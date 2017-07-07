@@ -22,9 +22,6 @@ import { loadAccounts } from "../actions/accountActions"
 export default class Layout extends React.Component {
 
   componentWillMount() {
-    this.props.dispatch(loadAccounts(
-      this.props.ethereumNode
-    ));
     this.props.ethereumNode.watch();
   }
 

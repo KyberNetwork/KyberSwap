@@ -9,9 +9,6 @@ const initState = {
 
 const global = (state=initState, action) => {
   switch (action.type) {
-    case "GLOBAL_INIT": {
-      return {...state, ethereum: action.payload}
-    }
     case "NEW_BLOCK_INCLUDED": {
       return {...state, currentBlock: action.payload}
     }

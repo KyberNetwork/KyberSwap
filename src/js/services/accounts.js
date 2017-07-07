@@ -23,5 +23,6 @@ export function loadAccounts(node) {
 }
 
 export function fetchAccount(ethereum, account, callback) {
+  console.log("account: ", account)
   account.sync(ethereum, callback)
 }

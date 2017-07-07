@@ -53,7 +53,7 @@ export default class EthereumService {
   }
 
   watch() {
-    this.rpc.eth.filter("latest", this.actAndWatch, (error) => {
+    this.rpc.eth.filter("latest", this.actAndWatch.bind(this), (error) => {
       // the node is not support for filtering
       this.fetchData()
       this.intervalID = setInterval(this.fetchData.bind(this), 10000)
@@ -95,12 +95,6 @@ export default class EthereumService {
     Object.keys(txs).forEach((hash) => {
       tx = txs[hash]
       store.dispatch(updateTx(ethereum, tx))
-      // if (tx.status == "pending") {
-      //   newTxs[hash] = tx.sync(ethereum)
-      // } else {
-      //   newTxs[hash] = tx
-      // }
-      // store.dispatch(updateTxs(newTxs))
     })
   }
 
@@ -123,7 +117,7 @@ export default class EthereumService {
   }
 
   actAndWatch(error, result) {
-    if (!error) {
+    if (error != null) {
       store.dispatch(updateBlockFailed(error))
     } else {
       store.dispatch(updateBlock(result))

@@ -24,6 +24,7 @@ import Tx from "../../services/tx"
 
   return {
     nonce: (account == undefined ? 0 : account.getUsableNonce()),
+    account: account,
     ethereum: state.global.ethereum,
     sourceBalance: sourceBalance,
     keystring: (account == undefined ? "" : account.key),
@@ -102,7 +103,7 @@ export default class PostExchange extends React.Component {
         ex, params.selectedAccount, params.gas, params.gasPrice,
         params.nonce, "pending", params.sourceToken, params.sourceAmount, params.destToken,
         params.minConversionRate, params.destAddress, params.maxDestAmount)
-      this.props.dispatch(updateAccount(ethereum, params.selectedAccount))
+      this.props.dispatch(updateAccount(ethereum, this.props.account))
       this.props.dispatch(emptyForm())
       this.props.dispatch(addTx(tx))
     } catch (e) {
