@@ -1,3 +1,5 @@
+import { fetchRate } from "../services/exchange"
+
 export function updateBlock(block) {
   return {
     type: "NEW_BLOCK_INCLUDED",
@@ -12,9 +14,11 @@ export function updateBlockFailed(error) {
   }
 }
 
-export function updateRates(newRates) {
+export function updateRate(ethereum, source, dest, reserve) {
   return {
-    type: "RATES_UPDATED",
-    payload: newRates
+    type: "RATE_UPDATED",
+    payload: new Promise((resolve, reject) => {
+      fetchRate(ethereum, source, dest, reserve, resolve)
+    })
   }
 }

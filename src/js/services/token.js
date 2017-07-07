@@ -13,12 +13,12 @@ export default class Token {
       this.owner, this.balance)
   }
 
-  sync(ethereum) {
-    const tok = this.shallowClone()
-    tok.balance = ethereum.getTokenBalance(
-      tok.address,
-      tok.owner.address,
-    );
-    return tok
+  sync(ethereum, callback) {
+    ethereum.getTokenBalance(
+      this.address, this.owner.address, (balance) => {
+        const tok = this.shallowClone()
+        tok.balance = balance
+        callback(tok)
+    })
   }
 }

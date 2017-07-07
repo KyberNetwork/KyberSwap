@@ -3,7 +3,6 @@ import { verifyNonce } from "../utils/validators"
 import store from "../store"
 import { incManualNonceAccount } from "../actions/accountActions"
 import constants from "../services/constants"
-import SupportedTokens from "./supported_tokens"
 import Rate from "./rate"
 
 export function etherToOthers(
@@ -75,38 +74,11 @@ export function tokenToOthers(
   return broadcasted
 }
 
-export function fetchRates(ethereum) {
-  var tokens = [{
-    name: "Ether",
-    icon: "/img/ether.png",
-    address: constants.ETHER_ADDRESS}]
-  for (var i = 0; i < SupportedTokens.length; i++) {
-    tokens.push({
-      name: SupportedTokens[i].name,
-      icon: SupportedTokens[i].icon,
-      address: SupportedTokens[i].address
+export function fetchRate(ethereum, source, dest, reserve, callback) {
+  ethereum.getRate(source.address, dest.address, reserve.index,
+    (result) => {
+      callback(new Rate(
+        source, dest, reserve,
+        result[0], result[1], result[2]))
     })
-  }
-  var rates = {}
-  for (var i = 0; i < tokens.length; i++) {
-    for (var j = 0; j < tokens.length; j++) {
-      if (i != j) {
-        for (var k = 0; k < constants.RESERVES.length; k++) {
-          var reserve = constants.RESERVES[k]
-          var rateFromContract = ethereum.getRate(
-            tokens[i].address, tokens[j].address, reserve.index)
-          var rate = new Rate(
-            tokens[i],
-            tokens[j],
-            reserve,
-            rateFromContract[0],
-            rateFromContract[1],
-            rateFromContract[2],
-          )
-          rates[rate.id()] = rate
-        }
-      }
-    }
-  }
-  return rates
 }

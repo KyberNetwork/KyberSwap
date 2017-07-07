@@ -77,6 +77,7 @@ export default class PostExchange extends React.Component {
   }
 
   postExchange = (event) => {
+    event.preventDefault()
     try {
       var ethereum = this.props.ethereum
       const params = this.verify()
@@ -101,16 +102,13 @@ export default class PostExchange extends React.Component {
         ex, params.selectedAccount, params.gas, params.gasPrice,
         params.nonce, "pending", params.sourceToken, params.sourceAmount, params.destToken,
         params.minConversionRate, params.destAddress, params.maxDestAmount)
-      setTimeout(() => {
-        this.props.dispatch(updateAccount(params.selectedAccount, params.nonce))
-      }, 2000)
+      this.props.dispatch(updateAccount(ethereum, params.selectedAccount))
       this.props.dispatch(emptyForm())
       this.props.dispatch(addTx(tx))
     } catch (e) {
       console.log(e)
       this.props.dispatch(throwError(e.message))
     }
-    event.preventDefault();
   }
 
   render() {

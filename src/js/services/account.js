@@ -34,22 +34,43 @@ export default class Account {
     return acc
   }
 
-  sync(ethereum) {
-    const acc = this.shallowClone()
-    acc.balance = ethereum.getBalance(acc.address)
-    acc.nonce = ethereum.getNonce(acc.address)
-    var BigNumber = ethereum.BigNumber
-    var intNonce = acc.nonce
-    var intManualNonce = acc.manualNonce
-    if (intNonce > intManualNonce) {
-      acc.manualNonce = intNonce
-    }
-    var newTokens = {};
-    Object.keys(acc.tokens).forEach((key) => {
-      newTokens[key] = acc.tokens[key].sync(ethereum);
-    });
-    acc.tokens = newTokens;
-    return acc
+  sync(ethereum, callback) {
+    var promise
+    promise = new Promise((resolve, reject) => {
+      const acc = this.shallowClone()
+      ethereum.getBalance(acc.address, (balance) => {
+        acc.balance = balance
+        resolve(acc)
+      })
+    })
+
+    promise = promise.then((acc) => {
+      return new Promise((resolve, reject) => {
+        ethereum.getNonce(acc.address, (nonce) => {
+          acc.nonce = nonce
+          if (acc.nonce > acc.manualNonce) {
+            acc.manualNonce = acc.nonce
+          }
+          resolve(acc)
+        })
+      })
+    })
+
+    Object.keys(this.tokens).forEach((key) => {
+      promise = promise.then((acc) => {
+        return new Promise((resolve, reject) => {
+          acc.tokens[key].sync(ethereum, (token) => {
+            acc.tokens[key] = token
+            resolve(acc)
+          })
+        })
+      })
+    })
+
+    promise.then((acc) => {
+      console.log("finally", acc)
+      callback(acc)
+    })
   }
 
   incManualNonce() {

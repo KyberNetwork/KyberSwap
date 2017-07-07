@@ -9,7 +9,7 @@ import ExchangeForm from "./ExchangeForm"
 import Transactions from "./Transactions"
 import ExchangeRates from "./ExchangeRates"
 
-import { loadAccounts, updateAccounts } from "../actions/accountActions"
+import { loadAccounts } from "../actions/accountActions"
 
 @connect((store) => {
   return {
@@ -25,7 +25,6 @@ export default class Layout extends React.Component {
     this.props.dispatch(loadAccounts(
       this.props.ethereumNode
     ));
-    this.props.dispatch(updateAccounts());
     this.props.ethereumNode.watch();
   }
 

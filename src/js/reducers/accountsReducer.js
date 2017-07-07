@@ -14,12 +14,7 @@ const accounts = (state=initState, action) => {
     case "LOAD_ACCOUNTS": {
       return {...state, accounts: action.payload}
     }
-    case "UPDATE_ACCOUNTS": {
-      var newAccounts = service.updateAccounts(state.accounts);
-      return {...state,
-        accounts: newAccounts}
-    }
-    case "UPDATE_ACCOUNT": {
+    case "UPDATE_ACCOUNT_FULFILLED": {
       var newAccounts = {...state.accounts}
       newAccounts[action.payload.address] = action.payload
       return {...state, accounts: newAccounts}
@@ -33,13 +28,9 @@ const accounts = (state=initState, action) => {
       return {...state,
         accounts: newAccounts}
     }
-    case "NEW_ACCOUNT_ADDED": {
-      var newAccount = service.newAccountInstance(
-        action.payload.address, action.payload.keystring,
-        action.payload.name, action.payload.desc
-      )
+    case "NEW_ACCOUNT_ADDED_FULFILLED": {
       var newAccounts = {...state.accounts}
-      newAccounts[action.payload.address] = newAccount
+      newAccounts[action.payload.address] = action.payload
       return {...state, accounts: newAccounts}
     }
   }

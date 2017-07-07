@@ -5,9 +5,11 @@ export function addTx(tx) {
   }
 }
 
-export function updateTxs(newTxs) {
+export function updateTx(ethereum, tx) {
   return {
-    type: "UPDATE_TXS",
-    payload: newTxs
+    type: "UPDATE_TX",
+    payload: new Promise((resolve, error) => {
+      tx.sync(ethereum, resolve)
+    })
   }
 }

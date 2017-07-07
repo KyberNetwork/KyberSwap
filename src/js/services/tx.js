@@ -25,13 +25,16 @@ export default class Tx {
     this.minConversionRate, this.recipient, this.maxDestAmount)
   }
 
-  sync = (ethereum) => {
-    var newTx = this.shallowClone()
-    if (ethereum.txMined(newTx.hash)) {
-      newTx.status = "mined"
-    } else {
-      newTx.status = "pending"
-    }
-    return newTx
+  sync = (ethereum, callback) => {
+    ethereum.txMined(this.hash, (mined) => {
+      var newTx = this.shallowClone()
+      if (mined) {
+        newTx.status = "mined"
+      }
+      else {
+        newTx.status = "pending"
+      }
+      callback(newTx)
+    })
   }
 }

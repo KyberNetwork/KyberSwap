@@ -8,8 +8,10 @@ const txs = (state=initState, action) => {
       newState[action.payload.hash] = action.payload
       return newState
     }
-    case "UPDATE_TXS": {
-      return {...state, ...action.payload}
+    case "UPDATE_TX_FULFILLED": {
+      var newState = {...state}
+      newState[action.payload.hash] = action.payload
+      return newState
     }
   }
   return state

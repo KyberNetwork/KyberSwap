@@ -11,23 +11,19 @@ export function loadAccounts(node) {
 export function addAccount(address, keystring, name, desc) {
   return {
     type: "NEW_ACCOUNT_ADDED",
-    payload: {address, keystring, name, desc}
+    payload: new Promise((resolve, reject) => {
+      service.newAccountInstance(
+        address, keystring, name, desc, resolve)
+    })
   }
 }
 
-export function updateAccounts() {
-  return {
-    type: "UPDATE_ACCOUNTS"
-  }
-}
-
-export function updateAccount(address, leastNonce) {
-  var state = store.getState()
-  var account = state.accounts.accounts[address]
-  account = account.sync(state.global.ethereum)
+export function updateAccount(ethereum, account) {
   return {
     type: "UPDATE_ACCOUNT",
-    payload: account
+    payload: new Promise((resolve, reject) => {
+      service.fetchAccount(ethereum, account, resolve)
+    })
   }
 }
 

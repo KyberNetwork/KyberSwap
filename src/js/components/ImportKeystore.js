@@ -18,6 +18,7 @@ export default class ImportKeystore extends React.Component {
   }
 
   importAccount = (event) => {
+    event.preventDefault()
     this.props.dispatch(addAccount(
       this.props.address, this.props.keystring,
       this.props.name, this.props.desc))

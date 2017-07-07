@@ -18,8 +18,11 @@ const global = (state=initState, action) => {
     case "GET_NEW_BLOCK_FAILED": {
       return {...state, connected: false}
     }
-    case "RATES_UPDATED": {
-      return {...state, rates: action.payload}
+    case "RATE_UPDATED_FULFILLED": {
+      var newRates = {...state.rates}
+      var rate = action.payload
+      newRates[rate.id()] = rate
+      return {...state, rates: newRates }
     }
   }
   return state
