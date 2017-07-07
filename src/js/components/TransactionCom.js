@@ -19,7 +19,7 @@ import { connect } from "react-redux"
     maxDestAmount: tx.maxDestAmount,
   }
 })
-export default class Transaction extends React.Component {
+export default class TransactionCom extends React.Component {
 
   render() {
     return (

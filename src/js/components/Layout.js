@@ -44,16 +44,16 @@ export default class Layout extends React.Component {
             <ImportKeystore />
             <h2>Accounts</h2>
             {accDetails}
-            <h2>Transactions</h2>
-            <Transactions />
+            <h2>Exchange Rates</h2>
+            <ExchangeRates />
           </div>
           <div class="form medium-4 cell">
             <h2>Exchange</h2>
             <ExchangeForm />
           </div>
           <div class="txs medium-4 cell">
-            <h2>Exchange Rates</h2>
-            <ExchangeRates />
+            <h2>Transactions</h2>
+            <Transactions />
           </div>
         </div>
         <Footer block={this.props.currentBlock} connected={this.props.connected}/>

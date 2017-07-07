@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import * as _ from "underscore"
 
-import Transaction from "./Transaction"
+import TransactionCom from "./TransactionCom"
 
 
 @connect((store) => {
@@ -18,7 +18,7 @@ export default class Transactions extends React.Component {
 
   render() {
     var txs = this.props.txs.map((tx) =>
-      <Transaction key={tx.hash} hash={tx.hash} />
+      <TransactionCom key={tx.hash} hash={tx.hash} />
     )
     return (
     <div>

@@ -31,6 +31,7 @@
   },
   "devDependencies": {},
   "scripts": {
+    "build": "NODE_ENV=production webpack -p",
     "dev": "webpack-dev-server --content-base src --inline --hot --port 3000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

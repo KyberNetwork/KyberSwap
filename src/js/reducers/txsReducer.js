@@ -9,25 +9,28 @@ const txs = (state=initState, action) => {
   switch (action.type) {
     case REHYDRATE: {
       var loadedTxs = action.payload.txs
-      var txs = {}
-      Object.keys(loadedTxs).forEach((hash) => {
-        var tx = loadedTxs[hash]
-        txs[hash] = new Tx(
-          tx.hash,
-          tx.from,
-          tx.gas,
-          tx.gasPrice,
-          tx.nonce,
-          tx.status,
-          tx.source,
-          tx.sourceAmount,
-          tx.dest,
-          tx.minConversionRate,
-          tx.recipient,
-          tx.maxDestAmount
-        )
-      })
-      return txs
+      if (loadedTxs) {
+        var txs = {}
+        Object.keys(loadedTxs).forEach((hash) => {
+          var tx = loadedTxs[hash]
+          txs[hash] = new Tx(
+            tx.hash,
+            tx.from,
+            tx.gas,
+            tx.gasPrice,
+            tx.nonce,
+            tx.status,
+            tx.source,
+            tx.sourceAmount,
+            tx.dest,
+            tx.minConversionRate,
+            tx.recipient,
+            tx.maxDestAmount
+          )
+        })
+        return txs
+      }
+      return state
     }
     case "TX_ADDED": {
       var newState = {...state}

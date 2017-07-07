@@ -13,37 +13,40 @@ const initState = {
 const accounts = (state=initState, action) => {
   switch (action.type) {
     case REHYDRATE: {
-      var loadedAccounts = action.payload.accounts.accounts
-      var accounts = {}
-      Object.keys(loadedAccounts).forEach((address) => {
-        var accMap = loadedAccounts[address]
-        console.log(accMap)
-        var acc = new Account(
-          accMap.address,
-          accMap.key,
-          accMap.name,
-          accMap.description,
-          accMap.balance,
-          accMap.nonce,
-          accMap.tokens,
-          accMap.manualNonce
-        )
-        var newTokens = {}
-        Object.keys(acc.tokens).forEach((address) => {
-          var token = acc.tokens[address]
-          newTokens[token.address] = new Token(
-            token.name,
-            token.icon,
-            token.address,
-            acc,
-            token.balance,
+      if (action.payload.accounts) {
+        var loadedAccounts = action.payload.accounts.accounts
+        var accounts = {}
+        Object.keys(loadedAccounts).forEach((address) => {
+          var accMap = loadedAccounts[address]
+          console.log(accMap)
+          var acc = new Account(
+            accMap.address,
+            accMap.key,
+            accMap.name,
+            accMap.description,
+            accMap.balance,
+            accMap.nonce,
+            accMap.tokens,
+            accMap.manualNonce
           )
+          var newTokens = {}
+          Object.keys(acc.tokens).forEach((address) => {
+            var token = acc.tokens[address]
+            newTokens[token.address] = new Token(
+              token.name,
+              token.icon,
+              token.address,
+              acc,
+              token.balance,
+            )
+          })
+          acc.tokens = newTokens
+          accounts[address] = acc
         })
-        acc.tokens = newTokens
-        accounts[address] = acc
-      })
-      var newState = {...state, accounts: accounts}
-      return newState
+        var newState = {...state, accounts: accounts}
+        return newState
+      }
+      return state
     }
     case "LOAD_ACCOUNTS": {
       return {...state, accounts: action.payload}
