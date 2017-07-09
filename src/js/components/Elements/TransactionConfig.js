@@ -1,21 +1,13 @@
 import React from "react";
-import { connect } from "react-redux";
 
-import { specifyGasLimit, specifyGasPrice } from "../../actions/exchangeFormActions";
 
-@connect((store) => {
-  return {
-    gasPrice: store.exchangeForm.gasPrice,
-    gas: store.exchangeForm.gas,
-  }
-})
 export default class TransactionConfig extends React.Component {
   specifyGas(event) {
-    this.props.dispatch(specifyGasLimit(event.target.value));
+    this.props.gasHandler(event)
   }
 
   specifyGasPrice(event) {
-    this.props.dispatch(specifyGasPrice(event.target.value));
+    this.props.gasPriceHandler(event)
   }
   render() {
     return (

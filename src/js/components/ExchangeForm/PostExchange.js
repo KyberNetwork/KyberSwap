@@ -61,7 +61,7 @@ export default class PostExchange extends React.Component {
     var gas = verifyNumber(this.props.gas)
     // should have better strategy to determine gas price
     var gasPrice = verifyNumber(this.props.gasPrice)
-    var password = document.getElementById("passphrase").value
+    var password = document.getElementById(this.props.passphraseID).value
     if (password == undefined || password == "") {
       throw new Error("Empty password")
     }
@@ -101,11 +101,18 @@ export default class PostExchange extends React.Component {
       }
       const tx = new Tx(
         ex, params.selectedAccount, params.gas, params.gasPrice,
-        params.nonce, "pending", params.sourceToken, params.sourceAmount, params.destToken,
-        params.minConversionRate, params.destAddress, params.maxDestAmount)
+        params.nonce, "pending", "exchange", {
+          sourceToken: params.sourceToken,
+          sourceAmount: params.sourceAmount,
+          destToken: params.destToken,
+          minConversionRate: params.minConversionRate,
+          destAddress: params.destAddress,
+          maxDestAmount: params.maxDestAmount,
+        })
       this.props.dispatch(updateAccount(ethereum, this.props.account))
-      this.props.dispatch(emptyForm())
       this.props.dispatch(addTx(tx))
+      document.getElementById(this.props.passphraseID).value = ''
+      this.props.dispatch(emptyForm())
     } catch (e) {
       console.log(e)
       this.props.dispatch(throwError(e.message))

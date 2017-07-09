@@ -1,8 +1,5 @@
-import * as service from "../services/accounts"
-import * as ethUtil from "ethereumjs-util"
 import Account from "../services/account"
 import Token from "../services/token"
-import BigNumber from "bignumber.js"
 import {REHYDRATE} from 'redux-persist/constants'
 
 
@@ -27,7 +24,10 @@ const accounts = (state=initState, action) => {
             accMap.balance,
             accMap.nonce,
             accMap.tokens,
-            accMap.manualNonce
+            accMap.manualNonce,
+            accMap.joined,
+            accMap.wallet,
+            accMap.walletCreationTx,
           )
           var newTokens = {}
           Object.keys(acc.tokens).forEach((address) => {
@@ -36,7 +36,7 @@ const accounts = (state=initState, action) => {
               token.name,
               token.icon,
               token.address,
-              acc,
+              acc.address,
               token.balance,
             )
           })
@@ -48,12 +48,32 @@ const accounts = (state=initState, action) => {
       }
       return state
     }
+    case "JOINING_KYBER_WALLET": {
+      var newAccounts = {...state.accounts}
+      var newAcc = newAccounts[action.payload.account.address].shallowClone()
+      newAcc.walletCreationTx = action.payload.hash
+      newAccounts[newAcc.address] = newAcc
+      return {...state, accounts: newAccounts}
+    }
+    case "JOINED_KYBER_WALLET": {
+      var newAccounts = {...state.accounts}
+      var newAcc = newAccounts[action.payload.address].shallowClone()
+      newAcc.wallet = action.payload.contractAddress
+      newAcc.joined = true
+      newAccounts[newAcc.address] = newAcc
+      return {...state, accounts: newAccounts}
+    }
     case "LOAD_ACCOUNTS": {
       return {...state, accounts: action.payload}
     }
     case "UPDATE_ACCOUNT_FULFILLED": {
       var newAccounts = {...state.accounts}
-      newAccounts[action.payload.address] = action.payload
+      var newAcc = newAccounts[action.payload.address].shallowClone()
+      newAcc.balance = action.payload.balance
+      newAcc.nonce = action.payload.nonce
+      newAcc.manualNonce = action.payload.manualNonce
+      newAcc.tokens = action.payload.tokens
+      newAccounts[newAcc.address] = newAcc
       return {...state, accounts: newAccounts}
     }
     case "INC_MANUAL_NONCE_ACCOUNT": {

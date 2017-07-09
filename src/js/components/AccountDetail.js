@@ -11,6 +11,8 @@ import { Balance, Token, Nonce } from "./Account/Balance";
     balance: acc.balance.toString(10),
     nonce: acc.nonce,
     desc: acc.description,
+    joined: acc.joined,
+    wallet: acc.wallet,
     tokens: Object.keys(acc.tokens).map((key) => {
       return {
         name: acc.tokens[key].name,
@@ -31,6 +33,8 @@ export default class AccountDetail extends React.Component {
         <NameAndDesc name={this.props.name} description={this.props.desc} />
         <Balance balance={this.props.balance} />
         <Nonce nonce={this.props.nonce} />
+        <p>Joined kyber wallet: {this.props.joined.toString()}</p>
+        <p>Wallet address: {this.props.wallet}</p>
         {tokens}
       </div>
     )

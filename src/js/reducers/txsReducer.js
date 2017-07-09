@@ -20,12 +20,9 @@ const txs = (state=initState, action) => {
             tx.gasPrice,
             tx.nonce,
             tx.status,
-            tx.source,
-            tx.sourceAmount,
-            tx.dest,
-            tx.minConversionRate,
-            tx.recipient,
-            tx.maxDestAmount
+            tx.type,
+            tx.data,
+            tx.address,
           )
         })
         return txs

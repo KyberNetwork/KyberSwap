@@ -1,20 +1,14 @@
 import React from "react";
-import { connect } from "react-redux";
 
 
-@connect((store) => {
-  return {
-    address: store.exchangeForm.selectedAccount,
-  }
-})
 export default class Credential extends React.Component {
-
   render() {
+    console.log('passphraseID: ', this.props.passphraseID)
     return (
       <div>
         <label>
           Please enter your passphrase:
-          <input id="passphrase" type="password"/>
+          <input id={this.props.passphraseID} type="password"/>
         </label>
       </div>
     )

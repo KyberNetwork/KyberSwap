@@ -3,6 +3,7 @@ import constants from "./constants"
 
 import { updateBlock, updateBlockFailed, updateRate } from "../actions/globalActions"
 import { updateAccount } from "../actions/accountActions"
+import { updateWallet } from "../actions/walletActions"
 import { updateTx } from "../actions/txActions"
 import SupportedTokens from "./supported_tokens"
 import * as ethUtil from 'ethereumjs-util'
@@ -94,7 +95,9 @@ export default class EthereumService {
     var ethereum = state.global.ethereum
     Object.keys(txs).forEach((hash) => {
       tx = txs[hash]
-      store.dispatch(updateTx(ethereum, tx))
+      if (tx.status == "pending") {
+        store.dispatch(updateTx(ethereum, tx))
+      }
     })
   }
 
@@ -108,10 +111,21 @@ export default class EthereumService {
     })
   }
 
+  fetchWalletsData() {
+    var state = store.getState()
+    var ethereum = state.global.ethereum
+    var wallets = store.getState().wallets.wallets
+    Object.keys(wallets).forEach((key) => {
+      console.log("updating wallet: " + key)
+      store.dispatch(updateWallet(ethereum, wallets[key]))
+    })
+  }
+
   fetchData() {
     console.log("start fetching data")
     this.fetchTxsData()
     this.fetchRateData()
+    this.fetchWalletsData()
     this.fetchAccountsData()
     console.log("done fetching and dispatching actions")
   }
@@ -142,7 +156,7 @@ export default class EthereumService {
       if (error != null) {
         console.log(error)
       } else {
-        callback(result == null ? false : true)
+        result == null ? callback(false, undefined) : callback(true, result.contractAddress)
       }
     })
   }
@@ -161,5 +175,13 @@ export default class EthereumService {
   sendRawTransaction(tx) {
     return this.rpc.eth.sendRawTransaction(
       ethUtil.bufferToHex(tx.serialize()))
+  }
+
+  deployKyberWalletData(from) {
+    var _kyberNetwork = constants.NETWORK_ADDRESS
+    var contract = this.rpc.eth.contract(constants.KYBER_WALLET)
+    return contract.new.getData(_kyberNetwork, {
+      data: constants.KYBER_WALLET_DATA,
+    })
   }
 }

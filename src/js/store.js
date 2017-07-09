@@ -5,7 +5,7 @@ import promise from "redux-promise-middleware";
 import {persistStore, autoRehydrate} from 'redux-persist'
 import reducer from "./reducers/index";
 
-const middleware = applyMiddleware(promise(), thunk, logger);
+const middleware = applyMiddleware(thunk, promise(), logger);
 const store = createStore(
   reducer, undefined, compose(middleware, autoRehydrate()))
 

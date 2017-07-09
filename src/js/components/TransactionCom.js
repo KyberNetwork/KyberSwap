@@ -11,12 +11,7 @@ import { connect } from "react-redux"
     gasPrice: tx.gasPrice,
     nonce: tx.nonce,
     status: tx.status,
-    source: tx.source,
-    sourceAmount: tx.sourceAmount,
-    dest: tx.dest,
-    minConversionRate: tx.minConversionRate,
-    recipient: tx.recipient,
-    maxDestAmount: tx.maxDestAmount,
+    type: tx.type,
   }
 })
 export default class TransactionCom extends React.Component {
@@ -30,12 +25,7 @@ export default class TransactionCom extends React.Component {
       <p>Gas price: {this.props.gasPrice}</p>
       <p>Nonce: {this.props.nonce}</p>
       <p>Status: {this.props.status}</p>
-      <p>Source: {this.props.source}</p>
-      <p>SourceAmount: {this.props.sourceAmount}</p>
-      <p>Dest: {this.props.dest}</p>
-      <p>MinConversionRate: {this.props.minConversionRate}</p>
-      <p>Recipient: {this.props.recipient}</p>
-      <p>MaxDestAmount: {this.props.maxDestAmount}</p>
+      <p>Type: {this.props.type}</p>
     </div>)
   }
 }

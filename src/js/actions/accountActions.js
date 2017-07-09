@@ -22,7 +22,7 @@ export function updateAccount(ethereum, account) {
   return {
     type: "UPDATE_ACCOUNT",
     payload: new Promise((resolve, reject) => {
-      service.fetchAccount(ethereum, account, resolve)
+      account.sync(ethereum, resolve)
     })
   }
 }
@@ -31,5 +31,19 @@ export function incManualNonceAccount(address) {
   return {
     type: "INC_MANUAL_NONCE_ACCOUNT",
     payload: address
+  }
+}
+
+export function joiningKyberWallet(account, hash) {
+  return {
+    type: "JOINING_KYBER_WALLET",
+    payload: { account, hash }
+  }
+}
+
+export function joinedKyberWallet(address, contractAddress) {
+  return {
+    type: "JOINED_KYBER_WALLET",
+    payload: { address, contractAddress }
   }
 }

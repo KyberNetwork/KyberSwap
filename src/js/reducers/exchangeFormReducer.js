@@ -52,8 +52,8 @@ const exchangeForm = (state=initState, action) => {
       return {...state, minConversionRate: action.payload}
     }
   }
-  return state;
+  return state
 }
 
-export default exchangeForm;
+export default exchangeForm
 

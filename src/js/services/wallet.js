@@ -1,41 +1,17 @@
-export default class Account {
-  constructor(address, keystring, name, desc, balance, nonce, tokens, manualNonce, joined, wallet, walletCreationTx) {
+export default class Wallet {
+  constructor(address, ownerAddress, name, desc, balance, tokens) {
     this.address = address
-    this.key = keystring
+    this.ownerAddress = ownerAddress
     this.name = name
     this.description = desc
     this.balance = balance || 0
-    this.nonce = nonce || 0
     this.tokens = tokens || {}
-    this.manualNonce = manualNonce || 0
-    this.joined = joined || false
-    this.wallet = wallet
-    this.walletCreationTx = walletCreationTx
   }
 
   shallowClone() {
-    return new Account(
-      this.address, this.key, this.name, this.description,
-      this.balance, this.nonce, this.tokens, this.manualNonce,
-      this.joined, this.wallet, this.walletCreationTx)
-  }
-
-  getUsableNonce() {
-    var nonceFromNode = this.nonce
-    var nonceManual = this.manualNonce
-    return nonceFromNode < nonceManual ? nonceManual : nonceFromNode
-  }
-
-  setPrivKey(key) {
-    const acc = this.shallowClone()
-    acc.privKey = key;
-    return acc
-  }
-
-  updateKey(keystring) {
-    const acc = this.shallowClone()
-    acc.key = keystring
-    return acc
+    return new Wallet(
+      this.address, this.ownerAddress, this.name, this.description,
+      this.balance, this.tokens)
   }
 
   sync(ethereum, callback) {
@@ -74,12 +50,6 @@ export default class Account {
     promise.then((acc) => {
       callback(acc)
     })
-  }
-
-  incManualNonce() {
-    const acc = this.shallowClone()
-    acc.manualNonce = acc.manualNonce + 1
-    return acc
   }
 
   addToken(token) {

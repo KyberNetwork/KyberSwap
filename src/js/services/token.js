@@ -3,19 +3,19 @@ export default class Token {
     this.name = name;
     this.icon = icon;
     this.address = address;
-    this.owner = owner;
+    this.ownerAddress = owner;
     this.balance = balance || 0;
   }
 
   shallowClone() {
     return new Token(
       this.name, this.icon, this.address,
-      this.owner, this.balance)
+      this.ownerAddress, this.balance)
   }
 
   sync(ethereum, callback) {
     ethereum.getTokenBalance(
-      this.address, this.owner.address, (balance) => {
+      this.address, this.ownerAddress, (balance) => {
         const tok = this.shallowClone()
         tok.balance = balance
         callback(tok)
