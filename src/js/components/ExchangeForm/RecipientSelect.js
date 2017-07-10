@@ -1,7 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from "react"
+import { connect } from "react-redux"
 
-import { specifyRecipient } from "../../actions/exchangeFormActions";
+import { specifyRecipient } from "../../actions/exchangeFormActions"
 
 
 @connect((store) => {

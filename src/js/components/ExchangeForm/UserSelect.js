@@ -1,6 +1,6 @@
-import React from "react";
-import { connect } from "react-redux";
-import { selectAccount } from "../../actions/exchangeFormActions";
+import React from "react"
+import { connect } from "react-redux"
+import { selectAccount } from "../../actions/exchangeFormActions"
 
 
 @connect((store, props) => {

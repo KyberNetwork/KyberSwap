@@ -14,7 +14,7 @@ export default class Payment extends React.Component {
     var account = this.props.account
     if (account) {
       if (account.joined) {
-        return <PaymentForm address={account.address} />
+        return <PaymentForm passphraseID="payment-passphrase" address={account.address} />
       } else {
         return <JoinPaymentForm address={account.address} passphraseID="join-payment-passphrase" />
       }

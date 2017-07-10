@@ -146,6 +146,15 @@ export default class EthereumService {
       maxDestAmount, minConversionRate, throwOnFailure)
   }
 
+  paymentData(walletAddress, sourceToken, sourceAmount, destToken, maxDestAmount,
+    minConversionRate, destAddress, data, onlyApproveToken, throwOnFailure) {
+    var wallet = this.rpc.eth.contract(constants.KYBER_WALLET).at(walletAddress)
+    return wallet.convertAndCall.getData(
+      sourceToken, sourceAmount, destToken, maxDestAmount,
+      minConversionRate, destAddress, data, onlyApproveToken, throwOnFailure
+    )
+  }
+
   approveTokenData(sourceToken, sourceAmount) {
     var tokenContract = this.erc20Contract.at(sourceToken)
     return tokenContract.approve.getData(this.networkAddress, sourceAmount)
