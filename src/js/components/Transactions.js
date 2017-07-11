@@ -8,7 +8,7 @@ import TransactionCom from "./TransactionCom"
 @connect((store) => {
   var nonceToTxs= {}
   var sortedTxs = _.sortBy(store.txs, (tx) => {
-    return tx.nonce + "-" + tx.hash
+    return tx.status + "-" + tx.nonce + "-" + tx.hash
   }).reverse()
   return {
     txs: sortedTxs

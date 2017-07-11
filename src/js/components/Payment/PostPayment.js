@@ -30,7 +30,7 @@ import Tx from "../../services/tx"
     nonce: (account == undefined ? 0 : account.getUsableNonce()),
     account: account,
     wallet: wallet,
-    ethereum: state.global.ethereum,
+    ethereum: state.connection.ethereum,
     sourceBalance: sourceBalance,
     keystring: (account == undefined ? "" : account.key),
     selectedWallet: state.paymentForm.selectedWallet,

@@ -1,16 +1,16 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import AccountDetail from "./AccountDetail"
-import WalletDetail from "./WalletDetail"
 import ImportKeystore from "./ImportKeystore"
+import Accounts from "./Accounts"
+import Wallets from "./Wallets"
 
 
 @connect((store) => {
   return {
     accounts: store.accounts.accounts,
     wallets: store.wallets.wallets,
-    ethereumNode: store.global.ethereum,
+    ethereumNode: store.connection.ethereum,
     currentBlock: store.global.currentBlock,
     connected: store.global.connected,
   }
@@ -19,32 +19,23 @@ export default class Dashboard extends React.Component {
 
   render() {
     var accounts = this.props.accounts
-    var accDetails = Object.keys(accounts).map((addr) => {
-      return (
-        <div key={addr} >
-          <AccountDetail address={addr} />
-          <br/>
+    var app
+    if (Object.keys(accounts).length == 0 ) {
+      app = (
+        <div>
+          You don't have any Ethereum addresses yet. Please use following form to import one.
+          <ImportKeystore />
         </div>
       )
-    })
-    var wallets = this.props.wallets
-    var walletDetails = Object.keys(wallets).map((addr) => {
-      return (
-        <div key={addr} >
-          <WalletDetail address={addr} />
-          <br/>
+    } else {
+      app = (
+        <div>
+          <ImportKeystore />
+          <Accounts />
+          <Wallets />
         </div>
       )
-    })
-    return (
-      <div>
-        <h2>Import Keystore</h2>
-        <ImportKeystore />
-        <h2>Wallets</h2>
-        {walletDetails}
-        <h2>Accounts</h2>
-        {accDetails}
-      </div>
-    )
+    }
+    return app
   }
 }

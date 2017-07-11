@@ -16,7 +16,7 @@ import Tx from "../../services/tx"
   var account = state.accounts.accounts[props.address]
   return {
     account: account,
-    ethereum: state.global.ethereum,
+    ethereum: state.connection.ethereum,
     gas: state.joinPaymentForm.gas,
     gasPrice: state.joinPaymentForm.gasPrice,
     nonce: (account == undefined ? 0 : account.getUsableNonce()),

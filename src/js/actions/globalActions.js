@@ -22,3 +22,9 @@ export function updateRate(ethereum, source, dest, reserve) {
     })
   }
 }
+
+export function acceptTermOfService() {
+  return {
+    type: "TERM_OF_SERVICE_ACCEPTED"
+  }
+}

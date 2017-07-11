@@ -17,6 +17,6 @@ const middleware = applyMiddleware(
 const store = createStore(
   reducer, undefined, compose(middleware, autoRehydrate()))
 
-persistStore(store, {blacklist: ['global']})
+persistStore(store, {blacklist: ['connection']})
 
 export default store

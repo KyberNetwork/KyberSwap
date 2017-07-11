@@ -11,6 +11,7 @@ import Transactions from "../components/Transactions"
 import Dashboard from "../components/Dashboard"
 import Exchange from "../components/Exchange"
 import Payment from "../components/Payment"
+import TermOfService from "../components/TermOfService"
 
 import { loadAccounts } from "../actions/accountActions"
 import history from "../history"
@@ -20,20 +21,22 @@ import history from "../history"
   return {
     accounts: store.accounts.accounts,
     wallets: store.wallets.wallets,
-    ethereumNode: store.global.ethereum,
+    ethereumNode: store.connection.ethereum,
     currentBlock: store.global.currentBlock,
     connected: store.global.connected,
+    termOfServiceAccepted: store.global.termOfServiceAccepted,
   }
 })
 export default class Layout extends React.Component {
 
   componentWillMount() {
-    this.props.ethereumNode.watch();
+    // this.props.ethereumNode.watch();
   }
 
   render() {
-    return (
-      <ConnectedRouter history={history}>
+    var app
+    if (this.props.termOfServiceAccepted) {
+      app = (
         <div>
           <Header/>
           <Link to="/">Dashboard</Link>
@@ -45,6 +48,17 @@ export default class Layout extends React.Component {
           <Route exact path="/exchange" component={Exchange}/>
           <Route exact path="/payment" component={Payment}/>
           <Footer block={this.props.currentBlock} connected={this.props.connected}/>
+        </div>
+      )
+    } else {
+      app = (
+        <TermOfService />
+      )
+    }
+    return (
+      <ConnectedRouter history={history}>
+        <div>
+          {app}
         </div>
       </ConnectedRouter>
     )
