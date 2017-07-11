@@ -9,6 +9,7 @@ import RecipientSelect from "./ExchangeForm/RecipientSelect"
 import TransactionConfig from "./Elements/TransactionConfig"
 import Credential from "./Elements/Credential"
 import PostExchange from "./ExchangeForm/PostExchange"
+import ExchangeRates from "./ExchangeRates"
 
 import { specifyGasLimit, specifyGasPrice } from "../actions/exchangeFormActions"
 
@@ -47,6 +48,7 @@ export default class ExchangeForm extends React.Component {
         <Credential passphraseID={this.props.passphraseID} />
         <PostExchange passphraseID={this.props.passphraseID} />
       </form>
+      <ExchangeRates />
     </div>)
   }
 }

@@ -25,7 +25,7 @@ import Tx from "../../services/tx"
   return {
     nonce: (account == undefined ? 0 : account.getUsableNonce()),
     account: account,
-    ethereum: state.global.ethereum,
+    ethereum: state.connection.ethereum,
     sourceBalance: sourceBalance,
     keystring: (account == undefined ? "" : account.key),
     selectedAccount: state.exchangeForm.selectedAccount,

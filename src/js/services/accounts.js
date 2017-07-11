@@ -13,7 +13,7 @@ export function newWalletInstance(address, ownerAddress, name, desc, callback) {
     )
   }
   wallet.sync(
-    store.getState().global.ethereum, callback)
+    store.getState().connection.ethereum, callback)
 }
 
 export function newAccountInstance(address, keystring, name, desc, callback) {
@@ -25,7 +25,7 @@ export function newAccountInstance(address, keystring, name, desc, callback) {
     )
   }
   account.sync(
-    store.getState().global.ethereum, callback)
+    store.getState().connection.ethereum, callback)
 }
 
 export function loadAccounts(node) {

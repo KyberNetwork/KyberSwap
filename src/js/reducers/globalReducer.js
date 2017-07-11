@@ -1,9 +1,7 @@
-import EthereumService from "../services/ethereum";
-
 const initState = {
-  ethereum: new EthereumService(),
   currentBlock: 0,
   connected: true,
+  termOfServiceAccepted: false,
   rates: {},
 }
 
@@ -21,8 +19,11 @@ const global = (state=initState, action) => {
       newRates[rate.id()] = rate
       return {...state, rates: newRates }
     }
+    case "TERM_OF_SERVICE_ACCEPTED": {
+      return {...state, termOfServiceAccepted: true}
+    }
   }
   return state
 }
 
-export default global;
+export default global

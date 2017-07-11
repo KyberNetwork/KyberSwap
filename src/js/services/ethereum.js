@@ -63,7 +63,7 @@ export default class EthereumService {
 
   fetchRateData() {
     var state = store.getState()
-    var ethereum = state.global.ethereum
+    var ethereum = state.connection.ethereum
     var tokens = [{
       name: "Ether",
       icon: "/img/ether.png",
@@ -92,7 +92,7 @@ export default class EthereumService {
     var state = store.getState()
     var tx
     var txs = state.txs
-    var ethereum = state.global.ethereum
+    var ethereum = state.connection.ethereum
     Object.keys(txs).forEach((hash) => {
       tx = txs[hash]
       if (tx.status == "pending") {
@@ -103,7 +103,7 @@ export default class EthereumService {
 
   fetchAccountsData() {
     var state = store.getState()
-    var ethereum = state.global.ethereum
+    var ethereum = state.connection.ethereum
     var accounts = store.getState().accounts.accounts
     Object.keys(accounts).forEach((key) => {
       console.log("updating account: " + key)
@@ -113,7 +113,7 @@ export default class EthereumService {
 
   fetchWalletsData() {
     var state = store.getState()
-    var ethereum = state.global.ethereum
+    var ethereum = state.connection.ethereum
     var wallets = store.getState().wallets.wallets
     Object.keys(wallets).forEach((key) => {
       console.log("updating wallet: " + key)
