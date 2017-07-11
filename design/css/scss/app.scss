@@ -1,0 +1,38 @@
+@import 'components/header';
+@import 'components/dashboard';
+@import 'components/common';
+
+body{
+	background-color:#ccc;
+}
+
+$widthBody : 1000px;
+$headerWidth:220px;
+.k-header{
+	  width: $headerWidth;
+    height: 100%;
+    position:fixed;
+}
+.k-contenter{
+	margin-left:$headerWidth;
+	min-height: 100vh;
+	//min-height:100%;
+	//position:fixed;
+	width:$widthBody - $headerWidth;
+}
+
+.k-body{
+	width:$widthBody;
+	margin:0 auto;
+	background-color:#fff;
+	display:flex;
+}
+.k-contenter{
+	background-color: #fbfcfb;
+	padding:30px 50px  20px 20px;
+	// width:100%;
+	// .k-content{
+	// 	background-color:#fff;
+	// 	height: 100%;
+	// }
+}
