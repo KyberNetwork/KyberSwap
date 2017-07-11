@@ -1,0 +1,129 @@
+$colorTable: #999;
+$colorModal : #2195f2;
+$modalFontSize:13px;
+.k-page-transaction {
+    table,
+    thead,
+    tbody,
+    tr {
+        border: none;
+    }
+    table {
+        text-align: center;
+        color: $colorTable;
+        font-size: 11px;
+        thead {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #aaa;
+            th {
+                text-align: center;
+                font-weight: normal;
+                color: $colorTable;
+            }
+        }
+        tbody {
+            tr {
+                border-bottom: none !important;
+                margin-bottom: 20px;
+                cursor: pointer;
+                &:hover{
+                	background-color:#eee;
+                }
+            }
+            .spacer {
+                width: 100px;
+                height: 10px;
+                background: transparent;
+                pointer-events: none;
+            }
+        }
+        .from {
+            &:before {
+                content: ' ';
+                width: 10px;
+                height: 10px;
+                display: inline-block;
+                border-radius: 10px;
+                margin-right: 5px;
+                border: 1px solid $colorTable;
+            }
+        }
+        .success,
+        .fail {
+            &:before {
+                content: ' ';
+                width: 6px;
+                height: 6px;
+                display: inline-block;
+                border-radius: 6px;
+                margin-right: 5px;
+            }
+        }
+        .success {
+            &:before {
+                background-color: #8bc34a;
+            }
+        }
+        .fail {
+            &:before {
+                background-color: #e74c3c;
+            }
+        }
+    }
+    #tx-modal{
+        font-size: $modalFontSize;
+        padding:0px;
+        outline: none;
+        border-radius:5px;
+        .modal-title{
+            color:$colorModal;
+            padding: 5px 30px;
+            border-bottom:1px solid #999;
+        }
+        .modal-info{
+            >div{
+                padding:5px;
+                label{
+                    width: 70px;
+                    margin-left: 30px;
+                    color: $colorModal;
+                    display: inline-block;
+                    font-size:$modalFontSize;
+                }
+                .account{
+                    padding:5px 10px;
+                    background-color:#b8e986;
+                    border-radius:8px;
+                    margin-right: 20px;
+                }
+
+            }
+        }
+        .modal-extra{
+            display: inline-block;
+            width: 100%;
+            margin-top: 50px;
+            >div{
+                padding:35px;
+                line-height: 30px;
+                text-align: center;
+                >div {
+                    &:last-child{
+                        color:$colorModal;
+                    }
+                }
+            }
+            .left{
+                float: left;
+            }
+            .right{
+                float: right;
+            }
+        }
+    }
+    .load-more {
+        text-align: center;
+        margin-top: 40px;
+    }
+}
