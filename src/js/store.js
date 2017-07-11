@@ -1,14 +1,22 @@
-import {compose, applyMiddleware, createStore} from "redux";
-import logger from "redux-logger";
-import thunk from "redux-thunk";
-import promise from "redux-promise-middleware";
+import {compose, applyMiddleware, createStore} from "redux"
+import logger from "redux-logger"
+import thunk from "redux-thunk"
+import promise from "redux-promise-middleware"
 import {persistStore, autoRehydrate} from 'redux-persist'
-import reducer from "./reducers/index";
+import reducer from "./reducers/index"
+import history from "./history"
+import { routerMiddleware } from 'react-router-redux'
 
-const middleware = applyMiddleware(thunk, promise(), logger);
+
+const routeMiddleware = routerMiddleware(history)
+
+const middleware = applyMiddleware(
+  thunk, promise(), logger, routeMiddleware
+)
+
 const store = createStore(
   reducer, undefined, compose(middleware, autoRehydrate()))
 
 persistStore(store, {blacklist: ['global']})
 
-export default store;
+export default store

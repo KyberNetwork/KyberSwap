@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { routerReducer } from 'react-router-redux'
 
 import accounts from './accountsReducer'
 import global from './globalReducer'
@@ -11,5 +12,6 @@ import txs from './txsReducer'
 
 export default combineReducers({
   accounts, exchangeForm, global, importKeystore, txs,
-  joinPaymentForm, wallets, paymentForm
+  joinPaymentForm, wallets, paymentForm,
+  router: routerReducer,
 })
