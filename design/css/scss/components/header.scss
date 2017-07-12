@@ -1,3 +1,5 @@
+$paddingLeft:20px;
+
 .k-header {
     background-color: #fff;
     
@@ -22,6 +24,26 @@
         color: #aaa;
         margin-top: 50px;
     }
+    .k-header-pendding-tx{
+        text-align: center;
+        margin-top: 50px;
+        padding:30px;
+        line-height: 25px;
+        >div{
+            &:first-child{
+                color: orange;
+            }
+            &:last-child{
+                font-size: 16px;
+            }
+        }
+        .number{
+            font-size: 40px;
+        }
+        .pending{
+            text-align: right;
+        }
+    }
     $tabHeight:40px;
     .k-header-menu {
         .tabs {
@@ -34,13 +56,13 @@
         }
         a {
             background-color: #fff;
-            font-size: 15px;
+            font-size: 20px;
             color: #aaa;
             height: $tabHeight;
             display: flex;
             padding: 0px;
             align-items: center;
-            padding-left: 20px;
+            padding-left: $paddingLeft;
             .k-icon{
             	margin-right: 10px;
             }
@@ -63,6 +85,21 @@
                     background-color: #00965e
                 }
             }
+        }
+    }
+    .node-select{
+        padding-left:$paddingLeft;
+        .k-select{
+            width: 150px;
+            position:relative;
+            top: -14px;
+            .k-select-option{
+                width: inherit;
+            }
+        }
+        .k-select-display{
+            text-align: center;
+            color: #aaa;
         }
     }
 }
