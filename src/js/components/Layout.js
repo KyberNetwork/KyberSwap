@@ -1,7 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
 import { Route } from 'react-router'
-import { Link } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 
 import Footer from "./Footer"
@@ -12,6 +11,7 @@ import Dashboard from "../components/Dashboard"
 import Exchange from "../components/Exchange"
 import Payment from "../components/Payment"
 import TermOfService from "../components/TermOfService"
+import SideBar from "../components/SideBar"
 
 import { loadAccounts } from "../actions/accountActions"
 import history from "../history"
@@ -28,7 +28,7 @@ import history from "../history"
 export default class Layout extends React.Component {
 
   componentWillMount() {
-    this.props.ethereumNode.watch();
+    this.props.ethereumNode.watch()
   }
 
   render() {
@@ -36,38 +36,7 @@ export default class Layout extends React.Component {
     if (this.props.termOfServiceAccepted) {
       app = (
         <div class="k-body">
-          <div class="k-header">
-            <div class="k-header-logo">
-              <img src="assets/logo_icon.png" />
-            </div>
-            <div class="k-header-menu" id="menu">
-              <ul class="tabs vertical" data-tabs>
-                <li class="tabs-title is-active">
-                  <Link to="/" aria-selected={true} >
-                    <i class="k-icon k-icon-account"></i> Dashboard
-                  </Link>
-                </li>
-                <li class="tabs-title">
-                  <Link to="/exchange">
-                    <i class="k-icon k-icon-exchange"></i> Exchange
-                  </Link>
-                </li>
-                <li class="tabs-title">
-                  <Link to="/transactions">
-                    <i class="k-icon k-icon-transaction"></i> Transactions
-                  </Link>
-                </li>
-                <li class="tabs-title">
-                  <Link to="/payment">
-                    <i class="k-icon k-icon-node"></i> Payment
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div class="k-header-footer">
-                KyberWallet - Official ethereum wallet from KybetNetwork
-            </div>
-          </div>
+          <SideBar />
           <div class="k-contenter">
             <div id="content" class="k-content">
               <Route exact path="/" component={Dashboard}/>

@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import { Link } from 'react-router-dom'
 
 
 @connect((store, props) => {
@@ -18,14 +19,17 @@ export default class TransactionCom extends React.Component {
 
   render() {
     return (
-    <div>
-      <p>Hash: {this.props.hash}</p>
-      <p>From: {this.props.from}</p>
-      <p>Gas: {this.props.gas}</p>
-      <p>Gas price: {this.props.gasPrice}</p>
-      <p>Nonce: {this.props.nonce}</p>
-      <p>Status: {this.props.status}</p>
-      <p>Type: {this.props.type}</p>
-    </div>)
+    <tr class="item">
+      <td class="from">
+        <Link to={"/transactions/" + this.props.hash}>
+          {this.props.hash}
+        </Link>
+      </td>
+      <td>{this.props.from}</td>
+      <td></td>
+      <td>{this.props.nonce}</td>
+      <td>{this.props.type}</td>
+      <td><span class={this.props.status == "mined" ? "success" : "fail"}>{this.props.status}</span></td>
+    </tr>)
   }
 }
