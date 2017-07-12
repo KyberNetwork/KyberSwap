@@ -1,4 +1,5 @@
 import React from "react"
+import BigNumber from 'bignumber.js';
 import { connect } from "react-redux"
 import * as ethUtil from 'ethereumjs-util'
 
@@ -16,6 +17,7 @@ import Tx from "../../services/tx"
   var account = state.accounts.accounts[address]
   var sourceBalance
   var sourceToken = state.exchangeForm.sourceToken
+  var destToken = state.exchangeForm.destToken
   if ( sourceToken == constants.ETHER_ADDRESS) {
     sourceBalance = (account == undefined ? "0" : account.balance.toString(10))
   } else {
@@ -25,14 +27,15 @@ import Tx from "../../services/tx"
   return {
     nonce: (account == undefined ? 0 : account.getUsableNonce()),
     account: account,
-    ethereum: state.global.ethereum,
+    ethereum: state.connection.ethereum,
     sourceBalance: sourceBalance,
     keystring: (account == undefined ? "" : account.key),
     selectedAccount: state.exchangeForm.selectedAccount,
     sourceToken: sourceToken,
     sourceAmount: state.exchangeForm.sourceAmount,
-    destToken: state.exchangeForm.destToken,
+    destToken: destToken,
     minConversionRate: state.exchangeForm.minConversionRate,
+    rate: state.global.rates[sourceToken + "-" + destToken],
     destAddress: state.exchangeForm.destAddress,
     maxDestAmount: state.exchangeForm.maxDestAmount,
     throwOnFailure: state.exchangeForm.throwOnFailure,
@@ -47,6 +50,13 @@ export default class PostExchange extends React.Component {
     var selectedAccount = verifyAccount(this.props.selectedAccount)
     var sourceToken = verifyToken(this.props.sourceToken)
     var sourceAmount = verifyAmount(this.props.sourceAmount, this.props.sourceBalance)
+    var expectedDestAmount = (
+      new BigNumber(this.props.sourceAmount))
+      .times("1000000000000000000")
+      .div(this.props.minConversionRate)
+    verifyAmount(
+      expectedDestAmount.toString(10),
+      this.props.rate.balance)
     var destToken = verifyToken(this.props.destToken)
     if (sourceToken == destToken) {
       throw new Error("Exchange between the same currencies")

@@ -1,79 +1,66 @@
 import React from "react"
 import { connect } from "react-redux"
+import { Route } from 'react-router'
+import { Link } from 'react-router-dom'
+import { ConnectedRouter } from 'react-router-redux'
 
 import Footer from "./Footer"
 import Header from "./Header"
-import AccountDetail from "./AccountDetail"
-import WalletDetail from "./WalletDetail"
-import ImportKeystore from "./ImportKeystore"
-import ExchangeForm from "./ExchangeForm"
-import Transactions from "./Transactions"
-import ExchangeRates from "./ExchangeRates"
-import Payment from "./Payment"
+
+import Transactions from "../components/Transactions"
+import Dashboard from "../components/Dashboard"
+import Exchange from "../components/Exchange"
+import Payment from "../components/Payment"
+import TermOfService from "../components/TermOfService"
 
 import { loadAccounts } from "../actions/accountActions"
+import history from "../history"
+
 
 @connect((store) => {
   return {
     accounts: store.accounts.accounts,
     wallets: store.wallets.wallets,
-    ethereumNode: store.global.ethereum,
+    ethereumNode: store.connection.ethereum,
     currentBlock: store.global.currentBlock,
     connected: store.global.connected,
+    termOfServiceAccepted: store.global.termOfServiceAccepted,
   }
 })
 export default class Layout extends React.Component {
 
   componentWillMount() {
-    this.props.ethereumNode.watch();
+    this.props.ethereumNode.watch()
   }
 
   render() {
-    var accounts = this.props.accounts
-    var accDetails = Object.keys(accounts).map((addr) => {
-      return (
-        <div key={addr} >
-          <AccountDetail address={addr} />
-          <br/>
+    var app
+    if (this.props.termOfServiceAccepted) {
+      app = (
+        <div>
+          <Header/>
+          <Link to="/">Dashboard</Link>
+          <Link to="/transactions">Transactions</Link>
+          <Link to="/exchange">Exchange</Link>
+          <Link to="/payment">Payment</Link>
+          <Route exact path="/" component={Dashboard}/>
+          <Route exact path="/transactions" component={Transactions}/>
+          <Route exact path="/exchange" component={Exchange}/>
+          <Route exact path="/payment" component={Payment}/>
+          <Footer block={this.props.currentBlock} connected={this.props.connected}/>
         </div>
       )
-    })
-    var wallets = this.props.wallets
-    var walletDetails = Object.keys(wallets).map((addr) => {
-      return (
-        <div key={addr} >
-          <WalletDetail address={addr} />
-          <br/>
-        </div>
+    } else {
+      app = (
+        <TermOfService />
       )
-    })
+    }
     return (
-      <div>
-        <Header/>
-        <div class="grid-x">
-          <div class="account medium-4 cell">
-            <h2>Import Keystore</h2>
-            <ImportKeystore />
-            <h2>Wallets</h2>
-            {walletDetails}
-            <h2>Accounts</h2>
-            {accDetails}
-            <h2>Exchange Rates</h2>
-            <ExchangeRates />
-          </div>
-          <div class="form medium-4 cell">
-            <h2>Payment</h2>
-            <Payment address="0x001adbc838ede392b5b054a47f8b8c28f2fa9f3f" />
-            <h2>Exchange</h2>
-            <ExchangeForm passphraseID="exchange-passphrase" />
-          </div>
-          <div class="txs medium-4 cell">
-            <h2>Transactions</h2>
-            <Transactions />
-          </div>
+      <ConnectedRouter history={history}>
+        <div>
+          {app}
         </div>
-        <Footer block={this.props.currentBlock} connected={this.props.connected}/>
-      </div>
+      </ConnectedRouter>
     )
   }
 }

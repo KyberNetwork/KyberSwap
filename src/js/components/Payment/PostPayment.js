@@ -1,4 +1,5 @@
 import React from "react"
+import BigNumber from 'bignumber.js';
 import { connect } from "react-redux"
 import * as ethUtil from 'ethereumjs-util'
 
@@ -20,6 +21,7 @@ import Tx from "../../services/tx"
   }
   var sourceBalance
   var sourceToken = state.paymentForm.sourceToken
+  var destToken = state.exchangeForm.destToken
   if (sourceToken == constants.ETHER_ADDRESS) {
     sourceBalance = (wallet == undefined ? "0" : wallet.balance.toString(10))
   } else {
@@ -30,7 +32,7 @@ import Tx from "../../services/tx"
     nonce: (account == undefined ? 0 : account.getUsableNonce()),
     account: account,
     wallet: wallet,
-    ethereum: state.global.ethereum,
+    ethereum: state.connection.ethereum,
     sourceBalance: sourceBalance,
     keystring: (account == undefined ? "" : account.key),
     selectedWallet: state.paymentForm.selectedWallet,
@@ -38,6 +40,7 @@ import Tx from "../../services/tx"
     sourceAmount: state.paymentForm.sourceAmount,
     destToken: state.paymentForm.destToken,
     minConversionRate: state.paymentForm.minConversionRate,
+    rate: state.global.rates[sourceToken + "-" + destToken],
     destAddress: state.paymentForm.destAddress,
     maxDestAmount: state.paymentForm.maxDestAmount,
     throwOnFailure: state.paymentForm.throwOnFailure,
@@ -53,6 +56,13 @@ export default class Postpayment extends React.Component {
     var selectedWallet = verifyAccount(this.props.selectedWallet)
     var sourceToken = verifyToken(this.props.sourceToken)
     var sourceAmount = verifyAmount(this.props.sourceAmount, this.props.sourceBalance)
+    var expectedDestAmount = (
+      new BigNumber(this.props.sourceAmount))
+      .times("1000000000000000000")
+      .div(this.props.minConversionRate)
+    verifyAmount(
+      expectedDestAmount.toString(10),
+      this.props.rate.balance)
     var destToken = verifyToken(this.props.destToken)
     if (sourceToken == destToken) {
       throw new Error("payment between the same currencies")
