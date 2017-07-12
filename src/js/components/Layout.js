@@ -30,7 +30,7 @@ import history from "../history"
 export default class Layout extends React.Component {
 
   componentWillMount() {
-    // this.props.ethereumNode.watch();
+    this.props.ethereumNode.watch()
   }
 
   render() {
