@@ -30,9 +30,9 @@ export default class Dashboard extends React.Component {
     } else {
       app = (
         <div>
-          <ImportKeystore />
           <Accounts />
           <Wallets />
+          <ImportKeystore />
         </div>
       )
     }

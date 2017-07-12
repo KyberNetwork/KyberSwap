@@ -1,0 +1,256 @@
+.k-header {
+  background-color: #fff;
+  top: 0px;
+  min-height: 500px; }
+  .k-header .k-header-logo {
+    padding: 20px;
+    padding-top: 40px;
+    padding-bottom: 60px;
+    text-align: center; }
+    .k-header .k-header-logo img {
+      width: 100%; }
+  .k-header .k-header-footer {
+    bottom: 0px;
+    position: absolute;
+    padding: 15px;
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 50px; }
+  .k-header .k-header-menu .tabs {
+    border: none; }
+  .k-header .k-header-menu li:not(:last-child) {
+    margin-bottom: 5px; }
+  .k-header .k-header-menu a {
+    background-color: #fff;
+    font-size: 15px;
+    color: #aaa;
+    height: 40px;
+    display: flex;
+    padding: 0px;
+    align-items: center;
+    padding-left: 20px; }
+    .k-header .k-header-menu a .k-icon {
+      margin-right: 10px; }
+  .k-header .k-header-menu span {
+    display: inline-block;
+    width: 30px; }
+  .k-header .k-header-menu .tabs-title.is-active a {
+    color: #000;
+    position: relative; }
+    .k-header .k-header-menu .tabs-title.is-active a:before {
+      content: '';
+      width: 5px;
+      height: 40px;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      background-color: #00965e; }
+
+.k-icon {
+  background-image: url("../assets/icon.png");
+  display: inline-block; }
+
+.k-icon-account {
+  background-position: -177px -20px;
+  width: 20px;
+  height: 20px; }
+
+.k-icon-exchange {
+  background-position: -60px -20px;
+  width: 20px;
+  height: 20px; }
+
+.k-icon-transaction {
+  background-position: -102px -20px;
+  width: 20px;
+  height: 20px; }
+
+.k-icon-node {
+  background-position: -20px -20px;
+  width: 20px;
+  height: 20px; }
+
+.k-icon-key {
+  background-position: -140px -20px;
+  width: 20px;
+  height: 20px; }
+
+.k-icon-qr {
+  background-position: -216px -20px;
+  width: 20px;
+  height: 20px; }
+
+.k-icon-usd {
+  background-position: -22px -65px;
+  width: 20px;
+  height: 30px; }
+
+.k-icon-gas {
+  background-position: -60px -65px;
+  width: 25px;
+  height: 30px; }
+
+.k-page-account .acc-item {
+  background-color: #fff; }
+  .k-page-account .acc-item.active .acc-title {
+    background-color: #209c6e;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px; }
+  .k-page-account .acc-item.active .acc-body {
+    color: #000; }
+  .k-page-account .acc-item.expand .acc-body-token {
+    display: block; }
+  .k-page-account .acc-item:not(:last-child) {
+    margin-bottom: 20px; }
+.k-page-account .acc-title {
+  padding: 5px 20px;
+  cursor: pointer;
+  font-size: 14px; }
+  .k-page-account .acc-title .k-icon {
+    width: 20px;
+    height: 20px;
+    background-position: -319px -20px;
+    position: relative;
+    top: 1px;
+    float: right; }
+.k-page-account .acc-body {
+  font-size: 13px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 15px;
+  color: #aaa; }
+.k-page-account .acc-address .k-icon {
+  position: relative;
+  top: 3px; }
+.k-page-account .acc-balance {
+  margin-top: 5px; }
+.k-page-account .acc-balance,
+.k-page-account .acc-content {
+  font-size: 14px; }
+.k-page-account .acc-body-token {
+  margin-top: 20px;
+  display: none; }
+  .k-page-account .acc-body-token .token-name {
+    font-size: 14px; }
+  .k-page-account .acc-body-token img {
+    height: 50px; }
+  .k-page-account .acc-body-token .token-item > div > div {
+    display: flex;
+    align-items: center; }
+  .k-page-account .acc-body-token .token-item:not(:last-child) {
+    margin-bottom: 10px; }
+
+.k-page-transaction table,
+.k-page-transaction thead,
+.k-page-transaction tbody,
+.k-page-transaction tr {
+  border: none; }
+.k-page-transaction table {
+  text-align: center;
+  color: #999;
+  font-size: 11px; }
+  .k-page-transaction table thead {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #aaa; }
+    .k-page-transaction table thead th {
+      text-align: center;
+      font-weight: normal;
+      color: #999; }
+  .k-page-transaction table tbody tr {
+    border-bottom: none !important;
+    margin-bottom: 20px;
+    cursor: pointer; }
+    .k-page-transaction table tbody tr:hover {
+      background-color: #eee; }
+  .k-page-transaction table tbody .spacer {
+    width: 100px;
+    height: 10px;
+    background: transparent;
+    pointer-events: none; }
+  .k-page-transaction table .from:before {
+    content: ' ';
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 10px;
+    margin-right: 5px;
+    border: 1px solid #999; }
+  .k-page-transaction table .success:before,
+  .k-page-transaction table .fail:before {
+    content: ' ';
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    border-radius: 6px;
+    margin-right: 5px; }
+  .k-page-transaction table .success:before {
+    background-color: #8bc34a; }
+  .k-page-transaction table .fail:before {
+    background-color: #e74c3c; }
+.k-page-transaction #tx-modal {
+  font-size: 13px;
+  padding: 0px;
+  outline: none;
+  border-radius: 5px; }
+  .k-page-transaction #tx-modal .modal-title {
+    color: #2195f2;
+    padding: 5px 30px;
+    border-bottom: 1px solid #999; }
+  .k-page-transaction #tx-modal .modal-info > div {
+    padding: 5px; }
+    .k-page-transaction #tx-modal .modal-info > div label {
+      width: 70px;
+      margin-left: 30px;
+      color: #2195f2;
+      display: inline-block;
+      font-size: 13px; }
+    .k-page-transaction #tx-modal .modal-info > div .account {
+      padding: 5px 10px;
+      background-color: #b8e986;
+      border-radius: 8px;
+      margin-right: 20px; }
+  .k-page-transaction #tx-modal .modal-extra {
+    display: inline-block;
+    width: 100%;
+    margin-top: 50px; }
+    .k-page-transaction #tx-modal .modal-extra > div {
+      padding: 35px;
+      line-height: 30px;
+      text-align: center; }
+      .k-page-transaction #tx-modal .modal-extra > div > div:last-child {
+        color: #2195f2; }
+    .k-page-transaction #tx-modal .modal-extra .left {
+      float: left; }
+    .k-page-transaction #tx-modal .modal-extra .right {
+      float: right; }
+.k-page-transaction .load-more {
+  text-align: center;
+  margin-top: 40px; }
+
+body {
+  background-color: #ccc; }
+
+.k-header {
+  width: 220px;
+  height: 100%;
+  position: fixed; }
+
+.k-contenter {
+  margin-left: 220px;
+  min-height: 100vh;
+  width: 980px; }
+
+.k-body {
+  width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  display: flex; }
+
+.k-contenter {
+  background-color: #fbfcfb;
+  padding: 30px 20px  20px 20px; }
+
+/*# sourceMappingURL=app.css.map */

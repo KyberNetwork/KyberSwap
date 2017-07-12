@@ -19,8 +19,6 @@ import history from "../history"
 
 @connect((store) => {
   return {
-    accounts: store.accounts.accounts,
-    wallets: store.wallets.wallets,
     ethereumNode: store.connection.ethereum,
     currentBlock: store.global.currentBlock,
     connected: store.global.connected,
@@ -30,24 +28,54 @@ import history from "../history"
 export default class Layout extends React.Component {
 
   componentWillMount() {
-    // this.props.ethereumNode.watch();
+    this.props.ethereumNode.watch();
   }
 
   render() {
     var app
     if (this.props.termOfServiceAccepted) {
       app = (
-        <div>
-          <Header/>
-          <Link to="/">Dashboard</Link>
-          <Link to="/transactions">Transactions</Link>
-          <Link to="/exchange">Exchange</Link>
-          <Link to="/payment">Payment</Link>
-          <Route exact path="/" component={Dashboard}/>
-          <Route exact path="/transactions" component={Transactions}/>
-          <Route exact path="/exchange" component={Exchange}/>
-          <Route exact path="/payment" component={Payment}/>
-          <Footer block={this.props.currentBlock} connected={this.props.connected}/>
+        <div class="k-body">
+          <div class="k-header">
+            <div class="k-header-logo">
+              <img src="assets/logo_icon.png" />
+            </div>
+            <div class="k-header-menu" id="menu">
+              <ul class="tabs vertical" data-tabs>
+                <li class="tabs-title is-active">
+                  <Link to="/" aria-selected={true} >
+                    <i class="k-icon k-icon-account"></i> Dashboard
+                  </Link>
+                </li>
+                <li class="tabs-title">
+                  <Link to="/exchange">
+                    <i class="k-icon k-icon-exchange"></i> Exchange
+                  </Link>
+                </li>
+                <li class="tabs-title">
+                  <Link to="/transactions">
+                    <i class="k-icon k-icon-transaction"></i> Transactions
+                  </Link>
+                </li>
+                <li class="tabs-title">
+                  <Link to="/payment">
+                    <i class="k-icon k-icon-node"></i> Payment
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div class="k-header-footer">
+                KyberWallet - Official ethereum wallet from KybetNetwork
+            </div>
+          </div>
+          <div class="k-contenter">
+            <div id="content" class="k-content">
+              <Route exact path="/" component={Dashboard}/>
+              <Route exact path="/transactions" component={Transactions}/>
+              <Route exact path="/exchange" component={Exchange}/>
+              <Route exact path="/payment" component={Payment}/>
+            </div>
+          </div>
         </div>
       )
     } else {

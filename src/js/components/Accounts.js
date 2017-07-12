@@ -14,16 +14,16 @@ export default class Wallets extends React.Component {
     var accounts = this.props.accounts
     var accDetails = Object.keys(accounts).map((addr) => {
       return (
-        <div key={addr} >
-          <AccountDetail address={addr} />
-          <br/>
-        </div>
+        <AccountDetail key={addr} address={addr} />
       )
     })
     return (
       <div>
-        <h2>Accounts</h2>
-        {accDetails}
+        <div class="k-page k-page-account">
+          <div id="account-list">
+            {accDetails}
+          </div>
+        </div>
       </div>
     )
   }
