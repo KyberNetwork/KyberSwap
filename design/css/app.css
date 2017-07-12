@@ -16,13 +16,26 @@
     font-size: 12px;
     color: #aaa;
     margin-top: 50px; }
+  .k-header .k-header-pendding-tx {
+    text-align: center;
+    margin-top: 50px;
+    padding: 30px;
+    line-height: 25px; }
+    .k-header .k-header-pendding-tx > div:first-child {
+      color: orange; }
+    .k-header .k-header-pendding-tx > div:last-child {
+      font-size: 16px; }
+    .k-header .k-header-pendding-tx .number {
+      font-size: 40px; }
+    .k-header .k-header-pendding-tx .pending {
+      text-align: right; }
   .k-header .k-header-menu .tabs {
     border: none; }
   .k-header .k-header-menu li:not(:last-child) {
     margin-bottom: 5px; }
   .k-header .k-header-menu a {
     background-color: #fff;
-    font-size: 15px;
+    font-size: 20px;
     color: #aaa;
     height: 40px;
     display: flex;
@@ -45,6 +58,55 @@
       left: 0px;
       top: 0px;
       background-color: #00965e; }
+  .k-header .node-select {
+    padding-left: 20px; }
+    .k-header .node-select .k-select {
+      width: 150px;
+      position: relative;
+      top: -14px; }
+      .k-header .node-select .k-select .k-select-option {
+        width: inherit; }
+    .k-header .node-select .k-select-display {
+      text-align: center;
+      color: #aaa; }
+
+.disable {
+  pointer-events: none;
+  cursor: default; }
+
+.k-select .k-select-display {
+  cursor: pointer; }
+  .k-select .k-select-display:after {
+    background-image: url("../assets/icon.png");
+    display: inline-block;
+    content: " ";
+    background-position: -60px -20px;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    position: relative;
+    top: 3px; }
+.k-select .k-select-option {
+  display: none;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 2px 10px;
+  color: #aaa;
+  position: absolute;
+  z-index: 999; }
+  .k-select .k-select-option > div {
+    cursor: pointer;
+    padding: 8px 0; }
+    .k-select .k-select-option > div:not(:last-child) {
+      border-bottom: 1px solid #aaa; }
+  .k-select .k-select-option .selected:after {
+    content: ' ';
+    height: 8px;
+    width: 8px;
+    display: inline-block;
+    border-radius: 8px;
+    background-color: green;
+    margin-left: 10px; }
 
 .k-icon {
   background-image: url("../assets/icon.png");
@@ -234,14 +296,14 @@ body {
   background-color: #ccc; }
 
 .k-header {
-  width: 220px;
+  width: 200px;
   height: 100%;
   position: fixed; }
 
 .k-contenter {
-  margin-left: 220px;
+  margin-left: 200px;
   min-height: 100vh;
-  width: 980px; }
+  width: 1000px; }
 
 .k-body {
   width: 1200px;
