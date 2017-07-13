@@ -34,10 +34,6 @@ export default class ImportKeystore extends React.Component {
             Account name:
             <input value={this.props.name} onChange={this.specifyName} type="text" />
           </label>
-          <label>
-            Account description:
-            <input value={this.props.desc} onChange={this.specifyDesc} type="text" />
-          </label>
           <Key address={this.props.address}/>
           <p>Associate address: {this.props.address}</p>
           <p>Error: {this.props.error}</p>

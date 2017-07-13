@@ -29,37 +29,44 @@ export default class AccountDetail extends React.Component {
       return <Token key={index} name={tok.name} balance={tok.balance} icon={tok.icon} />
     })
     return (
-      <div class="acc-item active expand">
-        <div class="acc-title">
-          {this.props.name}
-          <span class="acc-title-expand">
-            <i class="k-icon"></i>
-          </span>
-        </div>
-        <div class="acc-body">
-          <div class="acc-body-common">
-            <div class="acc-body-des">
-              {this.props.desc}
+      <div class="wallet-item">
+        <div>
+          <div class="wallet-left">
+            <div class="title">
+              <span>{this.props.name}</span>
             </div>
-            <div class="acc-address">
-              <i class="k-icon k-icon-key"></i>
-              <span>Address</span>
-              <span class="acc-address-content">{this.props.address}</span>
-            </div>
-            <div class="acc-balance">
-              {this.props.balance} wei
+            <div class="content">
+              <div class="balance">
+                <label>Ether</label>
+                <span>
+                  {this.props.balance}
+                </span>
+              </div>
+              <div class="address">
+                <label>Address</label>
+                <span>{this.props.address}</span>
+                <div>
+                  <img src="assets/qr_code.png" />
+                </div>
+              </div>
             </div>
           </div>
-          <div class="acc-body-token">
-            {tokens}
+          <div class="wallet-center">
+            <div class="row">
+              {tokens}
+            </div>
+          </div>
+          <div class="wallet-right">
+            <button class="k-tooltip delete">
+              <i class="k-icon k-icon-delete"></i>
+              <span class="k-tooltip-content down-arrow">Delete</span>
+            </button>
+            <button class="k-tooltip modiy">
+              <i class="k-icon k-icon-modify"></i>
+              <span class="k-tooltip-content down-arrow">Modify</span>
+            </button>
           </div>
         </div>
-        {/*
-        <Balance balance={this.props.balance} />
-        <Nonce nonce={this.props.nonce} />
-        <p>Joined kyber wallet: {this.props.joined.toString()}</p>
-        <p>Wallet address: {this.props.wallet}</p>
-        */}
       </div>
     )
   }

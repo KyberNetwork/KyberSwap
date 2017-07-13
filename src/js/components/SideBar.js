@@ -43,7 +43,7 @@ export default class SideBar extends React.Component {
             </li>
             <li class={this.tabClasses("/payment")}>
               <Link to="/payment">
-                <i class="k-icon k-icon-node"></i> Payment
+                <i class="k-icon k-icon-payment"></i> Payment
               </Link>
             </li>
             <li class={this.tabClasses("/transactions")}>
@@ -51,13 +51,8 @@ export default class SideBar extends React.Component {
                 <i class="k-icon k-icon-transaction"></i> Transactions
               </Link>
             </li>
-            <li class="tabs-title disable">
-              <a>
-                <i class="k-icon k-icon-node"></i> Node
-              </a>
-            </li>
-            <NodeSwitch />
           </ul>
+          <NodeSwitch />
         </div>
         <div class="k-header-pendding-tx">
           <div>

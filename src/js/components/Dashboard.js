@@ -30,7 +30,6 @@ export default class Dashboard extends React.Component {
       app = (
         <div>
           <Accounts />
-          <ImportKeystore />
         </div>
       )
     }

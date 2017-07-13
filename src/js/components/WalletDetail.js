@@ -34,6 +34,10 @@ export default class WalletDetail extends React.Component {
                 <span>{this.props.name}</span>
               </div>
               <div class="content">
+                <div class="balance">
+                  <label>Ether</label>
+                  <span class="text-gradient">{this.props.balance}</span>
+                </div>
                 <div class="address">
                   <label>Address</label>
                   <span>{this.props.address}</span>
@@ -41,12 +45,8 @@ export default class WalletDetail extends React.Component {
                     <img src="assets/qr_code.png" />
                   </div>
                 </div>
-                <div class="balance">
-                  <label>Ether</label>
-                  <span class="text-gradient">{this.props.balance}</span>
-                </div>
                 <div class="created text-gradient">
-                  Created by: <span>{this.props.owner}</span>
+                  Created by: {this.props.owner}
                 </div>
               </div>
             </div>

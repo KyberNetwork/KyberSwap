@@ -18,11 +18,14 @@ export default class Wallets extends React.Component {
       )
     })
     return (
-      <div>
-        <div class="k-page k-page-account">
-          <div id="account-list">
-            {accDetails}
-          </div>
+      <div class="k-page k-page-account">
+        <div id="wallet-list">
+          {accDetails}
+        </div>
+        <div class="import-wallet">
+          <button id="import" class="k-tooltip">
+            +<span class="k-tooltip-content down-arrow">Import Wallet</span>
+          </button>
         </div>
       </div>
     )
