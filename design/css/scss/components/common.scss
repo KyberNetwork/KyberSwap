@@ -1,11 +1,12 @@
-.disable{
+.disable {
     pointer-events: none;
-   cursor: default;
+    cursor: default;
 }
-.k-select{
-    .k-select-display{
+
+.k-select {
+    .k-select-display {
         cursor: pointer;
-        &:after{
+        &:after {
             background-image: url("../assets/icon.png");
             display: inline-block;
             content: " ";
@@ -17,37 +18,110 @@
             top: 3px;
         }
     }
-    .k-select-option{
+    .k-select-option {
         display: none;
-        background:#fff;
-        border:1px solid #ddd;
+        background: #fff;
+        border: 1px solid #ddd;
         padding: 2px 10px;
-        color:#aaa;
+        color: #aaa;
         position: absolute;
         z-index: 999;
-        >div{
+        >div {
             cursor: pointer;
-            padding:8px 0;
-            &:not(:last-child){
-                border-bottom:1px solid #aaa;
+            padding: 8px 0;
+            &:not(:last-child) {
+                border-bottom: 1px solid #aaa;
             }
         }
-        .selected{
-            &:after{
+        .selected {
+            &:after {
                 content: ' ';
                 height: 8px;
                 width: 8px;
                 display: inline-block;
-                border-radius:8px;
-                background-color:green;
+                border-radius: 8px;
+                background-color: green;
                 margin-left: 10px;
-            }   
+            }
         }
     }
 }
+
+$gradient:linear-gradient(-135deg,
+#17EAD9 0%,
+#6078EA 100%);
+.text-gradient {
+    background: $gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+.k-tooltip {
+    position: relative;
+    .k-tooltip-content {
+        display: none;
+        font-size: 13px;
+        color: #aaa;
+        position: absolute;
+        padding: 5px 20px;
+        text-align: center;
+        border: 1px solid #aaa;
+        background: #fff;
+        font-size: 12px;
+        border-radius: 10px;
+        top: -50px;
+        left: 0px
+    }
+    &:hover {
+        .k-tooltip-content {
+            display: block;
+        }
+    }
+    .down-arrow {
+        //display: inline-block;
+     //   position: relative;
+      //  border: 1px solid #777777;
+        text-decoration: none;
+      //  border-radius: 2px;
+      //  padding: 20px;
+      //  margin-top: 50px;
+    }
+    .down-arrow:before {
+        content: '';
+        display: block;  
+        position: absolute;
+        left: 23px;
+        top: 100%;
+        width: 0;
+        height: 0;
+        border: 10px solid transparent;
+        border-top-color: #aaa;
+    }
+
+    .down-arrow:after {
+        content: '';
+        display: block;  
+        position: absolute;
+        //margin-left: 1px;
+        left: 24px;
+        top: 100%;
+        width: 0;
+        height: 0;
+        border: 9px solid transparent;
+        border-top-color: white;
+    }
+}
+
 .k-icon {
     background-image: url("../assets/icon.png");
     display: inline-block;
+}
+
+.k-icon-wallet {
+    background-position: -177px -20px;
+    width: 20px;
+    height: 20px;
 }
 
 .k-icon-account {
@@ -63,6 +137,12 @@
 }
 
 .k-icon-transaction {
+    background-position: -102px -20px;
+    width: 20px;
+    height: 20px;
+}
+
+.k-icon-payment {
     background-position: -102px -20px;
     width: 20px;
     height: 20px;
@@ -85,6 +165,7 @@
     width: 20px;
     height: 20px;
 }
+
 .k-icon-usd {
     background-position: -22px -65px;
     width: 20px;
@@ -92,6 +173,18 @@
 }
 
 .k-icon-gas {
+    background-position: -60px -65px;
+    width: 25px;
+    height: 30px;
+}
+
+.k-icon-delete {
+    background-position: -60px -65px;
+    width: 25px;
+    height: 30px;
+}
+
+.k-icon-modify {
     background-position: -60px -65px;
     width: 25px;
     height: 30px;

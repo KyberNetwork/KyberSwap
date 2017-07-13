@@ -2,7 +2,7 @@ $(document).foundation()
 
 $(document).ready(function(){
 	
-	var initUrl = $("#menu a").attr("data-href");
+	var initUrl = $("#menu .is-active a").attr("data-href");
 	$.get( initUrl, function( data ) {
 	  $("#content").html(data);
 	});
