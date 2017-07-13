@@ -2,6 +2,8 @@ const initState = {
   currentBlock: 0,
   connected: true,
   termOfServiceAccepted: false,
+  nodeName: "Infura Kovan",
+  nodeURL: "https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi",
   rates: {},
 }
 

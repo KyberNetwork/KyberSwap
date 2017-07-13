@@ -16,6 +16,7 @@ export default class EthereumService {
     this.erc20Contract = this.rpc.eth.contract(constants.ERC20)
     this.networkAddress = constants.NETWORK_ADDRESS
     this.networkContract = this.rpc.eth.contract(constants.KYBER_NETWORK).at(this.networkAddress)
+    this.intervalID = null
   }
 
   version() {

@@ -28,7 +28,7 @@ export default class Transactions extends React.Component {
             <tr>
               <th>Hash</th>
               <th>From</th>
-              <th width="200">Age</th>
+              <th width="200">Broadcasted</th>
               <th>Nonce</th>
               <th>Type</th>
               <th>Status</th>
