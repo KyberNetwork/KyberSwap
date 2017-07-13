@@ -147,6 +147,9 @@ $borderRadius: 5px;
             button {
                 margin-left: 20px;
                 cursor: pointer;
+                &:focus{
+                    outline: none;
+                }
             }
             //.delete{
             // .k-tooltip-content {
@@ -171,6 +174,9 @@ $borderRadius: 5px;
             position: fixed;
             bottom: 40px;
              cursor: pointer;             
+             &:focus{
+                    outline: none;
+                }
         }
     }
     // button {

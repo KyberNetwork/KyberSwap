@@ -424,6 +424,8 @@
     .wallet-item .wallet-right button {
       margin-left: 20px;
       cursor: pointer; }
+      .wallet-item .wallet-right button:focus {
+        outline: none; }
 
 .import-wallet {
   display: inline-block;
@@ -439,6 +441,8 @@
     position: fixed;
     bottom: 40px;
     cursor: pointer; }
+    .import-wallet button:focus {
+      outline: none; }
 
 .k-page-exchange .progress-bar {
   height: 20px;
