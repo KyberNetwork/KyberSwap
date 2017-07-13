@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import QRCode from "qrcode.react"
 
 import NameAndDesc from "./Account/NameAndDesc";
 import { Balance, Token, Nonce } from "./Account/Balance";
@@ -46,7 +47,7 @@ export default class AccountDetail extends React.Component {
                 <label>Address</label>
                 <span>{this.props.address}</span>
                 <div>
-                  <img src="assets/qr_code.png" />
+                  <QRCode value={this.props.address} />
                 </div>
               </div>
             </div>

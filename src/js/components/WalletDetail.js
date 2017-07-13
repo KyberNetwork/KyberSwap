@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import QRCode from "qrcode.react"
 
 import { Token } from "./Account/Balance"
 
@@ -42,7 +43,7 @@ export default class WalletDetail extends React.Component {
                   <label>Address</label>
                   <span>{this.props.address}</span>
                   <div>
-                    <img src="assets/qr_code.png" />
+                    <QRCode value={this.props.address} />
                   </div>
                 </div>
                 <div class="created text-gradient">

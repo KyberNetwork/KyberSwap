@@ -122,46 +122,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent; }
 
-.k-tooltip {
-  position: relative; }
-  .k-tooltip .k-tooltip-content {
-    display: none;
-    font-size: 13px;
-    color: #aaa;
-    position: absolute;
-    padding: 5px 20px;
-    text-align: center;
-    border: 1px solid #aaa;
-    background: #fff;
-    font-size: 12px;
-    border-radius: 10px;
-    top: -50px;
-    left: 0px; }
-  .k-tooltip:hover .k-tooltip-content {
-    display: block; }
-  .k-tooltip .down-arrow {
-    text-decoration: none; }
-  .k-tooltip .down-arrow:before {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 23px;
-    top: 100%;
-    width: 0;
-    height: 0;
-    border: 10px solid transparent;
-    border-top-color: #aaa; }
-  .k-tooltip .down-arrow:after {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 24px;
-    top: 100%;
-    width: 0;
-    height: 0;
-    border: 9px solid transparent;
-    border-top-color: white; }
-
 .k-icon {
   background-image: url("../assets/icon.png");
   display: inline-block; }
@@ -462,10 +422,10 @@
     justify-content: center;
     align-items: center; }
     .wallet-item .wallet-right button {
-      margin-left: 20px; }
-    .wallet-item .wallet-right .k-tooltip-content {
-      left: -28px;
-      top: -35px; }
+      margin-left: 20px;
+      cursor: pointer; }
+      .wallet-item .wallet-right button:focus {
+        outline: none; }
 
 .import-wallet {
   display: inline-block;
@@ -481,6 +441,37 @@
     position: fixed;
     bottom: 40px;
     cursor: pointer; }
+    .import-wallet button:focus {
+      outline: none; }
+
+.k-page-exchange .progress-bar {
+  height: 20px;
+  width: 400px;
+  background-color: #adadad; }
+.k-page-exchange .progress-bar-active {
+  background-color: #f4a622;
+  height: inherit; }
+.k-page-exchange .page {
+  margin-top: 70px;
+  margin-left: 100px; }
+.k-page-exchange .page-item {
+  display: none; }
+.k-page-exchange .page-1 .progress-bar-active {
+  width: 25%; }
+.k-page-exchange .page-1 .item-1 {
+  display: block; }
+.k-page-exchange .page-2 .progress-bar-active {
+  width: 50%; }
+.k-page-exchange .page-2 .item-2 {
+  display: block; }
+.k-page-exchange .page-3 .progress-bar-active {
+  width: 75%; }
+.k-page-exchange .page-3 .item-3 {
+  display: block; }
+.k-page-exchange .page-4 .progress-bar-active {
+  width: 100%; }
+.k-page-exchange .page-4 .item-4 {
+  display: block; }
 
 body {
   background-color: #ccc; }

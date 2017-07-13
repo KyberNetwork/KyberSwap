@@ -23,8 +23,8 @@ export default class Wallets extends React.Component {
           {accDetails}
         </div>
         <div class="import-wallet">
-          <button id="import" class="k-tooltip">
-            +<span class="k-tooltip-content down-arrow">Import Wallet</span>
+          <button id="import" title="import new account from JSON keystore file">
+            +
           </button>
         </div>
       </div>

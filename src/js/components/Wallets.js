@@ -26,8 +26,8 @@ export default class Wallets extends React.Component {
           {walletDetails}
         </div>
         <div class="import-wallet">
-          <button id="import" class="k-tooltip">
-            +<span class="k-tooltip-content down-arrow">Import Wallet</span>
+          <button id="import" title="deploy new wallet">
+            +
           </button>
         </div>
       </div>
