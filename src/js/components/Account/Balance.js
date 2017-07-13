@@ -24,17 +24,15 @@ export class Nonce extends React.Component {
 export class Token extends React.Component {
   render() {
     return (
-      <div class="token-item grid-container">
-        <div class="grid-x grid-padding-x">
-          <div class="token-logo large-4 cell">
-            <img src={this.props.icon} />
-          </div>
-          <div class="token-name large-4 cell">
-            {this.props.name}
-          </div>
-          <div class="token-quantity large-4 cell">
-            {this.props.balance}
-          </div>
+      <div class="token-item">
+        <div class="avatar">
+          <img src={this.props.icon} />
+        </div>
+        <div class="name">
+          {this.props.name}
+        </div>
+        <div class="value text-gradient">
+          {this.props.balance}
         </div>
       </div>
     )

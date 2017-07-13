@@ -21,9 +21,15 @@ export default class Wallets extends React.Component {
       )
     })
     return (
-      <div>
-        <h2>Wallets</h2>
-        {walletDetails}
+      <div class="k-page k-page-wallet">
+        <div id="wallet-list">
+          {walletDetails}
+        </div>
+        <div class="import-wallet">
+          <button id="import" class="k-tooltip">
+            +<span class="k-tooltip-content down-arrow">Import Wallet</span>
+          </button>
+        </div>
       </div>
     )
   }
