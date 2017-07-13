@@ -57,61 +57,61 @@ $gradient:linear-gradient(-135deg,
 }
 
 
-.k-tooltip {
-    position: relative;
-    .k-tooltip-content {
-        display: none;
-        font-size: 13px;
-        color: #aaa;
-        position: absolute;
-        padding: 5px 20px;
-        text-align: center;
-        border: 1px solid #aaa;
-        background: #fff;
-        font-size: 12px;
-        border-radius: 10px;
-        top: -50px;
-        left: 0px
-    }
-    &:hover {
-        .k-tooltip-content {
-            display: block;
-        }
-    }
-    .down-arrow {
-        //display: inline-block;
-     //   position: relative;
-      //  border: 1px solid #777777;
-        text-decoration: none;
-      //  border-radius: 2px;
-      //  padding: 20px;
-      //  margin-top: 50px;
-    }
-    .down-arrow:before {
-        content: '';
-        display: block;  
-        position: absolute;
-        left: 23px;
-        top: 100%;
-        width: 0;
-        height: 0;
-        border: 10px solid transparent;
-        border-top-color: #aaa;
-    }
+// .k-tooltip {
+//     position: relative;
+//     .k-tooltip-content {
+//         display: none;
+//         font-size: 13px;
+//         color: #aaa;
+//         position: absolute;
+//         padding: 5px 20px;
+//         text-align: center;
+//         border: 1px solid #aaa;
+//         background: #fff;
+//         font-size: 12px;
+//         border-radius: 10px;
+//         top: -50px;
+//         left: 0px
+//     }
+//     &:hover {
+//         .k-tooltip-content {
+//             display: block;
+//         }
+//     }
+//     .down-arrow {
+//         //display: inline-block;
+//      //   position: relative;
+//       //  border: 1px solid #777777;
+//         text-decoration: none;
+//       //  border-radius: 2px;
+//       //  padding: 20px;
+//       //  margin-top: 50px;
+//     }
+//     .down-arrow:before {
+//         content: '';
+//         display: block;  
+//         position: absolute;
+//         left: 23px;
+//         top: 100%;
+//         width: 0;
+//         height: 0;
+//         border: 10px solid transparent;
+//         border-top-color: #aaa;
+//     }
 
-    .down-arrow:after {
-        content: '';
-        display: block;  
-        position: absolute;
-        //margin-left: 1px;
-        left: 24px;
-        top: 100%;
-        width: 0;
-        height: 0;
-        border: 9px solid transparent;
-        border-top-color: white;
-    }
-}
+//     .down-arrow:after {
+//         content: '';
+//         display: block;  
+//         position: absolute;
+//         //margin-left: 1px;
+//         left: 24px;
+//         top: 100%;
+//         width: 0;
+//         height: 0;
+//         border: 9px solid transparent;
+//         border-top-color: white;
+//     }
+// }
 
 .k-icon {
     background-image: url("../assets/icon.png");

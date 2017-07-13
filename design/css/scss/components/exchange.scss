@@ -1,0 +1,50 @@
+.k-page-exchange{
+	.progress-bar{
+		height: 20px;
+		width: 400px;
+		background-color: #adadad;
+	}
+	.progress-bar-active{
+		background-color:#f4a622;
+		height: inherit;
+	}
+	.page{
+		margin-top: 70px;
+		margin-left: 100px;
+	}
+	.page-item{
+		display: none;
+	}
+	.page-1{
+		.progress-bar-active{
+			width: 25%;
+		}
+		.item-1{
+			display: block;
+		}
+	}
+	.page-2{
+		.progress-bar-active{
+			width: 50%;
+		}
+		.item-2{
+			display: block;
+		}
+	}
+	.page-3{
+		.progress-bar-active{
+			width: 75%;
+		}
+		.item-3{
+			display: block;
+		}
+	}
+	.page-4{
+		.progress-bar-active{
+			width: 100%;
+		}
+		.item-4{
+			display: block;
+		}
+	}
+}

@@ -146,12 +146,13 @@ $borderRadius: 5px;
             align-items: center;
             button {
                 margin-left: 20px;
+                cursor: pointer;
             }
             //.delete{
-            .k-tooltip-content {
-                left: -28px;
-                top: -35px;
-            }
+            // .k-tooltip-content {
+            //     left: -28px;
+            //     top: -35px;
+            // }
             //}
         }
     }
@@ -169,7 +170,7 @@ $borderRadius: 5px;
             font-size: 60px;
             position: fixed;
             bottom: 40px;
-             cursor: pointer;
+             cursor: pointer;             
         }
     }
     // button {
