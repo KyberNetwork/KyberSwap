@@ -226,6 +226,16 @@
   width: 25px;
   height: 30px; }
 
+.k-icon-delete-green {
+  background-position: -60px -65px;
+  width: 25px;
+  height: 30px; }
+
+.k-icon-modify-modify {
+  background-position: -60px -65px;
+  width: 25px;
+  height: 30px; }
+
 .k-page-account .acc-item {
   background-color: #fff; }
   .k-page-account .acc-item.active .acc-title {
@@ -367,30 +377,48 @@
   margin-top: 40px; }
 
 .k-page-wallet .wallet-item {
+  background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
+.k-page-wallet .title span {
+  background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
+.k-page-wallet .import-wallet button {
+  background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
+
+.k-page-account .wallet-item {
+  border: 2px solid #00bd70;
+  background-image: #00bd70;
+  border-radius: 7px; }
+.k-page-account .balance span {
+  color: #00bd70; }
+.k-page-account .title span {
+  background-color: #00bd70; }
+.k-page-account .import-wallet button {
+  background-color: #00bd70; }
+.k-page-account .token-item .value {
+  color: #aaa; }
+
+.wallet-item {
   max-width: 820px;
   cursor: pointer;
   border-radius: 5px;
-  background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
   padding: 2px;
   margin-bottom: 30px;
   margin-left: 20px; }
-  .k-page-wallet .wallet-item > div {
+  .wallet-item > div {
     display: flex;
     border-radius: 3px;
     width: 100%;
     height: 100%;
     background-color: #fff; }
-    .k-page-wallet .wallet-item > div div.wallet-left {
+    .wallet-item > div div.wallet-left {
       width: 30%; }
-    .k-page-wallet .wallet-item > div div.wallet-center {
+    .wallet-item > div div.wallet-center {
       width: 50%; }
-    .k-page-wallet .wallet-item > div div.wallet-right {
+    .wallet-item > div div.wallet-right {
       width: 20%; }
-  .k-page-wallet .wallet-item .wallet-left .title {
+  .wallet-item .wallet-left .title {
     width: 100%; }
-    .k-page-wallet .wallet-item .wallet-left .title span {
+    .wallet-item .wallet-left .title span {
       padding: 5px 60px;
-      background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
       text-align: center;
       color: white;
       display: inline-block;
@@ -398,62 +426,61 @@
       top: -2px;
       left: -2px;
       position: relative; }
-  .k-page-wallet .wallet-item .wallet-left .content {
+  .wallet-item .wallet-left .content {
     padding-left: 20px;
     padding-top: 10px;
     padding-bottom: 5px; }
-  .k-page-wallet .wallet-item .wallet-left .address {
+  .wallet-item .wallet-left .address {
     margin-top: 20px; }
-    .k-page-wallet .wallet-item .wallet-left .address span {
+    .wallet-item .wallet-left .address span {
       font-size: 11px;
       color: #aaa; }
-    .k-page-wallet .wallet-item .wallet-left .address > div {
+    .wallet-item .wallet-left .address > div {
       text-align: center;
       padding: 10px; }
-  .k-page-wallet .wallet-item .wallet-left .created {
+  .wallet-item .wallet-left .created {
     margin-top: 10px; }
-  .k-page-wallet .wallet-item .wallet-center .row {
+  .wallet-item .wallet-center .row {
     display: flex; }
-  .k-page-wallet .wallet-item .balance {
+  .wallet-item .balance {
     color: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
-  .k-page-wallet .wallet-item .token-item {
+  .wallet-item .token-item {
     padding: 20px;
     text-align: center; }
-    .k-page-wallet .wallet-item .token-item img {
+    .wallet-item .token-item img {
       max-width: 50px; }
-    .k-page-wallet .wallet-item .token-item .name {
+    .wallet-item .token-item .name {
       font-size: 13px;
       text-transform: uppercase; }
-    .k-page-wallet .wallet-item .token-item .value {
+    .wallet-item .token-item .value {
       font-size: 11px; }
-  .k-page-wallet .wallet-item:hover .wallet-right {
+  .wallet-item:hover .wallet-right {
     visibility: visible; }
-  .k-page-wallet .wallet-item .wallet-right {
+  .wallet-item .wallet-right {
     visibility: hidden;
     display: flex;
     justify-content: center;
     align-items: center; }
-    .k-page-wallet .wallet-item .wallet-right button {
+    .wallet-item .wallet-right button {
       margin-left: 20px; }
-    .k-page-wallet .wallet-item .wallet-right .k-tooltip-content {
+    .wallet-item .wallet-right .k-tooltip-content {
       left: -28px;
       top: -35px; }
-.k-page-wallet .import-wallet {
+
+.import-wallet {
   display: inline-block;
   width: 100%;
   text-align: right;
   padding-right: 100px; }
-  .k-page-wallet .import-wallet button {
+  .import-wallet button {
     width: 70px;
     height: 70px;
-    background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
     border-radius: 70px;
     color: #fff;
     font-size: 60px;
     position: fixed;
-    bottom: 40px; }
-.k-page-wallet button {
-  cursor: pointer; }
+    bottom: 40px;
+    cursor: pointer; }
 
 body {
   background-color: #ccc; }
