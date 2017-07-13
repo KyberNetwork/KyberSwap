@@ -1,14 +1,59 @@
 $color:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
+$accountColor : #00bd70;
 $borderWidth:2px;
 $borderRadius: 5px;
+
+
 .k-page-wallet {
+    .wallet-item {
+        background-image: $color;
+    }
+    .title {
+        span{
+         background-image: $color;
+        }
+    }
+    .import-wallet{
+        button{            
+          background-image: $color;
+        }
+    }
+}
+.k-page-account {
+    .wallet-item {
+        border:$borderWidth solid $accountColor;
+        background-image: $accountColor;
+        border-radius:$borderRadius +2;
+    }
+    .balance {
+        span{
+            color: $accountColor
+        }
+    }
+    .title {
+        span{
+         background-color: $accountColor;
+        }
+    }
+    .import-wallet{
+        button{
+          background-color: $accountColor;
+        }
+    }
+    .token-item {
+        .value{
+            color: #aaa;
+        }
+    }
+}
+//.k-page-wallet {
     .wallet-item {
         // display: inline-block;
         //    width: 100%;
         max-width: 820px;
         cursor: pointer;
         border-radius: $borderRadius;
-        background-image: $color;
+        
         padding: $borderWidth;
         margin-bottom: 30px;
         margin-left: 20px;
@@ -37,7 +82,7 @@ $borderRadius: 5px;
                 width: 100%;
                 span {
                     padding: 5px 60px;
-                    background-image: $color;
+                    //background-image: $color;
                     text-align: center;
                     color: white;
                     display: inline-block;
@@ -118,15 +163,16 @@ $borderRadius: 5px;
         button {
             width: 70px;
             height: 70px;
-            background-image: $color;
+          //  background-image: $color;
             border-radius: 70px;
             color: #fff;
             font-size: 60px;
             position: fixed;
             bottom: 40px;
+             cursor: pointer;
         }
     }
-    button {
-        cursor: pointer;
-    }
-}
+    // button {
+    //     cursor: pointer;
+    // }
+//}
