@@ -3,49 +3,49 @@
     cursor: default;
 }
 
-.k-select {
-    .k-select-display {
-        cursor: pointer;
-        &:after {
-            background-image: url("../assets/icon.png");
-            display: inline-block;
-            content: " ";
-            background-position: -60px -20px;
-            width: 20px;
-            height: 20px;
-            margin-left: 5px;
-            position: relative;
-            top: 3px;
-        }
-    }
-    .k-select-option {
-        display: none;
-        background: #fff;
-        border: 1px solid #ddd;
-        padding: 2px 10px;
-        color: #aaa;
-        position: absolute;
-        z-index: 999;
-        >div {
-            cursor: pointer;
-            padding: 8px 0;
-            &:not(:last-child) {
-                border-bottom: 1px solid #aaa;
-            }
-        }
-        .selected {
-            &:after {
-                content: ' ';
-                height: 8px;
-                width: 8px;
-                display: inline-block;
-                border-radius: 8px;
-                background-color: green;
-                margin-left: 10px;
-            }
-        }
-    }
-}
+// .k-select {
+//     .k-select-display {
+//         cursor: pointer;
+//         &:after {
+//             background-image: url("../assets/icon.png");
+//             display: inline-block;
+//             content: " ";
+//             background-position: -60px -20px;
+//             width: 20px;
+//             height: 20px;
+//             margin-left: 5px;
+//             position: relative;
+//             top: 3px;
+//         }
+//     }
+//     .k-select-option {
+//         display: none;
+//         background: #fff;
+//         border: 1px solid #ddd;
+//         padding: 2px 10px;
+//         color: #aaa;
+//         position: absolute;
+//         z-index: 999;
+//         >div {
+//             cursor: pointer;
+//             padding: 8px 0;
+//             &:not(:last-child) {
+//                 border-bottom: 1px solid #aaa;
+//             }
+//         }
+//         .selected {
+//             &:after {
+//                 content: ' ';
+//                 height: 8px;
+//                 width: 8px;
+//                 display: inline-block;
+//                 border-radius: 8px;
+//                 background-color: green;
+//                 margin-left: 10px;
+//             }
+//         }
+//     }
+// }
 
 $gradient:linear-gradient(-135deg,
 #17EAD9 0%,
@@ -199,4 +199,31 @@ $gradient:linear-gradient(-135deg,
     background-position: -60px -65px;
     width: 25px;
     height: 30px;
+}
+
+.k-icon-lock{
+ background-position: -60px -65px;
+    width: 25px;
+    height: 30px;   
+}
+.k-icon-pig{
+    background-position: -60px -65px;
+    width: 25px;
+    height: 30px;   
+}
+
+.k-icon-time{
+    background-position: -60px -65px;
+    width: 25px;
+    height: 30px;   
+}
+.k-icon-verify{
+    background-position: -60px -65px;
+    width: 25px;
+    height: 30px;   
+}
+.k-icon-home{
+     background-position: -177px -20px;
+    width: 20px;
+    height: 20px;
 }
