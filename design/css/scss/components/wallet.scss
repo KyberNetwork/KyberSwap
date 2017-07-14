@@ -1,0 +1,185 @@
+$color:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
+$accountColor : #00bd70;
+$borderWidth:2px;
+$borderRadius: 5px;
+
+
+.k-page-wallet {
+    .wallet-item {
+        background-image: $color;
+    }
+    .title {
+        span{
+         background-image: $color;
+        }
+    }
+    .import-wallet{
+        button{            
+          background-image: $color;
+        }
+    }
+}
+.k-page-account {
+    .wallet-item {
+        border:$borderWidth solid $accountColor;
+        background-image: $accountColor;
+        border-radius:$borderRadius +2;
+    }
+    .balance {
+        span{
+            color: $accountColor
+        }
+    }
+    .title {
+        span{
+         background-color: $accountColor;
+        }
+    }
+    .import-wallet{
+        button{
+          background-color: $accountColor;
+        }
+    }
+    .token-item {
+        .value{
+            color: #aaa;
+        }
+    }
+}
+//.k-page-wallet {
+    .wallet-item {
+        // display: inline-block;
+        //    width: 100%;
+        max-width: 820px;
+        cursor: pointer;
+        border-radius: $borderRadius;
+        
+        padding: $borderWidth;
+        margin-bottom: 30px;
+        margin-left: 20px;
+        >div {
+            display: flex;
+            border-radius: $borderRadius - 2;
+            width: 100%;
+            //float: left;
+            height: 100%;
+            background-color: #fff;
+            div {
+                //  float: left;
+                &.wallet-left {
+                    width: 30%;
+                }
+                &.wallet-center {
+                    width: 50%;
+                }
+                &.wallet-right {
+                    width: 20%;
+                }
+            }
+        }
+        .wallet-left {
+            .title {
+                width: 100%;
+                span {
+                    padding: 5px 60px;
+                    //background-image: $color;
+                    text-align: center;
+                    color: white;
+                    display: inline-block;
+                    border-radius: 5px;
+                    top: -2px;
+                    left: -2px;
+                    position: relative;
+                }
+            }
+            .content {
+                padding-left: 20px;
+                padding-top: 10px;
+                padding-bottom: 5px;
+            }
+            .address {
+                margin-top: 20px;
+                span {
+                    font-size: 11px;
+                    color: #aaa;
+                }
+                >div {
+                    text-align: center;
+                    padding: 10px;
+                }
+            }
+            .created {
+                margin-top: 10px;
+            }
+        }
+        .wallet-center {
+            .row {
+                display: flex;
+            }
+        }
+        .balance {
+            color: $color;
+        }
+        .token-item {
+            padding: 20px;
+            text-align: center;
+            img {
+                max-width: 50px;
+            }
+            .name {
+                font-size: 13px;
+                text-transform: uppercase;
+            }
+            .value {
+                font-size: 11px;
+            }
+        }
+        &:hover {
+            .wallet-right {
+                visibility: visible;
+            }
+        }
+        .wallet-right {
+            visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            button {
+                margin-left: 20px;
+                cursor: pointer;
+                &:focus{
+                    outline: none;
+                }
+            }
+            //.delete{
+            // .k-tooltip-content {
+            //     left: -28px;
+            //     top: -35px;
+            // }
+            //}
+        }
+    }
+    .import-wallet {
+        display: inline-block;
+        width: 100%;
+        text-align: right;
+        padding-right: 100px;
+        button {
+            width: 70px;
+            height: 70px;
+          //  background-image: $color;
+            border-radius: 70px;
+            color: #fff;
+            font-size: 60px;
+            position: fixed;
+            bottom: 40px;
+             cursor: pointer;             
+             &:focus{
+                    outline: none;
+                }
+        }
+    }
+    // button {
+    //     cursor: pointer;
+    // }
+//}

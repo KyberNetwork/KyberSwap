@@ -1,0 +1,499 @@
+.k-header {
+  background-color: #fff;
+  top: 0px;
+  min-height: 500px; }
+  .k-header .k-header-logo {
+    padding: 20px;
+    padding-top: 40px;
+    padding-bottom: 60px;
+    text-align: center; }
+    .k-header .k-header-logo img {
+      width: 100%; }
+  .k-header .k-header-footer {
+    bottom: 0px;
+    position: absolute;
+    padding: 15px;
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 80px; }
+  .k-header .k-header-pendding-tx {
+    text-align: center;
+    margin-top: 50px;
+    padding: 30px;
+    line-height: 25px; }
+    .k-header .k-header-pendding-tx > div:first-child {
+      color: orange; }
+    .k-header .k-header-pendding-tx > div:last-child {
+      font-size: 16px; }
+    .k-header .k-header-pendding-tx .number {
+      font-size: 40px; }
+    .k-header .k-header-pendding-tx .pending {
+      text-align: right; }
+  .k-header .k-header-menu .tabs {
+    border: none; }
+  .k-header .k-header-menu li:not(:last-child) {
+    margin-bottom: 5px; }
+  .k-header .k-header-menu a {
+    background-color: #fff;
+    font-size: 20px;
+    color: #aaa;
+    height: 40px;
+    display: flex;
+    padding: 0px;
+    align-items: center;
+    padding-left: 20px; }
+    .k-header .k-header-menu a .k-icon {
+      margin-right: 10px; }
+  .k-header .k-header-menu span {
+    display: inline-block;
+    width: 30px; }
+  .k-header .k-header-menu .tabs-title.is-active a {
+    color: #000;
+    position: relative; }
+    .k-header .k-header-menu .tabs-title.is-active a:before {
+      content: '';
+      width: 5px;
+      height: 40px;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      background-color: #00965e; }
+  .k-header .node > div:first-child {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 18px;
+    color: #aaa; }
+    .k-header .node > div:first-child .k-icon {
+      position: relative;
+      top: 3px;
+      margin-right: 10px; }
+  .k-header .node .node-select {
+    padding-left: 20px; }
+    .k-header .node .node-select .k-select {
+      width: 150px;
+      position: relative;
+      top: -3px; }
+      .k-header .node .node-select .k-select .k-select-option {
+        width: inherit; }
+    .k-header .node .node-select .k-select-display {
+      text-align: center;
+      color: #aaa; }
+
+.disable {
+  pointer-events: none;
+  cursor: default; }
+
+.k-select .k-select-display {
+  cursor: pointer; }
+  .k-select .k-select-display:after {
+    background-image: url("../assets/icon.png");
+    display: inline-block;
+    content: " ";
+    background-position: -60px -20px;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    position: relative;
+    top: 3px; }
+.k-select .k-select-option {
+  display: none;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 2px 10px;
+  color: #aaa;
+  position: absolute;
+  z-index: 999; }
+  .k-select .k-select-option > div {
+    cursor: pointer;
+    padding: 8px 0; }
+    .k-select .k-select-option > div:not(:last-child) {
+      border-bottom: 1px solid #aaa; }
+  .k-select .k-select-option .selected:after {
+    content: ' ';
+    height: 8px;
+    width: 8px;
+    display: inline-block;
+    border-radius: 8px;
+    background-color: green;
+    margin-left: 10px; }
+
+.text-gradient {
+  background: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; }
+
+.k-icon {
+  background-image: url("../assets/icon.png");
+  display: inline-block; }
+
+.k-icon-wallet {
+  background-position: -177px -20px;
+  width: 20px;
+  height: 20px; }
+
+.k-icon-account {
+  background-position: -177px -20px;
+  width: 20px;
+  height: 20px; }
+
+.k-icon-exchange {
+  background-position: -60px -20px;
+  width: 20px;
+  height: 20px; }
+
+.k-icon-transaction {
+  background-position: -102px -20px;
+  width: 20px;
+  height: 20px; }
+
+.k-icon-payment {
+  background-position: -102px -20px;
+  width: 20px;
+  height: 20px; }
+
+.k-icon-node {
+  background-position: -20px -20px;
+  width: 20px;
+  height: 20px; }
+
+.k-icon-key {
+  background-position: -140px -20px;
+  width: 20px;
+  height: 20px; }
+
+.k-icon-qr {
+  background-position: -216px -20px;
+  width: 20px;
+  height: 20px; }
+
+.k-icon-usd {
+  background-position: -22px -65px;
+  width: 20px;
+  height: 30px; }
+
+.k-icon-gas {
+  background-position: -60px -65px;
+  width: 25px;
+  height: 30px; }
+
+.k-icon-delete {
+  background-position: -60px -65px;
+  width: 25px;
+  height: 30px; }
+
+.k-icon-modify {
+  background-position: -60px -65px;
+  width: 25px;
+  height: 30px; }
+
+.k-icon-delete-green {
+  background-position: -60px -65px;
+  width: 25px;
+  height: 30px; }
+
+.k-icon-modify-modify {
+  background-position: -60px -65px;
+  width: 25px;
+  height: 30px; }
+
+.k-page-account .acc-item {
+  background-color: #fff; }
+  .k-page-account .acc-item.active .acc-title {
+    background-color: #209c6e;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px; }
+  .k-page-account .acc-item.active .acc-body {
+    color: #000; }
+  .k-page-account .acc-item.expand .acc-body-token {
+    display: block; }
+  .k-page-account .acc-item:not(:last-child) {
+    margin-bottom: 20px; }
+.k-page-account .acc-title {
+  padding: 5px 20px;
+  cursor: pointer;
+  font-size: 14px; }
+  .k-page-account .acc-title .k-icon {
+    width: 20px;
+    height: 20px;
+    background-position: -319px -20px;
+    position: relative;
+    top: 1px;
+    float: right; }
+.k-page-account .acc-body {
+  font-size: 13px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 15px;
+  color: #aaa; }
+.k-page-account .acc-address .k-icon {
+  position: relative;
+  top: 3px; }
+.k-page-account .acc-balance {
+  margin-top: 5px; }
+.k-page-account .acc-balance,
+.k-page-account .acc-content {
+  font-size: 14px; }
+.k-page-account .acc-body-token {
+  margin-top: 20px;
+  display: none; }
+  .k-page-account .acc-body-token .token-name {
+    font-size: 14px; }
+  .k-page-account .acc-body-token img {
+    height: 50px; }
+  .k-page-account .acc-body-token .token-item > div > div {
+    display: flex;
+    align-items: center; }
+  .k-page-account .acc-body-token .token-item:not(:last-child) {
+    margin-bottom: 10px; }
+
+.k-page-transaction table,
+.k-page-transaction thead,
+.k-page-transaction tbody,
+.k-page-transaction tr {
+  border: none; }
+.k-page-transaction table {
+  text-align: center;
+  color: #999;
+  font-size: 11px; }
+  .k-page-transaction table thead {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #aaa; }
+    .k-page-transaction table thead th {
+      text-align: center;
+      font-weight: normal;
+      color: #999; }
+  .k-page-transaction table tbody tr {
+    border-bottom: none !important;
+    margin-bottom: 20px;
+    cursor: pointer; }
+    .k-page-transaction table tbody tr:hover {
+      background-color: #eee; }
+  .k-page-transaction table tbody .spacer {
+    width: 100px;
+    height: 10px;
+    background: transparent;
+    pointer-events: none; }
+  .k-page-transaction table .from:before {
+    content: ' ';
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 10px;
+    margin-right: 5px;
+    border: 1px solid #999; }
+  .k-page-transaction table .success:before,
+  .k-page-transaction table .fail:before {
+    content: ' ';
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    border-radius: 6px;
+    margin-right: 5px; }
+  .k-page-transaction table .success:before {
+    background-color: #8bc34a; }
+  .k-page-transaction table .fail:before {
+    background-color: #e74c3c; }
+.k-page-transaction #tx-modal {
+  font-size: 13px;
+  padding: 0px;
+  outline: none;
+  border-radius: 5px; }
+  .k-page-transaction #tx-modal .modal-title {
+    color: #2195f2;
+    padding: 5px 30px;
+    border-bottom: 1px solid #999; }
+  .k-page-transaction #tx-modal .modal-info > div {
+    padding: 5px; }
+    .k-page-transaction #tx-modal .modal-info > div label {
+      width: 70px;
+      margin-left: 30px;
+      color: #2195f2;
+      display: inline-block;
+      font-size: 13px; }
+    .k-page-transaction #tx-modal .modal-info > div .account {
+      padding: 5px 10px;
+      background-color: #b8e986;
+      border-radius: 8px;
+      margin-right: 20px; }
+  .k-page-transaction #tx-modal .modal-extra {
+    display: inline-block;
+    width: 100%;
+    margin-top: 50px; }
+    .k-page-transaction #tx-modal .modal-extra > div {
+      padding: 35px;
+      line-height: 30px;
+      text-align: center; }
+      .k-page-transaction #tx-modal .modal-extra > div > div:last-child {
+        color: #2195f2; }
+    .k-page-transaction #tx-modal .modal-extra .left {
+      float: left; }
+    .k-page-transaction #tx-modal .modal-extra .right {
+      float: right; }
+.k-page-transaction .load-more {
+  text-align: center;
+  margin-top: 40px; }
+
+.k-page-wallet .wallet-item {
+  background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
+.k-page-wallet .title span {
+  background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
+.k-page-wallet .import-wallet button {
+  background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
+
+.k-page-account .wallet-item {
+  border: 2px solid #00bd70;
+  background-image: #00bd70;
+  border-radius: 7px; }
+.k-page-account .balance span {
+  color: #00bd70; }
+.k-page-account .title span {
+  background-color: #00bd70; }
+.k-page-account .import-wallet button {
+  background-color: #00bd70; }
+.k-page-account .token-item .value {
+  color: #aaa; }
+
+.wallet-item {
+  max-width: 820px;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 2px;
+  margin-bottom: 30px;
+  margin-left: 20px; }
+  .wallet-item > div {
+    display: flex;
+    border-radius: 3px;
+    width: 100%;
+    height: 100%;
+    background-color: #fff; }
+    .wallet-item > div div.wallet-left {
+      width: 30%; }
+    .wallet-item > div div.wallet-center {
+      width: 50%; }
+    .wallet-item > div div.wallet-right {
+      width: 20%; }
+  .wallet-item .wallet-left .title {
+    width: 100%; }
+    .wallet-item .wallet-left .title span {
+      padding: 5px 60px;
+      text-align: center;
+      color: white;
+      display: inline-block;
+      border-radius: 5px;
+      top: -2px;
+      left: -2px;
+      position: relative; }
+  .wallet-item .wallet-left .content {
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 5px; }
+  .wallet-item .wallet-left .address {
+    margin-top: 20px; }
+    .wallet-item .wallet-left .address span {
+      font-size: 11px;
+      color: #aaa; }
+    .wallet-item .wallet-left .address > div {
+      text-align: center;
+      padding: 10px; }
+  .wallet-item .wallet-left .created {
+    margin-top: 10px; }
+  .wallet-item .wallet-center .row {
+    display: flex; }
+  .wallet-item .balance {
+    color: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
+  .wallet-item .token-item {
+    padding: 20px;
+    text-align: center; }
+    .wallet-item .token-item img {
+      max-width: 50px; }
+    .wallet-item .token-item .name {
+      font-size: 13px;
+      text-transform: uppercase; }
+    .wallet-item .token-item .value {
+      font-size: 11px; }
+  .wallet-item:hover .wallet-right {
+    visibility: visible; }
+  .wallet-item .wallet-right {
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .wallet-item .wallet-right button {
+      margin-left: 20px;
+      cursor: pointer; }
+      .wallet-item .wallet-right button:focus {
+        outline: none; }
+
+.import-wallet {
+  display: inline-block;
+  width: 100%;
+  text-align: right;
+  padding-right: 100px; }
+  .import-wallet button {
+    width: 70px;
+    height: 70px;
+    border-radius: 70px;
+    color: #fff;
+    font-size: 60px;
+    position: fixed;
+    bottom: 40px;
+    cursor: pointer; }
+    .import-wallet button:focus {
+      outline: none; }
+
+.k-page-exchange .progress-bar {
+  height: 20px;
+  width: 400px;
+  background-color: #adadad; }
+.k-page-exchange .progress-bar-active {
+  background-color: #f4a622;
+  height: inherit; }
+.k-page-exchange .page {
+  margin-top: 70px;
+  margin-left: 100px; }
+.k-page-exchange .page-item {
+  display: none; }
+.k-page-exchange .page-1 .progress-bar-active {
+  width: 25%; }
+.k-page-exchange .page-1 .item-1 {
+  display: block; }
+.k-page-exchange .page-2 .progress-bar-active {
+  width: 50%; }
+.k-page-exchange .page-2 .item-2 {
+  display: block; }
+.k-page-exchange .page-3 .progress-bar-active {
+  width: 75%; }
+.k-page-exchange .page-3 .item-3 {
+  display: block; }
+.k-page-exchange .page-4 .progress-bar-active {
+  width: 100%; }
+.k-page-exchange .page-4 .item-4 {
+  display: block; }
+
+body {
+  background-color: #ccc; }
+
+.k-header {
+  width: 200px;
+  height: 100%;
+  position: fixed; }
+
+.k-contenter {
+  margin-left: 200px;
+  min-height: 100vh;
+  width: 1000px; }
+
+.k-body {
+  width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  display: flex; }
+
+.k-contenter {
+  background-color: #fbfcfb;
+  padding: 30px 20px  20px 20px; }
+
+/*# sourceMappingURL=app.css.map */

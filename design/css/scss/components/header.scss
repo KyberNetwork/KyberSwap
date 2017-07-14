@@ -1,0 +1,115 @@
+$paddingLeft:20px;
+.k-header {
+    background-color: #fff;
+    //left: 0px;
+    top: 0px;
+    min-height: 500px;
+    .k-header-logo {
+        padding: 20px;
+        padding-top: 40px;
+        padding-bottom: 60px;
+        text-align: center;
+        img {
+            width: 100%;
+        }
+    }
+    .k-header-footer {
+        bottom: 0px;
+        position: absolute;
+        padding: 15px;
+        font-size: 12px;
+        color: #aaa;
+        margin-top: 80px;
+    }
+    .k-header-pendding-tx {
+        text-align: center;
+        margin-top: 50px;
+        padding: 30px;
+        line-height: 25px;
+        >div {
+            &:first-child {
+                color: orange;
+            }
+            &:last-child {
+                font-size: 16px;
+            }
+        }
+        .number {
+            font-size: 40px;
+        }
+        .pending {
+            text-align: right;
+        }
+    }
+    $tabHeight:40px;
+    .k-header-menu {
+        .tabs {
+            border: none;
+        }
+        li {
+            &:not(:last-child) {
+                margin-bottom: 5px;
+            }
+        }
+        a {
+            background-color: #fff;
+            font-size: 20px;
+            color: #aaa;
+            height: $tabHeight;
+            display: flex;
+            padding: 0px;
+            align-items: center;
+            padding-left: $paddingLeft;
+            .k-icon {
+                margin-right: 10px;
+            }
+        }
+        span {
+            display: inline-block;
+            width: 30px;
+        }
+        .tabs-title.is-active {
+            a {
+                color: #000;
+                position: relative;
+                &:before {
+                    content: '';
+                    width: 5px;
+                    height: $tabHeight;
+                    position: absolute;
+                    left: 0px;
+                    top: 0px;
+                    background-color: #00965e
+                }
+            }
+        }
+    }
+    .node {
+        >div:first-child{
+            margin-top: 60px;
+            text-align: center;
+            font-size: 18px;
+            color: #aaa;
+            .k-icon{
+                position:relative;
+                top: 3px;
+                margin-right: 10px;
+            }
+        }
+        .node-select {
+            padding-left: $paddingLeft;
+            .k-select {
+                width: 150px;
+                position: relative;
+                top: -3px;
+                .k-select-option {
+                    width: inherit;
+                }
+            }
+            .k-select-display {
+                text-align: center;
+                color: #aaa;
+            }
+        }
+    }
+}

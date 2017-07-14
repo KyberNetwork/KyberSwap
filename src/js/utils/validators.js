@@ -64,5 +64,5 @@ export function verifyNumber(amount) {
 }
 
 export function verifyNonce(nonce, future) {
-  return "0x" + (new BigNumber(nonce).plus(future || 0)).toString(16)
+  return (new BigNumber(nonce).plus(future || 0)).toNumber()
 }

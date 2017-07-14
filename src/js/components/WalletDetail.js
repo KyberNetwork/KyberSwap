@@ -1,8 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from "react"
+import { connect } from "react-redux"
+import QRCode from "qrcode.react"
 
-import NameAndDesc from "./Account/NameAndDesc";
-import { Balance, Token } from "./Account/Balance";
+import { Token } from "./Account/Balance"
 
 @connect((store, props) => {
   var wallet = store.wallets.wallets[props.address];
@@ -21,18 +21,53 @@ import { Balance, Token } from "./Account/Balance";
     })
   }
 })
-export default class AccountDetail extends React.Component {
+export default class WalletDetail extends React.Component {
   render() {
     var tokens = this.props.tokens.map((tok, index) => {
       return <Token key={index} name={tok.name} balance={tok.balance} icon={tok.icon} />
     })
     return (
       <div>
-        <NameAndDesc name={this.props.name} description={this.props.desc} />
-        <Balance balance={this.props.balance} />
-        <p>Created by: {this.props.owner}</p>
-        <p>Wallet address: {this.props.address}</p>
-        {tokens}
+        <div class="wallet-item">
+          <div>
+            <div class="wallet-left">
+              <div class="title">
+                <span>{this.props.name}</span>
+              </div>
+              <div class="content">
+                <div class="balance">
+                  <label>Ether</label>
+                  <span class="text-gradient">{this.props.balance}</span>
+                </div>
+                <div class="address">
+                  <label>Address</label>
+                  <span>{this.props.address}</span>
+                  <div>
+                    <QRCode value={this.props.address} />
+                  </div>
+                </div>
+                <div class="created text-gradient">
+                  Created by: {this.props.owner}
+                </div>
+              </div>
+            </div>
+            <div class="wallet-center">
+              <div class="row">
+                {tokens}
+              </div>
+            </div>
+            <div class="wallet-right">
+              <button class="k-tooltip delete">
+                <i class="k-icon k-icon-delete"></i>
+                <span class="k-tooltip-content down-arrow">Delete</span>
+              </button>
+              <button class="k-tooltip modiy">
+                <i class="k-icon k-icon-modify"></i>
+                <span class="k-tooltip-content down-arrow">Modify</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

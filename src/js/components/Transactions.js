@@ -21,8 +21,24 @@ export default class Transactions extends React.Component {
       <TransactionCom key={tx.hash} hash={tx.hash} />
     )
     return (
-    <div>
-      {txs}
+    <div class="k-page k-page-transaction">
+      <div>
+        <table class="unstriped" id="transaction-list">
+          <thead>
+            <tr>
+              <th>Hash</th>
+              <th>From</th>
+              <th width="200">Broadcasted</th>
+              <th>Nonce</th>
+              <th>Type</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {txs}
+          </tbody>
+        </table>
+      </div>
     </div>)
   }
 }

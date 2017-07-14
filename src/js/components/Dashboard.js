@@ -3,7 +3,6 @@ import { connect } from "react-redux"
 
 import ImportKeystore from "./ImportKeystore"
 import Accounts from "./Accounts"
-import Wallets from "./Wallets"
 
 
 @connect((store) => {
@@ -30,9 +29,7 @@ export default class Dashboard extends React.Component {
     } else {
       app = (
         <div>
-          <ImportKeystore />
           <Accounts />
-          <Wallets />
         </div>
       )
     }
