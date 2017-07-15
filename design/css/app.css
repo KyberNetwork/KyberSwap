@@ -193,9 +193,9 @@
   height: 30px; }
 
 .k-icon-lock {
-  background-position: -60px -65px;
-  width: 25px;
-  height: 30px; }
+  background-position: -400px -201px;
+  width: 40px;
+  height: 40px; }
 
 .k-icon-pig {
   background-position: -60px -65px;
@@ -236,6 +236,11 @@
   background-position: -215px -195px;
   width: 75px;
   height: 75px; }
+
+.k-icon-error {
+  background-position: -345px -304px;
+  width: 15px;
+  height: 15px; }
 
 .k-page-account .acc-item {
   background-color: #fff; }
@@ -486,7 +491,7 @@
       outline: none; }
 
 .k-page-exchange {
-  max-width: 900px;
+  max-width: 860px;
   padding-left: 40px; }
   .k-page-exchange .k-progress {
     text-align: center; }
@@ -532,31 +537,17 @@
     .k-page-exchange .next.disable button {
       background-color: #eee; }
   .k-page-exchange .error {
-    position: fixed;
-    bottom: 5px;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #e74c3c;
     display: flex;
-    height: 80px;
-    color: #fff; }
+    align-items: center; }
+    .k-page-exchange .error .k-icon {
+      margin-right: 5px; }
     .k-page-exchange .error.hide {
-      display: none; }
-    .k-page-exchange .error > div {
-      display: flex;
-      align-items: center;
-      justify-content: center; }
-    .k-page-exchange .error .close {
-      width: 80px;
-      background-color: #e74a34;
-      font-size: 40px;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 10px 0 0 10px; }
-    .k-page-exchange .error .content {
-      border-radius: 0 10px 10px 0;
-      width: 800px;
-      background-color: rgba(231, 74, 52, 0.6);
-      font-size: 20px; }
+      visibility: hidden; }
   .k-page-exchange .page {
-    margin-left: 100px; }
+    margin-left: 50px; }
   .k-page-exchange .page-item {
     display: none; }
   .k-page-exchange .input-space {
@@ -588,7 +579,8 @@
   .k-page-exchange .item-1 {
     padding-top: 60px; }
     .k-page-exchange .item-1 .input-line {
-      display: flex; }
+      display: flex;
+      justify-content: space-between; }
     .k-page-exchange .item-1 .input-account {
       display: flex;
       border-bottom: 1px solid #aaa; }
@@ -635,7 +627,7 @@
       left: auto;
       right: 0px; }
     .k-page-exchange .item-1 .bottom {
-      margin-top: 50px; }
+      margin-top: 40px; }
       .k-page-exchange .item-1 .bottom .label {
         text-align: center;
         background-color: transparent;
@@ -663,10 +655,9 @@
       .k-page-exchange .item-1 .usd-convert span {
         font-size: 15px;
         margin-right: 5px; }
-    .k-page-exchange .item-1 .input-group {
-      display: flex;
-      height: 40px; }
-      .k-page-exchange .item-1 .input-group .label-content {
+    .k-page-exchange .item-1 .input-group-item {
+      height: 90px; }
+      .k-page-exchange .item-1 .input-group-item .label-content {
         color: #333;
         font-size: 20px;
         margin-right: 10px;
@@ -717,7 +708,8 @@
       .k-page-exchange .item-1 .destination-amount.hide {
         display: none; }
   .k-page-exchange .item-2 {
-    padding-top: 60px; }
+    padding-top: 60px;
+    margin-left: 200px; }
     .k-page-exchange .item-2 .intro {
       width: 350px;
       text-align: center; }
@@ -734,13 +726,15 @@
       color: #999;
       margin-left: 10px; }
   .k-page-exchange .item-3 {
-    padding-top: 100px; }
+    padding-top: 100px;
+    margin-left: 200px; }
   .k-page-exchange .item-4 {
     padding-top: 100px;
     text-align: center; }
     .k-page-exchange .item-4 .verify {
-      margin: 0 auto;
-      margin-bottom: 60px; }
+      margin: 0 auto; }
+    .k-page-exchange .item-4 p {
+      margin-top: 60px; }
   .k-page-exchange .exchange-page[data-page='1'] .step-1 * {
     background-color: #f4a622 !important;
     color: #fff !important; }

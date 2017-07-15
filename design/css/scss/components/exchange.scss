@@ -8,7 +8,7 @@ $colorInput: #333;
 $boderInputItem1 : #aaa;
 $colorLableItem1:#777;
 .k-page-exchange {
-    max-width: 900px;
+    max-width: 860px;
     padding-left: 40px;
     .k-progress {
         text-align: center;
@@ -73,36 +73,49 @@ $colorLableItem1:#777;
         }
     }
     .error{
-    	position:fixed;
-        bottom:5px;
+        margin-top: 10px;
+        font-size: 13px;
+        color:#e74c3c;
         display: flex;
-       //  margin-left: 100px;
-         height: 80px;
-         color:#fff;
-
-         &.hide{
-            display: none;
-         }
-         >div{
-            display: flex;
-            align-items:center;
-            justify-content: center
-         }
-        .close{
-            width: 80px;
-            background-color:#e74a34;
-            font-size: 40px;   
-            font-weight: bold;
-            cursor: pointer;    
-            border-radius:10px 0 0 10px;     
+        align-items:center;
+        .k-icon{
+            margin-right: 5px;
         }
-        .content{
-            border-radius:0 10px 10px 0;
-            width: 800px;
-            background-color:rgba(231, 74, 52, 0.6);
-            font-size: 20px;
+        &.hide{
+            visibility: hidden;
         }
     }
+    // .error{
+    // 	position:fixed;
+    //     bottom:5px;
+    //     display: flex;
+    //    //  margin-left: 100px;
+    //      height: 80px;
+    //      color:#fff;
+
+    //      &.hide{
+    //         display: none;
+    //      }
+    //      >div{
+    //         display: flex;
+    //         align-items:center;
+    //         justify-content: center
+    //      }
+    //     .close{
+    //         width: 80px;
+    //         background-color:#e74a34;
+    //         font-size: 40px;   
+    //         font-weight: bold;
+    //         cursor: pointer;    
+    //         border-radius:10px 0 0 10px;     
+    //     }
+    //     .content{
+    //         border-radius:0 10px 10px 0;
+    //         width: 800px;
+    //         background-color:rgba(231, 74, 52, 0.6);
+    //         font-size: 20px;
+    //     }
+    // }
     // .progress-bar{
     // 	height: 20px;
     // 	width: 400px;
@@ -114,7 +127,7 @@ $colorLableItem1:#777;
     // }
     .page {
         // margin-top: 70px;
-        margin-left: 100px;
+            margin-left: 50px;
     }
     .page-item {
         display: none;
@@ -158,6 +171,7 @@ $colorLableItem1:#777;
         padding-top: 60px;
         .input-line {
             display: flex;
+            justify-content: space-between;
         }
         .input-account{
             display: flex;
@@ -248,7 +262,7 @@ $colorLableItem1:#777;
         }
         .bottom {
         	
-            margin-top: 50px;
+            margin-top: 40px;
             // .exchange-account{
             // 	border-bottom:1px solid $boderInputItem1;
             // }
@@ -290,9 +304,9 @@ $colorLableItem1:#777;
                 margin-right: 5px;
             }
         }
-        .input-group {
-            display: flex;
-            height: 40px;
+        .input-group-item {
+            //display: flex;
+            height: 90px;
             .label-content {
                 color: $colorItem1;
                 font-size: 20px;
@@ -380,6 +394,7 @@ $colorLableItem1:#777;
     }
     .item-2 {
         padding-top: 60px;
+            margin-left: 200px;
         .intro {
             width: 350px;
             text-align: center;
@@ -423,6 +438,7 @@ $colorLableItem1:#777;
     // }
     .item-3 {
         padding-top: 100px;
+        margin-left: 200px;
     }
     .item-4 {
         padding-top: 100px;
@@ -437,7 +453,10 @@ $colorLableItem1:#777;
             // align-items: center;
             // justify-content: center;
             margin: 0 auto;
-            margin-bottom: 60px;
+            
+        }
+        p{
+            margin-top: 60px;
         }
     }
     .exchange-page[data-page='1'] {

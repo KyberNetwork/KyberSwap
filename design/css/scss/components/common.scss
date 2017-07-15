@@ -206,9 +206,9 @@ $gradient:linear-gradient(-135deg,
 }
 
 .k-icon-lock{
- background-position: -60px -65px;
-    width: 25px;
-    height: 30px;   
+    background-position: -400px -201px;
+    width: 40px;
+    height: 40px; 
 }
 .k-icon-pig{
     background-position: -60px -65px;
@@ -252,4 +252,10 @@ $gradient:linear-gradient(-135deg,
     background-position: -215px -195px;
     width: 75px;
     height: 75px; 
+}
+
+.k-icon-error{
+        background-position: -345px -304px;
+    width: 15px;
+    height: 15px;
 }
