@@ -114,7 +114,7 @@
   -webkit-text-fill-color: transparent; }
 
 .k-icon {
-  background-image: url("../assets/icon.png");
+  background-image: url("../assets/sprite.png");
   display: inline-block; }
 
 .k-icon-wallet {
@@ -123,9 +123,9 @@
   height: 20px; }
 
 .k-icon-account {
-  background-position: -177px -20px;
+  background-position: -99px -70px;
   width: 20px;
-  height: 20px; }
+  height: 25px; }
 
 .k-icon-exchange {
   background-position: -60px -20px;
@@ -138,7 +138,7 @@
   height: 20px; }
 
 .k-icon-payment {
-  background-position: -102px -20px;
+  background-position: -141px -70px;
   width: 20px;
   height: 20px; }
 
@@ -163,27 +163,32 @@
   height: 30px; }
 
 .k-icon-gas {
-  background-position: -60px -65px;
-  width: 25px;
-  height: 30px; }
+  background-position: -160px -179px;
+  width: 31px;
+  height: 35px; }
+
+.k-icon-gas-price {
+  background-position: -94px -179px;
+  width: 50px;
+  height: 35px; }
 
 .k-icon-delete {
-  background-position: -60px -65px;
+  background-position: -217px -123px;
   width: 25px;
   height: 30px; }
 
 .k-icon-modify {
-  background-position: -60px -65px;
+  background-position: -264px -123px;
   width: 25px;
   height: 30px; }
 
 .k-icon-delete-green {
-  background-position: -60px -65px;
+  background-position: -217px -157px;
   width: 25px;
   height: 30px; }
 
-.k-icon-modify-modify {
-  background-position: -60px -65px;
+.k-icon-modify-green {
+  background-position: -262px -157px;
   width: 25px;
   height: 30px; }
 
@@ -203,14 +208,34 @@
   height: 30px; }
 
 .k-icon-verify {
-  background-position: -60px -65px;
-  width: 25px;
-  height: 30px; }
+  background-position: -19px -278px;
+  width: 80px;
+  height: 80px; }
 
 .k-icon-home {
-  background-position: -177px -20px;
-  width: 20px;
+  background-position: -138px -302px;
+  width: 25px;
   height: 20px; }
+
+.k-icon-amount {
+  background-position: -195px -302px;
+  width: 25px;
+  height: 20px; }
+
+.k-icon-min {
+  background-position: -298px -296px;
+  width: 30px;
+  height: 30px; }
+
+.k-icon-max {
+  background-position: -298px -296px;
+  width: 30px;
+  height: 30px; }
+
+.k-icon-btn-arrow {
+  background-position: -215px -195px;
+  width: 75px;
+  height: 75px; }
 
 .k-page-account .acc-item {
   background-color: #fff; }
@@ -466,7 +491,8 @@
   .k-page-exchange .k-progress {
     text-align: center; }
     .k-page-exchange .k-progress .progress-bar {
-      display: flex; }
+      display: flex;
+      justify-content: center; }
     .k-page-exchange .k-progress .step {
       display: flex;
       align-items: center; }
@@ -498,7 +524,11 @@
     margin-top: 80px;
     text-align: right; }
     .k-page-exchange .next button {
-      background-color: #f4a622; }
+      cursor: pointer; }
+      .k-page-exchange .next button.disable .k-icon {
+        background-position: -310px -195px; }
+      .k-page-exchange .next button:focus {
+        outline: none; }
     .k-page-exchange .next.disable button {
       background-color: #eee; }
   .k-page-exchange .error {
@@ -534,7 +564,8 @@
     margin-top: 30px;
     margin-left: 50px; }
     .k-page-exchange .input-space span {
-      margin-right: 25px; }
+      margin-right: 25px;
+      width: 50px; }
     .k-page-exchange .input-space input {
       width: 220px;
       border: none;
@@ -544,15 +575,25 @@
       box-shadow: none;
       font-size: 18px; }
   .k-page-exchange .title {
-    font-size: 15px; }
+    display: flex;
+    align-items: center; }
+    .k-page-exchange .title .k-icon {
+      margin-right: 10px; }
+    .k-page-exchange .title span {
+      font-weight: bold;
+      font-size: 20px;
+      color: #777; }
   .k-page-exchange input {
-    color: #999; }
+    color: #333; }
   .k-page-exchange .item-1 {
     padding-top: 60px; }
     .k-page-exchange .item-1 .input-line {
       display: flex; }
+    .k-page-exchange .item-1 .input-account {
+      display: flex;
+      border-bottom: 1px solid #aaa; }
     .k-page-exchange .item-1 .exchange-account {
-      width: 250px;
+      width: 280px;
       display: flex; }
       .k-page-exchange .item-1 .exchange-account input {
         background: transparent;
@@ -562,7 +603,7 @@
         .k-page-exchange .item-1 .exchange-account input:focus {
           outline: none; }
       .k-page-exchange .item-1 .exchange-account:hover .button:after {
-        border-top-color: #009dea; }
+        border-top-color: #333; }
       .k-page-exchange .item-1 .exchange-account .selectric {
         border: none;
         background: transparent;
@@ -584,11 +625,10 @@
         background: transparent;
         right: -35px; }
         .k-page-exchange .item-1 .exchange-account .button:after {
-          border-top-color: #009dea; }
+          border-top-color: #333; }
     .k-page-exchange .item-1 .top .label {
       display: none; }
     .k-page-exchange .item-1 .top input {
-      border-bottom: 1px solid #d1d3d5;
       width: 230px; }
     .k-page-exchange .item-1 .top .selectric-items {
       width: 250px !important;
@@ -596,8 +636,6 @@
       right: 0px; }
     .k-page-exchange .item-1 .bottom {
       margin-top: 50px; }
-      .k-page-exchange .item-1 .bottom .exchange-account {
-        border-bottom: 1px solid #009dea; }
       .k-page-exchange .item-1 .bottom .label {
         text-align: center;
         background-color: transparent;
@@ -609,7 +647,8 @@
         cursor: pointer; }
       .k-page-exchange .item-1 .bottom input {
         margin-right: 5px;
-        width: 200px; }
+        width: 260px;
+        border-bottom: 1px solid #aaa; }
       .k-page-exchange .item-1 .bottom .selectric-items {
         width: 150px !important; }
     .k-page-exchange .item-1 .usd-convert {
@@ -617,18 +656,21 @@
       justify-content: center;
       font-size: 14px;
       margin-top: 8px;
-      color: #555;
+      color: #aaa;
       display: flex; }
+      .k-page-exchange .item-1 .usd-convert label {
+        color: inherit; }
       .k-page-exchange .item-1 .usd-convert span {
-        font-size: 18px;
+        font-size: 15px;
         margin-right: 5px; }
     .k-page-exchange .item-1 .input-group {
       display: flex;
       height: 40px; }
       .k-page-exchange .item-1 .input-group .label-content {
-        color: #009dea;
-        font-size: 25px;
-        margin-right: 10px; }
+        color: #333;
+        font-size: 20px;
+        margin-right: 10px;
+        width: 40px; }
     .k-page-exchange .item-1 .input-select {
       display: flex; }
     .k-page-exchange .item-1 .input-line {
@@ -657,6 +699,23 @@
           margin-top: 5px; }
       .k-page-exchange .item-1 .rate.hide {
         display: none; }
+    .k-page-exchange .item-1 .destination-amount {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 700px;
+      margin: 0 auto;
+      margin-top: 80px; }
+      .k-page-exchange .item-1 .destination-amount .title {
+        font-weight: bold; }
+      .k-page-exchange .item-1 .destination-amount > div {
+        text-align: center; }
+        .k-page-exchange .item-1 .destination-amount > div > div {
+          margin-bottom: 10px; }
+      .k-page-exchange .item-1 .destination-amount * {
+        font-size: 15px; }
+      .k-page-exchange .item-1 .destination-amount.hide {
+        display: none; }
   .k-page-exchange .item-2 {
     padding-top: 60px; }
     .k-page-exchange .item-2 .intro {
@@ -675,59 +734,37 @@
       color: #999;
       margin-left: 10px; }
   .k-page-exchange .item-3 {
-    padding-top: 50px; }
-    .k-page-exchange .item-3 .intro p {
-      width: 300px;
-      color: #aaa;
-      padding-left: 5px;
-      font-size: 15px; }
-    .k-page-exchange .item-3 .intro.intro-bottom {
-      margin-top: 20px; }
-  .k-page-exchange .item-4 {
     padding-top: 100px; }
-  .k-page-exchange .item-5 {
+  .k-page-exchange .item-4 {
     padding-top: 100px;
     text-align: center; }
-    .k-page-exchange .item-5 .verify {
-      height: 100px;
-      width: 100px;
-      border-radius: 100px;
-      background-color: #00c071;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .k-page-exchange .item-4 .verify {
       margin: 0 auto;
       margin-bottom: 60px; }
   .k-page-exchange .exchange-page[data-page='1'] .step-1 * {
-    background-color: #d1d3d5 !important;
+    background-color: #f4a622 !important;
     color: #fff !important; }
   .k-page-exchange .exchange-page[data-page='1'] .item-1 {
     display: block; }
   .k-page-exchange .exchange-page[data-page='2'] .step-1 *,
   .k-page-exchange .exchange-page[data-page='2'] .step-2 * {
-    background-color: #d1d3d5 !important;
+    background-color: #f4a622 !important;
     color: #fff !important; }
   .k-page-exchange .exchange-page[data-page='2'] .item-2 {
     display: block; }
   .k-page-exchange .exchange-page[data-page='3'] .step-1 *,
   .k-page-exchange .exchange-page[data-page='3'] .step-2 *,
   .k-page-exchange .exchange-page[data-page='3'] .step-3 * {
-    background-color: #d1d3d5 !important;
+    background-color: #f4a622 !important;
     color: #fff !important; }
   .k-page-exchange .exchange-page[data-page='3'] .item-3 {
     display: block; }
   .k-page-exchange .exchange-page[data-page='4'] .step * {
-    background-color: #d1d3d5 !important;
+    background-color: #f4a622 !important;
     color: #fff !important; }
   .k-page-exchange .exchange-page[data-page='4'] .item-4 {
     display: block; }
-  .k-page-exchange .exchange-page[data-page='5'] .step * {
-    background-color: #d1d3d5 !important;
-    color: #fff !important; }
-  .k-page-exchange .exchange-page[data-page='5'] .item-5 {
-    display: block; }
-  .k-page-exchange .exchange-page[data-page='5'] .next {
+  .k-page-exchange .exchange-page[data-page='4'] .next {
     visibility: hidden; }
 
 body {

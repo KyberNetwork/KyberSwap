@@ -114,7 +114,7 @@ $gradient:linear-gradient(-135deg,
 // }
 
 .k-icon {
-    background-image: url("../assets/icon.png");
+    background-image: url("../assets/sprite.png");
     display: inline-block;
 }
 
@@ -125,9 +125,9 @@ $gradient:linear-gradient(-135deg,
 }
 
 .k-icon-account {
-    background-position: -177px -20px;
+        background-position: -99px -70px;
     width: 20px;
-    height: 20px;
+    height: 25px;
 }
 
 .k-icon-exchange {
@@ -143,7 +143,7 @@ $gradient:linear-gradient(-135deg,
 }
 
 .k-icon-payment {
-    background-position: -102px -20px;
+    background-position: -141px -70px;
     width: 20px;
     height: 20px;
 }
@@ -173,30 +173,34 @@ $gradient:linear-gradient(-135deg,
 }
 
 .k-icon-gas {
-    background-position: -60px -65px;
-    width: 25px;
-    height: 30px;
+    background-position: -160px -179px;
+    width: 31px;
+    height: 35px;
 }
-
+.k-icon-gas-price{
+     background-position: -94px -179px;
+    width: 50px;
+    height: 35px; 
+}
 .k-icon-delete {
-    background-position: -60px -65px;
+        background-position: -217px -123px;
     width: 25px;
     height: 30px;
 }
 
 .k-icon-modify {
-    background-position: -60px -65px;
+        background-position: -264px -123px;
     width: 25px;
     height: 30px;
 }
 .k-icon-delete-green {
-    background-position: -60px -65px;
+      background-position: -217px -157px;
     width: 25px;
     height: 30px;
 }
 
-.k-icon-modify-modify {
-    background-position: -60px -65px;
+.k-icon-modify-green {
+       background-position:-262px -157px;
     width: 25px;
     height: 30px;
 }
@@ -218,12 +222,34 @@ $gradient:linear-gradient(-135deg,
     height: 30px;   
 }
 .k-icon-verify{
-    background-position: -60px -65px;
-    width: 25px;
-    height: 30px;   
+       background-position: -19px -278px;
+    width: 80px;
+    height: 80px;
 }
 .k-icon-home{
-     background-position: -177px -20px;
-    width: 20px;
+    background-position: -138px -302px;
+    width: 25px;
     height: 20px;
+}
+.k-icon-amount{
+  background-position: -195px -302px;
+    width: 25px;
+    height: 20px;
+}
+
+.k-icon-min{
+    background-position: -298px -296px;
+    width: 30px;
+    height: 30px;    
+}
+
+.k-icon-max{
+    background-position: -298px -296px;
+    width: 30px;
+    height: 30px;     
+}
+.k-icon-btn-arrow{
+    background-position: -215px -195px;
+    width: 75px;
+    height: 75px; 
 }

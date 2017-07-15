@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$("#exchange-next").on('click', function(){
+	$("#exchange-next button").on('click', function(){
 		var currentPage = parseInt($(this).closest('.exchange-page').attr('data-page'),10);
 		//console.log(currentPage);
 		if(currentPage < 5){
