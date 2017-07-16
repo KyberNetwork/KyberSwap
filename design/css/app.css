@@ -388,6 +388,17 @@
   background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
 .k-page-wallet .import-wallet button {
   background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
+.k-page-wallet #tx-modal-wallet {
+  top: -460px !important; }
+.k-page-wallet .import-modal .modal-title {
+  text-align: center;
+  font-size: 25px;
+  padding: 10px 0px; }
+.k-page-wallet .import-modal label {
+  font-weight: bold; }
+.k-page-wallet .import-modal .submit-button {
+  text-align: right;
+  margin-top: 40px; }
 
 .k-page-account .wallet-item {
   border: 2px solid #00bd70;

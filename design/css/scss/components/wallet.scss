@@ -18,6 +18,35 @@ $borderRadius: 5px;
           background-image: $color;
         }
     }
+    #tx-modal-wallet{
+        top:-460px !important;        
+    }
+    .import-modal{
+        .modal-title{
+            text-align: center;
+            font-size: 25px;
+            padding:10px 0px;
+           // border-bottom: 1px solid #aaa;
+        }
+        label{
+            font-weight: bold;
+        }
+        .submit-button{
+            text-align: right;
+            margin-top: 40px;
+            // button{
+            //     color: #fff;
+            //     padding:10px 20px;
+            //     background-image: $color;
+            //     &:focus{
+            //         outline: none;
+            //     }
+            //     &:hover{
+            //         background-image: darken($color,10%);
+            //     }
+            // }
+        }
+    }
 }
 .k-page-account {
     .wallet-item {
@@ -179,6 +208,7 @@ $borderRadius: 5px;
                 }
         }
     }
+    
     // button {
     //     cursor: pointer;
     // }
