@@ -17,6 +17,9 @@ const middleware = applyMiddleware(
 const store = createStore(
   reducer, undefined, compose(middleware, autoRehydrate()))
 
-persistStore(store, {blacklist: ['connection']})
+persistStore(store, {blacklist: [
+  'connection',
+  // 'exchangeForm'
+  ]})
 
 export default store

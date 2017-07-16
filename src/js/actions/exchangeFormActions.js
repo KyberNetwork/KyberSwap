@@ -29,10 +29,10 @@ export function selectDestToken(addr) {
   }
 }
 
-export function specifyMinRate(rate) {
+export function specifyMinAmount(amount) {
   return {
-    type: "MIN_CONVERSION_RATE_SPECIFIED",
-    payload: rate,
+    type: "MIN_AMOUNT_SPECIFIED",
+    payload: amount,
   }
 }
 
@@ -57,10 +57,10 @@ export function specifyGasPrice(price) {
   }
 }
 
-export function throwError(error) {
+export function throwError(errors) {
   return {
     type: "ERROR_THREW",
-    payload: error,
+    payload: errors,
   }
 }
 
@@ -70,10 +70,40 @@ export function emptyForm() {
   }
 }
 
-export function suggestRate(source, dest) {
-  var rate = store.getState().global.rates[source + "-" + dest]
+export function nextStep() {
   return {
-    type: "EXCHANGE_FORM_SUGGEST_RATE",
-    payload: rate.rate.toString(10)
+    type: "EXCHANGE_FORM_NEXT_STEP"
+  }
+}
+
+export function previousStep() {
+  return {
+    type: "EXCHANGE_FORM_PREVIOUS_STEP"
+  }
+}
+
+export function suggestRate(source, dest) {
+  console.log(source + '-' + dest)
+  var rate = store.getState().global.rates[source + "-" + dest]
+  if (rate) {
+    return {
+      type: "EXCHANGE_FORM_SUGGEST_RATE",
+      payload: {
+        rate: rate.rate.toString(10),
+        reserve: rate.reserve,
+        expirationBlock: rate.expirationBlock,
+        balance: rate.balance.toString(10),
+      }
+    }
+  } else {
+    return {
+      type: "EXCHANGE_FORM_SUGGEST_RATE",
+      payload: {
+        rate: 0,
+        expirationBlock: 0,
+        balance: 0,
+        reserve: 0,
+      }
+    }
   }
 }

@@ -35,6 +35,7 @@ const accounts = (state=initState, action) => {
             newTokens[token.address] = new Token(
               token.name,
               token.icon,
+              token.symbol,
               token.address,
               acc.address,
               token.balance,

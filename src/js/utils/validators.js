@@ -1,33 +1,25 @@
-import BigNumber from 'bignumber.js';
-import * as ethUtil from 'ethereumjs-util';
-import TOKENS from "../services/supported_tokens";
-import constants from "../services/constants";
+import BigNumber from 'bignumber.js'
+import * as ethUtil from 'ethereumjs-util'
+import TOKENS from "../services/supported_tokens"
+import constants from "../services/constants"
 
 export function verifyAccount(addr) {
-  if (ethUtil.isValidAddress(addr)) {
-    return addr
-  } else {
-    throw new Error("Invalid address")
-  }
+  return ethUtil.isValidAddress(addr) ? null : "invalid"
 }
 
 export function verifyToken(addr) {
   if (!ethUtil.isValidAddress(addr)) {
-    console.log("invalid addr: " + addr)
-    throw new Error("Invalid token address")
+    return "invalid"
   } else {
     for (var i = 0; i < TOKENS.length; i++) {
-      console.log("supported " + TOKENS[i].address + " - sending: " + addr)
       if (TOKENS[i].address == addr) {
-        return addr
+        return null
       }
     }
     if (addr != constants.ETHER_ADDRESS) {
-      console.log("supported: " + constants.ETHER_ADDRESS)
-      console.log("  sending: " + addr)
-      throw new Error("Unsupported token")
+      return "unsupported"
     } else {
-      return addr
+      return null
     }
   }
 }
@@ -35,7 +27,7 @@ export function verifyToken(addr) {
 export function verifyAmount(amount, max) {
   var result = new BigNumber(amount)
   if (result == 'NaN' || result == 'Infinity') {
-    throw new Error("Invalid number")
+    return "not a number"
   }
   if (max != undefined) {
     var maxBig = new BigNumber(max)
@@ -43,26 +35,38 @@ export function verifyAmount(amount, max) {
       throw new Error("Invalid upper bound for amount")
     }
     if (result.cmp(maxBig) > 0) {
-      throw new Error("Amount is too high")
+      return "too high"
     }
     if (result.cmp(constants.EPSILON) < 0) {
-      throw new Error("Amount is too low")
+      return "too low"
     }
   }
-  return "0x" + result.toString(16)
+  return null
+  // return "0x" + result.toString(16)
 }
 
 export function verifyNumber(amount) {
   var result = new BigNumber(amount)
   if (result == 'NaN' || result == 'Infinity') {
-    throw new Error("Invalid number")
+    return "invalid number"
   }
   if (result.cmp(0) < 0) {
-    throw new Error("Number is negative")
+    return "nagative"
   }
-  return "0x" + result.toString(16)
+  return null
+  // return "0x" + result.toString(16)
 }
 
 export function verifyNonce(nonce, future) {
   return (new BigNumber(nonce).plus(future || 0)).toNumber()
+}
+
+export function anyErrors(errors) {
+  var keys = Object.keys(errors)
+  for (var i = 0; i < keys.length; i++) {
+    if (errors[keys[i]] != null && errors[keys[i]] != "") {
+      return true
+    }
+  }
+  return false
 }

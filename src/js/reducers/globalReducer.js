@@ -1,3 +1,8 @@
+import {REHYDRATE} from 'redux-persist/constants'
+import Rate from "../services/rate"
+import BigNumber from "bignumber.js"
+
+
 const initState = {
   currentBlock: 0,
   connected: true,
@@ -9,6 +14,27 @@ const initState = {
 
 const global = (state=initState, action) => {
   switch (action.type) {
+    case REHYDRATE: {
+      if (action.payload.global) {
+        var loadedRates = action.payload.global.rates
+        var rates = {}
+        Object.keys(loadedRates).forEach((id) => {
+          var rateMap = loadedRates[id]
+          var rate = new Rate(
+            rateMap.source,
+            rateMap.dest,
+            rateMap.reserve,
+            new BigNumber(rateMap.rate),
+            new BigNumber(rateMap.expirationBlock),
+            new BigNumber(rateMap.balance),
+          )
+          rates[id] = rate
+        })
+        var newState = {...state, ...action.payload.global, rates: rates}
+        return newState
+      }
+      return state
+    }
     case "NEW_BLOCK_INCLUDED": {
       return {...state, currentBlock: action.payload}
     }

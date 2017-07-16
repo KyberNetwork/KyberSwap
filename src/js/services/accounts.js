@@ -9,7 +9,7 @@ export function newWalletInstance(address, ownerAddress, name, desc, callback) {
   for (var i = 0; i < SupportedTokens.length; i++ ) {
     var tok = SupportedTokens[i];
     wallet.addToken(
-      new Token(tok.name, tok.icon, tok.address, address)
+      new Token(tok.name, tok.icon, tok.symbol, tok.address, address)
     )
   }
   wallet.sync(
@@ -21,7 +21,7 @@ export function newAccountInstance(address, keystring, name, desc, callback) {
   for (var i = 0; i < SupportedTokens.length; i++ ) {
     var tok = SupportedTokens[i];
     account.addToken(
-      new Token(tok.name, tok.icon, tok.address, account.address)
+      new Token(tok.name, tok.icon, tok.symbol, tok.address, account.address)
     )
   }
   account.sync(

@@ -1,12 +1,13 @@
 import React from "react"
-import BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js'
 import { connect } from "react-redux"
 import * as ethUtil from 'ethereumjs-util'
 
-import { throwError, emptyForm } from "../../actions/exchangeFormActions"
+import { throwError, emptyForm, nextStep, previousStep } from "../../actions/exchangeFormActions"
 import { updateAccount } from "../../actions/accountActions"
 import { addTx } from "../../actions/txActions"
-import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber } from "../../utils/validators"
+import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
+import { numberToHex } from "../../utils/converter"
 import constants from "../../services/constants"
 import { etherToOthers, tokenToOthers } from "../../services/exchange"
 import Tx from "../../services/tx"
@@ -38,60 +39,70 @@ import Tx from "../../services/tx"
     rate: state.global.rates[sourceToken + "-" + destToken],
     destAddress: state.exchangeForm.destAddress,
     maxDestAmount: state.exchangeForm.maxDestAmount,
+    minDestAmount: state.exchangeForm.minDestAmount,
     throwOnFailure: state.exchangeForm.throwOnFailure,
     gas: state.exchangeForm.gas,
     gasPrice: state.exchangeForm.gasPrice,
-    error: state.exchangeForm.error,
+    step: state.exchangeForm.step,
+    offeredRateBalance: state.exchangeForm.offeredRateBalance,
   }
 })
 export default class PostExchange extends React.Component {
 
-  verify = () => {
-    var selectedAccount = verifyAccount(this.props.selectedAccount)
-    var sourceToken = verifyToken(this.props.sourceToken)
-    var sourceAmount = verifyAmount(this.props.sourceAmount, this.props.sourceBalance)
-    var expectedDestAmount = (
-      new BigNumber(this.props.sourceAmount))
-      .times("1000000000000000000")
-      .div(this.props.minConversionRate)
-    verifyAmount(
-      expectedDestAmount.toString(10),
-      this.props.rate.balance)
-    var destToken = verifyToken(this.props.destToken)
-    if (sourceToken == destToken) {
-      throw new Error("Exchange between the same currencies")
-    }
-    var minConversionRate = verifyAmount(this.props.minConversionRate)
-    var destAddress = verifyAccount(this.props.destAddress)
-    var maxDestAmount = verifyAmount(this.props.maxDestAmount)
+  formParams = () => {
+    var selectedAccount = this.props.selectedAccount
+    var sourceToken = this.props.sourceToken
+    var sourceAmount = numberToHex(this.props.sourceAmount)
+    var destToken = this.props.destToken
+    var minConversionRate = numberToHex(this.props.minConversionRate)
+    var destAddress = this.props.destAddress
+    var maxDestAmount = numberToHex(this.props.maxDestAmount)
     var throwOnFailure = this.props.throwOnFailure
-    var error = this.props.error
     var nonce = verifyNonce(this.props.nonce)
     // should use estimated gas
-    var gas = verifyNumber(this.props.gas)
+    var gas = numberToHex(this.props.gas)
     // should have better strategy to determine gas price
-    var gasPrice = verifyNumber(this.props.gasPrice)
-    var password = document.getElementById(this.props.passphraseID).value
-    if (password == undefined || password == "") {
-      throw new Error("Empty password")
-    }
-    var keystring = this.props.keystring
-    if (keystring == undefined || keystring == "") {
-      throw new Error("Keystore is not loaded")
-    }
+    var gasPrice = numberToHex(this.props.gasPrice)
     return {
       selectedAccount, sourceToken, sourceAmount, destToken,
       minConversionRate, destAddress, maxDestAmount,
-      throwOnFailure, error, nonce, gas, gasPrice,
-      password, keystring
+      throwOnFailure, nonce, gas, gasPrice
     }
   }
 
-  postExchange = (event) => {
-    event.preventDefault()
+  stepOne = () => {
+    var errors = {}
+    errors["selectedAccountError"] = verifyAccount(this.props.selectedAccount)
+    errors["sourceTokenError"] = verifyToken(this.props.sourceToken)
+    errors["sourceAmountError"] = verifyAmount(this.props.sourceAmount, this.props.sourceBalance)
+    errors["destAddressError"] = verifyAccount(this.props.destAddress)
+    if (this.props.sourceToken == this.props.destToken) {
+      errors["destTokenError"] = "Exchange between the same currencies"
+    }
+    errors["minDestAmountError"] = verifyAmount(this.props.minDestAmount, this.props.offeredRateBalance)
+    return errors
+  }
+
+  stepTwo = () => {
+    var errors = {}
+    errors["gasError"] = verifyNumber(this.props.gas)
+    errors["gasPriceError"] = verifyNumber(this.props.gasPrice)
+    return errors
+  }
+
+  stepThree = () => {
+    var errors = {}
+    var password = document.getElementById(this.props.passphraseID).value
+    if (password == undefined || password == "") {
+      errors["passwordError"] = "Empty password"
+    }
+    var keystring = this.props.keystring
+    if (keystring == undefined || keystring == "") {
+      errors["keystringError"] = "Keystore is not loaded"
+    }
+    var ethereum = this.props.ethereum
     try {
-      var ethereum = this.props.ethereum
-      const params = this.verify()
+      const params = this.formParams()
       // sending by wei
       var ex
       if (params.sourceToken == constants.ETHER_ADDRESS) {
@@ -100,14 +111,14 @@ export default class PostExchange extends React.Component {
           params.sourceAmount, params.destToken, params.destAddress,
           params.maxDestAmount, params.minConversionRate,
           params.throwOnFailure, params.nonce, params.gas,
-          params.gasPrice, params.keystring, params.password)
+          params.gasPrice, keystring, password)
       } else {
         ex = tokenToOthers(
           ethereum, params.selectedAccount, params.sourceToken,
           params.sourceAmount, params.destToken, params.destAddress,
           params.maxDestAmount, params.minConversionRate,
           params.throwOnFailure, params.nonce, params.gas,
-          params.gasPrice, params.keystring, params.password)
+          params.gasPrice, keystring, password)
       }
       const tx = new Tx(
         ex, params.selectedAccount, params.gas, params.gasPrice,
@@ -122,11 +133,53 @@ export default class PostExchange extends React.Component {
       this.props.dispatch(updateAccount(ethereum, this.props.account))
       this.props.dispatch(addTx(tx))
       document.getElementById(this.props.passphraseID).value = ''
-      this.props.dispatch(emptyForm())
     } catch (e) {
       console.log(e)
-      this.props.dispatch(throwError(e.message))
+      errors["passwordError"] = "incorrect"
     }
+    return errors
+  }
+
+  postExchange = (event) => {
+    event.preventDefault()
+    switch (this.props.step) {
+      case 1: {
+        var errors = this.stepOne()
+        if (anyErrors(errors)) {
+          this.props.dispatch(throwError(errors))
+        } else {
+          this.props.dispatch(nextStep())
+        }
+        return
+      }
+      case 2: {
+        var errors = this.stepTwo()
+        if (anyErrors(errors)) {
+          this.props.dispatch(throwError(errors))
+        } else {
+          this.props.dispatch(nextStep())
+        }
+        return
+      }
+      case 3: {
+        var errors = this.stepThree()
+        if (anyErrors(errors)) {
+          this.props.dispatch(throwError(errors))
+        } else {
+          this.props.dispatch(nextStep())
+          this.props.dispatch(emptyForm())
+        }
+        return
+      }
+      case 4: {
+        return
+      }
+    }
+  }
+
+  back = (event) => {
+    event.preventDefault()
+    this.props.dispatch(previousStep())
   }
 
   render() {
@@ -143,7 +196,11 @@ export default class PostExchange extends React.Component {
     return (
       <div>
         {errorDiv}
-        <button class="button" onClick={this.postExchange}>Send</button>
+        { this.props.step != 1 ? <button class="button" onClick={this.back}>Back</button> : "" }
+        &nbsp;
+        <button class="button" onClick={this.postExchange}>
+          Next
+        </button>
       </div>
     )
   }
