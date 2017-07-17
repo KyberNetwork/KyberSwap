@@ -123,7 +123,6 @@ $colorLableItem1:#777;
     //  background-color:#f4a622;
     //  height: inherit;
     // }
-
     // &.blind{
     //     background-color:rgba(0,0,0,0.2);
     // }
@@ -162,29 +161,54 @@ $colorLableItem1:#777;
         .input-group-item {
             margin-left: 80px;
             margin-bottom: 40px;
-            // &.focus{
+            border: 1px solid #aaa;
+            padding: 20px;
+            width: 600px;
+            &.focus {
+            	border: 1px solid #000;
+                >label {
+                    font-weight: bold;
+                    color: #000;
+                }
+                input{
+                	color: $colorItem1;
+                }
+                .button {	             
+	                &:after {
+	                    border-top-color: $colorItem1;
+	                }
+	            }
+	             .label {
+	                color: $colorItem1;
+	            }
+            } // &.focus{
             //     background-color:#fff;
             // }
+            >label {
+                font-size: 14px;
+                color: #aaa;
+                float: left;
+                position: absolute;
+                margin-top: -40px;
+                background-color: #fbfcfb;
+                text-align: center;
+                padding: 5px 10px;
+            }
         }
         .input-item {
             display: flex;
             align-items: center;
 
-            >label {
-                font-size: 20px;
-                width: 150px;
-                color: #aaa;
-            }
+
 
             input {
                 background: transparent;
                 border: none;
-               // text-align: center;
+                text-align: center;
                 font-size: 20px;
-                width: 400px;
-                height: 40px;
-                border-bottom: 1px solid $boderInputItem1;
-                color:$colorItem1Blue;
+                width: 495px;
+                height: 40px; // border-bottom: 1px solid $boderInputItem1;
+                color: #aaa;
                 &:focus {
                     outline: none;
                 }
@@ -216,27 +240,27 @@ $colorLableItem1:#777;
                     }
                 }
             }
-            .label{
-                color:$colorItem1Blue;
+            .label {
+                color: #aaa;
             }
             .button {
                 background: transparent;
                 right: -35px;
                 &:after {
-                    border-top-color: $colorItem1Blue;
+                    border-top-color: #aaa;
                 }
             } // .label {               
             //     display: none;
             // }
         }
         .extra-info {
-            margin-left: 150px;
+            // margin-left: 150px;
             color: #aaa;
             font-size: 12px;
             margin-top: 10px;
         }
         .error {
-            margin-left: 150px;
+            // margin-left: 150px;
             font-size: 12px;
         }
         .input-account {
@@ -254,7 +278,7 @@ $colorLableItem1:#777;
                 top: -17px;
             }
             input {
-                width: 432px;
+                width: 530px;
             }
         }
         .input-amount {
@@ -264,8 +288,7 @@ $colorLableItem1:#777;
                 width: 100%;
                 margin: 0;
                 padding: 0px;
-                font-size: 18px;
-                //color: #000; //font-weight: bold;
+                font-size: 18px; //color: #000; //font-weight: bold;
                 cursor: pointer; //display: none;
             }
         }
@@ -291,8 +314,7 @@ $colorLableItem1:#777;
             margin-top: 80px;
             text-align: center;
             h3 {
-                font-size: 13px;
-              //  color: #00bd70;
+                font-size: 13px; //  color: #00bd70;
             }
         }
         .rate {
