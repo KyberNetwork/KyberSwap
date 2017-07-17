@@ -26,10 +26,12 @@
                     <label>Address from</label>
                     <div class="input-item">
                         <input type="" name="">
-                        <select class="selectric" id="from-account">
-                            <option value="Account 1">Account 1</option>
-                            <option value="Account 2">Account 2</option>
-                        </select>
+                        <div class="select-wrapper">
+	                        <select id="from-account">
+	                            <option value="Account 1">Account 1</option>
+	                            <option value="Account 2">Account 2</option>
+	                        </select>
+                        </div>
                     </div>
                     <div class="error">
                         <i class="k-icon k-icon-error"></i> Invalid address. Please enter a different address.
@@ -39,10 +41,13 @@
                     <label>Address to</label>
                     <div class="input-item">
                         <input type="" name="">
-                        <select class="selectric" id="to-account">
-                            <option value="Account 1">Account 1</option>
-                            <option value="Account 2">Account 2</option>
-                        </select>
+                        <div class="select-wrapper">
+                        	<select id="to-account">
+	                            <option value="Account 1">Account 1</option>
+	                            <option value="Account 2">Account 2</option>
+	                        </select>	
+                        </div>
+                        
                     </div>
                     <div class="error hide">
                         <i class="k-icon k-icon-error"></i> Invalid address. Please enter a different address.
@@ -52,7 +57,7 @@
                     <label>Amount from</label>
                     <div class="input-item">
                         <input type="" name="">
-                        <select class="selectric" id="from-amount">
+                        <select id="from-amount">
                             <option value="BTC">BTC</option>
                             <option value="ETH">ETH</option>
                             <option value="ANT">ANT</option>
@@ -69,7 +74,7 @@
                     <label>Amount to</label>
                     <div class="input-item input-amount">
                         <input type="" name="">
-                        <select class="selectric" id="to-amount">
+                        <select id="to-amount">
                             <option value="BTC">BTC</option>
                             <option value="ETH">ETH</option>
                             <option value="ANT">ANT</option>
@@ -207,4 +212,5 @@
     </div>
   </div> -->
 </div>
+
 <script type="text/javascript" src="js/exchange.js"></script>

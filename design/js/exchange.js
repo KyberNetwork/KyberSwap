@@ -14,7 +14,7 @@ $(document).ready(function(){
 		}
 	})
 
-	$(".input-item select").selectric();
+	//$(".input-item select").selectric();
 	$(".input-account select").on('change', function(){
 		$(this).closest('.input-account').find('input').val($(this).val());
 	})
