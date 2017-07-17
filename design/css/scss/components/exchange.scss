@@ -3,9 +3,9 @@ $colorText: #d1d3d5;
 $colorActive:#f4a622;
 $colorItem1Blue:#009dea;
 $colorItem1:#333;
-$fontsizeLable : 15px;
+$fontsizeLable: 15px;
 $colorInput: #333;
-$boderInputItem1 : #aaa;
+$boderInputItem1: #aaa;
 $colorLableItem1:#777;
 .k-page-exchange {
     max-width: 860px;
@@ -14,7 +14,7 @@ $colorLableItem1:#777;
         text-align: center;
         .progress-bar {
             display: flex;
-             justify-content: center;
+            justify-content: center;
         }
         .step {
             display: flex;
@@ -45,26 +45,26 @@ $colorLableItem1:#777;
                 flex-shrink: 0;
                 position: relative;
                 z-index: 0;
-                right: -5px;
-                // position: relative;
+                right: -5px; // position: relative;
                 // left: -1px;
             }
         }
     }
-    .next {
+    .navigation-btn {
         margin-top: 80px;
+        display: flex;
+        justify-content: space-between;
         text-align: right;
         button {
             cursor: pointer;
-            &.disable{
-                .k-icon{
-                     background-position:-310px -195px;
+            &.disable {
+                .k-icon {
+                    background-position: -310px -195px;
                 }
             }
-            &:focus{
+            &:focus {
                 outline: none;
-            }
-           // background-color: #f4a622;
+            } // background-color: #f4a622;
         }
         &.disable {
             button {
@@ -72,27 +72,25 @@ $colorLableItem1:#777;
             }
         }
     }
-    .error{
+    .error {
         margin-top: 10px;
         font-size: 13px;
-        color:#e74c3c;
+        color: #e74c3c;
         display: flex;
-        align-items:center;
-        .k-icon{
+        align-items: center;
+        .k-icon {
             margin-right: 5px;
         }
-        &.hide{
+        &.hide {
             visibility: hidden;
         }
-    }
-    // .error{
-    // 	position:fixed;
+    } // .error{
+    //  position:fixed;
     //     bottom:5px;
     //     display: flex;
     //    //  margin-left: 100px;
     //      height: 80px;
     //      color:#fff;
-
     //      &.hide{
     //         display: none;
     //      }
@@ -117,17 +115,23 @@ $colorLableItem1:#777;
     //     }
     // }
     // .progress-bar{
-    // 	height: 20px;
-    // 	width: 400px;
-    // 	background-color: #adadad;
+    //  height: 20px;
+    //  width: 400px;
+    //  background-color: #adadad;
     // }
     // .progress-bar-active{
-    // 	background-color:#f4a622;
-    // 	height: inherit;
+    //  background-color:#f4a622;
+    //  height: inherit;
     // }
+
+    // &.blind{
+    //     background-color:rgba(0,0,0,0.2);
+    // }
+    .exchange-page {
+        margin-left: 50px;
+    }
     .page {
         // margin-top: 70px;
-            margin-left: 50px;
     }
     .page-item {
         display: none;
@@ -147,56 +151,42 @@ $colorLableItem1:#777;
             background-color: transparent;
             outline: none;
             box-shadow: none;
-            font-size: 18px;
-           // color: #999;
+            font-size: 18px; // color: #999;
         }
     }
-    .title{
-    //	font-size: $fontsizeLable;
-        display: flex;
-        align-items:center;
-        .k-icon{
-            margin-right: 10px;
-        }
-        span{
-                font-weight: bold;
-                font-size: 20px;
-                color:$colorLableItem1;
-        }
-    }
-    input{
-    	color:$colorInput;
+    input {
+        color: $colorInput;
     }
     .item-1 {
         padding-top: 60px;
-        .input-line {
-            display: flex;
-            justify-content: space-between;
+        .input-group-item {
+            margin-left: 80px;
+            margin-bottom: 40px;
+            // &.focus{
+            //     background-color:#fff;
+            // }
         }
-        .input-account{
+        .input-item {
             display: flex;
-            border-bottom: 1px solid $boderInputItem1;
-        }
-        .exchange-account {
-        	width: 280px;
-            //border-bottom: 1px solid #aaa;
-            display: flex;
+            align-items: center;
+
+            >label {
+                font-size: 20px;
+                width: 150px;
+                color: #aaa;
+            }
+
             input {
                 background: transparent;
                 border: none;
-                text-align: center;
+               // text-align: center;
                 font-size: 20px;
-                
-               
+                width: 400px;
+                height: 40px;
+                border-bottom: 1px solid $boderInputItem1;
+                color:$colorItem1Blue;
                 &:focus {
                     outline: none;
-                }
-            }
-            &:hover {
-                .button {
-                    &:after {
-                        border-top-color: $colorItem1;
-                    }
                 }
             }
             .selectric {
@@ -204,21 +194,20 @@ $colorLableItem1:#777;
                 background: transparent;
                 overflow: initial;
             }
-           
+
             .selected {
                 background-color: $colorItem1Blue !important;
                 color: #fff !important;
             }
             .selectric-items {
                 border: none;
-               // width: 250px !important;
+                width: 250px !important;
             }
             .selectric-scroll {
                 li {
                     font-size: 18px;
                     text-align: center;
-                    color: #aaa;
-                    //color: $corlor;
+                    color: #aaa; //color: $corlor;
                     &:not(:last-child) {
                         border-bottom: 1px solid #eee;
                     }
@@ -227,68 +216,60 @@ $colorLableItem1:#777;
                     }
                 }
             }
+            .label{
+                color:$colorItem1Blue;
+            }
             .button {
                 background: transparent;
                 right: -35px;
                 &:after {
-                    border-top-color: $colorItem1;
+                    border-top-color: $colorItem1Blue;
                 }
-            }
+            } // .label {               
+            //     display: none;
+            // }
         }
-        .top {
-        	// .exchange-account {
-	        //     width: 200px;
-	        // }
-	        
- 			.label {               
+        .extra-info {
+            margin-left: 150px;
+            color: #aaa;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .error {
+            margin-left: 150px;
+            font-size: 12px;
+        }
+        .input-account {
+
+            .label {
                 display: none;
             }
-            input {
-            	 //border-bottom: 1px solid $colorText;
-            	 width: 230px;
-            }
-            // .account-to{
-            // 	.selectric-items {
-            // 		right: 0px;
-            // 		left: auto;
-            // 	}	
-            // }
             .selectric-items {
-            //    border: none;
+                //    border: none;
                 width: 250px !important;
                 left: auto;
-                right: 0px;
+                top: 25px;
+            }
+            .button {
+                top: -17px;
+            }
+            input {
+                width: 432px;
             }
         }
-        .bottom {
-        	
-            margin-top: 40px;
-            // .exchange-account{
-            // 	border-bottom:1px solid $boderInputItem1;
-            // }
-             .label {
+        .input-amount {
+            .label {
                 text-align: center;
                 background-color: transparent;
                 width: 100%;
                 margin: 0;
                 padding: 0px;
                 font-size: 18px;
-                color: #000;
-                //font-weight: bold;
-                cursor: pointer;
-                //display: none;
-            }
-            input{
-            	    margin-right: 5px;
-                width: 260px;
-                border-bottom: 1px solid $boderInputItem1;
-
-            }
-            .selectric-items {
-             //   border: none;
-                width: 150px !important;
+                //color: #000; //font-weight: bold;
+                cursor: pointer; //display: none;
             }
         }
+
         .usd-convert {
             align-items: center;
             justify-content: center;
@@ -296,61 +277,46 @@ $colorLableItem1:#777;
             margin-top: 8px;
             color: #aaa;
             display: flex;
-            label{
-                color:inherit;
-            }   
+            label {
+                color: inherit;
+            }
             span {
                 font-size: 15px;
                 margin-right: 5px;
             }
         }
-        .input-group-item {
-            //display: flex;
-            height: 90px;
-            .label-content {
-                color: $colorItem1;
-                font-size: 20px;
-                margin-right: 10px;
-                width: 40px;
-            }
-        }
-        .input-select {
-            display: flex;
-        }
-        .input-line {
-            margin-top: 30px;
-        }
-        .rate-wrapper{
 
-        	margin-top: 80px;
-        	text-align: center;
+        .rate-wrapper {
+
+            margin-top: 80px;
+            text-align: center;
+            h3 {
+                font-size: 13px;
+              //  color: #00bd70;
+            }
         }
         .rate {
             padding: 10px;
             border: 1px solid #999;
             border-radius: 5px;
-            
-            
-            display: inline-block;
-            //width: 600px;
+
+
+            display: inline-block; //width: 600px;
             //align-items: center;
             //justify-content: center;
             >div {
                 float: left;
                 text-align: center;
                 &:first-child {
-                    width: 200px;
-                    //padding-right:10px;
+                    width: 200px; //padding-right:10px;
                     border-right: 1px dashed #aaa;
                 }
                 &:nth-child(2) {
-                    width: 200px;
-                    //padding: 0 10px;
+                    width: 200px; //padding: 0 10px;
                     border-right: 1px dashed #aaa;
                 }
                 &:last-child {
-                    width: 230px;
-                    //padding-left:10px;
+                    width: 230px; //padding-left:10px;
                 }
                 span {
                     color: #aaa;
@@ -360,53 +326,46 @@ $colorLableItem1:#777;
             &.hide {
                 display: none;
             }
-        }
-        .destination-amount{
-            
-            display: flex;
-            align-items:center;
-            justify-content: space-between;
-            width: 700px;
-            margin:0 auto;
-            margin-top: 80px;
-
-            // .left{
-            //     float: left;
-            // }
-            .title{
-                font-weight: bold;
-            }
-            >div{
-                text-align: center;
-                >div{
-                    margin-bottom:10px;
-                
-                }
-            }
-            *{
-                    font-size: 15px;
-            }
-            &.hide{
-                display: none;
-            }
-        }
-
+        } // .destination-amount{
+        //     display: flex;
+        //     align-items:center;
+        //     justify-content: space-between;
+        //     width: 700px;
+        //     margin:0 auto;
+        //     margin-top: 80px;
+        //     // .left{
+        //     //     float: left;
+        //     // }
+        //     .title{
+        //         font-weight: bold;
+        //     }
+        //     >div{
+        //         text-align: center;
+        //         >div{
+        //             margin-bottom:10px;
+        //         }
+        //     }
+        //     *{
+        //             font-size: 15px;
+        //     }
+        //     &.hide{
+        //         display: none;
+        //     }
+        // }
     }
     .item-2 {
         padding-top: 60px;
-            margin-left: 200px;
+        margin-left: 200px;
         .intro {
             width: 350px;
-            text-align: center;
-            // label {
+            text-align: center; // label {
             //     font-size: 15px;
             //     color: #999;
             // }
             //margin:0 auto;
         }
         .input-space {
-            margin-left: 80px;
-            ///justify-content: center;
+            margin-left: 80px; ///justify-content: center;
             text-align: center;
             input {
                 width: 100px;
@@ -421,8 +380,7 @@ $colorLableItem1:#777;
             color: #999;
             margin-left: 10px;
         }
-    }
-    // .item-3 {
+    } // .item-3 {
     //     padding-top: 50px;
     //     .intro {
     //         p {
@@ -453,9 +411,8 @@ $colorLableItem1:#777;
             // align-items: center;
             // justify-content: center;
             margin: 0 auto;
-            
         }
-        p{
+        p {
             margin-top: 60px;
         }
     }
@@ -497,8 +454,7 @@ $colorLableItem1:#777;
         .item-3 {
             display: block;
         }
-    }
-    // .exchange-page[data-page='4'] {
+    } // .exchange-page[data-page='4'] {
     //     .step {
     //         * {
     //             background-color: $colorActive !important;
@@ -521,7 +477,7 @@ $colorLableItem1:#777;
         .item-4 {
             display: block;
         }
-        .next {
+        .navigation-btn {
             visibility: hidden;
         }
     }
