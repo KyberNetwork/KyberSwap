@@ -621,55 +621,32 @@
         color: #aaa; }
         .k-page-exchange .item-1 .input-item input:focus {
           outline: none; }
-      .k-page-exchange .item-1 .input-item .selectric {
+      .k-page-exchange .item-1 .input-item .select-wrapper {
+        width: 30px;
+        overflow: hidden; }
+      .k-page-exchange .item-1 .input-item select {
+        background-color: #fbfcfb;
+        cursor: pointer;
         border: none;
-        background: transparent;
-        overflow: initial; }
-      .k-page-exchange .item-1 .input-item .selected {
-        background-color: #009dea !important;
-        color: #fff !important; }
-      .k-page-exchange .item-1 .input-item .selectric-items {
-        border: none;
-        width: 250px !important; }
-      .k-page-exchange .item-1 .input-item .selectric-scroll li {
-        font-size: 18px;
-        text-align: center;
-        color: #aaa; }
-        .k-page-exchange .item-1 .input-item .selectric-scroll li:not(:last-child) {
-          border-bottom: 1px solid #eee; }
-        .k-page-exchange .item-1 .input-item .selectric-scroll li:hover {
-          background-color: #fff; }
-      .k-page-exchange .item-1 .input-item .label {
-        color: #aaa; }
-      .k-page-exchange .item-1 .input-item .button {
-        background: transparent;
-        right: -35px; }
-        .k-page-exchange .item-1 .input-item .button:after {
-          border-top-color: #aaa; }
+        margin-bottom: 0px; }
+        .k-page-exchange .item-1 .input-item select option {
+          padding: 10px 20px; }
+        .k-page-exchange .item-1 .input-item select:focus {
+          box-shadow: none; }
     .k-page-exchange .item-1 .extra-info {
       color: #aaa;
       font-size: 12px;
       margin-top: 10px; }
     .k-page-exchange .item-1 .error {
       font-size: 12px; }
-    .k-page-exchange .item-1 .input-account .label {
-      display: none; }
-    .k-page-exchange .item-1 .input-account .selectric-items {
-      width: 250px !important;
-      left: auto;
-      top: 25px; }
-    .k-page-exchange .item-1 .input-account .button {
-      top: -17px; }
     .k-page-exchange .item-1 .input-account input {
       width: 530px; }
-    .k-page-exchange .item-1 .input-amount .label {
-      text-align: center;
-      background-color: transparent;
-      width: 100%;
-      margin: 0;
-      padding: 0px;
-      font-size: 18px;
-      cursor: pointer; }
+    .k-page-exchange .item-1 .input-account select {
+      width: 100px;
+      position: relative;
+      left: -80px; }
+    .k-page-exchange .item-1 .input-amount select {
+      width: 80px; }
     .k-page-exchange .item-1 .usd-convert {
       align-items: center;
       justify-content: center;

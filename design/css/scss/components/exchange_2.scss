@@ -173,6 +173,9 @@ $colorLableItem1:#777;
                 input{
                 	color: $colorItem1;
                 }
+                // select{
+                // 	color: $colorItem1;	
+                // }
                 .button {	             
 	                &:after {
 	                    border-top-color: $colorItem1;
@@ -213,45 +216,60 @@ $colorLableItem1:#777;
                     outline: none;
                 }
             }
-            .selectric {
-                border: none;
-                background: transparent;
-                overflow: initial;
+            .select-wrapper{
+            	width: 30px;
+            	overflow: hidden;
             }
-
-            .selected {
-                background-color: $colorItem1Blue !important;
-                color: #fff !important;
+            select{
+            	background-color:#fbfcfb;
+            	//color:#aaa;
+            	cursor: pointer;
+            	border:none;
+            	margin-bottom:0px;
+            	option{
+            		padding: 10px 20px;
+            	}
+            	&:focus{
+            		box-shadow:none;
+            	}
             }
-            .selectric-items {
-                border: none;
-                width: 250px !important;
-            }
-            .selectric-scroll {
-                li {
-                    font-size: 18px;
-                    text-align: center;
-                    color: #aaa; //color: $corlor;
-                    &:not(:last-child) {
-                        border-bottom: 1px solid #eee;
-                    }
-                    &:hover {
-                        background-color: #fff;
-                    }
-                }
-            }
-            .label {
-                color: #aaa;
-            }
-            .button {
-                background: transparent;
-                right: -35px;
-                &:after {
-                    border-top-color: #aaa;
-                }
-            } // .label {               
-            //     display: none;
+            // .selectric {
+            //     border: none;
+            //     background: transparent;
+            //     overflow: initial;
             // }
+
+            // .selected {
+            //     background-color: $colorItem1Blue !important;
+            //     color: #fff !important;
+            // }
+            // .selectric-items {
+            //     border: none;
+            //     width: 250px !important;
+            // }
+            // .selectric-scroll {
+            //     li {
+            //         font-size: 18px;
+            //         text-align: center;
+            //         color: #aaa; //color: $corlor;
+            //         &:not(:last-child) {
+            //             border-bottom: 1px solid #eee;
+            //         }
+            //         &:hover {
+            //             background-color: #fff;
+            //         }
+            //     }
+            // }
+            // .label {
+            //     color: #aaa;
+            // }
+            // .button {
+            //     background: transparent;
+            //     right: -35px;
+            //     &:after {
+            //         border-top-color: #aaa;
+            //     }
+            // } 
         }
         .extra-info {
             // margin-left: 150px;
@@ -265,31 +283,39 @@ $colorLableItem1:#777;
         }
         .input-account {
 
-            .label {
-                display: none;
-            }
-            .selectric-items {
-                //    border: none;
-                width: 250px !important;
-                left: auto;
-                top: 25px;
-            }
-            .button {
-                top: -17px;
-            }
+            // .label {
+            //     display: none;
+            // }
+            // .selectric-items {
+            //     //    border: none;
+            //     width: 250px !important;
+            //     left: auto;
+            //     top: 25px;
+            // }
+            // .button {
+            //     top: -17px;
+            // }
             input {
                 width: 530px;
             }
+            select{
+            	width: 100px;
+            	position:relative;
+            	left: -80px;
+            }
         }
         .input-amount {
-            .label {
-                text-align: center;
-                background-color: transparent;
-                width: 100%;
-                margin: 0;
-                padding: 0px;
-                font-size: 18px; //color: #000; //font-weight: bold;
-                cursor: pointer; //display: none;
+            // .label {
+            //     text-align: center;
+            //     background-color: transparent;
+            //     width: 100%;
+            //     margin: 0;
+            //     padding: 0px;
+            //     font-size: 18px; //color: #000; //font-weight: bold;
+            //     cursor: pointer; //display: none;
+            // }
+            select{
+            	width: 80px;
             }
         }
 
