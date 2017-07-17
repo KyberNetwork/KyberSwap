@@ -388,6 +388,17 @@
   background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
 .k-page-wallet .import-wallet button {
   background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
+.k-page-wallet #tx-modal-wallet {
+  top: -460px !important; }
+.k-page-wallet .import-modal .modal-title {
+  text-align: center;
+  font-size: 25px;
+  padding: 10px 0px; }
+.k-page-wallet .import-modal label {
+  font-weight: bold; }
+.k-page-wallet .import-modal .submit-button {
+  text-align: right;
+  margin-top: 40px; }
 
 .k-page-account .wallet-item {
   border: 2px solid #00bd70;
@@ -525,16 +536,18 @@
         position: relative;
         z-index: 0;
         right: -5px; }
-  .k-page-exchange .next {
+  .k-page-exchange .navigation-btn {
     margin-top: 80px;
+    display: flex;
+    justify-content: space-between;
     text-align: right; }
-    .k-page-exchange .next button {
+    .k-page-exchange .navigation-btn button {
       cursor: pointer; }
-      .k-page-exchange .next button.disable .k-icon {
+      .k-page-exchange .navigation-btn button.disable .k-icon {
         background-position: -310px -195px; }
-      .k-page-exchange .next button:focus {
+      .k-page-exchange .navigation-btn button:focus {
         outline: none; }
-    .k-page-exchange .next.disable button {
+    .k-page-exchange .navigation-btn.disable button {
       background-color: #eee; }
   .k-page-exchange .error {
     margin-top: 10px;
@@ -546,7 +559,7 @@
       margin-right: 5px; }
     .k-page-exchange .error.hide {
       visibility: hidden; }
-  .k-page-exchange .page {
+  .k-page-exchange .exchange-page {
     margin-left: 50px; }
   .k-page-exchange .page-item {
     display: none; }
@@ -565,84 +578,75 @@
       outline: none;
       box-shadow: none;
       font-size: 18px; }
-  .k-page-exchange .title {
-    display: flex;
-    align-items: center; }
-    .k-page-exchange .title .k-icon {
-      margin-right: 10px; }
-    .k-page-exchange .title span {
-      font-weight: bold;
-      font-size: 20px;
-      color: #777; }
   .k-page-exchange input {
     color: #333; }
   .k-page-exchange .item-1 {
     padding-top: 60px; }
-    .k-page-exchange .item-1 .input-line {
-      display: flex;
-      justify-content: space-between; }
-    .k-page-exchange .item-1 .input-account {
-      display: flex;
-      border-bottom: 1px solid #aaa; }
-    .k-page-exchange .item-1 .exchange-account {
-      width: 280px;
-      display: flex; }
-      .k-page-exchange .item-1 .exchange-account input {
-        background: transparent;
-        border: none;
-        text-align: center;
-        font-size: 20px; }
-        .k-page-exchange .item-1 .exchange-account input:focus {
-          outline: none; }
-      .k-page-exchange .item-1 .exchange-account:hover .button:after {
-        border-top-color: #333; }
-      .k-page-exchange .item-1 .exchange-account .selectric {
-        border: none;
-        background: transparent;
-        overflow: initial; }
-      .k-page-exchange .item-1 .exchange-account .selected {
-        background-color: #009dea !important;
-        color: #fff !important; }
-      .k-page-exchange .item-1 .exchange-account .selectric-items {
-        border: none; }
-      .k-page-exchange .item-1 .exchange-account .selectric-scroll li {
-        font-size: 18px;
-        text-align: center;
-        color: #aaa; }
-        .k-page-exchange .item-1 .exchange-account .selectric-scroll li:not(:last-child) {
-          border-bottom: 1px solid #eee; }
-        .k-page-exchange .item-1 .exchange-account .selectric-scroll li:hover {
-          background-color: #fff; }
-      .k-page-exchange .item-1 .exchange-account .button {
-        background: transparent;
-        right: -35px; }
-        .k-page-exchange .item-1 .exchange-account .button:after {
+    .k-page-exchange .item-1 .input-group-item {
+      margin-left: 80px;
+      margin-bottom: 40px;
+      border: 1px solid #aaa;
+      padding: 20px;
+      width: 600px; }
+      .k-page-exchange .item-1 .input-group-item.focus {
+        border: 1px solid #000; }
+        .k-page-exchange .item-1 .input-group-item.focus > label {
+          font-weight: bold;
+          color: #000; }
+        .k-page-exchange .item-1 .input-group-item.focus input {
+          color: #333; }
+        .k-page-exchange .item-1 .input-group-item.focus .button:after {
           border-top-color: #333; }
-    .k-page-exchange .item-1 .top .label {
-      display: none; }
-    .k-page-exchange .item-1 .top input {
-      width: 230px; }
-    .k-page-exchange .item-1 .top .selectric-items {
-      width: 250px !important;
-      left: auto;
-      right: 0px; }
-    .k-page-exchange .item-1 .bottom {
-      margin-top: 40px; }
-      .k-page-exchange .item-1 .bottom .label {
+        .k-page-exchange .item-1 .input-group-item.focus .label {
+          color: #333; }
+      .k-page-exchange .item-1 .input-group-item > label {
+        font-size: 14px;
+        color: #aaa;
+        float: left;
+        position: absolute;
+        margin-top: -40px;
+        background-color: #fbfcfb;
         text-align: center;
-        background-color: transparent;
-        width: 100%;
-        margin: 0;
-        padding: 0px;
-        font-size: 18px;
-        color: #000;
-        cursor: pointer; }
-      .k-page-exchange .item-1 .bottom input {
-        margin-right: 5px;
-        width: 260px;
-        border-bottom: 1px solid #aaa; }
-      .k-page-exchange .item-1 .bottom .selectric-items {
-        width: 150px !important; }
+        padding: 5px 10px; }
+    .k-page-exchange .item-1 .input-item {
+      display: flex;
+      align-items: center; }
+      .k-page-exchange .item-1 .input-item input {
+        background: transparent;
+        border: none;
+        text-align: center;
+        font-size: 20px;
+        width: 495px;
+        height: 40px;
+        color: #aaa; }
+        .k-page-exchange .item-1 .input-item input:focus {
+          outline: none; }
+      .k-page-exchange .item-1 .input-item .select-wrapper {
+        width: 30px;
+        overflow: hidden; }
+      .k-page-exchange .item-1 .input-item select {
+        background-color: #fbfcfb;
+        cursor: pointer;
+        border: none;
+        margin-bottom: 0px; }
+        .k-page-exchange .item-1 .input-item select option {
+          padding: 10px 20px; }
+        .k-page-exchange .item-1 .input-item select:focus {
+          box-shadow: none; }
+    .k-page-exchange .item-1 .extra-info {
+      color: #aaa;
+      font-size: 12px;
+      margin-top: 10px; }
+    .k-page-exchange .item-1 .error {
+      font-size: 12px; }
+    .k-page-exchange .item-1 .input-account input {
+      width: 530px; }
+    .k-page-exchange .item-1 .input-account select {
+      width: 100px;
+      position: relative;
+      left: -80px; }
+    .k-page-exchange .item-1 .input-amount select {
+      width: 80px; }
     .k-page-exchange .item-1 .usd-convert {
       align-items: center;
       justify-content: center;
@@ -655,20 +659,11 @@
       .k-page-exchange .item-1 .usd-convert span {
         font-size: 15px;
         margin-right: 5px; }
-    .k-page-exchange .item-1 .input-group-item {
-      height: 90px; }
-      .k-page-exchange .item-1 .input-group-item .label-content {
-        color: #333;
-        font-size: 20px;
-        margin-right: 10px;
-        width: 40px; }
-    .k-page-exchange .item-1 .input-select {
-      display: flex; }
-    .k-page-exchange .item-1 .input-line {
-      margin-top: 30px; }
     .k-page-exchange .item-1 .rate-wrapper {
       margin-top: 80px;
       text-align: center; }
+      .k-page-exchange .item-1 .rate-wrapper h3 {
+        font-size: 13px; }
     .k-page-exchange .item-1 .rate {
       padding: 10px;
       border: 1px solid #999;
@@ -689,23 +684,6 @@
           color: #aaa;
           margin-top: 5px; }
       .k-page-exchange .item-1 .rate.hide {
-        display: none; }
-    .k-page-exchange .item-1 .destination-amount {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 700px;
-      margin: 0 auto;
-      margin-top: 80px; }
-      .k-page-exchange .item-1 .destination-amount .title {
-        font-weight: bold; }
-      .k-page-exchange .item-1 .destination-amount > div {
-        text-align: center; }
-        .k-page-exchange .item-1 .destination-amount > div > div {
-          margin-bottom: 10px; }
-      .k-page-exchange .item-1 .destination-amount * {
-        font-size: 15px; }
-      .k-page-exchange .item-1 .destination-amount.hide {
         display: none; }
   .k-page-exchange .item-2 {
     padding-top: 60px;
@@ -758,7 +736,7 @@
     color: #fff !important; }
   .k-page-exchange .exchange-page[data-page='4'] .item-4 {
     display: block; }
-  .k-page-exchange .exchange-page[data-page='4'] .next {
+  .k-page-exchange .exchange-page[data-page='4'] .navigation-btn {
     visibility: hidden; }
 
 body {
