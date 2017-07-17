@@ -584,22 +584,41 @@
     padding-top: 60px; }
     .k-page-exchange .item-1 .input-group-item {
       margin-left: 80px;
-      margin-bottom: 40px; }
+      margin-bottom: 40px;
+      border: 1px solid #aaa;
+      padding: 20px;
+      width: 600px; }
+      .k-page-exchange .item-1 .input-group-item.focus {
+        border: 1px solid #000; }
+        .k-page-exchange .item-1 .input-group-item.focus > label {
+          font-weight: bold;
+          color: #000; }
+        .k-page-exchange .item-1 .input-group-item.focus input {
+          color: #333; }
+        .k-page-exchange .item-1 .input-group-item.focus .button:after {
+          border-top-color: #333; }
+        .k-page-exchange .item-1 .input-group-item.focus .label {
+          color: #333; }
+      .k-page-exchange .item-1 .input-group-item > label {
+        font-size: 14px;
+        color: #aaa;
+        float: left;
+        position: absolute;
+        margin-top: -40px;
+        background-color: #fbfcfb;
+        text-align: center;
+        padding: 5px 10px; }
     .k-page-exchange .item-1 .input-item {
       display: flex;
       align-items: center; }
-      .k-page-exchange .item-1 .input-item > label {
-        font-size: 20px;
-        width: 150px;
-        color: #aaa; }
       .k-page-exchange .item-1 .input-item input {
         background: transparent;
         border: none;
+        text-align: center;
         font-size: 20px;
-        width: 400px;
+        width: 495px;
         height: 40px;
-        border-bottom: 1px solid #aaa;
-        color: #009dea; }
+        color: #aaa; }
         .k-page-exchange .item-1 .input-item input:focus {
           outline: none; }
       .k-page-exchange .item-1 .input-item .selectric {
@@ -621,19 +640,17 @@
         .k-page-exchange .item-1 .input-item .selectric-scroll li:hover {
           background-color: #fff; }
       .k-page-exchange .item-1 .input-item .label {
-        color: #009dea; }
+        color: #aaa; }
       .k-page-exchange .item-1 .input-item .button {
         background: transparent;
         right: -35px; }
         .k-page-exchange .item-1 .input-item .button:after {
-          border-top-color: #009dea; }
+          border-top-color: #aaa; }
     .k-page-exchange .item-1 .extra-info {
-      margin-left: 150px;
       color: #aaa;
       font-size: 12px;
       margin-top: 10px; }
     .k-page-exchange .item-1 .error {
-      margin-left: 150px;
       font-size: 12px; }
     .k-page-exchange .item-1 .input-account .label {
       display: none; }
@@ -644,7 +661,7 @@
     .k-page-exchange .item-1 .input-account .button {
       top: -17px; }
     .k-page-exchange .item-1 .input-account input {
-      width: 432px; }
+      width: 530px; }
     .k-page-exchange .item-1 .input-amount .label {
       text-align: center;
       background-color: transparent;

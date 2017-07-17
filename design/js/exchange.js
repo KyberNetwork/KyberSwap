@@ -19,17 +19,14 @@ $(document).ready(function(){
 		$(this).closest('.input-account').find('input').val($(this).val());
 	})
 
-	// $(".input-item input").on('focusin', function(){
-	// 	$('.input-group-item').removeClass('focus');
-	// 	$(this).closest('.input-group-item').addClass('focus');
-	// 	$('.k-page-exchange').addClass('blind');
+	$(".input-item input").on('focusin', function(){
+		$('.input-group-item').removeClass('focus');
+		$(this).closest('.input-group-item').addClass('focus');
 
-	// })
-	// $(".input-item input").on('focusout', function(){
-	// 	$('.input-group-item').removeClass('focus');	
-	// 	$('.k-page-exchange').removeClass('blind');
-
-	// })
+	})
+	$(".input-item input").on('focusout', function(){
+		$('.input-group-item').removeClass('focus');	
+	})
 	$('.error .close').on('click', function(){
 		$(this).closest('.error').addClass('hide');
 	})
