@@ -1,11 +1,12 @@
-import React from "react";
+import React from "react"
+import { toT } from "../../utils/converter"
 
 
 export class Balance extends React.Component {
   render() {
     return (
       <div>
-        <p>Ether: {this.props.balance} (wei)</p>
+        <p>Ether: {toT(this.props.balance)} (wei)</p>
       </div>
     )
   }
@@ -31,8 +32,8 @@ export class Token extends React.Component {
         <div class="name">
           {this.props.name}
         </div>
-        <div class="value text-gradient">
-          {this.props.balance}
+        <div class="value">
+          {toT(this.props.balance)}
         </div>
       </div>
     )

@@ -110,6 +110,9 @@ const exchangeForm = (state=initState, action) => {
       var step = state.step
       return {...initState, step: step}
     }
+    case "EXCHANGE_FORM_RESET_STEP": {
+      return {...state, step: 1 }
+    }
     case "EXCHANGE_FORM_NEXT_STEP": {
       return {...state, step: state.step + 1}
     }

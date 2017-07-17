@@ -10,7 +10,7 @@ import TransactionConfig from "./Elements/TransactionConfig"
 import Credential from "./Elements/Credential"
 import PostExchange from "./ExchangeForm/PostExchange"
 
-import { specifyGasLimit, specifyGasPrice } from "../actions/exchangeFormActions"
+import { specifyGasLimit, specifyGasPrice, resetStep } from "../actions/exchangeFormActions"
 
 
 @connect((store) => {
@@ -36,6 +36,11 @@ export default class ExchangeForm extends React.Component {
 
   specifyGasPrice(event) {
     this.props.dispatch(specifyGasPrice(event.target.value));
+  }
+
+  done = (event) => {
+    event.preventDefault()
+    this.props.dispatch(resetStep())
   }
 
   render() {
@@ -90,12 +95,13 @@ export default class ExchangeForm extends React.Component {
                 <Credential passphraseID={this.props.passphraseID} error={this.props.passwordError} />
               </div>
               <div class="page-item item-4">
-                  <span class="verify">
+                <span class="verify">
                   <i class="k-icon k-icon-verify"></i>
                 </span>
                 <p>
                   You are All Set. Your Exchange is Being Processed.
                 </p>
+                <button class="button" onClick={this.done}>Done</button>
               </div>
             </div>
             <div class="next" id="exchange-next">

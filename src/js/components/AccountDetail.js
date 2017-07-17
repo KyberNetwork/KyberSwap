@@ -1,9 +1,10 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from "react"
+import { connect } from "react-redux"
 import QRCode from "qrcode.react"
 
-import NameAndDesc from "./Account/NameAndDesc";
-import { Balance, Token, Nonce } from "./Account/Balance";
+import NameAndDesc from "./Account/NameAndDesc"
+import { Balance, Token, Nonce } from "./Account/Balance"
+import { toT } from "../utils/converter"
 
 @connect((store, props) => {
   var acc = store.accounts.accounts[props.address];
@@ -40,7 +41,7 @@ export default class AccountDetail extends React.Component {
               <div class="balance">
                 <label>Ether</label>
                 <span>
-                  {this.props.balance}
+                  {toT(this.props.balance)}
                 </span>
               </div>
               <div class="address">

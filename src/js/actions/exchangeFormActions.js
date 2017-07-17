@@ -70,6 +70,12 @@ export function emptyForm() {
   }
 }
 
+export function resetStep() {
+  return {
+    type: "EXCHANGE_FORM_RESET_STEP"
+  }
+}
+
 export function nextStep() {
   return {
     type: "EXCHANGE_FORM_NEXT_STEP"
