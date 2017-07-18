@@ -7,6 +7,19 @@ export function verifyAccount(addr) {
   return ethUtil.isValidAddress(addr) ? null : "invalid"
 }
 
+export function verifyKey(keystring) {
+  try {
+    var key = JSON.parse(keystring)
+    if (!key.address || key.address == "" || !key.crypto || key.crypto == "") {
+      return "Invalid keystore file"
+    }
+  } catch (e) {
+    console.log(e)
+    return "Malformed JSON keystore file"
+  }
+  return null
+}
+
 export function verifyToken(addr) {
   if (!ethUtil.isValidAddress(addr)) {
     return "invalid"

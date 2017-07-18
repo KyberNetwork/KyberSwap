@@ -19,7 +19,7 @@ const importKeystore = (state=initState, action) => {
       return {...state, desc: action.payload}
     }
     case "ACCOUNT_ERROR_THREW": {
-      return {...state, error: action.payload}
+      return {...state, error: action.payload, keystring: ""}
     }
     case "ACCOUNT_FORM_EMPTIED": {
       return {...initState}
