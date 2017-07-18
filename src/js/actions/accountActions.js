@@ -18,6 +18,7 @@ export function addAccount(address, keystring, name, desc) {
   }
 }
 
+
 export function updateAccount(ethereum, account) {
   return {
     type: "UPDATE_ACCOUNT",
@@ -26,6 +27,14 @@ export function updateAccount(ethereum, account) {
     })
   }
 }
+
+export function deleteAccount(address) {
+  return {
+    type: "DELETE_ACCOUNT",
+    payload: address
+  }
+}
+
 
 export function incManualNonceAccount(address) {
   return {

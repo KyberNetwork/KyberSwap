@@ -1,0 +1,93 @@
+import React from "react"
+import { connect } from "react-redux"
+
+//import Key from "./Elements/Key"
+import DropFile from "./Elements/DropFile"
+import Modal from 'react-modal';
+
+import { specifyName, specifyDesc, emptyForm } from "../actions/importKeystoreActions"
+import { addAccount } from "../actions/accountActions"
+
+const customStyles = {
+    overlay: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(10, 10, 10, 0.45)'
+    },
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        width: '400px'
+    }
+};
+@connect((store) => {
+  return {...store.importKeystore}
+})
+export default class ImportKeystoreModal extends React.Component {
+  specifyName = (event) => {
+    this.props.dispatch(specifyName(event.target.value))
+  }
+
+  specifyDesc = (event) => {
+    this.props.dispatch(specifyDesc(event.target.value))
+  }
+
+  importAccount = (event) => {
+    event.preventDefault()
+    this.props.dispatch(addAccount(
+    this.props.address, this.props.keystring,
+    this.props.name, this.props.desc))
+    this.props.dispatch(emptyForm())
+
+    this.props.onClose();
+  }
+
+  render() {
+    return (
+    	<Modal
+                  style={customStyles}
+                  isOpen={this.props.modalIsOpen}
+                  onRequestClose={this.props.onClose}         
+                  contentLabel="Import Modal"
+                >
+                  <div className="import-account">
+                    <div className="modal-title text-gradient">
+                        Import account
+                    </div>
+                    <div className="modal-body">
+                          <form >
+                              <div className="row">
+                                  <div className="large-12 columns">
+                                      <label>Name
+                                          <input value={this.props.name} onChange={this.specifyName} type="text" />
+                                      </label>
+                                  </div>
+                              </div>
+                              <div className="row">
+                                  <div className="large-12 columns">
+                                      <label>Import file                                
+                                      </label>
+                                      <div className="dropzone">
+                              <DropFile address={this.props.address}/>
+                           </div>                
+                                  </div>
+                              </div>
+                              <div className="row">
+                                  <div className="large-12 columns submit-button">
+                                      <button class="button" onClick={this.importAccount}>Add account</button>
+                                  </div>
+                              </div>
+                          </form>
+                      </div> 
+                  </div>                      
+                </Modal>  
+    )
+  }
+}

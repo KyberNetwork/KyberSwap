@@ -348,31 +348,38 @@ $colorLableItem1:#777;
             }
         }
         .rate {
-            padding: 10px;
+            //padding: 10px;
             border: 1px solid #999;
             border-radius: 5px;
 
 
-            display: inline-block; //width: 600px;
+            display: flex;
+
+            //display: inline-block; //width: 600px;
             //align-items: center;
             //justify-content: center;
             >div {
-                float: left;
+            //    float: left;
                 text-align: center;
+                padding:10px;
                 &:first-child {
-                    width: 200px; //padding-right:10px;
+                  //  width: 200px; //padding-right:10px;
                     border-right: 1px dashed #aaa;
+                    width: 40%;
                 }
                 &:nth-child(2) {
-                    width: 200px; //padding: 0 10px;
+                  //  width: 200px; //padding: 0 10px;
+                    width: 30%;
                     border-right: 1px dashed #aaa;
                 }
                 &:last-child {
-                    width: 230px; //padding-left:10px;
+                    width: 30%;
+                  //  width: 230px; //padding-left:10px;
                 }
                 span {
                     color: #aaa;
                     margin-top: 5px;
+                    word-wrap: break-word;
                 }
             }
             &.hide {

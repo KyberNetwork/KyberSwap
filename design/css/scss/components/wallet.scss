@@ -1,40 +1,40 @@
 $color:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
-$accountColor : #00bd70;
+$accountColor: #00bd70;
 $borderWidth:2px;
 $borderRadius: 5px;
 
 
 .k-page-wallet {
+    //modal
     .wallet-item {
         background-image: $color;
     }
+
     .title {
-        span{
-         background-image: $color;
+        span {
+            background-image: $color;
         }
     }
-    .import-wallet{
-        button{            
-          background-image: $color;
+    .import-wallet {
+        button {
+            background-image: $color;
         }
     }
-    #tx-modal-wallet{
-        top:-460px !important;        
+    #tx-modal-wallet {
+        top: -460px !important;
     }
-    .import-modal{
-        .modal-title{
+    .import-modal {
+        .modal-title {
             text-align: center;
             font-size: 25px;
-            padding:10px 0px;
-           // border-bottom: 1px solid #aaa;
+            padding: 10px 0px; // border-bottom: 1px solid #aaa;
         }
-        label{
+        label {
             font-weight: bold;
         }
-        .submit-button{
+        .submit-button {
             text-align: right;
-            margin-top: 40px;
-            // button{
+            margin-top: 40px; // button{
             //     color: #fff;
             //     padding:10px 20px;
             //     background-image: $color;
@@ -48,183 +48,227 @@ $borderRadius: 5px;
         }
     }
 }
+
 .k-page-account {
     .wallet-item {
-        border:$borderWidth solid $accountColor;
+        border: $borderWidth solid $accountColor;
         background-image: $accountColor;
-        border-radius:$borderRadius +2;
+        border-radius: $borderRadius +2;
     }
     .balance {
-        span{
+        span {
             color: $accountColor
         }
     }
     .title {
-        span{
-         background-color: $accountColor;
+        span {
+            background-color: $accountColor;
         }
     }
-    .import-wallet{
-        button{
-          background-color: $accountColor;
-        }
-    }
+
     .token-item {
-        .value{
+        .value {
             color: #aaa;
         }
     }
 }
-//.k-page-wallet {
-    .wallet-item {
-        // display: inline-block;
-        //    width: 100%;
-        max-width: 820px;
+
+.import-wallet {
+    button {
+        background-color: $accountColor;
+    }
+}
+
+.import-account {
+    .modal-title {
+        font-size: 20px;
+        text-align: center;
+    }
+    .modal-body label {
+        font-weight: bold;
+    }
+    .dropzone>div {
+        width: auto !important;
         cursor: pointer;
-        border-radius: $borderRadius;
-        
-        padding: $borderWidth;
-        margin-bottom: 30px;
-        margin-left: 20px;
-        >div {
-            display: flex;
-            border-radius: $borderRadius - 2;
-            width: 100%;
-            //float: left;
-            height: 100%;
-            background-color: #fff;
-            div {
-                //  float: left;
-                &.wallet-left {
-                    width: 40%;
-                }
-                &.wallet-center {
-                    width: 60%;
-                }
-                // &.wallet-right {
-                //     width: 20%;
-                // }
-            }
-        }
-        .wallet-left {
-            .title {
-                display: inline-block;
-                width: 100%;
-                >span {
-                    float: left;
-                    padding: 5px 60px;
-                    //background-image: $color;
-                    text-align: center;
-                    color: white;
-                    display: inline-block;
-                    border-radius: 5px;
-                    top: -2px;
-                    left: -2px;
-                    position: relative;
-                }
-            }
-            .content {
-                padding-left: 20px;
-                padding-top: 10px;
-                padding-bottom: 5px;
-            }
-            .address {
-                margin-top: 20px;
-                span {
-                    font-size: 11px;
-                    color: #aaa;
-                }
-                >div {
-                    text-align: center;
-                    padding: 10px;
-                }
-            }
-            .created {
-                margin-top: 10px;
-            }
-        }
-        .wallet-center {
-            .row {
-                display: flex;
-                justify-content: space-between;
-            }
-        }
-        .balance {
-            color: $color;
-        }
-        .token-item {
-            padding: 20px;
-            text-align: center;
-            img {
-                max-width: 50px;
-            }
-            .name {
-                font-size: 13px;
-                text-transform: uppercase;
-            }
-            .value {
-                font-size: 11px;
-            }
-        }
-        &:hover {
-            .control-btn {
-                visibility: visible;
-            }
-        }
-        .control-btn {
-                visibility: hidden;
-                float: left;
-                margin-left: 10px;
-                button{
-                    margin-left: 10px;
-                    cursor: pointer;
-                    &:focus{
-                        outline: none;
-                    }
-                }
-            }
-        // .wallet-right {
-        //     visibility: hidden;
-        //     display: flex;
-        //     justify-content: center;
-        //     align-items: center;
-        //     button {
-        //         margin-left: 20px;
-        //         cursor: pointer;
-        //         &:focus{
-        //             outline: none;
-        //         }
-        //     }
-        //     //.delete{
-        //     // .k-tooltip-content {
-        //     //     left: -28px;
-        //     //     top: -35px;
-        //     // }
-        //     //}
-        // }
     }
-    .import-wallet {
-        display: inline-block;
-        width: 100%;
+    .file-name {
+        padding: 10px;
+        font-size: 13px;
+        color: #aaa;
+    }
+    .submit-button {
         text-align: right;
-        padding-right: 100px;
-        button {
-            width: 70px;
-            height: 70px;
-          //  background-image: $color;
-            border-radius: 70px;
-            color: #fff;
-            font-size: 60px;
-            position: fixed;
-            bottom: 40px;
-             cursor: pointer;             
-             &:focus{
-                    outline: none;
-                }
+        margin-top: 40px;
+    }
+}
+
+//.k-page-wallet {
+.wallet-item {
+    // display: inline-block;
+    //    width: 100%;
+    max-width: 820px;
+    cursor: pointer;
+    border-radius: $borderRadius;
+
+    padding: $borderWidth;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    >div {
+        display: flex;
+        border-radius: $borderRadius - 2;
+        width: 100%; //float: left;
+        height: 100%;
+        background-color: #fff;
+        div {
+            //  float: left;
+            &.wallet-left {
+                width: 40%;
+            }
+            &.wallet-center {
+                width: 60%;
+            } // &.wallet-right {
+            //     width: 20%;
+            // }
         }
     }
-    
-    // button {
-    //     cursor: pointer;
+    .wallet-left {
+        .title {
+            display: inline-block;
+            width: 100%;
+            >span {
+                float: left;
+                padding: 5px 60px; //background-image: $color;
+                text-align: center;
+                color: white;
+                display: inline-block;
+                border-radius: 5px;
+                top: -2px;
+                left: -2px;
+                position: relative;
+            }
+        }
+        .content {
+            padding-left: 20px;
+            padding-top: 10px;
+            padding-bottom: 5px;
+        }
+        .address {
+            margin-top: 20px;
+            span {
+                font-size: 11px;
+                color: #aaa;
+            }
+            >div {
+                text-align: center;
+                padding: 10px;
+            }
+        }
+        .created {
+            margin-top: 10px;
+        }
+    }
+    .wallet-center {
+        .row {
+            // display: flex;
+            // justify-content: space-between;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-align-items: center;
+            align-items: center;
+            -webkit-justify-content: space-between;
+            justify-content: space-between;
+            /* You can set flex-wrap and flex-direction individually */
+            -webkit-flex-direction: row;
+            flex-direction: row;
+            -webkit-flex-wrap: wrap;
+            flex-wrap: wrap;
+            /* Or do it all in one line with flex flow */
+            -webkit-flex-flow: row wrap;
+            flex-flow: row wrap;
+            /* tweak the where items line up on the row */
+            /* valid values are: flex-start, flex-end, space-between, space-around, stretch */
+            -webkit-align-content: flex-end;
+            align-content: flex-end;
+        }
+    }
+    .balance {
+        color: $color;
+    }
+    .token-item {
+        padding: 20px;
+        text-align: center;
+        >div {
+            &:not(:last-child) {
+                margin-bottom: 8px;
+            }
+        }
+        img {
+            width: 80%;
+        }
+        .name {
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+        .value {
+            font-size: 11px;
+        }
+    }
+    &:hover {
+        .control-btn {
+            visibility: visible;
+        }
+    }
+    .control-btn {
+        visibility: hidden;
+        float: left;
+        margin-left: 10px;
+        button {
+            margin-left: 10px;
+            cursor: pointer;
+            &:focus {
+                outline: none;
+            }
+        }
+    } // .wallet-right {
+    //     visibility: hidden;
+    //     display: flex;
+    //     justify-content: center;
+    //     align-items: center;
+    //     button {
+    //         margin-left: 20px;
+    //         cursor: pointer;
+    //         &:focus{
+    //             outline: none;
+    //         }
+    //     }
+    //     //.delete{
+    //     // .k-tooltip-content {
+    //     //     left: -28px;
+    //     //     top: -35px;
+    //     // }
+    //     //}
     // }
+}
+
+.import-wallet {
+    display: inline-block;
+    width: 100%;
+    text-align: right;
+    padding-right: 100px;
+    button {
+        width: 70px;
+        height: 70px; //  background-image: $color;
+        border-radius: 70px;
+        color: #fff;
+        font-size: 60px;
+        position: fixed;
+        bottom: 40px;
+        cursor: pointer;
+        &:focus {
+            outline: none;
+        }
+    }
+} // button {
+//     cursor: pointer;
+// }
 //}
