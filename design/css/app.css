@@ -427,14 +427,14 @@
     height: 100%;
     background-color: #fff; }
     .wallet-item > div div.wallet-left {
-      width: 30%; }
+      width: 40%; }
     .wallet-item > div div.wallet-center {
-      width: 50%; }
-    .wallet-item > div div.wallet-right {
-      width: 20%; }
+      width: 60%; }
   .wallet-item .wallet-left .title {
+    display: inline-block;
     width: 100%; }
-    .wallet-item .wallet-left .title span {
+    .wallet-item .wallet-left .title > span {
+      float: left;
       padding: 5px 60px;
       text-align: center;
       color: white;
@@ -458,7 +458,8 @@
   .wallet-item .wallet-left .created {
     margin-top: 10px; }
   .wallet-item .wallet-center .row {
-    display: flex; }
+    display: flex;
+    justify-content: space-between; }
   .wallet-item .balance {
     color: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
   .wallet-item .token-item {
@@ -471,17 +472,16 @@
       text-transform: uppercase; }
     .wallet-item .token-item .value {
       font-size: 11px; }
-  .wallet-item:hover .wallet-right {
+  .wallet-item:hover .control-btn {
     visibility: visible; }
-  .wallet-item .wallet-right {
+  .wallet-item .control-btn {
     visibility: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center; }
-    .wallet-item .wallet-right button {
-      margin-left: 20px;
+    float: left;
+    margin-left: 10px; }
+    .wallet-item .control-btn button {
+      margin-left: 10px;
       cursor: pointer; }
-      .wallet-item .wallet-right button:focus {
+      .wallet-item .control-btn button:focus {
         outline: none; }
 
 .import-wallet {
@@ -578,8 +578,11 @@
       outline: none;
       box-shadow: none;
       font-size: 18px; }
-  .k-page-exchange input {
-    color: #333; }
+  .k-page-exchange input, .k-page-exchange textarea {
+    color: #333;
+    box-shadow: none; }
+    .k-page-exchange input:focus, .k-page-exchange textarea:focus {
+      box-shadow: none; }
   .k-page-exchange .item-1 {
     padding-top: 60px; }
     .k-page-exchange .item-1 .input-group-item {
