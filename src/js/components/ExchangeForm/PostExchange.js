@@ -194,7 +194,7 @@ export default class PostExchange extends React.Component {
       errorDiv = ""
     }
     return (
-      <div>
+      <div class="navigation-btn">
         {errorDiv}
         { this.props.step != 1 ? <button class="button" onClick={this.back}>Back</button> : "" }
         &nbsp;

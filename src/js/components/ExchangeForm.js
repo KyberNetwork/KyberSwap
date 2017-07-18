@@ -69,18 +69,10 @@ export default class ExchangeForm extends React.Component {
             </div>
             <div class="page">
               <div class="page-item item-1">
-                <div class="top">
-                  <div class="input-line">
-                    <UserSelect />
-                    <RecipientSelect />
-                  </div>
-                </div>
-                <div class="bottom">
-                  <div class="input-line">
-                    <TokenSource />
-                    <TokenDest />
-                  </div>
-                </div>
+                <UserSelect />
+                <RecipientSelect />
+                <TokenSource />
+                <TokenDest />
                 <ExchangeRate />
               </div>
               <div class="page-item item-2">

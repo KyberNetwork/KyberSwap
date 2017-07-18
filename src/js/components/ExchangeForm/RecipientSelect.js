@@ -39,17 +39,16 @@ export default class RecipientSelect extends React.Component {
       </div>)
     }
     return (
-      <div class="input-group-item label-text">
-        <div class="exchange-account exchange-input account-to">
-          <div class="input-account">
-            <label class="label-content">to</label>
-            <input type="text" value={this.props.destAddress} onChange={this.specifyDestAddress.bind(this)} value={this.props.destAddress} />
+      <div class="input-group-item input-account">
+        <label>Send to</label>
+        <div class="input-item">
+          <input type="text" value={this.props.destAddress} onChange={this.specifyDestAddress.bind(this)} value={this.props.destAddress} />
+          <div class="select-wrapper">
+            <select class="selectric" id="to-account" value={this.props.destAddress} onChange={this.selectAccount.bind(this)}>
+              <option key="1" value="">No account selected</option>
+              {userOptions}
+            </select>
           </div>
-
-          <select class="selectric" id="to-account" value={this.props.destAddress} onChange={this.selectAccount.bind(this)}>
-            <option key="1" value="">No account selected</option>
-            {userOptions}
-          </select>
         </div>
         { error }
       </div>

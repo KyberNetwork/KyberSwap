@@ -30,9 +30,9 @@ export default class ExchangeRate extends React.Component {
   render() {
     return (
       <div class="rate-wrapper">
-        <div>
+        <h3>
           Deal offered from KyberNetwork
-        </div>
+        </h3>
         <div class="rate">
           <div>
             <label>Exchange Rate</label>

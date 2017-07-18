@@ -35,16 +35,16 @@ export default class UserSelect extends React.Component {
       </div>)
     }
     return (
-      <div class="input-group-item label-text">
-        <div class="exchange-account exchange-input account-from">
-          <div class="input-account">
-            <label class="label-content">from</label>
-            <input value={this.props.selectedAccount} type="text" disabled />
+      <div class="input-group-item input-account">
+        <label>Exchange from</label>
+        <div class="input-item">
+          <input value={this.props.selectedAccount} type="text" disabled />
+          <div class="select-wrapper">
+            <select class="selectric" id="from-account" value={this.props.selectedAccount} onChange={this.selectAccount.bind(this)}>
+              <option key="1" value="">No account selected</option>
+              {userOptions}
+            </select>
           </div>
-          <select class="selectric" id="from-account" value={this.props.selectedAccount} onChange={this.selectAccount.bind(this)}>
-            <option key="1" value="">No account selected</option>
-            {userOptions}
-          </select>
         </div>
         { error }
       </div>)

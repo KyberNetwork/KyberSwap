@@ -57,22 +57,21 @@ export default class TokenDest extends React.Component {
       </div>)
     }
     return (
-    <div class="input-group-item label-text">
-      <div>
-        <div class="exchange-account">
+      <div class="input-group-item">
+        <label>For at least</label>
+        <div class="input-item input-amount">
           <input value={toT(this.props.specifiedMinAmount)} type="number" min="0" step="any" placeholder="Exchange for at least" onChange={this.specifyMinAmount}/>
           <select class="selectric" value={this.props.destToken} onChange={this.selectToken.bind(this)}>
             <option key={constants.ETHER_ADDRESS} value={constants.ETHER_ADDRESS}>ETH</option>
             {tokenOptions}
           </select>
         </div>
-        <div class="usd-convert">
-          <label>Your min conversion rate: </label>
-          <span>{toT(this.props.minConversionRate)}</span>
+        <div class="extra-info">
+          Your min conversion rate: {toT(this.props.minConversionRate)}
         </div>
+        { error }
+        { destTokenError }
       </div>
-      { error }
-      { destTokenError }
-    </div>)
+      )
   }
 }

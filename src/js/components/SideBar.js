@@ -61,9 +61,6 @@ export default class SideBar extends React.Component {
           </div>
           <div>Transactions</div>
         </div>
-        <div class="k-header-footer">
-            KyberWallet - Official ethereum wallet from KybetNetwork
-        </div>
       </div>
     )
   }
