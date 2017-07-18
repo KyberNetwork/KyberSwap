@@ -154,8 +154,12 @@ $colorLableItem1:#777;
             font-size: 18px; // color: #999;
         }
     }
-    input {
-        color: $colorInput;
+    input,textarea {
+        color: $colorInput;        
+        box-shadow:none;
+        &:focus{
+            box-shadow:none;
+        }
     }
     .item-1 {
         padding-top: 60px;
