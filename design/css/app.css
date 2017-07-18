@@ -38,8 +38,14 @@
     font-size: 20px;
     color: #aaa;
     height: 40px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
     padding: 0px;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
     align-items: center;
     padding-left: 20px; }
     .k-header .k-header-menu a .k-icon {
@@ -109,6 +115,8 @@
   cursor: default; }
 
 .text-gradient {
+  background: -webkit-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
+  background: -o-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
   background: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent; }
@@ -255,6 +263,7 @@
     display: block; }
   .k-page-account .acc-item:not(:last-child) {
     margin-bottom: 20px; }
+
 .k-page-account .acc-title {
   padding: 5px 20px;
   cursor: pointer;
@@ -266,6 +275,7 @@
     position: relative;
     top: 1px;
     float: right; }
+
 .k-page-account .acc-body {
   font-size: 13px;
   padding-left: 20px;
@@ -273,14 +283,18 @@
   padding-top: 5px;
   padding-bottom: 15px;
   color: #aaa; }
+
 .k-page-account .acc-address .k-icon {
   position: relative;
   top: 3px; }
+
 .k-page-account .acc-balance {
   margin-top: 5px; }
+
 .k-page-account .acc-balance,
 .k-page-account .acc-content {
   font-size: 14px; }
+
 .k-page-account .acc-body-token {
   margin-top: 20px;
   display: none; }
@@ -289,7 +303,13 @@
   .k-page-account .acc-body-token img {
     height: 50px; }
   .k-page-account .acc-body-token .token-item > div > div {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
     align-items: center; }
   .k-page-account .acc-body-token .token-item:not(:last-child) {
     margin-bottom: 10px; }
@@ -299,6 +319,7 @@
 .k-page-transaction tbody,
 .k-page-transaction tr {
   border: none; }
+
 .k-page-transaction table {
   text-align: center;
   color: #999;
@@ -342,6 +363,7 @@
     background-color: #8bc34a; }
   .k-page-transaction table .fail:before {
     background-color: #e74c3c; }
+
 .k-page-transaction #tx-modal {
   font-size: 13px;
   padding: 0px;
@@ -378,24 +400,37 @@
       float: left; }
     .k-page-transaction #tx-modal .modal-extra .right {
       float: right; }
+
 .k-page-transaction .load-more {
   text-align: center;
   margin-top: 40px; }
 
 .k-page-wallet .wallet-item {
+  background-image: -webkit-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
+  background-image: -o-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
   background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
+
 .k-page-wallet .title span {
+  background-image: -webkit-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
+  background-image: -o-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
   background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
+
 .k-page-wallet .import-wallet button {
+  background-image: -webkit-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
+  background-image: -o-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
   background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
+
 .k-page-wallet #tx-modal-wallet {
   top: -460px !important; }
+
 .k-page-wallet .import-modal .modal-title {
   text-align: center;
   font-size: 25px;
   padding: 10px 0px; }
+
 .k-page-wallet .import-modal label {
   font-weight: bold; }
+
 .k-page-wallet .import-modal .submit-button {
   text-align: right;
   margin-top: 40px; }
@@ -404,12 +439,16 @@
   border: 2px solid #00bd70;
   background-image: #00bd70;
   border-radius: 7px; }
+
 .k-page-account .balance span {
   color: #00bd70; }
+
 .k-page-account .title span {
   background-color: #00bd70; }
+
 .k-page-account .import-wallet button {
   background-color: #00bd70; }
+
 .k-page-account .token-item .value {
   color: #aaa; }
 
@@ -421,6 +460,9 @@
   margin-bottom: 30px;
   margin-left: 20px; }
   .wallet-item > div {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
     border-radius: 3px;
     width: 100%;
@@ -458,7 +500,13 @@
   .wallet-item .wallet-left .created {
     margin-top: 10px; }
   .wallet-item .wallet-center .row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
     justify-content: space-between; }
   .wallet-item .balance {
     color: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
@@ -507,10 +555,22 @@
   .k-page-exchange .k-progress {
     text-align: center; }
     .k-page-exchange .k-progress .progress-bar {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
       display: flex;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
       justify-content: center; }
     .k-page-exchange .k-progress .step {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
       display: flex;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
       align-items: center; }
       .k-page-exchange .k-progress .step.step-1 {
         right: -10px;
@@ -525,6 +585,8 @@
         width: 25px;
         height: 25px;
         border-radius: 25px;
+        -webkit-flex-shrink: 0;
+        -ms-flex-negative: 0;
         flex-shrink: 0;
         position: relative;
         z-index: 2; }
@@ -532,13 +594,21 @@
         height: 8px;
         width: 90px;
         background: #ebebec;
+        -webkit-flex-shrink: 0;
+        -ms-flex-negative: 0;
         flex-shrink: 0;
         position: relative;
         z-index: 0;
         right: -5px; }
   .k-page-exchange .navigation-btn {
     margin-top: 80px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
     justify-content: space-between;
     text-align: right; }
     .k-page-exchange .navigation-btn button {
@@ -553,7 +623,13 @@
     margin-top: 10px;
     font-size: 13px;
     color: #e74c3c;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
     align-items: center; }
     .k-page-exchange .error .k-icon {
       margin-right: 5px; }
@@ -564,6 +640,9 @@
   .k-page-exchange .page-item {
     display: none; }
   .k-page-exchange .input-space {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
     margin-top: 30px;
     margin-left: 50px; }
@@ -576,12 +655,15 @@
       border-bottom: 1px solid;
       background-color: transparent;
       outline: none;
+      -webkit-box-shadow: none;
       box-shadow: none;
       font-size: 18px; }
   .k-page-exchange input, .k-page-exchange textarea {
     color: #333;
+    -webkit-box-shadow: none;
     box-shadow: none; }
     .k-page-exchange input:focus, .k-page-exchange textarea:focus {
+      -webkit-box-shadow: none;
       box-shadow: none; }
   .k-page-exchange .item-1 {
     padding-top: 60px; }
@@ -612,7 +694,13 @@
         text-align: center;
         padding: 5px 10px; }
     .k-page-exchange .item-1 .input-item {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
       display: flex;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
       align-items: center; }
       .k-page-exchange .item-1 .input-item input {
         background: transparent;
@@ -635,6 +723,7 @@
         .k-page-exchange .item-1 .input-item select option {
           padding: 10px 20px; }
         .k-page-exchange .item-1 .input-item select:focus {
+          -webkit-box-shadow: none;
           box-shadow: none; }
     .k-page-exchange .item-1 .extra-info {
       color: #aaa;
@@ -651,11 +740,20 @@
     .k-page-exchange .item-1 .input-amount select {
       width: 80px; }
     .k-page-exchange .item-1 .usd-convert {
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
       align-items: center;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
       justify-content: center;
       font-size: 14px;
       margin-top: 8px;
       color: #aaa;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
       display: flex; }
       .k-page-exchange .item-1 .usd-convert label {
         color: inherit; }
@@ -760,10 +858,11 @@ body {
   width: 1200px;
   margin: 0 auto;
   background-color: #fff;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex; }
 
 .k-contenter {
   background-color: #fbfcfb;
   padding: 30px 20px  20px 20px; }
-
-/*# sourceMappingURL=app.css.map */
