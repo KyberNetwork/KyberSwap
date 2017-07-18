@@ -10,15 +10,12 @@ export default class NodeSwitch extends React.Component {
           <i class="k-icon k-icon-node"></i> Node
         </div>
         <div class="node-select">
-          <div class="k-select">
-            <div class="k-select-display">Infura Kovan</div>
-            <div class="k-select-option">
-              <div class="selected">Infura Kovan</div>
-              <div>Etherscan</div>
-              <div>KyberNetwork</div>
-              <div>Local</div>
-            </div>
-          </div>
+          <select class="selectric">
+            <option>Infura Kovan</option>
+            <option>Kyber Kovan</option>
+            <option>Etherscan</option>
+            <option>Local</option>
+          </select>
         </div>
       </div>
     )

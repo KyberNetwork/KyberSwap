@@ -1,28 +1,57 @@
 import React from "react"
 import { connect } from "react-redux"
+import Select from 'react-select'
 
 import { specifyRecipient } from "../../actions/exchangeFormActions"
 
 
 @connect((store) => {
   return {
+    accounts: Object.keys(store.accounts.accounts).map((key) => {
+      return {
+        address: store.accounts.accounts[key].address,
+        name: store.accounts.accounts[key].name,
+      };
+    }),
     destAddress: store.exchangeForm.destAddress,
+    error: store.exchangeForm.errors["destAddressError"],
   }
 })
 export default class RecipientSelect extends React.Component {
 
   specifyDestAddress(event) {
-    this.props.dispatch(specifyRecipient(event.target.value));
+    this.props.dispatch(specifyRecipient(event.target.value))
+  }
+
+  selectAccount(event) {
+    this.props.dispatch(specifyRecipient(event.target.value))
   }
 
   render() {
+    var userOptions = this.props.accounts.map((acc, index) => {
+      return <option key={acc.address} value={acc.address}>{acc.name}</option>
+    })
+    var error
+    if (this.props.error && this.props.error != "") {
+      error = (<div class="error">
+        <i class="k-icon k-icon-error"></i>
+        Selected address is {this.props.error}
+      </div>)
+    }
     return (
-    <label>
-      Recipient address:
-      <div>
-        <input type="text" value={this.props.destAddress} onChange={this.specifyDestAddress.bind(this)} value={this.props.destAddress} />
+      <div class="input-group-item input-account">
+        <label>Send to</label>
+        <div class="input-item">
+          <input type="text" value={this.props.destAddress} onChange={this.specifyDestAddress.bind(this)} value={this.props.destAddress} />
+          <div class="select-wrapper">
+            <select class="selectric" id="to-account" value={this.props.destAddress} onChange={this.selectAccount.bind(this)}>
+              <option key="1" value="">No account selected</option>
+              {userOptions}
+            </select>
+          </div>
+        </div>
+        { error }
       </div>
-      Specified recipient address: {this.props.destAddress}
-    </label>)
+    )
   }
 }

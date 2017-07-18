@@ -1,15 +1,16 @@
 export default class Token {
-  constructor(name, icon, address, owner, balance) {
-    this.name = name;
-    this.icon = icon;
-    this.address = address;
-    this.ownerAddress = owner;
-    this.balance = balance || 0;
+  constructor(name, icon, symbol, address, owner, balance) {
+    this.name = name
+    this.icon = icon
+    this.symbol = symbol
+    this.address = address
+    this.ownerAddress = owner
+    this.balance = balance || 0
   }
 
   shallowClone() {
     return new Token(
-      this.name, this.icon, this.address,
+      this.name, this.icon, this.symbol, this.address,
       this.ownerAddress, this.balance)
   }
 

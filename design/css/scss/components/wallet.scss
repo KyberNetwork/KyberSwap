@@ -18,6 +18,35 @@ $borderRadius: 5px;
           background-image: $color;
         }
     }
+    #tx-modal-wallet{
+        top:-460px !important;        
+    }
+    .import-modal{
+        .modal-title{
+            text-align: center;
+            font-size: 25px;
+            padding:10px 0px;
+           // border-bottom: 1px solid #aaa;
+        }
+        label{
+            font-weight: bold;
+        }
+        .submit-button{
+            text-align: right;
+            margin-top: 40px;
+            // button{
+            //     color: #fff;
+            //     padding:10px 20px;
+            //     background-image: $color;
+            //     &:focus{
+            //         outline: none;
+            //     }
+            //     &:hover{
+            //         background-image: darken($color,10%);
+            //     }
+            // }
+        }
+    }
 }
 .k-page-account {
     .wallet-item {
@@ -67,20 +96,22 @@ $borderRadius: 5px;
             div {
                 //  float: left;
                 &.wallet-left {
-                    width: 30%;
+                    width: 40%;
                 }
                 &.wallet-center {
-                    width: 50%;
+                    width: 60%;
                 }
-                &.wallet-right {
-                    width: 20%;
-                }
+                // &.wallet-right {
+                //     width: 20%;
+                // }
             }
         }
         .wallet-left {
             .title {
+                display: inline-block;
                 width: 100%;
-                span {
+                >span {
+                    float: left;
                     padding: 5px 60px;
                     //background-image: $color;
                     text-align: center;
@@ -115,6 +146,7 @@ $borderRadius: 5px;
         .wallet-center {
             .row {
                 display: flex;
+                justify-content: space-between;
             }
         }
         .balance {
@@ -135,29 +167,41 @@ $borderRadius: 5px;
             }
         }
         &:hover {
-            .wallet-right {
+            .control-btn {
                 visibility: visible;
             }
         }
-        .wallet-right {
-            visibility: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            button {
-                margin-left: 20px;
-                cursor: pointer;
-                &:focus{
-                    outline: none;
+        .control-btn {
+                visibility: hidden;
+                float: left;
+                margin-left: 10px;
+                button{
+                    margin-left: 10px;
+                    cursor: pointer;
+                    &:focus{
+                        outline: none;
+                    }
                 }
             }
-            //.delete{
-            // .k-tooltip-content {
-            //     left: -28px;
-            //     top: -35px;
-            // }
-            //}
-        }
+        // .wallet-right {
+        //     visibility: hidden;
+        //     display: flex;
+        //     justify-content: center;
+        //     align-items: center;
+        //     button {
+        //         margin-left: 20px;
+        //         cursor: pointer;
+        //         &:focus{
+        //             outline: none;
+        //         }
+        //     }
+        //     //.delete{
+        //     // .k-tooltip-content {
+        //     //     left: -28px;
+        //     //     top: -35px;
+        //     // }
+        //     //}
+        // }
     }
     .import-wallet {
         display: inline-block;
@@ -179,6 +223,7 @@ $borderRadius: 5px;
                 }
         }
     }
+    
     // button {
     //     cursor: pointer;
     // }
