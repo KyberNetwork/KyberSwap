@@ -1,7 +1,9 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import Key from "./Elements/Key"
+//import Key from "./Elements/Key"
+import DropFile from "./Elements/DropFile"
+
 import { specifyName, specifyDesc, emptyForm } from "../actions/importKeystoreActions"
 import { addAccount } from "../actions/accountActions"
 
@@ -34,7 +36,7 @@ export default class ImportKeystore extends React.Component {
             Account name:
             <input value={this.props.name} onChange={this.specifyName} type="text" />
           </label>
-          <Key address={this.props.address}/>
+          <DropFile address={this.props.address}/>
           <p>Associate address: {this.props.address}</p>
           <p>Error: {this.props.error}</p>
           <button class="button" onClick={this.importAccount}>Add account</button>

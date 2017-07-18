@@ -3,6 +3,7 @@ $corlor :#aaa;
 .k-header {
     background-color: #fff;
     //left: 0px;
+    overflow: auto;
     top: 0px;
     min-height: 500px;
     .k-header-logo {
@@ -80,7 +81,7 @@ $corlor :#aaa;
                     position: absolute;
                     left: 0px;
                     top: 0px;
-                    background-color: #00965e
+                    background-color: #00bd70;
                 }
             }
         }
@@ -99,9 +100,18 @@ $corlor :#aaa;
         }
         .node-select {
             //padding-left: $paddingLeft;
+            text-align: center;
+            select{
+                width: 150px;
+                cursor: pointer;
+                box-shadow:none;
+                &:focus{
+                    box-shadow:none;
+                }
+            }
             .selectric{
                   border: none;
-                  background: transparent;
+                 // background: transparent;
             }
             .label{
                 text-align: center;

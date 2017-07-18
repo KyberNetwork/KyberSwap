@@ -86,11 +86,19 @@ const accounts = (state=initState, action) => {
       return {...state,
         accounts: newAccounts}
     }
-    case "NEW_ACCOUNT_ADDED_FULFILLED": {
+    case "DELETE_ACCOUNT": {    
+      var newAccounts = {...state.accounts}
+      var address = action.payload
+      console.log(address)
+      console.log(newAccounts)
+      delete(newAccounts[address])      
+      return {...state, accounts: newAccounts}
+    }
+    case "NEW_ACCOUNT_ADDED_FULFILLED": {    
       var newAccounts = {...state.accounts}
       newAccounts[action.payload.address] = action.payload
       return {...state, accounts: newAccounts}
-    }
+    }    
   }
   return state;
 }
