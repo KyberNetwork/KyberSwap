@@ -21,7 +21,7 @@ export default class Wallets extends React.Component {
       <div class="k-page k-page-account">
         <div id="wallet-list">
           {accDetails}
-        </div>        
+        </div>
       </div>
     )
   }

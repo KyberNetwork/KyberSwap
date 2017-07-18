@@ -1,8 +1,9 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import Credential from "../Elements/Credential";
+import Credential from "../Elements/Credential"
 import TransactionConfig from "../Elements/TransactionConfig"
+import UserSelect from "../Payment/UserSelect"
 
 import { throwError, emptyForm } from "../../actions/joinPaymentFormActions"
 import { specifyGasLimit, specifyGasPrice } from "../../actions/joinPaymentFormActions"
@@ -13,7 +14,8 @@ import Tx from "../../services/tx"
 
 
 @connect((state, props) => {
-  var account = state.accounts.accounts[props.address]
+  var selectedAccount = state.joinPaymentForm.selectedAccount
+  var account = state.accounts.accounts[selectedAccount]
   return {
     account: account,
     ethereum: state.connection.ethereum,
@@ -25,16 +27,11 @@ import Tx from "../../services/tx"
 })
 export default class JoinPaymentForm extends React.Component {
 
-  componentWillMount() {
-    this.specifyGas = this.specifyGas.bind(this)
-    this.specifyGasPrice = this.specifyGasPrice.bind(this)
-  }
-
-  specifyGas(event) {
+  specifyGas = (event) => {
     this.props.dispatch(specifyGasLimit(event.target.value));
   }
 
-  specifyGasPrice(event) {
+  specifyGasPrice = (event) => {
     this.props.dispatch(specifyGasPrice(event.target.value));
   }
 
@@ -67,7 +64,7 @@ export default class JoinPaymentForm extends React.Component {
   render() {
     return (
       <div>
-        <p>Address: {this.props.account.address}</p>
+        <UserSelect />
         <TransactionConfig gas={this.props.gas} gasPrice={this.props.gasPrice} gasHandler={this.specifyGas} gasPriceHandler={this.specifyGasPrice} />
         <Credential passphraseID={this.props.passphraseID} />
         <p>Error: {this.props.error}</p>

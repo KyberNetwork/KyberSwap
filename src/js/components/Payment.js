@@ -7,8 +7,11 @@ import ExchangeRates from "./ExchangeRates"
 
 
 @connect((state, props) => {
-  var address = "0x001adbc838ede392b5b054a47f8b8c28f2fa9f3f"
-  const account = state.accounts.accounts[address]
+  var addresses = Object.keys(state.accounts.accounts)
+  var account
+  if (addresses.length > 0) {
+    account = state.accounts.accounts[addresses[0]]
+  }
   return { account }
 })
 export default class Payment extends React.Component {
@@ -24,7 +27,7 @@ export default class Payment extends React.Component {
         </div>
         )
       } else {
-        return <JoinPaymentForm address={account.address} passphraseID="join-payment-passphrase" />
+        return <JoinPaymentForm passphraseID="join-payment-passphrase" />
       }
     } else {
       return <div>You haven't imported any account yet</div>

@@ -16,30 +16,33 @@ import Accounts from "./Accounts"
   }
 })
 export default class Dashboard extends React.Component {
-   constructor() {
-            super();
-            this.state = {         
-                modalNoAccountIsOpen : true,      
-                modalIsOpen: false,
-            };            
-             this.openModal = this.openModal.bind(this);
-             this.onClose = this.onClose.bind(this);
-        }
-  openModal(){
+  constructor() {
+    super()
+    this.state = {
+        modalNoAccountIsOpen : true,
+        modalIsOpen: false,
+    }
+    this.openModal = this.openModal.bind(this)
+    this.onClose = this.onClose.bind(this)
+  }
+
+  openModal = () => {
     this.setState({
         modalIsOpen: true,
         modalNoAccountIsOpen : true
     })
   }
-  onClose(){
+
+  onClose = () => {
      this.setState({
         modalIsOpen: false,
         modalNoAccountIsOpen :false
     })
   }
+
   render() {
     var accounts = this.props.accounts
-    var modalIsOpen = false  
+    var modalIsOpen = false
     var app
     if (Object.keys(accounts).length == 0 ) {
       app = (
@@ -51,7 +54,7 @@ export default class Dashboard extends React.Component {
               +
             </button>
           </div>
-        </div>        
+        </div>
       )
     } else {
       app = (
