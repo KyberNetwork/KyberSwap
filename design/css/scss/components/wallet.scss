@@ -15,11 +15,7 @@ $borderRadius: 5px;
             background-image: $color;
         }
     }
-    .import-wallet {
-        button {
-            background-image: $color;
-        }
-    }
+    
     #tx-modal-wallet {
         top: -460px !important;
     }
@@ -46,6 +42,10 @@ $borderRadius: 5px;
             //     }
             // }
         }
+    }
+    .created {
+        padding: 10px;
+        word-break: break-all;
     }
 }
 
@@ -74,11 +74,24 @@ $borderRadius: 5px;
 }
 
 .import-wallet {
-    button {
-        background-color: $accountColor;
+    &.button-green{
+        button {
+            background-color: $accountColor;
+        }    
+    }    
+    &.button-gradient{
+      button{
+        background-image: $color;
+      }  
     }
 }
-
+.no-account{
+    text-align: center;
+    font-size: 20px;
+}
+.text-green{
+    color:  $accountColor;
+}
 .import-account {
     .modal-title {
         font-size: 20px;
@@ -162,33 +175,30 @@ $borderRadius: 5px;
                 text-align: center;
                 padding: 10px;
             }
-        }
-        .created {
-            margin-top: 10px;
-        }
+        }        
     }
     .wallet-center {
         .row {
-            // display: flex;
-            // justify-content: space-between;
-            display: -webkit-flex;
             display: flex;
-            -webkit-align-items: center;
-            align-items: center;
-            -webkit-justify-content: space-between;
             justify-content: space-between;
-            /* You can set flex-wrap and flex-direction individually */
-            -webkit-flex-direction: row;
-            flex-direction: row;
-            -webkit-flex-wrap: wrap;
-            flex-wrap: wrap;
-            /* Or do it all in one line with flex flow */
-            -webkit-flex-flow: row wrap;
-            flex-flow: row wrap;
-            /* tweak the where items line up on the row */
-            /* valid values are: flex-start, flex-end, space-between, space-around, stretch */
-            -webkit-align-content: flex-end;
-            align-content: flex-end;
+            // display: -webkit-flex;
+            // display: flex;
+            // -webkit-align-items: center;
+            // align-items: center;
+            // -webkit-justify-content: space-between;
+            // justify-content: space-between;
+            // /* You can set flex-wrap and flex-direction individually */
+            // -webkit-flex-direction: row;
+            // flex-direction: row;
+            // -webkit-flex-wrap: wrap;
+            // flex-wrap: wrap;
+            // /* Or do it all in one line with flex flow */
+            // -webkit-flex-flow: row wrap;
+            // flex-flow: row wrap;
+            // /* tweak the where items line up on the row */
+            // /* valid values are: flex-start, flex-end, space-between, space-around, stretch */
+            // -webkit-align-content: flex-end;
+            // align-content: flex-end;
         }
     }
     .balance {
@@ -203,7 +213,7 @@ $borderRadius: 5px;
             }
         }
         img {
-            width: 80%;
+            width: 40px;
         }
         .name {
             font-size: 13px;

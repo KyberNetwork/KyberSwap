@@ -16,56 +16,51 @@ import Accounts from "./Accounts"
   }
 })
 export default class Dashboard extends React.Component {
-   constructor() {
-            super();
-            this.state = {         
-                modalNoAccountIsOpen : true,      
-                modalIsOpen: false,
-            };            
-             this.openModal = this.openModal.bind(this);
-             this.onClose = this.onClose.bind(this);
-        }
-  openModal(){
+  constructor() {
+    super()
+    this.state = {
+        modalNoAccountIsOpen : true,
+        modalIsOpen: false,
+    }
+    this.openModal = this.openModal.bind(this)
+    this.onClose = this.onClose.bind(this)
+  }
+
+  openModal = () => {
     this.setState({
         modalIsOpen: true,
         modalNoAccountIsOpen : true
     })
   }
-  onClose(){
+
+  onClose = () => {
      this.setState({
         modalIsOpen: false,
         modalNoAccountIsOpen :false
     })
   }
+
   render() {
-    var accounts = this.props.accounts
-    var modalIsOpen = false  
+    var accounts = this.props.accounts   
     var app
-    if (Object.keys(accounts).length == 0 ) {
-      app = (
-        <div>
-          You don't have any Ethereum addresses yet. Please import one.
-          <ImportKeystoreModal modalIsOpen={this.state.modalNoAccountIsOpen} onClose={this.onClose}/>
-          <div class="import-wallet">
-            <button id="import" title="import new account from JSON keystore file" onClick={this.openModal}>
-              +
-            </button>
-          </div>
-        </div>        
-      )
-    } else {
-      app = (
-        <div>
-          <Accounts />
-          <ImportKeystoreModal modalIsOpen={this.state.modalIsOpen} onClose={this.onClose}/>
-          <div class="import-wallet">
-            <button id="import" title="import new account from JSON keystore file" onClick={this.openModal}>
-              +
-            </button>
-          </div>
-        </div>
-      )
-    }
-    return app
+    if (Object.keys(accounts).length == 0 ) {          
+      app =  (<div class="no-account">
+              You don't have any Ethereum addresses yet. Please import one.
+              <ImportKeystoreModal modalIsOpen={this.state.modalNoAccountIsOpen} onClose={this.onClose}/>             
+            </div>)          
+    } else {          
+      app =  (<div>
+                    <Accounts />
+                    <ImportKeystoreModal modalIsOpen={this.state.modalIsOpen} onClose={this.onClose}/>              
+              </div> )         
+    }      
+    return (<div  class="k-page k-page-account">
+              {app}
+            <div class="import-wallet button-green">
+                  <button id="import" title="import new account from JSON keystore file" onClick={this.openModal}>
+                    +
+                  </button>
+                </div>      
+          </div>)
   }
 }

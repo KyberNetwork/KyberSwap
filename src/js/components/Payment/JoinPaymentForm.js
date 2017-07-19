@@ -1,8 +1,10 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import Credential from "../Elements/Credential";
+import Modal from 'react-modal'
+import Credential from "../Elements/Credential"
 import TransactionConfig from "../Elements/TransactionConfig"
+import UserSelect from "../Payment/UserSelect"
 
 import { throwError, emptyForm } from "../../actions/joinPaymentFormActions"
 import { specifyGasLimit, specifyGasPrice } from "../../actions/joinPaymentFormActions"
@@ -11,40 +13,59 @@ import { updateAccount, joiningKyberWallet } from "../../actions/accountActions"
 import { addTx } from "../../actions/txActions"
 import Tx from "../../services/tx"
 
+const customStyles = {
+  overlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(10, 10, 10, 0.45)'
+  },
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    width: '400px'
+  }
+}
 
 @connect((state, props) => {
-  var account = state.accounts.accounts[props.address]
+  var selectedAccount = state.joinPaymentForm.selectedAccount
+  var account = state.accounts.accounts[selectedAccount]
   return {
     account: account,
     ethereum: state.connection.ethereum,
     gas: state.joinPaymentForm.gas,
     gasPrice: state.joinPaymentForm.gasPrice,
     nonce: (account == undefined ? 0 : account.getUsableNonce()),
-    error: state.joinPaymentForm.error
+    passwordError: state.joinPaymentForm.errors["passwordError"]
   }
 })
 export default class JoinPaymentForm extends React.Component {
 
-  componentWillMount() {
-    this.specifyGas = this.specifyGas.bind(this)
-    this.specifyGasPrice = this.specifyGasPrice.bind(this)
-  }
-
-  specifyGas(event) {
+  specifyGas = (event) => {
     this.props.dispatch(specifyGasLimit(event.target.value));
   }
 
-  specifyGasPrice(event) {
+  specifyGasPrice = (event) => {
     this.props.dispatch(specifyGasPrice(event.target.value));
   }
 
   joinKyberNetwork = (event) => {
     event.preventDefault()
+    var errors = {}
     try {
       var ethereum = this.props.ethereum
       var password = document.getElementById(this.props.passphraseID).value
       if (password == undefined || password == "") {
-        throw new Error("Empty password")
+        errors["passwordError"] = "empty"
+      }
+      if (!this.props.account) {
+        errors["selectedAccountError"] = "invalid"
       }
       // sending by wei
       var hash = deployKyberWallet(
@@ -60,19 +81,48 @@ export default class JoinPaymentForm extends React.Component {
       this.props.dispatch(emptyForm())
     } catch (e) {
       console.log(e)
-      this.props.dispatch(throwError(e.message))
+      errors["passwordError"] = "incorrect"
+      this.props.dispatch(throwError(errors))
     }
   }
 
   render() {
     return (
-      <div>
-        <p>Address: {this.props.account.address}</p>
-        <TransactionConfig gas={this.props.gas} gasPrice={this.props.gasPrice} gasHandler={this.specifyGas} gasPriceHandler={this.specifyGasPrice} />
-        <Credential passphraseID={this.props.passphraseID} />
-        <p>Error: {this.props.error}</p>
-        <button class="button" onClick={this.joinKyberNetwork} >Join KyberNetwork</button>
-      </div>
+      <Modal
+        style={customStyles}
+        isOpen={this.props.modalIsOpen}
+        onRequestClose={this.props.onClose}
+        contentLabel="Import wallet from keystore JSON file">
+        <div className="import-account">
+          <div className="modal-title text-gradient">
+            Deploy your Kyber Wallet contract
+          </div>
+          <div className="modal-body">
+            <form >
+              <div className="row">
+                <div className="large-12 columns">
+                  <UserSelect />
+                </div>
+              </div>
+              <div className="row">
+                <div className="large-12 columns">
+                  <TransactionConfig gas={this.props.gas} gasPrice={this.props.gasPrice} gasHandler={this.specifyGas} gasPriceHandler={this.specifyGasPrice} />
+                </div>
+              </div>
+              <div className="row">
+                <div className="large-12 columns">
+                  <Credential passphraseID={this.props.passphraseID} error={this.props.passwordError}/>
+                </div>
+              </div>
+              <div className="row">
+                <div className="large-12 columns submit-button">
+                  <button class="button" onClick={this.joinKyberNetwork} >Join KyberNetwork</button>
+                </div>
+              </div>
+            </form>
+            </div>
+        </div>
+      </Modal>
     )
   }
 }

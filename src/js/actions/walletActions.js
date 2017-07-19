@@ -9,6 +9,12 @@ export function addWallet(address, ownerAddress, name, desc) {
     })
   }
 }
+export function deleteWallet(address) {
+  return {
+    type: "DELETE_WALLET",
+    payload: address
+  }
+}
 
 export function updateWallet(ethereum, wallet) {
   return {

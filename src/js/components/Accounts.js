@@ -18,10 +18,10 @@ export default class Wallets extends React.Component {
       )
     })
     return (
-      <div class="k-page k-page-account">
+      <div>
         <div id="wallet-list">
           {accDetails}
-        </div>        
+        </div>
       </div>
     )
   }

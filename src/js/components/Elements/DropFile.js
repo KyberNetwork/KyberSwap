@@ -50,7 +50,7 @@ export default class DropFile extends React.Component {
         </p>
       }
     }
-    console.log(keystring)
+    //console.log(keystring)
     return (
       <Dropzone onDrop={this.onDrop.bind(this)}>
         {message}

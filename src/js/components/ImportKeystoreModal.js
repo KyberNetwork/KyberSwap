@@ -66,8 +66,8 @@ export default class ImportKeystoreModal extends React.Component {
         isOpen={this.props.modalIsOpen}
         onRequestClose={this.props.onClose}
         contentLabel="Import account from keystore JSON file">
-        <div className="import-account">
-          <div className="modal-title text-gradient">
+        <div className="import-account text-green">
+          <div className="modal-title">
             Import account
           </div>
           <div className="modal-body">
@@ -89,7 +89,7 @@ export default class ImportKeystoreModal extends React.Component {
               </div>
               <div className="row">
                 <div className="large-12 columns submit-button">
-                  <button class="button" onClick={this.importAccount}>Import account</button>
+                  <button class="button success" onClick={this.importAccount}>Import account</button>
                 </div>
               </div>
             </form>

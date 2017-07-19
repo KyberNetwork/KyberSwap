@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import QRCode from "qrcode.react"
-
+import { deleteWallet } from "../actions/walletActions"
 import { Token } from "./Account/Balance"
 
 @connect((store, props) => {
@@ -22,10 +22,30 @@ import { Token } from "./Account/Balance"
   }
 })
 export default class WalletDetail extends React.Component {
+  deleteWallet = (event, address) => {
+    event.preventDefault()
+    this.props.dispatch(deleteWallet(address))
+  }
   render() {
     var tokens = this.props.tokens.map((tok, index) => {
       return <Token key={index} name={tok.name} balance={tok.balance} icon={tok.icon} />
     })
+    var tokenRow  = [];
+    var rowCountItem = 3;
+    var numRow = Math.round(this.props.tokens.length / rowCountItem);
+
+    for(var i = 0; i < numRow ; i ++){
+      var row = [];
+      for(var j=0;j<rowCountItem;j++){
+        if (tokens[rowCountItem*i + j]) row.push(tokens[rowCountItem*i + j]);  
+      }
+      tokenRow.push(row)
+    }
+
+    var tokenRowrender = tokenRow.map((row, index) => {
+      return <div key={index} className='row'>{row}</div>
+    })
+
     return (
       <div>
         <div class="wallet-item">
@@ -33,6 +53,14 @@ export default class WalletDetail extends React.Component {
             <div class="wallet-left">
               <div class="title">
                 <span>{this.props.name}</span>
+                <div class="control-btn">
+                  <button class="k-tooltip delete" onClick={(e) => this.deleteWallet(e, this.props.address)}>
+                    <i class="k-icon k-icon-delete"></i>                    
+                  </button>
+                  <button class="k-tooltip modiy">
+                    <i class="k-icon k-icon-modify"></i>                    
+                  </button>
+                </div>
               </div>
               <div class="content">
                 <div class="balance">
@@ -45,27 +73,15 @@ export default class WalletDetail extends React.Component {
                   <div>
                     <QRCode value={this.props.address} />
                   </div>
-                </div>
-                <div class="created text-gradient">
-                  Created by: {this.props.owner}
-                </div>
+                </div>                
               </div>
             </div>
             <div class="wallet-center">
-              <div class="row">
-                {tokens}
+              {tokenRowrender}
+              <div class="created text-gradient">
+                Created by: {this.props.owner}
               </div>
-            </div>
-            <div class="wallet-right">
-              <button class="k-tooltip delete">
-                <i class="k-icon k-icon-delete"></i>
-                <span class="k-tooltip-content down-arrow">Delete</span>
-              </button>
-              <button class="k-tooltip modiy">
-                <i class="k-icon k-icon-modify"></i>
-                <span class="k-tooltip-content down-arrow">Modify</span>
-              </button>
-            </div>
+            </div>            
           </div>
         </div>
       </div>
