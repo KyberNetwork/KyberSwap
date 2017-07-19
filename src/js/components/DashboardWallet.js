@@ -2,8 +2,8 @@ import React from "react"
 import { connect } from "react-redux"
 
 //import ImportKeystore from "./ImportKeystore"
-import ImportKeystoreModal from "./ImportKeystoreModal"
-import Accounts from "./Accounts"
+import ImportWalletModal from "./ImportWalletModal"
+import Wallets from "./Wallets"
 
 
 @connect((store) => {
@@ -15,7 +15,7 @@ import Accounts from "./Accounts"
     connected: store.global.connected,
   }
 })
-export default class Dashboard extends React.Component {
+export default class DashboardWallet extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -41,23 +41,23 @@ export default class Dashboard extends React.Component {
   }
 
   render() {
-    var accounts = this.props.accounts   
+    var wallets = this.props.wallets   
     var app
-    if (Object.keys(accounts).length == 0 ) {          
+    if (Object.keys(wallets).length == 0 ) {          
       app =  (<div class="no-account">
-              You don't have any Ethereum addresses yet. Please import one.
-              <ImportKeystoreModal modalIsOpen={this.state.modalNoAccountIsOpen} onClose={this.onClose}/>             
+              You don't have any Ethereum wallets yet. Please import one.
+              <ImportWalletModal modalIsOpen={this.state.modalNoAccountIsOpen} onClose={this.onClose}/>             
             </div>)          
     } else {          
       app =  (<div>
-                    <Accounts />
-                    <ImportKeystoreModal modalIsOpen={this.state.modalIsOpen} onClose={this.onClose}/>              
+                    <Wallets />
+                    <ImportWalletModal modalIsOpen={this.state.modalIsOpen} onClose={this.onClose}/>              
               </div> )         
     }      
-    return (<div  class="k-page k-page-account">
+    return (<div class="k-page k-page-wallet">
               {app}
-            <div class="import-wallet button-green">
-                  <button id="import" title="import new account from JSON keystore file" onClick={this.openModal}>
+            <div class="import-wallet button-gradient">
+                  <button id="import" title="import new wallet from JSON keystore file" onClick={this.openModal}>
                     +
                   </button>
                 </div>      

@@ -6,7 +6,7 @@ import DropFile from "./Elements/DropFile"
 import Modal from 'react-modal';
 
 import { specifyName, specifyDesc, emptyForm,  throwError } from "../actions/importKeystoreActions"
-import { addAccount } from "../actions/accountActions"
+import { addWallet } from "../actions/walletActions"
 import { verifyAccount, verifyKey, anyErrors } from "../utils/validators"
 
 const customStyles = {
@@ -32,7 +32,7 @@ const customStyles = {
 @connect((store) => {
   return {...store.importKeystore}
 })
-export default class ImportKeystoreModal extends React.Component {
+export default class ImportWalletModal extends React.Component {
   specifyName = (event) => {
     this.props.dispatch(specifyName(event.target.value))
   }
@@ -50,7 +50,7 @@ export default class ImportKeystoreModal extends React.Component {
       console.log(errors)
       this.props.dispatch(throwError("Cannot import invalid keystore file"))
     } else {
-      this.props.dispatch(addAccount(
+      this.props.dispatch(addWallet(
       this.props.address, this.props.keystring,
       this.props.name, this.props.desc))
       this.props.dispatch(emptyForm())
@@ -65,10 +65,10 @@ export default class ImportKeystoreModal extends React.Component {
         style={customStyles}
         isOpen={this.props.modalIsOpen}
         onRequestClose={this.props.onClose}
-        contentLabel="Import account from keystore JSON file">
-        <div className="import-account text-green">
-          <div className="modal-title">
-            Import account
+        contentLabel="Import wallet from keystore JSON file">
+        <div className="import-account">
+          <div className="modal-title text-gradient">
+            Import wallet
           </div>
           <div className="modal-body">
             <form >
@@ -89,7 +89,7 @@ export default class ImportKeystoreModal extends React.Component {
               </div>
               <div className="row">
                 <div className="large-12 columns submit-button">
-                  <button class="button success" onClick={this.importAccount}>Import account</button>
+                  <button class="button" onClick={this.importAccount}>Import wallet</button>
                 </div>
               </div>
             </form>

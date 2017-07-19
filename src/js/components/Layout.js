@@ -9,7 +9,7 @@ import Header from "./Header"
 import Transactions from "../components/Transactions"
 import Dashboard from "../components/Dashboard"
 import Exchange from "../components/Exchange"
-import Wallets from "../components/Wallets"
+import DashboardWallet from "../components/DashboardWallet"
 import Payment from "../components/Payment"
 import TermOfService from "../components/TermOfService"
 import SideBar from "../components/SideBar"
@@ -41,7 +41,7 @@ export default class Layout extends React.Component {
           <div class="k-contenter">
             <div id="content" class="k-content">
               <Route exact path="/" component={Dashboard}/>
-              <Route exact path="/wallets" component={Wallets}/>
+              <Route exact path="/wallets" component={DashboardWallet}/>
               <Route exact path="/transactions" component={Transactions}/>
               <Route exact path="/exchange" component={Exchange}/>
               <Route exact path="/payment" component={Payment}/>

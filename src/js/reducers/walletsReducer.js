@@ -51,6 +51,12 @@ const wallets = (state=initState, action) => {
       newWallets[newWallet.address] = newWallet
       return {...state, wallets: newWallets}
     }
+    case "DELETE_WALLET": {    
+      var newWallets = {...state.wallets}
+      var address = action.payload          
+      delete(newWallets[address])      
+      return {...state, wallets: newWallets}
+    }
     case "NEW_WALLET_ADDED_FULFILLED": {
       var newWallets = {...state.wallets}
       newWallets[action.payload.address] = action.payload

@@ -37,6 +37,23 @@ export default class AccountDetail extends React.Component {
     var tokens = this.props.tokens.map((tok, index) => {
       return <Token key={index} name={tok.name} balance={tok.balance} icon={tok.icon} />
     })
+
+    var tokenRow  = [];
+    var rowCountItem = 3;
+    var numRow = Math.round(this.props.tokens.length / rowCountItem);
+
+    for(var i = 0; i < numRow ; i ++){
+      var row = [];
+      for(var j=0;j<rowCountItem;j++){
+        if (tokens[rowCountItem*i + j]) row.push(tokens[rowCountItem*i + j]);  
+      }            
+      tokenRow.push(row)
+    }
+    
+    var tokenRowrender = tokenRow.map((row, index) => {
+      return <div className='row'>{row}</div>
+    })
+
     return (
     <div class="wallet-item">
       <div>
@@ -67,9 +84,9 @@ export default class AccountDetail extends React.Component {
           </div>
         </div>
         <div class="wallet-center">
-          <div class="row">
-            {tokens}            
-          </div>        
+          
+            {tokenRowrender}                      
+          
         </div>
       </div>
     </div>
