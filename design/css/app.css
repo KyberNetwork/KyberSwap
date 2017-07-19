@@ -425,11 +425,6 @@
   background-image: -o-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
   background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
 
-.k-page-wallet .import-wallet button {
-  background-image: -webkit-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
-  background-image: -o-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
-  background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
-
 .k-page-wallet #tx-modal-wallet {
   top: -460px !important; }
 
@@ -445,6 +440,10 @@
   text-align: right;
   margin-top: 40px; }
 
+.k-page-wallet .created {
+  padding: 10px;
+  word-break: break-all; }
+
 .k-page-account .wallet-item {
   border: 2px solid #00bd70;
   background-image: #00bd70;
@@ -459,8 +458,20 @@
 .k-page-account .token-item .value {
   color: #aaa; }
 
-.import-wallet button {
+.import-wallet.button-green button {
   background-color: #00bd70; }
+
+.import-wallet.button-gradient button {
+  background-image: -webkit-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
+  background-image: -o-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
+  background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
+
+.no-account {
+  text-align: center;
+  font-size: 20px; }
+
+.text-green {
+  color: #00bd70; }
 
 .import-account .modal-title {
   font-size: 20px;
@@ -527,39 +538,15 @@
     .wallet-item .wallet-left .address > div {
       text-align: center;
       padding: 10px; }
-  .wallet-item .wallet-left .created {
-    margin-top: 10px; }
   .wallet-item .wallet-center .row {
-    display: -webkit-flex;
     display: -webkit-box;
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-justify-content: space-between;
     -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
     -ms-flex-pack: justify;
-    justify-content: space-between;
-    /* You can set flex-wrap and flex-direction individually */
-    -webkit-flex-direction: row;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    /* Or do it all in one line with flex flow */
-    -webkit-flex-flow: row wrap;
-    -ms-flex-flow: row wrap;
-    flex-flow: row wrap;
-    /* tweak the where items line up on the row */
-    /* valid values are: flex-start, flex-end, space-between, space-around, stretch */
-    -webkit-align-content: flex-end;
-    -ms-flex-line-pack: end;
-    align-content: flex-end; }
+    justify-content: space-between; }
   .wallet-item .balance {
     color: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
   .wallet-item .token-item {
@@ -568,7 +555,7 @@
     .wallet-item .token-item > div:not(:last-child) {
       margin-bottom: 8px; }
     .wallet-item .token-item img {
-      width: 80%; }
+      width: 40px; }
     .wallet-item .token-item .name {
       font-size: 13px;
       text-transform: uppercase; }

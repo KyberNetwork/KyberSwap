@@ -24,7 +24,7 @@ import { Token } from "./Account/Balance"
 export default class WalletDetail extends React.Component {
   deleteWallet = (event, address) => {
     event.preventDefault()
-    this.props.dispatch(deleteWallet(address))        
+    this.props.dispatch(deleteWallet(address))
   }
   render() {
     var tokens = this.props.tokens.map((tok, index) => {
@@ -38,12 +38,12 @@ export default class WalletDetail extends React.Component {
       var row = [];
       for(var j=0;j<rowCountItem;j++){
         if (tokens[rowCountItem*i + j]) row.push(tokens[rowCountItem*i + j]);  
-      }            
+      }
       tokenRow.push(row)
     }
-    
+
     var tokenRowrender = tokenRow.map((row, index) => {
-      return <div className='row'>{row}</div>
+      return <div key={index} className='row'>{row}</div>
     })
 
     return (

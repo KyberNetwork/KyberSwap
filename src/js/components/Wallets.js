@@ -24,7 +24,7 @@ export default class Wallets extends React.Component {
       <div>
         <div id="wallet-list">
           {walletDetails}
-        </div>        
+        </div>
       </div>
     )
   }

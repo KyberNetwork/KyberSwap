@@ -12,7 +12,7 @@ import { selectAccount } from "../../actions/joinPaymentFormActions"
       }
     }),
     selectedAccount: store.joinPaymentForm.selectedAccount,
-    error: store.joinPaymentForm.error
+    error: store.joinPaymentForm.errors["selectedAccountError"]
   }
 })
 export default class UserSelect extends React.Component {

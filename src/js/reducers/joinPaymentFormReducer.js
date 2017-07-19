@@ -2,7 +2,10 @@ const initState = {
   selectedAccount: "",
   gas: 1000000,
   gasPrice: 20000000000,
-  error: "",
+  errors: {
+    selectedAccountError: "",
+    passwordError: "",
+  },
 }
 
 const joinPaymentForm = (state=initState, action) => {
@@ -14,10 +17,10 @@ const joinPaymentForm = (state=initState, action) => {
       return {...state, gasPrice: action.payload}
     }
     case "JOIN_PAYMENT_GAS_SPECIFIED": {
-      return {...state, gas: action.payload}
+      return {...state, gas: state.errors, }
     }
     case "JOIN_PAYMENT_ERROR_THREW": {
-      return {...state, error: action.payload}
+      return {...state, errors: {...state.errors, ...action.payload}}
     }
     case "JOIN_PAYMENT_EMPTIED": {
       return {...initState}
