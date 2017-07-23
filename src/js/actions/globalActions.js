@@ -1,9 +1,11 @@
 import { fetchRate } from "../services/exchange"
 
-export function updateBlock(block) {
+export function updateBlock(ethereum, block) {
   return {
     type: "NEW_BLOCK_INCLUDED",
-    payload: block
+    payload: new Promise((resolve, reject) => {
+      ethereum.getLatestBlock(resolve)
+    })
   }
 }
 

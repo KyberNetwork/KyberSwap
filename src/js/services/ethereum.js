@@ -23,6 +23,16 @@ export default class EthereumService {
     return this.rpc.version.api
   }
 
+  getLatestBlock(callback) {
+    return this.rpc.eth.getBlock("latest", false, (error, block) => {
+      if (error != null) {
+        console.log(error)
+      } else {
+        callback(block.number)
+      }
+    })
+  }
+
   getBalance(address, callback) {
     this.rpc.eth.getBalance(address, (error, balance) => {
       if (error != null) {
@@ -107,7 +117,6 @@ export default class EthereumService {
     var ethereum = state.connection.ethereum
     var accounts = store.getState().accounts.accounts
     Object.keys(accounts).forEach((key) => {
-      console.log("updating account: " + key)
       store.dispatch(updateAccount(ethereum, accounts[key]))
     })
   }
@@ -117,25 +126,28 @@ export default class EthereumService {
     var ethereum = state.connection.ethereum
     var wallets = store.getState().wallets.wallets
     Object.keys(wallets).forEach((key) => {
-      console.log("updating wallet: " + key)
       store.dispatch(updateWallet(ethereum, wallets[key]))
     })
   }
 
+  fetchCurrentBlock = () => {
+    var state = store.getState()
+    var ethereum = state.connection.ethereum
+    store.dispatch(updateBlock(ethereum))
+  }
+
   fetchData() {
-    console.log("start fetching data")
+    this.fetchCurrentBlock()
     this.fetchTxsData()
     this.fetchRateData()
     this.fetchWalletsData()
     this.fetchAccountsData()
-    console.log("done fetching and dispatching actions")
   }
 
   actAndWatch(error, result) {
     if (error != null) {
       store.dispatch(updateBlockFailed(error))
     } else {
-      store.dispatch(updateBlock(result))
       this.fetchData()
     }
   }

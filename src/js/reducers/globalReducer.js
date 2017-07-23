@@ -35,7 +35,7 @@ const global = (state=initState, action) => {
       }
       return state
     }
-    case "NEW_BLOCK_INCLUDED": {
+    case "NEW_BLOCK_INCLUDED_FULFILLED": {
       return {...state, currentBlock: action.payload}
     }
     case "GET_NEW_BLOCK_FAILED": {
