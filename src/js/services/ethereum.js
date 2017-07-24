@@ -112,7 +112,7 @@ export default class EthereumService {
     })
   }
 
-  fetchAccountsData() {
+  fetchAccountsData = () => {
     var state = store.getState()
     var ethereum = state.connection.ethereum
     var accounts = store.getState().accounts.accounts
@@ -121,7 +121,7 @@ export default class EthereumService {
     })
   }
 
-  fetchWalletsData() {
+  fetchWalletsData = () => {
     var state = store.getState()
     var ethereum = state.connection.ethereum
     var wallets = store.getState().wallets.wallets
@@ -194,9 +194,15 @@ export default class EthereumService {
   }
 
   // tx should be ethereumjs-tx object
-  sendRawTransaction(tx) {
+  sendRawTransaction(tx, callback) {
     return this.rpc.eth.sendRawTransaction(
-      ethUtil.bufferToHex(tx.serialize()))
+      ethUtil.bufferToHex(tx.serialize()), (error, hash) => {
+        if (error != null) {
+          console.log(error)
+        } else {
+          callback(hash)
+        }
+      })
   }
 
   deployKyberWalletData(from) {

@@ -22,6 +22,8 @@ const initState = {
   gas: 1000000,
   gasPrice: 20000000000,
   step: 1,
+  broadcasting: true,
+  txHash: "",
   errors: {
     selectedAccountError: "",
     destAddressError: "",
@@ -118,6 +120,15 @@ const exchangeForm = (state=initState, action) => {
     }
     case "EXCHANGE_FORM_PREVIOUS_STEP": {
       return {...state, step: state.step - 1}
+    }
+    case "EXCHANGE_FORM_APPROVAL_TX_BROADCAST_PENDING": {
+      return {...state, broadcasting: true, txHash: action.payload }
+    }
+    case "EXCHANGE_FORM_TX_BROADCAST_PENDING": {
+      return {...state, broadcasting: true, txHash: action.payload }
+    }
+    case "EXCHANGE_FORM_TX_BROADCAST_FULFILLED": {
+      return {...state, broadcasting: false, txHash: action.payload }
     }
     case "EXCHANGE_FORM_SUGGEST_RATE": {
       var minRate = action.payload.rate

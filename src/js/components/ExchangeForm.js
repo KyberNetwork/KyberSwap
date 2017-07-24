@@ -21,6 +21,9 @@ import { specifyGasLimit, specifyGasPrice, resetStep } from "../actions/exchange
     gasPriceError: store.exchangeForm.errors["gasPriceError"],
     step: store.exchangeForm.step,
     passwordError: store.exchangeForm.errors["passwordError"],
+    broadcasting: store.exchangeForm.broadcasting,
+    txHash: store.exchangeForm.txHash,
+    tx: store.txs[store.exchangeForm.txHash],
   }
 })
 export default class ExchangeForm extends React.Component {
@@ -44,6 +47,20 @@ export default class ExchangeForm extends React.Component {
   }
 
   render() {
+    if (this.props.step == 4) {
+      var txStatus
+      var txHash = this.props.txHash
+      var tx = this.props.tx
+      if (this.props.broadcasting) {
+        txStatus = <p>Broadcasting your transaction...</p>
+      } else {
+        if (tx.status == "pending") {
+          txStatus = <p>Transaction {txHash} is waiting for confirmations...</p>
+        } else {
+          txStatus = <p>Transaction {txHash} is mined</p>
+        }
+      }
+    }
     return (
       <form>
         <div class="k-page k-page-exchange">
@@ -90,9 +107,7 @@ export default class ExchangeForm extends React.Component {
                 <span class="verify">
                   <i class="k-icon k-icon-verify"></i>
                 </span>
-                <p>
-                  You are All Set. Your Exchange is Being Processed.
-                </p>
+                {txStatus}
                 <button class="button" onClick={this.done}>Done</button>
               </div>
             </div>
