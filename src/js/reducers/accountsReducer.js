@@ -5,6 +5,7 @@ import {REHYDRATE} from 'redux-persist/constants'
 
 const initState = {
   accounts: {},
+  newAccountAdding: false,
 }
 
 const accounts = (state=initState, action) => {
@@ -86,19 +87,20 @@ const accounts = (state=initState, action) => {
       return {...state,
         accounts: newAccounts}
     }
-    case "DELETE_ACCOUNT": {    
+    case "DELETE_ACCOUNT": {
       var newAccounts = {...state.accounts}
       var address = action.payload
-      console.log(address)
-      console.log(newAccounts)
-      delete(newAccounts[address])      
+      delete(newAccounts[address])
       return {...state, accounts: newAccounts}
     }
-    case "NEW_ACCOUNT_ADDED_FULFILLED": {    
+    case "NEW_ACCOUNT_ADDED_FULFILLED": {
       var newAccounts = {...state.accounts}
       newAccounts[action.payload.address] = action.payload
-      return {...state, accounts: newAccounts}
-    }    
+      return {...state, newAccountAdding: false, accounts: newAccounts}
+    }
+    case "NEW_ACCOUNT_ADDED_PENDING": {
+      return {...state, newAccountAdding: true}
+    }
   }
   return state;
 }
