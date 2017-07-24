@@ -330,14 +330,30 @@
     height: 10px;
     background: transparent;
     pointer-events: none; }
-  .k-page-transaction table .from:before {
-    content: ' ';
-    width: 10px;
-    height: 10px;
-    display: inline-block;
-    border-radius: 10px;
-    margin-right: 5px;
-    border: 1px solid #999; }
+  .k-page-transaction table .hash {
+    display: flex; }
+    .k-page-transaction table .hash:before {
+      content: ' ';
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+      border-radius: 10px;
+      margin-right: 5px;
+      border: 1px solid #999;
+      position: relative;
+      top: 3px; }
+    .k-page-transaction table .hash a {
+      width: 250px;
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
+  .k-page-transaction table .from span {
+    width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block; }
   .k-page-transaction table .success:before,
   .k-page-transaction table .fail:before {
     content: ' ';
@@ -350,45 +366,60 @@
     background-color: #8bc34a; }
   .k-page-transaction table .fail:before {
     background-color: #e74c3c; }
-.k-page-transaction #tx-modal {
+.k-page-transaction .load-more {
+  text-align: center;
+  margin-top: 40px; }
+
+#tx-modal {
   font-size: 13px;
   padding: 0px;
   outline: none;
   border-radius: 5px; }
-  .k-page-transaction #tx-modal .modal-title {
+  #tx-modal .modal-title {
     color: #2195f2;
     padding: 5px 30px;
-    border-bottom: 1px solid #999; }
-  .k-page-transaction #tx-modal .modal-info > div {
+    border-bottom: 1px solid #999;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 20px; }
+  #tx-modal .modal-info > div {
+    display: flex;
     padding: 5px; }
-    .k-page-transaction #tx-modal .modal-info > div label {
-      width: 70px;
-      margin-left: 30px;
+    #tx-modal .modal-info > div label {
+      width: 170px;
       color: #2195f2;
       display: inline-block;
-      font-size: 13px; }
-    .k-page-transaction #tx-modal .modal-info > div .account {
+      font-size: 13px;
+      text-align: right;
+      margin-right: 20px; }
+    #tx-modal .modal-info > div span {
+      text-overflow: ellipsis;
+      width: 400px;
+      display: inline-block;
+      overflow: hidden; }
+      #tx-modal .modal-info > div span a {
+        color: #000; }
+        #tx-modal .modal-info > div span a:hover {
+          text-decoration: underline; }
+    #tx-modal .modal-info > div .account {
       padding: 5px 10px;
       background-color: #b8e986;
       border-radius: 8px;
       margin-right: 20px; }
-  .k-page-transaction #tx-modal .modal-extra {
+  #tx-modal .modal-extra {
     display: inline-block;
     width: 100%;
-    margin-top: 50px; }
-    .k-page-transaction #tx-modal .modal-extra > div {
-      padding: 35px;
+    margin-top: 40px; }
+    #tx-modal .modal-extra > div {
+      padding: 30px;
       line-height: 30px;
       text-align: center; }
-      .k-page-transaction #tx-modal .modal-extra > div > div:last-child {
+      #tx-modal .modal-extra > div > div:last-child {
         color: #2195f2; }
-    .k-page-transaction #tx-modal .modal-extra .left {
+    #tx-modal .modal-extra .left {
       float: left; }
-    .k-page-transaction #tx-modal .modal-extra .right {
+    #tx-modal .modal-extra .right {
       float: right; }
-.k-page-transaction .load-more {
-  text-align: center;
-  margin-top: 40px; }
 
 .k-page-wallet .wallet-item {
   background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }

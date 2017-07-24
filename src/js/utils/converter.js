@@ -47,6 +47,8 @@ export function toT(number) {
 }
 
 export function getToken(address) {
+  console.log(address);
+  console.log(supported_tokens);
   if (address == constants.ETHER_ADDRESS) {
     return {
       name: "Ether",
@@ -71,4 +73,17 @@ export function pairID(source, dest) {
 
 export function numberToHex(number) {
   return "0x" + (new BigNumber(number)).toString(16)
+}
+
+export function hexToNumber(hex) {
+  return new BigNumber(hex).toNumber()
+}
+
+export function toEther(number) {
+  var bigNumber = new BigNumber(number)
+  if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
+    return "0"
+  } else {
+    return bigNumber.dividedBy(1000000000000000000).toString(10)
+  }
 }
