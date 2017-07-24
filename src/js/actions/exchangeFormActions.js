@@ -113,3 +113,27 @@ export function suggestRate(source, dest) {
     }
   }
 }
+
+export function doApprovalTransaction(ethereum, tx, callback) {
+  return {
+    type: "EXCHANGE_FORM_APPROVAL_TX_BROADCAST",
+    payload: new Promise((resolve, reject) => {
+      ethereum.sendRawTransaction(tx, (hash) => {
+        callback(hash)
+        resolve(hash)
+      })
+    })
+  }
+}
+
+export function doTransaction(ethereum, tx, callback) {
+  return {
+    type: "EXCHANGE_FORM_TX_BROADCAST",
+    payload: new Promise((resolve, reject) => {
+      ethereum.sendRawTransaction(tx, (hash) => {
+        callback(hash)
+        resolve(hash)
+      })
+    })
+  }
+}

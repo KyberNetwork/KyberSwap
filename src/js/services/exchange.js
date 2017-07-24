@@ -1,7 +1,7 @@
 import { sealTxByKeystore } from "../utils/sealer"
 import { verifyNonce } from "../utils/validators"
 import store from "../store"
-import { incManualNonceAccount } from "../actions/accountActions"
+import { doTransaction, doApprovalTransaction } from "../actions/exchangeFormActions"
 import constants from "../services/constants"
 import Rate from "./rate"
 
@@ -9,7 +9,7 @@ export function etherToOthers(
   ethereum, account, sourceToken, sourceAmount, destToken,
   destAddress, maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas, gasPrice, keystring,
-  password) {
+  password, callback) {
 
   var txData = ethereum.exchangeData(
     sourceToken, sourceAmount, destToken, destAddress,
@@ -25,16 +25,14 @@ export function etherToOthers(
     chainId: 42
   }
   const tx = sealTxByKeystore(txParams, keystring, password)
-  const broadcasted = ethereum.sendRawTransaction(tx)
-  store.dispatch(incManualNonceAccount(account))
-  return broadcasted
+  store.dispatch(doTransaction(ethereum, tx, callback))
 }
 
 export function tokenToOthers(
   ethereum, account, sourceToken, sourceAmount, destToken,
   destAddress, maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas, gasPrice, keystring,
-  password) {
+  password, callback) {
 
   const approvalData = ethereum.approveTokenData(sourceToken, sourceAmount)
   const txParams = {
@@ -48,30 +46,26 @@ export function tokenToOthers(
     chainId: 42
   }
   const approvalTx = sealTxByKeystore(txParams, keystring, password)
-  const broadcastedApprovalTx = ethereum.sendRawTransaction(approvalTx)
-  store.dispatch(incManualNonceAccount(account))
-  console.log(broadcastedApprovalTx)
+  store.dispatch(
+    doApprovalTransaction(ethereum, approvalTx, (hash) => {
+      const exchangeData = ethereum.exchangeData(
+        sourceToken, sourceAmount, destToken, destAddress,
+        maxDestAmount, minConversionRate, throwOnFailure)
+      const newNonce = verifyNonce(nonce, 1)
 
-  // actual exchange
-  const exchangeData = ethereum.exchangeData(
-    sourceToken, sourceAmount, destToken, destAddress,
-    maxDestAmount, minConversionRate, throwOnFailure)
-  const newNonce = verifyNonce(nonce, 1)
-
-  const exchangeTxParams = {
-    nonce: newNonce,
-    gasPrice: gasPrice,
-    gasLimit: gas,
-    to: ethereum.networkAddress,
-    value: 0,
-    data: exchangeData,
-    // EIP 155 chainId - mainnet: 1, ropsten: 3
-    chainId: 42
-  }
-  const exchangeTx = sealTxByKeystore(exchangeTxParams, keystring, password)
-  const broadcasted = ethereum.sendRawTransaction(exchangeTx)
-  store.dispatch(incManualNonceAccount(account))
-  return broadcasted
+      const exchangeTxParams = {
+        nonce: newNonce,
+        gasPrice: gasPrice,
+        gasLimit: gas,
+        to: ethereum.networkAddress,
+        value: 0,
+        data: exchangeData,
+        // EIP 155 chainId - mainnet: 1, ropsten: 3
+        chainId: 42
+      }
+      const exchangeTx = sealTxByKeystore(exchangeTxParams, keystring, password)
+      store.dispatch(doTransaction(ethereum, exchangeTx, callback))
+  }))
 }
 
 export function fetchRate(ethereum, source, dest, reserve, callback) {

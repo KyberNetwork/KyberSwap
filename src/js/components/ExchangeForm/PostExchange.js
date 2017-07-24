@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import * as ethUtil from 'ethereumjs-util'
 
 import { throwError, emptyForm, nextStep, previousStep } from "../../actions/exchangeFormActions"
-import { updateAccount } from "../../actions/accountActions"
+import { updateAccount, incManualNonceAccount } from "../../actions/accountActions"
 import { addTx } from "../../actions/txActions"
 import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
 import { numberToHex } from "../../utils/converter"
@@ -104,34 +104,29 @@ export default class PostExchange extends React.Component {
     try {
       const params = this.formParams()
       // sending by wei
-      var ex
-      if (params.sourceToken == constants.ETHER_ADDRESS) {
-        ex = etherToOthers(
-          ethereum, params.selectedAccount, params.sourceToken,
-          params.sourceAmount, params.destToken, params.destAddress,
-          params.maxDestAmount, params.minConversionRate,
-          params.throwOnFailure, params.nonce, params.gas,
-          params.gasPrice, keystring, password)
-      } else {
-        ex = tokenToOthers(
-          ethereum, params.selectedAccount, params.sourceToken,
-          params.sourceAmount, params.destToken, params.destAddress,
-          params.maxDestAmount, params.minConversionRate,
-          params.throwOnFailure, params.nonce, params.gas,
-          params.gasPrice, keystring, password)
-      }
-      const tx = new Tx(
-        ex, params.selectedAccount, params.gas, params.gasPrice,
-        params.nonce, "pending", "exchange", {
-          sourceToken: params.sourceToken,
-          sourceAmount: params.sourceAmount,
-          destToken: params.destToken,
-          minConversionRate: params.minConversionRate,
-          destAddress: params.destAddress,
-          maxDestAmount: params.maxDestAmount,
+      var call = params.sourceToken == constants.ETHER_ADDRESS ? etherToOthers : tokenToOthers
+      var account = this.props.account
+      var dispatch = this.props.dispatch
+      call(
+        ethereum, params.selectedAccount, params.sourceToken,
+        params.sourceAmount, params.destToken, params.destAddress,
+        params.maxDestAmount, params.minConversionRate,
+        params.throwOnFailure, params.nonce, params.gas,
+        params.gasPrice, keystring, password, (ex) => {
+          const tx = new Tx(
+            ex, params.selectedAccount, params.gas, params.gasPrice,
+            params.nonce, "pending", "exchange", {
+              sourceToken: params.sourceToken,
+              sourceAmount: params.sourceAmount,
+              destToken: params.destToken,
+              minConversionRate: params.minConversionRate,
+              destAddress: params.destAddress,
+              maxDestAmount: params.maxDestAmount,
+            })
+          dispatch(incManualNonceAccount(params.selectedAccount))
+          dispatch(updateAccount(ethereum, account))
+          dispatch(addTx(tx))
         })
-      this.props.dispatch(updateAccount(ethereum, this.props.account))
-      this.props.dispatch(addTx(tx))
       document.getElementById(this.props.passphraseID).value = ''
     } catch (e) {
       console.log(e)
