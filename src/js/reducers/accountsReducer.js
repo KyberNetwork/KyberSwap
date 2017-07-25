@@ -102,7 +102,7 @@ const accounts = (state=initState, action) => {
       return {...state, newAccountAdding: true}
     }
   }
-  return state;
+  return state
 }
 
-export default accounts;
+export default accounts
