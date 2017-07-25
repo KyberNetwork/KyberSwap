@@ -2,7 +2,6 @@ import React from "react"
 import { connect } from "react-redux"
 import * as _ from "underscore"
 import Modal from 'react-modal'
-import { Link } from 'react-router-dom'
 import {getToken, toEther, hexToNumber} from '../utils/converter'
 
 import TransactionCom from "./TransactionCom"
@@ -48,12 +47,8 @@ export default class Transactions extends React.Component {
     this.onClose = this.onClose.bind(this)
   }
   openModal(tx, event){    
-    var convertedTx = tx;    
-    // var desToken = getToken(tx.data.destToken)
-    // convertedTx.data.destToken = desToken.symbol
-
-    // var sourceToken = getToken(tx.data.sourceToken)
-    // convertedTx.data.sourceToken = sourceToken.symbol
+    console.log(event);
+    var convertedTx = tx;        
 
     convertedTx.gasPrice = toEther(convertedTx.gasPrice)
     convertedTx.gas = hexToNumber(convertedTx.gas)
@@ -94,7 +89,7 @@ export default class Transactions extends React.Component {
               <th width="200">Broadcasted</th>
               <th>Nonce</th>
               <th>Type</th>
-              <th>Status</th>
+              <th width="150">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -162,9 +157,9 @@ export default class Transactions extends React.Component {
               <div>
                 <label>Hash</label>
                 <span id="hash">
-                  <Link to={"https://kovan.etherscan.io/tx/" + this.state.presentTx.hash}>
+                  <a href={"https://kovan.etherscan.io/tx/" + this.state.presentTx.hash}>
                     {this.state.presentTx.hash}
-                  </Link>
+                  </a>                  
                 </span>
               </div>
             </div>
