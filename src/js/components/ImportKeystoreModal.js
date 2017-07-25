@@ -3,31 +3,11 @@ import { connect } from "react-redux"
 
 //import Key from "./Elements/Key"
 import DropFile from "./Elements/DropFile"
-import Modal from 'react-modal';
+import Modal from './Elements/Modal'
 
 import { specifyName, specifyDesc, emptyForm,  throwError } from "../actions/importKeystoreActions"
 import { addAccount } from "../actions/accountActions"
 import { verifyAccount, verifyKey, anyErrors } from "../utils/validators"
-
-const customStyles = {
-  overlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(10, 10, 10, 0.45)'
-  },
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    width: '400px'
-  }
-}
 
 @connect((store) => {
   return {...store.importKeystore}
@@ -59,42 +39,47 @@ export default class ImportKeystoreModal extends React.Component {
     }
   }
 
+  content = () => {
+    return (
+      <div className="import-account text-green">
+        <div className="modal-title">
+          Import account
+        </div>
+        <div className="modal-body">
+          <form >
+            <div className="row">
+              <div className="large-12 columns">
+                <label>Name
+                  <input value={this.props.name} onChange={this.specifyName} type="text" />
+                </label>
+              </div>
+            </div>
+            <div className="row">
+              <div className="large-12 columns">
+                <label>JSON keystore file</label>
+                <div className="dropzone">
+                  <DropFile address={this.props.address}/>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="large-12 columns submit-button">
+                <button class="button success" onClick={this.importAccount}>Import account</button>
+              </div>
+            </div>
+          </form>
+          </div>
+      </div>
+    )
+  }
+
   render() {
     return (
       <Modal
-        style={customStyles}
-        isOpen={this.props.modalIsOpen}
-        onRequestClose={this.props.onClose}
-        contentLabel="Import account from keystore JSON file">
-        <div className="import-account text-green">
-          <div className="modal-title">
-            Import account
-          </div>
-          <div className="modal-body">
-            <form >
-              <div className="row">
-                <div className="large-12 columns">
-                  <label>Name
-                    <input value={this.props.name} onChange={this.specifyName} type="text" />
-                  </label>
-                </div>
-              </div>
-              <div className="row">
-                <div className="large-12 columns">
-                  <label>JSON keystore file</label>
-                  <div className="dropzone">
-                    <DropFile address={this.props.address}/>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="large-12 columns submit-button">
-                  <button class="button success" onClick={this.importAccount}>Import account</button>
-                </div>
-              </div>
-            </form>
-            </div>
-        </div>
+        modalIsOpen={this.props.modalIsOpen}
+        content={this.content}
+        modalID={this.props.modalID}
+        label="Import account from keystore JSON file">
       </Modal>
     )
   }

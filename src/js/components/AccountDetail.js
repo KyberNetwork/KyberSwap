@@ -59,7 +59,7 @@ export default class AccountDetail extends React.Component {
       <div>
         <div class="wallet-left">
           <div class="title">
-            <span>Account 1</span>
+            <span>{this.props.name}</span>
             <div class="control-btn">
                <button class="delete" title="Delete" onClick={(e) => this.deleteAccount(e, this.props.address)}>
                   <i class="k-icon k-icon-delete-green"></i>
@@ -67,7 +67,7 @@ export default class AccountDetail extends React.Component {
                 <button class="modiy" title="Modify">
                   <i class="k-icon k-icon-modify-green"></i>
                 </button>
-            </div> 
+            </div>
           </div>
           <div class="content">
             <div class="balance">
@@ -79,14 +79,12 @@ export default class AccountDetail extends React.Component {
               <span>{this.props.address}</span>
               <div>
                <QRCode value={this.props.address} />
-              </div>              
+              </div>
             </div>
           </div>
         </div>
         <div class="wallet-center">
-          
-            {tokenRowrender}                      
-          
+          {tokenRowrender}
         </div>
       </div>
     </div>
