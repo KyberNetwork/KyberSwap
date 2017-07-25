@@ -16,14 +16,16 @@ import { connect } from "react-redux"
   }
 })
 export default class TransactionCom extends React.Component {
-
+  stopParentClick(event){
+    event.stopPropagation();
+  }
   render() {
     return (
     <tr class="item" onClick={this.props.click}>
       <td class="hash">        
-        <a>
-          {this.props.hash}
-        </a>
+         <a href={"https://kovan.etherscan.io/tx/" + this.props.hash} onClick={this.stopParentClick.bind(this)}>
+            {this.props.hash}
+          </a>
       </td>
       <td class="from"><span>{this.props.from}</span></td>
       <td></td>
