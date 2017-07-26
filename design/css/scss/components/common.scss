@@ -7,6 +7,9 @@
     padding:15px;
     animation:unfoldIn 1s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
     transform:scaleY(.01) scaleX(0);
+    &:focus{
+        outline: none;
+    }
 }
 
 
