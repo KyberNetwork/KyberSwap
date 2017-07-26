@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 //import Key from "./Elements/Key"
 import DropFile from "./Elements/DropFile"
 import Modal from './Elements/Modal'
+import { closeModal } from "../actions/utilActions"
 
 import { specifyName, specifyDesc, emptyForm,  throwError } from "../actions/importKeystoreActions"
 import { addAccount } from "../actions/accountActions"
@@ -35,8 +36,10 @@ export default class ImportKeystoreModal extends React.Component {
       this.props.name, this.props.desc))
       this.props.dispatch(emptyForm())
 
-      this.props.onClose()
+      //this.props.onClose()
+      this.props.dispatch(closeModal(this.props.modalID))
     }
+    
   }
 
   content = () => {
@@ -79,6 +82,7 @@ export default class ImportKeystoreModal extends React.Component {
         modalIsOpen={this.props.modalIsOpen}
         content={this.content}
         modalID={this.props.modalID}
+        modalClass="modal-import"
         label="Import account from keystore JSON file">
       </Modal>
     )
