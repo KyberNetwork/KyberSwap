@@ -16,40 +16,38 @@ import TransactionCom from "./TransactionCom"
   return {
     txs: sortedTxs,
     utils: store.utils,
-    exchangeModalId:"new_exchange_modal",
-    joinModalId:"new_join_modal",
+    modalId:"new_transaction_modal",
   }
 })
 export default class Transactions extends React.Component {
   showDetailInfo = (tx, event) => {    
-    console.log(tx)
     switch(tx.type){
       case "join kyber wallet":
         var convertedTx = tx
-        convertedTx.gasPrice = toEther(convertedTx.gasPrice)
-        this.props.dispatch(setDataModal(this.props.joinModalId, convertedTx))    
-        this.props.dispatch(openModal(this.props.joinModalId))    
-        return
+        convertedTx.gasPrice = toEther(convertedTx.gasPrice)            
+        break
       case "exchange":
         var convertedTx = tx
         convertedTx.gas = hexToNumber(convertedTx.gas)
         convertedTx.data.minConversionRate = hexToNumber(convertedTx.data.minConversionRate)
         convertedTx.data.sourceAmount = hexToNumber(convertedTx.data.sourceAmount)
-        convertedTx.data.maxDestAmount = hexToNumber(convertedTx.data.maxDestAmount)
-
-        this.props.dispatch(setDataModal(this.props.exchangeModalId, convertedTx))    
-        this.props.dispatch(openModal(this.props.exchangeModalId))    
-        return
-    }    
+        convertedTx.data.maxDestAmount = hexToNumber(convertedTx.data.maxDestAmount)        
+        break
+    }   
+    this.props.dispatch(setDataModal(this.props.modalId, convertedTx)) 
+    this.props.dispatch(openModal(this.props.modalId))    
   }
   
-  contentJoin = () => {
-    var data = this.props.utils[this.props.joinModalId].data   
-    if (!data){
-      data = {}
+  content = () => {
+    if(!this.props.utils[this.props.modalId]){
+      return ""
     }
-    return (
-      <div id="tx-modal">
+    var data = this.props.utils[this.props.modalId].data
+    var content
+    switch(data.type){
+      case "join kyber wallet":
+        content = (
+           <div id="tx-modal">
             <div class="modal-title">
               Transaction
             </div>
@@ -91,95 +89,92 @@ export default class Transactions extends React.Component {
               </div>
             </div>
           </div>
-    )
-  }
-  contentExchange = () => {
-    var data = this.props.utils[this.props.exchangeModalId].data
-    if (!data) {
-      data = {
-        data :{}
-      }
-    }        
-    return (
-      <div id="tx-modal">
-        <div class="modal-title">
-          Transaction
-        </div>
-        <div class="modal-info">
-          <div>
-            <label>Nonce</label>
-            <span id="nonce">{data.nonce}</span>
-          </div>
-          <div>
-            <label>From</label>
-            <span>                  
-              <span id="from">
-                {data.from}
-              </span>          
-            </span>
-          </div>
-          <div>
-            <label>Source token</label>
-            <span>
-              {data.data.sourceToken}
-            </span>
-          </div>
-          <div>
-            <label>Source amout</label>
-            <span>
-              {data.data.sourceAmount}
-            </span>
-          </div>
-          <div>
-            <label>Destionation address</label>
-            <span>
-              {data.data.destAddress}
-            </span>
-          </div>              
-          <div>
-            <label>Destionation token</label>
-            <span>
-              {data.data.destToken}
-            </span>
-          </div>
-          <div>
-            <label>Max destionation amount</label>
-            <span>
-              {data.data.maxDestAmount}
-            </span>
-          </div>
-          <div>
-            <label>Min conversion rate</label>
-            <span>
-              {data.data.minConversionRate}
-            </span>
-          </div>
-          <div>
-            <label>Hash</label>
-            <span id="hash">
-              <a href={"https://kovan.etherscan.io/tx/" + data.hash}>
-                {data.hash}
-              </a>                  
-            </span>
-          </div>
-        </div>
-        <div class="modal-extra">
-          <div class="left">
-            <div id="gas-price">{data.gasPrice} Ether</div>
-            <i class="k-icon k-icon-usd"></i>
-            <div>Gas Price</div>
-          </div>
-          <div class="right">
-            <div id="gas-price">{data.gas}</div>
-            <div>
-              <i class="k-icon k-icon-gas"></i>  
+        )
+        break
+      case "exchange":
+        content = (
+          <div id="tx-modal">
+            <div class="modal-title">
+              Transaction
             </div>
-            
-            <div>Gas</div>
+            <div class="modal-info">
+              <div>
+                <label>Nonce</label>
+                <span id="nonce">{data.nonce}</span>
+              </div>
+              <div>
+                <label>From</label>
+                <span>                  
+                  <span id="from">
+                    {data.from}
+                  </span>          
+                </span>
+              </div>
+              <div>
+                <label>Source token</label>
+                <span>
+                  {data.data.sourceToken}
+                </span>
+              </div>
+              <div>
+                <label>Source amout</label>
+                <span>
+                  {data.data.sourceAmount}
+                </span>
+              </div>
+              <div>
+                <label>Destionation address</label>
+                <span>
+                  {data.data.destAddress}
+                </span>
+              </div>              
+              <div>
+                <label>Destionation token</label>
+                <span>
+                  {data.data.destToken}
+                </span>
+              </div>
+              <div>
+                <label>Max destionation amount</label>
+                <span>
+                  {data.data.maxDestAmount}
+                </span>
+              </div>
+              <div>
+                <label>Min conversion rate</label>
+                <span>
+                  {data.data.minConversionRate}
+                </span>
+              </div>
+              <div>
+                <label>Hash</label>
+                <span id="hash">
+                  <a href={"https://kovan.etherscan.io/tx/" + data.hash}>
+                    {data.hash}
+                  </a>                  
+                </span>
+              </div>
+            </div>
+            <div class="modal-extra">
+              <div class="left">
+                <div id="gas-price">{data.gasPrice} Ether</div>
+                <i class="k-icon k-icon-usd"></i>
+                <div>Gas Price</div>
+              </div>
+              <div class="right">
+                <div id="gas-price">{data.gas}</div>
+                <div>
+                  <i class="k-icon k-icon-gas"></i>  
+                </div>
+                
+                <div>Gas</div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    )
+        )
+        break
+    }    
+    return content
   }
 
 
@@ -206,18 +201,10 @@ export default class Transactions extends React.Component {
           </tbody>
         </table>
         <Modal                
-          content={this.contentExchange}
+          content={this.content}
           modalIsOpen={this.props.modalIsOpen}          
           label="Transaction information"
-          modalID={this.props.exchangeModalId}>
-          modalClass="modal-transaction"
-        </Modal>
-
-        <Modal                
-          content={this.contentJoin}
-          modalIsOpen={this.props.modalIsOpen}          
-          label="Transaction information"
-          modalID={this.props.joinModalId}>
+          modalID={this.props.modalId}>
           modalClass="modal-transaction"
         </Modal>
       </div>
