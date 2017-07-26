@@ -10,6 +10,7 @@ import { specifyName, specifyDesc, emptyForm,  throwError } from "../actions/imp
 import { addAccount } from "../actions/accountActions"
 import { verifyAccount, verifyKey, anyErrors } from "../utils/validators"
 
+
 @connect((store) => {
   return {...store.importKeystore}
 })
@@ -39,7 +40,6 @@ export default class ImportKeystoreModal extends React.Component {
       //this.props.onClose()
       this.props.dispatch(closeModal(this.props.modalID))
     }
-    
   }
 
   content = () => {
@@ -80,7 +80,7 @@ export default class ImportKeystoreModal extends React.Component {
     return (
       <Modal
         modalIsOpen={this.props.modalIsOpen}
-        content={this.content}
+        content={this.content()}
         modalID={this.props.modalID}
         modalClass="modal-import"
         label="Import account from keystore JSON file">

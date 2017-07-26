@@ -28,7 +28,7 @@ export default class Dashboard extends React.Component {
     if (Object.keys(accounts).length == 0 ) {
       app =  (
         <div class="no-account">
-          You don't have any Ethereum addresses yet. Please import one.
+          You don't have any imported Ethereum addresses. Please import one.
           <ImportKeystoreModal modalID={this.props.modalID} />
         </div>)
     } else {
@@ -44,7 +44,6 @@ export default class Dashboard extends React.Component {
     if (Object.keys(wallets).length == 0 ) {
       appWallet =  (
         <div class="no-wallet">
-          You don't have any Ethereum wallet yet. Please import one.
          <JoinPaymentForm passphraseID="payment-passphrase" modalID={this.props.modalWalletID}/>
         </div>)
     } else {
@@ -68,7 +67,7 @@ export default class Dashboard extends React.Component {
       importingWallet = ""
     }
     return (
-      <div>      
+      <div>
         <div  class="k-page">
           <div  class="k-page-account">
             {importingAccount}
@@ -81,7 +80,7 @@ export default class Dashboard extends React.Component {
             {importingWallet}
             {appWallet}
             <div class="import-wallet button-gradient">
-              <ModalButton modalID={this.props.modalWalletID} title="import new wallet" />
+              <ModalButton modalID={this.props.modalWalletID} title="Deploy new Kyber Wallet" />
             </div>
           </div>
         </div>
