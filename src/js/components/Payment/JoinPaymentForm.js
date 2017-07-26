@@ -11,6 +11,7 @@ import { throwError, emptyForm } from "../../actions/joinPaymentFormActions"
 import { specifyGasLimit, specifyGasPrice } from "../../actions/joinPaymentFormActions"
 import { deployKyberWallet } from "../../services/payment"
 import { updateAccount, joiningKyberWallet } from "../../actions/accountActions"
+import { closeModal } from "../../actions/utilActions"
 import { addTx } from "../../actions/txActions"
 import Tx from "../../services/tx"
 
@@ -69,22 +70,30 @@ export default class JoinPaymentForm extends React.Component {
         errors["selectedAccountError"] = "invalid"
       }
       // sending by wei
-      var hash = deployKyberWallet(
-        ethereum, this.props.account, this.props.nonce, this.props.gas,
-        this.props.gasPrice, this.props.account.key, password)
-      const tx = new Tx(
-        hash, this.props.account.address, this.props.gas, this.props.gasPrice,
-        this.props.nonce, "pending", "join kyber wallet")
-      this.props.dispatch(updateAccount(ethereum, this.props.account))
-      this.props.dispatch(joiningKyberWallet(this.props.account, hash))
-      this.props.dispatch(addTx(tx))
+      var account = this.props.account
+      var address = this.props.account.address
+      var gas = this.props.gas
+      var gasPrice = this.props.gasPrice
+      var nonce = this.props.nonce
+      var dispatch = this.props.dispatch
+      deployKyberWallet(
+        ethereum, account, nonce, gas,
+        gasPrice, account.key, password, (ex) => {
+          const tx = new Tx(
+            ex, address, gas, gasPrice,
+            nonce, "pending", "join kyber wallet")
+          dispatch(updateAccount(ethereum, account))
+          dispatch(joiningKyberWallet(account, ex))
+          dispatch(addTx(tx))
+        })
       document.getElementById(this.props.passphraseID).value = ''
       this.props.dispatch(emptyForm())
+      this.props.dispatch(closeModal(this.props.modalID))
     } catch (e) {
       console.log(e)
       errors["passwordError"] = "incorrect"
       this.props.dispatch(throwError(errors))
-    }    
+    }
   }
 
   content = () => {

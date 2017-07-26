@@ -1,11 +1,12 @@
 import { sealTxByKeystore } from "../utils/sealer"
-import { incManualNonceAccount } from "../actions/accountActions"
+import { doTransaction } from "../actions/joinPaymentFormActions"
 import constants from "../services/constants"
 import store from "../store"
 
 
 export function deployKyberWallet(
-  ethereum, account, nonce, gas, gasPrice, keystring, password) {
+  ethereum, account, nonce, gas, gasPrice,
+  keystring, password, callback) {
 
   var txData = ethereum.deployKyberWalletData(account.address)
   const txParams = {
@@ -16,9 +17,7 @@ export function deployKyberWallet(
     chainId: 42
   }
   const tx = sealTxByKeystore(txParams, keystring, password)
-  const broadcasted = ethereum.sendRawTransaction(tx)
-  store.dispatch(incManualNonceAccount(account.address))
-  return broadcasted
+  store.dispatch(doTransaction(ethereum, tx, callback))
 }
 
 export function payByEther(

@@ -15,8 +15,8 @@ import JoinPaymentForm from "./Payment/JoinPaymentForm"
     currentBlock: store.global.currentBlock,
     connected: store.global.connected,
     newAccountAdding: store.accounts.newAccountAdding,
-    newWalletAdding: store.accounts.newWalletAdding,
-    modalID: "new_account_modal",    
+    newWalletAdding: store.wallets.newWalletAdding,
+    modalID: "new_account_modal",
     modalWalletID : "new_wallet_modal"
   }
 })

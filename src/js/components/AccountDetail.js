@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import QRCode from "qrcode.react"
 
 import NameAndDesc from "./Account/NameAndDesc"
+import ModalButton from "./Elements/ModalButton"
 import { Balance, Token, Nonce } from "./Account/Balance"
 import { toT } from "../utils/converter"
 import { deleteAccount } from "../actions/accountActions"
@@ -29,7 +30,7 @@ export default class AccountDetail extends React.Component {
 
   deleteAccount = (event, address) => {
     event.preventDefault()
-    this.props.dispatch(deleteAccount(address))        
+    this.props.dispatch(deleteAccount(address))
   }
 
   render() {
@@ -82,8 +83,12 @@ export default class AccountDetail extends React.Component {
               </div>
             </div>
           </div>
-          <button class="button">Exchange</button>
-          <button class="button">Send</button>
+          <ModalButton modalID={this.props.modalWalletID} title="Deploy new Kyber Wallet">
+            Exchange
+          </ModalButton>
+          <ModalButton modalID={this.props.modalWalletID} title="Deploy new Kyber Wallet">
+            Send
+          </ModalButton>
         </div>
         <div class="wallet-center">
           {tokenRowrender}

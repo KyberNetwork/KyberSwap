@@ -1,10 +1,21 @@
+export function doTransaction(ethereum, tx, callback) {
+  return {
+    type: "JOIN_PAYMENT_FORM_TX_BROADCAST",
+    payload: new Promise((resolve, reject) => {
+      ethereum.sendRawTransaction(tx, (hash) => {
+        callback(hash)
+        resolve(hash)
+      })
+    })
+  }
+}
+
 export function selectAccount(addr) {
   return {
     type: "JOIN_PAYMENT_ACCOUNT_SELECTED",
     payload: addr,
   }
 }
-
 
 export function specifyGasLimit(gas) {
   return {
