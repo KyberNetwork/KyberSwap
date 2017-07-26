@@ -15,7 +15,7 @@ export default class ModalButton extends React.Component {
 
   render() {
     return (
-      <button id="import" title={this.props.title} onClick={this.openModal} >
+      <button class="import" title={this.props.title} onClick={this.openModal} >
         +
       </button>
     )

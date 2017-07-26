@@ -79,8 +79,9 @@ $borderRadius: 5px;
             background-color: $accountColor;
         }    
     }    
-    &.button-gradient{
+    &.button-gradient{    
       button{
+        right: 200px;
         background-image: $color;
       }  
     }
@@ -278,7 +279,33 @@ $borderRadius: 5px;
             outline: none;
         }
     }
-} // button {
-//     cursor: pointer;
-// }
-//}
+} 
+
+.no-wallet, .no-account{
+    padding-left:50px;
+}
+.modal-import{
+  width: 400px;
+}
+.modal-payment{
+  width: 600px;   
+  .input-space, .intro{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items:center;
+    span{
+        &:first-child{
+            display: block;
+            width: 100px;
+            text-align: right;
+            padding-right: 14px;   
+        }    
+    }    
+    input{
+        width: 400px;        
+        margin:0px;
+        margin-right: 10px;
+    }
+  }
+}

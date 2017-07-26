@@ -1,7 +1,8 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import Modal from 'react-modal'
+import Modal from '../Elements/Modal'
+import ModalButton from "../Elements/ModalButton"
 import Credential from "../Elements/Credential"
 import TransactionConfig from "../Elements/TransactionConfig"
 import UserSelect from "../Payment/UserSelect"
@@ -83,45 +84,51 @@ export default class JoinPaymentForm extends React.Component {
       console.log(e)
       errors["passwordError"] = "incorrect"
       this.props.dispatch(throwError(errors))
-    }
+    }    
   }
 
+  content = () => {
+    return (
+      <div className="import-account">
+        <div className="modal-title text-gradient">
+          Deploy your Kyber Wallet contract
+        </div>
+        <div className="modal-body">
+          <form >
+            <div className="row">
+              <div className="large-12 columns">
+                <UserSelect />
+              </div>
+            </div>
+            <div className="row">
+              <div className="large-12 columns">
+                <TransactionConfig gas={this.props.gas} gasPrice={this.props.gasPrice} gasHandler={this.specifyGas} gasPriceHandler={this.specifyGasPrice} />
+              </div>
+            </div>
+            <div className="row">
+              <div className="large-12 columns">
+                <Credential passphraseID={this.props.passphraseID} error={this.props.passwordError}/>
+              </div>
+            </div>
+            <div className="row">
+              <div className="large-12 columns submit-button">
+                <button class="button" onClick={this.joinKyberNetwork} >Join KyberNetwork</button>
+              </div>
+            </div>
+          </form>
+          </div>
+      </div>
+    )
+  }
   render() {
     return (
       <Modal
-        style={customStyles}
-        isOpen={this.props.modalIsOpen}
-        onRequestClose={this.props.onClose}
-        contentLabel="Import wallet from keystore JSON file">
-        <div className="import-account">
-          <div className="modal-title text-gradient">
-            Deploy your Kyber Wallet contract
-          </div>
-          <div className="modal-body">
-            <form >
-              <div className="row">
-                <div className="large-12 columns">
-                  <UserSelect />
-                </div>
-              </div>
-              <div className="row">
-                <div className="large-12 columns">
-                  <TransactionConfig gas={this.props.gas} gasPrice={this.props.gasPrice} gasHandler={this.specifyGas} gasPriceHandler={this.specifyGasPrice} />
-                </div>
-              </div>
-              <div className="row">
-                <div className="large-12 columns">
-                  <Credential passphraseID={this.props.passphraseID} error={this.props.passwordError}/>
-                </div>
-              </div>
-              <div className="row">
-                <div className="large-12 columns submit-button">
-                  <button class="button" onClick={this.joinKyberNetwork} >Join KyberNetwork</button>
-                </div>
-              </div>
-            </form>
-            </div>
-        </div>
+        modalID={this.props.modalID}        
+        isOpen={this.props.modalIsOpen}        
+        content={this.content}
+        modalClass="modal-payment"
+        label="Import wallet from keystore JSON file">
+        
       </Modal>
     )
   }
