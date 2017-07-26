@@ -82,6 +82,8 @@ export default class AccountDetail extends React.Component {
               </div>
             </div>
           </div>
+          <button class="button">Exchange</button>
+          <button class="button">Send</button>
         </div>
         <div class="wallet-center">
           {tokenRowrender}
