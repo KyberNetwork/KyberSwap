@@ -40,7 +40,7 @@ export default class KyberModal extends React.Component {
         isOpen={this.props.modalIsOpen}
         onRequestClose={this.onClose}
         contentLabel={this.props.label}>
-        {content()}
+        {content}
       </Modal>
     )
   }

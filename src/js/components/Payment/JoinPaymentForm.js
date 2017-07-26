@@ -123,12 +123,11 @@ export default class JoinPaymentForm extends React.Component {
   render() {
     return (
       <Modal
-        modalID={this.props.modalID}        
-        isOpen={this.props.modalIsOpen}        
-        content={this.content}
+        modalID={this.props.modalID}
+        isOpen={this.props.modalIsOpen}
+        content={this.content()}
         modalClass="modal-payment"
         label="Import wallet from keystore JSON file">
-        
       </Modal>
     )
   }
