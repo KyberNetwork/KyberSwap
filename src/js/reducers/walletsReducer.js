@@ -60,7 +60,10 @@ const wallets = (state=initState, action) => {
     case "NEW_WALLET_ADDED_FULFILLED": {
       var newWallets = {...state.wallets}
       newWallets[action.payload.address] = action.payload
-      return {...state, wallets: newWallets}
+      return {...state, newWalletAdding: false, wallets: newWallets}
+    }
+    case "NEW_WALLET_ADDED_PENDING": {
+      return {...state, newWalletAdding: true}
     }
   }
   return state

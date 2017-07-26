@@ -12,16 +12,10 @@ const customStyles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(10, 10, 10, 0.45)'
-  },
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    width: '400px'
+    backgroundColor: 'rgba(10, 10, 10, 0.45)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 }
 
@@ -39,6 +33,10 @@ export default class KyberModal extends React.Component {
     return (
       <Modal
         style={customStyles}
+         className={{
+          base: this.props.modalClass,
+          afterOpen: 'modal-open',
+        }}
         isOpen={this.props.modalIsOpen}
         onRequestClose={this.onClose}
         contentLabel={this.props.label}>

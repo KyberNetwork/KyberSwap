@@ -116,6 +116,26 @@
   pointer-events: none;
   cursor: default; }
 
+.modal-open {
+  background-color: white;
+  padding: 15px;
+  animation: unfoldIn 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  transform: scaleY(0.01) scaleX(0); }
+
+@keyframes unfoldIn {
+  0% {
+    transform: scaleY(0.005) scaleX(0); }
+  50% {
+    transform: scaleY(0.005) scaleX(1); }
+  100% {
+    transform: scaleY(1) scaleX(1); } }
+@keyframes unfoldOut {
+  0% {
+    transform: scaleY(1) scaleX(1); }
+  50% {
+    transform: scaleY(0.005) scaleX(1); }
+  100% {
+    transform: scaleY(0.005) scaleX(0); } }
 .text-gradient {
   background: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
   -webkit-background-clip: text;
@@ -343,13 +363,13 @@
       position: relative;
       top: 3px; }
     .k-page-transaction table .hash a {
-      width: 250px;
+      width: 200px;
       display: block;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis; }
   .k-page-transaction table .from span {
-    width: 250px;
+    width: 150px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -454,6 +474,7 @@
 .import-wallet.button-green button {
   background-color: #00bd70; }
 .import-wallet.button-gradient button {
+  right: 200px;
   background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
 
 .no-account {
@@ -566,6 +587,29 @@
     cursor: pointer; }
     .import-wallet button:focus {
       outline: none; }
+
+.no-wallet, .no-account {
+  padding-left: 50px; }
+
+.modal-import {
+  width: 400px; }
+
+.modal-payment {
+  width: 600px; }
+  .modal-payment .input-space, .modal-payment .intro {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center; }
+    .modal-payment .input-space span:first-child, .modal-payment .intro span:first-child {
+      display: block;
+      width: 100px;
+      text-align: right;
+      padding-right: 14px; }
+    .modal-payment .input-space input, .modal-payment .intro input {
+      width: 400px;
+      margin: 0px;
+      margin-right: 10px; }
 
 .k-page-exchange {
   max-width: 860px;
