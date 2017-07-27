@@ -9,7 +9,7 @@ import { addTx } from "../../actions/txActions"
 import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
 import { numberToHex } from "../../utils/converter"
 import constants from "../../services/constants"
-import { etherToOthers, tokenToOthers } from "../../services/exchange"
+import { etherToOthers, tokenToOthers, sendEther, sendToken } from "../../services/exchange"
 import Tx from "../../services/tx"
 
 
@@ -47,6 +47,7 @@ import Tx from "../../services/tx"
     gasPrice: exchangeForm.gasPrice,
     step: exchangeForm.step,
     offeredRateBalance: exchangeForm.offeredRateBalance,
+    isCrossSend: exchangeForm.isCrossSend,
   }
 })
 export default class PostExchange extends React.Component {
@@ -75,13 +76,16 @@ export default class PostExchange extends React.Component {
   stepOne = () => {
     var errors = {}
     errors["selectedAccountError"] = verifyAccount(this.props.selectedAccount)
+    errors["destAddressError"] = verifyAccount(this.props.destAddress)
+    if (this.props.isCrossSend || !this.props.allowDirectSend) {
+      errors["destTokenError"] = verifyToken(this.props.destToken)
+      errors["minDestAmountError"] = verifyAmount(this.props.minDestAmount, this.props.offeredRateBalance)
+      if (this.props.sourceToken == this.props.destToken) {
+        errors["destTokenError"] = "Exchange between the same currencies"
+      }
+    }
     errors["sourceTokenError"] = verifyToken(this.props.sourceToken)
     errors["sourceAmountError"] = verifyAmount(this.props.sourceAmount, this.props.sourceBalance)
-    errors["destAddressError"] = verifyAccount(this.props.destAddress)
-    if (this.props.sourceToken == this.props.destToken) {
-      errors["destTokenError"] = "Exchange between the same currencies"
-    }
-    errors["minDestAmountError"] = verifyAmount(this.props.minDestAmount, this.props.offeredRateBalance)
     return errors
   }
 
@@ -92,17 +96,7 @@ export default class PostExchange extends React.Component {
     return errors
   }
 
-  stepThree = () => {
-    var errors = {}
-    var password = document.getElementById(this.props.passphraseID).value
-    if (password == undefined || password == "") {
-      errors["passwordError"] = "Empty password"
-    }
-    var keystring = this.props.keystring
-    if (keystring == undefined || keystring == "") {
-      errors["keystringError"] = "Keystore is not loaded"
-    }
-    var ethereum = this.props.ethereum
+  doCrossSend = (keystring, password, ethereum, errors) => {
     try {
       const params = this.formParams()
       // sending by wei
@@ -136,6 +130,56 @@ export default class PostExchange extends React.Component {
       errors["passwordError"] = "incorrect"
     }
     return errors
+  }
+
+  doDirectSend = (keystring, password, ethereum, errors) => {
+    try {
+      const params = this.formParams()
+      // sending by wei
+      var call = params.sourceToken == constants.ETHER_ADDRESS ? sendEther : sendToken
+      var account = this.props.account
+      var dispatch = this.props.dispatch
+      call(
+        this.props.exchangeFormID, ethereum, params.selectedAccount,
+        params.sourceToken, params.sourceAmount,
+        params.destAddress, params.nonce, params.gas,
+        params.gasPrice, keystring, password, (ex, trans) => {
+          const tx = new Tx(
+            ex, params.selectedAccount, ethUtil.bufferToInt(trans.gas),
+            ethUtil.bufferToInt(trans.gasPrice),
+            ethUtil.bufferToInt(trans.nonce), "pending", "send", {
+              sourceToken: params.sourceToken,
+              sourceAmount: params.sourceAmount,
+              destAddress: params.destAddress,
+            })
+          dispatch(incManualNonceAccount(params.selectedAccount))
+          dispatch(updateAccount(ethereum, account))
+          dispatch(addTx(tx))
+        })
+      document.getElementById(this.props.passphraseID).value = ''
+    } catch (e) {
+      console.log(e)
+      errors["passwordError"] = "incorrect"
+    }
+    return errors
+  }
+
+  stepThree = () => {
+    var errors = {}
+    var password = document.getElementById(this.props.passphraseID).value
+    if (password == undefined || password == "") {
+      errors["passwordError"] = "Empty password"
+    }
+    var keystring = this.props.keystring
+    if (keystring == undefined || keystring == "") {
+      errors["keystringError"] = "Keystore is not loaded"
+    }
+    var ethereum = this.props.ethereum
+    if (this.props.isCrossSend) {
+      return this.doCrossSend(keystring, password, ethereum, errors)
+    } else {
+      return this.doDirectSend(keystring, password, ethereum, errors)
+    }
   }
 
   postExchange = (event) => {

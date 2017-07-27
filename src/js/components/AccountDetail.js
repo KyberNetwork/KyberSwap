@@ -7,6 +7,12 @@ import ModalButton from "./Elements/ModalButton"
 import { Balance, Token, Nonce } from "./Account/Balance"
 import { toT } from "../utils/converter"
 import { deleteAccount } from "../actions/accountActions"
+import { selectAccount, specifyRecipient } from "../actions/exchangeFormActions"
+
+const modalID = "quick-exchange-modal"
+const sendModalID = "quick-send-modal"
+const quickFormID = "quick-exchange"
+const quickSendFormID = "quick-send"
 
 @connect((store, props) => {
   var acc = store.accounts.accounts[props.address];
@@ -31,6 +37,20 @@ export default class AccountDetail extends React.Component {
   deleteAccount = (event, address) => {
     event.preventDefault()
     this.props.dispatch(deleteAccount(address))
+  }
+
+  openQuickExchange = (event) => {
+    this.props.dispatch(selectAccount(
+      quickFormID, this.props.address
+    ))
+    this.props.dispatch(specifyRecipient(
+      quickFormID, this.props.address))
+  }
+
+  openQuickSend = (event) => {
+    this.props.dispatch(selectAccount(
+      quickSendFormID, this.props.address
+    ))
   }
 
   render() {
@@ -83,10 +103,10 @@ export default class AccountDetail extends React.Component {
               </div>
             </div>
           </div>
-          <ModalButton class="button" modalID="quick-exchange-modal" title="Quick exchange between tokens">
+          <ModalButton preOpenHandler={this.openQuickExchange} class="button" modalID={modalID} title="Quick exchange between tokens">
             Exchange
           </ModalButton>
-          <ModalButton class="button" modalID={this.props.modalWalletID} title="Deploy new Kyber Wallet">
+          <ModalButton preOpenHandler={this.openQuickSend} class="button" modalID={sendModalID} title="Quick send ethers and tokens">
             Send
           </ModalButton>
         </div>

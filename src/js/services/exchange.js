@@ -5,6 +5,45 @@ import { doTransaction, doApprovalTransaction } from "../actions/exchangeFormAct
 import constants from "../services/constants"
 import Rate from "./rate"
 
+export function sendEther(
+  id, ethereum, account, sourceToken, sourceAmount,
+  destAddress, nonce, gas, gasPrice, keystring,
+  password, callback) {
+
+  const txParams = {
+    nonce: nonce,
+    gasPrice: gasPrice,
+    gasLimit: gas,
+    to: destAddress,
+    value: sourceAmount,
+    // EIP 155 chainId - mainnet: 1, ropsten: 3
+    chainId: 42
+  }
+  const tx = sealTxByKeystore(txParams, keystring, password)
+  store.dispatch(doTransaction(id, ethereum, tx, callback))
+}
+
+export function sendToken(
+  id, ethereum, account, sourceToken, sourceAmount,
+  destAddress, nonce, gas, gasPrice, keystring,
+  password, callback) {
+
+  var txData = ethereum.sendTokenData(
+    sourceToken, sourceAmount, destAddress)
+  const txParams = {
+    nonce: nonce,
+    gasPrice: gasPrice,
+    gasLimit: gas,
+    to: sourceToken,
+    value: 0,
+    data: txData,
+    // EIP 155 chainId - mainnet: 1, ropsten: 3
+    chainId: 42
+  }
+  const tx = sealTxByKeystore(txParams, keystring, password)
+  store.dispatch(doTransaction(id, ethereum, tx, callback))
+}
+
 export function etherToOthers(
   id, ethereum, account, sourceToken, sourceAmount, destToken,
   destAddress, maxDestAmount, minConversionRate,
@@ -68,6 +107,7 @@ export function tokenToOthers(
       store.dispatch(doTransaction(id, ethereum, exchangeTx, callback))
   }))
 }
+
 
 export function fetchRate(ethereum, source, dest, reserve, callback) {
   ethereum.getRate(source.address, dest.address, reserve.index,

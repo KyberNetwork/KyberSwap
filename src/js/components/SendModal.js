@@ -6,24 +6,24 @@ import ExchangeForm from "./ExchangeForm"
 import { closeModal } from "../actions/utilActions"
 
 
-const quickExchangeModalID = "quick-exchange-modal"
+const quickSendModalID = "quick-send-modal"
 
 @connect((store) => {
   return {}
 })
-export default class ExchangeModal extends React.Component {
+export default class SendModal extends React.Component {
 
-  closeQuickExchangeModal = (event) => {
-    this.props.dispatch(closeModal(quickExchangeModalID))
+  closeQuickSendModal = (event) => {
+    this.props.dispatch(closeModal(quickSendModalID))
   }
 
   content = () => {
     return <ExchangeForm
       passphraseID="exchange-modal-passphrase"
       exchangeFormID={this.props.exchangeFormID}
-      postExchangeHandler={this.closeQuickExchangeModal}
+      postExchangeHandler={this.closeQuickSendModal}
       hideSourceAddress={true}
-      hideDestAddress={true}
+      allowDirectSend={true}
     />
   }
 

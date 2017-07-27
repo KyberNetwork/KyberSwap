@@ -7,7 +7,7 @@ import { closeModal } from "../../actions/utilActions"
 
 const customStyles = {
   overlay: {
-    position: 'fixed',
+    position: 'relative',
     top: 0,
     left: 0,
     right: 0,

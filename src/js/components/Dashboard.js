@@ -4,9 +4,13 @@ import { connect } from "react-redux"
 import ImportKeystoreModal from "./ImportKeystoreModal"
 import ModalButton from "./Elements/ModalButton"
 import ExchangeModal from "./ExchangeModal"
+import SendModal from "./SendModal"
 import Accounts from "./Accounts"
 import Wallets from "./Wallets"
 import JoinPaymentForm from "./Payment/JoinPaymentForm"
+
+const quickExchangeModalID = "quick-exchange-modal"
+const quickSendModalID = "quick-send-modal"
 
 @connect((store) => {
   return {
@@ -85,7 +89,8 @@ export default class Dashboard extends React.Component {
             </div>
           </div>
           <div class="modals">
-            <ExchangeModal modalID="quick-exchange-modal" label="Exchange" />
+            <ExchangeModal exchangeFormID="quick-exchange" modalID={quickExchangeModalID} label="Quick Exchange" />
+            <SendModal exchangeFormID="quick-send" modalID={quickSendModalID} label="Quick Send" />
           </div>
         </div>
       </div>)

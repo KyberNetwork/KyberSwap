@@ -173,6 +173,11 @@ export default class EthereumService {
     return tokenContract.approve.getData(this.networkAddress, sourceAmount)
   }
 
+  sendTokenData(sourceToken, sourceAmount, destAddress) {
+    var tokenContract = this.erc20Contract.at(sourceToken)
+    return tokenContract.transfer.getData(destAddress, sourceAmount)
+  }
+
   txMined(hash, callback) {
     this.rpc.eth.getTransactionReceipt(hash, (error, result) => {
       if (error != null) {

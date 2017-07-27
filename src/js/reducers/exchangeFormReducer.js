@@ -16,6 +16,14 @@ const exchangeForm = (state=initState, action) => {
       newState[id].selectedAccount = action.payload
       return newState
     }
+    case "CROSS_SEND_SELECTED": {
+      newState[id].isCrossSend = true
+      return newState
+    }
+    case "CROSS_SEND_DESELECTED": {
+      newState[id].isCrossSend = false
+      return newState
+    }
     case "SOURCE_TOKEN_SELECTED": {
       var token = getToken(action.payload)
       newState[id].sourceToken = token.address
