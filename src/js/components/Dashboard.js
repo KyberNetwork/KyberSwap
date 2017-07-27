@@ -8,6 +8,8 @@ import Accounts from "./Accounts"
 import Wallets from "./Wallets"
 import JoinPaymentForm from "./Payment/JoinPaymentForm"
 
+const quickExchangeModalID = "quick-exchange-modal"
+
 @connect((store) => {
   return {
     accounts: store.accounts.accounts,
@@ -85,7 +87,7 @@ export default class Dashboard extends React.Component {
             </div>
           </div>
           <div class="modals">
-            <ExchangeModal exchangeFormID="quick-exchange" modalID="quick-exchange-modal" label="Quick Exchange" />
+            <ExchangeModal exchangeFormID="quick-exchange" modalID={quickExchangeModalID} label="Quick Exchange" />
           </div>
         </div>
       </div>)

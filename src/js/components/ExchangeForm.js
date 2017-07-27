@@ -45,6 +45,9 @@ export default class ExchangeForm extends React.Component {
     event.preventDefault()
     this.props.dispatch(
       resetStep(this.props.exchangeFormID))
+    if (this.props.postExchangeHandler) {
+      this.props.postExchangeHandler(event)
+    }
   }
 
   render() {
