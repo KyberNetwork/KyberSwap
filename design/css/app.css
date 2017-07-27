@@ -425,6 +425,14 @@
   background-image: -o-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
   background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
 
+<<<<<<< Updated upstream
+=======
+.k-page-wallet .import-wallet button {
+  background-image: -webkit-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
+  background-image: -o-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
+  background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
+
+>>>>>>> Stashed changes
 .k-page-wallet #tx-modal-wallet {
   top: -460px !important; }
 
@@ -455,6 +463,12 @@
 .k-page-account .title span {
   background-color: #00bd70; }
 
+<<<<<<< Updated upstream
+=======
+.k-page-account .import-wallet button {
+  background-color: #00bd70; }
+
+>>>>>>> Stashed changes
 .k-page-account .token-item .value {
   color: #aaa; }
 
@@ -542,11 +556,15 @@
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
+<<<<<<< Updated upstream
     display: flex;
     -webkit-box-pack: justify;
     -webkit-justify-content: space-between;
     -ms-flex-pack: justify;
     justify-content: space-between; }
+=======
+    display: flex; }
+>>>>>>> Stashed changes
   .wallet-item .balance {
     color: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
   .wallet-item .token-item {
@@ -565,10 +583,27 @@
     visibility: visible; }
   .wallet-item .control-btn {
     visibility: hidden;
+<<<<<<< Updated upstream
     float: left;
     margin-left: 10px; }
     .wallet-item .control-btn button {
       margin-left: 10px;
+=======
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center; }
+    .wallet-item .wallet-right button {
+      margin-left: 20px;
+>>>>>>> Stashed changes
       cursor: pointer; }
       .wallet-item .control-btn button:focus {
         outline: none; }
@@ -710,30 +745,7 @@
     padding-top: 60px; }
     .k-page-exchange .item-1 .input-group-item {
       margin-left: 80px;
-      margin-bottom: 40px;
-      border: 1px solid #aaa;
-      padding: 20px;
-      width: 600px; }
-      .k-page-exchange .item-1 .input-group-item.focus {
-        border: 1px solid #000; }
-        .k-page-exchange .item-1 .input-group-item.focus > label {
-          font-weight: bold;
-          color: #000; }
-        .k-page-exchange .item-1 .input-group-item.focus input {
-          color: #333; }
-        .k-page-exchange .item-1 .input-group-item.focus .button:after {
-          border-top-color: #333; }
-        .k-page-exchange .item-1 .input-group-item.focus .label {
-          color: #333; }
-      .k-page-exchange .item-1 .input-group-item > label {
-        font-size: 14px;
-        color: #aaa;
-        float: left;
-        position: absolute;
-        margin-top: -40px;
-        background-color: #fbfcfb;
-        text-align: center;
-        padding: 5px 10px; }
+      margin-bottom: 40px; }
     .k-page-exchange .item-1 .input-item {
       display: -webkit-box;
       display: -webkit-flex;
@@ -743,14 +755,18 @@
       -webkit-align-items: center;
       -ms-flex-align: center;
       align-items: center; }
+      .k-page-exchange .item-1 .input-item > label {
+        font-size: 20px;
+        width: 150px;
+        color: #aaa; }
       .k-page-exchange .item-1 .input-item input {
         background: transparent;
         border: none;
-        text-align: center;
         font-size: 20px;
-        width: 495px;
+        width: 400px;
         height: 40px;
-        color: #aaa; }
+        border-bottom: 1px solid #aaa;
+        color: #009dea; }
         .k-page-exchange .item-1 .input-item input:focus {
           outline: none; }
       .k-page-exchange .item-1 .input-item .select-wrapper {
@@ -760,19 +776,41 @@
         background-color: #fbfcfb;
         cursor: pointer;
         border: none;
+<<<<<<< Updated upstream
         margin-bottom: 0px; }
         .k-page-exchange .item-1 .input-item select option {
           padding: 10px 20px; }
         .k-page-exchange .item-1 .input-item select:focus {
           -webkit-box-shadow: none;
           box-shadow: none; }
+=======
+        width: 250px !important; }
+      .k-page-exchange .item-1 .input-item .selectric-scroll li {
+        font-size: 18px;
+        text-align: center;
+        color: #aaa; }
+        .k-page-exchange .item-1 .input-item .selectric-scroll li:not(:last-child) {
+          border-bottom: 1px solid #eee; }
+        .k-page-exchange .item-1 .input-item .selectric-scroll li:hover {
+          background-color: #fff; }
+      .k-page-exchange .item-1 .input-item .label {
+        color: #009dea; }
+      .k-page-exchange .item-1 .input-item .button {
+        background: transparent;
+        right: -35px; }
+        .k-page-exchange .item-1 .input-item .button:after {
+          border-top-color: #009dea; }
+>>>>>>> Stashed changes
     .k-page-exchange .item-1 .extra-info {
+      margin-left: 150px;
       color: #aaa;
       font-size: 12px;
       margin-top: 10px; }
     .k-page-exchange .item-1 .error {
+      margin-left: 150px;
       font-size: 12px; }
     .k-page-exchange .item-1 .input-account input {
+<<<<<<< Updated upstream
       width: 530px; }
     .k-page-exchange .item-1 .input-account select {
       width: 100px;
@@ -780,6 +818,17 @@
       left: -80px; }
     .k-page-exchange .item-1 .input-amount select {
       width: 80px; }
+=======
+      width: 432px; }
+    .k-page-exchange .item-1 .input-amount .label {
+      text-align: center;
+      background-color: transparent;
+      width: 100%;
+      margin: 0;
+      padding: 0px;
+      font-size: 18px;
+      cursor: pointer; }
+>>>>>>> Stashed changes
     .k-page-exchange .item-1 .usd-convert {
       -webkit-box-align: center;
       -webkit-align-items: center;

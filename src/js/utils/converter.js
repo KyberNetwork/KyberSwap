@@ -47,8 +47,6 @@ export function toT(number) {
 }
 
 export function getToken(address) {
-  console.log(address);
-  console.log(supported_tokens);
   if (address == constants.ETHER_ADDRESS) {
     return {
       name: "Ether",

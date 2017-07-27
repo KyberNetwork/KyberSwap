@@ -6,11 +6,13 @@ import {toT, toTWei} from "../../utils/converter"
 import constants from "../../services/constants"
 
 
-@connect((store) => {
-  var selectedAccount = store.exchangeForm.selectedAccount;
-  var account = store.accounts.accounts[selectedAccount];
+@connect((store, props) => {
+  var exchangeForm = store.exchangeForm[props.exchangeFormID]
+  exchangeForm = exchangeForm || {...constants.INIT_EXCHANGE_FORM_STATE}
+  var selectedAccount = exchangeForm.selectedAccount
+  var account = store.accounts.accounts[selectedAccount]
   if (account) {
-    var selectedToken = store.exchangeForm.sourceToken
+    var selectedToken = exchangeForm.sourceToken
     var selectedTokenBalance
     if (selectedToken == constants.ETHER_ADDRESS) {
       selectedTokenBalance = account.balance.toString(10)
@@ -30,18 +32,18 @@ import constants from "../../services/constants"
       balance: account.balance.toString(10),
       selectedToken: selectedToken,
       selectedTokenBalance: selectedTokenBalance,
-      specifiedAmount: store.exchangeForm.sourceAmount,
-      destToken: store.exchangeForm.destToken,
-      error: store.exchangeForm.errors["sourceAmountError"],
-      sourceTokenError: store.exchangeForm.errors["sourceTokenError"],
+      specifiedAmount: exchangeForm.sourceAmount,
+      destToken: exchangeForm.destToken,
+      error: exchangeForm.errors["sourceAmountError"],
+      sourceTokenError: exchangeForm.errors["sourceTokenError"],
     }
   } else {
     return {
       tokens: [],
       balance: 0,
-      selectedToken: store.exchangeForm.sourceToken,
-      specifiedAmount: store.exchangeForm.sourceAmount,
-      destToken: store.exchangeForm.destToken,
+      selectedToken: exchangeForm.sourceToken,
+      specifiedAmount: exchangeForm.sourceAmount,
+      destToken: exchangeForm.destToken,
       selectedTokenBalance: 0,
       error: "",
       sourceTokenError: "",
@@ -52,9 +54,10 @@ export default class TokenSource extends React.Component {
 
   selectToken(event) {
     this.props.dispatch(
-      selectSourceToken(event.target.value))
+      selectSourceToken(this.props.exchangeFormID, event.target.value))
     if (event.target.value != "" && this.props.destToken) {
       this.props.dispatch(suggestRate(
+        this.props.exchangeFormID,
         event.target.value,
         this.props.destToken
       ))
@@ -64,6 +67,7 @@ export default class TokenSource extends React.Component {
   specifyAmount(event) {
     var valueString = event.target.value == "" ? "0" : event.target.value
     this.props.dispatch(specifySourceAmount(
+      this.props.exchangeFormID,
       toTWei(valueString)))
   }
 

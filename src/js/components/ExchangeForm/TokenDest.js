@@ -9,23 +9,27 @@ import { toTWei, toT } from "../../utils/converter"
 import constants from "../../services/constants"
 
 
-@connect((store) => {
+@connect((store, props) => {
+  var exchangeForm = store.exchangeForm[props.exchangeFormID]
+  exchangeForm = exchangeForm || {...constants.INIT_EXCHANGE_FORM_STATE}
   return {
-    destToken: store.exchangeForm.destToken,
-    sourceToken: store.exchangeForm.sourceToken,
-    minConversionRate: store.exchangeForm.minConversionRate,
-    specifiedMinAmount: store.exchangeForm.minDestAmount,
-    error: store.exchangeForm.errors["minDestAmountError"],
-    destTokenError: store.exchangeForm.errors["destTokenError"],
+    destToken: exchangeForm.destToken,
+    sourceToken: exchangeForm.sourceToken,
+    minConversionRate: exchangeForm.minConversionRate,
+    specifiedMinAmount: exchangeForm.minDestAmount,
+    error: exchangeForm.errors["minDestAmountError"],
+    destTokenError: exchangeForm.errors["destTokenError"],
   }
 })
 
 export default class TokenDest extends React.Component {
 
   selectToken(event) {
-    this.props.dispatch(selectDestToken(event.target.value))
+    this.props.dispatch(
+      selectDestToken(this.props.exchangeFormID, event.target.value))
     if (this.props.sourceToken != "" && event.target.value) {
       this.props.dispatch(suggestRate(
+        this.props.exchangeFormID,
         this.props.sourceToken,
         event.target.value
       ))
@@ -35,7 +39,7 @@ export default class TokenDest extends React.Component {
   specifyMinAmount = (event) => {
     var valueString = event.target.value == "" ? "0" : event.target.value
     this.props.dispatch(
-      specifyMinAmount(toTWei(valueString)))
+      specifyMinAmount(this.props.exchangeFormID, toTWei(valueString)))
   }
 
   render() {
