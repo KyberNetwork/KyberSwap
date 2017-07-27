@@ -87,8 +87,8 @@ export default class ExchangeForm extends React.Component {
             </div>
             <div class="page">
               <div class="page-item item-1">
-                <UserSelect exchangeFormID={this.props.exchangeFormID}/>
-                <RecipientSelect exchangeFormID={this.props.exchangeFormID}/>
+                { this.props.hideSourceAddress ? "" : <UserSelect exchangeFormID={this.props.exchangeFormID}/> }
+                { this.props.hideSourceAddress ? "" : <RecipientSelect exchangeFormID={this.props.exchangeFormID}/> }
                 <TokenSource exchangeFormID={this.props.exchangeFormID}/>
                 <TokenDest exchangeFormID={this.props.exchangeFormID}/>
                 <ExchangeRate exchangeFormID={this.props.exchangeFormID}/>

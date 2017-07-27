@@ -85,7 +85,7 @@ export default class Dashboard extends React.Component {
             </div>
           </div>
           <div class="modals">
-            <ExchangeModal modalID="quick-exchange-modal" label="Exchange" />
+            <ExchangeModal exchangeFormID="quick-exchange" modalID="quick-exchange-modal" label="Quick Exchange" />
           </div>
         </div>
       </div>)

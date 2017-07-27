@@ -7,7 +7,12 @@ import ExchangeForm from "./ExchangeForm"
 
 export default class ExchangeModal extends React.Component {
   content = () => {
-    return <ExchangeForm passphraseID="exchange-modal-passphrase" />
+    return <ExchangeForm
+      passphraseID="exchange-modal-passphrase"
+      exchangeFormID={this.props.exchangeFormID}
+      hideSourceAddress={true}
+      hideDestAddress={true}
+    />
   }
 
   render() {
