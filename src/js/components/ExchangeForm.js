@@ -27,6 +27,7 @@ import { specifyGasLimit, specifyGasPrice, resetStep } from "../actions/exchange
     broadcasting: exchangeForm.broadcasting,
     txHash: exchangeForm.txHash,
     tx: store.txs[exchangeForm.txHash],
+    isCrossSend: exchangeForm.isCrossSend,
   }
 })
 export default class ExchangeForm extends React.Component {
@@ -91,10 +92,10 @@ export default class ExchangeForm extends React.Component {
             <div class="page">
               <div class="page-item item-1">
                 { this.props.hideSourceAddress ? "" : <UserSelect exchangeFormID={this.props.exchangeFormID}/> }
-                { this.props.hideSourceAddress ? "" : <RecipientSelect exchangeFormID={this.props.exchangeFormID}/> }
+                { this.props.hideDestAddress ? "" : <RecipientSelect exchangeFormID={this.props.exchangeFormID}/> }
                 <TokenSource exchangeFormID={this.props.exchangeFormID}/>
-                <TokenDest exchangeFormID={this.props.exchangeFormID}/>
-                <ExchangeRate exchangeFormID={this.props.exchangeFormID}/>
+                <TokenDest exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
+                { (this.props.isCrossSend || !this.props.allowDirectSend) ? <ExchangeRate exchangeFormID={this.props.exchangeFormID}/> : "" }
               </div>
               <div class="page-item item-2">
                 <TransactionConfig gas={this.props.gas}
@@ -116,7 +117,7 @@ export default class ExchangeForm extends React.Component {
               </div>
             </div>
             <div class="next" id="exchange-next">
-              <PostExchange passphraseID={this.props.passphraseID} exchangeFormID={this.props.exchangeFormID}/>
+              <PostExchange passphraseID={this.props.passphraseID} exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
             </div>
           </div>
         </div>

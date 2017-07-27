@@ -142,6 +142,20 @@ export function doApprovalTransaction(id, ethereum, tx, callback) {
   }
 }
 
+export function selectCrossSend(id) {
+  return {
+    type: "CROSS_SEND_SELECTED",
+    meta: id,
+  }
+}
+
+export function deselectCrossSend(id) {
+  return {
+    type: "CROSS_SEND_DESELECTED",
+    meta: id,
+  }
+}
+
 export function doTransaction(id, ethereum, tx, callback) {
   return {
     type: "EXCHANGE_FORM_TX_BROADCAST",

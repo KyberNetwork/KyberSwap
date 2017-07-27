@@ -14,6 +14,7 @@ const EPSILON = 1000
 const ETHER_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 const NETWORK_ADDRESS = "0x11542d7807dfb2b44937f756b9092c76e814f8ed"
 const INIT_EXCHANGE_FORM_STATE = {
+  isCrossSend: true,
   selectedAccount: "",
   sourceToken: ETHER_ADDRESS,
   sourceTokenSymbol: "",
