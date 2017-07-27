@@ -1,9 +1,12 @@
 import React from "react"
 import { connect } from "react-redux"
 import { selectAccount } from "../../actions/exchangeFormActions"
+import constants from "../../services/constants"
 
 
 @connect((store, props) => {
+  var exchangeForm = store.exchangeForm[props.exchangeFormID]
+  exchangeForm = exchangeForm || {...constants.INIT_EXCHANGE_FORM_STATE}
   return {
     accounts: Object.keys(store.accounts.accounts).map((key) => {
       return {
@@ -11,14 +14,15 @@ import { selectAccount } from "../../actions/exchangeFormActions"
         name: store.accounts.accounts[key].name,
       };
     }),
-    selectedAccount: store.exchangeForm.selectedAccount,
-    error: store.exchangeForm.errors["selectedAccountError"],
+    selectedAccount: exchangeForm.selectedAccount,
+    error: exchangeForm.errors["selectedAccountError"],
   }
 })
 export default class UserSelect extends React.Component {
 
   selectAccount(event) {
     this.props.dispatch(selectAccount(
+      this.props.exchangeFormID,
       event.target.value
     ))
   }

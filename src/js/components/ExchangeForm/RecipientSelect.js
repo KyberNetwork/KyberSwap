@@ -3,9 +3,12 @@ import { connect } from "react-redux"
 import Select from 'react-select'
 
 import { specifyRecipient } from "../../actions/exchangeFormActions"
+import constants from "../../services/constants"
 
 
-@connect((store) => {
+@connect((store, props) => {
+  var exchangeForm = store.exchangeForm[props.exchangeFormID]
+  exchangeForm = exchangeForm || {...constants.INIT_EXCHANGE_FORM_STATE}
   return {
     accounts: Object.keys(store.accounts.accounts).map((key) => {
       return {
@@ -13,18 +16,20 @@ import { specifyRecipient } from "../../actions/exchangeFormActions"
         name: store.accounts.accounts[key].name,
       };
     }),
-    destAddress: store.exchangeForm.destAddress,
-    error: store.exchangeForm.errors["destAddressError"],
+    destAddress: exchangeForm.destAddress,
+    error: exchangeForm.errors["destAddressError"],
   }
 })
 export default class RecipientSelect extends React.Component {
 
   specifyDestAddress(event) {
-    this.props.dispatch(specifyRecipient(event.target.value))
+    this.props.dispatch(
+      specifyRecipient(this.props.exchangeFormID, event.target.value))
   }
 
   selectAccount(event) {
-    this.props.dispatch(specifyRecipient(event.target.value))
+    this.props.dispatch(
+      specifyRecipient(this.props.exchangeFormID, event.target.value))
   }
 
   render() {

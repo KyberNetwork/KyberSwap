@@ -83,10 +83,10 @@ export default class AccountDetail extends React.Component {
               </div>
             </div>
           </div>
-          <ModalButton modalID={this.props.modalWalletID} title="Deploy new Kyber Wallet">
+          <ModalButton class="button" modalID="quick-exchange-modal" title="Quick exchange between tokens">
             Exchange
           </ModalButton>
-          <ModalButton modalID={this.props.modalWalletID} title="Deploy new Kyber Wallet">
+          <ModalButton class="button" modalID={this.props.modalWalletID} title="Deploy new Kyber Wallet">
             Send
           </ModalButton>
         </div>

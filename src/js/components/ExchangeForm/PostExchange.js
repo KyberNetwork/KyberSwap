@@ -13,12 +13,14 @@ import { etherToOthers, tokenToOthers } from "../../services/exchange"
 import Tx from "../../services/tx"
 
 
-@connect((state) => {
-  var address = state.exchangeForm.selectedAccount
-  var account = state.accounts.accounts[address]
+@connect((store, props) => {
+  var exchangeForm = store.exchangeForm[props.exchangeFormID]
+  exchangeForm = exchangeForm || {...constants.INIT_EXCHANGE_FORM_STATE}
+  var address = exchangeForm.selectedAccount
+  var account = store.accounts.accounts[address]
   var sourceBalance
-  var sourceToken = state.exchangeForm.sourceToken
-  var destToken = state.exchangeForm.destToken
+  var sourceToken = exchangeForm.sourceToken
+  var destToken = exchangeForm.destToken
   if ( sourceToken == constants.ETHER_ADDRESS) {
     sourceBalance = (account == undefined ? "0" : account.balance.toString(10))
   } else {
@@ -28,23 +30,23 @@ import Tx from "../../services/tx"
   return {
     nonce: (account == undefined ? 0 : account.getUsableNonce()),
     account: account,
-    ethereum: state.connection.ethereum,
+    ethereum: store.connection.ethereum,
     sourceBalance: sourceBalance,
     keystring: (account == undefined ? "" : account.key),
-    selectedAccount: state.exchangeForm.selectedAccount,
+    selectedAccount: exchangeForm.selectedAccount,
     sourceToken: sourceToken,
-    sourceAmount: state.exchangeForm.sourceAmount,
+    sourceAmount: exchangeForm.sourceAmount,
     destToken: destToken,
-    minConversionRate: state.exchangeForm.minConversionRate,
-    rate: state.global.rates[sourceToken + "-" + destToken],
-    destAddress: state.exchangeForm.destAddress,
-    maxDestAmount: state.exchangeForm.maxDestAmount,
-    minDestAmount: state.exchangeForm.minDestAmount,
-    throwOnFailure: state.exchangeForm.throwOnFailure,
-    gas: state.exchangeForm.gas,
-    gasPrice: state.exchangeForm.gasPrice,
-    step: state.exchangeForm.step,
-    offeredRateBalance: state.exchangeForm.offeredRateBalance,
+    minConversionRate: exchangeForm.minConversionRate,
+    rate: store.global.rates[sourceToken + "-" + destToken],
+    destAddress: exchangeForm.destAddress,
+    maxDestAmount: exchangeForm.maxDestAmount,
+    minDestAmount: exchangeForm.minDestAmount,
+    throwOnFailure: exchangeForm.throwOnFailure,
+    gas: exchangeForm.gas,
+    gasPrice: exchangeForm.gasPrice,
+    step: exchangeForm.step,
+    offeredRateBalance: exchangeForm.offeredRateBalance,
   }
 })
 export default class PostExchange extends React.Component {
@@ -108,14 +110,15 @@ export default class PostExchange extends React.Component {
       var account = this.props.account
       var dispatch = this.props.dispatch
       call(
-        ethereum, params.selectedAccount, params.sourceToken,
+        this.props.exchangeFormID, ethereum, params.selectedAccount, params.sourceToken,
         params.sourceAmount, params.destToken, params.destAddress,
         params.maxDestAmount, params.minConversionRate,
         params.throwOnFailure, params.nonce, params.gas,
-        params.gasPrice, keystring, password, (ex) => {
+        params.gasPrice, keystring, password, (ex, trans) => {
           const tx = new Tx(
-            ex, params.selectedAccount, params.gas, params.gasPrice,
-            params.nonce, "pending", "exchange", {
+            ex, params.selectedAccount, ethUtil.bufferToInt(trans.gas),
+            ethUtil.bufferToInt(trans.gasPrice),
+            ethUtil.bufferToInt(trans.nonce), "pending", "exchange", {
               sourceToken: params.sourceToken,
               sourceAmount: params.sourceAmount,
               destToken: params.destToken,
@@ -141,28 +144,28 @@ export default class PostExchange extends React.Component {
       case 1: {
         var errors = this.stepOne()
         if (anyErrors(errors)) {
-          this.props.dispatch(throwError(errors))
+          this.props.dispatch(throwError(this.props.exchangeFormID, errors))
         } else {
-          this.props.dispatch(nextStep())
+          this.props.dispatch(nextStep(this.props.exchangeFormID))
         }
         return
       }
       case 2: {
         var errors = this.stepTwo()
         if (anyErrors(errors)) {
-          this.props.dispatch(throwError(errors))
+          this.props.dispatch(throwError(this.props.exchangeFormID, errors))
         } else {
-          this.props.dispatch(nextStep())
+          this.props.dispatch(nextStep(this.props.exchangeFormID))
         }
         return
       }
       case 3: {
         var errors = this.stepThree()
         if (anyErrors(errors)) {
-          this.props.dispatch(throwError(errors))
+          this.props.dispatch(throwError(this.props.exchangeFormID, errors))
         } else {
-          this.props.dispatch(nextStep())
-          this.props.dispatch(emptyForm())
+          this.props.dispatch(nextStep(this.props.exchangeFormID))
+          this.props.dispatch(emptyForm(this.props.exchangeFormID))
         }
         return
       }
@@ -174,7 +177,7 @@ export default class PostExchange extends React.Component {
 
   back = (event) => {
     event.preventDefault()
-    this.props.dispatch(previousStep())
+    this.props.dispatch(previousStep(this.props.exchangeFormID))
   }
 
   render() {

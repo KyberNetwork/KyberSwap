@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 
 import ImportKeystoreModal from "./ImportKeystoreModal"
 import ModalButton from "./Elements/ModalButton"
+import ExchangeModal from "./ExchangeModal"
 import Accounts from "./Accounts"
 import Wallets from "./Wallets"
 import JoinPaymentForm from "./Payment/JoinPaymentForm"
@@ -73,15 +74,18 @@ export default class Dashboard extends React.Component {
             {importingAccount}
             {app}
             <div class="import-wallet button-green">
-              <ModalButton modalID={this.props.modalID} title="import new account from JSON keystore file" />
+              <ModalButton class="import" modalID={this.props.modalID} title="import new account from JSON keystore file" />
             </div>
           </div>
           <div  class="k-page-wallet">
             {importingWallet}
             {appWallet}
             <div class="import-wallet button-gradient">
-              <ModalButton modalID={this.props.modalWalletID} title="Deploy new Kyber Wallet" />
+              <ModalButton class="import" modalID={this.props.modalWalletID} title="Deploy new Kyber Wallet" />
             </div>
+          </div>
+          <div class="modals">
+            <ExchangeModal modalID="quick-exchange-modal" label="Exchange" />
           </div>
         </div>
       </div>)

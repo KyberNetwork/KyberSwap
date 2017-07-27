@@ -1,134 +1,95 @@
 import BigNumber from 'bignumber.js'
 import supported_tokens from "../services/supported_tokens"
 import constants from "../services/constants"
-import { calculateRate, calculateDest } from "../utils/converter"
+import { calculateRate, calculateDest, getToken } from "../utils/converter"
 
-
-const initState = {
-  selectedAccount: "",
-  sourceToken: constants.ETHER_ADDRESS,
-  sourceTokenSymbol: "",
-  sourceAmount: 0,
-  destToken: constants.ETHER_ADDRESS,
-  destTokenSymbol: "",
-  minConversionRate: 0,
-  destAddress: "",
-  minDestAmount: 0,
-  maxDestAmount: (new BigNumber(2)).pow(255).toString(10),
-  offeredRateExpiryBlock: 0,
-  offeredRateBalance: 0,
-  offeredRate: 0,
-  throwOnFailure: false,
-  gas: 1000000,
-  gasPrice: 20000000000,
-  step: 1,
-  broadcasting: true,
-  txHash: "",
-  errors: {
-    selectedAccountError: "",
-    destAddressError: "",
-    sourceTokenError: "",
-    sourceAmountError: "",
-    destTokenError: "",
-    maxDestAmountError: "",
-    minDestAmountError: "",
-    gasPriceError: "",
-    gasError: "",
-    passwordError: "",
-  }
-}
+const initFormState = constants.INIT_EXCHANGE_FORM_STATE
+const initState = {}
 
 const exchangeForm = (state=initState, action) => {
+  var id = action.meta
+  var newState = {...state}
+  var formState = state[id] || initFormState
+  newState[id] = {...formState}
   switch (action.type) {
     case "ACCOUNT_SELECTED": {
-      return {...state, selectedAccount: action.payload}
+      newState[id].selectedAccount = action.payload
+      return newState
     }
     case "SOURCE_TOKEN_SELECTED": {
-      if (action.payload == constants.ETHER_ADDRESS) {
-        return {...state,
-          sourceToken: action.payload,
-          sourceTokenSymbol: "ETH",
-        }
-      } else {
-        var token
-        for (var i = 0; i < supported_tokens.length; i++) {
-          var tok = supported_tokens[i]
-          if (tok.address == action.payload) {
-            token = tok
-            break
-          }
-        }
-        return {...state,
-          sourceToken: token.address,
-          sourceTokenSymbol: token.symbol,
-        }
-      }
+      var token = getToken(action.payload)
+      newState[id].sourceToken = token.address
+      newState[id].sourceTokenSymbol = token.symbol
+      return newState
     }
     case "DEST_TOKEN_SELECTED": {
-      if (action.payload == constants.ETHER_ADDRESS) {
-        return {...state,
-          destToken: action.payload,
-          destTokenSymbol: "ETH",
-        }
-      } else {
-        var token
-        for (var i = 0; i < supported_tokens.length; i++) {
-          var tok = supported_tokens[i]
-          if (tok.address == action.payload) {
-            token = tok
-            break
-          }
-        }
-        return {...state,
-          destToken: token.address,
-          destTokenSymbol: token.symbol,
-        }
-      }
+      var token = getToken(action.payload)
+      newState[id].destToken = token.address
+      newState[id].destTokenSymbol = token.symbol
+      return newState
     }
     case "SOURCE_AMOUNT_SPECIFIED": {
       var sourceAmount = action.payload
       var minAmount = calculateDest(
-        sourceAmount, state.minConversionRate).toString(10)
-      return {...state, sourceAmount: action.payload, minDestAmount: minAmount}
+        sourceAmount, newState[id].minConversionRate).toString(10)
+      newState[id].sourceAmount = action.payload
+      newState[id].minDestAmount = minAmount
+      return newState
     }
     case "MIN_AMOUNT_SPECIFIED": {
       var minAmount = action.payload
-      var minRate = calculateRate(state.sourceAmount, minAmount).toString(10)
-      return {...state, minDestAmount: minAmount, minConversionRate: minRate}
+      var minRate = calculateRate(newState[id].sourceAmount, minAmount).toString(10)
+      newState[id].minDestAmount = minAmount
+      newState[id].minConversionRate = minRate
+      return newState
     }
     case "RECIPIENT_SPECIFIED": {
-      return {...state, destAddress: action.payload}
+      newState[id].destAddress = action.payload
+      return newState
     }
     case "GAS_PRICE_SPECIFIED": {
-      return {...state, gasPrice: action.payload}
+      newState[id].gasPrice = action.payload
+      return newState
     }
     case "GAS_SPECIFIED": {
-      return {...state, gas: action.payload}
+      newState[id].gas = action.payload
+      return newState
     }
     case "ERROR_THREW": {
-      return {...state, errors: {...state.errors, ...action.payload}}
+      newState[id].errors = {...newState[id].errors, ...action.payload}
+      return newState
     }
     case "EXCHANGE_FORM_EMPTIED": {
-      var step = state.step
-      return {...initState, step: step}
+      var step = newState[id].step
+      newState[id] = {...initFormState, step: step}
+      return newState
     }
     case "EXCHANGE_FORM_RESET_STEP": {
-      return {...state, step: 1 }
+      newState[id].step = 1
+      return newState
     }
     case "EXCHANGE_FORM_NEXT_STEP": {
-      return {...state, step: state.step + 1}
+      newState[id].step = newState[id].step + 1
+      return newState
     }
     case "EXCHANGE_FORM_PREVIOUS_STEP": {
-      return {...state, step: state.step - 1}
+      newState[id].step = newState[id].step - 1
+      return newState
     }
     case "EXCHANGE_FORM_APPROVAL_TX_BROADCAST_PENDING": {
-      return {...state, broadcasting: true, txHash: action.payload }
+      newState[id].broadcasting = true
+      newState[id].txHash = action.payload
+      return newState
     }
     case "EXCHANGE_FORM_TX_BROADCAST_PENDING": {
-      return {...state, broadcasting: true, txHash: action.payload }
+      newState[id].broadcasting = true
+      newState[id].txHash = action.payload
+      return newState
     }
     case "EXCHANGE_FORM_TX_BROADCAST_FULFILLED": {
-      return {...state, broadcasting: false, txHash: action.payload }
+      newState[id].broadcasting = false
+      newState[id].txHash = action.payload
+      return newState
     }
     case "EXCHANGE_FORM_SUGGEST_RATE": {
       var minRate = action.payload.rate
@@ -139,18 +100,17 @@ const exchangeForm = (state=initState, action) => {
         balance = 0
         rate = 0
       } else {
-        minAmount = calculateDest(state.sourceAmount, minRate).toString(10)
+        minAmount = calculateDest(newState[id].sourceAmount, minRate).toString(10)
         block = action.payload.expirationBlock
         rate = action.payload.rate
         balance = action.payload.balance
       }
-      return {...state,
-        minConversionRate: minRate,
-        minDestAmount: minAmount,
-        offeredRateBalance: balance,
-        offeredRateExpiryBlock: block,
-        offeredRate: rate,
-      }
+      newState[id].minConversionRate = minRate
+      newState[id].minDestAmount = minAmount
+      newState[id].offeredRateBalance = balance
+      newState[id].offeredRateExpiryBlock = block
+      newState[id].offeredRate = rate
+      return newState
     }
   }
   return state
