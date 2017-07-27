@@ -12,7 +12,7 @@ const KYBER_WALLET_DATA = '0x6060604052341561000f57600080fd5b604051602080610d548
 // constants
 const EPSILON = 1000
 const ETHER_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-const NETWORK_ADDRESS = "0x2a5cfc611c26ae1332ed4b33bbeb0b4179b478f5"
+const NETWORK_ADDRESS = "0x11542d7807dfb2b44937f756b9092c76e814f8ed"
 const INIT_EXCHANGE_FORM_STATE = {
   selectedAccount: "",
   sourceToken: ETHER_ADDRESS,
