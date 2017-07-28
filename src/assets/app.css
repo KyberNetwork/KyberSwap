@@ -52,7 +52,7 @@
       position: relative; }
       .k-header .k-header-menu a:hover:before {
         content: '';
-        width: 40px;
+        width: 13px;
         height: 50px;
         position: absolute;
         left: 0px;
@@ -62,7 +62,7 @@
         border-left: 2px solid #00bd70; }
       .k-header .k-header-menu a:hover:after {
         content: '';
-        width: 40px;
+        width: 13px;
         height: 50px;
         position: absolute;
         right: 0px;
@@ -77,7 +77,7 @@
     position: relative; }
     .k-header .k-header-menu .tabs-title.is-active a:before {
       content: '';
-      width: 40px;
+      width: 13px;
       height: 50px;
       position: absolute;
       left: 0px;
@@ -87,7 +87,7 @@
       border-left: 2px solid #00bd70; }
     .k-header .k-header-menu .tabs-title.is-active a:after {
       content: '';
-      width: 40px;
+      width: 13px;
       height: 50px;
       position: absolute;
       right: 0px;
@@ -826,6 +826,7 @@
     font-size: 60px;
     position: fixed;
     bottom: 40px;
+    margin-left: 80px;
     cursor: pointer; }
     .import-wallet button:focus {
       outline: none; }
@@ -862,7 +863,7 @@
   bottom: 50px;
   background-color: #333;
   width: 280px;
-  margin-left: 480px;
+  margin-left: 570px;
   box-shadow: 1px 1px 1px 1px #000;
   animation: unfoldIn 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
   transform: scaleY(0.01) scaleX(0);
@@ -893,7 +894,7 @@
       margin-left: 20px; }
     .control-account .link:hover:before {
       content: '';
-      width: 40px;
+      width: 13px;
       height: 50px;
       position: absolute;
       left: 0px;
@@ -903,7 +904,7 @@
       border-left: 2px solid #00bd70; }
     .control-account .link:hover:after {
       content: '';
-      width: 40px;
+      width: 13px;
       height: 50px;
       position: absolute;
       right: 0px;

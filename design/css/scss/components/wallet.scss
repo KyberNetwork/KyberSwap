@@ -340,6 +340,7 @@ $backgroundColor:#333;
         font-size: 60px;
         position: fixed;
         bottom: 40px;
+        margin-left:80px;
         cursor: pointer;
         &:focus {
             outline: none;
@@ -381,14 +382,14 @@ $backgroundColor:#333;
 }
 
 $colorActiveTab :#00bd70;
-$widthActiveBorder : 40px;
+$widthActiveBorder : 13px;
 $tabHeight:50px;
 .control-account{
     position: fixed;
     bottom: 50px;    
     background-color: $backgroundColor;
     width: 280px;
-    margin-left: 480px;
+    margin-left: 570px;
     box-shadow: 1px 1px 1px 1px #000;
     animation:unfoldIn 0.6s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
     transform:scaleY(.01) scaleX(0);
