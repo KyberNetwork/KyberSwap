@@ -4,18 +4,14 @@ import Select from 'react-select'
 
 import { specifyRecipient } from "../../actions/exchangeFormActions"
 import constants from "../../services/constants"
+import { destAccounts } from "../../utils/store"
 
 
 @connect((store, props) => {
   var exchangeForm = store.exchangeForm[props.exchangeFormID]
   exchangeForm = exchangeForm || {...constants.INIT_EXCHANGE_FORM_STATE}
   return {
-    accounts: Object.keys(store.accounts.accounts).map((key) => {
-      return {
-        address: store.accounts.accounts[key].address,
-        name: store.accounts.accounts[key].name,
-      };
-    }),
+    accounts: destAccounts(store),
     destAddress: exchangeForm.destAddress,
     error: exchangeForm.errors["destAddressError"],
   }

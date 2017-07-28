@@ -4,13 +4,14 @@ import { connect } from "react-redux"
 import {selectSourceToken, specifySourceAmount, suggestRate} from "../../actions/exchangeFormActions"
 import {toT, toTWei} from "../../utils/converter"
 import constants from "../../services/constants"
+import {getSourceAccount} from "../../utils/store"
 
 
 @connect((store, props) => {
   var exchangeForm = store.exchangeForm[props.exchangeFormID]
   exchangeForm = exchangeForm || {...constants.INIT_EXCHANGE_FORM_STATE}
   var selectedAccount = exchangeForm.selectedAccount
-  var account = store.accounts.accounts[selectedAccount]
+  var account = getSourceAccount(store, selectedAccount)
   if (account) {
     var selectedToken = exchangeForm.sourceToken
     var selectedTokenBalance

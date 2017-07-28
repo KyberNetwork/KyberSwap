@@ -5,7 +5,7 @@ import {REHYDRATE} from 'redux-persist/constants'
 
 const initState = {
   wallets: {},
-  newAccountAdding: false,
+  newWalletAdding: false,
 }
 
 const wallets = (state=initState, action) => {
