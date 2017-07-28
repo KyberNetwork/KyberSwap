@@ -11,9 +11,12 @@ import Dashboard from "../components/Dashboard"
 import Exchange from "../components/Exchange"
 import DashboardWallet from "../components/DashboardWallet"
 import Payment from "../components/Payment"
+import InfoKyber from "../components/InfoKyber"
+
 import TermOfService from "../components/TermOfService"
 import SideBar from "../components/SideBar"
 import RateInfo from "../components/RateInfo"
+import GlobalControl from "../components/GlobalControl"
 
 import { loadAccounts } from "../actions/accountActions"
 import history from "../history"
@@ -46,9 +49,11 @@ export default class Layout extends React.Component {
               <Route exact path="/transactions" component={Transactions}/>
               <Route exact path="/exchange" component={Exchange}/>
               <Route exact path="/payment" component={Payment}/>
+              <Route exact path="/info" component={InfoKyber}/>
             </div>
           </div>
           <RateInfo />          
+          <GlobalControl />  
         </div>
       )
     } else {

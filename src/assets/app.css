@@ -266,7 +266,7 @@
   max-height: 600px;
   overflow-y: auto;
   padding: 15px;
-  animation: unfoldIn 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  animation: unfoldIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
   transform: scaleY(0.01) scaleX(0); }
   .modal-open:focus {
     outline: none; }
@@ -410,6 +410,11 @@
   width: 25px;
   height: 25px; }
 
+.k-icon-exchange-white {
+  background-position: -58px -20px;
+  width: 25px;
+  height: 25px; }
+
 .k-icon-send-green {
   background-position: -137px -19px;
   width: 25px;
@@ -459,6 +464,16 @@
   background-position: -219px -66px;
   width: 25px;
   height: 25px; }
+
+.k-icon-info {
+  background-position: -102px -20px;
+  width: 20px;
+  height: 20px; }
+
+.k-icon-contract {
+  background-position: -179px -20px;
+  width: 20px;
+  height: 20px; }
 
 .k-page-account .acc-item {
   background-color: #fff; }
@@ -750,7 +765,8 @@
     border: 1px solid #aaa;
     display: flex;
     justify-content: space-between;
-    align-items: center; }
+    align-items: center;
+    width: 200px; }
     .wallet-item .wallet-left .account-action button {
       cursor: pointer; }
   .wallet-item .wallet-center .row {
@@ -778,7 +794,7 @@
     position: relative; }
     .wallet-item .control-btn.show .control-menu {
       display: block;
-      animation: unfoldIn 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+      animation: unfoldIn 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
       transform: scaleY(0.01) scaleX(0); }
     .wallet-item .control-btn button {
       margin-left: 10px;
@@ -863,9 +879,9 @@
   bottom: 50px;
   background-color: #333;
   width: 280px;
-  margin-left: 570px;
+  margin-left: -220px;
   box-shadow: 1px 1px 1px 1px #000;
-  animation: unfoldIn 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  animation: unfoldIn 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
   transform: scaleY(0.01) scaleX(0);
   border-radius: 10px; }
   .control-account.hide {
@@ -1178,7 +1194,7 @@
   align-items: center;
   top: calc(50vh - 250px);
   right: -650px;
-  transition: 0.8s;
+  transition: 0.5s;
   color: white;
   position: fixed; }
 .k-rate .k-rate-btn {

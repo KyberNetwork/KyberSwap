@@ -10,7 +10,7 @@
     max-height: 600px;    
     overflow-y: auto;
     padding:15px;
-    animation:unfoldIn 1s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+    animation:unfoldIn 0.4s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
     transform:scaleY(.01) scaleX(0);
     &:focus{
         outline: none;
@@ -181,6 +181,11 @@ $gradient:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
     width: 25px;
     height: 25px;
 }
+.k-icon-exchange-white{
+    background-position: -58px -20px;
+    width: 25px;
+    height: 25px;
+}
 .k-icon-send-green{
     background-position: -137px -19px;
     width: 25px;
@@ -238,4 +243,16 @@ $gradient:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
     background-position: -219px -66px;
     width: 25px;
     height: 25px;   
+}
+
+.k-icon-info{
+    background-position: -102px -20px;
+    width: 20px;
+    height: 20px;
+}
+
+.k-icon-contract{
+    background-position: -179px -20px;
+    width: 20px;
+    height: 20px;
 }

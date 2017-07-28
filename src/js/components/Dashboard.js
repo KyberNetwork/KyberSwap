@@ -4,18 +4,12 @@ import { connect } from "react-redux"
 import ImportKeystoreModal from "./ImportKeystoreModal"
 import ModalButton from "./Elements/ModalButton"
 
-import ModalLink from "./Elements/ModalLink"
-import ToggleButton from "./Elements/ToggleButton"
-
-
-import ExchangeModal from "./ExchangeModal"
 import SendModal from "./SendModal"
 
 import Accounts from "./Accounts"
 import Wallets from "./Wallets"
 import JoinPaymentForm from "./Payment/JoinPaymentForm"
 
-const quickExchangeModalID = "quick-exchange-modal"
 const quickSendModalID = "quick-send-modal"
 
 @connect((store) => {
@@ -78,27 +72,7 @@ export default class Dashboard extends React.Component {
       importingWallet = <p>New wallet is being imported...</p>
     } else {
       importingWallet = ""
-    }
-
-    var linkAccount = (
-      <div class="link">
-        <i class="k-icon k-icon-import"></i>
-        <label>Import Account</label>
-      </div>      
-    )
-    var linkCall = (
-      <div class="link">
-        <i class="k-icon k-icon-call-white"></i>
-        <label>Import Wallet</label>
-      </div>      
-    )
-    var linkSend = (
-      <div class="link">
-        <i class="k-icon k-icon-send-white"></i>
-        <label>Send</label>
-      </div>      
-    )
-    var className=this.props.utils.showControl?"control-account":"control-account hide"
+    }  
     return (
       <div>
         <div  class="k-page">
@@ -111,24 +85,8 @@ export default class Dashboard extends React.Component {
             {appWallet}          
           </div>
 
-          <div class="import-wallet button-green">
-            <ToggleButton />           
-          </div>
-          <div className={className}>
-            <ul>
-              <li>
-                <ModalLink  modalID={this.props.modalID} content={linkAccount}/>                
-              </li>
-              <li>
-                <ModalLink  modalID={quickSendModalID} content={linkSend}/>                
-              </li>
-              <li>
-                <ModalLink  modalID={this.props.modalWalletID} content={linkCall}/>                
-              </li>                             
-            </ul>
-          </div>
           <div class="modals">            
-            <SendModal exchangeFormID="quick-send" modalID={quickSendModalID} label="Quick Send" />
+            <SendModal exchangeFormID="quick-send" modalID={quickSendModalID} label="Quick Send" />            
           </div>
         </div>
       </div>)

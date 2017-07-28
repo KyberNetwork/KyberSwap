@@ -132,12 +132,7 @@ export default class AccountDetail extends React.Component {
                   <ModalButton preOpenHandler={this.openQuickSend} modalID={sendModalID} title="Quick send ethers and tokens">
                     <i class="k-icon k-icon-send-green"></i>
                   </ModalButton>
-                </div>
-                <div>
-                  <ModalButton preOpenHandler={this.openQuickExchange} modalID={modalID} title="Quick exchange between tokens">
-                    <i class="k-icon k-icon-call-green"></i>
-                  </ModalButton>
-                </div>
+                </div>                
               </div>
             </div>
           </div>          
