@@ -1,6 +1,8 @@
 import React from "react"
 import { connect } from "react-redux"
 
+import {toT} from "../utils/converter"
+
 
 @connect((store) => {
   return {rates: store.global.rates}
@@ -13,9 +15,9 @@ export default class ExchangeRates extends React.Component {
       return (
         <tr key={rateID}>
           <td>{rate.source.name}/{rate.dest.name}</td>
-          <td title="{rate.rate.toString(10)}">{rate.rate.toString(10)}</td>
-          <td title="{rate.balance.toString(10)}">{rate.balance.toString(10)}</td>
-        </tr>      
+          <td title={toT(rate.rate)}>{toT(rate.rate, 8)}</td>
+          <td title={toT(rate.balance)}>{toT(rate.balance, 8)}</td>
+        </tr>
       )
     })
     return (
@@ -31,11 +33,11 @@ export default class ExchangeRates extends React.Component {
               <i class="k-icon k-icon-balance"></i>
               Balance
             </th>
-          </tr>          
+          </tr>
         </thead>
         <tbody>
           {rates}
-        </tbody>        
+        </tbody>
       </table>
     )
   }

@@ -2,9 +2,9 @@
 
 
 $color:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
-$accountColor: #00bd70;
+$accountColor: #00c072;
 $borderWidth:2px;
-$borderRadius: 5px;
+$borderRadius: 4px;
 
 $backgroundColor:#333;
 
@@ -116,13 +116,13 @@ $backgroundColor:#333;
 .wallet-item {
     // display: inline-block;
     //    width: 100%;
-    max-width: 820px;
+    max-width: 850px;
     border-radius: $borderRadius;
 
     padding: $borderWidth;
     margin-bottom: 30px;
     margin-left: 20px;
-    background-color: $backgroundColor;
+    background-image: linear-gradient(-180deg, #2F3037 0%, #22232A 95%);
     color: #fff;
     * {
         color: inherit;
@@ -137,7 +137,6 @@ $backgroundColor:#333;
                 width: 40%;
             }
             &.wallet-center {
-                width: 60%;
             } // &.wallet-right {
             //     width: 20%;
             // }
@@ -148,12 +147,15 @@ $backgroundColor:#333;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 1px solid #fff;
+        border-bottom: 1px solid #4f4f4f;
         width: 100%;
             padding-right: 10px;
         span {
             text-transform: uppercase;
             padding-left: $paddingLeft;
+            font-family: Lato-Light;
+            font-size: 16px;
+            color: #FFFFFF;
         }
     }
     .wallet-content {
@@ -161,12 +163,13 @@ $backgroundColor:#333;
     }
     .wallet-left {
         label {
-            font-size: 20px;
+          font-family: Lato-Bold;
+          font-size: 16px;
+          color: #FFFFFF;
         }
         .content {
             padding-left: $paddingLeft;
-            padding-top: 10px;
-            padding-bottom: 5px;
+            padding-top: 7px;
             >div{
                 span{
                     position: relative;
@@ -175,7 +178,7 @@ $backgroundColor:#333;
             }
         }
         .address {
-            margin-top: 20px;
+            margin-top: 15px;
             span {
                 font-size: 13px;
                 color: #aaa;
@@ -185,14 +188,14 @@ $backgroundColor:#333;
             }
         }
         .account-action {
-            height: 60px;
-            padding: 10px 30px;
-            margin-top: 40px;
-            border: 1px solid #aaa;
+            height: 50px;
+            padding: 10px 70px;
+            margin-top: 30px;
+            border: 1px solid #979797;
             display: flex;
             justify-content: space-between;
             align-items:center;
-            width:200px;
+            width: 283px;
             button{
                 cursor: pointer;
             }
@@ -225,7 +228,7 @@ $backgroundColor:#333;
         color: $color;
     }
     .token-item {
-        padding: 20px;
+        padding: 53px 40px;
         text-align: center;
         >div {
             &:not(:last-child) {
@@ -233,14 +236,16 @@ $backgroundColor:#333;
             }
         }
         img {
-            width: 40px;
+            height: 40px;
         }
         .name {
             font-size: 13px;
             text-transform: uppercase;
         }
         .value {
-            font-size: 11px;
+            padding-top: 20px;
+            font-size: 18px;
+            color: #FFFFFF;
         }
     }
     &:hover {
@@ -283,9 +288,8 @@ $backgroundColor:#333;
                 margin: 0px;
                 &:not(:last-child){
                     a{
-                        border-bottom: 1px solid #aaa;    
+                        border-bottom: 1px solid #4F4F4F;
                     }
-                    
                 }
                 a{
                        padding: 10px 20px;
@@ -334,17 +338,27 @@ $backgroundColor:#333;
     text-align: right;
     padding-right: 100px;
     button {
-        width: 70px;
-        height: 70px; //  background-image: $color;
+        width: 50px;
+        height: 50px; //  background-image: $color;
         border-radius: 70px;
         color: #fff;
-        font-size: 60px;
+        font-size: 40px;
         position: fixed;
         bottom: 40px;
+        right: 40px;
         margin-left:80px;
         cursor: pointer;
         &:focus {
             outline: none;
+        }
+
+        div {
+          display: block;
+          text-align: center;
+          width: 50px;
+          height: 50px;
+          vertical-align: middle;
+          line-height: 42px;
         }
     }
 }

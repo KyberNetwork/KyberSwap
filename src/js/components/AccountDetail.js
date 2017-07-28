@@ -87,7 +87,6 @@ export default class AccountDetail extends React.Component {
     var tokenRowrender = tokenRow.map((row, index) => {
       return <div key={index} className='row'>{row}</div>
     })
-    
     return (
     <div class="wallet-item">
       <div class="title">
@@ -117,7 +116,7 @@ export default class AccountDetail extends React.Component {
           <div class="content">
             <div class="balance">
               <label>Ether</label>
-              <span>{toT(this.props.balance)}</span>
+              <span title={toT(this.props.balance)}>{toT(this.props.balance, 8)}</span>
             </div>
             <div class="address">
               <label>Address</label>

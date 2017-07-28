@@ -52,8 +52,8 @@ export default class Layout extends React.Component {
               <Route exact path="/info" component={InfoKyber}/>
             </div>
           </div>
-          <RateInfo />          
-          <GlobalControl />  
+          <RateInfo />
+          <GlobalControl />
         </div>
       )
     } else {

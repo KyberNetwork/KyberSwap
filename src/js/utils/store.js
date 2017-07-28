@@ -29,3 +29,8 @@ export function destAccounts(store) {
   var result = sourceAccounts(store)
   return result
 }
+
+export function accountName(store, address) {
+  var acc = store.accounts.accounts[address]
+  return acc.name
+}

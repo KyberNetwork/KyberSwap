@@ -1,22 +1,22 @@
-$paddingLeft:20px;
+$paddingLeft: 40px;
+$paddingRight: 40px;
 $corlor :#aaa;
 
 $colorActiveTab :#00bd70;
 $widthActiveBorder : 13px;
 $tabHeight:50px;
-//$heightMenuLink : 50px;
+
 .k-header {
     background-color: #fff;
-    //left: 0px;        
     display: inline-block;
     min-height: 500px;
     .k-header-logo {
         padding: 20px;
-        padding-top: 40px;
-        padding-bottom: 60px;
+        padding-top: 10px;
+        padding-bottom: 10px;
         text-align: center;
         img {
-            width: 100%;
+            height: 120px;
         }
     }
     .k-header-footer {
@@ -29,8 +29,8 @@ $tabHeight:50px;
     }
     .k-header-pendding-tx {
         text-align: center;
-        margin-top: 50px;
-        padding: 30px;
+        margin-top: 70px;
+        padding-right: 30px;
         line-height: 25px;
         color: #aaa;
         >div {
@@ -48,7 +48,6 @@ $tabHeight:50px;
             text-align: right;
         }
     }
-    
     .k-header-menu {
         .tabs {
             border: none;
@@ -60,13 +59,15 @@ $tabHeight:50px;
             }
         }
         a {
-            font-size: 20px;
-            color: #fff;
+            font-family: Lato-Regular;
+            font-size: 16px;
+            color: #FFFFFF;
             height: $tabHeight;
             display: flex;
             padding: 0px;
             align-items: center;
             padding-left: $paddingLeft;
+            padding-right: $paddingRight;
             .k-icon {
                 margin-right: 10px;
             }
@@ -138,7 +139,7 @@ $tabHeight:50px;
         >div:first-child{
             margin-top: 60px;
             text-align: center;
-            font-size: 18px;
+            font-size: 16px;
             color: #fff;
             .k-icon{
                 position:relative;
@@ -154,7 +155,12 @@ $tabHeight:50px;
                 cursor: pointer;
                 box-shadow:none;
                 background-color:inherit;
-                color: #aaa;
+                font-family: Lato-Light;
+                font-size: 14px;
+                color: #D8D8D8;
+                letter-spacing: 0;
+                margin-bottom: 0;
+                padding-bottom: 0;
                 &:focus{
                     box-shadow:none;
                 }

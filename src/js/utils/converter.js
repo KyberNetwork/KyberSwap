@@ -37,12 +37,18 @@ export function toTWei(number) {
   }
 }
 
-export function toT(number) {
+export function toT(number, precision) {
   var bigNumber = new BigNumber(number)
+  var result
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
-    return "0"
+    result = new BigNumber("0")
   } else {
-    return bigNumber.div(1000000000000000000).toString(10)
+    result = bigNumber.div(1000000000000000000)
+  }
+  if (precision) {
+    return result.toFixed(precision)
+  } else {
+    return result.toString(10)
   }
 }
 
