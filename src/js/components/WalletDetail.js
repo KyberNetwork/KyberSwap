@@ -3,6 +3,15 @@ import { connect } from "react-redux"
 import QRCode from "qrcode.react"
 import { deleteWallet } from "../actions/walletActions"
 import { Token } from "./Account/Balance"
+import ModalButton from "./Elements/ModalButton"
+import { selectAccount, specifyRecipient } from "../actions/exchangeFormActions"
+import { toT } from "../utils/converter"
+
+
+const modalID = "quick-exchange-modal"
+const sendModalID = "quick-send-modal"
+const quickFormID = "quick-exchange"
+const quickSendFormID = "quick-send"
 
 @connect((store, props) => {
   var wallet = store.wallets.wallets[props.address];
@@ -26,6 +35,21 @@ export default class WalletDetail extends React.Component {
     event.preventDefault()
     this.props.dispatch(deleteWallet(address))
   }
+
+  openQuickExchange = (event) => {
+    this.props.dispatch(selectAccount(
+      quickFormID, this.props.address
+    ))
+    this.props.dispatch(specifyRecipient(
+      quickFormID, this.props.address))
+  }
+
+  openQuickSend = (event) => {
+    this.props.dispatch(selectAccount(
+      quickSendFormID, this.props.address
+    ))
+  }
+
   render() {
     var tokens = this.props.tokens.map((tok, index) => {
       return <Token key={index} name={tok.name} balance={tok.balance} icon={tok.icon} />
@@ -65,7 +89,7 @@ export default class WalletDetail extends React.Component {
               <div class="content">
                 <div class="balance">
                   <label>Ether</label>
-                  <span class="text-gradient">{this.props.balance}</span>
+                  <span class="text-gradient">{toT(this.props.balance)}</span>
                 </div>
                 <div class="address">
                   <label>Address</label>
@@ -73,15 +97,21 @@ export default class WalletDetail extends React.Component {
                   <div>
                     <QRCode value={this.props.address} />
                   </div>
-                </div>                
+                </div>
               </div>
+              <ModalButton preOpenHandler={this.openQuickExchange} class="button" modalID={modalID} title="Quick exchange between tokens">
+                Exchange
+              </ModalButton>
+              <ModalButton preOpenHandler={this.openQuickSend} class="button" modalID={sendModalID} title="Quick send ethers and tokens">
+                Send
+              </ModalButton>
             </div>
             <div class="wallet-center">
               {tokenRowrender}
               <div class="created text-gradient">
                 Created by: {this.props.owner}
               </div>
-            </div>            
+            </div>
           </div>
         </div>
       </div>

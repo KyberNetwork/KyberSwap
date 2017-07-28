@@ -5,7 +5,49 @@ import { doTransaction, doApprovalTransaction } from "../actions/exchangeFormAct
 import constants from "../services/constants"
 import Rate from "./rate"
 
-export function sendEther(
+export function sendEtherFromWallet(
+  id, ethereum, account, sourceToken, sourceAmount,
+  destAddress, nonce, gas, gasPrice, keystring,
+  password, callback, wallet) {
+
+  var txData = ethereum.sendEtherFromWalletData(
+    sourceAmount, destAddress)
+  const txParams = {
+    nonce: nonce,
+    gasPrice: gasPrice,
+    gasLimit: gas,
+    to: wallet.address,
+    value: 0,
+    data: txData,
+    // EIP 155 chainId - mainnet: 1, ropsten: 3
+    chainId: 42
+  }
+  const tx = sealTxByKeystore(txParams, keystring, password)
+  store.dispatch(doTransaction(id, ethereum, tx, callback))
+}
+
+export function sendTokenFromWallet(
+  id, ethereum, account, sourceToken, sourceAmount,
+  destAddress, nonce, gas, gasPrice, keystring,
+  password, callback, wallet) {
+
+  var txData = ethereum.sendTokenFromWalletData(
+    sourceToken, sourceAmount, destAddress)
+  const txParams = {
+    nonce: nonce,
+    gasPrice: gasPrice,
+    gasLimit: gas,
+    to: wallet.address,
+    value: 0,
+    data: txData,
+    // EIP 155 chainId - mainnet: 1, ropsten: 3
+    chainId: 42
+  }
+  const tx = sealTxByKeystore(txParams, keystring, password)
+  store.dispatch(doTransaction(id, ethereum, tx, callback))
+}
+
+export function sendEtherFromAccount(
   id, ethereum, account, sourceToken, sourceAmount,
   destAddress, nonce, gas, gasPrice, keystring,
   password, callback) {
@@ -23,7 +65,7 @@ export function sendEther(
   store.dispatch(doTransaction(id, ethereum, tx, callback))
 }
 
-export function sendToken(
+export function sendTokenFromAccount(
   id, ethereum, account, sourceToken, sourceAmount,
   destAddress, nonce, gas, gasPrice, keystring,
   password, callback) {
@@ -44,7 +86,7 @@ export function sendToken(
   store.dispatch(doTransaction(id, ethereum, tx, callback))
 }
 
-export function etherToOthers(
+export function etherToOthersFromAccount(
   id, ethereum, account, sourceToken, sourceAmount, destToken,
   destAddress, maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas, gasPrice, keystring,
@@ -67,7 +109,30 @@ export function etherToOthers(
   store.dispatch(doTransaction(id, ethereum, tx, callback))
 }
 
-export function tokenToOthers(
+export function exchangeFromWallet(
+  id, ethereum, account, sourceToken, sourceAmount, destToken,
+  destAddress, maxDestAmount, minConversionRate,
+  throwOnFailure, nonce, gas, gasPrice, keystring,
+  password, callback, wallet) {
+
+  var txData = ethereum.paymentData(
+    sourceToken, sourceAmount, destToken, maxDestAmount,
+    minConversionRate, destAddress, "", false, throwOnFailure)
+  const txParams = {
+    nonce: nonce,
+    gasPrice: gasPrice,
+    gasLimit: gas,
+    to: wallet.address,
+    value: 0,
+    data: txData,
+    // EIP 155 chainId - mainnet: 1, ropsten: 3
+    chainId: 42
+  }
+  const tx = sealTxByKeystore(txParams, keystring, password)
+  store.dispatch(doTransaction(id, ethereum, tx, callback))
+}
+
+export function tokenToOthersFromAccount(
   id, ethereum, account, sourceToken, sourceAmount, destToken,
   destAddress, maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas, gasPrice, keystring,
@@ -107,7 +172,6 @@ export function tokenToOthers(
       store.dispatch(doTransaction(id, ethereum, exchangeTx, callback))
   }))
 }
-
 
 export function fetchRate(ethereum, source, dest, reserve, callback) {
   ethereum.getRate(source.address, dest.address, reserve.index,
