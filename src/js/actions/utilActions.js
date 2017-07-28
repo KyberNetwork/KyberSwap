@@ -19,3 +19,31 @@ export function closeModal(modalID) {
     payload: modalID
   }
 }
+
+export function showRate() {
+  return {
+    type: "SHOW_RATE",    
+  }
+}
+export function hideRate() {
+  return {
+    type: "HIDE_RATE",   
+  }
+}
+
+
+export function showControl() {
+  return {
+    type: "SHOW_CONTROL",   
+  }
+}
+
+
+export function hideControl() {
+  return {
+    type: "HIDE_CONTROL",   
+  }
+}
+
+
+

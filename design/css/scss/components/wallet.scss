@@ -1,21 +1,18 @@
-$color:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
-$accountColor: #00bd70;
-$borderWidth:2px;
-$borderRadius: 5px;
+@import "global";
 
+
+$color:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
+$accountColor: #00c072;
+$borderWidth:2px;
+$borderRadius: 4px;
+
+$backgroundColor:#333;
 
 .k-page-wallet {
     //modal
-    .wallet-item {
-        background-image: $color;
-    }
-
-    .title {
-        span {
-            background-image: $color;
-        }
-    }
-    
+    // .wallet-item {
+    //     background-image: $color;
+    // }
     #tx-modal-wallet {
         top: -460px !important;
     }
@@ -51,7 +48,7 @@ $borderRadius: 5px;
 
 .k-page-account {
     .wallet-item {
-        border: $borderWidth solid $accountColor;
+        //border: $borderWidth solid $accountColor;
         background-image: $accountColor;
         border-radius: $borderRadius +2;
     }
@@ -60,11 +57,7 @@ $borderRadius: 5px;
             color: $accountColor
         }
     }
-    .title {
-        span {
-            background-color: $accountColor;
-        }
-    }
+
 
     .token-item {
         .value {
@@ -74,25 +67,28 @@ $borderRadius: 5px;
 }
 
 .import-wallet {
-    &.button-green{
+    &.button-green {
         button {
             background-color: $accountColor;
-        }    
-    }    
-    &.button-gradient{    
-      button{
-        right: 200px;
-        background-image: $color;
-      }  
+        }
+    }
+    &.button-gradient {
+        button {
+            right: 200px;
+            background-image: $color;
+        }
     }
 }
-.no-account{
+
+.no-account {
     text-align: center;
     font-size: 20px;
 }
-.text-green{
-    color:  $accountColor;
+
+.text-green {
+    color: $accountColor;
 }
+
 .import-account {
     .modal-title {
         font-size: 20px;
@@ -120,69 +116,95 @@ $borderRadius: 5px;
 .wallet-item {
     // display: inline-block;
     //    width: 100%;
-    max-width: 820px;
-    cursor: pointer;
+    max-width: 850px;
     border-radius: $borderRadius;
 
     padding: $borderWidth;
     margin-bottom: 30px;
     margin-left: 20px;
+    background-image: linear-gradient(-180deg, #2F3037 0%, #22232A 95%);
+    color: #fff;
+    * {
+        color: inherit;
+    }
     >div {
         display: flex;
-        border-radius: $borderRadius - 2;
         width: 100%; //float: left;
         height: 100%;
-        background-color: #fff;
         div {
             //  float: left;
             &.wallet-left {
                 width: 40%;
             }
             &.wallet-center {
-                width: 60%;
             } // &.wallet-right {
             //     width: 20%;
             // }
         }
     }
+    $paddingLeft:25px;
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #4f4f4f;
+        width: 100%;
+            padding-right: 10px;
+        span {
+            text-transform: uppercase;
+            padding-left: $paddingLeft;
+            font-family: Lato-Light;
+            font-size: 16px;
+            color: #FFFFFF;
+        }
+    }
+    .wallet-content {
+        padding-bottom: 20px;
+    }
     .wallet-left {
-        .title {
-            display: inline-block;
-            width: 100%;
-            >span {
-                float: left;
-                padding: 5px 60px; //background-image: $color;
-                text-align: center;
-                color: white;
-                display: inline-block;
-                border-radius: 5px;
-                top: -2px;
-                left: -2px;
-                position: relative;
-            }
+        label {
+          font-family: Lato-Bold;
+          font-size: 16px;
+          color: #FFFFFF;
         }
         .content {
-            padding-left: 20px;
-            padding-top: 10px;
-            padding-bottom: 5px;
+            padding-left: $paddingLeft;
+            padding-top: 7px;
+            >div{
+                span{
+                    position: relative;
+                    top: -5px;
+                }
+            }
         }
         .address {
-            margin-top: 20px;
+            margin-top: 15px;
             span {
-                font-size: 11px;
+                font-size: 13px;
                 color: #aaa;
             }
             >div {
                 text-align: center;
-                padding: 10px;
             }
-        }        
+        }
+        .account-action {
+            height: 50px;
+            padding: 10px 70px;
+            margin-top: 30px;
+            border: 1px solid #979797;
+            display: flex;
+            justify-content: space-between;
+            align-items:center;
+            width: 283px;
+            button{
+                cursor: pointer;
+            }
+        }
     }
     .wallet-center {
         .row {
             display: flex;
-            justify-content: space-between;
-            // display: -webkit-flex;
+            justify-content: space-between; // display: -webkit-flex;
             // display: flex;
             // -webkit-align-items: center;
             // align-items: center;
@@ -206,7 +228,7 @@ $borderRadius: 5px;
         color: $color;
     }
     .token-item {
-        padding: 20px;
+        padding: 53px 40px;
         text-align: center;
         >div {
             &:not(:last-child) {
@@ -214,14 +236,16 @@ $borderRadius: 5px;
             }
         }
         img {
-            width: 40px;
+            height: 40px;
         }
         .name {
             font-size: 13px;
             text-transform: uppercase;
         }
         .value {
-            font-size: 11px;
+            padding-top: 20px;
+            font-size: 18px;
+            color: #FFFFFF;
         }
     }
     &:hover {
@@ -230,9 +254,17 @@ $borderRadius: 5px;
         }
     }
     .control-btn {
-        visibility: hidden;
+    
         float: left;
         margin-left: 10px;
+        position:relative;
+        &.show{
+            .control-menu{
+                display: block;
+                animation:unfoldIn 0.2s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+                transform:scaleY(.01) scaleX(0);
+            }        
+        }
         button {
             margin-left: 10px;
             cursor: pointer;
@@ -240,7 +272,46 @@ $borderRadius: 5px;
                 outline: none;
             }
         }
-    } // .wallet-right {
+    } 
+    .control-menu{
+        background-color:#000;
+        border-radius:10px;
+        position:absolute;
+        right: 0px;
+        display: none;
+        ul{
+            list-style-type: none;
+            padding:0px;
+            margin: 0px;
+            >li{
+                padding:0px;
+                margin: 0px;
+                &:not(:last-child){
+                    a{
+                        border-bottom: 1px solid #4F4F4F;
+                    }
+                }
+                a{
+                       padding: 10px 20px;
+                        align-items: center;
+                        display: flex;
+                        font-size: 15px;
+                        color: #aaa;                
+                    &:hover{
+                        color: inherit;
+                    }
+                    i{
+                        margin-right: 10px;
+                        position:relative;
+                        top: -3px;
+                    }
+                }
+                    
+                }
+            }
+        }
+    
+    // .wallet-right {
     //     visibility: hidden;
     //     display: flex;
     //     justify-content: center;
@@ -267,45 +338,134 @@ $borderRadius: 5px;
     text-align: right;
     padding-right: 100px;
     button {
-        width: 70px;
-        height: 70px; //  background-image: $color;
+        width: 50px;
+        height: 50px; //  background-image: $color;
         border-radius: 70px;
         color: #fff;
-        font-size: 60px;
+        font-size: 40px;
         position: fixed;
         bottom: 40px;
+        right: 40px;
+        margin-left:80px;
         cursor: pointer;
         &:focus {
             outline: none;
         }
-    }
-} 
 
-.no-wallet, .no-account{
-    padding-left:50px;
-}
-.modal-import{
-  width: 400px;
-}
-.modal-payment{
-  width: 600px;   
-  .input-space, .intro{
-    margin-top: 10px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items:center;
-    span{
-        &:first-child{
-            display: block;
-            width: 100px;
-            text-align: right;
-            padding-right: 14px;   
-        }    
-    }    
-    input{
-        width: 400px;        
-        margin:0px;
-        margin-right: 10px;
+        div {
+          display: block;
+          text-align: center;
+          width: 50px;
+          height: 50px;
+          vertical-align: middle;
+          line-height: 42px;
+        }
     }
-  }
+}
+
+.no-wallet,
+.no-account {
+    padding-left: 50px;
+}
+
+.modal-import {
+    width: 400px;
+}
+
+.modal-payment {
+    width: 600px;
+    .input-space,
+    .intro {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        span {
+            &:first-child {
+                display: block;
+                width: 100px;
+                text-align: right;
+                padding-right: 14px;
+            }
+        }
+        input {
+            width: 400px;
+            margin: 0px;
+            margin-right: 10px;
+        }
+    }
+}
+
+$colorActiveTab :#00bd70;
+$widthActiveBorder : 13px;
+$tabHeight:50px;
+.control-account{
+    position: fixed;
+    bottom: 50px;    
+    background-color: $backgroundColor;
+    width: 280px;
+    margin-left: -220px;
+    box-shadow: 1px 1px 1px 1px #000;
+    animation:unfoldIn 0.2s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+    transform:scaleY(.01) scaleX(0);
+    border-radius: 10px;        
+    &.hide{
+        display: none;
+    }
+    *{
+        color: #fff;    
+    }    
+    ul{
+        list-style-type: none;
+        margin:0px;
+        >li{
+            &:not(:last-child){
+            border-bottom:1px solid #000;
+        }    
+        }
+    }
+    .link{
+        height: $tabHeight;        
+        display: flex;
+        align-items:center;
+        cursor: pointer;
+        *{
+            cursor: inherit;  
+        }
+        padding-left:30px;
+        position:relative;
+        span{
+            width: 80px;
+            text-align: center;
+        }
+        label{
+            font-size: 20px;
+            margin-left: 20px;
+        }
+        &:hover{
+            &:before {
+                    content: '';
+                    width: $widthActiveBorder;
+                    height: $tabHeight;
+                    position: absolute;
+                    left: 0px;
+                    top: 0px;
+                    border-top:2px solid $colorActiveTab;
+                    border-bottom:2px solid $colorActiveTab;                    
+                    border-left:2px solid $colorActiveTab;                    
+                }
+                &:after {
+                    content: '';
+                    width: $widthActiveBorder;
+                    height: $tabHeight;
+                    position: absolute;
+                    right: 0px;
+                    top: 0px;
+
+                    border-top:2px solid $colorActiveTab;
+                    border-bottom:2px solid $colorActiveTab;                    
+                    border-right:2px solid $colorActiveTab;      
+                }
+        }
+    }
 }

@@ -26,14 +26,14 @@ export default class SideBar extends React.Component {
         </div>
         <div class="k-header-menu" id="menu">
           <ul class="tabs vertical" data-tabs>
+            <li class={this.tabClasses("/exchange")}>
+              <Link to="/contracts">
+                <i class="k-icon k-icon-contract"></i> Contracts
+              </Link>
+            </li>
             <li class={this.tabClasses("/")}>
               <Link to="/" >
                 <i class="k-icon k-icon-account"></i> Accounts
-              </Link>
-            </li>
-            <li class={this.tabClasses("/exchange")}>
-              <Link to="/exchange">
-                <i class="k-icon k-icon-exchange"></i> Exchange
               </Link>
             </li>
             <li class={this.tabClasses("/transactions")}>
@@ -41,11 +41,16 @@ export default class SideBar extends React.Component {
                 <i class="k-icon k-icon-transaction"></i> Transactions
               </Link>
             </li>
+            <li class={this.tabClasses("/info")}>
+              <Link to="/info">
+                <i class="k-icon k-icon-info"></i> Information
+              </Link>
+            </li>
           </ul>
           <NodeSwitch />
         </div>
         <div class="k-header-pendding-tx">
-          <div>
+          <div class={this.props.pendingTxs.length != 0 ? "loading" : ""} >
             <div class="number">0{this.props.pendingTxs.length}</div>
             <div class="pending">pending</div>
           </div>

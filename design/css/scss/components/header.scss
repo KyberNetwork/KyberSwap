@@ -1,18 +1,22 @@
-$paddingLeft:20px;
+$paddingLeft: 40px;
+$paddingRight: 40px;
 $corlor :#aaa;
+
+$colorActiveTab :#00bd70;
+$widthActiveBorder : 13px;
+$tabHeight:50px;
+
 .k-header {
     background-color: #fff;
-    //left: 0px;
-    overflow: auto;
-    top: 0px;
+    display: inline-block;
     min-height: 500px;
     .k-header-logo {
         padding: 20px;
-        padding-top: 40px;
-        padding-bottom: 60px;
+        padding-top: 10px;
+        padding-bottom: 10px;
         text-align: center;
         img {
-            width: 100%;
+            height: 120px;
         }
     }
     .k-header-footer {
@@ -25,9 +29,10 @@ $corlor :#aaa;
     }
     .k-header-pendding-tx {
         text-align: center;
-        margin-top: 50px;
-        padding: 30px;
+        margin-top: 70px;
+        padding-right: 30px;
         line-height: 25px;
+        color: #aaa;
         >div {
             &:first-child {
                 color: orange;
@@ -43,10 +48,10 @@ $corlor :#aaa;
             text-align: right;
         }
     }
-    $tabHeight:40px;
     .k-header-menu {
         .tabs {
             border: none;
+            background-color:inherit;
         }
         li {
             &:not(:last-child) {
@@ -54,16 +59,47 @@ $corlor :#aaa;
             }
         }
         a {
-            background-color: #fff;
-            font-size: 20px;
-            color: #aaa;
+            font-family: Lato-Regular;
+            font-size: 16px;
+            color: #FFFFFF;
             height: $tabHeight;
             display: flex;
             padding: 0px;
             align-items: center;
             padding-left: $paddingLeft;
+            padding-right: $paddingRight;
             .k-icon {
                 margin-right: 10px;
+            }
+            &:focus{
+                background-color:inherit;
+            }
+            &:hover{
+                background-color:inherit;
+                position: relative;
+                &:before {
+                    content: '';
+                    width: $widthActiveBorder;
+                    height: $tabHeight;
+                    position: absolute;
+                    left: 0px;
+                    top: 0px;
+                    border-top:2px solid $colorActiveTab;
+                    border-bottom:2px solid $colorActiveTab;                    
+                    border-left:2px solid $colorActiveTab;                    
+                }
+                &:after {
+                    content: '';
+                    width: $widthActiveBorder;
+                    height: $tabHeight;
+                    position: absolute;
+                    right: 0px;
+                    top: 0px;
+
+                    border-top:2px solid $colorActiveTab;
+                    border-bottom:2px solid $colorActiveTab;                    
+                    border-right:2px solid $colorActiveTab;      
+                }
             }
         }
         span {
@@ -72,16 +108,29 @@ $corlor :#aaa;
         }
         .tabs-title.is-active {
             a {
-                color: #000;
                 position: relative;
                 &:before {
                     content: '';
-                    width: 5px;
+                    width: $widthActiveBorder;
                     height: $tabHeight;
                     position: absolute;
                     left: 0px;
                     top: 0px;
-                    background-color: #00bd70;
+                    border-top:2px solid $colorActiveTab;
+                    border-bottom:2px solid $colorActiveTab;                    
+                    border-left:2px solid $colorActiveTab;                    
+                }
+                &:after {
+                    content: '';
+                    width: $widthActiveBorder;
+                    height: $tabHeight;
+                    position: absolute;
+                    right: 0px;
+                    top: 0px;
+
+                    border-top:2px solid $colorActiveTab;
+                    border-bottom:2px solid $colorActiveTab;                    
+                    border-right:2px solid $colorActiveTab;      
                 }
             }
         }
@@ -90,8 +139,8 @@ $corlor :#aaa;
         >div:first-child{
             margin-top: 60px;
             text-align: center;
-            font-size: 18px;
-            color: #aaa;
+            font-size: 16px;
+            color: #fff;
             .k-icon{
                 position:relative;
                 top: 3px;
@@ -105,6 +154,13 @@ $corlor :#aaa;
                 width: 150px;
                 cursor: pointer;
                 box-shadow:none;
+                background-color:inherit;
+                font-family: Lato-Light;
+                font-size: 14px;
+                color: #D8D8D8;
+                letter-spacing: 0;
+                margin-bottom: 0;
+                padding-bottom: 0;
                 &:focus{
                     box-shadow:none;
                 }
@@ -156,6 +212,12 @@ $corlor :#aaa;
                     background: transparent;
                     right: 10px;
             }
+        }
+    }
+
+    .pending-icon{
+        img{
+            width: 100px;
         }
     }
 }

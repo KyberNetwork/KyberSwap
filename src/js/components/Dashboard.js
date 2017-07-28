@@ -3,13 +3,13 @@ import { connect } from "react-redux"
 
 import ImportKeystoreModal from "./ImportKeystoreModal"
 import ModalButton from "./Elements/ModalButton"
-import ExchangeModal from "./ExchangeModal"
+
 import SendModal from "./SendModal"
+
 import Accounts from "./Accounts"
 import Wallets from "./Wallets"
 import JoinPaymentForm from "./Payment/JoinPaymentForm"
 
-const quickExchangeModalID = "quick-exchange-modal"
 const quickSendModalID = "quick-send-modal"
 
 @connect((store) => {
@@ -20,9 +20,11 @@ const quickSendModalID = "quick-send-modal"
     currentBlock: store.global.currentBlock,
     connected: store.global.connected,
     newAccountAdding: store.accounts.newAccountAdding,
-    newWalletAdding: store.wallets.newWalletAdding,
-    modalID: "new_account_modal",
-    modalWalletID : "new_wallet_modal"
+
+    newWalletAdding: store.accounts.newWalletAdding,
+    modalID: "new_account_modal",    
+    modalWalletID : "new_wallet_modal",
+    utils:store.utils
   }
 })
 export default class Dashboard extends React.Component {
@@ -70,27 +72,21 @@ export default class Dashboard extends React.Component {
       importingWallet = <p>New wallet is being imported...</p>
     } else {
       importingWallet = ""
-    }
+    }  
     return (
       <div>
         <div  class="k-page">
           <div  class="k-page-account">
             {importingAccount}
-            {app}
-            <div class="import-wallet button-green">
-              <ModalButton class="import" modalID={this.props.modalID} title="import new account from JSON keystore file" />
-            </div>
+            {app}           
           </div>
           <div  class="k-page-wallet">
             {importingWallet}
-            {appWallet}
-            <div class="import-wallet button-gradient">
-              <ModalButton class="import" modalID={this.props.modalWalletID} title="Deploy new Kyber Wallet" />
-            </div>
+            {appWallet}          
           </div>
-          <div class="modals">
-            <ExchangeModal exchangeFormID="quick-exchange" modalID={quickExchangeModalID} label="Quick Exchange" />
-            <SendModal exchangeFormID="quick-send" modalID={quickSendModalID} label="Quick Send" />
+
+          <div class="modals">            
+            <SendModal exchangeFormID="quick-send" modalID={quickSendModalID} label="Quick Send" />            
           </div>
         </div>
       </div>)

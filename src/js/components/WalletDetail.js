@@ -6,6 +6,7 @@ import { Token } from "./Account/Balance"
 import ModalButton from "./Elements/ModalButton"
 import { selectAccount, specifyRecipient } from "../actions/exchangeFormActions"
 import { toT } from "../utils/converter"
+import { accountName } from "../utils/store"
 
 
 const modalID = "quick-exchange-modal"
@@ -20,6 +21,7 @@ const quickSendFormID = "quick-send"
     balance: wallet.balance.toString(10),
     desc: wallet.description,
     owner: wallet.ownerAddress,
+    ownerName: accountName(store, wallet.ownerAddress),
     address: wallet.address,
     tokens: Object.keys(wallet.tokens).map((key) => {
       return {
@@ -34,6 +36,18 @@ export default class WalletDetail extends React.Component {
   deleteWallet = (event, address) => {
     event.preventDefault()
     this.props.dispatch(deleteWallet(address))
+  }
+
+  toggleWallet = (event) =>{
+    var target = event.currentTarget
+    var parent = target.parentElement
+    var classParent = parent.className
+    if (classParent === "control-btn"){
+      classParent = "control-btn show"
+    }else{
+      classParent = "control-btn"
+    }
+    parent.className = classParent
   }
 
   openQuickExchange = (event) => {
@@ -71,47 +85,56 @@ export default class WalletDetail extends React.Component {
     })
 
     return (
-      <div>
-        <div class="wallet-item">
-          <div>
-            <div class="wallet-left">
-              <div class="title">
-                <span>{this.props.name}</span>
-                <div class="control-btn">
-                  <button class="k-tooltip delete" onClick={(e) => this.deleteWallet(e, this.props.address)}>
-                    <i class="k-icon k-icon-delete"></i>                    
-                  </button>
-                  <button class="k-tooltip modiy">
-                    <i class="k-icon k-icon-modify"></i>                    
-                  </button>
-                </div>
+      <div class="wallet-item">
+        <div class="title">
+          <span title={"Created by " + this.props.owner}>{this.props.name} - KyberWallet for {this.props.ownerName}</span>
+          <div class="control-btn">
+            <button onClick={(e) => this.toggleWallet(e)}>
+              <i class="k-icon k-icon-setting"></i>
+            </button>
+            <div className="control-menu">
+              <ul>
+                <li>
+                  <a class="delete" onClick={(e) => this.deleteWallet(e, this.props.address)}>
+                    <i class="k-icon k-icon-delete-green"></i> Delete...
+                  </a>
+                </li>
+                <li>
+                  <a class="modiy">
+                    <i class="k-icon k-icon-modify-green"></i> Modify...
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="wallet-content">
+          <div class="wallet-left">
+            <div class="content">
+              <div class="balance">
+                <label>Ether</label>
+                <span title={toT(this.props.balance)}>{toT(this.props.balance, 8)}</span>
               </div>
-              <div class="content">
-                <div class="balance">
-                  <label>Ether</label>
-                  <span class="text-gradient">{toT(this.props.balance)}</span>
-                </div>
-                <div class="address">
-                  <label>Address</label>
-                  <span>{this.props.address}</span>
+              <div class="address">
+                <label>Address</label>
+                <span>{this.props.address}</span>
+                <div class="account-action">
                   <div>
-                    <QRCode value={this.props.address} />
+                    <ModalButton preOpenHandler={this.openQuickExchange} modalID={modalID} title="Quick exchange between tokens">
+                      <i class="k-icon k-icon-exchange-green"></i>
+                    </ModalButton>
+                  </div>
+                  <div>
+                    <ModalButton preOpenHandler={this.openQuickSend} modalID={sendModalID} title="Quick send ethers and tokens">
+                      <i class="k-icon k-icon-send-green"></i>
+                    </ModalButton>
                   </div>
                 </div>
               </div>
-              <ModalButton preOpenHandler={this.openQuickExchange} class="button" modalID={modalID} title="Quick exchange between tokens">
-                Exchange
-              </ModalButton>
-              <ModalButton preOpenHandler={this.openQuickSend} class="button" modalID={sendModalID} title="Quick send ethers and tokens">
-                Send
-              </ModalButton>
             </div>
-            <div class="wallet-center">
-              {tokenRowrender}
-              <div class="created text-gradient">
-                Created by: {this.props.owner}
-              </div>
-            </div>
+          </div>
+          <div class="wallet-center">
+            {tokenRowrender}
           </div>
         </div>
       </div>

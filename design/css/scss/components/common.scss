@@ -1,11 +1,16 @@
+@import "global";
+@import "elements/loading_icon";
+
 .disable {
     pointer-events: none;
     cursor: default;
 }
 .modal-open{
     background-color:white;
+    max-height: 600px;    
+    overflow-y: auto;
     padding:15px;
-    animation:unfoldIn 1s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+    animation:unfoldIn 0.4s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
     transform:scaleY(.01) scaleX(0);
     &:focus{
         outline: none;
@@ -13,33 +18,11 @@
 }
 
 
-@keyframes unfoldIn {
-  0% {
-    transform:scaleY(.005) scaleX(0);
-  }
-  50% {
-    transform:scaleY(.005) scaleX(1);
-  }
-  100% {
-    transform:scaleY(1) scaleX(1);
-  }
-}
 
-@keyframes unfoldOut {
-  0% {
-    transform:scaleY(1) scaleX(1);
-  }
-  50% {
-    transform:scaleY(.005) scaleX(1);
-  }
-  100% {
-    transform:scaleY(.005) scaleX(0);
-  }
-}
 
-$gradient:linear-gradient(-135deg,
-#17EAD9 0%,
-#6078EA 100%);
+
+
+$gradient:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
 .text-gradient {
     background: $gradient;
     -webkit-background-clip: text;
@@ -188,7 +171,88 @@ $gradient:linear-gradient(-135deg,
 }
 
 .k-icon-error{
-        background-position: -345px -304px;
+    background-position: -345px -304px;
     width: 15px;
     height: 15px;
+}
+
+.k-icon-exchange-green{
+    background-position: -58px -66px;
+    width: 25px;
+    height: 25px;
+}
+.k-icon-exchange-white{
+    background-position: -58px -20px;
+    width: 25px;
+    height: 25px;
+}
+.k-icon-send-green{
+    background-position: -137px -19px;
+    width: 25px;
+    height: 25px;
+}
+
+.k-icon-send-white{
+    background-position: -219px -409px;
+    width: 25px;
+    height: 25px; 
+}
+
+.k-icon-call-green{
+    background-position: -17px -66px;
+    width: 25px;
+    height: 25px;
+}
+
+.k-icon-call-white{
+    background-position: -278px -413px;
+    width: 25px;
+    height: 25px;
+}
+
+.k-icon-import{
+   background-position: -136px -405px;
+    width: 30px;
+    height: 30px;
+}
+
+.k-icon-setting{
+ background-position: -357px -17px;
+    width: 25px;
+    height: 25px;   
+}
+
+.k-icon-rate-btn{
+     background-position: -408px -17px;
+    width: 25px;
+    height: 121px;    
+}
+.k-icon-exchange-orange{
+ background-position: -136px -67px;
+    width: 25px;
+    height: 25px;    
+}
+
+.k-icon-rate{
+    background-position: -250px -65px;
+    width: 25px;
+    height: 25px;   
+}
+
+.k-icon-balance{
+    background-position: -219px -66px;
+    width: 25px;
+    height: 25px;   
+}
+
+.k-icon-info{
+    background-position: -102px -20px;
+    width: 20px;
+    height: 20px;
+}
+
+.k-icon-contract{
+    background-position: -179px -20px;
+    width: 20px;
+    height: 20px;
 }

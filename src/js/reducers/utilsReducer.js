@@ -28,6 +28,26 @@ const utils = (state=initState, action) => {
       newState[action.payload.modalID].data = action.payload.data
       return newState 
     }
+    case "SHOW_RATE":{
+      var newState = {...state}      
+      newState.rate = true
+      return newState 
+    }
+    case "HIDE_RATE":{
+      var newState = {...state}
+      newState.rate = false
+      return newState 
+    }
+    case "SHOW_CONTROL":{
+      var newState = {...state}
+      newState.showControl = true
+      return newState 
+    }
+    case "HIDE_CONTROL":{
+      var newState = {...state}
+      newState.showControl = false
+      return newState 
+    }
   }
   return state
 }

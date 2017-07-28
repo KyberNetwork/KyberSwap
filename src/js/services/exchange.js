@@ -116,8 +116,9 @@ export function exchangeFromWallet(
   password, callback, wallet) {
 
   var txData = ethereum.paymentData(
-    sourceToken, sourceAmount, destToken, maxDestAmount,
-    minConversionRate, destAddress, "", false, throwOnFailure)
+    wallet.address, sourceToken, sourceAmount,
+    destToken, maxDestAmount, minConversionRate,
+    destAddress, "", false, throwOnFailure)
   const txParams = {
     nonce: nonce,
     gasPrice: gasPrice,
