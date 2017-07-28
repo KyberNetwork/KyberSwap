@@ -13,6 +13,7 @@ import DashboardWallet from "../components/DashboardWallet"
 import Payment from "../components/Payment"
 import TermOfService from "../components/TermOfService"
 import SideBar from "../components/SideBar"
+import RateInfo from "../components/RateInfo"
 
 import { loadAccounts } from "../actions/accountActions"
 import history from "../history"
@@ -47,6 +48,7 @@ export default class Layout extends React.Component {
               <Route exact path="/payment" component={Payment}/>
             </div>
           </div>
+          <RateInfo />          
         </div>
       )
     } else {

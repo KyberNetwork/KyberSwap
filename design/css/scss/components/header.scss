@@ -1,10 +1,14 @@
 $paddingLeft:20px;
 $corlor :#aaa;
+
+$colorActiveTab :#00bd70;
+$widthActiveBorder : 40px;
+$tabHeight:50px;
+//$heightMenuLink : 50px;
 .k-header {
     background-color: #fff;
-    //left: 0px;
-    overflow: auto;
-    top: 0px;
+    //left: 0px;        
+    display: inline-block;
     min-height: 500px;
     .k-header-logo {
         padding: 20px;
@@ -28,6 +32,7 @@ $corlor :#aaa;
         margin-top: 50px;
         padding: 30px;
         line-height: 25px;
+        color: #aaa;
         >div {
             &:first-child {
                 color: orange;
@@ -43,10 +48,11 @@ $corlor :#aaa;
             text-align: right;
         }
     }
-    $tabHeight:40px;
+    
     .k-header-menu {
         .tabs {
             border: none;
+            background-color:inherit;
         }
         li {
             &:not(:last-child) {
@@ -54,9 +60,8 @@ $corlor :#aaa;
             }
         }
         a {
-            background-color: #fff;
             font-size: 20px;
-            color: #aaa;
+            color: #fff;
             height: $tabHeight;
             display: flex;
             padding: 0px;
@@ -65,6 +70,36 @@ $corlor :#aaa;
             .k-icon {
                 margin-right: 10px;
             }
+            &:focus{
+                background-color:inherit;
+            }
+            &:hover{
+                background-color:inherit;
+                position: relative;
+                &:before {
+                    content: '';
+                    width: $widthActiveBorder;
+                    height: $tabHeight;
+                    position: absolute;
+                    left: 0px;
+                    top: 0px;
+                    border-top:2px solid $colorActiveTab;
+                    border-bottom:2px solid $colorActiveTab;                    
+                    border-left:2px solid $colorActiveTab;                    
+                }
+                &:after {
+                    content: '';
+                    width: $widthActiveBorder;
+                    height: $tabHeight;
+                    position: absolute;
+                    right: 0px;
+                    top: 0px;
+
+                    border-top:2px solid $colorActiveTab;
+                    border-bottom:2px solid $colorActiveTab;                    
+                    border-right:2px solid $colorActiveTab;      
+                }
+            }
         }
         span {
             display: inline-block;
@@ -72,16 +107,29 @@ $corlor :#aaa;
         }
         .tabs-title.is-active {
             a {
-                color: #000;
                 position: relative;
                 &:before {
                     content: '';
-                    width: 5px;
+                    width: $widthActiveBorder;
                     height: $tabHeight;
                     position: absolute;
                     left: 0px;
                     top: 0px;
-                    background-color: #00bd70;
+                    border-top:2px solid $colorActiveTab;
+                    border-bottom:2px solid $colorActiveTab;                    
+                    border-left:2px solid $colorActiveTab;                    
+                }
+                &:after {
+                    content: '';
+                    width: $widthActiveBorder;
+                    height: $tabHeight;
+                    position: absolute;
+                    right: 0px;
+                    top: 0px;
+
+                    border-top:2px solid $colorActiveTab;
+                    border-bottom:2px solid $colorActiveTab;                    
+                    border-right:2px solid $colorActiveTab;      
                 }
             }
         }
@@ -91,7 +139,7 @@ $corlor :#aaa;
             margin-top: 60px;
             text-align: center;
             font-size: 18px;
-            color: #aaa;
+            color: #fff;
             .k-icon{
                 position:relative;
                 top: 3px;
@@ -105,6 +153,8 @@ $corlor :#aaa;
                 width: 150px;
                 cursor: pointer;
                 box-shadow:none;
+                background-color:inherit;
+                color: #aaa;
                 &:focus{
                     box-shadow:none;
                 }

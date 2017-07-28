@@ -9,20 +9,34 @@ export default class ExchangeRates extends React.Component {
   render() {
     var rates = Object.keys(this.props.rates).map((rateID) => {
       var rate = this.props.rates[rateID]
+      console.log(rate)
       return (
-        <div key={rateID}>
-          <h3>Rate({rate.source.name}, {rate.dest.name})</h3>
-          <p>Reserve: {rate.reserve.name}</p>
-          <p>Rate: {rate.rate.toString(10)}</p>
-          <p>Expiration block: {rate.expirationBlock.toString(10)}</p>
-          <p>Balance: {rate.balance.toString(10)}</p>
-        </div>
+        <tr key={rateID}>
+          <td>{rate.source.name}/{rate.dest.name}</td>
+          <td title="{rate.rate.toString(10)}">{rate.rate.toString(10)}</td>
+          <td title="{rate.balance.toString(10)}">{rate.balance.toString(10)}</td>
+        </tr>      
       )
     })
     return (
-      <div>
-        {rates}
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <th width="200"></th>
+            <th width="150">
+              <i class="k-icon k-icon-rate"></i>
+              Rate
+            </th>
+            <th width="200">
+              <i class="k-icon k-icon-balance"></i>
+              Balance
+            </th>
+          </tr>          
+        </thead>
+        <tbody>
+          {rates}
+        </tbody>        
+      </table>
     )
   }
 }

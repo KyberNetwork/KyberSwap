@@ -1,3 +1,5 @@
+@import "global";
+
 .disable {
     pointer-events: none;
     cursor: default;
@@ -13,33 +15,7 @@
 }
 
 
-@keyframes unfoldIn {
-  0% {
-    transform:scaleY(.005) scaleX(0);
-  }
-  50% {
-    transform:scaleY(.005) scaleX(1);
-  }
-  100% {
-    transform:scaleY(1) scaleX(1);
-  }
-}
-
-@keyframes unfoldOut {
-  0% {
-    transform:scaleY(1) scaleX(1);
-  }
-  50% {
-    transform:scaleY(.005) scaleX(1);
-  }
-  100% {
-    transform:scaleY(.005) scaleX(0);
-  }
-}
-
-$gradient:linear-gradient(-135deg,
-#17EAD9 0%,
-#6078EA 100%);
+$gradient:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
 .text-gradient {
     background: $gradient;
     -webkit-background-clip: text;
@@ -188,7 +164,30 @@ $gradient:linear-gradient(-135deg,
 }
 
 .k-icon-error{
-        background-position: -345px -304px;
+    background-position: -345px -304px;
+    width: 15px;
+    height: 15px;
+}
+
+.k-icon-lr-arrow{
+    background-position: -345px -304px;
+    width: 15px;
+    height: 15px;
+}
+.k-icon-l-arrow{
+    background-position: -345px -304px;
+    width: 15px;
+    height: 15px;
+}
+
+.k-icon-duplicate{
+    background-position: -345px -304px;
+    width: 15px;
+    height: 15px;
+}
+
+.k-icon-import{
+   background-position: -345px -304px;
     width: 15px;
     height: 15px;
 }

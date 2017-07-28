@@ -5,38 +5,49 @@
 @import 'components/wallet';
 //@import 'components/exchange';
 @import 'components/exchange_2';
-body{
-	background-color:#ccc;
-	font-family: 'Lato', sans-serif;
+@import 'components/rate';
+body {
+    background-color: #ccc;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
 }
 
-$widthBody : 1200px;
-$headerWidth:200px;
-.k-header{
-	  width: $headerWidth;
-    height: 100%;
-    position:fixed;
-}
-.k-contenter{
-	margin-left:$headerWidth;
-	min-height: 100vh;
-	//min-height:100%;
-	//position:fixed;
-	width:$widthBody - $headerWidth;
+$widthBody: 1170px;
+$backgoundColor: #555;
+$headerWidth:240px;
+
+$bodyColor:#15161d;
+
+
+
+
+body {
+    background-color: $bodyColor;
 }
 
-.k-body{
-	width:$widthBody;
-	margin:0 auto;
-	background-color:#fff;
-	display:flex;
+.k-header {
+    width: $headerWidth;
+    background-color: $backgoundColor;
 }
-.k-contenter{
-	background-color: #fbfcfb;
-	padding:30px 20px  20px 20px;
-	// width:100%;
-	// .k-content{
-	// 	background-color:#fff;
-	// 	height: 100%;
-	// }
+
+.k-contenter {
+    width: $widthBody - $headerWidth;
+    background-color: $bodyColor;
+}
+
+.k-body {
+    width: $widthBody;
+    margin: 0 auto;
+    display: flex;
+}
+
+
+
+.k-contenter {
+    background-color: $bodyColor;
+    padding: 30px 20px 20px 20px; // width:100%;
+    // .k-content{
+    // 	background-color:#fff;
+    // 	height: 100%;
+    // }
 }

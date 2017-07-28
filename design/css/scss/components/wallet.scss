@@ -1,21 +1,18 @@
+@import "global";
+
+
 $color:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
 $accountColor: #00bd70;
 $borderWidth:2px;
 $borderRadius: 5px;
 
+$backgroundColor:#333;
 
 .k-page-wallet {
     //modal
-    .wallet-item {
-        background-image: $color;
-    }
-
-    .title {
-        span {
-            background-image: $color;
-        }
-    }
-    
+    // .wallet-item {
+    //     background-image: $color;
+    // }
     #tx-modal-wallet {
         top: -460px !important;
     }
@@ -51,7 +48,7 @@ $borderRadius: 5px;
 
 .k-page-account {
     .wallet-item {
-        border: $borderWidth solid $accountColor;
+        //border: $borderWidth solid $accountColor;
         background-image: $accountColor;
         border-radius: $borderRadius +2;
     }
@@ -60,11 +57,7 @@ $borderRadius: 5px;
             color: $accountColor
         }
     }
-    .title {
-        span {
-            background-color: $accountColor;
-        }
-    }
+
 
     .token-item {
         .value {
@@ -74,25 +67,28 @@ $borderRadius: 5px;
 }
 
 .import-wallet {
-    &.button-green{
+    &.button-green {
         button {
             background-color: $accountColor;
-        }    
-    }    
-    &.button-gradient{    
-      button{
-        right: 200px;
-        background-image: $color;
-      }  
+        }
+    }
+    &.button-gradient {
+        button {
+            right: 200px;
+            background-image: $color;
+        }
     }
 }
-.no-account{
+
+.no-account {
     text-align: center;
     font-size: 20px;
 }
-.text-green{
-    color:  $accountColor;
+
+.text-green {
+    color: $accountColor;
 }
+
 .import-account {
     .modal-title {
         font-size: 20px;
@@ -127,12 +123,15 @@ $borderRadius: 5px;
     padding: $borderWidth;
     margin-bottom: 30px;
     margin-left: 20px;
+    background-color: $backgroundColor;
+    color: #fff;
+    * {
+        color: inherit;
+    }
     >div {
         display: flex;
-        border-radius: $borderRadius - 2;
         width: 100%; //float: left;
         height: 100%;
-        background-color: #fff;
         div {
             //  float: left;
             &.wallet-left {
@@ -145,44 +144,58 @@ $borderRadius: 5px;
             // }
         }
     }
+    $paddingLeft:25px;
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #fff;
+        width: 100%;
+        span {
+            text-transform: uppercase;
+            padding-left: $paddingLeft;
+        }
+    }
+    .wallet-content {
+        padding-bottom: 20px;
+    }
     .wallet-left {
-        .title {
-            display: inline-block;
-            width: 100%;
-            >span {
-                float: left;
-                padding: 5px 60px; //background-image: $color;
-                text-align: center;
-                color: white;
-                display: inline-block;
-                border-radius: 5px;
-                top: -2px;
-                left: -2px;
-                position: relative;
-            }
+        label {
+            font-size: 20px;
         }
         .content {
-            padding-left: 20px;
+            padding-left: $paddingLeft;
             padding-top: 10px;
             padding-bottom: 5px;
+            >div{
+                span{
+                    position: relative;
+                    top: -5px;
+                }
+            }
         }
         .address {
             margin-top: 20px;
             span {
-                font-size: 11px;
+                font-size: 13px;
                 color: #aaa;
             }
             >div {
                 text-align: center;
-                padding: 10px;
             }
-        }        
+        }
+        .account-action {
+            padding: 20px 30px;
+            margin-top: 40px;
+            border: 1px solid #aaa;
+            display: flex;
+            justify-content: space-between;
+        }
     }
     .wallet-center {
         .row {
             display: flex;
-            justify-content: space-between;
-            // display: -webkit-flex;
+            justify-content: space-between; // display: -webkit-flex;
             // display: flex;
             // -webkit-align-items: center;
             // align-items: center;
@@ -279,33 +292,106 @@ $borderRadius: 5px;
             outline: none;
         }
     }
-} 
+}
 
-.no-wallet, .no-account{
-    padding-left:50px;
+.no-wallet,
+.no-account {
+    padding-left: 50px;
 }
-.modal-import{
-  width: 400px;
+
+.modal-import {
+    width: 400px;
 }
-.modal-payment{
-  width: 600px;   
-  .input-space, .intro{
-    margin-top: 10px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items:center;
-    span{
-        &:first-child{
-            display: block;
-            width: 100px;
-            text-align: right;
-            padding-right: 14px;   
-        }    
-    }    
-    input{
-        width: 400px;        
-        margin:0px;
-        margin-right: 10px;
+
+.modal-payment {
+    width: 600px;
+    .input-space,
+    .intro {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        span {
+            &:first-child {
+                display: block;
+                width: 100px;
+                text-align: right;
+                padding-right: 14px;
+            }
+        }
+        input {
+            width: 400px;
+            margin: 0px;
+            margin-right: 10px;
+        }
     }
-  }
+}
+
+$colorActiveTab :#00bd70;
+$widthActiveBorder : 40px;
+$tabHeight:50px;
+.control-account{
+    position: fixed;
+    bottom: 50px;    
+    background-color: $backgroundColor;
+    width: 280px;
+    margin-left: 480px;
+    box-shadow: 1px 1px 1px 1px #000;
+    animation:unfoldIn 0.6s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+    transform:scaleY(.01) scaleX(0);
+    border-radius: 10px;        
+    &.hide{
+        display: none;
+    }
+    *{
+        color: #fff;    
+    }    
+    ul{
+        list-style-type: none;
+        margin:0px;
+        >li{
+            &:not(:last-child){
+            border-bottom:1px solid #000;
+        }    
+        }
+    }
+    .link{
+        height: $tabHeight;        
+        display: flex;
+        align-items:center;
+        cursor: pointer;
+        position:relative;
+        span{
+            width: 80px;
+            text-align: center;
+        }
+        label{
+            font-size: 20px;
+        }
+        &:hover{
+            &:before {
+                    content: '';
+                    width: $widthActiveBorder;
+                    height: $tabHeight;
+                    position: absolute;
+                    left: 0px;
+                    top: 0px;
+                    border-top:2px solid $colorActiveTab;
+                    border-bottom:2px solid $colorActiveTab;                    
+                    border-left:2px solid $colorActiveTab;                    
+                }
+                &:after {
+                    content: '';
+                    width: $widthActiveBorder;
+                    height: $tabHeight;
+                    position: absolute;
+                    right: 0px;
+                    top: 0px;
+
+                    border-top:2px solid $colorActiveTab;
+                    border-bottom:2px solid $colorActiveTab;                    
+                    border-right:2px solid $colorActiveTab;      
+                }
+        }
+    }
 }

@@ -56,19 +56,19 @@ export default class AccountDetail extends React.Component {
 
     return (
     <div class="wallet-item">
-      <div>
-        <div class="wallet-left">
-          <div class="title">
-            <span>{this.props.name}</span>
-            <div class="control-btn">
-               <button class="delete" title="Delete" onClick={(e) => this.deleteAccount(e, this.props.address)}>
-                  <i class="k-icon k-icon-delete-green"></i>
-                </button>
-                <button class="modiy" title="Modify">
-                  <i class="k-icon k-icon-modify-green"></i>
-                </button>
-            </div>
-          </div>
+      <div class="title">
+        <span>{this.props.name}</span>
+        <div class="control-btn">
+           <button class="delete" title="Delete" onClick={(e) => this.deleteAccount(e, this.props.address)}>
+              <i class="k-icon k-icon-delete-green"></i>
+            </button>
+            <button class="modiy" title="Modify">
+              <i class="k-icon k-icon-modify-green"></i>
+            </button>
+        </div>
+      </div>
+      <div class="wallet-content">
+        <div class="wallet-left">          
           <div class="content">
             <div class="balance">
               <label>Ether</label>
@@ -77,8 +77,10 @@ export default class AccountDetail extends React.Component {
             <div class="address">
               <label>Address</label>
               <span>{this.props.address}</span>
-              <div>
-               <QRCode value={this.props.address} />
+              <div class="account-action">
+                <span><i class="k-icon k-icon-lr-arrow"></i></span>
+                <span><i class="k-icon k-icon-l-arrow"></i></span>
+                <span><i class="k-icon k-icon-duplicate"></i></span>
               </div>
             </div>
           </div>

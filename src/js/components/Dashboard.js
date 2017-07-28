@@ -3,6 +3,9 @@ import { connect } from "react-redux"
 
 import ImportKeystoreModal from "./ImportKeystoreModal"
 import ModalButton from "./Elements/ModalButton"
+import ModalLink from "./Elements/ModalLink"
+import ToggleButton from "./Elements/ToggleButton"
+
 import Accounts from "./Accounts"
 import Wallets from "./Wallets"
 import JoinPaymentForm from "./Payment/JoinPaymentForm"
@@ -17,7 +20,8 @@ import JoinPaymentForm from "./Payment/JoinPaymentForm"
     newAccountAdding: store.accounts.newAccountAdding,
     newWalletAdding: store.accounts.newWalletAdding,
     modalID: "new_account_modal",    
-    modalWalletID : "new_wallet_modal"
+    modalWalletID : "new_wallet_modal",
+    utils:store.utils
   }
 })
 export default class Dashboard extends React.Component {
@@ -67,22 +71,47 @@ export default class Dashboard extends React.Component {
     } else {
       importingWallet = ""
     }
+
+    var linkAccount = (
+      <div class="link">
+        <span><i class="k-icon k-icon-import"></i></span>
+        <label>Import Account</label>
+      </div>      
+    )
+    var linkWallet = (
+      <div class="link">
+        <span><i class="k-icon k-icon-import"></i></span>
+        <label>Import Wallet</label>
+      </div>      
+    )
+    var className=this.props.utils.showControl?"control-account":"control-account hide"
     return (
       <div>      
         <div  class="k-page">
           <div  class="k-page-account">
             {importingAccount}
-            {app}
-            <div class="import-wallet button-green">
-              <ModalButton modalID={this.props.modalID} title="import new account from JSON keystore file" />
-            </div>
+            {app}           
           </div>
           <div  class="k-page-wallet">
             {importingWallet}
-            {appWallet}
-            <div class="import-wallet button-gradient">
-              <ModalButton modalID={this.props.modalWalletID} title="import new wallet" />
-            </div>
+            {appWallet}          
+          </div>
+
+          <div class="import-wallet button-green">
+            <ToggleButton />           
+          </div>
+          <div className={className}>
+            <ul>
+              <li>
+                <ModalLink  modalID={this.props.modalID} content={linkAccount}/>                
+              </li>
+              <li>
+                <ModalLink  modalID={this.props.modalWalletID} content={linkWallet}/>                
+              </li>
+              <li>
+                <ModalLink  modalID={this.props.modalID} content={linkAccount}/>                
+              </li>
+            </ul>
           </div>
         </div>
       </div>)
