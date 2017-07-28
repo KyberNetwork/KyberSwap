@@ -5,8 +5,47 @@ import { doTransaction, doApprovalTransaction } from "../actions/exchangeFormAct
 import constants from "../services/constants"
 import Rate from "./rate"
 
+export function sendEther(
+  id, ethereum, account, sourceToken, sourceAmount,
+  destAddress, nonce, gas, gasPrice, keystring,
+  password, callback) {
+
+  const txParams = {
+    nonce: nonce,
+    gasPrice: gasPrice,
+    gasLimit: gas,
+    to: destAddress,
+    value: sourceAmount,
+    // EIP 155 chainId - mainnet: 1, ropsten: 3
+    chainId: 42
+  }
+  const tx = sealTxByKeystore(txParams, keystring, password)
+  store.dispatch(doTransaction(id, ethereum, tx, callback))
+}
+
+export function sendToken(
+  id, ethereum, account, sourceToken, sourceAmount,
+  destAddress, nonce, gas, gasPrice, keystring,
+  password, callback) {
+
+  var txData = ethereum.sendTokenData(
+    sourceToken, sourceAmount, destAddress)
+  const txParams = {
+    nonce: nonce,
+    gasPrice: gasPrice,
+    gasLimit: gas,
+    to: sourceToken,
+    value: 0,
+    data: txData,
+    // EIP 155 chainId - mainnet: 1, ropsten: 3
+    chainId: 42
+  }
+  const tx = sealTxByKeystore(txParams, keystring, password)
+  store.dispatch(doTransaction(id, ethereum, tx, callback))
+}
+
 export function etherToOthers(
-  ethereum, account, sourceToken, sourceAmount, destToken,
+  id, ethereum, account, sourceToken, sourceAmount, destToken,
   destAddress, maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas, gasPrice, keystring,
   password, callback) {
@@ -25,11 +64,11 @@ export function etherToOthers(
     chainId: 42
   }
   const tx = sealTxByKeystore(txParams, keystring, password)
-  store.dispatch(doTransaction(ethereum, tx, callback))
+  store.dispatch(doTransaction(id, ethereum, tx, callback))
 }
 
 export function tokenToOthers(
-  ethereum, account, sourceToken, sourceAmount, destToken,
+  id, ethereum, account, sourceToken, sourceAmount, destToken,
   destAddress, maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas, gasPrice, keystring,
   password, callback) {
@@ -47,7 +86,7 @@ export function tokenToOthers(
   }
   const approvalTx = sealTxByKeystore(txParams, keystring, password)
   store.dispatch(
-    doApprovalTransaction(ethereum, approvalTx, (hash) => {
+    doApprovalTransaction(id, ethereum, approvalTx, (hash) => {
       const exchangeData = ethereum.exchangeData(
         sourceToken, sourceAmount, destToken, destAddress,
         maxDestAmount, minConversionRate, throwOnFailure)
@@ -64,9 +103,11 @@ export function tokenToOthers(
         chainId: 42
       }
       const exchangeTx = sealTxByKeystore(exchangeTxParams, keystring, password)
-      store.dispatch(doTransaction(ethereum, exchangeTx, callback))
+      console.log(exchangeTx)
+      store.dispatch(doTransaction(id, ethereum, exchangeTx, callback))
   }))
 }
+
 
 export function fetchRate(ethereum, source, dest, reserve, callback) {
   ethereum.getRate(source.address, dest.address, reserve.index,

@@ -1,3 +1,6 @@
+import BigNumber from "bignumber.js"
+
+
 // abis
 const ERC20 = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"minter","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"o_success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_recipient","type":"address"},{"name":"_value","type":"uint256"}],"name":"createIlliquidToken","outputs":[{"name":"o_success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_recipient","type":"address"},{"name":"_amount","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"o_success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"endMintingTime","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_recipient","type":"address"},{"name":"_value","type":"uint256"}],"name":"createToken","outputs":[{"name":"o_success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"illiquidBalance","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_recipient","type":"address"},{"name":"_amount","type":"uint256"}],"name":"transfer","outputs":[{"name":"o_success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"LOCKOUT_PERIOD","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"o_remaining","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"makeLiquid","outputs":[],"payable":false,"type":"function"},{"inputs":[{"name":"_minter","type":"address"},{"name":"_endMintingTime","type":"uint256"}],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_recipient","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"}]
 const KYBER_NETWORK = [{"constant":false,"inputs":[{"name":"reserve","type":"address"},{"name":"source","type":"address"},{"name":"dest","type":"address"},{"name":"add","type":"bool"}],"name":"listPairForReserve","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"newAddress","type":"address"}],"name":"upgrade","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"getReserves","outputs":[{"name":"","type":"address[]"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"ETH_TOKEN_ADDRESS","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"reserves","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"source","type":"address"},{"name":"srcAmount","type":"uint256"},{"name":"dest","type":"address"},{"name":"destAddress","type":"address"},{"name":"maxDestAmount","type":"uint256"},{"name":"minConversionRate","type":"uint256"},{"name":"throwOnFailure","type":"bool"}],"name":"trade","outputs":[{"name":"","type":"uint256"}],"payable":true,"type":"function"},{"constant":false,"inputs":[{"name":"reserve","type":"address"},{"name":"add","type":"bool"}],"name":"addReserve","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"getNumReserves","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"source","type":"address"},{"name":"dest","type":"address"},{"name":"reserveIndex","type":"uint256"}],"name":"getRate","outputs":[{"name":"rate","type":"uint256"},{"name":"expBlock","type":"uint256"},{"name":"balance","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"token","type":"address"}],"name":"getBalance","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"inputs":[{"name":"_admin","type":"address"}],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"origin","type":"address"},{"indexed":false,"name":"error","type":"uint256"},{"indexed":false,"name":"errorInfo","type":"uint256"}],"name":"ErrorReport","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"sender","type":"address"},{"indexed":false,"name":"source","type":"address"},{"indexed":false,"name":"dest","type":"address"},{"indexed":false,"name":"actualSrcAmount","type":"uint256"},{"indexed":false,"name":"actualDestAmount","type":"uint256"}],"name":"Trade","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"reserve","type":"address"},{"indexed":false,"name":"add","type":"bool"}],"name":"AddReserve","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"reserve","type":"address"},{"indexed":false,"name":"source","type":"address"},{"indexed":false,"name":"dest","type":"address"},{"indexed":false,"name":"add","type":"bool"}],"name":"ListPairsForReserve","type":"event"}]
@@ -9,11 +12,47 @@ const KYBER_WALLET_DATA = '0x6060604052341561000f57600080fd5b604051602080610d548
 // constants
 const EPSILON = 1000
 const ETHER_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-const NETWORK_ADDRESS = "0x2a5cfc611c26ae1332ed4b33bbeb0b4179b478f5"
+const NETWORK_ADDRESS = "0x11542d7807dfb2b44937f756b9092c76e814f8ed"
+const INIT_EXCHANGE_FORM_STATE = {
+  isCrossSend: true,
+  selectedAccount: "",
+  sourceToken: ETHER_ADDRESS,
+  sourceTokenSymbol: "",
+  sourceAmount: 0,
+  destToken: ETHER_ADDRESS,
+  destTokenSymbol: "",
+  minConversionRate: 0,
+  destAddress: "",
+  minDestAmount: 0,
+  maxDestAmount: (new BigNumber(2)).pow(255).toString(10),
+  offeredRateExpiryBlock: 0,
+  offeredRateBalance: 0,
+  offeredRate: 0,
+  throwOnFailure: false,
+  gas: 1000000,
+  gasPrice: 20000000000,
+  step: 1,
+  broadcasting: true,
+  txHash: "",
+  errors: {
+    selectedAccountError: "",
+    destAddressError: "",
+    sourceTokenError: "",
+    sourceAmountError: "",
+    destTokenError: "",
+    maxDestAmountError: "",
+    minDestAmountError: "",
+    gasPriceError: "",
+    gasError: "",
+    passwordError: "",
+  }
+}
 
 // reserves
 const RESERVES = [{index: 0, name: "Kyber official reserve"}]
 
 export default {
   ERC20, KYBER_NETWORK, EPSILON, ETHER_ADDRESS,
-  NETWORK_ADDRESS, RESERVES, KYBER_WALLET, KYBER_WALLET_DATA}
+  NETWORK_ADDRESS, RESERVES, KYBER_WALLET,
+  KYBER_WALLET_DATA, INIT_EXCHANGE_FORM_STATE,
+}

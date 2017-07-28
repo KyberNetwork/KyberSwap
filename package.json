@@ -33,7 +33,7 @@
     "scryptsy": "^2.0.0",
     "underscore": "^1.8.3",
     "web3": "^0.19.1",
-    "webpack": "^3.0.0",
+    "webpack": "^3.4.1",
     "webpack-dev-server": "^2.5.0"
   },
   "devDependencies": {},

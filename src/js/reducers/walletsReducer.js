@@ -5,6 +5,7 @@ import {REHYDRATE} from 'redux-persist/constants'
 
 const initState = {
   wallets: {},
+  newAccountAdding: false,
 }
 
 const wallets = (state=initState, action) => {
@@ -51,10 +52,10 @@ const wallets = (state=initState, action) => {
       newWallets[newWallet.address] = newWallet
       return {...state, wallets: newWallets}
     }
-    case "DELETE_WALLET": {    
+    case "DELETE_WALLET": {
       var newWallets = {...state.wallets}
-      var address = action.payload          
-      delete(newWallets[address])      
+      var address = action.payload
+      delete(newWallets[address])
       return {...state, wallets: newWallets}
     }
     case "NEW_WALLET_ADDED_FULFILLED": {
@@ -62,7 +63,7 @@ const wallets = (state=initState, action) => {
       newWallets[action.payload.address] = action.payload
       return {...state, newWalletAdding: false, wallets: newWallets}
     }
-    case "NEW_WALLET_ADDED_PENDING": {
+    case "JOIN_PAYMENT_FORM_TX_BROADCAST_PENDING": {
       return {...state, newWalletAdding: true}
     }
   }

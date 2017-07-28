@@ -9,41 +9,46 @@ import RecipientSelect from "./ExchangeForm/RecipientSelect"
 import TransactionConfig from "./Elements/TransactionConfig"
 import Credential from "./Elements/Credential"
 import PostExchange from "./ExchangeForm/PostExchange"
+import constants from "../services/constants"
 
 import { specifyGasLimit, specifyGasPrice, resetStep } from "../actions/exchangeFormActions"
 
 
-@connect((store) => {
+@connect((store, props) => {
+  var exchangeForm = store.exchangeForm[props.exchangeFormID]
+  exchangeForm = exchangeForm || {...constants.INIT_EXCHANGE_FORM_STATE}
   return {
-    gas: store.exchangeForm.gas,
-    gasError: store.exchangeForm.errors["gasError"],
-    gasPrice: store.exchangeForm.gasPrice,
-    gasPriceError: store.exchangeForm.errors["gasPriceError"],
-    step: store.exchangeForm.step,
-    passwordError: store.exchangeForm.errors["passwordError"],
-    broadcasting: store.exchangeForm.broadcasting,
-    txHash: store.exchangeForm.txHash,
-    tx: store.txs[store.exchangeForm.txHash],
+    gas: exchangeForm.gas,
+    gasError: exchangeForm.errors["gasError"],
+    gasPrice: exchangeForm.gasPrice,
+    gasPriceError: exchangeForm.errors["gasPriceError"],
+    step: exchangeForm.step,
+    passwordError: exchangeForm.errors["passwordError"],
+    broadcasting: exchangeForm.broadcasting,
+    txHash: exchangeForm.txHash,
+    tx: store.txs[exchangeForm.txHash],
+    isCrossSend: exchangeForm.isCrossSend,
   }
 })
 export default class ExchangeForm extends React.Component {
 
-  componentWillMount() {
-    this.specifyGas = this.specifyGas.bind(this)
-    this.specifyGasPrice = this.specifyGasPrice.bind(this)
+  specifyGas = (event) => {
+    this.props.dispatch(
+      specifyGasLimit(this.props.exchangeFormID, event.target.value))
   }
 
-  specifyGas(event) {
-    this.props.dispatch(specifyGasLimit(event.target.value));
-  }
-
-  specifyGasPrice(event) {
-    this.props.dispatch(specifyGasPrice(event.target.value));
+  specifyGasPrice = (event) => {
+    this.props.dispatch(
+      specifyGasPrice(this.props.exchangeFormID, event.target.value))
   }
 
   done = (event) => {
     event.preventDefault()
-    this.props.dispatch(resetStep())
+    this.props.dispatch(
+      resetStep(this.props.exchangeFormID))
+    if (this.props.postExchangeHandler) {
+      this.props.postExchangeHandler(event)
+    }
   }
 
   render() {
@@ -86,11 +91,11 @@ export default class ExchangeForm extends React.Component {
             </div>
             <div class="page">
               <div class="page-item item-1">
-                <UserSelect />
-                <RecipientSelect />
-                <TokenSource />
-                <TokenDest />
-                <ExchangeRate />
+                { this.props.hideSourceAddress ? "" : <UserSelect exchangeFormID={this.props.exchangeFormID}/> }
+                { this.props.hideDestAddress ? "" : <RecipientSelect exchangeFormID={this.props.exchangeFormID}/> }
+                <TokenSource exchangeFormID={this.props.exchangeFormID}/>
+                <TokenDest exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
+                { (this.props.isCrossSend || !this.props.allowDirectSend) ? <ExchangeRate exchangeFormID={this.props.exchangeFormID}/> : "" }
               </div>
               <div class="page-item item-2">
                 <TransactionConfig gas={this.props.gas}
@@ -112,7 +117,7 @@ export default class ExchangeForm extends React.Component {
               </div>
             </div>
             <div class="next" id="exchange-next">
-              <PostExchange passphraseID={this.props.passphraseID} />
+              <PostExchange passphraseID={this.props.passphraseID} exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
             </div>
           </div>
         </div>

@@ -89,7 +89,7 @@ export default class EthereumService {
     var rates = {}
     for (var i = 0; i < tokens.length; i++) {
       for (var j = 0; j < tokens.length; j++) {
-        if (i != j) {
+        if (i != j && (i == 0 || j == 0)) {
           for (var k = 0; k < constants.RESERVES.length; k++) {
             var reserve = constants.RESERVES[k]
             store.dispatch(updateRate(ethereum, tokens[i], tokens[j], reserve))
@@ -171,6 +171,11 @@ export default class EthereumService {
   approveTokenData(sourceToken, sourceAmount) {
     var tokenContract = this.erc20Contract.at(sourceToken)
     return tokenContract.approve.getData(this.networkAddress, sourceAmount)
+  }
+
+  sendTokenData(sourceToken, sourceAmount, destAddress) {
+    var tokenContract = this.erc20Contract.at(sourceToken)
+    return tokenContract.transfer.getData(destAddress, sourceAmount)
   }
 
   txMined(hash, callback) {

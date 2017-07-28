@@ -20,24 +20,32 @@ import TransactionCom from "./TransactionCom"
   }
 })
 export default class Transactions extends React.Component {
-  showDetailInfo = (tx, event) => {    
-    switch(tx.type){
-      case "join kyber wallet":
+  showDetailInfo = (tx, event) => {
+    switch(tx.type) {
+      case "join kyber wallet": {
         var convertedTx = tx
-        convertedTx.gasPrice = toEther(convertedTx.gasPrice)            
+        convertedTx.gasPrice = toEther(convertedTx.gasPrice)
         break
-      case "exchange":
+      }
+      case "exchange": {
         var convertedTx = tx
         convertedTx.gas = hexToNumber(convertedTx.gas)
         convertedTx.data.minConversionRate = hexToNumber(convertedTx.data.minConversionRate)
         convertedTx.data.sourceAmount = hexToNumber(convertedTx.data.sourceAmount)
-        convertedTx.data.maxDestAmount = hexToNumber(convertedTx.data.maxDestAmount)        
+        convertedTx.data.maxDestAmount = hexToNumber(convertedTx.data.maxDestAmount)
         break
-    }   
-    this.props.dispatch(setDataModal(this.props.modalId, convertedTx)) 
-    this.props.dispatch(openModal(this.props.modalId))    
+      }
+      case "send": {
+        var convertedTx = tx
+        convertedTx.gas = hexToNumber(convertedTx.gas)
+        convertedTx.data.sourceAmount = hexToNumber(convertedTx.data.sourceAmount)
+        break
+      }
+    }
+    this.props.dispatch(setDataModal(this.props.modalId, convertedTx))
+    this.props.dispatch(openModal(this.props.modalId))
   }
-  
+
   content = () => {
     if(!this.props.utils[this.props.modalId]){
       return ""
@@ -58,10 +66,10 @@ export default class Transactions extends React.Component {
               </div>
               <div>
                 <label>From</label>
-                <span>                  
+                <span>
                   <span id="from">
                     {data.from}
-                  </span>          
+                  </span>
                 </span>
               </div>
               <div>
@@ -69,7 +77,7 @@ export default class Transactions extends React.Component {
                 <span id="hash">
                   <a href={"https://kovan.etherscan.io/tx/" + data.hash}>
                     {data.hash}
-                  </a>                  
+                  </a>
                 </span>
               </div>
             </div>
@@ -82,16 +90,15 @@ export default class Transactions extends React.Component {
               <div class="right">
                 <div id="gas-price">{data.gas}</div>
                 <div>
-                  <i class="k-icon k-icon-gas"></i>  
+                  <i class="k-icon k-icon-gas"></i>
                 </div>
-                
                 <div>Gas</div>
               </div>
             </div>
           </div>
         )
         break
-      case "exchange":
+      case "exchange": case "send":
         content = (
           <div id="tx-modal">
             <div class="modal-title">
@@ -104,10 +111,10 @@ export default class Transactions extends React.Component {
               </div>
               <div>
                 <label>From</label>
-                <span>                  
+                <span>
                   <span id="from">
                     {data.from}
-                  </span>          
+                  </span>
                 </span>
               </div>
               <div>
@@ -127,7 +134,7 @@ export default class Transactions extends React.Component {
                 <span>
                   {data.data.destAddress}
                 </span>
-              </div>              
+              </div>
               <div>
                 <label>Destionation token</label>
                 <span>
@@ -151,7 +158,7 @@ export default class Transactions extends React.Component {
                 <span id="hash">
                   <a href={"https://kovan.etherscan.io/tx/" + data.hash}>
                     {data.hash}
-                  </a>                  
+                  </a>
                 </span>
               </div>
             </div>
@@ -164,16 +171,15 @@ export default class Transactions extends React.Component {
               <div class="right">
                 <div id="gas-price">{data.gas}</div>
                 <div>
-                  <i class="k-icon k-icon-gas"></i>  
+                  <i class="k-icon k-icon-gas"></i>
                 </div>
-                
                 <div>Gas</div>
               </div>
             </div>
           </div>
         )
         break
-    }    
+    }
     return content
   }
 
@@ -200,9 +206,9 @@ export default class Transactions extends React.Component {
             {txs}
           </tbody>
         </table>
-        <Modal                
-          content={this.content}
-          modalIsOpen={this.props.modalIsOpen}          
+        <Modal
+          content={this.content()}
+          modalIsOpen={this.props.modalIsOpen}
           label="Transaction information"
           modalID={this.props.modalId}>
           modalClass="modal-transaction"

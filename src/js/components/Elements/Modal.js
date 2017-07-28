@@ -7,7 +7,7 @@ import { closeModal } from "../../actions/utilActions"
 
 const customStyles = {
   overlay: {
-    position: 'fixed',
+    position: 'fixed',      
     top: 0,
     left: 0,
     right: 0,
@@ -40,7 +40,7 @@ export default class KyberModal extends React.Component {
         isOpen={this.props.modalIsOpen}
         onRequestClose={this.onClose}
         contentLabel={this.props.label}>
-        {content()}
+        {content}
       </Modal>
     )
   }

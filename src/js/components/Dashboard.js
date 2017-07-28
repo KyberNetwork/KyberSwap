@@ -3,12 +3,20 @@ import { connect } from "react-redux"
 
 import ImportKeystoreModal from "./ImportKeystoreModal"
 import ModalButton from "./Elements/ModalButton"
+
 import ModalLink from "./Elements/ModalLink"
 import ToggleButton from "./Elements/ToggleButton"
+
+
+import ExchangeModal from "./ExchangeModal"
+import SendModal from "./SendModal"
 
 import Accounts from "./Accounts"
 import Wallets from "./Wallets"
 import JoinPaymentForm from "./Payment/JoinPaymentForm"
+
+const quickExchangeModalID = "quick-exchange-modal"
+const quickSendModalID = "quick-send-modal"
 
 @connect((store) => {
   return {
@@ -18,6 +26,7 @@ import JoinPaymentForm from "./Payment/JoinPaymentForm"
     currentBlock: store.global.currentBlock,
     connected: store.global.connected,
     newAccountAdding: store.accounts.newAccountAdding,
+
     newWalletAdding: store.accounts.newWalletAdding,
     modalID: "new_account_modal",    
     modalWalletID : "new_wallet_modal",
@@ -32,7 +41,7 @@ export default class Dashboard extends React.Component {
     if (Object.keys(accounts).length == 0 ) {
       app =  (
         <div class="no-account">
-          You don't have any Ethereum addresses yet. Please import one.
+          You don't have any imported Ethereum addresses. Please import one.
           <ImportKeystoreModal modalID={this.props.modalID} />
         </div>)
     } else {
@@ -48,7 +57,6 @@ export default class Dashboard extends React.Component {
     if (Object.keys(wallets).length == 0 ) {
       appWallet =  (
         <div class="no-wallet">
-          You don't have any Ethereum wallet yet. Please import one.
          <JoinPaymentForm passphraseID="payment-passphrase" modalID={this.props.modalWalletID}/>
         </div>)
     } else {
@@ -84,9 +92,21 @@ export default class Dashboard extends React.Component {
         <label>Import Wallet</label>
       </div>      
     )
+    var linkExchange = (
+      <div class="link">
+        <span><i class="k-icon k-icon-import"></i></span>
+        <label>Exchange</label>
+      </div>      
+    )
+    var linkSend = (
+      <div class="link">
+        <span><i class="k-icon k-icon-import"></i></span>
+        <label>Send</label>
+      </div>      
+    )
     var className=this.props.utils.showControl?"control-account":"control-account hide"
     return (
-      <div>      
+      <div>
         <div  class="k-page">
           <div  class="k-page-account">
             {importingAccount}
@@ -109,9 +129,16 @@ export default class Dashboard extends React.Component {
                 <ModalLink  modalID={this.props.modalWalletID} content={linkWallet}/>                
               </li>
               <li>
-                <ModalLink  modalID={this.props.modalID} content={linkAccount}/>                
+                <ModalLink  modalID={quickExchangeModalID} content={linkExchange}/>                
+              </li>
+               <li>
+                <ModalLink  modalID={quickSendModalID} content={linkSend}/>                
               </li>
             </ul>
+          </div>
+          <div class="modals">
+            <ExchangeModal exchangeFormID="quick-exchange" modalID={quickExchangeModalID} label="Quick Exchange" />
+            <SendModal exchangeFormID="quick-send" modalID={quickSendModalID} label="Quick Send" />
           </div>
         </div>
       </div>)

@@ -36,16 +36,6 @@ export default class SideBar extends React.Component {
                 <i class="k-icon k-icon-exchange"></i> Exchange
               </Link>
             </li>
-            <li class={this.tabClasses("/wallets")}>
-              <Link to="/wallets">
-                <i class="k-icon k-icon-wallet"></i> Wallet
-              </Link>
-            </li>
-            <li class={this.tabClasses("/payment")}>
-              <Link to="/payment">
-                <i class="k-icon k-icon-payment"></i> Payment
-              </Link>
-            </li>
             <li class={this.tabClasses("/transactions")}>
               <Link to="/transactions">
                 <i class="k-icon k-icon-transaction"></i> Transactions

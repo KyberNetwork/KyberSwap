@@ -170,6 +170,8 @@
 
 .modal-open {
   background-color: white;
+  max-height: 600px;
+  overflow-y: auto;
   padding: 15px;
   animation: unfoldIn 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
   transform: scaleY(0.01) scaleX(0); }
@@ -829,69 +831,75 @@
     padding-top: 60px; }
     .k-page-exchange .item-1 .input-group-item {
       margin-left: 80px;
-      margin-bottom: 40px;
-      border: 1px solid #aaa;
-      padding: 20px;
-      width: 600px; }
-      .k-page-exchange .item-1 .input-group-item.focus {
-        border: 1px solid #000; }
-        .k-page-exchange .item-1 .input-group-item.focus > label {
-          font-weight: bold;
-          color: #000; }
-        .k-page-exchange .item-1 .input-group-item.focus input {
-          color: #333; }
-        .k-page-exchange .item-1 .input-group-item.focus .button:after {
-          border-top-color: #333; }
-        .k-page-exchange .item-1 .input-group-item.focus .label {
-          color: #333; }
-      .k-page-exchange .item-1 .input-group-item > label {
-        font-size: 14px;
-        color: #aaa;
-        float: left;
-        position: absolute;
-        margin-top: -40px;
-        background-color: #fbfcfb;
-        text-align: center;
-        padding: 5px 10px; }
+      margin-bottom: 40px; }
     .k-page-exchange .item-1 .input-item {
       display: flex;
       align-items: center; }
+      .k-page-exchange .item-1 .input-item > label {
+        font-size: 20px;
+        width: 150px;
+        color: #aaa; }
       .k-page-exchange .item-1 .input-item input {
         background: transparent;
         border: none;
-        text-align: center;
         font-size: 20px;
-        width: 495px;
+        width: 400px;
         height: 40px;
-        color: #aaa; }
+        border-bottom: 1px solid #aaa;
+        color: #009dea; }
         .k-page-exchange .item-1 .input-item input:focus {
           outline: none; }
-      .k-page-exchange .item-1 .input-item .select-wrapper {
-        width: 30px;
-        overflow: hidden; }
-      .k-page-exchange .item-1 .input-item select {
-        background-color: #fbfcfb;
-        cursor: pointer;
+      .k-page-exchange .item-1 .input-item .selectric {
         border: none;
-        margin-bottom: 0px; }
-        .k-page-exchange .item-1 .input-item select option {
-          padding: 10px 20px; }
-        .k-page-exchange .item-1 .input-item select:focus {
-          box-shadow: none; }
+        background: transparent;
+        overflow: initial; }
+      .k-page-exchange .item-1 .input-item .selected {
+        background-color: #009dea !important;
+        color: #fff !important; }
+      .k-page-exchange .item-1 .input-item .selectric-items {
+        border: none;
+        width: 250px !important; }
+      .k-page-exchange .item-1 .input-item .selectric-scroll li {
+        font-size: 18px;
+        text-align: center;
+        color: #aaa; }
+        .k-page-exchange .item-1 .input-item .selectric-scroll li:not(:last-child) {
+          border-bottom: 1px solid #eee; }
+        .k-page-exchange .item-1 .input-item .selectric-scroll li:hover {
+          background-color: #fff; }
+      .k-page-exchange .item-1 .input-item .label {
+        color: #009dea; }
+      .k-page-exchange .item-1 .input-item .button {
+        background: transparent;
+        right: -35px; }
+        .k-page-exchange .item-1 .input-item .button:after {
+          border-top-color: #009dea; }
     .k-page-exchange .item-1 .extra-info {
+      margin-left: 150px;
       color: #aaa;
       font-size: 12px;
       margin-top: 10px; }
     .k-page-exchange .item-1 .error {
+      margin-left: 150px;
       font-size: 12px; }
+    .k-page-exchange .item-1 .input-account .label {
+      display: none; }
+    .k-page-exchange .item-1 .input-account .selectric-items {
+      width: 250px !important;
+      left: auto;
+      top: 25px; }
+    .k-page-exchange .item-1 .input-account .button {
+      top: -17px; }
     .k-page-exchange .item-1 .input-account input {
-      width: 530px; }
-    .k-page-exchange .item-1 .input-account select {
-      width: 100px;
-      position: relative;
-      left: -80px; }
-    .k-page-exchange .item-1 .input-amount select {
-      width: 80px; }
+      width: 432px; }
+    .k-page-exchange .item-1 .input-amount .label {
+      text-align: center;
+      background-color: transparent;
+      width: 100%;
+      margin: 0;
+      padding: 0px;
+      font-size: 18px;
+      cursor: pointer; }
     .k-page-exchange .item-1 .usd-convert {
       align-items: center;
       justify-content: center;
@@ -910,24 +918,24 @@
       .k-page-exchange .item-1 .rate-wrapper h3 {
         font-size: 13px; }
     .k-page-exchange .item-1 .rate {
+      padding: 10px;
       border: 1px solid #999;
       border-radius: 5px;
-      display: flex; }
+      display: inline-block; }
       .k-page-exchange .item-1 .rate > div {
-        text-align: center;
-        padding: 10px; }
+        float: left;
+        text-align: center; }
         .k-page-exchange .item-1 .rate > div:first-child {
-          border-right: 1px dashed #aaa;
-          width: 40%; }
+          width: 200px;
+          border-right: 1px dashed #aaa; }
         .k-page-exchange .item-1 .rate > div:nth-child(2) {
-          width: 30%;
+          width: 200px;
           border-right: 1px dashed #aaa; }
         .k-page-exchange .item-1 .rate > div:last-child {
-          width: 30%; }
+          width: 230px; }
         .k-page-exchange .item-1 .rate > div span {
           color: #aaa;
-          margin-top: 5px;
-          word-wrap: break-word; }
+          margin-top: 5px; }
       .k-page-exchange .item-1 .rate.hide {
         display: none; }
   .k-page-exchange .item-2 {
