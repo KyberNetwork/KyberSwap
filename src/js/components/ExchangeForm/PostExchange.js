@@ -9,7 +9,7 @@ import { addTx } from "../../actions/txActions"
 import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
 import { numberToHex } from "../../utils/converter"
 import constants from "../../services/constants"
-import { etherToOthers, tokenToOthers, sendEther, sendToken } from "../../services/exchange"
+import { etherToOthersFromAccount, tokenToOthersFromAccount, sendEtherFromAccount, sendTokenFromAccount, exchangeFromWallet } from "../../services/exchange"
 import Tx from "../../services/tx"
 
 
@@ -18,18 +18,27 @@ import Tx from "../../services/tx"
   exchangeForm = exchangeForm || {...constants.INIT_EXCHANGE_FORM_STATE}
   var address = exchangeForm.selectedAccount
   var account = store.accounts.accounts[address]
+  var wallet
+  if (!account) {
+    wallet = store.wallets.wallets[address]
+    if (wallet) {
+      account = store.accounts.accounts[wallet.ownerAddress]
+    }
+  }
   var sourceBalance
   var sourceToken = exchangeForm.sourceToken
   var destToken = exchangeForm.destToken
-  if ( sourceToken == constants.ETHER_ADDRESS) {
-    sourceBalance = (account == undefined ? "0" : account.balance.toString(10))
+  var sourceAccount = wallet || account
+  if (sourceToken == constants.ETHER_ADDRESS) {
+    sourceBalance = (sourceAccount == undefined ? "0" : sourceAccount.balance.toString(10))
   } else {
-    sourceBalance = (account == undefined ? "0" : account.tokens[sourceToken].balance.toString(10))
+    sourceBalance = (sourceAccount == undefined ? "0" : sourceAccount.tokens[sourceToken].balance.toString(10))
   }
 
   return {
     nonce: (account == undefined ? 0 : account.getUsableNonce()),
     account: account,
+    wallet: wallet,
     ethereum: store.connection.ethereum,
     sourceBalance: sourceBalance,
     keystring: (account == undefined ? "" : account.key),
@@ -100,17 +109,24 @@ export default class PostExchange extends React.Component {
     try {
       const params = this.formParams()
       // sending by wei
-      var call = params.sourceToken == constants.ETHER_ADDRESS ? etherToOthers : tokenToOthers
       var account = this.props.account
+      var wallet = this.props.wallet
+      var call
+      if (wallet) {
+        call = exchangeFromWallet
+      } else {
+        call = params.sourceToken == constants.ETHER_ADDRESS ? etherToOthersFromAccount : tokenToOthersFromAccount
+      }
       var dispatch = this.props.dispatch
+      var sourceAccount = wallet || account
       call(
-        this.props.exchangeFormID, ethereum, params.selectedAccount, params.sourceToken,
+        this.props.exchangeFormID, ethereum, account.address, params.sourceToken,
         params.sourceAmount, params.destToken, params.destAddress,
         params.maxDestAmount, params.minConversionRate,
         params.throwOnFailure, params.nonce, params.gas,
         params.gasPrice, keystring, password, (ex, trans) => {
           const tx = new Tx(
-            ex, params.selectedAccount, ethUtil.bufferToInt(trans.gas),
+            ex, sourceAccount.address, ethUtil.bufferToInt(trans.gas),
             ethUtil.bufferToInt(trans.gasPrice),
             ethUtil.bufferToInt(trans.nonce), "pending", "exchange", {
               sourceToken: params.sourceToken,
@@ -120,10 +136,10 @@ export default class PostExchange extends React.Component {
               destAddress: params.destAddress,
               maxDestAmount: params.maxDestAmount,
             })
-          dispatch(incManualNonceAccount(params.selectedAccount))
+          dispatch(incManualNonceAccount(account.address))
           dispatch(updateAccount(ethereum, account))
           dispatch(addTx(tx))
-        })
+        }, wallet)
       document.getElementById(this.props.passphraseID).value = ''
     } catch (e) {
       console.log(e)
@@ -135,27 +151,35 @@ export default class PostExchange extends React.Component {
   doDirectSend = (keystring, password, ethereum, errors) => {
     try {
       const params = this.formParams()
-      // sending by wei
-      var call = params.sourceToken == constants.ETHER_ADDRESS ? sendEther : sendToken
       var account = this.props.account
+      var wallet = this.props.wallet
+      var call
+      // sending from a wallet
+      if (wallet) {
+        call = params.sourceToken == constants.ETHER_ADDRESS ? sendEtherFromWallet : sendTokenFromWallet
+      } else {
+      // sending from a normal account
+        call = params.sourceToken == constants.ETHER_ADDRESS ? sendEtherFromAccount : sendTokenFromAccount
+      }
       var dispatch = this.props.dispatch
+      var sourceAccount = wallet || account
       call(
-        this.props.exchangeFormID, ethereum, params.selectedAccount,
+        this.props.exchangeFormID, ethereum, account.address,
         params.sourceToken, params.sourceAmount,
         params.destAddress, params.nonce, params.gas,
         params.gasPrice, keystring, password, (ex, trans) => {
           const tx = new Tx(
-            ex, params.selectedAccount, ethUtil.bufferToInt(trans.gas),
+            ex, sourceAccount.address, ethUtil.bufferToInt(trans.gas),
             ethUtil.bufferToInt(trans.gasPrice),
             ethUtil.bufferToInt(trans.nonce), "pending", "send", {
               sourceToken: params.sourceToken,
               sourceAmount: params.sourceAmount,
               destAddress: params.destAddress,
             })
-          dispatch(incManualNonceAccount(params.selectedAccount))
+          dispatch(incManualNonceAccount(account.address))
           dispatch(updateAccount(ethereum, account))
           dispatch(addTx(tx))
-        })
+        }, wallet)
       document.getElementById(this.props.passphraseID).value = ''
     } catch (e) {
       console.log(e)

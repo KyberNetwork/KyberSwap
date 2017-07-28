@@ -2,18 +2,14 @@ import React from "react"
 import { connect } from "react-redux"
 import { selectAccount } from "../../actions/exchangeFormActions"
 import constants from "../../services/constants"
+import {sourceAccounts} from "../../utils/store"
 
 
 @connect((store, props) => {
   var exchangeForm = store.exchangeForm[props.exchangeFormID]
   exchangeForm = exchangeForm || {...constants.INIT_EXCHANGE_FORM_STATE}
   return {
-    accounts: Object.keys(store.accounts.accounts).map((key) => {
-      return {
-        address: store.accounts.accounts[key].address,
-        name: store.accounts.accounts[key].name,
-      };
-    }),
+    accounts: sourceAccounts(store),
     selectedAccount: exchangeForm.selectedAccount,
     error: exchangeForm.errors["selectedAccountError"],
   }
