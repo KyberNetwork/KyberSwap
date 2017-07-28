@@ -1,4 +1,5 @@
 @import "global";
+@import "elements/loading_icon";
 
 .disable {
     pointer-events: none;
@@ -15,6 +16,10 @@
         outline: none;
     }
 }
+
+
+
+
 
 
 $gradient:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
@@ -171,25 +176,66 @@ $gradient:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
     height: 15px;
 }
 
-.k-icon-lr-arrow{
-    background-position: -345px -304px;
-    width: 15px;
-    height: 15px;
+.k-icon-exchange-green{
+    background-position: -58px -66px;
+    width: 25px;
+    height: 25px;
 }
-.k-icon-l-arrow{
-    background-position: -345px -304px;
-    width: 15px;
-    height: 15px;
+.k-icon-send-green{
+    background-position: -137px -19px;
+    width: 25px;
+    height: 25px;
 }
 
-.k-icon-duplicate{
-    background-position: -345px -304px;
-    width: 15px;
-    height: 15px;
+.k-icon-send-white{
+    background-position: -219px -409px;
+    width: 25px;
+    height: 25px; 
+}
+
+.k-icon-call-green{
+    background-position: -17px -66px;
+    width: 25px;
+    height: 25px;
+}
+
+.k-icon-call-white{
+    background-position: -278px -413px;
+    width: 25px;
+    height: 25px;
 }
 
 .k-icon-import{
-   background-position: -345px -304px;
-    width: 15px;
-    height: 15px;
+   background-position: -136px -405px;
+    width: 30px;
+    height: 30px;
+}
+
+.k-icon-setting{
+ background-position: -357px -17px;
+    width: 25px;
+    height: 25px;   
+}
+
+.k-icon-rate-btn{
+     background-position: -408px -17px;
+    width: 25px;
+    height: 121px;    
+}
+.k-icon-exchange-orange{
+ background-position: -136px -67px;
+    width: 25px;
+    height: 25px;    
+}
+
+.k-icon-rate{
+    background-position: -250px -65px;
+    width: 25px;
+    height: 25px;   
+}
+
+.k-icon-balance{
+    background-position: -219px -66px;
+    width: 25px;
+    height: 25px;   
 }

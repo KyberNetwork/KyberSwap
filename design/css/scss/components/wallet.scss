@@ -117,7 +117,6 @@ $backgroundColor:#333;
     // display: inline-block;
     //    width: 100%;
     max-width: 820px;
-    cursor: pointer;
     border-radius: $borderRadius;
 
     padding: $borderWidth;
@@ -151,6 +150,7 @@ $backgroundColor:#333;
         justify-content: space-between;
         border-bottom: 1px solid #fff;
         width: 100%;
+            padding-right: 10px;
         span {
             text-transform: uppercase;
             padding-left: $paddingLeft;
@@ -185,11 +185,16 @@ $backgroundColor:#333;
             }
         }
         .account-action {
-            padding: 20px 30px;
+            height: 60px;
+            padding: 10px 30px;
             margin-top: 40px;
             border: 1px solid #aaa;
             display: flex;
             justify-content: space-between;
+            align-items:center;
+            button{
+                cursor: pointer;
+            }
         }
     }
     .wallet-center {
@@ -243,9 +248,17 @@ $backgroundColor:#333;
         }
     }
     .control-btn {
-        visibility: hidden;
+    
         float: left;
         margin-left: 10px;
+        position:relative;
+        &.show{
+            .control-menu{
+                display: block;
+                animation:unfoldIn 0.6s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+                transform:scaleY(.01) scaleX(0);
+            }        
+        }
         button {
             margin-left: 10px;
             cursor: pointer;
@@ -253,7 +266,47 @@ $backgroundColor:#333;
                 outline: none;
             }
         }
-    } // .wallet-right {
+    } 
+    .control-menu{
+        background-color:#000;
+        border-radius:10px;
+        position:absolute;
+        right: 0px;
+        display: none;
+        ul{
+            list-style-type: none;
+            padding:0px;
+            margin: 0px;
+            >li{
+                padding:0px;
+                margin: 0px;
+                &:not(:last-child){
+                    a{
+                        border-bottom: 1px solid #aaa;    
+                    }
+                    
+                }
+                a{
+                       padding: 10px 20px;
+                        align-items: center;
+                        display: flex;
+                        font-size: 15px;
+                        color: #aaa;                
+                    &:hover{
+                        color: inherit;
+                    }
+                    i{
+                        margin-right: 10px;
+                        position:relative;
+                        top: -3px;
+                    }
+                }
+                    
+                }
+            }
+        }
+    
+    // .wallet-right {
     //     visibility: hidden;
     //     display: flex;
     //     justify-content: center;
@@ -360,6 +413,10 @@ $tabHeight:50px;
         display: flex;
         align-items:center;
         cursor: pointer;
+        *{
+            cursor: inherit;  
+        }
+        padding-left:30px;
         position:relative;
         span{
             width: 80px;
@@ -367,6 +424,7 @@ $tabHeight:50px;
         }
         label{
             font-size: 20px;
+            margin-left: 20px;
         }
         &:hover{
             &:before {

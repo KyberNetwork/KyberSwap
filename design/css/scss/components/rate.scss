@@ -30,33 +30,40 @@ $rateBtnColor:green;
         position: fixed;
     }
     .k-rate-btn {
-        padding: 8px;
-        background-color: $rateBtnColor;
-        cursor: pointer;
-        border-radius: 10px;
-        span {
-            color: white;
-            &:first-child {
-
-                display: block;
-                width: 1px;
-                word-wrap: break-word;
-                font-family: monospace;
-            }
-        }
+    	cursor: pointer;	
     }
+    // .k-rate-btn {
+    //     padding: 8px;
+    //     background-color: $rateBtnColor;
+    //     
+    //     border-radius: 10px;
+    //     span {
+    //         color: white;
+    //         &:first-child {
+
+    //             display: block;
+    //             width: 1px;
+    //             word-wrap: break-word;
+    //             font-family: monospace;
+    //         }
+    //     }
+    // }
+    
     .k-rate-info {
         width: $widthRate;
         height: $heightRate;
     }
 }
 
-$borderRateColor :#aaa;
+$borderRate : #00bf71;
+$borderRateColor :#999;
 .k-rate-info{
 	//padding:100px;
-	background-color:#3273c5;
+	background-color:#000;
 	overflow:auto;
-	border: 1px solid $borderRateColor;
+	border-top: 2px solid $borderRate;
+	border-bottom: 2px solid $borderRate;
+	border-left: 2px solid $borderRate;
 	border-radius:10px;
 	font-size: 15px;
 	*{
@@ -64,7 +71,7 @@ $borderRateColor :#aaa;
 	}
 	.title{
 		display: flex;
-		padding:9px 20px;
+		padding:5px 20px 9px 20px;
 		color:#fff;
 
 		justify-content: space-between;
@@ -72,7 +79,9 @@ $borderRateColor :#aaa;
 		text-transform: uppercase;
 		.left{
 			i{
-				margin-right: 5px
+				margin-right: 5px;
+				position: relative;
+    			top: 4px;
 			}
 		}
 	}
@@ -94,6 +103,11 @@ $borderRateColor :#aaa;
 				color: white;
 				&:nth-child(2){
 					border-right:1px solid $borderRateColor;
+				}
+				i{
+					position:relative;
+					top: 4px;
+					margin-right: 8px;
 				}
 			}
 		}

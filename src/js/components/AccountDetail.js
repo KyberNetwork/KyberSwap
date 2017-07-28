@@ -6,7 +6,7 @@ import NameAndDesc from "./Account/NameAndDesc"
 import ModalButton from "./Elements/ModalButton"
 import { Balance, Token, Nonce } from "./Account/Balance"
 import { toT } from "../utils/converter"
-import { deleteAccount } from "../actions/accountActions"
+import { deleteAccount} from "../actions/accountActions"
 import { selectAccount, specifyRecipient } from "../actions/exchangeFormActions"
 
 const modalID = "quick-exchange-modal"
@@ -38,7 +38,20 @@ export default class AccountDetail extends React.Component {
     event.preventDefault()
     this.props.dispatch(deleteAccount(address))
   }
+  toggleAccount = (event) =>{
+    var target = event.currentTarget
+    var parent = target.parentElement
+    console.log(parent)
+    console.log(parent.class)
+    var classParent = parent.className
+    if (classParent === "control-btn"){
+      classParent = "control-btn show"
+    }else{
+      classParent = "control-btn"
+    }
+    parent.className = classParent
 
+  }
   openQuickExchange = (event) => {
     this.props.dispatch(selectAccount(
       quickFormID, this.props.address
@@ -74,18 +87,29 @@ export default class AccountDetail extends React.Component {
     var tokenRowrender = tokenRow.map((row, index) => {
       return <div key={index} className='row'>{row}</div>
     })
-
+    
     return (
     <div class="wallet-item">
       <div class="title">
         <span>{this.props.name}</span>
         <div class="control-btn">
-           <button class="delete" title="Delete" onClick={(e) => this.deleteAccount(e, this.props.address)}>
-              <i class="k-icon k-icon-delete-green"></i>
-            </button>
-            <button class="modiy" title="Modify">
-              <i class="k-icon k-icon-modify-green"></i>
-            </button>
+          <button onClick={(e) => this.toggleAccount(e)}>
+            <i class="k-icon k-icon-setting"></i>
+          </button>
+          <div className="control-menu">
+            <ul>
+              <li>
+                <a class="delete" onClick={(e) => this.deleteAccount(e, this.props.address)}>
+                  <i class="k-icon k-icon-delete-green"></i> Delete...
+                </a>
+              </li>
+              <li>
+                <a class="modiy">
+                  <i class="k-icon k-icon-modify-green"></i> Modify...
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <div class="wallet-content">
@@ -99,18 +123,24 @@ export default class AccountDetail extends React.Component {
               <label>Address</label>
               <span>{this.props.address}</span>
               <div class="account-action">
-                <span><i class="k-icon k-icon-lr-arrow"></i></span>
-                <span><i class="k-icon k-icon-l-arrow"></i></span>
-                <span><i class="k-icon k-icon-duplicate"></i></span>
+                <div>
+                  <ModalButton preOpenHandler={this.openQuickExchange} modalID={modalID} title="Quick exchange between tokens">
+                    <i class="k-icon k-icon-exchange-green"></i>
+                  </ModalButton>
+                </div>
+                <div>
+                  <ModalButton preOpenHandler={this.openQuickSend} modalID={sendModalID} title="Quick send ethers and tokens">
+                    <i class="k-icon k-icon-send-green"></i>
+                  </ModalButton>
+                </div>
+                <div>
+                  <ModalButton preOpenHandler={this.openQuickExchange} modalID={modalID} title="Quick exchange between tokens">
+                    <i class="k-icon k-icon-call-green"></i>
+                  </ModalButton>
+                </div>
               </div>
             </div>
-          </div>
-          <ModalButton preOpenHandler={this.openQuickExchange} class="button" modalID={modalID} title="Quick exchange between tokens">
-            Exchange
-          </ModalButton>
-          <ModalButton preOpenHandler={this.openQuickSend} class="button" modalID={sendModalID} title="Quick send ethers and tokens">
-            Send
-          </ModalButton>
+          </div>          
         </div>
         <div class="wallet-center">
           {tokenRowrender}

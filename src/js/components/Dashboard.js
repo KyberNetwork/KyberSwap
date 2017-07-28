@@ -82,25 +82,19 @@ export default class Dashboard extends React.Component {
 
     var linkAccount = (
       <div class="link">
-        <span><i class="k-icon k-icon-import"></i></span>
+        <i class="k-icon k-icon-import"></i>
         <label>Import Account</label>
       </div>      
     )
-    var linkWallet = (
+    var linkCall = (
       <div class="link">
-        <span><i class="k-icon k-icon-import"></i></span>
+        <i class="k-icon k-icon-call-white"></i>
         <label>Import Wallet</label>
-      </div>      
-    )
-    var linkExchange = (
-      <div class="link">
-        <span><i class="k-icon k-icon-import"></i></span>
-        <label>Exchange</label>
       </div>      
     )
     var linkSend = (
       <div class="link">
-        <span><i class="k-icon k-icon-import"></i></span>
+        <i class="k-icon k-icon-send-white"></i>
         <label>Send</label>
       </div>      
     )
@@ -126,18 +120,14 @@ export default class Dashboard extends React.Component {
                 <ModalLink  modalID={this.props.modalID} content={linkAccount}/>                
               </li>
               <li>
-                <ModalLink  modalID={this.props.modalWalletID} content={linkWallet}/>                
-              </li>
-              <li>
-                <ModalLink  modalID={quickExchangeModalID} content={linkExchange}/>                
-              </li>
-               <li>
                 <ModalLink  modalID={quickSendModalID} content={linkSend}/>                
               </li>
+              <li>
+                <ModalLink  modalID={this.props.modalWalletID} content={linkCall}/>                
+              </li>                             
             </ul>
           </div>
-          <div class="modals">
-            <ExchangeModal exchangeFormID="quick-exchange" modalID={quickExchangeModalID} label="Quick Exchange" />
+          <div class="modals">            
             <SendModal exchangeFormID="quick-send" modalID={quickSendModalID} label="Quick Send" />
           </div>
         </div>
