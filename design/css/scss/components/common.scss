@@ -7,7 +7,7 @@
 }
 .modal-open{
     background-color:white;
-    max-height: 600px;    
+    max-height: 700px;    
     overflow-y: auto;
     padding:15px;
     animation:unfoldIn 0.4s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
@@ -126,6 +126,11 @@ $gradient:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
     width: 40px;
     height: 40px; 
 }
+.k-icon-lock-white{
+   background-position: -126px -473px;
+    width: 40px;
+    height: 40px;
+}
 .k-icon-pig{
     background-position: -60px -65px;
     width: 25px;
@@ -144,6 +149,11 @@ $gradient:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
 }
 .k-icon-home{
     background-position: -138px -302px;
+    width: 25px;
+    height: 20px;
+}
+.k-icon-home-white{
+    background-position: -47px -483px;
     width: 25px;
     height: 20px;
 }
@@ -255,4 +265,21 @@ $gradient:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
     background-position: -179px -20px;
     width: 20px;
     height: 20px;
+}
+
+.k-icon-close{
+    background-position: -48px -464px;
+    width: 20px;
+    height: 20px;
+}
+
+.k-icon-next{
+    background-position: -379px -408px;
+    width: 30px;
+    height: 30px;
+}
+.k-icon-back{
+    background-position: -321px -408px;
+    width: 30px;
+    height: 30px;
 }

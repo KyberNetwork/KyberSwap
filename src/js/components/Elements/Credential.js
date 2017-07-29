@@ -13,11 +13,9 @@ export default class Credential extends React.Component {
     console.log('passphraseID: ', this.props.passphraseID)
     return (
       <div>
-        <label class="title"><strong>Type in Your Passphrase to Exchange</strong></label>
-        <div class="input-space">
-          <span>
-            <i class="k-icon k-icon-lock"></i>
-          </span>
+        <label><strong>Type in your password to finish sending</strong></label>
+        <div class="input-space">          
+          <i class="k-icon k-icon-lock-white"></i>          
           <input id={this.props.passphraseID} type="password"/>
         </div>
         {error}

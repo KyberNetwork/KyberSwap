@@ -39,20 +39,20 @@ export default class RecipientSelect extends React.Component {
         Selected address is {this.props.error}
       </div>)
     }
-    return (
-      <div class="input-group-item input-account">
-        <label>Send to</label>
-        <div class="input-item">
-          <input type="text" value={this.props.destAddress} onChange={this.specifyDestAddress.bind(this)} value={this.props.destAddress} />
-          <div class="select-wrapper">
-            <select class="selectric" id="to-account" value={this.props.destAddress} onChange={this.selectAccount.bind(this)}>
+    return(
+      <div class="input-account">
+        <div>
+          <div>
+            <label>to</label>
+            <input type="text" value={this.props.destAddress} onChange={this.specifyDestAddress.bind(this)} value={this.props.destAddress} />
+          </div>
+          <select class="selectric" id="to-account" value={this.props.destAddress} onChange={this.selectAccount.bind(this)}>
               <option key="1" value="">No account selected</option>
               {userOptions}
-            </select>
-          </div>
-        </div>
+          </select>
+        </div>      
         { error }
-      </div>
-    )
+      </div>)
+
   }
 }

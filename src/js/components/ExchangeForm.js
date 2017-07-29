@@ -69,51 +69,96 @@ export default class ExchangeForm extends React.Component {
     return (
       <form>
         <div class="k-page k-page-exchange">
+          <div class="title">
+            <div class="left">
+              <i class="k-icon k-icon-send-green"></i>
+              <span>SEND</span>
+            </div>
+            <div class="right">
+              <button>
+                <i  class="k-icon k-icon-close"></i>
+              </button>              
+            </div>
+          </div>
+          <div class="advance">
+            <i class="k-icon k-icon-setting"></i>
+            <span>Advance</span>
+          </div>
           <div class="exchange-page" data-page={this.props.step}>
             <div class="k-progress">
               <div class="progress-bar">
                 <div class="step step-1">
-                  <span>1</span>
+                  <span class="circle"></span>
                 </div>
                 <div class="step step-2">
                   <div class="bridge"></div>
-                  <span>2</span>
+                  <span class="circle"></span>
                 </div>
                 <div class="step step-3">
                   <div class="bridge"></div>
-                  <span>3</span>
-                </div>
-                <div class="step step-4">
-                  <div class="bridge"></div>
-                  <span>4</span>
-                </div>
+                  <span class="circle"></span>
+                </div>                
+              </div>
+              <div class="progress-label">
+                <div>Address</div>
+                <div>Amount</div>
+                <div>Password</div>
               </div>
             </div>
             <div class="page">
               <div class="page-item item-1">
-                { this.props.hideSourceAddress ? "" : <UserSelect exchangeFormID={this.props.exchangeFormID}/> }
-                { this.props.hideDestAddress ? "" : <RecipientSelect exchangeFormID={this.props.exchangeFormID}/> }
-                <TokenSource exchangeFormID={this.props.exchangeFormID}/>
-                <TokenDest exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
-                { (this.props.isCrossSend || !this.props.allowDirectSend) ? <ExchangeRate exchangeFormID={this.props.exchangeFormID}/> : "" }
+                <h3>
+                  <i class="k-icon k-icon-home-white"></i>
+                  <span>Address</span>
+                </h3>
+                <div>
+                  <UserSelect exchangeFormID={this.props.exchangeFormID}/>
+                  <RecipientSelect exchangeFormID={this.props.exchangeFormID}/>                
+                </div>                
               </div>
               <div class="page-item item-2">
-                <TransactionConfig gas={this.props.gas}
-                  gasError={this.props.gasError}
-                  gasPrice={this.props.gasPrice}
-                  gasPriceError={this.props.gasPriceError}
-                  gasHandler={this.specifyGas}
-                  gasPriceHandler={this.specifyGasPrice} />
+                <div class="content">
+                  <ul>
+                    <li>
+                      <label>Amounts to send</label>
+                      <select>
+                        <option>BTC</option>
+                        <option>ETH</option>
+                      </select>
+                      <input type="text"/>
+                    </li>
+                    <li>
+                      <label>Convert to a different currency ?</label>                      
+                      <input type="checkbox"/>
+                    </li>
+                    <li>
+                      <label>Max Destination Amount </label>
+                      <select>
+                        <option>BTC</option>
+                        <option>ETH</option>
+                      </select>
+                      <span>123,456,789,101,112,567</span>
+                    </li>
+                    <li>
+                      <label>Min Destination Amount</label>
+                      <select>
+                        <option>BTC</option>
+                        <option>ETH</option>
+                      </select>
+                      <span>123,456,789,101,112,567</span>                      
+                    </li>
+                  </ul>
+                </div>                
+                <ExchangeRate exchangeFormID={this.props.exchangeFormID}/>
               </div>
               <div class="page-item item-3">
                 <Credential passphraseID={this.props.passphraseID} error={this.props.passwordError} />
               </div>
               <div class="page-item item-4">
+                <h3>Congratulations. Your transaction has been processed.</h3>
                 <span class="verify">
                   <i class="k-icon k-icon-verify"></i>
-                </span>
-                {txStatus}
-                <button class="button" onClick={this.done}>Done</button>
+                </span>                
               </div>
             </div>
             <div class="next" id="exchange-next">

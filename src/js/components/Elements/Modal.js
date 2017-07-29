@@ -12,6 +12,7 @@ const customStyles = {
     left: 0,
     right: 0,
     bottom: 0,
+    //backgroundColor: 'rgba(10, 10, 10, 0.45)',
     backgroundColor: 'rgba(10, 10, 10, 0.45)',
     display: 'flex',
     justifyContent: 'center',
