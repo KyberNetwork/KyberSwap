@@ -34,7 +34,7 @@ export function sendTokenFromWallet(
   var sendTokenData = ethereum.sendTokenData(
     sourceToken, sourceAmount, destAddress)
   var txData = ethereum.executeWalletData(
-    wallet.address, destAddress, sourceAmount, sendTokenData)
+    wallet.address, sourceToken, 0, sendTokenData)
   const txParams = {
     nonce: nonce,
     gasPrice: gasPrice,
