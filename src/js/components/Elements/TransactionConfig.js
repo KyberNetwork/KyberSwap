@@ -33,7 +33,7 @@ export default class TransactionConfig extends React.Component {
           <span>
             <i class="k-icon k-icon-gas"></i>
           </span>
-          <input type="number" step="any" min="0" value={this.props.gas} onChange={this.specifyGas.bind(this)} value={this.props.gas} />
+          <input type="number" step="any" min="0" value={this.props.gas} onChange={this.specifyGas.bind(this)} />
         </div>
         {gasError}
         <div class="intro intro-bottom">

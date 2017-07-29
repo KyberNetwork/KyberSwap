@@ -152,6 +152,11 @@ export default class EthereumService {
     }
   }
 
+  executeWalletData(walletAddress, to, value, data) {
+    var wallet = this.rpc.eth.contract(constants.KYBER_WALLET).at(walletAddress)
+    return wallet.execute.getData(to, value, data)
+  }
+
   exchangeData(sourceToken, sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate, throwOnFailure) {
     return this.networkContract.trade.getData(

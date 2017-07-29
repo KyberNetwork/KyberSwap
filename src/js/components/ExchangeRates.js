@@ -11,7 +11,6 @@ export default class ExchangeRates extends React.Component {
   render() {
     var rates = Object.keys(this.props.rates).map((rateID) => {
       var rate = this.props.rates[rateID]
-      console.log(rate)
       return (
         <tr key={rateID}>
           <td>{rate.source.name}/{rate.dest.name}</td>
