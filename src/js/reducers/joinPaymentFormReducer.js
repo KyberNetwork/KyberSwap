@@ -17,7 +17,7 @@ const joinPaymentForm = (state=initState, action) => {
       return {...state, gasPrice: action.payload}
     }
     case "JOIN_PAYMENT_GAS_SPECIFIED": {
-      return {...state, gas: state.errors, }
+      return {...state, gas: action.payload }
     }
     case "JOIN_PAYMENT_ERROR_THREW": {
       return {...state, errors: {...state.errors, ...action.payload}}

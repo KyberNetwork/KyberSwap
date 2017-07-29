@@ -10,8 +10,8 @@ export function sendEtherFromWallet(
   destAddress, nonce, gas, gasPrice, keystring,
   password, callback, wallet) {
 
-  var txData = ethereum.sendEtherFromWalletData(
-    sourceAmount, destAddress)
+  var txData = ethereum.executeWalletData(
+    wallet.address, destAddress, sourceAmount, "")
   const txParams = {
     nonce: nonce,
     gasPrice: gasPrice,
@@ -31,8 +31,10 @@ export function sendTokenFromWallet(
   destAddress, nonce, gas, gasPrice, keystring,
   password, callback, wallet) {
 
-  var txData = ethereum.sendTokenFromWalletData(
+  var sendTokenData = ethereum.sendTokenData(
     sourceToken, sourceAmount, destAddress)
+  var txData = ethereum.executeWalletData(
+    wallet.address, destAddress, sourceAmount, sendTokenData)
   const txParams = {
     nonce: nonce,
     gasPrice: gasPrice,

@@ -9,6 +9,8 @@ import UserSelect from "../Payment/UserSelect"
 
 import { throwError, emptyForm } from "../../actions/joinPaymentFormActions"
 import { specifyGasLimit, specifyGasPrice } from "../../actions/joinPaymentFormActions"
+import { verifyNonce } from "../../utils/validators"
+import { numberToHex } from "../../utils/converter"
 import { deployKyberWallet } from "../../services/payment"
 import { updateAccount, joiningKyberWallet } from "../../actions/accountActions"
 import { closeModal } from "../../actions/utilActions"
@@ -72,10 +74,11 @@ export default class JoinPaymentForm extends React.Component {
       // sending by wei
       var account = this.props.account
       var address = this.props.account.address
-      var gas = this.props.gas
-      var gasPrice = this.props.gasPrice
-      var nonce = this.props.nonce
+      var gas = numberToHex(this.props.gas)
+      var gasPrice = numberToHex(this.props.gasPrice)
+      var nonce = verifyNonce(this.props.nonce)
       var dispatch = this.props.dispatch
+      console.log(this.props)
       deployKyberWallet(
         ethereum, account, nonce, gas,
         gasPrice, account.key, password, (ex) => {
@@ -111,7 +114,11 @@ export default class JoinPaymentForm extends React.Component {
             </div>
             <div className="row">
               <div className="large-12 columns">
-                <TransactionConfig gas={this.props.gas} gasPrice={this.props.gasPrice} gasHandler={this.specifyGas} gasPriceHandler={this.specifyGasPrice} />
+                <TransactionConfig
+                  gas={this.props.gas}
+                  gasPrice={this.props.gasPrice}
+                  gasHandler={this.specifyGas}
+                  gasPriceHandler={this.specifyGasPrice} />
               </div>
             </div>
             <div className="row">
