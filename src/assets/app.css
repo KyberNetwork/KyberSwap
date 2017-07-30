@@ -1982,6 +1982,20 @@ select:focus {
         color: #00c784;
         border: 2px solid #00c784; }
 
+.info {
+  color: #fff;
+  padding: 50px; }
+  .info label {
+    font-family: Roboto-Regular;
+    font-size: 18px;
+    color: #00C072;
+    display: inline-block;
+    margin-right: 15px; }
+  .info .alert {
+    margin-top: 10px;
+    font-size: 20px;
+    color: #e74c3c; }
+
 @keyframes unfoldIn {
   0% {
     -webkit-transform: scaleY(0.005) scaleX(0);
