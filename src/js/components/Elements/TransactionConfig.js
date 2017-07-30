@@ -25,29 +25,21 @@ export default class TransactionConfig extends React.Component {
       </div>)
     }
     return (
-      <div>
-        <div class="intro">
-          <label class="title"><strong>You may opt to change our suggested gas limit.</strong></label>
-        </div>
-        <div class="input-space">
-          <span>
-            <i class="k-icon k-icon-gas"></i>
-          </span>
+      <ul>
+        <li>
+          <label>Gas limit</label>
           <input type="number" step="any" min="0" value={this.props.gas} onChange={this.specifyGas.bind(this)} />
-        </div>
-        {gasError}
-        <div class="intro intro-bottom">
-          <label class="title"><strong>You may opt to change our suggested gas price.</strong></label>
-        </div>
-        <div class="input-space">
-          <span>
-          <i class="k-icon k-icon-gas-price"></i>
-          </span>
+          {gasError}
+        </li>
+        <li>
+          <label>Gas price</label>
           <input type="number" step="any" min="0" value={this.props.gasPrice} onChange={this.specifyGasPrice.bind(this)} value={this.props.gasPrice} />
-          <span class="uint">Wei</span>
-        </div>
-        {gasPriceError}
-      </div>
+          <span class="helper">
+            wei
+          </span>
+          {gasPriceError}
+        </li>
+      </ul>
     )
   }
 }

@@ -26,11 +26,13 @@ export default class SideBar extends React.Component {
         </div>
         <div class="k-header-menu" id="menu">
           <ul class="tabs vertical" data-tabs>
+            {/*
             <li class={this.tabClasses("/exchange")}>
               <Link to="/contracts">
                 <i class="k-icon k-icon-contract"></i> Contracts
               </Link>
             </li>
+            */}
             <li class={this.tabClasses("/")}>
               <Link to="/" >
                 <i class="k-icon k-icon-account"></i> Accounts

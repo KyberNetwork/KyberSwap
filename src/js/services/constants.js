@@ -15,13 +15,14 @@ const EPSILON = 1000
 const ETHER_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 const NETWORK_ADDRESS = "0x11542d7807dfb2b44937f756b9092c76e814f8ed"
 const INIT_EXCHANGE_FORM_STATE = {
+  advanced: false,
   isCrossSend: true,
   selectedAccount: "",
   sourceToken: ETHER_ADDRESS,
-  sourceTokenSymbol: "",
+  sourceTokenSymbol: "ETH",
   sourceAmount: 0,
   destToken: ETHER_ADDRESS,
-  destTokenSymbol: "",
+  destTokenSymbol: "ETH",
   minConversionRate: 0,
   destAddress: "",
   minDestAmount: 0,
@@ -30,7 +31,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   offeredRateBalance: 0,
   offeredRate: 0,
   throwOnFailure: false,
-  gas: 1000000,
+  gas: 2000000,
   gasPrice: 20000000000,
   step: 1,
   broadcasting: true,

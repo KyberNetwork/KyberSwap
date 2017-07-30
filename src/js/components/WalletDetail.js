@@ -4,7 +4,7 @@ import QRCode from "qrcode.react"
 import { deleteWallet } from "../actions/walletActions"
 import { Token } from "./Account/Balance"
 import ModalButton from "./Elements/ModalButton"
-import { selectAccount, specifyRecipient } from "../actions/exchangeFormActions"
+import { selectAccount, specifyRecipient, specifyStep } from "../actions/exchangeFormActions"
 import { toT } from "../utils/converter"
 import { accountName } from "../utils/store"
 
@@ -56,6 +56,8 @@ export default class WalletDetail extends React.Component {
     ))
     this.props.dispatch(specifyRecipient(
       quickFormID, this.props.address))
+    this.props.dispatch(specifyStep(
+      quickFormID, 2))
   }
 
   openQuickSend = (event) => {

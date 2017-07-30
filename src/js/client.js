@@ -1,7 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { Provider } from "react-redux"
-import createHistory from 'history/createBrowserHistory'
 import { Route } from 'react-router'
 import { Link } from 'react-router-dom'
 

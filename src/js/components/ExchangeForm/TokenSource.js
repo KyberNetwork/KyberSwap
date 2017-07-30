@@ -91,21 +91,19 @@ export default class TokenSource extends React.Component {
       </div>)
     }
     return (
-      <div class="input-group-item input-amount">
-        <label>Exchange</label>
-        <div class="input-item">
-          <input value={toT(this.props.specifiedAmount)} type="number" min="0" step="any" placeholder="Amount to exchange" onChange={this.specifyAmount.bind(this)}/>
-          <select class="selectric" onChange={this.selectToken.bind(this)} value={this.props.selectedToken}>
-            <option key={constants.ETHER_ADDRESS} value={constants.ETHER_ADDRESS}>ETH</option>
-            {tokenOptions}
-          </select>
-        </div>
-        <div class="extra-info">
-          Your balance: {toT(this.props.selectedTokenBalance)}
-        </div>
+      <li>
+        <label>Amount to send</label>
+        <select onChange={this.selectToken.bind(this)} value={this.props.selectedToken}>
+          <option key={constants.ETHER_ADDRESS} value={constants.ETHER_ADDRESS}>ETH</option>
+          {tokenOptions}
+        </select>
+        <input value={toT(this.props.specifiedAmount)} type="number" min="0" step="any" placeholder="Amount to exchange" onChange={this.specifyAmount.bind(this)}/>
+        <span class="helper">
+          Your balance: {toT(this.props.selectedTokenBalance, 8)}
+        </span>
         { error }
         { sourceTokenError }
-      </div>
+      </li>
     )
   }
 }

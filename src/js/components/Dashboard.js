@@ -72,21 +72,21 @@ export default class Dashboard extends React.Component {
       importingWallet = <p>New wallet is being imported...</p>
     } else {
       importingWallet = ""
-    }  
+    }
     return (
       <div>
         <div  class="k-page">
           <div  class="k-page-account">
             {importingAccount}
-            {app}           
+            {app}
           </div>
           <div  class="k-page-wallet">
             {importingWallet}
-            {appWallet}          
+            {appWallet}
           </div>
 
-          <div class="modals">            
-            <SendModal exchangeFormID="quick-send" modalID={quickSendModalID} label="Quick Send" />            
+          <div class="modals">
+            <SendModal exchangeFormID="quick-send" modalID={quickSendModalID} label="Quick Send" />
           </div>
         </div>
       </div>)

@@ -86,16 +86,37 @@ $backgroundColor:#333;
 }
 
 .text-green {
-    color: $accountColor;
+    color: $colorGreen;
 }
 
 .import-account {
     .modal-title {
         font-size: 20px;
         text-align: center;
+        margin-bottom:20px;
+    }
+    form {
+        >div:first-child{
+            label{
+               // display: flex;
+               // align-items:center;
+                input{
+                    background: transparent;
+                    //border:none;
+                    color: #fff;
+                  //  margin-left: 15px;
+                  //  border-bottom:1px solid #aaa;
+                    &:focus{
+                        outline: none;
+                        box-shadow:none;
+                    }
+                }
+            }
+        }
     }
     .modal-body label {
         font-weight: bold;
+        color: #aaa;
     }
     .dropzone>div {
         width: auto !important;
@@ -109,6 +130,10 @@ $backgroundColor:#333;
     .submit-button {
         text-align: right;
         margin-top: 40px;
+        button{
+            background-color:$colorGreen;
+            color: white;
+        }
     }
 }
 
@@ -174,6 +199,7 @@ $backgroundColor:#333;
                 span{
                     position: relative;
                     top: -5px;
+                    color: #00c072;
                 }
             }
         }
@@ -358,7 +384,7 @@ $backgroundColor:#333;
           width: 50px;
           height: 50px;
           vertical-align: middle;
-          line-height: 42px;
+          line-height: 52px;
         }
     }
 }
@@ -401,10 +427,10 @@ $widthActiveBorder : 13px;
 $tabHeight:50px;
 .control-account{
     position: fixed;
-    bottom: 50px;    
+    bottom: 70px;
     background-color: $backgroundColor;
     width: 280px;
-    margin-left: -220px;
+    margin-left: -280px;
     box-shadow: 1px 1px 1px 1px #000;
     animation:unfoldIn 0.2s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
     transform:scaleY(.01) scaleX(0);
