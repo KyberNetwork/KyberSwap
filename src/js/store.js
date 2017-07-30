@@ -11,7 +11,10 @@ import { routerMiddleware } from 'react-router-redux'
 const routeMiddleware = routerMiddleware(history)
 
 const middleware = applyMiddleware(
-  thunk, promise(), logger, routeMiddleware
+  thunk,
+  promise(),
+  logger,
+  routeMiddleware,
 )
 
 const store = createStore(
@@ -19,7 +22,9 @@ const store = createStore(
 
 persistStore(store, {blacklist: [
   'connection',
-  // 'exchangeForm'
+  // 'exchangeForm',
+  // 'paymentForm',
+  // 'joinPaymentForm',
   ]})
 
 export default store

@@ -34,6 +34,7 @@ export default class ExchangeModal extends React.Component {
         content={this.content()}
         modalID={this.props.modalID}
         modalClass="modal-exchange"
+        outsideCallback={this.onClose}
         label={this.props.label}>
       </Modal>
     )

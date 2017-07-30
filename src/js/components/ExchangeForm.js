@@ -42,6 +42,10 @@ export default class ExchangeForm extends React.Component {
       specifyGasPrice(this.props.exchangeFormID, event.target.value))
   }
 
+  onClose = (event) => {
+    this.props.postExchangeHandler(event)
+  }
+
   done = (event) => {
     event.preventDefault()
     this.props.dispatch(
@@ -66,6 +70,18 @@ export default class ExchangeForm extends React.Component {
         }
       }
     }
+    var advanceOption
+    if (this.props.step == 2) {
+      advanceOption =
+        <div class="advance">
+          <i class="k-icon k-icon-setting"></i>
+          <span>Advance</span>
+        </div>
+    } else {
+      advanceOption =
+        <div class="advance">
+        </div>
+    }
     return (
       <form>
         <div class="k-page k-page-exchange">
@@ -75,15 +91,12 @@ export default class ExchangeForm extends React.Component {
               <span>SEND</span>
             </div>
             <div class="right">
-              <button>
+              <button onClick={this.onClose}>
                 <i  class="k-icon k-icon-close"></i>
-              </button>              
+              </button>
             </div>
           </div>
-          <div class="advance">
-            <i class="k-icon k-icon-setting"></i>
-            <span>Advance</span>
-          </div>
+          {advanceOption}
           <div class="exchange-page" data-page={this.props.step}>
             <div class="k-progress">
               <div class="progress-bar">
@@ -97,24 +110,26 @@ export default class ExchangeForm extends React.Component {
                 <div class="step step-3">
                   <div class="bridge"></div>
                   <span class="circle"></span>
-                </div>                
+                </div>
               </div>
               <div class="progress-label">
-                <div>Address</div>
-                <div>Amount</div>
-                <div>Password</div>
+                <div class="progress-step-1">Addresses</div>
+                <div class="progress-step-2">Amount</div>
+                <div class="progress-step-3">Password</div>
               </div>
             </div>
             <div class="page">
               <div class="page-item item-1">
                 <h3>
                   <i class="k-icon k-icon-home-white"></i>
-                  <span>Address</span>
+                  <span>Addresses</span>
                 </h3>
                 <div>
                   <UserSelect exchangeFormID={this.props.exchangeFormID}/>
+                </div>
+                <div>
                   <RecipientSelect exchangeFormID={this.props.exchangeFormID}/>                
-                </div>                
+                </div>
               </div>
               <div class="page-item item-2">
                 <div class="content">
@@ -148,7 +163,7 @@ export default class ExchangeForm extends React.Component {
                       <span>123,456,789,101,112,567</span>                      
                     </li>
                   </ul>
-                </div>                
+                </div>
                 <ExchangeRate exchangeFormID={this.props.exchangeFormID}/>
               </div>
               <div class="page-item item-3">
@@ -158,7 +173,7 @@ export default class ExchangeForm extends React.Component {
                 <h3>Congratulations. Your transaction has been processed.</h3>
                 <span class="verify">
                   <i class="k-icon k-icon-verify"></i>
-                </span>                
+                </span>
               </div>
             </div>
             <div class="next" id="exchange-next">

@@ -9,21 +9,24 @@ $boderInputItem1: #aaa;
 $colorLableItem1:#777;
 
 
-$backgoundExchange :#2c2d35;
+$backgoundExchange : linear-gradient(-180deg, #2F3037 0%, #22232A 95%);
 $colorBorderButtomModal:#aaa;
 $stepColorInactive:#9f9f9f;
 $stepColorActive:#00c072;
 .modal-exchange{
     padding:0px;
-    background-color:$backgoundExchange;
+    background-image:$backgoundExchange;
+    border-radius: 3.93px;
     overflow-x:hidden;
 }
 .k-page-exchange {
     width: 980px;
     .title{
         display: flex;
+        font-size: 15.7px;
+        color: #FFFFFF;
         justify-content: space-between;
-        padding:10px 20px;
+        padding:10px 10px;
         color: #fff;
         font-weight: bold;
         border-bottom:1px solid $colorBorderButtomModal;
@@ -31,7 +34,7 @@ $stepColorActive:#00c072;
             i{
                 position:relative;
                 margin-right:8px;
-                top: 3px;
+                vertical-align: middle;
             }
         }
         .right{
@@ -41,13 +44,17 @@ $stepColorActive:#00c072;
     .advance{
         text-align: right;
         margin-top: 0px;
-        padding-right:100px;
-        color: #aaa;
+        padding-top: 7px;
+        padding-right: 60px;
         cursor: pointer;
+        /* Advanced: */
+        font-size: 14px;
+        color: #9F9F9F;
+        height: 37px;
         i{
-            position:relative;
-            top: 3px;
+            vertical-align: middle;
             margin-right:5px;
+            margin-bottom: 5px;
         }
     }
     .k-progress {
@@ -55,20 +62,20 @@ $stepColorActive:#00c072;
         .progress-bar {
             display: flex;
             justify-content: center;
-            margin-top: 15px;
+            margin-top: 10px;
         }
         .step {
             display: flex;
             align-items: center;
             .circle{
-                height: 30px;
-                width: 30px;
+                height: 27px;
+                width: 27px;
                 display: block;
-                border-radius:30px;
+                border-radius:27px;
                 border: 3px solid $stepColorInactive;
-            }         
+            }
             &.step-1 {
-                right: -10px;
+                right: -3px;
                 z-index: 2;
                 position: relative;
             }
@@ -88,7 +95,7 @@ $stepColorActive:#00c072;
             }
             .bridge {
                     height: 3px;
-                    width: 174px;
+                    width: 176px;
                     background: $stepColorInactive;
                     flex-shrink: 0;
                     position: relative;
@@ -102,7 +109,9 @@ $stepColorActive:#00c072;
             justify-content: space-between;
             width: 485px;
             margin: 0 auto;
-            margin-top: 8px;
+            margin-top: 10px;
+            /* Amount: */
+            font-size: 16px;
             >div{
                 margin-left: 18px;
             }
@@ -201,30 +210,32 @@ $stepColorActive:#00c072;
     .page-item {
         display: none;
     }
-    
     input,textarea {
-        color: $colorInput;        
+        color: $colorInput;
         box-shadow:none;
         &:focus{
             box-shadow:none;
         }
     }
     .item-1 {
-        padding-top: 60px;   
-
+        padding-top: 40px;
 
         h3{
-            color: #fff;
+            font-size: 20px;
+            color: #FFFFFF;
             i{
-                margin-right: 10px;
+                vertical-align: middle;
+                margin-right: 30px;
+                margin-bottom: 4px;
             }
 
-        }   
+        }
         >div{
-            margin-top: 20px;
+            margin-top: 36px;
             display: flex;
+            flex: 0 0 100%;
             justify-content: space-between;
-        }  
+        }
         .extra-info {
             margin-left: 150px;
             color: #aaa;
@@ -232,47 +243,54 @@ $stepColorActive:#00c072;
             margin-top: 10px;
         }
         .error {
-            margin-left: 150px;
             font-size: 12px;
         }
 
-          input {
-                   background: transparent;
-                    border: none;
-                    font-size: 20px;
-                    height: 40px;
-                    color: #fff;
-                &:focus {
-                    outline: none;
-                }
-            }
+        input {
+          background: transparent;
+          border: none;
+          font-size: 20px;
+          height: 40px;
+          color: #fff;
+          &:focus {
+              outline: none;
+          }
+        }
+
         .input-account {
+            flex: 0 0 100%;
             >div{
+                border-bottom:1px solid $stepColorActive;
                 &:first-child{
                     display: flex;
                     >div{
                         height: 50px;
                         display: flex;
                         align-items:center;
-                        border-bottom:1px solid $stepColorActive;
+                        width: 100%;
                         label{
-                            color:$stepColorActive;
                             font-weight:bold;
-                            font-size: 18px;
+                            font-size: 20px;
+                            color: #00C072;
+                            width: 50px;
                         }
                     }
                 }
-            }            
+            }
+            >div.error {
+              border-bottom: none;
+            }
             select{
-                   border: none;
-                    width: 23px;
-                    &:focus{
-                        box-shadow:none;
-                        outline: none;
-                    }
-            }            
+              border: none;
+              width: 23px;
+              border: none;
+              background: url(/assets/dropdown-arrow.png) no-repeat center;
+              &:focus{
+                  box-shadow:none;
+                  outline: none;
+              }
+            }
             input {
-                width: 280px;
                 margin:0px;
                 margin-left:10px;
             }
@@ -481,15 +499,15 @@ $stepColorActive:#00c072;
     }
     .exchange-page[data-page='1'] {
         .step-1 {
-            
                 .circle{
                     border:3px solid $stepColorActive;
-                }      
-                                                    
-            
+                }
         }
         .item-1 {
             display: block;
+        }
+        .progress-step-1 {
+          color: #FFFFFF;
         }
     }
     .exchange-page[data-page='2'] {
@@ -497,16 +515,18 @@ $stepColorActive:#00c072;
         {
           .circle{
                     border:3px solid $stepColorActive;
-                }   
-            
+                }
         }
         .step-2{
                 .bridge{
                     background-color:$stepColorActive;
-                }                                          
+                }
         }
         .item-2 {
             display: block;
+        }
+        .progress-step-2 {
+          color: #FFFFFF;
         }
     }
     .exchange-page[data-page='3'] {
@@ -515,33 +535,39 @@ $stepColorActive:#00c072;
          {
            .circle{
                     border:3px solid $stepColorActive;
-                }   
+                }
                 .bridge{
                     background-color:$stepColorActive;
-                }                                          
+                }
         }
         .step-3{
              .bridge{
                     background-color:$stepColorActive;
-                }                                             
+                }
         }
         .item-3 {
             display: block;
         }
-    } 
+        .progress-step-3 {
+          color: #FFFFFF;
+        }
+    }
     .exchange-page[data-page='4'] {
         .step-1,
         .step-2,
         .step-3 {
            .circle{
                     border:3px solid $stepColorActive;
-                }   
+                }
                 .bridge{
                     background-color:$stepColorActive;
-                }                                          
+                }
         }
         .item-4 {
             display: block;
         }
-    } 
+        .progress-step-4 {
+          color: #FFFFFF;
+        }
+    }
 }

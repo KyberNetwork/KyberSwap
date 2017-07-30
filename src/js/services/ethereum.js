@@ -11,8 +11,8 @@ import store from "../store"
 
 export default class EthereumService {
   constructor() {
-    // this.rpc = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
-    this.rpc = new Web3(new Web3.providers.HttpProvider("https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi", 9000))
+    this.rpc = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+    // this.rpc = new Web3(new Web3.providers.HttpProvider("https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi", 9000))
     this.erc20Contract = this.rpc.eth.contract(constants.ERC20)
     this.networkAddress = constants.NETWORK_ADDRESS
     this.networkContract = this.rpc.eth.contract(constants.KYBER_NETWORK).at(this.networkAddress)
@@ -137,11 +137,11 @@ export default class EthereumService {
   }
 
   fetchData() {
-    this.fetchCurrentBlock()
-    this.fetchTxsData()
-    this.fetchRateData()
-    this.fetchWalletsData()
-    this.fetchAccountsData()
+    // this.fetchCurrentBlock()
+    // this.fetchTxsData()
+    // this.fetchRateData()
+    // this.fetchWalletsData()
+    // this.fetchAccountsData()
   }
 
   actAndWatch(error, result) {

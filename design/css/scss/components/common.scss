@@ -1,28 +1,25 @@
 @import "global";
 @import "elements/loading_icon";
 
+button:focus {
+  outline: none;
+}
+
 .disable {
     pointer-events: none;
     cursor: default;
 }
 .modal-open{
     background-color:$modalBackgoundColor;
-    max-height: 700px;    
+    max-height: 700px;
     overflow-y: auto;
     padding:15px;
-    border-radius: 13px;
-    box-shadow: 1px 1px 1px 1px;
     animation:unfoldIn 0.4s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
     transform:scaleY(.01) scaleX(0);
     &:focus{
         outline: none;
     }
 }
-
-
-
-
-
 
 $gradient:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
 .text-gradient {

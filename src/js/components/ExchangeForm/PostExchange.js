@@ -262,12 +262,12 @@ export default class PostExchange extends React.Component {
     return (
       <div class="navigation-btn">
         {errorDiv}
-        <div>          
+        <div>
           <button onClick={this.back} className={this.props.step != 1?"":"hide"}><i class="k-icon k-icon-back"></i></button>
           <button onClick={this.postExchange}>
             <i class="k-icon k-icon-next"></i>
           </button>
-        </div>        
+        </div>
       </div>
     )
   }
