@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 
 import ImportKeystoreModal from "./ImportKeystoreModal"
 import ModalButton from "./Elements/ModalButton"
+import ModalLink from "./Elements/ModalLink"
 
 import SendModal from "./SendModal"
 
@@ -11,6 +12,7 @@ import Wallets from "./Wallets"
 import JoinPaymentForm from "./Payment/JoinPaymentForm"
 
 const quickSendModalID = "quick-send-modal"
+const importModalId = "new_account_modal"
 
 @connect((store) => {
   return {
@@ -21,8 +23,8 @@ const quickSendModalID = "quick-send-modal"
     connected: store.global.connected,
     newAccountAdding: store.accounts.newAccountAdding,
 
-    newWalletAdding: store.accounts.newWalletAdding,
-    modalID: "new_account_modal",    
+    newWalletAdding: store.wallets.newWalletAdding,
+    modalID: "new_account_modal",
     modalWalletID : "new_wallet_modal",
     utils:store.utils
   }
@@ -33,9 +35,12 @@ export default class Dashboard extends React.Component {
     var accounts = this.props.accounts
     var app
     if (Object.keys(accounts).length == 0 ) {
+      var linkImport = (
+        <button>import</button>
+      )
       app =  (
         <div class="no-account">
-          You don't have any imported Ethereum addresses. Please import one.
+          You don’t have any accounts yet. Please  <ModalLink  modalID={importModalId} content={linkImport}/> one.
           <ImportKeystoreModal modalID={this.props.modalID} />
         </div>)
     } else {
@@ -63,13 +68,13 @@ export default class Dashboard extends React.Component {
 
     var importingAccount
     if (this.props.newAccountAdding) {
-      importingAccount = <p>New account is being imported...</p>
+      importingAccount = <p class="loading">New account is being imported...</p>
     } else {
       importingAccount = ""
     }
     var importingWallet
     if (this.props.newWalletAdding) {
-      importingWallet = <p>New wallet is being imported...</p>
+      importingWallet = <p class="loading">New wallet is being imported...</p>
     } else {
       importingWallet = ""
     }

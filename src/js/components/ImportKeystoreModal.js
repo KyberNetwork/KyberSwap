@@ -42,23 +42,26 @@ export default class ImportKeystoreModal extends React.Component {
     }
   }
 
+  closeModal = (event) => {
+    this.props.dispatch(closeModal(this.props.modalID))
+  }
   content = () => {
     return (
       <div className="import-account text-green">
         <div className="modal-title">
-          Import account
+          <div class="left">
+            <i class="k-icon k-icon-account"></i>Import account
+          </div>
+          <div class="right">
+            <button onClick={this.closeModal}>
+              <i class="k-icon k-icon-close"></i>
+            </button>
+          </div>
         </div>
         <div className="modal-body">
-          <form >
+          <form>
             <div className="row">
-              <div className="large-12 columns">
-                <label>Name
-                  <input value={this.props.name} onChange={this.specifyName} type="text" />
-                </label>
-              </div>
-            </div>
-            <div className="row">
-              <div className="large-12 columns">
+              <div className="large-12 columns keystore">
                 <label>JSON keystore file</label>
                 <div className="dropzone">
                   <DropFile address={this.props.address}/>
@@ -66,8 +69,14 @@ export default class ImportKeystoreModal extends React.Component {
               </div>
             </div>
             <div className="row">
+              <div className="large-12 columns account-name">
+                <label>Account Name</label>
+                <input value={this.props.name} onChange={this.specifyName} type="text" placeholder="Give your account a name"/>                
+              </div>
+            </div>            
+            <div className="row">
               <div className="large-12 columns submit-button">
-                <button class="button success" onClick={this.importAccount}>Import account</button>
+                <button class="button" onClick={this.importAccount}>Import account</button>
               </div>
             </div>
           </form>

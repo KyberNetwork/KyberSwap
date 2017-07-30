@@ -8,7 +8,7 @@ $rateBtnColor:green;
     }  
     .k-rate-content {
       right: 0px;
-       transition: 0.8s;
+       transition: 0.3s;
     }
   }
     .k-rate-wrapper {
@@ -25,9 +25,10 @@ $rateBtnColor:green;
         align-items: center;
         top: calc(50vh - #{$heightRate /2});
         right: - $widthRate;
-         transition: 0.5s;
+        transition: 0.3s;
         color: white;
         position: fixed;
+        z-index: 10000;
     }
     .k-rate-btn {
       cursor: pointer;  
@@ -83,6 +84,9 @@ $borderRateColor :#999;
         position: relative;
           top: 4px;
       }
+    }
+    .right{
+      cursor: pointer;
     }
   }
   .rate-content{

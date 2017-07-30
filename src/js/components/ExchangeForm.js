@@ -14,6 +14,7 @@ import constants from "../services/constants"
 
 import { specifyGasLimit, specifyGasPrice, resetStep, selectAdvance, deselectAdvance } from "../actions/exchangeFormActions"
 
+const quickExchangeModalID = "quick-exchange-modal"
 
 @connect((store, props) => {
   var exchangeForm = store.exchangeForm[props.exchangeFormID]

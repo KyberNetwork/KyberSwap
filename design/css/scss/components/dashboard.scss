@@ -2,6 +2,11 @@ $paddingLeft: 20px;
 
 
 .k-page-account {
+    p.loading {
+      padding-left: 25px;
+      color: #fff;
+      font-size: 20px;
+    }
     .acc-item {
         background-color: #fff;
         &.active {

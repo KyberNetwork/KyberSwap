@@ -83,15 +83,11 @@ export default class Transactions extends React.Component {
             </div>
             <div class="modal-extra">
               <div class="left">
-                <div id="gas-price">{data.gasPrice} Ether</div>
-                <i class="k-icon k-icon-usd"></i>
+                <div id="gas-price">{data.gasPrice} Ether</div>                
                 <div>Gas Price</div>
               </div>
               <div class="right">
-                <div id="gas-price">{data.gas}</div>
-                <div>
-                  <i class="k-icon k-icon-gas"></i>
-                </div>
+                <div id="gas-price">{data.gas}</div>                
                 <div>Gas</div>
               </div>
             </div>
@@ -164,15 +160,11 @@ export default class Transactions extends React.Component {
             </div>
             <div class="modal-extra">
               <div class="left">
-                <div id="gas-price">{data.gasPrice} Ether</div>
-                <i class="k-icon k-icon-usd"></i>
+                <div id="gas-price">{data.gasPrice} Ether</div>                
                 <div>Gas Price</div>
               </div>
               <div class="right">
-                <div id="gas-price">{data.gas}</div>
-                <div>
-                  <i class="k-icon k-icon-gas"></i>
-                </div>
+                <div id="gas-price">{data.gas}</div>                
                 <div>Gas</div>
               </div>
             </div>
