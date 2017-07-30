@@ -86,16 +86,37 @@ $backgroundColor:#333;
 }
 
 .text-green {
-    color: $accountColor;
+    color: $colorGreen;
 }
 
 .import-account {
     .modal-title {
         font-size: 20px;
         text-align: center;
+        margin-bottom:20px;
+    }
+    form {
+        >div:first-child{
+            label{
+               // display: flex;
+               // align-items:center;
+                input{
+                    background: transparent;
+                    //border:none;
+                    color: #fff;
+                  //  margin-left: 15px;
+                  //  border-bottom:1px solid #aaa;
+                    &:focus{
+                        outline: none;
+                        box-shadow:none;
+                    }
+                }
+            }
+        }
     }
     .modal-body label {
         font-weight: bold;
+        color: #aaa;
     }
     .dropzone>div {
         width: auto !important;
@@ -109,6 +130,10 @@ $backgroundColor:#333;
     .submit-button {
         text-align: right;
         margin-top: 40px;
+        button{
+            background-color:$colorGreen;
+            color: white;
+        }
     }
 }
 

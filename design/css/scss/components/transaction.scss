@@ -1,3 +1,5 @@
+@import "../components/global";
+
 $colorTable: #999;
 $colorModal : #2195f2;
 $modalFontSize:13px;
@@ -19,16 +21,19 @@ $modalFontSize:13px;
             th {
                 text-align: center;
                 font-weight: normal;
-                color: $colorTable;
+                color: $colorGreen;
             }
         }
         tbody {
+            background:transparent;
             tr {
                 border-bottom: none !important;
                 margin-bottom: 20px;
                 cursor: pointer;
+                background:transparent;
+                color: #fff;
                 &:hover{
-                	background-color:#eee;
+                	background-color:#333;
                 }
             }
             .spacer {
@@ -102,7 +107,7 @@ $modalFontSize:13px;
         outline: none;
         border-radius:5px;
         .modal-title{
-            color:$colorModal;
+            color:$colorGreen;
             padding: 5px 30px;
             border-bottom:1px solid #999;
             text-align:center;
@@ -115,7 +120,7 @@ $modalFontSize:13px;
                 padding:5px;
                 label{
                     width: 170px;                    
-                    color: $colorModal;
+                    color: $colorGreen;
                     display: inline-block;
                     font-size:$modalFontSize;
                     text-align: right;
@@ -127,8 +132,9 @@ $modalFontSize:13px;
                     width: 400px;
                     display: inline-block;
                     overflow: hidden;
+                    color: #fff;
                     a{
-                        color: #000;
+                        color: #fff;
                         &:hover{
                             text-decoration: underline;
                         }
@@ -150,13 +156,14 @@ $modalFontSize:13px;
             display: inline-block;
             width: 100%;
             margin-top: 40px;
+            color:#fff;
             >div{
                 padding:30px;
                 line-height: 30px;
                 text-align: center;
                 >div {
                     &:last-child{
-                        color:$colorModal;
+                        color:$colorGreen;
                     }
                 }
             }
