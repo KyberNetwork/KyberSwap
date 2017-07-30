@@ -9,7 +9,7 @@ import { addTx } from "../../actions/txActions"
 import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
 import { numberToHex } from "../../utils/converter"
 import constants from "../../services/constants"
-import { etherToOthersFromAccount, tokenToOthersFromAccount, sendEtherFromAccount, sendTokenFromAccount, exchangeFromWallet } from "../../services/exchange"
+import { etherToOthersFromAccount, tokenToOthersFromAccount, sendEtherFromAccount, sendTokenFromAccount, exchangeFromWallet, sendEtherFromWallet, sendTokenFromWallet } from "../../services/exchange"
 import Tx from "../../services/tx"
 
 
