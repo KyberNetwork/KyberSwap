@@ -37,6 +37,17 @@
     .input-space{
         position:relative;
     }
+    .error{
+            color: #fff;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            i{
+                margin-right: 10px;
+                position:relative;
+                top:2px;
+            }
+    }
 }
 
 .import-account {

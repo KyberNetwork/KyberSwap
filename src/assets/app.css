@@ -1417,6 +1417,15 @@
     color: #999; }
   .modal-payment .input-space {
     position: relative; }
+  .modal-payment .error {
+    color: #fff;
+    font-size: 15px;
+    display: flex;
+    align-items: center; }
+    .modal-payment .error i {
+      margin-right: 10px;
+      position: relative;
+      top: 2px; }
 
 .import-account .modal-title {
   font-size: 20px;
