@@ -8,7 +8,7 @@ import TransactionConfig from "../Elements/TransactionConfig"
 import UserSelect from "../Payment/UserSelect"
 
 import { throwError, emptyForm } from "../../actions/joinPaymentFormActions"
-import { specifyGasLimit, specifyGasPrice } from "../../actions/joinPaymentFormActions"
+import { specifyGasLimit, specifyGasPrice, specifyName } from "../../actions/joinPaymentFormActions"
 import { verifyNonce } from "../../utils/validators"
 import { numberToHex } from "../../utils/converter"
 import { deployKyberWallet } from "../../services/payment"
@@ -47,6 +47,7 @@ const customStyles = {
     ethereum: state.connection.ethereum,
     gas: state.joinPaymentForm.gas,
     gasPrice: state.joinPaymentForm.gasPrice,
+    name: state.joinPaymentForm.name,
     nonce: (account == undefined ? 0 : account.getUsableNonce()),
     passwordError: state.joinPaymentForm.errors["passwordError"]
   }
@@ -54,11 +55,15 @@ const customStyles = {
 export default class JoinPaymentForm extends React.Component {
 
   specifyGas = (event) => {
-    this.props.dispatch(specifyGasLimit(event.target.value));
+    this.props.dispatch(specifyGasLimit(event.target.value))
   }
 
   specifyGasPrice = (event) => {
-    this.props.dispatch(specifyGasPrice(event.target.value));
+    this.props.dispatch(specifyGasPrice(event.target.value))
+  }
+
+  specifyName = (event) => {
+    this.props.dispatch(specifyName(event.target.value))
   }
 
   joinKyberNetwork = (event) => {
@@ -79,6 +84,7 @@ export default class JoinPaymentForm extends React.Component {
       var gas = numberToHex(this.props.gas)
       var gasPrice = numberToHex(this.props.gasPrice)
       var nonce = verifyNonce(this.props.nonce)
+      var name = this.props.name
       var dispatch = this.props.dispatch
       console.log(this.props)
       deployKyberWallet(
@@ -86,7 +92,7 @@ export default class JoinPaymentForm extends React.Component {
         gasPrice, account.key, password, (ex) => {
           const tx = new Tx(
             ex, address, gas, gasPrice,
-            nonce, "pending", "join kyber wallet")
+            nonce, "pending", "join kyber wallet", name)
           dispatch(updateAccount(ethereum, account))
           dispatch(joiningKyberWallet(account, ex))
           dispatch(addTx(tx))
@@ -130,6 +136,12 @@ export default class JoinPaymentForm extends React.Component {
                   gasPrice={this.props.gasPrice}
                   gasHandler={this.specifyGas}
                   gasPriceHandler={this.specifyGasPrice} />
+              </div>
+            </div>
+            <div className="row">
+              <div className="large-12 columns">
+                <label>Wallet name</label>
+                <input type="text" value={this.props.name} onChange={this.specifyName} />
               </div>
             </div>
             <div className="row">

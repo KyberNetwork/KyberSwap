@@ -16,7 +16,7 @@ export function updateTx(ethereum, tx) {
       tx.sync(ethereum, (tx) => {
         if (tx.address && tx.address != "") {
           store.dispatch(joinedKyberWallet(tx.from, tx.address))
-          store.dispatch(addWallet(tx.address, tx.from, "default name", "default desc"))
+          store.dispatch(addWallet(tx.address, tx.from, tx.data, "default desc"))
         }
         resolve(tx)
       })

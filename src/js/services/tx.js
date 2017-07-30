@@ -9,7 +9,7 @@ export default class Tx {
     this.nonce = nonce
     this.status = status
     this.type = type
-    this.data = data
+    this.data = data // data can be used to store wallet name
     this.address = address
   }
 

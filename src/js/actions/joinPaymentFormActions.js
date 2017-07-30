@@ -17,6 +17,13 @@ export function selectAccount(addr) {
   }
 }
 
+export function specifyName(name) {
+  return {
+    type: "JOIN_PAYMENT_NAME_SPECIFIED",
+    payload: name,
+  }
+}
+
 export function specifyGasLimit(gas) {
   return {
     type: "JOIN_PAYMENT_GAS_SPECIFIED",
