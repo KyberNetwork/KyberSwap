@@ -52,9 +52,11 @@ export default class GlobalControl extends React.Component {
             <li>
               <ModalLink  modalID={walletModalID} content={linkWallet}/>
             </li>
+            {/*
             <li>
               <ModalLink  modalID={quickExchangeModalID} content={linkExchange}/>
             </li>
+            */}
           </ul>
         </div>
         <div class="modals">

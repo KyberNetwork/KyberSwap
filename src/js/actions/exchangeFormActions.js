@@ -94,6 +94,14 @@ export function nextStep(id) {
   }
 }
 
+export function specifyStep(id, step) {
+  return {
+    type: "EXCHANGE_FORM_STEP_SPECIFIED",
+    payload: step,
+    meta: id,
+  }
+}
+
 export function previousStep(id) {
   return {
     type: "EXCHANGE_FORM_PREVIOUS_STEP",
@@ -152,6 +160,20 @@ export function selectCrossSend(id) {
 export function deselectCrossSend(id) {
   return {
     type: "CROSS_SEND_DESELECTED",
+    meta: id,
+  }
+}
+
+export function selectAdvance(id) {
+  return {
+    type: "ADVANCE_SELECTED",
+    meta: id,
+  }
+}
+
+export function deselectAdvance(id) {
+  return {
+    type: "ADVANCE_DESELECTED",
     meta: id,
   }
 }

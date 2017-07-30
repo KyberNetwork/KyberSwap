@@ -10,6 +10,11 @@ $borderRadius: 4px;
 $backgroundColor:#333;
 
 .k-page-wallet {
+    p.loading {
+      padding-left: 25px;
+      color: #fff;
+      font-size: 20px;
+    }
     //modal
     // .wallet-item {
     //     background-image: $color;
@@ -154,6 +159,7 @@ $backgroundColor:#333;
                 span{
                     position: relative;
                     top: -5px;
+                    color: #00c072;
                 }
             }
         }
@@ -345,11 +351,12 @@ $backgroundColor:#333;
         }
 
         div {
-         display: block;
-        text-align: center;
-        width: 50px;
-        height: 50px;
-        padding-top: 5px;
+          display: block;
+          text-align: center;
+          width: 50px;
+          height: 50px;
+          vertical-align: middle;
+          line-height: 52px;
         }
     }
 }
@@ -378,11 +385,11 @@ $widthActiveBorder : 13px;
 $tabHeight:50px;
 .control-account{
     position: fixed;
-    bottom: 50px;    
+    bottom: 70px;
     background-color: $backgroundColor;
     width: 280px;
-    margin-left: -255px;
-  //  box-shadow: 1px 1px 1px 1px #000;
+    margin-left: -280px;
+    box-shadow: 1px 1px 1px 1px #000;
     animation:unfoldIn 0.2s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
     transform:scaleY(.01) scaleX(0);
     border-radius: 10px;        

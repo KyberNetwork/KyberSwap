@@ -9,12 +9,10 @@ import RecipientSelect from "./ExchangeForm/RecipientSelect"
 import TransactionConfig from "./Elements/TransactionConfig"
 import Credential from "./Elements/Credential"
 import PostExchange from "./ExchangeForm/PostExchange"
-
-import { closeModal } from "../actions/utilActions"
-
+import CrossSend from "./ExchangeForm/CrossSend"
 import constants from "../services/constants"
 
-import { specifyGasLimit, specifyGasPrice, resetStep } from "../actions/exchangeFormActions"
+import { specifyGasLimit, specifyGasPrice, resetStep, selectAdvance, deselectAdvance } from "../actions/exchangeFormActions"
 
 const quickExchangeModalID = "quick-exchange-modal"
 
@@ -32,6 +30,7 @@ const quickExchangeModalID = "quick-exchange-modal"
     txHash: exchangeForm.txHash,
     tx: store.txs[exchangeForm.txHash],
     isCrossSend: exchangeForm.isCrossSend,
+    advanced: exchangeForm.advanced,
   }
 })
 export default class ExchangeForm extends React.Component {
@@ -46,6 +45,19 @@ export default class ExchangeForm extends React.Component {
       specifyGasPrice(this.props.exchangeFormID, event.target.value))
   }
 
+  onClose = (event) => {
+    event.preventDefault()
+    this.props.postExchangeHandler(event)
+  }
+
+  selectAdvance = (event) => {
+    if (event.target.checked) {
+      this.props.dispatch(selectAdvance(this.props.exchangeFormID))
+    } else {
+      this.props.dispatch(deselectAdvance(this.props.exchangeFormID))
+    }
+  }
+
   done = (event) => {
     event.preventDefault()
     this.props.dispatch(
@@ -55,42 +67,44 @@ export default class ExchangeForm extends React.Component {
     }
   }
 
-  closeModal = (event) => {
-    this.props.dispatch(closeModal(quickExchangeModalID))
-  }
-
   render() {
     if (this.props.step == 4) {
       var txStatus
       var txHash = this.props.txHash
       var tx = this.props.tx
       if (this.props.broadcasting) {
-        txStatus = <p>Broadcasting your transaction...</p>
+        txStatus = <h3>Broadcasting your transaction...</h3>
       } else {
         if (tx.status == "pending") {
-          txStatus = <p>Transaction {txHash} is waiting for confirmations...</p>
+          txStatus = <div>
+            <h3>Transaction</h3>
+            <a href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
+            <h3>is waiting for confirmations...</h3>
+          </div>
         } else {
-          txStatus = <p>Transaction {txHash} is mined</p>
+          txStatus = <div>
+            <h3>Transaction</h3>
+            <a href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
+            <h3>is confirmed.</h3>
+          </div>
         }
       }
     }
     return (
-      <form>
+      <form autoComplete="false" >
         <div class="k-page k-page-exchange">
           <div class="title">
             <div class="left">
-              <i class="k-icon k-icon-send-green"></i>
-              <span>SEND</span>
+              <i class={"k-icon " + this.props.extraClass}></i>
+              <span>{this.props.label}</span>
             </div>
             <div class="right">
-              <span onClick={this.closeModal}>
-                <i class="k-icon k-icon-close"></i>
-              </span>              
+              <button onClick={this.onClose}>
+                <i  class="k-icon k-icon-close"></i>
+              </button>
             </div>
           </div>
           <div class="advance">
-            <i class="k-icon k-icon-setting"></i>
-            <span>Advance</span>
           </div>
           <div class="exchange-page" data-page={this.props.step}>
             <div class="k-progress">
@@ -102,43 +116,57 @@ export default class ExchangeForm extends React.Component {
                   <div class="bridge"></div>
                   <span class="circle"></span>
                 </div>
+                { this.props.advanced ?
+                  <div class="step step-advance">
+                    <div class="bridge"></div>
+                    <span class="circle"></span>
+                  </div> : ""
+                }
                 <div class="step step-3">
                   <div class="bridge"></div>
                   <span class="circle"></span>
-                </div>                
+                </div>
+                <div class="step step-4">
+                  <div class="bridge"></div>
+                  <span class="circle"></span>
+                </div>
               </div>
-              <div class="progress-label">
-                <div>Address</div>
-                <div>Amount</div>
-                <div>Password</div>
+              <div class={ this.props.advanced ? "advanced-progress-label progress-label" : "progress-label" }>
+                <div class="progress-step-1">Addresses</div>
+                <div class="progress-step-2">Amount</div>
+                { this.props.advanced ?
+                  <div class="progress-step-advance">Advance Option</div> : ""
+                }
+                <div class="progress-step-3">Password</div>
+                <div class="progress-step-4">Done</div>
               </div>
             </div>
             <div class="page">
               <div class="page-item item-1">
                 <h3>
                   <i class="k-icon k-icon-home-white"></i>
-                  <span>Address</span>
+                  <span>Addresses</span>
                 </h3>
                 <div>
                   <UserSelect exchangeFormID={this.props.exchangeFormID}/>
+                </div>
+                <div>
                   <RecipientSelect exchangeFormID={this.props.exchangeFormID}/>                
-                </div>                
+                </div>
               </div>
               <div class="page-item item-2">
                 <div class="content">
                   <ul>
+                    <TokenSource exchangeFormID={this.props.exchangeFormID} />
+                    { this.props.allowDirectSend ?
+                      <CrossSend exchangeFormID={this.props.exchangeFormID} /> : ""
+                    }
+                    <TokenDest exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
                     <li>
-                      <label>Amounts to send</label>
-                      <select>
-                        <option>BTC</option>
-                        <option>ETH</option>
-                      </select>
-                      <input type="text"/>
+                      <label>Advanced configuration</label>
+                      <input type="checkbox" defaultChecked={this.props.advanced} onChange={this.selectAdvance}/>
                     </li>
-                    <li>
-                      <label>Convert to a different currency ?</label>                      
-                      <input type="checkbox"/>
-                    </li>
+                    {/*
                     <li>
                       <label>Max Destination Amount </label>
                       <select>
@@ -155,18 +183,29 @@ export default class ExchangeForm extends React.Component {
                       </select>
                       <span>123,456,789,101,112,567</span>                      
                     </li>
+                    */}
                   </ul>
-                </div>                
-                <ExchangeRate exchangeFormID={this.props.exchangeFormID}/>
+                </div>
+                { (this.props.isCrossSend || !this.props.allowDirectSend) ? <ExchangeRate exchangeFormID={this.props.exchangeFormID}/> : "" }
+              </div>
+              <div class="page-item item-advance">
+                <div class="content">
+                  <TransactionConfig gas={this.props.gas}
+                    gasError={this.props.gasError}
+                    gasPrice={this.props.gasPrice}
+                    gasPriceError={this.props.gasPriceError}
+                    gasHandler={this.specifyGas}
+                    gasPriceHandler={this.specifyGasPrice} />
+                </div>
               </div>
               <div class="page-item item-3">
                 <Credential passphraseID={this.props.passphraseID} error={this.props.passwordError} />
               </div>
               <div class="page-item item-4">
-                <h3>Congratulations. Your transaction has been processed.</h3>
+                {txStatus}
                 <span class="verify">
-                  <i class="k-icon k-icon-verify"></i>
-                </span>                
+                  <i class="k-icon k-icon-verify" onClick={this.done} ></i>
+                </span>
               </div>
             </div>
             <div class="next" id="exchange-next">

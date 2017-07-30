@@ -23,8 +23,8 @@ const importModalId = "new_account_modal"
     connected: store.global.connected,
     newAccountAdding: store.accounts.newAccountAdding,
 
-    newWalletAdding: store.accounts.newWalletAdding,
-    modalID: "new_account_modal",    
+    newWalletAdding: store.wallets.newWalletAdding,
+    modalID: "new_account_modal",
     modalWalletID : "new_wallet_modal",
     utils:store.utils
   }
@@ -40,7 +40,7 @@ export default class Dashboard extends React.Component {
       )
       app =  (
         <div class="no-account">
-          You don’t have any accounts yet. Please  <ModalLink  modalID={importModalId} content={linkImport}/> one.          
+          You don’t have any accounts yet. Please  <ModalLink  modalID={importModalId} content={linkImport}/> one.
           <ImportKeystoreModal modalID={this.props.modalID} />
         </div>)
     } else {
@@ -68,30 +68,30 @@ export default class Dashboard extends React.Component {
 
     var importingAccount
     if (this.props.newAccountAdding) {
-      importingAccount = <p>New account is being imported...</p>
+      importingAccount = <p class="loading">New account is being imported...</p>
     } else {
       importingAccount = ""
     }
     var importingWallet
     if (this.props.newWalletAdding) {
-      importingWallet = <p>New wallet is being imported...</p>
+      importingWallet = <p class="loading">New wallet is being imported...</p>
     } else {
       importingWallet = ""
-    }  
+    }
     return (
       <div>
         <div  class="k-page">
           <div  class="k-page-account">
             {importingAccount}
-            {app}           
+            {app}
           </div>
           <div  class="k-page-wallet">
             {importingWallet}
-            {appWallet}          
+            {appWallet}
           </div>
 
-          <div class="modals">            
-            <SendModal exchangeFormID="quick-send" modalID={quickSendModalID} label="Quick Send" />            
+          <div class="modals">
+            <SendModal exchangeFormID="quick-send" modalID={quickSendModalID} label="Quick Send" />
           </div>
         </div>
       </div>)

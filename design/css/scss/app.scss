@@ -16,7 +16,7 @@ body {
 
 $widthBody: 1170px;
 $backgoundColor: #555;
-$headerWidth:240px;
+$headerWidth:220px;
 
 $bodyColor:#15161d;
 
@@ -28,7 +28,8 @@ body {
 }
 
 .k-header {
-    //width: $headerWidth;
+    width: $headerWidth;
+    min-width: $headerWidth;
     background-color: $backgoundColor;
     background-image: linear-gradient(-180deg, #2F3037 0%, #22232A 95%);
     border-radius: 2px;
