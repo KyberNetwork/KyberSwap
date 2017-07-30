@@ -6,10 +6,12 @@
     cursor: default;
 }
 .modal-open{
-    background-color:white;
+    background-color:$modalBackgoundColor;
     max-height: 700px;    
     overflow-y: auto;
     padding:15px;
+    border-radius: 13px;
+    box-shadow: 1px 1px 1px 1px;
     animation:unfoldIn 0.4s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
     transform:scaleY(.01) scaleX(0);
     &:focus{
