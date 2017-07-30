@@ -30,9 +30,6 @@ export default class TransactionConfig extends React.Component {
           <label class="title"><strong>You may opt to change our suggested gas limit.</strong></label>
         </div>
         <div class="input-space">
-          <span>
-            <i class="k-icon k-icon-gas"></i>
-          </span>
           <input type="number" step="any" min="0" value={this.props.gas} onChange={this.specifyGas.bind(this)} />
         </div>
         {gasError}
@@ -40,9 +37,6 @@ export default class TransactionConfig extends React.Component {
           <label class="title"><strong>You may opt to change our suggested gas price.</strong></label>
         </div>
         <div class="input-space">
-          <span>
-          <i class="k-icon k-icon-gas-price"></i>
-          </span>
           <input type="number" step="any" min="0" value={this.props.gasPrice} onChange={this.specifyGasPrice.bind(this)} value={this.props.gasPrice} />
           <span class="uint">Wei</span>
         </div>

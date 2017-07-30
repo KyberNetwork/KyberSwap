@@ -1,0 +1,132 @@
+@import "../components/global";
+
+.modal-import {
+    width: 600px;
+    padding:0px;
+}
+.modal-payment {
+    width: 600px;
+    padding:0px;
+    .k-icon-lock-white{
+        display: none;
+    }
+    select{
+        &:focus{
+            box-shadow:none;
+            outline: none;
+        }
+    }
+    input{
+        background-color:transparent;
+        border:1px solid #999;
+        color: #fff;
+        width: 100%;
+        border-radius:10px;
+        &:focus{
+            box-shadow:none;
+            outline: none;
+            background-color:transparent;
+        }
+    }
+    .uint{
+            position: absolute;
+            right: 25px;
+            top: 7px;
+            color: #999;
+    }
+    .input-space{
+        position:relative;
+    }
+    .error{
+            color: #fff;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            i{
+                margin-right: 10px;
+                position:relative;
+                top:2px;
+            }
+    }
+}
+
+.import-account {
+    .modal-title {
+        font-size: 20px;
+        text-align: center;        
+        display: flex;
+        justify-content: space-between;
+        padding:10px 15px;
+        background-color:#2e3037;
+        .left{
+        	text-transform: uppercase;
+        	font-weight: bold;
+        	color: #fff;
+        	display: flex;
+        	align-items:center;
+        	font-size: 18px;
+
+        	i{
+        		margin-right: 20px;
+        	}
+        }
+        .right{
+        	button{
+        		cursor: pointer;
+        	}
+        }
+    }
+    form {
+        .account-name{
+        	margin-top: 20px;
+            
+               // display: flex;
+               // align-items:center;
+                input{
+                    background: transparent;
+                    border:1px solid #777;
+                    color: #999;
+                    border-radius:10px;
+                  //  margin-left: 15px;
+                  //  border-bottom:1px solid #aaa;
+                    &:focus{
+                        outline: none;
+                        box-shadow:none;
+                    }
+                }
+            
+        }
+    }
+    .modal-body{
+    	padding:10px 30px;
+    	label {
+	        color: $colorGreen;
+	        font-size: 15px;
+	        font-weight: bold;
+	    }
+    }    
+    .dropzone>div {
+        width: auto !important;
+        cursor: pointer;
+        position:relative;
+    }
+    .file-name {
+        padding: 14px;
+        font-size: 15px;
+        color: #aaa;
+        i{
+            position: absolute;
+            bottom: 30px;
+            left: 235px;
+        }
+    }
+    .submit-button {
+        text-align: right;
+        margin-top: 40px;
+        button{
+            background-color:#2196f3;
+            color: white;
+            font-weight: bold;
+        }
+    }
+}

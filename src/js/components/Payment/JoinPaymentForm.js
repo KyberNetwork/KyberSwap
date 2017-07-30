@@ -15,8 +15,10 @@ import { deployKyberWallet } from "../../services/payment"
 import { updateAccount, joiningKyberWallet } from "../../actions/accountActions"
 import { closeModal } from "../../actions/utilActions"
 import { addTx } from "../../actions/txActions"
+
 import Tx from "../../services/tx"
 
+const importModalId = "new_wallet_modal"
 const customStyles = {
   overlay: {
     position: 'fixed',
@@ -99,11 +101,20 @@ export default class JoinPaymentForm extends React.Component {
     }
   }
 
+  closeModal = (event) => {
+    this.props.dispatch(closeModal(importModalId))
+  }
+
   content = () => {
     return (
       <div className="import-account">
-        <div className="modal-title text-gradient">
-          Deploy your Kyber Wallet contract
+        <div className="modal-title">
+          <div class="left">Deploy your Kyber Wallet contract</div>
+          <div class="right">
+            <button onClick={this.closeModal}>
+              <i class="k-icon k-icon-close"></i>
+            </button>
+          </div>
         </div>
         <div className="modal-body">
           <form >
