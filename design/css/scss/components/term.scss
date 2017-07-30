@@ -3,7 +3,7 @@
 $headingColor:#00c784;
 $termBackgoundColor:#2c2d34;
 .term-page{
-	background-color:#7cace4;
+  background: rgba(139,87,42,0.55);
 	position: fixed;
 		width: 100%;
 		height: 100%;
@@ -58,20 +58,21 @@ $termBackgoundColor:#2c2d34;
     margin: 0 auto;
     margin-top: 20px;
 		button{
-			    width: 150px;
-    height: 39px;
-    border-radius: 10px;
-    text-align: center;
-    padding-top: 1px;
-    cursor: pointer;
-			&.accept{
-				background-color:#2196f3;
-				color: #fff;
-			}
-			&.decline{
-				color: $headingColor;
-				border:2px solid $headingColor;
-			}
-		}
+      width: 150px;
+      height: 39px;
+      border-radius: 10px;
+      text-align: center;
+      padding-top: 1px;
+      cursor: pointer;
+      margin: 0 auto;
+      &.accept{
+        background-color:#2196f3;
+        color: #fff;
+      }
+      &.decline{
+        color: $headingColor;
+        border:2px solid $headingColor;
+      }
+    }
 	}
 }

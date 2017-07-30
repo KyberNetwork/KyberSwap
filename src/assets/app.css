@@ -1672,9 +1672,9 @@ select:focus {
 
 .k-rate.k-rate-show .k-rate-content {
   right: 0px;
-  -webkit-transition: 0.8s;
-  -o-transition: 0.8s;
-  transition: 0.8s; }
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s; }
 
 .k-rate .k-rate-wrapper {
   background-color: rgba(0, 0, 0, 0.3);
@@ -1696,11 +1696,12 @@ select:focus {
   align-items: center;
   top: calc(50vh - 250px);
   right: -650px;
-  -webkit-transition: 0.5s;
-  -o-transition: 0.5s;
-  transition: 0.5s;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
   color: white;
-  position: fixed; }
+  position: fixed;
+  z-index: 10000; }
 
 .k-rate .k-rate-btn {
   cursor: pointer; }
@@ -1774,7 +1775,7 @@ select:focus {
           border-right: 1px solid #999; }
 
 .term-page {
-  background-color: #7cace4;
+  background: rgba(139, 87, 42, 0.55);
   position: fixed;
   width: 100%;
   height: 100%; }
@@ -1828,7 +1829,8 @@ select:focus {
       border-radius: 10px;
       text-align: center;
       padding-top: 1px;
-      cursor: pointer; }
+      cursor: pointer;
+      margin: 0 auto; }
       .term-page .term-btn button.accept {
         background-color: #2196f3;
         color: #fff; }

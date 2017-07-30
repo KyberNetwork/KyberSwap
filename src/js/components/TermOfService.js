@@ -13,15 +13,18 @@ export default class TermOfService extends React.Component {
     event.preventDefault()
     this.props.dispatch(acceptTermOfService())
   }
+
   declineTOS = (event) => {
     event.preventDefault()
   }
+
   render() {
     return (
     <div class="term-page">
-      <div class="term-wrapper"></div>
+      <div class="term-wrapper">
+      </div>
       <div class="term-content">
-        <h2>Terms of Services</h2>
+        <h2>KyberWallet - Terms of Service</h2>
         <div class="body k-scroll">
           <p>These Terms of Service (“Terms”) govern your access to and use of our services,
     including our various websites, SMS, APIs, email notifications, applications,
@@ -43,10 +46,9 @@ export default class TermOfService extends React.Component {
     the information you provide to us when you use our Service.</p>
         </div>
         <div class="term-btn">
-          <button class="decline" onClick={this.declineTOS}>Decline</button>
-          <button class="accept" onClick={this.acceptTOS}>Accept</button>
+          <button class="decline" onClick={this.acceptTOS}>Accept</button>
         </div>
-      </div>              
+      </div>
     </div>)
   }
 }
