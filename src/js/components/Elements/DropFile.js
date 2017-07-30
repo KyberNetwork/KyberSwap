@@ -37,6 +37,7 @@ export default class DropFile extends React.Component {
       keystring = JSON.parse(this.props.keystring)
       message = <p className="file-name">
         Uploaded keystore file for address: <span>{keystring.address}</span>
+        <i class="k-icon k-icon-cloud"></i>
       </p>
     } catch (e) {
       console.log(e)
@@ -46,7 +47,8 @@ export default class DropFile extends React.Component {
         </p>
       } else {
         message = <p className="file-name">
-          Please upload a valid keystore file
+          Upload a valid keystore file
+          <i class="k-icon k-icon-cloud"></i>
         </p>
       }
     }

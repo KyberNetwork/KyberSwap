@@ -6,6 +6,8 @@
 @import 'components/exchange';
 //@import 'components/exchange_2';
 @import 'components/rate';
+@import 'components/term';
+@import 'components/import_account_modal';
 body {
     background-color: #ccc;
     font-family: 'Roboto', sans-serif;
@@ -26,7 +28,7 @@ body {
 }
 
 .k-header {
-    width: $headerWidth;
+    //width: $headerWidth;
     background-color: $backgoundColor;
     background-image: linear-gradient(-180deg, #2F3037 0%, #22232A 95%);
     border-radius: 2px;

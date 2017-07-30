@@ -9,10 +9,14 @@ import RecipientSelect from "./ExchangeForm/RecipientSelect"
 import TransactionConfig from "./Elements/TransactionConfig"
 import Credential from "./Elements/Credential"
 import PostExchange from "./ExchangeForm/PostExchange"
+
+import { closeModal } from "../actions/utilActions"
+
 import constants from "../services/constants"
 
 import { specifyGasLimit, specifyGasPrice, resetStep } from "../actions/exchangeFormActions"
 
+const quickExchangeModalID = "quick-exchange-modal"
 
 @connect((store, props) => {
   var exchangeForm = store.exchangeForm[props.exchangeFormID]
@@ -51,6 +55,10 @@ export default class ExchangeForm extends React.Component {
     }
   }
 
+  closeModal = (event) => {
+    this.props.dispatch(closeModal(quickExchangeModalID))
+  }
+
   render() {
     if (this.props.step == 4) {
       var txStatus
@@ -75,9 +83,9 @@ export default class ExchangeForm extends React.Component {
               <span>SEND</span>
             </div>
             <div class="right">
-              <button>
-                <i  class="k-icon k-icon-close"></i>
-              </button>              
+              <span onClick={this.closeModal}>
+                <i class="k-icon k-icon-close"></i>
+              </span>              
             </div>
           </div>
           <div class="advance">

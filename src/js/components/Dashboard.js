@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 
 import ImportKeystoreModal from "./ImportKeystoreModal"
 import ModalButton from "./Elements/ModalButton"
+import ModalLink from "./Elements/ModalLink"
 
 import SendModal from "./SendModal"
 
@@ -11,6 +12,7 @@ import Wallets from "./Wallets"
 import JoinPaymentForm from "./Payment/JoinPaymentForm"
 
 const quickSendModalID = "quick-send-modal"
+const importModalId = "new_account_modal"
 
 @connect((store) => {
   return {
@@ -33,9 +35,12 @@ export default class Dashboard extends React.Component {
     var accounts = this.props.accounts
     var app
     if (Object.keys(accounts).length == 0 ) {
+      var linkImport = (
+        <button>import</button>
+      )
       app =  (
         <div class="no-account">
-          You don't have any imported Ethereum addresses. Please import one.
+          You don’t have any accounts yet. Please  <ModalLink  modalID={importModalId} content={linkImport}/> one.          
           <ImportKeystoreModal modalID={this.props.modalID} />
         </div>)
     } else {

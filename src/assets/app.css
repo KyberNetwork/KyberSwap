@@ -310,7 +310,7 @@
   height: 20px; }
 
 .k-icon-home-white {
-  background-position: -47px -483px;
+  background-position: -47px -496px;
   width: 25px;
   height: 20px; }
 
@@ -423,6 +423,11 @@
   background-position: -321px -408px;
   width: 30px;
   height: 30px; }
+
+.k-icon-cloud {
+  background-position: -344px -464px;
+  width: 60px;
+  height: 40px; }
 
 .k-page-account .acc-item {
   background-color: #fff; }
@@ -665,33 +670,6 @@
 .text-green {
   color: #00c072; }
 
-.import-account .modal-title {
-  font-size: 20px;
-  text-align: center;
-  margin-bottom: 20px; }
-.import-account form > div:first-child label input {
-  background: transparent;
-  color: #fff; }
-  .import-account form > div:first-child label input:focus {
-    outline: none;
-    box-shadow: none; }
-.import-account .modal-body label {
-  font-weight: bold;
-  color: #aaa; }
-.import-account .dropzone > div {
-  width: auto !important;
-  cursor: pointer; }
-.import-account .file-name {
-  padding: 10px;
-  font-size: 13px;
-  color: #aaa; }
-.import-account .submit-button {
-  text-align: right;
-  margin-top: 40px; }
-  .import-account .submit-button button {
-    background-color: #00c072;
-    color: white; }
-
 .wallet-item {
   max-width: 850px;
   border-radius: 4px;
@@ -791,6 +769,16 @@
     position: absolute;
     right: 0px;
     display: none; }
+    .wallet-item .control-menu:after {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 5px solid #000;
+      position: absolute;
+      top: -5px;
+      right: 15px; }
     .wallet-item .control-menu ul {
       list-style-type: none;
       padding: 0px;
@@ -836,46 +824,43 @@
       text-align: center;
       width: 50px;
       height: 50px;
-      vertical-align: middle;
-      line-height: 42px; }
+      padding-top: 5px; }
 
 .no-wallet,
 .no-account {
-  padding-left: 50px; }
-
-.modal-import {
-  width: 400px; }
-
-.modal-payment {
-  width: 600px; }
-  .modal-payment .input-space,
-  .modal-payment .intro {
-    margin-top: 10px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center; }
-    .modal-payment .input-space span:first-child,
-    .modal-payment .intro span:first-child {
-      display: block;
-      width: 100px;
-      text-align: right;
-      padding-right: 14px; }
-    .modal-payment .input-space input,
-    .modal-payment .intro input {
-      width: 400px;
-      margin: 0px;
-      margin-right: 10px; }
+  padding-left: 50px;
+  color: #fff;
+  margin-top: 280px; }
+  .no-wallet > div,
+  .no-account > div {
+    display: inline-block; }
+    .no-wallet > div button,
+    .no-account > div button {
+      color: #00c072;
+      cursor: pointer; }
+      .no-wallet > div button:hover,
+      .no-account > div button:hover {
+        text-decoration: underline; }
 
 .control-account {
   position: fixed;
   bottom: 50px;
   background-color: #333;
   width: 280px;
-  margin-left: -220px;
-  box-shadow: 1px 1px 1px 1px #000;
+  margin-left: -255px;
   animation: unfoldIn 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
   transform: scaleY(0.01) scaleX(0);
   border-radius: 10px; }
+  .control-account:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #333;
+    bottom: 18px;
+    position: absolute;
+    right: -10px; }
   .control-account.hide {
     display: none; }
   .control-account * {
@@ -939,6 +924,8 @@
       position: relative;
       margin-right: 8px;
       top: 3px; }
+    .k-page-exchange .title .right span {
+      cursor: pointer; }
   .k-page-exchange .advance {
     text-align: right;
     margin-top: 0px;
@@ -1294,6 +1281,8 @@
       margin-right: 5px;
       position: relative;
       top: 4px; }
+    .k-rate-info .title .right {
+      cursor: pointer; }
   .k-rate-info .rate-content {
     padding: 40px; }
     .k-rate-info .rate-content table {
@@ -1328,6 +1317,161 @@
         .k-rate-info .rate-content tbody tr td:nth-child(2) {
           border-right: 1px solid #999; }
 
+.term-page {
+  background-color: #7cace4;
+  position: fixed;
+  width: 100%;
+  height: 100%; }
+  .term-page .term-content {
+    width: 800px;
+    word-wrap: break-word;
+    color: #aaa;
+    background-color: #2c2d34;
+    margin: 0 auto;
+    margin-top: 30px;
+    padding: 50px;
+    border-radius: 10px; }
+    .term-page .term-content * {
+      font-size: 18px; }
+    .term-page .term-content h2 {
+      color: #00c784;
+      text-align: center;
+      margin-bottom: 20px; }
+    .term-page .term-content h3 {
+      color: #00c784;
+      margin-top: 30px;
+      margin-right: 25px;
+      text-align: left; }
+    .term-page .term-content .body {
+      height: 400px;
+      overflow-y: auto;
+      padding-right: 25px; }
+    .term-page .term-content .k-scroll::-webkit-scrollbar {
+      width: 5px; }
+    .term-page .term-content .k-scroll::-webkit-scrollbar-track {
+      background-color: #4f4f4f;
+      border-radius: 3px; }
+    .term-page .term-content .k-scroll::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: #00c784; }
+  .term-page .term-btn {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+    margin: 0 auto;
+    margin-top: 20px; }
+    .term-page .term-btn button {
+      width: 150px;
+      height: 39px;
+      border-radius: 10px;
+      text-align: center;
+      padding-top: 1px;
+      cursor: pointer; }
+      .term-page .term-btn button.accept {
+        background-color: #2196f3;
+        color: #fff; }
+      .term-page .term-btn button.decline {
+        color: #00c784;
+        border: 2px solid #00c784; }
+
+@keyframes unfoldIn {
+  0% {
+    transform: scaleY(0.005) scaleX(0); }
+  50% {
+    transform: scaleY(0.005) scaleX(1); }
+  100% {
+    transform: scaleY(1) scaleX(1); } }
+@keyframes unfoldOut {
+  0% {
+    transform: scaleY(1) scaleX(1); }
+  50% {
+    transform: scaleY(0.005) scaleX(1); }
+  100% {
+    transform: scaleY(0.005) scaleX(0); } }
+.modal-import {
+  width: 600px;
+  padding: 0px; }
+
+.modal-payment {
+  width: 600px;
+  padding: 0px; }
+  .modal-payment .k-icon-lock-white {
+    display: none; }
+  .modal-payment select:focus {
+    box-shadow: none;
+    outline: none; }
+  .modal-payment input {
+    background-color: transparent;
+    border: 1px solid #999;
+    color: #fff;
+    width: 100%;
+    border-radius: 10px; }
+    .modal-payment input:focus {
+      box-shadow: none;
+      outline: none;
+      background-color: transparent; }
+  .modal-payment .uint {
+    position: absolute;
+    right: 25px;
+    top: 7px;
+    color: #999; }
+  .modal-payment .input-space {
+    position: relative; }
+
+.import-account .modal-title {
+  font-size: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background-color: #2e3037; }
+  .import-account .modal-title .left {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    font-size: 18px; }
+    .import-account .modal-title .left i {
+      margin-right: 20px; }
+  .import-account .modal-title .right button {
+    cursor: pointer; }
+.import-account form .account-name {
+  margin-top: 20px; }
+  .import-account form .account-name input {
+    background: transparent;
+    border: 1px solid #777;
+    color: #999;
+    border-radius: 10px; }
+    .import-account form .account-name input:focus {
+      outline: none;
+      box-shadow: none; }
+.import-account .modal-body {
+  padding: 10px 30px; }
+  .import-account .modal-body label {
+    color: #00c072;
+    font-size: 15px;
+    font-weight: bold; }
+.import-account .dropzone > div {
+  width: auto !important;
+  cursor: pointer;
+  position: relative; }
+.import-account .file-name {
+  padding: 14px;
+  font-size: 15px;
+  color: #aaa; }
+  .import-account .file-name i {
+    position: absolute;
+    bottom: 30px;
+    left: 235px; }
+.import-account .submit-button {
+  text-align: right;
+  margin-top: 40px; }
+  .import-account .submit-button button {
+    background-color: #2196f3;
+    color: white;
+    font-weight: bold; }
+
 body {
   background-color: #ccc;
   font-family: 'Roboto', sans-serif;
@@ -1337,7 +1481,6 @@ body {
   background-color: #15161d; }
 
 .k-header {
-  width: 240px;
   background-color: #555;
   background-image: linear-gradient(-180deg, #2F3037 0%, #22232A 95%);
   border-radius: 2px; }
