@@ -15,8 +15,8 @@ import constants from "../../services/constants"
       tokenSourceSymbol: exchangeForm.sourceTokenSymbol,
       tokenDestSymbol: exchangeForm.destTokenSymbol,
       offeredRateExpiryBlock: rate.expirationBlock.toString(10),
-      offeredRateBalance: toT(rate.balance),
-      offeredRate: "1 " + exchangeForm.sourceTokenSymbol + " = " + toT(rate.rate) + " " + exchangeForm.destTokenSymbol
+      offeredRateBalance: toT(rate.balance, 8),
+      offeredRate: "1 " + exchangeForm.sourceTokenSymbol + " = " + toT(rate.rate, 6) + " " + exchangeForm.destTokenSymbol
     }
   } else {
     return {
@@ -32,7 +32,7 @@ export default class ExchangeRate extends React.Component {
 
   render() {
     return (
-      <div class="rate-wrapper">        
+      <div class="rate-wrapper">
         <div class="rate">
           <div>
             <label>Exchange Rate</label>

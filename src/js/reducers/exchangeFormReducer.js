@@ -24,6 +24,14 @@ const exchangeForm = (state=initState, action) => {
       newState[id].isCrossSend = false
       return newState
     }
+    case "ADVANCE_SELECTED": {
+      newState[id].advanced = true
+      return newState
+    }
+    case "ADVANCE_DESELECTED": {
+      newState[id].advanced = false
+      return newState
+    }
     case "SOURCE_TOKEN_SELECTED": {
       var token = getToken(action.payload)
       newState[id].sourceToken = token.address
@@ -77,11 +85,27 @@ const exchangeForm = (state=initState, action) => {
       return newState
     }
     case "EXCHANGE_FORM_NEXT_STEP": {
-      newState[id].step = newState[id].step + 1
+      if (newState[id].advanced && newState[id].step == 2) {
+        newState[id].step = "advance"
+      } else if (newState[id].advanced && newState[id].step == "advance"){
+        newState[id].step = 3
+      } else {
+        newState[id].step = newState[id].step + 1
+      }
       return newState
     }
     case "EXCHANGE_FORM_PREVIOUS_STEP": {
-      newState[id].step = newState[id].step - 1
+      if (newState[id].advanced && newState[id].step == 3) {
+        newState[id].step = "advance"
+      } else if (newState[id].advanced && newState[id].step == "advance"){
+        newState[id].step = 2
+      } else {
+        newState[id].step = newState[id].step - 1
+      }
+      return newState
+    }
+    case "EXCHANGE_FORM_STEP_SPECIFIED": {
+      newState[id].step = action.payload
       return newState
     }
     case "EXCHANGE_FORM_APPROVAL_TX_BROADCAST_PENDING": {

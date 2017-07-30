@@ -24,6 +24,8 @@ export default class ExchangeModal extends React.Component {
       postExchangeHandler={this.closeQuickExchangeModal}
       hideSourceAddress={true}
       hideDestAddress={true}
+      extraClass="k-icon-exchange-green"
+      label={this.props.label}
     />
   }
 

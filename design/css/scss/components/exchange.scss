@@ -30,11 +30,13 @@ $stepColorActive:#00c072;
         color: #fff;
         font-weight: bold;
         border-bottom:1px solid $colorBorderButtomModal;
+        text-transform: uppercase;
         .left{
             i{
                 position:relative;
                 margin-right:8px;
                 vertical-align: middle;
+                padding-bottom: 4px;
             }
         }
         .right{
@@ -107,20 +109,20 @@ $stepColorActive:#00c072;
             display: flex;
             color: #aaa;
             justify-content: space-between;
-            width: 485px;
+            width: 650px;
             margin: 0 auto;
             margin-top: 10px;
             /* Amount: */
             font-size: 16px;
-            >div{
-                margin-left: 18px;
-            }
+        }
+        .advanced-progress-label {
+            width: 850px !important;
         }
     }
     .navigation-btn {
         margin-bottom:30px;
         >div:last-child{
-            margin-top: 80px;
+            margin-top: 100px;
             display: flex;
             justify-content: space-between;
             padding:20px;
@@ -158,49 +160,7 @@ $stepColorActive:#00c072;
         &.hide {
             visibility: hidden;
         }
-    } // .error{
-    //  position:fixed;
-    //     bottom:5px;
-    //     display: flex;
-    //    //  margin-left: 100px;
-    //      height: 80px;
-    //      color:#fff;
-    //      &.hide{
-    //         display: none;
-    //      }
-    //      >div{
-    //         display: flex;
-    //         align-items:center;
-    //         justify-content: center
-    //      }
-    //     .close{
-    //         width: 80px;
-    //         background-color:#e74a34;
-    //         font-size: 40px;   
-    //         font-weight: bold;
-    //         cursor: pointer;    
-    //         border-radius:10px 0 0 10px;     
-    //     }
-    //     .content{
-    //         border-radius:0 10px 10px 0;
-    //         width: 800px;
-    //         background-color:rgba(231, 74, 52, 0.6);
-    //         font-size: 20px;
-    //     }
-    // }
-    // .progress-bar{
-    //  height: 20px;
-    //  width: 400px;
-    //  background-color: #adadad;
-    // }
-    // .progress-bar-active{
-    //  background-color:#f4a622;
-    //  height: inherit;
-    // }
-
-    // &.blind{
-    //     background-color:rgba(0,0,0,0.2);
-    // }
+    }
     .exchange-page {
         padding: 0px 50px;
     }
@@ -281,7 +241,6 @@ $stepColorActive:#00c072;
               border-bottom: none;
             }
             select{
-              border: none;
               width: 23px;
               border: none;
               background: url(/assets/dropdown-arrow.png) no-repeat center;
@@ -325,9 +284,9 @@ $stepColorActive:#00c072;
         }
     }
     .item-2 {
-        padding-top: 60px;
+        padding-top: 50px;
         .content{
-            padding-left:145px;
+            padding-left:80px;
         }
         .intro {
             width: 350px;
@@ -348,19 +307,19 @@ $stepColorActive:#00c072;
         }
          .rate-wrapper {
 
-            margin-top: 80px;
+            margin-top: 25px;
             text-align: center;
             .rate{
                 display: flex;
                 justify-content: space-between;
                 border:1px solid #aaa;
                 padding:10px;
-                width: 600px;
+                width: 700px;
                 position: absolute;
-                margin-left: 166px;
+                margin-left: 85px;
                 >div{
                     padding: 0 10px;
-                    width: 33%;                    
+                    width: 33%;
                 }
                 >div:not(:last-child){
                     border-right:1px dashed #aaa;
@@ -384,6 +343,7 @@ $stepColorActive:#00c072;
             li{
                 display: flex;
                 align-items:center;
+                height: 55px;
                 &:before{
                     content: "• ";
                     color: #00c072;
@@ -391,61 +351,182 @@ $stepColorActive:#00c072;
                     font-size: 40px;
                 }
                 label{
-                    color: #fff;
                     font-size: 18px;
-                    width: 300px;
-                    font-weight: bold;
+                    width: 200px;
+                    font-family: Roboto-Bold;
+                    font-size: 18px;
+                    color: #FFFFFF;
                 }
-                input[type="text"]{
-                   background: transparent;
-                        border: none;
-                        font-size: 20px;
-                        height: 40px;
-                        color: #fff;
-                        color: #fff;
-                        border-bottom: 1px solid $stepColorActive;
-                        margin-left: 36px;
-                        width: 230px;
-                    &:focus {
-                        outline: none;
-                    }
+                label.long-label {
+                    width: 300px;
+                }
+                input[type="number"]{
+                  background: transparent;
+                  border: none;
+                  font-family: Roboto-Regular;
+                  font-size: 18px;
+                  color: #FFFFFF;
+                  height: 40px;
+                  border-bottom: 1px solid $stepColorActive;
+                  margin: 0 0 0 12px;
+                  width: 420px;
+                  padding-right: 166px;
+                  &:focus {
+                      outline: none;
+                  }
                 }
                 input[type="checkbox"]{
-                    margin:0px;
+                    margin: 0px;
                     width: 20px;
                     height: 20px;
                 }
                 span{
-                    color: #fff;
-                    font-size: 18px;
-                     margin-left: 36px;
+                  color: #fff;
+                  font-size: 18px;
+                  margin-left: 12px;
+                }
+                span.helper {
+                  display: block;
+                  font-size: 12px;
+                  position: absolute;
+                  right: 125px;
                 }
                 select{
-                    width: 20px;
+                    border: none;
+                    background: url(/assets/dropdown-arrow.png) no-repeat right;
+                    width: 60px;
+                    font-family: Lato-Bold;
+                    font-size: 18px;
+                    color: #00C072;
+                    margin-bottom: 0;
+                    padding: 0;
                 }
             }
         }
-    } // .item-3 {
-    //     padding-top: 50px;
-    //     .intro {
-    //         p {
-    //             width: 300px;
-    //             color: #aaa;
-    //             padding-left: 5px;
-    //             font-size: 15px;
-    //         }
-    //         &.intro-bottom {
-    //             margin-top: 20px
-    //         }
-    //     }
-    // }
+    }
+    .item-advance {
+        padding-top: 50px;
+        .content{
+            padding-left: 180px;
+        }
+        .intro {
+            width: 350px;
+            text-align: center; // label {
+            //     font-size: 15px;
+            //     color: #999;
+            // }
+            //margin:0 auto;
+        }
+
+        .intro-bottom {
+            margin-top: 20px
+        }
+        .uint {
+            font-size: 20px;
+            color: #999;
+            margin-left: 10px;
+        }
+         .rate-wrapper {
+
+            margin-top: 25px;
+            text-align: center;
+            .rate{
+                display: flex;
+                justify-content: space-between;
+                border:1px solid #aaa;
+                padding:10px;
+                width: 700px;
+                position: absolute;
+                margin-left: 85px;
+                >div{
+                    padding: 0 10px;
+                    width: 33%;
+                }
+                >div:not(:last-child){
+                    border-right:1px dashed #aaa;
+                }
+                label{
+                    color: #d0a623;
+                    text-align:center;
+                    font-size: 15px
+                }
+                span{
+                    text-align:center;   
+                    color: #aaa;
+                    margin-top: 5px;
+                    font-size: 15px;
+                }
+            }
+        }
+        ul{
+            list-style-type: none;
+            margin:0px;
+            li{
+                display: flex;
+                align-items:center;
+                height: 55px;
+                label{
+                    font-size: 18px;
+                    width: 80px;
+                    font-family: Roboto-Bold;
+                    font-size: 18px;
+                    color: #FFFFFF;
+                }
+                label.long-label {
+                    width: 300px;
+                }
+                input[type="number"]{
+                  background: transparent;
+                  border: none;
+                  font-family: Roboto-Regular;
+                  font-size: 18px;
+                  color: #FFFFFF;
+                  height: 40px;
+                  border-bottom: 1px solid $stepColorActive;
+                  margin: 0 0 0 12px;
+                  width: 350px;
+                  padding-right: 50px;
+                  &:focus {
+                      outline: none;
+                  }
+                }
+                input[type="checkbox"]{
+                    margin: 0px;
+                    width: 20px;
+                    height: 20px;
+                }
+                span{
+                  color: #fff;
+                  font-size: 18px;
+                  margin-left: 12px;
+                }
+                span.helper {
+                  display: block;
+                  font-size: 12px;
+                  position: absolute;
+                  right: 308px;
+                }
+                select{
+                    border: none;
+                    background: url(/assets/dropdown-arrow.png) no-repeat right;
+                    width: 60px;
+                    font-family: Lato-Bold;
+                    font-size: 18px;
+                    color: #00C072;
+                    margin-bottom: 0;
+                    padding: 0;
+                }
+            }
+        }
+    }
     .item-3 {
         padding-top: 100px;
         margin-left: 200px;
         label{
-            color: #fff;
-            font-size: 20px;
-            margin-left:20px;
+            margin-left: 60px;
+            font-family: Roboto-Bold;
+            font-size: 18px;
+            color: #FFFFFF;
         }
         .input-space {
             margin-left: 80px; ///justify-content: center;
@@ -466,7 +547,7 @@ $stepColorActive:#00c072;
                 color: #fff;
             }
 
-        }  
+        }
 
     }
     .item-4 {
@@ -476,8 +557,11 @@ $stepColorActive:#00c072;
             color: #fff;
             font-size: 20px;
             width: 400px;
-            margin:0 auto;            
-            margin-bottom:35px;
+            margin: 15px auto;
+        }
+        a {
+          color: #fff;
+          font-size: 18px;
         }
         .verify {
             // height: 100px;
@@ -488,6 +572,7 @@ $stepColorActive:#00c072;
             // display: flex;
             // align-items: center;
             // justify-content: center;
+            cursor: pointer;
             margin: 0 auto;
         }
         .input-space{
@@ -529,9 +614,33 @@ $stepColorActive:#00c072;
           color: #FFFFFF;
         }
     }
+    .exchange-page[data-page='advance'] {
+        .step-1,
+        .step-2
+        {
+          .circle{
+                    border:3px solid $stepColorActive;
+                }
+                .bridge{
+                    background-color:$stepColorActive;
+                }
+        }
+        .step-advance{
+                .bridge{
+                    background-color:$stepColorActive;
+                }
+        }
+        .item-advance {
+            display: block;
+        }
+        .progress-step-advance {
+          color: #FFFFFF;
+        }
+    }
     .exchange-page[data-page='3'] {
         .step-1,
         .step-2,
+        .step-advance,
          {
            .circle{
                     border:3px solid $stepColorActive;
@@ -555,6 +664,7 @@ $stepColorActive:#00c072;
     .exchange-page[data-page='4'] {
         .step-1,
         .step-2,
+        .step-advance,
         .step-3 {
            .circle{
                     border:3px solid $stepColorActive;

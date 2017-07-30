@@ -10,13 +10,12 @@ export default class Credential extends React.Component {
         Your password is {this.props.error}
       </div>)
     }
-    console.log('passphraseID: ', this.props.passphraseID)
     return (
       <div>
-        <label><strong>Type in your password to finish sending</strong></label>
-        <div class="input-space">          
-          <i class="k-icon k-icon-lock-white"></i>          
-          <input id={this.props.passphraseID} type="password"/>
+        <label><strong>Type in your passphrase to sign your transaction</strong></label>
+        <div class="input-space">
+          <i class="k-icon k-icon-lock-white"></i>
+          <input name="random" id={this.props.passphraseID} type="password"/>
         </div>
         {error}
       </div>

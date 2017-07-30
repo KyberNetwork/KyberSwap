@@ -86,6 +86,11 @@ export default class PostExchange extends React.Component {
     var errors = {}
     errors["selectedAccountError"] = verifyAccount(this.props.selectedAccount)
     errors["destAddressError"] = verifyAccount(this.props.destAddress)
+    return errors
+  }
+
+  stepTwo = () => {
+    var errors = {}
     if (this.props.isCrossSend || !this.props.allowDirectSend) {
       errors["destTokenError"] = verifyToken(this.props.destToken)
       errors["minDestAmountError"] = verifyAmount(this.props.minDestAmount, this.props.offeredRateBalance)
@@ -95,13 +100,6 @@ export default class PostExchange extends React.Component {
     }
     errors["sourceTokenError"] = verifyToken(this.props.sourceToken)
     errors["sourceAmountError"] = verifyAmount(this.props.sourceAmount, this.props.sourceBalance)
-    return errors
-  }
-
-  stepTwo = () => {
-    var errors = {}
-    errors["gasError"] = verifyNumber(this.props.gas)
-    errors["gasPriceError"] = verifyNumber(this.props.gasPrice)
     return errors
   }
 
@@ -188,6 +186,13 @@ export default class PostExchange extends React.Component {
     return errors
   }
 
+  stepAdvance = () => {
+    var errors = {}
+    errors["gasError"] = verifyNumber(this.props.gas)
+    errors["gasPriceError"] = verifyNumber(this.props.gasPrice)
+    return errors
+  }
+
   stepThree = () => {
     var errors = {}
     var password = document.getElementById(this.props.passphraseID).value
@@ -220,6 +225,15 @@ export default class PostExchange extends React.Component {
       }
       case 2: {
         var errors = this.stepTwo()
+        if (anyErrors(errors)) {
+          this.props.dispatch(throwError(this.props.exchangeFormID, errors))
+        } else {
+          this.props.dispatch(nextStep(this.props.exchangeFormID))
+        }
+        return
+      }
+      case "advance": {
+        var errors = this.stepAdvance()
         if (anyErrors(errors)) {
           this.props.dispatch(throwError(this.props.exchangeFormID, errors))
         } else {

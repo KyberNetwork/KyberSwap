@@ -22,7 +22,9 @@ export default class SendModal extends React.Component {
       passphraseID="exchange-modal-passphrase"
       exchangeFormID={this.props.exchangeFormID}
       postExchangeHandler={this.closeQuickSendModal}
+      label={this.props.label}
       hideSourceAddress={true}
+      extraClass="k-icon-send-green"
       allowDirectSend={true}
     />
   }

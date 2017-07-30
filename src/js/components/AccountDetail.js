@@ -7,7 +7,7 @@ import ModalButton from "./Elements/ModalButton"
 import { Balance, Token, Nonce } from "./Account/Balance"
 import { toT } from "../utils/converter"
 import { deleteAccount} from "../actions/accountActions"
-import { selectAccount, specifyRecipient } from "../actions/exchangeFormActions"
+import { selectAccount, specifyRecipient, specifyStep } from "../actions/exchangeFormActions"
 
 const modalID = "quick-exchange-modal"
 const sendModalID = "quick-send-modal"
@@ -41,8 +41,6 @@ export default class AccountDetail extends React.Component {
   toggleAccount = (event) =>{
     var target = event.currentTarget
     var parent = target.parentElement
-    console.log(parent)
-    console.log(parent.class)
     var classParent = parent.className
     if (classParent === "control-btn"){
       classParent = "control-btn show"
@@ -58,6 +56,8 @@ export default class AccountDetail extends React.Component {
     ))
     this.props.dispatch(specifyRecipient(
       quickFormID, this.props.address))
+    this.props.dispatch(specifyStep(
+      quickFormID, 2))
   }
 
   openQuickSend = (event) => {
@@ -131,10 +131,10 @@ export default class AccountDetail extends React.Component {
                   <ModalButton preOpenHandler={this.openQuickSend} modalID={sendModalID} title="Quick send ethers and tokens">
                     <i class="k-icon k-icon-send-green"></i>
                   </ModalButton>
-                </div>                
+                </div>
               </div>
             </div>
-          </div>          
+          </div>
         </div>
         <div class="wallet-center">
           {tokenRowrender}

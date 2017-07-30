@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import BigNumber from 'bignumber.js'
 
 import TOKENS from "../../services/supported_tokens"
-import { selectDestToken, suggestRate, specifyMinAmount, selectCrossSend, deselectCrossSend } from "../../actions/exchangeFormActions"
+import { selectDestToken, suggestRate, specifyMinAmount } from "../../actions/exchangeFormActions"
 import { toTWei, toT } from "../../utils/converter"
 
 import constants from "../../services/constants"
@@ -22,7 +22,6 @@ import constants from "../../services/constants"
     isCrossSend: exchangeForm.isCrossSend,
   }
 })
-
 export default class TokenDest extends React.Component {
 
   selectToken(event) {
@@ -43,14 +42,6 @@ export default class TokenDest extends React.Component {
       specifyMinAmount(this.props.exchangeFormID, toTWei(valueString)))
   }
 
-  toggleCrossSend = (event) => {
-    if (event.target.checked) {
-      this.props.dispatch(selectCrossSend(this.props.exchangeFormID))
-    } else {
-      this.props.dispatch(deselectCrossSend(this.props.exchangeFormID))
-    }
-  }
-
   render() {
     var tokenOptions = TOKENS.map((tok) => {
       return <option key={tok.address} value={tok.address}>{tok.symbol}</option>
@@ -69,39 +60,23 @@ export default class TokenDest extends React.Component {
         {this.props.destTokenError}
       </div>)
     }
-    var destTokenApp = ""
+    var destTokenApp = null
     if (this.props.isCrossSend || !this.props.allowDirectSend) {
       destTokenApp = (
-        <div class="input-group-item">
+        <li>
           <label>For at least</label>
-          <div class="input-item input-amount">
-            <input value={toT(this.props.specifiedMinAmount)} type="number" min="0" step="any" placeholder="Exchange for at least" onChange={this.specifyMinAmount}/>
-            <select class="selectric" value={this.props.destToken} onChange={this.selectToken.bind(this)}>
-              <option key={constants.ETHER_ADDRESS} value={constants.ETHER_ADDRESS}>ETH</option>
-              {tokenOptions}
-            </select>
-          </div>
-          <div class="extra-info">
-            Your min conversion rate: {toT(this.props.minConversionRate)}
-          </div>
+          <select class="selectric" value={this.props.destToken} onChange={this.selectToken.bind(this)}>
+            <option key={constants.ETHER_ADDRESS} value={constants.ETHER_ADDRESS}>ETH</option>
+            {tokenOptions}
+          </select>
+          <input value={toT(this.props.specifiedMinAmount)} type="number" min="0" step="any" placeholder="Exchange for at least" onChange={this.specifyMinAmount}/>
+          <span class="helper">
+            Your min rate: {toT(this.props.minConversionRate, 8)}
+          </span>
           { error }
           { destTokenError }
-        </div>)
+        </li>)
     }
-    return (
-      <div>
-        {this.props.allowDirectSend ?
-          <div class="input-group-item">
-            <div>
-              <input name="cross-send" type="checkbox"
-                checked={this.props.isCrossSend}
-                onChange={this.toggleCrossSend} />
-              <label for="cross-send">Cross send</label>
-            </div>
-          </div> : ""
-        }
-        {destTokenApp}
-      </div>
-      )
+    return destTokenApp
   }
 }

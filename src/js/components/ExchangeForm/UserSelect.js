@@ -45,7 +45,7 @@ export default class UserSelect extends React.Component {
             <option key="1" value="">No account selected</option>
             {userOptions}
           </select>
-        </div>      
+        </div>
         { error }
       </div>)
   }
