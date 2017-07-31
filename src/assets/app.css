@@ -308,7 +308,7 @@ select:focus {
   height: 40px; }
 
 .k-icon-lock-white {
-  background-position: -126px -473px;
+  background-position: -129px -463px;
   width: 40px;
   height: 40px; }
 
@@ -448,7 +448,7 @@ select:focus {
   height: 30px; }
 
 .k-icon-back {
-  background-position: -321px -408px;
+  background-position: -332px -404px;
   width: 30px;
   height: 30px; }
 
@@ -988,7 +988,8 @@ select:focus {
       position: relative;
       margin-right: 8px;
       vertical-align: middle;
-      padding-bottom: 4px; }
+      padding-bottom: 4px;
+      top: -3px; }
     .k-page-exchange .title .right span {
       cursor: pointer; }
   .k-page-exchange .advance {
@@ -1092,6 +1093,19 @@ select:focus {
     box-shadow: none; }
     .k-page-exchange input:focus, .k-page-exchange textarea:focus {
       box-shadow: none; }
+  .k-page-exchange input[type=checkbox] {
+    visibility: hidden; }
+    .k-page-exchange input[type=checkbox] + label {
+      background-position: -368px -467px; }
+    .k-page-exchange input[type=checkbox]:checked + label {
+      background-position: -408px -467px; }
+  .k-page-exchange .k-checkbox {
+    display: inline-block;
+    background-image: url("../assets/sprite.png");
+    width: 25px !important;
+    height: 25px !important;
+    position: relative;
+    left: -31px; }
   .k-page-exchange .item-1 {
     padding-top: 40px; }
     .k-page-exchange .item-1 h3 {
@@ -1211,14 +1225,19 @@ select:focus {
       list-style-type: none;
       margin: 0px; }
       .k-page-exchange .item-2 ul li {
-        display: flex;
-        align-items: center;
-        height: 55px; }
+        margin-top: 10px;
+        position: relative; }
+        .k-page-exchange .item-2 ul li > div {
+          display: flex;
+          align-items: center; }
         .k-page-exchange .item-2 ul li:before {
           content: "• ";
           color: #00c072;
           margin-right: 20px;
-          font-size: 40px; }
+          font-size: 40px;
+          top: -13px;
+          left: -29px;
+          position: absolute; }
         .k-page-exchange .item-2 ul li label {
           font-size: 18px;
           width: 200px;
@@ -1227,6 +1246,9 @@ select:focus {
           color: #FFFFFF; }
         .k-page-exchange .item-2 ul li label.long-label {
           width: 300px; }
+        .k-page-exchange .item-2 ul li .error {
+          margin-left: 273px;
+          margin-top: 0px; }
         .k-page-exchange .item-2 ul li input[type="number"] {
           background: transparent;
           border: none;
@@ -1251,8 +1273,8 @@ select:focus {
         .k-page-exchange .item-2 ul li span.helper {
           display: block;
           font-size: 12px;
-          position: absolute;
-          right: 125px; }
+          margin-left: 275px;
+          margin-top: 5px; }
         .k-page-exchange .item-2 ul li select {
           border: none;
           background: url(/assets/dropdown-arrow.png) no-repeat right;
