@@ -87,7 +87,8 @@ $tabHeight:40px;
                     top: 0px;
                     border-top:2px solid $colorActiveTab;
                     border-bottom:2px solid $colorActiveTab;                    
-                    border-left:2px solid $colorActiveTab;                    
+                    border-left:2px solid $colorActiveTab;    
+                    border-radius: 3px 0 0 3px;                
                 }
                 &:after {
                     content: '';
@@ -100,6 +101,7 @@ $tabHeight:40px;
                     border-top:2px solid $colorActiveTab;
                     border-bottom:2px solid $colorActiveTab;                    
                     border-right:2px solid $colorActiveTab;      
+                    border-radius: 0 3px 3px 0;
                 }
             }
         }
@@ -120,8 +122,7 @@ $tabHeight:40px;
                     border-top:2px solid $colorActiveTab;
                     border-bottom:2px solid $colorActiveTab;                    
                     border-left:2px solid $colorActiveTab;                    
-                    border-top-left-radius: 3px;
-                    border-bottom-left-radius: 3px;
+                    border-radius: 3px 0 0 3px;  
                 }
                 &:after {
                     content: '';
@@ -134,8 +135,7 @@ $tabHeight:40px;
                     border-top:2px solid $colorActiveTab;
                     border-bottom:2px solid $colorActiveTab;                    
                     border-right:2px solid $colorActiveTab;      
-                    border-top-right-radius: 3px;
-                    border-bottom-right-radius: 3px;
+                    border-radius: 0 3px 3px 0;
                 }
             }
         }

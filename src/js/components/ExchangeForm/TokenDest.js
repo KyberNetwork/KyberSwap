@@ -64,15 +64,19 @@ export default class TokenDest extends React.Component {
     if (this.props.isCrossSend || !this.props.allowDirectSend) {
       destTokenApp = (
         <li>
-          <label>For at least</label>
-          <select class="selectric" value={this.props.destToken} onChange={this.selectToken.bind(this)}>
-            <option key={constants.ETHER_ADDRESS} value={constants.ETHER_ADDRESS}>ETH</option>
-            {tokenOptions}
-          </select>
-          <input value={toT(this.props.specifiedMinAmount)} type="number" min="0" step="any" placeholder="Exchange for at least" onChange={this.specifyMinAmount}/>
-          <span class="helper">
-            Your min rate: {toT(this.props.minConversionRate, 8)}
-          </span>
+          <div>
+            <label>For at least</label>
+            <select class="selectric" value={this.props.destToken} onChange={this.selectToken.bind(this)}>
+              <option key={constants.ETHER_ADDRESS} value={constants.ETHER_ADDRESS}>ETH</option>
+              {tokenOptions}
+            </select>
+            <input value={toT(this.props.specifiedMinAmount)} type="number" min="0" step="any" placeholder="Exchange for at least" onChange={this.specifyMinAmount}/>
+          </div>
+          <div>
+            <span class="helper">
+              Your min rate: {toT(this.props.minConversionRate, 8)}
+            </span>
+          </div>          
           { error }
           { destTokenError }
         </li>)

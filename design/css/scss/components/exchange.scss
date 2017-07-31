@@ -37,6 +37,7 @@ $stepColorActive:#00c072;
                 margin-right:8px;
                 vertical-align: middle;
                 padding-bottom: 4px;
+                top: -3px;
             }
         }
         .right{
@@ -179,6 +180,24 @@ $stepColorActive:#00c072;
             box-shadow:none;
         }
     }
+    input[type=checkbox]{
+        visibility: hidden;
+        + label{            
+            background-position: -368px -467px;        
+        }
+        &:checked + label{
+            background-position: -408px -467px;           
+        }
+    }
+    .k-checkbox{
+        display: inline-block;
+        background-image: url("../assets/sprite.png");        
+        width: 25px !important;
+        height: 25px !important;
+        position: relative;
+        left: -31px;
+    }
+
     .item-1 {
         padding-top: 40px;
 
@@ -343,14 +362,20 @@ $stepColorActive:#00c072;
             list-style-type: none;
             margin:0px;
             li{
-                display: flex;
-                align-items:center;
-                height: 55px;
+                margin-top: 10px;
+                position:relative;
+                >div{
+                    display: flex;
+                    align-items:center;
+                }
                 &:before{
                     content: "• ";
                     color: #00c072;
                     margin-right: 20px;
-                    font-size: 40px;
+                    font-size: 40px;                        
+                    top: -13px;
+                    left: -29px;
+                    position:absolute;
                 }
                 label{
                     font-size: 18px;
@@ -361,6 +386,10 @@ $stepColorActive:#00c072;
                 }
                 label.long-label {
                     width: 300px;
+                }
+                .error{
+                    margin-left:273px;
+                    margin-top: 0px;
                 }
                 input[type="number"]{
                   background: transparent;
@@ -390,8 +419,8 @@ $stepColorActive:#00c072;
                 span.helper {
                   display: block;
                   font-size: 12px;
-                  position: absolute;
-                  right: 125px;
+                   margin-left: 275px;
+                    margin-top: 5px;
                 }
                 select{
                     border: none;

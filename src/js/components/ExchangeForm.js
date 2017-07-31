@@ -163,8 +163,11 @@ export default class ExchangeForm extends React.Component {
                     }
                     <TokenDest exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
                     <li>
-                      <label>Advanced configuration</label>
-                      <input type="checkbox" defaultChecked={this.props.advanced} onChange={this.selectAdvance}/>
+                      <div>
+                        <label>Advanced configuration</label>
+                        <input type="checkbox" defaultChecked={this.props.advanced} onChange={this.selectAdvance} id="advance-option"/>
+                        <label class="k-checkbox" for="advance-option"></label>
+                      </div>                      
                     </li>
                     {/*
                     <li>

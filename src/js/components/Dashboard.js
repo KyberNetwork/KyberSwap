@@ -12,7 +12,6 @@ import Wallets from "./Wallets"
 import JoinPaymentForm from "./Payment/JoinPaymentForm"
 
 const quickSendModalID = "quick-send-modal"
-const importModalId = "new_account_modal"
 
 @connect((store) => {
   return {
@@ -24,8 +23,6 @@ const importModalId = "new_account_modal"
     newAccountAdding: store.accounts.newAccountAdding,
 
     newWalletAdding: store.wallets.newWalletAdding,
-    modalID: "new_account_modal",
-    modalWalletID : "new_wallet_modal",
     utils:store.utils
   }
 })
@@ -56,13 +53,11 @@ export default class Dashboard extends React.Component {
     if (Object.keys(wallets).length == 0 ) {
       appWallet =  (
         <div class="no-wallet">
-         <JoinPaymentForm passphraseID="payment-passphrase" modalID={this.props.modalWalletID}/>
         </div>)
     } else {
       appWallet = (
         <div>
           <Wallets />
-          <JoinPaymentForm passphraseID="payment-passphrase" modalID={this.props.modalWalletID}/>
         </div>)
     }
 

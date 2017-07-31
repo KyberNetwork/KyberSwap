@@ -3,8 +3,9 @@ import React from "react"
 import ModalLink from "./Elements/ModalLink"
 import ToggleButton from "./Elements/ToggleButton"
 
-
+import JoinPaymentForm from "./Payment/JoinPaymentForm"
 import ExchangeModal from "./ExchangeModal"
+import ImportKeystoreModal from "./ImportKeystoreModal"
 
 import { connect } from "react-redux"
 
@@ -61,6 +62,8 @@ export default class GlobalControl extends React.Component {
         </div>
         <div class="modals">
           <ExchangeModal exchangeFormID="quick-exchange" modalID={quickExchangeModalID} label="Quick Exchange" />
+          <JoinPaymentForm passphraseID="payment-passphrase" modalID={walletModalID}/>
+           <ImportKeystoreModal modalID={accountModalID} />
         </div>
       </div>
     )

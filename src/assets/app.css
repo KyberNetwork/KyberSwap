@@ -70,7 +70,8 @@
           top: 0px;
           border-top: 2px solid #00bd70;
           border-bottom: 2px solid #00bd70;
-          border-left: 2px solid #00bd70; }
+          border-left: 2px solid #00bd70;
+          border-radius: 3px 0 0 3px; }
         .k-header .k-header-menu a:hover:after {
           content: '';
           width: 13px;
@@ -80,7 +81,8 @@
           top: 0px;
           border-top: 2px solid #00bd70;
           border-bottom: 2px solid #00bd70;
-          border-right: 2px solid #00bd70; }
+          border-right: 2px solid #00bd70;
+          border-radius: 0 3px 3px 0; }
     .k-header .k-header-menu span {
       display: inline-block;
       width: 30px; }
@@ -96,8 +98,7 @@
         border-top: 2px solid #00bd70;
         border-bottom: 2px solid #00bd70;
         border-left: 2px solid #00bd70;
-        border-top-left-radius: 3px;
-        border-bottom-left-radius: 3px; }
+        border-radius: 3px 0 0 3px; }
       .k-header .k-header-menu .tabs-title.is-active a:after {
         content: '';
         width: 13px;
@@ -108,8 +109,7 @@
         border-top: 2px solid #00bd70;
         border-bottom: 2px solid #00bd70;
         border-right: 2px solid #00bd70;
-        border-top-right-radius: 3px;
-        border-bottom-right-radius: 3px; }
+        border-radius: 0 3px 3px 0; }
   .k-header .node > div:first-child {
     margin-top: 60px;
     text-align: center;
@@ -220,161 +220,15 @@
     -webkit-transform: scaleY(0.005) scaleX(0);
     transform: scaleY(0.005) scaleX(0); } }
 
-@-webkit-keyframes dash {
-  62.5% {
-    opacity: 0; }
-  to {
-    stroke-dashoffset: 0; } }
+.loading .loading-icon {
+  display: block; }
 
-@keyframes dash {
-  62.5% {
-    opacity: 0; }
-  to {
-    stroke-dashoffset: 0; } }
-
-#floatBarsG {
-  position: relative;
-  width: 270px;
-  height: 33px;
-  margin: auto; }
-
-.floatBarsG {
-  position: absolute;
-  top: 0;
-  background-color: black;
-  width: 33px;
-  height: 33px;
-  animation-name: bounce_floatBarsG;
-  -o-animation-name: bounce_floatBarsG;
-  -ms-animation-name: bounce_floatBarsG;
-  -webkit-animation-name: bounce_floatBarsG;
-  -moz-animation-name: bounce_floatBarsG;
-  animation-duration: 2.28s;
-  -o-animation-duration: 2.28s;
-  -ms-animation-duration: 2.28s;
-  -webkit-animation-duration: 2.28s;
-  -moz-animation-duration: 2.28s;
-  animation-iteration-count: infinite;
-  -o-animation-iteration-count: infinite;
-  -ms-animation-iteration-count: infinite;
-  -webkit-animation-iteration-count: infinite;
-  -moz-animation-iteration-count: infinite;
-  animation-direction: normal;
-  -o-animation-direction: normal;
-  -ms-animation-direction: normal;
-  -webkit-animation-direction: normal;
-  -moz-animation-direction: normal;
-  transform: scale(0.3);
-  -o-transform: scale(0.3);
-  -ms-transform: scale(0.3);
-  -webkit-transform: scale(0.3);
-  -moz-transform: scale(0.3); }
-
-#floatBarsG_1 {
-  left: 0;
-  animation-delay: 0.91s;
-  -o-animation-delay: 0.91s;
-  -ms-animation-delay: 0.91s;
-  -webkit-animation-delay: 0.91s;
-  -moz-animation-delay: 0.91s; }
-
-#floatBarsG_2 {
-  left: 34px;
-  animation-delay: 1.14s;
-  -o-animation-delay: 1.14s;
-  -ms-animation-delay: 1.14s;
-  -webkit-animation-delay: 1.14s;
-  -moz-animation-delay: 1.14s; }
-
-#floatBarsG_3 {
-  left: 68px;
-  animation-delay: 1.37s;
-  -o-animation-delay: 1.37s;
-  -ms-animation-delay: 1.37s;
-  -webkit-animation-delay: 1.37s;
-  -moz-animation-delay: 1.37s; }
-
-#floatBarsG_4 {
-  left: 101px;
-  animation-delay: 1.59s;
-  -o-animation-delay: 1.59s;
-  -ms-animation-delay: 1.59s;
-  -webkit-animation-delay: 1.59s;
-  -moz-animation-delay: 1.59s; }
-
-#floatBarsG_5 {
-  left: 135px;
-  animation-delay: 1.82s;
-  -o-animation-delay: 1.82s;
-  -ms-animation-delay: 1.82s;
-  -webkit-animation-delay: 1.82s;
-  -moz-animation-delay: 1.82s; }
-
-#floatBarsG_6 {
-  left: 169px;
-  animation-delay: 2.05s;
-  -o-animation-delay: 2.05s;
-  -ms-animation-delay: 2.05s;
-  -webkit-animation-delay: 2.05s;
-  -moz-animation-delay: 2.05s; }
-
-#floatBarsG_7 {
-  left: 203px;
-  animation-delay: 2.28s;
-  -o-animation-delay: 2.28s;
-  -ms-animation-delay: 2.28s;
-  -webkit-animation-delay: 2.28s;
-  -moz-animation-delay: 2.28s; }
-
-#floatBarsG_8 {
-  left: 236px;
-  animation-delay: 2.5s;
-  -o-animation-delay: 2.5s;
-  -ms-animation-delay: 2.5s;
-  -webkit-animation-delay: 2.5s;
-  -moz-animation-delay: 2.5s; }
-
-@keyframes bounce_floatBarsG {
-  0% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    background-color: black; }
-  100% {
-    -webkit-transform: scale(0.3);
-    transform: scale(0.3);
-    background-color: white; } }
-
-@-o-keyframes bounce_floatBarsG {
-  0% {
-    -o-transform: scale(1);
-    background-color: black; }
-  100% {
-    -o-transform: scale(0.3);
-    background-color: white; } }
-
-@-ms-keyframes bounce_floatBarsG {
-  0% {
-    -ms-transform: scale(1);
-    background-color: black; }
-  100% {
-    -ms-transform: scale(0.3);
-    background-color: white; } }
-
-@-webkit-keyframes bounce_floatBarsG {
-  0% {
-    -webkit-transform: scale(1);
-    background-color: black; }
-  100% {
-    -webkit-transform: scale(0.3);
-    background-color: white; } }
-
-@-moz-keyframes bounce_floatBarsG {
-  0% {
-    -moz-transform: scale(1);
-    background-color: black; }
-  100% {
-    -moz-transform: scale(0.3);
-    background-color: white; } }
+.loading-icon {
+  display: none;
+  margin-top: 10px; }
+  .loading-icon svg path,
+  .loading-icon svg rect {
+    fill: #f9a100; }
 
 button:focus {
   outline: none;
@@ -500,7 +354,7 @@ select:focus {
   height: 40px; }
 
 .k-icon-lock-white {
-  background-position: -126px -473px;
+  background-position: -129px -463px;
   width: 40px;
   height: 40px; }
 
@@ -615,7 +469,7 @@ select:focus {
   height: 25px; }
 
 .k-icon-info {
-  background-position: -102px -20px;
+  background-position: -220px -521px;
   width: 20px;
   height: 20px; }
 
@@ -625,7 +479,12 @@ select:focus {
   height: 20px; }
 
 .k-icon-close {
-  background-position: -48px -464px;
+  background-position: -49px -469px;
+  width: 20px;
+  height: 20px; }
+
+.k-icon-tx {
+  background-position: -141px -522px;
   width: 20px;
   height: 20px; }
 
@@ -635,12 +494,12 @@ select:focus {
   height: 30px; }
 
 .k-icon-back {
-  background-position: -321px -408px;
+  background-position: -332px -404px;
   width: 30px;
   height: 30px; }
 
 .k-icon-cloud {
-  background-position: -344px -464px;
+  background-position: -283px -457px;
   width: 60px;
   height: 40px; }
 
@@ -800,19 +659,32 @@ select:focus {
   .k-page-transaction table .success:before,
   .k-page-transaction table .fail:before {
     content: ' ';
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     display: inline-block;
-    border-radius: 6px;
-    margin-right: 5px; }
+    border-radius: 8px;
+    margin-right: 8px; }
   .k-page-transaction table .success:before {
-    background-color: #8bc34a; }
+    background-color: #00c071; }
   .k-page-transaction table .fail:before {
-    background-color: #e74c3c; }
+    background-color: #d0011b; }
 
 .k-page-transaction .load-more {
   text-align: center;
   margin-top: 40px; }
+  .k-page-transaction .load-more button {
+    background-color: #2196f3;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer; }
+
+.modal-transaction {
+  padding: 0px;
+  border-radius: 5px;
+  width: 700px; }
 
 #tx-modal {
   font-size: 13px;
@@ -821,55 +693,66 @@ select:focus {
   border-radius: 5px; }
   #tx-modal .modal-title {
     color: #00c072;
-    padding: 5px 30px;
-    border-bottom: 1px solid #999;
+    padding: 10px 20px;
+    border-bottom: 1px solid #444;
     text-align: center;
     font-size: 20px;
-    margin-bottom: 20px; }
-  #tx-modal .modal-info > div {
+    margin-bottom: 20px;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    padding: 5px; }
-    #tx-modal .modal-info > div label {
-      width: 170px;
-      color: #00c072;
-      display: inline-block;
-      font-size: 13px;
-      text-align: right;
-      margin-right: 20px; }
-    #tx-modal .modal-info > div span {
-      -o-text-overflow: ellipsis;
-      text-overflow: ellipsis;
-      width: 400px;
-      display: inline-block;
-      overflow: hidden;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    background-color: #2e3037; }
+    #tx-modal .modal-title button {
+      cursor: pointer; }
+    #tx-modal .modal-title i {
+      position: relative;
+      top: 3px; }
+    #tx-modal .modal-title .left {
       color: #fff; }
-      #tx-modal .modal-info > div span a {
+      #tx-modal .modal-title .left i {
+        margin-right: 10px; }
+  #tx-modal .modal-info {
+    padding-left: 55px; }
+    #tx-modal .modal-info > div {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      padding: 5px; }
+      #tx-modal .modal-info > div label {
+        width: 80px;
+        color: #00c072;
+        display: inline-block;
+        font-size: 13px;
+        margin-right: 20px; }
+      #tx-modal .modal-info > div span {
         color: #fff; }
-        #tx-modal .modal-info > div span a:hover {
-          text-decoration: underline; }
-    #tx-modal .modal-info > div .account {
-      padding: 5px 10px;
-      background-color: #b8e986;
-      border-radius: 8px;
-      margin-right: 20px; }
-  #tx-modal .modal-extra {
-    display: inline-block;
-    width: 100%;
-    margin-top: 40px;
-    color: #fff; }
-    #tx-modal .modal-extra > div {
-      padding: 30px;
-      line-height: 30px;
-      text-align: center; }
-      #tx-modal .modal-extra > div > div:last-child {
-        color: #00c072; }
-    #tx-modal .modal-extra .left {
-      float: left; }
-    #tx-modal .modal-extra .right {
-      float: right; }
+        #tx-modal .modal-info > div span a {
+          color: #fff; }
+          #tx-modal .modal-info > div span a:hover {
+            text-decoration: underline; }
+      #tx-modal .modal-info > div .account {
+        padding: 5px 10px;
+        background-color: #b8e986;
+        border-radius: 8px;
+        margin-right: 20px; }
+  #tx-modal .modal-detail {
+    margin-bottom: 50px; }
+    #tx-modal .modal-detail .row {
+      width: 400px;
+      margin: 0 auto;
+      margin-top: 50px; }
+    #tx-modal .modal-detail label {
+      color: #00c072;
+      width: 170px;
+      display: inline-block; }
+    #tx-modal .modal-detail span {
+      color: #fff; }
 
 @keyframes unfoldIn {
   0% {
@@ -1219,7 +1102,8 @@ select:focus {
       top: 0px;
       border-top: 2px solid #00bd70;
       border-bottom: 2px solid #00bd70;
-      border-left: 2px solid #00bd70; }
+      border-left: 2px solid #00bd70;
+      border-radius: 3px 0 0 3px; }
     .control-account .link:hover:after {
       content: '';
       width: 13px;
@@ -1229,7 +1113,8 @@ select:focus {
       top: 0px;
       border-top: 2px solid #00bd70;
       border-bottom: 2px solid #00bd70;
-      border-right: 2px solid #00bd70; }
+      border-right: 2px solid #00bd70;
+      border-radius: 0 3px 3px 0; }
 
 .modal-exchange {
   padding: 0px;
@@ -1262,7 +1147,8 @@ select:focus {
       position: relative;
       margin-right: 8px;
       vertical-align: middle;
-      padding-bottom: 4px; }
+      padding-bottom: 4px;
+      top: -3px; }
     .k-page-exchange .title .right span {
       cursor: pointer; }
   .k-page-exchange .advance {
@@ -1402,6 +1288,19 @@ select:focus {
     .k-page-exchange input:focus, .k-page-exchange textarea:focus {
       -webkit-box-shadow: none;
       box-shadow: none; }
+  .k-page-exchange input[type=checkbox] {
+    visibility: hidden; }
+    .k-page-exchange input[type=checkbox] + label {
+      background-position: -368px -467px; }
+    .k-page-exchange input[type=checkbox]:checked + label {
+      background-position: -408px -467px; }
+  .k-page-exchange .k-checkbox {
+    display: inline-block;
+    background-image: url("../assets/sprite.png");
+    width: 25px !important;
+    height: 25px !important;
+    position: relative;
+    left: -31px; }
   .k-page-exchange .item-1 {
     padding-top: 40px; }
     .k-page-exchange .item-1 h3 {
@@ -1558,20 +1457,25 @@ select:focus {
       list-style-type: none;
       margin: 0px; }
       .k-page-exchange .item-2 ul li {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-        -webkit-align-items: center;
-        -ms-flex-align: center;
-        align-items: center;
-        height: 55px; }
+        margin-top: 10px;
+        position: relative; }
+        .k-page-exchange .item-2 ul li > div {
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+          -webkit-align-items: center;
+          -ms-flex-align: center;
+          align-items: center; }
         .k-page-exchange .item-2 ul li:before {
           content: "• ";
           color: #00c072;
           margin-right: 20px;
-          font-size: 40px; }
+          font-size: 40px;
+          top: -13px;
+          left: -29px;
+          position: absolute; }
         .k-page-exchange .item-2 ul li label {
           font-size: 18px;
           width: 200px;
@@ -1580,6 +1484,9 @@ select:focus {
           color: #FFFFFF; }
         .k-page-exchange .item-2 ul li label.long-label {
           width: 300px; }
+        .k-page-exchange .item-2 ul li .error {
+          margin-left: 273px;
+          margin-top: 0px; }
         .k-page-exchange .item-2 ul li input[type="number"] {
           background: transparent;
           border: none;
@@ -1604,8 +1511,8 @@ select:focus {
         .k-page-exchange .item-2 ul li span.helper {
           display: block;
           font-size: 12px;
-          position: absolute;
-          right: 125px; }
+          margin-left: 275px;
+          margin-top: 5px; }
         .k-page-exchange .item-2 ul li select {
           border: none;
           background: url(/assets/dropdown-arrow.png) no-repeat right;
@@ -2072,6 +1979,35 @@ select:focus {
       margin-right: 10px;
       position: relative;
       top: 2px; }
+  .modal-payment label {
+    font-weight: normal !important;
+    padding-left: 15px; }
+  .modal-payment ul {
+    list-style-type: none;
+    margin: 0px; }
+    .modal-payment ul li {
+      position: relative; }
+  .modal-payment .helper {
+    color: #fff;
+    position: absolute;
+    top: 32px;
+    right: 21px; }
+  .modal-payment select {
+    border: none;
+    background: url("/assets/dropdown-arrow.png") no-repeat right;
+    width: 60px;
+    font-family: Lato-Bold;
+    font-size: 18px;
+    color: #2c2d35;
+    margin-bottom: 0;
+    padding: 0 8px;
+    cursor: pointer; }
+  .modal-payment .input-account {
+    position: relative; }
+    .modal-payment .input-account .select-wrapper {
+      position: absolute;
+      right: 10px;
+      top: 24px; }
 
 .import-account .modal-title {
   font-size: 20px;
@@ -2087,7 +2023,6 @@ select:focus {
   padding: 10px 15px;
   background-color: #2e3037; }
   .import-account .modal-title .left {
-    text-transform: uppercase;
     font-weight: bold;
     color: #fff;
     display: -webkit-box;
@@ -2143,7 +2078,8 @@ select:focus {
   .import-account .submit-button button {
     background-color: #2196f3;
     color: white;
-    font-weight: bold; }
+    font-weight: bold;
+    border-radius: 3px; }
 
 body {
   background-color: #ccc;

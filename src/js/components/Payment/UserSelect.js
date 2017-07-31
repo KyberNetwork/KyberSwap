@@ -36,9 +36,9 @@ export default class UserSelect extends React.Component {
     }
     return (
       <div class="input-group-item input-account">
-        <label>Create kyber wallet for</label>
+        <label>Account</label>
         <div class="input-item">
-          <input value={this.props.selectedAccount} type="text" disabled />
+          <input value={this.props.selectedAccount} type="text" disabled placeholder="Choose your account to create wallet"/>
           <div class="select-wrapper">
             <select class="selectric" id="from-account" value={this.props.selectedAccount} onChange={this.selectAccount}>
               <option key="1" value="">No account selected</option>

@@ -24,10 +24,13 @@ export default class TokenDest extends React.Component {
   render() {
     return (
       <li>
-        <label>Cross send?</label>
-        <input name="cross-send" type="checkbox"
-          checked={this.props.isCrossSend}
-          onChange={this.toggleCrossSend} />
+        <div>
+          <label>Cross send?</label>
+          <input name="cross-send" type="checkbox" id="cross-send"
+            checked={this.props.isCrossSend}
+            onChange={this.toggleCrossSend} />
+          <label class="k-checkbox" for="cross-send"></label>
+        </div>        
       </li>
     )
   }
