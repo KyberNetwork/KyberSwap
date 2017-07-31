@@ -4,7 +4,7 @@ $corlor :#aaa;
 
 $colorActiveTab :#00bd70;
 $widthActiveBorder : 13px;
-$tabHeight:50px;
+$tabHeight:40px;
 
 .k-header {
     background-color: #fff;
@@ -12,8 +12,8 @@ $tabHeight:50px;
     min-height: 100vh;
     .k-header-logo {
         padding: 20px;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding-top: 30px;
+        padding-bottom: 30px;
         text-align: center;
         img {
             height: 120px;
@@ -49,6 +49,7 @@ $tabHeight:50px;
         }
     }
     .k-header-menu {
+        padding-top: 40px;
         .tabs {
             border: none;
             background-color:inherit;
@@ -119,6 +120,8 @@ $tabHeight:50px;
                     border-top:2px solid $colorActiveTab;
                     border-bottom:2px solid $colorActiveTab;                    
                     border-left:2px solid $colorActiveTab;                    
+                    border-top-left-radius: 3px;
+                    border-bottom-left-radius: 3px;
                 }
                 &:after {
                     content: '';
@@ -131,6 +134,8 @@ $tabHeight:50px;
                     border-top:2px solid $colorActiveTab;
                     border-bottom:2px solid $colorActiveTab;                    
                     border-right:2px solid $colorActiveTab;      
+                    border-top-right-radius: 3px;
+                    border-bottom-right-radius: 3px;
                 }
             }
         }
@@ -161,6 +166,8 @@ $tabHeight:50px;
                 letter-spacing: 0;
                 margin-bottom: 0;
                 padding-bottom: 0;
+                padding-top: 0;
+                margin-top: -10px;
                 &:focus{
                     box-shadow:none;
                 }

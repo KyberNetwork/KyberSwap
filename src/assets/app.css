@@ -5,8 +5,8 @@
   min-height: 100vh; }
   .k-header .k-header-logo {
     padding: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     text-align: center; }
     .k-header .k-header-logo img {
       height: 120px; }
@@ -31,79 +31,85 @@
       font-size: 40px; }
     .k-header .k-header-pendding-tx .pending {
       text-align: right; }
-  .k-header .k-header-menu .tabs {
-    border: none;
-    background-color: inherit; }
-  .k-header .k-header-menu li:not(:last-child) {
-    margin-bottom: 5px; }
-  .k-header .k-header-menu a {
-    font-family: Lato-Regular;
-    font-size: 16px;
-    color: #FFFFFF;
-    height: 50px;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    padding: 0px;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    padding-left: 40px;
-    padding-right: 40px; }
-    .k-header .k-header-menu a .k-icon {
-      margin-right: 10px; }
-    .k-header .k-header-menu a:focus {
+  .k-header .k-header-menu {
+    padding-top: 40px; }
+    .k-header .k-header-menu .tabs {
+      border: none;
       background-color: inherit; }
-    .k-header .k-header-menu a:hover {
-      background-color: inherit;
+    .k-header .k-header-menu li:not(:last-child) {
+      margin-bottom: 5px; }
+    .k-header .k-header-menu a {
+      font-family: Lato-Regular;
+      font-size: 16px;
+      color: #FFFFFF;
+      height: 40px;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      padding: 0px;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      padding-left: 40px;
+      padding-right: 40px; }
+      .k-header .k-header-menu a .k-icon {
+        margin-right: 10px; }
+      .k-header .k-header-menu a:focus {
+        background-color: inherit; }
+      .k-header .k-header-menu a:hover {
+        background-color: inherit;
+        position: relative; }
+        .k-header .k-header-menu a:hover:before {
+          content: '';
+          width: 13px;
+          height: 40px;
+          position: absolute;
+          left: 0px;
+          top: 0px;
+          border-top: 2px solid #00bd70;
+          border-bottom: 2px solid #00bd70;
+          border-left: 2px solid #00bd70; }
+        .k-header .k-header-menu a:hover:after {
+          content: '';
+          width: 13px;
+          height: 40px;
+          position: absolute;
+          right: 0px;
+          top: 0px;
+          border-top: 2px solid #00bd70;
+          border-bottom: 2px solid #00bd70;
+          border-right: 2px solid #00bd70; }
+    .k-header .k-header-menu span {
+      display: inline-block;
+      width: 30px; }
+    .k-header .k-header-menu .tabs-title.is-active a {
       position: relative; }
-      .k-header .k-header-menu a:hover:before {
+      .k-header .k-header-menu .tabs-title.is-active a:before {
         content: '';
         width: 13px;
-        height: 50px;
+        height: 40px;
         position: absolute;
         left: 0px;
         top: 0px;
         border-top: 2px solid #00bd70;
         border-bottom: 2px solid #00bd70;
-        border-left: 2px solid #00bd70; }
-      .k-header .k-header-menu a:hover:after {
+        border-left: 2px solid #00bd70;
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px; }
+      .k-header .k-header-menu .tabs-title.is-active a:after {
         content: '';
         width: 13px;
-        height: 50px;
+        height: 40px;
         position: absolute;
         right: 0px;
         top: 0px;
         border-top: 2px solid #00bd70;
         border-bottom: 2px solid #00bd70;
-        border-right: 2px solid #00bd70; }
-  .k-header .k-header-menu span {
-    display: inline-block;
-    width: 30px; }
-  .k-header .k-header-menu .tabs-title.is-active a {
-    position: relative; }
-    .k-header .k-header-menu .tabs-title.is-active a:before {
-      content: '';
-      width: 13px;
-      height: 50px;
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      border-top: 2px solid #00bd70;
-      border-bottom: 2px solid #00bd70;
-      border-left: 2px solid #00bd70; }
-    .k-header .k-header-menu .tabs-title.is-active a:after {
-      content: '';
-      width: 13px;
-      height: 50px;
-      position: absolute;
-      right: 0px;
-      top: 0px;
-      border-top: 2px solid #00bd70;
-      border-bottom: 2px solid #00bd70;
-      border-right: 2px solid #00bd70; }
+        border-right: 2px solid #00bd70;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px; }
   .k-header .node > div:first-child {
     margin-top: 60px;
     text-align: center;
@@ -126,7 +132,9 @@
       color: #D8D8D8;
       letter-spacing: 0;
       margin-bottom: 0;
-      padding-bottom: 0; }
+      padding-bottom: 0;
+      padding-top: 0;
+      margin-top: -10px; }
       .k-header .node .node-select select:focus {
         -webkit-box-shadow: none;
         box-shadow: none; }
