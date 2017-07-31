@@ -115,7 +115,9 @@ export default class JoinPaymentForm extends React.Component {
     return (
       <div className="import-account">
         <div className="modal-title">
-          <div class="left">Deploy your Kyber Wallet contract</div>
+          <div class="left">
+            <i class="k-icon k-icon-account"></i>Create a Kyber Wallet
+          </div>
           <div class="right">
             <button onClick={this.closeModal}>
               <i class="k-icon k-icon-close"></i>
@@ -131,19 +133,19 @@ export default class JoinPaymentForm extends React.Component {
             </div>
             <div className="row">
               <div className="large-12 columns">
+                <label>Wallet name</label>
+                <input type="text" value={this.props.name} onChange={this.specifyName} placeholder="Give your wallet a name"/>
+              </div>
+            </div>
+            <div className="row">
+              <div className="large-12 columns">
                 <TransactionConfig
                   gas={this.props.gas}
                   gasPrice={this.props.gasPrice}
                   gasHandler={this.specifyGas}
                   gasPriceHandler={this.specifyGasPrice} />
               </div>
-            </div>
-            <div className="row">
-              <div className="large-12 columns">
-                <label>Wallet name</label>
-                <input type="text" value={this.props.name} onChange={this.specifyName} />
-              </div>
-            </div>
+            </div>            
             <div className="row">
               <div className="large-12 columns">
                 <Credential passphraseID={this.props.passphraseID} error={this.props.passwordError}/>
@@ -151,7 +153,7 @@ export default class JoinPaymentForm extends React.Component {
             </div>
             <div className="row">
               <div className="large-12 columns submit-button">
-                <button class="button" onClick={this.joinKyberNetwork} >Join KyberNetwork</button>
+                <button class="button" onClick={this.joinKyberNetwork} >Create Kyber Wallet</button>
               </div>
             </div>
           </form>

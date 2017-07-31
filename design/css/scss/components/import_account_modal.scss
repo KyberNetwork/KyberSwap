@@ -48,6 +48,42 @@
                 top:2px;
             }
     }
+    label{
+        font-weight: normal !important;
+        padding-left:15px;
+    }
+    ul{
+        list-style-type: none;
+        margin: 0px;
+        li{
+            position: relative;
+        }
+    }
+    .helper{
+        color: #fff;
+        position: absolute;
+        top: 32px;
+        right: 21px;
+    }
+    select{
+            border: none;
+            background: url("/assets/dropdown-arrow.png") no-repeat right;
+            width: 60px;
+            font-family: Lato-Bold;
+            font-size: 18px;
+            color: #2e2037;
+            margin-bottom: 0;
+            padding: 0 8px;
+            cursor: pointer;
+    }
+    .input-account{
+        position:relative;
+        .select-wrapper{
+            position:absolute;
+            right:10px;
+            top:24px;
+        }
+    }
 }
 
 .import-account {
@@ -59,7 +95,6 @@
         padding:10px 15px;
         background-color:#2e3037;
         .left{
-        	text-transform: uppercase;
         	font-weight: bold;
         	color: #fff;
         	display: flex;
@@ -127,6 +162,7 @@
             background-color:#2196f3;
             color: white;
             font-weight: bold;
+            border-radius:3px;
         }
     }
 }

@@ -12,10 +12,9 @@ export default class Credential extends React.Component {
     }
     return (
       <div>
-        <label><strong>Type in your passphrase to sign your transaction</strong></label>
+        <label>Passphrase</label>
         <div class="input-space">
-          <i class="k-icon k-icon-lock-white"></i>
-          <input name="random" id={this.props.passphraseID} type="password"/>
+          <input name="random" id={this.props.passphraseID} type="password" placeholder="Type in your passphrase"/>
         </div>
         {error}
       </div>
