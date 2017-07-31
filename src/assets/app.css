@@ -5,8 +5,8 @@
   min-height: 100vh; }
   .k-header .k-header-logo {
     padding: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     text-align: center; }
     .k-header .k-header-logo img {
       height: 120px; }
@@ -31,73 +31,79 @@
       font-size: 40px; }
     .k-header .k-header-pendding-tx .pending {
       text-align: right; }
-  .k-header .k-header-menu .tabs {
-    border: none;
-    background-color: inherit; }
-  .k-header .k-header-menu li:not(:last-child) {
-    margin-bottom: 5px; }
-  .k-header .k-header-menu a {
-    font-family: Lato-Regular;
-    font-size: 16px;
-    color: #FFFFFF;
-    height: 50px;
-    display: flex;
-    padding: 0px;
-    align-items: center;
-    padding-left: 40px;
-    padding-right: 40px; }
-    .k-header .k-header-menu a .k-icon {
-      margin-right: 10px; }
-    .k-header .k-header-menu a:focus {
+  .k-header .k-header-menu {
+    padding-top: 40px; }
+    .k-header .k-header-menu .tabs {
+      border: none;
       background-color: inherit; }
-    .k-header .k-header-menu a:hover {
-      background-color: inherit;
+    .k-header .k-header-menu li:not(:last-child) {
+      margin-bottom: 5px; }
+    .k-header .k-header-menu a {
+      font-family: Lato-Regular;
+      font-size: 16px;
+      color: #FFFFFF;
+      height: 40px;
+      display: flex;
+      padding: 0px;
+      align-items: center;
+      padding-left: 40px;
+      padding-right: 40px; }
+      .k-header .k-header-menu a .k-icon {
+        margin-right: 10px; }
+      .k-header .k-header-menu a:focus {
+        background-color: inherit; }
+      .k-header .k-header-menu a:hover {
+        background-color: inherit;
+        position: relative; }
+        .k-header .k-header-menu a:hover:before {
+          content: '';
+          width: 13px;
+          height: 40px;
+          position: absolute;
+          left: 0px;
+          top: 0px;
+          border-top: 2px solid #00bd70;
+          border-bottom: 2px solid #00bd70;
+          border-left: 2px solid #00bd70;
+          border-radius: 3px 0 0 3px; }
+        .k-header .k-header-menu a:hover:after {
+          content: '';
+          width: 13px;
+          height: 40px;
+          position: absolute;
+          right: 0px;
+          top: 0px;
+          border-top: 2px solid #00bd70;
+          border-bottom: 2px solid #00bd70;
+          border-right: 2px solid #00bd70;
+          border-radius: 0 3px 3px 0; }
+    .k-header .k-header-menu span {
+      display: inline-block;
+      width: 30px; }
+    .k-header .k-header-menu .tabs-title.is-active a {
       position: relative; }
-      .k-header .k-header-menu a:hover:before {
+      .k-header .k-header-menu .tabs-title.is-active a:before {
         content: '';
         width: 13px;
-        height: 50px;
+        height: 40px;
         position: absolute;
         left: 0px;
         top: 0px;
         border-top: 2px solid #00bd70;
         border-bottom: 2px solid #00bd70;
-        border-left: 2px solid #00bd70; }
-      .k-header .k-header-menu a:hover:after {
+        border-left: 2px solid #00bd70;
+        border-radius: 3px 0 0 3px; }
+      .k-header .k-header-menu .tabs-title.is-active a:after {
         content: '';
         width: 13px;
-        height: 50px;
+        height: 40px;
         position: absolute;
         right: 0px;
         top: 0px;
         border-top: 2px solid #00bd70;
         border-bottom: 2px solid #00bd70;
-        border-right: 2px solid #00bd70; }
-  .k-header .k-header-menu span {
-    display: inline-block;
-    width: 30px; }
-  .k-header .k-header-menu .tabs-title.is-active a {
-    position: relative; }
-    .k-header .k-header-menu .tabs-title.is-active a:before {
-      content: '';
-      width: 13px;
-      height: 50px;
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      border-top: 2px solid #00bd70;
-      border-bottom: 2px solid #00bd70;
-      border-left: 2px solid #00bd70; }
-    .k-header .k-header-menu .tabs-title.is-active a:after {
-      content: '';
-      width: 13px;
-      height: 50px;
-      position: absolute;
-      right: 0px;
-      top: 0px;
-      border-top: 2px solid #00bd70;
-      border-bottom: 2px solid #00bd70;
-      border-right: 2px solid #00bd70; }
+        border-right: 2px solid #00bd70;
+        border-radius: 0 3px 3px 0; }
   .k-header .node > div:first-child {
     margin-top: 60px;
     text-align: center;
@@ -119,7 +125,9 @@
       color: #D8D8D8;
       letter-spacing: 0;
       margin-bottom: 0;
-      padding-bottom: 0; }
+      padding-bottom: 0;
+      padding-top: 0;
+      margin-top: -10px; }
       .k-header .node .node-select select:focus {
         box-shadow: none; }
     .k-header .node .node-select .selectric {
@@ -415,7 +423,7 @@ select:focus {
   height: 25px; }
 
 .k-icon-info {
-  background-position: -102px -20px;
+  background-position: -220px -521px;
   width: 20px;
   height: 20px; }
 
@@ -425,12 +433,12 @@ select:focus {
   height: 20px; }
 
 .k-icon-close {
-  background-position: -73px -489px;
+  background-position: -49px -469px;
   width: 20px;
   height: 20px; }
 
 .k-icon-tx {
-  background-position: -203px -544px;
+  background-position: -141px -522px;
   width: 20px;
   height: 20px; }
 
@@ -445,7 +453,7 @@ select:focus {
   height: 30px; }
 
 .k-icon-cloud {
-  background-position: -344px -464px;
+  background-position: -283px -457px;
   width: 60px;
   height: 40px; }
 
@@ -596,7 +604,8 @@ select:focus {
     font-weight: bold;
     padding: 10px 20px;
     border-radius: 5px;
-    font-size: 16px; }
+    font-size: 16px;
+    cursor: pointer; }
 
 .modal-transaction {
   padding: 0px;
@@ -943,7 +952,8 @@ select:focus {
       top: 0px;
       border-top: 2px solid #00bd70;
       border-bottom: 2px solid #00bd70;
-      border-left: 2px solid #00bd70; }
+      border-left: 2px solid #00bd70;
+      border-radius: 3px 0 0 3px; }
     .control-account .link:hover:after {
       content: '';
       width: 13px;
@@ -953,7 +963,8 @@ select:focus {
       top: 0px;
       border-top: 2px solid #00bd70;
       border-bottom: 2px solid #00bd70;
-      border-right: 2px solid #00bd70; }
+      border-right: 2px solid #00bd70;
+      border-radius: 0 3px 3px 0; }
 
 .modal-exchange {
   padding: 0px;

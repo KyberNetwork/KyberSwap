@@ -447,7 +447,8 @@ $tabHeight:50px;
                     top: 0px;
                     border-top:2px solid $colorActiveTab;
                     border-bottom:2px solid $colorActiveTab;                    
-                    border-left:2px solid $colorActiveTab;                    
+                    border-left:2px solid $colorActiveTab;  
+                    border-radius: 3px 0 0 3px;                    
                 }
                 &:after {
                     content: '';
@@ -460,6 +461,7 @@ $tabHeight:50px;
                     border-top:2px solid $colorActiveTab;
                     border-bottom:2px solid $colorActiveTab;                    
                     border-right:2px solid $colorActiveTab;      
+                    border-radius: 0 3px 3px 0;  
                 }
         }
     }
