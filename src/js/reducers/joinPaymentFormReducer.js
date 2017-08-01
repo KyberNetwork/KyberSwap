@@ -1,6 +1,6 @@
 const initState = {
   selectedAccount: "",
-  gas: 1000000,
+  gas: 2000000,
   gasPrice: 20000000000,
   name: "",
   errors: {

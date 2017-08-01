@@ -12,6 +12,7 @@ import Wallets from "./Wallets"
 import JoinPaymentForm from "./Payment/JoinPaymentForm"
 
 const quickSendModalID = "quick-send-modal"
+const importModalId = "new_account_modal"
 
 @connect((store) => {
   return {
