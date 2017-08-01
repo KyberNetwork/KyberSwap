@@ -55,14 +55,14 @@ export default class SideBar extends React.Component {
           <div class={this.props.pendingTxs.length != 0 ? "loading" : ""} >
             <div class="number">0{this.props.pendingTxs.length}</div>
             <div class="pending">pending</div>
-          </div>
-          <div>Transactions</div>
-          <div class="loading-icon">
-            <div class='bullet'></div>
-  <div class='bullet'></div>
-  <div class='bullet'></div>
-  <div class='bullet'></div>
-          </div>
+            <div>Transactions</div>
+            <div class="loading-icon">
+              <div class='bullet'></div>
+              <div class='bullet'></div>
+              <div class='bullet'></div>
+              <div class='bullet'></div>
+            </div>
+          </div>          
         </div>
       </div>
     )

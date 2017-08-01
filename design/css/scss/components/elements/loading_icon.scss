@@ -1,20 +1,18 @@
-.loading{
-	.loading-icon{
-		display: block;
-	}	
-}
+
+
+$widthLoading : 41px;
 .loading-icon{
-	display:none;
+	//display:none;
 	margin-top: 16px;
-    left: 98px;
+    left: 91px;
     position: relative;
 }
 
 .loading-icon .bullet {
     position: absolute;
-    padding: 5px;
+    padding: 3px;
     border-radius: 50%;
-    background: #2196f3;
+    background: #37A0F4;
     -webkit-animation: animIn 1s ease-in-out 0s infinite;
     animation: animIn 1s ease-in-out 0s infinite;
 }
@@ -36,31 +34,31 @@
 }
 @-webkit-keyframes animIn {
     0% {
-        -webkit-transform: translateX(-100px);
-        transform: translateX(-100px);
+        -webkit-transform: translateX(-$widthLoading );
+        transform: translateX(-$widthLoading );
         opacity: 0;
     }
     50% {
         opacity: 1;
     }
     100% {
-        -webkit-transform: translateX(100px);
-        transform: translateX(100px);
+        -webkit-transform: translateX($widthLoading );
+        transform: translateX($widthLoading );
         opacity: 0;
     }
 }
 @keyframes animIn {
     0% {
-        -webkit-transform: translateX(-100px);
-        transform: translateX(-100px);
+        -webkit-transform: translateX(-$widthLoading );
+        transform: translateX(-$widthLoading );
         opacity: 0;
     }
     50% {
         opacity: 1;
     }
     100% {
-        -webkit-transform: translateX(100px);
-        transform: translateX(100px);
+        -webkit-transform: translateX($widthLoading );
+        transform: translateX($widthLoading );
         opacity: 0;
     }
 }
