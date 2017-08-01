@@ -83,3 +83,11 @@ export function anyErrors(errors) {
   }
   return false
 }
+
+export function verifyPassphrase(passphrase, repassphrase) {
+  if (passphrase !== repassphrase){
+    return "Retype passphrase is not match"
+  }else{
+    return null
+  }
+}

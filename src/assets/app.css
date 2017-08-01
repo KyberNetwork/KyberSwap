@@ -502,6 +502,11 @@ select:focus {
   width: 60px;
   height: 40px; }
 
+.k-icon-download {
+  background-position: -220px -521px;
+  width: 20px;
+  height: 20px; }
+
 .k-page-account p.loading {
   padding-left: 25px;
   color: #fff;
@@ -821,7 +826,7 @@ select:focus {
       text-align: center; }
   .wallet-item .wallet-left .account-action {
     height: 50px;
-    padding: 10px 70px;
+    padding: 10px 30px;
     margin-top: 30px;
     border: 1px solid #979797;
     display: flex;
@@ -1739,10 +1744,9 @@ select:focus {
   .modal-payment select {
     border: none;
     background: url("/assets/dropdown-arrow.png") no-repeat right;
-    width: 60px;
+    width: 20px;
     font-family: Lato-Bold;
     font-size: 18px;
-    color: #2c2d35;
     margin-bottom: 0;
     padding: 0 8px;
     cursor: pointer; }

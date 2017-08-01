@@ -23,6 +23,7 @@ const quickSendFormID = "quick-send"
     desc: acc.description,
     joined: acc.joined,
     wallet: acc.wallet,
+    keystore: acc.key,
     tokens: Object.keys(acc.tokens).map((key) => {
       return {
         name: acc.tokens[key].name,
@@ -66,8 +67,18 @@ export default class AccountDetail extends React.Component {
     ))
   }
 
+  downloadKey = (event, keystore, address) => {
+    event.preventDefault()    
+    var a = document.createElement('a')    
+    var file = new Blob([keystore], { type: 'text/plain' })
+    a.href = (window.URL || window.webkitURL).createObjectURL(file)
+    a.download = address
+    a.click();
+    a.remove();
+  }
+
   render() {
-    var account = this.props.account;
+    var account = this.props.account
     var tokens = this.props.tokens.map((tok, index) => {
       return <Token key={index} name={tok.name} balance={tok.balance} icon={tok.icon} />
     })
@@ -122,6 +133,11 @@ export default class AccountDetail extends React.Component {
               <label>Address</label>
               <span>{this.props.address}</span>
               <div class="account-action">
+                <div>
+                  <button title="Downnload keystore file" onClick={(e) => this.downloadKey(e, this.props.keystore, this.props.address)}>
+                    <i class="k-icon k-icon-download"></i>
+                  </button>
+                </div>
                 <div>
                   <ModalButton preOpenHandler={this.openQuickExchange} modalID={modalID} title="Quick exchange between tokens">
                     <i class="k-icon k-icon-exchange-green"></i>
