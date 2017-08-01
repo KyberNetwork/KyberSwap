@@ -7,7 +7,8 @@ import ModalButton from "./Elements/ModalButton"
 import { Balance, Token, Nonce } from "./Account/Balance"
 import { toT } from "../utils/converter"
 import { deleteAccount} from "../actions/accountActions"
-import { selectAccount, specifyRecipient, specifyStep } from "../actions/exchangeFormActions"
+import constants from "../services/constants"
+import { selectAccount, specifyRecipient, specifyStep, suggestRate } from "../actions/exchangeFormActions"
 
 const modalID = "quick-exchange-modal"
 const sendModalID = "quick-send-modal"
@@ -58,12 +59,16 @@ export default class AccountDetail extends React.Component {
       quickFormID, this.props.address))
     this.props.dispatch(specifyStep(
       quickFormID, 2))
+    this.props.dispatch(suggestRate(
+      quickFormID, constants.RATE_EPSILON))
   }
 
   openQuickSend = (event) => {
     this.props.dispatch(selectAccount(
       quickSendFormID, this.props.address
     ))
+    this.props.dispatch(suggestRate(
+      quickSendFormID, constants.RATE_EPSILON))
   }
 
   render() {
@@ -125,11 +130,13 @@ export default class AccountDetail extends React.Component {
                 <div>
                   <ModalButton preOpenHandler={this.openQuickExchange} modalID={modalID} title="Quick exchange between tokens">
                     <i class="k-icon k-icon-exchange-green"></i>
+                    <p>Exchange</p>
                   </ModalButton>
                 </div>
                 <div>
                   <ModalButton preOpenHandler={this.openQuickSend} modalID={sendModalID} title="Quick send ethers and tokens">
                     <i class="k-icon k-icon-send-green"></i>
+                    <p>Send</p>
                   </ModalButton>
                 </div>
               </div>

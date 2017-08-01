@@ -38,13 +38,15 @@ export default class UserSelect extends React.Component {
       <div class="input-account">
         <div>
           <div>
-            <label>from</label>
+            <label>From</label>
             <input value={this.props.selectedAccount} type="text" disabled />
           </div>
-          <select id="from-account" value={this.props.selectedAccount} onChange={this.selectAccount.bind(this)}>
-            <option key="1" value="">No account selected</option>
-            {userOptions}
-          </select>
+          {this.props.editable ?
+            <select id="from-account" value={this.props.selectedAccount} onChange={this.selectAccount.bind(this)}>
+              <option key="1" value="">No account selected</option>
+              {userOptions}
+            </select> : ""
+          }
         </div>
         { error }
       </div>)
