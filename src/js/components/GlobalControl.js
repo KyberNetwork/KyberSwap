@@ -30,7 +30,7 @@ export default class GlobalControl extends React.Component {
     var linkWallet = (
       <div class="link">
         <i class="k-icon k-icon-import"></i>
-        <label>Import Wallet</label>
+        <label>Deploy Kyber Wallet</label>
       </div>
     )
     var linkExchange = (
@@ -63,7 +63,7 @@ export default class GlobalControl extends React.Component {
         <div class="modals">
           <ExchangeModal exchangeFormID="quick-exchange" modalID={quickExchangeModalID} label="Quick Exchange" />
           <JoinPaymentForm passphraseID="payment-passphrase" modalID={walletModalID}/>
-           <ImportKeystoreModal modalID={accountModalID} />
+          <ImportKeystoreModal modalID={accountModalID} />
         </div>
       </div>
     )

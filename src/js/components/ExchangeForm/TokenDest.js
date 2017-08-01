@@ -65,7 +65,7 @@ export default class TokenDest extends React.Component {
       destTokenApp = (
         <li>
           <div>
-            <label>For at least</label>
+            <label>Receive at least</label>
             <select class="selectric" value={this.props.destToken} onChange={this.selectToken.bind(this)}>
               <option key={constants.ETHER_ADDRESS} value={constants.ETHER_ADDRESS}>ETH</option>
               {tokenOptions}

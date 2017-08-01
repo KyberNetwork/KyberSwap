@@ -39,7 +39,7 @@
     .k-header .k-header-menu li:not(:last-child) {
       margin-bottom: 5px; }
     .k-header .k-header-menu a {
-      font-family: Lato-Regular;
+      font-family: Roboto-Regular;
       font-size: 16px;
       color: #FFFFFF;
       height: 40px;
@@ -127,7 +127,7 @@
       -webkit-box-shadow: none;
       box-shadow: none;
       background-color: inherit;
-      font-family: Lato-Light;
+      font-family: Roboto-Light;
       font-size: 14px;
       color: #D8D8D8;
       letter-spacing: 0;
@@ -244,6 +244,13 @@ select:focus {
   outline: none;
   -webkit-box-shadow: none;
   box-shadow: none; }
+
+input::-webkit-contacts-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
+  position: absolute;
+  right: 0; }
 
 .disable {
   pointer-events: none;
@@ -867,13 +874,13 @@ select:focus {
     .wallet-item .title span {
       text-transform: uppercase;
       padding-left: 25px;
-      font-family: Lato-Light;
+      font-family: Roboto-Light;
       font-size: 16px;
       color: #FFFFFF; }
   .wallet-item .wallet-content {
     padding-bottom: 20px; }
   .wallet-item .wallet-left label {
-    font-family: Lato-Bold;
+    font-family: Roboto-Bold;
     font-size: 16px;
     color: #FFFFFF; }
   .wallet-item .wallet-left .content {
@@ -1445,7 +1452,7 @@ select:focus {
         .k-page-exchange .item-2 .rate-wrapper .rate > div:not(:last-child) {
           border-right: 1px dashed #aaa; }
         .k-page-exchange .item-2 .rate-wrapper .rate label {
-          color: #d0a623;
+          color: #F5A623;
           text-align: center;
           font-size: 15px; }
         .k-page-exchange .item-2 .rate-wrapper .rate span {
@@ -1496,8 +1503,7 @@ select:focus {
           height: 40px;
           border-bottom: 1px solid #00c072;
           margin: 0 0 0 12px;
-          width: 420px;
-          padding-right: 166px; }
+          width: 420px; }
           .k-page-exchange .item-2 ul li input[type="number"]:focus {
             outline: none; }
         .k-page-exchange .item-2 ul li input[type="checkbox"] {
@@ -1517,7 +1523,7 @@ select:focus {
           border: none;
           background: url(/assets/dropdown-arrow.png) no-repeat right;
           width: 60px;
-          font-family: Lato-Bold;
+          font-family: Roboto-Bold;
           font-size: 18px;
           color: #00C072;
           margin-bottom: 0;
@@ -1595,7 +1601,7 @@ select:focus {
           color: #FFFFFF;
           height: 40px;
           border-bottom: 1px solid #00c072;
-          margin: 0 0 0 12px;
+          margin: 0 17px 0 12px;
           width: 350px;
           padding-right: 50px; }
           .k-page-exchange .item-advance ul li input[type="number"]:focus {
@@ -1617,7 +1623,7 @@ select:focus {
           border: none;
           background: url(/assets/dropdown-arrow.png) no-repeat right;
           width: 60px;
-          font-family: Lato-Bold;
+          font-family: Roboto-Bold;
           font-size: 18px;
           color: #00C072;
           margin-bottom: 0;
@@ -1714,12 +1720,14 @@ select:focus {
   .k-page-exchange .exchange-page[data-page='4'] .step-1 .circle,
   .k-page-exchange .exchange-page[data-page='4'] .step-2 .circle,
   .k-page-exchange .exchange-page[data-page='4'] .step-advance .circle,
-  .k-page-exchange .exchange-page[data-page='4'] .step-3 .circle {
+  .k-page-exchange .exchange-page[data-page='4'] .step-3 .circle,
+  .k-page-exchange .exchange-page[data-page='4'] .step-4 .circle {
     border: 3px solid #00c072; }
   .k-page-exchange .exchange-page[data-page='4'] .step-1 .bridge,
   .k-page-exchange .exchange-page[data-page='4'] .step-2 .bridge,
   .k-page-exchange .exchange-page[data-page='4'] .step-advance .bridge,
-  .k-page-exchange .exchange-page[data-page='4'] .step-3 .bridge {
+  .k-page-exchange .exchange-page[data-page='4'] .step-3 .bridge,
+  .k-page-exchange .exchange-page[data-page='4'] .step-4 .bridge {
     background-color: #00c072; }
   .k-page-exchange .exchange-page[data-page='4'] .item-4 {
     display: block; }
@@ -1996,7 +2004,7 @@ select:focus {
     border: none;
     background: url("/assets/dropdown-arrow.png") no-repeat right;
     width: 60px;
-    font-family: Lato-Bold;
+    font-family: Roboto-Bold;
     font-size: 18px;
     color: #2c2d35;
     margin-bottom: 0;

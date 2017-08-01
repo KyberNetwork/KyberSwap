@@ -346,7 +346,7 @@ $stepColorActive:#00c072;
                     border-right:1px dashed #aaa;
                 }
                 label{
-                    color: #d0a623;
+                    color: #F5A623;
                     text-align:center;
                     font-size: 15px
                 }
@@ -401,7 +401,6 @@ $stepColorActive:#00c072;
                   border-bottom: 1px solid $stepColorActive;
                   margin: 0 0 0 12px;
                   width: 420px;
-                  padding-right: 166px;
                   &:focus {
                       outline: none;
                   }
@@ -426,7 +425,7 @@ $stepColorActive:#00c072;
                     border: none;
                     background: url(/assets/dropdown-arrow.png) no-repeat right;
                     width: 60px;
-                    font-family: Lato-Bold;
+                    font-family: Roboto-Bold;
                     font-size: 18px;
                     color: #00C072;
                     margin-bottom: 0;
@@ -514,7 +513,7 @@ $stepColorActive:#00c072;
                   color: #FFFFFF;
                   height: 40px;
                   border-bottom: 1px solid $stepColorActive;
-                  margin: 0 0 0 12px;
+                  margin: 0 17px 0 12px;
                   width: 350px;
                   padding-right: 50px;
                   &:focus {
@@ -541,7 +540,7 @@ $stepColorActive:#00c072;
                     border: none;
                     background: url(/assets/dropdown-arrow.png) no-repeat right;
                     width: 60px;
-                    font-family: Lato-Bold;
+                    font-family: Roboto-Bold;
                     font-size: 18px;
                     color: #00C072;
                     margin-bottom: 0;
@@ -696,7 +695,8 @@ $stepColorActive:#00c072;
         .step-1,
         .step-2,
         .step-advance,
-        .step-3 {
+        .step-3,
+        .step-4 {
            .circle{
                     border:3px solid $stepColorActive;
                 }
