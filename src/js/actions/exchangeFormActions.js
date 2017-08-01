@@ -33,6 +33,14 @@ export function selectDestToken(id, addr) {
   }
 }
 
+export function specifyMinRate(id, rate) {
+  return {
+    type: "MIN_CONVERSION_RATE_SPECIFIED",
+    payload: rate,
+    meta: id,
+  }
+}
+
 export function specifyMinAmount(id, amount) {
   return {
     type: "MIN_AMOUNT_SPECIFIED",
@@ -109,14 +117,20 @@ export function previousStep(id) {
   }
 }
 
-export function suggestRate(id, source, dest) {
-  console.log(source + '-' + dest)
+export function suggestRate(id, epsilon) {
+  var exchange = store.getState().exchangeForm[id]
+  var source = exchange.sourceToken
+  var dest = exchange.destToken
   var rate = store.getState().global.rates[source + "-" + dest]
   if (rate) {
+    var bigRate = rate.rate
+    if (epsilon) {
+      bigRate = bigRate.times(1-epsilon)
+    }
     return {
       type: "EXCHANGE_FORM_SUGGEST_RATE",
       payload: {
-        rate: rate.rate.toString(10),
+        rate: bigRate.toString(10),
         reserve: rate.reserve,
         expirationBlock: rate.expirationBlock,
         balance: rate.balance.toString(10),

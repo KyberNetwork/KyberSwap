@@ -1,4 +1,5 @@
 import BigNumber from "bignumber.js"
+import supported_tokens from "./supported_tokens"
 
 
 // abis
@@ -12,17 +13,18 @@ const KYBER_WALLET_DATA = '0x6060604052341561000c57fe5b604051602080610f6b8339810
 
 // constants
 const EPSILON = 1000
+const RATE_EPSILON = 0.002
 const ETHER_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 const NETWORK_ADDRESS = "0x11542d7807dfb2b44937f756b9092c76e814f8ed"
 const INIT_EXCHANGE_FORM_STATE = {
   advanced: false,
-  isCrossSend: true,
+  isCrossSend: false,
   selectedAccount: "",
   sourceToken: ETHER_ADDRESS,
   sourceTokenSymbol: "ETH",
   sourceAmount: 0,
-  destToken: ETHER_ADDRESS,
-  destTokenSymbol: "ETH",
+  destToken: supported_tokens[0].address,
+  destTokenSymbol: supported_tokens[0].symbol,
   minConversionRate: 0,
   destAddress: "",
   minDestAmount: 0,
@@ -57,4 +59,5 @@ export default {
   ERC20, KYBER_NETWORK, EPSILON, ETHER_ADDRESS,
   NETWORK_ADDRESS, RESERVES, KYBER_WALLET,
   KYBER_WALLET_DATA, INIT_EXCHANGE_FORM_STATE,
+  RATE_EPSILON,
 }

@@ -29,10 +29,7 @@ export default class TokenDest extends React.Component {
       selectDestToken(this.props.exchangeFormID, event.target.value))
     if (this.props.sourceToken != "" && event.target.value) {
       this.props.dispatch(suggestRate(
-        this.props.exchangeFormID,
-        this.props.sourceToken,
-        event.target.value
-      ))
+        this.props.exchangeFormID, constants.RATE_EPSILON))
     }
   }
 
@@ -65,18 +62,13 @@ export default class TokenDest extends React.Component {
       destTokenApp = (
         <li>
           <div>
-            <label>For at least</label>
+            <label>{this.props.label || "As at least"}</label>
             <select class="selectric" value={this.props.destToken} onChange={this.selectToken.bind(this)}>
               <option key={constants.ETHER_ADDRESS} value={constants.ETHER_ADDRESS}>ETH</option>
               {tokenOptions}
             </select>
             <input value={toT(this.props.specifiedMinAmount)} type="number" min="0" step="any" placeholder="Exchange for at least" onChange={this.specifyMinAmount}/>
           </div>
-          <div>
-            <span class="helper">
-              Your min rate: {toT(this.props.minConversionRate, 8)}
-            </span>
-          </div>          
           { error }
           { destTokenError }
         </li>)

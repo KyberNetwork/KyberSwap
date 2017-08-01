@@ -16,6 +16,14 @@ select:focus {
   box-shadow: none;
 }
 
+input::-webkit-contacts-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+}
+
 .disable {
     pointer-events: none;
     cursor: default;

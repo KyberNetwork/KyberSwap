@@ -24,26 +24,23 @@ export default class TermOfService extends React.Component {
       <div class="term-wrapper">
       </div>
       <div class="term-content">
-        <h2>KyberWallet - Terms of Service</h2>
+        <h2>KyberWallet - Terms of Use</h2>
         <div class="body k-scroll">
-          <p>These Terms of Service (“Terms”) govern your access to and use of our services,
-    including our various websites, SMS, APIs, email notifications, applications,
-    buttons, widgets, ads, commerce services, and our other covered services
-    (https://support.twitter.com/articles/20172501) that link to these Terms
-    (collectively, the “Services”), and any information, text, links, graphics, photos,
-    videos, or other materials or arrangements of materials uploaded, downloaded
-    or appearing on the Services (collectively referred to as “Content”). By using the
-    Services you agree to be bound by these Terms.</p>
-          <h3>Privacy</h3>
-          <p>Our Privacy Policy (https://www.twitter.com/privacy) describes how we handle
-    the information you provide to us when you use our Services. You understand
-    that through your use of the Services you consent to the collection and use (as
-    set forth in the Privacy Policy) of this information, including the transfer of this
-    information to the United States, Ireland, and/or other countries for storage,
-    processing and use by Twitter and its affiliates.</p>
-          <h3>Governing Law</h3>
-          <p>Our Privacy Policy (https://www.twitter.com/privacy) describes how we handle
-    the information you provide to us when you use our Service.</p>
+          <p>
+            Kyber testnet wallet provides a platform for experimenting and understanding
+            KyberNetwork exchange and payment system. The current implementation not
+            secure in any way. Using it may cause loss of funds and could compromise
+            user privacy. The user bears the sole responsibility for any outcome that
+            is result of use of Kyber testnet wallet.
+          </p>
+          <div class="gap">
+          </div>
+          <h3 class="warning">
+            USE ONLY TESTNET ACCOUNTS!!!
+          </h3>
+          <h3 class="warning">
+            DO NOT USE REAL ETHEREUM ACCOUNTS!!!
+          </h3>
         </div>
         <div class="term-btn">
           <button class="decline" onClick={this.acceptTOS}>Accept</button>

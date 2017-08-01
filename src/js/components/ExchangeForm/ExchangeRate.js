@@ -39,7 +39,7 @@ export default class ExchangeRate extends React.Component {
             <span>{this.props.offeredRate}</span>
           </div>
           <div>
-            <label>Expired Block</label>
+            <label>Expiration Block</label>
             <span>{this.props.offeredRateExpiryBlock}</span>
           </div>
           <div>

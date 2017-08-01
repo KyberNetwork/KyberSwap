@@ -68,8 +68,8 @@
     select{
             border: none;
             background: url("/assets/dropdown-arrow.png") no-repeat right;
-            width: 20px;
-            font-family: Lato-Bold;
+            width: 60px;
+            font-family: Roboto-Bold;
             font-size: 18px;
             margin-bottom: 0;
             padding: 0 8px;
@@ -88,31 +88,31 @@
 .import-account {
     .modal-title {
         font-size: 20px;
-        text-align: center;        
+        text-align: center;
         display: flex;
         justify-content: space-between;
         padding:10px 15px;
         background-color:#2e3037;
         .left{
-        	font-weight: bold;
-        	color: #fff;
-        	display: flex;
-        	align-items:center;
-        	font-size: 18px;
+          font-weight: bold;
+          color: #fff;
+          display: flex;
+          align-items:center;
+          font-size: 18px;
 
-        	i{
-        		margin-right: 20px;
-        	}
+          i{
+            margin-right: 20px;
+          }
         }
         .right{
-        	button{
-        		cursor: pointer;
-        	}
+          button{
+            cursor: pointer;
+          }
         }
     }
     form {
         .account-name{
-        	margin-top: 20px;
+          margin-top: 20px;
             
                // display: flex;
                // align-items:center;
@@ -128,17 +128,16 @@
                         box-shadow:none;
                     }
                 }
-            
         }
     }
     .modal-body{
-    	padding:10px 30px;
-    	label {
-	        color: $colorGreen;
-	        font-size: 15px;
-	        font-weight: bold;
-	    }
-    }    
+      padding:10px 30px;
+      label {
+          color: $colorGreen;
+          font-size: 15px;
+          font-weight: bold;
+      }
+    }
     .dropzone>div {
         width: auto !important;
         cursor: pointer;

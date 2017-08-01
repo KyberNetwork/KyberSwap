@@ -138,7 +138,7 @@ $backgroundColor:#333;
         span {
             text-transform: uppercase;
             padding-left: $paddingLeft;
-            font-family: Lato-Light;
+            font-family: Roboto-Light;
             font-size: 16px;
             color: #FFFFFF;
         }
@@ -148,7 +148,7 @@ $backgroundColor:#333;
     }
     .wallet-left {
         label {
-          font-family: Lato-Bold;
+          font-family: Roboto-Bold;
           font-size: 16px;
           color: #FFFFFF;
         }
@@ -175,15 +175,26 @@ $backgroundColor:#333;
         }
         .account-action {
             height: 50px;
-            padding: 10px 30px;
+            padding: 10px 40px;
             margin-top: 30px;
             border: 1px solid #979797;
             display: flex;
             justify-content: space-between;
             align-items:center;
             width: 283px;
+            color: #00c072;
+            font-size: 16px;
+            i {
+              margin-bottom: -3px;
+            }
             button{
                 cursor: pointer;
+            }
+            p {
+              padding-bottom: 5px;
+              padding-left: 5px;
+              display: inline-block;
+              margin: 0;
             }
         }
     }

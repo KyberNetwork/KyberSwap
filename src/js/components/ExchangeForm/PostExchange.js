@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js'
 import { connect } from "react-redux"
 import * as ethUtil from 'ethereumjs-util'
 
-import { throwError, emptyForm, nextStep, previousStep } from "../../actions/exchangeFormActions"
+import { throwError, emptyForm, nextStep, previousStep, resetStep } from "../../actions/exchangeFormActions"
 import { updateAccount, incManualNonceAccount } from "../../actions/accountActions"
 import { addTx } from "../../actions/txActions"
 import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
@@ -262,6 +262,13 @@ export default class PostExchange extends React.Component {
     this.props.dispatch(previousStep(this.props.exchangeFormID))
   }
 
+  onClose = (event) => {
+    event.preventDefault()
+    this.props.postExchangeHandler(event)
+    this.props.dispatch(emptyForm(this.props.exchangeFormID))
+    this.props.dispatch(resetStep(this.props.exchangeFormID))
+  }
+
   render() {
     var errorDiv
     if (this.props.error != "") {
@@ -277,10 +284,18 @@ export default class PostExchange extends React.Component {
       <div class="navigation-btn">
         {errorDiv}
         <div>
-          <button onClick={this.back} className={this.props.step != 1?"":"hide"}><i class="k-icon k-icon-back"></i></button>
-          <button onClick={this.postExchange}>
-            <i class="k-icon k-icon-next"></i>
-          </button>
+          <button
+            onClick={this.back}
+            className={this.props.step == 1 || (this.props.step == 2 && this.props.exchangeFormID == "quick-exchange")? "hide" : ""}>
+            <i class="k-icon k-icon-back"></i></button>
+          { this.props.step == 4 ?
+            <button onClick={this.onClose}>
+              <i class="k-icon k-icon-next"></i>
+            </button> :
+            <button onClick={this.postExchange}>
+              <i class="k-icon k-icon-next"></i>
+            </button>
+          }
         </div>
       </div>
     )

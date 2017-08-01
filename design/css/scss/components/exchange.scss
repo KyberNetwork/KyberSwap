@@ -69,23 +69,58 @@ $stepColorActive:#00c072;
             justify-content: center;
             margin-top: 10px;
         }
+        .progress-squeeze {
+          .step {
+            width: 180px !important;
+          }
+        }
         .step {
-            display: flex;
+            display: block;
             align-items: center;
+            width: 220px;
+            margin: 0 -3px 0 -3px;
             .circle{
                 height: 27px;
                 width: 27px;
                 display: block;
                 border-radius:27px;
                 border: 3px solid $stepColorInactive;
+                margin: 0 auto;
+                background-color: #2F3037;
+            }
+            .left-bridge {
+               position: relative;
+               top: 15px;
+               width: 50%;
+               height: 3px;
+               background: $stepColorInactive;
+            }
+            .right-bridge {
+              float: right;
+              position: relative;
+              top: 12px;
+              right: 0;
+              width: 50%;
+              height: 3px;
+              background: $stepColorInactive;
+            }
+            &:first-of-type {
+              .left-bridge {
+                display: none;
+              }
+              .right-bridge {
+                top: 15px;
+              }
+            }
+            &:last-of-type {
+              .right-bridge {
+                display: none;
+              }
             }
             &.step-1 {
                 right: -3px;
                 z-index: 2;
                 position: relative;
-            }
-            &:not(:first-child) {
-                width: 200px;
             }
             >span {
                 color: $colorText;
@@ -98,25 +133,13 @@ $stepColorActive:#00c072;
                 z-index: 2;
                 background-color: $backgoundExchange ;
             }
-            .bridge {
-                    height: 3px;
-                    width: 176px;
-                    background: $stepColorInactive;
-                    flex-shrink: 0;
-                    position: relative;
-                    z-index: 0;
-                    right: -3px;
-            }
         }
-        .progress-label{
-            display: flex;
-            color: #aaa;
-            justify-content: space-between;
-            width: 650px;
-            margin: 0 auto;
-            margin-top: 10px;
-            /* Amount: */
+        .label{
+            font-family: Roboto-Light;
             font-size: 16px;
+            color: #FFFFFF;
+            background: none;
+            padding-top: 15px;
         }
         .advanced-progress-label {
             width: 850px !important;
@@ -200,6 +223,8 @@ $stepColorActive:#00c072;
 
     .item-1 {
         padding-top: 40px;
+        padding-left: 80px;
+        padding-right: 80px;
 
         h3{
             font-size: 20px;
@@ -309,6 +334,9 @@ $stepColorActive:#00c072;
         .content{
             padding-left:80px;
         }
+        span.placeholder {
+          width: 48px;
+        }
         .intro {
             width: 350px;
             text-align: center; // label {
@@ -346,7 +374,7 @@ $stepColorActive:#00c072;
                     border-right:1px dashed #aaa;
                 }
                 label{
-                    color: #d0a623;
+                    color: #F5A623;
                     text-align:center;
                     font-size: 15px
                 }
@@ -364,6 +392,7 @@ $stepColorActive:#00c072;
             li{
                 margin-top: 10px;
                 position:relative;
+                height: 45px;
                 >div{
                     display: flex;
                     align-items:center;
@@ -372,10 +401,16 @@ $stepColorActive:#00c072;
                     content: "• ";
                     color: #00c072;
                     margin-right: 20px;
-                    font-size: 40px;                        
+                    font-size: 40px;
                     top: -13px;
                     left: -29px;
                     position:absolute;
+                }
+                .helper {
+                  margin-left: 540px;
+                  display: block;
+                  font-size: 12px;
+                  color: #fff;
                 }
                 label{
                     font-size: 18px;
@@ -401,7 +436,6 @@ $stepColorActive:#00c072;
                   border-bottom: 1px solid $stepColorActive;
                   margin: 0 0 0 12px;
                   width: 420px;
-                  padding-right: 166px;
                   &:focus {
                       outline: none;
                   }
@@ -426,7 +460,7 @@ $stepColorActive:#00c072;
                     border: none;
                     background: url(/assets/dropdown-arrow.png) no-repeat right;
                     width: 60px;
-                    font-family: Lato-Bold;
+                    font-family: Roboto-Bold;
                     font-size: 18px;
                     color: #00C072;
                     margin-bottom: 0;
@@ -514,7 +548,7 @@ $stepColorActive:#00c072;
                   color: #FFFFFF;
                   height: 40px;
                   border-bottom: 1px solid $stepColorActive;
-                  margin: 0 0 0 12px;
+                  margin: 0 17px 0 12px;
                   width: 350px;
                   padding-right: 50px;
                   &:focus {
@@ -531,17 +565,11 @@ $stepColorActive:#00c072;
                   font-size: 18px;
                   margin-left: 12px;
                 }
-                span.helper {
-                  display: block;
-                  font-size: 12px;
-                  position: absolute;
-                  right: 308px;
-                }
                 select{
                     border: none;
                     background: url(/assets/dropdown-arrow.png) no-repeat right;
                     width: 60px;
-                    font-family: Lato-Bold;
+                    font-family: Roboto-Bold;
                     font-size: 18px;
                     color: #00C072;
                     margin-bottom: 0;
@@ -559,11 +587,14 @@ $stepColorActive:#00c072;
             font-size: 18px;
             color: #FFFFFF;
         }
+        .error {
+          margin-left: 80px;
+        }
         .input-space {
             margin-left: 80px; ///justify-content: center;
             text-align: center;
-            margin-top: 30px;           
-            display: flex;             
+            margin-top: 30px;
+            display: flex;
             i{
                 margin-right:20px;
             }
@@ -615,12 +646,12 @@ $stepColorActive:#00c072;
     }
     .exchange-page[data-page='1'] {
         .step-1 {
-                .circle{
-                    border:3px solid $stepColorActive;
-                }
+          .circle{
+              border:3px solid $stepColorActive;
+          }
         }
         .item-1 {
-            display: block;
+          display: block;
         }
         .progress-step-1 {
           color: #FFFFFF;
@@ -630,13 +661,20 @@ $stepColorActive:#00c072;
         .step-1,
         {
           .circle{
-                    border:3px solid $stepColorActive;
-                }
+                border:3px solid $stepColorActive;
+                background-color: $stepColorActive;
+            }
+          .left-bridge, .right-bridge {
+            background-color:$stepColorActive;
+          }
         }
         .step-2{
-                .bridge{
-                    background-color:$stepColorActive;
-                }
+          .circle {
+            border: 3px solid $stepColorActive;
+          }
+          .left-bridge {
+            background-color:$stepColorActive;
+          }
         }
         .item-2 {
             display: block;
@@ -650,16 +688,20 @@ $stepColorActive:#00c072;
         .step-2
         {
           .circle{
-                    border:3px solid $stepColorActive;
-                }
-                .bridge{
-                    background-color:$stepColorActive;
-                }
+            border:3px solid $stepColorActive;
+            background-color: $stepColorActive;
+          }
+          .left-bridge, .right-bridge{
+            background-color:$stepColorActive;
+          }
         }
         .step-advance{
-                .bridge{
-                    background-color:$stepColorActive;
-                }
+          .circle {
+            border: 3px solid $stepColorActive;
+          }
+          .left-bridge{
+            background-color:$stepColorActive;
+          }
         }
         .item-advance {
             display: block;
@@ -674,16 +716,21 @@ $stepColorActive:#00c072;
         .step-advance,
          {
            .circle{
-                    border:3px solid $stepColorActive;
-                }
-                .bridge{
-                    background-color:$stepColorActive;
-                }
+             border:3px solid $stepColorActive;
+             background-color: $stepColorActive;
+           }
+           .left-bridge, .right-bridge {
+             background-color:$stepColorActive;
+           }
         }
         .step-3{
-             .bridge{
-                    background-color:$stepColorActive;
-                }
+          .circle {
+            border: 3px solid $stepColorActive;
+          }
+          .left-bridge{
+            background-color:$stepColorActive;
+            background-color: $stepColorActive;
+          }
         }
         .item-3 {
             display: block;
@@ -696,14 +743,25 @@ $stepColorActive:#00c072;
         .step-1,
         .step-2,
         .step-advance,
-        .step-3 {
+        .step-3
+        {
            .circle{
-                    border:3px solid $stepColorActive;
-                }
-                .bridge{
-                    background-color:$stepColorActive;
-                }
+               border:3px solid $stepColorActive;
+               background-color: $stepColorActive;
+           }
+           .left-bridge, .right-bridge {
+               background-color:$stepColorActive;
+           }
         }
+        .step-4 {
+           .circle{
+                border:3px solid $stepColorActive;
+            }
+            .left-bridge{
+                background-color:$stepColorActive;
+            }
+        }
+
         .item-4 {
             display: block;
         }
