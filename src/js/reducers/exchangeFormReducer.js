@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import supported_tokens from "../services/supported_tokens"
 import constants from "../services/constants"
-import { calculateRate, calculateDest, getToken } from "../utils/converter"
+import { calculateRate, calculateDest, calculateMinAmount, getToken } from "../utils/converter"
 
 const initFormState = constants.INIT_EXCHANGE_FORM_STATE
 const initState = {}
@@ -55,6 +55,13 @@ const exchangeForm = (state=initState, action) => {
     case "MIN_AMOUNT_SPECIFIED": {
       var minAmount = action.payload
       var minRate = calculateRate(newState[id].sourceAmount, minAmount).toString(10)
+      newState[id].minDestAmount = minAmount
+      newState[id].minConversionRate = minRate
+      return newState
+    }
+    case "MIN_CONVERSION_RATE_SPECIFIED": {
+      var minRate = action.payload
+      var minAmount = calculateMinAmount(newState[id].sourceAmount, minRate).toString(10)
       newState[id].minDestAmount = minAmount
       newState[id].minConversionRate = minRate
       return newState

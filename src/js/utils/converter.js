@@ -6,6 +6,17 @@ import supported_tokens from "../services/supported_tokens"
 import constants from "../services/constants"
 
 
+export function calculateMinAmount(source, rate) {
+  var bigSource = new BigNumber(source)
+  var bigRate = new BigNumber(rate)
+  if (bigSource == 'NaN' || bigSource == 'Infinity' ||
+    bigRate == 'NaN' || bigRate == 'Infinity') {
+    return "0"
+  }
+  var minAmount = bigSource.times(bigRate).div(1000000000000000000)
+  return minAmount
+}
+
 export function calculateRate(source, dest) {
   var bigSource = new BigNumber(source)
   var bigDest = new BigNumber(dest)

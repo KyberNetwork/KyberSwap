@@ -58,10 +58,7 @@ export default class TokenSource extends React.Component {
       selectSourceToken(this.props.exchangeFormID, event.target.value))
     if (event.target.value != "" && this.props.destToken) {
       this.props.dispatch(suggestRate(
-        this.props.exchangeFormID,
-        event.target.value,
-        this.props.destToken
-      ))
+        this.props.exchangeFormID, constants.RATE_EPSILON))
     }
   }
 
@@ -93,19 +90,16 @@ export default class TokenSource extends React.Component {
     return (
       <li>
         <div> 
-          <label>Amount to send</label>
+          <label>{this.props.label || "Send"}</label>
           <select onChange={this.selectToken.bind(this)} value={this.props.selectedToken}>
             <option key={constants.ETHER_ADDRESS} value={constants.ETHER_ADDRESS}>ETH</option>
             {tokenOptions}
           </select>
           <input value={toT(this.props.specifiedAmount)} type="number" min="0" step="any" placeholder="Amount to exchange" onChange={this.specifyAmount.bind(this)}/>
         </div>
-        <div>
-          <span class="helper">
-            Your balance: {toT(this.props.selectedTokenBalance, 8)}
-          </span>        
+        <div class="helper">
+          Your balance: {toT(this.props.selectedTokenBalance, 8)}
         </div>
-        
         { error }
         { sourceTokenError }
       </li>

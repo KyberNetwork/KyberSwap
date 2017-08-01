@@ -7,7 +7,7 @@ import { openModal } from "../../actions/utilActions"
 @connect((store) => {
   return {}
 })
-export default class ModalButton extends React.Component {
+export default class ModalLink extends React.Component {
 
   openModal = (event) => {
     this.props.dispatch(openModal(this.props.modalID))
@@ -16,7 +16,7 @@ export default class ModalButton extends React.Component {
   render() {
     return (
       <div onClick={this.openModal} >
-		{this.props.content}	        
+    {this.props.content}
       </div>
     )
   }
