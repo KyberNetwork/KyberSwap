@@ -77,12 +77,14 @@ export default class EthereumService {
     var ethereum = state.connection.ethereum
     var tokens = [{
       name: "Ether",
+      symbol: "ETH",
       icon: "/img/ether.png",
       address: constants.ETHER_ADDRESS}]
     for (var i = 0; i < SupportedTokens.length; i++) {
       tokens.push({
         name: SupportedTokens[i].name,
         icon: SupportedTokens[i].icon,
+        symbol: SupportedTokens[i].symbol,
         address: SupportedTokens[i].address
       })
     }
@@ -137,11 +139,11 @@ export default class EthereumService {
   }
 
   fetchData() {
-    // this.fetchCurrentBlock()
-    // this.fetchTxsData()
-    // this.fetchRateData()
-    // this.fetchWalletsData()
-    // this.fetchAccountsData()
+    this.fetchCurrentBlock()
+    this.fetchTxsData()
+    this.fetchRateData()
+    this.fetchWalletsData()
+    this.fetchAccountsData()
   }
 
   actAndWatch(error, result) {

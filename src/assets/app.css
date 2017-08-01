@@ -1528,7 +1528,7 @@ input::-webkit-contacts-auto-fill-button {
       .k-page-exchange .item-2 ul li {
         margin-top: 10px;
         position: relative;
-        height: 35px; }
+        height: 45px; }
         .k-page-exchange .item-2 ul li > div {
           display: -webkit-box;
           display: -webkit-flex;
@@ -1847,7 +1847,7 @@ input::-webkit-contacts-auto-fill-button {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  top: calc(50vh - 250px);
+  top: calc(50vh - 155px);
   right: -650px;
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
@@ -1861,7 +1861,7 @@ input::-webkit-contacts-auto-fill-button {
 
 .k-rate .k-rate-info {
   width: 650px;
-  height: 500px; }
+  height: 310px; }
 
 .k-rate-info {
   background-color: #000;
@@ -1869,7 +1869,7 @@ input::-webkit-contacts-auto-fill-button {
   border-top: 2px solid #00bf71;
   border-bottom: 2px solid #00bf71;
   border-left: 2px solid #00bf71;
-  border-radius: 10px;
+  border-radius: 10px 0 0 10px;
   font-size: 15px; }
   .k-rate-info * {
     background-color: inherit; }
@@ -1914,16 +1914,16 @@ input::-webkit-contacts-auto-fill-button {
         margin-right: 8px; }
     .k-rate-info .rate-content tbody tr {
       border-top: 1px solid #999; }
+      .k-rate-info .rate-content tbody tr td.token-pair {
+        color: #23ae79;
+        text-transform: uppercase;
+        text-align: center; }
       .k-rate-info .rate-content tbody tr td {
         text-align: right; }
         .k-rate-info .rate-content tbody tr td:not:first-child {
           color: white;
           text-align: center;
           padding: 10px 20px; }
-        .k-rate-info .rate-content tbody tr td:first-child {
-          color: #23ae79;
-          text-transform: uppercase;
-          text-align: center; }
         .k-rate-info .rate-content tbody tr td:nth-child(2) {
           border-right: 1px solid #999; }
 
@@ -1940,7 +1940,8 @@ input::-webkit-contacts-auto-fill-button {
     margin: 0 auto;
     margin-top: 30px;
     padding: 50px;
-    border-radius: 10px; }
+    border-radius: 10px;
+    text-align: justify; }
     .term-page .term-content * {
       font-size: 18px; }
     .term-page .term-content h2 {
@@ -1950,8 +1951,13 @@ input::-webkit-contacts-auto-fill-button {
     .term-page .term-content h3 {
       color: #00c784;
       margin-top: 30px;
-      margin-right: 25px;
       text-align: left; }
+    .term-page .term-content h3.warning {
+      color: #d0a623;
+      margin-top: 30px;
+      text-align: center; }
+    .term-page .term-content .gap {
+      height: 60px; }
     .term-page .term-content .body {
       height: 400px;
       overflow-y: auto;
