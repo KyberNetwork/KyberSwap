@@ -8,9 +8,9 @@ import { closeModal } from "../actions/utilActions"
 import ReCredential from "./Elements/ReCredential"
 
 import { specifyName, specifyDesc, emptyForm,  throwError} from "../actions/createKeystoreActions"
-import { addAccount } from "../actions/accountActions"
+import { createAccount } from "../actions/accountActions"
 import { verifyAccount, verifyKey, verifyPassphrase, anyErrors } from "../utils/validators"
-import { addressFromKey } from "../utils/keys"
+//import { addressFromKey } from "../utils/keys"
 
 const passphraseID = "create-pass"
 const repassphraseID = "re-create-pass"
@@ -35,13 +35,17 @@ export default class CreateAccountModal extends React.Component {
     if (anyErrors(errors)) {      
       this.props.dispatch(throwError("Retype password is not match"))
     } else {      
-      this.props.dispatch(closeModal(this.props.modalID))
-      var keyString = JSON.stringify(ethereum.createNewAddress(password))      
-      var address = addressFromKey(keyString)    
-      this.props.dispatch(addAccount(
-      address, keyString,
-      this.props.name, this.props.desc))
+      this.props.dispatch(createAccount(password, this.props.name, this.props.desc, ethereum))
       this.props.dispatch(emptyForm())           
+
+      this.props.dispatch(closeModal(this.props.modalID))
+
+      // var keyString = JSON.stringify(ethereum.createNewAddress(password))      
+      // var address = addressFromKey(keyString)    
+      // this.props.dispatch(addAccount(
+      // address, keyString,
+      // this.props.name, this.props.desc))
+
     }
   }
 
@@ -88,7 +92,7 @@ export default class CreateAccountModal extends React.Component {
             </div>            
             <div className="row">
               <div className="large-12 columns account-name">
-                <ReCredential onKeyPressRePassword={(event) => this.pressRePassword(event)} onKeyPressPassword={(event) => this.focusNext('re_password', event)} passphraseID={passphraseID} repassphraseID={repassphraseID} error={this.props.passwordError}/>
+                <ReCredential onKeyPressRePassword={(event) => this.pressRePassword(event)} onKeyPressPassword={(event) => this.focusNext('re_password', event)} passphraseID={passphraseID} repassphraseID={repassphraseID} error={this.props.error}/>
               </div>
             </div>            
             <div className="row">

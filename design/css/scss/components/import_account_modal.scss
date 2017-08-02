@@ -163,4 +163,13 @@
             border-radius:3px;
         }
     }
+    .error{
+        color: #fff;
+        font-size: 13px;
+        i{
+            position:relative;
+            top: 3px;
+            margin-right: 5px;
+        }
+    }
 }
