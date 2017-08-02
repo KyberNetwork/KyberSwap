@@ -12,7 +12,7 @@ const importKeystore = (state=initState, action) => {
     case "ACCOUNT_KEY_UPLOADED": {
       return {...state, keystring: action.payload.keystring, address: action.payload.address}
     }
-    case "ACCOUNT_NAME_SPECIFIED": {
+    case "ACCOUNT_NAME_SPECIFIED": {      
       return {...state, name: action.payload}
     }
     case "ACCOUNT_DESC_SPECIFIED": {

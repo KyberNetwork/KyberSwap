@@ -7,17 +7,24 @@ import Modal from './Elements/Modal'
 import { closeModal } from "../actions/utilActions"
 import ReCredential from "./Elements/ReCredential"
 
+<<<<<<< HEAD
 import { specifyName, specifyDesc, emptyForm,  throwError} from "../actions/importKeystoreActions"
 import { addAccount } from "../actions/accountActions"
 import { verifyAccount, verifyKey, verifyPassphrase, anyErrors } from "../utils/validators"
 import { addressFromKey } from "../utils/keys"
+=======
+import { specifyName, specifyDesc, emptyForm,  throwError} from "../actions/createKeystoreActions"
+import { createAccount } from "../actions/accountActions"
+import { verifyAccount, verifyKey, verifyPassphrase, anyErrors } from "../utils/validators"
+//import { addressFromKey } from "../utils/keys"
+>>>>>>> master
 
 const passphraseID = "create-pass"
 const repassphraseID = "re-create-pass"
 @connect((store) => {
-  var importKeystore = {...store.importKeystore}
-  importKeystore.ethereum = store.connection.ethereum
-  return importKeystore
+  var createKeyStore = {...store.createKeyStore}
+  createKeyStore.ethereum = store.connection.ethereum
+  return createKeyStore
 })
 export default class CreateAccountModal extends React.Component {
   specifyName = (event) => {
@@ -28,22 +35,14 @@ export default class CreateAccountModal extends React.Component {
     event.preventDefault()
     var errors = {}
     var ethereum = this.props.ethereum
-    var keyString = ethereum.createNewAddress(this.props.passphraseID)
-    var address = addressFromKey(keyString)
-    errors["addressError"] = verifyAccount(address)
-    errors["keyError"] = verifyKey(keyString)
     var password = document.getElementById(passphraseID).value
     var repassword = document.getElementById(repassphraseID).value
-    errors["passwordError"] = verifyPassphrase(password, repassword)    
+    errors["passwordError"] = verifyPassphrase(password, repassword)        
     if (anyErrors(errors)) {
-      console.log(errors)
-      this.props.dispatch(throwError("Cannot import invalid keystore file"))
+      this.props.dispatch(throwError("Retype password is not match"))
     } else {
-      this.props.dispatch(addAccount(
-      address, keyString,
-      this.props.name, this.props.desc))
+      this.props.dispatch(createAccount(password, this.props.name, this.props.desc, ethereum))
       this.props.dispatch(emptyForm())
-     
       this.props.dispatch(closeModal(this.props.modalID))
     }
   }
@@ -91,7 +90,7 @@ export default class CreateAccountModal extends React.Component {
             </div>            
             <div className="row">
               <div className="large-12 columns account-name">
-                <ReCredential onKeyPressRePassword={(event) => this.pressRePassword(event)} onKeyPressPassword={(event) => this.focusNext('re_password', event)} passphraseID={passphraseID} repassphraseID={repassphraseID} error={this.props.passwordError}/>
+                <ReCredential onKeyPressRePassword={(event) => this.pressRePassword(event)} onKeyPressPassword={(event) => this.focusNext('re_password', event)} passphraseID={passphraseID} repassphraseID={repassphraseID} error={this.props.error}/>
               </div>
             </div>            
             <div className="row">

@@ -28,12 +28,12 @@ export default class TransactionConfig extends React.Component {
       <ul>
         <li>
           <label>Gas limit</label>
-          <input type="number" step="any" min="0" value={this.props.gas} onChange={this.specifyGas.bind(this)} />
+          <input onKeyPress={this.props.onGasPress} name="gas_limit" type="number" step="any" min="0" value={this.props.gas} onChange={this.specifyGas.bind(this)} />
           {gasError}
         </li>
         <li>
           <label>Gas price</label>
-          <input type="number" step="any" min="0" value={this.props.gasPrice} onChange={this.specifyGasPrice.bind(this)} value={this.props.gasPrice} />
+          <input onKeyPress={this.props.onGasPricePress} name="gas_price" type="number" step="any" min="0" value={this.props.gasPrice} onChange={this.specifyGasPrice.bind(this)} value={this.props.gasPrice} />
           <span class="helper">
             wei
           </span>

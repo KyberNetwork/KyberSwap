@@ -67,7 +67,7 @@ export default class TokenDest extends React.Component {
               <option key={constants.ETHER_ADDRESS} value={constants.ETHER_ADDRESS}>ETH</option>
               {tokenOptions}
             </select>
-            <input value={toT(this.props.specifiedMinAmount)} type="number" min="0" step="any" placeholder="Exchange for at least" onChange={this.specifyMinAmount}/>
+            <input name='token_des' onKeyPress={this.props.onKeyPress} value={toT(this.props.specifiedMinAmount)} type="number" min="0" step="any" placeholder="Exchange for at least" onChange={this.specifyMinAmount}/>
           </div>
           { error }
           { destTokenError }

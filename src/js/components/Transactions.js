@@ -114,7 +114,15 @@ export default class Transactions extends React.Component {
         content = (
           <div id="tx-modal">
             <div class="modal-title">
-              Transaction
+              <div class="left">
+                <i class="k-icon k-icon-tx"></i>
+                Transaction Details
+              </div>
+              <div class="right">
+                <button onClick={this.closeModal}>
+                  <i class="k-icon k-icon-close"></i>
+                </button>                
+              </div>
             </div>
             <div class="modal-info">
               <div>

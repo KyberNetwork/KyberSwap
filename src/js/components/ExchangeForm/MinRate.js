@@ -29,7 +29,7 @@ export default class MinRate extends React.Component {
           <div>
             <label>Min rate</label>
             <span class="placeholder"> </span>
-            <input value={toT(this.props.minConversionRate)}
+            <input value={toT(this.props.minConversionRate)} name="min_rate" onKeyPress={this.props.onKeyPress}
               type="number" min="0" step="any"
               placeholder="Min rate that you accept"
               onChange={this.specifyMinRate}/>

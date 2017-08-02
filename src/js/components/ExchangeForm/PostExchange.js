@@ -292,7 +292,7 @@ export default class PostExchange extends React.Component {
             <button onClick={this.onClose}>
               <i class="k-icon k-icon-next"></i>
             </button> :
-            <button onClick={this.postExchange}>
+            <button onClick={this.postExchange} id="next-exchange"> 
               <i class="k-icon k-icon-next"></i>
             </button>
           }
