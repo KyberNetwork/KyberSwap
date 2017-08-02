@@ -135,7 +135,7 @@ $stepColorActive:#00c072;
             }
         }
         .label{
-            font-family: Roboto-Light;
+            font-weight: 300;
             font-size: 16px;
             color: #FFFFFF;
             background: none;
@@ -392,7 +392,7 @@ $stepColorActive:#00c072;
             li{
                 margin-top: 10px;
                 position:relative;
-                height: 45px;
+                min-height: 45px;
                 >div{
                     display: flex;
                     align-items:center;
@@ -415,7 +415,8 @@ $stepColorActive:#00c072;
                 label{
                     font-size: 18px;
                     width: 200px;
-                    font-family: Roboto-Bold;
+                    //font-weight: 700;
+                    font-weight: 700;
                     font-size: 18px;
                     color: #FFFFFF;
                 }
@@ -429,7 +430,7 @@ $stepColorActive:#00c072;
                 input[type="number"]{
                   background: transparent;
                   border: none;
-                  font-family: Roboto-Regular;
+                  font-weight: 500;
                   font-size: 18px;
                   color: #FFFFFF;
                   height: 40px;
@@ -460,7 +461,8 @@ $stepColorActive:#00c072;
                     border: none;
                     background: url(/assets/dropdown-arrow.png) no-repeat right;
                     width: 60px;
-                    font-family: Roboto-Bold;
+                    //font-weight: 700;
+                    font-weight: 700;
                     font-size: 18px;
                     color: #00C072;
                     margin-bottom: 0;
@@ -533,7 +535,8 @@ $stepColorActive:#00c072;
                 label{
                     font-size: 18px;
                     width: 80px;
-                    font-family: Roboto-Bold;
+                  //  font-weight: 700;
+                    font-weight: 700;
                     font-size: 18px;
                     color: #FFFFFF;
                 }
@@ -543,7 +546,7 @@ $stepColorActive:#00c072;
                 input[type="number"]{
                   background: transparent;
                   border: none;
-                  font-family: Roboto-Regular;
+                  font-weight: 500;
                   font-size: 18px;
                   color: #FFFFFF;
                   height: 40px;
@@ -569,7 +572,8 @@ $stepColorActive:#00c072;
                     border: none;
                     background: url(/assets/dropdown-arrow.png) no-repeat right;
                     width: 60px;
-                    font-family: Roboto-Bold;
+                   // font-weight: 700;
+                    font-weight: 700;
                     font-size: 18px;
                     color: #00C072;
                     margin-bottom: 0;
@@ -583,7 +587,8 @@ $stepColorActive:#00c072;
         margin-left: 200px;
         label{
             margin-left: 60px;
-            font-family: Roboto-Bold;
+           // font-weight: 700;
+            font-weight: 700;
             font-size: 18px;
             color: #FFFFFF;
         }

@@ -25,14 +25,14 @@ export default class CreateAccountModal extends React.Component {
   }
 
   createAccount = (event) => {
-    event.preventDefault()   
+    event.preventDefault()
     var errors = {}
     var ethereum = this.props.ethereum
     var password = document.getElementById(passphraseID).value
     var repassword = document.getElementById(repassphraseID).value
     errors["passwordError"] = verifyPassphrase(password, repassword)        
     
-    if (anyErrors(errors)) {      
+    if (anyErrors(errors)) {
       this.props.dispatch(throwError("Retype password is not match"))
     } else {      
       var keyString = JSON.stringify(ethereum.createNewAddress(password))      
