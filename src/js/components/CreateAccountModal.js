@@ -31,7 +31,6 @@ export default class CreateAccountModal extends React.Component {
     var password = document.getElementById(passphraseID).value
     var repassword = document.getElementById(repassphraseID).value
     errors["passwordError"] = verifyPassphrase(password, repassword)        
-    
     if (anyErrors(errors)) {
       this.props.dispatch(throwError("Retype password is not match"))
     } else {      

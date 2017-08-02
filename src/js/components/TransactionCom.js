@@ -31,7 +31,7 @@ export default class TransactionCom extends React.Component {
       <td></td>
       <td>{this.props.nonce}</td>
       <td>{this.props.type}</td>
-      <td><span class={this.props.status == "mined" ? "success" : "fail"}>{this.props.status}</span></td>
+      <td><span class={this.props.status == "mined" || this.props.status == "success" ? "success" : "fail"}>{this.props.status}</span></td>
     </tr>)
   }
 }

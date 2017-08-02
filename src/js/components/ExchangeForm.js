@@ -100,6 +100,18 @@ export default class ExchangeForm extends React.Component {
             <a href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
             <h3>is waiting for confirmations...</h3>
           </div>
+        } else if (tx.status == "failed") {
+          txStatus = <div>
+            <h3>Transaction</h3>
+            <a href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
+            <h3>is failed. Please try again later.</h3>
+          </div>
+        } else if (tx.status == "success") {
+          txStatus = <div>
+            <h3>Transaction</h3>
+            <a href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
+            <h3>is successful.</h3>
+          </div>
         } else {
           txStatus = <div>
             <h3>Transaction</h3>
@@ -214,9 +226,16 @@ export default class ExchangeForm extends React.Component {
               </div>
               <div class="page-item item-4">
                 {txStatus}
-                <span class="verify">
-                  <i class="k-icon k-icon-verify" onClick={this.done} ></i>
-                </span>
+                { tx && tx.status == "failed" ?
+                  <span class="verify">
+                    <i class="k-icon k-icon-failed" onClick={this.done} ></i>
+                  </span> : ""
+                }
+                { tx && tx.status == "success" ?
+                  <span class="verify">
+                    <i class="k-icon k-icon-verify" onClick={this.done} ></i>
+                  </span> : ""
+                }
               </div>
             </div>
             <div class="next" id="exchange-next">
