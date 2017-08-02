@@ -6,10 +6,12 @@ import ToggleButton from "./Elements/ToggleButton"
 import JoinPaymentForm from "./Payment/JoinPaymentForm"
 import ExchangeModal from "./ExchangeModal"
 import ImportKeystoreModal from "./ImportKeystoreModal"
+import CreateAccountModal from "./CreateAccountModal"
 
 import { connect } from "react-redux"
 
 const quickExchangeModalID = "quick-exchange-modal"
+const accountCreateModalID = "new_account_create_modal"
 const accountModalID = "new_account_modal"
 const walletModalID = "new_wallet_modal"
 
@@ -21,6 +23,12 @@ const walletModalID = "new_wallet_modal"
 
 export default class GlobalControl extends React.Component {
   render() {
+    var linkCreateAccount = (
+      <div class="link">
+        <i class="k-icon k-icon-import"></i>
+        <label>Create Account</label>
+      </div>
+    )
     var linkAccount = (
       <div class="link">
         <i class="k-icon k-icon-import"></i>
@@ -48,6 +56,9 @@ export default class GlobalControl extends React.Component {
         <div className={className}>
           <ul>
             <li>
+              <ModalLink  modalID={accountCreateModalID} content={linkCreateAccount}/>
+            </li>
+            <li>
               <ModalLink  modalID={accountModalID} content={linkAccount}/>
             </li>
             <li>
@@ -63,7 +74,8 @@ export default class GlobalControl extends React.Component {
         <div class="modals">
           <ExchangeModal exchangeFormID="quick-exchange" modalID={quickExchangeModalID} label="Quick Exchange" />
           <JoinPaymentForm passphraseID="payment-passphrase" modalID={walletModalID}/>
-          <ImportKeystoreModal modalID={accountModalID} />
+           <ImportKeystoreModal modalID={accountModalID} />
+           <CreateAccountModal modalID={accountCreateModalID}/>
         </div>
       </div>
     )

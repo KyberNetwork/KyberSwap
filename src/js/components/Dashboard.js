@@ -13,6 +13,7 @@ import JoinPaymentForm from "./Payment/JoinPaymentForm"
 
 const quickSendModalID = "quick-send-modal"
 const importModalId = "new_account_modal"
+const createModalId = "new_account_create_modal"
 
 @connect((store) => {
   return {
@@ -36,9 +37,12 @@ export default class Dashboard extends React.Component {
       var linkImport = (
         <button>import</button>
       )
+      var linkCreate = (
+        <button>create</button>
+      )
       app =  (
         <div class="no-account">
-          You don’t have any accounts yet. Please  <ModalLink  modalID={importModalId} content={linkImport}/> one.
+          You don’t have any accounts yet. Please <ModalLink  modalID={createModalId} content={linkCreate}/> or <ModalLink  modalID={importModalId} content={linkImport}/> one.
           <ImportKeystoreModal modalID={this.props.modalID} />
         </div>)
     } else {

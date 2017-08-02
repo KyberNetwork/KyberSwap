@@ -1,4 +1,5 @@
 import Web3 from "web3"
+import Wallet from "ethereumjs-wallet"
 import constants from "./constants"
 
 import { updateBlock, updateBlockFailed, updateRate } from "../actions/globalActions"
@@ -223,5 +224,10 @@ export default class EthereumService {
     return contract.new.getData(_kyberNetwork, {
       data: constants.KYBER_WALLET_DATA,
     })
+  }
+
+  createNewAddress(passphrase) {
+    var newAddress = Wallet.generate()
+    return newAddress.toV3(passphrase, {kdf: "pbkdf2", c: 10240})
   }
 }

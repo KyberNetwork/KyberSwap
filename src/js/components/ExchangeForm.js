@@ -68,6 +68,24 @@ export default class ExchangeForm extends React.Component {
     }
   }
 
+  focusNext =(value, event) => {         
+    if(event.key === 'Enter'){
+      event.preventDefault()
+      if(document.getElementsByName(value)[0]){
+        document.getElementsByName(value)[0].focus();        
+      }      
+    }
+  }
+
+  goNextStep =(event) => {         
+    if(event.key === 'Enter'){
+      event.preventDefault()
+      if(document.getElementById('next-exchange')){
+        document.getElementById('next-exchange').click();        
+      }      
+    }
+  }
+
   render() {
     if (this.props.step == 4) {
       var txStatus
@@ -164,12 +182,12 @@ export default class ExchangeForm extends React.Component {
               <div class="page-item item-2">
                 <div class="content">
                   <ul>
-                    <TokenSource exchangeFormID={this.props.exchangeFormID} />
+                    <TokenSource onKeyPress={(event) => this.focusNext('token_des', event)} exchangeFormID={this.props.exchangeFormID} />
                     { this.props.allowDirectSend ?
                       <CrossSend exchangeFormID={this.props.exchangeFormID} /> : ""
                     }
-                    <TokenDest exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
-                    <MinRate exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
+                    <TokenDest onKeyPress={(event) => this.focusNext('min_rate', event)} exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
+                    <MinRate onKeyPress={(event) => this.goNextStep(event)} exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
                     <li>
                       <div>
                         <label>Advanced configuration</label>
@@ -192,7 +210,7 @@ export default class ExchangeForm extends React.Component {
                 </div>
               </div>
               <div class="page-item item-3">
-                <Credential passphraseID={this.props.passphraseID} error={this.props.passwordError} />
+                <Credential passphraseID={this.props.passphraseID} error={this.props.passwordError}  onKeyPress={(event) => this.goNextStep(event)}/>
               </div>
               <div class="page-item item-4">
                 {txStatus}

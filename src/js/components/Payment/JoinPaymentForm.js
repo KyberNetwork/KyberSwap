@@ -111,6 +111,22 @@ export default class JoinPaymentForm extends React.Component {
     this.props.dispatch(closeModal(importModalId))
   }
 
+  focusNext = (value, event) => {         
+    if(event.key === 'Enter'){
+      event.preventDefault()
+      if(document.getElementsByName(value)[0]){
+        document.getElementsByName(value)[0].focus();        
+      }      
+    }
+  }
+
+  clickJoin = (event) => {
+    if(event.key === 'Enter'){
+      event.preventDefault()
+      this.joinKyberNetwork(event)
+    }
+  }
+  
   content = () => {
     return (
       <div className="import-account">
@@ -134,7 +150,7 @@ export default class JoinPaymentForm extends React.Component {
             <div className="row">
               <div className="large-12 columns">
                 <label>Wallet name</label>
-                <input type="text" value={this.props.name} onChange={this.specifyName} placeholder="Give your wallet a name"/>
+                <input onKeyPress = {(event) => this.focusNext('gas_limit', event)} type="text" value={this.props.name} onChange={this.specifyName} placeholder="Give your wallet a name"/>
               </div>
             </div>
             <div className="row">
@@ -143,12 +159,15 @@ export default class JoinPaymentForm extends React.Component {
                   gas={this.props.gas}
                   gasPrice={this.props.gasPrice}
                   gasHandler={this.specifyGas}
-                  gasPriceHandler={this.specifyGasPrice} />
+                  gasPriceHandler={this.specifyGasPrice} 
+                  onGasPress = {(event) => this.focusNext('gas_price', event)}
+                  onGasPricePress = {(event) => this.focusNext('password', event)}
+                  />
               </div>
             </div>            
             <div className="row">
               <div className="large-12 columns">
-                <Credential passphraseID={this.props.passphraseID} error={this.props.passwordError}/>
+                <Credential onKeyPress = {(event) => this.clickJoin(event)} passphraseID={this.props.passphraseID} error={this.props.passwordError}/>
               </div>
             </div>
             <div className="row">

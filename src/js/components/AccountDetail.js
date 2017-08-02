@@ -24,6 +24,7 @@ const quickSendFormID = "quick-send"
     desc: acc.description,
     joined: acc.joined,
     wallet: acc.wallet,
+    keystore: acc.key,
     tokens: Object.keys(acc.tokens).map((key) => {
       return {
         name: acc.tokens[key].name,
@@ -71,8 +72,18 @@ export default class AccountDetail extends React.Component {
       quickSendFormID, constants.RATE_EPSILON))
   }
 
+  downloadKey = (event, keystore, address) => {
+    event.preventDefault()    
+    var a = document.createElement('a')    
+    var file = new Blob([keystore], { type: 'text/plain' })
+    a.href = (window.URL || window.webkitURL).createObjectURL(file)
+    a.download = address
+    a.click();
+    a.remove();
+  }
+
   render() {
-    var account = this.props.account;
+    var account = this.props.account
     var tokens = this.props.tokens.map((tok, index) => {
       return <Token key={index} name={tok.name} balance={tok.balance} icon={tok.icon} />
     })
@@ -112,12 +123,17 @@ export default class AccountDetail extends React.Component {
                   <i class="k-icon k-icon-modify-green"></i> Modify...
                 </a>
               </li>
+              <li>
+                <a class="download" onClick={(e) => this.downloadKey(e, this.props.keystore, this.props.address)}>
+                  <i class="k-icon k-icon-download"></i> Download key...
+                </a>
+              </li>
             </ul>
           </div>
         </div>
       </div>
       <div class="wallet-content">
-        <div class="wallet-left">          
+        <div class="wallet-left">
           <div class="content">
             <div class="balance">
               <label>Ether</label>

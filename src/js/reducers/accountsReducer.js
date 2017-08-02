@@ -101,6 +101,14 @@ const accounts = (state=initState, action) => {
     case "NEW_ACCOUNT_ADDED_PENDING": {
       return {...state, newAccountAdding: true}
     }
+    case "CREATE_NEW_ACCOUNT_FULFILLED":{
+      var newAccounts = {...state.accounts}
+      newAccounts[action.payload.address] = action.payload
+      return {...state, newAccountAdding: false, accounts: newAccounts}
+    }
+    case "CREATE_NEW_ACCOUNT_PENDING":{
+      return {...state, newAccountAdding: true} 
+    }
   }
   return state
 }

@@ -14,7 +14,7 @@ export default class Credential extends React.Component {
       <div>
         <label>Passphrase</label>
         <div class="input-space">
-          <input name="random" id={this.props.passphraseID} type="password" placeholder="Type in your passphrase"/>
+          <input onKeyPress={this.props.onKeyPress} name="password" id={this.props.passphraseID} type="password" placeholder="Type in your passphrase"/>
         </div>
         {error}
       </div>
