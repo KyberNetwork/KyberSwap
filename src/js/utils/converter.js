@@ -9,8 +9,8 @@ import constants from "../services/constants"
 export function calculateMinAmount(source, rate) {
   var bigSource = new BigNumber(source)
   var bigRate = new BigNumber(rate)
-  if (bigSource == 'NaN' || bigSource == 'Infinity' ||
-    bigRate == 'NaN' || bigRate == 'Infinity') {
+  if (bigSource == 'NaN' || bigSource == 'Infinity' || acceptableTyping(source) ||
+    bigRate == 'NaN' || bigRate == 'Infinity' || acceptableTyping(rate)) {
     return "0"
   }
   var minAmount = bigSource.times(bigRate).div(1000000000000000000)
@@ -20,8 +20,8 @@ export function calculateMinAmount(source, rate) {
 export function calculateRate(source, dest) {
   var bigSource = new BigNumber(source)
   var bigDest = new BigNumber(dest)
-  if (bigSource == 'NaN' || bigSource == 'Infinity' ||
-    bigDest == 'NaN' || bigDest == 'Infinity') {
+  if (bigSource == 'NaN' || bigSource == 'Infinity' || acceptableTyping(source) ||
+    bigDest == 'NaN' || bigDest == 'Infinity' || acceptableTyping(dest)) {
     return "0"
   }
   var rate = bigDest.times(1000000000000000000).div(bigSource)
@@ -31,18 +31,36 @@ export function calculateRate(source, dest) {
 export function calculateDest(source, rate) {
   var bigSource = new BigNumber(source)
   var bigRate = new BigNumber(rate)
-  if (bigSource == 'NaN' || bigSource == 'Infinity' ||
-    bigRate == 'NaN' || bigRate == 'Infinity') {
+  if (bigSource == 'NaN' || bigSource == 'Infinity' || acceptableTyping(source) ||
+    bigRate == 'NaN' || bigRate == 'Infinity' || acceptableTyping(rate)) {
     return "0"
   }
   var dest = bigSource.times(bigRate).div(1000000000000000000)
   return dest
 }
 
+function acceptableTyping(number) {
+  // zero suffixed with real number
+  // ends with a dot
+  if (number.length > 0 && number[number.length - 1] == ".") {
+    return true
+  }
+  if (number.length > 0 && number[number.length - 1] == "0") {
+    for (var i = 0; i < number.length; i++) {
+      if (number[i] == ".") {
+        return true
+      }
+    }
+  }
+  return false
+}
+
 export function toTWei(number) {
   var bigNumber = new BigNumber(number)
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
-    return "0"
+    return number
+  } else if (acceptableTyping(number)) {
+    return number
   } else {
     return bigNumber.times(1000000000000000000).toString(10)
   }
@@ -52,7 +70,9 @@ export function toT(number, precision) {
   var bigNumber = new BigNumber(number)
   var result
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
-    result = new BigNumber("0")
+    return number
+  } else if (acceptableTyping(number)) {
+    return number
   } else {
     result = bigNumber.div(1000000000000000000)
   }
