@@ -3,7 +3,6 @@ import Wallet from "./wallet"
 import Token from "./token"
 import SupportedTokens from "./supported_tokens"
 import store from "../store"
-import { addressFromKey } from "../utils/keys"
 
 export function newWalletInstance(address, ownerAddress, name, desc, callback) {
   var wallet = new Wallet(address, ownerAddress, name, desc)
@@ -34,19 +33,3 @@ export function loadAccounts(node) {
 
   return accounts;
 }
-
-
-export function createKeyStore(passphrase, name, desc, ethereum, callback) {
-    var promise
-    promise = new Promise((resolve, reject) => {
-      var keyString =JSON.stringify(ethereum.createNewAddress(passphrase))     
-      resolve(keyString)
-    })
-
-    promise.then((keyString) => {
-      console.log(keyString)
-      var address = addressFromKey(keyString)    
-      newAccountInstance(address, keyString, name, desc, callback)        
-
-    })
-  }

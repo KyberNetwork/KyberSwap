@@ -1,31 +1,10 @@
 import * as service from "../services/accounts"
 import store from "../store"
-import { addressFromKey } from "../utils/keys"
 
 export function loadAccounts(node) {
     return {
         type: "LOAD_ACCOUNTS",
         payload: service.loadAccounts(node)
-    }
-}
-
-export function createAccount(passphrase, name, desc, ethereum) {
-    return {
-        type: "CREATE_NEW_ACCOUNT",
-        payload: new Promise((resolve, reject) => {
-            service.createKeyStore(passphrase, name, desc, ethereum, resolve)
-
-            // service.createKeyStore(ethereum, passphrase, function(keyString){
-            //   console.log(keyString)
-            //   var address = addressFromKey(keyString)    
-            //   service.newAccountInstance(
-            //       address, keyString, name, desc, resolve)
-            //   })  
-            // })
-            //var keystring =JSON.stringify(ethereum.createNewAddress(passphrase))    
-            //console.log(keystring)  
-
-        })
     }
 }
 

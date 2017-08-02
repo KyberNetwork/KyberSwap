@@ -228,6 +228,6 @@ export default class EthereumService {
 
   createNewAddress(passphrase) {
     var newAddress = Wallet.generate()
-    return newAddress.toV3(passphrase)
+    return newAddress.toV3(passphrase, {kdf: "pbkdf2", c: 10240})
   }
 }

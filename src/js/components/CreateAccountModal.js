@@ -8,9 +8,9 @@ import { closeModal } from "../actions/utilActions"
 import ReCredential from "./Elements/ReCredential"
 
 import { specifyName, specifyDesc, emptyForm,  throwError} from "../actions/createKeystoreActions"
-import { createAccount } from "../actions/accountActions"
+import { addAccount } from "../actions/accountActions"
 import { verifyAccount, verifyKey, verifyPassphrase, anyErrors } from "../utils/validators"
-//import { addressFromKey } from "../utils/keys"
+import { addressFromKey } from "../utils/keys"
 
 const passphraseID = "create-pass"
 const repassphraseID = "re-create-pass"
@@ -35,17 +35,11 @@ export default class CreateAccountModal extends React.Component {
     if (anyErrors(errors)) {      
       this.props.dispatch(throwError("Retype password is not match"))
     } else {      
-      this.props.dispatch(createAccount(password, this.props.name, this.props.desc, ethereum))
+      var keyString = JSON.stringify(ethereum.createNewAddress(password))      
+      var address = addressFromKey(keyString)    
+      this.props.dispatch(addAccount(address, keyString, this.props.name, this.props.desc))
       this.props.dispatch(emptyForm())           
-
       this.props.dispatch(closeModal(this.props.modalID))
-
-      // var keyString = JSON.stringify(ethereum.createNewAddress(password))      
-      // var address = addressFromKey(keyString)    
-      // this.props.dispatch(addAccount(
-      // address, keyString,
-      // this.props.name, this.props.desc))
-
     }
   }
 
