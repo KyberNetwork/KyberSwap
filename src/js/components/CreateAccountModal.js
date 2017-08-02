@@ -15,9 +15,9 @@ import { addressFromKey } from "../utils/keys"
 const passphraseID = "create-pass"
 const repassphraseID = "re-create-pass"
 @connect((store) => {
-  var importKeystore = {...store.importKeystore}
-  importKeystore.ethereum = store.connection.ethereum
-  return importKeystore
+  var createKeyStore = {...store.createKeyStore}
+  createKeyStore.ethereum = store.connection.ethereum
+  return createKeyStore
 })
 export default class CreateAccountModal extends React.Component {
   specifyName = (event) => {
@@ -34,8 +34,8 @@ export default class CreateAccountModal extends React.Component {
     
     if (anyErrors(errors)) {      
       this.props.dispatch(throwError("Retype password is not match"))
-    } else {
-      var keyString = ethereum.createNewAddress(this.props.passphraseID)
+    } else {      
+      var keyString = JSON.stringify(ethereum.createNewAddress(password))      
       var address = addressFromKey(keyString)    
       this.props.dispatch(addAccount(
       address, keyString,
