@@ -23,6 +23,7 @@ const createModalId = "new_account_create_modal"
     currentBlock: store.global.currentBlock,
     connected: store.global.connected,
     newAccountAdding: store.accounts.newAccountAdding,
+    newAccountCreating: store.accounts.newAccountCreating,
 
     newWalletAdding: store.wallets.newWalletAdding,
     utils:store.utils
@@ -67,8 +68,9 @@ export default class Dashboard extends React.Component {
     }
 
     var importingAccount
-    if (this.props.newAccountAdding) {
-      importingAccount = <p class="loading">New account is being imported...</p>
+    console.log(this.props.newAccountAdding || this.props.newAccountCreating)
+    if (this.props.newAccountAdding || this.props.newAccountCreating) {
+      importingAccount = <p class="loading">New account is being added...</p>
     } else {
       importingAccount = ""
     }

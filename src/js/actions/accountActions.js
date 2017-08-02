@@ -1,6 +1,5 @@
 import * as service from "../services/accounts"
 import store from "../store"
-import { addressFromKey } from "../utils/keys"
 
 export function loadAccounts(node) {
     return {
@@ -9,22 +8,12 @@ export function loadAccounts(node) {
     }
 }
 
-export function createAccount(passphrase, name, desc, ethereum) {
+export function createAccount(address, keystring, name, desc) {
     return {
-        type: "CREATE_NEW_ACCOUNT",
+        type: "NEW_ACCOUNT_CREATED",
         payload: new Promise((resolve, reject) => {
-            service.createKeyStore(passphrase, name, desc, ethereum, resolve)
-
-            // service.createKeyStore(ethereum, passphrase, function(keyString){
-            //   console.log(keyString)
-            //   var address = addressFromKey(keyString)    
-            //   service.newAccountInstance(
-            //       address, keyString, name, desc, resolve)
-            //   })  
-            // })
-            //var keystring =JSON.stringify(ethereum.createNewAddress(passphrase))    
-            //console.log(keystring)  
-
+            service.newAccountInstance(
+                address, keystring, name, desc, resolve)
         })
     }
 }

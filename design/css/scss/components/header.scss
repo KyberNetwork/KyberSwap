@@ -65,7 +65,7 @@ $tabHeight:40px;
             }
         }
         a {
-            font-family: Roboto-Regular;
+            font-weight: 500;
             font-size: 16px;
             color: #FFFFFF;
             height: $tabHeight;
@@ -165,7 +165,7 @@ $tabHeight:40px;
                 cursor: pointer;
                 box-shadow:none;
                 background-color:inherit;
-                font-family: Roboto-Light;
+                font-weight: 300;
                 font-size: 14px;
                 color: #D8D8D8;
                 letter-spacing: 0;
