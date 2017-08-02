@@ -426,12 +426,18 @@
   background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 .k-page-wallet .import-wallet button {
   background-image: -webkit-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
   background-image: -o-linear-gradient(225deg, #17EAD9 0%, #6078EA 100%);
   background-image: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 .k-page-wallet #tx-modal-wallet {
   top: -460px !important; }
@@ -464,6 +470,12 @@
   background-color: #00bd70; }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+.k-page-account .import-wallet button {
+  background-color: #00bd70; }
+
+>>>>>>> Stashed changes
 =======
 .k-page-account .import-wallet button {
   background-color: #00bd70; }
@@ -557,12 +569,15 @@
     display: -webkit-flex;
     display: -ms-flexbox;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     display: flex;
     -webkit-box-pack: justify;
     -webkit-justify-content: space-between;
     -ms-flex-pack: justify;
     justify-content: space-between; }
 =======
+=======
+>>>>>>> Stashed changes
     display: flex; }
 >>>>>>> Stashed changes
   .wallet-item .balance {
@@ -584,11 +599,14 @@
   .wallet-item .control-btn {
     visibility: hidden;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     float: left;
     margin-left: 10px; }
     .wallet-item .control-btn button {
       margin-left: 10px;
 =======
+=======
+>>>>>>> Stashed changes
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -800,6 +818,9 @@
         right: -35px; }
         .k-page-exchange .item-1 .input-item .button:after {
           border-top-color: #009dea; }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     .k-page-exchange .item-1 .extra-info {
       margin-left: 150px;
@@ -811,6 +832,7 @@
       font-size: 12px; }
     .k-page-exchange .item-1 .input-account input {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       width: 530px; }
     .k-page-exchange .item-1 .input-account select {
       width: 100px;
@@ -819,6 +841,8 @@
     .k-page-exchange .item-1 .input-amount select {
       width: 80px; }
 =======
+=======
+>>>>>>> Stashed changes
       width: 432px; }
     .k-page-exchange .item-1 .input-amount .label {
       text-align: center;
