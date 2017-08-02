@@ -32,5 +32,5 @@ export function destAccounts(store) {
 
 export function accountName(store, address) {
   var acc = store.accounts.accounts[address]
-  return acc.name
+  return acc ? acc.name : address
 }
