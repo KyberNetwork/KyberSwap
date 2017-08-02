@@ -133,7 +133,7 @@ export default class AccountDetail extends React.Component {
         </div>
       </div>
       <div class="wallet-content">
-        <div class="wallet-left">          
+        <div class="wallet-left">
           <div class="content">
             <div class="balance">
               <label>Ether</label>
@@ -142,7 +142,7 @@ export default class AccountDetail extends React.Component {
             <div class="address">
               <label>Address</label>
               <span>{this.props.address}</span>
-              <div class="account-action">                
+              <div class="account-action">
                 <div>
                   <ModalButton preOpenHandler={this.openQuickExchange} modalID={modalID} title="Quick exchange between tokens">
                     <i class="k-icon k-icon-exchange-green"></i>

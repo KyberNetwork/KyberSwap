@@ -1,5 +1,5 @@
-import EthereumTx from "ethereumjs-tx";
-import { unlock } from "./keys";
+import EthereumTx from "ethereumjs-tx"
+import { unlock } from "./keys"
 
 export function sealTxByKeystore(params, keystore, password) {
   const tx = new EthereumTx(params)
