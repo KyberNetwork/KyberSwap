@@ -32,7 +32,7 @@ export default class Tx {
       if (mined) {
         newTx.address = receipt.contractAddress
         var logs = receipt.logs
-        if (newTx.type == "send" || newTx.type == "exchange") {
+        if (newTx.type == "exchange") {
           if (logs.length == 0) {
             newTx.threw = true
             newTx.status = "failed"
@@ -47,6 +47,8 @@ export default class Tx {
             }
             newTx.status = theLog ? "success" : "failed"
           }
+        } else if (newTx.type == "send") {
+          newTx.status = "success"
         } else {
           newTx.status = "mined"
         }

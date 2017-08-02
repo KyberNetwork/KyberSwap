@@ -22,9 +22,11 @@ const store = createStore(
 
 persistStore(store, {blacklist: [
   'connection',
-  // 'exchangeForm',
-  // 'paymentForm',
-  // 'joinPaymentForm',
+  'exchangeForm',
+  'paymentForm',
+  'joinPaymentForm',
+  'createKeyStore',
+  'importKeystore',
   ]})
 
 export default store

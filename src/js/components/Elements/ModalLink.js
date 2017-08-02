@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import { openModal } from "../../actions/utilActions"
+import { openModal, hideControl } from "../../actions/utilActions"
 
 
 @connect((store) => {
@@ -10,6 +10,7 @@ import { openModal } from "../../actions/utilActions"
 export default class ModalLink extends React.Component {
 
   openModal = (event) => {
+    this.props.dispatch(hideControl())
     this.props.dispatch(openModal(this.props.modalID))
   }
 

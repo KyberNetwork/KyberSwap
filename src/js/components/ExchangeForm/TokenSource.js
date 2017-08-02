@@ -90,8 +90,8 @@ export default class TokenSource extends React.Component {
     }
     return (
       <li>
-        <div> 
-          <label>{this.props.label || "Send"}</label>
+        <div>
+          <label>{ this.props.exchangeFormID == "quick-exchange" ? "Exchange" : "Send"}</label>
           <select onChange={this.selectToken.bind(this)} value={this.props.selectedToken}>
             <option key={constants.ETHER_ADDRESS} value={constants.ETHER_ADDRESS}>ETH</option>
             {tokenOptions}

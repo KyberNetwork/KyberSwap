@@ -88,6 +88,12 @@ $stepColorActive:#00c072;
                 margin: 0 auto;
                 background-color: #2F3037;
             }
+            .success {
+                background-color: $stepColorActive;
+            }
+            .failed {
+                background-color: #e74c3c;
+            }
             .left-bridge {
                position: relative;
                top: 15px;

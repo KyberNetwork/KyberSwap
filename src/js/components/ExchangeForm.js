@@ -86,6 +86,17 @@ export default class ExchangeForm extends React.Component {
     }
   }
 
+  getCircleClass = (tx) => {
+    if (tx) {
+      if (tx.status == "success") {
+        return "circle success"
+      } else if (tx.status == "failed") {
+        return "circle failed"
+      }
+    }
+    return "circle"
+  }
+
   render() {
     if (this.props.step == 4) {
       var txStatus
@@ -177,7 +188,7 @@ export default class ExchangeForm extends React.Component {
                 <div class="step step-4">
                   <span class="left-bridge"></span>
                   <span class="right-bridge"></span>
-                  <span class="circle"></span>
+                  <span class={this.getCircleClass(tx)} ></span>
                   <div class="label">Done</div>
                 </div>
               </div>

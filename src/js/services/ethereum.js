@@ -140,11 +140,11 @@ export default class EthereumService {
   }
 
   fetchData() {
-    this.fetchCurrentBlock()
-    this.fetchTxsData()
-    this.fetchRateData()
-    this.fetchWalletsData()
-    this.fetchAccountsData()
+    // this.fetchCurrentBlock()
+    // this.fetchTxsData()
+    // this.fetchRateData()
+    // this.fetchWalletsData()
+    // this.fetchAccountsData()
   }
 
   actAndWatch(error, result) {
