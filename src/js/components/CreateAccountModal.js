@@ -7,17 +7,9 @@ import Modal from './Elements/Modal'
 import { closeModal } from "../actions/utilActions"
 import ReCredential from "./Elements/ReCredential"
 
-<<<<<<< HEAD
-import { specifyName, specifyDesc, emptyForm,  throwError} from "../actions/importKeystoreActions"
-import { addAccount } from "../actions/accountActions"
-import { verifyAccount, verifyKey, verifyPassphrase, anyErrors } from "../utils/validators"
-import { addressFromKey } from "../utils/keys"
-=======
 import { specifyName, specifyDesc, emptyForm,  throwError} from "../actions/createKeystoreActions"
 import { createAccount } from "../actions/accountActions"
 import { verifyAccount, verifyKey, verifyPassphrase, anyErrors } from "../utils/validators"
-//import { addressFromKey } from "../utils/keys"
->>>>>>> master
 
 const passphraseID = "create-pass"
 const repassphraseID = "re-create-pass"

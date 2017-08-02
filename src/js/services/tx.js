@@ -1,3 +1,6 @@
+import * as ethUtil from 'ethereumjs-util'
+import constants from "../services/constants"
+
 export default class Tx {
   constructor(
     hash, from, gas, gasPrice, nonce, status,
@@ -27,20 +30,29 @@ export default class Tx {
     ethereum.txMined(this.hash, (mined, receipt) => {
       var newTx = this.shallowClone()
       if (mined) {
-        newTx.status = "mined"
+        newTx.address = receipt.contractAddress
+        var logs = receipt.logs
+        if (newTx.type == "send" || newTx.type == "exchange") {
+          if (logs.length == 0) {
+            newTx.threw = true
+            newTx.status = "failed"
+          } else {
+            var theLog
+            for (var i = 0; i < logs.length; i++) {
+              if (logs[i].address == constants.NETWORK_ADDRESS &&
+                logs[i].topics[0] == constants.TRADE_TOPIC) {
+                theLog = logs[i]
+                break
+              }
+            }
+            newTx.status = theLog ? "success" : "failed"
+          }
+        } else {
+          newTx.status = "mined"
+        }
       }
       else {
         newTx.status = "pending"
-      }
-      newTx.address = receipt.contractAddress
-      var logs = receipt.logs
-      if (newTx.type == "send" || newTx.type == "exchange") {
-        if (logs.length == 0) {
-          newTx.threw = true
-        } else {
-          var data = logs[0].data
-          console.log(data)
-        }
       }
       callback(newTx)
     })
