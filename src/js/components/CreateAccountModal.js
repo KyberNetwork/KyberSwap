@@ -8,7 +8,7 @@ import { closeModal } from "../actions/utilActions"
 import ReCredential from "./Elements/ReCredential"
 
 import { specifyName, specifyDesc, emptyForm,  throwError} from "../actions/createKeystoreActions"
-import { addAccount } from "../actions/accountActions"
+import { createAccount } from "../actions/accountActions"
 import { verifyAccount, verifyKey, verifyPassphrase, anyErrors } from "../utils/validators"
 import { addressFromKey } from "../utils/keys"
 
@@ -37,7 +37,7 @@ export default class CreateAccountModal extends React.Component {
     } else {      
       var keyString = JSON.stringify(ethereum.createNewAddress(password))      
       var address = addressFromKey(keyString)    
-      this.props.dispatch(addAccount(address, keyString, this.props.name, this.props.desc))
+      this.props.dispatch(createAccount(address, keyString, this.props.name, this.props.desc))
       this.props.dispatch(emptyForm())           
       this.props.dispatch(closeModal(this.props.modalID))
     }

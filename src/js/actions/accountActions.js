@@ -8,6 +8,16 @@ export function loadAccounts(node) {
     }
 }
 
+export function createAccount(address, keystring, name, desc) {
+    return {
+        type: "NEW_ACCOUNT_CREATED",
+        payload: new Promise((resolve, reject) => {
+            service.newAccountInstance(
+                address, keystring, name, desc, resolve)
+        })
+    }
+}
+
 export function addAccount(address, keystring, name, desc) {
     return {
         type: "NEW_ACCOUNT_ADDED",
