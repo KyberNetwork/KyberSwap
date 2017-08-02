@@ -345,12 +345,12 @@ input::-webkit-contacts-auto-fill-button {
   height: 30px; }
 
 .k-icon-delete-green {
-  background-position: -217px -157px;
+  background-position: -217px -160px;
   width: 25px;
   height: 30px; }
 
 .k-icon-modify-green {
-  background-position: -262px -157px;
+  background-position: -260px -159px;
   width: 25px;
   height: 30px; }
 
@@ -410,12 +410,12 @@ input::-webkit-contacts-auto-fill-button {
   height: 75px; }
 
 .k-icon-error {
-  background-position: -345px -304px;
+  background-position: -345px -303px;
   width: 15px;
   height: 15px; }
 
 .k-icon-exchange-green {
-  background-position: -58px -66px;
+  background-position: -58px -69px;
   width: 25px;
   height: 25px; }
 
@@ -465,7 +465,7 @@ input::-webkit-contacts-auto-fill-button {
   height: 25px; }
 
 .k-icon-rate {
-  background-position: -250px -65px;
+  background-position: -250px -66px;
   width: 25px;
   height: 25px; }
 
@@ -485,7 +485,7 @@ input::-webkit-contacts-auto-fill-button {
   height: 20px; }
 
 .k-icon-close {
-  background-position: -49px -469px;
+  background-position: -50px -470px;
   width: 20px;
   height: 20px; }
 
@@ -843,8 +843,7 @@ input::-webkit-contacts-auto-fill-button {
     color: #00c072;
     font-size: 16px; }
     .wallet-item .wallet-left .account-action i {
-      margin-bottom: -3px; }
-    .wallet-item .wallet-left .account-action .k-icon-send-green {
+      margin-bottom: -3px;
       position: relative;
       top: 3px; }
     .wallet-item .wallet-left .account-action button {

@@ -28,18 +28,15 @@ export default class CreateAccountModal extends React.Component {
     event.preventDefault()   
     var errors = {}
     var ethereum = this.props.ethereum
-    var keyString = ethereum.createNewAddress(this.props.passphraseID)
-    var address = addressFromKey(keyString)
-    errors["addressError"] = verifyAccount(address)
-    errors["keyError"] = verifyKey(keyString)
-    
     var password = document.getElementById(passphraseID).value
     var repassword = document.getElementById(repassphraseID).value
-    errors["passwordError"] = verifyPassphrase(password, repassword)    
-    if (anyErrors(errors)) {
-      console.log(errors)
-      this.props.dispatch(throwError("Cannot import invalid keystore file"))
+    errors["passwordError"] = verifyPassphrase(password, repassword)        
+    
+    if (anyErrors(errors)) {      
+      this.props.dispatch(throwError("Retype password is not match"))
     } else {
+      var keyString = ethereum.createNewAddress(this.props.passphraseID)
+      var address = addressFromKey(keyString)    
       this.props.dispatch(addAccount(
       address, keyString,
       this.props.name, this.props.desc))
