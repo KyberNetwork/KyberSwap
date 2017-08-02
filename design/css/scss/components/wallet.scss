@@ -138,7 +138,7 @@ $backgroundColor:#333;
         span {
             text-transform: uppercase;
             padding-left: $paddingLeft;
-            font-family: Lato-Light;
+            font-family: Roboto-Light;
             font-size: 16px;
             color: #FFFFFF;
         }
@@ -148,7 +148,7 @@ $backgroundColor:#333;
     }
     .wallet-left {
         label {
-          font-family: Lato-Bold;
+          font-family: Roboto-Bold;
           font-size: 16px;
           color: #FFFFFF;
         }
@@ -182,8 +182,23 @@ $backgroundColor:#333;
             justify-content: space-between;
             align-items:center;
             width: 283px;
+            color: #00c072;
+            font-size: 16px;
+            i {
+              margin-bottom: -3px;
+            }
+            .k-icon-send-green{
+                position:relative;
+                top: 3px;
+            }
             button{
                 cursor: pointer;
+            }
+            p {
+              padding-bottom: 5px;
+              padding-left: 5px;
+              display: inline-block;
+              margin: 0;
             }
         }
     }
@@ -264,6 +279,7 @@ $backgroundColor:#333;
         border-radius:10px;
         position:absolute;
         right: 0px;
+        width: 180px;
         display: none;
  &:after{
               content: '';

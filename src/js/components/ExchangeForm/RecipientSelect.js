@@ -43,14 +43,14 @@ export default class RecipientSelect extends React.Component {
       <div class="input-account">
         <div>
           <div>
-            <label>to</label>
+            <label>To</label>
             <input type="text" value={this.props.destAddress} onChange={this.specifyDestAddress.bind(this)} value={this.props.destAddress} />
           </div>
           <select class="selectric" id="to-account" value={this.props.destAddress} onChange={this.selectAccount.bind(this)}>
               <option key="1" value="">No account selected</option>
               {userOptions}
           </select>
-        </div>      
+        </div>
         { error }
       </div>)
 

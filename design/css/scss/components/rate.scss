@@ -1,11 +1,11 @@
-$heightRate:500px;
+$heightRate:310px;
 $widthRate: 650px;
 $rateBtnColor:green;
 .k-rate {
   &.k-rate-show{
     .k-rate-wrapper {
       display: block;
-    }  
+    }
     .k-rate-content {
       right: 0px;
        transition: 0.3s;
@@ -65,7 +65,7 @@ $borderRateColor :#999;
   border-top: 2px solid $borderRate;
   border-bottom: 2px solid $borderRate;
   border-left: 2px solid $borderRate;
-  border-radius:10px;
+  border-radius: 10px 0 0 10px;
   font-size: 15px;
   *{
     background-color:inherit;
@@ -118,17 +118,18 @@ $borderRateColor :#999;
     tbody{
       tr{
         border-top:1px solid $borderRateColor;
+        td.token-pair {
+          color: #23ae79;
+          text-transform: uppercase;
+          text-align: center;
+        }
+
         td{
           text-align: right;
           &:not:first-child{
             color: white;
             text-align: center;
             padding:10px 20px;
-          }
-          &:first-child{
-            color: #23ae79;
-            text-transform: uppercase;
-            text-align: center;
           }
           &:nth-child(2){
             border-right:1px solid $borderRateColor;

@@ -7,7 +7,8 @@ import ModalButton from "./Elements/ModalButton"
 import { Balance, Token, Nonce } from "./Account/Balance"
 import { toT } from "../utils/converter"
 import { deleteAccount} from "../actions/accountActions"
-import { selectAccount, specifyRecipient, specifyStep } from "../actions/exchangeFormActions"
+import constants from "../services/constants"
+import { selectAccount, specifyRecipient, specifyStep, suggestRate } from "../actions/exchangeFormActions"
 
 const modalID = "quick-exchange-modal"
 const sendModalID = "quick-send-modal"
@@ -59,12 +60,16 @@ export default class AccountDetail extends React.Component {
       quickFormID, this.props.address))
     this.props.dispatch(specifyStep(
       quickFormID, 2))
+    this.props.dispatch(suggestRate(
+      quickFormID, constants.RATE_EPSILON))
   }
 
   openQuickSend = (event) => {
     this.props.dispatch(selectAccount(
       quickSendFormID, this.props.address
     ))
+    this.props.dispatch(suggestRate(
+      quickSendFormID, constants.RATE_EPSILON))
   }
 
   downloadKey = (event, keystore, address) => {
@@ -118,6 +123,11 @@ export default class AccountDetail extends React.Component {
                   <i class="k-icon k-icon-modify-green"></i> Modify...
                 </a>
               </li>
+              <li>
+                <a class="download" onClick={(e) => this.downloadKey(e, this.props.keystore, this.props.address)}>
+                  <i class="k-icon k-icon-download"></i> Download key...
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -132,20 +142,17 @@ export default class AccountDetail extends React.Component {
             <div class="address">
               <label>Address</label>
               <span>{this.props.address}</span>
-              <div class="account-action">
-                <div>
-                  <button title="Downnload keystore file" onClick={(e) => this.downloadKey(e, this.props.keystore, this.props.address)}>
-                    <i class="k-icon k-icon-download"></i>
-                  </button>
-                </div>
+              <div class="account-action">                
                 <div>
                   <ModalButton preOpenHandler={this.openQuickExchange} modalID={modalID} title="Quick exchange between tokens">
                     <i class="k-icon k-icon-exchange-green"></i>
+                    <p>Exchange</p>
                   </ModalButton>
                 </div>
                 <div>
                   <ModalButton preOpenHandler={this.openQuickSend} modalID={sendModalID} title="Quick send ethers and tokens">
                     <i class="k-icon k-icon-send-green"></i>
+                    <p>Send</p>
                   </ModalButton>
                 </div>
               </div>

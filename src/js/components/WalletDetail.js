@@ -124,11 +124,13 @@ export default class WalletDetail extends React.Component {
                   <div>
                     <ModalButton preOpenHandler={this.openQuickExchange} modalID={modalID} title="Quick exchange between tokens">
                       <i class="k-icon k-icon-exchange-green"></i>
+                      <p>Exchange</p>
                     </ModalButton>
                   </div>
                   <div>
                     <ModalButton preOpenHandler={this.openQuickSend} modalID={sendModalID} title="Quick send ethers and tokens">
                       <i class="k-icon k-icon-send-green"></i>
+                      <p>Send</p>
                     </ModalButton>
                   </div>
                 </div>

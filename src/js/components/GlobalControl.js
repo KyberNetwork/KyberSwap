@@ -38,7 +38,7 @@ export default class GlobalControl extends React.Component {
     var linkWallet = (
       <div class="link">
         <i class="k-icon k-icon-import"></i>
-        <label>Import Wallet</label>
+        <label>Deploy Kyber Wallet</label>
       </div>
     )
     var linkExchange = (

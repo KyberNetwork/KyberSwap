@@ -15,13 +15,13 @@ export default class ReCredential extends React.Component {
       	<div>	
       		<label>Passphrase</label>
 	        <div class="input-space">
-	          <input id={this.props.passphraseID} type="password" placeholder="Type in your passphrase"/>
+	          <input onKeyPress={this.props.onKeyPressPassword} id={this.props.passphraseID} name="password" type="password" placeholder="Type in your passphrase"/>
 	        </div>
       	</div>
         <div>
         	<label>Retype Passphrase</label>
 	        <div class="input-space">
-	          <input id={this.props.repassphraseID} type="password" placeholder="Retype your passphrase"/>
+	          <input onKeyPress={this.props.onKeyPressRePassword} id={this.props.repassphraseID} name="re_password" type="password" placeholder="Retype your passphrase"/>
 	        </div>
         </div>
         {error}

@@ -10,6 +10,7 @@ import TransactionConfig from "./Elements/TransactionConfig"
 import Credential from "./Elements/Credential"
 import PostExchange from "./ExchangeForm/PostExchange"
 import CrossSend from "./ExchangeForm/CrossSend"
+import MinRate from "./ExchangeForm/MinRate"
 import constants from "../services/constants"
 
 import { specifyGasLimit, specifyGasPrice, resetStep, selectAdvance, deselectAdvance } from "../actions/exchangeFormActions"
@@ -67,6 +68,24 @@ export default class ExchangeForm extends React.Component {
     }
   }
 
+  focusNext =(value, event) => {         
+    if(event.key === 'Enter'){
+      event.preventDefault()
+      if(document.getElementsByName(value)[0]){
+        document.getElementsByName(value)[0].focus();        
+      }      
+    }
+  }
+
+  goNextStep =(event) => {         
+    if(event.key === 'Enter'){
+      event.preventDefault()
+      if(document.getElementById('next-exchange')){
+        document.getElementById('next-exchange').click();        
+      }      
+    }
+  }
+
   render() {
     if (this.props.step == 4) {
       var txStatus
@@ -108,45 +127,51 @@ export default class ExchangeForm extends React.Component {
           </div>
           <div class="exchange-page" data-page={this.props.step}>
             <div class="k-progress">
-              <div class="progress-bar">
-                <div class="step step-1">
-                  <span class="circle"></span>
-                </div>
+              <div class={this.props.exchangeFormID != "quick-exchange" ? "progress-bar progress-squeeze" : "progress-bar"}>
+                { this.props.exchangeFormID != "quick-exchange" ?
+                  <div class="step step-1">
+                    <span class="left-bridge"></span>
+                    <span class="right-bridge"></span>
+                    <span class="circle"></span>
+                    <div class="label">
+                      Destination
+                    </div>
+                  </div> : ""
+                }
                 <div class="step step-2">
-                  <div class="bridge"></div>
+                  <span class="left-bridge"></span>
+                  <span class="right-bridge"></span>
                   <span class="circle"></span>
+                  <div class="label">
+                    { this.props.exchangeFormID == "quick-exchange" ?
+                      "Exchange setting" : "Send setting"
+                    }
+                  </div>
                 </div>
                 { this.props.advanced ?
                   <div class="step step-advance">
-                    <div class="bridge"></div>
+                    <span class="left-bridge"></span>
+                    <span class="right-bridge"></span>
                     <span class="circle"></span>
+                    <div class="label">Advanced configuration</div>
                   </div> : ""
                 }
                 <div class="step step-3">
-                  <div class="bridge"></div>
+                  <span class="left-bridge"></span>
+                  <span class="right-bridge"></span>
                   <span class="circle"></span>
+                  <div class="label">Password</div>
                 </div>
                 <div class="step step-4">
-                  <div class="bridge"></div>
+                  <span class="left-bridge"></span>
+                  <span class="right-bridge"></span>
                   <span class="circle"></span>
+                  <div class="label">Done</div>
                 </div>
-              </div>
-              <div class={ this.props.advanced ? "advanced-progress-label progress-label" : "progress-label" }>
-                <div class="progress-step-1">Addresses</div>
-                <div class="progress-step-2">Amount</div>
-                { this.props.advanced ?
-                  <div class="progress-step-advance">Advance Option</div> : ""
-                }
-                <div class="progress-step-3">Password</div>
-                <div class="progress-step-4">Done</div>
               </div>
             </div>
             <div class="page">
               <div class="page-item item-1">
-                <h3>
-                  <i class="k-icon k-icon-home-white"></i>
-                  <span>Addresses</span>
-                </h3>
                 <div>
                   <UserSelect exchangeFormID={this.props.exchangeFormID}/>
                 </div>
@@ -157,36 +182,19 @@ export default class ExchangeForm extends React.Component {
               <div class="page-item item-2">
                 <div class="content">
                   <ul>
-                    <TokenSource exchangeFormID={this.props.exchangeFormID} />
+                    <TokenSource onKeyPress={(event) => this.focusNext('token_des', event)} exchangeFormID={this.props.exchangeFormID} />
                     { this.props.allowDirectSend ?
                       <CrossSend exchangeFormID={this.props.exchangeFormID} /> : ""
                     }
-                    <TokenDest exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
+                    <TokenDest onKeyPress={(event) => this.focusNext('min_rate', event)} exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
+                    <MinRate onKeyPress={(event) => this.goNextStep(event)} exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
                     <li>
                       <div>
                         <label>Advanced configuration</label>
                         <input type="checkbox" defaultChecked={this.props.advanced} onChange={this.selectAdvance} id="advance-option"/>
                         <label class="k-checkbox" for="advance-option"></label>
-                      </div>                      
+                      </div>
                     </li>
-                    {/*
-                    <li>
-                      <label>Max Destination Amount </label>
-                      <select>
-                        <option>BTC</option>
-                        <option>ETH</option>
-                      </select>
-                      <span>123,456,789,101,112,567</span>
-                    </li>
-                    <li>
-                      <label>Min Destination Amount</label>
-                      <select>
-                        <option>BTC</option>
-                        <option>ETH</option>
-                      </select>
-                      <span>123,456,789,101,112,567</span>                      
-                    </li>
-                    */}
                   </ul>
                 </div>
                 { (this.props.isCrossSend || !this.props.allowDirectSend) ? <ExchangeRate exchangeFormID={this.props.exchangeFormID}/> : "" }
@@ -202,7 +210,7 @@ export default class ExchangeForm extends React.Component {
                 </div>
               </div>
               <div class="page-item item-3">
-                <Credential passphraseID={this.props.passphraseID} error={this.props.passwordError} />
+                <Credential passphraseID={this.props.passphraseID} error={this.props.passwordError}  onKeyPress={(event) => this.goNextStep(event)}/>
               </div>
               <div class="page-item item-4">
                 {txStatus}
@@ -212,7 +220,7 @@ export default class ExchangeForm extends React.Component {
               </div>
             </div>
             <div class="next" id="exchange-next">
-              <PostExchange passphraseID={this.props.passphraseID} exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
+              <PostExchange passphraseID={this.props.passphraseID} exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend} postExchangeHandler={this.props.postExchangeHandler}/>
             </div>
           </div>
         </div>

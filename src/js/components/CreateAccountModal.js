@@ -52,6 +52,23 @@ export default class CreateAccountModal extends React.Component {
   closeModal = (event) => {
     this.props.dispatch(closeModal(this.props.modalID))
   }
+
+  focusNext = (value, event) => {         
+    if(event.key === 'Enter'){
+      event.preventDefault()
+      if(document.getElementsByName(value)[0]){
+        document.getElementsByName(value)[0].focus();        
+      }      
+    }
+  }
+
+  pressRePassword = (event) => {
+    if(event.key === 'Enter'){
+      event.preventDefault()
+      this.createAccount(event)
+    }
+  }
+
   content = () => {
     return (
       <div className="import-account text-green">
@@ -70,12 +87,12 @@ export default class CreateAccountModal extends React.Component {
             <div className="row">
               <div className="large-12 columns account-name">
                 <label>Account Name</label>
-                <input value={this.props.name} onChange={this.specifyName} type="text" placeholder="Give your account a name"/>                
+                <input onKeyPress={(event) => this.focusNext('password', event)} value={this.props.name} onChange={this.specifyName} type="text" placeholder="Give your account a name"/>                
               </div>
             </div>            
             <div className="row">
               <div className="large-12 columns account-name">
-                <ReCredential passphraseID={passphraseID} repassphraseID={repassphraseID} error={this.props.passwordError}/>
+                <ReCredential onKeyPressRePassword={(event) => this.pressRePassword(event)} onKeyPressPassword={(event) => this.focusNext('re_password', event)} passphraseID={passphraseID} repassphraseID={repassphraseID} error={this.props.passwordError}/>
               </div>
             </div>            
             <div className="row">
