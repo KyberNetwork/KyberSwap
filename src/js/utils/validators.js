@@ -86,7 +86,7 @@ export function anyErrors(errors) {
 
 export function verifyPassphrase(passphrase, repassphrase) {
   if (passphrase !== repassphrase){
-    return "Retype passphrase is not match"
+    return "Passphrase confirmation is not match"
   }else{
     return null
   }

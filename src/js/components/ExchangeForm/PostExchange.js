@@ -204,7 +204,7 @@ export default class PostExchange extends React.Component {
       errors["keystringError"] = "Keystore is not loaded"
     }
     var ethereum = this.props.ethereum
-    if (this.props.isCrossSend) {
+    if (this.props.isCrossSend || this.props.exchangeFormID == "quick-exchange") {
       return this.doCrossSend(keystring, password, ethereum, errors)
     } else {
       return this.doDirectSend(keystring, password, ethereum, errors)
