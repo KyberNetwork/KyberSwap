@@ -14,6 +14,7 @@ const exchangeForm = (state=initState, action) => {
   switch (action.type) {
     case "ACCOUNT_SELECTED": {
       newState[id].selectedAccount = action.payload
+      newState[id].errors = {...newState[id].errors, selectedAccountError: ""}
       return newState
     }
     case "CROSS_SEND_SELECTED": {
@@ -36,12 +37,14 @@ const exchangeForm = (state=initState, action) => {
       var token = getToken(action.payload)
       newState[id].sourceToken = token.address
       newState[id].sourceTokenSymbol = token.symbol
+      newState[id].errors = {...newState[id].errors, sourceTokenError: ""}
       return newState
     }
     case "DEST_TOKEN_SELECTED": {
       var token = getToken(action.payload)
       newState[id].destToken = token.address
       newState[id].destTokenSymbol = token.symbol
+      newState[id].errors = {...newState[id].errors, destTokenError: ""}
       return newState
     }
     case "SOURCE_AMOUNT_SPECIFIED": {
@@ -50,6 +53,7 @@ const exchangeForm = (state=initState, action) => {
         sourceAmount, newState[id].minConversionRate).toString(10)
       newState[id].sourceAmount = action.payload
       newState[id].minDestAmount = minAmount
+      newState[id].errors = {...newState[id].errors, sourceAmountError: ""}
       return newState
     }
     case "MIN_AMOUNT_SPECIFIED": {
@@ -57,6 +61,7 @@ const exchangeForm = (state=initState, action) => {
       var minRate = calculateRate(newState[id].sourceAmount, minAmount).toString(10)
       newState[id].minDestAmount = minAmount
       newState[id].minConversionRate = minRate
+      newState[id].errors = {...newState[id].errors, minDestAmountError: ""}
       return newState
     }
     case "MIN_CONVERSION_RATE_SPECIFIED": {
@@ -68,14 +73,17 @@ const exchangeForm = (state=initState, action) => {
     }
     case "RECIPIENT_SPECIFIED": {
       newState[id].destAddress = action.payload
+      newState[id].errors = {...newState[id].errors, destAddressError: ""}
       return newState
     }
     case "GAS_PRICE_SPECIFIED": {
       newState[id].gasPrice = action.payload
+      newState[id].errors = {...newState[id].errors, gasPriceError: ""}
       return newState
     }
     case "GAS_SPECIFIED": {
       newState[id].gas = action.payload
+      newState[id].errors = {...newState[id].errors, gasError: ""}
       return newState
     }
     case "ERROR_THREW": {

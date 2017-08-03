@@ -10,9 +10,13 @@ const initState = {
 const importKeystore = (state=initState, action) => {
   switch (action.type) {
     case "ACCOUNT_KEY_UPLOADED": {
-      return {...state, keystring: action.payload.keystring, address: action.payload.address}
+      return {...state,
+        keystring: action.payload.keystring,
+        address: action.payload.address,
+        error: "",
+        }
     }
-    case "ACCOUNT_NAME_SPECIFIED": {      
+    case "ACCOUNT_NAME_SPECIFIED": {
       return {...state, name: action.payload}
     }
     case "ACCOUNT_DESC_SPECIFIED": {

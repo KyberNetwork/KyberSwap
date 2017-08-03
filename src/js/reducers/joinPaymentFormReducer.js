@@ -12,7 +12,10 @@ const initState = {
 const joinPaymentForm = (state=initState, action) => {
   switch (action.type) {
     case "JOIN_PAYMENT_ACCOUNT_SELECTED": {
-      return {...state, selectedAccount: action.payload}
+      return {...state,
+        selectedAccount: action.payload,
+        errors: {...state.errors, selectedAccountError: ""}
+      }
     }
     case "JOIN_PAYMENT_GAS_PRICE_SPECIFIED": {
       return {...state, gasPrice: action.payload}
