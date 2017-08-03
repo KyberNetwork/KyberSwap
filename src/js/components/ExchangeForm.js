@@ -192,7 +192,7 @@ export default class ExchangeForm extends React.Component {
                 </div>
               </div>
             </div>
-            <div class="page">
+            <div className={(this.props.isCrossSend || !this.props.allowDirectSend)?"page cross-send":"page"}>
               <div class="page-item item-1">
                 <div>
                   <UserSelect exchangeFormID={this.props.exchangeFormID}/>
