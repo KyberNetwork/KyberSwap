@@ -398,6 +398,7 @@ $backgroundColor:#333;
 $colorActiveTab :#00C072;
 $widthActiveBorder : 13px;
 $tabHeight:50px;
+$gapHover:4px;
 .control-account{
     position: fixed;
     bottom: 70px;
@@ -435,26 +436,26 @@ $tabHeight:50px;
 
             }    
             &:hover{
-                 &:before {
-                    content: '';
-                    position: absolute;
-                    z-index: 2;
-                    height: 10px;
-                    background-color: #2c2d34;
-                    width: 5px;
-                    margin-top: $tabHeight / 2 - 5;
-                }
-                &:after {
-                    content: '';
-                    position: absolute;
-                    z-index: 2;
-                    height: 10px;
-                    background-color: #2c2d34;
-                    width: 5px;
-                    margin-top: $tabHeight / 2 - 5;
-                    top: 0px;
-                    right:0px;
-                }
+                //  &:before {
+                //     content: '';
+                //     position: absolute;
+                //     z-index: 2;
+                //     height: $gapHover;
+                //     background-color: #2c2d34;
+                //     width: 5px;
+                //     margin-top: $tabHeight / 2 - $gapHover / 2;
+                // }
+                // &:after {
+                //     content: '';
+                //     position: absolute;
+                //     z-index: 2;
+                //     height: $gapHover;
+                //     background-color: #2c2d34;
+                //     width: 5px;
+                //     margin-top: $tabHeight / 2 - $gapHover / 2;
+                //     top: 0px;
+                //     right:0px;
+                // }
                 >div{
                     &:before {
                         content: '';

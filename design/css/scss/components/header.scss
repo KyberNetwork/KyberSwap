@@ -5,7 +5,7 @@ $corlor :#aaa;
 $colorActiveTab :#00C072;
 $widthActiveBorder : 13px;
 $tabHeight:40px;
-
+$gapHover:6px;
 .k-header {
     background-color: #fff;
     display: inline-block;
@@ -75,26 +75,26 @@ $tabHeight:40px;
             &:hover{
                 background-color:inherit;
                 position: relative;
-                &:before {
-                    content: '';
-                    position: absolute;
-                    z-index: 2;
-                    height: 10px;
-                    background-color: #2c2d34;
-                    width: 5px;
-                    margin-top: $tabHeight / 2 - 5;
-                }
-                &:after {
-                    content: '';
-                    position: absolute;
-                    z-index: 2;
-                    height: 10px;
-                    background-color: #2c2d34;
-                    width: 5px;
-                    margin-top: $tabHeight / 2 - 5;
-                    top: 0px;
-                    right:0px;
-                }
+                // &:before {
+                //     content: '';
+                //     position: absolute;
+                //     z-index: 2;
+                //     height: $gapHover;
+                //     background-color: #2c2d34;
+                //     width: 5px;
+                //     margin-top: $tabHeight / 2 - $gapHover / 2;
+                // }
+                // &:after {
+                //     content: '';
+                //     position: absolute;
+                //     z-index: 2;
+                //     height: $gapHover;
+                //     background-color: #2c2d34;
+                //     width: 5px;
+                //     margin-top: $tabHeight / 2 - $gapHover / 2;
+                //     top: 0px;
+                //     right:0px;
+                // }
                 a{
                     background-color:transparent;
                     &:before {
@@ -149,26 +149,26 @@ $tabHeight:40px;
         }
         .tabs-title.is-active {
             position:relative;
-            &:before {
-                content: '';
-                position: absolute;
-                z-index: 2;
-                height: 10px;
-                background-color: #2c2d34;
-                width: 5px;
-                margin-top: $tabHeight / 2 - 5;
-            }
-            &:after {
-                content: '';
-                position: absolute;
-                z-index: 2;
-                height: 10px;
-                background-color: #2c2d34;
-                width: 5px;
-                margin-top: $tabHeight / 2 - 5;
-                top: 0px;
-                right:0px;
-            }
+            // &:before {
+            //     content: '';
+            //     position: absolute;
+            //     z-index: 2;
+            //      height: $gapHover;
+            //     background-color: #2c2d34;
+            //     width: 5px;
+            //     margin-top: $tabHeight / 2 - $gapHover / 2;
+            // }
+            // &:after {
+            //     content: '';
+            //     position: absolute;
+            //     z-index: 2;
+            //     height: $gapHover;
+            //     background-color: #2c2d34;
+            //     width: 5px;
+            //     margin-top: $tabHeight / 2 - $gapHover / 2;
+            //     top: 0px;
+            //     right:0px;
+            // }
             a {
                 position: relative;
                 &:before {

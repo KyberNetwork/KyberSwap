@@ -52,24 +52,6 @@
     .k-header .k-header-menu li:hover {
       background-color: inherit;
       position: relative; }
-      .k-header .k-header-menu li:hover:before {
-        content: '';
-        position: absolute;
-        z-index: 2;
-        height: 10px;
-        background-color: #2c2d34;
-        width: 5px;
-        margin-top: 15px; }
-      .k-header .k-header-menu li:hover:after {
-        content: '';
-        position: absolute;
-        z-index: 2;
-        height: 10px;
-        background-color: #2c2d34;
-        width: 5px;
-        margin-top: 15px;
-        top: 0px;
-        right: 0px; }
       .k-header .k-header-menu li:hover a {
         background-color: transparent; }
         .k-header .k-header-menu li:hover a:before {
@@ -113,24 +95,6 @@
       width: 30px; }
     .k-header .k-header-menu .tabs-title.is-active {
       position: relative; }
-      .k-header .k-header-menu .tabs-title.is-active:before {
-        content: '';
-        position: absolute;
-        z-index: 2;
-        height: 10px;
-        background-color: #2c2d34;
-        width: 5px;
-        margin-top: 15px; }
-      .k-header .k-header-menu .tabs-title.is-active:after {
-        content: '';
-        position: absolute;
-        z-index: 2;
-        height: 10px;
-        background-color: #2c2d34;
-        width: 5px;
-        margin-top: 15px;
-        top: 0px;
-        right: 0px; }
       .k-header .k-header-menu .tabs-title.is-active a {
         position: relative; }
         .k-header .k-header-menu .tabs-title.is-active a:before {
@@ -1051,24 +1015,6 @@ input::-webkit-contacts-auto-fill-button {
       position: relative; }
       .control-account ul > li:not(:last-child) {
         border-bottom: 1px solid #000; }
-      .control-account ul > li:hover:before {
-        content: '';
-        position: absolute;
-        z-index: 2;
-        height: 10px;
-        background-color: #2c2d34;
-        width: 5px;
-        margin-top: 20px; }
-      .control-account ul > li:hover:after {
-        content: '';
-        position: absolute;
-        z-index: 2;
-        height: 10px;
-        background-color: #2c2d34;
-        width: 5px;
-        margin-top: 20px;
-        top: 0px;
-        right: 0px; }
       .control-account ul > li:hover > div:before {
         content: '';
         width: 13px;
