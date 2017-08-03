@@ -59,8 +59,8 @@ $gradient:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
 }
 
 .k-icon-account {
-        background-position: -99px -70px;
-    width: 20px;
+    background-position: -97px -67px;
+    width: 25px;
     height: 25px;
 }
 
@@ -71,9 +71,9 @@ $gradient:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
 }
 
 .k-icon-transaction {
-    background-position: -102px -20px;
-    width: 20px;
-    height: 20px;
+    background-position: -98px -18px;
+    width: 25px;
+    height: 25px;
 }
 
 .k-icon-payment {
@@ -275,9 +275,9 @@ $gradient:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
 
 
 .k-icon-info{
-    background-position: -220px -521px;
-    width: 20px;
-    height: 20px;
+    background-position: -218px -518px;
+    width: 25px;
+    height: 25px;
 }
 
 .k-icon-contract{
@@ -313,7 +313,13 @@ $gradient:linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
 }
 
 .k-icon-download{
-    background-position: -264px -512px;
+    background-position: -417px -536px;
     width: 25px;
     height: 25px;
+}
+
+.k-icon-failed{
+    background-position: -311px -517px;
+    width: 80px;
+    height: 80px;
 }

@@ -37,11 +37,63 @@
       color: orange; }
   .k-header .k-header-menu {
     padding-top: 40px; }
+    .k-header .k-header-menu .k-icon-account {
+      position: relative;
+      top: -3px; }
+    .k-header .k-header-menu .k-icon-info {
+      position: relative;
+      top: -2px;
+      left: 2px; }
     .k-header .k-header-menu .tabs {
       border: none;
       background-color: inherit; }
     .k-header .k-header-menu li:not(:last-child) {
       margin-bottom: 5px; }
+    .k-header .k-header-menu li:hover {
+      background-color: inherit;
+      position: relative; }
+      .k-header .k-header-menu li:hover:before {
+        content: '';
+        position: absolute;
+        z-index: 2;
+        height: 10px;
+        background-color: #2c2d34;
+        width: 5px;
+        margin-top: 15px; }
+      .k-header .k-header-menu li:hover:after {
+        content: '';
+        position: absolute;
+        z-index: 2;
+        height: 10px;
+        background-color: #2c2d34;
+        width: 5px;
+        margin-top: 15px;
+        top: 0px;
+        right: 0px; }
+      .k-header .k-header-menu li:hover a {
+        background-color: transparent; }
+        .k-header .k-header-menu li:hover a:before {
+          content: '';
+          width: 13px;
+          height: 40px;
+          position: absolute;
+          left: 0px;
+          top: 0px;
+          border-top: 2px solid #00C072;
+          border-bottom: 2px solid #00C072;
+          border-left: 2px solid #00C072;
+          border-radius: 3px 0 0 3px; }
+        .k-header .k-header-menu li:hover a:after {
+          content: '';
+          width: 13px;
+          height: 40px;
+          position: absolute;
+          right: 0px;
+          top: 0px;
+          border-top: 2px solid #00C072;
+          border-bottom: 2px solid #00C072;
+          border-right: 2px solid #00C072;
+          border-radius: 0 3px 3px 0; }
     .k-header .k-header-menu a {
       font-weight: 500;
       font-size: 16px;
@@ -56,58 +108,53 @@
         margin-right: 10px; }
       .k-header .k-header-menu a:focus {
         background-color: inherit; }
-      .k-header .k-header-menu a:hover {
-        background-color: inherit;
+    .k-header .k-header-menu span {
+      display: inline-block;
+      width: 30px; }
+    .k-header .k-header-menu .tabs-title.is-active {
+      position: relative; }
+      .k-header .k-header-menu .tabs-title.is-active:before {
+        content: '';
+        position: absolute;
+        z-index: 2;
+        height: 10px;
+        background-color: #2c2d34;
+        width: 5px;
+        margin-top: 15px; }
+      .k-header .k-header-menu .tabs-title.is-active:after {
+        content: '';
+        position: absolute;
+        z-index: 2;
+        height: 10px;
+        background-color: #2c2d34;
+        width: 5px;
+        margin-top: 15px;
+        top: 0px;
+        right: 0px; }
+      .k-header .k-header-menu .tabs-title.is-active a {
         position: relative; }
-        .k-header .k-header-menu a:hover:before {
+        .k-header .k-header-menu .tabs-title.is-active a:before {
           content: '';
           width: 13px;
           height: 40px;
           position: absolute;
           left: 0px;
           top: 0px;
-          border-top: 2px solid #00bd70;
-          border-bottom: 2px solid #00bd70;
-          border-left: 2px solid #00bd70;
+          border-top: 2px solid #00C072;
+          border-bottom: 2px solid #00C072;
+          border-left: 2px solid #00C072;
           border-radius: 3px 0 0 3px; }
-        .k-header .k-header-menu a:hover:after {
+        .k-header .k-header-menu .tabs-title.is-active a:after {
           content: '';
           width: 13px;
           height: 40px;
           position: absolute;
           right: 0px;
           top: 0px;
-          border-top: 2px solid #00bd70;
-          border-bottom: 2px solid #00bd70;
-          border-right: 2px solid #00bd70;
+          border-top: 2px solid #00C072;
+          border-bottom: 2px solid #00C072;
+          border-right: 2px solid #00C072;
           border-radius: 0 3px 3px 0; }
-    .k-header .k-header-menu span {
-      display: inline-block;
-      width: 30px; }
-    .k-header .k-header-menu .tabs-title.is-active a {
-      position: relative; }
-      .k-header .k-header-menu .tabs-title.is-active a:before {
-        content: '';
-        width: 13px;
-        height: 40px;
-        position: absolute;
-        left: 0px;
-        top: 0px;
-        border-top: 2px solid #00bd70;
-        border-bottom: 2px solid #00bd70;
-        border-left: 2px solid #00bd70;
-        border-radius: 3px 0 0 3px; }
-      .k-header .k-header-menu .tabs-title.is-active a:after {
-        content: '';
-        width: 13px;
-        height: 40px;
-        position: absolute;
-        right: 0px;
-        top: 0px;
-        border-top: 2px solid #00bd70;
-        border-bottom: 2px solid #00bd70;
-        border-right: 2px solid #00bd70;
-        border-radius: 0 3px 3px 0; }
   .k-header .node > div:first-child {
     margin-top: 60px;
     text-align: center;
@@ -285,8 +332,8 @@ input::-webkit-contacts-auto-fill-button {
   height: 20px; }
 
 .k-icon-account {
-  background-position: -99px -70px;
-  width: 20px;
+  background-position: -97px -67px;
+  width: 25px;
   height: 25px; }
 
 .k-icon-exchange {
@@ -295,9 +342,9 @@ input::-webkit-contacts-auto-fill-button {
   height: 20px; }
 
 .k-icon-transaction {
-  background-position: -102px -20px;
-  width: 20px;
-  height: 20px; }
+  background-position: -98px -18px;
+  width: 25px;
+  height: 25px; }
 
 .k-icon-payment {
   background-position: -141px -70px;
@@ -475,9 +522,9 @@ input::-webkit-contacts-auto-fill-button {
   height: 25px; }
 
 .k-icon-info {
-  background-position: -220px -521px;
-  width: 20px;
-  height: 20px; }
+  background-position: -218px -518px;
+  width: 25px;
+  height: 25px; }
 
 .k-icon-contract {
   background-position: -179px -20px;
@@ -510,9 +557,14 @@ input::-webkit-contacts-auto-fill-button {
   height: 40px; }
 
 .k-icon-download {
-  background-position: -264px -512px;
+  background-position: -417px -536px;
   width: 25px;
   height: 25px; }
+
+.k-icon-failed {
+  background-position: -311px -517px;
+  width: 80px;
+  height: 80px; }
 
 .k-page-account p.loading {
   padding-left: 25px;
@@ -995,8 +1047,50 @@ input::-webkit-contacts-auto-fill-button {
   .control-account ul {
     list-style-type: none;
     margin: 0px; }
-    .control-account ul > li:not(:last-child) {
-      border-bottom: 1px solid #000; }
+    .control-account ul > li {
+      position: relative; }
+      .control-account ul > li:not(:last-child) {
+        border-bottom: 1px solid #000; }
+      .control-account ul > li:hover:before {
+        content: '';
+        position: absolute;
+        z-index: 2;
+        height: 10px;
+        background-color: #2c2d34;
+        width: 5px;
+        margin-top: 20px; }
+      .control-account ul > li:hover:after {
+        content: '';
+        position: absolute;
+        z-index: 2;
+        height: 10px;
+        background-color: #2c2d34;
+        width: 5px;
+        margin-top: 20px;
+        top: 0px;
+        right: 0px; }
+      .control-account ul > li:hover > div:before {
+        content: '';
+        width: 13px;
+        height: 50px;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        border-top: 2px solid #00C072;
+        border-bottom: 2px solid #00C072;
+        border-left: 2px solid #00C072;
+        border-radius: 3px 0 0 3px; }
+      .control-account ul > li:hover > div:after {
+        content: '';
+        width: 13px;
+        height: 50px;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        border-top: 2px solid #00C072;
+        border-bottom: 2px solid #00C072;
+        border-right: 2px solid #00C072;
+        border-radius: 0 3px 3px 0; }
   .control-account .link {
     height: 50px;
     display: flex;
@@ -1012,28 +1106,6 @@ input::-webkit-contacts-auto-fill-button {
     .control-account .link label {
       font-size: 20px;
       margin-left: 20px; }
-    .control-account .link:hover:before {
-      content: '';
-      width: 13px;
-      height: 50px;
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      border-top: 2px solid #00bd70;
-      border-bottom: 2px solid #00bd70;
-      border-left: 2px solid #00bd70;
-      border-radius: 3px 0 0 3px; }
-    .control-account .link:hover:after {
-      content: '';
-      width: 13px;
-      height: 50px;
-      position: absolute;
-      right: 0px;
-      top: 0px;
-      border-top: 2px solid #00bd70;
-      border-bottom: 2px solid #00bd70;
-      border-right: 2px solid #00bd70;
-      border-radius: 0 3px 3px 0; }
 
 .modal-exchange {
   padding: 0px;
