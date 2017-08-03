@@ -780,4 +780,40 @@ $stepColorActive:#00c072;
           color: #FFFFFF;
         }
     }
+    .k-tooltip{                
+        background-color:#000;
+        padding:15px;
+        width: 300px;
+        font-size: 14px !important;    
+        border: 1px solid $stepColorActive;
+        .underline{
+            text-decoration: underline;
+        }
+        &:after{
+            border-right-color: $stepColorActive !important;
+        }
+        >span{
+            color: $stepColorActive !important;
+        }
+        span{
+            color: #fff;
+            font-size: 14px !important; 
+            margin-left: 0px !important;
+        }
+        
+        ul{
+            list-style-type: disc;
+            margin-left: 22px;
+            li{
+                &:before{
+                    display: none;
+                }
+            }
+        }
+        
+            &.show{
+                opacity: 1;
+            }
+        
+    }
 }

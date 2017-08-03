@@ -12,6 +12,7 @@ import PostExchange from "./ExchangeForm/PostExchange"
 import CrossSend from "./ExchangeForm/CrossSend"
 import MinRate from "./ExchangeForm/MinRate"
 import constants from "../services/constants"
+import ReactTooltip from 'react-tooltip'
 
 import { specifyGasLimit, specifyGasPrice, resetStep, selectAdvance, deselectAdvance } from "../actions/exchangeFormActions"
 
@@ -213,7 +214,18 @@ export default class ExchangeForm extends React.Component {
                     <MinRate onKeyPress={(event) => this.goNextStep(event)} exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
                     <li>
                       <div>
-                        <label>Advanced</label>
+                        <label class="advance-label">Advanced
+                          <span data-tip data-for='advance-tooltip'>
+                              <i class="k-icon k-icon-question"></i>
+                            </span>
+                        </label>
+                         <ReactTooltip id='advance-tooltip' effect="solid" place="right" offset="{'left': -15}" className="k-tooltip">                                                        
+                              <span>To configure gas and gas price for your transaction:</span> 
+                              <ul>
+                                <li><span class="underline">Increasing gas price</span> can make your transaction <span class="underline">confirmed faster</span>.</li>
+                                <li><span class="underline">Decreasing gas price</span> can save a little gas cost but <span class="underline">longer to confirm</span>.</li>
+                              </ul>                                              
+                         </ReactTooltip>                                                   
                         <input type="checkbox" defaultChecked={this.props.advanced} onChange={this.selectAdvance} id="advance-option"/>
                         <label class="k-checkbox" for="advance-option"></label>
                       </div>
