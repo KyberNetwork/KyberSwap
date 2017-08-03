@@ -789,8 +789,17 @@ $stepColorActive:#00c072;
         .underline{
             text-decoration: underline;
         }
-        &:after{
+        &.place-top:after{
+            border-top-color: $stepColorActive !important;
+        }
+        &.place-right:after{
             border-right-color: $stepColorActive !important;
+        }
+        &.place-left:after{
+            border-left-color: $stepColorActive !important;
+        }
+        &.place-bottom:after{
+            border-bottom-color: $stepColorActive !important;
         }
         >span{
             color: $stepColorActive !important;

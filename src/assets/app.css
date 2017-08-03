@@ -1614,8 +1614,14 @@ input::-webkit-contacts-auto-fill-button {
     border: 1px solid #00c072; }
     .k-page-exchange .k-tooltip .underline {
       text-decoration: underline; }
-    .k-page-exchange .k-tooltip:after {
+    .k-page-exchange .k-tooltip.place-top:after {
+      border-top-color: #00c072 !important; }
+    .k-page-exchange .k-tooltip.place-right:after {
       border-right-color: #00c072 !important; }
+    .k-page-exchange .k-tooltip.place-left:after {
+      border-left-color: #00c072 !important; }
+    .k-page-exchange .k-tooltip.place-bottom:after {
+      border-bottom-color: #00c072 !important; }
     .k-page-exchange .k-tooltip > span {
       color: #00c072 !important; }
     .k-page-exchange .k-tooltip span {
