@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js'
 import TOKENS from "../../services/supported_tokens"
 import { selectDestToken, suggestRate, specifyMinAmount } from "../../actions/exchangeFormActions"
 import { toTWei, toT } from "../../utils/converter"
+import { currencies } from "../../utils/store"
 
 import constants from "../../services/constants"
 
@@ -40,7 +41,7 @@ export default class TokenDest extends React.Component {
   }
 
   render() {
-    var tokenOptions = TOKENS.map((tok) => {
+    var tokenOptions = currencies().map((tok) => {
       return <option key={tok.address} value={tok.address}>{tok.symbol}</option>
     })
     var error = ""
@@ -64,7 +65,6 @@ export default class TokenDest extends React.Component {
           <div>
             <label>{ this.props.exchangeFormID == "quick-exchange" ? "For at least" : "As at least"}</label>
             <select class="selectric" value={this.props.destToken} onChange={this.selectToken.bind(this)}>
-              <option key={constants.ETHER_ADDRESS} value={constants.ETHER_ADDRESS}>ETH</option>
               {tokenOptions}
             </select>
             <input name='token_des' onKeyPress={this.props.onKeyPress} value={toT(this.props.specifiedMinAmount)} type="number" min="0" step="any" placeholder="Exchange for at least" onChange={this.specifyMinAmount}/>
