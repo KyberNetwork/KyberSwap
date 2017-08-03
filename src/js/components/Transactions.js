@@ -30,7 +30,7 @@ export default class Transactions extends React.Component {
         break
       }
       case "exchange": {
-        var convertedTx = tx
+        var convertedTx = tx        
         convertedTx.gas = hexToNumber(convertedTx.gas)
         convertedTx.gasPrice = toEther(convertedTx.gasPrice)
         convertedTx.data.minConversionRate = hexToNumber(convertedTx.data.minConversionRate)

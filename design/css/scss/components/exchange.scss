@@ -79,6 +79,19 @@ $stepColorActive:#00c072;
             align-items: center;
             width: 220px;
             margin: 0 -3px 0 -3px;
+            &.step-advance{
+                transition:0.2s;                
+                .circle{                    
+                    transition:0.2s
+                }
+            }
+            &.step-advance.hide-step{
+                overflow:hidden;                
+                width: 0px !important;                
+                .circle{
+                    width: 0px;                
+                }
+            }
             .circle{
                 height: 27px;
                 width: 27px;
@@ -154,7 +167,7 @@ $stepColorActive:#00c072;
     .navigation-btn {
         margin-bottom:30px;
         >div:last-child{
-            margin-top: 100px;
+           // margin-top: 100px;
             display: flex;
             justify-content: space-between;
             padding:20px;
@@ -198,9 +211,16 @@ $stepColorActive:#00c072;
     }
     .page {
         // margin-top: 70px;
+        position:relative;
+        overflow:hidden;
     }
     .page-item {
-        display: none;
+       //display: none;
+        position: absolute;
+        top: 0px;
+        width: 900px;
+        //left: 900px;
+        transition:0.4s;
     }
     input,textarea {
         color: $colorInput;
@@ -655,20 +675,27 @@ $stepColorActive:#00c072;
             margin-top: 60px;
         }
     }
-    .exchange-page[data-page='1'] {
+    $pageLeft:900px;
+    .exchange-page[data-page='1'] {        
         .step-1 {
           .circle{
               border:3px solid $stepColorActive;
           }
         }
         .item-1 {
-          display: block;
+          left: 0;
+        }
+        .item-2,.item-3, .item-4, .item-advance{
+            left: $pageLeft;
+        }        
+        .page{
+            height: 300px;
         }
         .progress-step-1 {
           color: #FFFFFF;
         }
     }
-    .exchange-page[data-page='2'] {
+    .exchange-page[data-page='2'] {        
         .step-1,
         {
           .circle{
@@ -687,8 +714,27 @@ $stepColorActive:#00c072;
             background-color:$stepColorActive;
           }
         }
+        // .item-2 {
+        //     display: block;
+        //     visibility: visible;
+        //     //left: 0;
+        //     animation: slide 1s ease 3.5s forwards;
+        // }
         .item-2 {
-            display: block;
+          left: 0;
+        }
+        .item-1{
+            left: - $pageLeft;
+        }
+        .item-advance,.item-3, .item-4{
+            left: $pageLeft;
+        }        
+        .page{
+            transition: 0.4s;
+            height: 300px;
+            &.cross-send{
+                height: 500px;
+            }
         }
         .progress-step-2 {
           color: #FFFFFF;
@@ -706,17 +752,29 @@ $stepColorActive:#00c072;
             background-color:$stepColorActive;
           }
         }
-        .step-advance{
+        .step-advance{          
           .circle {
             border: 3px solid $stepColorActive;
           }
           .left-bridge{
             background-color:$stepColorActive;
-          }
+          }         
         }
-        .item-advance {
-            display: block;
+         .item-advance {
+          left: 0;
         }
+        .item-1,.item-2{
+            left: - $pageLeft;
+        }
+        .item-3, .item-4{
+            left: $pageLeft;
+        }        
+        .page{
+            height: 300px;
+        }
+        // .item-advance {
+        //     display: block;
+        // }
         .progress-step-advance {
           color: #FFFFFF;
         }
@@ -743,8 +801,20 @@ $stepColorActive:#00c072;
             background-color: $stepColorActive;
           }
         }
+        // .item-3 {
+        //     display: block;
+        // }
         .item-3 {
-            display: block;
+          left: 0;
+        }
+        .item-1,.item-2,.item-advance{
+            left: - $pageLeft;
+        }
+        .item-4{
+            left: $pageLeft;
+        }        
+        .page{
+            height: 300px;
         }
         .progress-step-3 {
           color: #FFFFFF;
@@ -773,8 +843,20 @@ $stepColorActive:#00c072;
             }
         }
 
+        // .item-4 {
+        //     display: block;
+        // }
         .item-4 {
-            display: block;
+          left: 0;
+        }
+        .item-1,.item-2,.item-advance,.item-3{
+            left: - $pageLeft;
+        }
+        // .item-4{
+        //     left: $pageLeft;
+        // }        
+        .page{
+            height: 300px;
         }
         .progress-step-4 {
           color: #FFFFFF;

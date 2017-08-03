@@ -38,7 +38,6 @@ export default class Layout extends React.Component {
 
   render() {
     var app
-    console.log(this.props.location)
     if (this.props.termOfServiceAccepted) {
       app = (
         <div class="k-body">

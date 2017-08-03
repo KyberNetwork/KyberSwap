@@ -171,15 +171,13 @@ export default class ExchangeForm extends React.Component {
                       "Exchange setting" : "Send setting"
                     }
                   </div>
+                </div>                
+                <div class="step step-advance" className={this.props.advanced?"step step-advance":"step step-advance hide-step"}>
+                  <span class="left-bridge"></span>
+                  <span class="right-bridge"></span>
+                  <span class="circle"></span>
+                  <div class="label">Advanced</div>
                 </div>
-                { this.props.advanced ?
-                  <div class="step step-advance">
-                    <span class="left-bridge"></span>
-                    <span class="right-bridge"></span>
-                    <span class="circle"></span>
-                    <div class="label">Advanced</div>
-                  </div> : ""
-                }
                 <div class="step step-3">
                   <span class="left-bridge"></span>
                   <span class="right-bridge"></span>
@@ -194,7 +192,7 @@ export default class ExchangeForm extends React.Component {
                 </div>
               </div>
             </div>
-            <div class="page">
+            <div className={(this.props.isCrossSend || !this.props.allowDirectSend)?"page cross-send":"page"}>
               <div class="page-item item-1">
                 <div>
                   <UserSelect exchangeFormID={this.props.exchangeFormID}/>
