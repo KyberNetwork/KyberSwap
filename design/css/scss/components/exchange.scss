@@ -79,6 +79,19 @@ $stepColorActive:#00c072;
             align-items: center;
             width: 220px;
             margin: 0 -3px 0 -3px;
+            &.step-advance{
+                transition:0.2s;                
+                .circle{                    
+                    transition:0.2s
+                }
+            }
+            &.step-advance.hide-step{
+                overflow:hidden;                
+                width: 0px !important;                
+                .circle{
+                    width: 0px;                
+                }
+            }
             .circle{
                 height: 27px;
                 width: 27px;
@@ -706,13 +719,13 @@ $stepColorActive:#00c072;
             background-color:$stepColorActive;
           }
         }
-        .step-advance{
+        .step-advance{          
           .circle {
             border: 3px solid $stepColorActive;
           }
           .left-bridge{
             background-color:$stepColorActive;
-          }
+          }         
         }
         .item-advance {
             display: block;

@@ -1111,6 +1111,15 @@ input::-webkit-contacts-auto-fill-button {
       align-items: center;
       width: 220px;
       margin: 0 -3px 0 -3px; }
+      .k-page-exchange .k-progress .step.step-advance {
+        transition: 0.2s; }
+        .k-page-exchange .k-progress .step.step-advance .circle {
+          transition: 0.2s; }
+      .k-page-exchange .k-progress .step.step-advance.hide-step {
+        overflow: hidden;
+        width: 0px !important; }
+        .k-page-exchange .k-progress .step.step-advance.hide-step .circle {
+          width: 0px; }
       .k-page-exchange .k-progress .step .circle {
         height: 27px;
         width: 27px;
