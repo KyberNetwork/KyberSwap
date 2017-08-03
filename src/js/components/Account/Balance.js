@@ -6,7 +6,7 @@ export class Balance extends React.Component {
   render() {
     return (
       <div>
-        <p>Ether: {toT(this.props.balance)} (wei)</p>
+        <p>Ether balance: {toT(this.props.balance)} (wei)</p>
       </div>
     )
   }
@@ -32,6 +32,7 @@ export class Token extends React.Component {
         <div class="name">
           {this.props.name}
         </div>
+        <label>Balance</label>
         <div class="value" title={toT(this.props.balance)}>
           {toT(this.props.balance, 8)}
         </div>

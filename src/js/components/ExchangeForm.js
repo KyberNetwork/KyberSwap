@@ -182,7 +182,7 @@ export default class ExchangeForm extends React.Component {
                   <span class="left-bridge"></span>
                   <span class="right-bridge"></span>
                   <span class="circle"></span>
-                  <div class="label">Password</div>
+                  <div class="label">Passphrase</div>
                 </div>
                 <div class="step step-4">
                   <span class="left-bridge"></span>
@@ -218,12 +218,12 @@ export default class ExchangeForm extends React.Component {
                             </span>
                         </label>
                          <ReactTooltip id='advance-tooltip' effect="solid" place="right" offset={{'left': -15}} className="k-tooltip">                                                        
-                              <span>To configure gas and gas price for your transaction:</span> 
+                              <span>To configure gas and gas price for your transaction:</span>
                               <ul>
-                                <li><span class="underline">Increasing gas price</span> can make your transaction <span class="underline">confirmed faster</span>.</li>
-                                <li><span class="underline">Decreasing gas price</span> can save a little gas cost but <span class="underline">longer to confirm</span>.</li>
-                              </ul>                                              
-                         </ReactTooltip>                                                   
+                                <li>Increasing gas price can make your transaction confirmed faster.</li>
+                                <li>Decreasing gas price can save a little gas cost but longer to confirm.</li>
+                              </ul>
+                         </ReactTooltip>
                         <input type="checkbox" defaultChecked={this.props.advanced} onChange={this.selectAdvance} id="advance-option"/>
                         <label class="k-checkbox" for="advance-option"></label>
                       </div>
@@ -243,7 +243,7 @@ export default class ExchangeForm extends React.Component {
                 </div>
               </div>
               <div class="page-item item-3">
-                <Credential passphraseID={this.props.passphraseID} error={this.props.passwordError}  onKeyPress={(event) => this.goNextStep(event)}/>
+                <Credential noLabel={true} passphraseID={this.props.passphraseID} error={this.props.passwordError}  onKeyPress={(event) => this.goNextStep(event)}/>
               </div>
               <div class="page-item item-4">
                 {txStatus}

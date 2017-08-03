@@ -243,9 +243,12 @@ $backgroundColor:#333;
             text-transform: uppercase;
         }
         .value {
-            padding-top: 20px;
+            padding-top: 0px;
             font-size: 18px;
             color: #FFFFFF;
+        }
+        label {
+            padding-top: 15px;
         }
     }
     &:hover {
