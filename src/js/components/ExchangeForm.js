@@ -219,7 +219,7 @@ export default class ExchangeForm extends React.Component {
                               <i class="k-icon k-icon-question"></i>
                             </span>
                         </label>
-                         <ReactTooltip id='advance-tooltip' effect="solid" place="right" offset="{'left': -15}" className="k-tooltip">                                                        
+                         <ReactTooltip id='advance-tooltip' effect="solid" place="right" offset={{'left': -15}} className="k-tooltip">                                                        
                               <span>To configure gas and gas price for your transaction:</span> 
                               <ul>
                                 <li><span class="underline">Increasing gas price</span> can make your transaction <span class="underline">confirmed faster</span>.</li>

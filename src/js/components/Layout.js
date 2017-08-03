@@ -38,10 +38,11 @@ export default class Layout extends React.Component {
 
   render() {
     var app
+    console.log(this.props.location)
     if (this.props.termOfServiceAccepted) {
       app = (
         <div class="k-body">
-          <SideBar />
+          <Route component={SideBar}/>          
           <div class="k-contenter">
             <div id="content" class="k-content">
               <Route exact path="/" component={Dashboard}/>

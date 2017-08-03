@@ -33,7 +33,7 @@ export default class MinRate extends React.Component {
                 <i class="k-icon k-icon-question"></i>
               </span>                           
             </label>
-            <ReactTooltip id='min-rate-tooltip' effect="solid" place="right" offset="{'left': -15}" className="k-tooltip">                                            
+            <ReactTooltip id='min-rate-tooltip' effect="solid" place="right" offset={{'left': -15}} className="k-tooltip">                                            
                   <span>Minimum exchange rate between chosen token pair:</span> 
                   <ul>
                     <li>If Kyber has <span class="underline">better rate</span> at <span class="underline">execution time</span>, <span class="underline">such rate</span> will be used.</li>

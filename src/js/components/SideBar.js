@@ -15,7 +15,7 @@ import NodeSwitch from "./NodeSwitch"
 export default class SideBar extends React.Component {
 
   tabClasses = (url) => {
-    return url == this.props.path ? "tabs-title is-active" : "tabs-title"
+    return url == this.props.location.pathname ? "tabs-title is-active" : "tabs-title"
   }
 
   render() {
