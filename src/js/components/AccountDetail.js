@@ -125,7 +125,7 @@ export default class AccountDetail extends React.Component {
               </li>
               <li>
                 <a class="download" onClick={(e) => this.downloadKey(e, this.props.keystore, this.props.address)}>
-                  <i class="k-icon k-icon-download"></i> Download key...
+                  <i class="k-icon k-icon-download"></i> Download Key...
                 </a>
               </li>
             </ul>

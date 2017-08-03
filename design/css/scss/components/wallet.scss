@@ -395,9 +395,10 @@ $backgroundColor:#333;
 
 
 
-$colorActiveTab :#00bd70;
+$colorActiveTab :#00C072;
 $widthActiveBorder : 13px;
 $tabHeight:50px;
+$gapHover:4px;
 .control-account{
     position: fixed;
     bottom: 70px;
@@ -429,9 +430,60 @@ $tabHeight:50px;
         list-style-type: none;
         margin:0px;
         >li{
+            position:relative;
             &:not(:last-child){
-            border-bottom:1px solid #000;
-        }    
+                border-bottom:1px solid #000;
+
+            }    
+            &:hover{
+                //  &:before {
+                //     content: '';
+                //     position: absolute;
+                //     z-index: 2;
+                //     height: $gapHover;
+                //     background-color: #2c2d34;
+                //     width: 5px;
+                //     margin-top: $tabHeight / 2 - $gapHover / 2;
+                // }
+                // &:after {
+                //     content: '';
+                //     position: absolute;
+                //     z-index: 2;
+                //     height: $gapHover;
+                //     background-color: #2c2d34;
+                //     width: 5px;
+                //     margin-top: $tabHeight / 2 - $gapHover / 2;
+                //     top: 0px;
+                //     right:0px;
+                // }
+                >div{
+                    &:before {
+                        content: '';
+                        width: $widthActiveBorder;
+                        height: $tabHeight;
+                        position: absolute;
+                        left: 0px;
+                        top: 0px;
+                        border-top:2px solid $colorActiveTab;
+                        border-bottom:2px solid $colorActiveTab;                    
+                        border-left:2px solid $colorActiveTab;  
+                        border-radius: 3px 0 0 3px;                    
+                    }
+                    &:after {
+                        content: '';
+                        width: $widthActiveBorder;
+                        height: $tabHeight;
+                        position: absolute;
+                        right: 0px;
+                        top: 0px;
+
+                        border-top:2px solid $colorActiveTab;
+                        border-bottom:2px solid $colorActiveTab;                    
+                        border-right:2px solid $colorActiveTab;      
+                        border-radius: 0 3px 3px 0;  
+                    }
+                }                
+            }
         }
     }
     .link{
@@ -452,32 +504,6 @@ $tabHeight:50px;
             font-size: 20px;
             margin-left: 20px;
         }
-        &:hover{
-            &:before {
-                    content: '';
-                    width: $widthActiveBorder;
-                    height: $tabHeight;
-                    position: absolute;
-                    left: 0px;
-                    top: 0px;
-                    border-top:2px solid $colorActiveTab;
-                    border-bottom:2px solid $colorActiveTab;                    
-                    border-left:2px solid $colorActiveTab;  
-                    border-radius: 3px 0 0 3px;                    
-                }
-                &:after {
-                    content: '';
-                    width: $widthActiveBorder;
-                    height: $tabHeight;
-                    position: absolute;
-                    right: 0px;
-                    top: 0px;
-
-                    border-top:2px solid $colorActiveTab;
-                    border-bottom:2px solid $colorActiveTab;                    
-                    border-right:2px solid $colorActiveTab;      
-                    border-radius: 0 3px 3px 0;  
-                }
-        }
+        
     }
 }
