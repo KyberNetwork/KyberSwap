@@ -176,7 +176,7 @@ export default class ExchangeForm extends React.Component {
                     <span class="left-bridge"></span>
                     <span class="right-bridge"></span>
                     <span class="circle"></span>
-                    <div class="label">Advanced configuration</div>
+                    <div class="label">Advanced</div>
                   </div> : ""
                 }
                 <div class="step step-3">
@@ -213,7 +213,7 @@ export default class ExchangeForm extends React.Component {
                     <MinRate onKeyPress={(event) => this.goNextStep(event)} exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
                     <li>
                       <div>
-                        <label>Advanced configuration</label>
+                        <label>Advanced</label>
                         <input type="checkbox" defaultChecked={this.props.advanced} onChange={this.selectAdvance} id="advance-option"/>
                         <label class="k-checkbox" for="advance-option"></label>
                       </div>

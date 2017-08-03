@@ -41,7 +41,7 @@ export default class CrossSend extends React.Component {
     return (
       <li>
         <div>
-          <label>As different token</label>
+          <label>In different token</label>
           <input name="cross-send" type="checkbox" id="cross-send"
             checked={this.props.isCrossSend}
             onChange={this.toggleCrossSend} />
