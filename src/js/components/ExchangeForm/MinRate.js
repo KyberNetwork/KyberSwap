@@ -4,6 +4,7 @@ import BigNumber from 'bignumber.js'
 import { toTWei, toT } from "../../utils/converter"
 import { specifyMinRate } from "../../actions/exchangeFormActions"
 import ReactTooltip from 'react-tooltip'
+import constants from "../../services/constants"
 
 @connect((store, props) => {
   var exchangeForm = store.exchangeForm[props.exchangeFormID]
