@@ -1,3 +1,6 @@
+import * as ethUtil from 'ethereumjs-util'
+import constants from "../services/constants"
+
 export default class Tx {
   constructor(
     hash, from, gas, gasPrice, nonce, status,
@@ -11,24 +14,48 @@ export default class Tx {
     this.type = type
     this.data = data // data can be used to store wallet name
     this.address = address
+    this.threw = false
+    this.error = null
+    this.errorInfo = null
   }
 
   shallowClone() {
     return new Tx(
     this.hash, this.from, this.gas, this.gasPrice, this.nonce,
-    this.status, this.type, this.data, this.address)
+    this.status, this.type, this.data, this.address, this.threw,
+    this.error, this.errorInfo)
   }
 
   sync = (ethereum, callback) => {
-    ethereum.txMined(this.hash, (mined, address) => {
+    ethereum.txMined(this.hash, (mined, receipt) => {
       var newTx = this.shallowClone()
       if (mined) {
-        newTx.status = "mined"
+        newTx.address = receipt.contractAddress
+        var logs = receipt.logs
+        if (newTx.type == "exchange") {
+          if (logs.length == 0) {
+            newTx.threw = true
+            newTx.status = "failed"
+          } else {
+            var theLog
+            for (var i = 0; i < logs.length; i++) {
+              if (logs[i].address == constants.NETWORK_ADDRESS &&
+                logs[i].topics[0] == constants.TRADE_TOPIC) {
+                theLog = logs[i]
+                break
+              }
+            }
+            newTx.status = theLog ? "success" : "failed"
+          }
+        } else if (newTx.type == "send") {
+          newTx.status = "success"
+        } else {
+          newTx.status = "mined"
+        }
       }
       else {
         newTx.status = "pending"
       }
-      newTx.address = address
       callback(newTx)
     })
   }

@@ -23,6 +23,9 @@ const txs = (state=initState, action) => {
             tx.type,
             tx.data,
             tx.address,
+            tx.threw,
+            tx.error,
+            tx.errorInfo,
           )
         })
         return txs

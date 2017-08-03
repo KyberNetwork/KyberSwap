@@ -62,7 +62,7 @@ export default class TokenDest extends React.Component {
       destTokenApp = (
         <li>
           <div>
-            <label>{this.props.label || "As at least"}</label>
+            <label>{ this.props.exchangeFormID == "quick-exchange" ? "For at least" : "As at least"}</label>
             <select class="selectric" value={this.props.destToken} onChange={this.selectToken.bind(this)}>
               <option key={constants.ETHER_ADDRESS} value={constants.ETHER_ADDRESS}>ETH</option>
               {tokenOptions}

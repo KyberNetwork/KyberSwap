@@ -68,7 +68,7 @@ export default class ExchangeRates extends React.Component {
           {rates.length > 0 ?
             rates :
             <tr>
-              <td colSpan="4" style={{"text-align": "center"}}>
+              <td colSpan="4" style={{textAlign: "center"}}>
                 No offered rate is available!
               </td>
             </tr>

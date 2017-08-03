@@ -286,11 +286,11 @@ export default class PostExchange extends React.Component {
         <div>
           <button
             onClick={this.back}
-            className={this.props.step == 1 || (this.props.step == 2 && this.props.exchangeFormID == "quick-exchange")? "hide" : ""}>
+            className={this.props.step == 1 || this.props.step == 4 || (this.props.step == 2 && this.props.exchangeFormID == "quick-exchange")? "hide" : ""}>
             <i class="k-icon k-icon-back"></i></button>
           { this.props.step == 4 ?
-            <button onClick={this.onClose}>
-              <i class="k-icon k-icon-next"></i>
+            <button class="button" onClick={this.onClose}>
+              Done
             </button> :
             <button onClick={this.postExchange} id="next-exchange"> 
               <i class="k-icon k-icon-next"></i>

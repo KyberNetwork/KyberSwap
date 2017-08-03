@@ -191,7 +191,7 @@ export default class EthereumService {
       if (error != null) {
         console.log(error)
       } else {
-        result == null ? callback(false, undefined) : callback(true, result.contractAddress)
+        result == null ? callback(false, undefined) : callback(true, result)
       }
     })
   }

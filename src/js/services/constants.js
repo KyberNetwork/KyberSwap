@@ -16,6 +16,7 @@ const EPSILON = 1000
 const RATE_EPSILON = 0.002
 const ETHER_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 const NETWORK_ADDRESS = "0x11542d7807dfb2b44937f756b9092c76e814f8ed"
+const TRADE_TOPIC = "0xec0d3e799aa270a144d7e3be084ccfc657450e33ecea1b1a4154c95cedaae5c3"
 const INIT_EXCHANGE_FORM_STATE = {
   advanced: false,
   isCrossSend: false,
@@ -59,5 +60,5 @@ export default {
   ERC20, KYBER_NETWORK, EPSILON, ETHER_ADDRESS,
   NETWORK_ADDRESS, RESERVES, KYBER_WALLET,
   KYBER_WALLET_DATA, INIT_EXCHANGE_FORM_STATE,
-  RATE_EPSILON,
+  RATE_EPSILON, TRADE_TOPIC,
 }

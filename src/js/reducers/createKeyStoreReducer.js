@@ -8,8 +8,8 @@ const initState = {
 
 
 const createKeyStore = (state=initState, action) => {
-  switch (action.type) {    
-    case "CREATE_ACCOUNT_NAME_SPECIFIED": {    	
+  switch (action.type) {
+    case "CREATE_ACCOUNT_NAME_SPECIFIED": {
       return {...state, name: action.payload}
     }
     case "CREATE_ACCOUNT_DESC_SPECIFIED": {

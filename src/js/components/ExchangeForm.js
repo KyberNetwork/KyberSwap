@@ -86,6 +86,17 @@ export default class ExchangeForm extends React.Component {
     }
   }
 
+  getCircleClass = (tx) => {
+    if (tx) {
+      if (tx.status == "success") {
+        return "circle success"
+      } else if (tx.status == "failed") {
+        return "circle failed"
+      }
+    }
+    return "circle"
+  }
+
   render() {
     if (this.props.step == 4) {
       var txStatus
@@ -99,6 +110,18 @@ export default class ExchangeForm extends React.Component {
             <h3>Transaction</h3>
             <a href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
             <h3>is waiting for confirmations...</h3>
+          </div>
+        } else if (tx.status == "failed") {
+          txStatus = <div>
+            <h3>Transaction</h3>
+            <a href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
+            <h3>is failed. Please try again later.</h3>
+          </div>
+        } else if (tx.status == "success") {
+          txStatus = <div>
+            <h3>Transaction</h3>
+            <a href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
+            <h3>is successful.</h3>
           </div>
         } else {
           txStatus = <div>
@@ -153,7 +176,7 @@ export default class ExchangeForm extends React.Component {
                     <span class="left-bridge"></span>
                     <span class="right-bridge"></span>
                     <span class="circle"></span>
-                    <div class="label">Advanced configuration</div>
+                    <div class="label">Advanced</div>
                   </div> : ""
                 }
                 <div class="step step-3">
@@ -165,7 +188,7 @@ export default class ExchangeForm extends React.Component {
                 <div class="step step-4">
                   <span class="left-bridge"></span>
                   <span class="right-bridge"></span>
-                  <span class="circle"></span>
+                  <span class={this.getCircleClass(tx)} ></span>
                   <div class="label">Done</div>
                 </div>
               </div>
@@ -190,7 +213,7 @@ export default class ExchangeForm extends React.Component {
                     <MinRate onKeyPress={(event) => this.goNextStep(event)} exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
                     <li>
                       <div>
-                        <label>Advanced configuration</label>
+                        <label>Advanced</label>
                         <input type="checkbox" defaultChecked={this.props.advanced} onChange={this.selectAdvance} id="advance-option"/>
                         <label class="k-checkbox" for="advance-option"></label>
                       </div>
@@ -214,9 +237,16 @@ export default class ExchangeForm extends React.Component {
               </div>
               <div class="page-item item-4">
                 {txStatus}
-                <span class="verify">
-                  <i class="k-icon k-icon-verify" onClick={this.done} ></i>
-                </span>
+                { tx && tx.status == "failed" ?
+                  <span class="verify">
+                    <i class="k-icon k-icon-failed" onClick={this.done} ></i>
+                  </span> : ""
+                }
+                { tx && tx.status == "success" ?
+                  <span class="verify">
+                    <i class="k-icon k-icon-verify" onClick={this.done} ></i>
+                  </span> : ""
+                }
               </div>
             </div>
             <div class="next" id="exchange-next">
