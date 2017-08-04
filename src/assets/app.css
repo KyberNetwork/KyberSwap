@@ -1385,6 +1385,8 @@ input::-webkit-contacts-auto-fill-button {
         background-position: -310px -195px; }
       .k-page-exchange .navigation-btn button:focus {
         outline: none; }
+    .k-page-exchange .navigation-btn button.done {
+      color: #fefefe; }
     .k-page-exchange .navigation-btn.disable button {
       background-color: #eee; }
   .k-page-exchange .error {

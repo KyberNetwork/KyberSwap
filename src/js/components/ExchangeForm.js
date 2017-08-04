@@ -249,12 +249,12 @@ export default class ExchangeForm extends React.Component {
                 {txStatus}
                 { tx && tx.status == "failed" ?
                   <span class="verify">
-                    <i class="k-icon k-icon-failed" onClick={this.done} ></i>
+                    <i class="k-icon k-icon-failed" ></i>
                   </span> : ""
                 }
                 { tx && tx.status == "success" ?
                   <span class="verify">
-                    <i class="k-icon k-icon-verify" onClick={this.done} ></i>
+                    <i class="k-icon k-icon-verify" ></i>
                   </span> : ""
                 }
               </div>

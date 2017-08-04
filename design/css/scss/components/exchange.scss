@@ -191,6 +191,10 @@ $stepColorActive:#00c072;
                 outline: none;
             } // background-color: #f4a622;
         }
+        button.done {
+          color: #fefefe;
+        }
+
         &.disable {
             button {
                 background-color: #eee;
