@@ -37,6 +37,12 @@ export function updateAccount(ethereum, account) {
         })
     }
 }
+export function modifyAccount(address, name){
+    return {
+        type: "MODIFY_ACCOUNT",
+        payload: {address:address, name:name}
+    }
+}
 
 export function addDeleteAccount(address) {
     return {

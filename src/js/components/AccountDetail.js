@@ -10,12 +10,14 @@ import { toT } from "../utils/converter"
 import { addDeleteAccount} from "../actions/accountActions"
 import constants from "../services/constants"
 import { selectAccount, specifyRecipient, specifyStep, suggestRate } from "../actions/exchangeFormActions"
+import {addNameModifyAccount} from "../actions/modifyAccountActions"
 
 const modalID = "quick-exchange-modal"
 const sendModalID = "quick-send-modal"
 const quickFormID = "quick-exchange"
 const quickSendFormID = "quick-send"
-const confirmModalId = "confirm_modal"
+const confirmModalId = "confirm_delete_account_modal"
+const modifyModalId = "modify_account_modal"
 
 @connect((store, props) => {
   var acc = store.accounts.accounts[props.address];
@@ -88,6 +90,11 @@ export default class AccountDetail extends React.Component {
     document.body.removeChild(element);
   }
 
+  openModifyModal = (event, address, name) =>{
+    this.props.dispatch(addNameModifyAccount(address, name))
+    this.props.dispatch(openModal(modifyModalId))
+  }
+
   render() {
     var account = this.props.account
     var tokens = this.props.tokens.map((tok, index) => {
@@ -125,7 +132,7 @@ export default class AccountDetail extends React.Component {
                 </a>
               </li>
               <li>
-                <a class="modiy">
+                <a class="modiy" onClick={(e) => this.openModifyModal(e, this.props.address, this.props.name)}>
                   <i class="k-icon k-icon-modify-green"></i> Modify...
                 </a>
               </li>

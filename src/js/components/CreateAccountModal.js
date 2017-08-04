@@ -2,7 +2,6 @@ import React from "react"
 import { connect } from "react-redux"
 
 //import Key from "./Elements/Key"
-import DropFile from "./Elements/DropFile"
 import Modal from './Elements/Modal'
 import { closeModal } from "../actions/utilActions"
 import ReCredential from "./Elements/ReCredential"

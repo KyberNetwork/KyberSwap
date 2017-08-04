@@ -12,10 +12,12 @@ import wallets from './walletsReducer'
 import utils from './utilsReducer'
 import txs from './txsReducer'
 import createKeyStore from './createKeyStoreReducer'
+import modifyAccount from './modifyAccountReducer'
+import modifyWallet from './modifyWalletReducer'
 
 export default combineReducers({
   accounts, exchangeForm, global, importKeystore, txs,
   joinPaymentForm, wallets, paymentForm, connection,
   utils,
-  router: routerReducer, createKeyStore
+  router: routerReducer, createKeyStore, modifyAccount, modifyWallet
 })

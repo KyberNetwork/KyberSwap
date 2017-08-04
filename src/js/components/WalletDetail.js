@@ -1,18 +1,21 @@
 import React from "react"
 import { connect } from "react-redux"
 import QRCode from "qrcode.react"
-import { deleteWallet } from "../actions/walletActions"
+import { addDeleteWallet } from "../actions/walletActions"
 import { Token } from "./Account/Balance"
 import ModalButton from "./Elements/ModalButton"
 import { selectAccount, specifyRecipient, specifyStep } from "../actions/exchangeFormActions"
 import { toT } from "../utils/converter"
 import { accountName } from "../utils/store"
-
+import { openModal } from "../actions/utilActions"
+import {addNameModifyWallet} from "../actions/modifyWalletActions"
 
 const modalID = "quick-exchange-modal"
 const sendModalID = "quick-send-modal"
 const quickFormID = "quick-exchange"
 const quickSendFormID = "quick-send"
+const confirmModalId = "confirm_delete_wallet_modal"
+const modifyWalletModalId = "modify_wallet_modal"
 
 @connect((store, props) => {
   var wallet = store.wallets.wallets[props.address];
@@ -34,8 +37,8 @@ const quickSendFormID = "quick-send"
 })
 export default class WalletDetail extends React.Component {
   deleteWallet = (event, address) => {
-    event.preventDefault()
-    this.props.dispatch(deleteWallet(address))
+    this.props.dispatch(addDeleteWallet(address))
+    this.props.dispatch(openModal(confirmModalId))
   }
 
   toggleWallet = (event) =>{
@@ -64,6 +67,11 @@ export default class WalletDetail extends React.Component {
     this.props.dispatch(selectAccount(
       quickSendFormID, this.props.address
     ))
+  }
+
+  openModifyModal = (event, address, name) =>{
+    this.props.dispatch(addNameModifyWallet(address, name))
+    this.props.dispatch(openModal(modifyWalletModalId))
   }
 
   render() {
@@ -102,7 +110,7 @@ export default class WalletDetail extends React.Component {
                   </a>
                 </li>
                 <li>
-                  <a class="modiy">
+                  <a class="modiy" onClick={(e) => this.openModifyModal(e, this.props.address, this.props.name)}>
                     <i class="k-icon k-icon-modify-green"></i> Modify...
                   </a>
                 </li>

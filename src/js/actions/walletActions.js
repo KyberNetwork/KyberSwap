@@ -9,6 +9,14 @@ export function addWallet(address, ownerAddress, name, desc) {
     })
   }
 }
+
+export function addDeleteWallet(address) {
+    return {
+        type: "ADD_DELETE_WALLET",
+        payload: address
+    }
+}
+
 export function deleteWallet(address) {
   return {
     type: "DELETE_WALLET",
@@ -23,4 +31,11 @@ export function updateWallet(ethereum, wallet) {
       wallet.sync(ethereum, resolve)
     })
   }
+}
+
+export function modifyWallet(address, name){
+    return {
+        type: "MODIFY_WALLET",
+        payload: {address:address, name:name}
+    }
 }

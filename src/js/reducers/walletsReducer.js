@@ -39,7 +39,7 @@ const wallets = (state=initState, action) => {
           wallet.tokens = newTokens
           wallets[address] = wallet
         })
-        var newState = {...state, wallets: wallets}
+        var newState = {...state, wallets: wallets, deleteWallet : action.payload.wallets?action.payload.wallets.deleteWallet:""}
         return newState
       }
       return state
@@ -51,6 +51,10 @@ const wallets = (state=initState, action) => {
       newWallet.tokens = action.payload.tokens
       newWallets[newWallet.address] = newWallet
       return {...state, wallets: newWallets}
+    }
+    case "ADD_DELETE_WALLET": {      
+      var address = action.payload      
+      return {...state, deleteWallet: address}
     }
     case "DELETE_WALLET": {
       var newWallets = {...state.wallets}
@@ -65,6 +69,12 @@ const wallets = (state=initState, action) => {
     }
     case "JOIN_PAYMENT_FORM_TX_BROADCAST_PENDING": {
       return {...state, newWalletAdding: true}
+    }
+    case "MODIFY_WALLET":{
+      var newWallets = {...state.wallets}
+      var address = action.payload.address
+      newWallets[address].name = action.payload.name
+      return {...state, wallets: newWallets}
     }
   }
   return state
