@@ -2319,6 +2319,48 @@ input::-webkit-contacts-auto-fill-button {
     top: 3px;
     margin-right: 5px; }
 
+@keyframes unfoldIn {
+  0% {
+    transform: scaleY(0.005) scaleX(0); }
+  50% {
+    transform: scaleY(0.005) scaleX(1); }
+  100% {
+    transform: scaleY(1) scaleX(1); } }
+@keyframes unfoldOut {
+  0% {
+    transform: scaleY(1) scaleX(1); }
+  50% {
+    transform: scaleY(0.005) scaleX(1); }
+  100% {
+    transform: scaleY(0.005) scaleX(0); } }
+.confirm-modal {
+  width: 400px;
+  height: 200px;
+  border-radius: 10px; }
+  .confirm-modal .modal-message {
+    color: #fff;
+    margin-top: 30px;
+    text-align: center;
+    font-size: 20px; }
+  .confirm-modal .modal-control {
+    margin: 0 auto;
+    margin-top: 30px;
+    display: flex;
+    width: 300px;
+    justify-content: space-between; }
+  .confirm-modal button {
+    font-weight: bold;
+    color: #fff;
+    width: 130px;
+    height: 40px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px; }
+    .confirm-modal button.cancel {
+      background: #37a0f3; }
+    .confirm-modal button.ok {
+      border: 2px solid #00c072; }
+
 body {
   background-color: #ccc;
   font-family: 'Roboto', sans-serif;

@@ -4,9 +4,10 @@ import QRCode from "qrcode.react"
 
 import NameAndDesc from "./Account/NameAndDesc"
 import ModalButton from "./Elements/ModalButton"
+import { openModal } from "../actions/utilActions"
 import { Balance, Token, Nonce } from "./Account/Balance"
 import { toT } from "../utils/converter"
-import { deleteAccount} from "../actions/accountActions"
+import { addDeleteAccount} from "../actions/accountActions"
 import constants from "../services/constants"
 import { selectAccount, specifyRecipient, specifyStep, suggestRate } from "../actions/exchangeFormActions"
 
@@ -14,6 +15,7 @@ const modalID = "quick-exchange-modal"
 const sendModalID = "quick-send-modal"
 const quickFormID = "quick-exchange"
 const quickSendFormID = "quick-send"
+const confirmModalId = "confirm_modal"
 
 @connect((store, props) => {
   var acc = store.accounts.accounts[props.address];
@@ -37,8 +39,8 @@ const quickSendFormID = "quick-send"
 export default class AccountDetail extends React.Component {
 
   deleteAccount = (event, address) => {
-    event.preventDefault()
-    this.props.dispatch(deleteAccount(address))
+    this.props.dispatch(addDeleteAccount(address))
+    this.props.dispatch(openModal(confirmModalId))
   }
   toggleAccount = (event) =>{
     var target = event.currentTarget
@@ -74,12 +76,16 @@ export default class AccountDetail extends React.Component {
 
   downloadKey = (event, keystore, address) => {
     event.preventDefault()    
-    var a = document.createElement('a')    
-    var file = new Blob([keystore], { type: 'text/plain' })
-    a.href = (window.URL || window.webkitURL).createObjectURL(file)
-    a.download = address
-    a.click();
-    a.remove();
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(keystore));
+    element.setAttribute('download', address);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
   }
 
   render() {

@@ -10,7 +10,7 @@ const initState = {
 
 const accounts = (state=initState, action) => {
   switch (action.type) {
-    case REHYDRATE: {
+    case REHYDRATE: {      
       if (action.payload.accounts) {
         var loadedAccounts = action.payload.accounts.accounts
         var accounts = {}
@@ -43,9 +43,9 @@ const accounts = (state=initState, action) => {
             )
           })
           acc.tokens = newTokens
-          accounts[address] = acc
+          accounts[address] = acc          
         })
-        var newState = {...state, accounts: accounts}
+        var newState = {...state, accounts: accounts, deleteAccount : action.payload.accounts?action.payload.accounts.deleteAccount:""}
         return newState
       }
       return state
@@ -92,6 +92,10 @@ const accounts = (state=initState, action) => {
       var address = action.payload
       delete(newAccounts[address])
       return {...state, accounts: newAccounts}
+    }
+    case "ADD_DELETE_ACCOUNT": {      
+      var address = action.payload      
+      return {...state, deleteAccount: address}
     }
     case "NEW_ACCOUNT_CREATED_FULFILLED": {
       var newAccounts = {...state.accounts}
