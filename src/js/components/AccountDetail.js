@@ -76,12 +76,16 @@ export default class AccountDetail extends React.Component {
 
   downloadKey = (event, keystore, address) => {
     event.preventDefault()    
-    var a = document.createElement('a')    
-    var file = new Blob([keystore], { type: 'text/plain' })
-    a.href = (window.URL || window.webkitURL).createObjectURL(file)
-    a.download = address
-    a.click();
-    a.remove();
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(keystore));
+    element.setAttribute('download', address);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
   }
 
   render() {
