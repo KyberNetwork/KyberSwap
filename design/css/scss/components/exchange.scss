@@ -174,6 +174,10 @@ $stepColorActive:#00c072;
         }
         button {
             cursor: pointer;
+            display: flex;
+            color: $stepColorActive;
+            font-size: 18px;
+            align-items: center;
             &.hide{
                 visibility: hidden;
                 display: block !important;
@@ -187,6 +191,10 @@ $stepColorActive:#00c072;
                 outline: none;
             } // background-color: #f4a622;
         }
+        button.done {
+          color: #fefefe;
+        }
+
         &.disable {
             button {
                 background-color: #eee;
@@ -733,7 +741,7 @@ $stepColorActive:#00c072;
             transition: 0.4s;
             height: 300px;
             &.cross-send{
-                height: 500px;
+                height: 450px;
             }
         }
         .progress-step-2 {

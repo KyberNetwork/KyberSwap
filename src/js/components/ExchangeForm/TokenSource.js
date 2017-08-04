@@ -63,7 +63,6 @@ export default class TokenSource extends React.Component {
   }
 
   specifyAmount(event) {
-    console.log(event.target.value)
     var valueString = event.target.value == "" ? "0" : event.target.value
     this.props.dispatch(specifySourceAmount(
       this.props.exchangeFormID,

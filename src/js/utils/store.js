@@ -1,3 +1,7 @@
+import TOKENS from "../services/supported_tokens"
+import constants from "../services/constants"
+
+
 export function getSourceAccount(store, address) {
   return store.wallets.wallets[address] || store.accounts.accounts[address]
 }
@@ -33,4 +37,17 @@ export function destAccounts(store) {
 export function accountName(store, address) {
   var acc = store.accounts.accounts[address]
   return acc ? acc.name : address
+}
+
+export function currencies() {
+  var result = [
+    {
+      name: "Ether",
+      symbol: "ETH",
+      icon: "/assets/ether.png",
+      address: constants.ETHER_ADDRESS,
+    }
+  ]
+  result.push(...TOKENS)
+  return result
 }

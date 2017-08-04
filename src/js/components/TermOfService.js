@@ -28,10 +28,10 @@ export default class TermOfService extends React.Component {
         <div class="body k-scroll">
           <p>
             Kyber testnet wallet provides a platform for experimenting and understanding
-            KyberNetwork exchange and payment system. The current implementation not
+            our exchange and payment services. The current implementation is not
             secure in any way. Using it may cause loss of funds and could compromise
             user privacy. The user bears the sole responsibility for any outcome that
-            is result of use of Kyber testnet wallet.
+            is using Kyber testnet wallet.
           </p>
           <div class="gap">
           </div>

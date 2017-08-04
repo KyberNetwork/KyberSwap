@@ -142,7 +142,7 @@ export default class AccountDetail extends React.Component {
         <div class="wallet-left">
           <div class="content">
             <div class="balance">
-              <label>Ether</label>
+              <label>Ether balance</label>
               <span title={toT(this.props.balance)}>{toT(this.props.balance, 8)}</span>
             </div>
             <div class="address">
