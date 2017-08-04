@@ -4,19 +4,23 @@ import { connect } from "react-redux"
 import ImportKeystoreModal from "./ImportKeystoreModal"
 import ModalButton from "./Elements/ModalButton"
 import ModalLink from "./Elements/ModalLink"
+import ConfirmModal from "./Elements/ConfirmModal"
 
 import SendModal from "./SendModal"
 
 import Accounts from "./Accounts"
 import Wallets from "./Wallets"
 import JoinPaymentForm from "./Payment/JoinPaymentForm"
+import { deleteAccount} from "../actions/accountActions"
 
 const quickSendModalID = "quick-send-modal"
 const importModalId = "new_account_modal"
 const createModalId = "new_account_create_modal"
+const confirmModalId = "confirm_modal"
 
 @connect((store) => {
   return {
+
     accounts: store.accounts.accounts,
     wallets: store.wallets.wallets,
     ethereumNode: store.connection.ethereum,
@@ -24,12 +28,18 @@ const createModalId = "new_account_create_modal"
     connected: store.global.connected,
     newAccountAdding: store.accounts.newAccountAdding,
     newAccountCreating: store.accounts.newAccountCreating,
+    deleteAccount: store.accounts.deleteAccount,
 
     newWalletAdding: store.wallets.newWalletAdding,
     utils:store.utils
   }
 })
 export default class Dashboard extends React.Component {
+
+  deleteAccount = (event) => {
+    console.log(this.props.deleteAccount)
+    this.props.dispatch(deleteAccount(this.props.deleteAccount))
+  }
 
   render() {
     var accounts = this.props.accounts
@@ -94,6 +104,7 @@ export default class Dashboard extends React.Component {
 
           <div class="modals">
             <SendModal exchangeFormID="quick-send" modalID={quickSendModalID} label="Quick Send" />
+            <ConfirmModal modalID={confirmModalId} action={this.deleteAccount} header="Confirm delete" message="Do you want to delete account?"/>
           </div>
         </div>
       </div>)

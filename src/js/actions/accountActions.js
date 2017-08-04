@@ -38,6 +38,14 @@ export function updateAccount(ethereum, account) {
     }
 }
 
+export function addDeleteAccount(address) {
+    return {
+        type: "ADD_DELETE_ACCOUNT",
+        payload: address
+    }
+}
+
+
 export function deleteAccount(address) {
     return {
         type: "DELETE_ACCOUNT",
