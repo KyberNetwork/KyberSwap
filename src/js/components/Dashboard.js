@@ -5,6 +5,8 @@ import ImportKeystoreModal from "./ImportKeystoreModal"
 import ModalButton from "./Elements/ModalButton"
 import ModalLink from "./Elements/ModalLink"
 import ConfirmModal from "./Elements/ConfirmModal"
+import ModifyAccountForm from "./Account/ModifyAccountForm"
+import ModifyWalletForm from "./Wallet/ModifyWalletForm"
 
 import SendModal from "./SendModal"
 
@@ -12,12 +14,15 @@ import Accounts from "./Accounts"
 import Wallets from "./Wallets"
 import JoinPaymentForm from "./Payment/JoinPaymentForm"
 import { deleteAccount} from "../actions/accountActions"
+import { deleteWallet} from "../actions/walletActions"
 
 const quickSendModalID = "quick-send-modal"
 const importModalId = "new_account_modal"
 const createModalId = "new_account_create_modal"
-const confirmModalId = "confirm_modal"
-
+const confirmAccountModalId = "confirm_delete_account_modal"
+const confirmWalletModalId = "confirm_delete_wallet_modal"
+const modifyModalId = "modify_account_modal"
+const modifyWalletModalId = "modify_wallet_modal"
 @connect((store) => {
   return {
 
@@ -29,6 +34,9 @@ const confirmModalId = "confirm_modal"
     newAccountAdding: store.accounts.newAccountAdding,
     newAccountCreating: store.accounts.newAccountCreating,
     deleteAccount: store.accounts.deleteAccount,
+    deleteWallet: store.wallets.deleteWallet,
+    modifyAccount: store.modifyAccount,
+    modifyWallet: store.modifyWallet,
 
     newWalletAdding: store.wallets.newWalletAdding,
     utils:store.utils
@@ -36,11 +44,12 @@ const confirmModalId = "confirm_modal"
 })
 export default class Dashboard extends React.Component {
 
-  deleteAccount = (event) => {
-    console.log(this.props.deleteAccount)
+  deleteAccount = (event) => {   
     this.props.dispatch(deleteAccount(this.props.deleteAccount))
   }
-
+  deleteWallet = (event) => {
+    this.props.dispatch(deleteWallet(this.props.deleteWallet))
+  }
   render() {
     var accounts = this.props.accounts
     var app
@@ -104,7 +113,10 @@ export default class Dashboard extends React.Component {
 
           <div class="modals">
             <SendModal exchangeFormID="quick-send" modalID={quickSendModalID} label="Quick Send" />
-            <ConfirmModal modalID={confirmModalId} action={this.deleteAccount} header="Confirm delete" message="Do you want to delete account?"/>
+            <ConfirmModal modalID={confirmAccountModalId} action={this.deleteAccount} header="Confirm delete" message="Do you want to delete your account?"/>
+            <ConfirmModal modalID={confirmWalletModalId} action={this.deleteWallet} header="Confirm delete" message="Do you want to delete your wallet?"/>
+            <ModifyAccountForm modalID={modifyModalId} name={this.props.modifyAccount.name} address={this.props.modifyAccount.address}/>
+            <ModifyWalletForm modalID={modifyWalletModalId} name={this.props.modifyWallet.name} address={this.props.modifyWallet.address}/>
           </div>
         </div>
       </div>)

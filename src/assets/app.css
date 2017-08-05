@@ -2414,6 +2414,14 @@ input::-webkit-contacts-auto-fill-button {
     .confirm-modal button.ok {
       border: 2px solid #00c072; }
 
+.modal-modify {
+  padding: 0px;
+  width: 400px; }
+  .modal-modify .button {
+    width: 120px; }
+  .modal-modify input {
+    border-radius: 5px; }
+
 body {
   background-color: #ccc;
   font-family: 'Roboto', sans-serif;

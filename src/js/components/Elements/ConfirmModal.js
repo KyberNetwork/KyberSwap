@@ -35,7 +35,6 @@ export default class ConfirmModal extends React.Component {
   render() {
     return (
       <Modal
-        modalIsOpen={this.props.modalIsOpen}
         content={this.content()}
         modalID={this.props.modalID}
         modalClass="confirm-modal"
