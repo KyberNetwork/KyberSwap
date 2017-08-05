@@ -75,7 +75,7 @@ export default class TokenSource extends React.Component {
     })
     var error = ""
     if (this.props.error && this.props.error != "") {
-      error = (<div class="error">
+      error = (<div class="error source">
         <i class="k-icon k-icon-error"></i>
         Specified amount is {this.props.error}
       </div>)

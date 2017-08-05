@@ -26,7 +26,7 @@ export default class MinRate extends React.Component {
     var minRateApp = null
     if (this.props.isCrossSend || !this.props.allowDirectSend) {
       minRateApp = (
-        <li>
+        <div>
           <div>
             <label>
               Min rate
@@ -37,17 +37,15 @@ export default class MinRate extends React.Component {
             <ReactTooltip id='min-rate-tooltip' effect="solid" place="right" offset={{'left': -15}} className="k-tooltip">                                            
               <span>Minimum exchange rate between chosen token pair:</span> 
               <ul>
-                <li>If Kyber has better rate at execution time, such rate will be used.</li>
-                <li>If Kyber doesn not have greater or equal rate, the transaction will fail.</li>
+                <li>The current rate may change when your transaction is included in a block. This indicates a minimum rate that you want for your trade, set by default 0.2% less than the current rate.</li>
               </ul>
              </ReactTooltip>
-            <span class="placeholder"> </span>
             <input value={toT(this.props.minConversionRate)} name="min_rate" onKeyPress={this.props.onKeyPress}
               type="number" min="0" step="any"
               placeholder="Min rate that you accept"
               onChange={this.specifyMinRate}/>
           </div>
-        </li>)
+        </div>)
     }
     return minRateApp
   }
