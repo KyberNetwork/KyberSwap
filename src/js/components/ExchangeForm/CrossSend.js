@@ -1,8 +1,9 @@
 import React from "react"
 import { connect } from "react-redux"
-import { selectCrossSend, deselectCrossSend, selectDestToken } from "../../actions/exchangeFormActions"
+import { selectCrossSend, suggestRate, deselectCrossSend, selectDestToken } from "../../actions/exchangeFormActions"
 import constants from "../../services/constants"
 import supported_tokens from "../../services/supported_tokens"
+import { currencies } from "../../utils/store"
 
 @connect((store, props) => {
   var exchangeForm = store.exchangeForm[props.exchangeFormID]
@@ -15,6 +16,14 @@ import supported_tokens from "../../services/supported_tokens"
 })
 
 export default class CrossSend extends React.Component {
+  selectToken(event) {
+    this.props.dispatch(
+      selectDestToken(this.props.exchangeFormID, event.target.value))
+    if (this.props.sourceToken != "" && event.target.value) {
+      this.props.dispatch(suggestRate(
+        this.props.exchangeFormID, constants.RATE_EPSILON))
+    }
+  }
 
   toggleCrossSend = (event) => {
     if (event.target.checked) {
@@ -38,14 +47,16 @@ export default class CrossSend extends React.Component {
   }
 
   render() {
+    var tokenOptions = currencies().map((tok) => {
+      return <option key={tok.address} value={tok.address}>{tok.symbol}</option>
+    })
     return (
       <li>
         <div>
-          <label>In different token</label>
-          <input name="cross-send" type="checkbox" id="cross-send"
-            checked={this.props.isCrossSend}
-            onChange={this.toggleCrossSend} />
-          <label class="k-checkbox" for="cross-send"></label>
+          <label>Recipient to receipt</label>
+          <select class="selectric" value={this.props.destToken} onChange={this.selectToken.bind(this)}>
+            {tokenOptions}
+          </select>
         </div>
       </li>
     )

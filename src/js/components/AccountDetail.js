@@ -9,7 +9,7 @@ import { Balance, Token, Nonce } from "./Account/Balance"
 import { toT } from "../utils/converter"
 import { addDeleteAccount} from "../actions/accountActions"
 import constants from "../services/constants"
-import { selectAccount, specifyRecipient, specifyStep, suggestRate } from "../actions/exchangeFormActions"
+import { selectAccount, specifyRecipient, specifyStep, suggestRate, selectDestToken } from "../actions/exchangeFormActions"
 
 const modalID = "quick-exchange-modal"
 const sendModalID = "quick-send-modal"
@@ -70,8 +70,8 @@ export default class AccountDetail extends React.Component {
     this.props.dispatch(selectAccount(
       quickSendFormID, this.props.address
     ))
-    this.props.dispatch(suggestRate(
-      quickSendFormID, constants.RATE_EPSILON))
+    this.props.dispatch(selectDestToken(
+      quickSendFormID, constants.ETHER_ADDRESS))
   }
 
   downloadKey = (event, keystore, address) => {
@@ -142,12 +142,12 @@ export default class AccountDetail extends React.Component {
         <div class="wallet-left">
           <div class="content">
             <div class="balance">
-              <label>Ether balance</label>
-              <span title={toT(this.props.balance)}>{toT(this.props.balance, 8)}</span>
-            </div>
-            <div class="address">
               <label>Address</label>
               <span>{this.props.address}</span>
+            </div>
+            <div class="address">
+              <label>Ether balance</label>
+              <span title={toT(this.props.balance)}>{toT(this.props.balance, 8)}</span>
               <div class="account-action">
                 <div>
                   <ModalButton preOpenHandler={this.openQuickExchange} modalID={modalID} title="Quick exchange between tokens">

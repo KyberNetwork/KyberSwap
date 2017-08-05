@@ -9,9 +9,11 @@ import constants from "../../services/constants"
 @connect((store, props) => {
   var exchangeForm = store.exchangeForm[props.exchangeFormID]
   exchangeForm = exchangeForm || {...constants.INIT_EXCHANGE_FORM_STATE}
+  var sourceToken = exchangeForm.sourceToken
+  var destToken = exchangeForm.destToken
   return {
     minConversionRate: exchangeForm.minConversionRate,
-    isCrossSend: exchangeForm.isCrossSend,
+    isCrossSend: sourceToken != destToken,
   }
 })
 export default class MinRate extends React.Component {

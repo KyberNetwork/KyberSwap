@@ -60,7 +60,8 @@ $backgroundColor:#333;
     }
     .balance {
         span {
-            color: $accountColor
+            color: $accountColor;
+            font-size: 13px;
         }
     }
 
@@ -167,7 +168,7 @@ $backgroundColor:#333;
         .address {
             margin-top: 15px;
             span {
-                font-size: 13px;
+                font-size: 16px;
                 color: #aaa;
             }
             >div {
@@ -226,6 +227,7 @@ $backgroundColor:#333;
     }
     .balance {
         color: $color;
+        font-size: 13px;
     }
     .token-item {
         padding: 53px 40px;

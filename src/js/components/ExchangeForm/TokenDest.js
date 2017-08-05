@@ -26,7 +26,7 @@ import constants from "../../services/constants"
     specifiedMinAmount: exchangeForm.minDestAmount,
     error: exchangeForm.errors["minDestAmountError"],
     destTokenError: exchangeForm.errors["destTokenError"],
-    isCrossSend: exchangeForm.isCrossSend,
+    isCrossSend: sourceToken != destToken,
     advanced: exchangeForm.advanced,
   }
 })
@@ -49,7 +49,7 @@ export default class TokenDest extends React.Component {
 
   label = () => {
     if (this.props.expectedAmount) {
-      return "Expected to receive"
+      return this.props.exchangeFormID == "quick-exchange" ? "Expected to receive" : "Expected amount"
     } else {
       return this.props.exchangeFormID == "quick-exchange" ? "Exchange for at least" : "Send as at least"
     }

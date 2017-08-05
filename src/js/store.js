@@ -27,6 +27,7 @@ persistStore(store, {blacklist: [
   'joinPaymentForm',
   'createKeyStore',
   'importKeystore',
+  'utils',
   ]})
 
 export default store

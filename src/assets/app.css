@@ -887,7 +887,8 @@ input::-webkit-contacts-auto-fill-button {
   border-radius: 6px; }
 
 .k-page-account .balance span {
-  color: #00c072; }
+  color: #00c072;
+  font-size: 13px; }
 
 .k-page-account .token-item .value {
   color: #aaa; }
@@ -968,7 +969,7 @@ input::-webkit-contacts-auto-fill-button {
   .wallet-item .wallet-left .address {
     margin-top: 15px; }
     .wallet-item .wallet-left .address span {
-      font-size: 13px;
+      font-size: 16px;
       color: #aaa; }
     .wallet-item .wallet-left .address > div {
       text-align: center; }
@@ -1013,7 +1014,8 @@ input::-webkit-contacts-auto-fill-button {
     -ms-flex-pack: justify;
     justify-content: space-between; }
   .wallet-item .balance {
-    color: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%); }
+    color: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%);
+    font-size: 13px; }
   .wallet-item .token-item {
     padding: 53px 40px;
     text-align: center; }

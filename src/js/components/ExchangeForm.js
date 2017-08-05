@@ -22,6 +22,8 @@ const quickExchangeModalID = "quick-exchange-modal"
 @connect((store, props) => {
   var exchangeForm = store.exchangeForm[props.exchangeFormID]
   exchangeForm = exchangeForm || {...constants.INIT_EXCHANGE_FORM_STATE}
+  var sourceToken = exchangeForm.sourceToken
+  var destToken = exchangeForm.destToken
   return {
     gas: exchangeForm.gas,
     gasError: exchangeForm.errors["gasError"],
@@ -32,7 +34,7 @@ const quickExchangeModalID = "quick-exchange-modal"
     broadcasting: exchangeForm.broadcasting,
     txHash: exchangeForm.txHash,
     tx: store.txs[exchangeForm.txHash],
-    isCrossSend: exchangeForm.isCrossSend,
+    isCrossSend: sourceToken != destToken,
     advanced: exchangeForm.advanced,
   }
 })
@@ -111,7 +113,7 @@ export default class ExchangeForm extends React.Component {
           txStatus = <div>
             <h3>Transaction</h3>
             <a href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
-            <h3>is waiting for confirmations...</h3>
+            <h3>is waiting for confirmation...</h3>
           </div>
         } else if (tx.status == "failed") {
           txStatus = <div>
