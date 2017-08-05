@@ -426,10 +426,41 @@ $stepColorActive:#00c072;
             li{
                 margin-top: 10px;
                 position:relative;
-                min-height: 45px;
+                min-height: 40px;
                 >div{
                     display: flex;
                     align-items:center;
+                    >div {
+                      display: flex;
+                      align-items:center;
+                    }
+                    span.expected-amount {
+                      padding-left: .5rem;
+                    }
+                }
+                >div.has-sub-inputs {
+                  display: block;
+                  div.sub-inputs {
+                    display: block;
+                    >div {
+                      display: block;
+                      >div {
+                        display: flex;
+                        align-items: center;
+                      }
+                      input {
+                        margin-left: 0;
+                        width: 492px;
+                        font-size: 16px;
+                      }
+                      label {
+                        font-size: 16px;
+                      }
+                      .error {
+                        margin-left: 200px;
+                      }
+                    }
+                  }
                 }
                 &:before{
                     content: "• ";
@@ -460,6 +491,9 @@ $stepColorActive:#00c072;
                 .error{
                     margin-left:273px;
                     margin-top: 0px;
+                }
+                .error.source {
+                  margin-top: -19px;
                 }
                 input[type="number"]{
                   background: transparent;
@@ -568,7 +602,7 @@ $stepColorActive:#00c072;
                 height: 55px;
                 label{
                     font-size: 18px;
-                    width: 80px;
+                    width: 120px;
                   //  font-weight: 700;
                     font-weight: 700;
                     font-size: 18px;
@@ -743,6 +777,7 @@ $stepColorActive:#00c072;
             &.cross-send{
                 height: 450px;
             }
+            overflow-y: scroll;
         }
         .progress-step-2 {
           color: #FFFFFF;

@@ -17,17 +17,6 @@ export function calculateMinAmount(source, rate) {
   return minAmount
 }
 
-export function calculateRate(source, dest) {
-  var bigSource = new BigNumber(source)
-  var bigDest = new BigNumber(dest)
-  if (bigSource == 'NaN' || bigSource == 'Infinity' || acceptableTyping(source) ||
-    bigDest == 'NaN' || bigDest == 'Infinity' || acceptableTyping(dest)) {
-    return "0"
-  }
-  var rate = bigDest.times(1000000000000000000).div(bigSource)
-  return rate
-}
-
 export function calculateDest(source, rate) {
   var bigSource = new BigNumber(source)
   var bigRate = new BigNumber(rate)
@@ -37,6 +26,18 @@ export function calculateDest(source, rate) {
   }
   var dest = bigSource.times(bigRate).div(1000000000000000000)
   return dest
+}
+
+
+export function calculateRate(source, dest) {
+  var bigSource = new BigNumber(source)
+  var bigDest = new BigNumber(dest)
+  if (bigSource == 'NaN' || bigSource == 'Infinity' || acceptableTyping(source) ||
+    bigDest == 'NaN' || bigDest == 'Infinity' || acceptableTyping(dest)) {
+    return "0"
+  }
+  var rate = bigDest.times(1000000000000000000).div(bigSource)
+  return rate
 }
 
 function acceptableTyping(number) {

@@ -11,6 +11,7 @@ import Credential from "./Elements/Credential"
 import PostExchange from "./ExchangeForm/PostExchange"
 import CrossSend from "./ExchangeForm/CrossSend"
 import MinRate from "./ExchangeForm/MinRate"
+import Advanced from "./ExchangeForm/Advanced"
 import constants from "../services/constants"
 import ReactTooltip from 'react-tooltip'
 
@@ -171,7 +172,7 @@ export default class ExchangeForm extends React.Component {
                       "Exchange setting" : "Send setting"
                     }
                   </div>
-                </div>                
+                </div>
                 <div class="step step-advance" className={this.props.advanced?"step step-advance":"step step-advance hide-step"}>
                   <span class="left-bridge"></span>
                   <span class="right-bridge"></span>
@@ -208,26 +209,35 @@ export default class ExchangeForm extends React.Component {
                     { this.props.allowDirectSend ?
                       <CrossSend exchangeFormID={this.props.exchangeFormID} /> : ""
                     }
-                    <TokenDest onKeyPress={(event) => this.focusNext('min_rate', event)} exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
-                    <MinRate onKeyPress={(event) => this.goNextStep(event)} exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend}/>
+                    { (!this.props.allowDirectSend || this.props.isCrossSend ) ?
+                      <li>
+                        <TokenDest
+                          expectedAmount={true}
+                          disableMinAmount={true}
+                          onKeyPress={(event) => this.focusNext('min_rate', event)}
+                          exchangeFormID={this.props.exchangeFormID}
+                          allowDirectSend={this.props.allowDirectSend}/>
+                      </li> : ""
+                    }
                     <li>
                       <div>
                         <label class="advance-label">Advanced
                           <span data-tip data-for='advance-tooltip'>
-                              <i class="k-icon k-icon-question"></i>
-                            </span>
+                            <i class="k-icon k-icon-question"></i>
+                          </span>
                         </label>
                          <ReactTooltip id='advance-tooltip' effect="solid" place="right" offset={{'left': -15}} className="k-tooltip">                                                        
-                              <span>To configure gas and gas price for your transaction:</span>
-                              <ul>
-                                <li>Increasing gas price can make your transaction confirmed faster.</li>
-                                <li>Decreasing gas price can save a little gas cost but longer to confirm.</li>
-                              </ul>
+                           <span>To configure minimum rate and gas info</span>
                          </ReactTooltip>
                         <input type="checkbox" defaultChecked={this.props.advanced} onChange={this.selectAdvance} id="advance-option"/>
                         <label class="k-checkbox" for="advance-option"></label>
                       </div>
                     </li>
+                    { this.props.advanced && (!this.props.allowDirectSend || this.props.isCrossSend )?
+                      <li>
+                        <Advanced focusNext={this.focusNext} goNextStep={this.goNextStep} exchangeFormID={this.props.exchangeFormID} allowDirectSend={this.props.allowDirectSend} />
+                      </li> : ""
+                    }
                   </ul>
                 </div>
                 { (this.props.isCrossSend || !this.props.allowDirectSend) ? <ExchangeRate exchangeFormID={this.props.exchangeFormID}/> : "" }

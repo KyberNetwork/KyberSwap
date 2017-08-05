@@ -1599,7 +1599,7 @@ input::-webkit-contacts-auto-fill-button {
       .k-page-exchange .item-2 ul li {
         margin-top: 10px;
         position: relative;
-        min-height: 45px; }
+        min-height: 40px; }
         .k-page-exchange .item-2 ul li > div {
           display: -webkit-box;
           display: -webkit-flex;
@@ -1609,6 +1609,40 @@ input::-webkit-contacts-auto-fill-button {
           -webkit-align-items: center;
           -ms-flex-align: center;
           align-items: center; }
+          .k-page-exchange .item-2 ul li > div > div {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center; }
+          .k-page-exchange .item-2 ul li > div span.expected-amount {
+            padding-left: .5rem; }
+        .k-page-exchange .item-2 ul li > div.has-sub-inputs {
+          display: block; }
+          .k-page-exchange .item-2 ul li > div.has-sub-inputs div.sub-inputs {
+            display: block; }
+            .k-page-exchange .item-2 ul li > div.has-sub-inputs div.sub-inputs > div {
+              display: block; }
+              .k-page-exchange .item-2 ul li > div.has-sub-inputs div.sub-inputs > div > div {
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -webkit-align-items: center;
+                -ms-flex-align: center;
+                align-items: center; }
+              .k-page-exchange .item-2 ul li > div.has-sub-inputs div.sub-inputs > div input {
+                margin-left: 0;
+                width: 492px;
+                font-size: 16px; }
+              .k-page-exchange .item-2 ul li > div.has-sub-inputs div.sub-inputs > div label {
+                font-size: 16px; }
+              .k-page-exchange .item-2 ul li > div.has-sub-inputs div.sub-inputs > div .error {
+                margin-left: 200px; }
         .k-page-exchange .item-2 ul li:before {
           content: "• ";
           color: #00c072;
@@ -1633,6 +1667,8 @@ input::-webkit-contacts-auto-fill-button {
         .k-page-exchange .item-2 ul li .error {
           margin-left: 273px;
           margin-top: 0px; }
+        .k-page-exchange .item-2 ul li .error.source {
+          margin-top: -19px; }
         .k-page-exchange .item-2 ul li input[type="number"] {
           background: transparent;
           border: none;
@@ -1726,7 +1762,7 @@ input::-webkit-contacts-auto-fill-button {
         height: 55px; }
         .k-page-exchange .item-advance ul li label {
           font-size: 18px;
-          width: 80px;
+          width: 120px;
           font-weight: 700;
           font-size: 18px;
           color: #FFFFFF; }
@@ -1842,7 +1878,8 @@ input::-webkit-contacts-auto-fill-button {
     -webkit-transition: 0.4s;
     -o-transition: 0.4s;
     transition: 0.4s;
-    height: 300px; }
+    height: 300px;
+    overflow-y: scroll; }
     .k-page-exchange .exchange-page[data-page='2'] .page.cross-send {
       height: 450px; }
   .k-page-exchange .exchange-page[data-page='2'] .progress-step-2 {
@@ -2321,18 +2358,26 @@ input::-webkit-contacts-auto-fill-button {
 
 @keyframes unfoldIn {
   0% {
+    -webkit-transform: scaleY(0.005) scaleX(0);
     transform: scaleY(0.005) scaleX(0); }
   50% {
+    -webkit-transform: scaleY(0.005) scaleX(1);
     transform: scaleY(0.005) scaleX(1); }
   100% {
+    -webkit-transform: scaleY(1) scaleX(1);
     transform: scaleY(1) scaleX(1); } }
+
 @keyframes unfoldOut {
   0% {
+    -webkit-transform: scaleY(1) scaleX(1);
     transform: scaleY(1) scaleX(1); }
   50% {
+    -webkit-transform: scaleY(0.005) scaleX(1);
     transform: scaleY(0.005) scaleX(1); }
   100% {
+    -webkit-transform: scaleY(0.005) scaleX(0);
     transform: scaleY(0.005) scaleX(0); } }
+
 .confirm-modal {
   width: 400px;
   height: 200px;
@@ -2345,8 +2390,14 @@ input::-webkit-contacts-auto-fill-button {
   .confirm-modal .modal-control {
     margin: 0 auto;
     margin-top: 30px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
     width: 300px;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
     justify-content: space-between; }
   .confirm-modal button {
     font-weight: bold;
