@@ -207,11 +207,11 @@ export default class EthereumService {
   }
 
   // tx should be ethereumjs-tx object
-  sendRawTransaction(tx, callback) {
+  sendRawTransaction(tx, callback, failCallback) {
     return this.rpc.eth.sendRawTransaction(
       ethUtil.bufferToHex(tx.serialize()), (error, hash) => {
         if (error != null) {
-          console.log(error)
+          failCallback(error)
         } else {
           callback(hash)
         }

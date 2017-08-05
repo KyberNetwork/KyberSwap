@@ -123,3 +123,12 @@ export function toEther(number) {
     return bigNumber.dividedBy(1000000000000000000).toString(10)
   }
 }
+
+export function errorName(message) {
+  var parts = message.split(". ")
+  if (parts.length > 0) {
+    return parts[0]
+  } else {
+    return message
+  }
+}

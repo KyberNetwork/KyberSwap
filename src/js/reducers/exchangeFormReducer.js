@@ -138,6 +138,11 @@ const exchangeForm = (state=initState, action) => {
       newState[id].txHash = action.payload
       return newState
     }
+    case "EXCHANGE_FORM_TX_BROADCAST_REJECTED": {
+      newState[id].broadcasting = false
+      newState[id].bcError = action.payload
+      return newState
+    }
     case "EXCHANGE_FORM_SUGGEST_RATE": {
       var minRate = action.payload.rate
       var minAmount, block, balance, rate

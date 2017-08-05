@@ -16,6 +16,7 @@ import constants from "../services/constants"
 import ReactTooltip from 'react-tooltip'
 
 import { specifyGasLimit, specifyGasPrice, resetStep, selectAdvance, deselectAdvance } from "../actions/exchangeFormActions"
+import { errorName } from "../utils/converter"
 
 const quickExchangeModalID = "quick-exchange-modal"
 
@@ -36,6 +37,7 @@ const quickExchangeModalID = "quick-exchange-modal"
     tx: store.txs[exchangeForm.txHash],
     isCrossSend: sourceToken != destToken,
     advanced: exchangeForm.advanced,
+    bcError: exchangeForm.bcError,
   }
 })
 export default class ExchangeForm extends React.Component {
@@ -108,6 +110,19 @@ export default class ExchangeForm extends React.Component {
       var tx = this.props.tx
       if (this.props.broadcasting) {
         txStatus = <h3>Broadcasting your transaction...</h3>
+      } else if (this.props.bcError != "") {
+        txStatus = <div>
+          <h3>Broadcasting your transaction failed.</h3>
+          <h3>
+            Error: {errorName(this.props.bcError.message)}
+            <span data-tip data-for='failure-tooltip'>
+              <i class="k-icon k-icon-question"></i>
+            </span>
+          </h3>
+          <ReactTooltip id='failure-tooltip' effect="solid" place="right" offset={{'left': -15}} className="k-tooltip">
+            <span>{this.props.bcError.message}</span>
+          </ReactTooltip>
+        </div>
       } else {
         if (tx.status == "pending") {
           txStatus = <div>
@@ -259,7 +274,7 @@ export default class ExchangeForm extends React.Component {
               </div>
               <div class="page-item item-4">
                 {txStatus}
-                { tx && tx.status == "failed" ?
+                { (tx && tx.status == "failed") || this.props.bcError != "" ?
                   <span class="verify">
                     <i class="k-icon k-icon-failed" ></i>
                   </span> : ""

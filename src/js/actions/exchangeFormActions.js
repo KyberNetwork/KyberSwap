@@ -158,6 +158,8 @@ export function doApprovalTransaction(id, ethereum, tx, callback) {
       ethereum.sendRawTransaction(tx, (hash) => {
         callback(hash)
         resolve(hash)
+      }, (error) => {
+        reject(error)
       })
     }),
     meta: id,
@@ -199,6 +201,8 @@ export function doTransaction(id, ethereum, tx, callback) {
       ethereum.sendRawTransaction(tx, (hash) => {
         callback(hash, tx)
         resolve(hash)
+      }, (error) => {
+        reject(error)
       })
     }),
     meta: id,

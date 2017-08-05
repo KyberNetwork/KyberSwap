@@ -86,7 +86,6 @@ export default class JoinPaymentForm extends React.Component {
       var nonce = verifyNonce(this.props.nonce)
       var name = this.props.name
       var dispatch = this.props.dispatch
-      console.log(this.props)
       deployKyberWallet(
         ethereum, account, nonce, gas,
         gasPrice, account.key, password, (ex) => {
