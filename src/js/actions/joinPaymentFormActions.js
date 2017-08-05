@@ -5,6 +5,8 @@ export function doTransaction(ethereum, tx, callback) {
       ethereum.sendRawTransaction(tx, (hash) => {
         callback(hash)
         resolve(hash)
+      }, (error) => {
+        reject(hash)
       })
     })
   }

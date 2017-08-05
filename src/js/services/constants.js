@@ -38,6 +38,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   gasPrice: 20000000000,
   step: 1,
   broadcasting: true,
+  bcError: "",
   txHash: "",
   errors: {
     selectedAccountError: "",
