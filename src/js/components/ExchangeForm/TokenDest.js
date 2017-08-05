@@ -59,7 +59,7 @@ export default class TokenDest extends React.Component {
     if (this.props.rate) {
       return toT(calculateDest(this.props.sourceAmount, this.props.rate.rate), 12)
     } else {
-      return "Unavailable"
+      return "This pair of token is not supported"
     }
   }
 

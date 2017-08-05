@@ -56,7 +56,7 @@ import Tx from "../../services/tx"
     gasPrice: exchangeForm.gasPrice,
     step: exchangeForm.step,
     offeredRateBalance: exchangeForm.offeredRateBalance,
-    isCrossSend: exchangeForm.isCrossSend,
+    isCrossSend: sourceToken != destToken,
   }
 })
 export default class PostExchange extends React.Component {
