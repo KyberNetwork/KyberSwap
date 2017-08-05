@@ -34,7 +34,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   offeredRateBalance: 0,
   offeredRate: 0,
   throwOnFailure: false,
-  gas: 2000000,
+  gas: 1000000,
   gasPrice: 20000000000,
   step: 1,
   broadcasting: true,
