@@ -211,7 +211,7 @@ export default class ExchangeForm extends React.Component {
                     { this.props.allowDirectSend ?
                       <CrossSend exchangeFormID={this.props.exchangeFormID} /> : ""
                     }
-                    { (!this.props.allowDirectSend || this.props.isCrossSend ) ?
+                    { (!this.props.allowDirectSend) ?
                       <li>
                         <TokenDest
                           expectedAmount={true}

@@ -4,14 +4,20 @@ import { selectCrossSend, suggestRate, deselectCrossSend, selectDestToken } from
 import constants from "../../services/constants"
 import supported_tokens from "../../services/supported_tokens"
 import { currencies } from "../../utils/store"
+import { toT, calculateDest } from "../../utils/converter"
 
 @connect((store, props) => {
   var exchangeForm = store.exchangeForm[props.exchangeFormID]
   exchangeForm = exchangeForm || {...constants.INIT_EXCHANGE_FORM_STATE}
+  var sourceToken = exchangeForm.sourceToken
+  var destToken = exchangeForm.destToken
+  var rate = store.global.rates[sourceToken + "-" + destToken]
   return {
-    isCrossSend: exchangeForm.isCrossSend,
-    sourceToken: exchangeForm.sourceToken,
-    destToken: exchangeForm.destToken,
+    isCrossSend: sourceToken != destToken,
+    sourceToken: sourceToken,
+    destToken: destToken,
+    sourceAmount: exchangeForm.sourceAmount,
+    rate: rate,
   }
 })
 
@@ -46,6 +52,14 @@ export default class CrossSend extends React.Component {
     }
   }
 
+  expectedAmount = () => {
+    if (this.props.rate) {
+      return toT(calculateDest(this.props.sourceAmount, this.props.rate.rate), 12)
+    } else {
+      return "Unavailable"
+    }
+  }
+
   render() {
     var tokenOptions = currencies().map((tok) => {
       return <option key={tok.address} value={tok.address}>{tok.symbol}</option>
@@ -57,6 +71,9 @@ export default class CrossSend extends React.Component {
           <select class="selectric" value={this.props.destToken} onChange={this.selectToken.bind(this)}>
             {tokenOptions}
           </select>
+          { this.props.isCrossSend ?
+            <span class="expected-amount">{ this.expectedAmount() }</span> : ""
+          }
         </div>
       </li>
     )
