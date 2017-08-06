@@ -2,8 +2,8 @@
 Kyber web wallet helps users to interact directly with KyberNetwork in order to exchange their ethers and tokens.
 You can see a walkthrough on Youtube [here](https://www.youtube.com/watch?v=v2bdcChFEuQ).
 
-## Official deployment
-We deployed the MVP of the wallet at [https://testnet-wallet.kyber.network](https://testnet-wallet.kyber.network). Any other websites that claims to be Kyber Wallet is fake and might contain malicious script to scam or steal your assets.
+## Live deployment
+We deployed the [MVP](https://github.com/KyberNetwork/KyberWallet/releases/tag/MVP) of the wallet at [https://testnet-wallet.kyber.network](https://testnet-wallet.kyber.network). Any other websites that claims to be Kyber Wallet is fake and might contain malicious scripts to scam or steal your assets.
 
 ## Install dependencies
 The wallet is developed on `Nodejs`, we assume users have it installed in their environment. *We suggest to use Node v7.3.0*
