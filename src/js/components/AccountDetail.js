@@ -43,7 +43,30 @@ export default class AccountDetail extends React.Component {
   deleteAccount = (event, address) => {
     this.props.dispatch(addDeleteAccount(address))
     this.props.dispatch(openModal(confirmModalId))
+    this.closeSetting(event)
   }
+
+  downloadKey = (event, keystore, address) => {
+    event.preventDefault()    
+    var element = document.createElement('a')
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(keystore))
+    element.setAttribute('download', address)
+
+    element.style.display = 'none'
+    document.body.appendChild(element)
+
+    element.click()
+
+    document.body.removeChild(element)
+    this.closeSetting(event)
+  }  
+
+  openModifyModal = (event, address, name) =>{
+    this.props.dispatch(addNameModifyAccount(address, name))
+    this.props.dispatch(openModal(modifyModalId))
+    this.closeSetting(event)
+  }
+
   toggleAccount = (event) =>{
     var target = event.currentTarget
     var parent = target.parentElement
@@ -56,6 +79,13 @@ export default class AccountDetail extends React.Component {
     parent.className = classParent
 
   }
+
+  closeSetting = (event) => {
+    var target = event.currentTarget
+    var parent = target.parentElement.parentElement.parentElement.parentElement
+    parent.className = "control-btn"
+  }
+
   openQuickExchange = (event) => {
     this.props.dispatch(selectAccount(
       quickFormID, this.props.address
@@ -75,26 +105,7 @@ export default class AccountDetail extends React.Component {
     this.props.dispatch(selectDestToken(
       quickSendFormID, constants.ETHER_ADDRESS))
   }
-
-  downloadKey = (event, keystore, address) => {
-    event.preventDefault()    
-    var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(keystore));
-    element.setAttribute('download', address);
-
-    element.style.display = 'none';
-    document.body.appendChild(element);
-
-    element.click();
-
-    document.body.removeChild(element);
-  }
-
-  openModifyModal = (event, address, name) =>{
-    this.props.dispatch(addNameModifyAccount(address, name))
-    this.props.dispatch(openModal(modifyModalId))
-  }
-
+  
   render() {
     var account = this.props.account
     var tokens = this.props.tokens.map((tok, index) => {
