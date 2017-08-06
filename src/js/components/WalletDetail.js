@@ -39,6 +39,13 @@ export default class WalletDetail extends React.Component {
   deleteWallet = (event, address) => {
     this.props.dispatch(addDeleteWallet(address))
     this.props.dispatch(openModal(confirmModalId))
+    this.closeSetting(event)
+  }
+
+  openModifyModal = (event, address, name) =>{
+    this.props.dispatch(addNameModifyWallet(address, name))
+    this.props.dispatch(openModal(modifyWalletModalId))
+    this.closeSetting(event)
   }
 
   toggleWallet = (event) =>{
@@ -51,6 +58,12 @@ export default class WalletDetail extends React.Component {
       classParent = "control-btn"
     }
     parent.className = classParent
+  }
+
+  closeSetting = (event) => {
+    var target = event.currentTarget
+    var parent = target.parentElement.parentElement.parentElement.parentElement
+    parent.className = "control-btn"
   }
 
   openQuickExchange = (event) => {
@@ -68,12 +81,7 @@ export default class WalletDetail extends React.Component {
       quickSendFormID, this.props.address
     ))
   }
-
-  openModifyModal = (event, address, name) =>{
-    this.props.dispatch(addNameModifyWallet(address, name))
-    this.props.dispatch(openModal(modifyWalletModalId))
-  }
-
+  
   render() {
     var tokens = this.props.tokens.map((tok, index) => {
       return <Token key={index} name={tok.name} balance={tok.balance} icon={tok.icon} />
