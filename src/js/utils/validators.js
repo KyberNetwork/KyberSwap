@@ -4,7 +4,9 @@ import TOKENS from "../services/supported_tokens"
 import constants from "../services/constants"
 
 export function verifyAccount(addr) {
-  return ethUtil.isValidAddress(addr) ? null : "invalid"
+  var valid = /^0x[0-9a-fA-F]{40}$/.test(addr)
+
+  return valid ? null : "invalid"
 }
 
 export function verifyKey(keystring) {
