@@ -356,28 +356,31 @@ $backgroundColor:#333;
     text-align: right;
     padding-right: 100px;
     button {
-        width: 50px;
-        height: 50px; //  background-image: $color;
-        border-radius: 70px;
-        color: #fff;
-        font-size: 40px;
+         width: 50px;
+         height: 50px; //  background-image: $color;
+         border-radius: 70px;
+         color: #fff;
+        // font-size: 40px;
         position: fixed;
-        bottom: 40px;
-        right: 40px;
-        margin-left:80px;
+        bottom: 40px;        
+        margin-left:10px;
         cursor: pointer;
+        font-size: 40px;
+        display: flex;
+        align-items:center;
+        justify-content: center;
         &:focus {
             outline: none;
         }
 
-        div {
-          display: block;
-          text-align: center;
-          width: 50px;
-          height: 50px;
-          vertical-align: middle;
-          line-height: 52px;
-        }
+        // div {
+        //   display: block;
+        //   text-align: center;
+        //   width: 50px;
+        //   height: 50px;
+        //   vertical-align: middle;
+        //   line-height: 52px;
+        // }
     }
 }
 

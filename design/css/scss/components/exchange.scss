@@ -593,10 +593,10 @@ $stepColorActive:#00c072;
                 }
             }
         }
-        ul{
+        .content > ul{
             list-style-type: none;
             margin:0px;
-            li{
+            >li{
                 display: flex;
                 align-items:center;
                 height: 55px;
