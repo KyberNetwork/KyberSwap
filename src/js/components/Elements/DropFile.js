@@ -13,10 +13,10 @@ export default class DropFile extends React.Component {
   onDrop(files) {
     var file = files[0]
     var fileReader = new FileReader()
-    fileReader.onload = () => {
-      var keystring = fileReader.result
+    fileReader.onload = (event) => {
+      var keystring = event.target.result
       try {
-        console.log("keystring: ", this.props.keystring)
+        console.log("keystring: ", keystring)
         var address = addressFromKey(keystring)
         this.props.dispatch(uploadKey(
           address, keystring))

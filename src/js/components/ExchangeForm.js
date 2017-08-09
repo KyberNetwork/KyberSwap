@@ -266,7 +266,10 @@ export default class ExchangeForm extends React.Component {
                     gasPrice={this.props.gasPrice}
                     gasPriceError={this.props.gasPriceError}
                     gasHandler={this.specifyGas}
-                    gasPriceHandler={this.specifyGasPrice} />
+                    gasPriceHandler={this.specifyGasPrice} 
+                    onGasPress = {(event) => this.focusNext('gas_price', event)}
+                    onGasPricePress = {this.goNextStep}
+                    />
                 </div>
               </div>
               <div class="page-item item-3">
