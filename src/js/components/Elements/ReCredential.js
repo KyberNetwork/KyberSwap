@@ -1,5 +1,5 @@
 import React from "react";
-
+import ReactPasswordStrength from "react-password-strength";
 
 export default class ReCredential extends React.Component {
   render() {
@@ -15,9 +15,15 @@ export default class ReCredential extends React.Component {
       	<div>	
       		<label>Passphrase</label>
 	        <div class="input-space">
-	          <input onKeyPress={this.props.onKeyPressPassword} id={this.props.passphraseID} name="password" type="password" placeholder="Type in your passphrase"/>
+            <ReactPasswordStrength
+              ref="passComponent"
+              minLength={6}
+              scoreWords={['weak', 'okay', 'good', 'strong', 'stronger']}            
+              inputProps={{ id: this.props.passphraseID, onKeyPress: this.props.onKeyPressPassword, placeholder: "Type in your passphrase"}}            
+            />	          
 	        </div>
       	</div>
+
         <div>
         	<label>Retype Passphrase</label>
 	        <div class="input-space">

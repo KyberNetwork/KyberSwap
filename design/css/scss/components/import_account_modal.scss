@@ -173,4 +173,18 @@
             margin-right: 5px;
         }
     }
+    .ReactPasswordStrength{
+        border:none;
+        .ReactPasswordStrength-input{
+            width: 100%;
+        }
+        .ReactPasswordStrength-strength-desc{
+            width: 120px;
+            top:-5px;
+        }
+        .ReactPasswordStrength-strength-bar{
+            top: -9px;
+        }
+        
+    }
 }
