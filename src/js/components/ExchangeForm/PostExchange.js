@@ -141,7 +141,7 @@ export default class PostExchange extends React.Component {
       document.getElementById(this.props.passphraseID).value = ''
     } catch (e) {
       console.log(e)
-      errors["passwordError"] = "incorrect"
+      errors["passwordError"] = e.message
     }
     return errors
   }
@@ -181,7 +181,7 @@ export default class PostExchange extends React.Component {
       document.getElementById(this.props.passphraseID).value = ''
     } catch (e) {
       console.log(e)
-      errors["passwordError"] = "incorrect"
+      errors["passwordError"] = e.message
     }
     return errors
   }

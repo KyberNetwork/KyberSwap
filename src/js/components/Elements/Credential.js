@@ -7,7 +7,7 @@ export default class Credential extends React.Component {
     if (this.props.error && this.props.error != "") {
       error = (<div class="error">
         <i class="k-icon k-icon-error"></i>
-        Your password is {this.props.error}
+        {this.props.error}
       </div>)
     }
     var classLabel = this.props.noLabel ?"hide":"" 
