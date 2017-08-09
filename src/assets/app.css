@@ -547,6 +547,11 @@ input::-webkit-contacts-auto-fill-button {
   width: 15px;
   height: 15px; }
 
+.k-icon-btn-green {
+  background-position: -19px -180px;
+  width: 52px;
+  height: 52px; }
+
 .k-page-account p.loading {
   padding-left: 25px;
   color: #fff;
@@ -973,21 +978,16 @@ input::-webkit-contacts-auto-fill-button {
     height: 50px;
     border-radius: 70px;
     color: #fff;
-    font-size: 40px;
     position: fixed;
     bottom: 40px;
-    right: 40px;
-    margin-left: 80px;
-    cursor: pointer; }
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
     .import-wallet button:focus {
       outline: none; }
-    .import-wallet button div {
-      display: block;
-      text-align: center;
-      width: 50px;
-      height: 50px;
-      vertical-align: middle;
-      line-height: 52px; }
 
 .no-wallet,
 .no-account {
@@ -1566,22 +1566,22 @@ input::-webkit-contacts-auto-fill-button {
           color: #aaa;
           margin-top: 5px;
           font-size: 15px; }
-    .k-page-exchange .item-advance ul {
+    .k-page-exchange .item-advance .content > ul {
       list-style-type: none;
       margin: 0px; }
-      .k-page-exchange .item-advance ul li {
+      .k-page-exchange .item-advance .content > ul > li {
         display: flex;
         align-items: center;
         height: 55px; }
-        .k-page-exchange .item-advance ul li label {
+        .k-page-exchange .item-advance .content > ul > li label {
           font-size: 18px;
           width: 120px;
           font-weight: 700;
           font-size: 18px;
           color: #FFFFFF; }
-        .k-page-exchange .item-advance ul li label.long-label {
+        .k-page-exchange .item-advance .content > ul > li label.long-label {
           width: 300px; }
-        .k-page-exchange .item-advance ul li input[type="number"] {
+        .k-page-exchange .item-advance .content > ul > li input[type="number"] {
           background: transparent;
           border: none;
           font-weight: 500;
@@ -1592,17 +1592,17 @@ input::-webkit-contacts-auto-fill-button {
           margin: 0 17px 0 12px;
           width: 350px;
           padding-right: 50px; }
-          .k-page-exchange .item-advance ul li input[type="number"]:focus {
+          .k-page-exchange .item-advance .content > ul > li input[type="number"]:focus {
             outline: none; }
-        .k-page-exchange .item-advance ul li input[type="checkbox"] {
+        .k-page-exchange .item-advance .content > ul > li input[type="checkbox"] {
           margin: 0px;
           width: 20px;
           height: 20px; }
-        .k-page-exchange .item-advance ul li span {
+        .k-page-exchange .item-advance .content > ul > li span {
           color: #fff;
           font-size: 18px;
           margin-left: 12px; }
-        .k-page-exchange .item-advance ul li select {
+        .k-page-exchange .item-advance .content > ul > li select {
           border: none;
           background: url(/assets/dropdown-arrow.png) no-repeat right;
           width: 60px;
@@ -2096,6 +2096,15 @@ input::-webkit-contacts-auto-fill-button {
     position: relative;
     top: 3px;
     margin-right: 5px; }
+.import-account .ReactPasswordStrength {
+  border: none; }
+  .import-account .ReactPasswordStrength .ReactPasswordStrength-input {
+    width: 100%; }
+  .import-account .ReactPasswordStrength .ReactPasswordStrength-strength-desc {
+    width: 120px;
+    top: -5px; }
+  .import-account .ReactPasswordStrength .ReactPasswordStrength-strength-bar {
+    top: -9px; }
 
 @keyframes unfoldIn {
   0% {

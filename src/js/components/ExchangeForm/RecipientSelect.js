@@ -28,6 +28,18 @@ export default class RecipientSelect extends React.Component {
       specifyRecipient(this.props.exchangeFormID, event.target.value))
   }
 
+  removeTrailing  = (e) => {
+    e.preventDefault();
+    var pastedText = '';
+    if (window.clipboardData && window.clipboardData.getData) { // IE
+        pastedText = window.clipboardData.getData('Text');
+      } else if (e.clipboardData && e.clipboardData.getData) {
+        pastedText = e.clipboardData.getData('text/plain');
+      }
+    e.target.value = pastedText.trim();    
+    this.specifyDestAddress(e)
+  }
+
   render() {
     var userOptions = this.props.accounts.map((acc, index) => {
       return <option key={acc.address} value={acc.address}>{acc.name}</option>
@@ -44,7 +56,7 @@ export default class RecipientSelect extends React.Component {
         <div>
           <div>
             <label>To</label>
-            <input type="text" value={this.props.destAddress} onChange={this.specifyDestAddress.bind(this)} value={this.props.destAddress} />
+            <input onPaste={e => this.removeTrailing(e)} type="text" value={this.props.destAddress} onChange={this.specifyDestAddress.bind(this)} value={this.props.destAddress} />
           </div>
           <select class="selectric" id="to-account" value={this.props.destAddress} onChange={this.selectAccount.bind(this)}>
               <option key="1" value="">No account selected</option>

@@ -28,13 +28,13 @@ export default class TransactionConfig extends React.Component {
     return (
       <ul>
         <li>
-          <label>Gas limit
+          <label for="gas_limit">Gas limit
           </label>
-          <input onKeyPress={this.props.onGasPress} name="gas_limit" type="number" step="any" min="0" value={this.props.gas} onChange={this.specifyGas.bind(this)} />
+          <input onKeyPress={this.props.onGasPress} name="gas_limit" id="gas_limit" type="number" step="any" min="0" value={this.props.gas} onChange={this.specifyGas.bind(this)} />
           {gasError}
         </li>
         <li>
-          <label>Gas price
+          <label for="gas_price">Gas price
             <span data-tip data-for='gas-price-tooltip'>
               <i class="k-icon k-icon-question"></i>
             </span>
@@ -46,7 +46,7 @@ export default class TransactionConfig extends React.Component {
               <li>Lower gas price saves transaction fees but may take longer to confirm your transaction.</li>
             </ul>
           </ReactTooltip>
-          <input onKeyPress={this.props.onGasPricePress} name="gas_price" type="number" step="any" min="0" value={this.props.gasPrice} onChange={this.specifyGasPrice.bind(this)} value={this.props.gasPrice} />
+          <input onKeyPress={this.props.onGasPricePress} name="gas_price" id="gas_price" type="number" step="any" min="0" value={this.props.gasPrice} onChange={this.specifyGasPrice.bind(this)}/>
           <span class="helper">
             wei
           </span>

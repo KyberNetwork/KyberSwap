@@ -22,7 +22,7 @@ export default class ToggleButton extends React.Component {
   render() {
     return (
       <button class="import" onClick={this.toggleControl} >
-        <div>+</div>
+        +
       </button>
     )
   }

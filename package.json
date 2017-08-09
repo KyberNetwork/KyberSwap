@@ -21,6 +21,7 @@
     "react-dom": "^15.6.1",
     "react-dropzone": "^3.13.3",
     "react-modal": "^2.2.2",
+    "react-password-strength": "^2.0.0",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
@@ -41,7 +42,7 @@
   "devDependencies": {},
   "scripts": {
     "build": "NODE_ENV=production webpack -p",
-    "dev": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --port 3000",
+    "dev": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Victor Tran",
