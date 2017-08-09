@@ -2020,6 +2020,15 @@ input::-webkit-contacts-auto-fill-button {
     position: relative;
     top: 3px;
     margin-right: 5px; }
+.import-account .ReactPasswordStrength {
+  border: none; }
+  .import-account .ReactPasswordStrength .ReactPasswordStrength-input {
+    width: 100%; }
+  .import-account .ReactPasswordStrength .ReactPasswordStrength-strength-desc {
+    width: 120px;
+    top: -5px; }
+  .import-account .ReactPasswordStrength .ReactPasswordStrength-strength-bar {
+    top: -9px; }
 
 @keyframes unfoldIn {
   0% {
