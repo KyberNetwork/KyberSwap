@@ -87,7 +87,6 @@ export default class Dashboard extends React.Component {
     }
 
     var importingAccount
-    console.log(this.props.newAccountAdding || this.props.newAccountCreating)
     if (this.props.newAccountAdding || this.props.newAccountCreating) {
       importingAccount = <p class="loading">New account is being added...</p>
     } else {

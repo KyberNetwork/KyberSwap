@@ -80,3 +80,11 @@ export function joinedKyberWallet(address, contractAddress) {
         payload: { address, contractAddress }
     }
 }
+
+
+export function sortAccount(order, field) {
+    return {
+        type: "SORT_ACCOUNT_BY_FIELD",
+        payload: { order, field }
+    }   
+}
