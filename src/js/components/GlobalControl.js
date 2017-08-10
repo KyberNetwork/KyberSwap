@@ -50,7 +50,7 @@ export default class GlobalControl extends React.Component {
     var className=this.props.utils.showControl?"control-account":"control-account hide"    
     return (
       <div>
-       <div class="import-wallet button-green">
+       <div class="import-wallet">
           <ToggleButton />
         </div>
         <div className={className}>
