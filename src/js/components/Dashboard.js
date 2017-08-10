@@ -156,10 +156,10 @@ export default class Dashboard extends React.Component {
                       <a onClick={(e) => this.sortAccount(e,"name")}>Sort by name</a>
                     </li>
                     <li>
-                      <a onClick={(e) => this.sortAccount(e,"createdTime")}>Sort by time</a>
+                      <a onClick={(e) => this.sortAccount(e,"createdTime")}>Sort by creation time</a>
                     </li>
                     <li>
-                      <a onClick={(e) => this.sortAccount(e,"balance")}>Sort by balance</a>
+                      <a onClick={(e) => this.sortAccount(e,"balance")}>Sort by ether balance</a>
                     </li>
                   </ul>
                 </div>
