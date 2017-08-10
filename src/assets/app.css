@@ -1107,7 +1107,8 @@ input::-webkit-contacts-auto-fill-button {
   width: 185px;
   display: none;
   margin-top: 2px;
-  z-index: 999; }
+  z-index: 999;
+  margin-left: -155px; }
   .account-sort .sort-menu:after {
     content: '';
     width: 0;
@@ -1117,7 +1118,7 @@ input::-webkit-contacts-auto-fill-button {
     border-bottom: 5px solid #000;
     position: absolute;
     top: -5px;
-    left: 15px; }
+    right: 15px; }
   .account-sort .sort-menu ul {
     list-style-type: none;
     padding: 0px;
@@ -1132,6 +1133,7 @@ input::-webkit-contacts-auto-fill-button {
         align-items: center;
         display: flex;
         font-size: 15px;
+        justify-content: flex-end;
         color: #aaa; }
         .account-sort .sort-menu ul > li a:hover {
           color: #fff; }

@@ -565,6 +565,7 @@ $gapHover:4px;
         display: none;
         margin-top: 2px;
         z-index: 999;
+            margin-left: -155px;
  &:after{
               content: '';
             width: 0;
@@ -574,7 +575,7 @@ $gapHover:4px;
             border-bottom: 5px solid #000;
             position: absolute;
             top: -5px;
-            left: 15px;
+            right: 15px;
         }
         ul{
 
@@ -594,6 +595,7 @@ $gapHover:4px;
                         align-items: center;
                         display: flex;
                         font-size: 15px;
+                        justify-content: flex-end;
                         color: #aaa;                
                     &:hover{
                         color: #fff;
