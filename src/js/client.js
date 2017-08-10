@@ -22,11 +22,18 @@ var clientPlatform = {
 console.log("client: ", clientPlatform)
 
 var illegal = false
-for (var i = 0; i< blackList.length; i++){
-  if (JSON.stringify(clientPlatform) === JSON.stringify(blackList[i])){
-    illegal = true
-    break;
+for (var i = 0; i< blackList.length; i++){  
+  if (clientPlatform.name !== blackList[i].name) {
+    continue
   }
+  if (clientPlatform.version.substring(0, blackList[i].version.length) !== blackList[i].version){
+    continue
+  }
+  if (clientPlatform.os.indexOf(blackList[i].os) === -1) {
+    continue
+  }
+  illegal = true
+  break
 }
 
 if (illegal){
