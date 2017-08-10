@@ -355,20 +355,12 @@ $backgroundColor:#333;
     width: 100%;
     text-align: right;
     padding-right: 100px;
-    button {
-         width: 50px;
-         height: 50px; //  background-image: $color;
-         border-radius: 70px;
-         color: #fff;
+    button {         
         // font-size: 40px;
         position: fixed;
         bottom: 40px;        
         margin-left:10px;
-        cursor: pointer;
-        font-size: 40px;
-        display: flex;
-        align-items:center;
-        justify-content: center;
+        cursor: pointer;        
         &:focus {
             outline: none;
         }

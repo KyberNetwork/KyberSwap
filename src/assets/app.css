@@ -974,18 +974,10 @@ input::-webkit-contacts-auto-fill-button {
   text-align: right;
   padding-right: 100px; }
   .import-wallet button {
-    width: 50px;
-    height: 50px;
-    border-radius: 70px;
-    color: #fff;
     position: fixed;
     bottom: 40px;
     margin-left: 10px;
-    cursor: pointer;
-    font-size: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center; }
+    cursor: pointer; }
     .import-wallet button:focus {
       outline: none; }
 
