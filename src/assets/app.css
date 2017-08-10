@@ -2080,6 +2080,28 @@ input::-webkit-contacts-auto-fill-button {
   .modal-modify input {
     border-radius: 5px; }
 
+@keyframes unfoldIn {
+  0% {
+    transform: scaleY(0.005) scaleX(0); }
+  50% {
+    transform: scaleY(0.005) scaleX(1); }
+  100% {
+    transform: scaleY(1) scaleX(1); } }
+@keyframes unfoldOut {
+  0% {
+    transform: scaleY(1) scaleX(1); }
+  50% {
+    transform: scaleY(0.005) scaleX(1); }
+  100% {
+    transform: scaleY(0.005) scaleX(0); } }
+.not-support {
+  color: white;
+  text-align: center;
+  margin-top: 100px;
+  font-size: 20px; }
+  .not-support .sorry {
+    color: #00c072; }
+
 body {
   background-color: #ccc;
   font-family: 'Roboto', sans-serif;
