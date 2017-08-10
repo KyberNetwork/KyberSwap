@@ -844,7 +844,7 @@ input::-webkit-contacts-auto-fill-button {
     border-bottom: 1px solid #4f4f4f;
     width: 100%;
     padding-right: 10px; }
-    .wallet-item .title span {
+    .wallet-item .title > span {
       text-transform: uppercase;
       padding-left: 25px;
       font-weight: 300;

@@ -76,6 +76,25 @@ const wallets = (state=initState, action) => {
       newWallets[address].name = action.payload.name
       return {...state, wallets: newWallets}
     }
+    case "SORT_WALLET_BY_FIELD":{
+      var oldWallets = {...state.wallets}
+      var order = action.payload.order
+      var field = action.payload.field
+      var walletArr = []
+      Object.keys(oldWallets).map(function(keyName, keyIndex) {
+        walletArr.push(oldWallets[keyName])
+      })
+      if (order === "ASC"){
+        walletArr.sort(function(a,b) {return (a[field] > b[field]) ? 1 : ((b[field] > a[field]) ? -1 : 0);} );
+      }else{
+        walletArr.sort(function(a,b) {return (a[field] > b[field]) ? -1 : ((b[field] > a[field]) ? 1 : 0);} );
+      }
+      var newWallets = {}
+      for(var i = 0; i < walletArr.length; i++){
+        newWallets[walletArr[i].address] = walletArr[i]
+      }
+      return {...state, wallets: newWallets}
+    }
   }
   return state
 }

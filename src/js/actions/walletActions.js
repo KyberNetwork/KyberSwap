@@ -39,3 +39,10 @@ export function modifyWallet(address, name){
         payload: {address:address, name:name}
     }
 }
+
+export function sortWallet(order, field) {
+    return {
+        type: "SORT_WALLET_BY_FIELD",
+        payload: { order, field }
+    }   
+}

@@ -1,17 +1,18 @@
 export default class Wallet {
-  constructor(address, ownerAddress, name, desc, balance, tokens) {
+  constructor(address, ownerAddress, name, desc, balance, tokens, createdTime) {
     this.address = address
     this.ownerAddress = ownerAddress
     this.name = name
     this.description = desc
     this.balance = balance || 0
     this.tokens = tokens || {}
+    this.createdTime = createdTime ? createdTime : Date.now()
   }
 
   shallowClone() {
     return new Wallet(
       this.address, this.ownerAddress, this.name, this.description,
-      this.balance, this.tokens)
+      this.balance, this.tokens, this.createdTime )
   }
 
   sync(ethereum, callback) {
