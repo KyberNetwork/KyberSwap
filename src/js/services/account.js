@@ -1,5 +1,5 @@
 export default class Account {
-  constructor(address, keystring, name, desc, balance, nonce, tokens, manualNonce, joined, wallet, walletCreationTx) {
+  constructor(address, keystring, name, desc, balance, nonce, tokens, manualNonce, joined, wallet, walletCreationTx, createdTime) {
     this.address = address
     this.key = keystring
     this.name = name
@@ -11,13 +11,14 @@ export default class Account {
     this.joined = joined || false
     this.wallet = wallet
     this.walletCreationTx = walletCreationTx
+    this.createdTime = createdTime ? createdTime : Date.now()
   }
 
   shallowClone() {
     return new Account(
       this.address, this.key, this.name, this.description,
       this.balance, this.nonce, this.tokens, this.manualNonce,
-      this.joined, this.wallet, this.walletCreationTx)
+      this.joined, this.wallet, this.walletCreationTx, this.createdTime )
   }
 
   getUsableNonce() {

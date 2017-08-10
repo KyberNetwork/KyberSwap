@@ -136,7 +136,7 @@ $backgroundColor:#333;
         border-bottom: 1px solid #4f4f4f;
         width: 100%;
             padding-right: 10px;
-        span {
+        >span {
             text-transform: uppercase;
             padding-left: $paddingLeft;
             font-weight: 300;
@@ -513,5 +513,101 @@ $gapHover:4px;
             margin-left: 20px;
         }
         
+    }
+}
+
+.account-sort{
+    >ul{
+        list-style-type: none;
+        width: 100%;
+        display: flex;
+        align-items:center;
+        justify-content: flex-end;
+        >li{
+            margin-right: 15px;
+            &.sort{
+                .sort-menu{
+                    display: none;
+                }
+                &.active{
+                    .sort-menu{
+                        display: block;
+                        animation:unfoldIn 0.2s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+                        transform:scaleY(.01) scaleX(0);
+                    }
+                }
+            }
+            &.search{
+                input{
+                    padding: 5px 0px;                                        
+                    margin-left: 10px;
+                    background-color: transparent;
+                    border:none;
+                    border-bottom: 1px solid #fff;
+                    color: #fff;
+                    width: 0px;
+                    transition: 0.2s;                    
+                }
+                &.active{
+                    input{
+                        width: 300px;
+                        padding: 5px 10px;
+                    }
+                }
+            }
+        }
+    }
+    .sort-menu{
+         background-color:#000;
+        border-radius:10px;
+        position:absolute;
+        width: 185px;
+        display: none;
+        margin-top: 2px;
+        z-index: 999;
+            margin-left: -155px;
+ &:after{
+              content: '';
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid #000;
+            position: absolute;
+            top: -5px;
+            right: 15px;
+        }
+        ul{
+
+            list-style-type: none;
+            padding:0px;
+            margin: 0px;
+            >li{
+                padding:0px;
+                margin: 0px;
+                &:not(:last-child){
+                    a{
+                        border-bottom: 1px solid #4F4F4F;
+                    }
+                }
+                a{
+                       padding: 10px 20px;
+                        align-items: center;
+                        display: flex;
+                        font-size: 15px;
+                        justify-content: flex-end;
+                        color: #aaa;                
+                    &:hover{
+                        color: #fff;
+                    }
+                    i{
+                        margin-right: 10px;
+                        position:relative;
+                        top: -3px;
+                    }
+                }
+                    
+                }
+            }
     }
 }

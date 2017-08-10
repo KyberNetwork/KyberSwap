@@ -13,8 +13,8 @@ import SendModal from "./SendModal"
 import Accounts from "./Accounts"
 import Wallets from "./Wallets"
 import JoinPaymentForm from "./Payment/JoinPaymentForm"
-import { deleteAccount} from "../actions/accountActions"
-import { deleteWallet} from "../actions/walletActions"
+import { deleteAccount, sortAccount} from "../actions/accountActions"
+import { deleteWallet, sortWallet} from "../actions/walletActions"
 
 const quickSendModalID = "quick-send-modal"
 const importModalId = "new_account_modal"
@@ -50,9 +50,51 @@ export default class Dashboard extends React.Component {
   deleteWallet = (event) => {
     this.props.dispatch(deleteWallet(this.props.deleteWallet))
   }
+
+  toggleActive = (event) => {
+    var parent = event.currentTarget.parentNode
+    if (parent.classList.contains("active")){
+      parent.classList.remove("active")
+    }else{
+      parent.classList.add("active")
+    }
+  }
+
+  searchAccount(e){
+    var value = e.target.value
+    var accounts = document.getElementsByClassName("wallet-item");
+    var name = ''
+    for (var i = 0; i< accounts.length; i++){
+      if(accounts[i].getElementsByClassName("account-name").length === 1){
+        name = accounts[i].getElementsByClassName("account-name")[0].innerHTML
+        if (name.indexOf(value) === -1){
+          accounts[i].className = "wallet-item hide"
+        }else{
+          accounts[i].className = "wallet-item"
+        }  
+      }      
+    }
+  }
+
+  sortAccount = (event, field) => {
+    var order = event.target.getAttribute("sort_order")
+    if (order === "ASC"){
+      this.props.dispatch(sortAccount("ASC",field))
+      this.props.dispatch(sortWallet("ASC",field))
+      event.target.setAttribute("sort_order","DESC")
+    }else{
+      this.props.dispatch(sortAccount("DESC",field))
+      this.props.dispatch(sortWallet("DESC",field))
+      event.target.setAttribute("sort_order","ASC")
+    }
+    //close sort menu
+    event.target.parentNode.parentNode.parentNode.parentNode.className = "sort"
+  }
+
   render() {
     var accounts = this.props.accounts
     var app
+   
     if (Object.keys(accounts).length == 0 ) {
       var linkImport = (
         <button>import</button>
@@ -69,6 +111,7 @@ export default class Dashboard extends React.Component {
       app = (
         <div>
           <Accounts />
+
           <ImportKeystoreModal modalID={this.props.modalID} />
         </div>)
     }
@@ -87,7 +130,6 @@ export default class Dashboard extends React.Component {
     }
 
     var importingAccount
-    console.log(this.props.newAccountAdding || this.props.newAccountCreating)
     if (this.props.newAccountAdding || this.props.newAccountCreating) {
       importingAccount = <p class="loading">New account is being added...</p>
     } else {
@@ -102,6 +144,34 @@ export default class Dashboard extends React.Component {
     return (
       <div>
         <div  class="k-page">
+          <div class="account-sort">
+            <ul>
+              <li class="sort">
+                <a onClick={e => this.toggleActive(e)} title="Sort">
+                  <i class="k-icon k-icon-sort"></i>
+                </a>
+                <div class="sort-menu">
+                  <ul>
+                    <li>
+                      <a onClick={(e) => this.sortAccount(e,"name")}>Sort by name</a>
+                    </li>
+                    <li>
+                      <a onClick={(e) => this.sortAccount(e,"createdTime")}>Sort by creation time</a>
+                    </li>
+                    <li>
+                      <a onClick={(e) => this.sortAccount(e,"balance")}>Sort by ether balance</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="search">
+                <a onClick={e => this.toggleActive(e)} title="Search">
+                  <i class="k-icon k-icon-search"></i>
+                </a>                          
+                <input  placeholder="type account or wallet name..." onChange={e => this.searchAccount(e)}/>
+              </li>
+            </ul>                    
+          </div>
           <div  class="k-page-account">
             {importingAccount}
             {app}

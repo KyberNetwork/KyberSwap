@@ -127,6 +127,25 @@ const accounts = (state=initState, action) => {
       newAccounts[address].name = action.payload.name
       return {...state, accounts: newAccounts}
     }
+    case "SORT_ACCOUNT_BY_FIELD":{
+      var oldAccounts = {...state.accounts}
+      var order = action.payload.order
+      var field = action.payload.field
+      var accountArr = []
+      Object.keys(oldAccounts).map(function(keyName, keyIndex) {
+        accountArr.push(oldAccounts[keyName])
+      })
+      if (order === "ASC"){
+        accountArr.sort(function(a,b) {return (a[field] > b[field]) ? 1 : ((b[field] > a[field]) ? -1 : 0);} );
+      }else{
+        accountArr.sort(function(a,b) {return (a[field] > b[field]) ? -1 : ((b[field] > a[field]) ? 1 : 0);} );
+      }
+      var newAccounts = {}
+      for(var i = 0; i < accountArr.length; i++){
+        newAccounts[accountArr[i].address] = accountArr[i]
+      }
+      return {...state, accounts: newAccounts}
+    }
   }
   return state
 }

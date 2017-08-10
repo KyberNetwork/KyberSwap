@@ -527,6 +527,16 @@ input::-webkit-contacts-auto-fill-button {
   width: 25px;
   height: 25px; }
 
+.k-icon-sort {
+  background-position: -141px -570px;
+  width: 25px;
+  height: 25px; }
+
+.k-icon-search {
+  background-position: -98px -570px;
+  width: 25px;
+  height: 25px; }
+
 .k-icon-failed {
   background-position: -311px -517px;
   width: 80px;
@@ -834,7 +844,7 @@ input::-webkit-contacts-auto-fill-button {
     border-bottom: 1px solid #4f4f4f;
     width: 100%;
     padding-right: 10px; }
-    .wallet-item .title span {
+    .wallet-item .title > span {
       text-transform: uppercase;
       padding-left: 25px;
       font-weight: 300;
@@ -1063,6 +1073,74 @@ input::-webkit-contacts-auto-fill-button {
     .control-account .link label {
       font-size: 20px;
       margin-left: 20px; }
+
+.account-sort > ul {
+  list-style-type: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; }
+  .account-sort > ul > li {
+    margin-right: 15px; }
+    .account-sort > ul > li.sort .sort-menu {
+      display: none; }
+    .account-sort > ul > li.sort.active .sort-menu {
+      display: block;
+      animation: unfoldIn 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+      transform: scaleY(0.01) scaleX(0); }
+    .account-sort > ul > li.search input {
+      padding: 5px 0px;
+      margin-left: 10px;
+      background-color: transparent;
+      border: none;
+      border-bottom: 1px solid #fff;
+      color: #fff;
+      width: 0px;
+      transition: 0.2s; }
+    .account-sort > ul > li.search.active input {
+      width: 300px;
+      padding: 5px 10px; }
+.account-sort .sort-menu {
+  background-color: #000;
+  border-radius: 10px;
+  position: absolute;
+  width: 185px;
+  display: none;
+  margin-top: 2px;
+  z-index: 999;
+  margin-left: -155px; }
+  .account-sort .sort-menu:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #000;
+    position: absolute;
+    top: -5px;
+    right: 15px; }
+  .account-sort .sort-menu ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px; }
+    .account-sort .sort-menu ul > li {
+      padding: 0px;
+      margin: 0px; }
+      .account-sort .sort-menu ul > li:not(:last-child) a {
+        border-bottom: 1px solid #4F4F4F; }
+      .account-sort .sort-menu ul > li a {
+        padding: 10px 20px;
+        align-items: center;
+        display: flex;
+        font-size: 15px;
+        justify-content: flex-end;
+        color: #aaa; }
+        .account-sort .sort-menu ul > li a:hover {
+          color: #fff; }
+        .account-sort .sort-menu ul > li a i {
+          margin-right: 10px;
+          position: relative;
+          top: -3px; }
 
 .modal-exchange {
   padding: 0px;

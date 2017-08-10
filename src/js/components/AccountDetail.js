@@ -130,7 +130,7 @@ export default class AccountDetail extends React.Component {
     return (
     <div class="wallet-item">
       <div class="title">
-        <span>{this.props.name}</span>
+        <span class="account-name">{this.props.name}</span>
         <div class="control-btn">
           <button onClick={(e) => this.toggleAccount(e)}>
             <i class="k-icon k-icon-setting"></i>
