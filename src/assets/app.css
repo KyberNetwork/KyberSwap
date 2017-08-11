@@ -1180,6 +1180,8 @@ input::-webkit-contacts-auto-fill-button {
       display: flex;
       justify-content: center;
       margin-top: 10px; }
+      .k-page-exchange .k-progress .progress-bar > div:first-child .circle {
+        top: 2px; }
     .k-page-exchange .k-progress .progress-squeeze .step {
       width: 180px !important; }
     .k-page-exchange .k-progress .step {
