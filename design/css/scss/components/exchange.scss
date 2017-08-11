@@ -68,6 +68,13 @@ $stepColorActive:#00c072;
             display: flex;
             justify-content: center;
             margin-top: 10px;
+            >div{
+                &:first-child{
+                    .circle{
+                        top:2px;
+                    }
+                }
+            }
         }
         .progress-squeeze {
           .step {
