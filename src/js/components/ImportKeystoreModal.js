@@ -23,17 +23,28 @@ export default class ImportKeystoreModal extends React.Component {
     this.props.dispatch(specifyDesc(event.target.value))
   }
 
+  lowerCaseKey = (keystring) => {
+    var keyObject = JSON.parse(keystring)
+    var keyLowerCase = {}
+    //lowercase all key
+    Object.keys(keyObject).map(function (key) {
+      keyLowerCase[key.toLowerCase()]= keyObject[key]
+    })
+    return JSON.stringify(keyLowerCase)
+  }
+
   importAccount = (event) => {
     event.preventDefault()
+    var keystring = this.lowerCaseKey(this.props.keystring)
     var errors = {}
     errors["addressError"] = verifyAccount(this.props.address)
-    errors["keyError"] = verifyKey(this.props.keystring)
+    errors["keyError"] = verifyKey(keystring)
     if (anyErrors(errors)) {
       console.log(errors)
       this.props.dispatch(throwError("Cannot import invalid keystore file"))
     } else {
       this.props.dispatch(addAccount(
-      this.props.address, this.props.keystring,
+      this.props.address, keystring,
       this.props.name, this.props.desc))
       this.props.dispatch(emptyForm())
 
