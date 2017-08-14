@@ -28,6 +28,11 @@ input::-webkit-contacts-auto-fill-button {
     pointer-events: none;
     cursor: default;
 }
+.visible-hide{
+    height: 0px;
+    position:absolute;
+    visibility: hidden;
+}
 .modal-open{
     background-color:$modalBackgoundColor;
     max-height: 700px;
