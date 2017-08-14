@@ -28,6 +28,19 @@ export default class KyberModal extends React.Component {
     this.props.dispatch(closeModal(this.props.modalID))
   }
 
+  afterOpenModal = () => {
+    //get height of window    
+    var screenHeight = window.innerHeight
+    console.log(ReactDOM.findDOMNode(renderedModal.portal))
+    //get height of modal
+    //var modalHeight = document.getElementsByClassName("modal-exchange")[0].clientHeight;    
+ //   console.log("height:", modalHeight)
+    // console.log("height:", this.subtitle.clientHeight)
+    // if(modalHeight > screenHeight) {
+
+    // }
+  }
+
   render() {
     var content = this.props.content
     return (
@@ -38,6 +51,7 @@ export default class KyberModal extends React.Component {
           afterOpen: 'modal-open',
         }}
         isOpen={this.props.modalIsOpen}
+        onAfterOpen={this.afterOpenModal}
         onRequestClose={this.onClose}
         contentLabel={this.props.label}>
         {content}

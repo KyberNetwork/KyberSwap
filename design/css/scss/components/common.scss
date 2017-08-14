@@ -30,7 +30,7 @@ input::-webkit-contacts-auto-fill-button {
 }
 .modal-open{
     background-color:$modalBackgoundColor;
-    max-height: 700px;
+    // max-height: 700px;
     overflow-y: auto;
     padding:15px;
     animation:unfoldIn 0.4s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
