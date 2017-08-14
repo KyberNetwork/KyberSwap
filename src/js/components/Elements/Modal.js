@@ -26,19 +26,26 @@ const customStyles = {
 export default class KyberModal extends React.Component {
   onClose = () => {
     this.props.dispatch(closeModal(this.props.modalID))
+    var app = document.getElementById("app")
+    app.style.height = "auto"
+    app.style.overflow = "initial"
   }
 
   afterOpenModal = () => {
     //get height of window    
     var screenHeight = window.innerHeight
-    console.log(ReactDOM.findDOMNode(renderedModal.portal))
     //get height of modal
-    //var modalHeight = document.getElementsByClassName("modal-exchange")[0].clientHeight;    
- //   console.log("height:", modalHeight)
-    // console.log("height:", this.subtitle.clientHeight)
-    // if(modalHeight > screenHeight) {
+    var modalContentInstance = document.getElementsByClassName("react-modal")[0]
+    var modalInstance = modalContentInstance.parentNode
+    var modalHeight = modalContentInstance.clientHeight;    
 
-    // }
+    if(modalHeight > screenHeight) {
+      modalInstance.style.position = 'absolute'
+      modalInstance.style.height = (modalHeight + 100) + "px"
+
+      app.style.height = (modalHeight + 100) + "px"
+      app.style.overflow = "hidden"
+    }
   }
 
   render() {
@@ -47,7 +54,7 @@ export default class KyberModal extends React.Component {
       <Modal
         style={customStyles}
          className={{
-          base: this.props.modalClass,
+          base: this.props.modalClass + " react-modal",
           afterOpen: 'modal-open',
         }}
         isOpen={this.props.modalIsOpen}
