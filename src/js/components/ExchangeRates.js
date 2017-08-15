@@ -36,12 +36,14 @@ export default class ExchangeRates extends React.Component {
           rateID = tokens[j].address + "-" + tokens[i].address
           rateReverse = this.props.rates[rateID]
           if (rate && rateReverse) {
+            const r1 = toT(rate.rate, 8);
+            const r2 = toT(rateReverse.rate, 8);
             rates.push(
               <tr key={rateID}>
                 <td class="token-pair">{rate.source.symbol}-{rate.dest.symbol}</td>
-                <td title={toT(rate.rate)}>{toT(rate.rate, 8)}</td>
+                <td>{r1}</td>
                 <td class="token-pair">{rateReverse.source.symbol}-{rateReverse.dest.symbol}</td>
-                <td title={toT(rateReverse.rate)}>{toT(rateReverse.rate, 8)}</td>
+                <td>{r2}</td>
               </tr>
             )
           }
