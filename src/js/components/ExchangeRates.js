@@ -39,9 +39,9 @@ export default class ExchangeRates extends React.Component {
             rates.push(
               <tr key={rateID}>
                 <td class="token-pair">{rate.source.symbol}-{rate.dest.symbol}</td>
-                <td title={toT(rate.rate)}>{toT(rate.rate, 8)}</td>
+                <td>{toT(rate.rate, 8)}</td>
                 <td class="token-pair">{rateReverse.source.symbol}-{rateReverse.dest.symbol}</td>
-                <td title={toT(rateReverse.rate)}>{toT(rateReverse.rate, 8)}</td>
+                <td>{toT(rateReverse.rate, 8)}</td>
               </tr>
             )
           }

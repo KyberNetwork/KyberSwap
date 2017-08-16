@@ -105,7 +105,7 @@ export default class WalletDetail extends React.Component {
     return (
       <div class="wallet-item">
         <div class="title">
-          <span title={"Created by " + this.props.owner}><span class="account-name">{this.props.name}</span> - KyberWallet for {this.props.ownerName}</span>
+          <span><span class="account-name">{this.props.name}</span> - KyberWallet for {this.props.ownerName}</span>
           <div class="control-btn">
             <button onClick={(e) => this.toggleWallet(e)}>
               <i class="k-icon k-icon-setting"></i>
@@ -135,7 +135,7 @@ export default class WalletDetail extends React.Component {
               </div>
               <div class="address">
                 <label>Ether balance</label>
-                <span title={toT(this.props.balance)}>{toT(this.props.balance, 8)}</span>
+                <span>{toT(this.props.balance, 8)}</span>
                 <div class="account-action">
                   <div>
                     <ModalButton preOpenHandler={this.openQuickExchange} modalID={modalID} title="Quick exchange between tokens">

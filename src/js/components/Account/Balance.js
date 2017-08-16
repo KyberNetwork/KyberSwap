@@ -33,7 +33,7 @@ export class Token extends React.Component {
           {this.props.name}
         </div>
         <label>Balance</label>
-        <div class="value" title={toT(this.props.balance)}>
+        <div class="value">
           {toT(this.props.balance, 8)}
         </div>
       </div>
