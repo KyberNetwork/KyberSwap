@@ -151,8 +151,8 @@ export default class ExchangeForm extends React.Component {
         }
       }
     }
-    return (
-      <form autoComplete="false" >
+    return (      
+      <div>
         <div class="k-page k-page-exchange">
           <div class="title">
             <div class="left">
@@ -294,6 +294,6 @@ export default class ExchangeForm extends React.Component {
             </div>
           </div>
         </div>
-      </form>)
+      </div>)
   }
 }

@@ -70,7 +70,7 @@ export default class ImportKeystoreModal extends React.Component {
           </div>
         </div>
         <div className="modal-body">
-          <form>
+          <div class="form">
             <div className="row">
               <div className="large-12 columns keystore">
                 <label>JSON keystore file</label>
@@ -90,7 +90,7 @@ export default class ImportKeystoreModal extends React.Component {
                 <button class="button" onClick={this.importAccount}>Import account</button>
               </div>
             </div>
-          </form>
+          </div>
           </div>
       </div>
     )

@@ -44,7 +44,7 @@ export default class ModifyAccountForm extends React.Component {
           </div>
         </div>
         <div className="modal-body">
-          <form>
+          <div class="form">
             <div className="row">
               <div className="large-12 columns account-name">
                 <label>Account Name</label>
@@ -56,7 +56,7 @@ export default class ModifyAccountForm extends React.Component {
                 <button class="button" onClick={this.updateAccount}>Update</button>
               </div>
             </div>
-          </form>
+          </div>
           </div>
       </div>
     )
