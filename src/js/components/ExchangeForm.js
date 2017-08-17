@@ -216,7 +216,7 @@ export default class ExchangeForm extends React.Component {
                   <UserSelect exchangeFormID={this.props.exchangeFormID}/>
                 </div>
                 <div>
-                  <RecipientSelect exchangeFormID={this.props.exchangeFormID}/>                
+                  <RecipientSelect  onKeyPress={(event) => this.goNextStep(event)} exchangeFormID={this.props.exchangeFormID}/>                
                 </div>
               </div>
               <div class="page-item item-2">

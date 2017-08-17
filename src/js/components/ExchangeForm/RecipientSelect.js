@@ -56,7 +56,7 @@ export default class RecipientSelect extends React.Component {
         <div>
           <div>
             <label>To</label>
-            <input onPaste={e => this.removeTrailing(e)} type="text" value={this.props.destAddress} onChange={this.specifyDestAddress.bind(this)} value={this.props.destAddress} />
+            <input onKeyPress={this.props.onKeyPress} onPaste={e => this.removeTrailing(e)} type="text" value={this.props.destAddress} onChange={this.specifyDestAddress.bind(this)} value={this.props.destAddress} />
           </div>
           <select class="selectric" id="to-account" value={this.props.destAddress} onChange={this.selectAccount.bind(this)}>
               <option key="1" value="">No account selected</option>
