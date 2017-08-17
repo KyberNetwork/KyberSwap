@@ -80,7 +80,7 @@ export function toT(number, precision) {
   if (precision) {
     return result.toFixed(precision)
   } else {
-    return result.toString(10)
+    return result.toString()
   }
 }
 

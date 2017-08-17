@@ -135,7 +135,7 @@ export default class WalletDetail extends React.Component {
               </div>
               <div class="address">
                 <label>Ether balance</label>
-                <span>{toT(this.props.balance, 8)}</span>
+                <span title={toT(this.props.balance)}>{toT(this.props.balance, 8)}</span>
                 <div class="account-action">
                   <div>
                     <ModalButton preOpenHandler={this.openQuickExchange} modalID={modalID} title="Quick exchange between tokens">
