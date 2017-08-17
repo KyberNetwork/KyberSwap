@@ -3,6 +3,8 @@
   background-color: #fff;
   display: inline-block;
   min-height: 100vh; }
+  .k-header #k-side-bar-content {
+    width: inherit; }
   .k-header .k-header-logo {
     padding: 20px;
     padding-top: 30px;
