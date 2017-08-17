@@ -140,7 +140,7 @@ export default class JoinPaymentForm extends React.Component {
           </div>
         </div>
         <div className="modal-body">
-          <form >
+          <div class="form">
             <div className="row">
               <div className="large-12 columns">
                 <UserSelect />
@@ -174,7 +174,7 @@ export default class JoinPaymentForm extends React.Component {
                 <button class="button" onClick={this.joinKyberNetwork} >Create Kyber Wallet</button>
               </div>
             </div>
-          </form>
+          </div>
           </div>
       </div>
     )

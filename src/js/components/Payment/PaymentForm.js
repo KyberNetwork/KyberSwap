@@ -37,7 +37,7 @@ export default class PaymentForm extends React.Component {
 
   render() {
     return (
-      <form>
+      <div>
         <WalletSelect />
         <TokenSource />
         <TokenDest />
@@ -47,7 +47,7 @@ export default class PaymentForm extends React.Component {
         <TransactionConfig gas={this.props.gas} gasPrice={this.props.gasPrice} gasHandler={this.specifyGas} gasPriceHandler={this.specifyGasPrice} />
         <Credential passphraseID={this.props.passphraseID} />
         <PostPayment passphraseID={this.props.passphraseID} />
-      </form>
+      </div>
     )
   }
 }

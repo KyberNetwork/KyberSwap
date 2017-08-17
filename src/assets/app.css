@@ -271,6 +271,11 @@ input::-webkit-contacts-auto-fill-button {
   pointer-events: none;
   cursor: default; }
 
+.visible-hide {
+  height: 0px;
+  position: absolute;
+  visibility: hidden; }
+
 .modal-open {
   background-color: #2c2d35;
   overflow-y: auto;
@@ -2048,14 +2053,14 @@ input::-webkit-contacts-auto-fill-button {
       margin-right: 20px; }
   .import-account .modal-title .right button {
     cursor: pointer; }
-.import-account form .account-name {
+.import-account .form .account-name {
   margin-top: 20px; }
-  .import-account form .account-name input {
+  .import-account .form .account-name input {
     background: transparent;
     border: 1px solid #777;
     color: #999;
     border-radius: 10px; }
-    .import-account form .account-name input:focus {
+    .import-account .form .account-name input:focus {
       outline: none;
       box-shadow: none; }
 .import-account .modal-body {
