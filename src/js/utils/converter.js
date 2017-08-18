@@ -63,7 +63,7 @@ export function toTWei(number) {
   } else if (acceptableTyping(number)) {
     return number
   } else {
-    return bigNumber.times(1000000000000000000).toString(10)
+    return bigNumber.times(1000000000000000000).toString()
   }
 }
 
@@ -120,7 +120,7 @@ export function toEther(number) {
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
     return "0"
   } else {
-    return bigNumber.dividedBy(1000000000000000000).toString(10)
+    return bigNumber.dividedBy(1000000000000000000).toString()
   }
 }
 
