@@ -2102,7 +2102,8 @@ input::-webkit-contacts-auto-fill-button {
   border: none; }
   .import-account .ReactPasswordStrength .ReactPasswordStrength-input {
     width: 100%;
-    padding: 0.5rem; }
+    padding: 0.5rem;
+    font-size: 1rem; }
   .import-account .ReactPasswordStrength .ReactPasswordStrength-strength-desc {
     width: 120px;
     top: -5px; }
