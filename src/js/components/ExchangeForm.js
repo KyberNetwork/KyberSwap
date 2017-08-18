@@ -127,25 +127,25 @@ export default class ExchangeForm extends React.Component {
         if (tx.status == "pending") {
           txStatus = <div>
             <h3>Transaction</h3>
-            <a href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
+            <a target="_blank" href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
             <h3>is waiting for confirmation...</h3>
           </div>
         } else if (tx.status == "failed") {
           txStatus = <div>
             <h3>Transaction</h3>
-            <a href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
+            <a target="_blank" href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
             <h3>is failed. Please try again later.</h3>
           </div>
         } else if (tx.status == "success") {
           txStatus = <div>
             <h3>Transaction</h3>
-            <a href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
+            <a target="_blank" href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
             <h3>is successful.</h3>
           </div>
         } else {
           txStatus = <div>
             <h3>Transaction</h3>
-            <a href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
+            <a target="_blank" href={"https://kovan.etherscan.io/tx/" + txHash}>{txHash}</a>
             <h3>is confirmed.</h3>
           </div>
         }

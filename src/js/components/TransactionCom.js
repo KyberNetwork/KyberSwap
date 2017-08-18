@@ -23,7 +23,7 @@ export default class TransactionCom extends React.Component {
     return (
     <tr class="item" onClick={this.props.click}>
       <td class="hash">
-         <a href={"https://kovan.etherscan.io/tx/" + this.props.hash} onClick={this.stopParentClick.bind(this)}>
+         <a target="_blank" href={"https://kovan.etherscan.io/tx/" + this.props.hash} onClick={this.stopParentClick.bind(this)}>
             {this.props.hash}
           </a>
       </td>
