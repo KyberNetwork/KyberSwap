@@ -1471,7 +1471,7 @@ input::-webkit-contacts-auto-fill-button {
               .k-page-exchange .item-2 ul li > div.has-sub-inputs div.sub-inputs > div .error {
                 margin-left: 200px; }
         .k-page-exchange .item-2 ul li:before {
-          content: "ΓÇó ";
+          content: "• ";
           color: #00c072;
           margin-right: 20px;
           font-size: 40px;
