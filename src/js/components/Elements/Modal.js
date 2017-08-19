@@ -23,13 +23,20 @@ const customStyles = {
   var p = store.utils[props.modalID] || {}
   return {...p}
 })
+
 export default class KyberModal extends React.Component {
-  onClose = () => {
-    this.props.dispatch(closeModal(this.props.modalID))
-    var app = document.getElementById("app")
-    app.style.height = "auto"
-    app.style.overflow = "initial"
+
+  componentWillUpdate(nextProps) {
+      if (!nextProps.modalIsOpen && this.props.modalIsOpen) {
+          var app = document.getElementById("app")
+          app.style.height = "auto"
+          app.style.overflow = "initial"
+      }
   }
+
+  onClose = () => {
+    this.props.dispatch(closeModal(this.props.modalID))    
+  }  
 
   afterOpenModal = () => {
     //get height of window    
@@ -59,7 +66,7 @@ export default class KyberModal extends React.Component {
         }}
         isOpen={this.props.modalIsOpen}
         onAfterOpen={this.afterOpenModal}
-        onRequestClose={this.onClose}
+        onRequestClose={this.props.onClose || this.onClose}
         contentLabel={this.props.label}>
         {content}
       </Modal>
