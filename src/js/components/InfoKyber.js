@@ -24,7 +24,7 @@ export default class InfoKyber extends React.Component {
           <div>
             <label>Reserve contract address:</label>
             <span>
-              <a href="https://kovan.etherscan.io/address/0x60860ce9688f4200e87e61b9a9a171cee1dc5f65">
+              <a target="_blank" href="https://kovan.etherscan.io/address/0x60860ce9688f4200e87e61b9a9a171cee1dc5f65">
                 0x60860ce9688f4200e87e61b9a9a171cee1dc5f65
               </a>
             </span>
@@ -32,7 +32,7 @@ export default class InfoKyber extends React.Component {
           <div>
             <label>Network contract address:</label>
             <span>
-              <a href={"https://kovan.etherscan.io/address/" + constants.NETWORK_ADDRESS}>
+              <a target="_blank" href={"https://kovan.etherscan.io/address/" + constants.NETWORK_ADDRESS}>
                 {constants.NETWORK_ADDRESS}
               </a>
             </span>
@@ -40,7 +40,7 @@ export default class InfoKyber extends React.Component {
           <div>
             <label>Kyber homepage:</label>
             <span>
-              <a href="https://kyber.network">https://kyber.network</a>
+              <a target="_blank" href="https://kyber.network">https://kyber.network</a>
             </span>
           </div>
         </div>

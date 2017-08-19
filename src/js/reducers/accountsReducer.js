@@ -99,16 +99,25 @@ const accounts = (state=initState, action) => {
     }
     case "NEW_ACCOUNT_CREATED_FULFILLED": {
       var newAccounts = {...state.accounts}
-      newAccounts[action.payload.address] = action.payload
-      return {...state, newAccountCreating: false, accounts: newAccounts}
+      var newAddedAcc = {}
+      newAddedAcc[action.payload.address] = action.payload       
+      Object.assign(newAddedAcc, newAccounts);      
+      return {...state, newAccountCreating: false, accounts: newAddedAcc}
     }
     case "NEW_ACCOUNT_CREATED_PENDING": {
       return {...state, newAccountCreating: true}
     }
     case "NEW_ACCOUNT_ADDED_FULFILLED": {
       var newAccounts = {...state.accounts}
-      newAccounts[action.payload.address] = action.payload
-      return {...state, newAccountAdding: false, accounts: newAccounts}
+      if(newAccounts[action.payload.address]){
+        newAccounts[action.payload.address] = action.payload  
+        return {...state, newAccountAdding: false, accounts: newAccounts}
+      }else{
+        var newAddedAcc = {}
+        newAddedAcc[action.payload.address] = action.payload       
+        Object.assign(newAddedAcc, newAccounts);      
+        return {...state, newAccountAdding: false, accounts: newAddedAcc}
+      }            
     }
     case "NEW_ACCOUNT_ADDED_PENDING": {
       return {...state, newAccountAdding: true}
