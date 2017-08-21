@@ -181,10 +181,15 @@ $stepColorActive:#00c072;
         }
         button {
             cursor: pointer;
-            display: flex;
+            // display: flex;
+            // display: -webkit-flex;
             color: $stepColorActive;
             font-size: 18px;
-            align-items: center;
+           // / align-items: center;
+            span{
+                position:relative;
+                top: -9px;
+            }
             &.hide{
                 visibility: hidden;
                 display: block !important;
