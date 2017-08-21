@@ -1266,10 +1266,11 @@ input::-webkit-contacts-auto-fill-button {
       padding: 20px; }
     .k-page-exchange .navigation-btn button {
       cursor: pointer;
-      display: flex;
       color: #00c072;
-      font-size: 18px;
-      align-items: center; }
+      font-size: 18px; }
+      .k-page-exchange .navigation-btn button span {
+        position: relative;
+        top: -9px; }
       .k-page-exchange .navigation-btn button.hide {
         visibility: hidden;
         display: block !important; }
