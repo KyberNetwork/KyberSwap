@@ -43,6 +43,12 @@ export default class InfoKyber extends React.Component {
               <a target="_blank" href="https://kyber.network">https://kyber.network</a>
             </span>
           </div>
+          <div>
+            <label>Get free Kovan Ether:</label>
+            <span>
+              <a target="_blank" href="https://github.com/kovan-testnet/faucet">here</a>
+            </span>
+          </div>
         </div>
         <div class="alert">
           Do not send ethers nor tokens to any of the addresses above. They are for test only and we are not likely to have control of them in mainnet.
