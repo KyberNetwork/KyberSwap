@@ -31,6 +31,7 @@ export default class Tx {
       var newTx = this.shallowClone()
       if (mined) {
         newTx.address = receipt.contractAddress
+        newTx.gas = receipt.gasUsed
         var logs = receipt.logs
         if (newTx.type == "exchange") {
           if (logs.length == 0) {
