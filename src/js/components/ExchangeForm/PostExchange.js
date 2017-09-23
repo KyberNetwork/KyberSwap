@@ -53,7 +53,7 @@ import Tx from "../../services/tx"
     minDestAmount: exchangeForm.minDestAmount,
     throwOnFailure: exchangeForm.throwOnFailure,
     gas: exchangeForm.gas,
-    gasPrice: exchangeForm.gasPrice,
+    gasPrice: store.connection.ethereum.rpc.toWei(exchangeForm.gasPrice, 'gwei'),
     step: exchangeForm.step,
     offeredRateBalance: exchangeForm.offeredRateBalance,
     isCrossSend: sourceToken != destToken,
@@ -125,7 +125,7 @@ export default class PostExchange extends React.Component {
         params.gasPrice, keystring, password, (ex, trans) => {
           const tx = new Tx(
             ex, sourceAccount.address, ethUtil.bufferToInt(trans.gas),
-            ethUtil.bufferToInt(trans.gasPrice),
+            parseInt(ethereum.rpc.fromWei(ethUtil.bufferToInt(trans.gasPrice), 'gwei')),
             ethUtil.bufferToInt(trans.nonce), "pending", "exchange", {
               sourceToken: params.sourceToken,
               sourceAmount: params.sourceAmount,
@@ -168,7 +168,7 @@ export default class PostExchange extends React.Component {
         params.gasPrice, keystring, password, (ex, trans) => {
           const tx = new Tx(
             ex, sourceAccount.address, ethUtil.bufferToInt(trans.gas),
-            ethUtil.bufferToInt(trans.gasPrice),
+            parseInt(ethereum.rpc.fromWei(ethUtil.bufferToInt(trans.gasPrice), 'gwei')),
             ethUtil.bufferToInt(trans.nonce), "pending", "send", {
               sourceToken: params.sourceToken,
               sourceAmount: params.sourceAmount,

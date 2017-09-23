@@ -48,7 +48,7 @@ export default class TransactionConfig extends React.Component {
           </ReactTooltip>
           <input onKeyPress={this.props.onGasPricePress} name="gas_price" id="gas_price" type="number" step="any" min="0" value={this.props.gasPrice} onChange={this.specifyGasPrice.bind(this)}/>
           <span class="helper">
-            wei
+            gwei
           </span>
           {gasPriceError}
         </li>
