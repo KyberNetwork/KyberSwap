@@ -7,7 +7,7 @@ import { throwError, emptyForm, nextStep, previousStep, resetStep } from "../../
 import { updateAccount, incManualNonceAccount } from "../../actions/accountActions"
 import { addTx } from "../../actions/txActions"
 import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
-import { numberToHex } from "../../utils/converter"
+import { numberToHex, toWei, fromWei } from "../../utils/converter"
 import constants from "../../services/constants"
 import { etherToOthersFromAccount, tokenToOthersFromAccount, sendEtherFromAccount, sendTokenFromAccount, exchangeFromWallet, sendEtherFromWallet, sendTokenFromWallet } from "../../services/exchange"
 import Tx from "../../services/tx"
@@ -53,7 +53,7 @@ import Tx from "../../services/tx"
     minDestAmount: exchangeForm.minDestAmount,
     throwOnFailure: exchangeForm.throwOnFailure,
     gas: exchangeForm.gas,
-    gasPrice: store.connection.ethereum.rpc.toWei(exchangeForm.gasPrice, 'gwei'),
+    gasPrice: toWei(exchangeForm.gasPrice, 'gwei'),
     step: exchangeForm.step,
     offeredRateBalance: exchangeForm.offeredRateBalance,
     isCrossSend: sourceToken != destToken,
@@ -125,7 +125,7 @@ export default class PostExchange extends React.Component {
         params.gasPrice, keystring, password, (ex, trans) => {
           const tx = new Tx(
             ex, sourceAccount.address, ethUtil.bufferToInt(trans.gas),
-            parseInt(ethereum.rpc.fromWei(ethUtil.bufferToInt(trans.gasPrice), 'gwei')),
+            fromWei(ethUtil.bufferToInt(trans.gasPrice), 'gwei'),
             ethUtil.bufferToInt(trans.nonce), "pending", "exchange", {
               sourceToken: params.sourceToken,
               sourceAmount: params.sourceAmount,
@@ -168,7 +168,7 @@ export default class PostExchange extends React.Component {
         params.gasPrice, keystring, password, (ex, trans) => {
           const tx = new Tx(
             ex, sourceAccount.address, ethUtil.bufferToInt(trans.gas),
-            parseInt(ethereum.rpc.fromWei(ethUtil.bufferToInt(trans.gasPrice), 'gwei')),
+            fromWei(ethUtil.bufferToInt(trans.gasPrice), 'gwei'),
             ethUtil.bufferToInt(trans.nonce), "pending", "send", {
               sourceToken: params.sourceToken,
               sourceAmount: params.sourceAmount,

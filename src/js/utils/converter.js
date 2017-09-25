@@ -67,6 +67,104 @@ export function toTWei(number) {
   }
 }
 
+export function toWei(number, unit) {
+  var bigNumber = new BigNumber(number)
+  if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
+    return number
+  } else if (acceptableTyping(number)) {
+    return number
+  } else {
+    switch (unit.toLowerCase()) {
+      case 'kwei':
+      case 'ada':
+        return bigNumber.times(1000).toString()
+        break
+      case 'mwei':
+      case 'babbage':
+        return bigNumber.times(1000000).toString()
+        break
+      case 'gwei':
+      case 'shannon':
+        return bigNumber.times(1000000000).toString()
+        break
+      case 'szabo':
+        return bigNumber.times(1000000000000).toString()
+        break
+      case 'finney':
+        return bigNumber.times(1000000000000000).toString()
+        break
+      case 'ether':
+        return bigNumber.times(1000000000000000000).toString()
+        break
+      case 'kether':
+      case 'grand':
+      case 'einstein':
+        return bigNumber.times(1000000000000000000000).toString()
+        break
+      case 'mether':
+        return bigNumber.times(1000000000000000000000000).toString()
+        break
+      case 'gether':
+        return bigNumber.times(1000000000000000000000000000).toString()
+        break
+      case 'tether':
+        return bigNumber.times(1000000000000000000000000000000).toString()
+        break
+      default:
+        return number
+    }
+  }
+}
+
+export function fromWei(number, unit) {
+  var bigNumber = new BigNumber(number)
+  if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
+    return number
+  } else if (acceptableTyping(number)) {
+    return number
+  } else {
+    switch (unit.toLowerCase()) {
+      case 'kwei':
+      case 'ada':
+        return bigNumber.div(1000).toString()
+        break
+      case 'mwei':
+      case 'babbage':
+        return bigNumber.div(1000000).toString()
+        break
+      case 'gwei':
+      case 'shannon':
+        return bigNumber.div(1000000000).toString()
+        break
+      case 'szabo':
+        return bigNumber.div(1000000000000).toString()
+        break
+      case 'finney':
+        return bigNumber.div(1000000000000000).toString()
+        break
+      case 'ether':
+        return bigNumber.div(1000000000000000000).toString()
+        break
+      case 'kether':
+      case 'grand':
+      case 'einstein':
+        return bigNumber.div(1000000000000000000000).toString()
+        break
+      case 'mether':
+        return bigNumber.div(1000000000000000000000000).toString()
+        break
+      case 'gether':
+        return bigNumber.div(1000000000000000000000000000).toString()
+        break
+      case 'tether':
+        return bigNumber.div(1000000000000000000000000000000).toString()
+        break
+      default:
+        return number
+    }
+  }
+}
+
 export function toT(number, precision) {
   var bigNumber = new BigNumber(number)
   var result
@@ -96,7 +194,7 @@ export function getToken(address) {
     for (var i = 0; i < supported_tokens.length; i++) {
       var tok = supported_tokens[i]
       if (tok.address == address) {
-        return {...tok}
+        return { ...tok }
       }
     }
     throw new Error("Unsupported token")
