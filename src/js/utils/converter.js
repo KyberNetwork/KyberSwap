@@ -67,6 +67,28 @@ export function toTWei(number) {
   }
 }
 
+export function gweiToWei(number) {
+  var bigNumber = new BigNumber(number)
+  if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
+    return number
+  } else if (acceptableTyping(number)) {
+    return number
+  } else {
+    return bigNumber.times(1000000000).toString()
+  }
+}
+
+export function weiToGwei(number) {
+  var bigNumber = new BigNumber(number)
+  if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
+    return number
+  } else if (acceptableTyping(number)) {
+    return number
+  } else {
+    return bigNumber.div(1000000000).toString()
+  }
+}
+
 export function toT(number, precision) {
   var bigNumber = new BigNumber(number)
   var result
@@ -96,7 +118,7 @@ export function getToken(address) {
     for (var i = 0; i < supported_tokens.length; i++) {
       var tok = supported_tokens[i]
       if (tok.address == address) {
-        return {...tok}
+        return { ...tok }
       }
     }
     throw new Error("Unsupported token")

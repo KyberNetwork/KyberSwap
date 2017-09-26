@@ -35,7 +35,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   offeredRate: 0,
   throwOnFailure: false,
   gas: 1000000,
-  gasPrice: 20000000000,
+  gasPrice: 20,
   step: 1,
   broadcasting: true,
   bcError: "",
