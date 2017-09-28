@@ -2111,6 +2111,37 @@ input::-webkit-contacts-auto-fill-button {
   .import-account .ReactPasswordStrength .ReactPasswordStrength-strength-bar {
     top: -9px; }
 
+#create-account-modal {
+  position: relative;
+  height: 380px;
+  overflow: hidden;
+  transition: 0.6s; }
+  #create-account-modal .page-1, #create-account-modal .page-2 {
+    position: absolute;
+    top: 0px;
+    transition: 0.6s;
+    width: 530px; }
+  #create-account-modal .page-2 {
+    left: 630px; }
+    #create-account-modal .page-2 * {
+      text-align: center; }
+    #create-account-modal .page-2 .title {
+      margin-top: 20px;
+      margin-bottom: 30px;
+      font-size: 25px; }
+    #create-account-modal .page-2 .warning {
+      color: #fff;
+      margin-top: 20px;
+      margin-bottom: 20px; }
+  #create-account-modal[data-page='1'] .page-1 {
+    left: 30px; }
+  #create-account-modal[data-page='2'] {
+    height: 280px; }
+    #create-account-modal[data-page='2'] .page-1 {
+      left: -630px; }
+    #create-account-modal[data-page='2'] .page-2 {
+      left: 30px; }
+
 @keyframes unfoldIn {
   0% {
     transform: scaleY(0.005) scaleX(0); }

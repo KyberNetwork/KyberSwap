@@ -190,3 +190,50 @@
         
     }
 }
+
+$heightPage: 380px;
+$widthPage: 530px;
+#create-account-modal{
+    position:relative;
+    height: $heightPage;
+    overflow:hidden;
+    transition: 0.6s;
+    .page-1,.page-2{
+        position:absolute;
+        top:0px;
+        transition: 0.6s;
+        width: $widthPage;               
+    }
+
+    .page-2{
+        left: $widthPage + 100px;        
+        *{
+            text-align:center;
+        }
+        .title{
+            margin-top: 20px;
+            margin-bottom:30px;
+            font-size: 25px;
+
+        }        
+        .warning{
+            color: #fff;            
+            margin-top: 20px;
+            margin-bottom:20px;
+        }
+    }
+    &[data-page='1']{     
+        .page-1{
+            left: 30px;
+        }
+    }
+    &[data-page='2']{
+        height: $heightPage - 100px;
+        .page-1{
+            left: - $widthPage - 100px;
+        }
+        .page-2{
+            left: 30px;
+        }
+    }
+}
