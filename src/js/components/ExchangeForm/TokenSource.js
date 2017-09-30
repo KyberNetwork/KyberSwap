@@ -95,7 +95,7 @@ export default class TokenSource extends React.Component {
             <option key={constants.ETHER_ADDRESS} value={constants.ETHER_ADDRESS}>ETH</option>
             {tokenOptions}
           </select>
-          <input name='token_source' onKeyPress={this.props.onKeyPress} value={toT(this.props.specifiedAmount)} type="number" min="0" step="any" placeholder="Amount to exchange" onChange={this.specifyAmount.bind(this)}/>
+          <input name='token_source' onKeyPress={this.props.onKeyPress} type="number" min="0" step="any" placeholder="Amount to exchange" onChange={this.specifyAmount.bind(this)}/>
         </div>
         <div class="helper">
           Your balance: {toT(this.props.selectedTokenBalance, 8)}
