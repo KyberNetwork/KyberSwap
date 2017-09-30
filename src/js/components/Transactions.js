@@ -25,14 +25,14 @@ export default class Transactions extends React.Component {
     switch(tx.type) {
       case "join kyber wallet": {
         var convertedTx = tx
-        convertedTx.gasPrice = toEther(convertedTx.gasPrice)
+        // convertedTx.gasPrice = toEther(convertedTx.gasPrice)
         convertedTx.gas = hexToNumber(convertedTx.gas)
         break
       }
       case "exchange": {
         var convertedTx = tx        
         convertedTx.gas = hexToNumber(convertedTx.gas)
-        convertedTx.gasPrice = toEther(convertedTx.gasPrice)
+        // convertedTx.gasPrice = toEther(convertedTx.gasPrice)
         convertedTx.data.minConversionRate = hexToNumber(convertedTx.data.minConversionRate)
         convertedTx.data.sourceAmount = hexToNumber(convertedTx.data.sourceAmount)
         convertedTx.data.maxDestAmount = hexToNumber(convertedTx.data.maxDestAmount)
@@ -42,6 +42,7 @@ export default class Transactions extends React.Component {
         var convertedTx = tx
         convertedTx.gas = hexToNumber(convertedTx.gas)
         convertedTx.data.sourceAmount = hexToNumber(convertedTx.data.sourceAmount)
+        // convertedTx.gasPrice = toEther(convertedTx.gasPrice)
         break
       }
     }
@@ -100,7 +101,7 @@ export default class Transactions extends React.Component {
               <div class="row">
                 <div class="item">
                   <label>Gas Price</label>
-                  <span>{data.gasPrice} Ether</span>
+                  <span>{data.gasPrice} Gwei</span>
                 </div>               
                 <div class="item">
                   <label>Gas</label>
@@ -181,7 +182,7 @@ export default class Transactions extends React.Component {
               <div class="row">
                 <div class="item">
                   <label>Gas Price</label>
-                  <span>{data.gasPrice} Ether</span>
+                  <span>{data.gasPrice} Gwei</span>
                 </div>               
                 <div class="item">
                   <label>Gas</label>
