@@ -40,7 +40,15 @@
     "webpack": "^3.4.1",
     "webpack-dev-server": "^2.5.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^1.1.4",
+    "image-webpack-loader": "^3.4.2",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2"
+  },
   "scripts": {
     "build": "NODE_ENV=production webpack -p",
     "dev": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000",
