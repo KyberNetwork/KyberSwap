@@ -1,12 +1,12 @@
 import React from "react"
-import { connect } from "react-redux"
+// import { connect } from "react-redux"
 
 import { acceptTermOfService } from "../actions/globalActions"
 
 
-@connect((store) => {
-  return {}
-})
+// @connect((store) => {
+//   return {}
+// })
 export default class TermOfService extends React.Component {
 
   acceptTOS = (event) => {

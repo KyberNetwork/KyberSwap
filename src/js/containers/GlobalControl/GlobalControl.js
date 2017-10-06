@@ -1,7 +1,9 @@
 import React from "react"
 
-import ModalLink from "../../components/Elements/ModalLink"
-import ToggleButton from "../../components/Elements/ToggleButton"
+//import ModalLink from "../../components/Elements/ModalLink"
+import {ModalLink, ToggleButton} from "../CommonElements"
+
+//import ToggleButton from "../../components/Elements/ToggleButton"
 
 import {CreateAccountModal, ImportKeystoreModal, DeployWalletModal} from "../../containers/GlobalControl"
 

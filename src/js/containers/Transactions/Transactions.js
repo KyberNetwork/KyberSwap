@@ -1,7 +1,9 @@
 import React from "react"
 import { connect } from "react-redux"
 import * as _ from "underscore"
-import Modal from '../../components/Elements/Modal'
+//import Modal from '../../components/Elements/Modal'
+import {Modal} from '../CommonElements'
+
 import { openModal, setDataModal } from "../../actions/utilActions"
 import { closeModal } from "../../actions/utilActions"
 

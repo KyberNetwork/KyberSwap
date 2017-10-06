@@ -2,7 +2,9 @@ import React from "react"
 import { connect } from "react-redux"
 
 //import Key from "./Elements/Key"
-import Modal from '../../components/Elements/Modal'
+//import Modal from '../../components/Elements/Modal'
+import {Modal} from '../CommonElements'
+
 import { ModifyWalletForm } from "../../components/Forms"
 
 import { closeModal } from "../../actions/utilActions"

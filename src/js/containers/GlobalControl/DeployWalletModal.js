@@ -1,8 +1,10 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import Modal from '../../components/Elements/Modal'
-import ModalButton from "../../components/Elements/ModalButton"
+//import Modal from '../../components/Elements/Modal'
+import {Modal, ModalButton} from '../CommonElements'
+
+//import ModalButton from "../../components/Elements/ModalButton"
 
 import { DeployWalletForm } from "../../components/Forms"
 

@@ -1,7 +1,8 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import Modal from "../../components/Elements/Modal"
+//import Modal from "../../components/Elements/Modal"
+import {Modal} from '../CommonElements'
 
 import {ExchangeForm} from "../ExchangeForm"
 import { closeModal } from "../../actions/utilActions"

@@ -1,8 +1,9 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import DropFile from "../../components/Elements/DropFile"
-import Modal from '../../components/Elements/Modal'
+//import DropFile from "../../components/Elements/DropFile"
+//import Modal from '../../components/Elements/Modal'
+import {Modal} from '../CommonElements'
 
 import {ImportAccountForm} from "../../components/Forms"
 
