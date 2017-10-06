@@ -4,11 +4,15 @@ import { Provider } from "react-redux"
 import { Route } from 'react-router'
 import { Link } from 'react-router-dom'
 
-import Layout from "./components/Layout"
+// import Layout from "./components/Layout"
+import {Layout} from "./containers/Layout"
+
 import NotSupportPage from "./components/NotSupportPage"
 import store from "./store"
 import platform from 'platform'
 import {blackList} from './blacklist'
+
+// require('../assets/scss/app.scss');
 
 const app = document.getElementById('app')
 
