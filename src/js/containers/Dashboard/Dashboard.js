@@ -3,9 +3,9 @@ import { connect } from "react-redux"
 
 import { ImportKeystoreModal, SendModal, ExchangeModal } from "../../containers/GlobalControl"
 
-import ModalButton from "../../components/Elements/ModalButton"
-import ModalLink from "../../components/Elements/ModalLink"
-import ConfirmModal from "../../components/Elements/ConfirmModal"
+import {ModalButton, ModalLink, ConfirmModal} from "../../containers/CommonElements"
+//import ModalLink from "../../components/Elements/ModalLink"
+//import ConfirmModal from "../../components/Elements/ConfirmModal"
 
 import { ModifyAccountModal, ModifyWalletModal } from "../Dashboard"
 import { Accounts, Wallets } from "../Dashboard"

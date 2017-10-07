@@ -2,7 +2,7 @@ import React from "react"
 
 import {Token} from  "../Account"
 
-import ModalButton from "../Elements/ModalButton"
+import { ModalButton } from "../../containers/CommonElements"
 
 import { toT } from "../../utils/converter"
 
