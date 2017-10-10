@@ -128,6 +128,11 @@ const exchangeForm = (state=initState, action) => {
       newState[id].txHash = action.payload
       return newState
     }
+    case "EXCHANGE_FORM_APPROVAL_TX_BROADCAST_REJECTED": {
+      newState[id].broadcasting = false
+      newState[id].bcError = action.payload
+      return newState
+    }
     case "EXCHANGE_FORM_TX_BROADCAST_PENDING": {
       newState[id].broadcasting = true
       newState[id].txHash = action.payload

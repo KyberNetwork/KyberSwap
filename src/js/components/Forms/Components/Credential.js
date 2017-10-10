@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 const Credential = (props)=> {
     var error = ""
@@ -8,15 +8,15 @@ const Credential = (props)=> {
         {props.error}
       </div>)
     }
-    var classLabel = props.noLabel ?"hide":"" 
+    var classLabel = props.noLabel ?"hide":""
     return (
-      <div>              
+      <div>
         <label for={props.passphraseID} className={classLabel}>Passphrase</label>
-        <div class="input-space">                      
-          <input onKeyPress={props.onKeyPress} name="password" id={props.passphraseID} type="password" placeholder="Type in your passphrase"/>          
+        <div class="input-space">
+          <input onKeyPress={props.onKeyPress} name="password" id={props.passphraseID} type="password" placeholder="Type in your passphrase"/>
         </div>
         {error}
       </div>
-    )  
+    )
 }
 export default Credential
