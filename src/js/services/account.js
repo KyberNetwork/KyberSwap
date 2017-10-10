@@ -39,6 +39,45 @@ export default class Account {
     return acc
   }
 
+  syncAccount(ethereum){
+     var promise
+      promise = new Promise((resolve, reject) => {
+        const acc = this.shallowClone()
+        ethereum.getBalance(acc.address, (balance) => {
+          acc.balance = balance
+          resolve(acc)
+        })
+      })
+
+      promise = promise.then((acc) => {
+        return new Promise((resolve, reject) => {
+          ethereum.getNonce(acc.address, (nonce) => {
+            acc.nonce = nonce
+            if (acc.nonce > acc.manualNonce) {
+              acc.manualNonce = acc.nonce
+            }
+            resolve(acc)
+          })
+        })
+      })
+
+      Object.keys(this.tokens).forEach((key) => {
+        promise = promise.then((acc) => {
+          return new Promise((resolve, reject) => {
+            acc.tokens[key].sync(ethereum, (token) => {
+              acc.tokens[key] = token
+              resolve(acc)
+            })
+          })
+        })
+      })
+
+      return promise
+      // promise.then((acc) => {
+      //   callback(acc)
+      // })
+  }
+
   sync(ethereum, callback) {
     var promise
     promise = new Promise((resolve, reject) => {

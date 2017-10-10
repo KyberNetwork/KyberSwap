@@ -1,5 +1,6 @@
-import * as service from "../services/accounts"
+//import * as service from "../services/accounts"
 import store from "../store"
+import * as constants from "./constants"
 
 export function loadAccounts(node) {
     return {
@@ -8,13 +9,27 @@ export function loadAccounts(node) {
     }
 }
 
+// export function createAccount(address, keystring, name, desc) {
+//     return {
+//         type: "NEW_ACCOUNT_CREATED",
+//         payload: new Promise((resolve, reject) => {
+//             service.newAccountInstance(
+//                 address, keystring, name, desc, resolve)
+//         })
+//     }
+// }
+
 export function createAccount(address, keystring, name, desc) {
     return {
-        type: "NEW_ACCOUNT_CREATED",
-        payload: new Promise((resolve, reject) => {
-            service.newAccountInstance(
-                address, keystring, name, desc, resolve)
-        })
+        type: constants.ACCOUNT_ACTION_NEW_ACCOUNT_CREATED_PENDING,
+        payload: {address: address, keystring: keystring, name: name, desc: desc}
+    }
+}
+export function createAccountComplete(account) {
+    console.log(account)
+    return {
+        type: constants.ACCOUNT_ACTION_NEW_ACCOUNT_CREATED_FULFILLED,
+        payload: account
     }
 }
 

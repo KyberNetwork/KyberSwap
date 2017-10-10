@@ -16,7 +16,18 @@ export function newWalletInstance(address, ownerAddress, name, desc, callback) {
     store.getState().connection.ethereum, callback)
 }
 
-export function newAccountInstance(address, keystring, name, desc, callback) {
+// export function newAccountInstance(address, keystring, name, desc, callback) {
+//   var account = new Account(address, keystring, name, desc)
+//   for (var i = 0; i < SupportedTokens.length; i++ ) {
+//     var tok = SupportedTokens[i];
+//     account.addToken(
+//       new Token(tok.name, tok.icon, tok.symbol, tok.address, account.address)
+//     )
+//   }
+//   account.sync(
+//     store.getState().connection.ethereum, callback)
+// }
+export function newAccountInstance(address, keystring, name, desc) {
   var account = new Account(address, keystring, name, desc)
   for (var i = 0; i < SupportedTokens.length; i++ ) {
     var tok = SupportedTokens[i];
@@ -24,8 +35,8 @@ export function newAccountInstance(address, keystring, name, desc, callback) {
       new Token(tok.name, tok.icon, tok.symbol, tok.address, account.address)
     )
   }
-  account.sync(
-    store.getState().connection.ethereum, callback)
+  return account.syncAccount(
+    store.getState().connection.ethereum)
 }
 
 export function loadAccounts(node) {
