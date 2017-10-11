@@ -1,6 +1,6 @@
 //import * as service from "../services/accounts"
 import store from "../store"
-import * as constants from "./constants"
+import ACC_ACTION from "../constants/accActions"
 
 export function loadAccounts(node) {
     return {
@@ -21,14 +21,13 @@ export function loadAccounts(node) {
 
 export function createAccount(address, keystring, name, desc) {
     return {
-        type: constants.ACCOUNT_ACTION_NEW_ACCOUNT_CREATED_PENDING,
+        type: ACC_ACTION.NEW_ACCOUNT_CREATED_PENDING,
         payload: {address: address, keystring: keystring, name: name, desc: desc}
     }
 }
 export function createAccountComplete(account) {
-    console.log(account)
     return {
-        type: constants.ACCOUNT_ACTION_NEW_ACCOUNT_CREATED_FULFILLED,
+        type: ACC_ACTION.NEW_ACCOUNT_CREATED_FULFILLED,
         payload: account
     }
 }

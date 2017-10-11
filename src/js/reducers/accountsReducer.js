@@ -1,7 +1,7 @@
 import Account from "../services/account"
 import Token from "../services/token"
 import {REHYDRATE} from 'redux-persist/constants'
-
+import ACC_ACTION from "../constants/accActions"
 
 const initState = {
   accounts: {},
@@ -97,14 +97,14 @@ const accounts = (state=initState, action) => {
       var address = action.payload      
       return {...state, deleteAccount: address}
     }
-    case "NEW_ACCOUNT_CREATED_FULFILLED": {
+    case ACC_ACTION.NEW_ACCOUNT_CREATED_FULFILLED: {
       var newAccounts = {...state.accounts}
       var newAddedAcc = {}
       newAddedAcc[action.payload.address] = action.payload       
       Object.assign(newAddedAcc, newAccounts);      
       return {...state, newAccountCreating: false, accounts: newAddedAcc}
     }
-    case "NEW_ACCOUNT_CREATED_PENDING": {
+    case ACC_ACTION.NEW_ACCOUNT_CREATED_PENDING: {
       return {...state, newAccountCreating: true}
     }
     case "NEW_ACCOUNT_ADDED_FULFILLED": {
