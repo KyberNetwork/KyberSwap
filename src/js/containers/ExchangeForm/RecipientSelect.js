@@ -12,6 +12,7 @@ import { destAccounts } from "../../utils/store"
   exchangeForm = exchangeForm || {...constants.INIT_EXCHANGE_FORM_STATE}
   return {
     accounts: destAccounts(store),
+    selectedAccount: exchangeForm.selectedAccount,
     destAddress: exchangeForm.destAddress,
     error: exchangeForm.errors["destAddressError"],
   }
@@ -41,7 +42,9 @@ export default class RecipientSelect extends React.Component {
   }
 
   render() {
-    var userOptions = this.props.accounts.map((acc, index) => {
+    var userOptions = this.props.accounts.filter((acc) => {
+      return acc.address !== this.props.selectedAccount;
+    }).map((acc, index) => {
       return <option key={acc.address} value={acc.address}>{acc.name}</option>
     })
     var error
