@@ -6,11 +6,13 @@ const DropFile = (props)=> {
   var keystring
   var message
   try {
-    keystring = JSON.parse(props.keystring)
-    message = <p className="file-name">
-      Uploaded keystore file for address: <span>{keystring.address}</span>
-      <i class="k-icon k-icon-cloud"></i>
-    </p>
+    if(props.keystring){
+      keystring = JSON.parse(props.keystring)
+      message = <p className="file-name">
+        Uploaded keystore file for address: <span>{keystring.address}</span>
+        <i class="k-icon k-icon-cloud"></i>
+      </p>
+    }
   } catch (e) {
     console.log(e)
     if (props.error != "") {
