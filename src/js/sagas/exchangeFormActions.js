@@ -20,7 +20,8 @@ function* approveTx(action) {
   	yield put(actions.doApprovalTransactionComplete(hash, action.meta))
   }
   catch (e) {
-  	yield put(actions.doApprovalTransactionFail(error, action.meta))
+    console.log(e)
+  	yield put(actions.doApprovalTransactionFail(e, action.meta))
   }     
 }
 
