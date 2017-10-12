@@ -14,6 +14,11 @@ const exchangeForm = (state=initState, action) => {
   newState[id] = {...formState}
   switch (action.type) {
     case EXCHANGE.ACCOUNT_SELECTED: {
+      //check if new account is selected
+      if(newState[id].selectedAccount != action.payload){
+        //reset item
+        newState[id] = initFormState        
+      }
       newState[id].selectedAccount = action.payload
       newState[id].errors = {...newState[id].errors, selectedAccountError: ""}
       return newState
