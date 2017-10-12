@@ -1,12 +1,15 @@
+import SupportedTokens from "./supported_tokens"
+import Token from "./token"
+
 export default class Wallet {
-  constructor(address, ownerAddress, name, desc, balance, tokens, createdTime) {
+  constructor(address, ownerAddress, name, desc, balance = 0, tokens = {}, createdTime = Date.now()) {
     this.address = address
     this.ownerAddress = ownerAddress
     this.name = name
     this.description = desc
-    this.balance = balance || 0
-    this.tokens = tokens || {}
-    this.createdTime = createdTime ? createdTime : Date.now()
+    this.balance = balance
+    this.tokens = tokens
+    this.createdTime = createdTime
   }
 
   shallowClone() {
@@ -15,10 +18,20 @@ export default class Wallet {
       this.balance, this.tokens, this.createdTime )
   }
 
-  sync(ethereum, callback) {
+  sync(ethereum, wallet) {
     var promise
+    var _this = wallet? wallet: this
+
+    _this.tokens = {}
+    for (var i = 0; i < SupportedTokens.length; i++ ) {
+      var tok = SupportedTokens[i];
+      wallet.addToken(
+        new Token(tok.name, tok.icon, tok.symbol, tok.address, _this.address)
+      )
+    }
+
     promise = new Promise((resolve, reject) => {
-      const acc = this.shallowClone()
+      const acc = _this.shallowClone()
       ethereum.getBalance(acc.address, (balance) => {
         acc.balance = balance
         resolve(acc)
@@ -37,7 +50,7 @@ export default class Wallet {
       })
     })
 
-    Object.keys(this.tokens).forEach((key) => {
+    Object.keys(_this.tokens).forEach((key) => {
       promise = promise.then((acc) => {
         return new Promise((resolve, reject) => {
           acc.tokens[key].sync(ethereum, (token) => {
@@ -48,9 +61,10 @@ export default class Wallet {
       })
     })
 
-    promise.then((acc) => {
-      callback(acc)
-    })
+    return promise
+    // promise.then((acc) => {
+    //   callback(acc)
+    // })
   }
 
   addToken(token) {

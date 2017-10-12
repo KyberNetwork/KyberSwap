@@ -1,7 +1,7 @@
 import Account from "../services/account"
 import Token from "../services/token"
 import {REHYDRATE} from 'redux-persist/constants'
-
+import ACC_ACTION from "../constants/accActions"
 
 const initState = {
   accounts: {},
@@ -50,14 +50,14 @@ const accounts = (state=initState, action) => {
       }
       return state
     }
-    case "JOINING_KYBER_WALLET": {
+    case ACC_ACTION.JOINING_KYBER_WALLET: {
       var newAccounts = {...state.accounts}
       var newAcc = newAccounts[action.payload.account.address].shallowClone()
       newAcc.walletCreationTx = action.payload.hash
       newAccounts[newAcc.address] = newAcc
       return {...state, accounts: newAccounts}
     }
-    case "JOINED_KYBER_WALLET": {
+    case ACC_ACTION.JOINED_KYBER_WALLET: {
       var newAccounts = {...state.accounts}
       var newAcc = newAccounts[action.payload.address].shallowClone()
       newAcc.wallet = action.payload.contractAddress
@@ -65,10 +65,10 @@ const accounts = (state=initState, action) => {
       newAccounts[newAcc.address] = newAcc
       return {...state, accounts: newAccounts}
     }
-    case "LOAD_ACCOUNTS": {
+    case ACC_ACTION.LOAD_ACCOUNTS: {
       return {...state, accounts: action.payload}
     }
-    case "UPDATE_ACCOUNT_FULFILLED": {
+    case ACC_ACTION.UPDATE_ACCOUNT_FULFILLED: {
       var newAccounts = {...state.accounts}
       var newAcc = newAccounts[action.payload.address].shallowClone()
       newAcc.balance = action.payload.balance
@@ -78,7 +78,7 @@ const accounts = (state=initState, action) => {
       newAccounts[newAcc.address] = newAcc
       return {...state, accounts: newAccounts}
     }
-    case "INC_MANUAL_NONCE_ACCOUNT": {
+    case ACC_ACTION.INC_MANUAL_NONCE_ACCOUNT: {
       var newAccounts = {...state.accounts}
       var address = action.payload
       var account = newAccounts[address]
@@ -87,27 +87,27 @@ const accounts = (state=initState, action) => {
       return {...state,
         accounts: newAccounts}
     }
-    case "DELETE_ACCOUNT": {
+    case ACC_ACTION.DELETE_ACCOUNT: {
       var newAccounts = {...state.accounts}
       var address = action.payload
       delete(newAccounts[address])
       return {...state, accounts: newAccounts}
     }
-    case "ADD_DELETE_ACCOUNT": {      
+    case ACC_ACTION.ADD_DELETE_ACCOUNT: {      
       var address = action.payload      
       return {...state, deleteAccount: address}
     }
-    case "NEW_ACCOUNT_CREATED_FULFILLED": {
+    case ACC_ACTION.NEW_ACCOUNT_CREATED_FULFILLED: {
       var newAccounts = {...state.accounts}
       var newAddedAcc = {}
       newAddedAcc[action.payload.address] = action.payload       
       Object.assign(newAddedAcc, newAccounts);      
       return {...state, newAccountCreating: false, accounts: newAddedAcc}
     }
-    case "NEW_ACCOUNT_CREATED_PENDING": {
+    case ACC_ACTION.NEW_ACCOUNT_CREATED_PENDING: {
       return {...state, newAccountCreating: true}
     }
-    case "NEW_ACCOUNT_ADDED_FULFILLED": {
+    case ACC_ACTION.NEW_ACCOUNT_ADDED_FULFILLED: {
       var newAccounts = {...state.accounts}
       if(newAccounts[action.payload.address]){
         newAccounts[action.payload.address] = action.payload  
@@ -119,24 +119,24 @@ const accounts = (state=initState, action) => {
         return {...state, newAccountAdding: false, accounts: newAddedAcc}
       }            
     }
-    case "NEW_ACCOUNT_ADDED_PENDING": {
+    case ACC_ACTION.NEW_ACCOUNT_ADDED_PENDING: {
       return {...state, newAccountAdding: true}
     }
-    case "CREATE_NEW_ACCOUNT_FULFILLED":{
-      var newAccounts = {...state.accounts}
-      newAccounts[action.payload.address] = action.payload
-      return {...state, newAccountAdding: false, accounts: newAccounts}
-    }
-    case "CREATE_NEW_ACCOUNT_PENDING":{
-      return {...state, newAccountAdding: true} 
-    }
-    case "MODIFY_ACCOUNT":{
+    // case ACC_ACTION.CREATE_NEW_ACCOUNT_FULFILLED:{
+    //   var newAccounts = {...state.accounts}
+    //   newAccounts[action.payload.address] = action.payload
+    //   return {...state, newAccountAdding: false, accounts: newAccounts}
+    // }
+    // case ACC_ACTION.CREATE_NEW_ACCOUNT_PENDING:{
+    //   return {...state, newAccountAdding: true} 
+    // }
+    case ACC_ACTION.MODIFY_ACCOUNT:{
       var newAccounts = {...state.accounts}
       var address = action.payload.address
       newAccounts[address].name = action.payload.name
       return {...state, accounts: newAccounts}
     }
-    case "SORT_ACCOUNT_BY_FIELD":{
+    case ACC_ACTION.SORT_ACCOUNT_BY_FIELD:{
       var oldAccounts = {...state.accounts}
       var order = action.payload.order
       var field = action.payload.field

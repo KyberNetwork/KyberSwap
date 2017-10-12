@@ -1,11 +1,11 @@
 export default class Token {
-  constructor(name, icon, symbol, address, owner, balance) {
+  constructor(name, icon, symbol, address, owner, balance = 0) {
     this.name = name
     this.icon = icon
     this.symbol = symbol
     this.address = address
     this.ownerAddress = owner
-    this.balance = balance || 0
+    this.balance = balance
   }
 
   shallowClone() {

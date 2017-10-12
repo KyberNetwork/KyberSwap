@@ -26,38 +26,40 @@ export default class Tx {
     this.error, this.errorInfo)
   }
 
-  sync = (ethereum, callback) => {
-    ethereum.txMined(this.hash, (mined, receipt) => {
-      var newTx = this.shallowClone()
-      if (mined) {
-        newTx.address = receipt.contractAddress
-        newTx.gas = receipt.gasUsed
-        var logs = receipt.logs
-        if (newTx.type == "exchange") {
-          if (logs.length == 0) {
-            newTx.threw = true
-            newTx.status = "failed"
-          } else {
-            var theLog
-            for (var i = 0; i < logs.length; i++) {
-              if (logs[i].address == constants.NETWORK_ADDRESS &&
-                logs[i].topics[0] == constants.TRADE_TOPIC) {
-                theLog = logs[i]
-                break
+  sync = (ethereum, tx) => {
+    return new Promise((resolve, reject)=>{
+      ethereum.txMined(tx.hash, (mined, receipt) => {
+        var newTx = tx.shallowClone()
+        if (mined) {
+          newTx.address = receipt.contractAddress
+          newTx.gas = receipt.gasUsed
+          var logs = receipt.logs
+          if (newTx.type == "exchange") {
+            if (logs.length == 0) {
+              newTx.threw = true
+              newTx.status = "failed"
+            } else {
+              var theLog
+              for (var i = 0; i < logs.length; i++) {
+                if (logs[i].address == constants.NETWORK_ADDRESS &&
+                  logs[i].topics[0] == constants.TRADE_TOPIC) {
+                  theLog = logs[i]
+                  break
+                }
               }
+              newTx.status = theLog ? "success" : "failed"
             }
-            newTx.status = theLog ? "success" : "failed"
+          } else if (newTx.type == "send") {
+            newTx.status = "success"
+          } else {
+            newTx.status = "mined"
           }
-        } else if (newTx.type == "send") {
-          newTx.status = "success"
-        } else {
-          newTx.status = "mined"
         }
-      }
-      else {
-        newTx.status = "pending"
-      }
-      callback(newTx)
-    })
+        else {
+          newTx.status = "pending"
+        }
+        resolve(newTx)
+      })
+    })    
   }
 }

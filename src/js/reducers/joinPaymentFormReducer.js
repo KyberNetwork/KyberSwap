@@ -1,3 +1,5 @@
+import PAYMENT from "../constants/joinPaymentFormActions"
+
 const initState = {
   selectedAccount: "",
   gas: 2000000,
@@ -12,28 +14,28 @@ const initState = {
 
 const joinPaymentForm = (state=initState, action) => {
   switch (action.type) {
-    case "JOIN_PAYMENT_ACCOUNT_SELECTED": {
+    case PAYMENT.JOIN_PAYMENT_ACCOUNT_SELECTED: {
       return {...state,
         selectedAccount: action.payload,
         errors: {...state.errors, selectedAccountError: ""}
       }
     }
-    case "JOIN_PAYMENT_FORM_TX_BROADCAST_REJECTED": {
+    case PAYMENT.JOIN_PAYMENT_FORM_TX_BROADCAST_REJECTED: {
       return {...state, bcError: action.payload}
     }
-    case "JOIN_PAYMENT_GAS_PRICE_SPECIFIED": {
+    case PAYMENT.JOIN_PAYMENT_GAS_PRICE_SPECIFIED: {
       return {...state, gasPrice: action.payload}
     }
-    case "JOIN_PAYMENT_NAME_SPECIFIED": {
+    case PAYMENT.JOIN_PAYMENT_NAME_SPECIFIED: {
       return {...state, name: action.payload}
     }
-    case "JOIN_PAYMENT_GAS_SPECIFIED": {
+    case PAYMENT.JOIN_PAYMENT_GAS_SPECIFIED: {
       return {...state, gas: action.payload }
     }
-    case "JOIN_PAYMENT_ERROR_THREW": {
+    case PAYMENT.JOIN_PAYMENT_ERROR_THREW: {
       return {...state, errors: {...state.errors, ...action.payload}}
     }
-    case "JOIN_PAYMENT_EMPTIED": {
+    case PAYMENT.JOIN_PAYMENT_EMPTIED: {
       return {...initState}
     }
   }
