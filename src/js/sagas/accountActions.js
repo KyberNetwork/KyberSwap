@@ -4,18 +4,21 @@ import ACC_ACTION from "../constants/accActions"
 import * as service from "../services/accounts"
 
 function* createNewAccount(action) {
-  const account = yield call(service.newAccountInstance, action.payload.address, action.payload.keystring, action.payload.name, action.payload.desc)
+  const {address, keystring, name, desc} = action.payload
+  const account = yield call(service.newAccountInstance, address, keystring, name, desc)
   yield put(actions.createAccountComplete(account))
 }
 
 function* addNewAccount(action) {
-  const account = yield call(service.newAccountInstance, action.payload.address, action.payload.keystring, action.payload.name, action.payload.desc)
+  const {address, keystring, name, desc} = action.payload
+  const account = yield call(service.newAccountInstance, address, keystring, name, desc)
   yield put(actions.addAccountComplete(account))
 }
 
 function* updateAccount(action) {
-  const account = yield call(action.payload.account.sync, action.payload.ethereum, action.payload.account)
-  yield put(actions.updateAccountComplete(account))
+  const {account, ethereum} = action.payload
+  const newAccount = yield call(account.sync, ethereum, account)
+  yield put(actions.updateAccountComplete(newAccount))
 }
 
 export function* watchAccount() {

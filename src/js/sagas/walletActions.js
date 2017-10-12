@@ -4,13 +4,15 @@ import WALLET_ACTION from "../constants/walletActions"
 import * as service from "../services/accounts"
 
 function* addNewWallet(action) {
-  const wallet = yield call(service.newWalletInstance, action.payload.address, action.payload.ownerAddress, action.payload.name, action.payload.desc)
+  const {address, ownerAddress, name, desc} = action.payload
+  const wallet = yield call(service.newWalletInstance, address, ownerAddress, name, desc)
   yield put(actions.addWalletComplete(wallet))
 }
 
 function* updateWallet(action) {
-  const wallet = yield call(action.payload.wallet.sync, action.payload.ethereum, action.payload.wallet)
-  yield put(actions.updateWalletComplete(wallet))
+  const {wallet, ethereum} = action.payload
+  const newWallet = yield call(wallet.sync, ethereum, wallet)
+  yield put(actions.updateWalletComplete(newWallet))
 }
 
 export function* watchWallet() {

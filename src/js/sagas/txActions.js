@@ -5,12 +5,13 @@ import {updateTxComplete} from '../actions/txActions'
 import TX from "../constants/txActions"
 
 function* updateTx(action) {
-  const tx = yield call(action.payload.tx.sync, action.payload.ethereum, action.payload.tx)	
-  if (tx.address && tx.address != "") {  	
-    yield put(joinedKyberWallet(tx.from, tx.address))
-    yield put(addWallet(tx.address, tx.from, tx.data, "default desc"))
+  const {tx, ethereum} = action.payload
+  const newTx = yield call(tx.sync, ethereum, tx)	
+  if (newTx.address && newTx.address != "") {  	
+    yield put(joinedKyberWallet(newTx.from, newTx.address))
+    yield put(addWallet(newTx.address, newTx.from, newTx.data, "default desc"))
   }  	
-  yield put(updateTxComplete(tx))    
+  yield put(updateTxComplete(newTx))    
 }
 
 export function* watchTx() {

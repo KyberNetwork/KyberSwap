@@ -4,8 +4,9 @@ import PAYMENT from "../constants/joinPaymentFormActions"
 
 function* broadcastTx(action) {
    try {
-  	const hash = yield call(action.payload.ethereum.sendRawTransaction, action.payload.tx, action.payload.ethereum)	
-  	action.payload.callback(hash, action.payload.tx)
+   	const {ethereum, tx, callback} = action.payload
+  	const hash = yield call(ethereum.sendRawTransaction, tx, ethereum)	
+  	callback(hash, tx)
   	yield put(actions.doTransactionComplete(hash))
   }
   catch (e) {

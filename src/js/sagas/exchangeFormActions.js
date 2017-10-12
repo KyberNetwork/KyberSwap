@@ -3,9 +3,10 @@ import * as actions from '../actions/exchangeFormActions'
 import EXCHANGE from "../constants/exchangeFormActions"
 
 function* broadCastTx(action) {
-  try {
-  	const hash = yield call(action.payload.ethereum.sendRawTransaction, action.payload.tx, action.payload.ethereum)	
-  	action.payload.callback(hash, action.payload.tx)
+  try {        
+    const {ethereum, tx, callback} = action.payload    
+  	const hash = yield call(ethereum.sendRawTransaction, tx, ethereum)	
+  	callback(hash, tx)
   	yield put(actions.doTransactionComplete(hash, action.meta))
   }
   catch (e) {
@@ -15,8 +16,9 @@ function* broadCastTx(action) {
 
 function* approveTx(action) {
   try {
-  	const hash = yield call(action.payload.ethereum.sendRawTransaction, action.payload.tx, action.payload.ethereum)	
-  	action.payload.callback(hash, action.payload.tx)
+    const {ethereum, tx, callback} = action.payload   
+  	const hash = yield call(ethereum.sendRawTransaction, tx, ethereum)	
+  	callback(hash, tx)
   	yield put(actions.doApprovalTransactionComplete(hash, action.meta))
   }
   catch (e) {

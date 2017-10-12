@@ -4,12 +4,14 @@ import GLOBAL from "../constants/globalActions"
 import { fetchRatePromise } from "../services/exchange"
 
 function* getLatestBlock(action) {
-  const block = yield call(action.payload.getLatestBlockPromise, action.payload)
+  const ethereum = action.payload
+  const block = yield call(ethereum.getLatestBlockPromise, ethereum)
   yield put(actions.updateBlockComplete(block))
 }
 
 function* updateRate(action) {
-  const rate = yield call(fetchRatePromise, action.payload.ethereum, action.payload.source, action.payload.dest, action.payload.reserve)
+  const {ethereum, source, dest, reserve} = action.payload
+  const rate = yield call(fetchRatePromise, ethereum, source, dest, reserve)
   yield put(actions.updateRateComplete(rate))
 }
 
