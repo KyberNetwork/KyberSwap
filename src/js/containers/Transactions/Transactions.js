@@ -76,7 +76,7 @@ export default class Transactions extends React.Component {
 
   render() {
     var txs = this.props.txs.map((tx) =>
-      <TransactionCom tx={tx} click={this.showDetailInfo.bind(null,tx)}/>
+      <TransactionCom key={tx.hash} tx={tx} click={this.showDetailInfo.bind(null,tx)}/>
     )
     return (
     <div class="k-page k-page-transaction">
