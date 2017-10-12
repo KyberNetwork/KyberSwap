@@ -1,3 +1,6 @@
+import SupportedTokens from "./supported_tokens"
+import Token from "./token"
+
 export default class Account {
   constructor(address, keystring, name, desc, balance = 0, nonce = 0, tokens = {}, manualNonce = 0, joined = false, wallet, walletCreationTx, createdTime = Date.now()) {
     this.address = address
@@ -40,8 +43,16 @@ export default class Account {
   }
 
   sync(ethereum, account){
-     var promise
-     const _this = account ? account: this
+      var promise
+      const _this = account ? account: this
+      _this.tokens = {}
+      for (var i = 0; i < SupportedTokens.length; i++ ) {
+        var tok = SupportedTokens[i];
+        _this.addToken(
+          new Token(tok.name, tok.icon, tok.symbol, tok.address, _this.address)
+        )
+      }
+      
       promise = new Promise((resolve, reject) => {
         const acc = _this.shallowClone()
         ethereum.getBalance(acc.address, (balance) => {
