@@ -1,12 +1,12 @@
 export default class Wallet {
-  constructor(address, ownerAddress, name, desc, balance, tokens, createdTime) {
+  constructor(address, ownerAddress, name, desc, balance = 0, tokens = {}, createdTime = Date.now()) {
     this.address = address
     this.ownerAddress = ownerAddress
     this.name = name
     this.description = desc
-    this.balance = balance || 0
-    this.tokens = tokens || {}
-    this.createdTime = createdTime ? createdTime : Date.now()
+    this.balance = balance
+    this.tokens = tokens
+    this.createdTime = createdTime
   }
 
   shallowClone() {

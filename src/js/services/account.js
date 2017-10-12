@@ -1,17 +1,17 @@
 export default class Account {
-  constructor(address, keystring, name, desc, balance, nonce, tokens, manualNonce, joined, wallet, walletCreationTx, createdTime) {
+  constructor(address, keystring, name, desc, balance = 0, nonce = 0, tokens = {}, manualNonce = 0, joined = false, wallet, walletCreationTx, createdTime = Date.now()) {
     this.address = address
     this.key = keystring
     this.name = name
     this.description = desc
-    this.balance = balance || 0
-    this.nonce = nonce || 0
-    this.tokens = tokens || {}
-    this.manualNonce = manualNonce || 0
-    this.joined = joined || false
+    this.balance = balance
+    this.nonce = nonce
+    this.tokens = tokens
+    this.manualNonce = manualNonce
+    this.joined = joined
     this.wallet = wallet
     this.walletCreationTx = walletCreationTx
-    this.createdTime = createdTime ? createdTime : Date.now()
+    this.createdTime = createdTime
   }
 
   shallowClone() {
