@@ -1,19 +1,5 @@
 import PAYMENT from "../constants/joinPaymentFormActions"
 
-// export function doTransaction(ethereum, tx, callback) {
-//   return {
-//     type: "JOIN_PAYMENT_FORM_TX_BROADCAST",
-//     payload: new Promise((resolve, reject) => {
-//       ethereum.sendRawTransaction(tx, (hash) => {
-//         callback(hash)
-//         resolve(hash)
-//       }, (error) => {
-//         reject(hash)
-//       })
-//     })
-//   }
-// }
-
 export function doTransaction(ethereum, tx, callback) {
   return {
     type: PAYMENT.JOIN_PAYMENT_FORM_TX_BROADCAST_PENDING,

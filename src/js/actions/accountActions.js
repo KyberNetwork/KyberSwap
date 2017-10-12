@@ -1,4 +1,3 @@
-//import * as service from "../services/accounts"
 import store from "../store"
 import ACC_ACTION from "../constants/accActions"
 

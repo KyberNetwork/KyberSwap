@@ -1,14 +1,8 @@
-/* eslint-disable no-constant-condition */
-
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
-//import * as actions from '../actions/txActions'
 import {joinedKyberWallet} from '../actions/accountActions'
 import {addWallet} from '../actions/walletActions'
 import {updateTxComplete} from '../actions/txActions'
-
 import TX from "../constants/txActions"
-//import store from "../store"
-//import * as service from "../services/accounts"
 
 function* updateTx(action) {
   const tx = yield call(action.payload.tx.sync, action.payload.ethereum, action.payload.tx)	

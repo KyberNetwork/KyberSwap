@@ -1,14 +1,4 @@
-//import { fetchRate } from "../services/exchange"
 import GLOBAL from "../constants/globalActions"
-
-// export function updateBlock(ethereum, block) {
-//   return {
-//     type: "NEW_BLOCK_INCLUDED",
-//     payload: new Promise((resolve, reject) => {
-//       ethereum.getLatestBlock(resolve)
-//     })
-//   }
-// }
 
 export function updateBlock(ethereum, block) {
   return {
@@ -29,15 +19,6 @@ export function updateBlockFailed(error) {
     payload: error
   }
 }
-
-// export function updateRate(ethereum, source, dest, reserve) {
-//   return {
-//     type: "RATE_UPDATED",
-//     payload: new Promise((resolve, reject) => {
-//       fetchRate(ethereum, source, dest, reserve, resolve)
-//     })
-//   }
-// }
 
 export function updateRate(ethereum, source, dest, reserve) {
   return {

@@ -1,5 +1,3 @@
-/* eslint-disable no-constant-condition */
-
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/exchangeFormActions'
 import EXCHANGE from "../constants/exchangeFormActions"
@@ -30,11 +28,3 @@ export function* watchExchange() {
   yield takeEvery(EXCHANGE.EXCHANGE_FORM_TX_BROADCAST_PENDING, broadCastTx)
   yield takeEvery(EXCHANGE.EXCHANGE_FORM_APPROVAL_TX_BROADCAST_PENDING, approveTx)  
 }
-
-
-// export default function* root() {
-//   yield all([
-//     //fork(addNewAccount),
-//     fork(watchAddNewAccount),    
-//   ])
-// }

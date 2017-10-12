@@ -151,21 +151,6 @@ export function suggestRate(id, epsilon) {
   }
 }
 
-// export function doApprovalTransaction(id, ethereum, tx, callback) {
-//   return {
-//     type: "EXCHANGE_FORM_APPROVAL_TX_BROADCAST",
-//     payload: new Promise((resolve, reject) => {
-//       ethereum.sendRawTransaction(tx, (hash) => {
-//         callback(hash)
-//         resolve(hash)
-//       }, (error) => {
-//         reject(error)
-//       })
-//     }),
-//     meta: id,
-//   }
-// }
-
 export function doApprovalTransaction(id, ethereum, tx, callback) {
   return {
     type: EXCHANGE.EXCHANGE_FORM_APPROVAL_TX_BROADCAST_PENDING,
@@ -217,21 +202,6 @@ export function deselectAdvance(id) {
     meta: id,
   }
 }
-
-// export function doTransaction(id, ethereum, tx, callback) {
-//   return {
-//     type: "EXCHANGE_FORM_TX_BROADCAST",
-//     payload: new Promise((resolve, reject) => {
-//       ethereum.sendRawTransaction(tx, (hash) => {
-//         callback(hash, tx)
-//         resolve(hash)
-//       }, (error) => {
-//         reject(error)
-//       })
-//     }),
-//     meta: id,
-//   }
-// }
 
 export function doTransaction(id, ethereum, tx, callback) {
   return {

@@ -1,10 +1,7 @@
-/* eslint-disable no-constant-condition */
-
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/globalActions'
 import GLOBAL from "../constants/globalActions"
 import { fetchRatePromise } from "../services/exchange"
-//import * as service from "../services/accounts"
 
 function* getLatestBlock(action) {
   const block = yield call(action.payload.getLatestBlockPromise, action.payload)

@@ -1,15 +1,4 @@
-//import * as service from "../services/accounts"
 import WALLET_ACTION from "../constants/walletActions"
-
-// export function addWallet(address, ownerAddress, name, desc) {
-//   return {
-//     type: "NEW_WALLET_ADDED",
-//     payload: new Promise((resolve, reject) => {
-//       service.newWalletInstance(
-//         address, ownerAddress, name, desc, resolve)
-//     })
-//   }
-// }
 
 export function addWallet(address, ownerAddress, name, desc) {
   return {
@@ -38,15 +27,6 @@ export function deleteWallet(address) {
     payload: address
   }
 }
-
-// export function updateWallet(ethereum, wallet) {
-//   return {
-//     type: WALLET_ACTION.UPDATE_WALLET_PENDING,
-//     payload: new Promise((resolve, reject) => {
-//       wallet.sync(ethereum, resolve)
-//     })
-//   }
-// }
 
 export function updateWallet(ethereum, wallet) {
   return {

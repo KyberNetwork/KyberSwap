@@ -1,5 +1,3 @@
-/* eslint-disable no-constant-condition */
-
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/walletActions'
 import WALLET_ACTION from "../constants/walletActions"
@@ -19,11 +17,3 @@ export function* watchWallet() {
   yield takeEvery(WALLET_ACTION.NEW_WALLET_ADDED_PENDING, addNewWallet)
   yield takeEvery(WALLET_ACTION.UPDATE_WALLET_PENDING, updateWallet)  
 }
-
-
-// export default function* root() {
-//   yield all([
-//     //fork(addNewAccount),
-//     fork(watchAddNewAccount),    
-//   ])
-// }
