@@ -184,3 +184,14 @@ export function fetchRate(ethereum, source, dest, reserve, callback) {
         result[0], result[1], result[2]))
     })
 }
+
+export function fetchRatePromise(ethereum, source, dest, reserve) {
+  return new Promise((resolve, reject)=>{
+    ethereum.getRate(source.address, dest.address, reserve.index,
+    (result) => {
+      resolve(new Rate(
+        source, dest, reserve,
+        result[0], result[1], result[2]))
+    })  
+  })  
+}

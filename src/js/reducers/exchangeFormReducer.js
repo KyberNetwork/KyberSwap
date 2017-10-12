@@ -2,6 +2,7 @@ import BigNumber from 'bignumber.js'
 import supported_tokens from "../services/supported_tokens"
 import constants from "../services/constants"
 import { calculateRate, calculateDest, calculateMinAmount, getToken } from "../utils/converter"
+import EXCHANGE from "../constants/exchangeFormActions"
 
 const initFormState = constants.INIT_EXCHANGE_FORM_STATE
 const initState = {}
@@ -12,42 +13,42 @@ const exchangeForm = (state=initState, action) => {
   var formState = state[id] || initFormState
   newState[id] = {...formState}
   switch (action.type) {
-    case "ACCOUNT_SELECTED": {
+    case EXCHANGE.ACCOUNT_SELECTED: {
       newState[id].selectedAccount = action.payload
       newState[id].errors = {...newState[id].errors, selectedAccountError: ""}
       return newState
     }
-    case "CROSS_SEND_SELECTED": {
+    case EXCHANGE.CROSS_SEND_SELECTED: {
       newState[id].isCrossSend = true
       return newState
     }
-    case "CROSS_SEND_DESELECTED": {
+    case EXCHANGE.CROSS_SEND_DESELECTED: {
       newState[id].isCrossSend = false
       return newState
     }
-    case "ADVANCE_SELECTED": {
+    case EXCHANGE.ADVANCE_SELECTED: {
       newState[id].advanced = true
       return newState
     }
-    case "ADVANCE_DESELECTED": {
+    case EXCHANGE.ADVANCE_DESELECTED: {
       newState[id].advanced = false
       return newState
     }
-    case "SOURCE_TOKEN_SELECTED": {
+    case EXCHANGE.SOURCE_TOKEN_SELECTED: {
       var token = getToken(action.payload)
       newState[id].sourceToken = token.address
       newState[id].sourceTokenSymbol = token.symbol
       newState[id].errors = {...newState[id].errors, sourceTokenError: ""}
       return newState
     }
-    case "DEST_TOKEN_SELECTED": {
+    case EXCHANGE.DEST_TOKEN_SELECTED: {
       var token = getToken(action.payload)
       newState[id].destToken = token.address
       newState[id].destTokenSymbol = token.symbol
       newState[id].errors = {...newState[id].errors, destTokenError: ""}
       return newState
     }
-    case "SOURCE_AMOUNT_SPECIFIED": {
+    case EXCHANGE.SOURCE_AMOUNT_SPECIFIED: {
       var sourceAmount = action.payload
       var minAmount = calculateDest(
         sourceAmount, newState[id].minConversionRate).toString(10)
@@ -56,7 +57,7 @@ const exchangeForm = (state=initState, action) => {
       newState[id].errors = {...newState[id].errors, sourceAmountError: ""}
       return newState
     }
-    case "MIN_AMOUNT_SPECIFIED": {
+    case EXCHANGE.MIN_AMOUNT_SPECIFIED: {
       var minAmount = action.payload
       var minRate = calculateRate(newState[id].sourceAmount, minAmount).toString(10)
       newState[id].minDestAmount = minAmount
@@ -64,42 +65,42 @@ const exchangeForm = (state=initState, action) => {
       newState[id].errors = {...newState[id].errors, minDestAmountError: ""}
       return newState
     }
-    case "MIN_CONVERSION_RATE_SPECIFIED": {
+    case EXCHANGE.MIN_CONVERSION_RATE_SPECIFIED: {
       var minRate = action.payload
       var minAmount = calculateMinAmount(newState[id].sourceAmount, minRate).toString(10)
       newState[id].minDestAmount = minAmount
       newState[id].minConversionRate = minRate
       return newState
     }
-    case "RECIPIENT_SPECIFIED": {
+    case EXCHANGE.RECIPIENT_SPECIFIED: {
       newState[id].destAddress = action.payload
       newState[id].errors = {...newState[id].errors, destAddressError: ""}
       return newState
     }
-    case "GAS_PRICE_SPECIFIED": {
+    case EXCHANGE.GAS_PRICE_SPECIFIED: {
       newState[id].gasPrice = action.payload
       newState[id].errors = {...newState[id].errors, gasPriceError: ""}
       return newState
     }
-    case "GAS_SPECIFIED": {
+    case EXCHANGE.GAS_SPECIFIED: {
       newState[id].gas = action.payload
       newState[id].errors = {...newState[id].errors, gasError: ""}
       return newState
     }
-    case "ERROR_THREW": {
+    case EXCHANGE.ERROR_THREW: {
       newState[id].errors = {...newState[id].errors, ...action.payload}
       return newState
     }
-    case "EXCHANGE_FORM_EMPTIED": {
+    case EXCHANGE.EXCHANGE_FORM_EMPTIED: {
       var step = newState[id].step
       newState[id] = {...initFormState, step: step}
       return newState
     }
-    case "EXCHANGE_FORM_RESET_STEP": {
+    case EXCHANGE.EXCHANGE_FORM_RESET_STEP: {
       newState[id].step = 1
       return newState
     }
-    case "EXCHANGE_FORM_NEXT_STEP": {
+    case EXCHANGE.EXCHANGE_FORM_NEXT_STEP: {
       if (newState[id].advanced && newState[id].step == 2) {
         newState[id].step = "advance"
       } else if (newState[id].advanced && newState[id].step == "advance"){
@@ -109,7 +110,7 @@ const exchangeForm = (state=initState, action) => {
       }
       return newState
     }
-    case "EXCHANGE_FORM_PREVIOUS_STEP": {
+    case EXCHANGE.EXCHANGE_FORM_PREVIOUS_STEP: {
       if (newState[id].advanced && newState[id].step == 3) {
         newState[id].step = "advance"
       } else if (newState[id].advanced && newState[id].step == "advance"){
@@ -119,36 +120,36 @@ const exchangeForm = (state=initState, action) => {
       }
       return newState
     }
-    case "EXCHANGE_FORM_STEP_SPECIFIED": {
+    case EXCHANGE.EXCHANGE_FORM_STEP_SPECIFIED: {
       newState[id].step = action.payload
       return newState
     }
-    case "EXCHANGE_FORM_APPROVAL_TX_BROADCAST_PENDING": {
+    case EXCHANGE.EXCHANGE_FORM_APPROVAL_TX_BROADCAST_PENDING: {
       newState[id].broadcasting = true
       newState[id].txHash = action.payload
       return newState
     }
-    case "EXCHANGE_FORM_APPROVAL_TX_BROADCAST_REJECTED": {
+    case EXCHANGE.EXCHANGE_FORM_APPROVAL_TX_BROADCAST_REJECTED: {
       newState[id].broadcasting = false
       newState[id].bcError = action.payload
       return newState
     }
-    case "EXCHANGE_FORM_TX_BROADCAST_PENDING": {
+    case EXCHANGE.EXCHANGE_FORM_TX_BROADCAST_PENDING: {
       newState[id].broadcasting = true
       newState[id].txHash = action.payload
       return newState
     }
-    case "EXCHANGE_FORM_TX_BROADCAST_FULFILLED": {
+    case EXCHANGE.EXCHANGE_FORM_TX_BROADCAST_FULFILLED: {
       newState[id].broadcasting = false
       newState[id].txHash = action.payload
       return newState
     }
-    case "EXCHANGE_FORM_TX_BROADCAST_REJECTED": {
+    case EXCHANGE.EXCHANGE_FORM_TX_BROADCAST_REJECTED: {
       newState[id].broadcasting = false
       newState[id].bcError = action.payload
       return newState
     }
-    case "EXCHANGE_FORM_SUGGEST_RATE": {
+    case EXCHANGE.EXCHANGE_FORM_SUGGEST_RATE: {
       var minRate = action.payload.rate
       var minAmount, block, balance, rate
       if ((new BigNumber(minRate)).toNumber() == 0) {

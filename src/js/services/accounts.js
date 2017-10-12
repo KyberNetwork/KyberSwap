@@ -12,7 +12,7 @@ export function newWalletInstance(address, ownerAddress, name, desc, callback) {
       new Token(tok.name, tok.icon, tok.symbol, tok.address, address)
     )
   }
-  wallet.sync(
+  return wallet.sync(
     store.getState().connection.ethereum, callback)
 }
 
@@ -35,7 +35,7 @@ export function newAccountInstance(address, keystring, name, desc) {
       new Token(tok.name, tok.icon, tok.symbol, tok.address, account.address)
     )
   }
-  return account.syncAccount(
+  return account.sync(
     store.getState().connection.ethereum)
 }
 

@@ -24,6 +24,18 @@ export default class EthereumService {
     return this.rpc.version.api
   }
 
+  getLatestBlockPromise(ethereum) {
+    return new Promise((resolve, reject) => {
+      ethereum.rpc.eth.getBlock("latest", false, (error, block) => {
+        if (error != null) {
+          console.log(error)
+        } else {
+          resolve(block.number)
+        }
+      })
+    })
+  }
+
   getLatestBlock(callback) {
     return this.rpc.eth.getBlock("latest", false, (error, block) => {
       if (error != null) {
@@ -207,17 +219,29 @@ export default class EthereumService {
   }
 
   // tx should be ethereumjs-tx object
-  sendRawTransaction(tx, callback, failCallback) {
-    return this.rpc.eth.sendRawTransaction(
+  // sendRawTransaction(tx, callback, failCallback) {
+  //   return this.rpc.eth.sendRawTransaction(
+  //     ethUtil.bufferToHex(tx.serialize()), (error, hash) => {
+  //       if (error != null) {
+  //         failCallback(error)
+  //       } else {
+  //         callback(hash)
+  //       }
+  //     })
+  // }
+  sendRawTransaction(tx, ethereum) {
+    return new Promise((resolve, rejected) => {
+      ethereum.rpc.eth.sendRawTransaction(
       ethUtil.bufferToHex(tx.serialize()), (error, hash) => {
         if (error != null) {
-          failCallback(error)
+          rejected(error)
         } else {
-          callback(hash)
+          resolve(hash)
         }
       })
+    })    
   }
-
+  
   deployKyberWalletData(from) {
     var _kyberNetwork = constants.NETWORK_ADDRESS
     var contract = this.rpc.eth.contract(constants.KYBER_WALLET)

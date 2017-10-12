@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import constants from "../services/constants";
-
+import PAYMENT from "../constants/paymentFormActions"
 
 const initState = {
   selectedWallet: "",
@@ -19,40 +19,40 @@ const initState = {
 
 const paymentForm = (state=initState, action) => {
   switch (action.type) {
-    case "PAYMENT_FORM_WALLET_SELECTED": {
+    case PAYMENT.PAYMENT_FORM_WALLET_SELECTED: {
       return {...state, selectedWallet: action.payload};
     }
-    case "PAYMENT_FORM_SOURCE_TOKEN_SELECTED": {
+    case PAYMENT.PAYMENT_FORM_SOURCE_TOKEN_SELECTED: {
       return {...state, sourceToken: action.payload};
     }
-    case "PAYMENT_FORM_DEST_TOKEN_SELECTED": {
+    case PAYMENT.PAYMENT_FORM_DEST_TOKEN_SELECTED: {
       return {...state, destToken: action.payload};
     }
-    case "PAYMENT_FORM_SOURCE_AMOUNT_SPECIFIED": {
+    case PAYMENT.PAYMENT_FORM_SOURCE_AMOUNT_SPECIFIED: {
       return {...state, sourceAmount: action.payload};
     }
-    case "PAYMENT_FORM_MIN_CONVERSION_RATE_SPECIFIED": {
+    case PAYMENT.PAYMENT_FORM_MIN_CONVERSION_RATE_SPECIFIED: {
       return {...state, minConversionRate: action.payload};
     }
-    case "PAYMENT_FORM_RECIPIENT_SPECIFIED": {
+    case PAYMENT.PAYMENT_FORM_RECIPIENT_SPECIFIED: {
       return {...state, destAddress: action.payload};
     }
-    case "PAYMENT_FORM_GAS_PRICE_SPECIFIED": {
+    case PAYMENT.PAYMENT_FORM_GAS_PRICE_SPECIFIED: {
       return {...state, gasPrice: action.payload};
     }
-    case "PAYMENT_FORM_GAS_SPECIFIED": {
+    case PAYMENT.PAYMENT_FORM_GAS_SPECIFIED: {
       return {...state, gas: action.payload};
     }
-    case "PAYMENT_FORM_ONLY_APPROVE_TOKEN_SPECIFIED": {
+    case PAYMENT.PAYMENT_FORM_ONLY_APPROVE_TOKEN_SPECIFIED: {
       return {...state, onlyApproveToken: action.payload};
     }
-    case "PAYMENT_FORM_ERROR_THREW": {
+    case PAYMENT.PAYMENT_FORM_ERROR_THREW: {
       return {...state, error: action.payload};
     }
-    case "PAYMENT_FORM_EMPTIED": {
+    case PAYMENT.PAYMENT_FORM_EMPTIED: {
       return {...initState}
     }
-    case "PAYMENT_FORM_SUGGEST_RATE": {
+    case PAYMENT.PAYMENT_FORM_SUGGEST_RATE: {
       return {...state, minConversionRate: action.payload}
     }
   }

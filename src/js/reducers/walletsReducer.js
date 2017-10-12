@@ -1,7 +1,7 @@
 import Wallet from "../services/wallet"
 import Token from "../services/token"
 import {REHYDRATE} from 'redux-persist/constants'
-
+import WALLET_ACTION from "../constants/walletActions"
 
 const initState = {
   wallets: {},
@@ -44,7 +44,7 @@ const wallets = (state=initState, action) => {
       }
       return state
     }
-    case "UPDATE_WALLET_FULFILLED": {
+    case WALLET_ACTION.UPDATE_WALLET_FULFILLED: {
       var newWallets = {...state.wallets}
       var newWallet = newWallets[action.payload.address].shallowClone()
       newWallet.balance = action.payload.balance
@@ -52,31 +52,34 @@ const wallets = (state=initState, action) => {
       newWallets[newWallet.address] = newWallet
       return {...state, wallets: newWallets}
     }
-    case "ADD_DELETE_WALLET": {      
+    case WALLET_ACTION.ADD_DELETE_WALLET: {      
       var address = action.payload      
       return {...state, deleteWallet: address}
     }
-    case "DELETE_WALLET": {
+    case WALLET_ACTION.DELETE_WALLET: {
       var newWallets = {...state.wallets}
       var address = action.payload
       delete(newWallets[address])
       return {...state, wallets: newWallets}
     }
-    case "NEW_WALLET_ADDED_FULFILLED": {
+    case WALLET_ACTION.NEW_WALLET_ADDED_FULFILLED: {
       var newWallets = {...state.wallets}
       newWallets[action.payload.address] = action.payload
       return {...state, newWalletAdding: false, wallets: newWallets}
     }
+    case WALLET_ACTION.NEW_WALLET_ADDED_PENDING: {
+      return {...state, newWalletAdding: true}
+    }
     case "JOIN_PAYMENT_FORM_TX_BROADCAST_PENDING": {
       return {...state, newWalletAdding: true}
     }
-    case "MODIFY_WALLET":{
+    case WALLET_ACTION.MODIFY_WALLET:{
       var newWallets = {...state.wallets}
       var address = action.payload.address
       newWallets[address].name = action.payload.name
       return {...state, wallets: newWallets}
     }
-    case "SORT_WALLET_BY_FIELD":{
+    case WALLET_ACTION.SORT_WALLET_BY_FIELD:{
       var oldWallets = {...state.wallets}
       var order = action.payload.order
       var field = action.payload.field

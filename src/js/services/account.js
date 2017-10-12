@@ -39,10 +39,11 @@ export default class Account {
     return acc
   }
 
-  syncAccount(ethereum){
+  sync(ethereum, account){
      var promise
+     const _this = account ? account: this
       promise = new Promise((resolve, reject) => {
-        const acc = this.shallowClone()
+        const acc = _this.shallowClone()
         ethereum.getBalance(acc.address, (balance) => {
           acc.balance = balance
           resolve(acc)
@@ -61,7 +62,7 @@ export default class Account {
         })
       })
 
-      Object.keys(this.tokens).forEach((key) => {
+      Object.keys(_this.tokens).forEach((key) => {
         promise = promise.then((acc) => {
           return new Promise((resolve, reject) => {
             acc.tokens[key].sync(ethereum, (token) => {
@@ -73,48 +74,45 @@ export default class Account {
       })
 
       return promise
-      // promise.then((acc) => {
-      //   callback(acc)
-      // })
   }
 
-  sync(ethereum, callback) {
-    var promise
-    promise = new Promise((resolve, reject) => {
-      const acc = this.shallowClone()
-      ethereum.getBalance(acc.address, (balance) => {
-        acc.balance = balance
-        resolve(acc)
-      })
-    })
+  // sync(ethereum, callback) {
+  //   var promise
+  //   promise = new Promise((resolve, reject) => {
+  //     const acc = this.shallowClone()
+  //     ethereum.getBalance(acc.address, (balance) => {
+  //       acc.balance = balance
+  //       resolve(acc)
+  //     })
+  //   })
 
-    promise = promise.then((acc) => {
-      return new Promise((resolve, reject) => {
-        ethereum.getNonce(acc.address, (nonce) => {
-          acc.nonce = nonce
-          if (acc.nonce > acc.manualNonce) {
-            acc.manualNonce = acc.nonce
-          }
-          resolve(acc)
-        })
-      })
-    })
+  //   promise = promise.then((acc) => {
+  //     return new Promise((resolve, reject) => {
+  //       ethereum.getNonce(acc.address, (nonce) => {
+  //         acc.nonce = nonce
+  //         if (acc.nonce > acc.manualNonce) {
+  //           acc.manualNonce = acc.nonce
+  //         }
+  //         resolve(acc)
+  //       })
+  //     })
+  //   })
 
-    Object.keys(this.tokens).forEach((key) => {
-      promise = promise.then((acc) => {
-        return new Promise((resolve, reject) => {
-          acc.tokens[key].sync(ethereum, (token) => {
-            acc.tokens[key] = token
-            resolve(acc)
-          })
-        })
-      })
-    })
+  //   Object.keys(this.tokens).forEach((key) => {
+  //     promise = promise.then((acc) => {
+  //       return new Promise((resolve, reject) => {
+  //         acc.tokens[key].sync(ethereum, (token) => {
+  //           acc.tokens[key] = token
+  //           resolve(acc)
+  //         })
+  //       })
+  //     })
+  //   })
 
-    promise.then((acc) => {
-      callback(acc)
-    })
-  }
+  //   promise.then((acc) => {
+  //     callback(acc)
+  //   })
+  // }
 
   incManualNonce() {
     const acc = this.shallowClone()

@@ -1,48 +1,77 @@
-import * as service from "../services/accounts"
+//import * as service from "../services/accounts"
+import WALLET_ACTION from "../constants/walletActions"
+
+// export function addWallet(address, ownerAddress, name, desc) {
+//   return {
+//     type: "NEW_WALLET_ADDED",
+//     payload: new Promise((resolve, reject) => {
+//       service.newWalletInstance(
+//         address, ownerAddress, name, desc, resolve)
+//     })
+//   }
+// }
 
 export function addWallet(address, ownerAddress, name, desc) {
   return {
-    type: "NEW_WALLET_ADDED",
-    payload: new Promise((resolve, reject) => {
-      service.newWalletInstance(
-        address, ownerAddress, name, desc, resolve)
-    })
+    type: WALLET_ACTION.NEW_WALLET_ADDED_PENDING,
+    payload: {address, ownerAddress, name, desc}
+  }
+}
+
+export function addWalletComplete(wallet) {
+  return {
+    type: WALLET_ACTION.NEW_WALLET_ADDED_FULFILLED,
+    payload: wallet
   }
 }
 
 export function addDeleteWallet(address) {
     return {
-        type: "ADD_DELETE_WALLET",
+        type: WALLET_ACTION.ADD_DELETE_WALLET,
         payload: address
     }
 }
 
 export function deleteWallet(address) {
   return {
-    type: "DELETE_WALLET",
+    type: WALLET_ACTION.DELETE_WALLET,
     payload: address
   }
 }
 
+// export function updateWallet(ethereum, wallet) {
+//   return {
+//     type: WALLET_ACTION.UPDATE_WALLET_PENDING,
+//     payload: new Promise((resolve, reject) => {
+//       wallet.sync(ethereum, resolve)
+//     })
+//   }
+// }
+
 export function updateWallet(ethereum, wallet) {
   return {
-    type: "UPDATE_WALLET",
-    payload: new Promise((resolve, reject) => {
-      wallet.sync(ethereum, resolve)
-    })
+    type: WALLET_ACTION.UPDATE_WALLET_PENDING,
+    payload: {ethereum, wallet}
+  }
+}
+
+export function updateWalletComplete(wallet) {
+  return {
+    type: WALLET_ACTION.UPDATE_WALLET_FULFILLED,
+    payload: wallet
   }
 }
 
 export function modifyWallet(address, name){
     return {
-        type: "MODIFY_WALLET",
+        type: WALLET_ACTION.MODIFY_WALLET,
         payload: {address:address, name:name}
     }
 }
 
 export function sortWallet(order, field) {
     return {
-        type: "SORT_WALLET_BY_FIELD",
+        type: WALLET_ACTION.SORT_WALLET_BY_FIELD,
         payload: { order, field }
     }   
 }

@@ -15,10 +15,11 @@ export default class Wallet {
       this.balance, this.tokens, this.createdTime )
   }
 
-  sync(ethereum, callback) {
+  sync(ethereum, wallet) {
     var promise
+    var _this = wallet? wallet: this
     promise = new Promise((resolve, reject) => {
-      const acc = this.shallowClone()
+      const acc = _this.shallowClone()
       ethereum.getBalance(acc.address, (balance) => {
         acc.balance = balance
         resolve(acc)
@@ -37,7 +38,7 @@ export default class Wallet {
       })
     })
 
-    Object.keys(this.tokens).forEach((key) => {
+    Object.keys(_this.tokens).forEach((key) => {
       promise = promise.then((acc) => {
         return new Promise((resolve, reject) => {
           acc.tokens[key].sync(ethereum, (token) => {
@@ -48,9 +49,10 @@ export default class Wallet {
       })
     })
 
-    promise.then((acc) => {
-      callback(acc)
-    })
+    return promise
+    // promise.then((acc) => {
+    //   callback(acc)
+    // })
   }
 
   addToken(token) {

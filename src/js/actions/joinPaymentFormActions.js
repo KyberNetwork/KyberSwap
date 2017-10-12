@@ -1,54 +1,77 @@
+import PAYMENT from "../constants/joinPaymentFormActions"
+
+// export function doTransaction(ethereum, tx, callback) {
+//   return {
+//     type: "JOIN_PAYMENT_FORM_TX_BROADCAST",
+//     payload: new Promise((resolve, reject) => {
+//       ethereum.sendRawTransaction(tx, (hash) => {
+//         callback(hash)
+//         resolve(hash)
+//       }, (error) => {
+//         reject(hash)
+//       })
+//     })
+//   }
+// }
+
 export function doTransaction(ethereum, tx, callback) {
   return {
-    type: "JOIN_PAYMENT_FORM_TX_BROADCAST",
-    payload: new Promise((resolve, reject) => {
-      ethereum.sendRawTransaction(tx, (hash) => {
-        callback(hash)
-        resolve(hash)
-      }, (error) => {
-        reject(hash)
-      })
-    })
+    type: PAYMENT.JOIN_PAYMENT_FORM_TX_BROADCAST_PENDING,
+    payload: {ethereum, tx, callback}
+  }
+}
+
+export function doTransactionComplete(hash) {
+  return {
+    type: PAYMENT.JOIN_PAYMENT_FORM_TX_BROADCAST_FULFILLED,
+    payload: hash
+  }
+}
+
+export function doTransactionFail(hash) {
+  return {
+    type: PAYMENT.JOIN_PAYMENT_FORM_TX_BROADCAST_REJECTED,
+    payload: hash
   }
 }
 
 export function selectAccount(addr) {
   return {
-    type: "JOIN_PAYMENT_ACCOUNT_SELECTED",
+    type: PAYMENT.JOIN_PAYMENT_ACCOUNT_SELECTED,
     payload: addr,
   }
 }
 
 export function specifyName(name) {
   return {
-    type: "JOIN_PAYMENT_NAME_SPECIFIED",
+    type: PAYMENT.JOIN_PAYMENT_NAME_SPECIFIED,
     payload: name,
   }
 }
 
 export function specifyGasLimit(gas) {
   return {
-    type: "JOIN_PAYMENT_GAS_SPECIFIED",
+    type: PAYMENT.JOIN_PAYMENT_GAS_SPECIFIED,
     payload: gas,
   }
 }
 
 export function specifyGasPrice(price) {
   return {
-    type: "JOIN_PAYMENT_GAS_PRICE_SPECIFIED",
+    type: PAYMENT.JOIN_PAYMENT_GAS_PRICE_SPECIFIED,
     payload: price,
   }
 }
 
 export function throwError(error) {
   return {
-    type: "JOIN_PAYMENT_ERROR_THREW",
+    type: PAYMENT.JOIN_PAYMENT_ERROR_THREW,
     payload: error,
   }
 }
 
 export function emptyForm() {
   return {
-    type: "JOIN_PAYMENT_EMPTIED"
+    type: PAYMENT.JOIN_PAYMENT_EMPTIED
   }
 }
