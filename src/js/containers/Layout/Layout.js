@@ -11,10 +11,14 @@ import {InfoKyber} from "../../containers/InfoKyber"
 
 import TermOfService from "../../components/TermOfService"
 
-import {SideBar} from "../../containers/SideBar"
-import {RateInfo} from "../../containers/RateInfo"
+//import {SideBar} from "../../containers/SideBar"
+import {Header} from "../../containers/Header"
 
-import {GlobalControl} from "../../containers/GlobalControl"
+//import {RateInfo} from "../../containers/RateInfo"
+
+import {ImportAccount} from "../ImportAccount"
+
+//import {GlobalControl} from "../../containers/GlobalControl"
 
 import { loadAccounts } from "../../actions/accountActions"
 import history from "../../history"
@@ -39,16 +43,15 @@ export default class Layout extends React.Component {
     if (this.props.termOfServiceAccepted) {
       app = (
         <div class="k-body">          
-          <Route component={SideBar}/>          
+          <Route component={Header}/>          
           <div class="k-contenter">
             <div id="content" class="k-content">
               <Route exact path="/" component={Dashboard}/>              
               <Route exact path="/transactions" component={Transactions}/>              
               <Route exact path="/info" component={InfoKyber}/>
+              <Route exact path="/import" component={ImportAccount}/>
             </div>
-          </div>
-          <RateInfo />
-          <GlobalControl />
+          </div>          
         </div>
       )
     } else {
