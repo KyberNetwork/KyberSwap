@@ -4,11 +4,12 @@ import { ExchangeRates } from "../../components/ExchangeRates"
 
 @connect((store) => {
   return {
-    rates: store.global.rates
+    rates: store.tokens
   }
 })
 
 export default class Rate extends React.Component {
+
 	render() {
     return (
         <div>
