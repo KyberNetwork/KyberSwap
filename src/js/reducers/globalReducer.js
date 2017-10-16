@@ -21,12 +21,12 @@ const global = (state=initState, action) => {
         Object.keys(loadedRates).forEach((id) => {
           var rateMap = loadedRates[id]
           var rate = new Rate(
-            rateMap.source,
-            rateMap.dest,
-            rateMap.reserve,
+            rateMap.name,
+            rateMap.symbol,
+            rateMap.icon,
+            rateMap.address,
             new BigNumber(rateMap.rate),
-            new BigNumber(rateMap.expirationBlock),
-            new BigNumber(rateMap.balance),
+            new BigNumber(rateMap.balance)
           )
           rates[id] = rate
         })
@@ -44,7 +44,7 @@ const global = (state=initState, action) => {
     case GLOBAL.RATE_UPDATED_FULFILLED: {
       var newRates = {...state.rates}
       var rate = action.payload
-      newRates[rate.id()] = rate
+      newRates[rate.symbol] = rate
       return {...state, rates: newRates }
     }
     case GLOBAL.TERM_OF_SERVICE_ACCEPTED: {

@@ -12,22 +12,16 @@ const ExchangeRates = (props) => {
       address: constants.ETHER_ADDRESS
   };
   var rates = []
-  var rateID
+  var rateSymbol
   var rate
-  var rateReverse
+  // var rateReverse
   for (var i = 0; i < SupportedTokens.length; i++) {
-    var token = {
-      name: SupportedTokens[i].name,
-      icon: SupportedTokens[i].icon,
-      symbol: SupportedTokens[i].symbol,
-      address: SupportedTokens[i].address
-    };
-    rateID = token.address + "-" + ether.address
-    rate = props.rates[rateID]
+    rateSymbol = SupportedTokens[i].symbol;
+    rate = props.rates[rateSymbol]
     if (rate) {
       rates.push(
-        <tr key={rateID}>
-          <td class="token-pair">{rate.source.symbol}</td>
+        <tr key={rateSymbol}>
+          <td class="token-pair">{rate.symbol}</td>
           <td title={toT(rate.rate)}>{toT(rate.rate, 8)}</td>
         </tr>
       )
