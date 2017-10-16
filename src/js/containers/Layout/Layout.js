@@ -3,11 +3,15 @@ import { connect } from "react-redux"
 import { Route } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 
-import {Transactions} from "../../containers/Transactions"
+//import {Transactions} from "../../containers/Transactions"
 
-import {Dashboard} from "../../containers/Dashboard"
+//import {Dashboard} from "../../containers/Dashboard"
 
 import {InfoKyber} from "../../containers/InfoKyber"
+
+import {Exchange} from "../../containers/Exchange"
+
+import {Transfer} from "../../containers/Transfer"
 
 import TermOfService from "../../components/TermOfService"
 
@@ -20,7 +24,7 @@ import {ImportAccount} from "../ImportAccount"
 
 //import {GlobalControl} from "../../containers/GlobalControl"
 
-import { loadAccounts } from "../../actions/accountActions"
+//import { loadAccounts } from "../../actions/accountActions"
 import history from "../../history"
 
 
@@ -46,10 +50,10 @@ export default class Layout extends React.Component {
           <Route component={Header}/>          
           <div class="k-contenter">
             <div id="content" class="k-content">
-              <Route exact path="/" component={Dashboard}/>              
-              <Route exact path="/transactions" component={Transactions}/>              
-              <Route exact path="/info" component={InfoKyber}/>
-              <Route exact path="/import" component={ImportAccount}/>
+              <Route exact path="/" component={ImportAccount}/>                            
+              <Route exact path="/info" component={InfoKyber}/>              
+              <Route exact path="/exchange" component={Exchange}/>
+              <Route exact path="/transfer" component={Transfer}/>
             </div>
           </div>          
         </div>

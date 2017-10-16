@@ -5,6 +5,8 @@ import {compose, applyMiddleware, createStore} from "redux"
 import createSagaMiddleware from 'redux-saga'
 
 import {persistStore, autoRehydrate} from 'redux-persist'
+import { asyncSessionStorage } from 'redux-persist/storages'
+
 import reducer from "./reducers/index"
 import history from "./history"
 import { routerMiddleware } from 'react-router-redux'
@@ -28,7 +30,9 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga)
 
-persistStore(store, {blacklist: [
+persistStore(store, {
+  storage: asyncSessionStorage,
+  blacklist: [
   'connection',
   'exchangeForm',
   'paymentForm',
