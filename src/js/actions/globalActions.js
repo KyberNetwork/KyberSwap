@@ -39,3 +39,9 @@ export function acceptTermOfService() {
     type: GLOBAL.TERM_OF_SERVICE_ACCEPTED
   }
 }
+
+export function clearSession() {
+  return {
+    type: GLOBAL.CLEAR_SESSION
+  }
+}

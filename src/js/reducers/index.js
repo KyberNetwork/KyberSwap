@@ -16,10 +16,20 @@ import txs from './txsReducer'
 import createKeyStore from './createKeyStoreReducer'
 import modifyAccount from './modifyAccountReducer'
 import modifyWallet from './modifyWalletReducer'
+import transactions from './transactionReducer'
 
-export default combineReducers({
+const appReducer = combineReducers({
   account, accounts, exchangeForm, global, tokens, importKeystore, txs,
-  joinPaymentForm, wallets, paymentForm, connection,
-  utils,
+  joinPaymentForm, wallets, paymentForm, connection,transactions,utils,
   router: routerReducer, createKeyStore, modifyAccount, modifyWallet
 })
+
+const rootReducer = (state, action) => {
+  if (action.type === 'GLOBAL.CLEAR_SESSION') {
+    state = {}
+  }
+  return appReducer(state, action)
+}
+
+export default rootReducer
+
