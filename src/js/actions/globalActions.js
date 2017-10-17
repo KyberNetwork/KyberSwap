@@ -20,10 +20,10 @@ export function updateBlockFailed(error) {
   }
 }
 
-export function updateRate(ethereum, source, dest, reserve, ownerAddr) {
+export function updateRate(ethereum, source, reserve, ownerAddr) {
   return {
     type: GLOBAL.RATE_UPDATED_PENDING,
-    payload: {ethereum, source, dest, reserve, ownerAddr}
+    payload: {ethereum, source, reserve, ownerAddr}
   }
 }
 
@@ -31,20 +31,6 @@ export function updateRateComplete(rate) {
   return {
     type: GLOBAL.RATE_UPDATED_FULFILLED,
     payload: rate
-  }
-}
-
-export function updateBalance(address) {
-  return {
-    type: GLOBAL.TOKEN_UPDATE_BALANCE_PENDING,
-    payload: address
-  }
-}
-
-export function updateBalanceComplete(balance) {
-  return {
-    type: GLOBAL.TOKEN_UPDATE_BALANCE_FULFILLED,
-    payload: balance
   }
 }
 

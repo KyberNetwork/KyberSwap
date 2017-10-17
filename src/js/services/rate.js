@@ -1,7 +1,8 @@
 import BigNumber from "bignumber.js"
+import constants from "../services/constants"
 
 export default class Rate {
-  constructor(name, symbol, icon, address, rate, reserve, balance = new BigNumber(0)){
+  constructor(name, symbol, icon, address, rate = new BigNumber(0), balance = new BigNumber(0)){
     this.name = name;
     this.symbol = symbol;
     this.icon = icon;
@@ -9,14 +10,31 @@ export default class Rate {
     this.rate = rate;
     this.balance = balance;
   }
-}
 
-export function updateBalancePromise(ethereum, source, ownerAddr) {
-  if (!ownerAddr || !ownerAddr.length) return new BigNumber(0);
-  return new Promise((resolve, reject)=>{
-    ethereum.getTokenBalance(source.address, ownerAddr, (result) => {
-      resolve(result);
-    })
-  })  
-}
+  fetchRate(ethereum, reserve){
+    const _this= this;
+    return new Promise((resolve, reject)=>{
+      ethereum.getRate(this.address, constants.ETHER_ADDRESS, reserve.index,
+        (result) => {
+          _this.rate = result[0];
+          resolve(_this);
+        }) 
+    });
+    
+  }
 
+  updateBalance(ethereum, ownerAddr){
+    const _this= this;
+    return new Promise((resolve, reject)=>{
+      if (!ownerAddr || !ownerAddr.length) {
+        resolve(new BigNumber(0));
+      }
+      else {
+        ethereum.getTokenBalance(this.address, ownerAddr, (result) => {
+          _this.balance = result;
+          resolve(_this);
+        })
+      }
+    });
+  }
+}

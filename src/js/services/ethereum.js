@@ -89,12 +89,6 @@ export default class EthereumService {
     var state = store.getState()
     var ethereum = state.connection.ethereum
     var ownerAddr = state.account.address
-    var ether = {
-      name: "Ether",
-      symbol: "ETH",
-      icon: "/img/ether.png",
-      address: constants.ETHER_ADDRESS
-    };
     for (var i = 0; i < SupportedTokens.length; i++) {
       var token = {
         name: SupportedTokens[i].name,
@@ -104,7 +98,7 @@ export default class EthereumService {
       }
       for (var k = 0; k < constants.RESERVES.length; k++) {
         var reserve = constants.RESERVES[k]
-        store.dispatch(updateRate(ethereum, token, ether, reserve, ownerAddr))
+        store.dispatch(updateRate(ethereum, token, reserve, ownerAddr))
       }
     }
   }
