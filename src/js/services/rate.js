@@ -1,14 +1,12 @@
-export default class Rate {
-  constructor(source, dest, reserve, rate, expirationBlock, balance) {
-    this.source = source
-    this.dest = dest
-    this.reserve = reserve
-    this.rate = rate
-    this.expirationBlock = expirationBlock
-    this.balance = balance
-  }
+import BigNumber from "bignumber.js"
 
-  id() {
-    return this.source.address + '-' + this.dest.address
+export default class Rate {
+  constructor(name, symbol, icon, address, rate, reserve, balance = new BigNumber(0)){
+    this.name = name;
+    this.symbol = symbol;
+    this.icon = icon;
+    this.address = address;
+    this.rate = rate;
+    this.balance = balance;
   }
 }
