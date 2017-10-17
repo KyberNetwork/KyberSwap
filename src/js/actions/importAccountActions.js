@@ -1,9 +1,9 @@
 import IMPORT from "../constants/importAccountActions"
 
-export function saveKeyStore(address, keystore) {
+export function saveKeyStore(address, keystore, callBack) {
     return {
         type: IMPORT.SAVE_KEYSTORE,
-        payload: {address, keystore}
+        payload: {address, keystore, callBack}
     }
 }
 export function throwError(error) {

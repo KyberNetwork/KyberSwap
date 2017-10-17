@@ -49,6 +49,21 @@ const utils = (state=initState, action) => {
       newState.showControl = false
       return newState 
     }
+    case UTIL.OPEN_TOKEN_MODAL:{
+      var newState = {...state}
+      newState.tokenModal = {
+        open: true,
+        type: action.payload
+      }
+      return newState 
+    }
+    case UTIL.HIDE_TOKEN_MODAL:{
+      var newState = {...state}
+      newState.tokenModal = {
+        open: false
+      }
+      return newState
+    }
   }
   return state
 }

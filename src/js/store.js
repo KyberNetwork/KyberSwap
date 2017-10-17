@@ -39,7 +39,6 @@ persistStore(store, {
   'joinPaymentForm',
   'createKeyStore',
   'importKeystore',
-  'utils',
   ]})
 
 export default store

@@ -9,7 +9,6 @@ import { connect } from "react-redux"
 
 //mport { closeModal } from "../../actions/utilActions"
 import {DropFile} from "../../components/ImportAccount"
-
 //import Dropzone from 'react-dropzone'
 
 //import { uploadKey } from "../../actions/importKeystoreActions"
@@ -17,6 +16,10 @@ import {DropFile} from "../../components/ImportAccount"
 import { saveKeyStore, throwError } from "../../actions/importAccountActions"
 import { verifyKey, anyErrors } from "../../utils/validators"
 import { addressFromKey } from "../../utils/keys"
+
+//import { history } from 'history'
+
+//const history = createHashHistory()
 
 @connect((store) => {
   return {...store.account}
@@ -53,6 +56,10 @@ export default class ImportKeystore extends React.Component {
   //     this.props.dispatch(closeModal(this.props.modalID))
   //   }
   // }
+  goToExchange = () =>{
+    window.location.href = "/exchange"
+   //this.context.router.history.push('/exchange');
+  }
 
   onDrop = (files) => {
     //console.log("xxx")
@@ -70,7 +77,8 @@ export default class ImportKeystore extends React.Component {
           console.log("keystring: ", keystring)
           var address = addressFromKey(keystring)
           this.props.dispatch(saveKeyStore(
-            address, keystring))                      
+            address, keystring))   
+          this.goToExchange()                   
         }    
       
   }
