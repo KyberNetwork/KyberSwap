@@ -88,28 +88,22 @@ export default class EthereumService {
   fetchRateData() {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    var tokens = [{
+    var ether = {
       name: "Ether",
       symbol: "ETH",
       icon: "/img/ether.png",
-      address: constants.ETHER_ADDRESS}]
+      address: constants.ETHER_ADDRESS
+    };
     for (var i = 0; i < SupportedTokens.length; i++) {
-      tokens.push({
+      var token = {
         name: SupportedTokens[i].name,
         icon: SupportedTokens[i].icon,
         symbol: SupportedTokens[i].symbol,
         address: SupportedTokens[i].address
-      })
-    }
-    var rates = {}
-    for (var i = 0; i < tokens.length; i++) {
-      for (var j = 0; j < tokens.length; j++) {
-        if (i != j && (i == 0 || j == 0)) {
-          for (var k = 0; k < constants.RESERVES.length; k++) {
-            var reserve = constants.RESERVES[k]
-            store.dispatch(updateRate(ethereum, tokens[i], tokens[j], reserve))
-          }
-        }
+      }
+      for (var k = 0; k < constants.RESERVES.length; k++) {
+        var reserve = constants.RESERVES[k]
+        store.dispatch(updateRate(ethereum, token, ether, reserve))
       }
     }
   }

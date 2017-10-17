@@ -2,7 +2,7 @@ import React from "react"
 
 const TokenSelect = (props) => {  
   return (
-   <div onClick={props.onSelected}>
+   <div onClick={(e) => props.onClick(e, props.symbol, props.type)}>
    	<span>{props.symbol}</span>
    	<img src={props.icon} />
    	<span>{props.balance}</span>

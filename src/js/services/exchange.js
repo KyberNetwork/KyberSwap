@@ -190,8 +190,13 @@ export function fetchRatePromise(ethereum, source, dest, reserve) {
     ethereum.getRate(source.address, dest.address, reserve.index,
     (result) => {
       resolve(new Rate(
-        source, dest, reserve,
-        result[0], result[1], result[2]))
+        source.name,
+        source.symbol,
+        source.icon,
+        source.address,
+        result[0],
+        result[2]
+      ))
     })  
   })  
 }

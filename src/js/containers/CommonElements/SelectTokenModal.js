@@ -28,7 +28,7 @@ const customStyles = {
    	return {
    		modalInfo : modal,
    		tokens: store.tokens,
-      selectToken: props.selectToken
+      chooseToken: props.chooseToken
    	}
    }
    else{
@@ -46,7 +46,9 @@ export default class SelectTokenModal extends React.Component {
   closeModal = (event) => {
     this.props.dispatch(hideSelectToken())
   }
-
+  chooseToken =(event, symbol, type)=>{
+    this.props.chooseToken(symbol, type)
+  }
   
 
   content = () => {
@@ -60,12 +62,13 @@ export default class SelectTokenModal extends React.Component {
   		case "source":
   			title = "Select source token"
   			//content = "source"  			
-		    var content = Object.keys(this.props.tokens).map((key) => {
-		    	const token = this.props.tokens[key]
-		      return <TokenSelect key={key} symbol={token.symbol} 
-		      				balance={token.balance} 
+		    var content = Object.keys(this.props.tokens).map((key, i) => {
+		    	const token = this.props.tokens[key]          
+		      return <TokenSelect key={i} symbol={token.symbol} 
+		      				balance={token.balance.toString()} 
 		      				icon={token.icon} 
-                  onSelected = {this.props.selectToken(key)}
+                  type = {this.props.modalInfo.type}
+                  onClick = {this.chooseToken}
                   />
 		    })
   			break
@@ -74,9 +77,10 @@ export default class SelectTokenModal extends React.Component {
   			var content = Object.keys(this.props.tokens).map((key) => {
 		    	const token = this.props.tokens[key]
 		      return <TokenSelect key={key} symbol={token.symbol} 
-		      				balance={token.balance} 
+		      				balance={token.balance.toString()} 
 		      				icon={token.icon} 
-                  onSelected = {this.props.selectToken(key)}
+                  type = {this.props.modalInfo.type}
+                  onClick = {this.chooseToken}
                   />
 		    })
   			break
@@ -85,9 +89,10 @@ export default class SelectTokenModal extends React.Component {
   			var content = Object.keys(this.props.tokens).map((key) => {
 		    	const token = this.props.tokens[key]
 		      return <TokenSelect key={key} symbol={token.symbol} 
-		      				balance={token.balance} 
+		      				balance={ttoken.balance.toString()} 
 		      				icon={token.icon} 
-                  onSelected = {this.props.selectToken(key)}
+                  type = {this.props.modalInfo.type}
+                  onClick = {this.chooseToken}
                   />
 		    })
   			break;

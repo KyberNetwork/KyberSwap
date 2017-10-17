@@ -1,9 +1,9 @@
 
 
-export function selectToken(type, symbol) {
+export function selectToken(symbol, type) {
 	 return {
 	    type: "SELECT_TOKEN",
-	    payload: {type, symbol}
+	    payload: {symbol, type}
 	  }
 }
 

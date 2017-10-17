@@ -8,6 +8,7 @@ import exchange from './exchangeReducer'
 
 import accounts from './accountsReducer'
 import global from './globalReducer'
+//import tokens from './tokensReducer'
 import exchangeForm from './exchangeFormReducer'
 import paymentForm from './paymentFormReducer'
 import importKeystore from './importKeystoreReducer'

@@ -17,6 +17,12 @@ var TOKENS = [
     icon: "/assets/gnosis-logo.png",
     address: "0x2c018fc6c9bb2b7653136dc7c5b7b588f2d11986"
   },
+  {
+    name: "Ethereum",
+    symbol: "ETH",
+    icon: "/assets/ethreum.png",
+    address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  },
 ]
 
 export default TOKENS
