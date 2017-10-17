@@ -10,3 +10,13 @@ export default class Rate {
     this.balance = balance;
   }
 }
+
+export function updateBalancePromise(ethereum, source, ownerAddr) {
+  if (!ownerAddr || !ownerAddr.length) return new BigNumber(0);
+  return new Promise((resolve, reject)=>{
+    ethereum.getTokenBalance(source.address, ownerAddr, (result) => {
+      resolve(result);
+    })
+  })  
+}
+

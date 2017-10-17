@@ -3,15 +3,11 @@ import Rate from "../services/rate"
 import BigNumber from "bignumber.js"
 import GLOBAL from "../constants/globalActions"
 
-const initState = {}
-
-const token = (state=initState, action) => {
+const token = (state={}, action) => {
   switch (action.type) {
     case REHYDRATE: {
       if (action.payload.tokens) {
         var loadedTokens = action.payload.tokens
-        console.log("----------------------------");
-        console.log(loadedTokens);
         var tokens = {}
         if(loadedTokens){
             Object.keys(loadedTokens).forEach((id) => {
@@ -30,7 +26,6 @@ const token = (state=initState, action) => {
         } else {
             return state;
         }
-        
       }
       return state
     }
@@ -42,7 +37,6 @@ const token = (state=initState, action) => {
     }
     default: return state
   }
-  
 }
 
 export default token
