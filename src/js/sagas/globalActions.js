@@ -2,6 +2,7 @@ import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effect
 import * as actions from '../actions/globalActions'
 import GLOBAL from "../constants/globalActions"
 import { fetchRatePromise } from "../services/exchange"
+import Rate from "../services/rate"
 
 function* getLatestBlock(action) {
   const ethereum = action.payload
@@ -10,8 +11,17 @@ function* getLatestBlock(action) {
 }
 
 function* updateRate(action) {
-  const {ethereum, source, dest, reserve} = action.payload
-  const rate = yield call(fetchRatePromise, ethereum, source, dest, reserve)
+  const {ethereum, source, reserve, ownerAddr} = action.payload
+  const rate = new Rate(
+    source.name,
+    source.symbol,
+    source.icon,
+    source.address
+  )
+  yield [
+    rate.fetchRate(ethereum, reserve),
+    rate.updateBalance(ethereum, ownerAddr)
+  ]
   yield put(actions.updateRateComplete(rate))
 }
 
