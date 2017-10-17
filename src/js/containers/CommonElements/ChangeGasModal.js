@@ -5,8 +5,8 @@ import { connect } from "react-redux"
 //import { TokenSelect } from '../../components/Token'
 import { hideGasModal } from "../../actions/utilActions"
 import {TransactionConfig} from "../../components/Forms/Components"
-import { specifyGas as specifyGasExchange, specifyGasPrice  as specifyGasPriceExchange } from "../../actions/exchangeActions"
-import { specifyGas as specifyGasTransfer, specifyGasPrice as specifyGasPriceTransfer } from "../../actions/transferActions"
+import { specifyGas as specifyGasExchange, specifyGasPrice  as specifyGasPriceExchange, hideAdvance as hideAdvanceExchange } from "../../actions/exchangeActions"
+import { specifyGas as specifyGasTransfer, specifyGasPrice as specifyGasPriceTransfer, hideAdvance as hideAdvanceTransfer } from "../../actions/transferActions"
 
 
 import Modal from 'react-modal'
@@ -26,31 +26,26 @@ const customStyles = {
 }
 
 @connect((store, props) => {
-   var modal = store.utils.gasModal
-   if (!!modal){
-   	return {
-   		modalInfo : modal,
-   		type: props.type,
-   		gas: props.gas,
-   		gasPrice: props.gasPrice,
-   		gasPriceError : props.gasPriceError,
-        gasError : props.gasError
-   	}
-   }
-   else{
-   	return {
-   		modalInfo : {
-   			open: false
-   		}
-   	}
-   }
+	return props
+   // return {
+   // 		open : props.open,
+   // 		type: props.type,
+   // 		gas: props.gas,
+   // 		gasPrice: props.gasPrice,
+   // 		gasPriceError : props.gasPriceError,
+   //      gasError : props.gasError
+   // 	}
   //return store.utils
 })
 
 export default class ChangeGasModal extends React.Component {
 
   closeModal = (event) => {
-    this.props.dispatch(hideGasModal())
+  	if(this.props.type === "exchange"){
+  		this.props.dispatch(hideAdvanceExchange())
+  	}else{
+  		this.props.dispatch(hideAdvanceTransfer(value))
+  	}
   }
   
   specifyGas = (event) => {
@@ -75,7 +70,7 @@ export default class ChangeGasModal extends React.Component {
     return (
     	<Modal  
 	     	 style={customStyles}    
-	         isOpen={this.props.modalInfo.open}
+	         isOpen={this.props.open}
 	          onRequestClose={this.closeModal}
              contentLabel ="change gas"
             >

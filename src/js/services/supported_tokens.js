@@ -21,7 +21,7 @@ var TOKENS = [
     name: "Ethereum",
     symbol: "ETH",
     icon: "/assets/ethreum.png",
-    address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
   },
 ]
 

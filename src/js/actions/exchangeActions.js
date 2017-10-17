@@ -27,3 +27,29 @@ export function specifyGasPrice(value) {
 		payload: value
 	}	
 }
+
+export function showAdvance(){
+	return {
+		type: "EXCHANGE.SHOW_ADVANCE",		
+	}		
+}
+
+export function hideAdvance(){
+	return {
+		type: "EXCHANGE.HIDE_ADVANCE",		
+	}		
+}
+
+export function changeSourceAmout(amount){
+	return {
+		type: "EXCHANGE.CHANGE_SOURCE_AMOUNT",
+		payload: amount		
+	}			
+}
+
+export function updateRateExchange(rate){
+	return {
+		type: "EXCHANGE.UPDATE_RATE",
+		payload: rate
+	}				
+}

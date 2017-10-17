@@ -19,9 +19,9 @@ const exchange = (state=initState, action) => {
   	case "SELECT_TOKEN":
   		var newState = {...state}
   		if(action.payload.type === "source"){
-			newState.sourceToken = action.payload.symbol
+			newState.sourceTokenSymbol = action.payload.symbol
   		}else if (action.payload.type === "des"){
-  			newState.desToken = action.payload.symbol
+  			newState.destTokenSymbol = action.payload.symbol
   		}
       return newState
     case "THOW_ERROR_SELECT_TOKEN":
@@ -40,6 +40,20 @@ const exchange = (state=initState, action) => {
       var newState = {...state}
       newState.gasPrice = action.payload
       return newState
+    case "EXCHANGE.SHOW_ADVANCE":
+      var newState = {...state}
+      newState.advance = true
+      return newState
+    case "EXCHANGE.HIDE_ADVANCE":
+      var newState = {...state}
+      newState.advance = false
+      return newState
+    case "EXCHANGE.CHANGE_SOURCE_AMOUNT":
+      var newState = {...state}
+      newState.sourceAmount = action.payload
+      return newState
+    case "EXCHANGE.UPDATE_RATE":
+      return {...state, rate: action.payload}
   }
   return state
 }

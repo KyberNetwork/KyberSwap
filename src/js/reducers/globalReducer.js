@@ -50,6 +50,9 @@ const global = (state=initState, action) => {
     case GLOBAL.TERM_OF_SERVICE_ACCEPTED: {
       return {...state, termOfServiceAccepted: true}
     }
+    case GLOBAL.CLEAR_SESSION: {
+      return {...state, termOfServiceAccepted: true}
+    }
   }
   return state
 }

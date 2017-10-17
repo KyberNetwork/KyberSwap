@@ -11,3 +11,15 @@ export function specifyGasPrice(value) {
 		payload: value
 	}	
 }
+
+export function showAdvance(){
+	return {
+		type: "TRANSFER.SHOW_ADVANCE",		
+	}		
+}
+
+export function hideAdvance(){
+	return {
+		type: "TRANSFER.HIDE_ADVANCE",		
+	}		
+}

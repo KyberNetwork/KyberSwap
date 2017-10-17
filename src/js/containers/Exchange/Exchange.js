@@ -3,12 +3,12 @@ import { connect } from "react-redux"
 
 //import TokenDest from "./TokenDest"
 //import {TokenDest, MinRate} from "../ExchangeForm"
-import {Token} from "../Exchange"
+import {Token, ExchangeRate} from "../Exchange"
 import {SelectTokenModal, ChangeGasModal} from "../CommonElements"
 
 import {openTokenModal, hideSelectToken} from "../../actions/utilActions"
 import { selectToken } from "../../actions/tokenActions"
-import {errorSelectToken, goToStep} from "../../actions/exchangeActions"
+import {errorSelectToken, goToStep, showAdvance, changeSourceAmout} from "../../actions/exchangeActions"
 
 @connect((store) => {
   if (!!!store.account.address){
@@ -28,7 +28,7 @@ export default class Exchange extends React.Component {
   chooseToken = (symbol, type) => {
     //console.log(type)
     //console.log(symbol)
-    this.props.dispatch(selectToken(symbol, type))
+    this.props.dispatch(selectToken(symbol, address, type))
     this.props.dispatch(hideSelectToken())
     // if (this.props.token_source === this.props.token_des){
     //   this.props.dispatch(errorSelectToken("Cannot exchange to the same token"))
@@ -37,23 +37,29 @@ export default class Exchange extends React.Component {
     // }
   }
   proccessSelectToken = () => {
-    if (this.props.token_source === this.props.token_des){
+    if (this.props.sourceTokenSymbol === this.props.desTokenSymbol){
       this.props.dispatch(errorSelectToken("Cannot exchange to the same token"))
     }else{
       this.props.dispatch(goToStep(2))
     }
   }
   showAdvanceOption = () => {
-
+    this.props.dispatch(showAdvance())
   }
-  changeSourceAmount = () => {
-
+  changeSourceAmount = (e) => {
+    var value = e.target.value
+    //console.log(value)
+    this.props.dispatch(changeSourceAmout(value))
   }
   getRate = () => {
     return 0
   }
   clickExchange = () =>{
     console.log("click exchange")
+  }
+  getDesAmount = () => {
+    var rate  = this.getRate()
+    return this.props.sourceAmount *rate
   }
   render() {    
     return (
@@ -67,7 +73,7 @@ export default class Exchange extends React.Component {
                 
 	       		 <span>to</span>
 	       		 <Token type="des"
-	       				token={this.props.desTokenSymbol} 
+	       				token={this.props.destTokenSymbol} 
                 onSelected={this.openDesToken}
                 />
        		</div>
@@ -81,7 +87,7 @@ export default class Exchange extends React.Component {
           <h1>Exchange from</h1>
           <div>
             <div>
-              <input value={this.props.sourceAmount} onChange={(e)=>this.changeSourceAmount.bind(e)}/>
+              <input type="text" value={this.props.sourceAmount} onChange={this.changeSourceAmount}/>
               <Token type="source"
                 token={this.props.sourceTokenSymbol}
                 onSelected={this.openSourceToken}
@@ -89,15 +95,15 @@ export default class Exchange extends React.Component {
             </div>
              <span> to</span>
             <div>
-              <input />
+              <input value={this.getDesAmount()}/>
               <Token type="des"
-                token={this.props.desTokenSymbol} 
+                token={this.props.destTokenSymbol} 
                 onSelected={this.openDesToken}
                 />  
             </div>
           </div>
           <div>
-            1 {this.props.token_source} = {this.getRate} {this.props.token_des}
+            <ExchangeRate rate={this.props.rate}/>
           </div>
           <div>
             <button onClick={this.clickExchange}>Exchange</button>

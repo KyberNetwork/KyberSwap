@@ -7,7 +7,7 @@ import { connect } from "react-redux"
 import {pickRandomProperty} from "../../utils/tokens"
 //import SUPPORTED_TOKENS from "../../services/supported_tokens"
 
-@connect((store, props) => {
+@connect((store, props) => {  
   return {
       type: props.type,     
       tokens:store.tokens,
@@ -20,6 +20,8 @@ export default class Token extends React.Component {
   render() {  	
     //console.log(pickRandomProperty(this.props.tokens))
     //var token = !!this.props.symbol?this.props.tokens[this.props.symbol]: this.props.tokens[pickRandomProperty(this.props.tokens)]
+    //console.log(this.props.symbol)
+    //console.log(this.props.tokens)
     var token = this.props.tokens[this.props.symbol]
   	var balance = this.props.type === 'source'?(<div>Address Balance: <span>{token.balance.toString()}</span></div>):''
   	
