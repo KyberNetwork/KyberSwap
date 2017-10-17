@@ -3,9 +3,7 @@ import Rate from "../services/rate"
 import BigNumber from "bignumber.js"
 import GLOBAL from "../constants/globalActions"
 
-const initState = {}
-
-const token = (state=initState, action) => {
+const token = (state={}, action) => {
   switch (action.type) {
     case REHYDRATE: {
       if (action.payload.tokens) {
@@ -28,7 +26,6 @@ const token = (state=initState, action) => {
         } else {
             return state;
         }
-        
       }
       return state
     }
@@ -40,7 +37,6 @@ const token = (state=initState, action) => {
     }
     default: return state
   }
-  
 }
 
 export default token

@@ -58,8 +58,15 @@ const INIT_EXCHANGE_FORM_STATE = {
 // reserves
 const RESERVES = [{index: 0, name: "Kyber official reserve"}]
 
+const ETH = {
+  name: "Ether",
+  symbol: "ETH",
+  icon: "/img/ether.png",
+  address: ETHER_ADDRESS
+};
+
 export default {
-  ERC20, KYBER_NETWORK, EPSILON, ETHER_ADDRESS,
+  ERC20, KYBER_NETWORK, EPSILON, ETHER_ADDRESS, ETH,
   NETWORK_ADDRESS, RESERVES, KYBER_WALLET,
   KYBER_WALLET_DATA, INIT_EXCHANGE_FORM_STATE,
   RATE_EPSILON, TRADE_TOPIC,

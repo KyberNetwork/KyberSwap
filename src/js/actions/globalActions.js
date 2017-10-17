@@ -20,10 +20,10 @@ export function updateBlockFailed(error) {
   }
 }
 
-export function updateRate(ethereum, source, dest, reserve) {
+export function updateRate(ethereum, source, reserve, ownerAddr) {
   return {
     type: GLOBAL.RATE_UPDATED_PENDING,
-    payload: {ethereum, source, dest, reserve}
+    payload: {ethereum, source, reserve, ownerAddr}
   }
 }
 

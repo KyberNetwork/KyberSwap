@@ -23,6 +23,7 @@ const ExchangeRates = (props) => {
         <tr key={rateSymbol}>
           <td class="token-pair">{rate.symbol}</td>
           <td title={toT(rate.rate)}>{toT(rate.rate, 8)}</td>
+          <td title={toT(rate.balance)}>{toT(rate.balance, 8)}</td>
         </tr>
       )
     }
