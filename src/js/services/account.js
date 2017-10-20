@@ -2,10 +2,10 @@ import SupportedTokens from "./supported_tokens"
 import Token from "./token"
 
 export default class Account {
-  constructor(address, type, keystring, balance = 0, nonce = 0, manualNonce = 0) {
+  constructor(address, type, keystring, balance = 0, nonce = 0, manualNonce = 0) {    
     this.address = address
     this.type = type
-    this.key = keystring
+    this.keystring = keystring
     //this.name = name
     //this.description = desc
     this.balance = balance
@@ -21,7 +21,7 @@ export default class Account {
 
   shallowClone() {
     return new Account(
-      this.address, this.key,this.type,
+      this.address, this.type, this.keystring,
       this.balance, this.nonce, this.manualNonce)
   }
 

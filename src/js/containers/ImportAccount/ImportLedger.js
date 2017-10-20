@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import { scanLedger } from "../../actions/importAccountActions"
+import { scanLedger } from "../../actions/accountActions"
 import { verifyKey, anyErrors } from "../../utils/validators"
 import { addressFromKey } from "../../utils/keys"
 

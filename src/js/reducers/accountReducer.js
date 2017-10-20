@@ -2,25 +2,24 @@
 //import Token from "../services/token"
 import {REHYDRATE} from 'redux-persist/constants'
 import IMPORT from "../constants/importAccountActions"
+import ACC_ACTION from "../constants/accActions"
 
 const initState = {
-  address: '',
-  keystore: '',
-  type: '',
-  error: ''
 }
 
 const account = (state=initState, action) => {
-  switch (action.type) {
-  	case IMPORT.SAVE_KEYSTORE: {
-  	  var payload = action.payload  	  
-      return {...state, address: payload.address, keystore: payload.keystore, type: 'keystore'}
-    }
-    case IMPORT.THROW_ERROR: {            
+  switch (action.type) {  	
+    case "IMPORT.IMPORT_NEW_ACCOUNT_FULFILLED": {
+      return action.payload
+    }      
+    case "IMPORT.THROW_ERROR": {            
       return {...state, error: action.payload}
     }
     case IMPORT.END_SESSION: {
       return {...initState}
+    }
+    case ACC_ACTION.UPDATE_ACCOUNT_FULFILLED:{
+        return action.payload
     }
     case 'IMPORT.SCAN_LEDGER_COMPLETE': {
       var wallets = action.payload;

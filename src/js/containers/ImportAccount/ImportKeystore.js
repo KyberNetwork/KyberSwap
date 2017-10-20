@@ -13,7 +13,7 @@ import {DropFile} from "../../components/ImportAccount"
 
 //import { uploadKey } from "../../actions/importKeystoreActions"
 //import { addAccount } from "../../actions/accountActions"
-import { importNewAccount, throwError } from "../../actions/importAccountActions"
+import { importNewAccount, throwError } from "../../actions/accountActions"
 import { verifyKey, anyErrors } from "../../utils/validators"
 import { addressFromKey } from "../../utils/keys"
 
@@ -78,7 +78,7 @@ export default class ImportKeystore extends React.Component {
           var address = addressFromKey(keystring)
           this.props.dispatch(importNewAccount(
             address, "keystore", keystring))   
-          this.goToExchange()                   
+         // this.goToExchange()                   
         }    
       
   }

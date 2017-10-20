@@ -117,23 +117,24 @@ export default class EthereumService {
     })
   }
 
-  fetchAccountsData = () => {
+  fetchAccountData = () => {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    var accounts = store.getState().accounts.accounts
-    Object.keys(accounts).forEach((key) => {
-      store.dispatch(updateAccount(ethereum, accounts[key]))
-    })
+    var account = store.getState().account
+    store.dispatch(updateAccount(ethereum, account))
+    // Object.keys(accounts).forEach((key) => {
+    //   store.dispatch(updateAccount(ethereum, accounts[key]))
+    // })
   }
 
-  fetchWalletsData = () => {
-    var state = store.getState()
-    var ethereum = state.connection.ethereum
-    var wallets = store.getState().wallets.wallets
-    Object.keys(wallets).forEach((key) => {
-      store.dispatch(updateWallet(ethereum, wallets[key]))
-    })
-  }
+  // fetchWalletsData = () => {
+  //   var state = store.getState()
+  //   var ethereum = state.connection.ethereum
+  //   var wallets = store.getState().wallets.wallets
+  //   Object.keys(wallets).forEach((key) => {
+  //     store.dispatch(updateWallet(ethereum, wallets[key]))
+  //   })
+  // }
 
   fetchCurrentBlock = () => {
     var state = store.getState()
@@ -165,8 +166,9 @@ export default class EthereumService {
     this.fetchCurrentBlock()
     this.fetchTxsData()
     this.fetchRateData()
-    this.fetchWalletsData()
-    this.fetchAccountsData()
+    //this.fetchWalletsData()
+    //this.fetchAccountsData()
+    this.fetchAccountData()
     this.fetchRateExchange()
 
   }

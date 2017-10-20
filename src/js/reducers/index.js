@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 
-import account from './importAccountReducer'
+import account from './accountReducer'
 import tokens from './tokensReducer'
 import exchange from './exchangeReducer'
 
