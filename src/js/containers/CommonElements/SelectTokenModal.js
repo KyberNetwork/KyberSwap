@@ -46,8 +46,8 @@ export default class SelectTokenModal extends React.Component {
   closeModal = (event) => {
     this.props.dispatch(hideSelectToken())
   }
-  chooseToken =(event, symbol, type)=>{
-    this.props.chooseToken(symbol, type)
+  chooseToken =(event, symbol, address, type)=>{
+    this.props.chooseToken(symbol,address, type)
   }
   
 
@@ -63,7 +63,8 @@ export default class SelectTokenModal extends React.Component {
   			title = "Select source token"
   			//content = "source"  			
 		    var content = Object.keys(this.props.tokens).map((key, i) => {
-		    	const token = this.props.tokens[key]          
+		    	const token = this.props.tokens[key] 
+          //console.log(token)         
 		      return <TokenSelect key={i} symbol={token.symbol} 
 		      				balance={token.balance.toString()} 
 		      				icon={token.icon} 

@@ -19,6 +19,7 @@ const NETWORK_ADDRESS = "0x11542d7807dfb2b44937f756b9092c76e814f8ed"
 const TRADE_TOPIC = "0xec0d3e799aa270a144d7e3be084ccfc657450e33ecea1b1a4154c95cedaae5c3"
 const INIT_EXCHANGE_FORM_STATE = {
   advanced: false,
+  passphrase: false,
   // isCrossSend: false,
   // selectedAccount: "",
   sourceToken: supported_tokens[0].address,
@@ -26,15 +27,18 @@ const INIT_EXCHANGE_FORM_STATE = {
   sourceAmount: 0,
   destToken: supported_tokens[1].address,
   destTokenSymbol: supported_tokens[1].symbol,
-  minConversionRate: 0,
+  
   destAddress: "",
-  rate: [new BigNumber(0),new BigNumber(0),new BigNumber(0)],  
-  //minDestAmount: 0,
+
+  //rate: [new BigNumber(0),new BigNumber(0),new BigNumber(0)],  
+  minConversionRate: 0,
+  minDestAmount: 0,
   //maxDestAmount: (new BigNumber(2)).pow(255).toString(10),
-  //offeredRateExpiryBlock: 0,
-  //offeredRateBalance: 0,
-  //offeredRate: 0,
-  //throwOnFailure: false,
+  offeredRateExpiryBlock: 0,
+  offeredRateBalance: 0,
+  offeredRate: 0,
+
+  throwOnFailure: false,
   gas: 1000000,
   gasPrice: 20,
   step: 1,

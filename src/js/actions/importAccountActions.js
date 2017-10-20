@@ -1,11 +1,19 @@
 import IMPORT from "../constants/importAccountActions"
 
-export function saveKeyStore(address, keystore, callBack) {
+export function importNewAccount(address, type, keystore) {
     return {
-        type: IMPORT.SAVE_KEYSTORE,
-        payload: {address, keystore, callBack}
+        type: "IMPORT.IMPORT_NEW_ACCOUNT_PENDING",
+        payload: {address, type, keystore}
     }
 }
+
+export function importNewAccountComplete(account){
+    return {
+        type: "IMPORT.IMPORT_NEW_ACCOUNT_FULFILLED",
+        payload: account
+    }
+}
+
 export function throwError(error) {
 	return {
         type: IMPORT.THROW_ERROR,

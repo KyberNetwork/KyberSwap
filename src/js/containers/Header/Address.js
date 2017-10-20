@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import { clearSession } from "../../actions/globalActions"
 
 @connect((store) => {
-  console.log(store)
   return {...store.account}
 })
 

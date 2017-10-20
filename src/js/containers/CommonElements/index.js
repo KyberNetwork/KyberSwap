@@ -8,3 +8,4 @@ export { default as ConfirmModal } from './ConfirmModal.js';
 
 export { default as SelectTokenModal } from './SelectTokenModal.js';
 export { default as ChangeGasModal } from './ChangeGasModal.js';
+export { default as PassphraseModal } from './PassphraseModal.js';

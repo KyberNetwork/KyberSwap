@@ -3,6 +3,7 @@
 import {REHYDRATE} from 'redux-persist/constants'
 //import IMPORT from "../constants/importAccountActions"
 import constants from "../services/constants"
+import { calculateDest} from "../utils/converter"
 // const initState = {
 //   token_source: 'GNT',
 //   token_des: 'DGD',
@@ -15,45 +16,52 @@ const initFormState = constants.INIT_EXCHANGE_FORM_STATE
 const initState = initFormState
 
 const exchange = (state=initState, action) => {
+  var newState = {...state}
   switch (action.type) {
-  	case "SELECT_TOKEN":
-  		var newState = {...state}
+  	case "EXCHANGE.SELECT_TOKEN":
+  		
   		if(action.payload.type === "source"){
-			newState.sourceTokenSymbol = action.payload.symbol
+			 newState.sourceTokenSymbol = action.payload.symbol
+        newState.sourceToken = action.payload.address      
   		}else if (action.payload.type === "des"){
   			newState.destTokenSymbol = action.payload.symbol
+        newState.destToken = action.payload.address
+
   		}
       return newState
     case "THOW_ERROR_SELECT_TOKEN":
-      var newState = {...state}
       newState.error_select_token = action.payload
       return newState
     case "GO_TO_STEP":
-      var newState = {...state}
       newState.step = action.payload
       return newState
     case "EXCHANGE_SPECIFY_GAS":
-      var newState = {...state}
       newState.gas = action.payload
       return newState
     case "EXCHANGE_SPECIFY_GAS_PRICE":
-      var newState = {...state}
       newState.gasPrice = action.payload
       return newState
     case "EXCHANGE.SHOW_ADVANCE":
-      var newState = {...state}
       newState.advance = true
       return newState
     case "EXCHANGE.HIDE_ADVANCE":
-      var newState = {...state}
       newState.advance = false
       return newState
     case "EXCHANGE.CHANGE_SOURCE_AMOUNT":
-      var newState = {...state}
       newState.sourceAmount = action.payload
       return newState
     case "EXCHANGE.UPDATE_RATE":
-      return {...state, rate: action.payload}
+      var rate = action.payload.offeredRate
+      newState.minConversionRate = rate
+      newState.minDestAmount = calculateDest(newState.sourceAmount, rate).toString(10)
+      newState.offeredRateBalance = action.payload.reserveBalance
+      newState.offeredRateExpiryBlock = action.payload.expirationBlock
+      newState.offeredRate = rate
+      return newState
+    case "EXCHANGE.OPEN_PASSPHRASE":
+      return {...state, passphrase: true}
+    case "EXCHANGE.HIDE_PASSPHRASE":
+      return {...state, passphrase: false}
   }
   return state
 }

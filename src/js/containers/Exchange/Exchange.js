@@ -1,14 +1,18 @@
 import React from "react"
 import { connect } from "react-redux"
 
+
+import {calculateMinAmount, toTWei, toEther} from "../../utils/converter"
 //import TokenDest from "./TokenDest"
 //import {TokenDest, MinRate} from "../ExchangeForm"
 import {Token, ExchangeRate} from "../Exchange"
-import {SelectTokenModal, ChangeGasModal} from "../CommonElements"
+import {SelectTokenModal, ChangeGasModal, PassphraseModal} from "../CommonElements"
 
+//import {toT, toTWei} from "../../utils/converter"
 import {openTokenModal, hideSelectToken} from "../../actions/utilActions"
-import { selectToken } from "../../actions/tokenActions"
-import {errorSelectToken, goToStep, showAdvance, changeSourceAmout} from "../../actions/exchangeActions"
+import { selectToken } from "../../actions/exchangeActions"
+import {errorSelectToken, goToStep, showAdvance, changeSourceAmout, openPassphrase} from "../../actions/exchangeActions"
+
 
 @connect((store) => {
   if (!!!store.account.address){
@@ -25,9 +29,8 @@ export default class Exchange extends React.Component {
     this.props.dispatch(openTokenModal("des"))
 
   }
-  chooseToken = (symbol, type) => {
-    //console.log(type)
-    //console.log(symbol)
+  chooseToken = (symbol,address, type) => {
+    
     this.props.dispatch(selectToken(symbol, address, type))
     this.props.dispatch(hideSelectToken())
     // if (this.props.token_source === this.props.token_des){
@@ -48,19 +51,29 @@ export default class Exchange extends React.Component {
   }
   changeSourceAmount = (e) => {
     var value = e.target.value
-    //console.log(value)
-    this.props.dispatch(changeSourceAmout(value))
-  }
-  getRate = () => {
-    return 0
+
+    console.log(value)
+    this.props.dispatch(changeSourceAmout(toTWei(value)))
   }
   clickExchange = () =>{
-    console.log("click exchange")
+    if(this.validateExchange){
+      this.props.dispatch(openPassphrase())
+    }
+
+  }
+  validateExchange = () =>{
+    return true
   }
   getDesAmount = () => {
-    var rate  = this.getRate()
-    return this.props.sourceAmount *rate
+    return 0
+    // var rate = this.props.rate[0]
+    // var sourceAmount = this.props.sourceAmount
+    // return calculateMinAmount(sourceAmount, rate).toNumber()
   }
+  createRecap = () => {
+    return "create reacap"
+  }  
+
   render() {    
     return (
       <div class="k-exchange-page">
@@ -87,7 +100,7 @@ export default class Exchange extends React.Component {
           <h1>Exchange from</h1>
           <div>
             <div>
-              <input type="text" value={this.props.sourceAmount} onChange={this.changeSourceAmount}/>
+              <input type="text" value={toEther(this.props.sourceAmount)} onChange={this.changeSourceAmount}/>
               <Token type="source"
                 token={this.props.sourceTokenSymbol}
                 onSelected={this.openSourceToken}
@@ -114,7 +127,7 @@ export default class Exchange extends React.Component {
           step 3
         </div>
 
-        <SelectTokenModal chooseToken ={this.chooseToken}/>
+        <SelectTokenModal chooseToken ={this.chooseToken} type="exchange"/>
         <ChangeGasModal type="exchange"
                         gas={this.props.gas}
                         gasPrice={this.props.gasPrice} 
@@ -122,6 +135,9 @@ export default class Exchange extends React.Component {
                         gasPriceError = {this.props.errors.gasPriceError}
                         gasError = {this.props.errors.gasError}                        
                         />
+        <PassphraseModal   type="exchange"
+                          open={this.props.passphrase}
+                          recap = {this.createRecap} />
       </div>
     )
   }

@@ -11,8 +11,8 @@ function* watchAndLog() {
   yield takeEvery('*', function* logger(action) {
     const state = yield select()
 
-    //  console.log('action', action)
-    //  console.log('state after', state)
+      console.log('action', action)
+      console.log('state after', state)
   })
 }
 

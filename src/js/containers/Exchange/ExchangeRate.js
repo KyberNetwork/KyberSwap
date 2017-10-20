@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 //import { getToken, pairID, toT } from "../../utils/converter"
 //import constants from "../../services/constants"
-
+import {toT} from "../../utils/converter"
 
 @connect((store, props) => {
   //get rate
@@ -39,15 +39,15 @@ export default class ExchangeRate extends React.Component {
         <div class="rate">
           <div>
             <label>Exchange Rate</label>
-            <span>{this.props.rate[0].toString()}</span>
+            <span>{this.props.offeredRate}</span>
           </div>
           <div>
             <label>Expiration Block</label>
-            <span>{this.props.rate[1].toString()}</span>
+            <span>{this.props.offeredRateExpiryBlock}</span>
           </div>
           <div>
             <label>Reserve Balance</label>
-            <span>{this.props.rate[2].toString()}</span>
+            <span>{this.props.offeredRateBalance}</span>
           </div>
         </div>
       </div>)

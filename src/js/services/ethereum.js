@@ -147,14 +147,14 @@ export default class EthereumService {
     var dest = state.exchange.destToken
     var reserve = constants.RESERVES[0].index
     
-    console.log(source)    
-    console.log(dest)    
-    console.log(reserve)    
+    // console.log(source)    
+    // console.log(dest)    
+    // console.log(reserve)    
     return this.networkContract.getRate(source, dest, reserve, (error, result) => {
       if (error != null) {
         console.log(error)
       } else {
-        console.log(result)
+        //console.log(result)
         store.dispatch(updateRateExchange(result))
       }
     })
@@ -221,15 +221,15 @@ export default class EthereumService {
   }
 
   getRate(source, dest, reserve, callback) {
-    console.log(source)
-    console.log(dest)
-    console.log(reserve)
+    // console.log(source)
+    // console.log(dest)
+    // console.log(reserve)
     return this.networkContract.getRate(source, dest, reserve, (error, result) => {
       if (error != null) {
         console.log(error)
       } else {
         callback(result)
-        console.log(result)
+        //console.log(result)
       }
     })
   }  
