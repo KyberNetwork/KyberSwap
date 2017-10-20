@@ -6,6 +6,7 @@ import { updateBlock, updateBlockFailed, updateRate } from "../actions/globalAct
 import { updateAccount } from "../actions/accountActions"
 import { updateWallet } from "../actions/walletActions"
 import { updateTx } from "../actions/txActions"
+import {updateRateExchange} from "../actions/exchangeActions"
 import SupportedTokens from "./supported_tokens"
 import * as ethUtil from 'ethereumjs-util'
 import store from "../store"
@@ -116,23 +117,24 @@ export default class EthereumService {
     })
   }
 
-  fetchAccountsData = () => {
+  fetchAccountData = () => {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    var accounts = store.getState().accounts.accounts
-    Object.keys(accounts).forEach((key) => {
-      store.dispatch(updateAccount(ethereum, accounts[key]))
-    })
+    var account = store.getState().account
+    store.dispatch(updateAccount(ethereum, account))
+    // Object.keys(accounts).forEach((key) => {
+    //   store.dispatch(updateAccount(ethereum, accounts[key]))
+    // })
   }
 
-  fetchWalletsData = () => {
-    var state = store.getState()
-    var ethereum = state.connection.ethereum
-    var wallets = store.getState().wallets.wallets
-    Object.keys(wallets).forEach((key) => {
-      store.dispatch(updateWallet(ethereum, wallets[key]))
-    })
-  }
+  // fetchWalletsData = () => {
+  //   var state = store.getState()
+  //   var ethereum = state.connection.ethereum
+  //   var wallets = store.getState().wallets.wallets
+  //   Object.keys(wallets).forEach((key) => {
+  //     store.dispatch(updateWallet(ethereum, wallets[key]))
+  //   })
+  // }
 
   fetchCurrentBlock = () => {
     var state = store.getState()
@@ -140,12 +142,35 @@ export default class EthereumService {
     store.dispatch(updateBlock(ethereum))
   }
 
+  fetchRateExchange = () => {
+    var state = store.getState()
+    var source = state.exchange.sourceToken
+    var dest = state.exchange.destToken
+    var reserve = constants.RESERVES[0].index
+    
+    // console.log(source)    
+    // console.log(dest)    
+    // console.log(reserve)    
+    return this.networkContract.getRate(source, dest, reserve, (error, result) => {
+      if (error != null) {
+        console.log(error)
+      } else {
+        //console.log(result)
+        store.dispatch(updateRateExchange(result))
+      }
+    })
+  }
+
+
   fetchData() {
     this.fetchCurrentBlock()
     this.fetchTxsData()
     this.fetchRateData()
-    this.fetchWalletsData()
-    this.fetchAccountsData()
+    //this.fetchWalletsData()
+    //this.fetchAccountsData()
+    this.fetchAccountData()
+    this.fetchRateExchange()
+
   }
 
   actAndWatch(error, result) {
@@ -198,15 +223,18 @@ export default class EthereumService {
   }
 
   getRate(source, dest, reserve, callback) {
+    // console.log(source)
+    // console.log(dest)
+    // console.log(reserve)
     return this.networkContract.getRate(source, dest, reserve, (error, result) => {
       if (error != null) {
         console.log(error)
       } else {
         callback(result)
+        //console.log(result)
       }
     })
-  }
-
+  }  
   // tx should be ethereumjs-tx object
   // sendRawTransaction(tx, callback, failCallback) {
   //   return this.rpc.eth.sendRawTransaction(

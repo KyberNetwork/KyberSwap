@@ -1,10 +1,14 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 
-import account from './importAccountReducer'
+import account from './accountReducer'
+import tokens from './tokensReducer'
+import exchange from './exchangeReducer'
+
+
 import accounts from './accountsReducer'
 import global from './globalReducer'
-import tokens from './tokensReducer'
+//import tokens from './tokensReducer'
 import exchangeForm from './exchangeFormReducer'
 import paymentForm from './paymentFormReducer'
 import importKeystore from './importKeystoreReducer'
@@ -19,7 +23,7 @@ import modifyWallet from './modifyWalletReducer'
 import transactions from './transactionReducer'
 
 const appReducer = combineReducers({
-  account, accounts, exchangeForm, global, tokens, importKeystore, txs,
+  account, accounts, exchange, exchangeForm, global, tokens, importKeystore, txs,
   joinPaymentForm, wallets, paymentForm, connection,transactions,utils,
   router: routerReducer, createKeyStore, modifyAccount, modifyWallet
 })

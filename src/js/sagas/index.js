@@ -5,14 +5,14 @@ import { watchGlobal } from './globalActions';
 import { watchExchange } from './exchangeFormActions';
 import { watchPayment } from './joinPaymentFormActions';
 import { watchTx } from './txActions';
-
+import { watchImportAccount } from './importAccountActions';
 
 function* watchAndLog() {
   yield takeEvery('*', function* logger(action) {
     const state = yield select()
 
-    //  console.log('action', action)
-    //  console.log('state after', state)
+      // console.log('action', action)
+      // console.log('state after', state)
   })
 }
 
@@ -24,6 +24,7 @@ export default function* root() {
    	fork(watchExchange), 
    	fork(watchPayment), 
    	fork(watchTx), 
-   	fork(watchAndLog), 
+    fork(watchAndLog), 
+    fork(watchImportAccount)
   ])
 }

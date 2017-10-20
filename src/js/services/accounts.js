@@ -10,8 +10,8 @@ export function newWalletInstance(address, ownerAddress, name, desc, callback) {
     store.getState().connection.ethereum, callback)
 }
 
-export function newAccountInstance(address, keystring, name, desc) {
-  var account = new Account(address, keystring, name, desc)  
+export function newAccountInstance(address, type, keystring) {
+  var account = new Account(address, type, keystring)  
   return account.sync(
     store.getState().connection.ethereum)
 }

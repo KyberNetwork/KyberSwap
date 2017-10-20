@@ -2,26 +2,27 @@ import SupportedTokens from "./supported_tokens"
 import Token from "./token"
 
 export default class Account {
-  constructor(address, keystring, name, desc, balance = 0, nonce = 0, tokens = {}, manualNonce = 0, joined = false, wallet, walletCreationTx, createdTime = Date.now()) {
+  constructor(address, type, keystring, balance = 0, nonce = 0, manualNonce = 0) {    
     this.address = address
-    this.key = keystring
-    this.name = name
-    this.description = desc
+    this.type = type
+    this.keystring = keystring
+    //this.name = name
+    //this.description = desc
     this.balance = balance
     this.nonce = nonce
-    this.tokens = tokens
+    //this.tokens = tokens
     this.manualNonce = manualNonce
-    this.joined = joined
-    this.wallet = wallet
-    this.walletCreationTx = walletCreationTx
-    this.createdTime = createdTime
+    
+    // this.joined = joined
+    // this.wallet = wallet
+    // this.walletCreationTx = walletCreationTx
+    // this.createdTime = createdTime
   }
 
   shallowClone() {
     return new Account(
-      this.address, this.key, this.name, this.description,
-      this.balance, this.nonce, this.tokens, this.manualNonce,
-      this.joined, this.wallet, this.walletCreationTx, this.createdTime )
+      this.address, this.type, this.keystring,
+      this.balance, this.nonce, this.manualNonce)
   }
 
   getUsableNonce() {
@@ -30,28 +31,28 @@ export default class Account {
     return nonceFromNode < nonceManual ? nonceManual : nonceFromNode
   }
 
-  setPrivKey(key) {
-    const acc = this.shallowClone()
-    acc.privKey = key;
-    return acc
-  }
+  // setPrivKey(key) {
+  //   const acc = this.shallowClone()
+  //   acc.privKey = key;
+  //   return acc
+  // }
 
-  updateKey(keystring) {
-    const acc = this.shallowClone()
-    acc.key = keystring
-    return acc
-  }
+  // updateKey(keystring) {
+  //   const acc = this.shallowClone()
+  //   acc.key = keystring
+  //   return acc
+  // }
 
   sync(ethereum, account){
       var promise
       const _this = account ? account: this
       _this.tokens = {}
-      for (var i = 0; i < SupportedTokens.length; i++ ) {
-        var tok = SupportedTokens[i];
-        _this.addToken(
-          new Token(tok.name, tok.icon, tok.symbol, tok.address, _this.address)
-        )
-      }
+      // for (var i = 0; i < SupportedTokens.length; i++ ) {
+      //   var tok = SupportedTokens[i];
+      //   _this.addToken(
+      //     new Token(tok.name, tok.icon, tok.symbol, tok.address, _this.address)
+      //   )
+      // }
       
       promise = new Promise((resolve, reject) => {
         const acc = _this.shallowClone()
@@ -73,16 +74,16 @@ export default class Account {
         })
       })
 
-      Object.keys(_this.tokens).forEach((key) => {
-        promise = promise.then((acc) => {
-          return new Promise((resolve, reject) => {
-            acc.tokens[key].sync(ethereum, (token) => {
-              acc.tokens[key] = token
-              resolve(acc)
-            })
-          })
-        })
-      })
+      // Object.keys(_this.tokens).forEach((key) => {
+      //   promise = promise.then((acc) => {
+      //     return new Promise((resolve, reject) => {
+      //       acc.tokens[key].sync(ethereum, (token) => {
+      //         acc.tokens[key] = token
+      //         resolve(acc)
+      //       })
+      //     })
+      //   })
+      // })
 
       return promise
   }
@@ -131,9 +132,9 @@ export default class Account {
     return acc
   }
 
-  addToken(token) {
-    const acc = this.shallowClone()
-    acc.tokens[token.address] = token;
-    return acc
-  }
+  // addToken(token) {
+  //   const acc = this.shallowClone()
+  //   acc.tokens[token.address] = token;
+  //   return acc
+  // }
 }
