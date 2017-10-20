@@ -12,3 +12,24 @@ export function throwError(error) {
         payload: error
     }
 }
+
+export function scanLedger(path){
+    return {
+        type: 'IMPORT.SCAN_LEDGER',
+        payload: path
+    }
+}
+
+export function scanLedgerComplete(wallets){
+    return {
+        type: 'IMPORT.SCAN_LEDGER_COMPLETE',
+        payload: wallets
+    }
+}
+
+export function scanLedgerFailed(err){
+    return {
+        type: 'IMPORT.SCAN_LEDGER_FAILED',
+        payload: err 
+    }
+}
