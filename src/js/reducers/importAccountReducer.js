@@ -22,6 +22,19 @@ const account = (state=initState, action) => {
     case IMPORT.END_SESSION: {
       return {...initState}
     }
+    case 'IMPORT.SCAN_LEDGER_COMPLETE': {
+      var wallets = action.payload;
+      console.log('SCAN_LEDGER_COMPLETE---------------------');
+      console.log(wallets);
+      // getLedgerAddress(path, 0, 5);
+      return {...state};
+    }
+    case 'IMPORT.SCAN_LEDGER_FAILED': {
+      var err = action.payload;
+      console.log("------------- scan ledger err------");
+      console.log(err);
+      return {...state};
+    }
   }
   return state
 }

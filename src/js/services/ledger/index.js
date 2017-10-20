@@ -1,24 +1,43 @@
-/********************************************************************************
-*   Ledger Node JS API
-*   (c) 2016-2017 Ledger
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-********************************************************************************/
+import { default as Wallet } from "./myetherwallet";
+import { default as ledgerU2f } from './ledger-comm-u2f';
+import { default as ledgerEth } from './ledger-eth'
+import { default as HDKey } from 'hdkey';
 
+export function connectLedger(dpath){
+  return new Promise((resolve, reject) => {
+    ledgerU2f.create_async().then((comm) => {
+      var eth = new ledgerEth(comm);
+      resolve(eth);
+    })
+    .fail((err) => {
+      reject(err);
+    });
+  });
+}
 
-var ledger = module.exports;
+export function getLedgerPublicKey(eth, dpath){
+  return new Promise((resolve, reject) => {
+    eth.getAddress_async(dpath, false, true)
+    .then((result) => { 
+      resolve(result);
+    })
+    .fail((err) => {
+      reject(err);
+    });
+  }); 
+}
 
-ledger.comm_u2f = require('./ledger-comm-u2f');
-ledger.eth = require('./ledger-eth');
-
-module.exports = ledger;
+export function getLedgerAddress(ledgerData, dpath, start, limit){
+    var wallets = [];
+    var hdk = new HDKey();
+    hdk.publicKey = new Buffer(ledgerData['publicKey'], 'hex');
+    hdk.chainCode = new Buffer(ledgerData['chainCode'], 'hex');
+    for(var i = start; i < start + limit; i++) {
+      var derivedKey = hdk.derive("m/" + i);
+      wallets.push(new Wallet(undefined, derivedKey.publicKey, dpath + "/" + i, 'ledger'));
+      // wallets[wallets.length - 1].type = "addressOnly";
+      // wallets[wallets.length - 1].setBalance(false);
+    }
+    console.log(wallets);
+    return wallets;
+}
