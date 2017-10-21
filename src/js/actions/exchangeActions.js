@@ -60,7 +60,7 @@ export function changeSourceAmout(amount){
 }
 
 export function updateRateExchange(rate){
-	// console.log(rate)
+	console.log(rate)
 	if(rate){
 		var offeredRate = rate[0].times(1-constants.RATE_EPSILON).toString(10)
 		var expirationBlock = rate[1].toString(10)
