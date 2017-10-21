@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import {ImportKeystore, ImportLedger} from "../ImportAccount"
+import { ImportKeystore, ImportTrezor, ImportLedger } from "../ImportAccount"
 
 @connect((store) => {
   return {...store.account}
@@ -13,6 +13,7 @@ export default class ImportAccount extends React.Component {
 			<div>
 				<h1>Add an address</h1>
 				<ImportKeystore />
+				<ImportTrezor />
 				<ImportLedger />
 			</div>
 		)
