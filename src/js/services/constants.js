@@ -55,6 +55,32 @@ const INIT_EXCHANGE_FORM_STATE = {
   }
 }
 
+const INIT_TRANSFER_FORM_STATE = {
+  advanced: false,
+  passphrase: false,
+  token: supported_tokens[0].address,
+  tokenSymbol: supported_tokens[0].symbol,
+  amount: 0,
+  destAddress: "",
+
+  throwOnFailure: false,
+  gas: 1000000,
+  gasPrice: 20,
+  step: 1,
+  broadcasting: true,
+  bcError: "",
+  txHash: "",
+  errors: {
+    sourceTokenError: "",
+    sourceAmountError: "",
+    destTokenError: "",
+    gasPriceError: "",
+    gasError: "",
+    passwordError: "",
+  }
+}
+
+
 // reserves
 const RESERVES = [{index: 0, name: "Kyber official reserve"}]
 
@@ -68,6 +94,6 @@ const ETH = {
 export default {
   ERC20, KYBER_NETWORK, EPSILON, ETHER_ADDRESS, ETH,
   NETWORK_ADDRESS, RESERVES, KYBER_WALLET,
-  KYBER_WALLET_DATA, INIT_EXCHANGE_FORM_STATE,
+  KYBER_WALLET_DATA, INIT_EXCHANGE_FORM_STATE, INIT_TRANSFER_FORM_STATE,
   RATE_EPSILON, TRADE_TOPIC,
 }

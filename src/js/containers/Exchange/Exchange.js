@@ -45,7 +45,6 @@ export default class Exchange extends React.Component {
     // }
   }
   proccessSelectToken = () => {
-    if this.props.
     if (this.props.sourceTokenSymbol === this.props.desTokenSymbol){
       //this.props.dispatch(errorSelectToken("Cannot exchange to the same token"))
     }else{
