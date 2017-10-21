@@ -21,9 +21,10 @@ import createKeyStore from './createKeyStoreReducer'
 import modifyAccount from './modifyAccountReducer'
 import modifyWallet from './modifyWalletReducer'
 import transactions from './transactionReducer'
+import transfer from './transferReducer'
 
 const appReducer = combineReducers({
-  account, accounts, exchange, exchangeForm, global, tokens, importKeystore, txs,
+  account, accounts, exchange, transfer, exchangeForm, global, tokens, importKeystore, txs,
   joinPaymentForm, wallets, paymentForm, connection,transactions,utils,
   router: routerReducer, createKeyStore, modifyAccount, modifyWallet
 })

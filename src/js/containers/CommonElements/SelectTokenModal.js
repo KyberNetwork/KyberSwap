@@ -92,7 +92,7 @@ export default class SelectTokenModal extends React.Component {
   			var content = Object.keys(this.props.tokens).map((key) => {
 		    	const token = this.props.tokens[key]
 		      return <TokenSelect key={key} symbol={token.symbol} 
-		      				balance={ttoken.balance.toString()} 
+		      				balance={token.balance.toString()} 
 		      				icon={token.icon} 
                   type = {this.props.modalInfo.type}
                   address = {token.address}
