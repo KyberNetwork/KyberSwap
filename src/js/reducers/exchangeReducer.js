@@ -33,16 +33,26 @@ const exchange = (state=initState, action) => {
       if (newState.sourceTokenSymbol === newState.destTokenSymbol){
         newState.errors.selectSameToken = "Cannot exchange the same token"
         newState.errors.selectTokenToken = ""
-      }else if ((newState.sourceTokenSymbol !== constants.ETHER_ADDRESS) &&
-                (newState.destTokenSymbol !== constants.ETHER_ADDRESS)){
+        return newState
+      }
+      if ((newState.sourceToken !== constants.ETHER_ADDRESS) &&
+                (newState.destToken !== constants.ETHER_ADDRESS)){
         newState.errors.selectSameToken = ""
         newState.errors.selectTokenToken = "This pair token is not supported"
-      }
+        return newState
+      }      
+      newState.errors.selectSameToken = ""
+      newState.errors.selectTokenToken = ""      
+      return newState
+    }
+    case "EXCHANGE.THROW_SOURCE_AMOUNT_ERROR":{
+      newState.errors.sourceAmountError = action.payload
+      return newState
     }
     case "THOW_ERROR_SELECT_TOKEN":
       newState.error_select_token = action.payload
       return newState
-    case "GO_TO_STEP":
+    case "EXCHANGE.GO_TO_STEP":
       newState.step = action.payload
       return newState
     case "EXCHANGE_SPECIFY_GAS":
@@ -57,9 +67,11 @@ const exchange = (state=initState, action) => {
     case "EXCHANGE.HIDE_ADVANCE":
       newState.advanced = false
       return newState
-    case "EXCHANGE.CHANGE_SOURCE_AMOUNT":
+    case "EXCHANGE.CHANGE_SOURCE_AMOUNT":{
       newState.sourceAmount = action.payload
+      newState.errors.sourceAmountError = ""
       return newState
+    }
     case "EXCHANGE.APPROVAL_TX_BROADCAST_PENDING": {
       newState.broadcasting = true
       newState.txHash = action.payload
@@ -93,10 +105,22 @@ const exchange = (state=initState, action) => {
       newState.offeredRateExpiryBlock = action.payload.expirationBlock
       newState.offeredRate = rate
       return newState
-    case "EXCHANGE.OPEN_PASSPHRASE":
-      return {...state, passphrase: true}
-    case "EXCHANGE.HIDE_PASSPHRASE":
-      return {...state, passphrase: false}
+    case "EXCHANGE.OPEN_PASSPHRASE":{
+      newState.passphrase = true
+      return newState      
+    }      
+    case "EXCHANGE.HIDE_PASSPHRASE":{
+      newState.passphrase = false
+      return newState
+    }      
+    case "EXCHANGE.CHANGE_PASSPHRASE":{
+      newState.errors.passwordError = ""
+      return newState
+    }
+    case "EXCHANGE.THROW_ERROR_PASSPHRASE":{
+      newState.errors.passwordError = action.payload
+      return newState
+    }
   }
   return state
 }

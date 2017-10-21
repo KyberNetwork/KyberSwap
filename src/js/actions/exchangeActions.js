@@ -2,10 +2,10 @@
 //import {RATE_EPSILON} from "../services/constants.js"
 import constants from "../services/constants"
 
-export function selectTokenAsync(symbol,address, type) {
+export function selectTokenAsync(symbol,address, type, ethereum) {
 	 return {
 	    type: "EXCHANGE.SELECT_TOKEN_ASYNC",
-	    payload: {symbol,address, type}
+	    payload: {symbol,address, type, ethereum}
 	  }
 }
 export function selectToken(symbol,address, type) {
@@ -20,6 +20,12 @@ export function checkSelectToken(){
 	}
 }
 
+export function thowErrorSourceAmount(message){
+	return {
+		type: "EXCHANGE.THROW_SOURCE_AMOUNT_ERROR",
+		payload: message
+	}	
+}
 
 export function  errorSelectToken(message) {
 	return {
@@ -31,7 +37,7 @@ export function  errorSelectToken(message) {
 
 export function goToStep(step){
 	return {
-		type: "GO_TO_STEP",
+		type: "EXCHANGE.GO_TO_STEP",
 		payload: step
 	}	
 }
@@ -120,6 +126,18 @@ export function hidePassphrase(){
 	}					
 }
 
+export function changePassword(){
+	return {
+		type: "EXCHANGE.CHANGE_PASSPHRASE",		
+	}					
+}
+
+export function throwPassphraseError(message){
+	return {
+		type: "EXCHANGE.THROW_ERROR_PASSPHRASE",		
+		payload: message
+	}		
+}
 
 export function doTransaction(id, ethereum, tx, callback) {
 	return {

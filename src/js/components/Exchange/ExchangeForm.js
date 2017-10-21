@@ -32,6 +32,7 @@ const ExchangeForm = (props) => {
           </div>
           {props.errorSelectSameToken}
           {props.errorSelectTokenToken}
+          {props.errorSourceAmount}
           <div>
             {props.exchangeRate}
           </div>

@@ -7,20 +7,25 @@ import {calculateMinAmount, toTWei, toT, toEther} from "../../utils/converter"
 //import {TokenDest, MinRate} from "../ExchangeForm"
 import {Token, ExchangeRate} from "../Exchange"
 import {ExchangeForm} from "../../components/Exchange"
-import {SelectTokenModal, ChangeGasModal, PassphraseModal} from "../CommonElements"
+import {SelectTokenModal, ChangeGasModal, PassphraseExchangeModal} from "../CommonElements"
 
 import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
 //import {toT, toTWei} from "../../utils/converter"
 import {openTokenModal, hideSelectToken} from "../../actions/utilActions"
-import { selectTokenAsync } from "../../actions/exchangeActions"
+import { selectTokenAsync, thowErrorSourceAmount } from "../../actions/exchangeActions"
 import {errorSelectToken, goToStep, showAdvance, changeSourceAmout, openPassphrase} from "../../actions/exchangeActions"
 
 
 @connect((store) => {
   if (!!!store.account.address){
     window.location.href = "/"
-  }
-  return {...store.exchange}
+  }  
+  const tokens = store.tokens
+  const sourceTokenSymbol = store.exchange.sourceTokenSymbol
+  const balance = tokens[sourceTokenSymbol].balance
+
+  const ethereum = store.connection.ethereum
+  return {...store.exchange, ethereum, balance}
 })
 
 export default class Exchange extends React.Component {
@@ -33,7 +38,7 @@ export default class Exchange extends React.Component {
   }
   chooseToken = (symbol,address, type) => {
     
-    this.props.dispatch(selectTokenAsync(symbol, address, type))
+    this.props.dispatch(selectTokenAsync(symbol, address, type, this.props.ethereum))
     //this.props.dispatch(hideSelectToken())
     // if (this.props.sourceTokenSymbol === this.props.desTokenSymbol){
     //   this.props.dispatch(errorSelectToken("Cannot exchange to the same token"))
@@ -45,30 +50,36 @@ export default class Exchange extends React.Component {
     // }
   }
   proccessSelectToken = () => {
-    if (this.props.sourceTokenSymbol === this.props.desTokenSymbol){
-      //this.props.dispatch(errorSelectToken("Cannot exchange to the same token"))
+    //console.log(anyErrors(this.props.errors))
+    if (anyErrors(this.props.errors)){
+
     }else{
       this.props.dispatch(goToStep(2))
-    }
+    }    
   }
   showAdvanceOption = () => {
     this.props.dispatch(showAdvance())
   }
   changeSourceAmount = (e) => {
-     var value = e.target.value
-    // if(isNaN(value)){
-    //   value = 0
-    // }    
-    //this.props.dispatch(changeSourceAmout(toTWei(value)))
+    var value = e.target.value
     this.props.dispatch(changeSourceAmout(value))
   }
   clickExchange = () =>{
-    if(this.validateExchange){
+    if(this.validateExchange()){
       this.props.dispatch(openPassphrase())
     }
 
   }
   validateExchange = () =>{
+    //check source amount
+    if(isNaN(this.props.sourceAmount)){
+      this.props.dispatch(thowErrorSourceAmount("Source amount must be a number"))
+      return false
+    }
+    else if(this.props.sourceAmount > toT(this.props.balance, 8)){
+      this.props.dispatch(thowErrorSourceAmount("Source amount is too high"))
+      return false
+    }    
     return true
   }
   getDesAmount = () => {
@@ -82,6 +93,7 @@ export default class Exchange extends React.Component {
   }  
 
   render() {    
+    //console.log(this.props.ethereum)
     var tokenSource = (
       <Token type="source"
 	       				token={this.props.sourceTokenSymbol}
@@ -100,6 +112,9 @@ export default class Exchange extends React.Component {
     )
     var errorSelectTokenToken = this.props.errors.selectTokenToken ===""?"":(
       <div>{this.props.errors.selectTokenToken}</div>
+    )
+    var errorSourceAmount = this.props.errors.sourceAmountError === ""?"":(
+      <div>{this.props.errors.sourceAmountError}</div>
     )
     //console.log(errorSelectSameToken)
     var buttonStep1 = (
@@ -127,7 +142,7 @@ export default class Exchange extends React.Component {
       />
     )
     var passphraseModal = (
-      <PassphraseModal   type="exchange"
+      <PassphraseExchangeModal   type="exchange"
       open={this.props.passphrase}
       recap = {this.createRecap} />
     )
@@ -151,7 +166,8 @@ export default class Exchange extends React.Component {
                     exchangeRate = {exchangeRate}
                     exchangeButton= {exchangeButton}
                     errorSelectSameToken = {errorSelectSameToken}
-                    errorSelectTokenToken = {errorSelectTokenToken}/>
+                    errorSelectTokenToken = {errorSelectTokenToken}
+                    errorSourceAmount = {errorSourceAmount}/>
     )
   }
 }

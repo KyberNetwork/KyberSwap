@@ -29,10 +29,12 @@ function* approveTx(action) {
 }
 
 function* selectToken(action) {
-  const {symbol,address, type} = action.payload
+  const {symbol,address, type, ethereum} = action.payload
   yield put(actions.selectToken(symbol,address, type))
   yield put(utilActions.hideSelectToken())
+  
   yield put(actions.checkSelectToken())
+  yield call(ethereum.fetchRateExchange)
 }
 
 export function* watchExchange() {

@@ -24,10 +24,17 @@ export default class Rate {
   }
 
   updateBalance(ethereum, ownerAddr){
+    //console.log(ownerAddr)
     const _this= this;
     return new Promise((resolve, reject)=>{
       if (!ownerAddr || !ownerAddr.length) {
         resolve(new BigNumber(0));
+      }
+      else if (this.address === constants.ETHER_ADDRESS){
+        ethereum.getBalance(ownerAddr, (result) => {
+          _this.balance = result;
+          resolve(_this);
+        })
       }
       else {
         ethereum.getTokenBalance(this.address, ownerAddr, (result) => {
