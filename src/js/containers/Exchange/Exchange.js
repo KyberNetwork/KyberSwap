@@ -16,9 +16,9 @@ import { selectTokenAsync, thowErrorSourceAmount } from "../../actions/exchangeA
 import {errorSelectToken, goToStep, showAdvance, changeSourceAmout, openPassphrase} from "../../actions/exchangeActions"
 
 
-@connect((store) => {
+@connect((store, props) => {
   if (!!!store.account.address){
-    window.location.href = "/"
+    props.history.push('/');
   }  
   const tokens = store.tokens
   const sourceTokenSymbol = store.exchange.sourceTokenSymbol

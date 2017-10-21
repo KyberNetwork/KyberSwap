@@ -15,9 +15,9 @@ import {openTokenModal, hideSelectToken} from "../../actions/utilActions"
 import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase } from '../../actions/transferActions';
 
 
-@connect((store) => {
+@connect((store, props) => {
   if (!!!store.account.address){
-    window.location.href = "/"
+    props.history.push('/');
   }
   return {...store.transfer}
 })
