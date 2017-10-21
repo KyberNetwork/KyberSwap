@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 //import TokenDest from "./TokenDest"
 //import {TokenDest, MinRate} from "../ExchangeForm"
 //import Token from "../Exchange"
+import {toT} from "../../utils/converter"
 import {pickRandomProperty} from "../../utils/tokens"
 //import SUPPORTED_TOKENS from "../../services/supported_tokens"
 
@@ -23,7 +24,7 @@ export default class Token extends React.Component {
     //console.log(this.props.symbol)
     //console.log(this.props.tokens)
     var token = this.props.tokens[this.props.symbol]
-  	var balance = this.props.type === 'source'?(<div>Address Balance: <span>{token.balance.toString()}</span></div>):''
+  	var balance = this.props.type === 'source'?(<div>Address Balance: <span>{toT(token.balance, 8)}</span></div>):''
   	
     return (
       <div>

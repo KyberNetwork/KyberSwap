@@ -6,7 +6,7 @@ import {toT} from "../../utils/converter"
 
 @connect((store, props) => {
   //get rate
-  return props
+  return store.exchange
   // var exchangeForm = store.exchangeForm[props.exchangeFormID]
   // exchangeForm = exchangeForm || {...constants.INIT_EXCHANGE_FORM_STATE}
   // var sourceToken = getToken(exchangeForm.sourceToken)
@@ -39,7 +39,7 @@ export default class ExchangeRate extends React.Component {
         <div class="rate">
           <div>
             <label>Exchange Rate</label>
-            <span>{this.props.offeredRate}</span>
+            <span>{toT(this.props.offeredRate,6)}</span>
           </div>
           <div>
             <label>Expiration Block</label>
@@ -47,7 +47,7 @@ export default class ExchangeRate extends React.Component {
           </div>
           <div>
             <label>Reserve Balance</label>
-            <span>{this.props.offeredRateBalance}</span>
+            <span>{toT(this.props.offeredRateBalance,8)}</span>
           </div>
         </div>
       </div>)

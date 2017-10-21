@@ -2,15 +2,17 @@ import React from "react"
 import { connect } from "react-redux"
 
 
-import {calculateMinAmount, toTWei, toEther} from "../../utils/converter"
+import {calculateMinAmount, toTWei, toT, toEther} from "../../utils/converter"
 //import TokenDest from "./TokenDest"
 //import {TokenDest, MinRate} from "../ExchangeForm"
 import {Token, ExchangeRate} from "../Exchange"
+import {ExchangeForm} from "../../components/Exchange"
 import {SelectTokenModal, ChangeGasModal, PassphraseModal} from "../CommonElements"
 
+import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
 //import {toT, toTWei} from "../../utils/converter"
 import {openTokenModal, hideSelectToken} from "../../actions/utilActions"
-import { selectToken } from "../../actions/exchangeActions"
+import { selectTokenAsync } from "../../actions/exchangeActions"
 import {errorSelectToken, goToStep, showAdvance, changeSourceAmout, openPassphrase} from "../../actions/exchangeActions"
 
 
@@ -31,8 +33,11 @@ export default class Exchange extends React.Component {
   }
   chooseToken = (symbol,address, type) => {
     
-    this.props.dispatch(selectToken(symbol, address, type))
-    this.props.dispatch(hideSelectToken())
+    this.props.dispatch(selectTokenAsync(symbol, address, type))
+    //this.props.dispatch(hideSelectToken())
+    // if (this.props.sourceTokenSymbol === this.props.desTokenSymbol){
+    //   this.props.dispatch(errorSelectToken("Cannot exchange to the same token"))
+    // }
     // if (this.props.token_source === this.props.token_des){
     //   this.props.dispatch(errorSelectToken("Cannot exchange to the same token"))
     // }else{
@@ -40,8 +45,9 @@ export default class Exchange extends React.Component {
     // }
   }
   proccessSelectToken = () => {
+    if this.props.
     if (this.props.sourceTokenSymbol === this.props.desTokenSymbol){
-      this.props.dispatch(errorSelectToken("Cannot exchange to the same token"))
+      //this.props.dispatch(errorSelectToken("Cannot exchange to the same token"))
     }else{
       this.props.dispatch(goToStep(2))
     }
@@ -50,10 +56,12 @@ export default class Exchange extends React.Component {
     this.props.dispatch(showAdvance())
   }
   changeSourceAmount = (e) => {
-    var value = e.target.value
-
-    console.log(value)
-    this.props.dispatch(changeSourceAmout(toTWei(value)))
+     var value = e.target.value
+    // if(isNaN(value)){
+    //   value = 0
+    // }    
+    //this.props.dispatch(changeSourceAmout(toTWei(value)))
+    this.props.dispatch(changeSourceAmout(value))
   }
   clickExchange = () =>{
     if(this.validateExchange){
@@ -65,7 +73,7 @@ export default class Exchange extends React.Component {
     return true
   }
   getDesAmount = () => {
-    return 0
+    return this.props.sourceAmount * toT(this.props.offeredRate,6)
     // var rate = this.props.rate[0]
     // var sourceAmount = this.props.sourceAmount
     // return calculateMinAmount(sourceAmount, rate).toNumber()
@@ -75,70 +83,76 @@ export default class Exchange extends React.Component {
   }  
 
   render() {    
-    return (
-      <div class="k-exchange-page">
-       	<div class="page-1" class={this.props.step!==1?'visible-hide':''}>
-       		<div>
-	       		<Token type="source"
+    var tokenSource = (
+      <Token type="source"
 	       				token={this.props.sourceTokenSymbol}
                 onSelected={this.openSourceToken}
                  />
-                
-	       		 <span>to</span>
-	       		 <Token type="des"
-	       				token={this.props.destTokenSymbol} 
-                onSelected={this.openDesToken}
-                />
-       		</div>
-          <div>{this.props.error_select_token}</div>
-       		<button onClick = {this.proccessSelectToken}>Continue</button>
-       	</div>
-        <div class="page-2" class={this.props.step!==2?'visible-hide':''}>
-          <div>
-            <button onClick={this.showAdvanceOption}>Advance</button>
-          </div>
-          <h1>Exchange from</h1>
-          <div>
-            <div>
-              <input type="text" value={toEther(this.props.sourceAmount)} onChange={this.changeSourceAmount}/>
-              <Token type="source"
-                token={this.props.sourceTokenSymbol}
-                onSelected={this.openSourceToken}
-                 />              
-            </div>
-             <span> to</span>
-            <div>
-              <input value={this.getDesAmount()}/>
-              <Token type="des"
-                token={this.props.destTokenSymbol} 
-                onSelected={this.openDesToken}
-                />  
-            </div>
-          </div>
-          <div>
-            <ExchangeRate rate={this.props.rate}/>
-          </div>
-          <div>
-            <button onClick={this.clickExchange}>Exchange</button>
-          </div>
-
-        </div>
-        <div class="page-3"  class={this.props.step!==3?'visible-hide':''}>
-          step 3
-        </div>
-
-        <SelectTokenModal chooseToken ={this.chooseToken} type="exchange"/>
-        <ChangeGasModal type="exchange"
-                        gas={this.props.gas}
-                        gasPrice={this.props.gasPrice} 
-                        open = {this.props.advance}
-                        gasPriceError = {this.props.errors.gasPriceError}
-                        gasError = {this.props.errors.gasError}                        
-                        />
-        <PassphraseModal   type="exchange"
-                          open={this.props.passphrase}
-                          recap = {this.createRecap} />
-      </div>
+    )
+    var tokenDest = (
+      <Token type="des"
+        token={this.props.destTokenSymbol} 
+      onSelected={this.openDesToken}
+      />
+    )
+    
+    var errorSelectSameToken = this.props.errors.selectSameToken ===""?"":(
+      <div>{this.props.errors.selectSameToken}</div>
+    )
+    var errorSelectTokenToken = this.props.errors.selectTokenToken ===""?"":(
+      <div>{this.props.errors.selectTokenToken}</div>
+    )
+    //console.log(errorSelectSameToken)
+    var buttonStep1 = (
+      <button onClick = {this.proccessSelectToken}>Continue</button>
+    )
+    var buttonShowAdvance = (
+      <button onClick={this.showAdvanceOption}>Advance</button>
+    )
+    var sourceAmount = (
+      <input type="text" value={this.props.sourceAmount} onChange={this.changeSourceAmount}/>
+    )
+    var destAmount = (
+      <input value={this.getDesAmount()}/>
+    )
+    var selectTokenModal = (
+      <SelectTokenModal chooseToken ={this.chooseToken} type="exchange"/>
+    )
+    var changeGasModal = (
+      <ChangeGasModal type="exchange"
+      gas={this.props.gas}
+      gasPrice={this.props.gasPrice} 
+      open = {this.props.advanced}
+      gasPriceError = {this.props.errors.gasPriceError}
+      gasError = {this.props.errors.gasError}                        
+      />
+    )
+    var passphraseModal = (
+      <PassphraseModal   type="exchange"
+      open={this.props.passphrase}
+      recap = {this.createRecap} />
+    )
+    var exchangeRate = (
+      <ExchangeRate />
+    )
+    var exchangeButton = (
+      <button onClick={this.clickExchange}>Exchange</button>
+    )
+    return (
+     <ExchangeForm step = {this.props.step}
+                    tokenSource = {tokenSource}
+                    tokenDest = {tokenDest}
+                    buttonStep1 = {buttonStep1}
+                    buttonShowAdvance = {buttonShowAdvance}
+                    sourceAmount = {sourceAmount}
+                    destAmount= {destAmount}
+                    selectTokenModal= {selectTokenModal}
+                    changeGasModal= {changeGasModal}
+                    passphraseModal= {passphraseModal}
+                    exchangeRate = {exchangeRate}
+                    exchangeButton= {exchangeButton}
+                    errorSelectSameToken = {errorSelectSameToken}
+                    errorSelectTokenToken = {errorSelectTokenToken}/>
     )
   }
 }

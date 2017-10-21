@@ -121,7 +121,10 @@ export default class EthereumService {
     var state = store.getState()
     var ethereum = state.connection.ethereum
     var account = store.getState().account
-    store.dispatch(updateAccount(ethereum, account))
+    if (account.address){
+      store.dispatch(updateAccount(ethereum, account))
+    }
+    
     // Object.keys(accounts).forEach((key) => {
     //   store.dispatch(updateAccount(ethereum, accounts[key]))
     // })

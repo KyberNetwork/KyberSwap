@@ -1,7 +1,7 @@
 import { sealTxByKeystore } from "../utils/sealer"
 import { verifyNonce } from "../utils/validators"
 import store from "../store"
-import { doTransaction, doApprovalTransaction } from "../actions/exchangeFormActions"
+import { doTransaction, doApprovalTransaction } from "../actions/exchangeActions"
 import constants from "../services/constants"
 import Rate from "./rate"
 

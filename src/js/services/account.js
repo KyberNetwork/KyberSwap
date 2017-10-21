@@ -46,7 +46,8 @@ export default class Account {
   sync(ethereum, account){
       var promise
       const _this = account ? account: this
-      _this.tokens = {}
+     // console.log(_this)
+     // _this.tokens = {}
       // for (var i = 0; i < SupportedTokens.length; i++ ) {
       //   var tok = SupportedTokens[i];
       //   _this.addToken(

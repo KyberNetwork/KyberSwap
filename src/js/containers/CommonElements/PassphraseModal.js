@@ -1,14 +1,21 @@
 import React from "react"
 import { connect } from "react-redux"
+import * as ethUtil from 'ethereumjs-util'
 
 //import Key from "./Elements/Key"
 //import { TokenSelect } from '../../components/Token'
 //import { hideGasModal } from "../../actions/utilActions"
 //import {TransactionConfig} from "../../components/Forms/Components"
-import { numberToHex, gweiToWei, weiToGwei } from "../../utils/converter"
+import { numberToHex, toTWei, gweiToWei, weiToGwei } from "../../utils/converter"
 import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
+import constants from "../../services/constants"
+import { etherToOthersFromAccount, tokenToOthersFromAccount, sendEtherFromAccount, sendTokenFromAccount, exchangeFromWallet, sendEtherFromWallet, sendTokenFromWallet } from "../../services/exchange"
 
 import { hidePassphrase as hidePassphraseExchange } from "../../actions/exchangeActions"
+import { updateAccount, incManualNonceAccount } from "../../actions/accountActions"
+import { addTx } from "../../actions/txActions"
+import Tx from "../../services/tx"
+
 //import { specifyGas as specifyGasTransfer, specifyGasPrice as specifyGasPriceTransfer, hideAdvance as hideAdvanceTransfer } from "../../actions/transferActions"
 
 
@@ -32,7 +39,8 @@ const customStyles = {
 	return {
     modal: props,
     form: store.exchange,
-    account: store.account
+    account: store.account,
+    ethereum: store.connection.ethereum
   }
    // return {
    // 		open : props.open,
@@ -58,17 +66,17 @@ export default class PassphraseModal extends React.Component {
   formParams = () => {
     var selectedAccount = this.props.account.address
     var sourceToken = this.props.form.sourceToken
-    var sourceAmount = numberToHex(this.props.form.sourceAmount)
+    var sourceAmount = numberToHex(toTWei(this.props.form.sourceAmount))
     var destToken = this.props.form.destToken
     var minConversionRate = numberToHex(this.props.form.minConversionRate)
     var destAddress = this.props.account.address
     var maxDestAmount = numberToHex(this.props.form.maxDestAmount)
-    var throwOnFailure = this.props.throwOnFailure
-    var nonce = verifyNonce(this.props.form.nonce)
+    var throwOnFailure = this.props.form.throwOnFailure
+    var nonce = verifyNonce(this.props.account.getUsableNonce())
     // should use estimated gas
     var gas = numberToHex(this.props.form.gas)
     // should have better strategy to determine gas price
-    var gasPrice = numberToHex(this.props.form.gasPrice)
+    var gasPrice = numberToHex(gweiToWei(this.props.form.gasPrice))
     return {
       selectedAccount, sourceToken, sourceAmount, destToken,
       minConversionRate, destAddress, maxDestAmount,
@@ -77,10 +85,45 @@ export default class PassphraseModal extends React.Component {
   }
 
   processTx = (event) => {
-  	//var password = document.getElementById("passphrase").value
-    const params = this.formParams()
-    console.log(params)
-  	//this.props.callAction(password)
+    var errors = {}
+    try {
+  	  var password = document.getElementById("passphrase").value    
+      const params = this.formParams()
+      // sending by wei
+      var account = this.props.account
+      var ethereum = this.props.ethereum  
+    
+      var call = params.sourceToken == constants.ETHER_ADDRESS ? etherToOthersFromAccount : tokenToOthersFromAccount
+      var dispatch = this.props.dispatch
+      var sourceAccount = account
+      var formId = "exchange"
+      call(
+        formId, ethereum, account.address, params.sourceToken,
+        params.sourceAmount, params.destToken, params.destAddress,
+        params.maxDestAmount, params.minConversionRate,
+        params.throwOnFailure, params.nonce, params.gas,
+        params.gasPrice, account.keystring, password, (ex, trans) => {
+          const tx = new Tx(
+            ex, sourceAccount.address, ethUtil.bufferToInt(trans.gas),
+            weiToGwei(ethUtil.bufferToInt(trans.gasPrice)),
+            ethUtil.bufferToInt(trans.nonce), "pending", "exchange", {
+              sourceToken: params.sourceToken,
+              sourceAmount: params.sourceAmount,
+              destToken: params.destToken,
+              minConversionRate: params.minConversionRate,
+              destAddress: params.destAddress,
+              maxDestAmount: params.maxDestAmount,
+            })
+          dispatch(incManualNonceAccount(account.address))
+          dispatch(updateAccount(ethereum, account))
+          dispatch(addTx(tx))
+        })
+      document.getElementById("passphrase").value = ''
+    } catch (e) {
+      console.log(e)
+      errors["passwordError"] = e.message
+    }
+    return errors
   }
 
   render() {

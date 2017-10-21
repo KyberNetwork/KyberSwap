@@ -6,7 +6,7 @@ import tokens from './tokensReducer'
 import exchange from './exchangeReducer'
 
 
-import accounts from './accountsReducer'
+//import accounts from './accountsReducer'
 import global from './globalReducer'
 //import tokens from './tokensReducer'
 import exchangeForm from './exchangeFormReducer'
@@ -23,7 +23,7 @@ import modifyWallet from './modifyWalletReducer'
 import transactions from './transactionReducer'
 
 const appReducer = combineReducers({
-  account, accounts, exchange, exchangeForm, global, tokens, importKeystore, txs,
+  account, exchange, exchangeForm, global, tokens, importKeystore, txs,
   joinPaymentForm, wallets, paymentForm, connection,transactions,utils,
   router: routerReducer, createKeyStore, modifyAccount, modifyWallet
 })

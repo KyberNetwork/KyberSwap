@@ -1,6 +1,7 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
-import * as actions from '../actions/exchangeFormActions'
-import EXCHANGE from "../constants/exchangeFormActions"
+import * as actions from '../actions/exchangeActions'
+import * as utilActions from '../actions/utilActions'
+//import EXCHANGE from "../constants/exchangeFormActions"
 
 function* broadCastTx(action) {
   try {        
@@ -27,7 +28,15 @@ function* approveTx(action) {
   }     
 }
 
+function* selectToken(action) {
+  const {symbol,address, type} = action.payload
+  yield put(actions.selectToken(symbol,address, type))
+  yield put(utilActions.hideSelectToken())
+  yield put(actions.checkSelectToken())
+}
+
 export function* watchExchange() {
-  yield takeEvery(EXCHANGE.EXCHANGE_FORM_TX_BROADCAST_PENDING, broadCastTx)
-  yield takeEvery(EXCHANGE.EXCHANGE_FORM_APPROVAL_TX_BROADCAST_PENDING, approveTx)  
+  yield takeEvery("EXCHANGE.TX_BROADCAST_PENDING", broadCastTx)
+  yield takeEvery("EXCHANGE.APPROVAL_TX_BROADCAST_PENDING", approveTx)  
+  yield takeEvery("EXCHANGE.SELECT_TOKEN_ASYNC", selectToken)
 }

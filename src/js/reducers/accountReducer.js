@@ -1,5 +1,5 @@
 //import Account from "../services/account"
-//import Token from "../services/token"
+import Account from "../services/account"
 import {REHYDRATE} from 'redux-persist/constants'
 import IMPORT from "../constants/importAccountActions"
 import ACC_ACTION from "../constants/accActions"
@@ -9,6 +9,19 @@ const initState = {
 
 const account = (state=initState, action) => {
   switch (action.type) {  	
+    case REHYDRATE: {
+      var account = action.payload.account
+      if (account) {
+        return new Account (
+          account.address,
+          account.type,
+          account.keystring,
+          account.balance,
+          account.nonce,
+          account.manualNonce
+        )        
+      }
+    }
     case "IMPORT.IMPORT_NEW_ACCOUNT_FULFILLED": {
       return action.payload
     }      

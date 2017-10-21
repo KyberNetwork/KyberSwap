@@ -18,17 +18,27 @@ const initState = initFormState
 const exchange = (state=initState, action) => {
   var newState = {...state}
   switch (action.type) {
-  	case "EXCHANGE.SELECT_TOKEN":
-  		
-  		if(action.payload.type === "source"){
-			 newState.sourceTokenSymbol = action.payload.symbol
-        newState.sourceToken = action.payload.address      
-  		}else if (action.payload.type === "des"){
-  			newState.destTokenSymbol = action.payload.symbol
-        newState.destToken = action.payload.address
-
-  		}
-      return newState
+  	case "EXCHANGE.SELECT_TOKEN":{
+      if(action.payload.type === "source"){
+        newState.sourceTokenSymbol = action.payload.symbol
+         newState.sourceToken = action.payload.address      
+       }else if (action.payload.type === "des"){
+         newState.destTokenSymbol = action.payload.symbol
+         newState.destToken = action.payload.address
+ 
+       }
+       return newState
+    }  		  		
+    case "EXCHANGE.CHECK_SELECT_TOKEN":{
+      if (newState.sourceTokenSymbol === newState.destTokenSymbol){
+        newState.errors.selectSameToken = "Cannot exchange the same token"
+        newState.errors.selectTokenToken = ""
+      }else if ((newState.sourceTokenSymbol !== constants.ETHER_ADDRESS) &&
+                (newState.destTokenSymbol !== constants.ETHER_ADDRESS)){
+        newState.errors.selectSameToken = ""
+        newState.errors.selectTokenToken = "This pair token is not supported"
+      }
+    }
     case "THOW_ERROR_SELECT_TOKEN":
       newState.error_select_token = action.payload
       return newState
@@ -42,14 +52,39 @@ const exchange = (state=initState, action) => {
       newState.gasPrice = action.payload
       return newState
     case "EXCHANGE.SHOW_ADVANCE":
-      newState.advance = true
+      newState.advanced = true
       return newState
     case "EXCHANGE.HIDE_ADVANCE":
-      newState.advance = false
+      newState.advanced = false
       return newState
     case "EXCHANGE.CHANGE_SOURCE_AMOUNT":
       newState.sourceAmount = action.payload
       return newState
+    case "EXCHANGE.APPROVAL_TX_BROADCAST_PENDING": {
+      newState.broadcasting = true
+      newState.txHash = action.payload
+      return newState
+    }
+    case "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED": {
+      newState.broadcasting = false
+      newState.bcError = action.payload
+      return newState
+    }
+    case "EXCHANGE.TX_BROADCAST_PENDING": {
+      newState.broadcasting = true
+      newState.txHash = action.payload
+      return newState
+    }
+    case "EXCHANGE.TX_BROADCAST_FULFILLED": {
+      newState.broadcasting = false
+      newState.txHash = action.payload
+      return newState
+    }
+    case "EXCHANGE.TX_BROADCAST_REJECTED": {
+      newState.broadcasting = false
+      newState.bcError = action.payload
+      return newState
+    }
     case "EXCHANGE.UPDATE_RATE":
       var rate = action.payload.offeredRate
       newState.minConversionRate = rate

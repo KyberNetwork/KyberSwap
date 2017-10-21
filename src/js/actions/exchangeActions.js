@@ -2,13 +2,23 @@
 //import {RATE_EPSILON} from "../services/constants.js"
 import constants from "../services/constants"
 
-export function selectToken(symbol,address, type) {
+export function selectTokenAsync(symbol,address, type) {
 	 return {
-	    type: "EXCHANGE.SELECT_TOKEN",
+	    type: "EXCHANGE.SELECT_TOKEN_ASYNC",
 	    payload: {symbol,address, type}
 	  }
 }
-
+export function selectToken(symbol,address, type) {
+	return {
+		 type: "EXCHANGE.SELECT_TOKEN",
+		 payload: {symbol,address, type}
+	 }
+}
+export function checkSelectToken(){
+	return {
+		type: "EXCHANGE.CHECK_SELECT_TOKEN"		
+	}
+}
 
 
 export function  errorSelectToken(message) {
@@ -60,7 +70,7 @@ export function changeSourceAmout(amount){
 }
 
 export function updateRateExchange(rate){
-	console.log(rate)
+	//console.log(rate)
 	if(rate){
 		var offeredRate = rate[0].times(1-constants.RATE_EPSILON).toString(10)
 		var expirationBlock = rate[1].toString(10)
@@ -109,3 +119,52 @@ export function hidePassphrase(){
 		type: "EXCHANGE.HIDE_PASSPHRASE",		
 	}					
 }
+
+
+export function doTransaction(id, ethereum, tx, callback) {
+	return {
+	  type: "EXCHANGE.TX_BROADCAST_PENDING",
+	  payload: {ethereum, tx, callback},
+	  meta: id,
+	}
+  }
+  
+  export function doTransactionComplete(txHash, id) {
+	return {
+	  type: "EXCHANGE.TX_BROADCAST_FULFILLED",
+	  payload: txHash,
+	  meta: id,
+	}
+  }
+  
+  export function doTransactionFail(error, id) {
+	return {
+	  type: "EXCHANGE.TX_BROADCAST_REJECTED",
+	  payload: error,
+	  meta: id,
+	}
+  }
+
+  export function doApprovalTransaction(id, ethereum, tx, callback) {
+	return {
+	  type: "EXCHANGE.APPROVAL_TX_BROADCAST_PENDING",
+	  payload: {ethereum, tx, callback},
+	  meta: id,
+	}
+  }
+  
+  export function doApprovalTransactionComplete(txHash, id) {
+	return {
+	  type: "EXCHANGE.APPROVAL_TX_BROADCAST_FULFILLED",
+	  payload: txHash,
+	  meta: id,
+	}
+  }
+  
+  export function doApprovalTransactionFail(error, id) {
+	return {
+	  type: "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED",
+	  payload: error,
+	  meta: id,
+	}
+  }
