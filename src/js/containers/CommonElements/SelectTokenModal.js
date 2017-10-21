@@ -50,42 +50,42 @@ export default class SelectTokenModal extends React.Component {
         var content = Object.keys(this.props.tokens).map((key, i) => {
           const token = this.props.tokens[key]
           //console.log(token)         
-          return <TokenSelect key={i} symbol={token.symbol}
-            balance={token.balance.toString()}
-            icon={token.icon}
-            type={this.props.modalInfo.type}
-            address={token.address}
-            onClick={this.chooseToken}
-          />
-        })
-        break
-      case "des":
-        title = "Select des token"
-        var content = Object.keys(this.props.tokens).map((key) => {
-          const token = this.props.tokens[key]
-          return <TokenSelect key={key} symbol={token.symbol}
-            balance={token.balance.toString()}
-            icon={token.icon}
-            type={this.props.modalInfo.type}
-            address={token.address}
-            onClick={this.chooseToken}
-          />
-        })
-        break
-      case "transfer":
-        title = "Select transfer token"
-        var content = Object.keys(this.props.tokens).map((key) => {
-          const token = this.props.tokens[key]
-          return <TokenSelect key={key} symbol={token.symbol}
-            balance={ttoken.balance.toString()}
-            icon={token.icon}
-            type={this.props.modalInfo.type}
-            address={token.address}
-            onClick={this.chooseToken}
-          />
-        })
-        break;
-    }
+		      return <TokenSelect key={i} symbol={token.symbol} 
+		      				balance={token.balance.toString()} 
+		      				icon={token.icon} 
+                  type = {this.props.modalInfo.type}
+                  address = {token.address}
+                  onClick = {this.chooseToken}
+                  />
+		    })
+  			break
+  		case "des":
+  			title = "Select des token"
+  			var content = Object.keys(this.props.tokens).map((key) => {
+		    	const token = this.props.tokens[key]
+		      return <TokenSelect key={key} symbol={token.symbol} 
+		      				balance={token.balance.toString()} 
+		      				icon={token.icon} 
+                  type = {this.props.modalInfo.type}
+                  address = {token.address}
+                  onClick = {this.chooseToken}
+                  />
+		    })
+  			break
+  		case "transfer":  		
+  			title = "Select transfer token"
+  			var content = Object.keys(this.props.tokens).map((key) => {
+		    	const token = this.props.tokens[key]
+		      return <TokenSelect key={key} symbol={token.symbol} 
+		      				balance={token.balance.toString()} 
+		      				icon={token.icon} 
+                  type = {this.props.modalInfo.type}
+                  address = {token.address}
+                  onClick = {this.chooseToken}
+                  />
+		    })
+  			break;
+  	}
     return (
       <div>
         <div className="modal-message">
