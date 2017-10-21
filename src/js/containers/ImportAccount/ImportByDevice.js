@@ -15,6 +15,7 @@ export default class ImportTrezor extends React.Component {
         super();
         this.state = {
             defaultDPath: "m/44'/60'/0'/0", // first address: m/44'/60'/0'/0/0,
+            ledgerPath: "m/44'/60'/0'", // first address: m/44'/60'/0'/0/0,
             addresses: [],
             currentAddresses: [],
             modalOpen: false,
@@ -22,15 +23,28 @@ export default class ImportTrezor extends React.Component {
         this.setDeviceState();
     }
 
-    connectDevice() {
+    connectDevice(walletType) {
         this.setDeviceState()
-        let promise = this.trezorInstance.getPubData();
-        promise.then((result) => {
-            this.generateAddress(result);
-        })
+        switch (walletType) {
+            case 'trezor': {
+                let promise = this.trezorInstance.getPubData();
+                promise.then((result) => {
+                    this.generateAddress(result);
+                })
+            }
+            case 'ledger': {
+                console.log('ok')
+                let path = this.state.ledgerPath;
+                connectLedger(path).then((eth) => {
+                    getLedgerPublicKey(eth, path).then((result) => {
+                        console.log(result)
+                    })
+                })
+            }
+        }
     }
 
-    setDeviceState(){
+    setDeviceState() {
         this.addressIndex = 0;
         this.currentIndex = 0;
         this.trezorInstance = new Trezor;
@@ -108,7 +122,9 @@ export default class ImportTrezor extends React.Component {
 
         return (
             <div>
-                <a onClick={() => this.connectDevice()}>Import via Trezor</a>
+                <a onClick={() => this.connectDevice('trezor')}>Import via Trezor</a>
+                <br />
+                <a onClick={() => this.connectDevice('ledger')}>Import via Ledger</a>
 
                 <SelectAddressModal
                     open={this.state.modalOpen}
