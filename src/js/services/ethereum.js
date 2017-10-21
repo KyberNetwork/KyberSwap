@@ -4,7 +4,7 @@ import constants from "./constants"
 
 import { updateBlock, updateBlockFailed, updateRate } from "../actions/globalActions"
 import { updateAccount } from "../actions/accountActions"
-import { updateWallet } from "../actions/walletActions"
+//import { updateWallet } from "../actions/walletActions"
 import { updateTx } from "../actions/txActions"
 import {updateRateExchange} from "../actions/exchangeActions"
 import SupportedTokens from "./supported_tokens"
