@@ -1,0 +1,1 @@
+export { default as Modal } from './MyModal.js';

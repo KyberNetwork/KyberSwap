@@ -1,6 +1,8 @@
-import React from "react"
-import { connect } from "react-redux"
-import Trezor from "../../services/trezor"
+import React from "react";
+import { connect } from "react-redux";
+import Trezor from "../../services/trezor/trezor";
+import { connectLedger, getLedgerPublicKey } from "../../services/ledger";
+import SelectAddressModal from "../CommonElements/SelectAddressModal";
 
 
 @connect((store) => {
@@ -14,83 +16,114 @@ export default class ImportTrezor extends React.Component {
         this.state = {
             defaultDPath: "m/44'/60'/0'/0", // first address: m/44'/60'/0'/0/0,
             addresses: [],
-            currentWalletIndex: 0,
+            currentAddresses: [],
+            modalOpen: false,
         }
-        this.address_index = 0;
-        this.abc = 0;
-
-    }
-    lowerCaseKey = (keystring) => {
-        return keystring.toLowerCase();
+        this.setDeviceState();
     }
 
-    trezor() {
-        if (!this.trezorInstance) {
-            this.trezorInstance = new Trezor;
-        }
+    connectDevice() {
+        this.setDeviceState()
+        let promise = this.trezorInstance.getPubData();
+        promise.then((result) => {
+            this.generateAddress(result);
+        })
     }
 
-    generateAddress() {
-        this.trezor();
-        let addresses = this.state.addresses;
-        for (let i = 0; i < 5; i++) {
-            let address = this.trezorInstance.generateAddress(0);
-            if (typeof (address) != 'string') {
-                address.then((result) => {
-                    addresses.push(result);
-                    console.log(addresses)
-                })
-            } else {
-                addresses.push(result);
-                console.log(addresses)
+    setDeviceState(){
+        this.addressIndex = 0;
+        this.currentIndex = 0;
+        this.trezorInstance = new Trezor;
+    }
+
+    generateAddress(statusConnect) {
+        let addresses = [];
+        if (statusConnect == 'Success') {
+            let index = 0;
+            for (index; index < 5; index++) {
+                let addressString = this.trezorInstance.getAddressString(index);
+                addresses.push(addressString);
             }
+            this.addressIndex = index;
+            this.currentIndex += 5;
 
+            this.setState({
+                addresses: addresses,
+                currentAddresses: addresses.slice(this.currentIndex - 5, this.currentIndex)
+            })
+            this.openModal();
         }
+    }
 
+    openModal() {
+        this.setState({
+            modalOpen: true,
+        })
+    }
+
+    closeModal() {
+        this.setState({
+            modalOpen: false,
+        })
     }
 
     moreAddress() {
         let addresses = this.state.addresses,
-            i = this.address_index + 1,
+            i = this.addressIndex,
             j = i + 5;
-        console.log(this.address_index);
-        for (i; i < j; i++) {
-            let path = this.state.defaultDPath + `/${i}`,
-                derivedKey = this.hdk.derive(`m/${i}`);
-
-            this.address_index = i;
-
-            let address = ethUtil.publicToAddress(derivedKey.publicKey, true);
-            let addressString = '0x' + address.toString('hex');
-
-            addresses.push(addressString);
+        if (this.addressIndex == this.currentIndex) {
+            for (i; i < j; i++) {
+                let addressString = this.trezorInstance.getAddressString(i);
+                addresses.push(addressString);
+            }
         }
+        this.addressIndex = i;
+        this.currentIndex += 5;
 
         this.setState({
-            wallets: addresses,
-            currentWalletIndex: this.address_index
+            addresses: addresses,
+            currentAddresses: addresses.slice(this.currentIndex - 5, this.currentIndex)
         })
     }
 
+    preAddress() {
+        let addresses = this.state.addresses;
+        if (this.currentIndex > 5) {
+            this.currentIndex -= 5;
+            this.setState({
+                currentAddresses: addresses.slice(this.currentIndex - 5, this.currentIndex)
+            })
+        }
+    }
+
     render() {
+        const currentList = this.state.currentAddresses.map((address) => {
+            return (
+                <li key={address}>
+                    <input type="radio" name="address" value={address} />
+                    <span> {address}</span>
+                </li>
+            )
+        })
+
         return (
             <div>
-                <a onClick={() => this.generateAddress()}>Import via Trezor</a>
-                <div className="popup">
-                    <ul>
-                        {this.state.addresses.map((address) => {
-                            return (
-                                <li key={address}>
-                                    <input type="radio" name="address" value={address} />
-                                    <span> {address}</span>
-                                </li>
-                            )
-                        })}
-                    </ul>
-                    <a onClick={() => this.preAddress()}>Pre address</a> |
-                    <a onClick={() => this.nextAddress()}> Next address</a> |
-                    <a onClick={() => this.moreAddress()}> More address</a>
-                </div>
+                <a onClick={() => this.connectDevice()}>Import via Trezor</a>
+
+                <SelectAddressModal
+                    open={this.state.modalOpen}
+                    onRequestClose={this.closeModal.bind(this)}
+                    content={
+                        <div className="popup">
+                            <ul>
+                                {currentList}
+                            </ul>
+                            <a onClick={() => this.preAddress()}>Pre address</a> |
+                            <a onClick={() => this.moreAddress()}> More address</a>
+                        </div>
+                    }
+                />
+
             </div>
         )
     }
