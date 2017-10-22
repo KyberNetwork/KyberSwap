@@ -4,9 +4,6 @@ import {REHYDRATE} from 'redux-persist/constants'
 //import IMPORT from "../constants/importAccountActions"
 import constants from "../services/constants"
 import { calculateDest} from "../utils/converter"
-import { randomToken } from "../utils/random"
-
-import supported_tokens from "../services/supported_tokens"
 // const initState = {
 //   token_source: 'GNT',
 //   token_des: 'DGD',
@@ -21,40 +18,14 @@ const initState = initFormState
 const exchange = (state=initState, action) => {
   var newState = {...state}
   switch (action.type) {
-    case REHYDRATE: {
-      var exchange = action.payload.exchange;
-      newState.selectedDest = exchange.selectedDest;
-      newState.selectedSource = exchange.selectedSource;
-      
-      var randomSelectToken = randomToken(2, Object.keys(supported_tokens).length);
-      if(newState.selectedSource){
-        var indexSelected = supported_tokens.map(x=>{return x.symbol}).indexOf(newState.selectedSource);
-        newState.sourceToken = supported_tokens[indexSelected].address;
-        newState.sourceTokenSymbol = supported_tokens[indexSelected].symbol;
-      } else {
-        newState.sourceToken = Object.values(supported_tokens)[randomSelectToken[0]].address
-        newState.sourceTokenSymbol = Object.values(supported_tokens)[randomSelectToken[0]].symbol
-      }
-    
-      if(newState.selectedDest){
-        var indexSelected = supported_tokens.map(x=>{return x.symbol}).indexOf(newState.selectedDest);
-        newState.destToken = supported_tokens[indexSelected].address;
-        newState.destTokenSymbol = supported_tokens[indexSelected].symbol;
-      } else {
-        newState.destToken = Object.values(supported_tokens)[randomSelectToken[1]].address
-        newState.destTokenSymbol = Object.values(supported_tokens)[randomSelectToken[1]].symbol
-      }
-      return newState;
-    }
   	case "EXCHANGE.SELECT_TOKEN":{
       if(action.payload.type === "source"){
         newState.sourceTokenSymbol = action.payload.symbol
-        newState.sourceToken = action.payload.address    
-        newState.selectedSource = action.payload.symbol
+         newState.sourceToken = action.payload.address      
        }else if (action.payload.type === "des"){
          newState.destTokenSymbol = action.payload.symbol
          newState.destToken = action.payload.address
-         newState.selectedDest = action.payload.symbol
+ 
        }
        return newState
     }  		  		
