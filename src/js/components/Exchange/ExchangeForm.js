@@ -42,7 +42,7 @@ const ExchangeForm = (props) => {
 
         </div>
         <div class="page-3"  class={props.step!==3?'visible-hide':''}>
-          step 3
+            {props.trasactionLoadingScreen}
         </div>
 
         {props.selectTokenModal}

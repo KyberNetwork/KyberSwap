@@ -121,6 +121,11 @@ const exchange = (state=initState, action) => {
       newState.errors.passwordError = action.payload
       return newState
     }
+    case "EXCHANGE.FINISH_EXCHANGE":{
+      newState.passphrase = false
+      newState.step = 3   
+      return newState   
+    }
   }
   return state
 }

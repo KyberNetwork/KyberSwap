@@ -11,7 +11,7 @@ import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, an
 import constants from "../../services/constants"
 import { etherToOthersFromAccount, tokenToOthersFromAccount, sendEtherFromAccount, sendTokenFromAccount, exchangeFromWallet, sendEtherFromWallet, sendTokenFromWallet } from "../../services/exchange"
 
-import { hidePassphrase as hidePassphraseExchange, changePassword, throwPassphraseError } from "../../actions/exchangeActions"
+import { hidePassphrase as hidePassphraseExchange, changePassword, throwPassphraseError, finishExchange } from "../../actions/exchangeActions"
 import { updateAccount, incManualNonceAccount } from "../../actions/accountActions"
 import { addTx } from "../../actions/txActions"
 import Tx from "../../services/tx"
@@ -121,6 +121,7 @@ export default class PassphraseExchangeModal extends React.Component {
           dispatch(addTx(tx))
         })
       document.getElementById("passphrase").value = ''
+      this.props.dispatch(finishExchange())
     } catch (e) {
       console.log(e)
       this.props.dispatch(throwPassphraseError("Key derivation failed"))

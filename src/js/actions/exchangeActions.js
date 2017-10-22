@@ -132,6 +132,12 @@ export function changePassword(){
 	}					
 }
 
+export function finishExchange(){
+	return {
+		type: "EXCHANGE.FINISH_EXCHANGE"
+	}
+}
+
 export function throwPassphraseError(message){
 	return {
 		type: "EXCHANGE.THROW_ERROR_PASSPHRASE",		

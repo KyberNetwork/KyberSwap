@@ -7,7 +7,7 @@ import {calculateMinAmount, toTWei, toT, toEther} from "../../utils/converter"
 //import {TokenDest, MinRate} from "../ExchangeForm"
 import {Token, ExchangeRate} from "../Exchange"
 import {ExchangeForm} from "../../components/Exchange"
-import {SelectTokenModal, ChangeGasModal, PassphraseExchangeModal} from "../CommonElements"
+import {SelectTokenModal, ChangeGasModal, PassphraseExchangeModal, TransactionLoading} from "../CommonElements"
 
 import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
 //import {toT, toTWei} from "../../utils/converter"
@@ -152,6 +152,9 @@ export default class Exchange extends React.Component {
     var exchangeButton = (
       <button onClick={this.clickExchange}>Exchange</button>
     )
+    var trasactionLoadingScreen = (
+      <TransactionLoading tx={this.props.txHash}/>
+    )
     return (
      <ExchangeForm step = {this.props.step}
                     tokenSource = {tokenSource}
@@ -167,7 +170,8 @@ export default class Exchange extends React.Component {
                     exchangeButton= {exchangeButton}
                     errorSelectSameToken = {errorSelectSameToken}
                     errorSelectTokenToken = {errorSelectTokenToken}
-                    errorSourceAmount = {errorSourceAmount}/>
+                    errorSourceAmount = {errorSourceAmount}
+                    trasactionLoadingScreen = {trasactionLoadingScreen}/>
     )
   }
 }

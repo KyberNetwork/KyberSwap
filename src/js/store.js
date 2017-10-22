@@ -34,11 +34,6 @@ persistStore(store, {
   storage: asyncSessionStorage,
   blacklist: [
   'connection',
-  'exchangeForm',
-  'paymentForm',
-  'joinPaymentForm',
-  'createKeyStore',
-  'importKeystore',
   'utils',
   ]})
 
