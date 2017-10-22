@@ -3,28 +3,16 @@ import { connect } from "react-redux"
 import { Route } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 
-//import {Transactions} from "../../containers/Transactions"
-
-//import {Dashboard} from "../../containers/Dashboard"
-
 import {InfoKyber} from "../../containers/InfoKyber"
 
 import {Exchange} from "../../containers/Exchange"
 
 import {Transfer} from "../../containers/Transfer"
 
-import TermOfService from "../../components/TermOfService"
-
-//import {SideBar} from "../../containers/SideBar"
 import {Header} from "../../containers/Header"
-
-//import {RateInfo} from "../../containers/RateInfo"
 
 import {ImportAccount} from "../ImportAccount"
 
-//import {GlobalControl} from "../../containers/GlobalControl"
-
-//import { loadAccounts } from "../../actions/accountActions"
 import history from "../../history"
 
 
@@ -33,7 +21,6 @@ import history from "../../history"
     ethereumNode: store.connection.ethereum,
     currentBlock: store.global.currentBlock,
     connected: store.global.connected,
-    termOfServiceAccepted: store.global.termOfServiceAccepted,
   }
 })
 export default class Layout extends React.Component {
@@ -43,9 +30,7 @@ export default class Layout extends React.Component {
   }
 
   render() {
-    var app
-    if (this.props.termOfServiceAccepted) {
-      app = (
+    var app = (
         <div class="k-body">          
           <Route component={Header}/>          
           <div class="k-contenter">
@@ -58,11 +43,7 @@ export default class Layout extends React.Component {
           </div>          
         </div>
       )
-    } else {
-      app = (
-        <TermOfService />
-      )
-    }
+   
     return (
       <ConnectedRouter history={history}>
         <div>
