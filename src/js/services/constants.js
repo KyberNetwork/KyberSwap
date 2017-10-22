@@ -20,8 +20,8 @@ const TRADE_TOPIC = "0xec0d3e799aa270a144d7e3be084ccfc657450e33ecea1b1a4154c95ce
 const INIT_EXCHANGE_FORM_STATE = {
   advanced: false,
   passphrase: false,
-  selectedSource: null,
-  selectedDest: null,
+  // isCrossSend: false,
+  // selectedAccount: "",
   sourceToken: supported_tokens[0].address,
   sourceTokenSymbol: supported_tokens[0].symbol,
   sourceAmount: 0,
@@ -58,7 +58,6 @@ const INIT_EXCHANGE_FORM_STATE = {
 const INIT_TRANSFER_FORM_STATE = {
   advanced: false,
   passphrase: false,
-  selected: null,
   token: supported_tokens[0].address,
   tokenSymbol: supported_tokens[0].symbol,
   amount: 0,

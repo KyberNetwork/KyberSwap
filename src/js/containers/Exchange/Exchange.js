@@ -15,16 +15,17 @@ import {openTokenModal, hideSelectToken} from "../../actions/utilActions"
 import { selectTokenAsync, thowErrorSourceAmount } from "../../actions/exchangeActions"
 import {errorSelectToken, goToStep, showAdvance, changeSourceAmout, openPassphrase} from "../../actions/exchangeActions"
 
-import { randomToken } from "../../utils/random"
-@connect((store, props) => {
+
+@connect((store) => {
   if (!!!store.account.address){
-    props.history.push('/');
+    window.location.href = "/"
   }  
   const tokens = store.tokens
-  
-  const balance = tokens[store.exchange.sourceTokenSymbol].balance
+  const sourceTokenSymbol = store.exchange.sourceTokenSymbol
+  const balance = tokens[sourceTokenSymbol].balance
+
   const ethereum = store.connection.ethereum
-  return {...store.exchange, ethereum, balance};
+  return {...store.exchange, ethereum, balance}
 })
 
 export default class Exchange extends React.Component {
