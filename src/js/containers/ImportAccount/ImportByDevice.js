@@ -1,21 +1,13 @@
 import React from "react";
-import { connect } from "react-redux";
-import Trezor from "../../services/trezor/trezor";
-import { connectLedger, getLedgerPublicKey } from "../../services/ledger";
+import AddressGenerator from "../../services/device/addressGenerator";
+import { getPubData, connectLedger, getLedgerPublicKey } from "../../services/device/device";
 import SelectAddressModal from "../CommonElements/SelectAddressModal";
-
-
-@connect((store) => {
-    return { ...store.account }
-})
 
 export default class ImportTrezor extends React.Component {
 
     constructor() {
         super();
         this.state = {
-            defaultDPath: "m/44'/60'/0'/0", // first address: m/44'/60'/0'/0/0,
-            ledgerPath: "m/44'/60'/0'", // first address: m/44'/60'/0'/0/0,
             addresses: [],
             currentAddresses: [],
             modalOpen: false,
@@ -23,50 +15,54 @@ export default class ImportTrezor extends React.Component {
         this.setDeviceState();
     }
 
+    setDeviceState() {
+        this.addressIndex = 0;
+        this.currentIndex = 0;
+        this.generator = null;
+    }
+
     connectDevice(walletType) {
         this.setDeviceState()
         switch (walletType) {
             case 'trezor': {
-                let promise = this.trezorInstance.getPubData();
+                let promise = getPubData();
                 promise.then((result) => {
                     this.generateAddress(result);
                 })
+                break;
             }
             case 'ledger': {
-                console.log('ok')
                 let path = this.state.ledgerPath;
                 connectLedger(path).then((eth) => {
                     getLedgerPublicKey(eth, path).then((result) => {
-                        console.log(result)
-                    })
-                })
+                        this.moreAddress(result);
+                    }).catch((err) => {
+                        console.log(err)
+                    });
+                }).catch((err) => {
+                    console.log(err)
+                });
+                break;
             }
         }
     }
 
-    setDeviceState() {
-        this.addressIndex = 0;
-        this.currentIndex = 0;
-        this.trezorInstance = new Trezor;
-    }
-
-    generateAddress(statusConnect) {
+    generateAddress(data) {
+        this.generator = new AddressGenerator(data);
         let addresses = [];
-        if (statusConnect == 'Success') {
-            let index = 0;
-            for (index; index < 5; index++) {
-                let addressString = this.trezorInstance.getAddressString(index);
-                addresses.push(addressString);
-            }
-            this.addressIndex = index;
-            this.currentIndex += 5;
-
-            this.setState({
-                addresses: addresses,
-                currentAddresses: addresses.slice(this.currentIndex - 5, this.currentIndex)
-            })
-            this.openModal();
+        let index = 0;
+        for (index; index < 5; index++) {
+            let addressString = this.generator.getAddressString(index);
+            addresses.push(addressString);
         }
+        this.addressIndex = index;
+        this.currentIndex += 5;
+
+        this.setState({
+            addresses: addresses,
+            currentAddresses: addresses.slice(this.currentIndex - 5, this.currentIndex)
+        })
+        this.openModal();
     }
 
     openModal() {
@@ -87,7 +83,7 @@ export default class ImportTrezor extends React.Component {
             j = i + 5;
         if (this.addressIndex == this.currentIndex) {
             for (i; i < j; i++) {
-                let addressString = this.trezorInstance.getAddressString(i);
+                let addressString = this.generator.getAddressString(i);
                 addresses.push(addressString);
             }
         }
@@ -122,9 +118,9 @@ export default class ImportTrezor extends React.Component {
 
         return (
             <div>
-                <a onClick={() => this.connectDevice('trezor')}>Import via Trezor</a>
+                <a onClick={this.connectDevice.bind(this, 'trezor')}>Import via Trezor</a>
                 <br />
-                <a onClick={() => this.connectDevice('ledger')}>Import via Ledger</a>
+                <a onClick={this.connectDevice.bind(this, 'ledger')}>Import via Ledger</a>
 
                 <SelectAddressModal
                     open={this.state.modalOpen}

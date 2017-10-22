@@ -1,10 +1,10 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import { ImportKeystore, ImportTrezor, ImportLedger } from "../ImportAccount"
+import { ImportKeystore, ImportTrezor } from "../ImportAccount"
 
 @connect((store) => {
-  return {...store.account}
+	return { ...store.account }
 })
 
 export default class ImportAccount extends React.Component {
@@ -14,7 +14,6 @@ export default class ImportAccount extends React.Component {
 				<h1>Add an address</h1>
 				<ImportKeystore />
 				<ImportTrezor />
-				<ImportLedger />
 			</div>
 		)
 	}
