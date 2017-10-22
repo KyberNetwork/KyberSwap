@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-
+import { push } from 'react-router-redux';
 //import DropFile from "../../components/Elements/DropFile"
 //import Modal from '../../components/Elements/Modal'
 //import {Modal} from '../CommonElements'
@@ -57,12 +57,14 @@ export default class ImportKeystore extends React.Component {
   //   }
   // }
   goToExchange = () =>{
-    window.location.href = "/exchange"
-   //this.context.router.history.push('/exchange');
+    // window.location.href = "/exchange"
+    // this.props.router.push('/exchange')
+    this.props.dispatch(push('/exchange'));
   }
 
   onDrop = (files) => {
     //console.log("xxx")
+    var _this = this
     var file = files[0]
     var fileReader = new FileReader()
     fileReader.onload = (event) => {
@@ -76,9 +78,11 @@ export default class ImportKeystore extends React.Component {
         }else{          
           console.log("keystring: ", keystring)
           var address = addressFromKey(keystring)
-          this.props.dispatch(importNewAccount(
-            address, "keystore", keystring))   
-         // this.goToExchange()                   
+          this.props.dispatch(importNewAccount(address, "keystore", keystring))
+          // this.goToExchange()   
+          setTimeout(() => {this.goToExchange()}, 3000)          
+
+          // setInterval(function(){ _this.goToExchange() }, 3000);            
         }    
       
   }
