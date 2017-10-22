@@ -4,6 +4,8 @@ import {REHYDRATE} from 'redux-persist/constants'
 //import IMPORT from "../constants/importAccountActions"
 import constants from "../services/constants"
 import { calculateDest} from "../utils/converter"
+import { randomToken } from "../utils/random"
+import supported_tokens from "../services/supported_tokens"
 // const initState = {
 //   token_source: 'GNT',
 //   token_des: 'DGD',
@@ -18,9 +20,25 @@ const initState = initFormState
 const transfer = (state=initState, action) => {
   var newState = {...state}
   switch (action.type) {
+    case REHYDRATE: {
+      var transfer = action.payload.transfer;
+      newState.selected = transfer.selected;
+
+      if(newState.selected){
+        var indexSelected = supported_tokens.map(x=>{return x.symbol}).indexOf(newState.selected);
+        newState.token = supported_tokens[indexSelected].address;
+        newState.tokenSymbol = supported_tokens[indexSelected].symbol;
+      } else {
+        var randomSelectToken = randomToken(1, Object.keys(supported_tokens).length);
+        newState.token = Object.values(supported_tokens)[randomSelectToken].address
+        newState.tokenSymbol = Object.values(supported_tokens)[randomSelectToken].symbol
+      }
+      return newState;
+    }
   	case "TRANSFER.SELECT_TOKEN":
       newState.tokenSymbol = action.payload.symbol
       newState.sourceToken = action.payload.address
+      newState.selected = action.payload.symbol
       return newState
     case "TRANSFER.THOW_ERROR_SELECT_TOKEN":
       newState.error_select_token = action.payload
