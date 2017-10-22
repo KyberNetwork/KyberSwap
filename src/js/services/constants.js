@@ -71,12 +71,9 @@ const INIT_TRANSFER_FORM_STATE = {
   bcError: "",
   txHash: "",
   errors: {
-    sourceTokenError: "",
-    sourceAmountError: "",
-    destTokenError: "",
-    gasPriceError: "",
-    gasError: "",
-    passwordError: "",
+    destAddress:"",
+    amountTransfer: "",
+    passwordError: ""
   }
 }
 

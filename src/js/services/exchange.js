@@ -2,6 +2,7 @@ import { sealTxByKeystore } from "../utils/sealer"
 import { verifyNonce } from "../utils/validators"
 import store from "../store"
 import { doTransaction, doApprovalTransaction } from "../actions/exchangeActions"
+import { doTransaction as doTransactionTransfer} from "../actions/transferActions"
 import constants from "../services/constants"
 import Rate from "./rate"
 
@@ -23,7 +24,7 @@ export function sendEtherFromWallet(
     chainId: 42
   }
   const tx = sealTxByKeystore(txParams, keystring, password)
-  store.dispatch(doTransaction(id, ethereum, tx, callback))
+  store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
 }
 
 export function sendTokenFromWallet(
@@ -46,7 +47,7 @@ export function sendTokenFromWallet(
     chainId: 42
   }
   const tx = sealTxByKeystore(txParams, keystring, password)
-  store.dispatch(doTransaction(id, ethereum, tx, callback))
+  store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
 }
 
 export function sendEtherFromAccount(
@@ -64,7 +65,7 @@ export function sendEtherFromAccount(
     chainId: 42
   }
   const tx = sealTxByKeystore(txParams, keystring, password)
-  store.dispatch(doTransaction(id, ethereum, tx, callback))
+  store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
 }
 
 export function sendTokenFromAccount(
@@ -85,7 +86,7 @@ export function sendTokenFromAccount(
     chainId: 42
   }
   const tx = sealTxByKeystore(txParams, keystring, password)
-  store.dispatch(doTransaction(id, ethereum, tx, callback))
+  store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
 }
 
 export function etherToOthersFromAccount(

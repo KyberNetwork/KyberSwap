@@ -1,25 +1,30 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import {calculateMinAmount, toTWei, toEther} from "../../utils/converter"
+import {calculateMinAmount, toT, toTWei, toEther} from "../../utils/converter"
+
+import {TransferForm} from "../../components/Forms"
 //import TokenDest from "./TokenDest"
 //import {TokenDest, MinRate} from "../ExchangeForm"
 import {Token, ExchangeRate} from "../Exchange"
-import {SelectTokenModal, ChangeGasModal, PassphraseTransferModal} from "../CommonElements"
+import {SelectTokenModal, ChangeGasModal, PassphraseTransferModal, TransactionLoading} from "../CommonElements"
 
 //import {toT, toTWei} from "../../utils/converter"
 import {openTokenModal, hideSelectToken} from "../../actions/utilActions"
 // import { selectToken } from "../../actions/exchangeActions"
 
-
-import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase } from '../../actions/transferActions';
+import {verifyAccount} from "../../utils/validators"
+import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase ,throwErrorDestAddress, thowErrorAmount} from '../../actions/transferActions';
 
 
 @connect((store) => {
   if (!!!store.account.address){
     window.location.href = "/"
   }
-  return {...store.transfer}
+  const tokens = store.tokens
+  const tokenSymbol = store.transfer.tokenSymbol
+  const balance = tokens[tokenSymbol].balance
+  return {...store.transfer, balance}
 })
 
 export default class Transfer extends React.Component {
@@ -41,69 +46,94 @@ export default class Transfer extends React.Component {
     this.props.dispatch(selectToken(symbol, address))
     this.props.dispatch(hideSelectToken())
   }
-  proccessSelectToken = () => {
-    if (this.props.sourceTokenSymbol === this.props.desTokenSymbol){
-      this.props.dispatch(errorSelectToken("Cannot exchange to the same token"))
-    }else{
-      this.props.dispatch(goToStep(2))
-    }
-  }
+
   showAdvanceOption = () => {
     this.props.dispatch(showAdvance())
   }
-  clickExchange = () =>{
-    if(this.validateExchange){
+  clickTransfer = () =>{
+    if(this.validateExchange()){
       this.props.dispatch(openPassphrase())
     }
   }
   validateExchange = () =>{
+    //check dest address is an ethereum address
+    if (verifyAccount(this.props.destAddress) !== null){
+      this.props.dispatch(throwErrorDestAddress("This is not an address"))
+      return false
+    }
+    if(isNaN(this.props.amount)){
+      this.props.dispatch(thowErrorAmount("amount must be a number"))
+      return false
+    }
+    else if(parseFloat(this.props.amount) > parseFloat(toT(this.props.balance, 8))){
+      this.props.dispatch(thowErrorAmount("amount is too high"))
+      return false
+    }        
     return true
   }
-  getDesAmount = () => {
-    return 0
-  }
+
   createRecap = () => {
     return "create reacap"
   }  
 
   render() {
-    return (
-       <div class="k-exchange-page">
-       	<div class="page-1" class={this.props.step!==1?'visible-hide':''}>
-          <div>
-            <button onClick={this.showAdvanceOption}>Advance</button>
-          </div>
-          <h1>Transfer to</h1>
-          <input value={this.props.destAddress} onChange={this.onAddressReceiveChange.bind(this)} />
-          <h1>Amount</h1>
-          <input value={this.props.amount} onChange={this.onAmountChange.bind(this)} />
-          <Token type="transfer"
-          token={this.props.tokenSymbol} 
-          onSelected={this.openTokenChoose}
-          />
-          <div>
-            <ExchangeRate rate={this.props.rate}/>
-          </div>
-          <div>{this.props.error_select_token}</div>
-          <button onClick = {this.clickExchange}>Transfer</button>
-        </div>
-
-        <div class="page-2"  class={this.props.step!==2?'visible-hide':''}>
-          step finish broadcasted
-        </div>
-
-        <SelectTokenModal chooseToken ={this.chooseToken} type="exchange"/>
-        <ChangeGasModal type="exchange"
-                        gas={this.props.gas}
-                        gasPrice={this.props.gasPrice} 
-                        open = {this.props.advance}
-                        gasPriceError = {this.props.errors.gasPriceError}
-                        gasError = {this.props.errors.gasError}                        
-                        />
-        <PassphraseTransferModal   type="transfer"
-                          open={this.props.passphrase}
-                          recap = {this.createRecap} />
-      </div>
+    var showAdvanceBtn = (
+      <button onClick={this.showAdvanceOption}>Advance</button>
     )
+    var destAddress = (
+      <input value={this.props.destAddress} onChange={this.onAddressReceiveChange.bind(this)} />
+    )
+    var amount = (
+      <input value={this.props.amount} onChange={this.onAmountChange.bind(this)} />
+    )
+    var transferBtn = (
+      <button onClick = {this.clickTransfer}>Transfer</button>
+    )
+    var token = (
+      <Token type="transfer"
+      token={this.props.tokenSymbol} 
+      onSelected={this.openTokenChoose}
+      /> 
+    )
+    var tokenModal = (
+      <SelectTokenModal chooseToken ={this.chooseToken} type="transfer"/>
+    )
+    var changeGasModal = (
+      <ChangeGasModal type="transfer"
+          gas={this.props.gas}
+          gasPrice={this.props.gasPrice} 
+          open = {this.props.advance}
+          gasPriceError = {this.props.errors.gasPriceError}
+          gasError = {this.props.errors.gasError}                        
+          />
+    )
+    var passPhraseModal = (
+      <PassphraseTransferModal   type="transfer"
+      open={this.props.passphrase}
+      recap = {this.createRecap} />
+    )
+    var trasactionLoadingScreen = (
+      <TransactionLoading tx={this.props.txHash}/>
+    )
+    var errorDestAddress = (
+      <div>{this.props.errors.destAddress}</div>
+    )
+    var errorAmount = (
+      <div>{this.props.errors.amountTransfer}</div>
+    )
+    return (
+     <TransferForm step = {this.props.step}
+                    showAdvanceBtn = {showAdvanceBtn}
+                    destAddress = {destAddress}
+                    amount = {amount}
+                    token = {token}
+                    transferBtn = {transferBtn}
+                    changeGasModal = {changeGasModal}
+                    passPhraseModal = {passPhraseModal}
+                    errorDestAddress = {errorDestAddress}
+                    errorAmount = {errorAmount}
+                    trasactionLoadingScreen = {trasactionLoadingScreen}
+                    />
+    ) 
   }
 }

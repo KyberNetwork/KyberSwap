@@ -1,7 +1,4 @@
 import React from "react"
-
-import { TransactionConfig } from "../../components/Forms/Components"
-
 import Modal from 'react-modal'
 
 const customStyles = {

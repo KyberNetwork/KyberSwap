@@ -6,7 +6,7 @@ import {calculateMinAmount, toTWei, toT, toEther} from "../../utils/converter"
 //import TokenDest from "./TokenDest"
 //import {TokenDest, MinRate} from "../ExchangeForm"
 import {Token, ExchangeRate} from "../Exchange"
-import {ExchangeForm} from "../../components/Exchange"
+import {ExchangeForm} from "../../components/Forms"
 import {SelectTokenModal, ChangeGasModal, PassphraseExchangeModal, TransactionLoading} from "../CommonElements"
 
 import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"

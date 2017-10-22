@@ -5,12 +5,6 @@ export function selectToken(symbol,address){
 	}
 }
 
-export function hidePassphrase(){
-	return {
-		type: "TRANSFER.HIDE_PASSPHRASE",		
-	}					
-}
-
 export function  errorSelectToken(message) {
 	return {
 		type: "TRANSFER.THOW_ERROR_SELECT_TOKEN",
@@ -70,3 +64,93 @@ export function specifyAmountTransfer(value){
 		payload: value
 	}
 }
+
+export function throwErrorDestAddress(message){
+	return {
+		type: "TRANSFER.THROW_ERROR_DEST_ADDRESS",
+		payload: message
+	}
+}
+
+
+export function thowErrorAmount(message){
+	return {
+		type: "TRANSFER.THROW_AMOUNT_ERROR",
+		payload: message
+	}	
+}
+
+
+export function hidePassphrase(){
+	return {
+		type: "TRANSFER.HIDE_PASSPHRASE",		
+	}					
+}
+
+export function changePassword(){
+	return {
+		type: "TRANSFER.CHANGE_PASSPHRASE",		
+	}					
+}
+
+export function finishTransfer(){
+	return {
+		type: "TRANSFER.FINISH_TRANSACTION"
+	}
+}
+
+export function throwPassphraseError(message){
+	return {
+		type: "TRANSFER.THROW_ERROR_PASSPHRASE",		
+		payload: message
+	}		
+}
+
+
+export function doTransaction(id, ethereum, tx, callback) {
+	return {
+	  type: "TRANSFER.TX_BROADCAST_PENDING",
+	  payload: {ethereum, tx, callback},
+	  meta: id,
+	}
+  }
+  
+  export function doTransactionComplete(txHash, id) {
+	return {
+	  type: "TRANSFER.TX_BROADCAST_FULFILLED",
+	  payload: txHash,
+	  meta: id,
+	}
+  }
+  
+  export function doTransactionFail(error, id) {
+	return {
+	  type: "TRANSFER.TX_BROADCAST_REJECTED",
+	  payload: error,
+	  meta: id,
+	}
+  }
+
+  export function doApprovalTransaction(id, ethereum, tx, callback) {
+	return {
+	  type: "TRANSFER.APPROVAL_TX_BROADCAST_PENDING",
+	  payload: {ethereum, tx, callback},
+	  meta: id,
+	}
+  }
+  
+  export function doApprovalTransactionComplete(txHash, id) {
+	return {
+	  type: "TRANSFER.APPROVAL_TX_BROADCAST_FULFILLED",
+	  payload: txHash,
+	  meta: id,
+	}
+  }
+  
+  export function doApprovalTransactionFail(error, id) {
+	return {
+	  type: "TRANSFER.APPROVAL_TX_BROADCAST_REJECTED",
+	  payload: error,
+	  meta: id,
+	}
+  }

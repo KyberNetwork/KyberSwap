@@ -3,6 +3,7 @@ import { watchAccount } from './accountActions';
 //import { watchWallet } from './walletActions';
 import { watchGlobal } from './globalActions';
 import { watchExchange } from './exchangeActions';
+import { watchTransfer } from './transferActions';
 //import { watchPayment } from './joinPaymentFormActions';
 import { watchTx } from './txActions';
 import { watchImportAccount } from './importAccountActions';
@@ -21,7 +22,8 @@ export default function* root() {
    	fork(watchAccount),    
    	//fork(watchWallet),    
    	fork(watchGlobal), 
-   	fork(watchExchange), 
+     fork(watchExchange), 
+     fork(watchTransfer), 
    	//fork(watchPayment), 
    	fork(watchTx), 
     fork(watchAndLog), 
