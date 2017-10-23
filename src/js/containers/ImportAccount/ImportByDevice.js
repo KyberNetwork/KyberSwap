@@ -1,6 +1,6 @@
 import React from "react";
 import AddressGenerator from "../../services/device/addressGenerator";
-import { getPubData, connectLedger, getLedgerPublicKey } from "../../services/device/device";
+import { getTrezorPublicKey, connectLedger, getLedgerPublicKey } from "../../services/device/device";
 import SelectAddressModal from "../CommonElements/SelectAddressModal";
 
 export default class ImportTrezor extends React.Component {
@@ -25,16 +25,15 @@ export default class ImportTrezor extends React.Component {
         this.setDeviceState()
         switch (walletType) {
             case 'trezor': {
-                let promise = getPubData();
+                let promise = getTrezorPublicKey();
                 promise.then((result) => {
                     this.generateAddress(result);
                 })
                 break;
             }
             case 'ledger': {
-                let path = this.state.ledgerPath;
-                connectLedger(path).then((eth) => {
-                    getLedgerPublicKey(eth, path).then((result) => {
+                connectLedger().then((eth) => {
+                    getLedgerPublicKey(eth).then((result) => {
                         this.generateAddress(result);
                     }).catch((err) => {
                         console.log(err)
