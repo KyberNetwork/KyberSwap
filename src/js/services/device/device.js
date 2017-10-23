@@ -9,6 +9,7 @@ export function getTrezorPublicKey() {
     return new Promise((resolve, reject) => {
         TrezorConnect.getXPubKey(defaultDPath, (result) => {
             if (result.success) {
+                result.dPath = defaultDPath;
                 resolve(result);
             } else {
                 reject(result.error);
@@ -35,6 +36,7 @@ export function getLedgerPublicKey(eth) {
     return new Promise((resolve, reject) => {
         eth.getAddress_async(ledgerPath, false, true)
             .then((result) => {
+                result.dPath = ledgerPath;
                 resolve(result);
             })
             .fail((err) => {
