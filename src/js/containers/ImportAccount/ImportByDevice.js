@@ -35,7 +35,7 @@ export default class ImportTrezor extends React.Component {
                 let path = this.state.ledgerPath;
                 connectLedger(path).then((eth) => {
                     getLedgerPublicKey(eth, path).then((result) => {
-                        this.moreAddress(result);
+                        this.generateAddress(result);
                     }).catch((err) => {
                         console.log(err)
                     });

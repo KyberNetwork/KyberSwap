@@ -1,6 +1,6 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/accountActions'
-import { connectLedger, getLedgerPublicKey, getLedgerAddress } from "../services/ledger"
+// import { connectLedger, getLedgerPublicKey, getLedgerAddress } from "../services/ledger"
 
 function* scanLedger(action) {
   const path = action.payload;
