@@ -12,8 +12,9 @@ const initState = {
 const account = (state=initState, action) => {
   switch (action.type) {  	
     case REHYDRATE: {
-      var account = action.payload.account.account
+      var account = action.payload.account
       if (account) {
+        account = account.account
         return {...state, account: new Account (
           account.address,
           account.type,

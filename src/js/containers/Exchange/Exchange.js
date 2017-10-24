@@ -4,9 +4,9 @@ import { connect } from "react-redux"
 
 import { calculateMinAmount, toT } from "../../utils/converter"
 
-import { Token, ExchangeRate, PostExchange } from "../Exchange"
+import { ExchangeRate, PostExchange } from "../Exchange"
 import { ExchangeForm } from "../../components/Forms"
-import { SelectTokenModal, ChangeGasModal, TransactionLoading } from "../CommonElements"
+import { SelectTokenModal, ChangeGasModal, TransactionLoading, Token } from "../CommonElements"
 
 import { anyErrors } from "../../utils/validators"
 
