@@ -126,6 +126,12 @@ export function hidePassphrase(){
 	}					
 }
 
+export function hideConfirm(){
+	return {
+		type: "EXCHANGE.HIDE_CONFIRM",		
+	}					
+}
+
 export function changePassword(){
 	return {
 		type: "EXCHANGE.CHANGE_PASSPHRASE",		
@@ -186,9 +192,23 @@ export function doTransaction(id, ethereum, tx, callback) {
   }
   
   export function doApprovalTransactionFail(error, id) {
-	return {
-	  type: "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED",
-	  payload: error,
-	  meta: id,
+		return {
+			type: "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED",
+			payload: error,
+			meta: id,
+		}
 	}
-  }
+	
+	export function saveRawExchangeTransaction(tx){
+		return {
+			type: "EXCHANGE.SAVE_RAW_TRANSACTION",
+			payload: tx			
+		}
+	}
+
+	export function throwErrorSignExchangeTransaction(error){
+		return {
+			type: "EXCHANGE.THROW_ERROR_SIGN_TRANSACTION",
+			payload: error
+		}
+	}

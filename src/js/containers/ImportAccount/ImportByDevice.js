@@ -1,7 +1,15 @@
 import React from "react";
+import { connect } from "react-redux"
+import { push } from 'react-router-redux';
+
 import AddressGenerator from "../../services/device/addressGenerator";
 import { getTrezorPublicKey, connectLedger, getLedgerPublicKey } from "../../services/device/device";
 import SelectAddressModal from "../CommonElements/SelectAddressModal";
+
+import { importNewAccount } from "../../actions/accountActions"
+@connect((store) => {
+    return {...store.account}
+  })
 
 export default class ImportTrezor extends React.Component {
 
@@ -124,10 +132,17 @@ export default class ImportTrezor extends React.Component {
                 type: this.walletType,
                 path: this.dPath + '/' + formAddress.index,
 
-            }
-        console.log(data)
+            };
+            
+        this.props.dispatch(importNewAccount(data.address, data.type, data.path))
+        this.closeModal()
+        setTimeout(() => {this.goToExchange()}, 3000)           
     }
-
+    goToExchange = () =>{
+        // window.location.href = "/exchange"
+        // this.props.router.push('/exchange')
+        this.props.dispatch(push('/exchange'));
+      }
     render() {
         const currentList = this.state.currentAddresses.map((address) => {
             return (

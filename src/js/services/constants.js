@@ -46,6 +46,8 @@ const INIT_EXCHANGE_FORM_STATE = {
   broadcasting: true,
   bcError: "",
   txHash: "",
+  txRaw: "",
+  confirmColdWallet: false,  
   errors: {   
     selectSameToken: "",
     selectTokenToken: "",
@@ -53,6 +55,7 @@ const INIT_EXCHANGE_FORM_STATE = {
     gasPriceError: "",
     gasError: "",
     passwordError: "",
+    signTransaction: ""
   }
 }
 

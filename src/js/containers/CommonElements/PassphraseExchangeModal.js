@@ -42,15 +42,6 @@ const customStyles = {
     account: store.account,
     ethereum: store.connection.ethereum
   }
-   // return {
-   // 		open : props.open,
-   // 		type: props.type,
-   // 		gas: props.gas,
-   // 		gasPrice: props.gasPrice,
-   // 		gasPriceError : props.gasPriceError,
-   //      gasError : props.gasError
-   // 	}
-  //return store.utils
 })
 
 export default class PassphraseExchangeModal extends React.Component {

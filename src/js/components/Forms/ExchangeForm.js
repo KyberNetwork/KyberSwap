@@ -46,8 +46,7 @@ const ExchangeForm = (props) => {
         </div>
 
         {props.selectTokenModal}
-        {props.changeGasModal}
-        {props.passphraseModal}
+        {props.changeGasModal}        
       </div>
   )
 }
