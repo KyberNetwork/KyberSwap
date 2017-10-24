@@ -14,7 +14,7 @@ const TransferForm = (props) => {
           {props.amount}
           {props.errorAmount}
           {props.token}
-          {props.transferBtn}
+          {props.transferButton}
         </div>
 
         <div class="page-2"  class={props.step!==2?'visible-hide':''}>
@@ -23,7 +23,6 @@ const TransferForm = (props) => {
 
         {props.tokenModal}
         {props.changeGasModal}
-        {props.passPhraseModal}
         
         
       </div>

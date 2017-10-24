@@ -153,4 +153,18 @@ export function doTransaction(id, ethereum, tx, callback) {
 	  payload: error,
 	  meta: id,
 	}
-  }
+	}
+	
+	export function saveRawTransferTransaction(tx){
+		return {
+			type: "TRANSFER.SAVE_RAW_TRANSACTION",
+			payload: tx			
+		}
+	}
+
+	export function throwErrorSignTransferTransaction(error){
+		return {
+			type: "TRANSFER.THROW_ERROR_SIGN_TRANSACTION",
+			payload: error
+		}
+	}

@@ -7,6 +7,7 @@ import {TransferForm} from "../../components/Forms"
 //import TokenDest from "./TokenDest"
 //import {TokenDest, MinRate} from "../ExchangeForm"
 import {Token, ExchangeRate} from "../Exchange"
+import {PostTransfer} from  "../Transfer"
 import {SelectTokenModal, ChangeGasModal, PassphraseTransferModal, TransactionLoading} from "../CommonElements"
 
 //import {toT, toTWei} from "../../utils/converter"
@@ -50,27 +51,7 @@ export default class Transfer extends React.Component {
   showAdvanceOption = () => {
     this.props.dispatch(showAdvance())
   }
-  clickTransfer = () =>{
-    if(this.validateExchange()){
-      this.props.dispatch(openPassphrase())
-    }
-  }
-  validateExchange = () =>{
-    //check dest address is an ethereum address
-    if (verifyAccount(this.props.destAddress) !== null){
-      this.props.dispatch(throwErrorDestAddress("This is not an address"))
-      return false
-    }
-    if(isNaN(this.props.amount)){
-      this.props.dispatch(thowErrorAmount("amount must be a number"))
-      return false
-    }
-    else if(parseFloat(this.props.amount) > parseFloat(toT(this.props.balance, 8))){
-      this.props.dispatch(thowErrorAmount("amount is too high"))
-      return false
-    }        
-    return true
-  }
+  
 
   createRecap = () => {
     return "create reacap"
@@ -107,10 +88,8 @@ export default class Transfer extends React.Component {
           gasError = {this.props.errors.gasError}                        
           />
     )
-    var passPhraseModal = (
-      <PassphraseTransferModal   type="transfer"
-      open={this.props.passphrase}
-      recap = {this.createRecap} />
+    var transferButton = (
+      <PostTransfer />      
     )
     var trasactionLoadingScreen = (
       <TransactionLoading tx={this.props.txHash}/>
@@ -127,9 +106,8 @@ export default class Transfer extends React.Component {
                     destAddress = {destAddress}
                     amount = {amount}
                     token = {token}
-                    transferBtn = {transferBtn}
                     changeGasModal = {changeGasModal}
-                    passPhraseModal = {passPhraseModal}
+                    transferButton = {transferButton}
                     errorDestAddress = {errorDestAddress}
                     errorAmount = {errorAmount}
                     trasactionLoadingScreen = {trasactionLoadingScreen}

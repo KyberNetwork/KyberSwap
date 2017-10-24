@@ -7,7 +7,9 @@ import { numberToHex, toTWei, gweiToWei, weiToGwei } from "../../utils/converter
 import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
 
 import { etherToOthersFromAccount, tokenToOthersFromAccount, sendEtherFromAccount, sendTokenFromAccount, exchangeFromWallet, sendEtherFromWallet, sendTokenFromWallet } from "../../services/exchange"
-import { hidePassphrase, changePassword, throwPassphraseError, finishTransfer } from "../../actions/transferActions"
+
+import { hidePassphrase, changePassword, throwPassphraseError, finishExchange, hideConfirm } from "../../actions/transferActions"
+import { openPassphrase ,throwErrorDestAddress, thowErrorAmount, doTransaction} from '../../actions/transferActions';
 
 import { updateAccount, incManualNonceAccount } from "../../actions/accountActions"
 import { addTx } from "../../actions/txActions"
@@ -17,10 +19,12 @@ import Tx from "../../services/tx"
 import {Modal} from "../../components/CommonElement"
 
 @connect((store, props) => {
+  const tokens = store.tokens
+  const tokenSymbol = store.transfer.tokenSymbol
+  const balance = tokens[tokenSymbol].balance
   return {
-    modal: props,
     account: store.account,
-    form: store.transfer,
+    form: {...store.transfer, balance},
     ethereum: store.connection.ethereum
   };
 	
@@ -28,127 +32,168 @@ import {Modal} from "../../components/CommonElement"
 
 
 export default class PostTransfer extends React.Component {
-    clickExchange = () =>{
-        if(this.validateExchange()){
-            //check account type
-            switch(this.props.account.type){
-                case "keystore":
-                    this.props.dispatch(openPassphrase())
-                    break
-                case "trezor":
-                    this.processTx()
-                    break
-            }
-            
-        }
-
+  clickTransfer = () =>{
+    if(this.validateTransfer()){
+      this.props.dispatch(openPassphrase())
     }
-    validateExchange = () =>{
-        //check source amount
-        if(isNaN(this.props.form.sourceAmount)){
-          this.props.dispatch(thowErrorSourceAmount("Source amount must be a number"))
-          return false
-        }
-        else if(this.props.form.sourceAmount > toT(this.props.form.sourceBalance, 8)){
-          this.props.dispatch(thowErrorSourceAmount("Source amount is too high"))
-          return false
-        }    
-        return true
-      }
+  }
+  validateTransfer = () =>{
+    //check dest address is an ethereum address
+    if (verifyAccount(this.props.form.destAddress) !== null){
+      this.props.dispatch(throwErrorDestAddress("This is not an address"))
+      return false
+    }
+    if(isNaN(this.props.form.amount)){
+      this.props.dispatch(thowErrorAmount("amount must be a number"))
+      return false
+    }
+    else if(parseFloat(this.props.form.amount) > parseFloat(toT(this.props.form.balance, 8))){
+      this.props.dispatch(thowErrorAmount("amount is too high"))
+      return false
+    }        
+    return true
+  }
+
       content = () =>{
           return (
-              <div>
-                <div>{this.createRecap}</div>
-                <input type="password" id="passphrase" onChange={this.changePassword}/>
-                <button onClick={this.processTx}>Exchange</button>
-                {this.props.form.errors.passwordError}
+            <div>
+              <div>{this.createRecap()}</div>
+              <input type="password" id="passphrase" onChange={this.changePassword}/>
+              <button onClick={this.processTx}>Transfer</button>
+              {this.props.form.errors.passwordError}
             </div>
           )
+      }
+      contentConfirm = () => {
+        return (
+          <div>
+            <div>{this.createRecap()}</div>
+            <button onClick={this.closeModal}>Cancel</button>
+            <button onClick={this.broacastTx}>Transfer</button>
+          </div>
+        )
+      }
+      broacastTx = () =>{
+        const id =  "transfer"
+        const ethereum = this.props.ethereum
+        const tx = this.props.form.txRaw
+        this.props.dispatch(doTransaction(id, ethereum, tx, (ex, trans)=>{
+          this.runAfterBroacastTx(ex, trans)
+          this.props.dispatch(finishExchange())
+        }))      
       }
       createRecap = () =>{
           return "Create recap"
       }
       closeModal = (event) => {
-        this.props.dispatch(hidePassphrase())
+        switch(this.props.account.type){
+          case "keystore":
+              this.props.dispatch(hidePassphrase())
+              break
+          case "trezor":
+              this.props.dispatch(hideConfirm())
+              break
+        }
+        
     }
     changePassword = (event) =>{
       this.props.dispatch(changePassword())
     }
     formParams = () => {
       var selectedAccount = this.props.account.address
-      var sourceToken = this.props.form.sourceToken
-      var sourceAmount = numberToHex(toTWei(this.props.form.sourceAmount))
-      var destToken = this.props.form.destToken
-      var minConversionRate = numberToHex(this.props.form.minConversionRate)
-      var destAddress = this.props.account.address
-      var maxDestAmount = numberToHex(this.props.form.maxDestAmount)
-      var throwOnFailure = this.props.form.throwOnFailure
-      var nonce = verifyNonce(this.props.account.getUsableNonce())
+      var token = this.props.form.token
+      var amount = numberToHex(toTWei(this.props.form.amount))
+      var destAddress = this.props.form.destAddress
+      var throwOnFailure = this.props.throwOnFailure
+      var nonce = verifyNonce(this.props.account.nonce)
       // should use estimated gas
       var gas = numberToHex(this.props.form.gas)
       // should have better strategy to determine gas price
       var gasPrice = numberToHex(gweiToWei(this.props.form.gasPrice))
       return {
-        selectedAccount, sourceToken, sourceAmount, destToken,
-        minConversionRate, destAddress, maxDestAmount,
+        selectedAccount, token, amount, destAddress, 
         throwOnFailure, nonce, gas, gasPrice
       }
     }
   
-    processTx = () => {
-     // var errors = {}
-      try {        
-        var password = this.props.account.type === "keystore"?document.getElementById("passphrase").value:""    
+    processTx = (event) => {
+      try {
+        var password = ""        
+        if (this.props.account.type === "keystore"){
+          password = document.getElementById("passphrase").value
+          document.getElementById("passphrase").value = ''
+        }        
         const params = this.formParams()
         // sending by wei
         var account = this.props.account
         var ethereum = this.props.ethereum  
       
-        var call = params.sourceToken == constants.ETHER_ADDRESS ? etherToOthersFromAccount : tokenToOthersFromAccount
+        var call = params.sourceToken == constants.ETHER_ADDRESS ? sendEtherFromAccount : sendTokenFromAccount
         var dispatch = this.props.dispatch
-        var sourceAccount = account
-        var formId = "exchange"
+        //var sourceAccount = account
+        var formId = "transfer"
         call(
-          formId, ethereum, account.address, params.sourceToken,
-          params.sourceAmount, params.destToken, params.destAddress,
-          params.maxDestAmount, params.minConversionRate,
-          params.throwOnFailure, params.nonce, params.gas,
+          formId, ethereum, account.address,
+          params.token, params.amount,
+          params.destAddress, params.nonce, params.gas,
           params.gasPrice, account.keystring, account.type, password, (ex, trans) => {
-            const tx = new Tx(
-              ex, sourceAccount.address, ethUtil.bufferToInt(trans.gas),
-              weiToGwei(ethUtil.bufferToInt(trans.gasPrice)),
-              ethUtil.bufferToInt(trans.nonce), "pending", "exchange", {
-                sourceToken: params.sourceToken,
-                sourceAmount: params.sourceAmount,
-                destToken: params.destToken,
-                minConversionRate: params.minConversionRate,
-                destAddress: params.destAddress,
-                maxDestAmount: params.maxDestAmount,
-              })
-            dispatch(incManualNonceAccount(account.address))
-            dispatch(updateAccount(ethereum, account))
-            dispatch(addTx(tx))
+            this.runAfterBroacastTx(ex, trans)
+            dispatch(finishExchange())
+
+            // const tx = new Tx(
+            //   ex, account.address, ethUtil.bufferToInt(trans.gas),
+            //   weiToGwei(ethUtil.bufferToInt(trans.gasPrice)),
+            //   ethUtil.bufferToInt(trans.nonce), "pending", "send", {
+            //     sourceToken: params.token,
+            //     sourceAmount: params.amount,
+            //     destAddress: params.destAddress,
+            //   })
+            // dispatch(incManualNonceAccount(account.address))
+            // dispatch(updateAccount(ethereum, account))
+            // dispatch(addTx(tx))
           })
-        document.getElementById("passphrase").value = ''
-        dispatch(finishExchange())
+        //document.getElementById("passphrase").value = ''
+        //dispatch(finishTransfer())
       } catch (e) {
         console.log(e)
         this.props.dispatch(throwPassphraseError("Key derivation failed"))
         //errors["passwordError"] = e.message
       }
     }
+    runAfterBroacastTx =(ex, trans)=>{
+      const account = this.props.account
+      const params = this.formParams()
+      const ethereum = this.props.ethereum
+      const dispatch = this.props.dispatch
+      const tx = new Tx(
+        ex, account.address, ethUtil.bufferToInt(trans.gas),
+        weiToGwei(ethUtil.bufferToInt(trans.gasPrice)),
+        ethUtil.bufferToInt(trans.nonce), "pending", "send", {
+          sourceToken: params.token,
+          sourceAmount: params.amount,
+          destAddress: params.destAddress,
+        })
+      dispatch(incManualNonceAccount(account.address))
+      dispatch(updateAccount(ethereum, account))
+      dispatch(addTx(tx))
+    }
     render (){
-        var modalPassphrase = this.props.account.type ==="keystore"?(
-            <Modal  
-            isOpen={this.props.form.passphrase}
-            onRequestClose={this.closeModal}
-            contentLabel="password modal"
-            content = {this.content()}       
-            />
-        ):""
-        return (
+      var modalPassphrase = this.props.account.type ==="keystore"?(
+        <Modal  
+        isOpen={this.props.form.passphrase}
+        onRequestClose={this.closeModal}
+        contentLabel="password modal"
+        content = {this.content()}       
+        />
+    ): <Modal 
+        isOpen={this.props.form.confirmColdWallet}
+        onRequestClose={this.closeModal}
+        contentLabel="confirm modal"
+        content = {this.contentConfirm()}    
+    />
+        return (          
             <div>
-            <button onClick={this.clickExchange}>Exchange</button>
+            <button onClick={this.clickTransfer}>Transfer</button>
                 {modalPassphrase}
                </div>            
         )
