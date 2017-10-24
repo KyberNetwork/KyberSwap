@@ -194,17 +194,17 @@ export default class PostTransfer extends React.Component {
     render (){
       var modalPassphrase = this.props.account.type ==="keystore"?(
         <Modal  
-        isOpen={this.props.form.passphrase}
-        onRequestClose={this.closeModal}
-        contentLabel="password modal"
-        content = {this.content()}       
+            isOpen={this.props.form.passphrase}
+            onRequestClose={this.closeModal}
+            contentLabel="password modal"
+            content = {this.content()}       
+            />
+        ): <Modal 
+            isOpen={this.props.form.confirmColdWallet}
+            onRequestClose={this.closeModal}
+            contentLabel="confirm modal"
+            content = {this.contentConfirm()}    
         />
-    ): <Modal 
-        isOpen={this.props.form.confirmColdWallet}
-        onRequestClose={this.closeModal}
-        contentLabel="confirm modal"
-        content = {this.contentConfirm()}    
-    />
         return (          
             <div>
             <button onClick={this.clickTransfer}>Transfer</button>
