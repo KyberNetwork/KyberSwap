@@ -89,8 +89,12 @@ const transfer = (state=initState, action) => {
       newState.passphrase = false
       return newState
     case "TRANSFER.THROW_ERROR_DEST_ADDRESS":
-      newState.errors.destAddress = action.payload
-      return newState
+      // var newErrorObj = newState.errors;
+      // newErrorObj.destAddress = action.payload;
+      // newState.errors = {destAddress: action.payload}
+      // newState.errors.destAddress = action.payload
+      var cloneState = {...newState, errors: {...newState.errors, destAddress: action.payload}}
+      return cloneState
     case "TRANSFER.THROW_AMOUNT_ERROR":{
       newState.errors.amountTransfer = action.payload
       return newState

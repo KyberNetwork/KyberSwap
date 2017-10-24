@@ -100,6 +100,15 @@ export default class PostTransfer extends React.Component {
         var form = this.props.form;
         return `transfer ${form.amount.toString().slice(0,7)}${form.amount.toString().length > 7?'...':''} ${form.tokenSymbol} to ${form.destAddress.slice(0,7)}...${form.destAddress.slice(-5)}`
       } 
+
+      recap = () => {
+        var amount = this.props.form.amount.toString();
+        var tokenSymbol = this.props.form.tokenSymbol;
+        var destAddress = this.props.form.destAddress;
+        return {
+          amount, tokenSymbol, destAddress
+        }
+      }
       closeModal = (event) => {
         switch(this.props.account.type){
           case "keystore":
@@ -187,12 +196,7 @@ export default class PostTransfer extends React.Component {
       const tx = new Tx(
         ex, account.address, ethUtil.bufferToInt(trans.gas),
         weiToGwei(ethUtil.bufferToInt(trans.gasPrice)),
-        ethUtil.bufferToInt(trans.nonce), "pending", "send", {
-          sourceToken: params.token,
-          sourceAmount: params.amount,
-          destAddress: params.destAddress,
-          recap: recap
-        })
+        ethUtil.bufferToInt(trans.nonce), "pending", "send", this.recap())
       dispatch(incManualNonceAccount(account.address))
       dispatch(updateAccount(ethereum, account))
       dispatch(addTx(tx))
