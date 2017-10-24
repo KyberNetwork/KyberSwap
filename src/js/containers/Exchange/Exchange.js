@@ -7,7 +7,7 @@ import {calculateMinAmount, toTWei, toT, toEther} from "../../utils/converter"
 //import {TokenDest, MinRate} from "../ExchangeForm"
 import {Token, ExchangeRate, PostExchange} from "../Exchange"
 import {ExchangeForm} from "../../components/Forms"
-import {SelectTokenModal, ChangeGasModal, PassphraseExchangeModal, TransactionLoading} from "../CommonElements"
+import {SelectTokenModal, ChangeGasModal, TransactionLoading} from "../CommonElements"
 
 import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
 //import {toT, toTWei} from "../../utils/converter"
@@ -145,11 +145,6 @@ export default class Exchange extends React.Component {
       gasPriceError = {this.props.errors.gasPriceError}
       gasError = {this.props.errors.gasError}                        
       />
-    )
-    var passphraseModal = (
-      <PassphraseExchangeModal   type="exchange"
-      open={this.props.passphrase}
-      recap={this.createRecap()} />
     )
     var exchangeRate = (
       <ExchangeRate />
