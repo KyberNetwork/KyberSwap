@@ -111,6 +111,7 @@ const exchange = (state=initState, action) => {
     }
     case "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED": {
       newState.broadcasting = false
+      newState.errors.gasError = action.payload
       newState.bcError = action.payload
       return newState
     }

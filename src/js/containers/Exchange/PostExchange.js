@@ -90,6 +90,20 @@ export default class PostExchange extends React.Component {
     var recap = `exchange ${this.props.sourceAmount.toString().slice(0, 7)}${this.props.sourceAmount.toString().length > 7 ? '...' : ''} ${this.props.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0, 7)}${this.getDesAmount().toString().length > 7 ? '...' : ''} ${this.props.destTokenSymbol}`
     return recap
   }
+  getDesAmount = () => {
+    return this.props.form.sourceAmount * toT(this.props.form.offeredRate,6)
+  }
+
+  recap = () => {
+    var sourceAmount = this.props.form.sourceAmount.toString();
+    var sourceTokenSymbol = this.props.form.sourceTokenSymbol;
+    var destAmount = this.getDesAmount().toString();
+    var destTokenSymbol = this.props.form.destTokenSymbol;
+    return {
+      sourceAmount, sourceTokenSymbol, destAmount, destTokenSymbol
+    }
+  }
+
   closeModal = (event) => {
     switch (this.props.account.type) {
       case "keystore":
@@ -190,14 +204,7 @@ export default class PostExchange extends React.Component {
     const tx = new Tx(
       ex, account.address, ethUtil.bufferToInt(trans.gas),
       weiToGwei(ethUtil.bufferToInt(trans.gasPrice)),
-      ethUtil.bufferToInt(trans.nonce), "pending", "exchange", {
-        sourceToken: params.sourceToken,
-        sourceAmount: params.sourceAmount,
-        destToken: params.destToken,
-        minConversionRate: params.minConversionRate,
-        destAddress: params.destAddress,
-        maxDestAmount: params.maxDestAmount,
-      })
+      ethUtil.bufferToInt(trans.nonce), "pending", "exchange", this.recap())
     dispatch(incManualNonceAccount(account.address))
     dispatch(updateAccount(ethereum, account))
     dispatch(addTx(tx))
