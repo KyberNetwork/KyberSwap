@@ -30,7 +30,7 @@ export default class ChangeGasModal extends React.Component {
     if (this.props.type === "exchange") {
       this.props.dispatch(hideAdvanceExchange())
     } else {
-      this.props.dispatch(hideAdvanceTransfer(value))
+      this.props.dispatch(hideAdvanceTransfer())
     }
   }
 

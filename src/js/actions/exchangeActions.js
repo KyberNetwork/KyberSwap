@@ -186,9 +186,15 @@ export function doTransaction(id, ethereum, tx, callback) {
   }
   
   export function doApprovalTransactionFail(error, id) {
-	return {
-	  type: "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED",
-	  payload: error,
-	  meta: id,
+		return {
+			type: "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED",
+			payload: error,
+			meta: id,
+		}
 	}
-  }
+	
+	export function makeNewExchange(){
+		return {
+			type: "EXCHANGE.MAKE_NEW_EXCHANGE"
+		}
+	}

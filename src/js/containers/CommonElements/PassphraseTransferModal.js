@@ -64,6 +64,7 @@ export default class PassphraseTransferModal extends React.Component {
       var dispatch = this.props.dispatch
       //var sourceAccount = account
       var formId = "transfer"
+      var recap = this.props.recap;
       call(
         formId, ethereum, account.address,
         params.token, params.amount,
@@ -76,6 +77,7 @@ export default class PassphraseTransferModal extends React.Component {
               sourceToken: params.token,
               sourceAmount: params.amount,
               destAddress: params.destAddress,
+              recap: recap
             })
           dispatch(incManualNonceAccount(account.address))
           dispatch(updateAccount(ethereum, account))

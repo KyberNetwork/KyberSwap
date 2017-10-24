@@ -148,9 +148,15 @@ export function doTransaction(id, ethereum, tx, callback) {
   }
   
   export function doApprovalTransactionFail(error, id) {
-	return {
-	  type: "TRANSFER.APPROVAL_TX_BROADCAST_REJECTED",
-	  payload: error,
-	  meta: id,
+		return {
+			type: "TRANSFER.APPROVAL_TX_BROADCAST_REJECTED",
+			payload: error,
+			meta: id,
+		}
 	}
-  }
+	
+	export function makeNewTransfer(){
+		return {
+			type: "TRANSFER.MAKE_NEW_TRANSFER"
+		}
+	}
