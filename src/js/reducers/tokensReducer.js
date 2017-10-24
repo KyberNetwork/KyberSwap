@@ -6,9 +6,8 @@ import GLOBAL from "../constants/globalActions"
 const token = (state={}, action) => {
   switch (action.type) {
     case REHYDRATE: {
-      if (action.payload.tokens) {
-        var loadedTokens = action.payload.tokens
-        var tokens = {}
+      var loadedTokens = action.payload.tokens      
+        var tokens = {}        
         if(loadedTokens){
             Object.keys(loadedTokens).forEach((id) => {
                 var tokenMap = loadedTokens[id]
@@ -25,9 +24,7 @@ const token = (state={}, action) => {
             return Object.assign({}, state, tokens)
         } else {
             return state;
-        }
-      }
-      return state
+        }            
     }
     case GLOBAL.RATE_UPDATED_FULFILLED: {
       var tokens = {...state.tokens}

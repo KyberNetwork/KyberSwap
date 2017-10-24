@@ -89,7 +89,7 @@ export default class EthereumService {
   fetchRateData() {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    var ownerAddr = state.account.address
+    var ownerAddr = state.account.account.address
     for (var i = 0; i < SupportedTokens.length; i++) {
       var token = {
         name: SupportedTokens[i].name,
@@ -120,7 +120,7 @@ export default class EthereumService {
   fetchAccountData = () => {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    var account = store.getState().account
+    var account = store.getState().account.account
     if (account.address){
       store.dispatch(updateAccount(ethereum, account))
     }

@@ -2,7 +2,7 @@ import { sealTxByKeystore, sealTxByTrezor } from "../utils/sealer"
 import { verifyNonce } from "../utils/validators"
 import store from "../store"
 import { doTransaction, doApprovalTransaction, saveRawExchangeTransaction, throwErrorSignExchangeTransaction } from "../actions/exchangeActions"
-import { doTransaction as doTransactionTransfer, saveRawTransferTransaction, throwErrorSignTransferTransaction} from "../actions/transferActions"
+import { doTransaction as doTransactionTransfer, saveRawTransferTransaction, throwErrorSignTransferTransaction } from "../actions/transferActions"
 import constants from "../services/constants"
 import Rate from "./rate"
 
@@ -64,7 +64,7 @@ export function sendEtherFromAccount(
     // EIP 155 chainId - mainnet: 1, ropsten: 3
     chainId: 42
   }
-  switch (accountType){
+  switch (accountType) {
     case "keystore":
       const tx = sealTxByKeystore(txParams, keystring, password)
       store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
@@ -77,7 +77,7 @@ export function sendEtherFromAccount(
         store.dispatch(throwErrorSignTransferTransaction(error))
       })
       break
-  }  
+  }
 }
 
 export function sendTokenFromAccount(
@@ -97,8 +97,8 @@ export function sendTokenFromAccount(
     // EIP 155 chainId - mainnet: 1, ropsten: 3
     chainId: 42
   }
-  
-  switch (accountType){
+
+  switch (accountType) {
     case "keystore":
       const tx = sealTxByKeystore(txParams, keystring, password)
       store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
@@ -112,7 +112,7 @@ export function sendTokenFromAccount(
       })
       break
   }
-  
+
 }
 
 export function etherToOthersFromAccount(
@@ -134,7 +134,7 @@ export function etherToOthersFromAccount(
     // EIP 155 chainId - mainnet: 1, ropsten: 3
     chainId: 42
   }
-  switch (accountType){
+  switch (accountType) {
     case "keystore":
       var tx = sealTxByKeystore(txParams, keystring, password)
       store.dispatch(doTransaction(id, ethereum, tx, callback))
@@ -149,7 +149,7 @@ export function etherToOthersFromAccount(
       break
   }
   //const tx = sealTxByKeystore(txParams, keystring, password)
-  
+
 }
 
 export function tokenToOthersFromAccount(
@@ -169,35 +169,35 @@ export function tokenToOthersFromAccount(
     // EIP 155 chainId - mainnet: 1, ropsten: 3
     chainId: 42
   }
-  switch (accountType){
+  switch (accountType) {
     case "keystore":
       const approvalTx = sealTxByKeystore(txParams, keystring, password)
       store.dispatch(
-          doApprovalTransaction(id, ethereum, approvalTx, (hash) => {
-            const exchangeData = ethereum.exchangeData(
-              sourceToken, sourceAmount, destToken, destAddress,
-              maxDestAmount, minConversionRate, throwOnFailure)
-            const newNonce = verifyNonce(nonce, 1)
-            const exchangeTxParams = {
-              nonce: newNonce,
-              gasPrice: gasPrice,
-              gasLimit: gas,
-              to: ethereum.networkAddress,
-              value: 0,
-              data: exchangeData,
-              // EIP 155 chainId - mainnet: 1, ropsten: 3
-              chainId: 42
-            }
-            const exchangeTx = sealTxByKeystore(exchangeTxParams, keystring, password)
-            console.log(exchangeTx)
-            store.dispatch(doTransaction(id, ethereum, exchangeTx, callback))
+        doApprovalTransaction(id, ethereum, approvalTx, (hash) => {
+          const exchangeData = ethereum.exchangeData(
+            sourceToken, sourceAmount, destToken, destAddress,
+            maxDestAmount, minConversionRate, throwOnFailure)
+          const newNonce = verifyNonce(nonce, 1)
+          const exchangeTxParams = {
+            nonce: newNonce,
+            gasPrice: gasPrice,
+            gasLimit: gas,
+            to: ethereum.networkAddress,
+            value: 0,
+            data: exchangeData,
+            // EIP 155 chainId - mainnet: 1, ropsten: 3
+            chainId: 42
+          }
+          const exchangeTx = sealTxByKeystore(exchangeTxParams, keystring, password)
+          console.log(exchangeTx)
+          store.dispatch(doTransaction(id, ethereum, exchangeTx, callback))
         }))
       break
     case "trezor":
-      
+
       break
   }
-  
+
 }
 
 export function fetchRate(ethereum, source, dest, reserve, callback) {
@@ -210,17 +210,17 @@ export function fetchRate(ethereum, source, dest, reserve, callback) {
 }
 
 export function fetchRatePromise(ethereum, source, dest, reserve) {
-  return new Promise((resolve, reject)=>{
+  return new Promise((resolve, reject) => {
     ethereum.getRate(source.address, dest.address, reserve.index,
-    (result) => {
-      resolve(new Rate(
-        source.name,
-        source.symbol,
-        source.icon,
-        source.address,
-        result[0],
-        result[2]
-      ))
-    })  
-  })  
+      (result) => {
+        resolve(new Rate(
+          source.name,
+          source.symbol,
+          source.icon,
+          source.address,
+          result[0],
+          result[2]
+        ))
+      })
+  })
 }

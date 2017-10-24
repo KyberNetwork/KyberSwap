@@ -19,13 +19,12 @@ import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectT
 
 
 @connect((store) => {
-  if (!!!store.account.address){
-    window.location.href = "/"
-  }
-  const tokens = store.tokens
-  const tokenSymbol = store.transfer.tokenSymbol
-  const balance = tokens[tokenSymbol].balance
-  return {...store.transfer, balance}
+  if (store.account.isStoreReady){
+    if (!!!store.account.account.address){
+      window.location.href = "/"
+    }
+  }  
+  return {...store.transfer}
 })
 
 export default class Transfer extends React.Component {

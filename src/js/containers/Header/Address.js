@@ -15,7 +15,7 @@ export default class Address extends React.Component {
   }
 
 	render() {
-    const address = this.props.address
+    const address = this.props.account.address
     return (
         <div>
           { address ? <p>{address}</p> : ''}

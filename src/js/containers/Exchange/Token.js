@@ -23,17 +23,25 @@ export default class Token extends React.Component {
     //var token = !!this.props.symbol?this.props.tokens[this.props.symbol]: this.props.tokens[pickRandomProperty(this.props.tokens)]
     //console.log(this.props.symbol)
     //console.log(this.props.tokens)
+    var tokenRender
     var token = this.props.tokens[this.props.symbol]
-  	var balance = this.props.type === 'source'?(<div>Address Balance: <span>{toT(token.balance, 8)}</span></div>):''
-  	
+    if (token){
+      var balance = this.props.type === 'source'?(<div>Address Balance: <span>{toT(token.balance, 8)}</span></div>):''
+      tokenRender = (
+        <div>
+          <div onClick={this.props.onSelected}>
+            <img src={token.icon} />
+            <span>{token.symbol}</span>
+          </div>      	
+          {balance}
+        </div>
+      )
+    }
+  	  	
     return (
       <div>
-      	<div onClick={this.props.onSelected}>
-	      	<img src={token.icon} />
-	      	<span>{token.symbol}</span>
-      	</div>      	
-      	{balance}
-      </div>
+        {tokenRender}
+      </div>      
     )
   }
 }

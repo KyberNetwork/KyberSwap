@@ -21,9 +21,12 @@ import {Modal} from "../../components/CommonElement"
 @connect((store, props) => {
   const tokens = store.tokens
   const tokenSymbol = store.transfer.tokenSymbol
-  const balance = tokens[tokenSymbol].balance
+  var balance = 0
+  if (tokens[tokenSymbol]){
+    balance = tokens[tokenSymbol].balance
+  }  
   return {
-    account: store.account,
+    account: store.account.account,
     form: {...store.transfer, balance},
     ethereum: store.connection.ethereum
   };
@@ -201,17 +204,17 @@ export default class PostTransfer extends React.Component {
     render (){
       var modalPassphrase = this.props.account.type ==="keystore"?(
         <Modal  
-        isOpen={this.props.form.passphrase}
-        onRequestClose={this.closeModal}
-        contentLabel="password modal"
-        content = {this.content()}       
+            isOpen={this.props.form.passphrase}
+            onRequestClose={this.closeModal}
+            contentLabel="password modal"
+            content = {this.content()}       
+            />
+        ): <Modal 
+            isOpen={this.props.form.confirmColdWallet}
+            onRequestClose={this.closeModal}
+            contentLabel="confirm modal"
+            content = {this.contentConfirm()}    
         />
-    ): <Modal 
-        isOpen={this.props.form.confirmColdWallet}
-        onRequestClose={this.closeModal}
-        contentLabel="confirm modal"
-        content = {this.contentConfirm()}    
-    />
         return (          
             <div>
             <button onClick={this.clickTransfer}>Transfer</button>

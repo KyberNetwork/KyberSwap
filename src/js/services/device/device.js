@@ -44,3 +44,16 @@ export function getLedgerPublicKey(eth) {
             });
     });
 }
+
+export function signLedgerTransaction(eth, path, raxTxHex) {
+    return new Promise((resolve, reject) => {
+        eth.signTransaction_async(path, raxTxHex)
+            .then((result) => {
+                resolve(result);
+            })
+            .fail((err) => {
+                reject(err);
+            });
+
+    });
+}
