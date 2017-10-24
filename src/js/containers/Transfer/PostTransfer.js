@@ -45,31 +45,32 @@ export default class PostTransfer extends React.Component {
     }
     validateExchange = () =>{
         //check source amount
-        if(isNaN(this.props.form.sourceAmount)){
-          this.props.dispatch(thowErrorSourceAmount("Source amount must be a number"))
-          return false
-        }
-        else if(this.props.form.sourceAmount > toT(this.props.form.sourceBalance, 8)){
-          this.props.dispatch(thowErrorSourceAmount("Source amount is too high"))
-          return false
-        }    
-        return true
+      if(isNaN(this.props.form.sourceAmount)){
+        this.props.dispatch(thowErrorSourceAmount("Source amount must be a number"))
+        return false
       }
-      content = () =>{
-          return (
-              <div>
-                <div>{this.createRecap}</div>
-                <input type="password" id="passphrase" onChange={this.changePassword}/>
-                <button onClick={this.processTx}>Exchange</button>
-                {this.props.form.errors.passwordError}
-            </div>
-          )
-      }
-      createRecap = () =>{
-          return "Create recap"
-      }
-      closeModal = (event) => {
-        this.props.dispatch(hidePassphrase())
+      else if(this.props.form.sourceAmount > toT(this.props.form.sourceBalance, 8)){
+        this.props.dispatch(thowErrorSourceAmount("Source amount is too high"))
+        return false
+      }    
+      return true
+    }
+    content = () =>{
+        return (
+            <div>
+              <div>{this.createRecap()}</div>
+              <input type="password" id="passphrase" onChange={this.changePassword}/>
+              <button onClick={this.processTx}>Exchange</button>
+              {this.props.form.errors.passwordError}
+          </div>
+        )
+    }
+    createRecap = () => {
+      var form = this.props.form;
+      return `transfer ${form.amount.toString().slice(0,7)}${form.amount.toString().length > 7?'...':''} ${form.tokenSymbol} to ${form.destAddress.slice(0,7)}...${form.destAddress.slice(-5)}`
+    }  
+    closeModal = (event) => {
+      this.props.dispatch(hidePassphrase())
     }
     changePassword = (event) =>{
       this.props.dispatch(changePassword())
@@ -108,6 +109,7 @@ export default class PostTransfer extends React.Component {
         var dispatch = this.props.dispatch
         var sourceAccount = account
         var formId = "exchange"
+        var recap = this.createRecap()    
         call(
           formId, ethereum, account.address, params.sourceToken,
           params.sourceAmount, params.destToken, params.destAddress,
@@ -124,6 +126,7 @@ export default class PostTransfer extends React.Component {
                 minConversionRate: params.minConversionRate,
                 destAddress: params.destAddress,
                 maxDestAmount: params.maxDestAmount,
+                recap: recap
               })
             dispatch(incManualNonceAccount(account.address))
             dispatch(updateAccount(ethereum, account))

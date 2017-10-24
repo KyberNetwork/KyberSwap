@@ -67,7 +67,7 @@ export default class PostExchange extends React.Component {
       content = () =>{
           return (
               <div>
-                <div>{this.createRecap}</div>
+                <div>{this.createRecap()}</div>
                 <input type="password" id="passphrase" onChange={this.changePassword}/>
                 <button onClick={this.processTx}>Exchange</button>
                 {this.props.form.errors.passwordError}
@@ -77,7 +77,7 @@ export default class PostExchange extends React.Component {
       contentConfirm = () => {
         return (
           <div>
-            <div>{this.createRecap}</div>
+            <div>{this.createRecap()}</div>
             <button onClick={this.closeModal}>Cancel</button>
             <button onClick={this.broacastTx}>Exchange</button>
           </div>
@@ -89,8 +89,14 @@ export default class PostExchange extends React.Component {
         var tx = this.props.form.rawTx
         this.props.dispatch(doTransaction(id, ethereum, tx, callback))
       }
+      getDesAmount = () => {
+        return this.props.form.sourceAmount * toT(this.props.form.offeredRate,6)
+      }
+
       createRecap = () => {
-        var recap = `exchange ${this.props.sourceAmount.toString().slice(0,7)}${this.props.sourceAmount.toString().length > 7?'...':''} ${this.props.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0,7)}${this.getDesAmount().toString().length > 7?'...':''} ${this.props.destTokenSymbol}`
+        var form = this.props.form;
+        var destAmount = this.getDesAmount();
+        var recap = `exchange ${form.sourceAmount.toString().slice(0,7)}${form.sourceAmount.toString().length > 7?'...':''} ${form.sourceTokenSymbol} for ${destAmount.toString().slice(0,7)}${destAmount.toString().length > 7?'...':''} ${form.destTokenSymbol}`
         return recap
       }
       closeModal = (event) => {
@@ -145,7 +151,6 @@ export default class PostExchange extends React.Component {
           password = document.getElementById("passphrase").value
           document.getElementById("passphrase").value = ''
         }
-        console.log(password)
         const params = this.formParams()
         // sending by wei
         var account = this.props.account
@@ -191,6 +196,7 @@ export default class PostExchange extends React.Component {
       const params = this.formParams()
       const ethereum = this.props.ethereum
       const dispatch = this.props.dispatch
+      var recap = this.createRecap()      
       const tx = new Tx(
         ex, account.address, ethUtil.bufferToInt(trans.gas),
         weiToGwei(ethUtil.bufferToInt(trans.gasPrice)),
@@ -201,6 +207,7 @@ export default class PostExchange extends React.Component {
           minConversionRate: params.minConversionRate,
           destAddress: params.destAddress,
           maxDestAmount: params.maxDestAmount,
+          recap: recap
         })
       dispatch(incManualNonceAccount(account.address))
       dispatch(updateAccount(ethereum, account))
