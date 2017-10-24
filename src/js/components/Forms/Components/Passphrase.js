@@ -16,8 +16,6 @@ const customStyles = {
 }
 
 const Passphrase = (props) => {
-  console.log("+++++++++++++++ run to passphrase")
-  console.log(props);
   return(
     <Modal  
       style={customStyles}    

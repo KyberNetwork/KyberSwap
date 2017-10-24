@@ -71,6 +71,7 @@ export default class PostExchange extends React.Component {
                 <div>{this.createRecap()}</div>
                 <input type="password" id="passphrase" onChange={this.changePassword}/>
                 <button onClick={this.processTx}>Exchange</button>
+                <div>{this.props.form.errors.gasError}</div>
                 {this.props.form.errors.passwordError}
             </div>
           )
