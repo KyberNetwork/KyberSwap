@@ -1,8 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
-import {Rate, Address} from "../Header"
+import {Rate, Address, Transactions} from "../Header"
 
-import { Transactions } from "../Transaction"
 import { clearTxs } from "../../actions/txActions"
 @connect((store) => {
   return {txs: store.txs}
