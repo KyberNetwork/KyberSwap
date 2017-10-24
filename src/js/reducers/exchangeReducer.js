@@ -149,6 +149,10 @@ const exchange = (state=initState, action) => {
       newState.passphrase = false
       return newState
     }      
+    case "EXCHANGE.HIDE_CONFIRM":{
+      newState.confirmColdWallet = false
+      return newState
+    }
     case "EXCHANGE.CHANGE_PASSPHRASE":{
       newState.errors.passwordError = ""
       return newState
@@ -159,8 +163,18 @@ const exchange = (state=initState, action) => {
     }
     case "EXCHANGE.FINISH_EXCHANGE":{
       newState.passphrase = false
+      newState.confirmColdWallet = false
       newState.step = 3   
       return newState   
+    }
+    case "EXCHANGE.SAVE_RAW_TRANSACTION":{
+      newState.txRaw = action.payload
+      newState.confirmColdWallet = true
+      return newState
+    }
+    case "EXCHANGE.THROW_ERROR_SIGN_TRANSACTION":{
+      newState.errors.signTransaction = action.payload
+      return newState
     }
   }
   return state

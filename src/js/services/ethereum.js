@@ -250,6 +250,7 @@ export default class EthereumService {
   //     })
   // }
   sendRawTransaction(tx, ethereum) {
+    //console.log(ethUtil.bufferToHex(tx.serialize()))
     return new Promise((resolve, rejected) => {
       ethereum.rpc.eth.sendRawTransaction(
       ethUtil.bufferToHex(tx.serialize()), (error, hash) => {

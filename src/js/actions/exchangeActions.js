@@ -126,6 +126,12 @@ export function hidePassphrase(){
 	}					
 }
 
+export function hideConfirm(){
+	return {
+		type: "EXCHANGE.HIDE_CONFIRM",		
+	}					
+}
+
 export function changePassword(){
 	return {
 		type: "EXCHANGE.CHANGE_PASSPHRASE",		
@@ -196,5 +202,18 @@ export function doTransaction(id, ethereum, tx, callback) {
 	export function makeNewExchange(){
 		return {
 			type: "EXCHANGE.MAKE_NEW_EXCHANGE"
+	}
+	
+	export function saveRawExchangeTransaction(tx){
+		return {
+			type: "EXCHANGE.SAVE_RAW_TRANSACTION",
+			payload: tx			
+		}
+	}
+
+	export function throwErrorSignExchangeTransaction(error){
+		return {
+			type: "EXCHANGE.THROW_ERROR_SIGN_TRANSACTION",
+			payload: error
 		}
 	}

@@ -1,7 +1,15 @@
 import React from "react";
+import { connect } from "react-redux"
+import { push } from 'react-router-redux';
+
 import AddressGenerator from "../../services/device/addressGenerator";
-import { getPubData, connectLedger, getLedgerPublicKey } from "../../services/device/device";
+import { getTrezorPublicKey, connectLedger, getLedgerPublicKey } from "../../services/device/device";
 import SelectAddressModal from "../CommonElements/SelectAddressModal";
+
+import { importNewAccount } from "../../actions/accountActions"
+@connect((store) => {
+    return {...store.account}
+  })
 
 export default class ImportTrezor extends React.Component {
 
@@ -18,24 +26,27 @@ export default class ImportTrezor extends React.Component {
     setDeviceState() {
         this.addressIndex = 0;
         this.currentIndex = 0;
+        this.walletType = 'trezor';
+        this.dPath = '';
         this.generator = null;
     }
 
     connectDevice(walletType) {
-        this.setDeviceState()
+        this.setDeviceState();
         switch (walletType) {
             case 'trezor': {
-                let promise = getPubData();
+                let promise = getTrezorPublicKey();
                 promise.then((result) => {
                     this.generateAddress(result);
+                    this.dPath = result.dPath;
                 })
                 break;
             }
             case 'ledger': {
-                let path = this.state.ledgerPath;
-                connectLedger(path).then((eth) => {
-                    getLedgerPublicKey(eth, path).then((result) => {
+                connectLedger().then((eth) => {
+                    getLedgerPublicKey(eth).then((result) => {
                         this.generateAddress(result);
+                        this.dPath = result.dPath;
                     }).catch((err) => {
                         console.log(err)
                     });
@@ -45,6 +56,8 @@ export default class ImportTrezor extends React.Component {
                 break;
             }
         }
+        console.log(this.dPath);
+        this.walletType = walletType;
     }
 
     generateAddress(data) {
@@ -52,8 +65,11 @@ export default class ImportTrezor extends React.Component {
         let addresses = [];
         let index = 0;
         for (index; index < 5; index++) {
-            let addressString = this.generator.getAddressString(index);
-            addresses.push(addressString);
+            let address = {
+                addressString: this.generator.getAddressString(index),
+                index: index,
+            };
+            addresses.push(address);
         }
         this.addressIndex = index;
         this.currentIndex += 5;
@@ -83,8 +99,11 @@ export default class ImportTrezor extends React.Component {
             j = i + 5;
         if (this.addressIndex == this.currentIndex) {
             for (i; i < j; i++) {
-                let addressString = this.generator.getAddressString(i);
-                addresses.push(addressString);
+                let address = {
+                    addressString: this.generator.getAddressString(i),
+                    index: i,
+                };
+                addresses.push(address);
             }
         }
         this.addressIndex = i;
@@ -106,12 +125,30 @@ export default class ImportTrezor extends React.Component {
         }
     }
 
+    getAddress() {
+        let formAddress = JSON.parse(this.refs.formAddress.address.value),
+            data = {
+                address: formAddress.addressString,
+                type: this.walletType,
+                path: this.dPath + '/' + formAddress.index,
+
+            };
+            
+        this.props.dispatch(importNewAccount(data.address, data.type, data.path))
+        this.closeModal()
+        setTimeout(() => {this.goToExchange()}, 3000)           
+    }
+    goToExchange = () =>{
+        // window.location.href = "/exchange"
+        // this.props.router.push('/exchange')
+        this.props.dispatch(push('/exchange'));
+      }
     render() {
         const currentList = this.state.currentAddresses.map((address) => {
             return (
-                <li key={address}>
-                    <input type="radio" name="address" value={address} />
-                    <span> {address}</span>
+                <li key={address.addressString}>
+                    <input type="radio" name="address" value={JSON.stringify(address)}  />
+                    <span> {address.addressString}</span>
                 </li>
             )
         })
@@ -127,11 +164,14 @@ export default class ImportTrezor extends React.Component {
                     onRequestClose={this.closeModal.bind(this)}
                     content={
                         <div className="popup">
-                            <ul>
-                                {currentList}
-                            </ul>
+                            <form ref="formAddress">
+                                <ul>
+                                    {currentList}
+                                </ul>
+                            </form>
                             <a onClick={() => this.preAddress()}>Pre address</a> |
-                            <a onClick={() => this.moreAddress()}> More address</a>
+                            <a onClick={() => this.moreAddress()}> More address</a> |
+                            <a onClick={() => this.getAddress()}> Select address</a>
                         </div>
                     }
                 />

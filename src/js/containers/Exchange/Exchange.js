@@ -5,7 +5,7 @@ import { connect } from "react-redux"
 import {calculateMinAmount, toTWei, toT, toEther} from "../../utils/converter"
 //import TokenDest from "./TokenDest"
 //import {TokenDest, MinRate} from "../ExchangeForm"
-import {Token, ExchangeRate} from "../Exchange"
+import {Token, ExchangeRate, PostExchange} from "../Exchange"
 import {ExchangeForm} from "../../components/Forms"
 import {SelectTokenModal, ChangeGasModal, PassphraseExchangeModal, TransactionLoading} from "../CommonElements"
 
@@ -64,24 +64,24 @@ export default class Exchange extends React.Component {
     var value = e.target.value
     this.props.dispatch(changeSourceAmout(value))
   }
-  clickExchange = () =>{
-    if(this.validateExchange()){
-      this.props.dispatch(openPassphrase())
-    }
+  // clickExchange = () =>{
+  //   if(this.validateExchange()){
+  //     this.props.dispatch(openPassphrase())
+  //   }
 
-  }
-  validateExchange = () =>{
-    //check source amount
-    if(isNaN(this.props.sourceAmount)){
-      this.props.dispatch(thowErrorSourceAmount("Source amount must be a number"))
-      return false
-    }
-    else if(this.props.sourceAmount > toT(this.props.balance, 8)){
-      this.props.dispatch(thowErrorSourceAmount("Source amount is too high"))
-      return false
-    }    
-    return true
-  }
+  // }
+  // validateExchange = () =>{
+  //   //check source amount
+  //   if(isNaN(this.props.sourceAmount)){
+  //     this.props.dispatch(thowErrorSourceAmount("Source amount must be a number"))
+  //     return false
+  //   }
+  //   else if(this.props.sourceAmount > toT(this.props.balance, 8)){
+  //     this.props.dispatch(thowErrorSourceAmount("Source amount is too high"))
+  //     return false
+  //   }    
+  //   return true
+  // }
   getDesAmount = () => {
     return this.props.sourceAmount * toT(this.props.offeredRate,6)
     // var rate = this.props.rate[0]
@@ -155,7 +155,7 @@ export default class Exchange extends React.Component {
       <ExchangeRate />
     )
     var exchangeButton = (
-      <button onClick={this.clickExchange}>Exchange</button>
+      <PostExchange />      
     )
     var trasactionLoadingScreen = (
       <TransactionLoading tx={this.props.txHash} makeNewTransaction={this.makeNewExchange}/>
@@ -170,7 +170,6 @@ export default class Exchange extends React.Component {
                     destAmount= {destAmount}
                     selectTokenModal= {selectTokenModal}
                     changeGasModal= {changeGasModal}
-                    passphraseModal= {passphraseModal}
                     exchangeRate = {exchangeRate}
                     exchangeButton= {exchangeButton}
                     errorSelectSameToken = {errorSelectSameToken}

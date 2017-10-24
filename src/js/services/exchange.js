@@ -1,7 +1,7 @@
-import { sealTxByKeystore } from "../utils/sealer"
+import { sealTxByKeystore, sealTxByTrezor } from "../utils/sealer"
 import { verifyNonce } from "../utils/validators"
 import store from "../store"
-import { doTransaction, doApprovalTransaction } from "../actions/exchangeActions"
+import { doTransaction, doApprovalTransaction, saveRawExchangeTransaction, throwErrorSignExchangeTransaction } from "../actions/exchangeActions"
 import { doTransaction as doTransactionTransfer} from "../actions/transferActions"
 import constants from "../services/constants"
 import Rate from "./rate"
@@ -92,7 +92,7 @@ export function sendTokenFromAccount(
 export function etherToOthersFromAccount(
   id, ethereum, account, sourceToken, sourceAmount, destToken,
   destAddress, maxDestAmount, minConversionRate,
-  throwOnFailure, nonce, gas, gasPrice, keystring,
+  throwOnFailure, nonce, gas, gasPrice, keystring, accountType,
   password, callback) {
 
   var txData = ethereum.exchangeData(
@@ -108,38 +108,29 @@ export function etherToOthersFromAccount(
     // EIP 155 chainId - mainnet: 1, ropsten: 3
     chainId: 42
   }
-  const tx = sealTxByKeystore(txParams, keystring, password)
-  store.dispatch(doTransaction(id, ethereum, tx, callback))
-}
-
-export function exchangeFromWallet(
-  id, ethereum, account, sourceToken, sourceAmount, destToken,
-  destAddress, maxDestAmount, minConversionRate,
-  throwOnFailure, nonce, gas, gasPrice, keystring,
-  password, callback, wallet) {
-
-  var txData = ethereum.paymentData(
-    wallet.address, sourceToken, sourceAmount,
-    destToken, maxDestAmount, minConversionRate,
-    destAddress, "", false, throwOnFailure)
-  const txParams = {
-    nonce: nonce,
-    gasPrice: gasPrice,
-    gasLimit: gas,
-    to: wallet.address,
-    value: 0,
-    data: txData,
-    // EIP 155 chainId - mainnet: 1, ropsten: 3
-    chainId: 42
+  var tx
+  switch (accountType){
+    case "keystore":
+      tx = sealTxByKeystore(txParams, keystring, password)
+      store.dispatch(doTransaction(id, ethereum, tx, callback))
+      break
+    case "trezor":
+      txParams.address_n = keystring
+      sealTxByTrezor(txParams, (tx) => {
+        store.dispatch(saveRawExchangeTransaction(tx))
+      }, (error) => {
+        store.dispatch(throwErrorSignExchangeTransaction(error))
+      })
+      break
   }
-  const tx = sealTxByKeystore(txParams, keystring, password)
-  store.dispatch(doTransaction(id, ethereum, tx, callback))
+  //const tx = sealTxByKeystore(txParams, keystring, password)
+  
 }
 
 export function tokenToOthersFromAccount(
   id, ethereum, account, sourceToken, sourceAmount, destToken,
   destAddress, maxDestAmount, minConversionRate,
-  throwOnFailure, nonce, gas, gasPrice, keystring,
+  throwOnFailure, nonce, gas, gasPrice, keystring, accountType,
   password, callback) {
 
   const approvalData = ethereum.approveTokenData(sourceToken, sourceAmount)
@@ -153,28 +144,35 @@ export function tokenToOthersFromAccount(
     // EIP 155 chainId - mainnet: 1, ropsten: 3
     chainId: 42
   }
-  const approvalTx = sealTxByKeystore(txParams, keystring, password)
-  store.dispatch(
-    doApprovalTransaction(id, ethereum, approvalTx, (hash) => {
-      const exchangeData = ethereum.exchangeData(
-        sourceToken, sourceAmount, destToken, destAddress,
-        maxDestAmount, minConversionRate, throwOnFailure)
-      const newNonce = verifyNonce(nonce, 1)
-
-      const exchangeTxParams = {
-        nonce: newNonce,
-        gasPrice: gasPrice,
-        gasLimit: gas,
-        to: ethereum.networkAddress,
-        value: 0,
-        data: exchangeData,
-        // EIP 155 chainId - mainnet: 1, ropsten: 3
-        chainId: 42
-      }
-      const exchangeTx = sealTxByKeystore(exchangeTxParams, keystring, password)
-      console.log(exchangeTx)
-      store.dispatch(doTransaction(id, ethereum, exchangeTx, callback))
-  }))
+  switch (accountType){
+    case "keystore":
+      const approvalTx = sealTxByKeystore(txParams, keystring, password)
+      store.dispatch(
+          doApprovalTransaction(id, ethereum, approvalTx, (hash) => {
+            const exchangeData = ethereum.exchangeData(
+              sourceToken, sourceAmount, destToken, destAddress,
+              maxDestAmount, minConversionRate, throwOnFailure)
+            const newNonce = verifyNonce(nonce, 1)
+            const exchangeTxParams = {
+              nonce: newNonce,
+              gasPrice: gasPrice,
+              gasLimit: gas,
+              to: ethereum.networkAddress,
+              value: 0,
+              data: exchangeData,
+              // EIP 155 chainId - mainnet: 1, ropsten: 3
+              chainId: 42
+            }
+            const exchangeTx = sealTxByKeystore(exchangeTxParams, keystring, password)
+            console.log(exchangeTx)
+            store.dispatch(doTransaction(id, ethereum, exchangeTx, callback))
+        }))
+      break
+    case "trezor":
+      
+      break
+  }
+  
 }
 
 export function fetchRate(ethereum, source, dest, reserve, callback) {
