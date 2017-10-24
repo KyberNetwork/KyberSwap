@@ -14,7 +14,7 @@ import {blackList} from './blacklist'
 
 // require('../assets/scss/app.scss');
 
-const app = document.getElementById('app')
+
 
 //check browser compatible
 var clientPlatform = {
@@ -39,6 +39,11 @@ for (var i = 0; i< blackList.length; i++){
   illegal = true
   break
 }
+
+
+
+
+
 
 if (illegal){
   ReactDOM.render(  

@@ -22,8 +22,11 @@ const transfer = (state=initState, action) => {
   var newState = {...state}
   switch (action.type) {
     case REHYDRATE: {
-      var transfer = action.payload.transfer;
-
+      var transfer = action.payload.transfer
+      if(!!!transfer){
+        return newState
+      }
+      newState = action.payload.transfer
       if(transfer && transfer.selected){
         newState.selected = transfer.selected;
         newState.token = transfer.token

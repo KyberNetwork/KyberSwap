@@ -1,10 +1,10 @@
-import {compose, applyMiddleware, createStore} from "redux"
+import { compose, applyMiddleware, createStore } from "redux"
 //import logger from "redux-logger"
 //import thunk from "redux-thunk"
 //import promise from "redux-promise-middleware"
 import createSagaMiddleware from 'redux-saga'
 
-import {persistStore, autoRehydrate} from 'redux-persist'
+import { persistStore, autoRehydrate } from 'redux-persist'
 import { asyncSessionStorage } from 'redux-persist/storages'
 
 import reducer from "./reducers/index"
@@ -12,7 +12,6 @@ import history from "./history"
 import { routerMiddleware } from 'react-router-redux'
 
 import rootSaga from './sagas'
-
 
 const routeMiddleware = routerMiddleware(history)
 
@@ -26,15 +25,14 @@ const middleware = applyMiddleware(
 )
 
 const store = createStore(
-  reducer, undefined, compose(middleware, autoRehydrate()))
-
+  reducer, undefined, compose(autoRehydrate(), middleware))
 sagaMiddleware.run(rootSaga)
 
 persistStore(store, {
   storage: asyncSessionStorage,
   blacklist: [
-  'connection',
-  'utils',
-  ]})
-
+    'connection',
+    'utils',
+  ]
+})
 export default store

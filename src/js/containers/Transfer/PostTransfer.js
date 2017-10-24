@@ -21,9 +21,12 @@ import {Modal} from "../../components/CommonElement"
 @connect((store, props) => {
   const tokens = store.tokens
   const tokenSymbol = store.transfer.tokenSymbol
-  const balance = tokens[tokenSymbol].balance
+  var balance = 0
+  if (tokens[tokenSymbol]){
+    balance = tokens[tokenSymbol].balance
+  }  
   return {
-    account: store.account,
+    account: store.account.account,
     form: {...store.transfer, balance},
     ethereum: store.connection.ethereum
   };
@@ -93,9 +96,10 @@ export default class PostTransfer extends React.Component {
           this.props.dispatch(finishTransfer())
         }))      
       }
-      createRecap = () =>{
-          return "Create recap"
-      }
+      createRecap = () => {
+        var form = this.props.form;
+        return `transfer ${form.amount.toString().slice(0,7)}${form.amount.toString().length > 7?'...':''} ${form.tokenSymbol} to ${form.destAddress.slice(0,7)}...${form.destAddress.slice(-5)}`
+      } 
       closeModal = (event) => {
         switch(this.props.account.type){
           case "keystore":
@@ -179,6 +183,7 @@ export default class PostTransfer extends React.Component {
       const params = this.formParams()
       const ethereum = this.props.ethereum
       const dispatch = this.props.dispatch
+      var recap = this.createRecap()       
       const tx = new Tx(
         ex, account.address, ethUtil.bufferToInt(trans.gas),
         weiToGwei(ethUtil.bufferToInt(trans.gasPrice)),
@@ -186,6 +191,7 @@ export default class PostTransfer extends React.Component {
           sourceToken: params.token,
           sourceAmount: params.amount,
           destAddress: params.destAddress,
+          recap: recap
         })
       dispatch(incManualNonceAccount(account.address))
       dispatch(updateAccount(ethereum, account))

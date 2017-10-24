@@ -18,12 +18,16 @@ import Tx from "../../services/tx"
 import { Modal } from "../../components/CommonElement"
 
 @connect((store) => {
-  const tokens = store.tokens
-  const sourceTokenSymbol = store.exchange.sourceTokenSymbol
-  const sourceBalance = tokens[sourceTokenSymbol].balance
+  var sourceTokenSymbol = store.exchange.sourceTokenSymbol
+  var tokens = store.tokens
+  var sourceBalance = 0
+  if (tokens[sourceTokenSymbol]){    
+    sourceBalance = tokens[sourceTokenSymbol].balance    
+  }
+  
   return {    
     form: { ...store.exchange, sourceBalance },
-    account: store.account,
+    account: store.account.account,
     ethereum: store.connection.ethereum
   }
 })

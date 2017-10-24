@@ -16,15 +16,13 @@ import { errorSelectToken, goToStep, showAdvance, changeSourceAmout, openPassphr
 
 
 @connect((store) => {
-  if (!!!store.account.address) {
-    window.location.href = "/"
-  }
-  const tokens = store.tokens
-  const sourceTokenSymbol = store.exchange.sourceTokenSymbol
-  const balance = tokens[sourceTokenSymbol].balance
-
+  if (store.account.isStoreReady){
+    if (!!!store.account.account.address){
+      window.location.href = "/"
+    }
+  }  
   const ethereum = store.connection.ethereum
-  return { ...store.exchange, ethereum, balance }
+  return { ...store.exchange, ethereum}
 })
 
 export default class Exchange extends React.Component {
@@ -113,11 +111,6 @@ export default class Exchange extends React.Component {
         gasPriceError={this.props.errors.gasPriceError}
         gasError={this.props.errors.gasError}
       />
-    )
-    var passphraseModal = (
-      <PassphraseExchangeModal type="exchange"
-        open={this.props.passphrase}
-        recap={this.createRecap()} />
     )
     var exchangeRate = (
       <ExchangeRate />
