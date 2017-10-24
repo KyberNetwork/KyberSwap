@@ -31,6 +31,7 @@ const appReducer = combineReducers({
 const rootReducer = (state, action) => {
   if (action.type === 'GLOBAL.CLEAR_SESSION') {
     state = {}
+    window.location.reload();
   }
   return appReducer(state, action)
 }

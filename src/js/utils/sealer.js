@@ -3,6 +3,9 @@ import { unlock } from "./keys"
 import TrezorConnect from "../services/device/trezor/trezor-connect";
 import { numberToHex } from "./converter"
 
+import ethUtil from "ethereumjs-util";
+import { signLedgerTransaction, connectLedger } from "../services/device/device";
+
 export function sealTxByKeystore(params, keystore, password) {
   const tx = new EthereumTx(params)
   const privKey = unlock(keystore, password, true)
@@ -68,4 +71,33 @@ export function sealTxByTrezor(params, callback, callbackFail) {
         callbackFail(response.error)
       }
     });
+}
+
+export function sealTxByLedger(params, callback, callbackFail) {
+  const eTx = new EthereumTx(params)
+
+  eTx.raw[6] = Buffer.from([params.chainId]);
+  // eTx.raw[7] = eTx.raw[8] = 0;
+  let txToSign = ethUtil.rlp.encode(eTx.raw);
+  console.log(eTx)
+
+  console.log(txToSign, txToSign.toString('hex'))
+  connectLedger().then((eth) => {
+    signLedgerTransaction(eth, params.address_n,  txToSign.toString('hex')).then((response) => {
+      if (typeof (callback) == 'function') {
+        console.log(response);
+
+        params.v = "0x" + response['v'];
+        params.r = "0x" + response['r'];
+        params.s = "0x" + response['s'];
+        var tx = new EthereumTx(params);
+
+        callback(tx);
+      }
+    })
+  }).catch((err) => {
+    if (typeof (callbackFail) == 'function') {
+      callbackFail(err);
+    }
+  });
 }
