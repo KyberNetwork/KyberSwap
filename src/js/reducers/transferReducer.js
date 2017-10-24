@@ -35,6 +35,19 @@ const transfer = (state=initState, action) => {
       }
       return newState;
     }
+    case "TRANSFER.MAKE_NEW_TRANSFER": 
+      var transfer = {...state};
+      newState = initState;
+      if(transfer && transfer.selected){
+        newState.selected = transfer.selected;
+        newState.token = transfer.token
+        newState.tokenSymbol = transfer.tokenSymbol
+      } else {
+        var randomSelectToken = randomToken(1, Object.keys(supported_tokens).length);
+        newState.token = Object.values(supported_tokens)[randomSelectToken].address
+        newState.tokenSymbol = Object.values(supported_tokens)[randomSelectToken].symbol
+      }
+      return newState;
   	case "TRANSFER.SELECT_TOKEN":
       newState.tokenSymbol = action.payload.symbol
       newState.sourceToken = action.payload.address
@@ -54,10 +67,10 @@ const transfer = (state=initState, action) => {
       newState.amount = action.payload
       newState.errors.amountTransfer = ""
       return newState
-    case "EXCHANGE_SPECIFY_GAS":
+    case "TRANSFER_SPECIFY_GAS":
       newState.gas = action.payload
       return newState
-    case "EXCHANGE_SPECIFY_GAS_PRICE":
+    case "TRANSFER_SPECIFY_GAS_PRICE":
       newState.gasPrice = action.payload
       return newState
     case "TRANSFER.SHOW_ADVANCE":
@@ -69,7 +82,7 @@ const transfer = (state=initState, action) => {
     case "TRANSFER.OPEN_PASSPHRASE":
       newState.passphrase = true
       return newState      
-    case "TRANSFER.HIDE_PASSPHRASE":
+    case "TRANSFERf.HIDE_PASSPHRASE":
       newState.passphrase = false
       return newState
     case "TRANSFER.THROW_ERROR_DEST_ADDRESS":

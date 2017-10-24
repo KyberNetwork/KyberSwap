@@ -89,8 +89,9 @@ export default class PostExchange extends React.Component {
         var tx = this.props.form.rawTx
         this.props.dispatch(doTransaction(id, ethereum, tx, callback))
       }
-      createRecap = () =>{
-          return "Create recap"
+      createRecap = () => {
+        var recap = `exchange ${this.props.sourceAmount.toString().slice(0,7)}${this.props.sourceAmount.toString().length > 7?'...':''} ${this.props.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0,7)}${this.getDesAmount().toString().length > 7?'...':''} ${this.props.destTokenSymbol}`
+        return recap
       }
       closeModal = (event) => {
         switch(this.props.account.type){

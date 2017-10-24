@@ -61,6 +61,7 @@ export default class PassphraseExchangeModal extends React.Component {
     var destAddress = this.props.account.address
     var maxDestAmount = numberToHex(this.props.form.maxDestAmount)
     var throwOnFailure = this.props.form.throwOnFailure
+
     var nonce = verifyNonce(this.props.account.getUsableNonce())
     // should use estimated gas
     var gas = numberToHex(this.props.form.gas)
@@ -86,6 +87,7 @@ export default class PassphraseExchangeModal extends React.Component {
       var dispatch = this.props.dispatch
       var sourceAccount = account
       var formId = "exchange"
+      var recap = this.props.recap;
       call(
         formId, ethereum, account.address, params.sourceToken,
         params.sourceAmount, params.destToken, params.destAddress,
@@ -102,6 +104,7 @@ export default class PassphraseExchangeModal extends React.Component {
               minConversionRate: params.minConversionRate,
               destAddress: params.destAddress,
               maxDestAmount: params.maxDestAmount,
+              recap: recap
             })
           dispatch(incManualNonceAccount(account.address))
           dispatch(updateAccount(ethereum, account))

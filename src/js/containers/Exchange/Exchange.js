@@ -13,7 +13,7 @@ import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, an
 //import {toT, toTWei} from "../../utils/converter"
 import {openTokenModal, hideSelectToken} from "../../actions/utilActions"
 import { selectTokenAsync, thowErrorSourceAmount } from "../../actions/exchangeActions"
-import {errorSelectToken, goToStep, showAdvance, changeSourceAmout} from "../../actions/exchangeActions"
+import {errorSelectToken, goToStep, showAdvance, changeSourceAmout, openPassphrase, makeNewExchange} from "../../actions/exchangeActions"
 
 
 @connect((store) => {
@@ -89,8 +89,13 @@ export default class Exchange extends React.Component {
     // return calculateMinAmount(sourceAmount, rate).toNumber()
   }
   createRecap = () => {
-    return "create reacap"
-  }  
+    var recap = `exchange ${this.props.sourceAmount.toString().slice(0,7)}${this.props.sourceAmount.toString().length > 7?'...':''} ${this.props.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0,7)}${this.getDesAmount().toString().length > 7?'...':''} ${this.props.destTokenSymbol}`
+    return recap
+  }
+
+  makeNewExchange = () => {
+    this.props.dispatch(makeNewExchange());
+  }
 
   render() {    
     //console.log(this.props.ethereum)
@@ -141,11 +146,11 @@ export default class Exchange extends React.Component {
       gasError = {this.props.errors.gasError}                        
       />
     )
-    // var passphraseModal = (
-    //   <PassphraseExchangeModal   type="exchange"
-    //   open={this.props.passphrase}
-    //   recap = {this.createRecap} />
-    // )
+    var passphraseModal = (
+      <PassphraseExchangeModal   type="exchange"
+      open={this.props.passphrase}
+      recap={this.createRecap()} />
+    )
     var exchangeRate = (
       <ExchangeRate />
     )
@@ -153,7 +158,7 @@ export default class Exchange extends React.Component {
       <PostExchange />      
     )
     var trasactionLoadingScreen = (
-      <TransactionLoading tx={this.props.txHash}/>
+      <TransactionLoading tx={this.props.txHash} makeNewTransaction={this.makeNewExchange}/>
     )
     return (
      <ExchangeForm step = {this.props.step}
@@ -170,7 +175,8 @@ export default class Exchange extends React.Component {
                     errorSelectSameToken = {errorSelectSameToken}
                     errorSelectTokenToken = {errorSelectTokenToken}
                     errorSourceAmount = {errorSourceAmount}
-                    trasactionLoadingScreen = {trasactionLoadingScreen}/>
+                    trasactionLoadingScreen = {trasactionLoadingScreen}
+                    recap = {this.createRecap()}/>
     )
   }
 }

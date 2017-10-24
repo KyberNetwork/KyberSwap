@@ -20,3 +20,9 @@ export function updateTxComplete(tx) {
     payload: tx
   }
 }
+
+export function clearTxs(){
+  return {
+    type: 'TX.CLEAR',
+  }
+}

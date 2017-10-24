@@ -23,7 +23,7 @@ export default class Tx {
     return new Tx(
     this.hash, this.from, this.gas, this.gasPrice, this.nonce,
     this.status, this.type, this.data, this.address, this.threw,
-    this.error, this.errorInfo)
+    this.error, this.errorInfo, this.recap)
   }
 
   sync = (ethereum, tx) => {

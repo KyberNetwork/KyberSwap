@@ -26,11 +26,13 @@ const txs = (state=initState, action) => {
             tx.threw,
             tx.error,
             tx.errorInfo,
+            tx.recap
           )
         })
         return txs
+      } else {
+        return state
       }
-      return state
     }
     case TX.TX_ADDED: {
       var newState = {...state}
@@ -41,6 +43,21 @@ const txs = (state=initState, action) => {
       var newState = {...state}
       newState[action.payload.hash] = action.payload
       return newState
+    }
+    case 'TX.CLEAR': {
+      var loadedTxs = {...state}
+      if (loadedTxs) {
+        var txs = {}
+        Object.keys(loadedTxs).forEach((hash) => {
+          var tx = loadedTxs[hash]
+          if(tx.status == "pending"){
+            txs[hash] = loadedTxs[hash]
+          }
+        })
+        return txs
+      } else {
+        return state
+      }
     }
   }
   return state
