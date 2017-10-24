@@ -32,10 +32,14 @@ export function sealTxByTrezor(params, callback, callbackFail){
   if (value.length % 2){
     value = '0' + value
   }
-  var data = params.data.slice(2)
-  if (data.length % 2){
-    data = '0' + data
+  var data = ""
+  if (params.data){
+    data = params.data.slice(2)
+    if (data.length % 2){
+      data = '0' + data
+    }
   }
+  
   var chain_id = params.chainId; // 1 for ETH, 61 for ETC
   TrezorConnect.signEthereumTx(
     address_n,

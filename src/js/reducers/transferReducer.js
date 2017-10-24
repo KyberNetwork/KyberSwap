@@ -50,7 +50,7 @@ const transfer = (state=initState, action) => {
       return newState;
   	case "TRANSFER.SELECT_TOKEN":
       newState.tokenSymbol = action.payload.symbol
-      newState.sourceToken = action.payload.address
+      newState.token = action.payload.address
       newState.selected = true
       return newState
     case "TRANSFER.THOW_ERROR_SELECT_TOKEN":
@@ -82,7 +82,7 @@ const transfer = (state=initState, action) => {
     case "TRANSFER.OPEN_PASSPHRASE":
       newState.passphrase = true
       return newState      
-    case "TRANSFERf.HIDE_PASSPHRASE":
+    case "TRANSFER.HIDE_PASSPHRASE":
       newState.passphrase = false
       return newState
     case "TRANSFER.THROW_ERROR_DEST_ADDRESS":
@@ -99,12 +99,7 @@ const transfer = (state=initState, action) => {
     case "TRANSFER.THROW_ERROR_PASSPHRASE":{
       newState.errors.passwordError = action.payload
       return newState
-    }
-    case "TRANSFER.FINISH_TRANSACTION":{
-      newState.passphrase = false
-      newState.step = 2   
-      return newState   
-    }    
+    } 
     case "TRANSFER.APPROVAL_TX_BROADCAST_PENDING": {
       newState.broadcasting = true
       newState.txHash = action.payload
@@ -128,6 +123,21 @@ const transfer = (state=initState, action) => {
     case "TRANSFER.TX_BROADCAST_REJECTED": {
       newState.broadcasting = false
       newState.bcError = action.payload
+      return newState
+    }
+    case "TRANSFER.FINISH_TRANSACTION":{
+      newState.passphrase = false
+      newState.confirmColdWallet = false
+      newState.step = 2
+      return newState   
+    }
+    case "TRANSFER.SAVE_RAW_TRANSACTION":{
+      newState.txRaw = action.payload
+      newState.confirmColdWallet = true
+      return newState
+    }
+    case "TRANSFER.THROW_ERROR_SIGN_TRANSACTION":{
+      newState.errors.signTransaction = action.payload
       return newState
     }
   }

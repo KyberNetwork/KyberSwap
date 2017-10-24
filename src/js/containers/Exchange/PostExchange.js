@@ -45,6 +45,7 @@ export default class PostExchange extends React.Component {
                     this.props.dispatch(openPassphrase())
                     break
                 case "trezor":
+                case "ledger":
                     this.processTx()
                     break
             }

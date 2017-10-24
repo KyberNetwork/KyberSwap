@@ -2,7 +2,7 @@ import { sealTxByKeystore, sealTxByTrezor } from "../utils/sealer"
 import { verifyNonce } from "../utils/validators"
 import store from "../store"
 import { doTransaction, doApprovalTransaction, saveRawExchangeTransaction, throwErrorSignExchangeTransaction } from "../actions/exchangeActions"
-import { doTransaction as doTransactionTransfer} from "../actions/transferActions"
+import { doTransaction as doTransactionTransfer, saveRawTransferTransaction, throwErrorSignTransferTransaction} from "../actions/transferActions"
 import constants from "../services/constants"
 import Rate from "./rate"
 
@@ -52,7 +52,7 @@ export function sendTokenFromWallet(
 
 export function sendEtherFromAccount(
   id, ethereum, account, sourceToken, sourceAmount,
-  destAddress, nonce, gas, gasPrice, keystring,
+  destAddress, nonce, gas, gasPrice, keystring, accountType,
   password, callback) {
 
   const txParams = {
@@ -64,13 +64,25 @@ export function sendEtherFromAccount(
     // EIP 155 chainId - mainnet: 1, ropsten: 3
     chainId: 42
   }
-  const tx = sealTxByKeystore(txParams, keystring, password)
-  store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
+  switch (accountType){
+    case "keystore":
+      const tx = sealTxByKeystore(txParams, keystring, password)
+      store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
+      break
+    case "trezor":
+      txParams.address_n = keystring
+      sealTxByTrezor(txParams, (tx) => {
+        store.dispatch(saveRawTransferTransaction(tx))
+      }, (error) => {
+        store.dispatch(throwErrorSignTransferTransaction(error))
+      })
+      break
+  }  
 }
 
 export function sendTokenFromAccount(
   id, ethereum, account, sourceToken, sourceAmount,
-  destAddress, nonce, gas, gasPrice, keystring,
+  destAddress, nonce, gas, gasPrice, keystring, accountType,
   password, callback) {
 
   var txData = ethereum.sendTokenData(
@@ -80,13 +92,27 @@ export function sendTokenFromAccount(
     gasPrice: gasPrice,
     gasLimit: gas,
     to: sourceToken,
-    value: 0,
+    value: '0x0',
     data: txData,
     // EIP 155 chainId - mainnet: 1, ropsten: 3
     chainId: 42
   }
-  const tx = sealTxByKeystore(txParams, keystring, password)
-  store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
+  
+  switch (accountType){
+    case "keystore":
+      const tx = sealTxByKeystore(txParams, keystring, password)
+      store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
+      break
+    case "trezor":
+      txParams.address_n = keystring
+      sealTxByTrezor(txParams, (tx) => {
+        store.dispatch(saveRawTransferTransaction(tx))
+      }, (error) => {
+        store.dispatch(throwErrorSignTransferTransaction(error))
+      })
+      break
+  }
+  
 }
 
 export function etherToOthersFromAccount(
@@ -108,10 +134,9 @@ export function etherToOthersFromAccount(
     // EIP 155 chainId - mainnet: 1, ropsten: 3
     chainId: 42
   }
-  var tx
   switch (accountType){
     case "keystore":
-      tx = sealTxByKeystore(txParams, keystring, password)
+      var tx = sealTxByKeystore(txParams, keystring, password)
       store.dispatch(doTransaction(id, ethereum, tx, callback))
       break
     case "trezor":
