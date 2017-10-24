@@ -143,6 +143,16 @@ export default class PostExchange extends React.Component {
         throwOnFailure, nonce, gas, gasPrice
       }
     }
+
+    recap = () => {
+      var sourceAmount = this.props.form.sourceAmount.toString();
+      var sourceTokenSymbol = this.props.form.sourceTokenSymbol;
+      var destAmount = this.getDesAmount().toString();
+      var destTokenSymbol = this.props.form.destTokenSymbol;
+      return {
+        sourceAmount, sourceTokenSymbol, destAmount, destTokenSymbol
+      }
+    }
   
     processTx = () => {
      // var errors = {}
@@ -197,19 +207,10 @@ export default class PostExchange extends React.Component {
       const params = this.formParams()
       const ethereum = this.props.ethereum
       const dispatch = this.props.dispatch
-      var recap = this.createRecap()      
       const tx = new Tx(
         ex, account.address, ethUtil.bufferToInt(trans.gas),
         weiToGwei(ethUtil.bufferToInt(trans.gasPrice)),
-        ethUtil.bufferToInt(trans.nonce), "pending", "exchange", {
-          sourceToken: params.sourceToken,
-          sourceAmount: params.sourceAmount,
-          destToken: params.destToken,
-          minConversionRate: params.minConversionRate,
-          destAddress: params.destAddress,
-          maxDestAmount: params.maxDestAmount,
-          recap: recap
-        })
+        ethUtil.bufferToInt(trans.nonce), "pending", "exchange", this.recap())
       dispatch(incManualNonceAccount(account.address))
       dispatch(updateAccount(ethereum, account))
       dispatch(addTx(tx))
