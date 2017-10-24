@@ -3,12 +3,12 @@ import { connect } from "react-redux"
 import * as ethUtil from 'ethereumjs-util'
 
 import constants from "../../services/constants"
-import { numberToHex, toTWei, gweiToWei, weiToGwei } from "../../utils/converter"
+import { numberToHex, toTWei, toT, gweiToWei, weiToGwei } from "../../utils/converter"
 import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
 
 import { etherToOthersFromAccount, tokenToOthersFromAccount, sendEtherFromAccount, sendTokenFromAccount, exchangeFromWallet, sendEtherFromWallet, sendTokenFromWallet } from "../../services/exchange"
 
-import { hidePassphrase, changePassword, throwPassphraseError, finishExchange, hideConfirm } from "../../actions/transferActions"
+import { hidePassphrase, changePassword, throwPassphraseError, finishTransfer, hideConfirm } from "../../actions/transferActions"
 import { openPassphrase ,throwErrorDestAddress, thowErrorAmount, doTransaction} from '../../actions/transferActions';
 
 import { updateAccount, incManualNonceAccount } from "../../actions/accountActions"
@@ -34,9 +34,20 @@ import {Modal} from "../../components/CommonElement"
 export default class PostTransfer extends React.Component {
   clickTransfer = () =>{
     if(this.validateTransfer()){
-      this.props.dispatch(openPassphrase())
+        //check account type
+        switch(this.props.account.type){
+            case "keystore":
+                this.props.dispatch(openPassphrase())
+                break
+            case "trezor":
+            case "ledger":
+                this.processTx()
+                break
+        }
+        
     }
-  }
+
+}
   validateTransfer = () =>{
     //check dest address is an ethereum address
     if (verifyAccount(this.props.form.destAddress) !== null){
@@ -79,7 +90,7 @@ export default class PostTransfer extends React.Component {
         const tx = this.props.form.txRaw
         this.props.dispatch(doTransaction(id, ethereum, tx, (ex, trans)=>{
           this.runAfterBroacastTx(ex, trans)
-          this.props.dispatch(finishExchange())
+          this.props.dispatch(finishTransfer())
         }))      
       }
       createRecap = () =>{
@@ -104,8 +115,8 @@ export default class PostTransfer extends React.Component {
       var token = this.props.form.token
       var amount = numberToHex(toTWei(this.props.form.amount))
       var destAddress = this.props.form.destAddress
-      var throwOnFailure = this.props.throwOnFailure
-      var nonce = verifyNonce(this.props.account.nonce)
+      var throwOnFailure = this.props.form.throwOnFailure
+      var nonce = verifyNonce(this.props.account.getUsableNonce())
       // should use estimated gas
       var gas = numberToHex(this.props.form.gas)
       // should have better strategy to determine gas price
@@ -124,11 +135,14 @@ export default class PostTransfer extends React.Component {
           document.getElementById("passphrase").value = ''
         }        
         const params = this.formParams()
+        console.log(params)
+        //return
         // sending by wei
         var account = this.props.account
         var ethereum = this.props.ethereum  
       
-        var call = params.sourceToken == constants.ETHER_ADDRESS ? sendEtherFromAccount : sendTokenFromAccount
+        var call = params.token == constants.ETHER_ADDRESS ? sendEtherFromAccount : sendTokenFromAccount
+      
         var dispatch = this.props.dispatch
         //var sourceAccount = account
         var formId = "transfer"
@@ -138,7 +152,7 @@ export default class PostTransfer extends React.Component {
           params.destAddress, params.nonce, params.gas,
           params.gasPrice, account.keystring, account.type, password, (ex, trans) => {
             this.runAfterBroacastTx(ex, trans)
-            dispatch(finishExchange())
+            dispatch(finishTransfer())
 
             // const tx = new Tx(
             //   ex, account.address, ethUtil.bufferToInt(trans.gas),

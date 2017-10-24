@@ -92,11 +92,12 @@ export function sendTokenFromAccount(
     gasPrice: gasPrice,
     gasLimit: gas,
     to: sourceToken,
-    value: 0,
+    value: '0x0',
     data: txData,
     // EIP 155 chainId - mainnet: 1, ropsten: 3
     chainId: 42
   }
+  
   switch (accountType){
     case "keystore":
       const tx = sealTxByKeystore(txParams, keystring, password)

@@ -3,9 +3,9 @@ import { connect } from "react-redux"
 import {Rate, Address} from "../Header"
 
 import { Transactions } from "../Transaction"
-
+import { clearTxs } from "../../actions/txActions"
 @connect((store) => {
-  return {...store.transactions}
+  return {txs: store.txs}
 })
 
 export default class Header extends React.Component {
@@ -19,9 +19,10 @@ export default class Header extends React.Component {
     this.setState({
       displayTrans: !this.state.displayTrans
     })
+    if(this.state.displayTrans) this.props.dispatch(clearTxs());
   }
 	render() {
-    const transactionsNum = this.props.transactions.length;
+    const transactionsNum = Object.keys(this.props.txs).length;
     return (
         <div>
           <div>Icon</div>

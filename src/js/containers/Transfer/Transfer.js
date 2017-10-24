@@ -15,7 +15,7 @@ import {openTokenModal, hideSelectToken} from "../../actions/utilActions"
 // import { selectToken } from "../../actions/exchangeActions"
 
 import {verifyAccount} from "../../utils/validators"
-import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase ,throwErrorDestAddress, thowErrorAmount} from '../../actions/transferActions';
+import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase ,throwErrorDestAddress, thowErrorAmount, makeNewTransfer} from '../../actions/transferActions';
 
 
 @connect((store) => {
@@ -54,8 +54,12 @@ export default class Transfer extends React.Component {
   
 
   createRecap = () => {
-    return "create reacap"
+    return `transfer ${this.props.amount.toString().slice(0,7)}${this.props.amount.toString().length > 7?'...':''} ${this.props.tokenSymbol} to ${this.props.destAddress.slice(0,7)}...${this.props.destAddress.slice(-5)}`
   }  
+
+  makeNewTransfer = () => {
+    this.props.dispatch(makeNewTransfer());
+  }
 
   render() {
     var showAdvanceBtn = (
@@ -67,9 +71,9 @@ export default class Transfer extends React.Component {
     var amount = (
       <input value={this.props.amount} onChange={this.onAmountChange.bind(this)} />
     )
-    var transferBtn = (
-      <button onClick = {this.clickTransfer}>Transfer</button>
-    )
+    // var transferBtn = (
+    //   <button onClick = {this.clickTransfer}>Transfer</button>
+    // )
     var token = (
       <Token type="transfer"
       token={this.props.tokenSymbol} 
@@ -92,7 +96,7 @@ export default class Transfer extends React.Component {
       <PostTransfer />      
     )
     var trasactionLoadingScreen = (
-      <TransactionLoading tx={this.props.txHash}/>
+      <TransactionLoading tx={this.props.txHash} makeNewTransaction={this.makeNewTransfer}/>
     )
     var errorDestAddress = (
       <div>{this.props.errors.destAddress}</div>
@@ -106,11 +110,13 @@ export default class Transfer extends React.Component {
                     destAddress = {destAddress}
                     amount = {amount}
                     token = {token}
+                    tokenModal = {tokenModal}
                     changeGasModal = {changeGasModal}
                     transferButton = {transferButton}
                     errorDestAddress = {errorDestAddress}
                     errorAmount = {errorAmount}
                     trasactionLoadingScreen = {trasactionLoadingScreen}
+                    recap = {this.createRecap()}
                     />
     ) 
   }

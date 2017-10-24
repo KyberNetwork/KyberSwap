@@ -2,18 +2,10 @@ import React from "react"
 import { connect } from "react-redux"
 
 @connect((store) => {
-    return {...store.transactions}
+    return {txs: store.txs}
 })
 
 export default class Transactions extends React.Component {
-
-    transactionStatus(status){
-        switch(status){
-            case 1: return 'OK'
-            case 0: return 'FAIL'
-            case -1: return 'PENDDING'
-        }
-    }
     hashDetailLink(hash){
         const url = 'https://kovan.etherscan.io/tx/'
         return url + hash
@@ -21,14 +13,14 @@ export default class Transactions extends React.Component {
 
     render() {
         const hashLink = 'https://kovan.etherscan.io/tx/'
-        const transactions = this.props.transactions.map( (val) => {
+        const transactions = Object.keys(this.props.txs).map((hash) => {
             return (
-                <li key={val.hash}>
-                    <p>{ this.transactionStatus(val.status) }</p>
+                <li key={hash}>
+                    <p>{this.props.txs[hash].status}</p>
                     <p>
-                        {val.transfer.from.value} {val.transfer.from.token} for {val.transfer.to.value} {val.transfer.to.token}                        
+                        {this.props.txs[hash].data.recap}
                     </p>
-                    <p><a href={this.hashDetailLink(val.hash)} target="_blank">{val.hash}</a></p>
+                    <p><a href={this.hashDetailLink(this.props.txs[hash].hash)} target="_blank">{this.props.txs[hash].hash}</a></p>
                 </li>
             )
         });

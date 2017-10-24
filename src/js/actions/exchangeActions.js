@@ -157,58 +157,64 @@ export function doTransaction(id, ethereum, tx, callback) {
 	  payload: {ethereum, tx, callback},
 	  meta: id,
 	}
-  }
-  
-  export function doTransactionComplete(txHash, id) {
-	return {
-	  type: "EXCHANGE.TX_BROADCAST_FULFILLED",
-	  payload: txHash,
-	  meta: id,
-	}
-  }
-  
-  export function doTransactionFail(error, id) {
-	return {
-	  type: "EXCHANGE.TX_BROADCAST_REJECTED",
-	  payload: error,
-	  meta: id,
-	}
-  }
+}
 
-  export function doApprovalTransaction(id, ethereum, tx, callback) {
+export function doTransactionComplete(txHash, id) {
 	return {
-	  type: "EXCHANGE.APPROVAL_TX_BROADCAST_PENDING",
-	  payload: {ethereum, tx, callback},
-	  meta: id,
+		type: "EXCHANGE.TX_BROADCAST_FULFILLED",
+		payload: txHash,
+		meta: id,
 	}
-  }
-  
-  export function doApprovalTransactionComplete(txHash, id) {
-	return {
-	  type: "EXCHANGE.APPROVAL_TX_BROADCAST_FULFILLED",
-	  payload: txHash,
-	  meta: id,
-	}
-  }
-  
-  export function doApprovalTransactionFail(error, id) {
-		return {
-			type: "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED",
-			payload: error,
-			meta: id,
-		}
-	}
-	
-	export function saveRawExchangeTransaction(tx){
-		return {
-			type: "EXCHANGE.SAVE_RAW_TRANSACTION",
-			payload: tx			
-		}
-	}
+}
 
-	export function throwErrorSignExchangeTransaction(error){
-		return {
-			type: "EXCHANGE.THROW_ERROR_SIGN_TRANSACTION",
-			payload: error
-		}
+export function doTransactionFail(error, id) {
+	return {
+		type: "EXCHANGE.TX_BROADCAST_REJECTED",
+		payload: error,
+		meta: id,
 	}
+}
+
+export function doApprovalTransaction(id, ethereum, tx, callback) {
+	return {
+		type: "EXCHANGE.APPROVAL_TX_BROADCAST_PENDING",
+		payload: {ethereum, tx, callback},
+		meta: id,
+	}
+}
+
+export function doApprovalTransactionComplete(txHash, id) {
+	return {
+		type: "EXCHANGE.APPROVAL_TX_BROADCAST_FULFILLED",
+		payload: txHash,
+		meta: id,
+	}
+}
+
+export function doApprovalTransactionFail(error, id) {
+	return {
+		type: "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED",
+		payload: error,
+		meta: id,
+	}
+}
+
+export function makeNewExchange(){
+	return {
+		type: "EXCHANGE.MAKE_NEW_EXCHANGE"
+	}
+}
+
+export function saveRawExchangeTransaction(tx){
+	return {
+		type: "EXCHANGE.SAVE_RAW_TRANSACTION",
+		payload: tx			
+	}
+}
+
+export function throwErrorSignExchangeTransaction(error){
+	return {
+		type: "EXCHANGE.THROW_ERROR_SIGN_TRANSACTION",
+		payload: error
+	}
+}

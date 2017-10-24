@@ -17,6 +17,7 @@ const ExchangeRates = (props) => {
   // var rateReverse
   for (var i = 0; i < SupportedTokens.length; i++) {
     rateSymbol = SupportedTokens[i].symbol;
+    if(rateSymbol.toLowerCase()=='eth') continue;
     rate = props.rates[rateSymbol]
     if (rate) {
       rates.push(
