@@ -78,28 +78,59 @@ export default class Exchange extends React.Component {
       />
     )
 
-    var errorSelectSameToken = this.props.errors.selectSameToken === "" ? "" : (
-      <div>{this.props.errors.selectSameToken}</div>
-    )
-    var errorSelectTokenToken = this.props.errors.selectTokenToken === "" ? "" : (
-      <div>{this.props.errors.selectTokenToken}</div>
-    )
-    var errorSourceAmount = this.props.errors.sourceAmountError === "" ? "" : (
-      <div>{this.props.errors.sourceAmountError}</div>
-    )
-    //console.log(errorSelectSameToken)
-    var buttonStep1 = (
-      <button onClick={this.proccessSelectToken}>Continue</button>
-    )
-    var buttonShowAdvance = (
-      <button onClick={this.showAdvanceOption}>Advance</button>
-    )
-    var sourceAmount = (
-      <input type="text" value={this.props.sourceAmount} onChange={this.changeSourceAmount} />
-    )
-    var destAmount = (
-      <input value={this.getDesAmount()} />
-    )
+    var errors = {
+      selectSameToken: this.props.errors.selectSameToken,
+      selectTokenToken: this.props.errors.selectTokenToken,
+      sourceAmount: this.props.errors.sourceAmountError,
+      tokenSource: ''
+    }
+
+    // var errorSelectSameToken = this.props.errors.selectSameToken === "" ? "" : (
+    //   <div>{this.props.errors.selectSameToken}</div>
+    // )
+    // var errorSelectTokenToken = this.props.errors.selectTokenToken === "" ? "" : (
+    //   <div>{this.props.errors.selectTokenToken}</div>
+    // )
+    // var errorSourceAmount = this.props.errors.sourceAmountError === "" ? "" : (
+    //   <div>{this.props.errors.sourceAmountError}</div>
+    // )
+
+
+    var button = {
+      selectToken: {
+        onClick: this.proccessSelectToken
+      },
+      showAdvance: {
+        onClick: this.showAdvanceOption
+      }
+    }
+
+    var input = {
+      sourceAmount: {
+        type: 'number',
+        value: this.props.sourceAmount,
+        onChange: this.changeSourceAmount
+      },
+      destAmount: {
+        type: 'text',
+        value: this.getDesAmount()
+      }
+    }
+
+
+    // var buttonStep1 = (
+    //   <button onClick={this.proccessSelectToken}>Continue</button>
+    // )
+    // var buttonShowAdvance = (
+    //   <button onClick={this.showAdvanceOption}>Advance</button>
+    // )
+
+    // var sourceAmount = (
+    //   <input type="text" value={this.props.sourceAmount} onChange={this.changeSourceAmount} />
+    // )
+    // var destAmount = (
+    //   <input value={this.getDesAmount()} />
+    // )
     var selectTokenModal = (
       <SelectTokenModal chooseToken={this.chooseToken} type="exchange" />
     )
@@ -125,19 +156,16 @@ export default class Exchange extends React.Component {
       <ExchangeForm step={this.props.step}
         tokenSource={tokenSource}
         tokenDest={tokenDest}
-        buttonStep1={buttonStep1}
-        buttonShowAdvance={buttonShowAdvance}
-        sourceAmount={sourceAmount}
-        destAmount={destAmount}
         selectTokenModal={selectTokenModal}
         changeGasModal={changeGasModal}
         exchangeRate={exchangeRate}
         exchangeButton={exchangeButton}
-        errorSelectSameToken={errorSelectSameToken}
-        errorSelectTokenToken={errorSelectTokenToken}
-        errorSourceAmount={errorSourceAmount}
         trasactionLoadingScreen={trasactionLoadingScreen}
-        recap={this.createRecap()} />
+        recap={this.createRecap()}
+        errors={errors}
+        button={button}
+        input={input}
+        />
     )
   }
 }
