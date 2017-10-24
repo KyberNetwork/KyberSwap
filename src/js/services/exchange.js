@@ -1,4 +1,4 @@
-import { sealTxByKeystore, sealTxByTrezor } from "../utils/sealer"
+import { sealTxByKeystore, sealTxByTrezor, sealTxByLedger } from "../utils/sealer"
 import { verifyNonce } from "../utils/validators"
 import store from "../store"
 import { doTransaction, doApprovalTransaction, saveRawExchangeTransaction, throwErrorSignExchangeTransaction } from "../actions/exchangeActions"
@@ -54,7 +54,7 @@ export function sendEtherFromAccount(
   id, ethereum, account, sourceToken, sourceAmount,
   destAddress, nonce, gas, gasPrice, keystring, accountType,
   password, callback) {
-
+    
   const txParams = {
     nonce: nonce,
     gasPrice: gasPrice,
@@ -72,6 +72,14 @@ export function sendEtherFromAccount(
     case "trezor":
       txParams.address_n = keystring
       sealTxByTrezor(txParams, (tx) => {
+        store.dispatch(saveRawTransferTransaction(tx))
+      }, (error) => {
+        store.dispatch(throwErrorSignTransferTransaction(error))
+      })
+      break
+    case "ledger":
+      txParams.address_n = keystring
+      sealTxByLedger(txParams, (tx) => {
         store.dispatch(saveRawTransferTransaction(tx))
       }, (error) => {
         store.dispatch(throwErrorSignTransferTransaction(error))
@@ -108,6 +116,15 @@ export function sendTokenFromAccount(
       sealTxByTrezor(txParams, (tx) => {
         store.dispatch(saveRawTransferTransaction(tx))
       }, (error) => {
+        store.dispatch(throwErrorSignTransferTransaction(error))
+      })
+      break
+    case "ledger":
+      txParams.address_n = keystring
+      sealTxByLedger(txParams, (tx) => {
+        console.log(tx)
+        store.dispatch(saveRawTransferTransaction(tx))
+      }, (error) => {        
         store.dispatch(throwErrorSignTransferTransaction(error))
       })
       break
