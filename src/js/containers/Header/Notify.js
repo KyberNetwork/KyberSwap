@@ -12,6 +12,7 @@ export default class Notify extends React.Component {
 
     displayTransactions = () => {
         this.props.dispatch(toggleNotify())
+        if(this.props.utils.showNotify) this.props.dispatch(clearTxs());
     }
       
     hashDetailLink(hash){
