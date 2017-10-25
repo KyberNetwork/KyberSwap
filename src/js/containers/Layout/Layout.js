@@ -31,16 +31,16 @@ export default class Layout extends React.Component {
 
   render() {
     var app = (
-        <div class="k-body">          
-          <Route component={Header}/>          
-          <div class="k-contenter">
-            <div id="content" class="k-content">
-              <Route exact path="/" component={ImportAccount}/>                            
-              <Route exact path="/info" component={InfoKyber}/>              
+        <div>          
+          <section id="header">
+            <Route component={Header}/>          
+          </section>
+          <section id="content">
+              <Route exact path="/" component={InfoKyber}/>                            
+              <Route exact path="/import" component={ImportAccount}/>              
               <Route exact path="/exchange" component={Exchange}/>
               <Route exact path="/transfer" component={Transfer}/>
-            </div>
-          </div>          
+          </section>
         </div>
       )
    
