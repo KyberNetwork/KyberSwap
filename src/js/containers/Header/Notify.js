@@ -10,14 +10,8 @@ import { toggleNotify } from '../../actions/utilActions'
 
 export default class Notify extends React.Component {
 
-    displayTransactions(){
-        // this.setState({
-        //     displayTrans: !this.state.displayTrans
-        // })
-        console.log("===================");
-        console.log(this);
+    displayTransactions = () => {
         this.props.dispatch(toggleNotify())
-        // if(this.props.utils.showNotify) this.props.dispatch(clearTxs());
     }
       
     hashDetailLink(hash){
