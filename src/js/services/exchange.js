@@ -122,7 +122,6 @@ export function sendTokenFromAccount(
     case "ledger":
       txParams.address_n = keystring
       sealTxByLedger(txParams, (tx) => {
-        console.log(tx)
         store.dispatch(saveRawTransferTransaction(tx))
       }, (error) => {        
         store.dispatch(throwErrorSignTransferTransaction(error))
@@ -159,6 +158,14 @@ export function etherToOthersFromAccount(
     case "trezor":
       txParams.address_n = keystring
       sealTxByTrezor(txParams, (tx) => {
+        store.dispatch(saveRawExchangeTransaction(tx))
+      }, (error) => {
+        store.dispatch(throwErrorSignExchangeTransaction(error))
+      })
+      break
+    case "ledger":
+      txParams.address_n = keystring
+      sealTxByLedger(txParams, (tx) => {
         store.dispatch(saveRawExchangeTransaction(tx))
       }, (error) => {
         store.dispatch(throwErrorSignExchangeTransaction(error))

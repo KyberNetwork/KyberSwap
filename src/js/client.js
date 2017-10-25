@@ -48,11 +48,11 @@ for (var i = 0; i< blackList.length; i++){
 if (illegal){
   ReactDOM.render(  
   <NotSupportPage client={clientPlatform}/>
-  , app);		  
+  , document.getElementById("app"));		  
 }else{
   ReactDOM.render(
   <Provider store={store}>
    <Layout />
-  </Provider>, app);		
+  </Provider>, document.getElementById("app"));		
 }
 

@@ -10,7 +10,6 @@ import transfer from './transferReducer'
 //import accounts from './accountsReducer'
 import global from './globalReducer'
 //import tokens from './tokensReducer'
-import exchangeForm from './exchangeFormReducer'
 //import paymentForm from './paymentFormReducer'
 //import importKeystore from './importKeystoreReducer'
 //import joinPaymentForm from './joinPaymentFormReducer'
@@ -24,7 +23,7 @@ import txs from './txsReducer'
 import transactions from './transactionReducer'
 
 const appReducer = combineReducers({
-  account, exchange,transfer, exchangeForm, global, tokens, txs,
+  account, exchange,transfer, global, tokens, txs,
   connection,transactions,utils,
   router: routerReducer
 })

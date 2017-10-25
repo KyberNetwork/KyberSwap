@@ -24,7 +24,6 @@ export default class Rate {
   }
 
   updateBalance(ethereum, ownerAddr){
-    //console.log(ownerAddr)
     const _this= this;
     return new Promise((resolve, reject)=>{
       if (!ownerAddr || !ownerAddr.length) {
