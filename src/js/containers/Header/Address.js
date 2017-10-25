@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { Link } from 'react-router-dom'
 
 import { clearSession } from "../../actions/globalActions"
-
+import { AddressView } from "../../components/Header"
 @connect((store) => {
   return {...store.account}
 })
@@ -15,20 +15,9 @@ export default class Address extends React.Component {
   }
 
 	render() {
-    const address = this.props.account.address
     return (
-        <div>
-          { address ? <p>{address}</p> : ''}
-          <Link to="/transfer" >
-            Transfer
-          </Link>
-          <br/>
-          <Link to="/exchange" >
-            ExChange
-          </Link>
-          <br/>
-          <a onClick={() => this.handleEndSession()}>End session</a>
-        </div>
+        <AddressView address={this.props.account.address}
+                     endSession={this.handleEndSession} />
     )
   }
 }

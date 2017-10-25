@@ -30,7 +30,7 @@ const ExchangeForm = (props) => {
               <div>{props.errors.tokenSource}</div>
 
               <input type={props.input.sourceAmount.type} value={props.input.sourceAmount.value} onChange={props.input.sourceAmount.onChange} />
-              <input value={props.input.destAmount.value} />
+              <input value={props.input.destAmount.value} readOnly/>
             </div>
              <span> to</span>
             <div>
