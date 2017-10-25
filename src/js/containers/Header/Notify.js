@@ -34,13 +34,20 @@ export default class Notify extends React.Component {
         const hashLink = 'https://kovan.etherscan.io/tx/'
         const transactions = Object.keys(this.props.txs).map((hash) => {
             return (
-                <li key={hash}>
-                    <p>{this.props.txs[hash].status}</p>
-                    <p>
-                        {this.createRecap(this.props.txs[hash].type, this.props.txs[hash].data)}
-                    </p>
-                    <p><a href={this.hashDetailLink(this.props.txs[hash].hash)} target="_blank">{this.props.txs[hash].hash}</a></p>
+                <li key={hash}><a class={this.props.txs[hash].status} href={this.hashDetailLink(this.props.txs[hash].hash)} target="_blank">
+                        <div class="title"><span class="amount">0.123456 ETH&nbsp;</span>for<span class="amount">&nbsp;12.345678 KNC</span></div>
+                        
+                        
+                        <div class="link">0xe7e52f01 ... d8be12</div>
+                    </a>
                 </li>
+                // <li key={hash}>
+                //     <p>{this.props.txs[hash].status}</p>
+                //     <p>
+                //         {this.createRecap(this.props.txs[hash].type, this.props.txs[hash].data)}
+                //     </p>
+                //     <p><a href={this.hashDetailLink(this.props.txs[hash].hash)} target="_blank">{this.props.txs[hash].hash}</a></p>
+                // </li>
             )
         });
         return (
