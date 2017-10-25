@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 
 import {calculateMinAmount, toT, toTWei, toEther} from "../../utils/converter"
 
-import {TransferForm} from "../../components/Forms"
+import {TransferForm} from "../../components/Transaction"
 //import TokenDest from "./TokenDest"
 //import {TokenDest, MinRate} from "../ExchangeForm"
 import {Token, ExchangeRate} from "../Exchange"

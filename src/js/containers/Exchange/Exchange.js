@@ -5,7 +5,7 @@ import { connect } from "react-redux"
 import { calculateMinAmount, toT } from "../../utils/converter"
 
 import { Token, ExchangeRate, PostExchange } from "../Exchange"
-import { ExchangeForm } from "../../components/Forms"
+import { ExchangeForm } from "../../components/Transaction"
 import { SelectTokenModal, ChangeGasModal, TransactionLoading } from "../CommonElements"
 
 import { anyErrors } from "../../utils/validators"
