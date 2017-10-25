@@ -10,7 +10,7 @@ import { Token, SelectTokenModal, ChangeGasModal, TransactionLoading } from "../
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
 import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase, throwErrorDestAddress, thowErrorAmount, makeNewTransfer } from '../../actions/transferActions';
-
+import {PassphraseModal, ConfirmTransferModal} from "../../components/Transaction"
 
 @connect((store) => {
   if (store.account.isStoreReady) {
