@@ -61,17 +61,41 @@ export default class Transfer extends React.Component {
   }
 
   render() {
-    var showAdvanceBtn = (
-      <button onClick={this.showAdvanceOption}>Advance</button>
-    )
-    var destAddress = (
-      <input value={this.props.destAddress} onChange={this.onAddressReceiveChange.bind(this)} />
-    )
-    var amount = (
-      <input value={this.props.amount} onChange={this.onAmountChange.bind(this)} />
-    )
-    // var transferBtn = (
-    //   <button onClick = {this.clickTransfer}>Transfer</button>
+    var button = {
+      showAdvance: {
+        onClick: this.showAdvanceOption
+      }
+    }
+    var input = {
+      destAddress: {
+        value: this.props.destAddress,
+        onChange: this.onAddressReceiveChange
+      },
+      amount: {
+        value: this.props.amount,
+        onChange: this.onAmountChange
+      }
+    }
+    var errors = {
+      destAddress: this.props.errors.destAddress,
+      amountTransfer: this.props.errors.amountTransfer
+    }
+
+
+    // var showAdvanceBtn = (
+    //   <button onClick={this.showAdvanceOption}>Advance</button>
+    // )
+    // var destAddress = (
+    //   <input value={this.props.destAddress} onChange={this.onAddressReceiveChange.bind(this)} />
+    // )
+    // var amount = (
+    //   <input value={this.props.amount} onChange={this.onAmountChange.bind(this)} />
+    // )
+    // var errorDestAddress = (
+    //   <div>{this.props.errors.destAddress}</div>
+    // )
+    // var errorAmount = (
+    //   <div>{this.props.errors.amountTransfer}</div>
     // )
     var token = (
       <Token type="transfer"
@@ -97,25 +121,18 @@ export default class Transfer extends React.Component {
     var trasactionLoadingScreen = (
       <TransactionLoading tx={this.props.txHash} makeNewTransaction={this.makeNewTransfer}/>
     )
-    var errorDestAddress = (
-      <div>{this.props.errors.destAddress}</div>
-    )
-    var errorAmount = (
-      <div>{this.props.errors.amountTransfer}</div>
-    )
+    
     return (
      <TransferForm step = {this.props.step}
-                    showAdvanceBtn = {showAdvanceBtn}
-                    destAddress = {destAddress}
-                    amount = {amount}
                     token = {token}
                     tokenModal = {tokenModal}
                     changeGasModal = {changeGasModal}
                     transferButton = {transferButton}
-                    errorDestAddress = {errorDestAddress}
-                    errorAmount = {errorAmount}
                     trasactionLoadingScreen = {trasactionLoadingScreen}
                     recap = {this.createRecap()}
+                    button = {button}
+                    input = {input}
+                    errors = {errors}
                     />
     ) 
   }

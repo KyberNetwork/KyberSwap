@@ -5,14 +5,22 @@ const TransferForm = (props) => {
     <div class="k-exchange-page">
        	<div class="page-1" class={props.step!==1?'visible-hide':''}>
           <div>
-            {props.showAdvanceBtn}
+            <button onClick={props.button.showAdvance.onClick}>Advance</button>
+            {/*{props.showAdvanceBtn}*/}
           </div>
           <h1>Transfer to</h1>
-          {props.destAddress}
-          {props.errorDestAddress}
+          {/*{props.destAddress}
+          {props.errorDestAddress}*/}
+
+          <input value={props.input.destAddress.value} onChange={props.input.destAddress.onChange} />
+          <div>{props.errors.destAddress}</div>
+
           <h1>Amount</h1>
-          {props.amount}
-          {props.errorAmount}
+          <input value={props.input.amount.value} onChange={props.input.amount.onChange} />
+          <div>{props.errors.amountTransfer}</div>
+
+          {/*{props.amount}
+          {props.errorAmount}*/}
           {props.token}
           {props.transferButton}
         </div>
