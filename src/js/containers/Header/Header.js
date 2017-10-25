@@ -20,15 +20,14 @@ export default class Header extends React.Component {
 
           <section id="header">
             <div class="row">
-              <div class="column small-5 medium-6 large-7">
+              <div class="column small-5 medium-6 large-7 hide-for-small-only">
                 <a class="logo" href="/">
                   <img src="/assets/img/logo.svg"/>
                 </a>
               </div>
-              <div class="column small-7 medium-6 large-5">
+              <div class="column small-12 medium-6 large-5">
                 <div class="user-bar">
                   <div class="row">
-                    <div class="column small-2"><a class="avatar" href="/exchange.html"><img src="/assets/img/address.png"/></a></div>
                     <Address />  
                     <Notify />
                   </div>
