@@ -6,7 +6,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
   context: path.join(__dirname, "src"),
   devtool: debug ? "inline-sourcemap" : false,
-  entry: ['babel-polyfill', "./js/client.js", "./assets/scss/app.scss"],
+  entry: ['babel-polyfill', "./js/client.js", "./assets/css/app.scss"],
   module: {
     loaders: [{
         test: /\.jsx?$/,
