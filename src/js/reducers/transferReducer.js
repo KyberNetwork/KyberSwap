@@ -82,6 +82,10 @@ const transfer = (state=initState, action) => {
     case "TRANSFER.HIDE_ADVANCE":
       newState.advance = false
       return newState
+    case "TRANSFER.HIDE_CONFIRM": {
+      newState.confirmColdWallet = false
+      return newState
+    }
     case "TRANSFER.OPEN_PASSPHRASE":
       newState.passphrase = true
       return newState      

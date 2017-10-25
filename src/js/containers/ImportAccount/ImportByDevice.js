@@ -8,8 +8,8 @@ import SelectAddressModal from "../CommonElements/SelectAddressModal";
 
 import { importNewAccount } from "../../actions/accountActions"
 @connect((store) => {
-    return {...store.account}
-  })
+    return { ...store.account }
+})
 
 export default class ImportTrezor extends React.Component {
 
@@ -133,22 +133,27 @@ export default class ImportTrezor extends React.Component {
                 path: this.dPath + '/' + formAddress.index,
 
             };
-            
+
         this.props.dispatch(importNewAccount(data.address, data.type, data.path))
         this.closeModal()
-        setTimeout(() => {this.goToExchange()}, 3000)           
+        setTimeout(() => { this.goToExchange() }, 3000)
     }
-    goToExchange = () =>{
+    goToExchange = () => {
         // window.location.href = "/exchange"
         // this.props.router.push('/exchange')
         this.props.dispatch(push('/exchange'));
-      }
+    }
     render() {
-        const currentList = this.state.currentAddresses.map((address) => {
+        const currentList = this.state.currentAddresses.map((address, index) => {
             return (
                 <li key={address.addressString}>
-                    <input type="radio" name="address" value={JSON.stringify(address)}  />
-                    <span> {address.addressString}</span>
+                    <label>
+                        <input type="radio"
+                            name="address"
+                            value={JSON.stringify(address)}
+                            defaultChecked={index == 0 ? true : false} />
+                        {address.addressString}
+                    </label>
                 </li>
             )
         })
