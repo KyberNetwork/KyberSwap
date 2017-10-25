@@ -2,23 +2,22 @@ import React from "react"
 import { connect } from "react-redux"
 import { NotifyView } from "../../components/Header"
 import { clearTxs } from "../../actions/txActions"
+import { toggleNotify } from '../../actions/utilActions'
 @connect((store) => {
-    return {txs: store.txs}
+    return {txs: store.txs,
+            utils: store.utils}
 })
 
 export default class Notify extends React.Component {
-    constructor(){
-        super();
-        this.state = {
-          displayTrans:false,
-        }
-      }
 
     displayTransactions(){
-        this.setState({
-            displayTrans: !this.state.displayTrans
-        })
-        if(this.state.displayTrans) this.props.dispatch(clearTxs());
+        // this.setState({
+        //     displayTrans: !this.state.displayTrans
+        // })
+        console.log("===================");
+        console.log(this);
+        this.props.dispatch(toggleNotify())
+        // if(this.props.utils.showNotify) this.props.dispatch(clearTxs());
     }
       
     hashDetailLink(hash){
@@ -52,7 +51,7 @@ export default class Notify extends React.Component {
         return (
             <NotifyView displayTransactions={this.displayTransactions}
                     transactionsNum={Object.keys(this.props.txs).length}
-                    displayTrans={this.state.displayTrans}
+                    displayTrans={this.props.utils.showNotify}
                     transactions={transactions} />
         )
     }
