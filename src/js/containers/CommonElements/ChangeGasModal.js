@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 //import Key from "./Elements/Key"
 //import { TokenSelect } from '../../components/Token'
 import { hideGasModal } from "../../actions/utilActions"
-import { TransactionConfig } from "../../components/Forms/Components"
+import { TransactionConfig } from "../../components/CommonElement"
 import { specifyGas as specifyGasExchange, specifyGasPrice as specifyGasPriceExchange, hideAdvance as hideAdvanceExchange } from "../../actions/exchangeActions"
 import { specifyGas as specifyGasTransfer, specifyGasPrice as specifyGasPriceTransfer, hideAdvance as hideAdvanceTransfer } from "../../actions/transferActions"
 

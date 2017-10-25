@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 
 import { toT } from "../../utils/converter"
 
-import { TransferForm } from "../../components/Forms"
+import { TransferForm } from "../../components/Transaction"
 import { PostTransfer } from "../Transfer"
 import { Token, SelectTokenModal, ChangeGasModal, TransactionLoading } from "../CommonElements"
 

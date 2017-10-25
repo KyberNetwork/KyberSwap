@@ -30,18 +30,22 @@ const ExchangeRates = (props) => {
     }
   }
 	return (
-    <table>
-      <tbody>
-        {rates.length > 0 ?
-          rates :
-          <tr>
-            <td colSpan="4" style={{textAlign: "center"}}>
-              No offered rate is available!
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
+    <div>
+      This is rate table
+      <table>
+        <tbody>
+          {rates.length > 0 ?
+            rates :
+            <tr>
+              <td colSpan="4" style={{textAlign: "center"}}>
+                No offered rate is available!
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    
   )
 }
 export default ExchangeRates

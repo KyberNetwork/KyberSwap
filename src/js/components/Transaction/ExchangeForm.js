@@ -26,18 +26,19 @@ const ExchangeForm = (props) => {
           <h1>Exchange from</h1>
           <div>
             <div>
-              <div>{props.errors.sourceAmount}</div>
-              <div>{props.errors.tokenSource}</div>
-
-              <input type={props.input.sourceAmount.type} value={props.input.sourceAmount.value} onChange={props.input.sourceAmount.onChange} />
-              <input value={props.input.destAmount.value} />
+            <input type={props.input.sourceAmount.type} value={props.input.sourceAmount.value} onChange={props.input.sourceAmount.onChange} />
+              <div>{props.tokenSource}</div>
+              <div>{props.sourceAmount}</div>
             </div>
-             <span> to</span>
+            <span> to</span>
             <div>
+            <input value={props.input.destAmount.value} readOnly/>              
               {props.destAmount}
               {props.tokenDest} 
             </div>
           </div>
+          <div>{props.errors.sourceAmount}</div>
+          <div>{props.errors.tokenSource}</div>
           <div>
             {props.exchangeRate}
           </div>

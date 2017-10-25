@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 
 //import Key from "./Elements/Key"
-import { TokenSelect } from '../../components/Token'
+import { TokenSelect } from '../../components/CommonElement'
 import { hideSelectToken } from "../../actions/utilActions"
 
 import { Modal } from '../../components/CommonElement'
