@@ -1,11 +1,26 @@
 import React from "react"
 import { connect } from "react-redux"
-
+import { NotifyView } from "../../components/Header"
+import { clearTxs } from "../../actions/txActions"
 @connect((store) => {
     return {txs: store.txs}
 })
 
-export default class Transactions extends React.Component {
+export default class Notify extends React.Component {
+    constructor(){
+        super();
+        this.state = {
+          displayTrans:false,
+        }
+      }
+
+    displayTransactions(){
+        this.setState({
+            displayTrans: !this.state.displayTrans
+        })
+        if(this.state.displayTrans) this.props.dispatch(clearTxs());
+    }
+      
     hashDetailLink(hash){
         const url = 'https://kovan.etherscan.io/tx/'
         return url + hash
@@ -35,11 +50,10 @@ export default class Transactions extends React.Component {
             )
         });
         return (
-            <div>
-                <ul>
-                    {transactions}
-                </ul>
-            </div>
+            <NotifyView displayTransactions={this.displayTransactions}
+                    transactionsNum={Object.keys(this.props.txs).length}
+                    displayTrans={this.state.displayTrans}
+                    transactions={transactions} />
         )
     }
 }

@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { ExchangeRates } from "../../components/ExchangeRates"
+import { RateView } from "../../components/Header"
 
 @connect((store) => {
   return {
@@ -12,10 +12,7 @@ export default class Rate extends React.Component {
 
 	render() {
     return (
-        <div>
-          This is rate table
-          <ExchangeRates rates = {this.props.rates}/>
-        </div>
+      <RateView rates = {this.props.rates}/>
     )
   }
 }
