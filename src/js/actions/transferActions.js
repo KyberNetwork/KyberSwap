@@ -51,6 +51,12 @@ export function hideAdvance(){
 	}		
 }
 
+export function hideConfirm(){
+	return {
+		type: "TRANSFER.HIDE_CONFIRM",		
+	}		
+}
+
 export function specifyAddressReceive(value){
 	return {
 		type: "TRANSFER.TRANSFER_SPECIFY_ADDRESS_RECEIVE",

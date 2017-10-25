@@ -32,7 +32,7 @@ const appReducer = combineReducers({
 const rootReducer = (state, action) => {
   if (action.type === 'GLOBAL.CLEAR_SESSION') {
     state = {}
-    window.location.reload();
+    window.location.href = '/';
   }
   return appReducer(state, action)
 }
