@@ -10,19 +10,27 @@ const ExchangeForm = (props) => {
 	       		 <span>to</span>
                 {props.tokenDest}
        		</div>
-            {props.errorSelectSameToken}
-            {props.errorSelectTokenToken}
-       		{props.buttonStep1}
+            <div>{props.errors.selectSameToken}</div>
+            <div>{props.errors.selectTokenToken}</div>
+
+            {/* {props.errorSelectSameToken}
+            {props.errorSelectTokenToken} 
+            {props.buttonStep1} */}
+            <button onClick={props.button.selectToken.onClick}>Continue</button>
        	</div>
         <div class="page-2" class={props.step!==2?'visible-hide':''}>
           <div>
-            {props.buttonShowAdvance}
+            {/*{props.buttonShowAdvance}*/}
+            <button onClick={props.button.showAdvance.onClick}>Advance</button>
           </div>
           <h1>Exchange from</h1>
           <div>
             <div>
-              {props.sourceAmount}
-              {props.tokenSource}             
+              <div>{props.errors.sourceAmount}</div>
+              <div>{props.errors.tokenSource}</div>
+
+              <input type={props.input.sourceAmount.type} value={props.input.sourceAmount.value} onChange={props.input.sourceAmount.onChange} />
+              <input value={props.input.destAmount.value} />
             </div>
              <span> to</span>
             <div>
@@ -30,9 +38,6 @@ const ExchangeForm = (props) => {
               {props.tokenDest} 
             </div>
           </div>
-          {props.errorSelectSameToken}
-          {props.errorSelectTokenToken}
-          {props.errorSourceAmount}
           <div>
             {props.exchangeRate}
           </div>
