@@ -10,14 +10,16 @@ import { AddressView } from "../../components/Header"
 
 export default class Address extends React.Component {
   
-  handleEndSession(){
+  handleEndSession = () => {
     this.props.dispatch(clearSession()) 
   }
 
 	render() {
     return (
         <AddressView address={this.props.account.address}
-                     endSession={this.handleEndSession} />
+                     parrentProps={this.props}
+                     endSession={this.handleEndSession} 
+        />
     )
   }
 }

@@ -64,6 +64,11 @@ const utils = (state=initState, action) => {
       }
       return newState
     }
+    case 'UTIL.TOGGLE_NOTIFY': {
+      var newState = {...state}
+      newState.showNotify = !newState.showNotify
+      return newState
+    }
   }
   return state
 }
