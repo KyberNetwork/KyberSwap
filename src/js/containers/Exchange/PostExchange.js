@@ -16,6 +16,7 @@ import { addTx } from "../../actions/txActions"
 import Tx from "../../services/tx"
 
 import { Modal } from "../../components/CommonElement"
+import {PassphraseModal, ConfirmTransferModal} from "../../components/Transaction"
 
 @connect((store) => {
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
@@ -63,21 +64,17 @@ export default class PostExchange extends React.Component {
   }
   content = () => {
     return (
-      <div>
-        <div>{this.createRecap}</div>
-        <input type="password" id="passphrase" onChange={this.changePassword} />
-        <button onClick={this.processTx}>Exchange</button>
-        {this.props.form.errors.passwordError}
-      </div>
+      <PassphraseModal recap={this.createRecap()}
+                        onChange = {this.changePassword}
+                        onClick = {this.processTx}
+                        passwordError={this.props.form.errors.passwordError} />
     )
   }
   contentConfirm = () => {
     return (
-      <div>
-        <div>{this.createRecap}</div>
-        <button onClick={this.closeModal}>Cancel</button>
-        <button onClick={this.broacastTx}>Exchange</button>
-      </div>
+      <ConfirmTransferModal recap={this.createRecap()}
+                    onCancel={this.closeModal}
+                    onExchange = {this.broacastTx} />      
     )
   }
   broacastTx = () => {
@@ -87,7 +84,7 @@ export default class PostExchange extends React.Component {
     this.props.dispatch(doTransaction(id, ethereum, tx, callback))
   }
   createRecap = () => {
-    var recap = `exchange ${this.props.sourceAmount.toString().slice(0, 7)}${this.props.sourceAmount.toString().length > 7 ? '...' : ''} ${this.props.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0, 7)}${this.getDesAmount().toString().length > 7 ? '...' : ''} ${this.props.destTokenSymbol}`
+    var recap = `exchange ${this.props.form.sourceAmount.toString().slice(0, 7)}${this.props.form.sourceAmount.toString().length > 7 ? '...' : ''} ${this.props.form.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0, 7)}${this.getDesAmount().toString().length > 7 ? '...' : ''} ${this.props.form.destTokenSymbol}`
     return recap
   }
   getDesAmount = () => {
@@ -150,7 +147,7 @@ export default class PostExchange extends React.Component {
 
   processTx = () => {
     // var errors = {}
-    //try {        
+    try {        
     var password = ""
     if (this.props.account.type === "keystore") {
       password = document.getElementById("passphrase").value
@@ -170,30 +167,17 @@ export default class PostExchange extends React.Component {
       params.maxDestAmount, params.minConversionRate,
       params.throwOnFailure, params.nonce, params.gas,
       params.gasPrice, account.keystring, account.type, password, (ex, trans) => {
-        // const tx = new Tx(
-        //   ex, account.address, ethUtil.bufferToInt(trans.gas),
-        //   weiToGwei(ethUtil.bufferToInt(trans.gasPrice)),
-        //   ethUtil.bufferToInt(trans.nonce), "pending", "exchange", {
-        //     sourceToken: params.sourceToken,
-        //     sourceAmount: params.sourceAmount,
-        //     destToken: params.destToken,
-        //     minConversionRate: params.minConversionRate,
-        //     destAddress: params.destAddress,
-        //     maxDestAmount: params.maxDestAmount,
-        //   })
-        // dispatch(incManualNonceAccount(account.address))
-        // dispatch(updateAccount(ethereum, account))
-        // dispatch(addTx(tx))
+
         this.runAfterBroacastTx(ex, trans)
         dispatch(finishExchange())
       })
 
 
-    // } catch (e) {
-    //   console.log(e)
-    //   this.props.dispatch(throwPassphraseError("Key derivation failed"))
-    //   //errors["passwordError"] = e.message
-    // }
+    } catch (e) {
+      console.log(e)
+      this.props.dispatch(throwPassphraseError("Key derivation failed"))
+      //errors["passwordError"] = e.message
+    }
   }
 
   runAfterBroacastTx = (ex, trans) => {
