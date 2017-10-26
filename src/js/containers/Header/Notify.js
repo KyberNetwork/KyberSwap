@@ -11,8 +11,14 @@ import { toggleNotify } from '../../actions/utilActions'
 export default class Notify extends React.Component {
 
     displayTransactions = () => {
-        this.props.dispatch(toggleNotify())
-        if(this.props.utils.showNotify) this.props.dispatch(clearTxs());
+        if(Object.keys(this.props.txs).length > 0){
+            this.props.dispatch(toggleNotify())
+            if(this.props.utils.showNotify) {
+                this.props.dispatch(clearTxs());
+            }
+        }
+        
+        
     }
       
     hashDetailLink(hash){
@@ -49,9 +55,25 @@ export default class Notify extends React.Component {
     render() {
         const hashLink = 'https://kovan.etherscan.io/tx/'
         const transactions = Object.keys(this.props.txs).map((hash) => {
+            var classTx = "pending"
+            switch (this.props.txs[hash].status){
+                case "success":
+                    classTx = "success"
+                    break
+                case "fail":
+                case "failed":
+                    classTx = "fail"
+                    break
+                case "mined":
+                    classTx = "success"
+                    break
+                default:
+                    classTx = "pending"
+                    break
+            }
             return (
                 <li key={hash}>
-                    <a class={this.props.txs[hash].status} href={this.hashDetailLink(this.props.txs[hash].hash)} target="_blank">
+                    <a class={classTx} href={this.hashDetailLink(this.props.txs[hash].hash)} target="_blank">
                         <div class="title"><span class="amount">{this.createRecap(this.props.txs[hash].type, this.props.txs[hash].data)}</span></div>
 
                         {/* <div class="title"><span class="amount">0.123456 ETH&nbsp;</span>for<span class="amount">&nbsp;12.345678 KNC</span></div> */}
