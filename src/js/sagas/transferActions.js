@@ -70,14 +70,27 @@ function* processTransfer(action) {
     gasPrice, keystring, type, password, account } = action.payload
   var callService = token == constants.ETHER_ADDRESS ? transferServices.sendEtherFromAccount : transferServices.sendTokenFromAccount
 
-  try {
-    var rawTx = yield call(callService, formId, ethereum, address,
+  var rawTx
+  if (type === "keystore") {
+    try {
+      rawTx = yield call(callService, formId, ethereum, address,
+        token, amount,
+        destAddress, nonce, gas,
+        gasPrice, keystring, type, password)
+    } catch (e) {
+      yield put(actions.throwPassphraseError(e.message))
+    }
+  } else {
+    rawTx = yield call(callService, formId, ethereum, address,
       token, amount,
       destAddress, nonce, gas,
       gasPrice, keystring, type, password)
+  }
+
+  try {
     if (type === "keystore") {
       const hash = yield call(ethereum.sendRawTransaction, rawTx, ethereum)
-      console.log(hash)
+      //console.log(hash)
       yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account)
     } else {
       yield put(actions.saveRawTransferTransaction(rawTx))
@@ -86,8 +99,6 @@ function* processTransfer(action) {
   } catch (e) {
     yield call(doTransactionFail, ethereum, account, e)
   }
-
-
 }
 
 export function* watchTransfer() {

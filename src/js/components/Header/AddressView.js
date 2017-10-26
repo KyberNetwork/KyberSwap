@@ -5,7 +5,7 @@ import React from "react"
 const Address = (props) => {
   var link = props.path === "/transfer"?(
     <Link to="/exchange" >
-      Exhchange
+      Exchange
     </Link>
   ):(
     <Link to="/transfer" >
