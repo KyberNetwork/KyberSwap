@@ -11,7 +11,7 @@ import { importNewAccount } from "../../actions/accountActions"
     return { ...store.account }
 })
 
-export default class ImportTrezor extends React.Component {
+export default class ImportByDevice extends React.Component {
 
     constructor() {
         super();
@@ -160,10 +160,26 @@ export default class ImportTrezor extends React.Component {
 
         return (
             <div>
-                <a onClick={this.connectDevice.bind(this, 'trezor')}>Import via Trezor</a>
-                <br />
-                <a onClick={this.connectDevice.bind(this, 'ledger')}>Import via Ledger</a>
-
+                <div class="small-12 medium-6 column">
+                    <div class="column column-block">
+                        <div class="importer json">
+                            <a href="#" onClick={this.connectDevice.bind(this, 'trezor')}>
+                                <img src="/assets/img/trezor.svg" />
+                                <div class="description">Import from<br />trezor</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="small-12 medium-6 column">
+                    <div class="column column-block">
+                        <div class="importer json">
+                            <a href="#" onClick={this.connectDevice.bind(this, 'ledger')}>
+                                <img src="/assets/img/ledger.svg" />
+                                <div class="description">Import from<br />ledger wallet</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <SelectAddressModal
                     open={this.state.modalOpen}
                     onRequestClose={this.closeModal.bind(this)}
