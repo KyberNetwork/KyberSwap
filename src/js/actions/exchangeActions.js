@@ -183,7 +183,7 @@ export function processExchange(formId, ethereum, address, sourceToken,
 	sourceAmount, destToken, destAddress,
 	maxDestAmount, minConversionRate,
 	throwOnFailure, nonce, gas,
-	gasPrice, keystring, type, password, account){
+	gasPrice, keystring, type, password, account, data){
 	return {
 		type: "EXCHANGE.PROCESS_EXCHANGE",
 		payload:{
@@ -191,7 +191,7 @@ export function processExchange(formId, ethereum, address, sourceToken,
 			sourceAmount, destToken, destAddress,
 			maxDestAmount, minConversionRate,
 			throwOnFailure, nonce, gas,
-			gasPrice, keystring, type, password, account
+			gasPrice, keystring, type, password, account, data
 		}
 	}
 }
@@ -205,10 +205,10 @@ export function doApprove(ethereum, sourceToken, sourceAmount, nonce, gas, gasPr
 			}
 		}	
 }
-export function doTransaction(id, ethereum, tx, account) {
+export function doTransaction(id, ethereum, tx, account, data) {
 	return {
 	  type: "EXCHANGE.TX_BROADCAST_PENDING",
-	  payload: {ethereum, tx, account},
+	  payload: {ethereum, tx, account, data},
 	  meta: id,
 	}
 }

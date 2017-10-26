@@ -11,11 +11,11 @@ import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
 import { addTx } from '../actions/txActions'
 
 function* broadCastTx(action) {
-  const { ethereum, tx, account } = action.payload
+  const { ethereum, tx, account, data } = action.payload
   try {
     const hash = yield call(ethereum.sendRawTransaction, tx, ethereum)
     //callback(hash, tx)
-    yield call(runAfterBroadcastTx, ethereum, tx, hash, account)
+    yield call(runAfterBroadcastTx, ethereum, tx, hash, account, data)
     //yield put(actions.doTransactionComplete(hash, action.meta))
   }
   catch (e) {
@@ -25,17 +25,11 @@ function* broadCastTx(action) {
 }
 
 
-function* runAfterBroadcastTx(ethereum, txRaw, hash, account) {
+function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   const tx = new Tx(
     hash, account.address, ethUtil.bufferToInt(txRaw.gas),
     converter.weiToGwei(ethUtil.bufferToInt(txRaw.gasPrice)),
-    ethUtil.bufferToInt(txRaw.nonce), "pending", "exchange")
-  tx.data = {
-    sourceAmount: "a",
-    destAmount: "b",
-    sourceTokenSymbol: "ETH",
-    destTokenSymbol: "ETH",
-  }
+    ethUtil.bufferToInt(txRaw.nonce), "pending", "transfer", data)  
   yield put(incManualNonceAccount(account.address))
   yield put(updateAccount(ethereum, account))
   yield put(addTx(tx))
@@ -67,7 +61,7 @@ function* processTransfer(action) {
   const { formId, ethereum, address,
     token, amount,
     destAddress, nonce, gas,
-    gasPrice, keystring, type, password, account } = action.payload
+    gasPrice, keystring, type, password, account, data} = action.payload
   var callService = token == constants.ETHER_ADDRESS ? transferServices.sendEtherFromAccount : transferServices.sendTokenFromAccount
 
   var rawTx
@@ -86,12 +80,12 @@ function* processTransfer(action) {
       destAddress, nonce, gas,
       gasPrice, keystring, type, password)
   }
-
+  
   try {
     if (type === "keystore") {
       const hash = yield call(ethereum.sendRawTransaction, rawTx, ethereum)
-      //console.log(hash)
-      yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account)
+      //console.log(hash)      
+      yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
     } else {
       yield put(actions.saveRawTransferTransaction(rawTx))
       yield put(actions.showConfirm())

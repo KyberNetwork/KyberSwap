@@ -32,7 +32,7 @@ export default class Notify extends React.Component {
             )
             {/* `${data.sourceAmount.slice(0,8)} ${data.tokenSymbol} &nbsp;</span>for<span class="amount">&nbsp;${data.destAmount.slice(0,7)} ${data.destTokenSymbol}` */}
             // return `exchange ${data.sourceAmount.slice(0,7)}${data.sourceAmount.length > 7?'...':''} ${data.sourceTokenSymbol} for ${data.destAmount.slice(0,7)}${data.destAmount.length > 7?'...':''} ${data.destTokenSymbol}`
-        } else if (type == "send"){
+        } else if (type == "transfer"){
             // return `transfer ${data.amount.slice(0,7)}${data.amount.length > 7?'...':''} ${data.tokenSymbol} to ${data.destAddress.slice(0,7)}...${data.destAddress.slice(-5)}`
             return (
                 <div class="title">

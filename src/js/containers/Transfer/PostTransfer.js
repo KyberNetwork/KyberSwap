@@ -93,7 +93,8 @@ export default class PostTransfer extends React.Component {
     const ethereum = this.props.ethereum
     const tx = this.props.form.txRaw
     const account = this.props.account
-    this.props.dispatch(transferActions.doTransaction(id, ethereum, tx, account))
+    var data = this.recap()
+    this.props.dispatch(transferActions.doTransaction(id, ethereum, tx, account, data))
   }
   createRecap = () => {
     var form = this.props.form;
@@ -159,10 +160,11 @@ export default class PostTransfer extends React.Component {
       //var dispatch = this.props.dispatch
       //var sourceAccount = account
       var formId = "transfer"
+      var data = this.recap()
       this.props.dispatch(transferActions.processTransfer(formId, ethereum, account.address,
         params.token, params.amount,
         params.destAddress, params.nonce, params.gas,
-        params.gasPrice, account.keystring, account.type, password, account))
+        params.gasPrice, account.keystring, account.type, password, account, data))
 
       // var formId = "transfer"
       // call(
