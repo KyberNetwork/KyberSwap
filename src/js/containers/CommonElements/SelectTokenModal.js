@@ -57,6 +57,7 @@ export default class SelectTokenModal extends React.Component {
                   onClick = {this.chooseToken}
                   inactive = {token.balance.equals(0)}
                   title={title}
+                  selected={this.props.modalInfo.selected==token.symbol}
                   />
 		    })
   			break
@@ -71,6 +72,7 @@ export default class SelectTokenModal extends React.Component {
                   address = {token.address}
                   onClick = {this.chooseToken}
                   title={title}
+                  selected={this.props.modalInfo.selected==token.symbol}
                   />
 		    })
   			break
@@ -85,6 +87,7 @@ export default class SelectTokenModal extends React.Component {
                   address = {token.address}
                   onClick = {this.chooseToken}
                   inactive = {token.balance.equals(0)}
+                  selected={this.props.modalInfo.selected==token.symbol}
                   />
 		    })
   			break;

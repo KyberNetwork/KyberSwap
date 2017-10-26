@@ -25,11 +25,11 @@ import { specifyGas as specifyGasExchange, specifyGasPrice as specifyGasPriceExc
 
 export default class Exchange extends React.Component {
   openSourceToken = (e) => {
-    this.props.dispatch(openTokenModal("source"))
+    this.props.dispatch(openTokenModal("source", this.props.exchange.sourceTokenSymbol))
   }
 
   openDesToken = (e) => {
-    this.props.dispatch(openTokenModal("des"))
+    this.props.dispatch(openTokenModal("des", this.props.exchange.destTokenSymbol))
   }
 
   chooseToken = (symbol, address, type) => {

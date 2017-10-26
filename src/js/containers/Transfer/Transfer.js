@@ -27,7 +27,7 @@ import { TransactionConfig } from "../../components/CommonElement"
 export default class Transfer extends React.Component {
 
   openTokenChoose = (e) => {
-    this.props.dispatch(openTokenModal("transfer"))
+    this.props.dispatch(openTokenModal("transfer", this.props.transfer.tokenSymbol))
   }
   onAddressReceiveChange = (event) => {
     var value = event.target.value
@@ -111,7 +111,7 @@ export default class Transfer extends React.Component {
       />
     )
     var tokenModal = (
-      <SelectTokenModal chooseToken={this.chooseToken} type="transfer" />
+      <SelectTokenModal chooseToken={this.chooseToken} type="transfer" selectedSymbol = {this.props.transfer.tokenSymbol}/>
     )
     var changeGasModal = (
       <ChangeGasModal type="transfer"

@@ -53,7 +53,8 @@ const utils = (state=initState, action) => {
       var newState = {...state}
       newState.tokenModal = {
         open: true,
-        type: action.payload
+        type: action.payload.type,
+        selected: action.payload.selected
       }
       return newState 
     }
