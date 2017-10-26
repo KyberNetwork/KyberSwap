@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import { ImportKeystore, ImportTrezor } from "../ImportAccount"
+import { ImportKeystore, ImportByDevice } from "../ImportAccount"
 
 @connect((store) => {
 	return { ...store.account }
@@ -10,10 +10,20 @@ import { ImportKeystore, ImportTrezor } from "../ImportAccount"
 export default class ImportAccount extends React.Component {
 	render() {
 		return (
-			<div>
-				<h1>Add an address</h1>
-				<ImportKeystore />
-				<ImportTrezor />
+			<div class="frame">
+				<div className="row">
+					<div class="column small-11 large-10 small-centered">
+						<h1 class="title">Add an address</h1>
+						<div class="row">
+							<div class="small-12 medium-4 column">
+								<ImportKeystore />
+							</div>
+							<div class="small-12 medium-8 column" style={{padding: 0}}>
+								<ImportByDevice />
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		)
 	}

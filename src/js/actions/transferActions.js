@@ -112,11 +112,25 @@ export function throwPassphraseError(message){
 	}		
 }
 
+export function processTransfer(formId, ethereum, address,
+	token, amount,
+	destAddress, nonce, gas,
+	gasPrice, keystring, type, password, account, data){
+	return {
+	  type: "TRANSFER.PROCESS_TRANSFER",
+	  payload: {
+			formId, ethereum, address,
+			token, amount,
+			destAddress, nonce, gas,
+			gasPrice, keystring, type, password, account, data
+		}	  
+	}  
+}
 
-export function doTransaction(id, ethereum, tx, callback) {
+export function doTransaction(id, ethereum, tx, account, data) {
 	return {
 	  type: "TRANSFER.TX_BROADCAST_PENDING",
-	  payload: {ethereum, tx, callback},
+	  payload: {ethereum, tx, account, data},
 	  meta: id,
 	}
   }

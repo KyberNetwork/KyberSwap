@@ -27,7 +27,7 @@ const TransferForm = (props) => {
                     <div class="token-amount">
                       <input type="number" min="0" step="0.000001" placeholder="0" value={props.input.amount.value} onChange={props.input.amount.onChange}/><span class="name">{props.tokenSymbol}</span>
                     </div>
-                    <div class="address-balance clearfix"><span class="note">Address Balance</span><a class="value" href="#">0.123456 ETH</a></div>
+                    <div class="address-balance clearfix"><span class="note">Address Balance</span><a class="value" href="#">{props.balance} {props.tokenSymbol}</a></div>
                   </label>
                 </div>
               </div>

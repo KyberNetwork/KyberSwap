@@ -2,11 +2,11 @@ import React from "react"
 
 import Dropzone from 'react-dropzone'
 
-const DropFile = (props)=> {
+const DropFile = (props) => {
   var keystring
   var message
   try {
-    if(props.keystring){
+    if (props.keystring) {
       keystring = JSON.parse(props.keystring)
       message = <p className="file-name">
         Uploaded keystore file for address: <span>{keystring.address}</span>
@@ -28,9 +28,15 @@ const DropFile = (props)=> {
   }
   //console.log(keystring)
   return (
-    <Dropzone onDrop={props.onDrop}>
+    <Dropzone onDrop={props.onDrop} class="column column-block">
+      <div class="importer json">
+        <a href="#"><img src="/assets/img/json.svg" />
+          <div class="description">Select or drag<br />your Json keystore here</div>
+        </a>
+      </div>
       {message}
-    </Dropzone>)  
+    </Dropzone>
+  )  
 }
 
 export default DropFile

@@ -33,12 +33,9 @@ export default class Layout extends React.Component {
     var app = (
         <div>
           <Route component={Header}/>    
-          {/* <section id="header">
-            <Route component={Header}/>          
-          </section> */}
           <section id="content">
-              <Route exact path="/" component={InfoKyber}/>                            
-              <Route exact path="/import" component={ImportAccount}/>              
+              <Route exact path="/" component={ImportAccount}/>              
+              <Route exact path="/info" component={InfoKyber}/>                                          
               <Route exact path="/exchange" component={Exchange}/>
               <Route exact path="/transfer" component={Transfer}/>
           </section>

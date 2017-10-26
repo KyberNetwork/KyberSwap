@@ -16,14 +16,11 @@ import { errorSelectToken, goToStep, showAdvance, changeSourceAmout, openPassphr
 
 import { TransactionConfig } from "../../components/CommonElement"
 import { specifyGas as specifyGasExchange, specifyGasPrice as specifyGasPriceExchange, hideAdvance as hideAdvanceExchange } from "../../actions/exchangeActions"
-@connect((store) => {
-  if (store.account.isStoreReady){
-    if (!!!store.account.account.address){
-      window.location.href = "/"
-    }
-  }  
+@connect((store) => {  
   const ethereum = store.connection.ethereum
-  return { ...store.exchange, ethereum}
+  const account = store.account
+  const exchange = store.exchange
+  return {account, ethereum, exchange}
 })
 
 export default class Exchange extends React.Component {
@@ -40,7 +37,7 @@ export default class Exchange extends React.Component {
   }
   
   proccessSelectToken = () => {
-    if (!anyErrors(this.props.errors)) {
+    if (!anyErrors(this.props.exchange.errors)) {
       this.props.dispatch(goToStep(2))
     } 
   }
@@ -53,10 +50,10 @@ export default class Exchange extends React.Component {
   }
 
   getDesAmount = () => {
-    return this.props.sourceAmount * toT(this.props.offeredRate, 6)
+    return this.props.exchange.sourceAmount * toT(this.props.exchange.offeredRate, 6)
   }
   createRecap = () => {
-    var recap = `exchange ${this.props.sourceAmount.toString().slice(0, 7)}${this.props.sourceAmount.toString().length > 7 ? '...' : ''} ${this.props.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0, 7)}${this.getDesAmount().toString().length > 7 ? '...' : ''} ${this.props.destTokenSymbol}`
+    var recap = `exchange ${this.props.exchange.sourceAmount.toString().slice(0, 7)}${this.props.exchange.sourceAmount.toString().length > 7 ? '...' : ''} ${this.props.exchange.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0, 7)}${this.getDesAmount().toString().length > 7 ? '...' : ''} ${this.props.exchange.destTokenSymbol}`
     return recap
   }
 
@@ -75,24 +72,32 @@ export default class Exchange extends React.Component {
   }
 
   render() {
-    //console.log(this.props.ethereum)
+    if (this.props.account.isStoreReady) {
+      if (!!!this.props.account.account.address) {
+        this.props.dispatch(push("/"))        
+        return (
+          <div></div>
+        )
+      }
+    }
+
     var tokenSource = (
       <Token type="source"
-        token={this.props.sourceTokenSymbol}
+        token={this.props.exchange.sourceTokenSymbol}
         onSelected={this.openSourceToken}
       />
     )
     var tokenDest = (
       <Token type="des"
-        token={this.props.destTokenSymbol}
+        token={this.props.exchange.destTokenSymbol}
         onSelected={this.openDesToken}
       />
     )
 
     var errors = {
-      selectSameToken: this.props.errors.selectSameToken,
-      selectTokenToken: this.props.errors.selectTokenToken,
-      sourceAmount: this.props.errors.sourceAmountError,
+      selectSameToken: this.props.exchange.errors.selectSameToken,
+      selectTokenToken: this.props.exchange.errors.selectTokenToken,
+      sourceAmount: this.props.exchange.errors.sourceAmountError,
       tokenSource: ''
     }
 
@@ -119,7 +124,7 @@ export default class Exchange extends React.Component {
     var input = {
       sourceAmount: {
         type: 'number',
-        value: this.props.sourceAmount,
+        value: this.props.exchange.sourceAmount,
         onChange: this.changeSourceAmount
       },
       destAmount: {
@@ -147,11 +152,11 @@ export default class Exchange extends React.Component {
     )
     var changeGasModal = (
       <ChangeGasModal type="exchange"
-        gas={this.props.gas}
-        gasPrice={this.props.gasPrice}
-        open={this.props.advanced}
-        gasPriceError={this.props.errors.gasPriceError}
-        gasError={this.props.errors.gasError}
+        gas={this.props.exchange.gas}
+        gasPrice={this.props.exchange.gasPrice}
+        open={this.props.exchange.advanced}
+        gasPriceError={this.props.exchange.errors.gasPriceError}
+        gasError={this.props.exchange.errors.gasError}
       />
     )
     var exchangeRate = (
@@ -161,19 +166,19 @@ export default class Exchange extends React.Component {
       <PostExchange />
     )
     var trasactionLoadingScreen = (
-      <TransactionLoading tx={this.props.txHash} makeNewTransaction={this.makeNewExchange} />
+      <TransactionLoading tx={this.props.exchange.txHash} makeNewTransaction={this.makeNewExchange} />
     )
     var gasConfig = (
-      <TransactionConfig gas={this.props.gas}
-              gasPrice={this.props.gasPrice}
+      <TransactionConfig gas={this.props.exchange.gas}
+              gasPrice={this.props.exchange.gasPrice}
               gasHandler={this.specifyGas}
               gasPriceHandler={this.specifyGasPrice}
-              gasPriceError={this.props.gasPriceError}
-              gasError={this.props.gasError}/>
+              gasPriceError={this.props.exchange.gasPriceError}
+              gasError={this.props.exchange.gasError}/>
     )   
 
     return (
-      <ExchangeForm step={this.props.step}
+      <ExchangeForm step={this.props.exchange.step}
         tokenSource={tokenSource}
         tokenDest={tokenDest}
         selectTokenModal={selectTokenModal}
