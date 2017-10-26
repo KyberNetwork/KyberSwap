@@ -13,9 +13,9 @@ export default class ImportAccount extends React.Component {
 			<div class="frame">
 				<div className="row">
 					<div class="column small-11 large-10 small-centered">
-						<h1 class="title">Add an address</h1>
+						<h1 class="title">Import address</h1>
 						<div class="row">
-							<div class="small-12 medium-4 column">
+							<div class="small-12 medium-4 column" style={{padding: 0}}>
 								<ImportKeystore />
 							</div>
 							<div class="small-12 medium-8 column" style={{padding: 0}}>
