@@ -21,31 +21,27 @@ const ExchangeRates = (props) => {
     rate = props.rates[rateSymbol]
     if (rate) {
       rates.push(
-        <tr key={rateSymbol}>
-          <td class="token-pair">{rate.symbol}</td>
-          <td title={toT(rate.rate)}>{toT(rate.rate, 8)}</td>
-          <td title={toT(rate.balance)}>{toT(rate.balance, 8)}</td>
-        </tr>
+        // <tr key={rateSymbol}>
+        //   <td class="token-pair">{rate.symbol}</td>
+        //   <td title={toT(rate.rate)}>{toT(rate.rate, 8)}</td>
+        //   <td title={toT(rate.balance)}>{toT(rate.balance, 8)}</td>
+        // </tr>
+
+        <li key={rateSymbol}>
+          <div class="pair">{rate.symbol} / ETH</div>
+          <div class="value up">{toT(rate.rate, 8)}<span>12%</span></div>
+        </li>
       )
     }
   }
 	return (
-    <div>
-      This is rate table
-      <table>
-        <tbody>
-          {rates.length > 0 ?
-            rates :
-            <tr>
-              <td colSpan="4" style={{textAlign: "center"}}>
-                No offered rate is available!
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-    
+    <div class="row">
+      <div class="column">
+        <ul class="rates">
+          {rates}
+        </ul>
+      </div>
+    </div>    
   )
 }
 export default ExchangeRates

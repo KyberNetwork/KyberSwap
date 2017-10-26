@@ -10,6 +10,7 @@ import { etherToOthersFromAccount, tokenToOthersFromAccount, sendEtherFromAccoun
 
 import { hidePassphrase, changePassword, throwPassphraseError, finishTransfer, hideConfirm } from "../../actions/transferActions"
 import { openPassphrase, throwErrorDestAddress, thowErrorAmount, doTransaction } from '../../actions/transferActions';
+import {PassphraseModal, ConfirmTransferModal} from "../../components/Transaction"
 
 import { updateAccount, incManualNonceAccount } from "../../actions/accountActions"
 import { addTx } from "../../actions/txActions"
@@ -203,22 +204,32 @@ export default class PostTransfer extends React.Component {
   render() {
     var modalPassphrase = this.props.account.type === "keystore" ? (
       <Modal
+        className={{base: 'reveal tiny',
+            afterOpen: 'reveal tiny'}}
         isOpen={this.props.form.passphrase}
         onRequestClose={this.closeModal}
         contentLabel="password modal"
         content={this.content()}
       />
     ) : <Modal
+        className={{base: 'reveal tiny',
+            afterOpen: 'reveal tiny'}}
         isOpen={this.props.form.confirmColdWallet}
         onRequestClose={this.closeModal}
         contentLabel="confirm modal"
         content={this.contentConfirm()}
       />
     return (
-      <div>
-        <button onClick={this.clickTransfer}>Transfer</button>
+      <div class="row">
+        <div class="column small-11 medium-10 large-9 small-centered text-center">
+          <p class="note">Passphrase is needed for each transfer transaction</p><a class="button accent" href="#" data-open="passphrase-modal" onClick={this.clickTransfer}>Transfer</a>
+        </div>
         {modalPassphrase}
       </div>
+      // <div>
+      //   <button onClick={this.clickTransfer}>Transfer</button>
+      //   {modalPassphrase}
+      // </div>
     )
   }
 }
