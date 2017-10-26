@@ -47,6 +47,9 @@ const INIT_EXCHANGE_FORM_STATE = {
   bcError: "",
   txHash: "",
   txRaw: "",
+  txApprove: false,
+  confirmApprove: false,
+  showConfirmApprove: false,
   confirmColdWallet: false,  
   errors: {   
     selectSameToken: "",

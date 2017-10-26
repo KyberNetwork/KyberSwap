@@ -132,6 +132,34 @@ export function hideConfirm(){
 	}					
 }
 
+export function showConfirm(){
+	return {
+		type: "EXCHANGE.SHOW_CONFIRM",		
+	}					
+}
+
+export function hideApprove(){
+	return {
+		type: "EXCHANGE.HIDE_APPROVE",		
+	}					
+}
+
+export function showApprove(){
+	return {
+		type: "EXCHANGE.SHOW_APPROVE",		
+	}					
+}
+export function hideConfirmApprove(){
+	return {
+		type: "EXCHANGE.HIDE_CONFIRM_APPROVE",		
+	}					
+}
+
+export function showConfirmApprove(){
+	return {
+		type: "EXCHANGE.SHOW_CONFIRM_APPROVE",		
+	}					
+}
 export function changePassword(){
 	return {
 		type: "EXCHANGE.CHANGE_PASSPHRASE",		
@@ -151,27 +179,51 @@ export function throwPassphraseError(message){
 	}		
 }
 
-export function doTransaction(id, ethereum, tx, callback) {
+export function processExchange(formId, ethereum, address, sourceToken,
+	sourceAmount, destToken, destAddress,
+	maxDestAmount, minConversionRate,
+	throwOnFailure, nonce, gas,
+	gasPrice, keystring, type, password, account){
+	return {
+		type: "EXCHANGE.PROCESS_EXCHANGE",
+		payload:{
+			formId, ethereum, address, sourceToken,
+			sourceAmount, destToken, destAddress,
+			maxDestAmount, minConversionRate,
+			throwOnFailure, nonce, gas,
+			gasPrice, keystring, type, password, account
+		}
+	}
+}
+export function doApprove(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+	keystring, password, accountType){
+		return {
+			type: "EXCHANGE.PROCESS_APPROVE",
+			payload:{
+				ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+				keystring, password, accountType
+			}
+		}	
+}
+export function doTransaction(id, ethereum, tx, account) {
 	return {
 	  type: "EXCHANGE.TX_BROADCAST_PENDING",
-	  payload: {ethereum, tx, callback},
+	  payload: {ethereum, tx, account},
 	  meta: id,
 	}
 }
 
-export function doTransactionComplete(txHash, id) {
+export function doTransactionComplete(txHash) {
 	return {
 		type: "EXCHANGE.TX_BROADCAST_FULFILLED",
-		payload: txHash,
-		meta: id,
+		payload: txHash,		
 	}
 }
 
-export function doTransactionFail(error, id) {
+export function doTransactionFail(error) {
 	return {
 		type: "EXCHANGE.TX_BROADCAST_REJECTED",
-		payload: error,
-		meta: id,
+		payload: error
 	}
 }
 
@@ -191,11 +243,10 @@ export function doApprovalTransactionComplete(txHash, id) {
 	}
 }
 
-export function doApprovalTransactionFail(error, id) {
+export function doApprovalTransactionFail(error) {
 	return {
 		type: "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED",
 		payload: error,
-		meta: id,
 	}
 }
 

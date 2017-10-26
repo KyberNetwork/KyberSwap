@@ -106,7 +106,7 @@ const exchange = (state=initState, action) => {
     }
     case "EXCHANGE.APPROVAL_TX_BROADCAST_PENDING": {
       newState.broadcasting = true
-      newState.txHash = action.payload
+      //newState.txHash = action.payload
       return newState
     }
     case "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED": {
@@ -117,7 +117,7 @@ const exchange = (state=initState, action) => {
     }
     case "EXCHANGE.TX_BROADCAST_PENDING": {
       newState.broadcasting = true
-      newState.txHash = action.payload
+      //newState.txHash = action.payload
       return newState
     }
     case "EXCHANGE.TX_BROADCAST_FULFILLED": {
@@ -148,6 +148,26 @@ const exchange = (state=initState, action) => {
     }      
     case "EXCHANGE.HIDE_CONFIRM":{
       newState.confirmColdWallet = false
+      return newState
+    }
+    case "EXCHANGE.SHOW_CONFIRM":{
+      newState.confirmColdWallet = true 
+      return newState
+    }
+    case "EXCHANGE.HIDE_APPROVE":{
+      newState.confirmApprove = false
+      return newState
+    }
+    case "EXCHANGE.SHOW_APPROVE":{
+      newState.confirmApprove = true 
+      return newState
+    }
+    case "EXCHANGE.HIDE_CONFIRM_APPROVE":{
+      newState.showConfirmApprove = false
+      return newState
+    }
+    case "EXCHANGE.SHOW_CONFIRM_APPROVE":{
+      newState.showConfirmApprove = true 
       return newState
     }
     case "EXCHANGE.CHANGE_PASSPHRASE":{
