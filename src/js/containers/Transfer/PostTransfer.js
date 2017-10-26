@@ -126,14 +126,14 @@ export default class PostTransfer extends React.Component {
   formParams = () => {
     var selectedAccount = this.props.account.address
     var token = this.props.form.token
-    var amount = numberToHex(toTWei(this.props.form.amount))
+    var amount = converters.numberToHex(toTWei(this.props.form.amount))
     var destAddress = this.props.form.destAddress
     var throwOnFailure = this.props.form.throwOnFailure
-    var nonce = verifyNonce(this.props.account.getUsableNonce())
+    var nonce = validators.verifyNonce(this.props.account.getUsableNonce())
     // should use estimated gas
-    var gas = numberToHex(this.props.form.gas)
+    var gas = converters.numberToHex(this.props.form.gas)
     // should have better strategy to determine gas price
-    var gasPrice = numberToHex(gweiToWei(this.props.form.gasPrice))
+    var gasPrice = converters.numberToHex(gweiToWei(this.props.form.gasPrice))
     return {
       selectedAccount, token, amount, destAddress,
       throwOnFailure, nonce, gas, gasPrice
@@ -216,6 +216,7 @@ export default class PostTransfer extends React.Component {
         onRequestClose={this.closeModal}
         contentLabel="password modal"
         content={this.content()}
+        type="passphrase"
       />
     ) : <Modal
         className={{base: 'reveal tiny',
@@ -224,6 +225,7 @@ export default class PostTransfer extends React.Component {
         onRequestClose={this.closeModal}
         contentLabel="confirm modal"
         content={this.contentConfirm()}
+        type="passphrase"
       />
     return (
       <div class="row">

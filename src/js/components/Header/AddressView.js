@@ -3,7 +3,15 @@ import React from "react"
 
 
 const Address = (props) => {
-
+  var link = props.path === "/transfer"?(
+    <Link to="/exchange" >
+      Exhchange
+    </Link>
+  ):(
+    <Link to="/transfer" >
+      Transfer
+    </Link>
+  )
   return props.address ?
     (
       <div class="column small-10">
@@ -15,9 +23,8 @@ const Address = (props) => {
         <div key="2" class="column small-9">
           <a class="short-address" href="/exchange.html">{props.address ? props.address.slice(0,8):''} ... {props.address? props.address.slice(-6):''}</a>
           <ul class="actions">
-            <li><Link to="/transfer" >
-                  Transfer
-                </Link>
+            <li>
+              {link}
             </li>
             <li><a onClick={props.endSession} class="exit">
                   End Session

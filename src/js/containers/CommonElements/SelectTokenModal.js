@@ -57,6 +57,7 @@ export default class SelectTokenModal extends React.Component {
                   address = {token.address}
                   onClick = {this.chooseToken}
                   inactive = {token.balance.equals(0)}
+                  title={title}
                   />
 		    })
   			break
@@ -70,14 +71,15 @@ export default class SelectTokenModal extends React.Component {
                   type = {this.props.modalInfo.type}
                   address = {token.address}
                   onClick = {this.chooseToken}
+                  title={title}
                   />
 		    })
   			break
   		case "transfer":  		
-  			title = "Select transfer token"
+  			title = "SELECT \"TRANSFER FROM\" TOKEN"
   			var content = Object.keys(this.props.tokens).map((key) => {
 		    	const token = this.props.tokens[key]
-		      return <TokenSelect key={key} symbol={token.symbol} 
+		      return <TokenSelect key={key} symbol={token.symbol} name={token.name}
 		      				balance={token.balance.toString()} 
 		      				icon={token.icon} 
                   type = {this.props.modalInfo.type}
@@ -90,24 +92,40 @@ export default class SelectTokenModal extends React.Component {
   	}
     return (
       <div>
-        <div className="modal-message">
-          {title}
-        </div>
-        {content}
-        <div className="modal-control">
-          <button className="cancel" onClick={this.closeModal}>Cancel</button>
+        <div class="title">{title}</div><a class="x" href="#" data-close>&times;</a>
+        <div class="content">
+          <div class="row tokens small-up-2 medium-up-3 large-up-4">
+              {content}
+              <div className="modal-control">
+              <button className="cancel" onClick={this.closeModal}>Cancel</button>
+            </div>
+          </div>
         </div>
       </div>
+
+
+
+
+
+
+      // <div>
+      //   {content}
+      //   <div className="modal-control">
+      //     <button className="cancel" onClick={this.closeModal}>Cancel</button>
+      //   </div>
+      // </div>
     )
   }
 
   render() {
     return (
-      <Modal
+      <Modal className={{base: 'reveal large',
+              afterOpen: 'reveal large'}}
         isOpen={this.props.modalInfo.open}
         onRequestClose={this.closeModal}
         contentLabel="select token"
         content = {this.content()}
+        type="selectToken"
       />
 
     )

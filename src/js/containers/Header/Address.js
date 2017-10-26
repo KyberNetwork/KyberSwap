@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom'
 
 import { clearSession } from "../../actions/globalActions"
 import { AddressView } from "../../components/Header"
-@connect((store) => {
-  return {...store.account}
+@connect((store, props) => {
+  const path = props.path
+  return {...store.account, path}
 })
 
 export default class Address extends React.Component {
@@ -19,6 +20,7 @@ export default class Address extends React.Component {
         <AddressView address={this.props.account.address}
                      parrentProps={this.props}
                      endSession={this.handleEndSession} 
+                     path = {this.props.path}
         />
     )
   }

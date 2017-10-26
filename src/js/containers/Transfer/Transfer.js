@@ -118,6 +118,7 @@ export default class Transfer extends React.Component {
     return (
      <TransferForm step = {this.props.step}
                     token = {token}
+                    tokenSymbol = {this.props.tokenSymbol}
                     tokenModal = {tokenModal}
                     changeGasModal = {changeGasModal}
                     transferButton = {transferButton}

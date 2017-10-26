@@ -53,7 +53,7 @@ export function sendTokenFromWallet(
 export function sendEtherFromAccount(
   id, ethereum, account, sourceToken, sourceAmount,
   destAddress, nonce, gas, gasPrice, keystring, accountType,
-  password, callback) {
+  password) {
 
   const txParams = {
     nonce: nonce,
@@ -96,7 +96,7 @@ export function sendEtherFromAccount(
 export function sendTokenFromAccount(
   id, ethereum, account, sourceToken, sourceAmount,
   destAddress, nonce, gas, gasPrice, keystring, accountType,
-  password, callback) {
+  password) {
 
   var txData = ethereum.sendTokenData(
     sourceToken, sourceAmount, destAddress)

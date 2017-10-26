@@ -28,13 +28,17 @@ export default class Token extends React.Component {
     if (token){
       var balance = this.props.type === 'source'?(<div>Address Balance: <span>{toT(token.balance, 8)}</span></div>):''
       tokenRender = (
-        <div>
-          <div onClick={this.props.onSelected}>
-            <img src={token.icon} />
-            <span>{token.symbol}</span>
-          </div>      	
-          {balance}
-        </div>
+        <label>Select Token
+          <div onClick={this.props.onSelected} class="token-select" data-open="transfer-from-token-modal"><img src="/assets/img/omg.svg"/><span class="name">{token.name}</span></div>
+        </label>
+
+        // <div>
+        //   <div onClick={this.props.onSelected}>
+        //     <img src={token.icon} />
+        //     <span>{token.symbol}</span>
+        //   </div>      	
+        //   {balance}
+        // </div>
       )
     }
   	  	
