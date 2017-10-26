@@ -210,6 +210,7 @@ export default class PostTransfer extends React.Component {
         onRequestClose={this.closeModal}
         contentLabel="password modal"
         content={this.content()}
+        type="passphrase"
       />
     ) : <Modal
         className={{base: 'reveal tiny',
@@ -218,6 +219,7 @@ export default class PostTransfer extends React.Component {
         onRequestClose={this.closeModal}
         contentLabel="confirm modal"
         content={this.contentConfirm()}
+        type="passphrase"
       />
     return (
       <div class="row">
