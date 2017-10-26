@@ -31,10 +31,11 @@ export default class Layout extends React.Component {
 
   render() {
     var app = (
-        <div>          
-          <section id="header">
+        <div>
+          <Route component={Header}/>    
+          {/* <section id="header">
             <Route component={Header}/>          
-          </section>
+          </section> */}
           <section id="content">
               <Route exact path="/" component={InfoKyber}/>                            
               <Route exact path="/import" component={ImportAccount}/>              
