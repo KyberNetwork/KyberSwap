@@ -126,7 +126,7 @@ export default class Transfer extends React.Component {
       <PostTransfer />
     )
     var trasactionLoadingScreen = (
-      <TransactionLoading tx={this.props.transfer.txHash} makeNewTransaction={this.makeNewTransfer} />
+      <TransactionLoading tx={this.props.transfer.txHash} makeNewTransaction={this.makeNewTransfer} type="transfer"/>
     )
 
     var gasConfig = (

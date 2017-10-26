@@ -49,10 +49,8 @@ export default class Tx {
               }
               newTx.status = theLog ? "success" : "failed"
             }
-          } else if (newTx.type == "send") {
-            newTx.status = "success"
           } else {
-            newTx.status = "mined"
+            newTx.status = "success"
           }
         }
         else {

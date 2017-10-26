@@ -1,7 +1,7 @@
 import React from "react"
 
 const TransferForm = (props) => {  
-  return (
+  var render = (
     <div>
       <div class="frame">
         <div class="row">
@@ -55,7 +55,15 @@ const TransferForm = (props) => {
       {props.transferButton}
       {props.tokenModal}
     </div>
-
+  )
+  return (
+    
+    <div>
+      {props.step!==2? render : ''}
+      <div class="page-3">
+        {props.step==2? props.trasactionLoadingScreen : ''}
+      </div>
+    </div>
 
 
 

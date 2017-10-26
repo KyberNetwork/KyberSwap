@@ -12,6 +12,7 @@ const MyModal = (props) => {
             right: 0,
             bottom: 0,
             backgroundColor: 'rgba(11, 15, 26, 0.8)',
+            zIndex: '1005'
         },
         content : {
             // position: 'absolute',

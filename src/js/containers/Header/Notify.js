@@ -64,9 +64,6 @@ export default class Notify extends React.Component {
                 case "failed":
                     classTx = "fail"
                     break
-                case "mined":
-                    classTx = "success"
-                    break
                 default:
                     classTx = "pending"
                     break
