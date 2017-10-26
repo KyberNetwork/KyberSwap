@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from 'react-router-dom'
 import { connect } from "react-redux"
 import { Rate, Address, Notify } from "../Header"
 
@@ -9,7 +10,7 @@ import { Rate, Address, Notify } from "../Header"
 export default class Header extends React.Component {
   
 	render() {
-    // const transactionsNum = Object.keys(this.props.txs).length;
+    // const transactionsNum = Object.keys(this.props.txs).length;    
     return (
       
         <div>
@@ -21,14 +22,17 @@ export default class Header extends React.Component {
           <section id="header">
             <div class="row">
               <div class="column small-5 medium-6 large-7 hide-for-small-only">
-                <a class="logo" href="/">
-                  <img src="/assets/img/logo.svg"/>
-                </a>
+              <Link to="/" className="logo">
+                <img src="/assets/img/logo.svg"/>
+              </Link>
+                {/* <a class="logo" href="/">
+                  
+                </a> */}
               </div>
               <div class="column small-12 medium-6 large-5">
                 <div class="user-bar">
                   <div class="row">
-                    <Address />  
+                    <Address path={this.props.location.pathname}/>  
                     <Notify />
                   </div>
                 </div>

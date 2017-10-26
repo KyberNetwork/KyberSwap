@@ -11,22 +11,23 @@ const TransferForm = (props) => {
               <div class="row">
                 <div class="column">
                   <label>Transfer to address
-                    <input class="text-center hash" type="text" placeholder="Address Hash"/>
+                    <input class="text-center hash" type="text" placeholder="Address Hash" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange}/>
                   </label>
                 </div>
               </div>
               <div class="row">
                 <div class="column medium-6">
-                  <label>Select Token
+                  {props.token}
+                  {/* <label>Select Token
                     <div class="token-select" data-open="transfer-from-token-modal"><img src="/assets/img/omg.svg"/><span class="name">OmiseGO</span></div>
-                  </label>
+                  </label> */}
                 </div>
                 <div class="column medium-6">
                   <label>Amount
                     <div class="token-amount">
-                      <input type="number" min="0" step="0.000001" placeholder="0"/><span class="name">OMG</span>
+                      <input type="number" min="0" step="0.000001" placeholder="0" value={props.input.amount.value} onChange={props.input.amount.onChange}/><span class="name">{props.tokenSymbol}</span>
                     </div>
-                    <div class="address-balance clearfix"><span class="note">Address Balance</span><a class="value" href="#">0.123456 ETH</a></div>
+                    <div class="address-balance clearfix"><span class="note">Address Balance</span><a class="value" href="#">{props.balance} {props.tokenSymbol}</a></div>
                   </label>
                 </div>
               </div>
@@ -60,6 +61,7 @@ const TransferForm = (props) => {
         </div>
       </div>
       {props.transferButton}
+      {props.tokenModal}
     </div>
 
 

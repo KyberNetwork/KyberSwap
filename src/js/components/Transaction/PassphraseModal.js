@@ -9,12 +9,13 @@ const PassphraseModal = (props) => {
           <div class="column">
             <center>
               <p>You are about to transfer<br/><strong>1.234567 ETH</strong>&nbsp;to&nbsp;<strong>0xde0b29 ... 697bae</strong></p>
-              <input class="text-center" type="password" placeholder="Enter your passphrase to confirm"/>
+              <input class="text-center" id="passphrase" type="password" placeholder="Enter your passphrase to confirm" onChange={(e)=>props.onChange(e)}/>
+              {props.passwordError}
             </center>
           </div>
         </div>
       </div>
-      <div class="overlap"><a class="button accent" href="/broadcast.html">Confirm</a></div>
+      <div class="overlap"><a class="button accent" onClick={(e) => props.onClick(e)}>Confirm</a></div>
     </div>
 
 

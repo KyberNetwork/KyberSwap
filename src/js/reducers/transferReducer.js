@@ -133,7 +133,7 @@ const transfer = (state=initState, action) => {
     }
     case "TRANSFER.TX_BROADCAST_REJECTED": {
       newState.broadcasting = false
-      newState.bcError = action.payload
+      newState.bcError = action.payload.message
       return newState
     }
     case "TRANSFER.FINISH_TRANSACTION":{

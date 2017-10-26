@@ -53,8 +53,8 @@ export function sendTokenFromWallet(
 export function sendEtherFromAccount(
   id, ethereum, account, sourceToken, sourceAmount,
   destAddress, nonce, gas, gasPrice, keystring, accountType,
-  password, callback) {
-    
+  password) {
+
   const txParams = {
     nonce: nonce,
     gasPrice: gasPrice,
@@ -67,23 +67,28 @@ export function sendEtherFromAccount(
   switch (accountType) {
     case "keystore":
       const tx = sealTxByKeystore(txParams, keystring, password)
-      store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
+      return new Promise((resolve) => {
+        resolve(tx)
+      })
+      //store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
       break
     case "trezor":
       txParams.address_n = keystring
-      sealTxByTrezor(txParams, (tx) => {
-        store.dispatch(saveRawTransferTransaction(tx))
-      }, (error) => {
-        store.dispatch(throwErrorSignTransferTransaction(error))
-      })
+      return sealTxByTrezor(txParams)
+      // sealTxByTrezor(txParams, (tx) => {
+      //   store.dispatch(saveRawTransferTransaction(tx))
+      // }, (error) => {
+      //   store.dispatch(throwErrorSignTransferTransaction(error))
+      // })
       break
     case "ledger":
       txParams.address_n = keystring
-      sealTxByLedger(txParams, (tx) => {
-        store.dispatch(saveRawTransferTransaction(tx))
-      }, (error) => {
-        store.dispatch(throwErrorSignTransferTransaction(error))
-      })
+      return sealTxByLedger(txParams)
+      // sealTxByLedger(txParams, (tx) => {
+      //   store.dispatch(saveRawTransferTransaction(tx))
+      // }, (error) => {
+      //   store.dispatch(throwErrorSignTransferTransaction(error))
+      // })
       break
   }
 }
@@ -91,7 +96,7 @@ export function sendEtherFromAccount(
 export function sendTokenFromAccount(
   id, ethereum, account, sourceToken, sourceAmount,
   destAddress, nonce, gas, gasPrice, keystring, accountType,
-  password, callback) {
+  password) {
 
   var txData = ethereum.sendTokenData(
     sourceToken, sourceAmount, destAddress)
@@ -109,23 +114,28 @@ export function sendTokenFromAccount(
   switch (accountType) {
     case "keystore":
       const tx = sealTxByKeystore(txParams, keystring, password)
-      store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
+      return new Promise((resolve) => {
+        resolve(tx)
+      })
+      //store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
       break
     case "trezor":
       txParams.address_n = keystring
-      sealTxByTrezor(txParams, (tx) => {
-        store.dispatch(saveRawTransferTransaction(tx))
-      }, (error) => {
-        store.dispatch(throwErrorSignTransferTransaction(error))
-      })
+      return sealTxByTrezor(txParams)
+      // sealTxByTrezor(txParams, (tx) => {
+      //   store.dispatch(saveRawTransferTransaction(tx))
+      // }, (error) => {
+      //   store.dispatch(throwErrorSignTransferTransaction(error))
+      // })
       break
     case "ledger":
       txParams.address_n = keystring
-      sealTxByLedger(txParams, (tx) => {
-        store.dispatch(saveRawTransferTransaction(tx))
-      }, (error) => {        
-        store.dispatch(throwErrorSignTransferTransaction(error))
-      })
+      return sealTxByLedger(txParams)
+      // sealTxByLedger(txParams, (tx) => {
+      //   store.dispatch(saveRawTransferTransaction(tx))
+      // }, (error) => {        
+      //   store.dispatch(throwErrorSignTransferTransaction(error))
+      // })
       break
   }
 
@@ -135,7 +145,7 @@ export function etherToOthersFromAccount(
   id, ethereum, account, sourceToken, sourceAmount, destToken,
   destAddress, maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas, gasPrice, keystring, accountType,
-  password, callback) {
+  password) {
 
   var txData = ethereum.exchangeData(
     sourceToken, sourceAmount, destToken, destAddress,
@@ -153,42 +163,42 @@ export function etherToOthersFromAccount(
   switch (accountType) {
     case "keystore":
       var tx = sealTxByKeystore(txParams, keystring, password)
-      store.dispatch(doTransaction(id, ethereum, tx, callback))
+      return new Promise((resolve) => {
+        resolve(tx)
+      })
+      //store.dispatch(doTransaction(id, ethereum, tx, callback))
       break
     case "trezor":
       txParams.address_n = keystring
-      sealTxByTrezor(txParams, (tx) => {
-        store.dispatch(saveRawExchangeTransaction(tx))
-      }, (error) => {
-        store.dispatch(throwErrorSignExchangeTransaction(error))
-      })
+      return sealTxByTrezor(txParams)
+      // sealTxByTrezor(txParams, (tx) => {
+      //   store.dispatch(saveRawExchangeTransaction(tx))
+      // }, (error) => {
+      //   store.dispatch(throwErrorSignExchangeTransaction(error))
+      // })
       break
     case "ledger":
       txParams.address_n = keystring
-      sealTxByLedger(txParams, (tx) => {
-        store.dispatch(saveRawExchangeTransaction(tx))
-      }, (error) => {
-        store.dispatch(throwErrorSignExchangeTransaction(error))
-      })
-      break
+      return sealTxByLedger(txParams)
+    // sealTxByLedger(txParams, (tx) => {
+    //   store.dispatch password)
+
   }
-  //const tx = sealTxByKeystore(txParams, keystring, password)
-
+  // }, (error) => {
+  //   store.dispatch(throwErrorSignExchangeTransaction(error))
+  // })
 }
+//const tx = sealTxByKeystore(txParams, keystring,
 
-export function tokenToOthersFromAccount(
-  id, ethereum, account, sourceToken, sourceAmount, destToken,
-  destAddress, maxDestAmount, minConversionRate,
-  throwOnFailure, nonce, gas, gasPrice, keystring, accountType,
-  password, callback) {
-
+export function getAppoveToken(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+  keystring, password, accountType) {
   const approvalData = ethereum.approveTokenData(sourceToken, sourceAmount)
   const txParams = {
     nonce: nonce,
     gasPrice: gasPrice,
     gasLimit: gas,
     to: sourceToken,
-    value: 0,
+    value: '0x0',
     data: approvalData,
     // EIP 155 chainId - mainnet: 1, ropsten: 3
     chainId: 42
@@ -196,30 +206,51 @@ export function tokenToOthersFromAccount(
   switch (accountType) {
     case "keystore":
       const approvalTx = sealTxByKeystore(txParams, keystring, password)
-      store.dispatch(
-        doApprovalTransaction(id, ethereum, approvalTx, (hash) => {
-          const exchangeData = ethereum.exchangeData(
-            sourceToken, sourceAmount, destToken, destAddress,
-            maxDestAmount, minConversionRate, throwOnFailure)
-          const newNonce = verifyNonce(nonce, 1)
-          const exchangeTxParams = {
-            nonce: newNonce,
-            gasPrice: gasPrice,
-            gasLimit: gas,
-            to: ethereum.networkAddress,
-            value: 0,
-            data: exchangeData,
-            // EIP 155 chainId - mainnet: 1, ropsten: 3
-            chainId: 42
-          }
-          const exchangeTx = sealTxByKeystore(exchangeTxParams, keystring, password)
-          console.log(exchangeTx)
-          store.dispatch(doTransaction(id, ethereum, exchangeTx, callback))
-        }))
-      break
+      return new Promise((resolve) => {
+        resolve(approvalTx)
+      })
     case "trezor":
+      txParams.address_n = keystring
+      return sealTxByTrezor(txParams)
+    case "ledger":
+      txParams.address_n = keystring
+      return sealTxByLedger(txParams)
 
-      break
+  }
+}
+export function tokenToOthersFromAccount(
+  id, ethereum, account, sourceToken, sourceAmount, destToken,
+  destAddress, maxDestAmount, minConversionRate,
+  throwOnFailure, nonce, gas, gasPrice, keystring, accountType,
+  password) {
+    const exchangeData = ethereum.exchangeData(
+      sourceToken, sourceAmount, destToken, destAddress,
+      maxDestAmount, minConversionRate, throwOnFailure)
+    const newNonce = verifyNonce(nonce, 1)
+    const exchangeTxParams = {
+      nonce: newNonce,
+      gasPrice: gasPrice,
+      gasLimit: gas,
+      to: ethereum.networkAddress,
+      value: '0x0',
+      data: exchangeData,
+      // EIP 155 chainId - mainnet: 1, ropsten: 3
+      chainId: 42
+    }
+  switch (accountType) {
+    case "keystore":      
+      const exchangeTx = sealTxByKeystore(exchangeTxParams, keystring, password)
+      //console.log(exchangeTx)
+      return new Promise((resolve) => {
+        resolve(exchangeTx)
+      })
+      //store.dispatch(doTransaction(id, ethereum, exchangeTx, callback))
+    case "trezor":
+      exchangeTxParams.address_n = keystring
+      return sealTxByTrezor(exchangeTxParams)
+    case "ledger":
+      exchangeTxParams.address_n = keystring
+      return sealTxByLedger(txParaexchangeTxParamsms)
   }
 
 }

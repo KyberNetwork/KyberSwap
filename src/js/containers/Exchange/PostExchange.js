@@ -5,18 +5,19 @@ import * as ethUtil from 'ethereumjs-util'
 
 import { numberToHex, toTWei, gweiToWei, toT, weiToGwei } from "../../utils/converter"
 import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
-import constants from "../../services/constants"
-import { etherToOthersFromAccount, tokenToOthersFromAccount, sendEtherFromAccount, sendTokenFromAccount, exchangeFromWallet, sendEtherFromWallet, sendTokenFromWallet } from "../../services/exchange"
+//import constants from "../../services/constants"
 
-import { hidePassphrase, changePassword, throwPassphraseError, finishExchange, hideConfirm } from "../../actions/exchangeActions"
-import { thowErrorSourceAmount, openPassphrase, doTransaction } from "../../actions/exchangeActions"
+
+//import { hidePassphrase, changePassword, throwPassphraseError, finishExchange, hideConfirm } from "../../actions/exchangeActions"
+//import * as exchangeActions { thowErrorSourceAmount, openPassphrase, doTransaction, processExchange } from "../../actions/exchangeActions"
+import * as exchangeActions from "../../actions/exchangeActions"
 
 import { updateAccount, incManualNonceAccount } from "../../actions/accountActions"
 import { addTx } from "../../actions/txActions"
 import Tx from "../../services/tx"
 
 import { Modal } from "../../components/CommonElement"
-import {PassphraseModal, ConfirmTransferModal} from "../../components/Transaction"
+import {PassphraseModal, ConfirmTransferModal, ApproveModal} from "../../components/Transaction"
 
 @connect((store) => {
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
@@ -39,7 +40,7 @@ export default class PostExchange extends React.Component {
       //check account type
       switch (this.props.account.type) {
         case "keystore":
-          this.props.dispatch(openPassphrase())
+          this.props.dispatch(exchangeActions.openPassphrase())
           break
         case "trezor":
         case "ledger":
@@ -53,11 +54,11 @@ export default class PostExchange extends React.Component {
   validateExchange = () => {
     //check source amount
     if (isNaN(this.props.form.sourceAmount)) {
-      this.props.dispatch(thowErrorSourceAmount("Source amount must be a number"))
+      this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount must be a number"))
       return false
-    }
-    else if (this.props.form.sourceAmount > toT(this.props.form.sourceBalance, 8)) {
-      this.props.dispatch(thowErrorSourceAmount("Source amount is too high"))
+    }    
+    else if (parseFloat(this.props.form.sourceAmount) > parseFloat(toT(this.props.form.sourceBalance, 8))) {
+      this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount is too high"))
       return false
     }
     return true
@@ -73,15 +74,37 @@ export default class PostExchange extends React.Component {
   contentConfirm = () => {
     return (
       <ConfirmTransferModal recap={this.createRecap()}
-                    onCancel={this.closeModal}
+                    onCancel={this.closeModalConfirm}
                     onExchange = {this.broacastTx} />      
     )
+  }
+  contentApprove = () =>{
+    return (
+      <ApproveModal recap="Please approve"
+                    onCancel={this.closeModalApprove}
+                    onSubmit = {this.approveTx} />      
+    )
+  }
+  contentConfirmApprove = () =>{
+    return (
+      <ApproveModal recap="Approve successfully, please exchange"
+                    onCancel={this.closeModalConfirmApprove}
+                    onSubmit = {this.processTx} />      
+    )
+  }
+  approveTx = () => {
+    const params = this.formParams()
+    const account = this.props.account
+    const ethereum = this.props.ethereum
+    this.props.dispatch(exchangeActions.doApprove(ethereum, params.sourceToken, params.sourceAmount, params.nonce, params.gas, params.gasPrice,
+      account.keystring, account.password, account.type))
   }
   broacastTx = () => {
     var id = "exchange"
     var ethereum = this.props.ethereum
-    var tx = this.props.form.rawTx
-    this.props.dispatch(doTransaction(id, ethereum, tx, callback))
+    var tx = this.props.form.txRaw
+    const account = this.props.account
+    this.props.dispatch(exchangeActions.doTransaction(id, ethereum, tx, account))
   }
   createRecap = () => {
     var recap = `exchange ${this.props.form.sourceAmount.toString().slice(0, 7)}${this.props.form.sourceAmount.toString().length > 7 ? '...' : ''} ${this.props.form.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0, 7)}${this.getDesAmount().toString().length > 7 ? '...' : ''} ${this.props.form.destTokenSymbol}`
@@ -102,28 +125,29 @@ export default class PostExchange extends React.Component {
   }
 
   closeModal = (event) => {
-    switch (this.props.account.type) {
-      case "keystore":
-        this.props.dispatch(hidePassphrase())
-        break
-      case "trezor":
-        this.props.dispatch(hideConfirm())
-        break
-    }
-
+    this.props.dispatch(exchangeActions.hidePassphrase())
+  }
+  closeModalConfirm = (event) => {
+    this.props.dispatch(exchangeActions.hideConfirm())
+  }
+  closeModalApprove = (event) => {
+    this.props.dispatch(exchangeActions.hideApprove())
+  }
+  closeModalConfirmApprove = (event) => {
+    this.props.dispatch(exchangeActions.hideConfirmApprove())
   }
   changePassword = (event) => {
-    this.props.dispatch(changePassword())
+    this.props.dispatch(exchangeActions.changePassword())
   }
-  broacastTx = () => {
-    const id = "exchange"
-    const ethereum = this.props.ethereum
-    const tx = this.props.form.txRaw
-    this.props.dispatch(doTransaction(id, ethereum, tx, (ex, trans) => {
-      this.runAfterBroacastTx(ex, trans)
-      this.props.dispatch(finishExchange())
-    }))
-  }
+  // broacastTx = () => {
+  //   const id = "exchange"
+  //   const ethereum = this.props.ethereum
+  //   const tx = this.props.form.txRaw
+  //   this.props.dispatch(doTransaction(id, ethereum, tx, (ex, trans) => {
+  //     this.runAfterBroacastTx(ex, trans)
+  //     this.props.dispatch(finishExchange())
+  //   }))
+  // }
   formParams = () => {
     var selectedAccount = this.props.account.address
     var sourceToken = this.props.form.sourceToken
@@ -158,41 +182,47 @@ export default class PostExchange extends React.Component {
     var account = this.props.account
     var ethereum = this.props.ethereum
 
-    var call = params.sourceToken == constants.ETHER_ADDRESS ? etherToOthersFromAccount : tokenToOthersFromAccount
-    var dispatch = this.props.dispatch
-    var formId = "exchange"
-    call(
-      formId, ethereum, account.address, params.sourceToken,
+   // var call = params.sourceToken == constants.ETHER_ADDRESS ? etherToOthersFromAccount : tokenToOthersFromAccount
+    //var dispatch = this.props.dispatch
+    var formId = "exchange"    
+    this.props.dispatch(exchangeActions.processExchange(formId, ethereum, account.address, params.sourceToken,
       params.sourceAmount, params.destToken, params.destAddress,
       params.maxDestAmount, params.minConversionRate,
       params.throwOnFailure, params.nonce, params.gas,
-      params.gasPrice, account.keystring, account.type, password, (ex, trans) => {
+      params.gasPrice, account.keystring, account.type, password, account))
 
-        this.runAfterBroacastTx(ex, trans)
-        dispatch(finishExchange())
-      })
+    // call(
+    //   formId, ethereum, account.address, params.sourceToken,
+    //   params.sourceAmount, params.destToken, params.destAddress,
+    //   params.maxDestAmount, params.minConversionRate,
+    //   params.throwOnFailure, params.nonce, params.gas,
+    //   params.gasPrice, account.keystring, account.type, password, (ex, trans) => {
+
+    //     this.runAfterBroacastTx(ex, trans)
+    //     dispatch(finishExchange())
+    //   })
 
 
     } catch (e) {
       console.log(e)
-      this.props.dispatch(throwPassphraseError("Key derivation failed"))
+      this.props.dispatch(exchangeActions.throwPassphraseError("Key derivation failed"))
       //errors["passwordError"] = e.message
     }
   }
 
-  runAfterBroacastTx = (ex, trans) => {
-    const account = this.props.account
-    const params = this.formParams()
-    const ethereum = this.props.ethereum
-    const dispatch = this.props.dispatch
-    const tx = new Tx(
-      ex, account.address, ethUtil.bufferToInt(trans.gas),
-      weiToGwei(ethUtil.bufferToInt(trans.gasPrice)),
-      ethUtil.bufferToInt(trans.nonce), "pending", "exchange", this.recap())
-    dispatch(incManualNonceAccount(account.address))
-    dispatch(updateAccount(ethereum, account))
-    dispatch(addTx(tx))
-  }
+  // runAfterBroacastTx = (ex, trans) => {
+  //   const account = this.props.account
+  //   const params = this.formParams()
+  //   const ethereum = this.props.ethereum
+  //   const dispatch = this.props.dispatch
+  //   const tx = new Tx(
+  //     ex, account.address, ethUtil.bufferToInt(trans.gas),
+  //     weiToGwei(ethUtil.bufferToInt(trans.gasPrice)),
+  //     ethUtil.bufferToInt(trans.nonce), "pending", "exchange", this.recap())
+  //   dispatch(incManualNonceAccount(account.address))
+  //   dispatch(updateAccount(ethereum, account))
+  //   dispatch(addTx(tx))
+  // }
 
   render() {
     var modalPassphrase = this.props.account.type === "keystore" ? (
@@ -202,12 +232,27 @@ export default class PostExchange extends React.Component {
         contentLabel="password modal"
         content={this.content()}
       />
-    ) : <Modal
+    ) : (<div>
+      <Modal
         isOpen={this.props.form.confirmColdWallet}
-        onRequestClose={this.closeModal}
+        onRequestClose={this.closeModalConfirm}
         contentLabel="confirm modal"
         content={this.contentConfirm()}
       />
+      <Modal
+        isOpen={this.props.form.confirmApprove}
+        onRequestClose={this.closeModalApprove}
+        contentLabel="approve modal"
+        content={this.contentApprove()}
+      />
+      <Modal
+        isOpen={this.props.form.showConfirmApprove}
+        onRequestClose={this.closeModalConfirmApprove}
+        contentLabel="confirm approve modal"
+        content={this.contentConfirmApprove()}
+      />
+    </div>)
+      
     return (
       <div>
         <button onClick={this.clickExchange}>Exchange</button>

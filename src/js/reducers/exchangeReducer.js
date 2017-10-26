@@ -106,7 +106,7 @@ const exchange = (state=initState, action) => {
     }
     case "EXCHANGE.APPROVAL_TX_BROADCAST_PENDING": {
       newState.broadcasting = true
-      newState.txHash = action.payload
+      //newState.txHash = action.payload
       return newState
     }
     case "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED": {
@@ -117,7 +117,7 @@ const exchange = (state=initState, action) => {
     }
     case "EXCHANGE.TX_BROADCAST_PENDING": {
       newState.broadcasting = true
-      newState.txHash = action.payload
+      //newState.txHash = action.payload
       return newState
     }
     case "EXCHANGE.TX_BROADCAST_FULFILLED": {
@@ -139,7 +139,7 @@ const exchange = (state=initState, action) => {
       newState.offeredRate = rate
       return newState
     case "EXCHANGE.OPEN_PASSPHRASE":{
-      newState.passphrase = true
+      newState.passphrase = true      
       return newState      
     }      
     case "EXCHANGE.HIDE_PASSPHRASE":{
@@ -148,6 +148,30 @@ const exchange = (state=initState, action) => {
     }      
     case "EXCHANGE.HIDE_CONFIRM":{
       newState.confirmColdWallet = false
+      return newState
+    }
+    case "EXCHANGE.SHOW_CONFIRM":{      
+      newState.confirmColdWallet = true       
+      return newState
+    }
+    case "EXCHANGE.HIDE_APPROVE":{
+      newState.confirmApprove = false
+      return newState
+    }
+    case "EXCHANGE.SHOW_APPROVE":{
+      //newState.passphrase = false
+      //newState.confirmColdWallet = false      
+      newState.confirmApprove = true 
+      newState.showConfirmApprove = false
+      return newState
+    }
+    case "EXCHANGE.HIDE_CONFIRM_APPROVE":{
+      newState.showConfirmApprove = false
+      return newState
+    }
+    case "EXCHANGE.SHOW_CONFIRM_APPROVE":{
+      newState.confirmApprove = false 
+      newState.showConfirmApprove = true 
       return newState
     }
     case "EXCHANGE.CHANGE_PASSPHRASE":{
@@ -161,12 +185,16 @@ const exchange = (state=initState, action) => {
     case "EXCHANGE.FINISH_EXCHANGE":{
       newState.passphrase = false
       newState.confirmColdWallet = false
+      newState.confirmApprove = false
+      newState.showConfirmApprove = false
       newState.step = 3   
       return newState   
     }
     case "EXCHANGE.SAVE_RAW_TRANSACTION":{
       newState.txRaw = action.payload
-      newState.confirmColdWallet = true
+      newState.confirmColdWallet = true      
+      newState.confirmApprove = false
+      newState.showConfirmApprove = false
       return newState
     }
     case "EXCHANGE.THROW_ERROR_SIGN_TRANSACTION":{
