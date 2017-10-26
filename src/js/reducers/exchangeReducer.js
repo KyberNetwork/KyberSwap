@@ -31,6 +31,7 @@ const exchange = (state=initState, action) => {
         newState.destToken = Object.values(SUPPORT_TOKENS)[randomSelectToken[1]].address
         newState.destTokenSymbol = Object.values(SUPPORT_TOKENS)[randomSelectToken[1]].symbol
       }
+      newState.step = 1;
       return newState;
     }
     case "EXCHANGE.MAKE_NEW_EXCHANGE":

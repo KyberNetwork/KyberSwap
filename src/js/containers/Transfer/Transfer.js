@@ -12,6 +12,9 @@ import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
 import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase, throwErrorDestAddress, thowErrorAmount, makeNewTransfer } from '../../actions/transferActions';
 
+import { specifyGas as specifyGasTransfer, specifyGasPrice as specifyGasPriceTransfer, hideAdvance as hideAdvanceTransfer } from "../../actions/transferActions"
+import { TransactionConfig } from "../../components/CommonElement"
+
 @connect((store) => {
   // if (store.account.isStoreReady) {
   //   if (!!!store.account.account.address) {
@@ -54,6 +57,16 @@ export default class Transfer extends React.Component {
     this.props.dispatch(makeNewTransfer());
   }
 
+  specifyGas = (event) => {
+    var value = event.target.value
+    this.props.dispatch(specifyGasTransfer(value))
+  }
+
+  specifyGasPrice = (event) => {
+    var value = event.target.value
+    this.props.dispatch(specifyGasPriceTransfer(value))
+  }
+
   render() {
     if (this.props.account.isStoreReady) {
       if (!!!this.props.account.account.address) {
@@ -91,22 +104,6 @@ export default class Transfer extends React.Component {
       amountTransfer: this.props.transfer.errors.amountTransfer
     }
 
-
-    // var showAdvanceBtn = (
-    //   <button onClick={this.showAdvanceOption}>Advance</button>
-    // )
-    // var destAddress = (
-    //   <input value={this.props.destAddress} onChange={this.onAddressReceiveChange.bind(this)} />
-    // )
-    // var amount = (
-    //   <input value={this.props.amount} onChange={this.onAmountChange.bind(this)} />
-    // )
-    // var errorDestAddress = (
-    //   <div>{this.props.errors.destAddress}</div>
-    // )
-    // var errorAmount = (
-    //   <div>{this.props.errors.amountTransfer}</div>
-    // )
     var token = (
       <Token type="transfer"
         token={this.props.transfer.tokenSymbol}
@@ -132,20 +129,30 @@ export default class Transfer extends React.Component {
       <TransactionLoading tx={this.props.transfer.txHash} makeNewTransaction={this.makeNewTransfer} />
     )
 
+    var gasConfig = (
+      <TransactionConfig gas={this.props.transfer.gas}
+              gasPrice={this.props.transfer.gasPrice}
+              gasHandler={this.specifyGas}
+              gasPriceHandler={this.specifyGasPrice}
+              gasPriceError={this.props.transfer.gasPriceError}
+              gasError={this.props.transfer.gasError}/>
+    )         
+    
     return (
-      <TransferForm step={this.props.transfer.step}
-        token={token}
-        tokenSymbol={this.props.transfer.tokenSymbol}
-        tokenModal={tokenModal}
-        changeGasModal={changeGasModal}
-        transferButton={transferButton}
-        trasactionLoadingScreen={trasactionLoadingScreen}
-        recap={this.createRecap()}
-        button={button}
-        input={input}
-        errors={errors}
-        balance = {balance}
-      />
-    )
+     <TransferForm step={this.props.transfer.step}
+                    token = {token}
+                    tokenSymbol = {this.props.transfer.tokenSymbol}
+                    tokenModal = {tokenModal}
+                    changeGasModal = {changeGasModal}
+                    gasConfig = {gasConfig}
+                    transferButton = {transferButton}
+                    trasactionLoadingScreen = {trasactionLoadingScreen}
+                    recap = {this.createRecap()}
+                    button = {button}
+                    input = {input}
+                    errors = {errors}
+                    balance = {balance}
+                    />
+    ) 
   }
 }

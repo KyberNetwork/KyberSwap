@@ -40,20 +40,12 @@ const TransferForm = (props) => {
                       <input class="switch-input" id="advanced" type="checkbox"/>
                       <label class="switch-paddle" for="advanced"><span class="show-for-sr">Advanced Mode</span></label>
                     </div>
+                    
                     <label class="switch-caption" for="advanced">Advanced</label>
                   </div>
                 </div>
                 <div class="advanced-content" disabled>
-                  <div class="transaction-fee">
-                    <label class="title">Transaction Fee<span class="help has-tip top" data-tooltip title="To move someone or something from one place, vehicle, person, or group to another"></span></label>
-                    <div class="gas-limit">
-                      <input type="number" min="0" max="3000000" step="1000000" placeholder="3,000,000"/>
-                    </div>
-                    <div class="symbol">×</div>
-                    <div class="gas-price">
-                      <input type="number" min="0" max="99" step="0.1" placeholder="0.2"/>
-                    </div><span class="result">0.123456 ETH</span>
-                  </div>
+                  {props.gasConfig}
                 </div>
               </div>
             </div>

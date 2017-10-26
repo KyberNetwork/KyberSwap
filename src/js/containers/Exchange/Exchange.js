@@ -14,7 +14,8 @@ import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import { selectTokenAsync, thowErrorSourceAmount } from "../../actions/exchangeActions"
 import { errorSelectToken, goToStep, showAdvance, changeSourceAmout, openPassphrase, makeNewExchange } from "../../actions/exchangeActions"
 
-
+import { TransactionConfig } from "../../components/CommonElement"
+import { specifyGas as specifyGasExchange, specifyGasPrice as specifyGasPriceExchange, hideAdvance as hideAdvanceExchange } from "../../actions/exchangeActions"
 @connect((store) => {  
   const ethereum = store.connection.ethereum
   const account = store.account
@@ -58,6 +59,16 @@ export default class Exchange extends React.Component {
 
   makeNewExchange = () => {
     this.props.dispatch(makeNewExchange());
+  }
+
+  specifyGas = (event) => {
+    var value = event.target.value
+    this.props.dispatch(specifyGasExchange(value))
+  }
+
+  specifyGasPrice = (event) => {
+    var value = event.target.value
+    this.props.dispatch(specifyGasPriceExchange(value))
   }
 
   render() {
@@ -117,7 +128,7 @@ export default class Exchange extends React.Component {
         onChange: this.changeSourceAmount
       },
       destAmount: {
-        type: 'text',
+        type: 'number',
         value: this.getDesAmount()
       }
     }
@@ -157,6 +168,15 @@ export default class Exchange extends React.Component {
     var trasactionLoadingScreen = (
       <TransactionLoading tx={this.props.exchange.txHash} makeNewTransaction={this.makeNewExchange} />
     )
+    var gasConfig = (
+      <TransactionConfig gas={this.props.exchange.gas}
+              gasPrice={this.props.exchange.gasPrice}
+              gasHandler={this.specifyGas}
+              gasPriceHandler={this.specifyGasPrice}
+              gasPriceError={this.props.exchange.gasPriceError}
+              gasError={this.props.exchange.gasError}/>
+    )   
+
     return (
       <ExchangeForm step={this.props.exchange.step}
         tokenSource={tokenSource}
@@ -164,6 +184,7 @@ export default class Exchange extends React.Component {
         selectTokenModal={selectTokenModal}
         changeGasModal={changeGasModal}
         exchangeRate={exchangeRate}
+        gasConfig = {gasConfig}
         exchangeButton={exchangeButton}
         trasactionLoadingScreen={trasactionLoadingScreen}
         recap={this.createRecap()}

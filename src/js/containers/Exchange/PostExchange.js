@@ -36,20 +36,22 @@ import {PassphraseModal, ConfirmTransferModal, ApproveModal} from "../../compone
 
 export default class PostExchange extends React.Component {
   clickExchange = () => {
-    if (this.validateExchange()) {
-      //check account type
-      switch (this.props.account.type) {
-        case "keystore":
-          this.props.dispatch(exchangeActions.openPassphrase())
-          break
-        case "trezor":
-        case "ledger":
-          this.processTx()
-          break
+    if(this.props.form.step == 1){
+      this.props.dispatch(exchangeActions.goToStep(2))
+    } else if (this.props.form.step == 2){
+      if (this.validateExchange()) {
+        //check account type
+        switch (this.props.account.type) {
+          case "keystore":
+            this.props.dispatch(exchangeActions.openPassphrase())
+            break
+          case "trezor":
+          case "ledger":
+            this.processTx()
+            break
+        }
       }
-
     }
-
   }
   validateExchange = () => {
     //check source amount
@@ -200,35 +202,55 @@ export default class PostExchange extends React.Component {
   render() {
     var modalPassphrase = this.props.account.type === "keystore" ? (
       <Modal
+        className={{base: 'reveal tiny',
+            afterOpen: 'reveal tiny'}}
         isOpen={this.props.form.passphrase}
         onRequestClose={this.closeModal}
         contentLabel="password modal"
         content={this.content()}
+        type="passphrase"
       />
-    ) : (<div>
+    ) : (
+    <div>
       <Modal
+        className={{base: 'reveal tiny',
+            afterOpen: 'reveal tiny'}}
         isOpen={this.props.form.confirmColdWallet}
         onRequestClose={this.closeModalConfirm}
         contentLabel="confirm modal"
         content={this.contentConfirm()}
+        type="passphrase"
       />
-      <Modal
+      <Modal className={{base: 'reveal tiny',
+            afterOpen: 'reveal tiny'}}
         isOpen={this.props.form.confirmApprove}
         onRequestClose={this.closeModalApprove}
         contentLabel="approve modal"
         content={this.contentApprove()}
       />
-      <Modal
+      <Modal className={{base: 'reveal tiny',
+            afterOpen: 'reveal tiny'}}
         isOpen={this.props.form.showConfirmApprove}
         onRequestClose={this.closeModalConfirmApprove}
         contentLabel="confirm approve modal"
         content={this.contentConfirmApprove()}
       />
-    </div>)
+    </div>
+  )
       
     return (
       <div>
-        <button onClick={this.clickExchange}>Exchange</button>
+        <div class="row hide-on-choose-token-pair">
+          <div class="column small-11 medium-10 large-9 small-centered text-center">
+            <p class="note">Passphrase is needed for each exchange transaction</p><a class="button accent" href="#" onClick={this.clickExchange} data-open="passphrase-modal">Exchange</a>
+          </div>
+        </div>
+        <div class="row show-on-choose-token-pair">
+          <div class="column small-11 medium-10 large-9 small-centered text-center">
+            <p class="note">Passphrase is needed for each exchange transaction</p><a class="button accent next animated pulse infinite" onClick={this.clickExchange} href="#">Next</a>
+          </div>
+        </div>
+        
         {modalPassphrase}
       </div>
     )
