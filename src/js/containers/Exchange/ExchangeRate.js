@@ -35,21 +35,27 @@ export default class ExchangeRate extends React.Component {
 
   render() {
     return (
-      <div class="rate-wrapper">
-        <div class="rate">
-          <div>
-            <label>Exchange Rate</label>
-            <span>{toT(this.props.offeredRate,6)}</span>
-          </div>
-          <div>
-            <label>Expiration Block</label>
-            <span>{this.props.offeredRateExpiryBlock}</span>
-          </div>
-          <div>
-            <label>Reserve Balance</label>
-            <span>{toT(this.props.offeredRateBalance,8)}</span>
-          </div>
-        </div>
-      </div>)
+      <div class="column">
+        <p class="token-compare">1 {this.props.sourceTokenSymbol} = {toT(this.props.offeredRate,6)} {this.props.destTokenSymbol}<span class="up">+12%</span></p>
+      </div>
+
+
+      // <div class="rate-wrapper">
+      //   <div class="rate">
+      //     <div>
+      //       <label>Exchange Rate</label>
+      //       <span>{toT(this.props.offeredRate,6)}</span>
+      //     </div>
+      //     <div>
+      //       <label>Expiration Block</label>
+      //       <span>{this.props.offeredRateExpiryBlock}</span>
+      //     </div>
+      //     <div>
+      //       <label>Reserve Balance</label>
+      //       <span>{toT(this.props.offeredRateBalance,8)}</span>
+      //     </div>
+      //   </div>
+      // </div>
+    )
   }
 }

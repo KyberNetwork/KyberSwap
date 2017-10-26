@@ -9,7 +9,7 @@ import constants from "../../services/constants"
 import { etherToOthersFromAccount, tokenToOthersFromAccount, sendEtherFromAccount, sendTokenFromAccount, exchangeFromWallet, sendEtherFromWallet, sendTokenFromWallet } from "../../services/exchange"
 
 import { hidePassphrase, changePassword, throwPassphraseError, finishExchange, hideConfirm } from "../../actions/exchangeActions"
-import { thowErrorSourceAmount, openPassphrase, doTransaction } from "../../actions/exchangeActions"
+import { thowErrorSourceAmount, openPassphrase, doTransaction, goToStep } from "../../actions/exchangeActions"
 
 import { updateAccount, incManualNonceAccount } from "../../actions/accountActions"
 import { addTx } from "../../actions/txActions"
@@ -35,20 +35,24 @@ import {PassphraseModal, ConfirmTransferModal} from "../../components/Transactio
 
 export default class PostExchange extends React.Component {
   clickExchange = () => {
-    if (this.validateExchange()) {
-      //check account type
-      switch (this.props.account.type) {
-        case "keystore":
-          this.props.dispatch(openPassphrase())
-          break
-        case "trezor":
-        case "ledger":
-          this.processTx()
-          break
+    if(this.props.form.step == 1){
+      this.props.dispatch(goToStep(2))
+    } else if(this.props.form.step == 2){
+
+      if (this.validateExchange()) {
+        //check account type
+        switch (this.props.account.type) {
+          case "keystore":
+            this.props.dispatch(openPassphrase())
+            break
+          case "trezor":
+          case "ledger":
+            this.processTx()
+            break
+        }
+  
       }
-
     }
-
   }
   validateExchange = () => {
     //check source amount
@@ -197,20 +201,36 @@ export default class PostExchange extends React.Component {
   render() {
     var modalPassphrase = this.props.account.type === "keystore" ? (
       <Modal
+        className={{base: 'reveal tiny',
+            afterOpen: 'reveal tiny'}}
         isOpen={this.props.form.passphrase}
         onRequestClose={this.closeModal}
         contentLabel="password modal"
         content={this.content()}
+        type="passphrase"
       />
     ) : <Modal
+        className={{base: 'reveal tiny',
+            afterOpen: 'reveal tiny'}}
         isOpen={this.props.form.confirmColdWallet}
         onRequestClose={this.closeModal}
         contentLabel="confirm modal"
         content={this.contentConfirm()}
+        type="passphrase"
       />
     return (
       <div>
-        <button onClick={this.clickExchange}>Exchange</button>
+        <div class="row hide-on-choose-token-pair">
+          <div class="column small-11 medium-10 large-9 small-centered text-center">
+            <p class="note">Passphrase is needed for each exchange transaction</p><a class="button accent" href="#" onClick={this.clickExchange} data-open="passphrase-modal">Exchange</a>
+          </div>
+        </div>
+        <div class="row show-on-choose-token-pair">
+          <div class="column small-11 medium-10 large-9 small-centered text-center">
+            <p class="note">Passphrase is needed for each exchange transaction</p><a class="button accent next animated pulse infinite" onClick={this.clickExchange} href="#">Next</a>
+          </div>
+        </div>
+        
         {modalPassphrase}
       </div>
     )

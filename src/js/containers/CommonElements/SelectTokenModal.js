@@ -48,9 +48,8 @@ export default class SelectTokenModal extends React.Component {
         title = "Select source token"
         //content = "source"  			
         var content = Object.keys(this.props.tokens).map((key, i) => {
-          const token = this.props.tokens[key]
-          //console.log(token)         
-		      return <TokenSelect key={i} symbol={token.symbol} 
+          var token = this.props.tokens[key]
+		      return <TokenSelect key={i} symbol={token.symbol} name={token.name}
 		      				balance={token.balance.toString()} 
 		      				icon={token.icon} 
                   type = {this.props.modalInfo.type}
@@ -63,9 +62,9 @@ export default class SelectTokenModal extends React.Component {
   			break
   		case "des":
   			title = "Select des token"
-  			var content = Object.keys(this.props.tokens).map((key) => {
-		    	const token = this.props.tokens[key]
-		      return <TokenSelect key={key} symbol={token.symbol} 
+  			var content = Object.keys(this.props.tokens).map((key,i) => {
+		    	var token = this.props.tokens[key]
+		      return <TokenSelect key={i} symbol={token.symbol} name={token.name}
 		      				balance={token.balance.toString()} 
 		      				icon={token.icon} 
                   type = {this.props.modalInfo.type}
@@ -76,10 +75,10 @@ export default class SelectTokenModal extends React.Component {
 		    })
   			break
   		case "transfer":  		
-  			title = "SELECT \"TRANSFER FROM\" TOKEN"
-  			var content = Object.keys(this.props.tokens).map((key) => {
-		    	const token = this.props.tokens[key]
-		      return <TokenSelect key={key} symbol={token.symbol} name={token.name}
+        title = "SELECT \"TRANSFER FROM\" TOKEN"
+  			var content = Object.keys(this.props.tokens).map((key,i) => {
+          var token = this.props.tokens[key]
+		      return <TokenSelect key={i} symbol={token.symbol} name={token.name}
 		      				balance={token.balance.toString()} 
 		      				icon={token.icon} 
                   type = {this.props.modalInfo.type}
