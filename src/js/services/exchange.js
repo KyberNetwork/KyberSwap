@@ -223,10 +223,6 @@ export function tokenToOthersFromAccount(
   destAddress, maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas, gasPrice, keystring, accountType,
   password) {
-    console.log(gas)
-    console.log(gasPrice)
-    return
-
     const exchangeData = ethereum.exchangeData(
       sourceToken, sourceAmount, destToken, destAddress,
       maxDestAmount, minConversionRate, throwOnFailure)

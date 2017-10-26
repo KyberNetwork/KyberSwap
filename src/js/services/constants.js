@@ -66,8 +66,8 @@ const INIT_TRANSFER_FORM_STATE = {
   advanced: false,
   passphrase: false,
   selected: false,
-  token: supported_tokens[0].address,
-  tokenSymbol: supported_tokens[0].symbol,
+  token: supported_tokens[3].address,
+  tokenSymbol: supported_tokens[3].symbol,
   amount: 0,
   destAddress: "",
 

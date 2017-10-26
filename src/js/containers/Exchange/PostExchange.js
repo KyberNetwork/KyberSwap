@@ -184,7 +184,7 @@ export default class PostExchange extends React.Component {
 
    // var call = params.sourceToken == constants.ETHER_ADDRESS ? etherToOthersFromAccount : tokenToOthersFromAccount
     //var dispatch = this.props.dispatch
-    var formId = "exchange"
+    var formId = "exchange"    
     this.props.dispatch(exchangeActions.processExchange(formId, ethereum, account.address, params.sourceToken,
       params.sourceAmount, params.destToken, params.destAddress,
       params.maxDestAmount, params.minConversionRate,

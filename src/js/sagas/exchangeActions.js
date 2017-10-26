@@ -4,7 +4,7 @@ import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
 import { addTx } from '../actions/txActions'
 import * as utilActions from '../actions/utilActions'
 import constants from "../services/constants"
-import { weiToGwei } from "../utils/converter"
+import * as converter from "../utils/converter"
 import * as ethUtil from 'ethereumjs-util'
 import * as servicesExchange from "../services/exchange"
 import Tx from "../services/tx"
@@ -46,8 +46,14 @@ function* selectToken(action) {
 function* runAfterBroadcastTx(ethereum, txRaw, hash, account) {
   const tx = new Tx(
     hash, account.address, ethUtil.bufferToInt(txRaw.gas),
-    weiToGwei(ethUtil.bufferToInt(txRaw.gasPrice)),
+    converter.weiToGwei(ethUtil.bufferToInt(txRaw.gasPrice)),
     ethUtil.bufferToInt(txRaw.nonce), "pending", "exchange")
+  tx.data = {
+    sourceAmount: "a",
+    destAmount: "b",
+    sourceTokenSymbol:"ETH",
+    destTokenSymbol:"ETH",
+  }
   yield put(incManualNonceAccount(account.address))
   yield put(updateAccount(ethereum, account))
   yield put(addTx(tx))
@@ -101,7 +107,10 @@ function* processExchange(action) {
       yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account)
     } else {
       const remain = yield call([ethereum, ethereum.getAllowance], sourceToken, address)
-      if (!remain.greaterThan(0)) {
+      console.log(remain)
+      const sourceAmountBig = converter.hexToNumber(sourceAmount)
+      console.log(remain.greaterThanOrEqualTo(sourceAmountBig))
+      if (!remain.greaterThanOrEqualTo(sourceAmountBig)) {
         //get approve
         if (type === "keystore") {
           const rawApprove = yield call(servicesExchange.getAppoveToken, ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
@@ -124,7 +133,7 @@ function* processExchange(action) {
           maxDestAmount, minConversionRate,
           throwOnFailure, nonce, gas,
           gasPrice, keystring, type, password)
-
+        console.log(txRaw)
         if (type === "keystore") {          
           const hash = yield call(ethereum.sendRawTransaction, txRaw, ethereum)          
           yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account)

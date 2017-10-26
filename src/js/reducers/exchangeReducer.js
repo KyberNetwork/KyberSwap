@@ -139,7 +139,7 @@ const exchange = (state=initState, action) => {
       newState.offeredRate = rate
       return newState
     case "EXCHANGE.OPEN_PASSPHRASE":{
-      newState.passphrase = true
+      newState.passphrase = true      
       return newState      
     }      
     case "EXCHANGE.HIDE_PASSPHRASE":{
@@ -150,8 +150,8 @@ const exchange = (state=initState, action) => {
       newState.confirmColdWallet = false
       return newState
     }
-    case "EXCHANGE.SHOW_CONFIRM":{
-      newState.confirmColdWallet = true 
+    case "EXCHANGE.SHOW_CONFIRM":{      
+      newState.confirmColdWallet = true       
       return newState
     }
     case "EXCHANGE.HIDE_APPROVE":{
@@ -159,7 +159,10 @@ const exchange = (state=initState, action) => {
       return newState
     }
     case "EXCHANGE.SHOW_APPROVE":{
+      //newState.passphrase = false
+      //newState.confirmColdWallet = false      
       newState.confirmApprove = true 
+      newState.showConfirmApprove = false
       return newState
     }
     case "EXCHANGE.HIDE_CONFIRM_APPROVE":{
@@ -167,6 +170,7 @@ const exchange = (state=initState, action) => {
       return newState
     }
     case "EXCHANGE.SHOW_CONFIRM_APPROVE":{
+      newState.confirmApprove = false 
       newState.showConfirmApprove = true 
       return newState
     }
@@ -181,12 +185,16 @@ const exchange = (state=initState, action) => {
     case "EXCHANGE.FINISH_EXCHANGE":{
       newState.passphrase = false
       newState.confirmColdWallet = false
+      newState.confirmApprove = false
+      newState.showConfirmApprove = false
       newState.step = 3   
       return newState   
     }
     case "EXCHANGE.SAVE_RAW_TRANSACTION":{
       newState.txRaw = action.payload
-      newState.confirmColdWallet = true
+      newState.confirmColdWallet = true      
+      newState.confirmApprove = false
+      newState.showConfirmApprove = false
       return newState
     }
     case "EXCHANGE.THROW_ERROR_SIGN_TRANSACTION":{
