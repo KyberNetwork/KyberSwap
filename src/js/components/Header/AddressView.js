@@ -35,7 +35,11 @@ const Address = (props) => {
       </div>
     ) : (
       <div class="column small-10">
-        <div class="user-bar text-right"><a class="button accent" href="/import-address.html">Import Address</a></div>  
+        <div class="user-bar text-right">
+          <Link to="/" className="button accent">
+              Import Address
+          </Link>          
+          </div>  
       </div>
     )
 }

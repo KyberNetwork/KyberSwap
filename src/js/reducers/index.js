@@ -20,11 +20,11 @@ import txs from './txsReducer'
 //import createKeyStore from './createKeyStoreReducer'
 //import modifyAccount from './modifyAccountReducer'
 //import modifyWallet from './modifyWalletReducer'
-import transactions from './transactionReducer'
+//import transactions from './transactionReducer'
 
 const appReducer = combineReducers({
   account, exchange,transfer, global, tokens, txs,
-  connection,transactions,utils,
+  connection,utils,
   router: routerReducer
 })
 
