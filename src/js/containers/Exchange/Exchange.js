@@ -166,7 +166,7 @@ export default class Exchange extends React.Component {
       <PostExchange />
     )
     var trasactionLoadingScreen = (
-      <TransactionLoading tx={this.props.exchange.txHash} makeNewTransaction={this.makeNewExchange} />
+      <TransactionLoading tx={this.props.exchange.txHash} makeNewTransaction={this.makeNewExchange} type="exchange"/>
     )
     var gasConfig = (
       <TransactionConfig gas={this.props.exchange.gas}

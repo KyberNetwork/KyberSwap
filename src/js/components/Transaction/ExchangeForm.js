@@ -1,9 +1,8 @@
 import React from "react"
 
 const ExchangeForm = (props) => {  
-  return (
-
-    <div class="choose-token-pair" id="exchange">
+  var render = (
+    <div>
       <div class="frame">
         <div class="row">
           <div class="column small-11 medium-10 large-8 small-centered">
@@ -56,6 +55,15 @@ const ExchangeForm = (props) => {
       </div>
       {props.exchangeButton}
       {props.selectTokenModal}
+    </div>
+  )
+  return (
+
+    <div class="choose-token-pair" id="exchange">
+      {props.step!==3? render : ''}
+      <div class="page-3">
+        {props.step==3? props.trasactionLoadingScreen : ''}
+      </div>
     </div>
 
 
