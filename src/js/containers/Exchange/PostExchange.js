@@ -71,7 +71,7 @@ export default class PostExchange extends React.Component {
     const account = this.props.account
     const ethereum = this.props.ethereum
     this.props.dispatch(exchangeActions.doApprove(ethereum, params.sourceToken, params.sourceAmount, params.nonce, params.gas, params.gasPrice,
-      account.keystring, account.password, account.type))
+      account.keystring, account.password, account.type, account))
   }
   
   createRecap = () => {
@@ -247,7 +247,7 @@ export default class PostExchange extends React.Component {
         </div>
         <div class="row show-on-choose-token-pair">
           <div class="column small-11 medium-10 large-9 small-centered text-center">
-            <p class="note">Passphrase is needed for each exchange transaction</p><a class="button accent next animated pulse infinite" onClick={this.clickExchange} href="#">Next</a>
+            <p class="note">Passphrase is needed for each exchange transaction</p><a class="button accent next animated pulse infinite" onClick={this.clickExchange}>Next</a>
           </div>
         </div>
         

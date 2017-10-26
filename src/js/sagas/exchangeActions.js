@@ -69,11 +69,12 @@ function* doApproveTransactionFail(ethereum, account, e) {
 
 function* processApprove(action) {
   const { ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-    keystring, password, accountType } = action.payload
+    keystring, password, accountType, account } = action.payload
   try {
     const rawApprove = yield call(servicesExchange.getAppoveToken, ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
       keystring, password, accountType)
     const hashApprove = yield call(ethereum.sendRawTransaction, rawApprove, ethereum)
+    console.log(hashApprove)
     yield put(actions.hideApprove())
     yield put(actions.showConfirmApprove())
   } catch (e) {

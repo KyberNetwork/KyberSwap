@@ -139,6 +139,8 @@ const transfer = (state=initState, action) => {
     case "TRANSFER.FINISH_TRANSACTION":{
       newState.passphrase = false
       newState.confirmColdWallet = false
+      newState.amount = 0
+      newState.txRaw = ""
       newState.step = 2
       return newState   
     }

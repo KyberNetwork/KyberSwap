@@ -196,12 +196,12 @@ export function processExchange(formId, ethereum, address, sourceToken,
 	}
 }
 export function doApprove(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-	keystring, password, accountType){
+	keystring, password, accountType, account){
 		return {
 			type: "EXCHANGE.PROCESS_APPROVE",
 			payload:{
 				ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-				keystring, password, accountType
+				keystring, password, accountType, account
 			}
 		}	
 }
