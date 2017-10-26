@@ -48,10 +48,10 @@ export function hideControl() {
 
 
 
-export function openTokenModal(type) {
+export function openTokenModal(type, selected) {
   return {
     type: UTIL.OPEN_TOKEN_MODAL,
-    payload: type,
+    payload: {type: type, selected: selected},
   }
 }
 

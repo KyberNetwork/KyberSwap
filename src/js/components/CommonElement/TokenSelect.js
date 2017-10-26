@@ -16,7 +16,7 @@ const TokenSelect = (props) => {
 
 
     <div class="column gutter-15">
-      <a class={"token-stamp " + (props.inactive? "" : "selected")} href="#" onClick={(e)=> {handleOnClick(e)}}>
+      <a class={"token-stamp " + (props.inactive? "empty": (props.selected?"selected":""))} href="#" onClick={(e)=> {handleOnClick(e)}}>
         <img src="/assets/img/eth.svg"/><span class="name">{props.name}</span>
         <div class="balance">{toT(props.balance, 8)}</div>
       </a>

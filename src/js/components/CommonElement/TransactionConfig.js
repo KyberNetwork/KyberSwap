@@ -32,7 +32,7 @@ const TransactionConfig = (props) => {
       <div class="symbol">×</div>
       <div class="gas-price">
         <input type="number" min="0" max="99" step="0.1" onKeyPress={props.onGasPricePress} value={props.gasPrice} onChange={specifyGasPrice.bind(this)}/>
-      </div><span class="result">{props.gas * props.gasPrice} ETH</span>
+      </div><span class="result">{props.gas * props.gasPrice} gwei</span>
     </div>
 
 
