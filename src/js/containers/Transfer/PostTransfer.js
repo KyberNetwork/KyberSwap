@@ -71,23 +71,17 @@ export default class PostTransfer extends React.Component {
 
   content = () => {
     return (
-      <div>
-        <div>{this.createRecap()}</div>
-        <input type="password" id="passphrase" onChange={this.changePassword} />
-        <button onClick={this.processTx}>Transfer</button>
-        {this.props.form.errors.passwordError}
-      </div>
+      <PassphraseModal recap={this.createRecap()}
+          onChange = {this.changePassword}
+          onClick = {this.processTx}
+          passwordError={this.props.form.errors.passwordError} />
     )
   }
   contentConfirm = () => {
-    // const err = this.props.transfer.bcError ? 'Broadcasting your transaction failed.Error: Insufficient funds' : ''
     return (
-      <div>
-        <div>{this.createRecap()}</div>
-        <button onClick={this.closeModal}>Cancel</button>
-        <button onClick={this.broacastTx}>Transfer</button>
-        {/* <div>{err}</div> */}
-      </div>
+      <ConfirmTransferModal recap={this.createRecap()}
+                    onCancel={this.closeModal}
+                    onExchange = {this.broacastTx} />
       
     )
   }
