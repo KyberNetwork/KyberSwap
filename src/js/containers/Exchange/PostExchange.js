@@ -68,8 +68,14 @@ export default class PostExchange extends React.Component {
   }
   
   createRecap = () => {
+    var sourceAmount = this.props.form.sourceAmount.toString();
+    var destAmount = this.getDesAmount().toString();
+    var sourceTokenSymbol = this.props.form.sourceTokenSymbol;
+    var destTokenSymbol = this.props.form.destTokenSymbol
     var recap = `exchange ${this.props.form.sourceAmount.toString().slice(0, 7)}${this.props.form.sourceAmount.toString().length > 7 ? '...' : ''} ${this.props.form.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0, 7)}${this.getDesAmount().toString().length > 7 ? '...' : ''} ${this.props.form.destTokenSymbol}`
-    return recap
+    return (
+      <p>You are about to exchange<br/><strong>{sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}</strong>&nbsp;for&nbsp;<strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}</strong></p>
+    )
   }
   getDesAmount = () => {
     return this.props.form.sourceAmount * converters.toT(this.props.form.offeredRate,6)
@@ -201,7 +207,9 @@ export default class PostExchange extends React.Component {
     return (
       <ConfirmTransferModal recap={this.createRecap()}
                     onCancel={this.closeModalConfirm}
-                    onExchange = {this.processTxAfterConfirm} />      
+                    onExchange = {this.processTxAfterConfirm} 
+                    type = "exchange"
+                    />      
     )
   }
   contentApprove = () =>{
@@ -228,7 +236,7 @@ export default class PostExchange extends React.Component {
         onRequestClose={this.closeModal}
         contentLabel="password modal"
         content={this.content()}
-        type="passphrase"
+        size="tiny"
       />
     ) : (
     <div>
@@ -239,7 +247,7 @@ export default class PostExchange extends React.Component {
         onRequestClose={this.closeModalConfirm}
         contentLabel="confirm modal"
         content={this.contentConfirm()}
-        type="passphrase"
+        size="tiny"
       />
       <Modal className={{base: 'reveal tiny',
             afterOpen: 'reveal tiny'}}
@@ -247,6 +255,7 @@ export default class PostExchange extends React.Component {
         onRequestClose={this.closeModalApprove}
         contentLabel="approve modal"
         content={this.contentApprove()}
+        size="tiny"
       />
       {/* <Modal className={{base: 'reveal tiny',
             afterOpen: 'reveal tiny'}}
@@ -254,6 +263,7 @@ export default class PostExchange extends React.Component {
         onRequestClose={this.closeModalConfirmApprove}
         contentLabel="confirm approve modal"
         content={this.contentConfirmApprove()}
+        size="tiny"
       /> */}
     </div>
   )

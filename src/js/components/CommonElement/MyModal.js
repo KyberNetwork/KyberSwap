@@ -16,7 +16,7 @@ const MyModal = (props) => {
         },
         content : {
             // position: 'absolute',
-            top: props.type == "passphrase" ? '186px' : '54px',
+            top: props.size == "tiny" ? '186px' : '54px',
             right: 'auto',
             left: 'auto',
             margin: '0 auto',
