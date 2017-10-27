@@ -250,7 +250,7 @@ export default class ImportByDevice extends React.Component {
 				<div class="small-12 medium-6 column" style={{ padding: 0 }}>
 					<div class="column column-block">
 						<div class="importer trezor">
-							<a href="#" onClick={() => this.connectDevice('trezor')}>
+							<a onClick={() => this.connectDevice('trezor')}>
 								<img src="/assets/img/trezor.svg" />
 								<div class="description">Import from<br />trezor</div>
 							</a>
@@ -260,7 +260,7 @@ export default class ImportByDevice extends React.Component {
 				<div class="small-12 medium-6 column" style={{ padding: 0 }}>
 					<div class="column column-block">
 						<div class="importer ledger">
-							<a href="#" onClick={() => this.connectDevice('ledger')}>
+							<a onClick={() => this.connectDevice('ledger')}>
 								<img src="/assets/img/ledger.svg" />
 								<div class="description">Import from<br />ledger wallet</div>
 							</a>
