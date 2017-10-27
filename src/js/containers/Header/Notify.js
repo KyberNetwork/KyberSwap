@@ -11,8 +11,8 @@ import { toggleNotify } from '../../actions/utilActions'
 export default class Notify extends React.Component {
 
     displayTransactions = () => {
-        if(Object.keys(this.props.txs).length > 0){
-            this.props.dispatch(toggleNotify())
+        this.props.dispatch(toggleNotify())
+        if(Object.keys(this.props.txs).length > 0){            
             if(this.props.utils.showNotify) {
                 this.props.dispatch(clearTxs());
             }

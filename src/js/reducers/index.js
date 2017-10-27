@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 
+
 import account from './accountReducer'
 import tokens from './tokensReducer'
 import exchange from './exchangeReducer'
@@ -23,15 +24,16 @@ import txs from './txsReducer'
 //import transactions from './transactionReducer'
 
 const appReducer = combineReducers({
-  account, exchange,transfer, global, tokens, txs,
-  connection,utils,
+  account, exchange, transfer, global, tokens, txs,
+  connection, utils,
   router: routerReducer
 })
 
 const rootReducer = (state, action) => {
-  if (action.type === 'GLOBAL.CLEAR_SESSION') {
+  if (action.type === 'GLOBAL.CLEAR_SESSION_FULFILLED') {
     state = {}
-    window.location.href = '/';
+    //setTimeout(() => this.props.dispatch(push("/")), 1000)
+    //window.location.href = '/';
   }
   return appReducer(state, action)
 }

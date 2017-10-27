@@ -18,7 +18,6 @@ import { toEther } from "../../utils/converter"
 
 
 export default class ImportByDevice extends React.Component {
-
 	constructor() {
 		super();
 		this.state = {

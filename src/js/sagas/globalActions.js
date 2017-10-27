@@ -31,10 +31,16 @@ function* goToRoute(action){
   // this.props.dispatch(push('/exchange'));
 }
 
+function* clearSession(action){
+  yield put(actions.clearSessionComplete())
+  yield put(actions.goToRoute('/'));
+}
+
 export function* watchGlobal() {
   yield takeEvery(GLOBAL.NEW_BLOCK_INCLUDED_PENDING, getLatestBlock)
   yield takeEvery(GLOBAL.RATE_UPDATED_PENDING, updateRate)
   yield takeEvery("GLOBAL.GO_TO_ROUTE", goToRoute)
+  yield takeEvery("GLOBAL.CLEAR_SESSION", clearSession)
 }
 
 
