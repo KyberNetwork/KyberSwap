@@ -48,7 +48,7 @@ export default class PostExchange extends React.Component {
   }
   validateExchange = () => {
     //check source amount
-    if (isNaN(this.props.form.sourceAmount)) {
+    if (isNaN(this.props.form.sourceAmount) || !this.props.form.sourceAmount || this.props.form.sourceAmount == '') {
       this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount must be a number"))
       return false
     }    

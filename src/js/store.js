@@ -33,6 +33,10 @@ persistStore(store, {
   blacklist: [
     'connection',
     'utils',
+     'account',
+     'exchange',
+     'transfer',
+     'txs'
   ]
 })
 export default store

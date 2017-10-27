@@ -11,12 +11,12 @@ const TokenSelect = (props) => {
   }
   console.log(props.name)
   return (
-    // <div class="column gutter-15"><a class="token-stamp selected" href="#"><img src="/assets/img/eth.svg"/><span class="name">Ethereum</span>
+    // <div class="column gutter-15"><a class="token-stamp selected"><img src="/assets/img/eth.svg"/><span class="name">Ethereum</span>
     // <div class="balance">12.345678</div></a></div>
 
 
     <div class="column gutter-15">
-      <a class={"token-stamp " + (props.inactive? "empty": (props.selected?"selected":""))} href="#" onClick={(e)=> {handleOnClick(e)}}>
+      <a class={"token-stamp " + (props.inactive? "empty": (props.selected?"selected":""))} onClick={(e)=> {handleOnClick(e)}}>
         <img src="/assets/img/eth.svg"/><span class="name">{props.name}</span>
         <div class="balance">{toT(props.balance, 8)}</div>
       </a>

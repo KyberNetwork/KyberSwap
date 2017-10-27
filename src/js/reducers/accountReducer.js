@@ -14,8 +14,7 @@ const account = (state=initState, action) => {
   switch (action.type) {  	
     case REHYDRATE: {
       var account = action.payload.account     
-      console.log(action.payload.account) 
-      if (account) {
+      if (account && account.account) {
         account = account.account
         return {...state, account: new Account (
           account.address,
@@ -33,7 +32,7 @@ const account = (state=initState, action) => {
       return {...state, loading: true}
     }
     case "IMPORT.IMPORT_NEW_ACCOUNT_FULFILLED": {
-      return {...state, account: action.payload, loading: false}
+      return {...state, account: action.payload, loading: false, isStoreReady: true}
     }      
     case "IMPORT.THROW_ERROR": {            
       return {...state, error: action.payload}
@@ -42,7 +41,12 @@ const account = (state=initState, action) => {
       return {...initState}
     }
     case ACC_ACTION.UPDATE_ACCOUNT_FULFILLED:{
-      return {...state, account: action.payload}
+      var oldState = {...state}
+      var newAccount = action.payload
+      if ((oldState.account) && (oldState.account.address === newAccount.address)){
+        return {...state, account: newAccount}
+      }
+      
     }    
   }
   return state

@@ -46,6 +46,12 @@ export function clearSession() {
   }
 }
 
+export function clearSessionComplete(){
+  return {
+    type: "GLOBAL.CLEAR_SESSION_FULFILLED"
+  }
+}
+
 export function goToRoute(route){
   return {
     type: "GLOBAL.GO_TO_ROUTE",
