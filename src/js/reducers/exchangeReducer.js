@@ -154,6 +154,8 @@ const exchange = (state=initState, action) => {
       return newState
     }
     case "EXCHANGE.SHOW_CONFIRM":{      
+      newState.confirmApprove = false 
+      newState.showConfirmApprove = false
       newState.confirmColdWallet = true       
       return newState
     }

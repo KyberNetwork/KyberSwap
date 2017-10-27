@@ -1,54 +1,10 @@
 import { sealTxByKeystore, sealTxByTrezor, sealTxByLedger } from "../utils/sealer"
 import { verifyNonce } from "../utils/validators"
+import {biggestNumber} from "../utils/converter"
 import store from "../store"
-import { doTransaction, doApprovalTransaction, saveRawExchangeTransaction, throwErrorSignExchangeTransaction } from "../actions/exchangeActions"
-import { doTransaction as doTransactionTransfer, saveRawTransferTransaction, throwErrorSignTransferTransaction } from "../actions/transferActions"
 import constants from "../services/constants"
 import Rate from "./rate"
 
-export function sendEtherFromWallet(
-  id, ethereum, account, sourceToken, sourceAmount,
-  destAddress, nonce, gas, gasPrice, keystring,
-  password, callback, wallet) {
-
-  var txData = ethereum.executeWalletData(
-    wallet.address, destAddress, sourceAmount, "")
-  const txParams = {
-    nonce: nonce,
-    gasPrice: gasPrice,
-    gasLimit: gas,
-    to: wallet.address,
-    value: 0,
-    data: txData,
-    // EIP 155 chainId - mainnet: 1, ropsten: 3
-    chainId: 42
-  }
-  const tx = sealTxByKeystore(txParams, keystring, password)
-  store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
-}
-
-export function sendTokenFromWallet(
-  id, ethereum, account, sourceToken, sourceAmount,
-  destAddress, nonce, gas, gasPrice, keystring,
-  password, callback, wallet) {
-
-  var sendTokenData = ethereum.sendTokenData(
-    sourceToken, sourceAmount, destAddress)
-  var txData = ethereum.executeWalletData(
-    wallet.address, sourceToken, 0, sendTokenData)
-  const txParams = {
-    nonce: nonce,
-    gasPrice: gasPrice,
-    gasLimit: gas,
-    to: wallet.address,
-    value: 0,
-    data: txData,
-    // EIP 155 chainId - mainnet: 1, ropsten: 3
-    chainId: 42
-  }
-  const tx = sealTxByKeystore(txParams, keystring, password)
-  store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
-}
 
 export function sendEtherFromAccount(
   id, ethereum, account, sourceToken, sourceAmount,
@@ -70,25 +26,14 @@ export function sendEtherFromAccount(
       return new Promise((resolve) => {
         resolve(tx)
       })
-      //store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
       break
     case "trezor":
       txParams.address_n = keystring
       return sealTxByTrezor(txParams)
-      // sealTxByTrezor(txParams, (tx) => {
-      //   store.dispatch(saveRawTransferTransaction(tx))
-      // }, (error) => {
-      //   store.dispatch(throwErrorSignTransferTransaction(error))
-      // })
       break
     case "ledger":
       txParams.address_n = keystring
       return sealTxByLedger(txParams)
-      // sealTxByLedger(txParams, (tx) => {
-      //   store.dispatch(saveRawTransferTransaction(tx))
-      // }, (error) => {
-      //   store.dispatch(throwErrorSignTransferTransaction(error))
-      // })
       break
   }
 }
@@ -117,25 +62,14 @@ export function sendTokenFromAccount(
       return new Promise((resolve) => {
         resolve(tx)
       })
-      //store.dispatch(doTransactionTransfer(id, ethereum, tx, callback))
       break
     case "trezor":
       txParams.address_n = keystring
       return sealTxByTrezor(txParams)
-      // sealTxByTrezor(txParams, (tx) => {
-      //   store.dispatch(saveRawTransferTransaction(tx))
-      // }, (error) => {
-      //   store.dispatch(throwErrorSignTransferTransaction(error))
-      // })
       break
     case "ledger":
       txParams.address_n = keystring
       return sealTxByLedger(txParams)
-      // sealTxByLedger(txParams, (tx) => {
-      //   store.dispatch(saveRawTransferTransaction(tx))
-      // }, (error) => {        
-      //   store.dispatch(throwErrorSignTransferTransaction(error))
-      // })
       break
   }
 
@@ -166,33 +100,22 @@ export function etherToOthersFromAccount(
       return new Promise((resolve) => {
         resolve(tx)
       })
-      //store.dispatch(doTransaction(id, ethereum, tx, callback))
       break
     case "trezor":
       txParams.address_n = keystring
       return sealTxByTrezor(txParams)
-      // sealTxByTrezor(txParams, (tx) => {
-      //   store.dispatch(saveRawExchangeTransaction(tx))
-      // }, (error) => {
-      //   store.dispatch(throwErrorSignExchangeTransaction(error))
-      // })
       break
     case "ledger":
       txParams.address_n = keystring
       return sealTxByLedger(txParams)
-    // sealTxByLedger(txParams, (tx) => {
-    //   store.dispatch password)
 
   }
-  // }, (error) => {
-  //   store.dispatch(throwErrorSignExchangeTransaction(error))
-  // })
 }
-//const tx = sealTxByKeystore(txParams, keystring,
 
 export function getAppoveToken(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-  keystring, password, accountType) {
-  const approvalData = ethereum.approveTokenData(sourceToken, sourceAmount)
+  keystring, password, accountType) {    
+  //const approvalData = ethereum.approveTokenData(sourceToken, sourceAmount)  
+  const approvalData = ethereum.approveTokenData(sourceToken, biggestNumber())
   const txParams = {
     nonce: nonce,
     gasPrice: gasPrice,

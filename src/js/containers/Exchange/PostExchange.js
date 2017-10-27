@@ -106,7 +106,7 @@ export default class PostExchange extends React.Component {
   formParams = () => {
     var selectedAccount = this.props.account.address
     var sourceToken = this.props.form.sourceToken
-    var sourceAmount =  converters.numberToHex(toTWei(this.props.form.sourceAmount))
+    var sourceAmount =  converters.numberToHex(converters.toTWei(this.props.form.sourceAmount))
     var destToken = this.props.form.destToken
     var minConversionRate = converters.numberToHex(this.props.form.minConversionRate)
     var destAddress = this.props.account.address
@@ -116,7 +116,7 @@ export default class PostExchange extends React.Component {
     // should use estimated gas
     var gas = converters.numberToHex(this.props.form.gas)
     // should have better strategy to determine gas price
-    var gasPrice = converters.numberToHex(gweiToWei(this.props.form.gasPrice))
+    var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.form.gasPrice))
     return {
       selectedAccount, sourceToken, sourceAmount, destToken,
       minConversionRate, destAddress, maxDestAmount,
@@ -142,12 +142,9 @@ export default class PostExchange extends React.Component {
       document.getElementById("passphrase").value = ''
     }
     const params = this.formParams()
-    // sending by wei
     var account = this.props.account
     var ethereum = this.props.ethereum
 
-   // var call = params.sourceToken == constants.ETHER_ADDRESS ? etherToOthersFromAccount : tokenToOthersFromAccount
-    //var dispatch = this.props.dispatch
     var formId = "exchange"    
     var data = this.recap()
     this.props.dispatch(exchangeActions.processExchange(formId, ethereum, account.address, params.sourceToken,
@@ -164,6 +161,19 @@ export default class PostExchange extends React.Component {
     }
   }
 
+  processTxAfterApprove = ()=>{        
+    var password = ""
+    const params = this.formParams()
+    var account = this.props.account
+    var ethereum = this.props.ethereum
+    var formId = "exchange"
+    var data = this.recap()
+    this.props.dispatch(exchangeActions.processExchangeAfterApprove(formId, ethereum, account.address, params.sourceToken,
+      params.sourceAmount, params.destToken, params.destAddress,
+      params.maxDestAmount, params.minConversionRate,
+      params.throwOnFailure, params.nonce, params.gas,
+      params.gasPrice, account.keystring, account.type, password, account, data))
+  }
   content = () => {
     return (
       <PassphraseModal recap={this.createRecap()}
@@ -190,7 +200,7 @@ export default class PostExchange extends React.Component {
     return (
       <ApproveModal recap="Approve successfully, please exchange"
                     onCancel={this.closeModalConfirmApprove}
-                    onSubmit = {this.processTx} />      
+                    onSubmit = {this.processTxAfterApprove} />      
     )
   }
 

@@ -63,12 +63,12 @@ export default class Exchange extends React.Component {
 
   specifyGas = (event) => {
     var value = event.target.value
-    this.props.dispatch(exchangeActions.specifyGasExchange(value))
+    this.props.dispatch(exchangeActions.specifyGas(value))
   }
 
   specifyGasPrice = (event) => {
     var value = event.target.value
-    this.props.dispatch(exchangeActions.specifyGasPriceExchange(value))
+    this.props.dispatch(exchangeActions.specifyGasPrice(value))
   }
 
   render() {

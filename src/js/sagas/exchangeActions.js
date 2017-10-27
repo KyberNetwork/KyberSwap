@@ -81,6 +81,24 @@ function* processApprove(action) {
     yield call(doApproveTransactionFail, ethereum, account, e)
   }
 }
+function* processExchangeAfterApprove(action){
+  const { formId, ethereum, address, sourceToken,
+    sourceAmount, destToken, destAddress,
+    maxDestAmount, minConversionRate,
+    throwOnFailure, nonce, gas,
+    gasPrice, keystring, type, password, account, data } = action.payload
+  try{
+    const txRaw = yield call(servicesExchange.tokenToOthersFromAccount, formId, ethereum, address, sourceToken,
+      sourceAmount, destToken, destAddress,
+      maxDestAmount, minConversionRate,
+      throwOnFailure, nonce, gas,
+      gasPrice, keystring, type, password)
+      yield put(actions.saveRawExchangeTransaction(txRaw))
+      yield put(actions.showConfirm())
+  }catch(e){
+    console.log(e)
+  }    
+}
 function* processExchange(action) {
   const { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
@@ -179,4 +197,5 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.SELECT_TOKEN_ASYNC", selectToken)
   yield takeEvery("EXCHANGE.PROCESS_EXCHANGE", processExchange)
   yield takeEvery("EXCHANGE.PROCESS_APPROVE", processApprove)
+  yield takeEvery("EXCHANGE.PROCESS_EXCHANGE_AFTER_APPROVE", processExchangeAfterApprove)
 }
