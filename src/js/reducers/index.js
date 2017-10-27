@@ -32,8 +32,6 @@ const appReducer = combineReducers({
 const rootReducer = (state, action) => {
   if (action.type === 'GLOBAL.CLEAR_SESSION_FULFILLED') {
     state = {}
-    //setTimeout(() => this.props.dispatch(push("/")), 1000)
-    //window.location.href = '/';
   }
   return appReducer(state, action)
 }

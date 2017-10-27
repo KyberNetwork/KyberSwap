@@ -34,6 +34,7 @@ function* goToRoute(action){
 function* clearSession(action){
   yield put(actions.clearSessionComplete())
   yield put(actions.goToRoute('/'));
+  //yield cancel("*")
 }
 
 export function* watchGlobal() {
