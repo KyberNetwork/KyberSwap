@@ -13,6 +13,8 @@ export default class Rate {
 
   fetchRate(ethereum, reserve){
     const _this= this;
+    // console.log(this.address)
+    // console.log(reserve.index)
     return new Promise((resolve, reject)=>{
       ethereum.getRate(this.address, constants.ETHER_ADDRESS, reserve.index,
         (result) => {

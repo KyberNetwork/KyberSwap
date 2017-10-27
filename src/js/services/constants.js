@@ -15,7 +15,7 @@ const KYBER_WALLET_DATA = '0x6060604052341561000c57fe5b604051602080610f6b8339810
 const EPSILON = 1000
 const RATE_EPSILON = 0.002
 const ETHER_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-const NETWORK_ADDRESS = "0x11542d7807dfb2b44937f756b9092c76e814f8ed"
+const NETWORK_ADDRESS = "0x78b4c74f20587c3af56e77dc2342943a9bda65f9"
 const TRADE_TOPIC = "0xec0d3e799aa270a144d7e3be084ccfc657450e33ecea1b1a4154c95cedaae5c3"
 const INIT_EXCHANGE_FORM_STATE = {
   advanced: false,
@@ -25,7 +25,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   selected: false,
   sourceToken: supported_tokens[0].address,
   sourceTokenSymbol: supported_tokens[0].symbol,
-  sourceAmount: 0,
+  sourceAmount: "",
   destToken: supported_tokens[1].address,
   destTokenSymbol: supported_tokens[1].symbol,
   
@@ -68,7 +68,7 @@ const INIT_TRANSFER_FORM_STATE = {
   selected: false,
   token: supported_tokens[3].address,
   tokenSymbol: supported_tokens[3].symbol,
-  amount: 0,
+  amount: "",
   destAddress: "",
 
   throwOnFailure: false,

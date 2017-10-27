@@ -3,7 +3,8 @@ import React from "react"
 const PassphraseModal = (props) => {  
   return (
     <div >
-      <div class="title text-center">Enter Passphrase</div><a class="x" onChange={(e)=>props.onChange(e)} data-close>&times;</a>
+      <div class="title text-center">Enter Passphrase</div>
+      <a class="x" onClick={(e)=>props.onCancel(e)}>&times;</a>
       <div class="content with-overlap">
         <div class="row">
           <div class="column">

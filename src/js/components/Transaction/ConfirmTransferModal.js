@@ -3,7 +3,8 @@ import React from "react"
 const ConfirmTransferModal = (props) => {  
   return (
     <div>
-      <div class="title text-center">{props.type} Confirm</div><a class="x" onClick={(e) => props.onCancel(e)} data-close>&times;</a>
+      <div class="title text-center">{props.type} Confirm</div>
+      <a class="x" onClick={(e) => props.onCancel(e)}>&times;</a>
         <div class="content with-overlap">
           <div class="row">
             <div class="column">

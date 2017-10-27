@@ -69,6 +69,7 @@ export default class PostTransfer extends React.Component {
       <PassphraseModal recap={this.createRecap()}
           onChange = {this.changePassword}
           onClick = {this.processTx}
+          onCancel = {this.closeModal}
           passwordError={this.props.form.errors.passwordError} />
     )
   }
@@ -232,7 +233,7 @@ export default class PostTransfer extends React.Component {
     return (
       <div class="row">
         <div class="column small-11 medium-10 large-9 small-centered text-center">
-          <p class="note">Passphrase is needed for each transfer transaction</p><a class="button accent" href="#" data-open="passphrase-modal" onClick={this.clickTransfer}>Transfer</a>
+          <p class="note">Passphrase is needed for each transfer transaction</p><a class="button accent" data-open="passphrase-modal" onClick={this.clickTransfer}>Transfer</a>
         </div>
         {modalPassphrase}
       </div>

@@ -200,6 +200,7 @@ export default class PostExchange extends React.Component {
       <PassphraseModal recap={this.createRecap()}
                         onChange = {this.changePassword}
                         onClick = {this.processTx}
+                        onCancel = {this.closeModal}
                         passwordError={this.props.form.errors.passwordError || this.props.form.bcError.message} />
     )
   }
@@ -272,7 +273,7 @@ export default class PostExchange extends React.Component {
       <div>
         <div class="row hide-on-choose-token-pair">
           <div class="column small-11 medium-10 large-9 small-centered text-center">
-            <p class="note">Passphrase is needed for each exchange transaction</p><a class="button accent" href="#" onClick={this.clickExchange} data-open="passphrase-modal">Exchange</a>
+            <p class="note">Passphrase is needed for each exchange transaction</p><a class="button accent" onClick={this.clickExchange} data-open="passphrase-modal">Exchange</a>
           </div>
         </div>
         <div class="row show-on-choose-token-pair">

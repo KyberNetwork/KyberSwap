@@ -137,7 +137,7 @@ export function numberToHex(number) {
 
 export function biggestNumber() {
   var initNumber = new BigNumber(2)
-  return "0x" + (initNumber.pow(256).sub(1).toString(16))
+  return "0x" + (initNumber.pow(255).toString(16))
   //return "0x" + (new BigNumber(Math.pow(2,256)-1)).toString(16)
 }
 
