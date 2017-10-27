@@ -16,7 +16,7 @@ const ExchangeForm = (props) => {
                       <input type={props.input.sourceAmount.type} value={props.input.sourceAmount.value} onChange={props.input.sourceAmount.onChange}  min="0" step="0.000001" placeholder="0"/>
                       {props.tokenSource}
                     </div>
-                    <div class="address-balance"><span class="note">Address Balance</span><a class="value" href="#">0.123456 ETH</a></div>
+                    <div class="address-balance"><span class="note">Address Balance</span><a class="value" href="#">{props.balance} {props.sourceTokenSymbol}</a></div>
                   </label>
                 </div>
                 <div class="column medium-6">

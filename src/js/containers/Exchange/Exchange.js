@@ -11,16 +11,16 @@ import { SelectTokenModal, ChangeGasModal, TransactionLoading, Token } from "../
 import { anyErrors } from "../../utils/validators"
 
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
-import { selectTokenAsync, thowErrorSourceAmount } from "../../actions/exchangeActions"
-import { errorSelectToken, goToStep, showAdvance, changeSourceAmout, openPassphrase, makeNewExchange } from "../../actions/exchangeActions"
+//import { selectTokenAsync, thowErrorSourceAmount } from "../../actions/exchangeActions"
+import * as exchangeActions from "../../actions/exchangeActions"
 
 import { TransactionConfig } from "../../components/CommonElement"
-import { specifyGas as specifyGasExchange, specifyGasPrice as specifyGasPriceExchange, hideAdvance as hideAdvanceExchange } from "../../actions/exchangeActions"
 @connect((store) => {  
   const ethereum = store.connection.ethereum
   const account = store.account
   const exchange = store.exchange
-  return {account, ethereum, exchange}
+  const tokens = store.tokens
+  return {account, ethereum, exchange, tokens}
 })
 
 export default class Exchange extends React.Component {
@@ -33,20 +33,20 @@ export default class Exchange extends React.Component {
   }
 
   chooseToken = (symbol, address, type) => {
-    this.props.dispatch(selectTokenAsync(symbol, address, type, this.props.ethereum))
+    this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
   }
   
   proccessSelectToken = () => {
     if (!anyErrors(this.props.exchange.errors)) {
-      this.props.dispatch(goToStep(2))
+      this.props.dispatch(exchangeActions.goToStep(2))
     } 
   }
   showAdvanceOption = () => {
-    this.props.dispatch(showAdvance())
+    this.props.dispatch(exchangeActions.showAdvance())
   }
   changeSourceAmount = (e) => {
     var value = e.target.value
-    this.props.dispatch(changeSourceAmout(value))
+    this.props.dispatch(exchangeActions.changeSourceAmout(value))
   }
 
   getDesAmount = () => {
@@ -58,17 +58,17 @@ export default class Exchange extends React.Component {
   }
 
   makeNewExchange = () => {
-    this.props.dispatch(makeNewExchange());
+    this.props.dispatch(exchangeActions.makeNewExchange());
   }
 
   specifyGas = (event) => {
     var value = event.target.value
-    this.props.dispatch(specifyGasExchange(value))
+    this.props.dispatch(exchangeActions.specifyGasExchange(value))
   }
 
   specifyGasPrice = (event) => {
     var value = event.target.value
-    this.props.dispatch(specifyGasPriceExchange(value))
+    this.props.dispatch(exchangeActions.specifyGasPriceExchange(value))
   }
 
   render() {
@@ -79,6 +79,12 @@ export default class Exchange extends React.Component {
           <div></div>
         )
       }
+    }
+
+    var balance = ""
+    var token = this.props.tokens[this.props.exchange.sourceTokenSymbol]
+    if(token){
+      balance = toT(token.balance,8)
     }
 
     var tokenSource = (
@@ -191,6 +197,8 @@ export default class Exchange extends React.Component {
         errors={errors}
         button={button}
         input={input}
+        balance = {balance}
+        sourceTokenSymbol = {this.props.exchange.sourceTokenSymbol}
         />
     )
   }

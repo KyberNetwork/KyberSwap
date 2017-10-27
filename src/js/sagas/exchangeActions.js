@@ -93,19 +93,28 @@ function* processExchange(action) {
   try {
     if (sourceToken == constants.ETHER_ADDRESS) {
       var txRaw
-      try {
+      if (type === "keystore") {        
+        try {
+          txRaw = yield call(servicesExchange.etherToOthersFromAccount, formId, ethereum, address, sourceToken,
+            sourceAmount, destToken, destAddress,
+            maxDestAmount, minConversionRate,
+            throwOnFailure, nonce, gas,
+            gasPrice, keystring, type, password)
+        } catch (e) {
+          yield put(actions.throwPassphraseError(e.message))
+          return
+        }
+        const hash = yield call(ethereum.sendRawTransaction, txRaw, ethereum)
+        yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
+      } else {
         txRaw = yield call(servicesExchange.etherToOthersFromAccount, formId, ethereum, address, sourceToken,
           sourceAmount, destToken, destAddress,
           maxDestAmount, minConversionRate,
           throwOnFailure, nonce, gas,
           gasPrice, keystring, type, password)
-      }
-      catch (e) {
-        yield put(actions.throwPassphraseError(e.message))
-        return
-      }
-      const hash = yield call(ethereum.sendRawTransaction, txRaw, ethereum)
-      yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
+        yield put(actions.saveRawExchangeTransaction(txRaw))
+        yield put(actions.showConfirm())
+      }      
     } else {
       const remain = yield call([ethereum, ethereum.getAllowance], sourceToken, address)
       console.log(remain)

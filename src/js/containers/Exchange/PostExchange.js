@@ -3,18 +3,13 @@ import { connect } from "react-redux"
 
 import * as ethUtil from 'ethereumjs-util'
 
-import { numberToHex, toTWei, gweiToWei, toT, weiToGwei } from "../../utils/converter"
-import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
-//import constants from "../../services/constants"
+//import { numberToHex, toTWei, gweiToWei, toT, weiToGwei } from "../../utils/converter"
+//import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
+import * as validators from "../../utils/validators"
+import * as converters from "../../utils/converter"
 
-
-//import { hidePassphrase, changePassword, throwPassphraseError, finishExchange, hideConfirm } from "../../actions/exchangeActions"
-//import * as exchangeActions { thowErrorSourceAmount, openPassphrase, doTransaction, processExchange } from "../../actions/exchangeActions"
 import * as exchangeActions from "../../actions/exchangeActions"
 
-import { updateAccount, incManualNonceAccount } from "../../actions/accountActions"
-import { addTx } from "../../actions/txActions"
-import Tx from "../../services/tx"
 
 import { Modal } from "../../components/CommonElement"
 import {PassphraseModal, ConfirmTransferModal, ApproveModal} from "../../components/Transaction"
@@ -59,7 +54,7 @@ export default class PostExchange extends React.Component {
       this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount must be a number"))
       return false
     }    
-    else if (parseFloat(this.props.form.sourceAmount) > parseFloat(toT(this.props.form.sourceBalance, 8))) {
+    else if (parseFloat(this.props.form.sourceAmount) > parseFloat(converters.toT(this.props.form.sourceBalance, 8))) {
       this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount is too high"))
       return false
     }
@@ -79,7 +74,7 @@ export default class PostExchange extends React.Component {
     return recap
   }
   getDesAmount = () => {
-    return this.props.form.sourceAmount * toT(this.props.form.offeredRate,6)
+    return this.props.form.sourceAmount * converters.toT(this.props.form.offeredRate,6)
   }
 
   recap = () => {
@@ -111,17 +106,17 @@ export default class PostExchange extends React.Component {
   formParams = () => {
     var selectedAccount = this.props.account.address
     var sourceToken = this.props.form.sourceToken
-    var sourceAmount = numberToHex(toTWei(this.props.form.sourceAmount))
+    var sourceAmount =  converters.numberToHex(toTWei(this.props.form.sourceAmount))
     var destToken = this.props.form.destToken
-    var minConversionRate = numberToHex(this.props.form.minConversionRate)
+    var minConversionRate = converters.numberToHex(this.props.form.minConversionRate)
     var destAddress = this.props.account.address
-    var maxDestAmount = numberToHex(this.props.form.maxDestAmount)
+    var maxDestAmount = converters.numberToHex(this.props.form.maxDestAmount)
     var throwOnFailure = this.props.form.throwOnFailure
-    var nonce = verifyNonce(this.props.account.getUsableNonce())
+    var nonce = validators.verifyNonce(this.props.account.getUsableNonce())
     // should use estimated gas
-    var gas = numberToHex(this.props.form.gas)
+    var gas = converters.numberToHex(this.props.form.gas)
     // should have better strategy to determine gas price
-    var gasPrice = numberToHex(gweiToWei(this.props.form.gasPrice))
+    var gasPrice = converters.numberToHex(gweiToWei(this.props.form.gasPrice))
     return {
       selectedAccount, sourceToken, sourceAmount, destToken,
       minConversionRate, destAddress, maxDestAmount,

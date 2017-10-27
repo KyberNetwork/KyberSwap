@@ -3,22 +3,14 @@ import { connect } from "react-redux"
 import * as ethUtil from 'ethereumjs-util'
 
 import constants from "../../services/constants"
-import { numberToHex, toTWei, toT, gweiToWei, weiToGwei } from "../../utils/converter"
-//import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
+
 import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
-//import { etherToOthersFromAccount, tokenToOthersFromAccount, sendEtherFromAccount, sendTokenFromAccount, exchangeFromWallet, sendEtherFromWallet, sendTokenFromWallet } from "../../services/exchange"
 
 import * as transferActions from "../../actions/transferActions"
-// import { hidePassphrase, changePassword, throwPassphraseError, finishTransfer, hideConfirm } from "../../actions/transferActions"
-// import { openPassphrase, throwErrorDestAddress, thowErrorAmount, doTransaction } from '../../actions/transferActions';
+
 import {PassphraseModal, ConfirmTransferModal} from "../../components/Transaction"
 
-//import { updateAccount, incManualNonceAccount } from "../../actions/accountActions"
-//import { addTx } from "../../actions/txActions"
-//import Tx from "../../services/tx"
-
-//import Passphrase from '../../components/Forms/Components/Passphrase'
 import { Modal } from "../../components/CommonElement"
 
 @connect((store, props) => {
