@@ -36,7 +36,7 @@ export default class ExchangeRate extends React.Component {
   render() {
     return (
       <div class="column">
-        <p class="token-compare">1 {this.props.sourceTokenSymbol} = {toT(this.props.offeredRate,6)} {this.props.destTokenSymbol}<span class="up">+12%</span></p>
+        <p class="token-compare">1 {this.props.sourceTokenSymbol} = {toT(this.props.offeredRate,6)} {this.props.destTokenSymbol}<span class="up">-%</span></p>
       </div>
 
 
