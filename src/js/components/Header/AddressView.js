@@ -14,30 +14,39 @@ const Address = (props) => {
     )
   return props.address ?
     (
-      <div class="column small-10 text-left" style={{padding:0}}>
-        <div key="1" class="column small-3">
-          <a class="avatar" href="/exchange.html">
-            <img src="/assets/img/address.png" />
-          </a>
-        </div>
-        <div key="2" class="column small-9">
-          <a class="short-address" href="/exchange.html">{props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}</a>
-          <ul class="actions">
-            <li>
-              {link}
-            </li>
-            <li>
-              <a onClick={props.endSession} class="exit">
-                End Session
-              </a>
-            </li>
-          </ul>
+      // <div class="column small-10">
+      <div class="user-bar">
+        <div class="row">
+          <div key="1" class="column small-2">
+            <a class="avatar" href="/exchange.html">
+              <img src="/assets/img/address.png" />
+            </a>
+          </div>
+          <div key="2" class="column small-8">
+            <a class="short-address" href="/exchange.html">{props.address ? props.address.slice(0,8):''} ... {props.address? props.address.slice(-6):''}</a>
+            <ul class="actions">
+              <li>
+                {link}
+              </li>
+              <li>
+                <a onClick={props.endSession} class="exit">
+                  End Session
+                </a>
+              </li>
+            </ul>
+          </div>
+          {props.notify}
         </div>
       </div>
     ) : (
-      <Link to="/" className="button accent" style={{marginRight: 20}}>
-        Import Address
-      </Link>
+      <div class="text-right">
+        <div class="user-bar">
+          <Link to="/" className="button accent" style={{marginRight: 20}}>
+            Import Address
+          </Link>
+        </div>
+      </div>
+      
     )
 }
 
