@@ -33,7 +33,7 @@ export default class Header extends React.Component {
                 <div class="user-bar">
                   <div class="row">
                     <Address path={this.props.location.pathname}/>  
-                    <Notify />
+                    {/* <Notify /> */}
                   </div>
                 </div>
               </div>

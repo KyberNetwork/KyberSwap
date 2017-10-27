@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 import { clearSession } from "../../actions/globalActions"
 import { AddressView } from "../../components/Header"
+import { Notify } from "../Header";
 @connect((store, props) => {
   const path = props.path
   return {...store.account, path}
@@ -16,11 +17,16 @@ export default class Address extends React.Component {
   }
 
 	render() {
+    var notify = (
+      <Notify />
+    )
+  
     return (
         <AddressView address={this.props.account.address}
                      parrentProps={this.props}
                      endSession={this.handleEndSession} 
                      path = {this.props.path}
+                     notify = {notify}
         />
     )
   }

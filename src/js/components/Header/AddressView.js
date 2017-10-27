@@ -14,13 +14,14 @@ const Address = (props) => {
   )
   return props.address ?
     (
-      <div class="column small-10">
-        <div key="1" class="column small-3">
+      // <div class="column small-10">
+      <div>
+        <div key="1" class="column small-2">
           <a class="avatar" href="/exchange.html">
             <img src="/assets/img/address.png"/>
           </a>
         </div>
-        <div key="2" class="column small-9">
+        <div key="2" class="column small-8">
           <a class="short-address" href="/exchange.html">{props.address ? props.address.slice(0,8):''} ... {props.address? props.address.slice(-6):''}</a>
           <ul class="actions">
             <li>
@@ -32,6 +33,7 @@ const Address = (props) => {
             </li>
           </ul>
         </div>
+        {props.notify}
       </div>
     ) : (
       <div class="column small-10">
