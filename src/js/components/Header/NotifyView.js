@@ -5,9 +5,9 @@ const Notify = (props) => {
   var classNotify = ""
   var counter = ""
   if (props.transactionsNum !== 0){
-    <span class="counter">{props.transactionsNum}</span>
+    counter = <span class="counter">{props.transactionsNum}</span>
   }else{
-    var classNotify = "empty"
+    classNotify = "empty"
   }  
   return(
     <div class="column small-2 text-right">
