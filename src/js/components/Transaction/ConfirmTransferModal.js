@@ -3,19 +3,19 @@ import React from "react"
 const ConfirmTransferModal = (props) => {  
   return (
     <div>
-      <div class="title text-center">Exchange Confirm</div><a class="x" onClick={(e) => props.onCancel(e)} data-close>&times;</a>
+      <div class="title text-center">{props.type} Confirm</div><a class="x" onClick={(e) => props.onCancel(e)} data-close>&times;</a>
         <div class="content with-overlap">
           <div class="row">
             <div class="column">
               <center>
-                {/* <p>{props.recap}</p> */}
-                <p>You are about to exchange<br/><strong>1.234567 ETH</strong>&nbsp;for&nbsp;<strong>12.345678 KNC</strong></p>
+                {props.recap}
+                {/* <p>You are about to exchange<br/><strong>1.234567 ETH</strong>&nbsp;for&nbsp;<strong>12.345678 KNC</strong></p> */}
                 <p>Press confirm if you really want to do this.</p>
               </center>
             </div>
           </div>
         </div>
-        <div class="overlap"><a class="button accent" href="#">Confirm</a></div>
+        <div class="overlap"><a class="button accent" onClick={(e)=>props.onExchange(e)}>Confirm</a></div>
     </div>
 
 

@@ -124,7 +124,7 @@ export default class SelectTokenModal extends React.Component {
         onRequestClose={this.closeModal}
         contentLabel="select token"
         content = {this.content()}
-        type="selectToken"
+        size="large"
       />
 
     )

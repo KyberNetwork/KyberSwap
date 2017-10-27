@@ -76,7 +76,9 @@ export default class PostTransfer extends React.Component {
     return (
       <ConfirmTransferModal recap={this.createRecap()}
                     onCancel={this.closeModal}
-                    onExchange = {this.processTx} />
+                    onExchange = {this.processTx} 
+                    type = "transfer"
+                    />
       
     )
   }
@@ -90,7 +92,13 @@ export default class PostTransfer extends React.Component {
   // }
   createRecap = () => {
     var form = this.props.form;
-    return `transfer ${form.amount.toString().slice(0, 7)}${form.amount.toString().length > 7 ? '...' : ''} ${form.tokenSymbol} to ${form.destAddress.slice(0, 7)}...${form.destAddress.slice(-5)}`
+    var amount = form.amount.toString();
+    var destAddress = form.destAddress;
+    var tokenSymbol = form.tokenSymbol;
+    // return `transfer ${form.amount.toString().slice(0, 7)}${form.amount.toString().length > 7 ? '...' : ''} ${form.tokenSymbol} to ${form.destAddress.slice(0, 7)}...${form.destAddress.slice(-5)}`
+    return (
+      <p>You are about to transfer<br/><strong>{amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}</strong>&nbsp;to&nbsp;<strong>{destAddress.slice(0, 7)}...{destAddress.slice(-5)}</strong></p>
+    )
   }
 
   recap = () => {
@@ -210,7 +218,7 @@ export default class PostTransfer extends React.Component {
         onRequestClose={this.closeModal}
         contentLabel="password modal"
         content={this.content()}
-        type="passphrase"
+        size="tiny"
       />
     ) : <Modal
         className={{base: 'reveal tiny',
@@ -219,7 +227,7 @@ export default class PostTransfer extends React.Component {
         onRequestClose={this.closeModal}
         contentLabel="confirm modal"
         content={this.contentConfirm()}
-        type="passphrase"
+        size="tiny"
       />
     return (
       <div class="row">
