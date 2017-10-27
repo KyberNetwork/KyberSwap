@@ -40,7 +40,7 @@ export default class PostTransfer extends React.Component {
           break
         case "trezor":
         case "ledger":
-          this.processTx()
+          this.props.dispatch(transferActions.showConfirm())
           break
       }
 
@@ -76,18 +76,18 @@ export default class PostTransfer extends React.Component {
     return (
       <ConfirmTransferModal recap={this.createRecap()}
                     onCancel={this.closeModal}
-                    onExchange = {this.broacastTx} />
+                    onExchange = {this.processTx} />
       
     )
   }
-  broacastTx = () => {
-    const id = "transfer"
-    const ethereum = this.props.ethereum
-    const tx = this.props.form.txRaw
-    const account = this.props.account
-    var data = this.recap()
-    this.props.dispatch(transferActions.doTransaction(id, ethereum, tx, account, data))
-  }
+  // broacastTx = () => {
+  //   const id = "transfer"
+  //   const ethereum = this.props.ethereum
+  //   const tx = this.props.form.txRaw
+  //   const account = this.props.account
+  //   var data = this.recap()
+  //   this.props.dispatch(transferActions.doTransaction(id, ethereum, tx, account, data))
+  // }
   createRecap = () => {
     var form = this.props.form;
     return `transfer ${form.amount.toString().slice(0, 7)}${form.amount.toString().length > 7 ? '...' : ''} ${form.tokenSymbol} to ${form.destAddress.slice(0, 7)}...${form.destAddress.slice(-5)}`
@@ -119,14 +119,14 @@ export default class PostTransfer extends React.Component {
   formParams = () => {
     var selectedAccount = this.props.account.address
     var token = this.props.form.token
-    var amount = converters.numberToHex(toTWei(this.props.form.amount))
+    var amount = converters.numberToHex(converters.toTWei(this.props.form.amount))
     var destAddress = this.props.form.destAddress
     var throwOnFailure = this.props.form.throwOnFailure
     var nonce = validators.verifyNonce(this.props.account.getUsableNonce())
     // should use estimated gas
     var gas = converters.numberToHex(this.props.form.gas)
     // should have better strategy to determine gas price
-    var gasPrice = converters.numberToHex(gweiToWei(this.props.form.gasPrice))
+    var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.form.gasPrice))
     return {
       selectedAccount, token, amount, destAddress,
       throwOnFailure, nonce, gas, gasPrice

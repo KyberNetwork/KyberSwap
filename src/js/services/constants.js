@@ -78,7 +78,7 @@ const INIT_TRANSFER_FORM_STATE = {
   broadcasting: true,
   bcError: "",
   txHash: "",
-  txRaw: "",
+  //txRaw: "",
   confirmColdWallet: false,
   errors: {
     destAddress:"",

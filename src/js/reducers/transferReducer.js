@@ -86,6 +86,10 @@ const transfer = (state=initState, action) => {
       newState.confirmColdWallet = false
       return newState
     }
+    case "TRANSFER.SHOW_CONFIRM": {
+      newState.confirmColdWallet = true
+      return newState
+    }
     case "TRANSFER.OPEN_PASSPHRASE":
       newState.passphrase = true
       return newState      
@@ -144,11 +148,11 @@ const transfer = (state=initState, action) => {
       newState.step = 2
       return newState   
     }
-    case "TRANSFER.SAVE_RAW_TRANSACTION":{
-      newState.txRaw = action.payload
-      newState.confirmColdWallet = true
-      return newState
-    }
+    // case "TRANSFER.SAVE_RAW_TRANSACTION":{
+    //   newState.txRaw = action.payload
+    //   newState.confirmColdWallet = true
+    //   return newState
+    // }
     case "TRANSFER.THROW_ERROR_SIGN_TRANSACTION":{
       newState.errors.signTransaction = action.payload
       return newState
