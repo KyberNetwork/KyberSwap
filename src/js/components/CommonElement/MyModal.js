@@ -23,11 +23,39 @@ const MyModal = (props) => {
             display: 'block'
         }
     }
+    function componentWillUpdate(nextProps) {
+        if (!nextProps.isOpen && props.isOpen) {
+            var app = document.getElementById("app")
+            app.style.height = "auto"
+            app.style.overflow = "initial"
+        }
+    }
+  
+    function afterOpenModal(event){
+      //get height of window    
+      var screenHeight = window.innerHeight
+      //get height of modal
+      var modalContentInstance = document.getElementsByClassName("react-modal")[0]
+      var modalInstance = modalContentInstance.parentNode
+      var modalHeight = modalContentInstance.clientHeight;    
+  
+      if(modalHeight > screenHeight) {
+        modalInstance.style.position = 'absolute'
+        modalInstance.style.height = (modalHeight + 100) + "px"
+  
+        app.style.height = (modalHeight + 100) + "px"
+        app.style.overflow = "hidden"
+      }
+    }
     return (
         <Modal
-            className={props.className}
+            className={{
+                base: props.className.base + " react-modal",
+                afterOpen: props.className.afterOpen + ' modal-open',
+            }}
             style={customStyles}
             isOpen={props.isOpen}
+            onAfterOpen={afterOpenModal.bind(this)}
             onRequestClose={props.onRequestClose}
             contentLabel={props.contentLabel}
         >
