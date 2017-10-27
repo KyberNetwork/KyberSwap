@@ -49,7 +49,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   txRaw: "",
   txApprove: false,
   confirmApprove: false,
-  showConfirmApprove: false,
+  //showConfirmApprove: false,
   confirmColdWallet: false,  
   errors: {   
     selectSameToken: "",

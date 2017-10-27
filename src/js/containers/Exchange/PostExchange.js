@@ -3,8 +3,6 @@ import { connect } from "react-redux"
 
 import * as ethUtil from 'ethereumjs-util'
 
-//import { numberToHex, toTWei, gweiToWei, toT, weiToGwei } from "../../utils/converter"
-//import { verifyAccount, verifyToken, verifyAmount, verifyNonce, verifyNumber, anyErrors } from "../../utils/validators"
 import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
 
@@ -124,14 +122,14 @@ export default class PostExchange extends React.Component {
     }
   }
 
-  broacastTx = () => {
-    var id = "exchange"
-    var ethereum = this.props.ethereum
-    var tx = this.props.form.txRaw
-    const account = this.props.account
-    var data = this.recap()
-    this.props.dispatch(exchangeActions.doTransaction(id, ethereum, tx, account, data))
-  }
+  // broacastTx = () => {
+  //   var id = "exchange"
+  //   var ethereum = this.props.ethereum
+  //   var tx = this.props.form.txRaw
+  //   const account = this.props.account
+  //   var data = this.recap()
+  //   this.props.dispatch(exchangeActions.doTransaction(id, ethereum, tx, account, data))
+  // }
 
   processTx = () => {
     // var errors = {}
@@ -161,19 +159,36 @@ export default class PostExchange extends React.Component {
     }
   }
 
-  processTxAfterApprove = ()=>{        
+  processTxAfterConfirm = () => {
+    // var errors = {}
+           
     var password = ""
     const params = this.formParams()
     var account = this.props.account
     var ethereum = this.props.ethereum
-    var formId = "exchange"
+
+    var formId = "exchange"    
     var data = this.recap()
-    this.props.dispatch(exchangeActions.processExchangeAfterApprove(formId, ethereum, account.address, params.sourceToken,
+    this.props.dispatch(exchangeActions.processExchangeAfterConfirm(formId, ethereum, account.address, params.sourceToken,
       params.sourceAmount, params.destToken, params.destAddress,
       params.maxDestAmount, params.minConversionRate,
       params.throwOnFailure, params.nonce, params.gas,
       params.gasPrice, account.keystring, account.type, password, account, data))
   }
+
+  // processTxAfterApprove = ()=>{        
+  //   var password = ""
+  //   const params = this.formParams()
+  //   var account = this.props.account
+  //   var ethereum = this.props.ethereum
+  //   var formId = "exchange"
+  //   var data = this.recap()
+  //   this.props.dispatch(exchangeActions.processExchangeAfterApprove(formId, ethereum, account.address, params.sourceToken,
+  //     params.sourceAmount, params.destToken, params.destAddress,
+  //     params.maxDestAmount, params.minConversionRate,
+  //     params.throwOnFailure, params.nonce, params.gas,
+  //     params.gasPrice, account.keystring, account.type, password, account, data))
+  // }
   content = () => {
     return (
       <PassphraseModal recap={this.createRecap()}
@@ -186,7 +201,7 @@ export default class PostExchange extends React.Component {
     return (
       <ConfirmTransferModal recap={this.createRecap()}
                     onCancel={this.closeModalConfirm}
-                    onExchange = {this.broacastTx} />      
+                    onExchange = {this.processTxAfterConfirm} />      
     )
   }
   contentApprove = () =>{
@@ -196,13 +211,13 @@ export default class PostExchange extends React.Component {
                     onSubmit = {this.approveTx} />      
     )
   }
-  contentConfirmApprove = () =>{
-    return (
-      <ApproveModal recap="Approve successfully, please exchange"
-                    onCancel={this.closeModalConfirmApprove}
-                    onSubmit = {this.processTxAfterApprove} />      
-    )
-  }
+  // contentConfirmApprove = () =>{
+  //   return (
+  //     <ApproveModal recap="Approve successfully, please exchange"
+  //                   onCancel={this.closeModalConfirmApprove}
+  //                   onSubmit = {this.processTxAfterApprove} />      
+  //   )
+  // }
 
   render() {
     var modalPassphrase = this.props.account.type === "keystore" ? (
@@ -233,13 +248,13 @@ export default class PostExchange extends React.Component {
         contentLabel="approve modal"
         content={this.contentApprove()}
       />
-      <Modal className={{base: 'reveal tiny',
+      {/* <Modal className={{base: 'reveal tiny',
             afterOpen: 'reveal tiny'}}
         isOpen={this.props.form.showConfirmApprove}
         onRequestClose={this.closeModalConfirmApprove}
         contentLabel="confirm approve modal"
         content={this.contentConfirmApprove()}
-      />
+      /> */}
     </div>
   )
       

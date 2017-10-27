@@ -196,13 +196,13 @@ export function processExchange(formId, ethereum, address, sourceToken,
 	}
 }
 
-export function processExchangeAfterApprove(formId, ethereum, address, sourceToken,
+export function processExchangeAfterConfirm(formId, ethereum, address, sourceToken,
 	sourceAmount, destToken, destAddress,
 	maxDestAmount, minConversionRate,
 	throwOnFailure, nonce, gas,
 	gasPrice, keystring, type, password, account, data) {
 	return {
-		type: "EXCHANGE.PROCESS_EXCHANGE_AFTER_APPROVE",
+		type: "EXCHANGE.PROCESS_EXCHANGE_AFTER_CONFIRM",
 		payload: {
 			formId, ethereum, address, sourceToken,
 			sourceAmount, destToken, destAddress,
@@ -212,6 +212,23 @@ export function processExchangeAfterApprove(formId, ethereum, address, sourceTok
 		}
 	}
 }
+
+// export function processExchangeAfterApprove(formId, ethereum, address, sourceToken,
+// 	sourceAmount, destToken, destAddress,
+// 	maxDestAmount, minConversionRate,
+// 	throwOnFailure, nonce, gas,
+// 	gasPrice, keystring, type, password, account, data) {
+// 	return {
+// 		type: "EXCHANGE.PROCESS_EXCHANGE_AFTER_APPROVE",
+// 		payload: {
+// 			formId, ethereum, address, sourceToken,
+// 			sourceAmount, destToken, destAddress,
+// 			maxDestAmount, minConversionRate,
+// 			throwOnFailure, nonce, gas,
+// 			gasPrice, keystring, type, password, account, data
+// 		}
+// 	}
+// }
 
 export function doApprove(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
 	keystring, password, accountType, account) {

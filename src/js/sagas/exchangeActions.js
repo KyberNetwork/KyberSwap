@@ -76,29 +76,57 @@ function* processApprove(action) {
     const hashApprove = yield call(ethereum.sendRawTransaction, rawApprove, ethereum)
     console.log(hashApprove)
     yield put(actions.hideApprove())
-    yield put(actions.showConfirmApprove())
+    yield put(actions.showConfirm())
   } catch (e) {
     yield call(doApproveTransactionFail, ethereum, account, e)
   }
 }
-function* processExchangeAfterApprove(action){
+// function* processExchangeAfterApprove(action) {
+//   const { formId, ethereum, address, sourceToken,
+//     sourceAmount, destToken, destAddress,
+//     maxDestAmount, minConversionRate,
+//     throwOnFailure, nonce, gas,
+//     gasPrice, keystring, type, password, account, data } = action.payload
+//   try {
+//     const txRaw = yield call(servicesExchange.tokenToOthersFromAccount, formId, ethereum, address, sourceToken,
+//       sourceAmount, destToken, destAddress,
+//       maxDestAmount, minConversionRate,
+//       throwOnFailure, nonce, gas,
+//       gasPrice, keystring, type, password)
+//     yield put(actions.saveRawExchangeTransaction(txRaw))
+//     yield put(actions.showConfirm())
+//   } catch (e) {
+//     console.log(e)
+//   }
+// }
+
+function* processExchangeAfterConfirm(action) {
   const { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
     throwOnFailure, nonce, gas,
     gasPrice, keystring, type, password, account, data } = action.payload
-  try{
-    const txRaw = yield call(servicesExchange.tokenToOthersFromAccount, formId, ethereum, address, sourceToken,
-      sourceAmount, destToken, destAddress,
-      maxDestAmount, minConversionRate,
-      throwOnFailure, nonce, gas,
-      gasPrice, keystring, type, password)
-      yield put(actions.saveRawExchangeTransaction(txRaw))
-      yield put(actions.showConfirm())
-  }catch(e){
-    console.log(e)
-  }    
+  try {
+    if (sourceToken == constants.ETHER_ADDRESS) {
+      var txRaw = yield call(servicesExchange.etherToOthersFromAccount, formId, ethereum, address, sourceToken,
+        sourceAmount, destToken, destAddress,
+        maxDestAmount, minConversionRate,
+        throwOnFailure, nonce, gas,
+        gasPrice, keystring, type, password)
+    } else {
+      txRaw = yield call(servicesExchange.tokenToOthersFromAccount, formId, ethereum, address, sourceToken,
+        sourceAmount, destToken, destAddress,
+        maxDestAmount, minConversionRate,
+        throwOnFailure, nonce, gas,
+        gasPrice, keystring, type, password)
+    }
+    const hash = yield call(ethereum.sendRawTransaction, txRaw, ethereum)
+    yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
+  } catch (e) {
+    yield call(doTransactionFail, ethereum, account, e)
+  }
 }
+
 function* processExchange(action) {
   const { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
@@ -111,7 +139,7 @@ function* processExchange(action) {
   try {
     if (sourceToken == constants.ETHER_ADDRESS) {
       var txRaw
-      if (type === "keystore") {        
+      if (type === "keystore") {
         try {
           txRaw = yield call(servicesExchange.etherToOthersFromAccount, formId, ethereum, address, sourceToken,
             sourceAmount, destToken, destAddress,
@@ -125,14 +153,14 @@ function* processExchange(action) {
         const hash = yield call(ethereum.sendRawTransaction, txRaw, ethereum)
         yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
       } else {
-        txRaw = yield call(servicesExchange.etherToOthersFromAccount, formId, ethereum, address, sourceToken,
-          sourceAmount, destToken, destAddress,
-          maxDestAmount, minConversionRate,
-          throwOnFailure, nonce, gas,
-          gasPrice, keystring, type, password)
-        yield put(actions.saveRawExchangeTransaction(txRaw))
+        // txRaw = yield call(servicesExchange.etherToOthersFromAccount, formId, ethereum, address, sourceToken,
+        //   sourceAmount, destToken, destAddress,
+        //   maxDestAmount, minConversionRate,
+        //   throwOnFailure, nonce, gas,
+        //   gasPrice, keystring, type, password)
+        // yield put(actions.saveRawExchangeTransaction(txRaw))
         yield put(actions.showConfirm())
-      }      
+      }
     } else {
       const remain = yield call([ethereum, ethereum.getAllowance], sourceToken, address)
       console.log(remain)
@@ -163,22 +191,22 @@ function* processExchange(action) {
           yield put(actions.showApprove())
         }
       } else {
-        var txRaw
-        try {
-          txRaw = yield call(servicesExchange.tokenToOthersFromAccount, formId, ethereum, address, sourceToken,
-            sourceAmount, destToken, destAddress,
-            maxDestAmount, minConversionRate,
-            throwOnFailure, nonce, gas,
-            gasPrice, keystring, type, password)
-        } catch (e) {
-          yield put(actions.throwPassphraseError(e.message))
-          return
-        }        
+        //var txRaw
         if (type === "keystore") {
+          try {
+            var txRaw = yield call(servicesExchange.tokenToOthersFromAccount, formId, ethereum, address, sourceToken,
+              sourceAmount, destToken, destAddress,
+              maxDestAmount, minConversionRate,
+              throwOnFailure, nonce, gas,
+              gasPrice, keystring, type, password)
+          } catch (e) {
+            yield put(actions.throwPassphraseError(e.message))
+            return
+          }
           const hash = yield call(ethereum.sendRawTransaction, txRaw, ethereum)
           yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
         } else {
-          yield put(actions.saveRawExchangeTransaction(txRaw))
+          //yield put(actions.saveRawExchangeTransaction(txRaw))
           yield put(actions.showConfirm())
         }
       }
@@ -197,5 +225,6 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.SELECT_TOKEN_ASYNC", selectToken)
   yield takeEvery("EXCHANGE.PROCESS_EXCHANGE", processExchange)
   yield takeEvery("EXCHANGE.PROCESS_APPROVE", processApprove)
-  yield takeEvery("EXCHANGE.PROCESS_EXCHANGE_AFTER_APPROVE", processExchangeAfterApprove)
+  yield takeEvery("EXCHANGE.PROCESS_EXCHANGE_AFTER_CONFIRM", processExchangeAfterConfirm)
+  //yield takeEvery("EXCHANGE.PROCESS_EXCHANGE_AFTER_APPROVE", processExchangeAfterApprove)
 }
