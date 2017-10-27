@@ -53,7 +53,7 @@ export default class PostTransfer extends React.Component {
       this.props.dispatch(transferActions.throwErrorDestAddress("This is not an address"))
       return false
     }
-    if (isNaN(this.props.form.amount)) {
+    if (isNaN(this.props.form.amount) || !this.props.form.amount || this.props.form.amount == '') {
       this.props.dispatch(transferActions.thowErrorAmount("amount must be a number"))
       return false
     }
