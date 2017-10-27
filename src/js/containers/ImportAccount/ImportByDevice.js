@@ -186,6 +186,7 @@ export default class ImportByDevice extends React.Component {
 	}
 
 	getCurrentList() {
+		const addressLink = 'https://kovan.etherscan.io/address/';
 		let currentListHtml = this.state.currentAddresses.map((address, index) => {
 			return (
 				<li key={address.addressString}>
@@ -195,7 +196,8 @@ export default class ImportByDevice extends React.Component {
 							value={JSON.stringify(address)}
 							defaultChecked={index == 0 ? true : false}
 						/>
-						{address.addressString} - <span> {address.balance} ETH</span>
+						<a href={addressLink + address.addressString} target="_blank">{address.addressString} </a>
+						 - <span> {address.balance} ETH</span>
 						<br />
 					</label>
 				</li>
