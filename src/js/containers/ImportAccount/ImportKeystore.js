@@ -76,7 +76,7 @@ export default class ImportKeystore extends React.Component {
           console.log(errors)
           this.props.dispatch(throwError("Cannot import invalid keystore file"))
         }else{          
-          console.log("keystring: ", keystring)
+          //console.log("keystring: ", keystring)
           var address = addressFromKey(keystring)
           this.props.dispatch(importNewAccount(address, "keystore", keystring))
           // this.goToExchange()   
