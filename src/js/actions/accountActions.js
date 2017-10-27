@@ -21,6 +21,12 @@ export function updateAccountComplete(account) {
 
 import IMPORT from "../constants/importAccountActions"
 
+export function importLoading(){
+    return {
+        type: "IMPORT.LOADING"
+    }
+}
+
 export function importNewAccount(address, type, keystring) {
     return {
         type: "IMPORT.IMPORT_NEW_ACCOUNT_PENDING",

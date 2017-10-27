@@ -136,7 +136,7 @@ export default class ImportByDevice extends React.Component {
 
         this.props.dispatch(importNewAccount(data.address, data.type, data.path))
         this.closeModal()
-        setTimeout(() => { this.goToExchange() }, 3000)
+        // setTimeout(() => { this.goToExchange() }, 3000)
     }
     goToExchange = () => {
         // window.location.href = "/exchange"

@@ -80,7 +80,8 @@ export default class ImportKeystore extends React.Component {
           var address = addressFromKey(keystring)
           this.props.dispatch(importNewAccount(address, "keystore", keystring))
           // this.goToExchange()   
-          setTimeout(() => {this.goToExchange()}, 3000)          
+          // setTimeout(() => {this.goToExchange()}, 3000)        
+
 
           // setInterval(function(){ _this.goToExchange() }, 3000);            
         }    
