@@ -94,13 +94,10 @@ export default class SelectTokenModal extends React.Component {
   	}
     return (
       <div>
-        <div class="title">{title}</div><a class="x" href="#" data-close>&times;</a>
+        <div class="title">{title}</div><a class="x" onClick={this.closeModal}>&times;</a>
         <div class="content">
           <div class="row tokens small-up-2 medium-up-3 large-up-4">
               {content}
-              <div className="modal-control">
-              <button className="cancel" onClick={this.closeModal}>Cancel</button>
-            </div>
           </div>
         </div>
       </div>
