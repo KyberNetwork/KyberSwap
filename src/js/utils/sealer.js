@@ -86,8 +86,6 @@ export function sealTxByLedger(params) {
   return new Promise((resolve, reject)=>{
     connectLedger().then((eth) => {
       signLedgerTransaction(eth, params.address_n,  txToSign.toString('hex')).then((response) => {
-        if (typeof (callback) == 'function') {
-          console.log(response);
   
           params.v = "0x" + response['v'];
           params.r = "0x" + response['r'];
@@ -95,7 +93,6 @@ export function sealTxByLedger(params) {
           var tx = new EthereumTx(params);
   
           resolve(tx);
-        }
       })
     }).catch((err) => {
       if (typeof (callbackFail) == 'function') {

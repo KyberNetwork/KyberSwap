@@ -41,7 +41,9 @@ const txs = (state=initState, action) => {
     }
     case TX.UPDATE_TX_FULFILLED: {
       var newState = {...state}
-      newState[action.payload.hash] = action.payload
+      if (newState[action.payload.hash]){
+        newState[action.payload.hash] = action.payload
+      }      
       return newState
     }
     case 'TX.CLEAR': {

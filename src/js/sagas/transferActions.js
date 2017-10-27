@@ -82,8 +82,9 @@ function* processTransfer(action) {
   }
   
   try {
+    console.log(rawTx)   
     const hash = yield call(ethereum.sendRawTransaction, rawTx, ethereum)
-    //console.log(hash)      
+    console.log(hash)      
     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
 
     // if (type === "keystore") {

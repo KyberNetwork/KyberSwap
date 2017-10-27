@@ -173,7 +173,7 @@ export function tokenToOthersFromAccount(
       return sealTxByTrezor(exchangeTxParams)
     case "ledger":
       exchangeTxParams.address_n = keystring
-      return sealTxByLedger(txParaexchangeTxParamsms)
+      return sealTxByLedger(exchangeTxParams)
   }
 
 }
