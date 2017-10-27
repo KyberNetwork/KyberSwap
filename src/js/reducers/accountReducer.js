@@ -6,7 +6,8 @@ import ACC_ACTION from "../constants/accActions"
 
 const initState = {
   isStoreReady: false,
-  account: false
+  account: false,
+  loading: false
 }
 
 const account = (state=initState, action) => {
@@ -28,8 +29,11 @@ const account = (state=initState, action) => {
         return {...state, isStoreReady: true}
       }
     }
+    case "IMPORT.LOADING": {
+      return {...state, loading: true}
+    }
     case "IMPORT.IMPORT_NEW_ACCOUNT_FULFILLED": {
-      return {...state, account: action.payload}
+      return {...state, account: action.payload, loading: false}
     }      
     case "IMPORT.THROW_ERROR": {            
       return {...state, error: action.payload}

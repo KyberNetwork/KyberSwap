@@ -1,5 +1,7 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/accountActions'
+import { goToRoute } from "../actions/globalActions"
+
 import ACC_ACTION from "../constants/accActions"
 import * as service from "../services/accounts"
 
@@ -22,10 +24,12 @@ function* updateAccount(action) {
 }
 
 function* importNewAccount(action){
+  yield put(actions.importLoading())
   const {address, type, keystring} = action.payload
   //console.log(type)
   const account = yield call(service.newAccountInstance, address, type, keystring)
   yield put(actions.importNewAccountComplete(account))
+  yield put(goToRoute('/exchange'));
 }
 
 export function* watchAccount() {

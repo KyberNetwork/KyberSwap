@@ -45,3 +45,10 @@ export function clearSession() {
     type: GLOBAL.CLEAR_SESSION
   }
 }
+
+export function goToRoute(route){
+  return {
+    type: "GLOBAL.GO_TO_ROUTE",
+    payload: route
+  }
+}

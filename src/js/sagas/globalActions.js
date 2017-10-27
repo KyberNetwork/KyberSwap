@@ -3,6 +3,7 @@ import * as actions from '../actions/globalActions'
 import GLOBAL from "../constants/globalActions"
 import { fetchRatePromise } from "../services/exchange"
 import Rate from "../services/rate"
+import { push } from 'react-router-redux';
 
 function* getLatestBlock(action) {
   const ethereum = action.payload
@@ -25,9 +26,15 @@ function* updateRate(action) {
   yield put(actions.updateRateComplete(rate))
 }
 
+function* goToRoute(action){
+  yield put(push(action.payload));
+  // this.props.dispatch(push('/exchange'));
+}
+
 export function* watchGlobal() {
   yield takeEvery(GLOBAL.NEW_BLOCK_INCLUDED_PENDING, getLatestBlock)
   yield takeEvery(GLOBAL.RATE_UPDATED_PENDING, updateRate)
+  yield takeEvery("GLOBAL.GO_TO_ROUTE", goToRoute)
 }
 
 
