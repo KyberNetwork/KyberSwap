@@ -135,6 +135,13 @@ export function numberToHex(number) {
   return "0x" + (new BigNumber(number)).toString(16)
 }
 
+export function biggestNumber() {
+  var initNumber = new BigNumber(2)
+  return "0x" + (initNumber.pow(256).sub(1).toString(16))
+  //return "0x" + (new BigNumber(Math.pow(2,256)-1)).toString(16)
+}
+
+
 export function hexToNumber(hex) {
   return new BigNumber(hex).toNumber()
 }

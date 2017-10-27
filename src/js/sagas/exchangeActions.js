@@ -69,16 +69,35 @@ function* doApproveTransactionFail(ethereum, account, e) {
 
 function* processApprove(action) {
   const { ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-    keystring, password, accountType } = action.payload
+    keystring, password, accountType, account } = action.payload
   try {
     const rawApprove = yield call(servicesExchange.getAppoveToken, ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
       keystring, password, accountType)
     const hashApprove = yield call(ethereum.sendRawTransaction, rawApprove, ethereum)
+    console.log(hashApprove)
     yield put(actions.hideApprove())
     yield put(actions.showConfirmApprove())
   } catch (e) {
     yield call(doApproveTransactionFail, ethereum, account, e)
   }
+}
+function* processExchangeAfterApprove(action){
+  const { formId, ethereum, address, sourceToken,
+    sourceAmount, destToken, destAddress,
+    maxDestAmount, minConversionRate,
+    throwOnFailure, nonce, gas,
+    gasPrice, keystring, type, password, account, data } = action.payload
+  try{
+    const txRaw = yield call(servicesExchange.tokenToOthersFromAccount, formId, ethereum, address, sourceToken,
+      sourceAmount, destToken, destAddress,
+      maxDestAmount, minConversionRate,
+      throwOnFailure, nonce, gas,
+      gasPrice, keystring, type, password)
+      yield put(actions.saveRawExchangeTransaction(txRaw))
+      yield put(actions.showConfirm())
+  }catch(e){
+    console.log(e)
+  }    
 }
 function* processExchange(action) {
   const { formId, ethereum, address, sourceToken,
@@ -92,19 +111,28 @@ function* processExchange(action) {
   try {
     if (sourceToken == constants.ETHER_ADDRESS) {
       var txRaw
-      try {
+      if (type === "keystore") {        
+        try {
+          txRaw = yield call(servicesExchange.etherToOthersFromAccount, formId, ethereum, address, sourceToken,
+            sourceAmount, destToken, destAddress,
+            maxDestAmount, minConversionRate,
+            throwOnFailure, nonce, gas,
+            gasPrice, keystring, type, password)
+        } catch (e) {
+          yield put(actions.throwPassphraseError(e.message))
+          return
+        }
+        const hash = yield call(ethereum.sendRawTransaction, txRaw, ethereum)
+        yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
+      } else {
         txRaw = yield call(servicesExchange.etherToOthersFromAccount, formId, ethereum, address, sourceToken,
           sourceAmount, destToken, destAddress,
           maxDestAmount, minConversionRate,
           throwOnFailure, nonce, gas,
           gasPrice, keystring, type, password)
-      }
-      catch (e) {
-        yield put(actions.throwPassphraseError(e.message))
-        return
-      }
-      const hash = yield call(ethereum.sendRawTransaction, txRaw, ethereum)
-      yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
+        yield put(actions.saveRawExchangeTransaction(txRaw))
+        yield put(actions.showConfirm())
+      }      
     } else {
       const remain = yield call([ethereum, ethereum.getAllowance], sourceToken, address)
       console.log(remain)
@@ -169,4 +197,5 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.SELECT_TOKEN_ASYNC", selectToken)
   yield takeEvery("EXCHANGE.PROCESS_EXCHANGE", processExchange)
   yield takeEvery("EXCHANGE.PROCESS_APPROVE", processApprove)
+  yield takeEvery("EXCHANGE.PROCESS_EXCHANGE_AFTER_APPROVE", processExchangeAfterApprove)
 }

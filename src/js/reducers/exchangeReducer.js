@@ -114,6 +114,8 @@ const exchange = (state=initState, action) => {
       newState.broadcasting = false
       newState.errors.gasError = action.payload
       newState.bcError = action.payload
+      newState.confirmApprove =  false
+      newState.showConfirmApprove = false
       return newState
     }
     case "EXCHANGE.TX_BROADCAST_PENDING": {
@@ -152,6 +154,8 @@ const exchange = (state=initState, action) => {
       return newState
     }
     case "EXCHANGE.SHOW_CONFIRM":{      
+      newState.confirmApprove = false 
+      newState.showConfirmApprove = false
       newState.confirmColdWallet = true       
       return newState
     }
@@ -183,11 +187,13 @@ const exchange = (state=initState, action) => {
       newState.errors.passwordError = action.payload
       return newState
     }
-    case "EXCHANGE.FINISH_EXCHANGE":{
+    case "EXCHANGE.FINISH_EXCHANGE":{      
       newState.passphrase = false
       newState.confirmColdWallet = false
       newState.confirmApprove = false
       newState.showConfirmApprove = false
+      newState.sourceAmount = 0
+      newState.txRaw = ""      
       newState.step = 3   
       return newState   
     }
