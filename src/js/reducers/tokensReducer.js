@@ -2,8 +2,19 @@ import {REHYDRATE} from 'redux-persist/constants'
 import Rate from "../services/rate"
 import BigNumber from "bignumber.js"
 import GLOBAL from "../constants/globalActions"
+import SUPPORT_TOKENS from "../services/supported_tokens"
 
-const token = (state={}, action) => {
+const initState = function(){
+  let tokens = {}
+  SUPPORT_TOKENS.forEach( (token) => {
+    tokens[token.symbol] = token
+    tokens[token.symbol].rate = 0
+    tokens[token.symbol].balance = 0
+  })
+  return tokens
+}()
+
+const token = (state=initState, action) => {
   switch (action.type) {
     case REHYDRATE: {
       var loadedTokens = action.payload.tokens      

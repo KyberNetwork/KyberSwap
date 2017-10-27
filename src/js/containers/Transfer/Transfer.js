@@ -70,11 +70,15 @@ export default class Transfer extends React.Component {
   render() {
     if (this.props.account.isStoreReady) {
       if (!!!this.props.account.account.address) {
-        this.props.dispatch(push("/"))
+        setTimeout(() => this.props.dispatch(push("/")), 1000)        
         return (
           <div></div>
         )
       }
+    }else{
+      return (
+        <div></div>
+      )
     }
 
     var balance = ""

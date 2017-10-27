@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-
+import { push } from 'react-router-redux';
 
 import { calculateMinAmount, toT } from "../../utils/converter"
 
@@ -74,11 +74,15 @@ export default class Exchange extends React.Component {
   render() {
     if (this.props.account.isStoreReady) {
       if (!!!this.props.account.account.address) {
-        this.props.dispatch(push("/"))        
+        setTimeout(() => this.props.dispatch(push("/")), 1000)   
         return (
           <div></div>
         )
       }
+    }else{
+      return (
+        <div></div>
+      )
     }
 
     var balance = ""
