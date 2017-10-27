@@ -8,6 +8,8 @@ const initState = function(){
   let tokens = {}
   SUPPORT_TOKENS.forEach( (token) => {
     tokens[token.symbol] = token
+    tokens[token.symbol].rate = 0
+    tokens[token.symbol].balance = 0
   })
   return tokens
 }()
