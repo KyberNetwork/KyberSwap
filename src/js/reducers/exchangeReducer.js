@@ -4,7 +4,7 @@ import {REHYDRATE} from 'redux-persist/constants'
 //import IMPORT from "../constants/importAccountActions"
 import constants from "../services/constants"
 import { calculateDest} from "../utils/converter"
-import { randomToken } from "../utils/random"
+import { randomToken, randomForExchange } from "../utils/random"
 import SUPPORT_TOKENS from "../services/supported_tokens"
 
 const initState = constants.INIT_EXCHANGE_FORM_STATE
@@ -14,6 +14,7 @@ const exchange = (state=initState, action) => {
   switch (action.type) {
     case REHYDRATE: {
       var exchange = action.payload.exchange; 
+      var tokens = action.payload.tokens;
       if(!!!exchange){
         return newState
       }
@@ -24,16 +25,26 @@ const exchange = (state=initState, action) => {
         newState.sourceTokenSymbol = exchange.sourceTokenSymbol
         newState.destToken = exchange.destToken
         newState.destTokenSymbol = exchange.destTokenSymbol
-      } else {
-        var randomSelectToken = randomToken(2, Object.keys(SUPPORT_TOKENS).length);
-        newState.sourceToken = Object.values(SUPPORT_TOKENS)[randomSelectToken[0]].address
-        newState.sourceTokenSymbol = Object.values(SUPPORT_TOKENS)[randomSelectToken[0]].symbol
-        newState.destToken = Object.values(SUPPORT_TOKENS)[randomSelectToken[1]].address
-        newState.destTokenSymbol = Object.values(SUPPORT_TOKENS)[randomSelectToken[1]].symbol
-      }
+      } 
+      // else {
+      //   var randomSelectToken = randomToken(2, Object.keys(SUPPORT_TOKENS).length);
+      //   newState.sourceToken = Object.values(SUPPORT_TOKENS)[randomSelectToken[0]].address
+      //   newState.sourceTokenSymbol = Object.values(SUPPORT_TOKENS)[randomSelectToken[0]].symbol
+      //   newState.destToken = Object.values(SUPPORT_TOKENS)[randomSelectToken[1]].address
+      //   newState.destTokenSymbol = Object.values(SUPPORT_TOKENS)[randomSelectToken[1]].symbol
+      // }
       newState.step = 1;
       return newState;
     }
+    case "EXCHANGE.SET_RANDOM_SELECTED_TOKEN":
+      var exchange = {...state}
+      var random = action.payload
+      exchange.sourceToken = random[0].address;
+      exchange.sourceTokenSymbol = random[0].symbol;
+      exchange.destToken = random[1].address;
+      exchange.destTokenSymbol = random[1].symbol;
+      return {...exchange}
+      // return newState;
     case "EXCHANGE.MAKE_NEW_EXCHANGE":
       var exchange = {...state};
       newState = initState;
