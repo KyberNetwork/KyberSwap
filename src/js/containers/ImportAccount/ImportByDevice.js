@@ -33,9 +33,10 @@ export default class ImportByDevice extends React.Component {
 			{ path: "m/44'/60'/0'", desc: 'Ledger (ETH)', defaultType: 'ledger' },
 			{ path: "m/44'/61'/0'/0", desc: 'TREZOR (ETC)' },
 			{ path: "m/44'/60'/160720'/0'", desc: 'Ledger (ETC)' },
-			{ path: 0, desc: 'Your Custom Path', defaultP: "m/44'/60'/1'/0" },
+			{ path: "m/0'/0'/0'", desc: 'SingularDTV' },
 			{ path: "m/44'/1'/0'/0", desc: 'Network: Testnets' },
 			{ path: "m/44'/40'/0'/0", desc: 'Network: Expanse' },
+			{ path: 0, desc: 'Your Custom Path', defaultP: "m/44'/60'/1'/0" },
 		]
 	}
 
@@ -128,7 +129,7 @@ export default class ImportByDevice extends React.Component {
 				addresses.push(address);
 				currentAddresses.push(address);
 				this.updateBalance(address.addressString, i);
-			
+
 			}
 		}
 		this.addressIndex = i;
@@ -163,7 +164,6 @@ export default class ImportByDevice extends React.Component {
 
 		this.props.dispatch(importNewAccount(data.address, data.type, data.path))
 		this.closeModal()
-		// setTimeout(() => { this.goToExchange() }, 3000)
 	}
 	goToExchange = () => {
 		this.props.dispatch(push('/exchange'));
@@ -190,16 +190,22 @@ export default class ImportByDevice extends React.Component {
 		let currentListHtml = this.state.currentAddresses.map((address, index) => {
 			return (
 				<li key={address.addressString}>
-					<label style={{ marginBottom: 0 }}>
-						<input type="radio"
+					<a class="name">
+						<label for={'address-' + address.addressString} style={{ marginBottom: 0, cursor: 'pointer' }}>
+							<img src="/assets/img/address.png" />
+							<span class="hash">{address.addressString}</span>
+						</label>
+						<input type="radio" id={'address-' + address.addressString}
 							name="address"
 							value={JSON.stringify(address)}
-							defaultChecked={index == 0 ? true : false}
+							onClick={() => this.getAddress()}
+							style={{ display: 'none' }}
 						/>
-						<a href={addressLink + address.addressString} target="_blank">{address.addressString} </a>
-						 - <span> {address.balance} ETH</span>
-						<br />
-					</label>
+					</a>
+					<div class="info">
+						<a class="link has-tip top explore" data-tooltip="" href={addressLink + address.addressString} target="_blank" title="View on Etherscan">{address.balance} ETH
+						</a>
+					</div>
 				</li>
 			)
 		})
@@ -214,38 +220,81 @@ export default class ImportByDevice extends React.Component {
 				this.setState({
 					currentList: addresses
 				})
-				
+
 			})
 	}
 
-	render() {
+	getSelectAddressHtml() {
+		return (
+			<div>
+				<div class="content">
+					<div class="row">
+						<div class="column">
+							<form ref="formPath">
+								<div class="row small-up-2 medium-up-3 large-up-3 address-paths gutter-15">
+									{this.getListPathHtml()}
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="content white">
+					<div class="row">
+						<div class="column">
+							<div class="block-title">
+								Select the address you would like to interact with
+								<img class="loading" src="/assets/img/waiting.svg" />
+							</div>
+							<form ref="formAddress">
+								<ul class="address-list animated fadeIn">
+									{this.getCurrentList()}
+								</ul>
+							</form>
+							<div class="address-list-navigation animated fadeIn">
+								<a class="previous" onClick={() => this.preAddress()}>Previous Addresses</a>
+								<a class="next" onClick={() => this.moreAddress()}>More Addresses</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		)
+	}
+
+	getListPathHtml() {
 		let listPath = this.DPATH.map((dPath, index) => {
 			return (
-				<label style={{ width: 200, float: 'left' }} key={dPath.path}>
-					<input type="radio" name="path"
+				<div class="column" key={dPath.path}>
+					<input id={'path-' + index} type="radio" name="path"
 						defaultValue={dPath.path}
 						defaultChecked={(dPath.defaultType == this.walletType) ? true : false}
+						onClick={() => this.choosePath()}
 					/>
-					{
-						dPath.path ? 
-						(
-							<span>
-								{dPath.path}
-								<br />
-								{dPath.desc}
-							</span>
-						) : (
-							<span>
-								{dPath.desc}
-								<input type="text" name="customPath"
-									defaultValue={dPath.defaultP}
-								/>
-							</span>
-						)
-					}
-				</label>
+					<label class="address-path-stamp" for={'path-' + index}>
+						{
+							dPath.path ? (
+								<div>
+									<div class="name">{dPath.path}</div>
+									<div class="note">{dPath.desc}</div>
+								</div>
+							) : (
+									<div>
+										<div class="name">{dPath.desc}</div>
+										<div class="address-path-input">
+											<input type="text" name="customPath" defaultValue={dPath.defaultP} />
+											<a class="submit pulse animated infinite" onClick={() => this.choosePath()} style={{ display: 'block' }}></a>
+										</div>
+									</div>
+								)
+						}
+					</label>
+				</div>
 			)
 		})
+		return listPath;
+	}
+
+	render() {
 		return (
 			<div>
 				<div class="small-12 medium-6 column" style={{ padding: 0 }}>
@@ -271,26 +320,7 @@ export default class ImportByDevice extends React.Component {
 				<SelectAddressModal
 					open={this.state.modalOpen}
 					onRequestClose={this.closeModal.bind(this)}
-					content={
-						<div className="popup">
-							<form ref="formPath">
-								{listPath}
-								<div style={{ clear: 'both' }}></div>
-							</form>
-
-							<button class="button expand" onClick={() => this.choosePath()}>Change path</button>
-							<br/>
-
-							<form ref="formAddress">
-								<ul>
-									{this.getCurrentList()}
-								</ul>
-							</form>
-							<a onClick={() => this.preAddress()}>Pre address</a> |
-							<a onClick={() => this.moreAddress()}> More address</a> |
-							<a onClick={() => this.getAddress()}> Select address</a>
-						</div>
-					}
+					content={this.getSelectAddressHtml()}
 				/>
 
 			</div>
