@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
+import constants from "../../services/constants"
 
 import AddressGenerator from "../../services/device/addressGenerator";
 import { getTrezorPublicKey, connectLedger, getLedgerPublicKey } from "../../services/device/device";
@@ -185,7 +186,7 @@ export default class ImportByDevice extends React.Component {
 	}
 
 	getCurrentList() {
-		const addressLink = 'https://kovan.etherscan.io/address/';
+		const addressLink = constants.KOVAN_ETH_URL + 'address/';
 		let currentListHtml = this.state.currentAddresses.map((address, index) => {
 			return (
 				<li key={address.addressString}>

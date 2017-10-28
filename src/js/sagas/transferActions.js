@@ -1,7 +1,6 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/transferActions'
 import * as utilActions from '../actions/utilActions'
-//import EXCHANGE from "../constants/exchangeFormActions"
 import * as transferServices from "../services/exchange"
 import constants from "../services/constants"
 import * as converter from "../utils/converter"

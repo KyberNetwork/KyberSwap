@@ -2,7 +2,7 @@
 
 export function selectToken(symbol, type) {
 	 return {
-	    type: "SELECT_TOKEN",
+	    type: "TOKEN.SELECT_TOKEN",
 	    payload: {symbol, type}
 	  }
 }

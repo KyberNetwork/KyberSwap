@@ -1,6 +1,5 @@
 import {REHYDRATE} from 'redux-persist/constants'
 import Tx from "../services/tx"
-import TX from "../constants/txActions"
 
 const initState = {
 }
@@ -34,19 +33,19 @@ const txs = (state=initState, action) => {
         return state
       }
     }
-    case TX.TX_ADDED: {
+    case "TX.TX_ADDED": {
       var newState = {...state}
       newState[action.payload.hash] = action.payload
       return newState
     }
-    case TX.UPDATE_TX_FULFILLED: {
+    case "TX.UPDATE_TX_FULFILLED": {
       var newState = {...state}
       if (newState[action.payload.hash]){
         newState[action.payload.hash] = action.payload
       }      
       return newState
     }
-    case 'TX.CLEAR': {
+    case "TX.CLEAR": {
       var loadedTxs = {...state}
       if (loadedTxs) {
         var txs = {}

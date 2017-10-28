@@ -1,7 +1,6 @@
 //import Account from "../services/account"
 //import Token from "../services/token"
 import {REHYDRATE} from 'redux-persist/constants'
-//import IMPORT from "../constants/importAccountActions"
 import constants from "../services/constants"
 import { calculateDest} from "../utils/converter"
 import { randomToken } from "../utils/random"
@@ -82,7 +81,7 @@ const exchange = (state=initState, action) => {
       newState.errors.sourceAmountError = action.payload
       return newState
     }
-    case "THOW_ERROR_SELECT_TOKEN":
+    case "EXCHANGE.THOW_ERROR_SELECT_TOKEN":
       newState.error_select_token = action.payload
       return newState
     case "EXCHANGE.GO_TO_STEP":
