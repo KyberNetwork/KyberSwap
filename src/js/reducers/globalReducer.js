@@ -50,6 +50,12 @@ const global = (state=initState, action) => {
     case GLOBAL.TERM_OF_SERVICE_ACCEPTED: {
       return {...state, termOfServiceAccepted: true}
     }
+    case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
+      if(!state.allStateUpdatedFirstTime){
+        return {...state, allStateUpdatedFirstTime: 1}
+      } 
+      return {...state};
+    }
   }
   return state
 }

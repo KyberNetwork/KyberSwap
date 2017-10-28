@@ -33,7 +33,10 @@ const account = (state=initState, action) => {
     }
     case "IMPORT.IMPORT_NEW_ACCOUNT_FULFILLED": {
       return {...state, account: action.payload, loading: false, isStoreReady: true}
-    }      
+    }     
+    case "IMPORT.CLOSE_LOADING_IMPORT": {
+      return {...state, loading: false}
+    }   
     case "IMPORT.THROW_ERROR": {            
       return {...state, error: action.payload}
     }

@@ -8,7 +8,10 @@ import SelectAddressModal from "../CommonElements/SelectAddressModal";
 
 import { importNewAccount } from "../../actions/accountActions"
 @connect((store) => {
-    return { ...store.account }
+    return {
+        account: store.account,
+        ethereum: store.connection.ethereum
+    }
 })
 
 export default class ImportByDevice extends React.Component {
@@ -134,7 +137,7 @@ export default class ImportByDevice extends React.Component {
 
             };
 
-        this.props.dispatch(importNewAccount(data.address, data.type, data.path))
+        this.props.dispatch(importNewAccount(data.address, data.type, data.path, this.props.ethereum))
         this.closeModal()
         // setTimeout(() => { this.goToExchange() }, 3000)
     }

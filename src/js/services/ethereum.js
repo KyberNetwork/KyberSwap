@@ -2,7 +2,7 @@ import Web3 from "web3"
 import Wallet from "ethereumjs-wallet"
 import constants from "./constants"
 
-import { updateBlock, updateBlockFailed, updateRate } from "../actions/globalActions"
+import { updateBlock, updateBlockFailed, updateRate, updateAllRate } from "../actions/globalActions"
 import { updateAccount } from "../actions/accountActions"
 //import { updateWallet } from "../actions/walletActions"
 import { updateTx } from "../actions/txActions"
@@ -90,18 +90,27 @@ export default class EthereumService {
     var state = store.getState()
     var ethereum = state.connection.ethereum
     var ownerAddr = state.account.account.address
-    for (var i = 0; i < SupportedTokens.length; i++) {
-      var token = {
-        name: SupportedTokens[i].name,
-        icon: SupportedTokens[i].icon,
-        symbol: SupportedTokens[i].symbol,
-        address: SupportedTokens[i].address
-      }
-      for (var k = 0; k < constants.RESERVES.length; k++) {
-        var reserve = constants.RESERVES[k]
-        store.dispatch(updateRate(ethereum, token, reserve, ownerAddr))
-      }
-    }
+    // for (var i = 0; i < SupportedTokens.length; i++) {
+    //   var token = {
+    //     name: SupportedTokens[i].name,
+    //     icon: SupportedTokens[i].icon,
+    //     symbol: SupportedTokens[i].symbol,
+    //     address: SupportedTokens[i].address
+    //   }
+    //   for (var k = 0; k < constants.RESERVES.length; k++) {
+    //     var reserve = constants.RESERVES[k]
+    //     store.dispatch(updateRate(ethereum, token, reserve, ownerAddr))
+
+
+
+    //     ///////////////////////////////////////
+    //   }
+    // }
+    for (var k = 0; k < constants.RESERVES.length; k++) {
+          var reserve = constants.RESERVES[k]
+          store.dispatch(updateAllRate(ethereum, SupportedTokens, reserve, ownerAddr))  
+        }
+    
   }
 
   fetchTxsData = () => {
