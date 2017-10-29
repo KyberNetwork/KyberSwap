@@ -87,9 +87,28 @@ export default class Exchange extends React.Component {
     }
 
     var balance = ""
+    var nameSource = ""
     var token = this.props.tokens[this.props.exchange.sourceTokenSymbol]
     if(token){
       balance = toT(token.balance,8)
+      nameSource = token.name
+    }
+
+    var balanceDest = ""
+    var nameDest = ""
+    var tokenDest = this.props.tokens[this.props.exchange.destTokenSymbol]
+    if(tokenDest){
+      balanceDest = toT(tokenDest.balance,8)
+      nameDest = tokenDest.name
+    }
+
+    var balanceInfo = {
+      sourceTokenSymbol: this.props.exchange.sourceTokenSymbol,
+      sourceAmount: balance,
+      sourceTokenName: nameSource,
+      destTokenSymbol: this.props.exchange.destTokenSymbol,
+      destAmount: balanceDest,
+      destTokenName: nameDest
     }
 
     var tokenSource = (
@@ -177,7 +196,11 @@ export default class Exchange extends React.Component {
       <PostExchange />
     )
     var trasactionLoadingScreen = (
-      <TransactionLoading tx={this.props.exchange.txHash} makeNewTransaction={this.makeNewExchange} type="exchange"/>
+      <TransactionLoading tx={this.props.exchange.txHash} 
+                          makeNewTransaction={this.makeNewExchange} 
+                          type="exchange"
+                          balanceInfo = {balanceInfo}
+                          />
     )
     var gasConfig = (
       <TransactionConfig gas={this.props.exchange.gas}
