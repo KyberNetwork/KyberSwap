@@ -115,6 +115,7 @@ const exchange = (state=initState, action) => {
       newState.bcError = action.payload
       newState.confirmApprove =  false
       newState.showConfirmApprove = false
+      newState.isApproving = false      
       return newState
     }
     case "EXCHANGE.TX_BROADCAST_PENDING": {
@@ -129,7 +130,8 @@ const exchange = (state=initState, action) => {
     }
     case "EXCHANGE.TX_BROADCAST_REJECTED": {
       newState.broadcasting = false
-      newState.bcError = action.payload
+      newState.bcError = action.payload      
+      newState.isConfirming = false
       return newState
     }
     case "EXCHANGE.UPDATE_RATE":
@@ -193,6 +195,8 @@ const exchange = (state=initState, action) => {
       newState.confirmColdWallet = false
       newState.confirmApprove = false
       newState.showConfirmApprove = false
+      newState.isApproving = false
+      newState.isConfirming = false
       newState.sourceAmount = 0
       newState.txRaw = ""      
       newState.step = 3   
@@ -209,6 +213,13 @@ const exchange = (state=initState, action) => {
       newState.errors.signTransaction = action.payload
       return newState
     }
+    case "EXCHANGE.PROCESS_APPROVE":{
+      newState.isApproving = true
+      return newState
+    }
+    case "EXCHANGE.PROCESS_EXCHANGE_AFTER_CONFIRM":
+    newState.isConfirming = true
+    return newState
   }
   return state
 }

@@ -74,10 +74,14 @@ function* processTransfer(action) {
       yield put(actions.throwPassphraseError(e.message))
     }
   } else {
-    rawTx = yield call(callService, formId, ethereum, address,
-      token, amount,
-      destAddress, nonce, gas,
-      gasPrice, keystring, type, password)
+    try {
+      rawTx = yield call(callService, formId, ethereum, address,
+        token, amount,
+        destAddress, nonce, gas,
+        gasPrice, keystring, type, password)
+    }catch(e){
+      yield call(doTransactionFail, ethereum, account, e)
+    }
   }
   
   try {

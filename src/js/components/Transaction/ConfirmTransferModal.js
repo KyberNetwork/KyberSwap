@@ -16,7 +16,7 @@ const ConfirmTransferModal = (props) => {
             </div>
           </div>
         </div>
-        <div class="overlap"><a class="button accent" onClick={(e)=>props.onExchange(e)}>Confirm</a></div>
+        <div class="overlap"><a className = {props.isConfirming?"button accent waiting": "button accent"} onClick={(e)=>props.onExchange(e)}>Confirm</a></div>
     </div>
 
 

@@ -37,6 +37,7 @@ export default class Exchange extends React.Component {
   }
   
   proccessSelectToken = () => {
+    console.log(anyErrors(this.props.exchange.errors))
     if (!anyErrors(this.props.exchange.errors)) {
       this.props.dispatch(exchangeActions.goToStep(2))
     } 
@@ -202,7 +203,7 @@ export default class Exchange extends React.Component {
         button={button}
         input={input}
         balance = {balance}
-        sourceTokenSymbol = {this.props.exchange.sourceTokenSymbol}
+        sourceTokenSymbol = {this.props.exchange.sourceTokenSymbol}        
         />
     )
   }
