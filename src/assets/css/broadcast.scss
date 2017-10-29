@@ -6,7 +6,55 @@
     margin-bottom: 0;
     margin-top: -25px;
   }
-  svg {
-    width: 100%;
+  &.finish {
+    animation-play-state: paused;
+    img.pending {
+      display: none;
+    }
+    img.finish {
+      display: block;
+    }
+  }
+  img.pending {
+    display: block;
+  }
+  img.finish {
+    display: none;
+  }
+}
+
+ul.broadcast-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0;
+  > li {
+    font-size: 14px;
+    font-weight: normal;
+    color: $medium-gray;
+    padding-left: 40px;
+    background-repeat: no-repeat;
+    background-position: top 2px left;
+    &:not(:last-child) {
+      margin-bottom: 12px;
+    }
+    &.success {
+      background-image: url(../img/success.svg);
+      font-weight: bold;
+      color: $dark-gray;
+    }
+    &.failed {
+      background-image: url(../img/failed.svg);
+      font-weight: bold;
+      color: $dark-gray;
+      .reason {
+        margin-top: 5px;
+        color: $alert-color;
+        font-weight: normal;
+      }
+    }
+    &.pending {
+      background-image: url(../img/waiting.svg);
+    }
   }
 }

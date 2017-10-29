@@ -9,7 +9,7 @@ const TokenSelect = (props) => {
       props.onClick(e, props.symbol, props.address, props.type)
     }
   }
-  console.log(props.name)
+  //console.log(props.name)
   return (
     // <div class="column gutter-15"><a class="token-stamp selected"><img src="/assets/img/eth.svg"/><span class="name">Ethereum</span>
     // <div class="balance">12.345678</div></a></div>

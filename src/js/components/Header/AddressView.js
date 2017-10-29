@@ -3,13 +3,13 @@ import React from "react"
 
 
 const Address = (props) => {
-  var link = props.path === "/transfer" ? (
-    <Link to="/exchange" >
-      Exchange
+  var link = props.path === "/exchange" ? (
+    <Link to="/transfer" >
+      Transfer
     </Link>
   ) : (
-      <Link to="/transfer" >
-        Transfer
+      <Link to="/exchange" >
+        Exchange
     </Link>
     )
   return props.address ?
@@ -18,12 +18,12 @@ const Address = (props) => {
       <div class="user-bar">
         <div class="row">
           <div key="1" class="column small-2">
-            <a class="avatar" href="/exchange.html">
+            <a class="avatar">
               <img src="/assets/img/address.png" />
             </a>
           </div>
           <div key="2" class="column small-8">
-            <a class="short-address" href="/exchange.html">{props.address ? props.address.slice(0,8):''} ... {props.address? props.address.slice(-6):''}</a>
+            <a class="short-address">{props.address ? props.address.slice(0,8):''} ... {props.address? props.address.slice(-6):''}</a>
             <ul class="actions">
               <li>
                 {link}

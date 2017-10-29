@@ -25,8 +25,7 @@ export default class Header extends React.Component {
               </Link>
             </div>
             <div class="column small-12 medium-6 large-5">
-              <Address path={this.props.location.pathname}/>  
-              {/* <Notify /> */}
+              <Address path={this.props.location.pathname}/> 
             </div>
           </div>
         </section>

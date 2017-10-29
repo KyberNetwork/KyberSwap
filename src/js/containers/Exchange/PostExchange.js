@@ -30,7 +30,11 @@ import {PassphraseModal, ConfirmTransferModal, ApproveModal} from "../../compone
 export default class PostExchange extends React.Component {
   clickExchange = () => {
     if(this.props.form.step == 1){
-      this.props.dispatch(exchangeActions.goToStep(2))
+      // console.log(this.props.form.errors)
+      // console.log(validators.anyErrors(this.props.form.errors))
+      if (!validators.anyErrors(this.props.form.errors)) {
+        this.props.dispatch(exchangeActions.goToStep(2))
+      }       
     } else if (this.props.form.step == 2){
       if (this.validateExchange()) {
         //check account type
@@ -209,6 +213,7 @@ export default class PostExchange extends React.Component {
       <ConfirmTransferModal recap={this.createRecap()}
                     onCancel={this.closeModalConfirm}
                     onExchange = {this.processTxAfterConfirm} 
+                    isConfirming = {this.props.form.isConfirming}
                     type = "exchange"
                     />      
     )
@@ -217,6 +222,7 @@ export default class PostExchange extends React.Component {
     return (
       <ApproveModal recap="Please approve"
                     onCancel={this.closeModalApprove}
+                    isApproving = {this.props.form.isApproving}
                     onSubmit = {this.approveTx} />      
     )
   }
@@ -255,7 +261,7 @@ export default class PostExchange extends React.Component {
         isOpen={this.props.form.confirmApprove}
         onRequestClose={this.closeModalApprove}
         contentLabel="approve modal"
-        content={this.contentApprove()}
+        content={this.contentApprove()}        
         size="tiny"
       />
       {/* <Modal className={{base: 'reveal tiny',
@@ -268,7 +274,10 @@ export default class PostExchange extends React.Component {
       /> */}
     </div>
   )
-      
+      var classNameNext = "button accent animated pulse infinite"
+      if (!validators.anyErrors(this.props.form.errors)){
+        classNameNext += " next"
+      }
     return (
       <div>
         <div class="row hide-on-choose-token-pair">
@@ -278,7 +287,7 @@ export default class PostExchange extends React.Component {
         </div>
         <div class="row show-on-choose-token-pair">
           <div class="column small-11 medium-10 large-9 small-centered text-center">
-            <p class="note">Passphrase is needed for each exchange transaction</p><a class="button accent next animated pulse infinite" onClick={this.clickExchange}>Next</a>
+            <p class="note">Passphrase is needed for each exchange transaction</p><a className= {classNameNext} onClick={this.clickExchange}>Next</a>
           </div>
         </div>
         

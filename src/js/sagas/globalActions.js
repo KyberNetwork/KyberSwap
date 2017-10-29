@@ -1,6 +1,5 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/globalActions'
-import GLOBAL from "../constants/globalActions"
 import { fetchRatePromise } from "../services/exchange"
 import { Rate, updateAllRatePromise } from "../services/rate"
 import { push } from 'react-router-redux';
@@ -37,6 +36,7 @@ function* goToRoute(action){
 function* clearSession(action){
   yield put(actions.clearSessionComplete())
   yield put(actions.goToRoute('/'));
+  //yield cancel("*")
 }
 
 function* updateAllRate(action){
@@ -46,8 +46,8 @@ function* updateAllRate(action){
 }
 
 export function* watchGlobal() {
-  yield takeEvery(GLOBAL.NEW_BLOCK_INCLUDED_PENDING, getLatestBlock)
-  yield takeEvery(GLOBAL.RATE_UPDATED_PENDING, updateRate)
+  yield takeEvery("GLOBAL.NEW_BLOCK_INCLUDED_PENDING", getLatestBlock)
+  yield takeEvery("GLOBAL.RATE_UPDATED_PENDING", updateRate)
   yield takeEvery("GLOBAL.GO_TO_ROUTE", goToRoute)
   yield takeEvery("GLOBAL.CLEAR_SESSION", clearSession)
   yield takeEvery("GLOBAL.RATE_UPDATE_ALL_PENDING", updateAllRate)

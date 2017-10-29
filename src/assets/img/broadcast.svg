@@ -4,24 +4,24 @@
     <desc>Created using Figma</desc>
     <g id="Canvas">
         <g id="broadcast">
-            <g id="color-4">
+            <g id="color-1">
+                <use xlink:href="#path2_fill" transform="translate(45.0067 48.2148)" fill="#BEDECD">
+                    <animate dur="4s" attributeName="fill" from="#BEDECD" to="#BEDECD" values="#BEDECD; #34908E; #5AB085; #EDF7F3; #BEDECD" repeatCount="indefinite"/>
+                </use>
+            </g>
+            <g id="color-2">
                 <use xlink:href="#path0_fill" transform="translate(45.0067 76.9853)" fill="#34908E">
-                    <animate dur="2s" attributeName="fill-opacity" from="1" to="0.5" repeatCount="indefinite" begin="0s"/>
+                    <animate dur="4s" attributeName="fill" from="#34908E" to="#34908E" values="#34908E; #5AB085; #EDF7F3; #BEDECD; #34908E" repeatCount="indefinite"/>
                 </use>
             </g>
             <g id="color-3">
                 <use xlink:href="#path1_fill" transform="translate(4.98299 4.12101)" fill="#5AB085">
-                    <animate dur="2s" attributeName="fill-opacity" from="1" to="0.5" repeatCount="indefinite" begin=".5s"/>
+                    <animate dur="4s" attributeName="fill" from="#5AB085" to="#5AB085" values="#5AB085; #EDF7F3; #BEDECD; #34908E; #5AB085" repeatCount="indefinite"/>
                 </use>
             </g>
-            <g id="color-2">
-                <use xlink:href="#path2_fill" transform="translate(45.0067 48.2148)" fill="#BEDECD">
-                    <animate dur="2s" attributeName="fill-opacity" from="1" to="0.5" repeatCount="indefinite" begin="1s"/>
-                </use>
-            </g>
-            <g id="color-1">
+            <g id="color-4">
                 <use xlink:href="#path3_fill" transform="translate(44.4439 4.12101)" fill="#EDF7F3">
-                    <animate dur="2s" attributeName="fill-opacity" from="1" to="0.5" repeatCount="indefinite" begin="1.5s"/>
+                    <animate dur="4s" attributeName="fill" from="#EDF7F3" to="#EDF7F3" values="#EDF7F3; #BEDECD; #34908E; #5AB085; #EDF7F3" repeatCount="indefinite"/>
                 </use>
             </g>
             <g id="strokes">

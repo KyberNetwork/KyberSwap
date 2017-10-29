@@ -49,6 +49,8 @@ const INIT_EXCHANGE_FORM_STATE = {
   txRaw: "",
   txApprove: false,
   confirmApprove: false,
+  isConfirming : false,
+  isApproving : false,
   //showConfirmApprove: false,
   confirmColdWallet: false,  
   errors: {   
@@ -79,6 +81,7 @@ const INIT_TRANSFER_FORM_STATE = {
   bcError: "",
   txHash: "",
   //txRaw: "",
+  isConfirming : false,
   confirmColdWallet: false,
   errors: {
     destAddress:"",
@@ -99,9 +102,11 @@ const ETH = {
   address: ETHER_ADDRESS
 };
 
+const KOVAN_ETH_URL = "https://kovan.etherscan.io/"
+
 export default {
   ERC20, KYBER_NETWORK, EPSILON, ETHER_ADDRESS, ETH,
   NETWORK_ADDRESS, RESERVES, KYBER_WALLET,
   KYBER_WALLET_DATA, INIT_EXCHANGE_FORM_STATE, INIT_TRANSFER_FORM_STATE,
-  RATE_EPSILON, TRADE_TOPIC,
+  RATE_EPSILON, TRADE_TOPIC,KOVAN_ETH_URL
 }

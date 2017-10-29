@@ -1,7 +1,6 @@
 //import Account from "../services/account"
 //import Token from "../services/token"
 import {REHYDRATE} from 'redux-persist/constants'
-//import IMPORT from "../constants/importAccountActions"
 import constants from "../services/constants"
 import { calculateDest} from "../utils/converter"
 
@@ -138,12 +137,14 @@ const transfer = (state=initState, action) => {
     case "TRANSFER.TX_BROADCAST_REJECTED": {
       newState.broadcasting = false
       newState.bcError = action.payload.message
+      newState.isConfirming = false
       return newState
     }
     case "TRANSFER.FINISH_TRANSACTION":{
       newState.passphrase = false
       newState.confirmColdWallet = false
       newState.amount = 0
+      newState.isConfirming = false
       newState.txRaw = ""
       newState.step = 2
       return newState   
@@ -155,6 +156,10 @@ const transfer = (state=initState, action) => {
     // }
     case "TRANSFER.THROW_ERROR_SIGN_TRANSACTION":{
       newState.errors.signTransaction = action.payload
+      return newState
+    }
+    case "TRANSFER.PROCESS_TRANSFER":{
+      newState.isConfirming = true
       return newState
     }
   }

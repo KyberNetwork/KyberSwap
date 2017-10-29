@@ -78,6 +78,7 @@ export default class PostTransfer extends React.Component {
       <ConfirmTransferModal recap={this.createRecap()}
                     onCancel={this.closeModal}
                     onExchange = {this.processTx} 
+                    isConfirming = {this.props.form.isConfirming}
                     type = "transfer"
                     />
       
