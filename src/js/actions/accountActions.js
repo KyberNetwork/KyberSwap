@@ -22,7 +22,7 @@ export function importLoading(){
 
 export function importNewAccount(address, type, keystring, ethereum) {
     return {
-        type: "IMPORT.IMPORT_NEW_ACCOUNT_PENDING",
+        type: "ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING",
         payload: {address, type, keystring, ethereum}
     }
 }
