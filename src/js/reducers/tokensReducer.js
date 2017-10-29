@@ -1,7 +1,6 @@
 import {REHYDRATE} from 'redux-persist/constants'
 import Rate from "../services/rate"
 import BigNumber from "bignumber.js"
-import GLOBAL from "../constants/globalActions"
 import SUPPORT_TOKENS from "../services/supported_tokens"
 
 const initState = function(){
@@ -37,7 +36,7 @@ const token = (state=initState, action) => {
             return state;
         }            
     }
-    case GLOBAL.RATE_UPDATED_FULFILLED: {
+    case "GLOBAL.RATE_UPDATED_FULFILLED": {
       var tokens = {...state.tokens}
       var token = action.payload
       tokens[token.symbol] = token

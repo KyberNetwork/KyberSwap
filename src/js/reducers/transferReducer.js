@@ -1,7 +1,6 @@
 //import Account from "../services/account"
 //import Token from "../services/token"
 import {REHYDRATE} from 'redux-persist/constants'
-//import IMPORT from "../constants/importAccountActions"
 import constants from "../services/constants"
 import { calculateDest} from "../utils/converter"
 

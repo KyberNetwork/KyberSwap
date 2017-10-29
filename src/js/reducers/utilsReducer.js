@@ -1,11 +1,10 @@
-import UTIL from "../constants/utilActions"
 
 const initState = {
 }
 
 const utils = (state=initState, action) => {
   switch (action.type) {
-    case UTIL.MODAL_OPEN: {
+    case "UTIL.MODAL_OPEN": {
       var newState = {...state}
       if(!newState[action.payload]){
         newState[action.payload] = {}
@@ -13,7 +12,7 @@ const utils = (state=initState, action) => {
       newState[action.payload].modalIsOpen = true
       return newState
     }
-    case UTIL.MODAL_CLOSE: {
+    case "UTIL.MODAL_CLOSE": {
       var newState = {...state}
       if(!newState[action.payload]){
         newState[action.payload] = {}
@@ -21,7 +20,7 @@ const utils = (state=initState, action) => {
       newState[action.payload].modalIsOpen = false
       return newState
     }
-    case UTIL.SET_DATA_MODAL:{
+    case "UTIL.SET_DATA_MODAL":{
       var newState = {...state}
       if(!newState[action.payload]){
         newState[action.payload.modalID] = {}
@@ -29,27 +28,27 @@ const utils = (state=initState, action) => {
       newState[action.payload.modalID].data = action.payload.data
       return newState 
     }
-    case UTIL.SHOW_RATE:{
+    case "UTIL.SHOW_RATE":{
       var newState = {...state}      
       newState.rate = true
       return newState 
     }
-    case UTIL.HIDE_RATE:{
+    case "UTIL.HIDE_RATE":{
       var newState = {...state}
       newState.rate = false
       return newState 
     }
-    case UTIL.SHOW_CONTROL:{
+    case "UTIL.SHOW_CONTROL":{
       var newState = {...state}
       newState.showControl = true
       return newState 
     }
-    case UTIL.HIDE_CONTROL:{
+    case "UTIL.HIDE_CONTROL":{
       var newState = {...state}
       newState.showControl = false
       return newState 
     }
-    case UTIL.OPEN_TOKEN_MODAL:{
+    case "UTIL.OPEN_TOKEN_MODAL":{
       var newState = {...state}
       newState.tokenModal = {
         open: true,
@@ -58,14 +57,14 @@ const utils = (state=initState, action) => {
       }
       return newState 
     }
-    case UTIL.HIDE_TOKEN_MODAL:{
+    case "UTIL.HIDE_TOKEN_MODAL":{
       var newState = {...state}
       newState.tokenModal = {
         open: false
       }
       return newState
     }
-    case 'UTIL.TOGGLE_NOTIFY': {
+    case "UTIL.TOGGLE_NOTIFY": {
       var newState = {...state}
       newState.showNotify = !newState.showNotify
       return newState

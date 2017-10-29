@@ -2,7 +2,6 @@ import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effect
 import * as actions from '../actions/accountActions'
 import { goToRoute } from "../actions/globalActions"
 
-import ACC_ACTION from "../constants/accActions"
 import * as service from "../services/accounts"
 
 // function* createNewAccount(action) {
@@ -33,8 +32,6 @@ function* importNewAccount(action){
 }
 
 export function* watchAccount() {
-  // yield takeEvery(ACC_ACTION.NEW_ACCOUNT_CREATED_PENDING, createNewAccount)
-  // yield takeEvery(ACC_ACTION.NEW_ACCOUNT_ADDED_PENDING, addNewAccount)
-  yield takeEvery(ACC_ACTION.UPDATE_ACCOUNT_PENDING, updateAccount)
-  yield takeEvery("IMPORT.IMPORT_NEW_ACCOUNT_PENDING", importNewAccount)
+  yield takeEvery("ACCOUNT.UPDATE_ACCOUNT_PENDING", updateAccount)
+  yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING", importNewAccount)
 }

@@ -33,7 +33,6 @@ export function connectLedger() {
 }
 
 export function getLedgerPublicKey(eth,path = ledgerPath) {
-    console.log(path)
     return new Promise((resolve, reject) => {
         eth.getAddress_async(path, false, true)
             .then((result) => {

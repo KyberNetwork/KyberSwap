@@ -6,7 +6,6 @@ import { watchExchange } from './exchangeActions';
 import { watchTransfer } from './transferActions';
 //import { watchPayment } from './joinPaymentFormActions';
 import { watchTx } from './txActions';
-import { watchImportAccount } from './importAccountActions';
 
 function* watchAndLog() {
   yield takeEvery('*', function* logger(action) {
@@ -27,6 +26,5 @@ export default function* root() {
    	//fork(watchPayment), 
    	fork(watchTx), 
     fork(watchAndLog), 
-    fork(watchImportAccount)
   ])
 }
