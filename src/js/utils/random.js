@@ -13,3 +13,48 @@ export function randomToken(numberToken, total){
     return result;
   }
 }
+
+// export function randomForExchange(tokens){
+//   /// random first element with balance
+//   var result = new Array(2);
+//   var tokenWithBalance = []
+//   Object.keys(tokens).map((hash) => {
+//     if(tokens[hash].balance && tokens[hash].balance.greaterThan(0)){
+//       tokenWithBalance.push(tokens[hash]);
+//     }
+//   });
+//   if(tokenWithBalance.length){
+//     result[0] = _.sample(tokenWithBalance);
+//     delete tokens[result[0].symbol];
+//   }
+//   var freeToken = [];
+//   Object.keys(tokens).map((hash) => {
+//     freeToken.push(tokens[hash]);
+//   });
+//   result[1] = _.sample(freeToken);
+//   return result;
+// }
+
+export function randomForExchange(tokens){
+  /// random first element with balance
+  var result = new Array(2);
+  var tokenWithBalance = []
+  tokens.map((token) => {
+    if(token.balance && token.balance.greaterThan(0)){
+      tokenWithBalance.push(token);
+    }
+  });
+  if(tokenWithBalance.length){
+    result[0] = _.sample(tokenWithBalance);
+    let index = tokens.map(x => { return x.symbol}).indexOf(result[0].symbol)
+    tokens.splice(index, 1);
+  }
+
+  result[1] = _.sample(tokens);
+  return result;
+
+}
+
+export function randomForTransfer(token){
+
+}
