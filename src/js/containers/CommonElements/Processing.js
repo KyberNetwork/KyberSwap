@@ -15,7 +15,9 @@ export default class Processing extends React.Component {
       <ProcessingModal />
     )
     return (
-      <ProcessingModal />
+      <div>
+        {this.props.account && this.props.account.loading ? processingModal : ''}
+      </div>
     )  
   }
 }
