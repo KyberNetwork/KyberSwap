@@ -9,7 +9,7 @@ import * as converters from "../../utils/converter"
 
 import * as transferActions from "../../actions/transferActions"
 
-import {PassphraseModal, ConfirmTransferModal} from "../../components/Transaction"
+import { PassphraseModal, ConfirmTransferModal } from "../../components/Transaction"
 
 import { Modal } from "../../components/CommonElement"
 
@@ -49,39 +49,40 @@ export default class PostTransfer extends React.Component {
   validateTransfer = () => {
     //check dest address is an ethereum address
     //console.log(validators.verifyAccount(this.props.form.destAddress))
+    var check = true
     if (validators.verifyAccount(this.props.form.destAddress) !== null) {
       this.props.dispatch(transferActions.throwErrorDestAddress("This is not an address"))
-      return false
+      check = false
     }
     if (isNaN(this.props.form.amount) || !this.props.form.amount || this.props.form.amount == '') {
-      this.props.dispatch(transferActions.thowErrorAmount("amount must be a number"))
-      return false
+      this.props.dispatch(transferActions.thowErrorAmount("Amount must be a number"))
+      check = false
     }
     else if (parseFloat(this.props.form.amount) > parseFloat(converters.toT(this.props.form.balance, 8))) {
-      this.props.dispatch(transferActions.thowErrorAmount("amount is too high"))
-      return false
+      this.props.dispatch(transferActions.thowErrorAmount("Amount is too high"))
+      check = false
     }
-    return true
+    return check
   }
 
   content = () => {
     return (
       <PassphraseModal recap={this.createRecap()}
-          onChange = {this.changePassword}
-          onClick = {this.processTx}
-          onCancel = {this.closeModal}
-          passwordError={this.props.form.errors.passwordError} />
+        onChange={this.changePassword}
+        onClick={this.processTx}
+        onCancel={this.closeModal}
+        passwordError={this.props.form.errors.passwordError || this.props.form.bcError} />
     )
   }
   contentConfirm = () => {
     return (
       <ConfirmTransferModal recap={this.createRecap()}
-                    onCancel={this.closeModal}
-                    onExchange = {this.processTx} 
-                    isConfirming = {this.props.form.isConfirming}
-                    type = "transfer"
-                    />
-      
+        onCancel={this.closeModal}
+        onExchange={this.processTx}
+        isConfirming={this.props.form.isConfirming}
+        type="transfer"
+      />
+
     )
   }
   // broacastTx = () => {
@@ -99,7 +100,7 @@ export default class PostTransfer extends React.Component {
     var tokenSymbol = form.tokenSymbol;
     // return `transfer ${form.amount.toString().slice(0, 7)}${form.amount.toString().length > 7 ? '...' : ''} ${form.tokenSymbol} to ${form.destAddress.slice(0, 7)}...${form.destAddress.slice(-5)}`
     return (
-      <p>You are about to transfer<br/><strong>{amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}</strong>&nbsp;to&nbsp;<strong>{destAddress.slice(0, 7)}...{destAddress.slice(-5)}</strong></p>
+      <p>You are about to transfer<br /><strong>{amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}</strong>&nbsp;to&nbsp;<strong>{destAddress.slice(0, 7)}...{destAddress.slice(-5)}</strong></p>
     )
   }
 
@@ -214,8 +215,10 @@ export default class PostTransfer extends React.Component {
   render() {
     var modalPassphrase = this.props.account.type === "keystore" ? (
       <Modal
-        className={{base: 'reveal tiny',
-            afterOpen: 'reveal tiny'}}
+        className={{
+          base: 'reveal tiny',
+          afterOpen: 'reveal tiny'
+        }}
         isOpen={this.props.form.passphrase}
         onRequestClose={this.closeModal}
         contentLabel="password modal"
@@ -223,8 +226,10 @@ export default class PostTransfer extends React.Component {
         size="tiny"
       />
     ) : <Modal
-        className={{base: 'reveal tiny',
-            afterOpen: 'reveal tiny'}}
+        className={{
+          base: 'reveal tiny',
+          afterOpen: 'reveal tiny'
+        }}
         isOpen={this.props.form.confirmColdWallet}
         onRequestClose={this.closeModal}
         contentLabel="confirm modal"
