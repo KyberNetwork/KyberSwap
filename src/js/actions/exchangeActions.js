@@ -75,7 +75,7 @@ export function changeSourceAmout(amount) {
 	}
 }
 
-export function setRandomSelectedToken(random){
+export function setRandomExchangeSelectedToken(random){
 	return {
 		type: "EXCHANGE.SET_RANDOM_SELECTED_TOKEN",
 		payload: random

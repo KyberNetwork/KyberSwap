@@ -32,6 +32,13 @@ export function specifyGas(value) {
 	}
 }
 
+export function setRandomTransferSelectedToken(random){
+	return {
+		type: "TRANSFER.SET_RANDOM_SELECTED_TOKEN",
+		payload: random
+	}
+}
+
 export function specifyGasPrice(value) {
 	return {
 		type: "TRANSFER_SPECIFY_GAS_PRICE",

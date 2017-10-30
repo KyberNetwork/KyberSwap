@@ -30,13 +30,20 @@ const transfer = (state=initState, action) => {
         newState.selected = transfer.selected;
         newState.token = transfer.token
         newState.tokenSymbol = transfer.tokenSymbol
-      } else {
-        var randomSelectToken = randomToken(1, Object.keys(supported_tokens).length);
-        newState.token = Object.values(supported_tokens)[randomSelectToken].address
-        newState.tokenSymbol = Object.values(supported_tokens)[randomSelectToken].symbol
       }
+      //  else {
+      //   var randomSelectToken = randomToken(1, Object.keys(supported_tokens).length);
+      //   newState.token = Object.values(supported_tokens)[randomSelectToken].address
+      //   newState.tokenSymbol = Object.values(supported_tokens)[randomSelectToken].symbol
+      // }
       return newState;
     }
+    case "TRANSFER.SET_RANDOM_SELECTED_TOKEN":
+      var transfer = {...state}
+      var random = action.payload
+      transfer.token = random[0].address;
+      transfer.tokenSymbol = random[0].symbol;
+      return {...transfer}
     case "TRANSFER.MAKE_NEW_TRANSFER": 
       var transfer = {...state};
       newState = initState;
