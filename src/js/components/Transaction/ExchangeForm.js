@@ -40,10 +40,6 @@ const ExchangeForm = (props) => {
                     </div>
                   </label>
                 </div>
-                <span class="error-text">{props.errors.selectSameToken}</span>
-                <span class="error-text">{props.errors.selectTokenToken}</span>
-                <span class="error-text">{props.errors.sourceAmount}</span>
-                <span class="error-text">{props.errors.tokenSource}</span>
               </div>
               <div class="row">
                 {props.exchangeRate}
