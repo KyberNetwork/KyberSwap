@@ -75,13 +75,6 @@ export function changeSourceAmout(amount) {
 	}
 }
 
-export function setRandomSelectedToken(random){
-	return {
-		type: "EXCHANGE.SET_RANDOM_SELECTED_TOKEN",
-		payload: random
-	}
-}
-
 export function updateRateExchange(rate) {
 	//console.log(rate)
 	if (rate) {

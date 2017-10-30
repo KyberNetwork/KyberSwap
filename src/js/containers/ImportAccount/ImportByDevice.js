@@ -162,7 +162,7 @@ export default class ImportByDevice extends React.Component {
 
 			};
 
-		this.props.dispatch(importNewAccount(data.address, data.type, data.path, this.props.ethereumNode))
+		this.props.dispatch(importNewAccount(data.address, data.type, data.path))
 		this.closeModal()
 	}
 	goToExchange = () => {
