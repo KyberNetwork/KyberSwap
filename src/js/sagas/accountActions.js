@@ -8,17 +8,7 @@ import * as service from "../services/accounts"
 import SupportedTokens from "../services/supported_tokens"
 import constants from "../services/constants"
 import { Rate, updateAllRatePromise } from "../services/rate"
-// function* createNewAccount(action) {
-//   const {address, keystring, name, desc} = action.payload
-//   const account = yield call(service.newAccountInstance, address, keystring, name, desc)
-//   yield put(actions.createAccountComplete(account))
-// }
 
-// function* addNewAccount(action) {
-//   const {address, keystring, name, desc} = action.payload
-//   const account = yield call(service.newAccountInstance, address, keystring, name, desc)
-//   yield put(actions.addAccountComplete(account))
-// }
 
 function* updateAccount(action) {
   const {account, ethereum} = action.payload
@@ -40,6 +30,9 @@ function* importNewAccount(action){
   var randomToken = randomForExchange(rates[0]);
   if(!randomToken[0]){
     //todo dispatch action waring no balanc
+    yield put(actions.closeImportLoading());
+    yield put(actions.throwError('Your address has no balance. Please import another address.'))
+    return;
   } else {
     yield put.sync(setRandomSelectedToken(randomToken))
   }
