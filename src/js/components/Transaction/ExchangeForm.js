@@ -26,7 +26,7 @@ const ExchangeForm = (props) => {
                     {props.errors.sourceAmount !=="" && 
                       <span class="error-text">{props.errors.sourceAmount}</span>
                     }
-                    <div class="address-balance"><span class="note">Address Balance</span><a class="value">{props.balance} {props.sourceTokenSymbol}</a></div>
+                    <div class="address-balance"><span class="note">Address Balance</span><a class="value" onClick={props.setAmount}>{props.balance} {props.sourceTokenSymbol}</a></div>
                   </label>
                 </div>
                 <div class="column medium-6">

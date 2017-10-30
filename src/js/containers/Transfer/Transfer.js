@@ -67,6 +67,22 @@ export default class Transfer extends React.Component {
     this.props.dispatch(specifyGasPriceTransfer(value))
   }
 
+  setAmount = () => {
+    var tokenSymbol = this.props.transfer.tokenSymbol
+    var token = this.props.tokens[tokenSymbol]
+    if (token) {
+      var balanceBig = token.balance
+      if (tokenSymbol === "ETH") {
+        if (!balanceBig.greaterThanOrEqualTo(Math.pow(10, 15))) {
+          return false
+        }
+        balanceBig = balanceBig.minus(Math.pow(10, 15))
+      }
+      var balance = toT(balanceBig, 8)
+      this.props.dispatch(specifyAmountTransfer(balance))
+    }
+  }
+
   render() {
     if (this.props.account.isStoreReady) {
       if (!!!this.props.account.account.address) {
@@ -167,6 +183,7 @@ export default class Transfer extends React.Component {
                     input = {input}
                     errors = {errors}
                     balance = {balance}
+                    setAmount={this.setAmount}
                     />
     ) 
   }
