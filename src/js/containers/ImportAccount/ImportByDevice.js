@@ -282,7 +282,7 @@ export default class ImportByDevice extends React.Component {
 										<div class="name">{dPath.desc}</div>
 										<div class="address-path-input">
 											<input type="text" name="customPath" defaultValue={dPath.defaultP} />
-											<a class="submit pulse animated infinite" onClick={() => this.choosePath()} style={{ display: 'block' }}></a>
+											<a class="submit pulse animated infinite" style={{ display: 'block' }}></a>
 										</div>
 									</div>
 								)
