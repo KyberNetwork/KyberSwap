@@ -35,7 +35,8 @@ const TransferForm = (props) => {
                       }
                     </div>
                     <div class="address-balance clearfix"><span class="note">Address Balance</span><a class="value" >{props.balance} {props.tokenSymbol}</a></div>
-                  </label>                  
+                  </label>
+                  <span class="error-text">{props.errors.amountTransfer}</span>
                 </div>
               </div>
             </form>

@@ -36,7 +36,7 @@ export function importNewAccountComplete(account){
 
 export function closeImportLoading(){
     return{
-        type: "IMPORT.CLOSE_LOADING_IMPORT"
+        type: "ACCOUNT.CLOSE_LOADING_IMPORT"
     }
 }
 

@@ -12,19 +12,20 @@ const exchange = (state=initState, action) => {
   var newState = {...state}
   switch (action.type) {
     case REHYDRATE: {
-      var exchange = action.payload.exchange; 
-      var tokens = action.payload.tokens;
-      if(!!!exchange){
-        return newState
-      }
-      newState = exchange
-      if(exchange && exchange.selected){
-        newState.selected = exchange.selected;
-        newState.sourceToken = exchange.sourceToken
-        newState.sourceTokenSymbol = exchange.sourceTokenSymbol
-        newState.destToken = exchange.destToken
-        newState.destTokenSymbol = exchange.destTokenSymbol
-      } 
+      newState = initState;
+      // var exchange = action.payload.exchange; 
+      // var tokens = action.payload.tokens;
+      // if(!!!exchange){
+      //   return newState
+      // }
+      // newState = exchange
+      // if(exchange && exchange.selected){
+      //   newState.selected = exchange.selected;
+      //   newState.sourceToken = exchange.sourceToken
+      //   newState.sourceTokenSymbol = exchange.sourceTokenSymbol
+      //   newState.destToken = exchange.destToken
+      //   newState.destTokenSymbol = exchange.destTokenSymbol
+      // } 
       // else {
       //   var randomSelectToken = randomToken(2, Object.keys(SUPPORT_TOKENS).length);
       //   newState.sourceToken = Object.values(SUPPORT_TOKENS)[randomSelectToken[0]].address
@@ -32,8 +33,7 @@ const exchange = (state=initState, action) => {
       //   newState.destToken = Object.values(SUPPORT_TOKENS)[randomSelectToken[1]].address
       //   newState.destTokenSymbol = Object.values(SUPPORT_TOKENS)[randomSelectToken[1]].symbol
       // }
-      newState.step = 1;
-      return newState;
+      return {...newState};
     }
     case "EXCHANGE.SET_RANDOM_SELECTED_TOKEN":
       var exchange = {...state}
@@ -43,23 +43,14 @@ const exchange = (state=initState, action) => {
       exchange.destToken = random[1].address;
       exchange.destTokenSymbol = random[1].symbol;
       return {...exchange}
-      // return newState;
     case "EXCHANGE.MAKE_NEW_EXCHANGE":
       var exchange = {...state};
       newState = initState;
-      if(exchange && exchange.selected){
-        newState.selected = exchange.selected;
-        newState.sourceToken = exchange.sourceToken
-        newState.sourceTokenSymbol = exchange.sourceTokenSymbol
-        newState.destToken = exchange.destToken
-        newState.destTokenSymbol = exchange.destTokenSymbol
-      } else {
-        var randomSelectToken = randomToken(2, Object.keys(SUPPORT_TOKENS).length);
-        newState.sourceToken = Object.values(SUPPORT_TOKENS)[randomSelectToken[0]].address
-        newState.sourceTokenSymbol = Object.values(SUPPORT_TOKENS)[randomSelectToken[0]].symbol
-        newState.destToken = Object.values(SUPPORT_TOKENS)[randomSelectToken[1]].address
-        newState.destTokenSymbol = Object.values(SUPPORT_TOKENS)[randomSelectToken[1]].symbol
-      }
+      newState.selected = true;
+      newState.sourceToken = exchange.sourceToken
+      newState.sourceTokenSymbol = exchange.sourceTokenSymbol
+      newState.destToken = exchange.destToken
+      newState.destTokenSymbol = exchange.destTokenSymbol
       return newState;
   	case "EXCHANGE.SELECT_TOKEN":{
       if(action.payload.type === "source"){
