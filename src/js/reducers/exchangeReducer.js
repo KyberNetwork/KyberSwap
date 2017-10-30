@@ -219,9 +219,20 @@ const exchange = (state=initState, action) => {
       newState.isApproving = true
       return newState
     }
-    case "EXCHANGE.PROCESS_EXCHANGE_AFTER_CONFIRM":
-    newState.isConfirming = true
-    return newState
+    case "EXCHANGE.PROCESS_EXCHANGE_AFTER_CONFIRM":{
+      newState.isConfirming = true
+      return newState
+    }    
+    case "TX.TX_ADDED": {      
+      newState.tempTx = action.payload
+      return newState
+    }
+    case "TX.UPDATE_TX_FULFILLED": {
+      if (newState.tempTx.hash === action.payload.hash){
+        newState.tempTx = action.payload
+      }      
+      return newState
+    }
   }
   return state
 }

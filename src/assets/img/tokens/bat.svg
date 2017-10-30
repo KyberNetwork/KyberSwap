@@ -1,0 +1,32 @@
+<svg width="28" height="28" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>bat</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(-709 35)">
+<g id="bat">
+<g id="bg">
+<use xlink:href="#path0_fill" transform="translate(709 -35)" fill="#E3D2DB"/>
+</g>
+<g id="bat">
+<g id="Vector">
+<use xlink:href="#path1_fill" transform="translate(714 -20.3261)" fill="#662D91"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path2_fill" transform="translate(723.043 -31)" fill="#9E1F63"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path3_fill" transform="translate(714 -31)" fill="#FF5000"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path4_fill" transform="translate(719.327 -24.5249)" fill="#E3D2DB"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" d="M 28 14C 28 21.732 21.732 28 14 28C 6.26801 28 0 21.732 0 14C 0 6.26801 6.26801 0 14 0C 21.732 0 28 6.26801 28 14Z"/>
+<path id="path1_fill" d="M 18 5.30411L 9.04311 2.72688e-07L 0 5.32607L 18 5.30411Z"/>
+<path id="path2_fill" d="M 0.00287987 0L -1.97754e-07 10.6739L 8.95689 15.978L 0.00287987 0Z"/>
+<path id="path3_fill" d="M 0 16L 9.04311 10.6739L 9.04599 0L 0 16Z"/>
+<path id="path4_fill" d="M 3.69765 0L 0 6.38744L 7.41186 6.38744L 3.69765 0Z"/>
+</defs>
+</svg>

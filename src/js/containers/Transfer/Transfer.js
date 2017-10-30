@@ -155,6 +155,7 @@ export default class Transfer extends React.Component {
     var trasactionLoadingScreen = (
       <TransactionLoading tx={this.props.transfer.txHash} 
                           makeNewTransaction={this.makeNewTransfer} 
+                          tempTx = {this.props.transfer.tempTx}
                           type="transfer"
                           balanceInfo = {balanceInfo}
                           />

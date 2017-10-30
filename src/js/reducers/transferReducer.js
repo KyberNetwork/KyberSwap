@@ -164,6 +164,16 @@ const transfer = (state=initState, action) => {
       newState.isConfirming = true
       return newState
     }
+    case "TX.TX_ADDED": {      
+      newState.tempTx = action.payload
+      return newState
+    }
+    case "TX.UPDATE_TX_FULFILLED": {
+      if (newState.tempTx.hash === action.payload.hash){
+        newState.tempTx = action.payload
+      }      
+      return newState
+    }
   }
   return state
 }

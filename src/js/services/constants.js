@@ -47,6 +47,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   bcError: "",
   txHash: "",
   txRaw: "",
+  tempTx: {},
   txApprove: false,
   confirmApprove: false,
   isConfirming : false,
@@ -81,6 +82,7 @@ const INIT_TRANSFER_FORM_STATE = {
   bcError: "",
   txHash: "",
   //txRaw: "",
+  tempTx: {},
   isConfirming : false,
   confirmColdWallet: false,
   errors: {

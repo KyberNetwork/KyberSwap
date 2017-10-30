@@ -229,6 +229,7 @@ export default class Exchange extends React.Component {
     )
     var trasactionLoadingScreen = (
       <TransactionLoading tx={this.props.exchange.txHash}
+        tempTx = {this.props.exchange.tempTx}
         makeNewTransaction={this.makeNewExchange}
         type="exchange"
         balanceInfo={balanceInfo}
