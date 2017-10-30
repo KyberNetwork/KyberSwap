@@ -26,10 +26,24 @@ export function updateRate(ethereum, source, reserve, ownerAddr) {
   }
 }
 
+export function updateAllRate(ethereum, tokens, reserve, ownerAddr){
+  return {
+    type: 'GLOBAL.RATE_UPDATE_ALL_PENDING',
+    payload: {ethereum, tokens, reserve, ownerAddr}
+  }
+}
+
 export function updateRateComplete(rate) {
   return {
     type: "GLOBAL.RATE_UPDATED_FULFILLED",
     payload: rate
+  }
+}
+
+export function updateAllRateComplete(rates){
+  return {
+    type: 'GLOBAL.ALL_RATE_UPDATED_FULFILLED',
+    payload: rates
   }
 }
 
