@@ -1,7 +1,8 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/accountActions'
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
-import { randomToken } from "../actions/exchangeActions"
+import { randomToken, setRandomSelectedToken } from "../actions/exchangeActions"
+import { randomForExchange } from "../utils/random"
 
 import ACC_ACTION from "../constants/accActions"
 import * as service from "../services/accounts"
@@ -36,22 +37,17 @@ function* importNewAccount(action){
     var reserve = constants.RESERVES[k];
     rates[k] = yield call(updateAllRatePromise, ethereum, SupportedTokens, constants.RESERVES[k], account.address)
   }
-  yield put.sync(updateAllRateComplete(rates[0]));
-  // yield put(randomToken());
+  var randomToken = randomForExchange(rates[0]);
+  if(!randomToken[0]){
+    //todo dispatch action waring no balanc
+  } else {
+    yield put.sync(setRandomSelectedToken(randomToken))
+  }
+  //todo set random token for exchange
+  // yield put.sync(updateAllRateComplete(rates[0]));
   yield put(actions.closeImportLoading());
   yield put(actions.importNewAccountComplete(account));
   yield put(goToRoute('/exchange'));
-
-  //// put action fetch all data
-  // for (var k = 0; k < constants.RESERVES.length; k++) {
-  //   var reserve = constants.RESERVES[k];
-  //   yield put(updateAllRate(ethereum, SupportedTokens, reserve, account.address));
-  // }
-  // yield put(actions.closeImportLoading())
-  // yield put(randomToken());
-  // yield put(actions.importNewAccountComplete(account))
-  // yield put(goToRoute('/exchange'));
-  
 }
 
 export function* watchAccount() {

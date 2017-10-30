@@ -28,17 +28,17 @@ import { randomForExchange } from "../../utils/random"
 
 export default class Exchange extends React.Component {
 
-  componentDidMount(){
-    if(this.props.exchange.selected) return;
+  // componentDidMount(){
+  //   if(this.props.exchange.selected) return;
 
-    var randomToken = randomForExchange(this.props.tokens);
-    if(!randomToken[0]){
-      //todo dispatch action waring no balance
-    } else {
-      this.props.dispatch(exchangeActions.setRandomSelectedToken(randomToken))
-    }
-    console.log(randomToken);
-  }
+  //   var randomToken = randomForExchange(this.props.tokens);
+  //   if(!randomToken[0]){
+  //     //todo dispatch action waring no balance
+  //   } else {
+  //     this.props.dispatch(exchangeActions.setRandomSelectedToken(randomToken))
+  //   }
+  //   console.log(randomToken);
+  // }
 
   openSourceToken = (e) => {
     this.props.dispatch(openTokenModal("source", this.props.exchange.sourceTokenSymbol))
