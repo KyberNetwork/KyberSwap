@@ -22,7 +22,10 @@ import { addressFromKey } from "../../utils/keys"
 //const history = createHashHistory()
 
 @connect((store) => {
-  return {...store.account}
+  return {
+    account: store.account,
+    ethereum: store.connection.ethereum
+  }
 })
 
 export default class ImportKeystore extends React.Component {
@@ -40,25 +43,25 @@ export default class ImportKeystore extends React.Component {
 
   // importAccount = (event) => {
   //   event.preventDefault()
-  //   var keystring = this.lowerCaseKey(this.props.keystring)
+  //   var keystring = this.lowerCaseKey(this.props.account.keystring)
   //   var errors = {}
-  //   errors["addressError"] = verifyAccount(this.props.address)
+  //   errors["addressError"] = verifyAccount(this.props.account.address)
   //   errors["keyError"] = verifyKey(keystring)
   //   if (anyErrors(errors)) {
   //     console.log(errors)
   //     this.props.dispatch(throwError("Cannot import invalid keystore file"))
   //   } else {
   //     this.props.dispatch(addAccount(
-  //     this.props.address, keystring,
-  //     this.props.name, this.props.desc))
+  //     this.props.account.address, keystring,
+  //     this.props.account.name, this.props.account.desc))
   //     this.props.dispatch(emptyForm())
 
-  //     this.props.dispatch(closeModal(this.props.modalID))
+  //     this.props.dispatch(closeModal(this.props.account.modalID))
   //   }
   // }
   goToExchange = () =>{
     // window.location.href = "/exchange"
-    // this.props.router.push('/exchange')
+    // this.props.account.router.push('/exchange')
     this.props.dispatch(push('/exchange'));
   }
 
@@ -78,7 +81,7 @@ export default class ImportKeystore extends React.Component {
         }else{          
           //console.log("keystring: ", keystring)
           var address = addressFromKey(keystring)
-          this.props.dispatch(importNewAccount(address, "keystore", keystring))
+          this.props.dispatch(importNewAccount(address, "keystore", keystring, this.props.ethereum))
           // this.goToExchange()   
           // setTimeout(() => {this.goToExchange()}, 3000)        
 
@@ -93,7 +96,7 @@ export default class ImportKeystore extends React.Component {
   render() {
     return (
       <DropFile 
-            error ={this.props.error}
+            error ={this.props.account.error}
             onDrop = {this.onDrop}
             />
     )

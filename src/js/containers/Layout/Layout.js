@@ -13,6 +13,7 @@ import {Header} from "../../containers/Header"
 
 import {ImportAccount} from "../ImportAccount"
 
+import { Processing } from "../../containers/CommonElements/"
 import history from "../../history"
 
 
@@ -38,7 +39,9 @@ export default class Layout extends React.Component {
               <Route exact path="/info" component={InfoKyber}/>                                          
               <Route exact path="/exchange" component={Exchange}/>
               <Route exact path="/transfer" component={Transfer}/>
+              <Processing />
           </section>
+          {}
         </div>
       )
    
