@@ -33,9 +33,9 @@ persistStore(store, {
   blacklist: [
     'connection',
     'utils',
-    // 'account',
-    // 'exchange',
-    // 'transfer',
+   //  'account',
+     'exchange',
+     'transfer',
     // 'txs'
   ]
 })

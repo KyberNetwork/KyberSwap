@@ -6,8 +6,41 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
 
 @import 'elements';
 @import 'broadcast';
+@import 'modals';
+@import 'addresses';
 @import 'tokens';
 @import 'slider';
+
+#waiting {
+  background-color: rgba($dark-gray, .5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10000;
+  .caption {
+    box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+    color: $medium-gray;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    background-color: white;
+    padding: 60px 30px 30px 30px;
+    max-width: 300px;
+    border-radius: $global-radius;
+    background-image: url(../img/waiting.svg);
+    background-size: 32px 32px;
+    background-repeat: no-repeat;
+    background-position: center top 30px;
+  }
+}
 
 #header {
   background-color: white;
@@ -264,8 +297,7 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
     display: none;
   }
   .hide-on-choose-token-pair {
-    overflow: hidden;
-    transition: height .4s ease-in-out;
+    display: block;
   }
   &.choose-token-pair {
     .title {
@@ -290,7 +322,7 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
       }
     }
     .hide-on-choose-token-pair {
-      height: 0;
+      display: none;
     }
     .show-on-choose-token-pair {
       display: block;

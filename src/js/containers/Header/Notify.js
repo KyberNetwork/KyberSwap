@@ -3,6 +3,8 @@ import { connect } from "react-redux"
 import { NotifyView } from "../../components/Header"
 import { clearTxs } from "../../actions/txActions"
 import { toggleNotify } from '../../actions/utilActions'
+import constants from "../../services/constants"
+
 @connect((store) => {
     return {txs: store.txs,
             utils: store.utils}
@@ -22,7 +24,7 @@ export default class Notify extends React.Component {
     }
       
     hashDetailLink(hash){
-        const url = 'https://kovan.etherscan.io/tx/'
+        const url = constants.KOVAN_ETH_URL + 'tx/'
         return url + hash
     }
 
@@ -53,7 +55,7 @@ export default class Notify extends React.Component {
     }
 
     render() {
-        const hashLink = 'https://kovan.etherscan.io/tx/'
+        const hashLink = constants.KOVAN_ETH_URL + 'tx/'
         const transactions = Object.keys(this.props.txs).map((hash) => {
             var classTx = "pending"
             switch (this.props.txs[hash].status){

@@ -8,7 +8,6 @@ import * as converter from "../utils/converter"
 import * as ethUtil from 'ethereumjs-util'
 import * as servicesExchange from "../services/exchange"
 import Tx from "../services/tx"
-//import EXCHANGE from "../constants/exchangeFormActions"
 
 function* broadCastTx(action) {
   const { ethereum, tx, account, data } = action.payload

@@ -838,8 +838,8 @@ $tooltip-color: $white;
 $tooltip-padding: 0.75rem;
 $tooltip-max-width: 20rem;
 $tooltip-font-size: rem-calc(12px);
-$tooltip-pip-width: 0.5rem;
-$tooltip-pip-height: $tooltip-pip-width * 0.866;
+$tooltip-pip-width: 6px;
+$tooltip-pip-height: $tooltip-pip-width * 7px;
 $tooltip-radius: $global-radius;
 
 // 55. Top Bar

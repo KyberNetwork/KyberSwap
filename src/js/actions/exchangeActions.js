@@ -29,7 +29,7 @@ export function thowErrorSourceAmount(message) {
 
 export function errorSelectToken(message) {
 	return {
-		type: "THOW_ERROR_SELECT_TOKEN",
+		type: "EXCHANGE.THOW_ERROR_SELECT_TOKEN",
 		payload: message
 	}
 }

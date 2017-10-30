@@ -5,11 +5,11 @@ import ledgerEth from './ledger/ledger-eth';
 const defaultDPath = "m/44'/60'/0'/0";
 const ledgerPath = "m/44'/60'/0'";
 
-export function getTrezorPublicKey() {
+export function getTrezorPublicKey(path = defaultDPath) {
     return new Promise((resolve, reject) => {
-        TrezorConnect.getXPubKey(defaultDPath, (result) => {
+        TrezorConnect.getXPubKey(path, (result) => {
             if (result.success) {
-                result.dPath = defaultDPath;
+                result.dPath = path;
                 resolve(result);
             } else {
                 reject(result.error);
@@ -32,11 +32,11 @@ export function connectLedger() {
     });
 }
 
-export function getLedgerPublicKey(eth) {
+export function getLedgerPublicKey(eth,path = ledgerPath) {
     return new Promise((resolve, reject) => {
-        eth.getAddress_async(ledgerPath, false, true)
+        eth.getAddress_async(path, false, true)
             .then((result) => {
-                result.dPath = ledgerPath;
+                result.dPath = path;
                 resolve(result);
             })
             .fail((err) => {

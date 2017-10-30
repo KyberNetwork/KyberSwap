@@ -1,6 +1,6 @@
 import React from "react"
 
-const ExchangeForm = (props) => {  
+const ExchangeForm = (props) => {
   var render = (
     <div>
       <div class="frame">
@@ -11,9 +11,12 @@ const ExchangeForm = (props) => {
               <div class="row">
                 <div class="column medium-6">
                   <label>Exchange From
-                  
+
                     <div class="token-input">
-                      <input type={props.input.sourceAmount.type} value={props.input.sourceAmount.value} onChange={props.input.sourceAmount.onChange}  min="0" step="0.000001" placeholder="0"/>
+
+                      <input type={props.input.sourceAmount.type} value={props.input.sourceAmount.value} onChange={(e) => props.input.sourceAmount.onChange(e)} min="0" step="0.000001" placeholder="0" />
+
+
                       {props.tokenSource}
                     </div>
                     <div class="address-balance"><span class="note">Address Balance</span><a class="value">{props.balance} {props.sourceTokenSymbol}</a></div>
@@ -22,7 +25,9 @@ const ExchangeForm = (props) => {
                 <div class="column medium-6">
                   <label>Exchange To
                     <div class="token-input">
-                      <input type={props.input.destAmount.type} value={props.input.destAmount.value} readOnly min="0" step="0.000001" placeholder="0"/>
+
+                      <input type={props.input.destAmount.type} value={props.input.destAmount.value} readOnly min="0" step="0.000001" placeholder="0" />
+
                       {/* <div class="info" data-open="exchange-to-token-modal"><img src="/assets/img/omg.svg"/><span class="name">OMG</span></div> */}
                       {props.tokenDest}
                     </div>
@@ -36,23 +41,24 @@ const ExchangeForm = (props) => {
               <div class="row">
                 {props.exchangeRate}
               </div>
-              
-              <div class="row hide-on-choose-token-pair">
-                <div class="column">
-                  <div class="clearfix">
-                    <div class="advanced-switch base-line float-right">
-                      <div class="switch accent">
-                        <input class="switch-input" id="advanced" type="checkbox"/>
-                        <label class="switch-paddle" for="advanced"><span class="show-for-sr">Advanced Mode</span></label>
+              {props.step === 2 &&
+                <div class="row hide-on-choose-token-pair">
+                  <div class="column">
+                    <div class="clearfix">
+                      <div class="advanced-switch base-line float-right">
+                        <div class="switch accent">
+                          <input class="switch-input" id="advanced" type="checkbox" />
+                          <label class="switch-paddle" for="advanced"><span class="show-for-sr">Advanced Mode</span></label>
+                        </div>
+                        <label class="switch-caption" for="advanced">Advanced</label>
                       </div>
-                      <label class="switch-caption" for="advanced">Advanced</label>
+                    </div>
+                    <div class="advanced-content" disabled>
+                      {props.gasConfig}
                     </div>
                   </div>
-                  <div class="advanced-content" disabled>
-                    {props.gasConfig}
-                  </div>
                 </div>
-              </div>
+              }
             </form>
           </div>
         </div>
@@ -64,9 +70,9 @@ const ExchangeForm = (props) => {
   return (
 
     <div class="choose-token-pair" id="exchange">
-      {props.step!==3? render : ''}
+      {props.step !== 3 ? render : ''}
       <div class="page-3">
-        {props.step==3? props.trasactionLoadingScreen : ''}
+        {props.step == 3 ? props.trasactionLoadingScreen : ''}
       </div>
     </div>
 
@@ -82,8 +88,8 @@ const ExchangeForm = (props) => {
     //    	<div class="page-1" class={props.step!==1?'visible-hide':''}>
     //    		<div>
     //           {props.tokenSource}
-                
-	  //      		 <span>to</span>
+
+    //      		 <span>to</span>
     //             {props.tokenDest}
     //    		</div>
     //         <div>{props.errors.selectSameToken}</div>

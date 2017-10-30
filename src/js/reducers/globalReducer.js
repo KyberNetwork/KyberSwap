@@ -1,7 +1,6 @@
 import {REHYDRATE} from 'redux-persist/constants'
 import Rate from "../services/rate"
 import BigNumber from "bignumber.js"
-import GLOBAL from "../constants/globalActions"
 
 const initState = {
   currentBlock: 0,
@@ -35,10 +34,10 @@ const global = (state=initState, action) => {
     //   }
     //   return state
     // }
-    case GLOBAL.NEW_BLOCK_INCLUDED_FULFILLED: {
+    case "GLOBAL.NEW_BLOCK_INCLUDED_FULFILLED": {
       return {...state, currentBlock: action.payload}
     }
-    case GLOBAL.GET_NEW_BLOCK_FAILED: {
+    case "GLOBAL.GET_NEW_BLOCK_FAILED": {
       return {...state, connected: false}
     }
     // case GLOBAL.RATE_UPDATED_FULFILLED: {
@@ -47,7 +46,7 @@ const global = (state=initState, action) => {
     //   newRates[rate.symbol] = rate
     //   return {...state, rates: newRates }
     // }
-    case GLOBAL.TERM_OF_SERVICE_ACCEPTED: {
+    case "GLOBAL.TERM_OF_SERVICE_ACCEPTED": {
       return {...state, termOfServiceAccepted: true}
     }
     case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {

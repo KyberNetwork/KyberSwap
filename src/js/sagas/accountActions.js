@@ -4,7 +4,6 @@ import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/glob
 import { randomToken, setRandomSelectedToken } from "../actions/exchangeActions"
 import { randomForExchange } from "../utils/random"
 
-import ACC_ACTION from "../constants/accActions"
 import * as service from "../services/accounts"
 import SupportedTokens from "../services/supported_tokens"
 import constants from "../services/constants"
@@ -51,8 +50,6 @@ function* importNewAccount(action){
 }
 
 export function* watchAccount() {
-  // yield takeEvery(ACC_ACTION.NEW_ACCOUNT_CREATED_PENDING, createNewAccount)
-  // yield takeEvery(ACC_ACTION.NEW_ACCOUNT_ADDED_PENDING, addNewAccount)
-  yield takeEvery(ACC_ACTION.UPDATE_ACCOUNT_PENDING, updateAccount)
-  yield takeEvery("IMPORT.IMPORT_NEW_ACCOUNT_PENDING", importNewAccount)
+  yield takeEvery("ACCOUNT.UPDATE_ACCOUNT_PENDING", updateAccount)
+  yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING", importNewAccount)
 }

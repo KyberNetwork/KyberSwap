@@ -2,7 +2,6 @@ import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effect
 import {joinedKyberWallet} from '../actions/accountActions'
 //import {addWallet} from '../actions/walletActions'
 import {updateTxComplete} from '../actions/txActions'
-import TX from "../constants/txActions"
 
 function* updateTx(action) {
   const {tx, ethereum} = action.payload
@@ -15,6 +14,6 @@ function* updateTx(action) {
 }
 
 export function* watchTx() {
-  yield takeEvery(TX.UPDATE_TX_PENDING, updateTx)  
+  yield takeEvery("TX.UPDATE_TX_PENDING", updateTx)  
 }
 

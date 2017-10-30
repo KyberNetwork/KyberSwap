@@ -82,9 +82,16 @@ export default class Transfer extends React.Component {
     }
 
     var balance = ""
+    var tokenName = ""
     var token = this.props.tokens[this.props.transfer.tokenSymbol]
     if(token){
       balance = toT(token.balance,8)
+      tokenName = token.name
+    }
+    var balanceInfo = {
+      tokenName: tokenName,
+      amount: balance,
+      tokenSymbol: this.props.transfer.tokenSymbol
     }
         
 
@@ -130,7 +137,11 @@ export default class Transfer extends React.Component {
       <PostTransfer />
     )
     var trasactionLoadingScreen = (
-      <TransactionLoading tx={this.props.transfer.txHash} makeNewTransaction={this.makeNewTransfer} type="transfer"/>
+      <TransactionLoading tx={this.props.transfer.txHash} 
+                          makeNewTransaction={this.makeNewTransfer} 
+                          type="transfer"
+                          balanceInfo = {balanceInfo}
+                          />
     )
 
     var gasConfig = (
