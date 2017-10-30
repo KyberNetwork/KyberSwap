@@ -26,7 +26,7 @@ const ExchangeForm = (props) => {
                     {props.errors.sourceAmount !=="" && 
                       <span class="error-text">{props.errors.sourceAmount}</span>
                     }
-                    <div class="address-balance"><span class="note">Address Balance</span><a class="value">{props.balance} {props.sourceTokenSymbol}</a></div>
+                    <div class="address-balance"><span class="note">Address Balance</span><a class="value" onClick={props.setAmount}>{props.balance} {props.sourceTokenSymbol}</a></div>
                   </label>
                 </div>
                 <div class="column medium-6">
@@ -72,7 +72,7 @@ const ExchangeForm = (props) => {
   )
   return (
 
-    <div class="choose-token-pair" id="exchange">
+    <div className = {props.step === 1?"choose-token-pair":""} id="exchange">
       {props.step !== 3 ? render : ''}
       <div class="page-3">
         {props.step == 3 ? props.trasactionLoadingScreen : ''}

@@ -1,7 +1,11 @@
 import React from "react"
 
 const PassphraseModal = (props) => {  
-  console.log(props.passwordError)
+  function submitTransaction(e) {    
+      if (e.key == "Enter") {
+        props.onClick(e)
+      }
+  }
   return (
     <div >
       <div class="title text-center">Enter Passphrase</div>
@@ -13,7 +17,9 @@ const PassphraseModal = (props) => {
               {/* <p>You are about to transfer<br/><strong>1.234567 ETH</strong>&nbsp;to&nbsp;<strong>0xde0b29 ... 697bae</strong></p> */}
               {props.recap}
               <label className={!!props.passwordError?"error":""}>
-                <input class="text-center" id="passphrase" type="password" placeholder="Enter your passphrase to confirm" onChange={(e)=>props.onChange(e)}/>
+                <input class="text-center" id="passphrase" type="password" placeholder="Enter your passphrase to confirm" 
+                       onChange={(e)=>props.onChange(e)} 
+                       onKeyPress={submitTransaction}/>
                 {!!props.passwordError &&
                   <span className="error-text">{props.passwordError}</span>              
                 }                

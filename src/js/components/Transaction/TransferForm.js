@@ -29,7 +29,7 @@ const TransferForm = (props) => {
                 <div class="column medium-6">
                   <label>Amount
                     <div className = {props.errors.amountTransfer===""?"token-amount":"token-amount error"}>
-                      <input type="number" min="0" step="0.000001" placeholder="0" value={props.input.amount.value} onChange={props.input.amount.onChange}/><span class="name">{props.tokenSymbol}</span>
+                      <input type="number" min="0" step="0.000001" placeholder="0" value={props.input.amount.value} onChange={props.input.amount.onChange} onClick={props.setAmount}/><span class="name">{props.tokenSymbol}</span>
                       {props.errors.amountTransfer !== "" && 
                         <span class="error-text">{props.errors.amountTransfer}</span>
                       }

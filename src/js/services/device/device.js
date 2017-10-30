@@ -12,7 +12,7 @@ export function getTrezorPublicKey(path = defaultDPath) {
                 result.dPath = path;
                 resolve(result);
             } else {
-                reject(result.error);
+                reject(result);
             }
         })
     });

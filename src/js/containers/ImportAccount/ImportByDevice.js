@@ -7,7 +7,7 @@ import AddressGenerator from "../../services/device/addressGenerator";
 import { getTrezorPublicKey, connectLedger, getLedgerPublicKey } from "../../services/device/device";
 import SelectAddressModal from "../CommonElements/SelectAddressModal";
 
-import { importNewAccount } from "../../actions/accountActions"
+import { importNewAccount, throwError } from "../../actions/accountActions"
 import { toEther } from "../../utils/converter"
 
 @connect((store) => {
@@ -29,14 +29,14 @@ export default class ImportByDevice extends React.Component {
 		this.setDeviceState();
 
 		this.DPATH = [
-			{ path: "m/44'/60'/0'/0", desc: 'Jaxx, Metamask, Exodus, imToken, TREZOR (ETH) & Digital Bitbox', defaultType: 'trezor' },
-			{ path: "m/44'/60'/0'", desc: 'Ledger (ETH)', defaultType: 'ledger' },
-			{ path: "m/44'/61'/0'/0", desc: 'TREZOR (ETC)' },
-			{ path: "m/44'/60'/160720'/0'", desc: 'Ledger (ETC)' },
-			{ path: "m/0'/0'/0'", desc: 'SingularDTV' },
-			{ path: "m/44'/1'/0'/0", desc: 'Network: Testnets' },
-			{ path: "m/44'/40'/0'/0", desc: 'Network: Expanse' },
-			{ path: 0, desc: 'Your Custom Path', defaultP: "m/44'/60'/1'/0" },
+			{ path: "m/44'/60'/0'/0", desc: 'Jaxx, Metamask, Exodus, imToken, TREZOR (ETH) & Digital Bitbox', defaultType: 'trezor', active: 0 },
+			{ path: "m/44'/60'/0'", desc: 'Ledger (ETH)', defaultType: 'ledger', active: 0 },
+			{ path: "m/44'/61'/0'/0", desc: 'TREZOR (ETC)', active: 0 },
+			{ path: "m/44'/60'/160720'/0'", desc: 'Ledger (ETC)', active: 0 },
+			{ path: "m/0'/0'/0'", desc: 'SingularDTV', notSupport: true, active: 0 },
+			{ path: "m/44'/1'/0'/0", desc: 'Network: Testnets', active: 0 },
+			{ path: "m/44'/40'/0'/0", desc: 'Network: Expanse', notSupport: true, active: 0 },
+			{ path: 0, desc: 'Your Custom Path', defaultP: "m/44'/60'/1'/0", active: 0 },
 		]
 	}
 
@@ -56,6 +56,10 @@ export default class ImportByDevice extends React.Component {
 				promise.then((result) => {
 					this.generateAddress(result);
 					this.dPath = result.dPath;
+				}).catch((err) => {
+					if (err.toString() == 'Error: Not a valid path.') {
+						this.props.dispatch(throwError('This path not supported  by Trezor'))
+					}
 				})
 				break;
 			}
@@ -66,6 +70,14 @@ export default class ImportByDevice extends React.Component {
 						this.generateAddress(result);
 						this.dPath = result.dPath;
 					}).catch((err) => {
+						switch (err) {
+							case 'Invalid status 6801':
+							case 'Invalid status 6a80':
+							case 'Invalid status 6804':
+								let msg = 'Check to make sure the right application is selected';
+								this.props.dispatch(throwError(msg))
+								break;
+						}
 						console.log(err)
 					});
 				}).catch((err) => {
@@ -85,7 +97,7 @@ export default class ImportByDevice extends React.Component {
 			let address = {
 				addressString: this.generator.getAddressString(index),
 				index: index,
-				balance: 'loading...',
+				balance: -1,
 			};
 			addresses.push(address);
 			this.updateBalance(address.addressString, index);
@@ -117,14 +129,12 @@ export default class ImportByDevice extends React.Component {
 			i = this.addressIndex,
 			j = i + 5,
 			currentAddresses = [];
-		console.log('before ', this.currentIndex, this.addressIndex);
-		console.log('before ', this.state);
 		if (this.addressIndex == this.currentIndex) {
 			for (i; i < j; i++) {
 				let address = {
 					addressString: this.generator.getAddressString(i),
 					index: i,
-					balance: 'loading...',
+					balance: -1,
 				};
 				addresses.push(address);
 				currentAddresses.push(address);
@@ -134,8 +144,6 @@ export default class ImportByDevice extends React.Component {
 		}
 		this.addressIndex = i;
 		this.currentIndex += 5;
-		console.log('after ', this.currentIndex, this.addressIndex);
-		console.log('after ', this.state);
 
 		this.setState({
 			addresses: addresses,
@@ -169,7 +177,7 @@ export default class ImportByDevice extends React.Component {
 		this.props.dispatch(push('/exchange'));
 	}
 
-	choosePath = () => {
+	choosePath() {
 		let formPath = this.refs.formPath,
 			path = formPath.path.value;
 
@@ -191,7 +199,7 @@ export default class ImportByDevice extends React.Component {
 			return (
 				<li key={address.addressString}>
 					<a class="name">
-						<label for={'address-' + address.addressString} style={{ marginBottom: 0, cursor: 'pointer' }}>
+						<label for={'address-' + address.addressString} style={{ marginBottom: 0, cursor: 'pointer', textTransform: 'lowercase' }}>
 							<img src="/assets/img/address.png" />
 							<span class="hash">{address.addressString}</span>
 						</label>
@@ -203,7 +211,10 @@ export default class ImportByDevice extends React.Component {
 						/>
 					</a>
 					<div class="info">
-						<a class="link has-tip top explore" data-tooltip="" href={addressLink + address.addressString} target="_blank" title="View on Etherscan">{address.balance} ETH
+						<a class="link has-tip top explore" href={addressLink + address.addressString} target="_blank" title="View on Etherscan">		{address.balance == '-1' ?
+							<img src="/assets/img/waiting.svg" />
+							: address.balance
+						} ETH
 						</a>
 					</div>
 				</li>
@@ -263,14 +274,19 @@ export default class ImportByDevice extends React.Component {
 
 	getListPathHtml() {
 		let listPath = this.DPATH.map((dPath, index) => {
+			let disabledPath = (this.walletType == 'ledger' && dPath.notSupport) ? true : false;
+			let defaultChecked = (dPath.defaultType == this.walletType) ? true : false
 			return (
 				<div class="column" key={dPath.path}>
 					<input id={'path-' + index} type="radio" name="path"
 						defaultValue={dPath.path}
-						defaultChecked={(dPath.defaultType == this.walletType) ? true : false}
+						defaultChecked={defaultChecked}
 						onClick={() => this.choosePath()}
+						disabled={disabledPath}
 					/>
-					<label class="address-path-stamp" for={'path-' + index}>
+					<label class="address-path-stamp"
+						for={'path-' + index}
+						style={disabledPath ? { opacity: .5 } : {}}>
 						{
 							dPath.path ? (
 								<div>
