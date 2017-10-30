@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import { ImportKeystore, ImportByDevice } from "../ImportAccount"
+import { ImportKeystore, ImportByDevice, ErrorModal } from "../ImportAccount"
 
 @connect((store) => {
 	return { ...store.account }
@@ -24,6 +24,7 @@ export default class ImportAccount extends React.Component {
 						</div>
 					</div>
 				</div>
+				<ErrorModal />
 			</div>
 		)
 	}

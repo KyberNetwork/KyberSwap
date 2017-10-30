@@ -5,7 +5,9 @@ import {REHYDRATE} from 'redux-persist/constants'
 const initState = {
   isStoreReady: false,
   account: false,
-  loading: false
+  loading: false,
+  error: "",
+  showError: false
 }
 
 const account = (state=initState, action) => {
@@ -33,7 +35,7 @@ const account = (state=initState, action) => {
       return {...state, account: action.payload, loading: false, isStoreReady: true}
     }      
     case "ACCOUNT.THROW_ERROR": {            
-      return {...state, error: action.payload}
+      return {...state, error: action.payload, showError: true}
     }
     case "IMPORT.END_SESSION": {
       return {...initState}
@@ -45,7 +47,10 @@ const account = (state=initState, action) => {
         return {...state, account: newAccount}
       }
       
-    }    
+    } 
+    case "ACCOUNT.CLOSE_ERROR_MODAL":{
+      return {...state, showError: false}
+    }
   }
   return state
 }

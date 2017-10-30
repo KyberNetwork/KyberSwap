@@ -41,9 +41,17 @@ export function throwError(error) {
     }
 }
 
+
+export function closeErrorModal(){
+    return {
+        type: "ACCOUNT.CLOSE_ERROR_MODAL"
+    }    
+}
+
 export function incManualNonceAccount(address) {
     return {
         type: "ACCOUNT.INC_MANUAL_NONCE_ACCOUNT",
         payload: address
     }
 }
+
