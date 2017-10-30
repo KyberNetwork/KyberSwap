@@ -36,6 +36,7 @@ function* importNewAccount(action){
     var reserve = constants.RESERVES[k];
     rates[k] = yield call(updateAllRatePromise, ethereum, SupportedTokens, constants.RESERVES[k], account.address)
   }
+  yield put.sync(updateAllRateComplete(rates[0]));
   var randomToken = randomForExchange(rates[0]);
   if(!randomToken[0]){
     //todo dispatch action waring no balanc
@@ -43,7 +44,6 @@ function* importNewAccount(action){
     yield put.sync(setRandomSelectedToken(randomToken))
   }
   //todo set random token for exchange
-  // yield put.sync(updateAllRateComplete(rates[0]));
   yield put(actions.closeImportLoading());
   yield put(actions.importNewAccountComplete(account));
   yield put(goToRoute('/exchange'));
