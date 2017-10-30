@@ -15,13 +15,11 @@ export default class Rate {
     const _this= this;
     // console.log(this.address)
     // console.log(reserve.index)
-    
     return new Promise((resolve, reject)=>{
       ethereum.getRate(this.address, constants.ETHER_ADDRESS, reserve.index,
         (result) => {
-          // _this.rate = result[0];
-          // resolve(_this);
-          resolve(result[0]);
+          _this.rate = result[0];
+          resolve(_this);
         }) 
     });
     
@@ -35,43 +33,16 @@ export default class Rate {
       }
       else if (this.address === constants.ETHER_ADDRESS){
         ethereum.getBalance(ownerAddr, (result) => {
-          // _this.balance = result;
-          // resolve(_this);
-          resolve(result);
+          _this.balance = result;
+          resolve(_this);
         })
       }
       else {
         ethereum.getTokenBalance(this.address, ownerAddr, (result) => {
-          // _this.balance = result;
-          // resolve(_this);
-          resolve(result);
+          _this.balance = result;
+          resolve(_this);
         })
       }
     });
   }
-}
-
-export function updateRatePromise(ethereum, source, reserve, ownerAddr){
-  return new Promise((resolve) => {
-    const rate = new Rate(
-      source.name,
-      source.symbol,
-      source.icon,
-      source.address
-    )
-    
-    Promise.all([rate.fetchRate(ethereum, reserve), rate.updateBalance(ethereum, ownerAddr)])
-      .then(values => {
-        rate.rate = values[0];
-        rate.balance = values[1];
-        resolve(rate);
-      })
-  });
-}
-
-export function updateAllRatePromise(ethereum, tokens, reserve, ownerAddr){
-  var promises = tokens.map((token) => {
-    return updateRatePromise(ethereum, token, reserve, ownerAddr)
-  });
-  return Promise.all(promises);
 }

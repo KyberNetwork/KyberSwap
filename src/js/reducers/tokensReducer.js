@@ -26,8 +26,8 @@ const token = (state=initState, action) => {
                   tokenMap.symbol,
                   tokenMap.icon,
                   tokenMap.address,
-                  new BigNumber(tokenMap.rate ? tokenMap.rate: 0),
-                  new BigNumber(tokenMap.balance ? tokenMap.balance : 0)
+                  new BigNumber(tokenMap.rate),
+                  new BigNumber(tokenMap.balance)
                 )
                 tokens[id] = token
             })
@@ -40,14 +40,6 @@ const token = (state=initState, action) => {
       var tokens = {...state.tokens}
       var token = action.payload
       tokens[token.symbol] = token
-      return Object.assign({}, state, tokens)
-    }
-    case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
-      var tokens = {...state.tokens}
-      var tokensData = action.payload;
-      tokensData.forEach((data) => {
-        tokens[data.symbol] = data
-      })
       return Object.assign({}, state, tokens)
     }
     default: return state

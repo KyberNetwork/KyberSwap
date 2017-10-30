@@ -15,8 +15,6 @@ import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import * as exchangeActions from "../../actions/exchangeActions"
 
 import { TransactionConfig } from "../../components/CommonElement"
-
-import { randomForExchange } from "../../utils/random"
 @connect((store) => {  
   const ethereum = store.connection.ethereum
   const account = store.account
@@ -25,20 +23,7 @@ import { randomForExchange } from "../../utils/random"
   return {account, ethereum, exchange, tokens}
 })
 
-
 export default class Exchange extends React.Component {
-
-  componentDidMount(){
-    if(this.props.exchange.selected) return;
-
-    var randomToken = randomForExchange(this.props.tokens);
-    if(!randomToken[0]){
-      //todo dispatch action waring no balance
-    } else {
-      this.props.dispatch(exchangeActions.setRandomSelectedToken(randomToken))
-    }
-  }
-
   openSourceToken = (e) => {
     this.props.dispatch(openTokenModal("source", this.props.exchange.sourceTokenSymbol))
   }
