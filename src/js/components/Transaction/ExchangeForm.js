@@ -39,7 +39,7 @@ const ExchangeForm = (props) => {
                       {props.tokenDest}
                     </div>
                   </label>
-                </div>                                
+                </div>
               </div>
               <div class="row">
                 {props.exchangeRate}

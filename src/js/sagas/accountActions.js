@@ -1,24 +1,15 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/accountActions'
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
-import { randomToken, setRandomSelectedToken } from "../actions/exchangeActions"
+import { randomToken, setRandomExchangeSelectedToken } from "../actions/exchangeActions"
+import { setRandomTransferSelectedToken } from "../actions/transferActions"
 import { randomForExchange } from "../utils/random"
 
 import * as service from "../services/accounts"
 import SupportedTokens from "../services/supported_tokens"
 import constants from "../services/constants"
 import { Rate, updateAllRatePromise } from "../services/rate"
-// function* createNewAccount(action) {
-//   const {address, keystring, name, desc} = action.payload
-//   const account = yield call(service.newAccountInstance, address, keystring, name, desc)
-//   yield put(actions.createAccountComplete(account))
-// }
 
-// function* addNewAccount(action) {
-//   const {address, keystring, name, desc} = action.payload
-//   const account = yield call(service.newAccountInstance, address, keystring, name, desc)
-//   yield put(actions.addAccountComplete(account))
-// }
 
 function* updateAccount(action) {
   const {account, ethereum} = action.payload
@@ -40,8 +31,12 @@ function* importNewAccount(action){
   var randomToken = randomForExchange(rates[0]);
   if(!randomToken[0]){
     //todo dispatch action waring no balanc
+    yield put(actions.closeImportLoading());
+    yield put(actions.throwError('Your address has no balance. Please import another address.'))
+    return;
   } else {
-    yield put.sync(setRandomSelectedToken(randomToken))
+    yield put.sync(setRandomExchangeSelectedToken(randomToken))
+    yield put.sync(setRandomTransferSelectedToken(randomToken))
   }
   //todo set random token for exchange
   yield put(actions.closeImportLoading());
