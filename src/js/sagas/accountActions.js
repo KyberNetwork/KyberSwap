@@ -32,7 +32,7 @@ function* importNewAccount(action){
   if(!randomToken[0]){
     //todo dispatch action waring no balanc
     yield put(actions.closeImportLoading());
-    yield put(actions.throwError('Your address has no balance. Please import another address.'))
+    yield put(actions.throwError('Your address has no balance in any tokens. Please import another address.'))
     return;
   } else {
     yield put.sync(setRandomExchangeSelectedToken(randomToken))
