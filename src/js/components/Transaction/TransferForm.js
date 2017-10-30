@@ -13,7 +13,7 @@ const TransferForm = (props) => {
                   <label>Transfer to address
                     <input class="text-center hash" type="text" placeholder="Address Hash" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange}/>
                   </label>
-                  {props.errors.destAddress}
+                  <span class="error-text">{props.errors.destAddress}</span>
                 </div>
               </div>
               <div class="row">
@@ -30,7 +30,7 @@ const TransferForm = (props) => {
                     </div>
                     <div class="address-balance clearfix"><span class="note">Address Balance</span><a class="value" >{props.balance} {props.tokenSymbol}</a></div>
                   </label>
-                  {props.errors.amountTransfer}
+                  <span class="error-text">{props.errors.amountTransfer}</span>
                 </div>
               </div>
             </form>
