@@ -65,3 +65,16 @@ export function toggleNotify(){
     type: 'UTIL.TOGGLE_NOTIFY'
   }
 }
+
+export function openInfoModal(title, content){
+  return {
+    type: "UTIL.OPEM_INFO_MODAL",
+    payload: {title: title, content: content}
+  }
+}
+
+export function closeInfoModal(){
+  return {
+    type: "UTIL.EXIT_INFO_MODAL"
+  }
+}
