@@ -1,0 +1,21 @@
+.ReactModal__Body--open{
+    overflow: hidden;
+}
+@media (min-width: 640px){
+    .react-modal{
+        margin-bottom: 50px!important; 
+    }
+    .reveal.large{
+        top: 54px;
+    }
+    
+    $half: -50%;
+    .reveal.tiny{
+        top: 50%;
+        -ms-transform: translateY($half);
+        -webkit-transform: translateY($half);
+        -moz-transform: translateY($half);
+        transform: translateY($half);
+    } 
+}
+  
