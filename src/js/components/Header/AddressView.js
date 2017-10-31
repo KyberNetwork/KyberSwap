@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import React from "react"
-
+import constants from "../../services/constants"
 
 const Address = (props) => {
   var link = props.path === "/exchange" ? (
@@ -23,7 +23,7 @@ const Address = (props) => {
             </a>
           </div>
           <div key="2" class="column small-8">
-            <a class="short-address">{props.address ? props.address.slice(0,8):''} ... {props.address? props.address.slice(-6):''}</a>
+            <a class="short-address" target="_blank" href={constants.KOVAN_ETH_URL + "/address/"+props.address}>{props.address ? props.address.slice(0,8):''} ... {props.address? props.address.slice(-6):''}</a>
             <ul class="actions">
               <li>
                 {link}

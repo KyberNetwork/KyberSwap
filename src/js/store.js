@@ -33,7 +33,7 @@ persistStore(store, {
   blacklist: [
      'connection',
     // 'utils',
-     //'account',
+     'account',
      'exchange',
      'transfer',
      'txs'

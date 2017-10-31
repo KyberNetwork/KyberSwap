@@ -162,9 +162,9 @@ function* processExchange(action) {
       }
     } else {
       const remain = yield call([ethereum, ethereum.getAllowance], sourceToken, address)
-      console.log(remain)
+      //console.log(remain)
       const sourceAmountBig = converter.hexToNumber(sourceAmount)
-      console.log(remain.greaterThanOrEqualTo(sourceAmountBig))
+      //console.log(remain.greaterThanOrEqualTo(sourceAmountBig))
       if (!remain.greaterThanOrEqualTo(sourceAmountBig)) {
         //get approve
         if (type === "keystore") {
