@@ -46,13 +46,18 @@ export function randomForExchange(tokens){
   });
   if(tokenWithBalance.length){
     result[0] = _.sample(tokenWithBalance);
-    let index = tokens.map(x => { return x.symbol}).indexOf(result[0].symbol)
-    tokens.splice(index, 1);
+    if(result[0].symbol.toLowerCase() == "eth"){
+      let index = tokens.map(x => { return x.symbol}).indexOf(result[0].symbol)
+      tokens.splice(index, 1);
+      result[1] = _.sample(tokens);
+    } else {
+      let indexETH = tokens.map(x => { return x.symbol.toLowerCase()}).indexOf("eth")
+      result[1] = tokens[indexETH];
+    }
+    return result;
+  } else {
+    return null;
   }
-
-  result[1] = _.sample(tokens);
-  return result;
-
 }
 
 export function randomForTransfer(token){
