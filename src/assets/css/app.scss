@@ -10,6 +10,7 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
 @import 'addresses';
 @import 'tokens';
 @import 'slider';
+@import 'fix-react-modal';
 
 #waiting {
   background-color: rgba($dark-gray, .5);
