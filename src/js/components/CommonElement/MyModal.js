@@ -1,72 +1,39 @@
-import React from "react"
-import Modal from 'react-modal'
+import React from "react";
+import Modal from 'react-modal';
 
-export default class MyModal extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            customStyles: {
-                overlay: {
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: 'rgba(11, 15, 26, 0.8)',
-                    zIndex: '1005',
-                    overflowY: 'auto'
-                },
-                content: {
-                    display: 'block',
-                }
-            }
+const MyModal = (props) => {
+    let customStyles = {
+        overlay: {
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(11, 15, 26, 0.8)',
+            zIndex: '1005',
+            overflowY: 'auto'
+        },
+        content: {
+            display: 'block',
         }
     }
 
-    componentWillUpdate = (nextProps) => {
-        if (!nextProps.isOpen && this.props.isOpen) {
-            var app = document.getElementById("app")
-            app.style.height = "auto"
-            app.style.overflow = "initial"
-        }
-    }
+    return (
+        <Modal
+            className={{
+                base: props.className.base + " react-modal",
+                afterOpen: props.className.afterOpen + ' modal-open',
+            }}
+            style={customStyles}
+            isOpen={props.isOpen}
+            onRequestClose={props.onRequestClose}
+            contentLabel={props.contentLabel}
+        >
+            {props.content}
+        </Modal>
 
-    afterOpenModal = (event) => {
-        //get height of window    
-        // var screenHeight = window.innerHeight
-        // //get height of modal
-        // var modalContentInstance = document.getElementsByClassName("react-modal")[0]
-        // var modalInstance = modalContentInstance.parentNode
-        // var modalHeight = modalContentInstance.clientHeight;
-
-        // if (modalHeight > screenHeight) {
-        //     modalInstance.style.position = 'absolute'
-        //     modalInstance.style.height = (modalHeight + 100) + "px"
-
-        //     app.style.height = (modalHeight + 100) + "px"
-        //     app.style.overflow = "hidden"
-        // }
-    }
-    
-    render = () => {
-        return (
-            <Modal
-                className={{
-                    base: this.props.className.base + " react-modal",
-                    afterOpen: this.props.className.afterOpen + ' modal-open',
-                }}
-                style={this.state.customStyles}
-                isOpen={this.props.isOpen}
-                onAfterOpen={this.afterOpenModal.bind(this)}
-                onRequestClose={this.props.onRequestClose}
-                contentLabel={this.props.contentLabel}
-            >
-                {this.props.content}
-            </Modal>
-
-        )
-    }
+    )
 
 }
 
-//export default MyModal
+export default MyModal
