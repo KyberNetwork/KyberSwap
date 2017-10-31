@@ -116,18 +116,18 @@ const transfer = (state=initState, action) => {
       newState.errors.passwordError = action.payload
       return newState
     } 
-    case "TRANSFER.APPROVAL_TX_BROADCAST_PENDING": {
-      newState.broadcasting = true
-      newState.txHash = action.payload
-      return newState
-    }
-    case "TRANSFER.APPROVAL_TX_BROADCAST_REJECTED": {
-      newState.broadcasting = false
-      newState.bcError = action.payload
-      return newState
-    }
+    // case "TRANSFER.APPROVAL_TX_BROADCAST_PENDING": {
+    //   newState.broadcasting = true
+    //   newState.txHash = action.payload
+    //   return newState
+    // }
+    // case "TRANSFER.APPROVAL_TX_BROADCAST_REJECTED": {
+    //   newState.broadcasting = false
+    //   newState.bcError = action.payload
+    //   return newState
+    // }
     case "TRANSFER.TX_BROADCAST_PENDING": {
-      newState.broadcasting = true
+      //newState.broadcasting = true
       newState.txHash = action.payload
       return newState
     }
@@ -138,17 +138,22 @@ const transfer = (state=initState, action) => {
     }
     case "TRANSFER.TX_BROADCAST_REJECTED": {
       newState.broadcasting = false
-      newState.bcError = action.payload.message
+      newState.bcError = action.payload?action.payload:"" 
       newState.isConfirming = false
       return newState
     }
     case "TRANSFER.FINISH_TRANSACTION":{
+      newState.broadcasting = false
+      return newState   
+    }
+    case "TRANSFER.PREPARE_TRANSACTION":{
       newState.passphrase = false
       newState.confirmColdWallet = false
       newState.amount = 0
       newState.isConfirming = false
       newState.txRaw = ""
       newState.step = 2
+      newState.broadcasting = true
       return newState   
     }
     // case "TRANSFER.SAVE_RAW_TRANSACTION":{

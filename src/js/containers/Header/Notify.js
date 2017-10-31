@@ -83,7 +83,7 @@ export default class Notify extends React.Component {
 
                         <div class="link">{tx.hash.slice(0, 10)} ... {tx.hash.slice(-6)}</div>
                         {classTx === "failed" &&
-                            <div class="reason">{tx.error || tx.errorInfo || "Couldn't broadcast your transaction to the blockchain"}</div>
+                            <div class="reason">{tx.error || tx.errorInfo || "Transaction is not mined"}</div>
                         }
                     </a>
                 </li>

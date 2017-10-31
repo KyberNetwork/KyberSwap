@@ -7,27 +7,65 @@ import constants from "../../services/constants"
 
 
 @connect((store, props) => {
-    if (props.tx !== "") {
+    if (props.broadcasting) {
+        return { broadcasting: true, error:"" }        
+    } else {
+        if (props.broadcastingError !== ""){
+            return { broadcasting: true, error: props.broadcastingError }        
+        }
         return {
-            ...props.tempTx, loading: false
+            ...props.tempTx, broadcasting: false
             , makeNewTransaction: props.makeNewTransaction
             , type: props.type
             , balanceInfo: props.balanceInfo
             , txHash: props.tx
         }
-    } else {
-        return { loading: true }
     }
 })
 
 export default class TransactionLoading extends React.Component {
     render() {
-        if (this.props.loading) {
+        if (this.props.broadcasting) {
+            var classPending = this.props.error === "" ? " pulse" : ""
             return (
-                <div>Loading....</div>
+                <div>
+                    <div class="frame">
+                        <div class="row">
+                            <div class="column small-11 medium-9 large-8 small-centered">
+                                <h1 class="title text-center">Broadcast
+                            </h1>
+                                <div class="row">
+                                    <div class="column medium-3 text-center">
+                                    <div className={"broadcast-animation animated infinite" + classPending}>
+                                        {this.props.error === "" ? <img src="/assets/img/broadcast.svg" /> : <img src="/assets/img/finish.svg" />}
+                                    </div>
+                                    </div>
+                                    <div class="column medium-9">
+                                        <ul class="broadcast-steps">
+                                            {this.props.error ==="" &&
+                                                <li class="pending">Broadcasting your transaction to network</li>
+                                            }
+                                            {this.props.error !=="" &&
+                                                <li class="failed">
+                                                    Couldn't broadcast your transaction to the blockchain
+                                                    <div class="reason">{this.props.error}</div>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column small-11 medium-10 large-9 small-centered text-center">
+                            <p class="note">You can now close your browser window or make another {this.props.type == 'exchange' ? "exchange" : "transfer"}</p><a class="button accent" onClick={this.props.makeNewTransaction}>{this.props.type == 'exchange' ? "Exchange" : "Transfer"}</a>
+                        </div>
+                    </div>
+                </div>
             )
         }
-        var classPending = this.props.status === "pending" ? " pulse": ""
+        var classPending = this.props.status === "pending" ? " pulse" : ""
         return (
             // <div>
             //     <div>{this.props.hash}</div>
@@ -39,18 +77,18 @@ export default class TransactionLoading extends React.Component {
                     <div class="row">
                         <div class="column small-11 medium-9 large-8 small-centered">
                             <h1 class="title text-center">Broadcast
-                           
+
                                     <div class="info">Transaction&nbsp;
                                 <br class="show-for-small-only"></br>
-                                        <a class="hash has-tip top" data-tooltip title="View on Etherscan" href={constants.KOVAN_ETH_URL + 'tx/' + this.props.txHash} target="_blank">
-                                            {this.props.txHash.slice(0, 12)} ... {this.props.txHash.slice(-10)}
-                                        </a>
-                                    </div>
-                                
+                                    <a class="hash has-tip top" data-tooltip title="View on Etherscan" href={constants.KOVAN_ETH_URL + 'tx/' + this.props.txHash} target="_blank">
+                                        {this.props.txHash.slice(0, 12)} ... {this.props.txHash.slice(-10)}
+                                    </a>
+                                </div>
+
                             </h1>
                             <div class="row">
                                 <div class="column medium-3 text-center">
-                                    <div className = {"broadcast-animation animated infinite" + classPending}>
+                                    <div className={"broadcast-animation animated infinite" + classPending}>
                                         {this.props.status == "pending" ? <img src="/assets/img/broadcast.svg" /> : <img src="/assets/img/finish.svg" />}
                                     </div>
                                 </div>
@@ -84,7 +122,7 @@ export default class TransactionLoading extends React.Component {
                                         }
                                         {this.props.status === "failed" &&
                                             <li class={this.props.status}>
-                                                Couldn't broadcast your transaction to the blockchain
+                                                Transaction error
                                                 <div class="reason">{this.props.error}</div>
                                             </li>
                                         }

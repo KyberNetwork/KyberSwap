@@ -12,13 +12,14 @@ import { addTx } from '../actions/txActions'
 function* broadCastTx(action) {
   const { ethereum, tx, account, data } = action.payload
   try {
+    yield put(actions.prePareBroadcast())
     const hash = yield call(ethereum.sendRawTransaction, tx, ethereum)
     //callback(hash, tx)
     yield call(runAfterBroadcastTx, ethereum, tx, hash, account, data)
     //yield put(actions.doTransactionComplete(hash, action.meta))
   }
   catch (e) {
-    yield call(doTransactionFail, ethereum, account, e)
+    yield call(doTransactionFail, ethereum, account, e.message)
     //yield put(actions.doTransactionFail(e, action.meta))
   }
 }
@@ -42,18 +43,18 @@ function* doTransactionFail(ethereum, account, e) {
   yield put(updateAccount(ethereum, account))
 }
 
-function* approveTx(action) {
-  try {
-    const { ethereum, tx, callback } = action.payload
-    const hash = yield call(ethereum.sendRawTransaction, tx, ethereum)
-    callback(hash, tx)
-    yield put(actions.doApprovalTransactionComplete(hash, action.meta))
-  }
-  catch (e) {
-    console.log(e)
-    yield put(actions.doApprovalTransactionFail(e, action.meta))
-  }
-}
+// function* approveTx(action) {
+//   try {
+//     const { ethereum, tx, callback } = action.payload
+//     const hash = yield call(ethereum.sendRawTransaction, tx, ethereum)
+//     callback(hash, tx)
+//     yield put(actions.doApprovalTransactionComplete(hash, action.meta))
+//   }
+//   catch (e) {
+//     console.log(e)
+//     yield put(actions.doApprovalTransactionFail(e, action.meta))
+//   }
+// }
 
 
 function* processTransfer(action) {
@@ -72,6 +73,7 @@ function* processTransfer(action) {
         gasPrice, keystring, type, password)
     } catch (e) {
       yield put(actions.throwPassphraseError(e.message))
+      return
     }
   } else {
     try {
@@ -80,14 +82,16 @@ function* processTransfer(action) {
         destAddress, nonce, gas,
         gasPrice, keystring, type, password)
     }catch(e){
-      yield call(doTransactionFail, ethereum, account, e)
+      yield call(doTransactionFail, ethereum, account, e.message)
+      return
     }
   }
   
   try {
-    console.log(rawTx)   
+   // console.log(rawTx)   
+    yield put(actions.prePareBroadcast())
     const hash = yield call(ethereum.sendRawTransaction, rawTx, ethereum)
-    console.log(hash)      
+   // console.log(hash)      
     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
 
     // if (type === "keystore") {
@@ -99,12 +103,12 @@ function* processTransfer(action) {
     //   yield put(actions.showConfirm())
     // }
   } catch (e) {
-    yield call(doTransactionFail, ethereum, account, e)
+    yield call(doTransactionFail, ethereum, account, e.message)
   }
 }
 
 export function* watchTransfer() {
   yield takeEvery("TRANSFER.TX_BROADCAST_PENDING", broadCastTx)
-  yield takeEvery("TRANSFER.APPROVAL_TX_BROADCAST_PENDING", approveTx)
+ // yield takeEvery("TRANSFER.APPROVAL_TX_BROADCAST_PENDING", approveTx)
   yield takeEvery("TRANSFER.PROCESS_TRANSFER", processTransfer)
 }

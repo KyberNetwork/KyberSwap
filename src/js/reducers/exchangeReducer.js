@@ -106,25 +106,25 @@ const exchange = (state=initState, action) => {
       newState.errors.sourceAmountError = ""
       return newState
     }
-    case "EXCHANGE.APPROVAL_TX_BROADCAST_PENDING": {
-      newState.broadcasting = true
-      //newState.txHash = action.payload
-      return newState
-    }
+    // case "EXCHANGE.APPROVAL_TX_BROADCAST_PENDING": {
+    //   newState.broadcasting = true
+    //   //newState.txHash = action.payload
+    //   return newState
+    // }
     case "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED": {
       newState.broadcasting = false
-      newState.errors.gasError = action.payload
-      newState.bcError = action.payload
+      //newState.errors.gasError = action.payload
+      newState.bcError = action.payload?action.payload:"" 
       newState.confirmApprove =  false
       newState.showConfirmApprove = false
       newState.isApproving = false      
       return newState
     }
-    case "EXCHANGE.TX_BROADCAST_PENDING": {
-      newState.broadcasting = true
-      //newState.txHash = action.payload
-      return newState
-    }
+    // case "EXCHANGE.TX_BROADCAST_PENDING": {
+    //   newState.broadcasting = true
+    //   //newState.txHash = action.payload
+    //   return newState
+    // }
     case "EXCHANGE.TX_BROADCAST_FULFILLED": {
       newState.broadcasting = false
       newState.txHash = action.payload
@@ -132,7 +132,7 @@ const exchange = (state=initState, action) => {
     }
     case "EXCHANGE.TX_BROADCAST_REJECTED": {
       newState.broadcasting = false
-      newState.bcError = action.payload      
+      newState.bcError = action.payload?action.payload:"" 
       newState.isConfirming = false
       return newState
     }
@@ -193,6 +193,10 @@ const exchange = (state=initState, action) => {
       return newState
     }
     case "EXCHANGE.FINISH_EXCHANGE":{      
+      newState.broadcasting = false
+      return newState   
+    }
+    case "EXCHANGE.PREPARE_BROADCAST":{
       newState.passphrase = false
       newState.confirmColdWallet = false
       newState.confirmApprove = false
@@ -202,7 +206,8 @@ const exchange = (state=initState, action) => {
       newState.sourceAmount = 0
       newState.txRaw = ""      
       newState.step = 3   
-      return newState   
+      newState.broadcasting = true
+      return newState
     }
     case "EXCHANGE.SAVE_RAW_TRANSACTION":{
       newState.txRaw = action.payload
