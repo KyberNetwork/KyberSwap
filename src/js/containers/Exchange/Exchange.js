@@ -94,10 +94,10 @@ export default class Exchange extends React.Component {
     if (token) {
       var balanceBig = token.balance
       if (tokenSymbol === "ETH") {
-        if (!balanceBig.greaterThanOrEqualTo(Math.pow(10, 15))) {
+        if (!balanceBig.greaterThanOrEqualTo(Math.pow(10, 17))) {
           return false
         }
-        balanceBig = balanceBig.minus(Math.pow(10, 15))
+        balanceBig = balanceBig.minus(Math.pow(10, 17))
       }
       var balance = toT(balanceBig, 8)
       this.props.dispatch(exchangeActions.changeSourceAmout(balance))
