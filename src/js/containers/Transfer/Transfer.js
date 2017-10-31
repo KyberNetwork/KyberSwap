@@ -158,6 +158,8 @@ export default class Transfer extends React.Component {
                           tempTx = {this.props.transfer.tempTx}
                           type="transfer"
                           balanceInfo = {balanceInfo}
+                          broadcasting = {this.props.transfer.broadcasting}
+                          broadcastingError = {this.props.transfer.bcError}
                           />
     )
 

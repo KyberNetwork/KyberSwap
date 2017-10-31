@@ -173,6 +173,13 @@ export function changePassword() {
 	}
 }
 
+
+export function prePareBroadcast(){
+	return {
+		type: "EXCHANGE.PREPARE_BROADCAST"
+	}
+}
+
 export function finishExchange() {
 	return {
 		type: "EXCHANGE.FINISH_EXCHANGE"

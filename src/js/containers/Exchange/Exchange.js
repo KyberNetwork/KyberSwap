@@ -233,6 +233,8 @@ export default class Exchange extends React.Component {
         makeNewTransaction={this.makeNewExchange}
         type="exchange"
         balanceInfo={balanceInfo}
+        broadcasting = {this.props.exchange.broadcasting}
+        broadcastingError = {this.props.exchange.bcError}
       />
     )
     var gasConfig = (

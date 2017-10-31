@@ -34,10 +34,13 @@ export default class Tx {
           newTx.address = receipt.contractAddress
           newTx.gas = receipt.gasUsed
           var logs = receipt.logs
+          //console.log(logs)
+          //console.log(newTx.type)
           if (newTx.type == "exchange") {
             if (logs.length == 0) {
               newTx.threw = true
               newTx.status = "failed"
+              newTx.error = "Warning! Error encountered during contract execution"
             } else {
               var theLog
               for (var i = 0; i < logs.length; i++) {
@@ -47,7 +50,9 @@ export default class Tx {
                   break
                 }
               }
+              //console.log(theLog)
               newTx.status = theLog ? "success" : "failed"
+              newTx.error = theLog ?"":"Warning! Error encountered during contract execution"
             }
           } else {
             newTx.status = "success"

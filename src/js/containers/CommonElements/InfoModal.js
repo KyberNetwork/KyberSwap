@@ -25,9 +25,6 @@ export default class Info extends React.Component {
   }
 
   render(){
-    var processingModal = (
-      <InfoModal />
-    )
     return (
       <InfoModal 
           isOpen={this.props.modal.open}

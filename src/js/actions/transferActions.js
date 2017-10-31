@@ -113,6 +113,12 @@ export function changePassword() {
 	}
 }
 
+export function prePareBroadcast(){
+	return {
+		type: "TRANSFER.PREPARE_TRANSACTION"
+	}
+}
+
 export function finishTransfer() {
 	return {
 		type: "TRANSFER.FINISH_TRANSACTION"
@@ -165,29 +171,29 @@ export function doTransactionFail(error, id) {
 	}
 }
 
-export function doApprovalTransaction(id, ethereum, tx, callback) {
-	return {
-		type: "TRANSFER.APPROVAL_TX_BROADCAST_PENDING",
-		payload: { ethereum, tx, callback },
-		meta: id,
-	}
-}
+// export function doApprovalTransaction(id, ethereum, tx, callback) {
+// 	return {
+// 		type: "TRANSFER.APPROVAL_TX_BROADCAST_PENDING",
+// 		payload: { ethereum, tx, callback },
+// 		meta: id,
+// 	}
+// }
 
-export function doApprovalTransactionComplete(txHash, id) {
-	return {
-		type: "TRANSFER.APPROVAL_TX_BROADCAST_FULFILLED",
-		payload: txHash,
-		meta: id,
-	}
-}
+// export function doApprovalTransactionComplete(txHash, id) {
+// 	return {
+// 		type: "TRANSFER.APPROVAL_TX_BROADCAST_FULFILLED",
+// 		payload: txHash,
+// 		meta: id,
+// 	}
+// }
 
-export function doApprovalTransactionFail(error, id) {
-	return {
-		type: "TRANSFER.APPROVAL_TX_BROADCAST_REJECTED",
-		payload: error,
-		meta: id,
-	}
-}
+// export function doApprovalTransactionFail(error, id) {
+// 	return {
+// 		type: "TRANSFER.APPROVAL_TX_BROADCAST_REJECTED",
+// 		payload: error,
+// 		meta: id,
+// 	}
+// }
 
 // export function saveRawTransferTransaction(tx){
 // 	return {
