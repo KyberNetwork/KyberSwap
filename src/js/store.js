@@ -31,12 +31,12 @@ sagaMiddleware.run(rootSaga)
 persistStore(store, {
   storage: asyncSessionStorage,
   blacklist: [
-    'connection',
-    'utils',
-   //  'account',
+     'connection',
+    // 'utils',
+     //'account',
      'exchange',
      'transfer',
-    // 'txs'
+     'txs'
   ]
 })
 export default store

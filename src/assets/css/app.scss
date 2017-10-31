@@ -157,6 +157,18 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
         border: 8px solid transparent;
         border-bottom-color: white;
       }
+      &.empty {
+        background-color: #fcfcfc;
+        &:after {
+          border-bottom-color: #fcfcfc;
+        }
+        > li {
+          display: none;
+          &.empty {
+            display: block;
+          }
+        }
+      }
       > li {
         font-size: 12px;
         position: relative;
@@ -174,6 +186,20 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
         }
         &:last-child > a {
           border-radius: 0 0 $global-radius $global-radius;
+        }
+        &.empty {
+          display: none;
+          padding: 60px 20px;
+          text-align: center;
+          img {
+            margin-bottom: 10px;
+          }
+          p.note {
+            margin-bottom: 0;
+          }
+          &:before {
+            display: none;
+          }
         }
         > a {
           display: block;

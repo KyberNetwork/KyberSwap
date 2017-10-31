@@ -27,7 +27,10 @@ const InfoModal = (props) => {
       content={content}
       isOpen={props.isOpen}
       onRequestClose={props.closeModal}
-      size="tiny"/>
+      size="tiny"
+      contentLabel="Info modal"
+      />
+      
   )
 }
 

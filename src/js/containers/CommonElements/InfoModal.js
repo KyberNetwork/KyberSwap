@@ -33,7 +33,7 @@ export default class Info extends React.Component {
           isOpen={this.props.modal.open}
           title={this.props.modal.title} 
           content={this.props.modal.content} 
-          closeModal={this.exitIdleMode.bind(this)}
+          closeModal={this.exitIdleMode.bind(this)}          
       />
     )  
   }

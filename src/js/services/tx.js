@@ -29,6 +29,8 @@ export default class Tx {
   sync = (ethereum, tx) => {
     return new Promise((resolve, reject)=>{
       ethereum.txMined(tx.hash, (mined, receipt) => {
+        console.log(mined)
+        console.log(receipt)
         var newTx = tx.shallowClone()
         if (mined) {
           newTx.address = receipt.contractAddress

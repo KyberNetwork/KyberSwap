@@ -1191,6 +1191,14 @@ ul.bxslider {
         right: 11px;
         border: 8px solid transparent;
         border-bottom-color: white; }
+      #header .user-bar ul.notifications.empty {
+        background-color: #fcfcfc; }
+        #header .user-bar ul.notifications.empty:after {
+          border-bottom-color: #fcfcfc; }
+        #header .user-bar ul.notifications.empty > li {
+          display: none; }
+          #header .user-bar ul.notifications.empty > li.empty {
+            display: block; }
       #header .user-bar ul.notifications > li {
         font-size: 12px;
         position: relative; }
@@ -1205,6 +1213,16 @@ ul.bxslider {
           border-bottom: 1px solid #eee; }
         #header .user-bar ul.notifications > li:last-child > a {
           border-radius: 0 0 4px 4px; }
+        #header .user-bar ul.notifications > li.empty {
+          display: none;
+          padding: 60px 20px;
+          text-align: center; }
+          #header .user-bar ul.notifications > li.empty img {
+            margin-bottom: 10px; }
+          #header .user-bar ul.notifications > li.empty p.note {
+            margin-bottom: 0; }
+          #header .user-bar ul.notifications > li.empty:before {
+            display: none; }
         #header .user-bar ul.notifications > li > a {
           display: block;
           padding: 20px 0 20px 55px;

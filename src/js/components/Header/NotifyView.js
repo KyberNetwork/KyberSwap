@@ -16,6 +16,11 @@ const Notify = (props) => {
       </a>
       <ul className = {"notifications hide animated fadeIn " + classNotify}>
         {props.transactions} 
+        {props.transactionsNum === 0 &&
+          <li className="empty">
+            <img src="/assets/img/empty.svg" />
+          </li>
+        }
         {/* <li><a class="pending" href="https://etherscan.io/tx/0x031bcfded7d6100ee32b0369c78b3791780e6a4a0e05b40a929426964569d086" target="_blank">
               <div class="title"><span class="amount">0.123456 ETH&nbsp;</span>for<span class="amount">&nbsp;12.345678 KNC</span></div>
               <div class="link">0xe7e52f01 ... d8be12</div>

@@ -13,12 +13,14 @@ import {Header} from "../../containers/Header"
 
 import {ImportAccount} from "../ImportAccount"
 
-import { Processing } from "../../containers/CommonElements/"
-import { InfoModal } from "../../containers/CommonElements"
+import { Processing, InfoModal } from "../../containers/CommonElements/"
+//import {  } from "../../containers/CommonElements"
+import constanst from "../../services/constants"
 import history from "../../history"
 import { clearSession } from "../../actions/globalActions"
 import { openInfoModal} from "../../actions/utilActions"
 import { default as _ } from 'underscore';
+
 
 @connect((store) => {
   return {
@@ -34,7 +36,7 @@ export default class Layout extends React.Component {
   constructor() {
     super();
     this.idleTime = 0;
-    this.timeoutEndSession = 30;    // x10 seconds
+    this.timeoutEndSession = constanst.IDLE_TIME_OUT / 10;    // x10 seconds
     this.idleMode = false;
   }
   componentWillMount() {
@@ -55,10 +57,10 @@ export default class Layout extends React.Component {
     if(!this.props.account.account) return;
     if(this.props.utils.infoModal && this.props.utils.infoModal.open) return;
     if(this.idleTime >= this.timeoutEndSession){
-      this.props.dispatch(openInfoModal("Wake up!", "We will clear all session data if you idle over a period of time greater than 3 minutes"));
+      this.props.dispatch(openInfoModal("Time out error", "We've cleared all your data because you idle over "+(constanst.IDLE_TIME_OUT / 60)+" minutes"));
       this.endSession();
     } else {
-      console.log("increase timmer ===")
+      //console.log("increase timmer ===")
       this.idleTime++;
     }
   }
