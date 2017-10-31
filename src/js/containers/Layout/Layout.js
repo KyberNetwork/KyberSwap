@@ -14,20 +14,63 @@ import {Header} from "../../containers/Header"
 import {ImportAccount} from "../ImportAccount"
 
 import { Processing } from "../../containers/CommonElements/"
+import { InfoModal } from "../../containers/CommonElements"
 import history from "../../history"
-
+import { clearSession } from "../../actions/globalActions"
+import { openInfoModal} from "../../actions/utilActions"
+import { default as _ } from 'underscore';
 
 @connect((store) => {
   return {
     ethereumNode: store.connection.ethereum,
     currentBlock: store.global.currentBlock,
     connected: store.global.connected,
+    utils: store.utils,
+    account: store.account
   }
 })
-export default class Layout extends React.Component {
 
+export default class Layout extends React.Component {
+  constructor() {
+    super();
+    this.idleTime = 0;
+    this.timeoutEndSession = 30;    // x10 seconds
+    this.idleMode = false;
+  }
   componentWillMount() {
     this.props.ethereumNode.watch()
+    
+    document.onload = this.resetTimmer;
+    document.onmousemove = this.resetTimmer;
+    document.onmousedown = this.resetTimmer; // touchscreen presses
+    document.ontouchstart = this.resetTimmer;
+    document.onclick = this.resetTimmer;     // touchpad clicks
+    document.onscroll = this.resetTimmer;    // scrolling with arrow keys
+    document.onkeypress = this.resetTimmer;
+
+    var intervalIdle = setInterval(this.checkTimmer.bind(this), 10000)
+  }
+
+  checkTimmer(){
+    if(!this.props.account.account) return;
+    if(this.props.utils.infoModal && this.props.utils.infoModal.open) return;
+    if(this.idleTime >= this.timeoutEndSession){
+      this.props.dispatch(openInfoModal("Wake up!", "We will clear all session data if you idle over a period of time greater than 3 minutes"));
+      this.endSession();
+    } else {
+      console.log("increase timmer ===")
+      this.idleTime++;
+    }
+  }
+
+  resetTimmer = _.throttle(this.doResetTimer.bind(this), 5000)
+
+  doResetTimer(){
+    this.idleTime = 0;
+  }
+
+  endSession(){
+    this.props.dispatch(clearSession());    
   }
 
   render() {
@@ -40,6 +83,10 @@ export default class Layout extends React.Component {
               <Route exact path="/exchange" component={Exchange}/>
               <Route exact path="/transfer" component={Transfer}/>
               <Processing />
+              
+          </section>
+          <section id="modals">
+            <InfoModal/>
           </section>
           {}
         </div>

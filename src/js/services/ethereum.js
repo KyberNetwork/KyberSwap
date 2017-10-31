@@ -178,7 +178,7 @@ export default class EthereumService {
   fetchData() {
     this.fetchCurrentBlock()
     this.fetchTxsData()
-    this.fetchRateData()
+    // this.fetchRateData()
     this.fetchAccountData()
     this.fetchRateExchange()
 

@@ -14,7 +14,7 @@ export default class ErrorModal extends React.Component {
     content = () => {
         return (
             <div>
-                <div class="title text-center">Error occurred</div><a class="x" onClick={this.closeModal}>&times;</a>
+                <div class="title text-center">{this.props.title? this.props.title: "Error occurred"}</div><a class="x" onClick={this.closeModal}>&times;</a>
                 <div class="content">
                     <div class="row">
                         <div class="column">
