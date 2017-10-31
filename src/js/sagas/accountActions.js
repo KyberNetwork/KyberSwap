@@ -29,7 +29,7 @@ function* importNewAccount(action){
   }
   yield put.sync(updateAllRateComplete(rates[0]));
   var randomToken = randomForExchange(rates[0]);
-  if(!randomToken[0]){
+  if(!randomToken || !randomToken[0]){
     //todo dispatch action waring no balanc
     yield put(actions.closeImportLoading());
     yield put(actions.throwError('Your address has no balance in any tokens. Please import another address.'))
