@@ -56,7 +56,8 @@ export default class PostExchange extends React.Component {
       this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount must be a number"))
       return false
     }    
-    else if (parseFloat(this.props.form.sourceAmount) > parseFloat(converters.toT(this.props.form.sourceBalance, 8))) {
+    var sourceAmountBig = converters.stringToBigNumber(this.props.form.sourceAmount)
+    if (sourceAmountBig.greaterThan(this.props.form.sourceBalance)) {
       this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount is too high"))
       return false
     }
@@ -86,7 +87,7 @@ export default class PostExchange extends React.Component {
   }
 
   recap = () => {
-    var sourceAmount = this.props.form.sourceAmount.toString();
+    var sourceAmount = this.props.form.sourceAmount;
     var sourceTokenSymbol = this.props.form.sourceTokenSymbol;
     var destAmount = this.getDesAmount().toString();
     var destTokenSymbol = this.props.form.destTokenSymbol;
@@ -114,7 +115,7 @@ export default class PostExchange extends React.Component {
   formParams = () => {
     var selectedAccount = this.props.account.address
     var sourceToken = this.props.form.sourceToken
-    var sourceAmount =  converters.numberToHex(converters.toTWei(this.props.form.sourceAmount))
+    var sourceAmount =  converters.stringToHex(this.props.form.sourceAmount)
     var destToken = this.props.form.destToken
     var minConversionRate = converters.numberToHex(this.props.form.minConversionRate)
     var destAddress = this.props.account.address

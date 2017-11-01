@@ -174,7 +174,7 @@ function* processExchange(action) {
     } else {
       const remain = yield call([ethereum, ethereum.getAllowance], sourceToken, address)
       //console.log(remain)
-      const sourceAmountBig = converter.hexToNumber(sourceAmount)
+      const sourceAmountBig = converter.hexToBigNumber(sourceAmount)
       //console.log(remain.greaterThanOrEqualTo(sourceAmountBig))
       if (!remain.greaterThanOrEqualTo(sourceAmountBig)) {
         //get approve

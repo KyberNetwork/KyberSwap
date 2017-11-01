@@ -78,7 +78,7 @@ export default class Transfer extends React.Component {
         }
         balanceBig = balanceBig.minus(Math.pow(10, 17))
       }
-      var balance = toT(balanceBig, 8)
+      var balance = balanceBig.div(1000000000000000000).toString()
       this.props.dispatch(specifyAmountTransfer(balance))
     }
   }

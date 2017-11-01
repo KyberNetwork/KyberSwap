@@ -146,6 +146,11 @@ export function hexToNumber(hex) {
   return new BigNumber(hex).toNumber()
 }
 
+export function hexToBigNumber(hex) {
+  return new BigNumber(hex)
+}
+
+
 export function toEther(number) {
   var bigNumber = new BigNumber(number)
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
@@ -162,4 +167,20 @@ export function errorName(message) {
   } else {
     return message
   }
+}
+
+
+export function stringToBigNumber(number){
+  var param = new BigNumber(10).pow(18)
+  var bigNumber = new BigNumber(number).times(param)
+  return bigNumber
+}
+
+export function stringToHex(number){
+  console.log(number)
+  var param = new BigNumber(10).pow(18)
+  var bigNumber = new BigNumber(number).times(param)
+  console.log(bigNumber)
+  console.log("0x" + bigNumber.toString(16))
+  return "0x" + bigNumber.toString(16)
 }

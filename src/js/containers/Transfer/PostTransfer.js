@@ -58,7 +58,8 @@ export default class PostTransfer extends React.Component {
       this.props.dispatch(transferActions.thowErrorAmount("Amount must be a number"))
       check = false
     }
-    else if (parseFloat(this.props.form.amount) > parseFloat(converters.toT(this.props.form.balance, 8))) {
+    var amountBig = converters.stringToBigNumber(this.props.form.amount)
+    if (amountBig.greaterThan(this.props.form.balance)) {
       this.props.dispatch(transferActions.thowErrorAmount("Amount is too high"))
       check = false
     }
@@ -130,7 +131,7 @@ export default class PostTransfer extends React.Component {
   formParams = () => {
     var selectedAccount = this.props.account.address
     var token = this.props.form.token
-    var amount = converters.numberToHex(converters.toTWei(this.props.form.amount))
+    var amount = converters.stringToHex(this.props.form.amount)
     var destAddress = this.props.form.destAddress
     var throwOnFailure = this.props.form.throwOnFailure
     var nonce = validators.verifyNonce(this.props.account.getUsableNonce())
