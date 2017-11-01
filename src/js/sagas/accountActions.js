@@ -19,9 +19,8 @@ function* updateAccount(action) {
 
 function* importNewAccount(action){
   yield put(actions.importLoading())
-  const {address, type, keystring, ethereum} = action.payload
-  //console.log(type)
-  const account = yield call(service.newAccountInstance, address, type, keystring)
+  const {address, type, keystring, ethereum, avatar} = action.payload
+  const account = yield call(service.newAccountInstance, address, type, keystring, avatar)
   var rates = []
   for (var k = 0; k < constants.RESERVES.length; k++) {
     var reserve = constants.RESERVES[k];

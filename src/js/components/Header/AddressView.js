@@ -19,7 +19,7 @@ const Address = (props) => {
         <div class="row">
           <div key="1" class="column small-2">
             <a class="avatar">
-              <img src="/assets/img/address.png" />
+              <img src={props.parrentProps.account.avatar} />
             </a>
           </div>
           <div key="2" class="column small-8">
