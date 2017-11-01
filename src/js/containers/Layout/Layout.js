@@ -38,6 +38,7 @@ export default class Layout extends React.Component {
     this.idleTime = 0;
     this.timeoutEndSession = constanst.IDLE_TIME_OUT / 10;    // x10 seconds
     this.idleMode = false;
+    this.intervalIdle = null;
   }
   componentWillMount() {
     this.props.ethereumNode.watch()
@@ -50,7 +51,7 @@ export default class Layout extends React.Component {
     document.onscroll = this.resetTimmer;    // scrolling with arrow keys
     document.onkeypress = this.resetTimmer;
 
-    var intervalIdle = setInterval(this.checkTimmer.bind(this), 10000)
+    this.intervalIdle = setInterval(this.checkTimmer.bind(this), 10000)
   }
 
   checkTimmer(){
