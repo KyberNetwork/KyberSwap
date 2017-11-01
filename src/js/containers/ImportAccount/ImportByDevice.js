@@ -99,8 +99,8 @@ export default class ImportByDevice extends React.Component {
 				addressString: this.generator.getAddressString(index),
 				index: index,
 				balance: -1,
-				avatar: this.getRandomAvatar(),
 			};
+			address.avatar = this.getRandomAvatar(address.addressString)
 			addresses.push(address);
 			this.updateBalance(address.addressString, index);
 		}
@@ -137,8 +137,8 @@ export default class ImportByDevice extends React.Component {
 					addressString: this.generator.getAddressString(i),
 					index: i,
 					balance: -1,
-					avatar: this.getRandomAvatar(),
 				};
+				address.avatar = this.getRandomAvatar(address.addressString)
 				addresses.push(address);
 				currentAddresses.push(address);
 				this.updateBalance(address.addressString, i);
@@ -154,8 +154,8 @@ export default class ImportByDevice extends React.Component {
 		})
 	}
 
-	getRandomAvatar(){
-		return new Gixi(36).getImage();
+	getRandomAvatar(addressString){
+		return new Gixi(36, addressString).getImage();
 	}
 
 	preAddress() {
