@@ -108,7 +108,6 @@ const ETH = {
 
 const KOVAN_ETH_URL = "https://kovan.etherscan.io/"
 const IDLE_TIME_OUT = 900
-const MINIMUM_SOURCE_BALANCE = 1000
 
 export default {
   ERC20, KYBER_NETWORK, EPSILON, ETHER_ADDRESS, ETH,
