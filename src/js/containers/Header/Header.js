@@ -19,14 +19,14 @@ export default class Header extends React.Component {
       <div>
         <section id="header">
           <div class="row">
-            <div class="column small-4 medium-6 large-7 hide-for-small-only">
+            <div class={"column "+ (this.props.account? "small-4 medium-6 large-7 hide-for-small-only" : "small-5 medium-6 large-7")}>
               <Link to="/info" className="logo">
                 <img src="/assets/img/logo.svg" />
               </Link>
             </div>
-            <div class="column small-12 medium-6 large-5">
+            {/* <div class="column small-12 medium-6 large-5"> */}
               <Address path={this.props.location.pathname}/> 
-            </div>
+            {/* </div> */}
           </div>
         </section>
 
