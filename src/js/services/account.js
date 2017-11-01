@@ -67,6 +67,8 @@ export default class Account {
       promise = promise.then((acc) => {
         return new Promise((resolve, reject) => {
           ethereum.getNonce(acc.address, (nonce) => {
+            //console.log(nonce)
+            //console.log(acc.manualNonce)
             acc.nonce = nonce
             if (acc.nonce > acc.manualNonce) {
               acc.manualNonce = acc.nonce

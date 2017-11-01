@@ -177,10 +177,10 @@ export function stringToBigNumber(number){
 }
 
 export function stringToHex(number){
-  console.log(number)
+  //console.log(number)
   var param = new BigNumber(10).pow(18)
   var bigNumber = new BigNumber(number).times(param)
-  console.log(bigNumber)
-  console.log("0x" + bigNumber.toString(16))
+  //console.log(bigNumber)
+  //console.log("0x" + bigNumber.toString(16))
   return "0x" + bigNumber.toString(16)
 }

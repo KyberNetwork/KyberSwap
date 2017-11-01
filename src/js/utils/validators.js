@@ -40,7 +40,8 @@ export function verifyToken(addr) {
 }
 
 export function verifyAmount(amount, max) {
-  var result = new BigNumber(amount)
+  var weiParam = new BigNumber(10)
+  var result = new BigNumber(amount).times(weiParam.pow(18))
   if (result == 'NaN' || result == 'Infinity') {
     return "not a number"
   }

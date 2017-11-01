@@ -57,6 +57,15 @@ const account = (state=initState, action) => {
     case "ACCOUNT.CLOSE_ERROR_MODAL":{
       return {...state, showError: false}
     }
+    case "ACCOUNT.INC_MANUAL_NONCE_ACCOUNT":{
+      var oldState = {...state}
+      var address = action.payload
+      if ((oldState.account) && (oldState.account.address === address)){
+        var account = oldState.account.incManualNonce()
+        return {...state,
+          account: account}
+      }
+    }    
   }
   return state
 }

@@ -8,7 +8,6 @@ import * as converters from "../../utils/converter"
 
 import * as exchangeActions from "../../actions/exchangeActions"
 
-
 import { Modal } from "../../components/CommonElement"
 import {PassphraseModal, ConfirmTransferModal, ApproveModal} from "../../components/Transaction"
 
@@ -52,16 +51,27 @@ export default class PostExchange extends React.Component {
   }
   validateExchange = () => {
     //check source amount
-    if (isNaN(this.props.form.sourceAmount) || !this.props.form.sourceAmount || this.props.form.sourceAmount == '') {
-      this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount must be a number"))
-      return false
-    }    
-    var sourceAmountBig = converters.stringToBigNumber(this.props.form.sourceAmount)
-    if (sourceAmountBig.greaterThan(this.props.form.sourceBalance)) {
-      this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount is too high"))
+    var validateAmount = validators.verifyAmount(this.props.form.sourceAmount, this.props.form.sourceBalance)
+    if (validateAmount !== null){
+      this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount is " + validateAmount))
       return false
     }
     return true
+    // if (isNaN(this.props.form.sourceAmount) || !this.props.form.sourceAmount || this.props.form.sourceAmount == '') {
+    //   this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount must be a number"))
+    //   return false
+    // }    
+    // var sourceAmountBig = converters.stringToBigNumber(this.props.form.sourceAmount)
+    // if (sourceAmountBig.greaterThan(this.props.form.sourceBalance)) {
+    //   this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount is too high"))
+    //   return false
+    // }
+    // var epsilon = cons
+    // if (sourceAmountBig.greaterThan(this.props.form.sourceBalance)) {
+    //   this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount is too high"))
+    //   return false
+    // }
+    // return true
   }
   
   approveTx = () => {
