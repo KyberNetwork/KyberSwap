@@ -1,4 +1,5 @@
 import { default as _ } from 'underscore';
+import constants from "../services/constants"
 
 export function randomToken(numberToken, total){
   if(!numberToken || numberToken < 1) return null;
@@ -40,7 +41,7 @@ export function randomForExchange(tokens){
   var result = new Array(2);
   var tokenWithBalance = []
   tokens.map((token) => {
-    if(token.balance && token.balance.greaterThan(0)){
+    if(token.balance && token.balance.times(token.rate).greaterThanOrEqualTo(constants.EPSILON)){
       tokenWithBalance.push(token);
     }
   });
