@@ -62,7 +62,11 @@ export function updateRatePromise(ethereum, source, reserve, ownerAddr){
     
     Promise.all([rate.fetchRate(ethereum, reserve), rate.updateBalance(ethereum, ownerAddr)])
       .then(values => {
-        rate.rate = values[0];
+        if(rate.symbol.toLowerCase() == "eth"){
+          rate.rate = new BigNumber(1)
+        } else {
+          rate.rate = values[0];
+        }
         rate.balance = values[1];
         resolve(rate);
       })
