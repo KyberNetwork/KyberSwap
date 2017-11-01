@@ -55,7 +55,7 @@ export default class SelectTokenModal extends React.Component {
                   type = {this.props.modalInfo.type}
                   address = {token.address}
                   onClick = {this.chooseToken}
-                  inactive = {!token.balance.times(token.rate).greaterThanOrEqualTo(constants.MINIMUM_SOURCE_BALANCE)}
+                  inactive = {!token.balance.times(token.rate).greaterThanOrEqualTo(constants.EPSILON)}
                   title={title}
                   selected={this.props.modalInfo.selected==token.symbol}
                   />
@@ -86,7 +86,7 @@ export default class SelectTokenModal extends React.Component {
                   type = {this.props.modalInfo.type}
                   address = {token.address}
                   onClick = {this.chooseToken}
-                  inactive = {!token.balance.times(token.rate).greaterThanOrEqualTo(constants.MINIMUM_SOURCE_BALANCE)}
+                  inactive = {!token.balance.times(token.rate).greaterThanOrEqualTo(constants.EPSILON)}
                   selected={this.props.modalInfo.selected==token.symbol}
                   />
 		    })

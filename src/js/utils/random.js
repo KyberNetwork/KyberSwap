@@ -41,7 +41,7 @@ export function randomForExchange(tokens){
   var result = new Array(2);
   var tokenWithBalance = []
   tokens.map((token) => {
-    if(token.balance && token.balance.times(token.rate).greaterThanOrEqualTo(constants.MINIMUM_SOURCE_BALANCE)){
+    if(token.balance && token.balance.times(token.rate).greaterThanOrEqualTo(constants.EPSILON)){
       tokenWithBalance.push(token);
     }
   });
