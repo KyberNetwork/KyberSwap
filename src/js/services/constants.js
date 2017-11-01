@@ -17,6 +17,7 @@ const RATE_EPSILON = 0.002
 const ETHER_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 const NETWORK_ADDRESS = "0x241702db94b4ff17429c749925f16ae5f0929668"
 const TRADE_TOPIC = "0xec0d3e799aa270a144d7e3be084ccfc657450e33ecea1b1a4154c95cedaae5c3"
+const RESERVE_ADDRESS = "0xfbd6bc836656ddfd64ebc783e16ef81f4d6f2aed"
 const INIT_EXCHANGE_FORM_STATE = {
   advanced: false,
   passphrase: false,
@@ -105,12 +106,11 @@ const ETH = {
 };
 
 const KOVAN_ETH_URL = "https://kovan.etherscan.io/"
-const GRAVATAR_URL = "https://www.gravatar.com/avatar/"
 const IDLE_TIME_OUT = 900
 
 export default {
   ERC20, KYBER_NETWORK, EPSILON, ETHER_ADDRESS, ETH,
   NETWORK_ADDRESS, RESERVES, KYBER_WALLET,
   KYBER_WALLET_DATA, INIT_EXCHANGE_FORM_STATE, INIT_TRANSFER_FORM_STATE,
-  RATE_EPSILON, TRADE_TOPIC, KOVAN_ETH_URL, IDLE_TIME_OUT, GRAVATAR_URL
+  RATE_EPSILON, TRADE_TOPIC, KOVAN_ETH_URL, IDLE_TIME_OUT, RESERVE_ADDRESS
 }
