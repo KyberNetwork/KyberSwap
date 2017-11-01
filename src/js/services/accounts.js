@@ -10,8 +10,8 @@ import store from "../store"
 //     store.getState().connection.ethereum, callback)
 // }
 
-export function newAccountInstance(address, type, keystring) {
-  var account = new Account(address, type, keystring)  
+export function newAccountInstance(address, type, keystring, avatar) {
+  var account = new Account(address, type, keystring,0 ,0 ,0, avatar)  
   return account.sync(
     store.getState().connection.ethereum)
 }

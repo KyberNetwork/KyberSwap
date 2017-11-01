@@ -9,6 +9,7 @@ import SelectAddressModal from "../CommonElements/SelectAddressModal";
 
 import { importNewAccount, throwError } from "../../actions/accountActions"
 import { toEther } from "../../utils/converter"
+import Gixi from "gixi"
 
 @connect((store) => {
 	return {
@@ -98,6 +99,7 @@ export default class ImportByDevice extends React.Component {
 				addressString: this.generator.getAddressString(index),
 				index: index,
 				balance: -1,
+				avatar: this.getRandomAvatar(),
 			};
 			addresses.push(address);
 			this.updateBalance(address.addressString, index);
@@ -135,6 +137,7 @@ export default class ImportByDevice extends React.Component {
 					addressString: this.generator.getAddressString(i),
 					index: i,
 					balance: -1,
+					avatar: this.getRandomAvatar(),
 				};
 				addresses.push(address);
 				currentAddresses.push(address);
@@ -149,6 +152,10 @@ export default class ImportByDevice extends React.Component {
 			addresses: addresses,
 			currentAddresses: addresses.slice(this.currentIndex - 5, this.currentIndex)
 		})
+	}
+
+	getRandomAvatar(){
+		return new Gixi(36).getImage();
 	}
 
 	preAddress() {
@@ -167,10 +174,11 @@ export default class ImportByDevice extends React.Component {
 				address: formAddress.addressString,
 				type: this.walletType,
 				path: this.dPath + '/' + formAddress.index,
+				avatar: formAddress.avatar
 
 			};
 
-		this.props.dispatch(importNewAccount(data.address, data.type, data.path, this.props.ethereumNode))
+		this.props.dispatch(importNewAccount(data.address, data.type, data.path, this.props.ethereumNode, data.avatar))
 		this.closeModal()
 	}
 	goToExchange = () => {
@@ -200,7 +208,7 @@ export default class ImportByDevice extends React.Component {
 				<li key={address.addressString}>
 					<a class="name">
 						<label for={'address-' + address.addressString} style={{ marginBottom: 0, cursor: 'pointer', textTransform: 'lowercase' }}>
-							<img src="/assets/img/address.png" />
+							<img src={address.avatar} />
 							<span class="hash">{address.addressString}</span>
 						</label>
 						<input type="radio" id={'address-' + address.addressString}

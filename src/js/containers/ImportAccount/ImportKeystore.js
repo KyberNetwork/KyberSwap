@@ -1,25 +1,11 @@
 import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
-//import DropFile from "../../components/Elements/DropFile"
-//import Modal from '../../components/Elements/Modal'
-//import {Modal} from '../CommonElements'
-
-//import {ImportAccountForm} from "../../components/Forms"
-
-//mport { closeModal } from "../../actions/utilActions"
 import {DropFile} from "../../components/ImportAccount"
-//import Dropzone from 'react-dropzone'
-
-//import { uploadKey } from "../../actions/importKeystoreActions"
-//import { addAccount } from "../../actions/accountActions"
 import { importNewAccount, throwError } from "../../actions/accountActions"
 import { verifyKey, anyErrors } from "../../utils/validators"
 import { addressFromKey } from "../../utils/keys"
-
-//import { history } from 'history'
-
-//const history = createHashHistory()
+import Gixi from "gixi"
 
 @connect((store) => {
   return {
@@ -81,7 +67,7 @@ export default class ImportKeystore extends React.Component {
         }else{          
           //console.log("keystring: ", keystring)
           var address = addressFromKey(keystring)
-          this.props.dispatch(importNewAccount(address, "keystore", keystring, this.props.ethereum))
+          this.props.dispatch(importNewAccount(address, "keystore", keystring, this.props.ethereum,new Gixi(36).getImage()))
           // this.goToExchange()   
           // setTimeout(() => {this.goToExchange()}, 3000)        
 

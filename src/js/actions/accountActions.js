@@ -20,10 +20,10 @@ export function importLoading(){
     }
 }
 
-export function importNewAccount(address, type, keystring, ethereum) {
+export function importNewAccount(address, type, keystring, ethereum, avatar) {
     return {
         type: "ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING",
-        payload: {address, type, keystring, ethereum}
+        payload: {address, type, keystring, ethereum, avatar}
     }
 }
 
