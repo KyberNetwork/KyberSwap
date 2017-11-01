@@ -2,7 +2,7 @@ import SupportedTokens from "./supported_tokens"
 import Token from "./token"
 
 export default class Account {
-  constructor(address, type, keystring, balance = 0, nonce = 0, manualNonce = 0) {    
+  constructor(address, type, keystring, balance = 0, nonce = 0, manualNonce = 0, avatar) {  
     this.address = address
     this.type = type
     this.keystring = keystring
@@ -12,6 +12,7 @@ export default class Account {
     this.nonce = nonce
     //this.tokens = tokens
     this.manualNonce = manualNonce
+    this.avatar = avatar
     
     // this.joined = joined
     // this.wallet = wallet
@@ -22,7 +23,7 @@ export default class Account {
   shallowClone() {
     return new Account(
       this.address, this.type, this.keystring,
-      this.balance, this.nonce, this.manualNonce)
+      this.balance, this.nonce, this.manualNonce,this.avatar)
   }
 
   getUsableNonce() {
