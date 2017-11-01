@@ -11,7 +11,7 @@ export default class InfoKyber extends React.Component {
             <h1 class="title">Kyber Testnet</h1>
             <p class="info">Version: 0.0.1<br/>Chain: Kovan
               <label>Node endpoint
-                <input class="address" type="text" value={constants.KOVAN_ETH_URL} readOnly="true" />
+                <input class="address" type="text" value={constants.NODE_ENDPOINT} readOnly="true" />
               </label>
               <label>Reserve contract address
                 <input class="address" type="text" value={constants.RESERVE_ADDRESS}  readOnly="true"/>
