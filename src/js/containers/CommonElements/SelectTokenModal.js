@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 //import Key from "./Elements/Key"
 import { TokenSelect } from '../../components/CommonElement'
 import { hideSelectToken } from "../../actions/utilActions"
-
+import constants from "../../services/constants"
 import { Modal } from '../../components/CommonElement'
 
 @connect((store, props) => {
@@ -55,7 +55,7 @@ export default class SelectTokenModal extends React.Component {
                   type = {this.props.modalInfo.type}
                   address = {token.address}
                   onClick = {this.chooseToken}
-                  inactive = {!token.balance.times(token.rate).greaterThanOrEqualTo(1)}
+                  inactive = {!token.balance.times(token.rate).greaterThanOrEqualTo(constants.MINIMUM_SOURCE_BALANCE)}
                   title={title}
                   selected={this.props.modalInfo.selected==token.symbol}
                   />
@@ -86,7 +86,7 @@ export default class SelectTokenModal extends React.Component {
                   type = {this.props.modalInfo.type}
                   address = {token.address}
                   onClick = {this.chooseToken}
-                  inactive = {!token.balance.times(token.rate).greaterThanOrEqualTo(1)}
+                  inactive = {!token.balance.times(token.rate).greaterThanOrEqualTo(constants.MINIMUM_SOURCE_BALANCE)}
                   selected={this.props.modalInfo.selected==token.symbol}
                   />
 		    })
