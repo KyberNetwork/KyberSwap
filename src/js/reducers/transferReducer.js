@@ -18,7 +18,8 @@ const initFormState = constants.INIT_TRANSFER_FORM_STATE
 const initState = initFormState
 
 const transfer = (state=initState, action) => {
-  var newState = {...state}
+  // var newState = {...state}
+  var newState = {...state, errors: {...state.errors}}
   switch (action.type) {
     case REHYDRATE: {
       newState = initState;
@@ -101,9 +102,9 @@ const transfer = (state=initState, action) => {
       // var newErrorObj = newState.errors;
       // newErrorObj.destAddress = action.payload;
       // newState.errors = {destAddress: action.payload}
-      // newState.errors.destAddress = action.payload
-      var cloneState = {...newState, errors: {...newState.errors, destAddress: action.payload}}
-      return cloneState
+      newState.errors.destAddress = action.payload
+      // var cloneState = {...newState, errors: {...newState.errors, destAddress: action.payload}}
+      return newState
     case "TRANSFER.THROW_AMOUNT_ERROR":{
       newState.errors.amountTransfer = action.payload
       return newState
