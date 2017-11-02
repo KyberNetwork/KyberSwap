@@ -50,6 +50,7 @@ export default class PostTransfer extends React.Component {
     //check dest address is an ethereum address
     //console.log(validators.verifyAccount(this.props.form.destAddress))
     var check = true
+    var checkNumber = true
     if (validators.verifyAccount(this.props.form.destAddress) !== null) {
       this.props.dispatch(transferActions.throwErrorDestAddress("This is not an address"))
       check = false
@@ -57,6 +58,10 @@ export default class PostTransfer extends React.Component {
     if (isNaN(this.props.form.amount) || !this.props.form.amount || this.props.form.amount == '') {
       this.props.dispatch(transferActions.thowErrorAmount("Amount must be a number"))
       check = false
+      checkNumber = false
+    }
+    if(!checkNumber){
+      return false
     }
     var amountBig = converters.stringToBigNumber(this.props.form.amount)
     if (amountBig.greaterThan(this.props.form.balance)) {
