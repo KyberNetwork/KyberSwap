@@ -2,19 +2,23 @@
 import React from "react"
 
 const Notify = (props) => {
-  var classNotify = ""
+  var classNotify = ""  
+  if (!props.displayTrans){
+    classNotify += "hide"
+  }
   var counter = ""
   if (props.transactionsNum !== 0){
     counter = <span class="counter">{props.transactionsNum}</span>
   }else{
-    classNotify = "empty"
+    classNotify += " empty"
   }  
+  
   return(
     <div class="column small-2 text-right">
       <a class="notifications-toggle" href="#notifications" onClick={(e)=>props.displayTransactions(e)}>
         <img src="/assets/img/menu.svg"/>{counter}
       </a>
-      <ul className = {"notifications hide animated fadeIn " + classNotify}>
+      <ul className = {"notifications animated fadeIn " + classNotify}>
         {props.transactions} 
         {props.transactionsNum === 0 &&
           <li className="empty">

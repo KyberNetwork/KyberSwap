@@ -47,22 +47,24 @@ export default class SelectTokenModal extends React.Component {
       case "source":
         title = "Select source token"
         //content = "source"  			
-        var content = Object.keys(this.props.tokens).map((key, i) => {
+        var content = Object.keys(this.props.tokens).map((key, i) => {          
           var token = this.props.tokens[key]
+          //console.log(token.balance.times(token.rate).toString())
+          //console.log(token.name)
 		      return <TokenSelect key={i} symbol={token.symbol} name={token.name}
 		      				balance={token.balance.toString()} 
 		      				icon={token.icon}
                   type = {this.props.modalInfo.type}
                   address = {token.address}
                   onClick = {this.chooseToken}
-                  inactive = {!token.balance.times(token.rate).greaterThanOrEqualTo(constants.EPSILON)}
+                  inactive = {!token.balance.greaterThanOrEqualTo(constants.EPSILON)}
                   title={title}
                   selected={this.props.modalInfo.selected==token.symbol}
                   />
 		    })
   			break
   		case "des":
-  			title = "Select des token"
+  			title = "Select destination token"
   			var content = Object.keys(this.props.tokens).map((key,i) => {
 		    	var token = this.props.tokens[key]
 		      return <TokenSelect key={i} symbol={token.symbol} name={token.name}
@@ -86,7 +88,7 @@ export default class SelectTokenModal extends React.Component {
                   type = {this.props.modalInfo.type}
                   address = {token.address}
                   onClick = {this.chooseToken}
-                  inactive = {!token.balance.times(token.rate).greaterThanOrEqualTo(constants.EPSILON)}
+                  inactive = {!token.balance.greaterThan(0)}
                   selected={this.props.modalInfo.selected==token.symbol}
                   />
 		    })
