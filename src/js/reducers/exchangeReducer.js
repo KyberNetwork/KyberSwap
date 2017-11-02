@@ -9,7 +9,7 @@ import SUPPORT_TOKENS from "../services/supported_tokens"
 const initState = constants.INIT_EXCHANGE_FORM_STATE
 
 const exchange = (state=initState, action) => {
-  var newState = {...state}
+  var newState = {...state, errors: {...state.errors}}
   switch (action.type) {
     case REHYDRATE: {
       newState = initState;
