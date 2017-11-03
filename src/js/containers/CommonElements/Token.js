@@ -7,6 +7,7 @@ import { connect } from "react-redux"
 import {toT} from "../../utils/converter"
 import {pickRandomProperty} from "../../utils/tokens"
 //import SUPPORTED_TOKENS from "../../services/supported_tokens"
+import { TokenView } from "../../components/CommonElement"
 
 @connect((store, props) => {  
   return {
@@ -19,44 +20,16 @@ import {pickRandomProperty} from "../../utils/tokens"
 
 export default class Token extends React.Component {
   render() {  	
-    //console.log(pickRandomProperty(this.props.tokens))
-    //var token = !!this.props.symbol?this.props.tokens[this.props.symbol]: this.props.tokens[pickRandomProperty(this.props.tokens)]
-    //console.log(this.props.symbol)
-    //console.log(this.props.tokens)
-    var tokenRender
-    var token = this.props.tokens[this.props.symbol]
-    if (token){
-      if(this.props.type == 'transfer'){
-        return (
-          <label>Select Token
-            <div onClick={this.props.onSelected} class="token-select" data-open="transfer-from-token-modal"><img src={token.icon}/><span class="name">{token.name}</span></div>
-          </label>
-  
-          // <div>
-          //   <div onClick={this.props.onSelected}>
-          //     <img src={token.icon} />
-          //     <span>{token.symbol}</span>
-          //   </div>      	
-          //   {balance}
-          // </div>
-        )
-      } else if(this.props.type == 'source'){
-        var balance = this.props.type === 'source'?(<div>Address Balance: <span>{toT(token.balance, 8)}</span></div>):''
-        return (
-          <div class="info" onClick={this.props.onSelected} data-open="exchange-from-token-modal"><img src={token.icon}/><span class="name">{this.props.symbol}</span></div>
-        )
-      } else if(this.props.type == 'des'){
-        return (
-          <div class="info" onClick={this.props.onSelected} data-open="exchange-to-token-modal"><img src={token.icon}/><span class="name">{this.props.symbol}</span></div>
-        )
-      }
-      
-    }
-  	  	
+
+    var token = this.props.tokens[this.props.symbol]  	
     return (
-      <div>
-        {tokenRender}
-      </div>      
+      <TokenView
+        token={token}
+        symbol={this.props.symbol}
+        onSelected={this.props.onSelected}
+        type={this.props.type}
+        balance={toT(token.balance, 8)}
+      />
     )
   }
 }
