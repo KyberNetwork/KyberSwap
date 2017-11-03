@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 
 import { calculateMinAmount, toT } from "../../utils/converter"
 
-import { ExchangeRate, PostExchange } from "../Exchange"
+import { PostExchange } from "../Exchange"
 import { ExchangeForm } from "../../components/Transaction"
 import { SelectTokenModal, ChangeGasModal, TransactionLoading, Token } from "../CommonElements"
 
@@ -221,9 +221,15 @@ export default class Exchange extends React.Component {
         gasError={this.props.exchange.errors.gasError}
       />
     )
-    var exchangeRate = (
-      <ExchangeRate />
-    )
+    // var exchangeRate = (
+    //   <ExchangeRate />
+    // )
+    var exchangeRate = {
+      sourceToken : this.props.exchange.sourceTokenSymbol,
+      rate: toT(this.props.exchange.offeredRate,6),
+      destToken : this.props.exchange.destTokenSymbol,
+      percent: "-"
+    }
     var exchangeButton = (
       <PostExchange />
     )

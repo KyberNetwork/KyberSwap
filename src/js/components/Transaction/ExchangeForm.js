@@ -41,8 +41,10 @@ const ExchangeForm = (props) => {
                   </label>
                 </div>
               </div>
-              <div class="row">
-                {props.exchangeRate}
+              <div class="row">                
+                <div class="column">
+                  <p class="token-compare">1 {props.exchangeRate.sourceToken} = {props.exchangeRate.rate} {props.exchangeRate.destToken}<span class="up">{props.exchangeRate.percent}%</span></p>
+                </div>
               </div>
               {props.step === 2 &&
                 <div class="row hide-on-choose-token-pair">

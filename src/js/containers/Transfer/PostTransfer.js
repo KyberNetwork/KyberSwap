@@ -9,7 +9,7 @@ import * as converters from "../../utils/converter"
 
 import * as transferActions from "../../actions/transferActions"
 
-import { PassphraseModal, ConfirmTransferModal } from "../../components/Transaction"
+import { PassphraseModal, ConfirmTransferModal, PostTransferBtn } from "../../components/Transaction"
 
 import { Modal } from "../../components/CommonElement"
 
@@ -243,12 +243,8 @@ export default class PostTransfer extends React.Component {
         size="tiny"
       />
     return (
-      <div class="row">
-        <div class="column small-11 medium-10 large-9 small-centered text-center">
-          <p class="note">Passphrase is needed for each transfer transaction</p><a class="button accent" data-open="passphrase-modal" onClick={this.clickTransfer}>Transfer</a>
-        </div>
-        {modalPassphrase}
-      </div>
+      <PostTransferBtn modalPassphrase = {modalPassphrase}
+                       submit = {this.clickTransfer}  />      
       // <div>
       //   <button onClick={this.clickTransfer}>Transfer</button>
       //   {modalPassphrase}

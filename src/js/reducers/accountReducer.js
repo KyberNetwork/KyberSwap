@@ -65,7 +65,7 @@ const account = (state=initState, action) => {
         return {...state,
           account: account}
       }
-    }    
+    }
   }
   return state
 }

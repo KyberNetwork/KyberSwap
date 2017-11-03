@@ -1,6 +1,6 @@
 import React from "react"
 
-import constants from "../../services/constants"
+import constants from "../services/constants"
 
 export default class InfoKyber extends React.Component {
   render() {
