@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { Modal } from "../../components/CommonElement"
+import { ErrorModalView } from "../../components/ImportAccount"
 import { closeErrorModal } from "../../actions/accountActions"
 
 @connect((store) => {
@@ -11,34 +11,14 @@ export default class ErrorModal extends React.Component {
     closeModal = () => {
         this.props.dispatch(closeErrorModal())
     }
-    content = () => {
-        return (
-            <div>
-                <div class="title text-center">{this.props.title? this.props.title: "Error occurred"}</div><a class="x" onClick={this.closeModal}>&times;</a>
-                <div class="content">
-                    <div class="row">
-                        <div class="column">
-                            <center>
-                                <p>{this.props.error}</p>
-                            </center>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+
     render() {
         return (
-            <Modal
-                className={{
-                    base: 'reveal tiny',
-                    afterOpen: 'reveal tiny'
-                }}
+            <ErrorModalView
                 isOpen={this.props.showError}
                 onRequestClose={this.closeModal}
-                contentLabel="error modal"
-                content={this.content()}
-                size="tiny"
+                title={this.props.title}
+                error={this.props.error}
             />
         )
     }
