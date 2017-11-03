@@ -6,7 +6,7 @@ import { toT } from "../../utils/converter"
 
 import { TransferForm } from "../../components/Transaction"
 import { PostTransfer } from "../Transfer"
-import { Token, SelectTokenModal, ChangeGasModal, TransactionLoading } from "../CommonElements"
+import { Token, SelectToken, ChangeGasModal, TransactionLoading } from "../CommonElements"
 
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
@@ -138,7 +138,7 @@ export default class Transfer extends React.Component {
       />
     )
     var tokenModal = (
-      <SelectTokenModal chooseToken={this.chooseToken} type="transfer" selectedSymbol = {this.props.transfer.tokenSymbol}/>
+      <SelectToken chooseToken={this.chooseToken} type="transfer" selectedSymbol = {this.props.transfer.tokenSymbol}/>
     )
     var changeGasModal = (
       <ChangeGasModal type="transfer"

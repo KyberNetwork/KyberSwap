@@ -20,7 +20,7 @@ import history from "../../history"
 import { clearSession } from "../../actions/globalActions"
 import { openInfoModal} from "../../actions/utilActions"
 import { default as _ } from 'underscore';
-
+import { LayoutView } from "../../components/Layout"
 
 @connect((store) => {
   return {
@@ -77,30 +77,38 @@ export default class Layout extends React.Component {
   }
 
   render() {
-    var app = (
-        <div>
-          <Route component={Header}/>    
-          <section id="content">
-              <Route exact path="/" component={ImportAccount}/>              
-              <Route exact path="/info" component={InfoKyber}/>                                          
-              <Route exact path="/exchange" component={Exchange}/>
-              <Route exact path="/transfer" component={Transfer}/>
-              <Processing />
+    // var app = (
+    //     <div>
+    //       <Route component={Header}/>    
+    //       <section id="content">
+    //           <Route exact path="/" component={ImportAccount}/>              
+    //           <Route exact path="/info" component={InfoKyber}/>                                          
+    //           <Route exact path="/exchange" component={Exchange}/>
+    //           <Route exact path="/transfer" component={Transfer}/>
+    //           <Processing />
               
-          </section>
-          <section id="modals">
-            <InfoModal/>
-          </section>
-          {}
-        </div>
-      )
+    //       </section>
+    //       <section id="modals">
+    //         <InfoModal/>
+    //       </section>
+    //       {}
+    //     </div>
+    //   )
    
     return (
-      <ConnectedRouter history={history}>
-        <div>
-          {app}
-        </div>
-      </ConnectedRouter>
+      // <ConnectedRouter history={history}>
+      //   <div>
+      //     {app}
+      //   </div>
+      // </ConnectedRouter>
+      <LayoutView
+        history={history}
+        Header={Header}
+        ImportAccount={ImportAccount}
+        InfoKyber={InfoKyber}
+        Exchange={Exchange}
+        Transfer={Transfer}
+      />
     )
   }
 }

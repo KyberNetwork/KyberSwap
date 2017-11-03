@@ -9,15 +9,9 @@ import { ProcessingModal } from '../../components/CommonElement'
 
 export default class Processing extends React.Component {
   
-
   render(){
-    var processingModal = (
-      <ProcessingModal />
-    )
     return (
-      <div>
-        {this.props.account && this.props.account.loading ? processingModal : ''}
-      </div>
+      <ProcessingModal isEnable={this.props.account && this.props.account.loading}/>
     )  
   }
 }

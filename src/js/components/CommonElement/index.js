@@ -6,3 +6,7 @@ export { default as Credential } from './Credential.js';
 export { default as TransactionConfig } from './TransactionConfig.js';
 export { default as ProcessingModal } from "./Processing.js"
 export { default as InfoModal} from "./InfoModal.js"
+export { default as SelectAddessModal } from "./SelectAddressModal.js"
+export { default as SelectTokenModal } from "./SelectTokenModal.js"
+export { default as TokenView } from "./Token.js"
+export { default as TransactionLoadingView } from "./TransactionLoadingView.js"
