@@ -1,5 +1,5 @@
 import Web3 from "web3"
-import Wallet from "ethereumjs-wallet"
+//import Wallet from "ethereumjs-wallet"
 import constants from "./constants"
 
 import { updateBlock, updateBlockFailed, updateRate, updateAllRate } from "../actions/globalActions"
@@ -295,8 +295,8 @@ export default class EthereumService {
     })
   }
 
-  createNewAddress(passphrase) {
-    var newAddress = Wallet.generate()
-    return newAddress.toV3(passphrase, {kdf: "pbkdf2", c: 10240})
-  }
+  // createNewAddress(passphrase) {
+  //   var newAddress = Wallet.generate()
+  //   return newAddress.toV3(passphrase, {kdf: "pbkdf2", c: 10240})
+  // }
 }
