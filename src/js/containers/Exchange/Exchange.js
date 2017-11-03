@@ -6,7 +6,7 @@ import { calculateMinAmount, toT } from "../../utils/converter"
 
 import { ExchangeRate, PostExchange } from "../Exchange"
 import { ExchangeForm } from "../../components/Transaction"
-import { SelectTokenModal, ChangeGasModal, TransactionLoading, Token } from "../CommonElements"
+import { SelectToken, ChangeGasModal, TransactionLoading, Token } from "../CommonElements"
 
 import { anyErrors } from "../../utils/validators"
 
@@ -210,7 +210,7 @@ export default class Exchange extends React.Component {
     //   <input value={this.getDesAmount()} />
     // )
     var selectTokenModal = (
-      <SelectTokenModal chooseToken={this.chooseToken} type="exchange" />
+      <SelectToken chooseToken={this.chooseToken} type="exchange" />
     )
     var changeGasModal = (
       <ChangeGasModal type="exchange"
