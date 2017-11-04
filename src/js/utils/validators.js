@@ -39,12 +39,17 @@ export function verifyToken(addr) {
   }
 }
 
-export function verifyAmount(amount, max) {
-  var weiParam = new BigNumber(10)
-  var result = new BigNumber(amount).times(weiParam.pow(18))
+export function verifyAmount(amount, max) {  
+  var testAmount = parseFloat(amount)
+  if(isNaN(testAmount)){
+    return "not a number"
+  }
+  var result = new BigNumber(amount)
   if (result == 'NaN' || result == 'Infinity') {
     return "not a number"
   }
+  var weiParam = new BigNumber(10)
+  result = result.times(weiParam.pow(18))
   if (max != undefined) {
     var maxBig = new BigNumber(max)
     if (maxBig == 'NaN' || maxBig == 'Infinity') {
