@@ -13,17 +13,17 @@ const ExchangeForm = (props) => {
                 <div class="column medium-6">
                   <label>Exchange From
 
-                    <div className = {errorToken ==="" && props.errors.sourceAmount === ""?"token-input":"token-input error"}>
+                    <div className={errorToken === "" && props.errors.sourceAmount === "" ? "token-input" : "token-input error"}>
 
                       <input type={props.input.sourceAmount.type} value={props.input.sourceAmount.value} onChange={(e) => props.input.sourceAmount.onChange(e)} min="0" step="0.000001" placeholder="0" />
 
 
                       {props.tokenSource}
                     </div>
-                    {errorToken !=="" && 
+                    {errorToken !== "" &&
                       <span class="error-text">{errorToken}</span>
                     }
-                    {props.errors.sourceAmount !=="" && 
+                    {props.errors.sourceAmount !== "" &&
                       <span class="error-text">{props.errors.sourceAmount}</span>
                     }
                     <div class="address-balance"><span class="note">Address Balance</span><a class="value" onClick={props.setAmount}>{props.balance} {props.sourceTokenSymbol}</a></div>
@@ -41,7 +41,7 @@ const ExchangeForm = (props) => {
                   </label>
                 </div>
               </div>
-              <div class="row">                
+              <div class="row">
                 <div class="column">
                   <p class="token-compare">1 {props.exchangeRate.sourceToken} = {props.exchangeRate.rate} {props.exchangeRate.destToken}<span class="up">{props.exchangeRate.percent}%</span></p>
                 </div>
@@ -74,68 +74,12 @@ const ExchangeForm = (props) => {
   )
   return (
 
-    <div className = {props.step === 1?"choose-token-pair":""} id="exchange">
+    <div className={props.step === 1 ? "choose-token-pair" : ""} id="exchange">
       {props.step !== 3 ? render : ''}
       <div class="page-3">
         {props.step == 3 ? props.trasactionLoadingScreen : ''}
       </div>
     </div>
-
-
-
-
-
-
-
-
-
-    // <div class="k-exchange-page">
-    //    	<div class="page-1" class={props.step!==1?'visible-hide':''}>
-    //    		<div>
-    //           {props.tokenSource}
-
-    //      		 <span>to</span>
-    //             {props.tokenDest}
-    //    		</div>
-    //         <div>{props.errors.selectSameToken}</div>
-    //         <div>{props.errors.selectTokenToken}</div>
-    //         <button onClick={props.button.selectToken.onClick}>Continue</button>
-    //    	</div>
-    //     <div class="page-2" class={props.step!==2?'visible-hide':''}>
-    //       <div>
-    //         <button onClick={props.button.showAdvance.onClick}>Advance</button>
-    //       </div>
-    //       <h1>Exchange from</h1>
-    //       <div>
-    //         <div>
-    //         <input type={props.input.sourceAmount.type} value={props.input.sourceAmount.value} onChange={props.input.sourceAmount.onChange} />
-    //           <div>{props.tokenSource}</div>
-    //           <div>{props.sourceAmount}</div>
-    //         </div>
-    //         <span> to</span>
-    //         <div>
-    //         <input value={props.input.destAmount.value} readOnly/>              
-    //           {props.destAmount}
-    //           {props.tokenDest} 
-    //         </div>
-    //       </div>
-    //       <div>{props.errors.sourceAmount}</div>
-    //       <div>{props.errors.tokenSource}</div>
-    //       <div>
-    //         {props.exchangeRate}
-    //       </div>
-    //       <div>
-    //         {props.exchangeButton}
-    //       </div>
-
-    //     </div>
-    //     <div class="page-3"  class={props.step!==3?'visible-hide':''}>
-    //         {props.trasactionLoadingScreen}
-    //     </div>
-
-    //     {props.selectTokenModal}
-    //     {props.changeGasModal}        
-    //   </div>
   )
 }
 

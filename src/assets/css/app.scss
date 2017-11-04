@@ -9,8 +9,10 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
 @import 'modals';
 @import 'addresses';
 @import 'tokens';
-@import 'slider';
+//@import 'slider';
 @import 'fix-react-modal';
+@import "~slick-carousel/slick/slick.css";
+//@import "~slick-carousel/slick/slick-theme.scss";
 
 #waiting {
   background-color: rgba($dark-gray, .5);
@@ -252,6 +254,7 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
 #rate-bar {
   background-color: #0E1320;
   color: $light-gray;
+  min-height: 0px !important;
   padding: 10px 15px;
   @include breakpoint(medium) {
     padding: 20px 15px;
@@ -268,12 +271,12 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
       background: linear-gradient(90deg, transparent, #0E1320);
     }
   }
-  ul.rates {
+  div.rate {
     list-style: none;
     margin: 0;
     padding: 0;
     font-size: 0;
-    > li {
+    div.slick-slide {
       display: inline-block;
       padding-right: 15px;
       &:not(:last-child) {

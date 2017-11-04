@@ -1,4 +1,6 @@
 import React from "react"
+import Slider from "react-slick"
+
 
 import {toT} from "../../utils/converter"
 import SupportedTokens from "../../services/supported_tokens"
@@ -27,19 +29,34 @@ const ExchangeRates = (props) => {
         //   <td title={toT(rate.balance)}>{toT(rate.balance, 8)}</td>
         // </tr>
 
-        <li key={rateSymbol}>
-          <div class="pair">{rate.symbol} / ETH</div>
-          <div class="value up">{toT(rate.rate, 8)}<span>-%</span></div>
-        </li>
+        <div key={rateSymbol}>
+          <div class="pair">ETH / {rate.symbol}</div>
+          <div class="value up">{toT(rate.rateEth, 6)}<span>-%</span></div>
+        </div>
       )
     }
   }
+  var settings = {    
+    infinite: true,
+    arrows: false,
+    autoplay: true,
+    speed: 500,    
+    adaptiveHeight: true,
+    variableWidth: true,
+    responsive: [
+                  { breakpoint: 400, settings: { slidesToShow: 2 } },  
+                  { breakpoint: 768, settings: { slidesToShow: 3 } },                   
+                  { breakpoint: 1024, settings: { slidesToShow: 5 } }, 
+                  { breakpoint: 100000, settings: { slidesToShow: 6 } } ]    
+  }
 	return (
     <div class="row">
-      <div class="column">
-        <ul class="rates">
+      <div class="column">       
+        <div className="rate">
+          <Slider {...settings}>
           {rates}
-        </ul>
+          </Slider>                  
+        </div>         
       </div>
     </div>    
   )
