@@ -74,7 +74,7 @@ const utils = (state=initState, action) => {
       newState.showNotify = !newState.showNotify
       return newState
     }
-    case "UTIL.OPEM_INFO_MODAL": {
+    case "UTIL.OPEN_INFO_MODAL": {
       var newState = {...state}
       var {title, content} = action.payload;
       newState.infoModal = {
