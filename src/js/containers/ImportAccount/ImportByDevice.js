@@ -6,6 +6,7 @@ import constants from "../../services/constants"
 import AddressGenerator from "../../services/device/addressGenerator";
 import { getTrezorPublicKey, connectLedger, getLedgerPublicKey } from "../../services/device/device";
 import SelectAddressModal from "../CommonElements/SelectAddressModal";
+import ImportByDeviceView from '../../components/ImportAccount/ImportByDeviceView'
 
 import { importNewAccount, throwError } from "../../actions/accountActions"
 import { toEther } from "../../utils/converter"
@@ -65,7 +66,7 @@ export default class ImportByDevice extends React.Component {
 				break;
 			}
 			case 'ledger': {
-
+				console.log(this)
 				connectLedger().then((eth) => {
 					getLedgerPublicKey(eth, path).then((result) => {
 						this.generateAddress(result);
@@ -154,7 +155,7 @@ export default class ImportByDevice extends React.Component {
 		})
 	}
 
-	getRandomAvatar(addressString){
+	getRandomAvatar(addressString) {
 		return new Gixi(36, addressString).getImage();
 	}
 
@@ -168,16 +169,7 @@ export default class ImportByDevice extends React.Component {
 		}
 	}
 
-	getAddress() {
-		let formAddress = JSON.parse(this.refs.formAddress.address.value),
-			data = {
-				address: formAddress.addressString,
-				type: this.walletType,
-				path: this.dPath + '/' + formAddress.index,
-				avatar: formAddress.avatar
-
-			};
-
+	getAddress(data) {
 		this.props.dispatch(importNewAccount(data.address, data.type, data.path, this.props.ethereumNode, data.avatar))
 		this.closeModal()
 	}
@@ -185,11 +177,7 @@ export default class ImportByDevice extends React.Component {
 		this.props.dispatch(push('/exchange'));
 	}
 
-	choosePath() {
-		let formPath = this.refs.formPath,
-			path = formPath.path.value;
-
-		path = (path != 0) ? path : formPath.customPath.value;
+	choosePath(path) {
 		this.connectDevice(this.walletType, path);
 	}
 
@@ -199,36 +187,6 @@ export default class ImportByDevice extends React.Component {
 				resolve(toEther(balance))
 			})
 		})
-	}
-
-	getCurrentList() {
-		const addressLink = constants.KOVAN_ETH_URL + 'address/';
-		let currentListHtml = this.state.currentAddresses.map((address, index) => {
-			return (
-				<li key={address.addressString}>
-					<a class="name">
-						<label for={'address-' + address.addressString} style={{ marginBottom: 0, cursor: 'pointer', textTransform: 'lowercase' }}>
-							<img src={address.avatar} />
-							<span class="hash">{address.addressString}</span>
-						</label>
-						<input type="radio" id={'address-' + address.addressString}
-							name="address"
-							value={JSON.stringify(address)}
-							onClick={() => this.getAddress()}
-							style={{ display: 'none' }}
-						/>
-					</a>
-					<div class="info">
-						<a class="link has-tip top explore" href={addressLink + address.addressString} target="_blank" title="View on Etherscan">		{address.balance == '-1' ?
-							<img src="/assets/img/waiting.svg" />
-							: address.balance
-						} ETH
-						</a>
-					</div>
-				</li>
-			)
-		})
-		return currentListHtml;
 	}
 
 	updateBalance(address, index) {
@@ -243,111 +201,22 @@ export default class ImportByDevice extends React.Component {
 			})
 	}
 
-	getSelectAddressHtml() {
-		return (
-			<div>
-				<div class="content">
-					<div class="row">
-						<div class="column">
-							<form ref="formPath">
-								<div class="row small-up-2 medium-up-3 large-up-3 address-paths gutter-15">
-									{this.getListPathHtml()}
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-				<div class="content white">
-					<div class="row">
-						<div class="column">
-							<div class="block-title">
-								Select the address you would like to interact with
-								<img class="loading" src="/assets/img/waiting.svg" />
-							</div>
-							<form ref="formAddress">
-								<ul class="address-list animated fadeIn">
-									{this.getCurrentList()}
-								</ul>
-							</form>
-							<div class="address-list-navigation animated fadeIn">
-								<a class="previous" onClick={() => this.preAddress()}>Previous Addresses</a>
-								<a class="next" onClick={() => this.moreAddress()}>More Addresses</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		)
-	}
-
-	getListPathHtml() {
-		let listPath = this.DPATH.map((dPath, index) => {
-			let disabledPath = (this.walletType == 'ledger' && dPath.notSupport) ? true : false;
-			let defaultChecked = (dPath.defaultType == this.walletType) ? true : false
-			return (
-				<div class="column" key={dPath.path}>
-					<input id={'path-' + index} type="radio" name="path"
-						defaultValue={dPath.path}
-						defaultChecked={defaultChecked}
-						onClick={() => this.choosePath()}
-						disabled={disabledPath}
-					/>
-					<label class="address-path-stamp"
-						for={'path-' + index}
-						style={disabledPath ? { opacity: .5 } : {}}>
-						{
-							dPath.path ? (
-								<div>
-									<div class="name">{dPath.path}</div>
-									<div class="note">{dPath.desc}</div>
-								</div>
-							) : (
-									<div>
-										<div class="name">{dPath.desc}</div>
-										<div class="address-path-input">
-											<input type="text" name="customPath" defaultValue={dPath.defaultP} />
-											<a class="submit pulse animated infinite" style={{ display: 'block' }}></a>
-										</div>
-									</div>
-								)
-						}
-					</label>
-				</div>
-			)
-		})
-		return listPath;
-	}
-
 	render() {
 		return (
-			<div>
-				<div class="small-12 medium-6 column" style={{ padding: 0 }}>
-					<div class="column column-block">
-						<div class="importer trezor">
-							<a onClick={() => this.connectDevice('trezor')}>
-								<img src="/assets/img/trezor.svg" />
-								<div class="description">Import from<br />trezor</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="small-12 medium-6 column" style={{ padding: 0 }}>
-					<div class="column column-block">
-						<div class="importer ledger">
-							<a onClick={() => this.connectDevice('ledger')}>
-								<img src="/assets/img/ledger.svg" />
-								<div class="description">Import from<br />ledger wallet</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<SelectAddressModal
-					open={this.state.modalOpen}
-					onRequestClose={this.closeModal.bind(this)}
-					content={this.getSelectAddressHtml()}
-				/>
-
-			</div>
+			<ImportByDeviceView
+				modalOpen={this.state.modalOpen}
+				onRequestClose={this.closeModal.bind(this)}
+				connectTrezor={() => this.connectDevice('trezor')}
+				connectLedger={() => this.connectDevice('ledger')}
+				getPreAddress={() => this.preAddress()}
+				getMoreAddress={() => this.moreAddress()}
+				dPath={this.DPATH}
+				currentDPath={this.dPath}
+				currentAddresses={this.state.currentAddresses}
+				walletType={this.walletType}
+				getAddress={this.getAddress.bind(this)}
+				choosePath={this.choosePath.bind(this)}
+			/>
 		)
 	}
 }
