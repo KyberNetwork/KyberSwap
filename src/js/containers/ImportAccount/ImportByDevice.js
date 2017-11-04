@@ -1,16 +1,15 @@
-import React from "react";
+import React from "react"
 import { connect } from "react-redux"
-import { push } from 'react-router-redux';
+import { push } from 'react-router-redux'
 import constants from "../../services/constants"
+import { getRandomAvatar } from "../../services/accounts"
 
 import AddressGenerator from "../../services/device/addressGenerator";
 import { getTrezorPublicKey, connectLedger, getLedgerPublicKey } from "../../services/device/device";
-import SelectAddressModal from "../CommonElements/SelectAddressModal";
-import ImportByDeviceView from '../../components/ImportAccount/ImportByDeviceView'
+import { ImportByDeviceView } from "../../components/ImportAccount"
 
 import { importNewAccount, throwError } from "../../actions/accountActions"
 import { toEther } from "../../utils/converter"
-import Gixi from "gixi"
 
 @connect((store) => {
 	return {
@@ -66,7 +65,6 @@ export default class ImportByDevice extends React.Component {
 				break;
 			}
 			case 'ledger': {
-				console.log(this)
 				connectLedger().then((eth) => {
 					getLedgerPublicKey(eth, path).then((result) => {
 						this.generateAddress(result);
@@ -101,7 +99,7 @@ export default class ImportByDevice extends React.Component {
 				index: index,
 				balance: -1,
 			};
-			address.avatar = this.getRandomAvatar(address.addressString)
+			address.avatar = getRandomAvatar(address.addressString)
 			addresses.push(address);
 			this.updateBalance(address.addressString, index);
 		}
@@ -139,7 +137,7 @@ export default class ImportByDevice extends React.Component {
 					index: i,
 					balance: -1,
 				};
-				address.avatar = this.getRandomAvatar(address.addressString)
+				address.avatar = getRandomAvatar(address.addressString)
 				addresses.push(address);
 				currentAddresses.push(address);
 				this.updateBalance(address.addressString, i);
@@ -153,10 +151,6 @@ export default class ImportByDevice extends React.Component {
 			addresses: addresses,
 			currentAddresses: addresses.slice(this.currentIndex - 5, this.currentIndex)
 		})
-	}
-
-	getRandomAvatar(addressString) {
-		return new Gixi(36, addressString).getImage();
 	}
 
 	preAddress() {
