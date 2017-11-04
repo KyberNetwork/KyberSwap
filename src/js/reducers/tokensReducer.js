@@ -36,12 +36,12 @@ const token = (state=initState, action) => {
             return state;
         }            
     }
-    case "GLOBAL.RATE_UPDATED_FULFILLED": {
-      var tokens = {...state.tokens}
-      var token = action.payload
-      tokens[token.symbol] = token
-      return Object.assign({}, state, tokens)
-    }
+    // case "GLOBAL.RATE_UPDATED_FULFILLED": {
+    //   var tokens = {...state.tokens}
+    //   var token = action.payload
+    //   tokens[token.symbol] = token
+    //   return Object.assign({}, state, tokens)
+    // }
     case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
       var tokens = {...state.tokens}
       var tokensData = action.payload;
