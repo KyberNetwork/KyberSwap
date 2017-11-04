@@ -4,16 +4,15 @@ import { push } from 'react-router-redux';
 
 import { toT } from "../../utils/converter"
 
-import { TransferForm } from "../../components/Transaction"
+import { TransferForm, TransactionConfig } from "../../components/Transaction"
 import { PostTransfer } from "../Transfer"
-import { Token, SelectToken, ChangeGasModal, TransactionLoading } from "../CommonElements"
+import { Token, SelectToken, TransactionLoading } from "../CommonElements"
 
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
 import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase, throwErrorDestAddress, thowErrorAmount, makeNewTransfer } from '../../actions/transferActions';
 
 import { specifyGas as specifyGasTransfer, specifyGasPrice as specifyGasPriceTransfer, hideAdvance as hideAdvanceTransfer } from "../../actions/transferActions"
-import { TransactionConfig } from "../../components/CommonElement"
 
 @connect((store) => {
   // if (store.account.isStoreReady) {
@@ -140,15 +139,6 @@ export default class Transfer extends React.Component {
     var tokenModal = (
       <SelectToken chooseToken={this.chooseToken} type="transfer" selectedSymbol = {this.props.transfer.tokenSymbol}/>
     )
-    var changeGasModal = (
-      <ChangeGasModal type="transfer"
-        gas={this.props.transfer.gas}
-        gasPrice={this.props.transfer.gasPrice}
-        open={this.props.transfer.advance}
-        gasPriceError={this.props.transfer.errors.gasPriceError}
-        gasError={this.props.transfer.errors.gasError}
-      />
-    )
     var transferButton = (
       <PostTransfer />
     )
@@ -177,7 +167,6 @@ export default class Transfer extends React.Component {
                     token = {token}
                     tokenSymbol = {this.props.transfer.tokenSymbol}
                     tokenModal = {tokenModal}
-                    changeGasModal = {changeGasModal}
                     gasConfig = {gasConfig}
                     transferButton = {transferButton}
                     trasactionLoadingScreen = {trasactionLoadingScreen}

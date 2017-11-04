@@ -1,6 +1,6 @@
 import React from "react"
 
-const TransferForm = (props) => {  
+const TransferForm = (props) => {
   var render = (
     <div>
       <div class="frame">
@@ -11,12 +11,12 @@ const TransferForm = (props) => {
               <div class="row">
                 <div class="column">
 
-                  <label className = {props.errors.destAddress===""?"":"error"}>Transfer to address
-                    <input class="text-center hash" type="text" placeholder="Address Hash" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange}/>
-                    {props.errors.destAddress !== "" && 
+                  <label className={props.errors.destAddress === "" ? "" : "error"}>Transfer to address
+                    <input class="text-center hash" type="text" placeholder="Address Hash" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange} />
+                    {props.errors.destAddress !== "" &&
                       <span class="error-text">{props.errors.destAddress}</span>
                     }
-                  </label>                  
+                  </label>
                 </div>
               </div>
               <div class="row">
@@ -28,13 +28,13 @@ const TransferForm = (props) => {
                 </div>
                 <div class="column medium-6">
                   <label>Amount
-                    <div className = {props.errors.amountTransfer===""?"token-amount":"token-amount error"}>
-                      <input type="number" min="0" step="0.000001" placeholder="0" value={props.input.amount.value} onChange={props.input.amount.onChange}/><span class="name">{props.tokenSymbol}</span>
-                      {props.errors.amountTransfer !== "" && 
+                    <div className={props.errors.amountTransfer === "" ? "token-amount" : "token-amount error"}>
+                      <input type="number" min="0" step="0.000001" placeholder="0" value={props.input.amount.value} onChange={props.input.amount.onChange} /><span class="name">{props.tokenSymbol}</span>
+                      {props.errors.amountTransfer !== "" &&
                         <span class="error-text">{props.errors.amountTransfer}</span>
                       }
                     </div>
-                    <div class="address-balance clearfix"><span class="note">Address Balance</span><a class="value"  onClick={props.setAmount}>{props.balance} {props.tokenSymbol}</a></div>
+                    <div class="address-balance clearfix"><span class="note">Address Balance</span><a class="value" onClick={props.setAmount}>{props.balance} {props.tokenSymbol}</a></div>
                   </label>
                   <span class="error-text">{props.errors.amountTransfer}</span>
                 </div>
@@ -45,10 +45,10 @@ const TransferForm = (props) => {
                 <div class="clearfix">
                   <div class="advanced-switch base-line float-right">
                     <div class="switch accent">
-                      <input class="switch-input" id="advanced" type="checkbox"/>
+                      <input class="switch-input" id="advanced" type="checkbox" />
                       <label class="switch-paddle" for="advanced"><span class="show-for-sr">Advanced Mode</span></label>
                     </div>
-                    
+
                     <label class="switch-caption" for="advanced">Advanced</label>
                   </div>
                 </div>
@@ -65,41 +65,13 @@ const TransferForm = (props) => {
     </div>
   )
   return (
-    
+
     <div>
-      {props.step!==2? render : ''}
+      {props.step !== 2 ? render : ''}
       <div class="page-3">
-        {props.step==2? props.trasactionLoadingScreen : ''}
+        {props.step == 2 ? props.trasactionLoadingScreen : ''}
       </div>
     </div>
-
-
-
-    // <div class="k-exchange-page">
-    //    	<div class="page-1" class={props.step!==1?'visible-hide':''}>
-    //       <div>
-    //         <button onClick={props.button.showAdvance.onClick}>Advance</button>
-    //       </div>
-    //       <h1>Transfer to</h1>
-
-    //       <input value={props.input.destAddress.value} onChange={props.input.destAddress.onChange} />
-    //       <div>{props.errors.destAddress}</div>
-
-    //       <h1>Amount</h1>
-    //       <input value={props.input.amount.value} onChange={props.input.amount.onChange} />
-    //       <div>{props.errors.amountTransfer}</div>
-
-    //       {props.token}
-    //       {props.transferButton}
-    //     </div>
-
-    //     <div class="page-2"  class={props.step!==2?'visible-hide':''}>
-    //       {props.trasactionLoadingScreen}
-    //     </div>
-
-    //     {props.tokenModal}
-    //     {props.changeGasModal}
-    //   </div>
   )
 }
 

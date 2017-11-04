@@ -5,16 +5,14 @@ import { push } from 'react-router-redux';
 import { calculateMinAmount, toT } from "../../utils/converter"
 
 import { PostExchange } from "../Exchange"
-import { ExchangeForm } from "../../components/Transaction"
-import { SelectToken, ChangeGasModal, TransactionLoading, Token } from "../CommonElements"
+import { ExchangeForm, TransactionConfig } from "../../components/Transaction"
+import { SelectToken, TransactionLoading, Token } from "../CommonElements"
 
 import { anyErrors } from "../../utils/validators"
 
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 //import { selectTokenAsync, thowErrorSourceAmount } from "../../actions/exchangeActions"
 import * as exchangeActions from "../../actions/exchangeActions"
-
-import { TransactionConfig } from "../../components/CommonElement"
 
 import { randomForExchange } from "../../utils/random"
 @connect((store) => {
@@ -211,16 +209,7 @@ export default class Exchange extends React.Component {
     // )
     var selectTokenModal = (
       <SelectToken chooseToken={this.chooseToken} type="exchange" />
-    )
-    var changeGasModal = (
-      <ChangeGasModal type="exchange"
-        gas={this.props.exchange.gas}
-        gasPrice={this.props.exchange.gasPrice}
-        open={this.props.exchange.advanced}
-        gasPriceError={this.props.exchange.errors.gasPriceError}
-        gasError={this.props.exchange.errors.gasError}
-      />
-    )
+    )  
     // var exchangeRate = (
     //   <ExchangeRate />
     // )
@@ -257,7 +246,6 @@ export default class Exchange extends React.Component {
         tokenSource={tokenSource}
         tokenDest={tokenDest}
         selectTokenModal={selectTokenModal}
-        changeGasModal={changeGasModal}
         exchangeRate={exchangeRate}
         gasConfig={gasConfig}
         exchangeButton={exchangeButton}
