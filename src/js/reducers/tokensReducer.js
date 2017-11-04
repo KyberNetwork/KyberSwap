@@ -8,7 +8,8 @@ const initState = function(){
   SUPPORT_TOKENS.forEach( (token) => {
     tokens[token.symbol] = token
     tokens[token.symbol].rate = 0
-    tokens[token.symbol].balance = 0
+    tokens[token.symbol].rateEth = 0
+    tokens[token.symbol].balance = 0    
   })
   return tokens
 }()
@@ -27,7 +28,8 @@ const token = (state=initState, action) => {
                   tokenMap.icon,
                   tokenMap.address,
                   new BigNumber(tokenMap.rate ? tokenMap.rate: 0),
-                  new BigNumber(tokenMap.balance ? tokenMap.balance : 0)
+                  new BigNumber(tokenMap.balance ? tokenMap.balance : 0),
+                  new BigNumber(tokenMap.rateEth ? tokenMap.rateEth : 0)
                 )
                 tokens[id] = token
             })

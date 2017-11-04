@@ -30,8 +30,8 @@ const ExchangeRates = (props) => {
         // </tr>
 
         <div key={rateSymbol}>
-          <div class="pair">{rate.symbol} / ETH</div>
-          <div class="value up">{toT(rate.rate, 8)}<span>-%</span></div>
+          <div class="pair">ETH / {rate.symbol}</div>
+          <div class="value up">{toT(rate.rateEth, 6)}<span>-%</span></div>
         </div>
       )
     }
