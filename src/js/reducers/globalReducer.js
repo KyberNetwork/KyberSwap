@@ -55,12 +55,12 @@ const global = (state=initState, action) => {
     case "GLOBAL.EXIT_IDLE_MODE": {
       return {...state, idleMode: false}
     }
-    case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
-      if(!state.allStateUpdatedFirstTime){
-        return {...state, allStateUpdatedFirstTime: 1}
-      } 
-      return {...state};
-    }
+    // case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
+    //   if(!state.allStateUpdatedFirstTime){
+    //     return {...state, allStateUpdatedFirstTime: 1}
+    //   } 
+    //   return {...state};
+    // }
   }
   return state
 }

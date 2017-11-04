@@ -5,6 +5,7 @@ export function updateBlock(ethereum, block) {
     payload: ethereum
   }
 }
+
 export function updateBlockComplete(block) {
   return {
     type: "GLOBAL.NEW_BLOCK_INCLUDED_FULFILLED",
@@ -19,12 +20,12 @@ export function updateBlockFailed(error) {
   }
 }
 
-export function updateRate(ethereum, source, reserve, ownerAddr) {
-  return {
-    type: "GLOBAL.RATE_UPDATED_PENDING",
-    payload: {ethereum, source, reserve, ownerAddr}
-  }
-}
+// export function updateRate(ethereum, source, reserve, ownerAddr) {
+//   return {
+//     type: "GLOBAL.RATE_UPDATED_PENDING",
+//     payload: {ethereum, source, reserve, ownerAddr}
+//   }
+// }
 
 export function updateAllRate(ethereum, tokens, reserve, ownerAddr){
   return {
@@ -33,12 +34,12 @@ export function updateAllRate(ethereum, tokens, reserve, ownerAddr){
   }
 }
 
-export function updateRateComplete(rate) {
-  return {
-    type: "GLOBAL.RATE_UPDATED_FULFILLED",
-    payload: rate
-  }
-}
+// export function updateRateComplete(rate) {
+//   return {
+//     type: "GLOBAL.RATE_UPDATED_FULFILLED",
+//     payload: rate
+//   }
+// }
 
 export function updateAllRateComplete(rates){
   return {
