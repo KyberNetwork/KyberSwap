@@ -20,12 +20,12 @@
 var Q = require('q');
 var utils = require('./utils');
 
-var LedgerEth = function(comm) {
+var LedgerEth = function (comm) {
 	this.comm = comm;
 	this.comm.setScrambleKey('w0w');
 }
 
-LedgerEth.prototype.getAddress_async = function(path, boolDisplay, boolChaincode) {
+LedgerEth.prototype.getAddress_async = function (path, boolDisplay, boolChaincode) {
 	var splitPath = utils.splitPath(path);
 	var buffer = new Buffer(5 + 1 + splitPath.length * 4);
 	buffer[0] = 0xe0;
@@ -37,7 +37,7 @@ LedgerEth.prototype.getAddress_async = function(path, boolDisplay, boolChaincode
 	splitPath.forEach(function (element, index) {
 		buffer.writeUInt32BE(element, 6 + 4 * index);
 	});
-	return this.comm.exchange(buffer.toString('hex'), [0x9000]).then(function(response) {
+	return this.comm.exchange(buffer.toString('hex'), [0x9000]).then(function (response) {
 		var result = {};
 		var response = new Buffer(response, 'hex');
 		var publicKeyLength = response[0];
@@ -51,13 +51,13 @@ LedgerEth.prototype.getAddress_async = function(path, boolDisplay, boolChaincode
 	});
 }
 
-LedgerEth.prototype.signTransaction_async = function(path, rawTxHex) {
+LedgerEth.prototype.signTransaction_async = function (path, rawTxHex) {
 	var splitPath = utils.splitPath(path);
 	var offset = 0;
 	var rawTx = new Buffer(rawTxHex, 'hex');
 	var apdus = [];
 	var response = [];
-	var self = this;	
+	var self = this;
 	while (offset != rawTx.length) {
 		var maxChunkSize = (offset == 0 ? (150 - 1 - splitPath.length * 4) : 150)
 		var chunkSize = (offset + maxChunkSize > rawTx.length ? rawTx.length - offset : maxChunkSize);
@@ -80,43 +80,51 @@ LedgerEth.prototype.signTransaction_async = function(path, rawTxHex) {
 		apdus.push(buffer.toString('hex'));
 		offset += chunkSize;
 	}
-	return utils.foreach(apdus, function(apdu) {
-		return self.comm.exchange(apdu, [0x9000]).then(function(apduResponse) {
+	return utils.foreach(apdus, function (apdu) {
+		return self.comm.exchange(apdu, [0x9000]).then(function (apduResponse) {
 			response = apduResponse;
 		})
-	}).then(function() {		
+	}).then(function () {
 		response = new Buffer(response, 'hex');
-		var result = {};					
+		var result = {};
 		result['v'] = response.slice(0, 1).toString('hex');
 		result['r'] = response.slice(1, 1 + 32).toString('hex');
 		result['s'] = response.slice(1 + 32, 1 + 32 + 32).toString('hex');
+		result['status'] = true
 		return result;
+	}).catch((err) => {
+		var result = {};
+		result['status'] = false		
+		result['error'] = err
+		result['error']['message'] = "Cannot sign transaction"
+		result['error']['type'] = "ledger"
+		return result
 	})
 }
 
-LedgerEth.prototype.getAppConfiguration_async = function() {
+LedgerEth.prototype.getAppConfiguration_async = function () {
 	var buffer = new Buffer(5);
 	buffer[0] = 0xe0;
 	buffer[1] = 0x06;
 	buffer[2] = 0x00;
 	buffer[3] = 0x00;
 	buffer[4] = 0x00;
-	return this.comm.exchange(buffer.toString('hex'), [0x9000]).then(function(response) {
-			var result = {};
-			var response = new Buffer(response, 'hex');
-			result['arbitraryDataEnabled'] = (response[0] & 0x01);
-			result['version'] = "" + response[1] + '.' + response[2] + '.' + response[3];
-			return result;
+	return this.comm.exchange(buffer.toString('hex'), [0x9000]).then(function (response) {
+		var result = {};
+		var response = new Buffer(response, 'hex');
+		result['arbitraryDataEnabled'] = (response[0] & 0x01);
+		result['version'] = "" + response[1] + '.' + response[2] + '.' + response[3];
+		return result;
 	});
 }
 
-LedgerEth.prototype.signPersonalMessage_async = function(path, messageHex) {
+LedgerEth.prototype.signPersonalMessage_async = function (path, messageHex) {
 	var splitPath = utils.splitPath(path);
 	var offset = 0;
 	var message = new Buffer(messageHex, 'hex');
 	var apdus = [];
 	var response = [];
-	var self = this;	
+	var self = this;
 	while (offset != message.length) {
 		var maxChunkSize = (offset == 0 ? (150 - 1 - splitPath.length * 4 - 4) : 150)
 		var chunkSize = (offset + maxChunkSize > message.length ? message.length - offset : maxChunkSize);
@@ -140,18 +148,18 @@ LedgerEth.prototype.signPersonalMessage_async = function(path, messageHex) {
 		apdus.push(buffer.toString('hex'));
 		offset += chunkSize;
 	}
-	return utils.foreach(apdus, function(apdu) {
-		return self.comm.exchange(apdu, [0x9000]).then(function(apduResponse) {
+	return utils.foreach(apdus, function (apdu) {
+		return self.comm.exchange(apdu, [0x9000]).then(function (apduResponse) {
 			response = apduResponse;
 		})
-	}).then(function() {		
+	}).then(function () {
 		response = new Buffer(response, 'hex');
-		var result = {};					
+		var result = {};
 		result['v'] = response[0];
 		result['r'] = response.slice(1, 1 + 32).toString('hex');
 		result['s'] = response.slice(1 + 32, 1 + 32 + 32).toString('hex');
 		return result;
-	})	
+	})
 }
 
 module.exports = LedgerEth;

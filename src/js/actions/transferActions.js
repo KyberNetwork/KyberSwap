@@ -151,23 +151,20 @@ export function doTransaction(id, ethereum, tx, account, data) {
 	return {
 		type: "TRANSFER.TX_BROADCAST_PENDING",
 		payload: { ethereum, tx, account, data },
-		meta: id,
 	}
 }
 
-export function doTransactionComplete(txHash, id) {
+export function doTransactionComplete(txHash) {
 	return {
 		type: "TRANSFER.TX_BROADCAST_FULFILLED",
 		payload: txHash,
-		meta: id,
 	}
 }
 
-export function doTransactionFail(error, id) {
+export function doTransactionFail(error) {
 	return {
 		type: "TRANSFER.TX_BROADCAST_REJECTED",
 		payload: error,
-		meta: id,
 	}
 }
 

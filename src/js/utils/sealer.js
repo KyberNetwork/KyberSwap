@@ -81,23 +81,22 @@ export function sealTxByLedger(params) {
 
   eTx.raw[6] = Buffer.from([params.chainId]);
   // eTx.raw[7] = eTx.raw[8] = 0;
-  let txToSign = ethUtil.rlp.encode(eTx.raw);
-
+  let txToSign = ethUtil.rlp.encode(eTx.raw);  
   return new Promise((resolve, reject)=>{
     connectLedger().then((eth) => {
-      signLedgerTransaction(eth, params.address_n,  txToSign.toString('hex')).then((response) => {
-  
+      signLedgerTransaction(eth, params.address_n,  txToSign.toString('hex')).then((response) => {        
+        if(response.status){
           params.v = "0x" + response['v'];
           params.r = "0x" + response['r'];
           params.s = "0x" + response['s'];
-          var tx = new EthereumTx(params);
-  
+          var tx = new EthereumTx(params);  
           resolve(tx);
+        }else{
+          reject(response.error)    
+        }          
       })
     }).catch((err) => {
-      if (typeof (callbackFail) == 'function') {
-        reject(err);
-      }
+      reject(err)      
     })
   })  
 }

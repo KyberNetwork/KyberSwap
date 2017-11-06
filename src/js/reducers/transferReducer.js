@@ -168,6 +168,7 @@ const transfer = (state=initState, action) => {
     }
     case "TRANSFER.PROCESS_TRANSFER":{
       newState.isConfirming = true
+      newState.bcError = ""
       return newState
     }
     case "TX.TX_ADDED": {      
