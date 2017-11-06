@@ -226,6 +226,7 @@ const exchange = (state=initState, action) => {
     }
     case "EXCHANGE.PROCESS_EXCHANGE_AFTER_CONFIRM":{
       newState.isConfirming = true
+      newState.bcError = ""
       return newState
     }    
     case "TX.TX_ADDED": {      

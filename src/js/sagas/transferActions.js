@@ -88,20 +88,9 @@ function* processTransfer(action) {
   }
   
   try {
-   // console.log(rawTx)   
     yield put(actions.prePareBroadcast())
     const hash = yield call(ethereum.sendRawTransaction, rawTx, ethereum)
-   // console.log(hash)      
     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
-
-    // if (type === "keystore") {
-    //   const hash = yield call(ethereum.sendRawTransaction, rawTx, ethereum)
-    //   //console.log(hash)      
-    //   yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
-    // } else {
-    //   yield put(actions.saveRawTransferTransaction(rawTx))
-    //   yield put(actions.showConfirm())
-    // }
   } catch (e) {
     yield call(doTransactionFail, ethereum, account, e.message)
   }
