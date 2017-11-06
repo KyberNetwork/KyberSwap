@@ -18,4 +18,14 @@
         transform: translateY($half);
     } 
 }
-  
+
+.address-path-stamp.active{
+    background: linear-gradient(135deg, #2A9A8D, #5F7921);
+    box-shadow: 0 10px 40px 0 rgba(42, 154, 141, 0.3);
+    .name{
+        color: #fff;
+    }
+    .note{
+        color: #BBDAD5;
+    }
+}
