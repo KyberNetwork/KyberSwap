@@ -16,9 +16,9 @@ const EPSILON = 1000
 const RATE_EPSILON = 0.002
 const NODE_ENDPOINT = "https://kovan.kyber.network"
 const ETHER_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-const NETWORK_ADDRESS = "0x241702db94b4ff17429c749925f16ae5f0929668"
+const NETWORK_ADDRESS = "0x3035fd7f1aa6180236f1ea6e7ffc2cde00a9027d"
 const TRADE_TOPIC = "0xec0d3e799aa270a144d7e3be084ccfc657450e33ecea1b1a4154c95cedaae5c3"
-const RESERVE_ADDRESS = "0xfbd6bc836656ddfd64ebc783e16ef81f4d6f2aed"
+const RESERVE_ADDRESS = "0xf38492cf6466b591579b1501a77ca6105db7de63"
 const INIT_EXCHANGE_FORM_STATE = {
   advanced: false,
   passphrase: false,
