@@ -4,7 +4,7 @@ import { RateView } from "../../components/Header"
 
 @connect((store) => {
   return {
-    rates: store.tokens
+    rates: store.tokens.tokens
   }
 })
 

@@ -19,7 +19,7 @@ import { randomForExchange } from "../../utils/random"
   const ethereum = store.connection.ethereum
   const account = store.account
   const exchange = store.exchange
-  const tokens = store.tokens
+  const tokens = store.tokens.tokens
   return { account, ethereum, exchange, tokens }
 })
 
@@ -103,6 +103,7 @@ export default class Exchange extends React.Component {
   }
 
   render() {
+    //console.log(this.props.account)
     if (this.props.account.isStoreReady) {
       if (!!!this.props.account.account.address) {
         setTimeout(() => this.props.dispatch(push("/")), 1000)

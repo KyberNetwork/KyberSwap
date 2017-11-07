@@ -1,4 +1,4 @@
-import {REHYDRATE} from 'redux-persist/constants'
+import {REHYDRATE} from 'redux-persist/lib/constants'
 import Tx from "../services/tx"
 
 const initState = {
@@ -6,33 +6,33 @@ const initState = {
 
 const txs = (state=initState, action) => {
   switch (action.type) {
-    case REHYDRATE: {
-      var loadedTxs = action.payload.txs
-      if (loadedTxs) {
-        var txs = {}
-        Object.keys(loadedTxs).forEach((hash) => {
-          var tx = loadedTxs[hash]
-          txs[hash] = new Tx(
-            tx.hash,
-            tx.from,
-            tx.gas,
-            tx.gasPrice,
-            tx.nonce,
-            tx.status,
-            tx.type,
-            tx.data,
-            tx.address,
-            tx.threw,
-            tx.error,
-            tx.errorInfo,
-            tx.recap
-          )
-        })
-        return txs
-      } else {
-        return state
-      }
-    }
+    // case REHYDRATE: {
+    //   var loadedTxs = {...state.txs}
+    //   if (loadedTxs) {
+    //     var txs = {}
+    //     Object.keys(loadedTxs).forEach((hash) => {
+    //       var tx = loadedTxs[hash]
+    //       txs[hash] = new Tx(
+    //         tx.hash,
+    //         tx.from,
+    //         tx.gas,
+    //         tx.gasPrice,
+    //         tx.nonce,
+    //         tx.status,
+    //         tx.type,
+    //         tx.data,
+    //         tx.address,
+    //         tx.threw,
+    //         tx.error,
+    //         tx.errorInfo,
+    //         tx.recap
+    //       )
+    //     })
+    //     return txs
+    //   } else {
+    //     return state
+    //   }
+    // }
     case "TX.TX_ADDED": {
       var newState = {...state}
       newState[action.payload.hash] = action.payload

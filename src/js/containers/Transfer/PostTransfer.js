@@ -14,7 +14,7 @@ import { PassphraseModal, ConfirmTransferModal, PostTransferBtn } from "../../co
 import { Modal } from "../../components/CommonElement"
 
 @connect((store, props) => {
-  const tokens = store.tokens
+  const tokens = store.tokens.tokens
   const tokenSymbol = store.transfer.tokenSymbol
   var balance = 0
   if (tokens[tokenSymbol]) {
@@ -63,7 +63,7 @@ export default class PostTransfer extends React.Component {
     if(!checkNumber){
       return false
     }
-    var amountBig = converters.stringToBigNumber(this.props.form.amount)
+    var amountBig = converters.stringEtherToBigNumber(this.props.form.amount)
     if (amountBig.greaterThan(this.props.form.balance)) {
       this.props.dispatch(transferActions.thowErrorAmount("Amount is too high"))
       check = false

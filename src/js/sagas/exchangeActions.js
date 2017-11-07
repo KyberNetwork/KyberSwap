@@ -172,7 +172,8 @@ function* processExchange(action) {
         yield put(actions.showConfirm())
       }
     } else {
-      const remain = yield call([ethereum, ethereum.getAllowance], sourceToken, address)
+      const remainStr = yield call([ethereum, ethereum.getAllowance], sourceToken, address)
+      const remain = converter.hexToBigNumber(remainStr)
       //console.log(remain)
       const sourceAmountBig = converter.hexToBigNumber(sourceAmount)
       //console.log(remain.greaterThanOrEqualTo(sourceAmountBig))

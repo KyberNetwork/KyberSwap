@@ -1,6 +1,6 @@
 //import Account from "../services/account"
 //import Token from "../services/token"
-import {REHYDRATE} from 'redux-persist/constants'
+import {REHYDRATE} from 'redux-persist/lib/constants'
 import constants from "../services/constants"
 import { calculateDest} from "../utils/converter"
 
@@ -21,25 +21,10 @@ const transfer = (state=initState, action) => {
   // var newState = {...state}
   var newState = {...state, errors: {...state.errors}}
   switch (action.type) {
-    case REHYDRATE: {
-      newState = initState;
-      // var transfer = action.payload.transfer
-      // if(!!!transfer){
-      //   return newState
-      // }
-      // newState = action.payload.transfer
-      // if(transfer && transfer.selected){
-      //   newState.selected = transfer.selected;
-      //   newState.token = transfer.token
-      //   newState.tokenSymbol = transfer.tokenSymbol
-      // }
-      //  else {
-      //   var randomSelectToken = randomToken(1, Object.keys(supported_tokens).length);
-      //   newState.token = Object.values(supported_tokens)[randomSelectToken].address
-      //   newState.tokenSymbol = Object.values(supported_tokens)[randomSelectToken].symbol
-      // }
-      return {...newState};
-    }
+    // case REHYDRATE: {
+    //   newState = initState;
+    //   return {...newState};
+    // }
     case "TRANSFER.SET_RANDOM_SELECTED_TOKEN":
       var transfer = {...state}
       var random = action.payload

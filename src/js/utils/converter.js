@@ -170,9 +170,13 @@ export function errorName(message) {
 }
 
 
-export function stringToBigNumber(number){
+export function stringEtherToBigNumber(number){
   var param = new BigNumber(10).pow(18)
   var bigNumber = new BigNumber(number).times(param)
+  return bigNumber
+}
+export function stringToBigNumber(number){
+  var bigNumber = new BigNumber(number)
   return bigNumber
 }
 

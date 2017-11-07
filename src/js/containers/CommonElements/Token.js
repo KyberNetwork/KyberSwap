@@ -12,7 +12,7 @@ import { TokenView } from "../../components/CommonElement"
 @connect((store, props) => {  
   return {
       type: props.type,     
-      tokens:store.tokens,
+      tokens:store.tokens.tokens,
       symbol: props.token,
       onSelected: props.onSelected
     } 

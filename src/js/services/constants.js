@@ -18,6 +18,7 @@ const NODE_ENDPOINT = "https://kovan.kyber.network"
 const ETHER_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 const NETWORK_ADDRESS = "0x241702db94b4ff17429c749925f16ae5f0929668"
 const TRADE_TOPIC = "0xec0d3e799aa270a144d7e3be084ccfc657450e33ecea1b1a4154c95cedaae5c3"
+//const TRADE_TOPIC = "0x05d2f3e2f3e0a781082873c332729f77c49ee05d757ef3d1e5058fa0d883f36f"
 const RESERVE_ADDRESS = "0xfbd6bc836656ddfd64ebc783e16ef81f4d6f2aed"
 const INIT_EXCHANGE_FORM_STATE = {
   advanced: false,

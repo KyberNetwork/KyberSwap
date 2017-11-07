@@ -35,6 +35,7 @@ function* importNewAccount(action){
     return;
   } else {
     yield put.sync(setRandomExchangeSelectedToken(randomToken))
+    yield call([ethereum, ethereum.fetchRateExchange])
     yield put.sync(setRandomTransferSelectedToken(randomToken))
   }
   //todo set random token for exchange

@@ -1,4 +1,8 @@
 import { combineReducers } from 'redux'
+import { persistReducer } from 'redux-persist'
+import session from 'redux-persist/lib/storage/session'
+import localForage from 'localforage'
+
 import { routerReducer } from 'react-router-redux'
 
 
@@ -11,15 +15,18 @@ import connection from './connection'
 import utils from './utilsReducer'
 import txs from './txsReducer'
 
+
 const appReducer = combineReducers({
-  account, exchange, transfer, global, tokens, txs,
-  connection, utils,
-  router: routerReducer
+  account, exchange, transfer, txs, connection, router: routerReducer, global,utils,
+  tokens: persistReducer({
+    key: 'tokens',
+    storage: localForage
+  }, tokens),  
 })
 
 const rootReducer = (state, action) => {
   if (action.type === 'GLOBAL.CLEAR_SESSION_FULFILLED') {
-    state = {utils: state.utils}
+    state = {utils: state.utils, tokens: state.tokens}
   }
   return appReducer(state, action)
 }

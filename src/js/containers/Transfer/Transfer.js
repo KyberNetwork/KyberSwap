@@ -20,7 +20,7 @@ import { specifyGas as specifyGasTransfer, specifyGasPrice as specifyGasPriceTra
   //     window.location.href = "/"
   //   }
   // }
-  return { transfer: store.transfer, account: store.account, tokens: store.tokens }
+  return { transfer: store.transfer, account: store.account, tokens: store.tokens.tokens }
 })
 
 export default class Transfer extends React.Component {

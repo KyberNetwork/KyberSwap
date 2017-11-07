@@ -30,27 +30,24 @@ export default class Tx {
     return new Promise((resolve, reject)=>{
       ethereum.txMined(tx.hash, (mined, receipt) => {
         var newTx = tx.shallowClone()
-        if (mined) {
+        if (mined) {          
           newTx.address = receipt.contractAddress
           newTx.gas = receipt.gasUsed
-          var logs = receipt.logs
-          //console.log(logs)
-          //console.log(newTx.type)
-          if (newTx.type == "exchange") {
+          var logs = receipt.logs          
+          if (newTx.type == "exchange") {            
             if (logs.length == 0) {
               newTx.threw = true
               newTx.status = "failed"
-              newTx.error = "Warning! Error encountered during contract execution"
+              newTx.error = "Warning! Log is empty"
             } else {
               var theLog
-              for (var i = 0; i < logs.length; i++) {
-                if (logs[i].address == constants.NETWORK_ADDRESS &&
-                  logs[i].topics[0] == constants.TRADE_TOPIC) {
+              for (var i = 0; i < logs.length; i++) {                
+                if (logs[i].address.toLowerCase() == constants.NETWORK_ADDRESS &&
+                  logs[i].topics[0].toLowerCase() == constants.TRADE_TOPIC) {
                   theLog = logs[i]
                   break
                 }
               }
-              //console.log(theLog)
               newTx.status = theLog ? "success" : "failed"
               newTx.error = theLog ?"":"Warning! Error encountered during contract execution"
             }

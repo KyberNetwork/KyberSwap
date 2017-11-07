@@ -9,17 +9,18 @@ import { updateTx } from "../actions/txActions"
 import {updateRateExchange} from "../actions/exchangeActions"
 import SupportedTokens from "./supported_tokens"
 import * as ethUtil from 'ethereumjs-util'
-import store from "../store"
+import {store} from "../store"
 
 export default class EthereumService {
-  constructor() {
-    // this.rpc = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+  constructor() {    
     //this.rpc = new Web3(new Web3.providers.HttpProvider("https://kovan.kyber.network", 9000))
-    this.rpc = new Web3(new Web3.providers.HttpProvider("https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi", 9000))
+    //this.rpc = new Web3(new Web3.providers.WebsocketProvider("ws://192.168.24.239:8546/", 9000))
+    this.rpc = new Web3(new Web3.providers.WebsocketProvider("wss://kovan.kyber.network/ws/", 9000))
+    //this.rpc = new Web3(new Web3.providers.HttpProvider("https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi", 9000))
     //this.rpc = new Web3(new Web3.providers.HttpProvider("http://192.168.25.215:8545", 9000))
-    this.erc20Contract = this.rpc.eth.contract(constants.ERC20)
+    this.erc20Contract = new this.rpc.eth.Contract(constants.ERC20)
     this.networkAddress = constants.NETWORK_ADDRESS
-    this.networkContract = this.rpc.eth.contract(constants.KYBER_NETWORK).at(this.networkAddress)
+    this.networkContract = new this.rpc.eth.Contract(constants.KYBER_NETWORK, this.networkAddress)
     this.intervalID = null
   }
 
@@ -29,63 +30,73 @@ export default class EthereumService {
 
   getLatestBlockPromise(ethereum) {
     return new Promise((resolve, reject) => {
-      ethereum.rpc.eth.getBlock("latest", false, (error, block) => {
-        if (error != null) {
-          console.log(error)
-        } else {
+      ethereum.rpc.eth.getBlock("latest", false).then((block) => {
+        if (block != null) {
           resolve(block.number)
-        }
+        } 
       })
     })
   }
 
   getLatestBlock(callback) {
-    return this.rpc.eth.getBlock("latest", false, (error, block) => {
-      if (error != null) {
-        console.log(error)
-      } else {
+    return this.rpc.eth.getBlock("latest", false).then((block) => {
+      if (block != null) {        
         callback(block.number)
       }
     })
   }
 
   getBalance(address, callback) {
-    this.rpc.eth.getBalance(address, (error, balance) => {      
-      if (error != null) {
-        console.log(error)
-      } else {
+    this.rpc.eth.getBalance(address).then((balance) => {      
+      if (balance != null) {        
         callback(balance)
       }
     })
   }
 
   getNonce(address, callback) {
-    this.rpc.eth.getTransactionCount(address, "pending", (error, nonce) => {
-      if (error != null) {
-        console.log(error)
-      } else {
+    this.rpc.eth.getTransactionCount(address, "pending").then((nonce) => {
+      if (nonce != null) {        
         callback(nonce)
       }
     })
   }
 
   getTokenBalance(address, ownerAddr, callback) {
-    var instance = this.erc20Contract.at(address)
-    instance.balanceOf(ownerAddr, (error, result) => {
-      if (error != null) {
-        console.log(error)
-      } else {
+    var instance = this.erc20Contract
+    instance.options.address = address
+    instance.methods.balanceOf(ownerAddr).call().then((result)=>{
+      if (result != null) {
         callback(result)
-      }
+      } 
     })
+    // instance.balanceOf(ownerAddr, (error, result) => {
+    //   if (error != null) {
+    //     console.log(error)
+    //   } else {
+    //     callback(result)
+    //   }
+    // })
   }
 
+  // watch() {
+  //   this.rpc.eth.filter("latest", this.actAndWatch.bind(this), (error) => {
+  //     // the node is not support for filtering
+  //     this.fetchData()
+  //     this.intervalID = setInterval(this.fetchData.bind(this), 10000)
+  //   })
+  // }
+
   watch() {
-    this.rpc.eth.filter("latest", this.actAndWatch.bind(this), (error) => {
-      // the node is not support for filtering
+    this.rpc.eth.subscribe("newBlockHeaders", this.actAndWatch.bind(this))
+  }
+
+  actAndWatch(error, result) {
+    if (error != null) {
+      store.dispatch(updateBlockFailed(error))
+    } else {
       this.fetchData()
-      this.intervalID = setInterval(this.fetchData.bind(this), 10000)
-    })
+    }
   }
 
   fetchRateData() {
@@ -161,18 +172,20 @@ export default class EthereumService {
     var source = state.exchange.sourceToken
     var dest = state.exchange.destToken
     var reserve = constants.RESERVES[0].index
-    
-    // console.log(source)    
-    // console.log(dest)    
-    // console.log(reserve)    
-    return this.networkContract.getRate(source, dest, reserve, (error, result) => {
-      if (error != null) {
-        console.log(error)
-      } else {
-        //console.log(result)
+        
+    // return this.networkContract.call().getRate(source, dest, reserve, (error, result) => {
+    //   if (error != null) {
+    //     console.log(error)
+    //   } else {
+    //     store.dispatch(updateRateExchange(result))
+    //   }
+    // })
+
+    return this.networkContract.methods.getRate(source, dest, reserve).call().then((result) => {      
+      if (result != null) {
         store.dispatch(updateRateExchange(result))
       }
-    })
+    })   
   }
 
 
@@ -184,83 +197,76 @@ export default class EthereumService {
     this.fetchRateExchange()
 
   }
+  
 
-  actAndWatch(error, result) {
-    if (error != null) {
-      store.dispatch(updateBlockFailed(error))
-    } else {
-      this.fetchData()
-    }
-  }
-
-  executeWalletData(walletAddress, to, value, data) {
-    var wallet = this.rpc.eth.contract(constants.KYBER_WALLET).at(walletAddress)
-    return wallet.execute.getData(to, value, data)
-  }
+  // executeWalletData(walletAddress, to, value, data) {
+  //   var wallet = new this.rpc.eth.Contract(constants.KYBER_WALLET, walletAddress)
+  //   return wallet.execute.getData(to, value, data)
+  // }
 
   exchangeData(sourceToken, sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate, throwOnFailure) {
-    return this.networkContract.trade.getData(
+    return this.networkContract.methods.trade(
       sourceToken, sourceAmount, destToken, destAddress,
-      maxDestAmount, minConversionRate, throwOnFailure)
+      maxDestAmount, minConversionRate, throwOnFailure).encodeABI()
   }
 
-  paymentData(walletAddress, sourceToken, sourceAmount, destToken, maxDestAmount,
-    minConversionRate, destAddress, data, onlyApproveToken, throwOnFailure) {
-    var wallet = this.rpc.eth.contract(constants.KYBER_WALLET).at(walletAddress)
-    return wallet.convertAndCall.getData(
-      sourceToken, sourceAmount, destToken, maxDestAmount,
-      minConversionRate, destAddress, data, onlyApproveToken, throwOnFailure
-    )
-  }
+  // paymentData(walletAddress, sourceToken, sourceAmount, destToken, maxDestAmount,
+  //   minConversionRate, destAddress, data, onlyApproveToken, throwOnFailure) {
+  //   var wallet = new this.rpc.eth.Contract(constants.KYBER_WALLET, walletAddress)
+  //   return wallet.convertAndCall.getData(
+  //     sourceToken, sourceAmount, destToken, maxDestAmount,
+  //     minConversionRate, destAddress, data, onlyApproveToken, throwOnFailure
+  //   )
+  // }
 
   approveTokenData(sourceToken, sourceAmount) {
-    var tokenContract = this.erc20Contract.at(sourceToken)
-    return tokenContract.approve.getData(this.networkAddress, sourceAmount)
+    var tokenContract = this.erc20Contract
+    tokenContract.options.address = sourceToken
+    return tokenContract.methods.approve(this.networkAddress, sourceAmount).encodeABI()
   }
 
   sendTokenData(sourceToken, sourceAmount, destAddress) {
-    var tokenContract = this.erc20Contract.at(sourceToken)
-    return tokenContract.transfer.getData(destAddress, sourceAmount)
+    var tokenContract = this.erc20Contract
+    tokenContract.options.address = sourceToken
+    return tokenContract.methods.transfer(destAddress, sourceAmount).encodeABI()
   }
 
   getAllowance(sourceToken, owner) {
-    var tokenContract = this.erc20Contract.at(sourceToken)
+    var tokenContract = this.erc20Contract
+    tokenContract.options.address = sourceToken
     return new Promise((resolve, reject)=>{
-        tokenContract.allowance(owner, this.networkAddress, function(error, result){       
-          if(!error){
-            //console.log(result)            
+        tokenContract.methods.allowance(owner, this.networkAddress).call().then((result)=>{       
+          if(result !== null){            
             resolve(result)
-          }            
-          else{
-            reject(error)
-          }   
+          }                      
         })                 
     })    
   }
 
   txMined(hash, callback) {
-    this.rpc.eth.getTransactionReceipt(hash, (error, result) => {
-      if (error != null) {
-        console.log(error)
-      } else {
-        result == null ? callback(false, undefined) : callback(true, result)
+    this.rpc.eth.getTransactionReceipt(hash).then((result) => {
+      if (result != null) {
+        callback(true, result)
+      }else{
+        callback(false, undefined)
       }
     })
   }
 
   getRate(source, dest, reserve, callback) {
-    // console.log(source)
-    // console.log(dest)
-    // console.log(reserve)
-    return this.networkContract.getRate(source, dest, reserve, (error, result) => {
-      if (error != null) {
-        console.log(error)
-      } else {
+    return this.networkContract.methods.getRate(source, dest, reserve).call().then((result) => {
+      if (result != null) {
         callback(result)
-        //console.log(result)
       }
     })
+    // return this.networkContract.getRate(source, dest, reserve, (error, result) => {
+    //   if (error != null) {
+    //     console.log(error)
+    //   } else {
+    //     callback(result)
+    //   }
+    // })
   }  
   // tx should be ethereumjs-tx object
   // sendRawTransaction(tx, callback, failCallback) {
@@ -276,7 +282,7 @@ export default class EthereumService {
   sendRawTransaction(tx, ethereum) {
     //console.log(ethUtil.bufferToHex(tx.serialize()))
     return new Promise((resolve, rejected) => {
-      ethereum.rpc.eth.sendRawTransaction(
+      ethereum.rpc.eth.sendSignedTransaction(
       ethUtil.bufferToHex(tx.serialize()), (error, hash) => {
         if (error != null) {
           rejected(error)
@@ -287,13 +293,13 @@ export default class EthereumService {
     })    
   }
   
-  deployKyberWalletData(from) {
-    var _kyberNetwork = constants.NETWORK_ADDRESS
-    var contract = this.rpc.eth.contract(constants.KYBER_WALLET)
-    return contract.new.getData(_kyberNetwork, {
-      data: constants.KYBER_WALLET_DATA,
-    })
-  }
+  // deployKyberWalletData(from) {
+  //   var _kyberNetwork = constants.NETWORK_ADDRESS
+  //   var contract = new this.rpc.eth.Contract(constants.KYBER_WALLET)
+  //   return contract.new.getData(_kyberNetwork, {
+  //     data: constants.KYBER_WALLET_DATA,
+  //   })
+  // }
 
   // createNewAddress(passphrase) {
   //   var newAddress = Wallet.generate()

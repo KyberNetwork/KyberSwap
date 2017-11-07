@@ -13,7 +13,7 @@ import { PassphraseModal, ConfirmTransferModal, ApproveModal, PostExchangeBtn } 
 
 @connect((store) => {
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
-  var tokens = store.tokens
+  var tokens = store.tokens.tokens
   var sourceBalance = 0
   if (tokens[sourceTokenSymbol]) {
     sourceBalance = tokens[sourceTokenSymbol].balance

@@ -1,4 +1,4 @@
-import {REHYDRATE} from 'redux-persist/constants'
+import {REHYDRATE} from 'redux-persist/lib/constants'
 import Rate from "../services/rate"
 import BigNumber from "bignumber.js"
 
@@ -13,27 +13,6 @@ const initState = {
 
 const global = (state=initState, action) => {
   switch (action.type) {
-    // case REHYDRATE: {
-    //   if (action.payload.global) {
-    //     var loadedRates = action.payload.global.rates
-    //     var rates = {}
-    //     Object.keys(loadedRates).forEach((id) => {
-    //       var rateMap = loadedRates[id]
-    //       var rate = new Rate(
-    //         rateMap.name,
-    //         rateMap.symbol,
-    //         rateMap.icon,
-    //         rateMap.address,
-    //         new BigNumber(rateMap.rate),
-    //         new BigNumber(rateMap.balance)
-    //       )
-    //       rates[id] = rate
-    //     })
-    //     var newState = {...state, ...action.payload.global, rates: rates}
-    //     return newState
-    //   }
-    //   return state
-    // }
     case "GLOBAL.NEW_BLOCK_INCLUDED_FULFILLED": {
       return {...state, currentBlock: action.payload}
     }
