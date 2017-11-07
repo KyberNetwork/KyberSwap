@@ -4,12 +4,13 @@ import { SelectAddressModal } from "../ImportAccount";
 
 const ImportByDeviceView = (props) => {
 
-    function choosePath() {
+    function choosePath(dpath) {
         let formPath = document.getElementById('formPath'),
-            path = formPath.path.value;
-
-        path = (path != 0) ? path : formPath.customPath.value;
-        props.choosePath(path);
+            selectedPath = dpath;
+        if(!dpath){
+            selectedPath = formPath.customPath.value;
+        }
+        props.choosePath(selectedPath, dpath);
     }
 
     function getAddress() {
@@ -58,16 +59,17 @@ const ImportByDeviceView = (props) => {
     function getListPathHtml() {
         let listPath = props.dPath.map((dPath, index) => {
             let disabledPath = (props.walletType == 'ledger' && dPath.notSupport) ? true : false;
-            let defaultChecked = (dPath.defaultType == props.walletType) ? true : false
+            let active = (props.currentDPath == dPath.path) ? 'active' : ''
             return (
                 <div class="column" key={dPath.path}>
-                    <input id={'path-' + index} type="radio" name="path"
+                    <input type="radio" name="path"
                         defaultValue={dPath.path}
-                        defaultChecked={defaultChecked}
-                        onClick={() => choosePath()}
                         disabled={disabledPath}
                     />
-                    <label class="address-path-stamp"
+                    <label class={'address-path-stamp ' + active}
+                        onClick={() => {
+                            if (dPath.path && !disabledPath) choosePath(dPath.path)
+                        }}
                         for={'path-' + index}
                         style={disabledPath ? { opacity: .5 } : {}}>
                         {
@@ -81,7 +83,10 @@ const ImportByDeviceView = (props) => {
                                         <div class="name">{dPath.desc}</div>
                                         <div class="address-path-input">
                                             <input type="text" name="customPath" defaultValue={dPath.defaultP} />
-                                            <a class="submit pulse animated infinite" style={{ display: 'block' }}></a>
+                                            <a class="submit pulse animated infinite"
+                                                style={{ display: 'block' }}
+                                                onClick={() => choosePath(dPath.path)}
+                                            ></a>
                                         </div>
                                     </div>
                                 )
@@ -99,7 +104,7 @@ const ImportByDeviceView = (props) => {
                 <div class="content">
                     <div class="row">
                         <div class="column">
-                            <form id="formPath">
+                            <form id="formPath" onSubmit={(e) => e.preventDefault()}>
                                 <div class="row small-up-2 medium-up-3 large-up-3 address-paths gutter-15">
                                     {getListPathHtml()}
                                 </div>
@@ -112,7 +117,6 @@ const ImportByDeviceView = (props) => {
                         <div class="column">
                             <div class="block-title">
                                 Select the address you would like to interact with
-								<img class="loading" src="/assets/img/waiting.svg" />
                             </div>
                             <form id="formAddress">
                                 <ul class="address-list animated fadeIn">
@@ -135,7 +139,7 @@ const ImportByDeviceView = (props) => {
             <div class="small-12 medium-6 column" style={{ padding: 0 }}>
                 <div class="column column-block">
                     <div class="importer trezor">
-                        <a onClick={props.connectTrezor}>
+                        <a onClick={() => props.showLoading('trezor')}>
                             <img src="/assets/img/trezor.svg" />
                             <div class="description">Import from<br />trezor</div>
                         </a>
@@ -145,7 +149,7 @@ const ImportByDeviceView = (props) => {
             <div class="small-12 medium-6 column" style={{ padding: 0 }}>
                 <div class="column column-block">
                     <div class="importer ledger">
-                        <a onClick={props.connectLedger}>
+                        <a onClick={() => props.showLoading('ledger')}>
                             <img src="/assets/img/ledger.svg" />
                             <div class="description">Import from<br />ledger wallet</div>
                         </a>

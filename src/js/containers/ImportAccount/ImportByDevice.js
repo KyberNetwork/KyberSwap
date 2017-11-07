@@ -8,7 +8,7 @@ import AddressGenerator from "../../services/device/addressGenerator";
 import { getTrezorPublicKey, connectLedger, getLedgerPublicKey } from "../../services/device/device";
 import { ImportByDeviceView } from "../../components/ImportAccount"
 
-import { importNewAccount, throwError } from "../../actions/accountActions"
+import { importNewAccount, importLoading, closeImportLoading, throwError } from "../../actions/accountActions"
 import { toEther } from "../../utils/converter"
 
 @connect((store) => {
@@ -30,14 +30,14 @@ export default class ImportByDevice extends React.Component {
 		this.setDeviceState();
 
 		this.DPATH = [
-			{ path: "m/44'/60'/0'/0", desc: 'Jaxx, Metamask, Exodus, imToken, TREZOR (ETH) & Digital Bitbox', defaultType: 'trezor', active: 0 },
-			{ path: "m/44'/60'/0'", desc: 'Ledger (ETH)', defaultType: 'ledger', active: 0 },
-			{ path: "m/44'/61'/0'/0", desc: 'TREZOR (ETC)', active: 0 },
-			{ path: "m/44'/60'/160720'/0'", desc: 'Ledger (ETC)', active: 0 },
-			{ path: "m/0'/0'/0'", desc: 'SingularDTV', notSupport: true, active: 0 },
-			{ path: "m/44'/1'/0'/0", desc: 'Network: Testnets', active: 0 },
-			{ path: "m/44'/40'/0'/0", desc: 'Network: Expanse', notSupport: true, active: 0 },
-			{ path: 0, desc: 'Your Custom Path', defaultP: "m/44'/60'/1'/0", active: 0 },
+			{ path: "m/44'/60'/0'/0", desc: 'Jaxx, Metamask, Exodus, imToken, TREZOR (ETH) & Digital Bitbox', defaultType: 'trezor' },
+			{ path: "m/44'/60'/0'", desc: 'Ledger (ETH)', defaultType: 'ledger' },
+			{ path: "m/44'/61'/0'/0", desc: 'TREZOR (ETC)' },
+			{ path: "m/44'/60'/160720'/0'", desc: 'Ledger (ETC)' },
+			{ path: "m/0'/0'/0'", desc: 'SingularDTV', notSupport: true },
+			{ path: "m/44'/1'/0'/0", desc: 'Network: Testnets' },
+			{ path: "m/44'/40'/0'/0", desc: 'Network: Expanse', notSupport: true },
+			{ path: 0, desc: 'Your Custom Path', defaultP: "m/44'/60'/1'/0", custom: false },
 		]
 	}
 
@@ -45,30 +45,33 @@ export default class ImportByDevice extends React.Component {
 		this.addressIndex = 0;
 		this.currentIndex = 0;
 		this.walletType = 'trezor';
-		this.dPath = '';
 		this.generator = null;
 	}
 
-	connectDevice(walletType, path) {
+	connectDevice(walletType, selectedPath, dpath) {
 		this.setDeviceState();
 		switch (walletType) {
 			case 'trezor': {
-				let promise = getTrezorPublicKey(path);
+				let promise = getTrezorPublicKey(selectedPath);
 				promise.then((result) => {
+					this.dPath = (dpath != 0) ? result.dPath : dpath;
 					this.generateAddress(result);
-					this.dPath = result.dPath;
+					this.props.dispatch(closeImportLoading());
 				}).catch((err) => {
 					if (err.toString() == 'Error: Not a valid path.') {
 						this.props.dispatch(throwError('This path not supported  by Trezor'))
 					}
+					this.props.dispatch(closeImportLoading());
+					this.props.dispatch(throwError('Cannot connect to ' + this.walletType))
 				})
 				break;
 			}
 			case 'ledger': {
 				connectLedger().then((eth) => {
-					getLedgerPublicKey(eth, path).then((result) => {
+					getLedgerPublicKey(eth, selectedPath).then((result) => {
+						this.dPath = (dpath != 0) ? result.dPath : dpath;
 						this.generateAddress(result);
-						this.dPath = result.dPath;
+						this.props.dispatch(closeImportLoading());
 					}).catch((err) => {
 						switch (err) {
 							case 'Invalid status 6801':
@@ -77,7 +80,10 @@ export default class ImportByDevice extends React.Component {
 								let msg = 'Check to make sure the right application is selected';
 								this.props.dispatch(throwError(msg))
 								break;
+							default:
+								this.props.dispatch(throwError('Cannot connect to ' + this.walletType))
 						}
+						this.props.dispatch(closeImportLoading());
 						console.log(err)
 					});
 				}).catch((err) => {
@@ -130,27 +136,31 @@ export default class ImportByDevice extends React.Component {
 			i = this.addressIndex,
 			j = i + 5,
 			currentAddresses = [];
-		if (this.addressIndex == this.currentIndex) {
-			for (i; i < j; i++) {
-				let address = {
-					addressString: this.generator.getAddressString(i),
-					index: i,
-					balance: -1,
-				};
-				address.avatar = getRandomAvatar(address.addressString)
-				addresses.push(address);
-				currentAddresses.push(address);
-				this.updateBalance(address.addressString, i);
+		if (this.generator) {
+			if (this.addressIndex == this.currentIndex) {
+				for (i; i < j; i++) {
+					let address = {
+						addressString: this.generator.getAddressString(i),
+						index: i,
+						balance: -1,
+					};
+					address.avatar = getRandomAvatar(address.addressString)
+					addresses.push(address);
+					currentAddresses.push(address);
+					this.updateBalance(address.addressString, i);
 
+				}
 			}
-		}
-		this.addressIndex = i;
-		this.currentIndex += 5;
+			this.addressIndex = i;
+			this.currentIndex += 5;
 
-		this.setState({
-			addresses: addresses,
-			currentAddresses: addresses.slice(this.currentIndex - 5, this.currentIndex)
-		})
+			this.setState({
+				addresses: addresses,
+				currentAddresses: addresses.slice(this.currentIndex - 5, this.currentIndex)
+			})
+		} else {
+			this.props.dispatch(throwError('Cannot connect to ' + this.walletType))
+		}
 	}
 
 	preAddress() {
@@ -171,8 +181,9 @@ export default class ImportByDevice extends React.Component {
 		this.props.dispatch(push('/exchange'));
 	}
 
-	choosePath(path) {
-		this.connectDevice(this.walletType, path);
+	choosePath(selectedPath, dpath) {
+		this.props.dispatch(importLoading());
+		this.connectDevice(this.walletType, selectedPath, dpath);
 	}
 
 	getBalance(address) {
@@ -195,13 +206,16 @@ export default class ImportByDevice extends React.Component {
 			})
 	}
 
+	showLoading(walletType) {
+		this.props.dispatch(importLoading());
+		this.connectDevice(walletType);
+	}
+
 	render() {
 		return (
 			<ImportByDeviceView
 				modalOpen={this.state.modalOpen}
 				onRequestClose={this.closeModal.bind(this)}
-				connectTrezor={() => this.connectDevice('trezor')}
-				connectLedger={() => this.connectDevice('ledger')}
 				getPreAddress={() => this.preAddress()}
 				getMoreAddress={() => this.moreAddress()}
 				dPath={this.DPATH}
@@ -210,6 +224,7 @@ export default class ImportByDevice extends React.Component {
 				walletType={this.walletType}
 				getAddress={this.getAddress.bind(this)}
 				choosePath={this.choosePath.bind(this)}
+				showLoading={this.showLoading.bind(this)}
 			/>
 		)
 	}
