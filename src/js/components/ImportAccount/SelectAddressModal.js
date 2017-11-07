@@ -11,7 +11,7 @@ const SelectAddressModal = (props) => {
       content={
           <div>
               <div class="title">Select HD derivation path</div><a class="x" onClick={props.onRequestClose}>&times;</a>
-              <div class="address-list-from-path">
+              <div class="address-list-path">
                   {props.content}
               </div>
           </div>
