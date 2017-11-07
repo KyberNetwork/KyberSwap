@@ -34,6 +34,9 @@ const global = (state=initState, action) => {
     case "GLOBAL.EXIT_IDLE_MODE": {
       return {...state, idleMode: false}
     }
+    case "CONN.SET_CONNECTION":{
+      return {...state, connected: true}
+    }
     // case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
     //   if(!state.allStateUpdatedFirstTime){
     //     return {...state, allStateUpdatedFirstTime: 1}

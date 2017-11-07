@@ -19,6 +19,8 @@ import constanst from "../../services/constants"
 import history from "../../history"
 import { clearSession } from "../../actions/globalActions"
 import { openInfoModal} from "../../actions/utilActions"
+import {setConnection} from "../../actions/connectionActions"
+
 import { default as _ } from 'underscore';
 import { LayoutView } from "../../components/Layout"
 
@@ -41,7 +43,7 @@ export default class Layout extends React.Component {
     this.intervalIdle = null;
   }
   componentWillMount() {
-    this.props.ethereumNode.watch()
+    //this.props.ethereumNode.watch()
     
     document.onload = this.resetTimmer;
     document.onmousemove = this.resetTimmer;
@@ -52,6 +54,7 @@ export default class Layout extends React.Component {
     document.onkeypress = this.resetTimmer;
 
     this.intervalIdle = setInterval(this.checkTimmer.bind(this), 10000)
+    this.intervalConnection = setInterval(this.checkConnection.bind(this), 10000)
   }
 
   checkTimmer(){
@@ -63,6 +66,15 @@ export default class Layout extends React.Component {
     } else {
       //console.log("increase timmer ===")
       this.idleTime++;
+    }
+  }
+
+  checkConnection(){
+    var _this = this
+    if (!_this.props.connected){
+      _this.props.ethereumNode.removeSubcribe(function(){
+        _this.props.dispatch(setConnection())      
+      })      
     }
   }
 

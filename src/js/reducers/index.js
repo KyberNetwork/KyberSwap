@@ -26,7 +26,11 @@ const appReducer = combineReducers({
 
 const rootReducer = (state, action) => {
   if (action.type === 'GLOBAL.CLEAR_SESSION_FULFILLED') {
-    state = {utils: state.utils, tokens: state.tokens}
+    state = {
+              utils: state.utils, 
+              tokens: state.tokens, 
+              global: state.global,
+              connection: state.connection}
   }
   return appReducer(state, action)
 }
