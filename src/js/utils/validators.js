@@ -39,7 +39,7 @@ export function verifyToken(addr) {
   }
 }
 
-export function verifyAmount(amount, max, decimal, rate) {  
+export function verifyAmount(amount, max, decimal, rate, symbol) {  
   var testAmount = parseFloat(amount)
   if(isNaN(testAmount)){
     return "not a number"
@@ -57,9 +57,12 @@ export function verifyAmount(amount, max, decimal, rate) {
     }
     if (result.cmp(maxBig) > 0) {
       return "too high"
-    }    
-    var rateBig = new BigNumber(rate)
-    var estimateValue = result.times(weiParam.pow(36)).div(weiParam.pow(decimal)).div(rateBig)
+    } 
+    var estimateValue = result   
+    if (symbol !== "ETH"){
+      var rateBig = new BigNumber(rate)
+      estimateValue = result.times(weiParam.pow(36)).div(weiParam.pow(decimal)).div(rateBig)
+    }
     if (estimateValue.cmp(constants.EPSILON) < 0) {
       return "too low"
     }

@@ -56,7 +56,8 @@ export default class PostExchange extends React.Component {
     var validateAmount = validators.verifyAmount(this.props.form.sourceAmount, 
                                                   this.props.form.sourceBalance, 
                                                   this.props.form.sourceDecimal,
-                                                  this.props.form.minConversionRate)
+                                                  this.props.form.minConversionRate,
+                                                  this.props.form.sourceTokenSymbol)
     if (validateAmount !== null) {
       this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount is " + validateAmount))
       return false
