@@ -16,7 +16,7 @@ export default class EthereumService {
     //this.rpc = new Web3(new Web3.providers.HttpProvider("https://kovan.kyber.network", 9000))
     //var provider = new Web3.providers.WebsocketProvider("ws://192.168.24.239:8546/")
     //this.rpcUrl = "wss://kovan.kyber.network/ws/"
-    this.rpcUrl = "ws://localhost:8546"
+    this.rpcUrl = "ws://192.168.24.247:8546"
     this.rpc    
     this.provider  
     this.createConnection()

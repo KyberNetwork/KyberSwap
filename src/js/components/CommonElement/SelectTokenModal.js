@@ -16,6 +16,7 @@ const SelectTokenModal = (props) => {
           //console.log(token.name)
           return <TokenSelect key={i} symbol={token.symbol} name={token.name}
                   balance={token.balance.toString()} 
+                  decimal={token.decimal}
                   icon={token.icon}
                   type = {props.type}
                   address = {token.address}
@@ -32,6 +33,7 @@ const SelectTokenModal = (props) => {
           var token = props.tokens[key]
           return <TokenSelect key={i} symbol={token.symbol} name={token.name}
                   balance={token.balance.toString()} 
+                  decimal={token.decimal}
                   icon={token.icon} 
                   type = {props.type}
                   address = {token.address}
@@ -47,6 +49,7 @@ const SelectTokenModal = (props) => {
           var token = props.tokens[key]
           return <TokenSelect key={i} symbol={token.symbol} name={token.name}
                   balance={token.balance.toString()} 
+                  decimal={token.decimal}
                   icon={token.icon} 
                   type = {props.type}
                   address = {token.address}
