@@ -1,6 +1,7 @@
 import React from "react"
 import { Modal, TokenSelect } from '../CommonElement'
 import constants from "../../services/constants"
+import BigNumber from "bignumber.js"
 
 const SelectTokenModal = (props) => {
   var content = () => {
@@ -12,15 +13,17 @@ const SelectTokenModal = (props) => {
         //content = "source"  			
         var content = Object.keys(props.tokens).map((key, i) => {          
           var token = props.tokens[key]
+          var tokenEpsilon = new BigNumber(10).pow(token.decimal).times(token.rate).div(new BigNumber(10).pow(33))          // 10^decimal * rate / 10^33
           //console.log(token.balance.times(token.rate).toString())
           //console.log(token.name)
           return <TokenSelect key={i} symbol={token.symbol} name={token.name}
                   balance={token.balance.toString()} 
+                  decimal={token.decimal}
                   icon={token.icon}
                   type = {props.type}
                   address = {token.address}
                   onClick = {props.chooseToken}
-                  inactive = {!token.balance.greaterThanOrEqualTo(constants.EPSILON)}
+                  inactive = {!token.balance.greaterThanOrEqualTo(tokenEpsilon)}
                   title={title}
                   selected={props.selected==token.symbol}
                   />
@@ -32,6 +35,7 @@ const SelectTokenModal = (props) => {
           var token = props.tokens[key]
           return <TokenSelect key={i} symbol={token.symbol} name={token.name}
                   balance={token.balance.toString()} 
+                  decimal={token.decimal}
                   icon={token.icon} 
                   type = {props.type}
                   address = {token.address}
@@ -47,6 +51,7 @@ const SelectTokenModal = (props) => {
           var token = props.tokens[key]
           return <TokenSelect key={i} symbol={token.symbol} name={token.name}
                   balance={token.balance.toString()} 
+                  decimal={token.decimal}
                   icon={token.icon} 
                   type = {props.type}
                   address = {token.address}

@@ -2,7 +2,7 @@ import BigNumber from "bignumber.js"
 import constants from "../services/constants"
 
 export default class Rate {
-  constructor(name, symbol, icon, address, rate = new BigNumber(0), balance = new BigNumber(0), rateEth = new BigNumber(0)) {
+  constructor(name, symbol, icon, address, decimal, rate = new BigNumber(0), balance = new BigNumber(0), rateEth = new BigNumber(0)) {
     this.name = name;
     this.symbol = symbol;
     this.icon = icon;
@@ -10,6 +10,7 @@ export default class Rate {
     this.rate = rate;
     this.rateEth = rateEth;
     this.balance = balance;
+    this.decimal = decimal;
   }
 
   fetchRate(ethereum, reserve) {
@@ -60,7 +61,8 @@ export function updateRatePromise(ethereum, source, reserve, ownerAddr) {
       source.name,
       source.symbol,
       source.icon,
-      source.address
+      source.address,
+      source.decimal
     )
 
     Promise.all([rate.fetchRate(ethereum, reserve), rate.fetchRateEth(ethereum, reserve), rate.updateBalance(ethereum, ownerAddr)])

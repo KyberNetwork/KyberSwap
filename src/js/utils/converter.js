@@ -108,6 +108,27 @@ export function toT(number, precision) {
   }
 }
 
+export function displayBalance(number, decimal, precision){
+  var bigNumber = new BigNumber(number)
+  var result
+  if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
+    return number
+  } else if (acceptableTyping(number)) {
+    return number
+  }
+  if(decimal){
+    result = bigNumber.div(Math.pow(10, decimal));
+  }
+  else {
+    result = bigNumber.div(1000000000000000000)
+  }
+  if (precision) {
+    return result.toFixed(precision)
+  } else {
+    return result.toString()
+  }
+}
+
 export function getToken(address) {
   if (address == constants.ETHER_ADDRESS) {
     return {
@@ -170,15 +191,15 @@ export function errorName(message) {
 }
 
 
-export function stringToBigNumber(number){
-  var param = new BigNumber(10).pow(18)
+export function stringEtherToBigNumber(number, decimal){
+  var param = new BigNumber(10).pow( decimal? decimal : 18)
   var bigNumber = new BigNumber(number).times(param)
   return bigNumber
 }
 
-export function stringToHex(number){
+export function stringToHex(number, decimal){
   //console.log(number)
-  var param = new BigNumber(10).pow(18)
+  var param = new BigNumber(10).pow(decimal? decimal : 18)
   var bigNumber = new BigNumber(number).times(param)
   //console.log(bigNumber)
   //console.log("0x" + bigNumber.toString(16))

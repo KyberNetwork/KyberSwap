@@ -27,6 +27,7 @@ const token = (state=initState, action) => {
                   tokenMap.symbol,
                   tokenMap.icon,
                   tokenMap.address,
+                  tokenMap.decimal,
                   new BigNumber(tokenMap.rate ? tokenMap.rate: 0),
                   new BigNumber(tokenMap.balance ? tokenMap.balance : 0),
                   new BigNumber(tokenMap.rateEth ? tokenMap.rateEth : 0)

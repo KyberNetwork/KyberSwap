@@ -17,13 +17,15 @@ import { Modal } from "../../components/CommonElement"
   const tokens = store.tokens
   const tokenSymbol = store.transfer.tokenSymbol
   var balance = 0
+  var decimal = 18
   if (tokens[tokenSymbol]) {
     balance = tokens[tokenSymbol].balance
+    decimal = tokens[tokenSymbol].decimal
   }
   return {
     account: store.account.account,
     transfer: store.transfer,
-    form: { ...store.transfer, balance },
+    form: { ...store.transfer, balance, decimal },
     ethereum: store.connection.ethereum
   };
 
@@ -63,7 +65,7 @@ export default class PostTransfer extends React.Component {
     if(!checkNumber){
       return false
     }
-    var amountBig = converters.stringToBigNumber(this.props.form.amount)
+    var amountBig = converters.stringEtherToBigNumber(this.props.form.amount, this.props.form.decimal)
     if (amountBig.greaterThan(this.props.form.balance)) {
       this.props.dispatch(transferActions.thowErrorAmount("Amount is too high"))
       check = false
@@ -136,7 +138,7 @@ export default class PostTransfer extends React.Component {
   formParams = () => {
     var selectedAccount = this.props.account.address
     var token = this.props.form.token
-    var amount = converters.stringToHex(this.props.form.amount)
+    var amount = converters.stringToHex(this.props.form.amount, this.props.form.decimal)
     var destAddress = this.props.form.destAddress
     var throwOnFailure = this.props.form.throwOnFailure
     var nonce = validators.verifyNonce(this.props.account.getUsableNonce())
