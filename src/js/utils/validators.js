@@ -39,7 +39,7 @@ export function verifyToken(addr) {
   }
 }
 
-export function verifyAmount(amount, max, decimal) {  
+export function verifyAmount(amount, max, decimal, rate) {  
   var testAmount = parseFloat(amount)
   if(isNaN(testAmount)){
     return "not a number"
@@ -57,8 +57,10 @@ export function verifyAmount(amount, max, decimal) {
     }
     if (result.cmp(maxBig) > 0) {
       return "too high"
-    }
-    if (result.cmp(constants.EPSILON) < 0) {
+    }    
+    var rateBig = new BigNumber(rate)
+    var estimateValue = result.times(weiParam.pow(36)).div(weiParam.pow(decimal)).div(rateBig)
+    if (estimateValue.cmp(constants.EPSILON) < 0) {
       return "too low"
     }
   }
