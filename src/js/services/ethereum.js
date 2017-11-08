@@ -15,8 +15,8 @@ export default class EthereumService {
   constructor() {
     //this.rpc = new Web3(new Web3.providers.HttpProvider("https://kovan.kyber.network", 9000))
     //var provider = new Web3.providers.WebsocketProvider("ws://192.168.24.239:8546/")
-    //this.rpcUrl = "wss://kovan.kyber.network/ws/"
-    this.rpcUrl = "ws://192.168.24.247:8546"
+    this.rpcUrl = "wss://kovan.kyber.network/ws/"
+    //this.rpcUrl = "ws://localhost:8546"
     this.rpc    
     this.provider  
     this.createConnection()
@@ -40,7 +40,8 @@ export default class EthereumService {
       store.dispatch(updateBlockFailed())
     })    
     this.rpc = new Web3(this.provider)    
-    this.rpc.eth.subscribe("newBlockHeaders", this.actAndWatch.bind(this))                 
+    //this.fetchData()
+    this.rpc.eth.subscribe("newBlockHeaders", this.fetchData.bind(this))                 
   }
 
   removeSubcribe(callback){    
@@ -95,55 +96,12 @@ export default class EthereumService {
         callback(result)
       }
     })
-    // instance.balanceOf(ownerAddr, (error, result) => {
-    //   if (error != null) {
-    //     console.log(error)
-    //   } else {
-    //     callback(result)
-    //   }
-    // })
-  }
-
-  // watch() {
-  //   this.rpc.eth.filter("latest", this.actAndWatch.bind(this), (error) => {
-  //     // the node is not support for filtering
-  //     this.fetchData()
-  //     this.intervalID = setInterval(this.fetchData.bind(this), 10000)
-  //   })
-  // }
-
-  // watch() {
-  //   this.rpc.eth.subscribe("newBlockHeaders", this.actAndWatch.bind(this))
-  // }
-
-  actAndWatch(error, result) {
-    if (error != null) {
-      //store.dispatch(updateBlockFailed(error))
-    } else {
-      this.fetchData()
-    }
-  }
+  }  
 
   fetchRateData() {
     var state = store.getState()
     var ethereum = state.connection.ethereum
     var ownerAddr = state.account.account.address
-    // for (var i = 0; i < SupportedTokens.length; i++) {
-    //   var token = {
-    //     name: SupportedTokens[i].name,
-    //     icon: SupportedTokens[i].icon,
-    //     symbol: SupportedTokens[i].symbol,
-    //     address: SupportedTokens[i].address
-    //   }
-    //   for (var k = 0; k < constants.RESERVES.length; k++) {
-    //     var reserve = constants.RESERVES[k]
-    //     store.dispatch(updateRate(ethereum, token, reserve, ownerAddr))
-
-
-
-    //     ///////////////////////////////////////
-    //   }
-    // }
     for (var k = 0; k < constants.RESERVES.length; k++) {
       var reserve = constants.RESERVES[k]
       store.dispatch(updateAllRate(ethereum, SupportedTokens, reserve, ownerAddr))
@@ -171,20 +129,7 @@ export default class EthereumService {
     if (account.address) {
       store.dispatch(updateAccount(ethereum, account))
     }
-
-    // Object.keys(accounts).forEach((key) => {
-    //   store.dispatch(updateAccount(ethereum, accounts[key]))
-    // })
   }
-
-  // fetchWalletsData = () => {
-  //   var state = store.getState()
-  //   var ethereum = state.connection.ethereum
-  //   var wallets = store.getState().wallets.wallets
-  //   Object.keys(wallets).forEach((key) => {
-  //     store.dispatch(updateWallet(ethereum, wallets[key]))
-  //   })
-  // }
 
   fetchCurrentBlock = () => {
     var state = store.getState()
@@ -197,14 +142,6 @@ export default class EthereumService {
     var source = state.exchange.sourceToken
     var dest = state.exchange.destToken
     var reserve = constants.RESERVES[0].index
-
-    // return this.networkContract.call().getRate(source, dest, reserve, (error, result) => {
-    //   if (error != null) {
-    //     console.log(error)
-    //   } else {
-    //     store.dispatch(updateRateExchange(result))
-    //   }
-    // })
 
     return this.networkContract.methods.getRate(source, dest, reserve).call().then((result) => {
       if (result != null) {
@@ -235,15 +172,6 @@ export default class EthereumService {
       sourceToken, sourceAmount, destToken, destAddress,
       maxDestAmount, minConversionRate, throwOnFailure).encodeABI()
   }
-
-  // paymentData(walletAddress, sourceToken, sourceAmount, destToken, maxDestAmount,
-  //   minConversionRate, destAddress, data, onlyApproveToken, throwOnFailure) {
-  //   var wallet = new this.rpc.eth.Contract(constants.KYBER_WALLET, walletAddress)
-  //   return wallet.convertAndCall.getData(
-  //     sourceToken, sourceAmount, destToken, maxDestAmount,
-  //     minConversionRate, destAddress, data, onlyApproveToken, throwOnFailure
-  //   )
-  // }
 
   approveTokenData(sourceToken, sourceAmount) {
     var tokenContract = this.erc20Contract
@@ -296,28 +224,10 @@ export default class EthereumService {
       if (result != null) {
         callback(result)
       }
-    })
-    // return this.networkContract.getRate(source, dest, reserve, (error, result) => {
-    //   if (error != null) {
-    //     console.log(error)
-    //   } else {
-    //     callback(result)
-    //   }
-    // })
+    })    
   }
-  // tx should be ethereumjs-tx object
-  // sendRawTransaction(tx, callback, failCallback) {
-  //   return this.rpc.eth.sendRawTransaction(
-  //     ethUtil.bufferToHex(tx.serialize()), (error, hash) => {
-  //       if (error != null) {
-  //         failCallback(error)
-  //       } else {
-  //         callback(hash)
-  //       }
-  //     })
-  // }
-  sendRawTransaction(tx, ethereum) {
-    //console.log(ethUtil.bufferToHex(tx.serialize()))
+
+  sendRawTransaction(tx, ethereum) {  
     return new Promise((resolve, rejected) => {
       ethereum.rpc.eth.sendSignedTransaction(
         ethUtil.bufferToHex(tx.serialize()), (error, hash) => {
@@ -328,18 +238,5 @@ export default class EthereumService {
           }
         })
     })
-  }
-
-  // deployKyberWalletData(from) {
-  //   var _kyberNetwork = constants.NETWORK_ADDRESS
-  //   var contract = new this.rpc.eth.Contract(constants.KYBER_WALLET)
-  //   return contract.new.getData(_kyberNetwork, {
-  //     data: constants.KYBER_WALLET_DATA,
-  //   })
-  // }
-
-  // createNewAddress(passphrase) {
-  //   var newAddress = Wallet.generate()
-  //   return newAddress.toV3(passphrase, {kdf: "pbkdf2", c: 10240})
-  // }
+  }  
 }
