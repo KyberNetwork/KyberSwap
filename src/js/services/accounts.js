@@ -1,5 +1,5 @@
 import Account from "./account"
-import store from "../store"
+import {store} from "../store"
 import jdenticon from 'jdenticon'
 
 export function newAccountInstance(address, type, keystring, avatar) {

@@ -12,7 +12,7 @@ import { Modal, SelectTokenModal } from '../../components/CommonElement'
   if (!!modal) {
     return {
       modalInfo: modal,
-      tokens: store.tokens,
+      tokens: store.tokens.tokens,
       chooseToken: props.chooseToken
     }
   }

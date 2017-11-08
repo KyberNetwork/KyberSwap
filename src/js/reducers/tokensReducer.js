@@ -1,4 +1,4 @@
-import {REHYDRATE} from 'redux-persist/constants'
+import {REHYDRATE} from 'redux-persist/lib/constants'
 import Rate from "../services/rate"
 import BigNumber from "bignumber.js"
 import SUPPORT_TOKENS from "../services/supported_tokens"
@@ -11,15 +11,16 @@ const initState = function(){
     tokens[token.symbol].rateEth = 0
     tokens[token.symbol].balance = 0    
   })
-  return tokens
+  return {tokens: tokens}
 }()
 
-const token = (state=initState, action) => {
+const tokens = (state=initState, action) => {
   switch (action.type) {
     case REHYDRATE: {
-      var loadedTokens = action.payload.tokens      
+      var payload = action.payload
         var tokens = {}        
-        if(loadedTokens){
+        if(payload){
+          var loadedTokens = payload.tokens
             Object.keys(loadedTokens).forEach((id) => {
                 var tokenMap = loadedTokens[id]
                 var token = new Rate(
@@ -27,33 +28,28 @@ const token = (state=initState, action) => {
                   tokenMap.symbol,
                   tokenMap.icon,
                   tokenMap.address,
+                  tokenMap.decimal,
                   new BigNumber(tokenMap.rate ? tokenMap.rate: 0),
                   new BigNumber(tokenMap.balance ? tokenMap.balance : 0),
                   new BigNumber(tokenMap.rateEth ? tokenMap.rateEth : 0)
                 )
                 tokens[id] = token
             })
-            return Object.assign({}, state, tokens)
+            return Object.assign({}, state, {tokens: tokens})
         } else {
             return state;
         }            
     }
-    // case "GLOBAL.RATE_UPDATED_FULFILLED": {
-    //   var tokens = {...state.tokens}
-    //   var token = action.payload
-    //   tokens[token.symbol] = token
-    //   return Object.assign({}, state, tokens)
-    // }
     case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
       var tokens = {...state.tokens}
       var tokensData = action.payload;
       tokensData.forEach((data) => {
         tokens[data.symbol] = data
       })
-      return Object.assign({}, state, tokens)
+      return Object.assign({}, state, {tokens: tokens})
     }
     default: return state
   }
 }
 
-export default token
+export default tokens

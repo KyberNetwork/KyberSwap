@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 
-import { toT } from "../../utils/converter"
+import { toT, displayBalance } from "../../utils/converter"
 
 import { TransferForm, TransactionConfig } from "../../components/Transaction"
 import { PostTransfer } from "../Transfer"
@@ -20,7 +20,7 @@ import { specifyGas as specifyGasTransfer, specifyGasPrice as specifyGasPriceTra
   //     window.location.href = "/"
   //   }
   // }
-  return { transfer: store.transfer, account: store.account, tokens: store.tokens }
+  return { transfer: store.transfer, account: store.account, tokens: store.tokens.tokens }
 })
 
 export default class Transfer extends React.Component {
@@ -77,7 +77,7 @@ export default class Transfer extends React.Component {
         }
         balanceBig = balanceBig.minus(Math.pow(10, 17))
       }
-      var balance = balanceBig.div(1000000000000000000).toString()
+      var balance = balanceBig.div(Math.pow(10, token.decimal)).toString()
       this.props.dispatch(specifyAmountTransfer(balance))
     }
   }
@@ -100,7 +100,7 @@ export default class Transfer extends React.Component {
     var tokenName = ""
     var token = this.props.tokens[this.props.transfer.tokenSymbol]
     if(token){
-      balance = toT(token.balance,8)
+      balance = displayBalance(token.balance, token.decimal, 8)
       tokenName = token.name
     }
     var balanceInfo = {

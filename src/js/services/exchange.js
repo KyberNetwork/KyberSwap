@@ -80,7 +80,6 @@ export function etherToOthersFromAccount(
   destAddress, maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas, gasPrice, keystring, accountType,
   password) {
-
   var txData = ethereum.exchangeData(
     sourceToken, sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate, throwOnFailure)
@@ -196,6 +195,7 @@ export function fetchRatePromise(ethereum, source, dest, reserve) {
           source.symbol,
           source.icon,
           source.address,
+          source.decimal,
           result[0],
           result[2]
         ))

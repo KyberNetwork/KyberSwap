@@ -17,12 +17,12 @@ const MyModal = (props) => {
             display: 'block',
         }
     }
-
     return (
         <Modal
             className={{
                 base: props.className.base + " react-modal",
                 afterOpen: props.className.afterOpen + ' modal-open',
+                beforeClose:""
             }}
             style={customStyles}
             isOpen={props.isOpen}

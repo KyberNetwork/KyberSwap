@@ -2,7 +2,7 @@ import BigNumber from "bignumber.js"
 import constants from "../services/constants"
 
 export default class Rate {
-  constructor(name, symbol, icon, address, rate = new BigNumber(0), balance = new BigNumber(0), rateEth = new BigNumber(0)) {
+  constructor(name, symbol, icon, address, decimal, rate = new BigNumber(0), balance = new BigNumber(0), rateEth = new BigNumber(0)) {
     this.name = name;
     this.symbol = symbol;
     this.icon = icon;
@@ -10,6 +10,7 @@ export default class Rate {
     this.rate = rate;
     this.rateEth = rateEth;
     this.balance = balance;
+    this.decimal = decimal;
   }
 
   fetchRate(ethereum, reserve) {
@@ -17,7 +18,8 @@ export default class Rate {
     return new Promise((resolve, reject) => {
       ethereum.getRate(this.address, constants.ETHER_ADDRESS, reserve.index,
         (result) => {
-          resolve(result[0]);
+          var rate = new BigNumber(result[0])
+          resolve(rate)
         })
     });
 
@@ -28,7 +30,8 @@ export default class Rate {
     return new Promise((resolve, reject) => {
       ethereum.getRate(constants.ETHER_ADDRESS, this.address, reserve.index,
         (result) => {
-          resolve(result[0]);
+          var rate = new BigNumber(result[0])
+          resolve(rate)
         })
     });
 
@@ -42,12 +45,14 @@ export default class Rate {
       }
       else if (this.address === constants.ETHER_ADDRESS) {
         ethereum.getBalance(ownerAddr, (result) => {
-          resolve(result);
+          var balance = new BigNumber(result)
+          resolve(balance)
         })
       }
       else {
         ethereum.getTokenBalance(this.address, ownerAddr, (result) => {
-          resolve(result);
+          var balance = new BigNumber(result)
+          resolve(balance);
         })
       }
     });
@@ -60,7 +65,8 @@ export function updateRatePromise(ethereum, source, reserve, ownerAddr) {
       source.name,
       source.symbol,
       source.icon,
-      source.address
+      source.address,
+      source.decimal
     )
 
     Promise.all([rate.fetchRate(ethereum, reserve), rate.fetchRateEth(ethereum, reserve), rate.updateBalance(ethereum, ownerAddr)])

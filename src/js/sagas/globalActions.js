@@ -17,7 +17,8 @@ function* updateRate(action) {
     source.name,
     source.symbol,
     source.icon,
-    source.address
+    source.address,
+    source.decimal
   )
   yield [
     rate.fetchRate(ethereum, reserve),

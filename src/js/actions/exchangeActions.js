@@ -1,6 +1,7 @@
 
 //import {RATE_EPSILON} from "../services/constants.js"
 import constants from "../services/constants"
+import * as converter from "../utils/converter"
 
 export function selectTokenAsync(symbol, address, type, ethereum) {
 	return {
@@ -85,9 +86,12 @@ export function setRandomExchangeSelectedToken(random){
 export function updateRateExchange(rate) {
 	//console.log(rate)
 	if (rate) {
-		var offeredRate = rate[0].times(1 - constants.RATE_EPSILON).toString(10)
-		var expirationBlock = rate[1].toString(10)
-		var reserveBalance = rate[2].toString(10)
+		var rateBig = converter.stringToBigNumber(rate[0])
+		var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
+		//console.log(rateBig.times(1 - constants.RATE_EPSILON))
+		//console.log(offeredRate)
+		var expirationBlock = rate[1]
+		var reserveBalance = rate[2]
 		return {
 			type: "EXCHANGE.UPDATE_RATE",
 			payload: { offeredRate, expirationBlock, reserveBalance }
