@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 
-import { calculateMinAmount, toT } from "../../utils/converter"
+import { calculateMinAmount, toT, displayBalance } from "../../utils/converter"
 
 import { PostExchange } from "../Exchange"
 import { ExchangeForm, TransactionConfig } from "../../components/Transaction"
@@ -97,7 +97,7 @@ export default class Exchange extends React.Component {
         }
         balanceBig = balanceBig.minus(Math.pow(10, 17))
       }
-      var balance = balanceBig.div(1000000000000000000).toString()
+      var balance = balanceBig.div(Math.pow(10, token.decimal)).toString()
       this.props.dispatch(exchangeActions.changeSourceAmout(balance))
     }
   }
@@ -121,7 +121,7 @@ export default class Exchange extends React.Component {
     var nameSource = ""
     var token = this.props.tokens[this.props.exchange.sourceTokenSymbol]
     if (token) {
-      balance = toT(token.balance, 8)
+      balance = displayBalance(token.balance, token.decimal, 8)
       nameSource = token.name
     }
 
@@ -129,7 +129,7 @@ export default class Exchange extends React.Component {
     var nameDest = ""
     var tokenDest = this.props.tokens[this.props.exchange.destTokenSymbol]
     if (tokenDest) {
-      balanceDest = toT(tokenDest.balance, 8)
+      balanceDest = displayBalance(tokenDest.balance, tokenDest.decimal, 8)
       nameDest = tokenDest.name
     }
 

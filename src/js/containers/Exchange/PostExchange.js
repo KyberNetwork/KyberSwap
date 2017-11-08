@@ -15,12 +15,14 @@ import { PassphraseModal, ConfirmTransferModal, ApproveModal, PostExchangeBtn } 
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
   var tokens = store.tokens.tokens
   var sourceBalance = 0
+  var sourceDecimal = 18
   if (tokens[sourceTokenSymbol]) {
     sourceBalance = tokens[sourceTokenSymbol].balance
+    sourceDecimal = tokens[sourceTokenSymbol].decimal
   }
 
   return {
-    form: { ...store.exchange, sourceBalance },
+    form: { ...store.exchange, sourceBalance, sourceDecimal },
     account: store.account.account,
     ethereum: store.connection.ethereum
   }
@@ -51,7 +53,7 @@ export default class PostExchange extends React.Component {
   }
   validateExchange = () => {
     //check source amount
-    var validateAmount = validators.verifyAmount(this.props.form.sourceAmount, this.props.form.sourceBalance)
+    var validateAmount = validators.verifyAmount(this.props.form.sourceAmount, this.props.form.sourceBalance, this.props.form.sourceDecimal)
     if (validateAmount !== null) {
       this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount is " + validateAmount))
       return false
@@ -125,7 +127,7 @@ export default class PostExchange extends React.Component {
   formParams = () => {
     var selectedAccount = this.props.account.address
     var sourceToken = this.props.form.sourceToken
-    var sourceAmount = converters.stringToHex(this.props.form.sourceAmount)
+    var sourceAmount = converters.stringToHex(this.props.form.sourceAmount, this.props.form.sourceDecimal)
     var destToken = this.props.form.destToken
     var minConversionRate = converters.numberToHex(this.props.form.minConversionRate)
     var destAddress = this.props.account.address

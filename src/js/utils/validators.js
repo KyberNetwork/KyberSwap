@@ -39,7 +39,7 @@ export function verifyToken(addr) {
   }
 }
 
-export function verifyAmount(amount, max) {  
+export function verifyAmount(amount, max, decimal) {  
   var testAmount = parseFloat(amount)
   if(isNaN(testAmount)){
     return "not a number"
@@ -49,7 +49,7 @@ export function verifyAmount(amount, max) {
     return "not a number"
   }
   var weiParam = new BigNumber(10)
-  result = result.times(weiParam.pow(18))
+  result = result.times(weiParam.pow(decimal ? decimal : 18))
   if (max != undefined) {
     var maxBig = new BigNumber(max)
     if (maxBig == 'NaN' || maxBig == 'Infinity') {
