@@ -39,36 +39,54 @@ export function verifyToken(addr) {
   }
 }
 
-export function verifyAmount(amount, max, decimal, rate, symbol) {  
-  var testAmount = parseFloat(amount)
-  if(isNaN(testAmount)){
+export function verifyAmount(sourceAmount, 
+                              balance, 
+                              sourceSymbol, 
+                              sourceDecimal, 
+                              rate, destDecimal, reserveBalance) {  
+  //verify number for source amount
+  var testAmount = parseFloat(sourceAmount)
+  if(isNaN(sourceAmount)){
     return "not a number"
   }
-  var result = new BigNumber(amount)
-  if (result == 'NaN' || result == 'Infinity') {
+  var sourceAmountWei = new BigNumber(sourceAmount)
+  if (sourceAmountWei == 'NaN' || sourceAmountWei == 'Infinity') {
     return "not a number"
   }
   var weiParam = new BigNumber(10)
-  result = result.times(weiParam.pow(decimal ? decimal : 18))
-  if (max != undefined) {
-    var maxBig = new BigNumber(max)
-    if (maxBig == 'NaN' || maxBig == 'Infinity') {
-      throw new Error("Invalid upper bound for amount")
-    }
-    if (result.cmp(maxBig) > 0) {
-      return "too high"
-    } 
-    var estimateValue = result   
-    if (symbol !== "ETH"){
-      var rateBig = new BigNumber(rate)
-      estimateValue = result.times(weiParam.pow(36)).div(weiParam.pow(decimal)).div(rateBig)
-    }
-    if (estimateValue.cmp(constants.EPSILON) < 0) {
-      return "too low"
-    }
+  sourceAmountWei = sourceAmountWei.times(weiParam.pow(sourceDecimal))  
+
+  //verify balance for source amount
+  var sourceBalance = new BigNumber(balance)
+  if (sourceBalance == 'NaN' || sourceBalance == 'Infinity') {
+    throw new Error("Invalid upper bound for amount")
   }
+  if (sourceAmountWei.cmp(sourceBalance) > 0) {
+    return "too high"
+  } 
+
+  //verify min source amount
+  var rateBig = new BigNumber(rate)
+  var estimateValue = sourceAmountWei   
+  if (sourceSymbol !== "ETH"){    
+    estimateValue = sourceAmountWei.times(weiParam.pow(36)).div(weiParam.pow(sourceDecimal)).div(rateBig)
+  }
+  if (estimateValue.cmp(constants.EPSILON) < 0) {
+    return "too low"
+  }
+
+  //verify max dest amount
+  var estimateDestAmount = sourceAmountWei.times(weiParam.pow(destDecimal))
+                                          .times(weiParam.pow(18))
+                                          .div(weiParam.pow(sourceDecimal))
+                                          .div(rateBig)
+
+  var reserveBalanceB = new BigNumber(reserveBalance)
+  if (estimateDestAmount.cmp(reserveBalanceB) > 0) {
+    return "too high (reserve does not have enough balance)"
+  }
+
   return null
-  // return "0x" + result.toString(16)
 }
 
 export function verifyNumber(amount) {

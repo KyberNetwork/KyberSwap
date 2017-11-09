@@ -21,8 +21,14 @@ import { PassphraseModal, ConfirmTransferModal, ApproveModal, PostExchangeBtn } 
     sourceDecimal = tokens[sourceTokenSymbol].decimal
   }
 
+  var destTokenSymbol = store.exchange.destTokenSymbol
+  var destDecimal = 18
+  if (tokens[destTokenSymbol]) {
+    destDecimal = tokens[destTokenSymbol].decimal
+  }
+
   return {
-    form: { ...store.exchange, sourceBalance, sourceDecimal },
+    form: { ...store.exchange, sourceBalance, sourceDecimal, destDecimal },
     account: store.account.account,
     ethereum: store.connection.ethereum
   }
@@ -55,9 +61,11 @@ export default class PostExchange extends React.Component {
     //check source amount
     var validateAmount = validators.verifyAmount(this.props.form.sourceAmount, 
                                                   this.props.form.sourceBalance, 
+                                                  this.props.form.sourceTokenSymbol,                                                  
                                                   this.props.form.sourceDecimal,
                                                   this.props.form.minConversionRate,
-                                                  this.props.form.sourceTokenSymbol)
+                                                  this.props.form.destDecimal,
+                                                  this.props.form.offeredRateBalance)
     if (validateAmount !== null) {
       this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount is " + validateAmount))
       return false
