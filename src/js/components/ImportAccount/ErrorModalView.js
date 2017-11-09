@@ -25,6 +25,7 @@ const ErrorModalView = (props) => {
             isOpen={props.isOpen}
             contentLabel="error modal"
             content={content}
+            onRequestClose={props.onRequestClose}
         />
     )
 
