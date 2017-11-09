@@ -16,13 +16,14 @@ export default class EthereumService {
     //this.rpc = new Web3(new Web3.providers.HttpProvider("https://kovan.kyber.network", 9000))
     //var provider = new Web3.providers.WebsocketProvider("ws://192.168.24.239:8546/")
     this.rpcUrl = "wss://kovan.kyber.network/ws/"
+    
     //this.rpcUrl = "ws://localhost:8546"
     //this.rpcUrl = "wss://kovan.infura.io/DtzEYY0Km2BA3YwyJcBG"
     this.rpc    
     this.provider  
     this.createConnection()
     //this.rpc = new Web3(new Web3.providers.WebsocketProvider("wss://kovan.kyber.network/ws/"))
-    //this.rpc = new Web3(new Web3.providers.HttpProvider("https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi", 9000))
+    //this.rpcHttp = new Web3(new Web3.providers.HttpProvider("http://localhost:8545", 9000))
     //this.rpc = new Web3(new Web3.providers.HttpProvider("http://192.168.25.215:8545", 9000))
     this.erc20Contract = new this.rpc.eth.Contract(constants.ERC20)
     this.networkAddress = constants.NETWORK_ADDRESS
@@ -82,7 +83,7 @@ export default class EthereumService {
   }
 
   getNonce(address, callback) {
-    this.rpc.eth.getTransactionCount(address, "pending").then((nonce) => {
+    this.rpc.eth.getTransactionCount(address).then((nonce) => {
       if (nonce != null) {
         callback(nonce)
       }
