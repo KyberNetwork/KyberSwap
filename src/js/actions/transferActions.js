@@ -74,7 +74,7 @@ export function showConfirm() {
 export function specifyAddressReceive(value) {
 	return {
 		type: "TRANSFER.TRANSFER_SPECIFY_ADDRESS_RECEIVE",
-		payload: value
+		payload: value.trim()
 	}
 }
 
