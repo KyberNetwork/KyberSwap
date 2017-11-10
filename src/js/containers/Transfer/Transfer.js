@@ -11,7 +11,7 @@ import { Token, SelectToken, TransactionLoading } from "../CommonElements"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
 import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase, throwErrorDestAddress, thowErrorAmount, makeNewTransfer } from '../../actions/transferActions';
-
+import  * as converters from "../../utils/converter"
 import { specifyGas as specifyGasTransfer, specifyGasPrice as specifyGasPriceTransfer, hideAdvance as hideAdvanceTransfer } from "../../actions/transferActions"
 
 @connect((store) => {
@@ -159,7 +159,9 @@ export default class Transfer extends React.Component {
               gasHandler={this.specifyGas}
               gasPriceHandler={this.specifyGasPrice}
               gasPriceError={this.props.transfer.gasPriceError}
-              gasError={this.props.transfer.gasError}/>
+              gasError={this.props.transfer.gasError}
+              totalGas={converters.gweiToEth(this.props.transfer.gas * this.props.transfer.gasPrice)}  
+              />
     )         
     
     return (
