@@ -10,15 +10,17 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = function (env) {
   //console.log(env.chain); // 'world'
   //get entry path
-  var entryChain
-  switch (env.chain) {
-    case "KOVAN":
-      entryChain = "src/env/kovan.js"
-      break
-    default:
-      entryChain = "src/env/kovan.js"
-      break;
-  }
+  var entryChain = "src/env/kovan.js"
+  if (env && env.chain){
+    switch (env.chain) {
+      case "KOVAN":
+        entryChain = "src/env/kovan.js"
+        break
+      default:
+        entryChain = "src/env/kovan.js"
+        break;
+    }
+  }  
   return {
     context: path.join(__dirname, "src"),
     devtool: debug ? "inline-sourcemap" : false,
