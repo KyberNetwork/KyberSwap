@@ -71,7 +71,8 @@
     "style-loader": "^0.19.0"
   },
   "scripts": {
-    "build": "NODE_ENV=production webpack -p",
+    "build": "NODE_ENV=production webpack -p",    
+    "kovan": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=KOVAN",
     "dev": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000",
     "test": "mocha -w test/helpers/browser.js test/*.spec.js --setupTestFrameworkScriptFile=raf/polyfill"
   },

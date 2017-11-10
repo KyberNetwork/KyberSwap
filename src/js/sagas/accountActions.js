@@ -8,7 +8,7 @@ import { setRandomTransferSelectedToken } from "../actions/transferActions"
 import { randomForExchange } from "../utils/random"
 
 import * as service from "../services/accounts"
-import SupportedTokens from "../services/supported_tokens"
+//import SupportedTokens from "../services/supported_tokens"
 import constants from "../services/constants"
 import { Rate, updateAllRatePromise } from "../services/rate"
 
@@ -21,12 +21,12 @@ function* updateAccount(action) {
 
 function* importNewAccount(action) {
   yield put(actions.importLoading())
-  const { address, type, keystring, ethereum, avatar } = action.payload
+  const { address, type, keystring, ethereum, avatar, tokens } = action.payload
   const account = yield call(service.newAccountInstance, address, type, keystring, avatar)
   var rates = []
   for (var k = 0; k < constants.RESERVES.length; k++) {
     var reserve = constants.RESERVES[k];
-    rates[k] = yield call(updateAllRatePromise, ethereum, SupportedTokens, constants.RESERVES[k], account.address)
+    rates[k] = yield call(updateAllRatePromise, ethereum, tokens, constants.RESERVES[k], account.address)
   }
   yield put.sync(updateAllRateComplete(rates[0]))
   var randomToken = randomForExchange(rates[0])

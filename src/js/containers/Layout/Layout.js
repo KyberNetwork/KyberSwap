@@ -16,6 +16,8 @@ import {ImportAccount} from "../ImportAccount"
 import { Processing, InfoModal } from "../../containers/CommonElements/"
 //import {  } from "../../containers/CommonElements"
 import constanst from "../../services/constants"
+import {createNewConnection} from "../../services/ethereum/connection"
+
 import history from "../../history"
 import { clearSession } from "../../actions/globalActions"
 import { openInfoModal} from "../../actions/utilActions"
@@ -23,6 +25,7 @@ import {setConnection} from "../../actions/connectionActions"
 
 import { default as _ } from 'underscore';
 import { LayoutView } from "../../components/Layout"
+
 
 @connect((store) => {
   return {
@@ -44,7 +47,6 @@ export default class Layout extends React.Component {
   }
   componentWillMount() {
     //this.props.ethereumNode.watch()
-    
     document.onload = this.resetTimmer;
     document.onmousemove = this.resetTimmer;
     document.onmousedown = this.resetTimmer; // touchscreen presses
@@ -54,7 +56,8 @@ export default class Layout extends React.Component {
     document.onkeypress = this.resetTimmer;
 
     this.intervalIdle = setInterval(this.checkTimmer.bind(this), 10000)
-    this.intervalConnection = setInterval(this.checkConnection.bind(this), 10000)
+    createNewConnection()
+   // this.intervalConnection = setInterval(this.checkConnection.bind(this), 10000)
   }
 
   checkTimmer(){
@@ -69,14 +72,14 @@ export default class Layout extends React.Component {
     }
   }
 
-  checkConnection(){
-    var _this = this
-    if (!_this.props.connected){
-      _this.props.ethereumNode.removeSubcribe(function(){
-        _this.props.dispatch(setConnection())      
-      })      
-    }
-  }
+  // checkConnection(){
+  //   var _this = this
+  //   if (!_this.props.connected){
+  //     _this.props.ethereumNode.removeSubcribe(function(){
+  //       _this.props.dispatch(setConnection())      
+  //     })      
+  //   }
+  // }
 
   resetTimmer = _.throttle(this.doResetTimer.bind(this), 5000)
 

@@ -16,7 +16,8 @@ export default class Rate {
   fetchRate(ethereum, reserve) {
     const _this = this;
     return new Promise((resolve, reject) => {
-      ethereum.getRate(this.address, constants.ETHER_ADDRESS, reserve.index,
+      ethereum.call("getRate")(this.address, constants.ETHER_ADDRESS, reserve.index)
+        .then(
         (result) => {
           var rate = new BigNumber(result[0])
           resolve(rate)
@@ -28,7 +29,8 @@ export default class Rate {
   fetchRateEth(ethereum, reserve) {
     const _this = this;
     return new Promise((resolve, reject) => {
-      ethereum.getRate(constants.ETHER_ADDRESS, this.address, reserve.index,
+      ethereum.call("getRate")(constants.ETHER_ADDRESS, this.address, reserve.index)
+              .then(
         (result) => {
           var rate = new BigNumber(result[0])
           resolve(rate)
@@ -44,13 +46,13 @@ export default class Rate {
         resolve(new BigNumber(0));
       }
       else if (this.address === constants.ETHER_ADDRESS) {
-        ethereum.getBalance(ownerAddr, (result) => {
+        ethereum.call("getBalance")(ownerAddr).then((result) => {
           var balance = new BigNumber(result)
           resolve(balance)
         })
       }
       else {
-        ethereum.getTokenBalance(this.address, ownerAddr, (result) => {
+        ethereum.call("getTokenBalance")(this.address, ownerAddr).then((result) => {
           var balance = new BigNumber(result)
           resolve(balance);
         })

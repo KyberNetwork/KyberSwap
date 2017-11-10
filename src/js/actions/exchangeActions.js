@@ -83,13 +83,17 @@ export function setRandomExchangeSelectedToken(random){
 	}
 }
 
-export function updateRateExchange(rate) {
-	//console.log(rate)
+export function updateRateExchange(ethereum ,source, dest, reserve) {
+	return {
+		type: "EXCHANGE.UPDATE_RATE_PENDING",
+		payload: {ethereum, source, dest, reserve}
+	}			
+}
+
+export function updateRateExchangeComplete(rate) {
 	if (rate) {
 		var rateBig = converter.stringToBigNumber(rate[0])
 		var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
-		//console.log(rateBig.times(1 - constants.RATE_EPSILON))
-		//console.log(offeredRate)
 		var expirationBlock = rate[1]
 		var reserveBalance = rate[2]
 		return {
@@ -101,27 +105,7 @@ export function updateRateExchange(rate) {
 			type: "EXCHANGE.UPDATE_RATE",
 			payload: { offeredRate: 0, expirationBlock: 0, reserveBalance: 0 }
 		}
-	}
-
-	// var bigRate = rate.rate
-	//    //if (epsilon) {
-	//      bigRate = bigRate.times(1-RATE_EPSILON)
-	//    //}
-	//    return {
-	//      type: "EXCHANGE_FORM_SUGGEST_RATE",
-	//      payload: {
-	//        rate: bigRate.toString(10),
-	//        reserve: rate.reserve,
-	//        expirationBlock: rate.expirationBlock,
-	//        balance: rate.balance.toString(10),
-	//      },
-	//      meta: id,
-	//    }
-
-	// return {
-	// 	type: "EXCHANGE.UPDATE_RATE",
-	// 	payload: rate
-	// }				
+	}				
 }
 
 

@@ -1,5 +1,8 @@
-export function setConnection(ethereum, account) {
+export function setConnection(ethereum) {
     return {
-        type: "CONN.SET_CONNECTION"        
+        type: "CONN.SET_CONNECTION",
+        payload: ethereum
     }
 }
+
+

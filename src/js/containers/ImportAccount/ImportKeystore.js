@@ -8,9 +8,15 @@ import { addressFromKey } from "../../utils/keys"
 import { getRandomAvatar } from "../../services/accounts"
 
 @connect((store) => {
+  var tokens = store.tokens.tokens
+	var supportTokens = []
+	Object.keys(tokens).forEach((key) => {
+	  supportTokens.push(tokens[key])
+  })
   return {
     account: store.account,
-    ethereum: store.connection.ethereum
+    ethereum: store.connection.ethereum,
+    tokens: supportTokens
   }
 })
 
@@ -37,7 +43,12 @@ export default class ImportKeystore extends React.Component {
         this.props.dispatch(throwError("Your uploaded JSON file is invalid. Please upload a correct JSON keystore."))
       } else {
         var address = addressFromKey(keystring)
-        this.props.dispatch(importNewAccount(address, "keystore", keystring, this.props.ethereum, getRandomAvatar(address)))
+        this.props.dispatch(importNewAccount(address, 
+          "keystore", 
+          keystring, 
+          this.props.ethereum, 
+          getRandomAvatar(address), 
+          this.props.tokens))
       }
 
     }

@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js"
-import supported_tokens from "./supported_tokens"
+import BLOCKCHAIN_INFO from "ETHEREUM_CONSTANT"
 
 
 // abis
@@ -16,20 +16,20 @@ const EPSILON = 1000000000000000
 const RATE_EPSILON = 0.002
 const NODE_ENDPOINT = "https://kovan.kyber.network"
 const ETHER_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-const NETWORK_ADDRESS = "0x9044968086e365216cc9e441a8e2cea300dd7228"
+//const NETWORK_ADDRESS = "0x00a8a6f8db6793174d500b0eb9e1f5b2402f80c3"
 const TRADE_TOPIC = "0xec0d3e799aa270a144d7e3be084ccfc657450e33ecea1b1a4154c95cedaae5c3"
-const RESERVE_ADDRESS = "0x5ef2294f81be7c4568a3f8c953e35ae934da1396"
+//const RESERVE_ADDRESS = "0x98990ee596d7c383a496f54c9e617ce7d2b3ed46"
 const INIT_EXCHANGE_FORM_STATE = {
   advanced: false,
   passphrase: false,
   // selectedSource: null,
   // selectedDest: null,
   selected: false,
-  sourceToken: supported_tokens[0].address,
-  sourceTokenSymbol: supported_tokens[0].symbol,
+  sourceToken: BLOCKCHAIN_INFO.tokens["ETH"].address,
+  sourceTokenSymbol: BLOCKCHAIN_INFO.tokens["ETH"].symbol,
   sourceAmount: "",
-  destToken: supported_tokens[1].address,
-  destTokenSymbol: supported_tokens[1].symbol,
+  destToken: BLOCKCHAIN_INFO.tokens["ETH"].address,
+  destTokenSymbol: BLOCKCHAIN_INFO.tokens["ETH"].symbol,
 
   destAddress: "",
 
@@ -71,8 +71,8 @@ const INIT_TRANSFER_FORM_STATE = {
   advanced: false,
   passphrase: false,
   selected: false,
-  token: supported_tokens[0].address,
-  tokenSymbol: supported_tokens[0].symbol,
+  token: BLOCKCHAIN_INFO.tokens["ETH"].address,
+  tokenSymbol: BLOCKCHAIN_INFO.tokens["ETH"].symbol,
   amount: "",
   destAddress: "",
 
@@ -110,8 +110,7 @@ const KOVAN_ETH_URL = "https://kovan.etherscan.io/"
 const IDLE_TIME_OUT = 900
 
 export default {
-  ERC20, KYBER_NETWORK, EPSILON, ETHER_ADDRESS, ETH,
-  NETWORK_ADDRESS, RESERVES, KYBER_WALLET,
+  ERC20, KYBER_NETWORK, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,
   KYBER_WALLET_DATA, INIT_EXCHANGE_FORM_STATE, INIT_TRANSFER_FORM_STATE,
-  RATE_EPSILON, TRADE_TOPIC, KOVAN_ETH_URL, IDLE_TIME_OUT, RESERVE_ADDRESS, NODE_ENDPOINT
+  RATE_EPSILON, TRADE_TOPIC, KOVAN_ETH_URL, IDLE_TIME_OUT, NODE_ENDPOINT
 }

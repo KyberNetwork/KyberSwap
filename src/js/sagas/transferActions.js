@@ -13,7 +13,7 @@ function* broadCastTx(action) {
   const { ethereum, tx, account, data } = action.payload
   try {
     yield put(actions.prePareBroadcast())
-    const hash = yield call(ethereum.sendRawTransaction, tx, ethereum)
+    const hash = yield call(ethereum.call("sendRawTransaction"), tx, ethereum)
     //callback(hash, tx)
     yield call(runAfterBroadcastTx, ethereum, tx, hash, account, data)
     //yield put(actions.doTransactionComplete(hash, action.meta))
@@ -89,7 +89,7 @@ function* processTransfer(action) {
   
   try {
     yield put(actions.prePareBroadcast())
-    const hash = yield call(ethereum.sendRawTransaction, rawTx, ethereum)
+    const hash = yield call(ethereum.call("sendRawTransaction"), rawTx, ethereum)
     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
   } catch (e) {
     yield call(doTransactionFail, ethereum, account, e.message)

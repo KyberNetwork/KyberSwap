@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import * as ethUtil from 'ethereumjs-util'
-import TOKENS from "../services/supported_tokens"
+//import TOKENS from "../services/supported_tokens"
 import constants from "../services/constants"
 
 export function verifyAccount(addr) {
@@ -22,22 +22,22 @@ export function verifyKey(keystring) {
   return null
 }
 
-export function verifyToken(addr) {
-  if (!ethUtil.isValidAddress(addr)) {
-    return "invalid"
-  } else {
-    for (var i = 0; i < TOKENS.length; i++) {
-      if (TOKENS[i].address == addr) {
-        return null
-      }
-    }
-    if (addr != constants.ETHER_ADDRESS) {
-      return "unsupported"
-    } else {
-      return null
-    }
-  }
-}
+// export function verifyToken(addr) {
+//   if (!ethUtil.isValidAddress(addr)) {
+//     return "invalid"
+//   } else {
+//     for (var i = 0; i < TOKENS.length; i++) {
+//       if (TOKENS[i].address == addr) {
+//         return null
+//       }
+//     }
+//     if (addr != constants.ETHER_ADDRESS) {
+//       return "unsupported"
+//     } else {
+//       return null
+//     }
+//   }
+// }
 
 export function verifyAmount(sourceAmount, 
                               balance, 

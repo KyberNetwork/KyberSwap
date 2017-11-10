@@ -5,7 +5,7 @@ import constants from "../services/constants"
 import { calculateDest} from "../utils/converter"
 
 import { randomToken } from "../utils/random"
-import supported_tokens from "../services/supported_tokens"
+//import supported_tokens from "../services/supported_tokens"
 // const initState = {
 //   token_source: 'GNT',
 //   token_des: 'DGD',

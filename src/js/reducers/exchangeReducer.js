@@ -4,7 +4,8 @@ import {REHYDRATE} from 'redux-persist/lib/constants'
 import constants from "../services/constants"
 import { calculateDest} from "../utils/converter"
 import { randomToken, randomForExchange } from "../utils/random"
-import SUPPORT_TOKENS from "../services/supported_tokens"
+//import SUPPORT_TOKENS from "../services/supported_tokens"
+//import BLOCKCHAIN_INFO from "ETHEREUMCONSTANTS"
 
 const initState = constants.INIT_EXCHANGE_FORM_STATE
 

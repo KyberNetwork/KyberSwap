@@ -12,9 +12,15 @@ import { importNewAccount, importLoading, closeImportLoading, throwError } from 
 import { toEther } from "../../utils/converter"
 
 @connect((store) => {
+	var tokens = store.tokens.tokens
+	var supportTokens = []
+	Object.keys(tokens).forEach((key) => {
+	  supportTokens.push(tokens[key])
+	})
 	return {
 		ethereumNode: store.connection.ethereum,
 		account: store.account,
+		tokens: supportTokens
 	}
 })
 
@@ -174,7 +180,7 @@ export default class ImportByDevice extends React.Component {
 	}
 
 	getAddress(data) {
-		this.props.dispatch(importNewAccount(data.address, data.type, data.path, this.props.ethereumNode, data.avatar))
+		this.props.dispatch(importNewAccount(data.address, data.type, data.path, this.props.ethereumNode, data.avatar, this.props.tokens))
 		this.closeModal()
 	}
 	goToExchange = () => {
@@ -188,7 +194,7 @@ export default class ImportByDevice extends React.Component {
 
 	getBalance(address) {
 		return new Promise((resolve, reject) => {
-			this.props.ethereumNode.getBalance(address, (balance) => {
+			this.props.ethereumNode.call("getBalance")(address).then((balance) => {
 				resolve(toEther(balance))
 			})
 		})

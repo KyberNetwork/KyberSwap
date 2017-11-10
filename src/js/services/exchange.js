@@ -4,7 +4,7 @@ import {biggestNumber} from "../utils/converter"
 import store from "../store"
 import constants from "../services/constants"
 import Rate from "./rate"
-
+import BLOCKCHAIN_INFO from "ETHEREUM_CONSTANT"
 
 export function sendEtherFromAccount(
   id, ethereum, account, sourceToken, sourceAmount,
@@ -43,7 +43,7 @@ export function sendTokenFromAccount(
   destAddress, nonce, gas, gasPrice, keystring, accountType,
   password) {
 
-  var txData = ethereum.sendTokenData(
+  var txData = ethereum.call("sendTokenData")(
     sourceToken, sourceAmount, destAddress)
   const txParams = {
     nonce: nonce,
@@ -80,14 +80,14 @@ export function etherToOthersFromAccount(
   destAddress, maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas, gasPrice, keystring, accountType,
   password) {
-  var txData = ethereum.exchangeData(
+  var txData = ethereum.call("exchangeData")(
     sourceToken, sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate, throwOnFailure)
   const txParams = {
     nonce: nonce,
     gasPrice: gasPrice,
     gasLimit: gas,
-    to: ethereum.networkAddress,
+    to: BLOCKCHAIN_INFO.network,
     value: sourceAmount,
     data: txData,
     // EIP 155 chainId - mainnet: 1, ropsten: 3
@@ -114,7 +114,7 @@ export function etherToOthersFromAccount(
 export function getAppoveToken(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
   keystring, password, accountType) {    
   //const approvalData = ethereum.approveTokenData(sourceToken, sourceAmount)  
-  const approvalData = ethereum.approveTokenData(sourceToken, biggestNumber())
+  const approvalData = ethereum.call("approveTokenData")(sourceToken, biggestNumber())
   const txParams = {
     nonce: nonce,
     gasPrice: gasPrice,
@@ -145,7 +145,7 @@ export function tokenToOthersFromAccount(
   destAddress, maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas, gasPrice, keystring, accountType,
   password) {
-    const exchangeData = ethereum.exchangeData(
+    const exchangeData = ethereum.call("exchangeData")(
       sourceToken, sourceAmount, destToken, destAddress,
       maxDestAmount, minConversionRate, throwOnFailure)
     const newNonce = verifyNonce(nonce, 1)
@@ -153,7 +153,7 @@ export function tokenToOthersFromAccount(
       nonce: newNonce,
       gasPrice: gasPrice,
       gasLimit: gas,
-      to: ethereum.networkAddress,
+      to: BLOCKCHAIN_INFO.network,
       value: '0x0',
       data: exchangeData,
       // EIP 155 chainId - mainnet: 1, ropsten: 3
@@ -178,7 +178,8 @@ export function tokenToOthersFromAccount(
 }
 
 export function fetchRate(ethereum, source, dest, reserve, callback) {
-  ethereum.getRate(source.address, dest.address, reserve.index,
+  ethereum.call("getRate")(source.address, dest.address, reserve.index)
+          .then(
     (result) => {
       callback(new Rate(
         source, dest, reserve,
@@ -188,7 +189,8 @@ export function fetchRate(ethereum, source, dest, reserve, callback) {
 
 export function fetchRatePromise(ethereum, source, dest, reserve) {
   return new Promise((resolve, reject) => {
-    ethereum.getRate(source.address, dest.address, reserve.index,
+    ethereum.call("getRate")(source.address, dest.address, reserve.index)
+            .then(
       (result) => {
         resolve(new Rate(
           source.name,

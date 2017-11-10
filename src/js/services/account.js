@@ -1,4 +1,4 @@
-import SupportedTokens from "./supported_tokens"
+//import SupportedTokens from "./supported_tokens"
 import Token from "./token"
 
 export default class Account {
@@ -58,7 +58,7 @@ export default class Account {
       
       promise = new Promise((resolve, reject) => {
         const acc = _this.shallowClone()
-        ethereum.getBalance(acc.address, (balance) => {
+        ethereum.call("getBalance")(acc.address).then((balance) => {
           acc.balance = balance
           resolve(acc)
         })
@@ -66,7 +66,7 @@ export default class Account {
 
       promise = promise.then((acc) => {
         return new Promise((resolve, reject) => {
-          ethereum.getNonce(acc.address, (nonce) => {
+          ethereum.call("getNonce")(acc.address).then((nonce) => {
             //console.log(nonce)
             //console.log(acc.manualNonce)
             acc.nonce = nonce

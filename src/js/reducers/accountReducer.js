@@ -37,9 +37,9 @@ const account = (state=initState, action) => {
       var oldState = {...state}
       var newAccount = action.payload
       if ((oldState.account) && (oldState.account.address === newAccount.address)){        
-        if (newAccount.manualNonce < oldState.account.manualNonce){
-          newAccount.manualNonce = oldState.account.manualNonce
-        }
+        // if (newAccount.manualNonce < oldState.account.manualNonce){
+        //   newAccount.manualNonce = oldState.account.manualNonce
+        // }
         return {...state, account: newAccount}
       }
       

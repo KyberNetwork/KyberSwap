@@ -7,7 +7,7 @@ import { push } from 'react-router-redux';
 
 function* getLatestBlock(action) {
   const ethereum = action.payload
-  const block = yield call(ethereum.getLatestBlockPromise, ethereum)
+  const block = yield call(ethereum.call("getLatestBlock"))
   yield put(actions.updateBlockComplete(block))
 }
 

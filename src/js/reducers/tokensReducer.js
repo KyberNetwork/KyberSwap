@@ -1,16 +1,17 @@
 import {REHYDRATE} from 'redux-persist/lib/constants'
 import Rate from "../services/rate"
 import BigNumber from "bignumber.js"
-import SUPPORT_TOKENS from "../services/supported_tokens"
+//import SUPPORT_TOKENS from "../services/supported_tokens"
+import BLOCKCHAIN_INFO from "ETHEREUM_CONSTANT"
 
 const initState = function(){
   let tokens = {}
-  SUPPORT_TOKENS.forEach( (token) => {
-    tokens[token.symbol] = token
-    tokens[token.symbol].rate = 0
-    tokens[token.symbol].rateEth = 0
-    tokens[token.symbol].balance = 0    
-  })
+  Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
+    tokens[key] = BLOCKCHAIN_INFO.tokens[key]
+    tokens[key].rate = 0
+    tokens[key].rateEth = 0
+    tokens[key].balance = 0    
+  }) 
   return {tokens: tokens}
 }()
 
