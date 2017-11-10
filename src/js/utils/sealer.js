@@ -41,7 +41,7 @@ export function sealTxByTrezor(params) {
   }
 
   var chain_id = params.chainId; // 1 for ETH, 61 for ETC
-  return new Promise((resolve, reject)=>{
+  return new Promise((resolve, reject) => {
     TrezorConnect.signEthereumTx(
       address_n,
       nonce,
@@ -73,30 +73,28 @@ export function sealTxByTrezor(params) {
         }
       })
   })
-  
+
 }
 
 export function sealTxByLedger(params) {
   const eTx = new EthereumTx(params)
-
   eTx.raw[6] = Buffer.from([params.chainId]);
-  // eTx.raw[7] = eTx.raw[8] = 0;
-  let txToSign = ethUtil.rlp.encode(eTx.raw);  
-  return new Promise((resolve, reject)=>{
+  let txToSign = ethUtil.rlp.encode(eTx.raw);
+  return new Promise((resolve, reject) => {
     connectLedger().then((eth) => {
-      signLedgerTransaction(eth, params.address_n,  txToSign.toString('hex')).then((response) => {        
-        if(response.status){
+      signLedgerTransaction(eth, params.address_n, txToSign.toString('hex')).then((response) => {
+        if (response.status) {
           params.v = "0x" + response['v'];
           params.r = "0x" + response['r'];
           params.s = "0x" + response['s'];
-          var tx = new EthereumTx(params);  
+          var tx = new EthereumTx(params);
           resolve(tx);
-        }else{
-          reject(response.error)    
-        }          
+        } else {
+          reject(response.error)
+        }
       })
     }).catch((err) => {
-      reject(err)      
+      reject(err)
     })
-  })  
+  })
 }

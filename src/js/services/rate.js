@@ -30,7 +30,7 @@ export default class Rate {
     const _this = this;
     return new Promise((resolve, reject) => {
       ethereum.call("getRate")(constants.ETHER_ADDRESS, this.address, reserve.index)
-              .then(
+        .then(
         (result) => {
           var rate = new BigNumber(result[0])
           resolve(rate)

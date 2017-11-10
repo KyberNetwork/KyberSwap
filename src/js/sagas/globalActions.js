@@ -3,7 +3,6 @@ import * as actions from '../actions/globalActions'
 import { fetchRatePromise } from "../services/exchange"
 import { Rate, updateAllRatePromise } from "../services/rate"
 import { push } from 'react-router-redux';
-// import SupportedTokens from "../services/supported_tokens"
 
 function* getLatestBlock(action) {
   const ethereum = action.payload
@@ -12,7 +11,7 @@ function* getLatestBlock(action) {
 }
 
 function* updateRate(action) {
-  const {ethereum, source, reserve, ownerAddr} = action.payload
+  const { ethereum, source, reserve, ownerAddr } = action.payload
   const rate = new Rate(
     source.name,
     source.symbol,
@@ -29,19 +28,17 @@ function* updateRate(action) {
 
 
 
-function* goToRoute(action){
+function* goToRoute(action) {
   yield put(push(action.payload));
-  // this.props.dispatch(push('/exchange'));
 }
 
-function* clearSession(action){
+function* clearSession(action) {
   yield put(actions.clearSessionComplete())
   yield put(actions.goToRoute('/'));
-  //yield cancel("*")
 }
 
-function* updateAllRate(action){
-  const {ethereum, tokens, reserve, ownerAddr} = action.payload
+function* updateAllRate(action) {
+  const { ethereum, tokens, reserve, ownerAddr } = action.payload
   const rates = yield call(updateAllRatePromise, ethereum, tokens, reserve, ownerAddr)
   yield put(actions.updateAllRateComplete(rates))
 }

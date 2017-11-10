@@ -25,7 +25,6 @@ function* broadCastTx(action) {
 function* approveTx(action) {
   try {
     const { ethereum, tx, callback } = action.payload
-    //yield put(actions.prePareBroadcast())
     const hash = yield call(ethereum.call("sendRawTransaction"), tx, ethereum)
     callback(hash, tx)
     yield put(actions.doApprovalTransactionComplete(hash, action.meta))
@@ -75,9 +74,7 @@ function* processApprove(action) {
   try {
     const rawApprove = yield call(servicesExchange.getAppoveToken, ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
       keystring, password, accountType)
-    //yield put(actions.prePareBroadcast())
     const hashApprove = yield call(ethereum.call("sendRawTransaction"), rawApprove, ethereum)
-    //console.log(hashApprove)
     yield put(actions.hideApprove())
     yield put(actions.showConfirm())
   } catch (e) {
@@ -85,24 +82,6 @@ function* processApprove(action) {
     yield call(doApproveTransactionFail, ethereum, account, e.message)
   }
 }
-// function* processExchangeAfterApprove(action) {
-//   const { formId, ethereum, address, sourceToken,
-//     sourceAmount, destToken, destAddress,
-//     maxDestAmount, minConversionRate,
-//     throwOnFailure, nonce, gas,
-//     gasPrice, keystring, type, password, account, data } = action.payload
-//   try {
-//     const txRaw = yield call(servicesExchange.tokenToOthersFromAccount, formId, ethereum, address, sourceToken,
-//       sourceAmount, destToken, destAddress,
-//       maxDestAmount, minConversionRate,
-//       throwOnFailure, nonce, gas,
-//       gasPrice, keystring, type, password)
-//     yield put(actions.saveRawExchangeTransaction(txRaw))
-//     yield put(actions.showConfirm())
-//   } catch (e) {
-//     console.log(e)
-//   }
-// }
 
 function* processExchangeAfterConfirm(action) {
   const { formId, ethereum, address, sourceToken,
@@ -157,31 +136,23 @@ function* processExchange(action) {
           yield put(actions.throwPassphraseError(e.message))
           return
         }
-        try{
+        try {
           yield put(actions.prePareBroadcast())
           const hash = yield call(ethereum.call("sendRawTransaction"), txRaw, ethereum)
           yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
-        }catch(e){
+        } catch (e) {
           console.log(e)
           yield call(doTransactionFail, ethereum, account, e.message)
           return
         }
-        
+
       } else {
-        // txRaw = yield call(servicesExchange.etherToOthersFromAccount, formId, ethereum, address, sourceToken,
-        //   sourceAmount, destToken, destAddress,
-        //   maxDestAmount, minConversionRate,
-        //   throwOnFailure, nonce, gas,
-        //   gasPrice, keystring, type, password)
-        // yield put(actions.saveRawExchangeTransaction(txRaw))
         yield put(actions.showConfirm())
       }
     } else {
       const remainStr = yield call(ethereum.call("getAllowance"), sourceToken, address)
       const remain = converter.hexToBigNumber(remainStr)
-      //console.log(remain)
       const sourceAmountBig = converter.hexToBigNumber(sourceAmount)
-      //console.log(remain.greaterThanOrEqualTo(sourceAmountBig))
       if (!remain.greaterThanOrEqualTo(sourceAmountBig)) {
         //get approve
         if (type === "keystore") {
@@ -225,7 +196,6 @@ function* processExchange(action) {
           const hash = yield call(ethereum.call("sendRawTransaction"), txRaw, ethereum)
           yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
         } else {
-          //yield put(actions.saveRawExchangeTransaction(txRaw))
           yield put(actions.showConfirm())
         }
       }
@@ -237,8 +207,8 @@ function* processExchange(action) {
   }
 }
 
-function* updateRatePending(action){
-  const {ethereum, source, dest, reserve} = action.payload
+function* updateRatePending(action) {
+  const { ethereum, source, dest, reserve } = action.payload
   const rate = yield call(ethereum.call("getRate"), source, dest, reserve)
   yield put(actions.updateRateExchangeComplete(rate))
 
@@ -252,5 +222,4 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.PROCESS_APPROVE", processApprove)
   yield takeEvery("EXCHANGE.PROCESS_EXCHANGE_AFTER_CONFIRM", processExchangeAfterConfirm)
   yield takeEvery("EXCHANGE.UPDATE_RATE_PENDING", updateRatePending)
-  //yield takeEvery("EXCHANGE.PROCESS_EXCHANGE_AFTER_APPROVE", processExchangeAfterApprove)
 }

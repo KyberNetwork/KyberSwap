@@ -1,8 +1,6 @@
 // in this package, all number are in 18 decimals precision
 
 import BigNumber from 'bignumber.js'
-
-//import supported_tokens from "../services/supported_tokens"
 import constants from "../services/constants"
 
 
@@ -80,7 +78,7 @@ export function gweiToWei(number) {
   }
 }
 
-export function gweiToEth(number){
+export function gweiToEth(number) {
   var bigNumber = new BigNumber(number)
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
     return number
@@ -119,7 +117,7 @@ export function toT(number, precision) {
   }
 }
 
-export function displayBalance(number, decimal, precision){
+export function displayBalance(number, decimal, precision) {
   var bigNumber = new BigNumber(number)
   var result
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
@@ -127,7 +125,7 @@ export function displayBalance(number, decimal, precision){
   } else if (acceptableTyping(number)) {
     return number
   }
-  if(decimal){
+  if (decimal) {
     result = bigNumber.div(Math.pow(10, decimal));
   }
   else {
@@ -139,25 +137,6 @@ export function displayBalance(number, decimal, precision){
     return result.toString()
   }
 }
-
-// export function getToken(address) {
-//   if (address == constants.ETHER_ADDRESS) {
-//     return {
-//       name: "Ether",
-//       icon: "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png",
-//       symbol: "ETH",
-//       address: constants.ETHER_ADDRESS,
-//     }
-//   } else {
-//     for (var i = 0; i < supported_tokens.length; i++) {
-//       var tok = supported_tokens[i]
-//       if (tok.address == address) {
-//         return { ...tok }
-//       }
-//     }
-//     throw new Error("Unsupported token")
-//   }
-// }
 
 export function pairID(source, dest) {
   return source.address + "-" + dest.address
@@ -202,21 +181,18 @@ export function errorName(message) {
 }
 
 
-export function stringEtherToBigNumber(number, decimal){
-  var param = new BigNumber(10).pow( decimal? decimal : 18)
+export function stringEtherToBigNumber(number, decimal) {
+  var param = new BigNumber(10).pow(decimal ? decimal : 18)
   var bigNumber = new BigNumber(number).times(param)
   return bigNumber
 }
-export function stringToBigNumber(number){
+export function stringToBigNumber(number) {
   var bigNumber = new BigNumber(number)
   return bigNumber
 }
 
-export function stringToHex(number, decimal){
-  //console.log(number)
-  var param = new BigNumber(10).pow(decimal? decimal : 18)
+export function stringToHex(number, decimal) {
+  var param = new BigNumber(10).pow(decimal ? decimal : 18)
   var bigNumber = new BigNumber(number).times(param)
-  //console.log(bigNumber)
-  //console.log("0x" + bigNumber.toString(16))
   return "0x" + bigNumber.toString(16)
 }

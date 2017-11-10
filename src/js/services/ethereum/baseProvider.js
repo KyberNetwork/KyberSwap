@@ -4,11 +4,6 @@ import * as ethUtil from 'ethereumjs-util'
 import BLOCKCHAIN_INFO from "ETHEREUM_CONSTANT"
 
 export default class BaseEthereumProvider {
-    // constructor(props) {
-    //     super(props)
-    //     this.rpc = this.props.rpc    
-    //     this.initContract()    
-    // }
 
     initContract(){
         this.erc20Contract = new this.rpc.eth.Contract(constants.ERC20)

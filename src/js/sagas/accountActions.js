@@ -8,7 +8,6 @@ import { setRandomTransferSelectedToken } from "../actions/transferActions"
 import { randomForExchange } from "../utils/random"
 
 import * as service from "../services/accounts"
-//import SupportedTokens from "../services/supported_tokens"
 import constants from "../services/constants"
 import { Rate, updateAllRatePromise } from "../services/rate"
 

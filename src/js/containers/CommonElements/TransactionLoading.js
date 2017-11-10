@@ -1,8 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
-//import Key from "./Elements/Key"
-//import { TokenSelect } from '../../components/Token'
 import constants from "../../services/constants"
 import { TransactionLoadingView } from "../../components/Transaction"
 

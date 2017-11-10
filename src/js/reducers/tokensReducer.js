@@ -1,7 +1,6 @@
 import {REHYDRATE} from 'redux-persist/lib/constants'
 import Rate from "../services/rate"
 import BigNumber from "bignumber.js"
-//import SUPPORT_TOKENS from "../services/supported_tokens"
 import BLOCKCHAIN_INFO from "ETHEREUM_CONSTANT"
 
 const initState = function(){

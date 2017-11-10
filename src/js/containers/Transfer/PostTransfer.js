@@ -50,7 +50,6 @@ export default class PostTransfer extends React.Component {
   }
   validateTransfer = () => {
     //check dest address is an ethereum address
-    //console.log(validators.verifyAccount(this.props.form.destAddress))
     var check = true
     var checkNumber = true
     if (validators.verifyAccount(this.props.form.destAddress.trim()) !== null) {
@@ -62,7 +61,7 @@ export default class PostTransfer extends React.Component {
       check = false
       checkNumber = false
     }
-    if(!checkNumber){
+    if (!checkNumber) {
       return false
     }
     var amountBig = converters.stringEtherToBigNumber(this.props.form.amount, this.props.form.decimal)
@@ -93,20 +92,11 @@ export default class PostTransfer extends React.Component {
 
     )
   }
-  // broacastTx = () => {
-  //   const id = "transfer"
-  //   const ethereum = this.props.ethereum
-  //   const tx = this.props.form.txRaw
-  //   const account = this.props.account
-  //   var data = this.recap()
-  //   this.props.dispatch(transferActions.doTransaction(id, ethereum, tx, account, data))
-  // }
   createRecap = () => {
     var form = this.props.form;
     var amount = form.amount.toString();
     var destAddress = form.destAddress;
     var tokenSymbol = form.tokenSymbol;
-    // return `transfer ${form.amount.toString().slice(0, 7)}${form.amount.toString().length > 7 ? '...' : ''} ${form.tokenSymbol} to ${form.destAddress.slice(0, 7)}...${form.destAddress.slice(-5)}`
     return (
       <p>You are about to transfer<br /><strong>{amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}</strong>&nbsp;to&nbsp;<strong>{destAddress.slice(0, 7)}...{destAddress.slice(-5)}</strong></p>
     )
@@ -160,66 +150,20 @@ export default class PostTransfer extends React.Component {
         document.getElementById("passphrase").value = ''
       }
       const params = this.formParams()
-      //console.log(params)
-      //return
       // sending by wei
       var account = this.props.account
       var ethereum = this.props.ethereum
-
-      //var call = params.token == constants.ETHER_ADDRESS ? sendEtherFromAccount : sendTokenFromAccount
-
-      //var dispatch = this.props.dispatch
-      //var sourceAccount = account
       var formId = "transfer"
       var data = this.recap()
       this.props.dispatch(transferActions.processTransfer(formId, ethereum, account.address,
         params.token, params.amount,
         params.destAddress, params.nonce, params.gas,
         params.gasPrice, account.keystring, account.type, password, account, data))
-
-      // var formId = "transfer"
-      // call(
-      //   formId, ethereum, account.address,
-      //   params.token, params.amount,
-      //   params.destAddress, params.nonce, params.gas,
-      //   params.gasPrice, account.keystring, account.type, password, (ex, trans) => {
-      //     this.runAfterBroacastTx(ex, trans)
-      //     dispatch(finishTransfer())
-
-      //     // const tx = new Tx(
-      //     //   ex, account.address, ethUtil.bufferToInt(trans.gas),
-      //     //   weiToGwei(ethUtil.bufferToInt(trans.gasPrice)),
-      //     //   ethUtil.bufferToInt(trans.nonce), "pending", "send", {
-      //     //     sourceToken: params.token,
-      //     //     sourceAmount: params.amount,
-      //     //     destAddress: params.destAddress,
-      //     //   })
-      //     // dispatch(incManualNonceAccount(account.address))
-      //     // dispatch(updateAccount(ethereum, account))
-      //     // dispatch(addTx(tx))
-      //   })
-      //document.getElementById("passphrase").value = ''
-      //dispatch(finishTransfer())
     } catch (e) {
       console.log(e)
       this.props.dispatch(transferActions.throwPassphraseError("Key derivation failed"))
-      //errors["passwordError"] = e.message
     }
   }
-  // runAfterBroacastTx = (ex, trans) => {
-  //   const account = this.props.account
-  //   const params = this.formParams()
-  //   const ethereum = this.props.ethereum
-  //   const dispatch = this.props.dispatch
-  //   var recap = this.createRecap()
-  //   const tx = new Tx(
-  //     ex, account.address, ethUtil.bufferToInt(trans.gas),
-  //     weiToGwei(ethUtil.bufferToInt(trans.gasPrice)),
-  //     ethUtil.bufferToInt(trans.nonce), "pending", "send", this.recap())
-  //   dispatch(incManualNonceAccount(account.address))
-  //   dispatch(updateAccount(ethereum, account))
-  //   dispatch(addTx(tx))
-  // }
   render() {
     var modalPassphrase = this.props.account.type === "keystore" ? (
       <Modal
@@ -245,12 +189,8 @@ export default class PostTransfer extends React.Component {
         size="tiny"
       />
     return (
-      <PostTransferBtn modalPassphrase = {modalPassphrase}
-                       submit = {this.clickTransfer}  />      
-      // <div>
-      //   <button onClick={this.clickTransfer}>Transfer</button>
-      //   {modalPassphrase}
-      // </div>
+      <PostTransferBtn modalPassphrase={modalPassphrase}
+        submit={this.clickTransfer} />
     )
   }
 }

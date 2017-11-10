@@ -11,9 +11,8 @@ import { SelectToken, TransactionLoading, Token } from "../CommonElements"
 import { anyErrors } from "../../utils/validators"
 
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
-//import { selectTokenAsync, thowErrorSourceAmount } from "../../actions/exchangeActions"
 import * as exchangeActions from "../../actions/exchangeActions"
-import  * as converters from "../../utils/converter"
+import * as converters from "../../utils/converter"
 import { randomForExchange } from "../../utils/random"
 @connect((store) => {
   const ethereum = store.connection.ethereum
@@ -25,18 +24,6 @@ import { randomForExchange } from "../../utils/random"
 
 
 export default class Exchange extends React.Component {
-
-  // componentDidMount(){
-  //   if(this.props.exchange.selected) return;
-
-  //   var randomToken = randomForExchange(this.props.tokens);
-  //   if(!randomToken[0]){
-  //     //todo dispatch action waring no balance
-  //   } else {
-  //     this.props.dispatch(exchangeActions.setRandomSelectedToken(randomToken))
-  //   }
-  //   console.log(randomToken);
-  // }
 
   openSourceToken = (e) => {
     this.props.dispatch(openTokenModal("source", this.props.exchange.sourceTokenSymbol))
@@ -51,7 +38,6 @@ export default class Exchange extends React.Component {
   }
 
   proccessSelectToken = () => {
-    //console.log(anyErrors(this.props.exchange.errors))
     if (!anyErrors(this.props.exchange.errors)) {
       this.props.dispatch(exchangeActions.goToStep(2))
     }
@@ -103,7 +89,6 @@ export default class Exchange extends React.Component {
   }
 
   render() {
-    //console.log(this.props.account)
     if (this.props.account.isStoreReady) {
       if (!!!this.props.account.account.address) {
         setTimeout(() => this.props.dispatch(push("/")), 1000)
@@ -162,17 +147,6 @@ export default class Exchange extends React.Component {
       tokenSource: ''
     }
 
-    // var errorSelectSameToken = this.props.errors.selectSameToken === "" ? "" : (
-    //   <div>{this.props.errors.selectSameToken}</div>
-    // )
-    // var errorSelectTokenToken = this.props.errors.selectTokenToken === "" ? "" : (
-    //   <div>{this.props.errors.selectTokenToken}</div>
-    // )
-    // var errorSourceAmount = this.props.errors.sourceAmountError === "" ? "" : (
-    //   <div>{this.props.errors.sourceAmountError}</div>
-    // )
-
-
     var button = {
       selectToken: {
         onClick: this.proccessSelectToken
@@ -194,30 +168,14 @@ export default class Exchange extends React.Component {
       }
     }
 
-
-    // var buttonStep1 = (
-    //   <button onClick={this.proccessSelectToken}>Continue</button>
-    // )
-    // var buttonShowAdvance = (
-    //   <button onClick={this.showAdvanceOption}>Advance</button>
-    // )
-
-    // var sourceAmount = (
-    //   <input type="text" value={this.props.sourceAmount} onChange={this.changeSourceAmount} />
-    // )
-    // var destAmount = (
-    //   <input value={this.getDesAmount()} />
-    // )
     var selectTokenModal = (
       <SelectToken chooseToken={this.chooseToken} type="exchange" />
-    )  
-    // var exchangeRate = (
-    //   <ExchangeRate />
-    // )
+    )
+
     var exchangeRate = {
-      sourceToken : this.props.exchange.sourceTokenSymbol,
-      rate: toT(this.props.exchange.offeredRate,6),
-      destToken : this.props.exchange.destTokenSymbol,
+      sourceToken: this.props.exchange.sourceTokenSymbol,
+      rate: toT(this.props.exchange.offeredRate, 6),
+      destToken: this.props.exchange.destTokenSymbol,
       percent: "-"
     }
     var exchangeButton = (
@@ -225,12 +183,12 @@ export default class Exchange extends React.Component {
     )
     var trasactionLoadingScreen = (
       <TransactionLoading tx={this.props.exchange.txHash}
-        tempTx = {this.props.exchange.tempTx}
+        tempTx={this.props.exchange.tempTx}
         makeNewTransaction={this.makeNewExchange}
         type="exchange"
         balanceInfo={balanceInfo}
-        broadcasting = {this.props.exchange.broadcasting}
-        broadcastingError = {this.props.exchange.bcError}
+        broadcasting={this.props.exchange.broadcasting}
+        broadcastingError={this.props.exchange.bcError}
       />
     )
     var gasConfig = (
@@ -239,9 +197,9 @@ export default class Exchange extends React.Component {
         gasHandler={this.specifyGas}
         gasPriceHandler={this.specifyGasPrice}
         gasPriceError={this.props.exchange.gasPriceError}
-        gasError={this.props.exchange.gasError} 
-        totalGas={converters.gweiToEth(this.props.exchange.gas * this.props.exchange.gasPrice)}        
-        />
+        gasError={this.props.exchange.gasError}
+        totalGas={converters.gweiToEth(this.props.exchange.gas * this.props.exchange.gasPrice)}
+      />
     )
 
     return (

@@ -16,7 +16,6 @@ export default class HttpEthereumProvider extends BaseEthereumProvider {
     }
 
     subcribeNewBlock(callBack){
-        //callBack()
         this.intervalID = setInterval(callBack, 10000)
     }
 

@@ -7,7 +7,6 @@ import { updateBlock, updateBlockFailed, updateRate, updateAllRate } from "../..
 import { updateAccount } from "../../actions/accountActions"
 import { updateTx } from "../../actions/txActions"
 import { updateRateExchange } from "../../actions/exchangeActions"
-//import { setConnection } from "../actions/connectionActions"
 import BLOCKCHAIN_INFO from "ETHEREUM_CONSTANT"
 import { store } from "../../store"
 import { setConnection } from "../../actions/connectionActions"

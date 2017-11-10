@@ -3,15 +3,10 @@ var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-// console.log(process.env.chain)
-// module.exports = function(env) {
-//   console.log(env.chain); // 'world'
-// }
 module.exports = function (env) {
-  //console.log(env.chain); // 'world'
   //get entry path
   var entryChain = "src/env/kovan.js"
-  if (env && env.chain){
+  if (env && env.chain) {
     switch (env.chain) {
       case "KOVAN":
         entryChain = "src/env/kovan.js"
@@ -20,17 +15,17 @@ module.exports = function (env) {
         entryChain = "src/env/kovan.js"
         break;
     }
-  }  
+  }
   return {
     context: path.join(__dirname, "src"),
     devtool: debug ? "inline-sourcemap" : false,
     entry: ['babel-polyfill', "./js/client.js", "./assets/css/app.scss"],
     resolve: {
-      modules: [path.resolve(__dirname, "src"),"node_modules"],
-      alias:{
-        ETHEREUM_CONSTANT: path.resolve(__dirname, entryChain)                
+      modules: [path.resolve(__dirname, "src"), "node_modules"],
+      alias: {
+        ETHEREUM_CONSTANT: path.resolve(__dirname, entryChain)
       },
-      extensions: [ '.js' ]
+      extensions: ['.js']
     },
     module: {
       loaders: [{
@@ -86,9 +81,9 @@ module.exports = function (env) {
         allChunks: true,
       }),
       new webpack.DefinePlugin({
-          '__PROCESS__': {
-            'ENV': 'production',
-          }
+        '__PROCESS__': {
+          'ENV': 'production',
+        }
       })
     ] : [
         new webpack.optimize.DedupePlugin(),
@@ -99,9 +94,9 @@ module.exports = function (env) {
           allChunks: true,
         }),
         new webpack.DefinePlugin({
-            '__PROCESS__': {
-              'ENV': 'production',
-            }
+          '__PROCESS__': {
+            'ENV': 'production',
+          }
         })
       ],
     devServer: {
@@ -110,5 +105,3 @@ module.exports = function (env) {
     }
   }
 };
-
-//module.exports = configureWebpack(env)

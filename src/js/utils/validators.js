@@ -1,6 +1,5 @@
 import BigNumber from 'bignumber.js'
 import * as ethUtil from 'ethereumjs-util'
-//import TOKENS from "../services/supported_tokens"
 import constants from "../services/constants"
 
 export function verifyAccount(addr) {
@@ -22,31 +21,14 @@ export function verifyKey(keystring) {
   return null
 }
 
-// export function verifyToken(addr) {
-//   if (!ethUtil.isValidAddress(addr)) {
-//     return "invalid"
-//   } else {
-//     for (var i = 0; i < TOKENS.length; i++) {
-//       if (TOKENS[i].address == addr) {
-//         return null
-//       }
-//     }
-//     if (addr != constants.ETHER_ADDRESS) {
-//       return "unsupported"
-//     } else {
-//       return null
-//     }
-//   }
-// }
-
-export function verifyAmount(sourceAmount, 
-                              balance, 
-                              sourceSymbol, 
-                              sourceDecimal, 
-                              rate, destDecimal, reserveBalance) {  
+export function verifyAmount(sourceAmount,
+  balance,
+  sourceSymbol,
+  sourceDecimal,
+  rate, destDecimal, reserveBalance) {
   //verify number for source amount
   var testAmount = parseFloat(sourceAmount)
-  if(isNaN(sourceAmount)){
+  if (isNaN(sourceAmount)) {
     return "not a number"
   }
   var sourceAmountWei = new BigNumber(sourceAmount)
@@ -54,7 +36,7 @@ export function verifyAmount(sourceAmount,
     return "not a number"
   }
   var weiParam = new BigNumber(10)
-  sourceAmountWei = sourceAmountWei.times(weiParam.pow(sourceDecimal))  
+  sourceAmountWei = sourceAmountWei.times(weiParam.pow(sourceDecimal))
 
   //verify balance for source amount
   var sourceBalance = new BigNumber(balance)
@@ -63,12 +45,12 @@ export function verifyAmount(sourceAmount,
   }
   if (sourceAmountWei.cmp(sourceBalance) > 0) {
     return "too high"
-  } 
+  }
 
   //verify min source amount
   var rateBig = new BigNumber(rate)
-  var estimateValue = sourceAmountWei   
-  if (sourceSymbol !== "ETH"){    
+  var estimateValue = sourceAmountWei
+  if (sourceSymbol !== "ETH") {
     estimateValue = sourceAmountWei.times(weiParam.pow(36)).div(weiParam.pow(sourceDecimal)).div(rateBig)
   }
   if (estimateValue.cmp(constants.EPSILON) < 0) {
@@ -77,9 +59,9 @@ export function verifyAmount(sourceAmount,
 
   //verify max dest amount
   var estimateDestAmount = sourceAmountWei.times(weiParam.pow(destDecimal))
-                                          .times(weiParam.pow(18))
-                                          .div(weiParam.pow(sourceDecimal))
-                                          .div(rateBig)
+    .times(weiParam.pow(18))
+    .div(weiParam.pow(sourceDecimal))
+    .div(rateBig)
 
   var reserveBalanceB = new BigNumber(reserveBalance)
   if (estimateDestAmount.cmp(reserveBalanceB) > 0) {
@@ -98,7 +80,6 @@ export function verifyNumber(amount) {
     return "nagative"
   }
   return null
-  // return "0x" + result.toString(16)
 }
 
 export function verifyNonce(nonce, future) {
@@ -116,9 +97,9 @@ export function anyErrors(errors) {
 }
 
 export function verifyPassphrase(passphrase, repassphrase) {
-  if (passphrase !== repassphrase){
+  if (passphrase !== repassphrase) {
     return "Passphrase confirmation is not match"
-  }else{
+  } else {
     return null
   }
 }

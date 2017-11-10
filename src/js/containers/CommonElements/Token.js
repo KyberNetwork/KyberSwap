@@ -1,12 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
-
-//import TokenDest from "./TokenDest"
-//import {TokenDest, MinRate} from "../ExchangeForm"
-//import Token from "../Exchange"
 import {toT} from "../../utils/converter"
 import {pickRandomProperty} from "../../utils/tokens"
-//import SUPPORTED_TOKENS from "../../services/supported_tokens"
 import { TokenView } from "../../components/CommonElement"
 
 @connect((store, props) => {  

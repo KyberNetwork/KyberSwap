@@ -37,8 +37,6 @@ import { PassphraseModal, ConfirmTransferModal, ApproveModal, PostExchangeBtn } 
 export default class PostExchange extends React.Component {
   clickExchange = () => {
     if (this.props.form.step == 1) {
-      // console.log(this.props.form.errors)
-      // console.log(validators.anyErrors(this.props.form.errors))
       if (!validators.anyErrors(this.props.form.errors)) {
         this.props.dispatch(exchangeActions.goToStep(2))
       }
@@ -59,33 +57,18 @@ export default class PostExchange extends React.Component {
   }
   validateExchange = () => {
     //check source amount
-    var validateAmount = validators.verifyAmount(this.props.form.sourceAmount, 
-                                                  this.props.form.sourceBalance, 
-                                                  this.props.form.sourceTokenSymbol,                                                  
-                                                  this.props.form.sourceDecimal,
-                                                  this.props.form.minConversionRate,
-                                                  this.props.form.destDecimal,
-                                                  this.props.form.offeredRateBalance)
+    var validateAmount = validators.verifyAmount(this.props.form.sourceAmount,
+      this.props.form.sourceBalance,
+      this.props.form.sourceTokenSymbol,
+      this.props.form.sourceDecimal,
+      this.props.form.minConversionRate,
+      this.props.form.destDecimal,
+      this.props.form.offeredRateBalance)
     if (validateAmount !== null) {
       this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount is " + validateAmount))
       return false
     }
     return true
-    // if (isNaN(this.props.form.sourceAmount) || !this.props.form.sourceAmount || this.props.form.sourceAmount == '') {
-    //   this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount must be a number"))
-    //   return false
-    // }    
-    // var sourceAmountBig = converters.stringToBigNumber(this.props.form.sourceAmount)
-    // if (sourceAmountBig.greaterThan(this.props.form.sourceBalance)) {
-    //   this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount is too high"))
-    //   return false
-    // }
-    // var epsilon = cons
-    // if (sourceAmountBig.greaterThan(this.props.form.sourceBalance)) {
-    //   this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount is too high"))
-    //   return false
-    // }
-    // return true
   }
 
   approveTx = () => {
@@ -157,15 +140,6 @@ export default class PostExchange extends React.Component {
     }
   }
 
-  // broacastTx = () => {
-  //   var id = "exchange"
-  //   var ethereum = this.props.ethereum
-  //   var tx = this.props.form.txRaw
-  //   const account = this.props.account
-  //   var data = this.recap()
-  //   this.props.dispatch(exchangeActions.doTransaction(id, ethereum, tx, account, data))
-  // }
-
   processTx = () => {
     // var errors = {}
     try {
@@ -190,13 +164,10 @@ export default class PostExchange extends React.Component {
     } catch (e) {
       console.log(e)
       this.props.dispatch(exchangeActions.throwPassphraseError("Key derivation failed"))
-      //errors["passwordError"] = e.message
     }
   }
 
   processTxAfterConfirm = () => {
-    // var errors = {}
-
     var password = ""
     const params = this.formParams()
     var account = this.props.account
@@ -211,19 +182,6 @@ export default class PostExchange extends React.Component {
       params.gasPrice, account.keystring, account.type, password, account, data))
   }
 
-  // processTxAfterApprove = ()=>{        
-  //   var password = ""
-  //   const params = this.formParams()
-  //   var account = this.props.account
-  //   var ethereum = this.props.ethereum
-  //   var formId = "exchange"
-  //   var data = this.recap()
-  //   this.props.dispatch(exchangeActions.processExchangeAfterApprove(formId, ethereum, account.address, params.sourceToken,
-  //     params.sourceAmount, params.destToken, params.destAddress,
-  //     params.maxDestAmount, params.minConversionRate,
-  //     params.throwOnFailure, params.nonce, params.gas,
-  //     params.gasPrice, account.keystring, account.type, password, account, data))
-  // }
   content = () => {
     return (
       <PassphraseModal recap={this.createRecap()}
@@ -251,13 +209,6 @@ export default class PostExchange extends React.Component {
         onSubmit={this.approveTx} />
     )
   }
-  // contentConfirmApprove = () =>{
-  //   return (
-  //     <ApproveModal recap="Approve successfully, please exchange"
-  //                   onCancel={this.closeModalConfirmApprove}
-  //                   onSubmit = {this.processTxAfterApprove} />      
-  //   )
-  // }
 
   render() {
     var modalPassphrase = ""

@@ -6,19 +6,15 @@ export default class WebsocketEthereumProvider extends BaseEthereumProvider {
         super(props)
         this.connection = true
         this.rpcUrl = props.url
-        this.provider = new Web3.providers.WebsocketProvider(this.rpcUrl)        
+        this.provider = new Web3.providers.WebsocketProvider(this.rpcUrl)
         this.provider.on('end', (err) => {
             console.log(err)
             props.failEvent()
-            //this.connection = false
         })
         this.provider.on('error', (err) => {
-                console.log(err)
-                props.failEvent()
-            })
-            // this.provider.on('open', (err) => {                
-            //     this.connection = true
-            // })
+            console.log(err)
+            props.failEvent()
+        })
 
         this.rpc = new Web3(this.provider)
         this.initContract()

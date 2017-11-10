@@ -1,7 +1,5 @@
 import React from "react"
 import { connect } from "react-redux"
-
-//import Key from "./Elements/Key"
 import { TokenSelect } from '../../components/CommonElement'
 import { hideSelectToken } from "../../actions/utilActions"
 import constants from "../../services/constants"
@@ -23,7 +21,6 @@ import { Modal, SelectTokenModal } from '../../components/CommonElement'
       }
     }
   }
-  //return store.utils
 })
 
 export default class SelectToken extends React.Component {

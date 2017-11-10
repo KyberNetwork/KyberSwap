@@ -14,13 +14,11 @@ function* broadCastTx(action) {
   try {
     yield put(actions.prePareBroadcast())
     const hash = yield call(ethereum.call("sendRawTransaction"), tx, ethereum)
-    //callback(hash, tx)
     yield call(runAfterBroadcastTx, ethereum, tx, hash, account, data)
-    //yield put(actions.doTransactionComplete(hash, action.meta))
   }
   catch (e) {
+    console.log(e)
     yield call(doTransactionFail, ethereum, account, e.message)
-    //yield put(actions.doTransactionFail(e, action.meta))
   }
 }
 
@@ -29,7 +27,7 @@ function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   const tx = new Tx(
     hash, account.address, ethUtil.bufferToInt(txRaw.gas),
     converter.weiToGwei(ethUtil.bufferToInt(txRaw.gasPrice)),
-    ethUtil.bufferToInt(txRaw.nonce), "pending", "transfer", data)  
+    ethUtil.bufferToInt(txRaw.nonce), "pending", "transfer", data)
   yield put(incManualNonceAccount(account.address))
   yield put(updateAccount(ethereum, account))
   yield put(addTx(tx))
@@ -43,25 +41,12 @@ function* doTransactionFail(ethereum, account, e) {
   yield put(updateAccount(ethereum, account))
 }
 
-// function* approveTx(action) {
-//   try {
-//     const { ethereum, tx, callback } = action.payload
-//     const hash = yield call(ethereum.sendRawTransaction, tx, ethereum)
-//     callback(hash, tx)
-//     yield put(actions.doApprovalTransactionComplete(hash, action.meta))
-//   }
-//   catch (e) {
-//     console.log(e)
-//     yield put(actions.doApprovalTransactionFail(e, action.meta))
-//   }
-// }
-
 
 function* processTransfer(action) {
   const { formId, ethereum, address,
     token, amount,
     destAddress, nonce, gas,
-    gasPrice, keystring, type, password, account, data} = action.payload
+    gasPrice, keystring, type, password, account, data } = action.payload
   var callService = token == constants.ETHER_ADDRESS ? transferServices.sendEtherFromAccount : transferServices.sendTokenFromAccount
 
   var rawTx
@@ -81,12 +66,13 @@ function* processTransfer(action) {
         token, amount,
         destAddress, nonce, gas,
         gasPrice, keystring, type, password)
-    }catch(e){
+    } catch (e) {
+      console.log(e)
       yield call(doTransactionFail, ethereum, account, e.message)
       return
     }
   }
-  
+
   try {
     yield put(actions.prePareBroadcast())
     const hash = yield call(ethereum.call("sendRawTransaction"), rawTx, ethereum)
@@ -98,6 +84,5 @@ function* processTransfer(action) {
 
 export function* watchTransfer() {
   yield takeEvery("TRANSFER.TX_BROADCAST_PENDING", broadCastTx)
- // yield takeEvery("TRANSFER.APPROVAL_TX_BROADCAST_PENDING", approveTx)
   yield takeEvery("TRANSFER.PROCESS_TRANSFER", processTransfer)
 }

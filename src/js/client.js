@@ -3,19 +3,12 @@ import ReactDOM from "react-dom"
 import { Provider } from "react-redux"
 import { Route } from 'react-router'
 import { Link } from 'react-router-dom'
-
-// import Layout from "./components/Layout"
 import { Layout } from "./containers/Layout"
-
 import NotSupportPage from "./components/NotSupportPage"
-
 import platform from 'platform'
 import { blackList } from './blacklist'
-
 import { PersistGate } from 'redux-persist/lib/integration/react'
 import { persistor, store } from "./store"
-// require('../assets/scss/app.scss');
-
 
 
 //check browser compatible
@@ -41,11 +34,6 @@ for (var i = 0; i < blackList.length; i++) {
   illegal = true
   break
 }
-
-
-
-
-
 
 if (illegal) {
   ReactDOM.render(

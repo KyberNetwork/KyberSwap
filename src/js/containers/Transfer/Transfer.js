@@ -11,15 +11,10 @@ import { Token, SelectToken, TransactionLoading } from "../CommonElements"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
 import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase, throwErrorDestAddress, thowErrorAmount, makeNewTransfer } from '../../actions/transferActions';
-import  * as converters from "../../utils/converter"
+import * as converters from "../../utils/converter"
 import { specifyGas as specifyGasTransfer, specifyGasPrice as specifyGasPriceTransfer, hideAdvance as hideAdvanceTransfer } from "../../actions/transferActions"
 
 @connect((store) => {
-  // if (store.account.isStoreReady) {
-  //   if (!!!store.account.account.address) {
-  //     window.location.href = "/"
-  //   }
-  // }
   return { transfer: store.transfer, account: store.account, tokens: store.tokens.tokens }
 })
 
@@ -37,8 +32,6 @@ export default class Transfer extends React.Component {
     this.props.dispatch(specifyAmountTransfer(value));
   }
   chooseToken = (symbol, address, type) => {
-
-    // this.props.dispatch(selectToken(symbol, address, type))
     this.props.dispatch(selectToken(symbol, address))
     this.props.dispatch(hideSelectToken())
   }
@@ -85,12 +78,12 @@ export default class Transfer extends React.Component {
   render() {
     if (this.props.account.isStoreReady) {
       if (!!!this.props.account.account.address) {
-        setTimeout(() => this.props.dispatch(push("/")), 1000)        
+        setTimeout(() => this.props.dispatch(push("/")), 1000)
         return (
           <div></div>
         )
       }
-    }else{
+    } else {
       return (
         <div></div>
       )
@@ -99,7 +92,7 @@ export default class Transfer extends React.Component {
     var balance = ""
     var tokenName = ""
     var token = this.props.tokens[this.props.transfer.tokenSymbol]
-    if(token){
+    if (token) {
       balance = displayBalance(token.balance, token.decimal, 8)
       tokenName = token.name
     }
@@ -108,7 +101,7 @@ export default class Transfer extends React.Component {
       amount: balance,
       tokenSymbol: this.props.transfer.tokenSymbol
     }
-        
+
 
     var button = {
       showAdvance: {
@@ -137,48 +130,48 @@ export default class Transfer extends React.Component {
       />
     )
     var tokenModal = (
-      <SelectToken chooseToken={this.chooseToken} type="transfer" selectedSymbol = {this.props.transfer.tokenSymbol}/>
+      <SelectToken chooseToken={this.chooseToken} type="transfer" selectedSymbol={this.props.transfer.tokenSymbol} />
     )
     var transferButton = (
       <PostTransfer />
     )
     var trasactionLoadingScreen = (
-      <TransactionLoading tx={this.props.transfer.txHash} 
-                          makeNewTransaction={this.makeNewTransfer} 
-                          tempTx = {this.props.transfer.tempTx}
-                          type="transfer"
-                          balanceInfo = {balanceInfo}
-                          broadcasting = {this.props.transfer.broadcasting}
-                          broadcastingError = {this.props.transfer.bcError}
-                          />
+      <TransactionLoading tx={this.props.transfer.txHash}
+        makeNewTransaction={this.makeNewTransfer}
+        tempTx={this.props.transfer.tempTx}
+        type="transfer"
+        balanceInfo={balanceInfo}
+        broadcasting={this.props.transfer.broadcasting}
+        broadcastingError={this.props.transfer.bcError}
+      />
     )
 
     var gasConfig = (
       <TransactionConfig gas={this.props.transfer.gas}
-              gasPrice={this.props.transfer.gasPrice}
-              gasHandler={this.specifyGas}
-              gasPriceHandler={this.specifyGasPrice}
-              gasPriceError={this.props.transfer.gasPriceError}
-              gasError={this.props.transfer.gasError}
-              totalGas={converters.gweiToEth(this.props.transfer.gas * this.props.transfer.gasPrice)}  
-              />
-    )         
-    
+        gasPrice={this.props.transfer.gasPrice}
+        gasHandler={this.specifyGas}
+        gasPriceHandler={this.specifyGasPrice}
+        gasPriceError={this.props.transfer.gasPriceError}
+        gasError={this.props.transfer.gasError}
+        totalGas={converters.gweiToEth(this.props.transfer.gas * this.props.transfer.gasPrice)}
+      />
+    )
+
     return (
-     <TransferForm step={this.props.transfer.step}
-                    token = {token}
-                    tokenSymbol = {this.props.transfer.tokenSymbol}
-                    tokenModal = {tokenModal}
-                    gasConfig = {gasConfig}
-                    transferButton = {transferButton}
-                    trasactionLoadingScreen = {trasactionLoadingScreen}
-                    recap = {this.createRecap()}
-                    button = {button}
-                    input = {input}
-                    errors = {errors}
-                    balance = {balance}
-                    setAmount={this.setAmount}
-                    />
-    ) 
+      <TransferForm step={this.props.transfer.step}
+        token={token}
+        tokenSymbol={this.props.transfer.tokenSymbol}
+        tokenModal={tokenModal}
+        gasConfig={gasConfig}
+        transferButton={transferButton}
+        trasactionLoadingScreen={trasactionLoadingScreen}
+        recap={this.createRecap()}
+        button={button}
+        input={input}
+        errors={errors}
+        balance={balance}
+        setAmount={this.setAmount}
+      />
+    )
   }
 }
