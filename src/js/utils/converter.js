@@ -80,6 +80,17 @@ export function gweiToWei(number) {
   }
 }
 
+export function gweiToEth(number){
+  var bigNumber = new BigNumber(number)
+  if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
+    return number
+  } else if (acceptableTyping(number)) {
+    return number
+  } else {
+    return bigNumber.div(1000000000).toString()
+  }
+}
+
 export function weiToGwei(number) {
   var bigNumber = new BigNumber(number)
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
