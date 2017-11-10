@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js"
-import BLOCKCHAIN_INFO from "ETHEREUM_CONSTANT"
+//import BLOCKCHAIN_INFO from "ETHEREUM_CONSTANT"
 
 
 // abis
@@ -25,11 +25,11 @@ const INIT_EXCHANGE_FORM_STATE = {
   // selectedSource: null,
   // selectedDest: null,
   selected: false,
-  sourceToken: BLOCKCHAIN_INFO.tokens["ETH"].address,
-  sourceTokenSymbol: BLOCKCHAIN_INFO.tokens["ETH"].symbol,
+  sourceToken: ETHER_ADDRESS,
+  sourceTokenSymbol: "ETH",
   sourceAmount: "",
-  destToken: BLOCKCHAIN_INFO.tokens["ETH"].address,
-  destTokenSymbol: BLOCKCHAIN_INFO.tokens["ETH"].symbol,
+  destToken: ETHER_ADDRESS,
+  destTokenSymbol: "ETH",
 
   destAddress: "",
 
@@ -71,8 +71,8 @@ const INIT_TRANSFER_FORM_STATE = {
   advanced: false,
   passphrase: false,
   selected: false,
-  token: BLOCKCHAIN_INFO.tokens["ETH"].address,
-  tokenSymbol: BLOCKCHAIN_INFO.tokens["ETH"].symbol,
+  token: ETHER_ADDRESS,
+  tokenSymbol: "ETH",
   amount: "",
   destAddress: "",
 

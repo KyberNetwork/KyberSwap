@@ -385,6 +385,9 @@ label.switch-caption {
         padding-left: 80px;
         text-align: right;
         margin: 0;
+        &[readonly] {
+          background-color: darken(white, 3)
+        }
       }
     }
     .gas-price {
@@ -414,7 +417,7 @@ label.switch-caption {
         padding-left: 80px;
         padding-right: 45px;
         text-align: right;
-        margin: 0;
+        margin: 0;      
       }
     }
   }
