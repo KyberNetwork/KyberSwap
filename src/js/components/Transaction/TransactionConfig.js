@@ -27,12 +27,12 @@ const TransactionConfig = (props) => {
     <div class="transaction-fee">
       <label class="title">Transaction Fee<span class="help has-tip top" data-tooltip title="Change gas limit or gas price affect the time to proccess transaction"></span></label>
       <div class="gas-limit">
-        <input type="number" min="0" max="3000000" step="100" onKeyPress={props.onGasPress} value={props.gas} onChange={specifyGas.bind(this)} />
+        <input type="number" min="0" max="3000000" step="100" onKeyPress={props.onGasPress} value={props.gas} onChange={specifyGas.bind(this)} disabled/>
       </div>
       <div class="symbol">×</div>
       <div class="gas-price">
         <input type="number" min="0" max="99" step="0.1" onKeyPress={props.onGasPricePress} value={props.gasPrice} onChange={specifyGasPrice.bind(this)} />
-      </div><span class="result">{props.gas * props.gasPrice} gwei</span>
+      </div><span class="result">{props.totalGas} eth</span>
     </div>
   )
 

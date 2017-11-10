@@ -13,7 +13,7 @@ import { anyErrors } from "../../utils/validators"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 //import { selectTokenAsync, thowErrorSourceAmount } from "../../actions/exchangeActions"
 import * as exchangeActions from "../../actions/exchangeActions"
-
+import  * as converters from "../../utils/converter"
 import { randomForExchange } from "../../utils/random"
 @connect((store) => {
   const ethereum = store.connection.ethereum
@@ -239,7 +239,9 @@ export default class Exchange extends React.Component {
         gasHandler={this.specifyGas}
         gasPriceHandler={this.specifyGasPrice}
         gasPriceError={this.props.exchange.gasPriceError}
-        gasError={this.props.exchange.gasError} />
+        gasError={this.props.exchange.gasError} 
+        totalGas={converters.gweiToEth(this.props.exchange.gas * this.props.exchange.gasPrice)}        
+        />
     )
 
     return (
