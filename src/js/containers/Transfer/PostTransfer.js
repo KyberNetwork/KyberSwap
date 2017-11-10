@@ -53,7 +53,7 @@ export default class PostTransfer extends React.Component {
     //console.log(validators.verifyAccount(this.props.form.destAddress))
     var check = true
     var checkNumber = true
-    if (validators.verifyAccount(this.props.form.destAddress) !== null) {
+    if (validators.verifyAccount(this.props.form.destAddress.trim()) !== null) {
       this.props.dispatch(transferActions.throwErrorDestAddress("This is not an address"))
       check = false
     }
