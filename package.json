@@ -63,6 +63,7 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",
     "image-webpack-loader": "^3.4.2",
+    "jest": "^21.2.1",
     "jsdom": "^11.3.0",
     "mocha": "^4.0.1",
     "node-sass": "^4.5.3",
@@ -74,7 +75,8 @@
     "build": "NODE_ENV=production webpack -p",    
     "kovan": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=KOVAN",
     "dev": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000",
-    "test": "mocha -w test/helpers/browser.js test/*.spec.js --setupTestFrameworkScriptFile=raf/polyfill"
+    "test": "mocha -w test/helpers/browser.js test/*.spec.js --setupTestFrameworkScriptFile=raf/polyfill",
+    "jest": "jest src/js/test  --setupTestFrameworkScriptFile=raf/polyfill"
   },
   "author": "Victor Tran",
   "license": "MIT"
