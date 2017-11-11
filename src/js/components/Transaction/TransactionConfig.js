@@ -1,5 +1,4 @@
 import React from "react"
-import ReactTooltip from 'react-tooltip'
 
 const TransactionConfig = (props) => {
   function specifyGas(event) {
