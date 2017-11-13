@@ -15,8 +15,6 @@ import { Rate, updateAllRatePromise } from "../services/rate"
 export function* updateAccount(action) {
   const { account, ethereum } = action.payload
   const newAccount = yield call(account.sync, ethereum, account)
-  console.log("--------------")
-  console.log(newAccount)
   yield put(actions.updateAccountComplete(newAccount))
 }
 

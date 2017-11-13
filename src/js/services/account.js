@@ -24,13 +24,14 @@ export default class Account {
   }
 
   sync(ethereum, account) {
+    console.log("run to sync -----------------")
     var promise
     const _this = account ? account : this
-
     promise = new Promise((resolve, reject) => {
       const acc = _this.shallowClone()
       ethereum.call("getBalance")(acc.address).then((balance) => {
         acc.balance = balance
+        console.log("111111111111111111111")
         resolve(acc)
       })
     })
@@ -42,6 +43,7 @@ export default class Account {
           if (acc.nonce > acc.manualNonce) {
             acc.manualNonce = acc.nonce
           }
+          console.log("22222222222222222222")
           resolve(acc)
         })
       })
