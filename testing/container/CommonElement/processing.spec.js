@@ -1,6 +1,6 @@
 import store from '../store';
 import React from 'react';
-import Processing from '../../../containers/CommonElements/Processing';
+import Processing from '../../../src/js/containers/CommonElements/Processing';
 import { shallow } from 'enzyme';
 
 describe('Processing', () => {
