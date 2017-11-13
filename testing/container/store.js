@@ -11,6 +11,14 @@ function tokens() {
                 address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 decimal: 18,
                 balance: 0
+            },
+            "OMG": {
+                name: "OmiseGO",
+                symbol: "OMG",
+                icon: "/assets/img/tokens/omg.svg",
+                address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                decimal: 18,
+                balance: 0
             }
         }
     }
@@ -24,6 +32,10 @@ function txs() {
     return {}
 }
 
+function connection() {
+    return {}
+}
+
 function account() {
     return {
         account: {
@@ -32,8 +44,16 @@ function account() {
     }
 }
 
+function exchange() {
+    return {
+        offeredRate: 0,
+        sourceAmount: '',
+        errors: {}
+    }
+}
+
 const reducer = combineReducers({
-    tokens, utils, account, txs
+    tokens, utils, account, txs, connection, exchange
 })
 
 const store = createStore(reducer);

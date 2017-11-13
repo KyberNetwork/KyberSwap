@@ -9,6 +9,13 @@ describe('Address', () => {
         spyOn(store, 'dispatch')
     });
 
+    it('render 1 <Address /> component', () => {
+        const component = shallow(
+            <Address store={store} />
+        ).dive();
+        expect(component.length).toBe(1);
+    })
+
     it('Test GLOBAL.CLEAR_SESSION was dispatched ', () => {
         const component = shallow(
             <Address store={store} />
@@ -17,7 +24,7 @@ describe('Address', () => {
         let addressView = component.find(AddressView).dive();
         addressView.find('.exit').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith(
-            {type: 'GLOBAL.CLEAR_SESSION'}
+            { type: 'GLOBAL.CLEAR_SESSION' }
         );
     })
 
