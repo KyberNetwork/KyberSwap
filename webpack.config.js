@@ -4,29 +4,29 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = function (env) {
-  //get entry path
-  var entryChain = "src/env/kovan.js"
-  if (env && env.chain) {
-    switch (env.chain) {
-      case "KOVAN":
-        entryChain = "src/env/kovan.js"
-        break
-      default:
-        entryChain = "src/env/kovan.js"
-        break;
-    }
-  }
+  // //get entry path
+  // var entryChain = "src/env/kovan.js"
+  // if (env && env.chain) {
+  //   switch (env.chain) {
+  //     case "KOVAN":
+  //       entryChain = "src/env/kovan.js"
+  //       break
+  //     default:
+  //       entryChain = "src/env/kovan.js"
+  //       break;
+  //   }
+  // }
   return {
     context: path.join(__dirname, "src"),
     devtool: debug ? "inline-sourcemap" : false,
     entry: ['babel-polyfill', "./js/client.js", "./assets/css/app.scss"],
-    resolve: {
-      modules: [path.resolve(__dirname, "src"), "node_modules"],
-      alias: {
-        ETHEREUM_CONSTANT: path.resolve(__dirname, entryChain)
-      },
-      extensions: ['.js']
-    },
+    // resolve: {
+    //   modules: [path.resolve(__dirname, "src"), "node_modules"],
+    //   alias: {
+    //     ETHEREUM_CONSTANT: path.resolve(__dirname, entryChain)
+    //   },
+    //   extensions: ['.js']
+    // },
     module: {
       loaders: [{
         test: /\.jsx?$/,
@@ -82,7 +82,7 @@ module.exports = function (env) {
       }),
       new webpack.DefinePlugin({
         '__PROCESS__': {
-          'ENV': 'production',
+          'ENV': env && env.chain ? '"' + env.chain + '"' : '"kovan"'
         }
       })
     ] : [
@@ -95,7 +95,7 @@ module.exports = function (env) {
         }),
         new webpack.DefinePlugin({
           '__PROCESS__': {
-            'ENV': 'production',
+            'ENV': '"production"',
           }
         })
       ],
