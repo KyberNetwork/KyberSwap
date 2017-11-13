@@ -1,6 +1,6 @@
 import store from '../store';
 import React from 'react';
-import InfoModal from '../../../containers/CommonElements/InfoModal';
+import InfoModal from '../../../src/js/containers/CommonElements/InfoModal';
 import { shallow } from 'enzyme';
 
 describe('InfoModal', () => {
