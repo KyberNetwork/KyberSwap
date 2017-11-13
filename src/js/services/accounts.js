@@ -1,6 +1,6 @@
 import Account from "./account"
 import {store} from "../store"
-import jdenticon from 'jdenticon'
+// import jdenticon from 'jdenticon'
 
 export function newAccountInstance(address, type, keystring, avatar) {
   var account = new Account(address, type, keystring,0 ,0 ,0, avatar)  
@@ -15,7 +15,7 @@ export function loadAccounts(node) {
 }
 
 export function getRandomAvatar(addressString) {
-  let svg = jdenticon.toSvg(addressString, 45),
-    url = 'data:image/svg+xml;base64,' + btoa(svg);
-  return url;
+  // let svg = jdenticon.toSvg(addressString, 45),
+  //   url = 'data:image/svg+xml;base64,' + btoa(svg);
+  // return url;
 }
