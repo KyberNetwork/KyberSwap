@@ -4,9 +4,9 @@ import { expectSaga } from 'redux-saga-test-plan';
 import { default as accountReducer } from "../../reducers/accountReducer"
 jest.mock('vm');
 
-// jest.mock('../../services/ethereum' );
-// let EthereumService = require('../../services/ethereum/ethereum').default
-// let ethereum = new EthereumService()
+jest.mock('../../services/ethereum/ethereum' );
+let EthereumService = require('../../services/ethereum/ethereum').default
+let ethereum = new EthereumService()
 
 const initState = {
   isStoreReady: false,
@@ -22,15 +22,15 @@ function* accountLoading() {
   yield put({ type: 'ACCOUNT.LOADING' });
 }
 
-// function* updateAccountPending(){
-//   yield put({
-//     type: "ACCOUNT.UPDATE_ACCOUNT_PENDING",
-//     payload: {
-//       ethereum: ethereum, 
-//       account: fakeAddress
-//     }
-//   })
-// }
+function* updateAccountPending(){
+  yield put({
+    type: "ACCOUNT.UPDATE_ACCOUNT_PENDING",
+    payload: {
+      ethereum: ethereum, 
+      account: fakeAddress
+    }
+  })
+}
 
 
 it('handle reducer and open loading modal', () => {
@@ -46,20 +46,20 @@ it('handle reducer and open loading modal', () => {
     })
 })
 
-// it('handle update account pending', () => {
+it('handle update account pending', () => {
 
-//   console.log("====================")
-//   console.log(ethereum)
+  console.log("====================")
+  console.log(ethereum)
 
-//   return expectSaga(updateAccountPending)
-//     .withReducer(accountReducer)
-//     // .hasFinalState({
-//     //     ...initState,
-//     //     loading: true
-//     //   })
-//     .run()
-//     .then((result) => {
-//       expect(result.storeState.loading).toEqual(true);
-//     })
-// })
+  return expectSaga(updateAccountPending)
+    .withReducer(accountReducer)
+    // .hasFinalState({
+    //     ...initState,
+    //     loading: true
+    //   })
+    .run()
+    .then((result) => {
+      expect(result.storeState.loading).toEqual(true);
+    })
+})
 

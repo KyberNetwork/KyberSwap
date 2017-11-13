@@ -1,7 +1,7 @@
 import Web3 from "web3"
 import constants from "../constants"
 import * as ethUtil from 'ethereumjs-util'
-import BLOCKCHAIN_INFO from "ETHEREUM_CONSTANT"
+import BLOCKCHAIN_INFO from "../../../../env"
 
 export default class BaseEthereumProvider {
 
