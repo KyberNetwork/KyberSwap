@@ -28,7 +28,7 @@ export function verifyAmount(sourceAmount,
   rate, destDecimal, reserveBalance) {
   //verify number for source amount
   var testAmount = parseFloat(sourceAmount)
-  if (isNaN(sourceAmount)) {
+  if (isNaN(testAmount)) {
     return "not a number"
   }
   var sourceAmountWei = new BigNumber(sourceAmount)
