@@ -5,6 +5,7 @@ export default class WebsocketEthereumProvider extends BaseEthereumProvider {
     constructor(props) {
         super(props)
         this.connection = true
+        this.reconnectTime = 0
         this.rpcUrl = props.url
         this.provider = new Web3.providers.WebsocketProvider(this.rpcUrl)
         this.provider.on('end', (err) => {
