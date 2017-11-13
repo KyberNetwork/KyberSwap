@@ -19,7 +19,7 @@ const PassphraseModal = (props) => {
               <label className={!!props.passwordError?"error":""}>
                 <input class="text-center" id="passphrase" type="password" placeholder="Enter your passphrase to confirm" 
                        onChange={(e)=>props.onChange(e)} 
-                       onKeyPress={submitTransaction}/>
+                       onKeyPress={submitTransaction} autoFocus/>
                 {!!props.passwordError &&
                   <span className="error-text">{props.passwordError}</span>              
                 }                
@@ -30,14 +30,6 @@ const PassphraseModal = (props) => {
       </div>
       <div class="overlap"><a class="button accent" onClick={(e) => props.onClick(e)}>Confirm</a></div>
     </div>
-
-
-    // <div>
-    //   <div>{props.recap}</div>
-    //   <input type="password" id="passphrase" onChange={(e)=>props.onChange(e)} />
-    //   <button onClick={(e) => props.onClick(e)}>Exchange</button>
-    //   {props.passwordError}
-    // </div>
   )
 }
 
