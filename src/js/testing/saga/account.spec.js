@@ -1,7 +1,7 @@
 'use strict';
 import { call, put, take } from 'redux-saga/effects';
 import { expectSaga } from 'redux-saga-test-plan';
-import { default as accountReducer } from "../src/js/reducers/accountReducer"
+import { default as accountReducer } from "../../reducers/accountReducer"
 jest.mock('vm');
 
 // jest.mock('../../services/ethereum' );
