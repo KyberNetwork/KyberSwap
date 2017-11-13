@@ -1,4 +1,5 @@
-//import Web3 from "web3"
+
+import React from 'react';
 import HttpEthereumProvider from "./httpProvider"
 import WebsocketEthereumProvider from "./wsProvider"
 import constants from "../constants"
@@ -11,15 +12,33 @@ import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
 import { setConnection } from "../../actions/connectionActions"
 
-export default class EthereumService {
-  constructor() {
+export default class EthereumService extends React.Component {
+  constructor(props) {
+    super(props)
     this.httpUrl = "https://kovan.infura.io/DtzEYY0Km2BA3YwyJcBG"
     this.wsUrl = "wss://kovan.kyber.network/ws/"
     //this.wsUrl = "ws://localhost:8546"
     this.httpProvider = this.getHttpProvider()
     this.wsProvider = this.getWebsocketProvider()
-    this.currentProvider = this.httpProvider
-    this.currentLabel = "http"
+
+    this.initProvider(props.default)
+  }
+
+  initProvider(provider) {
+    switch (provider) {
+      case "http":
+        this.currentProvider = this.httpProvider
+        this.currentLabel = "http"
+        break
+      case "ws":
+        this.currentProvider = this.wsProvider
+        this.currentLabel = "ws"
+        break
+      default:
+        this.currentProvider = this.httpProvider
+        this.currentLabel = "http"
+        break
+    }
   }
 
   getWebsocketProvider() {
@@ -29,6 +48,7 @@ export default class EthereumService {
         var ethereum = state.connection.ethereum
         if (ethereum.wsProvider.connection) {
           ethereum.wsProvider.connection = false
+          //ethereum.wsProvider.reconnectTime = 0
           store.dispatch(setConnection(ethereum))
         }
       }

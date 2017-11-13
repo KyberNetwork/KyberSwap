@@ -1,6 +1,6 @@
 import store from '../store';
 import React from 'react';
-import SelectToken from '../../../containers/CommonElements/SelectToken';
+import SelectToken from '../../../src/js/containers/CommonElements/SelectToken';
 import { shallow } from 'enzyme';
 
 describe('SelectToken', () => {

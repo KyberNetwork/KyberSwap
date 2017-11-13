@@ -1,6 +1,6 @@
 import store from '../store';
 import React from 'react';
-import Token from '../../../containers/CommonElements/Token';
+import Token from '../../../src/js/containers/CommonElements/Token';
 import { shallow } from 'enzyme';
 
 describe('Token', () => {

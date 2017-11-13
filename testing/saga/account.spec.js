@@ -1,11 +1,11 @@
 'use strict';
 import { call, put, take } from 'redux-saga/effects';
 import { expectSaga } from 'redux-saga-test-plan';
-import { default as accountReducer } from "../../reducers/accountReducer"
+import { default as accountReducer } from "../../src/js/reducers/accountReducer"
 jest.mock('vm');
 
-jest.mock('../../services/ethereum/ethereum' );
-let EthereumService = require('../../services/ethereum/ethereum').default
+jest.mock('../../src/js/services/ethereum/ethereum' );
+let EthereumService = require('../../src/js/services/ethereum/ethereum').default
 let ethereum = new EthereumService()
 
 const initState = {

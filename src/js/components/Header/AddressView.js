@@ -30,7 +30,7 @@ const Address = (props) => {
                   {link}
                 </li>
                 <li>
-                  <a onClick={props.endSession} class="exit">
+                  <a onClick={props.endSession} className="exit">
                     End Session
                   </a>
                 </li>

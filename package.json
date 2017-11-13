@@ -71,7 +71,7 @@
     "kovan": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=KOVAN",
     "dev": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=kovan",
     "test": "mocha -w test/helpers/browser.js test/*.spec.js --setupTestFrameworkScriptFile=raf/polyfill",
-    "jest": "jest src/js/test  --setupTestFrameworkScriptFile=raf/polyfill"
+    "jest": "jest testing  --setupTestFrameworkScriptFile=raf/polyfill"
   },
   "author": "Victor Tran",
   "license": "MIT"
