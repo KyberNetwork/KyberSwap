@@ -4,7 +4,7 @@ import {biggestNumber} from "../utils/converter"
 import store from "../store"
 import constants from "../services/constants"
 import Rate from "./rate"
-import BLOCKCHAIN_INFO from "ETHEREUM_CONSTANT"
+import BLOCKCHAIN_INFO from "../../../env"
 
 export function sendEtherFromAccount(
   id, ethereum, account, sourceToken, sourceAmount,

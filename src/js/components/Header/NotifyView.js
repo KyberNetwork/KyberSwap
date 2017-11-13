@@ -72,7 +72,7 @@ const Notify = (props) => {
 
   return (
     <div class="column small-2 text-right">
-      <a class="notifications-toggle" href="#notifications" onClick={(e) => props.displayTransactions(e)}>
+      <a className="notifications-toggle" href="#notifications" onClick={(e) => props.displayTransactions(e)}>
         <img src="/assets/img/menu.svg" />{counter}
       </a>
       <ul className={"notifications animated fadeIn " + classNotify}>

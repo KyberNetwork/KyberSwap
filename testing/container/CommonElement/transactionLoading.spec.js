@@ -1,6 +1,6 @@
 import store from '../store';
 import React from 'react';
-import TransactionLoading from '../../../containers/CommonElements/TransactionLoading';
+import TransactionLoading from '../../../src/js/containers/CommonElements/TransactionLoading';
 import { shallow } from 'enzyme';
 
 describe('TransactionLoading', () => {
@@ -21,7 +21,7 @@ describe('TransactionLoading', () => {
                 broadcastingError="Broadcasting error"
             />
         ).dive();
-        expect(component.instance().props.broadcasting).toBe(false)
+        expect(component.instance().props.broadcasting).toBe(true)
         expect(component.instance().props.error).toBe('Broadcasting error')
     })
 })

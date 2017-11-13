@@ -1,18 +1,4 @@
 {
-    "presets": [
-        "airbnb",
-        "es2015",
-        "stage-0"
-    ],
-    "plugins": [
-        //"transform-decorators-legacy",
-        //"transform-class-properties",
-        // [
-        //     "transform-runtime",
-        //     {
-        //         "polyfill": false,
-        //         "regenerator": true
-        //     }
-        // ]
-    ]
+  "presets": ["es2015", "react", "stage-1"],
+  "plugins": ["transform-decorators-legacy", "transform-class-properties"]
 }
