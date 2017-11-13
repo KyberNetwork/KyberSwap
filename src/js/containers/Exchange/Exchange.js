@@ -218,6 +218,7 @@ export default class Exchange extends React.Component {
         balance={balance}
         sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
         setAmount={this.setAmount}
+        isSelectToken = {this.props.exchange.isSelectToken}
       />
     )
   }

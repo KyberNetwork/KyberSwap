@@ -2,6 +2,7 @@ import React from "react"
 
 const ExchangeForm = (props) => {
   var errorToken = props.errors.selectSameToken + props.errors.selectTokenToken
+  var tokenRate = props.isSelectToken ? <img src="/assets/img/waiting.svg" /> : props.exchangeRate.rate
   var render = (
     <div>
       <div class="frame">
@@ -43,7 +44,7 @@ const ExchangeForm = (props) => {
               </div>
               <div class="row">
                 <div class="column">
-                  <p class="token-compare">1 {props.exchangeRate.sourceToken} = {props.exchangeRate.rate} {props.exchangeRate.destToken}<span class="up">{props.exchangeRate.percent}%</span></p>
+                  <p class="token-compare">1 {props.exchangeRate.sourceToken} = {tokenRate} {props.exchangeRate.destToken}<span class="up">{props.exchangeRate.percent}%</span></p>
                 </div>
               </div>
               {props.step === 2 &&

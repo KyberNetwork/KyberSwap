@@ -21,6 +21,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   advanced: false,
   passphrase: false,  
   selected: false,
+  isSelectToken: false,
   sourceToken: ETHER_ADDRESS,
   sourceTokenSymbol: "ETH",
   sourceAmount: "",

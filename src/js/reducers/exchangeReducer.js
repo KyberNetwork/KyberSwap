@@ -22,14 +22,19 @@ const exchange = (state = initState, action) => {
       exchange.destToken = random[1].address;
       exchange.destTokenSymbol = random[1].symbol;
       return { ...exchange }
-    case "EXCHANGE.MAKE_NEW_EXCHANGE":
+    case "EXCHANGE.MAKE_NEW_EXCHANGE":{
       var newState = { ...state };
       newState.selected = true;
       newState.sourceAmount = ""
       newState.errors = initState.errors
       newState.bcError = ""
       newState.step = initState.step
-      return newState;
+      return newState
+    }
+    case "EXCHANGE.SELECT_TOKEN_ASYNC":{
+      newState.isSelectToken = true      
+      return newState
+    }
     case "EXCHANGE.SELECT_TOKEN": {
       if (action.payload.type === "source") {
         newState.sourceTokenSymbol = action.payload.symbol
@@ -112,6 +117,7 @@ const exchange = (state = initState, action) => {
       newState.offeredRateBalance = action.payload.reserveBalance
       newState.offeredRateExpiryBlock = action.payload.expirationBlock
       newState.offeredRate = rate
+      newState.isSelectToken = false    
       return newState
     case "EXCHANGE.OPEN_PASSPHRASE": {
       newState.passphrase = true
@@ -193,7 +199,7 @@ const exchange = (state = initState, action) => {
       newState.isConfirming = true
       newState.bcError = ""
       return newState
-    }
+    }    
     case "TX.TX_ADDED": {
       newState.tempTx = action.payload
       return newState
