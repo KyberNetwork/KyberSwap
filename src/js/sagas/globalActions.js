@@ -37,7 +37,7 @@ function* clearSession(action) {
   yield put(actions.goToRoute('/'));
 }
 
-function* updateAllRate(action) {
+export function* updateAllRate(action) {
   const { ethereum, tokens, reserve, ownerAddr } = action.payload
   const rates = yield call(updateAllRatePromise, ethereum, tokens, reserve, ownerAddr)
   yield put(actions.updateAllRateComplete(rates))
