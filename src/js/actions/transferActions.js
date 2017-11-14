@@ -100,6 +100,12 @@ export function thowErrorAmount(message) {
 	}
 }
 
+export function thowErrorGasPrice(message){
+	return {
+		type: "TRANSFER.THROW_GAS_PRICE_ERROR",
+		payload: message
+	}
+}
 
 export function hidePassphrase() {
 	return {

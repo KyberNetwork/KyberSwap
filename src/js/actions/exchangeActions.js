@@ -28,6 +28,13 @@ export function thowErrorSourceAmount(message) {
 	}
 }
 
+export function thowErrorGasPrice(message){
+	return {
+		type: "EXCHANGE.THROW_GAS_PRICE_ERROR",
+		payload: message
+	}
+}
+
 export function errorSelectToken(message) {
 	return {
 		type: "EXCHANGE.THOW_ERROR_SELECT_TOKEN",

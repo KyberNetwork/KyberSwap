@@ -56,6 +56,11 @@ export default class PostTransfer extends React.Component {
       this.props.dispatch(transferActions.throwErrorDestAddress("This is not an address"))
       check = false
     }
+    var testGasPrice = parseFloat(this.props.form.gasPrice)
+    if (isNaN(testGasPrice)) {
+      this.props.dispatch(transferActions.thowErrorGasPrice("Gas price is not number"))
+      check = false
+    }    
     if (isNaN(this.props.form.amount) || !this.props.form.amount || this.props.form.amount == '') {
       this.props.dispatch(transferActions.thowErrorAmount("Amount must be a number"))
       check = false
@@ -68,7 +73,7 @@ export default class PostTransfer extends React.Component {
     if (amountBig.greaterThan(this.props.form.balance)) {
       this.props.dispatch(transferActions.thowErrorAmount("Amount is too high"))
       check = false
-    }
+    }  
     return check
   }
 

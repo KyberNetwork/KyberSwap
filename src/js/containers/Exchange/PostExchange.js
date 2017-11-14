@@ -57,6 +57,7 @@ export default class PostExchange extends React.Component {
   }
   validateExchange = () => {
     //check source amount
+    var check = true
     var validateAmount = validators.verifyAmount(this.props.form.sourceAmount,
       this.props.form.sourceBalance,
       this.props.form.sourceTokenSymbol,
@@ -66,9 +67,14 @@ export default class PostExchange extends React.Component {
       this.props.form.offeredRateBalance)
     if (validateAmount !== null) {
       this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount is " + validateAmount))
-      return false
+      check = false
     }
-    return true
+    var testGasPrice = parseFloat(this.props.form.gasPrice)
+    if (isNaN(testGasPrice)) {
+      this.props.dispatch(exchangeActions.thowErrorGasPrice("Gas price is not number"))
+      check = false
+    }
+    return check
   }
 
   approveTx = () => {
