@@ -16,7 +16,7 @@ const sagaMiddleware = createSagaMiddleware()
 
 const middleware = applyMiddleware(
   sagaMiddleware,
-  logger,
+  // logger,
   routeMiddleware,
 )
 
