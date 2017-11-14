@@ -9,6 +9,13 @@ describe('Address', () => {
         spyOn(store, 'dispatch')
     });
 
+    it('render 1 <Notify /> component', () => {
+        const component = shallow(
+            <Notify store={store} />
+        ).dive();
+        expect(component.length).toBe(1);
+    })
+
     it('Test UTIL.TOGGLE_NOTIFY was dispatched ', () => {
         const component = shallow(
             <Notify store={store} />
@@ -26,7 +33,7 @@ describe('Address', () => {
             hash: '0x420aa223b3cd206977ffe01198377d56e1e8ab8044bedb8015ff3487a1cd3c49',
         };
         store.getState().utils.showNotify = true;
-        
+
         const component = shallow(
             <Notify store={store} />
         ).dive();

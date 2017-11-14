@@ -63,7 +63,7 @@ const SelectTokenModal = (props) => {
       }
       return (
         <div>
-          <div class="title">{title}</div><a class="x" onClick={props.closeModal}>&times;</a>
+          <div class="title">{title}</div><a className="x" onClick={props.closeModal}>&times;</a>
           <div class="content">
             <div class="row tokens small-up-2 medium-up-3 large-up-4">
                 {content}

@@ -7,6 +7,14 @@ describe('InfoModal', () => {
     beforeEach(() => {
         spyOn(store, 'dispatch')
     });
+
+    it('render 1 <InfoModal /> component', () => {
+        const component = shallow(
+            <InfoModal store={store} />
+        ).dive();
+        expect(component.length).toBe(1)
+    })
+
     it('Test closeInfoModal was dispatched ', () => {
         const component = shallow(
             <InfoModal store={store} />

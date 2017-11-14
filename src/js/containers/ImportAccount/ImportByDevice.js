@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux'
 import constants from "../../services/constants"
-import { getRandomAvatar } from "../../services/accounts"
+import { getRandomAvatar } from "../../utils/keys"
 
 import AddressGenerator from "../../services/device/addressGenerator";
 import { getTrezorPublicKey, connectLedger, getLedgerPublicKey } from "../../services/device/device";
