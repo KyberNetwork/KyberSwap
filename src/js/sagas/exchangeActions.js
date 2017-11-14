@@ -211,7 +211,6 @@ function* updateRatePending(action) {
   const { ethereum, source, dest, reserve } = action.payload
   const rate = yield call(ethereum.call("getRate"), source, dest, reserve)
   yield put(actions.updateRateExchangeComplete(rate))
-
 }
 
 export function* watchExchange() {
