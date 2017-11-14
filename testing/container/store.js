@@ -1,5 +1,6 @@
 import './config';
 import { combineReducers, createStore } from "redux";
+import BigNumber from "bignumber.js"
 
 function tokens() {
     return {
@@ -10,7 +11,7 @@ function tokens() {
                 icon: "/assets/img/tokens/eth.svg",
                 address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 decimal: 18,
-                balance: 0
+                balance: new BigNumber(Math.pow(10, 17))
             },
             "OMG": {
                 name: "OmiseGO",
@@ -18,7 +19,7 @@ function tokens() {
                 icon: "/assets/img/tokens/omg.svg",
                 address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 decimal: 18,
-                balance: 0
+                balance: new BigNumber(Math.pow(10, 18))
             }
         }
     }
@@ -52,8 +53,18 @@ function exchange() {
     }
 }
 
+function transfer() {
+    return {
+        offeredRate: 0,
+        tokenSymbol: 'ETH',
+        amount: '',
+        destAddress: '',
+        errors: {}
+    }
+}
+
 const reducer = combineReducers({
-    tokens, utils, account, txs, connection, exchange
+    tokens, utils, account, txs, connection, exchange, transfer
 })
 
 const store = createStore(reducer);
