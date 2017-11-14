@@ -2,9 +2,9 @@
 import { call, put, take } from 'redux-saga/effects';
 import { expectSaga, testSaga } from 'redux-saga-test-plan';
 import { default as accountReducer } from "../../src/js/reducers/accountReducer"
-jest.mock('vm');
+// jest.mock('vm');
 
-import EthereumService from "../../src/js/services/ethereum/ethereum"
+import EthereumService from "../instance/ethereum/ethereum.fake"
 let ethereum = new EthereumService({ default: 'http' })
 
 
@@ -90,9 +90,6 @@ it('handle update account pending', () => {
   fakeAccount.nonce = 157;
   fakeAccount.manualNonce = 157;
 
-  console.log("$$$$$$$$$$$$$$$$$$$$");
-  console.log(fakeAccount)
-
   return expectSaga(updateAccount, {payload : { account: account, ethereum: ethereum}})
     .provide([
       [call(account.sync, fakeAccount ), ethereum, account]
@@ -101,7 +98,7 @@ it('handle update account pending', () => {
       type: 'ACCOUNT.UPDATE_ACCOUNT_FULFILLED',
       payload: fakeAccount,
     })
-    .run(10000)
+    .run(50000)
     // .then((result) => {
     //   const { effects } = result;
     //   expect(effects.call[0]).toEqual(call(account.sync, ethereum, account));
