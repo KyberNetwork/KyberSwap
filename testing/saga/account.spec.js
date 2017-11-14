@@ -161,6 +161,7 @@ it('import new account pending', () => {
 
     expect(effects.call).toHaveLength(3);
     expect(effects.put).toHaveLength(7);
+    
     expect(effects.put[0]).toEqual(
       put({ type: 'ACCOUNT.LOADING' })
     );
