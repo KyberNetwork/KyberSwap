@@ -26,7 +26,8 @@ import { Modal } from "../../components/CommonElement"
     account: store.account.account,
     transfer: store.transfer,
     form: { ...store.transfer, balance, decimal },
-    ethereum: store.connection.ethereum
+    ethereum: store.connection.ethereum,
+    keyService: props.keyService
   };
 
 })
@@ -56,6 +57,11 @@ export default class PostTransfer extends React.Component {
       this.props.dispatch(transferActions.throwErrorDestAddress("This is not an address"))
       check = false
     }
+    var testGasPrice = parseFloat(this.props.form.gasPrice)
+    if (isNaN(testGasPrice)) {
+      this.props.dispatch(transferActions.thowErrorGasPrice("Gas price is not number"))
+      check = false
+    }    
     if (isNaN(this.props.form.amount) || !this.props.form.amount || this.props.form.amount == '') {
       this.props.dispatch(transferActions.thowErrorAmount("Amount must be a number"))
       check = false
@@ -68,7 +74,7 @@ export default class PostTransfer extends React.Component {
     if (amountBig.greaterThan(this.props.form.balance)) {
       this.props.dispatch(transferActions.thowErrorAmount("Amount is too high"))
       check = false
-    }
+    }  
     return check
   }
 
@@ -158,7 +164,7 @@ export default class PostTransfer extends React.Component {
       this.props.dispatch(transferActions.processTransfer(formId, ethereum, account.address,
         params.token, params.amount,
         params.destAddress, params.nonce, params.gas,
-        params.gasPrice, account.keystring, account.type, password, account, data))
+        params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService))
     } catch (e) {
       console.log(e)
       this.props.dispatch(transferActions.throwPassphraseError("Key derivation failed"))

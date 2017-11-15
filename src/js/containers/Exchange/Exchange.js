@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 
 import { calculateMinAmount, toT, displayBalance } from "../../utils/converter"
 
-import { PostExchange } from "../Exchange"
+import { PostExchangeWithKey } from "../Exchange"
 import { ExchangeForm, TransactionConfig } from "../../components/Transaction"
 import { SelectToken, TransactionLoading, Token } from "../CommonElements"
 
@@ -179,7 +179,7 @@ export default class Exchange extends React.Component {
       percent: "-"
     }
     var exchangeButton = (
-      <PostExchange />
+      <PostExchangeWithKey />
     )
     var trasactionLoadingScreen = (
       <TransactionLoading tx={this.props.exchange.txHash}
@@ -196,8 +196,8 @@ export default class Exchange extends React.Component {
         gasPrice={this.props.exchange.gasPrice}
         gasHandler={this.specifyGas}
         gasPriceHandler={this.specifyGasPrice}
-        gasPriceError={this.props.exchange.gasPriceError}
-        gasError={this.props.exchange.gasError}
+        gasPriceError={this.props.exchange.errors.gasPriceError}
+        gasError={this.props.exchange.errors.gasError}
         totalGas={converters.gweiToEth(this.props.exchange.gas * this.props.exchange.gasPrice)}
       />
     )

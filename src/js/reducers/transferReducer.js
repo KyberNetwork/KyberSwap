@@ -53,6 +53,7 @@ const transfer = (state = initState, action) => {
       return newState
     case "TRANSFER_SPECIFY_GAS_PRICE":
       newState.gasPrice = action.payload
+      newState.errors.gasPrice = ""
       return newState
     case "TRANSFER.SHOW_ADVANCE":
       newState.advance = true
@@ -79,6 +80,10 @@ const transfer = (state = initState, action) => {
       return newState
     case "TRANSFER.THROW_AMOUNT_ERROR": {
       newState.errors.amountTransfer = action.payload
+      return newState
+    }
+    case "TRANSFER.THROW_GAS_PRICE_ERROR":{
+      newState.errors.gasPrice = action.payload
       return newState
     }
     case "TRANSFER.CHANGE_PASSPHRASE": {

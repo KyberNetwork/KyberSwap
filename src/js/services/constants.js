@@ -82,6 +82,7 @@ const INIT_TRANSFER_FORM_STATE = {
   isConfirming: false,
   confirmColdWallet: false,
   errors: {
+    gasPrice: "",
     destAddress: "",
     amountTransfer: "",
     passwordError: "",

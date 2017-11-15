@@ -5,7 +5,7 @@ import { push } from 'react-router-redux';
 import { toT, displayBalance } from "../../utils/converter"
 
 import { TransferForm, TransactionConfig } from "../../components/Transaction"
-import { PostTransfer } from "../Transfer"
+import { PostTransferWithKey } from "../Transfer"
 import { Token, SelectToken, TransactionLoading } from "../CommonElements"
 
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
@@ -14,7 +14,7 @@ import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectT
 import * as converters from "../../utils/converter"
 import { specifyGas as specifyGasTransfer, specifyGasPrice as specifyGasPriceTransfer, hideAdvance as hideAdvanceTransfer } from "../../actions/transferActions"
 
-@connect((store) => {
+@connect((store, props) => {
   return { transfer: store.transfer, account: store.account, tokens: store.tokens.tokens }
 })
 
@@ -133,7 +133,7 @@ export default class Transfer extends React.Component {
       <SelectToken chooseToken={this.chooseToken} type="transfer" selectedSymbol={this.props.transfer.tokenSymbol} />
     )
     var transferButton = (
-      <PostTransfer />
+      <PostTransferWithKey />
     )
     var trasactionLoadingScreen = (
       <TransactionLoading tx={this.props.transfer.txHash}
@@ -151,8 +151,8 @@ export default class Transfer extends React.Component {
         gasPrice={this.props.transfer.gasPrice}
         gasHandler={this.specifyGas}
         gasPriceHandler={this.specifyGasPrice}
-        gasPriceError={this.props.transfer.gasPriceError}
-        gasError={this.props.transfer.gasError}
+        gasPriceError={this.props.transfer.errors.gasPrice}
+        gasError={this.props.transfer.errors.gas}
         totalGas={converters.gweiToEth(this.props.transfer.gas * this.props.transfer.gasPrice)}
       />
     )

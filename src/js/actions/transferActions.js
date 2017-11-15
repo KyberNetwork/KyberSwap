@@ -100,6 +100,12 @@ export function thowErrorAmount(message) {
 	}
 }
 
+export function thowErrorGasPrice(message){
+	return {
+		type: "TRANSFER.THROW_GAS_PRICE_ERROR",
+		payload: message
+	}
+}
 
 export function hidePassphrase() {
 	return {
@@ -135,14 +141,14 @@ export function throwPassphraseError(message) {
 export function processTransfer(formId, ethereum, address,
 	token, amount,
 	destAddress, nonce, gas,
-	gasPrice, keystring, type, password, account, data) {
+	gasPrice, keystring, type, password, account, data, keyService) {
 	return {
 		type: "TRANSFER.PROCESS_TRANSFER",
 		payload: {
 			formId, ethereum, address,
 			token, amount,
 			destAddress, nonce, gas,
-			gasPrice, keystring, type, password, account, data
+			gasPrice, keystring, type, password, account, data, keyService
 		}
 	}
 }

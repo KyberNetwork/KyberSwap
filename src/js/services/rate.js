@@ -92,3 +92,32 @@ export function updateAllRatePromise(ethereum, tokens, reserve, ownerAddr) {
   });
   return Promise.all(promises);
 }
+
+
+export function fetchRate(ethereum, source, dest, reserve, callback) {
+  ethereum.call("getRate")(source.address, dest.address, reserve.index)
+          .then(
+    (result) => {
+      callback(new Rate(
+        source, dest, reserve,
+        result[0], result[1], result[2]))
+    })
+}
+
+export function fetchRatePromise(ethereum, source, dest, reserve) {
+  return new Promise((resolve, reject) => {
+    ethereum.call("getRate")(source.address, dest.address, reserve.index)
+            .then(
+      (result) => {
+        resolve(new Rate(
+          source.name,
+          source.symbol,
+          source.icon,
+          source.address,
+          source.decimal,
+          result[0],
+          result[2]
+        ))
+      })
+  })
+}
