@@ -89,9 +89,6 @@ it('handle new block include fullfilled', () => {
 
 const rates = globalTestValue.rates
 const ratesExpect = globalTestValue.ratesExpect
-const initedTokenReducer = (state = ratesExpect, action) => {
-  return tokensReducer(state, action)
-}
 function* allRateUpdateFullfilled() {
   yield put({ 
     type: 'GLOBAL.ALL_RATE_UPDATED_FULFILLED',
@@ -100,7 +97,7 @@ function* allRateUpdateFullfilled() {
 }
 it('handle new block include fullfilled', () => {
   return expectSaga(allRateUpdateFullfilled)
-    .withReducer(initedTokenReducer)
+    .withReducer(tokensReducer, ratesExpect)
     .run()
     .then((result) => {
       expect(result.storeState.tokens).toEqual(ratesExpect);
@@ -175,7 +172,7 @@ it('handle clear session', () => {
     .run()
     .then((result) => {
       const { effects, allEffects } = result;
-      
+
       expect(effects.put).toHaveLength(1);
 
       expect(effects.put[0]).toEqual(

@@ -183,9 +183,6 @@ const initalAccount = {
   loading: false,
   showError: false
 }
-const initedAccountReducer = (state = initalAccount, action) => {
-  return accountReducer(state, action)
-}
 function* updateAccountFullfilled() {
   yield put({ 
     type: 'ACCOUNT.UPDATE_ACCOUNT_FULFILLED',
@@ -194,7 +191,7 @@ function* updateAccountFullfilled() {
 }
 it('handle update account fullfilled', () => {
   return expectSaga(updateAccountFullfilled)
-    .withReducer(initedAccountReducer)
+    .withReducer(accountReducer, initalAccount)
     .run()
     .then((result) => {
       expect(result.storeState.account).toEqual(account);
