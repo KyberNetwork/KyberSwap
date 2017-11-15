@@ -1,7 +1,6 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/transferActions'
 import * as utilActions from '../actions/utilActions'
-import * as transferServices from "../services/exchange"
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
 import * as ethUtil from 'ethereumjs-util'
@@ -46,13 +45,14 @@ function* processTransfer(action) {
   const { formId, ethereum, address,
     token, amount,
     destAddress, nonce, gas,
-    gasPrice, keystring, type, password, account, data } = action.payload
-  var callService = token == constants.ETHER_ADDRESS ? transferServices.sendEtherFromAccount : transferServices.sendTokenFromAccount
+    gasPrice, keystring, type, password, account, data, keyService } = action.payload
+  var callService = token == constants.ETHER_ADDRESS ? "sendEtherFromAccount" :"sendTokenFromAccount"
 
   var rawTx
   if (type === "keystore") {
     try {
-      rawTx = yield call(callService, formId, ethereum, address,
+      var raw
+      rawTx = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
         token, amount,
         destAddress, nonce, gas,
         gasPrice, keystring, type, password)
@@ -62,7 +62,8 @@ function* processTransfer(action) {
     }
   } else {
     try {
-      rawTx = yield call(callService, formId, ethereum, address,
+      var rawTx
+      rawTx = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
         token, amount,
         destAddress, nonce, gas,
         gasPrice, keystring, type, password)

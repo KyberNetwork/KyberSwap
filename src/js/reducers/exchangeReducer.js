@@ -27,6 +27,7 @@ const exchange = (state = initState, action) => {
       newState.selected = true;
       newState.sourceAmount = ""
       newState.errors = initState.errors
+      newState.gasPrice = initState.gasPrice
       newState.bcError = ""
       newState.step = initState.step
       return newState
@@ -66,6 +67,10 @@ const exchange = (state = initState, action) => {
       newState.errors.sourceAmountError = action.payload
       return newState
     }
+    case "EXCHANGE.THROW_GAS_PRICE_ERROR":{
+      newState.errors.gasPriceError = action.payload
+      return newState
+    }
     case "EXCHANGE.THOW_ERROR_SELECT_TOKEN":
       newState.error_select_token = action.payload
       return newState
@@ -77,6 +82,7 @@ const exchange = (state = initState, action) => {
       return newState
     case "EXCHANGE_SPECIFY_GAS_PRICE":
       newState.gasPrice = action.payload
+      newState.errors.gasPriceError = ""
       return newState
     case "EXCHANGE.SHOW_ADVANCE":
       newState.advanced = true
