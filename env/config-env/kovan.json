@@ -6,7 +6,7 @@
       "icon": "/assets/img/tokens/eth.svg",
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "decimal": 18
-    },
+    },    
     "OMG": {
       "name": "OmiseGO",
       "symbol": "OMG",
@@ -69,14 +69,7 @@
       "icon": "/assets/img/tokens/bat.svg",
       "address": "0xc12e72373eae8f3b901f6d47b7124e025e55fb2b",   
       "decimal": 18 
-    },
-    "KNC": {
-      "name": "KyberNetwork",
-      "symbol": "KNC",
-      "icon": "/assets/img/tokens/knc.svg",
-      "address": "0x88c29c3f40b4e15989176f9546b80a1cff4a6b0d",
-      "decimal": 18
-    },
+    },    
     "EOS": {
       "name": "Eos",
       "symbol": "EOS",
@@ -90,6 +83,13 @@
       "icon": "/assets/img/tokens/link.svg",
       "address": "0xdd1de6eac7ff7ae02b139526e024fd53a128c164",
       "decimal": 18 
+    },
+    "KNC": {
+      "name": "KyberNetwork",
+      "symbol": "KNC",
+      "icon": "/assets/img/tokens/knc.svg",
+      "address": "0x88c29c3f40b4e15989176f9546b80a1cff4a6b0d",
+      "decimal": 18
     }
   },
   "exchanges": {
