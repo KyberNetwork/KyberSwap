@@ -4,7 +4,6 @@ import { expectSaga, testSaga } from 'redux-saga-test-plan';
 import { default as accountReducer } from "../../src/js/reducers/accountReducer"
 import { default as connectionReducer } from "../../src/js/reducers/connection"
 import { default as exchangeReducer } from "../../src/js/reducers/exchangeReducer"
-// jest.mock('vm');
 
 import EthereumService from "../instance/ethereum/ethereum.fake"
 let ethereum = new EthereumService({ default: 'http' })
@@ -33,8 +32,6 @@ Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key, index) => {
   tokens[index].rateEth = 0
   tokens[index].balance = 0    
 }) 
-
-
 
 const fakeAddress = "0xB6E3b94D74003376409600208EDac4D8B29d7f3E";
 
@@ -136,25 +133,6 @@ it('import new account pending', () => {
     tokens: tokens
   }})
   .withState(storeState)
-  // .provide([
-  //   [call(service.newAccountInstance, fakeAccount ),  account.address, account.type, account.keystring, account.avatar]
-  // ])
-  // .put({
-  //   type: ' ACCOUNT.CLOSE_LOADING_IMPORT',
-  //   payload: fakeAccount,
-  // })
-  // .put({
-  //   type: 'EXCHANGE.SET_RANDOM_SELECTED_TOKEN',
-  //   payload: fakeAccount,
-  // })
-  // .put({
-  //   type: 'ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED',
-  //   payload: fakeAccount,
-  // })
-  // .put({
-  //   type: 'GLOBAL.GO_TO_ROUTE',
-  //   payload: fakeAccount,
-  // })
   .run(100000)
   .then((result) => {
     const { effects, allEffects } = result;
@@ -185,3 +163,71 @@ it('import new account pending', () => {
 
   })
 });
+
+function* accountCloseLoadingImport() {
+  yield put({ type: 'ACCOUNT.CLOSE_LOADING_IMPORT' });
+}
+it('handle close loading import', () => {
+  return expectSaga(accountCloseLoadingImport)
+    .withReducer(accountReducer)
+    .run()
+    .then((result) => {
+      expect(result.storeState.loading).toEqual(false);
+    })
+})
+
+const initalAccount = {
+  account: account,
+  error: "",
+  isStoreReady: true,
+  loading: false,
+  showError: false
+}
+const initedAccountReducer = (state = initalAccount, action) => {
+  return accountReducer(state, action)
+}
+function* updateAccountFullfilled() {
+  yield put({ 
+    type: 'ACCOUNT.UPDATE_ACCOUNT_FULFILLED',
+    payload: account
+  });
+}
+it('handle update account fullfilled', () => {
+  return expectSaga(updateAccountFullfilled)
+    .withReducer(initedAccountReducer)
+    .run()
+    .then((result) => {
+      expect(result.storeState.account).toEqual(account);
+    })
+})
+
+const accountError = "this is account error"
+function* throwError() {
+  yield put({ 
+    type: 'ACCOUNT.THROW_ERROR',
+    payload: accountError
+  });
+}
+it('handle throw error', () => {
+  return expectSaga(throwError)
+    .withReducer(accountReducer)
+    .run()
+    .then((result) => {
+      expect(result.storeState.error).toEqual(accountError);
+      expect(result.storeState.showError).toEqual(true);
+    })
+})
+
+function* closeErrorModal() {
+  yield put({ 
+    type: 'ACCOUNT.CLOSE_ERROR_MODAL'
+  });
+}
+it('handle close error modal', () => {
+  return expectSaga(closeErrorModal)
+    .withReducer(accountReducer)
+    .run()
+    .then((result) => {
+      expect(result.storeState.showError).toEqual(false);
+    })
+})
