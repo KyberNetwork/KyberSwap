@@ -1,13 +1,17 @@
 'use strict';
 import { call, put, take } from 'redux-saga/effects';
 import { expectSaga, testSaga } from 'redux-saga-test-plan';
-import { getLatestBlock, updateAllRate } from "../../src/js/sagas/globalActions"
+import { getLatestBlock, updateAllRate, clearSession, goToRoute } from "../../src/js/sagas/globalActions"
 
 import * as BLOCKCHAIN_INFO from "../../env"
 import constants from "../../src/js/services/constants"
 import Account from "../../src/js/services/account"
 import { Rate, updateAllRatePromise } from "../../src/js/services/rate"
+import { default as globalReducer } from "../../src/js/reducers/globalReducer"
+import { default as tokensReducer } from "../../src/js/reducers/tokensReducer"
+import { default as rootReducer } from "../../src/js/reducers"
 
+import globalTestValue from "./global.test-value"
 import EthereumService from "../instance/ethereum/ethereum.fake"
 let ethereum = new EthereumService({ default: 'http' })
 
@@ -65,5 +69,120 @@ it('handle global rate update all pending', () => {
         ).toEqual(
           call(updateAllRatePromise, ethereum, tokens, constants.RESERVES[0], account.address)
         );
+    })
+})
+
+function* newBlockIncludeFullfilled() {
+  yield put({ 
+    type: 'GLOBAL.NEW_BLOCK_INCLUDED_FULFILLED',
+    payload: 4717584
+  });
+}
+it('handle new block include fullfilled', () => {
+  return expectSaga(newBlockIncludeFullfilled)
+    .withReducer(globalReducer)
+    .run()
+    .then((result) => {
+      expect(result.storeState.currentBlock).toEqual(4717584);
+    })
+})
+
+const rates = globalTestValue.rates
+const ratesExpect = globalTestValue.ratesExpect
+const initedTokenReducer = (state = ratesExpect, action) => {
+  return tokensReducer(state, action)
+}
+function* allRateUpdateFullfilled() {
+  yield put({ 
+    type: 'GLOBAL.ALL_RATE_UPDATED_FULFILLED',
+    payload: rates
+  });
+}
+it('handle new block include fullfilled', () => {
+  return expectSaga(allRateUpdateFullfilled)
+    .withReducer(initedTokenReducer)
+    .run()
+    .then((result) => {
+      expect(result.storeState.tokens).toEqual(ratesExpect);
+    })
+})
+
+
+
+function* clearSessionFullfilled() {
+  yield put({ 
+    type: 'GLOBAL.CLEAR_SESSION_FULFILLED'
+  });
+}
+it('handle clear session fullfilled', () => {
+  return expectSaga(clearSessionFullfilled)
+    .withReducer(rootReducer)
+    .run()
+    .then((result) => {
+      expect(result.storeState).toEqual(globalTestValue.initState);
+    })
+})
+
+
+
+it('handle go to route', () => {
+  return expectSaga(updateAllRate, {
+    payload : {
+      ethereum: ethereum, 
+      tokens: tokens, 
+      reserve: constants.RESERVES[0],
+      ownerAddr: account.address
+    }
+  })
+    .run(100000)
+    .then((result) => {
+      const { effects, allEffects } = result;
+
+      expect(effects.call).toHaveLength(1);
+      expect(effects.put).toHaveLength(1);
+      expect(effects.put[0].PUT.action.type).toEqual(
+        'GLOBAL.ALL_RATE_UPDATED_FULFILLED')
+        expect(
+          effects.call[0]
+        ).toEqual(
+          call(updateAllRatePromise, ethereum, tokens, constants.RESERVES[0], account.address)
+        );
+    })
+})
+
+
+
+it('handle clear session', () => {
+  return expectSaga(clearSession)
+    .run()
+    .then((result) => {
+      const { effects, allEffects } = result;
+      expect(effects.put).toHaveLength(2);
+
+      expect(effects.put[0]).toEqual(
+        put({ type: 'GLOBAL.CLEAR_SESSION_FULFILLED' })
+      );
+
+      expect(effects.put[1]).toEqual(
+        put({ type: 'GLOBAL.GO_TO_ROUTE', payload: '/' })
+      );
+    })
+})
+
+
+it('handle clear session', () => {
+  return expectSaga(goToRoute, {payload : '/'})
+    .run()
+    .then((result) => {
+      const { effects, allEffects } = result;
+      
+      expect(effects.put).toHaveLength(1);
+
+      expect(effects.put[0]).toEqual(
+        put({ 
+          type: '@@router/CALL_HISTORY_METHOD',
+          payload: { method: 'push', args: [ '/' ] }
+        })
+      );
     })
 })

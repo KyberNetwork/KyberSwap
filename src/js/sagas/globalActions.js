@@ -28,11 +28,11 @@ export function* updateRate(action) {
 
 
 
-function* goToRoute(action) {
+export function* goToRoute(action) {
   yield put(push(action.payload));
 }
 
-function* clearSession(action) {
+export function* clearSession(action) {
   yield put(actions.clearSessionComplete())
   yield put(actions.goToRoute('/'));
 }
