@@ -35,13 +35,6 @@ export function thowErrorGasPrice(message){
 	}
 }
 
-export function errorSelectToken(message) {
-	return {
-		type: "EXCHANGE.THOW_ERROR_SELECT_TOKEN",
-		payload: message
-	}
-}
-
 
 export function goToStep(step) {
 	return {
@@ -52,14 +45,14 @@ export function goToStep(step) {
 
 export function specifyGas(value) {
 	return {
-		type: "EXCHANGE_SPECIFY_GAS",
+		type: "EXCHANGE.SPECIFY_GAS",
 		payload: value
 	}
 }
 
 export function specifyGasPrice(value) {
 	return {
-		type: "EXCHANGE_SPECIFY_GAS_PRICE",
+		type: "EXCHANGE.SPECIFY_GAS_PRICE",
 		payload: value
 	}
 }
@@ -151,17 +144,17 @@ export function showApprove() {
 		type: "EXCHANGE.SHOW_APPROVE",
 	}
 }
-export function hideConfirmApprove() {
-	return {
-		type: "EXCHANGE.HIDE_CONFIRM_APPROVE",
-	}
-}
+// export function hideConfirmApprove() {
+// 	return {
+// 		type: "EXCHANGE.HIDE_CONFIRM_APPROVE",
+// 	}
+// }
 
-export function showConfirmApprove() {
-	return {
-		type: "EXCHANGE.SHOW_CONFIRM_APPROVE",
-	}
-}
+// export function showConfirmApprove() {
+// 	return {
+// 		type: "EXCHANGE.SHOW_CONFIRM_APPROVE",
+// 	}
+// }
 export function changePassword() {
 	return {
 		type: "EXCHANGE.CHANGE_PASSPHRASE",
@@ -300,16 +293,16 @@ export function makeNewExchange() {
 	}
 }
 
-export function saveRawExchangeTransaction(tx) {
-	return {
-		type: "EXCHANGE.SAVE_RAW_TRANSACTION",
-		payload: tx
-	}
-}
+// export function saveRawExchangeTransaction(tx) {
+// 	return {
+// 		type: "EXCHANGE.SAVE_RAW_TRANSACTION",
+// 		payload: tx
+// 	}
+// }
 
-export function throwErrorSignExchangeTransaction(error) {
-	return {
-		type: "EXCHANGE.THROW_ERROR_SIGN_TRANSACTION",
-		payload: error
-	}
-}
+// export function throwErrorSignExchangeTransaction(error) {
+// 	return {
+// 		type: "EXCHANGE.THROW_ERROR_SIGN_TRANSACTION",
+// 		payload: error
+// 	}
+// }

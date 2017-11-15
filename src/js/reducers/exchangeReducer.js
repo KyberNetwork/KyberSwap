@@ -53,8 +53,8 @@ const exchange = (state = initState, action) => {
         newState.errors.selectTokenToken = ""
         return newState
       }
-      if ((newState.sourceToken !== constants.ETHER_ADDRESS) &&
-        (newState.destToken !== constants.ETHER_ADDRESS)) {
+      if ((newState.sourceTokenSymbol !== "ETH") &&
+        (newState.destTokenSymbol !== "ETH")) {
         newState.errors.selectSameToken = ""
         newState.errors.selectTokenToken = "This pair token is not supported"
         return newState
@@ -71,16 +71,13 @@ const exchange = (state = initState, action) => {
       newState.errors.gasPriceError = action.payload
       return newState
     }
-    case "EXCHANGE.THOW_ERROR_SELECT_TOKEN":
-      newState.error_select_token = action.payload
-      return newState
     case "EXCHANGE.GO_TO_STEP":
       newState.step = action.payload
       return newState
-    case "EXCHANGE_SPECIFY_GAS":
+    case "EXCHANGE.SPECIFY_GAS":
       newState.gas = action.payload
       return newState
-    case "EXCHANGE_SPECIFY_GAS_PRICE":
+    case "EXCHANGE.SPECIFY_GAS_PRICE":
       newState.gasPrice = action.payload
       newState.errors.gasPriceError = ""
       return newState
@@ -149,18 +146,17 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.SHOW_APPROVE": {
       newState.confirmApprove = true
-      newState.showConfirmApprove = false
       return newState
     }
-    case "EXCHANGE.HIDE_CONFIRM_APPROVE": {
-      newState.showConfirmApprove = false
-      return newState
-    }
-    case "EXCHANGE.SHOW_CONFIRM_APPROVE": {
-      newState.confirmApprove = false
-      newState.showConfirmApprove = true
-      return newState
-    }
+    // case "EXCHANGE.HIDE_CONFIRM_APPROVE": {
+    //   newState.showConfirmApprove = false
+    //   return newState
+    // }
+    // case "EXCHANGE.SHOW_CONFIRM_APPROVE": {
+    //   newState.confirmApprove = false
+    //   newState.showConfirmApprove = true
+    //   return newState
+    // }
     case "EXCHANGE.CHANGE_PASSPHRASE": {
       newState.errors.passwordError = ""
       return newState
@@ -177,26 +173,26 @@ const exchange = (state = initState, action) => {
       newState.passphrase = false
       newState.confirmColdWallet = false
       newState.confirmApprove = false
-      newState.showConfirmApprove = false
+      //newState.showConfirmApprove = false
       newState.isApproving = false
       newState.isConfirming = false
       newState.sourceAmount = ""
-      newState.txRaw = ""
+      //newState.txRaw = ""
       newState.step = 3
       newState.broadcasting = true
       return newState
     }
-    case "EXCHANGE.SAVE_RAW_TRANSACTION": {
-      newState.txRaw = action.payload
-      newState.confirmColdWallet = true
-      newState.confirmApprove = false
-      newState.showConfirmApprove = false
-      return newState
-    }
-    case "EXCHANGE.THROW_ERROR_SIGN_TRANSACTION": {
-      newState.errors.signTransaction = action.payload
-      return newState
-    }
+    // case "EXCHANGE.SAVE_RAW_TRANSACTION": {
+    //   newState.txRaw = action.payload
+    //   newState.confirmColdWallet = true
+    //   newState.confirmApprove = false
+    //   newState.showConfirmApprove = false
+    //   return newState
+    // }
+    // case "EXCHANGE.THROW_ERROR_SIGN_TRANSACTION": {
+    //   newState.errors.signTransaction = action.payload
+    //   return newState
+    // }
     case "EXCHANGE.PROCESS_APPROVE": {
       newState.isApproving = true
       return newState
