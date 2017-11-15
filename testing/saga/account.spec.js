@@ -8,7 +8,6 @@ import { default as exchangeReducer } from "../../src/js/reducers/exchangeReduce
 import EthereumService from "../instance/ethereum/ethereum.fake"
 let ethereum = new EthereumService({ default: 'http' })
 
-
 import { updateAccount, importNewAccount } from "../../src/js/sagas/accountActions"
 import Account from "../../src/js/services/account"
 
