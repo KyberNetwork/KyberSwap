@@ -1,6 +1,6 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/globalActions'
-import { fetchRatePromise } from "../services/exchange"
+import { fetchRatePromise } from "../services/rate"
 import { Rate, updateAllRatePromise } from "../services/rate"
 import { push } from 'react-router-redux';
 

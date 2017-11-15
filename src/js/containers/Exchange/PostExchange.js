@@ -11,7 +11,7 @@ import * as exchangeActions from "../../actions/exchangeActions"
 import { Modal } from "../../components/CommonElement"
 import { PassphraseModal, ConfirmTransferModal, ApproveModal, PostExchangeBtn } from "../../components/Transaction"
 
-@connect((store) => {
+@connect((store, props) => {
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
   var tokens = store.tokens.tokens
   var sourceBalance = 0
@@ -30,7 +30,8 @@ import { PassphraseModal, ConfirmTransferModal, ApproveModal, PostExchangeBtn } 
   return {
     form: { ...store.exchange, sourceBalance, sourceDecimal, destDecimal },
     account: store.account.account,
-    ethereum: store.connection.ethereum
+    ethereum: store.connection.ethereum,
+    keyService: props.keyService
   }
 })
 
@@ -82,7 +83,7 @@ export default class PostExchange extends React.Component {
     const account = this.props.account
     const ethereum = this.props.ethereum
     this.props.dispatch(exchangeActions.doApprove(ethereum, params.sourceToken, params.sourceAmount, params.nonce, params.gas, params.gasPrice,
-      account.keystring, account.password, account.type, account))
+      account.keystring, account.password, account.type, account, this.props.keyService))
   }
 
   createRecap = () => {
@@ -164,7 +165,7 @@ export default class PostExchange extends React.Component {
         params.sourceAmount, params.destToken, params.destAddress,
         params.maxDestAmount, params.minConversionRate,
         params.throwOnFailure, params.nonce, params.gas,
-        params.gasPrice, account.keystring, account.type, password, account, data))
+        params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService))
 
 
     } catch (e) {
@@ -185,7 +186,7 @@ export default class PostExchange extends React.Component {
       params.sourceAmount, params.destToken, params.destAddress,
       params.maxDestAmount, params.minConversionRate,
       params.throwOnFailure, params.nonce, params.gas,
-      params.gasPrice, account.keystring, account.type, password, account, data))
+      params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService))
   }
 
   content = () => {
