@@ -26,7 +26,8 @@ import { Modal } from "../../components/CommonElement"
     account: store.account.account,
     transfer: store.transfer,
     form: { ...store.transfer, balance, decimal },
-    ethereum: store.connection.ethereum
+    ethereum: store.connection.ethereum,
+    keyService: props.keyService
   };
 
 })
@@ -163,7 +164,7 @@ export default class PostTransfer extends React.Component {
       this.props.dispatch(transferActions.processTransfer(formId, ethereum, account.address,
         params.token, params.amount,
         params.destAddress, params.nonce, params.gas,
-        params.gasPrice, account.keystring, account.type, password, account, data))
+        params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService))
     } catch (e) {
       console.log(e)
       this.props.dispatch(transferActions.throwPassphraseError("Key derivation failed"))

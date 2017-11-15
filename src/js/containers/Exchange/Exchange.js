@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 
 import { calculateMinAmount, toT, displayBalance } from "../../utils/converter"
 
-import { PostExchange } from "../Exchange"
+import { PostExchangeWithKey } from "../Exchange"
 import { ExchangeForm, TransactionConfig } from "../../components/Transaction"
 import { SelectToken, TransactionLoading, Token } from "../CommonElements"
 
@@ -158,7 +158,7 @@ export default class Exchange extends React.Component {
       percent: "-"
     }
     var exchangeButton = (
-      <PostExchange />
+      <PostExchangeWithKey />
     )
     var trasactionLoadingScreen = (
       <TransactionLoading tx={this.props.exchange.txHash}
