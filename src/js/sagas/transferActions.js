@@ -41,7 +41,9 @@ function* doTransactionFail(ethereum, account, e) {
 }
 
 
-function* processTransfer(action) {
+export function* processTransfer(action) {
+
+  
   const { formId, ethereum, address,
     token, amount,
     destAddress, nonce, gas,
