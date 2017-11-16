@@ -1,7 +1,7 @@
 import Web3 from "web3"
-import constants from "../constants"
+import constants from "../../../src/js/services/constants"
 import * as ethUtil from 'ethereumjs-util'
-import BLOCKCHAIN_INFO from "../../../../env"
+import BLOCKCHAIN_INFO from "../../../env"
 
 export default class BaseEthereumProvider {
 
@@ -38,7 +38,6 @@ export default class BaseEthereumProvider {
     getNonce(address) {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getTransactionCount(address, "pending").then((nonce) => {
-              //console.log(nonce)
                 if (nonce != null) {
                     resolve(nonce)
                 }
@@ -118,7 +117,6 @@ export default class BaseEthereumProvider {
     getRate(source, dest, reserve) {
         return new Promise((resolve, reject) => {
             this.networkContract.methods.getRate(source, dest, reserve).call().then((result) => {
-              //console.log(result)
                 if (result != null) {
                     resolve(result)
                 }

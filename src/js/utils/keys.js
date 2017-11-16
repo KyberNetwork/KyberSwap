@@ -55,6 +55,6 @@ export function unlock(input, password, nonStrict) {
 
 export function getRandomAvatar(addressString) {
   let svg = jdenticon.toSvg(addressString, 45),
-    url = 'data:image/svg+xml;base64,' + btoa(svg);
-  return url;
+  url = 'data:image/svg+xml;base64,' + btoa(svg);
+  return url
 }

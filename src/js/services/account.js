@@ -26,7 +26,6 @@ export default class Account {
   sync(ethereum, account) {
     var promise
     const _this = account ? account : this
-
     promise = new Promise((resolve, reject) => {
       const acc = _this.shallowClone()
       ethereum.call("getBalance")(acc.address).then((balance) => {

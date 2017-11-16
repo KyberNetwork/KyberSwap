@@ -12,16 +12,16 @@ import constants from "../services/constants"
 import { Rate, updateAllRatePromise } from "../services/rate"
 
 
-function* updateAccount(action) {
+export function* updateAccount(action) {
   const { account, ethereum } = action.payload
   const newAccount = yield call(account.sync, ethereum, account)
   yield put(actions.updateAccountComplete(newAccount))
 }
 
-function* importNewAccount(action) {
+export function* importNewAccount(action) {
   yield put(actions.importLoading())
   const { address, type, keystring, ethereum, avatar, tokens } = action.payload
-  const account = yield call(service.newAccountInstance, address, type, keystring, avatar)
+  const account = yield call(service.newAccountInstance, address, type, keystring, avatar, ethereum)
   var rates = []
   for (var k = 0; k < constants.RESERVES.length; k++) {
     var reserve = constants.RESERVES[k];
@@ -36,7 +36,7 @@ function* importNewAccount(action) {
     return
   } else {
     yield put.sync(setRandomExchangeSelectedToken(randomToken))
-    yield call([ethereum, ethereum.fetchRateExchange])
+    yield call(ethereum.fetchRateExchange)
     yield put.sync(setRandomTransferSelectedToken(randomToken))
   }
   //todo set random token for exchange

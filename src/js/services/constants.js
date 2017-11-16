@@ -44,7 +44,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   broadcasting: true,
   bcError: "",
   txHash: "",
-  txRaw: "",
+  //txRaw: "",
   tempTx: {},
   txApprove: false,
   confirmApprove: false,

@@ -95,7 +95,9 @@ LedgerEth.prototype.signTransaction_async = function (path, rawTxHex) {
 	}).catch((err) => {
 		var result = {};
 		result['status'] = false		
-		result['error'] = err
+    //result['error'] = err
+    console.log(err)
+    result['error'] = {}
 		result['error']['message'] = "Cannot sign transaction"
 		result['error']['type'] = "ledger"
 		return result

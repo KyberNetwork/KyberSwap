@@ -41,8 +41,10 @@
     "scryptsy": "^2.0.0",
     "underscore": "^1.8.3",
     "web3": "^1.0.0-beta.24",
+    "web3-providers-ws": "^1.0.0-beta.24",
     "webpack": "^3.4.1",
-    "webpack-dev-server": "^2.5.0"
+    "webpack-dev-server": "^2.5.0",
+    "websocket": "^1.0.25"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -72,6 +74,11 @@
     "dev": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=kovan",
     "test": "jest --setupTestFrameworkScriptFile=raf/polyfill"
   },
+  "jest": {
+    "globals": {
+       "window": null
+     }
+},
   "author": "Victor Tran",
   "license": "MIT"
 }
