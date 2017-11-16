@@ -34,15 +34,15 @@ it('handle process transfer with ledger and reject sign', () => {
     .run()
     .then((result) => {
       const { effects } = result;
-      expect(effects.put).toHaveLength(3);
+      expect(effects.put).toHaveLength(2);
 
       expect(effects.put[0]).toEqual(
         put({
           payload:"Cannot sign transaction",
           type:"TRANSFER.TX_BROADCAST_REJECTED"
         }));
-        expect(effects.put[1].PUT.action.type).toEqual('ACCOUNT.INC_MANUAL_NONCE_ACCOUNT');
-        expect(effects.put[2].PUT.action.type).toEqual('ACCOUNT.UPDATE_ACCOUNT_PENDING');
+        expect(effects.put[0].PUT.action.type).toEqual("TRANSFER.TX_BROADCAST_REJECTED");
+        expect(effects.put[1].PUT.action.type).toEqual('ACCOUNT.UPDATE_ACCOUNT_PENDING');
     })
 })
 
@@ -53,11 +53,15 @@ it('handle process transfer with trezor and reject sign', () => {
     .run()
     .then((result) => {
       const { effects } = result;
-      expect(effects.put).toHaveLength(3);
+      expect(effects.put).toHaveLength(2);
 
-      expect(effects.put[0].PUT.action.type).toEqual("TRANSFER.TX_BROADCAST_REJECTED");
-      expect(effects.put[1].PUT.action.type).toEqual('ACCOUNT.INC_MANUAL_NONCE_ACCOUNT');
-      expect(effects.put[2].PUT.action.type).toEqual('ACCOUNT.UPDATE_ACCOUNT_PENDING');
+      expect(effects.put[0]).toEqual(
+        put({
+          payload:"Cannot sign transaction",
+          type:"TRANSFER.TX_BROADCAST_REJECTED"
+        }));
+      // expect(effects.put[1].PUT.action.type).toEqual('ACCOUNT.INC_MANUAL_NONCE_ACCOUNT');
+      expect(effects.put[1].PUT.action.type).toEqual('ACCOUNT.UPDATE_ACCOUNT_PENDING');
     })
 })
 
