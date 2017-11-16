@@ -65,7 +65,7 @@ export function verifyAmount(sourceAmount,
 
   var reserveBalanceB = new BigNumber(reserveBalance)
   if (estimateDestAmount.cmp(reserveBalanceB) > 0) {
-    return "too high (reserve does not have enough balance)"
+    return "too high (pair is not available for trading at the moment)"
   }
 
   return null
