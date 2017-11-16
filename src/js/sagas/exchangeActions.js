@@ -57,13 +57,13 @@ function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
 
 function* doTransactionFail(ethereum, account, e) {
   yield put(actions.doTransactionFail(e))
-  yield put(incManualNonceAccount(account.address))
+  //yield put(incManualNonceAccount(account.address))
   yield put(updateAccount(ethereum, account))
 }
 
 function* doApproveTransactionFail(ethereum, account, e) {
   yield put(actions.doApprovalTransactionFail(e))
-  yield put(incManualNonceAccount(account.address))
+  //yield put(incManualNonceAccount(account.address))
   yield put(updateAccount(ethereum, account))
 }
 

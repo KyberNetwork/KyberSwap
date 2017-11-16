@@ -1,7 +1,7 @@
 import * as ethUtil from 'ethereumjs-util'
 import scrypt from 'scryptsy'
 import crypto from 'crypto'
-// import jdenticon from 'jdenticon'
+import jdenticon from 'jdenticon'
 
 function decipherBuffer(decipher, data) {
   return Buffer.concat([decipher.update(data), decipher.final()])
@@ -54,7 +54,7 @@ export function unlock(input, password, nonStrict) {
 }
 
 export function getRandomAvatar(addressString) {
-//   let svg = jdenticon.toSvg(addressString, 45),
-//     url = 'data:image/svg+xml;base64,' + btoa(svg);
-  return 'url';
+  let svg = jdenticon.toSvg(addressString, 45),
+  url = 'data:image/svg+xml;base64,' + btoa(svg);
+  return url
 }
