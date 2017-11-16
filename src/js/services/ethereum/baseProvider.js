@@ -38,6 +38,7 @@ export default class BaseEthereumProvider {
     getNonce(address) {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getTransactionCount(address, "pending").then((nonce) => {
+              //console.log(nonce)
                 if (nonce != null) {
                     resolve(nonce)
                 }
