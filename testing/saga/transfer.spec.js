@@ -211,3 +211,58 @@ it('handle throw broadcass rejected', () => {
       expect(result.storeState.bcError).toEqual("Gas too low..");
     })
 })
+
+
+function* prepareTransaction() {
+  yield put({ 
+    type: 'TRANSFER.PREPARE_TRANSACTION'
+  });
+}
+it('handle transfer prepare transaction', () => {
+  return expectSaga(prepareTransaction)
+    .withReducer(transferReducer)
+    .run()
+    .then((result) => {
+      expect(result.storeState.passphrase).toEqual(false);
+      expect(result.storeState.confirmColdWallet).toEqual(false);
+      expect(result.storeState.amount).toEqual(0);
+      expect(result.storeState.isConfirming).toEqual(false);
+      expect(result.storeState.txRaw).toEqual("");
+      expect(result.storeState.step).toEqual(2);
+      expect(result.storeState.broadcasting).toEqual(true);
+    })
+})
+
+
+function* txBroadcasstFullfilled(txHash) {
+  yield put({ 
+    type: 'TRANSFER.TX_BROADCAST_FULFILLED',
+    payload: txHash
+  });
+}
+it('handle transfer broadcast fullfilled', () => {
+  return expectSaga(txBroadcasstFullfilled, "0x1e9ae585e73b3a5ab1c41c8f01ccd1e62cffc5b9c96c7f477223d0ef94fc0f3f")
+    .withReducer(transferReducer)
+    .run()
+    .then((result) => {
+      expect(result.storeState.broadcasting).toEqual(false);
+      expect(result.storeState.txHash).toEqual("0x1e9ae585e73b3a5ab1c41c8f01ccd1e62cffc5b9c96c7f477223d0ef94fc0f3f");
+    })
+})
+
+
+
+function* finishTransaction() {
+  yield put({ 
+    type: 'TRANSFER.FINISH_TRANSACTION'
+  });
+}
+it('handle finish transaction', () => {
+  return expectSaga(finishTransaction)
+    .withReducer(transferReducer)
+    .run()
+    .then((result) => {
+      expect(result.storeState.broadcasting).toEqual(false);
+    })
+})
+

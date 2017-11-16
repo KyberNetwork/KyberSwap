@@ -82,7 +82,7 @@ function* processApprove(action) {
   }
 }
 
-function* processExchangeAfterConfirm(action) {
+export function* processExchangeAfterConfirm(action) {
   const { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
@@ -111,7 +111,7 @@ function* processExchangeAfterConfirm(action) {
   }
 }
 
-function* processExchange(action) {
+export function* processExchange(action) {
   const { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
@@ -119,7 +119,8 @@ function* processExchange(action) {
     gasPrice, keystring, type, password, account, data, keyService } = action.payload
 
   //check send ether or send token 
-
+  // console.log("========================");
+  // console.log(action.payload)
   try {
     if (sourceToken == constants.ETHER_ADDRESS) {
       var txRaw

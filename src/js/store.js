@@ -9,7 +9,6 @@ import history from "./history"
 import { routerMiddleware } from 'react-router-redux'
 
 import rootSaga from './sagas'
-jest.mock('vm')
 const routeMiddleware = routerMiddleware(history)
 
 const sagaMiddleware = createSagaMiddleware()
