@@ -242,7 +242,7 @@ describe('Test change gas', () => {
         });
 
         expect(store.dispatch).toHaveBeenCalledWith({
-            type: 'EXCHANGE_SPECIFY_GAS_PRICE',
+            type: 'EXCHANGE.SPECIFY_GAS_PRICE',
             payload: 1
         });
     })

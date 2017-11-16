@@ -1,6 +1,7 @@
 import './config';
 import { combineReducers, createStore } from "redux";
 import BigNumber from "bignumber.js"
+import Account from '../../src/js/services/account';
 
 function tokens() {
     return {
@@ -11,14 +12,14 @@ function tokens() {
                 icon: "/assets/img/tokens/eth.svg",
                 address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 decimal: 18,
-                balance: new BigNumber(Math.pow(10, 17))
+                balance: new BigNumber(Math.pow(10, 19))
             },
             "OMG": {
                 name: "OmiseGO",
                 symbol: "OMG",
                 icon: "/assets/img/tokens/omg.svg",
                 address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-                decimal: 18,
+                decimal: 9,
                 balance: new BigNumber(Math.pow(10, 18))
             }
         }
@@ -39,9 +40,10 @@ function connection() {
 
 function account() {
     return {
-        account: {
-            address: "0x37522832d0fe94f8e873e908d36ed1633a66116e"
-        }
+        account: new Account(
+            '0x12f0453c1947269842c5646df98905533c1b9519',
+            'keystore','',0,0,0,''
+        )
     }
 }
 
@@ -49,6 +51,12 @@ function exchange() {
     return {
         offeredRate: 0,
         sourceAmount: '',
+        bcError: '',
+        sourceTokenSymbol: '',
+        minConversionRate: '0',
+        offeredRate: '3296591097476482885',
+        offeredRateBalance: '8739437467440',
+        destTokenSymbol: 'OMG',
         errors: {}
     }
 }
