@@ -59,11 +59,13 @@ export function verifyAmount(sourceAmount,
 
   //verify max dest amount
   var estimateDestAmount = sourceAmountWei.times(weiParam.pow(destDecimal))
-    .times(weiParam.pow(18))
+    .times(rateBig)
     .div(weiParam.pow(sourceDecimal))
-    .div(rateBig)
+    .div(weiParam.pow(18))
 
   var reserveBalanceB = new BigNumber(reserveBalance)
+  console.log(reserveBalance.toString())
+  console.log(estimateDestAmount.toString())
   if (estimateDestAmount.cmp(reserveBalanceB) > 0) {
     return "too high (pair is not available for trading at the moment)"
   }

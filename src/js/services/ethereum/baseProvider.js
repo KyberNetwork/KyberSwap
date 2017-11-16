@@ -118,6 +118,7 @@ export default class BaseEthereumProvider {
     getRate(source, dest, reserve) {
         return new Promise((resolve, reject) => {
             this.networkContract.methods.getRate(source, dest, reserve).call().then((result) => {
+              //console.log(result)
                 if (result != null) {
                     resolve(result)
                 }
