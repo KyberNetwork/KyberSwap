@@ -49,8 +49,9 @@ export function* processTransfer(action) {
     destAddress, nonce, gas,
     gasPrice, keystring, type, password, account, data, keyService } = action.payload
   var callService = token == constants.ETHER_ADDRESS ? "sendEtherFromAccount" :"sendTokenFromAccount"
-
   var rawTx
+  // console.log("---------------------------------");
+  // console.log(action.payload)
   if (type === "keystore") {
     try {
       var raw
@@ -75,10 +76,14 @@ export function* processTransfer(action) {
       return
     }
   }
-
+  // console.log("=============+++++*************************")
+  // console.log(rawTx)
   try {
     yield put(actions.prePareBroadcast())
     const hash = yield call(ethereum.call("sendRawTransaction"), rawTx, ethereum)
+
+    // console.log("##############################")
+    // console.log(hash)
     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
   } catch (e) {
     yield call(doTransactionFail, ethereum, account, e.message)
