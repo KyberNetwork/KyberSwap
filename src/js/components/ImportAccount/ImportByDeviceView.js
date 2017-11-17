@@ -1,6 +1,7 @@
 import React from "react";
 import constants from "../../services/constants"
 import { SelectAddressModal } from "../ImportAccount";
+import { roundingNumber } from "../../utils/converter"
 
 const ImportByDeviceView = (props) => {
 
@@ -44,10 +45,13 @@ const ImportByDeviceView = (props) => {
                         />
                     </a>
                     <div class="info">
-                        <a class="link has-tip top explore" href={addressLink + address.addressString} target="_blank" title="View on Etherscan">		{address.balance == '-1' ?
-                            <img src="/assets/img/waiting.svg" />
-                            : address.balance
-                        } ETH
+                        <a class="link has-tip top explore" href={addressLink + address.addressString} target="_blank" title="View on Etherscan">
+                            <span title={address.balance}>
+                                {address.balance == '-1' ?
+                                <img src="/assets/img/waiting.svg" />
+                                : roundingNumber(address.balance)
+                                } ETH
+                            </span>
 						</a>
                     </div>
                 </li>

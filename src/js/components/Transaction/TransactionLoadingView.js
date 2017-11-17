@@ -1,5 +1,6 @@
 import React from "react"
 import constants from "../../services/constants"
+import { roundingNumber } from "../../utils/converter"
 
 const TransactionLoadingView = (props) => {
   if (props.broadcasting) {
@@ -73,11 +74,11 @@ const TransactionLoadingView = (props) => {
                         <ul class="address-balances">
                           <li>
                             <span class="name">{props.balanceInfo.sourceTokenName}</span>
-                            <span class="balance">{props.balanceInfo.sourceAmount} {props.balanceInfo.sourceTokenSymbol}</span>
+                            <span class="balance" title={props.balanceInfo.sourceAmount}>{roundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceTokenSymbol}</span>
                           </li>
                           <li>
                             <span class="name">{props.balanceInfo.destTokenName}</span>
-                            <span class="balance">{props.balanceInfo.destAmount} {props.balanceInfo.destTokenSymbol}</span>
+                            <span class="balance" title={props.balanceInfo.destAmount}>{roundingNumber(props.balanceInfo.destAmount)} {props.balanceInfo.destTokenSymbol}</span>
                           </li>
                         </ul>
                       }
@@ -85,7 +86,7 @@ const TransactionLoadingView = (props) => {
                         <ul class="address-balances">
                           <li>
                             <span class="name">{props.balanceInfo.tokenName}</span>
-                            <span class="balance">{props.balanceInfo.amount} {props.balanceInfo.tokenSymbol}</span>
+                            <span class="balance" title={props.balanceInfo.amount}>{roundingNumber(props.balanceInfo.amount)} {props.balanceInfo.tokenSymbol}</span>
                           </li>
                         </ul>
                       }
@@ -94,7 +95,7 @@ const TransactionLoadingView = (props) => {
                   {props.status === "failed" &&
                     <li class={props.status}>
                       Transaction error
-                                          <div class="reason">{props.error}</div>
+                      <div class="reason">{props.error}</div>
                     </li>
                   }
                   {props.status === "pending" &&
@@ -108,7 +109,7 @@ const TransactionLoadingView = (props) => {
       </div>
       <div class="row">
         <div class="column small-11 medium-10 large-9 small-centered text-center">
-          <p class="note">You can now close your browser window or make another {props.type == 'exchange' ? "exchange" : "transfer"}</p><a class="button accent" onClick={props.makeNewTransaction}>{props.type == 'exchange' ? "Exchange" : "Transfer"}</a>
+          <p class="note">You can now close your browser window or make another {props.type == 'exchange' ? "exchange" : "transfer"}</p><a className="button accent new-transaction" onClick={props.makeNewTransaction}>{props.type == 'exchange' ? "Exchange" : "Transfer"}</a>
         </div>
       </div>
     </div>
