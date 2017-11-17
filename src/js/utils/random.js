@@ -1,5 +1,7 @@
 import { default as _ } from 'underscore';
 import constants from "../services/constants"
+import BLOCKCHAIN_INFO from "../../../env"
+import BigNumber from "bignumber.js"
 
 export function randomToken(numberToken, total){
   if(!numberToken || numberToken < 1) return null;
@@ -39,26 +41,42 @@ export function randomToken(numberToken, total){
 export function randomForExchange(tokens){
   /// random first element with balance
   var result = new Array(2);
-  var tokenWithBalance = []
+  var tokenWithBalance = {}
+  var allTokenObj = {}
   tokens.map((token) => {
-    if(token.balance && token.balance.greaterThanOrEqualTo(constants.EPSILON)){
-      tokenWithBalance.push(token);
+    let tokenEpsilon = new BigNumber(10).pow(token.decimal).times(token.rate).div(new BigNumber(10).pow(33))          // 10^decimal * rate / 10^33
+    if(token.balance && token.balance.greaterThanOrEqualTo(tokenEpsilon)){
+      // tokenWithBalance.push(token);
+      
+      tokenWithBalance[token.symbol] = token;
     }
+    allTokenObj[token.symbol] = token;
   });
-  if(tokenWithBalance.length){
-    result[0] = _.sample(tokenWithBalance);
+
+  if(tokenWithBalance[BLOCKCHAIN_INFO.tokens.ETH.symbol]){
+    result[0] = allTokenObj[BLOCKCHAIN_INFO.tokens.ETH.symbol]
+    result[1] = allTokenObj[BLOCKCHAIN_INFO.tokens.KNC.symbol]
+    return result;
+  }
+
+  if(tokenWithBalance[BLOCKCHAIN_INFO.tokens.KNC.symbol]){
+    result[0] = allTokenObj[BLOCKCHAIN_INFO.tokens.KNC.symbol]
+    result[1] = allTokenObj[BLOCKCHAIN_INFO.tokens.ETH.symbol]
+    return result;
+  }
+
+
+  if(Object.keys(tokenWithBalance).length){
+    result[0] = tokenWithBalance[_.sample(Object.keys(tokenWithBalance))];
     if(result[0].symbol.toLowerCase() == "eth"){
-      let index = tokens.map(x => { return x.symbol}).indexOf(result[0].symbol)
-      tokens.splice(index, 1);
-      result[1] = _.sample(tokens);
+      delete allTokenObj[BLOCKCHAIN_INFO.tokens.ETH.symbol]
+      result[1] = allTokenObj[_.sample(Object.keys(allTokenObj))];
     } else {
-      let indexETH = tokens.map(x => { return x.symbol.toLowerCase()}).indexOf("eth")
-      result[1] = tokens[indexETH];
+      result[1] = allTokenObj[BLOCKCHAIN_INFO.tokens.ETH.symbol]
     }
     return result;
-  } else {
-    return null;
   }
+  return null;
 }
 
 export function randomForTransfer(token){
