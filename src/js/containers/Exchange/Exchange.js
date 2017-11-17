@@ -34,6 +34,7 @@ export default class Exchange extends React.Component {
   }
 
   chooseToken = (symbol, address, type) => {
+    this.props.dispatch(exchangeActions.changeDestAmout(caculateDestAmount(this.props.exchange.sourceAmount, this.props.exchange.offeredRate, 6)))
     this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
   }
 
