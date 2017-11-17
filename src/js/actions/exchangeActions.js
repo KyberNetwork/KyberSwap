@@ -76,6 +76,13 @@ export function changeSourceAmout(amount) {
 	}
 }
 
+export function changeDestAmout(amount) {
+	return {
+		type: "EXCHANGE.CHANGE_DEST_AMOUNT",
+		payload: amount
+	}
+}
+
 export function setRandomExchangeSelectedToken(random){
 	return {
 		type: "EXCHANGE.SET_RANDOM_SELECTED_TOKEN",

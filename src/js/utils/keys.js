@@ -20,19 +20,19 @@ export function addressFromKey(keystring) {
   }
 }
 
-export function addressFromPrivateKey(privateKey){
-  // try {
-  //   var keyObj = JSON.parse(keystring)
-  //   var address = keyObj.address
-  //   if (address == undefined || address == "") {
-  //     throw new Error("Invalid keystore format")
-  //   }
-  //   return "0x" + address
-  // } catch (e) {
-  //   throw new Error("Invalid private key format")
-  // }
-  return "0x0f50cf67c97C37824bA9c8E99E4f1CF4a8f54f7D"
-}
+// export function addressFromPrivateKey(privateKey){
+//   // try {
+//   //   var keyObj = JSON.parse(keystring)
+//   //   var address = keyObj.address
+//   //   if (address == undefined || address == "") {
+//   //     throw new Error("Invalid keystore format")
+//   //   }
+//   //   return "0x" + address
+//   // } catch (e) {
+//   //   throw new Error("Invalid private key format")
+//   // }
+//   return "0x2096e2F3843c8992F5Ae24B14C8B64fCC69e5B4d"
+// }
 
 export function unlock(input, password, nonStrict) {
     var json = (typeof input === 'object') ? input : JSON.parse(nonStrict ? input.toLowerCase() : input)
@@ -68,7 +68,13 @@ export function unlock(input, password, nonStrict) {
 }
 
 export function getRandomAvatar(addressString) {
-   let svg = jdenticon.toSvg(addressString, 45),
-   url = 'data:image/svg+xml;base64,' + btoa(svg);
-   return url
+  let svg = jdenticon.toSvg(addressString, 45),
+  url = 'data:image/svg+xml;base64,' + btoa(svg);
+  return url
+}
+
+export function addressFromPrivateKey(privateKey){
+    var addBuf = ethUtil.privateToAddress(new Buffer(privateKey, 'hex'))
+    var addrString = ethUtil.bufferToHex(addBuf)
+    return addrString
 }
