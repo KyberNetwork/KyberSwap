@@ -94,6 +94,9 @@ function* processApprove(action) {
       keystring, password, accountType)
     const hashApprove = yield call(ethereum.call("sendRawTransaction"), rawApprove, ethereum)
     console.log(hashApprove)
+    //increase nonce 
+    yield put(incManualNonceAccount(account.address))
+    
     yield put(actions.hideApprove())
     yield put(actions.showConfirm())
   } catch (e) {
@@ -210,7 +213,7 @@ function* exchangeETHtoTokenColdWallet(action) {
 }
 
 function* exchangeTokentoETHKeystore(action) {
-  const { formId, ethereum, address, sourceToken,
+  var { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
     throwOnFailure, nonce, gas,
@@ -232,6 +235,10 @@ function* exchangeTokentoETHKeystore(action) {
       yield put(actions.prePareBroadcast())
       var hashApprove = yield call(ethereum.call("sendRawTransaction"), rawApprove, ethereum)
       console.log(hashApprove)
+      //increase nonce 
+      yield put(incManualNonceAccount(account.address))
+      nonce ++
+
       var txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
         sourceAmount, destToken, destAddress,
         maxDestAmount, minConversionRate,
@@ -275,7 +282,7 @@ function* exchangeTokentoETHKeystore(action) {
   }
 }
 function* exchangeTokentoETHPrivateKey(action) {
-  const { formId, ethereum, address, sourceToken,
+  var { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
     throwOnFailure, nonce, gas,
@@ -290,6 +297,9 @@ function* exchangeTokentoETHPrivateKey(action) {
       yield put(actions.prePareBroadcast())
       var hashApprove = yield call(ethereum.call("sendRawTransaction"), rawApprove, ethereum)
       console.log(hashApprove)
+      //increase nonce 
+      yield put(incManualNonceAccount(account.address))
+      nonce ++
     }
     var txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
       sourceAmount, destToken, destAddress,

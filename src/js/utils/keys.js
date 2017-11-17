@@ -31,7 +31,7 @@ export function addressFromPrivateKey(privateKey){
   // } catch (e) {
   //   throw new Error("Invalid private key format")
   // }
-  return "0x2096e2F3843c8992F5Ae24B14C8B64fCC69e5B4d"
+  return "0x0f50cf67c97C37824bA9c8E99E4f1CF4a8f54f7D"
 }
 
 export function unlock(input, password, nonStrict) {
