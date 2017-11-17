@@ -39,12 +39,14 @@ export default class Exchange extends React.Component {
 
   changeSourceAmount = (e) => {
     var value = e.target.value
+    if (value < 0) return 
     this.props.dispatch(exchangeActions.changeSourceAmout(value))
     this.props.dispatch(exchangeActions.changeDestAmout(caculateDestAmount(value, this.props.exchange.offeredRate, 6)))
   }
 
   changeDestAmount = (e) => {
     var value = e.target.value
+    if (value < 0) return 
     this.props.dispatch(exchangeActions.changeDestAmout(value))
     this.props.dispatch(exchangeActions.changeSourceAmout(caculateSourceAmount(value, this.props.exchange.offeredRate, 6)));
   }
