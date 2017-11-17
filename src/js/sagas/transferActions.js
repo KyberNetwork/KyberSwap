@@ -41,13 +41,14 @@ function* doTransactionFail(ethereum, account, e) {
 }
 
 
-function* processTransfer(action) {
+export function* processTransfer(action) {
+
+  
   const { formId, ethereum, address,
     token, amount,
     destAddress, nonce, gas,
     gasPrice, keystring, type, password, account, data, keyService } = action.payload
   var callService = token == constants.ETHER_ADDRESS ? "sendEtherFromAccount" :"sendTokenFromAccount"
-
   var rawTx
   if (type === "keystore") {
     try {
@@ -73,7 +74,6 @@ function* processTransfer(action) {
       return
     }
   }
-
   try {
     yield put(actions.prePareBroadcast())
     const hash = yield call(ethereum.call("sendRawTransaction"), rawTx, ethereum)

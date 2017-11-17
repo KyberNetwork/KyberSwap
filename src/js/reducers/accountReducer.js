@@ -1,5 +1,5 @@
 //import Account from "../services/account"
-import Account from "../services/account"
+// import Account from "../services/account"
 import {REHYDRATE} from 'redux-persist/lib/constants'
 
 const initState = {

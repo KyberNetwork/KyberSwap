@@ -86,9 +86,11 @@ export const tokenToOthersFromAccount = (
   const exchangeData = ethereum.call("exchangeData")(
     sourceToken, sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate, throwOnFailure)
-  const newNonce = verifyNonce(nonce, 1)
+    //console.log(nonce)
+  //const newNonce = verifyNonce(nonce, 1)
+  //console.log(newNonce)
   const txParams = {
-    nonce: newNonce,
+    nonce: nonce,
     gasPrice: gasPrice,
     gasLimit: gas,
     to: BLOCKCHAIN_INFO.network,

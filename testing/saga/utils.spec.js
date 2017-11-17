@@ -62,3 +62,44 @@ it('handle toggle notify', () => {
       });
     })
 })
+
+
+
+function* openInfoModal(title, content) {
+  yield put({ 
+    type: 'UTIL.OPEN_INFO_MODAL',
+    payload: {
+      title: title,
+      content: content
+    }
+  });
+}
+it('handle toggle notify', () => {
+  return expectSaga(openInfoModal, "this is title", "this is content")
+    .withReducer(utilsReducer)
+    .run()
+    .then((result) => {
+      expect(result.storeState.infoModal).toEqual({
+        open: true,
+        title: "this is title",
+        content: "this is content"
+      });
+    })
+})
+
+
+function* exitInfoModal() {
+  yield put({ 
+    type: 'UTIL.EXIT_INFO_MODAL'
+  });
+}
+it('handle exit info', () => {
+  return expectSaga(exitInfoModal)
+    .withReducer(utilsReducer)
+    .run()
+    .then((result) => {
+      expect(result.storeState.infoModal).toEqual({
+        open: false
+      });
+    })
+})
