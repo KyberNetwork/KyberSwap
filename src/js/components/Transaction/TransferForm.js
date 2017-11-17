@@ -1,4 +1,5 @@
 import React from "react"
+import { roundingNumber } from "../../utils/converter"
 
 const TransferForm = (props) => {
   var render = (
@@ -34,7 +35,12 @@ const TransferForm = (props) => {
                         <span class="error-text">{props.errors.amountTransfer}</span>
                       }
                     </div>
-                    <div class="address-balance clearfix"><span class="note">Address Balance</span><a className="value" onClick={props.setAmount}>{props.balance} {props.tokenSymbol}</a></div>
+                    <div class="address-balance clearfix">
+                      <span class="note">Address Balance</span>
+                      <a className="value" onClick={props.setAmount} title={props.balance}>
+                        {roundingNumber(props.balance)} {props.tokenSymbol}
+                      </a>
+                    </div>
                   </label>
                   <span class="error-text">{props.errors.amountTransfer}</span>
                 </div>
