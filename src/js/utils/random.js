@@ -2,6 +2,7 @@ import { default as _ } from 'underscore';
 import constants from "../services/constants"
 import BLOCKCHAIN_INFO from "../../../env"
 import BigNumber from "bignumber.js"
+import * as converter from "../utils/converter"
 
 export function randomToken(numberToken, total){
   if(!numberToken || numberToken < 1) return null;
@@ -44,7 +45,8 @@ export function randomForExchange(tokens){
   var tokenWithBalance = {}
   var allTokenObj = {}
   tokens.map((token) => {
-    let tokenEpsilon = new BigNumber(10).pow(token.decimal).times(token.rate).div(new BigNumber(10).pow(33))          // 10^decimal * rate / 10^33
+    var tokenEpsilon = converter.caculateTokenEpsilon(token.rate, token.decimal)
+    // let tokenEpsilon = new BigNumber(10).pow(token.decimal).times(token.rate).div(new BigNumber(10).pow(33))          // 10^decimal * rate / 10^33
     if(token.balance && token.balance.greaterThanOrEqualTo(tokenEpsilon)){
       // tokenWithBalance.push(token);
       

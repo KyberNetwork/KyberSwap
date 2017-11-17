@@ -241,3 +241,10 @@ export function roundingNumber(number) {
   let result = numberStr.slice(0, MAX_DIGIS + 1);
   return +result;
 }
+
+
+export function caculateTokenEpsilon(rate, decimal){
+  var ts = new BigNumber(10).pow(decimal).times(rate).times(constants.EPSILON)
+  var ms = new BigNumber(10).pow(36)
+  return ts.div(ms)
+}
