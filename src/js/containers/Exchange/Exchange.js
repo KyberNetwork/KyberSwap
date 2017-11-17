@@ -37,14 +37,6 @@ export default class Exchange extends React.Component {
     this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
   }
 
-  proccessSelectToken = () => {
-    if (!anyErrors(this.props.exchange.errors)) {
-      this.props.dispatch(exchangeActions.goToStep(2))
-    }
-  }
-  showAdvanceOption = () => {
-    this.props.dispatch(exchangeActions.showAdvance())
-  }
   changeSourceAmount = (e) => {
     var value = e.target.value
     this.props.dispatch(exchangeActions.changeSourceAmout(value))
@@ -55,14 +47,6 @@ export default class Exchange extends React.Component {
     var value = e.target.value
     this.props.dispatch(exchangeActions.changeDestAmout(value))
     this.props.dispatch(exchangeActions.changeSourceAmout(caculateSourceAmount(value, this.props.exchange.offeredRate, 6)));
-  }
-
-  // getDesAmount = () => {
-  //   return this.props.exchange.sourceAmount * toT(this.props.exchange.offeredRate, 6)
-  // }
-  createRecap = () => {
-    var recap = `exchange ${this.props.exchange.sourceAmount.toString().slice(0, 7)}${this.props.exchange.sourceAmount.toString().length > 7 ? '...' : ''} ${this.props.exchange.sourceTokenSymbol} for ${this.props.exchange.destAmount.toString().slice(0, 7)}${this.props.exchange.destAmount.toString().length > 7 ? '...' : ''} ${this.props.exchange.destTokenSymbol}`
-    return recap
   }
 
   makeNewExchange = () => {
@@ -154,15 +138,6 @@ export default class Exchange extends React.Component {
       tokenSource: ''
     }
 
-    var button = {
-      selectToken: {
-        onClick: this.proccessSelectToken
-      },
-      showAdvance: {
-        onClick: this.showAdvanceOption
-      }
-    }
-
     var input = {
       sourceAmount: {
         type: 'number',
@@ -219,9 +194,7 @@ export default class Exchange extends React.Component {
         gasConfig={gasConfig}
         exchangeButton={exchangeButton}
         trasactionLoadingScreen={trasactionLoadingScreen}
-        recap={this.createRecap()}
         errors={errors}
-        button={button}
         input={input}
         balance={balance}
         sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}

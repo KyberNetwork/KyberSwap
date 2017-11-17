@@ -48,9 +48,16 @@ export default class PostExchange extends React.Component {
           case "keystore":
             this.props.dispatch(exchangeActions.openPassphrase())
             break
+          case "privateKey":
+            this.props.dispatch(exchangeActions.showConfirm())
+            break
           case "trezor":
           case "ledger":
-            this.processTx()
+            if (this.props.form.sourceTokenSymbol === "ETH") {
+              this.props.dispatch(exchangeActions.showConfirm())
+            } else {
+              this.checkTokenBalanceOfColdWallet()
+            }
             break
         }
       }
@@ -78,13 +85,7 @@ export default class PostExchange extends React.Component {
     return check
   }
 
-  approveTx = () => {
-    const params = this.formParams()
-    const account = this.props.account
-    const ethereum = this.props.ethereum
-    this.props.dispatch(exchangeActions.doApprove(ethereum, params.sourceToken, params.sourceAmount, params.nonce, params.gas, params.gasPrice,
-      account.keystring, account.password, account.type, account, this.props.keyService))
-  }
+
 
   createRecap = () => {
     var sourceAmount = this.props.form.sourceAmount.toString();
@@ -119,9 +120,6 @@ export default class PostExchange extends React.Component {
   closeModalApprove = (event) => {
     this.props.dispatch(exchangeActions.hideApprove())
   }
-  closeModalConfirmApprove = (event) => {
-    this.props.dispatch(exchangeActions.hideConfirmApprove())
-  }
   changePassword = (event) => {
     this.props.dispatch(exchangeActions.changePassword())
   }
@@ -145,6 +143,28 @@ export default class PostExchange extends React.Component {
       minConversionRate, destAddress, maxDestAmount,
       throwOnFailure, nonce, gas, gasPrice
     }
+  }
+  checkTokenBalanceOfColdWallet = () => {
+    const password = ""
+    const params = this.formParams()
+    const account = this.props.account
+    const ethereum = this.props.ethereum
+
+    const formId = "exchange"
+    const data = this.recap()
+    this.props.dispatch(exchangeActions.checkTokenBalanceOfColdWallet(formId, ethereum, account.address, params.sourceToken,
+      params.sourceAmount, params.destToken, params.destAddress,
+      params.maxDestAmount, params.minConversionRate,
+      params.throwOnFailure, params.nonce, params.gas,
+      params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService))
+  }
+
+  processExchangeAfterApprove = () => {
+    const params = this.formParams()
+    const account = this.props.account
+    const ethereum = this.props.ethereum
+    this.props.dispatch(exchangeActions.doApprove(ethereum, params.sourceToken, params.sourceAmount, params.nonce, params.gas, params.gasPrice,
+      account.keystring, account.password, account.type, account, this.props.keyService))
   }
 
   processTx = () => {
@@ -174,20 +194,20 @@ export default class PostExchange extends React.Component {
     }
   }
 
-  processTxAfterConfirm = () => {
-    var password = ""
-    const params = this.formParams()
-    var account = this.props.account
-    var ethereum = this.props.ethereum
+  // processTxAfterConfirm = () => {
+  //   var password = ""
+  //   const params = this.formParams()
+  //   var account = this.props.account
+  //   var ethereum = this.props.ethereum
 
-    var formId = "exchange"
-    var data = this.recap()
-    this.props.dispatch(exchangeActions.processExchangeAfterConfirm(formId, ethereum, account.address, params.sourceToken,
-      params.sourceAmount, params.destToken, params.destAddress,
-      params.maxDestAmount, params.minConversionRate,
-      params.throwOnFailure, params.nonce, params.gas,
-      params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService))
-  }
+  //   var formId = "exchange"
+  //   var data = this.recap()
+  //   this.props.dispatch(exchangeActions.processExchangeAfterConfirm(formId, ethereum, account.address, params.sourceToken,
+  //     params.sourceAmount, params.destToken, params.destAddress,
+  //     params.maxDestAmount, params.minConversionRate,
+  //     params.throwOnFailure, params.nonce, params.gas,
+  //     params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService))
+  // }
 
   content = () => {
     return (
@@ -202,7 +222,7 @@ export default class PostExchange extends React.Component {
     return (
       <ConfirmTransferModal recap={this.createRecap()}
         onCancel={this.closeModalConfirm}
-        onExchange={this.processTxAfterConfirm}
+        onExchange={this.processTx}
         isConfirming={this.props.form.isConfirming}
         type="exchange"
       />
@@ -213,7 +233,7 @@ export default class PostExchange extends React.Component {
       <ApproveModal recap="Please approve"
         onCancel={this.closeModalApprove}
         isApproving={this.props.form.isApproving}
-        onSubmit={this.approveTx} />
+        onSubmit={this.processExchangeAfterApprove} />
     )
   }
 

@@ -1,7 +1,7 @@
 import * as ethUtil from 'ethereumjs-util'
 import scrypt from 'scryptsy'
 import crypto from 'crypto'
-import jdenticon from 'jdenticon'
+ import jdenticon from 'jdenticon'
 
 function decipherBuffer(decipher, data) {
   return Buffer.concat([decipher.update(data), decipher.final()])
@@ -18,6 +18,20 @@ export function addressFromKey(keystring) {
   } catch (e) {
     throw new Error("Invalid keystore format")
   }
+}
+
+export function addressFromPrivateKey(privateKey){
+  // try {
+  //   var keyObj = JSON.parse(keystring)
+  //   var address = keyObj.address
+  //   if (address == undefined || address == "") {
+  //     throw new Error("Invalid keystore format")
+  //   }
+  //   return "0x" + address
+  // } catch (e) {
+  //   throw new Error("Invalid private key format")
+  // }
+  return "0x2096e2F3843c8992F5Ae24B14C8B64fCC69e5B4d"
 }
 
 export function unlock(input, password, nonStrict) {

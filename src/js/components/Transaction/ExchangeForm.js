@@ -1,4 +1,5 @@
 import React from "react"
+import { roundingNumber } from "../../utils/converter"
 
 const ExchangeForm = (props) => {
   var errorToken = props.errors.selectSameToken + props.errors.selectTokenToken
@@ -16,7 +17,7 @@ const ExchangeForm = (props) => {
 
                     <div className={errorToken === "" && props.errors.sourceAmount === "" ? "token-input" : "token-input error"}>
 
-                      <input type={props.input.sourceAmount.type} value={props.input.sourceAmount.value} onChange={(e) => props.input.sourceAmount.onChange(e)} min="0" step="0.000001" placeholder="0" />
+                      <input type={props.input.sourceAmount.type} className="source-input" value={props.input.sourceAmount.value} onChange={(e) => props.input.sourceAmount.onChange(e)} min="0" step="0.000001" placeholder="0" />
 
 
                       {props.tokenSource}
@@ -27,7 +28,12 @@ const ExchangeForm = (props) => {
                     {props.errors.sourceAmount !== "" &&
                       <span class="error-text">{props.errors.sourceAmount}</span>
                     }
-                    <div class="address-balance"><span class="note">Address Balance</span><a class="value" onClick={props.setAmount}>{props.balance} {props.sourceTokenSymbol}</a></div>
+                    <div class="address-balance">
+                      <span class="note">Address Balance</span>
+                      <a className="value" onClick={props.setAmount} title={props.balance}>
+                        {roundingNumber(props.balance)} {props.sourceTokenSymbol}
+                      </a>
+                    </div>
                   </label>
                 </div>
                 <div class="column medium-6">
@@ -44,7 +50,10 @@ const ExchangeForm = (props) => {
               </div>
               <div class="row">
                 <div class="column">
-                  <p class="token-compare">1 {props.exchangeRate.sourceToken} = {tokenRate} {props.exchangeRate.destToken}<span class="up">{props.exchangeRate.percent}%</span></p>
+                  <p class="token-compare" title={tokenRate}>
+                    1 {props.exchangeRate.sourceToken} = {roundingNumber(tokenRate)} {props.exchangeRate.destToken}
+                    <span class="up">{props.exchangeRate.percent}%</span>
+                  </p>
                 </div>
               </div>
               {props.step === 2 &&

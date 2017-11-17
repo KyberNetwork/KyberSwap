@@ -41,6 +41,7 @@ export default class PostTransfer extends React.Component {
         case "keystore":
           this.props.dispatch(transferActions.openPassphrase())
           break
+        case "privateKey":
         case "trezor":
         case "ledger":
           this.props.dispatch(transferActions.showConfirm())
@@ -61,8 +62,8 @@ export default class PostTransfer extends React.Component {
     if (isNaN(testGasPrice)) {
       this.props.dispatch(transferActions.thowErrorGasPrice("Gas price is not number"))
       check = false
-    }    
-    if (isNaN(this.props.form.amount) || !this.props.form.amount || this.props.form.amount == '') {
+    }
+    if (isNaN(parseFloat(this.props.form.amount))) {
       this.props.dispatch(transferActions.thowErrorAmount("Amount must be a number"))
       check = false
       checkNumber = false
@@ -74,7 +75,7 @@ export default class PostTransfer extends React.Component {
     if (amountBig.greaterThan(this.props.form.balance)) {
       this.props.dispatch(transferActions.thowErrorAmount("Amount is too high"))
       check = false
-    }  
+    }
     return check
   }
 
@@ -116,11 +117,12 @@ export default class PostTransfer extends React.Component {
       amount, tokenSymbol, destAddress
     }
   }
-  closeModal = (event) => {
+  closeModal = () => {
     switch (this.props.account.type) {
       case "keystore":
         this.props.dispatch(transferActions.hidePassphrase())
         break
+      case "privateKey":
       case "trezor":
       case "ledger":
         this.props.dispatch(transferActions.hideConfirm())
@@ -128,7 +130,7 @@ export default class PostTransfer extends React.Component {
     }
 
   }
-  changePassword = (event) => {
+  changePassword = () => {
     this.props.dispatch(transferActions.changePassword())
   }
   formParams = () => {
@@ -148,12 +150,10 @@ export default class PostTransfer extends React.Component {
     }
   }
 
-  processTx = (event) => {
+  processTx = (password) => {
     try {
-      var password = ""
-      if (this.props.account.type === "keystore") {
-        password = document.getElementById("passphrase").value
-        document.getElementById("passphrase").value = ''
+      if (this.props.account.type !== "keystore") {
+        password = ''
       }
       const params = this.formParams()
       // sending by wei

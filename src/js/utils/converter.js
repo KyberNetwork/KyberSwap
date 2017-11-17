@@ -227,3 +227,17 @@ export function stringToHex(number, decimal) {
   var bigNumber = new BigNumber(number).times(param)
   return "0x" + bigNumber.toString(16)
 }
+
+export function roundingNumber(number) {
+  const MAX_DIGIS = 7;
+  number = +number;
+  if (isNaN(number) || number <= 0) return 0;
+
+  let numberStr = number.toString();
+  if (Number.isInteger(number)) {
+    let result = numberStr.slice(0, MAX_DIGIS);
+    return +result;
+  }
+  let result = numberStr.slice(0, MAX_DIGIS + 1);
+  return +result;
+}

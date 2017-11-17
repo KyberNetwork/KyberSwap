@@ -35,16 +35,7 @@ export default class Transfer extends React.Component {
     this.props.dispatch(selectToken(symbol, address))
     this.props.dispatch(hideSelectToken())
   }
-
-  showAdvanceOption = () => {
-    this.props.dispatch(showAdvance())
-  }
-
-
-  createRecap = () => {
-    return `transfer ${this.props.transfer.amount.toString().slice(0, 7)}${this.props.transfer.amount.toString().length > 7 ? '...' : ''} ${this.props.transfer.tokenSymbol} to ${this.props.transfer.destAddress.slice(0, 7)}...${this.props.transfer.destAddress.slice(-5)}`
-  }
-
+  
   makeNewTransfer = () => {
     this.props.dispatch(makeNewTransfer());
   }
@@ -102,12 +93,6 @@ export default class Transfer extends React.Component {
       tokenSymbol: this.props.transfer.tokenSymbol
     }
 
-
-    var button = {
-      showAdvance: {
-        onClick: this.showAdvanceOption
-      }
-    }
     var input = {
       destAddress: {
         value: this.props.transfer.destAddress,
@@ -165,8 +150,6 @@ export default class Transfer extends React.Component {
         gasConfig={gasConfig}
         transferButton={transferButton}
         trasactionLoadingScreen={trasactionLoadingScreen}
-        recap={this.createRecap()}
-        button={button}
         input={input}
         errors={errors}
         balance={balance}
