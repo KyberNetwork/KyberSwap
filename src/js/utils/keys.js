@@ -58,3 +58,9 @@ export function getRandomAvatar(addressString) {
   url = 'data:image/svg+xml;base64,' + btoa(svg);
   return url
 }
+
+export function addressFromPrivateKey(privateKey){
+    var addBuf = ethUtil.privateToAddress(new Buffer(privateKey, 'hex'))
+    var addrString = ethUtil.bufferToHex(addBuf)
+    return addrString
+}
