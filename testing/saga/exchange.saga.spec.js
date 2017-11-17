@@ -57,31 +57,31 @@ it('handle process exchange with trezor and reject ', () => {
     })
 })
 
-// const perfectKeyStore = exchangeTestValue.perfectKeyStore
-// it('handle process exchange with keystore successfully', () => {
+const perfectKeyStore = exchangeTestValue.perfectKeyStore
+it('handle process exchange with keystore successfully', () => {
 
-//   console.log(perfectKeyStore)
-//   return expectSaga(processExchangeAfterConfirm, { payload: perfectKeyStore})
-//     .run(200000)
-//     .then((result) => {
-//       const { effects } = result;
+  console.log(perfectKeyStore)
+  return expectSaga(processExchangeAfterConfirm, { payload: perfectKeyStore})
+    .run(200000)
+    .then((result) => {
+      const { effects } = result;
 
-//       console.log(effects.put[0])
-//       console.log(effects.put[1])
-//       console.log(effects.put[2])
+      console.log(effects.put[0])
+      console.log(effects.put[1])
+      console.log(effects.put[2])
 
-//       console.log(effects.call[0])
-//       console.log(effects.call[1])
-//       console.log(effects.call[2])
-//       console.log(effects.call[3])
+      console.log(effects.call[0])
+      console.log(effects.call[1])
+      console.log(effects.call[2])
+      console.log(effects.call[3])
 
-//       expect(effects.put).toHaveLength(2);
+      expect(effects.put).toHaveLength(2);
       
-//       expect(effects.put[0]).toEqual(
-//         put({
-//           payload:"Cannot sign transaction",
-//           type:"EXCHANGE.TX_BROADCAST_REJECTED"
-//         }));
-//       expect(effects.put[1].PUT.action.type).toEqual('ACCOUNT.UPDATE_ACCOUNT_PENDING');
-//     })
-// })
+      expect(effects.put[0]).toEqual(
+        put({
+          payload:"Cannot sign transaction",
+          type:"EXCHANGE.TX_BROADCAST_REJECTED"
+        }));
+      expect(effects.put[1].PUT.action.type).toEqual('ACCOUNT.UPDATE_ACCOUNT_PENDING');
+    })
+})

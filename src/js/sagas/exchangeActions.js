@@ -104,6 +104,8 @@ export function* processExchangeAfterConfirm(action) {
     }
     yield put(actions.prePareBroadcast())
     const hash = yield call(ethereum.call("sendRawTransaction"), txRaw)
+    console.log("+++++++++++++++++++++++");
+    console.log(hash)
     yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
   } catch (e) {
     console.log(e)
@@ -139,6 +141,8 @@ export function* processExchange(action) {
         try {
           yield put(actions.prePareBroadcast())
           const hash = yield call(ethereum.call("sendRawTransaction"), txRaw, ethereum)
+          console.log("+++++++++++++++++++++++");
+          console.log(hash)
           yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
         } catch (e) {
           console.log(e)
