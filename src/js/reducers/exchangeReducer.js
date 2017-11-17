@@ -1,7 +1,8 @@
 import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
-import { calculateDest } from "../utils/converter"
+import { calculateDest, caculateDestAmount } from "../utils/converter"
 import { randomToken, randomForExchange } from "../utils/random"
+
 
 const initState = constants.INIT_EXCHANGE_FORM_STATE
 
@@ -193,6 +194,10 @@ const exchange = (state = initState, action) => {
       if (newState.tempTx.hash === action.payload.hash) {
         newState.tempTx = action.payload
       }
+      return newState
+    }
+    case "EXCHANGE.CACULATE_DEST_AMOUNT": {
+      newState.destAmount = caculateDestAmount(state.sourceAmount, state.offeredRate, 6)
       return newState
     }
   }

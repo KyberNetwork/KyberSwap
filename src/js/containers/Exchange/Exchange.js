@@ -34,7 +34,6 @@ export default class Exchange extends React.Component {
   }
 
   chooseToken = (symbol, address, type) => {
-    this.props.dispatch(exchangeActions.changeDestAmout(caculateDestAmount(this.props.exchange.sourceAmount, this.props.exchange.offeredRate, 6)))
     this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
   }
 
@@ -47,7 +46,8 @@ export default class Exchange extends React.Component {
     if (value < 0) return 
     this.props.dispatch(exchangeActions.changeSourceAmout(value))
     if(this.isError()) return
-    this.props.dispatch(exchangeActions.changeDestAmout(caculateDestAmount(value, this.props.exchange.offeredRate, 6)))
+    var destAmount = caculateDestAmount(value, this.props.exchange.offeredRate, 6)
+    this.props.dispatch(exchangeActions.changeDestAmout(destAmount))
   }
 
   changeDestAmount = (e) => {
@@ -55,7 +55,8 @@ export default class Exchange extends React.Component {
     if (value < 0 ) return 
     this.props.dispatch(exchangeActions.changeDestAmout(value))
     if(this.isError()) return
-    this.props.dispatch(exchangeActions.changeSourceAmout(caculateSourceAmount(value, this.props.exchange.offeredRate, 6)));
+    var sourceAmount = caculateSourceAmount(value, this.props.exchange.offeredRate, 6)
+    this.props.dispatch(exchangeActions.changeSourceAmout(sourceAmount));
   }
 
   makeNewExchange = () => {
@@ -85,7 +86,8 @@ export default class Exchange extends React.Component {
       }
       var balance = balanceBig.div(Math.pow(10, token.decimal)).toString()
       this.props.dispatch(exchangeActions.changeSourceAmout(balance))
-      this.props.dispatch(exchangeActions.changeDestAmout(caculateDestAmount(balance, this.props.exchange.offeredRate, 6)))
+      var destAmount = caculateDestAmount(balance, this.props.exchange.offeredRate, 6)
+      this.props.dispatch(exchangeActions.changeDestAmout(destAmount))
     }
   }
 

@@ -21,6 +21,12 @@ export function checkSelectToken() {
 	}
 }
 
+export function caculateDestAmount() {
+	return {
+		type: "EXCHANGE.CACULATE_DEST_AMOUNT"
+	}
+}
+
 export function thowErrorSourceAmount(message) {
 	return {
 		type: "EXCHANGE.THROW_SOURCE_AMOUNT_ERROR",

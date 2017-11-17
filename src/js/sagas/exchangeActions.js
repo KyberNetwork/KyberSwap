@@ -41,6 +41,9 @@ function* selectToken(action) {
 
   yield put(actions.checkSelectToken())
   yield call(ethereum.fetchRateExchange)
+  if(type == 'source' || type == 'des') { 
+    yield put(actions.caculateDestAmount())
+  }
 }
 
 function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
