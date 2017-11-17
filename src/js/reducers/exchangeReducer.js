@@ -24,6 +24,7 @@ const exchange = (state = initState, action) => {
       var newState = { ...state };
       newState.selected = true;
       newState.sourceAmount = ""
+      newState.destAmount = ""
       newState.errors = initState.errors
       newState.gasPrice = initState.gasPrice
       newState.bcError = ""
