@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 
-import { calculateMinAmount, toT, displayBalance } from "../../utils/converter"
+import { calculateMinAmount, toT, displayBalance, caculateSourceAmount, caculateDestAmount } from "../../utils/converter"
 
 import { PostExchangeWithKey } from "../Exchange"
 import { ExchangeForm, TransactionConfig } from "../../components/Transaction"
@@ -48,13 +48,13 @@ export default class Exchange extends React.Component {
   changeSourceAmount = (e) => {
     var value = e.target.value
     this.props.dispatch(exchangeActions.changeSourceAmout(value))
-    this.props.dispatch(exchangeActions.changeDestAmout(value * toT(this.props.exchange.offeredRate, 6)))
+    this.props.dispatch(exchangeActions.changeDestAmout(caculateDestAmount(value, this.props.exchange.offeredRate, 6)))
   }
 
   changeDestAmount = (e) => {
     var value = e.target.value
     this.props.dispatch(exchangeActions.changeDestAmout(value))
-    this.props.dispatch(exchangeActions.changeSourceAmout(value / toT(this.props.exchange.offeredRate, 6)))
+    this.props.dispatch(exchangeActions.changeSourceAmout(caculateSourceAmount(value, this.props.exchange.offeredRate, 6)));
   }
 
   // getDesAmount = () => {

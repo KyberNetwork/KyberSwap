@@ -26,6 +26,37 @@ export function calculateDest(source, rate) {
   return dest
 }
 
+export function caculateSourceAmount(destAmount, offeredRate, precision){
+  if(!destAmount || !offeredRate || acceptableTyping(destAmount) || acceptableTyping(offeredRate)){
+    return "0"
+  }
+  var bigDest = new BigNumber(destAmount)
+  var bigOfferedRate = new BigNumber(offeredRate)
+  
+  bigOfferedRate = bigOfferedRate.div(1000000000000000000)
+  var result = bigDest.div(bigOfferedRate)
+  if(precision){
+    return result.toFixed(precision)
+  } else {
+    return result.toString()
+  }
+}
+
+export function caculateDestAmount(sourceAmount, offeredRate, precision){
+  if(!sourceAmount || !offeredRate || acceptableTyping(sourceAmount) || acceptableTyping(offeredRate)){
+    return "0"
+  }
+  var bigSource = new BigNumber(sourceAmount)
+  var bigOfferedRate = new BigNumber(offeredRate)
+  
+  bigOfferedRate = bigOfferedRate.div(1000000000000000000)
+  var result = bigSource.times(bigOfferedRate)
+  if(precision){
+    return result.toFixed(precision)
+  } else {
+    return result.toString()
+  }
+}
 
 export function calculateRate(source, dest) {
   var bigSource = new BigNumber(source)
