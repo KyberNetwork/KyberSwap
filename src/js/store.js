@@ -9,14 +9,13 @@ import history from "./history"
 import { routerMiddleware } from 'react-router-redux'
 
 import rootSaga from './sagas'
-
 const routeMiddleware = routerMiddleware(history)
 
 const sagaMiddleware = createSagaMiddleware()
 
 const middleware = applyMiddleware(
   sagaMiddleware,
-  logger,
+  // logger,
   routeMiddleware,
 )
 
