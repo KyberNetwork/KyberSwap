@@ -1,7 +1,7 @@
 
 import React from "react"
 import { PostExchange } from "../Exchange"
-import {KeyStore, Trezor, Ledger} from "../../services/keys"
+import {KeyStore, Trezor, Ledger, PrivateKey} from "../../services/keys"
 //import Keystore from "../../services/keys/keystore"
 //import Keystore from "../../services/keys/keystore"
 //import Keystore from "../../services/keys/keystore"
@@ -13,6 +13,9 @@ import { connect } from "react-redux"
   switch(account.type){
     case "keystore":
       keyService = new KeyStore()
+      break
+    case "privateKey":
+      keyService = new PrivateKey()
       break
     case "trezor":
       keyService = new Trezor()

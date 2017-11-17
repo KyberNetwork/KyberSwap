@@ -144,17 +144,7 @@ export function showApprove() {
 		type: "EXCHANGE.SHOW_APPROVE",
 	}
 }
-// export function hideConfirmApprove() {
-// 	return {
-// 		type: "EXCHANGE.HIDE_CONFIRM_APPROVE",
-// 	}
-// }
 
-// export function showConfirmApprove() {
-// 	return {
-// 		type: "EXCHANGE.SHOW_CONFIRM_APPROVE",
-// 	}
-// }
 export function changePassword() {
 	return {
 		type: "EXCHANGE.CHANGE_PASSPHRASE",
@@ -198,13 +188,13 @@ export function processExchange(formId, ethereum, address, sourceToken,
 	}
 }
 
-export function processExchangeAfterConfirm(formId, ethereum, address, sourceToken,
+export function checkTokenBalanceOfColdWallet(formId, ethereum, address, sourceToken,
 	sourceAmount, destToken, destAddress,
 	maxDestAmount, minConversionRate,
 	throwOnFailure, nonce, gas,
 	gasPrice, keystring, type, password, account, data, keyService) {
 	return {
-		type: "EXCHANGE.PROCESS_EXCHANGE_AFTER_CONFIRM",
+		type: "EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET",
 		payload: {
 			formId, ethereum, address, sourceToken,
 			sourceAmount, destToken, destAddress,
@@ -214,23 +204,6 @@ export function processExchangeAfterConfirm(formId, ethereum, address, sourceTok
 		}
 	}
 }
-
-// export function processExchangeAfterApprove(formId, ethereum, address, sourceToken,
-// 	sourceAmount, destToken, destAddress,
-// 	maxDestAmount, minConversionRate,
-// 	throwOnFailure, nonce, gas,
-// 	gasPrice, keystring, type, password, account, data) {
-// 	return {
-// 		type: "EXCHANGE.PROCESS_EXCHANGE_AFTER_APPROVE",
-// 		payload: {
-// 			formId, ethereum, address, sourceToken,
-// 			sourceAmount, destToken, destAddress,
-// 			maxDestAmount, minConversionRate,
-// 			throwOnFailure, nonce, gas,
-// 			gasPrice, keystring, type, password, account, data
-// 		}
-// 	}
-// }
 
 export function doApprove(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
 	keystring, password, accountType, account, keyService) {
@@ -292,17 +265,3 @@ export function makeNewExchange() {
 		type: "EXCHANGE.MAKE_NEW_EXCHANGE"
 	}
 }
-
-// export function saveRawExchangeTransaction(tx) {
-// 	return {
-// 		type: "EXCHANGE.SAVE_RAW_TRANSACTION",
-// 		payload: tx
-// 	}
-// }
-
-// export function throwErrorSignExchangeTransaction(error) {
-// 	return {
-// 		type: "EXCHANGE.THROW_ERROR_SIGN_TRANSACTION",
-// 		payload: error
-// 	}
-// }

@@ -41,6 +41,7 @@ export default class PostTransfer extends React.Component {
         case "keystore":
           this.props.dispatch(transferActions.openPassphrase())
           break
+        case "privateKey":
         case "trezor":
         case "ledger":
           this.props.dispatch(transferActions.showConfirm())
@@ -121,6 +122,7 @@ export default class PostTransfer extends React.Component {
       case "keystore":
         this.props.dispatch(transferActions.hidePassphrase())
         break
+      case "privateKey":
       case "trezor":
       case "ledger":
         this.props.dispatch(transferActions.hideConfirm())

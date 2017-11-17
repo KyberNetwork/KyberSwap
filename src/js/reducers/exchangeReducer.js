@@ -1,5 +1,3 @@
-//import Account from "../services/account"
-//import Token from "../services/token"
 import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
 import { calculateDest } from "../utils/converter"
@@ -148,15 +146,6 @@ const exchange = (state = initState, action) => {
       newState.confirmApprove = true
       return newState
     }
-    // case "EXCHANGE.HIDE_CONFIRM_APPROVE": {
-    //   newState.showConfirmApprove = false
-    //   return newState
-    // }
-    // case "EXCHANGE.SHOW_CONFIRM_APPROVE": {
-    //   newState.confirmApprove = false
-    //   newState.showConfirmApprove = true
-    //   return newState
-    // }
     case "EXCHANGE.CHANGE_PASSPHRASE": {
       newState.errors.passwordError = ""
       return newState
@@ -182,24 +171,12 @@ const exchange = (state = initState, action) => {
       newState.broadcasting = true
       return newState
     }
-    // case "EXCHANGE.SAVE_RAW_TRANSACTION": {
-    //   newState.txRaw = action.payload
-    //   newState.confirmColdWallet = true
-    //   newState.confirmApprove = false
-    //   newState.showConfirmApprove = false
-    //   return newState
-    // }
-    // case "EXCHANGE.THROW_ERROR_SIGN_TRANSACTION": {
-    //   newState.errors.signTransaction = action.payload
-    //   return newState
-    // }
     case "EXCHANGE.PROCESS_APPROVE": {
       newState.isApproving = true
       return newState
     }
-    case "EXCHANGE.PROCESS_EXCHANGE_AFTER_CONFIRM": {
+    case "EXCHANGE.PROCESS_EXCHANGE": {
       newState.isConfirming = true
-      newState.bcError = ""
       return newState
     }    
     case "TX.TX_ADDED": {

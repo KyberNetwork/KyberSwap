@@ -13,6 +13,13 @@ export function sealTxByKeystore(params, keystore, password) {
   return tx
 }
 
+export function sealTxByPrivateKey(params, privKey ){
+  const tx = new EthereumTx(params)
+  const privateKey = Buffer.from(privKey, 'hex')
+  tx.sign(privateKey)
+  return tx
+}
+
 export function sealTxByTrezor(params) {
   var address_n = params.address_n
   var nonce = numberToHex(params.nonce).slice(2);
@@ -78,16 +85,16 @@ export function sealTxByTrezor(params) {
 
 export function sealTxByLedger(params) {
   const eTx = new EthereumTx(params)
-  eTx.raw[6] = Buffer.from([params.chainId]);
-  let txToSign = ethUtil.rlp.encode(eTx.raw);
+  eTx.raw[6] = Buffer.from([params.chainId])
+  let txToSign = ethUtil.rlp.encode(eTx.raw)
   return new Promise((resolve, reject) => {
     connectLedger().then((eth) => {
       signLedgerTransaction(eth, params.address_n, txToSign.toString('hex')).then((response) => {
         if (response.status) {
-          params.v = "0x" + response['v'];
-          params.r = "0x" + response['r'];
-          params.s = "0x" + response['s'];
-          var tx = new EthereumTx(params);
+          params.v = "0x" + response['v']
+          params.r = "0x" + response['r']
+          params.s = "0x" + response['s']
+          var tx = new EthereumTx(params)
           resolve(tx);
         } else {
           reject(response.error)

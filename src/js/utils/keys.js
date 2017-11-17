@@ -20,6 +20,20 @@ export function addressFromKey(keystring) {
   }
 }
 
+export function addressFromPrivateKey(privateKey){
+  // try {
+  //   var keyObj = JSON.parse(keystring)
+  //   var address = keyObj.address
+  //   if (address == undefined || address == "") {
+  //     throw new Error("Invalid keystore format")
+  //   }
+  //   return "0x" + address
+  // } catch (e) {
+  //   throw new Error("Invalid private key format")
+  // }
+  return "0x2096e2F3843c8992F5Ae24B14C8B64fCC69e5B4d"
+}
+
 export function unlock(input, password, nonStrict) {
     var json = (typeof input === 'object') ? input : JSON.parse(nonStrict ? input.toLowerCase() : input)
     if (json.version !== 3) {
