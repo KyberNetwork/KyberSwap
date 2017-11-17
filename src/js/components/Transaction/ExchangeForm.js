@@ -34,7 +34,7 @@ const ExchangeForm = (props) => {
                   <label>Exchange To
                     <div class="token-input">
 
-                      <input type={props.input.destAmount.type} value={props.input.destAmount.value} readOnly min="0" step="0.000001" placeholder="0" />
+                      <input type={props.input.destAmount.type} value={props.input.destAmount.value} onChange={(e) => props.input.destAmount.onChange(e)} min="0" step="0.000001" placeholder="0" />
 
                       {/* <div class="info" data-open="exchange-to-token-modal"><img src="/assets/img/omg.svg"/><span class="name">OMG</span></div> */}
                       {props.tokenDest}

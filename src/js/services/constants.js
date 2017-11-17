@@ -25,6 +25,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   sourceToken: ETHER_ADDRESS,
   sourceTokenSymbol: "ETH",
   sourceAmount: "",
+  destAmount: "",
   destToken: ETHER_ADDRESS,
   destTokenSymbol: "ETH",
 

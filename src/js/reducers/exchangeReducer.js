@@ -92,6 +92,11 @@ const exchange = (state = initState, action) => {
       newState.errors.sourceAmountError = ""
       return newState
     }
+    case "EXCHANGE.CHANGE_DEST_AMOUNT": {
+      newState.destAmount = action.payload
+      newState.errors.destAmountError = ""
+      return newState
+    }
     case "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED": {
       newState.broadcasting = false
       newState.bcError = action.payload ? action.payload : ""

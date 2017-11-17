@@ -48,13 +48,20 @@ export default class Exchange extends React.Component {
   changeSourceAmount = (e) => {
     var value = e.target.value
     this.props.dispatch(exchangeActions.changeSourceAmout(value))
+    this.props.dispatch(exchangeActions.changeDestAmout(value * toT(this.props.exchange.offeredRate, 6)))
   }
 
-  getDesAmount = () => {
-    return this.props.exchange.sourceAmount * toT(this.props.exchange.offeredRate, 6)
+  changeDestAmount = (e) => {
+    var value = e.target.value
+    this.props.dispatch(exchangeActions.changeDestAmout(value))
+    this.props.dispatch(exchangeActions.changeSourceAmout(value / toT(this.props.exchange.offeredRate, 6)))
   }
+
+  // getDesAmount = () => {
+  //   return this.props.exchange.sourceAmount * toT(this.props.exchange.offeredRate, 6)
+  // }
   createRecap = () => {
-    var recap = `exchange ${this.props.exchange.sourceAmount.toString().slice(0, 7)}${this.props.exchange.sourceAmount.toString().length > 7 ? '...' : ''} ${this.props.exchange.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0, 7)}${this.getDesAmount().toString().length > 7 ? '...' : ''} ${this.props.exchange.destTokenSymbol}`
+    var recap = `exchange ${this.props.exchange.sourceAmount.toString().slice(0, 7)}${this.props.exchange.sourceAmount.toString().length > 7 ? '...' : ''} ${this.props.exchange.sourceTokenSymbol} for ${this.props.exchange.destAmount.toString().slice(0, 7)}${this.props.exchange.destAmount.toString().length > 7 ? '...' : ''} ${this.props.exchange.destTokenSymbol}`
     return recap
   }
 
@@ -164,7 +171,8 @@ export default class Exchange extends React.Component {
       },
       destAmount: {
         type: 'number',
-        value: this.getDesAmount()
+        value: this.props.exchange.destAmount,
+        onChange: this.changeDestAmount
       }
     }
 
