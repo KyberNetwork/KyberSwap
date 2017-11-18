@@ -2,7 +2,7 @@ import React from "react"
 import { Modal, TokenSelect } from '../CommonElement'
 import constants from "../../services/constants"
 import BigNumber from "bignumber.js"
-import * as converter from "../../utils/converter"
+import { displayBalance, roundingNumber, caculateTokenEpsilon } from "../../utils/converter"
 
 const SelectTokenModal = (props) => {
   var content = () => {
@@ -14,11 +14,13 @@ const SelectTokenModal = (props) => {
         //content = "source"  			
         var content = Object.keys(props.tokens).map((key, i) => {          
           var token = props.tokens[key]
-          var tokenEpsilon = converter.caculateTokenEpsilon(token.rate, token.decimal)
-          //console.log(token.balance.times(token.rate).toString())
-          //console.log(token.name)
+          var tokenEpsilon = caculateTokenEpsilon(token.rate, token.decimal)
+          var balance = {
+            value: displayBalance(token.balance.toString(), token.decimal),
+            roundingValue: roundingNumber(displayBalance(token.balance.toString(), token.decimal, 8))
+          }
           return <TokenSelect key={i} symbol={token.symbol} name={token.name}
-                  balance={token.balance.toString()} 
+                  balance={balance} 
                   decimal={token.decimal}
                   icon={token.icon}
                   type = {props.type}
@@ -34,9 +36,12 @@ const SelectTokenModal = (props) => {
         title = "Select destination token"
         var content = Object.keys(props.tokens).map((key,i) => {
           var token = props.tokens[key]
+          var balance = {
+            value: displayBalance(token.balance.toString(), token.decimal),
+            roundingValue: roundingNumber(displayBalance(token.balance.toString(), token.decimal, 8))
+          }
           return <TokenSelect key={i} symbol={token.symbol} name={token.name}
-                  balance={token.balance.toString()} 
-                  decimal={token.decimal}
+                  balance={balance} 
                   icon={token.icon} 
                   type = {props.type}
                   address = {token.address}
@@ -50,9 +55,12 @@ const SelectTokenModal = (props) => {
         title = "SELECT \"TRANSFER FROM\" TOKEN"
         var content = Object.keys(props.tokens).map((key,i) => {
           var token = props.tokens[key]
+          var balance = {
+            value: displayBalance(token.balance.toString(), token.decimal),
+            roundingValue: roundingNumber(displayBalance(token.balance.toString(), token.decimal, 8))
+          }
           return <TokenSelect key={i} symbol={token.symbol} name={token.name}
-                  balance={token.balance.toString()} 
-                  decimal={token.decimal}
+                  balance={balance} 
                   icon={token.icon} 
                   type = {props.type}
                   address = {token.address}

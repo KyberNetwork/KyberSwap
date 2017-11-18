@@ -1,5 +1,4 @@
 import React from "react"
-import { roundingNumber } from "../../utils/converter"
 
 const ExchangeForm = (props) => {
   var errorToken = props.errors.selectSameToken + props.errors.selectTokenToken
@@ -30,8 +29,8 @@ const ExchangeForm = (props) => {
                     }
                     <div class="address-balance">
                       <span class="note">Address Balance</span>
-                      <a className="value" onClick={props.setAmount} title={props.balance}>
-                        {roundingNumber(props.balance)} {props.sourceTokenSymbol}
+                      <a className="value" onClick={props.setAmount} title={props.balance.value}>
+                        {props.balance.roundingValue} {props.sourceTokenSymbol}
                       </a>
                     </div>
                   </label>
