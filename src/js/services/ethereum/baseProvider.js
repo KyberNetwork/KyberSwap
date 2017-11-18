@@ -141,4 +141,19 @@ export default class BaseEthereumProvider {
         })
     })
   }
+
+  getLogExchange(currentBlock, latestBlock) {
+    return new Promise((resolve, rejected) => {
+      var startBlock = (latestBlock - currentBlock) > constants.HISTORY_BLOCK_RANGE ? 
+                                                    (latestBlock - constants.HISTORY_BLOCK_RANGE):
+                                                    currentBlock
+      this.networkContract.getPastEvents('Trade', {
+        fromBlock: startBlock,
+        toBlock: latestBlock
+      }, )
+        .then(function (events) {
+          resolve(events)          
+        })
+    })
+  }
 }

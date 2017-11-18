@@ -17,11 +17,15 @@ import txs from './txsReducer'
 
 
 const appReducer = combineReducers({
-  account, exchange, transfer, txs, connection, router: routerReducer, global,utils,
+  account, exchange, transfer, txs, connection, router: routerReducer,utils,
   tokens: persistReducer({
     key: 'tokens',
     storage: localForage
   }, tokens),  
+  global: persistReducer({
+    key: 'global',
+    storage: localForage
+  }, global),  
 })
 
 const rootReducer = (state, action) => {

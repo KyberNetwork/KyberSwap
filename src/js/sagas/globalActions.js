@@ -10,6 +10,13 @@ export function* getLatestBlock(action) {
   yield put(actions.updateBlockComplete(block))
 }
 
+export function* updateHistoryExchange(action) {
+  const { ethereum, history } = action.payload
+  const latestBlock = yield call(ethereum.call("getLatestBlock"))
+  const newLogs = yield call(ethereum.call("getLogExchange"), history.endBlock, latestBlock)
+  yield put(actions.updateHistory(newLogs, latestBlock))
+}
+
 export function* updateRate(action) {
   const { ethereum, source, reserve, ownerAddr } = action.payload
   const rate = new Rate(
@@ -49,6 +56,7 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.GO_TO_ROUTE", goToRoute)
   yield takeEvery("GLOBAL.CLEAR_SESSION", clearSession)
   yield takeEvery("GLOBAL.RATE_UPDATE_ALL_PENDING", updateAllRate)
+  yield takeEvery("GLOBAL.UPDATE_HISTORY_EXCHANGE", updateHistoryExchange)
 }
 
 

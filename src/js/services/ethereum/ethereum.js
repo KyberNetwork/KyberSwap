@@ -4,7 +4,7 @@ import HttpEthereumProvider from "./httpProvider"
 import WebsocketEthereumProvider from "./wsProvider"
 import constants from "../constants"
 
-import { updateBlock, updateBlockFailed, updateRate, updateAllRate } from "../../actions/globalActions"
+import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateHistoryExchange } from "../../actions/globalActions"
 import { updateAccount } from "../../actions/accountActions"
 import { updateTx } from "../../actions/txActions"
 import { updateRateExchange } from "../../actions/exchangeActions"
@@ -17,7 +17,7 @@ export default class EthereumService extends React.Component {
     super(props)
     this.httpUrl = "https://kovan.infura.io/DtzEYY0Km2BA3YwyJcBG"
     this.wsUrl = "wss://kovan.kyber.network/ws/"
-    //this.wsUrl = "ws://localhost:8546"
+    this.wsUrl = "ws://localhost:8546"
     this.httpProvider = this.getHttpProvider()
     this.wsProvider = this.getWebsocketProvider()
 
@@ -82,6 +82,7 @@ export default class EthereumService extends React.Component {
     this.fetchRateData()
     this.fetchAccountData()
     this.fetchRateExchange()
+    this.fetchHistoryExchange()
   }
 
   fetchRateData() {
@@ -135,6 +136,13 @@ export default class EthereumService extends React.Component {
     var dest = state.exchange.destToken
     var reserve = constants.RESERVES[0].index
     store.dispatch(updateRateExchange(ethereum, source, dest, reserve))
+  }
+
+  fetchHistoryExchange = () => {
+    var state = store.getState()
+    var ethereum = state.connection.ethereum
+    var history = state.global.history
+    store.dispatch(updateHistoryExchange(ethereum, history))
   }
 
   call(fn) {
