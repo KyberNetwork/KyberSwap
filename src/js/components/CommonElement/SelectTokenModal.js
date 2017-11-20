@@ -2,7 +2,7 @@ import React from "react"
 import { Modal, TokenSelect } from '../CommonElement'
 import constants from "../../services/constants"
 import BigNumber from "bignumber.js"
-import { displayBalance, roundingNumber, caculateTokenEpsilon } from "../../utils/converter"
+import { toT, caculateTokenEpsilon } from "../../utils/converter"
 
 const SelectTokenModal = (props) => {
   var content = () => {
@@ -15,10 +15,7 @@ const SelectTokenModal = (props) => {
         var content = Object.keys(props.tokens).map((key, i) => {          
           var token = props.tokens[key]
           var tokenEpsilon = caculateTokenEpsilon(token.rate, token.decimal)
-          var balance = {
-            value: displayBalance(token.balance.toString(), token.decimal),
-            roundingValue: roundingNumber(displayBalance(token.balance.toString(), token.decimal, 8))
-          }
+          var balance = toT(token.balance.toString(), token.decimal)
           return <TokenSelect key={i} symbol={token.symbol} name={token.name}
                   balance={balance} 
                   decimal={token.decimal}
@@ -36,10 +33,7 @@ const SelectTokenModal = (props) => {
         title = "Select destination token"
         var content = Object.keys(props.tokens).map((key,i) => {
           var token = props.tokens[key]
-          var balance = {
-            value: displayBalance(token.balance.toString(), token.decimal),
-            roundingValue: roundingNumber(displayBalance(token.balance.toString(), token.decimal, 8))
-          }
+          var balance = toT(token.balance.toString(), token.decimal)
           return <TokenSelect key={i} symbol={token.symbol} name={token.name}
                   balance={balance} 
                   icon={token.icon} 
@@ -55,10 +49,7 @@ const SelectTokenModal = (props) => {
         title = "SELECT \"TRANSFER FROM\" TOKEN"
         var content = Object.keys(props.tokens).map((key,i) => {
           var token = props.tokens[key]
-          var balance = {
-            value: displayBalance(token.balance.toString(), token.decimal),
-            roundingValue: roundingNumber(displayBalance(token.balance.toString(), token.decimal, 8))
-          }
+          var balance = toT(token.balance.toString(), token.decimal)
           return <TokenSelect key={i} symbol={token.symbol} name={token.name}
                   balance={balance} 
                   icon={token.icon} 
