@@ -98,7 +98,7 @@ export function anyErrors(errors) {
 
 export function verifyPassphrase(passphrase, repassphrase) {
   if (passphrase !== repassphrase) {
-    return "Passphrase confirmation is not match"
+    return "Password confirmation is not match"
   } else {
     return null
   }

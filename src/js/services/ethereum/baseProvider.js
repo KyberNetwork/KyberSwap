@@ -63,10 +63,6 @@ export default class BaseEthereumProvider {
 
   exchangeData(sourceToken, sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate, throwOnFailure) {
-    console.log({
-      sourceToken, sourceAmount, destToken, destAddress,
-      maxDestAmount, minConversionRate, throwOnFailure
-    })
     return this.networkContract.methods.trade(
       sourceToken, sourceAmount, destToken, destAddress,
       maxDestAmount, minConversionRate, throwOnFailure).encodeABI()
@@ -152,6 +148,7 @@ export default class BaseEthereumProvider {
         toBlock: latestBlock
       }, )
         .then(function (events) {
+          //console.log(events)
           resolve(events)          
         })
     })
