@@ -106,5 +106,6 @@
   "bank": "0xc7159686de47f2ca06fcd1e74d1b9a1a0e584259",
   "reserve": "0x98990ee596d7c383a496f54c9e617ce7d2b3ed46",
   "network": "0x00a8a6f8db6793174d500b0eb9e1f5b2402f80c3",
-  "wrapper": "0x5aa7b0c53affef857523014ac6ce6c8d30bc68e6"
+  "wrapper": "0x5aa7b0c53affef857523014ac6ce6c8d30bc68e6",
+  "endpoint": "https://kovan.kyber.network"
   }
