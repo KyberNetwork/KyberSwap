@@ -1,4 +1,9 @@
 {
+  "info": {
+    "node_endpoint": "https://kovan.kyber.network",
+    "reserve_address": "0x98990ee596d7c383a496f54c9e617ce7d2b3ed46",
+    "network_address": "0x00a8a6f8db6793174d500b0eb9e1f5b2402f80c3"
+  },
   "connections": {
     "http": "https://kovan.infura.io/DtzEYY0Km2BA3YwyJcBG",
     "ws": "wss://kovan.kyber.network/ws/"

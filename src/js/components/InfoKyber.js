@@ -1,6 +1,7 @@
 import React from "react"
 
 import constants from "../services/constants"
+import BLOCKCHAIN_INFO from "../../../env"
 
 export default class InfoKyber extends React.Component {
   render() {
@@ -11,13 +12,13 @@ export default class InfoKyber extends React.Component {
             <h1 class="title">Kyber Testnet</h1>
             <p class="info">Version: 0.0.1<br/>Chain: Kovan
               <label>Node endpoint
-                <input class="address" type="text" value={constants.NODE_ENDPOINT} readOnly="true" />
+                <input class="address" type="text" value={BLOCKCHAIN_INFO.info.node_endpoint} readOnly="true" />
               </label>
               <label>Reserve contract address
-                <input class="address" type="text" value={constants.RESERVE_ADDRESS}  readOnly="true"/>
+                <input class="address" type="text" value={BLOCKCHAIN_INFO.info.reserve_address}  readOnly="true"/>
               </label>
               <label>Network contract address
-                <input class="address" type="text" value={constants.NETWORK_ADDRESS}  readOnly="true"/>
+                <input class="address" type="text" value={BLOCKCHAIN_INFO.info.network_address}  readOnly="true"/>
               </label>Kyber homepage:&nbsp;
               <a href="https://kyber.network" target="_blank">https://kyber.network</a>
               <br></br>Get free Kovan Ether:&nbsp;<a href="#" target="_blank">here</a><br></br>Do not send ethers nor tokens to any of the addresses above.<br></br>They are for test only and we are not likely to have control of them in mainnet.
