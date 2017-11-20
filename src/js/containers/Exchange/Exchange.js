@@ -44,19 +44,29 @@ export default class Exchange extends React.Component {
   changeSourceAmount = (e) => {
     var value = e.target.value
     if (value < 0) return 
-    this.props.dispatch(exchangeActions.changeSourceAmout(value))
-    if(this.isError()) return
-    var destAmount = caculateDestAmount(value, this.props.exchange.offeredRate, 6)
-    this.props.dispatch(exchangeActions.changeDestAmout(destAmount))
+    // this.props.dispatch(exchangeActions.changeSourceAmout(value))
+    // if(this.isError()) return
+    // var destAmount = caculateDestAmount(value, this.props.exchange.offeredRate, 6)
+    // this.props.dispatch(exchangeActions.changeDestAmout(destAmount))
+    this.props.dispatch(exchangeActions.inputChange('source', value));
   }
 
   changeDestAmount = (e) => {
     var value = e.target.value
     if (value < 0 ) return 
-    this.props.dispatch(exchangeActions.changeDestAmout(value))
-    if(this.isError()) return
-    var sourceAmount = caculateSourceAmount(value, this.props.exchange.offeredRate, 6)
-    this.props.dispatch(exchangeActions.changeSourceAmout(sourceAmount));
+    // this.props.dispatch(exchangeActions.changeDestAmout(value))
+    // if(this.isError()) return
+    // var sourceAmount = caculateSourceAmount(value, this.props.exchange.offeredRate, 6)
+    // this.props.dispatch(exchangeActions.changeSourceAmout(sourceAmount));
+    this.props.dispatch(exchangeActions.inputChange('dest', value));
+  }
+
+  focusSource = () => {
+    this.props.dispatch(exchangeActions.focusInput('source'));
+  }
+
+  focusDest = () => {
+    this.props.dispatch(exchangeActions.focusInput('dest'));
   }
 
   makeNewExchange = () => {
@@ -85,9 +95,11 @@ export default class Exchange extends React.Component {
         balanceBig = balanceBig.minus(Math.pow(10, 17))
       }
       var balance = balanceBig.div(Math.pow(10, token.decimal)).toString()
-      this.props.dispatch(exchangeActions.changeSourceAmout(balance))
-      var destAmount = caculateDestAmount(balance, this.props.exchange.offeredRate, 6)
-      this.props.dispatch(exchangeActions.changeDestAmout(destAmount))
+      // this.props.dispatch(exchangeActions.changeSourceAmout(balance))
+      // var destAmount = caculateDestAmount(balance, this.props.exchange.offeredRate, 6)
+      // this.props.dispatch(exchangeActions.changeDestAmout(destAmount))
+      this.props.dispatch(exchangeActions.inputChange('source', balance));
+      this.focusSource()
     }
   }
 
@@ -160,12 +172,14 @@ export default class Exchange extends React.Component {
       sourceAmount: {
         type: 'number',
         value: this.props.exchange.sourceAmount,
-        onChange: this.changeSourceAmount
+        onChange: this.changeSourceAmount,
+        onFocus: this.focusSource
       },
       destAmount: {
         type: 'number',
         value: this.props.exchange.destAmount,
-        onChange: this.changeDestAmount
+        onChange: this.changeDestAmount,
+        onFocus: this.focusDest
       }
     }
 

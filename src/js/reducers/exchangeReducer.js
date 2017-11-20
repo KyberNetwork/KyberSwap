@@ -1,6 +1,6 @@
 import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
-import { calculateDest, caculateDestAmount } from "../utils/converter"
+import { calculateDest, caculateDestAmount, caculateSourceAmount } from "../utils/converter"
 import { randomToken, randomForExchange } from "../utils/random"
 
 
@@ -196,8 +196,34 @@ const exchange = (state = initState, action) => {
       }
       return newState
     }
-    case "EXCHANGE.CACULATE_DEST_AMOUNT": {
-      newState.destAmount = caculateDestAmount(state.sourceAmount, state.offeredRate, 6)
+    case "EXCHANGE.CACULATE_AMOUNT": {
+      if(state.errors.selectSameToken || state.errors.selectTokenToken) return newState
+      if(state.inputFocus == "dest"){
+        newState.sourceAmount = caculateSourceAmount(state.sourceAmount, state.offeredRate, 6)
+      } else {
+        newState.destAmount = caculateDestAmount(state.sourceAmount, state.offeredRate, 6)
+      }
+      return newState
+    }
+    case "EXCHANGE.INPUT_CHANGE": {
+      let focus = action.payload.focus
+      let value = action.payload.value
+      if(focus == "source"){
+        newState.sourceAmount = value
+        newState.errors.sourceAmountError = ""
+        if(state.errors.selectSameToken || state.errors.selectTokenToken) return newState
+        newState.destAmount = caculateDestAmount(value, state.offeredRate, 6)
+      }
+      else if(focus == "dest"){
+        newState.destAmount = value
+        newState.errors.destAmountError = ""
+        if(state.errors.selectSameToken || state.errors.selectTokenToken) return newState
+        newState.sourceAmount = caculateSourceAmount(value, state.offeredRate, 6)
+      }
+      return newState
+    }
+    case "EXCHANGE.FOCUS_INPUT": {
+      newState.inputFocus = action.payload
       return newState
     }
   }

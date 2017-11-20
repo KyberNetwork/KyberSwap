@@ -30,6 +30,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   destTokenSymbol: "ETH",
 
   destAddress: "",
+  inputFocus: "source",
 
   minConversionRate: 0,
   minDestAmount: 0,
