@@ -2,7 +2,7 @@ import React from "react"
 import Slider from "react-slick"
 
 
-import { toT } from "../../utils/converter"
+import { toT, roundingNumber } from "../../utils/converter"
 import constants from "../../services/constants"
 
 const ExchangeRates = (props) => {
@@ -19,7 +19,7 @@ const ExchangeRates = (props) => {
       rates.push(
         <div key={rateSymbol}>
           <div class="pair">{rate.symbol} / ETH</div>
-          <div class="value up">{toT(rate.rate, 6)}<span>-%</span></div>
+          <div class="value up">{roundingNumber(toT(rate.rate))}<span>-%</span></div>
         </div>
       )
     }
