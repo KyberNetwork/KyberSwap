@@ -37,6 +37,7 @@ import { PassphraseModal, ConfirmTransferModal, ApproveModal, PostExchangeBtn } 
 
 export default class PostExchange extends React.Component {
   clickExchange = () => {
+    if(validators.anyErrors(this.props.form.errors)) return;
     if (this.props.form.step == 1) {
       if (!validators.anyErrors(this.props.form.errors)) {
         this.props.dispatch(exchangeActions.goToStep(2))
@@ -278,16 +279,19 @@ export default class PostExchange extends React.Component {
         />
       )
     }
-    var classNameNext = "button accent animated pulse infinite"
+    let className = "button accent "
     if (!validators.anyErrors(this.props.form.errors)) {
-      classNameNext += " next"
+      className += " animated infinite pulse next"
     }
     return (
-      <PostExchangeBtn submit={this.clickExchange}
+      <PostExchangeBtn 
+        step={this.props.form.step}
+        submit={this.clickExchange}
         modalPassphrase={modalPassphrase}
         modalConfirm={modalConfirm}
         modalApprove={modalApprove}
-        classNameNext={classNameNext} />
+        className={className}
+         />
     )
   }
 }
