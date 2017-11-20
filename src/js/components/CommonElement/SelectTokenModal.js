@@ -14,7 +14,7 @@ const SelectTokenModal = (props) => {
         //content = "source"  			
         var content = Object.keys(props.tokens).map((key, i) => {          
           var token = props.tokens[key]
-          var tokenEpsilon = caculateTokenEpsilon(token.rate, token.decimal)
+          var tokenEpsilon = caculateTokenEpsilon(token.rate, token.decimal, token.symbol, token.balance)
           var balance = toT(token.balance.toString(), token.decimal)
           return <TokenSelect key={i} symbol={token.symbol} name={token.name}
                   balance={balance} 

@@ -133,6 +133,7 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.HIDE_PASSPHRASE": {
       newState.passphrase = false
+      newState.errors.passwordError = ""
       return newState
     }
     case "EXCHANGE.HIDE_CONFIRM": {
