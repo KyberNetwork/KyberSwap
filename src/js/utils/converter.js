@@ -131,24 +131,7 @@ export function weiToGwei(number) {
   }
 }
 
-export function toT(number, precision) {
-  var bigNumber = new BigNumber(number)
-  var result
-  if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
-    return number
-  } else if (acceptableTyping(number)) {
-    return number
-  } else {
-    result = bigNumber.div(1000000000000000000)
-  }
-  if (precision) {
-    return result.toFixed(precision)
-  } else {
-    return result.toString()
-  }
-}
-
-export function displayBalance(number, decimal, precision) {
+export function toT(number, decimal) {
   var bigNumber = new BigNumber(number)
   var result
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
@@ -162,11 +145,7 @@ export function displayBalance(number, decimal, precision) {
   else {
     result = bigNumber.div(1000000000000000000)
   }
-  if (precision) {
-    return result.toFixed(precision)
-  } else {
-    return result.toString()
-  }
+  return result.toString()
 }
 
 export function pairID(source, dest) {
@@ -237,6 +216,9 @@ export function roundingNumber(number) {
   if (Number.isInteger(number)) {
     let result = numberStr.slice(0, MAX_DIGIS);
     return +result;
+  }
+  if(number < 1e-7){
+    return 0;
   }
   let result = numberStr.slice(0, MAX_DIGIS + 1);
   return +result;

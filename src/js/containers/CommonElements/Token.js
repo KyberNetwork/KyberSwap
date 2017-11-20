@@ -1,6 +1,5 @@
 import React from "react"
 import { connect } from "react-redux"
-import {toT} from "../../utils/converter"
 import {pickRandomProperty} from "../../utils/tokens"
 import { TokenView } from "../../components/CommonElement"
 
@@ -23,7 +22,6 @@ export default class Token extends React.Component {
         symbol={this.props.symbol}
         onSelected={this.props.onSelected}
         type={this.props.type}
-        balance={toT(token.balance, 8)}
       />
     )
   }
