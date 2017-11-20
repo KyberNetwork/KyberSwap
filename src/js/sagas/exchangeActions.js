@@ -41,9 +41,6 @@ function* selectToken(action) {
 
   yield put(actions.checkSelectToken())
   yield call(ethereum.fetchRateExchange)
-  if(type == 'source' || type == 'des') { 
-    yield put(actions.caculateDestAmount())
-  }
 }
 
 function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
@@ -343,7 +340,8 @@ function* exchangeTokentoETHColdWallet(action) {
 function* updateRatePending(action) {
   const { ethereum, source, dest, reserve } = action.payload
   const rate = yield call(ethereum.call("getRate"), source, dest, reserve)
-  yield put(actions.updateRateExchangeComplete(rate))
+  yield put.sync(actions.updateRateExchangeComplete(rate))
+  yield put(actions.caculateDestAmount())
 }
 
 export function* watchExchange() {
