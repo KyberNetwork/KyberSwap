@@ -13,12 +13,11 @@ const ExchangeForm = (props) => {
             <form action="#" method="get">
               <div class="row">
                 <div class="column medium-6">
-                  <label>Exchange From
+                  <label style={{marginBottom: 0}}>Exchange From
 
                     <div className={errorToken === "" && props.errors.sourceAmount === "" ? "token-input" : "token-input error"}>
 
                       <input type={props.input.sourceAmount.type} className="source-input" value={props.input.sourceAmount.value} onChange={(e) => props.input.sourceAmount.onChange(e)} min="0" step="0.000001" placeholder="0" />
-
 
                       {props.tokenSource}
                     </div>
@@ -28,13 +27,13 @@ const ExchangeForm = (props) => {
                     {props.errors.sourceAmount !== "" &&
                       <span class="error-text">{props.errors.sourceAmount}</span>
                     }
-                    <div class="address-balance">
-                      <span class="note">Address Balance</span>
-                      <a className="value" onClick={props.setAmount} title={props.balance}>
-                        {roundingNumber(props.balance)} {props.sourceTokenSymbol}
-                      </a>
-                    </div>
                   </label>
+                  <div class="address-balance" style={{marginBottom: 40}}>
+                    <span class="note">Address Balance</span>
+                    <a className="value" onClick={props.setAmount} title={props.balance.value}>
+                      {props.balance.roundingValue} {props.sourceTokenSymbol}
+                    </a>
+                  </div>
                 </div>
                 <div class="column medium-6">
                   <label>Exchange To

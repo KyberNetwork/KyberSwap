@@ -1,6 +1,5 @@
 import React from "react"
 import constants from "../../services/constants"
-import { roundingNumber } from "../../utils/converter"
 
 const TransactionLoadingView = (props) => {
   if (props.broadcasting) {
@@ -69,16 +68,16 @@ const TransactionLoadingView = (props) => {
                   {props.status === "success" &&
                     <li class={props.status}>
                       Broadcasted your transaction to the blockchain
-                                          <p class="note">Current address balance</p>
+                      <p class="note">Current address balance</p>
                       {props.type === "exchange" &&
                         <ul class="address-balances">
                           <li>
                             <span class="name">{props.balanceInfo.sourceTokenName}</span>
-                            <span class="balance" title={props.balanceInfo.sourceAmount}>{roundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceTokenSymbol}</span>
+                            <span class="balance" title={props.balanceInfo.sourceAmount.value}>{props.balanceInfo.sourceAmount.roundingValue} {props.balanceInfo.sourceTokenSymbol}</span>
                           </li>
                           <li>
                             <span class="name">{props.balanceInfo.destTokenName}</span>
-                            <span class="balance" title={props.balanceInfo.destAmount}>{roundingNumber(props.balanceInfo.destAmount)} {props.balanceInfo.destTokenSymbol}</span>
+                            <span class="balance" title={props.balanceInfo.destAmount.value}>{props.balanceInfo.destAmount.roundingValue} {props.balanceInfo.destTokenSymbol}</span>
                           </li>
                         </ul>
                       }
@@ -86,7 +85,7 @@ const TransactionLoadingView = (props) => {
                         <ul class="address-balances">
                           <li>
                             <span class="name">{props.balanceInfo.tokenName}</span>
-                            <span class="balance" title={props.balanceInfo.amount}>{roundingNumber(props.balanceInfo.amount)} {props.balanceInfo.tokenSymbol}</span>
+                            <span class="balance" title={props.balanceInfo.amount.value}>{props.balanceInfo.amount.roundingValue} {props.balanceInfo.tokenSymbol}</span>
                           </li>
                         </ul>
                       }

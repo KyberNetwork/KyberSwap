@@ -107,7 +107,10 @@ export default class Exchange extends React.Component {
     var nameSource = ""
     var token = this.props.tokens[this.props.exchange.sourceTokenSymbol]
     if (token) {
-      balance = displayBalance(token.balance, token.decimal, 8)
+      balance = {
+        value: displayBalance(token.balance, token.decimal),
+        roundingValue: converters.roundingNumber(displayBalance(token.balance, token.decimal, 8))
+      }
       nameSource = token.name
     }
 
@@ -115,7 +118,10 @@ export default class Exchange extends React.Component {
     var nameDest = ""
     var tokenDest = this.props.tokens[this.props.exchange.destTokenSymbol]
     if (tokenDest) {
-      balanceDest = displayBalance(tokenDest.balance, tokenDest.decimal, 8)
+      balanceDest = {
+        value: displayBalance(tokenDest.balance, tokenDest.decimal),
+        roundingValue: converters.roundingNumber(displayBalance(tokenDest.balance, tokenDest.decimal, 8)),
+      }
       nameDest = tokenDest.name
     }
 

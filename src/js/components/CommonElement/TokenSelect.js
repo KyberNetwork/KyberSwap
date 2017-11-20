@@ -1,5 +1,4 @@
 import React from "react"
-import { toT, displayBalance, roundingNumber } from "../../utils/converter"
 
 const TokenSelect = (props) => {
   var handleOnClick = (e) => {
@@ -9,14 +8,11 @@ const TokenSelect = (props) => {
       props.onClick(e, props.symbol, props.address, props.type)
     }
   }
-  var balance = (balance) => {
-    return displayBalance(props.balance, props.decimal, 8)
-  }
   return (
     <div class="column gutter-15">
       <a className={"token-stamp " + (props.inactive ? "empty" : (props.selected ? "selected" : ""))} onClick={(e) => { handleOnClick(e) }}>
         <img src={props.icon} /><span class="name">{props.name}</span>
-        <div class="balance" title={balance()}>{roundingNumber(balance())}</div>
+        <div class="balance" title={props.balance.value}>{props.balance.roundingValue}</div>
       </a>
     </div>
   )
