@@ -3,7 +3,7 @@ import { call, put, take } from 'redux-saga/effects';
 import { expectSaga, testSaga } from 'redux-saga-test-plan';
 import * as CircularJSON from "circular-json";
 var stringify = require('json-stringify-safe');
-
+jest.mock('vm')
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { default as transferReducer } from "../../src/js/reducers/transferReducer"
 import transferTestValue from "./transfer.test-value"

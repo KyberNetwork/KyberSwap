@@ -6,7 +6,7 @@ var stringify = require('json-stringify-safe');
 import { processExchange, processExchangeAfterConfirm } from "../../src/js/sagas/exchangeActions"
 import exchangeTestValue from "./exchange.test-value"
 
-
+jest.mock('vm')
 
 const keystoreWrongPassphrase = exchangeTestValue.keystoreWrongPassphrase
 it('handle process exchange with keystore and wrong passphrase', () => {
