@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 
-import { toT, displayBalance } from "../../utils/converter"
+import { toT, displayBalance, roundingNumber } from "../../utils/converter"
 
 import { TransferForm, TransactionConfig } from "../../components/Transaction"
 import { PostTransferWithKey } from "../Transfer"
@@ -84,7 +84,10 @@ export default class Transfer extends React.Component {
     var tokenName = ""
     var token = this.props.tokens[this.props.transfer.tokenSymbol]
     if (token) {
-      balance = displayBalance(token.balance, token.decimal, 8)
+      balance = {
+        value: displayBalance(token.balance, token.decimal),
+        roundingValue: roundingNumber(displayBalance(token.balance, token.decimal, 8)),
+      }
       tokenName = token.name
     }
     var balanceInfo = {
