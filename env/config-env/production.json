@@ -1,4 +1,8 @@
 {
+  "connections": {
+    "http": "https://kovan.infura.io/DtzEYY0Km2BA3YwyJcBG",
+    "ws": "wss://kovan.kyber.network/ws/"
+  },
   "tokens": {
     "ETH": {
       "name": "Ethereum",
