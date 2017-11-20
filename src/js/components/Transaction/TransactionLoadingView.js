@@ -108,7 +108,7 @@ const TransactionLoadingView = (props) => {
       </div>
       <div class="row">
         <div class="column small-11 medium-10 large-9 small-centered text-center">
-          <p class="note">You can now close your browser window or make another {props.type == 'exchange' ? "exchange" : "transfer"}</p><a className="button accent new-transaction" onClick={props.makeNewTransaction}>{props.type == 'exchange' ? "Exchange" : "Transfer"}</a>
+          <p class="note">You can now close your browser window or make another {props.type == 'exchange' ? "exchange" : "transfer"}</p><a className={"button accent new-transaction" + (props.status != "pending" ? " animated infinite pulse" : "")} onClick={props.makeNewTransaction}>{props.type == 'exchange' ? "Exchange" : "Transfer"}</a>
         </div>
       </div>
     </div>
