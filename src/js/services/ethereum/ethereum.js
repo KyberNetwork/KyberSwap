@@ -15,9 +15,9 @@ import { setConnection } from "../../actions/connectionActions"
 export default class EthereumService extends React.Component {
   constructor(props) {
     super(props)
-    this.httpUrl = "https://kovan.infura.io/DtzEYY0Km2BA3YwyJcBG"
-    this.wsUrl = "wss://kovan.kyber.network/ws/"
-    this.wsUrl = "ws://localhost:8546"
+    this.httpUrl = BLOCKCHAIN_INFO.connections.httpUrl
+    this.wsUrl = BLOCKCHAIN_INFO.connections.wsUrl
+    // this.wsUrl = "ws://localhost:8546"
     this.httpProvider = this.getHttpProvider()
     this.wsProvider = this.getWebsocketProvider()
 
@@ -26,17 +26,17 @@ export default class EthereumService extends React.Component {
 
   initProvider(provider) {
     switch (provider) {
-      case "http":
+      case constants.CONNECTIONS_MODE.HTTP:
         this.currentProvider = this.httpProvider
-        this.currentLabel = "http"
+        this.currentLabel = constants.CONNECTIONS_MODE.HTTP
         break
-      case "ws":
+      case constants.CONNECTIONS_MODE.WS:
         this.currentProvider = this.wsProvider
-        this.currentLabel = "ws"
+        this.currentLabel = constants.CONNECTIONS_MODE.WS
         break
       default:
         this.currentProvider = this.httpProvider
-        this.currentLabel = "http"
+        this.currentLabel = constants.CONNECTIONS_MODE.HTTP
         break
     }
   }

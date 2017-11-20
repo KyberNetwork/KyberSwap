@@ -1,10 +1,10 @@
 import EthereumService from "./ethereum"
 import { setConnection, setIntervalConnection, clearIntervalConnection } from "../../actions/connectionActions"
 import { store } from "../../store"
-
+import constants from "../../services/constants"
 
 export function createNewConnection() {
-    var connectionInstance = new EthereumService({ default: 'http' })    
+    var connectionInstance = new EthereumService({ default: constants.CONNECTIONS_MODE.HTTP })    
     store.dispatch(setConnection(connectionInstance))
     connectionInstance.subcribe()
 
@@ -12,18 +12,18 @@ export function createNewConnection() {
         //check which connection is success
         var state = store.getState()
         var ethereum = state.connection.ethereum
-        if (ethereum.currentLabel === "ws") {
+        if (ethereum.currentLabel === constants.CONNECTIONS_MODE.WS) {
             if (!ethereum.wsProvider.connection) {
                 ethereum.clearSubcription()
                 ethereum.setProvider(ethereum.httpProvider)
-                ethereum.currentLabel = "http"
+                ethereum.currentLabel = constants.CONNECTIONS_MODE.HTTP
                 ethereum.subcribe()
                 store.dispatch(setConnection(ethereum))
                 return
             }
         }
 
-        if (ethereum.currentLabel === "http") {
+        if (ethereum.currentLabel === constants.CONNECTIONS_MODE.HTTP) {
             if (ethereum.wsProvider.reconnectTime > 10) {
                 store.dispatch(clearIntervalConnection())
             }
@@ -31,7 +31,7 @@ export function createNewConnection() {
                 ethereum.clearSubcription()
                 ethereum.wsProvider.reconnectTime = 0
                 ethereum.setProvider(ethereum.wsProvider)
-                ethereum.currentLabel = "ws"
+                ethereum.currentLabel = constants.CONNECTIONS_MODE.WS
                 ethereum.subcribe()
                 store.dispatch(setConnection(ethereum))
             } else {
