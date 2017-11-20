@@ -74,6 +74,7 @@ const transfer = (state = initState, action) => {
       return newState
     case "TRANSFER.HIDE_PASSPHRASE":
       newState.passphrase = false
+      newState.errors.passwordError = ""
       return newState
     case "TRANSFER.THROW_ERROR_DEST_ADDRESS":
       newState.errors.destAddress = action.payload

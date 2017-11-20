@@ -225,8 +225,11 @@ export function roundingNumber(number) {
 }
 
 
-export function caculateTokenEpsilon(rate, decimal){
-  var ts = new BigNumber(10).pow(decimal).times(rate).times(constants.EPSILON)
-  var ms = new BigNumber(10).pow(36)
-  return ts.div(ms)
+export function caculateTokenEpsilon(rate, decimal, symbol){
+  var tokenRate = rate
+  if (symbol === "ETH"){
+    tokenRate = new BigNumber(10).pow(18)
+  }
+  var ts = new BigNumber(10).pow(decimal).times(constants.EPSILON)
+  return ts.div(tokenRate)
 }

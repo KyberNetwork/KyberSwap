@@ -291,6 +291,7 @@ export default class PostExchange extends React.Component {
         modalConfirm={modalConfirm}
         modalApprove={modalApprove}
         className={className}
+        accountType = {this.props.account.type}
          />
     )
   }
