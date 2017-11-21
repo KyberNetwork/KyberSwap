@@ -121,6 +121,7 @@ function* processExchange(action) {
         yield call(exchangeETHtoTokenPrivateKey, action)
         break
       case "trezor":
+      case "ledger":
         yield call(exchangeETHtoTokenColdWallet, action)
         break
     }
@@ -133,6 +134,7 @@ function* processExchange(action) {
         yield call(exchangeTokentoETHPrivateKey, action)
         break
       case "trezor":
+      case "ledger":
         yield call(exchangeTokentoETHColdWallet, action)
         break
     }

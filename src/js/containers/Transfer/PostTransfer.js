@@ -202,7 +202,9 @@ export default class PostTransfer extends React.Component {
       <PostTransferBtn 
         className={className}
         modalPassphrase={modalPassphrase}
-        submit={this.clickTransfer} />
+        submit={this.clickTransfer} 
+        accountType = {this.props.account.type}
+        />
     )
   }
 }

@@ -99,7 +99,7 @@ export default class PostExchange extends React.Component {
     )
   }
   getDesAmount = () => {
-    return this.props.form.sourceAmount * converters.toT(this.props.form.offeredRate, 6)
+    return this.props.form.sourceAmount * converters.toT(this.props.form.offeredRate)
   }
 
   recap = () => {
@@ -291,6 +291,7 @@ export default class PostExchange extends React.Component {
         modalConfirm={modalConfirm}
         modalApprove={modalApprove}
         className={className}
+        accountType = {this.props.account.type}
          />
     )
   }
