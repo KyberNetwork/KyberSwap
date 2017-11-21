@@ -8,7 +8,10 @@ const initState = {
   loading: false,
   error: "",
   showError: false,
-  pKeyError: ""
+  pKey: {
+    error: '',
+    modalOpen: false
+  }
 }
 
 const account = (state=initState, action) => {
@@ -58,10 +61,27 @@ const account = (state=initState, action) => {
       }
     }
     case "ACCOUNT.PKEY_CHANGE": {
-      return {...state, pKeyError: ""}
+      let newState = {...state}
+      newState.pKey.error = ''
+      return newState
     }
     case "ACCOUNT.PKEY_ERROR": {
-      return {...state, pKeyError: action.payload}
+      let newState = {...state}
+      newState.pKey.error = action.payload
+      return newState
+    }
+    case "ACCOUNT.OPEN_PKEY_MODAL": {
+      let newState = {...state}
+      let pKey = {
+        error: '', modalOpen: true
+      }
+      newState.pKey = pKey
+      return newState
+    }
+    case "ACCOUNT.CLOSE_PKEY_MODAL": {
+      let newState = {...state}
+      newState.pKey.modalOpen = false
+      return newState
     }
   }
   return state
