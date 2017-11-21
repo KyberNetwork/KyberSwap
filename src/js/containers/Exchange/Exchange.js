@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 
-import { toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth } from "../../utils/converter"
+import { toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber } from "../../utils/converter"
 
 import { PostExchangeWithKey } from "../Exchange"
 import { ExchangeForm, TransactionConfig } from "../../components/Transaction"
@@ -84,6 +84,7 @@ export default class Exchange extends React.Component {
         balanceBig = balanceBig.minus(Math.pow(10, 17))
       }
       var balance = balanceBig.div(Math.pow(10, token.decimal)).toString()
+      balance = toPrimitiveNumber(balance)
       this.props.dispatch(exchangeActions.changeSourceAmout(balance))
       var destAmount = caculateDestAmount(balance, this.props.exchange.offeredRate, 6)
       this.props.dispatch(exchangeActions.changeDestAmout(destAmount))

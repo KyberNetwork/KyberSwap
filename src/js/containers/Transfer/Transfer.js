@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 
-import { toT, roundingNumber, gweiToEth } from "../../utils/converter"
+import { toT, roundingNumber, gweiToEth, toPrimitiveNumber } from "../../utils/converter"
 
 import { TransferForm, TransactionConfig } from "../../components/Transaction"
 import { PostTransferWithKey } from "../Transfer"
@@ -61,6 +61,7 @@ export default class Transfer extends React.Component {
         balanceBig = balanceBig.minus(Math.pow(10, 17))
       }
       var balance = balanceBig.div(Math.pow(10, token.decimal)).toString()
+      balance = toPrimitiveNumber(balance)
       this.props.dispatch(specifyAmountTransfer(balance))
     }
   }
