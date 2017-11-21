@@ -30,7 +30,8 @@ const ImportByPKeyView = (props) => {
 								<div class="column">
 									<center>
 										<label className={!!props.pKeyError ? "error" : ""}>
-											<input class="text-center" type="password" id="private_key" onChange={(e) => props.onChange(e)} placeholder="Enter your private key" required />
+											<input class="text-center" type="password" id="private_key" onChange={(e) => props.onChange(e)}
+											 placeholder="Enter your private key" required autoComplete="off" />
 											{!!props.pKeyError &&
 													<span className="error-text">{props.pKeyError}</span>
 											}
@@ -41,7 +42,7 @@ const ImportByPKeyView = (props) => {
 						</div>
 						<span className="error-text">kjsjdhfkjsdfk</span>
 						<div class="overlap">
-								<button type="submit" class="button accent" onClick={(e) => handldeSubmit(e)} >Import</button>
+								<button class="button accent" onClick={(e) => handldeSubmit(e)} >Import</button>
 						</div>
 							
 					</div>
