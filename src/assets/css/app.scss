@@ -45,6 +45,39 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
   }
 }
 
+#footer {
+  ul.links {
+    margin: 0 0 30px 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0;
+    text-align: center;
+    @include breakpoint(medium) {
+      text-align: right;
+    }
+    > li {
+      display: inline-block;
+      &:not(:last-child) > a:after {
+        content: '|';
+        font-size: 12px;
+        font-weight: lighter;
+        color: $light-gray;
+        margin: 0 15px;
+      }
+      > a {
+        color: $medium-gray;
+        display: block;
+        font-size: 13px;
+        letter-spacing: .5px;
+        font-weight: bold;
+        &:hover {
+          color: $dark-gray;
+        }
+      }
+    }
+  }
+}
+
 #header {
   background-color: white;
   padding: 10px 0;
