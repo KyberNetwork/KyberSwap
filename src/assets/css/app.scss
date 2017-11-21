@@ -10,7 +10,7 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
 @import 'addresses';
 @import 'tokens';
 //@import 'slider';
-@import 'fix-react-modal';
+@import 'custom';
 @import "~slick-carousel/slick/slick.css";
 //@import "~slick-carousel/slick/slick-theme.scss";
 
@@ -121,7 +121,7 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
       > li {
         display: inline-block;
         &:not(:last-child) {
-          margin-right: 25px;
+          margin-right: 20px;
         }
         a {
           font-size: 12px;
