@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { ImportByPKeyView } from "../../components/ImportAccount"
-import { importNewAccount, throwError } from "../../actions/accountActions"
+import { importNewAccount, throwError, pKeyChange, throwPKeyError } from "../../actions/accountActions"
 import { addressFromPrivateKey, getRandomAvatar } from "../../utils/keys"
 
 @connect((store) => {
@@ -38,15 +38,27 @@ export default class ImportByPrivateKey extends React.Component {
     })
   }
 
+  inputChange = (e) => {
+    var value = e.target.value
+    this.props.dispatch(pKeyChange(value));
+  }
+
   importPrivateKey() {
     const privateKey = document.getElementById("private_key").value
-    const address = addressFromPrivateKey(privateKey)
-    this.props.dispatch(importNewAccount(address,
-      "privateKey",
-      privateKey,
-      this.props.ethereum,
-      getRandomAvatar(address),
-      this.props.tokens))
+    try {
+      let address = addressFromPrivateKey(privateKey)
+      this.props.dispatch(importNewAccount(address,
+        "privateKey",
+        privateKey,
+        this.props.ethereum,
+        getRandomAvatar(address),
+        this.props.tokens))
+    } 
+    catch(e){
+      console.log(e)
+      this.props.dispatch(throwPKeyError(e.message))
+    }
+    
   }
 
   render() {
@@ -56,6 +68,8 @@ export default class ImportByPrivateKey extends React.Component {
         modalOpen={this.openModal.bind(this)}
         onRequestClose={this.closeModal.bind(this)}
         isOpen={this.state.modalOpen}
+        onChange={this.inputChange}
+        pKeyError={this.props.account.pKeyError}
       />
     )
   }

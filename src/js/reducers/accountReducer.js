@@ -7,7 +7,8 @@ const initState = {
   account: false,
   loading: false,
   error: "",
-  showError: false
+  showError: false,
+  pKeyError: ""
 }
 
 const account = (state=initState, action) => {
@@ -55,6 +56,12 @@ const account = (state=initState, action) => {
         return {...state,
           account: account}
       }
+    }
+    case "ACCOUNT.PKEY_CHANGE": {
+      return {...state, pKeyError: ""}
+    }
+    case "ACCOUNT.PKEY_ERROR": {
+      return {...state, pKeyError: action.payload}
     }
   }
   return state

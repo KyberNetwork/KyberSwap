@@ -20,6 +20,20 @@ export function importLoading(){
     }
 }
 
+export function pKeyChange(value){
+    return {
+        type: "ACCOUNT.PKEY_CHANGE",
+        payload: value
+    }
+}
+
+export function throwPKeyError(error){
+    return {
+        type: "ACCOUNT.PKEY_ERROR",
+        payload: error
+    }
+}
+
 export function importNewAccount(address, type, keystring, ethereum, avatar, tokens) {
     return {
         type: "ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING",
