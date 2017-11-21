@@ -140,7 +140,7 @@ const ImportByDeviceView = (props) => {
 
     return (
         <div>
-            <div class="small-12 medium-6 column" style={{ padding: 0 }}>
+            <div class="small-6 medium-6 column" style={{ padding: 0 }}>
                 <div class="column column-block">
                     <div class="importer trezor">
                         <a onClick={() => props.showLoading('trezor')}>
@@ -150,7 +150,7 @@ const ImportByDeviceView = (props) => {
                     </div>
                 </div>
             </div>
-            <div class="small-12 medium-6 column" style={{ padding: 0 }}>
+            <div class="small-6 medium-6 column" style={{ padding: 0 }}>
                 <div class="column column-block">
                     <div class="importer ledger">
                         <a onClick={() => props.showLoading('ledger')}>

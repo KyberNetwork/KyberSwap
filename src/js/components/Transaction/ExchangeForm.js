@@ -3,7 +3,7 @@ import { roundingNumber } from "../../utils/converter"
 
 const ExchangeForm = (props) => {
   var errorToken = props.errors.selectSameToken + props.errors.selectTokenToken
-  var tokenRate = props.isSelectToken ? <img src="/assets/img/waiting.svg" /> : props.exchangeRate.rate
+  var tokenRate = props.isSelectToken ? <img src="/assets/img/waiting.svg" /> : roundingNumber(props.exchangeRate.rate)
   var render = (
     <div>
       <div class="frame">
@@ -50,7 +50,7 @@ const ExchangeForm = (props) => {
               <div class="row">
                 <div class="column">
                   <p class="token-compare" title={tokenRate}>
-                    1 {props.exchangeRate.sourceToken} = {roundingNumber(tokenRate)} {props.exchangeRate.destToken}
+                    1 {props.exchangeRate.sourceToken} = {tokenRate} {props.exchangeRate.destToken}
                     <span class="up">{props.exchangeRate.percent}%</span>
                   </p>
                 </div>
