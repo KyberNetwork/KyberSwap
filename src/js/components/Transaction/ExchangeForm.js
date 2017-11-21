@@ -51,7 +51,7 @@ const ExchangeForm = (props) => {
                 <div class="column">
                   <p class="token-compare" title={tokenRate}>
                     1 {props.exchangeRate.sourceToken} = {roundingNumber(tokenRate)} {props.exchangeRate.destToken}
-                    <span class="up">{props.exchangeRate.percent}%</span>
+                    {/* <span class="up">{props.exchangeRate.percent}%</span> */}
                   </p>
                 </div>
               </div>
