@@ -86,26 +86,24 @@ export default class PostExchange extends React.Component {
     return check
   }
 
-
-
   createRecap = () => {
     var sourceAmount = this.props.form.sourceAmount.toString();
-    var destAmount = this.getDesAmount().toString();
+    var destAmount = this.props.form.destAmount.toString()
     var sourceTokenSymbol = this.props.form.sourceTokenSymbol;
     var destTokenSymbol = this.props.form.destTokenSymbol
-    var recap = `exchange ${this.props.form.sourceAmount.toString().slice(0, 7)}${this.props.form.sourceAmount.toString().length > 7 ? '...' : ''} ${this.props.form.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0, 7)}${this.getDesAmount().toString().length > 7 ? '...' : ''} ${this.props.form.destTokenSymbol}`
+    // var recap = `exchange ${this.props.form.sourceAmount.toString().slice(0, 7)}${this.props.form.sourceAmount.toString().length > 7 ? '...' : ''} ${this.props.form.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0, 7)}${this.getDesAmount().toString().length > 7 ? '...' : ''} ${this.props.form.destTokenSymbol}`
     return (
       <p>You are about to exchange<br /><strong>{sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}</strong>&nbsp;for&nbsp;<strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}</strong></p>
     )
   }
   getDesAmount = () => {
-    return this.props.form.sourceAmount * converters.toT(this.props.form.offeredRate, 6)
+    return this.props.form.sourceAmount * converters.toT(this.props.form.offeredRate)
   }
 
   recap = () => {
     var sourceAmount = this.props.form.sourceAmount;
     var sourceTokenSymbol = this.props.form.sourceTokenSymbol;
-    var destAmount = this.getDesAmount().toString();
+    var destAmount = this.props.form.destAmount
     var destTokenSymbol = this.props.form.destTokenSymbol;
     return {
       sourceAmount, sourceTokenSymbol, destAmount, destTokenSymbol
@@ -291,6 +289,7 @@ export default class PostExchange extends React.Component {
         modalConfirm={modalConfirm}
         modalApprove={modalApprove}
         className={className}
+        accountType = {this.props.account.type}
          />
     )
   }

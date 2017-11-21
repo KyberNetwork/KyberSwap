@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 
-import { calculateMinAmount, toT, displayBalance, caculateSourceAmount, caculateDestAmount } from "../../utils/converter"
+import { toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber } from "../../utils/converter"
 
 import { PostExchangeWithKey } from "../Exchange"
 import { ExchangeForm, TransactionConfig } from "../../components/Transaction"
@@ -12,7 +12,6 @@ import { anyErrors } from "../../utils/validators"
 
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import * as exchangeActions from "../../actions/exchangeActions"
-import * as converters from "../../utils/converter"
 import { randomForExchange } from "../../utils/random"
 @connect((store) => {
   const ethereum = store.connection.ethereum
@@ -44,19 +43,29 @@ export default class Exchange extends React.Component {
   changeSourceAmount = (e) => {
     var value = e.target.value
     if (value < 0) return 
-    this.props.dispatch(exchangeActions.changeSourceAmout(value))
-    if(this.isError()) return
-    var destAmount = caculateDestAmount(value, this.props.exchange.offeredRate, 6)
-    this.props.dispatch(exchangeActions.changeDestAmout(destAmount))
+    // this.props.dispatch(exchangeActions.changeSourceAmout(value))
+    // if(this.isError()) return
+    // var destAmount = caculateDestAmount(value, this.props.exchange.offeredRate, 6)
+    // this.props.dispatch(exchangeActions.changeDestAmout(destAmount))
+    this.props.dispatch(exchangeActions.inputChange('source', value));
   }
 
   changeDestAmount = (e) => {
     var value = e.target.value
     if (value < 0 ) return 
-    this.props.dispatch(exchangeActions.changeDestAmout(value))
-    if(this.isError()) return
-    var sourceAmount = caculateSourceAmount(value, this.props.exchange.offeredRate, 6)
-    this.props.dispatch(exchangeActions.changeSourceAmout(sourceAmount));
+    // this.props.dispatch(exchangeActions.changeDestAmout(value))
+    // if(this.isError()) return
+    // var sourceAmount = caculateSourceAmount(value, this.props.exchange.offeredRate, 6)
+    // this.props.dispatch(exchangeActions.changeSourceAmout(sourceAmount));
+    this.props.dispatch(exchangeActions.inputChange('dest', value));
+  }
+
+  focusSource = () => {
+    this.props.dispatch(exchangeActions.focusInput('source'));
+  }
+
+  focusDest = () => {
+    this.props.dispatch(exchangeActions.focusInput('dest'));
   }
 
   makeNewExchange = () => {
@@ -85,9 +94,13 @@ export default class Exchange extends React.Component {
         balanceBig = balanceBig.minus(Math.pow(10, 17))
       }
       var balance = balanceBig.div(Math.pow(10, token.decimal)).toString()
-      this.props.dispatch(exchangeActions.changeSourceAmout(balance))
-      var destAmount = caculateDestAmount(balance, this.props.exchange.offeredRate, 6)
-      this.props.dispatch(exchangeActions.changeDestAmout(destAmount))
+      balance = toPrimitiveNumber(balance)
+
+      this.props.dispatch(exchangeActions.inputChange('source', balance));
+      this.focusSource()
+      // this.props.dispatch(exchangeActions.changeSourceAmout(balance))
+      // var destAmount = caculateDestAmount(balance, this.props.exchange.offeredRate, 6)
+      // this.props.dispatch(exchangeActions.changeDestAmout(destAmount))
     }
   }
 
@@ -110,8 +123,8 @@ export default class Exchange extends React.Component {
     var token = this.props.tokens[this.props.exchange.sourceTokenSymbol]
     if (token) {
       balance = {
-        value: displayBalance(token.balance, token.decimal),
-        roundingValue: converters.roundingNumber(displayBalance(token.balance, token.decimal, 8))
+        value: toT(token.balance, token.decimal),
+        roundingValue: roundingNumber(toT(token.balance, token.decimal))
       }
       nameSource = token.name
     }
@@ -121,8 +134,8 @@ export default class Exchange extends React.Component {
     var tokenDest = this.props.tokens[this.props.exchange.destTokenSymbol]
     if (tokenDest) {
       balanceDest = {
-        value: displayBalance(tokenDest.balance, tokenDest.decimal),
-        roundingValue: converters.roundingNumber(displayBalance(tokenDest.balance, tokenDest.decimal, 8)),
+        value: toT(tokenDest.balance, tokenDest.decimal),
+        roundingValue: roundingNumber(toT(tokenDest.balance, tokenDest.decimal)),
       }
       nameDest = tokenDest.name
     }
@@ -160,12 +173,14 @@ export default class Exchange extends React.Component {
       sourceAmount: {
         type: 'number',
         value: this.props.exchange.sourceAmount,
-        onChange: this.changeSourceAmount
+        onChange: this.changeSourceAmount,
+        onFocus: this.focusSource
       },
       destAmount: {
         type: 'number',
         value: this.props.exchange.destAmount,
-        onChange: this.changeDestAmount
+        onChange: this.changeDestAmount,
+        onFocus: this.focusDest
       }
     }
 
@@ -175,7 +190,7 @@ export default class Exchange extends React.Component {
 
     var exchangeRate = {
       sourceToken: this.props.exchange.sourceTokenSymbol,
-      rate: toT(this.props.exchange.offeredRate, 6),
+      rate: toT(this.props.exchange.offeredRate),
       destToken: this.props.exchange.destTokenSymbol,
       percent: "-"
     }
@@ -199,7 +214,7 @@ export default class Exchange extends React.Component {
         gasPriceHandler={this.specifyGasPrice}
         gasPriceError={this.props.exchange.errors.gasPriceError}
         gasError={this.props.exchange.errors.gasError}
-        totalGas={converters.gweiToEth(this.props.exchange.gas * this.props.exchange.gasPrice)}
+        totalGas={gweiToEth(this.props.exchange.gas * this.props.exchange.gasPrice)}
       />
     )
 

@@ -10,7 +10,6 @@ const TokenView = (props) => {
         </label>
       )
     } else if(props.type == 'source'){
-      var balance = props.type === 'source'?(<div>Address Balance: <span>{props.balance}</span></div>):''
       return (
         <div class="info" onClick={props.onSelected} data-open="exchange-from-token-modal"><img src={props.token.icon}/><span class="name">{props.symbol}</span></div>
       )

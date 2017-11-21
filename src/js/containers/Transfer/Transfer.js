@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 
-import { toT, displayBalance, roundingNumber } from "../../utils/converter"
+import { toT, roundingNumber, gweiToEth, toPrimitiveNumber } from "../../utils/converter"
 
 import { TransferForm, TransactionConfig } from "../../components/Transaction"
 import { PostTransferWithKey } from "../Transfer"
@@ -11,7 +11,6 @@ import { Token, SelectToken, TransactionLoading } from "../CommonElements"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
 import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase, throwErrorDestAddress, thowErrorAmount, makeNewTransfer } from '../../actions/transferActions';
-import * as converters from "../../utils/converter"
 import { specifyGas as specifyGasTransfer, specifyGasPrice as specifyGasPriceTransfer, hideAdvance as hideAdvanceTransfer } from "../../actions/transferActions"
 
 @connect((store, props) => {
@@ -62,6 +61,7 @@ export default class Transfer extends React.Component {
         balanceBig = balanceBig.minus(Math.pow(10, 17))
       }
       var balance = balanceBig.div(Math.pow(10, token.decimal)).toString()
+      balance = toPrimitiveNumber(balance)
       this.props.dispatch(specifyAmountTransfer(balance))
     }
   }
@@ -85,8 +85,8 @@ export default class Transfer extends React.Component {
     var token = this.props.tokens[this.props.transfer.tokenSymbol]
     if (token) {
       balance = {
-        value: displayBalance(token.balance, token.decimal),
-        roundingValue: roundingNumber(displayBalance(token.balance, token.decimal, 8)),
+        value: toT(token.balance, token.decimal),
+        roundingValue: roundingNumber(toT(token.balance, token.decimal)),
       }
       tokenName = token.name
     }
@@ -141,7 +141,7 @@ export default class Transfer extends React.Component {
         gasPriceHandler={this.specifyGasPrice}
         gasPriceError={this.props.transfer.errors.gasPrice}
         gasError={this.props.transfer.errors.gas}
-        totalGas={converters.gweiToEth(this.props.transfer.gas * this.props.transfer.gasPrice)}
+        totalGas={gweiToEth(this.props.transfer.gas * this.props.transfer.gasPrice)}
       />
     )
 

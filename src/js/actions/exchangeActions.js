@@ -21,9 +21,23 @@ export function checkSelectToken() {
 	}
 }
 
-export function caculateDestAmount() {
+export function caculateAmount() {
 	return {
-		type: "EXCHANGE.CACULATE_DEST_AMOUNT"
+		type: "EXCHANGE.CACULATE_AMOUNT"
+	}
+}
+
+export function inputChange(focus, value){
+	return {
+		type: "EXCHANGE.INPUT_CHANGE",
+		payload: { focus, value }
+	}
+}
+
+export function focusInput(focus){
+	return {
+		type: "EXCHANGE.FOCUS_INPUT",
+		payload: focus
 	}
 }
 

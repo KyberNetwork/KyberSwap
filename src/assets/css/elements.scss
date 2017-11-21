@@ -234,6 +234,9 @@ p.note {
   &.json {
     background-image: url(../img/json.jpg)
   }
+  &.pkey {
+    background-image: url(../img/pkey.jpeg)
+  }
   &.trezor {
     background-image: url(../img/trezor.jpg)
   }
@@ -386,7 +389,7 @@ label.switch-caption {
         text-align: right;
         margin: 0;
         &[readonly] {
-          background-color: darken(white, 3)
+          background-color: darken(white, 5)
         }
       }
     }

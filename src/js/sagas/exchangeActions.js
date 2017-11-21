@@ -121,6 +121,7 @@ function* processExchange(action) {
         yield call(exchangeETHtoTokenPrivateKey, action)
         break
       case "trezor":
+      case "ledger":
         yield call(exchangeETHtoTokenColdWallet, action)
         break
     }
@@ -133,6 +134,7 @@ function* processExchange(action) {
         yield call(exchangeTokentoETHPrivateKey, action)
         break
       case "trezor":
+      case "ledger":
         yield call(exchangeTokentoETHColdWallet, action)
         break
     }
@@ -338,10 +340,10 @@ function* exchangeTokentoETHColdWallet(action) {
 }
 
 function* updateRatePending(action) {
-  const { ethereum, source, dest, reserve } = action.payload
+  const { ethereum, source, dest, reserve, focus } = action.payload
   const rate = yield call(ethereum.call("getRate"), source, dest, reserve)
   yield put.sync(actions.updateRateExchangeComplete(rate))
-  yield put(actions.caculateDestAmount())
+  yield put(actions.caculateAmount())
 }
 
 export function* watchExchange() {

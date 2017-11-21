@@ -1,9 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
-//import { push } from 'react-router-redux'
-//import { DropFile } from "../../components/ImportAccount"
+import { ImportByPKeyView } from "../../components/ImportAccount"
 import { importNewAccount, throwError } from "../../actions/accountActions"
-//import { verifyKey, anyErrors } from "../../utils/validators"
 import { addressFromPrivateKey, getRandomAvatar } from "../../utils/keys"
 
 @connect((store) => {
@@ -21,7 +19,26 @@ import { addressFromPrivateKey, getRandomAvatar } from "../../utils/keys"
 
 export default class ImportByPrivateKey extends React.Component {
 
-  importPrivateKey = () => {
+  constructor(props) {
+    super(props)
+    this.state = {
+      modalOpen: false
+    }
+  }
+
+  openModal() {
+    this.setState({
+      modalOpen: true,
+    })
+  }
+
+  closeModal() {
+    this.setState({
+      modalOpen: false,
+    })
+  }
+
+  importPrivateKey() {
     const privateKey = document.getElementById("private_key").value
     const address = addressFromPrivateKey(privateKey)
     this.props.dispatch(importNewAccount(address,
@@ -34,10 +51,12 @@ export default class ImportByPrivateKey extends React.Component {
 
   render() {
     return (
-      <div>
-        <textarea id="private_key"></textarea>
-        <button onClick={this.importPrivateKey}>Import private key</button>
-      </div>      
+      <ImportByPKeyView
+        importPrivateKey={this.importPrivateKey.bind(this)}
+        modalOpen={this.openModal.bind(this)}
+        onRequestClose={this.closeModal.bind(this)}
+        isOpen={this.state.modalOpen}
+      />
     )
   }
 }
