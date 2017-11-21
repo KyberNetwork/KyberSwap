@@ -200,7 +200,7 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.CACULATE_AMOUNT": {
       if(state.errors.selectSameToken || state.errors.selectTokenToken) return newState
       if(state.inputFocus == "dest"){
-        newState.sourceAmount = caculateSourceAmount(state.sourceAmount, state.offeredRate, 6)
+        newState.sourceAmount = caculateSourceAmount(state.destAmount, state.offeredRate, 6)
       } else {
         newState.destAmount = caculateDestAmount(state.sourceAmount, state.offeredRate, 6)
       }
