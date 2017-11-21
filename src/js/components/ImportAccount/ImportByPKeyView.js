@@ -6,7 +6,13 @@ const ImportByPKeyView = (props) => {
 	function handldeSubmit(e) {
 		e.preventDefault()
 		props.importPrivateKey()
-	}
+  }
+  
+  function submit(e){
+    if ( e.key === 'Enter' ) {
+      handldeSubmit(e)
+    }
+  }
 
 	return (
 		<div class="column column-block">
@@ -31,7 +37,7 @@ const ImportByPKeyView = (props) => {
 									<center>
 										<label className={!!props.pKeyError ? "error" : ""}>
 											<input class="text-center" type="password" id="private_key" onChange={(e) => props.onChange(e)}
-											 placeholder="Enter your private key" required autoComplete="off" />
+											 placeholder="Enter your private key" required autoComplete="off" onKeyPress = {(e) => submit(e)}/>
 											{!!props.pKeyError &&
 													<span className="error-text">{props.pKeyError}</span>
 											}
