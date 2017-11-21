@@ -33,3 +33,29 @@
 button:focus{
     outline: none;
 }
+#header{
+    a.active{
+        color: #656876!important;
+    }
+}
+
+.ReactModalPortal > * {
+    opacity: 0;
+}
+.ReactModal__Overlay {
+    transition: opacity 200ms;
+    background: rgba(0, 0, 0, 0.15);
+    &--after-open {
+        opacity: 1;
+        .react-modal{
+            margin-top: 0px!important;
+        }
+    }
+    &--before-close {
+        opacity: 0;
+    }
+    .react-modal{
+        transition: margin-top 200ms;
+        margin-top: -20px;
+    }
+}
