@@ -1,8 +1,15 @@
-import { Link } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import React from "react"
 import constants from "../../services/constants"
 
 const Address = (props) => {
+
+  function checkCurrentLink(e){
+    if(this.to == props.path){
+      e.preventDefault();
+    }
+  }
+
   return props.address ?
     (
       <div class="column small-12 medium-6 large-5">
@@ -16,8 +23,8 @@ const Address = (props) => {
             <div key="2" class="column small-8">
               <a class="short-address" target="_blank" href={constants.KOVAN_ETH_URL + "/address/" + props.address}>{props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}</a>
               <ul class="actions">
-                <li><Link to="/exchange" >Exchange</Link></li>
-                <li><Link to="/transfer" >Transfer</Link></li>
+                <li><NavLink to="/exchange" onClick={checkCurrentLink}>Exchange</NavLink></li>
+                <li><NavLink to="/transfer" onClick={checkCurrentLink}>Transfer</NavLink></li>
                 <li>
                   <a onClick={props.endSession} className="exit">
                     Exit
