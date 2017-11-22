@@ -7,6 +7,7 @@ import { processExchange, processExchangeAfterConfirm } from "../../src/js/sagas
 import exchangeTestValue from "./exchange.test-value"
 
 jest.mock('vm')
+jest.mock('jdenticon', () => {})
 
 const keystoreWrongPassphrase = exchangeTestValue.keystoreWrongPassphrase
 it('handle process exchange with keystore and wrong passphrase', () => {
