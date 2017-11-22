@@ -21,7 +21,7 @@ it('handle process transfer with keystore and wrong passphrase', () => {
 
       expect(effects.put[0]).toEqual(
         put({
-          payload:"Key derivation failed - possibly wrong passphrase",
+          payload:"Key derivation failed - possibly wrong password",
           type:"TRANSFER.THROW_ERROR_PASSPHRASE"
         }))
     })
