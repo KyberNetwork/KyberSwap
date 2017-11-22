@@ -175,6 +175,7 @@ const exchange = (state = initState, action) => {
       newState.isConfirming = false
       newState.sourceAmount = ""
       //newState.txRaw = ""
+      newState.bcError = ""
       newState.step = 3
       newState.broadcasting = true
       return newState
