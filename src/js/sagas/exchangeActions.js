@@ -69,7 +69,7 @@ function* doApproveTransactionFail(ethereum, account, e) {
 }
 
 
-function* checkTokenBalanceOfColdWallet(action) {
+export function* checkTokenBalanceOfColdWallet(action) {
   const { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
@@ -105,7 +105,7 @@ function* processApprove(action) {
   }
 }
 
-function* processExchange(action) {
+export function* processExchange(action) {
   const { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
@@ -141,7 +141,7 @@ function* processExchange(action) {
   }
 }
 
-function* exchangeETHtoTokenKeystore(action) {
+export function* exchangeETHtoTokenKeystore(action) {
   const { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
@@ -170,7 +170,7 @@ function* exchangeETHtoTokenKeystore(action) {
   }
 }
 
-function* exchangeETHtoTokenPrivateKey(action) {
+export function* exchangeETHtoTokenPrivateKey(action) {
   const { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
@@ -192,7 +192,7 @@ function* exchangeETHtoTokenPrivateKey(action) {
   }
 }
 
-function* exchangeETHtoTokenColdWallet(action) {
+export function* exchangeETHtoTokenColdWallet(action) {
   const { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
