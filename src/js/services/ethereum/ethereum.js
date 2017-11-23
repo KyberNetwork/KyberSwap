@@ -77,7 +77,7 @@ export default class EthereumService extends React.Component {
   }
 
   fetchData() {
-    this.fetchCurrentBlock()
+    //this.fetchCurrentBlock()
     this.fetchTxsData()
     this.fetchRateData()
     this.fetchAccountData()
@@ -140,9 +140,12 @@ export default class EthereumService extends React.Component {
 
   fetchHistoryExchange = () => {
     var state = store.getState()
-    var ethereum = state.connection.ethereum
     var history = state.global.history
-    store.dispatch(updateHistoryExchange(ethereum, history))
+    var ethereum = state.connection.ethereum
+    store.dispatch(updateBlock(ethereum))
+    if (history.isFirstPage){      
+      store.dispatch(updateHistoryExchange(ethereum, history.range, true, false))
+    }
   }
 
   call(fn) {

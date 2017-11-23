@@ -34,13 +34,6 @@ export function updateAllRate(ethereum, tokens, reserve, ownerAddr) {
   }
 }
 
-export function updateHistoryExchange(ethereum, history) {
-  return {
-    type: "GLOBAL.UPDATE_HISTORY_EXCHANGE",
-    payload: { ethereum, history }
-  }
-}
-
 export function updateAllRateComplete(rates) {
   return {
     type: 'GLOBAL.ALL_RATE_UPDATED_FULFILLED',
@@ -73,9 +66,17 @@ export function goToRoute(route) {
   }
 }
 
-export function updateHistory(logs, latestBlock) {
+
+export function updateHistoryExchange(ethereum, range, isFirstPage, currentBlock) {
+  return {
+    type: "GLOBAL.UPDATE_HISTORY_EXCHANGE",
+    payload: { ethereum, range, isFirstPage, currentBlock }
+  }
+}
+
+export function updateHistory(logs, toBlock, isFirstPage) {
   return {
     type: "GLOBAL.UPDATE_HISTORY",
-    payload: { logs, latestBlock }
+    payload: { logs, toBlock, isFirstPage }
   }
 }

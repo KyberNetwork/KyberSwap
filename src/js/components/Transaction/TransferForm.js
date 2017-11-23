@@ -2,7 +2,7 @@ import React from "react"
 
 const TransferForm = (props) => {
   var render = (
-    <div>
+    <div id="transfer-screen">
       <div class="frame">
         <div class="row">
           <div class="column small-11 medium-10 large-8 small-centered">
