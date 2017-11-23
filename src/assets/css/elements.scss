@@ -166,7 +166,6 @@ a.has-tip {
   padding: 30px 0;
   margin-bottom: 30px;
   @include breakpoint(medium) {
-    padding: 45px 0;
     margin-bottom: 35px;
   }
   h1.title {
@@ -177,7 +176,7 @@ a.has-tip {
     margin: 0 0 20px 0;
     letter-spacing: .5px;
     @include breakpoint(medium) {
-      margin: 30px 0 35px 0;
+      margin: 10px 0 25px 0;
     }
     .info {
       font-size: 14px;
