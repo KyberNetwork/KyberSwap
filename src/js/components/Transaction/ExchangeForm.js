@@ -2,14 +2,9 @@ import React from "react"
 import { roundingNumber } from "../../utils/converter"
 
 const ExchangeForm = (props) => {
-  function focusInput(){
-    console.log("==========================")
-    // console.log(e)
-    // console.log(e.target)
-    
+  function moveCursor(){
     let inp = document.getElementById('inputSource')
     inp.focus();
-    inp.value = props.balance.roundingValue;
     inp.setAttribute('type', 'text');
     if (inp.createTextRange) {
       var part = inp.createTextRange();
@@ -19,7 +14,6 @@ const ExchangeForm = (props) => {
         inp.setSelectionRange(0, 0);
     }
     inp.setAttribute('type', 'number');
-    
   }
   var errorToken = props.errors.selectSameToken + props.errors.selectTokenToken
   var tokenRate = props.isSelectToken ? <img src="/assets/img/waiting.svg" /> : roundingNumber(props.exchangeRate.rate)
@@ -51,10 +45,8 @@ const ExchangeForm = (props) => {
                   <div class="address-balance" style={{marginBottom: 40}}>
                     <span class="note">Address Balance</span>
                     <a className="value" onClick={() => {
-                      
-                      props.setAmount()
-                      // focusInput()
-                      
+                        props.setAmount()
+                        setTimeout(moveCursor, 0);
                       }} title={props.balance.value}>
                       {props.balance.roundingValue} {props.sourceTokenSymbol}
                     </a>

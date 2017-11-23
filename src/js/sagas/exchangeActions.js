@@ -346,31 +346,6 @@ function* updateRatePending(action) {
   yield put(actions.caculateAmount())
 }
 
-function moveCursor(){
-  let inp = document.getElementById('inputSource')
-  inp.focus();
-  inp.setAttribute('type', 'text');
-  if (inp.createTextRange) {
-    var part = inp.createTextRange();
-    part.move("character", 0);
-    part.select();
-  } else if (inp.setSelectionRange) {
-      inp.setSelectionRange(0, 0);
-  }
-  inp.setAttribute('type', 'number');
-}
-
-
-function* setAmount(action){
-  const balance = action.payload
-  yield put.sync(actions.inputChange('source', balance))
-  yield take();
-  setTimeout(() => {
-    moveCursor()
-  }, 0);
-  
-}
-
 export function* watchExchange() {
   yield takeEvery("EXCHANGE.TX_BROADCAST_PENDING", broadCastTx)
   yield takeEvery("EXCHANGE.APPROVAL_TX_BROADCAST_PENDING", approveTx)
@@ -379,5 +354,4 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.PROCESS_APPROVE", processApprove)
   yield takeEvery("EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET", checkTokenBalanceOfColdWallet)
   yield takeEvery("EXCHANGE.UPDATE_RATE_PENDING", updateRatePending)
-  yield takeEvery("EXCHANGE.SET_AMOUNT", setAmount)
 }
