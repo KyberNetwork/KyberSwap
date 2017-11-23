@@ -96,11 +96,9 @@ export default class Exchange extends React.Component {
       var balance = balanceBig.div(Math.pow(10, token.decimal)).toString()
       balance = toPrimitiveNumber(balance)
 
-      this.props.dispatch(exchangeActions.inputChange('source', balance));
       this.focusSource()
-      // this.props.dispatch(exchangeActions.changeSourceAmout(balance))
-      // var destAmount = caculateDestAmount(balance, this.props.exchange.offeredRate, 6)
-      // this.props.dispatch(exchangeActions.changeDestAmout(destAmount))
+      
+      this.props.dispatch(exchangeActions.inputChange('source', balance));
     }
   }
 
