@@ -34,6 +34,13 @@ export function inputChange(focus, value){
 	}
 }
 
+export function setAmount(balance){
+	return {
+		type: "EXCHANGE.SET_AMOUNT",
+		payload: balance
+	}
+}
+
 export function focusInput(focus){
 	return {
 		type: "EXCHANGE.FOCUS_INPUT",
