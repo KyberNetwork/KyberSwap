@@ -15,7 +15,7 @@ import { toEther } from "../../utils/converter"
 	var tokens = store.tokens.tokens
 	var supportTokens = []
 	Object.keys(tokens).forEach((key) => {
-	  supportTokens.push(tokens[key])
+		supportTokens.push(tokens[key])
 	})
 	return {
 		ethereumNode: store.connection.ethereum,
@@ -32,6 +32,7 @@ export default class ImportByDevice extends React.Component {
 			addresses: [],
 			currentAddresses: [],
 			modalOpen: false,
+			isFirstList: true,
 		}
 		this.setDeviceState();
 
@@ -159,11 +160,15 @@ export default class ImportByDevice extends React.Component {
 			}
 			this.addressIndex = i;
 			this.currentIndex += 5;
-
 			this.setState({
 				addresses: addresses,
 				currentAddresses: addresses.slice(this.currentIndex - 5, this.currentIndex)
 			})
+			if (this.state.isFirstList) {
+				this.setState({
+					isFirstList: false
+				})
+			}
 		} else {
 			this.props.dispatch(throwError('Cannot connect to ' + this.walletType))
 		}
@@ -174,7 +179,12 @@ export default class ImportByDevice extends React.Component {
 		if (this.currentIndex > 5) {
 			this.currentIndex -= 5;
 			this.setState({
-				currentAddresses: addresses.slice(this.currentIndex - 5, this.currentIndex)
+				currentAddresses: addresses.slice(this.currentIndex - 5, this.currentIndex),
+			})
+		}
+		if (this.currentIndex <= 5) {
+			this.setState({
+				isFirstList: true
 			})
 		}
 	}
@@ -221,6 +231,7 @@ export default class ImportByDevice extends React.Component {
 		return (
 			<ImportByDeviceView
 				modalOpen={this.state.modalOpen}
+				isFirstList={this.state.isFirstList}
 				onRequestClose={this.closeModal.bind(this)}
 				getPreAddress={() => this.preAddress()}
 				getMoreAddress={() => this.moreAddress()}
