@@ -45,7 +45,7 @@ const ImportByPKeyView = (props) => {
 							<div class="row">
 								<div class="column">
 									<center style={{marginBottom: 25}} className={!!props.pKeyError ? "error" : ""}>
-										<div className={'input-reveal'}>
+										<div className="input-reveal">
 											<input class="text-center" id="private_key"
 												type="password"
 												onChange={(e) => props.onChange(e)}
