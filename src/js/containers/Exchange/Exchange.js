@@ -60,6 +60,21 @@ export default class Exchange extends React.Component {
     this.props.dispatch(exchangeActions.inputChange('dest', value));
   }
 
+  moveCursor = () => {
+    console.log("==============================")
+    let inp = document.getElementById('inputSource')
+    inp.setAttribute('type', 'text');
+    if (inp.createTextRange) {
+      var part = inp.createTextRange();
+      part.move("character", 0);
+      part.select();
+    } else if (inp.setSelectionRange) {
+        inp.setSelectionRange(0, 0);
+    }
+    inp.setAttribute('type', 'number');
+    inp.focus();
+  }
+
   focusSource = () => {
     this.props.dispatch(exchangeActions.focusInput('source'));
   }
@@ -98,6 +113,10 @@ export default class Exchange extends React.Component {
 
       this.props.dispatch(exchangeActions.inputChange('source', balance));
       this.focusSource()
+      setTimeout(() => {
+        this.moveCursor()
+      }, 1000);
+      
       // this.props.dispatch(exchangeActions.changeSourceAmout(balance))
       // var destAmount = caculateDestAmount(balance, this.props.exchange.offeredRate, 6)
       // this.props.dispatch(exchangeActions.changeDestAmout(destAmount))

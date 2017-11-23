@@ -2,6 +2,25 @@ import React from "react"
 import { roundingNumber } from "../../utils/converter"
 
 const ExchangeForm = (props) => {
+  function focusInput(){
+    console.log("==========================")
+    // console.log(e)
+    // console.log(e.target)
+    
+    let inp = document.getElementById('inputSource')
+    inp.focus();
+    inp.value = props.balance.roundingValue;
+    inp.setAttribute('type', 'text');
+    if (inp.createTextRange) {
+      var part = inp.createTextRange();
+      part.move("character", 0);
+      part.select();
+    } else if (inp.setSelectionRange) {
+        inp.setSelectionRange(0, 0);
+    }
+    inp.setAttribute('type', 'number');
+    
+  }
   var errorToken = props.errors.selectSameToken + props.errors.selectTokenToken
   var tokenRate = props.isSelectToken ? <img src="/assets/img/waiting.svg" /> : roundingNumber(props.exchangeRate.rate)
   var render = (
@@ -17,7 +36,8 @@ const ExchangeForm = (props) => {
 
                     <div className={errorToken === "" && props.errors.sourceAmount === "" ? "token-input" : "token-input error"}>
 
-                      <input type={props.input.sourceAmount.type} className="source-input" value={props.input.sourceAmount.value} onFocus={() => props.input.sourceAmount.onFocus()} onChange={(e) => props.input.sourceAmount.onChange(e)} min="0" step="0.000001" placeholder="0" />
+                      <input id="inputSource" type={props.input.sourceAmount.type} className="source-input" value={props.input.sourceAmount.value} 
+                         onChange={(e) => props.input.sourceAmount.onChange(e)} min="0" step="0.000001" placeholder="0" />
 
                       {props.tokenSource}
                     </div>
@@ -30,7 +50,12 @@ const ExchangeForm = (props) => {
                   </label>
                   <div class="address-balance" style={{marginBottom: 40}}>
                     <span class="note">Address Balance</span>
-                    <a className="value" onClick={props.setAmount} title={props.balance.value}>
+                    <a className="value" onClick={() => {
+                      
+                      props.setAmount()
+                      // focusInput()
+                      
+                      }} title={props.balance.value}>
                       {props.balance.roundingValue} {props.sourceTokenSymbol}
                     </a>
                   </div>
