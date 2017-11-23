@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { ImportByPKeyView } from "../../components/ImportAccount"
-import { importNewAccount, throwError, pKeyChange, throwPKeyError } from "../../actions/accountActions"
+import { importNewAccount, throwError, pKeyChange, throwPKeyError, openPkeyModal, closePkeyModal } from "../../actions/accountActions"
 import { addressFromPrivateKey, getRandomAvatar } from "../../utils/keys"
 
 @connect((store) => {
@@ -19,26 +19,15 @@ import { addressFromPrivateKey, getRandomAvatar } from "../../utils/keys"
 
 export default class ImportByPrivateKey extends React.Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      modalOpen: false
-    }
-  }
-
   openModal() {
-    this.setState({
-      modalOpen: true,
-    })
+    this.props.dispatch(openPkeyModal());
   }
 
   closeModal() {
-    this.setState({
-      modalOpen: false,
-    })
+    this.props.dispatch(closePkeyModal());    
   }
 
-  inputChange = (e) => {
+  inputChange(e) {
     var value = e.target.value
     this.props.dispatch(pKeyChange(value));
   }
@@ -53,12 +42,11 @@ export default class ImportByPrivateKey extends React.Component {
         this.props.ethereum,
         getRandomAvatar(address),
         this.props.tokens))
-    } 
-    catch(e){
-      console.log(e)
-      this.props.dispatch(throwPKeyError(e.message))
     }
-    
+    catch (e) {
+      this.props.dispatch(throwPKeyError('Invalid private key'))
+    }
+
   }
 
   render() {
@@ -67,9 +55,9 @@ export default class ImportByPrivateKey extends React.Component {
         importPrivateKey={this.importPrivateKey.bind(this)}
         modalOpen={this.openModal.bind(this)}
         onRequestClose={this.closeModal.bind(this)}
-        isOpen={this.state.modalOpen}
-        onChange={this.inputChange}
-        pKeyError={this.props.account.pKeyError}
+        isOpen={this.props.account.pKey.modalOpen}
+        onChange={this.inputChange.bind(this)}
+        pKeyError={this.props.account.pKey.error}
       />
     )
   }

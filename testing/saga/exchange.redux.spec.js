@@ -552,7 +552,7 @@ it('proccess exchange after confirm', () => {
     .withReducer(exchangeReducer)
     .run()
     .then((result) => {
-      expect(result.storeState.isConfirming).toEqual(true)
+      expect(result.storeState.isConfirming).toEqual(false)
       expect(result.storeState.bcError).toEqual("")
     })
 })

@@ -13,7 +13,7 @@ import { Header } from "../../containers/Header"
 
 import { ImportAccount } from "../ImportAccount"
 
-import { Processing, InfoModal } from "../../containers/CommonElements/"
+import { Processing, InfoModal, ExchangeHistory } from "../../containers/CommonElements/"
 import constanst from "../../services/constants"
 import { createNewConnection } from "../../services/ethereum/connection"
 
@@ -79,6 +79,7 @@ export default class Layout extends React.Component {
   }
 
   render() {
+    var exchangeHistory = <ExchangeHistory />
     return (
       <LayoutView
         history={history}
@@ -87,6 +88,7 @@ export default class Layout extends React.Component {
         InfoKyber={InfoKyber}
         Exchange={Exchange}
         Transfer={Transfer}
+        exchangeHistory = {exchangeHistory}
       />
     )
   }

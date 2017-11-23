@@ -27,6 +27,18 @@ export function pKeyChange(value){
     }
 }
 
+export function openPkeyModal(){
+    return {
+        type: "ACCOUNT.OPEN_PKEY_MODAL",
+    }
+}
+
+export function closePkeyModal(){
+    return {
+        type: "ACCOUNT.CLOSE_PKEY_MODAL",
+    }
+}
+
 export function throwPKeyError(error){
     return {
         type: "ACCOUNT.PKEY_ERROR",
