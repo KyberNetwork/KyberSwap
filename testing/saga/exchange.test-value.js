@@ -158,8 +158,42 @@ const perfectKeyStore = {
   type: "keystore",
 }
 
+const perfectPrivateKey = {
+  account: {
+    address: "0x52249ee04a2860c42704c0bbc74bd82cb9b56e98",
+    avatar: "url",
+    balance: "9371655768903718468",
+    keystring: "77bb1696de272658e4e68a1b34a0f49efd23821b6813bc8e4b9ef530fb002aa6",
+    manualNonce: 184,
+    nonce: 184,
+    type: "privateKey",
+  },
+  address: "0x52249ee04a2860c42704c0bbc74bd82cb9b56e98",
+  data: {
+    destAmount: "33.987171",
+    destTokenSymbol: "KNC",
+    sourceAmount: "0.1",
+    sourceTokenSymbol: "ETH",
+  },
+  destAddress: "0x52249ee04a2860c42704c0bbc74bd82cb9b56e98",
+  destToken: "0x88c29c3f40b4e15989176f9546b80a1cff4a6b0d",
+  ethereum: ethereum,
+  formId: "exchange",
+  gas: "0xf4240",
+  gasPrice: "0x4a817c800",
+  keyService: new FakeKeyStore('success'),
+  keystring: "77bb1696de272658e4e68a1b34a0f49efd23821b6813bc8e4b9ef530fb002aa6",
+  maxDestAmount: "0x8000000000000000000000000000000000000000000000000000000000000000",
+  minConversionRate: "0x126caadc48523c926f",
+  nonce: 184,
+  password: "",
+  sourceAmount: "0x16345785d8a0000",
+  sourceToken: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  throwOnFailure: false,
+  type: "privateKey",
+}
 // const perfectKeyStore = {...keystoreWrongPassphrase, password: "huyhoang"}
 
 export default {
-  ethereum, keystoreWrongPassphrase, trezorReject, perfectKeyStore, trezorCheckTokenBalance
+  ethereum, keystoreWrongPassphrase, trezorReject, perfectKeyStore, trezorCheckTokenBalance, perfectPrivateKey
 }

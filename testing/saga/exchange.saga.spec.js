@@ -4,7 +4,8 @@ import { expectSaga, testSaga } from 'redux-saga-test-plan';
 var stringify = require('json-stringify-safe');
 
 import { processExchange, exchangeETHtoTokenColdWallet, 
-  checkTokenBalanceOfColdWallet, exchangeETHtoTokenKeystore } from "../../src/js/sagas/exchangeActions"
+  checkTokenBalanceOfColdWallet, exchangeETHtoTokenKeystore,
+  exchangeETHtoTokenPrivateKey } from "../../src/js/sagas/exchangeActions"
 import exchangeTestValue from "./exchange.test-value"
 
 jest.mock('vm')
@@ -56,15 +57,6 @@ it('handle process exchange with keystore successfully', () => {
     .then((result) => {
       const { effects } = result;
 
-      // console.log(effects.put[0])
-      // console.log(effects.put[1])
-      // console.log(effects.put[2])
-
-      // console.log(effects.call[0])
-      // console.log(effects.call[1])
-      // console.log(effects.call[2])
-      // console.log(effects.call[3])
-
       expect(effects.put).toHaveLength(3);
       
       expect(effects.put[0]).toEqual(
@@ -76,7 +68,8 @@ it('handle process exchange with keystore successfully', () => {
         put({
           payload:"tx.serialize is not a function",
           type:"EXCHANGE.TX_BROADCAST_REJECTED"
-        }));
+        })
+      );
       expect(effects.put[2].PUT.action.type).toEqual('ACCOUNT.UPDATE_ACCOUNT_PENDING');
     })
 })
@@ -92,5 +85,46 @@ it('handle check token balance of cold wallet', () => {
       expect(stringify(effects.call[0])).toEqual(
         stringify(call(ethereum.call("getAllowance"), trezorCheckTokenBalance.sourceToken, trezorCheckTokenBalance.address))
       )
+  })
+})
+
+const perfectPrivateKey = exchangeTestValue.perfectPrivateKey
+it('handle exchange eth to token with private key', () => {
+  return expectSaga(exchangeETHtoTokenPrivateKey, { payload: perfectPrivateKey})
+    .run()
+    .then((result) => {
+      const { effects } = result;
+
+      console.log("====================");
+      console.log(effects)
+
+      console.log(effects.put[0])
+      console.log(effects.put[1])
+      console.log(effects.put[2])
+
+      console.log(effects.call[0])
+      console.log(effects.call[1])
+      console.log(effects.call[2])
+      console.log(effects.call[3])
+
+      expect(effects.put).toHaveLength(3);
+      expect(effects.call).toHaveLength(4);
+
+      expect(effects.put[0]).toEqual(
+        put({
+          type:"EXCHANGE.PREPARE_BROADCAST"
+        })
+      );
+      expect(effects.put[1]).toEqual(
+        put({
+          type:"EXCHANGE.TX_BROADCAST_REJECTED",
+          payload: "tx.serialize is not a function"
+        })
+      );
+      expect(effects.put[2].PUT.action.type).toEqual("ACCOUNT.UPDATE_ACCOUNT_PENDING");
+
+      // expect(stringify(effects.call[0])).toEqual(
+      //   stringify(call(ethereum.call("getAllowance"), trezorCheckTokenBalance.sourceToken, trezorCheckTokenBalance.address))
+      // )
   })
 })
