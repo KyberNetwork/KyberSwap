@@ -88,3 +88,13 @@ button:focus{
         background-image: url(../img/unlock.svg);
     }
 }
+.address-list-path{
+    .button{
+        margin-bottom: 0;
+        line-height: unset;
+        border: none;
+    }
+    .address-list-navigation a{
+        transition: background-color 0s ease-in-out;        
+    }
+}
