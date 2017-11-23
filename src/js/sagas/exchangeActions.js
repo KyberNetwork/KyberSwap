@@ -170,7 +170,7 @@ export function* exchangeETHtoTokenKeystore(action) {
   }
 }
 
-function* exchangeETHtoTokenPrivateKey(action) {
+export function* exchangeETHtoTokenPrivateKey(action) {
   const { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,

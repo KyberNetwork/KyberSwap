@@ -2,7 +2,7 @@
 import { call, put, take } from 'redux-saga/effects';
 import { expectSaga, testSaga } from 'redux-saga-test-plan';
 var stringify = require('json-stringify-safe');
-
+const ethereum = exchangeTestValue.ethereum
 import { processExchange, exchangeETHtoTokenColdWallet, 
   checkTokenBalanceOfColdWallet, exchangeETHtoTokenKeystore,
   exchangeETHtoTokenPrivateKey } from "../../src/js/sagas/exchangeActions"
@@ -29,7 +29,7 @@ it('handle process exchange with keystore and wrong passphrase', () => {
     })
 })
 
-const ethereum = exchangeTestValue.ethereum
+
 const trezorReject = exchangeTestValue.trezorReject
 
 it('handle process exchange with trezor and reject ', () => {
@@ -94,19 +94,8 @@ it('handle exchange eth to token with private key', () => {
     .run()
     .then((result) => {
       const { effects } = result;
-
-      console.log("====================");
+      console.log("======================")
       console.log(effects)
-
-      console.log(effects.put[0])
-      console.log(effects.put[1])
-      console.log(effects.put[2])
-
-      console.log(effects.call[0])
-      console.log(effects.call[1])
-      console.log(effects.call[2])
-      console.log(effects.call[3])
-
       expect(effects.put).toHaveLength(3);
       expect(effects.call).toHaveLength(4);
 
@@ -122,9 +111,9 @@ it('handle exchange eth to token with private key', () => {
         })
       );
       expect(effects.put[2].PUT.action.type).toEqual("ACCOUNT.UPDATE_ACCOUNT_PENDING");
-
-      // expect(stringify(effects.call[0])).toEqual(
-      //   stringify(call(ethereum.call("getAllowance"), trezorCheckTokenBalance.sourceToken, trezorCheckTokenBalance.address))
-      // )
-  })
+      
+      console.log(effects.call[1])
+      expect(stringify(effects.call[1])).toEqual(
+        stringify(call(ethereum.call("sendRawTransaction"), '0xe64892ae67b8df29092e2573c1062b9c0de21ebee1310ef2c126d68f2d63e4e6', ethereum)))
+    })
 })
