@@ -30,8 +30,7 @@ const ExchangeForm = (props) => {
 
                     <div className={errorToken === "" && props.errors.sourceAmount === "" ? "token-input" : "token-input error"}>
 
-                      <input id="inputSource" type={props.input.sourceAmount.type} className="source-input" value={props.input.sourceAmount.value} 
-                         onChange={(e) => props.input.sourceAmount.onChange(e)} min="0" step="0.000001" placeholder="0" />
+                      <input id="inputSource" type={props.input.sourceAmount.type} className="source-input" value={props.input.sourceAmount.value} onFocus={props.input.sourceAmount.onFocus} onChange={props.input.sourceAmount.onChange} min="0" step="0.000001" placeholder="0" />
 
                       {props.tokenSource}
                     </div>
@@ -56,7 +55,7 @@ const ExchangeForm = (props) => {
                   <label>Exchange To
                     <div class="token-input">
 
-                      <input type={props.input.destAmount.type} value={props.input.destAmount.value} onFocus={() => props.input.destAmount.onFocus()} onChange={(e) => props.input.destAmount.onChange(e)} min="0" step="0.000001" placeholder="0" />
+                      <input type={props.input.destAmount.type} value={props.input.destAmount.value} onFocus={props.input.destAmount.onFocus} onChange={props.input.destAmount.onChange} min="0" step="0.000001" placeholder="0" />
 
                       {/* <div class="info" data-open="exchange-to-token-modal"><img src="/assets/img/omg.svg"/><span class="name">OMG</span></div> */}
                       {props.tokenDest}
