@@ -86,6 +86,42 @@ const trezorReject = {
   type: "trezor",
 }
 
+const trezorCheckTokenBalance = {
+  account: {
+    address: "0xf4682a4c0c092fd27d8b46a62a996df2313152dc",
+    avatar: "url",
+    balance: "0",
+    keystring: "m/44'/60'/0'/0/96",
+    manualNonce: 0,
+    nonce: 0,
+    type: "trezor"
+  },
+  
+  address: "0xf4682a4c0c092fd27d8b46a62a996df2313152dc",
+  data: {
+    destAmount: "0.058117",
+    destTokenSymbol: "ETH",
+    sourceAmount: "20",
+    sourceTokenSymbol: "KNC",
+  },
+  destAddress: "0xf4682a4c0c092fd27d8b46a62a996df2313152dc",
+  destToken: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  ethereum: ethereum,
+  formId: "exchange",
+  gas: "0xf4240",
+  gasPrice: "0x4a817c800",
+  keyService:  new FakeLedger('reject_sign'),
+  keystring: "m/44'/60'/0'/0/96",
+  maxDestAmount: "0x8000000000000000000000000000000000000000000000000000000000000000",
+  minConversionRate: "0xa52d8ba6b4047",
+  nonce: 0,
+  password: "",
+  sourceAmount: "0x1158e460913d00000",
+  sourceToken: "0x88c29c3f40b4e15989176f9546b80a1cff4a6b0d",
+  throwOnFailure: false,
+  type: "trezor",
+}
+
 
 const perfectKeyStore = {
   account: {
@@ -125,5 +161,5 @@ const perfectKeyStore = {
 // const perfectKeyStore = {...keystoreWrongPassphrase, password: "huyhoang"}
 
 export default {
-  keystoreWrongPassphrase, trezorReject, perfectKeyStore
+  ethereum, keystoreWrongPassphrase, trezorReject, perfectKeyStore, trezorCheckTokenBalance
 }
