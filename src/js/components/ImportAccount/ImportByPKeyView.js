@@ -14,12 +14,23 @@ const ImportByPKeyView = (props) => {
     }
   }
 
+	function toggleShowPw(){
+		let input = document.getElementById('private_key')
+		if(input.type == 'password'){
+			input.type = 'text'
+			input.parentElement.classList.add('unlock')
+		}else if(input.type == 'text'){
+			input.type = 'password'
+			input.parentElement.classList.remove('unlock')
+		}
+	}
+
 	return (
 		<div class="column column-block">
 			<div class="importer pkey">
 				<a onClick={() => props.modalOpen()}>
-						<img src="/assets/img/pkey.svg" />
-						<div class="description">Enter your<br />private key</div>
+					<img src="/assets/img/pkey.svg" />
+					<div class="description">Enter your<br />private key</div>
 				</a>
 			</div>
 
@@ -30,27 +41,30 @@ const ImportByPKeyView = (props) => {
 				content={
 					<div>
 						<div class="title">ENTER YOUR PRIVATE KEY</div><a class="x" onClick={props.onRequestClose}>&times;</a>
-						{/* <form onSubmit={(e) => handldeSubmit(e)}></form> */}
 						<div class="content with-overlap">
 							<div class="row">
 								<div class="column">
-									<center>
-										<label className={!!props.pKeyError ? "error" : ""}>
-											<input class="text-center" type="password" id="private_key" onChange={(e) => props.onChange(e)}
-											 placeholder="Enter your private key" required autoComplete="off" onKeyPress = {(e) => submit(e)}/>
-											{!!props.pKeyError &&
-													<span className="error-text">{props.pKeyError}</span>
-											}
-										</label>
+									<center style={{marginBottom: 25}} className={!!props.pKeyError ? "error" : ""}>
+										<div className={'input-reveal'}>
+											<input class="text-center" id="private_key"
+												type="password"
+												onChange={(e) => props.onChange(e)}
+												onKeyPress = {(e) => submit(e)}
+												placeholder="Enter your private key" required />
+											<a class="toggle" onClick={() => toggleShowPw()}></a>
+										</div>
+										{!!props.pKeyError &&
+											<span className="error-text">{props.pKeyError}</span>
+										}
 									</center>
 								</div>
 							</div>
 						</div>
 						<span className="error-text">kjsjdhfkjsdfk</span>
 						<div class="overlap">
-								<button class="button accent" onClick={(e) => handldeSubmit(e)} >Import</button>
+							<button class="button accent" onClick={(e) => handldeSubmit(e)} >Import</button>
 						</div>
-							
+
 					</div>
 				}
 			/>

@@ -59,3 +59,32 @@ button:focus{
         margin-top: -20px;
     }
 }
+.input-reveal {
+    position: relative;
+    input {
+        margin-bottom: 0;
+        padding-left: 35px;
+        padding-right: 35px;
+    }
+    .toggle {
+        opacity: .4;
+        display: block;
+        width: 20px;
+        height: 20px;
+        background-repeat: no-repeat;
+        background-size: contains;
+        background-position: center;
+        position: absolute;
+        top: 50%;
+        margin-top: -10px;
+        left: 12px;
+        -webkit-transition: opacity .5s ease-in-out;
+        -o-transition: opacity .5s ease-in-out;
+        transition: opacity .5s ease-in-out;
+        background-image: url(../img/lock.svg);
+    }
+    &.unlock .toggle {
+        // opacity: 1;
+        background-image: url(../img/unlock.svg);
+    }
+}
