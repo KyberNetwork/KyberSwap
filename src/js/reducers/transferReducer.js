@@ -121,6 +121,7 @@ const transfer = (state = initState, action) => {
       newState.isConfirming = false
       newState.txRaw = ""
       newState.step = 2
+      newState.bcError = ""
       newState.broadcasting = true
       return newState
     }

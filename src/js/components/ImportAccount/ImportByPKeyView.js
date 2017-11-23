@@ -6,7 +6,13 @@ const ImportByPKeyView = (props) => {
 	function handldeSubmit(e) {
 		e.preventDefault()
 		props.importPrivateKey()
-	}
+  }
+  
+  function submit(e){
+    if ( e.key === 'Enter' ) {
+      handldeSubmit(e)
+    }
+  }
 
 	function toggleShowPw(){
 		let input = document.getElementById('private_key')
@@ -43,6 +49,7 @@ const ImportByPKeyView = (props) => {
 											<input class="text-center" id="private_key"
 												type="password"
 												onChange={(e) => props.onChange(e)}
+												onKeyPress = {(e) => submit(e)}
 												placeholder="Enter your private key" required />
 											<a class="toggle" onClick={() => toggleShowPw()}></a>
 										</div>
