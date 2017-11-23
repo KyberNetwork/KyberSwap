@@ -44,23 +44,24 @@ const ImportByPKeyView = (props) => {
 						<div class="content with-overlap">
 							<div class="row">
 								<div class="column">
-									<center style={{marginBottom: 25}} className={!!props.pKeyError ? "error" : ""}>
-										<div className="input-reveal">
-											<input class="text-center" id="private_key"
-												type="password"
-												onChange={(e) => props.onChange(e)}
-												onKeyPress = {(e) => submit(e)}
-												placeholder="Enter your private key" required />
-											<a class="toggle" onClick={() => toggleShowPw()}></a>
-										</div>
-										{!!props.pKeyError &&
-											<span className="error-text">{props.pKeyError}</span>
-										}
+									<center>
+										<label className={!!props.pKeyError ? "error" : ""}>
+											<div className="input-reveal">
+												<input class="text-center" id="private_key"
+													type="password"
+													onChange={(e) => props.onChange(e)}
+													onKeyPress = {(e) => submit(e)}
+													placeholder="Enter your private key" required />
+												<a class="toggle" onClick={() => toggleShowPw()}></a>
+											</div>
+											{!!props.pKeyError &&
+												<span className="error-text">{props.pKeyError}</span>
+											}
+										</label>
 									</center>
 								</div>
 							</div>
 						</div>
-						<span className="error-text">kjsjdhfkjsdfk</span>
 						<div class="overlap">
 							<button class="button accent" onClick={(e) => handldeSubmit(e)} >Import</button>
 						</div>
