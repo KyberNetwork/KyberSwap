@@ -58,21 +58,22 @@
       font-size: 12px;
       font-weight: bold;
       text-transform: uppercase;
-      color: $dark-gray;
       letter-spacing: .5px;
       transition: background-color .4s ease-in-out;
       padding: 7px 15px;
       border-radius: 1000px;
-      background-color: #ECF6F4;
-      &:hover {
-        background-color: $light-gray;
-      }
+      &:not(.button){
+        background-color: #ECF6F4;
+        color: $dark-gray;
+        &:hover {
+          background-color: $light-gray;
+        }
+      }      
     }
   }
 
   .button{
     margin: 0px;
-    line-height: 0px;
   }
   
 }
