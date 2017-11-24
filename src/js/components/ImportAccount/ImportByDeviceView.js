@@ -128,7 +128,7 @@ const ImportByDeviceView = (props) => {
                                 </ul>
                             </form>
                             <div class="address-list-navigation animated fadeIn">
-                                <a class="previous" onClick={props.getPreAddress}>Previous Addresses</a>
+                                <a class={'previous ' + (props.isFirstList ? 'disabled' : '')} onClick={props.getPreAddress}>Previous Addresses</a>
                                 <a class="next" onClick={props.getMoreAddress}>More Addresses</a>
                             </div>
                         </div>

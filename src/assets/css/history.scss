@@ -1,6 +1,21 @@
 #history-exchange {
   margin-top: 30px;
   margin-bottom: 50px;
+  &.loading{
+    position: relative;
+    &:after{
+      content: ' ';
+      position: absolute;
+      width: 100%;
+      z-index: 2;
+      background: white;
+      opacity: 0.5;
+      top: 0;
+      left: 0;
+      display: block;
+      height: 100%;
+    }
+  }
   .history-content{
     
     overflow-x: auto;
@@ -58,21 +73,22 @@
       font-size: 12px;
       font-weight: bold;
       text-transform: uppercase;
-      color: $dark-gray;
       letter-spacing: .5px;
-      transition: background-color .4s ease-in-out;
       padding: 7px 15px;
       border-radius: 1000px;
-      background-color: #ECF6F4;
-      &:hover {
-        background-color: $light-gray;
-      }
+      &:not(.disabled){
+        transition: background-color .4s ease-in-out;
+        background-color: #ECF6F4;
+        color: $dark-gray;
+        &:hover {
+          background-color: $light-gray;
+        }
+      }      
     }
   }
 
   .button{
     margin: 0px;
-    line-height: 0px;
   }
   
 }

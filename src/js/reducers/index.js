@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { persistReducer } from 'redux-persist'
-import session from 'redux-persist/lib/storage/session'
+//import session from 'redux-persist/lib/storage/session'
 import localForage from 'localforage'
 
 import { routerReducer } from 'react-router-redux'

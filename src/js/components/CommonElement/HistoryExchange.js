@@ -77,7 +77,7 @@ const HistoryExchange = (props) => {
     }
   }
   return (
-    <div id="history-exchange" class="row">
+    <div id="history-exchange" className = {props.isFetching?"row loading":"row"}>
       {/* <div class="history-caption">
         From block {props.fromBlock} to block {props.toBlock}
       </div>       */}
@@ -100,10 +100,10 @@ const HistoryExchange = (props) => {
       </div>
       <div class="history-pargination">
         <div>
-          <a onClick={(e)=>props.first(e)} className={props.isFirstPage?"first button disabled":"first"}>Newest history</a>
+          <a onClick={(e)=>props.first(e)} className={props.isFirstPage?"first disabled":"first"}>Newest history</a>
         </div>
         <div>
-          <a onClick = {(e)=>props.previous(e)}  className={props.isFirstPage?"previous button disabled":"previous"}>Previous history</a>
+          <a onClick = {(e)=>props.previous(e)}  className={props.isFirstPage?"previous disabled":"previous"}>Previous history</a>
           <a onClick = {(e)=>props.next(e)} class="next">More history</a>
         </div>        
       </div>      
