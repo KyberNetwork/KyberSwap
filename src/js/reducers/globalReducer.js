@@ -12,6 +12,16 @@ const initState = {
 
 const global = (state = initState, action) => {
   switch (action.type) {
+    case REHYDRATE: {
+      if (action.key === "global") {
+        if(action.payload && action.payload.history){
+          var history = action.payload.history
+          history.isFetching = false
+          return Object.assign({}, state, { history: history })
+        }
+      }
+      return state
+    }
     case "GLOBAL.NEW_BLOCK_INCLUDED_FULFILLED": {
       var history = {...state.history}
       history.currentBlock = action.payload 
