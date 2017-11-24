@@ -44,6 +44,7 @@ export default class ExchangeHistory extends React.Component {
   render() {
     return (
       <HistoryExchange fromBlock={this.props.global.history.fromBlock}
+        isFetching = {this.props.global.history.isFetching}
         toBlock={this.props.global.history.toBlock}
         range = {this.props.global.history.range}
         isFirstPage = {this.props.global.history.isFirstPage}

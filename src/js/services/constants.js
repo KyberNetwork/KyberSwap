@@ -111,6 +111,7 @@ const HISTORY_EXCHANGE = {
   range: 10000,
   fromBlock: 0,
   toBlock: 0,
+  isFetching: false,
   logs:[]
 }
 

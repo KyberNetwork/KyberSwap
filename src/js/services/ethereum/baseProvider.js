@@ -152,7 +152,7 @@ export default class BaseEthereumProvider {
         toBlock: currentBlock
       }, )
         .then(function (events) {
-          console.log(events)
+          //console.log(events)
           resolve(events)          
         })
     })

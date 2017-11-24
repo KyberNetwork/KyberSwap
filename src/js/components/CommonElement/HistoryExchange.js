@@ -77,7 +77,7 @@ const HistoryExchange = (props) => {
     }
   }
   return (
-    <div id="history-exchange" class="row">
+    <div id="history-exchange" className = {props.isFetching?"row loading":"row"}>
       {/* <div class="history-caption">
         From block {props.fromBlock} to block {props.toBlock}
       </div>       */}
