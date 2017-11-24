@@ -104,7 +104,7 @@ const HistoryExchange = (props) => {
         </div>
         <div>
           <a onClick = {(e)=>props.previous(e)}  className={props.isFirstPage?"previous disabled":"previous"}>Previous history</a>
-          <a onClick = {(e)=>props.next(e)} class="next">More history</a>
+          <a onClick = {(e)=>props.next(e)} className="next">More history</a>
         </div>        
       </div>      
     </div>

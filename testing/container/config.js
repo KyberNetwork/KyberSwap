@@ -10,3 +10,6 @@ window.matchMedia = window.matchMedia || function() {
         removeListener: function() {}
     };
 };
+
+jest.mock('vm')
+jest.mock('jdenticon', () => {})

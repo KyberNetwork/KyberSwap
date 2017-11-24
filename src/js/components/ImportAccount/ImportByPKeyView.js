@@ -3,34 +3,34 @@ import { Modal } from '../CommonElement'
 
 const ImportByPKeyView = (props) => {
 
-	function handldeSubmit(e) {
-		e.preventDefault()
-		props.importPrivateKey()
-  }
-  
-  function submit(e){
-    if ( e.key === 'Enter' ) {
-      handldeSubmit(e)
-    }
-  }
+	function handldeSubmit() {
+		let privateKey = document.getElementById("private_key").value
+		props.importPrivateKey(privateKey)
+	}
 
-	function toggleShowPw(){
+	function submit(e) {
+		if (e.key === 'Enter') {
+			handldeSubmit(e)
+		}
+	}
+
+	function toggleShowPw() {
 		let input = document.getElementById('private_key')
-		if(input.type == 'password'){
+		if (input.type == 'password') {
 			input.type = 'text'
 			input.parentElement.classList.add('unlock')
-		}else if(input.type == 'text'){
+		} else if (input.type == 'text') {
 			input.type = 'password'
 			input.parentElement.classList.remove('unlock')
 		}
 	}
 
 	return (
-		<div class="column column-block">
-			<div class="importer pkey">
-				<a onClick={() => props.modalOpen()}>
+		<div className="column column-block">
+			<div className="importer pkey">
+				<a onClick={() => props.modalOpen()} id="importPKey">
 					<img src="/assets/img/pkey.svg" />
-					<div class="description">Enter your<br />private key</div>
+					<div className="description">Enter your<br />private key</div>
 				</a>
 			</div>
 
@@ -40,19 +40,19 @@ const ImportByPKeyView = (props) => {
 				onRequestClose={() => props.onRequestClose()}
 				content={
 					<div>
-						<div class="title">ENTER YOUR PRIVATE KEY</div><a class="x" onClick={props.onRequestClose}>&times;</a>
-						<div class="content with-overlap">
-							<div class="row">
-								<div class="column">
+						<div className="title">ENTER YOUR PRIVATE KEY</div><a className="x" onClick={props.onRequestClose}>&times;</a>
+						<div className="content with-overlap">
+							<div className="row">
+								<div className="column">
 									<center>
 										<label className={!!props.pKeyError ? "error" : ""}>
 											<div className="input-reveal">
-												<input class="text-center" id="private_key"
+												<input className="text-center" id="private_key"
 													type="password"
 													onChange={(e) => props.onChange(e)}
-													onKeyPress = {(e) => submit(e)}
+													onKeyPress={(e) => submit(e)}
 													placeholder="Enter your private key" required />
-												<a class="toggle" onClick={() => toggleShowPw()}></a>
+												<a className="toggle" onClick={() => toggleShowPw()}></a>
 											</div>
 											{!!props.pKeyError &&
 												<span className="error-text">{props.pKeyError}</span>
@@ -62,8 +62,8 @@ const ImportByPKeyView = (props) => {
 								</div>
 							</div>
 						</div>
-						<div class="overlap">
-							<button class="button accent" onClick={(e) => handldeSubmit(e)} >Import</button>
+						<div className="overlap">
+							<button className="button accent" id="submit_pkey" onClick={() => handldeSubmit()} >Import</button>
 						</div>
 
 					</div>
