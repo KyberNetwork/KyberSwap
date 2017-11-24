@@ -43,7 +43,7 @@ function* selectToken(action) {
   yield call(ethereum.fetchRateExchange)
 }
 
-function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
+export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   //console.log({txRaw, hash, account, data})
   const tx = new Tx(
     hash, account.address, ethUtil.bufferToInt(txRaw.gas),
