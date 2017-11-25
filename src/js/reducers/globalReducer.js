@@ -7,7 +7,8 @@ const initState = {
   termOfServiceAccepted: false,
   nodeName: "Infura Kovan",
   nodeURL: "https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi",
-  history: constants.HISTORY_EXCHANGE
+  history: constants.HISTORY_EXCHANGE,
+  isWaiting: false
 }
 
 const global = (state = initState, action) => {
@@ -35,6 +36,12 @@ const global = (state = initState, action) => {
     }
     case "GLOBAL.EXIT_IDLE_MODE": {
       return { ...state, idleMode: false }
+    }
+    case "GLOBAL.WAITE": {
+      return { ...state, isWaiting: true }
+    }
+    case "GLOBAL.NO_WAITE": {
+      return { ...state, isWaiting: false }
     }
     case "GLOBAL.UPDATE_HISTORY_EXCHANGE":{
       var history = {...state.history}

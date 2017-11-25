@@ -80,3 +80,15 @@ export function updateHistory(logs, toBlock, isFirstPage) {
     payload: { logs, toBlock, isFirstPage }
   }
 }
+
+export function waite(){
+  return {
+    type: "GLOBAL.WAITE"
+  }
+}
+
+export function noWaite(){
+  return {
+    type: "GLOBAL.NO_WAITE"
+  }
+}

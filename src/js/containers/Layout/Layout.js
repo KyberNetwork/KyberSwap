@@ -32,7 +32,8 @@ import { LayoutView } from "../../components/Layout"
     currentBlock: store.global.currentBlock,
     connected: store.global.connected,
     utils: store.utils,
-    account: store.account
+    account: store.account,
+    isWaiting: store.global.isWaiting
   }
 })
 
@@ -82,6 +83,7 @@ export default class Layout extends React.Component {
     var exchangeHistory = <ExchangeHistory />
     return (
       <LayoutView
+        isWaiting={this.props.isWaiting}
         history={history}
         Header={Header}
         ImportAccount={ImportAccount}
