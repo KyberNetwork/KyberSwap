@@ -187,7 +187,6 @@ describe('Submit transfer', () => {
         const postTransferBtn = shallow(
             <PostTransferBtn submit={postTransfer.instance().clickTransfer} />
         );
-
         postTransferBtn.find('.submit-transfer').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'TRANSFER.SHOW_CONFIRM',
@@ -217,7 +216,6 @@ describe('PassphraseModal', () => {
         });
     })
 });
-
 
 describe('Process submit', () => {
     beforeEach(() => {
@@ -315,11 +313,11 @@ describe('Close modal', () => {
             <PostTransfer store={store} />
         ).dive();
 
-        const passphraseModal = shallow(
+        const confirmTransferModal = shallow(
             <ConfirmTransferModal onCancel={postTransfer.instance().closeModal} />
         );
 
-        passphraseModal.find('.x').simulate('click');
+        confirmTransferModal.find('.x').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'TRANSFER.HIDE_CONFIRM',
         });
@@ -331,11 +329,11 @@ describe('Close modal', () => {
             <PostTransfer store={store} />
         ).dive();
 
-        const passphraseModal = shallow(
+        const confirmTransferModal = shallow(
             <ConfirmTransferModal onCancel={postTransfer.instance().closeModal} />
         );
 
-        passphraseModal.find('.x').simulate('click');
+        confirmTransferModal.find('.x').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'TRANSFER.HIDE_CONFIRM',
         });

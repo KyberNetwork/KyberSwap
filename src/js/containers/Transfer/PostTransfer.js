@@ -195,7 +195,7 @@ export default class PostTransfer extends React.Component {
         content={this.contentConfirm()}
         size="tiny"
       />
-    let className = "button accent submit-transfer "
+    let className = "button accent "
     if (!validators.anyErrors(this.props.form.errors)) {
       className += " animated infinite pulse next"
     }

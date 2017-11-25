@@ -194,21 +194,6 @@ export default class PostExchange extends React.Component {
     }
   }
 
-  // processTxAfterConfirm = () => {
-  //   var password = ""
-  //   const params = this.formParams()
-  //   var account = this.props.account
-  //   var ethereum = this.props.ethereum
-
-  //   var formId = "exchange"
-  //   var data = this.recap()
-  //   this.props.dispatch(exchangeActions.processExchangeAfterConfirm(formId, ethereum, account.address, params.sourceToken,
-  //     params.sourceAmount, params.destToken, params.destAddress,
-  //     params.maxDestAmount, params.minConversionRate,
-  //     params.throwOnFailure, params.nonce, params.gas,
-  //     params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService))
-  // }
-
   content = () => {
     return (
       <PassphraseModal recap={this.createRecap()}
