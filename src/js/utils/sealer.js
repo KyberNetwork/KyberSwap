@@ -59,8 +59,6 @@ export function sealTxByTrezor(params) {
       data,
       chain_id,
       function (response) {
-        console.log("---------------------")
-        console.log(response)
         if (response.success) {
           var v = new Buffer([response.v]);
           var r = new Buffer(response.r, 'hex');
