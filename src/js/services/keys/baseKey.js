@@ -69,7 +69,7 @@ export const getAppoveToken = (ethereum, sourceToken, sourceAmount, nonce, gas, 
   //const approvalData = ethereum.approveTokenData(sourceToken, sourceAmount)  
   const approvalData = ethereum.call("approveTokenData")(sourceToken, biggestNumber())
   const txParams = {
-    from:account,
+    from: account,
     nonce: nonce,
     gasPrice: gasPrice,
     gasLimit: gas,
