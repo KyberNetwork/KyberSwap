@@ -283,12 +283,16 @@ function* exchangeTokentoETHKeystore(action) {
     }
   }
 }
-function* exchangeTokentoETHPrivateKey(action) {
+export function* exchangeTokentoETHPrivateKey(action) {
   var { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
     throwOnFailure, nonce, gas,
     gasPrice, keystring, type, password, account, data, keyService } = action.payload
+
+    console.log("-------------------------------------")
+    console.log(action.payload)
+    
   try {
     var remainStr = yield call(ethereum.call("getAllowance"), sourceToken, address)
     var remain = converter.hexToBigNumber(remainStr)

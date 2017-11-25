@@ -136,4 +136,24 @@ export default class BaseEthereumProvider {
                 })
         })
     }
+
+    getLogExchange(currentBlock, range) {
+        return new Promise((resolve, rejected) => {
+          // var cachedRange = constants.HISTORY_EXCHANGE.cached.range 
+          // var startBlock = (latestBlock - currentBlock) > cachedRange ? 
+          //                                               (latestBlock - cachedRange):
+          //                                               currentBlock
+          //console.log(startBlock)         
+          var startBlock = currentBlock > range? currentBlock - range: 0
+          this.networkContract.getPastEvents('Trade', {
+            filter: {status: "mined"},
+            fromBlock: startBlock,
+            toBlock: currentBlock
+          }, )
+            .then(function (events) {
+              //console.log(events)
+              resolve(events)          
+            })
+        })
+      }
 }
