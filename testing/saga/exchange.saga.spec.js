@@ -8,7 +8,7 @@ import { processExchange, exchangeETHtoTokenColdWallet,
   exchangeETHtoTokenPrivateKey, exchangeTokentoETHPrivateKey } from "../../src/js/sagas/exchangeActions"
 import exchangeTestValue from "./exchange.test-value"
 import { KeyStore, Trezor, Ledger, PrivateKey } from "../../src/js/services/keys"
-
+import FakeTrezor from "../instance/trezor/Trezor.fake"
 jest.mock('vm')
 jest.mock('jdenticon', () => {})
 
@@ -243,7 +243,7 @@ describe('testing exchange saga successfully with trezor', () => {
     exchangeSuccess.account = trezorAccount
     exchangeSuccess.nonce = trezorAccount.nonce
     
-    exchangeSuccess.keyService = new Trezor()
+    exchangeSuccess.keyService = new FakeTrezor('success')
     exchangeSuccess.keystring = trezorAccount.keystring
     exchangeSuccess.type = trezorAccount.type
     return expectSaga(exchangeETHtoTokenColdWallet, { payload: exchangeSuccess})
