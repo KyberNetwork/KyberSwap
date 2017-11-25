@@ -557,5 +557,37 @@ it('proccess exchange after confirm', () => {
     })
 })
 
+//-------------------------------------------------------------------
 
+function* inputChange(focus, value) {
+  yield put({
+    type: "EXCHANGE.INPUT_CHANGE",
+    payload: { focus, value }
+  })
+}
+it('inout change', () => {
+  return expectSaga(inputChange, "source", "10")
+    .withReducer(exchangeReducer, { offeredRate: "123000000000000000000", errors: {} })
+    .run()
+    .then((result) => {
+      expect(result.storeState.sourceAmount).toEqual("10")
+      expect(result.storeState.destAmount).toEqual("1230.000000")
+    })
+})
 
+//-------------------------------------------------------------------
+
+function* focusInput(focus) {
+  yield put({
+    type: "EXCHANGE.FOCUS_INPUT",
+    payload: focus
+  })
+}
+it('focus input', () => {
+  return expectSaga(focusInput, "source")
+    .withReducer(exchangeReducer)
+    .run()
+    .then((result) => {
+      expect(result.storeState.inputFocus).toEqual("source")
+    })
+})

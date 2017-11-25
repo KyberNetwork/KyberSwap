@@ -12,7 +12,7 @@ export default class KeyStore {
 
   sealTx = (params, keystring) => {
     const tx = new EthereumTx(params)
-    const privateKey = Buffer.from(privKey, 'hex')
+    const privateKey = Buffer.from(keystring, 'hex')
     tx.sign(privateKey)
     return tx
   }
