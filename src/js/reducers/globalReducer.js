@@ -7,8 +7,7 @@ const initState = {
   termOfServiceAccepted: false,
   nodeName: "Infura Kovan",
   nodeURL: "https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi",
-  history: constants.HISTORY_EXCHANGE,
-  isWaiting: false
+  history: constants.HISTORY_EXCHANGE
 }
 
 const global = (state = initState, action) => {

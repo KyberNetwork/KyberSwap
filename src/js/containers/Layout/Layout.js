@@ -82,7 +82,6 @@ export default class Layout extends React.Component {
     var exchangeHistory = <ExchangeHistory />
     return (
       <LayoutView
-        isWaiting={this.props.isWaiting}
         history={history}
         Header={Header}
         ImportAccount={ImportAccount}
