@@ -46,24 +46,6 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
   }
 }
 
-#layout{
-  &.loading{
-    position: relative;
-    &:after{
-      content: ' ';
-      position: absolute;
-      width: 100%;
-      z-index: 2;
-      background: white;
-      opacity: 0.5;
-      top: 0;
-      left: 0;
-      display: block;
-      height: 100%;
-    }
-  }
-}
-
 #footer {
   ul.links {
     margin: 0 0 30px 0;

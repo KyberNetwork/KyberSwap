@@ -8,7 +8,7 @@ const LayoutView = (props) => {
       
   return (    
     <ConnectedRouter history={props.history}>
-      <div id="layout" className = {props.isWaiting?"loading":""}>
+      <div>
         <Route component={props.Header}/>    
         <section id="content">
             <Route exact path="/" component={props.ImportAccount}/>              
