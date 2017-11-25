@@ -1,7 +1,7 @@
 import * as ethUtil from 'ethereumjs-util'
 import scrypt from 'scryptsy'
 import crypto from 'crypto'
-
+ import jdenticon from 'jdenticon'
 
 function decipherBuffer(decipher, data) {
   return Buffer.concat([decipher.update(data), decipher.final()])
@@ -42,7 +42,7 @@ export function unlock(input, password, nonStrict) {
     var ciphertext = new Buffer(json.crypto.ciphertext, 'hex')
     var mac = ethUtil.sha3(Buffer.concat([derivedKey.slice(16, 32), ciphertext]))
     if (mac.toString('hex') !== json.crypto.mac) {
-        throw new Error('Key derivation failed - possibly wrong passphrase')
+        throw new Error('Key derivation failed - possibly wrong password')
     }
     var decipher = crypto.createDecipheriv(json.crypto.cipher, derivedKey.slice(0, 16), new Buffer(json.crypto.cipherparams.iv, 'hex'))
     var seed = decipherBuffer(decipher, ciphertext, 'hex')
@@ -51,4 +51,16 @@ export function unlock(input, password, nonStrict) {
         seed = Buffer.concat([nullBuff, seed]);
     }
     return seed
+}
+
+export function getRandomAvatar(addressString) {
+  let svg = jdenticon.toSvg(addressString, 45),
+  url = 'data:image/svg+xml;base64,' + btoa(svg);
+  return url
+}
+
+export function addressFromPrivateKey(privateKey){
+    var addBuf = ethUtil.privateToAddress(new Buffer(privateKey, 'hex'))
+    var addrString = ethUtil.bufferToHex(addBuf)
+    return addrString
 }

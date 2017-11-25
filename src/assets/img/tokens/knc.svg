@@ -1,0 +1,32 @@
+<svg width="28" height="28" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>knc</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(-747 35)">
+<g id="knc">
+<g id="bg">
+<use xlink:href="#path0_fill" transform="translate(747 -35)" fill="#BECDC5"/>
+</g>
+<g id="knc">
+<g id="Vector">
+<use xlink:href="#path1_fill" transform="translate(760.001 -22.9911)" fill="#34908E"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path2_fill" transform="translate(755.554 -31.5178)" fill="#5AB085"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path3_fill" transform="translate(760.001 -26.3578)" fill="#BEDECD"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path4_fill" transform="translate(759.938 -31.5178)" fill="#EDF7F3"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" d="M 0 14C 0 6.26801 6.26801 0 14 0C 21.732 0 28 6.26801 28 14C 28 21.732 21.732 28 14 28C 6.26801 28 0 21.732 0 14Z"/>
+<path id="path1_fill" d="M 0.09728 12.6034L 6.21202 7.07751L 3.65652e-15 4.70471e-15L 0.09728 12.6034Z"/>
+<path id="path2_fill" d="M -1.73254e-16 5.1892L 1.01449 15.4724L 4.55826 20.8373L 4.38454 1.603e-16L -1.73254e-16 5.1892Z"/>
+<path id="path3_fill" d="M 7.60301e-16 3.36676L 6.21202 10.4443L 6.44132 -8.4768e-15L 7.60301e-16 3.36676Z"/>
+<path id="path4_fill" d="M 2.3218e-15 -1.095e-16L 0.0625366 8.52668L 6.50385 5.15992L 2.3218e-15 -1.095e-16Z"/>
+</defs>
+</svg>
