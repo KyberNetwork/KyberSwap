@@ -105,7 +105,7 @@ export function* processApproveByColdWallet(action) {
     keystring, password, accountType, account, keyService } = action.payload
   try {
     const rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-      keystring, password, accountType)
+      keystring, password, accountType, account.address)
     const hashApprove = yield call(ethereum.call("sendRawTransaction"), rawApprove, ethereum)
     console.log(hashApprove)
     //increase nonce 
@@ -124,7 +124,7 @@ export function* processApproveByMetamask(action) {
     keystring, password, accountType, account, keyService } = action.payload
   try {
     const hashApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-      keystring, password, accountType)
+      keystring, password, accountType, account.address)
     //const hashApprove = yield call(ethereum.call("sendRawTransaction"), rawApprove, ethereum)
     console.log(hashApprove)
     //increase nonce 
@@ -289,7 +289,7 @@ function* exchangeTokentoETHKeystore(action) {
     var rawApprove
     try {
       rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-        keystring, password, type)
+        keystring, password, type, address)
     } catch (e) {
       console.log(e)
       yield put(actions.throwPassphraseError(e.message))
@@ -357,7 +357,7 @@ function* exchangeTokentoETHPrivateKey(action) {
     var sourceAmountBig = converter.hexToBigNumber(sourceAmount)
     if (!remain.greaterThanOrEqualTo(sourceAmountBig)) {
       var rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-        keystring, password, type)
+        keystring, password, type, address)
       yield put(actions.prePareBroadcast())
       var hashApprove = yield call(ethereum.call("sendRawTransaction"), rawApprove, ethereum)
       console.log(hashApprove)

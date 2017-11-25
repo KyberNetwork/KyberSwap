@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { importAccountMetamask } from "../../actions/accountActions"
+import { importAccountMetamask, throwError } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import Web3Service from "../../services/web3"
 
