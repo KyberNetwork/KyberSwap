@@ -54,6 +54,7 @@ export default class PostExchange extends React.Component {
             break
           case "trezor":
           case "ledger":
+          case "metamask":
             if (this.props.form.sourceTokenSymbol === "ETH") {
               this.props.dispatch(exchangeActions.showConfirm())
             } else {

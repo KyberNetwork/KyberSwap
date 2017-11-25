@@ -14,7 +14,7 @@ export default class Account {
   shallowClone() {
     return new Account(
       this.address, this.type, this.keystring,
-      this.balance, this.nonce, this.manualNonce, this.avatar)
+      this.balance, this.nonce, this.manualNonce, this.avatar, this.event)
   }
 
   getUsableNonce() {

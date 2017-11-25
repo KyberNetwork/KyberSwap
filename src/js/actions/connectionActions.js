@@ -19,3 +19,10 @@ export function clearIntervalConnection(intervalConnection){
         payload: intervalConnection
     }
 }
+
+// export function setSubprovider(provider) {
+//   return {
+//       type: "CONN.SET_SUB_PROVIDER",
+//       payload: provider
+//   }
+// }

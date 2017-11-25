@@ -108,5 +108,6 @@
   "network": "0x00a8a6f8db6793174d500b0eb9e1f5b2402f80c3",
   "wrapper": "0x5aa7b0c53affef857523014ac6ce6c8d30bc68e6",
   "endpoint": "https://kovan.kyber.network",
-  "averageBlockTime": 6000
+  "averageBlockTime": 6000,
+  "networkId":42
   }
