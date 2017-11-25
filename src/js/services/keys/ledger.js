@@ -1,6 +1,7 @@
 import * as keyService from "./baseKey"
 import EthereumTx from "ethereumjs-tx"
 import { signLedgerTransaction, connectLedger } from "../../services/device/device"
+import * as ethUtil from 'ethereumjs-util'
 
 export default class Ledger {
 
