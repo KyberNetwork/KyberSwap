@@ -1,7 +1,7 @@
 
 import React from "react"
 import { PostExchange } from "../Exchange"
-import {KeyStore, Trezor, Ledger, PrivateKey} from "../../services/keys"
+import {KeyStore, Trezor, Ledger, PrivateKey, Metamask} from "../../services/keys"
 import { connect } from "react-redux"
 
 @connect((store) => {
@@ -19,6 +19,9 @@ import { connect } from "react-redux"
       break
     case "ledger":
       keyService = new Ledger()
+      break
+    case "metamask":
+      keyService = new Metamask()
       break
     default:
       keyService = new KeyStore()

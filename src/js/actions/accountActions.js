@@ -1,89 +1,95 @@
 import store from "../store"
 
 export function updateAccount(ethereum, account) {
-    return {
-        type: "ACCOUNT.UPDATE_ACCOUNT_PENDING",
-        payload: {ethereum, account}
-    }
+  return {
+    type: "ACCOUNT.UPDATE_ACCOUNT_PENDING",
+    payload: { ethereum, account }
+  }
 }
 
 export function updateAccountComplete(account) {
-    return {
-        type: "ACCOUNT.UPDATE_ACCOUNT_FULFILLED",
-        payload: account
-    }
+  return {
+    type: "ACCOUNT.UPDATE_ACCOUNT_FULFILLED",
+    payload: account
+  }
 }
 
-export function importLoading(){
-    return {
-        type: "ACCOUNT.LOADING"
-    }
+export function importLoading() {
+  return {
+    type: "ACCOUNT.LOADING"
+  }
 }
 
-export function pKeyChange(value){
-    return {
-        type: "ACCOUNT.PKEY_CHANGE",
-        payload: value
-    }
+export function pKeyChange(value) {
+  return {
+    type: "ACCOUNT.PKEY_CHANGE",
+    payload: value
+  }
 }
 
-export function openPkeyModal(){
-    return {
-        type: "ACCOUNT.OPEN_PKEY_MODAL",
-    }
+export function openPkeyModal() {
+  return {
+    type: "ACCOUNT.OPEN_PKEY_MODAL",
+  }
 }
 
-export function closePkeyModal(){
-    return {
-        type: "ACCOUNT.CLOSE_PKEY_MODAL",
-    }
+export function closePkeyModal() {
+  return {
+    type: "ACCOUNT.CLOSE_PKEY_MODAL",
+  }
 }
 
-export function throwPKeyError(error){
-    return {
-        type: "ACCOUNT.PKEY_ERROR",
-        payload: error
-    }
+export function throwPKeyError(error) {
+  return {
+    type: "ACCOUNT.PKEY_ERROR",
+    payload: error
+  }
 }
 
-export function importNewAccount(address, type, keystring, ethereum, avatar, tokens) {
-    return {
-        type: "ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING",
-        payload: {address, type, keystring, ethereum, avatar, tokens}
-    }
+export function importNewAccount(address, type, keystring, ethereum, avatar, tokens, metamask = null) {
+  return {
+    type: "ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING",
+    payload: { address, type, keystring, ethereum, avatar, tokens, metamask }
+  }
 }
 
-export function importNewAccountComplete(account){
-    return {
-        type: "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED",
-        payload: account
-    }
+export function importNewAccountComplete(account) {
+  return {
+    type: "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED",
+    payload: account
+  }
 }
 
-export function closeImportLoading(){
-    return{
-        type: "ACCOUNT.CLOSE_LOADING_IMPORT"
-    }
+export function closeImportLoading() {
+  return {
+    type: "ACCOUNT.CLOSE_LOADING_IMPORT"
+  }
 }
 
 export function throwError(error) {
-	return {
-        type: "ACCOUNT.THROW_ERROR",
-        payload: error
-    }
+  return {
+    type: "ACCOUNT.THROW_ERROR",
+    payload: error
+  }
 }
 
 
-export function closeErrorModal(){
-    return {
-        type: "ACCOUNT.CLOSE_ERROR_MODAL"
-    }    
+export function closeErrorModal() {
+  return {
+    type: "ACCOUNT.CLOSE_ERROR_MODAL"
+  }
 }
 
 export function incManualNonceAccount(address) {
-    return {
-        type: "ACCOUNT.INC_MANUAL_NONCE_ACCOUNT",
-        payload: address
-    }
+  return {
+    type: "ACCOUNT.INC_MANUAL_NONCE_ACCOUNT",
+    payload: address
+  }
 }
 
+export function importAccountMetamask(web3Service, networkId, ethereum, tokens) {
+  return {
+    type: "ACCOUNT.IMPORT_ACCOUNT_METAMASK",
+    payload: { web3Service, networkId, ethereum, tokens }
+  }
+}
