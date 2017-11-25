@@ -21,6 +21,9 @@ export default class EthereumService extends React.Component {
     this.httpProvider = this.getHttpProvider()
     this.wsProvider = this.getWebsocketProvider()
 
+    //for metamask/mist
+    this.subProvider = null
+
     this.initProvider(props.default)
   }
 
@@ -39,6 +42,15 @@ export default class EthereumService extends React.Component {
         this.currentLabel = "http"
         break
     }
+  }
+  
+  getSubInstance(){
+    if(typeof web3 !== 'undefined'){
+      return web3
+    }else{
+      return false
+    }
+    
   }
 
   getWebsocketProvider() {

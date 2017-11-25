@@ -1,6 +1,7 @@
 //import Account from "../services/account"
 // import Account from "../services/account"
 import {REHYDRATE} from 'redux-persist/lib/constants'
+import { clearInterval } from 'timers';
 
 const initState = {
   isStoreReady: false,

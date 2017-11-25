@@ -17,6 +17,7 @@ const ImportAccountView = (props) => {
               {props.importByDevice}
             </div>
           </div>
+          {props.importByMetamask}
         </div>
       </div>
       {props.errorModal}
