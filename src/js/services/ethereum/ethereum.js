@@ -118,10 +118,18 @@ export default class EthereumService extends React.Component {
     var tx
     var txs = state.txs
     var ethereum = state.connection.ethereum
+    var tokens = state.tokens.tokens
+    var arrayTokens = []
+    if(tokens){
+      Object.keys(tokens).forEach((key) => {
+        arrayTokens.push(tokens[key])
+      })
+    } 
+    var account = state.account.account
     Object.keys(txs).forEach((hash) => {
       tx = txs[hash]
       if (tx.status == "pending") {
-        store.dispatch(updateTx(ethereum, tx))
+        store.dispatch(updateTx(ethereum, tx, arrayTokens, account))
       }
     })
   }
