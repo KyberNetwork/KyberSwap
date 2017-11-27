@@ -101,6 +101,7 @@ export default class EthereumService extends React.Component {
     var state = store.getState()
     var ethereum = state.connection.ethereum
     var ownerAddr = state.account.account.address
+    if(!ownerAddr) return;
     //var tokens = state.tokens.tokens
     var supportTokens = []
     Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
