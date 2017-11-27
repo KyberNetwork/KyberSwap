@@ -45,8 +45,10 @@ const tokens = (state = initState, action) => {
     }
     case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
       var tokens = { ...state.tokens }
-      var tokensData = action.payload;
+      var tokensData = action.payload.rates;
+      var isUpdateBalance = action.payload.isUpdateBalance;
       tokensData.forEach((data) => {
+        if(!isUpdateBalance && tokens[data.symbol]) data.balance = tokens[data.symbol].balance
         tokens[data.symbol] = data
       })
       return Object.assign({}, state, { tokens: tokens })

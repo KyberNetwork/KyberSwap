@@ -33,7 +33,7 @@ export function* importNewAccount(action) {
     var reserve = constants.RESERVES[k];
     rates[k] = yield call(updateAllRatePromise, ethereum, tokens, constants.RESERVES[k], account.address)
   }
-  yield put.sync(updateAllRateComplete(rates[0]))
+  yield put.sync(updateAllRateComplete(rates[0], true))
   var randomToken = randomForExchange(rates[0])
   if (!randomToken || !randomToken[0]) {
     //todo dispatch action waring no balanc

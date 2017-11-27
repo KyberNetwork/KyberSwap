@@ -15,7 +15,7 @@ function* updateTx(action) {
     var reserve = constants.RESERVES[k];
     rates[k] = yield call(updateAllRatePromise, ethereum, tokens, constants.RESERVES[k], account.address)
   }
-  yield put(updateAllRateComplete(rates[0]))
+  yield put(updateAllRateComplete(rates[0], true))
 }
 
 export function* watchTx() {

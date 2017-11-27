@@ -46,8 +46,9 @@ export function* clearSession(action) {
 
 export function* updateAllRate(action) {
   const { ethereum, tokens, reserve, ownerAddr } = action.payload
+  let isUpdateBalance = ownerAddr ? true : false
   const rates = yield call(updateAllRatePromise, ethereum, tokens, reserve, ownerAddr)
-  yield put(actions.updateAllRateComplete(rates))
+  yield put(actions.updateAllRateComplete(rates, isUpdateBalance))
 }
 
 export function* watchGlobal() {
