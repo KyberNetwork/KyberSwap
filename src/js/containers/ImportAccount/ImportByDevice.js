@@ -55,6 +55,15 @@ export default class ImportByDevice extends React.Component {
 		this.generator = null;
 	}
 
+	updateBalance() {
+		this.interval = setInterval(() => {
+			console.log(this.state.addresses)
+			this.state.addresses.forEach((address, index) => {
+				this.addBalance(address.addressString, index);
+			})
+		}, 10000)
+	}
+
 	connectDevice(walletType, selectedPath, dpath) {
 		this.setDeviceState();
 		switch (walletType) {
@@ -66,7 +75,7 @@ export default class ImportByDevice extends React.Component {
 					this.props.dispatch(closeImportLoading());
 				}).catch((err) => {
 					if (err.toString() == 'Error: Not a valid path.') {
-						this.props.dispatch(throwError('This path not supported  by Trezor'))
+						this.props.dispatch(throwError('This path not supported by Trezor'))
 					}
 					this.props.dispatch(closeImportLoading());
 					this.props.dispatch(throwError('Cannot connect to ' + this.walletType))
@@ -114,7 +123,7 @@ export default class ImportByDevice extends React.Component {
 			};
 			address.avatar = getRandomAvatar(address.addressString)
 			addresses.push(address);
-			this.updateBalance(address.addressString, index);
+			this.addBalance(address.addressString, index);
 		}
 		this.addressIndex = index;
 		this.currentIndex = index;
@@ -130,12 +139,14 @@ export default class ImportByDevice extends React.Component {
 		this.setState({
 			modalOpen: true,
 		})
+		this.updateBalance();
 	}
 
 	closeModal() {
 		this.setState({
 			modalOpen: false,
 		})
+		clearInterval(this.interval);
 	}
 
 	moreAddress() {
@@ -154,7 +165,7 @@ export default class ImportByDevice extends React.Component {
 					address.avatar = getRandomAvatar(address.addressString)
 					addresses.push(address);
 					currentAddresses.push(address);
-					this.updateBalance(address.addressString, i);
+					this.addBalance(address.addressString, i);
 
 				}
 			}
@@ -193,9 +204,6 @@ export default class ImportByDevice extends React.Component {
 		this.props.dispatch(importNewAccount(data.address, data.type, data.path, this.props.ethereumNode, data.avatar, this.props.tokens))
 		this.closeModal()
 	}
-	goToExchange = () => {
-		this.props.dispatch(push('/exchange'));
-	}
 
 	choosePath(selectedPath, dpath) {
 		this.props.dispatch(importLoading());
@@ -210,7 +218,7 @@ export default class ImportByDevice extends React.Component {
 		})
 	}
 
-	updateBalance(address, index) {
+	addBalance(address, index) {
 		this.getBalance(address)
 			.then((result) => {
 				let addresses = this.state.addresses;
@@ -218,7 +226,6 @@ export default class ImportByDevice extends React.Component {
 				this.setState({
 					currentList: addresses
 				})
-
 			})
 	}
 
