@@ -6,10 +6,10 @@ export function addTx(tx) {
   }
 }
 
-export function updateTx(ethereum, tx) {
+export function updateTx(ethereum, tx, tokens, account) {
   return {
     type: "TX.UPDATE_TX_PENDING",
-    payload: {ethereum, tx}
+    payload: {ethereum, tx, tokens, account}
   }
 }
 
