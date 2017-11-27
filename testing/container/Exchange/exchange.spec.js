@@ -68,7 +68,6 @@ describe('Open source token modal', () => {
 describe('Open destination token modal', () => {
     beforeEach(() => {
         spyOn(store, 'dispatch');
-        store.getState().account.isStoreReady = true;
     });
     it('Open modal ', () => {
         let destTokenSymbol = "OMG";
@@ -96,7 +95,6 @@ describe('Open destination token modal', () => {
 describe('Select token', () => {
     beforeEach(() => {
         spyOn(store, 'dispatch');
-        store.getState().account.isStoreReady = true;
     });
     it('Choose token', () => {
         const exchange = shallow(
@@ -125,73 +123,147 @@ describe('Select token', () => {
     })
 });
 
-describe('Input source onchange', () => {
+describe('Input amount onchange', () => {
     beforeEach(() => {
         spyOn(store, 'dispatch');
-        store.getState().account.isStoreReady = true;
     });
-    it('Input source onchange', () => {
+
+    it('Source amount onchange', () => {
         const exchange = shallow(
             <Exchange store={store} />
         ).dive();
         let input = {
             sourceAmount: {
-                type: 'number',
-                value: "",
                 onChange: exchange.instance().changeSourceAmount
             },
-            destAmount: {
-                type: 'number',
-                value: exchange.instance().getDesAmount()
-            }
+            destAmount: {}
         }
-        let errors = {
-            selectSameToken: '',
-            selectTokenToken: '',
-            sourceAmount: '',
-            tokenSource: ''
-        }
-        let exchangeRate = {
-            sourceToken: '',
-            rate: '',
-            destToken: '',
-            percent: "-"
-        }
+        let errors = {}
+        let exchangeRate = {}
+        let balance = {}
         const exchangeForm = shallow(
-            <ExchangeForm input={input} errors={errors} exchangeRate={exchangeRate} />
+            <ExchangeForm input={input}
+                errors={errors}
+                exchangeRate={exchangeRate}
+                balance={balance}
+            />
         );
 
         exchangeForm.find('.source-input').simulate('change', {
             target: { value: 0.1 }
         })
         expect(store.dispatch).toHaveBeenCalledWith({
-            type: 'EXCHANGE.CHANGE_SOURCE_AMOUNT',
-            payload: 0.1
+            type: 'EXCHANGE.INPUT_CHANGE',
+            payload: { "focus": "source", "value": 0.1 }
+        });
+
+        exchangeForm.find('.source-input').simulate('change', {
+            target: { value: -1 }
+        })
+        expect(store.dispatch).not.toHaveBeenCalledWith({
+            type: 'EXCHANGE.INPUT_CHANGE',
+            payload: { "focus": "source", "value": -1 }
+        });
+    })
+
+    it('Des amount onchange', () => {
+        const exchange = shallow(
+            <Exchange store={store} />
+        ).dive();
+        let input = {
+            sourceAmount: {},
+            destAmount: {
+                onChange: exchange.instance().changeDestAmount
+            }
+        }
+        let errors = {}
+        let exchangeRate = {}
+        let balance = {}
+        const exchangeForm = shallow(
+            <ExchangeForm input={input}
+                errors={errors}
+                exchangeRate={exchangeRate}
+                balance={balance}
+            />
+        );
+
+        exchangeForm.find('.des-input').simulate('change', {
+            target: { value: 0.1 }
+        })
+        expect(store.dispatch).toHaveBeenCalledWith({
+            type: 'EXCHANGE.INPUT_CHANGE',
+            payload: { "focus": "dest", "value": 0.1 }
+        });
+
+        exchangeForm.find('.des-input').simulate('change', {
+            target: { value: -1 }
+        })
+        expect(store.dispatch).not.toHaveBeenCalledWith({
+            type: 'EXCHANGE.INPUT_CHANGE',
+            payload: { "focus": "dest", "value": -1 }
         });
     })
 });
 
-describe('Test getDesAmount function', () => {
+describe('Input amount focus', () => {
     beforeEach(() => {
         spyOn(store, 'dispatch');
-        store.getState().account.isStoreReady = true;
     });
-    it('sourceAmount = 0.1 , offeredRate = 41372700402948563190', () => {
-        store.getState().exchange.sourceAmount = "0.1";
-        store.getState().exchange.offeredRate = "41372700402948563190";
+
+    it('Input source amount focus', () => {
         const exchange = shallow(
             <Exchange store={store} />
         ).dive();
-        expect(exchange.instance().getDesAmount()).toBe(4.13727)
+        let input = {
+            sourceAmount: {
+                onFocus: exchange.instance().focusSource
+            },
+            destAmount: {}
+        }
+        let errors = {}
+        let exchangeRate = {}
+        let balance = {}
+        const exchangeForm = shallow(
+            <ExchangeForm input={input}
+                errors={errors}
+                exchangeRate={exchangeRate}
+                balance={balance}
+            />
+        );
+
+        exchangeForm.find('.source-input').simulate('focus')
+        expect(store.dispatch).toHaveBeenCalledWith({
+            type: 'EXCHANGE.FOCUS_INPUT',
+            payload: 'source'
+        });
     })
 
-    it('sourceAmount = 0.1 , offeredRate = 0', () => {
-        store.getState().exchange.sourceAmount = "0.1";
-        store.getState().exchange.offeredRate = "0";
+    it('Input des amount focus', () => {
         const exchange = shallow(
             <Exchange store={store} />
         ).dive();
-        expect(exchange.instance().getDesAmount()).toBe(0)
+        let input = {
+            sourceAmount: {},
+            destAmount: {
+                onFocus: exchange.instance().focusDest
+            }
+        }
+        let errors = {}
+        let exchangeRate = {}
+        let balance = {}
+        const exchangeForm = shallow(
+            <ExchangeForm input={input}
+                errors={errors}
+                exchangeRate={exchangeRate}
+                balance={balance}
+            />
+        );
+
+        exchangeForm.find('.des-input').simulate('focus')
+        expect(store.dispatch).toHaveBeenCalledWith({
+            type: 'EXCHANGE.FOCUS_INPUT',
+            payload: 'dest'
+        });
     })
 });
 
@@ -289,8 +361,8 @@ describe('Test set amount', () => {
 
         exchange.find(ExchangeForm).dive().find('.value').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
-            type: 'EXCHANGE.CHANGE_SOURCE_AMOUNT',
-            payload: '0'
+            type: 'EXCHANGE.INPUT_CHANGE',
+            payload: { "focus": "source", "value": "0" }
         });
     })
 })

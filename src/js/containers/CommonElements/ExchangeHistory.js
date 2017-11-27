@@ -18,12 +18,12 @@ export default class ExchangeHistory extends React.Component {
     this.props.dispatch(actions.updateHistoryExchange(ethereum, range, true))    
   }
   showNext = (e) => {
-    if(toBlock - range < 1){
-      return
-    }
     var ethereum = this.props.ethereum
     var toBlock = this.props.global.history.toBlock
     var range = this.props.global.history.range
+    if(toBlock - range < 1){
+      return
+    }
     this.props.dispatch(actions.updateHistoryExchange(ethereum, range, false, toBlock - range))  
   }
   showPrevious = (e) => {
