@@ -23,6 +23,9 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
   bottom: 0;
   left: 0;
   z-index: 10000;
+  &.pending{
+    background-color: rgba($white, .3);
+  }
   .caption {
     box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
     text-align: center;

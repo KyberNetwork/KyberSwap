@@ -205,7 +205,8 @@ export default class PostTransfer extends React.Component {
         modalPassphrase={modalPassphrase}
         submit={this.clickTransfer} 
         accountType = {this.props.account.type}
-        />
+        isConfirming={this.props.form.isConfirming}
+      />
     )
   }
 }

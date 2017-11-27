@@ -1,4 +1,5 @@
 import React from "react"
+import { PendingOverlay } from "../../components/CommonElement"
 
 const PostExchangeBtn = (props) => {
 
@@ -19,9 +20,10 @@ const PostExchangeBtn = (props) => {
                 </div>
             </div>
             }
-            {props.modalPassphrase}
+            {props.modalPassphrase}   
             {props.modalConfirm}
             {props.modalApprove}
+            <PendingOverlay isEnable={props.isConfirming || props.isApproving}/>
         </div>
     )
 }
