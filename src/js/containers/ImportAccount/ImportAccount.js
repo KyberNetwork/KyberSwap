@@ -12,10 +12,10 @@ export default class ImportAccount extends React.Component {
   render() {
     return (
       <ImportAccountView
-        importKeyStore={<ImportKeystore />}
-        importByDevice={<ImportByDevice />}
-        importByPrivateKey={<ImportByPrivateKey />}
-        importByMetamask={<ImportByMetamask />}
+        firstKey={<ImportByMetamask />}
+        secondKey={<ImportKeystore />}
+        thirdKey={<ImportByDevice />}
+        fourthKey={<ImportByPrivateKey />}
         errorModal={<ErrorModal />}
       />
     )

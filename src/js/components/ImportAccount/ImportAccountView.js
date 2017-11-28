@@ -8,14 +8,14 @@ const ImportAccountView = (props) => {
           <h1 class="title">Import address</h1>
           <div class="row import-account">
             <div class="small-6 medium-4 column">
-              {props.importKeyStore}
+              {props.firstKey}
             </div>
             <div class="small-6 medium-4 column">
-              {props.importByPrivateKey}
+              {props.secondKey}
             </div>
-            {props.importByDevice}
+            {props.thirdKey}
             <div class="small-6 small-offset-3 medium-4 medium-offset-0 column end">
-              {props.importByMetamask}
+              {props.fourthKey}
             </div>
           </div>
         </div>
