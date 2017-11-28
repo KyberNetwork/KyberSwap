@@ -11,7 +11,7 @@ import { ImportByDeviceView } from "../../components/ImportAccount"
 import { importNewAccount, importLoading, closeImportLoading, throwError } from "../../actions/accountActions"
 import { toEther } from "../../utils/converter"
 
-@connect((store) => {
+@connect((store, props) => {
 	var tokens = store.tokens.tokens
 	var supportTokens = []
 	Object.keys(tokens).forEach((key) => {
@@ -20,10 +20,11 @@ import { toEther } from "../../utils/converter"
 	return {
 		ethereumNode: store.connection.ethereum,
 		account: store.account,
-		tokens: supportTokens
+		tokens: supportTokens,
+		deviceService: props.deviceService,
+		content: props.content
 	}
-})
-
+}, null,null,{ withRef: true })
 
 export default class ImportByDevice extends React.Component {
 	constructor() {
@@ -66,49 +67,21 @@ export default class ImportByDevice extends React.Component {
 
 	connectDevice(walletType, selectedPath, dpath) {
 		this.setDeviceState();
-		switch (walletType) {
-			case 'trezor': {
-				let promise = getTrezorPublicKey(selectedPath);
-				promise.then((result) => {
-					this.dPath = (dpath != 0) ? result.dPath : dpath;
-					this.generateAddress(result);
-					this.props.dispatch(closeImportLoading());
-				}).catch((err) => {
-					if (err.toString() == 'Error: Not a valid path.') {
-						this.props.dispatch(throwError('This path not supported by Trezor'))
-					}
-					this.props.dispatch(closeImportLoading());
-					this.props.dispatch(throwError('Cannot connect to ' + this.walletType))
-				})
-				break;
-			}
-			case 'ledger': {
-				connectLedger().then((eth) => {
-					getLedgerPublicKey(eth, selectedPath).then((result) => {
-						this.dPath = (dpath != 0) ? result.dPath : dpath;
-						this.generateAddress(result);
-						this.props.dispatch(closeImportLoading());
-					}).catch((err) => {
-						switch (err) {
-							case 'Invalid status 6801':
-							case 'Invalid status 6a80':
-							case 'Invalid status 6804':
-								let msg = 'Check to make sure the right application is selected';
-								this.props.dispatch(throwError(msg))
-								break;
-							default:
-								this.props.dispatch(throwError('Cannot connect to ' + this.walletType))
-						}
-						this.props.dispatch(closeImportLoading());
-						console.log(err)
-					});
-				}).catch((err) => {
-					console.log(err)
-				});
-				break;
-			}
+		if(!this.props.deviceService){
+			this.props.dispatch(throwError("cannot find device service"))	
+			return
 		}
-		this.walletType = walletType;
+		this.props.deviceService.getPublicKey(selectedPath)
+			.then((result) => {
+				this.dPath = (dpath != 0) ? result.dPath : dpath;
+				this.generateAddress(result);
+				this.props.dispatch(closeImportLoading());
+			})
+			.catch((err) => {
+				this.props.dispatch(throwError(err))
+				this.props.dispatch(closeImportLoading());
+			})
+		this.walletType = walletType;		
 	}
 
 	generateAddress(data) {
@@ -237,6 +210,7 @@ export default class ImportByDevice extends React.Component {
 	render() {
 		return (
 			<ImportByDeviceView
+				content={this.props.content}
 				modalOpen={this.state.modalOpen}
 				isFirstList={this.state.isFirstList}
 				onRequestClose={this.closeModal.bind(this)}

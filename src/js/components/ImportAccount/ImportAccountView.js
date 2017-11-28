@@ -10,13 +10,24 @@ const ImportAccountView = (props) => {
             <div class="small-6 medium-4 column">
               {props.firstKey}
             </div>
+
             <div class="small-6 medium-4 column">
               {props.secondKey}
             </div>
-            {props.thirdKey}
-            <div class="small-6 small-offset-3 medium-4 medium-offset-0 column end">
+
+            {/* {props.importByDevice} */}
+            <div class="small-6 medium-4 column">
+              {props.thirdKey}
+            </div>
+
+            <div class="small-6 medium-4 medium-offset-2 column">
               {props.fourthKey}
             </div>
+            
+            <div class="small-6 small-offset-3 medium-4 medium-offset-0 column end">
+              {props.fifthKey}
+            </div>
+
           </div>
         </div>
       </div>

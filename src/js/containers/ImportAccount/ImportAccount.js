@@ -2,7 +2,10 @@ import React from "react"
 import { connect } from "react-redux"
 
 import ImportAccountView from '../../components/ImportAccount/ImportAccountView'
-import { ImportKeystore, ImportByDevice, ImportByPrivateKey, ErrorModal, ImportByMetamask} from "../ImportAccount"
+import { ImportKeystore, ImportByDevice, ImportByPrivateKey, 
+  ErrorModal, ImportByMetamask,
+  ImportByDeviceWithLedger, ImportByDeviceWithTrezor
+} from "../ImportAccount"
 
 @connect((store) => {
   return { ...store.account }
@@ -14,8 +17,9 @@ export default class ImportAccount extends React.Component {
       <ImportAccountView
         firstKey={<ImportByMetamask />}
         secondKey={<ImportKeystore />}
-        thirdKey={<ImportByDevice />}
-        fourthKey={<ImportByPrivateKey />}
+        thirdKey={<ImportByDeviceWithTrezor/>}
+        fourthKey={<ImportByDeviceWithLedger/>}
+        fifthKey={<ImportByPrivateKey />}
         errorModal={<ErrorModal />}
       />
     )
