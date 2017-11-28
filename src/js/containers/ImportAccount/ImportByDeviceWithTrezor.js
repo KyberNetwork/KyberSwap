@@ -3,7 +3,7 @@ import React from "react"
 import { ImportByDevice } from "../ImportAccount"
 import { Trezor, Ledger } from "../../services/keys"
 
-import { ImportByLedgerView, ImportByTrezorView } from "../../components/ImportAccount"
+import { ImportByTrezorView } from "../../components/ImportAccount"
 
 export default class ImportByDeviceWithTrezor extends React.Component {
   deviceService = new Trezor()

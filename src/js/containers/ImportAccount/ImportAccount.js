@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 
 import ImportAccountView from '../../components/ImportAccount/ImportAccountView'
 import { ImportKeystore, ImportByDevice, ImportByPrivateKey, 
-  ErrorModal, ImportByMetamask, ImportByDeviceWithKey,
+  ErrorModal, ImportByMetamask,
   ImportByDeviceWithLedger, ImportByDeviceWithTrezor
 } from "../ImportAccount"
 

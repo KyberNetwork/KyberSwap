@@ -6,6 +6,5 @@ export { default as ImportByPrivateKey } from './ImportByPrivateKey.js';
 export { default as ErrorModal } from './ErrorModal.js';
 export { default as ImportByMetamask } from './ImportByMetamask.js';
 
-export { default as ImportByDeviceWithKey } from './ImportByDeviceWithKey.js'
 export { default as ImportByDeviceWithLedger } from './ImportByDeviceWithLedger.js'
 export { default as ImportByDeviceWithTrezor } from './ImportByDeviceWithTrezor.js'
