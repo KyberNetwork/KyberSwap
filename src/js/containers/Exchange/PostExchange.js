@@ -1,8 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import * as ethUtil from 'ethereumjs-util'
-
 import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
 
@@ -276,7 +274,9 @@ export default class PostExchange extends React.Component {
         modalApprove={modalApprove}
         className={className}
         accountType = {this.props.account.type}
-         />
+        isConfirming={this.props.form.isConfirming}
+        isApproving={this.props.form.isApproving}
+      />
     )
   }
 }

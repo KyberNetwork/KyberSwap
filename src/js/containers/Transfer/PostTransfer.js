@@ -1,6 +1,5 @@
 import React from "react"
 import { connect } from "react-redux"
-import * as ethUtil from 'ethereumjs-util'
 
 import constants from "../../services/constants"
 
@@ -205,7 +204,8 @@ export default class PostTransfer extends React.Component {
         modalPassphrase={modalPassphrase}
         submit={this.clickTransfer} 
         accountType = {this.props.account.type}
-        />
+        isConfirming={this.props.form.isConfirming}
+      />
     )
   }
 }

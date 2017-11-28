@@ -161,6 +161,7 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.THROW_ERROR_PASSPHRASE": {
       newState.errors.passwordError = action.payload
+      newState.isConfirming = false
       return newState
     }
     case "EXCHANGE.FINISH_EXCHANGE": {

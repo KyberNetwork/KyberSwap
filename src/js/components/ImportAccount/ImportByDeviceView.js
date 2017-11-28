@@ -159,7 +159,7 @@ const ImportByDeviceView = (props) => {
         //         </div>
         //     </div>
         // </div>,
-        <div key='coldwallet'>{props.content}</div>,
+        <div class="column column-block" key='coldwallet'>{props.content}</div>,
         <SelectAddressModal key="modal"
             isOpen={props.modalOpen}
             onRequestClose={props.onRequestClose}
