@@ -1,7 +1,7 @@
 
 import React from "react"
 import { ImportByDevice } from "../ImportAccount"
-import { Trezor, Ledger } from "../../services/keys"
+import { Ledger } from "../../services/keys"
 
 import { ImportByLedgerView } from "../../components/ImportAccount"
 
