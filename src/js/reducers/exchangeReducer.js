@@ -61,6 +61,7 @@ const exchange = (state = initState, action) => {
       }
       newState.errors.selectSameToken = ""
       newState.errors.selectTokenToken = ""
+      newState.errors.sourceAmountError = ""
       return newState
     }
     case "EXCHANGE.THROW_SOURCE_AMOUNT_ERROR": {

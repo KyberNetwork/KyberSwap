@@ -34,10 +34,10 @@ export function updateAllRate(ethereum, tokens, reserve, ownerAddr) {
   }
 }
 
-export function updateAllRateComplete(rates) {
+export function updateAllRateComplete(rates, isUpdateBalance) {
   return {
     type: 'GLOBAL.ALL_RATE_UPDATED_FULFILLED',
-    payload: rates
+    payload: { rates, isUpdateBalance }
   }
 }
 
