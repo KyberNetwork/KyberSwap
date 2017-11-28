@@ -93,6 +93,7 @@ const transfer = (state = initState, action) => {
     }
     case "TRANSFER.THROW_ERROR_PASSPHRASE": {
       newState.errors.passwordError = action.payload
+      newState.isConfirming = false
       return newState
     }
     case "TRANSFER.TX_BROADCAST_PENDING": {

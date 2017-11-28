@@ -1,8 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import * as ethUtil from 'ethereumjs-util'
-
 import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
 
