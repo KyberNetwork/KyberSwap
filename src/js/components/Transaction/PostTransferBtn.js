@@ -1,4 +1,5 @@
 import React from "react"
+import { PendingOverlay } from "../../components/CommonElement"
 
 const PostTransferBtn = (props) => {
 
@@ -9,6 +10,7 @@ const PostTransferBtn = (props) => {
                 <a className={'submit-transfer ' + props.className} data-open="passphrase-modal" onClick={props.submit}>Transfer</a>
             </div>
             {props.modalPassphrase}
+            <PendingOverlay isEnable={props.isConfirming}/>
         </div>
     )
 }
