@@ -11,9 +11,6 @@ import { ImportByDeviceView } from "../../components/ImportAccount"
 import { importNewAccount, importLoading, closeImportLoading, throwError } from "../../actions/accountActions"
 import { toEther } from "../../utils/converter"
 
-
-import { Trezor, Ledger} from "../../services/keys"
-
 @connect((store, props) => {
 	var tokens = store.tokens.tokens
 	var supportTokens = []
