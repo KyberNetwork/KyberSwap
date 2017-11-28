@@ -41,7 +41,7 @@ const ExchangeForm = (props) => {
                       <span class="error-text">{props.errors.sourceAmount}</span>
                     }
                   </label>
-                  <div class="address-balance" style={{marginBottom: 40}}>
+                  <div class="address-balance">
                     <span class="note">Address Balance</span>
                     <a className="value" onClick={() => {
                         props.setAmount()

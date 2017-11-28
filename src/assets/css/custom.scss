@@ -99,3 +99,80 @@ a.disabled{
 .import-account>.column{
     padding: 0;
 }
+.address-balance{
+    margin-bottom: 40px;
+}
+
+@media screen and (max-height: 790px) and (min-width: 640px){
+    #header{
+        min-height: auto!important;
+        padding: 10px 0!important;
+        img{
+            width: 100px;
+        }
+    }
+    .frame{
+        padding: 20px 0;
+        margin-bottom: 20px;
+        h1.title{
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+    }
+    .token-input{
+        margin-top: 5px!important;
+        min-height: auto;
+        input{
+            height: 50px;
+        }
+        .info:before{
+            height: 40px;
+            top: 59%;
+        }
+    }
+    .address-balance{
+        margin-bottom: 15px;
+        .note{
+            font-size: 11px;
+        }
+        .value{
+            font-size: 12px;
+        }
+    }
+    #rate-bar {
+        padding: 10px 10px!important;
+    }
+    .advanced-switch{
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    .switch.accent .switch-input:checked + .switch-paddle:after{
+        left: 28px;
+    }
+    .switch.accent .switch-paddle:after{
+        width: 18px;
+        height: 18px;
+        left: 5px;
+        top: 3px;
+    }
+    .switch.accent .switch-paddle{
+        width: 50px;
+        height: 25px;
+    }
+    #transfer-screen{
+        label{
+            margin-bottom: 0;
+            input.hash{
+                margin-bottom: 15px;
+                margin-top: 5px;
+            }
+        }
+        .token-select, .address-balance, .token-amount{
+            margin-top: 5px;
+        }
+        .address-balance{
+            margin-bottom: 5px;
+        }
+    }
+}
