@@ -13,7 +13,9 @@ const ImportAccountView = (props) => {
             <div class="small-6 medium-4 column">
               {props.importByPrivateKey}
             </div>
-            {props.importByDevice}
+            {/* {props.importByDevice} */}
+            {props.importByTrezor}
+            {props.importByLedger}
             <div class="small-6 small-offset-3 medium-4 medium-offset-0 column end">
               {props.importByMetamask}
             </div>

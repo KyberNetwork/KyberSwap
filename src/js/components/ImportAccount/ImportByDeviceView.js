@@ -139,26 +139,27 @@ const ImportByDeviceView = (props) => {
     }
 
     return ([
-        <div class="small-6 medium-4 column" key="trezor">
-            <div class="column column-block">
-                <div class="importer trezor">
-                    <a onClick={() => props.showLoading('trezor')}>
-                        <img src="/assets/img/trezor.svg" />
-                        <div class="description">Import from<br />trezor</div>
-                    </a>
-                </div>
-            </div>
-        </div>,
-        <div class="small-6 medium-4 medium-offset-2 column" key="ledger">
-            <div class="column column-block">
-                <div class="importer ledger">
-                    <a onClick={() => props.showLoading('ledger')}>
-                        <img src="/assets/img/ledger.svg" />
-                        <div class="description">Import from<br />ledger wallet</div>
-                    </a>
-                </div>
-            </div>
-        </div>,
+        // <div class="small-6 medium-4 column" key="trezor">
+        //     <div class="column column-block">
+        //         <div class="importer trezor">
+        //             <a onClick={() => props.showLoading('trezor')}>
+        //                 <img src="/assets/img/trezor.svg" />
+        //                 <div class="description">Import from<br />trezor</div>
+        //             </a>
+        //         </div>
+        //     </div>
+        // </div>,
+        // <div class="small-6 medium-4 medium-offset-2 column" key="ledger">
+        //     <div class="column column-block">
+        //         <div class="importer ledger">
+        //             <a onClick={() => props.showLoading('ledger')}>
+        //                 <img src="/assets/img/ledger.svg" />
+        //                 <div class="description">Import from<br />ledger wallet</div>
+        //             </a>
+        //         </div>
+        //     </div>
+        // </div>,
+        <div key='coldwallet'>{props.content}</div>,
         <SelectAddressModal key="modal"
             isOpen={props.modalOpen}
             onRequestClose={props.onRequestClose}
