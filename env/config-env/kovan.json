@@ -96,6 +96,7 @@
       "decimal": 18 
     }    
   },
+  "ethScanUrl": "https://kovan.etherscan.io/",
   "bank": "0xbe6eda3ea42f262a0d35a578b31dc13e125cb697",
   "reserve": "0xc1b22a5269bd5a8b1d214f2f9d23b888d05a98fb",
   "network": "0x2b7f9ae5a29ff7c387c8b794ed1f3cc45bbc57d0",

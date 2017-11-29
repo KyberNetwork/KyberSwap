@@ -1,11 +1,11 @@
 import React from "react"
-import constants from "../../services/constants"
 import { toT } from "../../utils/converter"
+import BLOCKCHAIN_INFO from "../../../../env"
 
 const HistoryExchange = (props) => {
 
   function hashDetailLink(hash) {
-    const url = constants.KOVAN_ETH_URL + 'tx/'
+    const url = BLOCKCHAIN_INFO.ethScanUrl + 'tx/'
     return url + hash
   }
 
