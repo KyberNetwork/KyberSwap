@@ -1,11 +1,11 @@
 import React from "react"
-import constants from "../../services/constants"
 import { toT } from "../../utils/converter"
+import BLOCKCHAIN_INFO from "../../../../env"
 
 const HistoryExchange = (props) => {
 
   function hashDetailLink(hash) {
-    const url = constants.KOVAN_ETH_URL + 'tx/'
+    const url = BLOCKCHAIN_INFO.ethScanUrl + 'tx/'
     return url + hash
   }
 
@@ -104,7 +104,7 @@ const HistoryExchange = (props) => {
         </div>
         <div>
           <a onClick = {(e)=>props.previous(e)}  className={props.currentPage === 0?"previous disabled":"previous"}>Previous history</a>
-          <a onClick = {(e)=>props.next(e)} className={props.currentPage > Math.round(props.eventsCount / props.itemPerPage)?"next disabled":"next"}>More history</a>
+          <a onClick = {(e)=>props.next(e)} className={props.currentPage >= (Math.round(props.eventsCount / props.itemPerPage) - 1)?"next disabled":"next"}>More history</a>
         </div>        
       </div>      
     </div>

@@ -30,7 +30,7 @@ const ExchangeForm = (props) => {
 
                     <div className={errorToken === "" && props.errors.sourceAmount === "" ? "token-input" : "token-input error"}>
 
-                      <input id="inputSource" type={props.input.sourceAmount.type} className="source-input" value={props.input.sourceAmount.value} onFocus={props.input.sourceAmount.onFocus} onChange={props.input.sourceAmount.onChange} min="0" step="0.000001" placeholder="0" />
+                      <input id="inputSource" type={props.input.sourceAmount.type} className="source-input" value={props.input.sourceAmount.value} onFocus={props.input.sourceAmount.onFocus} onChange={props.input.sourceAmount.onChange} min="0" step="0.000001" placeholder="0" autoFocus/>
 
                       {props.tokenSource}
                     </div>

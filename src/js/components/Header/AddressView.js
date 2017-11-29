@@ -1,7 +1,6 @@
 import { NavLink, Link } from 'react-router-dom'
 import React from "react"
-import constants from "../../services/constants"
-
+import BLOCKCHAIN_INFO from "../../../../env"
 const Address = (props) => {
 
   function checkCurrentLink(e){
@@ -21,7 +20,7 @@ const Address = (props) => {
               </a>
             </div>
             <div key="2" class="column small-8">
-              <a class="short-address" target="_blank" href={constants.KOVAN_ETH_URL + "/address/" + props.address}>{props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}</a>
+              <a class="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "/address/" + props.address}>{props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}</a>
               <ul class="actions">
                 <li><NavLink to="/exchange" onClick={checkCurrentLink}>Exchange</NavLink></li>
                 <li><NavLink to="/transfer" onClick={checkCurrentLink}>Transfer</NavLink></li>

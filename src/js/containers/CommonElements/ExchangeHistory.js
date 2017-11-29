@@ -23,7 +23,7 @@ export default class ExchangeHistory extends React.Component {
     var itemPerPage = this.props.global.history.itemPerPage
     var eventsCount = this.props.global.history.eventsCount
     var maxPage = Math.round(eventsCount/itemPerPage)  
-    if(page >= maxPage){
+    if(page >= maxPage - 1){
       return
     }
     var ethereum = this.props.ethereum
