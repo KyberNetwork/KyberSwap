@@ -42,7 +42,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   throwOnFailure: false,
   gas: 1000000,
   gasPrice: 20,
-  step: 1,
+  step: 2,
   broadcasting: true,
   bcError: "",
   txHash: "",
