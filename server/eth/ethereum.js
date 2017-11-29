@@ -23,7 +23,8 @@ class EthereumService {
     //this.wsProvider = this.getWebsocketProvider()
 
     //for metamask/mist
-    this.callback = props.callback
+    this.callbackLogs = props.callbackLogs
+
     this.initProvider(props.default)
     this.fromBlock = 0
     this.range = 0
@@ -92,10 +93,10 @@ class EthereumService {
     this.currentProvider.clearSubcription()
   }
 
-  fetchData() {
+  async fetchData() {
     //get currentBlock
+    //this.fetCurrentBlock()
     this.fetchLogExchange()
-    
   }
 
   async fetchLogExchange(){
@@ -114,9 +115,18 @@ class EthereumService {
         toBlock = latestBlock
       }
       var events  = await this.currentProvider.getLogExchange(currentBlock + 1, toBlock)
-      this.callback(events)
+
+      this.callbackLogs(events, latestBlock)
     }
   }
+
+
+  // async fetCurrentBlock(){
+  //   var currentBlock  = await this.currentProvider.getLatestBlock()
+  //   this.callbackBlock(currentBlock)
+  // }
+
+
 
 
   call(fn) {

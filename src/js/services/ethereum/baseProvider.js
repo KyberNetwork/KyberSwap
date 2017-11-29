@@ -16,13 +16,24 @@ export default class BaseEthereumProvider {
   }
 
   getLatestBlock() {
-    return new Promise((resolve, reject) => {
-      this.rpc.eth.getBlock("latest", false).then((block) => {
-        if (block != null) {
-          resolve(block.number)
+    return new Promise((resolve, rejected) => {
+      fetch(BLOCKCHAIN_INFO.history_endpoint + '/getLatestBlock', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
         }
+      }).then(function (response) {
+        resolve(response.json())
       })
     })
+    // return new Promise((resolve, reject) => {
+    //   this.rpc.eth.getBlock("latest", false).then((block) => {
+    //     if (block != null) {
+    //       resolve(block.number)
+    //     }
+    //   })
+    // })
   }
 
   getBalance(address) {
