@@ -129,7 +129,7 @@ export default class PostExchange extends React.Component {
     var destToken = this.props.form.destToken
     var minConversionRate = converters.numberToHex(this.props.form.minConversionRate)
     var destAddress = this.props.account.address
-    var maxDestAmount = converters.numberToHex(this.props.form.maxDestAmount)
+    var maxDestAmount = converters.biggestNumber()
     var throwOnFailure = this.props.form.throwOnFailure
     var nonce = validators.verifyNonce(this.props.account.getUsableNonce())
     // should use estimated gas

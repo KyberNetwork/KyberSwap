@@ -11,10 +11,11 @@ export function* getLatestBlock(action) {
 }
 
 export function* updateHistoryExchange(action) {
-  const { ethereum, range, isFirstPage, currentBlock} = action.payload
-  var toBlock = currentBlock? currentBlock: yield call(ethereum.call("getLatestBlock"))
-  const newLogs = yield call(ethereum.call("getLogExchange"), toBlock, range)
-  yield put(actions.updateHistory(newLogs, toBlock, isFirstPage))
+  const { ethereum, page, itemPerPage } = action.payload
+  var latestBlock = yield call(ethereum.call("getLatestBlock"))
+  const newLogs = yield call(ethereum.call("getLogExchange"), page, itemPerPage)
+  const eventsCount = yield call(ethereum.call("countALlEvents"))
+  yield put(actions.updateHistory(newLogs, latestBlock, page, eventsCount))
 }
 
 export function* updateRate(action) {

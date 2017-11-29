@@ -94,7 +94,7 @@ function* watchCoinbase(web3Service, address, networkId) {
     try {
       yield call(delay, 500)
       const coinbase = yield call([web3Service, web3Service.getCoinbase])
-      //console.log(coinbase)
+      console.log(coinbase)
       if (coinbase !== address) {
         yield put(clearSession())
         return

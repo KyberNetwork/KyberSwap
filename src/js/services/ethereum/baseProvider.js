@@ -138,23 +138,35 @@ export default class BaseEthereumProvider {
     })
   }
 
-  getLogExchange(currentBlock, range) {
+  countALlEvents(){
     return new Promise((resolve, rejected) => {
-      // var cachedRange = constants.HISTORY_EXCHANGE.cached.range 
-      // var startBlock = (latestBlock - currentBlock) > cachedRange ? 
-      //                                               (latestBlock - cachedRange):
-      //                                               currentBlock
-      //console.log(startBlock)         
-      var startBlock = currentBlock > range? currentBlock - range: 0
-      this.networkContract.getPastEvents('Trade', {
-        filter: {status: "mined"},
-        fromBlock: startBlock,
-        toBlock: currentBlock
-      }, )
-        .then(function (events) {
-          //console.log(events)
-          resolve(events)          
+      fetch(BLOCKCHAIN_INFO.history_endpoint + '/countHistory', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+      }).then(function (response) {
+        resolve(response.json())
+      })
+    })
+  }
+  
+  getLogExchange(page, itemPerPage) {
+    return new Promise((resolve, rejected) => {
+      fetch(BLOCKCHAIN_INFO.history_endpoint + '/getHistory', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          page: page,
+          itemPerPage: itemPerPage,
         })
+      }).then(function (response) {
+        resolve(response.json())
+      })
     })
   }
 }

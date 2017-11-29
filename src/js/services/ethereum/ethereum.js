@@ -21,9 +21,6 @@ export default class EthereumService extends React.Component {
     this.httpProvider = this.getHttpProvider()
     this.wsProvider = this.getWebsocketProvider()
 
-    //for metamask/mist
-    this.subProvider = null
-
     this.initProvider(props.default)
   }
 
@@ -42,15 +39,6 @@ export default class EthereumService extends React.Component {
         this.currentLabel = "http"
         break
     }
-  }
-  
-  getSubInstance(){
-    if(typeof web3 !== 'undefined'){
-      return web3
-    }else{
-      return false
-    }
-    
   }
 
   getWebsocketProvider() {
@@ -163,9 +151,9 @@ export default class EthereumService extends React.Component {
     var history = state.global.history
     var ethereum = state.connection.ethereum
     store.dispatch(updateBlock(ethereum))
-    if (history.isFirstPage){      
-      store.dispatch(updateHistoryExchange(ethereum, history.range, true, false))
-    }
+    //if (history.page,){      
+    store.dispatch(updateHistoryExchange(ethereum, history.page, history.itemPerPage))
+    //}
   }
 
   call(fn) {

@@ -38,33 +38,18 @@ const global = (state = initState, action) => {
     }
     case "GLOBAL.UPDATE_HISTORY_EXCHANGE":{
       var history = {...state.history}
-      if (!history.isFirstPage){
-        history.isFetching = true
-        return Object.assign({}, state, { history: history })
-      }
+      history.isFetching = true
+      return Object.assign({}, state, { history: history })
       break
     }
     case "GLOBAL.UPDATE_HISTORY":{
-      const {logs, toBlock, isFirstPage} = action.payload
+      const {logs, latestBlock, page, eventsCount} = action.payload
       var history = {...state.history}
-      history.toBlock = toBlock
-      history.fromBlock = toBlock - history.range
-      history.isFirstPage = isFirstPage
+      history.logs = logs
+      history.currentBlock = latestBlock
+      history.page = page
+      history.eventsCount = eventsCount
       history.isFetching = false
-      var showedLogs = []
-      for (var i = logs.length - 1; i >= 0; i--){
-        showedLogs.push({
-          actualDestAmount: logs[i].returnValues.actualDestAmount,
-          actualSrcAmount: logs[i].returnValues.actualSrcAmount,
-          dest: logs[i].returnValues.dest.toLowerCase(),
-          source: logs[i].returnValues.source.toLowerCase(),
-          sender: logs[i].returnValues.sender.toLowerCase(),
-          blockNumber:logs[i].blockNumber,
-          txHash: logs[i].transactionHash,
-          status: logs[i].type
-        })
-      }
-      history.logs = showedLogs
       return Object.assign({}, state, { history: history })
     }
   }

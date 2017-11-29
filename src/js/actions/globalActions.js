@@ -67,16 +67,16 @@ export function goToRoute(route) {
 }
 
 
-export function updateHistoryExchange(ethereum, range, isFirstPage, currentBlock) {
+export function updateHistoryExchange(ethereum, page, itemPerPage) {
   return {
     type: "GLOBAL.UPDATE_HISTORY_EXCHANGE",
-    payload: { ethereum, range, isFirstPage, currentBlock }
+    payload: { ethereum, page, itemPerPage }
   }
 }
 
-export function updateHistory(logs, toBlock, isFirstPage) {
+export function updateHistory(logs, latestBlock, page, eventsCount) {
   return {
     type: "GLOBAL.UPDATE_HISTORY",
-    payload: { logs, toBlock, isFirstPage }
+    payload: { logs, latestBlock, page, eventsCount}
   }
 }

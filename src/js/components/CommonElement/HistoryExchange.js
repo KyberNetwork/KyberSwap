@@ -69,13 +69,13 @@ const HistoryExchange = (props) => {
       </td>
     </tr>
   })
-  function createCaption(){
-    if(props.isFirstPage){
-      return `Exchange transactions in ${props.range} blocks from block ${props.toBlock} (the lastest block)`
-    }else{
-      return `Exchange transactions in ${props.range} blocks from block ${props.toBlock}`
-    }
-  }
+  // function createCaption(){
+  //   if(props.isFirstPage){
+  //     return `Exchange transactions in ${props.range} blocks from block ${props.toBlock} (the lastest block)`
+  //   }else{
+  //     return `Exchange transactions in ${props.range} blocks from block ${props.toBlock}`
+  //   }
+  // }
   return (
     <div id="history-exchange" className = {props.isFetching?"row loading":"row"}>
       {/* <div class="history-caption">
@@ -83,9 +83,9 @@ const HistoryExchange = (props) => {
       </div>       */}
       <div class="history-content">
         <table>
-          <caption>
+          {/* <caption>
             {createCaption()}
-          </caption>
+          </caption> */}
           <thead>
             <tr>
               <th>Tx hash</th>
@@ -100,11 +100,11 @@ const HistoryExchange = (props) => {
       </div>
       <div class="history-pargination">
         <div>
-          <a onClick={(e)=>props.first(e)} className={props.isFirstPage?"first disabled":"first"}>Newest history</a>
+          <a onClick={(e)=>props.first(e)} className={props.currentPage === 0?"first disabled":"first"}>Newest history</a>
         </div>
         <div>
-          <a onClick = {(e)=>props.previous(e)}  className={props.isFirstPage?"previous disabled":"previous"}>Previous history</a>
-          <a onClick = {(e)=>props.next(e)} className="next">More history</a>
+          <a onClick = {(e)=>props.previous(e)}  className={props.currentPage === 0?"previous disabled":"previous"}>Previous history</a>
+          <a onClick = {(e)=>props.next(e)} className={props.currentPage > Math.round(props.eventsCount / props.itemPerPage)?"next disabled":"next"}>More history</a>
         </div>        
       </div>      
     </div>
