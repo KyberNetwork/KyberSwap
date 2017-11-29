@@ -107,7 +107,10 @@ a.disabled{
         width: 20%;
     }
 }
-
+#header a.avatar img{
+    width: 45px;
+    max-width: none;
+}
 @media screen and (min-width: 640px){
     @media screen and (max-height: 790px){
         #header{
@@ -115,6 +118,9 @@ a.disabled{
             padding: 10px 0!important;
             a.logo img{
                 width: 100px;
+            }
+            .user-bar ul.notifications{
+                top: 60px!important;
             }
         }
         .frame{
