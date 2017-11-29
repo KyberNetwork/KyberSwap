@@ -16,7 +16,7 @@ export default class ExchangeHistory extends React.Component {
     var ethereum = this.props.ethereum
     var range = this.props.global.history.range
     var itemPerPage = this.props.global.history.itemPerPage
-    this.props.dispatch(actions.updateHistoryExchange(ethereum, 0, itemPerPage))    
+    this.props.dispatch(actions.updateHistoryExchange(ethereum, 0, itemPerPage, false))    
   }
   showNext = (e) => {
     var page = this.props.global.history.page
@@ -27,7 +27,7 @@ export default class ExchangeHistory extends React.Component {
       return
     }
     var ethereum = this.props.ethereum
-    this.props.dispatch(actions.updateHistoryExchange(ethereum, page + 1, itemPerPage))  
+    this.props.dispatch(actions.updateHistoryExchange(ethereum, page + 1, itemPerPage, false))  
   }
   showPrevious = (e) => {
     var page = this.props.global.history.page
@@ -36,7 +36,7 @@ export default class ExchangeHistory extends React.Component {
     }
     var ethereum = this.props.ethereum
     var itemPerPage = this.props.global.history.itemPerPage
-    this.props.dispatch(actions.updateHistoryExchange(ethereum, page - 1, itemPerPage)) 
+    this.props.dispatch(actions.updateHistoryExchange(ethereum, page - 1, itemPerPage, false)) 
   }
 
   render() {

@@ -152,7 +152,7 @@ export default class EthereumService extends React.Component {
     var ethereum = state.connection.ethereum
     store.dispatch(updateBlock(ethereum))
     //if (history.page,){      
-    store.dispatch(updateHistoryExchange(ethereum, history.page, history.itemPerPage))
+    store.dispatch(updateHistoryExchange(ethereum, history.page, history.itemPerPage, true))
     //}
   }
 

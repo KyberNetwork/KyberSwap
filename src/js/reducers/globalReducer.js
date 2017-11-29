@@ -38,17 +38,21 @@ const global = (state = initState, action) => {
     }
     case "GLOBAL.UPDATE_HISTORY_EXCHANGE":{
       var history = {...state.history}
-      history.isFetching = true
+      const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
+      if(!isAutoFetch){
+        history.isFetching = true
+      }
       return Object.assign({}, state, { history: history })
       break
     }
     case "GLOBAL.UPDATE_HISTORY":{
-      const {logs, latestBlock, page, eventsCount} = action.payload
+      const {logs, latestBlock, page, eventsCount, isAutoFetch} = action.payload
       var history = {...state.history}
       history.logs = logs
       history.currentBlock = latestBlock
       history.page = page
       history.eventsCount = eventsCount
+      
       history.isFetching = false
       return Object.assign({}, state, { history: history })
     }

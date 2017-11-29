@@ -81,9 +81,7 @@ module.exports = function (env) {
         allChunks: true,
       }),
       new webpack.DefinePlugin({
-        '__PROCESS__': {
-          'ENV': env && env.chain ? '"' + env.chain + '"' : '"kovan"'
-        }
+        'env': env && env.chain ? '"' + env.chain + '"' : '"kovan"'
       })
     ] : [
         new webpack.optimize.DedupePlugin(),
@@ -94,9 +92,7 @@ module.exports = function (env) {
           allChunks: true,
         }),
         new webpack.DefinePlugin({
-          '__PROCESS__': {
-            'ENV': '"production"',
-          }
+          'env': '"production"'
         })
       ],
     devServer: {
