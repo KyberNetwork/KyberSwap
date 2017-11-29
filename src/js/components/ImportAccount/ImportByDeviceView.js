@@ -1,7 +1,7 @@
 import React from "react";
-import constants from "../../services/constants"
 import { SelectAddressModal } from "../ImportAccount";
 import { roundingNumber } from "../../utils/converter"
+import BLOCKCHAIN_INFO from "../../../../env"
 
 const ImportByDeviceView = (props) => {
 
@@ -28,7 +28,7 @@ const ImportByDeviceView = (props) => {
     }
 
     function getCurrentList() {
-        const addressLink = constants.KOVAN_ETH_URL + 'address/';
+        const addressLink = BLOCKCHAIN_INFO.ethScanUrl + 'address/';
         let currentListHtml = props.currentAddresses.map((address, index) => {
             return (
                 <li key={address.addressString}>

@@ -42,7 +42,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   throwOnFailure: false,
   gas: 1000000,
   gasPrice: 20,
-  step: 1,
+  step: 2,
   broadcasting: true,
   bcError: "",
   txHash: "",
@@ -103,7 +103,6 @@ const ETH = {
   address: ETHER_ADDRESS
 };
 
-const KOVAN_ETH_URL = "https://kovan.etherscan.io/"
 const IDLE_TIME_OUT = 900
 const HISTORY_EXCHANGE = {
   isFirstPage: true,
@@ -118,5 +117,5 @@ const HISTORY_EXCHANGE = {
 export default {
   ERC20, KYBER_NETWORK, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,
   KYBER_WALLET_DATA, INIT_EXCHANGE_FORM_STATE, INIT_TRANSFER_FORM_STATE,
-  RATE_EPSILON, TRADE_TOPIC, KOVAN_ETH_URL, IDLE_TIME_OUT, HISTORY_EXCHANGE
+  RATE_EPSILON, TRADE_TOPIC, IDLE_TIME_OUT, HISTORY_EXCHANGE
 }

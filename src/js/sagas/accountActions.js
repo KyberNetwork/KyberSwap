@@ -1,4 +1,4 @@
-import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
+import { take, put, call, fork, select, takeEvery, all, cancel } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
 import { clearSession } from "../actions/globalActions"
@@ -50,14 +50,18 @@ export function* importNewAccount(action) {
   yield put(actions.closeImportLoading())
   yield put(actions.importNewAccountComplete(account))
 
+  yield put(goToRoute('/exchange'))
+
+
+
   //fork for metamask
   if (type === "metamask") {
     const {web3Service, address, networkId} = {...metamask}
-    yield [
-      fork(watchCoinbase, web3Service, address, networkId)
-    ]
+    const watchCoinbaseTask = yield fork(watchCoinbase, web3Service, address, networkId)
+
+    yield take('GLOBAL.CLEAR_SESSION')
+    yield cancel(watchCoinbaseTask)
   }
-  yield put(goToRoute('/exchange'))
 }
 
 export function* importMetamask(action) {
@@ -94,7 +98,6 @@ function* watchCoinbase(web3Service, address, networkId) {
     try {
       yield call(delay, 500)
       const coinbase = yield call([web3Service, web3Service.getCoinbase])
-      //console.log(coinbase)
       if (coinbase !== address) {
         yield put(clearSession())
         return

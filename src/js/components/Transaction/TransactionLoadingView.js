@@ -1,5 +1,5 @@
 import React from "react"
-import constants from "../../services/constants"
+import BLOCKCHAIN_INFO from "../../../../env"
 
 const TransactionLoadingView = (props) => {
   if (props.broadcasting) {
@@ -51,7 +51,7 @@ const TransactionLoadingView = (props) => {
             <h1 class="title text-center">Broadcast
                               <div class="info">Transaction&nbsp;
                           <br class="show-for-small-only"></br>
-                <a class="hash has-tip top" data-tooltip title="View on Etherscan" href={constants.KOVAN_ETH_URL + 'tx/' + props.txHash} target="_blank">
+                <a class="hash has-tip top" data-tooltip title="View on Etherscan" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank">
                   {props.txHash.slice(0, 12)} ... {props.txHash.slice(-10)}
                 </a>
               </div>
