@@ -235,6 +235,34 @@ class JSONPersist {
     })
   }
 
+  checkEventByHash(txHash, blockNumber){
+    return new Promise((resolve, reject) => {
+      fs.readFile(filePath, 'utf8', function (err, data) {
+        if (err) {
+          reject(err);
+        } else {
+          var obj = JSON.parse(data)
+          var check = false
+          for(var i = 0; i< obj.logs.length; i++){
+            if (obj.logs[i].blockNumber < blockNumber){
+              resolve(false)
+              return
+            }
+            if (obj.logs[i].blockNumber === blockNumber){
+              if(obj.logs[i].txHash === txHash){
+                resolve(true)  
+              }else{
+                continue
+              }
+            }
+            resolve(false) 
+          }
+        }
+        
+      })
+    })
+  }
+
 }
 
 

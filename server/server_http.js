@@ -44,8 +44,13 @@ async function handleEvent(logs, latestBlock) {
       await persistor.savedEvent(savedEvent)
       continue
     }else{
-      break
+      var check = await persistor.checkEventByHash(savedEvent.txHash, savedEvent.blockNumber)
+      if(!check){
+        await persistor.savedEvent(savedEvent)
+        continue
+      }
     }
+    break
     // if (savedEvent.blockNumber === highestBlock) {
     //   await persistor.savedEvent(savedEvent)
     //   continue
