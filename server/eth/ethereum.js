@@ -94,11 +94,11 @@ class EthereumService {
   }
 
   async fetchData() {
-    //get currentBlock
-    this.fetchLogExchange()
-  }
+    // //get currentBlock
+    // this.fetchLogExchange()
 
-  async fetchLogExchange(){
+    // // get current rate
+    // this.fetchRate()
     var currentBlock = await this.persistor.getCurrentBlock()
     var rangeBlock = await this.persistor.getRangeBlock()
     var count = await this.persistor.getCount()
@@ -117,9 +117,35 @@ class EthereumService {
       }
       var events  = await this.currentProvider.getLogExchange(currentBlock, toBlock)
 
-      this.callbackLogs(events)
+      var allRate = await this.currentProvider.getAllRate(BLOCKCHAIN_INFO.tokens, constants.RESERVES[0])
+    
+      this.handleEvent(events, allRate)
+    }
+
+  }
+
+
+  async handleEvent(logs, allRate) {
+    await this.persistor.saveRate(allRate)
+    for (var i = 0; i < logs.length; i++) {
+      var savedEvent = {
+        actualDestAmount: logs[i].returnValues.actualDestAmount,
+        actualSrcAmount: logs[i].returnValues.actualSrcAmount,
+        dest: logs[i].returnValues.dest.toLowerCase(),
+        source: logs[i].returnValues.source.toLowerCase(),
+        sender: logs[i].returnValues.sender.toLowerCase(),
+        blockNumber: logs[i].blockNumber,
+        txHash: logs[i].transactionHash,
+        status: logs[i].type
+      }
+      var check = await this.persistor.checkEventByHash(savedEvent.txHash, savedEvent.blockNumber)
+      console.log(check)
+      if(!check){
+        await this.persistor.savedEvent(savedEvent)
+      }
     }
   }
+  
 
   call(fn) {
     return this.currentProvider[fn].bind(this.currentProvider)

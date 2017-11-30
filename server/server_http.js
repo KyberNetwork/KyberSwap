@@ -17,9 +17,9 @@ function main() {
   var connectionInstance = new EthereumService(
     {
       default: 'http', persistor: persistor,
-      callbackLogs: (events) => {
-        handleEvent(events)
-      }
+      // callbackLogs: (events, latestBlock) => {
+      //   handleEvent(events, latestBlock)
+      // }
     })
   connectionInstance.subcribe()
 }
@@ -27,28 +27,13 @@ function main() {
 main()
 
 
-async function handleEvent(logs) {
-  //console.log(logs)
-  for (var i = 0; i < logs.length; i++) {
-    var savedEvent = {
-      actualDestAmount: logs[i].returnValues.actualDestAmount,
-      actualSrcAmount: logs[i].returnValues.actualSrcAmount,
-      dest: logs[i].returnValues.dest.toLowerCase(),
-      source: logs[i].returnValues.source.toLowerCase(),
-      sender: logs[i].returnValues.sender.toLowerCase(),
-      blockNumber: logs[i].blockNumber,
-      txHash: logs[i].transactionHash,
-      status: logs[i].type
-    }
-    var check = await persistor.checkEventByHash(savedEvent.txHash, savedEvent.blockNumber)
-    console.log(check)
-    if(!check){
-      await persistor.savedEvent(savedEvent)
-    }
-  }
-}
-
-
+app.post('/getRate', function (req, res) {
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  var event = persistor.getRate()
+  event.then((result) => {
+    res.end(JSON.stringify(result))
+  })
+});
 
 
 app.post('/getHistory', function (req, res) {
