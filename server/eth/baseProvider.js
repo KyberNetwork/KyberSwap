@@ -1,12 +1,12 @@
 
-var Web3 =  require("web3")
+var Web3 = require("web3")
 var constants = require("../../src/js/services/constants")
 var ethUtil = require('ethereumjs-util')
 var BLOCKCHAIN_INFO = require("../../env")
 
 class BaseEthereumProvider {
   constructor() {
-    
+
   }
   initContract() {
     this.erc20Contract = new this.rpc.eth.Contract(constants.ERC20)
@@ -128,6 +128,25 @@ class BaseEthereumProvider {
     })
   }
 
+  getAllRate(tokensObj, reserve) {
+    var promises = Object.keys(tokensObj).map((tokenName) => {
+      return Promise.all([
+        Promise.resolve(tokenName+'-'+constants.ETH.symbol),
+        this.getRate(tokensObj[tokenName].address, constants.ETH.address, reserve.index),
+        Promise.resolve(constants.ETH.symbol+'-'+tokenName),
+        this.getRate(constants.ETH.address, tokensObj[tokenName].address, reserve.index), 
+      ])
+    })
+    return Promise.all(promises).then((rates) => {
+      let ratesObj = {}
+      rates.map((rate) => {
+        ratesObj[rate[0]] = rate[1]
+        ratesObj[rate[2]] = rate[3]
+      })
+      return ratesObj
+    });
+  }
+
   sendRawTransaction(tx) {
     return new Promise((resolve, rejected) => {
       this.rpc.eth.sendSignedTransaction(
@@ -149,14 +168,14 @@ class BaseEthereumProvider {
       //                                               currentBlock
       //console.log(startBlock)         
       this.networkContract.getPastEvents('Trade', {
-        filter: {status: "mined"},
+        filter: { status: "mined" },
         fromBlock: fromBlock,
         toBlock: toBlock
       }, )
         .then(function (events) {
           //console.log(events)
-          resolve(events)          
-        }).catch((err)=>{
+          resolve(events)
+        }).catch((err) => {
           rejected(err)
         })
     })

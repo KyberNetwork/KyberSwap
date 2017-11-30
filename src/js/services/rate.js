@@ -61,7 +61,7 @@ export default class Rate {
   }
 }
 
-export function updateRatePromise(ethereum, source, reserve, ownerAddr) {
+export function updateRatePromise(ethereum, source, rateTokenEth, rateEthToken, ownerAddr) {
   return new Promise((resolve) => {
     const rate = new Rate(
       source.name,
@@ -70,8 +70,7 @@ export function updateRatePromise(ethereum, source, reserve, ownerAddr) {
       source.address,
       source.decimal
     )
-
-    Promise.all([rate.fetchRate(ethereum, reserve), rate.fetchRateEth(ethereum, reserve), rate.updateBalance(ethereum, ownerAddr)])
+    Promise.all([ Promise.resolve(new BigNumber(rateTokenEth[0])), Promise.resolve(new BigNumber(rateEthToken[0])), rate.updateBalance(ethereum, ownerAddr)])
       .then(values => {
         if (rate.symbol.toLowerCase() == "eth") {
           rate.rate = new BigNumber(1)
@@ -86,11 +85,18 @@ export function updateRatePromise(ethereum, source, reserve, ownerAddr) {
   });
 }
 
+
 export function updateAllRatePromise(ethereum, tokens, reserve, ownerAddr) {
-  var promises = tokens.map((token) => {
-    return updateRatePromise(ethereum, token, reserve, ownerAddr)
+  return new Promise((resolve) => {
+    ethereum.call("getRateExchange")().then(
+      (result) => {
+        var promises = tokens.map((token) => {
+          return updateRatePromise(ethereum, token, result[token.symbol+'-'+constants.ETH.symbol], result[constants.ETH.symbol+'-'+token.symbol], ownerAddr)
+        });
+        resolve(Promise.all(promises));
+      }
+    )
   });
-  return Promise.all(promises);
 }
 
 

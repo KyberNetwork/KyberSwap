@@ -92,13 +92,12 @@ class EthereumService {
     this.currentProvider.clearSubcription()
   }
 
-  fetchData() {
-    //get currentBlock
-    this.fetchLogExchange()
-    
-  }
+  async fetchData() {
+    // //get currentBlock
+    // this.fetchLogExchange()
 
-  async fetchLogExchange(){
+    // // get current rate
+    // this.fetchRate()
     var currentBlock = await this.persistor.getCurrentBlock()
     var rangeBlock = await this.persistor.getRangeBlock()
     var count = await this.persistor.getCount()
@@ -114,9 +113,38 @@ class EthereumService {
         toBlock = latestBlock
       }
       var events  = await this.currentProvider.getLogExchange(currentBlock + 1, toBlock)
-      this.callback(events)
+
+      var allRate = await this.currentProvider.getAllRate(BLOCKCHAIN_INFO.tokens, constants.RESERVES[0])
+      
+      this.callback(events, allRate)
     }
+
   }
+
+  // async fetchLogExchange(){
+  //   var currentBlock = await this.persistor.getCurrentBlock()
+  //   var rangeBlock = await this.persistor.getRangeBlock()
+  //   var count = await this.persistor.getCount()
+  //   var frequency = await this.persistor.getFrequency()
+  //   var latestBlock = await this.currentProvider.getLatestBlock()
+  //   if (count > frequency){
+  //     await this.persistor.updateCount(0)
+  //     await this.persistor.increaseBlock(latestBlock)
+  //   }else{
+  //     this.persistor.updateCount(++count)
+  //     var toBlock = currentBlock + rangeBlock
+  //     if (toBlock > latestBlock){
+  //       toBlock = latestBlock
+  //     }
+  //     var events  = await this.currentProvider.getLogExchange(currentBlock + 1, toBlock)
+  //     this.callback(events)
+  //   }
+  // }
+
+  // async fetchRate(){
+  //   console.log("------------------ run to fetch rate")
+  //   // var currentRate = await this.persistor.getCurrentRate()
+  // }
 
 
   call(fn) {

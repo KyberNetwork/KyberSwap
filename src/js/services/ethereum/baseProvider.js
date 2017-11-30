@@ -169,4 +169,19 @@ export default class BaseEthereumProvider {
       })
     })
   }
+
+  getRateExchange() {
+    return new Promise((resolve, rejected) => {
+      fetch(BLOCKCHAIN_INFO.history_endpoint + '/getRate', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: {}
+      }).then(function (response) {
+        resolve(response.json())
+      })
+    })
+  }
 }

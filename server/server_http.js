@@ -15,8 +15,8 @@ function main() {
   var EthereumService = require("./eth/ethereum")
   var connectionInstance = new EthereumService(
     {
-      default: 'http', persistor: persistor, callback: (events) => {
-        handleEvent(events, persistor)
+      default: 'http', persistor: persistor, callback: (events, allRate) => {
+        handleEvent(events, allRate, persistor)
       }
     })
   connectionInstance.subcribe()
@@ -25,7 +25,7 @@ function main() {
 main()
 
 
-async function handleEvent(logs, persistor) {
+async function handleEvent(logs, allRate, persistor) {
   var highestBlock = await persistor.getHighestBlock()
   for (var i = 0 ; i < logs.length; i++){
     var savedEvent = {
@@ -44,9 +44,17 @@ async function handleEvent(logs, persistor) {
       break
     }
   }
+
+  await persistor.saveRate(allRate)
 }
 
-
+app.post('/getRate', function (req, res) {
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  var event = persistor.getRate()
+  event.then((result) => {
+    res.end(JSON.stringify(result))
+  })
+});
 
 
 app.post('/getHistory', function (req, res) {

@@ -75,6 +75,16 @@ class JSONPersist {
     })
   }
 
+  getRate() {
+    return new Promise((resolve, reject) => {
+      fs.readFile(filePath, 'utf8', function (err, data) {
+        if (err) reject(err)
+        var obj = JSON.parse(data)
+        resolve(obj.rates)
+      })
+    })
+  }
+
   updateCount(count) {
     return new Promise((resolve, reject) => {
       fs.readFile(filePath, 'utf8', function (err, data) {
@@ -149,6 +159,24 @@ class JSONPersist {
             console.log("Event is saved");
           }
 
+        })
+      })
+    })
+  }
+
+  saveRate(rates){
+    return new Promise((resolve, reject) => {
+      fs.readFile(filePath, 'utf8', function (err, data) {
+        if (err) throw err
+        var obj = JSON.parse(data)
+        obj.rates = rates
+        fs.writeFile(filePath, JSON.stringify(obj), function (err) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(rates)
+            console.log("Rates is saved");
+          }
         })
       })
     })
