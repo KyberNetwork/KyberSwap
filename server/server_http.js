@@ -28,7 +28,7 @@ main()
 
 
 async function handleEvent(logs) {
-  console.log(logs)
+  //console.log(logs)
   for (var i = 0; i < logs.length; i++) {
     var savedEvent = {
       actualDestAmount: logs[i].returnValues.actualDestAmount,

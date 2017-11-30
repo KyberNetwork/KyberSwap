@@ -166,24 +166,22 @@ class SqlitePersist {
           console.log(err)
           reject(err.message)
         } else {
-          //console.log("------------max id--------")
-          //console.log(maxId)
-          var toID = maxId.id - page * itemPerPage > 0 ? maxId.id  - page * itemPerPage : 0
-          var fromId = maxId.id - (page + 1) * itemPerPage > 0 ? maxId.id  - (page + 1) * itemPerPage : 0
-
-          //console.log("------------from rows--------")
-          //console.log(fromId)
-          //console.log("------------to rows--------")
-          //console.log(toID)
-          sql = "SELECT * FROM logs WHERE id >= ? AND id <= ?"
-          _this.db.all(sql, [fromId, toID], function (err, rows) {
-            if (err) {
-              console.log(err)
-              reject(err.message)
-            } else {
-              resolve(rows.reverse())
-            }
-          })
+          if(maxId){
+            var toID = maxId.id - page * itemPerPage > 0 ? maxId.id  - page * itemPerPage : 0
+            var fromId = maxId.id - (page + 1) * itemPerPage > 0 ? maxId.id  - (page + 1) * itemPerPage : 0
+            sql = "SELECT * FROM logs WHERE id >= ? AND id <= ?"
+            _this.db.all(sql, [fromId, toID], function (err, rows) {
+              if (err) {
+                console.log(err)
+                reject(err.message)
+              } else {
+                resolve(rows.reverse())
+              }
+            })
+          }else{
+            resolve([])
+          }
+          
         }
       })
     })
