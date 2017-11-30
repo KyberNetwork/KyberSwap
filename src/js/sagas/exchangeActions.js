@@ -244,10 +244,6 @@ export function* exchangeETHtoTokenColdWallet(action) {
       throwOnFailure, nonce, gas,
       gasPrice, keystring, type, password)
 
-      console.log("^^^^^^^^^^^^^^^^^^^^^^^^")
-      console.log(txRaw)
-      console.log(txRaw.serialize())
-
     yield put(actions.prePareBroadcast())
     const hash = yield call(ethereum.call("sendRawTransaction"), txRaw, ethereum)
     yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)

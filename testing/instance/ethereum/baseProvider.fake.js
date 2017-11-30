@@ -124,6 +124,18 @@ export default class BaseEthereumProvider {
         })
     }
 
+    getAllRate(tokensObj, reserve) {
+        var promises = Object.keys(tokensObj).map((tokenName) => {
+          return Promise.all([
+            Promise.resolve(tokenName),
+            Promise.resolve(constants.ETH.symbol),
+            this.getRate(tokensObj[tokenName].address, constants.ETH.address, reserve.index),
+            this.getRate(constants.ETH.address, tokensObj[tokenName].address, reserve.index), 
+          ])
+        })
+        return Promise.all(promises)
+      }
+
     sendRawTransaction(tx) {
         return new Promise((resolve, rejected) => {
             this.rpc.eth.sendSignedTransaction(
@@ -154,6 +166,21 @@ export default class BaseEthereumProvider {
               //console.log(events)
               resolve(events)          
             })
+        })
+      }
+
+      getRateExchange() {
+        return new Promise((resolve, rejected) => {
+          fetch(BLOCKCHAIN_INFO.history_endpoint + '/getRate', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json, text/plain, */*',
+              'Content-Type': 'application/json'
+            },
+            body: {}
+          }).then(function (response) {
+            resolve(response.json())
+          })
         })
       }
 }
