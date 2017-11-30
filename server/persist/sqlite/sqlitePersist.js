@@ -34,6 +34,9 @@ class SqlitePersist {
         stmt.finalize()
 
         _this.db.run("CREATE TABLE logs (id INTEGER PRIMARY KEY, actualDestAmount TEXT, actualSrcAmount TEXT, dest TEXT, source TEXT, sender TEXT, blockNumber INT, txHash TEXT, status TEXT)")
+        
+        // create rate table
+        _this.db.run("CREATE TABLE rates (id INTEGER PRIMARY KEY, source TEXT, dest TEXT, rate TEXT, expBlock TEXT, balance TEXT)")
       })
     }
 
@@ -264,5 +267,43 @@ class SqlitePersist {
       })
     })
   }
+
+  saveRate(rates){
+
+    return new Promise((resolve, reject) => {
+      rates.forEach((rate) => {
+        let stmt = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, expBlock, balance) VALUES ((
+          SELECT id FROM rates WHERE source = ? AND dest = ?
+        ),?,?,?,?,?)`)
+        stmt.run(rate[0], rate[1], rate[0], rate[1], rate[2].rate, rate[2].expBlock, rate[2].balance);
+        stmt.finalize()
+        let stmt2 = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, expBlock, balance) VALUES ((
+          SELECT id FROM rates WHERE source = ? AND dest = ?
+        ), ?,?,?,?,?)`)
+        stmt2.run(rate[1], rate[0], rate[1], rate[0], rate[3].rate, rate[3].expBlock, rate[3].balance);
+        stmt2.finalize()
+      })
+      
+      resolve(rates)
+      console.log("all rate is inserted");
+    })
+  }
+
+  getRate() {
+    var sql = `SELECT * FROM rates`;
+    return new Promise((resolve, reject) => {
+      this.db.all(sql, [], (err, row) => {
+        if (err) {
+          console.log(err)
+          reject(err.message)
+        } else {
+          resolve(row)
+        }
+      })
+    })
+  }
+
 }
+
+
 module.exports = SqlitePersist

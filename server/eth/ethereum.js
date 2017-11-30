@@ -118,16 +118,15 @@ class EthereumService {
       var events  = await this.currentProvider.getLogExchange(currentBlock, toBlock)
 
       var allRate = await this.currentProvider.getAllRate(BLOCKCHAIN_INFO.tokens, constants.RESERVES[0])
-      
-      this.handleEvent(events, latestBlock, allRate)
+    
+      this.handleEvent(events, allRate)
     }
 
   }
 
 
-  async handleEvent (logs, latestBlock, allRate){
-    await this.persistor.saveLatestBlock(latestBlock)
-    var highestBlock = await this.persistor.getHighestBlock()
+  async handleEvent(logs, allRate) {
+    await this.persistor.saveRate(allRate)
     for (var i = 0; i < logs.length; i++) {
       var savedEvent = {
         actualDestAmount: logs[i].returnValues.actualDestAmount,
@@ -139,21 +138,14 @@ class EthereumService {
         txHash: logs[i].transactionHash,
         status: logs[i].type
       }
-      if (savedEvent.blockNumber > highestBlock) {
+      var check = await this.persistor.checkEventByHash(savedEvent.txHash, savedEvent.blockNumber)
+      console.log(check)
+      if(!check){
         await this.persistor.savedEvent(savedEvent)
-        continue
-      }else{
-        var check = await this.persistor.checkEventByHash(savedEvent.txHash, savedEvent.blockNumber)
-        if(!check){
-          await this.persistor.savedEvent(savedEvent)
-          continue
-        }
       }
-      break
     }
-
-    await this.persistor.saveRate(allRate)
   }
+  
 
   call(fn) {
     return this.currentProvider[fn].bind(this.currentProvider)

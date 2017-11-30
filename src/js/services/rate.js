@@ -70,7 +70,7 @@ export function updateRatePromise(ethereum, source, rateTokenEth, rateEthToken, 
       source.address,
       source.decimal
     )
-    Promise.all([ Promise.resolve(new BigNumber(rateTokenEth[0])), Promise.resolve(new BigNumber(rateEthToken[0])), rate.updateBalance(ethereum, ownerAddr)])
+    Promise.all([ Promise.resolve(new BigNumber(rateTokenEth)), Promise.resolve(new BigNumber(rateEthToken)), rate.updateBalance(ethereum, ownerAddr)])
       .then(values => {
         if (rate.symbol.toLowerCase() == "eth") {
           rate.rate = new BigNumber(1)
@@ -90,8 +90,12 @@ export function updateAllRatePromise(ethereum, tokens, reserve, ownerAddr) {
   return new Promise((resolve) => {
     ethereum.call("getRateExchange")().then(
       (result) => {
+        let tokenObj = {}
+        result.map((token) => {
+          tokenObj[token.source+'-'+token.dest] = token
+        })
         var promises = tokens.map((token) => {
-          return updateRatePromise(ethereum, token, result[token.symbol+'-'+constants.ETH.symbol], result[constants.ETH.symbol+'-'+token.symbol], ownerAddr)
+          return updateRatePromise(ethereum, token, tokenObj[token.symbol+'-'+constants.ETH.symbol].rate, tokenObj[constants.ETH.symbol+'-'+token.symbol].rate, ownerAddr)
         });
         resolve(Promise.all(promises));
       }

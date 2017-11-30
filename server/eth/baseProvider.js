@@ -131,20 +131,13 @@ class BaseEthereumProvider {
   getAllRate(tokensObj, reserve) {
     var promises = Object.keys(tokensObj).map((tokenName) => {
       return Promise.all([
-        Promise.resolve(tokenName+'-'+constants.ETH.symbol),
+        Promise.resolve(tokenName),
+        Promise.resolve(constants.ETH.symbol),
         this.getRate(tokensObj[tokenName].address, constants.ETH.address, reserve.index),
-        Promise.resolve(constants.ETH.symbol+'-'+tokenName),
         this.getRate(constants.ETH.address, tokensObj[tokenName].address, reserve.index), 
       ])
     })
-    return Promise.all(promises).then((rates) => {
-      let ratesObj = {}
-      rates.map((rate) => {
-        ratesObj[rate[0]] = rate[1]
-        ratesObj[rate[2]] = rate[3]
-      })
-      return ratesObj
-    });
+    return Promise.all(promises)
   }
 
   sendRawTransaction(tx) {
