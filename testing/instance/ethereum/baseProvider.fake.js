@@ -125,9 +125,6 @@ export default class BaseEthereumProvider {
     }
 
     sendRawTransaction(tx) {
-
-        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        console.log(tx)
         return new Promise((resolve, rejected) => {
             this.rpc.eth.sendSignedTransaction(
                 ethUtil.bufferToHex(tx.serialize()), (error, hash) => {
