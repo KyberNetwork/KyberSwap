@@ -115,18 +115,12 @@ class JSONPersist {
     })
   }
 
-  increaseBlock(latestBlock) {
+  updateBlock(block) {
     return new Promise((resolve, reject) => {
       fs.readFile(filePath, 'utf8', function (err, data) {
         if (err) throw err
         var obj = JSON.parse(data)
-        if (obj.currentBlock > latestBlock) return 
-        if(obj.currentBlock + obj.rangeFetch > latestBlock){
-          obj.currentBlock = latestBlock
-        }else{
-          obj.currentBlock += obj.rangeFetch
-        }
-        
+        obj.currentBlock = block
         fs.writeFile(filePath, JSON.stringify(obj), function (err) {
           if (err) {
             reject(err);
@@ -274,16 +268,18 @@ class JSONPersist {
           for(var i = 0; i< obj.logs.length; i++){
             if (obj.logs[i].blockNumber < blockNumber){
               resolve(false)
-              return
+              break
             }
             if (obj.logs[i].blockNumber === blockNumber){
               if(obj.logs[i].txHash === txHash){
-                resolve(true)  
+                resolve(true) 
+                break 
               }else{
                 continue
               }
             }
             resolve(false) 
+            break
           }
         }
         

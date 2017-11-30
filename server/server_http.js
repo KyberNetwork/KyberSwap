@@ -8,7 +8,8 @@ var bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
 
-var PersistClass = require("./persist/json/jsonPersist")
+//var PersistClass = require("./persist/json/jsonPersist")
+var PersistClass = require("./persist/sqlite/sqlitePersist")
 var persistor = new PersistClass()
 
 function main() {
