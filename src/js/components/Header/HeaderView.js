@@ -8,7 +8,7 @@ const HeaderView = (props) => {
     <div>
       <section id="header">
         <div class="row">
-          <div class={"column " + (props.account ? "small-4 medium-6 large-7 hide-for-small-only" : "small-5 medium-6 large-7")}>
+          <div class={"column " + (props.account ? "small-4 medium-5 large-7 hide-for-small-only" : "small-5 medium-6 large-7")}>
             <Link to={logoLink} className="logo">
               <img src="/assets/img/logo.svg" />
             </Link>

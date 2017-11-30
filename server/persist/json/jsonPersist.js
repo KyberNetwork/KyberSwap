@@ -31,6 +31,16 @@ class JSONPersist {
           }
           console.log("The file was inited!");
         })
+      }else{
+         var obj = JSON.parse(data)
+         obj.frequency =  config.frequency
+         obj.rangeFetch =  config.rangeFetch
+         fs.writeFile(filePath, JSON.stringify(obj), function (err) {
+          if (err) {
+            return console.log(err);
+          }
+          console.log("The file was inited!");
+        })
       }
     })
   }
@@ -214,6 +224,73 @@ class JSONPersist {
       })
     })
   }
+
+  saveLatestBlock(blockNumber){
+    return new Promise((resolve, reject) => {
+      fs.readFile(filePath, 'utf8', function (err, data) {
+        if (err) {
+          reject(err);
+        } else {
+          var obj = JSON.parse(data)
+          if (blockNumber <= obj.latestBlock ) return
+          obj.latestBlock = blockNumber
+          fs.writeFile(filePath, JSON.stringify(obj), function (err) {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(blockNumber)
+              console.log("block is updated");
+            }
+  
+          })
+        }
+        
+      })
+    })
+  }
+
+  getLatestBlock(){
+    return new Promise((resolve, reject) => {
+      fs.readFile(filePath, 'utf8', function (err, data) {
+        if (err) {
+          reject(err);
+        } else {
+          var obj = JSON.parse(data)
+          resolve(obj.latestBlock)
+        }
+        
+      })
+    })
+  }
+
+  checkEventByHash(txHash, blockNumber){
+    return new Promise((resolve, reject) => {
+      fs.readFile(filePath, 'utf8', function (err, data) {
+        if (err) {
+          reject(err);
+        } else {
+          var obj = JSON.parse(data)
+          var check = false
+          for(var i = 0; i< obj.logs.length; i++){
+            if (obj.logs[i].blockNumber < blockNumber){
+              resolve(false)
+              return
+            }
+            if (obj.logs[i].blockNumber === blockNumber){
+              if(obj.logs[i].txHash === txHash){
+                resolve(true)  
+              }else{
+                continue
+              }
+            }
+            resolve(false) 
+          }
+        }
+        
+      })
+    })
+  }
+
 }
 
 

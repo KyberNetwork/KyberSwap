@@ -23,7 +23,8 @@ class EthereumService {
     //this.wsProvider = this.getWebsocketProvider()
 
     //for metamask/mist
-    this.callback = props.callback
+    this.callbackLogs = props.callbackLogs
+
     this.initProvider(props.default)
     this.fromBlock = 0
     this.range = 0
@@ -116,36 +117,41 @@ class EthereumService {
 
       var allRate = await this.currentProvider.getAllRate(BLOCKCHAIN_INFO.tokens, constants.RESERVES[0])
       
-      this.callback(events, allRate)
+      this.handleEvent(events, latestBlock, allRate)
     }
 
   }
 
-  // async fetchLogExchange(){
-  //   var currentBlock = await this.persistor.getCurrentBlock()
-  //   var rangeBlock = await this.persistor.getRangeBlock()
-  //   var count = await this.persistor.getCount()
-  //   var frequency = await this.persistor.getFrequency()
-  //   var latestBlock = await this.currentProvider.getLatestBlock()
-  //   if (count > frequency){
-  //     await this.persistor.updateCount(0)
-  //     await this.persistor.increaseBlock(latestBlock)
-  //   }else{
-  //     this.persistor.updateCount(++count)
-  //     var toBlock = currentBlock + rangeBlock
-  //     if (toBlock > latestBlock){
-  //       toBlock = latestBlock
-  //     }
-  //     var events  = await this.currentProvider.getLogExchange(currentBlock + 1, toBlock)
-  //     this.callback(events)
-  //   }
-  // }
 
-  // async fetchRate(){
-  //   console.log("------------------ run to fetch rate")
-  //   // var currentRate = await this.persistor.getCurrentRate()
-  // }
+  async handleEvent (logs, latestBlock, allRate){
+    await this.persistor.saveLatestBlock(latestBlock)
+    var highestBlock = await this.persistor.getHighestBlock()
+    for (var i = 0; i < logs.length; i++) {
+      var savedEvent = {
+        actualDestAmount: logs[i].returnValues.actualDestAmount,
+        actualSrcAmount: logs[i].returnValues.actualSrcAmount,
+        dest: logs[i].returnValues.dest.toLowerCase(),
+        source: logs[i].returnValues.source.toLowerCase(),
+        sender: logs[i].returnValues.sender.toLowerCase(),
+        blockNumber: logs[i].blockNumber,
+        txHash: logs[i].transactionHash,
+        status: logs[i].type
+      }
+      if (savedEvent.blockNumber > highestBlock) {
+        await this.persistor.savedEvent(savedEvent)
+        continue
+      }else{
+        var check = await this.persistor.checkEventByHash(savedEvent.txHash, savedEvent.blockNumber)
+        if(!check){
+          await this.persistor.savedEvent(savedEvent)
+          continue
+        }
+      }
+      break
+    }
 
+    await this.persistor.saveRate(allRate)
+  }
 
   call(fn) {
     return this.currentProvider[fn].bind(this.currentProvider)

@@ -1,6 +1,6 @@
 var configure = {
-  rangeFetch: 20000000,
-  frequency: 2
+  rangeFetch: 5000000,
+  frequency: 5
 }
 
 module.exports = configure

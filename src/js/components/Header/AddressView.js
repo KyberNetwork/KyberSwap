@@ -11,7 +11,7 @@ const Address = (props) => {
 
   return props.address ?
     (
-      <div class="column small-12 medium-6 large-5">
+      <div class="column small-12 medium-7 large-5">
         <div class="user-bar">
           <div class="row">
             <div key="1" class="column small-2">
