@@ -36,27 +36,15 @@ export default class Exchange extends React.Component {
     this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
   }
 
-  isError = () => {
-    return (this.props.exchange.errors.selectSameToken || this.props.exchange.errors.selectTokenToken).length > 0 ? true : false
-  }
-
   changeSourceAmount = (e) => {
     var value = e.target.value
     if (value < 0) return 
-    // this.props.dispatch(exchangeActions.changeSourceAmout(value))
-    // if(this.isError()) return
-    // var destAmount = caculateDestAmount(value, this.props.exchange.offeredRate, 6)
-    // this.props.dispatch(exchangeActions.changeDestAmout(destAmount))
     this.props.dispatch(exchangeActions.inputChange('source', value));
   }
 
   changeDestAmount = (e) => {
     var value = e.target.value
     if (value < 0 ) return 
-    // this.props.dispatch(exchangeActions.changeDestAmout(value))
-    // if(this.isError()) return
-    // var sourceAmount = caculateSourceAmount(value, this.props.exchange.offeredRate, 6)
-    // this.props.dispatch(exchangeActions.changeSourceAmout(sourceAmount));
     this.props.dispatch(exchangeActions.inputChange('dest', value));
   }
 

@@ -32,8 +32,8 @@ export default class ImportByPrivateKey extends React.Component {
     this.props.dispatch(pKeyChange(value));
   }
 
-  importPrivateKey() {
-    const privateKey = document.getElementById("private_key").value
+  importPrivateKey(privateKey) {
+    console.log(privateKey)
     try {
       let address = addressFromPrivateKey(privateKey)
       this.props.dispatch(importNewAccount(address,

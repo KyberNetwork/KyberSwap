@@ -1,8 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import * as ethUtil from 'ethereumjs-util'
-
 import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
 
@@ -131,7 +129,7 @@ export default class PostExchange extends React.Component {
     var destToken = this.props.form.destToken
     var minConversionRate = converters.numberToHex(this.props.form.minConversionRate)
     var destAddress = this.props.account.address
-    var maxDestAmount = converters.numberToHex(this.props.form.maxDestAmount)
+    var maxDestAmount = converters.biggestNumber()
     var throwOnFailure = this.props.form.throwOnFailure
     var nonce = validators.verifyNonce(this.props.account.getUsableNonce())
     // should use estimated gas
@@ -193,21 +191,6 @@ export default class PostExchange extends React.Component {
       this.props.dispatch(exchangeActions.throwPassphraseError("Key derivation failed"))
     }
   }
-
-  // processTxAfterConfirm = () => {
-  //   var password = ""
-  //   const params = this.formParams()
-  //   var account = this.props.account
-  //   var ethereum = this.props.ethereum
-
-  //   var formId = "exchange"
-  //   var data = this.recap()
-  //   this.props.dispatch(exchangeActions.processExchangeAfterConfirm(formId, ethereum, account.address, params.sourceToken,
-  //     params.sourceAmount, params.destToken, params.destAddress,
-  //     params.maxDestAmount, params.minConversionRate,
-  //     params.throwOnFailure, params.nonce, params.gas,
-  //     params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService))
-  // }
 
   content = () => {
     return (
@@ -291,7 +274,9 @@ export default class PostExchange extends React.Component {
         modalApprove={modalApprove}
         className={className}
         accountType = {this.props.account.type}
-         />
+        isConfirming={this.props.form.isConfirming}
+        isApproving={this.props.form.isApproving}
+      />
     )
   }
 }

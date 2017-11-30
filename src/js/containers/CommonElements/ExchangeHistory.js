@@ -15,41 +15,39 @@ export default class ExchangeHistory extends React.Component {
   showFirst = (e) =>{
     var ethereum = this.props.ethereum
     var range = this.props.global.history.range
-    this.props.dispatch(actions.updateHistoryExchange(ethereum, range, true))    
+    var itemPerPage = this.props.global.history.itemPerPage
+    this.props.dispatch(actions.updateHistoryExchange(ethereum, 0, itemPerPage, false))    
   }
   showNext = (e) => {
-    if(toBlock - range < 1){
+    var page = this.props.global.history.page
+    var itemPerPage = this.props.global.history.itemPerPage
+    var eventsCount = this.props.global.history.eventsCount
+    var maxPage = Math.round(eventsCount/itemPerPage)  
+    if(page >= maxPage - 1){
       return
     }
     var ethereum = this.props.ethereum
-    var toBlock = this.props.global.history.toBlock
-    var range = this.props.global.history.range
-    this.props.dispatch(actions.updateHistoryExchange(ethereum, range, false, toBlock - range))  
+    this.props.dispatch(actions.updateHistoryExchange(ethereum, page + 1, itemPerPage, false))  
   }
   showPrevious = (e) => {
-    if(this.props.global.history.isFirstPage){
+    var page = this.props.global.history.page
+    if(page === 0){
       return
     }
     var ethereum = this.props.ethereum
-    var toBlock = this.props.global.history.toBlock
-    var range = this.props.global.history.range
-    var currentBlock = this.props.global.history.currentBlock
-    if (toBlock + range >= currentBlock){
-      this.props.dispatch(actions.updateHistoryExchange(ethereum, range, true))    
-    }else{
-      this.props.dispatch(actions.updateHistoryExchange(ethereum, range, false, toBlock + range))  
-    }    
+    var itemPerPage = this.props.global.history.itemPerPage
+    this.props.dispatch(actions.updateHistoryExchange(ethereum, page - 1, itemPerPage, false)) 
   }
 
   render() {
     return (
-      <HistoryExchange fromBlock={this.props.global.history.fromBlock}
+      <HistoryExchange 
         isFetching = {this.props.global.history.isFetching}
-        toBlock={this.props.global.history.toBlock}
-        range = {this.props.global.history.range}
-        isFirstPage = {this.props.global.history.isFirstPage}
         logs={this.props.global.history.logs}
         lastBlock={this.props.global.history.currentBlock}
+        currentPage = {this.props.global.history.page}
+        itemPerPage = {this.props.global.history.itemPerPage}
+        eventsCount = {this.props.global.history.eventsCount}
         averageTime={BLOCKCHAIN_INFO.averageBlockTime} 
         tokens = {this.props.tokens}
         first = {this.showFirst}

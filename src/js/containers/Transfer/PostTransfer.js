@@ -1,6 +1,5 @@
 import React from "react"
 import { connect } from "react-redux"
-import * as ethUtil from 'ethereumjs-util'
 
 import constants from "../../services/constants"
 
@@ -44,6 +43,7 @@ export default class PostTransfer extends React.Component {
         case "privateKey":
         case "trezor":
         case "ledger":
+        case "metamask":
           this.props.dispatch(transferActions.showConfirm())
           break
       }
@@ -194,7 +194,7 @@ export default class PostTransfer extends React.Component {
         content={this.contentConfirm()}
         size="tiny"
       />
-    let className = "button accent submit-transfer "
+    let className = "button accent "
     if (!validators.anyErrors(this.props.form.errors)) {
       className += " animated infinite pulse next"
     }
@@ -204,7 +204,8 @@ export default class PostTransfer extends React.Component {
         modalPassphrase={modalPassphrase}
         submit={this.clickTransfer} 
         accountType = {this.props.account.type}
-        />
+        isConfirming={this.props.form.isConfirming}
+      />
     )
   }
 }

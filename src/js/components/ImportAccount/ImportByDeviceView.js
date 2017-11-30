@@ -1,14 +1,14 @@
 import React from "react";
-import constants from "../../services/constants"
 import { SelectAddressModal } from "../ImportAccount";
 import { roundingNumber } from "../../utils/converter"
+import BLOCKCHAIN_INFO from "../../../../env"
 
 const ImportByDeviceView = (props) => {
 
     function choosePath(dpath) {
         let formPath = document.getElementById('formPath'),
             selectedPath = dpath;
-        if(!dpath){
+        if (!dpath) {
             selectedPath = formPath.customPath.value;
         }
         props.choosePath(selectedPath, dpath);
@@ -28,7 +28,7 @@ const ImportByDeviceView = (props) => {
     }
 
     function getCurrentList() {
-        const addressLink = constants.KOVAN_ETH_URL + 'address/';
+        const addressLink = BLOCKCHAIN_INFO.ethScanUrl + 'address/';
         let currentListHtml = props.currentAddresses.map((address, index) => {
             return (
                 <li key={address.addressString}>
@@ -48,11 +48,11 @@ const ImportByDeviceView = (props) => {
                         <a class="link has-tip top explore" href={addressLink + address.addressString} target="_blank" title="View on Etherscan">
                             <span title={address.balance}>
                                 {address.balance == '-1' ?
-                                <img src="/assets/img/waiting.svg" />
-                                : roundingNumber(address.balance)
+                                    <img src="/assets/img/waiting.svg" />
+                                    : roundingNumber(address.balance)
                                 } ETH
                             </span>
-						</a>
+                        </a>
                     </div>
                 </li>
             )
@@ -138,36 +138,35 @@ const ImportByDeviceView = (props) => {
         )
     }
 
-    return (
-        <div>
-            <div class="small-6 medium-6 column" style={{ padding: 0 }}>
-                <div class="column column-block">
-                    <div class="importer trezor">
-                        <a onClick={() => props.showLoading('trezor')}>
-                            <img src="/assets/img/trezor.svg" />
-                            <div class="description">Import from<br />trezor</div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="small-6 medium-6 column" style={{ padding: 0 }}>
-                <div class="column column-block">
-                    <div class="importer ledger">
-                        <a onClick={() => props.showLoading('ledger')}>
-                            <img src="/assets/img/ledger.svg" />
-                            <div class="description">Import from<br />ledger wallet</div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <SelectAddressModal
-                isOpen={props.modalOpen}
-                onRequestClose={props.onRequestClose}
-                content={getSelectAddressHtml()}
-            />
+    return ([
+        // <div class="small-6 medium-4 column" key="trezor">
+        //     <div class="column column-block">
+        //         <div class="importer trezor">
+        //             <a onClick={() => props.showLoading('trezor')}>
+        //                 <img src="/assets/img/trezor.svg" />
+        //                 <div class="description">Import from<br />trezor</div>
+        //             </a>
+        //         </div>
+        //     </div>
+        // </div>,
+        // <div class="small-6 medium-4 medium-offset-2 column" key="ledger">
+        //     <div class="column column-block">
+        //         <div class="importer ledger">
+        //             <a onClick={() => props.showLoading('ledger')}>
+        //                 <img src="/assets/img/ledger.svg" />
+        //                 <div class="description">Import from<br />ledger wallet</div>
+        //             </a>
+        //         </div>
+        //     </div>
+        // </div>,
+        <div class="column column-block" key='coldwallet'>{props.content}</div>,
+        <SelectAddressModal key="modal"
+            isOpen={props.modalOpen}
+            onRequestClose={props.onRequestClose}
+            content={getSelectAddressHtml()}
+        />
 
-        </div>
-    )
+    ])
 }
 
 export default ImportByDeviceView

@@ -1,4 +1,5 @@
 import React from "react"
+import { PendingOverlay } from "../../components/CommonElement"
 
 const PostExchangeBtn = (props) => {
 
@@ -15,13 +16,14 @@ const PostExchangeBtn = (props) => {
             <div class="row">
                 <div class="column small-11 medium-10 large-9 small-centered text-center">
                 {props.accountType === "keystore" && <p class="note">Password is needed for each exchange transaction</p>}
-                    <a className={props.className} onClick={props.submit}>Next</a>
+                    <a className={'submit ' + props.className} onClick={props.submit}>Next</a>
                 </div>
             </div>
             }
-            {props.modalPassphrase}
+            {props.modalPassphrase}   
             {props.modalConfirm}
             {props.modalApprove}
+            <PendingOverlay isEnable={props.isConfirming || props.isApproving}/>
         </div>
     )
 }

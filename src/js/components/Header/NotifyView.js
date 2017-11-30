@@ -1,6 +1,5 @@
 import React from "react"
-import constants from "../../services/constants"
-
+import BLOCKCHAIN_INFO from "../../../../env"
 const Notify = (props) => {
   var classNotify = ""
   if (!props.displayTrans) {
@@ -14,7 +13,7 @@ const Notify = (props) => {
   }
 
   function hashDetailLink(hash) {
-    const url = constants.KOVAN_ETH_URL + 'tx/'
+    const url = BLOCKCHAIN_INFO.ethScanUrl + 'tx/'
     return url + hash
   }
 

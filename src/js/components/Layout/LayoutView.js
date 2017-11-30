@@ -6,6 +6,10 @@ import { Link } from 'react-router-dom'
 
 const LayoutView = (props) => {
       
+  function scrollTop(){
+    window.scrollTo(0,0)
+  }
+
   return (    
     <ConnectedRouter history={props.history}>
       <div>
@@ -25,7 +29,7 @@ const LayoutView = (props) => {
           <div class="row">
             <div class="column">
               <ul class="links">
-                <li><Link to="/info">Info</Link></li>
+                <li><Link to="/info" onClick={() => scrollTop()}>Info</Link></li>
                 <li><Link to="#">Terms of Service</Link></li>
                 <li><Link to="#">Privacy Policies</Link></li>
               </ul>

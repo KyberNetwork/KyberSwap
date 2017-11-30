@@ -65,11 +65,11 @@ export const etherToOthersFromAccount = (
 }
 
 export const getAppoveToken = (ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-  keystring, password, accountType) => {
+  keystring, password, accountType, account) => {
   //const approvalData = ethereum.approveTokenData(sourceToken, sourceAmount)  
   const approvalData = ethereum.call("approveTokenData")(sourceToken, biggestNumber())
   const txParams = {
-    from:account,
+    from: account,
     nonce: nonce,
     gasPrice: gasPrice,
     gasLimit: gas,

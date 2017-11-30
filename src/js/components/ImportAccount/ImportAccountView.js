@@ -6,18 +6,27 @@ const ImportAccountView = (props) => {
       <div className="row">
         <div class="column small-11 large-12 small-centered">
           <h1 class="title">Import address</h1>
-          <div class="row">
-            <div class="small-6 medium-6 large-3 column" style={{ padding: 0 }}>
-              {props.importKeyStore}
+          <div class="row import-account">
+            <div class="small-6 medium-4 large-2dot4 column">
+              {props.firstKey}
             </div>
-            <div class="small-6 medium-6 large-3 column" style={{ padding: 0 }}>
-              {props.importByPrivateKey}
+
+            <div class="small-6 medium-4 large-2dot4 column">
+              {props.secondKey}
             </div>
-            <div class="small-12 medium-12 large-6 column" style={{ padding: 0 }}>
-              {props.importByDevice}
+            <div class="small-6 medium-4 large-2dot4 column">
+              {props.thirdKey}
             </div>
+
+            <div class="small-6 medium-4 medium-offset-2 large-2dot4 large-offset-0 column">
+              {props.fourthKey}
+            </div>
+            
+            <div class="small-6 small-offset-3 medium-4 medium-offset-0 large-2dot4 large-offset-0 column end">
+              {props.fifthKey}
+            </div>
+
           </div>
-          {props.importByMetamask}
         </div>
       </div>
       {props.errorModal}

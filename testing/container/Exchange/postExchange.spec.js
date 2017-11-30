@@ -192,7 +192,7 @@ describe('Test approveTx function', () => {
         ).dive();
 
         const approveModal = shallow(
-            <ApproveModal onSubmit={postExchange.instance().approveTx} />
+            <ApproveModal onSubmit={postExchange.instance().processExchangeAfterApprove} />
         );
         approveModal.find('.submit-approve').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
@@ -221,7 +221,7 @@ describe('Submit exchange', () => {
             <PostExchangeBtn submit={postExchange.instance().clickExchange} />
         );
 
-        postExchangeBtn.find('.next').simulate('click');
+        postExchangeBtn.find('.submit').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.GO_TO_STEP', payload: 2
         });
@@ -238,11 +238,92 @@ describe('Submit exchange', () => {
             <PostExchangeBtn submit={postExchange.instance().clickExchange} />
         );
 
-        postExchangeBtn.find('.next').simulate('click');
+        postExchangeBtn.find('.submit').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.OPEN_PASSPHRASE'
         });
     });
+
+    it('Submit by privateKey', () => {
+        store.getState().exchange.step = 2;
+        store.getState().account.account.type = 'privateKey';
+        const postExchange = shallow(
+            <PostExchange store={store} />
+        ).dive();
+
+        const postExchangeBtn = shallow(
+            <PostExchangeBtn submit={postExchange.instance().clickExchange} />
+        );
+
+        postExchangeBtn.find('.submit').simulate('click');
+        expect(store.dispatch).toHaveBeenCalledWith({
+            type: 'EXCHANGE.SHOW_CONFIRM'
+        });
+    });
+
+    it('Submit by Ledger', () => {
+        store.getState().exchange.step = 2;
+        store.getState().account.account.type = 'ledger';
+        store.getState().exchange.sourceTokenSymbol = 'ETH';
+        const postExchange = shallow(
+            <PostExchange store={store} />
+        ).dive();
+
+        const postExchangeBtn = shallow(
+            <PostExchangeBtn submit={postExchange.instance().clickExchange} />
+        );
+
+        postExchangeBtn.find('.submit').simulate('click');
+        expect(store.dispatch).toHaveBeenCalledWith({
+            type: 'EXCHANGE.SHOW_CONFIRM'
+        });
+    })
+
+    it('Submit by Trezor', () => {
+        store.getState().exchange.step = 2;
+        store.getState().account.account.type = 'trezor';
+        store.getState().exchange.sourceTokenSymbol = 'ETH';
+        const postExchange = shallow(
+            <PostExchange store={store} />
+        ).dive();
+
+        const postExchangeBtn = shallow(
+            <PostExchangeBtn submit={postExchange.instance().clickExchange} />
+        );
+
+        postExchangeBtn.find('.submit').simulate('click');
+        expect(store.dispatch).toHaveBeenCalledWith({
+            type: 'EXCHANGE.SHOW_CONFIRM',
+        });
+    })
+
+    it('Submit by device, token is not ETH', () => {
+        store.getState().exchange.step = 2;
+        store.getState().account.account.type = 'trezor';
+        store.getState().exchange.sourceTokenSymbol = 'OMG';
+        const postExchange = shallow(
+            <PostExchange store={store} />
+        ).dive();
+
+        const postExchangeBtn = shallow(
+            <PostExchangeBtn submit={postExchange.instance().clickExchange} />
+        );
+
+        postExchangeBtn.find('.submit').simulate('click');
+        expect(store.dispatch).toHaveBeenCalledWith({
+            type: 'EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET',
+            payload: {
+                "account": {
+                    "address": "0x12f0453c1947269842c5646df98905533c1b9519", "avatar": "", "balance": 0, "keystring": "", "manualNonce": 0, "nonce": 0, "type": "trezor"
+                }, 
+                "address": "0x12f0453c1947269842c5646df98905533c1b9519", 
+                "data": {
+                    "destAmount": "", "destTokenSymbol": "OMG", "sourceAmount": "0.1", "sourceTokenSymbol": "OMG"
+                }, 
+                "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519", "destToken": undefined, "ethereum": undefined, "formId": "exchange", "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "maxDestAmount": "0x5857a4", "minConversionRate": "0x23c46ca46a93f76b8", "nonce": 0, "password": "", "sourceAmount": "0x5f5e100", "sourceToken": undefined, "throwOnFailure": undefined, "type": "trezor"
+            }
+        });
+    })
 });
 
 describe('Close modal', () => {
@@ -252,6 +333,7 @@ describe('Close modal', () => {
 
     it('Close modal passphare', () => {
         store.getState().account.account.type = 'keystore';
+        store.getState().exchange.sourceTokenSymbol = 'ETH';
         const postExchange = shallow(
             <PostExchange store={store} />
         ).dive();
@@ -359,53 +441,11 @@ describe('Proccess transaction', () => {
                 "account": {
                     "address": "0x12f0453c1947269842c5646df98905533c1b9519", "avatar": "", "balance": 0, "keystring": "", "manualNonce": 0, "nonce": 0, "type": "keystore"
                 },
-                "address": "0x12f0453c1947269842c5646df98905533c1b9519", "data": { "destAmount": "0.3296591", "destTokenSymbol": "OMG", "sourceAmount": "0.1", "sourceTokenSymbol": "ETH" }, "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519", "destToken": undefined, "ethereum": undefined, "formId": "exchange", "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "maxDestAmount": "0x5857a4", "minConversionRate": "0x23c46ca46a93f76b8", "nonce": 0, "password": "", "sourceAmount": "0x16345785d8a0000", "sourceToken": undefined, "throwOnFailure": undefined, "type": "keystore"
-            }
-        });
-    })
-
-    it('Account type is Ledger', () => {
-        store.getState().exchange.step = 2;
-        store.getState().account.account.type = 'ledger';
-        const postExchange = shallow(
-            <PostExchange store={store} />
-        ).dive();
-
-        const postExchangeBtn = shallow(
-            <PostExchangeBtn submit={postExchange.instance().clickExchange} />
-        );
-
-        postExchangeBtn.find('.next').simulate('click');
-        expect(store.dispatch).toHaveBeenCalledWith({
-            type: 'EXCHANGE.PROCESS_EXCHANGE',
-            payload: {
-                "account": {
-                    "address": "0x12f0453c1947269842c5646df98905533c1b9519", "avatar": "", "balance": 0, "keystring": "", "manualNonce": 0, "nonce": 0, "type": "ledger"
+                "address": "0x12f0453c1947269842c5646df98905533c1b9519",
+                "data": {
+                    "destAmount": "", "destTokenSymbol": "OMG", "sourceAmount": "0.1", "sourceTokenSymbol": "ETH"
                 },
-                "address": "0x12f0453c1947269842c5646df98905533c1b9519", "data": { "destAmount": "0.3296591", "destTokenSymbol": "OMG", "sourceAmount": "0.1", "sourceTokenSymbol": "ETH" }, "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519", "destToken": undefined, "ethereum": undefined, "formId": "exchange", "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "maxDestAmount": "0x5857a4", "minConversionRate": "0x23c46ca46a93f76b8", "nonce": 0, "password": "", "sourceAmount": "0x16345785d8a0000", "sourceToken": undefined, "throwOnFailure": undefined, "type": "ledger"
-            }
-        });
-    })
-
-    it('Account type is Trezor', () => {
-        store.getState().exchange.step = 2;
-        store.getState().account.account.type = 'trezor';
-        const postExchange = shallow(
-            <PostExchange store={store} />
-        ).dive();
-
-        const postExchangeBtn = shallow(
-            <PostExchangeBtn submit={postExchange.instance().clickExchange} />
-        );
-
-        postExchangeBtn.find('.next').simulate('click');
-        expect(store.dispatch).toHaveBeenCalledWith({
-            type: 'EXCHANGE.PROCESS_EXCHANGE',
-            payload: {
-                "account": {
-                    "address": "0x12f0453c1947269842c5646df98905533c1b9519", "avatar": "", "balance": 0, "keystring": "", "manualNonce": 0, "nonce": 0, "type": "trezor"
-                },
-                "address": "0x12f0453c1947269842c5646df98905533c1b9519", "data": { "destAmount": "0.3296591", "destTokenSymbol": "OMG", "sourceAmount": "0.1", "sourceTokenSymbol": "ETH" }, "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519", "destToken": undefined, "ethereum": undefined, "formId": "exchange", "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "maxDestAmount": "0x5857a4", "minConversionRate": "0x23c46ca46a93f76b8", "nonce": 0, "password": "", "sourceAmount": "0x16345785d8a0000", "sourceToken": undefined, "throwOnFailure": undefined, "type": "trezor"
+                "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519", "destToken": undefined, "ethereum": undefined, "formId": "exchange", "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "maxDestAmount": "0x5857a4", "minConversionRate": "0x23c46ca46a93f76b8", "nonce": 0, "password": "", "sourceAmount": "0x16345785d8a0000", "sourceToken": undefined, "throwOnFailure": undefined, "type": "keystore"
             }
         });
     })
@@ -421,7 +461,7 @@ describe('Test getDesAmount function', () => {
         const postExchange = shallow(
             <PostExchange store={store} />
         ).dive();
-        expect(postExchange.instance().getDesAmount()).toBe(4.137270)
+        expect(postExchange.instance().getDesAmount()).toBe(4.137270040294856)
     })
 
     it('sourceAmount = 0.1 , offeredRate = 0', () => {
@@ -434,41 +474,15 @@ describe('Test getDesAmount function', () => {
     })
 });
 
-describe('Process tx after confirm', () => {
-    beforeEach(() => {
-        spyOn(store, 'dispatch');
-    });
-
-    it('Process tx after confirm', () => {
-        store.getState().account.account.type = 'trezor';
-        const postExchange = shallow(
-            <PostExchange store={store} />
-        ).dive();
-
-        const confirmTransferModal = shallow(
-            <ConfirmTransferModal onExchange={postExchange.instance().processTxAfterConfirm} />
-        );
-        confirmTransferModal.find('.process-submit').simulate('click');
-        expect(store.dispatch).toHaveBeenCalledWith({
-            type: 'EXCHANGE.PROCESS_EXCHANGE_AFTER_CONFIRM',
-            payload: {
-                "account": {
-                    "address": "0x12f0453c1947269842c5646df98905533c1b9519", "avatar": "", "balance": 0, "keystring": "", "manualNonce": 0, "nonce": 0, "type": "trezor"
-                }, 
-                "address": "0x12f0453c1947269842c5646df98905533c1b9519", "data": {"destAmount": "0", "destTokenSymbol": "OMG", "sourceAmount": "0.1", "sourceTokenSymbol": "ETH"}, "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519", "destToken": undefined, "ethereum": undefined, "formId": "exchange", "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "maxDestAmount": "0x5857a4", "minConversionRate": "0x23c46ca46a93f76b8", "nonce": 0, "password": "", "sourceAmount": "0x16345785d8a0000", "sourceToken": undefined, "throwOnFailure": undefined, "type": "trezor"
-            }
-        });
-    })
-})
-
 describe('Test recap function', () => {
     it('Recap', () => {
+        store.getState().exchange.destAmount = 0;
         const postExchange = shallow(
             <PostExchange store={store} />
         ).dive();
         let result = postExchange.instance().recap();
         expect(result).toEqual({
-            destAmount: "0",
+            destAmount: 0,
             destTokenSymbol: "OMG",
             sourceAmount: "0.1",
             sourceTokenSymbol: "ETH"
@@ -493,7 +507,7 @@ describe('Test formParams function', () => {
             "selectedAccount": "0x12f0453c1947269842c5646df98905533c1b9519",
             "sourceAmount": "0x16345785d8a0000",
             "sourceToken": undefined,
-            "throwOnFailure": undefined,        
+            "throwOnFailure": undefined,
         });
     });
 });

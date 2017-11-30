@@ -1,8 +1,35 @@
 import * as keyService from "./baseKey"
 import EthereumTx from "ethereumjs-tx"
 import { signLedgerTransaction, connectLedger } from "../../services/device/device"
+import * as ethUtil from 'ethereumjs-util'
+
+const defaultDPath = "m/44'/60'/0'";
 
 export default class Ledger {
+
+  getPublicKey = (path = defaultDPath) => {
+    return new Promise((resolve, reject) => {
+      connectLedger().then((eth) => {
+        eth.getAddress_async(path, false, true)
+          .then((result) => {
+            result.dPath = path;
+            resolve(result);
+          })
+          .fail((err) => {
+            switch (err) {
+							case 'Invalid status 6801':
+							case 'Invalid status 6a80':
+							case 'Invalid status 6804':
+              reject('Check to make sure the right application is selected')
+								break;
+							default:
+              reject('Cannot connect to ledger')
+            }
+          });
+      });
+    });
+  }
+
 
   callSignTransaction = (funcName, ...args) => {
     const { txParams, keystring, } = keyService[funcName](...args)

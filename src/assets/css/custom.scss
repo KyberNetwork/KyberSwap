@@ -96,3 +96,78 @@ a.disabled{
         background-color: #ECF6F4!important;
     }
 }
+.import-account>.column{
+    padding: 0;
+}
+.address-balance{
+    margin-bottom: 40px;
+}
+.large-2dot4{
+    @media screen and(min-width: 64em){
+        width: 20%;
+    }
+}
+#header a.avatar img{
+    width: 45px;
+    max-width: none;
+}
+@media screen and (min-width: 640px){
+    @media screen and (max-height: 790px){
+        #header{
+            min-height: auto!important;
+            padding: 10px 0!important;
+            a.logo img{
+                width: 100px;
+            }
+            .user-bar ul.notifications{
+                top: 60px!important;
+            }
+        }
+        .frame{
+            padding: 20px 0;
+            margin-bottom: 20px;
+            h1.title{
+                margin-top: 0;
+            }
+        }
+        .token-input{
+            margin-top: 5px!important;
+            min-height: auto;
+            input{
+                height: 50px;
+            }
+            .info:before{
+                height: 40px;
+                top: 59%;
+            }
+        }
+        #rate-bar {
+            padding: 10px 10px!important;
+        }
+        #transfer-screen{
+            label{
+                margin-bottom: 0;
+                input.hash{
+                    margin-bottom: 15px;
+                    margin-top: 5px;
+                }
+            }
+            .token-select, .address-balance, .token-amount{
+                margin-top: 5px;
+            }
+            .address-balance{
+                margin-bottom: 5px;
+            }
+        }
+    }
+    @media screen and (max-height: 670px){
+        .address-balance{
+            margin-bottom: 15px;
+        }
+        .frame{
+            h1.title{
+                margin-bottom: 10px;
+            }
+        }
+    }
+}

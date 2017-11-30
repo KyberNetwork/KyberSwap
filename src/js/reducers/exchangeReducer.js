@@ -61,6 +61,7 @@ const exchange = (state = initState, action) => {
       }
       newState.errors.selectSameToken = ""
       newState.errors.selectTokenToken = ""
+      newState.errors.sourceAmountError = ""
       return newState
     }
     case "EXCHANGE.THROW_SOURCE_AMOUNT_ERROR": {
@@ -160,6 +161,7 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.THROW_ERROR_PASSPHRASE": {
       newState.errors.passwordError = action.payload
+      newState.isConfirming = false
       return newState
     }
     case "EXCHANGE.FINISH_EXCHANGE": {

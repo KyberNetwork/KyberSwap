@@ -71,25 +71,30 @@ describe('Input destination address onchange', () => {
         spyOn(store, 'dispatch');
     });
     it('Input destination address onchange', () => {
+        let state = store.getState();
         const transfer = shallow(
             <Transfer store={store} />
         ).dive();
         let input = {
             destAddress: {
-                value: store.getState().transfer.destAddress,
+                value: state.transfer.destAddress,
                 onChange: transfer.instance().onAddressReceiveChange
             },
             amount: {
-                value: store.getState().transfer.amount,
+                value: state.transfer.amount,
                 onChange: transfer.instance().onAmountChange
             }
         }
         let errors = {
-            destAddress: store.getState().transfer.errors.destAddress,
-            amountTransfer: store.getState().transfer.errors.amountTransfer
+            destAddress: state.transfer.errors.destAddress,
+            amountTransfer: state.transfer.errors.amountTransfer
+        }
+        let balance = {
+            value: 0,
+            roundingValue: 0,
         }
         const transferForm = shallow(
-            <TransferForm input={input} errors={errors} />
+            <TransferForm input={input} errors={errors} balance={balance} />
         );
         transferForm.find('.hash').simulate('change', {
             target: { value: '0x23f35d...' }
@@ -106,25 +111,30 @@ describe('Input amount onchange', () => {
         spyOn(store, 'dispatch');
     });
     it('Input amount onchange', () => {
+        let state = store.getState();
         const transfer = shallow(
             <Transfer store={store} />
         ).dive();
         let input = {
             destAddress: {
-                value: store.getState().transfer.destAddress,
+                value: state.transfer.destAddress,
                 onChange: transfer.instance().onAddressReceiveChange
             },
             amount: {
-                value: store.getState().transfer.amount,
+                value: state.transfer.amount,
                 onChange: transfer.instance().onAmountChange
             }
         }
         let errors = {
-            destAddress: store.getState().transfer.errors.destAddress,
-            amountTransfer: store.getState().transfer.errors.amountTransfer
+            destAddress: state.transfer.errors.destAddress,
+            amountTransfer: state.transfer.errors.amountTransfer
+        }
+        let balance = {
+            value: 0,
+            roundingValue: 0,
         }
         const transferForm = shallow(
-            <TransferForm input={input} errors={errors} />
+            <TransferForm input={input} errors={errors} balance={balance} />
         );
         transferForm.find('.amount-input').simulate('change', {
             target: { value: 0.1 }

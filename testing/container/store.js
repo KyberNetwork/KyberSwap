@@ -43,7 +43,12 @@ function account() {
         account: new Account(
             '0x12f0453c1947269842c5646df98905533c1b9519',
             'keystore','',0,0,0,''
-        )
+        ),
+        pKey: {
+            error: '',
+            modalOpen: '',
+        }
+        
     }
 }
 
@@ -51,6 +56,7 @@ function exchange() {
     return {
         offeredRate: 0,
         sourceAmount: '',
+        destAmount: '',
         bcError: '',
         sourceTokenSymbol: '',
         minConversionRate: '0',
@@ -71,8 +77,14 @@ function transfer() {
     }
 }
 
+function global() {
+    return {
+        history: {}
+    }
+}
+
 const reducer = combineReducers({
-    tokens, utils, account, txs, connection, exchange, transfer
+    tokens, utils, account, txs, connection, exchange, transfer, global
 })
 
 const store = createStore(reducer);
