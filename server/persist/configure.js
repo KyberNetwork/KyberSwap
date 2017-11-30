@@ -1,5 +1,5 @@
 var configure = {
-  rangeFetch: 5000000,
+  rangeFetch: 10000000,
   frequency: 5
 }
 

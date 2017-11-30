@@ -8,7 +8,8 @@ var bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
 
-var PersistClass = require("./persist/json/jsonPersist")
+//var PersistClass = require("./persist/json/jsonPersist")
+var PersistClass = require("./persist/sqlite/sqlitePersist")
 var persistor = new PersistClass()
 
 function main() {
@@ -16,8 +17,8 @@ function main() {
   var connectionInstance = new EthereumService(
     {
       default: 'http', persistor: persistor,
-      callbackLogs: (events, latestBlock) => {
-        handleEvent(events, latestBlock)
+      callbackLogs: (events) => {
+        handleEvent(events)
       }
     })
   connectionInstance.subcribe()
@@ -26,9 +27,8 @@ function main() {
 main()
 
 
-async function handleEvent(logs, latestBlock) {
-  await persistor.saveLatestBlock(latestBlock)
-  var highestBlock = await persistor.getHighestBlock()
+async function handleEvent(logs) {
+  console.log(logs)
   for (var i = 0; i < logs.length; i++) {
     var savedEvent = {
       actualDestAmount: logs[i].returnValues.actualDestAmount,
@@ -40,21 +40,11 @@ async function handleEvent(logs, latestBlock) {
       txHash: logs[i].transactionHash,
       status: logs[i].type
     }
-    if (savedEvent.blockNumber > highestBlock) {
+    var check = await persistor.checkEventByHash(savedEvent.txHash, savedEvent.blockNumber)
+    console.log(check)
+    if(!check){
       await persistor.savedEvent(savedEvent)
-      continue
-    }else{
-      var check = await persistor.checkEventByHash(savedEvent.txHash, savedEvent.blockNumber)
-      if(!check){
-        await persistor.savedEvent(savedEvent)
-        continue
-      }
     }
-    break
-    // if (savedEvent.blockNumber === highestBlock) {
-    //   await persistor.savedEvent(savedEvent)
-    //   continue
-    // }
   }
 }
 

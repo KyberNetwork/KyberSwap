@@ -95,7 +95,6 @@ class EthereumService {
 
   async fetchData() {
     //get currentBlock
-    //this.fetCurrentBlock()
     this.fetchLogExchange()
   }
 
@@ -105,29 +104,22 @@ class EthereumService {
     var count = await this.persistor.getCount()
     var frequency = await this.persistor.getFrequency()
     var latestBlock = await this.currentProvider.getLatestBlock()
+    await this.persistor.saveLatestBlock(latestBlock)
     if (count > frequency){
       await this.persistor.updateCount(0)
-      await this.persistor.increaseBlock(latestBlock)
+      var blockUpdated = currentBlock + rangeBlock > latestBlock ?latestBlock: currentBlock + rangeBlock 
+      await this.persistor.updateBlock(blockUpdated)
     }else{
       this.persistor.updateCount(++count)
       var toBlock = currentBlock + rangeBlock
       if (toBlock > latestBlock){
         toBlock = latestBlock
       }
-      var events  = await this.currentProvider.getLogExchange(currentBlock + 1, toBlock)
+      var events  = await this.currentProvider.getLogExchange(currentBlock, toBlock)
 
-      this.callbackLogs(events, latestBlock)
+      this.callbackLogs(events)
     }
   }
-
-
-  // async fetCurrentBlock(){
-  //   var currentBlock  = await this.currentProvider.getLatestBlock()
-  //   this.callbackBlock(currentBlock)
-  // }
-
-
-
 
   call(fn) {
     return this.currentProvider[fn].bind(this.currentProvider)
