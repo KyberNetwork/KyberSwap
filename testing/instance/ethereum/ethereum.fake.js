@@ -15,8 +15,7 @@ export default class EthereumService extends React.Component {
   constructor(props) {
     super(props)
     this.httpUrl = "https://kovan.infura.io/DtzEYY0Km2BA3YwyJcBG"
-    this.wsUrl = "wss://kovan.kyber.network/ws/"
-    //this.wsUrl = "ws://localhost:8546"
+
     this.httpProvider = this.getHttpProvider()
 
     this.initProvider(props.default)

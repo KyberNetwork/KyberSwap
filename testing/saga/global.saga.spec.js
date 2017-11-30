@@ -3,9 +3,11 @@ import * as actions from '../../src/js/actions/globalActions'
 import { updateHistoryExchange } from '../../src/js/sagas/globalActions'
 import { expectSaga, testSaga } from 'redux-saga-test-plan';
 import EthereumService from "../instance/ethereum/ethereum.fake"
+jest.mock('vm')
+jest.mock('jdenticon', () => {})
+
 var stringify = require('json-stringify-safe');
 let ethereum = new EthereumService({ default: 'http' })
-jest.mock('vm')
 
 it('handle update history exchange', () => {
   return expectSaga(updateHistoryExchange, { payload: {

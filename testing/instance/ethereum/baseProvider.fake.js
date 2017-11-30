@@ -3,6 +3,7 @@ import constants from "../../../src/js/services/constants"
 import * as ethUtil from 'ethereumjs-util'
 import BLOCKCHAIN_INFO from "../../../env"
 
+import baseProviderTestValue from "../../saga/baseProvider.test-value"
 export default class BaseEthereumProvider {
 
     initContract(){
@@ -151,36 +152,13 @@ export default class BaseEthereumProvider {
 
     getLogExchange(currentBlock, range) {
         return new Promise((resolve, rejected) => {
-          // var cachedRange = constants.HISTORY_EXCHANGE.cached.range 
-          // var startBlock = (latestBlock - currentBlock) > cachedRange ? 
-          //                                               (latestBlock - cachedRange):
-          //                                               currentBlock
-          //console.log(startBlock)         
-          var startBlock = currentBlock > range? currentBlock - range: 0
-          this.networkContract.getPastEvents('Trade', {
-            filter: {status: "mined"},
-            fromBlock: startBlock,
-            toBlock: currentBlock
-          }, )
-            .then(function (events) {
-              //console.log(events)
-              resolve(events)          
-            })
+            resolve(Promise.resolve(baseProviderTestValue.exchangeLogs))
         })
       }
 
       getRateExchange() {
         return new Promise((resolve, rejected) => {
-          fetch(BLOCKCHAIN_INFO.history_endpoint + '/getRate', {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json, text/plain, */*',
-              'Content-Type': 'application/json'
-            },
-            body: {}
-          }).then(function (response) {
-            resolve(response.json())
-          })
+          resolve(Promise.resolve(baseProviderTestValue.exchangeRate))
         })
       }
 }

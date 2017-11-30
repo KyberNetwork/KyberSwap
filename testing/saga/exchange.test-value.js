@@ -229,8 +229,12 @@ const perfectPrivateKey = {
   throwOnFailure: false,
   type: "privateKey",
 }
+
+
 // const perfectKeyStore = {...keystoreWrongPassphrase, password: "huyhoang"}
 
 export default {
-  account, ethereum, keystoreWrongPassphrase, trezorReject, perfectKeyStore, trezorCheckTokenBalance, perfectPrivateKey, exchangeSuccess, ledgerAccount, trezorAccount, pKeyAccount
+  account, ethereum, keystoreWrongPassphrase, trezorReject, 
+  perfectKeyStore, trezorCheckTokenBalance, perfectPrivateKey, 
+  exchangeSuccess, ledgerAccount, trezorAccount, pKeyAccount
 }

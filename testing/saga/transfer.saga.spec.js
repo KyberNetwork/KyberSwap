@@ -3,11 +3,14 @@ import { call, put, take } from 'redux-saga/effects';
 import { expectSaga, testSaga } from 'redux-saga-test-plan';
 import * as CircularJSON from "circular-json";
 var stringify = require('json-stringify-safe');
+
+
 jest.mock('vm')
 jest.mock('jdenticon', () => {})
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { default as transferReducer } from "../../src/js/reducers/transferReducer"
 import transferTestValue from "./transfer.test-value"
+var ethereum = transferTestValue.ethereum
 import { processTransfer } from "../../src/js/sagas/transferActions"
 import { KeyStore, Ledger, Trezor} from "../../src/js/services/keys"
 
@@ -69,7 +72,7 @@ it('handle process transfer with trezor and reject sign', () => {
 
 const perfectKeystore = transferTestValue.perfectKeystore
 const signedTransaction = transferTestValue.signedTransaction
-const ethereum = transferTestValue.ethereum
+
 it('handle process transfer true keystore and passphrase', () => {
   return expectSaga(processTransfer, { payload: perfectKeystore})
     .provide([
