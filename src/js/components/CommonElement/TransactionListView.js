@@ -92,25 +92,26 @@ const TransactionListView = (props) => {
   }
 
   return (
-    <div className="frame">
+    <div className="frame history">
       <div className="row">
         <div class="column small-11 large-12 small-centered">
           <h1 className="title">TRANSACTION HISTORY</h1>
-          <div className="small-12 medium-6 large-6 column">
-            <span>ETH/TOKEN</span>
-            <div className="transaction-list">
-              {content(props.logsEth)}
+          <div className="row">
+            <div className="small-12 medium-12 large-6 column">
+              <span>ETH/TOKEN</span>
+              <div className="transaction-list">
+                {content(props.logsEth)}
+              </div>
             </div>
-          </div>
-          <div className="small-12 medium-6 large-6 column">
-            <span>TOKEN/ETH</span>
-            <div className="transaction-list">
-              {content(props.logsToken)}
+            <div className="small-12 medium-12 large-6 column">
+              <span>TOKEN/ETH</span>
+              <div className="transaction-list">
+                {content(props.logsToken)}
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div style={{ clear: 'both' }}></div>
     </div>
   )
 }
