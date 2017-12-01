@@ -5,7 +5,7 @@ var stringify = require('json-stringify-safe');
 const ethereum = exchangeTestValue.ethereum
 import { processExchange, exchangeETHtoTokenColdWallet, 
   checkTokenBalanceOfColdWallet, exchangeETHtoTokenKeystore, runAfterBroadcastTx,
-  exchangeETHtoTokenPrivateKey, exchangeTokentoETHPrivateKey } from "../../src/js/sagas/exchangeActions"
+  exchangeETHtoTokenPrivateKey, exchangeTokentoETHPrivateKey, exchangeTokentoETHMetamask } from "../../src/js/sagas/exchangeActions"
 import exchangeTestValue from "./exchange.test-value"
 import { KeyStore, Trezor, Ledger, PrivateKey, Metamask } from "../../src/js/services/keys"
 import FakeTrezor from "../instance/trezor/Trezor.fake"
@@ -360,12 +360,12 @@ describe('testing exchange saga successfully', () => {
     exchangeSuccess.keystring = metaMaskAccount.keystring
     exchangeSuccess.type = metaMaskAccount.type
     exchangeSuccess.password = "123qwe"
-    return expectSaga(exchangeETHtoTokenPrivateKey, { payload: exchangeSuccess})
+    return expectSaga(exchangeTokentoETHMetamask, { payload: exchangeSuccess})
       .run(200000)
       .then((result) => {
         const { effects } = result;
         expect(effects.put).toHaveLength(6);
-        expect(effects.call).toHaveLength(4);
+        expect(effects.call).toHaveLength(3);
 
         expect(effects.put[0]).toEqual(
           put({
@@ -379,17 +379,14 @@ describe('testing exchange saga successfully', () => {
         expect(effects.put[5].PUT.action.type).toEqual("EXCHANGE.FINISH_EXCHANGE");
 
         expect(stringify(effects.call[0])).toEqual(
-          stringify(call( new KeyStore().callSignTransaction, "etherToOthersFromAccount", exchangeSuccess.formId, ethereum, exchangeSuccess.address, exchangeSuccess.sourceToken,
+          stringify(call( new KeyStore().callSignTransaction, "tokenToOthersFromAccount", exchangeSuccess.formId, ethereum, exchangeSuccess.address, exchangeSuccess.sourceToken,
           exchangeSuccess.sourceAmount, exchangeSuccess.destToken, exchangeSuccess.destAddress,
           exchangeSuccess.maxDestAmount, exchangeSuccess.minConversionRate,
           exchangeSuccess.throwOnFailure, exchangeSuccess.nonce, exchangeSuccess.gas,
           exchangeSuccess.gasPrice, exchangeSuccess.keystring, exchangeSuccess.type, exchangeSuccess.password))
         )
-        expect(stringify(effects.call[1].CALL.fn)).toEqual(
-          stringify(ethereum.call("sendRawTransaction"))
-        )
 
-        expect(effects.call[2].CALL.fn).toEqual(
+        expect(effects.call[1].CALL.fn).toEqual(
           runAfterBroadcastTx
         )
       })

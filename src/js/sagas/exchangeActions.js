@@ -403,7 +403,7 @@ function* exchangeTokentoETHColdWallet(action) {
   }
 }
 
-function* exchangeTokentoETHMetamask(action) {
+export function* exchangeTokentoETHMetamask(action) {
   const { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,

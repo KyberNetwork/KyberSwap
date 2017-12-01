@@ -22,7 +22,7 @@ function* broadCastTx(action) {
 }
 
 
-function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
+export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   const tx = new Tx(
     hash, account.address, ethUtil.bufferToInt(txRaw.gas),
     converter.weiToGwei(ethUtil.bufferToInt(txRaw.gasPrice)),
