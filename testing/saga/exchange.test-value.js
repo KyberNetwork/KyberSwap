@@ -9,33 +9,33 @@ import FakeKeyStore from "../instance/keystore/KeyStore.fake"
 import { sealTxByKeystore} from "../../src/js/utils/sealer"
 
 var account = new Account(
-  "0x12f0453c1947269842c5646df98905533c1b9519", 
+  "0xee41a6c2b36d80d6698641b83fc883c0e11af683", 
   "keystore",
-  '{"version":3,"id":"42a81fda-8d1b-4e61-a8ee-8703bc4137b5","address":"12f0453c1947269842c5646df98905533c1b9519","crypto":{"ciphertext":"5ac005ce89f9483b3415e8057e7410a1c06fb11611f811109df79a462fe868d3","cipherparams":{"iv":"8dccbd0a66094ae251f8ec79559fece2"},"cipher":"aes-128-ctr","kdf":"pbkdf2","kdfparams":{"dklen":32,"salt":"0c6d49adde05b145a29acec30fa9961f277fab5a99f09bfe4d25d6a41a9c5e7e","c":10240,"prf":"hmac-sha256"},"mac":"22f6275e7e7064a71768ece7215e2eea8c4d16971f1079b429c9ddefb9d061a2"}}'
+  '{"version":3,"id":"143cecac-8639-4c12-9bb7-ca32e6ac3873","address":"ee41a6c2b36d80d6698641b83fc883c0e11af683","crypto":{"ciphertext":"c7368f3f9a5b2bd578985877b9f0afd10f1ad75cedcb030d508a045f96b2e213","cipherparams":{"iv":"aec29019a6ed80c939488cf9e03ff6aa"},"cipher":"aes-128-ctr","kdf":"pbkdf2","kdfparams":{"dklen":32,"salt":"f0d255037e3017e548ec2f8abc39141b21d914a1ba1e55ced76e38b9e08dcd67","c":10240,"prf":"hmac-sha256"},"mac":"7833dba575e38b5a43391c94716ed5ea9c53a616e700ee77223d5ab906e580bd"}}'
 );
 
 var ledgerAccount = new Account(
-  "0xf34791ada19af51d5b0dc927b8420a2c7dc9b704",
+  "0xdc5b1a4ed7a548aa208843c5f70d6e13696f272a",
   "ledger",
-  '{"version":3,"id":"04933224-8510-45f3-a3e2-882a8c149081","address":"f34791ada19af51d5b0dc927b8420a2c7dc9b704","crypto":{"ciphertext":"e4c51957a31da57e754498fd11da81d50424f3c2647fda816bc08ca51734f780","cipherparams":{"iv":"9f409c69b2c1eaf26c41e0ac8afd63cc"},"cipher":"aes-128-ctr","kdf":"pbkdf2","kdfparams":{"dklen":32,"salt":"07e47b0e900abe1aa4e2125e746a11ba7f6e87a696626c6ed0715113e3e4e75a","c":10240,"prf":"hmac-sha256"},"mac":"51d2dcb0a863a590d1c94bdbe315f0d9ec2ab3aa93f653d77922588a96ee2a65"}}'
+  '{"version":3,"id":"d552930a-d78e-438b-ae39-1a95611d1940","address":"dc5b1a4ed7a548aa208843c5f70d6e13696f272a","crypto":{"ciphertext":"110ffb09ee29eb97e479913e48ad5ca74e60658de7a124218dcef78b24ed1662","cipherparams":{"iv":"0d50c43b5d258dc5a276f8cbe5116aa1"},"cipher":"aes-128-ctr","kdf":"pbkdf2","kdfparams":{"dklen":32,"salt":"5b2e1723806b8faa4a21856b266acb6080eb993b5395050a782fdf22bc550ed1","c":10240,"prf":"hmac-sha256"},"mac":"12624988e26e574d6d09d0a11c0b3a88e6eb0eb1bdd1ba18b7c7ba13aa5a7a88"}}'
 )
 
 var trezorAccount = new Account(
-  "0x12f0453c1947269842c5646df98905533c1b9519",
+  "0x157022fc2da0fbecebcd1ed7766bd27316e44b5e",
   "trezor",
-  '{"version":3,"id":"42a81fda-8d1b-4e61-a8ee-8703bc4137b5","address":"12f0453c1947269842c5646df98905533c1b9519","crypto":{"ciphertext":"5ac005ce89f9483b3415e8057e7410a1c06fb11611f811109df79a462fe868d3","cipherparams":{"iv":"8dccbd0a66094ae251f8ec79559fece2"},"cipher":"aes-128-ctr","kdf":"pbkdf2","kdfparams":{"dklen":32,"salt":"0c6d49adde05b145a29acec30fa9961f277fab5a99f09bfe4d25d6a41a9c5e7e","c":10240,"prf":"hmac-sha256"},"mac":"22f6275e7e7064a71768ece7215e2eea8c4d16971f1079b429c9ddefb9d061a2"}}'
+  '{"version":3,"id":"15acaca3-681c-4045-8d6c-572db8c780d2","address":"157022fc2da0fbecebcd1ed7766bd27316e44b5e","crypto":{"ciphertext":"966b44de71b0cbd1a0236b66055b6def2882ca5f68f55e9186fafe054a4465d8","cipherparams":{"iv":"210b2a32e33a65b89af160f04328b9d1"},"cipher":"aes-128-ctr","kdf":"pbkdf2","kdfparams":{"dklen":32,"salt":"9e6414abe2b84a180c087cea59876b716c5ad0196822616b072ab506d3090a16","c":10240,"prf":"hmac-sha256"},"mac":"329e71f1b2b06b3811cfc4bea16147d48fc4df297bb9eb2f577329293001f1cb"}}'
 )
 
 var pKeyAccount = new Account(
-  "0xe86e95e15d94b5ab8e8fd9e56052220872fe099f",
+  "0x7427b84be85da9ea619f525d09e77d858e8ada49",
   "privateKey",
-  '{"version":3,"id":"40a4def5-9257-4da7-bbcc-2ed0b47a6424","address":"e86e95e15d94b5ab8e8fd9e56052220872fe099f","crypto":{"ciphertext":"ec47ed891000f25ee8fcfe1e82ffd9a0b9fed8e148ed568f0a7391a038f6a0ff","cipherparams":{"iv":"3b0175e20a449e9a34086e0b3f937c63"},"cipher":"aes-128-ctr","kdf":"pbkdf2","kdfparams":{"dklen":32,"salt":"84cd7f51b35ef7cae4af06a38f3ea55058450d653d3b0a43a720a2ded399161b","c":10240,"prf":"hmac-sha256"},"mac":"2a6896b36b8794265440623e65d5fa53b125f308e7f3125e43ffff883cb321b9"}}'
+  '{"version":3,"id":"7131238e-aab1-4c49-a084-44ea34046504","address":"7427b84be85da9ea619f525d09e77d858e8ada49","crypto":{"ciphertext":"906cf9784d86df2a2ba1ccaa7c4f929f6fffe47717f002620b7c0a5ca40b01e0","cipherparams":{"iv":"828e7caa3ab9574cb18132d89a014245"},"cipher":"aes-128-ctr","kdf":"pbkdf2","kdfparams":{"dklen":32,"salt":"200b21b722c8dd46907f56735356b63f185279a8ece031fffc998171e0812799","c":10240,"prf":"hmac-sha256"},"mac":"759a088d26e836afa55951b19cecf51c44fb6b4c66cf0c65904048fd08bc3796"}}'
 )
 
 var metaMaskAccount = new Account(
-  "0xb6e3b94d74003376409600208edac4d8b29d7f3e",
+  "0x7b2462642d995aa483cc9515c71003878499732f",
   "metaMask",
-  '{"version":3,"id":"f99e1f45-fd93-464b-9fd8-3f7f5a033fb5","address":"b6e3b94d74003376409600208edac4d8b29d7f3e","crypto":{"ciphertext":"aa5703765529451b59802ae85e83fb6777b2abe95b84078ff8b5e1b5fae226ca","cipherparams":{"iv":"4e996ecfc0f07ac2494f786eae085321"},"cipher":"aes-128-ctr","kdf":"pbkdf2","kdfparams":{"dklen":32,"salt":"092e368703de1578a3aae95846c6925a1ee275fa269667cc72a8b9fc5c42d23f","c":10240,"prf":"hmac-sha256"},"mac":"80df25239eac0d632448b9eda9d60f9d19a3c684b9173be7002dcb014a3b0e99"}}'
+  '{"version":3,"id":"881d13b3-7abe-4328-8b6a-3c784c6e9b5f","address":"7b2462642d995aa483cc9515c71003878499732f","crypto":{"ciphertext":"c0f96362acf9753e367642d8604a17ebb196d5dc23c62ab4d2260dbc1c4786a2","cipherparams":{"iv":"76fb27c46deeb58593c49d592219b272"},"cipher":"aes-128-ctr","kdf":"pbkdf2","kdfparams":{"dklen":32,"salt":"2cd734efdf9dd9bf775f70b5613e5f3b9c185d274f0dd4aff206a435f905eb5f","c":10240,"prf":"hmac-sha256"},"mac":"ad64f3da70dc8e3993071d73e446c2edd08d36518653977bc522507ebb7e9f57"}}'
 )
 
 const keystoreWrongPassphrase = {
@@ -158,7 +158,7 @@ var exchangeSuccess = {
   maxDestAmount: "0x8000000000000000000000000000000000000000000000000000000000000000",
   minConversionRate: "0x5318ac148df660d2f2",
   // nonce: 192,
-  password: "huyhoang",
+  password: "123qwe",
   sourceAmount: "0x38d7ea4c68000",
   sourceToken: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   throwOnFailure: false,

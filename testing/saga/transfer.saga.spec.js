@@ -175,7 +175,6 @@ describe('testing trasfer saga successfully', () => {
     transferSuccess.type = account.type
     transferSuccess.address = account.address
     transferSuccess.keystring = account.keystring
-    transferSuccess.password = "huyhoang"
 
     return expectSaga(processTransfer, { payload: transferSuccess})
       .run(200000)
@@ -220,7 +219,6 @@ describe('testing trasfer saga successfully', () => {
     transferSuccess.type = account.type
     transferSuccess.address = account.address
     transferSuccess.keystring = account.keystring
-    transferSuccess.password = "123qwe"
     return expectSaga(processTransfer, { payload: transferSuccess})
       .run(200000)
       .then((result) => {
@@ -263,7 +261,6 @@ describe('testing trasfer saga successfully', () => {
     transferSuccess.type = account.type
     transferSuccess.address = account.address
     transferSuccess.keystring = account.keystring
-    transferSuccess.password = "123qwe"
 
     return expectSaga(processTransfer, { payload: transferSuccess})
       .run(200000)
