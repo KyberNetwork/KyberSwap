@@ -146,6 +146,10 @@ export default class BaseEthereumProvider {
         })
     }
 
+    countALlEvents(){
+        return Promise.resolve(123)
+      }
+
     getLogExchange(currentBlock, range) {
         return new Promise((resolve, rejected) => {
             resolve(Promise.resolve(baseProviderTestValue.exchangeLogs))
