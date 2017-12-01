@@ -48,7 +48,8 @@ const global = (state = initState, action) => {
     case "GLOBAL.UPDATE_HISTORY":{
       const {logs, latestBlock, page, eventsCount, isAutoFetch} = action.payload
       var history = {...state.history}
-      history.logs = logs
+      history.logsEth = logs.eth
+      history.logsToken = logs.token
       history.currentBlock = latestBlock
       history.page = page
       history.eventsCount = eventsCount

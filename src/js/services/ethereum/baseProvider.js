@@ -173,6 +173,24 @@ export default class BaseEthereumProvider {
         },
         body: JSON.stringify({
           page: page,
+          itemPerPage: itemPerPage - 1,
+        })
+      }).then(function (response) {
+        resolve(response.json())
+      })
+    })
+  }
+
+  getLogTwoColumn(page, itemPerPage) {
+    return new Promise((resolve, rejected) => {
+      fetch(BLOCKCHAIN_INFO.history_endpoint + '/getHistoryTwoColumn', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          page: page,
           itemPerPage: itemPerPage,
         })
       }).then(function (response) {
@@ -192,7 +210,41 @@ export default class BaseEthereumProvider {
         body: {}
       }).then(function (response) {
         resolve(response.json())
+      }).catch((err) => {
+        console.log("-- catch error get rate from server --")
+        this.getRateFromBlockchain().then((result) => {
+          resolve(result)
+        })
       })
     })
+  }
+
+  getRateFromBlockchain(){
+    var ratePromises = []
+    var tokenObj = BLOCKCHAIN_INFO.tokens
+    Object.keys(tokenObj).map((tokenName) => {
+      ratePromises.push(Promise.all([
+        Promise.resolve(tokenName),
+        Promise.resolve(constants.ETH.symbol),
+        this.getRate(tokenObj[tokenName].address, constants.ETH.address, constants.RESERVES[0].index)
+      ]))
+      ratePromises.push(Promise.all([
+        Promise.resolve(constants.ETH.symbol),
+        Promise.resolve(tokenName),
+        this.getRate(constants.ETH.address, tokenObj[tokenName].address, constants.RESERVES[0].index)
+      ]))
+    })
+    return Promise.all(ratePromises).then((arrayRate) => {
+      var arrayRateObj =  arrayRate.map((rate) => {
+        return {
+          source: rate[0],
+          dest: rate[1],
+          rate: rate[2].rate,
+          expBlock: rate[2].expBlock,
+          balance: rate[2].balance
+        } 
+      })
+      return arrayRateObj
+    })    
   }
 }
