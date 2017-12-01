@@ -1,10 +1,13 @@
+.history{
+    background-color: $body-background;
+}
 .transaction-list {
   display: block;
   position: relative;
   padding: 10px;
   box-sizing: border-box;
-  //overflow: hidden;
-  height: 100%;
+  // overflow: hidden;
+  height: 485px;
 
   div, span {
       box-sizing: border-box;
@@ -17,77 +20,67 @@
       top: 0px;
       right: 5px;
       height: 80px;
-      margin: 15px 5px;
+      margin: 12px 5px;
 
       -webkit-transition: top 250ms ease-out;
       -moz-transition: top 250ms ease-out;
       -ms-transition: top 250ms ease-out;
       -o-transition: top 250ms ease-out;
       transition: top 250ms ease-out;
+      
+			&[data-pos="-5"] {
+					top: -475px;
+			}
+					
+			&[data-pos="-4"] {
+					top: -380px;
+			}
+			
+			&[data-pos="-3"] {
+					top: -285px;
+			}
 
-      &[data-pos="0"] {
-          z-index: 60;
-          top: 0px;
+      &[data-pos="-2"] {
+          top: -190px;
       }
 
+      &[data-pos="-1"] {
+          top: -95px;
+			}
+			
+      &[data-pos="0"] {
+				z-index: 60;
+				top: 0px;
+      }
+			
       &[data-pos="1"] {
-          z-index: 50;
-          top: 95px;
-          -webkit-transition: top 250ms 150ms ease-out;
-          -moz-transition: top 250ms 150ms ease-out;
-          -ms-transition: top 250ms 150ms ease-out;
-          -o-transition: top 250ms 150ms ease-out;
-          transition: top 250ms 150ms ease-out;
+        z-index: 50;
+				top: 95px;
       }
 
       &[data-pos="2"] {
           z-index: 40;
           top: 190px;
-          -webkit-transition: top 250ms 200ms ease-out;
-          -moz-transition: top 250ms 200ms ease-out;
-          -ms-transition: top 250ms 200ms ease-out;
-          -o-transition: top 250ms 200ms ease-out;
-          transition: top 250ms 200ms ease-out;
       }
 
       &[data-pos="3"] {
           z-index: 30;
           top: 285px;
-          -webkit-transition: top 250ms 250ms ease-out;
-          -moz-transition: top 250ms 250ms ease-out;
-          -ms-transition: top 250ms 250ms ease-out;
-          -o-transition: top 250ms 250ms ease-out;
-          transition: top 250ms 250ms ease-out;
       }
 
       &[data-pos="4"] {
           z-index: 20;
           top: 380px;
-          -webkit-transition: top 250ms 300ms ease-out;
-          -moz-transition: top 250ms 300ms ease-out;
-          -ms-transition: top 250ms 300ms ease-out;
-          -o-transition: top 250ms 300ms ease-out;
-          transition: top 250ms 300ms ease-out;
       }
 
       &[data-pos="5"] {
           z-index: 10;
           top: 475px;
-          -webkit-transition: top 250ms 350ms ease-out;
-          -moz-transition: top 250ms 350ms ease-out;
-          -ms-transition: top 250ms 350ms ease-out;
-          -o-transition: top 250ms 350ms ease-out;
-          transition: top 250ms 350ms ease-out;
       }
 
-      &[data-pos="6"] {
+      &[data-pos="6"], &[data-pos="7"], &[data-pos="8"], &[data-pos="9"]{
           z-index: 9;
           top: 570px;
-          -webkit-transition: top 250ms 400ms ease-out;
-          -moz-transition: top 250ms 400ms ease-out;
-          -ms-transition: top 250ms 400ms ease-out;
-          -o-transition: top 250ms 400ms ease-out;
-          transition: top 250ms 400ms ease-out;
       }
 
       .inner {
