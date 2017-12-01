@@ -59,8 +59,6 @@ it('handle global rate update all pending', () => {
     .run(100000)
     .then((result) => {
       const { effects, allEffects } = result;
-      console.log("================")
-      console.log(effects)
       expect(effects.call).toHaveLength(1);
       expect(effects.put).toHaveLength(1);
       expect(effects.put[0].PUT.action.type).toEqual(

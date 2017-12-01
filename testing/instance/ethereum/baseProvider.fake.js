@@ -4,6 +4,8 @@ import * as ethUtil from 'ethereumjs-util'
 import BLOCKCHAIN_INFO from "../../../env"
 
 import baseProviderTestValue from "../../saga/baseProvider.test-value"
+import rateTestValue from "../../saga/rate.test-value"
+
 export default class BaseEthereumProvider {
 
     initContract(){
@@ -116,13 +118,7 @@ export default class BaseEthereumProvider {
     }
 
     getRate(source, dest, reserve) {
-        return new Promise((resolve, reject) => {
-            this.networkContract.methods.getRate(source, dest, reserve).call().then((result) => {
-                if (result != null) {
-                    resolve(result)
-                }
-            })
-        })
+        return new Promise.resolve(rateTestValue.rate)
     }
 
     getAllRate(tokensObj, reserve) {

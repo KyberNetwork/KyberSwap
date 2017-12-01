@@ -96,8 +96,6 @@ it('handle exchange eth to token with private key', () => {
     .run()
     .then((result) => {
       const { effects } = result;
-      console.log("------------------")
-      console.log(effects)
 
       expect(effects.put).toHaveLength(1);
       expect(effects.call).toHaveLength(2);
@@ -256,8 +254,6 @@ describe('testing exchange saga successfully with trezor', () => {
       .then((result) => {
         const { effects } = result;
 
-        console.log("===========================")
-        console.log(effects)
 
         // expect(effects.put).toHaveLength(6);
         // expect(effects.call).toHaveLength(4);
