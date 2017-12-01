@@ -243,6 +243,7 @@ export function* exchangeETHtoTokenColdWallet(action) {
       maxDestAmount, minConversionRate,
       throwOnFailure, nonce, gas,
       gasPrice, keystring, type, password)
+
     yield put(actions.prePareBroadcast())
     const hash = yield call(ethereum.call("sendRawTransaction"), txRaw, ethereum)
     yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
@@ -402,7 +403,7 @@ function* exchangeTokentoETHColdWallet(action) {
   }
 }
 
-function* exchangeTokentoETHMetamask(action) {
+export function* exchangeTokentoETHMetamask(action) {
   const { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
