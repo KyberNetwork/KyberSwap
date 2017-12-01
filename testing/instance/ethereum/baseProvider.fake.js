@@ -19,13 +19,7 @@ export default class BaseEthereumProvider {
     }
 
     getLatestBlock() {
-        return new Promise((resolve, reject) => {
-            this.rpc.eth.getBlock("latest", false).then((block) => {
-                if (block != null) {
-                    resolve(block.number)
-                }
-            })
-        })
+        return Promise.resolve(4931928)
     }
 
     getBalance(address) {
@@ -153,6 +147,33 @@ export default class BaseEthereumProvider {
     getLogExchange(currentBlock, range) {
         return new Promise((resolve, rejected) => {
             resolve(Promise.resolve(baseProviderTestValue.exchangeLogs))
+        })
+      }
+
+      getLogTwoColumn(page, itemPerPage) {
+        return Promise.resolve({
+            eth: [{
+                actualDestAmount: "41010246916709757747",
+                actualSrcAmount: "99999999999999999",
+                blockNumber: 4931924,
+                dest: "0x8ac48aa26a7e25be12a9ddc83f6bbde1594414bb",
+                id: 201,
+                sender: "0x9f1a678b0079773b5c4f5aa8573132d2b8bcb1e7",
+                source: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                status: "mined",
+                txHash: "0xfc6976d0b1d0920b7aa3225f61cbda8010dfa0ff8b28dc85c9a9c622f877f7bb"
+            },],
+            token: [{
+                actualDestAmount: "7286277254209250843",
+                actualSrcAmount: "3090094699468192493102",
+                blockNumber: 4917236,
+                dest: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                id: 165,
+                sender: "0x9f1a678b0079773b5c4f5aa8573132d2b8bcb1e7",
+                source: "0x8ac48aa26a7e25be12a9ddc83f6bbde1594414bb",
+                status: "mined",
+                txHash: "0x588ec161d036e591bdbde96b4ba809916cc1a565fb64131737d1deba22020fc0",
+            }]
         })
       }
 
