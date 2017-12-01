@@ -248,48 +248,47 @@ describe('testing exchange saga successfully with trezor', () => {
     exchangeSuccess.keyService = new KeyStore()
     exchangeSuccess.keystring = trezorAccount.keystring
     exchangeSuccess.type = trezorAccount.type
+    exchangeSuccess.password = "123qwe"
     return expectSaga(exchangeETHtoTokenColdWallet, { payload: exchangeSuccess})
       .run(200000)
       .then((result) => {
         const { effects } = result;
 
-        console.log("_+++++++++++++++++++++++++++++++")
-        console.log(effects)
-        // expect(effects.put).toHaveLength(6);
-        // expect(effects.call).toHaveLength(4);
+        expect(effects.put).toHaveLength(6);
+        expect(effects.call).toHaveLength(4);
 
-        // expect(effects.put[0]).toEqual(
-        //   put({
-        //     type:"EXCHANGE.PREPARE_BROADCAST"
-        //   })
-        // );
-        // expect(effects.put[1].PUT.action.type).toEqual("ACCOUNT.INC_MANUAL_NONCE_ACCOUNT");
-        // expect(effects.put[2].PUT.action.type).toEqual("ACCOUNT.UPDATE_ACCOUNT_PENDING");
-        // expect(effects.put[3].PUT.action.type).toEqual("TX.TX_ADDED");
-        // expect(effects.put[4].PUT.action.type).toEqual("EXCHANGE.TX_BROADCAST_FULFILLED");
-        // expect(effects.put[5].PUT.action.type).toEqual("EXCHANGE.FINISH_EXCHANGE");
+        expect(effects.put[0]).toEqual(
+          put({
+            type:"EXCHANGE.PREPARE_BROADCAST"
+          })
+        );
+        expect(effects.put[1].PUT.action.type).toEqual("ACCOUNT.INC_MANUAL_NONCE_ACCOUNT");
+        expect(effects.put[2].PUT.action.type).toEqual("ACCOUNT.UPDATE_ACCOUNT_PENDING");
+        expect(effects.put[3].PUT.action.type).toEqual("TX.TX_ADDED");
+        expect(effects.put[4].PUT.action.type).toEqual("EXCHANGE.TX_BROADCAST_FULFILLED");
+        expect(effects.put[5].PUT.action.type).toEqual("EXCHANGE.FINISH_EXCHANGE");
 
-        // expect(stringify(effects.call[0])).toEqual(
-        //   stringify(call( new KeyStore().callSignTransaction, "etherToOthersFromAccount", exchangeSuccess.formId, ethereum, exchangeSuccess.address, exchangeSuccess.sourceToken,
-        //   exchangeSuccess.sourceAmount, exchangeSuccess.destToken, exchangeSuccess.destAddress,
-        //   exchangeSuccess.maxDestAmount, exchangeSuccess.minConversionRate,
-        //   exchangeSuccess.throwOnFailure, exchangeSuccess.nonce, exchangeSuccess.gas,
-        //   exchangeSuccess.gasPrice, exchangeSuccess.keystring, exchangeSuccess.type, exchangeSuccess.password))
-        // )
-        // expect(stringify(effects.call[1].CALL.fn)).toEqual(
-        //   stringify(ethereum.call("sendRawTransaction"))
-        // )
+        expect(stringify(effects.call[0])).toEqual(
+          stringify(call( new KeyStore().callSignTransaction, "etherToOthersFromAccount", exchangeSuccess.formId, ethereum, exchangeSuccess.address, exchangeSuccess.sourceToken,
+          exchangeSuccess.sourceAmount, exchangeSuccess.destToken, exchangeSuccess.destAddress,
+          exchangeSuccess.maxDestAmount, exchangeSuccess.minConversionRate,
+          exchangeSuccess.throwOnFailure, exchangeSuccess.nonce, exchangeSuccess.gas,
+          exchangeSuccess.gasPrice, exchangeSuccess.keystring, exchangeSuccess.type, exchangeSuccess.password))
+        )
+        expect(stringify(effects.call[1].CALL.fn)).toEqual(
+          stringify(ethereum.call("sendRawTransaction"))
+        )
 
-        // expect(effects.call[2].CALL.fn).toEqual(
-        //   runAfterBroadcastTx
-        // )
+        expect(effects.call[2].CALL.fn).toEqual(
+          runAfterBroadcastTx
+        )
       })
   })
 });
 
 
 var pKeyAccount = exchangeTestValue.pKeyAccount
-describe('testing exchange saga successfully', () => { 
+describe('testing exchange saga successfully', () => {
   var exchangeSuccess = exchangeTestValue.exchangeSuccess
   let account = null
   beforeAll(() => pKeyAccount.sync(ethereum, pKeyAccount).then(response => {
@@ -302,10 +301,10 @@ describe('testing exchange saga successfully', () => {
     exchangeSuccess.account = pKeyAccount
     exchangeSuccess.nonce = pKeyAccount.nonce
     
-    exchangeSuccess.keyService = new PrivateKey()
+    exchangeSuccess.keyService = new KeyStore()
     exchangeSuccess.keystring = pKeyAccount.keystring
     exchangeSuccess.type = pKeyAccount.type
-
+    exchangeSuccess.password = "123qwe"
     return expectSaga(exchangeETHtoTokenPrivateKey, { payload: exchangeSuccess})
       .run(200000)
       .then((result) => {
@@ -341,3 +340,59 @@ describe('testing exchange saga successfully', () => {
       })
   })
 });
+
+
+
+var metaMaskAccount = exchangeTestValue.metaMaskAccount
+describe('testing exchange saga successfully', () => { 
+  var exchangeSuccess = exchangeTestValue.exchangeSuccess
+  let account = null
+  beforeAll(() => metaMaskAccount.sync(ethereum, metaMaskAccount).then(response => {
+    metaMaskAccount = response
+  }));
+
+
+  it('handle process exchange with meta mask successfully', () => {
+    
+    exchangeSuccess.account = metaMaskAccount
+    exchangeSuccess.nonce = metaMaskAccount.nonce
+    
+    exchangeSuccess.keyService = new KeyStore()
+    exchangeSuccess.keystring = metaMaskAccount.keystring
+    exchangeSuccess.type = metaMaskAccount.type
+    exchangeSuccess.password = "123qwe"
+    return expectSaga(exchangeETHtoTokenPrivateKey, { payload: exchangeSuccess})
+      .run(200000)
+      .then((result) => {
+        const { effects } = result;
+        expect(effects.put).toHaveLength(6);
+        expect(effects.call).toHaveLength(4);
+
+        expect(effects.put[0]).toEqual(
+          put({
+            type:"EXCHANGE.PREPARE_BROADCAST"
+          })
+        );
+        expect(effects.put[1].PUT.action.type).toEqual("ACCOUNT.INC_MANUAL_NONCE_ACCOUNT");
+        expect(effects.put[2].PUT.action.type).toEqual("ACCOUNT.UPDATE_ACCOUNT_PENDING");
+        expect(effects.put[3].PUT.action.type).toEqual("TX.TX_ADDED");
+        expect(effects.put[4].PUT.action.type).toEqual("EXCHANGE.TX_BROADCAST_FULFILLED");
+        expect(effects.put[5].PUT.action.type).toEqual("EXCHANGE.FINISH_EXCHANGE");
+
+        expect(stringify(effects.call[0])).toEqual(
+          stringify(call( new KeyStore().callSignTransaction, "etherToOthersFromAccount", exchangeSuccess.formId, ethereum, exchangeSuccess.address, exchangeSuccess.sourceToken,
+          exchangeSuccess.sourceAmount, exchangeSuccess.destToken, exchangeSuccess.destAddress,
+          exchangeSuccess.maxDestAmount, exchangeSuccess.minConversionRate,
+          exchangeSuccess.throwOnFailure, exchangeSuccess.nonce, exchangeSuccess.gas,
+          exchangeSuccess.gasPrice, exchangeSuccess.keystring, exchangeSuccess.type, exchangeSuccess.password))
+        )
+        expect(stringify(effects.call[1].CALL.fn)).toEqual(
+          stringify(ethereum.call("sendRawTransaction"))
+        )
+
+        expect(effects.call[2].CALL.fn).toEqual(
+          runAfterBroadcastTx
+        )
+      })
+    })
+  });
