@@ -44,6 +44,7 @@ export default class ExchangeHistory extends React.Component {
       <HistoryExchange 
         isFetching = {this.props.global.history.isFetching}
         logs={this.props.global.history.logs}
+        tokens={this.props.tokens}
         lastBlock={this.props.global.history.currentBlock}
         currentPage = {this.props.global.history.page}
         itemPerPage = {this.props.global.history.itemPerPage}
