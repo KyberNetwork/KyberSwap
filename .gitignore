@@ -39,6 +39,9 @@ build/Release
 node_modules/
 jspm_packages/
 
+#store database
+server/persist/sqlite/store*
+
 # Typescript v1 declaration files
 typings/
 

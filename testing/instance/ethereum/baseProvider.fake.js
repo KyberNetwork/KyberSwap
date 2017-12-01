@@ -3,6 +3,9 @@ import constants from "../../../src/js/services/constants"
 import * as ethUtil from 'ethereumjs-util'
 import BLOCKCHAIN_INFO from "../../../env"
 
+import baseProviderTestValue from "../../saga/baseProvider.test-value"
+import rateTestValue from "../../saga/rate.test-value"
+
 export default class BaseEthereumProvider {
 
     initContract(){
@@ -16,13 +19,7 @@ export default class BaseEthereumProvider {
     }
 
     getLatestBlock() {
-        return new Promise((resolve, reject) => {
-            this.rpc.eth.getBlock("latest", false).then((block) => {
-                if (block != null) {
-                    resolve(block.number)
-                }
-            })
-        })
+        return Promise.resolve(4931928)
     }
 
     getBalance(address) {
@@ -115,14 +112,20 @@ export default class BaseEthereumProvider {
     }
 
     getRate(source, dest, reserve) {
-        return new Promise((resolve, reject) => {
-            this.networkContract.methods.getRate(source, dest, reserve).call().then((result) => {
-                if (result != null) {
-                    resolve(result)
-                }
-            })
-        })
+        return new Promise.resolve(rateTestValue.rate)
     }
+
+    getAllRate(tokensObj, reserve) {
+        var promises = Object.keys(tokensObj).map((tokenName) => {
+          return Promise.all([
+            Promise.resolve(tokenName),
+            Promise.resolve(constants.ETH.symbol),
+            this.getRate(tokensObj[tokenName].address, constants.ETH.address, reserve.index),
+            this.getRate(constants.ETH.address, tokensObj[tokenName].address, reserve.index), 
+          ])
+        })
+        return Promise.all(promises)
+      }
 
     sendRawTransaction(tx) {
         return new Promise((resolve, rejected) => {
@@ -137,23 +140,46 @@ export default class BaseEthereumProvider {
         })
     }
 
+    countALlEvents(){
+        return Promise.resolve(123)
+      }
+
     getLogExchange(currentBlock, range) {
         return new Promise((resolve, rejected) => {
-          // var cachedRange = constants.HISTORY_EXCHANGE.cached.range 
-          // var startBlock = (latestBlock - currentBlock) > cachedRange ? 
-          //                                               (latestBlock - cachedRange):
-          //                                               currentBlock
-          //console.log(startBlock)         
-          var startBlock = currentBlock > range? currentBlock - range: 0
-          this.networkContract.getPastEvents('Trade', {
-            filter: {status: "mined"},
-            fromBlock: startBlock,
-            toBlock: currentBlock
-          }, )
-            .then(function (events) {
-              //console.log(events)
-              resolve(events)          
-            })
+            resolve(Promise.resolve(baseProviderTestValue.exchangeLogs))
+        })
+      }
+
+      getLogTwoColumn(page, itemPerPage) {
+        return Promise.resolve({
+            eth: [{
+                actualDestAmount: "41010246916709757747",
+                actualSrcAmount: "99999999999999999",
+                blockNumber: 4931924,
+                dest: "0x8ac48aa26a7e25be12a9ddc83f6bbde1594414bb",
+                id: 201,
+                sender: "0x9f1a678b0079773b5c4f5aa8573132d2b8bcb1e7",
+                source: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                status: "mined",
+                txHash: "0xfc6976d0b1d0920b7aa3225f61cbda8010dfa0ff8b28dc85c9a9c622f877f7bb"
+            },],
+            token: [{
+                actualDestAmount: "7286277254209250843",
+                actualSrcAmount: "3090094699468192493102",
+                blockNumber: 4917236,
+                dest: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                id: 165,
+                sender: "0x9f1a678b0079773b5c4f5aa8573132d2b8bcb1e7",
+                source: "0x8ac48aa26a7e25be12a9ddc83f6bbde1594414bb",
+                status: "mined",
+                txHash: "0x588ec161d036e591bdbde96b4ba809916cc1a565fb64131737d1deba22020fc0",
+            }]
+        })
+      }
+
+      getRateExchange() {
+        return new Promise((resolve, rejected) => {
+          resolve(Promise.resolve(baseProviderTestValue.exchangeRate))
         })
       }
 }
