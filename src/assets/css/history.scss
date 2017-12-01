@@ -17,50 +17,45 @@
     }
   }
   .history-content{
-    
-    overflow-x: auto;
-  }
-  table{
-    min-width: 750px;
-    font-size: 13px;
-    caption{
-      text-align: left;
-      font-weight: normal;
-      font-style: italic
-    }
-    thead{
-      display: block;
-      tr{
-        width: 100%;
-        display: flex;
+    .history-stamp{
+      position: relative;
+      background-color: white;
+      border: 1px solid rgba(187, 218, 213, 0.5);
+      padding: 15px 15px 15px 75px;
+      font-size: 13px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      img{
+        &.token-from, &.token-to{
+          width: 28px;
+          height: 28px;
+          position: absolute;
+          top: 15px;
+          left: 15px;
+        }
+        &.token-from {
+          opacity: .5;
+        }
+        &.token-to {
+          margin-top: 14px;
+          margin-left: 14px;
+        }
       }
-      th{
-        //text-align: center;
-        display: block;
+      .amount strong {
+        font-family: "Roboto Mono", Consolas, "Liberation Mono", Courier, monospace;
       }
-    }
-    tbody{
-      display: block;
-      max-height: 300px;
-      overflow-y: auto;
-      tr{
-        display: flex;
+      .link {
+        font-family: "Roboto Mono", Consolas, "Liberation Mono", Courier, monospace;
+        font-weight: bold;
       }
-    }
-    tbody td, thead tr th{
-      &:first-child{
-        width: 25%
-      }
-      &:nth-child(2){
-        width: 55%
-      }
-      &:last-child{
-        width: 20%
+      .timestamp {
+        color: #999;
       }
     }
   }
   .history-pargination{
     @include clearfix;
+    padding: 0 15px;
     div{
       &:first-child{
         float:left
@@ -84,12 +79,13 @@
         &:hover {
           background-color: $light-gray;
         }
-      }      
+      }
+      &.next{
+        margin-left: 20px;
+      }   
     }
   }
-
-  .button{
-    margin: 0px;
+  .column:last-child:not(:first-child){
+    float: left;
   }
-  
 }
