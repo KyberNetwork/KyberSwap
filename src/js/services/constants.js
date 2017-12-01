@@ -106,7 +106,7 @@ const ETH = {
 const IDLE_TIME_OUT = 900
 const HISTORY_EXCHANGE = {
   page: 0,
-  itemPerPage: 10,
+  itemPerPage: 6,
   currentBlock: 0,
   eventsCount : 0,
   isFetching: false,
