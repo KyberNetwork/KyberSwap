@@ -46,6 +46,18 @@ app.post('/getHistory', function (req, res) {
   })
 })
 
+app.post('/getHistoryTwoColumn', function (req, res) {
+  res.writeHead(200, { 'Content-Type': 'text/html' })
+  var page = req.body.page
+  var itemPerpage = req.body.itemPerPage
+  var eventEth = persistor.getEventsFromEth(page, itemPerpage)
+  var eventToken = persistor.getEventsFromToken(page, itemPerpage)
+  eventEth.then((resultEth) => {
+    eventToken.then((resultToken) => {
+      res.end(JSON.stringify({ eth: resultEth, token: resultToken }))
+    })
+  })
+})
 app.post('/countHistory', (req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/html' });
   var event = persistor.countEvents()
@@ -54,7 +66,7 @@ app.post('/countHistory', (req, res) => {
   })
 })
 
-app.post('/getLatestBlock', (req, res)=>{
+app.post('/getLatestBlock', (req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/html' });
   var event = persistor.getLatestBlock()
   event.then((result) => {

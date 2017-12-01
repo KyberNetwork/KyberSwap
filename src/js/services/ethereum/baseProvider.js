@@ -173,6 +173,24 @@ export default class BaseEthereumProvider {
         },
         body: JSON.stringify({
           page: page,
+          itemPerPage: itemPerPage - 1,
+        })
+      }).then(function (response) {
+        resolve(response.json())
+      })
+    })
+  }
+
+  getLogTwoColumn(page, itemPerPage) {
+    return new Promise((resolve, rejected) => {
+      fetch(BLOCKCHAIN_INFO.history_endpoint + '/getHistoryTwoColumn', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          page: page,
           itemPerPage: itemPerPage,
         })
       }).then(function (response) {
