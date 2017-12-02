@@ -7,7 +7,8 @@ const initState = {
   termOfServiceAccepted: false,
   nodeName: "Infura Kovan",
   nodeURL: "https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi",
-  history: constants.HISTORY_EXCHANGE
+  history: constants.HISTORY_EXCHANGE,
+  count: {storageKey: constants.STORAGE_KEY}
 }
 
 const global = (state = initState, action) => {
@@ -18,14 +19,15 @@ const global = (state = initState, action) => {
           var history = action.payload.history
           
           // check load from loaclforage or initstate
-          let storeKey = localStorage.getItem('global')
-          if(storeKey !== constants.STORAGE_KEY){
+          if(action.payload.count && action.payload.count.storageKey !== constants.STORAGE_KEY){
             history = initState.history
-            localStorage.setItem('global', constants.STORAGE_KEY)
           }
 
           history.isFetching = false
-          return Object.assign({}, state, { history: history })
+          return Object.assign({}, state, { 
+            history: history,
+            count: {storageKey: constants.STORAGE_KEY}
+           })
         }
       }
       return state

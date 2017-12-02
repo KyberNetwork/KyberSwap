@@ -12,7 +12,10 @@ const initState = function () {
     tokens[key].rateEth = 0
     tokens[key].balance = 0
   })
-  return { tokens: tokens }
+  return { 
+    tokens: tokens,
+    count: {storageKey: constants.STORAGE_KEY}
+  }
 }()
 
 const tokens = (state = initState, action) => {
@@ -23,11 +26,9 @@ const tokens = (state = initState, action) => {
         var tokens = {}
         if (payload) {
           // check load from loaclforage or initstate
-          let storeKey = localStorage.getItem('tokens')
           var loadedTokens = payload.tokens 
-          if(storeKey !== constants.STORAGE_KEY){
+          if(payload.count && payload.count.storageKey !== constants.STORAGE_KEY){
             loadedTokens = initState.tokens
-            localStorage.setItem('tokens', constants.STORAGE_KEY)
           }
           
           Object.keys(loadedTokens).forEach((id) => {
@@ -44,7 +45,10 @@ const tokens = (state = initState, action) => {
             )
             tokens[id] = token
           })
-          return Object.assign({}, state, { tokens: tokens })
+          return Object.assign({}, state, { 
+            tokens: tokens,
+            count: {storageKey: constants.STORAGE_KEY}
+          })
         } else {
           return state;
         }

@@ -114,7 +114,7 @@ const HISTORY_EXCHANGE = {
   logsToken:[]
 }
 
-const STORAGE_KEY = "1"
+const STORAGE_KEY = "5"
 
 module.exports = {
   ERC20, KYBER_NETWORK, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,
