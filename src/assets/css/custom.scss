@@ -1,0 +1,178 @@
+.ReactModal__Body--open{
+    overflow: hidden;
+}
+@media (min-width: 640px){
+    .react-modal{
+        margin-bottom: 50px!important; 
+    }
+    .reveal.large{
+        top: 54px;
+    }
+    
+    $half: -50%;
+    .reveal.tiny{
+        top: 40%;
+        -ms-transform: translateY($half);
+        -webkit-transform: translateY($half);
+        -moz-transform: translateY($half);
+        transform: translateY($half);
+    } 
+}
+
+.address-path-stamp.active{
+    background: linear-gradient(135deg, #2A9A8D, #5F7921);
+    box-shadow: 0 10px 40px 0 rgba(42, 154, 141, 0.3);
+    .name{
+        color: #fff;
+    }
+    .note{
+        color: #BBDAD5;
+    }
+}
+
+button:focus{
+    outline: none;
+}
+#header{
+    a.active{
+        color: #656876!important;
+    }
+}
+
+.ReactModalPortal > * {
+    opacity: 0;
+}
+.ReactModal__Overlay {
+    transition: opacity 200ms;
+    background: rgba(0, 0, 0, 0.15);
+    &--after-open {
+        opacity: 1;
+        .react-modal{
+            margin-top: 0px!important;
+        }
+    }
+    &--before-close {
+        opacity: 0;
+    }
+    .react-modal{
+        transition: margin-top 200ms;
+        margin-top: -20px;
+    }
+}
+.input-reveal {
+    position: relative;
+    input {
+        margin-bottom: 0;
+        padding-left: 35px;
+        padding-right: 35px;
+    }
+    .toggle {
+        opacity: .4;
+        display: block;
+        width: 20px;
+        height: 20px;
+        background-repeat: no-repeat;
+        background-size: contains;
+        background-position: center;
+        position: absolute;
+        top: 50%;
+        margin-top: -10px;
+        left: 12px;
+        -webkit-transition: opacity .5s ease-in-out;
+        -o-transition: opacity .5s ease-in-out;
+        transition: opacity .5s ease-in-out;
+        background-image: url(../img/lock.svg);
+    }
+    &.unlock .toggle {
+        // opacity: 1;
+        background-image: url(../img/unlock.svg);
+    }
+}
+a.disabled{
+    opacity: 0.7;
+    cursor: not-allowed;
+    color: #676767!important;
+    &:hover{
+        background-color: #ECF6F4!important;
+    }
+}
+.import-account>.column{
+    padding: 0;
+}
+.address-balance{
+    margin-bottom: 40px;
+}
+.large-2dot4{
+    @media screen and(min-width: 64em){
+        width: 20%;
+    }
+}
+#header a.avatar img{
+    width: 45px;
+    max-width: none;
+}
+@media screen and (min-width: 640px){
+    @media screen and (max-height: 790px){
+        #header{
+            min-height: auto!important;
+            padding: 10px 0!important;
+            a.logo img{
+                width: 100px;
+            }
+            .user-bar ul.notifications{
+                top: 60px!important;
+            }
+        }
+        .frame{
+            padding: 20px 0;
+            margin-bottom: 20px;
+            h1.title{
+                margin-top: 0;
+            }
+        }
+        .token-input{
+            margin-top: 5px!important;
+            min-height: auto;
+            input{
+                height: 50px;
+            }
+            .info:before{
+                height: 40px;
+                top: 59%;
+            }
+        }
+        #rate-bar {
+            padding: 10px 10px!important;
+        }
+        #transfer-screen{
+            label{
+                margin-bottom: 0;
+                input.hash{
+                    margin-bottom: 15px;
+                    margin-top: 5px;
+                }
+            }
+            .token-select, .address-balance, .token-amount{
+                margin-top: 5px;
+            }
+            .address-balance{
+                margin-bottom: 5px;
+            }
+        }
+    }
+    @media screen and (max-height: 670px){
+        .address-balance{
+            margin-bottom: 15px;
+        }
+        .frame{
+            h1.title{
+                margin-bottom: 10px;
+            }
+        }
+        @media screen and (min-width: 790px) and (max-width: 1024px){
+            #import-acc{
+                width: 70%;
+            }
+        }
+    }
+}

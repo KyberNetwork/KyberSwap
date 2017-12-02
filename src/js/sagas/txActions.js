@@ -1,20 +1,24 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import {joinedKyberWallet} from '../actions/accountActions'
-import {addWallet} from '../actions/walletActions'
 import {updateTxComplete} from '../actions/txActions'
-import TX from "../constants/txActions"
+import { Rate, updateAllRatePromise } from "../services/rate"
+import { updateAllRateComplete } from "../actions/globalActions"
+import constants from "../services/constants"
 
 function* updateTx(action) {
-  const {tx, ethereum} = action.payload
+  const {tx, ethereum, tokens, account} = action.payload
   const newTx = yield call(tx.sync, ethereum, tx)	
-  if (newTx.address && newTx.address != "") {  	
-    yield put(joinedKyberWallet(newTx.from, newTx.address))
-    yield put(addWallet(newTx.address, newTx.from, newTx.data, "default desc"))
-  }  	
   yield put(updateTxComplete(newTx))    
+
+  var rates = []
+  for (var k = 0; k < constants.RESERVES.length; k++) {
+    var reserve = constants.RESERVES[k];
+    rates[k] = yield call(updateAllRatePromise, ethereum, tokens, constants.RESERVES[k], account.address)
+  }
+  yield put(updateAllRateComplete(rates[0], true))
 }
 
 export function* watchTx() {
-  yield takeEvery(TX.UPDATE_TX_PENDING, updateTx)  
+  yield takeEvery("TX.UPDATE_TX_PENDING", updateTx)  
 }
 

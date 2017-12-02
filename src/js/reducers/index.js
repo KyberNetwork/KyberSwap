@@ -1,23 +1,43 @@
 import { combineReducers } from 'redux'
+import { persistReducer } from 'redux-persist'
+//import session from 'redux-persist/lib/storage/session'
+import localForage from 'localforage'
+
 import { routerReducer } from 'react-router-redux'
 
-import accounts from './accountsReducer'
+
+import account from './accountReducer'
+import tokens from './tokensReducer'
+import exchange from './exchangeReducer'
+import transfer from './transferReducer'
 import global from './globalReducer'
-import exchangeForm from './exchangeFormReducer'
-import paymentForm from './paymentFormReducer'
-import importKeystore from './importKeystoreReducer'
-import joinPaymentForm from './joinPaymentFormReducer'
 import connection from './connection'
-import wallets from './walletsReducer'
 import utils from './utilsReducer'
 import txs from './txsReducer'
-import createKeyStore from './createKeyStoreReducer'
-import modifyAccount from './modifyAccountReducer'
-import modifyWallet from './modifyWalletReducer'
 
-export default combineReducers({
-  accounts, exchangeForm, global, importKeystore, txs,
-  joinPaymentForm, wallets, paymentForm, connection,
-  utils,
-  router: routerReducer, createKeyStore, modifyAccount, modifyWallet
+
+const appReducer = combineReducers({
+  account, exchange, transfer, txs, connection, router: routerReducer,utils,
+  tokens: persistReducer({
+    key: 'tokens',
+    storage: localForage
+  }, tokens),  
+  global: persistReducer({
+    key: 'global',
+    storage: localForage
+  }, global),  
 })
+
+const rootReducer = (state, action) => {
+  if (action.type === 'GLOBAL.CLEAR_SESSION_FULFILLED') {
+    state = {
+              utils: state.utils, 
+              tokens: state.tokens, 
+              global: state.global,
+              connection: state.connection}
+  }
+  return appReducer(state, action)
+}
+
+export default rootReducer
+
