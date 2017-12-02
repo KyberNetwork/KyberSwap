@@ -2,7 +2,7 @@ import store from '../store';
 import React from 'react';
 import PostExchangeWithKey from '../../../src/js/containers/Exchange/PostExchangeWithKey';
 import PostExchange from '../../../src/js/containers/Exchange/PostExchange';
-import { KeyStore, Trezor, Ledger } from "../../../src/js/services/keys"
+import { KeyStore, Trezor, Ledger, PrivateKey, Metamask } from "../../../src/js/services/keys"
 
 import { shallow, mount } from 'enzyme';
 
@@ -39,5 +39,25 @@ describe('Test key import', () => {
 
         let keyService = component.find(PostExchange).props().keyService
         expect(keyService).toBeInstanceOf(Ledger);
+    })
+
+    it('If key is privateKey', () => {
+        store.getState().account.account.type = 'privateKey';
+        const component = shallow(
+            <PostExchangeWithKey store={store} />
+        ).dive();
+
+        let keyService = component.find(PostExchange).props().keyService
+        expect(keyService).toBeInstanceOf(PrivateKey);
+    })
+
+    it('If key is metamask', () => {
+        store.getState().account.account.type = 'metamask';
+        const component = shallow(
+            <PostExchangeWithKey store={store} />
+        ).dive();
+
+        let keyService = component.find(PostExchange).props().keyService
+        expect(keyService).toBeInstanceOf(Metamask);
     })
 })

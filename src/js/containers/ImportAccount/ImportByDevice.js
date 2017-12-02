@@ -58,7 +58,6 @@ export default class ImportByDevice extends React.Component {
 
 	updateBalance() {
 		this.interval = setInterval(() => {
-			console.log(this.state.addresses)
 			this.state.addresses.forEach((address, index) => {
 				this.addBalance(address.addressString, index);
 			})

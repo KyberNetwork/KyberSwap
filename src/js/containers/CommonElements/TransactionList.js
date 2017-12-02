@@ -12,8 +12,10 @@ import BLOCKCHAIN_INFO from "../../../../env"
 })
 
 class TransactionList extends React.Component {
-
   render() {
+    if (this.props.global.history.logsEth.length ===0 && this.props.global.history.logsToken.length ===0){
+      return ""
+    }
     return (
       <TransactionListView tokens = {this.props.tokens}
                           logsEth = {this.props.global.history.logsEth}

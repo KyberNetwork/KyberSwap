@@ -33,7 +33,6 @@ export default class ImportByPrivateKey extends React.Component {
   }
 
   importPrivateKey(privateKey) {
-    console.log(privateKey)
     try {
       let address = addressFromPrivateKey(privateKey)
       this.props.dispatch(importNewAccount(address,

@@ -2,10 +2,24 @@ const sqlite3 = require('sqlite3').verbose()
 
 var fs = require('fs')
 var path = require('path')
-const filePath = path.join(__dirname, 'store.db')
 var config = require("../configure")
 
 
+var filePath
+
+var dbName = process.env.npm_config_chain
+//console.log("db name: " + dbName)
+switch(dbName){
+  case "kovan":
+    filePath = path.join(__dirname, 'kovan.db')
+    break
+  case "mainnet":
+    filePath = path.join(__dirname, 'mainnet.db')
+    break
+  default:
+    filePath = path.join(__dirname, 'temp.db')
+    break
+}
 
 class SqlitePersist {
   constructor() {
@@ -20,7 +34,7 @@ class SqlitePersist {
         }
         console.log('Connected to the store.db SQlite database.');
       })
-      var stmt = this.db.prepare("UPDATE configure set frequency =? AND rangeFetch =? WHERE id = 1")
+      var stmt = this.db.prepare("UPDATE configure set frequency =?, rangeFetch =? WHERE id = 1")
       stmt.run(config.frequency, config.rangeFetch);
       stmt.finalize()
     } else {
