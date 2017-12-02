@@ -20,14 +20,12 @@ const global = (state = initState, action) => {
           
           // check load from loaclforage or initstate
           if(action.payload.count && action.payload.count.storageKey !== constants.STORAGE_KEY){
-            history = initState.history
-          }
-
-          history.isFetching = false
-          return Object.assign({}, state, { 
-            history: history,
+            history = constants.HISTORY_EXCHANGE
+          } 
+          return {...state,
+            history: {...history},
             count: {storageKey: constants.STORAGE_KEY}
-           })
+           }
         }
       }
       return state
