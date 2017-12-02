@@ -4,6 +4,7 @@ import ImportByPrivateKey from '../../../src/js/containers/ImportAccount/ImportB
 import ImportByPKeyView from '../../../src/js/components/ImportAccount/ImportByPKeyView';
 import Modal from '../../../src/js/components/CommonElement/MyModal'
 import { shallow, mount } from 'enzyme';
+import BigNumber from "bignumber.js";
 
 describe('ImportByPrivateKey', () => {
     it('render 1 <ImportByPrivateKey /> component', () => {
@@ -79,20 +80,53 @@ describe('Import PrivateKey', () => {
         spyOn(store, 'dispatch');
     });
 
-    it('Import PrivateKey', () => {
+    it('Import PrivateKey, invalid key', () => {
         const component = shallow(
             <ImportByPrivateKey store={store} />
         ).dive();
-        const importByPKeyView = shallow(
-            <ImportByPKeyView
-                importPrivateKey={component.instance().importPrivateKey.bind(component.instance())}
-            />,
-            { attachTo: document.body }
-        );
-        importByPKeyView.find(Modal).dive().find('#submit_pkey').simulate('click');
+        // const importByPKeyView = shallow(
+        //     <ImportByPKeyView
+        //         importPrivateKey={component.instance().importPrivateKey.bind(component.instance())}
+        //     />,
+        //     { attachTo: document.body }
+        // );
+        // importByPKeyView.find(Modal).dive().find('#submit_pkey').simulate('click');
+
+        let pkey = 'This is invalid private key';
+        component.instance().importPrivateKey(pkey);
         expect(store.dispatch).toHaveBeenCalledWith({
-            type: "ACCOUNT.PKEY_CHANGE",
-            payload: "0ffffffffffff"
+            type: "ACCOUNT.PKEY_ERROR",
+            payload: "Invalid private key"
+        });
+    })
+
+    it('Import PrivateKey, valid key', () => {
+        const component = shallow(
+            <ImportByPrivateKey store={store} />
+        ).dive();
+        let pkey = '9e9b206620bf487df5aaa65ba28baf446fc9d9f67e1aa7506c56a54af9c849c5';
+        component.instance().importPrivateKey(pkey);
+        expect(store.dispatch).toHaveBeenCalledWith({
+            type: "ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING",
+            payload: {
+                "address": "0x95b4de7fb8800aab804a23d4185230949b503380",
+                "avatar": "data:image/svg+xml;base64,dW5kZWZpbmVk",
+                "ethereum": store.getState().connection.ethereum,
+                "keystring": "9e9b206620bf487df5aaa65ba28baf446fc9d9f67e1aa7506c56a54af9c849c5",
+                "metamask": null, 
+                "tokens": [
+                    {
+                        "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", 
+                        "balance": new BigNumber(Math.pow(10, 19)), 
+                        "decimal": 18, "icon": "/assets/img/tokens/eth.svg", "name": "Ethereum", "symbol": "ETH"},
+                    {
+                        "address": "0x1795b4560491c941c0635451f07332effe3ee7b3", 
+                        "balance": new BigNumber(Math.pow(10, 18)), 
+                        "decimal": 9, "icon": "/assets/img/tokens/omg.svg", "name": "OmiseGO","symbol": "OMG"
+                    }
+                ], 
+                "type": "privateKey"
+            }
         });
     })
 })

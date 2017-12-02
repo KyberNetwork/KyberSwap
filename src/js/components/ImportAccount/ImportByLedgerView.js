@@ -2,7 +2,7 @@ import React from "react"
 
 const ImportByLedgerView = (props) => {
   return (
-    <div class="importer ledger">
+    <div className="importer ledger">
       <a onClick={() => props.showLoading('ledger')}>
         <img src="/assets/img/ledger.svg" />
         <div class="description">Import from<br />ledger wallet</div>

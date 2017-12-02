@@ -26,6 +26,10 @@ export default class ImportByMetamask extends React.Component {
       return
     }
     var web3Service = new Web3Service(web3)
+    this.dispatchAccMetamask(web3Service);
+  }
+
+  dispatchAccMetamask(web3Service){
     this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
       this.props.ethereum, this.props.tokens))
   }

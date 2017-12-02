@@ -15,7 +15,6 @@ export function verifyKey(keystring) {
       return "Invalid keystore file"
     }
   } catch (e) {
-    console.log(e)
     return "Malformed JSON keystore file"
   }
   return null

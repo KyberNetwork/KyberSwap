@@ -192,6 +192,21 @@ describe('Submit transfer', () => {
             type: 'TRANSFER.SHOW_CONFIRM',
         });
     })
+
+    it('Submit transfer by Metamask', () => {
+        store.getState().account.account.type = 'metamask';
+        const postTransfer = shallow(
+            <PostTransfer store={store} />
+        ).dive();
+
+        const postTransferBtn = shallow(
+            <PostTransferBtn submit={postTransfer.instance().clickTransfer} />
+        );
+        postTransferBtn.find('.submit-transfer').simulate('click');
+        expect(store.dispatch).toHaveBeenCalledWith({
+            type: 'TRANSFER.SHOW_CONFIRM',
+        });
+    })
 });
 
 describe('PassphraseModal', () => {
@@ -247,7 +262,7 @@ describe('Process submit', () => {
                     tokenSymbol: "ETH"
                 },
                 destAddress: "0x95b4de7fb8800aab804a23d4185230949b503380",
-                ethereum: undefined,
+                ethereum: store.getState().connection.ethereum,
                 formId: "transfer",
                 gas: "0xf4240", gasPrice: "0x4a817c800", keystring: "", nonce: 0, password: "", token: undefined, type: "keystore"
             }
@@ -278,7 +293,7 @@ describe('Process submit', () => {
                     tokenSymbol: "ETH"
                 },
                 destAddress: "0x95b4de7fb8800aab804a23d4185230949b503380",
-                ethereum: undefined,
+                ethereum: store.getState().connection.ethereum,
                 formId: "transfer",
                 gas: "0xf4240", gasPrice: "0x4a817c800", keystring: "", nonce: 0, password: "", token: undefined, type: "trezor"
             }
@@ -338,6 +353,7 @@ describe('Close modal', () => {
             type: 'TRANSFER.HIDE_CONFIRM',
         });
     })
+
 });
 
 describe('Test recap function', () => {
@@ -369,7 +385,7 @@ describe('Test formParams function', () => {
             "selectedAccount": "0x12f0453c1947269842c5646df98905533c1b9519",
             "throwOnFailure": undefined,
             "token": undefined,
-        
+
         });
     });
 });
