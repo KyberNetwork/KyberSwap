@@ -131,7 +131,7 @@ export function weiToGwei(number) {
   }
 }
 
-export function toT(number, decimal) {
+export function toT(number, decimal, round) {
   var bigNumber = new BigNumber(number)
   var result
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
@@ -145,7 +145,11 @@ export function toT(number, decimal) {
   else {
     result = bigNumber.div(1000000000000000000)
   }
-  return result.toString()
+  if(round){
+    return result.round(round).toString()
+  }else{
+    return result.toString()
+  }
 }
 
 export function pairID(source, dest) {

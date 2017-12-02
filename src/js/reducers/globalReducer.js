@@ -1,7 +1,7 @@
 import { REHYDRATE } from 'redux-persist/lib/constants'
 import Rate from "../services/rate"
 import BigNumber from "bignumber.js"
-import  constants  from '../services/constants';
+import constants from '../services/constants';
 
 const initState = {
   termOfServiceAccepted: false,
@@ -14,7 +14,7 @@ const global = (state = initState, action) => {
   switch (action.type) {
     case REHYDRATE: {
       if (action.key === "global") {
-        if(action.payload && action.payload.history){
+        if (action.payload && action.payload.history) {
           var history = action.payload.history
           history.isFetching = false
           return Object.assign({}, state, { history: history })
@@ -23,8 +23,8 @@ const global = (state = initState, action) => {
       return state
     }
     case "GLOBAL.NEW_BLOCK_INCLUDED_FULFILLED": {
-      var history = {...state.history}
-      history.currentBlock = action.payload 
+      var history = { ...state.history }
+      history.currentBlock = action.payload
       return Object.assign({}, state, { history: history })
     }
     case "GLOBAL.TERM_OF_SERVICE_ACCEPTED": {
@@ -36,24 +36,24 @@ const global = (state = initState, action) => {
     case "GLOBAL.EXIT_IDLE_MODE": {
       return { ...state, idleMode: false }
     }
-    case "GLOBAL.UPDATE_HISTORY_EXCHANGE":{
-      var history = {...state.history}
+    case "GLOBAL.UPDATE_HISTORY_EXCHANGE": {
+      var history = { ...state.history }
       const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
-      if(!isAutoFetch){
+      if (!isAutoFetch) {
         history.isFetching = true
       }
       return Object.assign({}, state, { history: history })
       break
     }
-    case "GLOBAL.UPDATE_HISTORY":{
-      const {logs, latestBlock, page, eventsCount, isAutoFetch} = action.payload
-      var history = {...state.history}
+    case "GLOBAL.UPDATE_HISTORY": {
+      const { logs, latestBlock, page, eventsCount, isAutoFetch } = action.payload
+      var history = { ...state.history }
       history.logsEth = logs.eth
       history.logsToken = logs.token
       history.currentBlock = latestBlock
       history.page = page
       history.eventsCount = eventsCount
-      
+
       history.isFetching = false
       return Object.assign({}, state, { history: history })
     }
