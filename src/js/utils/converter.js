@@ -214,13 +214,12 @@ export function roundingNumber(number) {
 
   let numberStr = number.toString();
   if (Number.isInteger(number)) {
-    let result = numberStr.slice(0, MAX_DIGIS);
-    return +result;
+    return number;
   }
   if(number < 1e-7){
     return 0;
   }
-  let result = numberStr.slice(0, MAX_DIGIS + 1);
+  let result = number.toPrecision(number < 1 ? MAX_DIGIS - 1 : MAX_DIGIS);
   return +result;
 }
 
