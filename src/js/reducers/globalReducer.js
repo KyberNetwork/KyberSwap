@@ -16,6 +16,14 @@ const global = (state = initState, action) => {
       if (action.key === "global") {
         if(action.payload && action.payload.history){
           var history = action.payload.history
+          
+          // check load from loaclforage or initstate
+          let storeKey = localStorage.getItem('global')
+          if(storeKey !== constants.STORAGE_KEY){
+            history = initState.history
+            localStorage.setItem('global', constants.STORAGE_KEY)
+          }
+
           history.isFetching = false
           return Object.assign({}, state, { history: history })
         }

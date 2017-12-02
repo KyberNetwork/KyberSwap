@@ -2,6 +2,7 @@ import { REHYDRATE } from 'redux-persist/lib/constants'
 import Rate from "../services/rate"
 import BigNumber from "bignumber.js"
 import * as BLOCKCHAIN_INFO from "../../../env"
+import  constants from "../services/constants"
 
 const initState = function () {
   let tokens = {}
@@ -21,7 +22,14 @@ const tokens = (state = initState, action) => {
         var payload = action.payload
         var tokens = {}
         if (payload) {
-          var loadedTokens = payload.tokens
+          // check load from loaclforage or initstate
+          let storeKey = localStorage.getItem('tokens')
+          var loadedTokens = payload.tokens 
+          if(storeKey !== constants.STORAGE_KEY){
+            loadedTokens = initState.tokens
+            localStorage.setItem('tokens', constants.STORAGE_KEY)
+          }
+          
           Object.keys(loadedTokens).forEach((id) => {
             var tokenMap = loadedTokens[id]
             var token = new Rate(
