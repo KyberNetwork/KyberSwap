@@ -3,7 +3,7 @@ const sqlite3 = require('sqlite3').verbose()
 var fs = require('fs')
 var path = require('path')
 var config = require("../configure")
-
+var constants = require("../../../src/js/services/constants")
 
 var filePath
 
@@ -314,14 +314,14 @@ class SqlitePersist {
 
     return new Promise((resolve, reject) => {
       rates.forEach((rate) => {
-        if (rate[2] && rate[2].rate !== '0') {
+        if ((rate[2] && rate[2].rate !== '0') || (rate[0] == constants.ETH.symbol && rate[1] == constants.ETH.symbol)) {
           let stmt = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, expBlock, balance) VALUES ((
           SELECT id FROM rates WHERE source = ? AND dest = ?
         ),?,?,?,?,?)`)
           stmt.run(rate[0], rate[1], rate[0], rate[1], rate[2].rate, rate[2].expBlock, rate[2].balance);
           stmt.finalize()
         }
-        if (rate[3] && rate[3].rate !== '0') {
+        if ((rate[3] && rate[3].rate !== '0') || (rate[0] == constants.ETH.symbol && rate[1] == constants.ETH.symbol)) {
           let stmt2 = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, expBlock, balance) VALUES ((
           SELECT id FROM rates WHERE source = ? AND dest = ?
         ), ?,?,?,?,?)`)
