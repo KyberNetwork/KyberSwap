@@ -118,7 +118,7 @@ describe('Select token', () => {
         tokenSelect.find('.token-stamp').simulate('click')
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.SELECT_TOKEN_ASYNC',
-            payload: { address: undefined, ethereum: undefined, symbol: undefined, type: undefined }
+            payload: { address: undefined, ethereum: store.getState().connection.ethereum, symbol: undefined, type: undefined }
         });
     })
 });

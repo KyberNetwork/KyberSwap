@@ -28,10 +28,10 @@ const DropFile = (props) => {
   }
   //console.log(keystring)
   return (
-    <Dropzone onDrop={props.onDrop} class="column column-block">
-      <div class="importer json">
+    <Dropzone onDrop={props.onDrop} className="column column-block">
+      <div className="importer json">
         <a ><img src="/assets/img/json.svg" />
-          <div class="description">Select or drag<br />your keystore</div>
+          <div className="description">Select or drag<br />your keystore</div>
         </a>
       </div>
       {message}

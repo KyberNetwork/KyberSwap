@@ -38,7 +38,6 @@ export default class ImportKeystore extends React.Component {
       var errors = {}
       errors["keyError"] = verifyKey(keystring)
       if (anyErrors(errors)) {
-        console.log(errors)
         this.props.dispatch(throwError("Your uploaded JSON file is invalid. Please upload a correct JSON keystore."))
       } else {
         var address = addressFromKey(keystring)
@@ -56,7 +55,7 @@ export default class ImportKeystore extends React.Component {
 
   render() {
     return (
-      <DropFile
+      <DropFile id="import_json"
         error={this.props.account.error}
         onDrop={this.onDrop}
       />
