@@ -28,8 +28,6 @@ export default class FakeTrezor {
         const password = '123qwe'
         const privKey = unlock(keystring, password, true)
         tx.sign(privKey)
-        console.log("&&&&&&&&&&&&&&&&&&&&&")
-        console.log(tx)
         return Promise.resolve(tx)
         break;
       default:

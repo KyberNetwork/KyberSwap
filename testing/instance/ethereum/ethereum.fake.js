@@ -109,10 +109,6 @@ export default class EthereumService extends React.Component {
   }
 
   call(fn) {
-
-    console.log("================")
-    console.log(fn)
-    console.log(this.currentProvider[fn])
     return this.currentProvider[fn].bind(this.currentProvider)
   }
 }

@@ -48,7 +48,7 @@ class SqlitePersist {
         stmt.finalize()
 
         _this.db.run("CREATE TABLE logs (id INTEGER PRIMARY KEY, actualDestAmount TEXT, actualSrcAmount TEXT, dest TEXT, source TEXT, sender TEXT, blockNumber INT, txHash TEXT, status TEXT)")
-        
+
         // create rate table
         _this.db.run("CREATE TABLE rates (id INTEGER PRIMARY KEY, source TEXT, dest TEXT, rate TEXT, expBlock TEXT, balance TEXT)")
       })
@@ -183,9 +183,9 @@ class SqlitePersist {
           console.log(err)
           reject(err.message)
         } else {
-          if(maxId){
-            var toID = maxId.id - page * itemPerPage > 0 ? maxId.id  - page * itemPerPage : 0
-            var fromId = maxId.id - (page + 1) * itemPerPage > 0 ? maxId.id  - (page + 1) * itemPerPage : 0
+          if (maxId) {
+            var toID = maxId.id - page * itemPerPage > 0 ? maxId.id - page * itemPerPage : 0
+            var fromId = maxId.id - (page + 1) * itemPerPage > 0 ? maxId.id - (page + 1) * itemPerPage : 0
             sql = "SELECT * FROM logs WHERE id >= ? AND id <= ?"
             _this.db.all(sql, [fromId, toID], function (err, rows) {
               if (err) {
@@ -195,16 +195,16 @@ class SqlitePersist {
                 resolve(rows.reverse())
               }
             })
-          }else{
+          } else {
             resolve([])
           }
-          
+
         }
       })
     })
   }
 
-  getEventsFromEth(page, itemPerPage){
+  getEventsFromEth(page, itemPerPage) {
     return new Promise((resolve, reject) => {
       var sql = "SELECT * FROM logs WHERE source = ? ORDER BY blockNumber DESC LIMIT ?"
       this.db.all(sql, ["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", itemPerPage], function (err, rows) {
@@ -218,7 +218,7 @@ class SqlitePersist {
     })
   }
 
-  getEventsFromToken(page, itemPerPage){
+  getEventsFromToken(page, itemPerPage) {
     return new Promise((resolve, reject) => {
       var sql = "SELECT * FROM logs WHERE dest = ? ORDER BY blockNumber DESC LIMIT ?"
       this.db.all(sql, ["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", itemPerPage], function (err, rows) {
@@ -310,23 +310,25 @@ class SqlitePersist {
     })
   }
 
-  saveRate(rates){
+  saveRate(rates) {
 
     return new Promise((resolve, reject) => {
       rates.forEach((rate) => {
-       // console.log(rate)
-        let stmt = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, expBlock, balance) VALUES ((
+        if (rate[2] && rate[2].rate !== '0') {
+          let stmt = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, expBlock, balance) VALUES ((
           SELECT id FROM rates WHERE source = ? AND dest = ?
         ),?,?,?,?,?)`)
-        stmt.run(rate[0], rate[1], rate[0], rate[1], rate[2].rate, rate[2].expBlock, rate[2].balance);
-        stmt.finalize()
-        let stmt2 = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, expBlock, balance) VALUES ((
+          stmt.run(rate[0], rate[1], rate[0], rate[1], rate[2].rate, rate[2].expBlock, rate[2].balance);
+          stmt.finalize()
+        }
+        if (rate[3] && rate[3].rate !== '0') {
+          let stmt2 = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, expBlock, balance) VALUES ((
           SELECT id FROM rates WHERE source = ? AND dest = ?
         ), ?,?,?,?,?)`)
-        stmt2.run(rate[1], rate[0], rate[1], rate[0], rate[3].rate, rate[3].expBlock, rate[3].balance);
-        stmt2.finalize()
+          stmt2.run(rate[1], rate[0], rate[1], rate[0], rate[3].rate, rate[3].expBlock, rate[3].balance);
+          stmt2.finalize()
+        }
       })
-      
       resolve(rates)
       console.log("all rate is inserted");
     })
