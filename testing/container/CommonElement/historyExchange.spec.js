@@ -17,6 +17,7 @@ describe('ExchangeHistory', () => {
     })
 
     it('Test showFirst function ', () => {
+        store.getState().global.history.itemPerPage = 10
         const component = shallow(
             <ExchangeHistory store={store} />
         ).dive();
@@ -29,7 +30,7 @@ describe('ExchangeHistory', () => {
         historyExchange.find('.first').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
             type: "GLOBAL.UPDATE_HISTORY_EXCHANGE",
-            payload: { "currentBlock": undefined, "ethereum": undefined, "isFirstPage": true, "range": undefined }
+            payload: { "ethereum": store.getState().connection.ethereum, "isAutoFetch": false, "itemPerPage": 10, "page": 0 }
         });
     })
 })
@@ -39,9 +40,44 @@ describe('Test showNext function', () => {
         spyOn(store, 'dispatch')
     });
 
-    it('toBlock = 10, range = 5', () => {
-        store.getState().global.history.toBlock = 10;
-        store.getState().global.history.range = 5
+    it('page = 5, itemPerPage = 10, eventsCount = 50', () => {
+        store.getState().global.history.page = 5
+        store.getState().global.history.itemPerPage = 10
+        store.getState().global.history.eventsCount = 20
+        const component = shallow(
+            <ExchangeHistory store={store} />
+        ).dive();
+        const historyExchange = shallow(
+            <HistoryExchange store={store}
+                logs={[]}
+                next={component.instance().showNext}
+            />
+        );
+        historyExchange.find('.next').simulate('click');
+        expect(store.dispatch).not.toHaveBeenCalled();
+    })
+
+    it('page = 5, itemPerPage = 10, eventsCount = 60', () => {
+        store.getState().global.history.page = 5
+        store.getState().global.history.itemPerPage = 10
+        store.getState().global.history.eventsCount = 60
+        const component = shallow(
+            <ExchangeHistory store={store} />
+        ).dive();
+        const historyExchange = shallow(
+            <HistoryExchange store={store}
+                logs={[]}
+                next={component.instance().showNext}
+            />
+        );
+        historyExchange.find('.next').simulate('click');
+        expect(store.dispatch).not.toHaveBeenCalled();
+    })
+
+    it('page = 5, itemPerPage = 10, eventsCount = 70', () => {
+        store.getState().global.history.page = 5
+        store.getState().global.history.itemPerPage = 10
+        store.getState().global.history.eventsCount = 70
         const component = shallow(
             <ExchangeHistory store={store} />
         ).dive();
@@ -54,24 +90,8 @@ describe('Test showNext function', () => {
         historyExchange.find('.next').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
             type: "GLOBAL.UPDATE_HISTORY_EXCHANGE",
-            payload: { "currentBlock": 5, "ethereum": undefined, "isFirstPage": false, "range": 5 }
+            payload: {"ethereum": store.getState().connection.ethereum, "isAutoFetch": false, "itemPerPage": 10, "page": 6}
         });
-    })
-
-    it('toBlock = 10, range = 10', () => {
-        store.getState().global.history.toBlock = 10;
-        store.getState().global.history.range = 10
-        const component = shallow(
-            <ExchangeHistory store={store} />
-        ).dive();
-        const historyExchange = shallow(
-            <HistoryExchange store={store}
-                logs={[]}
-                next={component.instance().showNext}
-            />
-        );
-        historyExchange.find('.next').simulate('click');
-        expect(store.dispatch).not.toHaveBeenCalled();
     })
 });
 
@@ -80,8 +100,8 @@ describe('Test showPrevious function', () => {
         spyOn(store, 'dispatch')
     });
 
-    it('isFirstPage = true', () => {
-        store.getState().global.history.isFirstPage = true;
+    it('page = 0', () => {
+        store.getState().global.history.page = 0
         const component = shallow(
             <ExchangeHistory store={store} />
         ).dive();
@@ -95,11 +115,8 @@ describe('Test showPrevious function', () => {
         expect(store.dispatch).not.toHaveBeenCalled();
     })
 
-    it('toBlock + range < currentBlock', () => {
-        store.getState().global.history.isFirstPage = false;
-        store.getState().global.history.toBlock = 10;
-        store.getState().global.history.range = 5
-        store.getState().global.history.currentBlock = 20
+    it('page = 5', () => {
+        store.getState().global.history.page = 5
         const component = shallow(
             <ExchangeHistory store={store} />
         ).dive();
@@ -112,49 +129,7 @@ describe('Test showPrevious function', () => {
         historyExchange.find('.previous').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
             type: "GLOBAL.UPDATE_HISTORY_EXCHANGE",
-            payload: { "currentBlock": 15, "ethereum": undefined, "isFirstPage": false, "range": 5 }
-        });
-    })
-
-    it('toBlock + range > currentBlock', () => {
-        store.getState().global.history.isFirstPage = false;
-        store.getState().global.history.toBlock = 10;
-        store.getState().global.history.range = 5
-        store.getState().global.history.currentBlock = 14
-        const component = shallow(
-            <ExchangeHistory store={store} />
-        ).dive();
-        const historyExchange = shallow(
-            <HistoryExchange store={store}
-                logs={[]}
-                previous={component.instance().showPrevious}
-            />
-        );
-        historyExchange.find('.previous').simulate('click');
-        expect(store.dispatch).toHaveBeenCalledWith({
-            type: "GLOBAL.UPDATE_HISTORY_EXCHANGE",
-            payload: { "currentBlock": undefined, "ethereum": undefined, "isFirstPage": true, "range": 5 }
-        });
-    })
-
-    it('toBlock + range = currentBlock', () => {
-        store.getState().global.history.isFirstPage = false;
-        store.getState().global.history.toBlock = 10;
-        store.getState().global.history.range = 5
-        store.getState().global.history.currentBlock = 15
-        const component = shallow(
-            <ExchangeHistory store={store} />
-        ).dive();
-        const historyExchange = shallow(
-            <HistoryExchange store={store}
-                logs={[]}
-                previous={component.instance().showPrevious}
-            />
-        );
-        historyExchange.find('.previous').simulate('click');
-        expect(store.dispatch).toHaveBeenCalledWith({
-            type: "GLOBAL.UPDATE_HISTORY_EXCHANGE",
-            payload: { "currentBlock": undefined, "ethereum": undefined, "isFirstPage": true, "range": 5 }
+            payload: {"ethereum": store.getState().connection.ethereum, "isAutoFetch": false, "itemPerPage": 10, "page": 4}
         });
     })
 });
