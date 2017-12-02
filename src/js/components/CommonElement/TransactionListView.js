@@ -77,7 +77,8 @@ const TransactionListView = (props) => {
       var destToken = getTokenSymbol(item.dest)
       var sourceIcon = getIcon(item.source)
       var destIcon = getIcon(item.dest)
-      var sourceAmount = toT(item.actualSrcAmount, sourceToken.decimal, 2)
+      var sourceAmount = toT(item.actualSrcAmount, sourceToken.decimal, 3)
+      var sourceAmountFull = toT(item.actualSrcAmount, sourceToken.decimal, 7)
       return (
         <div className={"transaction-list-item open"} key={item.txHash} data-pos={i} onClick={(e) => gotoLink(item.txHash)}>
           <div className="inner">
@@ -86,7 +87,7 @@ const TransactionListView = (props) => {
               <div className="coin coin2" key={'coin-2'} style={{ backgroundImage: 'url(\'' + destIcon + '\')' }}></div>
             </div>
             <div className="titles">
-              <span className="rate">{sourceAmount}</span>
+              <span className="rate" title={sourceAmountFull}>{sourceAmount}</span>
               <span className="coins">{sourceToken.key.toUpperCase()} to {destToken.key.toUpperCase()}</span>
               <span className="time">{calculateTimeStamp(item.blockNumber)}</span>
             </div>
