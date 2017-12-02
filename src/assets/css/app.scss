@@ -10,8 +10,10 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
 @import 'addresses';
 @import 'tokens';
 //@import 'slider';
-@import 'fix-react-modal';
+@import 'custom';
 @import "~slick-carousel/slick/slick.css";
+@import "history";
+@import "transaction_list";
 //@import "~slick-carousel/slick/slick-theme.scss";
 
 #waiting {
@@ -22,6 +24,9 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
   bottom: 0;
   left: 0;
   z-index: 10000;
+  &.pending{
+    background-color: rgba($white, .3);
+  }
   .caption {
     box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
     text-align: center;
@@ -42,6 +47,39 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
     background-size: 32px 32px;
     background-repeat: no-repeat;
     background-position: center top 30px;
+  }
+}
+
+#footer {
+  ul.links {
+    margin: 0 0 30px 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0;
+    text-align: center;
+    @include breakpoint(medium) {
+      text-align: right;
+    }
+    > li {
+      display: inline-block;
+      &:not(:last-child) > a:after {
+        content: '|';
+        font-size: 12px;
+        font-weight: lighter;
+        color: $light-gray;
+        margin: 0 15px;
+      }
+      > a {
+        color: $medium-gray;
+        display: block;
+        font-size: 13px;
+        letter-spacing: .5px;
+        font-weight: bold;
+        &:hover {
+          color: $dark-gray;
+        }
+      }
+    }
   }
 }
 
@@ -88,7 +126,7 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
       > li {
         display: inline-block;
         &:not(:last-child) {
-          margin-right: 25px;
+          margin-right: 20px;
         }
         a {
           font-size: 12px;

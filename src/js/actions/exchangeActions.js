@@ -21,6 +21,26 @@ export function checkSelectToken() {
 	}
 }
 
+export function caculateAmount() {
+	return {
+		type: "EXCHANGE.CACULATE_AMOUNT"
+	}
+}
+
+export function inputChange(focus, value){
+	return {
+		type: "EXCHANGE.INPUT_CHANGE",
+		payload: { focus, value }
+	}
+}
+
+export function focusInput(focus){
+	return {
+		type: "EXCHANGE.FOCUS_INPUT",
+		payload: focus
+	}
+}
+
 export function thowErrorSourceAmount(message) {
 	return {
 		type: "EXCHANGE.THROW_SOURCE_AMOUNT_ERROR",
@@ -35,13 +55,6 @@ export function thowErrorGasPrice(message){
 	}
 }
 
-export function errorSelectToken(message) {
-	return {
-		type: "EXCHANGE.THOW_ERROR_SELECT_TOKEN",
-		payload: message
-	}
-}
-
 
 export function goToStep(step) {
 	return {
@@ -52,14 +65,14 @@ export function goToStep(step) {
 
 export function specifyGas(value) {
 	return {
-		type: "EXCHANGE_SPECIFY_GAS",
+		type: "EXCHANGE.SPECIFY_GAS",
 		payload: value
 	}
 }
 
 export function specifyGasPrice(value) {
 	return {
-		type: "EXCHANGE_SPECIFY_GAS_PRICE",
+		type: "EXCHANGE.SPECIFY_GAS_PRICE",
 		payload: value
 	}
 }
@@ -79,6 +92,13 @@ export function hideAdvance() {
 export function changeSourceAmout(amount) {
 	return {
 		type: "EXCHANGE.CHANGE_SOURCE_AMOUNT",
+		payload: amount
+	}
+}
+
+export function changeDestAmout(amount) {
+	return {
+		type: "EXCHANGE.CHANGE_DEST_AMOUNT",
 		payload: amount
 	}
 }
@@ -151,17 +171,7 @@ export function showApprove() {
 		type: "EXCHANGE.SHOW_APPROVE",
 	}
 }
-export function hideConfirmApprove() {
-	return {
-		type: "EXCHANGE.HIDE_CONFIRM_APPROVE",
-	}
-}
 
-export function showConfirmApprove() {
-	return {
-		type: "EXCHANGE.SHOW_CONFIRM_APPROVE",
-	}
-}
 export function changePassword() {
 	return {
 		type: "EXCHANGE.CHANGE_PASSPHRASE",
@@ -192,7 +202,7 @@ export function processExchange(formId, ethereum, address, sourceToken,
 	sourceAmount, destToken, destAddress,
 	maxDestAmount, minConversionRate,
 	throwOnFailure, nonce, gas,
-	gasPrice, keystring, type, password, account, data) {
+	gasPrice, keystring, type, password, account, data, keyService) {
 	return {
 		type: "EXCHANGE.PROCESS_EXCHANGE",
 		payload: {
@@ -200,52 +210,35 @@ export function processExchange(formId, ethereum, address, sourceToken,
 			sourceAmount, destToken, destAddress,
 			maxDestAmount, minConversionRate,
 			throwOnFailure, nonce, gas,
-			gasPrice, keystring, type, password, account, data
+			gasPrice, keystring, type, password, account, data, keyService
 		}
 	}
 }
 
-export function processExchangeAfterConfirm(formId, ethereum, address, sourceToken,
+export function checkTokenBalanceOfColdWallet(formId, ethereum, address, sourceToken,
 	sourceAmount, destToken, destAddress,
 	maxDestAmount, minConversionRate,
 	throwOnFailure, nonce, gas,
-	gasPrice, keystring, type, password, account, data) {
+	gasPrice, keystring, type, password, account, data, keyService) {
 	return {
-		type: "EXCHANGE.PROCESS_EXCHANGE_AFTER_CONFIRM",
+		type: "EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET",
 		payload: {
 			formId, ethereum, address, sourceToken,
 			sourceAmount, destToken, destAddress,
 			maxDestAmount, minConversionRate,
 			throwOnFailure, nonce, gas,
-			gasPrice, keystring, type, password, account, data
+			gasPrice, keystring, type, password, account, data, keyService
 		}
 	}
 }
 
-// export function processExchangeAfterApprove(formId, ethereum, address, sourceToken,
-// 	sourceAmount, destToken, destAddress,
-// 	maxDestAmount, minConversionRate,
-// 	throwOnFailure, nonce, gas,
-// 	gasPrice, keystring, type, password, account, data) {
-// 	return {
-// 		type: "EXCHANGE.PROCESS_EXCHANGE_AFTER_APPROVE",
-// 		payload: {
-// 			formId, ethereum, address, sourceToken,
-// 			sourceAmount, destToken, destAddress,
-// 			maxDestAmount, minConversionRate,
-// 			throwOnFailure, nonce, gas,
-// 			gasPrice, keystring, type, password, account, data
-// 		}
-// 	}
-// }
-
 export function doApprove(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-	keystring, password, accountType, account) {
+	keystring, password, accountType, account, keyService) {
 	return {
 		type: "EXCHANGE.PROCESS_APPROVE",
 		payload: {
 			ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-			keystring, password, accountType, account
+			keystring, password, accountType, account, keyService
 		}
 	}
 }
@@ -297,19 +290,5 @@ export function doApprovalTransactionFail(error) {
 export function makeNewExchange() {
 	return {
 		type: "EXCHANGE.MAKE_NEW_EXCHANGE"
-	}
-}
-
-export function saveRawExchangeTransaction(tx) {
-	return {
-		type: "EXCHANGE.SAVE_RAW_TRANSACTION",
-		payload: tx
-	}
-}
-
-export function throwErrorSignExchangeTransaction(error) {
-	return {
-		type: "EXCHANGE.THROW_ERROR_SIGN_TRANSACTION",
-		payload: error
 	}
 }

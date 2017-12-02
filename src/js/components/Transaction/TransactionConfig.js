@@ -30,7 +30,7 @@ const TransactionConfig = (props) => {
       </div>
       <div class="symbol">×</div>
       <div className ={props.gasPriceError !==""? "gas-price error":"gas-price"}>
-        <input type="number" min="0" max="99" step="0.1" onKeyPress={props.onGasPricePress} value={props.gasPrice} onChange={specifyGasPrice.bind(this)} />
+        <input type="number" min="0" max="99" className="gas-price-input" step="0.1" onKeyPress={props.onGasPricePress} value={props.gasPrice} onChange={specifyGasPrice.bind(this)} />
         {props.gasPriceError !=="" && <span class="error-text">{props.gasPriceError}</span>}
       </div><span class="result">{props.totalGas} eth</span>
     </div>

@@ -2,19 +2,18 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 
-import { toT, displayBalance } from "../../utils/converter"
+import { toT, roundingNumber, gweiToEth, toPrimitiveNumber } from "../../utils/converter"
 
 import { TransferForm, TransactionConfig } from "../../components/Transaction"
-import { PostTransfer } from "../Transfer"
+import { PostTransferWithKey } from "../Transfer"
 import { Token, SelectToken, TransactionLoading } from "../CommonElements"
 
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
 import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase, throwErrorDestAddress, thowErrorAmount, makeNewTransfer } from '../../actions/transferActions';
-import * as converters from "../../utils/converter"
 import { specifyGas as specifyGasTransfer, specifyGasPrice as specifyGasPriceTransfer, hideAdvance as hideAdvanceTransfer } from "../../actions/transferActions"
 
-@connect((store) => {
+@connect((store, props) => {
   return { transfer: store.transfer, account: store.account, tokens: store.tokens.tokens }
 })
 
@@ -35,16 +34,7 @@ export default class Transfer extends React.Component {
     this.props.dispatch(selectToken(symbol, address))
     this.props.dispatch(hideSelectToken())
   }
-
-  showAdvanceOption = () => {
-    this.props.dispatch(showAdvance())
-  }
-
-
-  createRecap = () => {
-    return `transfer ${this.props.transfer.amount.toString().slice(0, 7)}${this.props.transfer.amount.toString().length > 7 ? '...' : ''} ${this.props.transfer.tokenSymbol} to ${this.props.transfer.destAddress.slice(0, 7)}...${this.props.transfer.destAddress.slice(-5)}`
-  }
-
+  
   makeNewTransfer = () => {
     this.props.dispatch(makeNewTransfer());
   }
@@ -71,6 +61,7 @@ export default class Transfer extends React.Component {
         balanceBig = balanceBig.minus(Math.pow(10, 17))
       }
       var balance = balanceBig.div(Math.pow(10, token.decimal)).toString()
+      balance = toPrimitiveNumber(balance)
       this.props.dispatch(specifyAmountTransfer(balance))
     }
   }
@@ -93,7 +84,10 @@ export default class Transfer extends React.Component {
     var tokenName = ""
     var token = this.props.tokens[this.props.transfer.tokenSymbol]
     if (token) {
-      balance = displayBalance(token.balance, token.decimal, 8)
+      balance = {
+        value: toT(token.balance, token.decimal),
+        roundingValue: roundingNumber(toT(token.balance, token.decimal)),
+      }
       tokenName = token.name
     }
     var balanceInfo = {
@@ -102,12 +96,6 @@ export default class Transfer extends React.Component {
       tokenSymbol: this.props.transfer.tokenSymbol
     }
 
-
-    var button = {
-      showAdvance: {
-        onClick: this.showAdvanceOption
-      }
-    }
     var input = {
       destAddress: {
         value: this.props.transfer.destAddress,
@@ -133,7 +121,7 @@ export default class Transfer extends React.Component {
       <SelectToken chooseToken={this.chooseToken} type="transfer" selectedSymbol={this.props.transfer.tokenSymbol} />
     )
     var transferButton = (
-      <PostTransfer />
+      <PostTransferWithKey />
     )
     var trasactionLoadingScreen = (
       <TransactionLoading tx={this.props.transfer.txHash}
@@ -153,7 +141,7 @@ export default class Transfer extends React.Component {
         gasPriceHandler={this.specifyGasPrice}
         gasPriceError={this.props.transfer.errors.gasPrice}
         gasError={this.props.transfer.errors.gas}
-        totalGas={converters.gweiToEth(this.props.transfer.gas * this.props.transfer.gasPrice)}
+        totalGas={gweiToEth(this.props.transfer.gas * this.props.transfer.gasPrice)}
       />
     )
 
@@ -165,8 +153,6 @@ export default class Transfer extends React.Component {
         gasConfig={gasConfig}
         transferButton={transferButton}
         trasactionLoadingScreen={trasactionLoadingScreen}
-        recap={this.createRecap()}
-        button={button}
         input={input}
         errors={errors}
         balance={balance}

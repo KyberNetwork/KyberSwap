@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom'
 import { Rate, Address } from "../Header"
 
 const HeaderView = (props) => {
+  let logoLink = props.account ? '/exchange' : ''
   return (
     <div>
       <section id="header">
         <div class="row">
-          <div class={"column " + (props.account ? "small-4 medium-6 large-7 hide-for-small-only" : "small-5 medium-6 large-7")}>
-            <Link to="/info" className="logo">
+          <div class={"column " + (props.account ? "small-4 medium-5 large-7 hide-for-small-only" : "small-5 medium-6 large-7")}>
+            <Link to={logoLink} className="logo">
               <img src="/assets/img/logo.svg" />
             </Link>
           </div>

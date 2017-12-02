@@ -1,7 +1,6 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/transferActions'
 import * as utilActions from '../actions/utilActions'
-import * as transferServices from "../services/exchange"
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
 import * as ethUtil from 'ethereumjs-util'
@@ -23,7 +22,7 @@ function* broadCastTx(action) {
 }
 
 
-function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
+export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   const tx = new Tx(
     hash, account.address, ethUtil.bufferToInt(txRaw.gas),
     converter.weiToGwei(ethUtil.bufferToInt(txRaw.gasPrice)),
@@ -37,48 +36,94 @@ function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
 
 function* doTransactionFail(ethereum, account, e) {
   yield put(actions.doTransactionFail(e))
-  yield put(incManualNonceAccount(account.address))
+  //yield put(incManualNonceAccount(account.address))
   yield put(updateAccount(ethereum, account))
 }
 
 
-function* processTransfer(action) {
+export function* processTransfer(action) {
   const { formId, ethereum, address,
     token, amount,
     destAddress, nonce, gas,
-    gasPrice, keystring, type, password, account, data } = action.payload
-  var callService = token == constants.ETHER_ADDRESS ? transferServices.sendEtherFromAccount : transferServices.sendTokenFromAccount
-
-  var rawTx
-  if (type === "keystore") {
-    try {
-      rawTx = yield call(callService, formId, ethereum, address,
-        token, amount,
-        destAddress, nonce, gas,
-        gasPrice, keystring, type, password)
-    } catch (e) {
-      yield put(actions.throwPassphraseError(e.message))
-      return
-    }
-  } else {
-    try {
-      rawTx = yield call(callService, formId, ethereum, address,
-        token, amount,
-        destAddress, nonce, gas,
-        gasPrice, keystring, type, password)
-    } catch (e) {
-      console.log(e)
-      yield call(doTransactionFail, ethereum, account, e.message)
-      return
-    }
+    gasPrice, keystring, type, password, account, data, keyService } = action.payload
+  var callService = token == constants.ETHER_ADDRESS ? "sendEtherFromAccount" : "sendTokenFromAccount"
+  switch (type) {
+    case "keystore":
+      yield call(transferKeystore, action, callService)
+      break
+    case "privateKey":
+    case "trezor":
+    case "ledger":
+      yield call(transferColdWallet, action, callService)
+      break
+    case "metamask":
+      yield call(transferMetamask, action, callService)
+      break
   }
+}
 
+function* transferKeystore(action, callService) {
+  const { formId, ethereum, address,
+    token, amount,
+    destAddress, nonce, gas,
+    gasPrice, keystring, type, password, account, data, keyService } = action.payload
+  try {
+    var rawTx = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
+      token, amount,
+      destAddress, nonce, gas,
+      gasPrice, keystring, type, password)
+  } catch (e) {
+    yield put(actions.throwPassphraseError(e.message))
+    return
+  }
   try {
     yield put(actions.prePareBroadcast())
     const hash = yield call(ethereum.call("sendRawTransaction"), rawTx, ethereum)
     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
   } catch (e) {
     yield call(doTransactionFail, ethereum, account, e.message)
+  }
+
+}
+
+function* transferColdWallet(action, callService) {
+  const { formId, ethereum, address,
+    token, amount,
+    destAddress, nonce, gas,
+    gasPrice, keystring, type, password, account, data, keyService } = action.payload
+  try {
+    var rawTx
+    rawTx = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
+      token, amount,
+      destAddress, nonce, gas,
+      gasPrice, keystring, type, password)
+    yield put(actions.prePareBroadcast())
+    const hash = yield call(ethereum.call("sendRawTransaction"), rawTx, ethereum)
+    yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
+  } catch (e) {
+    console.log(e)
+    yield call(doTransactionFail, ethereum, account, e.message)
+    return
+  }
+}
+
+function* transferMetamask(action, callService) {
+  const { formId, ethereum, address,
+    token, amount,
+    destAddress, nonce, gas,
+    gasPrice, keystring, type, password, account, data, keyService } = action.payload
+  try {
+    const hash = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
+      token, amount,
+      destAddress, nonce, gas,
+      gasPrice, keystring, type, password)
+    yield put(actions.prePareBroadcast())
+    const rawTx = {gas, gasPrice, nonce}
+    yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
+  } catch (e) {
+    console.log(e)
+    yield call(doTransactionFail, ethereum, account, e.message)
+    return
   }
 }
 

@@ -1,9 +1,8 @@
-//import Account from "../services/account"
-//import Token from "../services/token"
 import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
-import { calculateDest } from "../utils/converter"
+import { calculateDest, caculateDestAmount, caculateSourceAmount } from "../utils/converter"
 import { randomToken, randomForExchange } from "../utils/random"
+
 
 const initState = constants.INIT_EXCHANGE_FORM_STATE
 
@@ -26,6 +25,7 @@ const exchange = (state = initState, action) => {
       var newState = { ...state };
       newState.selected = true;
       newState.sourceAmount = ""
+      newState.destAmount = ""
       newState.errors = initState.errors
       newState.gasPrice = initState.gasPrice
       newState.bcError = ""
@@ -53,14 +53,15 @@ const exchange = (state = initState, action) => {
         newState.errors.selectTokenToken = ""
         return newState
       }
-      if ((newState.sourceToken !== constants.ETHER_ADDRESS) &&
-        (newState.destToken !== constants.ETHER_ADDRESS)) {
+      if ((newState.sourceTokenSymbol !== "ETH") &&
+        (newState.destTokenSymbol !== "ETH")) {
         newState.errors.selectSameToken = ""
         newState.errors.selectTokenToken = "This pair token is not supported"
         return newState
       }
       newState.errors.selectSameToken = ""
       newState.errors.selectTokenToken = ""
+      newState.errors.sourceAmountError = ""
       return newState
     }
     case "EXCHANGE.THROW_SOURCE_AMOUNT_ERROR": {
@@ -71,16 +72,13 @@ const exchange = (state = initState, action) => {
       newState.errors.gasPriceError = action.payload
       return newState
     }
-    case "EXCHANGE.THOW_ERROR_SELECT_TOKEN":
-      newState.error_select_token = action.payload
-      return newState
     case "EXCHANGE.GO_TO_STEP":
       newState.step = action.payload
       return newState
-    case "EXCHANGE_SPECIFY_GAS":
+    case "EXCHANGE.SPECIFY_GAS":
       newState.gas = action.payload
       return newState
-    case "EXCHANGE_SPECIFY_GAS_PRICE":
+    case "EXCHANGE.SPECIFY_GAS_PRICE":
       newState.gasPrice = action.payload
       newState.errors.gasPriceError = ""
       return newState
@@ -93,6 +91,11 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.CHANGE_SOURCE_AMOUNT": {
       newState.sourceAmount = action.payload
       newState.errors.sourceAmountError = ""
+      return newState
+    }
+    case "EXCHANGE.CHANGE_DEST_AMOUNT": {
+      newState.destAmount = action.payload
+      newState.errors.destAmountError = ""
       return newState
     }
     case "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED": {
@@ -131,6 +134,7 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.HIDE_PASSPHRASE": {
       newState.passphrase = false
+      newState.errors.passwordError = ""
       return newState
     }
     case "EXCHANGE.HIDE_CONFIRM": {
@@ -149,16 +153,6 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.SHOW_APPROVE": {
       newState.confirmApprove = true
-      newState.showConfirmApprove = false
-      return newState
-    }
-    case "EXCHANGE.HIDE_CONFIRM_APPROVE": {
-      newState.showConfirmApprove = false
-      return newState
-    }
-    case "EXCHANGE.SHOW_CONFIRM_APPROVE": {
-      newState.confirmApprove = false
-      newState.showConfirmApprove = true
       return newState
     }
     case "EXCHANGE.CHANGE_PASSPHRASE": {
@@ -167,6 +161,7 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.THROW_ERROR_PASSPHRASE": {
       newState.errors.passwordError = action.payload
+      newState.isConfirming = false
       return newState
     }
     case "EXCHANGE.FINISH_EXCHANGE": {
@@ -177,33 +172,22 @@ const exchange = (state = initState, action) => {
       newState.passphrase = false
       newState.confirmColdWallet = false
       newState.confirmApprove = false
-      newState.showConfirmApprove = false
+      //newState.showConfirmApprove = false
       newState.isApproving = false
       newState.isConfirming = false
       newState.sourceAmount = ""
-      newState.txRaw = ""
+      //newState.txRaw = ""
+      newState.bcError = ""
       newState.step = 3
       newState.broadcasting = true
-      return newState
-    }
-    case "EXCHANGE.SAVE_RAW_TRANSACTION": {
-      newState.txRaw = action.payload
-      newState.confirmColdWallet = true
-      newState.confirmApprove = false
-      newState.showConfirmApprove = false
-      return newState
-    }
-    case "EXCHANGE.THROW_ERROR_SIGN_TRANSACTION": {
-      newState.errors.signTransaction = action.payload
       return newState
     }
     case "EXCHANGE.PROCESS_APPROVE": {
       newState.isApproving = true
       return newState
     }
-    case "EXCHANGE.PROCESS_EXCHANGE_AFTER_CONFIRM": {
+    case "EXCHANGE.PROCESS_EXCHANGE": {
       newState.isConfirming = true
-      newState.bcError = ""
       return newState
     }    
     case "TX.TX_ADDED": {
@@ -214,6 +198,36 @@ const exchange = (state = initState, action) => {
       if (newState.tempTx.hash === action.payload.hash) {
         newState.tempTx = action.payload
       }
+      return newState
+    }
+    case "EXCHANGE.CACULATE_AMOUNT": {
+      if(state.errors.selectSameToken || state.errors.selectTokenToken) return newState
+      if(state.inputFocus == "dest"){
+        newState.sourceAmount = caculateSourceAmount(state.destAmount, state.offeredRate, 6)
+      } else {
+        newState.destAmount = caculateDestAmount(state.sourceAmount, state.offeredRate, 6)
+      }
+      return newState
+    }
+    case "EXCHANGE.INPUT_CHANGE": {
+      let focus = action.payload.focus
+      let value = action.payload.value
+      if(focus == "source"){
+        newState.sourceAmount = value
+        newState.errors.sourceAmountError = ""
+        if(state.errors.selectSameToken || state.errors.selectTokenToken) return newState
+        newState.destAmount = caculateDestAmount(value, state.offeredRate, 6)
+      }
+      else if(focus == "dest"){
+        newState.destAmount = value
+        newState.errors.destAmountError = ""
+        if(state.errors.selectSameToken || state.errors.selectTokenToken) return newState
+        newState.sourceAmount = caculateSourceAmount(value, state.offeredRate, 6)
+      }
+      return newState
+    }
+    case "EXCHANGE.FOCUS_INPUT": {
+      newState.inputFocus = action.payload
       return newState
     }
   }

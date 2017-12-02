@@ -1,16 +1,24 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/globalActions'
-import { fetchRatePromise } from "../services/exchange"
+import { fetchRatePromise } from "../services/rate"
 import { Rate, updateAllRatePromise } from "../services/rate"
 import { push } from 'react-router-redux';
 
-function* getLatestBlock(action) {
+export function* getLatestBlock(action) {
   const ethereum = action.payload
   const block = yield call(ethereum.call("getLatestBlock"))
   yield put(actions.updateBlockComplete(block))
 }
 
-function* updateRate(action) {
+export function* updateHistoryExchange(action) {
+  const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
+  var latestBlock = yield call(ethereum.call("getLatestBlock"))
+  const newLogs = yield call(ethereum.call("getLogTwoColumn"), page, itemPerPage)
+  const eventsCount = yield call(ethereum.call("countALlEvents"))
+  yield put(actions.updateHistory(newLogs, latestBlock, page, eventsCount, isAutoFetch))
+}
+
+export function* updateRate(action) {
   const { ethereum, source, reserve, ownerAddr } = action.payload
   const rate = new Rate(
     source.name,
@@ -28,19 +36,20 @@ function* updateRate(action) {
 
 
 
-function* goToRoute(action) {
+export function* goToRoute(action) {
   yield put(push(action.payload));
 }
 
-function* clearSession(action) {
+export function* clearSession(action) {
   yield put(actions.clearSessionComplete())
   yield put(actions.goToRoute('/'));
 }
 
-function* updateAllRate(action) {
+export function* updateAllRate(action) {
   const { ethereum, tokens, reserve, ownerAddr } = action.payload
+  let isUpdateBalance = ownerAddr ? true : false
   const rates = yield call(updateAllRatePromise, ethereum, tokens, reserve, ownerAddr)
-  yield put(actions.updateAllRateComplete(rates))
+  yield put(actions.updateAllRateComplete(rates, isUpdateBalance))
 }
 
 export function* watchGlobal() {
@@ -49,6 +58,7 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.GO_TO_ROUTE", goToRoute)
   yield takeEvery("GLOBAL.CLEAR_SESSION", clearSession)
   yield takeEvery("GLOBAL.RATE_UPDATE_ALL_PENDING", updateAllRate)
+  yield takeEvery("GLOBAL.UPDATE_HISTORY_EXCHANGE", updateHistoryExchange)
 }
 
 

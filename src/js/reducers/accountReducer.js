@@ -1,13 +1,18 @@
 //import Account from "../services/account"
-import Account from "../services/account"
+// import Account from "../services/account"
 import {REHYDRATE} from 'redux-persist/lib/constants'
+import { clearInterval } from 'timers';
 
 const initState = {
   isStoreReady: false,
   account: false,
   loading: false,
   error: "",
-  showError: false
+  showError: false,
+  pKey: {
+    error: '',
+    modalOpen: false
+  }
 }
 
 const account = (state=initState, action) => {
@@ -55,6 +60,29 @@ const account = (state=initState, action) => {
         return {...state,
           account: account}
       }
+    }
+    case "ACCOUNT.PKEY_CHANGE": {
+      let newState = {...state}
+      newState.pKey.error = ''
+      return newState
+    }
+    case "ACCOUNT.PKEY_ERROR": {
+      let newState = {...state}
+      newState.pKey.error = action.payload
+      return newState
+    }
+    case "ACCOUNT.OPEN_PKEY_MODAL": {
+      let newState = {...state}
+      let pKey = {
+        error: '', modalOpen: true
+      }
+      newState.pKey = pKey
+      return newState
+    }
+    case "ACCOUNT.CLOSE_PKEY_MODAL": {
+      let newState = {...state}
+      newState.pKey.modalOpen = false
+      return newState
     }
   }
   return state

@@ -27,24 +27,17 @@ export function updateBlockFailed(error) {
 //   }
 // }
 
-export function updateAllRate(ethereum, tokens, reserve, ownerAddr){
+export function updateAllRate(ethereum, tokens, reserve, ownerAddr) {
   return {
     type: 'GLOBAL.RATE_UPDATE_ALL_PENDING',
-    payload: {ethereum, tokens, reserve, ownerAddr}
+    payload: { ethereum, tokens, reserve, ownerAddr }
   }
 }
 
-// export function updateRateComplete(rate) {
-//   return {
-//     type: "GLOBAL.RATE_UPDATED_FULFILLED",
-//     payload: rate
-//   }
-// }
-
-export function updateAllRateComplete(rates){
+export function updateAllRateComplete(rates, isUpdateBalance) {
   return {
     type: 'GLOBAL.ALL_RATE_UPDATED_FULFILLED',
-    payload: rates
+    payload: { rates, isUpdateBalance }
   }
 }
 
@@ -60,15 +53,30 @@ export function clearSession() {
   }
 }
 
-export function clearSessionComplete(){
+export function clearSessionComplete() {
   return {
     type: "GLOBAL.CLEAR_SESSION_FULFILLED"
   }
 }
 
-export function goToRoute(route){
+export function goToRoute(route) {
   return {
     type: "GLOBAL.GO_TO_ROUTE",
     payload: route
+  }
+}
+
+
+export function updateHistoryExchange(ethereum, page, itemPerPage, isAutoFetch) {
+  return {
+    type: "GLOBAL.UPDATE_HISTORY_EXCHANGE",
+    payload: { ethereum, page, itemPerPage, isAutoFetch }
+  }
+}
+
+export function updateHistory(logs, latestBlock, page, eventsCount, isAutoFetch) {
+  return {
+    type: "GLOBAL.UPDATE_HISTORY",
+    payload: { logs, latestBlock, page, eventsCount, isAutoFetch}
   }
 }

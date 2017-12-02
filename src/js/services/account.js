@@ -14,7 +14,7 @@ export default class Account {
   shallowClone() {
     return new Account(
       this.address, this.type, this.keystring,
-      this.balance, this.nonce, this.manualNonce, this.avatar)
+      this.balance, this.nonce, this.manualNonce, this.avatar, this.event)
   }
 
   getUsableNonce() {
@@ -26,7 +26,6 @@ export default class Account {
   sync(ethereum, account) {
     var promise
     const _this = account ? account : this
-
     promise = new Promise((resolve, reject) => {
       const acc = _this.shallowClone()
       ethereum.call("getBalance")(acc.address).then((balance) => {

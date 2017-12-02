@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { persistReducer } from 'redux-persist'
-import session from 'redux-persist/lib/storage/session'
+//import session from 'redux-persist/lib/storage/session'
 import localForage from 'localforage'
 
 import { routerReducer } from 'react-router-redux'
@@ -17,11 +17,15 @@ import txs from './txsReducer'
 
 
 const appReducer = combineReducers({
-  account, exchange, transfer, txs, connection, router: routerReducer, global,utils,
+  account, exchange, transfer, txs, connection, router: routerReducer,utils,
   tokens: persistReducer({
     key: 'tokens',
     storage: localForage
   }, tokens),  
+  global: persistReducer({
+    key: 'global',
+    storage: localForage
+  }, global),  
 })
 
 const rootReducer = (state, action) => {

@@ -26,6 +26,37 @@ export function calculateDest(source, rate) {
   return dest
 }
 
+export function caculateSourceAmount(destAmount, offeredRate, precision){
+  if(!destAmount || !offeredRate || acceptableTyping(destAmount) || acceptableTyping(offeredRate)){
+    return "0"
+  }
+  var bigDest = new BigNumber(destAmount)
+  var bigOfferedRate = new BigNumber(offeredRate)
+  
+  bigOfferedRate = bigOfferedRate.div(1000000000000000000)
+  var result = bigDest.div(bigOfferedRate)
+  if(precision){
+    return result.toFixed(precision)
+  } else {
+    return result.toString()
+  }
+}
+
+export function caculateDestAmount(sourceAmount, offeredRate, precision){
+  if(!sourceAmount || !offeredRate || acceptableTyping(sourceAmount) || acceptableTyping(offeredRate)){
+    return "0"
+  }
+  var bigSource = new BigNumber(sourceAmount)
+  var bigOfferedRate = new BigNumber(offeredRate)
+  
+  bigOfferedRate = bigOfferedRate.div(1000000000000000000)
+  var result = bigSource.times(bigOfferedRate)
+  if(precision){
+    return result.toFixed(precision)
+  } else {
+    return result.toString()
+  }
+}
 
 export function calculateRate(source, dest) {
   var bigSource = new BigNumber(source)
@@ -100,24 +131,7 @@ export function weiToGwei(number) {
   }
 }
 
-export function toT(number, precision) {
-  var bigNumber = new BigNumber(number)
-  var result
-  if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
-    return number
-  } else if (acceptableTyping(number)) {
-    return number
-  } else {
-    result = bigNumber.div(1000000000000000000)
-  }
-  if (precision) {
-    return result.toFixed(precision)
-  } else {
-    return result.toString()
-  }
-}
-
-export function displayBalance(number, decimal, precision) {
+export function toT(number, decimal) {
   var bigNumber = new BigNumber(number)
   var result
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
@@ -131,11 +145,7 @@ export function displayBalance(number, decimal, precision) {
   else {
     result = bigNumber.div(1000000000000000000)
   }
-  if (precision) {
-    return result.toFixed(precision)
-  } else {
-    return result.toString()
-  }
+  return result.toString()
 }
 
 export function pairID(source, dest) {
@@ -195,4 +205,35 @@ export function stringToHex(number, decimal) {
   var param = new BigNumber(10).pow(decimal ? decimal : 18)
   var bigNumber = new BigNumber(number).times(param)
   return "0x" + bigNumber.toString(16)
+}
+
+export function roundingNumber(number) {
+  const MAX_DIGIS = 7;
+  number = +number;
+  if (isNaN(number) || number <= 0) return 0;
+
+  let numberStr = number.toString();
+  if (Number.isInteger(number)) {
+    let result = numberStr.slice(0, MAX_DIGIS);
+    return +result;
+  }
+  if(number < 1e-7){
+    return 0;
+  }
+  let result = numberStr.slice(0, MAX_DIGIS + 1);
+  return +result;
+}
+
+export function toPrimitiveNumber(x) {
+  var bigNum = new BigNumber(x)
+  return bigNum.toString(10)
+};
+
+export function caculateTokenEpsilon(rate, decimal, symbol){
+  var tokenRate = rate
+  if (symbol === "ETH"){
+    tokenRate = new BigNumber(10).pow(18)
+  }
+  var ts = new BigNumber(10).pow(decimal).times(constants.EPSILON)
+  return ts.div(tokenRate)
 }

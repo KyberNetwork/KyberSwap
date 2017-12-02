@@ -2,7 +2,7 @@ import React from "react"
 
 const TransferForm = (props) => {
   var render = (
-    <div>
+    <div id="transfer-screen">
       <div class="frame">
         <div class="row">
           <div class="column small-11 medium-10 large-8 small-centered">
@@ -12,7 +12,7 @@ const TransferForm = (props) => {
                 <div class="column">
 
                   <label className={props.errors.destAddress === "" ? "" : "error"}>Transfer to address
-                    <input class="text-center hash" type="text" placeholder="Address Hash" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange} />
+                    <input className="text-center hash" type="text" placeholder="Address Hash" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange} />
                     {props.errors.destAddress !== "" &&
                       <span class="error-text">{props.errors.destAddress}</span>
                     }
@@ -29,12 +29,17 @@ const TransferForm = (props) => {
                 <div class="column medium-6">
                   <label>Amount
                     <div className={props.errors.amountTransfer === "" ? "token-amount" : "token-amount error"}>
-                      <input type="number" min="0" step="0.000001" placeholder="0" value={props.input.amount.value} onChange={props.input.amount.onChange} /><span class="name">{props.tokenSymbol}</span>
+                      <input type="number" min="0" step="0.000001" placeholder="0" value={props.input.amount.value} className="amount-input" onChange={props.input.amount.onChange} /><span class="name">{props.tokenSymbol}</span>
                       {props.errors.amountTransfer !== "" &&
                         <span class="error-text">{props.errors.amountTransfer}</span>
                       }
                     </div>
-                    <div class="address-balance clearfix"><span class="note">Address Balance</span><a class="value" onClick={props.setAmount}>{props.balance} {props.tokenSymbol}</a></div>
+                    <div class="address-balance clearfix">
+                      <span class="note">Address Balance</span>
+                      <a className="value" onClick={props.setAmount} title={props.balance.value}>
+                        {props.balance.roundingValue} {props.tokenSymbol}
+                      </a>
+                    </div>
                   </label>
                   <span class="error-text">{props.errors.amountTransfer}</span>
                 </div>

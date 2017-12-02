@@ -1,24 +1,37 @@
 import React from "react"
 
 const ImportAccountView = (props) => {
-    return (
-        <div class="frame">
-            <div className="row">
-                <div class="column small-11 large-10 small-centered">
-                    <h1 class="title">Import address</h1>
-                    <div class="row">
-                        <div class="small-12 medium-4 column" style={{ padding: 0 }}>
-                            {props.importKeyStore}
-                        </div>
-                        <div class="small-12 medium-8 column" style={{ padding: 0 }}>
-                            {props.importByDevice}
-                        </div>
-                    </div>
-                </div>
+  return (
+    <div class="frame">
+      <div className="row">
+        <div class="column small-11 large-12 small-centered" id="import-acc">
+          <h1 class="title">Import address</h1>
+          <div class="row import-account">
+            <div class="small-6 medium-4 large-2dot4 column">
+              {props.firstKey}
             </div>
-            {props.errorModal}
+
+            <div class="small-6 medium-4 large-2dot4 column">
+              {props.secondKey}
+            </div>
+            <div class="small-6 medium-4 large-2dot4 column">
+              {props.thirdKey}
+            </div>
+
+            <div class="small-6 medium-4 medium-offset-2 large-2dot4 large-offset-0 column">
+              {props.fourthKey}
+            </div>
+            
+            <div class="small-6 small-offset-3 medium-4 medium-offset-0 large-2dot4 large-offset-0 column end">
+              {props.fifthKey}
+            </div>
+
+          </div>
         </div>
-    )
+      </div>
+      {props.errorModal}
+    </div>
+  )
 }
 
 export default ImportAccountView

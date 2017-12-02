@@ -1,6 +1,5 @@
 import React from "react"
 import { connect } from "react-redux"
-import * as ethUtil from 'ethereumjs-util'
 
 import constants from "../../services/constants"
 
@@ -26,7 +25,8 @@ import { Modal } from "../../components/CommonElement"
     account: store.account.account,
     transfer: store.transfer,
     form: { ...store.transfer, balance, decimal },
-    ethereum: store.connection.ethereum
+    ethereum: store.connection.ethereum,
+    keyService: props.keyService
   };
 
 })
@@ -40,8 +40,10 @@ export default class PostTransfer extends React.Component {
         case "keystore":
           this.props.dispatch(transferActions.openPassphrase())
           break
+        case "privateKey":
         case "trezor":
         case "ledger":
+        case "metamask":
           this.props.dispatch(transferActions.showConfirm())
           break
       }
@@ -60,8 +62,8 @@ export default class PostTransfer extends React.Component {
     if (isNaN(testGasPrice)) {
       this.props.dispatch(transferActions.thowErrorGasPrice("Gas price is not number"))
       check = false
-    }    
-    if (isNaN(this.props.form.amount) || !this.props.form.amount || this.props.form.amount == '') {
+    }
+    if (isNaN(parseFloat(this.props.form.amount))) {
       this.props.dispatch(transferActions.thowErrorAmount("Amount must be a number"))
       check = false
       checkNumber = false
@@ -73,7 +75,7 @@ export default class PostTransfer extends React.Component {
     if (amountBig.greaterThan(this.props.form.balance)) {
       this.props.dispatch(transferActions.thowErrorAmount("Amount is too high"))
       check = false
-    }  
+    }
     return check
   }
 
@@ -115,11 +117,12 @@ export default class PostTransfer extends React.Component {
       amount, tokenSymbol, destAddress
     }
   }
-  closeModal = (event) => {
+  closeModal = () => {
     switch (this.props.account.type) {
       case "keystore":
         this.props.dispatch(transferActions.hidePassphrase())
         break
+      case "privateKey":
       case "trezor":
       case "ledger":
         this.props.dispatch(transferActions.hideConfirm())
@@ -127,7 +130,7 @@ export default class PostTransfer extends React.Component {
     }
 
   }
-  changePassword = (event) => {
+  changePassword = () => {
     this.props.dispatch(transferActions.changePassword())
   }
   formParams = () => {
@@ -147,12 +150,10 @@ export default class PostTransfer extends React.Component {
     }
   }
 
-  processTx = (event) => {
+  processTx = (password) => {
     try {
-      var password = ""
-      if (this.props.account.type === "keystore") {
-        password = document.getElementById("passphrase").value
-        document.getElementById("passphrase").value = ''
+      if (this.props.account.type !== "keystore") {
+        password = ''
       }
       const params = this.formParams()
       // sending by wei
@@ -163,7 +164,7 @@ export default class PostTransfer extends React.Component {
       this.props.dispatch(transferActions.processTransfer(formId, ethereum, account.address,
         params.token, params.amount,
         params.destAddress, params.nonce, params.gas,
-        params.gasPrice, account.keystring, account.type, password, account, data))
+        params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService))
     } catch (e) {
       console.log(e)
       this.props.dispatch(transferActions.throwPassphraseError("Key derivation failed"))
@@ -193,9 +194,18 @@ export default class PostTransfer extends React.Component {
         content={this.contentConfirm()}
         size="tiny"
       />
+    let className = "button accent "
+    if (!validators.anyErrors(this.props.form.errors)) {
+      className += " animated infinite pulse next"
+    }
     return (
-      <PostTransferBtn modalPassphrase={modalPassphrase}
-        submit={this.clickTransfer} />
+      <PostTransferBtn 
+        className={className}
+        modalPassphrase={modalPassphrase}
+        submit={this.clickTransfer} 
+        accountType = {this.props.account.type}
+        isConfirming={this.props.form.isConfirming}
+      />
     )
   }
 }

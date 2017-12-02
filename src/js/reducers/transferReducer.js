@@ -74,6 +74,7 @@ const transfer = (state = initState, action) => {
       return newState
     case "TRANSFER.HIDE_PASSPHRASE":
       newState.passphrase = false
+      newState.errors.passwordError = ""
       return newState
     case "TRANSFER.THROW_ERROR_DEST_ADDRESS":
       newState.errors.destAddress = action.payload
@@ -92,6 +93,7 @@ const transfer = (state = initState, action) => {
     }
     case "TRANSFER.THROW_ERROR_PASSPHRASE": {
       newState.errors.passwordError = action.payload
+      newState.isConfirming = false
       return newState
     }
     case "TRANSFER.TX_BROADCAST_PENDING": {
@@ -120,6 +122,7 @@ const transfer = (state = initState, action) => {
       newState.isConfirming = false
       newState.txRaw = ""
       newState.step = 2
+      newState.bcError = ""
       newState.broadcasting = true
       return newState
     }

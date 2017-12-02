@@ -166,7 +166,6 @@ a.has-tip {
   padding: 30px 0;
   margin-bottom: 30px;
   @include breakpoint(medium) {
-    padding: 45px 0;
     margin-bottom: 35px;
   }
   h1.title {
@@ -177,7 +176,7 @@ a.has-tip {
     margin: 0 0 20px 0;
     letter-spacing: .5px;
     @include breakpoint(medium) {
-      margin: 30px 0 35px 0;
+      margin: 10px 0 25px 0;
     }
     .info {
       font-size: 14px;
@@ -234,11 +233,17 @@ p.note {
   &.json {
     background-image: url(../img/json.jpg)
   }
+  &.pkey {
+    background-image: url(../img/pkey.jpeg)
+  }
   &.trezor {
     background-image: url(../img/trezor.jpg)
   }
   &.ledger {
     background-image: url(../img/ledger.jpg)
+  }
+  &.metamask {
+    background-image: url(../img/metamask.jpg)
   }
   > a {
     position: absolute;
@@ -386,7 +391,7 @@ label.switch-caption {
         text-align: right;
         margin: 0;
         &[readonly] {
-          background-color: darken(white, 3)
+          background-color: darken(white, 5)
         }
       }
     }

@@ -51,21 +51,22 @@ export function verifyAmount(sourceAmount,
   var rateBig = new BigNumber(rate)
   var estimateValue = sourceAmountWei
   if (sourceSymbol !== "ETH") {
-    estimateValue = sourceAmountWei.times(weiParam.pow(36)).div(weiParam.pow(sourceDecimal)).div(rateBig)
+    estimateValue = rateBig.times(sourceAmountWei).div(weiParam.pow(sourceDecimal))
   }
-  if (estimateValue.cmp(constants.EPSILON) < 0) {
+  var epsilon = new BigNumber(constants.EPSILON)
+  if (estimateValue.cmp(epsilon) < 0) {
     return "too low"
   }
 
   //verify max dest amount
   var estimateDestAmount = sourceAmountWei.times(weiParam.pow(destDecimal))
-    .times(weiParam.pow(18))
+    .times(rateBig)
     .div(weiParam.pow(sourceDecimal))
-    .div(rateBig)
+    .div(weiParam.pow(18))
 
   var reserveBalanceB = new BigNumber(reserveBalance)
   if (estimateDestAmount.cmp(reserveBalanceB) > 0) {
-    return "too high (reserve does not have enough balance)"
+    return "too high (pair is not available for trading at the moment)"
   }
 
   return null
@@ -98,7 +99,7 @@ export function anyErrors(errors) {
 
 export function verifyPassphrase(passphrase, repassphrase) {
   if (passphrase !== repassphrase) {
-    return "Passphrase confirmation is not match"
+    return "Password confirmation is not match"
   } else {
     return null
   }

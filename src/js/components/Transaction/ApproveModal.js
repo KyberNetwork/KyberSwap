@@ -1,10 +1,10 @@
 import React from "react"
 
-const ApproveModal = (props) => {  
+const ApproveModal = (props) => {
   return (
     <div>
       <div class="title text-center">ETH token exchange</div>
-      <a class="x" onClick={(e) => props.onCancel(e)}>&times;</a>
+      <a className="x" onClick={(e) => props.onCancel(e)}>&times;</a>
       <div class="content with-overlap">
         <div class="row">
           <div class="column">
@@ -14,13 +14,12 @@ const ApproveModal = (props) => {
           </div>
         </div>
       </div>
-      <div class="overlap"><a className = {props.isApproving?"button accent waiting": "button accent"} onClick={(e)=>props.onSubmit(e)}>Approve</a></div>
+      <div class="overlap">
+        <a className={"button accent submit-approve " + (props.isApproving ? "waiting" : "")}
+          onClick={(e) => props.onSubmit(e)}
+        >Approve</a>
+      </div>
     </div>
-    // <div>
-    //     <div>{props.recap}</div>
-    //     <button onClick={(e) => props.onCancel(e)}>Cancel</button>
-    //     <button onClick={(e)=>props.onSubmit(e)}>Approve</button>
-    //   </div>
   )
 }
 
