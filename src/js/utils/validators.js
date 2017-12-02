@@ -54,7 +54,7 @@ export function verifyAmount(sourceAmount,
   }
   var epsilon = new BigNumber(constants.EPSILON)
   if (estimateValue.cmp(epsilon) < 0) {
-    return "too low"
+    return "too small"
   }
 
   //verify max dest amount
