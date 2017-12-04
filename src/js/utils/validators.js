@@ -15,7 +15,6 @@ export function verifyKey(keystring) {
       return "Invalid keystore file"
     }
   } catch (e) {
-    console.log(e)
     return "Malformed JSON keystore file"
   }
   return null
@@ -55,7 +54,7 @@ export function verifyAmount(sourceAmount,
   }
   var epsilon = new BigNumber(constants.EPSILON)
   if (estimateValue.cmp(epsilon) < 0) {
-    return "too low"
+    return "too small"
   }
 
   //verify max dest amount

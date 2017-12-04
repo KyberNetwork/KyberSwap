@@ -12,4 +12,8 @@ window.matchMedia = window.matchMedia || function() {
 };
 
 jest.mock('vm')
-jest.mock('jdenticon', () => {})
+jest.mock('jdenticon', () => {
+    return {
+        toSvg: () => {}
+    };
+})

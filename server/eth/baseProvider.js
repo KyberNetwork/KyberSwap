@@ -121,6 +121,7 @@ class BaseEthereumProvider {
   getRate(source, dest, reserve) {
     return new Promise((resolve, reject) => {
       this.networkContract.methods.getRate(source, dest, reserve).call().then((result) => {
+       // console.log(result)
         if (result != null) {
           resolve(result)
         }
@@ -166,7 +167,7 @@ class BaseEthereumProvider {
         toBlock: toBlock
       }, )
         .then(function (events) {
-          //console.log(events)
+         // console.log(events)
           resolve(events)
         }).catch((err) => {
           rejected(err)

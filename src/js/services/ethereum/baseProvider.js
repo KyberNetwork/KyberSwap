@@ -15,10 +15,31 @@ export default class BaseEthereumProvider {
     return this.rpc.version.api
   }
 
+  isConnectNode() {
+    return new Promise((resolve, reject) => {
+      this.rpc.eth.getBlock("latest", false).then((block) => {
+        if (block != null) {
+          resolve(true)
+        }else{
+          resolve(false)
+        }
+      }).catch((errr)=>{
+        resolve(false)
+      })
+    })
+    // return new Promise((resolve, reject) => {
+    //   this.rpc.version.getEthereum().then((result) => {
+    //     resolve(true)
+    //   }).catch((err) => {
+    //     resolve(false)
+    //   })
+    // })
+  }
+
   getLatestBlock() {
     return new Promise((resolve, rejected) => {
       fetch(BLOCKCHAIN_INFO.history_endpoint + '/getLatestBlock', {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Accept': 'application/json, text/plain, */*',
           'Content-Type': 'application/json'
@@ -149,10 +170,10 @@ export default class BaseEthereumProvider {
     })
   }
 
-  countALlEvents(){
+  countALlEvents() {
     return new Promise((resolve, rejected) => {
       fetch(BLOCKCHAIN_INFO.history_endpoint + '/countHistory', {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Accept': 'application/json, text/plain, */*',
           'Content-Type': 'application/json'
@@ -162,7 +183,7 @@ export default class BaseEthereumProvider {
       })
     })
   }
-  
+
   getLogExchange(page, itemPerPage) {
     return new Promise((resolve, rejected) => {
       fetch(BLOCKCHAIN_INFO.history_endpoint + '/getHistory', {
@@ -184,15 +205,15 @@ export default class BaseEthereumProvider {
   getLogTwoColumn(page, itemPerPage) {
     return new Promise((resolve, rejected) => {
       fetch(BLOCKCHAIN_INFO.history_endpoint + '/getHistoryTwoColumn', {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Accept': 'application/json, text/plain, */*',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          page: page,
-          itemPerPage: itemPerPage,
-        })
+        // body: JSON.stringify({
+        //   page: page,
+        //   itemPerPage: itemPerPage,
+        // })
       }).then(function (response) {
         resolve(response.json())
       })
@@ -202,12 +223,12 @@ export default class BaseEthereumProvider {
   getRateExchange() {
     return new Promise((resolve, rejected) => {
       fetch(BLOCKCHAIN_INFO.history_endpoint + '/getRate', {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Accept': 'application/json, text/plain, */*',
           'Content-Type': 'application/json'
         },
-        body: {}
+        //body: {}
       }).then(function (response) {
         resolve(response.json())
       }).catch((err) => {
@@ -219,7 +240,7 @@ export default class BaseEthereumProvider {
     })
   }
 
-  getRateFromBlockchain(){
+  getRateFromBlockchain() {
     var ratePromises = []
     var tokenObj = BLOCKCHAIN_INFO.tokens
     Object.keys(tokenObj).map((tokenName) => {
@@ -235,16 +256,16 @@ export default class BaseEthereumProvider {
       ]))
     })
     return Promise.all(ratePromises).then((arrayRate) => {
-      var arrayRateObj =  arrayRate.map((rate) => {
+      var arrayRateObj = arrayRate.map((rate) => {
         return {
           source: rate[0],
           dest: rate[1],
           rate: rate[2].rate,
           expBlock: rate[2].expBlock,
           balance: rate[2].balance
-        } 
+        }
       })
       return arrayRateObj
-    })    
+    })
   }
 }

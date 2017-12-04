@@ -1,12 +1,18 @@
 import React from "react"
 import { toT } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
+import { CSSTransitionGroup } from 'react-transition-group'
 
 const TransactionListView = (props) => {
 
   function hashDetailLink(hash) {
     const url = BLOCKCHAIN_INFO.ethScanUrl + 'tx/'
     return url + hash
+  }
+
+  function gotoLink(hash) {
+    const url = BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + hash
+    window.open(url)
   }
 
   function getTokenSymbol(address) {
@@ -71,16 +77,17 @@ const TransactionListView = (props) => {
       var destToken = getTokenSymbol(item.dest)
       var sourceIcon = getIcon(item.source)
       var destIcon = getIcon(item.dest)
-      var sourceAmount = toT(item.actualSrcAmount, sourceToken.decimal).slice(0, 4)
+      var sourceAmount = toT(item.actualSrcAmount, sourceToken.decimal, 3)
+      var sourceAmountFull = toT(item.actualSrcAmount, sourceToken.decimal, 7)
       return (
-        <div className={"transaction-list-item open"} key={'item-' + i} data-pos={i}>
+        <div className={"transaction-list-item open"} key={item.txHash} data-pos={i} onClick={(e) => gotoLink(item.txHash)}>
           <div className="inner">
             <div className="coin-icon">
               <div className="coin coin1" key={'coin-1'} style={{ backgroundImage: 'url(\'' + sourceIcon + '\')' }}></div>
               <div className="coin coin2" key={'coin-2'} style={{ backgroundImage: 'url(\'' + destIcon + '\')' }}></div>
             </div>
             <div className="titles">
-              <span className="rate">{sourceAmount}</span>
+              <span className="rate" title={sourceAmountFull}>{sourceAmount}</span>
               <span className="coins">{sourceToken.key.toUpperCase()} to {destToken.key.toUpperCase()}</span>
               <span className="time">{calculateTimeStamp(item.blockNumber)}</span>
             </div>
@@ -97,16 +104,26 @@ const TransactionListView = (props) => {
         <div class="column small-11 large-12 small-centered">
           <h1 className="title">TRANSACTION HISTORY</h1>
           <div className="row">
-            <div className="small-12 medium-12 large-6 column">
-              <span>ETH/TOKEN</span>
+            <div className="small-12 medium-6 large-6 column">
+              <span>ETH / TOKEN</span>
               <div className="transaction-list">
-                {content(props.logsEth)}
+                <CSSTransitionGroup
+                  transitionName="example"
+                  transitionEnterTimeout={1000}
+                  transitionLeaveTimeout={1000}>
+                  {content(props.logsEth)}
+                </CSSTransitionGroup>
               </div>
             </div>
-            <div className="small-12 medium-12 large-6 column">
-              <span>TOKEN/ETH</span>
+            <div className="small-12 medium-6 large-6 column">
+              <span>TOKEN / ETH</span>
               <div className="transaction-list">
-                {content(props.logsToken)}
+                <CSSTransitionGroup
+                  transitionName="example"
+                  transitionEnterTimeout={1000}
+                  transitionLeaveTimeout={1000}>
+                  {content(props.logsToken)}
+                </CSSTransitionGroup>
               </div>
             </div>
           </div>

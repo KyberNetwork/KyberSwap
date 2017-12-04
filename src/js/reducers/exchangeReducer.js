@@ -96,6 +96,7 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.CHANGE_DEST_AMOUNT": {
       newState.destAmount = action.payload
       newState.errors.destAmountError = ""
+      newState.errors.sourceAmountError = ""      
       return newState
     }
     case "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED": {
@@ -221,6 +222,7 @@ const exchange = (state = initState, action) => {
       else if(focus == "dest"){
         newState.destAmount = value
         newState.errors.destAmountError = ""
+        newState.errors.sourceAmountError = ""
         if(state.errors.selectSameToken || state.errors.selectTokenToken) return newState
         newState.sourceAmount = caculateSourceAmount(value, state.offeredRate, 6)
       }

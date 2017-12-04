@@ -131,7 +131,7 @@ export function weiToGwei(number) {
   }
 }
 
-export function toT(number, decimal) {
+export function toT(number, decimal, round) {
   var bigNumber = new BigNumber(number)
   var result
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
@@ -145,7 +145,11 @@ export function toT(number, decimal) {
   else {
     result = bigNumber.div(1000000000000000000)
   }
-  return result.toString()
+  if(round){
+    return result.round(round).toString()
+  }else{
+    return result.toString()
+  }
 }
 
 export function pairID(source, dest) {
@@ -214,13 +218,12 @@ export function roundingNumber(number) {
 
   let numberStr = number.toString();
   if (Number.isInteger(number)) {
-    let result = numberStr.slice(0, MAX_DIGIS);
-    return +result;
+    return number;
   }
   if(number < 1e-7){
     return 0;
   }
-  let result = numberStr.slice(0, MAX_DIGIS + 1);
+  let result = number.toPrecision(number < 1 ? MAX_DIGIS - 1 : MAX_DIGIS);
   return +result;
 }
 

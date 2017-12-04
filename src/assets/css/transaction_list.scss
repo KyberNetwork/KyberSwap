@@ -4,150 +4,60 @@
 .transaction-list {
   display: block;
   position: relative;
-  padding: 10px;
+ // padding: 10px;
   box-sizing: border-box;
   // overflow: hidden;
-  height: 485px;
-
+ // height: 485px;
+ max-height: 475px;
+ overflow: hidden;
   div, span {
       box-sizing: border-box;
   }
 
   .transaction-list-item {
       display: block;
-      position: absolute;
-      left: 5px;
-      top: 0px;
-      right: 5px;
-      height: 80px;
-      margin: 12px 5px;
+      margin: 20px 2px;
 
-      -webkit-transition: top 250ms ease-out;
-      -moz-transition: top 250ms ease-out;
-      -ms-transition: top 250ms ease-out;
-      -o-transition: top 250ms ease-out;
-      transition: top 250ms ease-out;
-      
-			&[data-pos="-5"] {
-					top: -475px;
-			}
-					
-			&[data-pos="-4"] {
-					top: -380px;
-			}
-			
-			&[data-pos="-3"] {
-					top: -285px;
-			}
-
-      &[data-pos="-2"] {
-          top: -190px;
-      }
-
-      &[data-pos="-1"] {
-          top: -95px;
-			}
-			
-      &[data-pos="0"] {
-				z-index: 60;
-				top: 0px;
-      }
-			
-      &[data-pos="1"] {
-        z-index: 50;
-				top: 95px;
-      }
-
-      &[data-pos="2"] {
-          z-index: 40;
-          top: 190px;
-      }
-
-      &[data-pos="3"] {
-          z-index: 30;
-          top: 285px;
-      }
-
-      &[data-pos="4"] {
-          z-index: 20;
-          top: 380px;
-      }
-
-      &[data-pos="5"] {
-          z-index: 10;
-          top: 475px;
-      }
-
-      &[data-pos="6"], &[data-pos="7"], &[data-pos="8"], &[data-pos="9"]{
-          z-index: 9;
-          top: 570px;
-      }
-
+        .coin-icon{
+            position: relative;
+            width:100px;
+        }
       .inner {
-          display: block;
-          // position: absolute;
-          // left: 5px;
-          // top: 0px;
-          // right: 5px;
+          display: flex;
+          cursor: pointer;
           height: 100%;
           border-radius: 5px;
-          box-shadow: 0px 0px 5px rgba(0,0,0,.5);
-          padding: 16px;
+          border:1px solid #eee;
+          padding: 12px;
           background-color: #fff;
           background-image: url('../img/transaction-list-item-bg.png');
           background-size: cover;
           background-position: center;
-          -webkit-transition: all 300ms ease-in;
-          -moz-transition: all 300ms ease-in;
-          -ms-transition: all 300ms ease-in;
-          -o-transition: all 300ms ease-in;
-          transition: all 300ms ease-in;
+          &:hover{
+            border:1px solid #ccc;
+          }
 
           .coin {
               display: block;
-              position: absolute;
-              left: 16px;
-              top: 50%;
-              margin-top: -22px;
-              width: 45px;
-              height: 45px;
+               position: absolute;
+              width: 40px;
+              height: 40px;
               border-radius: 50%;
               background-size: cover;
               background-position: center;
-              z-index: 2;
-              -webkit-transition: all 400ms ease-out;
-              -moz-transition: all 400ms ease-out;
-              -ms-transition: all 400ms ease-out;
-              -o-transition: all 400ms ease-out;
-              transition: all 400ms ease-out;
 
               &.coin2 {
-                  left: 50px;
+                  left: 35px;
                   z-index: 1;
-                  -webkit-transition: all 400ms 100ms ease-out;
-                  -moz-transition: all 400ms 100ms ease-out;
-                  -ms-transition: all 400ms 100ms ease-out;
-                  -o-transition: all 400ms 100ms ease-out;
-                  transition: all 400ms 100ms ease-out;
               }
           }
 
           .titles {
               display: block;
-              position: absolute;
-              left: 150px;
-              right: 16px;
-              top: 16px;
-              bottom: 16px;
-              -webkit-transition: all 400ms 150ms ease-out;
-              -moz-transition: all 400ms 150ms ease-out;
-              -ms-transition: all 400ms 150ms ease-out;
-              -o-transition: all 400ms 150ms ease-out;
-              transition: all 400ms 150ms ease-out;
 
               .rate {
                   display: inline-block;
-                  font-size: 26px;
+                  font-size: 24px;
                   font-weight: bold;
                   color: #484647;
                   vertical-align: bottom;
@@ -157,7 +67,7 @@
 
               .coins {
                   display: inline-block;
-                  font-size: 18px;
+                  font-size: 16px;
                   font-weight: normal;
                   color: #484647;
                   vertical-align: bottom;
@@ -173,30 +83,24 @@
               }
           }
       }
-
-      &.init {
-
-          .inner {
-              opacity: 0;
-              -webkit-transform: scale(0.9, 0.9) translateY(-20px);
-              transform: scale(0.9, 0.9) translateY(-20px);
-
-              .coin {
-                  -webkit-transform: translateX(50px);
-                  -moz-transform: translateX(50px);
-                  -ms-transform: translateX(50px);
-                  -o-transform: translateX(50px);
-                  transform: translateX(50px);
-              }
-
-              .titles {
-                  -webkit-transform: translateX(-50px);
-                  -moz-transform: translateX(-50px);
-                  -ms-transform: translateX(-50px);
-                  -o-transform: translateX(-50px);
-                  transform: translateX(-50px);
-              }
-          }
-      }
   }
 }
+
+
+.example-enter {
+   opacity: 0.01;
+  }
+  
+  .example-enter.example-enter-active {
+    opacity: 1;
+    transition: opacity 1000ms;
+  }
+  
+  .example-leave {
+    opacity: 1;
+  }
+  
+  .example-leave.example-leave-active {
+    opacity: 0.01;
+    transition: opacity 1000ms;
+  }

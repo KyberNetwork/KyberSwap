@@ -201,7 +201,7 @@ describe('Test approveTx function', () => {
                 "account": {
                     "address": "0x12f0453c1947269842c5646df98905533c1b9519", "avatar": "", "balance": 0, "keystring": "", "manualNonce": 0, "nonce": 0, "type": "keystore"
                 },
-                "accountType": "keystore", "ethereum": undefined, "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "nonce": 0, "password": undefined, "sourceAmount": "0x16345785d8a0000", "sourceToken": undefined
+                "accountType": "keystore", "ethereum": store.getState().connection.ethereum, "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "nonce": 0, "password": undefined, "sourceAmount": "0x16345785d8a0000", "sourceToken": undefined
             }
         });
     })
@@ -297,6 +297,24 @@ describe('Submit exchange', () => {
         });
     })
 
+    it('Submit by Metamask', () => {
+        store.getState().exchange.step = 2;
+        store.getState().account.account.type = 'metamask';
+        store.getState().exchange.sourceTokenSymbol = 'ETH';
+        const postExchange = shallow(
+            <PostExchange store={store} />
+        ).dive();
+
+        const postExchangeBtn = shallow(
+            <PostExchangeBtn submit={postExchange.instance().clickExchange} />
+        );
+
+        postExchangeBtn.find('.submit').simulate('click');
+        expect(store.dispatch).toHaveBeenCalledWith({
+            type: 'EXCHANGE.SHOW_CONFIRM',
+        });
+    })
+
     it('Submit by device, token is not ETH', () => {
         store.getState().exchange.step = 2;
         store.getState().account.account.type = 'trezor';
@@ -312,16 +330,7 @@ describe('Submit exchange', () => {
         postExchangeBtn.find('.submit').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET',
-            payload: {
-                "account": {
-                    "address": "0x12f0453c1947269842c5646df98905533c1b9519", "avatar": "", "balance": 0, "keystring": "", "manualNonce": 0, "nonce": 0, "type": "trezor"
-                }, 
-                "address": "0x12f0453c1947269842c5646df98905533c1b9519", 
-                "data": {
-                    "destAmount": "", "destTokenSymbol": "OMG", "sourceAmount": "0.1", "sourceTokenSymbol": "OMG"
-                }, 
-                "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519", "destToken": undefined, "ethereum": undefined, "formId": "exchange", "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "maxDestAmount": "0x5857a4", "minConversionRate": "0x23c46ca46a93f76b8", "nonce": 0, "password": "", "sourceAmount": "0x5f5e100", "sourceToken": undefined, "throwOnFailure": undefined, "type": "trezor"
-            }
+            payload: { "account": { "address": "0x12f0453c1947269842c5646df98905533c1b9519", "avatar": "", "balance": 0, "keystring": "", "manualNonce": 0, "nonce": 0, "type": "trezor" }, "address": "0x12f0453c1947269842c5646df98905533c1b9519", "data": { "destAmount": "", "destTokenSymbol": "OMG", "sourceAmount": "0.1", "sourceTokenSymbol": "OMG" }, "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519", "destToken": undefined, "ethereum": store.getState().connection.ethereum, "formId": "exchange", "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "maxDestAmount": "0x8000000000000000000000000000000000000000000000000000000000000000", "minConversionRate": "0x23c46ca46a93f76b8", "nonce": 0, "password": "", "sourceAmount": "0x5f5e100", "sourceToken": undefined, "throwOnFailure": undefined, "type": "trezor" }
         });
     })
 });
@@ -437,16 +446,7 @@ describe('Proccess transaction', () => {
         passphraseModal.find('.process-submit').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.PROCESS_EXCHANGE',
-            payload: {
-                "account": {
-                    "address": "0x12f0453c1947269842c5646df98905533c1b9519", "avatar": "", "balance": 0, "keystring": "", "manualNonce": 0, "nonce": 0, "type": "keystore"
-                },
-                "address": "0x12f0453c1947269842c5646df98905533c1b9519",
-                "data": {
-                    "destAmount": "", "destTokenSymbol": "OMG", "sourceAmount": "0.1", "sourceTokenSymbol": "ETH"
-                },
-                "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519", "destToken": undefined, "ethereum": undefined, "formId": "exchange", "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "maxDestAmount": "0x5857a4", "minConversionRate": "0x23c46ca46a93f76b8", "nonce": 0, "password": "", "sourceAmount": "0x16345785d8a0000", "sourceToken": undefined, "throwOnFailure": undefined, "type": "keystore"
-            }
+            payload: { "account": { "address": "0x12f0453c1947269842c5646df98905533c1b9519", "avatar": "", "balance": 0, "keystring": "", "manualNonce": 0, "nonce": 0, "type": "keystore" }, "address": "0x12f0453c1947269842c5646df98905533c1b9519", "data": { "destAmount": "", "destTokenSymbol": "OMG", "sourceAmount": "0.1", "sourceTokenSymbol": "ETH" }, "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519", "destToken": undefined, "ethereum": store.getState().connection.ethereum, "formId": "exchange", "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "maxDestAmount": "0x8000000000000000000000000000000000000000000000000000000000000000", "minConversionRate": "0x23c46ca46a93f76b8", "nonce": 0, "password": "", "sourceAmount": "0x16345785d8a0000", "sourceToken": undefined, "throwOnFailure": undefined, "type": "keystore" }
         });
     })
 });
@@ -501,7 +501,7 @@ describe('Test formParams function', () => {
             "destToken": undefined,
             "gas": "0xf4240",
             "gasPrice": "0x4a817c800",
-            "maxDestAmount": "0x5857a4",
+            "maxDestAmount": "0x8000000000000000000000000000000000000000000000000000000000000000",
             "minConversionRate": "0x23c46ca46a93f76b8",
             "nonce": 0,
             "selectedAccount": "0x12f0453c1947269842c5646df98905533c1b9519",

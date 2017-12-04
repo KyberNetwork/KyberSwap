@@ -18,7 +18,7 @@ function tokens() {
                 name: "OmiseGO",
                 symbol: "OMG",
                 icon: "/assets/img/tokens/omg.svg",
-                address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                address: "0x1795b4560491c941c0635451f07332effe3ee7b3",
                 decimal: 9,
                 balance: new BigNumber(Math.pow(10, 18))
             }
@@ -35,10 +35,20 @@ function txs() {
 }
 
 function connection() {
-    return {}
+    return {
+        ethereum: {
+            call: () => {
+                return getBalance;
+            }
+        }
+    }
 }
 
-function account() {
+function getBalance(){
+    return Promise.resolve(0);
+}
+
+function account(state, action) {
     return {
         account: new Account(
             '0x12f0453c1947269842c5646df98905533c1b9519',

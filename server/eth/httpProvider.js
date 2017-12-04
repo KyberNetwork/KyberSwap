@@ -19,7 +19,7 @@ class HttpEthereumProvider extends BaseEthereumProvider {
     async subcribeNewBlock(callBack){        
         //callBack()
         while(true){
-          await this.delay(5000)
+          await this.delay(10000)
           callBack()
           //this.intervalID = setInterval(callBack, 10000)
         }

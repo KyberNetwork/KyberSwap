@@ -2,10 +2,24 @@ const sqlite3 = require('sqlite3').verbose()
 
 var fs = require('fs')
 var path = require('path')
-const filePath = path.join(__dirname, 'store.db')
 var config = require("../configure")
+var constants = require("../../../src/js/services/constants")
 
+var filePath
 
+var dbName = process.env.npm_config_chain
+//console.log("db name: " + dbName)
+switch(dbName){
+  case "kovan":
+    filePath = path.join(__dirname, 'kovan.db')
+    break
+  case "mainnet":
+    filePath = path.join(__dirname, 'mainnet.db')
+    break
+  default:
+    filePath = path.join(__dirname, 'temp.db')
+    break
+}
 
 class SqlitePersist {
   constructor() {
@@ -27,7 +41,9 @@ class SqlitePersist {
           }
         })
       })
-      
+      var stmt = this.db.prepare("UPDATE configure set frequency =?, rangeFetch =? WHERE id = 1")
+      stmt.run(config.frequency, config.rangeFetch);
+      stmt.finalize()
     } else {
       var _this = this
       this.db = new sqlite3.Database(filePath)
@@ -39,7 +55,7 @@ class SqlitePersist {
         stmt.finalize()
 
         _this.db.run("CREATE TABLE logs (id INTEGER PRIMARY KEY, actualDestAmount TEXT, actualSrcAmount TEXT, dest TEXT, source TEXT, sender TEXT, blockNumber INT, txHash TEXT, status TEXT)")
-        
+
         // create rate table
         _this.db.run("CREATE TABLE rates (id INTEGER PRIMARY KEY, source TEXT, dest TEXT, rate TEXT, expBlock TEXT, balance TEXT)")
       })
@@ -112,7 +128,7 @@ class SqlitePersist {
           reject(err.message)
         } else {
           if (row) {
-            console.log(`highest block: ${row.blockNumber}`)
+            //console.log(`highest block: ${row.blockNumber}`)
             resolve(row.blockNumber)
           } else {
             resolve(0)
@@ -132,7 +148,7 @@ class SqlitePersist {
           reject(err.message)
         } else {
           resolve(count)
-          console.log(`Count updated: ${count}`)
+          //console.log(`Count updated: ${count}`)
         }
       })
     })
@@ -147,7 +163,7 @@ class SqlitePersist {
           reject(err.message)
         } else {
           resolve(block)
-          console.log(`block updated: ${block}`)
+         // console.log(`block updated: ${block}`)
         }
       })
     })
@@ -174,9 +190,9 @@ class SqlitePersist {
           console.log(err)
           reject(err.message)
         } else {
-          if(maxId){
-            var toID = maxId.id - page * itemPerPage > 0 ? maxId.id  - page * itemPerPage : 0
-            var fromId = maxId.id - (page + 1) * itemPerPage > 0 ? maxId.id  - (page + 1) * itemPerPage : 0
+          if (maxId) {
+            var toID = maxId.id - page * itemPerPage > 0 ? maxId.id - page * itemPerPage : 0
+            var fromId = maxId.id - (page + 1) * itemPerPage > 0 ? maxId.id - (page + 1) * itemPerPage : 0
             sql = "SELECT * FROM logs WHERE id >= ? AND id <= ?"
             _this.db.all(sql, [fromId, toID], function (err, rows) {
               if (err) {
@@ -186,16 +202,16 @@ class SqlitePersist {
                 resolve(rows.reverse())
               }
             })
-          }else{
+          } else {
             resolve([])
           }
-          
+
         }
       })
     })
   }
 
-  getEventsFromEth(page, itemPerPage){
+  getEventsFromEth(page, itemPerPage) {
     return new Promise((resolve, reject) => {
       var sql = "SELECT * FROM logs WHERE source = ? ORDER BY blockNumber DESC LIMIT ?"
       this.db.all(sql, ["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", itemPerPage], function (err, rows) {
@@ -209,7 +225,7 @@ class SqlitePersist {
     })
   }
 
-  getEventsFromToken(page, itemPerPage){
+  getEventsFromToken(page, itemPerPage) {
     return new Promise((resolve, reject) => {
       var sql = "SELECT * FROM logs WHERE dest = ? ORDER BY blockNumber DESC LIMIT ?"
       this.db.all(sql, ["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", itemPerPage], function (err, rows) {
@@ -257,7 +273,7 @@ class SqlitePersist {
                 reject(err.message)
               } else {
                 resolve(blockNumber)
-                console.log(`latestBlock updated: ${blockNumber}`)
+               // console.log(`latestBlock updated: ${blockNumber}`)
               }
             })
           }
@@ -301,24 +317,27 @@ class SqlitePersist {
     })
   }
 
-  saveRate(rates){
+  saveRate(rates) {
 
     return new Promise((resolve, reject) => {
       rates.forEach((rate) => {
-        let stmt = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, expBlock, balance) VALUES ((
+        if ((rate[2] && rate[2].rate !== '0') || (rate[0] == constants.ETH.symbol && rate[1] == constants.ETH.symbol)) {
+          let stmt = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, expBlock, balance) VALUES ((
           SELECT id FROM rates WHERE source = ? AND dest = ?
         ),?,?,?,?,?)`)
-        stmt.run(rate[0], rate[1], rate[0], rate[1], rate[2].rate, rate[2].expBlock, rate[2].balance);
-        stmt.finalize()
-        let stmt2 = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, expBlock, balance) VALUES ((
+          stmt.run(rate[0], rate[1], rate[0], rate[1], rate[2].rate, rate[2].expBlock, rate[2].balance);
+          stmt.finalize()
+        }
+        if ((rate[3] && rate[3].rate !== '0') || (rate[0] == constants.ETH.symbol && rate[1] == constants.ETH.symbol)) {
+          let stmt2 = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, expBlock, balance) VALUES ((
           SELECT id FROM rates WHERE source = ? AND dest = ?
         ), ?,?,?,?,?)`)
-        stmt2.run(rate[1], rate[0], rate[1], rate[0], rate[3].rate, rate[3].expBlock, rate[3].balance);
-        stmt2.finalize()
+          stmt2.run(rate[1], rate[0], rate[1], rate[0], rate[3].rate, rate[3].expBlock, rate[3].balance);
+          stmt2.finalize()
+        }
       })
-      
       resolve(rates)
-      console.log("all rate is inserted");
+      //console.log("all rate is inserted");
     })
   }
 
