@@ -1,13 +1,30 @@
 #import-account, #info{
     & ~ .history{
-        background: url(/assets/img/icons.svg) no-repeat;
-        margin-top: 150px;
+        background: url(/assets/img/icons.svg) no-repeat -40px 50px;
+        margin-top: -110px;
         position: relative;
+        @media screen and(min-width: 1024px) {
+            margin-top: -240px;
+        }
+        @media screen and(min-width: 1440px) {
+            margin-top: -320px;
+        }
     }
 } 
 .history{
     background: $body-background;
+    animation: show 1s;
 }
+@-webkit-keyframes show {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes show {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
+
 .absolute{
     position: absolute;
 }
