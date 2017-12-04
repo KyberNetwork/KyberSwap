@@ -14,15 +14,20 @@ class SqlitePersist {
 
   initStore() {
     if (fs.existsSync(filePath)) {
-      this.db = new sqlite3.Database(filePath, (err) => {
-        if (err) {
-          return console.error(err.message)
-        }
-        console.log('Connected to the store.db SQlite database.');
+      this.db = new sqlite3.Database(filePath)
+      var _this = this
+      this.db.serialize(function () {
+        var sql = `UPDATE configure SET frequency = ?, rangeFetch = ? WHERE id = ?`
+        _this.db.run(sql, [config.frequency, config.rangeFetch, 1], (err, row) => {
+          if (err) {
+            console.log(err)
+            //reject(err.message)
+          } else {
+             console.log("Update range fetch and frequency")
+          }
+        })
       })
-      var stmt = this.db.prepare("UPDATE configure set frequency =? AND rangeFetch =? WHERE id = 1")
-      stmt.run(config.frequency, config.rangeFetch);
-      stmt.finalize()
+      
     } else {
       var _this = this
       this.db = new sqlite3.Database(filePath)
