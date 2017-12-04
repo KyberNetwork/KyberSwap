@@ -32,7 +32,7 @@ const ImportAccountView = (props) => {
         </div>
         {props.errorModal}
       </div>
-      <img src="/assets/img/bg-wave.png" class="absolute" />
+      <img src="/assets/img/bg-wave.png"/>
     </div>
   )
 }
