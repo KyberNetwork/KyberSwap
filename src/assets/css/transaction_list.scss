@@ -1,5 +1,15 @@
+#import-account, #info{
+    & ~ .history{
+        background: url(/assets/img/icons.svg) no-repeat;
+        margin-top: 150px;
+        position: relative;
+    }
+} 
 .history{
-    background-color: $body-background;
+    background: $body-background;
+}
+.absolute{
+    position: absolute;
 }
 .transaction-list {
   display: block;
@@ -22,7 +32,7 @@
             position: relative;
             width:100px;
         }
-      .inner {
+        .inner {
           display: flex;
           cursor: pointer;
           height: 100%;
@@ -54,7 +64,7 @@
 
           .titles {
               display: block;
-
+              margin-left: 12%;
               .rate {
                   display: inline-block;
                   font-size: 24px;
