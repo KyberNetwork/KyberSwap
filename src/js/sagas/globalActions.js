@@ -4,6 +4,8 @@ import { fetchRatePromise } from "../services/rate"
 import { Rate, updateAllRatePromise } from "../services/rate"
 import { push } from 'react-router-redux';
 import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
+import localForage from 'localforage'
+import { store } from "../store"
 
 export function* getLatestBlock(action) {
   const ethereum = action.payload
@@ -56,14 +58,18 @@ export function* updateAllRate(action) {
 export function* changelanguage(action){
   const { ethereum, lang } = action.payload
   try{
-    const languagePack = yield call(ethereum.call("getLanguagePack"), lang)
-    yield put.sync(addTranslationForLanguage(languagePack, lang))
+    var state = store.getState()
+    if(!state.locale || ! state.locale.translations|| !state.locale.translations["pack.0"] || state.locale.translations["pack.0"].indexOf(lang) < 0 ){
+      const languagePack = yield call(ethereum.call("getLanguagePack"), lang)
+      if(!languagePack) return;
+      yield put.sync(addTranslationForLanguage(languagePack, lang))
+      localForage.setItem('activeLanguageData', languagePack)
+    }
     yield put(setActiveLanguage(lang))
+    localForage.setItem('activeLanguage', lang)
   } catch(err){
-    console.log("++++++ get language pack err")
     console.log(err)
   }
-  
 }
 
 export function* watchGlobal() {

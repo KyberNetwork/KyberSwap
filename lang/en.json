@@ -1,4 +1,5 @@
 {
+  "pack": ["en"],
   "layout": {
     "info": ["Info"],
     "terms_of_service": ["Terms of Service"],

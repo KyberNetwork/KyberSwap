@@ -8,8 +8,9 @@ import reducer from "./reducers/index"
 import history from "./history"
 import { routerMiddleware } from 'react-router-redux'
 
-import { initialize, addTranslation, addTranslationForLanguage } from 'react-localize-redux';
+import { initialize, addTranslation, addTranslationForLanguage, setActiveLanguage } from 'react-localize-redux';
 import rootSaga from './sagas'
+import localForage from 'localforage'
 
 const en = require("../../lang/en.json")
 
@@ -43,8 +44,18 @@ store.dispatch(initialize(languages, {
   showMissingTranslationMsg: false,
   defaultLanguage: 'en' 
 }));
-
 store.dispatch(addTranslationForLanguage(en, 'en'));
+
+// check selected language pack from localForage
+Promise.all([
+  localForage.getItem('activeLanguage'),
+  localForage.getItem('activeLanguageData')
+]).then((result) => {
+  if(result[0] !== 'en' && result[0] && result[1]){
+    store.dispatch(addTranslationForLanguage(result[1], result[0]));
+    store.dispatch(setActiveLanguage(result[0]))
+  }
+})
 
 const persistor =  persistStore(store)
 

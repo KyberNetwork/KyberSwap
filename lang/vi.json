@@ -1,4 +1,5 @@
 {
+  "pack": ["vi"],
   "layout": {
     "info": ["Thông tin"],
     "terms_of_service": ["Điều khoản dịch vụ"],
