@@ -29,13 +29,18 @@ const LayoutView = (props) => {
           <div class="row">
             <div class="column">
               <ul class="links">
-                <li><Link to="/info" onClick={() => scrollTop()}>Info</Link></li>
-                <li><Link to="#">Terms of Service</Link></li>
-                <li><Link to="#">Privacy Policies</Link></li>
+                <li><Link to="/info" onClick={() => scrollTop()}>{props.translate("layout.info") ? props.translate("layout.info") : 'Info'}</Link></li>
+                <li><Link to="#">{props.translate("layout.terms_of_service") ? props.translate("layout.terms_of_service") : "Terms of Service"}</Link></li>
+                <li><Link to="#">{props.translate("layout.privacy_policies") ? props.translate("layout.privacy_policies") : "Privacy Policies"}</Link></li>
               </ul>
             </div>
           </div>
         </section>
+        <ul>
+          { props.supportedLanguages.map(language => 
+            <li key={language}><button onClick={()=>{props.setActiveLanguage(language)} }>{ language }</button></li>
+          )}
+        </ul>
       </div> 
     </ConnectedRouter> 
   )

@@ -27,6 +27,7 @@
     "react": "^16.1.0",
     "react-dom": "^16.1.0",
     "react-dropzone": "^4.2.1",
+    "react-localize-redux": "^2.13.7",
     "react-modal": "^3.1.0",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",

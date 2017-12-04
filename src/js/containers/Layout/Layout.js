@@ -24,7 +24,9 @@ import { setConnection } from "../../actions/connectionActions"
 
 import { default as _ } from 'underscore';
 import { LayoutView } from "../../components/Layout"
+import { getTranslate, getActiveLanguage } from 'react-localize-redux';
 
+const supportedLanguages = ['en', 'vi', 'fr']
 
 @connect((store) => {
   return {
@@ -32,7 +34,9 @@ import { LayoutView } from "../../components/Layout"
     currentBlock: store.global.currentBlock,
     connected: store.global.connected,
     utils: store.utils,
-    account: store.account
+    account: store.account,
+    translate: getTranslate(store.locale),
+    // currentLanguage: getActiveLanguage(store.locale).code
   }
 })
 
@@ -78,6 +82,11 @@ export default class Layout extends React.Component {
     this.props.dispatch(clearSession());
   }
 
+  setActiveLanguage(language){
+    console.log("++++++++++++++++++")
+    console.log(language)
+  }
+
   render() {
     //var exchangeHistory = <ExchangeHistory />
     var exchangeHistory = <TransactionList />
@@ -90,6 +99,9 @@ export default class Layout extends React.Component {
         Exchange={Exchange}
         Transfer={Transfer}
         exchangeHistory = {exchangeHistory}
+        supportedLanguages = {supportedLanguages}
+        setActiveLanguage={this.setActiveLanguage}
+        translate={this.props.translate}
       />
     )
   }
