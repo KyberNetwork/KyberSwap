@@ -160,9 +160,15 @@ a.has-tip {
     border-bottom-color: $dark-gray;
   }
 }
-
+$bg-from: #e9f6ec 30%;
+$bg-to: #def3ee 90%;
+$bg-end: #e4f6ef;
 .frame {
-  background-color: #ECF6F4;
+  background: $bg-from;
+  background: -webkit-linear-gradient(left, $bg-from , $bg-to, $bg-end);
+  background: -o-linear-gradient(left, $bg-from , $bg-to, $bg-end);
+  background: -moz-linear-gradient(left, $bg-from , $bg-to, $bg-end);
+  background: linear-gradient(left, $bg-from , $bg-to, $bg-end);
   padding: 30px 0;
   margin-bottom: 30px;
   @include breakpoint(medium) {
