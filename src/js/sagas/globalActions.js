@@ -3,6 +3,7 @@ import * as actions from '../actions/globalActions'
 import { fetchRatePromise } from "../services/rate"
 import { Rate, updateAllRatePromise } from "../services/rate"
 import { push } from 'react-router-redux';
+import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
 
 export function* getLatestBlock(action) {
   const ethereum = action.payload
@@ -52,6 +53,19 @@ export function* updateAllRate(action) {
   yield put(actions.updateAllRateComplete(rates, isUpdateBalance))
 }
 
+export function* changelanguage(action){
+  const { ethereum, lang } = action.payload
+  try{
+    const languagePack = yield call(ethereum.call("getLanguagePack"), lang)
+    yield put.sync(addTranslationForLanguage(languagePack, lang))
+    yield put(setActiveLanguage(lang))
+  } catch(err){
+    console.log("++++++ get language pack err")
+    console.log(err)
+  }
+  
+}
+
 export function* watchGlobal() {
   yield takeEvery("GLOBAL.NEW_BLOCK_INCLUDED_PENDING", getLatestBlock)
   yield takeEvery("GLOBAL.RATE_UPDATED_PENDING", updateRate)
@@ -59,6 +73,7 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.CLEAR_SESSION", clearSession)
   yield takeEvery("GLOBAL.RATE_UPDATE_ALL_PENDING", updateAllRate)
   yield takeEvery("GLOBAL.UPDATE_HISTORY_EXCHANGE", updateHistoryExchange)
+  yield takeEvery("GLOBAL.CHANGE_LANGUAGE", changelanguage)
 }
 
 

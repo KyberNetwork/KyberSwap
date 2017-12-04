@@ -18,7 +18,7 @@ import constanst from "../../services/constants"
 import { createNewConnection } from "../../services/ethereum/connection"
 
 import history from "../../history"
-import { clearSession } from "../../actions/globalActions"
+import { clearSession, changeLanguage } from "../../actions/globalActions"
 import { openInfoModal } from "../../actions/utilActions"
 import { setConnection } from "../../actions/connectionActions"
 
@@ -82,9 +82,8 @@ export default class Layout extends React.Component {
     this.props.dispatch(clearSession());
   }
 
-  setActiveLanguage(language){
-    console.log("++++++++++++++++++")
-    console.log(language)
+  setActiveLanguage = (language) => {
+    this.props.dispatch(changeLanguage(this.props.ethereumNode, language))
   }
 
   render() {

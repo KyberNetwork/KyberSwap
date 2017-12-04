@@ -8,12 +8,12 @@ import reducer from "./reducers/index"
 import history from "./history"
 import { routerMiddleware } from 'react-router-redux'
 
-import { initialize, addTranslation } from 'react-localize-redux';
+import { initialize, addTranslation, addTranslationForLanguage } from 'react-localize-redux';
 import rootSaga from './sagas'
 
-const en = require("../../lang/vi.json")
+const en = require("../../lang/en.json")
 
-const languages = ['en', 'fr', 'es'];
+const languages = ['en', 'vi', 'fr'];
 
 const routeMiddleware = routerMiddleware(history)
 
@@ -38,9 +38,13 @@ const onMissingTranslation = (key, languageCode) => {
   console.log(languageCode)
 };
 
-store.dispatch(initialize(languages, { missingTranslationCallback: onMissingTranslation, showMissingTranslationMsg: false }));
+store.dispatch(initialize(languages, { 
+  missingTranslationCallback: onMissingTranslation, 
+  showMissingTranslationMsg: false,
+  defaultLanguage: 'en' 
+}));
 
-store.dispatch(addTranslation(en));
+store.dispatch(addTranslationForLanguage(en, 'en'));
 
 const persistor =  persistStore(store)
 

@@ -29,9 +29,9 @@ const LayoutView = (props) => {
           <div class="row">
             <div class="column">
               <ul class="links">
-                <li><Link to="/info" onClick={() => scrollTop()}>{props.translate("layout.info") ? props.translate("layout.info") : 'Info'}</Link></li>
-                <li><Link to="#">{props.translate("layout.terms_of_service") ? props.translate("layout.terms_of_service") : "Terms of Service"}</Link></li>
-                <li><Link to="#">{props.translate("layout.privacy_policies") ? props.translate("layout.privacy_policies") : "Privacy Policies"}</Link></li>
+                <li><Link to="/info" onClick={() => scrollTop()}>{props.translate("layout.info.0") ? props.translate("layout.info.0") : 'Info'}</Link></li>
+                <li><Link to="#">{props.translate("layout.terms_of_service.0") ? props.translate("layout.terms_of_service.0") : "Terms of Service"}</Link></li>
+                <li><Link to="#">{props.translate("layout.privacy_policies.0") ? props.translate("layout.privacy_policies.0") : "Privacy Policies"}</Link></li>
               </ul>
             </div>
           </div>
@@ -40,6 +40,7 @@ const LayoutView = (props) => {
           { props.supportedLanguages.map(language => 
             <li key={language}><button onClick={()=>{props.setActiveLanguage(language)} }>{ language }</button></li>
           )}
+          <li key='abc'><button onClick={()=>{props.setActiveLanguage('abc')} }>abc</button></li>
         </ul>
       </div> 
     </ConnectedRouter> 
