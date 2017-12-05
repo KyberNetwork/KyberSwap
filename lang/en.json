@@ -33,6 +33,11 @@
     "next": "Next"
   },
 
+  "modal": {
+    "enter_password": "Enter Password",
+    "confirm": "Confirm"
+  },
+
   "error": {
     "select_same_token": "Cannot exchange the same token",
     "select_token_token": "This pair token is not supported",

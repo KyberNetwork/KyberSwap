@@ -87,7 +87,9 @@ export default class PostTransfer extends React.Component {
         onChange={this.changePassword}
         onClick={this.processTx}
         onCancel={this.closeModal}
-        passwordError={this.props.form.errors.passwordError || this.props.form.bcError} />
+        passwordError={this.props.form.errors.passwordError || this.props.form.bcError} 
+        translate={this.props.translate}
+      />
     )
   }
   contentConfirm = () => {

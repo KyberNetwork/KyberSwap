@@ -33,6 +33,12 @@
     "next": "Tiếp"
   },
 
+  "modal": {
+    "enter_password": "Nhập mật khẩu",
+    "confirm": "Confirm"
+  },
+
+
   "error": {
     "select_same_token": "Không thể đổi giữa hai token giống nhau",
     "select_token_token": "Cặp token này chưa được hỗ trợ",

@@ -215,7 +215,9 @@ export default class PostExchange extends React.Component {
         onChange={this.changePassword}
         onClick={this.processTx}
         onCancel={this.closeModal}
-        passwordError={this.props.form.errors.passwordError || this.props.form.bcError.message} />
+        passwordError={this.props.form.errors.passwordError || this.props.form.bcError.message} 
+        translate={this.props.translate}
+      />
     )
   }
   contentConfirm = () => {
