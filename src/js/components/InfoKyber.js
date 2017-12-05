@@ -27,7 +27,6 @@ export default class InfoKyber extends React.Component {
             </div>
           </div>
         </div>
-        <img src="/assets/img/bg-wave.png" />
       </div>
     )
   }
