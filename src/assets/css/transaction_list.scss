@@ -1,15 +1,24 @@
+#import-account, #info{
+    & ~ .history{
+        background-image: url(/assets/img/bg-wave.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        margin-top: -35px;
+        .frame{
+            padding-top: 100px;
+        }
+    }
+} 
 .history{
-    background-color: $body-background;
+    .frame{
+        background: url(/assets/img/icons.svg) no-repeat -40px 50px;
+    }
 }
+
 .transaction-list {
   display: block;
   position: relative;
- // padding: 10px;
   box-sizing: border-box;
-  // overflow: hidden;
- // height: 485px;
- max-height: 475px;
- overflow: hidden;
   div, span {
       box-sizing: border-box;
   }
@@ -22,7 +31,7 @@
             position: relative;
             width:100px;
         }
-      .inner {
+        .inner {
           display: flex;
           cursor: pointer;
           height: 100%;
@@ -54,7 +63,7 @@
 
           .titles {
               display: block;
-
+              margin-left: 12%;
               .rate {
                   display: inline-block;
                   font-size: 24px;

@@ -23,7 +23,7 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 10000;
+  z-index: 1000;
   &.pending{
     background-color: rgba($white, .3);
   }

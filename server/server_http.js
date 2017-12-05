@@ -27,7 +27,7 @@ function main() {
 main()
 
 
-app.post('/getRate', function (req, res) {
+app.get('/getRate', function (req, res) {
   res.writeHead(200, { 'Content-Type': 'text/html' });
   var event = persistor.getRate()
   event.then((result) => {
@@ -36,7 +36,7 @@ app.post('/getRate', function (req, res) {
 });
 
 
-app.post('/getHistory', function (req, res) {
+app.get('/getHistory', function (req, res) {
   res.writeHead(200, { 'Content-Type': 'text/html' })
   var page = req.body.page
   var itemPerpage = req.body.itemPerPage
@@ -46,10 +46,13 @@ app.post('/getHistory', function (req, res) {
   })
 })
 
-app.post('/getHistoryTwoColumn', function (req, res) {
+app.get('/getHistoryTwoColumn', function (req, res) {
   res.writeHead(200, { 'Content-Type': 'text/html' })
-  var page = req.body.page
-  var itemPerpage = req.body.itemPerPage
+  // var page = req.body.page
+  // var itemPerpage = req.body.itemPerPage
+  //console.log("x")
+  var page = 0
+  var itemPerpage = 5
   var eventEth = persistor.getEventsFromEth(page, itemPerpage)
   var eventToken = persistor.getEventsFromToken(page, itemPerpage)
   eventEth.then((resultEth) => {
@@ -58,7 +61,7 @@ app.post('/getHistoryTwoColumn', function (req, res) {
     })
   })
 })
-app.post('/countHistory', (req, res) => {
+app.get('/countHistory', (req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/html' });
   var event = persistor.countEvents()
   event.then((result) => {
@@ -66,7 +69,7 @@ app.post('/countHistory', (req, res) => {
   })
 })
 
-app.post('/getLatestBlock', (req, res) => {
+app.get('/getLatestBlock', (req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/html' });
   var event = persistor.getLatestBlock()
   event.then((result) => {
@@ -84,6 +87,6 @@ app.get('/getLanguagePack', (req, res) => {
   }
 })
 
-port = 3001
-app.listen(port)
-console.log('Listening at http://localhost:' + port)
+var port = process.env.npm_config_port? process.env.npm_config_port:3001
+app.listen(port, '0.0.0.0')
+console.log('Listening at http://0.0.0.0:' + port)

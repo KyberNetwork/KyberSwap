@@ -3,7 +3,7 @@
     "http": "https://kovan.infura.io/DtzEYY0Km2BA3YwyJcBG",
     "ws": "wss://kovan.kyber.network/ws/"
   },
-  "history_endpoint":"http://localhost:3001",
+  "history_endpoint":"http://0.0.0.0:3001",
   "tokens": {
     "ETH": {
       "name": "Ethereum",

@@ -8,7 +8,8 @@ const initState = {
   nodeName: "Infura Kovan",
   nodeURL: "https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi",
   history: constants.HISTORY_EXCHANGE,
-  count: {storageKey: constants.STORAGE_KEY}
+  count: {storageKey: constants.STORAGE_KEY},
+  conn_checker: constants.CONNECTION_CHECKER
 }
 
 const global = (state = initState, action) => {
@@ -64,6 +65,16 @@ const global = (state = initState, action) => {
 
       history.isFetching = false
       return Object.assign({}, state, { history: history })
+    }
+    case "GLOBAL.CONNECTION_UPDATE_IS_CHECK":{
+      var conn_checker = { ...state.conn_checker }
+      conn_checker.isCheck = action.payload
+      return Object.assign({}, state, { conn_checker: conn_checker })
+    }
+    case "GLOBAL.CONNECTION_UPDATE_COUNT":{
+      var conn_checker = { ...state.conn_checker }
+      conn_checker.count = action.payload
+      return Object.assign({}, state, { conn_checker: conn_checker })
     }
   }
   return state

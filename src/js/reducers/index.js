@@ -24,7 +24,8 @@ const appReducer = combineReducers({
   }, tokens),  
   global: persistReducer({
     key: 'global',
-    storage: localForage
+    storage: localForage,
+    blacklist: ['conn_checker']
   }, global),  
   locale: localeReducer
 })
