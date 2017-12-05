@@ -89,7 +89,7 @@ export function* importMetamask(action) {
     ))
   } catch (e) {
     console.log(e)
-    yield put(actions.throwError("Cannot connect to metamask"))
+    yield put(actions.throwError("Cannot get metamask account"))
   }
 }
 

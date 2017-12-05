@@ -7,7 +7,7 @@ export function createNewConnection() {
     var connectionInstance = new EthereumService({ default: 'http' })    
     store.dispatch(setConnection(connectionInstance))
     connectionInstance.subcribe()
-
+    return
     var connetionInterval = setInterval(() => {
         //check which connection is success
         var state = store.getState()
