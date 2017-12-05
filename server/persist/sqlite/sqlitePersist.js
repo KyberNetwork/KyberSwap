@@ -4,6 +4,7 @@ var fs = require('fs')
 var path = require('path')
 var config = require("../configure")
 var constants = require("../../../src/js/services/constants")
+var BLOCKCHAIN_INFO = require("../../../env")
 
 var filePath
 
@@ -58,6 +59,18 @@ class SqlitePersist {
 
         // create rate table
         _this.db.run("CREATE TABLE rates (id INTEGER PRIMARY KEY, source TEXT, dest TEXT, rate TEXT, expBlock TEXT, balance TEXT)")
+        /// init all rate first time
+      if(BLOCKCHAIN_INFO.tokens){
+          Object.keys(BLOCKCHAIN_INFO.tokens).map((token) => {
+            let stmt1 = _this.db.prepare(`INSERT INTO rates(source, dest, rate, expBlock, balance) VALUES (?,?,?,?,?)`)
+            stmt1.run(token, constants.ETH.symbol, 0, 0);
+            stmt1.finalize()
+
+            let stmt2 = _this.db.prepare(`INSERT INTO rates(source, dest, rate, expBlock, balance) VALUES (?,?,?,?,?)`)
+            stmt2.run(constants.ETH.symbol, token, 0, 0);
+            stmt2.finalize()
+          })
+        }
       })
     }
 
@@ -318,7 +331,6 @@ class SqlitePersist {
   }
 
   saveRate(rates) {
-
     return new Promise((resolve, reject) => {
       rates.forEach((rate) => {
         if ((rate[2] && rate[2].rate !== '0') || (rate[0] == constants.ETH.symbol && rate[1] == constants.ETH.symbol)) {
