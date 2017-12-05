@@ -13,12 +13,15 @@ import { anyErrors } from "../../utils/validators"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import * as exchangeActions from "../../actions/exchangeActions"
 import { randomForExchange } from "../../utils/random"
+import { getTranslate } from 'react-localize-redux';
+
 @connect((store) => {
   const ethereum = store.connection.ethereum
   const account = store.account
   const exchange = store.exchange
   const tokens = store.tokens.tokens
-  return { account, ethereum, exchange, tokens }
+  const translate = getTranslate(store.locale)
+  return { account, ethereum, exchange, tokens, translate }
 })
 
 
@@ -201,6 +204,7 @@ export default class Exchange extends React.Component {
         gasPriceError={this.props.exchange.errors.gasPriceError}
         gasError={this.props.exchange.errors.gasError}
         totalGas={gweiToEth(this.props.exchange.gas * this.props.exchange.gasPrice)}
+        translate={this.props.translate}
       />
     )
 
@@ -219,6 +223,7 @@ export default class Exchange extends React.Component {
         sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
         setAmount={this.setAmount}
         isSelectToken = {this.props.exchange.isSelectToken}
+        translate={this.props.translate}
       />
     )
   }

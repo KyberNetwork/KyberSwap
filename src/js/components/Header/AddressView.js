@@ -40,7 +40,7 @@ const Address = (props) => {
         <div class="text-right">
           <div class="user-bar">
             <Link to="/" className="button accent" style={{ marginRight: 20 }}>
-              Import Address
+              {props.translate("address.import_address") || "Import Address"}
               </Link>
           </div>
         </div>

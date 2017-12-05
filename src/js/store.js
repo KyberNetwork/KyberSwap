@@ -11,10 +11,10 @@ import { routerMiddleware } from 'react-router-redux'
 import { initialize, addTranslation, addTranslationForLanguage, setActiveLanguage } from 'react-localize-redux';
 import rootSaga from './sagas'
 import localForage from 'localforage'
+import Language from "../../lang"
+const defaultLanguagePack = require("../../lang/" + Language.defaultLanguage + ".json")
 
-const en = require("../../lang/en.json")
-
-const languages = ['en', 'vi', 'fr'];
+const languages = Language.supportLanguage;
 
 const routeMiddleware = routerMiddleware(history)
 
@@ -44,14 +44,14 @@ store.dispatch(initialize(languages, {
   showMissingTranslationMsg: false,
   defaultLanguage: 'en' 
 }));
-store.dispatch(addTranslationForLanguage(en, 'en'));
+store.dispatch(addTranslationForLanguage(defaultLanguagePack, Language.defaultLanguage));
 
 // check selected language pack from localForage
 Promise.all([
   localForage.getItem('activeLanguage'),
   localForage.getItem('activeLanguageData')
 ]).then((result) => {
-  if(result[0] !== 'en' && result[0] && result[1]){
+  if(result[0] !== Language.defaultLanguage && result[0] && result[1]){
     store.dispatch(addTranslationForLanguage(result[1], result[0]));
     store.dispatch(setActiveLanguage(result[0]))
   }

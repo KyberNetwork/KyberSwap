@@ -11,6 +11,7 @@ import * as transferActions from "../../actions/transferActions"
 import { PassphraseModal, ConfirmTransferModal, PostTransferBtn } from "../../components/Transaction"
 
 import { Modal } from "../../components/CommonElement"
+import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
   const tokens = store.tokens.tokens
@@ -26,7 +27,8 @@ import { Modal } from "../../components/CommonElement"
     transfer: store.transfer,
     form: { ...store.transfer, balance, decimal },
     ethereum: store.connection.ethereum,
-    keyService: props.keyService
+    keyService: props.keyService,
+    translate: getTranslate(store.locale)
   };
 
 })
@@ -205,6 +207,7 @@ export default class PostTransfer extends React.Component {
         submit={this.clickTransfer} 
         accountType = {this.props.account.type}
         isConfirming={this.props.form.isConfirming}
+        translate={this.props.translate}
       />
     )
   }

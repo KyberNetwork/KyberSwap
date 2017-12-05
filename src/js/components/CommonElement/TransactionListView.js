@@ -102,7 +102,7 @@ const TransactionListView = (props) => {
     <div className="frame history">
       <div className="row">
         <div class="column small-11 large-12 small-centered">
-          <h1 className="title">TRANSACTION HISTORY</h1>
+          <h1 className="title">{props.translate("transaction_list.transaction_history") || "TRANSACTION HISTORY"}</h1>
           <div className="row">
             <div className="small-12 medium-6 large-6 column">
               <span>ETH/TOKEN</span>

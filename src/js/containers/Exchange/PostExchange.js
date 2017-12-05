@@ -8,6 +8,7 @@ import * as exchangeActions from "../../actions/exchangeActions"
 
 import { Modal } from "../../components/CommonElement"
 import { PassphraseModal, ConfirmTransferModal, ApproveModal, PostExchangeBtn } from "../../components/Transaction"
+import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
@@ -29,7 +30,8 @@ import { PassphraseModal, ConfirmTransferModal, ApproveModal, PostExchangeBtn } 
     form: { ...store.exchange, sourceBalance, sourceDecimal, destDecimal },
     account: store.account.account,
     ethereum: store.connection.ethereum,
-    keyService: props.keyService
+    keyService: props.keyService,
+    translate: getTranslate(store.locale),
   }
 })
 
@@ -276,6 +278,7 @@ export default class PostExchange extends React.Component {
         accountType = {this.props.account.type}
         isConfirming={this.props.form.isConfirming}
         isApproving={this.props.form.isApproving}
+        translate={this.props.translate}
       />
     )
   }

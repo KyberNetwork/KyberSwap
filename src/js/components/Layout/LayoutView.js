@@ -29,9 +29,9 @@ const LayoutView = (props) => {
           <div class="row">
             <div class="column">
               <ul class="links">
-                <li><Link to="/info" onClick={() => scrollTop()}>{props.translate("layout.info.0") || 'Info'}</Link></li>
-                <li><Link to="#">{props.translate("layout.terms_of_service.0") || "Terms of Service"}</Link></li>
-                <li><Link to="#">{props.translate("layout.privacy_policies.0") || "Privacy Policies"}</Link></li>
+                <li><Link to="/info" onClick={() => scrollTop()}>{props.translate("layout.info") || 'Info'}</Link></li>
+                <li><Link to="#">{props.translate("layout.terms_of_service") || "Terms of Service"}</Link></li>
+                <li><Link to="#">{props.translate("layout.privacy_policies") || "Privacy Policies"}</Link></li>
               </ul>
             </div>
           </div>

@@ -1,8 +1,44 @@
 {
-  "pack": ["vi"],
+  "pack": "vi",
   "layout": {
-    "info": ["Thông tin"],
-    "terms_of_service": ["Điều khoản dịch vụ"],
-    "privacy_policies": ["Chính sách bảo mật"]
+    "info": "Thông tin",
+    "terms_of_service": "Điều khoản dịch vụ",
+    "privacy_policies": "Chính sách bảo mật"
+  },
+
+  "transaction_list": {
+    "transaction_history": "LỊCH SỬ GIAO DỊCH"
+  },
+
+  "address": {
+    "import_address": "Nhập địa chỉ"
+  },
+
+  "trasaction": {
+    "exchange": "TRAO ĐỔI",
+    "exchange_from": "ĐỔI TỪ",
+    "exchange_to": "ĐỔI SANG",
+
+    "transfer": "CHUYỂN KHOẢN",
+    "transfer_to_address": "CHUYỂN ĐẾN ĐỊA CHỈ",
+    "amount": "SỐ LƯỢNG",
+
+    "advanced": "NÂNG CAO",
+    "transaction_fee": "PHÍ GIAO DỊCH",
+
+    "address_balance": "Số dư địa chỉ",
+    "password_needed_exchange": "Mật khẩu cần thiết cho mỗi giao dịch",
+
+    "password_needed_transfer": "Mật khẩu cần thiết cho mỗi giao dịch",
+    "next": "Tiếp"
+  },
+
+  "error": {
+    "select_same_token": "Không thể đổi giữa hai token giống nhau",
+    "select_token_token": "Cặp token này chưa được hỗ trợ",
+    "source_amount_too_high": "Số lượng chuyển quá lớn",
+
+    "dest_address": "Địa chỉ không hợp lệ",
+    "amount_transfer_too_hign": "Số lượng quá lớn"
   }
 }
