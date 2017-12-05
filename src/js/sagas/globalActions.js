@@ -60,7 +60,7 @@ export function* changelanguage(action){
   const { ethereum, lang } = action.payload
   try{
     var state = store.getState()
-    if(!state.locale || ! state.locale.translations|| !state.locale.translations["pack.0"] || state.locale.translations["pack.0"].indexOf(lang) < 0 ){
+    if(!state.locale || ! state.locale.translations|| !state.locale.translations["pack"] || state.locale.translations["pack"].indexOf(lang) < 0 ){
       const languagePack = yield call(ethereum.call("getLanguagePack"), lang)
       if(!languagePack) return;
       yield put.sync(addTranslationForLanguage(languagePack, lang))
