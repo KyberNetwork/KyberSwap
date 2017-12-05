@@ -113,8 +113,8 @@ export default class Transfer extends React.Component {
       }
     }
     var errors = {
-      destAddress: this.props.transfer.errors.destAddress,
-      amountTransfer: this.props.transfer.errors.amountTransfer
+      destAddress: this.props.transfer.errors.destAddress || '',
+      amountTransfer: this.props.transfer.errors.amountTransfer || ''
     }
 
     var token = (

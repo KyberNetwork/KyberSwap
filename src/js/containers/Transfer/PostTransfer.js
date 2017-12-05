@@ -57,7 +57,7 @@ export default class PostTransfer extends React.Component {
     var check = true
     var checkNumber = true
     if (validators.verifyAccount(this.props.form.destAddress.trim()) !== null) {
-      this.props.dispatch(transferActions.throwErrorDestAddress("This is not an address"))
+      this.props.dispatch(transferActions.throwErrorDestAddress("error.dest_address"))
       check = false
     }
     var testGasPrice = parseFloat(this.props.form.gasPrice)
@@ -66,7 +66,7 @@ export default class PostTransfer extends React.Component {
       check = false
     }
     if (isNaN(parseFloat(this.props.form.amount))) {
-      this.props.dispatch(transferActions.thowErrorAmount("Amount must be a number"))
+      this.props.dispatch(transferActions.thowErrorAmount("error.amount_must_be_number"))
       check = false
       checkNumber = false
     }
@@ -75,7 +75,7 @@ export default class PostTransfer extends React.Component {
     }
     var amountBig = converters.stringEtherToBigNumber(this.props.form.amount, this.props.form.decimal)
     if (amountBig.greaterThan(this.props.form.balance)) {
-      this.props.dispatch(transferActions.thowErrorAmount("Amount is too high"))
+      this.props.dispatch(transferActions.thowErrorAmount("error.amount_transfer_too_hign"))
       check = false
     }
     return check

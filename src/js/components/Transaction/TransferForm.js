@@ -11,10 +11,10 @@ const TransferForm = (props) => {
               <div class="row">
                 <div class="column">
 
-                  <label className={props.errors.destAddress === "" ? "" : "error"}>Transfer to address
+                  <label className={props.errors.destAddress !== '' ? "error" : "" }>{props.translate("trasaction.transfer_to_address") || "Transfer to address"}
                     <input className="text-center hash" type="text" placeholder="Address Hash" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange} />
-                    {props.errors.destAddress !== "" &&
-                      <span class="error-text">{props.errors.destAddress}</span>
+                    {props.errors.destAddress  &&
+                      <span class="error-text">{props.translate(props.errors.destAddress)}</span>
                     }
                   </label>
                 </div>
@@ -28,10 +28,10 @@ const TransferForm = (props) => {
                 </div>
                 <div class="column medium-6">
                   <label>Amount
-                    <div className={props.errors.amountTransfer === "" ? "token-amount" : "token-amount error"}>
+                    <div className={props.errors.amountTransfer !== '' ? "token-amount error" : "token-amount"}>
                       <input type="number" min="0" step="0.000001" placeholder="0" value={props.input.amount.value} className="amount-input" onChange={props.input.amount.onChange} /><span class="name">{props.tokenSymbol}</span>
-                      {props.errors.amountTransfer !== "" &&
-                        <span class="error-text">{props.errors.amountTransfer}</span>
+                      {props.errors.amountTransfer &&
+                        <span class="error-text">{props.translate(props.errors.amountTransfer)}</span>
                       }
                     </div>
                     <div class="address-balance clearfix">
@@ -41,7 +41,7 @@ const TransferForm = (props) => {
                       </a>
                     </div>
                   </label>
-                  <span class="error-text">{props.errors.amountTransfer}</span>
+                  {/* <span class="error-text">{props.errors.amountTransfer}</span> */}
                 </div>
               </div>
             </form>
@@ -54,7 +54,7 @@ const TransferForm = (props) => {
                       <label class="switch-paddle" for="advanced"><span class="show-for-sr">Advanced Mode</span></label>
                     </div>
 
-                    <label class="switch-caption" for="advanced">Advanced</label>
+                    <label class="switch-caption" for="advanced">{props.translate("trasaction.advanced") || "Advanced"}</label>
                   </div>
                 </div>
                 <div class="advanced-content" disabled>

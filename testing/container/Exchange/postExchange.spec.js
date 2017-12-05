@@ -67,7 +67,7 @@ describe('Test validateExchange function', () => {
         let validate = postExchange.instance().validateExchange();
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.THROW_SOURCE_AMOUNT_ERROR',
-            payload: 'Source amount is not a number'
+            payload: 'error.source_amount_is_not_number'
         });
         expect(validate).toBe(false)
     });
@@ -79,7 +79,7 @@ describe('Test validateExchange function', () => {
         let validate = postExchange.instance().validateExchange();
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.THROW_SOURCE_AMOUNT_ERROR',
-            payload: 'Source amount is not a number'
+            payload: 'error.source_amount_is_not_number'
         });
         expect(validate).toBe(false)
     });
@@ -98,7 +98,7 @@ describe('Test validateExchange function', () => {
         let validate = postExchange.instance().validateExchange();
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.THROW_SOURCE_AMOUNT_ERROR',
-            payload: 'Source amount is too high'
+            payload: 'error.source_amount_too_high'
         });
         expect(validate).toBe(false)
     });

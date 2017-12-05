@@ -37,7 +37,7 @@ import { getTranslate } from 'react-localize-redux';
 
 export default class PostExchange extends React.Component {
   clickExchange = () => {
-    if(validators.anyErrors(this.props.form.errors)) return;
+    if (validators.anyErrors(this.props.form.errors)) return;
     if (this.props.form.step == 1) {
       if (!validators.anyErrors(this.props.form.errors)) {
         this.props.dispatch(exchangeActions.goToStep(2))
@@ -75,8 +75,23 @@ export default class PostExchange extends React.Component {
       this.props.form.minConversionRate,
       this.props.form.destDecimal,
       this.props.form.offeredRateBalance)
-    if (validateAmount !== null) {
-      this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount is " + validateAmount))
+    var sourceAmountErrorKey
+    switch (validateAmount) {
+      case 1:
+        sourceAmountErrorKey = "error.source_amount_is_not_number"
+        break
+      case 2:
+        sourceAmountErrorKey = "error.source_amount_too_high"
+        break
+      case 3:
+        sourceAmountErrorKey = "error.source_amount_too_small"
+        break
+      case 4:
+        sourceAmountErrorKey = "error.source_amount_too_high_for_reserve"
+        break
+    }
+    if (sourceAmountErrorKey) {
+      this.props.dispatch(exchangeActions.thowErrorSourceAmount(sourceAmountErrorKey))
       check = false
     }
     var testGasPrice = parseFloat(this.props.form.gasPrice)
@@ -268,14 +283,14 @@ export default class PostExchange extends React.Component {
       className += " animated infinite pulse next"
     }
     return (
-      <PostExchangeBtn 
+      <PostExchangeBtn
         step={this.props.form.step}
         submit={this.clickExchange}
         modalPassphrase={modalPassphrase}
         modalConfirm={modalConfirm}
         modalApprove={modalApprove}
         className={className}
-        accountType = {this.props.account.type}
+        accountType={this.props.account.type}
         isConfirming={this.props.form.isConfirming}
         isApproving={this.props.form.isApproving}
         translate={this.props.translate}

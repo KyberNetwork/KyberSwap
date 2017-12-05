@@ -28,11 +28,13 @@ export function verifyAmount(sourceAmount,
   //verify number for source amount
   var testAmount = parseFloat(sourceAmount)
   if (isNaN(testAmount)) {
-    return "not a number"
+    // return "not a number"
+    return 1
   }
   var sourceAmountWei = new BigNumber(sourceAmount)
   if (sourceAmountWei == 'NaN' || sourceAmountWei == 'Infinity') {
-    return "not a number"
+    // return "not a number"
+    return 1
   }
   var weiParam = new BigNumber(10)
   sourceAmountWei = sourceAmountWei.times(weiParam.pow(sourceDecimal))
@@ -43,7 +45,8 @@ export function verifyAmount(sourceAmount,
     throw new Error("Invalid upper bound for amount")
   }
   if (sourceAmountWei.cmp(sourceBalance) > 0) {
-    return "too high"
+    // return "too high"
+    return 2
   }
 
   //verify min source amount
@@ -54,7 +57,8 @@ export function verifyAmount(sourceAmount,
   }
   var epsilon = new BigNumber(constants.EPSILON)
   if (estimateValue.cmp(epsilon) < 0) {
-    return "too small"
+    // return "too small"
+    return 3
   }
 
   //verify max dest amount
@@ -65,7 +69,8 @@ export function verifyAmount(sourceAmount,
 
   var reserveBalanceB = new BigNumber(reserveBalance)
   if (estimateDestAmount.cmp(reserveBalanceB) > 0) {
-    return "too high (pair is not available for trading at the moment)"
+    // return "too high (pair is not available for trading at the moment)"
+    return 4
   }
 
   return null

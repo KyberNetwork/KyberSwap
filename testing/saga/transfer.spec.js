@@ -172,11 +172,11 @@ function* throwErrorDessAddress(message) {
   });
 }
 it('handle throw error dest address', () => {
-  return expectSaga(throwErrorDessAddress, "This is not an address")
+  return expectSaga(throwErrorDessAddress, "error.dest_address")
     .withReducer(transferReducer)
     .run()
     .then((result) => {
-      expect(result.storeState.errors.destAddress).toEqual("This is not an address");
+      expect(result.storeState.errors.destAddress).toEqual("error.dest_address");
     })
 })
 
@@ -188,11 +188,11 @@ function* throwAmountError(message) {
   });
 }
 it('handle throw amount error', () => {
-  return expectSaga(throwAmountError, "Amount must be a number")
+  return expectSaga(throwAmountError, "error.amount_must_be_number")
     .withReducer(transferReducer)
     .run()
     .then((result) => {
-      expect(result.storeState.errors.amountTransfer).toEqual("Amount must be a number");
+      expect(result.storeState.errors.amountTransfer).toEqual("error.amount_must_be_number");
     })
 })
 

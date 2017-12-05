@@ -35,7 +35,9 @@ const rootReducer = (state, action) => {
               utils: state.utils, 
               tokens: state.tokens, 
               global: state.global,
-              connection: state.connection}
+              connection: state.connection,
+              locale: state.locale
+            }
   }
   return appReducer(state, action)
 }
