@@ -56,7 +56,7 @@ export function* updateAllRate(action) {
 export function* checkConnection(action){
   var {ethereum, count, maxCount, isCheck} = action.payload
   const isConnected = yield call([ethereum, ethereum.call("isConnectNode")])
-  console.log(isConnected)
+  //console.log(isConnected)
   if (isConnected){
     if (!isCheck){
       yield put(actions.updateIsCheck(true))
