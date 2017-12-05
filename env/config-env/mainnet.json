@@ -103,6 +103,6 @@
   "network": "0x842182360dfae06c6a84e8a47d37aeeadb115694",
   "wrapper": "0x307d4d560d20bc2416aadfca79e10c22c424fdfC",
   "endpoint": "https://mainnet.infura.io/DtzEYY0Km2BA3YwyJcBG",
-  "averageBlockTime": 17000,
+  "averageBlockTime": 15000,
   "networkId":1
   }
