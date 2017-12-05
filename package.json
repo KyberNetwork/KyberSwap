@@ -75,7 +75,9 @@
     "style-loader": "^0.19.0"
   },
   "scripts": {
-    "build": "NODE_ENV=production webpack -p",
+    "build-kovan": "webpack -p --env.chain=kovan",
+    "build-mainnet": "webpack -p --env.chain=mainnet",
+    "mainnet": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=mainnet",
     "kovan": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=kovan",
     "dev": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=kovan",
     "test": "jest --setupTestFrameworkScriptFile=raf/polyfill",

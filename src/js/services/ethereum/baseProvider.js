@@ -229,9 +229,20 @@ export default class BaseEthereumProvider {
           'Content-Type': 'application/json'
         },
         //body: {}
-      }).then(function (response) {
-        resolve(response.json())
-      }).catch((err) => {
+      })
+      .then(function (response) {
+        if(response.status == 404){
+          console.log("~~~~~~~ not founf rate in server ~~~~~~~~")
+          this.getRateFromBlockchain().then((result) => {
+            resolve(result)
+          })
+        } else {
+          resolve(response.json())
+        }
+        
+      })
+
+      .catch((err) => {
         console.log("-- catch error get rate from server --")
         this.getRateFromBlockchain().then((result) => {
           resolve(result)

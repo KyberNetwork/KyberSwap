@@ -28,9 +28,12 @@ main()
 
 
 app.get('/getRate', function (req, res) {
-  res.writeHead(200, { 'Content-Type': 'text/html' });
+  // res.writeHead(200, { 'Content-Type': 'text/html' });
   var event = persistor.getRate()
   event.then((result) => {
+    if(!result || !result.length){
+      res.status(404).send()
+    }
     res.end(JSON.stringify(result))
   })
 });

@@ -126,6 +126,7 @@ class EthereumService {
 
 
   async handleEvent(logs, allRate) {
+   // console.log(logs)
     await this.persistor.saveRate(allRate)
     for (var i = 0; i < logs.length; i++) {
       var savedEvent = {
