@@ -115,10 +115,11 @@ class EthereumService {
       if (toBlock > latestBlock){
         toBlock = latestBlock
       }
+     // console.log("xxx")
       var events  = await this.currentProvider.getLogExchange(currentBlock, toBlock)
-
+      //console.log(events)
       var allRate = await this.currentProvider.getAllRate(BLOCKCHAIN_INFO.tokens, constants.RESERVES[0])
-    
+      
       this.handleEvent(events, allRate)
     }
 
@@ -126,7 +127,7 @@ class EthereumService {
 
 
   async handleEvent(logs, allRate) {
-   // console.log(logs)
+    //console.log(logs)
     await this.persistor.saveRate(allRate)
     for (var i = 0; i < logs.length; i++) {
       var savedEvent = {
