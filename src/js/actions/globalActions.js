@@ -1,3 +1,4 @@
+import * as converter from "../utils/converter"
 
 export function updateBlock(ethereum, block) {
   return {
@@ -77,6 +78,42 @@ export function updateHistoryExchange(ethereum, page, itemPerPage, isAutoFetch) 
 export function updateHistory(logs, latestBlock, page, eventsCount, isAutoFetch) {
   return {
     type: "GLOBAL.UPDATE_HISTORY",
-    payload: { logs, latestBlock, page, eventsCount, isAutoFetch}
+    payload: { logs, latestBlock, page, eventsCount, isAutoFetch }
+  }
+}
+
+export function checkConnection(ethereum, count, maxCount, isCheck) {
+  return {
+    type: "GLOBAL.CHECK_CONNECTION",
+    payload: { ethereum, count, maxCount, isCheck }
+  }
+}
+
+export function updateIsCheck(isCheck){
+  return {
+    type: "GLOBAL.CONNECTION_UPDATE_IS_CHECK",
+    payload: isCheck
+  }
+}
+
+export function updateCountConnection(count){
+  return {
+    type: "GLOBAL.CONNECTION_UPDATE_COUNT",
+    payload: count
+  }
+}
+
+export function setGasPrice(ethereum){
+  return {
+    type: "GLOBAL.SET_GAS_PRICE",
+    payload: ethereum
+  }
+}
+
+export function setGasPriceComplete(gasPrice){
+  var gasPriceGwei = converter.weiToGwei(gasPrice)
+  return {
+    type: "GLOBAL.SET_GAS_PRICE_COMPLETE",
+    payload: gasPriceGwei
   }
 }

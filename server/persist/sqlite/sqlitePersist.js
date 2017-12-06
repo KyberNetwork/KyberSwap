@@ -4,6 +4,7 @@ var fs = require('fs')
 var path = require('path')
 var config = require("../configure")
 var constants = require("../../../src/js/services/constants")
+var BLOCKCHAIN_INFO = require("../../../env")
 
 var filePath
 
@@ -28,11 +29,18 @@ class SqlitePersist {
 
   initStore() {
     if (fs.existsSync(filePath)) {
-      this.db = new sqlite3.Database(filePath, (err) => {
-        if (err) {
-          return console.error(err.message)
-        }
-        console.log('Connected to the store.db SQlite database.');
+      this.db = new sqlite3.Database(filePath)
+      var _this = this
+      this.db.serialize(function () {
+        var sql = `UPDATE configure SET frequency = ?, rangeFetch = ? WHERE id = ?`
+        _this.db.run(sql, [config.frequency, config.rangeFetch, 1], (err, row) => {
+          if (err) {
+            console.log(err)
+            //reject(err.message)
+          } else {
+             console.log("Update range fetch and frequency")
+          }
+        })
       })
       var stmt = this.db.prepare("UPDATE configure set frequency =?, rangeFetch =? WHERE id = 1")
       stmt.run(config.frequency, config.rangeFetch);
@@ -51,6 +59,18 @@ class SqlitePersist {
 
         // create rate table
         _this.db.run("CREATE TABLE rates (id INTEGER PRIMARY KEY, source TEXT, dest TEXT, rate TEXT, expBlock TEXT, balance TEXT)")
+        /// init all rate first time
+      if(BLOCKCHAIN_INFO.tokens){
+          Object.keys(BLOCKCHAIN_INFO.tokens).map((token) => {
+            let stmt1 = _this.db.prepare(`INSERT INTO rates(source, dest, rate, expBlock, balance) VALUES (?,?,?,?,?)`)
+            stmt1.run(token, constants.ETH.symbol, 0, 0);
+            stmt1.finalize()
+
+            let stmt2 = _this.db.prepare(`INSERT INTO rates(source, dest, rate, expBlock, balance) VALUES (?,?,?,?,?)`)
+            stmt2.run(constants.ETH.symbol, token, 0, 0);
+            stmt2.finalize()
+          })
+        }
       })
     }
 
@@ -121,7 +141,7 @@ class SqlitePersist {
           reject(err.message)
         } else {
           if (row) {
-            console.log(`highest block: ${row.blockNumber}`)
+            //console.log(`highest block: ${row.blockNumber}`)
             resolve(row.blockNumber)
           } else {
             resolve(0)
@@ -311,7 +331,6 @@ class SqlitePersist {
   }
 
   saveRate(rates) {
-
     return new Promise((resolve, reject) => {
       rates.forEach((rate) => {
         if ((rate[2] && rate[2].rate !== '0') || (rate[0] == constants.ETH.symbol && rate[1] == constants.ETH.symbol)) {
@@ -330,7 +349,7 @@ class SqlitePersist {
         }
       })
       resolve(rates)
-      console.log("all rate is inserted");
+      //console.log("all rate is inserted");
     })
   }
 

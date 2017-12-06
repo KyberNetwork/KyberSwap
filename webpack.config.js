@@ -4,18 +4,6 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = function (env) {
-  // //get entry path
-  // var entryChain = "src/env/kovan.js"
-  // if (env && env.chain) {
-  //   switch (env.chain) {
-  //     case "KOVAN":
-  //       entryChain = "src/env/kovan.js"
-  //       break
-  //     default:
-  //       entryChain = "src/env/kovan.js"
-  //       break;
-  //   }
-  // }
   return {
     context: path.join(__dirname, "src"),
     devtool: debug ? "inline-sourcemap" : false,
@@ -92,7 +80,7 @@ module.exports = function (env) {
           allChunks: true,
         }),
         new webpack.DefinePlugin({
-          'env': '"production"'
+          'env': '"kovan"'
         })
       ],
     devServer: {

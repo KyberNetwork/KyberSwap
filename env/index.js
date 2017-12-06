@@ -1,5 +1,6 @@
+
 var config
-, config_file = ( typeof env !== 'undefined' ? env : process.env.npm_config_chain || 'development') + '.json';
+, config_file = ( typeof env !== 'undefined' ? env : process.env.npm_config_chain || 'kovan') + '.json';
 try {
   config = require('./config-env/' + (config_file));
   } catch (err) {

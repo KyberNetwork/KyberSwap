@@ -28,6 +28,7 @@ const transfer = (state = initState, action) => {
       newState.selected = true;
       newState.token = transfer.token
       newState.tokenSymbol = transfer.tokenSymbol
+      newState.gasPrice = transfer.gasPrice
       return newState;
     case "TRANSFER.SELECT_TOKEN":
       newState.tokenSymbol = action.payload.symbol
@@ -143,6 +144,10 @@ const transfer = (state = initState, action) => {
       if (newState.tempTx.hash === action.payload.hash) {
         newState.tempTx = action.payload
       }
+      return newState
+    }
+    case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
+      newState.gasPrice = action.payload
       return newState
     }
   }

@@ -4,7 +4,7 @@ import HttpEthereumProvider from "./httpProvider"
 import WebsocketEthereumProvider from "./wsProvider"
 import constants from "../constants"
 
-import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateHistoryExchange } from "../../actions/globalActions"
+import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateHistoryExchange, checkConnection } from "../../actions/globalActions"
 import { updateAccount } from "../../actions/accountActions"
 import { updateTx } from "../../actions/txActions"
 import { updateRateExchange } from "../../actions/exchangeActions"
@@ -69,12 +69,20 @@ export default class EthereumService extends React.Component {
 
   subcribe() {
     //this.currentProvider.clearSubcription()
+    //get gas price
+    //this.fetchGasPrice()
     this.currentProvider.subcribeNewBlock(this.fetchData.bind(this))
   }
 
   clearSubcription() {
     this.currentProvider.clearSubcription()
   }
+
+  // fetchGasPrice(){
+  //   var state = store.getState()
+  //   var ethereum = state.connection.ethereum
+  //   store.dispatch(setGasPrice(ethereum))
+  // }
 
   fetchData() {
     //this.fetchCurrentBlock()
@@ -83,6 +91,7 @@ export default class EthereumService extends React.Component {
     this.fetchAccountData()
     this.fetchRateExchange()
     this.fetchHistoryExchange()
+    this.checkConnection()
   }
 
   fetchRateData() {
@@ -154,6 +163,13 @@ export default class EthereumService extends React.Component {
     //if (history.page,){      
     store.dispatch(updateHistoryExchange(ethereum, history.page, history.itemPerPage, true))
     //}
+  }
+
+  checkConnection = () => {
+    var state = store.getState()
+    var checker = state.global.conn_checker
+    var ethereum = state.connection.ethereum
+    store.dispatch(checkConnection(ethereum, checker.count, checker.maxCount, checker.isCheck))
   }
 
   call(fn) {

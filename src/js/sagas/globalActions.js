@@ -1,5 +1,6 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/globalActions'
+import * as actionsUtils from '../actions/utilActions'
 import { fetchRatePromise } from "../services/rate"
 import { Rate, updateAllRatePromise } from "../services/rate"
 import { push } from 'react-router-redux';
@@ -52,6 +53,41 @@ export function* updateAllRate(action) {
   yield put(actions.updateAllRateComplete(rates, isUpdateBalance))
 }
 
+export function* checkConnection(action){
+  var {ethereum, count, maxCount, isCheck} = action.payload
+  const isConnected = yield call([ethereum, ethereum.call("isConnectNode")])
+  //console.log(isConnected)
+  if (isConnected){
+    if (!isCheck){
+      yield put(actions.updateIsCheck(true))
+      yield put(actions.updateCountConnection(0))
+    }
+  }else{
+    if (isCheck){
+      if(count > maxCount){
+        yield put(actions.updateIsCheck(false))
+        yield put(actions.updateCountConnection(0))
+        return
+      }
+      if(count === maxCount){
+        yield put(actionsUtils.openInfoModal("Error modal", "Cannot connect to node right now. Please check your network!"))
+        yield put(actions.updateCountConnection(++count))
+        return
+      }
+      if(count < maxCount){
+        yield put(actions.updateCountConnection(++count))
+        return
+      }
+    }
+  }
+}
+
+export function* setGasPrice(action){
+  const ethereum = action.payload
+  const gasPrice = yield call([ethereum, ethereum.call("getGasPrice")])
+  yield put(actions.setGasPriceComplete(gasPrice))
+}
+
 export function* watchGlobal() {
   yield takeEvery("GLOBAL.NEW_BLOCK_INCLUDED_PENDING", getLatestBlock)
   yield takeEvery("GLOBAL.RATE_UPDATED_PENDING", updateRate)
@@ -59,6 +95,8 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.CLEAR_SESSION", clearSession)
   yield takeEvery("GLOBAL.RATE_UPDATE_ALL_PENDING", updateAllRate)
   yield takeEvery("GLOBAL.UPDATE_HISTORY_EXCHANGE", updateHistoryExchange)
+  yield takeEvery("GLOBAL.CHECK_CONNECTION", checkConnection)
+  yield takeEvery("GLOBAL.SET_GAS_PRICE", setGasPrice)
 }
 
 

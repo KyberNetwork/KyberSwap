@@ -1,7 +1,7 @@
 import { take, put, call, fork, select, takeEvery, all, cancel } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
-import { clearSession } from "../actions/globalActions"
+import { clearSession, setGasPrice } from "../actions/globalActions"
 import { openInfoModal } from '../actions/utilActions'
 import { getRandomAvatar } from "../utils/keys"
 //import { setInterval } from "timers"
@@ -50,6 +50,9 @@ export function* importNewAccount(action) {
   yield put(actions.closeImportLoading())
   yield put(actions.importNewAccountComplete(account))
 
+  //set gas price
+  yield put(setGasPrice(ethereum))
+
   yield put(goToRoute('/exchange'))
 
 
@@ -89,7 +92,7 @@ export function* importMetamask(action) {
     ))
   } catch (e) {
     console.log(e)
-    yield put(actions.throwError("Cannot connect to metamask"))
+    yield put(actions.throwError("Cannot get metamask account"))
   }
 }
 
