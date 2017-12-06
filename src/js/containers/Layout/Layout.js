@@ -21,7 +21,7 @@ import history from "../../history"
 import { clearSession, changeLanguage } from "../../actions/globalActions"
 import { openInfoModal } from "../../actions/utilActions"
 import { setConnection } from "../../actions/connectionActions"
-
+import localForage from 'localforage'
 import { default as _ } from 'underscore';
 import { LayoutView } from "../../components/Layout"
 import { getTranslate } from 'react-localize-redux';
@@ -83,7 +83,7 @@ export default class Layout extends React.Component {
   }
 
   setActiveLanguage = (language) => {
-    this.props.dispatch(changeLanguage(this.props.ethereumNode, language))
+    this.props.dispatch(changeLanguage(this.props.ethereumNode, language, localForage))
   }
 
   render() {

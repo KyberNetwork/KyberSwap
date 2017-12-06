@@ -77,16 +77,16 @@ export default class PostExchange extends React.Component {
       this.props.form.offeredRateBalance)
     var sourceAmountErrorKey
     switch (validateAmount) {
-      case 1:
+      case "not a number":
         sourceAmountErrorKey = "error.source_amount_is_not_number"
         break
-      case 2:
+      case "too high":
         sourceAmountErrorKey = "error.source_amount_too_high"
         break
-      case 3:
+      case "too small":
         sourceAmountErrorKey = "error.source_amount_too_small"
         break
-      case 4:
+      case "too high for reserve":
         sourceAmountErrorKey = "error.source_amount_too_high_for_reserve"
         break
     }

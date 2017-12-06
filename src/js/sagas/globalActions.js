@@ -5,7 +5,6 @@ import { fetchRatePromise } from "../services/rate"
 import { Rate, updateAllRatePromise } from "../services/rate"
 import { push } from 'react-router-redux';
 import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
-import localForage from 'localforage'
 import { store } from "../store"
 
 export function* getLatestBlock(action) {
@@ -57,7 +56,7 @@ export function* updateAllRate(action) {
 }
 
 export function* changelanguage(action){
-  const { ethereum, lang } = action.payload
+  const { ethereum, lang, localForage } = action.payload
   try{
     var state = store.getState()
     if(!state.locale || ! state.locale.translations|| !state.locale.translations["pack"] || state.locale.translations["pack"].indexOf(lang) < 0 ){
