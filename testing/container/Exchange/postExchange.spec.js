@@ -130,7 +130,7 @@ describe('Test validateExchange function', () => {
         let validate = postExchange.instance().validateExchange();
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.THROW_SOURCE_AMOUNT_ERROR',
-            payload: 'Source amount is too low'
+            payload: 'Source amount is too small'
         });
         expect(validate).toBe(false)
     });
