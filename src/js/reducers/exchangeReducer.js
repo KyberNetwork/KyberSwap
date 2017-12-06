@@ -232,6 +232,10 @@ const exchange = (state = initState, action) => {
       newState.inputFocus = action.payload
       return newState
     }
+    case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
+      newState.gasPrice = action.payload
+      return newState
+    }
   }
   return state
 }

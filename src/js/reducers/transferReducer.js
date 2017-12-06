@@ -145,6 +145,10 @@ const transfer = (state = initState, action) => {
       }
       return newState
     }
+    case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
+      newState.gasPrice = action.payload
+      return newState
+    }
   }
   return state
 }
