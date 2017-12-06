@@ -11,7 +11,7 @@ const TransferForm = (props) => {
               <div class="row">
                 <div class="column">
 
-                  <label className={props.errors.destAddress !== '' ? "error" : "" }>{props.translate("trasaction.transfer_to_address") || "Transfer to address"}
+                  <label className={props.errors.destAddress !== '' ? "error" : "" }>{props.translate("transaction.transfer_to_address") || "Transfer to address"}
                     <input className="text-center hash" type="text" placeholder="Address Hash" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange} />
                     {props.errors.destAddress  &&
                       <span class="error-text">{props.translate(props.errors.destAddress)}</span>
@@ -54,7 +54,7 @@ const TransferForm = (props) => {
                       <label class="switch-paddle" for="advanced"><span class="show-for-sr">Advanced Mode</span></label>
                     </div>
 
-                    <label class="switch-caption" for="advanced">{props.translate("trasaction.advanced") || "Advanced"}</label>
+                    <label class="switch-caption" for="advanced">{props.translate("transaction.advanced") || "Advanced"}</label>
                   </div>
                 </div>
                 <div class="advanced-content" disabled>
@@ -74,7 +74,7 @@ const TransferForm = (props) => {
     <div>
       {props.step !== 2 ? render : ''}
       <div class="page-3">
-        {props.step == 2 ? props.trasactionLoadingScreen : ''}
+        {props.step == 2 ? props.transactionLoadingScreen : ''}
       </div>
     </div>
   )

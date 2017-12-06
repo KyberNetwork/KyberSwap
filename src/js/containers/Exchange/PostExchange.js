@@ -109,7 +109,7 @@ export default class PostExchange extends React.Component {
     var destTokenSymbol = this.props.form.destTokenSymbol
     // var recap = `exchange ${this.props.form.sourceAmount.toString().slice(0, 7)}${this.props.form.sourceAmount.toString().length > 7 ? '...' : ''} ${this.props.form.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0, 7)}${this.getDesAmount().toString().length > 7 ? '...' : ''} ${this.props.form.destTokenSymbol}`
     return (
-      <p>You are about to exchange<br /><strong>{sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}</strong>&nbsp;for&nbsp;<strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}</strong></p>
+      <p>{this.props.translate("transaction.about_to_exchange") || "You are about to exchange"}<br /><strong>{sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}</strong>&nbsp;for&nbsp;<strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}</strong></p>
     )
   }
   getDesAmount = () => {
@@ -227,6 +227,8 @@ export default class PostExchange extends React.Component {
         onExchange={this.processTx}
         isConfirming={this.props.form.isConfirming}
         type="exchange"
+        translate={this.props.translate}
+        title={this.props.translate("modal.confirm_exchange_title") || "Exchange confirm"}
       />
     )
   }

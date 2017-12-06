@@ -3,22 +3,28 @@ import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 import constants from "../../services/constants"
 import { TransactionLoadingView } from "../../components/Transaction"
+import { getTranslate } from 'react-localize-redux'
 
 @connect((store, props) => {
+    var returnProps = {}
     if (props.broadcasting) {
-        return { broadcasting: true, error: "" }
-    } else {
-        if (props.broadcastingError !== "") {
-            return { broadcasting: true, error: props.broadcastingError }
+        returnProps =  { 
+            broadcasting: true, 
+            error: ""
         }
-        return {
-            ...props.tempTx, broadcasting: false
-            , makeNewTransaction: props.makeNewTransaction
-            , type: props.type
-            , balanceInfo: props.balanceInfo
-            , txHash: props.tx
+    } else if (props.broadcastingError !== "") {
+        returnProps = { broadcasting: true, error: props.broadcastingError }
+    } else {
+        returnProps = {
+            ...props.tempTx, 
+            broadcasting: false,
+            makeNewTransaction: props.makeNewTransaction,
+            type: props.type,
+            balanceInfo: props.balanceInfo,
+            txHash: props.tx
         }
     }
+    return {...returnProps, translate: getTranslate(store.locale)}
 })
 
 export default class TransactionLoading extends React.Component {
@@ -32,6 +38,7 @@ export default class TransactionLoading extends React.Component {
                 txHash={this.props.txHash}
                 balanceInfo={this.props.balanceInfo}
                 makeNewTransaction={this.props.makeNewTransaction}
+                translate={this.props.translate}
             />
 
         )

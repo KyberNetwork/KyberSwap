@@ -120,7 +120,7 @@ const ImportByDeviceView = (props) => {
                     <div class="row">
                         <div class="column">
                             <div class="block-title">
-                                Select the address you would like to interact with
+                                {props.translate("modal.select_address") || "Select the address you would like to interact with"}
                             </div>
                             <form id="formAddress">
                                 <ul class="address-list animated fadeIn">
@@ -128,8 +128,8 @@ const ImportByDeviceView = (props) => {
                                 </ul>
                             </form>
                             <div class="address-list-navigation animated fadeIn">
-                                <a class={'previous ' + (props.isFirstList ? 'disabled' : '')} onClick={props.getPreAddress}>Previous Addresses</a>
-                                <a class="next" onClick={props.getMoreAddress}>More Addresses</a>
+                                <a class={'previous ' + (props.isFirstList ? 'disabled' : '')} onClick={props.getPreAddress}>{props.translate("modal.previous_addresses") || "Previous Addresses"}</a>
+                                <a class="next" onClick={props.getMoreAddress}>{props.translate("modal.more_addresses") || "More Addresses"}</a>
                             </div>
                         </div>
                     </div>
@@ -164,6 +164,7 @@ const ImportByDeviceView = (props) => {
             isOpen={props.modalOpen}
             onRequestClose={props.onRequestClose}
             content={getSelectAddressHtml()}
+            translate={props.translate}
         />
 
     ])

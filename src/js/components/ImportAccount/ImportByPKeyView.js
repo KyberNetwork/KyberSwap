@@ -30,7 +30,7 @@ const ImportByPKeyView = (props) => {
 			<div className="importer pkey">
 				<a onClick={() => props.modalOpen()} id="importPKey">
 					<img src="/assets/img/pkey.svg" />
-					<div className="description">Enter your<br />private key</div>
+					<div className="description">{props.translate("import.from_private_key") || <span>Enter your<br />private key</span>}</div>
 				</a>
 			</div>
 
@@ -40,7 +40,7 @@ const ImportByPKeyView = (props) => {
 				onRequestClose={() => props.onRequestClose()}
 				content={
 					<div>
-						<div className="title">ENTER YOUR PRIVATE KEY</div><a className="x" onClick={props.onRequestClose}>&times;</a>
+						<div className="title">{ props.translate("import.from_private_key_input_title") || "ENTER YOUR PRIVATE KEY"}</div><a className="x" onClick={props.onRequestClose}>&times;</a>
 						<div className="content with-overlap">
 							<div className="row">
 								<div className="column">
@@ -51,7 +51,7 @@ const ImportByPKeyView = (props) => {
 													type="password"
 													onChange={(e) => props.onChange(e)}
 													onKeyPress={(e) => submit(e)}
-													placeholder="Enter your private key" required />
+													placeholder={ props.translate("import.from_private_key_input_title_placehoder") || "Enter your private key"} required />
 												<a className="toggle" onClick={() => toggleShowPw()}></a>
 											</div>
 											{!!props.pKeyError &&
@@ -63,7 +63,7 @@ const ImportByPKeyView = (props) => {
 							</div>
 						</div>
 						<div className="overlap">
-							<button className="button accent" id="submit_pkey" onClick={() => handldeSubmit()} >Import</button>
+							<button className="button accent" id="submit_pkey" onClick={() => handldeSubmit()} >{props.translate("modal.import") || "Import"}</button>
 						</div>
 
 					</div>

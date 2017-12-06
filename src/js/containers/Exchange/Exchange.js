@@ -186,7 +186,7 @@ export default class Exchange extends React.Component {
     var exchangeButton = (
       <PostExchangeWithKey />
     )
-    var trasactionLoadingScreen = (
+    var transactionLoadingScreen = (
       <TransactionLoading tx={this.props.exchange.txHash}
         tempTx={this.props.exchange.tempTx}
         makeNewTransaction={this.makeNewExchange}
@@ -216,7 +216,7 @@ export default class Exchange extends React.Component {
         exchangeRate={exchangeRate}
         gasConfig={gasConfig}
         exchangeButton={exchangeButton}
-        trasactionLoadingScreen={trasactionLoadingScreen}
+        transactionLoadingScreen={transactionLoadingScreen}
         errors={errors}
         input={input}
         balance={balance}

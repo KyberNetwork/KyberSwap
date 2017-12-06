@@ -24,7 +24,7 @@ import { setConnection } from "../../actions/connectionActions"
 import localForage from 'localforage'
 import { default as _ } from 'underscore';
 import { LayoutView } from "../../components/Layout"
-import { getTranslate } from 'react-localize-redux';
+import { getTranslate } from 'react-localize-redux'
 
 import Language from "../../../../lang"
 

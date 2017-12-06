@@ -10,7 +10,7 @@ const SelectAddressModal = (props) => {
       contentLabel="Select Address"
       content={
           <div>
-              <div class="title">Select HD derivation path</div><a class="x" onClick={props.onRequestClose}>&times;</a>
+              <div class="title">{props.translate("modal.select_hd_path") || "Select HD derivation path"}</div><a class="x" onClick={props.onRequestClose}>&times;</a>
               <div class="address-list-path">
                   {props.content}
               </div>

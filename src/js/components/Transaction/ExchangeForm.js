@@ -24,11 +24,11 @@ const ExchangeForm = (props) => {
       <div class="frame">
         <div class="row">
           <div class="column small-11 medium-10 large-8 small-centered">
-            <h1 class="title">{props.translate("trasaction.exchange") || "Exchange"}</h1>
+            <h1 class="title">{props.translate("transaction.exchange") || "Exchange"}</h1>
             <form action="#" method="get">
               <div class="row">
                 <div class="column medium-6">
-                  <label style={{marginBottom: 0}}>{props.translate("trasaction.exchange_from") || "Exchange From"}
+                  <label style={{marginBottom: 0}}>{props.translate("transaction.exchange_from") || "Exchange From"}
 
                     <div className={errorToken !== "" || props.errors.sourceAmount != '' ? "token-input error" : "token-input"}>
 
@@ -44,7 +44,7 @@ const ExchangeForm = (props) => {
                     }
                   </label>
                   <div class="address-balance">
-                    <span class="note">{props.translate("trasaction.address_balance") ||"Address Balance"}</span>
+                    <span class="note">{props.translate("transaction.address_balance") ||"Address Balance"}</span>
                     <a className="value" onClick={() => {
                         props.setAmount()
                         setTimeout(moveCursor, 0);
@@ -54,7 +54,7 @@ const ExchangeForm = (props) => {
                   </div>
                 </div>
                 <div class="column medium-6">
-                  <label>{props.translate("trasaction.exchange_to") || "Exchange To"}
+                  <label>{props.translate("transaction.exchange_to") || "Exchange To"}
                     <div class="token-input">
                       <input type={props.input.destAmount.type} className="des-input" value={props.input.destAmount.value} onFocus={props.input.destAmount.onFocus} onChange={props.input.destAmount.onChange} min="0" step="0.000001" placeholder="0" />
                       {props.tokenDest}
@@ -78,7 +78,7 @@ const ExchangeForm = (props) => {
                           <input class="switch-input" id="advanced" type="checkbox" />
                           <label class="switch-paddle" for="advanced"><span class="show-for-sr">Advanced Mode</span></label>
                         </div>
-                        <label class="switch-caption" for="advanced">{props.translate("trasaction.advanced") || "Advanced"}</label>
+                        <label class="switch-caption" for="advanced">{props.translate("transaction.advanced") || "Advanced"}</label>
                       </div>
                     </div>
                     <div class="advanced-content" disabled>
@@ -100,7 +100,7 @@ const ExchangeForm = (props) => {
     <div className={props.step === 1 ? "choose-token-pair" : ""} id="exchange">
       {props.step !== 3 ? render : ''}
       <div class="page-3">
-        {props.step == 3 ? props.trasactionLoadingScreen : ''}
+        {props.step == 3 ? props.transactionLoadingScreen : ''}
       </div>
     </div>
   )

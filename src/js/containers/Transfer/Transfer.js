@@ -129,7 +129,7 @@ export default class Transfer extends React.Component {
     var transferButton = (
       <PostTransferWithKey />
     )
-    var trasactionLoadingScreen = (
+    var transactionLoadingScreen = (
       <TransactionLoading tx={this.props.transfer.txHash}
         makeNewTransaction={this.makeNewTransfer}
         tempTx={this.props.transfer.tempTx}
@@ -159,7 +159,7 @@ export default class Transfer extends React.Component {
         tokenModal={tokenModal}
         gasConfig={gasConfig}
         transferButton={transferButton}
-        trasactionLoadingScreen={trasactionLoadingScreen}
+        transactionLoadingScreen={transactionLoadingScreen}
         input={input}
         errors={errors}
         balance={balance}
