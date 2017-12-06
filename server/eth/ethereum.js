@@ -118,6 +118,7 @@ class EthereumService {
       if (toBlock > latestBlock){
         toBlock = latestBlock
       }
+     // console.log("xxx")
       var events  = await this.currentProvider.getLogExchange(currentBlock, toBlock)
       this.handleEvent(events)
     }
