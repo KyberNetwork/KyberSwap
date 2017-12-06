@@ -37,15 +37,15 @@ function txs() {
 function connection() {
     return {
         ethereum: {
-            call: () => {
-                return getBalance;
+            call: (callback) => {
+                return ethFunc[callback];
             }
         }
     }
 }
 
-function getBalance(){
-    return Promise.resolve(0);
+let ethFunc = {
+    getBalance: () => Promise.resolve(0),
 }
 
 function account(state, action) {
