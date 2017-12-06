@@ -86,7 +86,10 @@ class EthereumService {
 
   subcribe() {
     //this.currentProvider.clearSubcription()
-    this.currentProvider.subcribeNewBlock(this.fetchData.bind(this))
+    this.currentProvider.subcribeNewBlock(() => {
+      this.fetchData.bind(this)()
+      this.fetchAllRateData.bind(this)()
+    })
   }
 
   clearSubcription() {
@@ -117,18 +120,17 @@ class EthereumService {
       }
      // console.log("xxx")
       var events  = await this.currentProvider.getLogExchange(currentBlock, toBlock)
-      //console.log(events)
-      var allRate = await this.currentProvider.getAllRate(BLOCKCHAIN_INFO.tokens, constants.RESERVES[0])
-      
-      this.handleEvent(events, allRate)
+      this.handleEvent(events)
     }
+  }
 
+  async fetchAllRateData(){
+    var allRate = await this.currentProvider.getAllRate(BLOCKCHAIN_INFO.tokens, constants.RESERVES[0])
+    this.persistor.saveRate(allRate)
   }
 
 
-  async handleEvent(logs, allRate) {
-    //console.log(logs)
-    await this.persistor.saveRate(allRate)
+  async handleEvent(logs) {
     for (var i = 0; i < logs.length; i++) {
       var savedEvent = {
         actualDestAmount: logs[i].returnValues.actualDestAmount,
