@@ -52,17 +52,21 @@ export default class BaseEthereumProvider {
           'Accept': 'application/json, text/plain, */*',
           'Content-Type': 'application/json'
         }
-      }).then(function (response) {
-        resolve(response.json())
+      }).then((response) => {
+        return response.json()
+      }).then((data) => {
+        if(data && typeof data == 'number' && data > 0){
+          resolve(data)
+        } else {
+          this.rpc.eth.getBlock("latest", false).then((block) => {
+            if (block != null) {
+              resolve(block.number)
+            }
+          })
+        }
       })
     })
-    // return new Promise((resolve, reject) => {
-    //   this.rpc.eth.getBlock("latest", false).then((block) => {
-    //     if (block != null) {
-    //       resolve(block.number)
-    //     }
-    //   })
-    // })
+    
   }
 
   getBalance(address) {
@@ -178,38 +182,6 @@ export default class BaseEthereumProvider {
     })
   }
 
-  countALlEvents() {
-    return new Promise((resolve, rejected) => {
-      fetch(BLOCKCHAIN_INFO.history_endpoint + '/countHistory', {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'application/json'
-        },
-      }).then(function (response) {
-        resolve(response.json())
-      })
-    })
-  }
-
-  getLogExchange(page, itemPerPage) {
-    return new Promise((resolve, rejected) => {
-      fetch(BLOCKCHAIN_INFO.history_endpoint + '/getHistory', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          page: page,
-          itemPerPage: itemPerPage - 1,
-        })
-      }).then(function (response) {
-        resolve(response.json())
-      })
-    })
-  }
-
   getLogTwoColumn(page, itemPerPage) {
     return new Promise((resolve, rejected) => {
       fetch(BLOCKCHAIN_INFO.history_endpoint + '/getHistoryTwoColumn', {
@@ -222,8 +194,11 @@ export default class BaseEthereumProvider {
         //   page: page,
         //   itemPerPage: itemPerPage,
         // })
-      }).then(function (response) {
-        resolve(response.json())
+      }).then((response) => {
+        return response.json()
+      }).then((data) => {
+        if(!data) rejected()
+        resolve(data)
       })
     })
   }
