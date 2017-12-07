@@ -69,12 +69,20 @@ export default class EthereumService extends React.Component {
 
   subcribe() {
     //this.currentProvider.clearSubcription()
+    //get gas price
+    //this.fetchGasPrice()
     this.currentProvider.subcribeNewBlock(this.fetchData.bind(this))
   }
 
   clearSubcription() {
     this.currentProvider.clearSubcription()
   }
+
+  // fetchGasPrice(){
+  //   var state = store.getState()
+  //   var ethereum = state.connection.ethereum
+  //   store.dispatch(setGasPrice(ethereum))
+  // }
 
   fetchData() {
     //this.fetchCurrentBlock()

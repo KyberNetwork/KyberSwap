@@ -1,7 +1,9 @@
 import { REHYDRATE } from 'redux-persist/lib/constants'
 
 
-const initState = {}
+const initState = {
+  langModal: false
+}
 
 const utils = (state = initState, action) => {
   switch (action.type) {
@@ -89,6 +91,16 @@ const utils = (state = initState, action) => {
       newState.infoModal = {
         open: false
       }
+      return newState
+    }
+    case "UTIL.HIDE_LANGUAGE_MODAL":{
+      var newState = { ...state }
+      newState.langModal = false
+      return newState
+    }
+    case "UTIL.SHOW_LANGUAGE_MODAL":{
+      var newState = { ...state }
+      newState.langModal = true
       return newState
     }
   }

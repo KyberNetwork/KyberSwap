@@ -9,6 +9,7 @@ var BLOCKCHAIN_INFO = require("../../../env")
 var filePath
 
 var dbName = process.env.npm_config_chain
+
 //console.log("db name: " + dbName)
 switch(dbName){
   case "kovan":
@@ -20,6 +21,13 @@ switch(dbName){
   default:
     filePath = path.join(__dirname, 'temp.db')
     break
+}
+
+var isInit = process.env.npm_config_init
+if (isInit){
+  fs.unlink(filePath, (err, result)=>{
+    console.log("Clear old file")
+  })
 }
 
 class SqlitePersist {
@@ -161,7 +169,7 @@ class SqlitePersist {
           reject(err.message)
         } else {
           resolve(count)
-          //console.log(`Count updated: ${count}`)
+          console.log(`Count updated: ${count}`)
         }
       })
     })
@@ -176,7 +184,7 @@ class SqlitePersist {
           reject(err.message)
         } else {
           resolve(block)
-         // console.log(`block updated: ${block}`)
+          console.log(`block updated: ${block}`)
         }
       })
     })
@@ -286,7 +294,7 @@ class SqlitePersist {
                 reject(err.message)
               } else {
                 resolve(blockNumber)
-               // console.log(`latestBlock updated: ${blockNumber}`)
+                console.log(`latestBlock updated: ${blockNumber}`)
               }
             })
           }

@@ -27,7 +27,7 @@ const exchange = (state = initState, action) => {
       newState.sourceAmount = ""
       newState.destAmount = ""
       newState.errors = initState.errors
-      newState.gasPrice = initState.gasPrice
+      //newState.gasPrice = initState.gasPrice
       newState.bcError = ""
       newState.step = initState.step
       return newState
@@ -230,6 +230,10 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.FOCUS_INPUT": {
       newState.inputFocus = action.payload
+      return newState
+    }
+    case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
+      newState.gasPrice = action.payload
       return newState
     }
   }

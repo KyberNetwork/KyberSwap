@@ -106,10 +106,9 @@
   }
   
   .example-leave {
-    opacity: 1;
+    display: none;
   }
   
   .example-leave.example-leave-active {
-    opacity: 0.01;
-    transition: opacity 1000ms;
+    display: none;
   }
