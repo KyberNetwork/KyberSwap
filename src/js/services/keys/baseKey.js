@@ -15,7 +15,7 @@ export const sendEtherFromAccount = (
     to: destAddress,
     value: sourceAmount,
     // EIP 155 chainId - mainnet: 1, ropsten: 3
-    chainId: 42
+    chainId: BLOCKCHAIN_INFO.networkId
   }
 
   return { txParams, keystring, password }
@@ -37,7 +37,7 @@ export const sendTokenFromAccount = (
     value: '0x0',
     data: txData,
     // EIP 155 chainId - mainnet: 1, ropsten: 3
-    chainId: 42
+    chainId: BLOCKCHAIN_INFO.networkId
   }
   return { txParams, keystring, password }
 }
@@ -59,7 +59,7 @@ export const etherToOthersFromAccount = (
     value: sourceAmount,
     data: txData,
     // EIP 155 chainId - mainnet: 1, ropsten: 3
-    chainId: 42
+    chainId: BLOCKCHAIN_INFO.networkId
   }
   return { txParams, keystring, password }
 }
@@ -77,7 +77,7 @@ export const getAppoveToken = (ethereum, sourceToken, sourceAmount, nonce, gas, 
     value: '0x0',
     data: approvalData,
     // EIP 155 chainId - mainnet: 1, ropsten: 3
-    chainId: 42
+    chainId: BLOCKCHAIN_INFO.networkId
   }
   return { txParams, keystring, password }
 }
@@ -100,7 +100,7 @@ export const tokenToOthersFromAccount = (
     value: '0x0',
     data: exchangeData,
     // EIP 155 chainId - mainnet: 1, ropsten: 3
-    chainId: 42
+    chainId: BLOCKCHAIN_INFO.networkId
   }
   return { txParams, keystring, password }
 }

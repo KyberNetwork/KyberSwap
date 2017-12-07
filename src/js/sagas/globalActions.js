@@ -101,6 +101,12 @@ export function* checkConnection(action){
   }
 }
 
+export function* setGasPrice(action){
+  const ethereum = action.payload
+  const gasPrice = yield call([ethereum, ethereum.call("getGasPrice")])
+  yield put(actions.setGasPriceComplete(gasPrice))
+}
+
 export function* watchGlobal() {
   yield takeEvery("GLOBAL.NEW_BLOCK_INCLUDED_PENDING", getLatestBlock)
   yield takeEvery("GLOBAL.RATE_UPDATED_PENDING", updateRate)
@@ -110,6 +116,7 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.UPDATE_HISTORY_EXCHANGE", updateHistoryExchange)
   yield takeEvery("GLOBAL.CHANGE_LANGUAGE", changelanguage)
   yield takeEvery("GLOBAL.CHECK_CONNECTION", checkConnection)
+  yield takeEvery("GLOBAL.SET_GAS_PRICE", setGasPrice)
 }
 
 

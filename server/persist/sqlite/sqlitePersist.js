@@ -161,7 +161,7 @@ class SqlitePersist {
           reject(err.message)
         } else {
           resolve(count)
-          //console.log(`Count updated: ${count}`)
+          console.log(`Count updated: ${count}`)
         }
       })
     })
@@ -176,7 +176,7 @@ class SqlitePersist {
           reject(err.message)
         } else {
           resolve(block)
-         // console.log(`block updated: ${block}`)
+          console.log(`block updated: ${block}`)
         }
       })
     })
@@ -286,7 +286,7 @@ class SqlitePersist {
                 reject(err.message)
               } else {
                 resolve(blockNumber)
-               // console.log(`latestBlock updated: ${blockNumber}`)
+                console.log(`latestBlock updated: ${blockNumber}`)
               }
             })
           }

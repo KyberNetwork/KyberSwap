@@ -15,6 +15,14 @@ export default class BaseEthereumProvider {
     return this.rpc.version.api
   }
 
+  getGasPrice(){
+    return new Promise((resolve, reject) => {
+      this.rpc.eth.getGasPrice().then((result)=>{
+        resolve(result)
+      })
+    })
+  }
+
   isConnectNode() {
     return new Promise((resolve, reject) => {
       this.rpc.eth.getBlock("latest", false).then((block) => {
