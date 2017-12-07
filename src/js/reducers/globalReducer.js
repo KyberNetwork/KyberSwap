@@ -1,54 +1,80 @@
-import {REHYDRATE} from 'redux-persist/constants'
+import { REHYDRATE } from 'redux-persist/lib/constants'
 import Rate from "../services/rate"
 import BigNumber from "bignumber.js"
-import GLOBAL from "../constants/globalActions"
+import constants from '../services/constants';
 
 const initState = {
-  currentBlock: 0,
-  connected: true,
   termOfServiceAccepted: false,
   nodeName: "Infura Kovan",
   nodeURL: "https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi",
-  rates: {},
+  history: constants.HISTORY_EXCHANGE,
+  count: {storageKey: constants.STORAGE_KEY},
+  conn_checker: constants.CONNECTION_CHECKER
 }
 
-const global = (state=initState, action) => {
+const global = (state = initState, action) => {
   switch (action.type) {
     case REHYDRATE: {
-      if (action.payload.global) {
-        var loadedRates = action.payload.global.rates
-        var rates = {}
-        Object.keys(loadedRates).forEach((id) => {
-          var rateMap = loadedRates[id]
-          var rate = new Rate(
-            rateMap.source,
-            rateMap.dest,
-            rateMap.reserve,
-            new BigNumber(rateMap.rate),
-            new BigNumber(rateMap.expirationBlock),
-            new BigNumber(rateMap.balance),
-          )
-          rates[id] = rate
-        })
-        var newState = {...state, ...action.payload.global, rates: rates}
-        return newState
+      if (action.key === "global") {
+        if (action.payload && action.payload.history) {
+          var history = action.payload.history
+          
+          // check load from loaclforage or initstate
+          if(action.payload.count && action.payload.count.storageKey !== constants.STORAGE_KEY){
+            history = constants.HISTORY_EXCHANGE
+          } 
+          return {...state,
+            history: {...history},
+            count: {storageKey: constants.STORAGE_KEY}
+           }
+        }
       }
       return state
     }
-    case GLOBAL.NEW_BLOCK_INCLUDED_FULFILLED: {
-      return {...state, currentBlock: action.payload}
+    case "GLOBAL.NEW_BLOCK_INCLUDED_FULFILLED": {
+      var history = { ...state.history }
+      history.currentBlock = action.payload
+      return Object.assign({}, state, { history: history })
     }
-    case GLOBAL.GET_NEW_BLOCK_FAILED: {
-      return {...state, connected: false}
+    case "GLOBAL.TERM_OF_SERVICE_ACCEPTED": {
+      return { ...state, termOfServiceAccepted: true }
     }
-    case GLOBAL.RATE_UPDATED_FULFILLED: {
-      var newRates = {...state.rates}
-      var rate = action.payload
-      newRates[rate.id()] = rate
-      return {...state, rates: newRates }
+    case "GLOBAL.IDLE_MODE": {
+      return { ...state, idleMode: true }
     }
-    case GLOBAL.TERM_OF_SERVICE_ACCEPTED: {
-      return {...state, termOfServiceAccepted: true}
+    case "GLOBAL.EXIT_IDLE_MODE": {
+      return { ...state, idleMode: false }
+    }
+    case "GLOBAL.UPDATE_HISTORY_EXCHANGE": {
+      var history = { ...state.history }
+      const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
+      if (!isAutoFetch) {
+        history.isFetching = true
+      }
+      return Object.assign({}, state, { history: history })
+      break
+    }
+    case "GLOBAL.UPDATE_HISTORY": {
+      const { logs, latestBlock, page, eventsCount, isAutoFetch } = action.payload
+      var history = { ...state.history }
+      history.logsEth = logs.eth
+      history.logsToken = logs.token
+      history.currentBlock = latestBlock
+      history.page = page
+      history.eventsCount = eventsCount
+
+      history.isFetching = false
+      return Object.assign({}, state, { history: history })
+    }
+    case "GLOBAL.CONNECTION_UPDATE_IS_CHECK":{
+      var conn_checker = { ...state.conn_checker }
+      conn_checker.isCheck = action.payload
+      return Object.assign({}, state, { conn_checker: conn_checker })
+    }
+    case "GLOBAL.CONNECTION_UPDATE_COUNT":{
+      var conn_checker = { ...state.conn_checker }
+      conn_checker.count = action.payload
+      return Object.assign({}, state, { conn_checker: conn_checker })
     }
   }
   return state

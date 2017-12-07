@@ -1,0 +1,218 @@
+// token
+
+.token-stamp {
+  display: block;
+  background-color: white;
+  padding: 12px;
+  box-shadow: 0 10px 40px 0 rgba($light-gray, .5);
+  border-radius: $global-radius;
+  margin-bottom: 15px;
+  &.empty {
+    opacity: .5;
+    cursor: initial;
+  }
+  &.selected {
+    background: $accent-gradient;
+    box-shadow: 0 10px 40px 0 rgba($primary-color, .3);
+    .name {
+      color: white;
+    }
+    .balance {
+      color: white;
+      border-top-color: rgba($light-gray, .3);
+      &:before {
+        color: $light-gray;
+      }
+    }
+  }
+  img {
+    margin-right: 10px;
+    background-color: white;
+    border-radius: 1000px;
+  }
+  .name {
+    font-weight: bold;
+    font-size: 16px;
+    color: $dark-gray;
+  }
+  .balance {
+    text-align: center;
+    color: $dark-gray;
+    font-family: $font-family-monospace;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 20px;
+    border-top: 1px solid lighten($light-gray, 5);
+    padding-top: 8px;
+    margin-top: 10px;
+    &:before {
+      display: none;
+      font-family: $body-font-family;
+      content: 'Balance';
+      color: $primary-color;
+      text-transform: uppercase;
+      float: left;
+      margin-right: 5px;
+    }
+  }
+  @include breakpoint(medium) {
+    padding: 15px;
+    .balance {
+      text-align: right;
+      &:before {
+        display: block;
+      }
+    }
+  }
+}
+
+.token-select {
+  background-color: white;
+  padding: 0 30px 0 45px;
+  min-height: 40px;
+  height: 40px;
+  box-shadow: 0 10px 40px 0 rgba($light-gray, .5);
+  font-size: 13px;
+  border-radius: 1000px;
+  cursor: pointer;
+  position: relative;
+  img {
+    position: absolute;
+    left: 6px;
+    top: 6px;
+  }
+  span.name {
+    text-transform: none;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 40px;
+  }
+  &:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-left-color: $dark-gray;
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -5px;
+  }
+}
+
+.token-amount {
+  position: relative;
+  > input {
+    padding-right: 48px;
+    margin-bottom: 0;
+    font-size: 14px;
+  }
+  > .name {
+    display: block;
+    position: absolute;
+    top: 0;
+    line-height: 40px;
+    right: 12px;
+    white-space: nowrap;
+    text-align: left;
+  }
+}
+
+.token-input {
+  background-color: white;
+  box-shadow: 0 10px 40px 0 rgba($light-gray, .5);
+  border-radius: $global-radius;
+  overflow: hidden;
+  display: table;
+  width: 100%;
+  min-height: 64px;
+  &.error {
+    box-shadow: inset 0 -1px 0 0 rgba($alert-color, .25), 0 10px 40px 0 rgba($alert-color, .1);
+  }
+  input {
+    appearance: none;
+    display: table-cell;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: $font-family-monospace;
+    border: none;
+    text-align: center;
+    padding: 12px 15px;
+    height: 62px;
+    color: black;
+    margin: 1px 0 0 0;
+    outline: none;
+    box-shadow: none;
+    border-radius: 0;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  .info {
+    display: table-cell;
+    min-width: 125px;
+    vertical-align: middle;
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+    padding-left: 12px;
+    padding-right: 30px;
+    &:before {
+      content: '';
+      height: 48px;
+      position: absolute;
+      top: 50%;
+      margin-top: -24px;
+      left: 0;
+      display: block;
+      width: 1px;
+      background-color: $light-gray;
+    }
+    &:after {
+      content: '';
+      width: 0;
+      height: 0;
+      border: 5px solid transparent;
+      border-left-color: $dark-gray;
+      display: block;
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      margin-top: -5px;
+    }
+    img {
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    span.name {
+      font-size: 16px;
+      font-weight: bold;
+      vertical-align: middle;
+    }
+  }
+}
+
+p.token-compare {
+  font-size: 14px;
+  color: $medium-gray;
+  font-weight: bold;
+  letter-spacing: .5px;
+  font-family: $font-family-monospace;
+  text-align: center;
+  span {
+    margin-left: 10px;
+    &:before {
+      content: '(';
+    }
+    &:after {
+      content: ')'
+    }
+    &.up {
+      color: $primary-color;
+    }
+    &.down {
+      color: $alert-color;
+    }
+  }
+}

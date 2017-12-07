@@ -1,0 +1,108 @@
+{
+  "connections": {
+    "http": "https://mainnet.infura.io/DtzEYY0Km2BA3YwyJcBG",
+    "ws": "wss://mainnet.infura.io/ws"
+  },
+  "history_endpoint":"http://0.0.0.0:3001",
+  "tokens": {
+    "ETH": {
+      "name": "Ethereum",
+      "symbol": "ETH",
+      "icon": "/assets/img/tokens/eth.svg",
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimal": 18
+    },    
+    "KNC": {
+      "name": "KyberNetwork",
+      "symbol": "KNC",
+      "icon": "/assets/img/tokens/knc.svg",
+      "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+      "decimal": 18
+    },
+    "OMG": {
+      "name": "OmiseGO",
+      "symbol": "OMG",
+      "icon": "/assets/img/tokens/omg.svg",
+      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+      "decimal": 18 
+    },
+    "DGD": {
+      "name": "Digix",
+      "symbol": "DGD",
+      "icon": "/assets/img/tokens/dgd.svg",
+      "address": "0xe0b7927c4af23765cb51314a0e0521a9645f0e2a",
+      "decimal": 9  
+    },
+    "CVC": {
+      "name": "Civic",
+      "symbol": "CVC",
+      "icon": "/assets/img/tokens/cvc.svg",
+      "address": "0x41e5560054824ea6b0732e656e3ad64e20e94e45",
+      "decimal": 8  
+    },
+    "FUN": {
+      "name": "FunFair",
+      "symbol": "FUN",
+      "icon": "/assets/img/tokens/fun.svg",
+      "address": "0x419d0d8bdd9af5e606ae2232ed285aff190e711b",
+      "decimal": 8
+    },
+    "MCO": {
+      "name": "Monaco",
+      "symbol": "MCO",
+      "icon": "/assets/img/tokens/mco.svg",
+      "address": "0xb63b606ac810a52cca15e44bb630fd42d8d1d83d",
+      "decimal": 8 
+    },
+    "GNT": {
+      "name": "Golem",
+      "symbol": "GNT",
+      "icon": "/assets/img/tokens/gnt.svg",
+      "address": "0xa74476443119a942de498590fe1f2454d7d4ac0d",    
+      "decimal": 18
+    },
+    "ADX": {
+      "name": "Adex",
+      "symbol": "ADX",
+      "icon": "/assets/img/tokens/adx.svg",
+      "address": "0x4470bb87d77b963a013db939be332f927f2b992e",  
+      "decimal": 4 
+    },
+    "PAY": {
+      "name": "TenX",
+      "symbol": "PAY",
+      "icon": "/assets/img/tokens/pay.svg",
+      "address": "0xb97048628db6b661d4c2aa833e95dbe1a905b280",  
+      "decimal": 18  
+    },
+    "BAT": {
+      "name": "BasicAttention",
+      "symbol": "BAT",
+      "icon": "/assets/img/tokens/bat.svg",
+      "address": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",   
+      "decimal": 18 
+    },    
+    "EOS": {
+      "name": "Eos",
+      "symbol": "EOS",
+      "icon": "/assets/img/tokens/eos.svg",
+      "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0", 
+      "decimal": 18   
+    },
+    "LINK": {
+      "name": "ChainLink",
+      "symbol": "LINK",
+      "icon": "/assets/img/tokens/link.svg",
+      "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+      "decimal": 18 
+    }    
+  },
+  "ethScanUrl": "https://etherscan.io/",
+  "bank": "0x0",
+  "reserve": "0x582ea0af091ae0d98fdf08216cb2846711a65f6a",
+  "network": "0x842182360dfae06c6a84e8a47d37aeeadb115694",
+  "wrapper": "0x307d4d560d20bc2416aadfca79e10c22c424fdfC",
+  "endpoint": "wss://mainnet.infura.io/ws",
+  "averageBlockTime": 15000,
+  "networkId":1
+  }

@@ -1,0 +1,34 @@
+<svg width="25" height="28" viewBox="0 0 25 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>mco</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(-599 35)">
+<g id="mco">
+<g id="Vector">
+<use xlink:href="#path0_fill" transform="translate(599 -35)" fill="url(#paint0_linear)"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path1_fill" transform="translate(611.127 -35)" fill="url(#paint1_linear)"/>
+</g>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(68.0404 -73.7346 73.7346 68.0404 -70.8651 29.9639)">
+<stop offset="0" stop-color="#5E003F"/>
+<stop offset="0.52" stop-color="#C04372"/>
+<stop offset="0.56" stop-color="#CD5770"/>
+<stop offset="0.62" stop-color="#DF736E"/>
+<stop offset="0.7" stop-color="#ED886C"/>
+<stop offset="0.78" stop-color="#F7986B"/>
+<stop offset="0.87" stop-color="#FDA16A"/>
+<stop offset="1" stop-color="#FFA46A"/>
+</linearGradient>
+<linearGradient id="paint1_linear" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(21.1992 -32.5194 32.5194 21.1992 -25.3164 23.1374)">
+<stop offset="0" stop-color="#5E003F"/>
+<stop offset="0.48" stop-color="#C15866"/>
+<stop offset="0.81" stop-color="#EB8B69"/>
+<stop offset="1" stop-color="#FFA46A"/>
+</linearGradient>
+<path id="path0_fill" d="M 2.95406 14.9761L 6.15326 12.5942L 8.98118 14.3923L 8.98118 17.6251L 11.1207 19.6764L 11.1197 20.6387L 9.05818 22.5612L 7.31585 22.5612L 2.95406 14.9761ZM 13.0632 20.641L 13.059 19.6726L 15.1913 17.6255L 15.1913 14.3923L 17.9888 12.5723L 21.1819 14.9761L 16.8418 22.5392L 15.1228 22.5392L 13.0632 20.641ZM 10.0305 14.3923L 8.98958 11.6793L 15.1785 11.6793L 14.1586 14.3923L 14.4598 17.4236L 12.0715 17.4288L 9.71157 17.433L 10.0305 14.3923ZM 12.0715 10.937L 6.18994 10.9342L 7.28337 6.07192L 16.8316 6.07192L 17.9838 10.9405L 12.0715 10.937ZM 12.0715 0.00686014L 0 7.00168L 0 21.0004L 12.0715 27.9927L 12.0855 28L 24.2492 20.9999L 24.2492 7.00168L 12.0862 0L 12.0715 0.00686014Z"/>
+<path id="path1_fill" d="M 0.99122 20.641L 0.987019 19.6726L 3.11926 17.6255L 3.11926 14.3923L 5.9168 12.5723L 9.10984 14.9761L 4.76976 22.5392L 3.05038 22.5392L 0.99122 20.641ZM 1.70902e-07 0.00728015L 1.70902e-07 6.07206L 4.75869 6.07206L 5.9119 10.9407L 1.70902e-07 10.9376L 1.70902e-07 11.6796L 3.10596 11.6796L 2.08604 14.3923L 2.38831 17.4236L 1.70902e-07 17.4288L 1.70902e-07 27.9927L 0.0140005 28L 12.1774 21.0004L 12.1774 7.00168L 0.0137202 0L 1.70902e-07 0.00728015Z"/>
+</defs>
+</svg>

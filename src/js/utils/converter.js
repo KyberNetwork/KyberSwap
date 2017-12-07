@@ -1,8 +1,6 @@
 // in this package, all number are in 18 decimals precision
 
 import BigNumber from 'bignumber.js'
-
-import supported_tokens from "../services/supported_tokens"
 import constants from "../services/constants"
 
 
@@ -28,6 +26,37 @@ export function calculateDest(source, rate) {
   return dest
 }
 
+export function caculateSourceAmount(destAmount, offeredRate, precision){
+  if(!destAmount || !offeredRate || acceptableTyping(destAmount) || acceptableTyping(offeredRate)){
+    return "0"
+  }
+  var bigDest = new BigNumber(destAmount)
+  var bigOfferedRate = new BigNumber(offeredRate)
+  
+  bigOfferedRate = bigOfferedRate.div(1000000000000000000)
+  var result = bigDest.div(bigOfferedRate)
+  if(precision){
+    return result.toFixed(precision)
+  } else {
+    return result.toString()
+  }
+}
+
+export function caculateDestAmount(sourceAmount, offeredRate, precision){
+  if(!sourceAmount || !offeredRate || acceptableTyping(sourceAmount) || acceptableTyping(offeredRate)){
+    return "0"
+  }
+  var bigSource = new BigNumber(sourceAmount)
+  var bigOfferedRate = new BigNumber(offeredRate)
+  
+  bigOfferedRate = bigOfferedRate.div(1000000000000000000)
+  var result = bigSource.times(bigOfferedRate)
+  if(precision){
+    return result.toFixed(precision)
+  } else {
+    return result.toString()
+  }
+}
 
 export function calculateRate(source, dest) {
   var bigSource = new BigNumber(source)
@@ -80,6 +109,17 @@ export function gweiToWei(number) {
   }
 }
 
+export function gweiToEth(number) {
+  var bigNumber = new BigNumber(number)
+  if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
+    return number
+  } else if (acceptableTyping(number)) {
+    return number
+  } else {
+    return bigNumber.div(1000000000).toString()
+  }
+}
+
 export function weiToGwei(number) {
   var bigNumber = new BigNumber(number)
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
@@ -91,39 +131,24 @@ export function weiToGwei(number) {
   }
 }
 
-export function toT(number, precision) {
+export function toT(number, decimal, round) {
   var bigNumber = new BigNumber(number)
   var result
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
     return number
   } else if (acceptableTyping(number)) {
     return number
-  } else {
+  }
+  if (decimal) {
+    result = bigNumber.div(Math.pow(10, decimal));
+  }
+  else {
     result = bigNumber.div(1000000000000000000)
   }
-  if (precision) {
-    return result.toFixed(precision)
-  } else {
+  if(round){
+    return result.round(round).toString()
+  }else{
     return result.toString()
-  }
-}
-
-export function getToken(address) {
-  if (address == constants.ETHER_ADDRESS) {
-    return {
-      name: "Ether",
-      icon: "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png",
-      symbol: "ETH",
-      address: constants.ETHER_ADDRESS,
-    }
-  } else {
-    for (var i = 0; i < supported_tokens.length; i++) {
-      var tok = supported_tokens[i]
-      if (tok.address == address) {
-        return { ...tok }
-      }
-    }
-    throw new Error("Unsupported token")
   }
 }
 
@@ -135,9 +160,21 @@ export function numberToHex(number) {
   return "0x" + (new BigNumber(number)).toString(16)
 }
 
+export function biggestNumber() {
+  var initNumber = new BigNumber(2)
+  return "0x" + (initNumber.pow(255).toString(16))
+  //return "0x" + (new BigNumber(Math.pow(2,256)-1)).toString(16)
+}
+
+
 export function hexToNumber(hex) {
   return new BigNumber(hex).toNumber()
 }
+
+export function hexToBigNumber(hex) {
+  return new BigNumber(hex)
+}
+
 
 export function toEther(number) {
   var bigNumber = new BigNumber(number)
@@ -155,4 +192,51 @@ export function errorName(message) {
   } else {
     return message
   }
+}
+
+
+export function stringEtherToBigNumber(number, decimal) {
+  var param = new BigNumber(10).pow(decimal ? decimal : 18)
+  var bigNumber = new BigNumber(number).times(param)
+  return bigNumber
+}
+export function stringToBigNumber(number) {
+  var bigNumber = new BigNumber(number)
+  return bigNumber
+}
+
+export function stringToHex(number, decimal) {
+  var param = new BigNumber(10).pow(decimal ? decimal : 18)
+  var bigNumber = new BigNumber(number).times(param)
+  return "0x" + bigNumber.toString(16)
+}
+
+export function roundingNumber(number) {
+  const MAX_DIGIS = 7;
+  number = +number;
+  if (isNaN(number) || number <= 0) return 0;
+
+  let numberStr = number.toString();
+  if (Number.isInteger(number)) {
+    return number;
+  }
+  if(number < 1e-7){
+    return 0;
+  }
+  let result = number.toPrecision(number < 1 ? MAX_DIGIS - 1 : MAX_DIGIS);
+  return +result;
+}
+
+export function toPrimitiveNumber(x) {
+  var bigNum = new BigNumber(x)
+  return bigNum.toString(10)
+};
+
+export function caculateTokenEpsilon(rate, decimal, symbol){
+  var tokenRate = rate
+  if (symbol === "ETH"){
+    tokenRate = new BigNumber(10).pow(18)
+  }
+  var ts = new BigNumber(10).pow(decimal).times(constants.EPSILON)
+  return ts.div(tokenRate)
 }

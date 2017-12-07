@@ -1,0 +1,114 @@
+#import-account, #info{
+    & ~ .history{
+        background-image: url(/assets/img/bg-wave.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        margin-top: -35px;
+        .frame{
+            padding-top: 100px;
+        }
+    }
+} 
+.history{
+    .frame{
+        background: url(/assets/img/icons.svg) no-repeat -40px 50px;
+    }
+}
+
+.transaction-list {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  div, span {
+      box-sizing: border-box;
+  }
+
+  .transaction-list-item {
+      display: block;
+      margin: 20px 2px;
+
+        .coin-icon{
+            position: relative;
+            width:100px;
+        }
+        .inner {
+          display: flex;
+          cursor: pointer;
+          height: 100%;
+          border-radius: 5px;
+          border:1px solid #eee;
+          padding: 12px;
+          background-color: #fff;
+          background-image: url('../img/transaction-list-item-bg.png');
+          background-size: cover;
+          background-position: center;
+          &:hover{
+            border:1px solid #ccc;
+          }
+
+          .coin {
+              display: block;
+               position: absolute;
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              background-size: cover;
+              background-position: center;
+
+              &.coin2 {
+                  left: 35px;
+                  z-index: 1;
+              }
+          }
+
+          .titles {
+              display: block;
+              margin-left: 12%;
+              .rate {
+                  display: inline-block;
+                  font-size: 24px;
+                  font-weight: bold;
+                  color: #484647;
+                  vertical-align: bottom;
+                  margin-right: 20px;
+                  line-height: 1em;
+              }
+
+              .coins {
+                  display: inline-block;
+                  font-size: 16px;
+                  font-weight: normal;
+                  color: #484647;
+                  vertical-align: bottom;
+                  line-height: 1em;
+              }
+
+              .time {
+                  display: block;
+                  font-size: 14px;
+                  font-weight: normal;
+                  color: #bdbfbf;
+                  line-height: 1.5em;
+              }
+          }
+      }
+  }
+}
+
+
+.example-enter {
+   opacity: 0.01;
+  }
+  
+  .example-enter.example-enter-active {
+    opacity: 1;
+    transition: opacity 1000ms;
+  }
+  
+  .example-leave {
+    display: none;
+  }
+  
+  .example-leave.example-leave-active {
+    display: none;
+  }
