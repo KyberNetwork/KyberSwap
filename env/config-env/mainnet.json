@@ -1,7 +1,7 @@
 {
   "connections": {
     "http": "https://mainnet.infura.io/DtzEYY0Km2BA3YwyJcBG",
-    "ws": "wss://kovan.kyber.network/ws/"
+    "ws": "wss://mainnet.infura.io/ws"
   },
   "history_endpoint":"http://0.0.0.0:3001",
   "tokens": {
@@ -102,7 +102,7 @@
   "reserve": "0x582ea0af091ae0d98fdf08216cb2846711a65f6a",
   "network": "0x842182360dfae06c6a84e8a47d37aeeadb115694",
   "wrapper": "0x307d4d560d20bc2416aadfca79e10c22c424fdfC",
-  "endpoint": "https://mainnet.infura.io/DtzEYY0Km2BA3YwyJcBG",
+  "endpoint": "wss://mainnet.infura.io/ws",
   "averageBlockTime": 15000,
   "networkId":1
   }

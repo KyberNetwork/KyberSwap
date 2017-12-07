@@ -9,6 +9,7 @@ var BLOCKCHAIN_INFO = require("../../../env")
 var filePath
 
 var dbName = process.env.npm_config_chain
+
 //console.log("db name: " + dbName)
 switch(dbName){
   case "kovan":
@@ -20,6 +21,13 @@ switch(dbName){
   default:
     filePath = path.join(__dirname, 'temp.db')
     break
+}
+
+var isInit = process.env.npm_config_init
+if (isInit){
+  fs.unlink(filePath, (err, result)=>{
+    console.log("Clear old file")
+  })
 }
 
 class SqlitePersist {
