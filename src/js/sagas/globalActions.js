@@ -57,16 +57,20 @@ export function* updateAllRate(action) {
 
 export function* changelanguage(action){
   const { ethereum, lang, localForage } = action.payload
+  
   try{
     var state = store.getState()
-    if(!state.locale || ! state.locale.translations|| !state.locale.translations["pack"] || state.locale.translations["pack"].indexOf(lang) < 0 ){
+
+    var activeLang = lang == 'en' ? lang : 'active'
+    if(!state.locale || !state.locale.translations|| !state.locale.translations["pack"] || state.locale.translations["pack"].indexOf(lang) < 0 ){
       const languagePack = yield call(ethereum.call("getLanguagePack"), lang)
       if(!languagePack) return;
-      yield put.sync(addTranslationForLanguage(languagePack, lang))
-      localForage.setItem('activeLanguageData', languagePack)
+      
+      yield put.sync(addTranslationForLanguage(languagePack, activeLang))
+      // localForage.setItem('activeLanguageData', languagePack)
     }
-    yield put(setActiveLanguage(lang))
-    localForage.setItem('activeLanguage', lang)
+    yield put(setActiveLanguage(activeLang))
+    // localForage.setItem('activeLanguage', lang)
   } catch(err){
     console.log(err)
   }

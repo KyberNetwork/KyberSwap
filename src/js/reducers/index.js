@@ -27,11 +27,11 @@ const appReducer = combineReducers({
     storage: localForage,
     blacklist: ['conn_checker']
   }, global), 
-  // locale: persistReducer({
-  //   key: 'locale',
-  //   storage: localForage
-  // }, localeReducer),  
-  locale: localeReducer
+  locale: persistReducer({
+    key: 'locale',
+    storage: localForage
+  }, localeReducer),  
+  // locale: localeReducer
 })
 
 const rootReducer = (state, action) => {

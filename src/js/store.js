@@ -16,7 +16,7 @@ import { constants } from "zlib";
 
 import  constantsVar from "../js/services/constants"
 
-const languages = Language.supportLanguage;
+
 
 const routeMiddleware = routerMiddleware(history)
 
@@ -40,15 +40,22 @@ const onMissingTranslation = (key, languageCode) => {
   console.log(key)
   console.log(languageCode)
 };
+const defaultLanguagePack = require("../../lang/" + Language.defaultLanguage + ".json")
 
-store.dispatch(initialize(languages, { 
+var arrayLangInit = Language.loadAll? Language.supportLanguage : Language.defaultAndActive 
+
+console.log("================")
+console.log(arrayLangInit)
+
+store.dispatch(initialize(arrayLangInit, { 
   missingTranslationCallback: onMissingTranslation, 
   showMissingTranslationMsg: false,
-  defaultLanguage: 'en' 
+  // defaultLanguage: Language.defaultLanguage
 }));
+store.dispatch(addTranslationForLanguage(defaultLanguagePack, Language.defaultLanguage));
 
 if(Language.loadAll){
-  Language.supportLanguage.map((langName) => {
+  Language.otherLang.map((langName) => {
     try{
       let langData = require("../../lang/" + langName + ".json")
       store.dispatch(addTranslationForLanguage(langData, langName));
@@ -56,39 +63,32 @@ if(Language.loadAll){
       console.log(err)
     }
   })
-} else {
-  try{
-    const defaultLanguagePack = require("../../lang/" + Language.defaultLanguage + ".json")
-    store.dispatch(addTranslationForLanguage(defaultLanguagePack, Language.defaultLanguage));
-  } catch(err){
-    console.log(err)
-  }
 }
 
 
-// check selected language pack from localForage
-Promise.all([
-  localForage.getItem('activeLanguage'),
-  localForage.getItem('activeLanguageData'),
-  localForage.getItem('storageKey')
-]).then((result) => {
-  if(result[0] !== Language.defaultLanguage && result[0] && result[1]){
-    if(result[2] !== constantsVar.STORAGE_KEY){
-      console.log("-----------update language package-------------")
-      try{
-        var updateLang = require("../../lang/" + result[0] + ".json")
-        localForage.setItem('activeLanguageData', updateLang)
-        localForage.setItem('storageKey', constantsVar.STORAGE_KEY)
-        store.dispatch(addTranslationForLanguage(updateLang, result[0]));
-      } catch(err){
-        console.log(err)
-      }
-    } else {
-      store.dispatch(addTranslationForLanguage(result[1], result[0]));
-    }
-    store.dispatch(setActiveLanguage(result[0]))
-  }
-})
+// // check selected language pack from localForage
+// Promise.all([
+//   localForage.getItem('activeLanguage'),
+//   localForage.getItem('activeLanguageData'),
+//   localForage.getItem('storageKey')
+// ]).then((result) => {
+//   if(result[0] !== Language.defaultLanguage && result[0] && result[1]){
+//     if(result[2] !== constantsVar.STORAGE_KEY){
+//       console.log("-----------update language package-------------")
+//       try{
+//         var updateLang = require("../../lang/" + result[0] + ".json")
+//         localForage.setItem('activeLanguageData', updateLang)
+//         localForage.setItem('storageKey', constantsVar.STORAGE_KEY)
+//         store.dispatch(addTranslationForLanguage(updateLang, result[0]));
+//       } catch(err){
+//         console.log(err)
+//       }
+//     } else {
+//       store.dispatch(addTranslationForLanguage(result[1], result[0]));
+//     }
+//     store.dispatch(setActiveLanguage(result[0]))
+//   }
+// })
 
 
 const persistor =  persistStore(store)
