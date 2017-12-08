@@ -1,38 +1,40 @@
 import localForage from 'localforage'
 import  constants from "./constants"
-import Language from "../../../lang"
+import Language from "../../../lang/index"
+import { initialize, addTranslation, addTranslationForLanguage, setActiveLanguage, localeReducer } from 'react-localize-redux';
 
-export default class LanguageService {
-  constructor(isClientLoad, store){
-    super(isClientLoad, store)
-    this.isClientLoad = isClientLoad
-    this.store = store
-    this.initLanguage(isClientLoad)
+
+const onMissingTranslation = (key, languageCode) => {
+  // here you can do whatever you want e.g. call back end service that will 
+  console.log("-------------- missing transsaction")
+  console.log(key)
+  console.log(languageCode)
+};
+
+export function initLanguage(store){
+  const defaultLanguagePack = require("../../../lang/" + Language.defaultLanguage + ".json")
+  const arrayLangInit = Language.loadAll? Language.supportLanguage : Language.defaultAndActive 
+
+  store.dispatch(initialize(arrayLangInit, { 
+    missingTranslationCallback: onMissingTranslation, 
+    showMissingTranslationMsg: false,
+    defaultLanguage: Language.defaultLanguage
+  }));
+  store.dispatch(addTranslationForLanguage(defaultLanguagePack, Language.defaultLanguage));
+
+  if(Language.loadAll){
+    Language.otherLang.map((langName) => {
+      try{
+        let langData = require("../../../lang/" + langName + ".json")
+        store.dispatch(addTranslationForLanguage(langData, langName));
+      }catch(err){
+        console.log(err)
+      }
+    })
   }
+}
 
-  initLanguage(isClientLoad){
-    const defaultLanguagePack = require("../../lang/" + Language.defaultLanguage + ".json")
-    const arrayLangInit = Language.loadAll? Language.supportLanguage : Language.defaultAndActive 
-    this.store.dispatch(initialize(arrayLangInit, { 
-      missingTranslationCallback: onMissingTranslation, 
-      showMissingTranslationMsg: false,
-      // defaultLanguage: Language.defaultLanguage
-    }));
-    this.store.dispatch(addTranslationForLanguage(defaultLanguagePack, Language.defaultLanguage));
-
-    if(Language.loadAll){
-      Language.otherLang.map((langName) => {
-        try{
-          let langData = require("../../lang/" + langName + ".json")
-          this.store.dispatch(addTranslationForLanguage(langData, langName));
-        }catch(err){
-          console.log(err)
-        }
-      })
-    }
-  }
-
-  getLanguage(key){
-
-  }
+export function getLanguage(key){
+  let langData = require("../../../lang/" + key + ".json")
+  return langData
 }

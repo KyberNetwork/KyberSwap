@@ -7,6 +7,9 @@ import { push } from 'react-router-redux';
 import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
 import { store } from "../store"
 
+import { getLanguage } from "../services/language"
+import Language from "../../../lang"
+
 export function* getLatestBlock(action) {
   const ethereum = action.payload
   const block = yield call(ethereum.call("getLatestBlock"))
@@ -55,27 +58,6 @@ export function* updateAllRate(action) {
   yield put(actions.updateAllRateComplete(rates, isUpdateBalance))
 }
 
-export function* changelanguage(action){
-  const { ethereum, lang, localForage } = action.payload
-  
-  try{
-    var state = store.getState()
-
-    var activeLang = lang == 'en' ? lang : 'active'
-    if(!state.locale || !state.locale.translations|| !state.locale.translations["pack"] || state.locale.translations["pack"].indexOf(lang) < 0 ){
-      const languagePack = yield call(ethereum.call("getLanguagePack"), lang)
-      if(!languagePack) return;
-      
-      yield put.sync(addTranslationForLanguage(languagePack, activeLang))
-      // localForage.setItem('activeLanguageData', languagePack)
-    }
-    yield put(setActiveLanguage(activeLang))
-    // localForage.setItem('activeLanguage', lang)
-  } catch(err){
-    console.log(err)
-  }
-}
-
 export function* checkConnection(action){
   var {ethereum, count, maxCount, isCheck} = action.payload
   const isConnected = yield call([ethereum, ethereum.call("isConnectNode")])
@@ -111,6 +93,42 @@ export function* setGasPrice(action){
   yield put(actions.setGasPriceComplete(gasPrice))
 }
 
+export function* changelanguage(action){
+  const { ethereum, lang, localForage } = action.payload
+  
+  try{
+    var state = store.getState()
+
+    var activeLang = lang == 'en' ? lang : 'active'
+    if(!state.locale || !state.locale.translations|| !state.locale.translations["pack"] || state.locale.translations["pack"].indexOf(lang) < 0 ){
+      const languagePack = yield call(ethereum.call("getLanguagePack"), lang)
+      if(!languagePack) return;
+      
+      yield put.sync(addTranslationForLanguage(languagePack, activeLang))
+      // localForage.setItem('activeLanguageData', languagePack)
+    }
+    yield put(setActiveLanguage(activeLang))
+    // localForage.setItem('activeLanguage', lang)
+  } catch(err){
+    console.log(err)
+  }
+}
+
+export function* rehydratePersist(action){
+  if(action.key === "locale"){
+    var payload = action.payload
+    if(payload && !Language.loadAll && getActiveLanguage(payload).code == Language.defaultAndActive[1]){
+      //todo check if version of active lang is old => update
+      var currentActiveLang = payload.translations.pack[1]
+      try{
+        var activeLangpack = yield call(getLanguage, currentActiveLang)
+        yield put(addTranslationForLanguage('active', activeLangpack))
+      }catch(err){
+        console.log(err)
+      }
+    } 
+  }
+}
 export function* watchGlobal() {
   yield takeEvery("GLOBAL.NEW_BLOCK_INCLUDED_PENDING", getLatestBlock)
   yield takeEvery("GLOBAL.RATE_UPDATED_PENDING", updateRate)
@@ -121,6 +139,7 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.CHANGE_LANGUAGE", changelanguage)
   yield takeEvery("GLOBAL.CHECK_CONNECTION", checkConnection)
   yield takeEvery("GLOBAL.SET_GAS_PRICE", setGasPrice)
+  yield takeEvery("persist/REHYDRATE", rehydratePersist)
 }
 
 
