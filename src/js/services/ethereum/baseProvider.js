@@ -193,17 +193,28 @@ export default class BaseEthereumProvider {
           'Accept': 'application/json, text/plain, */*',
           'Content-Type': 'application/json'
         },
-        // body: JSON.stringify({
-        //   page: page,
-        //   itemPerPage: itemPerPage,
-        // })
       }).then((response) => {
         return response.json()
       }).then((data) => {
-        if(!data) rejected()
-        resolve(data)
+        for(let key in data){
+          data[key] = data[key].filter(item => {
+            return (this.tokenIsSupported(item.dest)
+            && this.tokenIsSupported(item.source))
+          })
+        }
+        resolve(data);
       })
     })
+  }
+
+  tokenIsSupported(address) {
+    let tokens = BLOCKCHAIN_INFO.tokens
+    for(let token in tokens){
+      if(tokens[token].address == address){
+        return true
+      }
+    }
+    return false
   }
 
   getRateExchange() {
