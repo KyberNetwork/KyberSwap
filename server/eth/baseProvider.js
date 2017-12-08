@@ -3,6 +3,7 @@ var Web3 = require("web3")
 var constants = require("../../src/js/services/constants")
 var ethUtil = require('ethereumjs-util')
 var BLOCKCHAIN_INFO = require("../../env")
+const https = require("https")
 
 class BaseEthereumProvider {
   constructor() {
@@ -19,11 +20,56 @@ class BaseEthereumProvider {
   }
 
   getLatestBlock() {
-    return new Promise((resolve, reject) => {
-      this.rpc.eth.getBlock("latest", false).then((block) => {
-        if (block != null) {
-          resolve(block.number)
+    // return new Promise((resolve, reject) => {
+    //   this.rpc.eth.getBlock("latest", false).then((block) => {
+    //     if (block != null) {
+    //       resolve(block.number)
+    //     }
+    //   })
+    // })
+    var serverPoint = BLOCKCHAIN_INFO.server_logs.url
+    var api = BLOCKCHAIN_INFO.server_logs.api_key
+
+    //var url = `${serverPoint}/api?module=proxy&action=eth_blockNumber&apikey=${api}`
+
+    var options = {
+      host: serverPoint,
+      path: `/api?module=proxy&action=eth_blockNumber&apikey=${api}`
+    }
+
+    return new Promise((resolve, rejected) => {
+      https.get(options, res => {
+        //console.log(res)
+        var statusCode = res.statusCode;
+        if (statusCode != 200) {
+          console.log("non-200 response status code:")
+          console.log(res.statusCode)
+          console.log("for url:")
+          console.log(serverPoint)
+          resolve(0);
+          return
         }
+
+        res.setEncoding("utf8");
+        let body = ""
+        res.on("data", data => {
+          body += data
+        })
+        res.on("end", () => {
+          try {
+            body = JSON.parse(body)
+            var blockNumber = this.rpc.eth.abi.decodeParameters(['uint256'], body.result)
+            resolve(blockNumber['0'])
+          } catch (e) {
+            console.log(e)
+            resolve(0)
+          }
+
+        })
+        res.on("error", function () {
+          console.log("GET request error")
+          resolve(0)
+        })
       })
     })
   }
@@ -57,7 +103,8 @@ class BaseEthereumProvider {
     return new Promise((resolve, reject) => {
       instance.methods.balanceOf(ownerAddr).call().then((result) => {
         if (result != null) {
-          resolve(result)
+
+          resolve(blockNumber)
         }
       })
     })
@@ -121,7 +168,7 @@ class BaseEthereumProvider {
   getRate(source, dest, reserve) {
     return new Promise((resolve, reject) => {
       this.networkContract.methods.getRate(source, dest, reserve).call().then((result) => {
-       // console.log(result)
+        // console.log(result)
         if (result != null) {
           resolve(result)
         }
@@ -135,7 +182,7 @@ class BaseEthereumProvider {
         Promise.resolve(tokenName),
         Promise.resolve(constants.ETH.symbol),
         this.getRate(tokensObj[tokenName].address, constants.ETH.address, reserve.index),
-        this.getRate(constants.ETH.address, tokensObj[tokenName].address, reserve.index), 
+        this.getRate(constants.ETH.address, tokensObj[tokenName].address, reserve.index),
       ])
     })
     return Promise.all(promises)
@@ -154,24 +201,71 @@ class BaseEthereumProvider {
     })
   }
 
+  // getLogExchange(fromBlock, toBlock) {
+  //   return new Promise((resolve, rejected) => {
+  //     // var cachedRange = constants.HISTORY_EXCHANGE.cached.range 
+  //     // var startBlock = (latestBlock - currentBlock) > cachedRange ? 
+  //     //                                               (latestBlock - cachedRange):
+  //     //                                               currentBlock
+  //     //console.log(startBlock)         
+  //     this.networkContract.getPastEvents('Trade', {
+  //       filter: { status: "mined" },
+  //       fromBlock: fromBlock,
+  //       toBlock: toBlock
+  //     }, )
+  //       .then(function (events) {
+  //        // console.log(events)
+  //         resolve(events)
+  //       }).catch((err) => {
+  //         rejected(err)
+  //       })
+  //   })
+  // }
+  // deCode(){
+  //   console.log(this.rpc.eth.abi.decodeParameters(['address', 'address', 'uint256', 'uint256'], "0x000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee0000000000000000000000009e973ef5ac3f207d6704b9f4e804691eebe9ecbc000000000000000000000000000000000000000000000000002386f26f9dfdb800000000000000000000000000000000000000000000000000000000315c2a72"))
+  // }
   getLogExchange(fromBlock, toBlock) {
+    var serverPoint = BLOCKCHAIN_INFO.server_logs.url
+    var api = BLOCKCHAIN_INFO.server_logs.api_key
+    var contractAddress = BLOCKCHAIN_INFO.network
+    var tradeTopic = constants.TRADE_TOPIC
+
+    //var url = `${serverPoint}/api?module=logs&action=getLogs&fromBlock=${fromBlock}&toBlock=${toBlock}&address=${contractAddress}&topic0=${tradeTopic}&apikey=${api}`
+    var options = {
+      host: serverPoint,
+      path: `/api?module=logs&action=getLogs&fromBlock=${fromBlock}&toBlock=${toBlock}&address=${contractAddress}&topic0=${tradeTopic}&apikey=${api}`
+    }
     return new Promise((resolve, rejected) => {
-      // var cachedRange = constants.HISTORY_EXCHANGE.cached.range 
-      // var startBlock = (latestBlock - currentBlock) > cachedRange ? 
-      //                                               (latestBlock - cachedRange):
-      //                                               currentBlock
-      //console.log(startBlock)         
-      this.networkContract.getPastEvents('Trade', {
-        filter: { status: "mined" },
-        fromBlock: fromBlock,
-        toBlock: toBlock
-      }, )
-        .then(function (events) {
-         // console.log(events)
-          resolve(events)
-        }).catch((err) => {
-          rejected(err)
+      https.get(options, res => {
+        var statusCode = res.statusCode;
+        if (statusCode != 200) {
+          console.log("non-200 response status code:");
+          console.log(res.statusCode)
+          console.log("for url:")
+          console.log(serverPoint)
+          resolve([]);
+          return
+        }
+
+        res.setEncoding("utf8");
+        let body = ""
+        res.on("data", data => {
+          body += data
         })
+        res.on("end", () => {
+          try {
+            body = JSON.parse(body)
+            resolve(body.result)
+          } catch (e) {
+            console.log(e)
+            resolve([])
+          }
+
+        }).on("error", function () {
+          console.log("GET request error")
+          resolve([])
+        })
+      })
     })
   }
 }
