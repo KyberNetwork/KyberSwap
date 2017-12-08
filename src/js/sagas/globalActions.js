@@ -96,39 +96,26 @@ export function* setGasPrice(action){
 export function* changelanguage(action){
   const { ethereum, lang, localForage } = action.payload
   
+  if(Language.supportLanguage.indexOf(lang) < 0) return
   try{
     var state = store.getState()
-
-    var activeLang = lang == 'en' ? lang : 'active'
-    if(!state.locale || !state.locale.translations|| !state.locale.translations["pack"] || state.locale.translations["pack"].indexOf(lang) < 0 ){
-      const languagePack = yield call(ethereum.call("getLanguagePack"), lang)
-      if(!languagePack) return;
-      
-      yield put.sync(addTranslationForLanguage(languagePack, activeLang))
-      // localForage.setItem('activeLanguageData', languagePack)
+    
+    var activeLang = lang
+    if(!Language.loadAll){
+      activeLang = lang == Language.defaultLanguage ? Language.defaultLanguage : Language.defaultAndActive[1]
+      if(!state || !state.locale || state.locale.translations["pack"][1] !== lang){
+        var languagePack = yield call(ethereum.call("getLanguagePack"), lang)
+        if(!languagePack) return;
+        
+        yield put.sync(addTranslationForLanguage(languagePack, activeLang))
+      }
     }
     yield put(setActiveLanguage(activeLang))
-    // localForage.setItem('activeLanguage', lang)
   } catch(err){
     console.log(err)
   }
 }
 
-export function* rehydratePersist(action){
-  if(action.key === "locale"){
-    var payload = action.payload
-    if(payload && !Language.loadAll && getActiveLanguage(payload).code == Language.defaultAndActive[1]){
-      //todo check if version of active lang is old => update
-      var currentActiveLang = payload.translations.pack[1]
-      try{
-        var activeLangpack = yield call(getLanguage, currentActiveLang)
-        yield put(addTranslationForLanguage('active', activeLangpack))
-      }catch(err){
-        console.log(err)
-      }
-    } 
-  }
-}
 export function* watchGlobal() {
   yield takeEvery("GLOBAL.NEW_BLOCK_INCLUDED_PENDING", getLatestBlock)
   yield takeEvery("GLOBAL.RATE_UPDATED_PENDING", updateRate)
@@ -139,7 +126,6 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.CHANGE_LANGUAGE", changelanguage)
   yield takeEvery("GLOBAL.CHECK_CONNECTION", checkConnection)
   yield takeEvery("GLOBAL.SET_GAS_PRICE", setGasPrice)
-  yield takeEvery("persist/REHYDRATE", rehydratePersist)
 }
 
 

@@ -22,6 +22,7 @@
     "transfer": "CHUYỂN KHOẢN",
     "transfer_to_address": "CHUYỂN ĐẾN ĐỊA CHỈ",
     "amount": "SỐ LƯỢNG",
+    "select_token": "Chọn Token",
 
     "advanced": "NÂNG CAO",
     "transaction_fee": "PHÍ GIAO DỊCH",

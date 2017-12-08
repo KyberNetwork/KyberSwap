@@ -14,10 +14,15 @@ import global from './globalReducer'
 import connection from './connection'
 import utils from './utilsReducer'
 import txs from './txsReducer'
-import locale from './languageReducer'import { localeReducer } from 'react-localize-redux';
+import locale from './languageReducer'
+// import { localeReducer } from 'react-localize-redux';
 
 const appReducer = combineReducers({
   account, exchange, transfer, txs, connection, router: routerReducer,utils,
+  locale: persistReducer({
+    key: 'locale',
+    storage: localForage
+  }, locale),  
   tokens: persistReducer({
     key: 'tokens',
     storage: localForage
@@ -26,12 +31,7 @@ const appReducer = combineReducers({
     key: 'global',
     storage: localForage,
     blacklist: ['conn_checker']
-  }, global), 
-  locale: persistReducer({
-    key: 'locale',
-    storage: localForage
-  }, localeReducer),  
-  // locale: locale
+  }, global)
 })
 
 const rootReducer = (state, action) => {

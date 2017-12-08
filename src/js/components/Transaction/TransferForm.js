@@ -27,7 +27,7 @@ const TransferForm = (props) => {
                   </label> */}
                 </div>
                 <div class="column medium-6">
-                  <label>Amount
+                  <label>{props.translate("transaction.amount") || "Amount"}
                     <div className={props.errors.amountTransfer !== '' ? "token-amount error" : "token-amount"}>
                       <input type="number" min="0" step="0.000001" placeholder="0" value={props.input.amount.value} className="amount-input" onChange={props.input.amount.onChange} /><span class="name">{props.tokenSymbol}</span>
                       {props.errors.amountTransfer &&
@@ -35,7 +35,7 @@ const TransferForm = (props) => {
                       }
                     </div>
                     <div class="address-balance clearfix">
-                      <span class="note">Address Balance</span>
+                      <span class="note">{props.translate("transaction.address_balance") || "Address Balance"}</span>
                       <a className="value" onClick={props.setAmount} title={props.balance.value}>
                         {props.balance.roundingValue} {props.tokenSymbol}
                       </a>

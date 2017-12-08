@@ -22,6 +22,7 @@
     "transfer": "TRANSFER",
     "transfer_to_address": "TRANSFER TO ADDRESS",
     "amount": "AMOUNT",
+    "select_token": "Select Token",
 
     "advanced": "ADVANCED",
     "transaction_fee": "TRANSACTION FEE",
