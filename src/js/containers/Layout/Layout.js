@@ -13,6 +13,8 @@ import { Header } from "../../containers/Header"
 
 import { ImportAccount } from "../ImportAccount"
 
+import { Footer } from "../Layout"
+
 import { Processing, InfoModal, ExchangeHistory, TransactionList } from "../../containers/CommonElements/"
 import constanst from "../../services/constants"
 import { createNewConnection } from "../../services/ethereum/connection"
@@ -89,6 +91,7 @@ export default class Layout extends React.Component {
   render() {
     //var exchangeHistory = <ExchangeHistory />
     var exchangeHistory = <TransactionList />
+    var footer = <Footer />
     return (
       <LayoutView
         history={history}
@@ -101,6 +104,7 @@ export default class Layout extends React.Component {
         supportedLanguages = {Language.supportLanguage}
         setActiveLanguage={this.setActiveLanguage}
         translate={this.props.translate}
+        footer = {footer}
       />
     )
   }

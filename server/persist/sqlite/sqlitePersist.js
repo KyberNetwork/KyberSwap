@@ -9,6 +9,7 @@ var BLOCKCHAIN_INFO = require("../../../env")
 var filePath
 
 var dbName = process.env.npm_config_chain
+
 //console.log("db name: " + dbName)
 switch(dbName){
   case "kovan":
@@ -22,9 +23,19 @@ switch(dbName){
     break
 }
 
+
+
 class SqlitePersist {
   constructor() {
-    this.initStore()
+    this.initArraySupportedTokenAddress()
+    //this.initStore()
+  }
+
+  destroyStore(cb){
+    fs.unlink(filePath, (err, result)=>{
+      console.log("Clear old file")
+      cb()
+    })
   }
 
   initStore() {
@@ -55,7 +66,7 @@ class SqlitePersist {
         stmt.run(1, 0, 0, config.frequency, 0, config.rangeFetch);
         stmt.finalize()
 
-        _this.db.run("CREATE TABLE logs (id INTEGER PRIMARY KEY, actualDestAmount TEXT, actualSrcAmount TEXT, dest TEXT, source TEXT, sender TEXT, blockNumber INT, txHash TEXT, status TEXT)")
+        _this.db.run("CREATE TABLE logs (id INTEGER PRIMARY KEY, actualDestAmount TEXT, actualSrcAmount TEXT, dest TEXT, source TEXT, sender TEXT, blockNumber INT, txHash TEXT, timestamp INT, status TEXT)")
 
         // create rate table
         _this.db.run("CREATE TABLE rates (id INTEGER PRIMARY KEY, source TEXT, dest TEXT, rate TEXT, expBlock TEXT, balance TEXT)")
@@ -74,6 +85,16 @@ class SqlitePersist {
       })
     }
 
+  }
+
+  initArraySupportedTokenAddress(){
+    var stringAddress = ''
+    if(BLOCKCHAIN_INFO.tokens){
+      stringAddress = Object.keys(BLOCKCHAIN_INFO.tokens).map((tokenName) => {
+        return '\'' + BLOCKCHAIN_INFO.tokens[tokenName].address + '\''
+      }).toString()
+    }
+    this.suportedTokenStr = '(' + stringAddress + ')'
   }
 
   getCurrentBlock() {
@@ -183,9 +204,10 @@ class SqlitePersist {
   }
 
   savedEvent(event) {
+    console.log(event)
     return new Promise((resolve, reject) => {
-      var stmt = this.db.prepare("INSERT INTO logs(actualDestAmount, actualSrcAmount, dest, source, sender, blockNumber, txHash, status) VALUES (?,?,?,?,?,?,?,?)")
-      stmt.run(event.actualDestAmount, event.actualSrcAmount, event.dest, event.source, event.sender, event.blockNumber, event.txHash, event.status);
+      var stmt = this.db.prepare("INSERT INTO logs(actualDestAmount, actualSrcAmount, dest, source, sender, blockNumber, txHash, status, timestamp) VALUES (?,?,?,?,?,?,?,?,?)")
+      stmt.run(event.actualDestAmount, event.actualSrcAmount, event.dest, event.source, event.sender, event.blockNumber, event.txHash, event.status, event.timestamp);
       stmt.finalize()
 
       resolve(event)
@@ -226,7 +248,7 @@ class SqlitePersist {
 
   getEventsFromEth(page, itemPerPage) {
     return new Promise((resolve, reject) => {
-      var sql = "SELECT * FROM logs WHERE source = ? ORDER BY blockNumber DESC LIMIT ?"
+      var sql = "SELECT * FROM logs WHERE source = ? AND dest IN "+this.suportedTokenStr+" ORDER BY blockNumber DESC LIMIT ?"
       this.db.all(sql, ["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", itemPerPage], function (err, rows) {
         if (err) {
           console.log(err)
@@ -240,7 +262,7 @@ class SqlitePersist {
 
   getEventsFromToken(page, itemPerPage) {
     return new Promise((resolve, reject) => {
-      var sql = "SELECT * FROM logs WHERE dest = ? ORDER BY blockNumber DESC LIMIT ?"
+      var sql = "SELECT * FROM logs WHERE dest = ? AND source IN "+this.suportedTokenStr+" ORDER BY blockNumber DESC LIMIT ?"
       this.db.all(sql, ["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", itemPerPage], function (err, rows) {
         if (err) {
           console.log(err)
@@ -349,7 +371,7 @@ class SqlitePersist {
         }
       })
       resolve(rates)
-      //console.log("all rate is inserted");
+      console.log("all rate is inserted");
     })
   }
 

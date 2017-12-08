@@ -55,16 +55,17 @@ const global = (state = initState, action) => {
       break
     }
     case "GLOBAL.UPDATE_HISTORY": {
-      const { logs, latestBlock, page, eventsCount, isAutoFetch } = action.payload
+      const { logs, latestBlock, page, isAutoFetch } = action.payload
       var history = { ...state.history }
-      history.logsEth = logs.eth
-      history.logsToken = logs.token
+      if(logs){        
+        if(logs.eth) history.logsEth = logs.eth
+        if(logs.token) history.logsToken = logs.token
+      }
       history.currentBlock = latestBlock
       history.page = page
-      history.eventsCount = eventsCount
-
+      // history.eventsCount = eventsCount
       history.isFetching = false
-      return Object.assign({}, state, { history: history })
+      return { ...state,  history: {...history} }
     }
     case "GLOBAL.CONNECTION_UPDATE_IS_CHECK":{
       var conn_checker = { ...state.conn_checker }
