@@ -146,6 +146,11 @@ class EthereumService {
     var arrayAddressToken = Object.keys(BLOCKCHAIN_INFO.tokens).map((tokenName) => {return BLOCKCHAIN_INFO.tokens[tokenName].address})
     for (var i = 0; i < logs.length; i++) {
       var savedEvent = this.getEvent(logs[i])
+
+      var dest = savedEvent.dest
+      var source = savedEvent.source
+      if(arrayAddressToken.indexOf(dest) < 0 || arrayAddressToken.indexOf(source) < 0) continue
+
       var check = await this.persistor.checkEventByHash(savedEvent.txHash, savedEvent.blockNumber)
       console.log(check)
       if (!check) {
