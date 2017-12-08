@@ -143,19 +143,9 @@ class EthereumService {
 
 
   async handleEvent(logs) {
+    var arrayAddressToken = Object.keys(BLOCKCHAIN_INFO.tokens).map((tokenName) => {return BLOCKCHAIN_INFO.tokens[tokenName].address})
     for (var i = 0; i < logs.length; i++) {
       var savedEvent = this.getEvent(logs[i])
-      //console.log(savedEvent)
-      // var savedEvent = {
-      //   actualDestAmount: logs[i].returnValues.actualDestAmount,
-      //   actualSrcAmount: logs[i].returnValues.actualSrcAmount,
-      //   dest: logs[i].returnValues.dest.toLowerCase(),
-      //   source: logs[i].returnValues.source.toLowerCase(),
-      //   sender: logs[i].returnValues.sender.toLowerCase(),
-      //   blockNumber: logs[i].blockNumber,
-      //   txHash: logs[i].transactionHash,
-      //   status: logs[i].type
-      // }
       var check = await this.persistor.checkEventByHash(savedEvent.txHash, savedEvent.blockNumber)
       console.log(check)
       if (!check) {

@@ -27,6 +27,7 @@ switch(dbName){
 
 class SqlitePersist {
   constructor() {
+    this.initArraySupportedTokenAddress()
     //this.initStore()
   }
 
@@ -84,6 +85,16 @@ class SqlitePersist {
       })
     }
 
+  }
+
+  initArraySupportedTokenAddress(){
+    var stringAddress = ''
+    if(BLOCKCHAIN_INFO.tokens){
+      stringAddress = Object.keys(BLOCKCHAIN_INFO.tokens).map((tokenName) => {
+        return '\'' + BLOCKCHAIN_INFO.tokens[tokenName].address + '\''
+      }).toString()
+    }
+    this.suportedTokenStr = '(' + stringAddress + ')'
   }
 
   getCurrentBlock() {
@@ -237,7 +248,7 @@ class SqlitePersist {
 
   getEventsFromEth(page, itemPerPage) {
     return new Promise((resolve, reject) => {
-      var sql = "SELECT * FROM logs WHERE source = ? ORDER BY blockNumber DESC LIMIT ?"
+      var sql = "SELECT * FROM logs WHERE source = ? AND dest IN "+this.suportedTokenStr+" ORDER BY blockNumber DESC LIMIT ?"
       this.db.all(sql, ["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", itemPerPage], function (err, rows) {
         if (err) {
           console.log(err)
@@ -251,7 +262,7 @@ class SqlitePersist {
 
   getEventsFromToken(page, itemPerPage) {
     return new Promise((resolve, reject) => {
-      var sql = "SELECT * FROM logs WHERE dest = ? ORDER BY blockNumber DESC LIMIT ?"
+      var sql = "SELECT * FROM logs WHERE dest = ? AND source IN "+this.suportedTokenStr+" ORDER BY blockNumber DESC LIMIT ?"
       this.db.all(sql, ["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", itemPerPage], function (err, rows) {
         if (err) {
           console.log(err)
