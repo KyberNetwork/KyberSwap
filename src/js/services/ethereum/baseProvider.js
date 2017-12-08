@@ -58,12 +58,15 @@ export default class BaseEthereumProvider {
         if(data && typeof data == 'number' && data > 0){
           resolve(data)
         } else {
-          this.rpc.eth.getBlock("latest", false).then((block) => {
-            if (block != null) {
-              resolve(block.number)
-            }
-          })
+          throw('cannot get lastest block from server')
         }
+      })
+      .catch((err) => {
+        this.rpc.eth.getBlock("latest", false).then((block) => {
+          if (block != null) {
+            resolve(block.number)
+          }
+        })
       })
     })
     
