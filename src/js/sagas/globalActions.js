@@ -101,7 +101,7 @@ export function* changelanguage(action){
     var state = store.getState()
     
     var activeLang = lang
-    if(!Language.loadAll){
+    if(!Language.loadAll && lang !== Language.defaultLanguage){
       activeLang = lang == Language.defaultLanguage ? Language.defaultLanguage : Language.defaultAndActive[1]
       if(!state || !state.locale || state.locale.translations["pack"][1] !== lang){
         var languagePack = yield call(ethereum.call("getLanguagePack"), lang)

@@ -63,7 +63,9 @@
     "view_on_etherscan": "View on Etherscan",
     "press_confirm_if_really_want": "Press confirm if you really want to do this.",
     "confirm_exchange_title": "Exchange confirm",
-    "confirm_transfer_title": "Transfer confirm"
+    "confirm_transfer_title": "Transfer confirm",
+
+    "select_your_language": "Select your language"
   },
 
   "error": {
