@@ -33,3 +33,16 @@ export function closeInfoModal(){
     type: "UTIL.EXIT_INFO_MODAL"
   }
 }
+
+
+export function hideLangugaModal(){
+  return {
+    type: "UTIL.HIDE_LANGUAGE_MODAL"
+  }
+}
+
+export function showLangugaModal(){
+  return {
+    type: "UTIL.SHOW_LANGUAGE_MODAL"
+  }
+}

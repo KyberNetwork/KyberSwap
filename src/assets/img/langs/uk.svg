@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="21px" viewBox="0 0 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48 (47235) - http://www.bohemiancoding.com/sketch -->
+    <title>uk</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="10.5" cy="10.5" r="10.5"></circle>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="uk">
+            <g id="Group-2">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Oval" fill="#223C72" xlink:href="#path-1"></use>
+                <polygon id="Rectangle-3" fill="#EFEBE7" mask="url(#mask-2)" points="3.50646784 2.625 19.1125092 16.6767427 17.3560413 18.6274979 1.75 4.57575517"></polygon>
+                <polygon id="Rectangle-3-Copy" fill="#EFEBE7" mask="url(#mask-2)" points="3.61890673 18.9204112 1.86243889 16.9696561 18.7299689 1.7820638 20.4864368 3.73281897"></polygon>
+                <polygon id="Rectangle-Copy-4" fill="#EF3827" mask="url(#mask-2)" points="1.85102358 3.94156564 2.42507523 3.28119475 18.2739764 17.0584344 17.6999248 17.7188052"></polygon>
+                <polygon id="Rectangle-Copy-5" fill="#EF3827" mask="url(#mask-2)" points="2.72602358 17.0584344 18.5749248 3.28119475 19.1489764 3.94156564 3.30007523 17.7188052"></polygon>
+                <polygon id="Rectangle" fill="#EFEBE7" mask="url(#mask-2)" points="8.75 0 12.25 0 12.25 21 8.75 21"></polygon>
+                <polygon id="Rectangle-Copy" fill="#EFEBE7" mask="url(#mask-2)" points="21 12.25 0 12.25 0 8.75 21 8.75"></polygon>
+                <polygon id="Rectangle-Copy-2" fill="#EF3827" mask="url(#mask-2)" points="9.625 0 11.375 0 11.375 21 9.625 21"></polygon>
+                <polygon id="Rectangle-Copy-3" fill="#EF3827" mask="url(#mask-2)" points="-1.5308085e-17 11.375 -1.2246468e-16 9.625 21 9.625 21 11.375"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

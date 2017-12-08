@@ -28,6 +28,7 @@ const transfer = (state = initState, action) => {
       newState.selected = true;
       newState.token = transfer.token
       newState.tokenSymbol = transfer.tokenSymbol
+      newState.gasPrice = transfer.gasPrice
       return newState;
     case "TRANSFER.SELECT_TOKEN":
       newState.tokenSymbol = action.payload.symbol

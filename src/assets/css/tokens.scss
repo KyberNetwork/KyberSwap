@@ -9,6 +9,7 @@
   margin-bottom: 15px;
   &.empty {
     opacity: .5;
+    cursor: initial;
   }
   &.selected {
     background: $accent-gradient;

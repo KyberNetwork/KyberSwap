@@ -4,7 +4,7 @@ import HttpEthereumProvider from "./httpProvider"
 import WebsocketEthereumProvider from "./wsProvider"
 import constants from "../constants"
 
-import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateHistoryExchange, checkConnection, setGasPrice } from "../../actions/globalActions"
+import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateHistoryExchange, checkConnection } from "../../actions/globalActions"
 import { updateAccount } from "../../actions/accountActions"
 import { updateTx } from "../../actions/txActions"
 import { updateRateExchange } from "../../actions/exchangeActions"
@@ -15,7 +15,11 @@ import { setConnection } from "../../actions/connectionActions"
 export default class EthereumService extends React.Component {
   constructor(props) {
     super(props)
-    this.httpUrl = BLOCKCHAIN_INFO.connections.http
+
+    var httpArr = BLOCKCHAIN_INFO.connections.http
+    var randomNum = Math.floor((Math.random() * httpArr.length))
+    this.httpUrl = httpArr[randomNum]
+   // this.httpUrl = BLOCKCHAIN_INFO.connections.http
     this.wsUrl = BLOCKCHAIN_INFO.connections.ws
     // this.wsUrl = "ws://localhost:8546"
     this.httpProvider = this.getHttpProvider()
@@ -70,7 +74,7 @@ export default class EthereumService extends React.Component {
   subcribe() {
     //this.currentProvider.clearSubcription()
     //get gas price
-    this.fetchGasPrice()
+    //this.fetchGasPrice()
     this.currentProvider.subcribeNewBlock(this.fetchData.bind(this))
   }
 
@@ -78,11 +82,11 @@ export default class EthereumService extends React.Component {
     this.currentProvider.clearSubcription()
   }
 
-  fetchGasPrice(){
-    var state = store.getState()
-    var ethereum = state.connection.ethereum
-    store.dispatch(setGasPrice(ethereum))
-  }
+  // fetchGasPrice(){
+  //   var state = store.getState()
+  //   var ethereum = state.connection.ethereum
+  //   store.dispatch(setGasPrice(ethereum))
+  // }
 
   fetchData() {
     //this.fetchCurrentBlock()

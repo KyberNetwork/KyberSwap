@@ -12,6 +12,20 @@ app.use(bodyParser.json())
 var PersistClass = require("./persist/sqlite/sqlitePersist")
 var persistor = new PersistClass()
 
+var isInit = process.env.npm_config_init
+if (isInit){
+  persistor.destroyStore(()=>{
+    persistor.initStore()
+  })
+}else{
+  persistor.initStore()
+}
+
+process.on('uncaughtException', function (err) {
+  console.log('Caught exception: ' + err);
+  console.log("Process still run")
+});
+
 function main() {
   var EthereumService = require("./eth/ethereum")
   var connectionInstance = new EthereumService(

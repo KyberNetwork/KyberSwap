@@ -27,7 +27,7 @@ const exchange = (state = initState, action) => {
       newState.sourceAmount = ""
       newState.destAmount = ""
       newState.errors = initState.errors
-      newState.gasPrice = initState.gasPrice
+      //newState.gasPrice = initState.gasPrice
       newState.bcError = ""
       newState.step = initState.step
       return newState
