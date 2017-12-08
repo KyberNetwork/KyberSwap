@@ -5,7 +5,7 @@ const ImportByTrezorView = (props) => {
     <div class="importer trezor">
       <a onClick={() => props.showLoading('trezor')}>
         <img src="/assets/img/trezor.svg" />
-        <div class="description">Import from<br />trezor</div>
+        <div class="description">{props.translate("import.from_trezor") || <span>Import from<br />trezor</span>}</div>
       </a>
     </div>
   )

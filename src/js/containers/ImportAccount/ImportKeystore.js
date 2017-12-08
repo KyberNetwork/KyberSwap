@@ -5,6 +5,7 @@ import { DropFile } from "../../components/ImportAccount"
 import { importNewAccount, throwError } from "../../actions/accountActions"
 import { verifyKey, anyErrors } from "../../utils/validators"
 import { addressFromKey, getRandomAvatar } from "../../utils/keys"
+import { getTranslate } from 'react-localize-redux'
 
 @connect((store) => {
   var tokens = store.tokens.tokens
@@ -15,7 +16,8 @@ import { addressFromKey, getRandomAvatar } from "../../utils/keys"
   return {
     account: store.account,
     ethereum: store.connection.ethereum,
-    tokens: supportTokens
+    tokens: supportTokens,
+    translate: getTranslate(store.locale)
   }
 })
 
@@ -58,6 +60,7 @@ export default class ImportKeystore extends React.Component {
       <DropFile id="import_json"
         error={this.props.account.error}
         onDrop={this.onDrop}
+        translate={this.props.translate}
       />
     )
   }

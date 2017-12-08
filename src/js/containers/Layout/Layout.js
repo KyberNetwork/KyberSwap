@@ -13,18 +13,22 @@ import { Header } from "../../containers/Header"
 
 import { ImportAccount } from "../ImportAccount"
 
+import { Footer } from "../Layout"
+
 import { Processing, InfoModal, ExchangeHistory, TransactionList } from "../../containers/CommonElements/"
 import constanst from "../../services/constants"
 import { createNewConnection } from "../../services/ethereum/connection"
 
 import history from "../../history"
-import { clearSession } from "../../actions/globalActions"
+import { clearSession, changeLanguage } from "../../actions/globalActions"
 import { openInfoModal } from "../../actions/utilActions"
 import { setConnection } from "../../actions/connectionActions"
-
+import localForage from 'localforage'
 import { default as _ } from 'underscore';
 import { LayoutView } from "../../components/Layout"
+import { getTranslate } from 'react-localize-redux'
 
+import Language from "../../../../lang"
 
 @connect((store) => {
   return {
@@ -32,7 +36,9 @@ import { LayoutView } from "../../components/Layout"
     currentBlock: store.global.currentBlock,
     connected: store.global.connected,
     utils: store.utils,
-    account: store.account
+    account: store.account,
+    translate: getTranslate(store.locale),
+    // currentLanguage: getActiveLanguage(store.locale).code
   }
 })
 
@@ -78,9 +84,14 @@ export default class Layout extends React.Component {
     this.props.dispatch(clearSession());
   }
 
+  setActiveLanguage = (language) => {
+    this.props.dispatch(changeLanguage(this.props.ethereumNode, language, localForage))
+  }
+
   render() {
     //var exchangeHistory = <ExchangeHistory />
     var exchangeHistory = <TransactionList />
+    var footer = <Footer />
     return (
       <LayoutView
         history={history}
@@ -90,6 +101,10 @@ export default class Layout extends React.Component {
         Exchange={Exchange}
         Transfer={Transfer}
         exchangeHistory = {exchangeHistory}
+        supportedLanguages = {Language.supportLanguage}
+        setActiveLanguage={this.setActiveLanguage}
+        translate={this.props.translate}
+        footer = {footer}
       />
     )
   }

@@ -4,6 +4,11 @@ import * as actionsUtils from '../actions/utilActions'
 import { fetchRatePromise } from "../services/rate"
 import { Rate, updateAllRatePromise } from "../services/rate"
 import { push } from 'react-router-redux';
+import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
+import { store } from "../store"
+
+import { getLanguage } from "../services/language"
+import Language from "../../../lang"
 
 export function* getLatestBlock(action) {
   const ethereum = action.payload
@@ -15,8 +20,8 @@ export function* updateHistoryExchange(action) {
   const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
   var latestBlock = yield call(ethereum.call("getLatestBlock"))
   const newLogs = yield call(ethereum.call("getLogTwoColumn"), page, itemPerPage)
-  const eventsCount = yield call(ethereum.call("countALlEvents"))
-  yield put(actions.updateHistory(newLogs, latestBlock, page, eventsCount, isAutoFetch))
+  // const eventsCount = yield call(ethereum.call("countALlEvents"))
+  yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
 }
 
 export function* updateRate(action) {
@@ -82,6 +87,35 @@ export function* checkConnection(action){
   }
 }
 
+export function* setGasPrice(action){
+  const ethereum = action.payload
+  const gasPrice = yield call([ethereum, ethereum.call("getGasPrice")])
+  yield put(actions.setGasPriceComplete(gasPrice))
+}
+
+export function* changelanguage(action){
+  const { ethereum, lang, localForage } = action.payload
+  
+  if(Language.supportLanguage.indexOf(lang) < 0) return
+  try{
+    var state = store.getState()
+    
+    var activeLang = lang
+    if(!Language.loadAll && lang !== Language.defaultLanguage){
+      activeLang = lang == Language.defaultLanguage ? Language.defaultLanguage : Language.defaultAndActive[1]
+      if(!state || !state.locale || state.locale.translations["pack"][1] !== lang){
+        var languagePack = yield call(ethereum.call("getLanguagePack"), lang)
+        if(!languagePack) return;
+        
+        yield put.sync(addTranslationForLanguage(languagePack, activeLang))
+      }
+    }
+    yield put(setActiveLanguage(activeLang))
+  } catch(err){
+    console.log(err)
+  }
+}
+
 export function* watchGlobal() {
   yield takeEvery("GLOBAL.NEW_BLOCK_INCLUDED_PENDING", getLatestBlock)
   yield takeEvery("GLOBAL.RATE_UPDATED_PENDING", updateRate)
@@ -89,7 +123,9 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.CLEAR_SESSION", clearSession)
   yield takeEvery("GLOBAL.RATE_UPDATE_ALL_PENDING", updateAllRate)
   yield takeEvery("GLOBAL.UPDATE_HISTORY_EXCHANGE", updateHistoryExchange)
+  yield takeEvery("GLOBAL.CHANGE_LANGUAGE", changelanguage)
   yield takeEvery("GLOBAL.CHECK_CONNECTION", checkConnection)
+  yield takeEvery("GLOBAL.SET_GAS_PRICE", setGasPrice)
 }
 
 

@@ -12,6 +12,20 @@ app.use(bodyParser.json())
 var PersistClass = require("./persist/sqlite/sqlitePersist")
 var persistor = new PersistClass()
 
+var isInit = process.env.npm_config_init
+if (isInit){
+  persistor.destroyStore(()=>{
+    persistor.initStore()
+  })
+}else{
+  persistor.initStore()
+}
+
+process.on('uncaughtException', function (err) {
+  console.log('Caught exception: ' + err);
+  console.log("Process still run")
+});
+
 function main() {
   var EthereumService = require("./eth/ethereum")
   var connectionInstance = new EthereumService(
@@ -78,6 +92,16 @@ app.get('/getLatestBlock', (req, res) => {
   event.then((result) => {
     res.end(JSON.stringify(result))
   })
+})
+
+app.get('/getLanguagePack', (req, res) => {
+  var lang = req.query.lang;
+  try{
+    var langualgePack = require("../lang/" + lang + ".json")
+    return res.json(langualgePack)
+  } catch (err) {
+    return res.status(404).send("language pack not found!")
+  }
 })
 
 var port = process.env.npm_config_port? process.env.npm_config_port:3001

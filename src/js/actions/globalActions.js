@@ -1,3 +1,4 @@
+import * as converter from "../utils/converter"
 
 export function updateBlock(ethereum, block) {
   return {
@@ -53,6 +54,13 @@ export function clearSession() {
   }
 }
 
+export function changeLanguage(ethereum, lang, localForage){
+  return {
+    type: "GLOBAL.CHANGE_LANGUAGE",
+    payload: {ethereum, lang, localForage}
+  }
+}
+
 export function clearSessionComplete() {
   return {
     type: "GLOBAL.CLEAR_SESSION_FULFILLED"
@@ -99,5 +107,20 @@ export function updateCountConnection(count){
   return {
     type: "GLOBAL.CONNECTION_UPDATE_COUNT",
     payload: count
+  }
+}
+
+export function setGasPrice(ethereum){
+  return {
+    type: "GLOBAL.SET_GAS_PRICE",
+    payload: ethereum
+  }
+}
+
+export function setGasPriceComplete(gasPrice){
+  var gasPriceGwei = converter.weiToGwei(gasPrice)
+  return {
+    type: "GLOBAL.SET_GAS_PRICE_COMPLETE",
+    payload: gasPriceGwei
   }
 }

@@ -94,7 +94,11 @@ export function updateAllRatePromise(ethereum, tokens, reserve, ownerAddr) {
         result.map((token) => {
           tokenObj[token.source+'-'+token.dest] = token
         })
-        var promises = tokens.map((token) => {
+        var promises = tokens
+        .filter((token) => {
+          return tokenObj[token.symbol+'-'+constants.ETH.symbol] && tokenObj[constants.ETH.symbol+'-'+token.symbol]
+        })
+        .map((token) => {
           return updateRatePromise(ethereum, token, tokenObj[token.symbol+'-'+constants.ETH.symbol].rate, tokenObj[constants.ETH.symbol+'-'+token.symbol].rate, ownerAddr)
         });
         resolve(Promise.all(promises));

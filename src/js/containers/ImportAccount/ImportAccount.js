@@ -6,9 +6,13 @@ import { ImportKeystore, ImportByDevice, ImportByPrivateKey,
   ErrorModal, ImportByMetamask,
   ImportByDeviceWithLedger, ImportByDeviceWithTrezor
 } from "../ImportAccount"
+import { getTranslate } from 'react-localize-redux'
 
 @connect((store) => {
-  return { ...store.account }
+  return { 
+    ...store.account,
+    translate: getTranslate(store.locale)
+   }
 })
 
 export default class ImportAccount extends React.Component {
@@ -21,6 +25,7 @@ export default class ImportAccount extends React.Component {
         fourthKey={<ImportByDeviceWithLedger/>}
         fifthKey={<ImportByPrivateKey />}
         errorModal={<ErrorModal />}
+        translate={this.props.translate}
       />
     )
   }

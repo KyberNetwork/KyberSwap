@@ -8,6 +8,7 @@ import * as exchangeActions from "../../actions/exchangeActions"
 
 import { Modal } from "../../components/CommonElement"
 import { PassphraseModal, ConfirmTransferModal, ApproveModal, PostExchangeBtn } from "../../components/Transaction"
+import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
@@ -29,13 +30,14 @@ import { PassphraseModal, ConfirmTransferModal, ApproveModal, PostExchangeBtn } 
     form: { ...store.exchange, sourceBalance, sourceDecimal, destDecimal },
     account: store.account.account,
     ethereum: store.connection.ethereum,
-    keyService: props.keyService
+    keyService: props.keyService,
+    translate: getTranslate(store.locale),
   }
 })
 
 export default class PostExchange extends React.Component {
   clickExchange = () => {
-    if(validators.anyErrors(this.props.form.errors)) return;
+    if (validators.anyErrors(this.props.form.errors)) return;
     if (this.props.form.step == 1) {
       if (!validators.anyErrors(this.props.form.errors)) {
         this.props.dispatch(exchangeActions.goToStep(2))
@@ -73,8 +75,23 @@ export default class PostExchange extends React.Component {
       this.props.form.minConversionRate,
       this.props.form.destDecimal,
       this.props.form.offeredRateBalance)
-    if (validateAmount !== null) {
-      this.props.dispatch(exchangeActions.thowErrorSourceAmount("Source amount is " + validateAmount))
+    var sourceAmountErrorKey
+    switch (validateAmount) {
+      case "not a number":
+        sourceAmountErrorKey = "error.source_amount_is_not_number"
+        break
+      case "too high":
+        sourceAmountErrorKey = "error.source_amount_too_high"
+        break
+      case "too small":
+        sourceAmountErrorKey = "error.source_amount_too_small"
+        break
+      case "too high for reserve":
+        sourceAmountErrorKey = "error.source_amount_too_high_for_reserve"
+        break
+    }
+    if (sourceAmountErrorKey) {
+      this.props.dispatch(exchangeActions.thowErrorSourceAmount(sourceAmountErrorKey))
       check = false
     }
     var testGasPrice = parseFloat(this.props.form.gasPrice)
@@ -92,7 +109,7 @@ export default class PostExchange extends React.Component {
     var destTokenSymbol = this.props.form.destTokenSymbol
     // var recap = `exchange ${this.props.form.sourceAmount.toString().slice(0, 7)}${this.props.form.sourceAmount.toString().length > 7 ? '...' : ''} ${this.props.form.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0, 7)}${this.getDesAmount().toString().length > 7 ? '...' : ''} ${this.props.form.destTokenSymbol}`
     return (
-      <p>You are about to exchange<br /><strong>{sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}</strong>&nbsp;for&nbsp;<strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}</strong></p>
+      <p>{this.props.translate("transaction.about_to_exchange") || "You are about to exchange"}<br /><strong>{sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}</strong>&nbsp;for&nbsp;<strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}</strong></p>
     )
   }
   getDesAmount = () => {
@@ -198,7 +215,9 @@ export default class PostExchange extends React.Component {
         onChange={this.changePassword}
         onClick={this.processTx}
         onCancel={this.closeModal}
-        passwordError={this.props.form.errors.passwordError || this.props.form.bcError.message} />
+        passwordError={this.props.form.errors.passwordError || this.props.form.bcError.message} 
+        translate={this.props.translate}
+      />
     )
   }
   contentConfirm = () => {
@@ -208,6 +227,8 @@ export default class PostExchange extends React.Component {
         onExchange={this.processTx}
         isConfirming={this.props.form.isConfirming}
         type="exchange"
+        translate={this.props.translate}
+        title={this.props.translate("modal.confirm_exchange_title") || "Exchange confirm"}
       />
     )
   }
@@ -266,16 +287,17 @@ export default class PostExchange extends React.Component {
       className += " animated infinite pulse next"
     }
     return (
-      <PostExchangeBtn 
+      <PostExchangeBtn
         step={this.props.form.step}
         submit={this.clickExchange}
         modalPassphrase={modalPassphrase}
         modalConfirm={modalConfirm}
         modalApprove={modalApprove}
         className={className}
-        accountType = {this.props.account.type}
+        accountType={this.props.account.type}
         isConfirming={this.props.form.isConfirming}
         isApproving={this.props.form.isApproving}
+        translate={this.props.translate}
       />
     )
   }
