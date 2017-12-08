@@ -4,6 +4,7 @@ var HttpEthereumProvider = require("./httpProvider")
 //import WebsocketEthereumProvider from "./wsProvider"
 var constants = require("../../src/js/services/constants")
 
+//var converters = require("../../src/js/utils/converter")
 //import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateHistoryExchange } from "../../actions/globalActions"
 //import { updateAccount } from "../../actions/accountActions"
 //import { updateTx } from "../../actions/txActions"
@@ -13,10 +14,16 @@ var BLOCKCHAIN_INFO = require("../../env")
 //import { setConnection } from "../../actions/connectionActions"
 //var co = require('co')
 
+
+
 class EthereumService {
   constructor(props) {
     //super(props)
-    this.httpUrl = BLOCKCHAIN_INFO.connections.http
+    //get random node
+    var httpArr = BLOCKCHAIN_INFO.connections.http
+    var randomNum = Math.floor((Math.random() * httpArr.length))
+    this.httpUrl = httpArr[randomNum]
+    
     this.wsUrl = BLOCKCHAIN_INFO.connections.ws
     // this.wsUrl = "ws://localhost:8546"
     this.httpProvider = this.getHttpProvider()
@@ -29,6 +36,8 @@ class EthereumService {
     this.fromBlock = 0
     this.range = 0
     this.persistor = props.persistor
+
+    //console.log(this.currentProvider.deCode())
     //this.initProvider()
   }
 
@@ -48,14 +57,14 @@ class EthereumService {
         break
     }
   }
-  
+
   // getSubInstance(){
   //   if(typeof web3 !== 'undefined'){
   //     return web3
   //   }else{
   //     return false
   //   }
-    
+
   // }
 
   // getWebsocketProvider() {
@@ -97,59 +106,70 @@ class EthereumService {
   }
 
   async fetchData() {
-    // //get currentBlock
-    // this.fetchLogExchange()
-
-    // // get current rate
-    // this.fetchRate()
     var currentBlock = await this.persistor.getCurrentBlock()
     var rangeBlock = await this.persistor.getRangeBlock()
     var count = await this.persistor.getCount()
     var frequency = await this.persistor.getFrequency()
     var latestBlock = await this.currentProvider.getLatestBlock()
     await this.persistor.saveLatestBlock(latestBlock)
-    if (count > frequency){
+    if (count > frequency) {
       await this.persistor.updateCount(0)
-      var blockUpdated = currentBlock + rangeBlock > latestBlock ?latestBlock: currentBlock + rangeBlock 
+      var blockUpdated = currentBlock + rangeBlock > latestBlock ? latestBlock : currentBlock + rangeBlock
       await this.persistor.updateBlock(blockUpdated)
-    }else{
+    } else {
       this.persistor.updateCount(++count)
       var toBlock = currentBlock + rangeBlock
-      if (toBlock > latestBlock){
+      if (toBlock > latestBlock) {
         toBlock = latestBlock
       }
-     // console.log("xxx")
-      var events  = await this.currentProvider.getLogExchange(currentBlock, toBlock)
+      // console.log("xxx")
+      if (toBlock - currentBlock < 2000) {
+        currentBlock = toBlock - 2000
+      }
+      var events = await this.currentProvider.getLogExchange(currentBlock, toBlock)
       this.handleEvent(events)
     }
   }
 
-  async fetchAllRateData(){
-    var allRate = await this.currentProvider.getAllRate(BLOCKCHAIN_INFO.tokens, constants.RESERVES[0])
-    this.persistor.saveRate(allRate)
+  async fetchAllRateData() {
+    try {
+      var allRate = await this.currentProvider.getAllRate(BLOCKCHAIN_INFO.tokens, constants.RESERVES[0])
+      this.persistor.saveRate(allRate)
+    } catch (e) {
+      console.log(e)
+    }
+
   }
 
 
   async handleEvent(logs) {
+    var arrayAddressToken = Object.keys(BLOCKCHAIN_INFO.tokens).map((tokenName) => {return BLOCKCHAIN_INFO.tokens[tokenName].address})
     for (var i = 0; i < logs.length; i++) {
-      var savedEvent = {
-        actualDestAmount: logs[i].returnValues.actualDestAmount,
-        actualSrcAmount: logs[i].returnValues.actualSrcAmount,
-        dest: logs[i].returnValues.dest.toLowerCase(),
-        source: logs[i].returnValues.source.toLowerCase(),
-        sender: logs[i].returnValues.sender.toLowerCase(),
-        blockNumber: logs[i].blockNumber,
-        txHash: logs[i].transactionHash,
-        status: logs[i].type
-      }
+      var savedEvent = this.getEvent(logs[i])
       var check = await this.persistor.checkEventByHash(savedEvent.txHash, savedEvent.blockNumber)
       console.log(check)
-      if(!check){
+      if (!check) {
         await this.persistor.savedEvent(savedEvent)
       }
     }
   }
-  
+
+  getEvent(log) {
+    //console.log(log)
+    var blockNumber = this.currentProvider.rpc.eth.abi.decodeParameters(['uint256'], log.blockNumber)
+    var eventData = this.currentProvider.rpc.eth.abi.decodeParameters(['address', 'address', 'uint256', 'uint256'], log.data)
+    var timeStamp = this.currentProvider.rpc.eth.abi.decodeParameters(['uint256'], log.timeStamp)
+    return {
+      blockNumber: blockNumber['0'],
+      actualDestAmount: eventData['3'],
+      actualSrcAmount: eventData['2'],
+      dest: eventData['1'].toLowerCase(),
+      source: eventData['0'].toLowerCase(),
+      txHash: log.transactionHash.toLowerCase(),
+      timestamp: timeStamp['0'],
+      status: "mined"
+    }
+  }
 
   call(fn) {
     return this.currentProvider[fn].bind(this.currentProvider)

@@ -15,7 +15,11 @@ import { setConnection } from "../../actions/connectionActions"
 export default class EthereumService extends React.Component {
   constructor(props) {
     super(props)
-    this.httpUrl = BLOCKCHAIN_INFO.connections.http
+
+    var httpArr = BLOCKCHAIN_INFO.connections.http
+    var randomNum = Math.floor((Math.random() * httpArr.length))
+    this.httpUrl = httpArr[randomNum]
+   // this.httpUrl = BLOCKCHAIN_INFO.connections.http
     this.wsUrl = BLOCKCHAIN_INFO.connections.ws
     // this.wsUrl = "ws://localhost:8546"
     this.httpProvider = this.getHttpProvider()

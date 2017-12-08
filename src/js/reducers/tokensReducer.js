@@ -61,6 +61,7 @@ const tokens = (state = initState, action) => {
       var isUpdateBalance = action.payload.isUpdateBalance;
       if(tokensData){
         tokensData.forEach((data) => {
+          if(!tokens[data.symbol]) return
           if(!isUpdateBalance && tokens[data.symbol]) data.balance = tokens[data.symbol].balance
           tokens[data.symbol] = data
         })
