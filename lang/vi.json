@@ -47,7 +47,11 @@
 
     "about_to_exchange": "Bạn chuẩn bị chuyển đổi",
     "about_to_transfer": "Bạn chuẩn bị gửi",
-    "processing": "Đang xử lý"
+    "processing": "Đang xử lý",
+    "gas_limit": "Gas giới hạn",
+    "gas_price": "Giá Gas",
+    "for": "đổi lấy",
+    "to": "đến"
   },
 
   "modal": {
@@ -65,7 +69,10 @@
     "confirm_exchange_title": "Xác nhận giao dịch",
     "confirm_transfer_title": "Xác nhận giao dịch",
 
-    "select_your_language": "Lựa chọn ngôn ngữ"
+    "select_your_language": "Lựa chọn ngôn ngữ",
+    "select_source_token": "Chọn token bạn muốn đổi",
+    "select_dest_token": "Chọn token bạn muốn nhận",
+    "select_trasfer_from_token": "CHỌN TOKEN CHUYỂN KHOẢN"
   },
 
 

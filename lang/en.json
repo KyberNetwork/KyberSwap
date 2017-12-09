@@ -47,7 +47,11 @@
 
     "about_to_exchange": "You are about to exchange",
     "about_to_transfer": "You are about to transfer",
-    "processing": "Processing"
+    "processing": "Processing",
+    "gas_limit": "Gas limit",
+    "gas_price": "Gas Price",
+    "for": "for",
+    "to": "to"
   },
 
   "modal": {
@@ -65,7 +69,10 @@
     "confirm_exchange_title": "Exchange confirm",
     "confirm_transfer_title": "Transfer confirm",
 
-    "select_your_language": "Select your language"
+    "select_your_language": "Select your language",
+    "select_source_token": "Select source token",
+    "select_dest_token": "Select destination token",
+    "select_trasfer_from_token": "SELECT \"TRANSFER FROM\" TOKEN"
   },
 
   "error": {
