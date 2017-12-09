@@ -87,7 +87,16 @@
 
     "dest_address": "Địa chỉ không hợp lệ",
     "amount_transfer_too_hign": "Số lượng quá lớn",
-    "amount_must_be_number": "Số lượng chuyển sai định dạng"
+    "amount_must_be_number": "Số lượng chuyển sai định dạng",
+
+    "error_occurred": "Có lỗi xảy ra",
+    "cannot_connect_metamask": "Không thể kết nối đến tài khoản Metamask",
+    "cannot_connect_trezor": "Không thể kết nối trezor",
+    "cannot_connect_ledger": "Không thể kết nối ledger",
+    "invalid_private_key": "Private key không đúng định dạng",
+    "no_balance": "Tài khoản của bạn hiện không có đủ số dư ở tất cả token, hãy nhập một tài khoản khác",
+    "clear_data_timeout": "Chúng tôi đã xóa hết dữ liêu bởi vì bạn đã không sử dụng trong ",
+    "minutes": "minutes"
   },
 
   "import": {

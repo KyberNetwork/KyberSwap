@@ -66,7 +66,7 @@ export default class Layout extends React.Component {
     if (!this.props.account.account) return;
     if (this.props.utils.infoModal && this.props.utils.infoModal.open) return;
     if (this.idleTime >= this.timeoutEndSession) {
-      this.props.dispatch(openInfoModal("Time out error", "We've cleared all your data because you idle over " + (constanst.IDLE_TIME_OUT / 60) + " minutes"));
+      this.props.dispatch(openInfoModal("Time out error", (this.props.translate("error.clear_data_timeout") || "We've cleared all your data because you idle over ") + (constanst.IDLE_TIME_OUT / 60) + (this.props.translate("error.minutes") || " minutes")));
       this.endSession();
     } else {
       this.idleTime++;

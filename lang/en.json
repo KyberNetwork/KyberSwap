@@ -85,7 +85,16 @@
 
     "dest_address": "This is not an address",
     "amount_transfer_too_hign": "Amount is too high",
-    "amount_must_be_number": "Amount must be a number"
+    "amount_must_be_number": "Amount must be a number",
+
+    "error_occurred": "Error occurred",
+    "cannot_connect_metamask": "Cannot get metamask account",
+    "cannot_connect_trezor": "Cannot connect to trezor",
+    "cannot_connect_ledger": "Cannot connect to ledger",
+    "invalid_private_key": "Invalid private key",
+    "no_balance": "Your address has no balance in any tokens. Please import another address.",
+    "clear_data_timeout": "We've cleared all your data because you idle over",
+    "minutes": "minutes"
   },
 
   "import": {
