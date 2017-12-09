@@ -48,7 +48,7 @@ describe('Test validateTransfer function', () => {
         let validate = postTransfer.instance().validateTransfer();
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'TRANSFER.THROW_ERROR_DEST_ADDRESS',
-            payload: 'This is not an address'
+            payload: 'error.dest_address'
         });
         expect(validate).toBe(false)
     })
@@ -87,7 +87,7 @@ describe('Test validateTransfer function', () => {
         let validate = postTransfer.instance().validateTransfer();
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'TRANSFER.THROW_AMOUNT_ERROR',
-            payload: 'Amount must be a number'
+            payload: 'error.amount_must_be_number'
         });
         expect(validate).toBe(false)
     })
@@ -101,7 +101,7 @@ describe('Test validateTransfer function', () => {
         let validate = postTransfer.instance().validateTransfer();
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'TRANSFER.THROW_AMOUNT_ERROR',
-            payload: 'Amount must be a number'
+            payload: 'error.amount_must_be_number'
         });
         expect(validate).toBe(false)
     })

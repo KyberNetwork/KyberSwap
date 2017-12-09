@@ -2,7 +2,7 @@ import React from "react"
 import { Route } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 import { Processing, InfoModal } from "../../containers/CommonElements/"
-
+import { Link } from 'react-router-dom'
 
 const LayoutView = (props) => {
 
@@ -24,10 +24,25 @@ const LayoutView = (props) => {
           <InfoModal />
         </section>
         <section id="footer">
-          {props.footer}
+          <div class="row">
+            <div class="column">
+              <ul class="links">
+                <li><Link to="/info" onClick={() => scrollTop()}>{props.translate("layout.info") || 'Info'}</Link></li>
+                <li><Link to="#">{props.translate("layout.terms_of_service") || "Terms of Service"}</Link></li>
+                <li><Link to="#">{props.translate("layout.privacy_policies") || "Privacy Policies"}</Link></li>
+              </ul>
+            </div>
+          </div>
         </section>
-      </div>
-    </ConnectedRouter>
+        <ul>
+          { props.supportedLanguages.map(language => 
+            <li key={language}><button onClick={()=>{props.setActiveLanguage(language)} }>{ language }</button></li>
+          )}
+          <li key='abc'><button onClick={()=>{props.setActiveLanguage('abc')} }>abc</button></li>
+        </ul>
+        {props.footer}
+      </div> 
+    </ConnectedRouter> 
   )
 }
 

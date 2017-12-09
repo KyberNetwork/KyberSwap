@@ -54,6 +54,13 @@ export function clearSession() {
   }
 }
 
+export function changeLanguage(ethereum, lang){
+  return {
+    type: "GLOBAL.CHANGE_LANGUAGE",
+    payload: {ethereum, lang}
+  }
+}
+
 export function clearSessionComplete() {
   return {
     type: "GLOBAL.CLEAR_SESSION_FULFILLED"

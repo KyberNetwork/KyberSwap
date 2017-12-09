@@ -5,7 +5,7 @@ const TokenView = (props) => {
   if (props.token){
     if(props.type == 'transfer'){
       return (
-        <label>Select Token
+        <label>{props.translate("transaction.select_token") ||"Select Token"}
           <div onClick={props.onSelected} className="token-select" data-open="transfer-from-token-modal"><img src={props.token.icon}/><span class="name">{props.token.name}</span></div>
         </label>
       )

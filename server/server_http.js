@@ -94,6 +94,16 @@ app.get('/getLatestBlock', (req, res) => {
   })
 })
 
+app.get('/getLanguagePack', (req, res) => {
+  var lang = req.query.lang;
+  try{
+    var langualgePack = require("../lang/" + lang + ".json")
+    return res.json(langualgePack)
+  } catch (err) {
+    return res.status(404).send("language pack not found!")
+  }
+})
+
 var port = process.env.npm_config_port? process.env.npm_config_port:3001
 app.listen(port, '0.0.0.0')
 console.log('Listening at http://0.0.0.0:' + port)

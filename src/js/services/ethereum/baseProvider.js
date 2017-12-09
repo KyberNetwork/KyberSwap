@@ -248,7 +248,17 @@ export default class BaseEthereumProvider {
     })
   }
 
-  getRateFromBlockchain() {
+  getLanguagePack(lang) {
+    return new Promise((resolve, rejected) => {
+      fetch(BLOCKCHAIN_INFO.history_endpoint + '/getLanguagePack?lang=' + lang).then(function (response) {
+        resolve(response.json())
+      }).catch((err) => {
+        rejected(err)
+      })
+    })
+  }
+
+  getRateFromBlockchain(){
     var ratePromises = []
     var tokenObj = BLOCKCHAIN_INFO.tokens
     Object.keys(tokenObj).map((tokenName) => {

@@ -49,19 +49,19 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.CHECK_SELECT_TOKEN": {
       if (newState.sourceTokenSymbol === newState.destTokenSymbol) {
-        newState.errors.selectSameToken = "Cannot exchange the same token"
-        newState.errors.selectTokenToken = ""
+        newState.errors.selectSameToken = "error.select_same_token"
+        newState.errors.selectTokenToken = ''
         return newState
       }
       if ((newState.sourceTokenSymbol !== "ETH") &&
         (newState.destTokenSymbol !== "ETH")) {
-        newState.errors.selectSameToken = ""
-        newState.errors.selectTokenToken = "This pair token is not supported"
+        newState.errors.selectSameToken = ''
+        newState.errors.selectTokenToken = "error.select_token_token"
         return newState
       }
-      newState.errors.selectSameToken = ""
-      newState.errors.selectTokenToken = ""
-      newState.errors.sourceAmountError = ""
+      newState.errors.selectSameToken = ''
+      newState.errors.selectTokenToken = ''
+      newState.errors.sourceAmountError = ''
       return newState
     }
     case "EXCHANGE.THROW_SOURCE_AMOUNT_ERROR": {

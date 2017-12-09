@@ -12,9 +12,15 @@ import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
 import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase, throwErrorDestAddress, thowErrorAmount, makeNewTransfer } from '../../actions/transferActions';
 import { specifyGas as specifyGasTransfer, specifyGasPrice as specifyGasPriceTransfer, hideAdvance as hideAdvanceTransfer } from "../../actions/transferActions"
+import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
-  return { transfer: store.transfer, account: store.account, tokens: store.tokens.tokens }
+  return { 
+    transfer: store.transfer, 
+    account: store.account, 
+    tokens: store.tokens.tokens,
+    translate: getTranslate(store.locale),
+   }
 })
 
 export default class Transfer extends React.Component {
@@ -107,8 +113,8 @@ export default class Transfer extends React.Component {
       }
     }
     var errors = {
-      destAddress: this.props.transfer.errors.destAddress,
-      amountTransfer: this.props.transfer.errors.amountTransfer
+      destAddress: this.props.transfer.errors.destAddress || '',
+      amountTransfer: this.props.transfer.errors.amountTransfer || ''
     }
 
     var token = (
@@ -123,7 +129,7 @@ export default class Transfer extends React.Component {
     var transferButton = (
       <PostTransferWithKey />
     )
-    var trasactionLoadingScreen = (
+    var transactionLoadingScreen = (
       <TransactionLoading tx={this.props.transfer.txHash}
         makeNewTransaction={this.makeNewTransfer}
         tempTx={this.props.transfer.tempTx}
@@ -142,6 +148,7 @@ export default class Transfer extends React.Component {
         gasPriceError={this.props.transfer.errors.gasPrice}
         gasError={this.props.transfer.errors.gas}
         totalGas={gweiToEth(this.props.transfer.gas * this.props.transfer.gasPrice)}
+        translate={this.props.translate}
       />
     )
 
@@ -152,11 +159,12 @@ export default class Transfer extends React.Component {
         tokenModal={tokenModal}
         gasConfig={gasConfig}
         transferButton={transferButton}
-        trasactionLoadingScreen={trasactionLoadingScreen}
+        transactionLoadingScreen={transactionLoadingScreen}
         input={input}
         errors={errors}
         balance={balance}
         setAmount={this.setAmount}
+        translate={this.props.translate}
       />
     )
   }

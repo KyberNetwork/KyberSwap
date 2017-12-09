@@ -6,7 +6,7 @@ const ImportAccountView = (props) => {
       <div class="frame">
         <div className="row">
           <div class="column small-11 large-12 small-centered" id="import-acc">
-            <h1 class="title">Import address</h1>
+            <h1 class="title">{props.translate("address.import_address") || "Import address"}</h1>
             <div class="row import-account">
               <div class="small-6 medium-4 large-2dot4 column">
                 {props.firstKey}
