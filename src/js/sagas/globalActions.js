@@ -94,7 +94,7 @@ export function* setGasPrice(action){
 }
 
 export function* changelanguage(action){
-  const { ethereum, lang, localForage } = action.payload
+  const { ethereum, lang } = action.payload
   
   if(Language.supportLanguage.indexOf(lang) < 0) return
   try{

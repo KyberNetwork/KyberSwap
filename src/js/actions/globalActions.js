@@ -54,10 +54,10 @@ export function clearSession() {
   }
 }
 
-export function changeLanguage(ethereum, lang, localForage){
+export function changeLanguage(ethereum, lang){
   return {
     type: "GLOBAL.CHANGE_LANGUAGE",
-    payload: {ethereum, lang, localForage}
+    payload: {ethereum, lang}
   }
 }
 

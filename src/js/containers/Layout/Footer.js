@@ -7,7 +7,6 @@ import { Modal } from '../../components/CommonElement'
 import { Link } from 'react-router-dom'
 import { getTranslate } from 'react-localize-redux'
 import { changeLanguage } from "../../actions/globalActions"
-import localForage from 'localforage'
 @connect((store) => {
 
   return {
@@ -29,7 +28,7 @@ export default class Footer extends React.Component {
   }
 
   setActiveLanguage = (language) => {
-    this.props.dispatch(changeLanguage(this.props.ethereumNode, language, localForage))
+    this.props.dispatch(changeLanguage(this.props.ethereumNode, language))
     this.closeModal()
   }
 
