@@ -204,7 +204,7 @@ class SqlitePersist {
   }
 
   savedEvent(event) {
-    console.log(event)
+    //console.log(event)
     return new Promise((resolve, reject) => {
       var stmt = this.db.prepare("INSERT INTO logs(actualDestAmount, actualSrcAmount, dest, source, sender, blockNumber, txHash, status, timestamp) VALUES (?,?,?,?,?,?,?,?,?)")
       stmt.run(event.actualDestAmount, event.actualSrcAmount, event.dest, event.source, event.sender, event.blockNumber, event.txHash, event.status, event.timestamp);

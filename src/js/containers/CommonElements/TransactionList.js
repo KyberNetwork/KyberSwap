@@ -4,11 +4,14 @@ import React from 'react';
 import { connect } from "react-redux"
 import { TransactionListView } from '../../components/CommonElement'
 import BLOCKCHAIN_INFO from "../../../../env"
+import { getTranslate } from 'react-localize-redux';
 
 @connect((store) => {
   return { 
     global: store.global,
-    tokens: store.tokens.tokens}
+    tokens: store.tokens.tokens,
+    translate: getTranslate(store.locale),
+  }
 })
 
 class TransactionList extends React.Component {
@@ -21,7 +24,9 @@ class TransactionList extends React.Component {
                           logsEth = {this.props.global.history.logsEth}
                           logsToken = {this.props.global.history.logsToken}
                           averageTime={BLOCKCHAIN_INFO.averageBlockTime}  
-                          lastBlock={this.props.global.history.currentBlock}/>
+                          lastBlock={this.props.global.history.currentBlock}
+                          translate={this.props.translate}
+                          />
     )
   }
 }

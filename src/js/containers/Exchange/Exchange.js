@@ -13,12 +13,15 @@ import { anyErrors } from "../../utils/validators"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import * as exchangeActions from "../../actions/exchangeActions"
 import { randomForExchange } from "../../utils/random"
+import { getTranslate } from 'react-localize-redux';
+
 @connect((store) => {
   const ethereum = store.connection.ethereum
   const account = store.account
   const exchange = store.exchange
   const tokens = store.tokens.tokens
-  return { account, ethereum, exchange, tokens }
+  const translate = getTranslate(store.locale)
+  return { account, ethereum, exchange, tokens, translate }
 })
 
 
@@ -149,9 +152,9 @@ export default class Exchange extends React.Component {
     )
 
     var errors = {
-      selectSameToken: this.props.exchange.errors.selectSameToken,
-      selectTokenToken: this.props.exchange.errors.selectTokenToken,
-      sourceAmount: this.props.exchange.errors.sourceAmountError,
+      selectSameToken: this.props.exchange.errors.selectSameToken || '',
+      selectTokenToken: this.props.exchange.errors.selectTokenToken || '',
+      sourceAmount: this.props.exchange.errors.sourceAmountError || '',
       tokenSource: ''
     }
 
@@ -183,7 +186,7 @@ export default class Exchange extends React.Component {
     var exchangeButton = (
       <PostExchangeWithKey />
     )
-    var trasactionLoadingScreen = (
+    var transactionLoadingScreen = (
       <TransactionLoading tx={this.props.exchange.txHash}
         tempTx={this.props.exchange.tempTx}
         makeNewTransaction={this.makeNewExchange}
@@ -201,6 +204,7 @@ export default class Exchange extends React.Component {
         gasPriceError={this.props.exchange.errors.gasPriceError}
         gasError={this.props.exchange.errors.gasError}
         totalGas={gweiToEth(this.props.exchange.gas * this.props.exchange.gasPrice)}
+        translate={this.props.translate}
       />
     )
 
@@ -212,13 +216,14 @@ export default class Exchange extends React.Component {
         exchangeRate={exchangeRate}
         gasConfig={gasConfig}
         exchangeButton={exchangeButton}
-        trasactionLoadingScreen={trasactionLoadingScreen}
+        transactionLoadingScreen={transactionLoadingScreen}
         errors={errors}
         input={input}
         balance={balance}
         sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
         setAmount={this.setAmount}
         isSelectToken = {this.props.exchange.isSelectToken}
+        translate={this.props.translate}
       />
     )
   }

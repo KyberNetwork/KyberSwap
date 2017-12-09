@@ -11,6 +11,7 @@ import * as transferActions from "../../actions/transferActions"
 import { PassphraseModal, ConfirmTransferModal, PostTransferBtn } from "../../components/Transaction"
 
 import { Modal } from "../../components/CommonElement"
+import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
   const tokens = store.tokens.tokens
@@ -26,7 +27,8 @@ import { Modal } from "../../components/CommonElement"
     transfer: store.transfer,
     form: { ...store.transfer, balance, decimal },
     ethereum: store.connection.ethereum,
-    keyService: props.keyService
+    keyService: props.keyService,
+    translate: getTranslate(store.locale)
   };
 
 })
@@ -55,7 +57,7 @@ export default class PostTransfer extends React.Component {
     var check = true
     var checkNumber = true
     if (validators.verifyAccount(this.props.form.destAddress.trim()) !== null) {
-      this.props.dispatch(transferActions.throwErrorDestAddress("This is not an address"))
+      this.props.dispatch(transferActions.throwErrorDestAddress("error.dest_address"))
       check = false
     }
     var testGasPrice = parseFloat(this.props.form.gasPrice)
@@ -64,7 +66,7 @@ export default class PostTransfer extends React.Component {
       check = false
     }
     if (isNaN(parseFloat(this.props.form.amount))) {
-      this.props.dispatch(transferActions.thowErrorAmount("Amount must be a number"))
+      this.props.dispatch(transferActions.thowErrorAmount("error.amount_must_be_number"))
       check = false
       checkNumber = false
     }
@@ -73,7 +75,7 @@ export default class PostTransfer extends React.Component {
     }
     var amountBig = converters.stringEtherToBigNumber(this.props.form.amount, this.props.form.decimal)
     if (amountBig.greaterThan(this.props.form.balance)) {
-      this.props.dispatch(transferActions.thowErrorAmount("Amount is too high"))
+      this.props.dispatch(transferActions.thowErrorAmount("error.amount_transfer_too_hign"))
       check = false
     }
     return check
@@ -85,7 +87,9 @@ export default class PostTransfer extends React.Component {
         onChange={this.changePassword}
         onClick={this.processTx}
         onCancel={this.closeModal}
-        passwordError={this.props.form.errors.passwordError || this.props.form.bcError} />
+        passwordError={this.props.form.errors.passwordError || this.props.form.bcError} 
+        translate={this.props.translate}
+      />
     )
   }
   contentConfirm = () => {
@@ -95,6 +99,8 @@ export default class PostTransfer extends React.Component {
         onExchange={this.processTx}
         isConfirming={this.props.form.isConfirming}
         type="transfer"
+        translate={this.props.translate}
+        title={this.props.translate("modal.confirm_transfer_title") || "Transfer confirm"}
       />
 
     )
@@ -105,7 +111,7 @@ export default class PostTransfer extends React.Component {
     var destAddress = form.destAddress;
     var tokenSymbol = form.tokenSymbol;
     return (
-      <p>You are about to transfer<br /><strong>{amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}</strong>&nbsp;to&nbsp;<strong>{destAddress.slice(0, 7)}...{destAddress.slice(-5)}</strong></p>
+      <p>{this.props.translate("transaction.about_to_transfer") || "You are about to transfer"}<br /><strong>{amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}</strong>&nbsp;to&nbsp;<strong>{destAddress.slice(0, 7)}...{destAddress.slice(-5)}</strong></p>
     )
   }
 
@@ -205,6 +211,7 @@ export default class PostTransfer extends React.Component {
         submit={this.clickTransfer} 
         accountType = {this.props.account.type}
         isConfirming={this.props.form.isConfirming}
+        translate={this.props.translate}
       />
     )
   }

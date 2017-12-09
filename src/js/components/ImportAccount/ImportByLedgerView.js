@@ -5,7 +5,7 @@ const ImportByLedgerView = (props) => {
     <div className="importer ledger">
       <a onClick={() => props.showLoading('ledger')}>
         <img src="/assets/img/ledger.svg" />
-        <div class="description">Import from<br />ledger wallet</div>
+        <div class="description">{props.translate("import.from_ledger") || <span>Import from<br />ledger wallet</span>}</div>
       </a>
     </div>
   )

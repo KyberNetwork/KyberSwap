@@ -25,7 +25,7 @@ const PassphraseModal = (props) => {
   }
   return (
     <div >
-      <div className="title text-center">Enter Password</div>
+      <div className="title text-center">{props.translate("modal.enter_password") || "Enter Password"}</div>
       <a className="x" onClick={() => props.onCancel()}>&times;</a>
       <div className="content with-overlap">
         <div className="row">
@@ -49,7 +49,7 @@ const PassphraseModal = (props) => {
       <div className="overlap">
         <a className="button accent process-submit"
           onClick={(e) => submitTransaction(e)}>
-          Confirm
+          {props.translate("modal.confirm") || "Confirm"}
         </a>
       </div>
     </div>

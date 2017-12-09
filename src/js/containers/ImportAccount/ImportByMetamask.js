@@ -4,6 +4,7 @@ import { importAccountMetamask, throwError } from "../../actions/accountActions"
 import { ImportByMetamaskView } from "../../components/ImportAccount"
 import BLOCKCHAIN_INFO from "../../../../env"
 import Web3Service from "../../services/web3"
+import { getTranslate } from 'react-localize-redux'
 
 @connect((store) => {
   var tokens = store.tokens.tokens
@@ -14,7 +15,8 @@ import Web3Service from "../../services/web3"
   return {
     account: store.account,
     ethereum: store.connection.ethereum,
-    tokens: supportTokens
+    tokens: supportTokens,
+    translate: getTranslate(store.locale)
   }
 })
 
@@ -38,6 +40,7 @@ export default class ImportByMetamask extends React.Component {
     return (
       <ImportByMetamaskView 
         connect={this.connect}
+        translate={this.props.translate}
       />
     )
   }

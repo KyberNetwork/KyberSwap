@@ -1,0 +1,95 @@
+{
+  "pack": "vi",
+  "layout": {
+    "info": "Thông tin",
+    "terms_of_service": "Điều khoản dịch vụ",
+    "privacy_policies": "Chính sách bảo mật"
+  },
+
+  "transaction_list": {
+    "transaction_history": "LỊCH SỬ GIAO DỊCH"
+  },
+
+  "address": {
+    "import_address": "Nhập địa chỉ"
+  },
+
+  "transaction": {
+    "exchange": "TRAO ĐỔI",
+    "exchange_from": "ĐỔI TỪ",
+    "exchange_to": "ĐỔI SANG",
+
+    "transfer": "CHUYỂN KHOẢN",
+    "transfer_to_address": "CHUYỂN ĐẾN ĐỊA CHỈ",
+    "amount": "SỐ LƯỢNG",
+    "select_token": "Chọn Token",
+
+    "advanced": "NÂNG CAO",
+    "transaction_fee": "PHÍ GIAO DỊCH",
+
+    "address_balance": "Số dư địa chỉ",
+    "password_needed_exchange": "Mật khẩu cần thiết cho mỗi giao dịch",
+
+    "password_needed_transfer": "Mật khẩu cần thiết cho mỗi giao dịch",
+    "next": "Tiếp",
+    "exit": "THOÁT",
+
+    "broadcast": "Gửi",
+    "transaction": "Giao dịch",
+    "broadcasted_title": "Giao dịch của bạn đã được gửi đến blockchain",
+    "close_browser_or_make_new_exchange": "Bạn đã có thể đóng cửa sổ hiện tại hoặc tiếp tục trao đổi",
+    "close_browser_or_make_new_transfer": "Bạn đã có thể đóng cửa sổ hiện tại hoặc tiếp tục chuyển khoangr",
+    "broadcasting": "Đang truyền dữ liêu ra mạng",
+    "cound_not_broadcast": "Không thể gửi giao dịch của bạn đến blockchain",
+    "current_address_balance": "Số dư hiện tại",
+    "transaction_error": "Lỗi giao dịch",
+    "waiting_transaction": "Đang đợi giao dịch được xác thực",
+
+    "about_to_exchange": "Bạn chuẩn bị chuyển đổi",
+    "about_to_transfer": "Bạn chuẩn bị gửi",
+    "processing": "Đang xử lý"
+  },
+
+  "modal": {
+    "enter_password": "Nhập mật khẩu",
+    "confirm": "Xác nhận",
+    "import": "Nhập",
+    "enter_password_placeholder": "Nhập mật khẩu xác nhận",
+    "select_hd_path": "Chọn HD derivation path",
+    "select_address": "Chọn địa chỉ bạn muốn sử dụng",
+    "previous_addresses": "Địa chỉ Trước",
+    "more_addresses": "Thêm Địa chỉ",
+    "custom_path": "Path Tùy Chỉnh",
+    "view_on_etherscan": "Xem trên Etherscan",
+    "press_confirm_if_really_want": "Click xác nhận nếu bạn thật sự muốn.",
+    "confirm_exchange_title": "Xác nhận giao dịch",
+    "confirm_transfer_title": "Xác nhận giao dịch",
+
+    "select_your_language": "Lựa chọn ngôn ngữ"
+  },
+
+
+  "error": {
+    "select_same_token": "Không thể đổi giữa hai token giống nhau",
+    "select_token_token": "Cặp token này chưa được hỗ trợ",
+    "source_amount_too_high": "Số lượng chuyển quá lớn",
+    "source_amount_too_small": "Số lượng chuyển quá nhỏ",
+    "source_amount_too_high_for_reserve": "Số lượng chuyển quá lớn (hiện không có sẵn token để giao dịch tại thời điểm này)",
+    "source_amount_is_not_number": "Số lượng chuyển sai định dạng",
+
+
+    "dest_address": "Địa chỉ không hợp lệ",
+    "amount_transfer_too_hign": "Số lượng quá lớn",
+    "amount_must_be_number": "Số lượng chuyển sai định dạng"
+  },
+
+  "import": {
+    "from_metamask": "Kêt nối <br> metamask",
+    "from_keystore": "Chọn hoặc kéo<br />keystore",
+    "from_trezor": "Nhập từ<br />trezor",
+    "from_ledger": "Nhập từ<br />ledger",
+    "from_private_key": "Điền<br />private key",
+    "from_private_key_input_title": "ĐIỀN PRIVATEKEY",
+    "from_private_key_input_title_placehoder": "Điền private key"
+  } 
+}

@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { ImportByPKeyView } from "../../components/ImportAccount"
 import { importNewAccount, throwError, pKeyChange, throwPKeyError, openPkeyModal, closePkeyModal } from "../../actions/accountActions"
 import { addressFromPrivateKey, getRandomAvatar } from "../../utils/keys"
+import { getTranslate } from 'react-localize-redux'
 
 @connect((store) => {
   var tokens = store.tokens.tokens
@@ -13,7 +14,8 @@ import { addressFromPrivateKey, getRandomAvatar } from "../../utils/keys"
   return {
     account: store.account,
     ethereum: store.connection.ethereum,
-    tokens: supportTokens
+    tokens: supportTokens,
+    translate: getTranslate(store.locale)
   }
 })
 
@@ -57,6 +59,7 @@ export default class ImportByPrivateKey extends React.Component {
         isOpen={this.props.account.pKey.modalOpen}
         onChange={this.inputChange.bind(this)}
         pKeyError={this.props.account.pKey.error}
+        translate={this.props.translate}
       />
     )
   }

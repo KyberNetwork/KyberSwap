@@ -10,6 +10,7 @@ import { ImportByDeviceView } from "../../components/ImportAccount"
 
 import { importNewAccount, importLoading, closeImportLoading, throwError } from "../../actions/accountActions"
 import { toEther } from "../../utils/converter"
+import { getTranslate } from 'react-localize-redux'
 
 @connect((store, props) => {
 	var tokens = store.tokens.tokens
@@ -22,13 +23,14 @@ import { toEther } from "../../utils/converter"
 		account: store.account,
 		tokens: supportTokens,
 		deviceService: props.deviceService,
-		content: props.content
+		content: props.content,
+		translate: getTranslate(store.locale)
 	}
 }, null,null,{ withRef: true })
 
 export default class ImportByDevice extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			addresses: [],
 			currentAddresses: [],
@@ -45,7 +47,7 @@ export default class ImportByDevice extends React.Component {
 			{ path: "m/0'/0'/0'", desc: 'SingularDTV', notSupport: true },
 			{ path: "m/44'/1'/0'/0", desc: 'Network: Testnets' },
 			{ path: "m/44'/40'/0'/0", desc: 'Network: Expanse', notSupport: true },
-			{ path: 0, desc: 'Your Custom Path', defaultP: "m/44'/60'/1'/0", custom: false },
+			{ path: 0, desc: this.props.translate("modal.custom_path") || 'Your Custom Path', defaultP: "m/44'/60'/1'/0", custom: false },
 		]
 	}
 
@@ -222,6 +224,7 @@ export default class ImportByDevice extends React.Component {
 				getAddress={this.getAddress.bind(this)}
 				choosePath={this.choosePath.bind(this)}
 				showLoading={this.showLoading.bind(this)}
+				translate={this.props.translate}
 			/>
 		)
 	}
