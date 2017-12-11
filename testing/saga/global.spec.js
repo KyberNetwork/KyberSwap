@@ -91,12 +91,12 @@ const ratesExpect = globalTestValue.ratesExpect
 function* allRateUpdateFullfilled() {
   yield put({ 
     type: 'GLOBAL.ALL_RATE_UPDATED_FULFILLED',
-    payload: {rates}
+    payload: {rates, isisUpdateBalance: false}
   });
 }
 it('handle all rate update fullfilled', () => {
   return expectSaga(allRateUpdateFullfilled)
-    .withReducer(tokensReducer, ratesExpect)
+    .withReducer(tokensReducer, {tokens: ratesExpect})
     .run()
     .then((result) => {
       expect(result.storeState.tokens).toEqual(ratesExpect);
