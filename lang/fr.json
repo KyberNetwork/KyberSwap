@@ -1,7 +1,7 @@
 {
   "pack": "fr",
   "pack_icon": "/assets/img/langs/kr.svg",
-  "pack_label": "Korean",
+  "pack_label": "한국어",
   "pack_active": false,
   "layout": {
     "info": "Info",
