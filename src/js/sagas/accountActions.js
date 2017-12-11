@@ -75,7 +75,7 @@ export function* importMetamask(action) {
     const currentId = yield call([web3Service, web3Service.getNetworkId])
     if (parseInt(currentId, 10) !== networkId) {
       console.log(currentId)
-      yield put(actions.throwError("Network is not match"))
+      yield put(actions.throwError(getTranslate(store.getState().locale)("error.network_not_match") || "Network is not match"))
       return
     }
     //get coinbase

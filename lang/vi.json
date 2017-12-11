@@ -103,7 +103,11 @@
     "invalid_private_key": "Private key không đúng định dạng",
     "no_balance": "Tài khoản của bạn hiện không có đủ số dư ở tất cả token, hãy nhập một tài khoản khác",
     "clear_data_timeout": "Chúng tôi đã xóa hết dữ liêu bởi vì bạn đã không sử dụng trong ",
-    "minutes": " phút"
+    "minutes": " phút",
+
+    "path_not_support_by_trezor": "Đường dẫn này không được Trezor hỗ trợ",
+    "check_right_application_selected": "Kiểm tra lại để chắc chắn bạn đã sử dụng đúng ứng dụng",
+    "network_not_match": "Network không đúng"
   },
 
   "import": {
