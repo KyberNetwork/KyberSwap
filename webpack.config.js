@@ -1,12 +1,14 @@
-var debug = process.env.NODE_ENV !== "production";
+//var debug = process.env.NODE_ENV !== "production";
+
 var webpack = require('webpack');
 var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-module.exports = function (env) {
+
+var scriptConfig = function (env) {
   return {
     context: path.join(__dirname, "src"),
-    devtool: debug ? "inline-sourcemap" : false,
+    devtool: (env && env.chain !== "mainnet") ? "inline-sourcemap" : false,
     entry: ['babel-polyfill', "./js/client.js", "./assets/css/app.scss"],
     // resolve: {
     //   modules: [path.resolve(__dirname, "src"), "node_modules"],
@@ -63,7 +65,7 @@ module.exports = function (env) {
       path: __dirname + "/src/",
       filename: "client.min.js"
     },
-    plugins: debug ? [
+    plugins: (env && env.chain !== "mainnet") ? [
       new ExtractTextPlugin({ // define where to save the file
         filename: 'app.bundle.css',
         allChunks: true,
@@ -89,3 +91,27 @@ module.exports = function (env) {
     }
   }
 };
+
+
+var indexConfig = function (env) {
+  var HtmlWebpackPlugin = require('html-webpack-plugin')
+  return {
+    entry: ['./src/client.min.js'],
+    output: {
+      path: __dirname + '/src',
+      filename: 'client.min.js'
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        hash: true,
+        title: "Wallet - kyber.network",
+        template: './src/app.html.template',
+        inject: 'body',
+        styleFile:'app.bundle.css?v=' + Date.now()
+      }),
+      
+    ]
+  }
+}
+
+module.exports = [scriptConfig, indexConfig]
