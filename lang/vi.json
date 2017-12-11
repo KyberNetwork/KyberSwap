@@ -96,7 +96,7 @@
     "invalid_private_key": "Private key không đúng định dạng",
     "no_balance": "Tài khoản của bạn hiện không có đủ số dư ở tất cả token, hãy nhập một tài khoản khác",
     "clear_data_timeout": "Chúng tôi đã xóa hết dữ liêu bởi vì bạn đã không sử dụng trong ",
-    "minutes": "minutes"
+    "minutes": " phút"
   },
 
   "import": {

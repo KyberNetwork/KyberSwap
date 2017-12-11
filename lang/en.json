@@ -94,7 +94,10 @@
     "invalid_private_key": "Invalid private key",
     "no_balance": "Your address has no balance in any tokens. Please import another address.",
     "clear_data_timeout": "We've cleared all your data because you idle over",
-    "minutes": "minutes"
+    "minutes": " minutes",
+
+    "path_not_support_by_trezor": "This path not supported by Trezor",
+    "check_right_application_selected": "Check to make sure the right application is selected"
   },
 
   "import": {
