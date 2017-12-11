@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom'
 import { getTranslate } from 'react-localize-redux'
 import { supportLanguage } from '../../../../lang'
 import { changeLanguage } from "../../actions/globalActions"
-
 @connect((store) => {
   return {
     ethereumNode: store.connection.ethereum,

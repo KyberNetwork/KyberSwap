@@ -51,7 +51,11 @@
 
     "about_to_exchange": "Bạn chuẩn bị chuyển đổi",
     "about_to_transfer": "Bạn chuẩn bị gửi",
-    "processing": "Đang xử lý"
+    "processing": "Đang xử lý",
+    "gas_limit": "Gas giới hạn",
+    "gas_price": "Giá Gas",
+    "for": "đổi lấy",
+    "to": "đến"
   },
 
   "modal": {
@@ -69,7 +73,10 @@
     "confirm_exchange_title": "Xác nhận giao dịch",
     "confirm_transfer_title": "Xác nhận giao dịch",
 
-    "select_your_language": "Lựa chọn ngôn ngữ"
+    "select_your_language": "Lựa chọn ngôn ngữ",
+    "select_source_token": "Chọn token bạn muốn đổi",
+    "select_dest_token": "Chọn token bạn muốn nhận",
+    "select_trasfer_from_token": "CHỌN TOKEN CHUYỂN KHOẢN"
   },
 
 
@@ -84,7 +91,16 @@
 
     "dest_address": "Địa chỉ không hợp lệ",
     "amount_transfer_too_hign": "Số lượng quá lớn",
-    "amount_must_be_number": "Số lượng chuyển sai định dạng"
+    "amount_must_be_number": "Số lượng chuyển sai định dạng",
+
+    "error_occurred": "Có lỗi xảy ra",
+    "cannot_connect_metamask": "Không thể kết nối đến tài khoản Metamask",
+    "cannot_connect_trezor": "Không thể kết nối trezor",
+    "cannot_connect_ledger": "Không thể kết nối ledger",
+    "invalid_private_key": "Private key không đúng định dạng",
+    "no_balance": "Tài khoản của bạn hiện không có đủ số dư ở tất cả token, hãy nhập một tài khoản khác",
+    "clear_data_timeout": "Chúng tôi đã xóa hết dữ liêu bởi vì bạn đã không sử dụng trong ",
+    "minutes": " phút"
   },
 
   "import": {
@@ -97,6 +113,19 @@
     "from_private_key_input_title_placehoder": "Điền private key"
   },
 
+  "info": {
+    "title": "Kyber phiên bản thử nghiệm",
+    "version": "Phiên bản",
+    "chain": "Chuỗi",
+    "node_endpoint": "Node",
+    "reserve_address": "Địa chỉ contract reserve",
+    "network_address": "Địa chỉ contract network",
+    "kyber_homepage": "Trang chủ Kyber",
+    "get_free_kovan": "Lấy Kovan Ether miễn phí",
+    "warning": "Không nên chuyển bất kỳ ether nào cho các địa chỉ phía trên.</br>Các địa chỉ trên chỉ sử dụng trong môi trường test và chúng tôi có khả năng không sử dụng trong phiên bản chính thức.",
+    "here": "tại đây"
+  },
+    
   "footer": {
     "info": "Thông tin",
     "language": "Ngôn ngữ"

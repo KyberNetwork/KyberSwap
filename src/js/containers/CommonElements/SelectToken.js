@@ -5,22 +5,23 @@ import { hideSelectToken } from "../../actions/utilActions"
 import constants from "../../services/constants"
 import { getTranslate } from 'react-localize-redux'
 import { Modal, SelectTokenModal } from '../../components/CommonElement'
-
 @connect((store, props) => {
   var modal = store.utils.tokenModal
   if (!!modal) {
     return {
       modalInfo: modal,
       tokens: store.tokens.tokens,
-      translate: getTranslate(store.locale),
-      chooseToken: props.chooseToken
+      chooseToken: props.chooseToken,
+      translate: getTranslate(store.locale)
     }
   }
   else {
     return {
       modalInfo: {
         open: false
-      }
+      },
+      translate: getTranslate(store.locale)
+
     }
   }
 })

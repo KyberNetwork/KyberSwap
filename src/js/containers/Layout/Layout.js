@@ -23,7 +23,6 @@ import history from "../../history"
 import { clearSession, changeLanguage } from "../../actions/globalActions"
 import { openInfoModal } from "../../actions/utilActions"
 import { setConnection } from "../../actions/connectionActions"
-import localForage from 'localforage'
 import { default as _ } from 'underscore';
 import { LayoutView } from "../../components/Layout"
 import { getTranslate } from 'react-localize-redux'
@@ -67,7 +66,7 @@ export default class Layout extends React.Component {
     if (!this.props.account.account) return;
     if (this.props.utils.infoModal && this.props.utils.infoModal.open) return;
     if (this.idleTime >= this.timeoutEndSession) {
-      this.props.dispatch(openInfoModal("Time out error", "We've cleared all your data because you idle over " + (constanst.IDLE_TIME_OUT / 60) + " minutes"));
+      this.props.dispatch(openInfoModal("Time out error", (this.props.translate("error.clear_data_timeout") || "We've cleared all your data because you idle over ") + (constanst.IDLE_TIME_OUT / 60) + (this.props.translate("error.minutes") || " minutes")));
       this.endSession();
     } else {
       this.idleTime++;
@@ -85,7 +84,7 @@ export default class Layout extends React.Component {
   }
 
   setActiveLanguage = (language) => {
-    this.props.dispatch(changeLanguage(this.props.ethereumNode, language, localForage))
+    this.props.dispatch(changeLanguage(this.props.ethereumNode, language))
   }
 
   render() {

@@ -2,10 +2,16 @@ import * as keyService from "./baseKey"
 import TrezorConnect from "../../services/device/trezor/trezor-connect";
 import EthereumTx from "ethereumjs-tx"
 import { numberToHex } from "../../utils/converter"
+import { getTranslate } from 'react-localize-redux'
+
+import { store } from "../../store"
 
 const defaultDPath = "m/44'/60'/0'/0";
 
 export default class Trezor {
+  constructor(){
+    this.translate = getTranslate(store.getState().locale)
+  }
 
   getPublicKey = (path = defaultDPath) => {
     return new Promise((resolve, reject) => {
@@ -14,9 +20,9 @@ export default class Trezor {
             result.dPath = path;
             resolve(result);
           } else {
-            var err = 'Cannot connect to trezor'
+            var err = this.translate("error.cannot_connect_trezor") || 'Cannot connect to trezor'
             if (result.toString() == 'Error: Not a valid path.') {
-              err = 'This path not supported by Trezor'
+              err = this.translate("error.path_not_support_by_trezor") || 'This path not supported by Trezor'
             }
             reject(err)
           }

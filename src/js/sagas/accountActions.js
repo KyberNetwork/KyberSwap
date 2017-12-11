@@ -17,6 +17,8 @@ import constants from "../services/constants"
 import { Rate, updateAllRatePromise } from "../services/rate"
 import { clearInterval } from 'timers';
 
+import { getTranslate } from 'react-localize-redux'
+import { store } from "../store"
 
 export function* updateAccount(action) {
   const { account, ethereum } = action.payload
@@ -92,7 +94,7 @@ export function* importMetamask(action) {
     ))
   } catch (e) {
     console.log(e)
-    yield put(actions.throwError("Cannot get metamask account"))
+    yield put(actions.throwError(getTranslate(store.getState().locale)("error.cannot_connect_metamask") || "Cannot get metamask account"))
   }
 }
 

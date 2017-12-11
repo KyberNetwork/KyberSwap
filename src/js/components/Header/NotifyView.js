@@ -23,7 +23,7 @@ const Notify = (props) => {
       return (
         <div class="title">
           <span class="amount">{data.sourceAmount.slice(0, 8)} {data.sourceTokenSymbol}&nbsp;</span>
-          for
+          {props.translate("transaction.for") || "for"}
                 <span class="amount">&nbsp;{data.destAmount.slice(0, 7)} {data.destTokenSymbol}</span>
         </div>
       )
@@ -31,7 +31,7 @@ const Notify = (props) => {
       return (
         <div class="title">
           <span class="amount">{data.amount.slice(0, 8)} {data.tokenSymbol}&nbsp;</span>
-          to
+          {props.translate("transaction.to") || "to"}
                 <span class="amount">&nbsp;{data.destAddress.slice(0, 8)}...{data.destAddress.slice(-6)}</span>
         </div>
       )
