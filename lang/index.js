@@ -1,5 +1,5 @@
 
-const loadAll = false
+const loadAll = true
 const defaultLanguage = 'en'
 const otherLang = ['vi', 'fr']
 
