@@ -79,7 +79,11 @@
     "select_your_language": "Select your language",
     "select_source_token": "Select source token",
     "select_dest_token": "Select destination token",
-    "select_trasfer_from_token": "SELECT \"TRANSFER FROM\" TOKEN"
+    "select_trasfer_from_token": "SELECT \"TRANSFER FROM\" TOKEN",
+
+    "approve_exchange_trezor": "Kyber need your approve to do exchange with&nbsp;<strong>ETH</strong>&nbsp;on your Trezor address. Press&nbsp;<strong>Apprrove</strong>&nbsp;button below to open Trezor utility.",
+    "eth_token_exchange": "ETH token exchange",
+    "approve": "Approve"
   },
 
   "error": {
