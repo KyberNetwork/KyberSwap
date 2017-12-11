@@ -45,7 +45,7 @@ export default class ImportByPrivateKey extends React.Component {
         this.props.tokens))
     }
     catch (e) {
-      this.props.dispatch(throwPKeyError('Invalid private key'))
+      this.props.dispatch(throwPKeyError(this.props.translate("error.invalid_private_key") || 'Invalid private key'))
     }
 
   }

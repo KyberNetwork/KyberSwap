@@ -16,7 +16,7 @@ import { getTranslate } from 'react-localize-redux';
 
 class TransactionList extends React.Component {
   render() {
-    if (this.props.global.history.logsEth.length ===0 && this.props.global.history.logsToken.length ===0){
+    if (!this.props.global.history || !this.props.global.history.logsEth || !this.props.global.history.logsToken || (this.props.global.history.logsEth.length ===0 && this.props.global.history.logsToken.length ===0)){
       return ""
     }
     return (

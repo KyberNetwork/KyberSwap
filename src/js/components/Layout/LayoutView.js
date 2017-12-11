@@ -5,9 +5,6 @@ import { Processing, InfoModal } from "../../containers/CommonElements/"
 import { Link } from 'react-router-dom'
 
 const LayoutView = (props) => {
-
-
-
   return (
     <ConnectedRouter history={props.history}>
       <div>

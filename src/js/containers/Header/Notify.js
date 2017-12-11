@@ -4,11 +4,13 @@ import { NotifyView } from "../../components/Header"
 import { clearTxs } from "../../actions/txActions"
 import { toggleNotify } from '../../actions/utilActions'
 import constants from "../../services/constants"
+import { getTranslate } from 'react-localize-redux';
 
 @connect((store) => {
     return {
         txs: store.txs,
-        utils: store.utils
+        utils: store.utils,
+        translate: getTranslate(store.locale)
     }
 })
 
@@ -29,7 +31,8 @@ export default class Notify extends React.Component {
             <NotifyView displayTransactions={this.displayTransactions}
                 transactionsNum={Object.keys(this.props.txs).length}
                 displayTrans={this.props.utils.showNotify}
-                txs={this.props.txs}    
+                txs={this.props.txs}
+                translate={this.props.translate}    
             />
         )
     }

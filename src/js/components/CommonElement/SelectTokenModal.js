@@ -10,7 +10,7 @@ const SelectTokenModal = (props) => {
     var content = ''
     switch (props.type) {
       case "source":
-        title = "Select source token"
+        title = props.translate("modal.select_source_token") || "Select source token"
         //content = "source"  			
         var content = Object.keys(props.tokens).map((key, i) => {          
           var token = props.tokens[key]
@@ -26,11 +26,12 @@ const SelectTokenModal = (props) => {
                   inactive = {!token.balance.greaterThanOrEqualTo(tokenEpsilon)}
                   title={title}
                   selected={props.selected==token.symbol}
+                  translate={props.translate}
                   />
         })
         break
       case "des":
-        title = "Select destination token"
+        title = props.translate("modal.select_dest_token") || "Select destination token"
         var content = Object.keys(props.tokens).map((key,i) => {
           var token = props.tokens[key]
           var balance = toT(token.balance.toString(), token.decimal)
@@ -42,11 +43,12 @@ const SelectTokenModal = (props) => {
                   onClick = {props.chooseToken}
                   title={title}
                   selected={props.selected==token.symbol}
+                  translate={props.translate}
                   />
         })
         break
       case "transfer":  		
-        title = "SELECT \"TRANSFER FROM\" TOKEN"
+        title = props.translate("modal.select_trasfer_from_token") || "SELECT \"TRANSFER FROM\" TOKEN"
         var content = Object.keys(props.tokens).map((key,i) => {
           var token = props.tokens[key]
           var balance = toT(token.balance.toString(), token.decimal)
@@ -58,6 +60,7 @@ const SelectTokenModal = (props) => {
                   onClick = {props.chooseToken}
                   inactive = {!token.balance.greaterThan(0)}
                   selected={props.selected==token.symbol}
+                  translate={props.translate}
                   />
         })
       }
