@@ -79,7 +79,11 @@
     "select_your_language": "Lựa chọn ngôn ngữ",
     "select_source_token": "Chọn token bạn muốn đổi",
     "select_dest_token": "Chọn token bạn muốn nhận",
-    "select_trasfer_from_token": "CHỌN TOKEN CHUYỂN KHOẢN"
+    "select_trasfer_from_token": "CHỌN TOKEN CHUYỂN KHOẢN",
+
+    "approve_exchange_trezor": "Kyber cần sự đồng ý của bạn để  chuyển&nbsp;<strong>ETH</strong>&nbsp;trong ví Trezor. Nhấn nút&nbsp;<strong>Đồng ý</strong>&nbsp;phía đưới để tiếp tục.",
+    "eth_token_exchange": "Chuyển đổi eth token",
+    "approve": "Đồng ý"
   },
 
 
@@ -103,7 +107,11 @@
     "invalid_private_key": "Private key không đúng định dạng",
     "no_balance": "Tài khoản của bạn hiện không có đủ số dư ở tất cả token, hãy nhập một tài khoản khác",
     "clear_data_timeout": "Chúng tôi đã xóa hết dữ liêu bởi vì bạn đã không sử dụng trong ",
-    "minutes": " phút"
+    "minutes": " phút",
+
+    "path_not_support_by_trezor": "Đường dẫn này không được Trezor hỗ trợ",
+    "check_right_application_selected": "Kiểm tra lại để chắc chắn bạn đã sử dụng đúng ứng dụng",
+    "network_not_match": "Network không đúng"
   },
 
   "import": {

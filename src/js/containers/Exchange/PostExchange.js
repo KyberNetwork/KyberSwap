@@ -237,7 +237,9 @@ export default class PostExchange extends React.Component {
       <ApproveModal recap="Please approve"
         onCancel={this.closeModalApprove}
         isApproving={this.props.form.isApproving}
-        onSubmit={this.processExchangeAfterApprove} />
+        onSubmit={this.processExchangeAfterApprove} 
+        translate={this.props.translate}
+        />
     )
   }
 
