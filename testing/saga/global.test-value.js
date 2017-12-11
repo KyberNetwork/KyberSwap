@@ -11,9 +11,12 @@ import utils from '../../src/js/reducers/utilsReducer'
 import txs from '../../src/js/reducers/txsReducer'
 import { routerReducer } from 'react-router-redux'
 import { createStore } from 'redux';
+import { localeReducer } from 'react-localize-redux';
 
 const initState = createStore(combineReducers({
-  account, exchange, transfer, txs, connection, router: routerReducer, global,utils, tokens
+  account, exchange, transfer, txs, connection, router: routerReducer, utils,
+  locale: localeReducer,
+  global,tokens
 })).getState()
 
 const ratesExpect = {

@@ -1,6 +1,6 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../../src/js/actions/globalActions'
-import { updateHistoryExchange, checkConnection } from '../../src/js/sagas/globalActions'
+import { updateHistoryExchange, checkConnection, changelanguage } from '../../src/js/sagas/globalActions'
 import { expectSaga, testSaga } from 'redux-saga-test-plan';
 import EthereumService from "../instance/ethereum/ethereum.fake"
 jest.mock('vm')
@@ -158,6 +158,20 @@ describe('checkConnection', () => {
           payload: 2
         })
         .run();
+    })
+
+    it('handle change language', () => {
+      return expectSaga(changelanguage, { payload: {
+        ethereum: ethereum,
+        lang: 'vi'
+      }})
+      .run()
+      .then((result) => {
+        const { effects } = result;
+        expect(effects.put).toHaveLength(1);
+
+        expect(effects.put[0].PUT.action.type).toEqual("@@localize/SET_ACTIVE_LANGUAGE")
+      })
     })
   })
 })

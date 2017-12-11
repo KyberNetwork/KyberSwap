@@ -115,7 +115,7 @@ it('check select token with two tokens are same', () => {
     .withReducer(exchangeReducer, currentState)
     .run()
     .then((result) => {
-      expect(result.storeState.errors.selectSameToken).toEqual("Cannot exchange the same token")
+      expect(result.storeState.errors.selectSameToken).toEqual("error.select_same_token")
       expect(result.storeState.errors.selectTokenToken).toEqual("")
     })
 })
@@ -131,7 +131,7 @@ it('check select token with two tokens not include ether', () => {
     .run()
     .then((result) => {
       expect(result.storeState.errors.selectSameToken).toEqual("")
-      expect(result.storeState.errors.selectTokenToken).toEqual("This pair token is not supported")
+      expect(result.storeState.errors.selectTokenToken).toEqual("error.select_token_token")
     })
 })
 
