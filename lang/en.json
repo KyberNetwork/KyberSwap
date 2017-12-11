@@ -55,7 +55,10 @@
     "gas_limit": "Gas limit",
     "gas_price": "Gas Price",
     "for": "for",
-    "to": "to"
+    "to": "to",
+
+    "transfer_tooltip": "Transfer ether or tokens to other addresses",
+    "transaction_config_tooltip": "Change gas limit or gas price affect the time to proccess transaction"
   },
 
   "modal": {
@@ -130,5 +133,15 @@
   "footer": {
     "info": "Info",
     "language": "Language"
+  },
+
+
+  "history": {
+    "second_ago": "seconds ago",
+    "minutes_ago": "minutes ago",
+    "hours_ago": "hours ago",
+    "days_ago": "days ago",
+    "months_ago": "months ago",
+    "years_ago": "years ago"
   }
 }
