@@ -1,5 +1,8 @@
 {
   "pack": "fr",
+  "pack_icon": "/assets/img/langs/kr.svg",
+  "pack_label": "Korean",
+  "pack_active": false,
   "layout": {
     "info": "Info",
     "terms_of_service": "Conditions d'utilisation",

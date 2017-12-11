@@ -1,5 +1,8 @@
 {
   "pack": "vi",
+  "pack_icon": "/assets/img/langs/cn.svg",
+  "pack_label": "China",
+  "pack_active": true,
   "layout": {
     "info": "Thông tin",
     "terms_of_service": "Điều khoản dịch vụ",

@@ -1,5 +1,8 @@
 {
   "pack": "en",
+  "pack_icon": "/assets/img/langs/uk.svg",
+  "pack_label": "English",
+  "pack_active": true,
   "layout": {
     "info": "Info",
     "terms_of_service": "Terms of Service",
