@@ -81,27 +81,27 @@ const TransactionListView = (props) => {
     var elapsed = Date.now() - timeStamp*1000;
 
     if (elapsed < msPerMinute) {
-      return Math.round(elapsed / 1000) + ' seconds ago';
+      return Math.round(elapsed / 1000) + ' ' + (props.translate('history.second_ago') || 'seconds ago');
     }
 
     else if (elapsed < msPerHour) {
-      return Math.round(elapsed / msPerMinute) + ' minutes ago';
+      return Math.round(elapsed / msPerMinute) + ' ' + (props.translate('history.minutes_ago') || 'minutes ago');
     }
 
     else if (elapsed < msPerDay) {
-      return Math.round(elapsed / msPerHour) + ' hours ago';
+      return Math.round(elapsed / msPerHour) + ' ' + (props.translate('history.hours_ago') || 'hours ago');
     }
 
     else if (elapsed < msPerMonth) {
-      return Math.round(elapsed / msPerDay) + ' days ago';
+      return Math.round(elapsed / msPerDay) + ' ' + (props.translate('history.days_ago') || 'days ago');
     }
 
     else if (elapsed < msPerYear) {
-      return Math.round(elapsed / msPerMonth) + ' months ago';
+      return Math.round(elapsed / msPerMonth) + ' ' + (props.translate('history.months_ago') || 'months ago');
     }
 
     else {
-      return Math.round(elapsed / msPerYear) + ' years ago';
+      return Math.round(elapsed / msPerYear) + ' ' + (props.translate('history.years_ago') || 'years ago');
     }
   }
   //return timestamp
