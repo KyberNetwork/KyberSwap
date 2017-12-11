@@ -10,6 +10,7 @@ import {Dashboard} from "../../containers/Dashboard"
 import {InfoKyber} from "../../containers/InfoKyber"
 
 import TermOfService from "../../components/TermOfService"
+import WarningMessage from "../../components/WarningMessage"
 
 import {SideBar} from "../../containers/SideBar"
 import {RateInfo} from "../../containers/RateInfo"
@@ -59,6 +60,7 @@ export default class Layout extends React.Component {
     return (
       <ConnectedRouter history={history}>
         <div>
+          <WarningMessage />
           {app}
         </div>
       </ConnectedRouter>
