@@ -28,6 +28,7 @@
     "transaction_fee": "PHÍ GIAO DỊCH",
 
     "address_balance": "Số dư địa chỉ",
+    "balance": "Số dư",
     "password_needed_exchange": "Mật khẩu cần thiết cho mỗi giao dịch",
 
     "password_needed_transfer": "Mật khẩu cần thiết cho mỗi giao dịch",
@@ -120,5 +121,10 @@
     "get_free_kovan": "Lấy Kovan Ether miễn phí",
     "warning": "Không nên chuyển bất kỳ ether nào cho các địa chỉ phía trên.</br>Các địa chỉ trên chỉ sử dụng trong môi trường test và chúng tôi có khả năng không sử dụng trong phiên bản chính thức.",
     "here": "tại đây"
+  },
+    
+  "footer": {
+    "info": "Thông tin",
+    "language": "Ngôn ngữ"
   }
 }

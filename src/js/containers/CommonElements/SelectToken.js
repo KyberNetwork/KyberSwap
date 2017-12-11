@@ -3,8 +3,8 @@ import { connect } from "react-redux"
 import { TokenSelect } from '../../components/CommonElement'
 import { hideSelectToken } from "../../actions/utilActions"
 import constants from "../../services/constants"
+import { getTranslate } from 'react-localize-redux'
 import { Modal, SelectTokenModal } from '../../components/CommonElement'
-import { getTranslate } from 'react-localize-redux';
 @connect((store, props) => {
   var modal = store.utils.tokenModal
   if (!!modal) {

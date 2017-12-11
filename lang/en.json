@@ -28,6 +28,7 @@
     "transaction_fee": "TRANSACTION FEE",
 
     "address_balance": "Address Balance",
+    "balance": "Balance",
     "password_needed_exchange": "Password is needed for each exchange transaction",
 
     "password_needed_transfer": "Password is needed for each transfer transaction",
@@ -121,5 +122,10 @@
     "get_free_kovan": "Get free Kovan Ether",
     "warning": "Do not send ethers nor tokens to any of the addresses above.<br></br>They are for test only and we are not likely to have control of them in mainnet.",
     "here": "here"
+  },
+  
+  "footer": {
+    "info": "Info",
+    "language": "Language"
   }
 }

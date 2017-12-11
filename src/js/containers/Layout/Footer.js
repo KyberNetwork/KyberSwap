@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 // import { TokenSelect } from '../../components/CommonElement'
- import { hideLangugaModal, showLangugaModal } from "../../actions/utilActions"
+import { hideLangugaModal, showLangugaModal } from "../../actions/utilActions"
 import constants from "../../services/constants"
 import { Modal } from '../../components/CommonElement'
 import { Link } from 'react-router-dom'
@@ -32,25 +32,31 @@ export default class Footer extends React.Component {
   }
 
   content = () => {
+    let translate = this.props.translate
     return (
       <div className="language-list">
-        <div class="title">{this.props.translate("modal.select_your_language") || "Select your language"}</div><a className="x" onClick={this.closeModal}>&times;</a>
+        <div class="title">{translate("modal.select_your_language") || "Select your language"}</div><a className="x" onClick={this.closeModal}>&times;</a>
         <div class="content">
-          <div class="row tokens small-up-2 medium-up-3 large-up-4">
-            <div class="column gutter-15">
-              <a className={"token-stamp selected"} onClick={()=>{this.setActiveLanguage('en')} }>
+          <div class="row tokens">
+            <div class="column small-6 medium-4">
+              <button className={'token-stamp width-f ' + 
+                (translate('pack') == 'en' ? 'selected' : '')}
+                onClick={() => { this.setActiveLanguage('en') }}
+              >
                 <img src={"/assets/img/langs/uk.svg"} /><span class="name">English</span>
-              </a>
+              </button>
             </div>
-            <div class="column gutter-15">
-              <a className={"token-stamp empty"} onClick={()=>{this.setActiveLanguage('vi')} }>
+            <div class="column small-6 medium-4">
+              <button disabled className={"token-stamp width-f empty"} 
+                onClick={() => { this.setActiveLanguage('vi') }}
+              >
                 <img src={"/assets/img/langs/cn.svg"} /><span class="name">China</span>
-              </a>
+              </button>
             </div>
-            <div class="column gutter-15" onClick={()=>{this.setActiveLanguage('fr')} }>
-              <a className={"token-stamp empty"}>
+            <div class="column small-6 medium-4 end">
+              <button disabled className={"token-stamp width-f empty"} onClick={() => { this.setActiveLanguage('fr') }}>
                 <img src={"/assets/img/langs/kr.svg"} /><span class="name">Korea</span>
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -65,8 +71,16 @@ export default class Footer extends React.Component {
       <div class="row">
         <div class="column">
           <ul class="links">
-            <li><Link to="/info" onClick={() => this.scrollTop()}>Info</Link></li>
-            <li><a onClick={() => this.openLanguageModal()}>Language</a></li>
+            <li>
+              <Link to="/info" onClick={() => this.scrollTop()}>
+                {this.props.translate("footer.info") || "Info"}
+              </Link>
+            </li>
+            <li>
+              <a onClick={() => this.openLanguageModal()}>
+                {this.props.translate("footer.language") || "Language"}
+              </a>
+            </li>
           </ul>
         </div>
         <Modal className={{
