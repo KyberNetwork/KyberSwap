@@ -6,7 +6,7 @@ const TransferForm = (props) => {
       <div class="frame">
         <div class="row">
           <div class="column small-11 medium-10 large-8 small-centered">
-            <h1 class="title">Transfer<span class="help has-tip top" data-tooltip title="Transfer ether or tokens to other addresses"></span></h1>
+            <h1 class="title">{props.translate("transaction.transfer") || "Transfer"}<span class="help has-tip top" data-tooltip title={props.translate("transaction.transfer_tooltip") || "Transfer ether or tokens to other addresses"}></span></h1>
             <form action="#" method="get">
               <div class="row">
                 <div class="column">

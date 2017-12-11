@@ -55,7 +55,10 @@
     "gas_limit": "Gas giới hạn",
     "gas_price": "Giá Gas",
     "for": "đổi lấy",
-    "to": "đến"
+    "to": "đến",
+
+    "transfer_tooltip": "Chuyển eth hoặc token đến một tài khoản khác",
+    "transaction_config_tooltip": "Thay đổi gas limit hoặc gas price sẽ ảnh hưởng đến tốc độ giao dịch"
   },
 
   "modal": {
@@ -129,5 +132,14 @@
   "footer": {
     "info": "Thông tin",
     "language": "Ngôn ngữ"
+  },
+
+  "history": {
+    "second_ago": "giây trước",
+    "minutes_ago": "phút trước",
+    "hours_ago": "giờ trước",
+    "days_ago": "ngày trước",
+    "months_ago": "tháng trước",
+    "years_ago": "năm trước"
   }
 }

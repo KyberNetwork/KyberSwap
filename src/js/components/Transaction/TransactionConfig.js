@@ -24,7 +24,7 @@ const TransactionConfig = (props) => {
   // }
   return (
     <div class="transaction-fee">
-      <label class="title">{props.translate("transaction.transaction_fee") || "Transaction Fee"}<span class="help has-tip top" data-tooltip title="Change gas limit or gas price affect the time to proccess transaction"></span></label>
+      <label class="title">{props.translate("transaction.transaction_fee") || "Transaction Fee"}<span class="help has-tip top" data-tooltip title={props.translate("transaction.transaction_config_tooltip") || "Change gas limit or gas price affect the time to proccess transaction"}></span></label>
       <div class="gas-limit">
         <input type="number" min="0" max="3000000" step="100" onKeyPress={props.onGasPress} value={props.gas} onChange={specifyGas.bind(this)} readOnly/>
       </div>
