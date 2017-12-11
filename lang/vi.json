@@ -107,5 +107,18 @@
     "from_private_key": "Điền<br />private key",
     "from_private_key_input_title": "ĐIỀN PRIVATEKEY",
     "from_private_key_input_title_placehoder": "Điền private key"
-  } 
+  },
+
+  "info": {
+    "title": "Kyber phiên bản thử nghiệm",
+    "version": "Phiên bản",
+    "chain": "Chuỗi",
+    "node_endpoint": "Node",
+    "reserve_address": "Địa chỉ contract reserve",
+    "network_address": "Địa chỉ contract network",
+    "kyber_homepage": "Trang chủ Kyber",
+    "get_free_kovan": "Lấy Kovan Ether miễn phí",
+    "warning": "Không nên chuyển bất kỳ ether nào cho các địa chỉ phía trên.</br>Các địa chỉ trên chỉ sử dụng trong môi trường test và chúng tôi có khả năng không sử dụng trong phiên bản chính thức.",
+    "here": "tại đây"
+  }
 }

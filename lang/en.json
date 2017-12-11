@@ -108,5 +108,18 @@
     "from_private_key": "Enter your<br />private key",
     "from_private_key_input_title": "ENTER YOUR PRIVATE KEY",
     "from_private_key_input_title_placehoder": "Enter your private key"
+  },
+
+  "info": {
+    "title": "Kyber Testnet",
+    "version": "Version",
+    "chain": "Chain",
+    "node_endpoint": "Node endpoint",
+    "reserve_address": "Reserve contract address",
+    "network_address": "Network contract address",
+    "kyber_homepage": "Kyber homepage",
+    "get_free_kovan": "Get free Kovan Ether",
+    "warning": "Do not send ethers nor tokens to any of the addresses above.<br></br>They are for test only and we are not likely to have control of them in mainnet.",
+    "here": "here"
   }
 }
