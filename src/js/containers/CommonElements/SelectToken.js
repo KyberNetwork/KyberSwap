@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { TokenSelect } from '../../components/CommonElement'
 import { hideSelectToken } from "../../actions/utilActions"
 import constants from "../../services/constants"
+import { getTranslate } from 'react-localize-redux'
 import { Modal, SelectTokenModal } from '../../components/CommonElement'
 
 @connect((store, props) => {
@@ -11,6 +12,7 @@ import { Modal, SelectTokenModal } from '../../components/CommonElement'
     return {
       modalInfo: modal,
       tokens: store.tokens.tokens,
+      translate: getTranslate(store.locale),
       chooseToken: props.chooseToken
     }
   }
@@ -43,7 +45,7 @@ export default class SelectToken extends React.Component {
           chooseToken={this.chooseToken}
           selected={this.props.modalInfo.selected}
           closeModal={this.closeModal}
-
+          translate={this.props.translate}
       />
 
     )

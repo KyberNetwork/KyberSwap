@@ -28,6 +28,7 @@
     "transaction_fee": "PHÍ GIAO DỊCH",
 
     "address_balance": "Số dư địa chỉ",
+    "balance": "Số dư",
     "password_needed_exchange": "Mật khẩu cần thiết cho mỗi giao dịch",
 
     "password_needed_transfer": "Mật khẩu cần thiết cho mỗi giao dịch",
@@ -91,5 +92,10 @@
     "from_private_key": "Điền<br />private key",
     "from_private_key_input_title": "ĐIỀN PRIVATEKEY",
     "from_private_key_input_title_placehoder": "Điền private key"
-  } 
+  },
+
+  "footer": {
+    "info": "Thông tin",
+    "language": "Ngôn ngữ"
+  }
 }
