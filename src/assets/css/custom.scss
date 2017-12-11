@@ -38,7 +38,9 @@ button:focus{
         color: #656876!important;
     }
 }
-
+.width-f{
+    width: 100%;
+}
 .ReactModalPortal > * {
     opacity: 0;
 }
@@ -172,6 +174,30 @@ a.disabled{
         @media screen and (min-width: 790px) and (max-width: 1024px){
             #import-acc{
                 width: 70%;
+            }
+        }
+    }
+}
+.token-stamp{
+    &.selected .balance{
+        span{
+            color: $light-gray;
+        }
+    }
+    .balance{
+        &:before{
+            content: unset;
+        }
+        span{
+            font-family: "Muli", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+            color: map-get($foundation-palette, primary);
+            text-transform: uppercase;
+            float: left;
+            margin-right: 5px;
+        }
+        @media screen and(max-width: 40em){
+            span{
+                display: none;
             }
         }
     }

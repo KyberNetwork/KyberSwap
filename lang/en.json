@@ -28,6 +28,7 @@
     "transaction_fee": "TRANSACTION FEE",
 
     "address_balance": "Address Balance",
+    "balance": "Balance",
     "password_needed_exchange": "Password is needed for each exchange transaction",
 
     "password_needed_transfer": "Password is needed for each transfer transaction",
@@ -89,5 +90,10 @@
     "from_private_key": "Enter your<br />private key",
     "from_private_key_input_title": "ENTER YOUR PRIVATE KEY",
     "from_private_key_input_title_placehoder": "Enter your private key"
+  },
+  
+  "footer": {
+    "info": "Info",
+    "language": "Language"
   }
 }

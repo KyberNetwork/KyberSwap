@@ -26,6 +26,7 @@ const SelectTokenModal = (props) => {
                   inactive = {!token.balance.greaterThanOrEqualTo(tokenEpsilon)}
                   title={title}
                   selected={props.selected==token.symbol}
+                  translate={props.translate}
                   />
         })
         break
@@ -42,6 +43,7 @@ const SelectTokenModal = (props) => {
                   onClick = {props.chooseToken}
                   title={title}
                   selected={props.selected==token.symbol}
+                  translate={props.translate}
                   />
         })
         break
@@ -58,6 +60,7 @@ const SelectTokenModal = (props) => {
                   onClick = {props.chooseToken}
                   inactive = {!token.balance.greaterThan(0)}
                   selected={props.selected==token.symbol}
+                  translate={props.translate}
                   />
         })
       }
