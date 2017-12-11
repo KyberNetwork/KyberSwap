@@ -9,6 +9,7 @@ import SelectTokenModal from '../../../src/js/components/CommonElement/SelectTok
 import TokenSelect from '../../../src/js/components/CommonElement/TokenSelect';
 import TransactionLoadingView from '../../../src/js/components/Transaction/TransactionLoadingView';
 import TransactionConfig from '../../../src/js/components/Transaction/TransactionConfig';
+import { getTranslate } from 'react-localize-redux';
 
 import { shallow, mount } from 'enzyme';
 import BigNumber from "bignumber.js"
@@ -107,6 +108,7 @@ describe('Select token', () => {
                 balance="2"
                 decimal="18"
                 inactive={true}
+                translate={getTranslate(store.getState().locale)}
             />
         );
 
@@ -138,7 +140,11 @@ describe('Input amount onchange', () => {
             },
             destAmount: {}
         }
-        let errors = {}
+        let errors = {
+            selectSameToken: '',
+            selectTokenToken: '',
+            sourceAmount: '',
+        }
         let exchangeRate = {}
         let balance = {}
         const exchangeForm = shallow(
@@ -146,6 +152,7 @@ describe('Input amount onchange', () => {
                 errors={errors}
                 exchangeRate={exchangeRate}
                 balance={balance}
+                translate={getTranslate(store.getState().locale)}
             />
         );
 
@@ -176,7 +183,11 @@ describe('Input amount onchange', () => {
                 onChange: exchange.instance().changeDestAmount
             }
         }
-        let errors = {}
+        let errors = {
+            selectSameToken: '',
+            selectTokenToken: '',
+            sourceAmount: '',
+        }
         let exchangeRate = {}
         let balance = {}
         const exchangeForm = shallow(
@@ -184,6 +195,7 @@ describe('Input amount onchange', () => {
                 errors={errors}
                 exchangeRate={exchangeRate}
                 balance={balance}
+                translate={getTranslate(store.getState().locale)}
             />
         );
 
@@ -220,7 +232,11 @@ describe('Input amount focus', () => {
             },
             destAmount: {}
         }
-        let errors = {}
+        let errors = {
+            selectSameToken: '',
+            selectTokenToken: '',
+            sourceAmount: '',
+        }
         let exchangeRate = {}
         let balance = {}
         const exchangeForm = shallow(
@@ -228,6 +244,7 @@ describe('Input amount focus', () => {
                 errors={errors}
                 exchangeRate={exchangeRate}
                 balance={balance}
+                translate={getTranslate(store.getState().locale)}
             />
         );
 
@@ -248,7 +265,11 @@ describe('Input amount focus', () => {
                 onFocus: exchange.instance().focusDest
             }
         }
-        let errors = {}
+        let errors = {
+            selectSameToken: '',
+            selectTokenToken: '',
+            sourceAmount: '',
+        }
         let exchangeRate = {}
         let balance = {}
         const exchangeForm = shallow(
@@ -256,6 +277,7 @@ describe('Input amount focus', () => {
                 errors={errors}
                 exchangeRate={exchangeRate}
                 balance={balance}
+                translate={getTranslate(store.getState().locale)}
             />
         );
 
@@ -281,6 +303,7 @@ describe('Test make new transaction', () => {
             <TransactionLoadingView
                 txHash="0x035bedb6e3e8b0..."
                 makeNewTransaction={exchange.instance().makeNewExchange}
+                translate={getTranslate(store.getState().locale)}
             />
         );
 
@@ -304,6 +327,7 @@ describe('Test change gas', () => {
         const transactionConfig = shallow(
             <TransactionConfig
                 gasPriceHandler={exchange.instance().specifyGasPrice}
+                translate={getTranslate(store.getState().locale)}
             />
         );
 

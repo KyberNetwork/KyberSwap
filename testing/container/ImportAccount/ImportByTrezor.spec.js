@@ -12,7 +12,7 @@ describe('ImportByDeviceWithTrezor', () => {
 
     it('render 1 <ImportByDeviceWithTrezor /> component', () => {
         const component = shallow(
-            <ImportByDeviceWithTrezor />
+            <ImportByDeviceWithTrezor store={store} />
         );
         expect(component.length).toBe(1)
     })

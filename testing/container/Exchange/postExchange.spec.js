@@ -5,6 +5,7 @@ import PostExchangeBtn from '../../../src/js/components/Transaction/PostExchange
 import PassphraseModal from '../../../src/js/components/Transaction/PassphraseModal';
 import ConfirmTransferModal from '../../../src/js/components/Transaction/ConfirmTransferModal';
 import ApproveModal from '../../../src/js/components/Transaction/ApproveModal';
+import { getTranslate } from 'react-localize-redux';
 
 import { shallow, mount } from 'enzyme';
 import BigNumber from "bignumber.js";
@@ -117,7 +118,7 @@ describe('Test validateExchange function', () => {
         let validate = postExchange.instance().validateExchange();
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.THROW_SOURCE_AMOUNT_ERROR',
-            payload: 'Source amount is too high (pair is not available for trading at the moment)'
+            payload: 'error.source_amount_too_high_for_reserve'
         });
         expect(validate).toBe(false)
     });
@@ -130,7 +131,7 @@ describe('Test validateExchange function', () => {
         let validate = postExchange.instance().validateExchange();
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.THROW_SOURCE_AMOUNT_ERROR',
-            payload: 'Source amount is too small'
+            payload: 'error.source_amount_too_small'
         });
         expect(validate).toBe(false)
     });
@@ -218,7 +219,9 @@ describe('Submit exchange', () => {
         ).dive();
 
         const postExchangeBtn = shallow(
-            <PostExchangeBtn submit={postExchange.instance().clickExchange} />
+            <PostExchangeBtn submit={postExchange.instance().clickExchange}
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         postExchangeBtn.find('.submit').simulate('click');
@@ -235,7 +238,9 @@ describe('Submit exchange', () => {
         ).dive();
 
         const postExchangeBtn = shallow(
-            <PostExchangeBtn submit={postExchange.instance().clickExchange} />
+            <PostExchangeBtn submit={postExchange.instance().clickExchange} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         postExchangeBtn.find('.submit').simulate('click');
@@ -252,7 +257,9 @@ describe('Submit exchange', () => {
         ).dive();
 
         const postExchangeBtn = shallow(
-            <PostExchangeBtn submit={postExchange.instance().clickExchange} />
+            <PostExchangeBtn submit={postExchange.instance().clickExchange} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         postExchangeBtn.find('.submit').simulate('click');
@@ -270,7 +277,9 @@ describe('Submit exchange', () => {
         ).dive();
 
         const postExchangeBtn = shallow(
-            <PostExchangeBtn submit={postExchange.instance().clickExchange} />
+            <PostExchangeBtn submit={postExchange.instance().clickExchange} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         postExchangeBtn.find('.submit').simulate('click');
@@ -288,7 +297,9 @@ describe('Submit exchange', () => {
         ).dive();
 
         const postExchangeBtn = shallow(
-            <PostExchangeBtn submit={postExchange.instance().clickExchange} />
+            <PostExchangeBtn submit={postExchange.instance().clickExchange} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         postExchangeBtn.find('.submit').simulate('click');
@@ -306,7 +317,9 @@ describe('Submit exchange', () => {
         ).dive();
 
         const postExchangeBtn = shallow(
-            <PostExchangeBtn submit={postExchange.instance().clickExchange} />
+            <PostExchangeBtn submit={postExchange.instance().clickExchange} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         postExchangeBtn.find('.submit').simulate('click');
@@ -324,7 +337,9 @@ describe('Submit exchange', () => {
         ).dive();
 
         const postExchangeBtn = shallow(
-            <PostExchangeBtn submit={postExchange.instance().clickExchange} />
+            <PostExchangeBtn submit={postExchange.instance().clickExchange} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         postExchangeBtn.find('.submit').simulate('click');
@@ -348,7 +363,9 @@ describe('Close modal', () => {
         ).dive();
 
         const passphraseModal = shallow(
-            <PassphraseModal onCancel={postExchange.instance().closeModal} />
+            <PassphraseModal onCancel={postExchange.instance().closeModal} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         passphraseModal.find('.x').simulate('click');
@@ -364,7 +381,9 @@ describe('Close modal', () => {
         ).dive();
 
         const confirmTransferModal = shallow(
-            <ConfirmTransferModal onCancel={postExchange.instance().closeModalConfirm} />
+            <ConfirmTransferModal onCancel={postExchange.instance().closeModalConfirm} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         confirmTransferModal.find('.x').simulate('click');
@@ -380,7 +399,9 @@ describe('Close modal', () => {
         ).dive();
 
         const confirmTransferModal = shallow(
-            <ConfirmTransferModal onCancel={postExchange.instance().closeModalConfirm} />
+            <ConfirmTransferModal onCancel={postExchange.instance().closeModalConfirm} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         confirmTransferModal.find('.x').simulate('click');
@@ -395,7 +416,9 @@ describe('Close modal', () => {
         ).dive();
 
         const confirmTransferModal = shallow(
-            <ConfirmTransferModal onCancel={postExchange.instance().closeModalApprove} />
+            <ConfirmTransferModal onCancel={postExchange.instance().closeModalApprove} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         confirmTransferModal.find('.x').simulate('click');
@@ -416,7 +439,9 @@ describe('PassphraseModal', () => {
         ).dive();
 
         const passphraseModal = shallow(
-            <PassphraseModal onChange={postExchange.instance().changePassword} />
+            <PassphraseModal onChange={postExchange.instance().changePassword} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         passphraseModal.find('#passphrase').simulate('change', {
@@ -440,7 +465,9 @@ describe('Proccess transaction', () => {
         ).dive();
 
         const passphraseModal = mount(
-            <PassphraseModal onClick={postExchange.instance().processTx} />,
+            <PassphraseModal onClick={postExchange.instance().processTx} 
+                translate={getTranslate(store.getState().locale)}
+            />,
             { attachTo: document.body }
         );
         passphraseModal.find('.process-submit').simulate('click');

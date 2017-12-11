@@ -2,6 +2,8 @@ import './config';
 import { combineReducers, createStore } from "redux";
 import BigNumber from "bignumber.js"
 import Account from '../../src/js/services/account';
+import { localeReducer } from 'react-localize-redux';
+import { initialize } from 'react-localize-redux';
 
 function tokens() {
     return {
@@ -93,8 +95,19 @@ function global() {
     }
 }
 
+function locale(state, action) {
+    return {
+        languages: [
+            {code: "en", active: false},
+            {code: "active", active: true, _v: "10"}
+        ],
+        translations: {},
+        options: { renderInnerHtml: true, showMissingTranslationMsg: true } 
+    }
+}
+
 const reducer = combineReducers({
-    tokens, utils, account, txs, connection, exchange, transfer, global
+    tokens, utils, account, txs, connection, exchange, transfer, global, locale
 })
 
 const store = createStore(reducer);
