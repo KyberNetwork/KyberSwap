@@ -3,9 +3,11 @@ import { connect } from "react-redux"
 // import { TokenSelect } from '../../components/CommonElement'
 import { hideLangugaModal, showLangugaModal } from "../../actions/utilActions"
 import constants from "../../services/constants"
+import { getLanguage } from "../../services/language"
 import { Modal } from '../../components/CommonElement'
 import { Link } from 'react-router-dom'
 import { getTranslate } from 'react-localize-redux'
+import { supportLanguage } from '../../../../lang'
 import { changeLanguage } from "../../actions/globalActions"
 @connect((store) => {
   return {
@@ -38,26 +40,22 @@ export default class Footer extends React.Component {
         <div class="title">{translate("modal.select_your_language") || "Select your language"}</div><a className="x" onClick={this.closeModal}>&times;</a>
         <div class="content">
           <div class="row tokens">
-            <div class="column small-6 medium-4">
-              <button className={'token-stamp width-f ' + 
-                (translate('pack') == 'en' ? 'selected' : '')}
-                onClick={() => { this.setActiveLanguage('en') }}
-              >
-                <img src={"/assets/img/langs/uk.svg"} /><span class="name">English</span>
-              </button>
-            </div>
-            <div class="column small-6 medium-4">
-              <button disabled className={"token-stamp width-f empty"} 
-                onClick={() => { this.setActiveLanguage('vi') }}
-              >
-                <img src={"/assets/img/langs/cn.svg"} /><span class="name">China</span>
-              </button>
-            </div>
-            <div class="column small-6 medium-4 end">
-              <button disabled className={"token-stamp width-f empty"} onClick={() => { this.setActiveLanguage('fr') }}>
-                <img src={"/assets/img/langs/kr.svg"} /><span class="name">Korea</span>
-              </button>
-            </div>
+            {
+              supportLanguage.map(lang => (
+                <div class="column small-6 medium-4" key={lang}>
+                  <button className={'token-stamp width-f '
+                      + (translate('pack') == lang ? 'selected ' : '')
+                      + (getLanguage(lang).pack_active ? '' : 'empty')
+                    }
+                    disabled={getLanguage(lang).pack_active ? false : true}
+                    onClick={() => { this.setActiveLanguage(lang) }}
+                  >
+                    <img src={getLanguage(lang).pack_icon} />
+                    <span class="name">{getLanguage(lang).pack_label}</span>
+                  </button>
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>
