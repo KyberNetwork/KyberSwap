@@ -9,6 +9,7 @@ import SelectTokenModal from '../../../src/js/components/CommonElement/SelectTok
 import TokenSelect from '../../../src/js/components/CommonElement/TokenSelect';
 import TransactionLoadingView from '../../../src/js/components/Transaction/TransactionLoadingView';
 import TransactionConfig from '../../../src/js/components/Transaction/TransactionConfig';
+import { getTranslate } from 'react-localize-redux';
 
 import { shallow, mount } from 'enzyme';
 import BigNumber from "bignumber.js"
@@ -94,7 +95,9 @@ describe('Input destination address onchange', () => {
             roundingValue: 0,
         }
         const transferForm = shallow(
-            <TransferForm input={input} errors={errors} balance={balance} />
+            <TransferForm input={input} errors={errors} balance={balance} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
         transferForm.find('.hash').simulate('change', {
             target: { value: '0x23f35d...' }
@@ -134,7 +137,9 @@ describe('Input amount onchange', () => {
             roundingValue: 0,
         }
         const transferForm = shallow(
-            <TransferForm input={input} errors={errors} balance={balance} />
+            <TransferForm input={input} errors={errors} balance={balance}
+                translate={getTranslate(store.getState().locale)}
+            />
         );
         transferForm.find('.amount-input').simulate('change', {
             target: { value: 0.1 }
@@ -162,6 +167,7 @@ describe('Select token', () => {
                 balance="2"
                 decimal="18"
                 inactive={true}
+                translate={getTranslate(store.getState().locale)}
             />
         );
 
@@ -194,6 +200,7 @@ describe('Make new transaction', () => {
             <TransactionLoadingView
                 txHash="0x035bedb6e3e8b0..."
                 makeNewTransaction={transfer.instance().makeNewTransfer}
+                translate={getTranslate(store.getState().locale)}
             />
         );
 
@@ -216,6 +223,7 @@ describe('Test change gas', () => {
         const transactionConfig = shallow(
             <TransactionConfig
                 gasPriceHandler={transfer.instance().specifyGasPrice}
+                translate={getTranslate(store.getState().locale)}
             />
         );
 

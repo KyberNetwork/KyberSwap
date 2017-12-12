@@ -2,7 +2,9 @@ import store from '../store';
 import React from 'react';
 import ImportByPrivateKey from '../../../src/js/containers/ImportAccount/ImportByPrivateKey';
 import ImportByPKeyView from '../../../src/js/components/ImportAccount/ImportByPKeyView';
-import Modal from '../../../src/js/components/CommonElement/MyModal'
+import Modal from '../../../src/js/components/CommonElement/MyModal';
+import { getTranslate } from 'react-localize-redux';
+
 import { shallow, mount } from 'enzyme';
 import BigNumber from "bignumber.js";
 
@@ -27,6 +29,7 @@ describe('Open close modal', () => {
         const importByPKeyView = shallow(
             <ImportByPKeyView
                 modalOpen={component.instance().openModal.bind(component.instance())}
+                translate={getTranslate(store.getState().locale)}
             />
         );
         importByPKeyView.find('#importPKey').simulate('click');
@@ -42,6 +45,7 @@ describe('Open close modal', () => {
         const importByPKeyView = shallow(
             <ImportByPKeyView
                 onRequestClose={component.instance().closeModal.bind(component.instance())}
+                translate={getTranslate(store.getState().locale)}
             />
         );
         importByPKeyView.find(Modal).dive().find('.x').simulate('click');
@@ -63,6 +67,7 @@ describe('Input passphare change', () => {
         const importByPKeyView = shallow(
             <ImportByPKeyView
                 onChange={component.instance().inputChange.bind(component.instance())}
+                translate={getTranslate(store.getState().locale)}
             />
         );
         importByPKeyView.find(Modal).dive().find('#private_key').simulate('change', {
@@ -84,14 +89,6 @@ describe('Import PrivateKey', () => {
         const component = shallow(
             <ImportByPrivateKey store={store} />
         ).dive();
-        // const importByPKeyView = shallow(
-        //     <ImportByPKeyView
-        //         importPrivateKey={component.instance().importPrivateKey.bind(component.instance())}
-        //     />,
-        //     { attachTo: document.body }
-        // );
-        // importByPKeyView.find(Modal).dive().find('#submit_pkey').simulate('click');
-
         let pkey = 'This is invalid private key';
         component.instance().importPrivateKey(pkey);
         expect(store.dispatch).toHaveBeenCalledWith({

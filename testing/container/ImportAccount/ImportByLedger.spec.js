@@ -12,7 +12,7 @@ describe('ImportByDeviceWithLedger', () => {
 
     it('render 1 <ImportByDeviceWithLedger /> component', () => {
         const component = shallow(
-            <ImportByDeviceWithLedger />
+            <ImportByDeviceWithLedger store={store} />
         );
         expect(component.length).toBe(1)
     })

@@ -4,6 +4,7 @@ import PostTransfer from '../../../src/js/containers/Transfer/PostTransfer';
 import PostTransferBtn from '../../../src/js/components/Transaction/PostTransferBtn';
 import PassphraseModal from '../../../src/js/components/Transaction/PassphraseModal';
 import ConfirmTransferModal from '../../../src/js/components/Transaction/ConfirmTransferModal';
+import { getTranslate } from 'react-localize-redux';
 
 import { shallow, mount } from 'enzyme';
 import BigNumber from "bignumber.js";
@@ -117,9 +118,9 @@ describe('Test validateTransfer function', () => {
         ).dive();
 
         let validate = postTransfer.instance().validateTransfer();
-        expect(store.dispatch).toHaveBeenCalledWith({
+        expect(store.dispatch).toHaveBeenCalledWith({   
             type: 'TRANSFER.THROW_AMOUNT_ERROR',
-            payload: 'Amount is too high'
+            payload: 'error.amount_transfer_too_hign'
         });
         expect(validate).toBe(false)
     })
@@ -153,7 +154,9 @@ describe('Submit transfer', () => {
         ).dive();
 
         const postTransferBtn = shallow(
-            <PostTransferBtn submit={postTransfer.instance().clickTransfer} />
+            <PostTransferBtn submit={postTransfer.instance().clickTransfer} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         postTransferBtn.find('.submit-transfer').simulate('click');
@@ -169,7 +172,9 @@ describe('Submit transfer', () => {
         ).dive();
 
         const postTransferBtn = shallow(
-            <PostTransferBtn submit={postTransfer.instance().clickTransfer} />
+            <PostTransferBtn submit={postTransfer.instance().clickTransfer} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         postTransferBtn.find('.submit-transfer').simulate('click');
@@ -185,7 +190,9 @@ describe('Submit transfer', () => {
         ).dive();
 
         const postTransferBtn = shallow(
-            <PostTransferBtn submit={postTransfer.instance().clickTransfer} />
+            <PostTransferBtn submit={postTransfer.instance().clickTransfer} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
         postTransferBtn.find('.submit-transfer').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
@@ -200,7 +207,9 @@ describe('Submit transfer', () => {
         ).dive();
 
         const postTransferBtn = shallow(
-            <PostTransferBtn submit={postTransfer.instance().clickTransfer} />
+            <PostTransferBtn submit={postTransfer.instance().clickTransfer} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
         postTransferBtn.find('.submit-transfer').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
@@ -220,7 +229,9 @@ describe('PassphraseModal', () => {
         ).dive();
 
         const passphraseModal = shallow(
-            <PassphraseModal onChange={postTransfer.instance().changePassword} />
+            <PassphraseModal onChange={postTransfer.instance().changePassword} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         passphraseModal.find('#passphrase').simulate('change', {
@@ -244,7 +255,9 @@ describe('Process submit', () => {
         ).dive();
 
         const passphraseModal = mount(
-            <PassphraseModal onClick={postTransfer.instance().processTx} />,
+            <PassphraseModal onClick={postTransfer.instance().processTx} 
+                translate={getTranslate(store.getState().locale)}
+            />,
             { attachTo: document.body }
         );
         passphraseModal.find('.process-submit').simulate('click');
@@ -276,7 +289,9 @@ describe('Process submit', () => {
         ).dive();
 
         const passphraseModal = mount(
-            <ConfirmTransferModal onExchange={postTransfer.instance().processTx} />,
+            <ConfirmTransferModal onExchange={postTransfer.instance().processTx} 
+                translate={getTranslate(store.getState().locale)}
+            />,
         );
         passphraseModal.find('.process-submit').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
@@ -313,7 +328,9 @@ describe('Close modal', () => {
         ).dive();
 
         const passphraseModal = shallow(
-            <PassphraseModal onCancel={postTransfer.instance().closeModal} />
+            <PassphraseModal onCancel={postTransfer.instance().closeModal} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         passphraseModal.find('.x').simulate('click');
@@ -329,7 +346,9 @@ describe('Close modal', () => {
         ).dive();
 
         const confirmTransferModal = shallow(
-            <ConfirmTransferModal onCancel={postTransfer.instance().closeModal} />
+            <ConfirmTransferModal onCancel={postTransfer.instance().closeModal} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         confirmTransferModal.find('.x').simulate('click');
@@ -345,7 +364,9 @@ describe('Close modal', () => {
         ).dive();
 
         const confirmTransferModal = shallow(
-            <ConfirmTransferModal onCancel={postTransfer.instance().closeModal} />
+            <ConfirmTransferModal onCancel={postTransfer.instance().closeModal} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
 
         confirmTransferModal.find('.x').simulate('click');
