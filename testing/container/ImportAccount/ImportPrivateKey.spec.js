@@ -93,7 +93,7 @@ describe('Import PrivateKey', () => {
         component.instance().importPrivateKey(pkey);
         expect(store.dispatch).toHaveBeenCalledWith({
             type: "ACCOUNT.PKEY_ERROR",
-            payload: "Invalid private key"
+            payload: "Missing localized key: error.invalid_private_key for language: active"
         });
     })
 
