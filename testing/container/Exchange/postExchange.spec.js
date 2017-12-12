@@ -193,7 +193,9 @@ describe('Test approveTx function', () => {
         ).dive();
 
         const approveModal = shallow(
-            <ApproveModal onSubmit={postExchange.instance().processExchangeAfterApprove} />
+            <ApproveModal onSubmit={postExchange.instance().processExchangeAfterApprove} 
+                translate={getTranslate(store.getState().locale)}
+            />
         );
         approveModal.find('.submit-approve').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
