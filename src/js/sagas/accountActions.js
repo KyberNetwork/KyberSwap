@@ -22,14 +22,18 @@ import { store } from "../store"
 
 export function* updateAccount(action) {
   const { account, ethereum } = action.payload
-  const newAccount = yield call(account.sync, ethereum, account)
-  yield put(actions.updateAccountComplete(newAccount))
+  try{
+    const newAccount = yield call(account.sync, ethereum, account)
+    yield put(actions.updateAccountComplete(newAccount))
+  } catch (err){
+    console.log(err)
+  }
+  
 }
 
 export function* importNewAccount(action) {
   yield put(actions.importLoading())
   const { address, type, keystring, ethereum, avatar, tokens, metamask } = action.payload
-
   try {
     const account = yield call(service.newAccountInstance, address, type, keystring, avatar, ethereum)
     var rates = []
@@ -62,6 +66,7 @@ export function* importNewAccount(action) {
   }
   catch (err) {
     console.log(err)
+    yield put(actions.throwError('Cannot connet to blockchain right now. Please try again later.'))
     yield put(actions.closeImportLoading())
   }
 

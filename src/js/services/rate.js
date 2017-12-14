@@ -52,15 +52,22 @@ export default class Rate {
         resolve(new BigNumber(0));
       }
       else if (this.address === constants.ETHER_ADDRESS) {
-        ethereum.call("getBalance")(ownerAddr).then((result) => {
+        ethereum.call("getBalance")(ownerAddr)
+        .then((result) => {
           var balance = new BigNumber(result)
           resolve(balance)
+        }).catch((err) => {
+          reject(err)
         })
       }
       else {
-        ethereum.call("getTokenBalance")(this.address, ownerAddr).then((result) => {
+        ethereum.call("getTokenBalance")(this.address, ownerAddr)
+        .then((result) => {
           var balance = new BigNumber(result)
           resolve(balance);
+        })
+        .catch((err) => {
+          reject(err)
         })
       }
     });
@@ -68,7 +75,7 @@ export default class Rate {
 }
 
 export function updateRatePromise(ethereum, source, rateTokenEth, rateEthToken, ownerAddr) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const rate = new Rate(
       source.name,
       source.symbol,
@@ -88,27 +95,37 @@ export function updateRatePromise(ethereum, source, rateTokenEth, rateEthToken, 
         rate.balance = values[2]
         resolve(rate);
       })
+      .catch((err) => {
+        reject(err)
+      })
   });
 }
 
 
 export function updateAllRatePromise(ethereum, tokens, reserve, ownerAddr) {
-  return new Promise((resolve) => {
-    ethereum.call("getRateExchange")().then(
+  return new Promise((resolve, reject) => {
+    ethereum.call("getRateExchange")()
+    .then(
       (result) => {
         let tokenObj = {}
-        result.map((token) => {
-          tokenObj[token.source+'-'+token.dest] = token
-        })
-        var promises = tokens
-        .filter((token) => {
-          return tokenObj[token.symbol+'-'+constants.ETH.symbol] && tokenObj[constants.ETH.symbol+'-'+token.symbol]
-        })
-        .map((token) => {
-          return updateRatePromise(ethereum, token, tokenObj[token.symbol+'-'+constants.ETH.symbol].rate, tokenObj[constants.ETH.symbol+'-'+token.symbol].rate, ownerAddr)
-        });
-        resolve(Promise.all(promises));
-      }
-    )
+        if(result && result.length){ 
+          result.map((token) => {
+            tokenObj[token.source+'-'+token.dest] = token
+          })
+          var promises = tokens
+          .filter((token) => {
+            return tokenObj[token.symbol+'-'+constants.ETH.symbol] && tokenObj[constants.ETH.symbol+'-'+token.symbol]
+          })
+          .map((token) => {
+            return updateRatePromise(ethereum, token, tokenObj[token.symbol+'-'+constants.ETH.symbol].rate, tokenObj[constants.ETH.symbol+'-'+token.symbol].rate, ownerAddr)
+          });
+          resolve(Promise.all(promises));
+        }else {
+          reject("cannot get rate exchange")
+        }
+      })
+    .catch((err) => {
+      reject(err)
+    })
   });
 }

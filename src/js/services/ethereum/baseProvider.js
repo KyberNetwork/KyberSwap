@@ -215,9 +215,11 @@ export default class BaseEthereumProvider {
           'Accept': 'application/json, text/plain, */*',
           'Content-Type': 'application/json'
         },
-      }).then((response) => {
+      })
+      .then((response) => {
         return response.json()
-      }).then((data) => {
+      })
+      .then((data) => {
         for(let key in data){
           data[key] = data[key].filter(item => {
             return (this.tokenIsSupported(item.dest)
@@ -227,7 +229,7 @@ export default class BaseEthereumProvider {
         resolve(data);
       })
       .catch((err) => {
-        rejected(err)
+        console.log(err)
       })
     })
   }
