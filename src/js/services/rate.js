@@ -22,6 +22,9 @@ export default class Rate {
           var rate = new BigNumber(result[0])
           resolve(rate)
         })
+        .catch((err) => {
+          reject(err)
+        })
     });
 
   }
@@ -34,6 +37,9 @@ export default class Rate {
         (result) => {
           var rate = new BigNumber(result[0])
           resolve(rate)
+        })
+        .catch((err) => {
+          reject(err)
         })
     });
 

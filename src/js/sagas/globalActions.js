@@ -33,11 +33,17 @@ export function* updateRate(action) {
     source.address,
     source.decimal
   )
-  yield [
-    rate.fetchRate(ethereum, reserve),
-    rate.updateBalance(ethereum, ownerAddr)
-  ]
-  yield put(actions.updateRateComplete(rate))
+  try{
+    yield [
+      rate.fetchRate(ethereum, reserve),
+      rate.updateBalance(ethereum, ownerAddr)
+    ]
+    yield put(actions.updateRateComplete(rate))
+  }
+  catch(err){
+    console.log(err)
+  }
+  
 }
 
 

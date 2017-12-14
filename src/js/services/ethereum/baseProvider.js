@@ -17,8 +17,12 @@ export default class BaseEthereumProvider {
 
   getGasPrice(){
     return new Promise((resolve, reject) => {
-      this.rpc.eth.getGasPrice().then((result)=>{
+      this.rpc.eth.getGasPrice()
+      .then((result)=>{
         resolve(result)
+      })
+      .catch((err) => {
+        reject(err)
       })
     })
   }
@@ -74,25 +78,30 @@ export default class BaseEthereumProvider {
 
   getBalance(address) {
     return new Promise((resolve, reject) => {
-      this.rpc.eth.getBalance(address).then((balance) => {
+      this.rpc.eth.getBalance(address)
+      .then((balance) => {
         if (balance != null) {
           resolve(balance)
         }
       })
-      // .catch((err) => {
-      //   console.log(err)
-      //   reject(err)
-      // })
+      .catch((err) => {
+        console.log(err)
+        reject(err)
+      })
     })
   }
 
   getNonce(address) {
     return new Promise((resolve, reject) => {
-      this.rpc.eth.getTransactionCount(address, "pending").then((nonce) => {
+      this.rpc.eth.getTransactionCount(address, "pending")
+      .then((nonce) => {
         //console.log(nonce)
         if (nonce != null) {
           resolve(nonce)
         }
+      })
+      .catch((err) => {
+        reject(err)
       })
     })
 
@@ -103,10 +112,14 @@ export default class BaseEthereumProvider {
     var instance = this.erc20Contract
     instance.options.address = address
     return new Promise((resolve, reject) => {
-      instance.methods.balanceOf(ownerAddr).call().then((result) => {
+      instance.methods.balanceOf(ownerAddr).call()
+      .then((result) => {
         if (result != null) {
           resolve(result)
         }
+      })
+      .catch((err) => {
+        reject(err)
       })
     })
 
@@ -174,10 +187,10 @@ export default class BaseEthereumProvider {
           resolve(result)
         }
       })
-      // .catch((err) => {
-      //   console.log(err)
-      //   reject(err)
-      // })
+      .catch((err) => {
+        // console.log(err)
+        reject(err)
+      })
     })
   }
 
@@ -213,6 +226,9 @@ export default class BaseEthereumProvider {
         }
         resolve(data);
       })
+      .catch((err) => {
+        rejected(err)
+      })
     })
   }
 
@@ -238,9 +254,13 @@ export default class BaseEthereumProvider {
       })
       .then(function (response) {
         if(response.status == 404){
-          console.log("~~~~~~~ not founf rate in server ~~~~~~~~")
-          this.getRateFromBlockchain().then((result) => {
+          console.log("~~~~~~~ not found rate in server ~~~~~~~~")
+          this.getRateFromBlockchain()
+          .then((result) => {
             resolve(result)
+          })
+          .catch((err) => {
+            rejected(err)
           })
         } else {
           resolve(response.json())
@@ -250,8 +270,12 @@ export default class BaseEthereumProvider {
 
       .catch((err) => {
         console.log("-- catch error get rate from server --")
-        this.getRateFromBlockchain().then((result) => {
+        this.getRateFromBlockchain()
+        .then((result) => {
           resolve(result)
+        })
+        .catch((err) => {
+          rejected(err)
         })
       })
     })
@@ -282,17 +306,22 @@ export default class BaseEthereumProvider {
         this.getRate(constants.ETH.address, tokenObj[tokenName].address, constants.RESERVES[0].index)
       ]))
     })
-    return Promise.all(ratePromises).then((arrayRate) => {
-      var arrayRateObj = arrayRate.map((rate) => {
-        return {
-          source: rate[0],
-          dest: rate[1],
-          rate: rate[2].rate,
-          expBlock: rate[2].expBlock,
-          balance: rate[2].balance
-        }
+    return Promise.all(ratePromises)
+      .then((arrayRate) => {
+        var arrayRateObj = arrayRate.map((rate) => {
+          return {
+            source: rate[0],
+            dest: rate[1],
+            rate: rate[2].rate,
+            expBlock: rate[2].expBlock,
+            balance: rate[2].balance
+          }
+        })
+        return arrayRateObj
       })
-      return arrayRateObj
-    })
+      .catch((err) => {
+        console.log(err)
+        // return Promise.reject(err)
+      })
   }
 }
