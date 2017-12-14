@@ -30,6 +30,7 @@
         .coin-icon{
             position: relative;
             width:100px;
+            display: flex;
         }
         .inner {
           display: flex;
@@ -63,7 +64,7 @@
 
           .titles {
               display: block;
-              margin-left: 12%;
+              margin-left: 5%;
               .rate {
                   display: inline-block;
                   font-size: 24px;
@@ -81,6 +82,7 @@
                   color: #484647;
                   vertical-align: bottom;
                   line-height: 1em;
+
               }
 
               .time {

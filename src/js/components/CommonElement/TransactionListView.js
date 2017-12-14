@@ -78,7 +78,7 @@ const TransactionListView = (props) => {
     var msPerMonth = msPerDay * 30;
     var msPerYear = msPerDay * 365;
 
-    var elapsed = Date.now() - timeStamp*1000;
+    var elapsed = Date.now() - timeStamp * 1000;
 
     if (elapsed < msPerMinute) {
       return Math.round(elapsed / 1000) + ' ' + (props.translate('history.second_ago') || 'seconds ago');
@@ -123,9 +123,13 @@ const TransactionListView = (props) => {
               <div className="coin coin2" key={'coin-2'} style={{ backgroundImage: 'url(\'' + destIcon + '\')' }}></div>
             </div>
             <div className="titles">
-              <span className="rate" title={sourceAmountFull}>{sourceAmount}</span>
-              <span className="coins">{sourceToken.key.toUpperCase()} to {destToken.key.toUpperCase()}</span>
-              <span className="time">{calculateTimeStamp(item.timestamp)}</span>
+              <div>
+                <span className="rate" title={sourceAmountFull}>{sourceAmount}</span>
+                <span className="coins">{sourceToken.key.toUpperCase()} to {destToken.key.toUpperCase()}</span>
+              </div>
+              <div>
+                <span className="time">{calculateTimeStamp(item.timestamp)}</span>
+              </div>
             </div>
           </div>
         </div>

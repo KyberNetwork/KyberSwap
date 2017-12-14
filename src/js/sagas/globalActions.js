@@ -1,7 +1,6 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/globalActions'
 import * as actionsUtils from '../actions/utilActions'
-import { fetchRatePromise } from "../services/rate"
 import { Rate, updateAllRatePromise } from "../services/rate"
 import { push } from 'react-router-redux';
 import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
