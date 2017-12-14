@@ -20,6 +20,12 @@ export function clearIntervalConnection(intervalConnection){
     }
 }
 
+export function createNewConnectionInstance(){
+    return {
+        type: "CONNECTION.CREATE_NEW_CONNECTION"
+    }
+}
+
 // export function setSubprovider(provider) {
 //   return {
 //       type: "CONN.SET_SUB_PROVIDER",

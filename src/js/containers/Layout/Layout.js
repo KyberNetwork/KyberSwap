@@ -17,12 +17,12 @@ import { Footer } from "../Layout"
 
 import { Processing, InfoModal, ExchangeHistory, TransactionList } from "../../containers/CommonElements/"
 import constanst from "../../services/constants"
-import { createNewConnection } from "../../services/ethereum/connection"
+// import { createNewConnection } from "../../services/ethereum/connection"
 
 import history from "../../history"
 import { clearSession, changeLanguage } from "../../actions/globalActions"
 import { openInfoModal } from "../../actions/utilActions"
-import { setConnection } from "../../actions/connectionActions"
+import { setConnection, createNewConnectionInstance } from "../../actions/connectionActions"
 import { default as _ } from 'underscore';
 import { LayoutView } from "../../components/Layout"
 import { getTranslate } from 'react-localize-redux'
@@ -59,7 +59,9 @@ export default class Layout extends React.Component {
     document.onkeypress = this.resetTimmer;
 
     this.intervalIdle = setInterval(this.checkTimmer.bind(this), 10000)
-    createNewConnection()
+
+    this.props.dispatch(createNewConnectionInstance())
+    // createNewConnection()
   }
 
   checkTimmer() {

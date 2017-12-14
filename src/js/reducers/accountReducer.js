@@ -31,7 +31,7 @@ const account = (state=initState, action) => {
     }
     case "ACCOUNT.CLOSE_LOADING_IMPORT": {
       return {...state, loading: false}
-    }   
+    }
     case "ACCOUNT.THROW_ERROR": {            
       return {...state, error: action.payload, showError: true}
     }

@@ -79,6 +79,10 @@ export default class BaseEthereumProvider {
           resolve(balance)
         }
       })
+      // .catch((err) => {
+      //   console.log(err)
+      //   reject(err)
+      // })
     })
   }
 
@@ -164,11 +168,16 @@ export default class BaseEthereumProvider {
 
   getRate(source, dest, reserve) {
     return new Promise((resolve, reject) => {
-      this.networkContract.methods.getRate(source, dest, reserve).call().then((result) => {
+      this.networkContract.methods.getRate(source, dest, reserve).call()
+      .then((result) => {
         if (result != null) {
           resolve(result)
         }
       })
+      // .catch((err) => {
+      //   console.log(err)
+      //   reject(err)
+      // })
     })
   }
 

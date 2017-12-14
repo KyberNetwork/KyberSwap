@@ -1,6 +1,7 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/globalActions'
 import * as actionsUtils from '../actions/utilActions'
+import { closeImportLoading } from '../actions/accountActions'
 import { Rate, updateAllRatePromise } from "../services/rate"
 import { push } from 'react-router-redux';
 import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
@@ -75,6 +76,7 @@ export function* checkConnection(action){
       }
       if(count === maxCount){
         yield put(actionsUtils.openInfoModal("Error modal", "Cannot connect to node right now. Please check your network!"))
+        yield put(closeImportLoading())
         yield put(actions.updateCountConnection(++count))
         return
       }
