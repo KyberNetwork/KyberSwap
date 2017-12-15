@@ -6,7 +6,6 @@ import * as BaseKey from "../../src/js/services/keys/baseKey"
 import FakeLedger from "../instance/ledger/Ledger.fake"
 import FakeTrezor from "../instance/trezor/Trezor.fake"
 import FakeKeyStore from "../instance/keystore/KeyStore.fake"
-import { sealTxByKeystore} from "../../src/js/utils/sealer"
 
 var account = new Account(
   "0xee41a6c2b36d80d6698641b83fc883c0e11af683", 

@@ -5,7 +5,7 @@ import { KeyStore, Trezor, Ledger } from "../../src/js/services/keys"
 import * as BaseKey from "../../src/js/services/keys/baseKey"
 import FakeLedger from "../instance/ledger/Ledger.fake"
 import FakeTrezor from "../instance/trezor/Trezor.fake"
-import { sealTxByKeystore} from "../../src/js/utils/sealer"
+// import { sealTxByKeystore} from "../../src/js/utils/sealer"
 
 var account = new Account(
   "0xe23d874235087e16e2bded03e8b5c0c984c7172c", 
@@ -191,11 +191,11 @@ const { txParams } = BaseKey.sendEtherFromAccount(
   token, amount,
   destAddress, nonce, gas,
   gasPrice, keystring, type, password)
-const signedTransaction = sealTxByKeystore(txParams, keystring, password);
+// const signedTransaction = sealTxByKeystore(txParams, keystring, password);
 
 
 export default {
   keystoreWrongPassphrase, ledgerSignError, perfectKeystore, 
-  trezorSignError, ethereum, signedTransaction, account, 
+  trezorSignError, ethereum, account, 
   ledgerAccount, trezorAccount, pKeyAccount, metaMaskAccount, transferSuccess
 }
