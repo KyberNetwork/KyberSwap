@@ -22,46 +22,60 @@ import { store } from "../store"
 
 export function* updateAccount(action) {
   const { account, ethereum } = action.payload
-  const newAccount = yield call(account.sync, ethereum, account)
-  yield put(actions.updateAccountComplete(newAccount))
+  try{
+    const newAccount = yield call(account.sync, ethereum, account)
+    yield put(actions.updateAccountComplete(newAccount))
+  } catch (err){
+    console.log(err)
+  }
+  
 }
 
 export function* importNewAccount(action) {
   yield put(actions.importLoading())
   const { address, type, keystring, ethereum, avatar, tokens, metamask } = action.payload
-  const account = yield call(service.newAccountInstance, address, type, keystring, avatar, ethereum)
-  var rates = []
-  for (var k = 0; k < constants.RESERVES.length; k++) {
-    var reserve = constants.RESERVES[k];
-    rates[k] = yield call(updateAllRatePromise, ethereum, tokens, constants.RESERVES[k], account.address)
-  }
-  yield put.sync(updateAllRateComplete(rates[0], true))
-  var randomToken = randomForExchange(rates[0])
-  if (!randomToken || !randomToken[0]) {
-    //todo dispatch action waring no balanc
+  try {
+    const account = yield call(service.newAccountInstance, address, type, keystring, avatar, ethereum)
+    var rates = []
+    for (var k = 0; k < constants.RESERVES.length; k++) {
+      var reserve = constants.RESERVES[k];
+      rates[k] = yield call(updateAllRatePromise, ethereum, tokens, constants.RESERVES[k], account.address)
+    }
+    yield put.sync(updateAllRateComplete(rates[0], true))
+    var randomToken = randomForExchange(rates[0])
+    if (!randomToken || !randomToken[0]) {
+      //todo dispatch action waring no balanc
+      yield put(actions.closeImportLoading())
+      yield put(actions.throwError('Your address has no balance in any tokens. Please import another address.'))
+
+      return
+    } else {
+      yield put.sync(setRandomExchangeSelectedToken(randomToken))
+      yield call(ethereum.fetchRateExchange)
+      yield put.sync(setRandomTransferSelectedToken(randomToken))
+    }
+    //todo set random token for exchange
     yield put(actions.closeImportLoading())
-    yield put(actions.throwError('Your address has no balance in any tokens. Please import another address.'))
+    yield put(actions.importNewAccountComplete(account))
 
-    return
-  } else {
-    yield put.sync(setRandomExchangeSelectedToken(randomToken))
-    yield call(ethereum.fetchRateExchange)
-    yield put.sync(setRandomTransferSelectedToken(randomToken))
+    //set gas price
+    yield put(setGasPrice(ethereum))
+
+    yield put(goToRoute('/exchange'))
+
   }
-  //todo set random token for exchange
-  yield put(actions.closeImportLoading())
-  yield put(actions.importNewAccountComplete(account))
+  catch (err) {
+    console.log(err)
+    yield put(actions.throwError('Cannot connet to blockchain right now. Please try again later.'))
+    yield put(actions.closeImportLoading())
+  }
 
-  //set gas price
-  yield put(setGasPrice(ethereum))
-
-  yield put(goToRoute('/exchange'))
 
 
 
   //fork for metamask
   if (type === "metamask") {
-    const {web3Service, address, networkId} = {...metamask}
+    const { web3Service, address, networkId } = { ...metamask }
     const watchCoinbaseTask = yield fork(watchCoinbase, web3Service, address, networkId)
 
     yield take('GLOBAL.CLEAR_SESSION')

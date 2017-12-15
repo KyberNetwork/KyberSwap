@@ -1,6 +1,7 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/globalActions'
 import * as actionsUtils from '../actions/utilActions'
+import { closeImportLoading } from '../actions/accountActions'
 import { Rate, updateAllRatePromise } from "../services/rate"
 import { push } from 'react-router-redux';
 import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
@@ -32,11 +33,17 @@ export function* updateRate(action) {
     source.address,
     source.decimal
   )
-  yield [
-    rate.fetchRate(ethereum, reserve),
-    rate.updateBalance(ethereum, ownerAddr)
-  ]
-  yield put(actions.updateRateComplete(rate))
+  try{
+    yield [
+      rate.fetchRate(ethereum, reserve),
+      rate.updateBalance(ethereum, ownerAddr)
+    ]
+    yield put(actions.updateRateComplete(rate))
+  }
+  catch(err){
+    console.log(err)
+  }
+  
 }
 
 
@@ -51,10 +58,16 @@ export function* clearSession(action) {
 }
 
 export function* updateAllRate(action) {
-  const { ethereum, tokens, reserve, ownerAddr } = action.payload
-  let isUpdateBalance = ownerAddr ? true : false
-  const rates = yield call(updateAllRatePromise, ethereum, tokens, reserve, ownerAddr)
-  yield put(actions.updateAllRateComplete(rates, isUpdateBalance))
+  try{
+    const { ethereum, tokens, reserve, ownerAddr } = action.payload
+    let isUpdateBalance = ownerAddr ? true : false
+    const rates = yield call(updateAllRatePromise, ethereum, tokens, reserve, ownerAddr)
+    yield put(actions.updateAllRateComplete(rates, isUpdateBalance))
+  }
+  catch (err) {
+    console.log(err)
+  }
+  
 }
 
 export function* checkConnection(action){
@@ -75,6 +88,7 @@ export function* checkConnection(action){
       }
       if(count === maxCount){
         yield put(actionsUtils.openInfoModal("Error modal", "Cannot connect to node right now. Please check your network!"))
+        yield put(closeImportLoading())
         yield put(actions.updateCountConnection(++count))
         return
       }
