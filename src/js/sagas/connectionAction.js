@@ -14,8 +14,8 @@ export function* createNewConnection() {
   var ethereum = state.connection.ethereum
   const watchConnectionTask = yield fork(watchToSwitchConnection, ethereum)
 
-  yield take('GLOBAL.CLEAR_SESSION')
-  yield cancel(watchConnectionTask)
+  //yield take('GLOBAL.CLEAR_SESSION')
+  //yield cancel(watchConnectionTask)
 }
 
 function* watchToSwitchConnection(ethereum) {
