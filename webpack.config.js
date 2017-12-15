@@ -82,7 +82,7 @@ var scriptConfig = function (env) {
           allChunks: true,
         }),
         new webpack.DefinePlugin({
-          'env': '"kovan"'
+          'env': '"mainnet"'
         })
       ],
     devServer: {
