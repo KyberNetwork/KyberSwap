@@ -119,8 +119,8 @@ const TransactionListView = (props) => {
         <div className={"transaction-list-item open"} key={item.txHash} data-pos={i} onClick={(e) => gotoLink(item.txHash)}>
           <div className="inner">
             <div className="coin-icon">
-              <div className="coin coin1" key={'coin-1'} style={{ backgroundImage: 'url(\'' + sourceIcon + '\')' }}></div>
-              <div className="coin coin2" key={'coin-2'} style={{ backgroundImage: 'url(\'' + destIcon + '\')' }}></div>
+              <div className="coin coin1" key={'coin-1'} style={{ backgroundImage: 'url('+ require('../../../assets/img/tokens/' + sourceIcon) + ')' }}></div>
+              <div className="coin coin2" key={'coin-2'} style={{ backgroundImage: 'url('+ require('../../../assets/img/tokens/' + destIcon) + ')' }}></div>
             </div>
             <div className="titles">
               <div>
