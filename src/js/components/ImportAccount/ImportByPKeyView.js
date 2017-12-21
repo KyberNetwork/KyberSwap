@@ -29,7 +29,7 @@ const ImportByPKeyView = (props) => {
 		<div className="column column-block">
 			<div className="importer pkey">
 				<a onClick={() => props.modalOpen()} id="importPKey">
-					<img src="/assets/img/pkey.svg" />
+					<img src={require('../../../assets/img/pkey.svg')} />
 					<div className="description">{props.translate("import.from_private_key") || <span>Enter your<br />private key</span>}</div>
 				</a>
 			</div>

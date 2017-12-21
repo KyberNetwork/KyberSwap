@@ -1,7 +1,6 @@
 import React from "react"
 import { Link } from 'react-router-dom'
 import { Rate, Address } from "../Header"
-//import logo from "../../../assets/img/logo.svg"
 
 const HeaderView = (props) => {
   let logoLink = props.account ? '/exchange' : ''

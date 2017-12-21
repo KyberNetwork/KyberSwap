@@ -18,7 +18,7 @@ const ExchangeForm = (props) => {
   var errorSelectSameToken = props.errors.selectSameToken !== '' ? props.translate(props.errors.selectSameToken) : ''
   var errorSelectTokenToken = props.errors.selectTokenToken !== '' ? props.translate(props.errors.selectTokenToken) : ''
   var errorToken = errorSelectSameToken + errorSelectTokenToken
-  var tokenRate = props.isSelectToken ? <img src="/assets/img/waiting.svg" /> : roundingNumber(props.exchangeRate.rate)
+  var tokenRate = props.isSelectToken ? <img src={require('../../../assets/img/waiting.svg')}/> : roundingNumber(props.exchangeRate.rate)
   var render = (
     <div>
       <div class="frame">

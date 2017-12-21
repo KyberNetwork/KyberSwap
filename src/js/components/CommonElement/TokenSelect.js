@@ -15,7 +15,7 @@ const TokenSelect = (props) => {
   return (
     <div class="column gutter-15">
       <a className={"token-stamp " + (props.inactive ? "empty" : (props.selected ? "selected" : ""))} onClick={(e) => { handleOnClick(e) }}>
-        <img src={props.icon} /><span class="name">{props.name}</span>
+        <img src={require('../../../assets/img/tokens/' + props.icon)} /><span class="name">{props.name}</span>
         <div class="balance" title={props.balance}>
           <span>{props.translate("transaction.balance") || 'Balance'}</span>
           {balance()}

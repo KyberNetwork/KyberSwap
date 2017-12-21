@@ -1,6 +1,6 @@
 {
   "pack": "en",
-  "pack_icon": "/assets/img/langs/uk.svg",
+  "pack_icon": "uk.svg",
   "pack_label": "English",
   "pack_active": true,
   "layout": {
