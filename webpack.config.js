@@ -9,7 +9,7 @@ var scriptConfig = function (env) {
   return {
     context: path.join(__dirname, "src"),
     devtool: (env && env.chain !== "mainnet") ? "inline-sourcemap" : false,
-    entry: ['babel-polyfill', "./js/client.js", "./assets/css/app.scss"],
+    entry: ['babel-polyfill', "./js/client.js"],
     // resolve: {
     //   modules: [path.resolve(__dirname, "src"), "node_modules"],
     //   alias: {
@@ -29,35 +29,43 @@ var scriptConfig = function (env) {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
+        loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader', 'url-loader'])
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            query: {
-              name: '[name].[ext]'
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 2000000
             }
           }
-        },
-        {
-          loader: 'image-webpack-loader',
-          options: {
-            query: {
-              mozjpeg: {
-                progressive: true,
-              },
-              gifsicle: {
-                interlaced: true,
-              },
-              optipng: {
-                optimizationLevel: 7,
-              }
-            }
-          }
-        }
         ]
+        // use: [{
+        //   loader: 'file-loader',
+        //   options: {
+        //     query: {
+        //       name: '[name].[ext]'
+        //     }
+        //   }
+        // },
+        // {
+        //   loader: 'image-webpack-loader',
+        //   options: {
+        //     query: {
+        //       mozjpeg: {
+        //         progressive: true,
+        //       },
+        //       gifsicle: {
+        //         interlaced: true,
+        //       },
+        //       optipng: {
+        //         optimizationLevel: 7,
+        //       }
+        //     }
+        //   }
+        // }
+        // ]
       }
       ]
     },
