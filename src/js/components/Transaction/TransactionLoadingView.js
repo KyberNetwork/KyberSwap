@@ -14,7 +14,7 @@ const TransactionLoadingView = (props) => {
               <div class="row">
                 <div class="column medium-3 text-center">
                   <div className={"broadcast-animation animated infinite" + classPending}>
-                    {props.error === "" ? <img src="/assets/img/broadcast.svg" /> : <img src="/assets/img/finish.svg" />}
+                    {props.error === "" ? <img src={require('../../../assets/img/broadcast.svg')}/> : <img src={require('../../../assets/img/finish.svg')} />}
                   </div>
                 </div>
                 <div class="column medium-9">
@@ -60,7 +60,7 @@ const TransactionLoadingView = (props) => {
             <div class="row">
               <div class="column medium-3 text-center">
                 <div className={"broadcast-animation animated infinite" + classPending}>
-                  {props.status == "pending" ? <img src="/assets/img/broadcast.svg" /> : <img src="/assets/img/finish.svg" />}
+                  {props.status == "pending" ? <img src={require('../../../assets/img/broadcast.svg')} /> : <img src={require('../../../assets/img/finish.svg')} />}
                 </div>
               </div>
               <div class="column medium-9">

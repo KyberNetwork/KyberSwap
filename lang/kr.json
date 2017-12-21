@@ -1,6 +1,6 @@
 {
   "pack": "fr",
-  "pack_icon": "/assets/img/langs/kr.svg",
+  "pack_icon": "kr.svg",
   "pack_label": "한국어",
   "pack_active": false,
   "layout": {

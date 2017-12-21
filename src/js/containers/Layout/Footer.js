@@ -50,7 +50,7 @@ export default class Footer extends React.Component {
                     disabled={getLanguage(lang).pack_active ? false : true}
                     onClick={() => { this.setActiveLanguage(lang) }}
                   >
-                    <img src={getLanguage(lang).pack_icon} />
+                    <img src={require('../../../assets/img/langs/' + getLanguage(lang).pack_icon)} />
                     <span class="name">{getLanguage(lang).pack_label}</span>
                   </button>
                 </div>

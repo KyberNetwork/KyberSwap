@@ -22,9 +22,6 @@ const TransferForm = (props) => {
               <div class="row">
                 <div class="column medium-6">
                   {props.token}
-                  {/* <label>Select Token
-                    <div class="token-select" data-open="transfer-from-token-modal"><img src="/assets/img/omg.svg"/><span class="name">OmiseGO</span></div>
-                  </label> */}
                 </div>
                 <div class="column medium-6">
                   <label>{props.translate("transaction.amount") || "Amount"}

@@ -67,8 +67,8 @@ const HistoryExchange = (props) => {
     return (
       <div key={i} class="small-12 medium-6 large-4 column">
         <div class="history-stamp">
-          <img class="token-from" src={getIcon(item.source)} />
-          <img class="token-to" src={getIcon(item.dest)} />
+          <img class="token-from" src={require('../../../assets/img/tokens/' + getIcon(item.source))} />
+          <img class="token-to" src={require('../../../assets/img/tokens/' + getIcon(item.dest))} />
           <div class="amount">{createRecap(item)}</div>
           <a class="link" href={hashDetailLink(item.txHash)} target="_blank">
             {item.txHash.slice(0, 10)} ... {item.txHash.slice(-6)}

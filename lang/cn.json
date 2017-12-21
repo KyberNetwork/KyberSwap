@@ -1,6 +1,6 @@
 {
   "pack": "vi",
-  "pack_icon": "/assets/img/langs/cn.svg",
+  "pack_icon": "cn.svg",
   "pack_label": "中文",
   "pack_active": true,
   "layout": {
