@@ -9,7 +9,7 @@ var scriptConfig = function (env) {
   return {
     context: path.join(__dirname, "src"),
     devtool: (env && env.chain !== "mainnet") ? "inline-sourcemap" : false,
-    entry: ['babel-polyfill', "./js/client.js"],
+    entry: ['babel-polyfill', "./js/client.js", "./assets/css/app.scss"],
     // resolve: {
     //   modules: [path.resolve(__dirname, "src"), "node_modules"],
     //   alias: {
@@ -29,7 +29,7 @@ var scriptConfig = function (env) {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader', 'url-loader'])
+        loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader']),
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
