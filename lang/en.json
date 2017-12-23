@@ -10,7 +10,7 @@
   },
 
   "transaction_list": {
-    "transaction_history": "TRANSACTION HISTORY"
+    "transaction_history": "Transaction"
   },
 
   "address": {
@@ -18,17 +18,17 @@
   },
 
   "transaction": {
-    "exchange": "EXCHANGE",
-    "exchange_from": "EXCHANGE FROM",
-    "exchange_to": "EXCHANGE TO",
+    "exchange": "Exchange",
+    "exchange_from": "Exchange from",
+    "exchange_to": "Exchange to",
 
-    "transfer": "TRANSFER",
-    "transfer_to_address": "TRANSFER TO ADDRESS",
-    "amount": "AMOUNT",
-    "select_token": "Select Token",
+    "transfer": "Transfer",
+    "transfer_to_address": "Transfer to address",
+    "amount": "amount",
+    "select_token": "Select token",
 
-    "advanced": "ADVANCED",
-    "transaction_fee": "TRANSACTION FEE",
+    "advanced": "advanced",
+    "transaction_fee": "Transaction fee",
 
     "address_balance": "Address Balance",
     "balance": "Balance",
@@ -67,6 +67,8 @@
     "import": "Import",
     "enter_password_placeholder": "Enter your password to confirm",
     "select_hd_path": "Select HD derivation path",
+    "select_trezor_address": "Select TREZOR address",
+    "select_ledger_address": "Select LEDGER address",
     "select_address": "Select the address you would like to interact with",
     "previous_addresses": "Previous Addresses",
     "more_addresses": "More Addresses",

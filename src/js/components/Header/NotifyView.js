@@ -24,7 +24,7 @@ const Notify = (props) => {
         <div class="title">
           <span class="amount">{data.sourceAmount.slice(0, 8)} {data.sourceTokenSymbol}&nbsp;</span>
           {props.translate("transaction.for") || "for"}
-                <span class="amount">&nbsp;{data.destAmount.slice(0, 7)} {data.destTokenSymbol}</span>
+          <span class="amount">&nbsp;{data.destAmount.slice(0, 7)} {data.destTokenSymbol}</span>
         </div>
       )
     } else if (type == "transfer") {
@@ -32,7 +32,7 @@ const Notify = (props) => {
         <div class="title">
           <span class="amount">{data.amount.slice(0, 8)} {data.tokenSymbol}&nbsp;</span>
           {props.translate("transaction.to") || "to"}
-                <span class="amount">&nbsp;{data.destAddress.slice(0, 8)}...{data.destAddress.slice(-6)}</span>
+          <span class="amount">&nbsp;{data.destAddress.slice(0, 8)}...{data.destAddress.slice(-6)}</span>
         </div>
       )
     } else {
@@ -70,7 +70,7 @@ const Notify = (props) => {
   });
 
   return (
-    <div class="column small-2 text-right">
+    <React.Fragment>
       <a className="notifications-toggle" href="#notifications" onClick={(e) => props.displayTransactions(e)}>
         <img src={require('../../../assets/img/menu.svg')} />{counter}
       </a>
@@ -82,7 +82,7 @@ const Notify = (props) => {
           </li>
         }
       </ul>
-    </div>
+    </React.Fragment>
   )
 }
 

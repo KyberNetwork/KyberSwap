@@ -10,7 +10,7 @@
   },
 
   "transaction_list": {
-    "transaction_history": "LỊCH SỬ GIAO DỊCH"
+    "transaction_history": "lịch sử giao dịch"
   },
 
   "address": {
@@ -67,6 +67,8 @@
     "import": "Nhập",
     "enter_password_placeholder": "Nhập mật khẩu xác nhận",
     "select_hd_path": "Chọn HD derivation path",
+    "select_trezor_address": "Chọn địa chỉ từ TREZOR",
+    "select_ledger_address": "Chọn địa chỉ từ LEDGER",
     "select_address": "Chọn địa chỉ bạn muốn sử dụng",
     "previous_addresses": "Địa chỉ Trước",
     "more_addresses": "Thêm Địa chỉ",

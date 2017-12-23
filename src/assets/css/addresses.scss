@@ -27,19 +27,21 @@ ul.address-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  background-color: white;
   font-size: 0;
   overflow: hidden;
   > li {
     padding: 10px 0;
     background-color: transparent;
-    transition: background-color .4s ease-in-out;
+    transition: background-color 0.1s ease-in-out;
     @include clearfix;
     &:not(:last-child) {
-      border-bottom: 1px solid lighten($light-gray, 10);
+      border-bottom: 1px solid $bg-divider-light;
     }
     &:hover {
-      background-color: lighten($light-gray, 18);
+      background-color: $bg-primary-darker;
+    }
+    label{
+      color: $white-light;
     }
     .info {
       float: right;
@@ -48,27 +50,27 @@ ul.address-list {
       text-align: right;
       white-space: nowrap;
       .link {
-        color: black;
+        color: $white-light;
         cursor: pointer;
         text-align: right;
         font-size: 14px;
-        font-weight: bold;
-        font-family: $font-family-monospace;
         padding-right: 25px;
         background-image: url(../img/link.svg);
         background-repeat: no-repeat;
         background-size: 16px 16px;
         background-position: center right;
+        font-weight: normal;
       }
     }
     .name {
       float: left;
       display: block;
-      font-size: 14px;
-      font-weight: bold;
-      font-family: $font-family-monospace;
       color: $dark-gray;
       white-space: nowrap;
+      label{
+        font-size: 14px;
+        font-weight: normal;
+      }
       img {
         width: 36px;
         height: 36px;
@@ -182,65 +184,79 @@ ul.address-list {
   }
 }
 
-.address-path-input {
-  position: relative;
-  input[type=text] {
-    background-color: #f5f5f5;
-    margin: 5px 0 0 0;
-    box-shadow: none;
-    font-weight: bold;
-    font-size: 14px;
-    transition: padding-right .4s ease-in-out;
-    &:focus {
-      box-shadow: 0;
-    }
-  }
-  a.submit {
-    display: none;
-    position: absolute;
-    height: 30px;
-    width: 30px;
-    border-radius: 1000px;
-    top: 5px;
-    right: 5px;
-    background-color: #eee;
-    transition: background-color .4s ease-in-out;
-    &:hover {
-      background-color: #ddd;
-    }
-    &:after {
-      content: '';
-      width: 0;
-      height: 0;
-      border: 5px solid transparent;
-      border-left-color: $dark-gray;
-      display: block;
-      position: absolute;
-      right: 7px;
-      top: 50%;
-      margin-top: -5px;
-    }
-  }
-}
-
 label.address-path-stamp {
   display: block;
-  background-color: white;
+  background-color: $bg-primary-lighter;
   padding: 12px 15px;
   margin: 0 0 15px 0;
-  box-shadow: 0 10px 40px 0 rgba($light-gray, .5);
-  border-radius: $global-radius;
   min-height: 93px;
   .name {
     text-transform: none;
     font-weight: bold;
     font-size: 14px;
-    color: $dark-gray;
+    color: $white;
   }
   .note {
     text-transform: none;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: normal;
+    color: $white-light;
+  }
+  &.active{
+    background: $bg-success-gradient;
+    .address-path-input{
+      input[type=text] {
+        background-color: rgba(35, 102, 102, 0.88);
+        color: #fefefe;
+        border: 1px solid #236968;
+      }
+      a.submit {
+        background-color: #2a4552;
+        &:after{
+          border-left-color: $white;
+        }
+      }
+    }
+  }
+  
+  .address-path-input {
+    position: relative;
+    input[type=text] {
+      background-color: #f5f5f5;
+      margin: 5px 0 0 0;
+      box-shadow: none;
+      font-weight: bold;
+      font-size: 14px;
+      &:focus {
+        box-shadow: 0;
+      }
+    }
+    a.submit {
+      display: none;
+      position: absolute;
+      height: 100%;
+      width: 50px;
+      border-radius: 0;
+      top: 0;
+      right: 0;
+      background-color: #eee;
+      transition: background-color .1s ease-in-out;
+      &:hover {
+        background-color: #d1d1d1;
+      }
+      &:after {
+        content: '';
+        width: 0;
+        height: 0;
+        border: 5px solid transparent;
+        border-left-color: $dark-gray;
+        display: block;
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        margin-top: -5px;
+      }
+    }
   }
 }
 
