@@ -1,9 +1,11 @@
 
+
 var Web3 = require("web3")
 var constants = require("../../src/js/services/constants")
 var ethUtil = require('ethereumjs-util')
 var BLOCKCHAIN_INFO = require("../../env")
 const https = require("https")
+const request = require('request');
 
 class BaseEthereumProvider {
   constructor() {
@@ -201,29 +203,35 @@ class BaseEthereumProvider {
     })
   }
 
-  // getLogExchange(fromBlock, toBlock) {
-  //   return new Promise((resolve, rejected) => {
-  //     // var cachedRange = constants.HISTORY_EXCHANGE.cached.range 
-  //     // var startBlock = (latestBlock - currentBlock) > cachedRange ? 
-  //     //                                               (latestBlock - cachedRange):
-  //     //                                               currentBlock
-  //     //console.log(startBlock)         
-  //     this.networkContract.getPastEvents('Trade', {
-  //       filter: { status: "mined" },
-  //       fromBlock: fromBlock,
-  //       toBlock: toBlock
-  //     }, )
-  //       .then(function (events) {
-  //        // console.log(events)
-  //         resolve(events)
-  //       }).catch((err) => {
-  //         rejected(err)
-  //       })
-  //   })
-  // }
-  // deCode(){
-  //   console.log(this.rpc.eth.abi.decodeParameters(['address', 'address', 'uint256', 'uint256'], "0x000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee0000000000000000000000009e973ef5ac3f207d6704b9f4e804691eebe9ecbc000000000000000000000000000000000000000000000000002386f26f9dfdb800000000000000000000000000000000000000000000000000000000315c2a72"))
-  // }
+
+  getAllRateUSD(tokensObj) {
+    var promises = Object.values(tokensObj).map((value) => {
+      return this.getRateUSD(value.usd_id)
+    })
+    return Promise.all(promises)
+  }
+
+  getRateUSD(tokenId){
+    var serverPoint = BLOCKCHAIN_INFO.api_usd
+    var path = `/v1/ticker/${tokenId}`
+    return new Promise((resolve, rejected)=>{
+      request.get({
+        url : serverPoint + path,
+        json: true
+      }, (err, resp, body) => {
+        if (err) return rejected(new Error('Can\'t reach coin market cap server.'));
+        if (resp && resp.statusCode == 404) return rejected(new Error('Currency id not found.'));
+        if (!resp || resp.statusCode != 200) return rejected(new Error('Invalid response from coin market cap server.'));
+
+        if (body.length === 1){
+          return resolve(body[0])
+        }else{
+          return rejected(new Error('Rate usd is not in right format'))
+        }
+      })
+    })
+  }
+  
   getLogExchange(fromBlock, toBlock) {
     var serverPoint = BLOCKCHAIN_INFO.server_logs.url
     var api = BLOCKCHAIN_INFO.server_logs.api_key

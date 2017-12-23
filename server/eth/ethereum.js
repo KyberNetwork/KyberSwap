@@ -23,7 +23,7 @@ class EthereumService {
     var httpArr = BLOCKCHAIN_INFO.connections.http
     var randomNum = Math.floor((Math.random() * httpArr.length))
     this.httpUrl = httpArr[randomNum]
-    
+
     this.wsUrl = BLOCKCHAIN_INFO.connections.ws
     // this.wsUrl = "ws://localhost:8546"
     this.httpProvider = this.getHttpProvider()
@@ -96,8 +96,14 @@ class EthereumService {
   subcribe() {
     //this.currentProvider.clearSubcription()
     this.currentProvider.subcribeNewBlock(() => {
-      this.fetchData.bind(this)()
-      this.fetchAllRateData.bind(this)()
+      return Promise.all([
+        this.fetchData.bind(this)(),
+        this.fetchAllRateData.bind(this)(),
+        this.fetchAllRateUSD.bind(this)()
+      ])
+      // this.fetchData.bind(this)()
+      // this.fetchAllRateData.bind(this)()
+      // this.fetchAllRateUSD.bind(this)()
     })
   }
 
@@ -129,6 +135,9 @@ class EthereumService {
       var events = await this.currentProvider.getLogExchange(currentBlock, toBlock)
       this.handleEvent(events)
     }
+    return new Promise((resolve, rejected)=>{
+      resolve(true)
+    })
   }
 
   async fetchAllRateData() {
@@ -139,17 +148,37 @@ class EthereumService {
       console.log(e)
     }
 
+    return new Promise((resolve, rejected)=>{
+      resolve(true)
+    })
+  }
+
+
+  async fetchAllRateUSD() {
+    var tokens = BLOCKCHAIN_INFO.tokens
+    for (let key in tokens) {
+      try {
+        var rate = await this.currentProvider.getRateUSD(tokens[key].usd_id)
+        await this.persistor.saveRateUSD(rate)
+      } catch (e) {
+        console.log(e)
+        continue
+      }
+    }
+    return new Promise((resolve, rejected)=>{
+      resolve(true)
+    })
   }
 
 
   async handleEvent(logs) {
-    var arrayAddressToken = Object.keys(BLOCKCHAIN_INFO.tokens).map((tokenName) => {return BLOCKCHAIN_INFO.tokens[tokenName].address})
+    var arrayAddressToken = Object.keys(BLOCKCHAIN_INFO.tokens).map((tokenName) => { return BLOCKCHAIN_INFO.tokens[tokenName].address })
     for (var i = 0; i < logs.length; i++) {
       var savedEvent = this.getEvent(logs[i])
 
       var dest = savedEvent.dest
       var source = savedEvent.source
-      if(arrayAddressToken.indexOf(dest) < 0 || arrayAddressToken.indexOf(source) < 0) continue
+      if (arrayAddressToken.indexOf(dest) < 0 || arrayAddressToken.indexOf(source) < 0) continue
 
       var check = await this.persistor.checkEventByHash(savedEvent.txHash, savedEvent.blockNumber)
       console.log(check)
