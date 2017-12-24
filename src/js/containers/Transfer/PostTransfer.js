@@ -150,9 +150,10 @@ export default class PostTransfer extends React.Component {
     var gas = converters.numberToHex(this.props.form.gas)
     // should have better strategy to determine gas price
     var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.form.gasPrice))
+    var balanceData = {balance: this.props.form.balance.toString()}
     return {
       selectedAccount, token, amount, destAddress,
-      throwOnFailure, nonce, gas, gasPrice
+      throwOnFailure, nonce, gas, gasPrice, balanceData
     }
   }
 
@@ -170,7 +171,7 @@ export default class PostTransfer extends React.Component {
       this.props.dispatch(transferActions.processTransfer(formId, ethereum, account.address,
         params.token, params.amount,
         params.destAddress, params.nonce, params.gas,
-        params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService))
+        params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService, params.balanceData))
     } catch (e) {
       console.log(e)
       this.props.dispatch(transferActions.throwPassphraseError("Key derivation failed"))

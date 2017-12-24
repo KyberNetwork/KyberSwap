@@ -87,13 +87,18 @@ export default class Transfer extends React.Component {
     }
 
     var balance = ""
+    var addressBalance = ""
     var tokenName = ""
     var token = this.props.tokens[this.props.transfer.tokenSymbol]
     if (token) {
-      balance = {
+      addressBalance = {
         value: toT(token.balance, token.decimal),
         roundingValue: roundingNumber(toT(token.balance, token.decimal)),
       }
+      balance = {
+        prev:toT(this.props.transfer.balanceData.prev, token.decimal),
+        next:toT(this.props.transfer.balanceData.next, token.decimal)
+      } 
       tokenName = token.name
     }
     var balanceInfo = {
@@ -162,7 +167,7 @@ export default class Transfer extends React.Component {
         transactionLoadingScreen={transactionLoadingScreen}
         input={input}
         errors={errors}
-        balance={balance}
+        balance={addressBalance}
         setAmount={this.setAmount}
         translate={this.props.translate}
       />

@@ -19,24 +19,8 @@
     } 
 }
 
-.address-path-stamp.active{
-    background: linear-gradient(135deg, #2A9A8D, #5F7921);
-    box-shadow: 0 10px 40px 0 rgba(42, 154, 141, 0.3);
-    .name{
-        color: #fff;
-    }
-    .note{
-        color: #BBDAD5;
-    }
-}
-
 button:focus{
     outline: none;
-}
-#header{
-    a.active{
-        color: #656876!important;
-    }
 }
 .width-f{
     width: 100%;
@@ -86,7 +70,6 @@ button:focus{
         background-image: url(../img/lock.svg);
     }
     &.unlock .toggle {
-        // opacity: 1;
         background-image: url(../img/unlock.svg);
     }
 }
@@ -109,25 +92,15 @@ a.disabled{
         width: 20%;
     }
 }
-#header a.avatar img{
-    width: 45px;
-    max-width: none;
-}
 @media screen and (min-width: 640px){
     @media screen and (max-height: 790px){
         #header{
-            min-height: auto!important;
-            padding: 10px 0!important;
-            a.logo img{
-                width: 100px;
-            }
             .user-bar ul.notifications{
                 top: 60px!important;
             }
         }
         .frame{
             padding: 20px 0;
-            margin-bottom: 20px;
             h1.title{
                 margin-top: 0;
             }
@@ -142,9 +115,6 @@ a.disabled{
                 height: 40px;
                 top: 59%;
             }
-        }
-        #rate-bar {
-            padding: 10px 10px!important;
         }
         #transfer-screen{
             label{

@@ -20,7 +20,7 @@ class HttpEthereumProvider extends BaseEthereumProvider {
         //callBack()
         while(true){
           await this.delay(10000)
-          callBack()
+          await callBack()
           //this.intervalID = setInterval(callBack, 10000)
         }
     }

@@ -1,7 +1,7 @@
 import { take, put, call, fork, select, takeEvery, all, cancel } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
-import { clearSession, setGasPrice } from "../actions/globalActions"
+import { clearSession, setGasPrice, setBalanceToken } from "../actions/globalActions"
 import { openInfoModal } from '../actions/utilActions'
 import { getRandomAvatar } from "../utils/keys"
 //import { setInterval } from "timers"
@@ -22,13 +22,24 @@ import { store } from "../store"
 
 export function* updateAccount(action) {
   const { account, ethereum } = action.payload
-  try{
+  try {
     const newAccount = yield call(account.sync, ethereum, account)
     yield put(actions.updateAccountComplete(newAccount))
-  } catch (err){
+  } catch (err) {
     console.log(err)
   }
-  
+
+}
+
+export function* updateTokenBalance(action) {
+  try {
+    const { ethereum, address, tokens } = action.payload
+    const balanceTokens = yield call([ethereum, ethereum.call("getAllBalancesToken")], address, tokens)
+    yield put(setBalanceToken(balanceTokens))
+  }
+  catch (err) {
+    console.log(err)
+  }
 }
 
 export function* importNewAccount(action) {
@@ -36,13 +47,23 @@ export function* importNewAccount(action) {
   const { address, type, keystring, ethereum, avatar, tokens, metamask } = action.payload
   try {
     const account = yield call(service.newAccountInstance, address, type, keystring, avatar, ethereum)
-    var rates = []
-    for (var k = 0; k < constants.RESERVES.length; k++) {
-      var reserve = constants.RESERVES[k];
-      rates[k] = yield call(updateAllRatePromise, ethereum, tokens, constants.RESERVES[k], account.address)
-    }
-    yield put.sync(updateAllRateComplete(rates[0], true))
-    var randomToken = randomForExchange(rates[0])
+
+    const balanceTokens = yield call([ethereum, ethereum.call("getAllBalancesToken")], address, tokens)
+    //map balance
+    var mapBalance = {}
+    balanceTokens.map(token => {
+      mapBalance[token.symbol] = token.balance
+    })
+
+    //update token and token balance
+    var newTokens = {}
+    Object.values(tokens).map(token => {
+      var token = { ...token }
+      token.balance = mapBalance[token.symbol]
+      newTokens[token.symbol] = token
+    })
+
+    var randomToken = randomForExchange(newTokens)
     if (!randomToken || !randomToken[0]) {
       //todo dispatch action waring no balanc
       yield put(actions.closeImportLoading())
@@ -56,6 +77,8 @@ export function* importNewAccount(action) {
     }
     //todo set random token for exchange
     yield put(actions.closeImportLoading())
+
+    yield put(setBalanceToken(balanceTokens))
     yield put(actions.importNewAccountComplete(account))
 
     //set gas price
@@ -140,4 +163,6 @@ export function* watchAccount() {
   yield takeEvery("ACCOUNT.UPDATE_ACCOUNT_PENDING", updateAccount)
   yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING", importNewAccount)
   yield takeEvery("ACCOUNT.IMPORT_ACCOUNT_METAMASK", importMetamask)
+  yield takeEvery("ACCOUNT.UPDATE_TOKEN_BALANCE", updateTokenBalance)
+  
 }

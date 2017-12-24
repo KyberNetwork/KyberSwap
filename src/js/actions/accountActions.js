@@ -7,6 +7,13 @@ export function updateAccount(ethereum, account) {
   }
 }
 
+export function updateTokenBalance(ethereum, address, tokens){
+  return {
+    type: "ACCOUNT.UPDATE_TOKEN_BALANCE",
+    payload: { ethereum, address, tokens }
+  }
+}
+
 export function updateAccountComplete(account) {
   return {
     type: "ACCOUNT.UPDATE_ACCOUNT_FULFILLED",

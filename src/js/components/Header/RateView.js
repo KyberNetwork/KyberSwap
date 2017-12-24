@@ -19,7 +19,7 @@ const ExchangeRates = (props) => {
       rates.push(
         <div key={rateSymbol}>
           <div class="pair">{rate.symbol} / ETH</div>
-          <div class="value up">{roundingNumber(toT(rate.rate))}<span>-%</span></div>
+          <div class="value up">{roundingNumber(toT(rate.rate))}<span>(-%)</span></div>
         </div>
       )
     }

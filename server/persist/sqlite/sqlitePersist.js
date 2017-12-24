@@ -11,7 +11,7 @@ var filePath
 var dbName = process.env.npm_config_chain
 
 //console.log("db name: " + dbName)
-switch(dbName){
+switch (dbName) {
   case "kovan":
     filePath = path.join(__dirname, 'kovan.db')
     break
@@ -31,8 +31,8 @@ class SqlitePersist {
     //this.initStore()
   }
 
-  destroyStore(cb){
-    fs.unlink(filePath, (err, result)=>{
+  destroyStore(cb) {
+    fs.unlink(filePath, (err, result) => {
       console.log("Clear old file")
       cb()
     })
@@ -49,7 +49,7 @@ class SqlitePersist {
             console.log(err)
             //reject(err.message)
           } else {
-             console.log("Update range fetch and frequency")
+            console.log("Update range fetch and frequency")
           }
         })
       })
@@ -60,34 +60,57 @@ class SqlitePersist {
       var _this = this
       this.db = new sqlite3.Database(filePath)
       this.db.serialize(function () {
-        _this.db.run("CREATE TABLE configure (id INT, currentBlock INT, latestBlock INT, frequency INT, count INT, rangeFetch INT)");
-
-        var stmt = _this.db.prepare("INSERT INTO configure VALUES (?,?,?,?,?,?)")
-        stmt.run(1, 0, 0, config.frequency, 0, config.rangeFetch);
-        stmt.finalize()
-
-        _this.db.run("CREATE TABLE logs (id INTEGER PRIMARY KEY, actualDestAmount TEXT, actualSrcAmount TEXT, dest TEXT, source TEXT, sender TEXT, blockNumber INT, txHash TEXT, timestamp INT, status TEXT)")
-
-        // create rate table
-        _this.db.run("CREATE TABLE rates (id INTEGER PRIMARY KEY, source TEXT, dest TEXT, rate TEXT, expBlock TEXT, balance TEXT)")
-        /// init all rate first time
-      if(BLOCKCHAIN_INFO.tokens){
-          Object.keys(BLOCKCHAIN_INFO.tokens).map((token) => {
-            let stmt1 = _this.db.prepare(`INSERT INTO rates(source, dest, rate, expBlock, balance) VALUES (?,?,?,?,?)`)
-            stmt1.run(token, constants.ETH.symbol, 0, 0);
-            stmt1.finalize()
-
-            let stmt2 = _this.db.prepare(`INSERT INTO rates(source, dest, rate, expBlock, balance) VALUES (?,?,?,?,?)`)
-            stmt2.run(constants.ETH.symbol, token, 0, 0);
-            stmt2.finalize()
-          })
-        }
+        _this.initConfigureTable()
+        _this.initLogsTable()
+        _this.initRatesTable()
+        _this.initRateUSDTable()
       })
+      console.log("Done init table")
     }
 
   }
 
-  initArraySupportedTokenAddress(){
+  initConfigureTable() {
+    this.db.run("CREATE TABLE configure (id INT, currentBlock INT, latestBlock INT, frequency INT, count INT, rangeFetch INT)");
+
+    var stmt = this.db.prepare("INSERT INTO configure VALUES (?,?,?,?,?,?)")
+    stmt.run(1, 0, 0, config.frequency, 0, config.rangeFetch);
+    stmt.finalize()
+  }
+  initLogsTable() {
+    this.db.run("CREATE TABLE logs (id INTEGER PRIMARY KEY, actualDestAmount TEXT, actualSrcAmount TEXT, dest TEXT, source TEXT, sender TEXT, blockNumber INT, txHash TEXT, timestamp INT, status TEXT)")
+  }
+  initRatesTable() {
+    var _this = this
+    this.db.run("CREATE TABLE rates (id INTEGER PRIMARY KEY, source TEXT, dest TEXT, rate TEXT, expBlock TEXT, balance TEXT)")
+    /// init all rate first time
+    if (BLOCKCHAIN_INFO.tokens) {
+      //init rate between token token;
+      Object.keys(BLOCKCHAIN_INFO.tokens).map((token) => {
+        let stmt1 = _this.db.prepare(`INSERT INTO rates(source, dest, rate, expBlock, balance) VALUES (?,?,?,?,?)`)
+        stmt1.run(token, constants.ETH.symbol, 0, 0);
+        stmt1.finalize()
+
+        let stmt2 = _this.db.prepare(`INSERT INTO rates(source, dest, rate, expBlock, balance) VALUES (?,?,?,?,?)`)
+        stmt2.run(constants.ETH.symbol, token, 0, 0);
+        stmt2.finalize()
+      })
+    }
+  }
+  initRateUSDTable() {
+    var _this = this
+    this.db.run("CREATE TABLE rate_usd (id INTEGER PRIMARY KEY, token TEXT, price TEXT)")
+    if (BLOCKCHAIN_INFO.tokens) {
+      //init rate between token token;
+      Object.keys(BLOCKCHAIN_INFO.tokens).map((tokenSymbol) => {
+        let stmt = _this.db.prepare(`INSERT INTO rate_usd(token, price) VALUES (?,?)`)
+        stmt.run(tokenSymbol, 0);
+        stmt.finalize()
+      })
+    }
+  }
+
+  initArraySupportedTokenAddress() {
     var stringAddress = ''
     var stringSymbol = ''
     if(BLOCKCHAIN_INFO.tokens){
@@ -254,7 +277,7 @@ class SqlitePersist {
 
   getEventsFromEth(page, itemPerPage) {
     return new Promise((resolve, reject) => {
-      var sql = "SELECT * FROM logs WHERE source = ? AND dest IN "+this.suportedTokenStr+" ORDER BY blockNumber DESC LIMIT ?"
+      var sql = "SELECT * FROM logs WHERE source = ? AND dest IN " + this.suportedTokenStr + " ORDER BY blockNumber DESC LIMIT ?"
       this.db.all(sql, ["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", itemPerPage], function (err, rows) {
         if (err) {
           console.log(err)
@@ -268,7 +291,7 @@ class SqlitePersist {
 
   getEventsFromToken(page, itemPerPage) {
     return new Promise((resolve, reject) => {
-      var sql = "SELECT * FROM logs WHERE dest = ? AND source IN "+this.suportedTokenStr+" ORDER BY blockNumber DESC LIMIT ?"
+      var sql = "SELECT * FROM logs WHERE dest = ? AND source IN " + this.suportedTokenStr + " ORDER BY blockNumber DESC LIMIT ?"
       this.db.all(sql, ["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", itemPerPage], function (err, rows) {
         if (err) {
           console.log(err)
@@ -381,6 +404,19 @@ class SqlitePersist {
     })
   }
 
+
+  saveRateUSD(rate) {
+    return new Promise((resolve, reject) => {
+      let stmt = this.db.prepare(`INSERT OR REPLACE INTO rate_usd(id, token, price) VALUES ((
+        SELECT id FROM rate_usd WHERE token = ?
+      ),?,?)`)
+      stmt.run(rate.symbol, rate.symbol, rate.price_usd);
+      stmt.finalize()
+      resolve(rate)
+      console.log("rateUSD is inserted: " + rate.symbol);
+    })
+  }
+
   getRate() {
     var sql = "SELECT * FROM rates Where source IN " + this.supportedTokenSymbol + " AND dest IN " + this.supportedTokenSymbol;
     return new Promise((resolve, reject) => {
@@ -393,6 +429,28 @@ class SqlitePersist {
         }
       })
     })
+  }
+
+  getRateUSD(){
+    var promises = Object.values(BLOCKCHAIN_INFO.tokens).map(token=>{
+      return new Promise((resolve, reject)=>{
+        var sql = `SELECT * FROM rate_usd where token = ?`
+        this.db.get(sql, [token.symbol], (err, row) => {
+          var tokenPrice = {
+            symbol: token.symbol
+          }
+          if (err) {
+            console.log(err)
+            tokenPrice.price_usd = 0
+          } else {
+            tokenPrice.price_usd = row.price
+          }
+          resolve(tokenPrice)
+          
+        })
+      })
+    })
+    return Promise.all(promises)
   }
 
 }

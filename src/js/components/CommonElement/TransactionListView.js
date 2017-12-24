@@ -116,20 +116,14 @@ const TransactionListView = (props) => {
       var sourceAmount = toT(item.actualSrcAmount, sourceToken.decimal, 3)
       var sourceAmountFull = toT(item.actualSrcAmount, sourceToken.decimal, 7)
       return (
-        <div className={"transaction-list-item open"} key={item.txHash} data-pos={i} onClick={(e) => gotoLink(item.txHash)}>
-          <div className="inner">
-            <div className="coin-icon">
-              <div className="coin coin1" key={'coin-1'} style={{ backgroundImage: 'url('+ require('../../../assets/img/tokens/' + sourceIcon) + ')' }}></div>
-              <div className="coin coin2" key={'coin-2'} style={{ backgroundImage: 'url('+ require('../../../assets/img/tokens/' + destIcon) + ')' }}></div>
+        <div className={"transaction-list-item"} key={item.txHash} data-pos={i} onClick={(e) => gotoLink(item.txHash)}>
+          <div className="clearfix px-3 py-4">
+            <div className="float-left">
+              <span className="font-w-b mr-2 font-s-up-1" title={sourceAmountFull}>{sourceAmount}</span>
+              <span className="coins">{sourceToken.key.toUpperCase()} to {destToken.key.toUpperCase()}</span>
             </div>
-            <div className="titles">
-              <div>
-                <span className="rate" title={sourceAmountFull}>{sourceAmount}</span>
-                <span className="coins">{sourceToken.key.toUpperCase()} to {destToken.key.toUpperCase()}</span>
-              </div>
-              <div>
-                <span className="time">{calculateTimeStamp(item.timestamp)}</span>
-              </div>
+            <div className="float-right font-s-down-1">
+              <span className="time">{calculateTimeStamp(item.timestamp)}</span>
             </div>
           </div>
         </div>
@@ -139,38 +133,37 @@ const TransactionListView = (props) => {
   }
 
   return (
-    <div className="history">
-      <div className="frame">
-        <div className="row">
-          <div class="column small-11 large-12 small-centered">
-            <h1 className="title">{props.translate("transaction_list.transaction_history") || "TRANSACTION HISTORY"}</h1>
-            <div className="row">
-              <div className="small-12 medium-6 large-6 column">
-                <span>ETH / TOKEN</span>
-                <div className="transaction-list">
-                  <CSSTransitionGroup
-                    transitionName="example"
-                    transitionEnterTimeout={1000}
-                    transitionLeaveTimeout={1000}>
-                    {content(props.logsEth)}
-                  </CSSTransitionGroup>
-                </div>
+    <div className="history mb-8">
+      <div className="row">
+        <div class="column small-11 large-12 small-centered">
+          <h1 className="title">{props.translate("transaction_list.transaction_history") || "Transactions"}</h1>
+          <div className="row">
+            <div className="small-12 medium-6 large-6 column">
+              <p className="p-3 bg-light">ETH / TOKEN</p>
+              <div className="transaction-list">
+                <CSSTransitionGroup
+                  transitionName="example"
+                  transitionEnterTimeout={1000}
+                  transitionLeaveTimeout={1000}>
+                  {content(props.logsEth)}
+                </CSSTransitionGroup>
               </div>
-              <div className="small-12 medium-6 large-6 column">
-                <span>TOKEN / ETH</span>
-                <div className="transaction-list">
-                  <CSSTransitionGroup
-                    transitionName="example"
-                    transitionEnterTimeout={1000}
-                    transitionLeaveTimeout={1000}>
-                    {content(props.logsToken)}
-                  </CSSTransitionGroup>
-                </div>
+            </div>
+            <div className="small-12 medium-6 large-6 column">
+              <p className="px-2 py-3 bg-light">TOKEN / ETH</p>
+              <div className="transaction-list">
+                <CSSTransitionGroup
+                  transitionName="example"
+                  transitionEnterTimeout={1000}
+                  transitionLeaveTimeout={1000}>
+                  {content(props.logsToken)}
+                </CSSTransitionGroup>
               </div>
             </div>
           </div>
         </div>
       </div>
+
     </div>
   )
 }

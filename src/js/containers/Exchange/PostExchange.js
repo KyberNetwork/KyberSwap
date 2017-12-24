@@ -21,13 +21,15 @@ import { getTranslate } from 'react-localize-redux';
   }
 
   var destTokenSymbol = store.exchange.destTokenSymbol
+  var destBalance = 0
   var destDecimal = 18
   if (tokens[destTokenSymbol]) {
+    destBalance = tokens[destTokenSymbol].balance
     destDecimal = tokens[destTokenSymbol].decimal
   }
 
   return {
-    form: { ...store.exchange, sourceBalance, sourceDecimal, destDecimal },
+    form: { ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal },
     account: store.account.account,
     ethereum: store.connection.ethereum,
     keyService: props.keyService,
@@ -153,10 +155,12 @@ export default class PostExchange extends React.Component {
     var gas = converters.numberToHex(this.props.form.gas)
     // should have better strategy to determine gas price
     var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.form.gasPrice))
+    var balanceData = {source: this.props.form.sourceBalance.toString(), 
+        dest: this.props.form.destBalance.toString()}
     return {
       selectedAccount, sourceToken, sourceAmount, destToken,
       minConversionRate, destAddress, maxDestAmount,
-      throwOnFailure, nonce, gas, gasPrice
+      throwOnFailure, nonce, gas, gasPrice, balanceData
     }
   }
   checkTokenBalanceOfColdWallet = () => {
@@ -200,7 +204,7 @@ export default class PostExchange extends React.Component {
         params.sourceAmount, params.destToken, params.destAddress,
         params.maxDestAmount, params.minConversionRate,
         params.throwOnFailure, params.nonce, params.gas,
-        params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService))
+        params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService, params.balanceData))
 
 
     } catch (e) {

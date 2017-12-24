@@ -80,8 +80,17 @@ $medium-gray: #262C41;
 $dark-gray: #0B0F1A;
 $black: #0a0a0a;
 $white: #fefefe;
+$white-light: rgba(254, 254, 254, 0.8);
 $body-background: #fff;
 $body-font-color: #0B0F1A;
+$bg-primary: #2a4552;
+$bg-primary-lighter: #3f5662;
+$bg-primary-darker: #233a44;
+$bg-success-gradient: linear-gradient(135deg, #30968e, #298083);
+$bg-success: #4de6c1;
+$bg-divider: #243c47;
+$bg-divider-light: rgba(254, 254, 254, 0.12);
+
 $body-font-family: 'Muli', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
 $body-antialiased: true;
 $global-margin: 1rem;

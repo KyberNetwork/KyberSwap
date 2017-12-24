@@ -4,8 +4,8 @@ import HttpEthereumProvider from "./httpProvider"
 import WebsocketEthereumProvider from "./wsProvider"
 import constants from "../constants"
 
-import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateHistoryExchange, checkConnection } from "../../actions/globalActions"
-import { updateAccount } from "../../actions/accountActions"
+import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRateUSD, updateHistoryExchange, checkConnection } from "../../actions/globalActions"
+import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx } from "../../actions/txActions"
 import { updateRateExchange } from "../../actions/exchangeActions"
 import BLOCKCHAIN_INFO from "../../../../env"
@@ -19,7 +19,7 @@ export default class EthereumService extends React.Component {
     var httpArr = BLOCKCHAIN_INFO.connections.http
     var randomNum = Math.floor((Math.random() * httpArr.length))
     this.httpUrl = httpArr[randomNum]
-   // this.httpUrl = BLOCKCHAIN_INFO.connections.http
+    // this.httpUrl = BLOCKCHAIN_INFO.connections.http
     this.wsUrl = BLOCKCHAIN_INFO.connections.ws
     // this.wsUrl = "ws://localhost:8546"
     this.httpProvider = this.getHttpProvider()
@@ -82,17 +82,15 @@ export default class EthereumService extends React.Component {
     this.currentProvider.clearSubcription()
   }
 
-  // fetchGasPrice(){
-  //   var state = store.getState()
-  //   var ethereum = state.connection.ethereum
-  //   store.dispatch(setGasPrice(ethereum))
-  // }
-
   fetchData() {
-    //this.fetchCurrentBlock()
     this.fetchTxsData()
+
     this.fetchRateData()
+    this.fetchRateUSD()
+
     this.fetchAccountData()
+    this.fetchTokenBalance()
+
     this.fetchRateExchange()
     this.fetchHistoryExchange()
     this.checkConnection()
@@ -101,17 +99,25 @@ export default class EthereumService extends React.Component {
   fetchRateData() {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    var ownerAddr = state.account.account.address
-    //var tokens = state.tokens.tokens
-    var supportTokens = []
-    Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
-      supportTokens.push(BLOCKCHAIN_INFO.tokens[key])
-    })
     for (var k = 0; k < constants.RESERVES.length; k++) {
       var reserve = constants.RESERVES[k]
-      store.dispatch(updateAllRate(ethereum, supportTokens, reserve, ownerAddr))
+      store.dispatch(updateAllRate(ethereum, BLOCKCHAIN_INFO.tokens, reserve))
     }
+  }
 
+  fetchTokenBalance() {
+    var state = store.getState()
+    var ethereum = state.connection.ethereum
+    var account = state.account.account
+    if (account.address) {
+      store.dispatch(updateTokenBalance(ethereum, account.address, BLOCKCHAIN_INFO.tokens))
+    }
+  }
+  
+  fetchRateUSD() {
+    var state = store.getState()
+    var ethereum = state.connection.ethereum
+    store.dispatch(updateAllRateUSD(ethereum, BLOCKCHAIN_INFO.tokens))
   }
 
   fetchTxsData = () => {
@@ -119,18 +125,36 @@ export default class EthereumService extends React.Component {
     var tx
     var txs = state.txs
     var ethereum = state.connection.ethereum
-    var tokens = state.tokens.tokens
-    var arrayTokens = []
-    if(tokens){
-      Object.keys(tokens).forEach((key) => {
-        arrayTokens.push(tokens[key])
-      })
-    } 
+
     var account = state.account.account
+    var listToken = {}
     Object.keys(txs).forEach((hash) => {
       tx = txs[hash]
       if (tx.status == "pending") {
-        store.dispatch(updateTx(ethereum, tx, arrayTokens, account))
+        if (tx.type === "exchange") {
+          var exchange = state.exchange
+          listToken = {
+            source: {
+              symbol: exchange.sourceTokenSymbol,
+              address: exchange.sourceToken
+            },
+            dest: {
+              symbol: exchange.destTokenSymbol,
+              address: exchange.destToken
+            }
+          }
+          store.dispatch(updateTx(ethereum, tx, account, listToken))
+        } else {
+          var transfer = state.transfer
+          listToken = {
+            token: {
+              symbol: transfer.tokenSymbol,
+              address: transfer.token
+            }
+          }
+          store.dispatch(updateTx(ethereum, tx, account, listToken))
+        }
+
       }
     })
   }
@@ -138,7 +162,7 @@ export default class EthereumService extends React.Component {
   fetchAccountData = () => {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    var account = store.getState().account.account
+    var account = state.account.account
     if (account.address) {
       store.dispatch(updateAccount(ethereum, account))
     }

@@ -10,9 +10,9 @@ import { RateView } from "../../components/Header"
 
 export default class Rate extends React.Component {
 
-	render() {
+  render() {
     return (
-      <RateView rates = {this.props.rates}/>
+      <RateView rates={this.props.rates} />
     )
   }
 }

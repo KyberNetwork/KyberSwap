@@ -11,7 +11,11 @@ $divider-color: darken($title-background-color, 5);
 .reveal {
   position: relative;
   overflow: visible;
+  color: $white;
+  border-radius: 0;
   outline: none;
+  background-color: $bg-primary;
+  border: 2px solid $white;
   box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
   @include breakpoint(small only) {
     top: 0 !important;
@@ -23,44 +27,18 @@ $divider-color: darken($title-background-color, 5);
   a.x {
     display: block;
     position: absolute;
-    right: 15px;
-    top: 25px;
-    width: 24px;
-    height: 24px;
-    line-height: 22px;
-    border-radius: 24px;
-    background-color: darken($light-gray, 15);
-    color: white;
-    text-align: center;
-    outline: none;
+    right: 20px;
+    top: 10px;
+    font-size: 32px;
+    color: $white;
   }
   .title {
     font-weight: bold;
-    font-size: 14px;
-    letter-spacing: 1px;
-    padding: 25px 20px 20px 20px;
-    background-color: $title-background-color;
-    text-transform: uppercase;
-    color: $medium-gray;
-    border-radius: $global-radius $global-radius 0 0;
-    border-bottom: 1px solid $divider-color;
-  }
-  @include breakpoint(medium) {
-    a.x {
-      width: 32px;
-      height: 32px;
-      line-height: 32px;
-      border-radius: 32px;
-      right: -16px;
-      top: -16px;
-      background-color: $primary-color;
-    }
-    .title {
-      padding: 30px 25px 25px 25px;
-    }
+    font-size: 20px;
+    padding: 20px 25px;
+    background-color: $bg-primary-darker;
   }
   .overlap {
-    position: absolute;
     width: 100%;
     text-align: center;
     transform: translateY(-50%);
@@ -69,12 +47,9 @@ $divider-color: darken($title-background-color, 5);
     }
   }
   .content {
-    padding: 15px 10px;
+    padding: 20px 10px;
     @include breakpoint(medium) {
       padding: 15px;
-    }
-    &.white {
-      background-color: white;
     }
     &.with-overlap {
       padding-bottom: 25px;
@@ -82,9 +57,9 @@ $divider-color: darken($title-background-color, 5);
     .block-title {
       @include clearfix;
       font-weight: bold;
-      font-size: 14px;
-      color: $medium-gray;
-      margin: 10px 0 15px 0;
+      font-size: 16px;
+      color: $bg-success;
+      margin-bottom: 15px;
       img.loading {
         height: 21px;
         float: right;

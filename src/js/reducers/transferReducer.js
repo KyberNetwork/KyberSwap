@@ -125,6 +125,10 @@ const transfer = (state = initState, action) => {
       newState.step = 2
       newState.bcError = ""
       newState.broadcasting = true
+      newState.balanceData = {
+        prev: action.payload.balanceData.balance,
+        next: 0
+      }
       return newState
     }
     case "TRANSFER.THROW_ERROR_SIGN_TRANSACTION": {
@@ -144,6 +148,10 @@ const transfer = (state = initState, action) => {
       if (newState.tempTx.hash === action.payload.hash) {
         newState.tempTx = action.payload
       }
+      return newState
+    }
+    case "TRANSFER.UPDATE_CURRENT_BALANCE":{
+      newState.balanceData.next = action.payload.tokenBalance 
       return newState
     }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{

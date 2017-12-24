@@ -2,7 +2,7 @@ import { REHYDRATE } from 'redux-persist/lib/constants'
 import Rate from "../services/rate"
 import BigNumber from "bignumber.js"
 import * as BLOCKCHAIN_INFO from "../../../env"
-import  constants from "../services/constants"
+import constants from "../services/constants"
 
 const initState = function () {
   let tokens = {}
@@ -12,9 +12,9 @@ const initState = function () {
     tokens[key].rateEth = 0
     tokens[key].balance = 0
   })
-  return { 
+  return {
     tokens: tokens,
-    count: {storageKey: constants.STORAGE_KEY}
+    count: { storageKey: constants.STORAGE_KEY }
   }
 }()
 
@@ -26,11 +26,11 @@ const tokens = (state = initState, action) => {
         var tokens = {}
         if (payload) {
           // check load from loaclforage or initstate
-          var loadedTokens = payload.tokens 
-          if(payload.count && payload.count.storageKey !== constants.STORAGE_KEY){
+          var loadedTokens = payload.tokens
+          if (payload.count && payload.count.storageKey !== constants.STORAGE_KEY) {
             loadedTokens = initState.tokens
           }
-          
+
           Object.keys(loadedTokens).forEach((id) => {
             var tokenMap = loadedTokens[id]
             var token = new Rate(
@@ -39,15 +39,16 @@ const tokens = (state = initState, action) => {
               tokenMap.icon,
               tokenMap.address,
               tokenMap.decimal,
-              new BigNumber(tokenMap.rate ? tokenMap.rate : 0),
-              new BigNumber(tokenMap.balance ? tokenMap.balance : 0),
-              new BigNumber(tokenMap.rateEth ? tokenMap.rateEth : 0)
+              tokenMap.rate ? tokenMap.rate : 0,
+              0,
+              tokenMap.rateEth ? tokenMap.rateEth : 0,
+              tokenMap.rateUSD ? tokenMap.rateUSD : 0
             )
             tokens[id] = token
           })
-          return Object.assign({}, state, { 
+          return Object.assign({}, state, {
             tokens: tokens,
-            count: {storageKey: constants.STORAGE_KEY}
+            count: { storageKey: constants.STORAGE_KEY }
           })
         } else {
           return state;
@@ -57,16 +58,73 @@ const tokens = (state = initState, action) => {
     }
     case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
       var tokens = { ...state.tokens }
-      var tokensData = action.payload.rates;
-      var isUpdateBalance = action.payload.isUpdateBalance;
-      if(tokensData){
-        tokensData.forEach((data) => {
-          if(!tokens[data.symbol]) return
-          if(!isUpdateBalance && tokens[data.symbol]) data.balance = tokens[data.symbol].balance
-          tokens[data.symbol] = data
-        })
-      }
-      return Object.assign({}, state, { tokens: tokens })
+      var rates = action.payload.rates
+
+      //map token
+      var mapToken = {}
+      rates.map(rate => {
+        if (rate.source !== "ETH") {
+          if (!mapToken[rate.source]) {
+            mapToken[rate.source] = {}
+          }
+          mapToken[rate.source].rate = rate.rate
+        } else {
+          if (!mapToken[rate.dest]) {
+            mapToken[rate.dest] = {}
+          }
+          mapToken[rate.dest].rateEth = rate.rate
+        }
+      })
+
+      //push data
+      var newTokens = {}
+      Object.keys(tokens).map(key => {
+        var token = tokens[key]
+        if (mapToken[key] && mapToken[key].rate) {
+          token.rate = mapToken[key].rate
+        }
+        if (mapToken[key] && mapToken[key].rateEth) {
+          token.rate = mapToken[key].rateEth
+        }
+        newTokens[key] = token
+      })
+
+      return Object.assign({}, state, { tokens: newTokens })
+    }
+    case 'GLOBAL.UPDATE_RATE_USD_FULFILLED': {
+      var tokens = { ...state.tokens }
+      var rates = action.payload.rates
+      //map token
+      var mapToken = {}
+      rates.map(rate => {
+        mapToken[rate.symbol] = rate.price_usd
+      })
+
+      //push data
+      var newTokens = {}
+      Object.keys(tokens).map(key => {
+        var token = tokens[key]
+        token.rateUSD = mapToken[token.symbol]
+        newTokens[key] = token
+      })
+      return Object.assign({}, state, { tokens: newTokens })
+    }
+    case 'GLOBAL.SET_BALANCE_TOKEN':{
+      var tokens = { ...state.tokens }
+      
+      var balances = action.payload.balances
+      var mapBalance = {}
+      balances.map(balance=>{
+        mapBalance[balance.symbol] = balance.balance
+      })
+
+      var newTokens = {}
+      Object.keys(tokens).map(key => {
+        var token = tokens[key]
+        token.balance = mapBalance[token.symbol]
+        newTokens[key] = token
+      })
+      return Object.assign({}, state, { tokens: newTokens }) 
     }
     default: return state
   }

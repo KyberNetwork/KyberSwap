@@ -9,3 +9,5 @@ export { default as SelectTokenModal } from "./SelectTokenModal.js"
 export { default as TokenView } from "./Token.js"
 export { default as HistoryExchange } from "./HistoryExchange.js"
 export { default as TransactionListView } from "./TransactionListView.js"
+
+export { default as TokenSelectorView } from "./TokenSelectorView.js"

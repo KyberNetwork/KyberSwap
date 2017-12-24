@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from 'react-router-dom'
 import { connect } from "react-redux"
-import { Rate, Address, Notify } from "../Header"
+import { Rate, Address, Notify, AccountBalance } from "../Header"
 import { getTranslate } from 'react-localize-redux';
 
 import HeaderView from '../../components/Header/HeaderView'
@@ -17,13 +17,17 @@ import HeaderView from '../../components/Header/HeaderView'
 export default class Header extends React.Component {
 
   render() {
+  var balance = this.props.account?<AccountBalance />:false 
     return (
-      <HeaderView account={this.props.account}
+      <HeaderView 
+        account={this.props.account}
         address={<Address 
           path={this.props.location.pathname}
           translate={this.props.translate}
           />}
         rate={<Rate />}
+        balance = {balance}
+
       />
     )
   }

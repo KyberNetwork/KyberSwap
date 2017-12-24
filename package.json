@@ -4,6 +4,7 @@
   "description": "Ethereum wallet developed by KyberNetwork team. It supports instant exchange between wide range of tokens.",
   "main": "webpack.config.js",
   "dependencies": {
+    "axios": "^0.17.1",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-react-html-attrs": "^2.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
