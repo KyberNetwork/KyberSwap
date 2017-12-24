@@ -21,6 +21,10 @@ const HeaderView = (props) => {
         {props.rate}
       </section>
 
+      {props.balance && 
+      <section id="balance-account">
+        {props.balance}
+      </section>}
     </div>
   )
 }

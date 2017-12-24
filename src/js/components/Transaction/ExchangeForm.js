@@ -30,11 +30,11 @@ const ExchangeForm = (props) => {
                 <div class="column medium-6">
                   <label style={{marginBottom: 0}}>{props.translate("transaction.exchange_from") || "Exchange From"}
 
-                    <div className={errorToken !== "" || props.errors.sourceAmount != '' ? "token-input error" : "token-input"}>
+                    <div className={errorToken !== "" || props.errors.sourceAmount != '' ? "error" : ""}>
 
                       <input id="inputSource" type={props.input.sourceAmount.type} className="source-input" value={props.input.sourceAmount.value} onFocus={props.input.sourceAmount.onFocus} onChange={props.input.sourceAmount.onChange} min="0" step="0.000001" placeholder="0" autoFocus/>
 
-                      {props.tokenSource}
+                      {props.tokenSourceSelect}
                     </div>
                     {errorToken !== "" &&
                       <span class="error-text">{errorToken}</span>
@@ -55,9 +55,9 @@ const ExchangeForm = (props) => {
                 </div>
                 <div class="column medium-6">
                   <label>{props.translate("transaction.exchange_to") || "Exchange To"}
-                    <div class="token-input">
+                    <div>
                       <input type={props.input.destAmount.type} className="des-input" value={props.input.destAmount.value} onFocus={props.input.destAmount.onFocus} onChange={props.input.destAmount.onChange} min="0" step="0.000001" placeholder="0" />
-                      {props.tokenDest}
+                      {props.tokenDestSelect}
                     </div>
                   </label>
                 </div>
@@ -92,7 +92,7 @@ const ExchangeForm = (props) => {
         </div>
       </div>
       {props.exchangeButton}
-      {props.selectTokenModal}
+      {/* {props.selectTokenModal} */}
     </div>
   )
   return (

@@ -181,6 +181,12 @@ const exchange = (state = initState, action) => {
       newState.bcError = ""
       newState.step = 3
       newState.broadcasting = true
+      newState.balanceData = {
+        prevSource : action.payload.balanceData.source,
+        nextSource: 0,
+        prevDest: action.payload.balanceData.dest,
+        nextDest: 0
+      }
       return newState
     }
     case "EXCHANGE.PROCESS_APPROVE": {
@@ -232,10 +238,15 @@ const exchange = (state = initState, action) => {
       newState.inputFocus = action.payload
       return newState
     }
+    case "EXCHANGE.UPDATE_CURRENT_BALANCE":{
+      newState.balanceData.nextSource = action.payload.sourceBalance 
+      newState.balanceData.nextDest = action.payload.destBalance
+      return newState
+    }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
       newState.gasPrice = action.payload
       return newState
-    }
+    }    
   }
   return state
 }

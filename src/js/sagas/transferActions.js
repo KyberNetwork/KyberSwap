@@ -45,7 +45,7 @@ export function* processTransfer(action) {
   const { formId, ethereum, address,
     token, amount,
     destAddress, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService } = action.payload
+    gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
   var callService = token == constants.ETHER_ADDRESS ? "sendEtherFromAccount" : "sendTokenFromAccount"
   switch (type) {
     case "keystore":
@@ -66,7 +66,7 @@ function* transferKeystore(action, callService) {
   const { formId, ethereum, address,
     token, amount,
     destAddress, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService } = action.payload
+    gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
   try {
     var rawTx = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
       token, amount,
@@ -77,7 +77,7 @@ function* transferKeystore(action, callService) {
     return
   }
   try {
-    yield put(actions.prePareBroadcast())
+    yield put(actions.prePareBroadcast(balanceData))
     const hash = yield call(ethereum.call("sendRawTransaction"), rawTx, ethereum)
     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
   } catch (e) {
@@ -90,14 +90,14 @@ function* transferColdWallet(action, callService) {
   const { formId, ethereum, address,
     token, amount,
     destAddress, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService } = action.payload
+    gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
   try {
     var rawTx
     rawTx = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
       token, amount,
       destAddress, nonce, gas,
       gasPrice, keystring, type, password)
-    yield put(actions.prePareBroadcast())
+    yield put(actions.prePareBroadcast(balanceData))
     const hash = yield call(ethereum.call("sendRawTransaction"), rawTx, ethereum)
     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
   } catch (e) {
@@ -111,13 +111,13 @@ function* transferMetamask(action, callService) {
   const { formId, ethereum, address,
     token, amount,
     destAddress, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService } = action.payload
+    gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
   try {
     const hash = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
       token, amount,
       destAddress, nonce, gas,
       gasPrice, keystring, type, password)
-    yield put(actions.prePareBroadcast())
+    yield put(actions.prePareBroadcast(balanceData))
     const rawTx = {gas, gasPrice, nonce}
     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
   } catch (e) {

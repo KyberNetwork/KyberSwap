@@ -1,27 +1,39 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import {joinedKyberWallet} from '../actions/accountActions'
 import {updateTxComplete} from '../actions/txActions'
-import { Rate, updateAllRatePromise } from "../services/rate"
+
+import * as exchangeActions from '../actions/exchangeActions'
+import * as transferActions from '../actions/transferActions'
+
+import { Rate } from "../services/rate"
 import { updateAllRateComplete } from "../actions/globalActions"
 import constants from "../services/constants"
 
-function* updateTx(action) {
-  const {tx, ethereum, tokens, account} = action.payload
-  const newTx = yield call(tx.sync, ethereum, tx)	
-  yield put(updateTxComplete(newTx))    
 
-  var rates = []
-  try{
-    for (var k = 0; k < constants.RESERVES.length; k++) {
-      var reserve = constants.RESERVES[k];
-      rates[k] = yield call(updateAllRatePromise, ethereum, tokens, constants.RESERVES[k], account.address)
-    }
-    yield put(updateAllRateComplete(rates[0], true))
+function* getBalance(accAddr, tokenAddr, tokenSymbol, ethereum){
+  var balance = 0
+  if(tokenSymbol === "ETH"){
+    balance = yield call([ethereum, ethereum.call("getBalance")], accAddr)
+  }else{
+    balance = yield call([ethereum, ethereum.call("getTokenBalance")], tokenAddr, accAddr)
   }
-  catch(err){
-    console.log(err)
+  return balance
+}
+function* updateTx(action) {
+  const {tx, ethereum, tokens, account, listToken} = action.payload
+  const newTx = yield call(tx.sync, ethereum, tx)	
+  if(tx.type === "exchange"){
+    var sourceBalance = yield call(getBalance, account.address, 
+      listToken.source.address, listToken.source.symbol, ethereum)
+    var destBalance = yield call(getBalance, account.address, 
+      listToken.dest.address, listToken.dest.symbol, ethereum)
+    yield put(exchangeActions.updateCurrentBalance(sourceBalance, destBalance))
+  }else{
+    var tokenBalance = yield call(getBalance, account.address, 
+      listToken.token.address, listToken.token.symbol, ethereum)
+    yield put(transferActions.updateCurrentBalance(tokenBalance))
   }
-  
+  yield put(updateTxComplete(newTx))    
 }
 
 export function* watchTx() {

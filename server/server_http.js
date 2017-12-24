@@ -13,11 +13,11 @@ var PersistClass = require("./persist/sqlite/sqlitePersist")
 var persistor = new PersistClass()
 
 var isInit = process.env.npm_config_init
-if (isInit){
-  persistor.destroyStore(()=>{
+if (isInit) {
+  persistor.destroyStore(() => {
     persistor.initStore()
   })
-}else{
+} else {
   persistor.initStore()
 }
 
@@ -31,9 +31,6 @@ function main() {
   var connectionInstance = new EthereumService(
     {
       default: 'http', persistor: persistor,
-      // callbackLogs: (events, latestBlock) => {
-      //   handleEvent(events, latestBlock)
-      // }
     })
   connectionInstance.subcribe()
 }
@@ -42,10 +39,9 @@ main()
 
 
 app.get('/getRate', function (req, res) {
-  // res.writeHead(200, { 'Content-Type': 'text/html' });
   var event = persistor.getRate()
   event.then((result) => {
-    if(!result || !result.length){
+    if (!result || !result.length) {
       res.status(404).send()
     }
     res.end(JSON.stringify(result))
@@ -54,7 +50,6 @@ app.get('/getRate', function (req, res) {
 
 
 app.get('/getHistory', function (req, res) {
-  res.writeHead(200, { 'Content-Type': 'text/html' })
   var page = req.body.page
   var itemPerpage = req.body.itemPerPage
   var event = persistor.getEvents(page, itemPerpage)
@@ -64,10 +59,6 @@ app.get('/getHistory', function (req, res) {
 })
 
 app.get('/getHistoryTwoColumn', function (req, res) {
-  res.writeHead(200, { 'Content-Type': 'text/html' })
-  // var page = req.body.page
-  // var itemPerpage = req.body.itemPerPage
-  //console.log("x")
   var page = 0
   var itemPerpage = 5
   var eventEth = persistor.getEventsFromEth(page, itemPerpage)
@@ -79,7 +70,6 @@ app.get('/getHistoryTwoColumn', function (req, res) {
   })
 })
 app.get('/countHistory', (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/html' });
   var event = persistor.countEvents()
   event.then((result) => {
     res.end(JSON.stringify(result))
@@ -87,16 +77,25 @@ app.get('/countHistory', (req, res) => {
 })
 
 app.get('/getLatestBlock', (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/html' });
   var event = persistor.getLatestBlock()
   event.then((result) => {
     res.end(JSON.stringify(result))
   })
 })
 
+app.get('/getRateUSD', (req, res) => {
+  var event = persistor.getRateUSD()
+  event.then((result) => {
+    if (!result || !result.length) {
+      res.status(404).send()
+    }
+    res.end(JSON.stringify(result))
+  })
+})
+
 app.get('/getLanguagePack', (req, res) => {
   var lang = req.query.lang;
-  try{
+  try {
     var langualgePack = require("../lang/" + lang + ".json")
     return res.json(langualgePack)
   } catch (err) {
@@ -104,6 +103,6 @@ app.get('/getLanguagePack', (req, res) => {
   }
 })
 
-var port = process.env.npm_config_port? process.env.npm_config_port:3001
+var port = process.env.npm_config_port ? process.env.npm_config_port : 3001
 app.listen(port, '0.0.0.0')
 console.log('Listening at http://0.0.0.0:' + port)

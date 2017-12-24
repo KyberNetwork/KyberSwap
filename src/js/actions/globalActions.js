@@ -28,17 +28,31 @@ export function updateBlockFailed(error) {
 //   }
 // }
 
-export function updateAllRate(ethereum, tokens, reserve, ownerAddr) {
+export function updateAllRate(ethereum, tokens, reserve) {
   return {
     type: 'GLOBAL.RATE_UPDATE_ALL_PENDING',
-    payload: { ethereum, tokens, reserve, ownerAddr }
+    payload: { ethereum, tokens, reserve}
   }
 }
 
-export function updateAllRateComplete(rates, isUpdateBalance) {
+export function updateAllRateComplete(rates) {
   return {
     type: 'GLOBAL.ALL_RATE_UPDATED_FULFILLED',
-    payload: { rates, isUpdateBalance }
+    payload: { rates }
+  }
+}
+
+export function updateAllRateUSD(ethereum, tokens){
+  return {
+    type: 'GLOBAL.UPDATE_RATE_USD_PENDING',
+    payload: { ethereum, tokens}
+  }
+}
+
+export function updateAllRateUSDComplete(rates){
+  return {
+    type: 'GLOBAL.UPDATE_RATE_USD_FULFILLED',
+    payload: {rates}
   }
 }
 
@@ -51,6 +65,13 @@ export function acceptTermOfService() {
 export function clearSession() {
   return {
     type: "GLOBAL.CLEAR_SESSION"
+  }
+}
+
+export function setBalanceToken(balances){
+  return {
+    type: "GLOBAL.SET_BALANCE_TOKEN",
+    payload: {balances}
   }
 }
 
@@ -95,6 +116,7 @@ export function checkConnection(ethereum, count, maxCount, isCheck) {
     payload: { ethereum, count, maxCount, isCheck }
   }
 }
+
 
 export function updateIsCheck(isCheck){
   return {

@@ -425,6 +425,28 @@ class SqlitePersist {
     })
   }
 
+  getRateUSD(){
+    var promises = Object.values(BLOCKCHAIN_INFO.tokens).map(token=>{
+      return new Promise((resolve, reject)=>{
+        var sql = `SELECT * FROM rate_usd where token = ?`
+        this.db.get(sql, [token.symbol], (err, row) => {
+          var tokenPrice = {
+            symbol: token.symbol
+          }
+          if (err) {
+            console.log(err)
+            tokenPrice.price_usd = 0
+          } else {
+            tokenPrice.price_usd = row.price
+          }
+          resolve(tokenPrice)
+          
+        })
+      })
+    })
+    return Promise.all(promises)
+  }
+
 }
 
 

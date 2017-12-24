@@ -2,6 +2,7 @@ import Web3 from "web3"
 import constants from "../constants"
 import * as ethUtil from 'ethereumjs-util'
 import BLOCKCHAIN_INFO from "../../../../env"
+import axios from 'axios'
 
 export default class BaseEthereumProvider {
 
@@ -15,15 +16,15 @@ export default class BaseEthereumProvider {
     return this.rpc.version.api
   }
 
-  getGasPrice(){
+  getGasPrice() {
     return new Promise((resolve, reject) => {
       this.rpc.eth.getGasPrice()
-      .then((result)=>{
-        resolve(result)
-      })
-      .catch((err) => {
-        reject(err)
-      })
+        .then((result) => {
+          resolve(result)
+        })
+        .catch((err) => {
+          reject(err)
+        })
     })
   }
 
@@ -32,10 +33,10 @@ export default class BaseEthereumProvider {
       this.rpc.eth.getBlock("latest", false).then((block) => {
         if (block != null) {
           resolve(true)
-        }else{
+        } else {
           resolve(false)
         }
-      }).catch((errr)=>{
+      }).catch((errr) => {
         resolve(false)
       })
     })
@@ -59,50 +60,81 @@ export default class BaseEthereumProvider {
       }).then((response) => {
         return response.json()
       }).then((data) => {
-        if(data && typeof data == 'number' && data > 0){
+        if (data && typeof data == 'number' && data > 0) {
           resolve(data)
         } else {
-          throw('cannot get lastest block from server')
+          throw ('cannot get lastest block from server')
         }
       })
-      .catch((err) => {
-        this.rpc.eth.getBlock("latest", false).then((block) => {
-          if (block != null) {
-            resolve(block.number)
-          }
+        .catch((err) => {
+          this.rpc.eth.getBlock("latest", false).then((block) => {
+            if (block != null) {
+              resolve(block.number)
+            }
+          })
         })
-      })
     })
-    
+
   }
 
   getBalance(address) {
     return new Promise((resolve, reject) => {
       this.rpc.eth.getBalance(address)
-      .then((balance) => {
-        if (balance != null) {
-          resolve(balance)
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-        reject(err)
-      })
+        .then((balance) => {
+          if (balance != null) {
+            resolve(balance)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+          reject(err)
+        })
     })
+  }
+
+  getAllBalancesToken(address, tokens) {
+    var promises = Object.keys(tokens).map(index => {
+      var token = tokens[index]
+      if (token.symbol === 'ETH') {
+        return new Promise((resolve, reject) => {
+          this.getBalance(address).then(result => {
+            resolve({
+              symbol: 'ETH',
+              balance: result
+            })
+          }).catch(err => {
+            reject(new Error("Cannot get balance of ETH"))
+          })
+        })
+
+      } else {
+        return new Promise((resolve, reject) => {
+          this.getTokenBalance(token.address, address).then(result => {
+            resolve({
+              symbol: token.symbol,
+              balance: result
+            })
+          }).catch(err => {
+            reject(new Error("Cannot get balance of " + token.symbol))
+          })
+        })
+      }
+    })
+    return Promise.all(promises)
   }
 
   getNonce(address) {
     return new Promise((resolve, reject) => {
       this.rpc.eth.getTransactionCount(address, "pending")
-      .then((nonce) => {
-        //console.log(nonce)
-        if (nonce != null) {
-          resolve(nonce)
-        }
-      })
-      .catch((err) => {
-        reject(err)
-      })
+        .then((nonce) => {
+          //console.log(nonce)
+          if (nonce != null) {
+            resolve(nonce)
+          }
+        })
+        .catch((err) => {
+          reject(err)
+        })
     })
 
 
@@ -113,14 +145,14 @@ export default class BaseEthereumProvider {
     instance.options.address = address
     return new Promise((resolve, reject) => {
       instance.methods.balanceOf(ownerAddr).call()
-      .then((result) => {
-        if (result != null) {
-          resolve(result)
-        }
-      })
-      .catch((err) => {
-        reject(err)
-      })
+        .then((result) => {
+          if (result != null) {
+            resolve(result)
+          }
+        })
+        .catch((err) => {
+          reject(err)
+        })
     })
 
   }
@@ -182,15 +214,15 @@ export default class BaseEthereumProvider {
   getRate(source, dest, reserve) {
     return new Promise((resolve, reject) => {
       this.networkContract.methods.getRate(source, dest, reserve).call()
-      .then((result) => {
-        if (result != null) {
-          resolve(result)
-        }
-      })
-      .catch((err) => {
-        // console.log(err)
-        reject(err)
-      })
+        .then((result) => {
+          if (result != null) {
+            resolve(result)
+          }
+        })
+        .catch((err) => {
+          // console.log(err)
+          reject(err)
+        })
     })
   }
 
@@ -216,35 +248,26 @@ export default class BaseEthereumProvider {
           'Content-Type': 'application/json'
         },
       })
-      .then((response) => {
-        return response.json()
-      })
-      .then((data) => {
-        for(let key in data){
-          data[key] = data[key].filter(item => {
-            return (this.tokenIsSupported(item.dest)
-            && this.tokenIsSupported(item.source))
-          })
-        }
-        resolve(data);
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+        .then((response) => {
+          return response.json()
+        })
+        .then((data) => {
+          for (let key in data) {
+            data[key] = data[key].filter(item => {
+              return (this.tokenIsSupported(item.dest)
+                && this.tokenIsSupported(item.source))
+            })
+          }
+          resolve(data);
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     })
   }
 
-  tokenIsSupported(address) {
-    let tokens = BLOCKCHAIN_INFO.tokens
-    for(let token in tokens){
-      if(tokens[token].address == address){
-        return true
-      }
-    }
-    return false
-  }
 
-  getRateExchange() {
+  getAllRatesFromServer(tokens, reserve) {
     return new Promise((resolve, rejected) => {
       fetch(BLOCKCHAIN_INFO.history_endpoint + '/getRate', {
         method: 'GET',
@@ -252,35 +275,83 @@ export default class BaseEthereumProvider {
           'Accept': 'application/json, text/plain, */*',
           'Content-Type': 'application/json'
         },
-        //body: {}
       })
-      .then(function (response) {
-        if(response.status == 404){
-          console.log("~~~~~~~ not found rate in server ~~~~~~~~")
-          this.getRateFromBlockchain()
-          .then((result) => {
-            resolve(result)
-          })
-          .catch((err) => {
+        .then(function (response) {
+          if (response.status == 404) {
             rejected(err)
-          })
-        } else {
-          resolve(response.json())
-        }
-        
-      })
-
-      .catch((err) => {
-        console.log("-- catch error get rate from server --")
-        this.getRateFromBlockchain()
-        .then((result) => {
-          resolve(result)
+          } else {
+            resolve(response.json())
+          }
         })
         .catch((err) => {
           rejected(err)
         })
+    })
+  }
+
+  tokenIsSupported(address) {
+    let tokens = BLOCKCHAIN_INFO.tokens
+    for (let token in tokens) {
+      if (tokens[token].address == address) {
+        return true
+      }
+    }
+    return false
+  }
+
+  getAllRatesUSDFromServer() {
+    return new Promise((resolve, rejected) => {
+      fetch(BLOCKCHAIN_INFO.history_endpoint + '/getRateUSD', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+      })
+        .then(function (response) {
+          if (response.status == 404) {
+            rejected(err)
+          } else {
+            resolve(response.json())
+          }
+        })
+        .catch((err) => {
+          rejected(err)
+        })
+    })
+  }
+
+  getAllRatesUSDFromThirdParty() {
+    //get from third party api
+    var promises = Object.keys(BLOCKCHAIN_INFO.tokens).map(key => {
+      var token = BLOCKCHAIN_INFO.tokens[key]
+      var url = BLOCKCHAIN_INFO.api_usd + '/v1/ticker/' + token.usd_id + "/"
+      return new Promise(resolve => {
+        axios.get(url)
+          .then(function (response) {
+            if (response.status === 200) {
+              return resolve({
+                symbol: key,
+                price_usd: response.data[0].price_usd
+              })
+            } else {
+              console.log(response)
+              return resolve({
+                symbol: key,
+                price_usd: 0
+              })
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+            return resolve({
+              symbol: key,
+              price_usd: 0
+            })
+          });
       })
     })
+    return Promise.all(promises)
   }
 
   getLanguagePack(lang) {
@@ -293,7 +364,7 @@ export default class BaseEthereumProvider {
     })
   }
 
-  getRateFromBlockchain(){
+  getAllRatesFromBlockchain(tokens, reserve) {
     var ratePromises = []
     var tokenObj = BLOCKCHAIN_INFO.tokens
     Object.keys(tokenObj).map((tokenName) => {

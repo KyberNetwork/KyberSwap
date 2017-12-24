@@ -44,10 +44,11 @@ export function randomForExchange(tokens){
   var result = new Array(2);
   var tokenWithBalance = {}
   var allTokenObj = {}
-  tokens.map((token) => {
+  Object.values(tokens).map((token) => {
     var tokenEpsilon = converter.caculateTokenEpsilon(token.rate, token.decimal, token.symbol)
     // let tokenEpsilon = new BigNumber(10).pow(token.decimal).times(token.rate).div(new BigNumber(10).pow(33))          // 10^decimal * rate / 10^33
-    if(token.balance && token.balance.greaterThanOrEqualTo(tokenEpsilon)){
+    var balance = new BigNumber(token.balance)
+    if(balance && balance.greaterThanOrEqualTo(tokenEpsilon)){
       // tokenWithBalance.push(token);
       
       tokenWithBalance[token.symbol] = token;

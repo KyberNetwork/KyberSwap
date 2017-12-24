@@ -6,7 +6,8 @@ import { toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEt
 
 import { PostExchangeWithKey } from "../Exchange"
 import { ExchangeForm, TransactionConfig } from "../../components/Transaction"
-import { SelectToken, TransactionLoading, Token } from "../CommonElements"
+
+import { TokenSelector, TransactionLoading, Token } from "../CommonElements"
 
 import { anyErrors } from "../../utils/validators"
 
@@ -27,13 +28,13 @@ import { getTranslate } from 'react-localize-redux';
 
 export default class Exchange extends React.Component {
 
-  openSourceToken = (e) => {
-    this.props.dispatch(openTokenModal("source", this.props.exchange.sourceTokenSymbol))
-  }
+  // openSourceToken = (e) => {
+  //   this.props.dispatch(openTokenModal("source", this.props.exchange.sourceTokenSymbol))
+  // }
 
-  openDesToken = (e) => {
-    this.props.dispatch(openTokenModal("des", this.props.exchange.destTokenSymbol))
-  }
+  // openDesToken = (e) => {
+  //   this.props.dispatch(openTokenModal("des", this.props.exchange.destTokenSymbol))
+  // }
 
   chooseToken = (symbol, address, type) => {
     this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
@@ -107,11 +108,16 @@ export default class Exchange extends React.Component {
       )
     }
 
+    var addressBalance = ""
     var balance = ""
     var nameSource = ""
     var token = this.props.tokens[this.props.exchange.sourceTokenSymbol]
     if (token) {
       balance = {
+        prevValue:toT(this.props.exchange.balanceData.prevSource, token.decimal),
+        nextValue:toT(this.props.exchange.balanceData.nextSource, token.decimal)
+      }
+      addressBalance = {
         value: toT(token.balance, token.decimal),
         roundingValue: roundingNumber(toT(token.balance, token.decimal))
       }
@@ -123,8 +129,10 @@ export default class Exchange extends React.Component {
     var tokenDest = this.props.tokens[this.props.exchange.destTokenSymbol]
     if (tokenDest) {
       balanceDest = {
-        value: toT(tokenDest.balance, tokenDest.decimal),
-        roundingValue: roundingNumber(toT(tokenDest.balance, tokenDest.decimal)),
+        prevValue:toT(this.props.exchange.balanceData.prevDest, token.decimal),
+        nextValue:toT(this.props.exchange.balanceData.nextDest, token.decimal),
+        // value: toT(tokenDest.balance, tokenDest.decimal),
+        // roundingValue: roundingNumber(toT(tokenDest.balance, tokenDest.decimal)),
       }
       nameDest = tokenDest.name
     }
@@ -138,18 +146,36 @@ export default class Exchange extends React.Component {
       destTokenName: nameDest
     }
 
-    var tokenSource = (
-      <Token type="source"
-        token={this.props.exchange.sourceTokenSymbol}
-        onSelected={this.openSourceToken}
-      />
+    //--------For select token
+    var tokenDest = {}
+    var isNotSupport = false
+    Object.keys(this.props.tokens).map((key, i) => {
+      isNotSupport = false
+      if (this.props.exchange.sourceTokenSymbol === key){
+        isNotSupport = true
+      }
+      if(this.props.exchange.sourceTokenSymbol !=="ETH" && key !== "ETH"){
+        isNotSupport = true
+      } 
+      tokenDest[key] = {...this.props.tokens[key], isNotSupport: isNotSupport}
+    })
+      
+    var tokenSourceSelect = (
+      <TokenSelector type="source"
+                      focusItem = {this.props.exchange.sourceTokenSymbol}
+                      listItem = {this.props.tokens}
+                      chooseToken = {this.chooseToken}
+                      />
     )
-    var tokenDest = (
-      <Token type="des"
-        token={this.props.exchange.destTokenSymbol}
-        onSelected={this.openDesToken}
-      />
+    var tokenDestSelect = (
+      <TokenSelector type="des"
+                      focusItem = {this.props.exchange.destTokenSymbol}
+                      listItem = {tokenDest}
+                      chooseToken = {this.chooseToken}
+                      />
     )
+    //--------End
+
 
     var errors = {
       selectSameToken: this.props.exchange.errors.selectSameToken || '',
@@ -173,9 +199,7 @@ export default class Exchange extends React.Component {
       }
     }
 
-    var selectTokenModal = (
-      <SelectToken chooseToken={this.chooseToken} type="exchange" />
-    )
+    
 
     var exchangeRate = {
       sourceToken: this.props.exchange.sourceTokenSymbol,
@@ -210,16 +234,17 @@ export default class Exchange extends React.Component {
 
     return (
       <ExchangeForm step={this.props.exchange.step}
-        tokenSource={tokenSource}
-        tokenDest={tokenDest}
-        selectTokenModal={selectTokenModal}
+      tokenSourceSelect={tokenSourceSelect}
+        tokenDestSelect={tokenDestSelect}
+
+        // selectTokenModal={selectTokenModal}
         exchangeRate={exchangeRate}
         gasConfig={gasConfig}
         exchangeButton={exchangeButton}
         transactionLoadingScreen={transactionLoadingScreen}
         errors={errors}
         input={input}
-        balance={balance}
+        balance={addressBalance}
         sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
         setAmount={this.setAmount}
         isSelectToken = {this.props.exchange.isSelectToken}

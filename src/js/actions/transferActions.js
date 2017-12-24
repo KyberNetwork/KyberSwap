@@ -1,177 +1,178 @@
 export function selectToken(symbol, address) {
-	return {
-		type: "TRANSFER.SELECT_TOKEN",
-		payload: { symbol, address }
-	}
+  return {
+    type: "TRANSFER.SELECT_TOKEN",
+    payload: { symbol, address }
+  }
 }
 
 export function errorSelectToken(message) {
-	return {
-		type: "TRANSFER.THOW_ERROR_SELECT_TOKEN",
-		payload: message
-	}
+  return {
+    type: "TRANSFER.THOW_ERROR_SELECT_TOKEN",
+    payload: message
+  }
 }
 
 export function goToStep(step) {
-	return {
-		type: "TRANSFER.GO_TO_STEP",
-		payload: step
-	}
+  return {
+    type: "TRANSFER.GO_TO_STEP",
+    payload: step
+  }
 }
 
 export function openPassphrase() {
-	return {
-		type: "TRANSFER.OPEN_PASSPHRASE",
-	}
+  return {
+    type: "TRANSFER.OPEN_PASSPHRASE",
+  }
 }
 
 export function specifyGas(value) {
-	return {
-		type: "TRANSFER_SPECIFY_GAS",
-		payload: value
-	}
+  return {
+    type: "TRANSFER_SPECIFY_GAS",
+    payload: value
+  }
 }
 
-export function setRandomTransferSelectedToken(random){
-	return {
-		type: "TRANSFER.SET_RANDOM_SELECTED_TOKEN",
-		payload: random
-	}
+export function setRandomTransferSelectedToken(random) {
+  return {
+    type: "TRANSFER.SET_RANDOM_SELECTED_TOKEN",
+    payload: random
+  }
 }
 
 export function specifyGasPrice(value) {
-	return {
-		type: "TRANSFER_SPECIFY_GAS_PRICE",
-		payload: value
-	}
+  return {
+    type: "TRANSFER_SPECIFY_GAS_PRICE",
+    payload: value
+  }
 }
 
 export function showAdvance() {
-	return {
-		type: "TRANSFER.SHOW_ADVANCE",
-	}
+  return {
+    type: "TRANSFER.SHOW_ADVANCE",
+  }
 }
 
 export function hideAdvance() {
-	return {
-		type: "TRANSFER.HIDE_ADVANCE",
-	}
+  return {
+    type: "TRANSFER.HIDE_ADVANCE",
+  }
 }
 
 export function hideConfirm() {
-	return {
-		type: "TRANSFER.HIDE_CONFIRM",
-	}
+  return {
+    type: "TRANSFER.HIDE_CONFIRM",
+  }
 }
 
 export function showConfirm() {
-	return {
-		type: "TRANSFER.SHOW_CONFIRM",
+  return {
+    type: "TRANSFER.SHOW_CONFIRM",
 
-	}
+  }
 }
 
 export function specifyAddressReceive(value) {
-	return {
-		type: "TRANSFER.TRANSFER_SPECIFY_ADDRESS_RECEIVE",
-		payload: value.trim()
-	}
+  return {
+    type: "TRANSFER.TRANSFER_SPECIFY_ADDRESS_RECEIVE",
+    payload: value.trim()
+  }
 }
 
 export function specifyAmountTransfer(value) {
-	return {
-		type: "TRANSFER.TRANSFER_SPECIFY_AMOUNT",
-		payload: value
-	}
+  return {
+    type: "TRANSFER.TRANSFER_SPECIFY_AMOUNT",
+    payload: value
+  }
 }
 
 export function throwErrorDestAddress(message) {
-	return {
-		type: "TRANSFER.THROW_ERROR_DEST_ADDRESS",
-		payload: message
-	}
+  return {
+    type: "TRANSFER.THROW_ERROR_DEST_ADDRESS",
+    payload: message
+  }
 }
 
 
 export function thowErrorAmount(message) {
-	return {
-		type: "TRANSFER.THROW_AMOUNT_ERROR",
-		payload: message
-	}
+  return {
+    type: "TRANSFER.THROW_AMOUNT_ERROR",
+    payload: message
+  }
 }
 
-export function thowErrorGasPrice(message){
-	return {
-		type: "TRANSFER.THROW_GAS_PRICE_ERROR",
-		payload: message
-	}
+export function thowErrorGasPrice(message) {
+  return {
+    type: "TRANSFER.THROW_GAS_PRICE_ERROR",
+    payload: message
+  }
 }
 
 export function hidePassphrase() {
-	return {
-		type: "TRANSFER.HIDE_PASSPHRASE",
-	}
+  return {
+    type: "TRANSFER.HIDE_PASSPHRASE",
+  }
 }
 
 export function changePassword() {
-	return {
-		type: "TRANSFER.CHANGE_PASSPHRASE",
-	}
+  return {
+    type: "TRANSFER.CHANGE_PASSPHRASE",
+  }
 }
 
-export function prePareBroadcast(){
-	return {
-		type: "TRANSFER.PREPARE_TRANSACTION"
-	}
+export function prePareBroadcast(balanceData) {
+  return {
+    type: "TRANSFER.PREPARE_TRANSACTION",
+    payload: {balanceData: balanceData}
+  }
 }
 
 export function finishTransfer() {
-	return {
-		type: "TRANSFER.FINISH_TRANSACTION"
-	}
+  return {
+    type: "TRANSFER.FINISH_TRANSACTION"
+  }
 }
 
 export function throwPassphraseError(message) {
-	return {
-		type: "TRANSFER.THROW_ERROR_PASSPHRASE",
-		payload: message
-	}
+  return {
+    type: "TRANSFER.THROW_ERROR_PASSPHRASE",
+    payload: message
+  }
 }
 
 export function processTransfer(formId, ethereum, address,
-	token, amount,
-	destAddress, nonce, gas,
-	gasPrice, keystring, type, password, account, data, keyService) {
-	return {
-		type: "TRANSFER.PROCESS_TRANSFER",
-		payload: {
-			formId, ethereum, address,
-			token, amount,
-			destAddress, nonce, gas,
-			gasPrice, keystring, type, password, account, data, keyService
-		}
-	}
+  token, amount,
+  destAddress, nonce, gas,
+  gasPrice, keystring, type, password, account, data, keyService, balanceData) {
+  return {
+    type: "TRANSFER.PROCESS_TRANSFER",
+    payload: {
+      formId, ethereum, address,
+      token, amount,
+      destAddress, nonce, gas,
+      gasPrice, keystring, type, password, account, data, keyService, balanceData
+    }
+  }
 }
 
 export function doTransaction(id, ethereum, tx, account, data) {
-	return {
-		type: "TRANSFER.TX_BROADCAST_PENDING",
-		payload: { ethereum, tx, account, data },
-	}
+  return {
+    type: "TRANSFER.TX_BROADCAST_PENDING",
+    payload: { ethereum, tx, account, data },
+  }
 }
 
 export function doTransactionComplete(txHash) {
-	return {
-		type: "TRANSFER.TX_BROADCAST_FULFILLED",
-		payload: txHash,
-	}
+  return {
+    type: "TRANSFER.TX_BROADCAST_FULFILLED",
+    payload: txHash,
+  }
 }
 
 export function doTransactionFail(error) {
-	return {
-		type: "TRANSFER.TX_BROADCAST_REJECTED",
-		payload: error,
-	}
+  return {
+    type: "TRANSFER.TX_BROADCAST_REJECTED",
+    payload: error,
+  }
 }
 
 // export function doApprovalTransaction(id, ethereum, tx, callback) {
@@ -206,14 +207,22 @@ export function doTransactionFail(error) {
 // }
 
 export function throwErrorSignTransferTransaction(error) {
-	return {
-		type: "TRANSFER.THROW_ERROR_SIGN_TRANSACTION",
-		payload: error
-	}
+  return {
+    type: "TRANSFER.THROW_ERROR_SIGN_TRANSACTION",
+    payload: error
+  }
 }
 
 export function makeNewTransfer() {
-	return {
-		type: "TRANSFER.MAKE_NEW_TRANSFER"
-	}
+  return {
+    type: "TRANSFER.MAKE_NEW_TRANSFER"
+  }
+}
+
+
+export function updateCurrentBalance(tokenBalance) {
+  return {
+    type: "TRANSFER.UPDATE_CURRENT_BALANCE",
+    payload: { tokenBalance }
+  }
 }

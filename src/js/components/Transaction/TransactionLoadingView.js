@@ -1,4 +1,5 @@
 import React from "react"
+import { roundingNumber} from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
 
 const TransactionLoadingView = (props) => {
@@ -73,11 +74,15 @@ const TransactionLoadingView = (props) => {
                         <ul class="address-balances">
                           <li>
                             <span class="name">{props.balanceInfo.sourceTokenName}</span>
-                            <span class="balance" title={props.balanceInfo.sourceAmount.value}>{props.balanceInfo.sourceAmount.roundingValue} {props.balanceInfo.sourceTokenSymbol}</span>
+                            <span class="balance" title={props.balanceInfo.sourceAmount.prevValue}>{roundingNumber(props.balanceInfo.sourceAmount.prevValue)}</span>
+                            <span>-></span>
+                            <span class="balance" title={props.balanceInfo.sourceAmount.nextValue}>{roundingNumber(props.balanceInfo.sourceAmount.nextValue)}</span>
                           </li>
                           <li>
                             <span class="name">{props.balanceInfo.destTokenName}</span>
-                            <span class="balance" title={props.balanceInfo.destAmount.value}>{props.balanceInfo.destAmount.roundingValue} {props.balanceInfo.destTokenSymbol}</span>
+                            <span class="balance" title={props.balanceInfo.destAmount.prevValue}>{roundingNumber(props.balanceInfo.destAmount.prevValue)}</span>
+                            <span>-></span>
+                            <span class="balance" title={props.balanceInfo.destAmount.nextValue}>{roundingNumber(props.balanceInfo.destAmount.nextValue)}</span>
                           </li>
                         </ul>
                       }
@@ -85,7 +90,9 @@ const TransactionLoadingView = (props) => {
                         <ul class="address-balances">
                           <li>
                             <span class="name">{props.balanceInfo.tokenName}</span>
-                            <span class="balance" title={props.balanceInfo.amount.value}>{props.balanceInfo.amount.roundingValue} {props.balanceInfo.tokenSymbol}</span>
+                            <span class="balance" title={props.balanceInfo.amount.prev}>{roundingNumber(props.balanceInfo.amount.prev)}</span>
+                            <span>-></span>
+                            <span class="balance" title={props.balanceInfo.amount.next}>{roundingNumber(props.balanceInfo.amount.next)}</span>
                           </li>
                         </ul>
                       }

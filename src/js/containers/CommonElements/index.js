@@ -6,3 +6,5 @@ export { default as Processing } from './Processing.js'
 export {default as InfoModal } from './InfoModal.js'
 export {default as ExchangeHistory } from './ExchangeHistory.js'
 export {default as TransactionList } from './TransactionList.js'
+
+export {default as TokenSelector } from './TokenSelector.js'

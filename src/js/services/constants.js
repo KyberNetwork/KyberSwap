@@ -53,6 +53,12 @@ const INIT_EXCHANGE_FORM_STATE = {
   isConfirming: false,
   isApproving: false,
   confirmColdWallet: false,
+  balanceData:{
+    prevSource : 0,
+    nextSource: 0,
+    prevDest: 0,
+    nextDest: 0
+  },
   errors: {
     selectSameToken: '',
     selectTokenToken: '',
@@ -83,6 +89,10 @@ const INIT_TRANSFER_FORM_STATE = {
   tempTx: {},
   isConfirming: false,
   confirmColdWallet: false,
+  balanceData:{
+    prev : 0,
+    next: 0
+  },
   errors: {
     gasPrice: '',
     destAddress: '',
@@ -121,7 +131,7 @@ const CONNECTION_CHECKER = {
   isCheck: true
 }
 
-const STORAGE_KEY = "16"
+const STORAGE_KEY = "17"
 
 module.exports = {
   ERC20, KYBER_NETWORK, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,
