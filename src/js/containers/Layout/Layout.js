@@ -9,7 +9,7 @@ import { Exchange } from "../../containers/Exchange"
 
 import { Transfer } from "../../containers/Transfer"
 
-import { Header } from "../../containers/Header"
+import { Header, Rate } from "../../containers/Header"
 
 import { ImportAccount } from "../ImportAccount"
 
@@ -90,9 +90,9 @@ export default class Layout extends React.Component {
   }
 
   render() {
-    //var exchangeHistory = <ExchangeHistory />
     var exchangeHistory = <TransactionList />
     var footer = <Footer />
+    var rate = <Rate />
     return (
       <LayoutView
         history={history}
@@ -101,10 +101,11 @@ export default class Layout extends React.Component {
         InfoKyber={InfoKyber}
         Exchange={Exchange}
         Transfer={Transfer}
-        exchangeHistory = {exchangeHistory}
-        supportedLanguages = {Language.supportLanguage}
+        exchangeHistory={exchangeHistory}
+        supportedLanguages={Language.supportLanguage}
         setActiveLanguage={this.setActiveLanguage}
-        footer = {footer}
+        footer={footer}
+        rate={rate}
       />
     )
   }
