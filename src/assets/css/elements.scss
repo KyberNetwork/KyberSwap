@@ -5,12 +5,8 @@ input {
     padding: 10px 15px 10px 15px;
     min-height: 40px;
     height: 40px;
-    box-shadow: 0 10px 40px 0 rgba($light-gray, .5);
     font-size: 13px;
-    border-radius: 1000px;
-    &:focus {
-      box-shadow: 0 10px 40px 0 rgba($light-gray, .5);
-    }
+    border-radius: 0;
   }
   &[type=number], &.address, &.hash {
     font-weight: bold;
@@ -105,7 +101,6 @@ span.error-text {
     position: relative;
     margin-bottom: 50px;
     white-space: nowrap;
-    box-shadow: 0 10px 40px 0 rgba($primary-color, .4);
     &.waiting {
       color: rgba(white, .5);
       pointer-events: none;
@@ -160,46 +155,19 @@ a.has-tip {
     border-bottom-color: $dark-gray;
   }
 }
-$bg-from: #e9f6ec 30%;
-$bg-to: #def3ee 90%;
-$bg-end: #e4f6ef;
-.frame {
-  background: $bg-from;
-  background: -webkit-linear-gradient(left, $bg-from , $bg-to, $bg-end);
-  background: -o-linear-gradient(left, $bg-from , $bg-to, $bg-end);
-  background: -moz-linear-gradient(left, $bg-from , $bg-to, $bg-end);
-  background: linear-gradient(left, $bg-from , $bg-to, $bg-end);
-  padding: 30px 0;
-  margin-bottom: 30px;
+h1.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 20px 0;
+  letter-spacing: .5px;
   @include breakpoint(medium) {
-    margin-bottom: 35px;
+    margin: 10px 0 25px 0;
   }
-  h1.title {
-    font-size: 20px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: $dark-gray;
-    margin: 0 0 20px 0;
-    letter-spacing: .5px;
-    @include breakpoint(medium) {
-      margin: 10px 0 25px 0;
-    }
-    .info {
-      font-size: 14px;
-      text-transform: none;
-      font-weight: normal;
-      margin-top: 10px;
-      line-height: 1.75;
-      strong {
-        margin-right: 10px;
-      }
-      a.hash {
-        font-weight: bold;
-        font-family: $font-family-monospace;
-        cursor: pointer;
-      }
-    }
-  }
+}
+.frame {
+  padding: 30px 0;
+  background-color: $bg-primary;
+  color: $white;
   .info {
     margin: 0;
     label {
@@ -228,14 +196,21 @@ p.note {
 .importer {
   background-position: center;
   background-repeat: no-repeat;
-  background-color: $light-gray;
   background-size: cover;
   height: 0;
   padding-top: 100%;
   position: relative;
+  @include breakpoint(large){
+    height: 240px;
+    padding-top: 0;
+    img {
+      margin-top: 20px;
+    }
+  }
+  border-radius: 4px;
   border-radius: $global-radius;
   overflow: hidden;
-  box-shadow: 0 10px 40px 0 rgba($light-gray, .5);
+  box-shadow: 0px 1px 13px $bg-divider;
   &.json {
     background-image: url(../img/json.jpg)
   }
@@ -261,20 +236,17 @@ p.note {
     background-color: rgba($dark-gray, .7);
     text-align: center;
     &:hover {
-      background: linear-gradient(135deg, rgba(#2A9A8D, .9), rgba(#5F7921, .9));
+      background: linear-gradient(135deg, rgba(#4ca294, .9), rgba(#3b8a8a, .9));
     }
   }
   img {
     width: 100%;
   }
   .description {
-    margin-top: 8px;
+    margin-top: 20px;
     padding: 0 15px;
-    color: $light-gray;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
+    color: $white;
+    font-size: 15px;
     line-height: 1.6;
   }
 }

@@ -34,7 +34,6 @@ const ImportByDeviceView = (props) => {
                 <li key={address.addressString}>
                     <a class="name">
                         <label for={'address-' + address.addressString} style={{ marginBottom: 0, cursor: 'pointer', textTransform: 'lowercase' }}>
-                            <img src={address.avatar} />
                             <span class="hash">{address.addressString}</span>
                         </label>
                         <input type="radio" id={'address-' + address.addressString}
@@ -83,17 +82,17 @@ const ImportByDeviceView = (props) => {
                                     <div class="note">{dPath.desc}</div>
                                 </div>
                             ) : (
-                                    <div>
-                                        <div class="name">{dPath.desc}</div>
-                                        <div class="address-path-input">
-                                            <input type="text" name="customPath" defaultValue={dPath.defaultP} />
-                                            <a class="submit pulse animated infinite"
-                                                style={{ display: 'block' }}
-                                                onClick={() => choosePath(dPath.path)}
-                                            ></a>
-                                        </div>
+                                <div>
+                                    <div class="name">{dPath.desc}</div>
+                                    <div class="address-path-input">
+                                        <input type="text" name="customPath" defaultValue={dPath.defaultP} />
+                                        <a class="submit"
+                                            style={{ display: 'block' }}
+                                            onClick={() => choosePath(dPath.path)}
+                                        ></a>
                                     </div>
-                                )
+                                </div>
+                            )
                         }
                     </label>
                 </div>
@@ -108,6 +107,9 @@ const ImportByDeviceView = (props) => {
                 <div class="content">
                     <div class="row">
                         <div class="column">
+                            <div class="block-title">
+                                {props.translate("modal.select_hd_path") || "Select HD derivation path"}
+                            </div>
                             <form id="formPath" onSubmit={(e) => e.preventDefault()}>
                                 <div class="row small-up-2 medium-up-3 large-up-3 address-paths gutter-15">
                                     {getListPathHtml()}
@@ -145,6 +147,7 @@ const ImportByDeviceView = (props) => {
             onRequestClose={props.onRequestClose}
             content={getSelectAddressHtml()}
             translate={props.translate}
+            walletType={props.walletType}
         />
 
     ])
