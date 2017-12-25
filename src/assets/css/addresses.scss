@@ -35,10 +35,10 @@ ul.address-list {
     transition: background-color 0.1s ease-in-out;
     @include clearfix;
     &:not(:last-child) {
-      border-bottom: 1px solid $bg-divider-light;
+      border-bottom: 1px solid $k-divider-light;
     }
     &:hover {
-      background-color: $bg-primary-darker;
+      background-color: $k-primary-darker;
     }
     label{
       color: $white-light;
@@ -186,7 +186,7 @@ ul.address-list {
 
 label.address-path-stamp {
   display: block;
-  background-color: $bg-primary-lighter;
+  background-color: $k-primary-lighter;
   padding: 12px 15px;
   margin: 0 0 15px 0;
   min-height: 93px;
@@ -203,7 +203,7 @@ label.address-path-stamp {
     color: $white-light;
   }
   &.active{
-    background: $bg-success-gradient;
+    background: $k-success-gradient;
     .address-path-input{
       input[type=text] {
         background-color: rgba(35, 102, 102, 0.88);
