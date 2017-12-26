@@ -34,9 +34,9 @@ const ExchangeForm = (props) => {
               <div class="row">
                 <div class="column medium-5">
                   <label>
-                    <div className="exchange-label">
+                    <span className="transaction-label">
                       {props.translate("transaction.exchange_from") || "From"}
-                    </div>
+                    </span>
 
                     <div className={errorToken !== "" || props.errors.sourceAmount != '' ? "error select-token-panel" : "select-token-panel"}>
                       {props.tokenSourceSelect}
@@ -66,9 +66,9 @@ const ExchangeForm = (props) => {
 
                 <div class="column medium-5">
                   <label>
-                    <div className="exchange-label">
+                    <span className="transaction-label">
                       {props.translate("transaction.exchange_to") || "To"}
-                    </div>
+                    </span>
                     <div className="select-token-panel">
                       {props.tokenDestSelect}
                       <input type={props.input.destAmount.type} className="des-input" value={props.input.destAmount.value} onFocus={props.input.destAmount.onFocus} onChange={props.input.destAmount.onChange} min="0" step="0.000001" placeholder="0" />
@@ -76,17 +76,6 @@ const ExchangeForm = (props) => {
                   </label>
                 </div>
               </div>
-
-             
-
-                {/* <div class="row hide-on-choose-token-pair">
-                  <div class="column">
-                    <div class="advanced-content" disabled>
-                      {props.gasConfig}
-                    </div>
-                  </div>
-                </div> */}
-
             </form>
           </div>
         </div>

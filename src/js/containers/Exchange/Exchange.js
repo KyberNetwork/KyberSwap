@@ -242,7 +242,7 @@ export default class Exchange extends React.Component {
 
     return (
       <ExchangeForm step={this.props.exchange.step}
-      tokenSourceSelect={tokenSourceSelect}
+        tokenSourceSelect={tokenSourceSelect}
         tokenDestSelect={tokenDestSelect}
 
         // selectTokenModal={selectTokenModal}

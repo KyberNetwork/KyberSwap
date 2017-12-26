@@ -7,7 +7,9 @@ import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
 
 import * as transferActions from "../../actions/transferActions"
+import * as utilActions from "../../actions/utilActions"
 
+import {TermAndServices} from "../../containers/CommonElements"
 import { PassphraseModal, ConfirmTransferModal, PostTransferBtn } from "../../components/Transaction"
 
 import { Modal } from "../../components/CommonElement"
@@ -37,6 +39,12 @@ import { getTranslate } from 'react-localize-redux';
 export default class PostTransfer extends React.Component {
   clickTransfer = () => {
     if (this.validateTransfer()) {
+
+      //agree terms and services
+      if(!this.props.form.termAgree){
+        return this.props.dispatch(utilActions.openInfoModal("Agree terms and services","You must agree terms and services!"))
+      }
+      
       //check account type
       switch (this.props.account.type) {
         case "keystore":
@@ -139,6 +147,11 @@ export default class PostTransfer extends React.Component {
   changePassword = () => {
     this.props.dispatch(transferActions.changePassword())
   }
+
+  clickCheckbox = (value) => {
+    this.props.dispatch(transferActions.setTermAndServices(value))
+  }
+
   formParams = () => {
     var selectedAccount = this.props.account.address
     var token = this.props.form.token
@@ -202,9 +215,13 @@ export default class PostTransfer extends React.Component {
         size="tiny"
       />
     let className = "button accent "
-    if (!validators.anyErrors(this.props.form.errors)) {
+    if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree) {
       className += " animated infinite pulse next"
     }
+
+    var termAndServices = (<TermAndServices clickCheckbox = {this.clickCheckbox}
+      termAgree = {this.props.form.termAgree}/>)
+
     return (
       <PostTransferBtn 
         className={className}
@@ -213,6 +230,8 @@ export default class PostTransfer extends React.Component {
         accountType = {this.props.account.type}
         isConfirming={this.props.form.isConfirming}
         translate={this.props.translate}
+        step = {this.props.transfer.step}
+        termAndServices = {termAndServices}
       />
     )
   }

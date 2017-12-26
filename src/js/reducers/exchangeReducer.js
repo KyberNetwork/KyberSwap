@@ -243,6 +243,10 @@ const exchange = (state = initState, action) => {
       newState.balanceData.nextDest = action.payload.destBalance
       return newState
     }
+    case "EXCHANGE.SET_TERM_AND_SERVICES":{
+      newState.termAgree = action.payload.value
+      return newState
+    }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
       newState.gasPrice = action.payload
       return newState

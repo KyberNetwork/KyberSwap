@@ -7,12 +7,9 @@ const PostExchangeBtn = (props) => {
     <div className="frame">
       {props.step == 2 ?
         <div class="row">
-          <div className="exchange-footer">
+          <div className="transaction-footer">
             <div className="column small-11 medium-4 large-4">
-              <label className="term-services">
-                <input type="checkbox" />
-                <span>Terms and <br></br> Conditions</span>
-              </label>
+              {props.termAndServices}
             </div>
             <div class="column small-11 medium-4 large-4 text-center">
               {/* {props.accountType === "keystore" && <p class="note">{props.translate("transaction.password_needed_exchange") || "Password is needed for each exchange transaction"}</p>}                     */}
