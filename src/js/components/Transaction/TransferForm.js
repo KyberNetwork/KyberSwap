@@ -13,19 +13,44 @@ const TransferForm = (props) => {
             </h1>
             <form action="#" method="get">
               <div class="row">
-                <div class="column">
+                <div class="column small-11 medium-7 large-7">
 
-                  <label className={props.errors.destAddress !== '' ? "error" : "" }>{props.translate("transaction.transfer_to_address") || "Transfer to address"}
-                    <input className="text-center hash" type="text" placeholder="Address Hash" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange} />
-                    {props.errors.destAddress  &&
+                  <label className={props.errors.destAddress !== '' ? "error" : ""}>
+                    <span className="transaction-label">Address</span>
+                    <textarea className="hash" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange}>
+                    </textarea>
+                    {props.errors.destAddress &&
                       <span class="error-text">{props.translate(props.errors.destAddress)}</span>
                     }
                   </label>
                 </div>
+
+                <div class="column small-11 medium-5 large-5">
+                  <label>
+                    <span className="transaction-label">
+                      Token/Amount
+                    </span>
+
+                    <div className={props.errors.amountTransfer !== '' ? "error select-token-panel" : "select-token-panel"}>
+                      {props.tokenTransferSelect}
+                      <input type="number" min="0" step="0.000001" placeholder="0" value={props.input.amount.value} className="amount-input" onChange={props.input.amount.onChange} />
+                    </div>
+                    {props.errors.amountTransfer &&
+                      <span class="error-text">{props.translate(props.errors.amountTransfer)}</span>
+                    }
+                  </label>
+                  <div class="address-balance clearfix">
+                    <span class="note">{props.translate("transaction.address_balance") || "Address Balance"}</span>
+                    <a className="value" onClick={props.setAmount} title={props.balance.value}>
+                      {props.balance.roundingValue} {props.tokenSymbol}
+                    </a>
+                  </div>
+                </div>
               </div>
-              <div class="row">
+
+
+              {/* <div class="row">
                 <div class="column medium-6">
-                  {/* {props.token} */}
                   {props.tokenTransferSelect}
                 </div>
                 <div class="column medium-6">
@@ -43,9 +68,8 @@ const TransferForm = (props) => {
                       </a>
                     </div>
                   </label>
-                  {/* <span class="error-text">{props.errors.amountTransfer}</span> */}
                 </div>
-              </div>
+              </div> */}
             </form>
           </div>
         </div>

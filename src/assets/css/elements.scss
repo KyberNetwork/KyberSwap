@@ -1,3 +1,19 @@
+
+textarea{
+  &.hash {
+    font-size: 15px;
+    letter-spacing: 1.25px;
+    background-color: #415b68;
+    height: 87px;
+    color: white;
+    font-weight: bold;
+  }
+}
+
+.transaction-label{
+  font-weight: bold;
+}
+
 input {
   &[type=password],
   &[type=number],
@@ -11,10 +27,6 @@ input {
   &[type=number], &.address, &.hash {
     font-weight: bold;
     font-family: $font-family-monospace;
-  }
-  &.hash {
-    font-size: 14px;
-    letter-spacing: 1.25px;
   }
   &::-webkit-input-placeholder {
     color: #ddd;
@@ -181,12 +193,13 @@ h1.title {
     margin: 10px 0 25px 0;
   }
   a{
-    color: white;
+    color: #91a1a7;
+    
     &:first-child{
       margin-right: 15px;
     }
     &.disable{
-      color: #91a1a7;
+      color: white;  
       cursor: initial;
       pointer-events: none;
     }
