@@ -7,7 +7,7 @@ const HeaderView = (props) => {
   return (
     <div>
       <section id="header">
-        <div class="row">
+        <div class="row px-4">
           <div class="column">
             <div class="float-left">
               <Link to={logoLink} className="logo">

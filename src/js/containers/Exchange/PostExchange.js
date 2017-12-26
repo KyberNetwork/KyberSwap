@@ -8,10 +8,11 @@ import * as exchangeActions from "../../actions/exchangeActions"
 import * as utilActions from "../../actions/utilActions"
 
 import { Modal } from "../../components/CommonElement"
-import {TermAndServices} from "../../containers/CommonElements"
+import { TermAndServices } from "../../containers/CommonElements"
 
 import { PassphraseModal, ConfirmTransferModal, ApproveModal, PostExchangeBtn } from "../../components/Transaction"
 import { getTranslate } from 'react-localize-redux';
+import { RateBetweenToken } from "../Exchange"
 
 @connect((store, props) => {
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
@@ -37,6 +38,7 @@ import { getTranslate } from 'react-localize-redux';
     ethereum: store.connection.ethereum,
     keyService: props.keyService,
     translate: getTranslate(store.locale),
+    exchange: store.exchange,
   }
 })
 
@@ -50,8 +52,8 @@ export default class PostExchange extends React.Component {
     } else if (this.props.form.step == 2) {
       if (this.validateExchange()) {
         //agree terms and services
-        if(!this.props.form.termAgree){
-          return this.props.dispatch(utilActions.openInfoModal("Agree terms and services","You must agree terms and services!"))
+        if (!this.props.form.termAgree) {
+          return this.props.dispatch(utilActions.openInfoModal("Agree terms and services", "You must agree terms and services!"))
         }
         //check account type
         switch (this.props.account.type) {
@@ -167,8 +169,10 @@ export default class PostExchange extends React.Component {
     var gas = converters.numberToHex(this.props.form.gas)
     // should have better strategy to determine gas price
     var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.form.gasPrice))
-    var balanceData = {source: this.props.form.sourceBalance.toString(), 
-        dest: this.props.form.destBalance.toString()}
+    var balanceData = {
+      source: this.props.form.sourceBalance.toString(),
+      dest: this.props.form.destBalance.toString()
+    }
     return {
       selectedAccount, sourceToken, sourceAmount, destToken,
       minConversionRate, destAddress, maxDestAmount,
@@ -231,7 +235,7 @@ export default class PostExchange extends React.Component {
         onChange={this.changePassword}
         onClick={this.processTx}
         onCancel={this.closeModal}
-        passwordError={this.props.form.errors.passwordError || this.props.form.bcError.message} 
+        passwordError={this.props.form.errors.passwordError || this.props.form.bcError.message}
         translate={this.props.translate}
       />
     )
@@ -253,11 +257,12 @@ export default class PostExchange extends React.Component {
       <ApproveModal recap="Please approve"
         onCancel={this.closeModalApprove}
         isApproving={this.props.form.isApproving}
-        onSubmit={this.processExchangeAfterApprove} 
+        onSubmit={this.processExchangeAfterApprove}
         translate={this.props.translate}
-        />
+      />
     )
   }
+
 
   render() {
     var modalPassphrase = ""
@@ -304,9 +309,25 @@ export default class PostExchange extends React.Component {
     if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree) {
       className += " animated infinite pulse next"
     }
+    var termAndServices = (
+      <TermAndServices 
+        clickCheckbox={this.clickCheckbox}
+        termAgree={this.props.form.termAgree} 
+      />
+    )
+    var exchangeRate = {
+      sourceToken: this.props.exchange.sourceTokenSymbol,
+      rate: converters.toT(this.props.exchange.offeredRate),
+      destToken: this.props.exchange.destTokenSymbol,
+      percent: "-"
+    }
 
-    var termAndServices = (<TermAndServices clickCheckbox = {this.clickCheckbox}
-                                            termAgree = {this.props.form.termAgree}/>)
+    var rateToken = (
+      <RateBetweenToken
+        isSelectToken={this.props.exchange.isSelectToken}
+        exchangeRate={exchangeRate}
+      />
+    )
     return (
       <PostExchangeBtn
         step={this.props.form.step}
@@ -319,7 +340,8 @@ export default class PostExchange extends React.Component {
         isConfirming={this.props.form.isConfirming}
         isApproving={this.props.form.isApproving}
         translate={this.props.translate}
-        termAndServices = {termAndServices}
+        termAndServices={termAndServices}
+        rateToken={rateToken}
       />
     )
   }

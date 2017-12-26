@@ -4,9 +4,10 @@ textarea{
     font-size: 15px;
     letter-spacing: 1.25px;
     background-color: #415b68;
-    height: 100px;
-    color: white;
+    height: 97px;
+    color: $white;
     font-weight: bold;
+    resize: none;
   }
 }
 
@@ -63,7 +64,6 @@ label {
   .select-token-panel{
     background-color: #415b68;
     cursor: pointer;
-    margin-top: 4px;
     input{
       height: auto;
       padding: 10px!important;
@@ -328,8 +328,24 @@ span.help {
 
 
 .transaction-footer{
-  display: flex;
-  align-items: center;
+  position: relative;
+  margin-top: 80px;
+  .term, .adv-btn{
+    position: absolute;
+    top: -45px;
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+  .adv-btn{
+    right: 0.9375rem;
+  }
+  @include breakpoint(medium){
+    margin-top: 0;
+    .term, .adv-btn{
+      top: 50%;
+    }
+  }
   label{
     margin-bottom: 0px;
     display: flex;
@@ -364,7 +380,6 @@ span.help {
   &.accent {
     .switch-paddle {
       background: white;
-      box-shadow: 0 10px 40px 0 rgba($light-gray, .5);
       border-radius: 1000px;
       transition: background .3s ease-in-out;
       width: 57px;
@@ -381,7 +396,7 @@ span.help {
       }
     }
     .switch-input:checked + .switch-paddle {
-      background: $accent-gradient;
+      background: $k-success;
       &:after {
         left: 30px;
       }
@@ -390,7 +405,6 @@ span.help {
 }
 
 .advanced-switch {
-  margin: 10px 0 25px 0;
   user-select: none;
   display: flex;
   .switch-caption{

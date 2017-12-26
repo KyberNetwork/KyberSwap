@@ -55,6 +55,7 @@
       border-bottom: 1px solid #4c636f;
     }
     .select-item{
+      display: block;
       border: 2px solid #fefefe;
       border-top: none;
     }
@@ -87,6 +88,7 @@
   &.close{
     .select-item{
       height: 0px;
+      display: none;
       overflow: hidden;
       padding: 0;
     }

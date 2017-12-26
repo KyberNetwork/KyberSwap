@@ -5,15 +5,15 @@ const TransferForm = (props) => {
   var render = (
     <div id="transfer-screen">
       <div class="frame">
-        <div class="row">
-          <div>
+        <div class="row px-4">
+          <div class="column">
             <h1 class="title">
               <Link to="/exchange">{props.translate("transaction.exchange") || "Exchange"}</Link>
               <Link to="/transfer" className="disable">{props.translate("transaction.transfer") || "Transfer"}</Link>
             </h1>
             <form action="#" method="get">
               <div class="row">
-                <div class="column small-11 medium-7 large-7">
+                <div class="column small-12 medium-7">
 
                   <label className={props.errors.destAddress !== '' ? "error" : ""}>
                     <span className="transaction-label">Address</span>
@@ -25,7 +25,7 @@ const TransferForm = (props) => {
                   </label>
                 </div>
 
-                <div class="column small-11 medium-5 large-5">
+                <div class="column small-12 medium-5">
                   <label>
                     <span className="transaction-label">
                       Token/Amount

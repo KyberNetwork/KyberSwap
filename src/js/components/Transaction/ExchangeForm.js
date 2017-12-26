@@ -24,7 +24,7 @@ const ExchangeForm = (props) => {
   var render = (
     <div>
       <div class="frame">
-        <div class="row">
+        <div class="row px-4">
           <div class="column">
             <h1 class="title">
               <Link to="/exchange" className="disable">{props.translate("transaction.exchange") || "Exchange"}</Link>
@@ -79,7 +79,6 @@ const ExchangeForm = (props) => {
         </div>
       </div>
       {props.gasConfig}
-      {props.rateToken}
       {props.exchangeButton}
       {/* {props.selectTokenModal} */}
     </div>

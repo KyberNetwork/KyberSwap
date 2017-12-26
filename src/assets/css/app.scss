@@ -156,7 +156,7 @@ $accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
       font-size: 0;
       text-align: left;
       top: 53px;
-      z-index: 2;
+      z-index: 5;
       width: 330px;
       left: auto;
       &:before {
@@ -345,7 +345,7 @@ $accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
         position: absolute;
         background-color: #fff;
         padding: 7px 22px;
-        right: 15px;
+        right: 30px;
         border-radius: 2px;
         cursor: pointer;
       }
@@ -415,7 +415,7 @@ $accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
     margin-bottom: 8px;
   }
   .token-compare {
-    margin-bottom: 0;
+    margin-bottom: 10px;
   }
   .show-on-choose-token-pair {
     display: none;

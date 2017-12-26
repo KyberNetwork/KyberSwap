@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 
 import { toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber, stringToBigNumber } from "../../utils/converter"
 
-import { PostExchangeWithKey, RateBetweenToken } from "../Exchange"
+import { PostExchangeWithKey } from "../Exchange"
 import { ExchangeForm, TransactionConfig } from "../../components/Transaction"
 
 import { TokenSelector, TransactionLoading, Token } from "../CommonElements"
@@ -198,20 +198,6 @@ export default class Exchange extends React.Component {
         onFocus: this.focusDest
       }
     }
-
-    
-
-    var exchangeRate = {
-      sourceToken: this.props.exchange.sourceTokenSymbol,
-      rate: toT(this.props.exchange.offeredRate),
-      destToken: this.props.exchange.destTokenSymbol,
-      percent: "-"
-    }
-
-    var rateToken = (
-      <RateBetweenToken isSelectToken = {this.props.exchange.isSelectToken}
-                        exchangeRate = {exchangeRate}/>
-    )
     var exchangeButton = (
       <PostExchangeWithKey />
     )
@@ -244,9 +230,6 @@ export default class Exchange extends React.Component {
       <ExchangeForm step={this.props.exchange.step}
         tokenSourceSelect={tokenSourceSelect}
         tokenDestSelect={tokenDestSelect}
-
-        // selectTokenModal={selectTokenModal}
-        exchangeRate={exchangeRate}
         gasConfig={gasConfig}
         exchangeButton={exchangeButton}
         transactionLoadingScreen={transactionLoadingScreen}
@@ -255,8 +238,6 @@ export default class Exchange extends React.Component {
         balance={addressBalance}
         sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
         setAmount={this.setAmount}
-        // isSelectToken = {this.props.exchange.isSelectToken}
-        rateToken = {rateToken}
         translate={this.props.translate}
       />
     )
