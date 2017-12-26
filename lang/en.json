@@ -62,7 +62,7 @@
 
     "transfer_tooltip": "Transfer ether or tokens to other addresses",
     "transaction_config_tooltip": "Change gas limit or gas price affect the time to proccess transaction",
-    "terms_and_conditions": "Terms and <br/> Conditions"
+    "terms_and_conditions": "<span>Terms and <br/> Conditions</span>"
   },
 
   "modal": {

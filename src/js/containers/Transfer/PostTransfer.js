@@ -191,6 +191,7 @@ export default class PostTransfer extends React.Component {
     }
   }
   render() {
+    
     var modalPassphrase = this.props.account.type === "keystore" ? (
       <Modal
         className={{
