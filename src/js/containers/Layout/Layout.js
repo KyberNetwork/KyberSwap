@@ -15,7 +15,7 @@ import { ImportAccount } from "../ImportAccount"
 
 import { Footer } from "../Layout"
 
-import { Processing, InfoModal, ExchangeHistory, TransactionList } from "../../containers/CommonElements/"
+import { Processing, ExchangeHistory, TransactionList } from "../../containers/CommonElements/"
 import constanst from "../../services/constants"
 // import { createNewConnection } from "../../services/ethereum/connection"
 
@@ -98,7 +98,6 @@ export default class Layout extends React.Component {
         history={history}
         Header={Header}
         ImportAccount={ImportAccount}
-        InfoKyber={InfoKyber}
         Exchange={Exchange}
         Transfer={Transfer}
         exchangeHistory={exchangeHistory}
