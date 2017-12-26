@@ -70,19 +70,6 @@
     }
   }
 
-  .list-item::-webkit-scrollbar-track{
-    -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
-    background-color: #1a2c35;
-  }
-  .list-item::-webkit-scrollbar{
-    width: 6px;
-    background-color: #1a2c35;
-  }
-  .list-item::-webkit-scrollbar-thumb{
-    background-color: #7b868b;
-  }
-
-
   .list-item{
     height: 200px;
     overflow-y: auto;
