@@ -10,6 +10,7 @@ import { Rate, updateAllRatePromise } from "../../src/js/services/rate"
 import { default as globalReducer } from "../../src/js/reducers/globalReducer"
 import { default as tokensReducer } from "../../src/js/reducers/tokensReducer"
 import { default as rootReducer } from "../../src/js/reducers"
+var stringify = require('json-stringify-safe');
 
 import globalTestValue from "./global.test-value"
 import EthereumService from "../instance/ethereum/ethereum.fake"
@@ -63,11 +64,12 @@ it('handle global rate update all pending', () => {
       expect(effects.put).toHaveLength(1);
       expect(effects.put[0].PUT.action.type).toEqual(
         'GLOBAL.ALL_RATE_UPDATED_FULFILLED')
-        // expect(
-        //   effects.call[0]
-        // ).toEqual(
-        //   call(updateAllRatePromise, ethereum, tokens, constants.RESERVES[0], account.address)
-        // );
+
+      expect(
+        stringify(effects.call[0].fn)
+      ).toEqual(
+        stringify(ethereum.call('getAllRatesFromServer'))
+      );
     })
 })
 
@@ -133,16 +135,15 @@ it('handle update all rate', () => {
     .run(100000)
     .then((result) => {
       const { effects, allEffects } = result;
-
       expect(effects.call).toHaveLength(1);
       expect(effects.put).toHaveLength(1);
       expect(effects.put[0].PUT.action.type).toEqual(
         'GLOBAL.ALL_RATE_UPDATED_FULFILLED')
-        expect(
-          effects.call[0]
-        ).toEqual(
-          call(updateAllRatePromise, ethereum, tokens, constants.RESERVES[0], account.address)
-        );
+      expect(
+        stringify(effects.call[0].fn)
+      ).toEqual(
+        stringify(ethereum.call('getAllRatesFromServer'))
+      );
     })
 })
 
