@@ -21,7 +21,7 @@ const TokenSelectorView = (props) => {
               <img src={require("../../../assets/img/tokens/" + item.icon)} />
               <span className="item-name">{item.name}</span>
               {item.isNotSupport &&
-                <span className="unsupported">not supported</span>
+                <span className="unsupported">{props.translate("error.not_supported") || "not supported"}</span>
               }  
             </div>
             <div>

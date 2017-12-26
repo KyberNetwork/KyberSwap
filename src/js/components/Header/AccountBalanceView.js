@@ -33,9 +33,9 @@ const AccountBalanceView = (props) => {
       <div className="row balance-header">
         <div className="column">
           <div className="mt-3 clearfix">
-            <h4 className="title font-w-b float-left">My balance</h4>
+            <h4 className="title font-w-b float-left">{props.translate("address.my_balance") || "My balance"}</h4>
             <p title={total} className="float-right font-w-b">
-              <span className="text-success text-uppercase">Total</span>
+              <span className="text-success text-uppercase">{props.translate("address.total") || "Total"}</span>
               <span className="font-s-up-1 ml-2">{roundingTotal}</span> USD
             </p>
           </div>
