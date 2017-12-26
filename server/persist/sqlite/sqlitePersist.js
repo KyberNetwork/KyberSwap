@@ -112,12 +112,18 @@ class SqlitePersist {
 
   initArraySupportedTokenAddress() {
     var stringAddress = ''
-    if (BLOCKCHAIN_INFO.tokens) {
+    var stringSymbol = ''
+    if(BLOCKCHAIN_INFO.tokens){
       stringAddress = Object.keys(BLOCKCHAIN_INFO.tokens).map((tokenName) => {
         return '\'' + BLOCKCHAIN_INFO.tokens[tokenName].address + '\''
       }).toString()
+
+      stringSymbol = Object.keys(BLOCKCHAIN_INFO.tokens).map((tokenName) => {
+        return '\'' + BLOCKCHAIN_INFO.tokens[tokenName].symbol + '\''
+      }).toString()
     }
     this.suportedTokenStr = '(' + stringAddress + ')'
+    this.supportedTokenSymbol = '(' + stringSymbol + ')'
   }
 
   getCurrentBlock() {
@@ -412,7 +418,7 @@ class SqlitePersist {
   }
 
   getRate() {
-    var sql = `SELECT * FROM rates`;
+    var sql = "SELECT * FROM rates Where source IN " + this.supportedTokenSymbol + " AND dest IN " + this.supportedTokenSymbol;
     return new Promise((resolve, reject) => {
       this.db.all(sql, [], (err, row) => {
         if (err) {
