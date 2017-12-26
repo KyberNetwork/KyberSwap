@@ -13,7 +13,7 @@ const Address = (props) => {
     (
       <div class="float-right">
         <div class="user-bar">
-          <span class="text-light font-w-b">ADDRESS</span>
+          <span class="text-light font-w-b">{props.translate("address.address") || "ADDRESS"}</span>
           <a class="short-address mx-3" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "/address/" + props.address}>{props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}</a>
           <a onClick={props.endSession} className="exit mr-3">
             {props.translate("transaction.exit") || "Exit"}

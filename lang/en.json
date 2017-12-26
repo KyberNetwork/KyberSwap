@@ -14,7 +14,10 @@
   },
 
   "address": {
-    "import_address": "Import Address"
+    "address": "Address",
+    "import_address": "Import Address",
+    "my_balance": "My balance",
+    "total": "Total"
   },
 
   "transaction": {
@@ -58,7 +61,8 @@
     "to": "to",
 
     "transfer_tooltip": "Transfer ether or tokens to other addresses",
-    "transaction_config_tooltip": "Change gas limit or gas price affect the time to proccess transaction"
+    "transaction_config_tooltip": "Change gas limit or gas price affect the time to proccess transaction",
+    "terms_and_conditions": "<span>Terms and <br/> Conditions</span>"
   },
 
   "modal": {
@@ -111,7 +115,8 @@
 
     "path_not_support_by_trezor": "This path not supported by Trezor",
     "check_right_application_selected": "Check to make sure the right application is selected",
-    "network_not_match": "Network is not match"
+    "network_not_match": "Network is not match",
+    "not_supported": "not supported"
   },
 
   "import": {

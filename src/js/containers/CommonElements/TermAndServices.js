@@ -1,11 +1,13 @@
 import React from "react"
 import { Modal } from "../../components/CommonElement"
 import { connect } from "react-redux"
+import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
-  return {
-    clickCheckbox: props.clickCheckbox,
-    termAgree: props.termAgree
+  return { 
+    clickCheckbox : props.clickCheckbox,
+    termAgree: props.termAgree,
+    translate: getTranslate(store.locale)
   }
 })
 
@@ -81,9 +83,7 @@ export default class TermAndServices extends React.Component {
           <span onClick = {(e) => this.changeCheckbox(e)}>
             {checkBox}
           </span>
-          <span>
-            Terms and <br></br> Conditions
-          </span>
+          {this.props.translate("transaction.terms_and_conditions") || <span>Terms and <br></br> Conditions </span>}
           <span  onClick={this.showTerms} className="view-term">
             <a>VIEW</a>
           </span>

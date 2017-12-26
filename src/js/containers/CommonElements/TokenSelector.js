@@ -1,13 +1,15 @@
 import React from "react"
 import { connect } from "react-redux"
 import { TokenSelectorView } from '../../components/CommonElement'
+import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
   return {
     focusItem: props.focusItem,
     listItem: props.listItem,
     type : props.type,
-    chooseToken: props.chooseToken
+    chooseToken: props.chooseToken,
+    translate: getTranslate(store.locale)
   }
 })
 
@@ -64,7 +66,7 @@ export default class TokenSelector extends React.Component {
         // chooseToken={this.chooseToken}
         // selected={this.props.modalInfo.selected}
         // closeModal={this.closeModal}
-        // translate={this.props.translate}
+        translate={this.props.translate}
       />
 
     )
