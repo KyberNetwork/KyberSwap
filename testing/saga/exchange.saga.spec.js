@@ -63,7 +63,10 @@ it('handle process exchange with keystore Transaction with the same hash', () =>
       
       expect(effects.put[0]).toEqual(
         put({
-          type:"EXCHANGE.PREPARE_BROADCAST"
+          type:"EXCHANGE.PREPARE_BROADCAST",
+          payload:{
+            balanceData: undefined
+          }
         }))
 
       expect(effects.put[1]).toEqual(
@@ -148,7 +151,10 @@ describe('testing exchange saga successfully', () => {
 
         expect(effects.put[0]).toEqual(
           put({
-            type:"EXCHANGE.PREPARE_BROADCAST"
+            type:"EXCHANGE.PREPARE_BROADCAST",
+            payload:{
+              balanceData: undefined
+            }
           })
         );
         expect(effects.put[1].PUT.action.type).toEqual("ACCOUNT.INC_MANUAL_NONCE_ACCOUNT");
@@ -203,7 +209,10 @@ describe('testing exchange saga successfully with ledger', () => {
 
         expect(effects.put[0]).toEqual(
           put({
-            type:"EXCHANGE.PREPARE_BROADCAST"
+            type:"EXCHANGE.PREPARE_BROADCAST",
+            payload:{
+              balanceData: undefined
+            }
           })
         );
         expect(effects.put[1].PUT.action.type).toEqual("ACCOUNT.INC_MANUAL_NONCE_ACCOUNT");
@@ -258,7 +267,10 @@ describe('testing exchange saga successfully with trezor', () => {
 
         expect(effects.put[0]).toEqual(
           put({
-            type:"EXCHANGE.PREPARE_BROADCAST"
+            type:"EXCHANGE.PREPARE_BROADCAST",
+            payload:{
+              balanceData: undefined
+            }
           })
         );
         expect(effects.put[1].PUT.action.type).toEqual("ACCOUNT.INC_MANUAL_NONCE_ACCOUNT");
@@ -313,7 +325,10 @@ describe('testing exchange saga successfully', () => {
 
         expect(effects.put[0]).toEqual(
           put({
-            type:"EXCHANGE.PREPARE_BROADCAST"
+            type:"EXCHANGE.PREPARE_BROADCAST",
+            payload:{
+              balanceData: undefined
+            }
           })
         );
         expect(effects.put[1].PUT.action.type).toEqual("ACCOUNT.INC_MANUAL_NONCE_ACCOUNT");
@@ -369,7 +384,10 @@ describe('testing exchange saga successfully', () => {
 
         expect(effects.put[0]).toEqual(
           put({
-            type:"EXCHANGE.PREPARE_BROADCAST"
+            type:"EXCHANGE.PREPARE_BROADCAST",
+            payload:{
+              balanceData: undefined
+            }
           })
         );
         expect(effects.put[1].PUT.action.type).toEqual("ACCOUNT.INC_MANUAL_NONCE_ACCOUNT");
