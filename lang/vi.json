@@ -14,7 +14,10 @@
   },
 
   "address": {
-    "import_address": "Nhập địa chỉ"
+    "address": "Địa chỉ",
+    "import_address": "Nhập địa chỉ",
+    "my_balance": "Số dư",
+    "total": "Tất cả"
   },
 
   "transaction": {
@@ -58,7 +61,8 @@
     "to": "đến",
 
     "transfer_tooltip": "Chuyển eth hoặc token đến một tài khoản khác",
-    "transaction_config_tooltip": "Thay đổi gas limit hoặc gas price sẽ ảnh hưởng đến tốc độ giao dịch"
+    "transaction_config_tooltip": "Thay đổi gas limit hoặc gas price sẽ ảnh hưởng đến tốc độ giao dịch",
+    "terms_and_conditions": "Điều khoản sử dụng <br/> Chính sách bảo mật"
   },
 
   "modal": {
@@ -111,7 +115,8 @@
 
     "path_not_support_by_trezor": "Đường dẫn này không được Trezor hỗ trợ",
     "check_right_application_selected": "Kiểm tra lại để chắc chắn bạn đã sử dụng đúng ứng dụng",
-    "network_not_match": "Network không đúng"
+    "network_not_match": "Network không đúng",
+    "not_supported": "Không hỗ trợ"
   },
 
   "import": {
