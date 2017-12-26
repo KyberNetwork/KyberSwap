@@ -18,7 +18,7 @@ export default class InfoKyber extends React.Component {
       <div id="info">
         <div class="frame">
           <div class="row">
-            <div class="column small-11 medium-9 large-8 small-centered">
+            <div class="column small-11 medium-11 large-11 small-centered">
               <p class="info">{this.props.translate("info.version") || "Version"}: 0.0.1<br />{this.props.translate("info.chain") || "Chain"}: Kovan
               <label>{this.props.translate("info.node_endpoint") || "Node endpoint"}
                 <input class="address" type="text" value={BLOCKCHAIN_INFO.endpoint} readOnly="true" />
