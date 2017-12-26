@@ -1,8 +1,9 @@
 import React from "react"
 import { roundingNumber } from "../../utils/converter"
+import { Link } from 'react-router-dom'
 
 const ExchangeForm = (props) => {
-  function moveCursor(){
+  function moveCursor() {
     let inp = document.getElementById('inputSource')
     inp.focus();
     inp.setAttribute('type', 'text');
@@ -11,30 +12,34 @@ const ExchangeForm = (props) => {
       part.move("character", 0);
       part.select();
     } else if (inp.setSelectionRange) {
-        inp.setSelectionRange(0, 0);
+      inp.setSelectionRange(0, 0);
     }
     inp.setAttribute('type', 'number');
   }
   var errorSelectSameToken = props.errors.selectSameToken !== '' ? props.translate(props.errors.selectSameToken) : ''
   var errorSelectTokenToken = props.errors.selectTokenToken !== '' ? props.translate(props.errors.selectTokenToken) : ''
   var errorToken = errorSelectSameToken + errorSelectTokenToken
-  var tokenRate = props.isSelectToken ? <img src={require('../../../assets/img/waiting.svg')}/> : roundingNumber(props.exchangeRate.rate)
+ // 
   var render = (
     <div>
       <div class="frame">
         <div class="row">
-          <div class="column small-11 medium-10 large-8 small-centered">
-            <h1 class="title">{props.translate("transaction.exchange") || "Exchange"}</h1>
+          <div>
+            <h1 class="title">
+              <Link to="/exchange" className="disable">{props.translate("transaction.exchange") || "Exchange"}</Link>
+              <Link to="/transfer">{props.translate("transaction.transfer") || "Transfer"}</Link>
+            </h1>
             <form action="#" method="get">
               <div class="row">
-                <div class="column medium-6">
-                  <label style={{marginBottom: 0}}>{props.translate("transaction.exchange_from") || "Exchange From"}
+                <div class="column medium-5">
+                  <label>
+                    <div className="exchange-label">
+                      {props.translate("transaction.exchange_from") || "From"}
+                    </div>
 
-                    <div className={errorToken !== "" || props.errors.sourceAmount != '' ? "error" : ""}>
-
-                      <input id="inputSource" type={props.input.sourceAmount.type} className="source-input" value={props.input.sourceAmount.value} onFocus={props.input.sourceAmount.onFocus} onChange={props.input.sourceAmount.onChange} min="0" step="0.000001" placeholder="0" autoFocus/>
-
+                    <div className={errorToken !== "" || props.errors.sourceAmount != '' ? "error select-token-panel" : "select-token-panel"}>
                       {props.tokenSourceSelect}
+                      <input id="inputSource" type={props.input.sourceAmount.type} className="source-input" value={props.input.sourceAmount.value} onFocus={props.input.sourceAmount.onFocus} onChange={props.input.sourceAmount.onChange} min="0" step="0.000001" placeholder="0" autoFocus />
                     </div>
                     {errorToken !== "" &&
                       <span class="error-text">{errorToken}</span>
@@ -44,53 +49,49 @@ const ExchangeForm = (props) => {
                     }
                   </label>
                   <div class="address-balance">
-                    <span class="note">{props.translate("transaction.address_balance") ||"Address Balance"}</span>
+                    <span class="note">{props.translate("transaction.address_balance") || "Address Balance"}</span>
                     <a className="value" onClick={() => {
-                        props.setAmount()
-                        setTimeout(moveCursor, 0);
-                      }} title={props.balance.value}>
+                      props.setAmount()
+                      setTimeout(moveCursor, 0);
+                    }} title={props.balance.value}>
                       {props.balance.roundingValue} {props.sourceTokenSymbol}
                     </a>
                   </div>
                 </div>
-                <div class="column medium-6">
-                  <label>{props.translate("transaction.exchange_to") || "Exchange To"}
-                    <div>
-                      <input type={props.input.destAmount.type} className="des-input" value={props.input.destAmount.value} onFocus={props.input.destAmount.onFocus} onChange={props.input.destAmount.onChange} min="0" step="0.000001" placeholder="0" />
+
+                <div class="column medium-2">
+                  <img src={require("../../../assets/img/switch.svg")} />
+                </div>
+
+                <div class="column medium-5">
+                  <label>
+                    <div className="exchange-label">
+                      {props.translate("transaction.exchange_to") || "To"}
+                    </div>
+                    <div className="select-token-panel">
                       {props.tokenDestSelect}
+                      <input type={props.input.destAmount.type} className="des-input" value={props.input.destAmount.value} onFocus={props.input.destAmount.onFocus} onChange={props.input.destAmount.onChange} min="0" step="0.000001" placeholder="0" />
                     </div>
                   </label>
                 </div>
               </div>
-              <div class="row">
-                <div class="column">
-                  <p class="token-compare" title={tokenRate}>
-                    1 {props.exchangeRate.sourceToken} = {tokenRate} {props.exchangeRate.destToken}
-                  </p>
-                </div>
-              </div>
-              {props.step === 2 &&
-                <div class="row hide-on-choose-token-pair">
+
+             
+
+                {/* <div class="row hide-on-choose-token-pair">
                   <div class="column">
-                    <div class="clearfix">
-                      <div class="advanced-switch base-line float-right">
-                        <div class="switch accent">
-                          <input class="switch-input" id="advanced" type="checkbox" />
-                          <label class="switch-paddle" for="advanced"><span class="show-for-sr">Advanced Mode</span></label>
-                        </div>
-                        <label class="switch-caption" for="advanced">{props.translate("transaction.advanced") || "Advanced"}</label>
-                      </div>
-                    </div>
                     <div class="advanced-content" disabled>
                       {props.gasConfig}
                     </div>
                   </div>
-                </div>
-              }
+                </div> */}
+
             </form>
           </div>
         </div>
       </div>
+      {props.gasConfig}
+      {props.rateToken}
       {props.exchangeButton}
       {/* {props.selectTokenModal} */}
     </div>

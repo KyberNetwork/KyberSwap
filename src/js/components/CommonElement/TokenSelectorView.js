@@ -20,13 +20,17 @@ const TokenSelectorView = (props) => {
         var item = listShow[key]
         var balance = toT(item.balance, item.decimal)
         return (
-          <div key={key} onClick={(e) => props.selectItem(e, item.symbol, item.address)}>
-            <img src={require("../../../assets/img/tokens/" + item.icon)} />
-            <span>{item.name}</span>
-            {item.isNotSupport &&
-              <span className="unsupported">not supported</span>
-            }
-            <span title={balance}>{roundingNumber(balance)}</span>
+          <div key={key} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item">
+            <div>
+              <img src={require("../../../assets/img/tokens/" + item.icon)} />
+              <span className="item-name">{item.name}</span>
+              {item.isNotSupport &&
+                <span className="unsupported">not supported</span>
+              }  
+            </div>
+            <div>
+              <span title={balance}>{roundingNumber(balance)}</span>
+            </div>
           </div>
         )
       }
@@ -34,16 +38,22 @@ const TokenSelectorView = (props) => {
   }
 
   return (
-    <div className={props.open ? "open" : "close"}>
-      <div>
-        <img src={require("../../../assets/img/tokens/" + focusItem.icon)} />
-        <span>{focusItem.name}</span>
+    <div className={props.open ? "open token-selector" : "close token-selector"}>
+      <div className="focus-item" onClick={(e) => props.toggleOpen(e)}>
+        <div>
+          <img src={require("../../../assets/img/tokens/" + focusItem.icon)} />
+        </div>
+        <div>{focusItem.name}</div>
       </div>
-      <div>
-        <input value={props.searchWord} placeholder="Search token" onChange={(e) => props.changeWord(e)} />
-      </div>
-      <div>
-        {getListToken()}
+
+
+      <div className="select-item">
+        <div className="search-item">
+          <input value={props.searchWord} placeholder="Search" onChange={(e) => props.changeWord(e)} />
+        </div>
+        <div className="list-item">
+          {getListToken()}
+        </div>
       </div>
     </div>
   )

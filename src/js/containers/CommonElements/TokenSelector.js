@@ -32,8 +32,12 @@ export default class TokenSelector extends React.Component {
     this.setState({searchWord: value})
   }
 
+  toggleOpen = (e)=>{
+    this.setState({open: !this.state.open})
+  }
   selectItem = (event, symbol, address) => {
     this.props.chooseToken(symbol, address, this.props.type)
+    this.setState({open: false})
   }
   // closeModal = (event) => {
   //   this.props.dispatch(hideSelectToken())
@@ -51,7 +55,7 @@ export default class TokenSelector extends React.Component {
 
         listItem = {this.props.listItem}
         focusItem = {this.props.focusItem}
-        
+        toggleOpen = {this.toggleOpen}
         changeWord = {this.changeWord}
         selectItem = {this.selectItem}
         // onRequestClose={this.closeModal}

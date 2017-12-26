@@ -161,26 +161,29 @@ ul.address-list {
 
 .address-balance {
   @include clearfix;
-  color: $primary-color;
+  color: white;
   line-height: 25px;
   margin-top: 6px;
+  text-align: right;
   @include breakpoint(medium) {
     margin-top: 12px;
   }
   .note {
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 13px;
+    //font-weight: bold;
     text-transform: none;
-    float: left;
+    //float: left;
+    margin-right:10px;
     letter-spacing: .5px;
   }
   .value {
-    float: right;
+  //  float: right;
     font-weight: bold;
     font-family: $font-family-monospace;
     font-size: 14px;
     text-align: right;
     margin-left: 5px;
+    color: white;
   }
 }
 

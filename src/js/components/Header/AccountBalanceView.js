@@ -7,7 +7,7 @@ const AccountBalanceView = (props) => {
     var balances = Object.values(props.tokens).map(token => {
       var balance = converts.toT(token.balance, token.decimal)
       return (
-        <div>
+        <div key={token.symbol}>
           <div><img src={require("../../../assets/img/tokens/" + token.icon)} /></div>
           <div>
             <div>{token.symbol}</div>
