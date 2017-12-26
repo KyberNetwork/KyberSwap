@@ -14,7 +14,7 @@ $divider-color: darken($title-background-color, 5);
   color: $white;
   border-radius: 0;
   outline: none;
-  background-color: $bg-primary;
+  background-color: $k-primary;
   border: 2px solid $white;
   box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
   @include breakpoint(small only) {
@@ -36,7 +36,7 @@ $divider-color: darken($title-background-color, 5);
     font-weight: bold;
     font-size: 20px;
     padding: 20px 25px;
-    background-color: $bg-primary-darker;
+    background-color: $k-primary-darker;
   }
   .overlap {
     width: 100%;
@@ -58,7 +58,7 @@ $divider-color: darken($title-background-color, 5);
       @include clearfix;
       font-weight: bold;
       font-size: 16px;
-      color: $bg-success;
+      color: $k-success;
       margin-bottom: 15px;
       img.loading {
         height: 21px;

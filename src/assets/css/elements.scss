@@ -194,7 +194,7 @@ h1.title {
 }
 .frame {
   padding: 30px 0;
-  background-color: $bg-primary;
+  background-color: $k-primary;
   color: $white;
   .info {
     margin: 0;
@@ -238,7 +238,7 @@ p.note {
   border-radius: 4px;
   border-radius: $global-radius;
   overflow: hidden;
-  box-shadow: 0px 1px 13px $bg-divider;
+  box-shadow: 0px 1px 13px $k-divider;
   &.json {
     background-image: url(../img/json.jpg)
   }

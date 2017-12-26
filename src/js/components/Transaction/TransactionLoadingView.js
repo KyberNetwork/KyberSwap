@@ -1,5 +1,5 @@
 import React from "react"
-import { roundingNumber} from "../../utils/converter"
+import { roundingNumber } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
 
 const TransactionLoadingView = (props) => {
@@ -9,27 +9,26 @@ const TransactionLoadingView = (props) => {
       <div>
         <div class="frame">
           <div class="row">
-            <div class="column small-11 medium-9 large-8 small-centered">
-              <h1 class="title text-center">{props.translate("transaction.broadcast") || "Broadcast"}
-                </h1>
-              <div class="row">
-                <div class="column medium-3 text-center">
-                  <div className={"broadcast-animation animated infinite" + classPending}>
-                    {props.error === "" ? <img src={require('../../../assets/img/broadcast.svg')}/> : <img src={require('../../../assets/img/finish.svg')} />}
-                  </div>
-                </div>
-                <div class="column medium-9">
-                  <ul class="broadcast-steps">
-                    {props.error === "" &&
-                      <li class="pending">{props.translate("transaction.broadcasting") || "Broadcasting your transaction to network"}</li>
-                    }
-                    {props.error !== "" &&
-                      <li class="failed">
-                        {props.translate("transaction.cound_not_broadcast") || "Couldn't broadcast your transaction to the blockchain"}
-                                        <div class="reason">{props.error}</div>
-                      </li>
-                    }
-                  </ul>
+            <div class="text-center">
+              <h1 class="title mb-0">{props.translate("transaction.broadcast") || "Broadcast"}
+              </h1>
+              <ul class="broadcast-steps">
+                {props.error === "" &&
+                  <li class="pending">
+                    <h5 class="font-w-b">{props.translate("transaction.broadcasting") || "Broadcasting your transaction to network"}
+                    </h5>
+                  </li>
+                }
+                {props.error !== "" &&
+                  <li class="failed">
+                    <h5 class="font-w-b">{props.translate("transaction.cound_not_broadcast") || "Couldn't broadcast your transaction to the blockchain"}</h5>
+                    <div class="reason">{props.error}</div>
+                  </li>
+                }
+              </ul>
+              <div class="text-center">
+                <div className={"broadcast-animation animated infinite" + classPending}>
+                  {props.error === "" ? <img src={require('../../../assets/img/broadcast.svg')} /> : <img src={require('../../../assets/img/finish.svg')} />}
                 </div>
               </div>
             </div>
@@ -48,68 +47,67 @@ const TransactionLoadingView = (props) => {
     <div>
       <div class="frame">
         <div class="row">
-          <div class="column small-11 medium-9 large-8 small-centered">
-            <h1 class="title text-center">{props.translate("transaction.broadcast") || "Broadcast"}
-                              <div class="info">{props.translate("transaction.transaction") || "Transaction"}&nbsp;
-                          <br class="show-for-small-only"></br>
-                <a class="hash has-tip top" data-tooltip title="View on Etherscan" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank">
-                  {props.txHash.slice(0, 12)} ... {props.txHash.slice(-10)}
-                </a>
-              </div>
-
+          <div class="text-center">
+            <h1 class="title mb-0">{props.translate("transaction.broadcast") || "Broadcast"}
             </h1>
-            <div class="row">
-              <div class="column medium-3 text-center">
+            <div class="info text-light font-s-down-1 my-3">
+              {props.translate("transaction.transaction") || "Transaction"}&nbsp;
+              <a class="font-w-b text-light" data-tooltip title="View on Etherscan" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank">
+              {props.txHash.slice(0, 12)} ... {props.txHash.slice(-10)}
+              </a>
+            </div>
+            <ul class="broadcast-steps">
+              {props.status === "success" &&
+                <li class={props.status}>
+                  <h5 class="text-success font-w-b">{props.translate("transaction.broadcasted_title") || "Broadcasted your transaction to the blockchain"}</h5>
+                  {props.type === "exchange" &&
+                    <ul class="address-balances text-white">
+                      <li class="text-left">
+                        <span class="name">{props.balanceInfo.sourceTokenName}</span>
+                        <span class="balance" title={props.balanceInfo.sourceAmount.prevValue}>{roundingNumber(props.balanceInfo.sourceAmount.prevValue)}</span>
+                        <span class="ml-2 mr-3">-></span>
+                        <span class="balance" title={props.balanceInfo.sourceAmount.nextValue}>{roundingNumber(props.balanceInfo.sourceAmount.nextValue)}</span>
+                      </li>
+                      <li class="text-left">
+                        <span class="name">{props.balanceInfo.destTokenName}</span>
+                        <span class="balance" title={props.balanceInfo.destAmount.prevValue}>{roundingNumber(props.balanceInfo.destAmount.prevValue)}</span>
+                        <span class="ml-2 mr-3">-></span>
+                        <span class="balance font-w-b" title={props.balanceInfo.destAmount.nextValue}>{roundingNumber(props.balanceInfo.destAmount.nextValue)}</span>
+                      </li>
+                    </ul>
+                  }
+                  {props.type === "transfer" &&
+                    <ul class="address-balances text-white">
+                      <li class="text-left">
+                        <span class="name">{props.balanceInfo.tokenName}</span>
+                        <span class="balance" title={props.balanceInfo.amount.prev}>{roundingNumber(props.balanceInfo.amount.prev)}</span>
+                        <span class="ml-2 mr-3">-></span>
+                        <span class="balance font-w-b" title={props.balanceInfo.amount.next}>{roundingNumber(props.balanceInfo.amount.next)}</span>
+                      </li>
+                    </ul>
+                  }
+                </li>
+              }
+              {props.status === "failed" &&
+                <li class={props.status}>
+                  <h5 class="font-w-b">{props.translate("transaction.transaction_error") || "Transaction error"}</h5>
+                  <div class="reason">{props.error}</div>
+                </li>
+              }
+              {props.status === "pending" &&
+                <li class={props.status}>
+                  <h5 class="font-w-b">{props.translate("transaction.waiting_transaction") || "Waiting for your transaction to be mined"}</h5>
+                </li>
+              }
+            </ul>
+            {classPending != "" ? (
+              <div class="text-center">
                 <div className={"broadcast-animation animated infinite" + classPending}>
-                  {props.status == "pending" ? <img src={require('../../../assets/img/broadcast.svg')} /> : <img src={require('../../../assets/img/finish.svg')} />}
+                  {props.error === "" ? <img src={require('../../../assets/img/broadcast.svg')} /> : <img src={require('../../../assets/img/finish.svg')} />}
                 </div>
               </div>
-              <div class="column medium-9">
-                <ul class="broadcast-steps">
-                  {props.status === "success" &&
-                    <li class={props.status}>
-                      {props.translate("transaction.broadcasted_title") || "Broadcasted your transaction to the blockchain"}
-                      <p class="note">{props.translate("transaction.current_address_balance") || "Current address balance"}</p>
-                      {props.type === "exchange" &&
-                        <ul class="address-balances">
-                          <li>
-                            <span class="name">{props.balanceInfo.sourceTokenName}</span>
-                            <span class="balance" title={props.balanceInfo.sourceAmount.prevValue}>{roundingNumber(props.balanceInfo.sourceAmount.prevValue)}</span>
-                            <span>-></span>
-                            <span class="balance" title={props.balanceInfo.sourceAmount.nextValue}>{roundingNumber(props.balanceInfo.sourceAmount.nextValue)}</span>
-                          </li>
-                          <li>
-                            <span class="name">{props.balanceInfo.destTokenName}</span>
-                            <span class="balance" title={props.balanceInfo.destAmount.prevValue}>{roundingNumber(props.balanceInfo.destAmount.prevValue)}</span>
-                            <span>-></span>
-                            <span class="balance" title={props.balanceInfo.destAmount.nextValue}>{roundingNumber(props.balanceInfo.destAmount.nextValue)}</span>
-                          </li>
-                        </ul>
-                      }
-                      {props.type === "transfer" &&
-                        <ul class="address-balances">
-                          <li>
-                            <span class="name">{props.balanceInfo.tokenName}</span>
-                            <span class="balance" title={props.balanceInfo.amount.prev}>{roundingNumber(props.balanceInfo.amount.prev)}</span>
-                            <span>-></span>
-                            <span class="balance" title={props.balanceInfo.amount.next}>{roundingNumber(props.balanceInfo.amount.next)}</span>
-                          </li>
-                        </ul>
-                      }
-                    </li>
-                  }
-                  {props.status === "failed" &&
-                    <li class={props.status}>
-                      {props.translate("transaction.transaction_error") || "Transaction error"}
-                      <div class="reason">{props.error}</div>
-                    </li>
-                  }
-                  {props.status === "pending" &&
-                    <li class={props.status}>{props.translate("transaction.waiting_transaction") || "Waiting for your transaction to be mined"}</li>
-                  }
-                </ul>
-              </div>
-            </div>
+              ) : ''
+            }
           </div>
         </div>
       </div>

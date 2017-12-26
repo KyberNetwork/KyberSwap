@@ -70,7 +70,7 @@ const Notify = (props) => {
   });
 
   return (
-    <div>
+    <React.Fragment>
       <a className="notifications-toggle" href="#notifications" onClick={(e) => props.displayTransactions(e)}>
         <img src={require('../../../assets/img/menu.svg')} />{counter}
       </a>
@@ -82,7 +82,7 @@ const Notify = (props) => {
           </li>
         }
       </ul>
-    </div>
+    </React.Fragment>
   )
 }
 
