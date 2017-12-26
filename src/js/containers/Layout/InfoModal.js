@@ -32,6 +32,7 @@ export default class InfoModal extends React.Component {
   content = () => {
     return (
       <div>
+        <div class="title text-center">Kyber Testnet</div>
         <a className="x" onClick={this.closeModal}>&times;</a>
         <div class="content">
           <div class="row tokens small-up-2 medium-up-3 large-up-4">
