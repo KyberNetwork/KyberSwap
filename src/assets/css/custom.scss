@@ -84,9 +84,6 @@ a.disabled{
 .import-account>.column{
     padding: 0;
 }
-.address-balance{
-    margin-bottom: 40px;
-}
 .large-2dot4{
     @media screen and(min-width: 64em){
         width: 20%;
@@ -96,9 +93,6 @@ a.disabled{
     @media screen and (max-height: 790px){
         .frame{
             padding: 20px 0;
-            h1.title{
-                margin-top: 0;
-            }
         }
         .token-input{
             margin-top: 5px!important;
@@ -122,20 +116,9 @@ a.disabled{
             .token-select, .address-balance, .token-amount{
                 margin-top: 5px;
             }
-            .address-balance{
-                margin-bottom: 5px;
-            }
         }
     }
     @media screen and (max-height: 670px){
-        .address-balance{
-            margin-bottom: 15px;
-        }
-        .frame{
-            h1.title{
-                margin-bottom: 10px;
-            }
-        }
         @media screen and (min-width: 790px) and (max-width: 1024px){
             #import-acc{
                 width: 70%;

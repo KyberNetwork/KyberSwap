@@ -11,10 +11,14 @@ const Address = (props) => {
 
   return props.address ?
     (
-      <div class="float-right">
-        <div class="user-bar">
-          <span class="text-light font-w-b">ADDRESS</span>
-          <a class="short-address mx-3" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "/address/" + props.address}>{props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}</a>
+      <div className="float-right">
+        <div className="user-bar">
+          <div className="address d-inline-block">
+            <div className="float-left-md text-light font-w-b">ADDRESS</div>
+            <div className="float-right-md">
+              <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "/address/" + props.address}>{props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}</a>
+            </div>
+          </div>
           <a onClick={props.endSession} className="exit mr-3">
             {props.translate("transaction.exit") || "Exit"}
           </a>
@@ -22,9 +26,9 @@ const Address = (props) => {
         </div>
       </div>
     ) : (props.path === "/info" ? (
-      <div class="column small-7 medium-6 large-5">
-        <div class="text-right">
-          <div class="user-bar">
+      <div className="column small-7 medium-6 large-5">
+        <div className="text-right">
+          <div className="user-bar">
             <Link to="/" className="button accent" style={{ marginRight: 20 }}>
               {props.translate("address.import_address") || "Import Address"}
             </Link>

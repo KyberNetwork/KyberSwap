@@ -25,7 +25,7 @@ const ExchangeForm = (props) => {
     <div>
       <div class="frame">
         <div class="row">
-          <div>
+          <div class="column">
             <h1 class="title">
               <Link to="/exchange" className="disable">{props.translate("transaction.exchange") || "Exchange"}</Link>
               <Link to="/transfer">{props.translate("transaction.transfer") || "Transfer"}</Link>
@@ -59,11 +59,9 @@ const ExchangeForm = (props) => {
                     </a>
                   </div>
                 </div>
-
-                <div class="column medium-2">
-                  <img src={require("../../../assets/img/switch.svg")} />
+                <div class="column medium-2 exchange-icon hide-for-small-only">
+                  <i className="k k-exchange k-3x"></i>
                 </div>
-
                 <div class="column medium-5">
                   <label>
                     <span className="transaction-label">

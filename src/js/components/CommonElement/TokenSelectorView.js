@@ -1,11 +1,7 @@
 import React from "react"
-
 import { toT, roundingNumber } from "../../utils/converter"
 
 const TokenSelectorView = (props) => {
-
-
-  //var data = props.data
   var focusItem = props.listItem[props.focusItem]
   var listShow = {}
   Object.keys(props.listItem).map((key, i) => {
@@ -39,11 +35,12 @@ const TokenSelectorView = (props) => {
 
   return (
     <div className={props.open ? "open token-selector" : "close token-selector"}>
-      <div className="focus-item" onClick={(e) => props.toggleOpen(e)}>
-        <div>
+      <div className="focus-item d-flex" onClick={(e) => props.toggleOpen(e)}>
+        <div className="icon">
           <img src={require("../../../assets/img/tokens/" + focusItem.icon)} />
         </div>
-        <div>{focusItem.name}</div>
+        <div className="mr-auto">{focusItem.name}</div>
+        <div><i className={'k k-angle white ' + (props.open ? 'up' : 'down')}></i></div>
       </div>
 
 

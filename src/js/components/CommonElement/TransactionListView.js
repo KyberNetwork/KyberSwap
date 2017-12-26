@@ -123,7 +123,9 @@ const TransactionListView = (props) => {
               <span className="coins">{sourceToken.key.toUpperCase()} to {destToken.key.toUpperCase()}</span>
             </div>
             <div className="float-right font-s-down-1">
-              <span className="time">{calculateTimeStamp(item.timestamp)}</span>
+              <span className="time">
+                {calculateTimeStamp(item.timestamp)} <i className="k k-angle right ml-3"></i>
+              </span>
             </div>
           </div>
         </div>

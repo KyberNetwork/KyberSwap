@@ -48,7 +48,9 @@ const AccountBalanceView = (props) => {
         <div className="expand">
           <div className="row align-right">
             <div className="text-right">
-              <button onClick={props.toggleBalances}>^</button>
+              <button onClick={props.toggleBalances}>
+                <i className={'k k-angle ' + (props.expanded ? 'up' : '')}></i>
+              </button>
             </div>
           </div>
         </div>

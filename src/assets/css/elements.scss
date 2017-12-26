@@ -12,6 +12,7 @@ textarea{
 
 .transaction-label{
   font-weight: bold;
+  font-size: 15px;
 }
 
 .unlock input, input[type=password] {
@@ -62,6 +63,11 @@ label {
   .select-token-panel{
     background-color: #415b68;
     cursor: pointer;
+    margin-top: 4px;
+    input{
+      height: auto;
+      padding: 10px!important;
+    }
   }
   .exchange-label{
     font-size: 14px;
@@ -197,12 +203,8 @@ a.has-tip {
 h1.title {
   font-size: 24px;
   font-weight: bold;
-  margin: 0 0 20px 0;
   letter-spacing: .5px;
   padding: 20px 0;
-  @include breakpoint(medium) {
-    margin: 10px 0 25px 0;
-  }
   a{
     color: #91a1a7;
     
