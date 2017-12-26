@@ -10,7 +10,6 @@ $accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
 @import 'modals';
 @import 'addresses';
 @import 'tokens';
-//@import 'slider';
 @import 'custom';
 @import "~slick-carousel/slick/slick.css";
 @import "history";
@@ -18,7 +17,7 @@ $accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
 @import "language";
 @import "token_select";
 @import "term_and_services";
-//@import "~slick-carousel/slick/slick-theme.scss";
+@import "icon";
 
 #waiting {
   background-color: rgba($dark-gray, .5);
@@ -95,15 +94,21 @@ $accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
   a.logo img{
     width: 100px;
   }
-  a.avatar img{
-    width: 45px;
-    max-width: none;
-  }
   .user-bar {
     margin-top: 11px;
     position: relative;
+    .address{
+      text-align: right;
+      font-size: .75em;
+      vertical-align: top;
+      margin-right: 10px;
+      @include breakpoint(medium){
+        font-size: inherit;
+        vertical-align: bottom;
+      }
+    }
     .exit{
-      padding: 4px 12px;
+      padding: 7px 12px;
       border: 1px solid #eee;
       font-weight: 700;
       color: inherit;
@@ -114,32 +119,10 @@ $accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
       font-weight: bold;
       font-size: 14px;
       color: $dark-gray;
-    }
-    ul.actions {
-      font-size: 0;
-      list-style: none;
-      margin: 3px 0 0 0;
-      padding: 0;
-      > li {
-        display: inline-block;
-        &:not(:last-child) {
-          margin-right: 20px;
-        }
-        a {
-          font-size: 12px;
-          font-weight: bold;
-          text-transform: uppercase;
-          letter-spacing: .5px;
-          color: $medium-gray;
-          &.exit {
-            color: $alert-color;
-          }
-        }
-      }
+      margin-left: 10px;
     }
     .notifications-toggle {
       display: inline-block;
-      padding-right: 10px;
       text-align: center;
       position: relative;
       margin-top: 5px;
@@ -300,14 +283,14 @@ $accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
     width: 100%;
     top: 55px;
     background-color: #fff;
-    z-index: 1;
+    z-index: 3;
     > .row{
       max-height: 90px;
       overflow-y: hidden;
       transition: max-height .3s;
       &.active{
         overflow: auto;
-        max-height: 500px;
+        max-height: 400px;
       }
       @include breakpoint(medium){
         &.active{
@@ -361,7 +344,7 @@ $accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
       button{
         position: absolute;
         background-color: #fff;
-        padding: 6px 26px;
+        padding: 7px 22px;
         right: 15px;
         border-radius: 2px;
         cursor: pointer;
@@ -428,6 +411,9 @@ $accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
       transition: width .4s ease-in-out;
     }
   }
+  label{
+    margin-bottom: 8px;
+  }
   .token-compare {
     margin-bottom: 0;
   }
@@ -473,4 +459,13 @@ $accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
     background-color: transparent;
     text-align: center;
   }
+}
+.exchange-icon{
+  text-align: center;
+  margin-top: 70px;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }

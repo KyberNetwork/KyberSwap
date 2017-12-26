@@ -6,11 +6,10 @@ const HeaderView = (props) => {
   let logoLink = props.account ? '/exchange' : ''
   return (
     <div>
-
       <section id="header">
         <div class="row">
           <div class="column">
-            <div class={"float-left " + (props.account ? "hide-for-small-only" : "")}>
+            <div class="float-left">
               <Link to={logoLink} className="logo">
                 <img src={require("../../../assets/img/logo.svg")} />
               </Link>
