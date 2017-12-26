@@ -1,4 +1,5 @@
 import React from "react"
+import { NavLink } from 'react-router-dom'
 import { roundingNumber } from "../../utils/converter"
 
 const ExchangeForm = (props) => {
@@ -23,6 +24,8 @@ const ExchangeForm = (props) => {
     <div>
       <div class="frame">
         <div class="row">
+          <NavLink to="/exchange">Exchange</NavLink>
+          <NavLink to="/transfer">Transfer</NavLink>
           <div class="column small-11 medium-10 large-8 small-centered">
             <h1 class="title">{props.translate("transaction.exchange") || "Exchange"}</h1>
             <form action="#" method="get">

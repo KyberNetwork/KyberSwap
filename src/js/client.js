@@ -9,7 +9,7 @@ import platform from 'platform'
 import { blackList } from './blacklist'
 import { PersistGate } from 'redux-persist/lib/integration/react'
 import { persistor, store } from "./store"
-
+import Modal from 'react-modal';
 
 //check browser compatible
 var clientPlatform = {
@@ -34,6 +34,8 @@ for (var i = 0; i < blackList.length; i++) {
   illegal = true
   break
 }
+
+Modal.setAppElement('body');
 
 if (illegal) {
   ReactDOM.render(

@@ -5,6 +5,21 @@
 .text-light{
     color: #a5a5a5;
 }
+.text-white{
+    color: $white;
+}
+.text-success{
+    color: $k-success;
+}
+.text-uppercase{
+    text-transform: uppercase;
+}
+.p-relative{
+    position: relative;
+}
+.p-absolute{
+    position: absolute;
+}
 .font-s-up-1{
     font-size: 1.15em;
 }
@@ -14,8 +29,14 @@
 .font-w-b{
     font-weight: 700;
 }
+.d-inline-block{
+    display: inline-block;
+}
+.d-flex{
+    display: flex;
+}
 @for $i from 0 through 8{
-    $space: $i * .3rem;
+    $space: ($i * .3rem)#{'!important'};
     .px-#{$i}{
         padding-left: $space;
         padding-right: $space;

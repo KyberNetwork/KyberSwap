@@ -94,11 +94,6 @@ a.disabled{
 }
 @media screen and (min-width: 640px){
     @media screen and (max-height: 790px){
-        #header{
-            .user-bar ul.notifications{
-                top: 60px!important;
-            }
-        }
         .frame{
             padding: 20px 0;
             h1.title{

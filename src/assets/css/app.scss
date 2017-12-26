@@ -111,7 +111,6 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
     a.short-address {
       font-weight: bold;
       font-size: 14px;
-      font-family: $font-family-monospace;
       color: $dark-gray;
     }
     ul.actions {
@@ -172,7 +171,7 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
       font-size: 0;
       text-align: left;
       top: 53px;
-      z-index: 1;
+      z-index: 2;
       width: 330px;
       left: auto;
       &:before {
@@ -282,12 +281,99 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
   }
 }
 
+#balance-account{
+  position: relative;
+  .balance-header{
+    min-height: 150px;
+    @media screen and (max-width: 640px) {
+      min-height: 0;
+    }
+    .title{
+      font-size: 1.5625rem;
+      line-height: 25px;
+    }
+  }
+  .balances{
+    position: absolute;
+    width: 100%;
+    top: 55px;
+    background-color: #fff;
+    z-index: 1;
+    > .row{
+      max-height: 90px;
+      overflow-y: hidden;
+      transition: max-height .3s;
+      &.active{
+        overflow: auto;
+        max-height: 500px;
+      }
+      @include breakpoint(medium){
+        &.active{
+          overflow: hidden;
+        }
+      }
+      @media screen and (max-width: 640px) {
+        max-height: 0;
+        padding: 0;
+      }
+    }
+  }
+  .balance-item{
+    border-radius: 30px;
+    line-height: 20px;
+    padding: 10px 15px;
+    font-size: 0.88em;
+    border: 1px solid transparent;
+    &.active, &:hover{
+      background-color: #f8f8f8;
+      border-color: #d5d5d5;
+    }
+    h4{
+      line-height: 29px;
+    }
+    img{
+      vertical-align: baseline;
+      margin-right: 15px;
+    }
+    @media screen and (max-width: 640px) {
+      img{
+        vertical-align: bottom;
+      }
+      > div{
+        width: calc(100% - 50px);
+        .symbol{
+          float: left;
+        }
+        .balance{
+          float: right;
+        }
+      }
+    }
+  }
+  .expand{
+    border-top: 1px solid #eee;
+    height: 8px;
+    background-color: #fff;
+    .row{
+      position: relative;
+      button{
+        position: absolute;
+        background-color: #fff;
+        padding: 6px 26px;
+        right: 15px;
+        border-radius: 2px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
 #rate-bar {
-  background-color: $bg-primary;
+  background-color: $k-primary;
   color: $white-light;
   min-height: 0px !important;
   padding: 10px 15px;
-  border-top: 1px solid $bg-divider;
+  border-top: 1px solid $k-divider;
   @include breakpoint(medium) {
     padding: 20px 15px;
   }
@@ -312,7 +398,7 @@ $accent-gradient: linear-gradient(135deg, #2A9A8D, #5F7921);
       display: inline-block;
       padding-right: 15px;
       &:not(:last-child) {
-        border-right: 1px solid $bg-divider;
+        border-right: 1px solid $k-divider;
         margin-right: 15px;
       }
       .pair {
