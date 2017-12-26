@@ -14,6 +14,16 @@ textarea{
   font-weight: bold;
 }
 
+.unlock input, input[type=password] {
+  background-color: transparent;
+  border-bottom: 1px solid #fefefe;
+  height: 50px;
+  color: #fefefe;
+  &:focus{
+    background-color: transparent;
+    border-bottom: 1px solid #fefefe;
+  }
+}
 input {
   &[type=password],
   &[type=number],
@@ -327,14 +337,21 @@ span.help {
     margin-bottom: 0px;
     display: flex;
     align-items: center;
+    .view-term{
+      border: 1px solid white;
+      padding: 5px;
+    }
     span{
       line-height: 15px;
       font-size: 13px;
-      &:first-child{
-        margin-right: 15px;
+      &:not(:first-child){
+        margin-left: 15px;
+      }
+      &:nth-child(2){
+        color: #ccc;
       }
       a{
-        color: #ccc;
+        color: white;
       }
     }
   }

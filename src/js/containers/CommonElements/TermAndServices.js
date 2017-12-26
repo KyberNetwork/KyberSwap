@@ -81,8 +81,11 @@ export default class TermAndServices extends React.Component {
           <span onClick = {(e) => this.changeCheckbox(e)}>
             {checkBox}
           </span>
-          <span onClick={this.showTerms}>
-            <a>Terms and <br></br> Conditions</a>
+          <span>
+            Terms and <br></br> Conditions
+          </span>
+          <span  onClick={this.showTerms} className="view-term">
+            <a>VIEW</a>
           </span>
         </div>
 
