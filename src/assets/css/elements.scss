@@ -31,14 +31,30 @@ input {
 }
 
 label {
-  color: lighten($medium-gray, 10);
+  color: white;
   letter-spacing: .5px;
-  font-weight: bold;
+  font-weight: normal;
   font-size: 12px;
-  text-transform: uppercase;
+  //margin-bottom: 10px !important;
+  //text-transform: uppercase;
+  .select-token-panel{
+    background-color: #415b68;
+  }
+  .exchange-label{
+    font-size: 14px;
+  }
   margin-bottom: 20px;
   @include breakpoint(medium) {
     margin-bottom: 30px;
+  }
+  input[type=number], input[type=number]:focus{
+    background-color: transparent;
+    text-align: right;
+    color: white;
+    border-top: 1px solid #2a4654;
+    margin-bottom: 0px;
+    font-size: 20px;
+    padding: 20px;
   }
   > input[type=text],
   > input[type=number],
@@ -46,7 +62,7 @@ label {
   > .token-amount,
   > .token-input {
     margin-top: 15px;
-    margin-bottom: 0;
+    margin-bottom: 0;    
   }
   &.title {
     margin-bottom: 15px;
@@ -99,7 +115,7 @@ span.error-text {
     letter-spacing: 1.25px;
     text-transform: uppercase;
     position: relative;
-    margin-bottom: 50px;
+    //margin-bottom: 50px;
     white-space: nowrap;
     &.waiting {
       color: rgba(white, .5);
@@ -160,13 +176,25 @@ h1.title {
   font-weight: bold;
   margin: 0 0 20px 0;
   letter-spacing: .5px;
+  padding: 20px 0;
   @include breakpoint(medium) {
     margin: 10px 0 25px 0;
+  }
+  a{
+    color: white;
+    &:first-child{
+      margin-right: 15px;
+    }
+    &.disable{
+      color: #91a1a7;
+      cursor: initial;
+      pointer-events: none;
+    }
   }
 }
 .frame {
   padding: 30px 0;
-  background-color: $bg-primary;
+  background-color: $k-primary;
   color: $white;
   .info {
     margin: 0;
@@ -210,7 +238,7 @@ p.note {
   border-radius: 4px;
   border-radius: $global-radius;
   overflow: hidden;
-  box-shadow: 0px 1px 13px $bg-divider;
+  box-shadow: 0px 1px 13px $k-divider;
   &.json {
     background-image: url(../img/json.jpg)
   }
@@ -271,6 +299,27 @@ span.help {
   vertical-align: middle;
 }
 
+
+
+.exchange-footer{
+  display: flex;
+  align-items: center;
+  label{
+    margin-bottom: 0px;
+    display: flex;
+    align-items: center;
+    &.term-services{
+      input{
+        margin: 0px;
+        margin-right: 10px;
+      }
+      span{
+        line-height: 14px;
+        color: #ccc;
+      }
+    }
+  }
+}
 // advanced switch
 
 .switch {
@@ -281,6 +330,7 @@ span.help {
       border-radius: 1000px;
       transition: background .3s ease-in-out;
       width: 57px;
+      margin-bottom: 0px;
       height: 31px;
       &:after {
         background: white;
@@ -304,28 +354,57 @@ span.help {
 .advanced-switch {
   margin: 10px 0 25px 0;
   user-select: none;
+  display: flex;
+  .switch-caption{
+    margin-right: 10px;
+    font-weight: bold;
+  }
 }
 
 label.switch-caption {
   padding-left: 15px;
 }
 
+
+.gas-config{
+  // padding: 15px 0px;
+  background-color: #243c48;
+  input{
+    color: white;
+  }
+  // .result{
+  //   color: white;
+  // }
+}
 .advanced-content {
-  transition: opacity .4s ease-in-out;
+  padding: 10px;
+  transition: 0.3s;
   &[disabled] {
-    opacity: .3;
+    // opacity: .3;
+    padding: 0px;
+    height: 0px;
+    overflow: hidden;
     pointer-events: none;
   }
   .transaction-fee {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    >label{
+      margin-bottom: 0px;
+      margin-right: 20px;
+      font-size: 14px;
+    }
     .symbol {
       line-height: 40px;
       text-align: center;
+      color: #8e9aa1;
     }
     .result {
       line-height: 40px;
       text-align: center;
       display: block;
-      color: $medium-gray;
+      color: #00ffd6;
       font-weight: bold;
       font-family: $font-family-monospace;
       font-size: 14px;
@@ -337,8 +416,11 @@ label.switch-caption {
     @include breakpoint(medium) {
       .gas-limit,
       .gas-price {
-        width: 35%;
         float: left;
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        color: #8e9aa1
       }
       .symbol {
         width: 5%;
@@ -352,55 +434,62 @@ label.switch-caption {
     }
     .gas-limit {
       position: relative;
-      &:before {
-        content: 'Gas Limit';
-        position: absolute;
-        left: 12px;
-        top: 13px;
-        white-space: nowrap;
-        font-size: 11px;
-        font-weight: bold;
-        text-transform: uppercase;
-        text-align: left;
+      
+      // &:before {
+      //   content: 'Gas Limit';
+      //   position: absolute;
+      //   left: 12px;
+      //   top: 13px;
+      //   white-space: nowrap;
+      //   font-size: 11px;
+      //   font-weight: bold;
+      //   text-transform: uppercase;
+      //   text-align: left;
+      // }
+      span:first-child{
+        margin-right: 10px;
       }
-      input {
-        width: 100%;
-        padding-left: 80px;
-        text-align: right;
-        margin: 0;
-        &[readonly] {
-          background-color: darken(white, 5)
-        }
-      }
+      // input {
+      //   width: 70px;
+      //   padding-left: 80px;
+      //   text-align: right;
+      //   margin: 0;
+      //   font-size: 14px;
+      //   margin-left: 10px;
+      //   &[readonly] {
+      //     background-color: transparent
+      //   }
+      // }
     }
     .gas-price {
       position: relative;
-      &:before {
-        content: 'Gas Price';
-        position: absolute;
-        left: 12px;
-        top: 13px;
-        white-space: nowrap;
-        font-size: 11px;
-        font-weight: bold;
-        text-transform: uppercase;
-      }
-      &:after {
-        content: 'gwei';
-        position: absolute;
-        right: 12px;
-        top: 13px;
-        white-space: nowrap;
-        font-size: 11px;
-        font-weight: bold;
-        text-align: right;
-      }
+      // &:before {
+      //   content: 'Gas Price';
+      //   position: absolute;
+      //   left: 12px;
+      //   top: 13px;
+      //   white-space: nowrap;
+      //   font-size: 11px;
+      //   font-weight: bold;
+      //   text-transform: uppercase;
+      // }
+      // &:after {
+      //   content: 'gwei';
+      //   position: absolute;
+      //   right: 12px;
+      //   top: 13px;
+      //   white-space: nowrap;
+      //   font-size: 11px;
+      //   font-weight: bold;
+      //   text-align: right;
+      // }
       input {
-        width: 100%;
-        padding-left: 80px;
-        padding-right: 45px;
+        width: 136px;
+        padding: 0px;
         text-align: right;
-        margin: 0;      
+        margin: 0 10px;
+        background-color: #12323a;
+        color: white;
       }
     }
   }

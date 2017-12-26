@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from 'react-router-dom'
 
 const TransferForm = (props) => {
   var render = (
@@ -6,7 +7,10 @@ const TransferForm = (props) => {
       <div class="frame">
         <div class="row">
           <div class="column small-11 medium-10 large-8 small-centered">
-            <h1 class="title">{props.translate("transaction.transfer") || "Transfer"}<span class="help has-tip top" data-tooltip title={props.translate("transaction.transfer_tooltip") || "Transfer ether or tokens to other addresses"}></span></h1>
+            <h1 class="title">
+              <Link to="/exchange">{props.translate("transaction.exchange") || "Exchange"}</Link>
+              <Link to="/transfer" className="disable">{props.translate("transaction.transfer") || "Transfer"}</Link>
+            </h1>
             <form action="#" method="get">
               <div class="row">
                 <div class="column">
@@ -21,7 +25,8 @@ const TransferForm = (props) => {
               </div>
               <div class="row">
                 <div class="column medium-6">
-                  {props.token}
+                  {/* {props.token} */}
+                  {props.tokenTransferSelect}
                 </div>
                 <div class="column medium-6">
                   <label>{props.translate("transaction.amount") || "Amount"}
@@ -63,7 +68,7 @@ const TransferForm = (props) => {
         </div>
       </div>
       {props.transferButton}
-      {props.tokenModal}
+      {/* {props.tokenModal} */}
     </div>
   )
   return (

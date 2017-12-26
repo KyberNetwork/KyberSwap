@@ -6,7 +6,7 @@ import { toT, roundingNumber, gweiToEth, toPrimitiveNumber } from "../../utils/c
 
 import { TransferForm, TransactionConfig } from "../../components/Transaction"
 import { PostTransferWithKey } from "../Transfer"
-import { Token, SelectToken, TransactionLoading } from "../CommonElements"
+import { TokenSelector, TransactionLoading } from "../CommonElements"
 
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
@@ -122,15 +122,24 @@ export default class Transfer extends React.Component {
       amountTransfer: this.props.transfer.errors.amountTransfer || ''
     }
 
-    var token = (
-      <Token type="transfer"
-        token={this.props.transfer.tokenSymbol}
-        onSelected={this.openTokenChoose}
-      />
+    // var token = (
+    //   <Token type="transfer"
+    //     token={this.props.transfer.tokenSymbol}
+    //     onSelected={this.openTokenChoose}
+    //   />
+    // )
+    // var tokenModal = (
+    //   <SelectToken chooseToken={this.chooseToken} type="transfer" selectedSymbol={this.props.transfer.tokenSymbol} />
+    // )
+
+    var tokenTransferSelect = (
+      <TokenSelector type="transfer"
+                      focusItem = {this.props.transfer.tokenSymbol}
+                      listItem = {this.props.tokens}
+                      chooseToken = {this.chooseToken}
+                      />
     )
-    var tokenModal = (
-      <SelectToken chooseToken={this.chooseToken} type="transfer" selectedSymbol={this.props.transfer.tokenSymbol} />
-    )
+
     var transferButton = (
       <PostTransferWithKey />
     )
@@ -159,9 +168,8 @@ export default class Transfer extends React.Component {
 
     return (
       <TransferForm step={this.props.transfer.step}
-        token={token}
         tokenSymbol={this.props.transfer.tokenSymbol}
-        tokenModal={tokenModal}
+        tokenTransferSelect={tokenTransferSelect}
         gasConfig={gasConfig}
         transferButton={transferButton}
         transactionLoadingScreen={transactionLoadingScreen}

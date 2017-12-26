@@ -110,6 +110,9 @@ export function gweiToWei(number) {
 }
 
 export function gweiToEth(number) {
+  if( number === "" || isNaN(number)){
+    return "0"
+  }
   var bigNumber = new BigNumber(number)
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
     return number

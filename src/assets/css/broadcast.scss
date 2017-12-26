@@ -1,52 +1,52 @@
-.broadcast-animation {
-  display: inline-block;
-  margin-bottom: 20px;
-  animation-duration: 1s;
-  @include breakpoint(medium) {
-    margin-bottom: 0;
-    margin-top: -25px;
-  }
-  &.finish {
-    animation-play-state: paused;
-    img.pending {
-      display: none;
-    }
-    img.finish {
-      display: block;
+.broadcast-animation{
+  width: 120px;
+  height: 120px;
+  background-color: #243c47;
+  padding: 17px;
+  border-radius: 50%;
+  margin: 0 auto;
+  img{
+    max-height: 100%;
     }
   }
-  img.pending {
-    display: block;
-  }
-  img.finish {
-    display: none;
-  }
-}
-
 ul.broadcast-steps {
-  margin: 0;
+  margin: 0 0 20px 0;
   padding: 0;
   list-style: none;
   font-size: 0;
+  ul.address-balances{
+    display: table;
+    width: 90%;
+    margin: 35px auto 0;
+    border-collapse: collapse;
+    @include breakpoint(medium){
+      width: 65%;
+    }
+    li{
+      border-top: 1px solid #45616f;
+      span{
+        padding: 10px 0;
+        font-weight: 100;
+      }
+    }
+  }
   > li {
     font-size: 14px;
-    font-weight: normal;
-    color: $medium-gray;
-    padding-left: 40px;
+    font-weight: bold;
+    color: $k-success;
+    display: inline-block;
     background-repeat: no-repeat;
     background-position: top 2px left;
     &:not(:last-child) {
       margin-bottom: 12px;
     }
     &.success {
-      background-image: url(../img/success.svg);
+      // background-image: url(../img/success.svg);
       font-weight: bold;
-      color: $dark-gray;
     }
     &.failed {
-      background-image: url(../img/failed.svg);
+      // background-image: url(../img/failed.svg);
       font-weight: bold;
-      color: $dark-gray;
       .reason {
         margin-top: 5px;
         color: $alert-color;
@@ -54,7 +54,7 @@ ul.broadcast-steps {
       }
     }
     &.pending {
-      background-image: url(../img/waiting.svg);
+      // background-image: url(../img/waiting.svg);
     }
   }
 }

@@ -18,8 +18,6 @@ const Address = (props) => {
           <a onClick={props.endSession} className="exit mr-3">
             {props.translate("transaction.exit") || "Exit"}
           </a>
-          <NavLink to="/exchange" onClick={checkCurrentLink}>{props.translate("transaction.exchange") || "Exchange"}</NavLink>
-          <NavLink to="/transfer" onClick={checkCurrentLink}>{props.translate("transaction.transfer") || "Transfer"}</NavLink>
           {props.notify}
         </div>
       </div>

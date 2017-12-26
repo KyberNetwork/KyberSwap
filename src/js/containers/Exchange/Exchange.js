@@ -2,9 +2,9 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 
-import { toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber } from "../../utils/converter"
+import { toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber, stringToBigNumber } from "../../utils/converter"
 
-import { PostExchangeWithKey } from "../Exchange"
+import { PostExchangeWithKey, RateBetweenToken } from "../Exchange"
 import { ExchangeForm, TransactionConfig } from "../../components/Transaction"
 
 import { TokenSelector, TransactionLoading, Token } from "../CommonElements"
@@ -71,14 +71,14 @@ export default class Exchange extends React.Component {
 
   specifyGasPrice = (event) => {
     var value = event.target.value
-    this.props.dispatch(exchangeActions.specifyGasPrice(value))
+    this.props.dispatch(exchangeActions.specifyGasPrice(value + ""))
   }
 
   setAmount = () => {
     var tokenSymbol = this.props.exchange.sourceTokenSymbol
     var token = this.props.tokens[tokenSymbol]
     if (token) {
-      var balanceBig = token.balance
+      var balanceBig = stringToBigNumber(token.balance)
       if (tokenSymbol === "ETH") {
         if (!balanceBig.greaterThanOrEqualTo(Math.pow(10, 17))) {
           return false
@@ -207,6 +207,11 @@ export default class Exchange extends React.Component {
       destToken: this.props.exchange.destTokenSymbol,
       percent: "-"
     }
+
+    var rateToken = (
+      <RateBetweenToken isSelectToken = {this.props.exchange.isSelectToken}
+                        exchangeRate = {exchangeRate}/>
+    )
     var exchangeButton = (
       <PostExchangeWithKey />
     )
@@ -220,6 +225,9 @@ export default class Exchange extends React.Component {
         broadcastingError={this.props.exchange.bcError}
       />
     )
+
+    var gasPrice = stringToBigNumber(gweiToEth(this.props.exchange.gasPrice))
+    var totalGas = gasPrice.mul(this.props.exchange.gas)
     var gasConfig = (
       <TransactionConfig gas={this.props.exchange.gas}
         gasPrice={this.props.exchange.gasPrice}
@@ -227,7 +235,7 @@ export default class Exchange extends React.Component {
         gasPriceHandler={this.specifyGasPrice}
         gasPriceError={this.props.exchange.errors.gasPriceError}
         gasError={this.props.exchange.errors.gasError}
-        totalGas={gweiToEth(this.props.exchange.gas * this.props.exchange.gasPrice)}
+        totalGas={totalGas.toString()}
         translate={this.props.translate}
       />
     )
@@ -247,7 +255,8 @@ export default class Exchange extends React.Component {
         balance={addressBalance}
         sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
         setAmount={this.setAmount}
-        isSelectToken = {this.props.exchange.isSelectToken}
+        // isSelectToken = {this.props.exchange.isSelectToken}
+        rateToken = {rateToken}
         translate={this.props.translate}
       />
     )
