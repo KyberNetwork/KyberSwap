@@ -76,17 +76,6 @@ const ExchangeForm = (props) => {
                   </label>
                 </div>
               </div>
-
-             
-
-                {/* <div class="row hide-on-choose-token-pair">
-                  <div class="column">
-                    <div class="advanced-content" disabled>
-                      {props.gasConfig}
-                    </div>
-                  </div>
-                </div> */}
-
             </form>
           </div>
         </div>

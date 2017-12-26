@@ -301,22 +301,26 @@ span.help {
 
 
 
-.exchange-footer{
+.transaction-footer{
   display: flex;
   align-items: center;
   label{
     margin-bottom: 0px;
     display: flex;
     align-items: center;
-    &.term-services{
-      input{
-        margin: 0px;
-        margin-right: 10px;
-      }
-      span{
-        line-height: 14px;
-        color: #ccc;
-      }
+  }
+  .term-services{
+    margin-bottom: 0px;
+    display: flex;
+    align-items: center;
+    input{
+      margin: 0px;
+      margin-right: 10px;
+    }
+    span{
+      line-height: 15px;
+      font-size: 13px;
+      color: #ccc;
     }
   }
 }

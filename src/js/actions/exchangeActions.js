@@ -300,3 +300,10 @@ export function updateCurrentBalance(sourceBalance, destBalance){
     payload: {sourceBalance, destBalance}
   }
 }
+
+export function setTermAndServices(value){
+  return {
+    type: "EXCHANGE.SET_TERM_AND_SERVICES",
+    payload: {value}
+  }
+}

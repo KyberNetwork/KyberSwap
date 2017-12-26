@@ -154,6 +154,10 @@ const transfer = (state = initState, action) => {
       newState.balanceData.next = action.payload.tokenBalance 
       return newState
     }
+    case "TRANSFER.SET_TERM_AND_SERVICES":{
+      newState.termAgree = action.payload.value
+      return newState
+    }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
       newState.gasPrice = action.payload
       return newState

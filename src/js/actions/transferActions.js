@@ -175,37 +175,6 @@ export function doTransactionFail(error) {
   }
 }
 
-// export function doApprovalTransaction(id, ethereum, tx, callback) {
-// 	return {
-// 		type: "TRANSFER.APPROVAL_TX_BROADCAST_PENDING",
-// 		payload: { ethereum, tx, callback },
-// 		meta: id,
-// 	}
-// }
-
-// export function doApprovalTransactionComplete(txHash, id) {
-// 	return {
-// 		type: "TRANSFER.APPROVAL_TX_BROADCAST_FULFILLED",
-// 		payload: txHash,
-// 		meta: id,
-// 	}
-// }
-
-// export function doApprovalTransactionFail(error, id) {
-// 	return {
-// 		type: "TRANSFER.APPROVAL_TX_BROADCAST_REJECTED",
-// 		payload: error,
-// 		meta: id,
-// 	}
-// }
-
-// export function saveRawTransferTransaction(tx){
-// 	return {
-// 		type: "TRANSFER.SAVE_RAW_TRANSACTION",
-// 		payload: tx			
-// 	}
-// }
-
 export function throwErrorSignTransferTransaction(error) {
   return {
     type: "TRANSFER.THROW_ERROR_SIGN_TRANSACTION",
@@ -224,5 +193,13 @@ export function updateCurrentBalance(tokenBalance) {
   return {
     type: "TRANSFER.UPDATE_CURRENT_BALANCE",
     payload: { tokenBalance }
+  }
+}
+
+
+export function setTermAndServices(value){
+  return {
+    type: "TRANSFER.SET_TERM_AND_SERVICES",
+    payload: {value}
   }
 }

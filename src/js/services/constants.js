@@ -19,6 +19,7 @@ const TRADE_TOPIC = "0xec0d3e799aa270a144d7e3be084ccfc657450e33ecea1b1a4154c95ce
 //const RESERVE_ADDRESS = "0x98990ee596d7c383a496f54c9e617ce7d2b3ed46"
 const INIT_EXCHANGE_FORM_STATE = {
   advanced: false,
+  termAgree: true,
   passphrase: false,  
   selected: false,
   isSelectToken: false,
@@ -72,6 +73,7 @@ const INIT_EXCHANGE_FORM_STATE = {
 
 const INIT_TRANSFER_FORM_STATE = {
   advanced: false,
+  termAgree:  true,
   passphrase: false,
   selected: false,
   token: ETHER_ADDRESS,

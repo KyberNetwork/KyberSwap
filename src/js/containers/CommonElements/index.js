@@ -8,3 +8,4 @@ export {default as ExchangeHistory } from './ExchangeHistory.js'
 export {default as TransactionList } from './TransactionList.js'
 
 export {default as TokenSelector } from './TokenSelector.js'
+export {default as TermAndServices } from './TermAndServices.js'

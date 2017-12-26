@@ -5,8 +5,11 @@ import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
 
 import * as exchangeActions from "../../actions/exchangeActions"
+import * as utilActions from "../../actions/utilActions"
 
 import { Modal } from "../../components/CommonElement"
+import {TermAndServices} from "../../containers/CommonElements"
+
 import { PassphraseModal, ConfirmTransferModal, ApproveModal, PostExchangeBtn } from "../../components/Transaction"
 import { getTranslate } from 'react-localize-redux';
 
@@ -46,6 +49,10 @@ export default class PostExchange extends React.Component {
       }
     } else if (this.props.form.step == 2) {
       if (this.validateExchange()) {
+        //agree terms and services
+        if(!this.props.form.termAgree){
+          return this.props.dispatch(utilActions.openInfoModal("Agree terms and services","You must agree terms and services!"))
+        }
         //check account type
         switch (this.props.account.type) {
           case "keystore":
@@ -67,6 +74,11 @@ export default class PostExchange extends React.Component {
       }
     }
   }
+
+  clickCheckbox = (value) => {
+    this.props.dispatch(exchangeActions.setTermAndServices(value))
+  }
+
   validateExchange = () => {
     //check source amount
     var check = true
@@ -289,9 +301,12 @@ export default class PostExchange extends React.Component {
       )
     }
     let className = "button accent "
-    if (!validators.anyErrors(this.props.form.errors)) {
+    if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree) {
       className += " animated infinite pulse next"
     }
+
+    var termAndServices = (<TermAndServices clickCheckbox = {this.clickCheckbox}
+                                            termAgree = {this.props.form.termAgree}/>)
     return (
       <PostExchangeBtn
         step={this.props.form.step}
@@ -304,6 +319,7 @@ export default class PostExchange extends React.Component {
         isConfirming={this.props.form.isConfirming}
         isApproving={this.props.form.isApproving}
         translate={this.props.translate}
+        termAndServices = {termAndServices}
       />
     )
   }

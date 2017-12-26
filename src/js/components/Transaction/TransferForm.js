@@ -6,7 +6,7 @@ const TransferForm = (props) => {
     <div id="transfer-screen">
       <div class="frame">
         <div class="row">
-          <div class="column small-11 medium-10 large-8 small-centered">
+          <div>
             <h1 class="title">
               <Link to="/exchange">{props.translate("transaction.exchange") || "Exchange"}</Link>
               <Link to="/transfer" className="disable">{props.translate("transaction.transfer") || "Transfer"}</Link>
@@ -47,26 +47,11 @@ const TransferForm = (props) => {
                 </div>
               </div>
             </form>
-            <div class="row hide-on-choose-token-pair">
-              <div class="column">
-                <div class="clearfix">
-                  <div class="advanced-switch base-line float-right">
-                    <div class="switch accent">
-                      <input class="switch-input" id="advanced" type="checkbox" />
-                      <label class="switch-paddle" for="advanced"><span class="show-for-sr">Advanced Mode</span></label>
-                    </div>
-
-                    <label class="switch-caption" for="advanced">{props.translate("transaction.advanced") || "Advanced"}</label>
-                  </div>
-                </div>
-                <div class="advanced-content" disabled>
-                  {props.gasConfig}
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
+
+      {props.gasConfig}
       {props.transferButton}
       {/* {props.tokenModal} */}
     </div>
