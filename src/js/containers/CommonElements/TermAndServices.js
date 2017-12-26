@@ -14,21 +14,20 @@ export default class TermAndServices extends React.Component {
   constructor() {
     super()
     this.state = {
-      isCheck: false
+      isOpen: false,
     }
   }
 
   showTerms = () => {
-    this.setState({ isCheck: true })
+    this.setState({ isOpen: true })
   }
 
   onRequestClose = () => {
-    this.setState({ isCheck: false })
+    this.setState({ isOpen: false })
   }
 
   changeCheckbox = (e) => {
-    var value = e.target.checked
-    this.props.clickCheckbox(value)
+    this.props.clickCheckbox(!this.props.termAgree)
   }
 
   content = () => {
@@ -73,10 +72,15 @@ export default class TermAndServices extends React.Component {
   }
 
   render() {
+    var checkBox = this.props.termAgree ? <img src={require("../../../assets/img/checkmark-selected.svg")} />
+                                      :<img src={require("../../../assets/img/checkmark-unselected.svg")} />
     return (
       <div>
         <div className="term-services">
-          <input type="checkbox" onChange={(e) => this.changeCheckbox(e)} checked={this.props.termAgree} />
+          {/* <input type="checkbox" onChange={(e) => this.changeCheckbox(e)} checked={this.props.termAgree} /> */}
+          <span onClick = {(e) => this.changeCheckbox(e)}>
+            {checkBox}
+          </span>
           <span onClick={this.showTerms}>
             <a>Terms and <br></br> Conditions</a>
           </span>
@@ -86,7 +90,7 @@ export default class TermAndServices extends React.Component {
           base: 'reveal tiny',
           afterOpen: 'reveal tiny'
         }}
-          isOpen={this.state.isCheck}
+          isOpen={this.state.isOpen}
           onRequestClose={this.onRequestClose}
           contentLabel="Terms and Services"
           content={this.content()}

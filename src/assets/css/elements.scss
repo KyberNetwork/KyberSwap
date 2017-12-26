@@ -4,7 +4,7 @@ textarea{
     font-size: 15px;
     letter-spacing: 1.25px;
     background-color: #415b68;
-    height: 87px;
+    height: 100px;
     color: white;
     font-weight: bold;
   }
@@ -327,13 +327,12 @@ span.help {
     margin-bottom: 0px;
     display: flex;
     align-items: center;
-    input{
-      margin: 0px;
-      margin-right: 10px;
-    }
     span{
       line-height: 15px;
       font-size: 13px;
+      &:first-child{
+        margin-right: 15px;
+      }
       a{
         color: #ccc;
       }
