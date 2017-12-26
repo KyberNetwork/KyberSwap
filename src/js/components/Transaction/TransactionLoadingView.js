@@ -36,7 +36,7 @@ const TransactionLoadingView = (props) => {
         </div>
         <div class="row">
           <div class="column small-11 medium-10 large-9 small-centered text-center">
-            <p class="note">{props.type == 'exchange' ? props.translate("transaction.close_browser_or_make_new_exchange") : props.translate("transaction.close_browser_or_make_new_transfer")}</p><a class="button accent" onClick={props.makeNewTransaction}>{props.type == 'exchange' ? "Exchange" : "Transfer"}</a>
+            <p class="note text-white">{props.type == 'exchange' ? props.translate("transaction.close_browser_or_make_new_exchange") : props.translate("transaction.close_browser_or_make_new_transfer")}</p><a class="button accent" onClick={props.makeNewTransaction}>{props.type == 'exchange' ? "Exchange" : "Transfer"}</a>
           </div>
         </div>
       </div>
@@ -113,7 +113,7 @@ const TransactionLoadingView = (props) => {
       </div>
       <div class="row">
         <div class="column small-11 medium-10 large-9 small-centered text-center">
-          <p class="note">{props.type == 'exchange' ? props.translate("transaction.close_browser_or_make_new_exchange") : props.translate("transaction.close_browser_or_make_new_transfer")}</p><a className={"button accent new-transaction" + (props.status != "pending" ? " animated infinite pulse" : "")} onClick={props.makeNewTransaction}>{props.type == 'exchange' ? props.translate("transaction.exchange") : props.translate("transaction.transfer")}</a>
+          <p class="note text-white">{props.type == 'exchange' ? props.translate("transaction.close_browser_or_make_new_exchange") : props.translate("transaction.close_browser_or_make_new_transfer")}</p><a className={"button accent new-transaction" + (props.status != "pending" ? " animated infinite pulse" : "")} onClick={props.makeNewTransaction}>{props.type == 'exchange' ? props.translate("transaction.exchange") : props.translate("transaction.transfer")}</a>
         </div>
       </div>
     </div>
