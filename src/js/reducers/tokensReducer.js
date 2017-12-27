@@ -84,7 +84,7 @@ const tokens = (state = initState, action) => {
           token.rate = mapToken[key].rate
         }
         if (mapToken[key] && mapToken[key].rateEth) {
-          token.rate = mapToken[key].rateEth
+          token.rateEth = mapToken[key].rateEth
         }
         newTokens[key] = token
       })

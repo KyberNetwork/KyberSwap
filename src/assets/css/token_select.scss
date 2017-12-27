@@ -68,6 +68,10 @@
       padding: 9px 20px;
       display: flex;
       justify-content: space-between;
+      .item-icon{
+        border-radius: 20px;
+        background-color: #fefefe;
+      }
       >div{
         .item-name{
           margin-left: 10px;

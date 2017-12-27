@@ -442,6 +442,12 @@ label.switch-caption {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+    >div{
+      &:not(:first-child){
+        margin-left: 20px;
+      }
+    }
     >label{
       margin-bottom: 0px;
       margin-right: 20px;
@@ -465,7 +471,19 @@ label.switch-caption {
         content: '= ';
       }
     }
+    // @include breakpoint(large){
+    //   >div{
+    //     &:first-child{
+    //       width: 100%;
+    //     }
+    //   }
+    // }
     @include breakpoint(medium) {
+      // >div{
+      //   &:first-child{
+      //     width: 100%;
+      //   }
+      // }
       .gas-limit,
       .gas-price {
         float: left;
@@ -485,7 +503,7 @@ label.switch-caption {
       }
     }
     .gas-limit {
-      position: relative;
+      //position: relative;
       
       // &:before {
       //   content: 'Gas Limit';
@@ -514,7 +532,7 @@ label.switch-caption {
       // }
     }
     .gas-price {
-      position: relative;
+     // position: relative;
       // &:before {
       //   content: 'Gas Price';
       //   position: absolute;
@@ -542,6 +560,7 @@ label.switch-caption {
         margin: 0 10px;
         background-color: #12323a;
         color: white;
+        padding-right: 10px;
       }
     }
   }

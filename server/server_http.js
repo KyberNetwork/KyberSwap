@@ -69,6 +69,18 @@ app.get('/getHistoryTwoColumn', function (req, res) {
     })
   })
 })
+
+
+app.get('/getHistoryOneColumn', function (req, res) {
+  var page = 0
+  var itemPerpage = 10
+  var events = persistor.getEvents(page, itemPerpage)
+  events.then((result) => {
+    res.end(JSON.stringify({ events: result }))
+  })
+})
+
+
 app.get('/countHistory', (req, res) => {
   var event = persistor.countEvents()
   event.then((result) => {

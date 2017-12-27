@@ -83,10 +83,15 @@ export default class TermAndServices extends React.Component {
           <span onClick = {(e) => this.changeCheckbox(e)}>
             {checkBox}
           </span>
-          {this.props.translate("transaction.terms_and_conditions") || <span>Terms and <br></br> Conditions </span>}
-          <span  onClick={this.showTerms} className="view-term">
-            <a>VIEW</a>
+          <span onClick={this.showTerms}>
+            <a>
+              {this.props.translate("transaction.terms_and_conditions") || <span>Terms and <br></br> Conditions </span>}
+            </a>
           </span>
+          
+          {/* <span  onClick={this.showTerms} className="view-term">
+            <a>VIEW</a>
+          </span> */}
         </div>
 
         <Modal className={{

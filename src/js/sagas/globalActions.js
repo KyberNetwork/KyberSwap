@@ -19,7 +19,7 @@ export function* getLatestBlock(action) {
 export function* updateHistoryExchange(action) {
   const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
   var latestBlock = yield call(ethereum.call("getLatestBlock"))
-  const newLogs = yield call(ethereum.call("getLogTwoColumn"), page, itemPerPage)
+  const newLogs = yield call(ethereum.call("getLogOneColumn"), page, itemPerPage)
   // const eventsCount = yield call(ethereum.call("countALlEvents"))
   yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
 }

@@ -11,18 +11,20 @@ import { getTranslate } from 'react-localize-redux';
     global: store.global,
     tokens: store.tokens.tokens,
     translate: getTranslate(store.locale),
+    logsEth: store.global.history.logs.slice(0, 5), 
+    logsToken: store.global.history.logs.slice(5, 10)
   }
 })
 
 class TransactionList extends React.Component {
   render() {
-    if (!this.props.global.history || !this.props.global.history.logsEth || !this.props.global.history.logsToken || (this.props.global.history.logsEth.length ===0 && this.props.global.history.logsToken.length ===0)){
+    if (!this.props.global.history || !this.props.global.history.logs || (this.props.global.history.logs.length ===0)){
       return ""
     }
     return (
       <TransactionListView tokens = {this.props.tokens}
-                          logsEth = {this.props.global.history.logsEth}
-                          logsToken = {this.props.global.history.logsToken}
+                          logsEth = {this.props.logsEth}
+                          logsToken = {this.props.logsToken}
                           averageTime={BLOCKCHAIN_INFO.averageBlockTime}  
                           lastBlock={this.props.global.history.currentBlock}
                           translate={this.props.translate}

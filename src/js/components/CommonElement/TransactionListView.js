@@ -23,53 +23,10 @@ const TransactionListView = (props) => {
     }
   }
 
-
-
-  // function createRecap(log) {
-  //   const sourceToken = getTokenSymbol(log.source)
-  //   const destToken = getTokenSymbol(log.dest)
-  //   const sender = log.sender.slice(0, 8) + " ... " + log.sender.slice(-6)
-  //   const sourceAmount = toT(log.actualSrcAmount, sourceToken.decimal).slice(0, 7)
-  //   const destAmount = toT(log.actualDestAmount, destToken.decimal).slice(0, 7)
-  //   return (
-  //     <div>
-  //       <strong>{sourceAmount + ' ' + sourceToken.key}</strong> to
-  //       <strong> {destAmount + ' ' + destToken.key}</strong>
-  //     </div>
-  //   )
-  // }
-
   function getIcon(tokenAddress) {
     let token = getTokenSymbol(tokenAddress)
     return props.tokens[token.key].icon
   }
-
-  // function calculateTimeStamp(currentBlock) {
-  //   var lastBlock = props.lastBlock
-  //   var averageTime = props.averageTime
-  //   var seconds = (lastBlock - currentBlock) * averageTime / 1000
-  //   var interval = Math.floor(seconds / 31536000);
-  //   if (interval > 0) {
-  //     return interval + " years ago"
-  //   }
-  //   interval = Math.floor(seconds / 2592000);
-  //   if (interval > 0) {
-  //     return interval + " months ago"
-  //   }
-  //   interval = Math.floor(seconds / 86400);
-  //   if (interval > 0) {
-  //     return interval + " days ago"
-  //   }
-  //   interval = Math.floor(seconds / 3600);
-  //   if (interval > 0) {
-  //     return interval + " hours ago"
-  //   }
-  //   interval = Math.floor(seconds / 60);
-  //   if (interval > 0) {
-  //     return interval + " minutes ago"
-  //   }
-  //   return Math.floor(seconds) + " seconds ago"
-  // }
 
   function calculateTimeStamp(timeStamp) {
     var msPerMinute = 60 * 1000;
@@ -104,8 +61,6 @@ const TransactionListView = (props) => {
       return Math.round(elapsed / msPerYear) + ' ' + (props.translate('history.years_ago') || 'years ago');
     }
   }
-  //return timestamp
-
 
   function content(list) {
     var content = list.map(function (item, i) {
@@ -141,7 +96,7 @@ const TransactionListView = (props) => {
           <h1 className="title">{props.translate("transaction_list.transaction_history") || "Transactions"}</h1>
           <div className="row">
             <div className="small-12 medium-6 large-6 column">
-              <p className="p-3 bg-light">ETH / TOKEN</p>
+              {/* <p className="p-3 bg-light">ETH / TOKEN</p> */}
               <div className="transaction-list">
                 <CSSTransitionGroup
                   transitionName="example"
@@ -152,7 +107,7 @@ const TransactionListView = (props) => {
               </div>
             </div>
             <div className="small-12 medium-6 large-6 column">
-              <p className="px-2 py-3 bg-light">TOKEN / ETH</p>
+              {/* <p className="px-2 py-3 bg-light">TOKEN / ETH</p> */}
               <div className="transaction-list">
                 <CSSTransitionGroup
                   transitionName="example"

@@ -303,6 +303,20 @@ class SqlitePersist {
     })
   }
 
+  getEvents(page, itemPerPage){
+    return new Promise((resolve, reject) => {
+      var sql = "SELECT * FROM logs WHERE dest IN "+this.suportedTokenStr+" AND source IN " + this.suportedTokenStr + " ORDER BY blockNumber DESC LIMIT ?"
+      this.db.all(sql, [itemPerPage], function (err, rows) {
+        if (err) {
+          console.log(err)
+          reject(err.message)
+        } else {
+          resolve(rows)
+        }
+      })
+    })
+  }
+
   countEvents() {
     var sql = `SELECT Count(*) as count FROM logs`;
     return new Promise((resolve, reject) => {
