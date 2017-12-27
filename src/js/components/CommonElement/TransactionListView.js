@@ -91,36 +91,37 @@ const TransactionListView = (props) => {
 
   return (
     <div className="history mb-8">
-      <div className="row">
-        <div class="column small-11 large-12 small-centered">
-          <h1 className="title">{props.translate("transaction_list.transaction_history") || "Transactions"}</h1>
-          <div className="row">
-            <div className="small-12 medium-6 large-6 column">
-              {/* <p className="p-3 bg-light">ETH / TOKEN</p> */}
-              <div className="transaction-list">
-                <CSSTransitionGroup
-                  transitionName="example"
-                  transitionEnterTimeout={1000}
-                  transitionLeaveTimeout={1000}>
-                  {content(props.logsEth)}
-                </CSSTransitionGroup>
-              </div>
+      <div className="row small-11 medium-12 large-12">
+        <div className="row column">
+          <div className="small-12 medium-12 large-12 column">
+            <h1 className="title column">{props.translate("transaction_list.transaction_history") || "Transactions"}</h1>
+          </div>
+        </div>
+        <div className="row column">
+          <div className="small-12 medium-12 large-6 column">
+            {/* <p className="p-3 bg-light">ETH / TOKEN</p> */}
+            <div className="transaction-list">
+              <CSSTransitionGroup
+                transitionName="example"
+                transitionEnterTimeout={1000}
+                transitionLeaveTimeout={1000}>
+                {content(props.logsEth)}
+              </CSSTransitionGroup>
             </div>
-            <div className="small-12 medium-6 large-6 column">
-              {/* <p className="px-2 py-3 bg-light">TOKEN / ETH</p> */}
-              <div className="transaction-list">
-                <CSSTransitionGroup
-                  transitionName="example"
-                  transitionEnterTimeout={1000}
-                  transitionLeaveTimeout={1000}>
-                  {content(props.logsToken)}
-                </CSSTransitionGroup>
-              </div>
+          </div>
+          <div className="small-12 medium-12 large-6 column">
+            {/* <p className="px-2 py-3 bg-light">TOKEN / ETH</p> */}
+            <div className="transaction-list">
+              <CSSTransitionGroup
+                transitionName="example"
+                transitionEnterTimeout={1000}
+                transitionLeaveTimeout={1000}>
+                {content(props.logsToken)}
+              </CSSTransitionGroup>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   )
 }

@@ -6,7 +6,7 @@ const PostExchangeBtn = (props) => {
   return (
     <div className="bg-primary pb-4">
       {props.step == 2 ?
-        <div className="row px-4">
+        <div className="row small-11 medium-12 large-12">
           <div class="column transaction-footer">
             <div className="term">
               {props.termAndServices}

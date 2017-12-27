@@ -39,7 +39,7 @@ const ExchangeRates = (props) => {
       { breakpoint: 100000, settings: { slidesToShow: 6 } }]
   }
   return (
-    <div class="row">
+    <div class="row small-11 medium-12 large-12">
       <div class="column">
         <div className="rate">
           <Slider {...settings}>

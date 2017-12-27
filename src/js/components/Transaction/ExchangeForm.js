@@ -24,7 +24,7 @@ const ExchangeForm = (props) => {
   var render = (
     <div>
       <div class="frame">
-        <div class="row px-4">
+        <div class="row small-11 medium-12 large-12">
           <div class="column">
             <h1 class="title">
               <Link to="/exchange" className="disable">{props.translate("transaction.exchange") || "Exchange"}</Link>

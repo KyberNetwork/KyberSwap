@@ -6,7 +6,7 @@ const PostTransferBtn = (props) => {
   return (
     <div className="bg-primary">
       {props.step !== 2 ?
-        <div class="row px-4">
+        <div class="row small-11 medium-12 large-12">
           <div className="column transaction-footer">
             <div className="term">
               {props.termAndServices}

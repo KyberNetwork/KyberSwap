@@ -30,7 +30,7 @@ const AccountBalanceView = (props) => {
   var roundingTotal = converts.roundingNumber(total)
   return (
     <div>
-      <div className="row balance-header px-4">
+      <div className="row balance-header small-11 medium-12 large-12">
         <div className="column">
           <div className="mt-3 clearfix">
             <h4 className="title font-w-b float-left">{props.translate("address.my_balance") || "My balance"}</h4>

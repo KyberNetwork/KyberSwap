@@ -357,11 +357,12 @@ $accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
   background-color: $k-primary;
   color: $white-light;
   min-height: 0px !important;
-  padding: 10px 15px;
+  //padding: 10px 15px;
+  padding: 15px 0;
   border-top: 1px solid $k-divider;
-  @include breakpoint(medium) {
-    padding: 20px 15px;
-  }
+  // @include breakpoint(medium) {
+  //   padding: 20px 15px;
+  // }
   .bx-wrapper {
     &:after {
       pointer-events: none;

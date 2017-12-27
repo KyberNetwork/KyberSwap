@@ -46,7 +46,7 @@ const TransactionLoadingView = (props) => {
   return (
     <div>
       <div class="frame">
-        <div class="row">
+        <div class="row small-11 medium-12 large-12">
           <div class="text-center">
             <h1 class="title mb-0">{props.translate("transaction.broadcast") || "Broadcast"}
             </h1>

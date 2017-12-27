@@ -4,7 +4,7 @@ const ImportAccountView = (props) => {
   return (
     <div id="import-account">
       <div class="frame">
-        <div className="row px-4">
+        <div className="row">
           <div class="column small-11 large-12 small-centered" id="import-acc">
             <h1 class="title">{props.translate("address.import_address") || "Import address"}</h1>
             <div class="row import-account">
