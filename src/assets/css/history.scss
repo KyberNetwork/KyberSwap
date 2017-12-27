@@ -1,6 +1,8 @@
 #history-exchange {
   margin-top: 30px;
   margin-bottom: 50px;
+  color: #2c2c2c;
+  
   &.loading{
     position: relative;
     &:after{
@@ -42,10 +44,10 @@
         }
       }
       .amount strong {
-        font-family: "Roboto Mono", Consolas, "Liberation Mono", Courier, monospace;
+      //  font-family: "Roboto Mono", Consolas, "Liberation Mono", Courier, monospace;
       }
       .link {
-        font-family: "Roboto Mono", Consolas, "Liberation Mono", Courier, monospace;
+       // font-family: "Roboto Mono", Consolas, "Liberation Mono", Courier, monospace;
         font-weight: bold;
       }
       .timestamp {

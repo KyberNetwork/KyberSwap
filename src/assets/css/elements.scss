@@ -18,12 +18,12 @@ textarea{
 
 .unlock input, input[type=password] {
   background-color: transparent;
-  border-bottom: 1px solid #fefefe;
+  border-bottom: 1px solid $white;
   height: 50px;
-  color: #fefefe;
+  color: $white;
   &:focus{
     background-color: transparent;
-    border-bottom: 1px solid #fefefe;
+    border-bottom: 1px solid $white;
   }
 }
 input {
@@ -202,14 +202,14 @@ a.has-tip {
 }
 h1.title {
   font-size: 24px;
-  font-weight: bold;
+  //font-weight: bold;
   letter-spacing: .5px;
   padding: 20px 0;
   a{
     color: #91a1a7;
     
     &:first-child{
-      margin-right: 15px;
+      margin-right: 25px;
     }
     &.disable{
       color: white;  
@@ -290,7 +290,7 @@ p.note {
     background-color: rgba($dark-gray, .7);
     text-align: center;
     &:hover {
-      background: linear-gradient(135deg, rgba(#4ca294, .9), rgba(#3b8a8a, .9));
+      background-color: linear-gradient(178deg, #36d9ac, #049696);
     }
   }
   img {
@@ -364,6 +364,9 @@ span.help {
     margin-bottom: 0px;
     display: flex;
     align-items: center;
+    .term-text{
+      color: rgba(255,255,255, 0.5)
+    }
     .view-term{
       border: 1px solid white;
       padding: 5px;
@@ -377,9 +380,9 @@ span.help {
       &:nth-child(2){
         color: #ccc;
       }
-      a{
-        color: white;
-      }
+      // a{
+      //   color: white;
+      // }
     }
   }
 }

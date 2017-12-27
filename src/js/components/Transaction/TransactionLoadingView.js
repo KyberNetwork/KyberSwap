@@ -59,7 +59,7 @@ const TransactionLoadingView = (props) => {
             <ul class="broadcast-steps">
               {props.status === "success" &&
                 <li class={props.status}>
-                  <h5 class="text-success font-w-b">{props.translate("transaction.broadcasted_title") || "Broadcasted your transaction to the blockchain"}</h5>
+                  <h5 class="text-success">{props.translate("transaction.broadcasted_title") || "Broadcasted your transaction to the blockchain"}</h5>
                   {props.type === "exchange" &&
                     <ul class="address-balances text-white">
                       <li class="text-left">

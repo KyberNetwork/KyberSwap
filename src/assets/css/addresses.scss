@@ -55,7 +55,7 @@ ul.address-list {
         text-align: right;
         font-size: 14px;
         padding-right: 25px;
-        background-image: url(../img/link.svg);
+        background-image: url('../img/link.svg');
         background-repeat: no-repeat;
         background-size: 16px 16px;
         background-position: center right;
@@ -201,7 +201,7 @@ label.address-path-stamp {
     .address-path-input{
       input[type=text] {
         background-color: rgba(35, 102, 102, 0.88);
-        color: #fefefe;
+        color: $white;
         border: 1px solid #236968;
       }
       a.submit {

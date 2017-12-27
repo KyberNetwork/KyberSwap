@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Muli:400,800,400i|Roboto+Mono:400,700');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 @import '../bower/animate.css/animate.css';
 @import 'settings';
 @import "util";
 
-$accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
+$accent-gradient: linear-gradient(169deg, #36d9ac, #049696);
+
 
 @import 'elements';
 @import 'broadcast';
@@ -18,6 +19,11 @@ $accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
 @import "token_select";
 @import "term_and_services";
 @import "icon";
+
+
+body{
+  color: $black;
+}
 
 #waiting {
   background-color: rgba($dark-gray, .5);
@@ -108,7 +114,7 @@ $accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
       }
     }
     .exit{
-      padding: 7px 12px;
+      padding: 5px 12px;
       border: 1px solid #eee;
       font-weight: 700;
       color: inherit;
@@ -469,4 +475,10 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
   margin: 0; 
+}
+
+#import-account{
+  .title{
+    font-weight: normal;
+  }
 }

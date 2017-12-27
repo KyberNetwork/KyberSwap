@@ -32,27 +32,32 @@ export default class ImportKeystore extends React.Component {
   }
 
   onDrop = (files) => {
-    var _this = this
-    var file = files[0]
-    var fileReader = new FileReader()
-    fileReader.onload = (event) => {
-      var keystring = this.lowerCaseKey(event.target.result)
-      var errors = {}
-      errors["keyError"] = verifyKey(keystring)
-      if (anyErrors(errors)) {
-        this.props.dispatch(throwError("Your uploaded JSON file is invalid. Please upload a correct JSON keystore."))
-      } else {
-        var address = addressFromKey(keystring)
-        this.props.dispatch(importNewAccount(address,
-          "keystore",
-          keystring,
-          this.props.ethereum,
-          getRandomAvatar(address),
-          this.props.tokens))
-      }
+    try {
+      var _this = this
+      var file = files[0]
+      var fileReader = new FileReader()
+      fileReader.onload = (event) => {
+        var keystring = this.lowerCaseKey(event.target.result)
+        var errors = {}
+        errors["keyError"] = verifyKey(keystring)
+        if (anyErrors(errors)) {
+          this.props.dispatch(throwError("Your uploaded JSON file is invalid. Please upload a correct JSON keystore."))
+        } else {
+          var address = addressFromKey(keystring)
+          this.props.dispatch(importNewAccount(address,
+            "keystore",
+            keystring,
+            this.props.ethereum,
+            getRandomAvatar(address),
+            this.props.tokens))
+        }
 
+      }
+      fileReader.readAsText(file)
+    } catch (e) {
+      console.log(e)
     }
-    fileReader.readAsText(file)
+
   }
 
   render() {

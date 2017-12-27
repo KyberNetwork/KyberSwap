@@ -62,6 +62,9 @@
 
 @import '../bower/foundation-sites/scss/util/util';
 
+// 0. Custom design
+//$design-background-frame-color: #2a4552;
+
 // 1. Global
 // ---------
 
@@ -78,20 +81,20 @@ $foundation-palette: (
 $light-gray: #BBDAD5;
 $medium-gray: #262C41;
 $dark-gray: #0B0F1A;
-$black: #0a0a0a;
-$white: #fefefe;
-$white-light: rgba(254, 254, 254, 0.8);
+$black: #2c2c2c;
+$white: #ffffff;
+$white-light: rgba(255, 255, 255, 0.56);
 $body-background: #fff;
 $body-font-color: #0B0F1A;
 $k-primary: #2a4552;
 $k-primary-lighter: #3f5662;
 $k-primary-darker: #233a44;
 $k-success-gradient: linear-gradient(135deg, #30968e, #298083);
-$k-success: #34b8a5;
+$k-success: #3ee6c1;
 $k-divider: #243c47;
 $k-divider-light: rgba(254, 254, 254, 0.12);
 
-$body-font-family: 'Muli', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+$body-font-family:'Source Sans Pro', sans-serif;
 $body-antialiased: true;
 $global-margin: 1rem;
 $global-padding: 1rem;
@@ -139,10 +142,16 @@ $block-grid-max: 8;
 // 4. Base Typography
 // ------------------
 
-$header-font-family: 'Muli', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+// $header-font-family: 'Muli', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+// $header-font-weight: $global-weight-normal;
+// $header-font-style: normal;
+// $font-family-monospace: 'Roboto Mono', Consolas, 'Liberation Mono', Courier, monospace;
+
+$header-font-family: 'Source Sans Pro', sans-serif;
 $header-font-weight: $global-weight-normal;
 $header-font-style: normal;
-$font-family-monospace: 'Roboto Mono', Consolas, 'Liberation Mono', Courier, monospace;
+$font-family-monospace: 'Source Sans Pro', sans-serif;
+
 $header-color: inherit;
 $header-lineheight: 1.4;
 $header-margin-bottom: 0.5rem;
