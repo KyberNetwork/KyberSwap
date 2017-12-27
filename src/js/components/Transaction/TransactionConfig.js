@@ -8,20 +8,7 @@ const TransactionConfig = (props) => {
   function specifyGasPrice(event) {
     props.gasPriceHandler(event)
   }
-  // var gasError = ""
-  // if (props.gasError && props.gasError != "") {
-  //   gasError = (<div class="error">
-  //     <i class="k-icon k-icon-error"></i>
-  //     Specified gas limit is {props.gasError}
-  //   </div>)
-  // }
-  // var gasPriceError = ""
-  // if (props.gasPriceError && props.gasPriceError != "") {
-  //   gasPriceError = (<div class="error">
-  //     <i class="k-icon k-icon-error"></i>
-  //     Specified gas limit is {props.gasPriceError}
-  //   </div>)
-  // }
+  
   return (
     <div className="frame">
       <div className="gas-config">

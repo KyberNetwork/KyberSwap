@@ -2,6 +2,9 @@
 .bg-light{
     background-color: #f5f5f5;
 }
+.bg-primary{
+    background-color: $k-primary;
+}
 .text-light{
     color: #a5a5a5;
 }
@@ -34,6 +37,9 @@
 }
 .d-flex{
     display: flex;
+}
+.w-100{
+    width: 100%;
 }
 @include breakpoint(medium){
     .float-left-md{
