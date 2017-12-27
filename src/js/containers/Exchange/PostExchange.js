@@ -38,7 +38,6 @@ import { RateBetweenToken } from "../Exchange"
     ethereum: store.connection.ethereum,
     keyService: props.keyService,
     translate: getTranslate(store.locale),
-    exchange: store.exchange,
   }
 })
 
@@ -315,16 +314,17 @@ export default class PostExchange extends React.Component {
         termAgree={this.props.form.termAgree} 
       />
     )
+
     var exchangeRate = {
-      sourceToken: this.props.exchange.sourceTokenSymbol,
-      rate: converters.toT(this.props.exchange.offeredRate),
-      destToken: this.props.exchange.destTokenSymbol,
+      sourceToken: this.props.form.sourceTokenSymbol,
+      rate: converters.toT(this.props.form.offeredRate),
+      destToken: this.props.form.destTokenSymbol,
       percent: "-"
     }
 
     var rateToken = (
       <RateBetweenToken
-        isSelectToken={this.props.exchange.isSelectToken}
+        isSelectToken={this.props.form.isSelectToken}
         exchangeRate={exchangeRate}
       />
     )
