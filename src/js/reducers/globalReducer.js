@@ -58,12 +58,10 @@ const global = (state = initState, action) => {
       const { logs, latestBlock, page, isAutoFetch } = action.payload
       var history = { ...state.history }
       if(logs){        
-        if(logs.eth) history.logsEth = logs.eth
-        if(logs.token) history.logsToken = logs.token
+        if(logs.events) history.logs = logs.events
       }
       history.currentBlock = latestBlock
       history.page = page
-      // history.eventsCount = eventsCount
       history.isFetching = false
       return { ...state,  history: {...history} }
     }

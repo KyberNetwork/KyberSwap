@@ -146,7 +146,7 @@ const TransactionListView = (props) => {
             <h1 className="title">{props.translate("transaction_list.transaction_history") || "TRANSACTION HISTORY"}</h1>
             <div className="row">
               <div className="small-12 medium-6 large-6 column">
-                <span>ETH / TOKEN</span>
+                {/* <span>ETH / TOKEN</span> */}
                 <div className="transaction-list">
                   <CSSTransitionGroup
                     transitionName="example"
@@ -157,7 +157,7 @@ const TransactionListView = (props) => {
                 </div>
               </div>
               <div className="small-12 medium-6 large-6 column">
-                <span>TOKEN / ETH</span>
+                {/* <span>TOKEN / ETH</span> */}
                 <div className="transaction-list">
                   <CSSTransitionGroup
                     transitionName="example"

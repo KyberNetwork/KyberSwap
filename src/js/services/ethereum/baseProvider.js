@@ -234,6 +234,34 @@ export default class BaseEthereumProvider {
     })
   }
 
+
+  getLogOneColumn(page, itemPerPage) {
+    return new Promise((resolve, rejected) => {
+      fetch(BLOCKCHAIN_INFO.history_endpoint + '/getHistoryOneColumn', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+      })
+        .then((response) => {
+          return response.json()
+        })
+        .then((data) => {
+          for (let key in data) {
+            data[key] = data[key].filter(item => {
+              return (this.tokenIsSupported(item.dest)
+                && this.tokenIsSupported(item.source))
+            })
+          }
+          resolve(data);
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    })
+  }
+  
   tokenIsSupported(address) {
     let tokens = BLOCKCHAIN_INFO.tokens
     for(let token in tokens){

@@ -111,6 +111,7 @@ const HISTORY_EXCHANGE = {
   currentBlock: 0,
   eventsCount : 0,
   isFetching: false,
+  logs: [],
   logsEth:[],
   logsToken:[]
 }
