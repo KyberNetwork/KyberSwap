@@ -18,7 +18,9 @@ const TokenSelectorView = (props) => {
         return (
           <div key={key} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item">
             <div>
-              <img src={require("../../../assets/img/tokens/" + item.icon)} />
+              <span className="item-icon">
+                <img src={require("../../../assets/img/tokens/" + item.icon)} />
+              </span>
               <span className="item-name">{item.name}</span>
               {item.isNotSupport &&
                 <span className="unsupported">{props.translate("error.not_supported") || "not supported"}</span>
