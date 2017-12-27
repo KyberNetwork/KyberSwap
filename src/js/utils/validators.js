@@ -57,6 +57,13 @@ export function verifyAmount(sourceAmount,
     return "too small"
   }
 
+  //verify max cap
+  //estimate value based on eth
+  var maxCap = new BigNumber(constants.MAX_CAP_ONE_EXCHANGE_BASE_VALUE)
+  if (estimateValue.cmp(maxCap) > 0) {
+    return "too high"
+  }
+
   //verify max dest amount
   var estimateDestAmount = sourceAmountWei.times(weiParam.pow(destDecimal))
     .times(rateBig)
@@ -64,9 +71,14 @@ export function verifyAmount(sourceAmount,
     .div(weiParam.pow(18))
 
   var reserveBalanceB = new BigNumber(reserveBalance)
-  if (estimateDestAmount.cmp(reserveBalanceB) > 0) {
+  var reserveBalanceMaxCap = reserveBalanceB.mul(constants.MAX_CAP_ONE_EXCHANGE_BASE_RESERVE)
+
+  if (estimateDestAmount.cmp(reserveBalanceMaxCap) > 0) {
     return "too high for reserve"
   }
+
+
+  
 
   return null
 }
