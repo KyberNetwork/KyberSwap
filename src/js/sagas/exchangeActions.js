@@ -351,7 +351,7 @@ export function* exchangeTokentoETHPrivateKey(action) {
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
     throwOnFailure, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService } = action.payload
+    gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
   try {
     var remainStr = yield call(ethereum.call("getAllowance"), sourceToken, address)
     var remain = converter.hexToBigNumber(remainStr)
