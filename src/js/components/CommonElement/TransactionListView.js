@@ -108,6 +108,7 @@ const TransactionListView = (props) => {
 
 
   function content(list) {
+    console.log(list)
     var content = list.map(function (item, i) {
       var sourceToken = getTokenSymbol(item.source)
       var destToken = getTokenSymbol(item.dest)
@@ -141,7 +142,7 @@ const TransactionListView = (props) => {
           <h1 className="title">{props.translate("transaction_list.transaction_history") || "Transactions"}</h1>
           <div className="row">
             <div className="small-12 medium-6 large-6 column">
-              <p className="p-3 bg-light">ETH / TOKEN</p>
+              {/* <p className="p-3 bg-light">ETH / TOKEN</p> */}
               <div className="transaction-list">
                 <CSSTransitionGroup
                   transitionName="example"
@@ -152,7 +153,7 @@ const TransactionListView = (props) => {
               </div>
             </div>
             <div className="small-12 medium-6 large-6 column">
-              <p className="px-2 py-3 bg-light">TOKEN / ETH</p>
+              {/* <p className="px-2 py-3 bg-light">TOKEN / ETH</p> */}
               <div className="transaction-list">
                 <CSSTransitionGroup
                   transitionName="example"

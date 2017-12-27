@@ -124,7 +124,8 @@ const HISTORY_EXCHANGE = {
   eventsCount : 0,
   isFetching: false,
   logsEth:[],
-  logsToken:[]
+  logsToken:[],
+  logs: []
 }
 
 const CONNECTION_CHECKER = {
