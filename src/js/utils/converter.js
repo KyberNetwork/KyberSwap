@@ -215,19 +215,28 @@ export function stringToHex(number, decimal) {
 }
 
 export function roundingNumber(number) {
-  const MAX_DIGIS = 7;
+  const MAX_DIGIS = 7, SIZE = 3;
   number = +number;
-  if (isNaN(number) || number <= 0) return 0;
-
   let numberStr = number.toString();
-  if (Number.isInteger(number)) {
-    return number;
+  if (Number.isInteger(number) && numberStr.length >= MAX_DIGIS) {
+    return number.toLocaleString();
   }
-  if(number < 1e-7){
-    return 0;
+  if (isNaN(number) || number <= 0) number = 0;
+  if (number < 1e-7) number = 0;
+
+  let precision = number.toPrecision((number < 1 && number > 0) ? MAX_DIGIS - 1 : MAX_DIGIS),
+      arr = precision.split('.'),
+      intPart = arr[0],
+      i = intPart.length % SIZE || SIZE,
+      result = intPart.substr( 0, i );
+
+  for ( ; i < intPart.length; i += SIZE ) {
+    result += ',' + intPart.substr( i, SIZE );
   }
-  let result = number.toPrecision(number < 1 ? MAX_DIGIS - 1 : MAX_DIGIS);
-  return +result;
+  if(arr[1]){
+    result += '.' + arr[1];
+  }
+  return result;
 }
 
 export function toPrimitiveNumber(x) {
