@@ -215,36 +215,36 @@ class SqlitePersist {
     })
   }
 
-  getEvents(page, itemPerPage) {
-    //get last id 
-    var _this = this
-    return new Promise((resolve, reject) => {
-      var sql = "SELECT id FROM logs ORDER BY id DESC LIMIT 1"
-      this.db.get(sql, [], function (err, maxId) {
-        if (err) {
-          console.log(err)
-          reject(err.message)
-        } else {
-          if (maxId) {
-            var toID = maxId.id - page * itemPerPage > 0 ? maxId.id - page * itemPerPage : 0
-            var fromId = maxId.id - (page + 1) * itemPerPage > 0 ? maxId.id - (page + 1) * itemPerPage : 0
-            sql = "SELECT * FROM logs WHERE id >= ? AND id <= ?"
-            _this.db.all(sql, [fromId, toID], function (err, rows) {
-              if (err) {
-                console.log(err)
-                reject(err.message)
-              } else {
-                resolve(rows.reverse())
-              }
-            })
-          } else {
-            resolve([])
-          }
+  // getEvents(page, itemPerPage) {
+  //   //get last id 
+  //   var _this = this
+  //   return new Promise((resolve, reject) => {
+  //     var sql = "SELECT id FROM logs ORDER BY id DESC LIMIT 1"
+  //     this.db.get(sql, [], function (err, maxId) {
+  //       if (err) {
+  //         console.log(err)
+  //         reject(err.message)
+  //       } else {
+  //         if (maxId) {
+  //           var toID = maxId.id - page * itemPerPage > 0 ? maxId.id - page * itemPerPage : 0
+  //           var fromId = maxId.id - (page + 1) * itemPerPage > 0 ? maxId.id - (page + 1) * itemPerPage : 0
+  //           sql = "SELECT * FROM logs WHERE id >= ? AND id <= ?"
+  //           _this.db.all(sql, [fromId, toID], function (err, rows) {
+  //             if (err) {
+  //               console.log(err)
+  //               reject(err.message)
+  //             } else {
+  //               resolve(rows.reverse())
+  //             }
+  //           })
+  //         } else {
+  //           resolve([])
+  //         }
 
-        }
-      })
-    })
-  }
+  //       }
+  //     })
+  //   })
+  // }
 
   getEventsFromEth(page, itemPerPage) {
     return new Promise((resolve, reject) => {
@@ -264,6 +264,20 @@ class SqlitePersist {
     return new Promise((resolve, reject) => {
       var sql = "SELECT * FROM logs WHERE dest = ? AND source IN "+this.suportedTokenStr+" ORDER BY blockNumber DESC LIMIT ?"
       this.db.all(sql, ["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", itemPerPage], function (err, rows) {
+        if (err) {
+          console.log(err)
+          reject(err.message)
+        } else {
+          resolve(rows)
+        }
+      })
+    })
+  }
+
+  getEvents(page, itemPerPage){
+    return new Promise((resolve, reject) => {
+      var sql = "SELECT * FROM logs WHERE dest IN "+this.suportedTokenStr+" AND source IN " + this.suportedTokenStr + " ORDER BY blockNumber DESC LIMIT ?"
+      this.db.all(sql, [itemPerPage], function (err, rows) {
         if (err) {
           console.log(err)
           reject(err.message)
