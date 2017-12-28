@@ -4,7 +4,7 @@ import { PendingOverlay } from "../../components/CommonElement"
 const PostTransferBtn = (props) => {
 
   return (
-    <div className="bg-primary">
+    <div className="bg-primary py-4">
       {props.step !== 2 ?
         <div class="row small-11 medium-12 large-12">
           <div className="column transaction-footer">

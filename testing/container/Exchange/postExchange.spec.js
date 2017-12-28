@@ -118,7 +118,7 @@ describe('Test validateExchange function', () => {
         let validate = postExchange.instance().validateExchange();
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.THROW_SOURCE_AMOUNT_ERROR',
-            payload: 'error.source_amount_too_high_for_reserve'
+            payload: 'error.source_amount_too_high'
         });
         expect(validate).toBe(false)
     });
@@ -475,7 +475,12 @@ describe('Proccess transaction', () => {
         passphraseModal.find('.process-submit').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.PROCESS_EXCHANGE',
-            payload: { "account": { "address": "0x12f0453c1947269842c5646df98905533c1b9519", "avatar": "", "balance": 0, "keystring": "", "manualNonce": 0, "nonce": 0, "type": "keystore" }, "address": "0x12f0453c1947269842c5646df98905533c1b9519", "data": { "destAmount": "", "destTokenSymbol": "OMG", "sourceAmount": "0.1", "sourceTokenSymbol": "ETH" }, "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519", "destToken": undefined, "ethereum": store.getState().connection.ethereum, "formId": "exchange", "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "maxDestAmount": "0x8000000000000000000000000000000000000000000000000000000000000000", "minConversionRate": "0x23c46ca46a93f76b8", "nonce": 0, "password": "", "sourceAmount": "0x16345785d8a0000", "sourceToken": undefined, "throwOnFailure": undefined, "type": "keystore" }
+            payload: { "account": { "address": "0x12f0453c1947269842c5646df98905533c1b9519", "avatar": "", "balance": 0, "keystring": "", "manualNonce": 0, "nonce": 0, "type": "keystore" }, "address": "0x12f0453c1947269842c5646df98905533c1b9519", "data": { "destAmount": "", "destTokenSymbol": "OMG", "sourceAmount": "0.1", "sourceTokenSymbol": "ETH" }, "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519", "destToken": undefined, "ethereum": store.getState().connection.ethereum, "formId": "exchange", "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "maxDestAmount": "0x8000000000000000000000000000000000000000000000000000000000000000", "minConversionRate": "0x23c46ca46a93f76b8", "nonce": 0, "password": "", "sourceAmount": "0x16345785d8a0000", "sourceToken": undefined, "throwOnFailure": undefined, "type": "keystore",
+            "balanceData": {
+                "dest": "1000000000000000000",
+                "source": "10000000000000000000",
+                },
+            }
         });
     })
 });
@@ -528,6 +533,10 @@ describe('Test formParams function', () => {
         expect(result).toEqual({
             "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519",
             "destToken": undefined,
+            "balanceData": {
+                  "dest": "1000000000000000000",
+                  "source": "10000000000000000000",
+            },
             "gas": "0xf4240",
             "gasPrice": "0x4a817c800",
             "maxDestAmount": "0x8000000000000000000000000000000000000000000000000000000000000000",

@@ -118,7 +118,7 @@ describe('Test validateTransfer function', () => {
         ).dive();
 
         let validate = postTransfer.instance().validateTransfer();
-        expect(store.dispatch).toHaveBeenCalledWith({   
+        expect(store.dispatch).toHaveBeenCalledWith({
             type: 'TRANSFER.THROW_AMOUNT_ERROR',
             payload: 'error.amount_transfer_too_hign'
         });
@@ -147,14 +147,34 @@ describe('Submit transfer', () => {
         spyOn(store, 'dispatch');
     });
 
+    it("Don't agree term service", () => {
+        store.getState().transfer.termAgree = false;
+        const postTransfer = shallow(
+            <PostTransfer store={store} />
+        ).dive();
+
+        const postTransferBtn = shallow(
+            <PostTransferBtn submit={postTransfer.instance().clickTransfer}
+                translate={getTranslate(store.getState().locale)}
+            />
+        );
+
+        postTransferBtn.find('.submit-transfer').simulate('click');
+        expect(store.dispatch).toHaveBeenCalledWith({
+            type: 'UTIL.OPEN_INFO_MODAL',
+            "payload": { "content": "You must agree terms and services!", "title": "Agree terms and services" }
+        });
+    })
+
     it('Submit transfer by Keystore', () => {
+        store.getState().transfer.termAgree = true;
         store.getState().account.account.type = 'keystore';
         const postTransfer = shallow(
             <PostTransfer store={store} />
         ).dive();
 
         const postTransferBtn = shallow(
-            <PostTransferBtn submit={postTransfer.instance().clickTransfer} 
+            <PostTransferBtn submit={postTransfer.instance().clickTransfer}
                 translate={getTranslate(store.getState().locale)}
             />
         );
@@ -166,13 +186,14 @@ describe('Submit transfer', () => {
     })
 
     it('Submit transfer by Trezor', () => {
+        store.getState().transfer.termAgree = true;
         store.getState().account.account.type = 'trezor';
         const postTransfer = shallow(
             <PostTransfer store={store} />
         ).dive();
 
         const postTransferBtn = shallow(
-            <PostTransferBtn submit={postTransfer.instance().clickTransfer} 
+            <PostTransferBtn submit={postTransfer.instance().clickTransfer}
                 translate={getTranslate(store.getState().locale)}
             />
         );
@@ -184,13 +205,14 @@ describe('Submit transfer', () => {
     })
 
     it('Submit transfer by Ledger', () => {
+        store.getState().transfer.termAgree = true;
         store.getState().account.account.type = 'ledger';
         const postTransfer = shallow(
             <PostTransfer store={store} />
         ).dive();
 
         const postTransferBtn = shallow(
-            <PostTransferBtn submit={postTransfer.instance().clickTransfer} 
+            <PostTransferBtn submit={postTransfer.instance().clickTransfer}
                 translate={getTranslate(store.getState().locale)}
             />
         );
@@ -201,13 +223,14 @@ describe('Submit transfer', () => {
     })
 
     it('Submit transfer by Metamask', () => {
+        store.getState().transfer.termAgree = true;
         store.getState().account.account.type = 'metamask';
         const postTransfer = shallow(
             <PostTransfer store={store} />
         ).dive();
 
         const postTransferBtn = shallow(
-            <PostTransferBtn submit={postTransfer.instance().clickTransfer} 
+            <PostTransferBtn submit={postTransfer.instance().clickTransfer}
                 translate={getTranslate(store.getState().locale)}
             />
         );
@@ -229,7 +252,7 @@ describe('PassphraseModal', () => {
         ).dive();
 
         const passphraseModal = shallow(
-            <PassphraseModal onChange={postTransfer.instance().changePassword} 
+            <PassphraseModal onChange={postTransfer.instance().changePassword}
                 translate={getTranslate(store.getState().locale)}
             />
         );
@@ -255,7 +278,7 @@ describe('Process submit', () => {
         ).dive();
 
         const passphraseModal = mount(
-            <PassphraseModal onClick={postTransfer.instance().processTx} 
+            <PassphraseModal onClick={postTransfer.instance().processTx}
                 translate={getTranslate(store.getState().locale)}
             />,
             { attachTo: document.body }
@@ -269,6 +292,7 @@ describe('Process submit', () => {
                 },
                 address: "0x12f0453c1947269842c5646df98905533c1b9519",
                 amount: "0x16345785d8a0000",
+                "balanceData": { "balance": "10000000000000000000" },
                 data: {
                     amount: "0.1",
                     destAddress: "0x95b4de7fb8800aab804a23d4185230949b503380",
@@ -289,7 +313,7 @@ describe('Process submit', () => {
         ).dive();
 
         const passphraseModal = mount(
-            <ConfirmTransferModal onExchange={postTransfer.instance().processTx} 
+            <ConfirmTransferModal onExchange={postTransfer.instance().processTx}
                 translate={getTranslate(store.getState().locale)}
             />,
         );
@@ -302,6 +326,7 @@ describe('Process submit', () => {
                 },
                 address: "0x12f0453c1947269842c5646df98905533c1b9519",
                 amount: "0x16345785d8a0000",
+                "balanceData": { "balance": "10000000000000000000" },
                 data: {
                     amount: "0.1",
                     destAddress: "0x95b4de7fb8800aab804a23d4185230949b503380",
@@ -328,7 +353,7 @@ describe('Close modal', () => {
         ).dive();
 
         const passphraseModal = shallow(
-            <PassphraseModal onCancel={postTransfer.instance().closeModal} 
+            <PassphraseModal onCancel={postTransfer.instance().closeModal}
                 translate={getTranslate(store.getState().locale)}
             />
         );
@@ -346,7 +371,7 @@ describe('Close modal', () => {
         ).dive();
 
         const confirmTransferModal = shallow(
-            <ConfirmTransferModal onCancel={postTransfer.instance().closeModal} 
+            <ConfirmTransferModal onCancel={postTransfer.instance().closeModal}
                 translate={getTranslate(store.getState().locale)}
             />
         );
@@ -364,7 +389,7 @@ describe('Close modal', () => {
         ).dive();
 
         const confirmTransferModal = shallow(
-            <ConfirmTransferModal onCancel={postTransfer.instance().closeModal} 
+            <ConfirmTransferModal onCancel={postTransfer.instance().closeModal}
                 translate={getTranslate(store.getState().locale)}
             />
         );
@@ -399,6 +424,9 @@ describe('Test formParams function', () => {
         let result = postTransfer.instance().formParams();
         expect(result).toEqual({
             amount: '0x16345785d8a0000',
+            "balanceData": {
+                "balance": "10000000000000000000",
+            },
             destAddress: '0x95b4de7fb8800aab804a23d4185230949b503380',
             "gas": "0xf4240",
             "gasPrice": "0x4a817c800",

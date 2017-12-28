@@ -28,14 +28,6 @@ import { getTranslate } from 'react-localize-redux';
 
 export default class Exchange extends React.Component {
 
-  // openSourceToken = (e) => {
-  //   this.props.dispatch(openTokenModal("source", this.props.exchange.sourceTokenSymbol))
-  // }
-
-  // openDesToken = (e) => {
-  //   this.props.dispatch(openTokenModal("des", this.props.exchange.destTokenSymbol))
-  // }
-
   chooseToken = (symbol, address, type) => {
     this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
   }
