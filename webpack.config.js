@@ -1,5 +1,3 @@
-//var debug = process.env.NODE_ENV !== "production";
-
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -10,13 +8,6 @@ var scriptConfig = function (env) {
     context: path.join(__dirname, "src"),
     devtool: (env && env.chain !== "mainnet") ? "inline-sourcemap" : false,
     entry: ['babel-polyfill', "./js/client.js", "./assets/css/app.scss"],
-    // resolve: {
-    //   modules: [path.resolve(__dirname, "src"), "node_modules"],
-    //   alias: {
-    //     ETHEREUM_CONSTANT: path.resolve(__dirname, entryChain)
-    //   },
-    //   extensions: ['.js']
-    // },
     module: {
       loaders: [{
         test: /\.jsx?$/,
@@ -41,31 +32,6 @@ var scriptConfig = function (env) {
             }
           }
         ]
-        // use: [{
-        //   loader: 'file-loader',
-        //   options: {
-        //     query: {
-        //       name: '[name].[ext]'
-        //     }
-        //   }
-        // },
-        // {
-        //   loader: 'image-webpack-loader',
-        //   options: {
-        //     query: {
-        //       mozjpeg: {
-        //         progressive: true,
-        //       },
-        //       gifsicle: {
-        //         interlaced: true,
-        //       },
-        //       optipng: {
-        //         optimizationLevel: 7,
-        //       }
-        //     }
-        //   }
-        // }
-        // ]
       }
       ]
     },
@@ -82,9 +48,6 @@ var scriptConfig = function (env) {
         'env': env && env.chain ? '"' + env.chain + '"' : '"kovan"'
       })
     ] : [
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
         new ExtractTextPlugin({ // define where to save the file
           filename: 'app.bundle.css',
           allChunks: true,
@@ -115,9 +78,9 @@ var indexConfig = function (env) {
         title: "Wallet - kyber.network",
         template: './src/app.html.template',
         inject: 'body',
-        styleFile:'app.bundle.css?v=' + Date.now()
+        styleFile: 'app.bundle.css?v=' + Date.now()
       }),
-      
+
     ]
   }
 }
