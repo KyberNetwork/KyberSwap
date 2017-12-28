@@ -66,6 +66,7 @@ function account(state, action) {
 
 function exchange() {
     return {
+        termAgree: true,
         offeredRate: 0,
         sourceAmount: '',
         destAmount: '',
@@ -75,17 +76,21 @@ function exchange() {
         offeredRate: '3296591097476482885',
         offeredRateBalance: '8739437467440',
         destTokenSymbol: 'OMG',
-        errors: {}
+        gas: 20,
+        errors: {},
+        balanceData: { nextDest: 0, prevDest: 0, nextSource: 0, prevSource: 0 }
     }
 }
 
 function transfer() {
     return {
+        termAgree: true,
         offeredRate: 0,
         tokenSymbol: 'ETH',
         amount: '',
         destAddress: '',
-        errors: {}
+        errors: {},
+        balanceData: { next: 0, prev: 0 }
     }
 }
 

@@ -1,12 +1,12 @@
 import store from '../store';
 import React from 'react';
-import Token from '../../../src/js/containers/CommonElements/Token';
+import TokenSelector from '../../../src/js/containers/CommonElements/TokenSelector';
 import { shallow } from 'enzyme';
 
-describe('Token', () => {
-    it('render 1 <Token /> component', () => {
+describe('TokenSelector', () => {
+    it('render 1 <TokenSelector /> component', () => {
         const component = shallow(
-            <Token store={store}
+            <TokenSelector store={store}
                 token="ETH"
                 type="source"
             />
