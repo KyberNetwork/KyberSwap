@@ -215,7 +215,12 @@ it('handle throw broadcass rejected', () => {
 
 function* prepareTransaction() {
   yield put({ 
-    type: 'TRANSFER.PREPARE_TRANSACTION'
+    type: 'TRANSFER.PREPARE_TRANSACTION',
+    payload: {
+      balanceData: {
+        balance: 213
+      }
+    }
   });
 }
 it('handle transfer prepare transaction', () => {

@@ -11,6 +11,7 @@ jest.mock('vm')
 jest.mock('jdenticon', () => {})
 import { updateAccount, importNewAccount } from "../../src/js/sagas/accountActions"
 import Account from "../../src/js/services/account"
+var stringify = require('json-stringify-safe');
 
 import * as BLOCKCHAIN_INFO from "../../env"
 import * as service from "../../src/js/services/accounts"
@@ -137,30 +138,18 @@ it('import new account pending', () => {
   .then((result) => {
     const { effects, allEffects } = result;
 
-    expect(effects.call).toHaveLength(3);
-    expect(effects.put).toHaveLength(8);
-    
+    expect(effects.call).toHaveLength(1);
+    expect(effects.put).toHaveLength(3);
+    expect(effects.call[0]).toEqual(
+      call(service.newAccountInstance, fakeAccount.address, fakeAccount.type, fakeAccount.keystring, fakeAccount.avatar, ethereum),
+    );
+
     expect(effects.put[0]).toEqual(
       put({ type: 'ACCOUNT.LOADING' })
     );
-    expect(effects.put[4]).toEqual(
+    expect(effects.put[2]).toEqual(
       put({ type: 'ACCOUNT.CLOSE_LOADING_IMPORT' })
     );
-    expect(effects.put[5]).toEqual(
-      put({ 
-        type: 'ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED',
-        payload: fakeAccount
-     })
-    );
-
-    // expect(allEffects).toEqual([
-    //   put({ type: 'ACCOUNT.LOADING' }),
-    //   call(service.newAccountInstance, account.address, account.type, account.keystring, account.avatar, ethereum),
-    //   call(updateAllRatePromise, ethereum, tokens, constants.RESERVES[0], account.address),
-    //   put({type: 'GLOBAL.ALL_RATE_UPDATED_FULFILLED'}),
-
-    // ]);
-
   })
 });
 
