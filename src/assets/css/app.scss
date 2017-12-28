@@ -235,6 +235,14 @@ body{
           transition: background-color .4s ease-in-out;
           &:hover {
             background-color: lighten($light-gray, 18);
+            .link{
+              color: #2A9A8D
+            }
+          }
+          &:focus{
+            .link{
+              color: #2A9A8D
+            }
           }
           &.pending {
             background-image: url(../img/waiting.svg);
