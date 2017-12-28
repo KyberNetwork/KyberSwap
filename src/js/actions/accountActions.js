@@ -1,4 +1,3 @@
-import store from "../store"
 
 export function updateAccount(ethereum, account) {
   return {
