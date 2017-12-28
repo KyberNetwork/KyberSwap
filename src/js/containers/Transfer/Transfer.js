@@ -15,19 +15,16 @@ import { specifyGas as specifyGasTransfer, specifyGasPrice as specifyGasPriceTra
 import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
-  return { 
-    transfer: store.transfer, 
-    account: store.account, 
+  return {
+    transfer: store.transfer,
+    account: store.account,
     tokens: store.tokens.tokens,
     translate: getTranslate(store.locale),
-   }
+  }
 })
 
 export default class Transfer extends React.Component {
 
-  openTokenChoose = (e) => {
-    this.props.dispatch(openTokenModal("transfer", this.props.transfer.tokenSymbol))
-  }
   onAddressReceiveChange = (event) => {
     var value = event.target.value
     this.props.dispatch(specifyAddressReceive(value));
@@ -40,7 +37,7 @@ export default class Transfer extends React.Component {
     this.props.dispatch(selectToken(symbol, address))
     this.props.dispatch(hideSelectToken())
   }
-  
+
   makeNewTransfer = () => {
     this.props.dispatch(makeNewTransfer());
   }
@@ -96,9 +93,9 @@ export default class Transfer extends React.Component {
         roundingValue: roundingNumber(toT(token.balance, token.decimal)),
       }
       balance = {
-        prev:toT(this.props.transfer.balanceData.prev, token.decimal),
-        next:toT(this.props.transfer.balanceData.next, token.decimal)
-      } 
+        prev: toT(this.props.transfer.balanceData.prev, token.decimal),
+        next: toT(this.props.transfer.balanceData.next, token.decimal)
+      }
       tokenName = token.name
     }
     var balanceInfo = {
@@ -122,22 +119,13 @@ export default class Transfer extends React.Component {
       amountTransfer: this.props.transfer.errors.amountTransfer || ''
     }
 
-    // var token = (
-    //   <Token type="transfer"
-    //     token={this.props.transfer.tokenSymbol}
-    //     onSelected={this.openTokenChoose}
-    //   />
-    // )
-    // var tokenModal = (
-    //   <SelectToken chooseToken={this.chooseToken} type="transfer" selectedSymbol={this.props.transfer.tokenSymbol} />
-    // )
-
     var tokenTransferSelect = (
-      <TokenSelector type="transfer"
-                      focusItem = {this.props.transfer.tokenSymbol}
-                      listItem = {this.props.tokens}
-                      chooseToken = {this.chooseToken}
-                      />
+      <TokenSelector 
+        type="transfer"
+        focusItem={this.props.transfer.tokenSymbol}
+        listItem={this.props.tokens}
+        chooseToken={this.chooseToken}
+      />
     )
 
     var transferButton = (

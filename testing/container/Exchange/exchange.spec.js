@@ -2,11 +2,7 @@ import store from '../store';
 import React from 'react';
 import Exchange from '../../../src/js/containers/Exchange/Exchange';
 import ExchangeForm from '../../../src/js/components/Transaction/ExchangeForm';
-import Token from '../../../src/js/containers/CommonElements/Token';
-import TokenView from '../../../src/js/components/CommonElement/Token';
-import SelectToken from '../../../src/js/containers/CommonElements/SelectToken';
-import SelectTokenModal from '../../../src/js/components/CommonElement/SelectTokenModal';
-import TokenSelect from '../../../src/js/components/CommonElement/TokenSelect';
+import TokenSelectorView from '../../../src/js/components/CommonElement/TokenSelectorView';
 import TransactionLoadingView from '../../../src/js/components/Transaction/TransactionLoadingView';
 import TransactionConfig from '../../../src/js/components/Transaction/TransactionConfig';
 import { getTranslate } from 'react-localize-redux';
@@ -37,90 +33,33 @@ describe('Check account is not imported', () => {
     })
 });
 
-describe('Open source token modal', () => {
+describe('Select token', () => {
     beforeEach(() => {
         spyOn(store, 'dispatch');
         store.getState().account.isStoreReady = true;
         store.getState().account.account.address = '0x37522832d0f...';
     });
-    it('Open modal ', () => {
-        let sourcceToken = "ETH";
-        store.getState().exchange.sourceTokenSymbol = sourcceToken;
-        const exchange = shallow(
-            <Exchange store={store} />
-        ).dive();
-
-        const sourceToken = shallow(
-            <Token store={store}
-                type="source"
-                token={sourcceToken}
-                onSelected={exchange.instance().openSourceToken}
-            />
-        ).dive();
-
-        sourceToken.find(TokenView).dive().simulate('click');
-        expect(store.dispatch).toHaveBeenCalledWith({
-            type: 'UTIL.OPEN_TOKEN_MODAL',
-            payload: { selected: "ETH", "type": "source" }
-        });
-    })
-});
-
-describe('Open destination token modal', () => {
-    beforeEach(() => {
-        spyOn(store, 'dispatch');
-    });
-    it('Open modal ', () => {
-        let destTokenSymbol = "OMG";
-        store.getState().exchange.destTokenSymbol = destTokenSymbol;
-        const exchange = shallow(
-            <Exchange store={store} />
-        ).dive();
-
-        const sourceToken = shallow(
-            <Token store={store}
-                type="des"
-                token={destTokenSymbol}
-                onSelected={exchange.instance().openDesToken}
-            />
-        ).dive();
-
-        sourceToken.find(TokenView).dive().simulate('click');
-        expect(store.dispatch).toHaveBeenCalledWith({
-            type: 'UTIL.OPEN_TOKEN_MODAL',
-            payload: { selected: "OMG", "type": "des" }
-        });
-    })
-});
-
-describe('Select token', () => {
-    beforeEach(() => {
-        spyOn(store, 'dispatch');
-    });
     it('Choose token', () => {
+        store.getState().exchange.sourceTokenSymbol = 'OMG';
         const exchange = shallow(
             <Exchange store={store} />
         ).dive();
 
         const tokenSelect = shallow(
-            <TokenSelect type="exchange"
-                onClick={exchange.instance().chooseToken}
-                balance="2"
-                decimal="18"
-                inactive={true}
+            <TokenSelectorView type="exchange"
+                listItem={store.getState().tokens.tokens}
+                focusItem="OMG"
+                searchWord=""
+                selectItem={exchange.instance().chooseToken}
                 translate={getTranslate(store.getState().locale)}
             />
         );
+        console.log(tokenSelect.find('.select-item').html())
 
-        tokenSelect.find('.token-stamp').simulate('click', {
-            preventDefault: () => { }
-        })
-        tokenSelect.setProps({ inactive: false })
-
-        tokenSelect.find('.token-stamp').simulate('click')
+        tokenSelect.find('.token-item').simulate('click')
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.SELECT_TOKEN_ASYNC',
-            payload: { address: undefined, ethereum: store.getState().connection.ethereum, symbol: undefined, type: undefined }
+            payload: { address: 'ETH', ethereum: store.getState().connection.ethereum, symbol: undefined, type: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' }
         });
     })
 });
@@ -339,7 +278,7 @@ describe('Test change gas', () => {
 
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.SPECIFY_GAS_PRICE',
-            payload: 1
+            payload: '1'
         });
     })
 });
@@ -349,18 +288,6 @@ describe('Test set amount', () => {
         spyOn(store, 'dispatch');
         store.getState().account.isStoreReady = true;
     });
-    it('SourceTokenSymbol = "ABC" (don\'t support) ', () => {
-        store.getState().exchange.sourceTokenSymbol = 'ABC';
-        const exchange = shallow(
-            <Exchange store={store} />
-        ).dive();
-
-        exchange.find(ExchangeForm).dive().find('.value').simulate('click');
-        expect(store.dispatch).not.toHaveBeenCalledWith({
-            type: 'EXCHANGE.CHANGE_SOURCE_AMOUNT',
-            payload: '0'
-        });
-    })
 
     it('SourceTokenSymbol = "ETH", amount too low ', () => {
         store.getState().exchange.sourceTokenSymbol = 'ETH';

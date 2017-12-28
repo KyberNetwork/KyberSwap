@@ -2,11 +2,8 @@ import store from '../store';
 import React from 'react';
 import Transfer from '../../../src/js/containers/Transfer/Transfer';
 import TransferForm from '../../../src/js/components/Transaction/TransferForm';
-import Token from '../../../src/js/containers/CommonElements/Token';
-import TokenView from '../../../src/js/components/CommonElement/Token';
-import SelectToken from '../../../src/js/containers/CommonElements/SelectToken';
-import SelectTokenModal from '../../../src/js/components/CommonElement/SelectTokenModal';
-import TokenSelect from '../../../src/js/components/CommonElement/TokenSelect';
+import TokenSelector from '../../../src/js/containers/CommonElements/TokenSelector';
+import TokenSelectorView from '../../../src/js/components/CommonElement/TokenSelectorView';
 import TransactionLoadingView from '../../../src/js/components/Transaction/TransactionLoadingView';
 import TransactionConfig from '../../../src/js/components/Transaction/TransactionConfig';
 import { getTranslate } from 'react-localize-redux';
@@ -37,39 +34,11 @@ describe('Check account is not imported', () => {
     })
 });
 
-describe('Open source token modal', () => {
+describe('Input destination address onchange', () => {
     beforeEach(() => {
         spyOn(store, 'dispatch');
         store.getState().account.isStoreReady = true;
         store.getState().account.account.address = '0x37522832d0f...';
-    });
-
-    it('Open modal ', () => {
-        let sourcceToken = "ETH";
-        store.getState().exchange.sourceTokenSymbol = sourcceToken;
-        const transfer = shallow(
-            <Transfer store={store} />
-        ).dive();
-
-        const sourceToken = shallow(
-            <Token store={store}
-                type="transfer"
-                token={sourcceToken}
-                onSelected={transfer.instance().openTokenChoose}
-            />
-        ).dive();
-
-        sourceToken.find(TokenView).dive().find('.token-select').simulate('click');
-        expect(store.dispatch).toHaveBeenCalledWith({
-            type: 'UTIL.OPEN_TOKEN_MODAL',
-            payload: { selected: "ETH", "type": "transfer" }
-        });
-    })
-});
-
-describe('Input destination address onchange', () => {
-    beforeEach(() => {
-        spyOn(store, 'dispatch');
     });
     it('Input destination address onchange', () => {
         let state = store.getState();
@@ -162,27 +131,22 @@ describe('Select token', () => {
         ).dive();
 
         const tokenSelect = shallow(
-            <TokenSelect type="transfer"
-                onClick={transfer.instance().chooseToken}
-                balance="2"
-                decimal="18"
-                inactive={true}
+            <TokenSelectorView type="transfer"
+                listItem={store.getState().tokens.tokens}
+                focusItem="OMG"
+                searchWord=""
+                selectItem={transfer.instance().chooseToken}
                 translate={getTranslate(store.getState().locale)}
             />
         );
 
-        tokenSelect.find('.token-stamp').simulate('click', {
-            preventDefault: () => { }
-        })
-        tokenSelect.setProps({ inactive: false })
-
-        tokenSelect.find('.token-stamp').simulate('click')
+        tokenSelect.find('.token-item').simulate('click')
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'UTIL.HIDE_TOKEN_MODAL',
         });
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'TRANSFER.SELECT_TOKEN',
-            payload: { address: undefined, symbol: undefined }
+            payload: { address: 'ETH', symbol: undefined }
         });
     })
 });
