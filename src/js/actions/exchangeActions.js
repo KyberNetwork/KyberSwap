@@ -55,6 +55,12 @@ export function thowErrorGasPrice(message) {
   }
 }
 
+export function thowErrorRate(message) {
+  return {
+    type: "EXCHANGE.THROW_RATE_ERROR",
+    payload: message
+  }
+}
 
 export function goToStep(step) {
   return {
@@ -305,5 +311,18 @@ export function setTermAndServices(value){
   return {
     type: "EXCHANGE.SET_TERM_AND_SERVICES",
     payload: {value}
+  }
+}
+
+export function setOfferedRate(value){
+  return {
+    type: "EXCHANGE.SET_OFFERED_RATE",
+    payload: {value}
+  }
+}
+
+export function resetOfferedRate(){
+  return {
+    type: "EXCHANGE.RESET_OFFERED_RATE",
   }
 }

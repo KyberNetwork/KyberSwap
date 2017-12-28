@@ -14,6 +14,11 @@ const TransactionConfig = (props) => {
       <div className="row small-11 medium-12 hide-on-choose-token-pair">
         <div className="column">
           <div className="advanced-content" disabled>
+            {props.minRate && (
+              <div className="min-rate">
+                {props.minRate}
+              </div>
+            )}
             <div className="transaction-fee text-light">
               <div className="font-w-b text-white">
                 {props.translate("transaction.transaction_fee") || "Transaction Fee"}

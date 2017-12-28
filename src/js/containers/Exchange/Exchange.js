@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 
 import { toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber, stringToBigNumber } from "../../utils/converter"
 
-import { PostExchangeWithKey } from "../Exchange"
+import { PostExchangeWithKey, MinRate } from "../Exchange"
 import { ExchangeForm, TransactionConfig } from "../../components/Transaction"
 
 import { TokenSelector, TransactionLoading, Token } from "../CommonElements"
@@ -223,6 +223,7 @@ export default class Exchange extends React.Component {
         gasError={this.props.exchange.errors.gasError}
         totalGas={totalGas.toString()}
         translate={this.props.translate}
+        minRate = {<MinRate />}
       />
     )
 

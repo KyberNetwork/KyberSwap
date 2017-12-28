@@ -446,6 +446,11 @@ label.switch-caption {
       overflow: hidden;
       pointer-events: none;
     }
+    .min-rate{
+      .error{
+        color: red;
+      }
+    }
     .transaction-fee{
       text-transform: capitalize;
       .gas-price{
