@@ -10,97 +10,111 @@
     "ws": "wss://mainnet.infura.io/ws"
   },
   "history_endpoint": "http://0.0.0.0:3001",
+  "api_usd":"https://api.coinmarketcap.com",
   "tokens": {
     "ETH": {
       "name": "Ethereum",
       "symbol": "ETH",
       "icon": "eth.svg",
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "decimal": 18
+      "decimal": 18,
+      "usd_id":"ethereum"
     },
     "KNC": {
       "name": "KyberNetwork",
       "symbol": "KNC",
       "icon": "knc.svg",
       "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
-      "decimal": 18
+      "decimal": 18,
+      "usd_id":"kyber-network"
     },
     "OMG": {
       "name": "OmiseGO",
       "symbol": "OMG",
       "icon": "omg.svg",
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "decimal": 18
+      "decimal": 18,
+      "usd_id":"omisego"
     },
     "DGD": {
       "name": "Digix",
       "symbol": "DGD",
       "icon": "dgd.svg",
       "address": "0xe0b7927c4af23765cb51314a0e0521a9645f0e2a",
-      "decimal": 9
+      "decimal": 9,
+      "usd_id":"digixdao"
     },
     "CVC": {
       "name": "Civic",
       "symbol": "CVC",
       "icon": "cvc.svg",
       "address": "0x41e5560054824ea6b0732e656e3ad64e20e94e45",
-      "decimal": 8
+      "decimal": 8,
+      "usd_id":"civic"
     },
     "FUN": {
       "name": "FunFair",
       "symbol": "FUN",
       "icon": "fun.svg",
       "address": "0x419d0d8bdd9af5e606ae2232ed285aff190e711b",
-      "decimal": 8
+      "decimal": 8,
+      "usd_id":"funfair"
     },
     "MCO": {
       "name": "Monaco",
       "symbol": "MCO",
       "icon": "mco.svg",
       "address": "0xb63b606ac810a52cca15e44bb630fd42d8d1d83d",
-      "decimal": 8
+      "decimal": 8,
+      "usd_id":"monaco"
     },
     "GNT": {
       "name": "Golem",
       "symbol": "GNT",
       "icon": "gnt.svg",
       "address": "0xa74476443119a942de498590fe1f2454d7d4ac0d",
-      "decimal": 18
+      "decimal": 18,
+      "usd_id":"golem-network-tokens"
     },
     "ADX": {
       "name": "Adex",
       "symbol": "ADX",
       "icon": "adx.svg",
       "address": "0x4470bb87d77b963a013db939be332f927f2b992e",
-      "decimal": 4
+      "decimal": 4,
+      "usd_id":"adx-net"
     },
     "PAY": {
       "name": "TenX",
       "symbol": "PAY",
       "icon": "pay.svg",
       "address": "0xb97048628db6b661d4c2aa833e95dbe1a905b280",
-      "decimal": 18
+      "decimal": 18,
+      "usd_id":"tenx"
     },
     "BAT": {
       "name": "BasicAttention",
       "symbol": "BAT",
       "icon": "bat.svg",
       "address": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
-      "decimal": 18
+      "decimal": 18,
+      "usd_id":"basic-attention-token"
     },
     "EOS": {
       "name": "Eos",
       "symbol": "EOS",
       "icon": "eos.svg",
       "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
-      "decimal": 18
+      "decimal": 18,
+      "usd_id":"eos"
     },
     "LINK": {
       "name": "ChainLink",
       "symbol": "LINK",
       "icon": "link.svg",
       "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
-      "decimal": 18
+      "decimal": 18,
+      "usd_id":"chainlink"
     }
   },
   "ethScanUrl": "https://etherscan.io/",
