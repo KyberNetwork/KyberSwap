@@ -138,7 +138,7 @@ const CONNECTION_CHECKER = {
   isCheck: true
 }
 
-const STORAGE_KEY = "17"
+const STORAGE_KEY = "18"
 
 module.exports = {
   ERC20, KYBER_NETWORK, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,
