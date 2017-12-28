@@ -82,9 +82,9 @@ var scriptConfig = function (env) {
         'env': env && env.chain ? '"' + env.chain + '"' : '"kovan"'
       })
     ] : [
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
+        //new webpack.optimize.DedupePlugin(),
+        //new webpack.optimize.OccurrenceOrderPlugin(),
+        //new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
         new ExtractTextPlugin({ // define where to save the file
           filename: 'app.bundle.css',
           allChunks: true,
