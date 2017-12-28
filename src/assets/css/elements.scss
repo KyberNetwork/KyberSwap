@@ -289,8 +289,8 @@ p.note {
     display: block;
     background-color: rgba($dark-gray, .7);
     text-align: center;
-    &:hover {
-      background-color: linear-gradient(178deg, #36d9ac, #049696);
+    &:hover{
+      background: linear-gradient(178deg, #36d9ac, #049696);
     }
   }
   img {
