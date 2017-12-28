@@ -464,17 +464,24 @@ label.switch-caption {
       }
     }
 
-    @media screen and(max-width: 640px) {
+    .symbol{
+      img{
+        width: 9px;
+      }
+    }
+    @include breakpoint(small only){
       .gas-limit, .gas-price{
         display: flex;
         border: 1px solid;
         padding: 5px 10px;
         height: 41px;
         align-items: center;
+        border-radius: 35px;
       }
       .symbol{
         text-align: center;
         margin: 9px 0;
+        border-radius: 35px;
       }
       .gas-price{
         margin-bottom: 15px;

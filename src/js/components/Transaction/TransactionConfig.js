@@ -23,7 +23,9 @@ const TransactionConfig = (props) => {
                 <span className="mr-auto">Gas limit</span> 
                 <span className="ml-2">{props.gas}</span>
               </div>
-              <div className="symbol"> x </div>
+              <div className="symbol"> 
+              <img src={require("../../../assets/img/multiply.png")} />
+               </div>
               <div className="gas-price">
                 <span className="mr-auto">Gas price</span>
                 <input type="number" min="0" max="99" className="gas-price-input" step="0.1" onKeyPress={props.onGasPricePress} value={props.gasPrice} onChange={specifyGasPrice.bind(this)} />
