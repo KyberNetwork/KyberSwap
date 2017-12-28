@@ -462,18 +462,18 @@ label.switch-caption {
     }
 
     @media screen and(max-width: 640px) {
-      .gas-limit{
+      .gas-limit, .gas-price{
         display: flex;
         border: 1px solid;
         padding: 5px 10px;
+        height: 41px;
+        align-items: center;
       }
       .symbol{
         text-align: center;
         margin: 9px 0;
       }
       .gas-price{
-        border: 1px solid;
-        padding: 5px 10px;
         margin-bottom: 15px;
         input{
           margin-right: 10px;

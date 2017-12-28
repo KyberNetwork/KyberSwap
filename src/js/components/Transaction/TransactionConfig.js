@@ -21,7 +21,7 @@ const TransactionConfig = (props) => {
               </div>
               <div className="gas-limit">
                 <span className="mr-auto">Gas limit</span> 
-                <span>{props.gas}</span>
+                <span className="ml-2">{props.gas}</span>
               </div>
               <div className="symbol"> x </div>
               <div className="gas-price">
