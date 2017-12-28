@@ -59,7 +59,9 @@ const tokens = (state = initState, action) => {
     case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
       var tokens = { ...state.tokens }
       var rates = action.payload.rates
-
+      if (!rates){
+        return state
+      }
       //map token
       var mapToken = {}
       rates.map(rate => {
