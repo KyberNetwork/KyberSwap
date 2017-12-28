@@ -182,4 +182,80 @@ export default class BaseEthereumProvider {
           resolve(Promise.resolve(baseProviderTestValue.exchangeRate))
         })
       }
+
+      getAllRatesFromServer(tokens, reserve) {
+        return Promise.resolve([
+            {id: 4, source: "ETH", dest: "KNC", rate: "413547223588488151040", expBlock: "20000000000000000000"},
+            {id: 5, source: "OMG", dest: "ETH", rate: "10986625448146288", expBlock: "20000000000000000000"},
+            {id: 6, source: "ETH", dest: "OMG", rate: "58337873220747280384", expBlock: "20000000000000000000"},
+            {id: 7, source: "DGD", dest: "ETH", rate: "150171599878325920", expBlock: "20000000000000000000"},
+            {id: 8, source: "ETH", dest: "DGD", rate: "3724785404671197696", expBlock: "20000000000000000000"},
+            {id: 9, source: "CVC", dest: "ETH", rate: "279792818458559", expBlock: "20000000000000000000"},
+            {id: 10, source: "ETH", dest: "CVC", rate: "1413862421104244293632", expBlock: "20000000000000000000"},
+            {id: 11, source: "FUN", dest: "ETH", rate: "56225043573100", expBlock: "20000000000000000000"},
+            {id: 12, source: "ETH", dest: "FUN", rate: "16112606216645611880448", expBlock: "20000000000000000000"},
+            {id: 13, source: "MCO", dest: "ETH", rate: "18510054747455684", expBlock: "20000000000000000000"}
+        ])
+      }
+    
+      tokenIsSupported(address) {
+        let tokens = BLOCKCHAIN_INFO.tokens
+        for (let token in tokens) {
+          if (tokens[token].address == address) {
+            return true
+          }
+        }
+        return false
+      }
+    
+      getAllRatesUSDFromServer() {
+        return Promise.resolve([
+            {symbol: "ETH", price_usd: "779.425"},
+            {symbol: "KNC", price_usd: "2.51344"},
+            {symbol: "OMG", price_usd: "15.3806"},
+            {symbol: "DGD", price_usd: "176.631"},
+            {symbol: "CVC", price_usd: "0.866233"},
+            {symbol: "FUN", price_usd: "0.0579856"},
+            {symbol: "MCO", price_usd: "17.5238"},
+            {symbol: "GNT", price_usd: "0.655012"},
+            {symbol: "ADX", price_usd: "2.38584"},
+            {symbol: "PAY", price_usd: "4.29903"},
+            {symbol: "BAT", price_usd: "0.379259"},
+            {symbol: "EOS", price_usd: "9.91221"},
+            {symbol: "LINK", price_usd: "0.486197"}
+        ])
+      }
+    
+      getAllRatesUSDFromThirdParty() {
+        //get from third party api
+        var promises = Object.keys(BLOCKCHAIN_INFO.tokens).map(key => {
+          var token = BLOCKCHAIN_INFO.tokens[key]
+          var url = BLOCKCHAIN_INFO.api_usd + '/v1/ticker/' + token.usd_id + "/"
+          return new Promise(resolve => {
+            axios.get(url)
+              .then(function (response) {
+                if (response.status === 200) {
+                  return resolve({
+                    symbol: key,
+                    price_usd: response.data[0].price_usd
+                  })
+                } else {
+                  console.log(response)
+                  return resolve({
+                    symbol: key,
+                    price_usd: 0
+                  })
+                }
+              })
+              .catch(function (error) {
+                console.log(error)
+                return resolve({
+                  symbol: key,
+                  price_usd: 0
+                })
+              });
+          })
+        })
+        return Promise.all(promises)
+      }
 }

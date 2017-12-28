@@ -450,7 +450,7 @@ body {
   margin: 0;
   padding: 0;
   background: #fff;
-  font-family: "Muli", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   font-weight: normal;
   line-height: 1.5;
   color: #0B0F1A;
@@ -1337,7 +1337,7 @@ h3, .h3,
 h4, .h4,
 h5, .h5,
 h6, .h6 {
-  font-family: "Muli", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   font-style: normal;
   font-weight: normal;
   color: inherit;
@@ -1475,7 +1475,7 @@ code {
   padding: 0.125rem 0.3125rem 0.0625rem;
   border: 1px solid #262C41;
   background-color: #BBDAD5;
-  font-family: "Roboto Mono", Consolas, "Liberation Mono", Courier, monospace;
+  font-family: 'Source Sans Pro', sans-serif;
   font-weight: normal;
   color: #0a0a0a; }
 
@@ -1483,7 +1483,7 @@ kbd {
   margin: 0;
   padding: 0.125rem 0.25rem 0;
   background-color: #BBDAD5;
-  font-family: "Roboto Mono", Consolas, "Liberation Mono", Courier, monospace;
+  font-family:'Source Sans Pro', sans-serif;
   color: #0a0a0a;
   border-radius: 4px; }
 

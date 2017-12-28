@@ -201,7 +201,7 @@ label.address-path-stamp {
     .address-path-input{
       input[type=text] {
         background-color: rgba(35, 102, 102, 0.88);
-        color: #fefefe;
+        color: $white;
         border: 1px solid #236968;
       }
       a.submit {

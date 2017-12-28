@@ -84,7 +84,7 @@ export default class TermAndServices extends React.Component {
             {checkBox}
           </span>
           <span onClick={this.showTerms}>
-            <a>
+            <a className="term-text">
               {this.props.translate("transaction.terms_and_conditions") || <span>Terms and <br></br> Conditions </span>}
             </a>
           </span>

@@ -489,7 +489,11 @@ it('finish exchange', () => {
 //-----------------------------------------------------------------
 function* prePareBroadcast() {
   yield put({
-    type: "EXCHANGE.PREPARE_BROADCAST"
+    type: "EXCHANGE.PREPARE_BROADCAST",
+    payload: { balanceData: {
+      source: "ETH",
+      dest: "KNC"
+    }}
   })
 }
 
