@@ -47,7 +47,7 @@ const ImportByDeviceView = (props) => {
                         <a class="link has-tip top explore" href={addressLink + address.addressString} target="_blank" title="View on Etherscan">
                             <span title={address.balance}>
                                 {address.balance == '-1' ?
-                                    <img src={require('../../../assets/img/waiting.svg')} />
+                                    <img src={require('../../../assets/img/waiting-white.svg')} />
                                     : roundingNumber(address.balance)
                                 } ETH
                             </span>

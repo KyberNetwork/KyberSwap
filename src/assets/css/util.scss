@@ -17,6 +17,12 @@
 .text-uppercase{
     text-transform: uppercase;
 }
+.text-capitalize{
+    text-transform: capitalize;
+}
+.text-lowercase{
+    text-transform: lowercase;
+}
 .p-relative{
     position: relative;
 }
@@ -37,6 +43,11 @@
 }
 .d-flex{
     display: flex;
+}
+@include breakpoint(medium){
+    .d-inline-block-md{
+        display: inline-block;
+    }
 }
 .w-100{
     width: 100%;

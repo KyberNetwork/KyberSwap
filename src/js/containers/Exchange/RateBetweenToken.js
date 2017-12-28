@@ -9,7 +9,7 @@ import { roundingNumber } from "../../utils/converter"
 
 export default class RateBetweenToken extends React.Component {
   render = () => {
-    var tokenRate = this.props.isSelectToken ? <img src={require('../../../assets/img/waiting.svg')} /> : roundingNumber(this.props.exchangeRate.rate)
+    var tokenRate = this.props.isSelectToken ? <img src={require('../../../assets/img/waiting-white.svg')} /> : roundingNumber(this.props.exchangeRate.rate)
     return (
       <p class="token-compare" title={tokenRate}>
         1 {this.props.exchangeRate.sourceToken} = {tokenRate} {this.props.exchangeRate.destToken}

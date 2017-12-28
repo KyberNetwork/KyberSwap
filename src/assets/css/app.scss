@@ -93,6 +93,10 @@ $accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
   min-height: 75px;
   a.logo img{
     width: 100px;
+    @media screen and (max-width: 450px){
+      width: 70px;
+      margin-top: 10px;
+    }
   }
   .user-bar {
     margin-top: 11px;
@@ -270,12 +274,16 @@ $accent-gradient: linear-gradient(135deg, #00cb9e, #298083);
   position: relative;
   .balance-header{
     min-height: 150px;
+    .title{
+      font-size: 25px;
+      line-height: 25px;
+    }
     @media screen and (max-width: 640px) {
       min-height: 0;
-    }
-    .title{
-      font-size: 1.5625rem;
-      line-height: 25px;
+      font-size: 0.85em;
+      .title{
+        font-size: 1.4em;
+      }
     }
   }
   .balances{

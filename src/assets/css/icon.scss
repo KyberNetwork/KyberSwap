@@ -34,6 +34,9 @@
     &.k-link{
         background-image: url(../img/link-white.svg);
     }
+    &.k-info{
+        background-image: url(../img/info-button.svg);
+    }
 }
 @for $i from 1 through 3{
     .k-#{$i}x{

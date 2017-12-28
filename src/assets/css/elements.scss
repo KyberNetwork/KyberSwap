@@ -388,26 +388,26 @@ span.help {
 .switch {
   &.accent {
     .switch-paddle {
-      background: white;
+      background: #1b2e36;
       border-radius: 1000px;
       transition: background .3s ease-in-out;
-      width: 57px;
+      width: 50px;
       margin-bottom: 0px;
-      height: 31px;
+      height: 28px;
       &:after {
         background: white;
         box-shadow: 0 1px 5px 0 rgba($medium-gray, .4);
         border-radius: 1000px;
-        width: 22px;
-        height: 22px;
-        left: 5px;
-        top: 4px;
+        width: 29px;
+        height: 29px;
+        left: 0;
+        top: 0;
       }
     }
     .switch-input:checked + .switch-paddle {
       background: $k-success;
       &:after {
-        left: 30px;
+        left: 22px;
       }
     }
   }
@@ -428,148 +428,71 @@ label.switch-caption {
 
 
 .gas-config{
-  // padding: 15px 0px;
   background-color: #243c48;
   input{
-    color: white;
+    height: auto;
+    min-height: auto;
   }
-  // .result{
-  //   color: white;
-  // }
-}
-.advanced-content {
-  padding: 10px;
-  transition: 0.3s;
-  &[disabled] {
-    // opacity: .3;
-    padding: 0px;
-    height: 0px;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  .transaction-fee {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    >div{
-      &:not(:first-child){
-        margin-left: 20px;
-      }
+  .advanced-content {
+    padding: 15px 0;
+    transition: 0.3s;
+    font-size: 0.8em;
+    &[disabled] {
+      padding: 0px;
+      height: 0px;
+      overflow: hidden;
+      pointer-events: none;
     }
-    >label{
-      margin-bottom: 0px;
-      margin-right: 20px;
-      font-size: 14px;
-    }
-    .symbol {
-      line-height: 40px;
-      text-align: center;
-      color: #8e9aa1;
-    }
-    .result {
-      line-height: 40px;
-      text-align: center;
-      display: block;
-      color: #00ffd6;
-      font-weight: bold;
-      font-family: $font-family-monospace;
-      font-size: 14px;
-      white-space: nowrap;
-      &:before {
-        content: '= ';
-      }
-    }
-    // @include breakpoint(large){
-    //   >div{
-    //     &:first-child{
-    //       width: 100%;
-    //     }
-    //   }
-    // }
-    @include breakpoint(medium) {
-      // >div{
-      //   &:first-child{
-      //     width: 100%;
-      //   }
-      // }
-      .gas-limit,
-      .gas-price {
-        float: left;
+    .transaction-fee{
+      text-transform: capitalize;
+      .gas-price{
         display: flex;
         align-items: center;
-        font-weight: bold;
-        color: #8e9aa1
+        input{
+          width: 100px;
+          background-color: #1b2e36;
+          color: #fff;
+          margin: 0 20px;
+          text-align: right;
+        }
       }
-      .symbol {
-        width: 5%;
-        float: left;
-      }
-      .result {
-        width: 25%;
-        float: left;
-        text-align: right;
+      .gas-limit{
+        margin-top: 15px;
       }
     }
-    .gas-limit {
-      //position: relative;
-      
-      // &:before {
-      //   content: 'Gas Limit';
-      //   position: absolute;
-      //   left: 12px;
-      //   top: 13px;
-      //   white-space: nowrap;
-      //   font-size: 11px;
-      //   font-weight: bold;
-      //   text-transform: uppercase;
-      //   text-align: left;
-      // }
-      span:first-child{
-        margin-right: 10px;
+
+    @media screen and(max-width: 640px) {
+      .gas-limit{
+        display: flex;
+        border: 1px solid;
+        padding: 5px 10px;
       }
-      // input {
-      //   width: 70px;
-      //   padding-left: 80px;
-      //   text-align: right;
-      //   margin: 0;
-      //   font-size: 14px;
-      //   margin-left: 10px;
-      //   &[readonly] {
-      //     background-color: transparent
-      //   }
-      // }
+      .symbol{
+        text-align: center;
+        margin: 9px 0;
+      }
+      .gas-price{
+        border: 1px solid;
+        padding: 5px 10px;
+        margin-bottom: 15px;
+        input{
+          margin-right: 10px;
+          padding: 5px 10px;
+        }
+      }
     }
-    .gas-price {
-     // position: relative;
-      // &:before {
-      //   content: 'Gas Price';
-      //   position: absolute;
-      //   left: 12px;
-      //   top: 13px;
-      //   white-space: nowrap;
-      //   font-size: 11px;
-      //   font-weight: bold;
-      //   text-transform: uppercase;
-      // }
-      // &:after {
-      //   content: 'gwei';
-      //   position: absolute;
-      //   right: 12px;
-      //   top: 13px;
-      //   white-space: nowrap;
-      //   font-size: 11px;
-      //   font-weight: bold;
-      //   text-align: right;
-      // }
-      input {
-        width: 136px;
-        padding: 0px;
-        text-align: right;
-        margin: 0 10px;
-        background-color: #12323a;
-        color: white;
-        padding-right: 10px;
+
+    @include breakpoint(medium){
+      .transaction-fee{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        > div{
+          margin-right: 10px;
+        }
+        .gas-limit{
+          margin-top: 0;
+        }
       }
     }
   }
