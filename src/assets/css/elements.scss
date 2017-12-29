@@ -286,7 +286,7 @@ p.note {
     background-color: rgba($dark-gray, .7);
     text-align: center;
     &:hover{
-      background: linear-gradient(178deg, rgba(54, 217, 172, 0.5), rgba(4, 150, 150, 0.5));
+      background: linear-gradient(178deg, rgba(54, 217, 172, 0.7), rgba(4, 150, 150, 0.7));
     }
   }
   img {
@@ -458,6 +458,7 @@ label.switch-caption {
         margin-bottom: 8px;
         background-color: #1b2e36;
         color: #a5a5a5;
+        border-radius: 25px;
       }
     }
     .error-text{

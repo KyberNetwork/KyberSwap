@@ -30,7 +30,7 @@ export default class MinRate extends React.Component {
       <div className="row min-rate small-12 medium-8">
         <label className="column small-12 medium-3 text-right">
           <span>Min Rate</span>
-          <span className="k k-info k-2x ml-3" title="Increase for better profit"></span>
+          <span className="k k-info k-2x ml-3" title="Lower rates for better success chance during market volatility"></span>
         </label>
         <div className="column small-12 medium-6 end p-relative">
           <input type="number" value={offeredRate} onChange={(e) => this.changeOfferRate(e)} />

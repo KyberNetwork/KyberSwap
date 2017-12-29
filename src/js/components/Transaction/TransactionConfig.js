@@ -17,7 +17,7 @@ const TransactionConfig = (props) => {
           <div className="row gas-price text-light small-12 medium-8 mt-3">
             <label className="column small-12 medium-3">
               <span>Gas price</span>
-              <span className="k k-info k-2x ml-3" data-tooltip title={props.translate("transaction.transaction_config_tooltip") || "Change gas limit or gas price affect the time to proccess transaction"}></span>
+              <span className="k k-info k-2x ml-3" data-tooltip title={props.translate("transaction.transaction_config_tooltip") || "Higher gas price, faster transaction"}></span>
             </label>
             <div className="column small-12 medium-6 end p-relative">
               <input type="number" min="0" max="99" className="gas-price-input" step="0.1" onKeyPress={props.onGasPricePress} value={props.gasPrice} onChange={specifyGasPrice.bind(this)} />
