@@ -27,11 +27,13 @@ export default class MinRate extends React.Component {
       offeredRate = converter.toT(offeredRate, 18)
     }
     return (
-      <div className="min-rate">
-        <span>Min Rate</span>
+    <div class="column small-12 medium-6 min-rate">
+      <label class="title">Min Rate<span class="help has-tip top" data-tooltip title="Lower rates for better success chance during market volatility"></span></label>
+      <div className ={this.props.exchange.errors.rateError !==""? "error":""}>
         <input type="number" value={offeredRate} onChange={(e) => this.changeOfferRate(e)}/>
-        <span className="error">{this.props.exchange.errors.rateError}</span>
+        <span className="error-text">{this.props.exchange.errors.rateError}</span>
       </div>
+    </div>
     )
   }
 }
