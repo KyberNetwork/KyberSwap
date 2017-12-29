@@ -4,7 +4,7 @@ import HttpEthereumProvider from "./httpProvider"
 import WebsocketEthereumProvider from "./wsProvider"
 import constants from "../constants"
 
-import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRateUSD, updateHistoryExchange, checkConnection } from "../../actions/globalActions"
+import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRateUSD, updateHistoryExchange, checkConnection, setGasPrice } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx } from "../../actions/txActions"
 import { updateRateExchange } from "../../actions/exchangeActions"
@@ -94,6 +94,8 @@ export default class EthereumService extends React.Component {
     this.fetchRateExchange()
     this.fetchHistoryExchange()
     this.checkConnection()
+
+    this.fetchGasprice()
   }
 
   fetchRateData() {
@@ -191,6 +193,12 @@ export default class EthereumService extends React.Component {
     //if (history.page,){      
     store.dispatch(updateHistoryExchange(ethereum, history.page, history.itemPerPage, true))
     //}
+  }
+
+  fetchGasprice = () => {
+    var state = store.getState()
+    var ethereum = state.connection.ethereum
+    store.dispatch(setGasPrice(ethereum))
   }
 
   checkConnection = () => {

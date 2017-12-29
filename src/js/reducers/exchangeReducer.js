@@ -28,6 +28,7 @@ const exchange = (state = initState, action) => {
       newState.step = initState.step
       newState.offeredRate = newState.minConversionRate
       newState.isEditRate = false
+      newState.isEditGasPrice = false
       return newState
     }
     case "EXCHANGE.SELECT_TOKEN_ASYNC":{
@@ -81,6 +82,7 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.SPECIFY_GAS_PRICE":{
       newState.gasPrice = action.payload
+      newState.isEditGasPrice = true
       newState.errors.gasPriceError = ""
       return newState
     }
@@ -256,7 +258,9 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
-      newState.gasPrice = action.payload
+      if(!newState.isEditGasPrice){
+        newState.gasPrice = action.payload
+      }
       return newState
     }    
   }

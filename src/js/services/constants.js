@@ -48,6 +48,8 @@ const INIT_EXCHANGE_FORM_STATE = {
   throwOnFailure: false,
   gas: 1000000,
   gasPrice: 20,
+  isEditGasPrice: false,
+
   step: 2,
   broadcasting: true,
   bcError: "",
@@ -88,8 +90,10 @@ const INIT_TRANSFER_FORM_STATE = {
   destAddress: "",
 
   throwOnFailure: false,
-  gas: 1000000,
+  gas: 21000,
   gasPrice: 20,
+  isEditGasPrice: false,
+  
   step: 1,
   broadcasting: true,
   bcError: "",

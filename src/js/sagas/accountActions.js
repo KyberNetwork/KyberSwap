@@ -82,7 +82,7 @@ export function* importNewAccount(action) {
     yield put(actions.importNewAccountComplete(account))
 
     //set gas price
-    yield put(setGasPrice(ethereum))
+   // yield put(setGasPrice(ethereum))
 
     yield put(goToRoute('/exchange'))
 
