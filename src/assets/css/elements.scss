@@ -339,10 +339,11 @@ label.switch-caption {
 }
 
 .advanced-content {
-  transition: opacity .4s ease-in-out;
+  overflow: hidden;
+  max-height: 205px;
+  transition: max-height .4s;
   &[disabled] {
-    opacity: .3;
-    pointer-events: none;
+    max-height: 0;
   }
   .transaction-fee {
     .result {
