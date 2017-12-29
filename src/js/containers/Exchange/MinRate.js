@@ -18,7 +18,7 @@ export default class MinRate extends React.Component {
       var valueB = converter.toTWei(value)
       this.props.dispatch(actions.setOfferedRate(valueB.toString()))
     }
-    
+    this.props.dispatch(actions.caculateAmount())
   }
 
   render = () => {

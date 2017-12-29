@@ -9,10 +9,6 @@ const initState = constants.INIT_EXCHANGE_FORM_STATE
 const exchange = (state = initState, action) => {
   var newState = { ...state, errors: { ...state.errors } }
   switch (action.type) {
-    // case REHYDRATE: {
-    //   newState = initState      
-    //   return {...newState}
-    // }
     case "EXCHANGE.SET_RANDOM_SELECTED_TOKEN":
       var exchange = { ...state }
       var random = action.payload
@@ -79,31 +75,21 @@ const exchange = (state = initState, action) => {
       newState.errors.rateError = action.payload
       return newState
     }
-    case "EXCHANGE.GO_TO_STEP":
+    case "EXCHANGE.GO_TO_STEP":{
       newState.step = action.payload
       return newState
-    case "EXCHANGE.SPECIFY_GAS":
-      newState.gas = action.payload
-      return newState
-    case "EXCHANGE.SPECIFY_GAS_PRICE":
+    }
+    case "EXCHANGE.SPECIFY_GAS_PRICE":{
       newState.gasPrice = action.payload
       newState.errors.gasPriceError = ""
       return newState
-    case "EXCHANGE.SHOW_ADVANCE":
+    }
+    case "EXCHANGE.SHOW_ADVANCE":{
       newState.advanced = true
       return newState
-    case "EXCHANGE.HIDE_ADVANCE":
-      newState.advanced = false
-      return newState
-    case "EXCHANGE.CHANGE_SOURCE_AMOUNT": {
-      newState.sourceAmount = action.payload
-      newState.errors.sourceAmountError = ""
-      return newState
     }
-    case "EXCHANGE.CHANGE_DEST_AMOUNT": {
-      newState.destAmount = action.payload
-      newState.errors.destAmountError = ""
-      newState.errors.sourceAmountError = ""      
+    case "EXCHANGE.HIDE_ADVANCE":{
+      newState.advanced = false
       return newState
     }
     case "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED": {
@@ -217,6 +203,7 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.CACULATE_AMOUNT": {
+      console.log(newState)
       if(state.errors.selectSameToken || state.errors.selectTokenToken) return newState
       if(state.inputFocus == "dest"){
         newState.sourceAmount = caculateSourceAmount(state.destAmount, state.offeredRate, 6)

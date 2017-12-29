@@ -12,6 +12,7 @@ export default class RateBetweenToken extends React.Component {
 
   resetOfferedRate = (e)=>{
     this.props.dispatch(actions.resetOfferedRate())
+    this.props.dispatch(actions.caculateAmount())
   }
 
   render = () => {

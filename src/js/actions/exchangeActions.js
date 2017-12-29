@@ -95,19 +95,19 @@ export function hideAdvance() {
   }
 }
 
-export function changeSourceAmout(amount) {
-  return {
-    type: "EXCHANGE.CHANGE_SOURCE_AMOUNT",
-    payload: amount
-  }
-}
+// export function changeSourceAmout(amount) {
+//   return {
+//     type: "EXCHANGE.CHANGE_SOURCE_AMOUNT",
+//     payload: amount
+//   }
+// }
 
-export function changeDestAmout(amount) {
-  return {
-    type: "EXCHANGE.CHANGE_DEST_AMOUNT",
-    payload: amount
-  }
-}
+// export function changeDestAmout(amount) {
+//   return {
+//     type: "EXCHANGE.CHANGE_DEST_AMOUNT",
+//     payload: amount
+//   }
+// }
 
 export function setRandomExchangeSelectedToken(random) {
   return {

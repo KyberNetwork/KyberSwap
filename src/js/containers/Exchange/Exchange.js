@@ -190,6 +190,7 @@ export default class Exchange extends React.Component {
         onFocus: this.focusDest
       }
     }
+   // console.log(input)
     var exchangeButton = (
       <PostExchangeWithKey />
     )
