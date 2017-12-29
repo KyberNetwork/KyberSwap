@@ -157,6 +157,20 @@ export default class BaseEthereumProvider {
 
   }
 
+  estimateGas(txObj){
+    return new Promise((resolve, reject) => {
+      this.rpc.eth.estimateGas(txObj)
+        .then((result) => {
+          if (result != null) {
+            resolve(result)
+          }
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
+  }
+
   exchangeData(sourceToken, sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate, throwOnFailure) {
     return this.networkContract.methods.trade(

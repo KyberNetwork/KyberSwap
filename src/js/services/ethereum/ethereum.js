@@ -7,7 +7,7 @@ import constants from "../constants"
 import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRateUSD, updateHistoryExchange, checkConnection, setGasPrice } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx } from "../../actions/txActions"
-import { updateRateExchange } from "../../actions/exchangeActions"
+import { updateRateExchange, estimateGas } from "../../actions/exchangeActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
 import { setConnection } from "../../actions/connectionActions"
@@ -96,6 +96,7 @@ export default class EthereumService extends React.Component {
     this.checkConnection()
 
     this.fetchGasprice()
+    this.fetchGasExchange()
   }
 
   fetchRateData() {
@@ -199,6 +200,27 @@ export default class EthereumService extends React.Component {
     var state = store.getState()
     var ethereum = state.connection.ethereum
     store.dispatch(setGasPrice(ethereum))
+  }
+
+  fetchGasExchange = () => {
+    var state = store.getState()
+    var account = state.account.account
+    if (!account.address) {
+      return
+    }
+    var ethereum = state.connection.ethereum
+    var exchange = state.exchange
+    var tokens = state.tokens.tokens
+
+    var sourceDecimal = 18
+    var sourceTokenSymbol = exchange.sourceTokenSymbol
+    if (tokens[sourceTokenSymbol]) {
+      sourceDecimal = tokens[sourceTokenSymbol].decimal
+    }
+
+    var kyber_address = BLOCKCHAIN_INFO.network
+    var destAddress = account.address
+    store.dispatch(estimateGas(ethereum, {...state.exchange, sourceDecimal, kyber_address, destAddress}))
   }
 
   checkConnection = () => {

@@ -205,7 +205,6 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.CACULATE_AMOUNT": {
-      console.log(newState)
       if(state.errors.selectSameToken || state.errors.selectTokenToken) return newState
       if(state.inputFocus == "dest"){
         newState.sourceAmount = caculateSourceAmount(state.destAmount, state.offeredRate, 6)
@@ -255,6 +254,10 @@ const exchange = (state = initState, action) => {
       newState.offeredRate = newState.minConversionRate
       newState.isEditRate = false
       newState.errors.rateError = ''
+      return newState
+    }
+    case "EXCHANGE.SET_ESTIMATE_GAS_USED":{
+      newState.gas_estimate = action.payload.estimatedGas
       return newState
     }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{

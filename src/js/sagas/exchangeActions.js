@@ -437,7 +437,39 @@ function* updateRatePending(action) {
     console.log("===================")
     console.log(err)
   }
+}
 
+function* updateGasUsed(action){
+  try{
+    const {ethereum, exchange} = action.payload
+    const sourceToken = exchange.sourceToken
+    const sourceAmount = converter.stringToHex(exchange.sourceAmount, exchange.sourceDecimal)
+    const destToken = exchange.destToken
+    const destAddress = exchange.destAddress
+    const maxDestAmount = converter.biggestNumber() 
+    const minConversionRate = converter.numberToHex(exchange.offeredRate) 
+    const throwOnFailure = false
+    var data = yield call([ethereum, ethereum.call("exchangeData")], sourceToken, sourceAmount, 
+                                                    destToken, destAddress,
+                                          maxDestAmount, minConversionRate, throwOnFailure)
+    //console.log(data)
+    var value = '0x0'                
+    if(exchange.sourceTokenSymbol === 'ETH'){
+      value = sourceAmount
+    }
+    var txObj = {
+      from: destAddress,
+      to: exchange.kyber_address,
+      data: data,
+      value: sourceAmount
+    }
+    //console.log(txObj)
+    var estimatedGas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
+    //console.log(estimatedGas)
+    yield put(actions.setEstimateGas(estimatedGas))
+  }catch(e){
+    console.log(e)
+  }
 }
 
 export function* watchExchange() {
@@ -448,4 +480,5 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.PROCESS_APPROVE", processApprove)
   yield takeEvery("EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET", checkTokenBalanceOfColdWallet)
   yield takeEvery("EXCHANGE.UPDATE_RATE_PENDING", updateRatePending)
+  yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", updateGasUsed)
 }
