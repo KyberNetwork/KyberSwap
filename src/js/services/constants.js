@@ -42,6 +42,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   offeredRateExpiryBlock: 0,
   offeredRateBalance: 0,
   offeredRate: 0,
+  isEditRate : false,
 
   throwOnFailure: false,
   gas: 1000000,
@@ -64,7 +65,8 @@ const INIT_EXCHANGE_FORM_STATE = {
     gasPriceError: '',
     gasError: '',
     passwordError: '',
-    signTransaction: ''
+    signTransaction: '',
+    rateError: ''
   }
 }
 

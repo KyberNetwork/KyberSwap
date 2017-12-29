@@ -99,6 +99,12 @@ export default class PostExchange extends React.Component {
       this.props.dispatch(exchangeActions.thowErrorGasPrice("Gas price is not number"))
       check = false
     }
+
+    var testRate = parseFloat(this.props.form.offeredRate)
+    if (isNaN(testRate)) {
+      this.props.dispatch(exchangeActions.thowErrorRate("Rate is not number"))
+      check = false
+    }
     return check
   }
 
@@ -144,7 +150,7 @@ export default class PostExchange extends React.Component {
     var sourceToken = this.props.form.sourceToken
     var sourceAmount = converters.stringToHex(this.props.form.sourceAmount, this.props.form.sourceDecimal)
     var destToken = this.props.form.destToken
-    var minConversionRate = converters.numberToHex(this.props.form.minConversionRate)
+    var minConversionRate = converters.numberToHex(this.props.form.offeredRate)
     var destAddress = this.props.account.address
     var maxDestAmount = converters.biggestNumber()
     var throwOnFailure = this.props.form.throwOnFailure

@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 
 import { toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber } from "../../utils/converter"
 
-import { PostExchangeWithKey } from "../Exchange"
+import { PostExchangeWithKey, MinRate, RateBetweenToken } from "../Exchange"
 import { ExchangeForm, TransactionConfig } from "../../components/Transaction"
 import { SelectToken, TransactionLoading, Token } from "../CommonElements"
 
@@ -177,12 +177,6 @@ export default class Exchange extends React.Component {
       <SelectToken chooseToken={this.chooseToken} type="exchange" />
     )
 
-    var exchangeRate = {
-      sourceToken: this.props.exchange.sourceTokenSymbol,
-      rate: toT(this.props.exchange.offeredRate),
-      destToken: this.props.exchange.destTokenSymbol,
-      percent: "-"
-    }
     var exchangeButton = (
       <PostExchangeWithKey />
     )
@@ -204,7 +198,21 @@ export default class Exchange extends React.Component {
         gasPriceError={this.props.exchange.errors.gasPriceError}
         gasError={this.props.exchange.errors.gasError}
         totalGas={gweiToEth(this.props.exchange.gas * this.props.exchange.gasPrice)}
-        translate={this.props.translate}
+        translate={this.props.translate}        
+      />
+    ) 
+
+    var exchangeRate = {
+      sourceToken: this.props.exchange.sourceTokenSymbol,
+      rate: toT(this.props.exchange.minConversionRate),
+      destToken: this.props.exchange.destTokenSymbol,
+      percent: "-"
+    }
+
+    var rateToken = (
+      <RateBetweenToken
+        isSelectToken={this.props.exchange.isSelectToken}
+        exchangeRate={exchangeRate}
       />
     )
 
@@ -213,7 +221,6 @@ export default class Exchange extends React.Component {
         tokenSource={tokenSource}
         tokenDest={tokenDest}
         selectTokenModal={selectTokenModal}
-        exchangeRate={exchangeRate}
         gasConfig={gasConfig}
         exchangeButton={exchangeButton}
         transactionLoadingScreen={transactionLoadingScreen}
@@ -224,6 +231,8 @@ export default class Exchange extends React.Component {
         setAmount={this.setAmount}
         isSelectToken = {this.props.exchange.isSelectToken}
         translate={this.props.translate}
+        minRate = {<MinRate />}
+        rateToken = {rateToken}
       />
     )
   }

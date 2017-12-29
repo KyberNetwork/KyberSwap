@@ -30,6 +30,9 @@ const exchange = (state = initState, action) => {
       //newState.gasPrice = initState.gasPrice
       newState.bcError = ""
       newState.step = initState.step
+
+      newState.offeredRate = newState.minConversionRate
+      newState.isEditRate = false
       return newState
     }
     case "EXCHANGE.SELECT_TOKEN_ASYNC":{
@@ -45,6 +48,7 @@ const exchange = (state = initState, action) => {
         newState.destToken = action.payload.address
       }
       newState.selected = true
+      newState.isEditRate = false
       return newState
     }
     case "EXCHANGE.CHECK_SELECT_TOKEN": {
@@ -70,6 +74,10 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.THROW_GAS_PRICE_ERROR":{
       newState.errors.gasPriceError = action.payload
+      return newState
+    }
+    case "EXCHANGE.THROW_RATE_ERROR":{
+      newState.errors.rateError = action.payload
       return newState
     }
     case "EXCHANGE.GO_TO_STEP":
@@ -126,7 +134,9 @@ const exchange = (state = initState, action) => {
       }
       newState.offeredRateBalance = action.payload.reserveBalance
       newState.offeredRateExpiryBlock = action.payload.expirationBlock
-      newState.offeredRate = rate
+      if(!newState.isEditRate){
+        newState.offeredRate = rate
+      }
       newState.isSelectToken = false    
       return newState
     case "EXCHANGE.OPEN_PASSPHRASE": {
@@ -230,6 +240,18 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.FOCUS_INPUT": {
       newState.inputFocus = action.payload
+      return newState
+    }
+    case "EXCHANGE.SET_OFFERED_RATE":{
+      newState.offeredRate = action.payload.value
+      newState.errors.rateError = ''
+      newState.isEditRate = true
+      return newState
+    }
+    case "EXCHANGE.RESET_OFFERED_RATE":{
+      newState.offeredRate = newState.minConversionRate
+      newState.isEditRate = false
+      newState.errors.rateError = ''
       return newState
     }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{

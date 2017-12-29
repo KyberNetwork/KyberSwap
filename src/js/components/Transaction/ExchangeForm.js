@@ -18,7 +18,7 @@ const ExchangeForm = (props) => {
   var errorSelectSameToken = props.errors.selectSameToken !== '' ? props.translate(props.errors.selectSameToken) : ''
   var errorSelectTokenToken = props.errors.selectTokenToken !== '' ? props.translate(props.errors.selectTokenToken) : ''
   var errorToken = errorSelectSameToken + errorSelectTokenToken
-  var tokenRate = props.isSelectToken ? <img src={require('../../../assets/img/waiting.svg')}/> : roundingNumber(props.exchangeRate.rate)
+ // var tokenRate = props.isSelectToken ? <img src={require('../../../assets/img/waiting.svg')}/> : roundingNumber(props.exchangeRate.rate)
   var render = (
     <div>
       <div class="frame">
@@ -64,9 +64,10 @@ const ExchangeForm = (props) => {
               </div>
               <div class="row">
                 <div class="column">
-                  <p class="token-compare" title={tokenRate}>
+                  {props.rateToken}
+                  {/* <p class="token-compare" title={tokenRate}>
                     1 {props.exchangeRate.sourceToken} = {tokenRate} {props.exchangeRate.destToken}
-                  </p>
+                  </p> */}
                 </div>
               </div>
               {props.step === 2 &&
@@ -82,6 +83,7 @@ const ExchangeForm = (props) => {
                       </div>
                     </div>
                     <div class="advanced-content" disabled>
+                      {props.minRate}
                       {props.gasConfig}
                     </div>
                   </div>
