@@ -347,7 +347,7 @@ describe('Submit exchange', () => {
         postExchangeBtn.find('.submit').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET',
-            payload: { "account": { "address": "0x12f0453c1947269842c5646df98905533c1b9519", "avatar": "", "balance": 0, "keystring": "", "manualNonce": 0, "nonce": 0, "type": "trezor" }, "address": "0x12f0453c1947269842c5646df98905533c1b9519", "data": { "destAmount": "", "destTokenSymbol": "OMG", "sourceAmount": "0.1", "sourceTokenSymbol": "OMG" }, "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519", "destToken": undefined, "ethereum": store.getState().connection.ethereum, "formId": "exchange", "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "maxDestAmount": "0x8000000000000000000000000000000000000000000000000000000000000000", "minConversionRate": "0x23c46ca46a93f76b8", "nonce": 0, "password": "", "sourceAmount": "0x5f5e100", "sourceToken": undefined, "throwOnFailure": undefined, "type": "trezor" }
+            payload: { "account": { "address": "0x12f0453c1947269842c5646df98905533c1b9519", "avatar": "", "balance": 0, "keystring": "", "manualNonce": 0, "nonce": 0, "type": "trezor" }, "address": "0x12f0453c1947269842c5646df98905533c1b9519", "data": { "destAmount": "", "destTokenSymbol": "OMG", "sourceAmount": "0.1", "sourceTokenSymbol": "OMG" }, "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519", "destToken": undefined, "ethereum": store.getState().connection.ethereum, "formId": "exchange", "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "maxDestAmount": "0x8000000000000000000000000000000000000000000000000000000000000000", "minConversionRate": "0x2dbfd82316cd0745", "nonce": 0, "password": "", "sourceAmount": "0x5f5e100", "sourceToken": undefined, "throwOnFailure": undefined, "type": "trezor" }
         });
     })
 });
@@ -475,7 +475,7 @@ describe('Proccess transaction', () => {
         passphraseModal.find('.process-submit').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'EXCHANGE.PROCESS_EXCHANGE',
-            payload: { "account": { "address": "0x12f0453c1947269842c5646df98905533c1b9519", "avatar": "", "balance": 0, "keystring": "", "manualNonce": 0, "nonce": 0, "type": "keystore" }, "address": "0x12f0453c1947269842c5646df98905533c1b9519", "data": { "destAmount": "", "destTokenSymbol": "OMG", "sourceAmount": "0.1", "sourceTokenSymbol": "ETH" }, "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519", "destToken": undefined, "ethereum": store.getState().connection.ethereum, "formId": "exchange", "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "maxDestAmount": "0x8000000000000000000000000000000000000000000000000000000000000000", "minConversionRate": "0x23c46ca46a93f76b8", "nonce": 0, "password": "", "sourceAmount": "0x16345785d8a0000", "sourceToken": undefined, "throwOnFailure": undefined, "type": "keystore",
+            payload: { "account": { "address": "0x12f0453c1947269842c5646df98905533c1b9519", "avatar": "", "balance": 0, "keystring": "", "manualNonce": 0, "nonce": 0, "type": "keystore" }, "address": "0x12f0453c1947269842c5646df98905533c1b9519", "data": { "destAmount": "", "destTokenSymbol": "OMG", "sourceAmount": "0.1", "sourceTokenSymbol": "ETH" }, "destAddress": "0x12f0453c1947269842c5646df98905533c1b9519", "destToken": undefined, "ethereum": store.getState().connection.ethereum, "formId": "exchange", "gas": "0xf4240", "gasPrice": "0x4a817c800", "keyService": undefined, "keystring": "", "maxDestAmount": "0x8000000000000000000000000000000000000000000000000000000000000000", "minConversionRate": "0x2dbfd82316cd0745", "nonce": 0, "password": "", "sourceAmount": "0x16345785d8a0000", "sourceToken": undefined, "throwOnFailure": undefined, "type": "keystore",
             "balanceData": {
                 "dest": "1000000000000000000",
                 "source": "10000000000000000000",
@@ -540,7 +540,7 @@ describe('Test formParams function', () => {
             "gas": "0xf4240",
             "gasPrice": "0x4a817c800",
             "maxDestAmount": "0x8000000000000000000000000000000000000000000000000000000000000000",
-            "minConversionRate": "0x23c46ca46a93f76b8",
+            "minConversionRate": "0x0",
             "nonce": 0,
             "selectedAccount": "0x12f0453c1947269842c5646df98905533c1b9519",
             "sourceAmount": "0x16345785d8a0000",
