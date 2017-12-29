@@ -330,7 +330,7 @@ span.help {
 }
 
 .advanced-switch {
-  margin: 10px 0 25px 0;
+  margin: 10px 0 15px 0;
   user-select: none;
 }
 
@@ -339,58 +339,28 @@ label.switch-caption {
 }
 
 .advanced-content {
-  transition: opacity .4s ease-in-out;
+  overflow: hidden;
+  max-height: 205px;
+  transition: max-height .4s;
   &[disabled] {
-    opacity: .3;
-    pointer-events: none;
+    max-height: 0;
   }
   .transaction-fee {
-    .symbol {
-      line-height: 40px;
-      text-align: center;
-    }
     .result {
-      line-height: 40px;
-      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 0;
       display: block;
       color: $medium-gray;
       font-weight: bold;
       font-family: $font-family-monospace;
-      font-size: 14px;
+      font-size: 12px;
       white-space: nowrap;
-      &:before {
-        content: '= ';
-      }
     }
     @include breakpoint(medium) {
-      .gas-limit,
-      .gas-price {
-        width: 35%;
-        float: left;
-      }
-      .symbol {
-        width: 5%;
-        float: left;
-      }
-      .result {
-        width: 25%;
-        float: left;
-        text-align: right;
-      }
+
     }
     .gas-limit {
       position: relative;
-      &:before {
-        content: 'Gas Limit';
-        position: absolute;
-        left: 12px;
-        top: 13px;
-        white-space: nowrap;
-        font-size: 11px;
-        font-weight: bold;
-        text-transform: uppercase;
-        text-align: left;
-      }
       input {
         width: 100%;
         padding-left: 80px;
@@ -403,16 +373,6 @@ label.switch-caption {
     }
     .gas-price {
       position: relative;
-      &:before {
-        content: 'Gas Price';
-        position: absolute;
-        left: 12px;
-        top: 13px;
-        white-space: nowrap;
-        font-size: 11px;
-        font-weight: bold;
-        text-transform: uppercase;
-      }
       &:after {
         content: 'gwei';
         position: absolute;

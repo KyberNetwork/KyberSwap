@@ -83,8 +83,10 @@ const ExchangeForm = (props) => {
                       </div>
                     </div>
                     <div class="advanced-content" disabled>
-                      {props.minRate}
-                      {props.gasConfig}
+                      <div className="row">
+                        {props.minRate}
+                        {props.gasConfig}
+                      </div>
                     </div>
                   </div>
                 </div>
