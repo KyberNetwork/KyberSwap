@@ -16,7 +16,7 @@ const TransactionConfig = (props) => {
           {props.minRate}
           <div className="row gas-price text-light small-12 medium-8 mt-3">
             <label className="column small-12 medium-3">
-              <span>Gas price</span>
+              <span>{props.translate("transaction.gas_price") || "Gas price"}</span>
               <span className="k k-info k-2x ml-3" data-tooltip title={props.translate("transaction.transaction_config_tooltip") || "Higher gas price, faster transaction"}></span>
             </label>
             <div className="column small-12 medium-6 end p-relative">
@@ -24,7 +24,7 @@ const TransactionConfig = (props) => {
               <div class="mt-2">
                 <span className="unit text-lowercase">gwei</span>
                 {props.gasPriceError !== "" && <p class="error-text mb-1">{props.gasPriceError}</p>}
-                Transaction Fee: <span className="text-success font-w-b">{props.totalGas} eth</span>
+                {props.translate("transaction.transaction_fee") || "Transaction Fee"}: <span className="text-success font-w-b">{props.totalGas} eth</span>
               </div>
             </div>
           </div>

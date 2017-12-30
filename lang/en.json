@@ -59,9 +59,12 @@
     "gas_price": "Gas Price",
     "for": "for",
     "to": "to",
+    "best_rate": "Best Rate",
+    "token_amount": "Token/Amount",
 
     "transfer_tooltip": "Transfer ether or tokens to other addresses",
     "transaction_config_tooltip": "Higher gas price, faster transaction",
+    "best_rate_tooltip": "Lower rates for better success chance during market volatility",
     "terms_and_conditions": "<span>Terms and <br/> Conditions</span>"
   },
 

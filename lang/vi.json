@@ -59,9 +59,12 @@
     "gas_price": "Giá Gas",
     "for": "đổi lấy",
     "to": "đến",
+    "best_rate": "Rate tốt nhất",
+    "token_amount": "Token/Số lượng",
 
     "transfer_tooltip": "Chuyển eth hoặc token đến một tài khoản khác",
     "transaction_config_tooltip": "Thay đổi gas limit hoặc gas price sẽ ảnh hưởng đến tốc độ giao dịch",
+    "best_rate_tooltip": "Rate thấp hơn cho khả năng thành công cao hơn khi thị trường biến động",
     "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>"
   },
 
