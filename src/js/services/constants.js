@@ -47,7 +47,7 @@ const INIT_EXCHANGE_FORM_STATE = {
 
   throwOnFailure: false,
   gas: 1000000,
-  gas_estimate: 50000,
+  gas_estimate: 300000,
   gasPrice: 20,
   isEditGasPrice: false,
 
