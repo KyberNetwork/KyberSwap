@@ -77,6 +77,7 @@ function exchange() {
         offeredRateBalance: '8739437467440',
         destTokenSymbol: 'OMG',
         gas: 20,
+        gas_estimate: 300000,
         errors: {},
         balanceData: { nextDest: 0, prevDest: 0, nextSource: 0, prevSource: 0 }
     }
@@ -89,6 +90,7 @@ function transfer() {
         tokenSymbol: 'ETH',
         amount: '',
         destAddress: '',
+        gas_estimate: 300000,
         errors: {},
         balanceData: { next: 0, prev: 0 }
     }
