@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>dgd</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="dgd">
+            <g id="Vector">
+                <path d="M14,0 C6.26472,0 0,6.26471 0,14 C0,21.7353 6.26472,28 14,28 C21.7353,28 28,21.7353 28,14 C28.0123,6.26471 21.7351,0 14,0 Z" id="Path" fill="#FFFFFF" opacity="0.900000036"></path>
+                <polygon id="path1_fill-path" fill="#000000" points="14.4572 6.24008 21.1298 6.24008 21.1298 7.59933 15.94 7.59933 15.94 11.5534 19.7705 11.5534 19.7705 10.318 17.052 10.318 17.052 8.95845 21.2532 8.95845 21.2532 12.9126 14.4572 12.9126"></polygon>
+                <path d="M17.9417,22.3037 L6.79616,22.3037 L6.79616,14.2719 L17.9418,14.2719 C20.1043,14.2719 21.8712,16.0882 21.8712,18.2878 C21.8712,20.4873 20.104,22.3035 17.9417,22.3035 L17.9417,22.3037 Z" id="path2_fill" fill="#000000" fill-rule="nonzero"></path>
+                <path d="M17.63306,16.002 L8.64982,16.002 L8.64982,20.574 L17.6206,20.574 C18.8686,20.574 19.9559,19.53602 19.9559,18.2756 C19.9313,17.00258 18.9058,15.9894 17.63306,16.002 Z" id="path0_fill-path" fill="#EAECEE"></path>
+                <polygon id="path1_fill-path" fill="#000000" points="6.67254 8.95859 11.9858 8.95859 11.9858 6.24008 13.468 6.24008 13.468 12.9126 6.67254 12.9126 6.67254 8.95845"></polygon>
+                <polygon id="path2_fill" fill="#F5A623" points="6.79600003 6.36369983 10.99711 6.36369983 10.99711 7.96992 6.79600003 7.96992"></polygon>
+                <polygon id="path0_fill-path" fill="#FFFFFF" points="8.03200017 10.318 11.86254 10.318 11.86254 11.55364 8.03200017 11.55364"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

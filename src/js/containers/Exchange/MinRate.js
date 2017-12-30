@@ -29,7 +29,7 @@ export default class MinRate extends React.Component {
     return (
       <div className="row min-rate small-12 medium-8">
         <label className="column small-12 medium-3 text-right">
-          <span>Min Rate</span>
+          <span>Best Rate</span>
           <span className="k k-info k-2x ml-3" title="Lower rates for better success chance during market volatility"></span>
         </label>
         <div className="column small-12 medium-6 end p-relative">
