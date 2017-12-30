@@ -183,6 +183,37 @@ export default class BaseEthereumProvider {
         })
       }
 
+      getLogOneColumn(page, itemPerPage) {
+        return Promise.resolve({
+            events: [
+                {
+                    actualDestAmount: "1238588934297318387",
+                    actualSrcAmount: "112736066241914034288",
+                    blockNumber: 5181803,
+                    dest: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    id: 545,
+                    sender: null,
+                    source: "0x1795b4560491c941c0635451f07332effe3ee7b3",
+                    status: "mined",
+                    timestamp: 1514618168,
+                    txHash: "0x7acc54791c136591a8deeb32b2842be507b9624041859574665819e712ae2027"
+                },
+                {
+                    actualDestAmount: "1238588934297318387",
+                    actualSrcAmount: "112736066241914034288",
+                    blockNumber: 5181803,
+                    dest: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    id: 545,
+                    sender: null,
+                    source: "0x1795b4560491c941c0635451f07332effe3ee7b3",
+                    status: "mined",
+                    timestamp: 1514618168,
+                    txHash: "0x7acc54791c136591a8deeb32b2842be507b9624041859574665819e712ae2027",
+                }
+            ]
+        })
+      }
+
       getAllRatesFromServer(tokens, reserve) {
         return Promise.resolve([
             {id: 4, source: "ETH", dest: "KNC", rate: "413547223588488151040", expBlock: "20000000000000000000"},
