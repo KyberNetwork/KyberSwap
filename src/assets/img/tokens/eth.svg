@@ -1,12 +1,14 @@
-<svg width="28" height="28" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<title>eth</title>
-<desc>Created using Figma</desc>
-<g id="Canvas" transform="translate(-409 35)">
-<g id="eth">
-<use xlink:href="#path0_fill" transform="translate(409 -35)" fill="#515B85"/>
-</g>
-</g>
-<defs>
-<path id="path0_fill" d="M 14 0C 6.26802 0 0 6.26802 0 14C 0 21.732 6.26802 28 14 28C 21.732 28 28 21.732 28 14C 28 6.26802 21.732 0 14 0ZM 13.8185 23.2754L 8.28586 15.4491L 13.8185 18.6884L 13.8185 23.2754ZM 13.8185 17.5414L 8.24843 14.2786L 13.8185 11.8387L 13.8185 17.5414ZM 13.8185 11.4467L 8.42782 13.8078L 13.8185 4.75068L 13.8185 11.4467ZM 14.1775 4.74796L 19.644 13.8414L 14.1775 11.4467L 14.1775 4.74796ZM 14.1775 23.2754L 14.1775 18.6884L 19.7102 15.4491L 14.1775 23.2754ZM 14.1775 17.5415L 14.1775 11.8388L 19.7517 14.2805L 14.1775 17.5415Z"/>
-</defs>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>eth</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="eth">
+            <path d="M13,2 C6.37258857,2 1,7.37258857 1,14 C1,20.6274286 6.37258857,26 13,26 C19.6274286,26 25,20.6274286 25,14 C25,7.37258857 19.6274286,2 13,2 Z" id="path0_fill-path" fill="#FFFFFF"></path>
+            <path d="M14,0 C6.26802,0 0,6.26802 0,14 C0,21.732 6.26802,28 14,28 C21.732,28 28,21.732 28,14 C28,6.26802 21.732,0 14,0 Z" id="path0_fill-path" fill="#FFFFFF"></path>
+            <path d="M14,0 C6.26802,0 0,6.26802 0,14 C0,21.732 6.26802,28 14,28 C21.732,28 28,21.732 28,14 C28,6.26802 21.732,0 14,0 Z M13.8185,23.2754 L8.28586,15.4491 L13.8185,18.6884 L13.8185,23.2754 Z M13.8185,17.5414 L8.24843,14.2786 L13.8185,11.8387 L13.8185,17.5414 Z M13.8185,11.4467 L8.42782,13.8078 L13.8185,4.75068 L13.8185,11.4467 Z M14.1775,4.74796 L19.644,13.8414 L14.1775,11.4467 L14.1775,4.74796 Z M14.1775,23.2754 L14.1775,18.6884 L19.7102,15.4491 L14.1775,23.2754 Z M14.1775,17.5415 L14.1775,11.8388 L19.7517,14.2805 L14.1775,17.5415 Z" id="path0_fill" fill="#8B9FF7" fill-rule="nonzero"></path>
+        </g>
+    </g>
 </svg>

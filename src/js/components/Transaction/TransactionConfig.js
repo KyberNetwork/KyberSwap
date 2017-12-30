@@ -24,7 +24,7 @@ const TransactionConfig = (props) => {
               <div class="mt-2">
                 <span className="unit text-lowercase">gwei</span>
                 {props.gasPriceError !== "" && <p class="error-text mb-1">{props.gasPriceError}</p>}
-                Estimate Transaction Fee: <span className="text-success font-w-b">{props.totalGas} eth</span>
+                Transaction Fee: <span className="text-success font-w-b">{props.totalGas} eth</span>
               </div>
             </div>
           </div>

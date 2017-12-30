@@ -300,29 +300,44 @@ export function makeNewExchange() {
   }
 }
 
-export function updateCurrentBalance(sourceBalance, destBalance){
+export function updateCurrentBalance(sourceBalance, destBalance) {
   return {
     type: "EXCHANGE.UPDATE_CURRENT_BALANCE",
-    payload: {sourceBalance, destBalance}
+    payload: { sourceBalance, destBalance }
   }
 }
 
-export function setTermAndServices(value){
+export function setTermAndServices(value) {
   return {
     type: "EXCHANGE.SET_TERM_AND_SERVICES",
-    payload: {value}
+    payload: { value }
   }
 }
 
-export function setOfferedRate(value){
+export function setOfferedRate(value) {
   return {
     type: "EXCHANGE.SET_OFFERED_RATE",
-    payload: {value}
+    payload: { value }
   }
 }
 
-export function resetOfferedRate(){
+export function resetOfferedRate() {
   return {
     type: "EXCHANGE.RESET_OFFERED_RATE",
+  }
+}
+
+
+export function estimateGas(ethereum, exchange) {
+  return {
+    type: "EXCHANGE.ESTIMATE_GAS_USED",
+    payload: { ethereum, exchange }
+  }
+}
+
+export function setEstimateGas(estimatedGas){
+  return {
+    type: "EXCHANGE.SET_ESTIMATE_GAS_USED",
+    payload: { estimatedGas }
   }
 }

@@ -206,9 +206,9 @@ export default class Exchange extends React.Component {
     )
 
     var gasPrice = stringToBigNumber(gweiToEth(this.props.exchange.gasPrice))
-    var totalGas = gasPrice.mul(this.props.exchange.gas)
+    var totalGas = gasPrice.mul(this.props.exchange.gas_estimate)
     var gasConfig = (
-      <TransactionConfig gas={this.props.exchange.gas}
+      <TransactionConfig gas={this.props.exchange.gas_estimate}
         gasPrice={this.props.exchange.gasPrice}
         gasHandler={this.specifyGas}
         gasPriceHandler={this.specifyGasPrice}

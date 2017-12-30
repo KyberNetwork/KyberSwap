@@ -1,34 +1,31 @@
-<svg width="25" height="28" viewBox="0 0 25 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<title>mco</title>
-<desc>Created using Figma</desc>
-<g id="Canvas" transform="translate(-599 35)">
-<g id="mco">
-<g id="Vector">
-<use xlink:href="#path0_fill" transform="translate(599 -35)" fill="url(#paint0_linear)"/>
-</g>
-<g id="Vector">
-<use xlink:href="#path1_fill" transform="translate(611.127 -35)" fill="url(#paint1_linear)"/>
-</g>
-</g>
-</g>
-<defs>
-<linearGradient id="paint0_linear" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(68.0404 -73.7346 73.7346 68.0404 -70.8651 29.9639)">
-<stop offset="0" stop-color="#5E003F"/>
-<stop offset="0.52" stop-color="#C04372"/>
-<stop offset="0.56" stop-color="#CD5770"/>
-<stop offset="0.62" stop-color="#DF736E"/>
-<stop offset="0.7" stop-color="#ED886C"/>
-<stop offset="0.78" stop-color="#F7986B"/>
-<stop offset="0.87" stop-color="#FDA16A"/>
-<stop offset="1" stop-color="#FFA46A"/>
-</linearGradient>
-<linearGradient id="paint1_linear" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(21.1992 -32.5194 32.5194 21.1992 -25.3164 23.1374)">
-<stop offset="0" stop-color="#5E003F"/>
-<stop offset="0.48" stop-color="#C15866"/>
-<stop offset="0.81" stop-color="#EB8B69"/>
-<stop offset="1" stop-color="#FFA46A"/>
-</linearGradient>
-<path id="path0_fill" d="M 2.95406 14.9761L 6.15326 12.5942L 8.98118 14.3923L 8.98118 17.6251L 11.1207 19.6764L 11.1197 20.6387L 9.05818 22.5612L 7.31585 22.5612L 2.95406 14.9761ZM 13.0632 20.641L 13.059 19.6726L 15.1913 17.6255L 15.1913 14.3923L 17.9888 12.5723L 21.1819 14.9761L 16.8418 22.5392L 15.1228 22.5392L 13.0632 20.641ZM 10.0305 14.3923L 8.98958 11.6793L 15.1785 11.6793L 14.1586 14.3923L 14.4598 17.4236L 12.0715 17.4288L 9.71157 17.433L 10.0305 14.3923ZM 12.0715 10.937L 6.18994 10.9342L 7.28337 6.07192L 16.8316 6.07192L 17.9838 10.9405L 12.0715 10.937ZM 12.0715 0.00686014L 0 7.00168L 0 21.0004L 12.0715 27.9927L 12.0855 28L 24.2492 20.9999L 24.2492 7.00168L 12.0862 0L 12.0715 0.00686014Z"/>
-<path id="path1_fill" d="M 0.99122 20.641L 0.987019 19.6726L 3.11926 17.6255L 3.11926 14.3923L 5.9168 12.5723L 9.10984 14.9761L 4.76976 22.5392L 3.05038 22.5392L 0.99122 20.641ZM 1.70902e-07 0.00728015L 1.70902e-07 6.07206L 4.75869 6.07206L 5.9119 10.9407L 1.70902e-07 10.9376L 1.70902e-07 11.6796L 3.10596 11.6796L 2.08604 14.3923L 2.38831 17.4236L 1.70902e-07 17.4288L 1.70902e-07 27.9927L 0.0140005 28L 12.1774 21.0004L 12.1774 7.00168L 0.0137202 0L 1.70902e-07 0.00728015Z"/>
-</defs>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="28px" viewBox="0 0 24 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>mco</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="-292.236857%" y1="107.013929%" x2="-11.6486317%" y2="-156.323929%" id="linearGradient-1">
+            <stop stop-color="#5E003F" offset="0%"></stop>
+            <stop stop-color="#C04372" offset="52%"></stop>
+            <stop stop-color="#CD5770" offset="56%"></stop>
+            <stop stop-color="#DF736E" offset="62%"></stop>
+            <stop stop-color="#ED886C" offset="70%"></stop>
+            <stop stop-color="#F7986B" offset="78%"></stop>
+            <stop stop-color="#FDA16A" offset="87%"></stop>
+            <stop stop-color="#FFA46A" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="-207.8966%" y1="82.6335714%" x2="-33.8101748%" y2="-33.5071429%" id="linearGradient-2">
+            <stop stop-color="#5E003F" offset="0%"></stop>
+            <stop stop-color="#C15866" offset="48%"></stop>
+            <stop stop-color="#EB8B69" offset="81%"></stop>
+            <stop stop-color="#FFA46A" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="mco">
+            <polygon id="path0_fill-path" fill="#FFFFFF" points="11.9474457 0.00686014 0 7.00168 0 21.0004 11.9474457 27.9927 11.9613018 28 24 20.9999 24 7.00168 11.9619946 0"></polygon>
+            <path d="M2.92370223,14.9761 L6.09002524,12.5942 L8.88888376,14.3923 L8.88888376,17.6251 L11.0064167,19.6764 L11.005427,20.6387 L8.96509246,22.5612 L7.24066773,22.5612 L2.92370223,14.9761 Z M12.9289544,20.641 L12.9247975,19.6726 L15.0351847,17.6255 L15.0351847,14.3923 L17.8039358,12.5723 L20.9642215,14.9761 L16.6687231,22.5392 L14.9673886,22.5392 L12.9289544,20.641 Z M9.92742029,14.3923 L8.89719743,11.6793 L15.0225162,11.6793 L14.0130973,14.3923 L14.311202,17.4236 L11.9474457,17.4288 L9.61176781,17.433 L9.92742029,14.3923 Z M11.9474457,10.937 L6.12632829,10.9342 L7.20852152,6.07192 L16.6586279,6.07192 L17.7989872,10.9405 L11.9474457,10.937 Z M11.9474457,0.00686014 L0,7.00168 L0,21.0004 L11.9474457,27.9927 L11.9613018,28 L24,20.9999 L24,7.00168 L11.9619946,0 L11.9474457,0.00686014 Z" id="path0_fill" fill="url(#linearGradient-1)" fill-rule="nonzero"></path>
+            <path d="M12.9767798,20.641 L12.97264,19.6726 L15.0738186,17.6255 L15.0738186,14.3923 L17.8306041,12.5723 L20.9771281,14.9761 L16.7002742,22.5392 L15.005942,22.5392 L12.9767798,20.641 Z M12,0.00728015 L12,6.07206 L16.6893654,6.07206 L17.8257755,10.9407 L12,10.9376 L12,11.6796 L15.0607123,11.6796 L14.0556505,14.3923 L14.353517,17.4236 L12,17.4288 L12,27.9927 L12.0137964,28 L24,21.0004 L24,7.00168 L12.0135202,0 L12,0.00728015 Z" id="path1_fill" fill="url(#linearGradient-2)" fill-rule="nonzero"></path>
+        </g>
+    </g>
 </svg>

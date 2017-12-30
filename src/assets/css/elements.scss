@@ -106,8 +106,8 @@ input.error {
 .error + span.error-text,
 .error span.error-text {
   color: $alert-color;
-  font-size: 12px;
-  font-style: italic;
+  //font-size: 12px;
+ // font-style: italic;
   font-weight: normal;
   display: block;
   text-transform: none;

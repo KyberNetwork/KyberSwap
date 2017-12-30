@@ -29,6 +29,7 @@ const transfer = (state = initState, action) => {
       newState.token = transfer.token
       newState.tokenSymbol = transfer.tokenSymbol
       newState.gasPrice = transfer.gasPrice
+      newState.isEditGasPrice = false
       return newState;
     case "TRANSFER.SELECT_TOKEN":
       newState.tokenSymbol = action.payload.symbol
@@ -54,6 +55,7 @@ const transfer = (state = initState, action) => {
       return newState
     case "TRANSFER_SPECIFY_GAS_PRICE":
       newState.gasPrice = action.payload
+      newState.isEditGasPrice = true
       newState.errors.gasPrice = ""
       return newState
     case "TRANSFER.SHOW_ADVANCE":
@@ -159,7 +161,9 @@ const transfer = (state = initState, action) => {
       return newState
     }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
-      newState.gasPrice = action.payload
+      if(!newState.isEditGasPrice){
+        newState.gasPrice = action.payload
+      }
       return newState
     }
   }
