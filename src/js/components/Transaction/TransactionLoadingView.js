@@ -4,7 +4,7 @@ import BLOCKCHAIN_INFO from "../../../../env"
 
 const TransactionLoadingView = (props) => {
   if (props.broadcasting) {
-    var classPending = props.error === "" ? " pulse" : ""
+    var classPending = !props.error ? " pulse" : ""
     return (
       <div>
         <div class="frame">
@@ -13,13 +13,13 @@ const TransactionLoadingView = (props) => {
               <h1 class="title mb-0">{props.translate("transaction.broadcast") || "Broadcast"}
               </h1>
               <ul class="broadcast-steps">
-                {props.error === "" &&
+                {!props.error &&
                   <li class="pending">
                     <h5 class="font-w-b">{props.translate("transaction.broadcasting") || "Broadcasting your transaction to network"}
                     </h5>
                   </li>
                 }
-                {props.error !== "" &&
+                {props.error &&
                   <li class="failed">
                     <h5 class="font-w-b">{props.translate("transaction.cound_not_broadcast") || "Couldn't broadcast your transaction to the blockchain"}</h5>
                     <div class="reason">{props.error}</div>
@@ -27,8 +27,8 @@ const TransactionLoadingView = (props) => {
                 }
               </ul>
               <div class="text-center">
-                <div className={"broadcast-animation animated infinite" + classPending}>
-                  {props.error === "" ? <img src={require('../../../assets/img/broadcast.svg')} /> : <img src={require('../../../assets/img/finish.svg')} />}
+                <div className={"broadcast-animation"}>
+                  {!props.error ? <img src={require('../../../assets/img/broadcast.svg')} /> : <img src={require('../../../assets/img/finish.svg')} />}
                 </div>
               </div>
             </div>
@@ -53,7 +53,7 @@ const TransactionLoadingView = (props) => {
             <div class="info text-light font-s-down-1 my-3">
               {props.translate("transaction.transaction") || "Transaction"}&nbsp;
               <a class="font-w-b text-light" data-tooltip title="View on Etherscan" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank">
-              {props.txHash.slice(0, 12)} ... {props.txHash.slice(-10)}
+                {props.txHash.slice(0, 12)} ... {props.txHash.slice(-10)}
               </a>
             </div>
             <ul class="broadcast-steps">
@@ -102,11 +102,11 @@ const TransactionLoadingView = (props) => {
             </ul>
             {classPending != "" ? (
               <div class="text-center">
-                <div className={"broadcast-animation animated infinite" + classPending}>
-                  {props.error === "" ? <img src={require('../../../assets/img/broadcast.svg')} /> : <img src={require('../../../assets/img/finish.svg')} />}
+                <div className={"broadcast-animation"}>
+                  {!props.error ? <img src={require('../../../assets/img/broadcast.svg')} /> : <img src={require('../../../assets/img/finish.svg')} />}
                 </div>
               </div>
-              ) : ''
+            ) : ''
             }
           </div>
         </div>
