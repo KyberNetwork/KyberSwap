@@ -16,7 +16,7 @@ const TransferForm = (props) => {
                 <div class="column small-12 medium-7">
 
                   <label className={props.errors.destAddress !== '' ? "error" : ""}>
-                    <span className="transaction-label">Address</span>
+                    <span className="transaction-label">{props.translate("address.address") ||  "Address"}</span>
                     <textarea className="hash" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange}>
                     </textarea>
                     {props.errors.destAddress &&
@@ -28,7 +28,7 @@ const TransferForm = (props) => {
                 <div class="column small-12 medium-5">
                   <label>
                     <span className="transaction-label">
-                      Token/Amount
+                      {props.translate("transaction.token_amount") || "Token/Amount"}
                     </span>
 
                     <div className={props.errors.amountTransfer !== '' ? "error select-token-panel" : "select-token-panel"}>

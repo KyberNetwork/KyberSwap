@@ -250,21 +250,21 @@ it('show advance=', () => {
 })
 
 //-------------------------------------------------------------------------------
-function* changeSourceAmout(amount) {
-  yield put({
-    type: "EXCHANGE.CHANGE_SOURCE_AMOUNT",
-    payload: amount
-  })
-}
-it('change source amount', () => {
-  return expectSaga(changeSourceAmout, "0.1")
-    .withReducer(exchangeReducer)
-    .run()
-    .then((result) => {
-      expect(result.storeState.sourceAmount).toEqual("0.1")
-      expect(result.storeState.errors.sourceAmountError).toEqual("")
-    })
-})
+// function* changeSourceAmout(amount) {
+//   yield put({
+//     type: "EXCHANGE.CHANGE_SOURCE_AMOUNT",
+//     payload: amount
+//   })
+// }
+// it('change source amount', () => {
+//   return expectSaga(changeSourceAmout, "0.1")
+//     .withReducer(exchangeReducer)
+//     .run()
+//     .then((result) => {
+//       expect(result.storeState.sourceAmount).toEqual("0.1")
+//       expect(result.storeState.errors.sourceAmountError).toEqual("")
+//     })
+// })
 
 //-----------------------------------------------------------------------------
 function* doApprovalTransactionFail(error) {
