@@ -46,6 +46,7 @@ const INIT_EXCHANGE_FORM_STATE = {
 
   throwOnFailure: false,
   gas: 1000000,
+  gas_estimate:  300000,
   gasPrice: 20,
   step: 2,
   broadcasting: true,
@@ -81,6 +82,7 @@ const INIT_TRANSFER_FORM_STATE = {
 
   throwOnFailure: false,
   gas: 1000000,
+  gas_estimate:  21000,
   gasPrice: 20,
   step: 1,
   broadcasting: true,

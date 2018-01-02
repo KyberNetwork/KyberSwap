@@ -141,13 +141,13 @@ export default class Transfer extends React.Component {
     )
 
     var gasConfig = (
-      <TransactionConfig gas={this.props.transfer.gas}
+      <TransactionConfig gas={this.props.transfer.gas_estimate}
         gasPrice={this.props.transfer.gasPrice}
         gasHandler={this.specifyGas}
         gasPriceHandler={this.specifyGasPrice}
         gasPriceError={this.props.transfer.errors.gasPrice}
         gasError={this.props.transfer.errors.gas}
-        totalGas={gweiToEth(this.props.transfer.gas * this.props.transfer.gasPrice)}
+        totalGas={gweiToEth(this.props.transfer.gas_estimate * this.props.transfer.gasPrice)}
         translate={this.props.translate}
       />
     )

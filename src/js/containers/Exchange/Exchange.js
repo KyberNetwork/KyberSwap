@@ -191,13 +191,13 @@ export default class Exchange extends React.Component {
       />
     )
     var gasConfig = (
-      <TransactionConfig gas={this.props.exchange.gas}
+      <TransactionConfig gas={this.props.exchange.gas_estimate}
         gasPrice={this.props.exchange.gasPrice}
         gasHandler={this.specifyGas}
         gasPriceHandler={this.specifyGasPrice}
         gasPriceError={this.props.exchange.errors.gasPriceError}
         gasError={this.props.exchange.errors.gasError}
-        totalGas={gweiToEth(this.props.exchange.gas * this.props.exchange.gasPrice)}
+        totalGas={gweiToEth(this.props.exchange.gas_estimate * this.props.exchange.gasPrice)}
         translate={this.props.translate}        
       />
     ) 
