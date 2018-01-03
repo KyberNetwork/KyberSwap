@@ -284,6 +284,7 @@ function* exchangeTokentoETHKeystore(action) {
     throwOnFailure, nonce, gas,
     gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
   var remainStr = yield call(ethereum.call("getAllowance"), sourceToken, address)
+  console.log("remain: " + remainStr)
   var remain = converter.hexToBigNumber(remainStr)
   var sourceAmountBig = converter.hexToBigNumber(sourceAmount)
   if (!remain.greaterThanOrEqualTo(sourceAmountBig)) {
@@ -299,7 +300,7 @@ function* exchangeTokentoETHKeystore(action) {
     try {
       yield put(actions.prePareBroadcast(balanceData))
       var hashApprove = yield call(ethereum.call("sendRawTransaction"), rawApprove, ethereum)
-      console.log(hashApprove)
+      console.log("approve: " + hashApprove)
       //increase nonce 
       yield put(incManualNonceAccount(account.address))
       nonce++
@@ -309,7 +310,7 @@ function* exchangeTokentoETHKeystore(action) {
         maxDestAmount, minConversionRate,
         throwOnFailure, nonce, gas,
         gasPrice, keystring, type, password)
-      yield put(actions.prePareBroadcast())
+      yield put(actions.prePareBroadcast(balanceData))
       var hash = yield call(ethereum.call("sendRawTransaction"), txRaw, ethereum)
       yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
     } catch (e) {
@@ -359,7 +360,7 @@ export function* exchangeTokentoETHPrivateKey(action) {
     if (!remain.greaterThanOrEqualTo(sourceAmountBig)) {
       var rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
         keystring, password, type, address)
-      yield put(actions.prePareBroadcast())
+      yield put(actions.prePareBroadcast(balanceData))
       var hashApprove = yield call(ethereum.call("sendRawTransaction"), rawApprove, ethereum)
       console.log(hashApprove)
       //increase nonce 

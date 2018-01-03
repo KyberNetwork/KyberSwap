@@ -167,10 +167,9 @@ class BaseEthereumProvider {
 
   }
 
-  getRate(source, dest, reserve) {
+  getRate(source, dest, quantity) {
     return new Promise((resolve, reject) => {
-      this.networkContract.methods.getRate(source, dest, reserve).call().then((result) => {
-        // console.log(result)
+      this.networkContract.methods.getExpectedRate(source, dest, quantity).call().then((result) => {
         if (result != null) {
           resolve(result)
         }
@@ -183,8 +182,8 @@ class BaseEthereumProvider {
       return Promise.all([
         Promise.resolve(tokenName),
         Promise.resolve(constants.ETH.symbol),
-        this.getRate(tokensObj[tokenName].address, constants.ETH.address, reserve.index),
-        this.getRate(constants.ETH.address, tokensObj[tokenName].address, reserve.index),
+        this.getRate(tokensObj[tokenName].address, constants.ETH.address, '0x0'),
+        this.getRate(constants.ETH.address, tokensObj[tokenName].address, '0x0'),
       ])
     })
     return Promise.all(promises)

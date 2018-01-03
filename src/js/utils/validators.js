@@ -70,12 +70,12 @@ export function verifyAmount(sourceAmount,
     .div(weiParam.pow(sourceDecimal))
     .div(weiParam.pow(18))
 
-  var reserveBalanceB = new BigNumber(reserveBalance)
-  var reserveBalanceMaxCap = reserveBalanceB.mul(constants.MAX_CAP_ONE_EXCHANGE_BASE_RESERVE)
+  // var reserveBalanceB = new BigNumber(reserveBalance)
+  // var reserveBalanceMaxCap = reserveBalanceB.mul(constants.MAX_CAP_ONE_EXCHANGE_BASE_RESERVE)
 
-  if (estimateDestAmount.cmp(reserveBalanceMaxCap) > 0) {
-    return "too high for reserve"
-  }
+  // if (estimateDestAmount.cmp(reserveBalanceMaxCap) > 0) {
+  //   return "too high for reserve"
+  // }
 
 
   
