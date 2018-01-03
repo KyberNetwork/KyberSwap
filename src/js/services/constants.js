@@ -83,6 +83,8 @@ const INIT_TRANSFER_FORM_STATE = {
   throwOnFailure: false,
   gas: 1000000,
   gas_estimate:  21000,
+  gas_limit_transfer_eth: 21000,
+  gas_limit_transfer_token: 50000,
   gasPrice: 20,
   step: 1,
   broadcasting: true,
