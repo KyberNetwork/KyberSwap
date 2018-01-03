@@ -172,10 +172,10 @@ export default class BaseEthereumProvider {
   }
 
   exchangeData(sourceToken, sourceAmount, destToken, destAddress,
-    maxDestAmount, minConversionRate, throwOnFailure) {
+    maxDestAmount, minConversionRate, walletId) {
     return this.networkContract.methods.trade(
       sourceToken, sourceAmount, destToken, destAddress,
-      maxDestAmount, minConversionRate, throwOnFailure).encodeABI()
+      maxDestAmount, minConversionRate, walletId).encodeABI()
   }
 
   approveTokenData(sourceToken, sourceAmount) {
@@ -225,11 +225,12 @@ export default class BaseEthereumProvider {
 
   }
 
-  getRate(source, dest, reserve) {
+  getRate(source, dest, quantity) {
     return new Promise((resolve, reject) => {
-      this.networkContract.methods.getRate(source, dest, reserve).call()
+      this.networkContract.methods.getExpectedRate(source, dest, quantity).call()
         .then((result) => {
           if (result != null) {
+            console.log(result)
             resolve(result)
           }
         })
@@ -412,12 +413,12 @@ export default class BaseEthereumProvider {
       ratePromises.push(Promise.all([
         Promise.resolve(tokenName),
         Promise.resolve(constants.ETH.symbol),
-        this.getRate(tokenObj[tokenName].address, constants.ETH.address, constants.RESERVES[0].index)
+        this.getRate(tokenObj[tokenName].address, constants.ETH.address, '0x0')
       ]))
       ratePromises.push(Promise.all([
         Promise.resolve(constants.ETH.symbol),
         Promise.resolve(tokenName),
-        this.getRate(constants.ETH.address, tokenObj[tokenName].address, constants.RESERVES[0].index)
+        this.getRate(constants.ETH.address, tokenObj[tokenName].address, '0x0')
       ]))
     })
     return Promise.all(ratePromises)
@@ -426,9 +427,10 @@ export default class BaseEthereumProvider {
           return {
             source: rate[0],
             dest: rate[1],
-            rate: rate[2].rate,
-            expBlock: rate[2].expBlock,
-            balance: rate[2].balance
+            rate: rate[2].expectedPrice,
+            minRate: rate[2].slippagePrice
+            // expBlock: rate[2].expBlock,
+            // balance: rate[2].balance
           }
         })
         return arrayRateObj

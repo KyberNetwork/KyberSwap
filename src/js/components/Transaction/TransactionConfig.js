@@ -9,6 +9,7 @@ const TransactionConfig = (props) => {
     props.gasPriceHandler(event)
   }
 
+  var caption = props.maxGasPrice? "Higher gas price, faster transaction. Max gas price: 50 Gwei":"Higher gas price, faster transaction."
   return (
     <div className="gas-config">
       <div className="row small-11 medium-12 hide-on-choose-token-pair">
@@ -17,7 +18,7 @@ const TransactionConfig = (props) => {
           <div className="row gas-price text-light small-12 medium-8 mt-3">
             <label className="column small-12 medium-3">
               <span>{props.translate("transaction.gas_price") || "Gas price"}</span>
-              <span className="k k-info k-2x ml-3" data-tooltip title={props.translate("transaction.transaction_config_tooltip") || "Higher gas price, faster transaction"}></span>
+              <span className="k k-info k-2x ml-3" data-tooltip title={caption}></span>
             </label>
             <div className="column small-12 medium-6 end p-relative">
               <input type="number" min="0" max="99" className="gas-price-input" step="0.1" onKeyPress={props.onGasPricePress} value={props.gasPrice} onChange={specifyGasPrice.bind(this)} />

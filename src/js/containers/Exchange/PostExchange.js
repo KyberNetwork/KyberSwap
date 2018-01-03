@@ -113,6 +113,11 @@ export default class PostExchange extends React.Component {
     if (isNaN(testGasPrice)) {
       this.props.dispatch(exchangeActions.thowErrorGasPrice("Gas price is not number"))
       check = false
+    }else{
+      if (this.props.form.gasPrice > this.props.form.maxGasPrice){
+        this.props.dispatch(exchangeActions.thowErrorGasPrice("Gas price must be smaller than "+this.props.form.maxGasPrice+" Gwei"))
+        check = false
+      }
     }
 
     var testRate = parseFloat(this.props.form.offeredRate)

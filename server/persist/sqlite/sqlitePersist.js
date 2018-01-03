@@ -13,13 +13,16 @@ var dbName = process.env.npm_config_chain
 //console.log("db name: " + dbName)
 switch (dbName) {
   case "kovan":
-    filePath = path.join(__dirname, 'kovan.db')
+    filePath = path.join(__dirname, '/stores/kovan.db')
+    break
+  case "ropsten":
+    filePath = path.join(__dirname, '/stores/ropsten.db')
     break
   case "mainnet":
-    filePath = path.join(__dirname, 'mainnet.db')
+    filePath = path.join(__dirname, '/stores/mainnet.db')
     break
   default:
-    filePath = path.join(__dirname, 'temp.db')
+    filePath = path.join(__dirname, '/stores/temp.db')
     break
 }
 
@@ -82,17 +85,17 @@ class SqlitePersist {
   }
   initRatesTable() {
     var _this = this
-    this.db.run("CREATE TABLE rates (id INTEGER PRIMARY KEY, source TEXT, dest TEXT, rate TEXT, expBlock TEXT, balance TEXT)")
+    this.db.run("CREATE TABLE rates (id INTEGER PRIMARY KEY, source TEXT, dest TEXT, rate TEXT, minRate TEXT, expBlock TEXT, balance TEXT)")
     /// init all rate first time
     if (BLOCKCHAIN_INFO.tokens) {
       //init rate between token token;
       Object.keys(BLOCKCHAIN_INFO.tokens).map((token) => {
-        let stmt1 = _this.db.prepare(`INSERT INTO rates(source, dest, rate, expBlock, balance) VALUES (?,?,?,?,?)`)
-        stmt1.run(token, constants.ETH.symbol, 0, 0);
+        let stmt1 = _this.db.prepare(`INSERT INTO rates(source, dest, rate, minRate, expBlock, balance) VALUES (?,?,?,?,?,?)`)
+        stmt1.run(token, constants.ETH.symbol, 0, 0, 0, 0);
         stmt1.finalize()
 
-        let stmt2 = _this.db.prepare(`INSERT INTO rates(source, dest, rate, expBlock, balance) VALUES (?,?,?,?,?)`)
-        stmt2.run(constants.ETH.symbol, token, 0, 0);
+        let stmt2 = _this.db.prepare(`INSERT INTO rates(source, dest, rate, minRate, expBlock, balance) VALUES (?,?,?,?,?,?)`)
+        stmt2.run(constants.ETH.symbol, token, 0, 0, 0, 0);
         stmt2.finalize()
       })
     }
@@ -113,7 +116,7 @@ class SqlitePersist {
   initArraySupportedTokenAddress() {
     var stringAddress = ''
     var stringSymbol = ''
-    if(BLOCKCHAIN_INFO.tokens){
+    if (BLOCKCHAIN_INFO.tokens) {
       stringAddress = Object.keys(BLOCKCHAIN_INFO.tokens).map((tokenName) => {
         return '\'' + BLOCKCHAIN_INFO.tokens[tokenName].address + '\''
       }).toString()
@@ -303,9 +306,9 @@ class SqlitePersist {
     })
   }
 
-  getEvents(page, itemPerPage){
+  getEvents(page, itemPerPage) {
     return new Promise((resolve, reject) => {
-      var sql = "SELECT * FROM logs WHERE dest IN "+this.suportedTokenStr+" AND source IN " + this.suportedTokenStr + " ORDER BY blockNumber DESC LIMIT ?"
+      var sql = "SELECT * FROM logs WHERE dest IN " + this.suportedTokenStr + " AND source IN " + this.suportedTokenStr + " ORDER BY blockNumber DESC LIMIT ?"
       this.db.all(sql, [itemPerPage], function (err, rows) {
         if (err) {
           console.log(err)
@@ -396,20 +399,21 @@ class SqlitePersist {
   }
 
   saveRate(rates) {
+    //console.log(rates)
     return new Promise((resolve, reject) => {
       rates.forEach((rate) => {
-        if ((rate[2] && rate[2].rate !== '0') || (rate[0] == constants.ETH.symbol && rate[1] == constants.ETH.symbol)) {
-          let stmt = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, expBlock, balance) VALUES ((
+        if ((rate[2] && rate[2].expectedPrice !== '0') || (rate[0] == constants.ETH.symbol && rate[1] == constants.ETH.symbol)) {
+          let stmt = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, minRate, expBlock, balance) VALUES ((
           SELECT id FROM rates WHERE source = ? AND dest = ?
-        ),?,?,?,?,?)`)
-          stmt.run(rate[0], rate[1], rate[0], rate[1], rate[2].rate, rate[2].expBlock, rate[2].balance);
+        ),?,?,?,?,?, ?)`)
+          stmt.run(rate[0], rate[1], rate[0], rate[1], rate[2].expectedPrice, rate[2].slippagePrice, 0, 0);
           stmt.finalize()
         }
-        if ((rate[3] && rate[3].rate !== '0') || (rate[0] == constants.ETH.symbol && rate[1] == constants.ETH.symbol)) {
-          let stmt2 = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, expBlock, balance) VALUES ((
+        if ((rate[3] && rate[3].expectedPrice !== '0') || (rate[0] == constants.ETH.symbol && rate[1] == constants.ETH.symbol)) {
+          let stmt2 = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, minRate, expBlock, balance) VALUES ((
           SELECT id FROM rates WHERE source = ? AND dest = ?
-        ), ?,?,?,?,?)`)
-          stmt2.run(rate[1], rate[0], rate[1], rate[0], rate[3].rate, rate[3].expBlock, rate[3].balance);
+        ), ?,?,?,?,?,?)`)
+          stmt2.run(rate[1], rate[0], rate[1], rate[0], rate[3].expectedPrice, rate[3].slippagePrice, 0, 0);
           stmt2.finalize()
         }
       })
@@ -445,9 +449,9 @@ class SqlitePersist {
     })
   }
 
-  getRateUSD(){
-    var promises = Object.values(BLOCKCHAIN_INFO.tokens).map(token=>{
-      return new Promise((resolve, reject)=>{
+  getRateUSD() {
+    var promises = Object.values(BLOCKCHAIN_INFO.tokens).map(token => {
+      return new Promise((resolve, reject) => {
         var sql = `SELECT * FROM rate_usd where token = ?`
         this.db.get(sql, [token.symbol], (err, row) => {
           var tokenPrice = {
@@ -460,7 +464,7 @@ class SqlitePersist {
             tokenPrice.price_usd = row.price
           }
           resolve(tokenPrice)
-          
+
         })
       })
     })
