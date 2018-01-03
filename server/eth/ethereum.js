@@ -143,6 +143,7 @@ class EthereumService {
   async fetchAllRateData() {
     try {
       var allRate = await this.currentProvider.getAllRate(BLOCKCHAIN_INFO.tokens, constants.RESERVES[0])
+     // console.log(allRate)
       this.persistor.saveRate(allRate)
     } catch (e) {
       console.log(e)

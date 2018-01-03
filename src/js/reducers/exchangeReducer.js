@@ -114,13 +114,13 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.UPDATE_RATE":
-      var rate = action.payload.offeredRate
+      var rate = action.payload.minConversionRate
       newState.minConversionRate = rate
       if (newState.sourceAmount !== "") {
         newState.minDestAmount = calculateDest(newState.sourceAmount, rate).toString(10)
       }
-      newState.offeredRateBalance = action.payload.reserveBalance
-      newState.offeredRateExpiryBlock = action.payload.expirationBlock
+      //newState.offeredRateBalance = action.payload.reserveBalance
+     // newState.offeredRateExpiryBlock = action.payload.expirationBlock
       if(!newState.isEditRate){
         newState.offeredRate = rate
       }

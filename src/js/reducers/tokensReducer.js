@@ -9,7 +9,9 @@ const initState = function () {
   Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
     tokens[key] = BLOCKCHAIN_INFO.tokens[key]
     tokens[key].rate = 0
+    tokens[key].minRate = 0
     tokens[key].rateEth = 0
+    tokens[key].minRateEth = 0
     tokens[key].balance = 0
   })
   return {
@@ -40,8 +42,10 @@ const tokens = (state = initState, action) => {
               tokenMap.address,
               tokenMap.decimal,
               tokenMap.rate ? tokenMap.rate : 0,
+              tokenMap.minRate ? tokenMap.minRate : 0,
               0,
               tokenMap.rateEth ? tokenMap.rateEth : 0,
+              tokenMap.minRateEth ? tokenMap.minRateEth : 0,
               tokenMap.rateUSD ? tokenMap.rateUSD : 0
             )
             tokens[id] = token
@@ -70,11 +74,13 @@ const tokens = (state = initState, action) => {
             mapToken[rate.source] = {}
           }
           mapToken[rate.source].rate = rate.rate
+          mapToken[rate.source].minRate = rate.minRate
         } else {
           if (!mapToken[rate.dest]) {
             mapToken[rate.dest] = {}
           }
           mapToken[rate.dest].rateEth = rate.rate
+          mapToken[rate.dest].minRateEth = rate.minRate
         }
       })
 
@@ -84,9 +90,11 @@ const tokens = (state = initState, action) => {
         var token = tokens[key]
         if (mapToken[key] && mapToken[key].rate) {
           token.rate = mapToken[key].rate
+          token.minRate = mapToken[key].minRate
         }
         if (mapToken[key] && mapToken[key].rateEth) {
           token.rateEth = mapToken[key].rateEth
+          token.minRateEth = mapToken[key].minRateEth
         }
         newTokens[key] = token
       })
