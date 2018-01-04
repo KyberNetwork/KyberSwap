@@ -16,8 +16,8 @@
   "address": {
     "address": "Address",
     "import_address": "Import Address",
-    "my_balance": "My balance",
-    "total": "Total"
+    "my_balance": "Balance",
+    "total": "Estimated Value"
   },
 
   "transaction": {
@@ -35,28 +35,28 @@
 
     "address_balance": "Address Balance",
     "balance": "Balance",
-    "password_needed_exchange": "Password is needed for each exchange transaction",
+    "password_needed_exchange": "Password is needed for every exchange transaction",
 
-    "password_needed_transfer": "Password is needed for each transfer transaction",
+    "password_needed_transfer": "Password is needed for every transfer transaction",
     "next": "Next",
     "exit": "EXIT",
 
     "broadcast": "Broadcast",
     "transaction": "Transaction",
-    "broadcasted_title": "Broadcasted your transaction to the blockchain",
+    "broadcasted_title": "Broadcasted the transaction to the blockchain",
     "close_browser_or_make_new_exchange": "You can now close your browser window or make another exchange",
     "close_browser_or_make_new_transfer": "You can now close your browser window or make another transfer",
-    "broadcasting": "Broadcasting your transaction to network",
-    "cound_not_broadcast": "Couldn't broadcast your transaction to the blockchain",
+    "broadcasting": "Broadcasting the transaction to the blockchain",
+    "cound_not_broadcast": "Couldn't broadcast the transaction to the blockchain",
     "current_address_balance": "Current address balance",
     "transaction_error": "Transaction error",
-    "waiting_transaction": "Waiting for your transaction to be mined",
+    "waiting_transaction": "Waiting for the transaction to be mined",
 
     "about_to_exchange": "You are about to exchange",
     "about_to_transfer": "You are about to transfer",
     "processing": "Processing",
     "gas_limit": "Gas limit",
-    "gas_price": "Gas Price",
+    "gas_price": "Gas price",
     "for": "for",
     "to": "to",
     "best_rate": "Best Rate",
@@ -73,16 +73,16 @@
     "enter_password": "Enter Password",
     "confirm": "Confirm",
     "import": "Import",
-    "enter_password_placeholder": "Enter your password to confirm",
+    "enter_password_placeholder": "Enter wallet password to confirm",
     "select_hd_path": "Select HD derivation path",
     "select_trezor_address": "Select TREZOR address",
     "select_ledger_address": "Select LEDGER address",
-    "select_address": "Select the address you would like to interact with",
+    "select_address": "Select the address you would like to use",
     "previous_addresses": "Previous Addresses",
     "more_addresses": "More Addresses",
     "custom_path": "Your Custom Path",
     "view_on_etherscan": "View on Etherscan",
-    "press_confirm_if_really_want": "Press confirm if you really want to do this.",
+    "press_confirm_if_really_want": "Press confirm to continue.",
     "confirm_exchange_title": "Exchange confirm",
     "confirm_transfer_title": "Transfer confirm",
 
@@ -91,14 +91,14 @@
     "select_dest_token": "Select destination token",
     "select_trasfer_from_token": "SELECT \"TRANSFER FROM\" TOKEN",
 
-    "approve_exchange_trezor": "Kyber need your approve to do exchange with&nbsp;<strong>ETH</strong>&nbsp;on your Trezor address. Press&nbsp;<strong>Apprrove</strong>&nbsp;button below to open Trezor utility.",
+    "approve_exchange_trezor": "Kyber needs your approve to do exchange with&nbsp;<strong>ETH</strong>&nbsp;on your Trezor address. Press&nbsp;<strong>Apprrove</strong>&nbsp;button below to open Trezor utility.",
     "eth_token_exchange": "ETH token exchange",
     "approve": "Approve"
   },
 
   "error": {
     "select_same_token": "Cannot exchange the same token",
-    "select_token_token": "This pair token is not supported",
+    "select_token_token": "This token pair is not supported yet",
     "source_amount_too_high": "Source amount is too high",
     "source_amount_too_small": "Source amount is too small",
     "source_amount_too_high_for_reserve": "Source amount is too high (pair is not available for trading at the moment)",
@@ -113,13 +113,13 @@
     "cannot_connect_trezor": "Cannot connect to trezor",
     "cannot_connect_ledger": "Cannot connect to ledger",
     "invalid_private_key": "Invalid private key",
-    "no_balance": "Your address has no balance in any tokens. Please import another address.",
-    "clear_data_timeout": "We've cleared all your data because you idle over",
+    "no_balance": "Your address does not have any tokens that we support. Please import another address.",
+    "clear_data_timeout": "We've cleared all your data because your session is timed out",
     "minutes": " minutes",
 
-    "path_not_support_by_trezor": "This path not supported by Trezor",
-    "check_right_application_selected": "Check to make sure the right application is selected",
-    "network_not_match": "Network is not match",
+    "path_not_support_by_trezor": "This path is not supported by Trezor",
+    "check_right_application_selected": "Check if right application is selected",
+    "network_not_match": "Network is not matched",
     "not_supported": "not supported"
   },
 
@@ -142,7 +142,7 @@
     "network_address": "Network contract address",
     "kyber_homepage": "Kyber homepage",
     "get_free_kovan": "Get free",
-    "warning": "Do not send ethers nor tokens to any of the addresses above.<br></br>They are for test only and we are not likely to have control of them in mainnet.",
+    "warning": "DO NOT send real ethers or tokens to any of the addresses above.<br></br>They are testnet addresses only!",
     "here": "here"
   },
   
