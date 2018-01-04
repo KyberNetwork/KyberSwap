@@ -219,11 +219,11 @@ export function roundingNumber(number) {
   const MAX_DIGIS = 7, SIZE = 3;
   number = +number;
   let numberStr = number.toString();
-  if (Number.isInteger(number) && numberStr.length >= MAX_DIGIS) {
-    return number.toLocaleString();
-  }
   if (isNaN(number) || number <= 0) number = 0;
   if (number < 1e-7) number = 0;
+  if (('' + Math.floor(number)).length >= MAX_DIGIS) {
+    return Math.floor(number).toLocaleString();
+  }
 
   let precision = number.toPrecision((number < 1 && number > 0) ? MAX_DIGIS - 1 : MAX_DIGIS),
     arr = precision.split('.'),

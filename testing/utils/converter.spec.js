@@ -17,9 +17,13 @@ describe('roundingNumber function ', () => {
         let result = roundingNumber(12345678);
         expect(result).toBe('12,345,678');
     })
+    it('number = 12345678.3123', () => {
+        let result = roundingNumber(12345678.3123);
+        expect(result).toBe('12,345,678');
+    })
     it('number = -12345678', () => {
         let result = roundingNumber(-12345678);
-        expect(result).toBe('-12,345,678');
+        expect(result).toBe('0.000000');
     })
     it('number = 00012345678', () => {
         let result = roundingNumber('00012345678');

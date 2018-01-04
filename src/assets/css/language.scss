@@ -2,10 +2,15 @@
 
 .language-list{
   .token-stamp{
-    display: flex;
-
+    text-align: left;
+    &:not(.empty){
+      cursor: pointer;
+    }
     img{
       background-color: transparent
+    }
+    span{
+      vertical-align: middle;
     }
   }
 }
