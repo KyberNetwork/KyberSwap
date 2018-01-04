@@ -17,7 +17,9 @@
     "address": "Địa chỉ",
     "import_address": "Nhập địa chỉ",
     "my_balance": "Số dư",
-    "total": "Tất cả"
+    "total": "Tất cả",
+    "hide_small_balance": "Ẩn số dư nhỏ",
+    "show_all_balance": "Hiển thị tất cả"
   },
 
   "transaction": {

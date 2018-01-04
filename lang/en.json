@@ -17,7 +17,9 @@
     "address": "Address",
     "import_address": "Import Address",
     "my_balance": "My balance",
-    "total": "Total"
+    "total": "Total",
+    "hide_small_balance": "Hide small balances",
+    "show_all_balance": "Show all balances"
   },
 
   "transaction": {

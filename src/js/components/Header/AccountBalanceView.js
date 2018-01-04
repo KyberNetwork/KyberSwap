@@ -41,7 +41,8 @@ const AccountBalanceView = (props) => {
             <h4 className="title font-w-b float-left">{props.translate("address.my_balance") || "My balance"}</h4>
             <span onClick={props.toggleZeroBalance}>
               <a className="p-3">
-                {props.showZeroBalance ? "Hide small balances" : "Show all balances"}
+                {props.showZeroBalance ? props.translate("address.hide_small_balance") || "Hide small balances" 
+                : props.translate("address.show_all_balance") || "Show all balances"}
               </a>
             </span>
             <p title={total} className="float-right font-w-b">
