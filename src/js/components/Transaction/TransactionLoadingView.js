@@ -65,13 +65,13 @@ const TransactionLoadingView = (props) => {
                       <li class="text-left">
                         <span class="name">{props.balanceInfo.sourceTokenName}</span>
                         <span class="balance" title={props.balanceInfo.sourceAmount.prevValue}>{roundingNumber(props.balanceInfo.sourceAmount.prevValue)}</span>
-                        <span class="ml-2 mr-3">-></span>
+                        <i className="k k-arrow"></i>
                         <span class="balance" title={props.balanceInfo.sourceAmount.nextValue}>{roundingNumber(props.balanceInfo.sourceAmount.nextValue)}</span>
                       </li>
                       <li class="text-left">
                         <span class="name">{props.balanceInfo.destTokenName}</span>
                         <span class="balance" title={props.balanceInfo.destAmount.prevValue}>{roundingNumber(props.balanceInfo.destAmount.prevValue)}</span>
-                        <span class="ml-2 mr-3">-></span>
+                        <i className="k k-arrow"></i>
                         <span class="balance font-w-b" title={props.balanceInfo.destAmount.nextValue}>{roundingNumber(props.balanceInfo.destAmount.nextValue)}</span>
                       </li>
                     </ul>
@@ -81,7 +81,7 @@ const TransactionLoadingView = (props) => {
                       <li class="text-left">
                         <span class="name">{props.balanceInfo.tokenName}</span>
                         <span class="balance" title={props.balanceInfo.amount.prev}>{roundingNumber(props.balanceInfo.amount.prev)}</span>
-                        <span class="ml-2 mr-3">-></span>
+                        <i className="k k-arrow"></i>
                         <span class="balance font-w-b" title={props.balanceInfo.amount.next}>{roundingNumber(props.balanceInfo.amount.next)}</span>
                       </li>
                     </ul>

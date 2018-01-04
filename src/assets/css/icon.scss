@@ -37,6 +37,9 @@
     &.k-info{
         background-image: url(../img/info-button.svg);
     }
+    &.k-arrow{
+        background-image: url(../img/arrow-right.svg);
+    }
 }
 @for $i from 1 through 3{
     .k-#{$i}x{

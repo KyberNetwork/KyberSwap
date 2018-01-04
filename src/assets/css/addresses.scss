@@ -6,16 +6,16 @@ span.address {
 ul.address-balances {
   margin: 0;
   > li {
-    display: table-row;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
   }
   span.name {
-    display: table-cell;
-    margin-right: 10px;
+    width: 70px;
     white-space: nowrap;
     padding-right: 20px;
   }
   span.balance {
-    display: table-cell;
     text-align: right;
     font-weight: bold;
     font-family: $font-family-monospace;

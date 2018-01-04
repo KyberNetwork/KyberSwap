@@ -9,7 +9,7 @@ const TransactionConfig = (props) => {
     props.gasPriceHandler(event)
   }
 
-  var caption = props.maxGasPrice? "Higher gas price, faster transaction. Max gas price: 50 Gwei":"Higher gas price, faster transaction."
+  var caption = props.maxGasPrice? props.translate("transaction.transaction_config_tooltip") || "Higher gas price, faster transaction. Max gas price: 50 Gwei" : "Higher gas price, faster transaction."
   return (
     <div className="gas-config">
       <div className="row small-11 medium-12 hide-on-choose-token-pair">
