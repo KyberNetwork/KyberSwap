@@ -125,9 +125,16 @@ export function* checkConnection(action) {
 }
 
 export function* setGasPrice(action) {
-  const ethereum = action.payload
-  const gasPrice = yield call([ethereum, ethereum.call("getGasPrice")])
-  yield put(actions.setGasPriceComplete(gasPrice))
+  try{
+    const ethereum = action.payload
+    const gasPrice = yield call([ethereum, ethereum.call("getGasPrice")])
+    const gasPriceFixed = gasPrice < 1? 1: Math.ceil(gasPrice)
+    yield put(actions.setGasPriceComplete(gasPriceFixed))
+  }catch(err)
+  {
+    console.log(err)
+  }
+  
 }
 
 
