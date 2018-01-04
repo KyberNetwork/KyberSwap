@@ -10,7 +10,7 @@
     ],
     "ws": "wss://ropsten.kyber.network/ws/"
   },
-  "history_endpoint": "http://0.0.0.0:3001",
+  "history_endpoint": "http://192.168.25.248:3001",
   "api_usd":"https://api.coinmarketcap.com",
   "tokens": {
     "ETH": {
@@ -126,6 +126,7 @@
   "endpoint": "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",
   "averageBlockTime": 6000,
   "networkId": 3,
+  "chainName": "Ropsten",
   "server_logs": {
     "url": "ropsten.etherscan.io",
     "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"

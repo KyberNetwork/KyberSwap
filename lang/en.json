@@ -141,7 +141,7 @@
     "reserve_address": "Reserve contract address",
     "network_address": "Network contract address",
     "kyber_homepage": "Kyber homepage",
-    "get_free_kovan": "Get free Kovan Ether",
+    "get_free_kovan": "Get free",
     "warning": "Do not send ethers nor tokens to any of the addresses above.<br></br>They are for test only and we are not likely to have control of them in mainnet.",
     "here": "here"
   },

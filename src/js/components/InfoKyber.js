@@ -19,7 +19,7 @@ export default class InfoKyber extends React.Component {
         <div class="frame">
           <div class="row">
             <div class="column small-11 medium-11 large-11 small-centered">
-              <p class="info">{this.props.translate("info.version") || "Version"}: 0.0.1<br />{this.props.translate("info.chain") || "Chain"}: Kovan
+              <p class="info">{this.props.translate("info.version") || "Version"}: 0.0.1<br />{this.props.translate("info.chain") || "Chain"}: {BLOCKCHAIN_INFO.chainName}
               <label>{this.props.translate("info.node_endpoint") || "Node endpoint"}
                 <input class="address" type="text" value={BLOCKCHAIN_INFO.endpoint} readOnly="true" />
                 </label>
@@ -30,7 +30,7 @@ export default class InfoKyber extends React.Component {
                 <input class="address" type="text" value={BLOCKCHAIN_INFO.network} readOnly="true" />
                 </label>{this.props.translate("info.kyber_homepage") || "Kyber homepage"}:&nbsp;
               <a href="https://kyber.network" target="_blank">https://kyber.network</a>
-                <br></br>{this.props.translate("info.get_free_kovan") || "Get free Kovan Ether"}:&nbsp;<a href="#" target="_blank">{this.props.translate("info.here") || "here"}</a><br></br>{this.props.translate("info.warning") || <span>Do not send ethers nor tokens to any of the addresses above.<br></br>They are for test only and we are not likely to have control of them in mainnet.</span>}
+                <br></br>{this.props.translate("info.get_free_kovan") || "Get free"} {BLOCKCHAIN_INFO.chainName} Ether:&nbsp;<a href="#" target="_blank">{this.props.translate("info.here") || "here"}</a><br></br>{this.props.translate("info.warning") || <span>Do not send ethers nor tokens to any of the addresses above.<br></br>They are for test only and we are not likely to have control of them in mainnet.</span>}
             </p>
             </div>
           </div>
