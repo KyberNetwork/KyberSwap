@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 
-import { toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber, stringToBigNumber } from "../../utils/converter"
+import { stringToHex, getDifferentAmount, toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber, stringToBigNumber } from "../../utils/converter"
 
 import { PostExchangeWithKey, MinRate } from "../Exchange"
 import { ExchangeForm, TransactionConfig } from "../../components/Transaction"
@@ -22,6 +22,8 @@ import { getTranslate } from 'react-localize-redux';
   const exchange = store.exchange
   const tokens = store.tokens.tokens
   const translate = getTranslate(store.locale)
+
+  
   return { account, ethereum, exchange, tokens, translate }
 })
 
@@ -36,6 +38,28 @@ export default class Exchange extends React.Component {
     var value = e.target.value
     if (value < 0) return 
     this.props.dispatch(exchangeActions.inputChange('source', value));
+
+    var sourceDecimal = 18
+    var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
+    var minRate = 0
+    var tokens = this.props.tokens
+    if (tokens[sourceTokenSymbol]) {
+      sourceDecimal = tokens[sourceTokenSymbol].decimal
+      minRate = tokens[sourceTokenSymbol].minRate
+    }
+    //check amount to reset rate
+    var differenceValue = getDifferentAmount(value, 
+                            this.props.exchange.prevAmount,  
+                            sourceDecimal, minRate, sourceTokenSymbol)
+    //console.log(differenceValue)
+    if(differenceValue > this.props.exchange.rangeSetRate){
+      var ethereum = this.props.ethereum
+      var source = this.props.exchange.sourceToken
+      var dest = this.props.exchange.destToken
+      var sourceAmountHex = stringToHex(this.props.exchange.sourceAmount, sourceDecimal)
+      this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceAmountHex))
+      this.props.dispatch(exchangeActions.updatePrevSource(value))
+    }
   }
 
   changeDestAmount = (e) => {

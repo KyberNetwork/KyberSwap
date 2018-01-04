@@ -230,7 +230,8 @@ export default class BaseEthereumProvider {
       this.networkContract.methods.getExpectedRate(source, dest, quantity).call()
         .then((result) => {
           if (result != null) {
-            console.log(result)
+            //console.log(quantity)
+            //console.log(result)
             resolve(result)
           }
         })

@@ -260,6 +260,10 @@ const exchange = (state = initState, action) => {
       newState.gas_estimate = action.payload.estimatedGas
       return newState
     }
+    case "EXCHANGE.SET_PREV_SOURCE":{
+      newState.prevAmount = action.payload.value
+      return newState
+    }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
       if(!newState.isEditGasPrice){
         newState.gasPrice = action.payload

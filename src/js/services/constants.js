@@ -43,6 +43,9 @@ const INIT_EXCHANGE_FORM_STATE = {
   maxDestAmount: 0,
  // offeredRateExpiryBlock: 0,
  // offeredRateBalance: 0,
+  rangeSetRate: 5, // 5 eth
+  prevAmount:0,
+
   offeredRate: 0,
   isEditRate : false,
 

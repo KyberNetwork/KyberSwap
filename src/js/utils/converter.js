@@ -26,32 +26,32 @@ export function calculateDest(source, rate) {
   return dest
 }
 
-export function caculateSourceAmount(destAmount, offeredRate, precision){
-  if(!destAmount || !offeredRate || acceptableTyping(destAmount) || acceptableTyping(offeredRate)){
+export function caculateSourceAmount(destAmount, offeredRate, precision) {
+  if (!destAmount || !offeredRate || acceptableTyping(destAmount) || acceptableTyping(offeredRate)) {
     return "0"
   }
   var bigDest = new BigNumber(destAmount)
   var bigOfferedRate = new BigNumber(offeredRate)
-  
+
   bigOfferedRate = bigOfferedRate.div(1000000000000000000)
   var result = bigDest.div(bigOfferedRate)
-  if(precision){
+  if (precision) {
     return result.toFixed(precision)
   } else {
     return result.toString()
   }
 }
 
-export function caculateDestAmount(sourceAmount, offeredRate, precision){
-  if(!sourceAmount || !offeredRate || acceptableTyping(sourceAmount) || acceptableTyping(offeredRate)){
+export function caculateDestAmount(sourceAmount, offeredRate, precision) {
+  if (!sourceAmount || !offeredRate || acceptableTyping(sourceAmount) || acceptableTyping(offeredRate)) {
     return "0"
   }
   var bigSource = new BigNumber(sourceAmount)
   var bigOfferedRate = new BigNumber(offeredRate)
-  
+
   bigOfferedRate = bigOfferedRate.div(1000000000000000000)
   var result = bigSource.times(bigOfferedRate)
-  if(precision){
+  if (precision) {
     return result.toFixed(precision)
   } else {
     return result.toString()
@@ -110,7 +110,7 @@ export function gweiToWei(number) {
 }
 
 export function gweiToEth(number) {
-  if( number === "" || isNaN(number)){
+  if (number === "" || isNaN(number)) {
     return "0"
   }
   var bigNumber = new BigNumber(number)
@@ -148,9 +148,9 @@ export function toT(number, decimal, round) {
   else {
     result = bigNumber.div(1000000000000000000)
   }
-  if(round){
+  if (round) {
     return result.round(round).toString()
-  }else{
+  } else {
     return result.toString()
   }
 }
@@ -209,6 +209,7 @@ export function stringToBigNumber(number) {
 }
 
 export function stringToHex(number, decimal) {
+  if (number === "" || isNaN(number)) return "0x0"
   var param = new BigNumber(10).pow(decimal ? decimal : 18)
   var bigNumber = new BigNumber(number).times(param)
   return "0x" + bigNumber.toString(16)
@@ -225,15 +226,15 @@ export function roundingNumber(number) {
   if (number < 1e-7) number = 0;
 
   let precision = number.toPrecision((number < 1 && number > 0) ? MAX_DIGIS - 1 : MAX_DIGIS),
-      arr = precision.split('.'),
-      intPart = arr[0],
-      i = intPart.length % SIZE || SIZE,
-      result = intPart.substr( 0, i );
+    arr = precision.split('.'),
+    intPart = arr[0],
+    i = intPart.length % SIZE || SIZE,
+    result = intPart.substr(0, i);
 
-  for ( ; i < intPart.length; i += SIZE ) {
-    result += ',' + intPart.substr( i, SIZE );
+  for (; i < intPart.length; i += SIZE) {
+    result += ',' + intPart.substr(i, SIZE);
   }
-  if(arr[1]){
+  if (arr[1]) {
     result += '.' + arr[1];
   }
   return result;
@@ -244,11 +245,29 @@ export function toPrimitiveNumber(x) {
   return bigNum.toString(10)
 };
 
-export function caculateTokenEpsilon(rate, decimal, symbol){
+export function caculateTokenEpsilon(rate, decimal, symbol) {
   var tokenRate = rate
-  if (symbol === "ETH"){
+  if (symbol === "ETH") {
     tokenRate = new BigNumber(10).pow(18)
   }
   var ts = new BigNumber(10).pow(decimal).times(constants.EPSILON)
   return ts.div(tokenRate)
+}
+
+export function getDifferentAmount(sourceAmount, prevAmount, sourceDecimal,
+  minRate, sourceTokenSymbol) {
+    if((sourceAmount === "") || isNaN(sourceAmount)) sourceAmount = 0
+    if(sourceTokenSymbol === 'ETH'){
+      return Math.abs(sourceAmount - prevAmount) 
+    }else{
+      var valueChange = Math.abs(sourceAmount - prevAmount) 
+      var rate = new BigNumber(minRate)
+      var rateWeight = new BigNumber(10).pow(18)
+      rate = rate.div(rateWeight)
+
+      var value = new BigNumber(valueChange)
+      value = value.mul(rate)
+
+      return value.toNumber()
+    }
 }

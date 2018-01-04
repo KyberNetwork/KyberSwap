@@ -11,6 +11,7 @@ import { updateRateExchange, estimateGas } from "../../actions/exchangeActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
 import { setConnection } from "../../actions/connectionActions"
+import {stringToHex} from "../../utils/converter"
 
 export default class EthereumService extends React.Component {
   constructor(props) {
@@ -182,8 +183,18 @@ export default class EthereumService extends React.Component {
     var ethereum = state.connection.ethereum
     var source = state.exchange.sourceToken
     var dest = state.exchange.destToken
-    var reserve = constants.RESERVES[0].index
-    store.dispatch(updateRateExchange(ethereum, source, dest, reserve))
+    var sourceAmount = state.exchange.sourceAmount
+    
+    var tokens = state.tokens.tokens    
+    var sourceDecimal = 18
+    var sourceTokenSymbol = state.exchange.sourceTokenSymbol
+    if (tokens[sourceTokenSymbol]) {
+      sourceDecimal = tokens[sourceTokenSymbol].decimal
+    }
+    
+    var sourceAmountHex = stringToHex(sourceAmount, sourceDecimal)
+
+    store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmountHex))
   }
 
   fetchHistoryExchange = () => {

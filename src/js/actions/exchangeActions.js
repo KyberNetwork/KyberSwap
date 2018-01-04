@@ -116,10 +116,17 @@ export function setRandomExchangeSelectedToken(random) {
   }
 }
 
-export function updateRateExchange(ethereum, source, dest, reserve) {
+export function updateRateExchange(ethereum, source, dest, sourceAmount) {
   return {
     type: "EXCHANGE.UPDATE_RATE_PENDING",
-    payload: { ethereum, source, dest, reserve }
+    payload: { ethereum, source, dest, sourceAmount }
+  }
+}
+
+export function updatePrevSource(value){
+  return {
+    type: "EXCHANGE.SET_PREV_SOURCE",
+    payload: { value }
   }
 }
 
