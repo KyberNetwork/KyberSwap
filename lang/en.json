@@ -63,7 +63,8 @@
     "token_amount": "Token/Amount",
 
     "transfer_tooltip": "Transfer ether or tokens to other addresses",
-    "transaction_config_tooltip": "Higher gas price, faster transaction. Max gas price: 50 Gwei",
+    "transaction_gasprice_50": "Higher gas price, faster transaction. Max gas price: 50 Gwei",
+    "transaction_gasprice": "Higher gas price, faster transaction. Max gas price: 50 Gwei",
     "best_rate_tooltip": "Lower rates for better success chance during market volatility",
     "terms_and_conditions": "<span>Terms and <br/> Conditions</span>"
   },
