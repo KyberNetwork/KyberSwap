@@ -48,7 +48,7 @@ export default class AccountBalance extends React.Component {
       this.props.dispatch(hideSelectToken())
     }
     this.setState({
-      expanded: !this.state.expanded
+      expanded: false
     })
   }
 
