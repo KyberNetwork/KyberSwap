@@ -7,8 +7,8 @@ const AccountBalanceView = (props) => {
     var balances = Object.values(props.tokens).map(token => {
       var balance = converts.toT(token.balance, token.decimal)
       return (
-        <div className="columns my-2" key={token.symbol}>
-          <div className={'balance-item ' + (token.symbol == 'ETH' ? 'active' : '')}>
+        <div className="columns my-2" key={token.symbol} onClick={(e) => props.selectToken(e, token.symbol, token.address)}>
+          <div className={'balance-item ' + (token.symbol == props.sourceActive ? 'active' : '')}>
             <img src={require("../../../assets/img/tokens/" + token.icon)} />
             <div className="d-inline-block">
               <div className="symbol font-w-b">{token.symbol}</div>

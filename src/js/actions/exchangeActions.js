@@ -353,3 +353,9 @@ export function setEstimateGas(estimatedGas){
     payload: { estimatedGas }
   }
 }
+
+export function swapToken(){
+  return {
+    type: "EXCHANGE.SWAP_TOKEN",
+  }
+}

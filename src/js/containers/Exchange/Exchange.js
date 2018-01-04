@@ -110,6 +110,11 @@ export default class Exchange extends React.Component {
     }
   }
 
+  swapToken = () => {
+    this.props.dispatch(exchangeActions.swapToken())
+    this.props.ethereum.fetchRateExchange()
+  }
+
   render() {
     if (this.props.account.isStoreReady) {
       if (!!!this.props.account.account.address) {
@@ -258,6 +263,7 @@ export default class Exchange extends React.Component {
         sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
         setAmount={this.setAmount}
         translate={this.props.translate}
+        swapToken = {this.swapToken}
       />
     )
   }

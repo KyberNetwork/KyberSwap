@@ -264,6 +264,18 @@ const exchange = (state = initState, action) => {
       newState.prevAmount = action.payload.value
       return newState
     }
+    case "EXCHANGE.SWAP_TOKEN":{
+      var tempSourceToken = newState.sourceToken
+      var tempSourceTokenSymbol = newState.sourceTokenSymbol
+      newState.sourceToken = newState.destToken
+      newState.sourceTokenSymbol = newState.destTokenSymbol
+      newState.destToken = tempSourceToken
+      newState.destTokenSymbol = tempSourceTokenSymbol
+      newState.sourceAmount = 0
+      newState.destAmount = 0
+      newState.isSelectToken = true
+      return newState
+    }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
       if(!newState.isEditGasPrice){
         newState.gasPrice = action.payload
