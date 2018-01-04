@@ -206,6 +206,7 @@ export function stringToBigNumber(number) {
 }
 
 export function stringToHex(number, decimal) {
+  if (number === "" || isNaN(number)) return "0x0"
   var param = new BigNumber(10).pow(decimal ? decimal : 18)
   var bigNumber = new BigNumber(number).times(param)
   return "0x" + bigNumber.toString(16)
@@ -239,4 +240,23 @@ export function caculateTokenEpsilon(rate, decimal, symbol){
   }
   var ts = new BigNumber(10).pow(decimal).times(constants.EPSILON)
   return ts.div(tokenRate)
+}
+
+
+export function getDifferentAmount(sourceAmount, prevAmount, sourceDecimal,
+  minRate, sourceTokenSymbol) {
+    if((sourceAmount === "") || isNaN(sourceAmount)) sourceAmount = 0
+    if(sourceTokenSymbol === 'ETH'){
+      return Math.abs(sourceAmount - prevAmount) 
+    }else{
+      var valueChange = Math.abs(sourceAmount - prevAmount) 
+      var rate = new BigNumber(minRate)
+      var rateWeight = new BigNumber(10).pow(18)
+      rate = rate.div(rateWeight)
+
+      var value = new BigNumber(valueChange)
+      value = value.mul(rate)
+
+      return value.toNumber()
+    }
 }

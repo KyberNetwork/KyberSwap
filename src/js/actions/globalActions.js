@@ -110,6 +110,13 @@ export function updateCountConnection(count){
   }
 }
 
+export function setBalanceToken(balances){
+  return {
+    type: "GLOBAL.SET_BALANCE_TOKEN",
+    payload: {balances}
+  }
+}
+
 export function setGasPrice(ethereum){
   return {
     type: "GLOBAL.SET_GAS_PRICE",

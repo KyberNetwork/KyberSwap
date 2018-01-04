@@ -1,7 +1,7 @@
 import { take, put, call, fork, select, takeEvery, all, cancel } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
-import { clearSession, setGasPrice } from "../actions/globalActions"
+import { clearSession, setGasPrice, setBalanceToken } from "../actions/globalActions"
 import { openInfoModal } from '../actions/utilActions'
 import { getRandomAvatar } from "../utils/keys"
 //import { setInterval } from "timers"
@@ -36,13 +36,23 @@ export function* importNewAccount(action) {
   const { address, type, keystring, ethereum, avatar, tokens, metamask } = action.payload
   try {
     const account = yield call(service.newAccountInstance, address, type, keystring, avatar, ethereum)
-    var rates = []
-    for (var k = 0; k < constants.RESERVES.length; k++) {
-      var reserve = constants.RESERVES[k];
-      rates[k] = yield call(updateAllRatePromise, ethereum, tokens, constants.RESERVES[k], account.address)
-    }
-    yield put.sync(updateAllRateComplete(rates[0], true))
-    var randomToken = randomForExchange(rates[0])
+
+    const balanceTokens = yield call([ethereum, ethereum.call("getAllBalancesToken")], address, tokens)
+    //map balance
+    var mapBalance = {}
+    balanceTokens.map(token => {
+      mapBalance[token.symbol] = token.balance
+    })
+
+    //update token and token balance
+    var newTokens = {}
+    Object.values(tokens).map(token => {
+      var token = { ...token }
+      token.balance = mapBalance[token.symbol]
+      newTokens[token.symbol] = token
+    })
+
+    var randomToken = randomForExchange(newTokens)
     if (!randomToken || !randomToken[0]) {
       //todo dispatch action waring no balanc
       yield put(actions.closeImportLoading())
@@ -56,10 +66,12 @@ export function* importNewAccount(action) {
     }
     //todo set random token for exchange
     yield put(actions.closeImportLoading())
+
+    yield put(setBalanceToken(balanceTokens))
     yield put(actions.importNewAccountComplete(account))
 
     //set gas price
-    yield put(setGasPrice(ethereum))
+   // yield put(setGasPrice(ethereum))
 
     yield put(goToRoute('/exchange'))
 
@@ -69,9 +81,6 @@ export function* importNewAccount(action) {
     yield put(actions.throwError('Cannot connet to blockchain right now. Please try again later.'))
     yield put(actions.closeImportLoading())
   }
-
-
-
 
   //fork for metamask
   if (type === "metamask") {
@@ -110,6 +119,16 @@ export function* importMetamask(action) {
     console.log(e)
     yield put(actions.throwError(getTranslate(store.getState().locale)("error.cannot_connect_metamask") || "Cannot get metamask account"))
   }
+
+  //fork for metamask
+  if (type === "metamask") {
+    const { web3Service, address, networkId } = { ...metamask }
+    const watchCoinbaseTask = yield fork(watchCoinbase, web3Service, address, networkId)
+
+    yield take('GLOBAL.CLEAR_SESSION')
+    yield cancel(watchCoinbaseTask)
+  }
+
 }
 
 function* watchCoinbase(web3Service, address, networkId) {
@@ -136,8 +155,21 @@ function* watchCoinbase(web3Service, address, networkId) {
   }
 }
 
+export function* updateTokenBalance(action) {
+  try {
+    const { ethereum, address, tokens } = action.payload
+    const balanceTokens = yield call([ethereum, ethereum.call("getAllBalancesToken")], address, tokens)
+    yield put(setBalanceToken(balanceTokens))
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
 export function* watchAccount() {
   yield takeEvery("ACCOUNT.UPDATE_ACCOUNT_PENDING", updateAccount)
   yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING", importNewAccount)
   yield takeEvery("ACCOUNT.IMPORT_ACCOUNT_METAMASK", importMetamask)
+
+  yield takeEvery("ACCOUNT.UPDATE_TOKEN_BALANCE", updateTokenBalance)
 }

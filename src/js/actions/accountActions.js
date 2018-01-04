@@ -93,3 +93,10 @@ export function importAccountMetamask(web3Service, networkId, ethereum, tokens) 
     payload: { web3Service, networkId, ethereum, tokens }
   }
 }
+
+export function updateTokenBalance(ethereum, address, tokens){
+  return {
+    type: "ACCOUNT.UPDATE_TOKEN_BALANCE",
+    payload: { ethereum, address, tokens }
+  }
+}

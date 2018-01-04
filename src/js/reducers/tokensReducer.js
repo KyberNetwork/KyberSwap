@@ -9,7 +9,9 @@ const initState = function () {
   Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
     tokens[key] = BLOCKCHAIN_INFO.tokens[key]
     tokens[key].rate = 0
+    tokens[key].minRate = 0
     tokens[key].rateEth = 0
+    tokens[key].minRateEth = 0
     tokens[key].balance = 0
   })
   return { 
@@ -39,9 +41,11 @@ const tokens = (state = initState, action) => {
               tokenMap.icon,
               tokenMap.address,
               tokenMap.decimal,
-              new BigNumber(tokenMap.rate ? tokenMap.rate : 0),
-              new BigNumber(tokenMap.balance ? tokenMap.balance : 0),
-              new BigNumber(tokenMap.rateEth ? tokenMap.rateEth : 0)
+              tokenMap.rate ? tokenMap.rate : 0,
+              tokenMap.minRate ? tokenMap.minRate : 0,
+              0,
+              tokenMap.rateEth ? tokenMap.rateEth : 0,
+              tokenMap.minRateEth ? tokenMap.minRateEth : 0,
             )
             tokens[id] = token
           })
@@ -57,16 +61,61 @@ const tokens = (state = initState, action) => {
     }
     case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
       var tokens = { ...state.tokens }
-      var tokensData = action.payload.rates;
-      var isUpdateBalance = action.payload.isUpdateBalance;
-      if(tokensData){
-        tokensData.forEach((data) => {
-          if(!tokens[data.symbol]) return
-          if(!isUpdateBalance && tokens[data.symbol]) data.balance = tokens[data.symbol].balance
-          tokens[data.symbol] = data
-        })
+      var rates = action.payload.rates
+      if (!rates){
+        return state
       }
-      return Object.assign({}, state, { tokens: tokens })
+      //map token
+      var mapToken = {}
+      rates.map(rate => {
+        if (rate.source !== "ETH") {
+          if (!mapToken[rate.source]) {
+            mapToken[rate.source] = {}
+          }
+          mapToken[rate.source].rate = rate.rate
+          mapToken[rate.source].minRate = rate.minRate
+        } else {
+          if (!mapToken[rate.dest]) {
+            mapToken[rate.dest] = {}
+          }
+          mapToken[rate.dest].rateEth = rate.rate
+          mapToken[rate.dest].minRateEth = rate.minRate
+        }
+      })
+
+      //push data
+      var newTokens = {}
+      Object.keys(tokens).map(key => {
+        var token = tokens[key]
+        if (mapToken[key] && mapToken[key].rate) {
+          token.rate = mapToken[key].rate
+          token.minRate = mapToken[key].minRate
+        }
+        if (mapToken[key] && mapToken[key].rateEth) {
+          token.rateEth = mapToken[key].rateEth
+          token.minRateEth = mapToken[key].minRateEth
+        }
+        newTokens[key] = token
+      })
+
+      return Object.assign({}, state, { tokens: newTokens })
+    }
+    case 'GLOBAL.SET_BALANCE_TOKEN':{
+      var tokens = { ...state.tokens }
+      
+      var balances = action.payload.balances
+      var mapBalance = {}
+      balances.map(balance=>{
+        mapBalance[balance.symbol] = balance.balance
+      })
+
+      var newTokens = {}
+      Object.keys(tokens).map(key => {
+        var token = tokens[key]
+        token.balance = mapBalance[token.symbol]
+        newTokens[key] = token
+      })
+      return Object.assign({}, state, { tokens: newTokens }) 
     }
     default: return state
   }

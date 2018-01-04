@@ -4,13 +4,15 @@ import HttpEthereumProvider from "./httpProvider"
 import WebsocketEthereumProvider from "./wsProvider"
 import constants from "../constants"
 
-import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateHistoryExchange, checkConnection } from "../../actions/globalActions"
-import { updateAccount } from "../../actions/accountActions"
+import { updateBlock, updateBlockFailed, updateRate, updateAllRate, 
+  updateHistoryExchange, checkConnection ,setGasPrice } from "../../actions/globalActions"
+import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx } from "../../actions/txActions"
 import { updateRateExchange } from "../../actions/exchangeActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
 import { setConnection } from "../../actions/connectionActions"
+import {stringToHex} from "../../utils/converter"
 
 export default class EthereumService extends React.Component {
   constructor(props) {
@@ -92,10 +94,15 @@ export default class EthereumService extends React.Component {
     //this.fetchCurrentBlock()
     this.fetchTxsData()
     this.fetchRateData()
+
     this.fetchAccountData()
+    this.fetchTokenBalance()
+
     this.fetchRateExchange()
     this.fetchHistoryExchange()
     this.checkConnection()
+
+    this.fetchGasprice()
   }
 
   fetchRateData() {
@@ -144,6 +151,15 @@ export default class EthereumService extends React.Component {
     }
   }
 
+  fetchTokenBalance() {
+    var state = store.getState()
+    var ethereum = state.connection.ethereum
+    var account = state.account.account
+    if (account.address) {
+      store.dispatch(updateTokenBalance(ethereum, account.address, BLOCKCHAIN_INFO.tokens))
+    }
+  }
+
   fetchCurrentBlock = () => {
     var state = store.getState()
     var ethereum = state.connection.ethereum
@@ -155,8 +171,18 @@ export default class EthereumService extends React.Component {
     var ethereum = state.connection.ethereum
     var source = state.exchange.sourceToken
     var dest = state.exchange.destToken
-    var reserve = constants.RESERVES[0].index
-    store.dispatch(updateRateExchange(ethereum, source, dest, reserve))
+    var sourceAmount = state.exchange.sourceAmount
+    
+    var tokens = state.tokens.tokens    
+    var sourceDecimal = 18
+    var sourceTokenSymbol = state.exchange.sourceTokenSymbol
+    if (tokens[sourceTokenSymbol]) {
+      sourceDecimal = tokens[sourceTokenSymbol].decimal
+    }
+    
+    var sourceAmountHex = stringToHex(sourceAmount, sourceDecimal)
+
+    store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmountHex))
   }
 
   fetchHistoryExchange = () => {
@@ -167,6 +193,13 @@ export default class EthereumService extends React.Component {
     //if (history.page,){      
     store.dispatch(updateHistoryExchange(ethereum, history.page, history.itemPerPage, true))
     //}
+  }
+
+
+  fetchGasprice = () => {
+    var state = store.getState()
+    var ethereum = state.connection.ethereum
+    store.dispatch(setGasPrice(ethereum))
   }
 
   checkConnection = () => {

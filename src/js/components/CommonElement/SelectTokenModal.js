@@ -15,7 +15,8 @@ const SelectTokenModal = (props) => {
         var content = Object.keys(props.tokens).map((key, i) => {          
           var token = props.tokens[key]
           var tokenEpsilon = caculateTokenEpsilon(token.rate, token.decimal, token.symbol, token.balance)
-          var balance = toT(token.balance.toString(), token.decimal)
+          var balance = toT(token.balance, token.decimal)
+          var balanceBig = new BigNumber(token.balance)
           return <TokenSelect key={i} symbol={token.symbol} name={token.name}
                   balance={balance} 
                   decimal={token.decimal}
@@ -23,7 +24,7 @@ const SelectTokenModal = (props) => {
                   type = {props.type}
                   address = {token.address}
                   onClick = {props.chooseToken}
-                  inactive = {!token.balance.greaterThanOrEqualTo(tokenEpsilon)}
+                  inactive = {!balanceBig.greaterThanOrEqualTo(tokenEpsilon)}
                   title={title}
                   selected={props.selected==token.symbol}
                   translate={props.translate}
@@ -34,7 +35,7 @@ const SelectTokenModal = (props) => {
         title = props.translate("modal.select_dest_token") || "Select destination token"
         var content = Object.keys(props.tokens).map((key,i) => {
           var token = props.tokens[key]
-          var balance = toT(token.balance.toString(), token.decimal)
+          var balance = toT(token.balance, token.decimal)
           return <TokenSelect key={i} symbol={token.symbol} name={token.name}
                   balance={balance} 
                   icon={token.icon} 
@@ -51,14 +52,15 @@ const SelectTokenModal = (props) => {
         title = props.translate("modal.select_trasfer_from_token") || "SELECT \"TRANSFER FROM\" TOKEN"
         var content = Object.keys(props.tokens).map((key,i) => {
           var token = props.tokens[key]
-          var balance = toT(token.balance.toString(), token.decimal)
+          var balance = toT(token.balance, token.decimal)
+          var balanceBig = new BigNumber(token.balance)
           return <TokenSelect key={i} symbol={token.symbol} name={token.name}
                   balance={balance} 
                   icon={token.icon} 
                   type = {props.type}
                   address = {token.address}
                   onClick = {props.chooseToken}
-                  inactive = {!token.balance.greaterThan(0)}
+                  inactive = {!balanceBig.greaterThan(0)}
                   selected={props.selected==token.symbol}
                   translate={props.translate}
                   />

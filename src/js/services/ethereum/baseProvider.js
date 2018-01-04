@@ -91,6 +91,37 @@ export default class BaseEthereumProvider {
     })
   }
 
+  getAllBalancesToken(address, tokens) {
+    var promises = Object.keys(tokens).map(index => {
+      var token = tokens[index]
+      if (token.symbol === 'ETH') {
+        return new Promise((resolve, reject) => {
+          this.getBalance(address).then(result => {
+            resolve({
+              symbol: 'ETH',
+              balance: result
+            })
+          }).catch(err => {
+            reject(new Error("Cannot get balance of ETH"))
+          })
+        })
+
+      } else {
+        return new Promise((resolve, reject) => {
+          this.getTokenBalance(token.address, address).then(result => {
+            resolve({
+              symbol: token.symbol,
+              balance: result
+            })
+          }).catch(err => {
+            reject(new Error("Cannot get balance of " + token.symbol))
+          })
+        })
+      }
+    })
+    return Promise.all(promises)
+  }
+
   getNonce(address) {
     return new Promise((resolve, reject) => {
       this.rpc.eth.getTransactionCount(address, "pending")
@@ -126,10 +157,10 @@ export default class BaseEthereumProvider {
   }
 
   exchangeData(sourceToken, sourceAmount, destToken, destAddress,
-    maxDestAmount, minConversionRate, throwOnFailure) {
+    maxDestAmount, minConversionRate, walletId) {
     return this.networkContract.methods.trade(
       sourceToken, sourceAmount, destToken, destAddress,
-      maxDestAmount, minConversionRate, throwOnFailure).encodeABI()
+      maxDestAmount, minConversionRate, walletId).encodeABI()
   }
 
   approveTokenData(sourceToken, sourceAmount) {
@@ -179,18 +210,17 @@ export default class BaseEthereumProvider {
 
   }
 
-  getRate(source, dest, reserve) {
+  getRate(source, dest, quantity) {
     return new Promise((resolve, reject) => {
-      this.networkContract.methods.getRate(source, dest, reserve).call()
-      .then((result) => {
-        if (result != null) {
-          resolve(result)
-        }
-      })
-      .catch((err) => {
-        // console.log(err)
-        reject(err)
-      })
+      this.networkContract.methods.getExpectedRate(source, dest, quantity).call()
+        .then((result) => {
+          if (result != null) {
+            resolve(result)
+          }
+        })
+        .catch((err) => {
+          reject(err)
+        })
     })
   }
 
@@ -203,6 +233,28 @@ export default class BaseEthereumProvider {
           } else {
             resolve(hash)
           }
+        })
+    })
+  }
+
+  getAllRatesFromServer(tokens, reserve) {
+    return new Promise((resolve, rejected) => {
+      fetch(BLOCKCHAIN_INFO.history_endpoint + '/getRate', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+      })
+        .then(function (response) {
+          if (response.status == 404) {
+            rejected(err)
+          } else {
+            resolve(response.json())
+          }
+        })
+        .catch((err) => {
+          rejected(err)
         })
     })
   }
@@ -321,19 +373,19 @@ export default class BaseEthereumProvider {
     })
   }
 
-  getRateFromBlockchain(){
+  getAllRatesFromBlockchain(tokens, reserve) {
     var ratePromises = []
     var tokenObj = BLOCKCHAIN_INFO.tokens
     Object.keys(tokenObj).map((tokenName) => {
       ratePromises.push(Promise.all([
         Promise.resolve(tokenName),
         Promise.resolve(constants.ETH.symbol),
-        this.getRate(tokenObj[tokenName].address, constants.ETH.address, constants.RESERVES[0].index)
+        this.getRate(tokenObj[tokenName].address, constants.ETH.address, '0x0')
       ]))
       ratePromises.push(Promise.all([
         Promise.resolve(constants.ETH.symbol),
         Promise.resolve(tokenName),
-        this.getRate(constants.ETH.address, tokenObj[tokenName].address, constants.RESERVES[0].index)
+        this.getRate(constants.ETH.address, tokenObj[tokenName].address, '0x0')
       ]))
     })
     return Promise.all(ratePromises)
@@ -342,9 +394,8 @@ export default class BaseEthereumProvider {
           return {
             source: rate[0],
             dest: rate[1],
-            rate: rate[2].rate,
-            expBlock: rate[2].expBlock,
-            balance: rate[2].balance
+            rate: rate[2].expectedPrice,
+            minRate: rate[2].slippagePrice
           }
         })
         return arrayRateObj

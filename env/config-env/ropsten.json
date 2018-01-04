@@ -1,0 +1,133 @@
+{
+  "connections": {
+    "http": [
+      "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",
+      "https://ropsten.infura.io/0BRKxQ0SFvAxGL72cbXi",
+      "https://ropsten.infura.io/Ho4cy66JFfTvvAVlXvii",
+      "https://ropsten.infura.io/aFvzEJSCQtTUJJ0Ec0mW",
+      "https://ropsten.infura.io/uF2YCXrIz7yUFEXd2yo0",
+      "https://ropsten.infura.io/NhLyl78p5UrUgBN5GSty"
+    ],
+    "ws": "wss://ropsten.kyber.network/ws/"
+  },
+  "history_endpoint": "http://0.0.0.0:3001",
+  "api_usd":"https://api.coinmarketcap.com",
+  "tokens": {
+    "ETH": {
+      "name": "Ethereum",
+      "symbol": "ETH",
+      "icon": "eth.svg",
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimal": 18,
+      "usd_id":"ethereum"
+    },
+    "KNC": {
+      "name": "KyberNetwork",
+      "symbol": "KNC",
+      "icon": "knc.svg",
+      "address": "0x6eaea070a6ff1636fb3b20b02f84b71f2d7f0afa",
+      "decimal": 18,
+      "usd_id":"kyber-network"
+    },
+    "OMG": {
+      "name": "OmiseGO",
+      "symbol": "OMG",
+      "icon": "omg.svg",
+      "address": "0x4c722a9567a79a360a6cfda749c64fee1d6d4f72",
+      "decimal": 18,
+      "usd_id":"omisego"
+    },
+    "DGD": {
+      "name": "DigixDAO",
+      "symbol": "DGD",
+      "icon": "dgd.svg",
+      "address": "0x2be40c78a0ee828d0a064c999292f5239c60b53e",
+      "decimal": 9,
+      "usd_id":"digixdao"
+    },
+    "CVC": {
+      "name": "Civic",
+      "symbol": "CVC",
+      "icon": "cvc.svg",
+      "address": "0x794d7ab1edd712fd17b001f7f0fc162c413761ed",
+      "decimal": 8,
+      "usd_id":"civic"
+    },
+    "FUN": {
+      "name": "FunFair",
+      "symbol": "FUN",
+      "icon": "fun.svg",
+      "address": "0x62b37aab071507989da5e59151ea1bb5b748fe14",
+      "decimal": 8,
+      "usd_id":"funfair"
+    },
+    "MCO": {
+      "name": "Monaco",
+      "symbol": "MCO",
+      "icon": "mco.svg",
+      "address": "0xdbb17afa7a6f1ab2cd3e319e5a0f07a5362827da",
+      "decimal": 8,
+      "usd_id":"monaco"
+    },
+    "GNT": {
+      "name": "Golem",
+      "symbol": "GNT",
+      "icon": "gnt.svg",
+      "address": "0x8948894eafb7f70515bb4a5dfe230dfb0e7c509e",
+      "decimal": 18,
+      "usd_id":"golem-network-tokens"
+    },
+    "ADX": {
+      "name": "AdEx",
+      "symbol": "ADX",
+      "icon": "adx.svg",
+      "address": "0x436215d9454795360742f8b3b84e4f90bc04ef23",
+      "decimal": 4,
+      "usd_id":"adx-net"
+    },
+    "PAY": {
+      "name": "TenX",
+      "symbol": "PAY",
+      "icon": "pay.svg",
+      "address": "0xdf5ac1d84c7f1a05ab1aae691f58d260eb83bc36",
+      "decimal": 18,
+      "usd_id":"tenx"
+    },
+    "BAT": {
+      "name": "BasicAttention",
+      "symbol": "BAT",
+      "icon": "bat.svg",
+      "address": "0x63214374d6db6d942f154cbf77f584a555d37f8e",
+      "decimal": 18,
+      "usd_id":"basic-attention-token"
+    },
+    "EOS": {
+      "name": "Eos",
+      "symbol": "EOS",
+      "icon": "eos.svg",
+      "address": "0x87b804590fcac9930d9b4de0b20d5e710cafce75",
+      "decimal": 18,
+      "usd_id":"eos"
+    },
+    "LINK": {
+      "name": "ChainLink",
+      "symbol": "LINK",
+      "icon": "link.svg",
+      "address": "0xf5f23f4c687dc4e69d330b6221b9b48fa6d9cd72",
+      "decimal": 18,
+      "usd_id":"chainlink"
+    }
+  },
+  "ethScanUrl": "https://ropsten.etherscan.io/",
+  "bank": "0x7a1fb0bebc6fbd521ae9193be832976dd15d4136",
+  "reserve": "0x0ce02a41fec5dd016f8b5ac338b4aa4149379096",
+  "network": "0x2cb8c4a914b1699d84e7cb73887d1728f3ebdab6",
+  "wrapper": "0x905e523efad524f4986dbc268ff63a5425948c56",
+  "endpoint": "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",
+  "averageBlockTime": 6000,
+  "networkId": 3,
+  "server_logs": {
+    "url": "ropsten.etherscan.io",
+    "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
+  }
+}

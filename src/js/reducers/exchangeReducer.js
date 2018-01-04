@@ -127,18 +127,16 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.UPDATE_RATE":
-      var rate = action.payload.offeredRate
-      newState.minConversionRate = rate
-      if (newState.sourceAmount !== "") {
-        newState.minDestAmount = calculateDest(newState.sourceAmount, rate).toString(10)
-      }
-      newState.offeredRateBalance = action.payload.reserveBalance
-      newState.offeredRateExpiryBlock = action.payload.expirationBlock
-      if(!newState.isEditRate){
-        newState.offeredRate = rate
-      }
-      newState.isSelectToken = false    
-      return newState
+    var rate = action.payload.minConversionRate
+    newState.minConversionRate = rate
+    if (newState.sourceAmount !== "") {
+      newState.minDestAmount = calculateDest(newState.sourceAmount, rate).toString(10)
+    }
+    if(!newState.isEditRate){
+      newState.offeredRate = rate
+    }
+    newState.isSelectToken = false    
+    return newState
     case "EXCHANGE.OPEN_PASSPHRASE": {
       newState.passphrase = true
       return newState
@@ -252,6 +250,10 @@ const exchange = (state = initState, action) => {
       newState.offeredRate = newState.minConversionRate
       newState.isEditRate = false
       newState.errors.rateError = ''
+      return newState
+    }
+    case "EXCHANGE.SET_PREV_SOURCE":{
+      newState.prevAmount = action.payload.value
       return newState
     }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{

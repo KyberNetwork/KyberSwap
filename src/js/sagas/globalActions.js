@@ -58,17 +58,23 @@ export function* clearSession(action) {
 }
 
 export function* updateAllRate(action) {
-  try{
-    const { ethereum, tokens, reserve, ownerAddr } = action.payload
-    let isUpdateBalance = ownerAddr ? true : false
-    const rates = yield call(updateAllRatePromise, ethereum, tokens, reserve, ownerAddr)
-    yield put(actions.updateAllRateComplete(rates, isUpdateBalance))
+  const { ethereum, tokens, reserve } = action.payload
+  try {
+    const rates = yield call([ethereum, ethereum.call("getAllRatesFromServer")], tokens)
+    yield put(actions.updateAllRateComplete(rates))
   }
   catch (err) {
-    console.log(err)
+    //get rate from blockchain
+    try {
+      const rates = yield call([ethereum, ethereum.call("getAllRatesFromBlockchain")], tokens, reserve)
+      yield put(actions.updateAllRateComplete(rates))
+    }
+    catch (err) {
+      console.log(err)
+    }
   }
-  
 }
+
 
 export function* checkConnection(action){
   var {ethereum, count, maxCount, isCheck} = action.payload

@@ -11,15 +11,18 @@ var filePath
 var dbName = process.env.npm_config_chain
 
 //console.log("db name: " + dbName)
-switch(dbName){
+switch (dbName) {
   case "kovan":
-    filePath = path.join(__dirname, 'kovan.db')
+    filePath = path.join(__dirname, '/stores/kovan.db')
+    break
+  case "ropsten":
+    filePath = path.join(__dirname, '/stores/ropsten.db')
     break
   case "mainnet":
-    filePath = path.join(__dirname, 'mainnet.db')
+    filePath = path.join(__dirname, '/stores/mainnet.db')
     break
   default:
-    filePath = path.join(__dirname, 'temp.db')
+    filePath = path.join(__dirname, '/stores/temp.db')
     break
 }
 
@@ -60,31 +63,43 @@ class SqlitePersist {
       var _this = this
       this.db = new sqlite3.Database(filePath)
       this.db.serialize(function () {
-        _this.db.run("CREATE TABLE configure (id INT, currentBlock INT, latestBlock INT, frequency INT, count INT, rangeFetch INT)");
-
-        var stmt = _this.db.prepare("INSERT INTO configure VALUES (?,?,?,?,?,?)")
-        stmt.run(1, 0, 0, config.frequency, 0, config.rangeFetch);
-        stmt.finalize()
-
-        _this.db.run("CREATE TABLE logs (id INTEGER PRIMARY KEY, actualDestAmount TEXT, actualSrcAmount TEXT, dest TEXT, source TEXT, sender TEXT, blockNumber INT, txHash TEXT, timestamp INT, status TEXT)")
-
-        // create rate table
-        _this.db.run("CREATE TABLE rates (id INTEGER PRIMARY KEY, source TEXT, dest TEXT, rate TEXT, expBlock TEXT, balance TEXT)")
-        /// init all rate first time
-      if(BLOCKCHAIN_INFO.tokens){
-          Object.keys(BLOCKCHAIN_INFO.tokens).map((token) => {
-            let stmt1 = _this.db.prepare(`INSERT INTO rates(source, dest, rate, expBlock, balance) VALUES (?,?,?,?,?)`)
-            stmt1.run(token, constants.ETH.symbol, 0, 0);
-            stmt1.finalize()
-
-            let stmt2 = _this.db.prepare(`INSERT INTO rates(source, dest, rate, expBlock, balance) VALUES (?,?,?,?,?)`)
-            stmt2.run(constants.ETH.symbol, token, 0, 0);
-            stmt2.finalize()
-          })
-        }
+        _this.initConfigureTable()
+        _this.initLogsTable()
+        _this.initRatesTable()
+        //_this.initRateUSDTable()
       })
+      console.log("Done init table")
     }
 
+  }
+
+  initConfigureTable() {
+    this.db.run("CREATE TABLE configure (id INT, currentBlock INT, latestBlock INT, frequency INT, count INT, rangeFetch INT)");
+
+    var stmt = this.db.prepare("INSERT INTO configure VALUES (?,?,?,?,?,?)")
+    stmt.run(1, 0, 0, config.frequency, 0, config.rangeFetch);
+    stmt.finalize()
+  }
+  initLogsTable() {
+    this.db.run("CREATE TABLE logs (id INTEGER PRIMARY KEY, actualDestAmount TEXT, actualSrcAmount TEXT, dest TEXT, source TEXT, sender TEXT, blockNumber INT, txHash TEXT, timestamp INT, status TEXT)")
+  }
+
+  initRatesTable() {
+    var _this = this
+    this.db.run("CREATE TABLE rates (id INTEGER PRIMARY KEY, source TEXT, dest TEXT, rate TEXT, minRate TEXT, expBlock TEXT, balance TEXT)")
+    /// init all rate first time
+    if (BLOCKCHAIN_INFO.tokens) {
+      //init rate between token token;
+      Object.keys(BLOCKCHAIN_INFO.tokens).map((token) => {
+        let stmt1 = _this.db.prepare(`INSERT INTO rates(source, dest, rate, minRate, expBlock, balance) VALUES (?,?,?,?,?,?)`)
+        stmt1.run(token, constants.ETH.symbol, 0, 0, 0, 0);
+        stmt1.finalize()
+
+        let stmt2 = _this.db.prepare(`INSERT INTO rates(source, dest, rate, minRate, expBlock, balance) VALUES (?,?,?,?,?,?)`)
+        stmt2.run(constants.ETH.symbol, token, 0, 0, 0, 0);
+        stmt2.finalize()
+      })
+    }
   }
 
   initArraySupportedTokenAddress(){
@@ -373,20 +388,21 @@ class SqlitePersist {
   }
 
   saveRate(rates) {
+    //console.log(rates)
     return new Promise((resolve, reject) => {
       rates.forEach((rate) => {
-        if ((rate[2] && rate[2].rate !== '0') || (rate[0] == constants.ETH.symbol && rate[1] == constants.ETH.symbol)) {
-          let stmt = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, expBlock, balance) VALUES ((
+        if ((rate[2] && rate[2].expectedPrice !== '0') || (rate[0] == constants.ETH.symbol && rate[1] == constants.ETH.symbol)) {
+          let stmt = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, minRate, expBlock, balance) VALUES ((
           SELECT id FROM rates WHERE source = ? AND dest = ?
-        ),?,?,?,?,?)`)
-          stmt.run(rate[0], rate[1], rate[0], rate[1], rate[2].rate, rate[2].expBlock, rate[2].balance);
+        ),?,?,?,?,?, ?)`)
+          stmt.run(rate[0], rate[1], rate[0], rate[1], rate[2].expectedPrice, rate[2].slippagePrice, 0, 0);
           stmt.finalize()
         }
-        if ((rate[3] && rate[3].rate !== '0') || (rate[0] == constants.ETH.symbol && rate[1] == constants.ETH.symbol)) {
-          let stmt2 = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, expBlock, balance) VALUES ((
+        if ((rate[3] && rate[3].expectedPrice !== '0') || (rate[0] == constants.ETH.symbol && rate[1] == constants.ETH.symbol)) {
+          let stmt2 = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, minRate, expBlock, balance) VALUES ((
           SELECT id FROM rates WHERE source = ? AND dest = ?
-        ), ?,?,?,?,?)`)
-          stmt2.run(rate[1], rate[0], rate[1], rate[0], rate[3].rate, rate[3].expBlock, rate[3].balance);
+        ), ?,?,?,?,?,?)`)
+          stmt2.run(rate[1], rate[0], rate[1], rate[0], rate[3].expectedPrice, rate[3].slippagePrice, 0, 0);
           stmt2.finalize()
         }
       })

@@ -10,17 +10,17 @@ function* updateTx(action) {
   const newTx = yield call(tx.sync, ethereum, tx)	
   yield put(updateTxComplete(newTx))    
 
-  var rates = []
-  try{
-    for (var k = 0; k < constants.RESERVES.length; k++) {
-      var reserve = constants.RESERVES[k];
-      rates[k] = yield call(updateAllRatePromise, ethereum, tokens, constants.RESERVES[k], account.address)
-    }
-    yield put(updateAllRateComplete(rates[0], true))
-  }
-  catch(err){
-    console.log(err)
-  }
+  // var rates = []
+  // try{
+  //   for (var k = 0; k < constants.RESERVES.length; k++) {
+  //     var reserve = constants.RESERVES[k];
+  //     rates[k] = yield call(updateAllRatePromise, ethereum, tokens, constants.RESERVES[k], account.address)
+  //   }
+  //   yield put(updateAllRateComplete(rates[0], true))
+  // }
+  // catch(err){
+  //   console.log(err)
+  // }
   
 }
 
