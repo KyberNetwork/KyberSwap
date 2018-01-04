@@ -1,12 +1,16 @@
 import React from "react"
 import * as converts from "../../utils/converter"
-
+import BigNumber from "bignumber.js"
 const AccountBalanceView = (props) => {
 
   function getBalances() {
     var balances = Object.values(props.tokens).map(token => {
       var balance = converts.toT(token.balance, token.decimal)
+
+      var tokenEpsilon = converts.caculateTokenEpsilon(token.rate, token.decimal, token.symbol)
+      var bigBalance = new BigNumber(token.balance)
       return (
+        props.showZeroBalance || bigBalance.greaterThanOrEqualTo(tokenEpsilon) ? 
         <div className="columns my-2" key={token.symbol} onClick={(e) => props.selectToken(e, token.symbol, token.address)}>
           <div className={'balance-item ' + (token.symbol == props.sourceActive ? 'active' : '')}>
             <img src={require("../../../assets/img/tokens/" + token.icon)} />
@@ -16,6 +20,7 @@ const AccountBalanceView = (props) => {
             </div>
           </div>
         </div>
+        : <div key={token.symbol}/>
       )
     })
     return balances
@@ -34,6 +39,11 @@ const AccountBalanceView = (props) => {
         <div className="column">
           <div className="mt-3 clearfix">
             <h4 className="title font-w-b float-left">{props.translate("address.my_balance") || "My balance"}</h4>
+            <span onClick={props.toggleZeroBalance}>
+              <a className="p-3">
+                {props.showZeroBalance ? "Hide small balances" : "Show all balances"}
+              </a>
+            </span>
             <p title={total} className="float-right font-w-b">
               <span className="text-success text-uppercase">{props.translate("address.total") || "Total"}</span>
               <span className="font-s-up-1 ml-2">{roundingTotal}</span> USD
