@@ -150,8 +150,8 @@ export default class Exchange extends React.Component {
     var tokenDest = this.props.tokens[this.props.exchange.destTokenSymbol]
     if (tokenDest) {
       balanceDest = {
-        prevValue:toT(this.props.exchange.balanceData.prevDest, token.decimal),
-        nextValue:toT(this.props.exchange.balanceData.nextDest, token.decimal),
+        prevValue:toT(this.props.exchange.balanceData.prevDest, tokenDest.decimal),
+        nextValue:toT(this.props.exchange.balanceData.nextDest, tokenDest.decimal),
         // value: toT(tokenDest.balance, tokenDest.decimal),
         // roundingValue: roundingNumber(toT(tokenDest.balance, tokenDest.decimal)),
       }
