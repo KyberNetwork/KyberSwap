@@ -60,7 +60,7 @@ const ExchangeForm = (props) => {
                   </div>
                 </div>
                 <div class="column medium-2 exchange-icon hide-for-small-only">
-                  <i className="k k-exchange k-3x" onClick = {(e) => props.swapToken(e)}></i>
+                  <i className="k k-exchange k-3x cur-pointer" onClick = {(e) => props.swapToken(e)}></i>
                 </div>
                 <div class="column medium-5">
                   <label>

@@ -44,6 +44,9 @@
 .d-flex{
     display: flex;
 }
+.cur-pointer{
+    cursor: pointer;
+}
 @include breakpoint(medium){
     .d-inline-block-md{
         display: inline-block;

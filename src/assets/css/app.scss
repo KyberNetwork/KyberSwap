@@ -99,9 +99,9 @@ body{
   min-height: 75px;
   a.logo img{
     width: 100px;
+    margin-top: 10px;
     @media screen and (max-width: 450px){
       width: 70px;
-      margin-top: 10px;
     }
   }
   .user-bar {
@@ -331,6 +331,7 @@ body{
     padding: 10px 15px;
     font-size: 0.88em;
     border: 1px solid transparent;
+    cursor: pointer;
     &.active, &:hover{
       background-color: #f8f8f8;
       border-color: #d5d5d5;
