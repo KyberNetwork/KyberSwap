@@ -103,6 +103,9 @@ export default class PostExchange extends React.Component {
       case "too high":
         sourceAmountErrorKey = "error.source_amount_too_high"
         break
+      case "too high cap":
+        sourceAmountErrorKey = "error.source_amount_too_high_cap"
+        break
       case "too small":
         sourceAmountErrorKey = "error.source_amount_too_small"
         break

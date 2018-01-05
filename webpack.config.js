@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
-const Uglify = require("uglifyjs-webpack-plugin")
+//const Uglify = require("uglifyjs-webpack-plugin")
 
 var scriptConfig = function (env) {
   return {
@@ -40,7 +40,7 @@ var scriptConfig = function (env) {
       filename: "client.min.js"
     },
     plugins: (env && env.chain !== "mainnet") ? [
-      new Uglify({sourceMap: true}),
+     // new Uglify({sourceMap: true}),
       new ExtractTextPlugin({ // define where to save the file
         filename: 'app.bundle.css',
         allChunks: true,
@@ -49,7 +49,7 @@ var scriptConfig = function (env) {
         'env': env && env.chain ? '"' + env.chain + '"' : '"kovan"'
       })
     ] : [
-        new Uglify({sourceMap: true}),
+      //  new Uglify({sourceMap: true}),
         new ExtractTextPlugin({ // define where to save the file
           filename: 'app.bundle.css',
           allChunks: true,

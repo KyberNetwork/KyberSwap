@@ -65,7 +65,7 @@ const TransactionListView = (props) => {
       var sourceAmountFull = toT(item.actualSrcAmount, sourceToken.decimal, 7)
       var desAmount = toT(item.actualDestAmount, destToken.decimal, 3)
       var desAmountFull = toT(item.actualDestAmount, destToken.decimal, 7)
-      var rate = roundingNumber(sourceAmountFull / desAmountFull)
+      var rate = roundingNumber(desAmountFull / sourceAmountFull )
       return (
         <div className="clearfix" key={item.txHash} onClick={(e) => gotoLink(item.txHash)}>
           <div className="column small-4 large-2">{calculateTimeStamp(item.timestamp)}</div>
