@@ -28,10 +28,10 @@ export function updateBlockFailed(error) {
 //   }
 // }
 
-export function updateAllRate(ethereum, tokens, reserve) {
+export function updateAllRate(ethereum, tokens) {
   return {
     type: 'GLOBAL.RATE_UPDATE_ALL_PENDING',
-    payload: { ethereum, tokens, reserve}
+    payload: { ethereum, tokens}
   }
 }
 
@@ -141,8 +141,9 @@ export function setGasPrice(ethereum){
 
 export function setGasPriceComplete(gasPrice){
   var gasPriceGwei = converter.weiToGwei(gasPrice)
+  var gasPriceFixed = gasPriceGwei < 1? 1: Math.ceil(gasPriceGwei)
   return {
     type: "GLOBAL.SET_GAS_PRICE_COMPLETE",
-    payload: gasPriceGwei
+    payload: gasPriceFixed
   }
 }

@@ -103,10 +103,11 @@ export default class EthereumService extends React.Component {
   fetchRateData() {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    for (var k = 0; k < constants.RESERVES.length; k++) {
-      var reserve = constants.RESERVES[k]
-      store.dispatch(updateAllRate(ethereum, BLOCKCHAIN_INFO.tokens, reserve))
-    }
+    // for (var k = 0; k < constants.RESERVES.length; k++) {
+    //   var reserve = constants.RESERVES[k]
+    //   store.dispatch(updateAllRate(ethereum, BLOCKCHAIN_INFO.tokens, reserve))
+    // }
+    store.dispatch(updateAllRate(ethereum, BLOCKCHAIN_INFO.tokens))
   }
 
   fetchTokenBalance() {

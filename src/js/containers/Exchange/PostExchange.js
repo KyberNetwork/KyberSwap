@@ -19,21 +19,25 @@ import { RateBetweenToken } from "../Exchange"
   var tokens = store.tokens.tokens
   var sourceBalance = 0
   var sourceDecimal = 18
+  var sourceName = "Ether"
   if (tokens[sourceTokenSymbol]) {
     sourceBalance = tokens[sourceTokenSymbol].balance
     sourceDecimal = tokens[sourceTokenSymbol].decimal
+    sourceName = tokens[sourceTokenSymbol].name
   }
 
   var destTokenSymbol = store.exchange.destTokenSymbol
   var destBalance = 0
   var destDecimal = 18
+  var destName = "Kybernetwork"
   if (tokens[destTokenSymbol]) {
     destBalance = tokens[destTokenSymbol].balance
     destDecimal = tokens[destTokenSymbol].decimal
+    destName = tokens[destTokenSymbol].name
   }
 
   return {
-    form: { ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal },
+    form: { ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal, sourceName, destName },
     account: store.account.account,
     ethereum: store.connection.ethereum,
     keyService: props.keyService,
@@ -89,7 +93,7 @@ export default class PostExchange extends React.Component {
       this.props.form.sourceDecimal,
       this.props.form.minConversionRate,
       this.props.form.destDecimal,
-      this.props.form.offeredRateBalance)
+      this.props.form.maxCap)
     var sourceAmountErrorKey
     switch (validateAmount) {
       case "not a number":
@@ -180,7 +184,11 @@ export default class PostExchange extends React.Component {
     // should have better strategy to determine gas price
     var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.form.gasPrice))
     var balanceData = {
+      sourceName: this.props.form.sourceName,
+      sourceDecimal: this.props.form.sourceDecimal,
       source: this.props.form.sourceBalance.toString(),
+      destName: this.props.form.destName,
+      destDecimal: this.props.form.destDecimal,
       dest: this.props.form.destBalance.toString()
     }
     return {

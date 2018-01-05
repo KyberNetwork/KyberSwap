@@ -24,7 +24,7 @@ export function verifyAmount(sourceAmount,
   balance,
   sourceSymbol,
   sourceDecimal,
-  rate, destDecimal, reserveBalance) {
+  rate, destDecimal, maxCap) {
   //verify number for source amount
   var testAmount = parseFloat(sourceAmount)
   if (isNaN(testAmount)) {
@@ -59,16 +59,16 @@ export function verifyAmount(sourceAmount,
 
   //verify max cap
   //estimate value based on eth
-  var maxCap = new BigNumber(constants.MAX_CAP_ONE_EXCHANGE_BASE_VALUE)
+  var maxCap = new BigNumber(maxCap)
   if (estimateValue.cmp(maxCap) > 0) {
     return "too high"
   }
 
   //verify max dest amount
-  var estimateDestAmount = sourceAmountWei.times(weiParam.pow(destDecimal))
-    .times(rateBig)
-    .div(weiParam.pow(sourceDecimal))
-    .div(weiParam.pow(18))
+  // var estimateDestAmount = sourceAmountWei.times(weiParam.pow(destDecimal))
+  //   .times(rateBig)
+  //   .div(weiParam.pow(sourceDecimal))
+  //   .div(weiParam.pow(18))
 
   // var reserveBalanceB = new BigNumber(reserveBalance)
   // var reserveBalanceMaxCap = reserveBalanceB.mul(constants.MAX_CAP_ONE_EXCHANGE_BASE_RESERVE)

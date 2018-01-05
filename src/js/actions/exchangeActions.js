@@ -123,7 +123,7 @@ export function updateRateExchange(ethereum, source, dest, sourceAmount) {
   }
 }
 
-export function updatePrevSource(value){
+export function updatePrevSource(value) {
   return {
     type: "EXCHANGE.SET_PREV_SOURCE",
     payload: { value }
@@ -132,13 +132,13 @@ export function updatePrevSource(value){
 
 export function updateRateExchangeComplete(rate) {
   if (rate) {
-   // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
-  //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
+    // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
+    //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
 
     //var rateBig = converter.stringToBigNumber(rate[0])
     var offeredRate = rate.expectedPrice
     var minConversionRate = rate.slippagePrice
-    
+
     //var expirationBlock = rate[1]
     //var reserveBalance = rate[2]
     return {
@@ -148,7 +148,7 @@ export function updateRateExchangeComplete(rate) {
   } else {
     return {
       type: "EXCHANGE.UPDATE_RATE",
-      payload: { offeredRate: 0, minConversionRate: 0}
+      payload: { offeredRate: 0, minConversionRate: 0 }
     }
   }
 }
@@ -347,15 +347,22 @@ export function estimateGas(ethereum, exchange) {
   }
 }
 
-export function setEstimateGas(estimatedGas){
+export function setEstimateGas(estimatedGas) {
   return {
     type: "EXCHANGE.SET_ESTIMATE_GAS_USED",
     payload: { estimatedGas }
   }
 }
 
-export function swapToken(){
+export function swapToken() {
   return {
     type: "EXCHANGE.SWAP_TOKEN",
+  }
+}
+
+export function setCapExchange(maxCap) {
+  return {
+    type: "EXCHANGE.SET_CAP_EXCHANGE",
+    payload: { maxCap }
   }
 }

@@ -10,7 +10,7 @@
     ],
     "ws": "wss://ropsten.kyber.network/ws/"
   },
-  "history_endpoint": "http://192.168.25.248:3001",
+  "history_endpoint": "http://0.0.0.0:3001",
   "api_usd":"https://api.coinmarketcap.com",
   "tokens": {
     "ETH": {

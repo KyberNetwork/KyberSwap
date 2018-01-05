@@ -129,43 +129,37 @@ export default class Exchange extends React.Component {
       )
     }
 
-    var addressBalance = ""
-    var balance = ""
-    var nameSource = ""
-    var token = this.props.tokens[this.props.exchange.sourceTokenSymbol]
-    if (token) {
-      balance = {
-        prevValue:toT(this.props.exchange.balanceData.prevSource, token.decimal),
-        nextValue:toT(this.props.exchange.balanceData.nextSource, token.decimal)
-      }
-      addressBalance = {
-        value: toT(token.balance, token.decimal),
-        roundingValue: roundingNumber(toT(token.balance, token.decimal))
-      }
-      nameSource = token.name
+    //for transaction loading screen
+    var balance = {
+      prevValue:toT(this.props.exchange.balanceData.prevSource, this.props.exchange.balanceData.sourceDecimal),
+      nextValue:toT(this.props.exchange.balanceData.nextSource, this.props.exchange.balanceData.sourceDecimal)
     }
-
-    var balanceDest = ""
-    var nameDest = ""
-    var tokenDest = this.props.tokens[this.props.exchange.destTokenSymbol]
-    if (tokenDest) {
-      balanceDest = {
-        prevValue:toT(this.props.exchange.balanceData.prevDest, tokenDest.decimal),
-        nextValue:toT(this.props.exchange.balanceData.nextDest, tokenDest.decimal),
-        // value: toT(tokenDest.balance, tokenDest.decimal),
-        // roundingValue: roundingNumber(toT(tokenDest.balance, tokenDest.decimal)),
-      }
-      nameDest = tokenDest.name
+    var balanceDest = {
+      prevValue:toT(this.props.exchange.balanceData.prevDest, this.props.exchange.balanceData.destDecimal),
+      nextValue:toT(this.props.exchange.balanceData.nextDest, this.props.exchange.balanceData.destDecimal),
+      // value: toT(tokenDest.balance, tokenDest.decimal),
+      // roundingValue: roundingNumber(toT(tokenDest.balance, tokenDest.decimal)),
     }
 
     var balanceInfo = {
-      sourceTokenSymbol: this.props.exchange.sourceTokenSymbol,
+      //sourceTokenSymbol: this.props.exchange.sourceTokenSymbol,
       sourceAmount: balance,
-      sourceTokenName: nameSource,
-      destTokenSymbol: this.props.exchange.destTokenSymbol,
+      sourceTokenName: this.props.exchange.balanceData.sourceName,
+      //destTokenSymbol: this.props.exchange.destTokenSymbol,
       destAmount: balanceDest,
-      destTokenName: nameDest
+      destTokenName: this.props.exchange.balanceData.destName,
     }
+
+    var transactionLoadingScreen = (
+      <TransactionLoading tx={this.props.exchange.txHash}
+        tempTx={this.props.exchange.tempTx}
+        makeNewTransaction={this.makeNewExchange}
+        type="exchange"
+        balanceInfo={balanceInfo}
+        broadcasting={this.props.exchange.broadcasting}
+        broadcastingError={this.props.exchange.bcError}
+      />
+    )
 
     //--------For select token
     var tokenDest = {}
@@ -223,16 +217,7 @@ export default class Exchange extends React.Component {
     var exchangeButton = (
       <PostExchangeWithKey />
     )
-    var transactionLoadingScreen = (
-      <TransactionLoading tx={this.props.exchange.txHash}
-        tempTx={this.props.exchange.tempTx}
-        makeNewTransaction={this.makeNewExchange}
-        type="exchange"
-        balanceInfo={balanceInfo}
-        broadcasting={this.props.exchange.broadcasting}
-        broadcastingError={this.props.exchange.bcError}
-      />
-    )
+    
 
     var gasPrice = stringToBigNumber(gweiToEth(this.props.exchange.gasPrice))
     var totalGas = gasPrice.mul(this.props.exchange.gas_estimate)
@@ -250,6 +235,14 @@ export default class Exchange extends React.Component {
       />
     )
 
+    var addressBalance = ""
+    var token = this.props.tokens[this.props.exchange.sourceTokenSymbol]
+    if (token) {
+      addressBalance = {
+        value: toT(token.balance, token.decimal),
+        roundingValue: roundingNumber(toT(token.balance, token.decimal))
+      }
+    }
     return (
       <ExchangeForm step={this.props.exchange.step}
         tokenSourceSelect={tokenSourceSelect}
