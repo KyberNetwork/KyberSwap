@@ -66,7 +66,7 @@
 
     "transfer_tooltip": "Transfer ether or tokens to other addresses",
     "transaction_gasprice_50": "Higher gas price, faster transaction. Max gas price: 50 Gwei",
-    "transaction_gasprice": "Higher gas price, faster transaction. Max gas price: 50 Gwei",
+    "transaction_gasprice": "Higher gas price, faster transaction",
     "best_rate_tooltip": "Lower rates for better success chance during market volatility",
     "terms_and_conditions": "<span>Terms and <br/> Conditions</span>"
   },
@@ -84,7 +84,7 @@
     "more_addresses": "More Addresses",
     "custom_path": "Your Custom Path",
     "view_on_etherscan": "View on Etherscan",
-    "press_confirm_if_really_want": "Press confirm to continue.",
+    "press_confirm_if_really_want": "Press confirm to continue",
     "confirm_exchange_title": "Exchange confirm",
     "confirm_transfer_title": "Transfer confirm",
 
@@ -115,7 +115,7 @@
     "cannot_connect_trezor": "Cannot connect to trezor",
     "cannot_connect_ledger": "Cannot connect to ledger",
     "invalid_private_key": "Invalid private key",
-    "no_balance": "Your address does not have any tokens that we support. Please import another address.",
+    "no_balance": "Your address does not have any tokens that we support. Please import another address",
     "clear_data_timeout": "We've cleared all your data because your session is timed out",
     "minutes": " minutes",
 
