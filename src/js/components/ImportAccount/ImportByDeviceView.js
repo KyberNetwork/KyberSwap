@@ -20,8 +20,6 @@ const ImportByDeviceView = (props) => {
                 address: formAddress.addressString,
                 type: props.walletType,
                 path: props.currentDPath + '/' + formAddress.index,
-                avatar: formAddress.avatar
-
             };
 
         props.getAddress(data);

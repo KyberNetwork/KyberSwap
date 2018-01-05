@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { ImportByPKeyView } from "../../components/ImportAccount"
 import { importNewAccount, throwError, pKeyChange, throwPKeyError, openPkeyModal, closePkeyModal } from "../../actions/accountActions"
-import { addressFromPrivateKey, getRandomAvatar } from "../../utils/keys"
+import { addressFromPrivateKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
 
 @connect((store) => {
@@ -42,7 +42,6 @@ export default class ImportByPrivateKey extends React.Component {
         "privateKey",
         privateKey,
         this.props.ethereum,
-        getRandomAvatar(address),
         this.props.tokens))
     }
     catch (e) {

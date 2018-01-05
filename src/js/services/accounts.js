@@ -1,7 +1,7 @@
 import Account from "./account"
 
-export function newAccountInstance(address, type, keystring, avatar, ethereum) {
-  var account = new Account(address, type, keystring,0 ,0 ,0, avatar)
+export function newAccountInstance(address, type, keystring, ethereum) {
+  var account = new Account(address, type, keystring)
   return account.sync(ethereum, account)
 }
 

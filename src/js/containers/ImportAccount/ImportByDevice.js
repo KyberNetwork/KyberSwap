@@ -2,7 +2,6 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux'
 import constants from "../../services/constants"
-import { getRandomAvatar } from "../../utils/keys"
 
 import AddressGenerator from "../../services/device/addressGenerator";
 import { getTrezorPublicKey, connectLedger, getLedgerPublicKey } from "../../services/device/device";
@@ -95,7 +94,6 @@ export default class ImportByDevice extends React.Component {
 				index: index,
 				balance: -1,
 			};
-			address.avatar = getRandomAvatar(address.addressString)
 			addresses.push(address);
 			this.addBalance(address.addressString, index);
 		}
@@ -136,7 +134,6 @@ export default class ImportByDevice extends React.Component {
 						index: i,
 						balance: -1,
 					};
-					address.avatar = getRandomAvatar(address.addressString)
 					addresses.push(address);
 					currentAddresses.push(address);
 					this.addBalance(address.addressString, i);
@@ -175,7 +172,7 @@ export default class ImportByDevice extends React.Component {
 	}
 
 	getAddress(data) {
-		this.props.dispatch(importNewAccount(data.address, data.type, data.path, this.props.ethereumNode, data.avatar, this.props.tokens))
+		this.props.dispatch(importNewAccount(data.address, data.type, data.path, this.props.ethereumNode, this.props.tokens))
 		this.closeModal()
 	}
 

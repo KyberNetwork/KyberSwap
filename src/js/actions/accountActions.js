@@ -52,10 +52,10 @@ export function throwPKeyError(error) {
   }
 }
 
-export function importNewAccount(address, type, keystring, ethereum, avatar, tokens, metamask = null) {
+export function importNewAccount(address, type, keystring, ethereum, tokens, metamask = null) {
   return {
     type: "ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING",
-    payload: { address, type, keystring, ethereum, avatar, tokens, metamask }
+    payload: { address, type, keystring, ethereum, tokens, metamask }
   }
 }
 

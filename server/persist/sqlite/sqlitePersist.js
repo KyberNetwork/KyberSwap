@@ -10,7 +10,10 @@ var filePath
 
 var dbName = process.env.npm_config_chain
 
-//console.log("db name: " + dbName)
+var dir = __dirname + '/stores'
+if(!fs.existsSync(dir)){
+  fs.mkdirSync(dir);
+}
 switch (dbName) {
   case "kovan":
     filePath = path.join(__dirname, '/stores/kovan.db')
