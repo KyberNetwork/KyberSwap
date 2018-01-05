@@ -38,9 +38,9 @@ const AccountBalanceView = (props) => {
           <div className="mt-3 clearfix">
             <h4 className="title font-w-b float-left">{props.translate("address.my_balance") || "My balance"}</h4>
             {props.showBalance && (
-              <p className="float-right font-w-b">
-                <span className="text-success text-uppercase">{props.translate("address.total") || "Total"}</span>
-                <span className="font-s-up-1 ml-2">{getBalanceUsd()}</span> USD
+              <p className="float-right">
+                <span className="text-capitalize">{props.translate("address.total") || "Total"}</span>
+                <span className="font-w-b font-s-up-1 ml-2">{getBalanceUsd()}</span> USD
               </p>
             )}
           </div>

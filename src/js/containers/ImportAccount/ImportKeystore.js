@@ -4,7 +4,7 @@ import { push } from 'react-router-redux'
 import { DropFile } from "../../components/ImportAccount"
 import { importNewAccount, throwError } from "../../actions/accountActions"
 import { verifyKey, anyErrors } from "../../utils/validators"
-import { addressFromKey, getRandomAvatar } from "../../utils/keys"
+import { addressFromKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
 
 @connect((store) => {
@@ -48,7 +48,6 @@ export default class ImportKeystore extends React.Component {
             "keystore",
             keystring,
             this.props.ethereum,
-            getRandomAvatar(address),
             this.props.tokens))
         }
 

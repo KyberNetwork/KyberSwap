@@ -54,7 +54,6 @@ describe('Select token', () => {
                 translate={getTranslate(store.getState().locale)}
             />
         );
-        console.log(tokenSelect.find('.select-item').html())
 
         tokenSelect.find('.token-item').simulate('click')
         expect(store.dispatch).toHaveBeenCalledWith({

@@ -64,7 +64,6 @@ body{
     margin: 0 0 30px 0;
     padding: 0;
     list-style: none;
-    font-size: 0;
     text-align: center;
     @include breakpoint(medium) {
       text-align: right;
@@ -81,7 +80,6 @@ body{
       > a {
         color: $medium-gray;
         display: block;
-        font-size: 13px;
         letter-spacing: .5px;
         font-weight: bold;
         &:hover {
@@ -107,6 +105,7 @@ body{
   .user-bar {
     margin-top: 11px;
     position: relative;
+    font-size: 15px;
     .address{
       text-align: right;
       font-size: .75em;
@@ -127,7 +126,6 @@ body{
     }
     a.short-address {
       font-weight: bold;
-      font-size: 14px;
       color: $dark-gray;
       margin-left: 10px;
     }
@@ -329,7 +327,6 @@ body{
     border-radius: 30px;
     line-height: 20px;
     padding: 10px 15px;
-    font-size: 0.88em;
     border: 1px solid transparent;
     cursor: pointer;
     &.active, &:hover{
@@ -491,8 +488,9 @@ body{
     font-weight: bold;
     font-family: "Source Sans Pro", sans-serif;
     font-size: 13px;
+    color: #0B0F1A;
     a{
-      color: #0B0F1A;
+      color: inherit;
     }
   }
 }
