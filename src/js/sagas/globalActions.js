@@ -58,7 +58,7 @@ export function* clearSession(action) {
 }
 
 export function* updateAllRate(action) {
-  const { ethereum, tokens, reserve } = action.payload
+  const { ethereum, tokens } = action.payload
   try {
     const rates = yield call([ethereum, ethereum.call("getAllRatesFromServer")], tokens)
     yield put(actions.updateAllRateComplete(rates))
@@ -66,7 +66,7 @@ export function* updateAllRate(action) {
   catch (err) {
     //get rate from blockchain
     try {
-      const rates = yield call([ethereum, ethereum.call("getAllRatesFromBlockchain")], tokens, reserve)
+      const rates = yield call([ethereum, ethereum.call("getAllRatesFromBlockchain")], tokens)
       yield put(actions.updateAllRateComplete(rates))
     }
     catch (err) {
@@ -128,8 +128,7 @@ export function* setGasPrice(action) {
   try{
     const ethereum = action.payload
     const gasPrice = yield call([ethereum, ethereum.call("getGasPrice")])
-    const gasPriceFixed = gasPrice < 1? 1: Math.ceil(gasPrice)
-    yield put(actions.setGasPriceComplete(gasPriceFixed))
+    yield put(actions.setGasPriceComplete(gasPrice))
   }catch(err)
   {
     console.log(err)

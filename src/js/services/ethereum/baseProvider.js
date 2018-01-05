@@ -123,6 +123,21 @@ export default class BaseEthereumProvider {
     return Promise.all(promises)
   }
 
+  getMaxCap(address){
+    return new Promise((resolve, reject) => {
+      this.networkContract.methods.getUserCapInWei(address).call()
+        .then((result) => {
+          if (result != null) {
+            console.log(result)
+            resolve(result)
+          }
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
+  }
+
   getNonce(address) {
     return new Promise((resolve, reject) => {
       this.rpc.eth.getTransactionCount(address, "pending")
@@ -230,8 +245,6 @@ export default class BaseEthereumProvider {
       this.networkContract.methods.getExpectedRate(source, dest, quantity).call()
         .then((result) => {
           if (result != null) {
-            //console.log(quantity)
-            //console.log(result)
             resolve(result)
           }
         })
@@ -310,7 +323,7 @@ export default class BaseEthereumProvider {
   }
 
 
-  getAllRatesFromServer(tokens, reserve) {
+  getAllRatesFromServer(tokens) {
     return new Promise((resolve, rejected) => {
       fetch(BLOCKCHAIN_INFO.history_endpoint + '/getRate', {
         method: 'GET',
@@ -407,7 +420,7 @@ export default class BaseEthereumProvider {
     })
   }
 
-  getAllRatesFromBlockchain(tokens, reserve) {
+  getAllRatesFromBlockchain(tokens) {
     var ratePromises = []
     var tokenObj = BLOCKCHAIN_INFO.tokens
     Object.keys(tokenObj).map((tokenName) => {

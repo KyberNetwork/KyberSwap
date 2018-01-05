@@ -133,6 +133,8 @@ const transfer = (state = initState, action) => {
       newState.bcError = ""
       newState.broadcasting = true
       newState.balanceData = {
+        tokenName: action.payload.balanceData.name,
+        tokenDecimal: action.payload.balanceData.decimal,
         prev: action.payload.balanceData.balance,
         next: 0
       }

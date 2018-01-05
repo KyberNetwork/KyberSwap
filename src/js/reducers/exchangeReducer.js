@@ -179,8 +179,13 @@ const exchange = (state = initState, action) => {
       newState.step = 3
       newState.broadcasting = true
       newState.balanceData = {
+        sourceName: action.payload.balanceData.sourceName,
+        sourceDecimal: action.payload.balanceData.sourceDecimal,
         prevSource : action.payload.balanceData.source,
         nextSource: 0,
+
+        destName: action.payload.balanceData.destName,
+        destDecimal: action.payload.balanceData.destDecimal,
         prevDest: action.payload.balanceData.dest,
         nextDest: 0
       }
@@ -274,6 +279,10 @@ const exchange = (state = initState, action) => {
       newState.sourceAmount = ""
       newState.destAmount = 0
       newState.isSelectToken = true
+      return newState
+    }
+    case "EXCHANGE.SET_CAP_EXCHANGE":{
+      newState.maxCap = action.payload.maxCap
       return newState
     }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{

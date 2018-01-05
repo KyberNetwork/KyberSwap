@@ -8,7 +8,7 @@ import { getRandomAvatar } from "../utils/keys"
 //import { setSubprovider } from '../actions/connectionActions'
 
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
-import { randomToken, setRandomExchangeSelectedToken } from "../actions/exchangeActions"
+import { randomToken, setRandomExchangeSelectedToken, setCapExchange } from "../actions/exchangeActions"
 import { setRandomTransferSelectedToken } from "../actions/transferActions"
 import { randomForExchange } from "../utils/random"
 
@@ -48,6 +48,16 @@ export function* importNewAccount(action) {
   try {
     const account = yield call(service.newAccountInstance, address, type, keystring, avatar, ethereum)
 
+
+    var maxCapOneExchange = yield call([ethereum, ethereum.call("getMaxCap")], address)
+    yield put(setCapExchange(maxCapOneExchange))
+    // if (maxCapOneExchange === '0'){
+    //   yield put(actions.closeImportLoading())
+    //   yield put(actions.throwError('Your address does not has enough cap for exchange'))
+    //   return
+    // }
+    
+
     const balanceTokens = yield call([ethereum, ethereum.call("getAllBalancesToken")], address, tokens)
     //map balance
     var mapBalance = {}
@@ -63,18 +73,34 @@ export function* importNewAccount(action) {
       newTokens[token.symbol] = token
     })
 
-    var randomToken = randomForExchange(newTokens)
-    if (!randomToken || !randomToken[0]) {
-      //todo dispatch action waring no balanc
-      yield put(actions.closeImportLoading())
-      yield put(actions.throwError('Your address has no balance in any tokens. Please import another address.'))
+    //var randomToken = randomForExchange(newTokens)
+    console.log(tokens)
+    var randomToken = [
+    {
+      address: newTokens['ETH'].address,
+      symbol: newTokens['ETH'].symbol
+    },
+    {
+      address: newTokens['KNC'].address,
+      symbol: newTokens['KNC'].symbol
+    },
+    ]
+    // if (!randomToken || !randomToken[0]) {
+    //   //todo dispatch action waring no balanc
+    //   yield put(actions.closeImportLoading())
+    //   yield put(actions.throwError('Your address has no balance in any tokens. Please import another address.'))
 
-      return
-    } else {
-      yield put.sync(setRandomExchangeSelectedToken(randomToken))
-      yield call(ethereum.fetchRateExchange)
-      yield put.sync(setRandomTransferSelectedToken(randomToken))
-    }
+    //   return
+    // } else {
+    //   yield put(setRandomExchangeSelectedToken(randomToken))
+    //   yield call(ethereum.fetchRateExchange)
+    //   yield put(setRandomTransferSelectedToken(randomToken))
+    // }
+
+    yield put(setRandomExchangeSelectedToken(randomToken))
+    yield call(ethereum.fetchRateExchange)
+    //yield put(setRandomTransferSelectedToken(randomToken))
+
     //todo set random token for exchange
     yield put(actions.closeImportLoading())
 

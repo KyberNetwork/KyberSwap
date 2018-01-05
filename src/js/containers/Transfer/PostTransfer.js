@@ -20,14 +20,16 @@ import { getTranslate } from 'react-localize-redux';
   const tokenSymbol = store.transfer.tokenSymbol
   var balance = 0
   var decimal = 18
+  var tokenName = "kyber"
   if (tokens[tokenSymbol]) {
     balance = tokens[tokenSymbol].balance
     decimal = tokens[tokenSymbol].decimal
+    tokenName = tokens[tokenSymbol].name
   }
   return {
     account: store.account.account,
     transfer: store.transfer,
-    form: { ...store.transfer, balance, decimal },
+    form: { ...store.transfer, balance, decimal, tokenName },
     ethereum: store.connection.ethereum,
     keyService: props.keyService,
     translate: getTranslate(store.locale)
@@ -163,7 +165,11 @@ export default class PostTransfer extends React.Component {
     var gas = converters.numberToHex(this.props.form.gas)
     // should have better strategy to determine gas price
     var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.form.gasPrice))
-    var balanceData = {balance: this.props.form.balance.toString()}
+    var balanceData = {
+      balance: this.props.form.balance.toString(), 
+      name: this.props.form.tokenName,
+      decimal: this.props.form.decimal
+      }
     return {
       selectedAccount, token, amount, destAddress,
       throwOnFailure, nonce, gas, gasPrice, balanceData

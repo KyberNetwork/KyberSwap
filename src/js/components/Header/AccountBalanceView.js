@@ -12,7 +12,7 @@ const AccountBalanceView = (props) => {
             <img src={require("../../../assets/img/tokens/" + token.icon)} />
             <div className="d-inline-block">
               <div className="symbol font-w-b">{token.symbol}</div>
-              <div title={balance} className="balance">{converts.roundingNumber(balance)}</div>
+              <div title={balance.toString()} className="balance">{converts.roundingNumber(balance)}</div>
             </div>
           </div>
         </div>
