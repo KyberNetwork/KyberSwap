@@ -2,7 +2,7 @@ import Web3 from "web3"
 import constants from "../constants"
 import * as ethUtil from 'ethereumjs-util'
 import BLOCKCHAIN_INFO from "../../../../env"
-import axios from 'axios'
+//import axios from 'axios'
 
 export default class BaseEthereumProvider {
 
@@ -377,38 +377,38 @@ export default class BaseEthereumProvider {
     })
   }
 
-  getAllRatesUSDFromThirdParty() {
-    //get from third party api
-    var promises = Object.keys(BLOCKCHAIN_INFO.tokens).map(key => {
-      var token = BLOCKCHAIN_INFO.tokens[key]
-      var url = BLOCKCHAIN_INFO.api_usd + '/v1/ticker/' + token.usd_id + "/"
-      return new Promise(resolve => {
-        axios.get(url)
-          .then(function (response) {
-            if (response.status === 200) {
-              return resolve({
-                symbol: key,
-                price_usd: response.data[0].price_usd
-              })
-            } else {
-              console.log(response)
-              return resolve({
-                symbol: key,
-                price_usd: 0
-              })
-            }
-          })
-          .catch(function (error) {
-            console.log(error)
-            return resolve({
-              symbol: key,
-              price_usd: 0
-            })
-          });
-      })
-    })
-    return Promise.all(promises)
-  }
+  // getAllRatesUSDFromThirdParty() {
+  //   //get from third party api
+  //   var promises = Object.keys(BLOCKCHAIN_INFO.tokens).map(key => {
+  //     var token = BLOCKCHAIN_INFO.tokens[key]
+  //     var url = BLOCKCHAIN_INFO.api_usd + '/v1/ticker/' + token.usd_id + "/"
+  //     return new Promise(resolve => {
+  //       axios.get(url)
+  //         .then(function (response) {
+  //           if (response.status === 200) {
+  //             return resolve({
+  //               symbol: key,
+  //               price_usd: response.data[0].price_usd
+  //             })
+  //           } else {
+  //             console.log(response)
+  //             return resolve({
+  //               symbol: key,
+  //               price_usd: 0
+  //             })
+  //           }
+  //         })
+  //         .catch(function (error) {
+  //           console.log(error)
+  //           return resolve({
+  //             symbol: key,
+  //             price_usd: 0
+  //           })
+  //         });
+  //     })
+  //   })
+  //   return Promise.all(promises)
+  // }
 
   getLanguagePack(lang) {
     return new Promise((resolve, rejected) => {

@@ -10,9 +10,7 @@ import { routerMiddleware } from 'react-router-redux'
 
 import { initialize, addTranslation, addTranslationForLanguage, setActiveLanguage, localeReducer } from 'react-localize-redux';
 import rootSaga from './sagas'
-import localForage from 'localforage'
 import Language from "../../lang"
-import { constants } from "zlib";
 
 import  constantsVar from "../js/services/constants"
 
@@ -24,7 +22,7 @@ const sagaMiddleware = createSagaMiddleware()
 
 const middleware = applyMiddleware(
   sagaMiddleware,
-   logger,
+  logger,
   routeMiddleware,
 )
 

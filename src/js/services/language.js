@@ -1,4 +1,3 @@
-import localForage from 'localforage'
 import  constants from "./constants"
 import Language from "../../../lang/index"
 import { initialize, addTranslation, addTranslationForLanguage, setActiveLanguage, localeReducer } from 'react-localize-redux';

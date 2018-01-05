@@ -20,31 +20,8 @@ export function* updateHistoryExchange(action) {
   const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
   var latestBlock = yield call(ethereum.call("getLatestBlock"))
   const newLogs = yield call(ethereum.call("getLogOneColumn"), page, itemPerPage)
-  // const eventsCount = yield call(ethereum.call("countALlEvents"))
   yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
 }
-
-// export function* updateRate(action) {
-//   const { ethereum, source, reserve, ownerAddr } = action.payload
-//   const rate = new Rate(
-//     source.name,
-//     source.symbol,
-//     source.icon,
-//     source.address,
-//     source.decimal
-//   )
-//   try{
-//     yield [
-//       rate.fetchRate(ethereum, reserve),
-//       rate.updateBalance(ethereum, ownerAddr)
-//     ]
-//     yield put(actions.updateRateComplete(rate))
-//   }
-//   catch(err){
-//     console.log(err)
-//   }
-
-// }
 
 
 
@@ -83,12 +60,12 @@ export function* updateRateUSD(action) {
   }
   catch (err) {
     //get rate from blockchain
-    try {
-      const rates = yield call([ethereum, ethereum.call("getAllRatesUSDFromThirdParty")], tokens)
-      yield put(actions.updateAllRateUSDComplete(rates))
-    } catch (err) {
-      console.log(err)
-    }
+    // try {
+    //   const rates = yield call([ethereum, ethereum.call("getAllRatesUSDFromThirdParty")], tokens)
+    //   yield put(actions.updateAllRateUSDComplete(rates))
+    // } catch (err) {
+    //   console.log(err)
+    // }
   }
 }
 

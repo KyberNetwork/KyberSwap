@@ -1,4 +1,3 @@
-//import BigNumber from "bignumber.js"
 import constants from "../services/constants"
 
 export default class Rate {

@@ -1,4 +1,3 @@
-import * as ethUtil from 'ethereumjs-util'
 import constants from "../services/constants"
 import BLOCKCHAIN_INFO from "../../../env"
 
