@@ -194,7 +194,6 @@ class EthereumService {
   }
 
   getEvent(log) {
-    //console.log(log)
     var blockNumber = this.currentProvider.rpc.eth.abi.decodeParameters(['uint256'], log.blockNumber)
     var eventData = this.currentProvider.rpc.eth.abi.decodeParameters(['address', 'address', 'uint256', 'uint256'], log.data)
     var timeStamp = this.currentProvider.rpc.eth.abi.decodeParameters(['uint256'], log.timeStamp)

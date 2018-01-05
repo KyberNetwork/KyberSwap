@@ -56,6 +56,18 @@ export function updateAllRateUSDComplete(rates){
   }
 }
 
+export function showBalanceUSD(){
+  return {
+    type: 'GLOBAL.SHOW_BALABCE_USD',
+  }
+}
+
+export function hideBalanceUSD(){
+  return {
+    type: 'GLOBAL.HIDE_BALABCE_USD',
+  }
+}
+
 export function acceptTermOfService() {
   return {
     type: "GLOBAL.TERM_OF_SERVICE_ACCEPTED"
