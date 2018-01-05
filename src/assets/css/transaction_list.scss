@@ -22,3 +22,22 @@
   .example-leave.example-leave-active {
     display: none;
   }
+
+.transaction-list{
+  text-align: left;
+  .header{
+    background-color: #eee;
+    font-weight: normal;
+    padding: 15px 0;
+  }
+  .body{
+    cursor: pointer;
+    > div{
+      padding: 20px 0;
+      border-bottom: 1px solid #eee;
+      &:hover{
+        background-color: #f6f6f6;
+      }
+    }
+  }
+}

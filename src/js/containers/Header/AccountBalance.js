@@ -20,6 +20,7 @@ import { getTranslate } from 'react-localize-redux';
     tokens: store.tokens.tokens,
     translate: getTranslate(store.locale),
     ethereum: store.connection.ethereum,
+    showBalance: store.global.showBalance,
     sourceActive,
     location 
   }
@@ -68,8 +69,7 @@ export default class AccountBalance extends React.Component {
         translate={this.props.translate}
         sourceActive={this.props.sourceActive}
         selectToken={this.selectToken.bind(this)}
-        showZeroBalance={this.state.showZeroBalance}
-        toggleZeroBalance={this.toggleZeroBalance.bind(this)}
+        showBalance = {this.props.showBalance}
       />
     )
   }

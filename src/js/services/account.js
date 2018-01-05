@@ -1,18 +1,17 @@
 export default class Account {
-  constructor(address, type, keystring, balance = 0, nonce = 0, manualNonce = 0, avatar) {
+  constructor(address, type, keystring, balance = 0, nonce = 0, manualNonce = 0) {
     this.address = address
     this.type = type
     this.keystring = keystring
     this.balance = balance
     this.nonce = nonce
     this.manualNonce = manualNonce
-    this.avatar = avatar
   }
 
   shallowClone() {
     return new Account(
       this.address, this.type, this.keystring,
-      this.balance, this.nonce, this.manualNonce, this.avatar, this.event)
+      this.balance, this.nonce, this.manualNonce, this.event)
   }
 
   getUsableNonce() {

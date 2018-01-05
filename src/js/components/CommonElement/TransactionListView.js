@@ -1,5 +1,5 @@
 import React from "react"
-import { toT } from "../../utils/converter"
+import { toT, roundingNumber } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { CSSTransitionGroup } from 'react-transition-group'
 
@@ -21,11 +21,6 @@ const TransactionListView = (props) => {
         return { key, decimal: props.tokens[key].decimal }
       }
     }
-  }
-
-  function getIcon(tokenAddress) {
-    let token = getTokenSymbol(tokenAddress)
-    return props.tokens[token.key].icon
   }
 
   function calculateTimeStamp(timeStamp) {
@@ -66,21 +61,25 @@ const TransactionListView = (props) => {
     var content = list.map(function (item, i) {
       var sourceToken = getTokenSymbol(item.source)
       var destToken = getTokenSymbol(item.dest)
-      var sourceIcon = getIcon(item.source)
-      var destIcon = getIcon(item.dest)
       var sourceAmount = toT(item.actualSrcAmount, sourceToken.decimal, 3)
       var sourceAmountFull = toT(item.actualSrcAmount, sourceToken.decimal, 7)
+      var desAmount = toT(item.actualDestAmount, destToken.decimal, 3)
+      var desAmountFull = toT(item.actualDestAmount, destToken.decimal, 7)
+      var rate = roundingNumber(sourceAmountFull / desAmountFull)
       return (
-        <div className={"transaction-list-item"} key={item.txHash} data-pos={i} onClick={(e) => gotoLink(item.txHash)}>
-          <div className="clearfix px-3 py-4">
-            <div className="float-left">
-              <span className="font-w-b mr-2 font-s-up-1" title={sourceAmountFull}>{sourceAmount}</span>
-              <span className="coins">{sourceToken.key.toUpperCase()} to {destToken.key.toUpperCase()}</span>
-            </div>
-            <div className="float-right font-s-down-1">
-              <span className="time">
-                {calculateTimeStamp(item.timestamp)} <i className="k k-angle right ml-3"></i>
+        <div className="clearfix" key={item.txHash} onClick={(e) => gotoLink(item.txHash)}>
+          <div className="column small-4 large-2">{calculateTimeStamp(item.timestamp)}</div>
+          <div className="column small-3 show-for-large">
+            Exchange
+            <span className="ml-3">{sourceToken.key} <i className="k k-angle right"></i> {destToken.key}</span>
+          </div>
+          <div className="column small-3 show-for-large">1 {sourceToken.key} = {rate} {destToken.key}</div>
+          <div className="column small-8 large-4">
+            <div className="d-flex align-center">
+              <span className="mr-auto">
+                {sourceAmount} {sourceToken.key} for {desAmount} {destToken.key}
               </span>
+              <i className="k k-angle right"></i>
             </div>
           </div>
         </div>
@@ -98,25 +97,21 @@ const TransactionListView = (props) => {
           </div>
         </div>
         <div className="row column">
-          <div className="small-12 medium-12 large-6 column">
-            {/* <p className="p-3 bg-light">ETH / TOKEN</p> */}
+          <div className="small-12 column">
             <div className="transaction-list">
+              <div className="clearfix header">
+                <div className="column small-4 large-2">Date</div>
+                <div className="column small-3 show-for-large">Description</div>
+                <div className="column small-3 show-for-large">Rate</div>
+                <div className="column small-8 large-4">Amount</div>
+              </div>
               <CSSTransitionGroup
                 transitionName="example"
                 transitionEnterTimeout={1000}
-                transitionLeaveTimeout={1000}>
+                transitionLeaveTimeout={1000}
+                class="body"
+                component="div">
                 {content(props.logsEth)}
-              </CSSTransitionGroup>
-            </div>
-          </div>
-          <div className="small-12 medium-12 large-6 column">
-            {/* <p className="px-2 py-3 bg-light">TOKEN / ETH</p> */}
-            <div className="transaction-list">
-              <CSSTransitionGroup
-                transitionName="example"
-                transitionEnterTimeout={1000}
-                transitionLeaveTimeout={1000}>
-                {content(props.logsToken)}
               </CSSTransitionGroup>
             </div>
           </div>

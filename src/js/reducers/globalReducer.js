@@ -5,6 +5,7 @@ import constants from '../services/constants';
 
 const initState = {
   termOfServiceAccepted: false,
+  showBalance: false,
   nodeName: "Infura Kovan",
   nodeURL: "https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi",
   history: constants.HISTORY_EXCHANGE,
@@ -77,6 +78,12 @@ const global = (state = initState, action) => {
       var conn_checker = { ...state.conn_checker }
       conn_checker.count = action.payload
       return Object.assign({}, state, { conn_checker: conn_checker })
+    }
+    case "GLOBAL.SHOW_BALABCE_USD":{
+      return Object.assign({}, state, { showBalance: true })
+    }
+    case "GLOBAL.HIDE_BALABCE_USD":{
+      return Object.assign({}, state, { showBalance: false })
     }
   }
   return state

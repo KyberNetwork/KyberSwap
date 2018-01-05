@@ -14,7 +14,9 @@ function tokens() {
                 icon: "/assets/img/tokens/eth.svg",
                 address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 decimal: 18,
-                balance: new BigNumber(Math.pow(10, 19))
+                balance: new BigNumber(Math.pow(10, 19)),
+                minRate: '0',
+                minRateETH: '0',
             },
             "OMG": {
                 name: "OmiseGO",
@@ -22,7 +24,9 @@ function tokens() {
                 icon: "/assets/img/tokens/omg.svg",
                 address: "0x1795b4560491c941c0635451f07332effe3ee7b3",
                 decimal: 9,
-                balance: new BigNumber(Math.pow(10, 18))
+                balance: new BigNumber(Math.pow(10, 18)),
+                minRate: '21699393893477488',
+                minRateETH: '43391211520165175427',
             }
         }
     }
@@ -77,6 +81,7 @@ function exchange() {
         offeredRateBalance: '8739437467440',
         destTokenSymbol: 'OMG',
         gas: 20,
+        prevAmount: 0,
         gas_estimate: 300000,
         errors: {},
         balanceData: { nextDest: 0, prevDest: 0, nextSource: 0, prevSource: 0 }

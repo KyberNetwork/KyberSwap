@@ -3,9 +3,6 @@ import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
 import { clearSession, setGasPrice, setBalanceToken } from "../actions/globalActions"
 import { openInfoModal } from '../actions/utilActions'
-import { getRandomAvatar } from "../utils/keys"
-//import { setInterval } from "timers"
-//import { setSubprovider } from '../actions/connectionActions'
 
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
 import { randomToken, setRandomExchangeSelectedToken, setCapExchange } from "../actions/exchangeActions"
@@ -44,9 +41,9 @@ export function* updateTokenBalance(action) {
 
 export function* importNewAccount(action) {
   yield put(actions.importLoading())
-  const { address, type, keystring, ethereum, avatar, tokens, metamask } = action.payload
+  const { address, type, keystring, ethereum, tokens, metamask } = action.payload
   try {
-    const account = yield call(service.newAccountInstance, address, type, keystring, avatar, ethereum)
+    const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
 
 
     var maxCapOneExchange = yield call([ethereum, ethereum.call("getMaxCap")], address)
@@ -151,7 +148,6 @@ export function* importMetamask(action) {
       "metamask",
       web3Service,
       ethereum,
-      getRandomAvatar(address),
       tokens,
       metamask
     ))

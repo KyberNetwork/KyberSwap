@@ -64,8 +64,10 @@ export function* updateRateUSD(action) {
   try {
     const rates = yield call([ethereum, ethereum.call("getAllRatesUSDFromServer")], tokens)
     yield put(actions.updateAllRateUSDComplete(rates))
+    yield put(actions.showBalanceUSD())
   }
   catch (err) {
+    yield put(actions.hideBalanceUSD())
     //get rate from blockchain
     // try {
     //   const rates = yield call([ethereum, ethereum.call("getAllRatesUSDFromThirdParty")], tokens)

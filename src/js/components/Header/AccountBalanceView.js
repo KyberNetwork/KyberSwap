@@ -26,29 +26,28 @@ const AccountBalanceView = (props) => {
     return balances
   }
 
-  var total = 0
-  Object.values(props.tokens).map(token => {
-    var balance = converts.toT(token.balance, token.decimal)
-    total += balance * token.rateUSD
-  })
-
-  var roundingTotal = converts.roundingNumber(total)
+  function getBalanceUsd(){
+    var total = 0
+    Object.values(props.tokens).map(token => {
+      var balance = converts.toT(token.balance, token.decimal)
+      total += balance * token.rateUSD
+    })
+    var roundingTotal = converts.roundingNumber(total)
+    return roundingTotal    
+  }
+  
   return (
     <div>
       <div className="row balance-header small-11 medium-12 large-12">
         <div className="column">
           <div className="mt-3 clearfix">
             <h4 className="title font-w-b float-left">{props.translate("address.my_balance") || "My balance"}</h4>
-            <span onClick={props.toggleZeroBalance}>
-              <a className="p-3">
-                {props.showZeroBalance ? props.translate("address.hide_small_balance") || "Hide small balances" 
-                : props.translate("address.show_all_balance") || "Show all balances"}
-              </a>
-            </span>
-            <p title={total} className="float-right font-w-b">
-              <span className="text-success text-uppercase">{props.translate("address.total") || "Total"}</span>
-              <span className="font-s-up-1 ml-2">{roundingTotal}</span> USD
-            </p>
+            {props.showBalance && (
+              <p className="float-right">
+                <span className="text-capitalize">{props.translate("address.total") || "Total"}</span>
+                <span className="font-w-b font-s-up-1 ml-2">{getBalanceUsd()}</span> USD
+              </p>
+            )}
           </div>
         </div>
       </div>
