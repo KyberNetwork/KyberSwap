@@ -25,7 +25,7 @@
       "name": "KyberNetwork",
       "symbol": "KNC",
       "icon": "knc.svg",
-      "address": "0x6eaea070a6ff1636fb3b20b02f84b71f2d7f0afa",
+      "address": "0xf45ee6ece1dbf209245d358c5f59c239c3c9e741",
       "decimal": 18,
       "usd_id":"kyber-network"
     },
@@ -33,7 +33,7 @@
       "name": "OmiseGO",
       "symbol": "OMG",
       "icon": "omg.svg",
-      "address": "0x4c722a9567a79a360a6cfda749c64fee1d6d4f72",
+      "address": "0x4f6d90ea077ebcaaa9600ababb6e984f7c3f6b01",
       "decimal": 18,
       "usd_id":"omisego"
     },
@@ -41,7 +41,7 @@
       "name": "DigixDAO",
       "symbol": "DGD",
       "icon": "dgd.svg",
-      "address": "0x2be40c78a0ee828d0a064c999292f5239c60b53e",
+      "address": "0x7b9f924b334c5bac8a853a98f983d47fe8dbe48c",
       "decimal": 9,
       "usd_id":"digixdao"
     },
@@ -49,7 +49,7 @@
       "name": "Civic",
       "symbol": "CVC",
       "icon": "cvc.svg",
-      "address": "0x794d7ab1edd712fd17b001f7f0fc162c413761ed",
+      "address": "0x6b664837d337d8e97560a4c3e37f8e4e26a41117",
       "decimal": 8,
       "usd_id":"civic"
     },
@@ -57,7 +57,7 @@
       "name": "FunFair",
       "symbol": "FUN",
       "icon": "fun.svg",
-      "address": "0x62b37aab071507989da5e59151ea1bb5b748fe14",
+      "address": "0xfbf4a88d63b5d5b225349d6a64b0cd389eb276e6",
       "decimal": 8,
       "usd_id":"funfair"
     },
@@ -65,7 +65,7 @@
       "name": "Monaco",
       "symbol": "MCO",
       "icon": "mco.svg",
-      "address": "0xdbb17afa7a6f1ab2cd3e319e5a0f07a5362827da",
+      "address": "0x76b7a1563341b9e402bdd37e2710489ab476d67a",
       "decimal": 8,
       "usd_id":"monaco"
     },
@@ -73,7 +73,7 @@
       "name": "Golem",
       "symbol": "GNT",
       "icon": "gnt.svg",
-      "address": "0x8948894eafb7f70515bb4a5dfe230dfb0e7c509e",
+      "address": "0xd870f0e37fa467d86734f3cfcc25d50bafb535e0",
       "decimal": 18,
       "usd_id":"golem-network-tokens"
     },
@@ -81,7 +81,7 @@
       "name": "AdEx",
       "symbol": "ADX",
       "icon": "adx.svg",
-      "address": "0x436215d9454795360742f8b3b84e4f90bc04ef23",
+      "address": "0x56c5a9f098bed93fea9bbb4294c06658ad082971",
       "decimal": 4,
       "usd_id":"adx-net"
     },
@@ -89,7 +89,7 @@
       "name": "TenX",
       "symbol": "PAY",
       "icon": "pay.svg",
-      "address": "0xdf5ac1d84c7f1a05ab1aae691f58d260eb83bc36",
+      "address": "0xb429af0a2e7a20abba57d560dcdbbd762a14a5d9",
       "decimal": 18,
       "usd_id":"tenx"
     },
@@ -97,7 +97,7 @@
       "name": "BasicAttention",
       "symbol": "BAT",
       "icon": "bat.svg",
-      "address": "0x63214374d6db6d942f154cbf77f584a555d37f8e",
+      "address": "0x97503942522ede0a1094ea9aa794361cf7975618",
       "decimal": 18,
       "usd_id":"basic-attention-token"
     },
@@ -105,7 +105,7 @@
       "name": "Eos",
       "symbol": "EOS",
       "icon": "eos.svg",
-      "address": "0x87b804590fcac9930d9b4de0b20d5e710cafce75",
+      "address": "0xf9afcf6c9ddf48a7f10a5be44ffd80a94fe32ce7",
       "decimal": 18,
       "usd_id":"eos"
     },
@@ -113,16 +113,17 @@
       "name": "ChainLink",
       "symbol": "LINK",
       "icon": "link.svg",
-      "address": "0xf5f23f4c687dc4e69d330b6221b9b48fa6d9cd72",
+      "address": "0xa3535ce5cdb51b562b03f7b4d953fb1443ce84b1",
       "decimal": 18,
       "usd_id":"chainlink"
     }
   },
   "ethScanUrl": "https://ropsten.etherscan.io/",
-  "bank": "0x7a1fb0bebc6fbd521ae9193be832976dd15d4136",
-  "reserve": "0x0ce02a41fec5dd016f8b5ac338b4aa4149379096",
-  "network": "0x2cb8c4a914b1699d84e7cb73887d1728f3ebdab6",
-  "wrapper": "0x905e523efad524f4986dbc268ff63a5425948c56",
+  "bank": "0xcbae93b11b0a7a944649f26f17ab5566a1526f6f",
+  "reserve": "0x6e584dfcf2eb34bfd4f27e58118894f1c999ae88",
+  "pricing": "0x0344620b9079c90b0be0c84147a03034601940ca",
+  "network": "0xe435429d0dd8c236b9c95b7a271f09bc0b67589d",
+  "wrapper": "0x5bb2c658a1de448f46da6e251c53e150bd4ecfb7",
   "endpoint": "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",
   "averageBlockTime": 6000,
   "networkId": 3,

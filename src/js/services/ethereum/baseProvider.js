@@ -9,7 +9,9 @@ export default class BaseEthereumProvider {
   initContract() {
     this.erc20Contract = new this.rpc.eth.Contract(constants.ERC20)
     this.networkAddress = BLOCKCHAIN_INFO.network
+    this.wrapperAddress = BLOCKCHAIN_INFO.wrapper
     this.networkContract = new this.rpc.eth.Contract(constants.KYBER_NETWORK, this.networkAddress)
+    this.wrapperContract = new this.rpc.eth.Contract(constants.KYBER_WRAPPER, this.wrapperAddress)
   }
 
   version() {
@@ -237,6 +239,20 @@ export default class BaseEthereumProvider {
         })
         .catch((err) => {
           // console.log(err)
+          reject(err)
+        })
+    })
+  }
+
+  getAllRate(sources, dest, quantity){
+    return new Promise((resolve, reject) => {
+      this.wrapperContract.methods.getExpectedRates(this.networkAddress, source, dest, quantity).call()
+        .then((result) => {
+          if (result != null) {
+            resolve(result)
+          }
+        })
+        .catch((err) => {
           reject(err)
         })
     })
