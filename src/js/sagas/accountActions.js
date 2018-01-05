@@ -74,7 +74,7 @@ export function* importNewAccount(action) {
     })
 
     //var randomToken = randomForExchange(newTokens)
-    console.log(tokens)
+  //  console.log(tokens)
     var randomToken = [
     {
       address: newTokens['ETH'].address,

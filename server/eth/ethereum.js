@@ -154,12 +154,16 @@ class EthereumService {
     })
   }
 
+  delay(second) {
+    return new Promise(resolve => setTimeout(resolve, second))
+  }
 
   async fetchAllRateUSD() {
     var tokens = BLOCKCHAIN_INFO.tokens
     for (let key in tokens) {
       try {
         var rate = await this.currentProvider.getRateUSD(tokens[key].usd_id)
+        await this.delay(5000)
         await this.persistor.saveRateUSD(rate)
       } catch (e) {
         console.log(e)

@@ -1,5 +1,3 @@
-import Token from "./token"
-
 export default class Account {
   constructor(address, type, keystring, balance = 0, nonce = 0, manualNonce = 0, avatar) {
     this.address = address

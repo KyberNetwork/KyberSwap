@@ -4,13 +4,14 @@ import EthereumService from "../services/ethereum/ethereum"
 import { setConnection } from "../actions/connectionActions"
 import { delay } from 'redux-saga'
 
-export function* createNewConnection() {
+export function* createNewConnection(action) {
   var connectionInstance = new EthereumService({ default: 'http' })
   yield put(setConnection(connectionInstance))
   connectionInstance.subcribe()
 
   
   var state = store.getState()
+  //var ethereum = action.payload.ethereum
   var ethereum = state.connection.ethereum
   const watchConnectionTask = yield fork(watchToSwitchConnection, ethereum)
 

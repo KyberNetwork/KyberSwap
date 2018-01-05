@@ -1,6 +1,5 @@
 import { REHYDRATE } from 'redux-persist/lib/constants'
 import Rate from "../services/rate"
-import BigNumber from "bignumber.js"
 import * as BLOCKCHAIN_INFO from "../../../env"
 import constants from "../services/constants"
 

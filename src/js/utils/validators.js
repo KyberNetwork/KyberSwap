@@ -1,5 +1,4 @@
 import BigNumber from 'bignumber.js'
-import * as ethUtil from 'ethereumjs-util'
 import constants from "../services/constants"
 
 export function verifyAccount(addr) {
@@ -63,23 +62,6 @@ export function verifyAmount(sourceAmount,
   if (estimateValue.cmp(maxCap) > 0) {
     return "too high"
   }
-
-  //verify max dest amount
-  // var estimateDestAmount = sourceAmountWei.times(weiParam.pow(destDecimal))
-  //   .times(rateBig)
-  //   .div(weiParam.pow(sourceDecimal))
-  //   .div(weiParam.pow(18))
-
-  // var reserveBalanceB = new BigNumber(reserveBalance)
-  // var reserveBalanceMaxCap = reserveBalanceB.mul(constants.MAX_CAP_ONE_EXCHANGE_BASE_RESERVE)
-
-  // if (estimateDestAmount.cmp(reserveBalanceMaxCap) > 0) {
-  //   return "too high for reserve"
-  // }
-
-
-  
-
   return null
 }
 
