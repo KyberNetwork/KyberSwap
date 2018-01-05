@@ -32,12 +32,19 @@ export default class AccountBalance extends React.Component {
     super()
     this.state = {
       expanded: false,
+      showZeroBalance: true
     }
   }
 
   toggleBalances() {
     this.setState({
       expanded: !this.state.expanded
+    })
+  }
+
+  toggleZeroBalance(){
+    this.setState({
+      showZeroBalance: !this.state.showZeroBalance
     })
   }
 
@@ -63,6 +70,7 @@ export default class AccountBalance extends React.Component {
         sourceActive={this.props.sourceActive}
         selectToken={this.selectToken.bind(this)}
         showBalance = {this.props.showBalance}
+        showZeroBalance={this.state.showZeroBalance}
       />
     )
   }

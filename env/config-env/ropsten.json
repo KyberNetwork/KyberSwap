@@ -121,6 +121,7 @@
   "ethScanUrl": "https://ropsten.etherscan.io/",
   "bank": "0xcbae93b11b0a7a944649f26f17ab5566a1526f6f",
   "reserve": "0x6e584dfcf2eb34bfd4f27e58118894f1c999ae88",
+  "pricing": "0x0344620b9079c90b0be0c84147a03034601940ca",
   "network": "0xe435429d0dd8c236b9c95b7a271f09bc0b67589d",
   "wrapper": "0x5bb2c658a1de448f46da6e251c53e150bd4ecfb7",
   "endpoint": "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",

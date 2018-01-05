@@ -9,7 +9,9 @@ export default class BaseEthereumProvider {
   initContract() {
     this.erc20Contract = new this.rpc.eth.Contract(constants.ERC20)
     this.networkAddress = BLOCKCHAIN_INFO.network
+    this.wrapperAddress = BLOCKCHAIN_INFO.wrapper
     this.networkContract = new this.rpc.eth.Contract(constants.KYBER_NETWORK, this.networkAddress)
+    this.wrapperContract = new this.rpc.eth.Contract(constants.KYBER_WRAPPER, this.wrapperAddress)
   }
 
   version() {
@@ -417,6 +419,76 @@ export default class BaseEthereumProvider {
       }).catch((err) => {
         rejected(err)
       })
+    })
+  }
+
+  getAllRate(sources, dests, quantity) {
+    var serverPoint = BLOCKCHAIN_INFO.ethScanUrl
+    var api = BLOCKCHAIN_INFO.server_logs.api_key
+
+    var dataAbi = this.wrapperContract.methods.getExpectedRates(this.networkAddress, sources, dests, quantity).encodeABI()
+    var path = `/api?module=proxy&action=eth_call&to=${this.wrapperAddress}&data=${dataAbi}&tag=latest&apikey=${api}`
+
+    return new Promise((resolve, rejected) => {
+      fetch(serverPoint + path)
+        .then((response) => {
+          if (!response.ok) {
+            reject(response.statusText);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          try {
+            var dataMapped = this.rpc.eth.abi.decodeParameters([
+              {
+                type: 'uint256[]',
+                name: 'expectedPrice'
+              },
+              {
+                type: 'uint256[]',
+                name: 'slippagePrice'
+              }
+            ], data.result)
+            resolve(dataMapped)
+          } catch (e) {
+            console.log(e)
+            resolve([])
+          }
+        })
+        .catch((err) => {
+          console.log("GET request error")
+          resolve([])
+        })
+    })
+  }
+
+  getAllRatesFromEtherscan(tokensObj) {
+    var arrayTokenAddress = Object.keys(tokensObj).map((tokenName) => {
+      return tokensObj[tokenName].address
+    });
+
+    var arrayEthAddress = Array(arrayTokenAddress.length).fill(constants.ETH.address)
+
+    var arrayQty = Array(arrayTokenAddress.length*2).fill("0x0")
+
+    return this.getAllRate(arrayTokenAddress.concat(arrayEthAddress), arrayEthAddress.concat(arrayTokenAddress), arrayQty).then((result) => {
+      var returnData = []
+      Object.keys(tokensObj).map((tokenSymbol, i) => {
+        returnData.push({
+          source: tokenSymbol,
+          dest: "ETH",
+          rate: result.expectedPrice[i],
+          minRate: result.slippagePrice[i]
+        })
+
+        returnData.push({
+          source: "ETH",
+          dest: tokenSymbol,
+          rate: result.expectedPrice[i + arrayTokenAddress.length],
+          minRate: result.slippagePrice[i + arrayTokenAddress.length]
+        })
+      });
+      return returnData
     })
   }
 

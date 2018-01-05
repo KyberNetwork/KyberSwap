@@ -1,12 +1,16 @@
 import React from "react"
 import * as converts from "../../utils/converter"
-
+import BigNumber from "bignumber.js"
 const AccountBalanceView = (props) => {
 
   function getBalances() {
     var balances = Object.values(props.tokens).map(token => {
       var balance = converts.toT(token.balance, token.decimal)
+
+      var tokenEpsilon = converts.caculateTokenEpsilon(token.rate, token.decimal, token.symbol)
+      var bigBalance = new BigNumber(token.balance)
       return (
+        props.showZeroBalance || bigBalance.greaterThanOrEqualTo(tokenEpsilon) ? 
         <div className="columns my-2" key={token.symbol} onClick={(e) => props.selectToken(e, token.symbol, token.address)}>
           <div className={'balance-item ' + (token.symbol == props.sourceActive ? 'active' : '')}>
             <img src={require("../../../assets/img/tokens/" + token.icon)} />
@@ -16,6 +20,7 @@ const AccountBalanceView = (props) => {
             </div>
           </div>
         </div>
+        : <div key={token.symbol}/>
       )
     })
     return balances

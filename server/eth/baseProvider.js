@@ -14,7 +14,9 @@ class BaseEthereumProvider {
   initContract() {
     this.erc20Contract = new this.rpc.eth.Contract(constants.ERC20)
     this.networkAddress = BLOCKCHAIN_INFO.network
+    this.wrapperAddress = BLOCKCHAIN_INFO.wrapper
     this.networkContract = new this.rpc.eth.Contract(constants.KYBER_NETWORK, this.networkAddress)
+    this.wrapperContract = new this.rpc.eth.Contract(constants.KYBER_WRAPPER, this.wrapperAddress)
   }
 
   version() {
@@ -177,7 +179,83 @@ class BaseEthereumProvider {
     })
   }
 
-  getAllRate(tokensObj, reserve) {
+  getAllRate(sources, dests, quantity) {
+    var serverPoint = BLOCKCHAIN_INFO.server_logs.url
+    var api = BLOCKCHAIN_INFO.server_logs.api_key
+
+    var dataAbi = this.wrapperContract.methods.getExpectedRates(this.networkAddress, sources, dests, quantity).encodeABI()
+    var options = {
+      host: serverPoint,
+      path: `/api?module=proxy&action=eth_call&to=${this.wrapperAddress}&data=${dataAbi}&tag=latest&apikey=${api}`
+    }
+
+    return new Promise((resolve, rejected) => {
+      https.get(options, res => {
+        var statusCode = res.statusCode;
+        if (statusCode != 200) {
+          resolve([]);
+          return
+        }
+        res.setEncoding("utf8");
+        let body = ""
+        res.on("data", data => {
+          body += data
+        })
+        res.on("end", () => {
+          try {
+            body = JSON.parse(body)
+            var dataMapped = this.rpc.eth.abi.decodeParameters([
+              {
+                type: 'uint256[]',
+                name: 'expectedPrice'
+              },
+              {
+                type: 'uint256[]',
+                name: 'slippagePrice'
+              }
+            ], body.result)
+            resolve(dataMapped)
+          } catch (e) {
+            console.log(e)
+            resolve([])
+          }
+        }).on("error", function () {
+          console.log("GET request error")
+          resolve([])
+        })
+      })
+    })
+  }
+
+  getAllRatesFromEtherscan(tokensObj, reserve) {
+    var arrayTokenAddress = Object.keys(tokensObj).map((tokenName) => {
+      return tokensObj[tokenName].address
+    });
+
+    var arrayEthAddress = Array(arrayTokenAddress.length).fill(constants.ETH.address)
+    var arrayQty = Array(arrayTokenAddress.length*2).fill("0x0")
+
+    return this.getAllRate(arrayTokenAddress.concat(arrayEthAddress), arrayEthAddress.concat(arrayTokenAddress), arrayQty).then((result) => {
+      if(!result) return []
+
+      return Object.keys(tokensObj).map((tokenName, i) => {
+        return [
+          tokenName,
+          'ETH',
+          {
+            expectedPrice: result.expectedPrice[i],
+            slippagePrice: result.slippagePrice[i]
+          },
+          {
+            expectedPrice: result.expectedPrice[i + arrayTokenAddress.length],
+            slippagePrice: result.slippagePrice[i + arrayTokenAddress.length]
+          }
+        ]
+      });
+    })
+  }
+
+  getAllRatesFromBlockchain(tokensObj, reserve) {
     var promises = Object.keys(tokensObj).map((tokenName) => {
       return Promise.all([
         Promise.resolve(tokenName),
@@ -210,27 +288,27 @@ class BaseEthereumProvider {
     return Promise.all(promises)
   }
 
-  getRateUSD(tokenId){
+  getRateUSD(tokenId) {
     var serverPoint = BLOCKCHAIN_INFO.api_usd
     var path = `/v1/ticker/${tokenId}`
-    return new Promise((resolve, rejected)=>{
+    return new Promise((resolve, rejected) => {
       request.get({
-        url : serverPoint + path,
+        url: serverPoint + path,
         json: true
       }, (err, resp, body) => {
         if (err) return rejected(new Error('Can\'t reach coin market cap server.'));
         if (resp && resp.statusCode == 404) return rejected(new Error('Currency id not found.'));
         if (!resp || resp.statusCode != 200) return rejected(new Error('Invalid response from coin market cap server.'));
 
-        if (body.length === 1){
+        if (body.length === 1) {
           return resolve(body[0])
-        }else{
+        } else {
           return rejected(new Error('Rate usd is not in right format'))
         }
       })
     })
   }
-  
+
   getLogExchange(fromBlock, toBlock) {
     var serverPoint = BLOCKCHAIN_INFO.server_logs.url
     var api = BLOCKCHAIN_INFO.server_logs.api_key
