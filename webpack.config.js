@@ -40,7 +40,7 @@ var scriptConfig = function (env) {
       filename: "client.min.js"
     },
     plugins: (env && env.chain !== "mainnet") ? [
-      new Uglify({sourceMap: true, minimize: true}),
+      new Uglify({sourceMap: true}),
       new ExtractTextPlugin({ // define where to save the file
         filename: 'app.bundle.css',
         allChunks: true,
@@ -49,7 +49,7 @@ var scriptConfig = function (env) {
         'env': env && env.chain ? '"' + env.chain + '"' : '"kovan"'
       })
     ] : [
-        new Uglify({sourceMap: true, minimize: true}),
+        new Uglify({sourceMap: true}),
         new ExtractTextPlugin({ // define where to save the file
           filename: 'app.bundle.css',
           allChunks: true,

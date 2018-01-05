@@ -228,7 +228,6 @@ class BaseEthereumProvider {
   }
 
   getAllRatesFromEtherscan(tokensObj, reserve) {
-    console.log("server get all rate from etherscan")
     var arrayTokenAddress = Object.keys(tokensObj).map((tokenName) => {
       return tokensObj[tokenName].address
     });
@@ -257,7 +256,6 @@ class BaseEthereumProvider {
   }
 
   getAllRatesFromBlockchain(tokensObj, reserve) {
-    console.log("server get all rate from blockchain")
     var promises = Object.keys(tokensObj).map((tokenName) => {
       return Promise.all([
         Promise.resolve(tokenName),

@@ -326,7 +326,6 @@ export default class BaseEthereumProvider {
 
 
   getAllRatesFromServer(tokens) {
-    console.log("client get all rate from server")
     return new Promise((resolve, rejected) => {
       fetch(BLOCKCHAIN_INFO.history_endpoint + '/getRate', {
         method: 'GET',
@@ -464,7 +463,6 @@ export default class BaseEthereumProvider {
   }
 
   getAllRatesFromEtherscan(tokensObj) {
-    console.log("client get all rate from etherscan")
     var arrayTokenAddress = Object.keys(tokensObj).map((tokenName) => {
       return tokensObj[tokenName].address
     });
@@ -495,7 +493,6 @@ export default class BaseEthereumProvider {
   }
 
   getAllRatesFromBlockchain(tokens) {
-    console.log("client get all rate from blockchain")
     var ratePromises = []
     var tokenObj = BLOCKCHAIN_INFO.tokens
     Object.keys(tokenObj).map((tokenName) => {
