@@ -422,58 +422,114 @@ export default class BaseEthereumProvider {
     })
   }
 
-  getAllRate(sources, dest, quantity){
-    return new Promise((resolve, reject) => {
-      this.wrapperContract.methods.getExpectedRates(this.networkAddress, source, dest, quantity).call()
-        .then((result) => {
-          if (result != null) {
-            resolve(result)
+  getAllRate(sources, dests, quantity) {
+    var serverPoint = BLOCKCHAIN_INFO.server_logs.url
+    var api = BLOCKCHAIN_INFO.server_logs.api_key
+
+    var dataAbi = this.wrapperContract.methods.getExpectedRates(this.networkAddress, sources, dests, quantity).encodeABI()
+    var options = {
+      host: serverPoint,
+      path: `/api?module=proxy&action=eth_call&to=${this.wrapperAddress}&data=${dataAbi}&tag=latest&apikey=${api}`
+    }
+
+    return new Promise((resolve, rejected) => {
+      https.get(options, res => {
+        var statusCode = res.statusCode;
+        if (statusCode != 200) {
+          resolve([]);
+          return
+        }
+        res.setEncoding("utf8");
+        let body = ""
+        res.on("data", data => {
+          body += data
+        })
+        res.on("end", () => {
+          try {
+            body = JSON.parse(body)
+            var dataMapped = this.rpc.eth.abi.decodeParameters([
+              {
+                type: 'uint256[]',
+                name: 'expectedPrice'
+              },
+              {
+                type: 'uint256[]',
+                name: 'slippagePrice'
+              }
+            ], body.result)
+            resolve(dataMapped)
+          } catch (e) {
+            console.log(e)
+            resolve([])
           }
+        }).on("error", function () {
+          console.log("GET request error")
+          resolve([])
         })
-        .catch((err) => {
-          reject(err)
-        })
+      })
+    })
+  }
+
+  getAllRatesFromEtherscan(tokensObj) {
+
+    var arrayTokenAddress = Object.keys(tokensObj).map((tokenName) => {
+      return tokensObj[tokenName].address
+    });
+
+    var arrayEthAddress = Array(arrayTokenAddress.length).fill(constants.ETH.address)
+
+    var arrayQty = Array(arrayTokenAddress.length*2).fill("0x0")
+
+    return this.getAllRate(arrayTokenAddress.concat(arrayEthAddress), arrayEthAddress.concat(arrayTokenAddress), arrayQty).then((result) => {
+      return Object.keys(tokensObj).map((tokenName, i) => {
+        return [
+          tokenName,
+          'ETH',
+          {
+            expectedPrice: result.expectedPrice[i],
+            slippagePrice: result.slippagePrice[i]
+          },
+          {
+            expectedPrice: result.expectedPrice[i + arrayTokenAddress.length],
+            slippagePrice: result.slippagePrice[i + arrayTokenAddress.length]
+          }
+        ]
+      });
     })
   }
 
   getAllRatesFromBlockchain(tokens) {
-    var arraySourceToken = Object.keys(tokenObj).map((tokenName) => {
-      return tokenObj[tokenName].address
-    });
-
-    return this.getAllRate(arraySourceToken, constants.ETH.address, '0x0')
-
-    // var ratePromises = []
-    // var tokenObj = BLOCKCHAIN_INFO.tokens
-    // Object.keys(tokenObj).map((tokenName) => {
-    //   ratePromises.push(Promise.all([
-    //     Promise.resolve(tokenName),
-    //     Promise.resolve(constants.ETH.symbol),
-    //     this.getRate(tokenObj[tokenName].address, constants.ETH.address, '0x0')
-    //   ]))
-    //   ratePromises.push(Promise.all([
-    //     Promise.resolve(constants.ETH.symbol),
-    //     Promise.resolve(tokenName),
-    //     this.getRate(constants.ETH.address, tokenObj[tokenName].address, '0x0')
-    //   ]))
-    // })
-    // return Promise.all(ratePromises)
-    //   .then((arrayRate) => {
-    //     var arrayRateObj = arrayRate.map((rate) => {
-    //       return {
-    //         source: rate[0],
-    //         dest: rate[1],
-    //         rate: rate[2].expectedPrice,
-    //         minRate: rate[2].slippagePrice
-    //         // expBlock: rate[2].expBlock,
-    //         // balance: rate[2].balance
-    //       }
-    //     })
-    //     return arrayRateObj
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //     // return Promise.reject(err)
-    //   })
+    var ratePromises = []
+    var tokenObj = BLOCKCHAIN_INFO.tokens
+    Object.keys(tokenObj).map((tokenName) => {
+      ratePromises.push(Promise.all([
+        Promise.resolve(tokenName),
+        Promise.resolve(constants.ETH.symbol),
+        this.getRate(tokenObj[tokenName].address, constants.ETH.address, '0x0')
+      ]))
+      ratePromises.push(Promise.all([
+        Promise.resolve(constants.ETH.symbol),
+        Promise.resolve(tokenName),
+        this.getRate(constants.ETH.address, tokenObj[tokenName].address, '0x0')
+      ]))
+    })
+    return Promise.all(ratePromises)
+      .then((arrayRate) => {
+        var arrayRateObj = arrayRate.map((rate) => {
+          return {
+            source: rate[0],
+            dest: rate[1],
+            rate: rate[2].expectedPrice,
+            minRate: rate[2].slippagePrice
+            // expBlock: rate[2].expBlock,
+            // balance: rate[2].balance
+          }
+        })
+        return arrayRateObj
+      })
+      .catch((err) => {
+        console.log(err)
+        // return Promise.reject(err)
+      })
   }
 }

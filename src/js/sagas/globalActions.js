@@ -43,11 +43,18 @@ export function* updateAllRate(action) {
   catch (err) {
     //get rate from blockchain
     try {
-      const rates = yield call([ethereum, ethereum.call("getAllRatesFromBlockchain")], tokens)
+      const rates = yield call([ethereum, ethereum.call("getAllRatesFromEtherscan")], tokens)
       yield put(actions.updateAllRateComplete(rates))
     }
     catch (err) {
       console.log(err)
+      try {
+        const rates = yield call([ethereum, ethereum.call("getAllRatesFromBlockchain")], tokens)
+        yield put(actions.updateAllRateComplete(rates))
+      }
+      catch (err) {
+        console.log(err)
+      }
     }
   }
 }
