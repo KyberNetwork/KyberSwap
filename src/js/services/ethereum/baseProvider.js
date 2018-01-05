@@ -326,6 +326,7 @@ export default class BaseEthereumProvider {
 
 
   getAllRatesFromServer(tokens) {
+    console.log("client get all rate from server")
     return new Promise((resolve, rejected) => {
       fetch(BLOCKCHAIN_INFO.history_endpoint + '/getRate', {
         method: 'GET',
@@ -423,30 +424,22 @@ export default class BaseEthereumProvider {
   }
 
   getAllRate(sources, dests, quantity) {
-    var serverPoint = BLOCKCHAIN_INFO.server_logs.url
+    var serverPoint = BLOCKCHAIN_INFO.ethScanUrl
     var api = BLOCKCHAIN_INFO.server_logs.api_key
 
     var dataAbi = this.wrapperContract.methods.getExpectedRates(this.networkAddress, sources, dests, quantity).encodeABI()
-    var options = {
-      host: serverPoint,
-      path: `/api?module=proxy&action=eth_call&to=${this.wrapperAddress}&data=${dataAbi}&tag=latest&apikey=${api}`
-    }
+    var path = `/api?module=proxy&action=eth_call&to=${this.wrapperAddress}&data=${dataAbi}&tag=latest&apikey=${api}`
 
     return new Promise((resolve, rejected) => {
-      https.get(options, res => {
-        var statusCode = res.statusCode;
-        if (statusCode != 200) {
-          resolve([]);
-          return
-        }
-        res.setEncoding("utf8");
-        let body = ""
-        res.on("data", data => {
-          body += data
+      fetch(serverPoint + path)
+        .then((response) => {
+          if (!response.ok) {
+            reject(response.statusText);
+          }
+          return response.json();
         })
-        res.on("end", () => {
+        .then((data) => {
           try {
-            body = JSON.parse(body)
             var dataMapped = this.rpc.eth.abi.decodeParameters([
               {
                 type: 'uint256[]',
@@ -456,22 +449,22 @@ export default class BaseEthereumProvider {
                 type: 'uint256[]',
                 name: 'slippagePrice'
               }
-            ], body.result)
+            ], data.result)
             resolve(dataMapped)
           } catch (e) {
             console.log(e)
             resolve([])
           }
-        }).on("error", function () {
+        })
+        .catch((err) => {
           console.log("GET request error")
           resolve([])
         })
-      })
     })
   }
 
   getAllRatesFromEtherscan(tokensObj) {
-
+    console.log("client get all rate from etherscan")
     var arrayTokenAddress = Object.keys(tokensObj).map((tokenName) => {
       return tokensObj[tokenName].address
     });
@@ -481,24 +474,28 @@ export default class BaseEthereumProvider {
     var arrayQty = Array(arrayTokenAddress.length*2).fill("0x0")
 
     return this.getAllRate(arrayTokenAddress.concat(arrayEthAddress), arrayEthAddress.concat(arrayTokenAddress), arrayQty).then((result) => {
-      return Object.keys(tokensObj).map((tokenName, i) => {
-        return [
-          tokenName,
-          'ETH',
-          {
-            expectedPrice: result.expectedPrice[i],
-            slippagePrice: result.slippagePrice[i]
-          },
-          {
-            expectedPrice: result.expectedPrice[i + arrayTokenAddress.length],
-            slippagePrice: result.slippagePrice[i + arrayTokenAddress.length]
-          }
-        ]
+      var returnData = []
+      Object.keys(tokensObj).map((tokenSymbol, i) => {
+        returnData.push({
+          source: tokenSymbol,
+          dest: "ETH",
+          rate: result.expectedPrice[i],
+          minRate: result.slippagePrice[i]
+        })
+
+        returnData.push({
+          source: "ETH",
+          dest: tokenSymbol,
+          rate: result.expectedPrice[i + arrayTokenAddress.length],
+          minRate: result.slippagePrice[i + arrayTokenAddress.length]
+        })
       });
+      return returnData
     })
   }
 
   getAllRatesFromBlockchain(tokens) {
+    console.log("client get all rate from blockchain")
     var ratePromises = []
     var tokenObj = BLOCKCHAIN_INFO.tokens
     Object.keys(tokenObj).map((tokenName) => {
