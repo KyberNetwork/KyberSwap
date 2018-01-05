@@ -97,9 +97,9 @@ class EthereumService {
     //this.currentProvider.clearSubcription()
     this.currentProvider.subcribeNewBlock(() => {
       return Promise.all([
-        this.fetchData.bind(this)(),
+        // this.fetchData.bind(this)(),
         this.fetchAllRateData.bind(this)(),
-        this.fetchAllRateUSD.bind(this)()
+        // this.fetchAllRateUSD.bind(this)()
       ])
       // this.fetchData.bind(this)()
       // this.fetchAllRateData.bind(this)()
@@ -142,7 +142,7 @@ class EthereumService {
 
   async fetchAllRateData() {
     try {
-      var allRate = await this.currentProvider.getAllRate(BLOCKCHAIN_INFO.tokens, constants.RESERVES[0])
+      var allRate = await this.currentProvider.getAllRatesFromBlockchain(BLOCKCHAIN_INFO.tokens, constants.RESERVES[0])
      // console.log(allRate)
       this.persistor.saveRate(allRate)
     } catch (e) {

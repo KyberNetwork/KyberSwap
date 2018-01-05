@@ -257,20 +257,6 @@ export default class BaseEthereumProvider {
     })
   }
 
-  getAllRate(sources, dest, quantity){
-    return new Promise((resolve, reject) => {
-      this.wrapperContract.methods.getExpectedRates(this.networkAddress, source, dest, quantity).call()
-        .then((result) => {
-          if (result != null) {
-            resolve(result)
-          }
-        })
-        .catch((err) => {
-          reject(err)
-        })
-    })
-  }
-
   sendRawTransaction(tx) {
     return new Promise((resolve, rejected) => {
       this.rpc.eth.sendSignedTransaction(
@@ -436,38 +422,58 @@ export default class BaseEthereumProvider {
     })
   }
 
-  getAllRatesFromBlockchain(tokens) {
-    var ratePromises = []
-    var tokenObj = BLOCKCHAIN_INFO.tokens
-    Object.keys(tokenObj).map((tokenName) => {
-      ratePromises.push(Promise.all([
-        Promise.resolve(tokenName),
-        Promise.resolve(constants.ETH.symbol),
-        this.getRate(tokenObj[tokenName].address, constants.ETH.address, '0x0')
-      ]))
-      ratePromises.push(Promise.all([
-        Promise.resolve(constants.ETH.symbol),
-        Promise.resolve(tokenName),
-        this.getRate(constants.ETH.address, tokenObj[tokenName].address, '0x0')
-      ]))
-    })
-    return Promise.all(ratePromises)
-      .then((arrayRate) => {
-        var arrayRateObj = arrayRate.map((rate) => {
-          return {
-            source: rate[0],
-            dest: rate[1],
-            rate: rate[2].expectedPrice,
-            minRate: rate[2].slippagePrice
-            // expBlock: rate[2].expBlock,
-            // balance: rate[2].balance
+  getAllRate(sources, dest, quantity){
+    return new Promise((resolve, reject) => {
+      this.wrapperContract.methods.getExpectedRates(this.networkAddress, source, dest, quantity).call()
+        .then((result) => {
+          if (result != null) {
+            resolve(result)
           }
         })
-        return arrayRateObj
-      })
-      .catch((err) => {
-        console.log(err)
-        // return Promise.reject(err)
-      })
+        .catch((err) => {
+          reject(err)
+        })
+    })
+  }
+
+  getAllRatesFromBlockchain(tokens) {
+    var arraySourceToken = Object.keys(tokenObj).map((tokenName) => {
+      return tokenObj[tokenName].address
+    });
+
+    return this.getAllRate(arraySourceToken, constants.ETH.address, '0x0')
+
+    // var ratePromises = []
+    // var tokenObj = BLOCKCHAIN_INFO.tokens
+    // Object.keys(tokenObj).map((tokenName) => {
+    //   ratePromises.push(Promise.all([
+    //     Promise.resolve(tokenName),
+    //     Promise.resolve(constants.ETH.symbol),
+    //     this.getRate(tokenObj[tokenName].address, constants.ETH.address, '0x0')
+    //   ]))
+    //   ratePromises.push(Promise.all([
+    //     Promise.resolve(constants.ETH.symbol),
+    //     Promise.resolve(tokenName),
+    //     this.getRate(constants.ETH.address, tokenObj[tokenName].address, '0x0')
+    //   ]))
+    // })
+    // return Promise.all(ratePromises)
+    //   .then((arrayRate) => {
+    //     var arrayRateObj = arrayRate.map((rate) => {
+    //       return {
+    //         source: rate[0],
+    //         dest: rate[1],
+    //         rate: rate[2].expectedPrice,
+    //         minRate: rate[2].slippagePrice
+    //         // expBlock: rate[2].expBlock,
+    //         // balance: rate[2].balance
+    //       }
+    //     })
+    //     return arrayRateObj
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //     // return Promise.reject(err)
+    //   })
   }
 }
