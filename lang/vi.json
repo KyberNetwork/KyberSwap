@@ -143,7 +143,7 @@
     "reserve_address": "Địa chỉ contract reserve",
     "network_address": "Địa chỉ contract network",
     "kyber_homepage": "Trang chủ Kyber",
-    "get_free_kovan": "Lấy Kovan Ether miễn phí",
+    "get_free_kovan": "Lấy",
     "warning": "Không nên chuyển bất kỳ ether nào cho các địa chỉ phía trên.</br>Các địa chỉ trên chỉ sử dụng trong môi trường test và chúng tôi có khả năng không sử dụng trong phiên bản chính thức.",
     "here": "tại đây"
   },

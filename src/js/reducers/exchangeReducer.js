@@ -271,7 +271,7 @@ const exchange = (state = initState, action) => {
       newState.sourceTokenSymbol = newState.destTokenSymbol
       newState.destToken = tempSourceToken
       newState.destTokenSymbol = tempSourceTokenSymbol
-      newState.sourceAmount = 0
+      newState.sourceAmount = ""
       newState.destAmount = 0
       newState.isSelectToken = true
       return newState

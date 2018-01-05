@@ -133,6 +133,7 @@
   "endpoint": "wss://mainnet.infura.io/ws",
   "averageBlockTime": 15000,
   "networkId": 1,
+  "chainName": "Mainnet",
   "server_logs": {
     "url": "api.etherscan.io",
     "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
