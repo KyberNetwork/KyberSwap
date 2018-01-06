@@ -171,7 +171,7 @@ body{
       &:before {
         content: '';
         position: absolute;
-        top: -18px;
+        top: -17px;
         right: 10px;
         border: 9px solid transparent;
         border-bottom-color: #ddd;
@@ -179,7 +179,7 @@ body{
       &:after {
         content: '';
         position: absolute;
-        top: -16px;
+        top: -15px;
         right: 11px;
         border: 8px solid transparent;
         border-bottom-color: white;
@@ -290,6 +290,7 @@ body{
     .title{
       font-size: 25px;
       line-height: 25px;
+      margin-bottom: 16px;
     }
     @media screen and (max-width: 640px) {
       min-height: 0;
@@ -403,10 +404,10 @@ body{
     font-size: 0;
     div.slick-slide {
       display: inline-block;
-      padding-right: 15px;
+      padding-right: 70px;
       &:not(:last-child) {
         border-right: 1px solid $k-divider;
-        margin-right: 15px;
+        margin-right:30px;
       }
       .pair {
         font-size: 12px;
