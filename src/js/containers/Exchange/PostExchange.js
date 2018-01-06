@@ -14,6 +14,7 @@ import { TermAndServices } from "../../containers/CommonElements"
 import { PassphraseModal, ConfirmTransferModal, ApproveModal, PostExchangeBtn } from "../../components/Transaction"
 import { getTranslate } from 'react-localize-redux';
 import { RateBetweenToken } from "../Exchange"
+import { toggleTxConfig } from "../../actions/exchangeActions";
 
 @connect((store, props) => {
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
@@ -286,6 +287,9 @@ export default class PostExchange extends React.Component {
     )
   }
 
+  openConfig = () => {
+    this.props.dispatch(toggleTxConfig());
+  }
 
   render() {
     var modalPassphrase = ""
@@ -367,6 +371,8 @@ export default class PostExchange extends React.Component {
         translate={this.props.translate}
         termAndServices={termAndServices}
         rateToken={rateToken}
+        openConfig={this.openConfig}
+        isOpenTxConfig={this.props.form.isOpenTxConfig}
       />
     )
   }

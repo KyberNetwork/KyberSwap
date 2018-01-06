@@ -224,14 +224,15 @@ export default class Exchange extends React.Component {
     var gasConfig = (
       <TransactionConfig gas={this.props.exchange.gas_estimate}
         gasPrice={this.props.exchange.gasPrice}
-        maxGasPrice = {this.props.exchange.maxGasPrice}
+        maxGasPrice={this.props.exchange.maxGasPrice}
         gasHandler={this.specifyGas}
         gasPriceHandler={this.specifyGasPrice}
         gasPriceError={this.props.exchange.errors.gasPriceError}
         gasError={this.props.exchange.errors.gasError}
         totalGas={totalGas.toString()}
         translate={this.props.translate}
-        minRate = {<MinRate />}
+        minRate={<MinRate />}
+        isOpenTxConfig={this.props.exchange.isOpenTxConfig}
       />
     )
 

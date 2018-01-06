@@ -68,13 +68,13 @@ const TransactionListView = (props) => {
       var rate = roundingNumber(desAmountFull / sourceAmountFull )
       return (
         <div className="clearfix" key={item.txHash} onClick={(e) => gotoLink(item.txHash)}>
-          <div className="column small-4 large-2">{calculateTimeStamp(item.timestamp)}</div>
+          <div className="column small-4 medium-3 large-2">{calculateTimeStamp(item.timestamp)}</div>
           <div className="column small-3 show-for-large">
             Exchange
             <span className="ml-3">{sourceToken.key} <i className="k k-angle right"></i> {destToken.key}</span>
           </div>
-          <div className="column small-3 show-for-large">1 {sourceToken.key} = {rate} {destToken.key}</div>
-          <div className="column small-8 large-4">
+          <div className="column small-3 medium-4 large-3 show-for-medium">1 {sourceToken.key} = {rate} {destToken.key}</div>
+          <div className="column small-8 medium-5 large-4">
             <div className="d-flex align-center">
               <span className="mr-auto">
                 {sourceAmount} {sourceToken.key} for {desAmount} {destToken.key}
@@ -99,20 +99,22 @@ const TransactionListView = (props) => {
         <div className="row column">
           <div className="small-12 column">
             <div className="transaction-list">
-              <div className="clearfix header">
-                <div className="column small-4 large-2">Date</div>
-                <div className="column small-3 show-for-large">Description</div>
-                <div className="column small-3 show-for-large">Rate</div>
-                <div className="column small-8 large-4">Amount</div>
+              <div className="wrapper">
+                <div className="clearfix header">
+                  <div className="column small-4 medium-3 large-2">Date</div>
+                  <div className="column small-3 show-for-large">Description</div>
+                  <div className="column small-3 medium-4 large-3 show-for-medium">Rate</div>
+                  <div className="column small-8 medium-5 large-4">Amount</div>
+                </div>
+                <CSSTransitionGroup
+                  transitionName="example"
+                  transitionEnterTimeout={1000}
+                  transitionLeaveTimeout={1000}
+                  class="body"
+                  component="div">
+                  {content(props.logsEth)}
+                </CSSTransitionGroup>
               </div>
-              <CSSTransitionGroup
-                transitionName="example"
-                transitionEnterTimeout={1000}
-                transitionLeaveTimeout={1000}
-                class="body"
-                component="div">
-                {content(props.logsEth)}
-              </CSSTransitionGroup>
             </div>
           </div>
         </div>

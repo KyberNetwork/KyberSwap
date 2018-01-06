@@ -24,7 +24,11 @@
   }
 
 .transaction-list{
+  overflow-x: auto;
   text-align: left;
+  .wrapper{
+    min-width: 365px;
+  }
   .header{
     background-color: #eee;
     font-weight: normal;
