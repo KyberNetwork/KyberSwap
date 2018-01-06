@@ -20,7 +20,7 @@ const PostExchangeBtn = (props) => {
                 <div class="advanced-switch base-line float-right">
                   <label class="switch-caption" for="advanced">{props.translate("transaction.advanced") || "Advance"}</label>
                   <div class="switch accent">
-                    <input class="switch-input" id="advanced" type="checkbox" />
+                    <input class="switch-input" onChange={props.openConfig} id="advanced" type="checkbox" checked={props.isOpenTxConfig ? true : false} />
                     <label class="switch-paddle" for="advanced"><span class="show-for-sr">Advanced Mode</span></label>
                   </div>
                 </div>

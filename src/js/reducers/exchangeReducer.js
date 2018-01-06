@@ -285,6 +285,10 @@ const exchange = (state = initState, action) => {
       newState.maxCap = action.payload.maxCap
       return newState
     }
+    case "EXCHANGE.TOGGLE_CONFIG":{
+      newState.isOpenTxConfig = !newState.isOpenTxConfig
+      return newState
+    }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
       if(!newState.isEditGasPrice){
         if (action.payload > newState.maxGasPrice){

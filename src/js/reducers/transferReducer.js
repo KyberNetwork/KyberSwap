@@ -165,6 +165,10 @@ const transfer = (state = initState, action) => {
       newState.termAgree = action.payload.value
       return newState
     }
+    case "TRANSFER.TOGGLE_CONFIG":{
+      newState.isOpenTxConfig = !newState.isOpenTxConfig
+      return newState
+    }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
       if(!newState.isEditGasPrice){
         newState.gasPrice = action.payload

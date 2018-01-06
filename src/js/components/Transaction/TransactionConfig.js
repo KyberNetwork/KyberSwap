@@ -15,7 +15,7 @@ const TransactionConfig = (props) => {
   return (
     <div className="gas-config">
       <div className="row small-11 medium-12 hide-on-choose-token-pair">
-        <div className="advanced-content" disabled>
+        <div className="advanced-content" disabled={props.isOpenTxConfig ? false : true}>
           {props.minRate}
           <div className="row gas-price text-light small-12 medium-8 mt-3">
             <label className="column small-12 medium-3">
