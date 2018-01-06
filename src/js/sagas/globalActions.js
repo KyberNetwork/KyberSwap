@@ -5,7 +5,6 @@ import { closeImportLoading } from '../actions/accountActions'
 import { Rate } from "../services/rate"
 import { push } from 'react-router-redux';
 import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
-import { store } from "../store"
 
 import { getLanguage } from "../services/language"
 import Language from "../../../lang"
@@ -117,16 +116,14 @@ export function* setGasPrice(action) {
 
 
 export function* changelanguage(action) {
-  const { ethereum, lang } = action.payload
+  const { ethereum, lang, locale } = action.payload
 
   if (Language.supportLanguage.indexOf(lang) < 0) return
   try {
-    var state = store.getState()
-
     var activeLang = lang
     if (!Language.loadAll && lang !== Language.defaultLanguage) {
       activeLang = lang == Language.defaultLanguage ? Language.defaultLanguage : Language.defaultAndActive[1]
-      if (!state || !state.locale || state.locale.translations["pack"][1] !== lang) {
+      if (!locale || locale.translations["pack"][1] !== lang) {
         var languagePack = yield call(ethereum.call("getLanguagePack"), lang)
         if (!languagePack) return;
 

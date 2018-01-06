@@ -23,7 +23,7 @@ export function clearIntervalConnection(intervalConnection){
 export function createNewConnectionInstance(){
     return {
         type: "CONNECTION.CREATE_NEW_CONNECTION",
-        //payload: {ethereum}
+        // payload: {ethereum}
     }
 }
 

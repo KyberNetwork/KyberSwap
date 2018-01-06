@@ -93,9 +93,9 @@ export function incManualNonceAccount(address) {
   }
 }
 
-export function importAccountMetamask(web3Service, networkId, ethereum, tokens) {
+export function importAccountMetamask(web3Service, networkId, ethereum, tokens, translate) {
   return {
     type: "ACCOUNT.IMPORT_ACCOUNT_METAMASK",
-    payload: { web3Service, networkId, ethereum, tokens }
+    payload: { web3Service, networkId, ethereum, tokens, translate }
   }
 }
