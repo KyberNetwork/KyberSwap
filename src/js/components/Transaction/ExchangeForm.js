@@ -46,7 +46,7 @@ const ExchangeForm = (props) => {
                       <span class="error-text">{errorToken}</span>
                     }
                     {props.errors.sourceAmount !== '' &&
-                      <span class="error-text">{props.translate(props.errors.sourceAmount)}</span>
+                      <span class="error-text">{props.translate(props.errors.sourceAmount, { cap: props.maxCap })}</span>
                     }
                   </label>
                   <div class="address-balance">

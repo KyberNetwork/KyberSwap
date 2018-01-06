@@ -1,11 +1,11 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/globalActions'
+import * as actionsExchange from '../actions/exchangeActions'
 import * as actionsUtils from '../actions/utilActions'
 import { closeImportLoading } from '../actions/accountActions'
 import { Rate } from "../services/rate"
 import { push } from 'react-router-redux';
 import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
-import { store } from "../store"
 
 import { getLanguage } from "../services/language"
 import Language from "../../../lang"
@@ -43,18 +43,11 @@ export function* updateAllRate(action) {
   catch (err) {
     //get rate from blockchain
     try {
-      const rates = yield call([ethereum, ethereum.call("getAllRatesFromEtherscan")], tokens)
+      const rates = yield call([ethereum, ethereum.call("getAllRatesFromBlockchain")], tokens)
       yield put(actions.updateAllRateComplete(rates))
     }
     catch (err) {
       console.log(err)
-      try {
-        const rates = yield call([ethereum, ethereum.call("getAllRatesFromBlockchain")], tokens)
-        yield put(actions.updateAllRateComplete(rates))
-      }
-      catch (err) {
-        console.log(err)
-      }
     }
   }
 }
@@ -122,18 +115,28 @@ export function* setGasPrice(action) {
   
 }
 
+export function* setMaxGasPrice(action) {
+  try{
+    const ethereum = action.payload
+    const maxGasPrice = yield call(ethereum.call("getMaxGasPrice"))
+    yield put(actionsExchange.setMaxGasPriceComplete(maxGasPrice))
+  }catch(err)
+  {
+    console.log(err)
+  }
+  
+}
+
 
 export function* changelanguage(action) {
-  const { ethereum, lang } = action.payload
+  const { ethereum, lang, locale } = action.payload
 
   if (Language.supportLanguage.indexOf(lang) < 0) return
   try {
-    var state = store.getState()
-
     var activeLang = lang
     if (!Language.loadAll && lang !== Language.defaultLanguage) {
       activeLang = lang == Language.defaultLanguage ? Language.defaultLanguage : Language.defaultAndActive[1]
-      if (!state || !state.locale || state.locale.translations["pack"][1] !== lang) {
+      if (!locale || locale.translations["pack"][1] !== lang) {
         var languagePack = yield call(ethereum.call("getLanguagePack"), lang)
         if (!languagePack) return;
 
@@ -160,6 +163,8 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.RATE_UPDATE_ALL_PENDING", updateAllRate)
   yield takeEvery("GLOBAL.UPDATE_RATE_USD_PENDING", updateRateUSD)
 
+
+  yield takeEvery("EXCHANGE.SET_MAX_GAS_PRICE", setMaxGasPrice)
 }
 
 
