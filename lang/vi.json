@@ -101,6 +101,7 @@
     "select_same_token": "Không thể đổi giữa hai token giống nhau",
     "select_token_token": "Cặp token này chưa được hỗ trợ",
     "source_amount_too_high": "Số lượng chuyển quá lớn",
+    "source_amount_too_high_cap": "Số lượng chuyển vượt quá limit",
     "source_amount_too_small": "Số lượng chuyển quá nhỏ",
     "source_amount_too_high_for_reserve": "Số lượng chuyển quá lớn (hiện không có sẵn token để giao dịch tại thời điểm này)",
     "source_amount_is_not_number": "Số lượng chuyển sai định dạng",

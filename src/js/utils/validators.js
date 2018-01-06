@@ -60,7 +60,7 @@ export function verifyAmount(sourceAmount,
   //estimate value based on eth
   var maxCap = new BigNumber(maxCap)
   if (estimateValue.cmp(maxCap) > 0) {
-    return "too high"
+    return "too high cap"
   }
   return null
 }

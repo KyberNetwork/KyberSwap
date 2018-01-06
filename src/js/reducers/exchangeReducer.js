@@ -287,7 +287,11 @@ const exchange = (state = initState, action) => {
     }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
       if(!newState.isEditGasPrice){
-        newState.gasPrice = action.payload
+        if (action.payload > newState.maxGasPrice){
+          newState.gasPrice = newState.maxGasPrice
+        }else{
+          newState.gasPrice = action.payload
+        }
       }
       return newState
     }    
