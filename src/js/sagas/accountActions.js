@@ -7,7 +7,7 @@ import { openInfoModal } from '../actions/utilActions'
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
 import { randomToken, setRandomExchangeSelectedToken, setCapExchange } from "../actions/exchangeActions"
 import { setRandomTransferSelectedToken } from "../actions/transferActions"
-import { randomForExchange } from "../utils/random"
+//import { randomForExchange } from "../utils/random"
 
 import * as service from "../services/accounts"
 import constants from "../services/constants"

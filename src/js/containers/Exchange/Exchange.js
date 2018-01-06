@@ -13,7 +13,7 @@ import { anyErrors } from "../../utils/validators"
 
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import * as exchangeActions from "../../actions/exchangeActions"
-import { randomForExchange } from "../../utils/random"
+//import { randomForExchange } from "../../utils/random"
 import { getTranslate } from 'react-localize-redux';
 
 @connect((store) => {
