@@ -12,8 +12,8 @@ const TransactionLoadingView = (props) => {
           <div class="row">
             <div className="column">
               <h1 class="title">
-                <Link to="/exchange">{props.translate("transaction.exchange") || "Exchange"}</Link>
-                <Link to="/transfer">{props.translate("transaction.transfer") || "Transfer"}</Link>
+                <Link to="/exchange" className={props.type === "exchange" ? "disable" : ""}>{props.translate("transaction.exchange") || "Exchange"}</Link>
+                <Link to="/transfer" className={props.type === "transfer" ? "disable" : ""}>{props.translate("transaction.transfer") || "Transfer"}</Link>
               </h1>
             </div>
             <div class="text-center">
@@ -58,8 +58,8 @@ const TransactionLoadingView = (props) => {
         <div class="row small-11 medium-12 large-12">
           <div className="column">
             <h1 class="title">
-              <Link to="/exchange">{props.translate("transaction.exchange") || "Exchange"}</Link>
-              <Link to="/transfer">{props.translate("transaction.transfer") || "Transfer"}</Link>
+              <Link to="/exchange" className={props.type === "exchange" ? "disable" : ""}>{props.translate("transaction.exchange") || "Exchange"}</Link>
+              <Link to="/transfer" className={props.type === "transfer" ? "disable" : ""}>{props.translate("transaction.transfer") || "Transfer"}</Link>
             </h1>
           </div>
           <div class="text-center">

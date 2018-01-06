@@ -22,6 +22,7 @@ import { getTranslate } from 'react-localize-redux';
   const exchange = store.exchange
   const tokens = store.tokens.tokens
   const translate = getTranslate(store.locale)
+  const location = store.router.location.pathname
 
   
   return { account, ethereum, exchange, tokens, translate }
@@ -149,6 +150,7 @@ export default class Exchange extends React.Component {
       destAmount: balanceDest,
       destTokenName: this.props.exchange.balanceData.destName,
     }
+
 
     var transactionLoadingScreen = (
       <TransactionLoading tx={this.props.exchange.txHash}
