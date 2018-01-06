@@ -1,5 +1,6 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/globalActions'
+import * as actionsExchange from '../actions/exchangeActions'
 import * as actionsUtils from '../actions/utilActions'
 import { closeImportLoading } from '../actions/accountActions'
 import { Rate } from "../services/rate"
@@ -114,6 +115,18 @@ export function* setGasPrice(action) {
   
 }
 
+export function* setMaxGasPrice(action) {
+  try{
+    const ethereum = action.payload
+    const maxGasPrice = yield call(ethereum.call("getMaxGasPrice"))
+    yield put(actionsExchange.setMaxGasPriceComplete(maxGasPrice))
+  }catch(err)
+  {
+    console.log(err)
+  }
+  
+}
+
 
 export function* changelanguage(action) {
   const { ethereum, lang, locale } = action.payload
@@ -150,6 +163,8 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.RATE_UPDATE_ALL_PENDING", updateAllRate)
   yield takeEvery("GLOBAL.UPDATE_RATE_USD_PENDING", updateRateUSD)
 
+
+  yield takeEvery("EXCHANGE.SET_MAX_GAS_PRICE", setMaxGasPrice)
 }
 
 

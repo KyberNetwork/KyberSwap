@@ -484,4 +484,19 @@ export default class BaseEthereumProvider {
       return returnData
     })
   }
+
+  getMaxGasPrice(){
+    return new Promise((resolve, reject) => {
+      this.networkContract.methods.maxGasPrice().call()
+        .then((result) => {
+          if (result != null) {
+            resolve(result)
+          }
+        })
+        .catch((err) => {
+          // console.log(err)
+          reject(err)
+        })
+    })
+  }
 }

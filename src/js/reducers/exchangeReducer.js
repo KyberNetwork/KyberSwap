@@ -294,7 +294,11 @@ const exchange = (state = initState, action) => {
         }
       }
       return newState
-    }    
+    }
+    case "EXCHANGE.SET_MAX_GAS_PRICE_COMPLETE":{
+      newState.maxGasPrice = action.payload
+      return newState
+    }
   }
   return state
 }

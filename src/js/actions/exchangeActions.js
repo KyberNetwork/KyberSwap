@@ -366,3 +366,18 @@ export function setCapExchange(maxCap) {
     payload: { maxCap }
   }
 }
+
+export function setMaxGasPrice(ethereum){
+  return {
+    type: "EXCHANGE.SET_MAX_GAS_PRICE",
+    payload: ethereum
+  }
+}
+
+export function setMaxGasPriceComplete(maxGasPrice){
+  var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
+  return {
+    type: "EXCHANGE.SET_MAX_GAS_PRICE_COMPLETE",
+    payload: maxGasPriceGwei
+  }
+}
