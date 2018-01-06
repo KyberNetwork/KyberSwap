@@ -76,6 +76,12 @@ export function specifyGas(value) {
   }
 }
 
+export function toggleTxConfig() {
+  return {
+    type: "EXCHANGE.TOGGLE_CONFIG"
+  }
+}
+
 export function specifyGasPrice(value) {
   return {
     type: "EXCHANGE.SPECIFY_GAS_PRICE",

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 @import '../bower/animate.css/animate.css';
 @import 'settings';
 @import "util";
@@ -23,6 +23,7 @@ $accent-gradient: linear-gradient(169deg, #36d9ac, #049696);
 
 body{
   color: $black;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #waiting {
@@ -486,7 +487,7 @@ body{
     padding: 10px 0;
     margin-top: 15px;
     font-weight: bold;
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 13px;
     color: #0B0F1A;
     a{
