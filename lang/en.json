@@ -10,7 +10,7 @@
   },
 
   "transaction_list": {
-    "transaction_history": "Transaction"
+    "transaction_history": "Recent trades"
   },
 
   "address": {
