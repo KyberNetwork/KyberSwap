@@ -42,6 +42,7 @@
     "password_needed_transfer": "Password is needed for every transfer transaction",
     "next": "Next",
     "exit": "EXIT",
+    "back": "Back",
 
     "broadcast": "Broadcast",
     "transaction": "Transaction",

@@ -1,6 +1,7 @@
 import React from "react"
 import { roundingNumber } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
+import { Link } from 'react-router-dom'
 
 const TransactionLoadingView = (props) => {
   if (props.broadcasting) {
@@ -9,6 +10,12 @@ const TransactionLoadingView = (props) => {
       <div>
         <div class="frame">
           <div class="row">
+            <div className="column">
+              <h1 class="title">
+                <Link to="/exchange">{props.translate("transaction.exchange") || "Exchange"}</Link>
+                <Link to="/transfer">{props.translate("transaction.transfer") || "Transfer"}</Link>
+              </h1>
+            </div>
             <div class="text-center">
               <h1 class="title mb-0 font-w-b">{props.translate("transaction.broadcast") || "Broadcast"}
               </h1>
@@ -36,7 +43,6 @@ const TransactionLoadingView = (props) => {
         </div>
         <div class="row">
           <div class="column small-11 medium-10 large-9 small-centered text-center">
-            <p class="note text-white">{props.type == 'exchange' ? props.translate("transaction.close_browser_or_make_new_exchange") : props.translate("transaction.close_browser_or_make_new_transfer")}</p>
             <a className="new-transaction" onClick={props.makeNewTransaction}>
               {props.translate("back") || 'Back'}
             </a>
@@ -50,6 +56,12 @@ const TransactionLoadingView = (props) => {
     <div>
       <div class="frame">
         <div class="row small-11 medium-12 large-12">
+          <div className="column">
+            <h1 class="title">
+              <Link to="/exchange">{props.translate("transaction.exchange") || "Exchange"}</Link>
+              <Link to="/transfer">{props.translate("transaction.transfer") || "Transfer"}</Link>
+            </h1>
+          </div>
           <div class="text-center">
             <h1 class="title mb-0 font-w-b">{props.translate("transaction.broadcast") || "Broadcast"}
             </h1>
@@ -116,9 +128,6 @@ const TransactionLoadingView = (props) => {
       </div>
       <div class="row">
         <div class="column small-11 medium-10 large-9 small-centered text-center">
-          <p class="note text-white">
-            {props.type == 'exchange' ? props.translate("transaction.close_browser_or_make_new_exchange") : props.translate("transaction.close_browser_or_make_new_transfer")}
-          </p>
           <a className="new-transaction" onClick={props.makeNewTransaction}>
             {props.translate("back") || 'Back'}
           </a>
