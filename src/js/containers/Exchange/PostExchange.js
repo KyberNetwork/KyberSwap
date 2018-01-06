@@ -96,6 +96,7 @@ export default class PostExchange extends React.Component {
       this.props.form.destDecimal,
       this.props.form.maxCap)
     var sourceAmountErrorKey
+    console.log(validateAmount)
     switch (validateAmount) {
       case "not a number":
         sourceAmountErrorKey = "error.source_amount_is_not_number"
@@ -328,6 +329,7 @@ export default class PostExchange extends React.Component {
       )
     }
     let className = "button accent "
+    console.log(this.props.form.errors)
     if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree) {
       className += " animated infinite pulse next"
     }
