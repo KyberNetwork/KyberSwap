@@ -181,11 +181,13 @@ const exchange = (state = initState, action) => {
       newState.balanceData = {
         sourceName: action.payload.balanceData.sourceName,
         sourceDecimal: action.payload.balanceData.sourceDecimal,
+        sourceSymbol: action.payload.balanceData.sourceSymbol,
         prevSource : action.payload.balanceData.source,
         nextSource: 0,
 
         destName: action.payload.balanceData.destName,
         destDecimal: action.payload.balanceData.destDecimal,
+        destSymbol: action.payload.balanceData.destSymbol,
         prevDest: action.payload.balanceData.dest,
         nextDest: 0
       }

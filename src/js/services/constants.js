@@ -70,11 +70,13 @@ const INIT_EXCHANGE_FORM_STATE = {
   confirmColdWallet: false,
   balanceData:{
     sourceName: "Ether",
+    sourceSymbol: "ETH",
     sourceDecimal: 18,
     prevSource : 0,
     nextSource: 0,
 
     destName: "Kyber",
+    destSymbol: "KNC",
     destDecimal: 18,
     prevDest: 0,
     nextDest: 0
@@ -119,6 +121,7 @@ const INIT_TRANSFER_FORM_STATE = {
   confirmColdWallet: false,
   balanceData:{
     tokenName: "Ether",
+    tokenSymbol: "ETH",
     tokenDecimal: 18,
     prev : 0,
     next: 0
