@@ -18,8 +18,7 @@
     "import_address": "Import Address",
     "my_balance": "Balance",
     "total": "Estimated Value",
-    "hide_small_balance": "Hide small balances",
-    "show_all_balance": "Show all balances"
+    "hide_zero_balance": "Hide zero balance"
   },
 
   "transaction": {
