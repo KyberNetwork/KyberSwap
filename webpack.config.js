@@ -50,12 +50,14 @@ var scriptConfig = function (env) {
     ] : [
         new Uglify({
           sourceMap: true,
-          compress: {
-            warnings: false
-          },
-          output: {
-              comments: false
-          }}),
+          // compress: {
+          //   warnings: false
+          // },
+          // output: {
+          //     comments: false
+          // }
+        }
+        ),
         new ExtractTextPlugin({ // define where to save the file
           filename: 'app.bundle.css',
           allChunks: true,
