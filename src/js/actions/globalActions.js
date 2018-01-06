@@ -87,10 +87,10 @@ export function setBalanceToken(balances){
   }
 }
 
-export function changeLanguage(ethereum, lang){
+export function changeLanguage(ethereum, lang, locale){
   return {
     type: "GLOBAL.CHANGE_LANGUAGE",
-    payload: {ethereum, lang}
+    payload: {ethereum, lang, locale}
   }
 }
 

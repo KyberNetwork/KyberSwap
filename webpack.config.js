@@ -1,12 +1,12 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
-//const Uglify = require("uglifyjs-webpack-plugin")
+const Uglify = require("uglifyjs-webpack-plugin")
 
 var scriptConfig = function (env) {
   return {
     context: path.join(__dirname, "src"),
-    devtool: (env && env.chain !== "mainnet") ? "inline-sourcemap" : false,
+    devtool: (env && env.build !== "true") ? "inline-sourcemap" : false,
     entry: ['babel-polyfill', "./js/client.js", "./assets/css/app.scss"],
     module: {
       loaders: [{
@@ -39,23 +39,34 @@ var scriptConfig = function (env) {
       path: __dirname + "/src/",
       filename: "client.min.js"
     },
-    plugins: (env && env.chain !== "mainnet") ? [
-     // new Uglify({sourceMap: true}),
+    plugins: (env && env.build !== "true") ? [
       new ExtractTextPlugin({ // define where to save the file
         filename: 'app.bundle.css',
         allChunks: true,
       }),
       new webpack.DefinePlugin({
-        'env': env && env.chain ? '"' + env.chain + '"' : '"kovan"'
+        'env': JSON.stringify(env.chain)
       })
     ] : [
-      //  new Uglify({sourceMap: true}),
+        new Uglify({
+          sourceMap: true,
+          // compress: {
+          //   warnings: false
+          // },
+          // output: {
+          //     comments: false
+          // }
+        }
+        ),
         new ExtractTextPlugin({ // define where to save the file
           filename: 'app.bundle.css',
           allChunks: true,
         }),
         new webpack.DefinePlugin({
-          'env': '"mainnet"'
+          'env': JSON.stringify(env.chain),
+          'process.env': {
+            'NODE_ENV': JSON.stringify("production")
+          }
         })
       ],
     devServer: {

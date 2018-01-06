@@ -1,7 +1,7 @@
 import { take, put, call, fork, select, takeEvery, all, cancel } from 'redux-saga/effects'
-import { store } from "../store"
 import EthereumService from "../services/ethereum/ethereum"
 import { setConnection } from "../actions/connectionActions"
+import { setMaxGasPrice } from "../actions/exchangeActions"
 import { delay } from 'redux-saga'
 
 export function* createNewConnection(action) {
@@ -10,10 +10,11 @@ export function* createNewConnection(action) {
   connectionInstance.subcribe()
 
   
-  var state = store.getState()
-  //var ethereum = action.payload.ethereum
-  var ethereum = state.connection.ethereum
-  const watchConnectionTask = yield fork(watchToSwitchConnection, ethereum)
+  // var state = store.getState()
+  // var ethereum = action.payload.ethereum
+  // var ethereum = state.connection.ethereum
+  yield put(setMaxGasPrice(connectionInstance))
+  const watchConnectionTask = yield fork(watchToSwitchConnection, connectionInstance)
 
   //yield take('GLOBAL.CLEAR_SESSION')
   //yield cancel(watchConnectionTask)

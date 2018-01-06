@@ -4,7 +4,8 @@ import HttpEthereumProvider from "./httpProvider"
 import WebsocketEthereumProvider from "./wsProvider"
 import constants from "../constants"
 
-import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRateUSD, updateHistoryExchange, checkConnection, setGasPrice } from "../../actions/globalActions"
+import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRateUSD, 
+        updateHistoryExchange, checkConnection, setGasPrice, setMaxGasPrice } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx } from "../../actions/txActions"
 import { updateRateExchange, estimateGas } from "../../actions/exchangeActions"
@@ -213,6 +214,15 @@ export default class EthereumService extends React.Component {
     var ethereum = state.connection.ethereum
     store.dispatch(setGasPrice(ethereum))
   }
+
+  // fetchMaxGasPrice = () => {
+  //   var state = store.getState()
+  //   var ethereum = state.connection.ethereum
+
+  //   console.log("++++++++++++++++++++++")
+  //   console.log(ethereum)
+  //   store.dispatch(setMaxGasPrice(ethereum))
+  // }
 
   fetchGasExchange = () => {
     var state = store.getState()

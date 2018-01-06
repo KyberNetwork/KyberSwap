@@ -7,7 +7,7 @@ import { openInfoModal } from '../actions/utilActions'
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
 import { randomToken, setRandomExchangeSelectedToken, setCapExchange } from "../actions/exchangeActions"
 import { setRandomTransferSelectedToken } from "../actions/transferActions"
-import { randomForExchange } from "../utils/random"
+//import { randomForExchange } from "../utils/random"
 
 import * as service from "../services/accounts"
 import constants from "../services/constants"
@@ -15,7 +15,6 @@ import { Rate, updateAllRatePromise } from "../services/rate"
 import { clearInterval } from 'timers';
 
 import { getTranslate } from 'react-localize-redux'
-import { store } from "../store"
 
 export function* updateAccount(action) {
   const { account, ethereum } = action.payload
@@ -130,12 +129,12 @@ export function* importNewAccount(action) {
 }
 
 export function* importMetamask(action) {
-  const { web3Service, networkId, ethereum, tokens } = action.payload
+  const { web3Service, networkId, ethereum, tokens, translate } = action.payload
   try {
     const currentId = yield call([web3Service, web3Service.getNetworkId])
     if (parseInt(currentId, 10) !== networkId) {
       console.log(currentId)
-      yield put(actions.throwError(getTranslate(store.getState().locale)("error.network_not_match") || "Network is not match"))
+      yield put(actions.throwError(translate("error.network_not_match") || "Network is not match"))
       return
     }
     //get coinbase
@@ -153,7 +152,7 @@ export function* importMetamask(action) {
     ))
   } catch (e) {
     console.log(e)
-    yield put(actions.throwError(getTranslate(store.getState().locale)("error.cannot_connect_metamask") || "Cannot get metamask account"))
+    yield put(actions.throwError(translate("error.cannot_connect_metamask") || "Cannot get metamask account"))
   }
 }
 

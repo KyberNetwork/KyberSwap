@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 
-import { stringToHex, getDifferentAmount, toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber, stringToBigNumber } from "../../utils/converter"
+import { stringToHex, getDifferentAmount, toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber, stringToBigNumber, toEther } from "../../utils/converter"
 
 import { PostExchangeWithKey, MinRate } from "../Exchange"
 import { ExchangeForm, TransactionConfig } from "../../components/Transaction"
@@ -13,7 +13,7 @@ import { anyErrors } from "../../utils/validators"
 
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import * as exchangeActions from "../../actions/exchangeActions"
-import { randomForExchange } from "../../utils/random"
+//import { randomForExchange } from "../../utils/random"
 import { getTranslate } from 'react-localize-redux';
 
 @connect((store) => {
@@ -258,6 +258,7 @@ export default class Exchange extends React.Component {
         setAmount={this.setAmount}
         translate={this.props.translate}
         swapToken = {this.swapToken}
+        maxCap={toEther(this.props.exchange.maxCap)}
       />
     )
   }

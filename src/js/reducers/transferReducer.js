@@ -2,7 +2,7 @@ import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
 import { calculateDest } from "../utils/converter"
 
-import { randomToken } from "../utils/random"
+//import { randomToken } from "../utils/random"
 
 const initFormState = constants.INIT_TRANSFER_FORM_STATE
 const initState = initFormState
