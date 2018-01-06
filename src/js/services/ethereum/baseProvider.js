@@ -125,7 +125,7 @@ export default class BaseEthereumProvider {
     return Promise.all(promises)
   }
 
-  getMaxCap(address){
+  getMaxCap(address) {
     return new Promise((resolve, reject) => {
       this.networkContract.methods.getUserCapInWei(address).call()
         .then((result) => {
@@ -174,7 +174,7 @@ export default class BaseEthereumProvider {
 
   }
 
-  estimateGas(txObj){
+  estimateGas(txObj) {
     return new Promise((resolve, reject) => {
       this.rpc.eth.estimateGas(txObj)
         .then((result) => {
@@ -423,53 +423,46 @@ export default class BaseEthereumProvider {
   }
 
   getAllRate(sources, dests, quantity) {
-    var serverPoint = BLOCKCHAIN_INFO.ethScanUrl
-    var api = BLOCKCHAIN_INFO.server_logs.api_key
-
     var dataAbi = this.wrapperContract.methods.getExpectedRates(this.networkAddress, sources, dests, quantity).encodeABI()
-    var path = `/api?module=proxy&action=eth_call&to=${this.wrapperAddress}&data=${dataAbi}&tag=latest&apikey=${api}`
 
     return new Promise((resolve, rejected) => {
-      fetch(serverPoint + path)
-        .then((response) => {
-          if (!response.ok) {
-            reject(response.statusText);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          try {
-            var dataMapped = this.rpc.eth.abi.decodeParameters([
-              {
-                type: 'uint256[]',
-                name: 'expectedPrice'
-              },
-              {
-                type: 'uint256[]',
-                name: 'slippagePrice'
-              }
-            ], data.result)
-            resolve(dataMapped)
-          } catch (e) {
-            console.log(e)
-            resolve([])
-          }
-        })
-        .catch((err) => {
-          console.log("GET request error")
+      this.rpc.eth.call({
+        to: this.wrapperAddress,
+        data: dataAbi
+      })
+      .then((data) => {
+        try {
+          var dataMapped = this.rpc.eth.abi.decodeParameters([
+            {
+              type: 'uint256[]',
+              name: 'expectedPrice'
+            },
+            {
+              type: 'uint256[]',
+              name: 'slippagePrice'
+            }
+          ], data)
+          resolve(dataMapped)
+        } catch (e) {
+          console.log(e)
           resolve([])
-        })
+        }
+      })
+      .catch((err) => {
+        console.log("GET request error")
+        resolve([])
+      })
     })
   }
 
-  getAllRatesFromEtherscan(tokensObj) {
+  getAllRatesFromBlockchain(tokensObj) {
     var arrayTokenAddress = Object.keys(tokensObj).map((tokenName) => {
       return tokensObj[tokenName].address
     });
 
     var arrayEthAddress = Array(arrayTokenAddress.length).fill(constants.ETH.address)
 
-    var arrayQty = Array(arrayTokenAddress.length*2).fill("0x0")
+    var arrayQty = Array(arrayTokenAddress.length * 2).fill("0x0")
 
     return this.getAllRate(arrayTokenAddress.concat(arrayEthAddress), arrayEthAddress.concat(arrayTokenAddress), arrayQty).then((result) => {
       var returnData = []
@@ -490,40 +483,5 @@ export default class BaseEthereumProvider {
       });
       return returnData
     })
-  }
-
-  getAllRatesFromBlockchain(tokens) {
-    var ratePromises = []
-    var tokenObj = BLOCKCHAIN_INFO.tokens
-    Object.keys(tokenObj).map((tokenName) => {
-      ratePromises.push(Promise.all([
-        Promise.resolve(tokenName),
-        Promise.resolve(constants.ETH.symbol),
-        this.getRate(tokenObj[tokenName].address, constants.ETH.address, '0x0')
-      ]))
-      ratePromises.push(Promise.all([
-        Promise.resolve(constants.ETH.symbol),
-        Promise.resolve(tokenName),
-        this.getRate(constants.ETH.address, tokenObj[tokenName].address, '0x0')
-      ]))
-    })
-    return Promise.all(ratePromises)
-      .then((arrayRate) => {
-        var arrayRateObj = arrayRate.map((rate) => {
-          return {
-            source: rate[0],
-            dest: rate[1],
-            rate: rate[2].expectedPrice,
-            minRate: rate[2].slippagePrice
-            // expBlock: rate[2].expBlock,
-            // balance: rate[2].balance
-          }
-        })
-        return arrayRateObj
-      })
-      .catch((err) => {
-        console.log(err)
-        // return Promise.reject(err)
-      })
   }
 }
