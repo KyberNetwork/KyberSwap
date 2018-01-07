@@ -286,11 +286,18 @@ body{
 #balance-account{
   position: relative;
   .balance-header{
-    min-height: 150px;
+    max-height: 130px;
     .title{
-      font-size: 25px;
+      font-size: 1.2rem;
       line-height: 25px;
       margin-bottom: 16px;
+      margin-right: 10px;
+    }
+    img{
+      width: 15px;
+    }
+    .estimate-value{
+      font-size: 0.9rem;
     }
     @media screen and (max-width: 640px) {
       min-height: 0;
@@ -303,11 +310,11 @@ body{
   .balances{
     position: absolute;
     width: 100%;
-    top: 55px;
+    top: 45px;
     background-color: #fff;
     z-index: 3;
     > .row{
-      max-height: 90px;
+      max-height: 75px;
       overflow-y: hidden;
       transition: max-height .3s;
       &.active{
@@ -329,6 +336,7 @@ body{
     border-radius: 30px;
     line-height: 20px;
     padding: 10px 15px;
+    font-size: 13px;
     border: 1px solid transparent;
     cursor: pointer;
     &.active, &:hover{

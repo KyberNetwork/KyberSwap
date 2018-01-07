@@ -10,16 +10,15 @@
   },
 
   "transaction_list": {
-    "transaction_history": "Transaction"
+    "transaction_history": "Recent trades"
   },
 
   "address": {
     "address": "Address",
     "import_address": "Import Address",
     "my_balance": "Balance",
-    "total": "Estimated Value",
-    "hide_small_balance": "Hide small balances",
-    "show_all_balance": "Show all balances"
+    "total": "Value",
+    "hide_zero_balance": "Hide zero balance"
   },
 
   "transaction": {
