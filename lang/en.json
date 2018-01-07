@@ -68,7 +68,7 @@
     "transaction_gasprice_50": "Higher gas price, faster transaction. Max gas price: 50 Gwei",
     "transaction_gasprice": "Higher gas price, faster transaction",
     "best_rate_tooltip": "Lower rates for better success chance during market volatility",
-    "terms_and_conditions": "<span>Terms and <br/> Conditions</span>"
+    "terms_and_conditions": "<span>Terms and <br  class='show-for-small-only'>Conditions</span>"
   },
 
   "modal": {
