@@ -11,9 +11,9 @@ const AccountBalanceView = (props) => {
       var bigBalance = new BigNumber(token.balance)
       return (
         props.showZeroBalance || bigBalance.greaterThanOrEqualTo(tokenEpsilon) ? 
-        <div className="columns my-2" key={token.symbol} onClick={(e) => props.selectToken(e, token.symbol, token.address)}>
+        <div className="columns my-1" key={token.symbol} onClick={(e) => props.selectToken(e, token.symbol, token.address)}>
           <div className={'balance-item ' + (token.symbol == props.sourceActive ? 'active' : '')}>
-            <img src={require("../../../assets/img/tokens/" + token.icon)} />
+            {/* <img src={require("../../../assets/img/tokens/" + token.icon)} /> */}
             <div className="d-inline-block">
               <div className="symbol font-w-b">{token.symbol}</div>
               <div title={balance.toString()} className="balance">{converts.roundingNumber(balance)}</div>
@@ -43,7 +43,7 @@ const AccountBalanceView = (props) => {
           <div className="mt-3 clearfix">
             <h4 className="title font-w-b float-left">{props.translate("address.my_balance") || "My balance"}</h4>
             {props.showBalance && (
-              <p className="float-right">
+              <p className="float-right estimate-value">
                 <span className="text-capitalize">{props.translate("address.total") || "Total"}</span>
                 <span className="font-w-b font-s-up-1 ml-2">{getBalanceUsd()}</span> USD
               </p>
@@ -52,7 +52,7 @@ const AccountBalanceView = (props) => {
         </div>
       </div>
       <div className="balances">
-        <div className={'row px-4 small-up-1 medium-up-3 large-up-5 ' + (props.expanded ? 'active' : '')}>
+        <div className={'row px-4 small-up-2 medium-up-5 large-up-7 ' + (props.expanded ? 'active' : '')}>
           {getBalances()}
         </div>
         <div className="expand">
