@@ -78,13 +78,13 @@ const TransactionLoadingView = (props) => {
                   {props.type === "exchange" &&
                     <ul class="address-balances text-white">
                       <li class="text-left">
-                        <span class="name">{props.balanceInfo.sourceTokenName}</span>
+                        <span class="name">{props.balanceInfo.sourceSymbol}</span>
                         <span class="balance" title={props.balanceInfo.sourceAmount.prevValue}>{roundingNumber(props.balanceInfo.sourceAmount.prevValue)}</span>
                         <i className="k k-arrow"></i>
                         <span class="balance" title={props.balanceInfo.sourceAmount.nextValue}>{roundingNumber(props.balanceInfo.sourceAmount.nextValue)}</span>
                       </li>
                       <li class="text-left">
-                        <span class="name">{props.balanceInfo.destTokenName}</span>
+                        <span class="name">{props.balanceInfo.destSymbol}</span>
                         <span class="balance" title={props.balanceInfo.destAmount.prevValue}>{roundingNumber(props.balanceInfo.destAmount.prevValue)}</span>
                         <i className="k k-arrow"></i>
                         <span class="balance font-w-b" title={props.balanceInfo.destAmount.nextValue}>{roundingNumber(props.balanceInfo.destAmount.nextValue)}</span>
@@ -94,7 +94,7 @@ const TransactionLoadingView = (props) => {
                   {props.type === "transfer" &&
                     <ul class="address-balances text-white">
                       <li class="text-left">
-                        <span class="name">{props.balanceInfo.tokenName}</span>
+                        <span class="name">{props.balanceInfo.tokenSymbol}</span>
                         <span class="balance" title={props.balanceInfo.amount.prev}>{roundingNumber(props.balanceInfo.amount.prev)}</span>
                         <i className="k k-arrow"></i>
                         <span class="balance font-w-b" title={props.balanceInfo.amount.next}>{roundingNumber(props.balanceInfo.amount.next)}</span>

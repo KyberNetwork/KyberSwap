@@ -169,7 +169,8 @@ export default class PostTransfer extends React.Component {
     var balanceData = {
       balance: this.props.form.balance.toString(), 
       name: this.props.form.tokenName,
-      decimal: this.props.form.decimal
+      decimal: this.props.form.decimal,
+      tokenSymbol: this.props.form.tokenSymbol,
       }
     return {
       selectedAccount, token, amount, destAddress,

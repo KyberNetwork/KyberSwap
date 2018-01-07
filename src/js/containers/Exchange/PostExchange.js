@@ -39,7 +39,8 @@ import { toggleTxConfig } from "../../actions/exchangeActions";
   }
 
   return {
-    form: { ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal, sourceName, destName },
+    form: { ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal, 
+              sourceName, destName },
     account: store.account.account,
     ethereum: store.connection.ethereum,
     keyService: props.keyService,
@@ -97,7 +98,6 @@ export default class PostExchange extends React.Component {
       this.props.form.destDecimal,
       this.props.form.maxCap)
     var sourceAmountErrorKey
-    console.log(validateAmount)
     switch (validateAmount) {
       case "not a number":
         sourceAmountErrorKey = "error.source_amount_is_not_number"
@@ -191,10 +191,12 @@ export default class PostExchange extends React.Component {
     var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.form.gasPrice))
     var balanceData = {
       sourceName: this.props.form.sourceName,
+      sourceSymbol: this.props.form.sourceTokenSymbol,
       sourceDecimal: this.props.form.sourceDecimal,
       source: this.props.form.sourceBalance.toString(),
       destName: this.props.form.destName,
       destDecimal: this.props.form.destDecimal,
+      destSymbol: this.props.form.destTokenSymbol,
       dest: this.props.form.destBalance.toString()
     }
     return {
