@@ -10,38 +10,52 @@ const AccountBalanceView = (props) => {
       var tokenEpsilon = converts.caculateTokenEpsilon(token.rate, token.decimal, token.symbol)
       var bigBalance = new BigNumber(token.balance)
       return (
-        props.showZeroBalance || bigBalance.greaterThanOrEqualTo(tokenEpsilon) ? 
-        <div className="columns my-2" key={token.symbol} onClick={(e) => props.selectToken(e, token.symbol, token.address)}>
-          <div className={'balance-item ' + (token.symbol == props.sourceActive ? 'active' : '')}>
-            <img src={require("../../../assets/img/tokens/" + token.icon)} />
-            <div className="d-inline-block">
-              <div className="symbol font-w-b">{token.symbol}</div>
-              <div title={balance.toString()} className="balance">{converts.roundingNumber(balance)}</div>
+        props.showZeroBalance || bigBalance.greaterThanOrEqualTo(tokenEpsilon) ?
+          <div className="columns my-2" key={token.symbol} onClick={(e) => props.selectToken(e, token.symbol, token.address)}>
+            <div className={'balance-item ' + (token.symbol == props.sourceActive ? 'active' : '')}>
+              <img src={require("../../../assets/img/tokens/" + token.icon)} />
+              <div className="d-inline-block">
+                <div className="symbol font-w-b">{token.symbol}</div>
+                <div title={balance.toString()} className="balance">{converts.roundingNumber(balance)}</div>
+              </div>
             </div>
           </div>
-        </div>
-        : <div key={token.symbol}/>
+          : <div key={token.symbol} />
       )
     })
     return balances
   }
 
-  function getBalanceUsd(){
+  function getBalanceUsd() {
     var total = 0
     Object.values(props.tokens).map(token => {
       var balance = converts.toT(token.balance, token.decimal)
       total += balance * token.rateUSD
     })
     var roundingTotal = converts.roundingNumber(total)
-    return roundingTotal    
+    return roundingTotal
   }
-  
+
+  var checkBox = !props.showZeroBalance ? <img src={require("../../../assets/img/checkmark-selected-dark.svg")} />
+                                      :<img src={require("../../../assets/img/checkmark-unselected-dark.svg")} />
+
   return (
     <div>
       <div className="row balance-header small-11 medium-12 large-12">
         <div className="column">
           <div className="mt-3 clearfix">
             <h4 className="title font-w-b float-left">{props.translate("address.my_balance") || "My balance"}</h4>
+              <div onClick={props.toggleZeroBalance} class="float-left">
+                {/* <input type="checkbox" checked={!props.showZeroBalance} />
+                <a className="term-text">
+                  Hide zero balance
+                </a> */}
+
+                {checkBox}
+                <a className="term-text">
+                  {props.translate("address.hide_zero_balance") || "Hide zero balance"}
+                </a>
+              </div>
             {props.showBalance && (
               <p className="float-right">
                 <span className="text-capitalize">{props.translate("address.total") || "Total"}</span>
