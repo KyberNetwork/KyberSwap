@@ -151,7 +151,7 @@ export default class Transfer extends React.Component {
         gasError={this.props.transfer.errors.gas}
         totalGas={totalGas.toString()}
         translate={this.props.translate}
-        isOpenTxConfig={this.props.transfer.isOpenTxConfig}
+        advanced={this.props.transfer.advanced}
       />
     )
 
