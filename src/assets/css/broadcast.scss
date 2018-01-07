@@ -18,6 +18,11 @@ ul.broadcast-steps {
   padding: 0;
   list-style: none;
   font-size: 0;
+  .pending, .success, .failed{
+    h4{
+      font-size: 1.2rem;
+    }
+  }
   ul.address-balances{
     display: block;
     width: 90%;
@@ -55,7 +60,7 @@ ul.broadcast-steps {
     }
     &.failed {
       h4{
-        color: #f66c6c;
+        color: $alert-color;
       }
       .reason {
         text-align: center;

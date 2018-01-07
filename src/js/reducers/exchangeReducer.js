@@ -23,6 +23,7 @@ const exchange = (state = initState, action) => {
       newState.sourceAmount = ""
       newState.destAmount = ""
       newState.errors = initState.errors
+      newState.isOpenTxConfig = false
       //newState.gasPrice = initState.gasPrice
       newState.bcError = ""
       newState.step = initState.step

@@ -11,7 +11,7 @@ const AccountBalanceView = (props) => {
       var bigBalance = new BigNumber(token.balance)
       return (
         props.showZeroBalance || bigBalance.greaterThanOrEqualTo(tokenEpsilon) ?
-          <div className="columns my-1" key={token.symbol} onClick={(e) => props.selectToken(e, token.symbol, token.address)}>
+          <div className="columns my-2" key={token.symbol} onClick={(e) => props.selectToken(e, token.symbol, token.address)}>
             <div className={'balance-item ' + (token.symbol == props.sourceActive ? 'active' : '')}>
               <div className="d-inline-block">
                 <div className="symbol font-w-b">{token.symbol}</div>
@@ -35,8 +35,8 @@ const AccountBalanceView = (props) => {
     return roundingTotal
   }
 
-  var checkBox = props.showZeroBalance ? <img src={require("../../../assets/img/checkmark-selected-dark.svg")} />
-    : <img src={require("../../../assets/img/checkmark-unselected-dark.svg")} />
+  // var checkBox = props.showZeroBalance ? <img src={require("../../../assets/img/checkmark-selected-dark.svg")} />
+  //   : <img src={require("../../../assets/img/checkmark-unselected-dark.svg")} />
 
   return (
     <div>
@@ -45,7 +45,7 @@ const AccountBalanceView = (props) => {
           <div className="mt-3 clearfix">
             <h4 className="title font-w-b float-left">{props.translate("address.my_balance") || "My balance"}</h4>
             <div onClick={props.toggleZeroBalance} class="float-left">
-              {checkBox}
+              {/* {checkBox} */}
             </div>
             {props.showBalance && (
               <p className="float-right estimate-value">
@@ -57,7 +57,7 @@ const AccountBalanceView = (props) => {
         </div>
       </div>
       <div className="balances">
-        <div className={'row px-4 small-up-2 medium-up-5 large-up-7 ' + (props.expanded ? 'active' : '')}>
+        <div className={'row small-up-3 medium-up-6 large-up-8 ' + (props.expanded ? 'active' : '')}>
           {getBalances()}
         </div>
         <div className="expand">

@@ -84,7 +84,7 @@
         width: 30px;
       }
       .unsupported{
-        color:red;
+        color:$alert-color;
       }
       &:hover{
         background-color: rgba(36, 173, 151, 0.45)

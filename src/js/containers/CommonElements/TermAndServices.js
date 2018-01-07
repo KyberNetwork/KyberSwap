@@ -85,7 +85,7 @@ export default class TermAndServices extends React.Component {
           </span>
           <span onClick={this.showTerms}>
             <a className="term-text">
-              {this.props.translate("transaction.terms_and_conditions") || <span>Terms and <br></br> Conditions </span>}
+              {this.props.translate("transaction.terms_and_conditions") || <span>Terms and <br className="show-for-small-only"></br> Conditions </span>}
             </a>
           </span>
           

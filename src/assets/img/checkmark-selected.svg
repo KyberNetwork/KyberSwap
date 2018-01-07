@@ -4,11 +4,11 @@
     <title>checkmark selected</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Terms" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(0.000000, -2.000000)">
-        <g id="checkmark-selected">
-            <g transform="translate(0.000000, 2.000000)">
-                <rect id="Rectangle-9" stroke="#FFFFFF" stroke-width="2" x="1" y="1" width="23" height="23"></rect>
-                <g id="checkmark" transform="translate(4.629630, 6.481481)" fill="#FFFFFF">
+    <g id="Terms-Copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(0.000000, -2.000000)">
+        <g id="Terms">
+            <g id="checkmark-selected" transform="translate(0.000000, 2.000000)">
+                <rect id="Rectangle-9" stroke="#FFFFFF" stroke-width="2" x="1" y="1" width="23" height="23" rx="4"></rect>
+                <g id="checkmark" transform="translate(5.000000, 6.000000)" fill="#FFFFFF">
                     <polygon id="Rectangle-2-Copy-8" transform="translate(9.924670, 6.120601) scale(1, -1) rotate(45.000000) translate(-9.924670, -6.120601) " points="3.01367207 4.97000191 16.8356678 4.97000191 16.8356678 7.27120042 3.01367207 7.27120042"></polygon>
                     <polygon id="Rectangle-2-Copy-10" transform="translate(3.754702, 8.011436) scale(-1, -1) rotate(45.000000) translate(-3.754702, -8.011436) " points="-0.403415368 6.86083702 7.91281865 6.86083702 7.91281865 9.16203552 -0.403415368 9.16203552"></polygon>
                 </g>

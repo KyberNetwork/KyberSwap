@@ -4,7 +4,7 @@
 @import "util";
 
 $accent-gradient: linear-gradient(169deg, #36d9ac, #049696);
-
+$alert-color : #ff5d00;
 
 @import 'elements';
 @import 'broadcast';
@@ -36,6 +36,9 @@ body{
   z-index: 1000;
   &.pending{
     background-color: rgba($white, .3);
+    h4{
+      font-size: 1.2rem;
+    }
   }
   .caption {
     box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
@@ -286,7 +289,7 @@ body{
 #balance-account{
   position: relative;
   .balance-header{
-    max-height: 130px;
+    min-height: 130px;
     .title{
       font-size: 1.2rem;
       line-height: 25px;
@@ -310,7 +313,7 @@ body{
   .balances{
     position: absolute;
     width: 100%;
-    top: 45px;
+    top: 40px;
     background-color: #fff;
     z-index: 3;
     > .row{
@@ -333,7 +336,7 @@ body{
     }
   }
   .balance-item{
-    border-radius: 30px;
+    border-radius: 15px;
     line-height: 20px;
     padding: 10px 15px;
     font-size: 13px;
@@ -350,24 +353,25 @@ body{
       vertical-align: baseline;
       margin-right: 15px;
     }
-    @media screen and (max-width: 640px) {
-      img{
-        vertical-align: bottom;
-      }
-      > div{
-        width: calc(100% - 50px);
-        .symbol{
-          float: left;
-        }
-        .balance{
-          float: right;
-        }
-      }
-    }
+    // @media screen and (max-width: 640px) {
+    //   img{
+    //     vertical-align: bottom;
+    //   }
+    //   > div{
+    //     width: calc(100% - 50px);
+    //     .symbol{
+    //       float: left;
+    //     }
+    //     .balance{
+    //       float: right;
+    //     }
+    //   }
+    // }
   }
   .expand{
     border-top: 1px solid #eee;
     height: 8px;
+    margin-top: 10px;
     background-color: #fff;
     .row{
       position: relative;

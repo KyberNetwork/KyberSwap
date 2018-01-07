@@ -27,6 +27,7 @@ const transfer = (state = initState, action) => {
       newState.token = transfer.token
       newState.tokenSymbol = transfer.tokenSymbol
       newState.gasPrice = transfer.gasPrice
+      newState.isOpenTxConfig = false
       newState.isEditGasPrice = false
       return newState;
     case "TRANSFER.SELECT_TOKEN":
