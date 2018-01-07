@@ -127,6 +127,7 @@ export default class Transfer extends React.Component {
     var balanceInfo = {
       tokenName: this.props.transfer.balanceData.tokenName,
       amount: balance,
+      tokenSymbol: this.props.transfer.balanceData.tokenSymbol
      // tokenSymbol: this.props.transfer.tokenSymbol
     }
     var transactionLoadingScreen = (

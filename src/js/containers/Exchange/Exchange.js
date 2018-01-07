@@ -145,10 +145,12 @@ export default class Exchange extends React.Component {
     var balanceInfo = {
       //sourceTokenSymbol: this.props.exchange.sourceTokenSymbol,
       sourceAmount: balance,
+      sourceSymbol: this.props.exchange.balanceData.sourceSymbol,
       sourceTokenName: this.props.exchange.balanceData.sourceName,
       //destTokenSymbol: this.props.exchange.destTokenSymbol,
       destAmount: balanceDest,
       destTokenName: this.props.exchange.balanceData.destName,
+      destSymbol: this.props.exchange.balanceData.destSymbol,
     }
 
 
