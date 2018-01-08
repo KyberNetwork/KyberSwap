@@ -69,6 +69,38 @@ export function calculateRate(source, dest) {
   return rate
 }
 
+export function caculateEthBalance(token){
+  if(token.symbol.toLowerCase() == 'eth'){
+    return token.balance
+  } else {
+    var rateBig = new BigNumber(token.rate)
+    var balanceBig = new BigNumber(token.balance)
+    var weiParam = new BigNumber(10)
+    var balanceToken = balanceBig.div(weiParam.pow(token.decimal))
+
+    var balanceEth = balanceToken.times(rateBig)
+    return balanceEth.toString()
+  }
+}
+
+export function shortEthBalance(tokens){
+  var shortedTokens = []
+  let removedEth = {...tokens}
+  delete removedEth[constants.ETH.symbol]
+  if(tokens){
+    shortedTokens = Object.values(removedEth).sort((a, b) => {
+      // if(a.symbol == constants.ETH.symbol) return false
+      var balanceEthA = new BigNumber(caculateEthBalance(a)) 
+      var balanceEthB = new BigNumber(caculateEthBalance(b)) 
+      return balanceEthB.sub(balanceEthA)
+    })
+  } 
+  if(tokens[constants.ETH.symbol]){
+    shortedTokens.unshift(tokens[constants.ETH.symbol])
+  }
+  return shortedTokens
+}
+
 function acceptableTyping(number) {
   // ends with a dot
   if (number.length > 0 && number[number.length - 1] == ".") {
