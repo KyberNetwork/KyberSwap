@@ -91,6 +91,12 @@ body{
           color: $dark-gray;
         }
       }
+      img{
+        width: 25px;
+      }
+      span{
+        vertical-align: middle;
+      }
     }
   }
 }
