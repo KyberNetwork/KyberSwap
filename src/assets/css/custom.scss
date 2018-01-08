@@ -125,7 +125,7 @@ a.disabled{
                     margin-top: 5px;
                 }
             }
-            .token-select, .address-balance, .token-amount{
+            .address-balance{
                 margin-top: 5px;
             }
         }
@@ -134,30 +134,6 @@ a.disabled{
         @media screen and (min-width: 790px) and (max-width: 1024px){
             #import-acc{
                 width: 70%;
-            }
-        }
-    }
-}
-.token-stamp{
-    &.selected .balance{
-        span{
-            color: $light-gray;
-        }
-    }
-    .balance{
-        &:before{
-            content: unset;
-        }
-        span{
-            //font-family: "Muli", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-            color: map-get($foundation-palette, primary);
-            text-transform: uppercase;
-            float: left;
-            margin-right: 5px;
-        }
-        @media screen and(max-width: 40em){
-            span{
-                display: none;
             }
         }
     }
@@ -173,4 +149,7 @@ a.disabled{
 }
 .custom-scroll::-webkit-scrollbar-thumb{
     background-color: #7b868b;
+}
+.column:last-child:not(:first-child){
+    float: left;
 }
