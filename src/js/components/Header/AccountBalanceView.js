@@ -5,7 +5,7 @@ import BigNumber from "bignumber.js"
 const AccountBalanceView = (props) => {
 
   function getBalances() {
-    var balances = Object.values(converts.shortEthBalance(props.tokens))
+    var balances = converts.shortEthBalance(props.tokens)
     .map(token => {
       var balance = converts.toT(token.balance, token.decimal)
 

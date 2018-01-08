@@ -79,19 +79,25 @@ export function caculateEthBalance(token){
     var balanceToken = balanceBig.div(weiParam.pow(token.decimal))
 
     var balanceEth = balanceToken.times(rateBig)
-    return balanceEth
+    return balanceEth.toString()
   }
 }
 
 export function shortEthBalance(tokens){
-  var shortedTokens = tokens
-  if(tokens && Array.isArray(tokens)){
-    shortedTokens = tokens.short((a, b) => {
-      var balanceEthA = caculateEthBalance(a)
-      var balanceEthB = caculateEthBalance(b)
-      return balanceEthA.gte(balanceEthB)
+  var shortedTokens = []
+  let removedEth = {...tokens}
+  delete removedEth[constants.ETH.symbol]
+  if(tokens){
+    shortedTokens = Object.values(removedEth).sort((a, b) => {
+      // if(a.symbol == constants.ETH.symbol) return false
+      var balanceEthA = new BigNumber(caculateEthBalance(a)) 
+      var balanceEthB = new BigNumber(caculateEthBalance(b)) 
+      return balanceEthB.sub(balanceEthA)
     })
   } 
+  if(tokens[constants.ETH.symbol]){
+    shortedTokens.unshift(tokens[constants.ETH.symbol])
+  }
   return shortedTokens
 }
 
