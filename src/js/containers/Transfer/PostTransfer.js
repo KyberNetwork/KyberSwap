@@ -140,6 +140,7 @@ export default class PostTransfer extends React.Component {
         break
       case "privateKey":
       case "trezor":
+      case "metamask":
       case "ledger":
         this.props.dispatch(transferActions.hideConfirm())
         break
