@@ -47,7 +47,7 @@ var scriptConfig = function (env) {
       new webpack.DefinePlugin({
         'env': JSON.stringify(env.chain),
         'process.env': {
-          'logger': true
+          'logger': env.logger
         }
       })
     ] : [
@@ -68,7 +68,8 @@ var scriptConfig = function (env) {
         new webpack.DefinePlugin({
           'env': JSON.stringify(env.chain),
           'process.env': {
-            'NODE_ENV': JSON.stringify("production")
+            'NODE_ENV': JSON.stringify("production"),
+            'logger': env.logger
           }
         })
       ],
