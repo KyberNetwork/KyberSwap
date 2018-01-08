@@ -3,6 +3,9 @@ import * as converts from "../../utils/converter"
 import BigNumber from "bignumber.js"
 
 const AccountBalanceView = (props) => {
+  function displayBalance(balance, rateUSD){
+    return `${props.translate("address.my_balance") || "Balance"}: ${balance} \n${props.translate("address.estimated_value") || "Estimated value"}: ${converts.roundingNumber(balance * rateUSD)} USD`
+  }
 
   function getBalances() {
     var balances = converts.shortEthBalance(props.tokens)
@@ -13,11 +16,11 @@ const AccountBalanceView = (props) => {
       var bigBalance = new BigNumber(token.balance)
       return (
         props.showZeroBalance || bigBalance.greaterThanOrEqualTo(tokenEpsilon) ?
-          <div className="columns my-2" key={token.symbol} onClick={(e) => props.selectToken(e, token.symbol, token.address)}>
+          <div title={displayBalance(balance, token.rateUSD)} className="columns my-2" key={token.symbol} onClick={(e) => props.selectToken(e, token.symbol, token.address)}>
             <div className={'balance-item ' + (token.symbol == props.sourceActive ? 'active' : '')}>
               <div className="d-inline-block">
                 <div className="symbol font-w-b">{token.symbol}</div>
-                <div title={balance.toString()} className="balance">{converts.roundingNumber(balance)}</div>
+                <div className="balance">{converts.roundingNumber(balance)}</div>
               </div>
             </div>
           </div>
@@ -51,7 +54,7 @@ const AccountBalanceView = (props) => {
             </div>
             {props.showBalance && (
               <p className="float-right estimate-value">
-                <span className="text-capitalize">{props.translate("address.total") || "Total"}</span>
+                <span className="text-capitalize">{props.translate("address.total") || "Total value"}</span>
                 <span className="font-w-b font-s-up-1 ml-2">{getBalanceUsd()}</span> USD
               </p>
             )}
