@@ -203,7 +203,9 @@ h1.title {
     color: #91a1a7;
     
     &:first-child{
-      margin-right: 25px;
+      margin-right: 15px;
+      padding-right: 15px;
+      border-right: 1px solid #91a1a7;
     }
     &.disable{
       color: white;  
@@ -395,8 +397,8 @@ span.help {
         background: white;
         box-shadow: 0 1px 5px 0 rgba($medium-gray, .4);
         border-radius: 1000px;
-        width: 29px;
-        height: 29px;
+        width: 28px;
+        height: 28px;
         left: 0;
         top: 0;
       }

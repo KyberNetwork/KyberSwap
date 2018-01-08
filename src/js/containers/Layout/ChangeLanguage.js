@@ -76,7 +76,7 @@ export default class InfoModal extends React.Component {
       <React.Fragment>
         <a onClick={() => this.openModal()}>
           <img src={require('../../../assets/img/langs/' + getLanguage(lang).pack_icon)} />
-          <span className="ml-2">{getLanguage(lang).pack_label}</span>
+          <span className="ml-2 language-name">{getLanguage(lang).pack_label}</span>
         </a>
 
         <Modal className={{
