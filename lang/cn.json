@@ -131,8 +131,8 @@
   "import": {
     "from_metamask": "连接至<br>Metatmask",
     "from_keystore": "选择或拖动<br />您的密钥库",
-    "from_trezor": "从<br />trezor导入",
-    "from_ledger": "从<br />ledger导入",
+    "from_trezor": "从<br />Trezor导入",
+    "from_ledger": "从<br />Ledger导入",
     "from_private_key": "请输入您的<br />密钥",
     "from_private_key_input_title": "请输入您的密钥",
     "from_private_key_input_title_placehoder": "请输入您的密钥"

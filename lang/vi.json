@@ -131,8 +131,8 @@
   "import": {
     "from_metamask": "Kêt nối <br> metamask",
     "from_keystore": "Chọn hoặc kéo<br />keystore",
-    "from_trezor": "Nhập từ<br />trezor",
-    "from_ledger": "Nhập từ<br />ledger",
+    "from_trezor": "Nhập từ<br />Trezor",
+    "from_ledger": "Nhập từ<br />Ledger",
     "from_private_key": "Điền<br />private key",
     "from_private_key_input_title": "ĐIỀN PRIVATEKEY",
     "from_private_key_input_title_placehoder": "Điền private key"

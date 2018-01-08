@@ -9,20 +9,17 @@ import { store } from "../../store"
 const defaultDPath = "m/44'/60'/0'/0";
 
 export default class Trezor {
-  constructor(){
-    this.translate = getTranslate(store.getState().locale)
-  }
-
   getPublicKey = (path = defaultDPath) => {
+    var translate = getTranslate(store.getState().locale)
     return new Promise((resolve, reject) => {
       TrezorConnect.getXPubKey(path, (result) => {
           if (result.success) {
             result.dPath = path;
             resolve(result);
           } else {
-            var err = this.translate("error.cannot_connect_trezor") || 'Cannot connect to trezor'
+            var err = translate("error.cannot_connect_trezor") || 'Cannot connect to trezor'
             if (result.toString() == 'Error: Not a valid path.') {
-              err = this.translate("error.path_not_support_by_trezor") || 'This path not supported by Trezor'
+              err = translate("error.path_not_support_by_trezor") || 'This path not supported by Trezor'
             }
             reject(err)
           }
