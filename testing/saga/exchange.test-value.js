@@ -151,7 +151,7 @@ var exchangeSuccess = {
   ethereum: ethereum,
   formId: "exchange",
   gas: "0xf4240",
-  gasPrice: "0x4a817c800",
+  gasPrice: "0x5a817c800",
   // keyService: new KeyStore(),
   // keystring: '{"version":3,"id":"42a81fda-8d1b-4e61-a8ee-8703bc4137b5","address":"12f0453c1947269842c5646df98905533c1b9519","crypto":{"ciphertext":"5ac005ce89f9483b3415e8057e7410a1c06fb11611f811109df79a462fe868d3","cipherparams":{"iv":"8dccbd0a66094ae251f8ec79559fece2"},"cipher":"aes-128-ctr","kdf":"pbkdf2","kdfparams":{"dklen":32,"salt":"0c6d49adde05b145a29acec30fa9961f277fab5a99f09bfe4d25d6a41a9c5e7e","c":10240,"prf":"hmac-sha256"},"mac":"22f6275e7e7064a71768ece7215e2eea8c4d16971f1079b429c9ddefb9d061a2"}}',
   maxDestAmount: "0x8000000000000000000000000000000000000000000000000000000000000000",
