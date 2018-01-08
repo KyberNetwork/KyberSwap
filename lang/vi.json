@@ -1,7 +1,7 @@
 {
   "pack": "vi",
   "pack_icon": "vi.svg",
-  "pack_label": "Việt nam",
+  "pack_label": "Việt Nam",
   "pack_active": true,
   "layout": {
     "info": "Thông tin",
