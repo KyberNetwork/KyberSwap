@@ -69,6 +69,32 @@ export function calculateRate(source, dest) {
   return rate
 }
 
+export function caculateEthBalance(token){
+  if(token.symbol.toLowerCase() == 'eth'){
+    return token.balance
+  } else {
+    var rateBig = new BigNumber(token.rate)
+    var balanceBig = new BigNumber(token.balance)
+    var weiParam = new BigNumber(10)
+    var balanceToken = balanceBig.div(weiParam.pow(token.decimal))
+
+    var balanceEth = balanceToken.times(rateBig)
+    return balanceEth
+  }
+}
+
+export function shortEthBalance(tokens){
+  var shortedTokens = tokens
+  if(tokens && Array.isArray(tokens)){
+    shortedTokens = tokens.short((a, b) => {
+      var balanceEthA = caculateEthBalance(a)
+      var balanceEthB = caculateEthBalance(b)
+      return balanceEthA.gte(balanceEthB)
+    })
+  } 
+  return shortedTokens
+}
+
 function acceptableTyping(number) {
   // ends with a dot
   if (number.length > 0 && number[number.length - 1] == ".") {

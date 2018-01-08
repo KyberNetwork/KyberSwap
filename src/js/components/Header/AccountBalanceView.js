@@ -1,10 +1,12 @@
 import React from "react"
 import * as converts from "../../utils/converter"
 import BigNumber from "bignumber.js"
+
 const AccountBalanceView = (props) => {
 
   function getBalances() {
-    var balances = Object.values(props.tokens).map(token => {
+    var balances = Object.values(converts.shortEthBalance(props.tokens))
+    .map(token => {
       var balance = converts.toT(token.balance, token.decimal)
 
       var tokenEpsilon = converts.caculateTokenEpsilon(token.rate, token.decimal, token.symbol)
