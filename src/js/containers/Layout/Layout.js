@@ -9,7 +9,12 @@ import { Exchange } from "../../containers/Exchange"
 
 import { Transfer } from "../../containers/Transfer"
 
+<<<<<<< HEAD
 import { Header, Rate } from "../../containers/Header"
+=======
+import TermOfService from "../../components/TermOfService"
+import WarningMessage from "../../components/WarningMessage"
+>>>>>>> a0116577fe8de7bc6ad1535385dd3d2cb08c8732
 
 import { ImportAccount } from "../ImportAccount"
 
