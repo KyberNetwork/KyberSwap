@@ -9,11 +9,8 @@ import { getTranslate } from 'react-localize-redux'
 const defaultDPath = "m/44'/60'/0'";
 
 export default class Ledger {
-  constructor(){
-    this.translate = getTranslate(store.getState().locale)
-  }
-
   getPublicKey = (path = defaultDPath) => {
+    var translate = getTranslate(store.getState().locale)
     return new Promise((resolve, reject) => {
       connectLedger().then((eth) => {
         eth.getAddress_async(path, false, true)
@@ -26,10 +23,10 @@ export default class Ledger {
 							case 'Invalid status 6801':
 							case 'Invalid status 6a80':
 							case 'Invalid status 6804':
-              reject(this.translate("error.check_right_application_selected") || 'Check to make sure the right application is selected')
+              reject(translate("error.check_right_application_selected") || 'Check to make sure the right application is selected')
 								break;
 							default:
-              reject(this.translate("error.cannot_connect_ledger") || 'Cannot connect to ledger')
+              reject(translate("error.cannot_connect_ledger") || 'Cannot connect to ledger')
             }
           });
       });
