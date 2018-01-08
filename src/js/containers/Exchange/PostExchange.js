@@ -14,7 +14,6 @@ import { TermAndServices } from "../../containers/CommonElements"
 import { PassphraseModal, ConfirmTransferModal, ApproveModal, PostExchangeBtn } from "../../components/Transaction"
 import { getTranslate } from 'react-localize-redux';
 import { RateBetweenToken } from "../Exchange"
-import { toggleTxConfig } from "../../actions/exchangeActions";
 
 @connect((store, props) => {
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
@@ -283,6 +282,7 @@ export default class PostExchange extends React.Component {
       <ApproveModal recap="Please approve"
         onCancel={this.closeModalApprove}
         isApproving={this.props.form.isApproving}
+        token={this.props.form.sourceTokenSymbol}
         onSubmit={this.processExchangeAfterApprove}
         translate={this.props.translate}
       />
@@ -290,7 +290,7 @@ export default class PostExchange extends React.Component {
   }
 
   openConfig = () => {
-    this.props.dispatch(toggleTxConfig());
+    this.props.dispatch(exchangeActions.toggleAdvance());
   }
 
   render() {
@@ -374,7 +374,7 @@ export default class PostExchange extends React.Component {
         termAndServices={termAndServices}
         rateToken={rateToken}
         openConfig={this.openConfig}
-        isOpenTxConfig={this.props.form.isOpenTxConfig}
+        advanced={this.props.form.advanced}
       />
     )
   }

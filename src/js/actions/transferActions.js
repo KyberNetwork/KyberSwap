@@ -32,12 +32,6 @@ export function specifyGas(value) {
   }
 }
 
-export function toggleTxConfig() {
-  return {
-    type: "TRANSFER.TOGGLE_CONFIG"
-  }
-}
-
 export function setRandomTransferSelectedToken(random) {
   return {
     type: "TRANSFER.SET_RANDOM_SELECTED_TOKEN",
@@ -52,15 +46,9 @@ export function specifyGasPrice(value) {
   }
 }
 
-export function showAdvance() {
+export function toggleAdvance() {
   return {
-    type: "TRANSFER.SHOW_ADVANCE",
-  }
-}
-
-export function hideAdvance() {
-  return {
-    type: "TRANSFER.HIDE_ADVANCE",
+    type: "TRANSFER.TOGGLE_ADVANCE",
   }
 }
 

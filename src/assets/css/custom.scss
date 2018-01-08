@@ -1,7 +1,7 @@
 .ReactModal__Body--open{
     overflow: hidden;
 }
-@media (min-width: 640px){
+@include breakpoint(medium){
     .react-modal{
         margin-bottom: 50px!important; 
     }
@@ -11,11 +11,18 @@
     
     $half: -50%;
     .reveal.tiny{
+        width: 55%;
+        max-width: 500px;
         top: 40%;
         -ms-transform: translateY($half);
         -webkit-transform: translateY($half);
         -moz-transform: translateY($half);
         transform: translateY($half);
+    } 
+}
+@include breakpoint(large){
+    .reveal.tiny{
+        width: 30%;
     } 
 }
 
@@ -94,7 +101,7 @@ a.disabled{
         margin-bottom: 8px;
     }
 }
-@media screen and (min-width: 640px){
+@include breakpoint(medium){
     @media screen and (max-height: 790px){
         .frame{
             padding: 20px 0;

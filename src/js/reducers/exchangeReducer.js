@@ -23,7 +23,7 @@ const exchange = (state = initState, action) => {
       newState.sourceAmount = ""
       newState.destAmount = ""
       newState.errors = initState.errors
-      newState.isOpenTxConfig = false
+      newState.advanced = false
       //newState.gasPrice = initState.gasPrice
       newState.bcError = ""
       newState.step = initState.step
@@ -87,12 +87,8 @@ const exchange = (state = initState, action) => {
       newState.errors.gasPriceError = ""
       return newState
     }
-    case "EXCHANGE.SHOW_ADVANCE":{
-      newState.advanced = true
-      return newState
-    }
-    case "EXCHANGE.HIDE_ADVANCE":{
-      newState.advanced = false
+    case "EXCHANGE.TOGGLE_ADVANCE":{
+      newState.advanced = !newState.advanced
       return newState
     }
     case "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED": {
@@ -286,10 +282,6 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.SET_CAP_EXCHANGE":{
       newState.maxCap = action.payload.maxCap
-      return newState
-    }
-    case "EXCHANGE.TOGGLE_CONFIG":{
-      newState.isOpenTxConfig = !newState.isOpenTxConfig
       return newState
     }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{

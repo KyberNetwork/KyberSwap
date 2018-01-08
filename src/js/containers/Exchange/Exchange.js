@@ -236,7 +236,7 @@ export default class Exchange extends React.Component {
         totalGas={totalGas.toString()}
         translate={this.props.translate}
         minRate={<MinRate />}
-        isOpenTxConfig={this.props.exchange.isOpenTxConfig}
+        advanced={this.props.exchange.advanced}
       />
     )
 
