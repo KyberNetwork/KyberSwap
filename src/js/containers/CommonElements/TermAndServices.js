@@ -95,14 +95,13 @@ export default class TermAndServices extends React.Component {
         </div>
 
         <Modal className={{
-          base: 'reveal tiny',
-          afterOpen: 'reveal tiny'
+          base: 'reveal medium',
+          afterOpen: 'reveal medium'
         }}
           isOpen={this.state.isOpen}
           onRequestClose={this.onRequestClose}
           contentLabel="Terms and Services"
           content={this.content()}
-          size="tiny"
         />
       </div>
     )

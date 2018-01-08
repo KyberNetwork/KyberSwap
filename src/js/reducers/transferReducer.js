@@ -27,7 +27,7 @@ const transfer = (state = initState, action) => {
       newState.token = transfer.token
       newState.tokenSymbol = transfer.tokenSymbol
       newState.gasPrice = transfer.gasPrice
-      newState.isOpenTxConfig = false
+      newState.advanced = false
       newState.isEditGasPrice = false
       return newState;
     case "TRANSFER.SELECT_TOKEN":
@@ -62,11 +62,8 @@ const transfer = (state = initState, action) => {
       newState.isEditGasPrice = true
       newState.errors.gasPrice = ""
       return newState
-    case "TRANSFER.SHOW_ADVANCE":
-      newState.advance = true
-      return newState
-    case "TRANSFER.HIDE_ADVANCE":
-      newState.advance = false
+    case "TRANSFER.TOGGLE_ADVANCE":
+      newState.advanced = !newState.advanced
       return newState
     case "TRANSFER.HIDE_CONFIRM": {
       newState.confirmColdWallet = false
@@ -165,10 +162,6 @@ const transfer = (state = initState, action) => {
     }
     case "TRANSFER.SET_TERM_AND_SERVICES":{
       newState.termAgree = action.payload.value
-      return newState
-    }
-    case "TRANSFER.TOGGLE_CONFIG":{
-      newState.isOpenTxConfig = !newState.isOpenTxConfig
       return newState
     }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{

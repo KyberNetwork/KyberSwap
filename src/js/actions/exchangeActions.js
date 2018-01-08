@@ -76,12 +76,6 @@ export function specifyGas(value) {
   }
 }
 
-export function toggleTxConfig() {
-  return {
-    type: "EXCHANGE.TOGGLE_CONFIG"
-  }
-}
-
 export function specifyGasPrice(value) {
   return {
     type: "EXCHANGE.SPECIFY_GAS_PRICE",
@@ -89,31 +83,11 @@ export function specifyGasPrice(value) {
   }
 }
 
-export function showAdvance() {
+export function toggleAdvance() {
   return {
-    type: "EXCHANGE.SHOW_ADVANCE",
+    type: "EXCHANGE.TOGGLE_ADVANCE",
   }
 }
-
-export function hideAdvance() {
-  return {
-    type: "EXCHANGE.HIDE_ADVANCE",
-  }
-}
-
-// export function changeSourceAmout(amount) {
-//   return {
-//     type: "EXCHANGE.CHANGE_SOURCE_AMOUNT",
-//     payload: amount
-//   }
-// }
-
-// export function changeDestAmout(amount) {
-//   return {
-//     type: "EXCHANGE.CHANGE_DEST_AMOUNT",
-//     payload: amount
-//   }
-// }
 
 export function setRandomExchangeSelectedToken(random) {
   return {

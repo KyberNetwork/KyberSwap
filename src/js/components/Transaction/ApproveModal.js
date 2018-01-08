@@ -10,7 +10,7 @@ const ApproveModal = (props) => {
           <div class="column">
             <center>
               <p class="message">
-              {props.translate('modal.approve_exchange_trezor') || <span>Kyber need your approve to do exchange with&nbsp;<strong>ETH</strong>&nbsp;on your Trezor address. Press&nbsp;<strong>Apprrove</strong>&nbsp;button below to open Trezor utility.</span>}
+              {props.translate('modal.approve_exchange', {token : props.token} ) || <span>You need to grant permission for Kyber Wallet to interact with  {props.token} on this address.</span>}
               </p>
             </center>
           </div>
