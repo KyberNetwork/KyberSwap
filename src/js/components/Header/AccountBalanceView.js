@@ -4,7 +4,8 @@ import BigNumber from "bignumber.js"
 
 const AccountBalanceView = (props) => {
   function displayBalance(balance, rateUSD){
-    return `${props.translate("address.my_balance") || "Balance"}: ${balance} \n${props.translate("address.estimated_value") || "Estimated value"}: ${converts.roundingNumber(balance * rateUSD)} USD`
+    return props.showBalance? `${props.translate("address.my_balance") || "Balance"}: ${balance} \n${props.translate("address.estimated_value") || "Estimated value"}: ${converts.roundingNumber(balance * rateUSD)} USD`:
+                                `${props.translate("address.my_balance") || "Balance"}: ${balance}`
   }
 
   function getBalances() {
