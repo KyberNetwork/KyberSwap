@@ -17,7 +17,8 @@
     "address": "Address",
     "import_address": "Import Address",
     "my_balance": "Balance",
-    "total": "Value",
+    "estimated_value": "Estimated value",
+    "total": "Total value",
     "hide_zero_balance": "Hide zero balance"
   },
 

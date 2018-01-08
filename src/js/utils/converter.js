@@ -89,7 +89,6 @@ export function shortEthBalance(tokens){
   delete removedEth[constants.ETH.symbol]
   if(tokens){
     shortedTokens = Object.values(removedEth).sort((a, b) => {
-      // if(a.symbol == constants.ETH.symbol) return false
       var balanceEthA = new BigNumber(caculateEthBalance(a)) 
       var balanceEthB = new BigNumber(caculateEthBalance(b)) 
       return balanceEthB.sub(balanceEthA)
