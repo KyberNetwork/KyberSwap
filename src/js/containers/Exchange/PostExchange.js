@@ -87,6 +87,11 @@ export default class PostExchange extends React.Component {
   }
 
   validateExchange = () => {
+    if(this.props.form.offeredRate === "0"){
+      this.props.dispatch(utilActions.openInfoModal(this.props.translate("error.error_occurred"),
+                        this.props.translate("error.source_amount_rate_error")))
+      return false
+    }
     //check source amount
     var check = true
     var validateAmount = validators.verifyAmount(this.props.form.sourceAmount,

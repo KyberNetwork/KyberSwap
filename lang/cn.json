@@ -105,6 +105,7 @@
     "source_amount_too_high": "原始数量过高",
     "source_amount_too_high_cap": "原始数量超过了你的额度。你的额度是${ cap }ETH",
     "source_amount_too_small": "原始数量过低",
+    "source_amount_rate_error": "Cannot exchange at the momment",
     "source_amount_too_high_for_reserve": "原始数量过高 （交易对目前还不支持）",
     "source_amount_is_not_number": "原始数量不是一个数字",
 
