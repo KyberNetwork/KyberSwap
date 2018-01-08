@@ -5,9 +5,9 @@ import { initialize, addTranslation, addTranslationForLanguage, setActiveLanguag
 
 const onMissingTranslation = (key, languageCode) => {
   // here you can do whatever you want e.g. call back end service that will 
-  console.log("-------------- missing transsaction")
-  console.log(key)
-  console.log(languageCode)
+  // console.log("-------------- missing transsaction")
+  // console.log(key)
+  // console.log(languageCode)
 };
 
 export function initLanguage(store){
