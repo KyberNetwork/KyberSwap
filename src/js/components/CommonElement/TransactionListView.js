@@ -70,14 +70,16 @@ const TransactionListView = (props) => {
         <div className="clearfix" key={item.txHash} onClick={(e) => gotoLink(item.txHash)}>
           <div className="column small-4 medium-3 large-2">{calculateTimeStamp(item.timestamp)}</div>
           <div className="column small-3 show-for-large">
-            Exchange
+            {props.translate('transaction.exchange') || 'Exchange'}
             <span className="ml-3">{sourceToken.key} <i className="k k-angle right"></i> {destToken.key}</span>
           </div>
           <div className="column small-3 medium-4 large-3 show-for-medium">1 {sourceToken.key} = {rate} {destToken.key}</div>
           <div className="column small-8 medium-5 large-4">
             <div className="d-flex align-center">
               <span className="mr-auto">
-                {sourceAmount} {sourceToken.key} for {desAmount} {destToken.key}
+                {sourceAmount} {sourceToken.key} 
+                &nbsp;{props.translate('transaction.for') || 'For'}&nbsp;
+                {desAmount} {destToken.key}
               </span>
               <i className="k k-angle right"></i>
             </div>
