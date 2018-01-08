@@ -13,17 +13,18 @@ import rootSaga from './sagas'
 import Language from "../../lang"
 
 import  constantsVar from "../js/services/constants"
-
 import {initLanguage} from "../js/services/language"
 
 const routeMiddleware = routerMiddleware(history)
 
 const sagaMiddleware = createSagaMiddleware()
 
+var middlewareArray = [sagaMiddleware, routeMiddleware]
+if(process.env.logger){
+  middlewareArray.push(logger)
+}
 const middleware = applyMiddleware(
-  sagaMiddleware,
-  logger,
-  routeMiddleware,
+  ...middlewareArray
 )
 
 

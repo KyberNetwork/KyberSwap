@@ -45,7 +45,10 @@ var scriptConfig = function (env) {
         allChunks: true,
       }),
       new webpack.DefinePlugin({
-        'env': JSON.stringify(env.chain)
+        'env': JSON.stringify(env.chain),
+        'process.env': {
+          'logger': true
+        }
       })
     ] : [
         // new Uglify({
