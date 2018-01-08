@@ -92,7 +92,7 @@
     "select_dest_token": "Chọn token bạn muốn nhận",
     "select_trasfer_from_token": "CHỌN TOKEN CHUYỂN KHOẢN",
 
-    "approve_exchange_trezor": "Kyber cần sự đồng ý của bạn để  chuyển&nbsp;<strong>ETH</strong>&nbsp;trong ví Trezor. Nhấn nút&nbsp;<strong>Đồng ý</strong>&nbsp;phía đưới để tiếp tục.",
+    "approve_exchange": "Bạn cần cấp phép cho Kyber để có thể tương tác với <strong>${ token }</strong> trên địa chỉ này",
     "eth_token_exchange": "Chuyển đổi eth token",
     "approve": "Đồng ý"
   },

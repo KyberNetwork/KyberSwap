@@ -43,7 +43,6 @@ const INIT_EXCHANGE_FORM_STATE = {
   minConversionRate: 0,
   minDestAmount: 0,
   maxDestAmount: 0,
-  isOpenTxConfig: false,
   rangeSetRate: 5, // 5 eth
   prevAmount:0,
 
@@ -110,7 +109,6 @@ const INIT_TRANSFER_FORM_STATE = {
   gas_limit_transfer_token: 50000,
   gasPrice: 20,
   isEditGasPrice: false,
-  isOpenTxConfig: false,
   
   step: 1,
   broadcasting: true,

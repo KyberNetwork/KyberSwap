@@ -1,11 +1,166 @@
 {
-  "pack": "fr",
+  "pack": "kr",
   "pack_icon": "kr.svg",
   "pack_label": "한국어",
-  "pack_active": false,
+  "pack_active": true,
   "layout": {
-    "info": "Info",
-    "terms_of_service": "Conditions d'utilisation",
-    "privacy_policies": "Les politiques de confidentialité"
+    "info": "정보",
+    "terms_of_service": "서비스 약관",
+    "privacy_policies": "개인 정보 보호 정책"
+  },
+
+  "transaction_list": {
+    "transaction_history": "최근 거래"
+  },
+
+  "address": {
+    "address": "주소",
+    "import_address": "주소 가져오기",
+    "my_balance": "잔액",
+    "total": "추정 가치",
+    "hide_zero_balance": "잔액 숨기기"
+  },
+
+  "transaction": {
+    "exchange": "환전",
+    "exchange_from": "보내는 곳",
+    "exchange_to": "받는 곳",
+
+    "transfer": "송금",
+    "transfer_to_address": "주소로 송금하기",
+    "amount": "금액",
+    "select_token": "토큰 선택",
+
+    "advanced": "사전",
+    "transaction_fee": "교환 수수료",
+
+    "address_balance": "주소 잔액",
+    "balance": "잔액",
+    "password_needed_exchange": "교환 할때마다 비밀번호 입력이 필요합니다",
+
+    "password_needed_transfer": "보내기를 할때마다 비밀번호 입력이 필요합니다",
+    "next": "다음",
+    "exit": "나가기",
+    "back": "Back",
+
+    "broadcast": "전송",
+    "transaction": "거래",
+    "broadcasted_title": "블록체인에 당신의 거래를 전송하였습니다",
+    "close_browser_or_make_new_exchange": "브라우저를 종료하거나 다른 횐전을 할 수 있습니다",
+    "close_browser_or_make_new_transfer": "브라우저를 종료하거나 다른 송금을 할 수 있습니다",
+    "broadcasting": "블록체인에 거래를 전송 중에 있습니다",
+    "cound_not_broadcast": "블록체인에 거래를 전송 할 수 없습니다",
+    "current_address_balance": "현재 주소 잔액",
+    "transaction_error": "거래 오류",
+    "waiting_transaction": "거래 대기 중에 있습니다",
+
+    "about_to_exchange": "환전을 시작합니다",
+    "about_to_transfer": "송금을 시작합니다",
+    "processing": "진행중",
+    "gas_limit": "Gas 한도",
+    "gas_price": "Gas 가격",
+    "for": "위해",
+    "to": "하려면",
+    "best_rate": "최저 가격",
+    "token_amount": "토큰/금액",
+
+    "transfer_tooltip": "이더 또는 토큰을 다른 주소로 전송하십시오",
+    "transaction_gasprice_50": "높은 Gss 가격, 더 빠른 거래 속도, 최대 Gas 비용: 50 Gwei",
+    "transaction_gasprice": "높은 Gss 가격, 더 빠른 거래 속도",
+    "best_rate_tooltip": "시장이 변동될 때 가격을 낮추면 성공률이 높아질 수 있습니다",
+    "terms_and_conditions": "<span>이용 약관 및 <br  class='show-for-small-only'>조건</span>"
+  },
+
+  "modal": {
+    "enter_password": "비밀번호 입력",
+    "confirm": "확인",
+    "import": "가져오기",
+    "enter_password_placeholder": "확인하려면 지갑 암호를 입력주시기 바랍니다",
+    "select_hd_path": "하드디스크에서 파생된 경로 선택",
+    "select_trezor_address": "TREZOR 주소선택",
+    "select_ledger_address": "LEDGER 주소 선택",
+    "select_address": "사용할 주소를 선택하세요",
+    "previous_addresses": "이전 주소",
+    "more_addresses": "더 많은 주소",
+    "custom_path": "맞춤 경로",
+    "view_on_etherscan": "Etherscan에서 보기",
+    "press_confirm_if_really_want": "계속하시려면 버튼을 눌러주세요",
+    "confirm_exchange_title": "환전확인",
+    "confirm_transfer_title": "송금확인",
+
+    "select_your_language": "언어를 선택해주세요 ",
+    "select_source_token": "토큰을 선택해주세요",
+    "select_dest_token": "환전을 받고자 하는 토큰을 선택해주세요",
+    "select_trasfer_from_token": "선택 \"TRANSFER FROM\" 토큰",
+
+    "approve_exchange": "You need to grant permission for Kyber Wallet to interact with <strong>${ token }</strong> on this address",
+    "eth_token_exchange": "ETH 토큰 거래",
+    "approve": "승인"
+  },
+
+  "error": {
+    "select_same_token": "동일한 토큰으로 교환할 수 없습니다",
+    "select_token_token": "해당 토큰은 지원되지 않습니다",
+    "source_amount_too_high": "토큰 금액이 너무 높습니다",
+    "source_amount_too_high_cap": "토큰 금액이 한도 이상입니다. 한도는 3 ETH 입니다",
+    "source_amount_too_small": "토큰 금액이 너무 작습니다",
+    "source_amount_too_high_for_reserve": "토큰 금액이 너무 높습니다 (현재 지원되지 않는 토큰입니다)",
+    "source_amount_is_not_number": "토큰 금액이 숫자가 아닙니다",
+
+    "dest_address": "이것은 주소가 아닙니다",
+    "amount_transfer_too_hign": "금액이 너무 높습니다",
+    "amount_must_be_number": "금액은 반드시 숫자로 기입해 주시기 바랍니다",
+
+    "error_occurred": "에러가 발생했습니다",
+    "cannot_connect_metamask": "Metamask 계정을 가져올 수 없습니다",
+    "cannot_connect_trezor": "TREZOR에 연결할 수 없습니다",
+    "cannot_connect_ledger": "LEDGER에 연결할 수 없습니다",
+    "invalid_private_key": "잘못된 키입니다",
+    "no_balance": "주소에 지원가능한 토큰이 없습니다. 다른 주소를 사용해주세요",
+    "clear_data_timeout": "세션 초과로 인해 데이터를 모두 삭제하였습니다",
+    "minutes": " 분",
+
+    "path_not_support_by_trezor": "TREZOR는 해당 경로를 지원하지 않습니다",
+    "check_right_application_selected": "올바른 응용프로그램이 선택되었는지 확인하십시오",
+    "network_not_match": "네트워크가 일치하지 않습니다",
+    "not_supported": "지원하지 않습니다"
+  },
+
+  "import": {
+    "from_metamask": "Metamask에 <br> 연결하기",
+    "from_keystore": "키 저장소를 선택 또는 <br /> 드래그 하십시오",
+    "from_trezor": "TREZOR에서 <br /> 가져오기",
+    "from_ledger": "LEDGER에서 <br /> 가져오기",
+    "from_private_key": "개인키 <br /> 입력하기",
+    "from_private_key_input_title": "개인키 입력하기",
+    "from_private_key_input_title_placehoder": "개인키 입력하기"
+  },
+
+  "info": {
+    "title": "카이버 테스트넷",
+    "version": "버젼",
+    "chain": "체인",
+    "node_endpoint": "노드 끝",
+    "reserve_address": "리저브 계약 주소",
+    "network_address": "네트워크 계약 주소",
+    "kyber_homepage": "카이버 홈페이지",
+    "get_free_kovan": "무료 다운로드",
+    "warning": "위의 주소 있는 주소들에게 실제 이더나 토큰을 보내지 마십시오. <br> </ br> 그들은 testnet 주소입니다!",
+    "here": "여기"
+  },
+  
+  "footer": {
+    "info": "정보",
+    "language": "언어"
+  },
+
+
+  "history": {
+    "second_ago": "몇초 전",
+    "minutes_ago": "몇분 전",
+    "hours_ago": "몇시간 전",
+    "days_ago": "몇일 전",
+    "months_ago": "몇달 전",
+    "years_ago": "years ago"
   }
 }

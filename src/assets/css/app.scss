@@ -64,6 +64,7 @@ body{
 }
 
 #footer {
+  font-size: 14px;
   ul.links {
     margin: 0 0 30px 0;
     padding: 0;
@@ -89,6 +90,12 @@ body{
         &:hover {
           color: $dark-gray;
         }
+      }
+      img{
+        width: 25px;
+      }
+      span{
+        vertical-align: middle;
       }
     }
   }
@@ -174,7 +181,7 @@ body{
       &:before {
         content: '';
         position: absolute;
-        top: -17px;
+        top: -18px;
         right: 10px;
         border: 9px solid transparent;
         border-bottom-color: #ddd;
@@ -182,7 +189,7 @@ body{
       &:after {
         content: '';
         position: absolute;
-        top: -15px;
+        top: -16px;
         right: 11px;
         border: 8px solid transparent;
         border-bottom-color: white;

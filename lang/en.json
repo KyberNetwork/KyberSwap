@@ -94,7 +94,7 @@
     "select_dest_token": "Select destination token",
     "select_trasfer_from_token": "SELECT \"TRANSFER FROM\" TOKEN",
 
-    "approve_exchange_trezor": "Kyber needs your approve to do exchange with&nbsp;<strong>ETH</strong>&nbsp;on your Trezor address. Press&nbsp;<strong>Apprrove</strong>&nbsp;button below to open Trezor utility.",
+    "approve_exchange": "You need to grant permission for Kyber Wallet to interact with <strong>${ token }</strong> on this address",
     "eth_token_exchange": "ETH token exchange",
     "approve": "Approve"
   },

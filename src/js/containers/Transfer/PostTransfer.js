@@ -14,7 +14,6 @@ import { PassphraseModal, ConfirmTransferModal, PostTransferBtn } from "../../co
 
 import { Modal } from "../../components/CommonElement"
 import { getTranslate } from 'react-localize-redux';
-import { toggleTxConfig } from "../../actions/transferActions";
 
 @connect((store, props) => {
   const tokens = store.tokens.tokens
@@ -198,9 +197,9 @@ export default class PostTransfer extends React.Component {
       this.props.dispatch(transferActions.throwPassphraseError("Key derivation failed"))
     }
   }
-
+  
   openConfig = () => {
-    this.props.dispatch(toggleTxConfig());
+    this.props.dispatch(transferActions.toggleAdvance());
   }
 
   render() {
@@ -247,6 +246,7 @@ export default class PostTransfer extends React.Component {
         step={this.props.transfer.step}
         termAndServices={termAndServices}
         openConfig={this.openConfig}
+        advanced={this.props.transfer.advanced}
       />
     )
   }
