@@ -335,7 +335,6 @@ export default class PostExchange extends React.Component {
       )
     }
     let className = "button accent "
-    console.log(this.props.form.errors)
     if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree) {
       className += " animated infinite pulse next"
     }
