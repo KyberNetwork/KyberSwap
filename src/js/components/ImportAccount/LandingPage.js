@@ -12,7 +12,7 @@ const LandingPage = (props)=> {
                         <li class="">Liquid</li>
                         <li class="">Compatible</li>
                     </ul>
-                <button class="button accent">Get Started</button>
+                <button class="button accent" onClick={(e)=>props.goExchange(e)}>Get Started</button>
             </div>
         </div>
     </div>

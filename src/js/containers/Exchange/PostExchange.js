@@ -173,9 +173,11 @@ export default class PostExchange extends React.Component {
     this.props.dispatch(exchangeActions.hidePassphrase())
   }
   closeModalConfirm = (event) => {
+    if(this.props.form.isConfirming) return
     this.props.dispatch(exchangeActions.hideConfirm())
   }
   closeModalApprove = (event) => {
+    if(this.props.form.isApproving) return
     this.props.dispatch(exchangeActions.hideApprove())
   }
   changePassword = (event) => {

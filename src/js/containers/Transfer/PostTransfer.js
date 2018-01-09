@@ -138,14 +138,13 @@ export default class PostTransfer extends React.Component {
       case "keystore":
         this.props.dispatch(transferActions.hidePassphrase())
         break
-      case "privateKey":
       case "trezor":
       case "metamask":
       case "ledger":
+        if(this.props.form.isConfirming) return
         this.props.dispatch(transferActions.hideConfirm())
         break
     }
-
   }
   changePassword = () => {
     this.props.dispatch(transferActions.changePassword())

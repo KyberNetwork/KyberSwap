@@ -10,7 +10,8 @@ const initState = {
   nodeURL: "https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi",
   history: constants.HISTORY_EXCHANGE,
   count: {storageKey: constants.STORAGE_KEY},
-  conn_checker: constants.CONNECTION_CHECKER
+  conn_checker: constants.CONNECTION_CHECKER,
+  isVisitFirstTime: true
 }
 
 const global = (state = initState, action) => {
@@ -84,6 +85,9 @@ const global = (state = initState, action) => {
     }
     case "GLOBAL.HIDE_BALABCE_USD":{
       return Object.assign({}, state, { showBalance: false })
+    }
+    case "GLOBAL.VISIT_EXCHANGE":{
+      return Object.assign({}, state, { isVisitFirstTime: false })
     }
   }
   return state

@@ -68,7 +68,10 @@
     "transaction_gasprice_50": "높은 Gss 가격, 더 빠른 거래 속도, 최대 Gas 비용: 50 Gwei",
     "transaction_gasprice": "높은 Gss 가격, 더 빠른 거래 속도",
     "best_rate_tooltip": "시장이 변동될 때 가격을 낮추면 성공률이 높아질 수 있습니다",
-    "terms_and_conditions": "<span>이용 약관 및 <br  class='show-for-small-only'>조건</span>"
+    "terms_and_conditions": "<span>이용 약관 및 <br  class='show-for-small-only'>조건</span>",
+
+    "error_tx_log":"Warning! Log is empty",
+    "error_tx_contract":"Warning! Error encountered during contract execution"
   },
 
   "modal": {
