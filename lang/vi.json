@@ -167,5 +167,14 @@
     "rate": "Tỉ Giá",
     "description": "Mô tả",
     "amount": "Số lượng"
+  },
+
+  "landing_page":{
+    "title": "Trust-Free Exchange for Ethereum tokens",
+    "trustless": "Trustless",
+    "instant": "Instant",
+    "liquid": "Liquid",
+    "compatible": "Compatible",
+    "get_started": "Get Started"
   }
 }
