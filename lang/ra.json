@@ -154,7 +154,6 @@
     "language": "Language"
   },
 
-
   "history": {
     "second_ago": "seconds ago",
     "minutes_ago": "minutes ago",
@@ -162,5 +161,14 @@
     "days_ago": "days ago",
     "months_ago": "months ago",
     "years_ago": "years ago"
+  },
+
+  "landing_page":{
+    "title": "Trust-Free Exchange  for Ethereum tokens",
+    "trustless": "Trustless",
+    "instant": "Instant",
+    "liquid": "Liquid",
+    "compatible": "Compatible",
+    "get_started": "Get Started"
   }
 }
