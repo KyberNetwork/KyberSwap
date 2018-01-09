@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="21px" viewBox="0 0 30 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>flags/uk</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="30" height="21"></rect>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="flags/uk">
+            <g id="flags-color-3_uk">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#00329C" xlink:href="#path-1"></use>
+                <path d="M30,1.16666667 C30,0.522666667 29.44,0 28.75,0 L25.524375,0 L17.5,5.761 L17.5,0 L12.5,0 L12.5,5.761 L4.475625,0 L1.25,0 C0.56,0 0,0.522666667 0,1.16666667 L0,2.67516667 L7.649375,8.16666667 L0,8.16666667 L0,12.8333333 L7.649375,12.8333333 L0,18.3254167 L0,19.8333333 C0,20.4773333 0.56,21 1.25,21 L4.475625,21 L12.5,15.239 L12.5,21 L17.5,21 L17.5,15.239 L25.524375,21 L28.75,21 C29.44,21 30,20.4773333 30,19.8333333 L30,18.3254167 L22.350625,12.8333333 L30,12.8333333 L30,8.16666667 L22.350625,8.16666667 L30,2.67516667 L30,1.16666667 Z" id="Shape" fill="#E6E6E6" fill-rule="nonzero" mask="url(#mask-2)"></path>
+                <polygon id="Shape" fill="#D10D24" fill-rule="nonzero" mask="url(#mask-2)" points="30 9.33333333 16.25 9.33333333 16.25 0 13.75 0 13.75 9.33333333 0 9.33333333 0 11.6666667 13.75 11.6666667 13.75 21 16.25 21 16.25 11.6666667 30 11.6666667"></polygon>
+                <path d="M31.2959176,-1.83333333 L18.75,8.16666667 L21.0617021,8.16666667 L32,-0.551656564 L32,-0.596935174 C32,-1.13151489 31.7089229,-1.57845858 31.2959176,-1.83333333 Z" id="Shape" fill="#D10D24" fill-rule="nonzero" mask="url(#mask-2)"></path>
+                <path d="M21.0617021,12.8333333 L18.75,12.8333333 L31.2959176,22.8333333 C31.7089229,22.5784586 32,22.1315149 32,21.5969352 L32,21.5516566 L21.0617021,12.8333333 Z" id="Shape" fill="#D10D24" fill-rule="nonzero" mask="url(#mask-2)"></path>
+                <path d="M8.93829787,13 L-2,21.7183232 L-2,21.7636018 C-2,22.2981816 -1.70892287,22.7451252 -1.29591755,23 L11.25,13 L8.93829787,13 Z" id="Shape" fill="#D10D24" fill-rule="nonzero" mask="url(#mask-2)"></path>
+                <path d="M8.93829787,8.16666667 L11.25,8.16666667 L-1.29591755,-1.83333333 C-1.70892287,-1.57845858 -2,-1.13151489 -2,-0.596935174 L-2,-0.551656564 L8.93829787,8.16666667 Z" id="Shape" fill="#D10D24" fill-rule="nonzero" mask="url(#mask-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

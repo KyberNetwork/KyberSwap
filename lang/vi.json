@@ -1,0 +1,167 @@
+{
+  "pack": "vi",
+  "pack_icon": "vi.svg",
+  "pack_label": "Việt Nam",
+  "pack_active": true,
+  "layout": {
+    "info": "Thông tin",
+    "terms_of_service": "Điều khoản dịch vụ",
+    "privacy_policies": "Chính sách bảo mật"
+  },
+
+  "transaction_list": {
+    "transaction_history": "LỊCH SỬ GIAO DỊCH"
+  },
+
+  "address": {
+    "address": "Địa chỉ",
+    "import_address": "Nhập địa chỉ",
+    "my_balance": "Số dư",
+    "estimated_value": "Giá trị ước tính",
+    "total": "Tất cả",
+    "hide_zero_balance": "Ẩn số dư nhỏ"
+  },
+
+  "transaction": {
+    "exchange": "TRAO ĐỔI",
+    "exchange_from": "ĐỔI TỪ",
+    "exchange_to": "ĐỔI SANG",
+
+    "transfer": "CHUYỂN KHOẢN",
+    "transfer_to_address": "CHUYỂN ĐẾN ĐỊA CHỈ",
+    "amount": "SỐ LƯỢNG",
+    "select_token": "Chọn Token",
+
+    "advanced": "NÂNG CAO",
+    "transaction_fee": "PHÍ GIAO DỊCH",
+
+    "address_balance": "Số dư địa chỉ",
+    "balance": "Số dư",
+    "password_needed_exchange": "Mật khẩu cần thiết cho mỗi giao dịch",
+
+    "password_needed_transfer": "Mật khẩu cần thiết cho mỗi giao dịch",
+    "next": "Tiếp",
+    "exit": "THOÁT",
+    "back": "Quay lại",
+
+    "broadcast": "Gửi",
+    "transaction": "Giao dịch",
+    "broadcasted_title": "Giao dịch của bạn đã được gửi đến blockchain",
+    "close_browser_or_make_new_exchange": "Bạn đã có thể đóng cửa sổ hiện tại hoặc tiếp tục trao đổi",
+    "close_browser_or_make_new_transfer": "Bạn đã có thể đóng cửa sổ hiện tại hoặc tiếp tục chuyển khoangr",
+    "broadcasting": "Đang truyền dữ liêu ra mạng",
+    "cound_not_broadcast": "Không thể gửi giao dịch của bạn đến blockchain",
+    "current_address_balance": "Số dư hiện tại",
+    "transaction_error": "Lỗi giao dịch",
+    "waiting_transaction": "Đang đợi giao dịch được xác thực",
+
+    "about_to_exchange": "Bạn chuẩn bị chuyển đổi",
+    "about_to_transfer": "Bạn chuẩn bị gửi",
+    "processing": "Đang xử lý",
+    "gas_limit": "Gas giới hạn",
+    "gas_price": "Giá Gas",
+    "for": "đổi lấy",
+    "to": "đến",
+    "best_rate": "Rate tốt nhất",
+    "token_amount": "Token/Số lượng",
+
+    "transfer_tooltip": "Chuyển eth hoặc token đến một tài khoản khác",
+    "transaction_gasprice_50": "Giá Gas càng cao, giao dịch càng nhanh. Giá Gas lớn nhất 50 Gwei",
+    "transaction_gasprice": "Giá Gas càng cao, giao dịch càng nhanh",
+    "best_rate_tooltip": "Rate thấp hơn cho khả năng thành công cao hơn khi thị trường biến động",
+    "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>"
+  },
+
+  "modal": {
+    "enter_password": "Nhập mật khẩu",
+    "confirm": "Xác nhận",
+    "import": "Nhập",
+    "enter_password_placeholder": "Nhập mật khẩu xác nhận",
+    "select_hd_path": "Chọn HD derivation path",
+    "select_address": "Chọn địa chỉ bạn muốn sử dụng",
+    "previous_addresses": "Địa chỉ Trước",
+    "more_addresses": "Thêm Địa chỉ",
+    "custom_path": "Path Tùy Chỉnh",
+    "view_on_etherscan": "Xem trên Etherscan",
+    "press_confirm_if_really_want": "Click xác nhận nếu bạn thật sự muốn.",
+    "confirm_exchange_title": "Xác nhận giao dịch",
+    "confirm_transfer_title": "Xác nhận giao dịch",
+
+    "select_your_language": "Lựa chọn ngôn ngữ",
+    "select_source_token": "Chọn token bạn muốn đổi",
+    "select_dest_token": "Chọn token bạn muốn nhận",
+    "select_trasfer_from_token": "CHỌN TOKEN CHUYỂN KHOẢN",
+
+    "approve_exchange": "Bạn cần cấp phép cho Kyber để có thể tương tác với <strong>${ token }</strong> trên địa chỉ này",
+    "eth_token_exchange": "Chuyển đổi eth token",
+    "approve": "Đồng ý"
+  },
+
+
+  "error": {
+    "select_same_token": "Không thể đổi giữa hai token giống nhau",
+    "select_token_token": "Cặp token này chưa được hỗ trợ",
+    "source_amount_too_high": "Số lượng chuyển quá lớn",
+    "source_amount_too_high_cap": "Số lượng chuyển vượt quá limit. Giới hạn ${ cap } ETH",
+    "source_amount_too_small": "Số lượng chuyển quá nhỏ",
+    "source_amount_rate_error": "Không thể chuyển đổi tại thời điểm hiện tại",
+    "source_amount_too_high_for_reserve": "Số lượng chuyển quá lớn (hiện không có sẵn token để giao dịch tại thời điểm này)",
+    "source_amount_is_not_number": "Số lượng chuyển sai định dạng",
+
+
+    "dest_address": "Địa chỉ không hợp lệ",
+    "amount_transfer_too_hign": "Số lượng quá lớn",
+    "amount_must_be_number": "Số lượng chuyển sai định dạng",
+
+    "error_occurred": "Có lỗi xảy ra",
+    "cannot_connect_metamask": "Không thể kết nối đến tài khoản Metamask",
+    "cannot_connect_trezor": "Không thể kết nối trezor",
+    "cannot_connect_ledger": "Không thể kết nối ledger",
+    "invalid_private_key": "Private key không đúng định dạng",
+    "no_balance": "Tài khoản của bạn hiện không có đủ số dư ở tất cả token, hãy nhập một tài khoản khác",
+    "clear_data_timeout": "Chúng tôi đã xóa hết dữ liêu bởi vì bạn đã không sử dụng trong ",
+    "minutes": " phút",
+
+    "path_not_support_by_trezor": "Đường dẫn này không được Trezor hỗ trợ",
+    "check_right_application_selected": "Kiểm tra lại để chắc chắn bạn đã sử dụng đúng ứng dụng",
+    "network_not_match": "Network không đúng",
+    "not_supported": "Không hỗ trợ"
+  },
+
+  "import": {
+    "from_metamask": "Kêt nối <br> metamask",
+    "from_keystore": "Chọn hoặc kéo<br />keystore",
+    "from_trezor": "Nhập từ<br />Trezor",
+    "from_ledger": "Nhập từ<br />Ledger",
+    "from_private_key": "Điền<br />private key",
+    "from_private_key_input_title": "ĐIỀN PRIVATEKEY",
+    "from_private_key_input_title_placehoder": "Điền private key"
+  },
+
+  "info": {
+    "title": "Kyber phiên bản thử nghiệm",
+    "version": "Phiên bản",
+    "chain": "Chuỗi",
+    "node_endpoint": "Node",
+    "reserve_address": "Địa chỉ contract reserve",
+    "network_address": "Địa chỉ contract network",
+    "kyber_homepage": "Trang chủ Kyber",
+    "get_free_kovan": "Lấy",
+    "warning": "Không nên chuyển bất kỳ ether nào cho các địa chỉ phía trên.</br>Các địa chỉ trên chỉ sử dụng trong môi trường test và chúng tôi có khả năng không sử dụng trong phiên bản chính thức.",
+    "here": "tại đây"
+  },
+    
+  "footer": {
+    "info": "Thông tin",
+    "language": "Ngôn ngữ"
+  },
+
+  "history": {
+    "second_ago": "giây trước",
+    "minutes_ago": "phút trước",
+    "hours_ago": "giờ trước",
+    "days_ago": "ngày trước",
+    "months_ago": "tháng trước",
+    "years_ago": "năm trước"
+  }
+}

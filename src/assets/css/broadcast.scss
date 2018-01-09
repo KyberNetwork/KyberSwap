@@ -1,0 +1,90 @@
+.page-3{
+  background-color: $k-primary
+}
+
+.broadcast-animation{
+  //width: 120px;
+  height: 120px;
+  //background-color: #243c47;
+  padding: 17px;
+  border-radius: 50%;
+  margin: 0 auto;
+  img{
+    max-height: 100%;
+    }
+  }
+ul.broadcast-steps {
+  margin: 0 0 20px 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0;
+  .pending, .success, .failed{
+    h4{
+      font-size: 1.2rem;
+    }
+  }
+  ul.address-balances{
+    display: block;
+    width: 90%;
+    margin: 35px auto 0;
+    border-collapse: collapse;
+    @include breakpoint(medium){
+      width: 75%;
+    }
+    li{
+      border-top: 1px solid #45616f;
+      span{
+        padding: 10px 0;
+        font-weight: 100;
+      }
+      .balance{
+        width: 68px;
+      }
+      .name{
+        width: 50px;
+      }
+    }
+  }
+  > li {
+    font-size: 14px;
+    font-weight: bold;
+    color: $k-success;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: top 2px left;
+    width: 100%;
+    @include breakpoint(500px){
+      width: 430px;
+    }
+    &:not(:last-child) {
+      margin-bottom: 12px;
+    }
+    &.success {
+      font-weight: bold;
+    }
+    &.failed {
+      h4{
+        color: $alert-color;
+      }
+      .reason {
+        text-align: center;
+        margin-top: 5px;
+        color: $white;
+        font-weight: normal;
+      }
+    }
+  }
+}
+.new-transaction{
+  background: #263d48!important;
+  border: 2px solid #3ee6c1;
+  padding: 18px 70px;
+  border-radius: 35px;
+  display: inline-block;
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 20px;
+  &:hover{
+    color: #fff;
+  }
+}

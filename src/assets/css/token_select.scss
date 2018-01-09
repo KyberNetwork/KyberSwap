@@ -1,0 +1,105 @@
+.token-selector{
+  position: relative;
+  color: $white;
+  cursor: pointer;
+  background-color: #415b68;
+  .token-name{
+    color: #aaa;
+  }
+  input{
+    background-color: #1d2f37;
+    outline: none;
+    border: none;
+    padding: 15px;
+    width: 100%;
+    color: white;
+    height: 40px;
+
+    &:-webkit-outer-spin-button,
+    &:-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+  }
+  .focus-item{
+    padding: 6px 12px;
+    border: 2px solid transparent;
+    border-bottom: 1px solid transparent;
+    font-size: 15px;
+    .icon{
+      margin-right: 10px;
+      border-radius: 20px;
+     // background-color: $white;
+      border: 2px solid $white;
+      img{
+        vertical-align: top;
+      }
+    }
+  }
+  .select-item{
+    padding-bottom: 20px;
+    position: absolute;
+    transition: 0.2s;
+    width: 100%;
+    z-index: 2;
+    background-color: #243c48;
+    border: 2px solid $white;
+    border-top: none;
+    border-bottom: none;
+    .search-item{
+      padding: 10px 15px 0px 15px;
+      margin-bottom: 10px;
+    }
+  }
+  &.open{
+    background-color: #243c48;
+    .focus-item{
+      border-color: $white;
+      border-bottom: 1px solid #4c636f;
+    }
+    .select-item{
+      display: block;
+      border: 2px solid $white;
+      border-top: none;
+    }
+  }
+
+  .list-item{
+    height: 200px;
+    overflow-y: auto;
+    .token-item{
+      padding: 9px 20px;
+      display: flex;
+      justify-content: space-between;
+      .item-icon{
+        // border-radius: 20px;
+        // background-color: $white;
+        width: 35px;
+        display: inline-block;
+      }
+      >div{
+        .item-name{
+          margin-left: 10px;
+          margin-right: 5px;
+        }
+      }
+      >img{
+        width: 30px;
+      }
+      .unsupported{
+        color:$alert-color;
+      }
+      &:hover{
+        background-color: rgba(36, 173, 151, 0.45)
+      }
+    }
+  }
+  &.close{
+    .select-item{
+      height: 0px;
+      display: none;
+      overflow: hidden;
+      padding: 0;
+    }
+  }
+}

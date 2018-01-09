@@ -1,8 +1,6 @@
 // in this package, all number are in 18 decimals precision
 
 import BigNumber from 'bignumber.js'
-
-import supported_tokens from "../services/supported_tokens"
 import constants from "../services/constants"
 
 
@@ -28,6 +26,37 @@ export function calculateDest(source, rate) {
   return dest
 }
 
+export function caculateSourceAmount(destAmount, offeredRate, precision) {
+  if (!destAmount || !offeredRate || acceptableTyping(destAmount) || acceptableTyping(offeredRate)) {
+    return "0"
+  }
+  var bigDest = new BigNumber(destAmount)
+  var bigOfferedRate = new BigNumber(offeredRate)
+
+  bigOfferedRate = bigOfferedRate.div(1000000000000000000)
+  var result = bigDest.div(bigOfferedRate)
+  if (precision) {
+    return result.toFixed(precision)
+  } else {
+    return result.toString()
+  }
+}
+
+export function caculateDestAmount(sourceAmount, offeredRate, precision) {
+  if (!sourceAmount || !offeredRate || acceptableTyping(sourceAmount) || acceptableTyping(offeredRate)) {
+    return "0"
+  }
+  var bigSource = new BigNumber(sourceAmount)
+  var bigOfferedRate = new BigNumber(offeredRate)
+
+  bigOfferedRate = bigOfferedRate.div(1000000000000000000)
+  var result = bigSource.times(bigOfferedRate)
+  if (precision) {
+    return result.toFixed(precision)
+  } else {
+    return result.toString()
+  }
+}
 
 export function calculateRate(source, dest) {
   var bigSource = new BigNumber(source)
@@ -38,6 +67,37 @@ export function calculateRate(source, dest) {
   }
   var rate = bigDest.times(1000000000000000000).div(bigSource)
   return rate
+}
+
+export function caculateEthBalance(token){
+  if(token.symbol.toLowerCase() == 'eth'){
+    return token.balance
+  } else {
+    var rateBig = new BigNumber(token.rate)
+    var balanceBig = new BigNumber(token.balance)
+    var weiParam = new BigNumber(10)
+    var balanceToken = balanceBig.div(weiParam.pow(token.decimal))
+
+    var balanceEth = balanceToken.times(rateBig)
+    return balanceEth.toString()
+  }
+}
+
+export function shortEthBalance(tokens){
+  var shortedTokens = []
+  let removedEth = {...tokens}
+  delete removedEth[constants.ETH.symbol]
+  if(tokens){
+    shortedTokens = Object.values(removedEth).sort((a, b) => {
+      var balanceEthA = new BigNumber(caculateEthBalance(a)) 
+      var balanceEthB = new BigNumber(caculateEthBalance(b)) 
+      return balanceEthB.sub(balanceEthA)
+    })
+  } 
+  if(tokens[constants.ETH.symbol]){
+    shortedTokens.unshift(tokens[constants.ETH.symbol])
+  }
+  return shortedTokens
 }
 
 function acceptableTyping(number) {
@@ -80,6 +140,20 @@ export function gweiToWei(number) {
   }
 }
 
+export function gweiToEth(number) {
+  if (number === "" || isNaN(number)) {
+    return "0"
+  }
+  var bigNumber = new BigNumber(number)
+  if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
+    return number
+  } else if (acceptableTyping(number)) {
+    return number
+  } else {
+    return bigNumber.div(1000000000).toString()
+  }
+}
+
 export function weiToGwei(number) {
   var bigNumber = new BigNumber(number)
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
@@ -91,39 +165,24 @@ export function weiToGwei(number) {
   }
 }
 
-export function toT(number, precision) {
+export function toT(number, decimal, round) {
   var bigNumber = new BigNumber(number)
   var result
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
     return number
   } else if (acceptableTyping(number)) {
     return number
-  } else {
+  }
+  if (decimal) {
+    result = bigNumber.div(Math.pow(10, decimal));
+  }
+  else {
     result = bigNumber.div(1000000000000000000)
   }
-  if (precision) {
-    return result.toFixed(precision)
+  if (round) {
+    return result.round(round).toString()
   } else {
     return result.toString()
-  }
-}
-
-export function getToken(address) {
-  if (address == constants.ETHER_ADDRESS) {
-    return {
-      name: "Ether",
-      icon: "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png",
-      symbol: "ETH",
-      address: constants.ETHER_ADDRESS,
-    }
-  } else {
-    for (var i = 0; i < supported_tokens.length; i++) {
-      var tok = supported_tokens[i]
-      if (tok.address == address) {
-        return { ...tok }
-      }
-    }
-    throw new Error("Unsupported token")
   }
 }
 
@@ -135,9 +194,21 @@ export function numberToHex(number) {
   return "0x" + (new BigNumber(number)).toString(16)
 }
 
+export function biggestNumber() {
+  var initNumber = new BigNumber(2)
+  return "0x" + (initNumber.pow(255).toString(16))
+  //return "0x" + (new BigNumber(Math.pow(2,256)-1)).toString(16)
+}
+
+
 export function hexToNumber(hex) {
   return new BigNumber(hex).toNumber()
 }
+
+export function hexToBigNumber(hex) {
+  return new BigNumber(hex)
+}
+
 
 export function toEther(number) {
   var bigNumber = new BigNumber(number)
@@ -155,4 +226,79 @@ export function errorName(message) {
   } else {
     return message
   }
+}
+
+
+export function stringEtherToBigNumber(number, decimal) {
+  var param = new BigNumber(10).pow(decimal ? decimal : 18)
+  var bigNumber = new BigNumber(number).times(param)
+  return bigNumber
+}
+export function stringToBigNumber(number) {
+  var bigNumber = new BigNumber(number)
+  return bigNumber
+}
+
+export function stringToHex(number, decimal) {
+  if (number === "" || isNaN(number)) return "0x0"
+  var param = new BigNumber(10).pow(decimal ? decimal : 18)
+  var bigNumber = new BigNumber(number).times(param)
+  return "0x" + bigNumber.toString(16)
+}
+
+export function roundingNumber(number) {
+  const MAX_DIGIS = 7, SIZE = 3;
+  number = +number;
+  let numberStr = number.toString();
+  if (isNaN(number) || number <= 0) number = 0;
+  if (number < 1e-7) number = 0;
+  if (('' + Math.floor(number)).length >= MAX_DIGIS) {
+    return Math.floor(number).toLocaleString();
+  }
+
+  let precision = number.toPrecision((number < 1 && number > 0) ? MAX_DIGIS - 1 : MAX_DIGIS),
+    arr = precision.split('.'),
+    intPart = arr[0],
+    i = intPart.length % SIZE || SIZE,
+    result = intPart.substr(0, i);
+
+  for (; i < intPart.length; i += SIZE) {
+    result += ',' + intPart.substr(i, SIZE);
+  }
+  if (arr[1]) {
+    result += '.' + arr[1];
+  }
+  return result;
+}
+
+export function toPrimitiveNumber(x) {
+  var bigNum = new BigNumber(x)
+  return bigNum.toString(10)
+};
+
+export function caculateTokenEpsilon(rate, decimal, symbol) {
+  var tokenRate = rate
+  if (symbol === "ETH") {
+    tokenRate = new BigNumber(10).pow(18)
+  }
+  var ts = new BigNumber(10).pow(decimal).times(constants.EPSILON)
+  return ts.div(tokenRate)
+}
+
+export function getDifferentAmount(sourceAmount, prevAmount, sourceDecimal,
+  minRate, sourceTokenSymbol) {
+    if((sourceAmount === "") || isNaN(sourceAmount)) sourceAmount = 0
+    if(sourceTokenSymbol === 'ETH'){
+      return Math.abs(sourceAmount - prevAmount) 
+    }else{
+      var valueChange = Math.abs(sourceAmount - prevAmount) 
+      var rate = new BigNumber(minRate)
+      var rateWeight = new BigNumber(10).pow(18)
+      rate = rate.div(rateWeight)
+
+      var value = new BigNumber(valueChange)
+      value = value.mul(rate)
+
+      return value.toNumber()
+    }
 }

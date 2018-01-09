@@ -1,6 +1,4 @@
 import BigNumber from 'bignumber.js'
-import * as ethUtil from 'ethereumjs-util'
-import TOKENS from "../services/supported_tokens"
 import constants from "../services/constants"
 
 export function verifyAccount(addr) {
@@ -16,48 +14,55 @@ export function verifyKey(keystring) {
       return "Invalid keystore file"
     }
   } catch (e) {
-    console.log(e)
     return "Malformed JSON keystore file"
   }
   return null
 }
 
-export function verifyToken(addr) {
-  if (!ethUtil.isValidAddress(addr)) {
-    return "invalid"
-  } else {
-    for (var i = 0; i < TOKENS.length; i++) {
-      if (TOKENS[i].address == addr) {
-        return null
-      }
-    }
-    if (addr != constants.ETHER_ADDRESS) {
-      return "unsupported"
-    } else {
-      return null
-    }
-  }
-}
-
-export function verifyAmount(amount, max) {
-  var result = new BigNumber(amount)
-  if (result == 'NaN' || result == 'Infinity') {
+export function verifyAmount(sourceAmount,
+  balance,
+  sourceSymbol,
+  sourceDecimal,
+  rate, destDecimal, maxCap) {
+  //verify number for source amount
+  var testAmount = parseFloat(sourceAmount)
+  if (isNaN(testAmount)) {
     return "not a number"
   }
-  if (max != undefined) {
-    var maxBig = new BigNumber(max)
-    if (maxBig == 'NaN' || maxBig == 'Infinity') {
-      throw new Error("Invalid upper bound for amount")
-    }
-    if (result.cmp(maxBig) > 0) {
-      return "too high"
-    }
-    if (result.cmp(constants.EPSILON) < 0) {
-      return "too low"
-    }
+  var sourceAmountWei = new BigNumber(sourceAmount)
+  if (sourceAmountWei == 'NaN' || sourceAmountWei == 'Infinity') {
+    return "not a number"
+  }
+  var weiParam = new BigNumber(10)
+  sourceAmountWei = sourceAmountWei.times(weiParam.pow(sourceDecimal))
+
+  //verify balance for source amount
+  var sourceBalance = new BigNumber(balance)
+  if (sourceBalance == 'NaN' || sourceBalance == 'Infinity') {
+    throw new Error("Invalid upper bound for amount")
+  }
+  if (sourceAmountWei.cmp(sourceBalance) > 0) {
+    return "too high"
+  }
+
+  //verify min source amount
+  var rateBig = new BigNumber(rate)
+  var estimateValue = sourceAmountWei
+  if (sourceSymbol !== "ETH") {
+    estimateValue = rateBig.times(sourceAmountWei).div(weiParam.pow(sourceDecimal))
+  }
+  var epsilon = new BigNumber(constants.EPSILON)
+  if (estimateValue.cmp(epsilon) < 0) {
+    return "too small"
+  }
+
+  //verify max cap
+  //estimate value based on eth
+  var maxCap = new BigNumber(maxCap)
+  if (estimateValue.cmp(maxCap) > 0) {
+    return "too high cap"
   }
   return null
-  // return "0x" + result.toString(16)
 }
 
 export function verifyNumber(amount) {
@@ -69,7 +74,6 @@ export function verifyNumber(amount) {
     return "nagative"
   }
   return null
-  // return "0x" + result.toString(16)
 }
 
 export function verifyNonce(nonce, future) {
@@ -87,9 +91,9 @@ export function anyErrors(errors) {
 }
 
 export function verifyPassphrase(passphrase, repassphrase) {
-  if (passphrase !== repassphrase){
-    return "Passphrase confirmation is not match"
-  }else{
+  if (passphrase !== repassphrase) {
+    return "Password confirmation is not match"
+  } else {
     return null
   }
 }

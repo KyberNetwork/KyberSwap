@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="28px" viewBox="0 0 24 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>mco</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="-292.236857%" y1="107.013929%" x2="-11.6486317%" y2="-156.323929%" id="linearGradient-1">
+            <stop stop-color="#5E003F" offset="0%"></stop>
+            <stop stop-color="#C04372" offset="52%"></stop>
+            <stop stop-color="#CD5770" offset="56%"></stop>
+            <stop stop-color="#DF736E" offset="62%"></stop>
+            <stop stop-color="#ED886C" offset="70%"></stop>
+            <stop stop-color="#F7986B" offset="78%"></stop>
+            <stop stop-color="#FDA16A" offset="87%"></stop>
+            <stop stop-color="#FFA46A" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="-207.8966%" y1="82.6335714%" x2="-33.8101748%" y2="-33.5071429%" id="linearGradient-2">
+            <stop stop-color="#5E003F" offset="0%"></stop>
+            <stop stop-color="#C15866" offset="48%"></stop>
+            <stop stop-color="#EB8B69" offset="81%"></stop>
+            <stop stop-color="#FFA46A" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="mco">
+            <polygon id="path0_fill-path" fill="#FFFFFF" points="11.9474457 0.00686014 0 7.00168 0 21.0004 11.9474457 27.9927 11.9613018 28 24 20.9999 24 7.00168 11.9619946 0"></polygon>
+            <path d="M2.92370223,14.9761 L6.09002524,12.5942 L8.88888376,14.3923 L8.88888376,17.6251 L11.0064167,19.6764 L11.005427,20.6387 L8.96509246,22.5612 L7.24066773,22.5612 L2.92370223,14.9761 Z M12.9289544,20.641 L12.9247975,19.6726 L15.0351847,17.6255 L15.0351847,14.3923 L17.8039358,12.5723 L20.9642215,14.9761 L16.6687231,22.5392 L14.9673886,22.5392 L12.9289544,20.641 Z M9.92742029,14.3923 L8.89719743,11.6793 L15.0225162,11.6793 L14.0130973,14.3923 L14.311202,17.4236 L11.9474457,17.4288 L9.61176781,17.433 L9.92742029,14.3923 Z M11.9474457,10.937 L6.12632829,10.9342 L7.20852152,6.07192 L16.6586279,6.07192 L17.7989872,10.9405 L11.9474457,10.937 Z M11.9474457,0.00686014 L0,7.00168 L0,21.0004 L11.9474457,27.9927 L11.9613018,28 L24,20.9999 L24,7.00168 L11.9619946,0 L11.9474457,0.00686014 Z" id="path0_fill" fill="url(#linearGradient-1)" fill-rule="nonzero"></path>
+            <path d="M12.9767798,20.641 L12.97264,19.6726 L15.0738186,17.6255 L15.0738186,14.3923 L17.8306041,12.5723 L20.9771281,14.9761 L16.7002742,22.5392 L15.005942,22.5392 L12.9767798,20.641 Z M12,0.00728015 L12,6.07206 L16.6893654,6.07206 L17.8257755,10.9407 L12,10.9376 L12,11.6796 L15.0607123,11.6796 L14.0556505,14.3923 L14.353517,17.4236 L12,17.4288 L12,27.9927 L12.0137964,28 L24,21.0004 L24,7.00168 L12.0135202,0 L12,0.00728015 Z" id="path1_fill" fill="url(#linearGradient-2)" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,168 @@
+{
+  "pack": "cn",
+  "pack_icon": "cn.svg",
+  "pack_label": "中文",
+  "pack_active": true,
+  "layout": {
+    "info": "信息",
+    "terms_of_service": "服务条款",
+    "privacy_policies": "隐私政策"
+  },
+
+  "transaction_list": {
+    "transaction_history": "最近交易"
+  },
+
+  "address": {
+    "address": "地址",
+    "import_address": "导入地址",
+    "my_balance": "余额",
+    "total": "估值",
+    "hide_zero_balance": "隐藏小额资产"
+  },
+
+  
+  "transaction": {
+    "exchange": "交易",
+    "exchange_from": "从",
+    "exchange_to": "去",
+
+    "transfer": "转移",
+    "transfer_to_address": "转移到地址",
+    "amount": "数量",
+    "select_token": "选择代币",
+
+    "advanced": "提前",
+    "transaction_fee": "交易费",
+
+    "address_balance": "地址余额",
+    "balance": "余额",
+    "password_needed_exchange": "每笔交易都需要密码",
+
+    "password_needed_transfer": "每笔转移都需要密码",
+    "next": "下一个",
+    "exit": "推出",
+    "back": "Back",
+
+    "broadcast": "广播",
+    "transaction": "交易",
+    "broadcasted_title": "将您的交易广播至区块链",
+    "close_browser_or_make_new_exchange": "您现在可以关闭浏览器窗口或进行另一币交易",
+    "close_browser_or_make_new_transfer": "您现在可以关闭浏览器窗口或进行另一币转移",
+    "broadcasting": "您的交易正在被广播至区块链",
+    "cound_not_broadcast": "无法将您的交易广播至区块链",
+    "current_address_balance": "当前地址余额",
+    "transaction_error": "交易错误",
+    "waiting_transaction": "您的交易正在等待被挖掘",
+
+    "about_to_exchange": "您将开始交易",
+    "about_to_transfer": "您将开始转移",
+    "processing": "处理中",
+    "gas_limit": "燃料限额",
+    "gas_price": "燃料价格",
+    "for": "对于",
+    "to": "至",
+    "best_rate": "最优价",
+    "token_amount": "代币／数量",
+
+    "transfer_tooltip": "转移以太或代币至其它地址",
+    "transaction_gasprice_50": "更高的燃料价格，更快的交易速度。最高燃料价格：50 Gwei",
+    "transaction_gasprice": "更高的燃料价格，更快的交易速度",
+    "best_rate_tooltip": "市场波动时，更低的价格可以带来更好的成功率",
+    "terms_and_conditions": "<span>条款和 <br  class='show-for-small-only'>条件</span>"
+  },
+
+  "modal": {
+    "enter_password": "输入密码",
+    "confirm": "确认",
+    "import": "导入",
+    "enter_password_placeholder": "输入钱包密码进行确认",
+    "select_hd_path": "选择硬盘派生路径",
+    "select_trezor_address": "选择TREZOR地址",
+    "select_ledger_address": "选择LEDGER地址",
+    "select_address": "选择您想要使用的地址",
+    "previous_addresses": "以前的地址",
+    "more_addresses": "更多地址",
+    "custom_path": "您的自定义路径",
+    "view_on_etherscan": "在Etherscan上查看",
+    "press_confirm_if_really_want": "请按确认以继续",
+    "confirm_exchange_title": "交易确认",
+    "confirm_transfer_title": "转移确认",
+
+    "select_your_language": "选择你的语言",
+    "select_source_token": "选择原始代币",
+    "select_dest_token": "选择终点代币",
+    "select_trasfer_from_token": "选择 \"TRANSFER FROM\" 代币",
+
+    "approve_exchange": "You need to grant permission for Kyber Wallet to interact with <strong>${ token }</strong> on this address",
+    "eth_token_exchange": "ETH代币交易",
+    "approve": "批准"
+  },
+
+  "error": {
+    "select_same_token": "无法和同种代币进行交易",
+    "select_token_token": "This token pair is not supported yet",
+    "source_amount_too_high": "原始数量过高",
+    "source_amount_too_high_cap": "原始数量超过了你的额度。你的额度是${ cap }ETH",
+    "source_amount_too_small": "原始数量过低",
+    "source_amount_rate_error": "Cannot exchange at the moment",
+    "source_amount_too_high_for_reserve": "原始数量过高 （交易对目前还不支持）",
+    "source_amount_is_not_number": "原始数量不是一个数字",
+
+    "dest_address": "这不是一个地址",
+    "amount_transfer_too_hign": "数量过高",
+    "amount_must_be_number": "数量必须是一个数字",
+
+    "error_occurred": "发生错误",
+    "cannot_connect_metamask": "无法获取Metamask账户",
+    "cannot_connect_trezor": "无法连接至Trezor",
+    "cannot_connect_ledger": "无法连接至Ledger",
+    "invalid_private_key": "无效的密钥",
+    "no_balance": "您的地址上没有我们支持的代币。请导入其它的地址。",
+    "clear_data_timeout": "由于您的会话超时，我们清除了您的数据",
+    "minutes": " 分钟",
+
+    "path_not_support_by_trezor": "Trezor不支持这个路径",
+    "check_right_application_selected": "检查是否选择了正确的应用",
+    "network_not_match": "网络不匹配",
+    "not_supported": "不支持"
+  },
+
+  "import": {
+    "from_metamask": "连接至<br>Metatmask",
+    "from_keystore": "选择或拖动<br />您的密钥库",
+    "from_trezor": "从<br />Trezor导入",
+    "from_ledger": "从<br />Ledger导入",
+    "from_private_key": "请输入您的<br />密钥",
+    "from_private_key_input_title": "请输入您的密钥",
+    "from_private_key_input_title_placehoder": "请输入您的密钥"
+  },
+
+  "info": {
+    "title": "Kyber测试网络",
+    "version": "版本",
+    "chain": "链",
+    "node_endpoint": "节点端",
+    "reserve_address": "储蓄库合约地址",
+    "network_address": "网络合约地址",
+    "kyber_homepage": "Kyber主页",
+    "get_free_kovan": "得到免费的",
+    "warning": "请不药发送以太或代币到以上的任何地址.<br></br>他们都是测试网络的地址！",
+    "here": "这里"
+  },
+  
+  "footer": {
+    "info": "信息",
+    "language": "语音"
+  },
+
+
+  "history": {
+    "second_ago": "秒之前",
+    "minutes_ago": "分钟之前",
+    "hours_ago": "小时之前",
+    "days_ago": "天之前",
+    "months_ago": "月之前",
+    "years_ago": "年之前"
+  }
+}

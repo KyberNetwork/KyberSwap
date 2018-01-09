@@ -1,0 +1,124 @@
+$title-background-color: #DCF0EC;
+$footer-background-color: $title-background-color;
+$divider-color: darken($title-background-color, 5);
+
+.reveal-overlay {
+  background-color: rgba($dark-gray, .75);
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.reveal {
+  position: relative;
+  overflow: visible;
+  color: $white;
+  border-radius: 0;
+  outline: none;
+  background-color: $k-primary;
+  border: 2px solid $white;
+  box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
+  @include breakpoint(small only) {
+    top: 0 !important;
+    height: auto;
+  }
+  .message {
+    margin-bottom: 25px;
+  }
+  a.x {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 32px;
+    color: $white;
+  }
+  .title {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 20px 25px;
+    background-color: $k-primary-darker;
+  }
+  .overlap {
+    width: 100%;
+    text-align: center;
+    transform: translateY(-50%);
+    .button {
+      margin: 0;
+    }
+  }
+  .content {
+    padding: 20px 10px;
+    @include breakpoint(medium) {
+      padding: 15px;
+    }
+    &.with-overlap {
+      padding-bottom: 25px;
+    }
+    .block-title {
+      @include clearfix;
+      font-weight: bold;
+      font-size: 16px;
+      color: $k-success;
+      margin-bottom: 15px;
+      img.loading {
+        height: 21px;
+        float: right;
+        margin-left: 10px;
+      }
+    }
+    p {
+      font-size: 14px;
+      line-height: 1.7;
+    }
+  }
+  .footer {
+    border-top: 1px solid $divider-color;
+    padding: 25px 10px;
+    background-color: $footer-background-color;
+    @include breakpoint(medium) {
+      padding: 15px;
+    }
+    &.with-overlap {
+      padding-top: 45px;
+    }
+    .action {
+      font-weight: bold;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: $dark-gray;
+      letter-spacing: .5px;
+    }
+  }
+}
+
+#exchange-from-token-modal,
+#exchange-to-token-modal,
+#transfer-from-token-modal {
+  @include breakpoint(medium) {
+    max-width: 860px;
+  }
+}
+
+#passphrase-modal {
+  @include breakpoint(medium) {
+    max-width: 360px;
+  }
+}
+
+#switch-trezor-address-modal {
+  @include breakpoint(medium) {
+    max-width: 360px;
+  }
+}
+
+#select-trezor-address-modal {
+  @include breakpoint(medium) {
+    max-width: 860px;
+  }
+}
+
+#request-trezor-access-modal {
+  @include breakpoint(medium) {
+    max-width: 400px;
+  }
+}

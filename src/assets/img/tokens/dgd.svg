@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>dgd</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="dgd">
+            <g id="Vector">
+                <path d="M14,0 C6.26472,0 0,6.26471 0,14 C0,21.7353 6.26472,28 14,28 C21.7353,28 28,21.7353 28,14 C28.0123,6.26471 21.7351,0 14,0 Z" id="Path" fill="#000000" opacity="0.900000036"></path>
+                <polygon id="path1_fill-path" fill="#FFFFFF" points="14.4572 6.24008 21.1298 6.24008 21.1298 7.59933 15.94 7.59933 15.94 11.5534 19.7705 11.5534 19.7705 10.318 17.052 10.318 17.052 8.95845 21.2532 8.95845 21.2532 12.9126 14.4572 12.9126"></polygon>
+                <g id="Group-3" transform="translate(6.000000, 14.000000)">
+                    <path d="M11.9417,8.3037 L0.79616,8.3037 L0.79616,0.2719 L11.9418,0.2719 C14.1043,0.2719 15.8712,2.0882 15.8712,4.2878 C15.8712,6.4873 14.104,8.3035 11.9417,8.3035 L11.9417,8.3037 Z" id="path2_fill" fill="#FFFFFF" fill-rule="nonzero"></path>
+                    <path d="M11.63306,2.002 L2.64982,2.002 L2.64982,6.574 L11.6206,6.574 C12.8686,6.574 13.9559,5.53602 13.9559,4.2756 C13.9313,3.00258 12.9058,1.9894 11.63306,2.002 Z" id="path0_fill-path" fill="#000000"></path>
+                </g>
+                <g id="Group-2" transform="translate(6.000000, 6.000000)">
+                    <polygon id="path1_fill-path" fill="#FFFFFF" points="5.9858 2.95859 5.9858 0.24008 7.468 0.24008 7.468 6.9126 0.67254 6.9126 0.67254 2.95845"></polygon>
+                    <polygon id="path0_fill-path" fill="#000000" points="2.03200017 4.318 5.86254 4.318 5.86254 5.55364 2.03200017 5.55364"></polygon>
+                </g>
+                <polygon id="path2_fill" fill="#F5A623" points="6.79600003 6.36369983 10.99711 6.36369983 10.99711 7.96992 6.79600003 7.96992"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

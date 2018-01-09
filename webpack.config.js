@@ -1,14 +1,15 @@
-var debug = process.env.NODE_ENV !== "production";
 var webpack = require('webpack');
 var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+//const Uglify = require("uglifyjs-webpack-plugin")
 
-module.exports = {
-  context: path.join(__dirname, "src"),
-  devtool: debug ? "inline-sourcemap" : false,
-  entry: ['babel-polyfill', "./js/client.js", "./assets/scss/app.scss"],
-  module: {
-    loaders: [{
+var scriptConfig = function (env) {
+  return {
+    context: path.join(__dirname, "src"),
+    devtool: (env && env.build !== "true") ? "inline-sourcemap" : false,
+    entry: ['babel-polyfill', "./js/client.js", "./assets/css/app.scss"],
+    module: {
+      loaders: [{
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
@@ -19,58 +20,86 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
+        loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader']),
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        use: [{
-            loader: 'file-loader',
-            options: {
-              query: {
-                name: '[name].[ext]'
-              }
-            }
-          },
+        use: [
           {
-            loader: 'image-webpack-loader',
+            loader: 'url-loader',
             options: {
-              query: {
-                mozjpeg: {
-                  progressive: true,
-                },
-                gifsicle: {
-                  interlaced: true,
-                },
-                optipng: {
-                  optimizationLevel: 7,
-                }
-              }
+              limit: 2000000
             }
           }
         ]
       }
-    ]
-  },
-  output: {
-    path: __dirname + "/src/",
-    filename: "client.min.js"
-  },
-  plugins: debug ? [
-    new ExtractTextPlugin({ // define where to save the file
-      filename: 'app.bundle.css',
-      allChunks: true,
-    })
-  ] : [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
-    new ExtractTextPlugin({ // define where to save the file
-      filename: 'app.bundle.css',
-      allChunks: true,
-    })
-  ],
-  devServer: {
-    compress: true,
-    disableHostCheck: true,
+      ]
+    },
+    output: {
+      path: __dirname + "/src/",
+      filename: "client.min.js"
+    },
+    plugins: (env && env.build !== "true") ? [
+      new ExtractTextPlugin({ // define where to save the file
+        filename: 'app.bundle.css',
+        allChunks: true,
+      }),
+      new webpack.DefinePlugin({
+        'env': JSON.stringify(env.chain),
+        'process.env': {
+          'logger': env.logger
+        }
+      })
+    ] : [
+        // new Uglify({
+        //   sourceMap: true,
+        //   compress: {
+        //     warnings: false
+        //   },
+        //   output: {
+        //       comments: false
+        //   }
+        // }
+        // ),
+        new ExtractTextPlugin({ // define where to save the file
+          filename: 'app.bundle.css',
+          allChunks: true,
+        }),
+        new webpack.DefinePlugin({
+          'env': JSON.stringify(env.chain),
+          'process.env': {
+            'NODE_ENV': JSON.stringify("production"),
+            'logger': env.logger
+          }
+        })
+      ],
+    devServer: {
+      compress: true,
+      disableHostCheck: true,
+    }
   }
 };
+
+
+var indexConfig = function (env) {
+  var HtmlWebpackPlugin = require('html-webpack-plugin')
+  return {
+    entry: ['./src/client.min.js'],
+    output: {
+      path: __dirname + '/src',
+      filename: 'client.min.js'
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        hash: true,
+        title: "Wallet - kyber.network",
+        template: './src/app.html.template',
+        inject: 'body',
+        styleFile: 'app.bundle.css?v=' + Date.now()
+      }),
+
+    ]
+  }
+}
+
+module.exports = [scriptConfig, indexConfig]

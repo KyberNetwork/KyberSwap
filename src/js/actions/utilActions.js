@@ -1,50 +1,48 @@
-import UTIL from "../constants/utilActions"
 
-export function setDataModal(modalID, data) {
+
+
+
+export function openTokenModal(type, selected) {
   return {
-    type: UTIL.SET_DATA_MODAL,
-    payload: {modalID, data}
+    type: "UTIL.OPEN_TOKEN_MODAL",
+    payload: {type: type, selected: selected},
   }
 }
 
-export function openModal(modalID) {
+export function hideSelectToken(){
+ return {
+    type: "UTIL.HIDE_TOKEN_MODAL",
+  } 
+}
+
+export function toggleNotify(){
   return {
-    type: UTIL.MODAL_OPEN,
-    payload: modalID
+    type: 'UTIL.TOGGLE_NOTIFY'
   }
 }
 
-export function closeModal(modalID) {
+export function openInfoModal(title, content){
   return {
-    type: UTIL.MODAL_CLOSE,
-    payload: modalID
+    type: "UTIL.OPEN_INFO_MODAL",
+    payload: {title: title, content: content}
   }
 }
 
-export function showRate() {
+export function closeInfoModal(){
   return {
-    type: UTIL.SHOW_RATE,    
-  }
-}
-export function hideRate() {
-  return {
-    type: UTIL.HIDE_RATE,   
-  }
-}
-
-
-export function showControl() {
-  return {
-    type: UTIL.SHOW_CONTROL,   
+    type: "UTIL.EXIT_INFO_MODAL"
   }
 }
 
 
-export function hideControl() {
+export function hideLangugaModal(){
   return {
-    type: UTIL.HIDE_CONTROL,   
+    type: "UTIL.HIDE_LANGUAGE_MODAL"
   }
 }
 
-
-
+export function showLangugaModal(){
+  return {
+    type: "UTIL.SHOW_LANGUAGE_MODAL"
+  }
+}
