@@ -41,7 +41,7 @@ ul.broadcast-steps {
         width: 68px;
       }
       .name{
-        width: 100px;
+        width: 50px;
       }
     }
   }
@@ -52,6 +52,10 @@ ul.broadcast-steps {
     display: inline-block;
     background-repeat: no-repeat;
     background-position: top 2px left;
+    width: 100%;
+    @include breakpoint(500px){
+      width: 430px;
+    }
     &:not(:last-child) {
       margin-bottom: 12px;
     }
