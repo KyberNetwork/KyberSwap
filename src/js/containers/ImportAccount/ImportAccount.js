@@ -1,32 +1,44 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import ImportAccountView from '../../components/ImportAccount/ImportAccountView'
-import { ImportKeystore, ImportByDevice, ImportByPrivateKey, 
+import { LandingPage, ImportAccountView } from '../../components/ImportAccount'
+import {
+  ImportKeystore, ImportByDevice, ImportByPrivateKey,
   ErrorModal, ImportByMetamask,
   ImportByDeviceWithLedger, ImportByDeviceWithTrezor
 } from "../ImportAccount"
+
+import {visitExchange} from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux'
 
 @connect((store) => {
-  return { 
+  return {
     ...store.account,
-    translate: getTranslate(store.locale)
-   }
+    translate: getTranslate(store.locale),
+    isVisitFirstTime: store.global.isVisitFirstTime
+  }
 })
 
 export default class ImportAccount extends React.Component {
+  goExchange = (e) => {
+    this.props.dispatch(visitExchange())
+  }
+
   render() {
-    return (
-      <ImportAccountView
-        firstKey={<ImportByMetamask />}
-        secondKey={<ImportKeystore />}
-        thirdKey={<ImportByDeviceWithTrezor/>}
-        fourthKey={<ImportByDeviceWithLedger/>}
-        fifthKey={<ImportByPrivateKey />}
-        errorModal={<ErrorModal />}
-        translate={this.props.translate}
-      />
-    )
+    if (this.props.isVisitFirstTime) {
+      return <LandingPage goExchange = {this.goExchange}/>
+    } else {
+      return (
+        <ImportAccountView
+          firstKey={<ImportByMetamask />}
+          secondKey={<ImportKeystore />}
+          thirdKey={<ImportByDeviceWithTrezor />}
+          fourthKey={<ImportByDeviceWithLedger />}
+          fifthKey={<ImportByPrivateKey />}
+          errorModal={<ErrorModal />}
+          translate={this.props.translate}
+        />
+      )
+    }
   }
 }

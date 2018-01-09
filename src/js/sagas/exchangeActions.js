@@ -428,10 +428,10 @@ export function* exchangeTokentoETHMetamask(action) {
 }
 
 function* updateRatePending(action) {
-  const { ethereum, source, dest, sourceAmount } = action.payload
+  const { ethereum, source, dest, sourceAmount, isManual, rateInit } = action.payload
   try {
     const rate = yield call(ethereum.call("getRate"), source, dest, sourceAmount)
-    yield put.sync(actions.updateRateExchangeComplete(rate))
+    yield put.sync(actions.updateRateExchangeComplete(rateInit, rate.slippagePrice))
     yield put(actions.caculateAmount())
   }
   catch (err) {

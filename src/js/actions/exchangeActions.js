@@ -96,10 +96,11 @@ export function setRandomExchangeSelectedToken(random) {
   }
 }
 
-export function updateRateExchange(ethereum, source, dest, sourceAmount) {
+export function updateRateExchange(ethereum, source, dest, 
+  sourceAmount, isManual = false, rateInit = "0") {
   return {
     type: "EXCHANGE.UPDATE_RATE_PENDING",
-    payload: { ethereum, source, dest, sourceAmount }
+    payload: { ethereum, source, dest, sourceAmount, isManual, rateInit }
   }
 }
 
@@ -110,27 +111,21 @@ export function updatePrevSource(value) {
   }
 }
 
-export function updateRateExchangeComplete(rate) {
-  if (rate) {
+export function updateRateExchangeComplete(rateInit, slippagePrice) {
     // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
     //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
 
     //var rateBig = converter.stringToBigNumber(rate[0])
-    var offeredRate = rate.expectedPrice
-    var minConversionRate = rate.slippagePrice
+  //  var offeredRate = rate.expectedPrice
+   // var minConversionRate = rate.slippagePrice
 
     //var expirationBlock = rate[1]
     //var reserveBalance = rate[2]
-    return {
-      type: "EXCHANGE.UPDATE_RATE",
-      payload: { offeredRate, minConversionRate }
-    }
-  } else {
-    return {
-      type: "EXCHANGE.UPDATE_RATE",
-      payload: { offeredRate: 0, minConversionRate: 0 }
-    }
+  return {
+    type: "EXCHANGE.UPDATE_RATE",
+    payload: { rateInit, slippagePrice }
   }
+  
 }
 
 

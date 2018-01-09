@@ -8,3 +8,4 @@ export { default as ImportByMetamaskView } from './ImportByMetamaskView.js';
 
 export { default as ImportByTrezorView } from './ImportByTrezorView.js';
 export { default as ImportByLedgerView } from './ImportByLedgerView.js'
+export { default as LandingPage } from './LandingPage.js'

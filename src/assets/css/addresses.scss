@@ -91,10 +91,9 @@ ul.address-list {
     letter-spacing: .5px;
     transition: background-color .4s ease-in-out;
     padding: 7px 15px;
-    border-radius: 1000px;
-    background-color: #ECF6F4;
+    background-color: #fff;
     &:hover {
-      background-color: $light-gray;
+      background-color: $k-gray;
     }
   }
   .previous {

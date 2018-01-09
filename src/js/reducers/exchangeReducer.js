@@ -17,7 +17,7 @@ const exchange = (state = initState, action) => {
       exchange.destToken = random[1].address;
       exchange.destTokenSymbol = random[1].symbol;
       return { ...exchange }
-    case "EXCHANGE.MAKE_NEW_EXCHANGE":{
+    case "EXCHANGE.MAKE_NEW_EXCHANGE": {
       var newState = { ...state };
       newState.selected = true;
       newState.sourceAmount = ""
@@ -32,8 +32,8 @@ const exchange = (state = initState, action) => {
       newState.isEditGasPrice = false
       return newState
     }
-    case "EXCHANGE.SELECT_TOKEN_ASYNC":{
-      newState.isSelectToken = true      
+    case "EXCHANGE.SELECT_TOKEN_ASYNC": {
+      newState.isSelectToken = true
       return newState
     }
     case "EXCHANGE.SELECT_TOKEN": {
@@ -69,25 +69,25 @@ const exchange = (state = initState, action) => {
       newState.errors.sourceAmountError = action.payload
       return newState
     }
-    case "EXCHANGE.THROW_GAS_PRICE_ERROR":{
+    case "EXCHANGE.THROW_GAS_PRICE_ERROR": {
       newState.errors.gasPriceError = action.payload
       return newState
     }
-    case "EXCHANGE.THROW_RATE_ERROR":{
+    case "EXCHANGE.THROW_RATE_ERROR": {
       newState.errors.rateError = action.payload
       return newState
     }
-    case "EXCHANGE.GO_TO_STEP":{
+    case "EXCHANGE.GO_TO_STEP": {
       newState.step = action.payload
       return newState
     }
-    case "EXCHANGE.SPECIFY_GAS_PRICE":{
+    case "EXCHANGE.SPECIFY_GAS_PRICE": {
       newState.gasPrice = action.payload
       newState.isEditGasPrice = true
       newState.errors.gasPriceError = ""
       return newState
     }
-    case "EXCHANGE.TOGGLE_ADVANCE":{
+    case "EXCHANGE.TOGGLE_ADVANCE": {
       newState.advanced = !newState.advanced
       return newState
     }
@@ -111,17 +111,20 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.UPDATE_RATE":
-      var rate = action.payload.minConversionRate
+      const { rateInit, slippagePrice } = action.payload
+      newState.slippagePrice = slippagePrice
+      
+      var rate = slippagePrice === "0" ? rateInit : slippagePrice      
       newState.minConversionRate = rate
       if (newState.sourceAmount !== "") {
         newState.minDestAmount = calculateDest(newState.sourceAmount, rate).toString(10)
       }
       //newState.offeredRateBalance = action.payload.reserveBalance
-     // newState.offeredRateExpiryBlock = action.payload.expirationBlock
-      if(!newState.isEditRate){
+      // newState.offeredRateExpiryBlock = action.payload.expirationBlock
+      if (!newState.isEditRate) {
         newState.offeredRate = rate
       }
-      newState.isSelectToken = false    
+      newState.isSelectToken = false
       return newState
     case "EXCHANGE.OPEN_PASSPHRASE": {
       newState.passphrase = true
@@ -179,7 +182,7 @@ const exchange = (state = initState, action) => {
         sourceName: action.payload.balanceData.sourceName,
         sourceDecimal: action.payload.balanceData.sourceDecimal,
         sourceSymbol: action.payload.balanceData.sourceSymbol,
-        prevSource : action.payload.balanceData.source,
+        prevSource: action.payload.balanceData.source,
         nextSource: 0,
 
         destName: action.payload.balanceData.destName,
@@ -197,7 +200,7 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.PROCESS_EXCHANGE": {
       newState.isConfirming = true
       return newState
-    }    
+    }
     case "TX.TX_ADDED": {
       newState.tempTx = action.payload
       return newState
@@ -209,8 +212,8 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.CACULATE_AMOUNT": {
-      if(state.errors.selectSameToken || state.errors.selectTokenToken) return newState
-      if(state.inputFocus == "dest"){
+      if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
+      if (state.inputFocus == "dest") {
         newState.sourceAmount = caculateSourceAmount(state.destAmount, state.offeredRate, 6)
       } else {
         newState.destAmount = caculateDestAmount(state.sourceAmount, state.offeredRate, 6)
@@ -220,17 +223,17 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.INPUT_CHANGE": {
       let focus = action.payload.focus
       let value = action.payload.value
-      if(focus == "source"){
+      if (focus == "source") {
         newState.sourceAmount = value
         newState.errors.sourceAmountError = ""
-        if(state.errors.selectSameToken || state.errors.selectTokenToken) return newState
+        if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
         newState.destAmount = caculateDestAmount(value, state.offeredRate, 6)
       }
-      else if(focus == "dest"){
+      else if (focus == "dest") {
         newState.destAmount = value
         newState.errors.destAmountError = ""
         newState.errors.sourceAmountError = ""
-        if(state.errors.selectSameToken || state.errors.selectTokenToken) return newState
+        if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
         newState.sourceAmount = caculateSourceAmount(value, state.offeredRate, 6)
       }
       return newState
@@ -239,36 +242,36 @@ const exchange = (state = initState, action) => {
       newState.inputFocus = action.payload
       return newState
     }
-    case "EXCHANGE.UPDATE_CURRENT_BALANCE":{
-      newState.balanceData.nextSource = action.payload.sourceBalance 
+    case "EXCHANGE.UPDATE_CURRENT_BALANCE": {
+      newState.balanceData.nextSource = action.payload.sourceBalance
       newState.balanceData.nextDest = action.payload.destBalance
       return newState
     }
-    case "EXCHANGE.SET_TERM_AND_SERVICES":{
+    case "EXCHANGE.SET_TERM_AND_SERVICES": {
       newState.termAgree = action.payload.value
       return newState
     }
-    case "EXCHANGE.SET_OFFERED_RATE":{
+    case "EXCHANGE.SET_OFFERED_RATE": {
       newState.offeredRate = action.payload.value
       newState.errors.rateError = ''
       newState.isEditRate = true
       return newState
     }
-    case "EXCHANGE.RESET_OFFERED_RATE":{
+    case "EXCHANGE.RESET_OFFERED_RATE": {
       newState.offeredRate = newState.minConversionRate
       newState.isEditRate = false
       newState.errors.rateError = ''
       return newState
     }
-    case "EXCHANGE.SET_ESTIMATE_GAS_USED":{
+    case "EXCHANGE.SET_ESTIMATE_GAS_USED": {
       newState.gas_estimate = action.payload.estimatedGas
       return newState
     }
-    case "EXCHANGE.SET_PREV_SOURCE":{
+    case "EXCHANGE.SET_PREV_SOURCE": {
       newState.prevAmount = action.payload.value
       return newState
     }
-    case "EXCHANGE.SWAP_TOKEN":{
+    case "EXCHANGE.SWAP_TOKEN": {
       var tempSourceToken = newState.sourceToken
       var tempSourceTokenSymbol = newState.sourceTokenSymbol
       newState.sourceToken = newState.destToken
@@ -280,22 +283,29 @@ const exchange = (state = initState, action) => {
       newState.isSelectToken = true
       return newState
     }
-    case "EXCHANGE.SET_CAP_EXCHANGE":{
+    case "EXCHANGE.SET_CAP_EXCHANGE": {
       newState.maxCap = action.payload.maxCap
       return newState
     }
-    case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
-      if(!newState.isEditGasPrice){
-        if (action.payload > newState.maxGasPrice){
+    case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
+      if (!newState.isEditGasPrice) {
+        if (action.payload > newState.maxGasPrice) {
           newState.gasPrice = newState.maxGasPrice
-        }else{
+        } else {
           newState.gasPrice = action.payload
         }
       }
       return newState
     }
-    case "EXCHANGE.SET_MAX_GAS_PRICE_COMPLETE":{
+    case "EXCHANGE.SET_MAX_GAS_PRICE_COMPLETE": {
       newState.maxGasPrice = action.payload
+      return newState
+    }
+    case "EXCHANGE.UPDATE_RATE_PENDING": {
+      const isManual = action.payload.isManual
+      if (isManual) {
+        newState.isSelectToken = true
+      }
       return newState
     }
   }

@@ -37,7 +37,7 @@ export default class Tx {
           if (logs.length == 0) {
             newTx.threw = true
             newTx.status = "failed"
-            newTx.error = "Warning! Log is empty"
+            newTx.error = "transaction.error_tx_log"
           } else {
             var theLog
             for (var i = 0; i < logs.length; i++) {
@@ -48,7 +48,7 @@ export default class Tx {
               }
             }
             newTx.status = theLog ? "success" : "failed"
-            newTx.error = theLog ? "" : "Warning! Error encountered during contract execution"
+            newTx.error = theLog ? "" : "transaction.error_tx_contract"
           }
         } else {
           newTx.status = "success"

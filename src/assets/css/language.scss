@@ -17,7 +17,7 @@
       opacity: .5;
       cursor: initial;
     }
-    &.selected {
+    &.selected{
       background: $k-success-gradient;
       .name {
         color: white;

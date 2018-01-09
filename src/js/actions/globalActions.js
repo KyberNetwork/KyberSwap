@@ -159,3 +159,9 @@ export function setGasPriceComplete(gasPrice){
     payload: gasPriceFixed
   }
 }
+
+export function visitExchange(){
+  return {
+    type: "GLOBAL.VISIT_EXCHANGE",
+  }
+}

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600');
 @import '../bower/animate.css/animate.css';
 @import 'settings';
 @import "util";
@@ -19,6 +19,7 @@ $alert-color : #ff5d00;
 @import "token_select";
 @import "term_and_services";
 @import "icon";
+@import "landing_page";
 
 
 body{
@@ -63,16 +64,16 @@ body{
   }
 }
 
-#footer {
-  font-size: 14px;
+.info-menu {
+  font-size: 0.8rem;
   .language-name{
     text-transform: capitalize;
   }
   ul.links {
-    margin: 0 0 30px 0;
     padding: 0;
     list-style: none;
-    text-align: center;
+    margin: 0px;
+    margin-top: 1rem;
     @include breakpoint(medium) {
       text-align: right;
     }
@@ -84,6 +85,9 @@ body{
         font-weight: lighter;
         color: $light-gray;
         margin: 0 15px;
+        @include breakpoint(small only) {
+          margin: 0 10px;
+        }
       }
       > a {
         color: $medium-gray;
@@ -499,15 +503,11 @@ body{
 }
 
 #info{
-  h1{
-    background-color: transparent;
-    text-align: center;
-  }
+  padding: 10px;
   .address{
     text-align: center;
-    background-color: #fff;
-    padding: 10px 0;
-    margin-top: 15px;
+    background-color: $k-gray;
+    padding: 17px 0;
     font-weight: bold;
     font-family: "Montserrat", sans-serif;
     font-size: 13px;
