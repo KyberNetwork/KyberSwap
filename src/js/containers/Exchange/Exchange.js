@@ -57,8 +57,16 @@ export default class Exchange extends React.Component {
       var ethereum = this.props.ethereum
       var source = this.props.exchange.sourceToken
       var dest = this.props.exchange.destToken
-      var sourceAmountHex = stringToHex(this.props.exchange.sourceAmount, sourceDecimal)
-      this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceAmountHex))
+      var destTokenSymbol = this.props.exchange.destTokenSymbol
+      var sourceAmountHex = stringToHex(value, sourceDecimal)
+      var rateInit = 0
+      if(sourceTokenSymbol === 'ETH' && destTokenSymbol !=='ETH'){
+        rateInit = this.props.tokens[destTokenSymbol].minRateEth
+      }
+      if(sourceTokenSymbol !== 'ETH' && destTokenSymbol ==='ETH'){
+        rateInit = this.props.tokens[sourceTokenSymbol].minRate
+      }
+      this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceAmountHex, true, rateInit))
       this.props.dispatch(exchangeActions.updatePrevSource(value))
     }
   }

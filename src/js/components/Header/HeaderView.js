@@ -8,12 +8,13 @@ const HeaderView = (props) => {
     <div>
       <section id="header">
         <div class="row small-11 medium-12 large-12">
-          <div class="column">
-            <div class="float-left">
+          <div class="row column">
+            <div class="column small-6 medium-6 large-6">
               <Link to={logoLink} className="logo">
                 <img src={require("../../../assets/img/logo.svg")} />
               </Link>
             </div>
+            {props.infoMenu}
             {props.address}
           </div>
         </div>

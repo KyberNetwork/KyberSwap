@@ -63,16 +63,16 @@ body{
   }
 }
 
-#footer {
-  font-size: 14px;
+.info-menu {
+  font-size: 0.8rem;
   .language-name{
     text-transform: capitalize;
   }
   ul.links {
-    margin: 0 0 30px 0;
     padding: 0;
     list-style: none;
-    text-align: center;
+    margin: 0px;
+    margin-top: 1rem;
     @include breakpoint(medium) {
       text-align: right;
     }
@@ -84,6 +84,9 @@ body{
         font-weight: lighter;
         color: $light-gray;
         margin: 0 15px;
+        @include breakpoint(small only) {
+          margin: 0 10px;
+        }
       }
       > a {
         color: $medium-gray;

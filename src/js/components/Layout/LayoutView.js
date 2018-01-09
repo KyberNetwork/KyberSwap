@@ -24,9 +24,9 @@ const LayoutView = (props) => {
         <section id="modals">
           <InfoModal />
         </section>
-        <section id="footer">
+        {/* <section id="footer">
           {props.footer}
-        </section>
+        </section> */}
       </div>
     </ConnectedRouter>
   )
