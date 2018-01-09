@@ -11,35 +11,39 @@ import { getTranslate } from 'react-localize-redux';
   }
 })
 
-
 export default class InfoKyber extends React.Component {
   render() {
     return (
       <div id="info">
-        <div class="frame">
-          <div class="row">
-            <div class="column small-11 medium-11 large-11 small-centered">
-              <div class="info">{this.props.translate("info.version") || "Version"}: 0.1.0<br />{this.props.translate("info.chain") || "Chain"}: {BLOCKCHAIN_INFO.chainName}
-              <label>{this.props.translate("info.node_endpoint") || "Node endpoint"}
-                <div class="address">{BLOCKCHAIN_INFO.endpoint}</div>
-              </label>
-              <label>{this.props.translate("info.reserve_address") || "Reserve contract address"}
-                <div class="address">
-                  <a href={BLOCKCHAIN_INFO.ethScanUrl + "/address/" + BLOCKCHAIN_INFO.reserve}  target="_blank">{BLOCKCHAIN_INFO.reserve}</a>
-                </div>
-              </label>
-              <label>{this.props.translate("info.network_address") || "Network contract address"}
-                <div class="address">
-                  <a href={BLOCKCHAIN_INFO.ethScanUrl + "/address/" + BLOCKCHAIN_INFO.network}  target="_blank">{BLOCKCHAIN_INFO.network}</a>
-                </div>
-              </label>
-              {this.props.translate("info.kyber_homepage") || "Kyber homepage"}:&nbsp;
-              <a href="https://kyber.network" target="_blank">https://kyber.network</a>
-              <br />
-              {this.props.translate("info.get_free_kovan") || "Get free"} {BLOCKCHAIN_INFO.chainName} Ether:&nbsp;<a href="#" target="_blank">{this.props.translate("info.here") || "here"}</a><br></br>{this.props.translate("info.warning") || <span>Do not send ethers nor tokens to any of the addresses above.<br></br>They are for test only and we are not likely to have control of them in mainnet.</span>}
-            </div>
-            </div>
-          </div>
+        <div class="font-s-down-1">
+          <span class="mr-2">
+            <span class="font-w-b">{this.props.translate("info.version") || "Version"}</span>: 0.1.0
+          </span>
+          <span>
+            <span class="font-w-b">{this.props.translate("info.chain") || "Chain"}</span>: {BLOCKCHAIN_INFO.chainName}
+          </span>
+        </div>
+        <p class="mt-6 mb-1 font-w-b">{this.props.translate("info.node_endpoint") || "Node endpoint"}</p>
+        <div class="address">{BLOCKCHAIN_INFO.endpoint}</div>
+        <p class="mt-4 mb-1 font-w-b">{this.props.translate("info.reserve_address") || "Reserve contract address"}</p>
+        <div class="address">
+          <a href={BLOCKCHAIN_INFO.ethScanUrl + "/address/" + BLOCKCHAIN_INFO.reserve} target="_blank">{BLOCKCHAIN_INFO.reserve}</a>
+        </div>
+        <p class="mt-4 mb-1 font-w-b">{this.props.translate("info.network_address") || "Network contract address"}</p>
+        <div class="address">
+          <a href={BLOCKCHAIN_INFO.ethScanUrl + "/address/" + BLOCKCHAIN_INFO.network} target="_blank">{BLOCKCHAIN_INFO.network}</a>
+        </div>
+        <div class="mt-6">
+          <p class="mb-1 font-s-down-1">
+            {this.props.translate("info.kyber_homepage") || "Kyber homepage"}:&nbsp;
+          <a href="https://kyber.network" target="_blank">https://kyber.network</a>
+          </p>
+          <p class="mb-1 font-s-down-1">
+            {this.props.translate("info.get_free_kovan") || "Get free"} {BLOCKCHAIN_INFO.chainName} Ether:&nbsp;<a href="#" target="_blank">{this.props.translate("info.here") || "here"}</a>
+          </p>
+          <p class="font-s-down-1">
+            {this.props.translate("info.warning") || <span>Do not send ethers nor tokens to any of the addresses above.<br /> They are for test only and we are not likely to have control of them in mainnet.</span>}
+          </p>
         </div>
       </div>
     )

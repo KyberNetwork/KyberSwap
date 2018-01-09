@@ -502,15 +502,11 @@ body{
 }
 
 #info{
-  h1{
-    background-color: transparent;
-    text-align: center;
-  }
+  padding: 10px;
   .address{
     text-align: center;
-    background-color: #fff;
-    padding: 10px 0;
-    margin-top: 15px;
+    background-color: $k-gray;
+    padding: 17px 0;
     font-weight: bold;
     font-family: "Montserrat", sans-serif;
     font-size: 13px;

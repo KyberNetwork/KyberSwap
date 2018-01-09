@@ -45,7 +45,7 @@ const ImportByDeviceView = (props) => {
                         <a class="link has-tip top explore" href={addressLink + address.addressString} target="_blank" title="View on Etherscan">
                             <span title={address.balance}>
                                 {address.balance == '-1' ?
-                                    <img src={require('../../../assets/img/waiting-white.svg')} />
+                                    <img src={require('../../../assets/img/waiting.svg')} />
                                     : roundingNumber(address.balance)
                                 } ETH
                             </span>
@@ -102,7 +102,7 @@ const ImportByDeviceView = (props) => {
     function getSelectAddressHtml() {
         return (
             <div>
-                <div class="content">
+                <div class="content bg-light">
                     <div class="row">
                         <div class="column">
                             <div class="block-title">
@@ -116,7 +116,7 @@ const ImportByDeviceView = (props) => {
                         </div>
                     </div>
                 </div>
-                <div class="content white">
+                <div class="content">
                     <div class="row">
                         <div class="column">
                             <div class="block-title">
@@ -128,8 +128,14 @@ const ImportByDeviceView = (props) => {
                                 </ul>
                             </form>
                             <div class="address-list-navigation animated fadeIn">
-                                <a class={'previous ' + (props.isFirstList ? 'disabled' : '')} onClick={props.getPreAddress}>{props.translate("modal.previous_addresses") || "Previous Addresses"}</a>
-                                <a class="next" onClick={props.getMoreAddress}>{props.translate("modal.more_addresses") || "More Addresses"}</a>
+                                <a class={'previous ' + (props.isFirstList ? 'disabled' : '')} onClick={props.getPreAddress}>
+                                    <i className="k k-angle left mr-2"></i>
+                                    {props.translate("modal.previous_addresses") || "Previous Addresses"}
+                                </a>
+                                <a class="next" onClick={props.getMoreAddress}>
+                                    {props.translate("modal.more_addresses") || "More Addresses"}
+                                    <i className="k k-angle right ml-2"></i>
+                                </a>
                             </div>
                         </div>
                     </div>

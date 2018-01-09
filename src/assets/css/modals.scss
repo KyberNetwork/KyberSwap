@@ -11,11 +11,9 @@ $divider-color: darken($title-background-color, 5);
 .reveal {
   position: relative;
   overflow: visible;
-  color: $white;
   border-radius: 0;
   outline: none;
-  background-color: $k-primary;
-  border: 2px solid $white;
+  background-color: $white;
   box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
   @include breakpoint(small only) {
     top: 0 !important;
@@ -30,13 +28,13 @@ $divider-color: darken($title-background-color, 5);
     right: 20px;
     top: 10px;
     font-size: 32px;
-    color: $white;
+    color: inherit;
   }
   .title {
     font-weight: bold;
     font-size: 20px;
     padding: 20px 25px;
-    background-color: $k-primary-darker;
+    border-bottom: 1px solid #eee;
   }
   .overlap {
     width: 100%;
@@ -51,6 +49,28 @@ $divider-color: darken($title-background-color, 5);
     @include breakpoint(medium) {
       padding: 15px;
     }
+    #passphrase, #private_key{
+      border: none;
+      background-color: #f1f1f1;
+      height: 60px;
+      color: #000;
+      font-size: 14px;
+      &::-webkit-input-placeholder{
+        color: transparent;
+        background-image: url(../img/dot.png);
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      &::-moz-placeholder{
+        color: transparent;
+        background-image: url(../img/dot.png);
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      &:not([type="text"]){
+        font-size: 35px;
+      }
+    }
     &.with-overlap {
       padding-bottom: 25px;
     }
@@ -58,7 +78,6 @@ $divider-color: darken($title-background-color, 5);
       @include clearfix;
       font-weight: bold;
       font-size: 16px;
-      color: $k-success;
       margin-bottom: 15px;
       img.loading {
         height: 21px;
