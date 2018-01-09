@@ -45,7 +45,7 @@ const ImportByDeviceView = (props) => {
                         <a class="link has-tip top explore" href={addressLink + address.addressString} target="_blank" title="View on Etherscan">
                             <span title={address.balance}>
                                 {address.balance == '-1' ?
-                                    <img src={require('../../../assets/img/waiting.svg')} />
+                                    <img src={require('../../../assets/img/waiting-white.svg')} />
                                     : roundingNumber(address.balance)
                                 } ETH
                             </span>
@@ -102,7 +102,7 @@ const ImportByDeviceView = (props) => {
     function getSelectAddressHtml() {
         return (
             <div>
-                <div class="content bg-light">
+                <div class="content">
                     <div class="row">
                         <div class="column">
                             <div class="block-title">
@@ -116,7 +116,7 @@ const ImportByDeviceView = (props) => {
                         </div>
                     </div>
                 </div>
-                <div class="content">
+                <div class="content white">
                     <div class="row">
                         <div class="column">
                             <div class="block-title">
