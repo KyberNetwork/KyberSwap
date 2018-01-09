@@ -179,5 +179,13 @@
     "use_testnet":"请务必使用测试网络的钱包！！！",
     "use_real":"请千万不要使用真实的以太坊账户！！！",
     "accept":"Accept"
+  },
+
+  "landing_page":{
+    "title": "Trust-Free Exchange  for Ethereum tokens",
+    "trustless": "Trustless",
+    "instant": "Instant",
+    "liquid": "Liquid",
+    "compatible": "Compatible"
   }
 }

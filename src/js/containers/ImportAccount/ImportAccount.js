@@ -26,7 +26,7 @@ export default class ImportAccount extends React.Component {
 
   render() {
     if (this.props.isVisitFirstTime) {
-      return <LandingPage goExchange = {this.goExchange}/>
+      return <LandingPage goExchange={this.goExchange} translate={this.props.translate}/>
     } else {
       return (
         <ImportAccountView

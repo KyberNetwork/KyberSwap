@@ -177,6 +177,14 @@
     "use_testnet":"반드시 테스트넷 계정을 사용하시기 바랍니다!!!!",
     "use_real":"진짜 이더리움 계정은 사용하시면 안됩니다!!!",
     "accept":"Accept"
-  }
+  },
+
+"landing_page":{
+  "title": "Trust-Free Exchange  for Ethereum tokens",
+  "trustless": "Trustless",
+  "instant": "Instant",
+  "liquid": "Liquid",
+  "compatible": "Compatible"
+}
 
 }
