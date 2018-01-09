@@ -42,7 +42,7 @@
     "password_needed_transfer": "Mật khẩu cần thiết cho mỗi giao dịch",
     "next": "Tiếp",
     "exit": "THOÁT",
-    "back": "Quay lại",
+    "back": "Trang đầu",
 
     "broadcast": "Gửi",
     "transaction": "Giao dịch",
@@ -162,6 +162,10 @@
     "hours_ago": "giờ trước",
     "days_ago": "ngày trước",
     "months_ago": "tháng trước",
-    "years_ago": "năm trước"
+    "years_ago": "năm trước",
+    "date": "Thời gian",
+    "rate": "Tỉ Giá",
+    "description": "Mô tả",
+    "amount": "Số lượng"
   }
 }

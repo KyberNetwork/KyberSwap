@@ -44,7 +44,7 @@ const TransactionLoadingView = (props) => {
         <div class="row">
           <div class="column small-11 medium-10 large-9 small-centered text-center">
             <a className="new-transaction" onClick={props.makeNewTransaction}>
-              {props.translate("back") || 'Back'}
+              {props.translate("transaction.back") || 'Back'}
             </a>
           </div>
         </div>
@@ -129,7 +129,7 @@ const TransactionLoadingView = (props) => {
       <div class="row">
         <div class="column small-11 medium-10 large-9 small-centered text-center">
           <a className="new-transaction" onClick={props.makeNewTransaction}>
-            {props.translate("back") || 'Back'}
+            {props.translate("transaction.back") || 'Back'}
           </a>
         </div>
       </div>

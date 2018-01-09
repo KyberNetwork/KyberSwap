@@ -103,10 +103,10 @@ const TransactionListView = (props) => {
             <div className="transaction-list">
               <div className="wrapper">
                 <div className="clearfix header">
-                  <div className="column small-4 medium-3 large-2">Date</div>
-                  <div className="column small-3 show-for-large">Description</div>
-                  <div className="column small-3 medium-4 large-3 show-for-medium">Rate</div>
-                  <div className="column small-8 medium-5 large-4">Amount</div>
+                  <div className="column small-4 medium-3 large-2">{props.translate('history.date') || 'Date'}</div>
+                  <div className="column small-3 show-for-large">{props.translate('history.description') || 'Description'}</div>
+                  <div className="column small-3 medium-4 large-3 show-for-medium">{props.translate('history.rate') || 'Rate'}</div>
+                  <div className="column small-8 medium-5 large-4">{props.translate('history.amount') || 'Amount'}</div>
                 </div>
                 <CSSTransitionGroup
                   transitionName="example"

@@ -42,7 +42,7 @@
     "password_needed_transfer": "每笔转移都需要密码",
     "next": "下一个",
     "exit": "推出",
-    "back": "Back",
+    "back": "主页",
 
     "broadcast": "广播",
     "transaction": "交易",
@@ -94,7 +94,7 @@
     "select_dest_token": "选择终点代币",
     "select_trasfer_from_token": "选择 \"TRANSFER FROM\" 代币",
 
-    "approve_exchange": "You need to grant permission for Kyber Wallet to interact with <strong>${ token }</strong> on this address",
+    "approve_exchange": "您需要获取Kyber钱包的许可才能在当前地址与<strong>${ token }</strong>交互",
     "eth_token_exchange": "ETH代币交易",
     "approve": "批准"
   },
@@ -105,7 +105,7 @@
     "source_amount_too_high": "原始数量过高",
     "source_amount_too_high_cap": "原始数量超过了你的额度。你的额度是${ cap }ETH",
     "source_amount_too_small": "原始数量过低",
-    "source_amount_rate_error": "Cannot exchange at the moment",
+    "source_amount_rate_error": "当前无法交易",
     "source_amount_too_high_for_reserve": "原始数量过高 （交易对目前还不支持）",
     "source_amount_is_not_number": "原始数量不是一个数字",
 
@@ -163,6 +163,18 @@
     "hours_ago": "小时之前",
     "days_ago": "天之前",
     "months_ago": "月之前",
-    "years_ago": "年之前"
+    "years_ago": "年之前",
+    "date": "日期",
+    "rate": "汇率",
+    "description": "描述",
+    "amount": "数量"
+  },
+
+  "terms":{
+    "title" : "Kyber钱包 - 使用条款",
+    "content":"Kyber测试网络钱包提供了一个让大家能够实验和了解我们的交易和支付的服务平台。 目前的版本可能不安全。 使用它可能会导致资金损失，并可能危及用户的隐私。 用户对使用Kyber测试网络钱包的任何结果承担全部责任。",
+    "use_testnet":"请务必使用测试网络的钱包！！！",
+    "use_real":"请千万不要使用真实的以太坊账户！！！",
+    "accept":"Accept"
   }
 }
