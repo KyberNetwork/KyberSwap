@@ -13,7 +13,7 @@ const LandingPage = (props)=> {
                             <li class="">{props.translate("landing_page.liquid") || "Liquid"}</li>
                             <li class="">{props.translate("landing_page.compatible") || "Compatible"}</li>
                         </ul>
-                    <button class="button accent" onClick={(e)=>props.goExchange(e)}>Get Started</button>
+                    <button class="button accent" onClick={(e)=>props.goExchange(e)}>{props.translate("landing_page.get_started") || "Get Started"}</button>
                 </div>
             </div>
         </div>

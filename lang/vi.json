@@ -170,10 +170,11 @@
   },
 
   "landing_page":{
-    "title": "Trust-Free Exchange  for Ethereum tokens",
+    "title": "Trust-Free Exchange for Ethereum tokens",
     "trustless": "Trustless",
     "instant": "Instant",
     "liquid": "Liquid",
-    "compatible": "Compatible"
+    "compatible": "Compatible",
+    "get_started": "Get Started"
   }
 }
