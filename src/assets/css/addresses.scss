@@ -35,13 +35,13 @@ ul.address-list {
     transition: background-color 0.1s ease-in-out;
     @include clearfix;
     &:not(:last-child) {
-      border-bottom: 1px solid $k-divider-light;
+      border-bottom: 1px solid #eaeaea;
     }
     &:hover {
-      background-color: $k-primary-darker;
+      background-color: $k-gray;
     }
     label{
-      color: $white-light;
+      color: inherit;
     }
     .info {
       float: right;
@@ -50,12 +50,12 @@ ul.address-list {
       text-align: right;
       white-space: nowrap;
       .link {
-        color: $white-light;
+        color: inherit;
         cursor: pointer;
         text-align: right;
         font-size: 14px;
         padding-right: 25px;
-        background-image: url(../img/link-white.svg);
+        background-image: url(../img/link.svg);
         background-repeat: no-repeat;
         background-size: 16px 16px;
         background-position: center right;
@@ -89,12 +89,12 @@ ul.address-list {
     text-transform: uppercase;
     color: $dark-gray;
     letter-spacing: .5px;
+    border: 1px solid #ddd;
     transition: background-color .4s ease-in-out;
     padding: 7px 15px;
-    border-radius: 1000px;
-    background-color: #ECF6F4;
+    background-color: #fff;
     &:hover {
-      background-color: $light-gray;
+      background-color: $k-gray;
     }
   }
   .previous {
@@ -183,24 +183,22 @@ ul.address-list {
 
 label.address-path-stamp {
   display: block;
-  background-color: $k-primary-lighter;
+  background-color: #eaeaea;
   padding: 12px 15px;
   margin: 0 0 15px 0;
   min-height: 93px;
+  color: inherit;
   .name {
-    text-transform: none;
     font-weight: bold;
     font-size: 14px;
-    color: $white;
   }
   .note {
-    text-transform: none;
     font-size: 12px;
     font-weight: normal;
-    color: $white-light;
   }
   &.active{
     background: $k-success-gradient;
+    color: $white;
     .address-path-input{
       input[type=text] {
         background-color: rgba(35, 102, 102, 0.88);
@@ -219,7 +217,7 @@ label.address-path-stamp {
   .address-path-input {
     position: relative;
     input[type=text] {
-      background-color: #f5f5f5;
+      background-color: $k-gray;
       margin: 5px 0 0 0;
       box-shadow: none;
       font-weight: bold;

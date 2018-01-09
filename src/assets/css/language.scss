@@ -6,19 +6,22 @@
     padding: 12px;
     border-radius: $global-radius;
     margin-bottom: 15px;
+    border: 1px solid #eee;
     &:not(.empty){
       cursor: pointer;
     }
     img{
-      background-color: transparent;
+      background-color: #fff;
+      padding: 1px;
       margin-right: 10px;
     }
     &.empty {
       opacity: .5;
       cursor: initial;
     }
-    &.selected {
+    &.selected, &:hover{
       background: $k-success-gradient;
+      border-color: transparent;
       .name {
         color: white;
       }
