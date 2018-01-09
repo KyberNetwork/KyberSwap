@@ -19,6 +19,7 @@ $alert-color : #ff5d00;
 @import "token_select";
 @import "term_and_services";
 @import "icon";
+@import "landing_page";
 
 
 body{
@@ -526,38 +527,5 @@ input[type=number]::-webkit-outer-spin-button {
 #import-account{
   .title{
     font-weight: normal;
-  }
-}
-#get-start{
-  color: #f2f4f4;
-  .title{
-    font-weight: bold;
-    margin-top: 70px;
-    text-transform: uppercase;
-  }
-  button{
-    padding: 0 30px;
-  }
-  ul{
-    margin: 70px 0;
-    font-weight: 500;
-    li{
-      list-style: none;
-      display: inline-block;
-      position: relative;
-      padding: 0 45px;
-      &::before{
-        content: '';
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        background-image: url(../img/tick.svg);
-        background-size: 100%;
-        background-repeat: no-repeat;
-        position: absolute;
-        left: 15px;
-        top: 3px;
-      }
-    }
   }
 }
