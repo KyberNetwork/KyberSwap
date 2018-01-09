@@ -30,9 +30,10 @@ const ExchangeRates = (props) => {
     arrows: false,
     autoplay: true,
     speed: 500,
+    pauseOnHover: true,
     adaptiveHeight: true,
     variableWidth: true,
-    slidesToScroll: 3,
+    slidesToScroll: 2,
     responsive: [
       { breakpoint: 400, settings: { slidesToShow: 2 } },
       { breakpoint: 768, settings: { slidesToShow: 3 } },
