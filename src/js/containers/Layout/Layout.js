@@ -34,6 +34,7 @@ import Language from "../../../../lang"
     ethereumNode: store.connection.ethereum,
     currentBlock: store.global.currentBlock,
     connected: store.global.connected,
+    showBalance: store.global.showBalance,
     utils: store.utils,
     account: store.account,
     translate: getTranslate(store.locale),
@@ -91,7 +92,7 @@ export default class Layout extends React.Component {
   }
 
   render() {
-    var exchangeHistory = <TransactionList />
+    var exchangeHistory = this.props.showBalance?<TransactionList />:""
     var footer = <Footer />
     var rate = <Rate />
     return (
