@@ -182,11 +182,11 @@
   },
 
   "landing_page":{
-    "title": "Trust-Free Exchange  for Ethereum tokens",
-    "trustless": "Trustless",
-    "instant": "Instant",
-    "liquid": "Liquid",
-    "compatible": "Compatible",
-    "get_started": "Get Started"
+    "title": "无需信任的以太坊代币交易所",
+    "trustless": "无需信赖",
+    "instant": "迅速",
+    "liquid": "流动性",
+    "compatible": "兼容",
+    "get_started": "开始"
   }
 }
