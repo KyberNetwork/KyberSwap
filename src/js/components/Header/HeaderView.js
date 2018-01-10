@@ -9,7 +9,7 @@ const HeaderView = (props) => {
       <section id="header">
         <div class="row small-11 medium-12 large-12">
           <div class="row column">
-            <div class="column small-6 medium-6 large-6">
+            <div class="column small-3">
               <Link to={logoLink} className="logo">
                 <img src={require("../../../assets/img/logo.svg")} />
               </Link>
