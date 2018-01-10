@@ -70,8 +70,8 @@
     "best_rate_tooltip": "시장이 변동될 때 가격을 낮추면 성공률이 높아질 수 있습니다",
     "terms_and_conditions": "<span>이용 약관 및 <br  class='show-for-small-only'>조건</span>",
 
-    "error_tx_log":"Warning! Log is empty",
-    "error_tx_contract":"Warning! Error encountered during contract execution"
+    "error_tx_log":"로그가 비어있는 상태입니다",
+    "error_tx_contract":"해당 토큰을 지원하지 않습니다"
   },
 
   "modal": {

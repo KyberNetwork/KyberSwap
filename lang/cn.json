@@ -71,8 +71,8 @@
     "best_rate_tooltip": "市场波动时，更低的价格可以带来更好的成功率",
     "terms_and_conditions": "<span>条款和 <br  class='show-for-small-only'>条件</span>",
 
-    "error_tx_log":"Warning! Log is empty",
-    "error_tx_contract":"Warning! Error encountered during contract execution"
+    "error_tx_log":"空的日志",
+    "error_tx_contract":"警告！合约执行过程中发生了错误"
   },
 
   "modal": {

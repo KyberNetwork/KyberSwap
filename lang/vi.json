@@ -170,11 +170,11 @@
   },
 
   "landing_page":{
-    "title": "Trao đổi miễn phí cho Ethereum tokens",
+    "title": "Trao đổi Ethereum tokens",
     "trustless": "Tin tưởng",
     "instant": "Tức thì",
     "liquid": "Thanh khoản",
-    "compatible": "Compatible",
+    "compatible": "Tương thích",
     "get_started": "Bắt đầu"
   }
 }
