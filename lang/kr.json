@@ -180,12 +180,12 @@
   },
 
 "landing_page":{
-  "title": "Trust-Free Exchange  for Ethereum tokens",
-  "trustless": "Trustless",
-  "instant": "Instant",
-  "liquid": "Liquid",
-  "compatible": "Compatible",
-    "get_started": "Get Started"
+  "title": "믿을 수 있는 이더리움 기반 토큰의 교환",
+  "trustless": "무신뢰",
+  "instant": "빠른",
+  "liquid": "유동성",
+  "compatible": "호환 가능",
+  "get_started": "시작"
 }
 
 }
