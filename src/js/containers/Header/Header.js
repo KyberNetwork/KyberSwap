@@ -7,7 +7,11 @@ import { getTranslate } from 'react-localize-redux';
 import HeaderView from '../../components/Header/HeaderView'
 
 @connect((store) => {
-  var location = store.router.location.pathname
+
+  var location = "/"
+  if (store.router.location){
+    location = store.router.location.pathname
+  }
   return { 
     location: location,
     txs: store.txs,

@@ -22,8 +22,6 @@ import { getTranslate } from 'react-localize-redux';
   const exchange = store.exchange
   const tokens = store.tokens.tokens
   const translate = getTranslate(store.locale)
-  const location = store.router.location.pathname
-
   
   return { account, ethereum, exchange, tokens, translate }
 })
