@@ -71,7 +71,8 @@
     "terms_and_conditions": "<span>이용 약관 및 <br  class='show-for-small-only'>조건</span>",
 
     "error_tx_log":"로그가 비어있는 상태입니다",
-    "error_tx_contract":"해당 토큰을 지원하지 않습니다"
+    "error_tx_contract":"해당 토큰을 지원하지 않습니다",
+    "no_pedding_tx": "No pending transaction"
   },
 
   "modal": {

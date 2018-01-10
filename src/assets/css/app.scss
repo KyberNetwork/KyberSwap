@@ -25,6 +25,7 @@ $alert-color : #ff5d00;
 body{
   color: $black;
   font-family: 'Montserrat', sans-serif;
+  min-width: 350px;
 }
 
 #waiting {
@@ -121,7 +122,7 @@ body{
     }
   }
   .user-bar {
-    margin-top: 11px;
+    margin-top: 14px;
     position: relative;
     font-size: 15px;
     .address{
@@ -180,7 +181,7 @@ body{
       list-style: none;
       font-size: 0;
       text-align: left;
-      top: 53px;
+      top: 50px;
       z-index: 5;
       width: 330px;
       left: auto;
@@ -521,12 +522,6 @@ body{
   text-align: center;
   margin-top: 70px;
 }
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
-}
-
 #import-account{
   .title{
     font-weight: normal;
