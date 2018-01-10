@@ -170,11 +170,11 @@
   },
 
   "landing_page":{
-    "title": "Trust-Free Exchange for Ethereum tokens",
-    "trustless": "Trustless",
-    "instant": "Instant",
-    "liquid": "Liquid",
+    "title": "Trao đổi miễn phí cho Ethereum tokens",
+    "trustless": "Tin tưởng",
+    "instant": "Tức thì",
+    "liquid": "Thanh khoản",
     "compatible": "Compatible",
-    "get_started": "Get Started"
+    "get_started": "Bắt đầu"
   }
 }
