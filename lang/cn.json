@@ -25,14 +25,14 @@
   "transaction": {
     "exchange": "交易",
     "exchange_from": "从",
-    "exchange_to": "去",
+    "exchange_to": "到",
 
     "transfer": "转移",
     "transfer_to_address": "转移到地址",
     "amount": "数量",
     "select_token": "选择代币",
 
-    "advanced": "提前",
+    "advanced": "高级",
     "transaction_fee": "交易费",
 
     "address_balance": "地址余额",
@@ -41,7 +41,7 @@
 
     "password_needed_transfer": "每笔转移都需要密码",
     "next": "下一个",
-    "exit": "推出",
+    "exit": "退出",
     "back": "主页",
 
     "broadcast": "广播",
@@ -60,7 +60,7 @@
     "processing": "处理中",
     "gas_limit": "燃料限额",
     "gas_price": "燃料价格",
-    "for": "对于",
+    "for": "换至",
     "to": "至",
     "best_rate": "最优价",
     "token_amount": "代币／数量",

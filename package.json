@@ -78,13 +78,14 @@
     "redux-saga-test-plan": "^3.3.1",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
+    "uglifyjs-webpack-plugin": "^1.1.6",
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "build-kovan": "NODE_ENV=production webpack -p --env.chain=kovan --env.build=true",
-    "build-mainnet": "NODE_ENV=production webpack -p --env.chain=mainnet --env.build=true",
-    "build-ropsten": "NODE_ENV=production webpack -p --env.chain=ropsten --env.build=true",
+    "build-kovan": "NODE_ENV=production webpack --env.chain=kovan --env.build=true",
+    "build-mainnet": "NODE_ENV=production webpack --env.chain=mainnet --env.build=true",
+    "build-ropsten": "NODE_ENV=production webpack --env.chain=ropsten --env.build=true",
     "mainnet": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=mainnet",
     "kovan": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=kovan",
     "ropsten": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=ropsten --env.logger=true",

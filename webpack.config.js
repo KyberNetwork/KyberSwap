@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 var scriptConfig = function (env) {
   return {
@@ -50,6 +51,7 @@ var scriptConfig = function (env) {
         }
       })
     ] : [
+        new UglifyJsPlugin(),
         new ExtractTextPlugin({ // define where to save the file
           filename: 'app.bundle.css',
           allChunks: true,
