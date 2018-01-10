@@ -72,7 +72,8 @@
     "terms_and_conditions": "<span>条款和 <br  class='show-for-small-only'>条件</span>",
 
     "error_tx_log":"空的日志",
-    "error_tx_contract":"警告！合约执行过程中发生了错误"
+    "error_tx_contract":"警告！合约执行过程中发生了错误",
+    "no_pedding_tx": "No pending transaction"
   },
 
   "modal": {
@@ -104,7 +105,7 @@
 
   "error": {
     "select_same_token": "无法和同种代币进行交易",
-    "select_token_token": "This token pair is not supported yet",
+    "select_token_token": "这个代币交易对目前还不支持",
     "source_amount_too_high": "原始数量过高",
     "source_amount_too_high_cap": "原始数量超过了你的额度。你的额度是${ cap }ETH",
     "source_amount_too_small": "原始数量过低",
@@ -150,8 +151,8 @@
     "reserve_address": "储蓄库合约地址",
     "network_address": "网络合约地址",
     "kyber_homepage": "Kyber主页",
-    "get_free_kovan": "得到免费的",
-    "warning": "请不药发送以太或代币到以上的任何地址.<br></br>他们都是测试网络的地址！",
+    "get_free_kovan": "获取免费的",
+    "warning": "请不要发送以太或代币到以上的任何地址.<br></br>他们都是测试网络的地址！",
     "here": "这里"
   },
   
