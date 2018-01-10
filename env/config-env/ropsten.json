@@ -128,6 +128,7 @@
   "averageBlockTime": 6000,
   "networkId": 3,
   "chainName": "Ropsten",
+  "faucet":"https://faucet.kyber.network/",
   "server_logs": {
     "url": "ropsten.etherscan.io",
     "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
