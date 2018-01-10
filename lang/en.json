@@ -72,7 +72,8 @@
     "terms_and_conditions": "<span>Terms and <br  class='show-for-small-only'>Conditions</span>",
 
     "error_tx_log":"Warning! Log is empty",
-    "error_tx_contract":"Warning! Error encountered during contract execution"
+    "error_tx_contract":"Warning! Error encountered during contract execution",
+    "no_pedding_tx": "No pending transaction"
   },
 
   "modal": {

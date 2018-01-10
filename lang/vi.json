@@ -1,7 +1,7 @@
 {
   "pack": "vi",
   "pack_icon": "vi.svg",
-  "pack_label": "Việt Nam",
+  "pack_label": "Tiếng Việt",
   "pack_active": true,
   "layout": {
     "info": "Thông tin",
@@ -69,7 +69,8 @@
     "transaction_gasprice_50": "Giá Gas càng cao, giao dịch càng nhanh. Giá Gas lớn nhất 50 Gwei",
     "transaction_gasprice": "Giá Gas càng cao, giao dịch càng nhanh",
     "best_rate_tooltip": "Rate thấp hơn cho khả năng thành công cao hơn khi thị trường biến động",
-    "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>"
+    "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>",
+    "no_pedding_tx": "Không có giao dịch nào"
   },
 
   "modal": {

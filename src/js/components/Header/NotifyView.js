@@ -79,6 +79,7 @@ const Notify = (props) => {
         {props.transactionsNum === 0 &&
           <li className="empty">
             <img src={require('../../../assets/img/empty.svg')} />
+            <p>{props.translate('transaction.no_pedding_tx') || 'No pending transaction'}</p>
           </li>
         }
       </ul>
