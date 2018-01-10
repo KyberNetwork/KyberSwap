@@ -243,6 +243,7 @@ export function stringToHex(number, decimal) {
   if (number === "" || isNaN(number)) return "0x0"
   var param = new BigNumber(10).pow(decimal ? decimal : 18)
   var bigNumber = new BigNumber(number).times(param)
+  bigNumber = bigNumber.round()
   return "0x" + bigNumber.toString(16)
 }
 
