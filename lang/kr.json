@@ -126,7 +126,8 @@
 
     "path_not_support_by_trezor": "TREZOR는 해당 경로를 지원하지 않습니다",
     "check_right_application_selected": "올바른 응용프로그램이 선택되었는지 확인하십시오",
-    "network_not_match": "네트워크가 일치하지 않습니다",
+    "network_not_match": "Metamask should be on ${expectedName}. Currently on ${currentName}",
+    "network_not_match_unknow": "Metamask should be on ${expectedName}",
     "not_supported": "지원하지 않습니다"
   },
 

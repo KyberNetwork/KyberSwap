@@ -12,7 +12,8 @@ import { setRandomTransferSelectedToken } from "../actions/transferActions"
 import * as service from "../services/accounts"
 import constants from "../services/constants"
 import { Rate, updateAllRatePromise } from "../services/rate"
-import { clearInterval } from 'timers';
+
+import {findNetworkName} from "../utils/converter"
 
 import { getTranslate } from 'react-localize-redux'
 
@@ -133,9 +134,15 @@ export function* importMetamask(action) {
   try {
     const currentId = yield call([web3Service, web3Service.getNetworkId])
     if (parseInt(currentId, 10) !== networkId) {
-      console.log(currentId)
-      yield put(actions.throwError(translate("error.network_not_match") || "Network is not match"))
-      return
+      var currentName = findNetworkName(parseInt(currentId, 10))
+      var expectedName = findNetworkName(networkId)
+      if(currentName){
+        yield put(actions.throwError(translate("error.network_not_match", {currentName: currentName, expectedName: expectedName}) || "Network is not match"))
+        return
+      }else{
+        yield put(actions.throwError(translate("error.network_not_match_unknow", {expectedName: expectedName}) || "Network is not match"))
+        return
+      }
     }
     //get coinbase
     const address = yield call([web3Service, web3Service.getCoinbase])
@@ -155,6 +162,7 @@ export function* importMetamask(action) {
     yield put(actions.throwError(translate("error.cannot_connect_metamask") || "Cannot get metamask account"))
   }
 }
+
 
 function* watchCoinbase(web3Service, address, networkId) {
   while (true) {

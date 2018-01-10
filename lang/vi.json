@@ -124,7 +124,8 @@
 
     "path_not_support_by_trezor": "Đường dẫn này không được Trezor hỗ trợ",
     "check_right_application_selected": "Kiểm tra lại để chắc chắn bạn đã sử dụng đúng ứng dụng",
-    "network_not_match": "Network không đúng",
+    "network_not_match": "Metamask cần chạy ở ${expectedName}. Hiện đang trên ${currentName}",
+    "network_not_match_unknow": "Metamask cần chạy ${expectedName}",
     "not_supported": "Không hỗ trợ"
   },
 

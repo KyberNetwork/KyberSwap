@@ -302,3 +302,22 @@ export function getDifferentAmount(sourceAmount, prevAmount, sourceDecimal,
       return value.toNumber()
     }
 }
+
+export function findNetworkName(networkId){
+  switch(networkId){
+    case 0:
+     return "Olympic Network"
+    case 1:
+      return "Mainnet"
+    case 2:
+      return "Morden Network"
+    case 3:
+      return "Ropsten Network"
+    case 4:
+      return "Rinkeby Network"
+    case 42:
+      return "Kovan Network"
+    default:
+      return null
+  }
+}

@@ -127,7 +127,8 @@
 
     "path_not_support_by_trezor": "Trezor不支持这个路径",
     "check_right_application_selected": "检查是否选择了正确的应用",
-    "network_not_match": "网络不匹配",
+    "network_not_match": "Metamask should be on ${expectedName}. Currently on ${currentName}",
+    "network_not_match_unknow": "Metamask should be on ${expectedName}",
     "not_supported": "不支持"
   },
 
