@@ -94,16 +94,26 @@ class EthereumService {
   }
 
   subcribe() {
-    //this.currentProvider.clearSubcription()
+    // this.currentProvider.subcribeNewBlock(() => {
+    //   // return Promise.all([
+    //   //   this.fetchData.bind(this)(),
+    //   //   this.fetchAllRateData.bind(this)(),
+    //   //   this.fetchAllRateUSD.bind(this)()
+    //   // ])
+    //   this.fetchData.bind(this)(),
+    //   this.fetchAllRateData.bind(this)(),
+    //   this.fetchAllRateUSD.bind(this)()
+    // })
+
     this.currentProvider.subcribeNewBlock(() => {
+      this.fetchData.bind(this)()
       return Promise.all([
-        this.fetchData.bind(this)(),
+     //   this.fetchData.bind(this)(),
         this.fetchAllRateData.bind(this)(),
         this.fetchAllRateUSD.bind(this)()
       ])
-      // this.fetchData.bind(this)()
-      // this.fetchAllRateData.bind(this)()
-      // this.fetchAllRateUSD.bind(this)()
+     // this.fetchAllRateData.bind(this)(),
+     // this.fetchAllRateUSD.bind(this)()
     })
   }
 
