@@ -13,7 +13,7 @@ import * as service from "../services/accounts"
 import constants from "../services/constants"
 import { Rate, updateAllRatePromise } from "../services/rate"
 
-import {findNetworkName} from "../utils/converter"
+import { findNetworkName } from "../utils/converter"
 
 import { getTranslate } from 'react-localize-redux'
 
@@ -48,12 +48,28 @@ export function* importNewAccount(action) {
 
     var maxCapOneExchange = yield call([ethereum, ethereum.call("getMaxCap")], address)
     yield put(setCapExchange(maxCapOneExchange))
-    // if (maxCapOneExchange === '0'){
-    //   yield put(actions.closeImportLoading())
-    //   yield put(actions.throwError('Your address does not has enough cap for exchange'))
-    //   return
-    // }
-    
+    //update token and token balance
+    var newTokens = {}
+    Object.values(tokens).map(token => {
+      var token = { ...token }
+      newTokens[token.symbol] = token
+    })
+    var randomToken = [
+      {
+        address: newTokens['ETH'].address,
+        symbol: newTokens['ETH'].symbol
+      },
+      {
+        address: newTokens['KNC'].address,
+        symbol: newTokens['KNC'].symbol
+      },
+    ]
+    yield put(setRandomExchangeSelectedToken(randomToken))
+    yield call(ethereum.fetchRateExchange)
+    //todo set random token for exchange
+    yield put(actions.closeImportLoading())
+    yield put(actions.importNewAccountComplete(account))
+    yield put(goToRoute('/exchange'))
 
     const balanceTokens = yield call([ethereum, ethereum.call("getAllBalancesToken")], address, tokens)
     //map balance
@@ -61,54 +77,7 @@ export function* importNewAccount(action) {
     balanceTokens.map(token => {
       mapBalance[token.symbol] = token.balance
     })
-
-    //update token and token balance
-    var newTokens = {}
-    Object.values(tokens).map(token => {
-      var token = { ...token }
-      token.balance = mapBalance[token.symbol]
-      newTokens[token.symbol] = token
-    })
-
-    //var randomToken = randomForExchange(newTokens)
-  //  console.log(tokens)
-    var randomToken = [
-    {
-      address: newTokens['ETH'].address,
-      symbol: newTokens['ETH'].symbol
-    },
-    {
-      address: newTokens['KNC'].address,
-      symbol: newTokens['KNC'].symbol
-    },
-    ]
-    // if (!randomToken || !randomToken[0]) {
-    //   //todo dispatch action waring no balanc
-    //   yield put(actions.closeImportLoading())
-    //   yield put(actions.throwError('Your address has no balance in any tokens. Please import another address.'))
-
-    //   return
-    // } else {
-    //   yield put(setRandomExchangeSelectedToken(randomToken))
-    //   yield call(ethereum.fetchRateExchange)
-    //   yield put(setRandomTransferSelectedToken(randomToken))
-    // }
-
-    yield put(setRandomExchangeSelectedToken(randomToken))
-    yield call(ethereum.fetchRateExchange)
-    //yield put(setRandomTransferSelectedToken(randomToken))
-
-    //todo set random token for exchange
-    yield put(actions.closeImportLoading())
-
     yield put(setBalanceToken(balanceTokens))
-    yield put(actions.importNewAccountComplete(account))
-
-    //set gas price
-   // yield put(setGasPrice(ethereum))
-
-    yield put(goToRoute('/exchange'))
-
   }
   catch (err) {
     console.log(err)
@@ -136,11 +105,11 @@ export function* importMetamask(action) {
     if (parseInt(currentId, 10) !== networkId) {
       var currentName = findNetworkName(parseInt(currentId, 10))
       var expectedName = findNetworkName(networkId)
-      if(currentName){
-        yield put(actions.throwError(translate("error.network_not_match", {currentName: currentName, expectedName: expectedName}) || "Network is not match"))
+      if (currentName) {
+        yield put(actions.throwError(translate("error.network_not_match", { currentName: currentName, expectedName: expectedName }) || "Network is not match"))
         return
-      }else{
-        yield put(actions.throwError(translate("error.network_not_match_unknow", {expectedName: expectedName}) || "Network is not match"))
+      } else {
+        yield put(actions.throwError(translate("error.network_not_match_unknow", { expectedName: expectedName }) || "Network is not match"))
         return
       }
     }
@@ -193,5 +162,5 @@ export function* watchAccount() {
   yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING", importNewAccount)
   yield takeEvery("ACCOUNT.IMPORT_ACCOUNT_METAMASK", importMetamask)
   yield takeEvery("ACCOUNT.UPDATE_TOKEN_BALANCE", updateTokenBalance)
-  
+
 }
