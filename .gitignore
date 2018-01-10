@@ -6,6 +6,10 @@ yarn-debug.log*
 yarn-error.log*
 package-lock.json
 
+src/app.bundle.css
+src/client.min.js
+src/index.html
+
 # Runtime data
 pids
 *.pid
