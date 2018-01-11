@@ -38,7 +38,6 @@ input {
   }
   &[type=number], &.address, &.hash {
     font-weight: bold;
-    font-family: $font-family-monospace;
   }
   &::-webkit-input-placeholder {
     color: #ddd;
@@ -138,6 +137,7 @@ input.error {
     text-transform: uppercase;
     position: relative;
     white-space: nowrap;
+    border: none;
     cursor: default;
     &.waiting {
       color: rgba(white, .5);

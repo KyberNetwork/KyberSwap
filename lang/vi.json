@@ -86,6 +86,7 @@
     "custom_path": "Path Tùy Chỉnh",
     "view_on_etherscan": "Xem trên Etherscan",
     "press_confirm_if_really_want": "Click xác nhận nếu bạn thật sự muốn.",
+    "waiting_for_confirmation": "Đang chờ xác nhận từ ví của bạn",
     "confirm_exchange_title": "Xác nhận giao dịch",
     "confirm_transfer_title": "Xác nhận giao dịch",
 
@@ -121,8 +122,11 @@
     "cannot_connect_ledger": "Không thể kết nối ledger",
     "invalid_private_key": "Private key không đúng định dạng",
     "no_balance": "Tài khoản của bạn hiện không có đủ số dư ở tất cả token, hãy nhập một tài khoản khác",
-    "clear_data_timeout": "Chúng tôi đã xóa hết dữ liêu bởi vì bạn đã không sử dụng trong ",
+    "clear_data_timeout": "Chúng tôi đã xóa hết dữ liêu bởi vì bạn đã không sử dụng trong ${time} phút",
     "minutes": " phút",
+    "time_out": "Hết phiên đăng nhập",
+    "network_error": "Không thể kết nối đến blockchain. Hãy kiểm tra lại mạng Internet!",
+    "term_error": "Bạn phải đồng với các điều khoản và dịch vụ!",
 
     "path_not_support_by_trezor": "Đường dẫn này không được Trezor hỗ trợ",
     "check_right_application_selected": "Kiểm tra lại để chắc chắn bạn đã sử dụng đúng ứng dụng",

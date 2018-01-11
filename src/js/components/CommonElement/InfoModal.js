@@ -1,16 +1,18 @@
 import React from "react"
-// import Modal from 'react-modal'
+import { IDLE_TIME_OUT } from "../../services/constants";
 import {Modal} from '../CommonElement'
 
 const InfoModal = (props) => {
+  var title = props.title ? props.title : ''
+  var content = props.content ? props.content : ''
   var content = (
     <div>
-      <div class="title text-center">{props.title}</div><a class="x" onClick={props.closeModal}>&times;</a>
+      <div class="title text-center">{props.translate(title)}</div><a class="x" onClick={props.closeModal}>&times;</a>
       <div class="content">
           <div class="row">
               <div class="column">
                   <center>
-                      <p>{props.content}</p>
+                      <p>{props.translate(content, {time: IDLE_TIME_OUT/60} )}</p>
                   </center>
               </div>
           </div>
@@ -19,7 +21,7 @@ const InfoModal = (props) => {
   )
   return (
     <Modal
-    className={
+      className={
       {
         base: 'reveal tiny',
         afterOpen: 'reveal tiny'
