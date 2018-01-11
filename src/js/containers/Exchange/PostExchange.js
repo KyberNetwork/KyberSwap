@@ -357,7 +357,7 @@ export default class PostExchange extends React.Component {
 
     var exchangeRate = {
       sourceToken: this.props.form.sourceTokenSymbol,
-      rate: converters.toT(this.props.form.minConversionRate),
+      rate: converters.toT(this.props.form.offeredRate),
       destToken: this.props.form.destTokenSymbol,
       percent: "-"
     }

@@ -48,7 +48,7 @@ const INIT_EXCHANGE_FORM_STATE = {
 
   offeredRate: 0,
   isEditRate : false,
-  slippagePrice: 0,
+  slippageRate: 0,
 
   throwOnFailure: false,
   gas: 1000000,

@@ -21,7 +21,8 @@ import { getTranslate } from 'react-localize-redux'
             makeNewTransaction: props.makeNewTransaction,
             type: props.type,
             balanceInfo: props.balanceInfo,
-            txHash: props.tx
+            txHash: props.tx,
+            analyze : props.analyze
         }
     }
     return {...returnProps, translate: getTranslate(store.locale)}
@@ -39,6 +40,7 @@ export default class TransactionLoading extends React.Component {
                 balanceInfo={this.props.balanceInfo}
                 makeNewTransaction={this.props.makeNewTransaction}
                 translate={this.props.translate}
+                analyze = {this.props.analyze}
             />
 
         )

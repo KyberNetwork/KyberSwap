@@ -73,7 +73,8 @@
 
     "error_tx_log":"空的日志",
     "error_tx_contract":"警告！合约执行过程中发生了错误",
-    "no_pedding_tx": "No pending transaction"
+    "no_pedding_tx": "No pending transaction",
+    "rate_info": "Rates might be changed during settlement.<br> You can indicate your minimum rate by clicking \"Advanced\""
   },
 
   "modal": {
