@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import * as converter from "../../utils/converter"
 import * as actions from "../../actions/exchangeActions"
 import { getTranslate } from 'react-localize-redux';
+import ReactTooltip from 'react-tooltip'
 
 @connect((store) => {
   return { 
@@ -34,7 +35,8 @@ export default class MinRate extends React.Component {
       <div className="row min-rate small-12 medium-8">
         <label className="column small-12 medium-3 text-right">
           <span>{this.props.translate("transaction.best_rate") || "Best Rate"}</span>
-          <span className="k k-info k-2x ml-3" title={this.props.translate("transaction.best_rate_tooltip") || "Lower rates for better success chance during market volatility"}></span>
+          <span className="k k-info k-2x ml-3" data-for="rate-tip" data-tip={this.props.translate("transaction.best_rate_tooltip") || "Lower rates for better success chance during market volatility"}></span>
+          <ReactTooltip place="bottom" id="rate-tip" type="light"/>
         </label>
         <div className="column small-12 medium-6 end p-relative">
           <input type="number" value={offeredRate} onChange={(e) => this.changeOfferRate(e)} />
