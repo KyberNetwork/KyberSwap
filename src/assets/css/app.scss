@@ -21,11 +21,32 @@ $alert-color : #ff5d00;
 @import "icon";
 @import "landing_page";
 
+@font-face{
+  font-family: 'My-Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/Montserrat-Regular.ttf);
+}
+@font-face{
+  font-family: 'My-Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  src: url(../fonts/Montserrat-Medium.ttf);
+}
+@font-face{
+  font-family: 'My-Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  src: url(../fonts/Montserrat-SemiBold.ttf);
+}
 
 body{
   color: $black;
-  font-family: 'Montserrat', sans-serif;
+  font-family: $code-font-family;
   min-width: 350px;
+}
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
+  font-family: $code-font-family;
 }
 
 #waiting {
@@ -160,7 +181,6 @@ body{
         position: absolute;
         margin-left: -10px;
         margin-top: 13px;
-        font-family: $font-family-monospace;
         font-weight: bold;
         font-size: 12px;
         line-height: 20px;
@@ -278,7 +298,6 @@ body{
         }
         span.amount {
           font-weight: bold;
-          font-family: $font-family-monospace;
         }
         .title {
           color: $dark-gray;
@@ -286,7 +305,6 @@ body{
         }
         .link {
           font-weight: bold;
-          font-family: $font-family-monospace;
           font-size: 12px;
           margin-top: 4px;
         }
@@ -405,12 +423,8 @@ body{
   background-color: $k-primary;
   color: $white-light;
   min-height: 0px !important;
-  //padding: 10px 15px;
   padding: 15px 0;
   border-top: 1px solid $k-divider;
-  // @include breakpoint(medium) {
-  //   padding: 20px 15px;
-  // }
   .bx-wrapper {
     &:after {
       pointer-events: none;
@@ -440,7 +454,6 @@ body{
         font-weight: bold;
       }
       .value {
-        font-family: $font-family-monospace;
         font-size: 14px;
         span {
           margin-left: 10px;
@@ -510,7 +523,6 @@ body{
     background-color: $k-gray;
     padding: 17px 0;
     font-weight: bold;
-    font-family: "Montserrat", sans-serif;
     font-size: 13px;
     color: #0B0F1A;
     a{

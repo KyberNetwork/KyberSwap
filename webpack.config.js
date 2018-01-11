@@ -23,7 +23,7 @@ var scriptConfig = function (env) {
         loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader']),
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
+        test: /\.(jpe?g|png|gif|svg|ttf)$/i,
         use: [
           {
             loader: 'url-loader',

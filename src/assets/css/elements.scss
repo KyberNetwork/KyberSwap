@@ -38,7 +38,6 @@ input {
   }
   &[type=number], &.address, &.hash {
     font-weight: bold;
-    font-family: $font-family-monospace;
   }
   &::-webkit-input-placeholder {
     color: #ddd;
