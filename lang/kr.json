@@ -89,6 +89,7 @@
     "custom_path": "맞춤 경로",
     "view_on_etherscan": "Etherscan에서 보기",
     "press_confirm_if_really_want": "계속하시려면 버튼을 눌러주세요",
+    "waiting_for_confirmation": "Waiting for confirmation from your wallet",
     "confirm_exchange_title": "환전확인",
     "confirm_transfer_title": "송금확인",
 
@@ -122,8 +123,11 @@
     "cannot_connect_ledger": "LEDGER에 연결할 수 없습니다",
     "invalid_private_key": "잘못된 키입니다",
     "no_balance": "주소에 지원가능한 토큰이 없습니다. 다른 주소를 사용해주세요",
-    "clear_data_timeout": "세션 초과로 인해 데이터를 모두 삭제하였습니다",
+    "clear_data_timeout": "세션 초과로 인해 데이터를 모두 삭제하였습니다 ${time} 분",
     "minutes": " 분",
+    "time_out": "Time out",
+    "network_error": "Cannot connect to node right now. Please check your network!",
+    "term_error": "You must agree terms and services!",
 
     "path_not_support_by_trezor": "TREZOR는 해당 경로를 지원하지 않습니다",
     "check_right_application_selected": "올바른 응용프로그램이 선택되었는지 확인하십시오",

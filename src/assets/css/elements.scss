@@ -138,6 +138,7 @@ input.error {
     text-transform: uppercase;
     position: relative;
     white-space: nowrap;
+    border: none;
     cursor: default;
     &.waiting {
       color: rgba(white, .5);
