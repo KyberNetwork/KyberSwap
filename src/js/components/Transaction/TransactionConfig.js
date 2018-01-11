@@ -1,4 +1,5 @@
 import React from "react"
+import ReactTooltip from 'react-tooltip'
 
 const TransactionConfig = (props) => {
   function specifyGas(event) {
@@ -20,7 +21,8 @@ const TransactionConfig = (props) => {
           <div className="row gas-price text-light small-12 medium-8 mt-3">
             <label className="column small-12 medium-3">
               <span>{props.translate("transaction.gas_price") || "Gas price"}</span>
-              <span className="k k-info k-2x ml-3" data-tooltip title={caption}></span>
+              <span className="k k-info k-2x ml-3" data-tip={caption} data-for='gas-price-tip'></span>
+              <ReactTooltip place="bottom" id="gas-price-tip" type="light"/>
             </label>
             <div className="column small-12 medium-6 end p-relative">
               <input type="number" min="0" max="99" className="gas-price-input" step="0.1" onKeyPress={props.onGasPricePress} value={props.gasPrice} onChange={specifyGasPrice.bind(this)} />

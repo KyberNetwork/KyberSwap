@@ -431,8 +431,8 @@ function* updateRatePending(action) {
   const { ethereum, source, dest, sourceAmount, isManual, rateInit } = action.payload
   try {
     const rate = yield call(ethereum.call("getRate"), source, dest, sourceAmount)
-    console.log(rate)
-    yield put.sync(actions.updateRateExchangeComplete(rateInit, rate.slippagePrice))
+ console.log(rate)
+    yield put.sync(actions.updateRateExchangeComplete(rateInit, rate.expectedPrice, rate.slippagePrice))
     yield put(actions.caculateAmount())
   }
   catch (err) {
@@ -474,6 +474,22 @@ function* updateGasUsed(action){
   }
 }
 
+function* analyzeError(action){
+  const {ethereum, exchange, tokens} = action.payload
+  try{
+    var error = yield call(getError(ethereum, exchange, tokens))
+    console.log(error)
+  }catch(e){
+    console.log(e)
+  }
+}
+
+function* getError(ethereum, exchange, tokens){
+  //gas price
+}
+
+
+
 export function* watchExchange() {
   yield takeEvery("EXCHANGE.TX_BROADCAST_PENDING", broadCastTx)
   yield takeEvery("EXCHANGE.APPROVAL_TX_BROADCAST_PENDING", approveTx)
@@ -483,4 +499,5 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET", checkTokenBalanceOfColdWallet)
   yield takeEvery("EXCHANGE.UPDATE_RATE_PENDING", updateRatePending)
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", updateGasUsed)
+  yield takeEvery("EXCHANGE.ANALYZE_ERROR", analyzeError)
 }

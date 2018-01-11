@@ -32,7 +32,7 @@
     "amount": "amount",
     "select_token": "Select token",
 
-    "advanced": "Advance",
+    "advanced": "Advanced",
     "transaction_fee": "Transaction fee",
 
     "address_balance": "Address Balance",
@@ -62,7 +62,7 @@
     "gas_price": "Gas price",
     "for": "for",
     "to": "to",
-    "best_rate": "Best Rate",
+    "best_rate": "Min Rate",
     "token_amount": "Token/Amount",
 
     "transfer_tooltip": "Transfer ether or tokens to other addresses",
@@ -73,7 +73,8 @@
 
     "error_tx_log":"Warning! Log is empty",
     "error_tx_contract":"Warning! Error encountered during contract execution",
-    "no_pedding_tx": "No pending transaction"
+    "no_pedding_tx": "No pending transaction",
+    "rate_info": "Rates might be changed during settlement.<br> You can indicate your minimum rate by clicking \"Advanced\""
   },
 
   "modal": {

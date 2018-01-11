@@ -73,7 +73,7 @@
   }
 }
 
-p.token-compare {
+.token-compare {
   color: #00ffd6;
   font-weight: bold;
   letter-spacing: .5px;
@@ -81,12 +81,12 @@ p.token-compare {
   text-align: center;
   span {
     margin-left: 10px;
-    &:before {
-      content: '(';
-    }
-    &:after {
-      content: ')'
-    }
+    // &:before {
+    //   content: '(';
+    // }
+    // &:after {
+    //   content: ')'
+    // }
     &.up {
       color: $primary-color;
     }

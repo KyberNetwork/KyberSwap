@@ -297,7 +297,7 @@ export function getDifferentAmount(sourceAmount, prevAmount, sourceDecimal,
       var rateWeight = new BigNumber(10).pow(18)
       rate = rate.div(rateWeight)
 
-      var value = new BigNumber(valueChange)
+      var value = new BigNumber(valueChange + "")
       value = value.mul(rate)
 
       return value.toNumber()
