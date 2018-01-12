@@ -71,7 +71,7 @@
     "best_rate_tooltip": "Rate thấp hơn cho khả năng thành công cao hơn khi thị trường biến động",
     "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>",
     "no_pedding_tx": "Không có giao dịch nào",
-    "rate_info": "Rate có thể thay đổi, bạn có thể  chỉ định rate nhỏ nhất bởi click \"NÂNG CAO\""
+    "rate_info": "Rate có thể thay đổi. <br/>Bạn có thể  chỉ định rate nhỏ nhất bởi click \"NÂNG CAO\""
   },
 
   "modal": {
