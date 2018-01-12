@@ -19,11 +19,6 @@ export default class RateBetweenToken extends React.Component {
 
   render = () => {
     var tokenRate = this.props.isSelectToken ? <img src={require('../../../assets/img/waiting-white.svg')} /> : roundingNumber(this.props.exchangeRate.rate)
-    // var caption = this.props.translate("transaction.rate_info") || "Rates might be changed during settlement.<br> You can indicate your minimum rate by clicking \"Advanced\""
-    // console.log(JSON.stringify(caption))
-    
-    var tooltiptest = 'this is <br /> a test';
-    console.log(tooltiptest)
     return (
       <div class="token-compare">
         <span>
