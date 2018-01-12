@@ -5,7 +5,10 @@ const TokenSelectorView = (props) => {
   var focusItem = props.listItem[props.focusItem]
   var listShow = {}
   Object.keys(props.listItem).map((key, i) => {
-    if (props.listItem[key].name.toLowerCase().includes(props.searchWord)) {
+    var token = props.listItem[key],
+        matchName = token.name.toLowerCase().includes(props.searchWord),
+        matchSymbol = token.symbol.toLowerCase().includes(props.searchWord)
+    if (matchSymbol || matchName) {
       listShow[key] = props.listItem[key]
     }
   })
