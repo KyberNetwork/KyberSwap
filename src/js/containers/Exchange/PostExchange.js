@@ -189,7 +189,7 @@ export default class PostExchange extends React.Component {
     var sourceToken = this.props.form.sourceToken
     var sourceAmount = converters.stringToHex(this.props.form.sourceAmount, this.props.form.sourceDecimal)
     var destToken = this.props.form.destToken
-    var minConversionRate = converters.numberToHex(this.props.form.offeredRate)
+    var minConversionRate = converters.numberToHex(this.props.form.minConversionRate)
     var destAddress = this.props.account.address
     var maxDestAmount = converters.biggestNumber()
     var throwOnFailure = this.props.form.throwOnFailure
