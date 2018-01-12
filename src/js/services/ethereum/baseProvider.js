@@ -316,6 +316,16 @@ export default class BaseEthereumProvider {
     })
   }
 
+  wrapperGetConversionRate(reserve, input, blockno){
+    
+  }
+  wrapperGetReasons(reserve, input, blockno){
+    
+  }
+  wrapperGetChosenReserve(input, blockno){
+
+  }
+
   sendRawTransaction(tx) {
     return new Promise((resolve, rejected) => {
       this.rpc.eth.sendSignedTransaction(

@@ -8,6 +8,7 @@ import * as converter from "../utils/converter"
 import * as ethUtil from 'ethereumjs-util'
 import Tx from "../services/tx"
 
+
 function* broadCastTx(action) {
   const { ethereum, tx, account, data } = action.payload
   try {
@@ -507,53 +508,57 @@ function* analyzeError(action){
 }
 
 function* debug(input, blockno, ethereum){
+  var networkIssues = {}
+  var reserveIssues = {}
   var gasCap = yield call([ethereum, ethereum.call("wrapperGetGasCap")], blockNumber)
   if(gas_price > gasCap){
-    yield put(actions.setAnalizeError("Gas price exceeded max limit"))
-    return
+    networkIssues["gas_price"] = "Gas price exceeded max limit"
   }
 
   if(input.source !== constants.ETHER_ADDRESS){
     if(input.value > 0){
-      yield put(actions.setAnalizeError("failed because of sending ether along the tx when it is trying to trade token to ether"))
-      return
+      networkIssues["token_eher"] = "failed because of sending ether along the tx when it is trying to trade token to ether"
     }
     var remainStr = yield call(ethereum.call("getAllowance"), input.source, input.owner)
     if(remainStr < input.srcAmount){
-      yield put(actions.setAnalizeError("failed because allowance is lower than srcAmount"))
-      return
+      networkIssues["allowance"] = "failed because allowance is lower than srcAmount"
     }
     var balance = yield call([ethereum, ethereum.call("getTokenBalance")],input.source, input.owner)
     if(balance < input.sourceAmount){
-      yield put(actions.setAnalizeError("failed because token balance is lower than srcAmount"))
-      return
+      networkIssues["balance"] = "failed because token balance is lower than srcAmount"
     }
   }else{
     if(input.value !== input.srcAmount){
-      yield put(actions.setAnalizeError("failed because the user didn't send the exact amount of ether along"))
-      return
+      networkIssues["ether_amount"] = "failed because the user didn't send the exact amount of ether along"
     }
   }
 
   if(input.source === constants.ETHER_ADDRESS){
     var userCap = yield call([ethereum, ethereum.call("wrapperGetUserCap"), input, blockno])
     if (input.srcAmount > userCap) {
-      yield put(actions.setAnalizeError("failed because the source amount exceeded user cap"))
-      return
+      networkIssues["user_cap"] = "failed because the source amount exceeded user cap"
     }
   }
 
   if(input.dest === constants.ETHER_ADDRESS){
     var userCap = yield call([ethereum, ethereum.call("wrapperGetUserCap"), input, blockno])
     if (input.destAmount > userCap) {
-      yield put(actions.setAnalizeError("failed because the source amount exceeded user cap"))
-      return
+      networkIssues["user_cap"] = "failed because the source amount exceeded user cap"
     }
   }
 
   //Reserve scops
-  
-
+  var rates = yield call([ethereum, ethereum.call("wrapperGetConversionRate")
+                            ,input.reserves[0], input, blockno])
+  if(rates === 0){
+    var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], input.reserves[0], input, blockno)
+    reserveIssues["reason"] = reasons
+  }else{
+    var chosenReserve = yield call([ethereum, ethereum.call("wrapperGetChosenReserve")],input, blockno)
+    var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], chosenReserve, input, blockno)
+    reserveIssues["reason"] = reasons
+  }
+  yield put(actions.setAnalyzeError(networkIssues, reserveIssues))
 }
 
 
