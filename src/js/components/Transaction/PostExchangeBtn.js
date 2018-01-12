@@ -2,7 +2,6 @@ import React from "react"
 import { PendingOverlay } from "../../components/CommonElement"
 
 const PostExchangeBtn = (props) => {
-
   return (
     <div className="bg-primary py-4">
       {props.step == 2 ?

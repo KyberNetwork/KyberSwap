@@ -62,7 +62,7 @@
     "gas_price": "燃料价格",
     "for": "换至",
     "to": "至",
-    "best_rate": "最优价",
+    "best_rate": "最小价格",
     "token_amount": "代币／数量",
 
     "transfer_tooltip": "转移以太或代币至其它地址",
@@ -73,7 +73,7 @@
 
     "error_tx_log":"空的日志",
     "error_tx_contract":"警告！合约执行过程中发生了错误",
-    "no_pedding_tx": "No pending transaction",
+    "no_pedding_tx": "没有待处理的交易",
     "rate_info": "Rates might be changed during settlement.<br> You can indicate your minimum rate by clicking \"Advanced\""
   },
 
@@ -91,7 +91,7 @@
     "custom_path": "您的自定义路径",
     "view_on_etherscan": "在Etherscan上查看",
     "press_confirm_if_really_want": "请按确认以继续",
-    "waiting_for_confirmation": "Waiting for confirmation from your wallet",
+    "waiting_for_confirmation": "正在等待您钱包的确认信息",
     "confirm_exchange_title": "交易确认",
     "confirm_transfer_title": "转移确认",
 
@@ -127,14 +127,14 @@
     "no_balance": "您的地址上没有我们支持的代币。请导入其它的地址。",
     "clear_data_timeout": "由于您的会话超时，我们清除了您的数据 ${time} 分钟",
     "minutes": " 分钟",
-    "time_out": "Time out",
-    "network_error": "Cannot connect to node right now. Please check your network!",
-    "term_error": "You must agree terms and services!",
+    "time_out": "超时",
+    "network_error": "目前无法连接到区块链。请稍后再尝试。",
+    "term_error": "您必须先同意服务条款！",
 
     "path_not_support_by_trezor": "Trezor不支持这个路径",
     "check_right_application_selected": "检查是否选择了正确的应用",
-    "network_not_match": "Metamask should be on ${expectedName}. Currently on ${currentName}",
-    "network_not_match_unknow": "Metamask should be on ${expectedName}",
+    "network_not_match": "Metamask需要连接到${expectedName}网络，而您现在连接的是${currentName}",
+    "network_not_match_unknow": "Metamask需要连接到${expectedName}",
     "not_supported": "不支持"
   },
 

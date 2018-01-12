@@ -26,7 +26,7 @@ export default class RateBetweenToken extends React.Component {
           1 {this.props.exchangeRate.sourceToken} = {tokenRate} {this.props.exchangeRate.destToken}
         </span>
         <span className="k k-info k-2x ml-3" data-tip={caption} data-for='rate-notice-tip'></span>
-        <ReactTooltip place="right" id="rate-notice-tip" type="light" html={true}/>
+        <ReactTooltip place="right" id="rate-notice-tip" type="light" multiline={true}/>
       </div>
     )
   }

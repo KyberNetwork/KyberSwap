@@ -141,8 +141,8 @@
   "import": {
     "from_metamask": "Connect to <br> metamask",
     "from_keystore": "Select or drag<br />your keystore",
-    "from_trezor": "Import from<br />trezor",
-    "from_ledger": "Import from<br />ledger",
+    "from_trezor": "Exchange from<br />trezor",
+    "from_ledger": "Exchange from<br />ledger",
     "from_private_key": "Enter your<br />private key",
     "from_private_key_input_title": "ENTER YOUR PRIVATE KEY",
     "from_private_key_input_title_placehoder": "Enter your private key"
