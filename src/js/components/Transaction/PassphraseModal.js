@@ -47,7 +47,7 @@ const PassphraseModal = (props) => {
         </div>
       </div>
       <div className="overlap">
-        <a className="button accent process-submit"
+        <a className="button accent process-submit next"
           onClick={(e) => submitTransaction(e)}>
           {props.translate("modal.confirm") || "Confirm"}
         </a>
