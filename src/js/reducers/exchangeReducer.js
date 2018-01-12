@@ -66,6 +66,11 @@ const exchange = (state = initState, action) => {
           newState.sourceToken = BLOCKCHAIN_INFO.tokens['ETH'].address  
         }
       }
+      //reset all error
+      for (var key in newState.errors) {
+        newState.errors[key] = ""
+      }
+      
       newState.selected = true
       newState.isEditRate = false
       return newState

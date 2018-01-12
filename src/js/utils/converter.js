@@ -125,7 +125,7 @@ export function toTWei(number) {
   } else if (acceptableTyping(number)) {
     return number
   } else {
-    return bigNumber.times(1000000000000000000).toString()
+    return bigNumber.times(1000000000000000000).round().toString()
   }
 }
 

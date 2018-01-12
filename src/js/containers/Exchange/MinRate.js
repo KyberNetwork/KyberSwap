@@ -15,22 +15,23 @@ import ReactTooltip from 'react-tooltip'
 
 export default class MinRate extends React.Component {
 
-  changeOfferRate = (e) => {
+  changeMinRate = (e) => {
     var value = e.target.value
-    if (value === "" || isNaN(value)) {
-      this.props.dispatch(actions.setMinRate(value))
-    } else {
-      var valueB = converter.toTWei(value)
-      this.props.dispatch(actions.setMinRate(valueB.toString()))
-    }
-    this.props.dispatch(actions.caculateAmount())
+    this.props.dispatch(actions.setMinRate(value))
+    // if (value === "" || isNaN(value)) {
+    //   this.props.dispatch(actions.setMinRate(value))
+    // } else {
+    //   var valueB = converter.toTWei(value)
+    //   this.props.dispatch(actions.setMinRate(valueB.toString()))
+    // }
+    //this.props.dispatch(actions.caculateAmount())
   }
 
   render = () => {
     var minConversionRate = this.props.exchange.minConversionRate
-    if (minConversionRate !== "" && !isNaN(minConversionRate)) {
-      minConversionRate = converter.toT(minConversionRate, 18)
-    }
+    // if (minConversionRate !== "" && !isNaN(minConversionRate)) {
+    //   minConversionRate = converter.toT(minConversionRate, 18)
+    // }
     return (
       <div className="row min-rate small-12 medium-8">
         <label className="column small-12 medium-3 text-right">
@@ -39,7 +40,7 @@ export default class MinRate extends React.Component {
           <ReactTooltip place="bottom" id="rate-tip" type="light"/>
         </label>
         <div className="column small-12 medium-6 end p-relative">
-          <input type="number" value={minConversionRate} onChange={(e) => this.changeOfferRate(e)} />
+          <input type="number" value={minConversionRate} onChange={(e) => this.changeMinRate(e)} />
           <span className="error-text">{this.props.exchange.errors.rateError}</span>
         </div>
       </div>

@@ -117,13 +117,11 @@ export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePric
 
   //var rateBig = converter.stringToBigNumber(rate[0])
   //  var offeredRate = rate.expectedPrice
-  // var minConversionRate = rate.slippagePrice
-
   //var expirationBlock = rate[1]
   //var reserveBalance = rate[2]
   return {
     type: "EXCHANGE.UPDATE_RATE",
-    payload: { rateInit, expectedPrice, slippagePrice }
+    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18) }
   }
 
 }

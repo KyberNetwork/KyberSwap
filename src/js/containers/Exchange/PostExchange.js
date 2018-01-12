@@ -98,7 +98,7 @@ export default class PostExchange extends React.Component {
       this.props.form.sourceBalance,
       this.props.form.sourceTokenSymbol,
       this.props.form.sourceDecimal,
-      this.props.form.minConversionRate,
+      this.props.form.offeredRate,
       this.props.form.destDecimal,
       this.props.form.maxCap)
     var sourceAmountErrorKey
@@ -137,7 +137,7 @@ export default class PostExchange extends React.Component {
       }
     }
 
-    var testRate = parseFloat(this.props.form.offeredRate)
+    var testRate = parseFloat(this.props.form.minConversionRate)
     if (isNaN(testRate)) {
       this.props.dispatch(exchangeActions.thowErrorRate("Rate is not number"))
       check = false
@@ -189,7 +189,10 @@ export default class PostExchange extends React.Component {
     var sourceToken = this.props.form.sourceToken
     var sourceAmount = converters.stringToHex(this.props.form.sourceAmount, this.props.form.sourceDecimal)
     var destToken = this.props.form.destToken
-    var minConversionRate = converters.numberToHex(this.props.form.minConversionRate)
+
+    var minConversionRate = converters.toTWei(this.props.form.minConversionRate)
+    minConversionRate = converters.numberToHex(minConversionRate)
+
     var destAddress = this.props.account.address
     var maxDestAmount = converters.biggestNumber()
     var throwOnFailure = this.props.form.throwOnFailure
