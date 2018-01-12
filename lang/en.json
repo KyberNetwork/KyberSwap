@@ -74,7 +74,7 @@
     "error_tx_log":"Warning! Log is empty",
     "error_tx_contract":"Warning! Error encountered during contract execution",
     "no_pedding_tx": "No pending transaction",
-    "rate_info": "Rates might be changed during settlement.<br> You can indicate your minimum rate by clicking \"Advanced\""
+    "rate_info": "Rates might be changed during settlement. <br/>You can indicate your minimum rate by clicking \"Advanced\""
   },
 
   "modal": {

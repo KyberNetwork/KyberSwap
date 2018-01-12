@@ -431,7 +431,6 @@ function* updateRatePending(action) {
   const { ethereum, source, dest, sourceAmount, isManual, rateInit } = action.payload
   try {
     const rate = yield call(ethereum.call("getRate"), source, dest, sourceAmount)
- console.log(rate)
     yield put.sync(actions.updateRateExchangeComplete(rateInit, rate.expectedPrice, rate.slippagePrice))
     yield put(actions.caculateAmount())
   }
