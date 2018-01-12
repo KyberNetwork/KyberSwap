@@ -431,7 +431,6 @@ function* updateRatePending(action) {
   const { ethereum, source, dest, sourceAmount, isManual, rateInit } = action.payload
   try {
     const rate = yield call(ethereum.call("getRate"), source, dest, sourceAmount)
- console.log(rate)
     yield put.sync(actions.updateRateExchangeComplete(rateInit, rate.expectedPrice, rate.slippagePrice))
     yield put(actions.caculateAmount())
   }
@@ -477,17 +476,85 @@ function* updateGasUsed(action){
 function* analyzeError(action){
   const {ethereum, exchange, tokens} = action.payload
   try{
-    var error = yield call(getError(ethereum, exchange, tokens))
-    console.log(error)
+    var txHash = exchange.txHash
+    var tx = yield call([ethereum, ethereum.call("getTx")], txHash)
+    var value = tx.value
+    var owner = tx.from
+    var gas_price = tx.gasPrice
+    var blockNumber = tx.blockNumber
+
+    var result = yield call([ethereum, ethereum.call("exactExchangeData")], tx.input)
+    var source = result[0].value
+    var srcAmount = result[1].value
+    var dest = result[2].value
+    var destAddress = result[3].value
+    var maxDestAmount = result[4].value
+    var minConversionRate = result[5].value
+    var walletID = result[6].value
+    var reserves = yield call([ethereum, ethereum.call("getListReserve")])
+
+    console.log(value,owner,gas_price, blockNumber,source ,sourceAmount ,dest, destAddress, 
+      maxDestAmount, minConversionRate, walletID)
+    
+    var input = {value, owner, gas_price, source, srcAmount, dest, 
+      destAddress, maxDestAmount, minConversionRate, walletID, reserves}
+    
+    yield call(debug, input, blockNumber, ethereum)
+    //check gas price
   }catch(e){
     console.log(e)
   }
 }
 
-function* getError(ethereum, exchange, tokens){
-  //gas price
-}
+function* debug(input, blockno, ethereum){
+  var gasCap = yield call([ethereum, ethereum.call("wrapperGetGasCap")], blockNumber)
+  if(gas_price > gasCap){
+    yield put(actions.setAnalizeError("Gas price exceeded max limit"))
+    return
+  }
 
+  if(input.source !== constants.ETHER_ADDRESS){
+    if(input.value > 0){
+      yield put(actions.setAnalizeError("failed because of sending ether along the tx when it is trying to trade token to ether"))
+      return
+    }
+    var remainStr = yield call(ethereum.call("getAllowance"), input.source, input.owner)
+    if(remainStr < input.srcAmount){
+      yield put(actions.setAnalizeError("failed because allowance is lower than srcAmount"))
+      return
+    }
+    var balance = yield call([ethereum, ethereum.call("getTokenBalance")],input.source, input.owner)
+    if(balance < input.sourceAmount){
+      yield put(actions.setAnalizeError("failed because token balance is lower than srcAmount"))
+      return
+    }
+  }else{
+    if(input.value !== input.srcAmount){
+      yield put(actions.setAnalizeError("failed because the user didn't send the exact amount of ether along"))
+      return
+    }
+  }
+
+  if(input.source === constants.ETHER_ADDRESS){
+    var userCap = yield call([ethereum, ethereum.call("wrapperGetUserCap"), input, blockno])
+    if (input.srcAmount > userCap) {
+      yield put(actions.setAnalizeError("failed because the source amount exceeded user cap"))
+      return
+    }
+  }
+
+  if(input.dest === constants.ETHER_ADDRESS){
+    var userCap = yield call([ethereum, ethereum.call("wrapperGetUserCap"), input, blockno])
+    if (input.destAmount > userCap) {
+      yield put(actions.setAnalizeError("failed because the source amount exceeded user cap"))
+      return
+    }
+  }
+
+  //Reserve scops
+  
+
+}
 
 
 export function* watchExchange() {

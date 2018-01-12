@@ -2,7 +2,7 @@ import Web3 from "web3"
 import constants from "../constants"
 import * as ethUtil from 'ethereumjs-util'
 import BLOCKCHAIN_INFO from "../../../../env"
-//import axios from 'axios'
+import abiDecoder from "abi-decoder"
 
 export default class BaseEthereumProvider {
 
@@ -190,9 +190,12 @@ export default class BaseEthereumProvider {
 
   exchangeData(sourceToken, sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate, walletId) {
-    return this.networkContract.methods.trade(
+    var data = this.networkContract.methods.trade(
       sourceToken, sourceAmount, destToken, destAddress,
       maxDestAmount, minConversionRate, walletId).encodeABI()
+
+    console.log(data)
+    return data
   }
 
   approveTokenData(sourceToken, sourceAmount) {
@@ -252,6 +255,62 @@ export default class BaseEthereumProvider {
         })
         .catch((err) => {
           // console.log(err)
+          reject(err)
+        })
+    })
+  }
+
+  getTx(txHash) {
+    return new Promise((resolve, rejected) => {
+      this.rpc.eth.getTransaction(txHash).then((result) => {
+        if (result != null) {
+          resolve(result)
+        } else {
+          rejected("Cannot get tx hash")
+        }
+      })
+    })
+  }
+
+  getListReserve() {
+    return Promise.resolve([BLOCKCHAIN_INFO.network])
+  }
+
+  getAbiByName(name, abi) {
+    for (var value of abi) {
+      if (value.name === name) {
+        return [value]
+      }
+    }
+    return false
+  }
+
+  exactExchangeData(data) {
+    return new Promise((resolve, rejected) => {
+      //get trade abi from 
+      var tradeAbi = this.getAbiByName("trade", constants.KYBER_NETWORK)
+      abiDecoder.addABI(tradeAbi)
+      var decoded = abiDecoder.decodeMethod(data);
+      resolve(decoded.params)
+    })
+  }
+
+  wrapperGetGasCap(input, blockno) {
+    return new Promise((resolve, rejected) => {
+      resolve('50')
+    })
+  }
+
+  wrapperGetUserCap(input, blockno) {
+    return new Promise((resolve, rejected) => {
+      this.networkContract.methods.getUserCapInWei(input.owner).call()
+        .then((result) => {
+          if (result != null) {
+            console.log(result)
+            resolve(result)
+          }
+        })
+        .catch((err) => {
           reject(err)
         })
     })
@@ -430,28 +489,28 @@ export default class BaseEthereumProvider {
         to: this.wrapperAddress,
         data: dataAbi
       })
-      .then((data) => {
-        try {
-          var dataMapped = this.rpc.eth.abi.decodeParameters([
-            {
-              type: 'uint256[]',
-              name: 'expectedPrice'
-            },
-            {
-              type: 'uint256[]',
-              name: 'slippagePrice'
-            }
-          ], data)
-          resolve(dataMapped)
-        } catch (e) {
-          console.log(e)
+        .then((data) => {
+          try {
+            var dataMapped = this.rpc.eth.abi.decodeParameters([
+              {
+                type: 'uint256[]',
+                name: 'expectedPrice'
+              },
+              {
+                type: 'uint256[]',
+                name: 'slippagePrice'
+              }
+            ], data)
+            resolve(dataMapped)
+          } catch (e) {
+            console.log(e)
+            resolve([])
+          }
+        })
+        .catch((err) => {
+          console.log("GET request error")
           resolve([])
-        }
-      })
-      .catch((err) => {
-        console.log("GET request error")
-        resolve([])
-      })
+        })
     })
   }
 
@@ -485,7 +544,7 @@ export default class BaseEthereumProvider {
     })
   }
 
-  getMaxGasPrice(){
+  getMaxGasPrice() {
     return new Promise((resolve, reject) => {
       this.networkContract.methods.maxGasPrice().call()
         .then((result) => {
