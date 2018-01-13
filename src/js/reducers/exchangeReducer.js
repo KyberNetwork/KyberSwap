@@ -32,6 +32,9 @@ const exchange = (state = initState, action) => {
 
       newState.isEditRate = false
       newState.isEditGasPrice = false
+
+      newState.isAnalize = false
+      newState.isAnalizeComplete = false
       return newState
     }
     case "EXCHANGE.SELECT_TOKEN_ASYNC": {
@@ -337,6 +340,17 @@ const exchange = (state = initState, action) => {
       if (isManual) {
         newState.isSelectToken = true
       }
+      return newState
+    }
+    case "EXCHANGE.ANALYZE_ERROR":{
+      newState.isAnalize = true
+      return newState
+    }
+    case "EXCHANGE.SET_ANALYZE_ERROR":{
+      const { networkIssues, reserveIssues } = action.payload
+      newState.analizeError = {networkIssues, reserveIssues}
+      newState.isAnalize = false
+      newState.isAnalizeComplete = true
       return newState
     }
   }

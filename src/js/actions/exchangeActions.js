@@ -361,3 +361,10 @@ export function analyzeError(ethereum, exchange, token) {
     payload: { ethereum, exchange, token }
   }
 }
+
+export function setAnalyzeError(networkIssues, reserveIssues){
+  return {
+    type: "EXCHANGE.SET_ANALYZE_ERROR",
+    payload: { networkIssues, reserveIssues }
+  }
+}

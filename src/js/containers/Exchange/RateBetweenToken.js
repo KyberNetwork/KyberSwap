@@ -25,7 +25,7 @@ export default class RateBetweenToken extends React.Component {
           1 {this.props.exchangeRate.sourceToken} = {tokenRate} {this.props.exchangeRate.destToken}
         </span>
         <span className="k k-info k-2x ml-3" data-tip data-for='rate-notice-tip'></span>
-        <ReactTooltip id='rate-notice-tip' data-place="right" type='light' effect='solid' data-multiline={true} data-html={true}>
+        <ReactTooltip id='rate-notice-tip' place="right" type='light' effect='solid' data-multiline={true} data-html={true}>
           {this.props.translate("transaction.rate_info") || "Rates might be changed during settlement.<br> You can indicate your minimum rate by clicking \"Advanced\""}
         </ReactTooltip>
       </div>
