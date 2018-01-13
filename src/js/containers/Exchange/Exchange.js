@@ -167,15 +167,21 @@ export default class Exchange extends React.Component {
     }
 
 
+    var analyze = {
+      action: this.analyze,
+      isAnalize: this.props.exchange.isAnalize,
+      isAnalizeComplete: this.props.exchange.isAnalizeComplete,
+      analizeError : this.props.exchange.analizeError
+    }
     var transactionLoadingScreen = (
       <TransactionLoading tx={this.props.exchange.txHash}
         tempTx={this.props.exchange.tempTx}
         makeNewTransaction={this.makeNewExchange}
-        type="exchange"
-        analyze = {this.analyze}
+        type="exchange"        
         balanceInfo={balanceInfo}
         broadcasting={this.props.exchange.broadcasting}
         broadcastingError={this.props.exchange.bcError}
+        analyze = {analyze}
       />
     )
 

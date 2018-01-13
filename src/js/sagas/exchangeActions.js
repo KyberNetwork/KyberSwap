@@ -441,22 +441,22 @@ function* updateRatePending(action) {
   }
 }
 
-function* updateGasUsed(action){
-  try{
-    const {ethereum, exchange} = action.payload
+function* updateGasUsed(action) {
+  try {
+    const { ethereum, exchange } = action.payload
     const sourceToken = exchange.sourceToken
     const sourceAmount = converter.stringToHex(exchange.sourceAmount, exchange.sourceDecimal)
     const destToken = exchange.destToken
     const destAddress = exchange.destAddress
-    const maxDestAmount = converter.biggestNumber() 
-    const minConversionRate = converter.numberToHex(exchange.offeredRate) 
+    const maxDestAmount = converter.biggestNumber()
+    const minConversionRate = converter.numberToHex(exchange.offeredRate)
     const throwOnFailure = false
-    var data = yield call([ethereum, ethereum.call("exchangeData")], sourceToken, sourceAmount, 
-                                                    destToken, destAddress,
-                                          maxDestAmount, minConversionRate, throwOnFailure)
+    var data = yield call([ethereum, ethereum.call("exchangeData")], sourceToken, sourceAmount,
+      destToken, destAddress,
+      maxDestAmount, minConversionRate, throwOnFailure)
     //console.log(data)
-    var value = '0x0'                
-    if(exchange.sourceTokenSymbol === 'ETH'){
+    var value = '0x0'
+    if (exchange.sourceTokenSymbol === 'ETH') {
       value = sourceAmount
     }
     var txObj = {
@@ -469,14 +469,14 @@ function* updateGasUsed(action){
     var estimatedGas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
     //console.log(estimatedGas)
     yield put(actions.setEstimateGas(estimatedGas))
-  }catch(e){
+  } catch (e) {
     console.log(e)
   }
 }
 
-function* analyzeError(action){
-  const {ethereum, exchange, tokens} = action.payload
-  try{
+function* analyzeError(action) {
+  const { ethereum, exchange, tokens } = action.payload
+  try {
     var txHash = exchange.txHash
     var tx = yield call([ethereum, ethereum.call("getTx")], txHash)
     var value = tx.value
@@ -494,70 +494,96 @@ function* analyzeError(action){
     var walletID = result[6].value
     var reserves = yield call([ethereum, ethereum.call("getListReserve")])
 
-    console.log(value,owner,gas_price, blockNumber,source ,sourceAmount ,dest, destAddress, 
-      maxDestAmount, minConversionRate, walletID)
-    
-    var input = {value, owner, gas_price, source, srcAmount, dest, 
-      destAddress, maxDestAmount, minConversionRate, walletID, reserves}
-    
+    var input = {
+      value, owner, gas_price, source, srcAmount, dest,
+      destAddress, maxDestAmount, minConversionRate, walletID, reserves
+    }
+
     yield call(debug, input, blockNumber, ethereum)
     //check gas price
-  }catch(e){
+  } catch (e) {
     console.log(e)
   }
 }
 
-function* debug(input, blockno, ethereum){
+function* debug(input, blockno, ethereum) {
+  //console.log(input, blockno)
   var networkIssues = {}
   var reserveIssues = {}
-  var gasCap = yield call([ethereum, ethereum.call("wrapperGetGasCap")], blockNumber)
-  if(gas_price > gasCap){
+  var gasCap = yield call([ethereum, ethereum.call("wrapperGetGasCap")], blockno)
+  //console.log(gasCap)
+  //console.log(input.gas_price)
+  //  console.log(converter.compareTwoNumber(input.gas_price, gasCap))
+  if (converter.compareTwoNumber(input.gas_price, gasCap) === 1) {
     networkIssues["gas_price"] = "Gas price exceeded max limit"
   }
 
-  if(input.source !== constants.ETHER_ADDRESS){
-    if(input.value > 0){
+  //var remainStr = yield call([ethereum, ethereum.call("getAllowance")], input.source, input.owner)
+  //console.log(remainStr)
+  //console.log(input.srcAmount)
+  //console.log("step1")
+  // console.log(converter.compareTwoNumber(remainStr, input.srcAmount))
+  if (input.source !== constants.ETHER_ADDRESS) {
+  //  console.log("step1")
+    if (converter.compareTwoNumber(input.value, 0) === 1) {
+   //   console.log("step2")
       networkIssues["token_eher"] = "failed because of sending ether along the tx when it is trying to trade token to ether"
     }
-    var remainStr = yield call(ethereum.call("getAllowance"), input.source, input.owner)
-    if(remainStr < input.srcAmount){
+    var remainStr = yield call([ethereum, ethereum.call("getAllowance")], input.source, input.owner, blockno)
+  //  console.log("step3")
+    if (converter.compareTwoNumber(remainStr, input.srcAmount) === -1) {
+    //  console.log("step4")
       networkIssues["allowance"] = "failed because allowance is lower than srcAmount"
     }
-    var balance = yield call([ethereum, ethereum.call("getTokenBalance")],input.source, input.owner)
-    if(balance < input.sourceAmount){
+    var balance = yield call([ethereum, ethereum.call("getTokenBalance")], input.source, input.owner, blockno)
+  //  console.log("step5")
+    if (converter.compareTwoNumber(balance, input.srcAmount) === -1) {
+   //   console.log("step6")
       networkIssues["balance"] = "failed because token balance is lower than srcAmount"
     }
-  }else{
-    if(input.value !== input.srcAmount){
+  } else {
+    if (converter.compareTwoNumber(input.value, input.srcAmount) !== 0) {
+  //    console.log("step7")
       networkIssues["ether_amount"] = "failed because the user didn't send the exact amount of ether along"
     }
   }
 
-  if(input.source === constants.ETHER_ADDRESS){
-    var userCap = yield call([ethereum, ethereum.call("wrapperGetUserCap"), input, blockno])
-    if (input.srcAmount > userCap) {
+  if (input.source === constants.ETHER_ADDRESS) {
+   // console.log("step7.1")
+    var userCap = yield call([ethereum, ethereum.call("getMaxCap")], input.owner, blockno)
+   // console.log("step7.5")
+    if (converter.compareTwoNumber(input.srcAmount, userCap) === 1) {
+   //   console.log("step8")
       networkIssues["user_cap"] = "failed because the source amount exceeded user cap"
     }
   }
 
-  if(input.dest === constants.ETHER_ADDRESS){
-    var userCap = yield call([ethereum, ethereum.call("wrapperGetUserCap"), input, blockno])
+  if (input.dest === constants.ETHER_ADDRESS) {
+  //  console.log("step8.5")
+    var userCap = yield call([ethereum, ethereum.call("getMaxCap")], input.owner, blockno)
+  //  console.log("step9")
     if (input.destAmount > userCap) {
+    //  console.log("step10")
       networkIssues["user_cap"] = "failed because the source amount exceeded user cap"
     }
   }
 
   //Reserve scops
-  var rates = yield call([ethereum, ethereum.call("wrapperGetConversionRate")
-                            ,input.reserves[0], input, blockno])
-  if(rates === 0){
+  //console.log()
+  var rates = yield call([ethereum, ethereum.call("wrapperGetConversionRate")]
+    , input.reserves[0], input, blockno)
+  if (rates.expectedPrice === 0) {
     var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], input.reserves[0], input, blockno)
+    //console.log("step8")
     reserveIssues["reason"] = reasons
-  }else{
-    var chosenReserve = yield call([ethereum, ethereum.call("wrapperGetChosenReserve")],input, blockno)
+  } else {
+    var chosenReserve = yield call([ethereum, ethereum.call("wrapperGetChosenReserve")], input, blockno)
     var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], chosenReserve, input, blockno)
+    // console.log("step9")
     reserveIssues["reason"] = reasons
   }
+  console.log(reserveIssues)
+  console.log(networkIssues)
   yield put(actions.setAnalyzeError(networkIssues, reserveIssues))
 }
 
