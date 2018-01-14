@@ -62,7 +62,7 @@ const Notify = (props) => {
 
           <div class="link">{tx.hash.slice(0, 10)} ... {tx.hash.slice(-6)}</div>
           {classTx === "failed" &&
-            <div class="reason">{tx.error || tx.errorInfo || "Transaction is not mined"}</div>
+            <div class="reason">{props.translate(tx.error || tx.errorInfo) || "Transaction is not mined"}</div>
           }
         </a>
       </li>
@@ -79,6 +79,7 @@ const Notify = (props) => {
         {props.transactionsNum === 0 &&
           <li className="empty">
             <img src={require('../../../assets/img/empty.svg')} />
+            <p>{props.translate('transaction.no_pedding_tx') || 'No pending transaction'}</p>
           </li>
         }
       </ul>

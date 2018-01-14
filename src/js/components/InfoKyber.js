@@ -17,7 +17,7 @@ export default class InfoKyber extends React.Component {
       <div id="info">
         <div class="font-s-down-1">
           <span class="mr-2">
-            <span class="font-w-b">{this.props.translate("info.version") || "Version"}</span>: 0.1.0
+            <span class="font-w-b">{this.props.translate("info.version") || "Version"}</span>: 0.1.1
           </span>
           <span>
             <span class="font-w-b">{this.props.translate("info.chain") || "Chain"}</span>: {BLOCKCHAIN_INFO.chainName}
@@ -39,7 +39,7 @@ export default class InfoKyber extends React.Component {
           <a href="https://kyber.network" target="_blank">https://kyber.network</a>
           </p>
           <p class="mb-1 font-s-down-1">
-            {this.props.translate("info.get_free_kovan") || "Get free"} {BLOCKCHAIN_INFO.chainName} Ether:&nbsp;<a href="#" target="_blank">{this.props.translate("info.here") || "here"}</a>
+            {this.props.translate("info.get_free_kovan") || "Get free"} {BLOCKCHAIN_INFO.chainName} Ether:&nbsp;<a href={BLOCKCHAIN_INFO.faucet?BLOCKCHAIN_INFO.faucet:"#"} target="_blank">{this.props.translate("info.here") || "here"}</a>
           </p>
           <p class="font-s-down-1">
             {this.props.translate("info.warning") || <span>Do not send ethers nor tokens to any of the addresses above.<br /> They are for test only and we are not likely to have control of them in mainnet.</span>}

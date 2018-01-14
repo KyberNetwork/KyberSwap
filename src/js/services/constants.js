@@ -48,7 +48,7 @@ const INIT_EXCHANGE_FORM_STATE = {
 
   offeredRate: 0,
   isEditRate : false,
-  slippagePrice: 0,
+  slippageRate: 0,
 
   throwOnFailure: false,
   gas: 1000000,
@@ -164,7 +164,7 @@ const CONNECTION_CHECKER = {
   isCheck: true
 }
 
-const STORAGE_KEY = "29"
+const STORAGE_KEY = "33"
 
 module.exports = {
   ERC20, KYBER_NETWORK, KYBER_WRAPPER, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,

@@ -44,7 +44,7 @@ export default class PostTransfer extends React.Component {
 
       //agree terms and services
       if(!this.props.form.termAgree){
-        return this.props.dispatch(utilActions.openInfoModal("Agree terms and services","You must agree terms and services!"))
+        return this.props.dispatch(utilActions.openInfoModal("layout.terms_of_service", "error.term_error"))
       }
       
       //check account type

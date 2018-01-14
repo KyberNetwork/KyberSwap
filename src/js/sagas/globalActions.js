@@ -90,7 +90,7 @@ export function* checkConnection(action) {
         return
       }
       if (count === maxCount) {
-        yield put(actionsUtils.openInfoModal("Error modal", "Cannot connect to node right now. Please check your network!"))
+        yield put(actionsUtils.openInfoModal("error.error_occurred", "error.network_error"))
         yield put(closeImportLoading())
         yield put(actions.updateCountConnection(++count))
         return

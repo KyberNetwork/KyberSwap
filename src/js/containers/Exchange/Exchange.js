@@ -22,8 +22,6 @@ import { getTranslate } from 'react-localize-redux';
   const exchange = store.exchange
   const tokens = store.tokens.tokens
   const translate = getTranslate(store.locale)
-  const location = store.router.location.pathname
-
   
   return { account, ethereum, exchange, tokens, translate }
 })
@@ -124,6 +122,13 @@ export default class Exchange extends React.Component {
     this.props.ethereum.fetchRateExchange()
   }
 
+  analyze = () => {
+    var ethereum = this.props.ethereum
+    var exchange = this.props.exchange
+    var tokens = this.props.tokens
+    this.props.dispatch(exchangeActions.analyzeError(ethereum, exchange, tokens))
+  }
+
   render() {
     if (this.props.account.isStoreReady) {
       if (!!!this.props.account.account.address) {
@@ -167,6 +172,7 @@ export default class Exchange extends React.Component {
         tempTx={this.props.exchange.tempTx}
         makeNewTransaction={this.makeNewExchange}
         type="exchange"
+        analyze = {this.analyze}
         balanceInfo={balanceInfo}
         broadcasting={this.props.exchange.broadcasting}
         broadcastingError={this.props.exchange.bcError}

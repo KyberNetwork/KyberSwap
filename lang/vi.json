@@ -1,7 +1,7 @@
 {
   "pack": "vi",
   "pack_icon": "vi.svg",
-  "pack_label": "Việt Nam",
+  "pack_label": "Tiếng Việt",
   "pack_active": true,
   "layout": {
     "info": "Thông tin",
@@ -69,7 +69,9 @@
     "transaction_gasprice_50": "Giá Gas càng cao, giao dịch càng nhanh. Giá Gas lớn nhất 50 Gwei",
     "transaction_gasprice": "Giá Gas càng cao, giao dịch càng nhanh",
     "best_rate_tooltip": "Rate thấp hơn cho khả năng thành công cao hơn khi thị trường biến động",
-    "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>"
+    "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>",
+    "no_pedding_tx": "Không có giao dịch nào",
+    "rate_info": "Rate có thể thay đổi. <br/>Bạn có thể  chỉ định rate nhỏ nhất bởi click \"NÂNG CAO\""
   },
 
   "modal": {
@@ -84,6 +86,7 @@
     "custom_path": "Path Tùy Chỉnh",
     "view_on_etherscan": "Xem trên Etherscan",
     "press_confirm_if_really_want": "Click xác nhận nếu bạn thật sự muốn.",
+    "waiting_for_confirmation": "Đang chờ xác nhận từ ví của bạn",
     "confirm_exchange_title": "Xác nhận giao dịch",
     "confirm_transfer_title": "Xác nhận giao dịch",
 
@@ -119,12 +122,16 @@
     "cannot_connect_ledger": "Không thể kết nối ledger",
     "invalid_private_key": "Private key không đúng định dạng",
     "no_balance": "Tài khoản của bạn hiện không có đủ số dư ở tất cả token, hãy nhập một tài khoản khác",
-    "clear_data_timeout": "Chúng tôi đã xóa hết dữ liêu bởi vì bạn đã không sử dụng trong ",
+    "clear_data_timeout": "Chúng tôi đã xóa hết dữ liêu bởi vì bạn đã không sử dụng trong ${time} phút",
     "minutes": " phút",
+    "time_out": "Hết phiên đăng nhập",
+    "network_error": "Không thể kết nối đến blockchain. Hãy kiểm tra lại mạng Internet!",
+    "term_error": "Bạn phải đồng với các điều khoản và dịch vụ!",
 
     "path_not_support_by_trezor": "Đường dẫn này không được Trezor hỗ trợ",
     "check_right_application_selected": "Kiểm tra lại để chắc chắn bạn đã sử dụng đúng ứng dụng",
-    "network_not_match": "Network không đúng",
+    "network_not_match": "Metamask cần chạy ở ${expectedName}. Hiện đang trên ${currentName}",
+    "network_not_match_unknow": "Metamask cần chạy ${expectedName}",
     "not_supported": "Không hỗ trợ"
   },
 
@@ -170,11 +177,11 @@
   },
 
   "landing_page":{
-    "title": "Trust-Free Exchange for Ethereum tokens",
-    "trustless": "Trustless",
-    "instant": "Instant",
-    "liquid": "Liquid",
-    "compatible": "Compatible",
-    "get_started": "Get Started"
+    "title": "Trao đổi Ethereum tokens",
+    "trustless": "Tin tưởng",
+    "instant": "Tức thì",
+    "liquid": "Thanh khoản",
+    "compatible": "Tương thích",
+    "get_started": "Bắt đầu"
   }
 }

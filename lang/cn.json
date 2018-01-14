@@ -25,14 +25,14 @@
   "transaction": {
     "exchange": "交易",
     "exchange_from": "从",
-    "exchange_to": "去",
+    "exchange_to": "到",
 
     "transfer": "转移",
     "transfer_to_address": "转移到地址",
     "amount": "数量",
     "select_token": "选择代币",
 
-    "advanced": "提前",
+    "advanced": "高级选项",
     "transaction_fee": "交易费",
 
     "address_balance": "地址余额",
@@ -41,16 +41,16 @@
 
     "password_needed_transfer": "每笔转移都需要密码",
     "next": "下一个",
-    "exit": "推出",
+    "exit": "退出",
     "back": "主页",
 
-    "broadcast": "广播",
+    "broadcast": "交易上链",
     "transaction": "交易",
     "broadcasted_title": "将您的交易广播至区块链",
     "close_browser_or_make_new_exchange": "您现在可以关闭浏览器窗口或进行另一币交易",
     "close_browser_or_make_new_transfer": "您现在可以关闭浏览器窗口或进行另一币转移",
-    "broadcasting": "您的交易正在被广播至区块链",
-    "cound_not_broadcast": "无法将您的交易广播至区块链",
+    "broadcasting": "您的交易正在被上链至区块链",
+    "cound_not_broadcast": "无法将您的交易上链至区块链",
     "current_address_balance": "当前地址余额",
     "transaction_error": "交易错误",
     "waiting_transaction": "您的交易正在等待被挖掘",
@@ -60,9 +60,9 @@
     "processing": "处理中",
     "gas_limit": "燃料限额",
     "gas_price": "燃料价格",
-    "for": "兑换为",
+    "for": "换至",
     "to": "至",
-    "best_rate": "最优价",
+    "best_rate": "最小价格",
     "token_amount": "代币／数量",
 
     "transfer_tooltip": "转移以太或代币至其它地址",
@@ -71,8 +71,10 @@
     "best_rate_tooltip": "市场波动时，更低的价格可以带来更好的成功率",
     "terms_and_conditions": "<span>条款和 <br  class='show-for-small-only'>条件</span>",
 
-    "error_tx_log":"Warning! Log is empty",
-    "error_tx_contract":"Warning! Error encountered during contract execution"
+    "error_tx_log":"空的日志",
+    "error_tx_contract":"警告！合约执行过程中发生了错误",
+    "no_pedding_tx": "没有待处理的交易",
+    "rate_info": "Rates might be changed during settlement.<br> You can indicate your minimum rate by clicking \"Advanced\""
   },
 
   "modal": {
@@ -89,6 +91,7 @@
     "custom_path": "您的自定义路径",
     "view_on_etherscan": "在Etherscan上查看",
     "press_confirm_if_really_want": "请按确认以继续",
+    "waiting_for_confirmation": "正在等待您钱包的确认信息",
     "confirm_exchange_title": "交易确认",
     "confirm_transfer_title": "转移确认",
 
@@ -104,7 +107,7 @@
 
   "error": {
     "select_same_token": "无法和同种代币进行交易",
-    "select_token_token": "This token pair is not supported yet",
+    "select_token_token": "这个代币交易对目前还不支持",
     "source_amount_too_high": "原始数量过高",
     "source_amount_too_high_cap": "原始数量超过了你的额度。你的额度是${ cap }ETH",
     "source_amount_too_small": "原始数量过低",
@@ -122,12 +125,16 @@
     "cannot_connect_ledger": "无法连接至Ledger",
     "invalid_private_key": "无效的密钥",
     "no_balance": "您的地址上没有我们支持的代币。请导入其它的地址。",
-    "clear_data_timeout": "由于您的会话超时，我们清除了您的数据",
+    "clear_data_timeout": "由于您的会话超时，我们清除了您的数据 ${time} 分钟",
     "minutes": " 分钟",
+    "time_out": "超时",
+    "network_error": "目前无法连接到区块链。请稍后再尝试。",
+    "term_error": "您必须先同意服务条款！",
 
     "path_not_support_by_trezor": "Trezor不支持这个路径",
     "check_right_application_selected": "检查是否选择了正确的应用",
-    "network_not_match": "网络不匹配",
+    "network_not_match": "Metamask需要连接到${expectedName}网络，而您现在连接的是${currentName}",
+    "network_not_match_unknow": "Metamask需要连接到${expectedName}",
     "not_supported": "不支持"
   },
 
@@ -149,8 +156,8 @@
     "reserve_address": "储蓄库合约地址",
     "network_address": "网络合约地址",
     "kyber_homepage": "Kyber主页",
-    "get_free_kovan": "得到免费的",
-    "warning": "请不药发送以太或代币到以上的任何地址.<br></br>他们都是测试网络的地址！",
+    "get_free_kovan": "获取免费的",
+    "warning": "请不要发送以太或代币到以上的任何地址.<br></br>他们都是测试网络的地址！",
     "here": "这里"
   },
   
@@ -182,11 +189,11 @@
   },
 
   "landing_page":{
-    "title": "Trust-Free Exchange  for Ethereum tokens",
-    "trustless": "Trustless",
-    "instant": "Instant",
-    "liquid": "Liquid",
-    "compatible": "Compatible",
-    "get_started": "Get Started"
+    "title": "无需信任的以太坊代币交易所",
+    "trustless": "无需信赖",
+    "instant": "迅速",
+    "liquid": "流动性",
+    "compatible": "兼容",
+    "get_started": "开始"
   }
 }

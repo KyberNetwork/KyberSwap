@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
-//const Uglify = require("uglifyjs-webpack-plugin")
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 var scriptConfig = function (env) {
   return {
@@ -23,7 +23,7 @@ var scriptConfig = function (env) {
         loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader']),
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
+        test: /\.(jpe?g|png|gif|svg|ttf)$/i,
         use: [
           {
             loader: 'url-loader',
@@ -47,20 +47,11 @@ var scriptConfig = function (env) {
       new webpack.DefinePlugin({
         'env': JSON.stringify(env.chain),
         'process.env': {
-          'logger': env.logger
+          'logger': 'true'
         }
       })
     ] : [
-        // new Uglify({
-        //   sourceMap: true,
-        //   compress: {
-        //     warnings: false
-        //   },
-        //   output: {
-        //       comments: false
-        //   }
-        // }
-        // ),
+        new UglifyJsPlugin(),
         new ExtractTextPlugin({ // define where to save the file
           filename: 'app.bundle.css',
           allChunks: true,
@@ -68,8 +59,7 @@ var scriptConfig = function (env) {
         new webpack.DefinePlugin({
           'env': JSON.stringify(env.chain),
           'process.env': {
-            'NODE_ENV': JSON.stringify("production"),
-            'logger': env.logger
+            'NODE_ENV': JSON.stringify("production")
           }
         })
       ],

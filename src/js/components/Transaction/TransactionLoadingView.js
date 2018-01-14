@@ -107,6 +107,11 @@ const TransactionLoadingView = (props) => {
                 <li class={props.status}>
                   <h4 class="font-w-b">{props.translate("transaction.transaction_error") || "Transaction error"}</h4>
                   <div class="reason">{props.translate(props.error) || "Warning! Error encountered during contract execution"}</div>
+                  {/* {props.type==="exchange" && (
+                    <div>
+                      <a onClick={(e)=>props.analyze(e)}>Analyze</a>
+                    </div>
+                  )} */}
                 </li>
               }
               {props.status === "pending" &&

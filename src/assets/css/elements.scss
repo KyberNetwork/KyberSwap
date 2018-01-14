@@ -38,7 +38,6 @@ input {
   }
   &[type=number], &.address, &.hash {
     font-weight: bold;
-    font-family: $font-family-monospace;
   }
   &::-webkit-input-placeholder {
     color: #ddd;
@@ -104,8 +103,7 @@ input.error {
 .error + span.error-text,
 .error span.error-text {
   color: $alert-color;
-  //font-size: 12px;
- // font-style: italic;
+  font-size: 13px;
   font-weight: normal;
   display: block;
   text-transform: none;
@@ -138,13 +136,17 @@ input.error {
     letter-spacing: 1.25px;
     text-transform: uppercase;
     position: relative;
-    //margin-bottom: 50px;
     white-space: nowrap;
+    border: none;
+    cursor: default;
     &.waiting {
       color: rgba(white, .5);
       pointer-events: none;
       animation: button-accent-waiting 2s ease infinite;
       position: relative;
+    }
+    &.next{
+      cursor: pointer;
     }
   }
 }

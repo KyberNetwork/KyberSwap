@@ -96,7 +96,7 @@ export function setRandomExchangeSelectedToken(random) {
   }
 }
 
-export function updateRateExchange(ethereum, source, dest, 
+export function updateRateExchange(ethereum, source, dest,
   sourceAmount, isManual = false, rateInit = "0") {
   return {
     type: "EXCHANGE.UPDATE_RATE_PENDING",
@@ -111,21 +111,19 @@ export function updatePrevSource(value) {
   }
 }
 
-export function updateRateExchangeComplete(rateInit, slippagePrice) {
-    // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
-    //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
+export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice) {
+  // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
+  //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
 
-    //var rateBig = converter.stringToBigNumber(rate[0])
+  //var rateBig = converter.stringToBigNumber(rate[0])
   //  var offeredRate = rate.expectedPrice
-   // var minConversionRate = rate.slippagePrice
-
-    //var expirationBlock = rate[1]
-    //var reserveBalance = rate[2]
+  //var expirationBlock = rate[1]
+  //var reserveBalance = rate[2]
   return {
     type: "EXCHANGE.UPDATE_RATE",
-    payload: { rateInit, slippagePrice }
+    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18) }
   }
-  
+
 }
 
 
@@ -301,16 +299,16 @@ export function setTermAndServices(value) {
   }
 }
 
-export function setOfferedRate(value) {
+export function setMinRate(value) {
   return {
-    type: "EXCHANGE.SET_OFFERED_RATE",
+    type: "EXCHANGE.SET_MIN_RATE",
     payload: { value }
   }
 }
 
-export function resetOfferedRate() {
+export function resetMinRate() {
   return {
-    type: "EXCHANGE.RESET_OFFERED_RATE",
+    type: "EXCHANGE.RESET_MIN_RATE",
   }
 }
 
@@ -342,17 +340,24 @@ export function setCapExchange(maxCap) {
   }
 }
 
-export function setMaxGasPrice(ethereum){
+export function setMaxGasPrice(ethereum) {
   return {
     type: "EXCHANGE.SET_MAX_GAS_PRICE",
     payload: ethereum
   }
 }
 
-export function setMaxGasPriceComplete(maxGasPrice){
+export function setMaxGasPriceComplete(maxGasPrice) {
   var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
   return {
     type: "EXCHANGE.SET_MAX_GAS_PRICE_COMPLETE",
     payload: maxGasPriceGwei
+  }
+}
+
+export function analyzeError(ethereum, exchange, token) {
+  return {
+    type: "EXCHANGE.ANALYZE_ERROR",
+    payload: { ethereum, exchange, token }
   }
 }

@@ -2,6 +2,7 @@ import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
 import { calculateDest, caculateDestAmount, caculateSourceAmount } from "../utils/converter"
 //import { randomToken, randomForExchange } from "../utils/random"
+import BLOCKCHAIN_INFO from "../../../env"
 
 
 const initState = constants.INIT_EXCHANGE_FORM_STATE
@@ -27,7 +28,8 @@ const exchange = (state = initState, action) => {
       //newState.gasPrice = initState.gasPrice
       newState.bcError = ""
       newState.step = initState.step
-      newState.offeredRate = newState.minConversionRate
+      newState.minConversionRate = newState.slippageRate
+
       newState.isEditRate = false
       newState.isEditGasPrice = false
       return newState
@@ -40,10 +42,35 @@ const exchange = (state = initState, action) => {
       if (action.payload.type === "source") {
         newState.sourceTokenSymbol = action.payload.symbol
         newState.sourceToken = action.payload.address
+
+        if(newState.sourceTokenSymbol === 'ETH'){
+          if(newState.destTokenSymbol === 'ETH'){
+            newState.destTokenSymbol = 'KNC'
+            newState.destToken = BLOCKCHAIN_INFO.tokens['KNC'].address  
+          }
+        }else{
+          newState.destTokenSymbol = 'ETH'
+          newState.destToken = BLOCKCHAIN_INFO.tokens['ETH'].address  
+        }
       } else if (action.payload.type === "des") {
         newState.destTokenSymbol = action.payload.symbol
         newState.destToken = action.payload.address
+
+        if(newState.destTokenSymbol === 'ETH'){
+          if(newState.sourceTokenSymbol === 'ETH'){
+            newState.sourceTokenSymbol = 'KNC'
+            newState.sourceToken = BLOCKCHAIN_INFO.tokens['KNC'].address  
+          }
+        }else{
+          newState.sourceTokenSymbol = 'ETH'
+          newState.sourceToken = BLOCKCHAIN_INFO.tokens['ETH'].address  
+        }
       }
+      //reset all error
+      for (var key in newState.errors) {
+        newState.errors[key] = ""
+      }
+      
       newState.selected = true
       newState.isEditRate = false
       return newState
@@ -111,18 +138,22 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.UPDATE_RATE":
-      const { rateInit, slippagePrice } = action.payload
-      newState.slippagePrice = slippagePrice
+      const { rateInit, expectedPrice, slippagePrice } = action.payload
+
       
-      var rate = slippagePrice === "0" ? rateInit : slippagePrice      
-      newState.minConversionRate = rate
+      var slippageRate = slippagePrice === "0" ? rateInit:slippagePrice
+      var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice   
+
+      newState.slippageRate = slippagePrice
+      newState.offeredRate = expectedRate
+
       if (newState.sourceAmount !== "") {
-        newState.minDestAmount = calculateDest(newState.sourceAmount, rate).toString(10)
+        newState.minDestAmount = calculateDest(newState.sourceAmount, expectedRate).toString(10)
       }
       //newState.offeredRateBalance = action.payload.reserveBalance
       // newState.offeredRateExpiryBlock = action.payload.expirationBlock
       if (!newState.isEditRate) {
-        newState.offeredRate = rate
+        newState.minConversionRate = slippageRate
       }
       newState.isSelectToken = false
       return newState
@@ -251,15 +282,15 @@ const exchange = (state = initState, action) => {
       newState.termAgree = action.payload.value
       return newState
     }
-    case "EXCHANGE.SET_OFFERED_RATE": {
-      newState.offeredRate = action.payload.value
+    case "EXCHANGE.SET_MIN_RATE": {
+      newState.minConversionRate = action.payload.value
       newState.errors.rateError = ''
       newState.isEditRate = true
       return newState
     }
-    case "EXCHANGE.RESET_OFFERED_RATE": {
-      newState.offeredRate = newState.minConversionRate
-      newState.isEditRate = false
+    case "EXCHANGE.RESET_MIN_RATE": {
+      newState.minConversionRate = newState.offeredRate
+      newState.isEditRate = true
       newState.errors.rateError = ''
       return newState
     }

@@ -125,7 +125,7 @@ export function toTWei(number) {
   } else if (acceptableTyping(number)) {
     return number
   } else {
-    return bigNumber.times(1000000000000000000).toString()
+    return bigNumber.times(1000000000000000000).round().toString()
   }
 }
 
@@ -243,6 +243,7 @@ export function stringToHex(number, decimal) {
   if (number === "" || isNaN(number)) return "0x0"
   var param = new BigNumber(10).pow(decimal ? decimal : 18)
   var bigNumber = new BigNumber(number).times(param)
+  bigNumber = bigNumber.round()
   return "0x" + bigNumber.toString(16)
 }
 
@@ -296,9 +297,28 @@ export function getDifferentAmount(sourceAmount, prevAmount, sourceDecimal,
       var rateWeight = new BigNumber(10).pow(18)
       rate = rate.div(rateWeight)
 
-      var value = new BigNumber(valueChange)
+      var value = new BigNumber(valueChange + "")
       value = value.mul(rate)
 
       return value.toNumber()
     }
+}
+
+export function findNetworkName(networkId){
+  switch(networkId){
+    case 0:
+     return "Olympic Network"
+    case 1:
+      return "Mainnet"
+    case 2:
+      return "Morden Network"
+    case 3:
+      return "Ropsten Network"
+    case 4:
+      return "Rinkeby Network"
+    case 42:
+      return "Kovan Network"
+    default:
+      return null
+  }
 }
