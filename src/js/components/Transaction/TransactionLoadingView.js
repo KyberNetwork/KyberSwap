@@ -84,7 +84,7 @@ const TransactionLoadingView = (props) => {
                 <li class={props.status}>
                   <h4 class="text-success font-w-b">
                     {/* {props.translate("transaction.broadcasted_title") || "Broadcasted your transaction to the blockchain"} */}
-                    {props.type === "exchange" && `Successfully exchange between ${props.balanceInfo.sourceSymbol} and ${props.balanceInfo.destSymbol}`}
+                    {props.type === "exchange" && `Successfully exchanged between ${props.balanceInfo.sourceSymbol} and ${props.balanceInfo.destSymbol}`}
                     {props.type === "transfer" && `Successfully transferred ${props.balanceInfo.tokenSymbol} to ${props.address}`}
                   </h4>
                   {props.type === "exchange" &&
