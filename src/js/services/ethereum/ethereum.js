@@ -8,7 +8,7 @@ import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRat
         updateHistoryExchange, checkConnection, setGasPrice, setMaxGasPrice } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx } from "../../actions/txActions"
-import { updateRateExchange, estimateGas } from "../../actions/exchangeActions"
+import { updateRateExchange, estimateGas, analyzeError } from "../../actions/exchangeActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
 import { setConnection } from "../../actions/connectionActions"
@@ -98,9 +98,18 @@ export default class EthereumService extends React.Component {
     this.checkConnection()
 
     this.fetchGasprice()
-   // this.fetchGasExchange()
+ //   this.testAnalize()
   }
 
+  // testAnalize(){
+  //   var state = store.getState()
+  //   var ethereum = state.connection.ethereum
+  //   var exchange = state.exchange
+  //   exchange.txHash = "0x1c98b83f37ca45c6644a679dcea18d4b7bdc89ac7c702f0b83b324760198d44b"
+  //   var tokens = state.tokens.tokens
+  //   store.dispatch(analyzeError(ethereum, exchange, tokens))
+  // }
+  
   fetchRateData() {
     var state = store.getState()
     var ethereum = state.connection.ethereum
