@@ -130,6 +130,7 @@ export default class Transfer extends React.Component {
       tokenSymbol: this.props.transfer.balanceData.tokenSymbol
      // tokenSymbol: this.props.transfer.tokenSymbol
     }
+    var destAdressShort = this.props.transfer.destAddress.slice(0, 8) + "..." +  this.props.transfer.destAddress.slice(-6)
     var transactionLoadingScreen = (
       <TransactionLoading tx={this.props.transfer.txHash}
         makeNewTransaction={this.makeNewTransfer}
@@ -138,6 +139,7 @@ export default class Transfer extends React.Component {
         balanceInfo={balanceInfo}
         broadcasting={this.props.transfer.broadcasting}
         broadcastingError={this.props.transfer.bcError}
+        address = {destAdressShort}
       />
     )
 
