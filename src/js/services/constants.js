@@ -51,8 +51,8 @@ const INIT_EXCHANGE_FORM_STATE = {
   slippageRate: 0,
 
   throwOnFailure: false,
-  gas: 1000000,
-  gas_estimate: 300000,
+  gas: 7000000,
+  gas_estimate: 7000000,
   gasPrice: 20,
   maxGasPrice: 50,
   isEditGasPrice: false,
