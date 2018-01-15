@@ -475,10 +475,11 @@ function* updateGasUsed(action){
 }
 
 function* analyzeError(action){
-  const {ethereum, exchange, tokens} = action.payload
+  const {ethereum, txHash} = action.payload
   try{
-    var txHash = exchange.txHash
+   // var txHash = exchange.txHash
     var tx = yield call([ethereum, ethereum.call("getTx")], txHash)
+    console.log(tx)
     var value = tx.value
     var owner = tx.from
     var gas_price = tx.gasPrice
@@ -494,8 +495,8 @@ function* analyzeError(action){
     var walletID = result[6].value
     var reserves = yield call([ethereum, ethereum.call("getListReserve")])
 
-    console.log(value,owner,gas_price, blockNumber,source ,sourceAmount ,dest, destAddress, 
-      maxDestAmount, minConversionRate, walletID)
+    // console.log(value,owner,gas_price, blockNumber,source ,sourceAmount ,dest, destAddress, 
+    //   maxDestAmount, minConversionRate, walletID)
     
     var input = {value, owner, gas_price, source, srcAmount, dest, 
       destAddress, maxDestAmount, minConversionRate, walletID, reserves}
@@ -508,9 +509,10 @@ function* analyzeError(action){
 }
 
 function* debug(input, blockno, ethereum){
+  console.log(input)
   var networkIssues = {}
   var reserveIssues = {}
-  var gasCap = yield call([ethereum, ethereum.call("wrapperGetGasCap")], blockNumber)
+  var gasCap = yield call([ethereum, ethereum.call("wrapperGetGasCap")], blockno)
   if(gas_price > gasCap){
     networkIssues["gas_price"] = "Gas price exceeded max limit"
   }
@@ -555,6 +557,8 @@ function* debug(input, blockno, ethereum){
     reserveIssues["reason"] = reasons
   }else{
     var chosenReserve = yield call([ethereum, ethereum.call("wrapperGetChosenReserve")],input, blockno)
+    console.log(rate)
+
     var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], chosenReserve, input, blockno)
     reserveIssues["reason"] = reasons
   }
