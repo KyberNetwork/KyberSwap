@@ -26,7 +26,7 @@ ul.broadcast-steps {
   ul.address-balances{
     display: block;
     width: 90%;
-    margin: 35px auto 0;
+    margin: 20px auto 0;
     border-collapse: collapse;
     @include breakpoint(medium){
       width: 75%;
@@ -86,5 +86,24 @@ ul.broadcast-steps {
   margin-bottom: 20px;
   &:hover{
     color: #fff;
+  }
+}
+
+.tx-title{
+  >*{
+    margin-right: 15px;
+    font-size: 16px;
+  }  
+  .copy-tx{
+   img{
+     width: 14px;
+   }
+  }
+}
+
+.tx-loading{
+  .info{
+    margin-bottom: 1.5rem !important;
+    margin-top: 0.9rem !important;
   }
 }

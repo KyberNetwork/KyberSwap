@@ -162,7 +162,7 @@ describe('Submit transfer', () => {
         postTransferBtn.find('.submit-transfer').simulate('click');
         expect(store.dispatch).toHaveBeenCalledWith({
             type: 'UTIL.OPEN_INFO_MODAL',
-            "payload": { "content": "You must agree terms and services!", "title": "Agree terms and services" }
+            "payload": { "content": "error.term_error", "title": "layout.terms_of_service" }
         });
     })
 
@@ -288,11 +288,11 @@ describe('Process submit', () => {
             type: 'TRANSFER.PROCESS_TRANSFER',
             payload: {
                 account: {
-                    address: "0x12f0453c1947269842c5646df98905533c1b9519", avatar: "", balance: 0, keystring: "", manualNonce: 0, nonce: 0, type: "keystore"
+                    address: "0x12f0453c1947269842c5646df98905533c1b9519", balance: 0, keystring: "", manualNonce: 0, nonce: 0, type: "keystore"
                 },
                 address: "0x12f0453c1947269842c5646df98905533c1b9519",
                 amount: "0x16345785d8a0000",
-                "balanceData": { "balance": "10000000000000000000" },
+                "balanceData": {"balance": "10000000000000000000", "decimal": 18, "name": "Ethereum", "tokenSymbol": "ETH"},
                 data: {
                     amount: "0.1",
                     destAddress: "0x95b4de7fb8800aab804a23d4185230949b503380",
@@ -322,11 +322,11 @@ describe('Process submit', () => {
             type: 'TRANSFER.PROCESS_TRANSFER',
             payload: {
                 account: {
-                    address: "0x12f0453c1947269842c5646df98905533c1b9519", avatar: "", balance: 0, keystring: "", manualNonce: 0, nonce: 0, type: "trezor"
+                    address: "0x12f0453c1947269842c5646df98905533c1b9519", balance: 0, keystring: "", manualNonce: 0, nonce: 0, type: "trezor"
                 },
                 address: "0x12f0453c1947269842c5646df98905533c1b9519",
                 amount: "0x16345785d8a0000",
-                "balanceData": { "balance": "10000000000000000000" },
+                "balanceData": {"balance": "10000000000000000000", "decimal": 18, "name": "Ethereum", "tokenSymbol": "ETH"},
                 data: {
                     amount: "0.1",
                     destAddress: "0x95b4de7fb8800aab804a23d4185230949b503380",
@@ -425,7 +425,8 @@ describe('Test formParams function', () => {
         expect(result).toEqual({
             amount: '0x16345785d8a0000',
             "balanceData": {
-                "balance": "10000000000000000000",
+                "balance": "10000000000000000000", 
+                "decimal": 18, "name": "Ethereum", "tokenSymbol": "ETH"
             },
             destAddress: '0x95b4de7fb8800aab804a23d4185230949b503380',
             "gas": "0xf4240",
