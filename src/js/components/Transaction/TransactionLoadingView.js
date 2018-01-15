@@ -51,7 +51,34 @@ const TransactionLoadingView = (props) => {
       </div>
     )
   }
+
   var classPending = props.status === "pending" ? " pulse" : ""
+  var analyze = ""
+  if (props.type === "exchange") {
+    if (props.analyze.isAnalizeComplete) {
+      var listErrors = Object.keys(props.analyze.analizeError).map(key => {
+        var list = Object.keys(props.analyze.analizeError[key]).map(keyItem => {
+          return (<div key={key + keyItem} className="reason-item">{props.analyze.analizeError[key][keyItem]}</div>)
+        })
+        return list
+      })
+      analyze = (
+        <div className="reason">
+          {listErrors}
+        </div>
+      )
+    } else {
+      if (props.isAnalize) {
+        analyze = ""
+      } else {
+        analyze = (
+          <div className="reason">
+            <a onClick={(e) => props.analyze.action(e)}>Analyze</a>
+          </div>
+        )
+      }
+    }
+  }
   return (
     <div>
       <div class="frame">
@@ -106,12 +133,13 @@ const TransactionLoadingView = (props) => {
               {props.status === "failed" &&
                 <li class={props.status}>
                   <h4 class="font-w-b">{props.translate("transaction.transaction_error") || "Transaction error"}</h4>
-                  <div class="reason">{props.translate(props.error) || "Warning! Error encountered during contract execution"}</div>
-                  {props.type==="exchange" && (
-                    <div>
-                      <a onClick={(e)=>props.analyze(e)}>Analyze</a>
+                  {/* <div class="reason">{props.translate(props.error) || "Warning! Error encountered during contract execution"}</div> */}
+                  {analyze}
+                  {/* {props.type==="exchange" && (
+                    <div class="reason">
+                      <a onClick={(e)=>props.analyze.action(e)}>Analyze</a>
                     </div>
-                  )}
+                  )} */}
                 </li>
               }
               {props.status === "pending" &&

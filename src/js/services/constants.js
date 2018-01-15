@@ -90,7 +90,10 @@ const INIT_EXCHANGE_FORM_STATE = {
     passwordError: '',
     signTransaction: '',
     rateError: ''
-  }
+  },
+  isAnalize: false,
+  isAnalizeComplete: false,
+  analizeError : {}
 }
 
 const INIT_TRANSFER_FORM_STATE = {
