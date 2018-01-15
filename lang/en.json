@@ -49,7 +49,7 @@
     "failed": "Failed!",
     "broadcasted": "Broadcasted!",
     "broadcasting": "Broadcasting!",
-    "success_ex_msg": "Successfully exchange between ${source} to ${dest}",
+    "success_ex_msg": "Successfully exchange from ${source} to ${dest}",
     "success_tx_msg": "Successfully transferred ${token} to ${address}",
     "copy_tx": "Copy transaction hash",
     "analyze_error": "Analysis summary",

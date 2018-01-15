@@ -87,7 +87,7 @@ const TransactionLoadingView = (props) => {
           <div class="text-center">
             <h1 class="title mb-0 font-w-b">
               {props.status === "success" && (props.translate('transaction.done') || "Done!")}
-              {props.status === "failed" && (props.translate('transaction.fail') || "Fail!")}
+              {props.status === "failed" && (props.translate('transaction.failed') || "Failed!")}
               {props.status === "pending" && (props.translate('transaction.broadcasted') || "Broadcasted")}
             </h1>
             <div class="info text-light font-s-down-1 tx-title">
