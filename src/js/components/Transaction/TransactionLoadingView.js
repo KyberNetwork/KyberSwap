@@ -4,6 +4,7 @@ import BLOCKCHAIN_INFO from "../../../../env"
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
+import AnalyzeLogModal from './AnalyzeLogModal'
 
 const TransactionLoadingView = (props) => {
   if (props.broadcasting) {
@@ -59,7 +60,20 @@ const TransactionLoadingView = (props) => {
       </div>
     )
   }
+
+  var handleAnalyze = (e) => {
+    props.analyze.action(e)
+    props.toogleModal()
+  }  
+
   var classPending = props.status === "pending" ? " pulse" : ""
+  var analyzeBtn = ""
+
+  if (props.type === "exchange") {
+    analyzeBtn = (
+      <a className="analyze" onClick={(e) => handleAnalyze(e)}>Analyze</a>
+    )
+  }
   return (
     <div>
       <div class="frame tx-loading">
@@ -73,7 +87,7 @@ const TransactionLoadingView = (props) => {
           <div class="text-center">
             <h1 class="title mb-0 font-w-b">
               {props.status === "success" && (props.translate('transaction.done') || "Done!")}
-              {props.status === "failed" && (props.translate('transaction.fail') || "Fail!")}
+              {props.status === "failed" && (props.translate('transaction.failed') || "Failed!")}
               {props.status === "pending" && (props.translate('transaction.broadcasted') || "Broadcasted")}
             </h1>
             <div class="info text-light font-s-down-1 tx-title">
@@ -132,11 +146,20 @@ const TransactionLoadingView = (props) => {
               }
               {props.status === "failed" &&
                 <li class={props.status}>
-                  <h4 class="font-w-b">{props.translate("transaction.transaction_error") || "Transaction error"}</h4>
-                  <div class="reason">{props.translate(props.error) || "Warning! Error encountered during contract execution"}</div>
+                  <h4 class="font-w-b d-inline-block">
+                    <img src={require("../../../assets/img/error.svg")} />
+                    {props.translate("transaction.transaction_error") || "Transaction error"}
+                  </h4>
+                  {/* <div class="reason">{props.translate(props.error) || "Warning! Error encountered during contract execution"}</div> */}
+                  {analyzeBtn}
+                  <AnalyzeLogModal analyze={props.analyze} 
+                    onRequestClose={props.toogleModal}
+                    isOpen={props.isOpenModal}
+                    translate={props.translate}
+                  />
                   {/* {props.type==="exchange" && (
-                    <div>
-                      <a onClick={(e)=>props.analyze(e)}>Analyze</a>
+                    <div class="reason">
+                      <a onClick={(e)=>props.analyze.action(e)}>Analyze</a>
                     </div>
                   )} */}
                 </li>

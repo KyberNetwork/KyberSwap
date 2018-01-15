@@ -304,6 +304,11 @@ export function getDifferentAmount(sourceAmount, prevAmount, sourceDecimal,
     }
 }
 
+export function compareTwoNumber(num1, num2){
+  var num1Big = new BigNumber(num1.toString())
+  var num2Big = new BigNumber(num2.toString())
+  return num1Big.comparedTo(num2Big)
+}
 export function findNetworkName(networkId){
   switch(networkId){
     case 0:

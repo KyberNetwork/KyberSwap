@@ -355,9 +355,16 @@ export function setMaxGasPriceComplete(maxGasPrice) {
   }
 }
 
-export function analyzeError(ethereum, exchange, token) {
+export function analyzeError(ethereum, txHash) {
   return {
     type: "EXCHANGE.ANALYZE_ERROR",
-    payload: { ethereum, exchange, token }
+    payload: { ethereum, txHash}
+  }
+}
+
+export function setAnalyzeError(networkIssues, reserveIssues){
+  return {
+    type: "EXCHANGE.SET_ANALYZE_ERROR",
+    payload: { networkIssues, reserveIssues }
   }
 }

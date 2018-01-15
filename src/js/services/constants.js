@@ -90,7 +90,10 @@ const INIT_EXCHANGE_FORM_STATE = {
     passwordError: '',
     signTransaction: '',
     rateError: ''
-  }
+  },
+  isAnalize: false,
+  isAnalizeComplete: false,
+  analizeError : {}
 }
 
 const INIT_TRANSFER_FORM_STATE = {
@@ -164,7 +167,7 @@ const CONNECTION_CHECKER = {
   isCheck: true
 }
 
-const STORAGE_KEY = "35"
+const STORAGE_KEY = "36"
 
 module.exports = {
   ERC20, KYBER_NETWORK, KYBER_WRAPPER, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,
