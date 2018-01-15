@@ -21,14 +21,14 @@ const TransactionLoadingView = (props) => {
             <div class="text-center">
               <h1 class="title mb-0 font-w-b">
               {props.error? 
-                props.translate("error.failed") || 'Failed'
-                : props.translate("transaction.broadcasting") || 'Broadcasting the transaction to the blockchain'}
+                props.translate("error.failed") || 'Failed!'
+                : props.translate("transaction.broadcasting") || 'Broadcasting'}
               
               </h1>
               <ul class="broadcast-steps">
                 {!props.error &&
                   <li class="pending">
-                    <h4 class="font-w-b">{props.translate("transaction.broadcasting") || "Broadcasting the transaction to the blockchain"}
+                    <h4 class="font-w-b">{props.translate("transaction.broadcasting_blockchain") || "Broadcasting the transaction to the blockchain"}
                     </h4>
                   </li>
                 }
