@@ -52,6 +52,7 @@
     "success_ex_msg": "Successfully exchange between ${source} and ${dest}",
     "success_tx_msg": "Successfully transferred ${token} to ${address}",
     "copy_tx": "Copy transaction hash",
+    "analyze_error": "Analysis summary",
     
     "broadcast": "Broadcast",
     "transaction": "Transaction",
