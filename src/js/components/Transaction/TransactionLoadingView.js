@@ -20,14 +20,15 @@ const TransactionLoadingView = (props) => {
             </div>
             <div class="text-center">
               <h1 class="title mb-0 font-w-b">
-              {/* {props.translate("transaction.broadcast") || "Broadcast"} */}
-              {props.error? "Failed":"Broadcasting"}
+              {props.error? 
+                props.translate("error.failed") || 'Failed'
+                : props.translate("transaction.broadcasting") || 'Broadcasting the transaction to the blockchain'}
               
               </h1>
               <ul class="broadcast-steps">
                 {!props.error &&
                   <li class="pending">
-                    <h4 class="font-w-b">{props.translate("transaction.broadcasting") || "Broadcasting your transaction to network"}
+                    <h4 class="font-w-b">{props.translate("transaction.broadcasting") || "Broadcasting the transaction to the blockchain"}
                     </h4>
                   </li>
                 }
@@ -49,8 +50,9 @@ const TransactionLoadingView = (props) => {
         <div class="row">
           <div class="column small-11 medium-10 large-9 small-centered text-center">
             <a className="new-transaction" onClick={props.makeNewTransaction}>
-              {/* {props.translate("transaction.back") || 'Back'} */}
-              {props.type === "exchange"? "New exchange":"New transfer"}
+              {props.type === "exchange"?
+                props.translate("transaction.new_ex") || "New exchange"
+                : props.translate("transaction.new_tx") || "New transfer"}
             </a>
           </div>
         </div>
@@ -70,17 +72,17 @@ const TransactionLoadingView = (props) => {
           </div>
           <div class="text-center">
             <h1 class="title mb-0 font-w-b">
-              {/* {props.translate("transaction.broadcast") || "Broadcast"} */}
-              {props.status === "success" && "Done!"}
-              {props.status === "failed" && "Fail!"}
-              {props.status === "pending" && "Broadcasted"}
+              {props.status === "success" && (props.translate('transaction.done') || "Done!")}
+              {props.status === "failed" && (props.translate('transaction.fail') || "Fail!")}
+              {props.status === "pending" && (props.translate('transaction.broadcasted') || "Broadcasted")}
             </h1>
             <div class="info text-light font-s-down-1 tx-title">
               <span className="font-w-b ">{props.translate("transaction.transaction") || "Transaction"}</span>
-              <a class="text-light" data-tooltip title="View on Etherscan" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank">
+              <a class="text-light" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank" 
+              title={props.translate("modal.view_on_etherscan") || "View on Etherscan"} >
                 {props.txHash.slice(0, 12)} ... {props.txHash.slice(-10)}
               </a>
-              <a className="copy-tx" data-tip={"Copy transaction hash"} data-for='copy-tx-tip'>
+              <a className="copy-tx" data-tip={props.translate("transaction.copy_tx") || "Copy transaction hash"} data-for='copy-tx-tip'>
                 <CopyToClipboard text={props.txHash}>
                   <img src={require("../../../assets/img/copy.svg")} />
                 </CopyToClipboard>
@@ -91,9 +93,14 @@ const TransactionLoadingView = (props) => {
               {props.status === "success" &&
                 <li class={props.status}>
                   <h4 class="text-success font-w-b">
-                    {/* {props.translate("transaction.broadcasted_title") || "Broadcasted your transaction to the blockchain"} */}
-                    {props.type === "exchange" && `Successfully exchange from ${props.balanceInfo.sourceSymbol} to ${props.balanceInfo.destSymbol}`}
-                    {props.type === "transfer" && `Successfully transferred ${props.balanceInfo.tokenSymbol} to ${props.address}`}
+                    {props.type === "exchange" && 
+                      (props.translate("transaction.success_ex_msg", {source: props.balanceInfo.sourceSymbol, dest: props.balanceInfo.destSymbol}) 
+                      ||`Successfully exchange from ${props.balanceInfo.sourceSymbol} to ${props.balanceInfo.destSymbol}`)
+                    }
+                    {props.type === "transfer" && 
+                      (props.translate("transaction.success_tx_msg", {token: props.balanceInfo.tokenSymbol, address: props.address}) ||
+                      `Successfully transferred ${props.balanceInfo.tokenSymbol} to ${props.address}`)
+                    }
                   </h4>
                   {props.type === "exchange" &&
                     <ul class="address-balances text-white">
@@ -154,8 +161,9 @@ const TransactionLoadingView = (props) => {
       <div class="row">
         <div class="column small-11 medium-10 large-9 small-centered text-center">
           <a className="new-transaction" onClick={props.makeNewTransaction}>
-            {/* {props.translate("transaction.back") || 'Back'} */}
-            {props.type === "exchange"? "New exchange":"New transfer"}
+            {props.type === "exchange"?
+                props.translate("transaction.new_ex") || "New exchange"
+                : props.translate("transaction.new_tx") || "New transfer"}
           </a>
         </div>
       </div>

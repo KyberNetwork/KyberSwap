@@ -103,11 +103,11 @@ describe('Import PrivateKey', () => {
         ).dive();
         let pkey = '9e9b206620bf487df5aaa65ba28baf446fc9d9f67e1aa7506c56a54af9c849c5';
         component.instance().importPrivateKey(pkey);
+        console.log(expect(store.dispatch).toHaveBeenCalledWith())
         expect(store.dispatch).toHaveBeenCalledWith({
             type: "ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING",
             payload: {
                 "address": "0x95b4de7fb8800aab804a23d4185230949b503380",
-                "avatar": "data:image/svg+xml;base64,dW5kZWZpbmVk",
                 "ethereum": store.getState().connection.ethereum,
                 "keystring": "9e9b206620bf487df5aaa65ba28baf446fc9d9f67e1aa7506c56a54af9c849c5",
                 "metamask": null, 
