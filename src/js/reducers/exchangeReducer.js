@@ -138,10 +138,10 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.UPDATE_RATE":
-      const { rateInit, expectedPrice, slippagePrice } = action.payload
+      const { rateInit, expectedPrice, slippagePrice, rateInitSlippage } = action.payload
 
       
-      var slippageRate = slippagePrice === "0" ? rateInit:slippagePrice
+      var slippageRate = slippagePrice === "0" ? rateInitSlippage:slippagePrice
       var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice   
 
       newState.slippageRate = slippagePrice
