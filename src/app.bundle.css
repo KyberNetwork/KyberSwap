@@ -3978,8 +3978,12 @@ input[type=password], input[type=number], input[type=text] {
   padding: 10px 15px 10px 15px;
   min-height: 40px;
   height: 40px;
-  font-size: 13px;
+  font-size: 14px;
   border-radius: 0; }
+
+input[type=password] {
+  font: small-caption;
+  font-size: 30px; }
 
 input[type=number], input.address, input.hash {
   font-weight: bold; }
@@ -4347,7 +4351,7 @@ ul.broadcast-steps {
   ul.broadcast-steps ul.address-balances {
     display: block;
     width: 90%;
-    margin: 35px auto 0;
+    margin: 20px auto 0;
     border-collapse: collapse; }
     @media print, screen and (min-width: 40em) {
       ul.broadcast-steps ul.address-balances {
@@ -4383,6 +4387,17 @@ ul.broadcast-steps {
       margin-top: 5px;
       color: #ffffff;
       font-weight: normal; }
+    ul.broadcast-steps > li.failed img {
+      width: 20px;
+      vertical-align: baseline;
+      margin-right: 5px; }
+  ul.broadcast-steps .analyze {
+    margin-left: 15px;
+    padding: 4px 12px;
+    border-radius: 17px;
+    border: 1px solid #ff5d00;
+    color: #f7f7f7;
+    font-weight: normal; }
 
 .new-transaction {
   background: #263d48 !important;
@@ -4395,6 +4410,25 @@ ul.broadcast-steps {
   margin-bottom: 20px; }
   .new-transaction:hover {
     color: #fff; }
+
+.tx-title > * {
+  margin-right: 15px;
+  font-size: 16px; }
+
+.tx-title .copy-tx img {
+  width: 14px; }
+
+.tx-loading .info {
+  margin-bottom: 1.5rem !important;
+  margin-top: 0.9rem !important; }
+
+.reason-analyze {
+  padding: 20px 0; }
+  .reason-analyze .reason-item {
+    display: flex; }
+    .reason-analyze .reason-item::before {
+      content: '-';
+      margin-right: 10px; }
 
 .reveal-overlay {
   background-color: rgba(11, 15, 26, 0.75);
@@ -4977,7 +5011,7 @@ input[type=number] {
       padding: 20px 0;
       border-bottom: 1px solid #eee; }
       .transaction-list .body > div:hover {
-        background-color: #f6f6f6; }
+        background-color: #f0f0f0; }
 
 .language-list .token-stamp {
   text-align: left;
@@ -5476,7 +5510,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     border: 1px solid transparent;
     cursor: pointer; }
     #balance-account .balance-item.active, #balance-account .balance-item:hover {
-      background-color: #f8f8f8;
+      background-color: #f0f0f0;
       border-color: #d5d5d5; }
     #balance-account .balance-item h4 {
       line-height: 29px; }

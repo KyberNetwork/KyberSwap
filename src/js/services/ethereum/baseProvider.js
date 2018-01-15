@@ -2,7 +2,7 @@ import Web3 from "web3"
 import constants from "../constants"
 import * as ethUtil from 'ethereumjs-util'
 import BLOCKCHAIN_INFO from "../../../../env"
-//import axios from 'axios'
+import abiDecoder from "abi-decoder"
 
 export default class BaseEthereumProvider {
 
@@ -125,19 +125,33 @@ export default class BaseEthereumProvider {
     return Promise.all(promises)
   }
 
-  getMaxCap(address) {
+  getMaxCap(address, blockno) {
+    var data =  this.networkContract.methods.getUserCapInWei(address).encodeABI()
     return new Promise((resolve, reject) => {
-      this.networkContract.methods.getUserCapInWei(address).call()
-        .then((result) => {
-          if (result != null) {
-            console.log(result)
-            resolve(result)
-          }
-        })
-        .catch((err) => {
+      this.rpc.eth.call({
+        to: BLOCKCHAIN_INFO.network,
+        data: data
+      }, blockno ? blockno : this.rpc.eth.defaultBlock)
+        .then(result => {
+          var cap = this.rpc.eth.abi.decodeParameters(['uint256'], result)
+          resolve(cap[0])
+        }).catch((err) => {
+          // console.log(err)
           reject(err)
         })
     })
+    // return new Promise((resolve, reject) => {
+    //   this.networkContract.methods.getUserCapInWei(address).call()
+    //     .then((result) => {
+    //       if (result != null) {
+    //         console.log(result)
+    //         resolve(result)
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       reject(err)
+    //     })
+    // })
   }
 
   getNonce(address) {
@@ -157,20 +171,37 @@ export default class BaseEthereumProvider {
 
   }
 
-  getTokenBalance(address, ownerAddr) {
+  getTokenBalance(address, ownerAddr, blockno) {
     var instance = this.erc20Contract
     instance.options.address = address
+
+    var data = instance.methods.balanceOf(ownerAddr).encodeABI()
+
     return new Promise((resolve, reject) => {
-      instance.methods.balanceOf(ownerAddr).call()
-        .then((result) => {
-          if (result != null) {
-            resolve(result)
-          }
-        })
-        .catch((err) => {
+      this.rpc.eth.call({
+        to: address,
+        data: data
+      }, blockno ? blockno : this.rpc.eth.defaultBlock)
+        .then(result => {
+          var balance = this.rpc.eth.abi.decodeParameters(['uint256'], result)
+          resolve(balance[0])
+        }).catch((err) => {
+          // console.log(err)
           reject(err)
         })
     })
+
+    // return new Promise((resolve, reject) => {
+    //   instance.methods.balanceOf(ownerAddr).call()
+    //     .then((result) => {
+    //       if (result != null) {
+    //         resolve(result)
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       reject(err)
+    //     })
+    // })
 
   }
 
@@ -190,9 +221,12 @@ export default class BaseEthereumProvider {
 
   exchangeData(sourceToken, sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate, walletId) {
-    return this.networkContract.methods.trade(
+    var data = this.networkContract.methods.trade(
       sourceToken, sourceAmount, destToken, destAddress,
       maxDestAmount, minConversionRate, walletId).encodeABI()
+
+    //console.log(data)
+    return data
   }
 
   approveTokenData(sourceToken, sourceAmount) {
@@ -207,16 +241,32 @@ export default class BaseEthereumProvider {
     return tokenContract.methods.transfer(destAddress, sourceAmount).encodeABI()
   }
 
-  getAllowance(sourceToken, owner) {
+  getAllowance(sourceToken, owner, blockno) {
     var tokenContract = this.erc20Contract
     tokenContract.options.address = sourceToken
+
+    var data = tokenContract.methods.allowance(owner, this.networkAddress).encodeABI()
+
     return new Promise((resolve, reject) => {
-      tokenContract.methods.allowance(owner, this.networkAddress).call().then((result) => {
-        if (result !== null) {
-          resolve(result)
-        }
-      })
+      this.rpc.eth.call({
+        to: sourceToken,
+        data: data
+      }, blockno ? blockno : this.rpc.eth.defaultBlock)
+        .then(result => {
+          var allowance = this.rpc.eth.abi.decodeParameters(['uint256'], result)
+          resolve(allowance[0])
+        }).catch((err) => {
+          // console.log(err)
+          reject(err)
+        })
     })
+    // return new Promise((resolve, reject) => {
+    //   tokenContract.methods.allowance(owner, this.networkAddress).call().then((result) => {
+    //     if (result !== null) {
+    //       resolve(result)
+    //     }
+    //   })
+    // })
   }
 
   getDecimalsOfToken(token) {
@@ -256,6 +306,7 @@ export default class BaseEthereumProvider {
         })
     })
   }
+
 
   sendRawTransaction(tx) {
     return new Promise((resolve, rejected) => {
@@ -430,28 +481,28 @@ export default class BaseEthereumProvider {
         to: this.wrapperAddress,
         data: dataAbi
       })
-      .then((data) => {
-        try {
-          var dataMapped = this.rpc.eth.abi.decodeParameters([
-            {
-              type: 'uint256[]',
-              name: 'expectedPrice'
-            },
-            {
-              type: 'uint256[]',
-              name: 'slippagePrice'
-            }
-          ], data)
-          resolve(dataMapped)
-        } catch (e) {
-          console.log(e)
+        .then((data) => {
+          try {
+            var dataMapped = this.rpc.eth.abi.decodeParameters([
+              {
+                type: 'uint256[]',
+                name: 'expectedPrice'
+              },
+              {
+                type: 'uint256[]',
+                name: 'slippagePrice'
+              }
+            ], data)
+            resolve(dataMapped)
+          } catch (e) {
+            console.log(e)
+            resolve([])
+          }
+        })
+        .catch((err) => {
+          console.log("GET request error")
           resolve([])
-        }
-      })
-      .catch((err) => {
-        console.log("GET request error")
-        resolve([])
-      })
+        })
     })
   }
 
@@ -485,7 +536,7 @@ export default class BaseEthereumProvider {
     })
   }
 
-  getMaxGasPrice(){
+  getMaxGasPrice() {
     return new Promise((resolve, reject) => {
       this.networkContract.methods.maxGasPrice().call()
         .then((result) => {
@@ -499,4 +550,119 @@ export default class BaseEthereumProvider {
         })
     })
   }
+
+  //--------------------------For debug tx functions
+  getTx(txHash) {
+    return new Promise((resolve, rejected) => {
+      this.rpc.eth.getTransaction(txHash).then((result) => {
+        if (result != null) {
+          resolve(result)
+        } else {
+          rejected("Cannot get tx hash")
+        }
+      })
+    })
+  }
+
+  getListReserve() {
+    return Promise.resolve([BLOCKCHAIN_INFO.reserve])
+  }
+
+  getAbiByName(name, abi) {
+    for (var value of abi) {
+      if (value.name === name) {
+        return [value]
+      }
+    }
+    return false
+  }
+
+  exactExchangeData(data) {
+    return new Promise((resolve, rejected) => {
+      //get trade abi from 
+      var tradeAbi = this.getAbiByName("trade", constants.KYBER_NETWORK)
+      abiDecoder.addABI(tradeAbi)
+      var decoded = abiDecoder.decodeMethod(data);
+      resolve(decoded.params)
+    })
+  }
+
+  wrapperGetGasCap(input, blockno) {
+    return new Promise((resolve, reject) => {
+      var data = this.networkContract.methods.maxGasPrice().encodeABI()
+      this.rpc.eth.call({
+        to: BLOCKCHAIN_INFO.network,
+        data: data
+      }, blockno)
+        .then(result => {
+          var gasCap = this.rpc.eth.abi.decodeParameters(['uint256'], result)
+          resolve(gasCap[0])
+        }).catch((err) => {
+          // console.log(err)
+          reject(err)
+        })
+
+      //   this.networkContract.methods.maxGasPrice().call()
+      //     .then((result) => {
+      //       if (result != null) {
+      //         resolve(result)
+      //       }
+      //     })
+      //     .catch((err) => {
+      //       // console.log(err)
+      //       reject(err)
+      //     })
+      // })
+    })
+  }
+
+  // wrapperGetUserCap(input, blockno) {
+  //   return new Promise((resolve, rejected) => {
+  //     this.networkContract.methods.getUserCapInWei(input.owner).call()
+  //       .then((result) => {
+  //         if (result != null) {
+  //           // console.log(result)
+  //           resolve(result)
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         reject(err)
+  //       })
+  //   })
+  // }
+
+  wrapperGetConversionRate(reserve, input, blockno) {
+    var data = this.networkContract.methods.getExpectedRate(input.source, input.dest, input.srcAmount).encodeABI()
+   // console.log(data)
+    return new Promise((resolve, reject) => {
+      this.rpc.eth.call({
+        to: BLOCKCHAIN_INFO.network,
+        data: data
+      }, blockno)
+        .then(result => {
+          var rates = this.rpc.eth.abi.decodeParameters([{
+            type: 'uint256',
+            name: 'expectedPrice'
+        },{
+            type: 'uint256',
+            name: 'slippagePrice'
+        }], result)
+         resolve(rates)
+        }).catch((err) => {
+          // console.log(err)
+          reject(err)
+        })
+    })
+  }
+  wrapperGetReasons(reserve, input, blockno) {
+    return new Promise((resolve) => {
+      resolve("Source amount is over capacity of block")
+    })
+  }
+  wrapperGetChosenReserve(input, blockno) {
+    return new Promise((resolve) => {
+      resolve(BLOCKCHAIN_INFO.reserve)
+    })
+  }
+
 }

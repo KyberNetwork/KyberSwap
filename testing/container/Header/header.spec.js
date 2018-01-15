@@ -9,10 +9,12 @@ describe('Header', () => {
     });
 
     it('render 1 <Header /> component', () => {
+        let state = store.getState();
+        state.router = {};
+        state.router.location = {};
+        state.router.location.pathname = '/';
         const component = shallow(
-            <Header store={store}
-                location={{pathname: '/'}}
-            />
+            <Header store={store} />
         ).dive();
         expect(component.length).toBe(1);
     })

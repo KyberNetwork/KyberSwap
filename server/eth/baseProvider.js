@@ -233,10 +233,10 @@ class BaseEthereumProvider {
     });
 
     var arrayEthAddress = Array(arrayTokenAddress.length).fill(constants.ETH.address)
-    var arrayQty = Array(arrayTokenAddress.length*2).fill("0x0")
+    var arrayQty = Array(arrayTokenAddress.length * 2).fill("0x0")
 
     return this.getAllRate(arrayTokenAddress.concat(arrayEthAddress), arrayEthAddress.concat(arrayTokenAddress), arrayQty).then((result) => {
-      if(!result) return []
+      if (!result) return []
 
       return Object.keys(tokensObj).map((tokenName, i) => {
         return [
@@ -256,103 +256,163 @@ class BaseEthereumProvider {
   }
 
   getAllRatesFromBlockchain(tokensObj, reserve) {
-    var promises = Object.keys(tokensObj).map((tokenName) => {
-      return Promise.all([
-        Promise.resolve(tokenName),
-        Promise.resolve(constants.ETH.symbol),
-        this.getRate(tokensObj[tokenName].address, constants.ETH.address, '0x0'),
-        this.getRate(constants.ETH.address, tokensObj[tokenName].address, '0x0'),
-      ])
-    })
-    return Promise.all(promises)
-  }
+    var arrayTokenAddress = Object.keys(tokensObj).map((tokenName) => {
+      return tokensObj[tokenName].address
+    });
 
-  sendRawTransaction(tx) {
-    return new Promise((resolve, rejected) => {
-      this.rpc.eth.sendSignedTransaction(
-        ethUtil.bufferToHex(tx.serialize()), (error, hash) => {
-          if (error != null) {
-            rejected(error)
-          } else {
-            resolve(hash)
+    var arrayEthAddress = Array(arrayTokenAddress.length).fill(constants.ETH.address)
+
+    var arrayQty = Array(arrayTokenAddress.length * 2).fill("0x0")
+
+    return this.getAllRateFromNode(arrayTokenAddress.concat(arrayEthAddress), arrayEthAddress.concat(arrayTokenAddress), arrayQty).then((result) => {
+      var returnData = []
+      Object.keys(tokensObj).map((tokenSymbol, i) => {
+        returnData.push( [
+          tokenSymbol,
+          'ETH',
+          {
+            expectedPrice: result.expectedPrice[i],
+            slippagePrice: result.slippagePrice[i]
+          },
+          {
+            expectedPrice: result.expectedPrice[i + arrayTokenAddress.length],
+            slippagePrice: result.slippagePrice[i + arrayTokenAddress.length]
           }
-        })
+        ])
+      });
+      return returnData
     })
   }
 
+  getAllRateFromNode(sources, dests, quantity) {
+    var dataAbi = this.wrapperContract.methods.getExpectedRates(this.networkAddress, sources, dests, quantity).encodeABI()
 
-  getAllRateUSD(tokensObj) {
-    var promises = Object.values(tokensObj).map((value) => {
-      return this.getRateUSD(value.usd_id)
-    })
-    return Promise.all(promises)
-  }
-
-  getRateUSD(tokenId) {
-    var serverPoint = BLOCKCHAIN_INFO.api_usd
-    var path = `/v1/ticker/${tokenId}`
     return new Promise((resolve, rejected) => {
-      request.get({
-        url: serverPoint + path,
-        json: true
-      }, (err, resp, body) => {
-        if (err) return rejected(new Error('Can\'t reach coin market cap server.'));
-        if (resp && resp.statusCode == 404) return rejected(new Error('Currency id not found.'));
-        if (!resp || resp.statusCode != 200) return rejected(new Error('Invalid response from coin market cap server.'));
-
-        if (body.length === 1) {
-          return resolve(body[0])
-        } else {
-          return rejected(new Error('Rate usd is not in right format'))
-        }
+      this.rpc.eth.call({
+        to: this.wrapperAddress,
+        data: dataAbi
       })
-    })
-  }
-
-  getLogExchange(fromBlock, toBlock) {
-    var serverPoint = BLOCKCHAIN_INFO.server_logs.url
-    var api = BLOCKCHAIN_INFO.server_logs.api_key
-    var contractAddress = BLOCKCHAIN_INFO.network
-    var tradeTopic = constants.TRADE_TOPIC
-
-    //var url = `${serverPoint}/api?module=logs&action=getLogs&fromBlock=${fromBlock}&toBlock=${toBlock}&address=${contractAddress}&topic0=${tradeTopic}&apikey=${api}`
-    var options = {
-      host: serverPoint,
-      path: `/api?module=logs&action=getLogs&fromBlock=${fromBlock}&toBlock=${toBlock}&address=${contractAddress}&topic0=${tradeTopic}&apikey=${api}`
-    }
-    return new Promise((resolve, rejected) => {
-      https.get(options, res => {
-        var statusCode = res.statusCode;
-        if (statusCode != 200) {
-          console.log("non-200 response status code:");
-          console.log(res.statusCode)
-          console.log("for url:")
-          console.log(serverPoint)
-          resolve([]);
-          return
-        }
-
-        res.setEncoding("utf8");
-        let body = ""
-        res.on("data", data => {
-          body += data
-        })
-        res.on("end", () => {
+        .then((data) => {
           try {
-            body = JSON.parse(body)
-            resolve(body.result)
+            var dataMapped = this.rpc.eth.abi.decodeParameters([
+              {
+                type: 'uint256[]',
+                name: 'expectedPrice'
+              },
+              {
+                type: 'uint256[]',
+                name: 'slippagePrice'
+              }
+            ], data)
+            resolve(dataMapped)
           } catch (e) {
             console.log(e)
             resolve([])
           }
-
-        }).on("error", function () {
+        })
+        .catch((err) => {
           console.log("GET request error")
           resolve([])
         })
-      })
     })
   }
+  // var promises = Object.keys(tokensObj).map((tokenName) => {
+  //   return Promise.all([
+  //     Promise.resolve(tokenName),
+  //     Promise.resolve(constants.ETH.symbol),
+  //     this.getRate(tokensObj[tokenName].address, constants.ETH.address, '0x0'),
+  //     this.getRate(constants.ETH.address, tokensObj[tokenName].address, '0x0'),
+  //   ])
+  // })
+  // return Promise.all(promises)
+//}
+
+sendRawTransaction(tx) {
+  return new Promise((resolve, rejected) => {
+    this.rpc.eth.sendSignedTransaction(
+      ethUtil.bufferToHex(tx.serialize()), (error, hash) => {
+        if (error != null) {
+          rejected(error)
+        } else {
+          resolve(hash)
+        }
+      })
+  })
+}
+
+
+getAllRateUSD(tokensObj) {
+  var promises = Object.values(tokensObj).map((value) => {
+    return this.getRateUSD(value.usd_id)
+  })
+  return Promise.all(promises)
+}
+
+getRateUSD(tokenId) {
+  var serverPoint = BLOCKCHAIN_INFO.api_usd
+  var path = `/v1/ticker/${tokenId}`
+  return new Promise((resolve, rejected) => {
+    request.get({
+      url: serverPoint + path,
+      json: true
+    }, (err, resp, body) => {
+      if (err) return rejected(new Error('Can\'t reach coin market cap server.'));
+      if (resp && resp.statusCode == 404) return rejected(new Error('Currency id not found.'));
+      if (!resp || resp.statusCode != 200) return rejected(new Error('Invalid response from coin market cap server.'));
+
+      if (body.length === 1) {
+        return resolve(body[0])
+      } else {
+        return rejected(new Error('Rate usd is not in right format'))
+      }
+    })
+  })
+}
+
+getLogExchange(fromBlock, toBlock) {
+  var serverPoint = BLOCKCHAIN_INFO.server_logs.url
+  var api = BLOCKCHAIN_INFO.server_logs.api_key
+  var contractAddress = BLOCKCHAIN_INFO.network
+  var tradeTopic = constants.TRADE_TOPIC
+
+  //var url = `${serverPoint}/api?module=logs&action=getLogs&fromBlock=${fromBlock}&toBlock=${toBlock}&address=${contractAddress}&topic0=${tradeTopic}&apikey=${api}`
+  var options = {
+    host: serverPoint,
+    path: `/api?module=logs&action=getLogs&fromBlock=${fromBlock}&toBlock=${toBlock}&address=${contractAddress}&topic0=${tradeTopic}&apikey=${api}`
+  }
+  return new Promise((resolve, rejected) => {
+    https.get(options, res => {
+      var statusCode = res.statusCode;
+      if (statusCode != 200) {
+        console.log("non-200 response status code:");
+        console.log(res.statusCode)
+        console.log("for url:")
+        console.log(serverPoint)
+        resolve([]);
+        return
+      }
+
+      res.setEncoding("utf8");
+      let body = ""
+      res.on("data", data => {
+        body += data
+      })
+      res.on("end", () => {
+        try {
+          body = JSON.parse(body)
+          resolve(body.result)
+        } catch (e) {
+          console.log(e)
+          resolve([])
+        }
+
+      }).on("error", function () {
+        console.log("GET request error")
+        resolve([])
+      })
+    })
+  })
+}
 }
 
 

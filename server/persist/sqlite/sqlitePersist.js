@@ -405,20 +405,20 @@ class SqlitePersist {
     //console.log(rates)
     return new Promise((resolve, reject) => {
       rates.forEach((rate) => {
-        if ((rate[2] && rate[2].expectedPrice !== '0') || (rate[0] == constants.ETH.symbol && rate[1] == constants.ETH.symbol)) {
+       // if (rate[0] == constants.ETH.symbol && rate[1] !== constants.ETH.symbol) {
           let stmt = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, minRate, expBlock, balance) VALUES ((
           SELECT id FROM rates WHERE source = ? AND dest = ?
         ),?,?,?,?,?, ?)`)
           stmt.run(rate[0], rate[1], rate[0], rate[1], rate[2].expectedPrice, rate[2].slippagePrice, 0, 0);
           stmt.finalize()
-        }
-        if ((rate[3] && rate[3].expectedPrice !== '0') || (rate[0] == constants.ETH.symbol && rate[1] == constants.ETH.symbol)) {
+     //   }
+    //    if (rate[0] !== constants.ETH.symbol && rate[1] == constants.ETH.symbol) {
           let stmt2 = this.db.prepare(`INSERT OR REPLACE INTO rates(id, source, dest, rate, minRate, expBlock, balance) VALUES ((
           SELECT id FROM rates WHERE source = ? AND dest = ?
         ), ?,?,?,?,?,?)`)
           stmt2.run(rate[1], rate[0], rate[1], rate[0], rate[3].expectedPrice, rate[3].slippagePrice, 0, 0);
           stmt2.finalize()
-        }
+     //   }
       })
       resolve(rates)
       console.log("all rate is inserted");

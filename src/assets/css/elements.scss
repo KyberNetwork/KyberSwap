@@ -33,9 +33,20 @@ input {
     padding: 10px 15px 10px 15px;
     min-height: 40px;
     height: 40px;
-    font-size: 13px;
+    font-size: 14px;
     border-radius: 0;
   }
+  &[type=password]{
+    font:small-caption;
+    font-size: 30px;
+  }
+  // &::-webkit-input-placeholder,
+  //   &::-moz-placeholder,
+  //   &::-ms-input-placeholder{
+  //     font:normal !important;
+  //     font-size: 14px !important;
+  //     color: red;
+  //   }
   &[type=number], &.address, &.hash {
     font-weight: bold;
   }

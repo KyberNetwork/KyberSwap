@@ -375,7 +375,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
     border: 1px solid transparent;
     cursor: pointer;
     &.active, &:hover{
-      background-color: #f8f8f8;
+      background-color: #f0f0f0;
       border-color: #d5d5d5;
     }
     h4{

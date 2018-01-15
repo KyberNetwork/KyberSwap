@@ -32,6 +32,9 @@ const exchange = (state = initState, action) => {
 
       newState.isEditRate = false
       newState.isEditGasPrice = false
+
+      newState.isAnalize = false
+      newState.isAnalizeComplete = false
       return newState
     }
     case "EXCHANGE.SELECT_TOKEN_ASYNC": {
@@ -138,10 +141,10 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.UPDATE_RATE":
-      const { rateInit, expectedPrice, slippagePrice } = action.payload
+      const { rateInit, expectedPrice, slippagePrice, rateInitSlippage } = action.payload
 
       
-      var slippageRate = slippagePrice === "0" ? rateInit:slippagePrice
+      var slippageRate = slippagePrice === "0" ? rateInitSlippage:slippagePrice
       var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice   
 
       newState.slippageRate = slippagePrice
@@ -337,6 +340,17 @@ const exchange = (state = initState, action) => {
       if (isManual) {
         newState.isSelectToken = true
       }
+      return newState
+    }
+    case "EXCHANGE.ANALYZE_ERROR":{
+      newState.isAnalize = true
+      return newState
+    }
+    case "EXCHANGE.SET_ANALYZE_ERROR":{
+      const { networkIssues, reserveIssues } = action.payload
+      newState.analizeError = {networkIssues, reserveIssues}
+      newState.isAnalize = false
+      newState.isAnalizeComplete = true
       return newState
     }
   }
