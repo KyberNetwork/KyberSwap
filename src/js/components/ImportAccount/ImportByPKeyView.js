@@ -51,7 +51,9 @@ const ImportByPKeyView = (props) => {
 													type="password"
 													onChange={(e) => props.onChange(e)}
 													onKeyPress={(e) => submit(e)}
-													placeholder={ props.translate("import.from_private_key_input_title_placehoder") || "Enter your private key"} required />
+													autoFocus
+													//placeholder={ props.translate("import.from_private_key_input_title_placehoder") || "Enter your private key"} 
+													required />
 												<a className="toggle" onClick={() => toggleShowPw()}></a>
 											</div>
 											{!!props.pKeyError &&

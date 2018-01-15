@@ -2,13 +2,14 @@ import React from "react"
 import { roundingNumber } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { Link } from 'react-router-dom'
+import ReactTooltip from 'react-tooltip'
 
 const TransactionLoadingView = (props) => {
   if (props.broadcasting) {
     var classPending = !props.error ? " pulse" : ""
     return (
       <div>
-        <div class="frame">
+        <div class="frame tx-loading">
           <div class="row">
             <div className="column">
               <h1 class="title">
@@ -58,7 +59,7 @@ const TransactionLoadingView = (props) => {
   var classPending = props.status === "pending" ? " pulse" : ""
   return (
     <div>
-      <div class="frame">
+      <div class="frame tx-loading">
         <div class="row small-11 medium-12 large-12">
           <div className="column">
             <h1 class="title">
@@ -69,22 +70,26 @@ const TransactionLoadingView = (props) => {
           <div class="text-center">
             <h1 class="title mb-0 font-w-b">
               {/* {props.translate("transaction.broadcast") || "Broadcast"} */}
-              {props.status === "success" && "Successful!"}
+              {props.status === "success" && "Done!"}
               {props.status === "failed" && "Fail!"}
               {props.status === "pending" && "Broadcasted"}
             </h1>
-            <div class="info text-light font-s-down-1 my-3">
-              {props.translate("transaction.transaction") || "Transaction"}&nbsp;
-              <a class="font-w-b text-light" data-tooltip title="View on Etherscan" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank">
+            <div class="info text-light font-s-down-1 tx-title">
+              <span className="font-w-b ">{props.translate("transaction.transaction") || "Transaction"}</span>
+              <a class="text-light" data-tooltip title="View on Etherscan" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank">
                 {props.txHash.slice(0, 12)} ... {props.txHash.slice(-10)}
               </a>
+              <a className="copy-tx" data-tip={"Copy transaction hash"} data-for='copy-tx-tip'>
+                <img src={require("../../../assets/img/copy.svg")} />
+              </a>
+              <ReactTooltip place="bottom" id="copy-tx-tip" type="light"/>
             </div>
             <ul class="broadcast-steps">
               {props.status === "success" &&
                 <li class={props.status}>
                   <h4 class="text-success font-w-b">
                     {/* {props.translate("transaction.broadcasted_title") || "Broadcasted your transaction to the blockchain"} */}
-                    {props.type === "exchange" && `Successfully exchange between ${props.balanceInfo.sourceSymbol} and ${props.balanceInfo.destSymbol}`}
+                    {props.type === "exchange" && `Successfully exchange from ${props.balanceInfo.sourceSymbol} to ${props.balanceInfo.destSymbol}`}
                     {props.type === "transfer" && `Successfully transferred ${props.balanceInfo.tokenSymbol} to ${props.address}`}
                   </h4>
                   {props.type === "exchange" &&
