@@ -475,10 +475,11 @@ function* updateGasUsed(action) {
 }
 
 function* analyzeError(action) {
-  const { ethereum, exchange, tokens } = action.payload
+  const { ethereum, txHash } = action.payload
   try {
-    var txHash = exchange.txHash
+    //var txHash = exchange.txHash
     var tx = yield call([ethereum, ethereum.call("getTx")], txHash)
+   // console.log(tx)
     var value = tx.value
     var owner = tx.from
     var gas_price = tx.gasPrice
@@ -507,7 +508,7 @@ function* analyzeError(action) {
 }
 
 function* debug(input, blockno, ethereum) {
-  //console.log(input, blockno)
+ // console.log(input, blockno)
   var networkIssues = {}
   var reserveIssues = {}
   var gasCap = yield call([ethereum, ethereum.call("wrapperGetGasCap")], blockno)
@@ -577,10 +578,13 @@ function* debug(input, blockno, ethereum) {
     //console.log("step8")
     reserveIssues["reason"] = reasons
   } else {
-    var chosenReserve = yield call([ethereum, ethereum.call("wrapperGetChosenReserve")], input, blockno)
-    var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], chosenReserve, input, blockno)
+    //var chosenReserve = yield call([ethereum, ethereum.call("wrapperGetChosenReserve")], input, blockno)
+   // var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], chosenReserve, input, blockno)
     // console.log("step9")
-    reserveIssues["reason"] = reasons
+    //console.log(rates)
+    if(converter.compareTwoNumber(input.minConversionRate, rates.expectedPrice) === 1){
+      reserveIssues["reason"] = "Your min rate is too high!"
+    }
   }
   console.log(reserveIssues)
   console.log(networkIssues)

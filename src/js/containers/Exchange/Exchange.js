@@ -125,8 +125,8 @@ export default class Exchange extends React.Component {
   analyze = () => {
     var ethereum = this.props.ethereum
     var exchange = this.props.exchange
-    var tokens = this.props.tokens
-    this.props.dispatch(exchangeActions.analyzeError(ethereum, exchange, tokens))
+   //var tokens = this.props.tokens
+    this.props.dispatch(exchangeActions.analyzeError(ethereum, exchange.txHash))
   }
 
   render() {

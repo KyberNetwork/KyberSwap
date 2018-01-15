@@ -121,7 +121,7 @@ export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePric
   //var reserveBalance = rate[2]
   return {
     type: "EXCHANGE.UPDATE_RATE",
-    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18) }
+    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage:  converter.toT(rateInit, 18)}
   }
 
 }
@@ -355,10 +355,10 @@ export function setMaxGasPriceComplete(maxGasPrice) {
   }
 }
 
-export function analyzeError(ethereum, exchange, token) {
+export function analyzeError(ethereum, txHash) {
   return {
     type: "EXCHANGE.ANALYZE_ERROR",
-    payload: { ethereum, exchange, token }
+    payload: { ethereum, txHash}
   }
 }
 

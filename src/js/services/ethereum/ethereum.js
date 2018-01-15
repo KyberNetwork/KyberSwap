@@ -104,10 +104,7 @@ export default class EthereumService extends React.Component {
   // testAnalize(){
   //   var state = store.getState()
   //   var ethereum = state.connection.ethereum
-  //   var exchange = state.exchange
-  //   exchange.txHash = "0x3efd784b2e6f7f1b4989702b1fcb9a22f57a94c653d1f07547be45bd04b409c7"
-  //   var tokens = state.tokens.tokens
-  //   store.dispatch(analyzeError(ethereum, exchange, tokens))
+  //   store.dispatch(analyzeError(ethereum, "0x1c98b83f37ca45c6644a679dcea18d4b7bdc89ac7c702f0b83b324760198d44b"))
   // }
   
   fetchRateData() {

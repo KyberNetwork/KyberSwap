@@ -656,7 +656,7 @@ export default class BaseEthereumProvider {
   }
   wrapperGetReasons(reserve, input, blockno) {
     return new Promise((resolve) => {
-      resolve("Market cannot meet your min rate")
+      resolve("Source amount is over capacity of block")
     })
   }
   wrapperGetChosenReserve(input, blockno) {
