@@ -45,11 +45,11 @@
     "back": "Frontpage",
     "new_tx": "New transfer",
     "new_ex": "New exchange",
-    "done": "Successful!",
+    "done": "Done!",
     "failed": "Failed!",
     "broadcasted": "Broadcasted!",
     "broadcasting": "Broadcasting!",
-    "success_ex_msg": "Successfully exchange between ${source} and ${dest}",
+    "success_ex_msg": "Successfully exchange between ${source} to ${dest}",
     "success_tx_msg": "Successfully transferred ${token} to ${address}",
     "copy_tx": "Copy transaction hash",
     
