@@ -72,7 +72,21 @@ ul.broadcast-steps {
         color: $white;
         font-weight: normal;
       }
+      img{
+        width: 20px;
+        vertical-align: baseline;
+        margin-right: 5px;
+      }
     }
+  }
+  
+  .analyze{
+    margin-left: 15px;
+    padding: 4px 12px;
+    border-radius: 17px;
+    border: 1px solid #ff5d00;
+    color: #f7f7f7;
+    font-weight: normal;
   }
 }
 .new-transaction{
@@ -105,5 +119,15 @@ ul.broadcast-steps {
   .info{
     margin-bottom: 1.5rem !important;
     margin-top: 0.9rem !important;
+  }
+}
+.reason-analyze{
+  padding: 20px 0;
+  .reason-item{
+    display: flex;
+    &::before{
+      content: '-';
+      margin-right: 10px;
+    }
   }
 }

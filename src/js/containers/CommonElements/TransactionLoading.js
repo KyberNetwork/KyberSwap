@@ -8,28 +8,42 @@ import { getTranslate } from 'react-localize-redux'
 @connect((store, props) => {
     var returnProps = {}
     if (props.broadcasting) {
-        returnProps =  { 
-            broadcasting: true, 
+        returnProps = {
+            broadcasting: true,
             error: ""
         }
     } else if (props.broadcastingError !== "") {
         returnProps = { broadcasting: true, error: props.broadcastingError }
     } else {
         returnProps = {
-            ...props.tempTx, 
+            ...props.tempTx,
             broadcasting: false,
             makeNewTransaction: props.makeNewTransaction,
             type: props.type,
             balanceInfo: props.balanceInfo,
             txHash: props.tx,
-            analyze : props.analyze,
+            analyze: props.analyze,
             address: props.address
         }
     }
-    return {...returnProps, translate: getTranslate(store.locale)}
+    return { ...returnProps, translate: getTranslate(store.locale) }
 })
 
 export default class TransactionLoading extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+            isOpenModal: false,
+        }
+    }
+
+    toogleModal() {
+        this.setState({
+            isOpenModal: !this.state.isOpenModal
+        })
+    }
+
     render() {
         return (
             <TransactionLoadingView
@@ -41,8 +55,10 @@ export default class TransactionLoading extends React.Component {
                 balanceInfo={this.props.balanceInfo}
                 makeNewTransaction={this.props.makeNewTransaction}
                 translate={this.props.translate}
-                analyze = {this.props.analyze}
-                address = {this.props.address}
+                analyze={this.props.analyze}
+                address={this.props.address}
+                toogleModal={this.toogleModal.bind(this)}
+                isOpenModal={this.state.isOpenModal}
             />
 
         )
