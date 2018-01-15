@@ -16,7 +16,6 @@ export default class HttpEthereumProvider extends BaseEthereumProvider {
     }
 
     subcribeNewBlock(callBack){        
-//        this.rpc.eth.getBlock("latest").then(console.log)
         callBack()
         this.intervalID = setInterval(callBack, 10000)
     }

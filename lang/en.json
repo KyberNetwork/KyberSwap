@@ -69,7 +69,7 @@
     "transaction_gasprice_50": "Higher gas price, faster transaction. Max gas price: 50 Gwei",
     "transaction_gasprice": "Higher gas price, faster transaction",
     "best_rate_tooltip": "Lower rate typically results in better success rate when the market is volatile",
-    "terms_and_conditions": "<span>Terms and <br  class='show-for-small-only'>Conditions</span>",
+    "terms_and_conditions": "<span>terms and <br  class='show-for-small-only'>conditions</span>",
 
     "error_tx_log":"Warning! Log is empty",
     "error_tx_contract":"Warning! Error encountered during contract execution",

@@ -3,6 +3,7 @@ import { roundingNumber } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
+import {CopyToClipboard} from 'react-copy-to-clipboard'
 
 const TransactionLoadingView = (props) => {
   if (props.broadcasting) {
@@ -80,7 +81,9 @@ const TransactionLoadingView = (props) => {
                 {props.txHash.slice(0, 12)} ... {props.txHash.slice(-10)}
               </a>
               <a className="copy-tx" data-tip={"Copy transaction hash"} data-for='copy-tx-tip'>
-                <img src={require("../../../assets/img/copy.svg")} />
+                <CopyToClipboard text={props.txHash}>
+                  <img src={require("../../../assets/img/copy.svg")} />
+                </CopyToClipboard>
               </a>
               <ReactTooltip place="bottom" id="copy-tx-tip" type="light"/>
             </div>
