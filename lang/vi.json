@@ -144,7 +144,8 @@
     "check_right_application_selected": "Kiểm tra lại để chắc chắn bạn đã sử dụng đúng ứng dụng",
     "network_not_match": "Metamask cần chạy ở ${expectedName}. Hiện đang trên ${currentName}",
     "network_not_match_unknow": "Metamask cần chạy ${expectedName}",
-    "not_supported": "Không hỗ trợ"
+    "not_supported": "Không hỗ trợ",
+    "metamask_not_install":"Không thể kết nối đến Metamask. Hãy chắc chắn rằng Metamask của bạn đã được cài"
   },
 
   "import": {

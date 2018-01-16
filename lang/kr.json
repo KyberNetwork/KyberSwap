@@ -146,7 +146,8 @@
     "check_right_application_selected": "올바른 응용프로그램이 선택되었는지 확인하십시오",
     "network_not_match": "Metamask should be on ${expectedName}. Currently on ${currentName}",
     "network_not_match_unknow": "Metamask should be on ${expectedName}",
-    "not_supported": "지원하지 않습니다"
+    "not_supported": "지원하지 않습니다",
+    "metamask_not_install":"Cannot connect to metamask."
   },
 
   "import": {
