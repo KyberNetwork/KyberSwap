@@ -145,7 +145,12 @@
     "network_not_match": "Metamask cần chạy ở ${expectedName}. Hiện đang trên ${currentName}",
     "network_not_match_unknow": "Metamask cần chạy ${expectedName}",
     "not_supported": "Không hỗ trợ",
-    "metamask_not_install":"Không thể kết nối đến Metamask. Hãy chắc chắn rằng Metamask của bạn đã được cài"
+    "metamask_not_install":"Không thể kết nối đến Metamask. Hãy chắc chắn rằng Metamask của bạn đã được cài",
+
+    "gas_price_not_number":"Giá Gas không phải là số",
+    "rate_not_number":"Rate không là số",
+    "gas_price_limit":"Giá gas cần nhỏ hơn ${maxGas} Gwei",
+    "passphrase_error":"Không thể giải mã key"
   },
 
   "import": {

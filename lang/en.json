@@ -148,7 +148,12 @@
     "network_not_match": "Metamask should be on ${expectedName}. Currently on ${currentName}",
     "network_not_match_unknow": "Metamask should be on ${expectedName}",
     "not_supported": "not supported",
-    "metamask_not_install":"Cannot connect to metamask. Please make sure you have metamask installed"
+    "metamask_not_install":"Cannot connect to metamask. Please make sure you have metamask installed",
+
+    "gas_price_not_number":"Gas price is not number",
+    "rate_not_number":"Rate is not number",
+    "gas_price_limit":"Gas price must be smaller than ${maxGas} Gwei",
+    "passphrase_error":"Key derivation failed"
   },
 
   "import": {

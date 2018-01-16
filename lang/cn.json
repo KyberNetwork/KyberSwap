@@ -148,7 +148,12 @@
     "network_not_match": "Metamask需要连接到${expectedName}网络，而您现在连接的是${currentName}",
     "network_not_match_unknow": "Metamask需要连接到${expectedName}",
     "not_supported": "不支持",
-    "metamask_not_install":"Cannot connect to metamask."
+    "metamask_not_install":"Cannot connect to metamask.",
+
+    "gas_price_not_number":"Gas price is not number",
+    "rate_not_number":"Rate is not number",
+    "gas_price_limit":"Gas price must be smaller than ${maxGas} Gwei",
+    "passphrase_error":"Key derivation failed"
   },
 
   "import": {
