@@ -45,14 +45,16 @@
     "back": "Frontpage",
     "new_tx": "New transfer",
     "new_ex": "New exchange",
-    "done": "Done",
-    "failed": "Failed",
-    "broadcasted": "Broadcasted",
-    "broadcasting": "Broadcasting",
+    "done": "Done!",
+    "failed": "Failed!",
+    "broadcasted": "Broadcasted!",
+    "broadcasting": "Broadcasting!",
     "success_ex_msg": "Successfully exchanged from ${source} to ${dest}",
     "success_tx_msg": "Successfully transferred ${token} to ${address}",
     "copy_tx": "Copy transaction hash",
     "analyze_error": "Reasons the transaction failed",
+    "copied": "Copied!",
+    "analyze": "Show reasons",
     
     "broadcast": "Broadcast",
     "transaction": "Transaction",
@@ -79,7 +81,7 @@
     "transaction_gasprice_50": "Higher gas price, faster transaction. Max gas price: 50 Gwei",
     "transaction_gasprice": "Higher gas price, faster transaction",
     "best_rate_tooltip": "Lower rate typically results in better success rate when the market is volatile",
-    "terms_and_conditions": "<span>terms and <br  class='show-for-small-only'>conditions</span>",
+    "terms_and_conditions": "<span>Terms and <br  class='show-for-small-only'>conditions</span>",
 
     "error_tx_log":"Warning! Log is empty",
     "error_tx_contract":"Warning! Error encountered during contract execution",
@@ -145,7 +147,13 @@
     "check_right_application_selected": "Check if right application is selected",
     "network_not_match": "Metamask should be on ${expectedName}. Currently on ${currentName}",
     "network_not_match_unknow": "Metamask should be on ${expectedName}",
-    "not_supported": "not supported"
+    "not_supported": "not supported",
+    "metamask_not_install":"Cannot connect to metamask. Please make sure you have metamask installed",
+
+    "gas_price_not_number":"Gas price is not number",
+    "rate_not_number":"Rate is not number",
+    "gas_price_limit":"Gas price must be smaller than ${maxGas} Gwei",
+    "passphrase_error":"Key derivation failed"
   },
 
   "import": {

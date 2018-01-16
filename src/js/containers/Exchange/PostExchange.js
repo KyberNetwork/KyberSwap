@@ -128,18 +128,18 @@ export default class PostExchange extends React.Component {
     }
     var testGasPrice = parseFloat(this.props.form.gasPrice)
     if (isNaN(testGasPrice)) {
-      this.props.dispatch(exchangeActions.thowErrorGasPrice("Gas price is not number"))
+      this.props.dispatch(exchangeActions.thowErrorGasPrice("error.gas_price_not_number"))
       check = false
     }else{
       if (parseFloat(this.props.form.gasPrice) > this.props.form.maxGasPrice){
-        this.props.dispatch(exchangeActions.thowErrorGasPrice("Gas price must be smaller than "+this.props.form.maxGasPrice+" Gwei"))
+        this.props.dispatch(exchangeActions.thowErrorGasPrice("error.gas_price_limit"))
         check = false
       }
     }
 
     var testRate = parseFloat(this.props.form.minConversionRate)
     if (isNaN(testRate)) {
-      this.props.dispatch(exchangeActions.thowErrorRate("Rate is not number"))
+      this.props.dispatch(exchangeActions.thowErrorRate("error.rate_not_number"))
       check = false
     }
     return check
@@ -263,7 +263,7 @@ export default class PostExchange extends React.Component {
 
     } catch (e) {
       console.log(e)
-      this.props.dispatch(exchangeActions.throwPassphraseError("Key derivation failed"))
+      this.props.dispatch(exchangeActions.throwPassphraseError(this.props.translate("error.passphrase_error")))
     }
   }
 

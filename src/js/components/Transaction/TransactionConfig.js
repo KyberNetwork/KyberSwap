@@ -28,7 +28,7 @@ const TransactionConfig = (props) => {
               <input type="number" min="0" max="99" className="gas-price-input" step="0.1" onKeyPress={props.onGasPricePress} value={props.gasPrice} onChange={specifyGasPrice.bind(this)} />
               <div class="mt-2">
                 <span className="unit text-lowercase">gwei</span>
-                {props.gasPriceError !== "" && <p class="error-text mb-1">{props.gasPriceError}</p>}
+                {props.gasPriceError !== "" && <p class="error-text mb-1">{props.translate(props.gasPriceError, { maxGas: props.maxGasPrice })}</p>}
                 {props.translate("transaction.transaction_fee") || "Transaction Fee"}: <span className="text-success font-w-b">{props.totalGas} ETH</span>
               </div>
             </div>

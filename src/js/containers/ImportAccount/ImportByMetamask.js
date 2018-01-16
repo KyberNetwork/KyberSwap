@@ -24,7 +24,7 @@ export default class ImportByMetamask extends React.Component {
 
   connect = (e) => {
     if (typeof web3 === "undefined") {
-      this.props.dispatch(throwError('Cannot connect to metamask'))
+      this.props.dispatch(throwError(this.props.translate('error.metamask_not_install') || 'Cannot connect to metamask. Please make sure you have metamask installed'))
       return
     }
     var web3Service = new Web3Service(web3)
