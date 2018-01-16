@@ -110,7 +110,7 @@ const TransactionLoadingView = (props) => {
                   <img src={require("../../../assets/img/copy.svg")} />
                 </CopyToClipboard>
               </a>
-              <ReactTooltip getContent={[() => getTooltipCopy()]} place="bottom" id="copy-tx-tip" type="light"/>
+              <ReactTooltip getContent={[() => getTooltipCopy()]} place="right" id="copy-tx-tip" type="light"/>
             </div>
             <ul class="broadcast-steps">
               {props.status === "success" &&
