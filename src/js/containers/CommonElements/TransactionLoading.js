@@ -35,12 +35,19 @@ export default class TransactionLoading extends React.Component {
         super();
         this.state = {
             isOpenModal: false,
+            isCopied: false
         }
     }
 
     toogleModal() {
         this.setState({
             isOpenModal: !this.state.isOpenModal
+        })
+    }
+
+    handleCopy() {
+        this.setState({
+            isCopied: true
         })
     }
 
@@ -59,6 +66,8 @@ export default class TransactionLoading extends React.Component {
                 address={this.props.address}
                 toogleModal={this.toogleModal.bind(this)}
                 isOpenModal={this.state.isOpenModal}
+                isCopied={this.state.isCopied}
+                handleCopy={this.handleCopy.bind(this)}
             />
 
         )
