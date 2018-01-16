@@ -43,16 +43,18 @@
     "next": "下一个",
     "exit": "退出",
     "back": "主页",
-    "new_tx": "New transfer",
-    "new_ex": "New exchange",
-    "done": "Successful!",
-    "failed": "Failed!",
-    "broadcasted": "Broadcasted!",
-    "broadcasting": "Broadcasting!",
-    "success_ex_msg": "Successfully exchange between ${source} and ${dest}",
-    "success_tx_msg": "Successfully transferred ${token} to ${address}",
-    "copy_tx": "Copy transaction hash",
-    "analyze_error": "Analysis summary",
+    "new_tx": "新的转移",
+    "new_ex": "新的交易",
+    "done": "完成!",
+    "failed": "失败!",
+    "broadcasted": "交易上链完成!",
+    "broadcasting": "交易上链中!",
+    "success_ex_msg": "成功地将 ${source} 交易为 ${dest} 了",
+    "success_tx_msg": "成功地将 ${token} 转移至 ${address}",
+    "copy_tx": "拷贝交易哈希",
+    "analyze_error": "失败原因",
+    "copied": "拷贝成功",
+    "analyze": "显示原因",
 
     "broadcast": "交易上链",
     "transaction": "交易",
@@ -84,7 +86,7 @@
     "error_tx_log":"空的日志",
     "error_tx_contract":"警告！合约执行过程中发生了错误",
     "no_pedding_tx": "没有待处理的交易",
-    "rate_info": "Rates might be changed during settlement.<br> You can indicate your minimum rate by clicking \"Advanced\""
+    "rate_info": "价格也许会在结算过程中发生变化。<br> 您可以点击\"高级选项\"来显示您的最低价格。"
   },
 
   "modal": {

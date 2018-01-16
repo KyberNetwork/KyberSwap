@@ -49,10 +49,12 @@
     "failed": "Failed!",
     "broadcasted": "Broadcasted!",
     "broadcasting": "Broadcasting!",
-    "success_ex_msg": "Successfully exchange from ${source} to ${dest}",
+    "success_ex_msg": "Successfully exchanged from ${source} to ${dest}",
     "success_tx_msg": "Successfully transferred ${token} to ${address}",
     "copy_tx": "Copy transaction hash",
-    "analyze_error": "Analysis summary",
+    "analyze_error": "Reasons the transaction failed",
+    "copied": "Copied!",
+    "analyze": "Show reasons",
     
     "broadcast": "Broadcast",
     "transaction": "Transaction",
@@ -79,7 +81,7 @@
     "transaction_gasprice_50": "Higher gas price, faster transaction. Max gas price: 50 Gwei",
     "transaction_gasprice": "Higher gas price, faster transaction",
     "best_rate_tooltip": "Lower rate typically results in better success rate when the market is volatile",
-    "terms_and_conditions": "<span>terms and <br  class='show-for-small-only'>conditions</span>",
+    "terms_and_conditions": "<span>Terms and <br  class='show-for-small-only'>conditions</span>",
 
     "error_tx_log":"Warning! Log is empty",
     "error_tx_contract":"Warning! Error encountered during contract execution",

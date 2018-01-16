@@ -64,14 +64,22 @@ const TransactionLoadingView = (props) => {
   var handleAnalyze = (e) => {
     props.analyze.action(e)
     props.toogleModal()
-  }  
+  }
+
+  var getTooltipCopy = () => {
+    return props.isCopied ? 
+      (props.translate("transaction.copied") || "Copied!") :
+      (props.translate("transaction.copy_tx") || "Copy transaction hash")
+  }
 
   var classPending = props.status === "pending" ? " pulse" : ""
   var analyzeBtn = ""
 
   if (props.type === "exchange") {
     analyzeBtn = (
-      <a className="analyze" onClick={(e) => handleAnalyze(e)}>Analyze</a>
+      <a className="analyze" onClick={(e) => handleAnalyze(e)}>
+        {props.translate('transaction.analyze') || "Show reasons"}
+      </a>
     )
   }
   return (
@@ -96,12 +104,13 @@ const TransactionLoadingView = (props) => {
               title={props.translate("modal.view_on_etherscan") || "View on Etherscan"} >
                 {props.txHash.slice(0, 12)} ... {props.txHash.slice(-10)}
               </a>
-              <a className="copy-tx" data-tip={props.translate("transaction.copy_tx") || "Copy transaction hash"} data-for='copy-tx-tip'>
+              <a className="copy-tx" data-for='copy-tx-tip' onClick={props.handleCopy}
+                data-tip="">
                 <CopyToClipboard text={props.txHash}>
                   <img src={require("../../../assets/img/copy.svg")} />
                 </CopyToClipboard>
               </a>
-              <ReactTooltip place="bottom" id="copy-tx-tip" type="light"/>
+              <ReactTooltip getContent={[() => getTooltipCopy()]} place="bottom" id="copy-tx-tip" type="light"/>
             </div>
             <ul class="broadcast-steps">
               {props.status === "success" &&
@@ -109,7 +118,7 @@ const TransactionLoadingView = (props) => {
                   <h4 class="text-success font-w-b">
                     {props.type === "exchange" && 
                       (props.translate("transaction.success_ex_msg", {source: props.balanceInfo.sourceSymbol, dest: props.balanceInfo.destSymbol}) 
-                      ||`Successfully exchange from ${props.balanceInfo.sourceSymbol} to ${props.balanceInfo.destSymbol}`)
+                      ||`Successfully exchanged from ${props.balanceInfo.sourceSymbol} to ${props.balanceInfo.destSymbol}`)
                     }
                     {props.type === "transfer" && 
                       (props.translate("transaction.success_tx_msg", {token: props.balanceInfo.tokenSymbol, address: props.address}) ||

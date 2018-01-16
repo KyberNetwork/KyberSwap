@@ -42,16 +42,18 @@
     "next": "다음",
     "exit": "나가기",
     "back": "앞화면",
-    "new_tx": "New transfer",
-    "new_ex": "New exchange",
-    "done": "Successful!",
-    "failed": "Failed!",
-    "broadcasted": "Broadcasted!",
-    "broadcasting": "Broadcasting!",
-    "success_ex_msg": "Successfully exchange between ${source} and ${dest}",
-    "success_tx_msg": "Successfully transferred ${token} to ${address}",
-    "copy_tx": "Copy transaction hash",
-    "analyze_error": "Analysis summary",
+    "new_tx": "새로운 송금",
+    "new_ex": "새로운 환전",
+    "done": "완료!",
+    "failed": "실패!",
+    "broadcasted": "전송 완료!",
+    "broadcasting": "전송 중!",
+    "success_ex_msg": "성공적으로 ${source} 를 ${dest} 로 교환 하였습니다",
+    "success_tx_msg": "성공적으로 ${token} 를 ${address} 주소로 송금 하였습니다",
+    "copy_tx": "트랜잭션 해시 복사",
+    "analyze_error": "실패원인",
+    "copied": "복사완료",
+    "analyze": "원인 파악하기",
 
     "broadcast": "전송",
     "transaction": "거래",
@@ -83,7 +85,7 @@
     "error_tx_log":"로그가 비어있는 상태입니다",
     "error_tx_contract":"해당 토큰을 지원하지 않습니다",
     "no_pedding_tx": "미체결 거래가 없습니다",
-    "rate_info": "Rates might be changed during settlement.<br> You can indicate your minimum rate by clicking \"Advanced\""
+    "rate_info": "결제 과정에서 가격이 변경 될 수 있습니다. <br> \"고급 옵션\"을 클릭하면 최저 가격을 표시 할 수 있습니다."
   },
 
   "modal": {

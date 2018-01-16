@@ -52,7 +52,9 @@
     "success_ex_msg": "Trao đổi thành công ${source} và ${dest}",
     "success_tx_msg": "Chuyển khoản thành công ${token} đến ${address}",
     "copy_tx": "Copy địa chỉ giao dịch",
-    "analyze_error": "Kết quả phân tích",
+    "analyze_error": "Nguyên nhân lỗi",
+    "copied": "Đã sao chép!",
+    "analyze": "Xem nguyên nhân",
 
     "broadcast": "Gửi",
     "transaction": "Giao dịch",

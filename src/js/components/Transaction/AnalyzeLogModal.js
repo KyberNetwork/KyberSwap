@@ -20,7 +20,7 @@ const AnalyzelogModal = (props) => {
 
     const content = (
         <div>
-            <div class="title text-center">{props.title ? props.title : props.translate("transaction.analyze_error") || "Analysis summary"}</div><a class="x" onClick={props.onRequestClose}>&times;</a>
+            <div class="title text-center">{props.title ? props.title : props.translate("transaction.analyze_error") || "Failed reasons"}</div><a class="x" onClick={props.onRequestClose}>&times;</a>
             <div class="content">
                 <div class="row">
                     <div class="column">
