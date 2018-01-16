@@ -24,7 +24,8 @@ const TokenSelectorView = (props) => {
               <span className="item-icon">
                 <img src={require("../../../assets/img/tokens/" + item.icon)} />
               </span>
-              <span className="item-name">{item.symbol}<span className="show-for-large token-name"> - {item.name}</span></span>
+              <span className="item-name">
+                <span className="font-w-b">{item.symbol}</span><span className="show-for-large token-name"> - {item.name}</span></span>
               {item.isNotSupport &&
                 <span className="unsupported">{props.translate("error.not_supported") || "not supported"}</span>
               }  
@@ -44,7 +45,7 @@ const TokenSelectorView = (props) => {
         <div className="icon">
           <img src={require("../../../assets/img/tokens/" + focusItem.icon)} />
         </div>
-        <div className="mr-auto">{focusItem.symbol}<span className="show-for-large token-name"> - {focusItem.name}</span></div>
+        <div className="mr-auto"><span className="font-w-b">{focusItem.symbol}</span><span className="show-for-large token-name"> - {focusItem.name}</span></div>
         <div><i className={'k k-angle white ' + (props.open ? 'up' : 'down')}></i></div>
       </div>
 

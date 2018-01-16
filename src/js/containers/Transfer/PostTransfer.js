@@ -72,7 +72,7 @@ export default class PostTransfer extends React.Component {
     }
     var testGasPrice = parseFloat(this.props.form.gasPrice)
     if (isNaN(testGasPrice)) {
-      this.props.dispatch(transferActions.thowErrorGasPrice("Gas price is not number"))
+      this.props.dispatch(transferActions.thowErrorGasPrice("error.gas_price_not_number"))
       check = false
     }
     if (isNaN(parseFloat(this.props.form.amount))) {
@@ -194,7 +194,7 @@ export default class PostTransfer extends React.Component {
         params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService, params.balanceData))
     } catch (e) {
       console.log(e)
-      this.props.dispatch(transferActions.throwPassphraseError("Key derivation failed"))
+      this.props.dispatch(transferActions.throwPassphraseError(this.props.translate("error.passphrase_error")))
     }
   }
   
