@@ -656,7 +656,7 @@ export default class BaseEthereumProvider {
   }
   wrapperGetReasons(reserve, input, blockno) {
     return new Promise((resolve) => {
-      resolve("Source amount is over capacity of block")
+      resolve("Cannot get rate at the moment!")
     })
   }
   wrapperGetChosenReserve(input, blockno) {

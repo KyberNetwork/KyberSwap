@@ -189,11 +189,12 @@ class BaseEthereumProvider {
       path: `/api?module=proxy&action=eth_call&to=${this.wrapperAddress}&data=${dataAbi}&tag=latest&apikey=${api}`
     }
 
+   // console.log(options)
     return new Promise((resolve, rejected) => {
       https.get(options, res => {
         var statusCode = res.statusCode;
         if (statusCode != 200) {
-          resolve([]);
+          rejected(new Error("Status etherscan is not 200"))
           return
         }
         res.setEncoding("utf8");
@@ -214,14 +215,16 @@ class BaseEthereumProvider {
                 name: 'slippagePrice'
               }
             ], body.result)
+            //console.log("aaaa")
+           // console.log(body.result)
             resolve(dataMapped)
           } catch (e) {
             console.log(e)
-            resolve([])
+            rejected(new Error("Cannot get rate from etherscan"))
           }
         }).on("error", function () {
           console.log("GET request error")
-          resolve([])
+          rejected(new Error("Request error"))
         })
       })
     })
@@ -237,7 +240,7 @@ class BaseEthereumProvider {
 
     return this.getAllRate(arrayTokenAddress.concat(arrayEthAddress), arrayEthAddress.concat(arrayTokenAddress), arrayQty).then((result) => {
       if (!result) return []
-
+     // console.log(result)
       return Object.keys(tokensObj).map((tokenName, i) => {
         return [
           tokenName,
@@ -307,12 +310,12 @@ class BaseEthereumProvider {
             resolve(dataMapped)
           } catch (e) {
             console.log(e)
-            resolve([])
+            rejected(new Error("Cannot get rate from blockchain"))
           }
         })
         .catch((err) => {
           console.log("GET request error")
-          resolve([])
+          rejected(new Error("Request node error"))
         })
     })
   }

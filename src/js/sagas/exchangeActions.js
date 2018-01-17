@@ -573,9 +573,8 @@ function* debug(input, blockno, ethereum) {
   //console.log()
   var rates = yield call([ethereum, ethereum.call("wrapperGetConversionRate")]
     , input.reserves[0], input, blockno)
-  if (rates.expectedPrice === 0) {
+  if (converter.compareTwoNumber(rates.expectedPrice, 0) === 0) {
     var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], input.reserves[0], input, blockno)
-    //console.log("step8")
     reserveIssues["reason"] = reasons
   } else {
     //var chosenReserve = yield call([ethereum, ethereum.call("wrapperGetChosenReserve")], input, blockno)

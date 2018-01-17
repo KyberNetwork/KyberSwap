@@ -153,11 +153,13 @@ class EthereumService {
   async fetchAllRateData() {
     try {
       var allRate = await this.currentProvider.getAllRatesFromEtherscan(BLOCKCHAIN_INFO.tokens, constants.RESERVES[0])
+      //console.log(allRate)
       this.persistor.saveRate(allRate)
     } catch (e) {
       console.log(e)
       try {
         var allRate = await this.currentProvider.getAllRatesFromBlockchain(BLOCKCHAIN_INFO.tokens, constants.RESERVES[0])
+     //   console.log(allRate)
         this.persistor.saveRate(allRate)
       } catch (e) {
         console.log(e)
@@ -178,6 +180,7 @@ class EthereumService {
     for (let key in tokens) {
       try {
         var rate = await this.currentProvider.getRateUSD(tokens[key].usd_id)
+       // console.log(rate)
         await this.delay(5000)
         await this.persistor.saveRateUSD(rate)
       } catch (e) {

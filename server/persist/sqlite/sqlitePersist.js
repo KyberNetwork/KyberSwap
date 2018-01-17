@@ -427,6 +427,7 @@ class SqlitePersist {
 
 
   saveRateUSD(rate) {
+   // console.log(rate)
     return new Promise((resolve, reject) => {
       let stmt = this.db.prepare(`INSERT OR REPLACE INTO rate_usd(id, token, price) VALUES ((
         SELECT id FROM rate_usd WHERE token = ?
