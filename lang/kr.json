@@ -212,13 +212,16 @@
     "accept":"Accept"
   },
 
-"landing_page":{
-  "title": "분권화된 이더리움 토큰 거래소",
-  "trustless": "무신뢰",
-  "instant": "빠른",
-  "liquid": "유동성",
-  "compatible": "호환 가능",
-  "get_started": "시작"
-}
+  "landing_page":{
+    "title": "분권화된 이더리움 토큰 거래소",
+    "trustless": "무신뢰",
+    "instant": "빠른",
+    "liquid": "유동성",
+    "compatible": "호환 가능",
+    "get_started": "시작"
+  },
+
+  "product_feedback": "Product Feedback",
+  "help": "Help"
 
 }
