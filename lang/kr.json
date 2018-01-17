@@ -147,13 +147,20 @@
     "network_not_match": "Metamask should be on ${expectedName}. Currently on ${currentName}",
     "network_not_match_unknow": "Metamask should be on ${expectedName}",
     "not_supported": "지원하지 않습니다",
-    "metamask_not_install":"Cannot connect to metamask.",
+    "metamask_not_install":"메타마스크에 연결할 수 없습니다. 메타마스크가 설치 되어 있는지 확인 해 주세요.",
 
 
-    "gas_price_not_number":"Gas price is not number",
-    "rate_not_number":"Rate is not number",
-    "gas_price_limit":"Gas price must be smaller than ${maxGas} Gwei",
-    "passphrase_error":"Key derivation failed"
+    "gas_price_not_number":"Gas 가격은 숫자만 입력하셔야 합니다.",
+    "rate_not_number":"가격은 숫자만 입력하셔야 합니다.",
+    "gas_price_limit":"Gas 가격은 ${maxGas} Gwei 보다 작아야 합니다.",
+    "passphrase_error":"키 경로 파악 실패",
+    "gas_price_exceeded_limit":"Gas 가격이 최대 한도를 넘었습니다.",
+    "issue_token_ether":"토큰을 이더리움으로 바꾸기 위해서는 이더리움 외의 토큰을 넣어 주셔야 합니다.",
+    "issue_allowance":"허용량이 입력하신 토큰 금액보다 낮습니다.",
+    "issue_balance":"입력하신 토큰 금액이 보유 토큰 잔액보다 많습니다.",
+    "issue_ether_amount":"전송하실 이더리움 수치를 정확히 넣어 주셔야 합니다.",
+    "issue_user_cap":"입력하신 토큰 금액이 사용자 총 한도를 넘었습니다.",
+    "min_rate_too_high":"입력하신 최저 가격이 너무 높습니다."
   },
 
   "import": {
@@ -206,7 +213,7 @@
   },
 
 "landing_page":{
-  "title": "믿을 수 있는 이더리움 기반 토큰의 교환",
+  "title": "분권화된 이더리움 토큰 거래소",
   "trustless": "무신뢰",
   "instant": "빠른",
   "liquid": "유동성",
