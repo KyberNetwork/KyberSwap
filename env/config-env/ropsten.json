@@ -10,7 +10,7 @@
     ],
     "ws": "wss://ropsten.kyber.network/ws/"
   },
-  "history_endpoint": "https://cache.kyber.network/",
+  "history_endpoint": "https://cache.kyber.network",
   "api_usd":"https://api.coinmarketcap.com",
   "tokens": {
     "ETH": {
