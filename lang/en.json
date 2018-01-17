@@ -153,7 +153,14 @@
     "gas_price_not_number":"Gas price is not number",
     "rate_not_number":"Rate is not number",
     "gas_price_limit":"Gas price must be smaller than ${maxGas} Gwei",
-    "passphrase_error":"Key derivation failed"
+    "passphrase_error":"Key derivation failed",
+    "gas_price_exceeded_limit":"Gas price exceeded max limit",
+    "issue_token_ether":"Failed because of sending ether along the tx when it is trying to trade token to ether",
+    "issue_allowance":"Failed because allowance is lower than srcAmount",
+    "issue_balance":"Failed because token balance is lower than srcAmount",
+    "issue_ether_amount":"Failed because the user didn't send the exact amount of ether along",
+    "issue_user_cap":"Failed because the source amount exceeded user cap",
+    "min_rate_too_high":"Your min rate is too high!"
   },
 
   "import": {
@@ -206,7 +213,7 @@
   },
 
   "landing_page":{
-    "title": "Decentralized Exchange  for Ethereum tokens",
+    "title": "Decentralized Exchange for Ethereum tokens",
     "trustless": "Trustless",
     "instant": "Instant",
     "liquid": "Liquid",
