@@ -213,5 +213,8 @@
     "liquid": "流动性",
     "compatible": "兼容",
     "get_started": "开始"
-  }
+  },
+
+  "product_feedback": "Product Feedback",
+  "help": "Help"
 }

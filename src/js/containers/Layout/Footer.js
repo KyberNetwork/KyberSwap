@@ -14,17 +14,17 @@ export default class Footer extends React.Component {
     return (
       <div className="row small-11 medium-12 large-12">
         <div className="column row">
-          <div className="column large-6 medium-6 small-12 footer-menu">
+          <div className="column medium-6 small-12 footer-menu text-xs-only-center">
             <ul className="links">
               <li>
-                <a>Product Feedback</a>
+                <a>{this.props.translate('product_feedback') || 'Product Feedback'}</a>
               </li>
               <li>
-                <a>Help</a>
+                <a>{this.props.translate('help') || 'Help'}</a>
               </li>
             </ul>
           </div>
-          <div className="column large-6 medium-6 small-12 text-right">
+          <div className="column medium-6 small-12 text-right text-xs-only-center">
             Developed with <span className="emoji"> ❤️ </span> and <span className="emoji"> ☕ </span>
             <br></br>
             ©️ 2018 KYBER NETWORK PTE. LTD.
