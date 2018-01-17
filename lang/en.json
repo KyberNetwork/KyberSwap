@@ -120,7 +120,7 @@
   "error": {
     "select_same_token": "Cannot exchange the same token",
     "select_token_token": "This token pair is not supported yet",
-    "source_amount_too_high": "Source amount is too high",
+    "source_amount_too_high": "Source amount is too high. Your balance is insufficient",
     "source_amount_too_high_cap": "Source amount is over your cap. Your cap is ${ cap } ETH",
     "source_amount_too_small": "Source amount is too small",
     "source_amount_rate_error": "Cannot exchange at the moment",
