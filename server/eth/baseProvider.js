@@ -392,7 +392,7 @@ class BaseEthereumProvider {
     var serverPoint = BLOCKCHAIN_INFO.server_logs.url
     var api = BLOCKCHAIN_INFO.server_logs.api_key
     var contractAddress = BLOCKCHAIN_INFO.network
-    var tradeTopic = constants.TRADE_TOPIC
+    var tradeTopic = BLOCKCHAIN_INFO.trade_topic
 
     //var url = `${serverPoint}/api?module=logs&action=getLogs&fromBlock=${fromBlock}&toBlock=${toBlock}&address=${contractAddress}&topic0=${tradeTopic}&apikey=${api}`
     var options = {
@@ -436,7 +436,7 @@ class BaseEthereumProvider {
 
   getLogExchangeFromNode(fromBlock, toBlock) {
     var contractAddress = BLOCKCHAIN_INFO.network
-    var tradeTopic = constants.TRADE_TOPIC
+    var tradeTopic = BLOCKCHAIN_INFO.trade_topic
 
     return new Promise((resolve, rejected) => {
       this.networkContract.getPastEvents('Trade', {

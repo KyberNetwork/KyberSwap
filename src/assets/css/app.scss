@@ -20,6 +20,7 @@ $alert-color : #ff5d00;
 @import "term_and_services";
 @import "icon";
 @import "landing_page";
+@import "footer";
 
 @font-face{
   font-family: 'My-Montserrat';
@@ -129,6 +130,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
     }
   }
 }
+
 
 #header {
   background-color: white;

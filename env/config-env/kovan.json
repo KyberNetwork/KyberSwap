@@ -60,6 +60,7 @@
   "reserve": "0xb57e7b3ede2eb428de3a7be3988727df130e1a0f",
   "network": "0x152efe8e90f41701852ef59c0831daa581b2018f",
   "wrapper": "0xb6e8688caff0e389aa17c62f86e4196f25f07f34",
+  "trade_topic":"0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
   "endpoint": "https://kovan.infura.io/DtzEYY0Km2BA3YwyJcBG",
   "averageBlockTime": 6000,
   "networkId": 42,

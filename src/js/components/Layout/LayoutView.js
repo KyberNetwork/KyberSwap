@@ -18,8 +18,12 @@ const LayoutView = (props) => {
           <div id="rate-bar" class="mb-8">
             {props.rate}
           </div>
+          
           <Processing />
           {props.exchangeHistory}
+          <div id="footer">
+            {props.footer}
+          </div>
         </section>
         <section id="modals">
           <InfoModal />

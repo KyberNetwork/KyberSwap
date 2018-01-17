@@ -10,7 +10,7 @@
     ],
     "ws": "wss://ropsten.kyber.network/ws/"
   },
-  "history_endpoint": "https://cache.kyber.network",
+  "history_endpoint": "https://cache.kyber.network/",
   "api_usd":"https://api.coinmarketcap.com",
   "tokens": {
     "ETH": {
@@ -124,6 +124,7 @@
   "pricing": "0x6dcf29f5dc0f207e6d850d9436e35281079bc063",
   "network": "0xe801403a9b8dae494f9088a4687c1c139fae2fe4",
   "wrapper": "0x54556ac5afbd73b6a9d1c3d2d679477dd33ea81f",
+  "trade_topic":"0xec0d3e799aa270a144d7e3be084ccfc657450e33ecea1b1a4154c95cedaae5c3",
   "endpoint": "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",
   "averageBlockTime": 6000,
   "networkId": 3,
