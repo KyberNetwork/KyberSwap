@@ -38,8 +38,10 @@ import { RateBetweenToken } from "../Exchange"
   }
 
   return {
-    form: { ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal, 
-              sourceName, destName },
+    form: {
+      ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
+      sourceName, destName
+    },
     account: store.account.account,
     ethereum: store.connection.ethereum,
     keyService: props.keyService,
@@ -119,7 +121,7 @@ export default class PostExchange extends React.Component {
         sourceAmountErrorKey = "error.source_amount_too_high_for_reserve"
         break
     }
-    if(this.props.form.slippagePrice === "0"){
+    if (this.props.form.slippagePrice === "0") {
       sourceAmountErrorKey = "error.source_amount_too_high"
     }
     if (sourceAmountErrorKey) {
@@ -130,8 +132,8 @@ export default class PostExchange extends React.Component {
     if (isNaN(testGasPrice)) {
       this.props.dispatch(exchangeActions.thowErrorGasPrice("error.gas_price_not_number"))
       check = false
-    }else{
-      if (parseFloat(this.props.form.gasPrice) > this.props.form.maxGasPrice){
+    } else {
+      if (parseFloat(this.props.form.gasPrice) > this.props.form.maxGasPrice) {
         this.props.dispatch(exchangeActions.thowErrorGasPrice("error.gas_price_limit"))
         check = false
       }
@@ -173,11 +175,11 @@ export default class PostExchange extends React.Component {
     this.props.dispatch(exchangeActions.hidePassphrase())
   }
   closeModalConfirm = (event) => {
-    if(this.props.form.isConfirming) return
+    if (this.props.form.isConfirming) return
     this.props.dispatch(exchangeActions.hideConfirm())
   }
   closeModalApprove = (event) => {
-    if(this.props.form.isApproving) return
+    if (this.props.form.isApproving) return
     this.props.dispatch(exchangeActions.hideApprove())
   }
   changePassword = (event) => {
@@ -291,6 +293,7 @@ export default class PostExchange extends React.Component {
     )
   }
   contentApprove = () => {
+    var addressShort = this.props.account.address.slice(0, 8) + "..." + this.props.account.address.slice(-6)
     return (
       <ApproveModal recap="Please approve"
         onCancel={this.closeModalApprove}
@@ -298,6 +301,7 @@ export default class PostExchange extends React.Component {
         token={this.props.form.sourceTokenSymbol}
         onSubmit={this.processExchangeAfterApprove}
         translate={this.props.translate}
+        address={addressShort}
       />
     )
   }
@@ -352,9 +356,9 @@ export default class PostExchange extends React.Component {
       className += " animated infinite pulse next"
     }
     var termAndServices = (
-      <TermAndServices 
+      <TermAndServices
         clickCheckbox={this.clickCheckbox}
-        termAgree={this.props.form.termAgree} 
+        termAgree={this.props.form.termAgree}
       />
     )
 
