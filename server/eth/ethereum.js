@@ -107,11 +107,13 @@ class EthereumService {
 
     this.currentProvider.subcribeNewBlock(() => {
       this.fetchData.bind(this)()
-      return Promise.all([
-     //   this.fetchData.bind(this)(),
-        this.fetchAllRateData.bind(this)(),
-        this.fetchAllRateUSD.bind(this)()
-      ])
+      this.fetchAllRateData.bind(this)()
+      this.fetchAllRateUSD.bind(this)()
+    //   return Promise.all([
+    //  //   this.fetchData.bind(this)(),
+    //     ,
+    //     ()
+    //   ])
      // this.fetchAllRateData.bind(this)(),
      // this.fetchAllRateUSD.bind(this)()
     })
@@ -122,28 +124,33 @@ class EthereumService {
   }
 
   async fetchData() {
-    var currentBlock = await this.persistor.getCurrentBlock()
-    var rangeBlock = await this.persistor.getRangeBlock()
-    var count = await this.persistor.getCount()
-    var frequency = await this.persistor.getFrequency()
-    var latestBlock = await this.currentProvider.getLatestBlock()
-    await this.persistor.saveLatestBlock(latestBlock)
-    if (count > frequency) {
-      await this.persistor.updateCount(0)
-      var blockUpdated = currentBlock + rangeBlock > latestBlock ? latestBlock : currentBlock + rangeBlock
-      await this.persistor.updateBlock(blockUpdated)
-    } else {
-      this.persistor.updateCount(++count)
-      var toBlock = currentBlock + rangeBlock
-      if (toBlock > latestBlock) {
-        toBlock = latestBlock
+    try{
+      var currentBlock = await this.persistor.getCurrentBlock()
+      var rangeBlock = await this.persistor.getRangeBlock()
+      var count = await this.persistor.getCount()
+      var frequency = await this.persistor.getFrequency()
+      var latestBlock = await this.currentProvider.getLatestBlock()
+      await this.persistor.saveLatestBlock(latestBlock)
+      if (count > frequency) {
+        await this.persistor.updateCount(0)
+        var blockUpdated = currentBlock + rangeBlock > latestBlock ? latestBlock : currentBlock + rangeBlock
+        await this.persistor.updateBlock(blockUpdated)
+      } else {
+        this.persistor.updateCount(++count)
+        var toBlock = currentBlock + rangeBlock
+        if (toBlock > latestBlock) {
+          toBlock = latestBlock
+        }
+        // console.log("xxx")
+        if (toBlock - currentBlock < 2000) {
+          currentBlock = toBlock - 2000
+        }
+        
+        var events = await this.currentProvider.getLogExchange(currentBlock, toBlock)
+        this.handleEvent(events)
       }
-      // console.log("xxx")
-      if (toBlock - currentBlock < 2000) {
-        currentBlock = toBlock - 2000
-      }
-      var events = await this.currentProvider.getLogExchange(currentBlock, toBlock)
-      this.handleEvent(events)
+    }catch(e){
+      console.log(e.message)
     }
     return new Promise((resolve, rejected)=>{
       resolve(true)
@@ -156,13 +163,13 @@ class EthereumService {
       //console.log(allRate)
       this.persistor.saveRate(allRate)
     } catch (e) {
-      console.log(e)
+      console.log(e.message)
       try {
         var allRate = await this.currentProvider.getAllRatesFromBlockchain(BLOCKCHAIN_INFO.tokens, constants.RESERVES[0])
      //   console.log(allRate)
         this.persistor.saveRate(allRate)
       } catch (e) {
-        console.log(e)
+        console.log(e.message)
       }
     }
 
@@ -184,7 +191,7 @@ class EthereumService {
         await this.delay(5000)
         await this.persistor.saveRateUSD(rate)
       } catch (e) {
-        console.log(e)
+        console.log(e.message)
         continue
       }
     }
@@ -204,7 +211,7 @@ class EthereumService {
       if (arrayAddressToken.indexOf(dest) < 0 || arrayAddressToken.indexOf(source) < 0) continue
 
       var check = await this.persistor.checkEventByHash(savedEvent.txHash, savedEvent.blockNumber)
-      console.log(check)
+     // console.log(check)
       if (!check) {
         await this.persistor.savedEvent(savedEvent)
       }

@@ -7,12 +7,34 @@ var bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
 
+var isInit = process.env.npm_config_init
 
-//var PersistClass = require("./persist/json/jsonPersist")
+
+
+/**************** SET LOG FILE */
+var fileLog = __dirname + "/error.log"
+const manager = require('simple-node-logger').createLogManager();
+manager.createFileAppender( { logFilePath:fileLog } );
+const log = manager.createLogger( 'errorLog', 'info' );
+if (!fs.existsSync(fileLog)){
+  fs.writeFile(fileLog, '', function(){console.log('done created log file')})
+}else{
+  if(isInit){
+    //clear error log
+    fs.writeFile(fileLog, '', function(){console.log('done clear log file')})
+  }
+}
+process.on('uncaughtException', function (err) {
+  log.info(err, ' accepted at ', new Date().toJSON());
+  console.log("uncaughtException")
+});
+/**END INIT */
+
+
+/******************** INIT DATABASE ***************/
 var PersistClass = require("./persist/sqlite/sqlitePersist")
 var persistor = new PersistClass()
-
-var isInit = process.env.npm_config_init
+//clear database
 if (isInit) {
   persistor.destroyStore(() => {
     persistor.initStore()
@@ -20,11 +42,8 @@ if (isInit) {
 } else {
   persistor.initStore()
 }
+/**END INIT DATABASE */
 
-process.on('uncaughtException', function (err) {
-  console.log('Caught exception: ' + err);
-  console.log("Process still run")
-});
 
 function main() {
   var EthereumService = require("./eth/ethereum")
@@ -38,6 +57,8 @@ function main() {
 main()
 
 
+
+/****************** HTTP SERVER */
 app.get('/getRate', function (req, res) {
   var event = persistor.getRate()
   event.then((result) => {

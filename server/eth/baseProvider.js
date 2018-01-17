@@ -46,11 +46,11 @@ class BaseEthereumProvider {
         //console.log(res)
         var statusCode = res.statusCode;
         if (statusCode != 200) {
-          console.log("non-200 response status code:")
-          console.log(res.statusCode)
-          console.log("for url:")
-          console.log(serverPoint)
-          resolve(0);
+          //console.log("non-200 response status code:")
+          //console.log(res.statusCode)
+          //console.log("for url:")
+          //console.log(serverPoint)
+          rejected(new Error("Status code from etherscan is not 200"));
           return
         }
 
@@ -66,108 +66,106 @@ class BaseEthereumProvider {
             resolve(blockNumber['0'])
           } catch (e) {
             console.log(e)
-            resolve(0)
+            rejected(new Error("Cannot parse blockNumber from etherscan"));
           }
 
         })
         res.on("error", function () {
           console.log("GET request error")
-          resolve(0)
+          rejected(new Error("Cannot request from etherscan"));
         })
       })
     })
   }
 
-  getBalance(address) {
-    return new Promise((resolve, reject) => {
-      this.rpc.eth.getBalance(address).then((balance) => {
-        if (balance != null) {
-          resolve(balance)
-        }
-      })
-    })
-  }
+  // getBalance(address) {
+  //   return new Promise((resolve, reject) => {
+  //     this.rpc.eth.getBalance(address).then((balance) => {
+  //       if (balance != null) {
+  //         resolve(balance)
+  //       }
+  //     })
+  //   })
+  // }
 
-  getNonce(address) {
-    return new Promise((resolve, reject) => {
-      this.rpc.eth.getTransactionCount(address, "pending").then((nonce) => {
-        //console.log(nonce)
-        if (nonce != null) {
-          resolve(nonce)
-        }
-      })
-    })
+  // getNonce(address) {
+  //   return new Promise((resolve, reject) => {
+  //     this.rpc.eth.getTransactionCount(address, "pending").then((nonce) => {
+  //       //console.log(nonce)
+  //       if (nonce != null) {
+  //         resolve(nonce)
+  //       }
+  //     })
+  //   })
+  // }
 
+  // getTokenBalance(address, ownerAddr) {
+  //   var instance = this.erc20Contract
+  //   instance.options.address = address
+  //   return new Promise((resolve, reject) => {
+  //     instance.methods.balanceOf(ownerAddr).call().then((result) => {
+  //       if (result != null) {
 
-  }
+  //         resolve(blockNumber)
+  //       }
+  //     })
+  //   })
 
-  getTokenBalance(address, ownerAddr) {
-    var instance = this.erc20Contract
-    instance.options.address = address
-    return new Promise((resolve, reject) => {
-      instance.methods.balanceOf(ownerAddr).call().then((result) => {
-        if (result != null) {
+  // }
 
-          resolve(blockNumber)
-        }
-      })
-    })
+  // exchangeData(sourceToken, sourceAmount, destToken, destAddress,
+  //   maxDestAmount, minConversionRate, throwOnFailure) {
+  //   return this.networkContract.methods.trade(
+  //     sourceToken, sourceAmount, destToken, destAddress,
+  //     maxDestAmount, minConversionRate, throwOnFailure).encodeABI()
+  // }
 
-  }
+  // approveTokenData(sourceToken, sourceAmount) {
+  //   var tokenContract = this.erc20Contract
+  //   tokenContract.options.address = sourceToken
+  //   return tokenContract.methods.approve(this.networkAddress, sourceAmount).encodeABI()
+  // }
 
-  exchangeData(sourceToken, sourceAmount, destToken, destAddress,
-    maxDestAmount, minConversionRate, throwOnFailure) {
-    return this.networkContract.methods.trade(
-      sourceToken, sourceAmount, destToken, destAddress,
-      maxDestAmount, minConversionRate, throwOnFailure).encodeABI()
-  }
+  // sendTokenData(sourceToken, sourceAmount, destAddress) {
+  //   var tokenContract = this.erc20Contract
+  //   tokenContract.options.address = sourceToken
+  //   return tokenContract.methods.transfer(destAddress, sourceAmount).encodeABI()
+  // }
 
-  approveTokenData(sourceToken, sourceAmount) {
-    var tokenContract = this.erc20Contract
-    tokenContract.options.address = sourceToken
-    return tokenContract.methods.approve(this.networkAddress, sourceAmount).encodeABI()
-  }
+  // getAllowance(sourceToken, owner) {
+  //   var tokenContract = this.erc20Contract
+  //   tokenContract.options.address = sourceToken
+  //   return new Promise((resolve, reject) => {
+  //     tokenContract.methods.allowance(owner, this.networkAddress).call().then((result) => {
+  //       if (result !== null) {
+  //         resolve(result)
+  //       }
+  //     })
+  //   })
+  // }
 
-  sendTokenData(sourceToken, sourceAmount, destAddress) {
-    var tokenContract = this.erc20Contract
-    tokenContract.options.address = sourceToken
-    return tokenContract.methods.transfer(destAddress, sourceAmount).encodeABI()
-  }
+  // getDecimalsOfToken(token) {
+  //   var tokenContract = this.erc20Contract
+  //   tokenContract.options.address = token
+  //   return new Promise((resolve, reject) => {
+  //     tokenContract.methods.decimals().call().then((result) => {
+  //       if (result !== null) {
+  //         resolve(result)
+  //       }
+  //     })
+  //   })
+  // }
 
-  getAllowance(sourceToken, owner) {
-    var tokenContract = this.erc20Contract
-    tokenContract.options.address = sourceToken
-    return new Promise((resolve, reject) => {
-      tokenContract.methods.allowance(owner, this.networkAddress).call().then((result) => {
-        if (result !== null) {
-          resolve(result)
-        }
-      })
-    })
-  }
+  // txMined(hash) {
+  //   return new Promise((resolve, reject) => {
+  //     this.rpc.eth.getTransactionReceipt(hash).then((result) => {
+  //       if (result != null) {
+  //         resolve(result)
+  //       }
+  //     })
+  //   })
 
-  getDecimalsOfToken(token) {
-    var tokenContract = this.erc20Contract
-    tokenContract.options.address = token
-    return new Promise((resolve, reject) => {
-      tokenContract.methods.decimals().call().then((result) => {
-        if (result !== null) {
-          resolve(result)
-        }
-      })
-    })
-  }
-
-  txMined(hash) {
-    return new Promise((resolve, reject) => {
-      this.rpc.eth.getTransactionReceipt(hash).then((result) => {
-        if (result != null) {
-          resolve(result)
-        }
-      })
-    })
-
-  }
+  // }
 
   getRate(source, dest, quantity) {
     return new Promise((resolve, reject) => {
@@ -330,18 +328,18 @@ class BaseEthereumProvider {
   // return Promise.all(promises)
 //}
 
-sendRawTransaction(tx) {
-  return new Promise((resolve, rejected) => {
-    this.rpc.eth.sendSignedTransaction(
-      ethUtil.bufferToHex(tx.serialize()), (error, hash) => {
-        if (error != null) {
-          rejected(error)
-        } else {
-          resolve(hash)
-        }
-      })
-  })
-}
+// sendRawTransaction(tx) {
+//   return new Promise((resolve, rejected) => {
+//     this.rpc.eth.sendSignedTransaction(
+//       ethUtil.bufferToHex(tx.serialize()), (error, hash) => {
+//         if (error != null) {
+//           rejected(error)
+//         } else {
+//           resolve(hash)
+//         }
+//       })
+//   })
+// }
 
 
 getAllRateUSD(tokensObj) {
@@ -387,11 +385,11 @@ getLogExchange(fromBlock, toBlock) {
     https.get(options, res => {
       var statusCode = res.statusCode;
       if (statusCode != 200) {
-        console.log("non-200 response status code:");
-        console.log(res.statusCode)
-        console.log("for url:")
-        console.log(serverPoint)
-        resolve([]);
+       // console.log("non-200 response status code:");
+       // console.log(res.statusCode)
+       // console.log("for url:")
+       // console.log(serverPoint)
+        rejected(new Error("Status code is not 200 in etherscan"));
         return
       }
 
@@ -406,12 +404,12 @@ getLogExchange(fromBlock, toBlock) {
           resolve(body.result)
         } catch (e) {
           console.log(e)
-          resolve([])
+          rejected(new Error("Cannot parse log"));
         }
 
       }).on("error", function () {
         console.log("GET request error")
-        resolve([])
+        rejected(new Error("Get request error"));
       })
     })
   })

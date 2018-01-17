@@ -45,13 +45,13 @@
       "decimal": 18,
       "usd_id":"eos"
     },
-    "SALT": {
-      "name": "Salt",
-      "symbol": "SNT",
+    "SNT": {
+      "name":"Status",
       "address": "0x0be7d3de36c9bde96d529b41d0639204b2ed19c2",
-      "icon": "salt.svg",
+      "symbol": "SNT",
+      "icon": "snt.svg",
       "decimal": 18,
-      "usd_id":"salt"
+      "usd_id":"status"
     }
 
   },
