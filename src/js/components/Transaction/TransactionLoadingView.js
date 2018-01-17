@@ -104,8 +104,9 @@ const TransactionLoadingView = (props) => {
               title={props.translate("modal.view_on_etherscan") || "View on Etherscan"} >
                 {props.txHash.slice(0, 12)} ... {props.txHash.slice(-10)}
               </a>
-              <a className="copy-tx" data-for='copy-tx-tip' onClick={props.handleCopy}
-                data-tip="">
+              <a className="copy-tx" data-for='copy-tx-tip' data-tip=""
+                onClick={props.handleCopy} 
+                onMouseLeave={props.resetCopy} >
                 <CopyToClipboard text={props.txHash}>
                   <img src={require("../../../assets/img/copy.svg")} />
                 </CopyToClipboard>

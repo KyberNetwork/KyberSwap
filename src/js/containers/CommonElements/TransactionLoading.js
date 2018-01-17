@@ -51,6 +51,12 @@ export default class TransactionLoading extends React.Component {
         })
     }
 
+    resetCopy(){
+        this.setState({
+            isCopied: false
+        })
+    }
+
     render() {
         return (
             <TransactionLoadingView
@@ -68,6 +74,7 @@ export default class TransactionLoading extends React.Component {
                 isOpenModal={this.state.isOpenModal}
                 isCopied={this.state.isCopied}
                 handleCopy={this.handleCopy.bind(this)}
+                resetCopy={this.resetCopy.bind(this)}
             />
 
         )
