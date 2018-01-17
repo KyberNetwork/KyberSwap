@@ -25,6 +25,9 @@
       display: inline-block;
       position: relative;
       padding: 0 45px;
+      @include breakpoint(medium only){
+        padding: 0 37px;
+      }
       &::before{
         content: '';
         display: inline-block;

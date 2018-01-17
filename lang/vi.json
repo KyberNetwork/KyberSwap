@@ -201,5 +201,8 @@
     "liquid": "Thanh khoản",
     "compatible": "Tương thích",
     "get_started": "Bắt đầu"
-  }
+  },
+
+  "product_feedback": "Product Feedback",
+  "help": "Help"
 }
