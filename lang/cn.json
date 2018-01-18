@@ -148,12 +148,19 @@
     "network_not_match": "Metamask需要连接到${expectedName}网络，而您现在连接的是${currentName}",
     "network_not_match_unknow": "Metamask需要连接到${expectedName}",
     "not_supported": "不支持",
-    "metamask_not_install":"Cannot connect to metamask.",
+    "metamask_not_install":"无法连接至metamask。请确认您已经安装了metamask。",
 
-    "gas_price_not_number":"Gas price is not number",
-    "rate_not_number":"Rate is not number",
-    "gas_price_limit":"Gas price must be smaller than ${maxGas} Gwei",
-    "passphrase_error":"Key derivation failed"
+    "gas_price_not_number":"燃料价格不是数字",
+    "rate_not_number":"交易价格不是数字",
+    "gas_price_limit":"燃料价格必须小于 ${maxGas} Gwei",
+    "passphrase_error":"秘钥派生失败",
+    "gas_price_exceeded_limit": "燃料价格超过了最高限制。t",
+    "issue_token_ether":"交易失败，由于发送eth的同时还试图用该eth与其它代币交易。",
+    "issue_allowance":"交易失败，由于许可数量低于srcAmount",
+    "issue_balance":"交易失败，由于代币余额低于scrAmount",
+    "issue_ether_amount":"交易失败，由于用户没有发送准确的eth数量",
+    "issue_user_cap":"交易失败，由于原始数量超过了用户限额。",
+    "min_rate_too_high":"你设置的最交易低价格太高了！"
   },
 
   "import": {
@@ -207,7 +214,7 @@
   },
 
   "landing_page":{
-    "title": "无需信任的以太坊代币交易所",
+    "title": "以太坊代币的去中心化交易",
     "trustless": "无需信赖",
     "instant": "迅速",
     "liquid": "流动性",
@@ -215,6 +222,6 @@
     "get_started": "开始"
   },
 
-  "product_feedback": "Product Feedback",
-  "help": "Help"
+  "product_feedback": "产品反馈",
+  "help": "帮助"
 }
