@@ -120,7 +120,7 @@
     "select_same_token": "동일한 토큰으로 교환할 수 없습니다",
     "select_token_token": "해당 토큰은 지원되지 않습니다",
     "source_amount_too_high": "수량이 너무 큽니다",
-    "source_amount_too_high_cap": "보내시려는 토큰 수량이 한도 이상입니다. 한도는 10 ETH 입니다",
+    "source_amount_too_high_cap": "보내시려는 토큰 수량이 한도 이상입니다. 한도는 ${ cap } ETH 입니다",
     "source_amount_too_small": "보내시려는 토큰 수량이 너무 작습니다",
     "source_amount_rate_error": "현재 거래할 수 없습니다",
     "source_amount_too_high_for_reserve": "보내시려는 토큰 수량이 너무 큽니다 (현재 지원되지 않는 토큰입니다)",
