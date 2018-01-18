@@ -186,12 +186,14 @@ class BaseEthereumProvider {
   // }
 
   getRate(source, dest, quantity) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, rejected) => {
       this.networkContract.methods.getExpectedRate(source, dest, quantity).call().then((result) => {
         if (result != null) {
           resolve(result)
         }
-      })
+      }).catch(e =>{
+        rejected(e)
+      })        
     })
   }
 
