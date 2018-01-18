@@ -27,7 +27,7 @@ export default class Footer extends React.Component {
           <div className="column medium-6 small-12 text-right text-xs-only-center">
             Developed with <span className="emoji"> ❤️ </span> and <span className="emoji"> ☕ </span>
             <br></br>
-            ©️ 2018 KYBER NETWORK PTE. LTD.
+            ©️ 2018 KYBER NETWORK
           </div>
         </div>
       </div>
