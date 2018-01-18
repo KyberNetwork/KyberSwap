@@ -7,8 +7,8 @@ var bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
 
-var isInit = process.env.npm_config_init
-
+var isInit = process.env.npm_config_init || process.env.init
+console.log(isInit)
 
 
 /**************** SET LOG FILE */
