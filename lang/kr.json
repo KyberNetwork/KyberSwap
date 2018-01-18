@@ -71,7 +71,7 @@
     "processing": "진행중",
     "gas_limit": "Gas 한도",
     "gas_price": "Gas 가격",
-    "for": "위해",
+    "for": "를",
     "to": "하려면",
     "best_rate": "최소 속도",
     "token_amount": "토큰/금액",
@@ -193,16 +193,17 @@
 
 
   "history": {
-    "second_ago": "몇초 전",
-    "minutes_ago": "몇분 전",
-    "hours_ago": "몇시간 전",
-    "days_ago": "몇일 전",
-    "months_ago": "몇달 전",
+    "second_ago": "초 전",
+    "minutes_ago": "분 전",
+    "hours_ago": "시간 전",
+    "days_ago": "일 전",
+    "months_ago": "달 전",
     "years_ago": "년 전",
     "date": "날짜",
     "rate": "환율",
     "description": "설명",
-    "amount": "금액"
+    "amount": "금액",
+    "in": "로"
   },
   "terms":{
     "title" : "Kyber Wallet- 이용 약관",
