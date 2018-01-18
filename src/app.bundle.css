@@ -3522,6 +3522,10 @@
 .w-100 {
   width: 100%; }
 
+@media screen and (max-width: 39.9375em) {
+  .text-xs-only-center {
+    text-align: center; } }
+
 @media print, screen and (min-width: 40em) {
   .float-left-md {
     float: left; }
@@ -5207,6 +5211,9 @@ input[type=number] {
       display: inline-block;
       position: relative;
       padding: 0 45px; }
+      @media screen and (min-width: 40em) and (max-width: 63.9375em) {
+        #get-start ul li {
+          padding: 0 37px; } }
       #get-start ul li::before {
         content: '';
         display: inline-block;
@@ -5218,6 +5225,42 @@ input[type=number] {
         position: absolute;
         left: 15px;
         top: 3px; }
+
+#footer {
+  margin: 30px 0px;
+  letter-spacing: .5px;
+  font-size: 0.8rem;
+  line-height: 25px; }
+  #footer .emoji {
+    margin: 0px 5px; }
+
+.footer-menu {
+  font-size: 0.8rem; }
+  .footer-menu ul.links {
+    padding: 0;
+    list-style: none;
+    margin: 0px;
+    margin-top: 1rem; }
+    .footer-menu ul.links > li {
+      display: inline-block; }
+      .footer-menu ul.links > li:not(:last-child) > a:after {
+        content: '|';
+        font-size: 12px;
+        font-weight: lighter;
+        color: #BBDAD5;
+        margin: 0 15px; }
+      .footer-menu ul.links > li > a {
+        color: #262C41;
+        display: block; }
+        .footer-menu ul.links > li > a:hover {
+          color: #0B0F1A; }
+      .footer-menu ul.links > li span {
+        vertical-align: middle; }
+    @media screen and (max-width: 39.9375em) {
+      .footer-menu ul.links {
+        padding: 10px 0;
+        margin: 0 auto 10px;
+        width: 70%; } }
 
 @font-face {
   font-family: 'My-Montserrat';
