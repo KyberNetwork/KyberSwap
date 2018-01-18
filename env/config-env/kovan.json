@@ -25,7 +25,7 @@
       "name": "KyberNetwork",
       "symbol": "KNC",
       "icon": "knc.svg",
-      "address": "0x6b795456a4fe39d3171d0584ef7df787eeabea26",
+      "address": "0x8dc114d77e857558aefbe8e1a50b460ff9578f1a",
       "decimal": 18,
       "usd_id":"kyber-network"
     },
@@ -33,7 +33,7 @@
       "name": "OmiseGO",
       "symbol": "OMG",
       "icon": "omg.svg",
-      "address": "0x28108bc3f3bd42a1144daff0eb73eddadf2f3510",
+      "address": "0x7606bd550f467546212649a9c25623dfca88dcd7",
       "decimal": 18,
       "usd_id":"omisego"
     },
@@ -41,25 +41,32 @@
       "name": "Eos",
       "symbol": "EOS",
       "icon": "eos.svg",
-      "address": "0x094655b92b557e164b82c702fed10f1e152351ea",
+      "address": "0x15fb2a9d7dadbb88f260f78dcbb574b3b76a8e06",
       "decimal": 18,
       "usd_id":"eos"
     },
     "SNT": {
       "name":"Status",
-      "address": "0x0be7d3de36c9bde96d529b41d0639204b2ed19c2",
+      "address": "0x676f650000f420485b99ef0377a2e1c96eb3e821",
       "symbol": "SNT",
       "icon": "snt.svg",
       "decimal": 18,
       "usd_id":"status"
+    },
+    "SALT": {
+      "name":"Salt",
+      "address": "0xcc112cd38362bf3c07d226768fd5869e65296083",
+      "symbol": "SALT",
+      "icon": "salt.svg",
+      "decimal": 18,
+      "usd_id":"salt"
     }
-
   },
   "ethScanUrl": "https://kovan.etherscan.io/",
-  "bank": "0x5e9f9c1d7ebd4af7e72106fa83b80cf83c8e5f59",
-  "reserve": "0xb57e7b3ede2eb428de3a7be3988727df130e1a0f",
-  "network": "0x152efe8e90f41701852ef59c0831daa581b2018f",
-  "wrapper": "0xb6e8688caff0e389aa17c62f86e4196f25f07f34",
+  "bank": "0x2eb59a43644451b279a2c1a44a9bfecb055527d0",
+  "reserve": "0x2d1ceabd5a1cd16581ad199031601615a434a2cd",
+  "network": "0x643211b405c9a14139142e1104250bbcd94bd0ef",
+  "wrapper": "0xa54f27b5a72fc1ddc5c4bc6ed50391f457e4a46a",
   "trade_topic":"0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
   "endpoint": "https://kovan.infura.io/DtzEYY0Km2BA3YwyJcBG",
   "averageBlockTime": 6000,
