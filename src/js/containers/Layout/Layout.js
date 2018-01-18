@@ -8,7 +8,7 @@ import { Transfer } from "../../containers/Transfer"
 import { Header, Rate } from "../../containers/Header"
 import { ImportAccount } from "../ImportAccount"
 
-//import { Footer } from "../Layout"
+import { Footer } from "../Layout"
 
 import { Processing, ExchangeHistory, TransactionList } from "../../containers/CommonElements/"
 import constanst from "../../services/constants"
@@ -88,7 +88,7 @@ export default class Layout extends React.Component {
 
   render() {
     var exchangeHistory = this.props.showBalance?<TransactionList />:""
-    //var footer = <Footer />
+    var footer = <Footer />
     var rate = <Rate />
     return (
       <LayoutView
@@ -101,6 +101,7 @@ export default class Layout extends React.Component {
         supportedLanguages={Language.supportLanguage}
         setActiveLanguage={this.setActiveLanguage}
         rate={rate}
+        footer = {footer}
       />
     )
   }

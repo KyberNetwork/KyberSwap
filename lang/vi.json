@@ -150,7 +150,14 @@
     "gas_price_not_number":"Giá Gas không phải là số",
     "rate_not_number":"Rate không là số",
     "gas_price_limit":"Giá gas cần nhỏ hơn ${maxGas} Gwei",
-    "passphrase_error":"Không thể giải mã key"
+    "passphrase_error":"Không thể giải mã key",
+    "gas_price_exceeded_limit":"Giá Gas vượt quá giới hạn",
+    "issue_token_ether":"Lỗi do gửi ether khi đang thực hiện trao đổi token sang ether",
+    "issue_allowance":"Lỗi do mức cho phép nhỏ hơn số tiền gửi",
+    "issue_balance":"Lỗi do tài khoản token nhỏ hơn số tiền gửi",
+    "issue_ether_amount":"Lỗi do người dùng đã không gửi chính xác số lượng eths",
+    "issue_user_cap":"Lỗi do số lượng ban đầu vượt quá giới hạn người dùng",
+    "min_rate_too_high":"Rate của bạn quá cao!"
   },
 
   "import": {
@@ -201,5 +208,8 @@
     "liquid": "Thanh khoản",
     "compatible": "Tương thích",
     "get_started": "Bắt đầu"
-  }
+  },
+
+  "product_feedback": "Phản hồi sản phẩm",
+  "help": "Hỗ trợ"
 }

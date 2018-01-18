@@ -22,8 +22,14 @@ class BaseEthereumProvider {
   version() {
     return this.rpc.version.api
   }
-
-  getLatestBlock() {
+  // getLatestBlock(){
+  //   return new Promise((resolve, rejected)=>{
+  //     try{
+  //       var blockNumber = this.getLatestBlockFromEtherScan()
+  //     }
+  //   })
+  // }
+  getLatestBlockFromEtherScan() {
     // return new Promise((resolve, reject) => {
     //   this.rpc.eth.getBlock("latest", false).then((block) => {
     //     if (block != null) {
@@ -46,11 +52,11 @@ class BaseEthereumProvider {
         //console.log(res)
         var statusCode = res.statusCode;
         if (statusCode != 200) {
-          console.log("non-200 response status code:")
-          console.log(res.statusCode)
-          console.log("for url:")
-          console.log(serverPoint)
-          resolve(0);
+          //console.log("non-200 response status code:")
+          //console.log(res.statusCode)
+          //console.log("for url:")
+          //console.log(serverPoint)
+          rejected(new Error("Status code from etherscan is not 200 when get block number"));
           return
         }
 
@@ -66,116 +72,128 @@ class BaseEthereumProvider {
             resolve(blockNumber['0'])
           } catch (e) {
             console.log(e)
-            resolve(0)
+            rejected(new Error("Cannot parse blockNumber from etherscan"));
           }
 
         })
         res.on("error", function () {
           console.log("GET request error")
-          resolve(0)
+          rejected(new Error("Cannot request blocknumber from etherscan"));
         })
       })
     })
   }
 
-  getBalance(address) {
-    return new Promise((resolve, reject) => {
-      this.rpc.eth.getBalance(address).then((balance) => {
-        if (balance != null) {
-          resolve(balance)
+  getLatestBlockFromNode() {
+    return new Promise((resolve, rejected) => {
+      this.rpc.eth.getBlock("latest", false).then((block) => {
+        if (block != null) {
+          resolve(block.number)
         }
+      }).catch(e => {
+        rejected(e)        
       })
     })
   }
 
-  getNonce(address) {
-    return new Promise((resolve, reject) => {
-      this.rpc.eth.getTransactionCount(address, "pending").then((nonce) => {
-        //console.log(nonce)
-        if (nonce != null) {
-          resolve(nonce)
-        }
-      })
-    })
+  // getBalance(address) {
+  //   return new Promise((resolve, reject) => {
+  //     this.rpc.eth.getBalance(address).then((balance) => {
+  //       if (balance != null) {
+  //         resolve(balance)
+  //       }
+  //     })
+  //   })
+  // }
 
+  // getNonce(address) {
+  //   return new Promise((resolve, reject) => {
+  //     this.rpc.eth.getTransactionCount(address, "pending").then((nonce) => {
+  //       //console.log(nonce)
+  //       if (nonce != null) {
+  //         resolve(nonce)
+  //       }
+  //     })
+  //   })
+  // }
 
-  }
+  // getTokenBalance(address, ownerAddr) {
+  //   var instance = this.erc20Contract
+  //   instance.options.address = address
+  //   return new Promise((resolve, reject) => {
+  //     instance.methods.balanceOf(ownerAddr).call().then((result) => {
+  //       if (result != null) {
 
-  getTokenBalance(address, ownerAddr) {
-    var instance = this.erc20Contract
-    instance.options.address = address
-    return new Promise((resolve, reject) => {
-      instance.methods.balanceOf(ownerAddr).call().then((result) => {
-        if (result != null) {
+  //         resolve(blockNumber)
+  //       }
+  //     })
+  //   })
 
-          resolve(blockNumber)
-        }
-      })
-    })
+  // }
 
-  }
+  // exchangeData(sourceToken, sourceAmount, destToken, destAddress,
+  //   maxDestAmount, minConversionRate, throwOnFailure) {
+  //   return this.networkContract.methods.trade(
+  //     sourceToken, sourceAmount, destToken, destAddress,
+  //     maxDestAmount, minConversionRate, throwOnFailure).encodeABI()
+  // }
 
-  exchangeData(sourceToken, sourceAmount, destToken, destAddress,
-    maxDestAmount, minConversionRate, throwOnFailure) {
-    return this.networkContract.methods.trade(
-      sourceToken, sourceAmount, destToken, destAddress,
-      maxDestAmount, minConversionRate, throwOnFailure).encodeABI()
-  }
+  // approveTokenData(sourceToken, sourceAmount) {
+  //   var tokenContract = this.erc20Contract
+  //   tokenContract.options.address = sourceToken
+  //   return tokenContract.methods.approve(this.networkAddress, sourceAmount).encodeABI()
+  // }
 
-  approveTokenData(sourceToken, sourceAmount) {
-    var tokenContract = this.erc20Contract
-    tokenContract.options.address = sourceToken
-    return tokenContract.methods.approve(this.networkAddress, sourceAmount).encodeABI()
-  }
+  // sendTokenData(sourceToken, sourceAmount, destAddress) {
+  //   var tokenContract = this.erc20Contract
+  //   tokenContract.options.address = sourceToken
+  //   return tokenContract.methods.transfer(destAddress, sourceAmount).encodeABI()
+  // }
 
-  sendTokenData(sourceToken, sourceAmount, destAddress) {
-    var tokenContract = this.erc20Contract
-    tokenContract.options.address = sourceToken
-    return tokenContract.methods.transfer(destAddress, sourceAmount).encodeABI()
-  }
+  // getAllowance(sourceToken, owner) {
+  //   var tokenContract = this.erc20Contract
+  //   tokenContract.options.address = sourceToken
+  //   return new Promise((resolve, reject) => {
+  //     tokenContract.methods.allowance(owner, this.networkAddress).call().then((result) => {
+  //       if (result !== null) {
+  //         resolve(result)
+  //       }
+  //     })
+  //   })
+  // }
 
-  getAllowance(sourceToken, owner) {
-    var tokenContract = this.erc20Contract
-    tokenContract.options.address = sourceToken
-    return new Promise((resolve, reject) => {
-      tokenContract.methods.allowance(owner, this.networkAddress).call().then((result) => {
-        if (result !== null) {
-          resolve(result)
-        }
-      })
-    })
-  }
+  // getDecimalsOfToken(token) {
+  //   var tokenContract = this.erc20Contract
+  //   tokenContract.options.address = token
+  //   return new Promise((resolve, reject) => {
+  //     tokenContract.methods.decimals().call().then((result) => {
+  //       if (result !== null) {
+  //         resolve(result)
+  //       }
+  //     })
+  //   })
+  // }
 
-  getDecimalsOfToken(token) {
-    var tokenContract = this.erc20Contract
-    tokenContract.options.address = token
-    return new Promise((resolve, reject) => {
-      tokenContract.methods.decimals().call().then((result) => {
-        if (result !== null) {
-          resolve(result)
-        }
-      })
-    })
-  }
+  // txMined(hash) {
+  //   return new Promise((resolve, reject) => {
+  //     this.rpc.eth.getTransactionReceipt(hash).then((result) => {
+  //       if (result != null) {
+  //         resolve(result)
+  //       }
+  //     })
+  //   })
 
-  txMined(hash) {
-    return new Promise((resolve, reject) => {
-      this.rpc.eth.getTransactionReceipt(hash).then((result) => {
-        if (result != null) {
-          resolve(result)
-        }
-      })
-    })
-
-  }
+  // }
 
   getRate(source, dest, quantity) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, rejected) => {
       this.networkContract.methods.getExpectedRate(source, dest, quantity).call().then((result) => {
         if (result != null) {
           resolve(result)
         }
-      })
+      }).catch(e =>{
+        rejected(e)
+      })        
     })
   }
 
@@ -189,11 +207,12 @@ class BaseEthereumProvider {
       path: `/api?module=proxy&action=eth_call&to=${this.wrapperAddress}&data=${dataAbi}&tag=latest&apikey=${api}`
     }
 
+    // console.log(options)
     return new Promise((resolve, rejected) => {
       https.get(options, res => {
         var statusCode = res.statusCode;
         if (statusCode != 200) {
-          resolve([]);
+          rejected(new Error("Status etherscan is not 200 when get all rate"))
           return
         }
         res.setEncoding("utf8");
@@ -214,14 +233,16 @@ class BaseEthereumProvider {
                 name: 'slippagePrice'
               }
             ], body.result)
+            //console.log("aaaa")
+            // console.log(body.result)
             resolve(dataMapped)
           } catch (e) {
             console.log(e)
-            resolve([])
+            rejected(new Error("Cannot get rate from etherscan"))
           }
         }).on("error", function () {
           console.log("GET request error")
-          resolve([])
+          rejected(new Error("Request get rate error"))
         })
       })
     })
@@ -237,7 +258,7 @@ class BaseEthereumProvider {
 
     return this.getAllRate(arrayTokenAddress.concat(arrayEthAddress), arrayEthAddress.concat(arrayTokenAddress), arrayQty).then((result) => {
       if (!result) return []
-
+      // console.log(result)
       return Object.keys(tokensObj).map((tokenName, i) => {
         return [
           tokenName,
@@ -267,7 +288,7 @@ class BaseEthereumProvider {
     return this.getAllRateFromNode(arrayTokenAddress.concat(arrayEthAddress), arrayEthAddress.concat(arrayTokenAddress), arrayQty).then((result) => {
       var returnData = []
       Object.keys(tokensObj).map((tokenSymbol, i) => {
-        returnData.push( [
+        returnData.push([
           tokenSymbol,
           'ETH',
           {
@@ -307,12 +328,12 @@ class BaseEthereumProvider {
             resolve(dataMapped)
           } catch (e) {
             console.log(e)
-            resolve([])
+            rejected(new Error("Cannot get rate from blockchain"))
           }
         })
         .catch((err) => {
           console.log("GET request error")
-          resolve([])
+          rejected(new Error("Request get rate from node error"))
         })
     })
   }
@@ -325,95 +346,119 @@ class BaseEthereumProvider {
   //   ])
   // })
   // return Promise.all(promises)
-//}
+  //}
 
-sendRawTransaction(tx) {
-  return new Promise((resolve, rejected) => {
-    this.rpc.eth.sendSignedTransaction(
-      ethUtil.bufferToHex(tx.serialize()), (error, hash) => {
-        if (error != null) {
-          rejected(error)
-        } else {
-          resolve(hash)
-        }
-      })
-  })
-}
+  // sendRawTransaction(tx) {
+  //   return new Promise((resolve, rejected) => {
+  //     this.rpc.eth.sendSignedTransaction(
+  //       ethUtil.bufferToHex(tx.serialize()), (error, hash) => {
+  //         if (error != null) {
+  //           rejected(error)
+  //         } else {
+  //           resolve(hash)
+  //         }
+  //       })
+  //   })
+  // }
 
 
-getAllRateUSD(tokensObj) {
-  var promises = Object.values(tokensObj).map((value) => {
-    return this.getRateUSD(value.usd_id)
-  })
-  return Promise.all(promises)
-}
-
-getRateUSD(tokenId) {
-  var serverPoint = BLOCKCHAIN_INFO.api_usd
-  var path = `/v1/ticker/${tokenId}`
-  return new Promise((resolve, rejected) => {
-    request.get({
-      url: serverPoint + path,
-      json: true
-    }, (err, resp, body) => {
-      if (err) return rejected(new Error('Can\'t reach coin market cap server.'));
-      if (resp && resp.statusCode == 404) return rejected(new Error('Currency id not found.'));
-      if (!resp || resp.statusCode != 200) return rejected(new Error('Invalid response from coin market cap server.'));
-
-      if (body.length === 1) {
-        return resolve(body[0])
-      } else {
-        return rejected(new Error('Rate usd is not in right format'))
-      }
+  getAllRateUSD(tokensObj) {
+    var promises = Object.values(tokensObj).map((value) => {
+      return this.getRateUSD(value.usd_id)
     })
-  })
-}
-
-getLogExchange(fromBlock, toBlock) {
-  var serverPoint = BLOCKCHAIN_INFO.server_logs.url
-  var api = BLOCKCHAIN_INFO.server_logs.api_key
-  var contractAddress = BLOCKCHAIN_INFO.network
-  var tradeTopic = constants.TRADE_TOPIC
-
-  //var url = `${serverPoint}/api?module=logs&action=getLogs&fromBlock=${fromBlock}&toBlock=${toBlock}&address=${contractAddress}&topic0=${tradeTopic}&apikey=${api}`
-  var options = {
-    host: serverPoint,
-    path: `/api?module=logs&action=getLogs&fromBlock=${fromBlock}&toBlock=${toBlock}&address=${contractAddress}&topic0=${tradeTopic}&apikey=${api}`
+    return Promise.all(promises)
   }
-  return new Promise((resolve, rejected) => {
-    https.get(options, res => {
-      var statusCode = res.statusCode;
-      if (statusCode != 200) {
-        console.log("non-200 response status code:");
-        console.log(res.statusCode)
-        console.log("for url:")
-        console.log(serverPoint)
-        resolve([]);
-        return
-      }
 
-      res.setEncoding("utf8");
-      let body = ""
-      res.on("data", data => {
-        body += data
-      })
-      res.on("end", () => {
-        try {
-          body = JSON.parse(body)
-          resolve(body.result)
-        } catch (e) {
-          console.log(e)
-          resolve([])
+  getRateUSD(tokenId) {
+    var serverPoint = BLOCKCHAIN_INFO.api_usd
+    var path = `/v1/ticker/${tokenId}`
+    return new Promise((resolve, rejected) => {
+      request.get({
+        url: serverPoint + path,
+        json: true
+      }, (err, resp, body) => {
+        if (err) return rejected(new Error('Can\'t reach coin market cap server.'));
+        if (resp && resp.statusCode == 404) return rejected(new Error('Currency id not found.'));
+        if (!resp || resp.statusCode != 200) return rejected(new Error('Invalid response from coin market cap server.'));
+
+        if (body.length === 1) {
+          return resolve(body[0])
+        } else {
+          return rejected(new Error('Rate usd is not in right format'))
         }
-
-      }).on("error", function () {
-        console.log("GET request error")
-        resolve([])
       })
     })
-  })
+  }
+
+  getLogExchange(fromBlock, toBlock) {
+    var serverPoint = BLOCKCHAIN_INFO.server_logs.url
+    var api = BLOCKCHAIN_INFO.server_logs.api_key
+    var contractAddress = BLOCKCHAIN_INFO.network
+    var tradeTopic = BLOCKCHAIN_INFO.trade_topic
+
+    //var url = `${serverPoint}/api?module=logs&action=getLogs&fromBlock=${fromBlock}&toBlock=${toBlock}&address=${contractAddress}&topic0=${tradeTopic}&apikey=${api}`
+    var options = {
+      host: serverPoint,
+      path: `/api?module=logs&action=getLogs&fromBlock=${fromBlock}&toBlock=${toBlock}&address=${contractAddress}&topic0=${tradeTopic}&apikey=${api}`
+    }
+    //console.log(options)
+    return new Promise((resolve, rejected) => {
+      https.get(options, res => {
+        var statusCode = res.statusCode;
+        if (statusCode != 200) {
+          // console.log("non-200 response status code:");
+          // console.log(res.statusCode)
+          // console.log("for url:")
+          // console.log(serverPoint)
+          rejected(new Error("Status code is not 200 in etherscan when get logs"));
+          return
+        }
+
+        res.setEncoding("utf8");
+        let body = ""
+        res.on("data", data => {
+          body += data
+        })
+        res.on("end", () => {
+          try {
+            body = JSON.parse(body)
+            resolve(body.result)
+          } catch (e) {
+            console.log(e)
+            rejected(new Error("Cannot parse log"));
+          }
+
+        }).on("error", function () {
+          console.log("GET request error")
+          rejected(new Error("Get request logs error"));
+        })
+      })
+    })
+  }
+
+  getLogExchangeFromNode(fromBlock, toBlock) {
+    var contractAddress = BLOCKCHAIN_INFO.network
+    var tradeTopic = BLOCKCHAIN_INFO.trade_topic
+
+    return new Promise((resolve, rejected) => {
+      this.networkContract.getPastEvents('Trade', {
+        filter: { topic0: tradeTopic },
+        fromBlock: fromBlock,
+        toBlock: toBlock
+      })
+        .then(function (events) {
+          console.log(events)
+          resolve(events)
+        }).catch(e => {
+          rejected(e)
+        })
+    })
+  }
+
 }
-}
+
+
+
 
 
 module.exports = BaseEthereumProvider

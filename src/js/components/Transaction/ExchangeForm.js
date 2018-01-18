@@ -2,6 +2,7 @@ import React from "react"
 import { NavLink } from 'react-router-dom'
 import { roundingNumber } from "../../utils/converter"
 import { Link } from 'react-router-dom'
+import constants from "../../services/constants"
 
 const ExchangeForm = (props) => {
   function moveCursor() {
@@ -21,6 +22,8 @@ const ExchangeForm = (props) => {
   var errorSelectTokenToken = props.errors.selectTokenToken !== '' ? props.translate(props.errors.selectTokenToken) : ''
   var errorToken = errorSelectSameToken + errorSelectTokenToken
  // 
+ //var maxCap = props.sourceTokenSymbol === "ETH"?props.maxCap: props.maxCap*constants.MAX_CAP_PERCENT
+ var maxCap = props.maxCap
   var render = (
     <div>
       <div class="frame">
@@ -46,7 +49,7 @@ const ExchangeForm = (props) => {
                       <span class="error-text">{errorToken}</span>
                     }
                     {props.errors.sourceAmount !== '' &&
-                      <span class="error-text">{props.translate(props.errors.sourceAmount, { cap: props.maxCap })}</span>
+                      <span class="error-text">{props.translate(props.errors.sourceAmount, { cap: maxCap })}</span>
                     }
                   </label>
                   <div class="address-balance">

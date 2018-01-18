@@ -7,7 +7,8 @@ import constants from "../services/constants"
 import * as converter from "../utils/converter"
 import * as ethUtil from 'ethereumjs-util'
 import Tx from "../services/tx"
-
+import { getTranslate } from 'react-localize-redux';
+import { store } from '../store';
 
 function* broadCastTx(action) {
   const { ethereum, tx, account, data } = action.payload
@@ -432,6 +433,7 @@ function* updateRatePending(action) {
   const { ethereum, source, dest, sourceAmount, isManual, rateInit } = action.payload
   try {
     const rate = yield call(ethereum.call("getRate"), source, dest, sourceAmount)
+   // console.log(rate)
     yield put.sync(actions.updateRateExchangeComplete(rateInit, rate.expectedPrice, rate.slippagePrice))
     yield put(actions.caculateAmount())
   }
@@ -508,82 +510,58 @@ function* analyzeError(action) {
 }
 
 function* debug(input, blockno, ethereum) {
- // console.log(input, blockno)
   var networkIssues = {}
   var reserveIssues = {}
+  var translate = getTranslate(store.getState().locale)
   var gasCap = yield call([ethereum, ethereum.call("wrapperGetGasCap")], blockno)
-  //console.log(gasCap)
-  //console.log(input.gas_price)
-  //  console.log(converter.compareTwoNumber(input.gas_price, gasCap))
   if (converter.compareTwoNumber(input.gas_price, gasCap) === 1) {
-    networkIssues["gas_price"] = "Gas price exceeded max limit"
+    networkIssues["gas_price"] = translate('error.gas_price_exceeded_limit') || "Gas price exceeded max limit"
   }
-
-  //var remainStr = yield call([ethereum, ethereum.call("getAllowance")], input.source, input.owner)
-  //console.log(remainStr)
-  //console.log(input.srcAmount)
-  //console.log("step1")
-  // console.log(converter.compareTwoNumber(remainStr, input.srcAmount))
+  console.log(translate('import.from_private_key_input_title'))
   if (input.source !== constants.ETHER_ADDRESS) {
-  //  console.log("step1")
     if (converter.compareTwoNumber(input.value, 0) === 1) {
-   //   console.log("step2")
-      networkIssues["token_eher"] = "failed because of sending ether along the tx when it is trying to trade token to ether"
+      networkIssues["token_ether"] = translate('error.issue_token_ether') || "Failed because of sending ether along the tx when it is trying to trade token to ether"
     }
     var remainStr = yield call([ethereum, ethereum.call("getAllowance")], input.source, input.owner, blockno)
-  //  console.log("step3")
     if (converter.compareTwoNumber(remainStr, input.srcAmount) === -1) {
-    //  console.log("step4")
-      networkIssues["allowance"] = "failed because allowance is lower than srcAmount"
+      networkIssues["allowance"] = translate('error.issue_allowance') || "Failed because allowance is lower than srcAmount"
     }
     var balance = yield call([ethereum, ethereum.call("getTokenBalance")], input.source, input.owner, blockno)
-  //  console.log("step5")
     if (converter.compareTwoNumber(balance, input.srcAmount) === -1) {
-   //   console.log("step6")
-      networkIssues["balance"] = "failed because token balance is lower than srcAmount"
+      networkIssues["balance"] = translate('error.issue_balance') || "Failed because token balance is lower than srcAmount"
     }
   } else {
     if (converter.compareTwoNumber(input.value, input.srcAmount) !== 0) {
-  //    console.log("step7")
-      networkIssues["ether_amount"] = "failed because the user didn't send the exact amount of ether along"
+      networkIssues["ether_amount"] = translate('error.issue_ether_amount') || "Failed because the user didn't send the exact amount of ether along"
     }
   }
 
   if (input.source === constants.ETHER_ADDRESS) {
-   // console.log("step7.1")
     var userCap = yield call([ethereum, ethereum.call("getMaxCap")], input.owner, blockno)
-   // console.log("step7.5")
     if (converter.compareTwoNumber(input.srcAmount, userCap) === 1) {
-   //   console.log("step8")
-      networkIssues["user_cap"] = "failed because the source amount exceeded user cap"
+      networkIssues["user_cap"] = translate('error.issue_user_cap') || "Failed because the source amount exceeded user cap"
     }
   }
 
   if (input.dest === constants.ETHER_ADDRESS) {
-  //  console.log("step8.5")
     var userCap = yield call([ethereum, ethereum.call("getMaxCap")], input.owner, blockno)
-  //  console.log("step9")
     if (input.destAmount > userCap) {
-    //  console.log("step10")
-      networkIssues["user_cap"] = "failed because the source amount exceeded user cap"
+      networkIssues["user_cap"] = translate('error.issue_user_cap') || "Failed because the source amount exceeded user cap"
     }
   }
 
   //Reserve scops
-  //console.log()
   var rates = yield call([ethereum, ethereum.call("wrapperGetConversionRate")]
     , input.reserves[0], input, blockno)
-  if (rates.expectedPrice === 0) {
+  if (converter.compareTwoNumber(rates.expectedPrice, 0) === 0) {
     var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], input.reserves[0], input, blockno)
-    //console.log("step8")
     reserveIssues["reason"] = reasons
   } else {
     //var chosenReserve = yield call([ethereum, ethereum.call("wrapperGetChosenReserve")], input, blockno)
    // var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], chosenReserve, input, blockno)
-    // console.log("step9")
-    //console.log(rates)
+
     if(converter.compareTwoNumber(input.minConversionRate, rates.expectedPrice) === 1){
-      reserveIssues["reason"] = "Your min rate is too high!"
+      reserveIssues["reason"] = translate('error.min_rate_too_high') || "Your min rate is too high!"
     }
   }
   console.log(reserveIssues)

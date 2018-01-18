@@ -112,7 +112,7 @@
     "select_dest_token": "Select destination token",
     "select_trasfer_from_token": "SELECT \"TRANSFER FROM\" TOKEN",
 
-    "approve_exchange": "You need to grant permission for Kyber Wallet to interact with <strong>${ token }</strong> on this address",
+    "approve_exchange": "You need to grant permission for Kyber Wallet to interact with <strong>${ token }</strong> on address <strong>${address}</strong>",
     "eth_token_exchange": "ETH token exchange",
     "approve": "Approve"
   },
@@ -120,8 +120,8 @@
   "error": {
     "select_same_token": "Cannot exchange the same token",
     "select_token_token": "This token pair is not supported yet",
-    "source_amount_too_high": "Source amount is too high",
-    "source_amount_too_high_cap": "Source amount is over your cap. Your cap is ${ cap } ETH",
+    "source_amount_too_high": "Source amount is too high. Your balance is insufficient",
+    "source_amount_too_high_cap": "Source amount is over your cap. You should exchange smaller than ${ cap } ETH",
     "source_amount_too_small": "Source amount is too small",
     "source_amount_rate_error": "Cannot exchange at the moment",
     "source_amount_too_high_for_reserve": "Source amount is too high (pair is not available for trading at the moment)",
@@ -153,7 +153,14 @@
     "gas_price_not_number":"Gas price is not number",
     "rate_not_number":"Rate is not number",
     "gas_price_limit":"Gas price must be smaller than ${maxGas} Gwei",
-    "passphrase_error":"Key derivation failed"
+    "passphrase_error":"Key derivation failed",
+    "gas_price_exceeded_limit":"Gas price exceeded max limit",
+    "issue_token_ether":"Failed because of sending ether along the tx when it is trying to trade token to ether",
+    "issue_allowance":"Failed because allowance is lower than srcAmount",
+    "issue_balance":"Failed because token balance is lower than srcAmount",
+    "issue_ether_amount":"Failed because the user didn't send the exact amount of ether along",
+    "issue_user_cap":"Failed because the source amount exceeded user cap",
+    "min_rate_too_high":"Your min rate is too high!"
   },
 
   "import": {
@@ -206,11 +213,14 @@
   },
 
   "landing_page":{
-    "title": "Trust-Free Exchange  for Ethereum tokens",
+    "title": "Decentralized Exchange for Ethereum tokens",
     "trustless": "Trustless",
     "instant": "Instant",
     "liquid": "Liquid",
     "compatible": "Compatible",
     "get_started": "Get Started"
-  }
+  },
+
+  "product_feedback": "Product Feedback",
+  "help": "Help"
 }

@@ -1,0 +1,45 @@
+#footer{
+    margin:30px 0px;
+    letter-spacing: .5px;
+    font-size: 0.8rem;
+    line-height: 25px;
+
+    .emoji{
+        margin:0px 5px;
+    }
+}
+.footer-menu {
+    font-size: 0.8rem;
+    ul.links {
+      padding: 0;
+      list-style: none;
+      margin: 0px;
+      margin-top: 1rem;
+      > li {
+        display: inline-block;
+        &:not(:last-child) > a:after {
+          content: '|';
+          font-size: 12px;
+          font-weight: lighter;
+          color: $light-gray;
+          margin: 0 15px;
+        }
+        > a {
+          color: $medium-gray;
+          display: block;
+          
+          &:hover {
+            color: $dark-gray;
+          }
+        }
+        span{
+          vertical-align: middle;
+        }
+      }
+      @include breakpoint(small only){
+        padding: 10px 0;
+        margin: 0 auto 10px;
+        width: 70%;
+      }
+    }
+  }

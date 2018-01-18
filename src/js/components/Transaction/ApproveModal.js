@@ -10,7 +10,8 @@ const ApproveModal = (props) => {
           <div class="column">
             <center>
               <p class="message">
-              {props.translate('modal.approve_exchange', {token : props.token} ) || <span>You need to grant permission for Kyber Wallet to interact with  {props.token} on this address.</span>}
+              {props.translate('modal.approve_exchange', {token : props.token, address: props.address} ) 
+                      || <span>You need to grant permission for Kyber Wallet to interact with  {props.token} on address {props.address}.</span>}
               </p>
             </center>
           </div>

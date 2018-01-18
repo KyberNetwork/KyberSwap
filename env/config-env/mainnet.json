@@ -130,6 +130,7 @@
   "reserve": "0x582ea0af091ae0d98fdf08216cb2846711a65f6a",
   "network": "0x842182360dfae06c6a84e8a47d37aeeadb115694",
   "wrapper": "0x307d4d560d20bc2416aadfca79e10c22c424fdfC",
+  "trade_topic":"0xec0d3e799aa270a144d7e3be084ccfc657450e33ecea1b1a4154c95cedaae5c3",
   "endpoint": "wss://mainnet.infura.io/ws",
   "averageBlockTime": 15000,
   "networkId": 1,

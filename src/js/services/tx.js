@@ -42,7 +42,7 @@ export default class Tx {
             var theLog
             for (var i = 0; i < logs.length; i++) {
               if (logs[i].address.toLowerCase() == BLOCKCHAIN_INFO.network &&
-                logs[i].topics[0].toLowerCase() == constants.TRADE_TOPIC) {
+                logs[i].topics[0].toLowerCase() == BLOCKCHAIN_INFO.trade_topic) {
                 theLog = logs[i]
                 break
               }

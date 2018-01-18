@@ -65,6 +65,11 @@
 .w-100{
     width: 100%;
 }
+.text-xs-only-center{
+    @include breakpoint(small only){
+        text-align: center;
+    }
+}
 @include breakpoint(medium){
     .float-left-md{
         float: left;
