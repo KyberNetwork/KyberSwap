@@ -121,7 +121,7 @@
     "select_same_token": "无法和同种代币进行交易",
     "select_token_token": "这个代币交易对目前还不支持",
     "source_amount_too_high": "原始数量过高",
-    "source_amount_too_high_cap": "原始数量超过了你的额度。你的额度是${ cap }ETH",
+    "source_amount_too_high_cap": "原始数量超过了你的额度。你的额度是 ${ cap } ETH",
     "source_amount_too_small": "原始数量过低",
     "source_amount_rate_error": "当前无法交易",
     "source_amount_too_high_for_reserve": "原始数量过高 （交易对目前还不支持）",
