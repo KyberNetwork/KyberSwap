@@ -1,5 +1,5 @@
 import * as ethUtil from 'ethereumjs-util'
-import scrypt from 'scryptsy'
+//import scrypt from 'scryptsy'
 import crypto from 'crypto'
 
 function decipherBuffer(decipher, data) {

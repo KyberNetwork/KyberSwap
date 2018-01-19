@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+var CompressionPlugin = require('compression-webpack-plugin')
 
 var scriptConfig = function (env) {
   return {
@@ -61,6 +62,13 @@ var scriptConfig = function (env) {
           'process.env': {
             'NODE_ENV': JSON.stringify("production")
           }
+        }),
+        new CompressionPlugin({ 
+          asset: "[path].gz[query]",
+          algorithm: "gzip",
+          test: /\.js$|\.css$|\.html$/,
+          threshold: 10240,
+          minRatio: 0.8
         })
       ],
     devServer: {
