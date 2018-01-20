@@ -23,6 +23,7 @@
     "history": "^4.7.2",
     "jdenticon": "^1.7.2",
     "localforage": "^1.5.5",
+    "lodash": "^4.17.4",
     "raf": "^3.4.0",
     "react": "^16.2.0",
     "react-copy-to-clipboard": "^5.0.1",
