@@ -58,7 +58,7 @@
       "address": "0xcc112cd38362bf3c07d226768fd5869e65296083",
       "symbol": "SALT",
       "icon": "salt.svg",
-      "decimal": 18,
+      "decimal": 8,
       "usd_id":"salt"
     }
   },
