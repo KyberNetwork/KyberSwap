@@ -6,6 +6,7 @@ export default class HttpEthereumProvider extends BaseEthereumProvider {
         super(props)
         this.rpcUrl = props.url
         this.rpc = new Web3(new Web3.providers.HttpProvider(this.rpcUrl, 9000))
+        //console.log(this.rpc)
         this.connection = true
         this.initContract()        
         this.intervalId = null

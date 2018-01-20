@@ -51,10 +51,8 @@
     "scryptsy": "^2.0.0",
     "simple-node-logger": "^0.93.33",
     "sqlite3": "^3.1.13",
-    "swarm-js": "^0.1.37",
     "underscore": "^1.8.3",
     "web3": "^1.0.0-beta.18",
-    "web3-eth": "^1.0.0-beta.28",
     "web3-providers-ws": "^1.0.0-beta.28",
     "webpack-dev-server": "^2.9.7",
     "websocket": "^1.0.25"

@@ -433,8 +433,9 @@ function* updateRatePending(action) {
   const { ethereum, source, dest, sourceAmount, isManual, rateInit } = action.payload
   try {
     const rate = yield call(ethereum.call("getRate"), source, dest, sourceAmount)
-   // console.log(rate)
-    yield put.sync(actions.updateRateExchangeComplete(rateInit, rate.expectedPrice, rate.slippagePrice))
+    const expectedPrice = rate.expectedPrice ? rate.expectedPrice : "0"
+    const slippagePrice = rate.slippagePrice ? rate.slippagePrice : "0"
+    yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice))
     yield put(actions.caculateAmount())
   }
   catch (err) {
@@ -469,7 +470,6 @@ function* updateGasUsed(action) {
     }
     //console.log(txObj)
     var estimatedGas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
-    //console.log(estimatedGas)
     yield put(actions.setEstimateGas(estimatedGas))
   } catch (e) {
     console.log(e)
