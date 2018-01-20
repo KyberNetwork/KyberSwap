@@ -51,7 +51,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   isEditRate : false,
   slippageRate: 0,
 
-  throwOnFailure: false,
+  throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 1000000,
   gas_estimate: 100000,
   gasPrice: 20,
@@ -107,7 +107,7 @@ const INIT_TRANSFER_FORM_STATE = {
   amount: "",
   destAddress: "",
 
-  throwOnFailure: false,
+  throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 1000000,
   gas_estimate: 21000,
   gas_limit_transfer_eth: 21000,

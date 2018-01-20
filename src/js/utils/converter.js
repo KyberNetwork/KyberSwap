@@ -166,7 +166,7 @@ export function weiToGwei(number) {
 }
 
 export function toT(number, decimal, round) {
-  var bigNumber = new BigNumber(number)
+  var bigNumber = new BigNumber(number.toString())
   var result
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
     return number
