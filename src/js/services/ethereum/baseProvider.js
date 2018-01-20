@@ -221,13 +221,9 @@ export default class BaseEthereumProvider {
 
   exchangeData(sourceToken, sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate, walletId) {
-      console.log(sourceToken, sourceAmount, destToken, destAddress,
-        maxDestAmount, minConversionRate, walletId)
     var data = this.networkContract.methods.trade(
       sourceToken, sourceAmount, destToken, destAddress,
       maxDestAmount, minConversionRate, walletId).encodeABI()
-
-    console.log(data)
     return data
   }
 
