@@ -9,7 +9,7 @@
       ],
       "ws": "wss://mainnet.infura.io/ws"
     },
-    "history_endpoint": "https://cache.kyber.networkew",
+    "history_endpoint": "https://cache.kyber.network",
     "api_usd":"https://api.coinmarketcap.com",
     "tokens": {
       "ETH": {
