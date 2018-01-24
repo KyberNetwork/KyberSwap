@@ -11,15 +11,15 @@ const AnalyzelogModal = (props) => {
     )
     if (props.analyze.isAnalizeComplete) {
         var isEmpty = true
-        listErrors = Object.keys(x).map(key => {
-            if(Object.keys(x[key]).length > 0) isEmpty = false
-            var list = Object.keys(x[key]).map(keyItem => {
-                return (<div key={key + keyItem} className="reason-item">{x[key][keyItem]}</div>)
+        listErrors = Object.keys(props.analyze.analizeError).map(key => {
+            if(Object.keys(props.analyze.analizeError[key]).length > 0) isEmpty = false
+            var list = Object.keys(props.analyze.analizeError[key]).map(keyItem => {
+                return (<div key={key + keyItem} className="reason-item">{props.analyze.analizeError[key][keyItem]}</div>)
             })
             return list
         })
         listErrors = isEmpty ? (
-            <div className="reason-item">{props.translate('no_reason_found') || 'No any reason was found'}</div>
+            <div className="reason-item">{props.translate('transaction.no_reason_found') || 'No any reason was found'}</div>
         ) : listErrors
     }
 
