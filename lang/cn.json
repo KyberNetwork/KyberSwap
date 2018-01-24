@@ -55,6 +55,7 @@
     "analyze_error": "失败原因",
     "copied": "拷贝成功",
     "analyze": "显示原因",
+    "no_reason_found": "No any reason was found",
 
     "broadcast": "交易上链",
     "transaction": "交易",

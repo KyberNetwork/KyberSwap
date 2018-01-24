@@ -55,6 +55,7 @@
     "analyze_error": "Reasons the transaction failed",
     "copied": "Copied!",
     "analyze": "Show reasons",
+    "no_reason_found": "No any reason was found",
     
     "broadcast": "Broadcast",
     "transaction": "Transaction",
