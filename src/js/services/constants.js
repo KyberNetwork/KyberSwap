@@ -52,8 +52,8 @@ const INIT_EXCHANGE_FORM_STATE = {
   slippageRate: 0,
 
   throwOnFailure: "0x0000000000000000000000000000000000000000",
-  gas: 1000000,
-  gas_estimate: 100000,
+  gas: 330000,
+  gas_estimate: 330000,
   gasPrice: 20,
   maxGasPrice: 50,
   isEditGasPrice: false,
@@ -108,7 +108,7 @@ const INIT_TRANSFER_FORM_STATE = {
   destAddress: "",
 
   throwOnFailure: "0x0000000000000000000000000000000000000000",
-  gas: 1000000,
+  gas: 100000,
   gas_estimate: 21000,
   gas_limit_transfer_eth: 21000,
   gas_limit_transfer_token: 50000,
@@ -168,7 +168,7 @@ const CONNECTION_CHECKER = {
   isCheck: true
 }
 
-const STORAGE_KEY = "44"
+const STORAGE_KEY = "45"
 
 module.exports = {
   ERC20, KYBER_NETWORK, KYBER_WRAPPER, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,

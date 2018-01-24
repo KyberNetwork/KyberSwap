@@ -458,7 +458,7 @@ function* updateGasUsed(action) {
       destToken, destAddress,
       maxDestAmount, minConversionRate, throwOnFailure)
     //console.log(data)
-    var value = '0x0'
+    var value = '0'
     if (exchange.sourceTokenSymbol === 'ETH') {
       value = sourceAmount
     }
@@ -466,10 +466,11 @@ function* updateGasUsed(action) {
       from: destAddress,
       to: exchange.kyber_address,
       data: data,
-      value: sourceAmount
+      value: value,
     }
-    //console.log(txObj)
+    console.log(txObj)
     var estimatedGas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
+    console.log(estimatedGas)
     yield put(actions.setEstimateGas(estimatedGas))
   } catch (e) {
     console.log(e)
