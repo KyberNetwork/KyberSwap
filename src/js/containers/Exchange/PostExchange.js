@@ -51,6 +51,10 @@ import { RateBetweenToken } from "../Exchange"
 
 export default class PostExchange extends React.Component {
   clickExchange = () => {
+    if(this.props.form.maxCap == 0){
+      this.props.dispatch(utilActions.openInfoModal("transaction.transaction_error", "transaction.not_enable_exchange"))
+      return
+    }
     if (validators.anyErrors(this.props.form.errors)) return;
     if (this.props.form.step == 1) {
       if (!validators.anyErrors(this.props.form.errors)) {
@@ -155,9 +159,11 @@ export default class PostExchange extends React.Component {
     var destAmount = this.props.form.destAmount.toString()
     var sourceTokenSymbol = this.props.form.sourceTokenSymbol;
     var destTokenSymbol = this.props.form.destTokenSymbol
-    // var recap = `exchange ${this.props.form.sourceAmount.toString().slice(0, 7)}${this.props.form.sourceAmount.toString().length > 7 ? '...' : ''} ${this.props.form.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0, 7)}${this.getDesAmount().toString().length > 7 ? '...' : ''} ${this.props.form.destTokenSymbol}`
     return (
-      <p>{this.props.translate("transaction.about_to_exchange") || "You are about to exchange"}<br /><strong>{sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}</strong>&nbsp;{this.props.translate("transaction.for") || "for"}&nbsp;<strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}</strong></p>
+      <p>{this.props.translate("transaction.about_to_exchange") || "You are about to exchange"}
+        <br />
+        <span class="text-success"><strong>{sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}</strong>&nbsp;{this.props.translate("transaction.for") || "for"}&nbsp;<strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}</strong></span>
+      </p>
     )
   }
   getDesAmount = () => {
@@ -280,7 +286,9 @@ export default class PostExchange extends React.Component {
         onCancel={this.closeModal}
         passwordError={this.props.form.errors.passwordError || this.props.form.bcError.message}
         translate={this.props.translate}
-        isConfirming = {this.props.form.isFetchingGas}
+        isFetchingGas={this.props.form.isFetchingGas}
+        gasPrice={this.props.form.gasPrice}
+        gas={this.props.form.gas}
       />
     )
   }
@@ -289,6 +297,8 @@ export default class PostExchange extends React.Component {
       <ConfirmTransferModal recap={this.createRecap()}
         onCancel={this.closeModalConfirm}
         onExchange={this.processTx}
+        gasPrice={this.props.form.gasPrice}
+        gas={this.props.form.gas}
         isConfirming={this.props.form.isConfirming}
         isFetchingGas = {this.props.form.isFetchingGas}
         type="exchange"

@@ -476,7 +476,7 @@ function* updateGasUsed(action) {
     const destToken = exchange.destToken
     const maxDestAmount = converter.biggestNumber()
     const minConversionRate = converter.numberToHex(exchange.offeredRate)
-    const throwOnFailure = false
+    const throwOnFailure = "0x0000000000000000000000000000000000000000"
     var data = yield call([ethereum, ethereum.call("exchangeData")], sourceToken, sourceAmount,
       destToken, destAddress,
       maxDestAmount, minConversionRate, throwOnFailure)
