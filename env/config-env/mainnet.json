@@ -7,9 +7,9 @@
       "https://mainnet.infura.io/uF2YCXrIz7yUFEXd2yo0",
       "https://mainnet.infura.io/NhLyl78p5UrUgBN5GSty"
     ],
-    "ws": "wss://mainnet.infura.io/ws"
+    "ws": "wss://mainnet.infura.io"
   },
-  "history_endpoint": "https://cache.kyber.network",
+  "history_endpoint": "http://0.0.0.0:3001",
   "api_usd":"https://api.coinmarketcap.com",
   "tokens": {
     "ETH": {
