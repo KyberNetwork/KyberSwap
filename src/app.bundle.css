@@ -3502,6 +3502,12 @@
 .d-flex {
   display: flex; }
 
+.justify-content-between {
+  justify-content: space-between; }
+
+.justify-content-around {
+  justify-content: space-around; }
+
 .align-center {
   align-items: center; }
 
@@ -4334,6 +4340,21 @@ label.switch-caption {
       top: 9px;
       right: 25px;
       color: inherit; }
+    .gas-config .advanced-content .gas-price .gas-select {
+      margin-bottom: 10px;
+      margin-top: 15px; }
+      .gas-config .advanced-content .gas-price .gas-select button {
+        padding: 7px 13px;
+        border-radius: 20px;
+        background-color: #1b2e36;
+        color: #a5a5a5;
+        min-width: 80px;
+        border: 1px solid transparent;
+        cursor: pointer; }
+        .gas-config .advanced-content .gas-price .gas-select button:hover {
+          border-color: #3ee6c1;
+          color: #3ee6c1;
+          background-color: #2b4552; }
 
 .page-3 {
   background-color: #2a4552; }
@@ -4498,6 +4519,11 @@ ul.broadcast-steps {
     .reveal .content p {
       font-size: 14px;
       line-height: 1.7; }
+    .reveal .content .gas-configed {
+      width: 270px;
+      white-space: nowrap; }
+    .reveal .content hr {
+      border-color: #a5a5a5; }
   .reveal .footer {
     border-top: 1px solid #cae8e2;
     padding: 25px 10px;
@@ -4696,8 +4722,6 @@ ul.address-list {
     text-align: right;
     margin-left: 5px;
     color: #ffffff; }
-    .address-balance .value:hover {
-      color: #3ee6c1; }
 
 label.address-path-stamp {
   display: block;
