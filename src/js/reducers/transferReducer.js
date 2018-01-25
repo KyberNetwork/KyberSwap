@@ -164,6 +164,9 @@ const transfer = (state = initState, action) => {
       newState.termAgree = action.payload.value
       return newState
     }
+    case "TRANSFER.SET_GAS_USED":{
+      newState.gas = action.payload.gas
+    }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
       if(!newState.isEditGasPrice){
         newState.gasPrice = action.payload

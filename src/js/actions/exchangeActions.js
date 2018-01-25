@@ -313,17 +313,16 @@ export function resetMinRate() {
 }
 
 
-export function estimateGas(ethereum, exchange) {
+export function estimateGas() {
   return {
     type: "EXCHANGE.ESTIMATE_GAS_USED",
-    payload: { ethereum, exchange }
   }
 }
 
-export function setEstimateGas(estimatedGas) {
+export function setEstimateGas(gas) {
   return {
-    type: "EXCHANGE.SET_ESTIMATE_GAS_USED",
-    payload: { estimatedGas }
+    type: "EXCHANGE.SET_GAS_USED",
+    payload: { gas }
   }
 }
 

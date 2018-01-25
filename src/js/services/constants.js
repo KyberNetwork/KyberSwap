@@ -53,7 +53,7 @@ const INIT_EXCHANGE_FORM_STATE = {
 
   throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 330000,
-  gas_estimate: 330000,
+  gas_limit: 500000,
   gasPrice: 20,
   maxGasPrice: 50,
   isEditGasPrice: false,
@@ -108,10 +108,10 @@ const INIT_TRANSFER_FORM_STATE = {
   destAddress: "",
 
   throwOnFailure: "0x0000000000000000000000000000000000000000",
-  gas: 100000,
-  gas_estimate: 21000,
-  gas_limit_transfer_eth: 21000,
-  gas_limit_transfer_token: 50000,
+  gas: 21000,
+  // gas_estimate: 21000,
+  // gas_limit_transfer_eth: 21000,
+  // gas_limit_transfer_token: 50000,
   gasPrice: 20,
   isEditGasPrice: false,
   

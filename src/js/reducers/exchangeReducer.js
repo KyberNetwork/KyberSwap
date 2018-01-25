@@ -297,8 +297,8 @@ const exchange = (state = initState, action) => {
       newState.errors.rateError = ''
       return newState
     }
-    case "EXCHANGE.SET_ESTIMATE_GAS_USED": {
-      newState.gas_estimate = action.payload.estimatedGas
+    case "EXCHANGE.SET_GAS_USED": {
+      newState.gas = action.payload.gas
       return newState
     }
     case "EXCHANGE.SET_PREV_SOURCE": {

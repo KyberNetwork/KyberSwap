@@ -7,6 +7,7 @@ import * as ethUtil from 'ethereumjs-util'
 import Tx from "../services/tx"
 import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
 import { addTx } from '../actions/txActions'
+import { store } from "../store"
 
 function* broadCastTx(action) {
   const { ethereum, tx, account, data } = action.payload
@@ -127,7 +128,101 @@ function* transferMetamask(action, callService) {
   }
 }
 
+function* estimateGasUsed(action){
+  var state = store.getState()
+  var transfer = state.transfer
+
+  var tokens = state.tokens.tokens
+  var decimal = 18
+  var tokenSymbol = state.transfer.tokenSymbol
+  if (tokens[tokenSymbol]) {
+    decimal = tokens[tokenSymbol].decimal
+  }
+
+  var account = state.account.account
+  var fromAddr = account.address
+  yield call(calculateGasUse, fromAddr, transfer.tokenSymbol, transfer.token, decimal, transfer.amount)
+}
+
+
+
+function* estimateGasUsedWhenSelectToken(action){
+  const { symbol, address } = action.payload
+
+  var state = store.getState()
+  var transfer = state.transfer
+
+  var tokens = state.tokens.tokens
+  var decimal = 18
+  var tokenSymbol = symbol
+  if (tokens[tokenSymbol]) {
+    decimal = tokens[tokenSymbol].decimal
+  }
+
+  var account = state.account.account
+  var fromAddr = account.address
+
+  yield call(calculateGasUse, fromAddr, tokenSymbol, address, decimal, transfer.amount)
+}
+
+function* estimateGasUsedWhenChangeAmount(action){
+  var amount = action.payload
+
+  var state = store.getState()
+  var transfer = state.transfer
+  var tokens = state.tokens.tokens
+
+  var decimal = 18
+  var tokenSymbol = transfer.tokenSymbol
+  if (tokens[tokenSymbol]) {
+    decimal = tokens[tokenSymbol].decimal
+  }
+
+  var account = state.account.account
+  var fromAddr = account.address
+
+  yield call(calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimal, amount)
+}
+
+function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, sourceAmount){
+ 
+  try{
+    var state = store.getState()
+    var ethereum = state.connection.ethereum
+
+    const amount = converter.stringToHex(sourceAmount, tokenDecimal)
+    var gas = 0
+    var internalAdrr = "0x3cf628d49ae46b49b210f0521fbd9f82b461a9e1"
+    var txObj
+    if (tokenSymbol === 'ETH'){
+      txObj = {
+        from : fromAddr,
+        value: amount,
+        to:internalAdrr
+      }
+      gas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
+    }else{
+      var data = yield call([ethereum, ethereum.call("sendTokenData")],tokenAddr, amount, internalAdrr)
+      txObj = {
+        from : fromAddr,
+        value:"0",
+        to:tokenAddr,
+        data: data
+      }
+      gas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
+      gas = Math.round(gas * 120 / 100)
+    }
+    yield put(actions.setGasUsed(gas))
+  }catch(e){
+    console.log(e)
+  }
+}
+
 export function* watchTransfer() {
   yield takeEvery("TRANSFER.TX_BROADCAST_PENDING", broadCastTx)
   yield takeEvery("TRANSFER.PROCESS_TRANSFER", processTransfer)
+
+  yield takeEvery("TRANSFER.ESTIMATE_GAS_USED", estimateGasUsed)
+  yield takeEvery("TRANSFER.SELECT_TOKEN", estimateGasUsedWhenSelectToken)
+  yield takeEvery("TRANSFER.TRANSFER_SPECIFY_AMOUNT", estimateGasUsedWhenChangeAmount)
 }

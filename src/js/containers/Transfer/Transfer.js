@@ -144,9 +144,9 @@ export default class Transfer extends React.Component {
     )
 
     var gasPrice = stringToBigNumber(gweiToEth(this.props.transfer.gasPrice))
-    var totalGas = gasPrice.mul(this.props.transfer.gas_estimate)
+    var totalGas = gasPrice.mul(this.props.transfer.gas)
     var gasConfig = (
-      <TransactionConfig gas={this.props.transfer.gas_estimate}
+      <TransactionConfig gas={this.props.transfer.gas}
         gasPrice={this.props.transfer.gasPrice}
         gasHandler={this.specifyGas}
         gasPriceHandler={this.specifyGasPrice}

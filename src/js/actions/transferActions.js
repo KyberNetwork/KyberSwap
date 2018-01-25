@@ -198,4 +198,15 @@ export function setTermAndServices(value){
   }
 }
 
-export function estimateGasTransfer()
+export function estimateGasTransfer(){
+  return {
+    type: "TRANSFER.ESTIMATE_GAS_USED",
+  }
+}
+
+export function setGasUsed(gas){
+  return {
+    type: "TRANSFER.SET_GAS_USED",
+    payload: {gas}
+  }
+}

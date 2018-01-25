@@ -9,6 +9,7 @@ import * as ethUtil from 'ethereumjs-util'
 import Tx from "../services/tx"
 import { getTranslate } from 'react-localize-redux';
 import { store } from '../store';
+import BLOCKCHAIN_INFO from "../../../env"
 
 function* broadCastTx(action) {
   const { ethereum, tx, account, data } = action.payload
@@ -445,12 +446,26 @@ function* updateRatePending(action) {
 }
 
 function* updateGasUsed(action) {
+  var state = store.getState()
+  const ethereum = state.connection.ethereum
+  const exchange = state.exchange
+  const kyber_address = BLOCKCHAIN_INFO.network
+  var gas = exchange.gas_limit
+
+  var account = state.account.account
+  var destAddress = account.address
+
+  var tokens = state.tokens.tokens
+  var sourceDecimal = 18
+  var sourceTokenSymbol = exchange.sourceTokenSymbol
+  if (tokens[sourceTokenSymbol]) {
+    sourceDecimal = tokens[sourceTokenSymbol].decimal
+  }
+
   try {
-    const { ethereum, exchange } = action.payload
     const sourceToken = exchange.sourceToken
-    const sourceAmount = converter.stringToHex(exchange.sourceAmount, exchange.sourceDecimal)
+    const sourceAmount = converter.stringToHex(exchange.sourceAmount, sourceDecimal)
     const destToken = exchange.destToken
-    const destAddress = exchange.destAddress
     const maxDestAmount = converter.biggestNumber()
     const minConversionRate = converter.numberToHex(exchange.offeredRate)
     const throwOnFailure = false
@@ -464,17 +479,21 @@ function* updateGasUsed(action) {
     }
     var txObj = {
       from: destAddress,
-      to: exchange.kyber_address,
+      to: kyber_address,
       data: data,
       value: value,
     }
     console.log(txObj)
-    var estimatedGas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
-    console.log(estimatedGas)
-    yield put(actions.setEstimateGas(estimatedGas))
+    gas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
+    gas = gas * 120/100
+    if (gas > exchange.gas_limit) {
+      gas = exchange.gas_limit
+    }
   } catch (e) {
     console.log(e)
   }
+  console.log(gas)
+  yield put(actions.setEstimateGas(gas))
 }
 
 function* analyzeError(action) {
