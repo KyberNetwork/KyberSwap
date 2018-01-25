@@ -55,6 +55,11 @@ const INIT_EXCHANGE_FORM_STATE = {
   gas: 330000,
   gas_estimate: 330000,
   gasPrice: 20,
+  gasPriceSuggest: {
+    fastGas: 20,
+    standardGas: 20,
+    safeLowGas: 20
+  },
   maxGasPrice: 50,
   isEditGasPrice: false,
 
@@ -113,6 +118,12 @@ const INIT_TRANSFER_FORM_STATE = {
   gas_limit_transfer_eth: 21000,
   gas_limit_transfer_token: 50000,
   gasPrice: 20,
+  gasPriceSuggest: {
+    fastGas: 20,
+    standardGas: 20,
+    safeLowGas: 20
+  },
+  maxGasPrice: 50,
   isEditGasPrice: false,
   
   step: 1,

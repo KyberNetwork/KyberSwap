@@ -663,4 +663,18 @@ export default class BaseEthereumProvider {
     })
   }
 
+  getGasFromEthgasstation(){
+    return new Promise((resolve, rejected) => {
+      fetch(BLOCKCHAIN_INFO.gasstation_endpoint)
+      .then((response) => {
+        return response.json()
+      })
+      .then((data) => {
+        resolve(data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    })
+  }
 }

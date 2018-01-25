@@ -323,10 +323,17 @@ const exchange = (state = initState, action) => {
     }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
       if (!newState.isEditGasPrice) {
-        if (action.payload > newState.maxGasPrice) {
+        var { safeLowGas, standardGas, fastGas, defaultGas } = action.payload
+        if (fastGas > newState.maxGasPrice) {
+          newState.gasPriceSuggest.fastGas = +newState.maxGasPrice
+          newState.gasPriceSuggest.standardGas = +newState.maxGasPrice
+          newState.gasPriceSuggest.safeLowGas = +newState.maxGasPrice - newState.maxGasPrice * 30 / 100
           newState.gasPrice = newState.maxGasPrice
         } else {
-          newState.gasPrice = action.payload
+          newState.gasPriceSuggest.fastGas = fastGas
+          newState.gasPriceSuggest.standardGas = standardGas
+          newState.gasPriceSuggest.safeLowGas = safeLowGas
+          newState.gasPrice = defaultGas
         }
       }
       return newState

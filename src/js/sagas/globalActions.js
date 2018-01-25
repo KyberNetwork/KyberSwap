@@ -10,6 +10,8 @@ import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 
 import { getLanguage } from "../services/language"
 import Language from "../../../lang"
 
+import * as converter from "../utils/converter"
+
 export function* getLatestBlock(action) {
   const ethereum = action.payload
   const block = yield call(ethereum.call("getLatestBlock"))
@@ -104,27 +106,53 @@ export function* checkConnection(action) {
 }
 
 export function* setGasPrice(action) {
-  try{
+  var safeLowGas, standardGas, fastGas, defaultGas
+  try {
     const ethereum = action.payload
-    const gasPrice = yield call([ethereum, ethereum.call("getGasPrice")])
-    yield put(actions.setGasPriceComplete(gasPrice))
-  }catch(err)
-  {
-    console.log(err)
+    const gasStationPrice = yield call([ethereum, ethereum.call("getGasFromEthgasstation")])
+    var safeLowGas, standardGas, fastGas, defaultGas
+    safeLowGas = gasStationPrice.safeLow / 10
+    standardGas = defaultGas = gasStationPrice.average / 10
+    fastGas = gasStationPrice.fast / 10
+    yield put(actions.setGasPriceComplete(safeLowGas, standardGas, fastGas, defaultGas))
   }
-  
+  catch (err) {
+    console.log(err)
+    try {
+      const ethereum = action.payload
+      const gasPrice = yield call([ethereum, ethereum.call("getGasPrice")])
+      var gasPriceGwei = converter.weiToGwei(gasPrice)
+
+      if(gasPriceGwei >= 20){
+        defaultGas = 20
+        safeLowGas = 20
+        standardGas = +gasPriceGwei
+        fastGas = +gasPriceGwei * 1.3
+      } else {
+        standardGas = gasPriceGwei
+        safeLowGas = gasPriceGwei - gasPriceGwei * 30 / 100
+        fastGas = gasPriceGwei + gasPriceGwei * 30 / 100
+        defaultGas = standardGas
+      }
+
+
+      yield put(actions.setGasPriceComplete(safeLowGas, standardGas, fastGas, defaultGas))
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
 }
 
 export function* setMaxGasPrice(action) {
-  try{
+  try {
     const ethereum = action.payload
     const maxGasPrice = yield call(ethereum.call("getMaxGasPrice"))
     yield put(actionsExchange.setMaxGasPriceComplete(maxGasPrice))
-  }catch(err)
-  {
+  } catch (err) {
     console.log(err)
   }
-  
+
 }
 
 
