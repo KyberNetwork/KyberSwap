@@ -9,6 +9,7 @@ import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRat
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx } from "../../actions/txActions"
 import { updateRateExchange, estimateGas, analyzeError } from "../../actions/exchangeActions"
+import {estimateGasTransfer} from "../../actions/transferActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
 import { setConnection } from "../../actions/connectionActions"
@@ -98,6 +99,9 @@ export default class EthereumService extends React.Component {
     this.checkConnection()
 
     this.fetchGasprice()
+
+   // this.fetchGasExchange()
+   this.fetchGasTransfer()
 //    this.testAnalize()
   }
 
@@ -260,6 +264,10 @@ export default class EthereumService extends React.Component {
     store.dispatch(estimateGas(ethereum, {...state.exchange, sourceDecimal, kyber_address, destAddress}))
   }
 
+  fetchGasTransfer = () => {
+    var state = store.getState()
+    store.dispatch(estimateGasTransfer(ethereum, {...state.transfer}))
+  }
   checkConnection = () => {
     var state = store.getState()
     var checker = state.global.conn_checker

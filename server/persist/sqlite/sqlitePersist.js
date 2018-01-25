@@ -24,6 +24,9 @@ switch (dbName) {
   case "mainnet":
     filePath = path.join(__dirname, '/stores/mainnet.db')
     break
+  case "internal_mainnet":
+    filePath = path.join(__dirname, '/stores/internal_mainnet.db')
+    break
   default:
     filePath = path.join(__dirname, '/stores/temp.db')
     break
