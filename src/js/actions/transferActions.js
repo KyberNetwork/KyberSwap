@@ -197,3 +197,5 @@ export function setTermAndServices(value){
     payload: {value}
   }
 }
+
+export function estimateGasTransfer()

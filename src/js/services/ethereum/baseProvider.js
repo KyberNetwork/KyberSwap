@@ -201,7 +201,7 @@ export default class BaseEthereumProvider {
     //     .catch((err) => {
     //       reject(err)
     //     })
-    // })
+    // }) 
 
   }
 
