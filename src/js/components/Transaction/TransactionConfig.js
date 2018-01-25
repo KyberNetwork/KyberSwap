@@ -7,6 +7,10 @@ const TransactionConfig = (props) => {
     props.gasPriceHandler(value)
   }
 
+  function tooltipGasSuggest(time) {
+    return props.translate("transaction.transaction_time", {time: time })
+  }
+
   var caption = props.maxGasPrice ?
     props.translate("transaction.transaction_gasprice_50") || "Higher gas price, faster transaction. Max gas price: 50 Gwei" : 
     props.translate("transaction.transaction_gasprice") || "Higher gas price, faster transaction"
@@ -30,9 +34,14 @@ const TransactionConfig = (props) => {
                 <span className="unit text-lowercase">gwei</span>
                 {gasPriceError}
                 <div className="d-flex justify-content-between gas-select">
-                  <button onClick={() => specifyGasPrice(gasPriceSuggest.safeLowGas)}>Slow</button>
-                  <button onClick={() => specifyGasPrice(gasPriceSuggest.standardGas)}>Medium</button>
-                  <button onClick={() => specifyGasPrice(gasPriceSuggest.fastGas)}>Fast</button>
+                  <button onClick={() => specifyGasPrice(gasPriceSuggest.safeLowGas)} data-tip={tooltipGasSuggest(30)} data-for="low">Low</button>
+                  <ReactTooltip place="bottom" id="low" type="light" />
+
+                  <button onClick={() => specifyGasPrice(gasPriceSuggest.standardGas)} data-tip={tooltipGasSuggest(5)} data-for="standard">Standard</button>
+                  <ReactTooltip place="bottom" id="standard" type="light" />
+
+                  <button onClick={() => specifyGasPrice(gasPriceSuggest.fastGas)} data-tip={tooltipGasSuggest(2)} data-for="fast">Fast</button>
+                  <ReactTooltip place="bottom" id="fast" type="light" />
                 </div>
                 {props.translate("transaction.transaction_fee") || "Transaction Fee"}: <span className="text-success font-w-b">{props.totalGas} ETH</span>
               </div>

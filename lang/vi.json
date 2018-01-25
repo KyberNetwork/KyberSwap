@@ -67,6 +67,7 @@
     "current_address_balance": "Số dư hiện tại",
     "transaction_error": "Lỗi giao dịch",
     "not_enable_exchange": "Ví của bạn chưa thể giao dịch lúc này",
+    "transaction_time": "Thời gian giao dịch: < ${time} phút",
     "waiting_transaction": "Đang đợi giao dịch được xác thực",
 
     "about_to_exchange": "Bạn chuẩn bị chuyển đổi",
