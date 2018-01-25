@@ -54,6 +54,7 @@
     "analyze_error": "실패원인",
     "copied": "복사완료",
     "analyze": "원인 파악하기",
+    "no_reason_found": "No any reason was found",
 
     "broadcast": "전송",
     "transaction": "거래",
