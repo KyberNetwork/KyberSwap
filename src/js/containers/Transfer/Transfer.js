@@ -47,8 +47,7 @@ export default class Transfer extends React.Component {
     this.props.dispatch(specifyGasTransfer(value))
   }
 
-  specifyGasPrice = (event) => {
-    var value = event.target.value
+  specifyGasPrice = (value) => {
     this.props.dispatch(specifyGasPriceTransfer(value))
   }
 
@@ -159,6 +158,7 @@ export default class Transfer extends React.Component {
         totalGas={totalGas.toString()}
         translate={this.props.translate}
         advanced={this.props.transfer.advanced}
+        gasPriceSuggest={this.props.transfer.gasPriceSuggest}
       />
     )
 
