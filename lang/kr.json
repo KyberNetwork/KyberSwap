@@ -65,6 +65,7 @@
     "cound_not_broadcast": "블록체인에 거래를 전송 할 수 없습니다",
     "current_address_balance": "현재 주소 잔액",
     "transaction_error": "거래 오류",
+    "not_enable_exchange": "Your address is not enabled for exchange",
     "waiting_transaction": "거래 대기 중에 있습니다",
 
     "about_to_exchange": "환전을 시작합니다",

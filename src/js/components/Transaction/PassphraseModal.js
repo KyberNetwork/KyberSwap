@@ -1,4 +1,5 @@
 import React from "react"
+import { gweiToEth, stringToBigNumber } from "../../utils/converter"
 
 const PassphraseModal = (props) => {
   function submitTransaction(e) {
@@ -23,6 +24,9 @@ const PassphraseModal = (props) => {
       input.parentElement.classList.remove('unlock')
     }
   }
+
+  var gasPrice = stringToBigNumber(gweiToEth(props.gasPrice))
+  var totalGas = gasPrice.mul(props.gas)
   return (
     <div >
       <div className="title text-center">{props.translate("modal.enter_password") || "Enter Password"}</div>
@@ -32,6 +36,19 @@ const PassphraseModal = (props) => {
           <div className="column">
             <center>
               {props.recap}
+              <div className="gas-configed text-light">
+                <div class="d-flex justify-content-around">
+                  <p>Gas Price</p>
+                  <p>{props.gasPrice} Gwei</p>
+                </div>
+                <div class="d-flex justify-content-around">
+                  <p>{props.translate("transaction.transaction_fee") || "Transaction Fee"}</p>
+                  <p>{props.isFetchingGas ?
+                    <img src={require('../../../assets/img/waiting-white.svg')} /> 
+                    : <span>{totalGas.toString()}</span>
+                  } ETH</p>
+                </div>
+              </div>
               <label className={!!props.passwordError ? "error" : ""}>
                 <div className="input-reveal">
                   <input className="text-center" id="passphrase" type="password" 

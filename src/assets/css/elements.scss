@@ -489,6 +489,24 @@ label.switch-caption {
         right: 25px;
         color: inherit;
       }
+      .gas-select{
+        margin-bottom: 10px;
+        margin-top: 15px;
+        button{
+          padding: 7px 13px;
+          border-radius: 20px;
+          background-color: #1b2e36;
+          color: #a5a5a5;
+          min-width: 80px;
+          border: 1px solid transparent;
+          cursor: pointer;
+          &:hover{
+            border-color: $k-success;
+            color: $k-success;
+            background-color: #2b4552;
+          }
+        }
+      }
     }
   }
 }

@@ -92,8 +92,7 @@ export default class Exchange extends React.Component {
     this.props.dispatch(exchangeActions.specifyGas(value))
   }
 
-  specifyGasPrice = (event) => {
-    var value = event.target.value
+  specifyGasPrice = (value) => {
     this.props.dispatch(exchangeActions.specifyGasPrice(value + ""))
   }
 
@@ -260,6 +259,7 @@ export default class Exchange extends React.Component {
         totalGas={totalGas.toString()}
         translate={this.props.translate}
         minRate={<MinRate />}
+        gasPriceSuggest={this.props.exchange.gasPriceSuggest}
         advanced={this.props.exchange.advanced}
       />
     )

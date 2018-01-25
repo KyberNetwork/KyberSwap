@@ -66,6 +66,7 @@
     "cound_not_broadcast": "无法将您的交易上链至区块链",
     "current_address_balance": "当前地址余额",
     "transaction_error": "交易错误",
+    "not_enable_exchange": "Your address is not enabled for exchange",
     "waiting_transaction": "您的交易正在等待被挖掘",
 
     "about_to_exchange": "您将开始交易",
