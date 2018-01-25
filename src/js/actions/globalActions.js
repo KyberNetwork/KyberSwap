@@ -151,10 +151,10 @@ export function setGasPrice(ethereum){
   }
 }
 
-export function setGasPriceComplete(safeLowGas, standardGas, fastGas, defaultGas){
+export function setGasPriceComplete(suggestGasData){
   return {
     type: "GLOBAL.SET_GAS_PRICE_COMPLETE",
-    payload: {safeLowGas, standardGas, fastGas, defaultGas}
+    payload: suggestGasData
   }
 }
 
