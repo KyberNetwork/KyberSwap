@@ -44,7 +44,9 @@ export function* importNewAccount(action) {
   const { address, type, keystring, ethereum, tokens, metamask } = action.payload
   try {
     const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
-
+    yield put(actions.closeImportLoading())
+    yield put(actions.importNewAccountComplete(account))
+    yield put(goToRoute('/exchange'))
 
     var maxCapOneExchange = yield call([ethereum, ethereum.call("getMaxCap")], address)
     yield put(setCapExchange(maxCapOneExchange))
@@ -65,11 +67,11 @@ export function* importNewAccount(action) {
       },
     ]
     yield put(setRandomExchangeSelectedToken(randomToken))
-    yield call(ethereum.fetchRateExchange)
+    
     //todo set random token for exchange
-    yield put(actions.closeImportLoading())
-    yield put(actions.importNewAccountComplete(account))
-    yield put(goToRoute('/exchange'))
+    
+
+    yield call(ethereum.fetchRateExchange)
 
     const balanceTokens = yield call([ethereum, ethereum.call("getAllBalancesToken")], address, tokens)
     //map balance

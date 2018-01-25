@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 
-import { stringToHex, getDifferentAmount, toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber, stringToBigNumber, toEther } from "../../utils/converter"
+import { gweiToWei, stringToHex, getDifferentAmount, toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber, stringToBigNumber, toEther } from "../../utils/converter"
 
 import { PostExchangeWithKey, MinRate } from "../Exchange"
 import { ExchangeForm, TransactionConfig } from "../../components/Transaction"
@@ -103,10 +103,14 @@ export default class Exchange extends React.Component {
     if (token) {
       var balanceBig = stringToBigNumber(token.balance)
       if (tokenSymbol === "ETH") {
-        if (!balanceBig.greaterThanOrEqualTo(Math.pow(10, 17))) {
+        var gasLimit = this.props.exchange.gas_limit
+        var gasPrice = stringToBigNumber(gweiToWei(this.props.exchange.gasPrice))
+        var totalGas = gasPrice.mul(gasLimit)
+
+        if (!balanceBig.greaterThanOrEqualTo(totalGas)) {
           return false
         }
-        balanceBig = balanceBig.minus(Math.pow(10, 17))
+        balanceBig = balanceBig.minus(totalGas)
       }
       var balance = balanceBig.div(Math.pow(10, token.decimal)).toString()
       balance = toPrimitiveNumber(balance)
@@ -244,9 +248,9 @@ export default class Exchange extends React.Component {
     
 
     var gasPrice = stringToBigNumber(gweiToEth(this.props.exchange.gasPrice))
-    var totalGas = gasPrice.mul(this.props.exchange.gas_estimate)
+    var totalGas = gasPrice.mul(this.props.exchange.gas)
     var gasConfig = (
-      <TransactionConfig gas={this.props.exchange.gas_estimate}
+      <TransactionConfig gas={this.props.exchange.gas}
         gasPrice={this.props.exchange.gasPrice}
         maxGasPrice={this.props.exchange.maxGasPrice}
         gasHandler={this.specifyGas}

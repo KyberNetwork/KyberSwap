@@ -130,7 +130,10 @@ export function toTWei(number) {
 }
 
 export function gweiToWei(number) {
-  var bigNumber = new BigNumber(number)
+  if (number === "" || isNaN(number)) {
+    return "0"
+  }
+  var bigNumber = new BigNumber(number.toString())
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
     return number
   } else if (acceptableTyping(number)) {

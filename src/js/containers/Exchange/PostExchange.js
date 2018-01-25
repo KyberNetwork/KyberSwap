@@ -65,15 +65,18 @@ export default class PostExchange extends React.Component {
         //check account type
         switch (this.props.account.type) {
           case "keystore":
+            this.props.dispatch(exchangeActions.fetchGas())
             this.props.dispatch(exchangeActions.openPassphrase())
             break
           case "privateKey":
+            this.props.dispatch(exchangeActions.fetchGas())
             this.props.dispatch(exchangeActions.showConfirm())
             break
           case "trezor":
           case "ledger":
           case "metamask":
             if (this.props.form.sourceTokenSymbol === "ETH") {
+              this.props.dispatch(exchangeActions.fetchGas())
               this.props.dispatch(exchangeActions.showConfirm())
             } else {
               this.checkTokenBalanceOfColdWallet()
@@ -277,6 +280,7 @@ export default class PostExchange extends React.Component {
         onCancel={this.closeModal}
         passwordError={this.props.form.errors.passwordError || this.props.form.bcError.message}
         translate={this.props.translate}
+        isConfirming = {this.props.form.isFetchingGas}
       />
     )
   }
@@ -286,6 +290,7 @@ export default class PostExchange extends React.Component {
         onCancel={this.closeModalConfirm}
         onExchange={this.processTx}
         isConfirming={this.props.form.isConfirming}
+        isFetchingGas = {this.props.form.isFetchingGas}
         type="exchange"
         translate={this.props.translate}
         title={this.props.translate("modal.confirm_exchange_title") || "Exchange confirm"}

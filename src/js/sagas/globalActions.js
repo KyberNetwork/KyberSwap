@@ -9,6 +9,10 @@ import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 
 
 import { getLanguage } from "../services/language"
 import Language from "../../../lang"
+import constants from "../services/constants"
+
+
+import * as converter from "../utils/converter"
 
 export function* getLatestBlock(action) {
   const ethereum = action.payload
@@ -103,28 +107,71 @@ export function* checkConnection(action) {
   }
 }
 
-export function* setGasPrice(action) {
-  try{
-    const ethereum = action.payload
-    const gasPrice = yield call([ethereum, ethereum.call("getGasPrice")])
-    yield put(actions.setGasPriceComplete(gasPrice))
-  }catch(err)
-  {
-    console.log(err)
+function compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas){
+  if (fastGas > constants.MAX_GAS_PRICE) {
+    var returnSuggest = {}
+    returnSuggest.fastGas = constants.MAX_GAS_PRICE
+    returnSuggest.standardGas = constants.MAX_GAS_PRICE
+    returnSuggest.safeLowGas = constants.MAX_GAS_PRICE - constants.MAX_GAS_PRICE * 30 / 100
+    returnSuggest.defaultGas = constants.MAX_GAS_PRICE
+    return returnSuggest
+  } else {
+    return {safeLowGas, standardGas, fastGas, defaultGas}
   }
-  
+}
+
+export function* setGasPrice(action) {
+  var safeLowGas, standardGas, fastGas, defaultGas
+  try {
+    if(env !== "mainnet") throw "get suggest rate from node"
+
+    const ethereum = action.payload
+    const gasStationPrice = yield call([ethereum, ethereum.call("getGasFromEthgasstation")])
+    var safeLowGas, standardGas, fastGas, defaultGas
+    safeLowGas = gasStationPrice.safeLow / 10
+    standardGas = defaultGas = gasStationPrice.average / 10
+    fastGas = gasStationPrice.fast / 10
+
+    var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas)
+    yield put(actions.setGasPriceComplete(compareWithMax))
+  }
+  catch (err) {
+    console.log(err)
+    try {
+      const ethereum = action.payload
+      const gasPrice = yield call([ethereum, ethereum.call("getGasPrice")])
+      var gasPriceGwei = converter.weiToGwei(gasPrice)
+
+      if(gasPriceGwei >= 20){
+        defaultGas = 20
+        safeLowGas = 20
+        standardGas = +gasPriceGwei
+        fastGas = +gasPriceGwei * 1.3
+      } else {
+        standardGas = gasPriceGwei
+        safeLowGas = gasPriceGwei - gasPriceGwei * 30 / 100
+        fastGas = gasPriceGwei + gasPriceGwei * 30 / 100
+        defaultGas = standardGas
+      }
+
+      var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas)
+      yield put(actions.setGasPriceComplete(compareWithMax))
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
 }
 
 export function* setMaxGasPrice(action) {
-  try{
+  try {
     const ethereum = action.payload
     const maxGasPrice = yield call(ethereum.call("getMaxGasPrice"))
     yield put(actionsExchange.setMaxGasPriceComplete(maxGasPrice))
-  }catch(err)
-  {
+  } catch (err) {
     console.log(err)
   }
-  
+
 }
 
 
