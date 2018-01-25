@@ -19,6 +19,9 @@ const MAX_CAP_PERCENT = 0.95
 const MAX_CAP_ONE_EXCHANGE_BASE_VALUE = "10000000000000000000" //10 ETH
 const MAX_CAP_ONE_EXCHANGE_BASE_RESERVE = 0.5 //50% 
 
+
+const MAX_GAS_PRICE = 50
+
 // const NODE_ENDPOINT = "https://kovan.kyber.network"
 const ETHER_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 //const NETWORK_ADDRESS = "0x00a8a6f8db6793174d500b0eb9e1f5b2402f80c3"
@@ -55,6 +58,11 @@ const INIT_EXCHANGE_FORM_STATE = {
   gas: 330000,
   gas_limit: 500000,
   gasPrice: 20,
+  gasPriceSuggest: {
+    fastGas: 20,
+    standardGas: 20,
+    safeLowGas: 20
+  },
   maxGasPrice: 50,
   isEditGasPrice: false,
 
@@ -113,6 +121,12 @@ const INIT_TRANSFER_FORM_STATE = {
   // gas_limit_transfer_eth: 21000,
   // gas_limit_transfer_token: 50000,
   gasPrice: 20,
+  gasPriceSuggest: {
+    fastGas: 20,
+    standardGas: 20,
+    safeLowGas: 20
+  },
+  maxGasPrice: 50,
   isEditGasPrice: false,
   
   step: 1,
@@ -174,5 +188,5 @@ module.exports = {
   ERC20, KYBER_NETWORK, KYBER_WRAPPER, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,
   KYBER_WALLET_DATA, INIT_EXCHANGE_FORM_STATE, INIT_TRANSFER_FORM_STATE,
   RATE_EPSILON, IDLE_TIME_OUT, HISTORY_EXCHANGE, STORAGE_KEY, CONNECTION_CHECKER,
-  MAX_CAP_ONE_EXCHANGE_BASE_VALUE, MAX_CAP_ONE_EXCHANGE_BASE_RESERVE, MAX_CAP_PERCENT
+  MAX_CAP_ONE_EXCHANGE_BASE_VALUE, MAX_CAP_ONE_EXCHANGE_BASE_RESERVE, MAX_CAP_PERCENT, MAX_GAS_PRICE
 }

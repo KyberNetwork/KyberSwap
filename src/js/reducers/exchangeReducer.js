@@ -46,34 +46,34 @@ const exchange = (state = initState, action) => {
         newState.sourceTokenSymbol = action.payload.symbol
         newState.sourceToken = action.payload.address
 
-        if(newState.sourceTokenSymbol === 'ETH'){
-          if(newState.destTokenSymbol === 'ETH'){
+        if (newState.sourceTokenSymbol === 'ETH') {
+          if (newState.destTokenSymbol === 'ETH') {
             newState.destTokenSymbol = 'KNC'
-            newState.destToken = BLOCKCHAIN_INFO.tokens['KNC'].address  
+            newState.destToken = BLOCKCHAIN_INFO.tokens['KNC'].address
           }
-        }else{
+        } else {
           newState.destTokenSymbol = 'ETH'
-          newState.destToken = BLOCKCHAIN_INFO.tokens['ETH'].address  
+          newState.destToken = BLOCKCHAIN_INFO.tokens['ETH'].address
         }
       } else if (action.payload.type === "des") {
         newState.destTokenSymbol = action.payload.symbol
         newState.destToken = action.payload.address
 
-        if(newState.destTokenSymbol === 'ETH'){
-          if(newState.sourceTokenSymbol === 'ETH'){
+        if (newState.destTokenSymbol === 'ETH') {
+          if (newState.sourceTokenSymbol === 'ETH') {
             newState.sourceTokenSymbol = 'KNC'
-            newState.sourceToken = BLOCKCHAIN_INFO.tokens['KNC'].address  
+            newState.sourceToken = BLOCKCHAIN_INFO.tokens['KNC'].address
           }
-        }else{
+        } else {
           newState.sourceTokenSymbol = 'ETH'
-          newState.sourceToken = BLOCKCHAIN_INFO.tokens['ETH'].address  
+          newState.sourceToken = BLOCKCHAIN_INFO.tokens['ETH'].address
         }
       }
       //reset all error
       for (var key in newState.errors) {
         newState.errors[key] = ""
       }
-      
+
       newState.selected = true
       newState.isEditRate = false
       return newState
@@ -143,9 +143,9 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.UPDATE_RATE":
       const { rateInit, expectedPrice, slippagePrice, rateInitSlippage } = action.payload
 
-      
-      var slippageRate = slippagePrice === "0" ? rateInitSlippage:slippagePrice
-      var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice   
+
+      var slippageRate = slippagePrice === "0" ? rateInitSlippage : slippagePrice
+      var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
 
       newState.slippageRate = slippagePrice
       newState.offeredRate = expectedRate
@@ -323,11 +323,11 @@ const exchange = (state = initState, action) => {
     }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
       if (!newState.isEditGasPrice) {
-        if (action.payload > newState.maxGasPrice) {
-          newState.gasPrice = newState.maxGasPrice
-        } else {
-          newState.gasPrice = action.payload
-        }
+        var { safeLowGas, standardGas, fastGas, defaultGas } = action.payload
+        newState.gasPriceSuggest.fastGas = fastGas
+        newState.gasPriceSuggest.standardGas = standardGas
+        newState.gasPriceSuggest.safeLowGas = safeLowGas
+        newState.gasPrice = defaultGas
       }
       return newState
     }
@@ -342,13 +342,13 @@ const exchange = (state = initState, action) => {
       }
       return newState
     }
-    case "EXCHANGE.ANALYZE_ERROR":{
+    case "EXCHANGE.ANALYZE_ERROR": {
       newState.isAnalize = true
       return newState
     }
-    case "EXCHANGE.SET_ANALYZE_ERROR":{
+    case "EXCHANGE.SET_ANALYZE_ERROR": {
       const { networkIssues, reserveIssues } = action.payload
-      newState.analizeError = {networkIssues, reserveIssues}
+      newState.analizeError = { networkIssues, reserveIssues }
       newState.isAnalize = false
       newState.isAnalizeComplete = true
       return newState

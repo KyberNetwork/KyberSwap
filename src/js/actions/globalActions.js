@@ -151,17 +151,22 @@ export function setGasPrice(ethereum){
   }
 }
 
-export function setGasPriceComplete(gasPrice){
-  var gasPriceGwei = converter.weiToGwei(gasPrice)
-  var gasPriceFixed = gasPriceGwei > 20? 20: Math.ceil(gasPriceGwei)
+export function setGasPriceComplete(suggestGasData){
   return {
     type: "GLOBAL.SET_GAS_PRICE_COMPLETE",
-    payload: gasPriceFixed
+    payload: suggestGasData
   }
 }
 
 export function visitExchange(){
   return {
     type: "GLOBAL.VISIT_EXCHANGE",
+  }
+}
+
+export function caculateGasPrice(gasStationPrice){
+  return {
+    type: "GLOBAL.CACULATE_GASPRICE",
+    payload: gasStationPrice
   }
 }
