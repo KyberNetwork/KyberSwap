@@ -9,6 +9,7 @@ import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRat
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx } from "../../actions/txActions"
 import { updateRateExchange, estimateGas, analyzeError } from "../../actions/exchangeActions"
+import {estimateGasTransfer} from "../../actions/transferActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
 import { setConnection } from "../../actions/connectionActions"
@@ -99,7 +100,8 @@ export default class EthereumService extends React.Component {
 
     this.fetchGasprice()
 
-   // this.fetchGasExchange()
+    //this.fetchGasExchange()
+    //this.fetchGasTransfer()
 //    this.testAnalize()
   }
 
@@ -247,21 +249,41 @@ export default class EthereumService extends React.Component {
     if (!account.address) {
       return
     }
-    var ethereum = state.connection.ethereum
-    var exchange = state.exchange
-    var tokens = state.tokens.tokens
-
-    var sourceDecimal = 18
-    var sourceTokenSymbol = exchange.sourceTokenSymbol
-    if (tokens[sourceTokenSymbol]) {
-      sourceDecimal = tokens[sourceTokenSymbol].decimal
+    var pathname = state.router.location.pathname
+    if (pathname !== "/exchange"){
+      return
     }
 
-    var kyber_address = BLOCKCHAIN_INFO.network
-    var destAddress = account.address
-    store.dispatch(estimateGas(ethereum, {...state.exchange, sourceDecimal, kyber_address, destAddress}))
+    // var ethereum = state.connection.ethereum
+    // var exchange = state.exchange
+    // var tokens = state.tokens.tokens
+
+    // var sourceDecimal = 18
+    // var sourceTokenSymbol = exchange.sourceTokenSymbol
+    // if (tokens[sourceTokenSymbol]) {
+    //   sourceDecimal = tokens[sourceTokenSymbol].decimal
+    // }
+
+    // var kyber_address = BLOCKCHAIN_INFO.network
+    // var destAddress = account.address
+    // store.dispatch(estimateGas(ethereum, {...state.exchange, sourceDecimal, kyber_address, destAddress}))
+
+    store.dispatch(estimateGas())
   }
 
+  fetchGasTransfer = () => {
+    var state = store.getState()
+    var account = state.account.account
+    if (!account.address) {
+      return
+    }
+
+    var pathname = state.router.location.pathname
+    if (pathname !== "/transfer"){
+      return
+    }
+    store.dispatch(estimateGasTransfer())
+  }
   checkConnection = () => {
     var state = store.getState()
     var checker = state.global.conn_checker

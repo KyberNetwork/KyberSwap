@@ -54,6 +54,7 @@
     "analyze_error": "실패원인",
     "copied": "복사완료",
     "analyze": "원인 파악하기",
+    "no_reason_found": "No any reason was found",
 
     "broadcast": "전송",
     "transaction": "거래",
@@ -64,6 +65,7 @@
     "cound_not_broadcast": "블록체인에 거래를 전송 할 수 없습니다",
     "current_address_balance": "현재 주소 잔액",
     "transaction_error": "거래 오류",
+    "not_enable_exchange": "Your address is not enabled for exchange",
     "waiting_transaction": "거래 대기 중에 있습니다",
 
     "about_to_exchange": "환전을 시작합니다",

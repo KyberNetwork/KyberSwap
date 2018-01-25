@@ -55,6 +55,7 @@
     "analyze_error": "Reasons the transaction failed",
     "copied": "Copied!",
     "analyze": "Show reasons",
+    "no_reason_found": "No any reason was found",
     
     "broadcast": "Broadcast",
     "transaction": "Transaction",
@@ -65,6 +66,7 @@
     "cound_not_broadcast": "Couldn't broadcast the transaction to the blockchain",
     "current_address_balance": "Current address balance",
     "transaction_error": "Transaction error",
+    "not_enable_exchange": "Your address is not enabled for exchange",
     "waiting_transaction": "Waiting for the transaction to be mined",
 
     "about_to_exchange": "You are about to exchange",
