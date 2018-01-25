@@ -123,7 +123,7 @@ function compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas){
 export function* setGasPrice(action) {
   var safeLowGas, standardGas, fastGas, defaultGas
   try {
-    if(env !== "mainnet") throw "get suggest rate from node"
+   // if((env !== "mainnet") || (env !== "internal_mainnet"))  throw "get suggest rate from node"
 
     const ethereum = action.payload
     const gasStationPrice = yield call([ethereum, ethereum.call("getGasFromEthgasstation")])

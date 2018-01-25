@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { roundingNumber } from "../../utils/converter"
 import { Link } from 'react-router-dom'
 import constants from "../../services/constants"
+import ReactTooltip from 'react-tooltip'
 
 const ExchangeForm = (props) => {
   function moveCursor() {
@@ -57,8 +58,12 @@ const ExchangeForm = (props) => {
                     <a className="value" onClick={() => {
                       props.setAmount()
                       setTimeout(moveCursor, 0);
-                    }} title={props.balance.value}>
-                      {props.balance.roundingValue} {props.sourceTokenSymbol}
+                    }}>
+                      <span title={props.balance.value}>
+                        {props.balance.roundingValue} {props.sourceTokenSymbol}
+                      </span>
+                      <span class="k k-info k-2x ml-3" data-tip="Click to exchange all balance" data-for="balance-notice-tip" currentitem="false"></span>
+                      <ReactTooltip place="right" id="balance-notice-tip" type="light"/>
                     </a>
                   </div>
                 </div>
