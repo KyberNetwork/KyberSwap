@@ -167,6 +167,14 @@ const transfer = (state = initState, action) => {
     case "TRANSFER.SET_GAS_USED":{
       newState.gas = action.payload.gas
     }
+    case "TRANSFER.FETCH_GAS":{
+      newState.isFetchingGas = true
+      return newState
+    }
+    case "TRANSFER.FETCH_GAS_SUCCESS":{
+      newState.isFetchingGas = false
+      return newState
+    }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
       if (!newState.isEditGasPrice) {
         var { safeLowGas, standardGas, fastGas, defaultGas } = action.payload

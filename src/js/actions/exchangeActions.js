@@ -367,3 +367,15 @@ export function setAnalyzeError(networkIssues, reserveIssues){
     payload: { networkIssues, reserveIssues }
   }
 }
+
+
+export function fetchGas(){
+  return {
+    type: "EXCHANGE.FETCH_GAS"
+  }
+}
+export function fetchGasSuccess(){
+  return {
+    type: "EXCHANGE.FETCH_GAS_SUCCESS"
+  }
+}

@@ -44,6 +44,9 @@ function* selectToken(action) {
 
   yield put(actions.checkSelectToken())
   yield call(ethereum.fetchRateExchange)
+
+  //calculate gas use
+  yield call(updateGasUsed)
 }
 
 export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
@@ -445,6 +448,11 @@ function* updateRatePending(action) {
   }
 }
 
+function* fetchGas(action){
+  yield call(updateGasUsed)
+  yield put(actions.fetchGasSuccess())
+}
+
 function* updateGasUsed(action) {
   var state = store.getState()
   const ethereum = state.connection.ethereum
@@ -483,16 +491,16 @@ function* updateGasUsed(action) {
       data: data,
       value: value,
     }
-    console.log(txObj)
+    //console.log(txObj)
     gas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
-    gas = gas * 120/100
+    gas = Math.round(gas * 120/100)
     if (gas > exchange.gas_limit) {
       gas = exchange.gas_limit
     }
   } catch (e) {
     console.log(e)
   }
-  console.log(gas)
+ // console.log(gas)
   yield put(actions.setEstimateGas(gas))
 }
 
@@ -600,4 +608,7 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.UPDATE_RATE_PENDING", updateRatePending)
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", updateGasUsed)
   yield takeEvery("EXCHANGE.ANALYZE_ERROR", analyzeError)
+
+  yield takeEvery("EXCHANGE.INPUT_CHANGE", updateGasUsed)
+  yield takeEvery("EXCHANGE.FETCH_GAS", fetchGas)
 }

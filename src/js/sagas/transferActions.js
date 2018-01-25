@@ -184,8 +184,26 @@ function* estimateGasUsedWhenChangeAmount(action){
   yield call(calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimal, amount)
 }
 
+
+function* fetchGas(){
+  var state = store.getState()
+  var transfer = state.transfer
+  var tokens = state.tokens.tokens
+
+  var decimal = 18
+  var tokenSymbol = transfer.tokenSymbol
+  if (tokens[tokenSymbol]) {
+    decimal = tokens[tokenSymbol].decimal
+  }
+
+  var account = state.account.account
+  var fromAddr = account.address
+
+  yield call(calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimal, transfer.amount)
+  yield put(actions.fetchGasSuccess())
+}
+
 function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, sourceAmount){
- 
   try{
     var state = store.getState()
     var ethereum = state.connection.ethereum
@@ -225,4 +243,5 @@ export function* watchTransfer() {
   yield takeEvery("TRANSFER.ESTIMATE_GAS_USED", estimateGasUsed)
   yield takeEvery("TRANSFER.SELECT_TOKEN", estimateGasUsedWhenSelectToken)
   yield takeEvery("TRANSFER.TRANSFER_SPECIFY_AMOUNT", estimateGasUsedWhenChangeAmount)
+  yield takeEvery("TRANSFER.FETCH_GAS", fetchGas)
 }

@@ -181,6 +181,7 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.HIDE_APPROVE": {
       newState.confirmApprove = false
+      newState.isApproving = false
       return newState
     }
     case "EXCHANGE.SHOW_APPROVE": {
@@ -351,6 +352,14 @@ const exchange = (state = initState, action) => {
       newState.analizeError = { networkIssues, reserveIssues }
       newState.isAnalize = false
       newState.isAnalizeComplete = true
+      return newState
+    }
+    case "EXCHANGE.FETCH_GAS":{
+      newState.isFetchingGas = true
+      return newState
+    }
+    case "EXCHANGE.FETCH_GAS_SUCCESS":{
+      newState.isFetchingGas = false
       return newState
     }
   }
