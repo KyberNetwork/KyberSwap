@@ -67,6 +67,7 @@
     "current_address_balance": "Current address balance",
     "transaction_error": "Transaction error",
     "not_enable_exchange": "Your address is not enabled for exchange",
+    "transaction_time": "Transaction time: < ${time} minutes",
     "waiting_transaction": "Waiting for the transaction to be mined",
 
     "about_to_exchange": "You are about to exchange",
