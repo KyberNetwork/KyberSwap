@@ -165,7 +165,13 @@
     "issue_balance":"입력하신 토큰 금액이 보유 토큰 잔액보다 많습니다.",
     "issue_ether_amount":"전송하실 이더리움 수치를 정확히 넣어 주셔야 합니다.",
     "issue_user_cap":"입력하신 토큰 금액이 사용자 총 한도를 넘었습니다.",
-    "min_rate_too_high":"입력하신 최저 가격이 너무 높습니다."
+    "min_rate_too_high":"입력하신 최저 가격이 너무 높습니다.",
+
+    "ledger_global_err": "<div class='text-left'>Cannot connect to your Ledger. Please check if:<br/>- Your Ledger is properly plugged in.<br/>- You have logged into your Ledger.<br/>- You have launched Ethereum Application on your Ledger.<br/>- Browser Support has been enabled in your Ledger.  Learn to enable Browser Support <a href=\"${link}\" target=\"_blank\">here</a>.</div>",
+    "need_to_config_env_ledger": "You need to configure your Linux device to access Ledger. Instruction <a href=\"${link}\" target=\"_blank\">here</a>.",
+    "invalid_path_or_session_expired": "Cannot get address from this path. Please check your path is valid or Ledger is connected.",
+    "path_is_invalid": "Invalid path. Please choose another one.",
+    "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue."
   },
 
   "import": {

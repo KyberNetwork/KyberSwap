@@ -165,7 +165,13 @@
     "issue_balance":"交易失败，由于代币余额低于scrAmount",
     "issue_ether_amount":"交易失败，由于用户没有发送准确的eth数量",
     "issue_user_cap":"交易失败，由于原始数量超过了用户限额。",
-    "min_rate_too_high":"你设置的最交易低价格太高了！"
+    "min_rate_too_high":"你设置的最交易低价格太高了！",
+
+    "ledger_global_err": "<div class='text-left'>Cannot connect to your Ledger. Please check if:<br/>- Your Ledger is properly plugged in.<br/>- You have logged into your Ledger.<br/>- You have launched Ethereum Application on your Ledger.<br/>- Browser Support has been enabled in your Ledger. Learn to enable Browser Support <a href=\"${link}\" target=\"_blank\">here</a>.</div>",
+    "need_to_config_env_ledger": "You need to configure your Linux device to access Ledger. Instruction <a href=\"${link}\" target=\"_blank\">here</a>.",
+    "invalid_path_or_session_expired": "Cannot get address from this path. Please check your path is valid or Ledger is connected.",
+    "path_is_invalid": "Invalid path. Please choose another one.",
+    "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue."
   },
 
   "import": {
