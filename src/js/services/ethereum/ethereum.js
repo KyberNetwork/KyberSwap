@@ -26,7 +26,8 @@ export default class EthereumService extends React.Component {
     this.wsUrl = BLOCKCHAIN_INFO.connections.ws
     // this.wsUrl = "ws://localhost:8546"
     this.httpProvider = this.getHttpProvider()
-    this.wsProvider = this.getWebsocketProvider()
+    //this.wsProvider = this.getWebsocketProvider()
+    this.wsProvider = false
 
     this.initProvider(props.default)
   }

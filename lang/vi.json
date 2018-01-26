@@ -65,8 +65,12 @@
     "broadcasting_blockchain": "Đang truyền dữ liêu ra mạng",
     "cound_not_broadcast": "Không thể gửi giao dịch của bạn đến blockchain",
     "current_address_balance": "Số dư hiện tại",
+
     "transaction_error": "Lỗi giao dịch",
-    "not_enable_exchange": "Ví của bạn chưa thể giao dịch lúc này",
+    
+    "notification": "Thồng báo",
+    "not_enable_exchange": "Địa chỉ của bạn không phù hợp để trao đổi tại thời điểm hiện tại.",
+
     "transaction_time": "Thời gian giao dịch: < ${time} phút",
     "waiting_transaction": "Đang đợi giao dịch được xác thực",
 

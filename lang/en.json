@@ -65,8 +65,12 @@
     "broadcasting_blockchain": "Broadcasting the transaction to the blockchain",
     "cound_not_broadcast": "Couldn't broadcast the transaction to the blockchain",
     "current_address_balance": "Current address balance",
+
     "transaction_error": "Transaction error",
-    "not_enable_exchange": "Your address is not enabled for exchange",
+
+    "notification": "Notification",
+    "not_enable_exchange": "Your address is not eligible for exchange at the momment. Come back later!",
+
     "transaction_time": "Transaction time: < ${time} minutes",
     "waiting_transaction": "Waiting for the transaction to be mined",
 

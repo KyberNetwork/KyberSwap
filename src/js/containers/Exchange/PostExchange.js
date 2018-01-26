@@ -52,7 +52,7 @@ import { RateBetweenToken } from "../Exchange"
 export default class PostExchange extends React.Component {
   clickExchange = () => {
     if(this.props.form.maxCap == 0){
-      this.props.dispatch(utilActions.openInfoModal("transaction.transaction_error", "transaction.not_enable_exchange"))
+      this.props.dispatch(utilActions.openInfoModal("transaction.notification", "transaction.not_enable_exchange"))
       return
     }
     if (validators.anyErrors(this.props.form.errors)) return;

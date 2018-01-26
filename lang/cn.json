@@ -66,7 +66,10 @@
     "cound_not_broadcast": "无法将您的交易上链至区块链",
     "current_address_balance": "当前地址余额",
     "transaction_error": "交易错误",
-    "not_enable_exchange": "Your address is not enabled for exchange",
+
+    "notification": "Notification",
+    "not_enable_exchange": "Your address is not eligible for exchange at the momment. Come back later!",
+
     "transaction_time": "Transaction time: < ${time} minutes",
     "waiting_transaction": "您的交易正在等待被挖掘",
 

@@ -498,7 +498,7 @@ function* updateGasUsed(action) {
       gas = exchange.gas_limit
     }
   } catch (e) {
-    console.log(e)
+    console.log(e.message)
   }
  // console.log(gas)
   yield put(actions.setEstimateGas(gas))
