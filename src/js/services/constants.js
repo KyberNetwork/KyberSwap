@@ -119,6 +119,7 @@ const INIT_TRANSFER_FORM_STATE = {
 
   throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 21000,
+  gas_limit: 100000,
   isFetchingGas: false,
   // gas_estimate: 21000,
   // gas_limit_transfer_eth: 21000,

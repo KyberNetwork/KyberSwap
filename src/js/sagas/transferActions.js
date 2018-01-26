@@ -204,11 +204,11 @@ function* fetchGas(){
 }
 
 function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, sourceAmount){
-  try{
     var state = store.getState()
     var ethereum = state.connection.ethereum
-
+    var transfer = state.transfer
     const amount = converter.stringToHex(sourceAmount, tokenDecimal)
+    var gasLimit = transfer.gas_limit
     var gas = 0
     var internalAdrr = "0x3cf628d49ae46b49b210f0521fbd9f82b461a9e1"
     var txObj
@@ -218,22 +218,33 @@ function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, source
         value: amount,
         to:internalAdrr
       }
-      gas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
-    }else{
-      var data = yield call([ethereum, ethereum.call("sendTokenData")],tokenAddr, amount, internalAdrr)
-      txObj = {
-        from : fromAddr,
-        value:"0",
-        to:tokenAddr,
-        data: data
+      try{
+        gas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
+        yield put(actions.setGasUsed(gas))
+      }catch(e){
+        console.log(e.message)
+        yield put(actions.setGasUsed(gasLimit))
       }
-      gas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
-      gas = Math.round(gas * 120 / 100)
+    }else{
+      try{
+        //var destAddr = transfer.destAddress
+        var data = yield call([ethereum, ethereum.call("sendTokenData")],tokenAddr, amount, internalAdrr)
+        txObj = {
+          from : fromAddr,
+          value:"0",
+          to:tokenAddr,
+          data: data
+        }
+        gas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
+        console.log(gas)
+        gas = Math.round(gas * 130 / 100)
+        console.log(gas)
+        yield put(actions.setGasUsed(gas))
+      }catch(e){
+        console.log(e.message)
+        yield put(actions.setGasUsed(gasLimit))
+      }
     }
-    yield put(actions.setGasUsed(gas))
-  }catch(e){
-    console.log(e)
-  }
 }
 
 export function* watchTransfer() {
