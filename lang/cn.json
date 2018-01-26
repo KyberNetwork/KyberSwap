@@ -158,6 +158,8 @@
     "network_not_match_unknow": "Metamask需要连接到${expectedName}",
     "not_supported": "不支持",
     "metamask_not_install":"无法连接至metamask。请确认您已经安装了metamask。",
+    "browser_not_support_metamask": "Metamask is not supported on ${browser}, use Chrome or FireFox to use instead.",
+    "browser_not_support_ledger": "Ledger is not supported on ${browser}, use Chrome to use instead.",
 
     "gas_price_not_number":"燃料价格不是数字",
     "rate_not_number":"交易价格不是数字",
