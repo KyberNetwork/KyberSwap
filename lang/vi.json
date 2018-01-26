@@ -156,6 +156,8 @@
     "network_not_match_unknow": "Metamask cần chạy ${expectedName}",
     "not_supported": "Không hỗ trợ",
     "metamask_not_install":"Không thể kết nối đến Metamask. Hãy chắc chắn rằng Metamask của bạn đã được cài",
+    "browser_not_support_metamask": "Metamask không được hỗ trợ trên ${browser}, bạn hãy dùng Chrome or FireFox để sử dụng",
+    "browser_not_support_ledger": "Ledger không được hỗ trợ trên ${browser}, bạn hãy dùng Chrome để sử dụng",
 
     "gas_price_not_number":"Giá Gas không phải là số",
     "rate_not_number":"Rate không là số",

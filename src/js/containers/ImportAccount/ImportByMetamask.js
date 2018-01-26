@@ -5,6 +5,7 @@ import { ImportByMetamaskView } from "../../components/ImportAccount"
 import BLOCKCHAIN_INFO from "../../../../env"
 import Web3Service from "../../services/web3"
 import { getTranslate } from 'react-localize-redux'
+import bowser from 'bowser'
 
 @connect((store) => {
   var tokens = store.tokens.tokens
@@ -23,6 +24,12 @@ import { getTranslate } from 'react-localize-redux'
 export default class ImportByMetamask extends React.Component {
 
   connect = (e) => {
+    let browser = bowser.name
+		if(browser != 'Chrome' && browser != 'Firefox'){
+      let erroMsg = this.props.translate("error.browser_not_support_metamask", {browser: browser}) || `Metamask is not supported on ${browser}, you can use Chrome or Firefox instead.`
+			this.props.dispatch(throwError(erroMsg))
+			return
+		}
     if (typeof web3 === "undefined") {
       this.props.dispatch(throwError(this.props.translate('error.metamask_not_install') || 'Cannot connect to metamask. Please make sure you have metamask installed'))
       return

@@ -157,7 +157,8 @@
     "network_not_match_unknow": "Metamask should be on ${expectedName}",
     "not_supported": "지원하지 않습니다",
     "metamask_not_install":"메타마스크에 연결할 수 없습니다. 메타마스크가 설치 되어 있는지 확인 해 주세요.",
-
+    "browser_not_support_metamask": "Metamask is not supported on ${browser}, use Chrome or FireFox to use instead.",
+    "browser_not_support_ledger": "Ledger is not supported on ${browser}, use Chrome to use instead.",
 
     "gas_price_not_number":"Gas 가격은 숫자만 입력하셔야 합니다.",
     "rate_not_number":"가격은 숫자만 입력하셔야 합니다.",

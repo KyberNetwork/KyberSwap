@@ -159,6 +159,8 @@
     "network_not_match_unknow": "Metamask should be on ${expectedName}",
     "not_supported": "not supported",
     "metamask_not_install":"Cannot connect to metamask. Please make sure you have metamask installed",
+    "browser_not_support_metamask": "Metamask is not supported on ${browser},you can use Chrome or FireFox instead.",
+    "browser_not_support_ledger": "Ledger is not supported on ${browser},you can use Chrome instead.",
 
     "gas_price_not_number":"Gas price is not number",
     "rate_not_number":"Rate is not number",
