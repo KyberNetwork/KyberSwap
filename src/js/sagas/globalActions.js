@@ -10,7 +10,6 @@ import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 
 import { getLanguage } from "../services/language"
 import Language from "../../../lang"
 import constants from "../services/constants"
-import { store } from '../store'
 
 import * as converter from "../utils/converter"
 import { store } from '../store'

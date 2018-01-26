@@ -227,8 +227,8 @@ function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, source
       }
     }else{
       try{
-        //var destAddr = transfer.destAddress
-        var data = yield call([ethereum, ethereum.call("sendTokenData")],tokenAddr, amount, internalAdrr)
+        var destAddr = transfer.destAddress !== "" ? transfer.destAddress : internalAdrr
+        var data = yield call([ethereum, ethereum.call("sendTokenData")],tokenAddr, amount, destAddr)
         txObj = {
           from : fromAddr,
           value:"0",
@@ -236,9 +236,7 @@ function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, source
           data: data
         }
         gas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
-        console.log(gas)
-        gas = Math.round(gas * 130 / 100)
-        console.log(gas)
+        gas = Math.round(gas * 120 / 100)
         yield put(actions.setGasUsed(gas))
       }catch(e){
         console.log(e.message)
