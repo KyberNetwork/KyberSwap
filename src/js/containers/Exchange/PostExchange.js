@@ -56,7 +56,9 @@ export default class PostExchange extends React.Component {
       return
     }
     if(this.props.form.maxCap == 0){
-      this.props.dispatch(utilActions.openInfoModal("transaction.notification", "transaction.not_enable_exchange"))
+      let titleModal = this.props.translate('transaction.transaction_error') || 'Transaction error'
+      let contentModal = this.props.translate('transaction.not_enable_exchange') || 'Your address is not enabled for exchange'
+      this.props.dispatch(utilActions.openInfoModal(titleModal, contentModal))
       return
     }
     if (validators.anyErrors(this.props.form.errors)) return;
@@ -68,7 +70,9 @@ export default class PostExchange extends React.Component {
       if (this.validateExchange()) {
         //agree terms and services
         if (!this.props.form.termAgree) {
-          return this.props.dispatch(utilActions.openInfoModal("layout.terms_of_service", "error.term_error"))
+          let titleModal = this.props.translate('layout.terms_of_service') || 'Terms of Service'
+          let contentModal = this.props.translate('error.term_error') || 'You must agree terms and services!'
+          return this.props.dispatch(utilActions.openInfoModal(titleModal, contentModal))
         }
         //check account type
         switch (this.props.account.type) {
