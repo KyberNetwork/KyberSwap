@@ -70,6 +70,7 @@
     
     "notification": "Thồng báo",
     "not_enable_exchange": "Địa chỉ của bạn không phù hợp để trao đổi tại thời điểm hiện tại.",
+    "kyber_down" : "Kyber hiện tại không hỗ trợ trao đổi. <br/>Xin bạn vui lòng quay laị sau!",
 
     "transaction_time": "Thời gian giao dịch: < ${time} phút",
     "waiting_transaction": "Đang đợi giao dịch được xác thực",

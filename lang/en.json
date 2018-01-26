@@ -69,7 +69,8 @@
     "transaction_error": "Transaction error",
 
     "notification": "Notification",
-    "not_enable_exchange": "Your address is not eligible for exchange at the momment. Come back later!",
+    "not_enable_exchange": "Your address is not eligible for exchange at the momment. Please come back later!",
+    "kyber_down" : "Kyber exchange is not enabled at the moment.<br/> Please come back later!",
 
     "transaction_time": "Transaction time: < ${time} minutes",
     "waiting_transaction": "Waiting for the transaction to be mined",

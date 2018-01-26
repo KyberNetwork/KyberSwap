@@ -51,6 +51,10 @@ import { RateBetweenToken } from "../Exchange"
 
 export default class PostExchange extends React.Component {
   clickExchange = () => {
+    if(!this.props.form.kyber_enabled){
+      this.props.dispatch(utilActions.openInfoModal("transaction.notification", "transaction.kyber_down"))
+      return
+    }
     if(this.props.form.maxCap == 0){
       this.props.dispatch(utilActions.openInfoModal("transaction.notification", "transaction.not_enable_exchange"))
       return

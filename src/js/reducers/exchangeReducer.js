@@ -362,6 +362,10 @@ const exchange = (state = initState, action) => {
       newState.isFetchingGas = false
       return newState
     }
+    case "EXCHANGE.SET_KYBER_ENABLE":{
+      newState.kyber_enabled = action.payload
+      return newState
+    }
   }
   return state
 }

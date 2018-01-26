@@ -597,6 +597,19 @@ function* debug(input, blockno, ethereum) {
   yield put(actions.setAnalyzeError(networkIssues, reserveIssues))
 }
 
+function* checkKyberEnable(){
+  var state = store.getState()
+  const ethereum = state.connection.ethereum
+  try{
+    var enabled = yield call([ethereum, ethereum.call("checkKyberEnable")])
+    yield put(actions.setKyberEnable(enabled))
+  }catch(e){
+    console.log(e.message)
+    yield put(actions.setKyberEnable(false))
+  }
+  
+}
+
 
 export function* watchExchange() {
   yield takeEvery("EXCHANGE.TX_BROADCAST_PENDING", broadCastTx)
@@ -611,4 +624,5 @@ export function* watchExchange() {
 
   yield takeEvery("EXCHANGE.INPUT_CHANGE", updateGasUsed)
   yield takeEvery("EXCHANGE.FETCH_GAS", fetchGas)
+  yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
 }

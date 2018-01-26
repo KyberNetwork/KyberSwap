@@ -305,6 +305,20 @@ export default class BaseEthereumProvider {
     })
   }
 
+  checkKyberEnable(){
+    return new Promise((resolve, reject) => {
+      this.networkContract.methods.enabled().call()
+        .then((result) => {
+          if (result != null) {
+            resolve(result)
+          }
+        })
+        .catch((err) => {
+          // console.log(err)
+          reject(err)
+        })
+    })
+  }
 
   sendRawTransaction(tx) {
     return new Promise((resolve, rejected) => {
@@ -583,7 +597,7 @@ export default class BaseEthereumProvider {
       var decoded = abiDecoder.decodeMethod(data);
       resolve(decoded.params)
     })
-  }
+  }  
 
   wrapperGetGasCap(input, blockno) {
     return new Promise((resolve, reject) => {
