@@ -4,12 +4,14 @@ import { signLedgerTransaction, connectLedger } from "../../services/device/devi
 import * as ethUtil from 'ethereumjs-util'
 
 import { store } from "../../store"
+import { CONFIG_ENV_LEDGER_LINK, LEDGER_SUPPORT_LINK } from "../constants"
 import { getTranslate } from 'react-localize-redux'
 
 const defaultDPath = "m/44'/60'/0'";
 
 export default class Ledger {
-  getPublicKey = (path = defaultDPath) => {
+  
+  getPublicKey = (path = defaultDPath, isOpenModal) => {
     var translate = getTranslate(store.getState().locale)
     return new Promise((resolve, reject) => {
       connectLedger().then((eth) => {
@@ -19,20 +21,33 @@ export default class Ledger {
             resolve(result);
           })
           .fail((err) => {
+            let errorMsg
             switch (err) {
-							case 'Invalid status 6801':
-							case 'Invalid status 6a80':
-							case 'Invalid status 6804':
-              reject(translate("error.check_right_application_selected") || 'Check to make sure the right application is selected')
-								break;
-							default:
-              reject(translate("error.cannot_connect_ledger") || 'Cannot connect to ledger')
+              case 'Invalid status 6801':
+                if (isOpenModal) {
+                  errorMsg = translate("error.invalid_path_or_session_expired") || 'Cannot get address from this path. Please check your path is valid or Ledger is connected.'
+                } else {
+                  errorMsg = translate("error.ledger_time_out") || 'Your session on Ledger is expired. Please log in  again to continue.'
+                }
+                break
+              case 'Invalid status 6a80':
+              case 'Invalid status 6804':
+                errorMsg = translate("error.path_is_invalid") || 'Invalid path. Please choose another one.'
+                break
+              default:
+                if(err.errorCode == 1){
+                  let link = CONFIG_ENV_LEDGER_LINK
+                  errorMsg = translate("error.need_to_config_env_ledger", {link: link})
+                }else{
+                  let link = LEDGER_SUPPORT_LINK
+                  errorMsg = translate("error.ledger_global_err", {link: link})
+                }
             }
+            reject(errorMsg)
           });
       });
     });
   }
-
 
   callSignTransaction = (funcName, ...args) => {
     const { txParams, keystring, } = keyService[funcName](...args)

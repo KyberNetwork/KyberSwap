@@ -71,7 +71,7 @@ export default class ImportByDevice extends React.Component {
 			this.props.dispatch(throwError("cannot find device service"))	
 			return
 		}
-		this.props.deviceService.getPublicKey(selectedPath)
+		this.props.deviceService.getPublicKey(selectedPath, this.state.modalOpen)
 			.then((result) => {
 				this.dPath = (dpath != 0) ? result.dPath : dpath;
 				this.generateAddress(result);
