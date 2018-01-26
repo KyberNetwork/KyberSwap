@@ -8,7 +8,7 @@ import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRat
         updateHistoryExchange, checkConnection, setGasPrice, setMaxGasPrice } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx } from "../../actions/txActions"
-import { updateRateExchange, estimateGas, analyzeError } from "../../actions/exchangeActions"
+import { updateRateExchange, estimateGas, analyzeError, checkKyberEnable } from "../../actions/exchangeActions"
 import {estimateGasTransfer} from "../../actions/transferActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
@@ -26,7 +26,8 @@ export default class EthereumService extends React.Component {
     this.wsUrl = BLOCKCHAIN_INFO.connections.ws
     // this.wsUrl = "ws://localhost:8546"
     this.httpProvider = this.getHttpProvider()
-    this.wsProvider = this.getWebsocketProvider()
+    //this.wsProvider = this.getWebsocketProvider()
+    this.wsProvider = false
 
     this.initProvider(props.default)
   }
@@ -99,6 +100,8 @@ export default class EthereumService extends React.Component {
     this.checkConnection()
 
     this.fetchGasprice()
+
+    this.checkKyberEnable()
 
     //this.fetchGasExchange()
     //this.fetchGasTransfer()
@@ -289,6 +292,10 @@ export default class EthereumService extends React.Component {
     var checker = state.global.conn_checker
     var ethereum = state.connection.ethereum
     store.dispatch(checkConnection(ethereum, checker.count, checker.maxCount, checker.isCheck))
+  }
+
+  checkKyberEnable  = () => {
+    store.dispatch(checkKyberEnable())
   }
 
   call(fn) {

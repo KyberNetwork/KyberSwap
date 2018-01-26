@@ -14,7 +14,7 @@ export function* createNewConnection(action) {
   // var ethereum = action.payload.ethereum
   // var ethereum = state.connection.ethereum
   yield put(setMaxGasPrice(connectionInstance))
-  const watchConnectionTask = yield fork(watchToSwitchConnection, connectionInstance)
+//  const watchConnectionTask = yield fork(watchToSwitchConnection, connectionInstance)
 
   //yield take('GLOBAL.CLEAR_SESSION')
   //yield cancel(watchConnectionTask)

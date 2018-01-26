@@ -379,3 +379,16 @@ export function fetchGasSuccess(){
     type: "EXCHANGE.FETCH_GAS_SUCCESS"
   }
 }
+
+export function checkKyberEnable(){
+  return {
+    type: "EXCHANGE.CHECK_KYBER_ENABLE"
+  }
+}
+
+export function setKyberEnable(enable){
+  return {
+    type: "EXCHANGE.SET_KYBER_ENABLE",
+    payload: enable
+  }
+}

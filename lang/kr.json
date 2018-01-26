@@ -64,8 +64,12 @@
     "broadcasting_blockchain": "블록체인에 거래를 전송 중에 있습니다",
     "cound_not_broadcast": "블록체인에 거래를 전송 할 수 없습니다",
     "current_address_balance": "현재 주소 잔액",
+
     "transaction_error": "거래 오류",
-    "not_enable_exchange": "Your address is not enabled for exchange",
+    "notification": "Notification",
+    "not_enable_exchange": "Your address is not eligible for exchange at the moment. Come back later!",
+    "kyber_down" : "Kyber exchange is not enabled at the momment. <br/>Please come back later!",
+
     "transaction_time": "Transaction time: < ${time} minutes",
     "waiting_transaction": "거래 대기 중에 있습니다",
     "click_to_ex_all_balance": "Click to exchange all balance",
