@@ -13,6 +13,7 @@ import constants from "../services/constants"
 
 
 import * as converter from "../utils/converter"
+import { store } from '../store'
 
 export function* getLatestBlock(action) {
   const ethereum = action.payload
@@ -107,13 +108,13 @@ export function* checkConnection(action) {
   }
 }
 
-function compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas){
-  if (fastGas > constants.MAX_GAS_PRICE) {
+function compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
+  if (fastGas > maxGas) {
     var returnSuggest = {}
-    returnSuggest.fastGas = constants.MAX_GAS_PRICE
-    returnSuggest.standardGas = constants.MAX_GAS_PRICE
-    returnSuggest.safeLowGas = constants.MAX_GAS_PRICE - constants.MAX_GAS_PRICE * 30 / 100
-    returnSuggest.defaultGas = constants.MAX_GAS_PRICE
+    returnSuggest.fastGas = maxGas
+    returnSuggest.standardGas = maxGas
+    returnSuggest.safeLowGas = maxGas - maxGas * 30 / 100
+    returnSuggest.defaultGas = maxGas
     return returnSuggest
   } else {
     return {safeLowGas, standardGas, fastGas, defaultGas}
@@ -122,17 +123,21 @@ function compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas){
 
 export function* setGasPrice(action) {
   var safeLowGas, standardGas, fastGas, defaultGas
+  var state = store.getState()
+  var maxGasPrice = state.exchange.maxGasPrice
   try {
    // if((env !== "mainnet") || (env !== "internal_mainnet"))  throw "get suggest rate from node"
 
     const ethereum = action.payload
     const gasStationPrice = yield call([ethereum, ethereum.call("getGasFromEthgasstation")])
     var safeLowGas, standardGas, fastGas, defaultGas
+
     safeLowGas = gasStationPrice.safeLow / 10
-    standardGas = defaultGas = gasStationPrice.average / 10
+    standardGas = defaultGas = ( gasStationPrice.average / 10 + gasStationPrice.fast / 10) / 2
+
     fastGas = gasStationPrice.fast / 10
 
-    var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas)
+    var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
     yield put(actions.setGasPriceComplete(compareWithMax))
   }
   catch (err) {
@@ -154,7 +159,7 @@ export function* setGasPrice(action) {
         defaultGas = standardGas
       }
 
-      var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas)
+      var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
       yield put(actions.setGasPriceComplete(compareWithMax))
     }
     catch (err) {
