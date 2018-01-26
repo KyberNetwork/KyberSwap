@@ -10,7 +10,7 @@ import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 
 import { getLanguage } from "../services/language"
 import Language from "../../../lang"
 import constants from "../services/constants"
-
+import { store } from '../store'
 
 import * as converter from "../utils/converter"
 
@@ -26,8 +26,6 @@ export function* updateHistoryExchange(action) {
   const newLogs = yield call(ethereum.call("getLogOneColumn"), page, itemPerPage)
   yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
 }
-
-
 
 export function* goToRoute(action) {
   yield put(push(action.payload));
@@ -94,7 +92,10 @@ export function* checkConnection(action) {
         return
       }
       if (count === maxCount) {
-        yield put(actionsUtils.openInfoModal("error.error_occurred", "error.network_error"))
+        let translate = getTranslate(store.getState().locale)
+        let titleModal = translate('error.error_occurred') || 'Error occurred'
+        let contentModal = translate('error.network_error') || 'Cannot connect to node right now. Please check your network!'
+        yield put(actionsUtils.openInfoModal(titleModal, contentModal))
         yield put(closeImportLoading())
         yield put(actions.updateCountConnection(++count))
         return

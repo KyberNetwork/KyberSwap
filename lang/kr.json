@@ -68,6 +68,8 @@
     "not_enable_exchange": "Your address is not enabled for exchange",
     "transaction_time": "Transaction time: < ${time} minutes",
     "waiting_transaction": "거래 대기 중에 있습니다",
+    "click_to_ex_all_balance": "Click to exchange all balance",
+    "click_to_transfer_all_balance": "Click to transfer all balance",
 
     "about_to_exchange": "환전을 시작합니다",
     "about_to_transfer": "송금을 시작합니다",

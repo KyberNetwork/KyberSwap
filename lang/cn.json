@@ -69,6 +69,8 @@
     "not_enable_exchange": "Your address is not enabled for exchange",
     "transaction_time": "Transaction time: < ${time} minutes",
     "waiting_transaction": "您的交易正在等待被挖掘",
+    "click_to_ex_all_balance": "Click to exchange all balance",
+    "click_to_transfer_all_balance": "Click to transfer all balance",
 
     "about_to_exchange": "您将开始交易",
     "about_to_transfer": "您将开始转移",

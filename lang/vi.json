@@ -69,6 +69,8 @@
     "not_enable_exchange": "Ví của bạn chưa thể giao dịch lúc này",
     "transaction_time": "Thời gian giao dịch: < ${time} phút",
     "waiting_transaction": "Đang đợi giao dịch được xác thực",
+    "click_to_ex_all_balance": "Trao đổi toàn bộ tài khoản",
+    "click_to_transfer_all_balance": "Chuyển toàn bộ tài khoản",
 
     "about_to_exchange": "Bạn chuẩn bị chuyển đổi",
     "about_to_transfer": "Bạn chuẩn bị gửi",

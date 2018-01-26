@@ -69,6 +69,8 @@
     "not_enable_exchange": "Your address is not enabled for exchange",
     "transaction_time": "Transaction time: < ${time} minutes",
     "waiting_transaction": "Waiting for the transaction to be mined",
+    "click_to_ex_all_balance": "Click to exchange all balance",
+    "click_to_transfer_all_balance": "Click to transfer all balance",
 
     "about_to_exchange": "You are about to exchange",
     "about_to_transfer": "You are about to transfer",
