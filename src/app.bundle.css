@@ -3471,6 +3471,9 @@
 
 .text-success {
   color: #3ee6c1; }
+  .text-success .color-white {
+    color: #fff;
+    margin: 0 5px; }
 
 .text-uppercase {
   text-transform: uppercase; }

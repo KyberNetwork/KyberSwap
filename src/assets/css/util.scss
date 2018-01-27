@@ -13,6 +13,10 @@
 }
 .text-success{
     color: $k-success;
+    .color-white{
+        color: #fff;
+        margin: 0 5px;
+    }
 }
 .text-uppercase{
     text-transform: uppercase;

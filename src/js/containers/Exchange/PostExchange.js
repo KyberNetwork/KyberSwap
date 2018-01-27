@@ -170,7 +170,12 @@ export default class PostExchange extends React.Component {
     return (
       <p>{this.props.translate("transaction.about_to_exchange") || "You are about to exchange"}
         <br />
-        <span class="text-success"><strong>{sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}</strong>&nbsp;{this.props.translate("transaction.for") || "for"}&nbsp;<strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}</strong></span>
+        <span class="text-success">
+          <strong>{sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}</strong>
+              <span className="color-white">{this.props.translate("transaction.for") || "for"}</span>
+            <strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}
+            </strong>
+        </span>
       </p>
     )
   }
