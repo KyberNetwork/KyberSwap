@@ -16,8 +16,9 @@ export default class Processing extends React.Component {
   render(){
     return (
       <ProcessingModal 
-      isEnable={this.props.account && this.props.account.loading}
-      translate={this.props.translate}
+        isEnable={this.props.account && this.props.account.loading}
+        checkTimeImportLedger={this.props.account.checkTimeImportLedger}
+        translate={this.props.translate}
       />
     )  
   }

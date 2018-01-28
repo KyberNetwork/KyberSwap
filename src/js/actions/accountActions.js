@@ -26,6 +26,18 @@ export function importLoading() {
   }
 }
 
+export function checkTimeImportLedger() {
+  return {
+    type: "ACCOUNT.CHECK_TIME_IMPORT_LEDGER"
+  }
+}
+
+export function resetCheckTimeImportLedger() {
+  return {
+    type: "ACCOUNT.RESET_CHECK_TIME_IMPORT_LEDGER"
+  }
+}
+
 export function pKeyChange(value) {
   return {
     type: "ACCOUNT.PKEY_CHANGE",
