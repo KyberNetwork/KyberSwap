@@ -8,7 +8,8 @@ import { updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRat
         updateHistoryExchange, checkConnection, setGasPrice, setMaxGasPrice } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx } from "../../actions/txActions"
-import { updateRateExchange, estimateGas, analyzeError } from "../../actions/exchangeActions"
+import { updateRateExchange, estimateGas, analyzeError, checkKyberEnable } from "../../actions/exchangeActions"
+import {estimateGasTransfer} from "../../actions/transferActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
 import { setConnection } from "../../actions/connectionActions"
@@ -25,7 +26,8 @@ export default class EthereumService extends React.Component {
     this.wsUrl = BLOCKCHAIN_INFO.connections.ws
     // this.wsUrl = "ws://localhost:8546"
     this.httpProvider = this.getHttpProvider()
-    this.wsProvider = this.getWebsocketProvider()
+    //this.wsProvider = this.getWebsocketProvider()
+    this.wsProvider = false
 
     this.initProvider(props.default)
   }
@@ -98,14 +100,19 @@ export default class EthereumService extends React.Component {
     this.checkConnection()
 
     this.fetchGasprice()
-//    this.testAnalize()
+
+    this.checkKyberEnable()
+
+    //this.fetchGasExchange()
+    //this.fetchGasTransfer()
+    this.testAnalize()
   }
 
-  // testAnalize(){
-  //   var state = store.getState()
-  //   var ethereum = state.connection.ethereum
-  //   store.dispatch(analyzeError(ethereum, "0xee750f06c67282d1010374c8f168a7448b99e6f91eb7f7206222a2d6efb9c3df"))
-  // }
+  testAnalize(){
+    var state = store.getState()
+    var ethereum = state.connection.ethereum
+    store.dispatch(analyzeError(ethereum, "0x53343c3066330fb59627efce4d65a5af517886329732b02cff4d969a7fddbe8c"))
+  }
   
   fetchRateData() {
     var state = store.getState()
@@ -245,26 +252,50 @@ export default class EthereumService extends React.Component {
     if (!account.address) {
       return
     }
-    var ethereum = state.connection.ethereum
-    var exchange = state.exchange
-    var tokens = state.tokens.tokens
-
-    var sourceDecimal = 18
-    var sourceTokenSymbol = exchange.sourceTokenSymbol
-    if (tokens[sourceTokenSymbol]) {
-      sourceDecimal = tokens[sourceTokenSymbol].decimal
+    var pathname = state.router.location.pathname
+    if (pathname !== "/exchange"){
+      return
     }
 
-    var kyber_address = BLOCKCHAIN_INFO.network
-    var destAddress = account.address
-    store.dispatch(estimateGas(ethereum, {...state.exchange, sourceDecimal, kyber_address, destAddress}))
+    // var ethereum = state.connection.ethereum
+    // var exchange = state.exchange
+    // var tokens = state.tokens.tokens
+
+    // var sourceDecimal = 18
+    // var sourceTokenSymbol = exchange.sourceTokenSymbol
+    // if (tokens[sourceTokenSymbol]) {
+    //   sourceDecimal = tokens[sourceTokenSymbol].decimal
+    // }
+
+    // var kyber_address = BLOCKCHAIN_INFO.network
+    // var destAddress = account.address
+    // store.dispatch(estimateGas(ethereum, {...state.exchange, sourceDecimal, kyber_address, destAddress}))
+
+    store.dispatch(estimateGas())
   }
 
+  fetchGasTransfer = () => {
+    var state = store.getState()
+    var account = state.account.account
+    if (!account.address) {
+      return
+    }
+
+    var pathname = state.router.location.pathname
+    if (pathname !== "/transfer"){
+      return
+    }
+    store.dispatch(estimateGasTransfer())
+  }
   checkConnection = () => {
     var state = store.getState()
     var checker = state.global.conn_checker
     var ethereum = state.connection.ethereum
     store.dispatch(checkConnection(ethereum, checker.count, checker.maxCount, checker.isCheck))
+  }
+
+  checkKyberEnable  = () => {
+    store.dispatch(checkKyberEnable())
   }
 
   call(fn) {

@@ -55,6 +55,7 @@
     "analyze_error": "失败原因",
     "copied": "拷贝成功",
     "analyze": "显示原因",
+    "no_reason_found": "No any reason was found",
 
     "broadcast": "交易上链",
     "transaction": "交易",
@@ -65,7 +66,15 @@
     "cound_not_broadcast": "无法将您的交易上链至区块链",
     "current_address_balance": "当前地址余额",
     "transaction_error": "交易错误",
+
+    "notification": "Notification",
+    "not_enable_exchange": "Your address is not eligible for exchange at the moment. Come back later!",
+    "kyber_down" : "Kyber exchange is not enabled at the moment. <br/>Please come back later!",
+
+    "transaction_time": "Transaction time: < ${time} minutes",
     "waiting_transaction": "您的交易正在等待被挖掘",
+    "click_to_ex_all_balance": "Click to exchange all balance",
+    "click_to_transfer_all_balance": "Click to transfer all balance",
 
     "about_to_exchange": "您将开始交易",
     "about_to_transfer": "您将开始转移",
@@ -149,6 +158,8 @@
     "network_not_match_unknow": "Metamask需要连接到${expectedName}",
     "not_supported": "不支持",
     "metamask_not_install":"无法连接至metamask。请确认您已经安装了metamask。",
+    "browser_not_support_metamask": "Metamask is not supported on ${browser} browser. </br>Please use Chrome or FireFox instead.",
+    "browser_not_support_ledger": "Ledger is not supported on ${browser} browser. </br>Please use Chrome instead.",
 
     "gas_price_not_number":"燃料价格不是数字",
     "rate_not_number":"交易价格不是数字",
@@ -160,7 +171,13 @@
     "issue_balance":"交易失败，由于代币余额低于scrAmount",
     "issue_ether_amount":"交易失败，由于用户没有发送准确的eth数量",
     "issue_user_cap":"交易失败，由于原始数量超过了用户限额。",
-    "min_rate_too_high":"你设置的最交易低价格太高了！"
+    "min_rate_too_high":"你设置的最交易低价格太高了！",
+
+    "ledger_global_err": "<div class='text-left'>Cannot connect to your Ledger. Please check if:<br/>- Your Ledger is properly plugged in.<br/>- You have logged into your Ledger.<br/>- You have launched Ethereum Application on your Ledger.<br/>- Browser Support has been enabled in your Ledger. Learn to enable Browser Support <a href=\"${link}\" target=\"_blank\">here</a>.</div>",
+    "need_to_config_env_ledger": "You need to configure your Linux device to access Ledger. Instruction <a href=\"${link}\" target=\"_blank\">here</a>.",
+    "invalid_path_or_session_expired": "Cannot get address from this path. Please check your path is valid or Ledger is connected.",
+    "path_is_invalid": "Invalid path. Please choose another one.",
+    "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue."
   },
 
   "import": {

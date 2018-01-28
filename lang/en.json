@@ -55,6 +55,7 @@
     "analyze_error": "Reasons the transaction failed",
     "copied": "Copied!",
     "analyze": "Show reasons",
+    "no_reason_found": "We cannot find any reason for your transaction. Please try again in a while.",
     
     "broadcast": "Broadcast",
     "transaction": "Transaction",
@@ -64,8 +65,17 @@
     "broadcasting_blockchain": "Broadcasting the transaction to the blockchain",
     "cound_not_broadcast": "Couldn't broadcast the transaction to the blockchain",
     "current_address_balance": "Current address balance",
+
     "transaction_error": "Transaction error",
+
+    "notification": "Notification",
+    "not_enable_exchange": "Your address is not eligible for exchange at the moment. Please come back later!",
+    "kyber_down" : "Kyber exchange is not enabled at the moment.<br/> Please come back later!",
+
+    "transaction_time": "Transaction time: < ${time} minutes",
     "waiting_transaction": "Waiting for the transaction to be mined",
+    "click_to_ex_all_balance": "Click to exchange all balance",
+    "click_to_transfer_all_balance": "Click to transfer all balance",
 
     "about_to_exchange": "You are about to exchange",
     "about_to_transfer": "You are about to transfer",
@@ -149,6 +159,8 @@
     "network_not_match_unknow": "Metamask should be on ${expectedName}",
     "not_supported": "not supported",
     "metamask_not_install":"Cannot connect to metamask. Please make sure you have metamask installed",
+    "browser_not_support_metamask": "Metamask is not supported on ${browser} browser. </br>Please use Chrome or FireFox instead.",
+    "browser_not_support_ledger": "Ledger is not supported on ${browser} browser. </br>Please use Chrome instead.",
 
     "gas_price_not_number":"Gas price is not number",
     "rate_not_number":"Rate is not number",
@@ -160,7 +172,13 @@
     "issue_balance":"Failed because token balance is lower than srcAmount",
     "issue_ether_amount":"Failed because the user didn't send the exact amount of ether along",
     "issue_user_cap":"Failed because the source amount exceeded user cap",
-    "min_rate_too_high":"Your min rate is too high!"
+    "min_rate_too_high":"Your min rate is too high!",
+
+    "ledger_global_err": "<div class='text-left'>Cannot connect to your Ledger. Please check if:<br/>- Your Ledger is properly plugged in.<br/>- You have logged into your Ledger.<br/>- You have launched Ethereum Application on your Ledger.<br/>- Browser Support has been enabled in your Ledger. Learn to enable Browser Support <a href=\"${link}\" target=\"_blank\">here</a>.</div>",
+    "need_to_config_env_ledger": "You need to configure your Linux device to access Ledger. Instruction <a href=\"${link}\" target=\"_blank\">here</a>.",
+    "invalid_path_or_session_expired": "Cannot get address from this path. Please check your path is valid or Ledger is connected.",
+    "path_is_invalid": "Invalid path. Please choose another one.",
+    "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue."
   },
 
   "import": {

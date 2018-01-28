@@ -197,3 +197,27 @@ export function setTermAndServices(value){
     payload: {value}
   }
 }
+
+
+export function fetchGas(){
+  return {
+    type: "TRANSFER.FETCH_GAS"
+  }
+}
+export function fetchGasSuccess(){
+  return {
+    type: "TRANSFER.FETCH_GAS_SUCCESS"
+  }
+}
+export function estimateGasTransfer(){
+  return {
+    type: "TRANSFER.ESTIMATE_GAS_USED"
+  }
+}
+
+export function setGasUsed(gas){
+  return {
+    type: "TRANSFER.SET_GAS_USED",
+    payload: {gas}
+  }
+}

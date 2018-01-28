@@ -7,9 +7,9 @@
       "https://mainnet.infura.io/uF2YCXrIz7yUFEXd2yo0",
       "https://mainnet.infura.io/NhLyl78p5UrUgBN5GSty"
     ],
-    "ws": "wss://mainnet.infura.io/ws"
+    "ws": "wss://mainnet.infura.io"
   },
-  "history_endpoint": "https://cache.kyber.network",
+  "history_endpoint": "http://0.0.0.0:3001",
   "api_usd":"https://api.coinmarketcap.com",
   "tokens": {
     "ETH": {
@@ -64,7 +64,7 @@
   "ethScanUrl": "https://etherscan.io/",
   "bank": "0x0",
   "reserve": "0x749dd52D7f22CBc3897a0fc20b55393B1f78B4fE",
-  "network": "np[",
+  "network": "0x803e2b13a11c21ec0616cead4a3d2ebe1326f5b0",
   "wrapper": "0x69569ec8ddf4dbd0a48a96bf7ab37e62cfe2c3ec",
   "trade_topic":"0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
   "endpoint": "wss://mainnet.infura.io/ws",
@@ -74,5 +74,6 @@
   "server_logs": {
     "url": "api.etherscan.io",
     "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
-  }
+  },
+  "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json"
 }
