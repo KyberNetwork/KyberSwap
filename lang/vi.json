@@ -55,6 +55,7 @@
     "analyze_error": "Nguyên nhân lỗi",
     "copied": "Đã sao chép!",
     "analyze": "Xem nguyên nhân",
+    "no_reason_found": "Không tìm thấy nguyên nhân nào",
 
     "broadcast": "Gửi",
     "transaction": "Giao dịch",
@@ -64,8 +65,17 @@
     "broadcasting_blockchain": "Đang truyền dữ liêu ra mạng",
     "cound_not_broadcast": "Không thể gửi giao dịch của bạn đến blockchain",
     "current_address_balance": "Số dư hiện tại",
+
     "transaction_error": "Lỗi giao dịch",
+    
+    "notification": "Thồng báo",
+    "not_enable_exchange": "Địa chỉ của bạn không phù hợp để trao đổi tại thời điểm hiện tại.",
+    "kyber_down" : "Kyber hiện tại không hỗ trợ trao đổi. <br/>Xin bạn vui lòng quay laị sau!",
+
+    "transaction_time": "Thời gian giao dịch: < ${time} phút",
     "waiting_transaction": "Đang đợi giao dịch được xác thực",
+    "click_to_ex_all_balance": "Trao đổi toàn bộ tài khoản",
+    "click_to_transfer_all_balance": "Chuyển toàn bộ tài khoản",
 
     "about_to_exchange": "Bạn chuẩn bị chuyển đổi",
     "about_to_transfer": "Bạn chuẩn bị gửi",
@@ -146,6 +156,8 @@
     "network_not_match_unknow": "Metamask cần chạy ${expectedName}",
     "not_supported": "Không hỗ trợ",
     "metamask_not_install":"Không thể kết nối đến Metamask. Hãy chắc chắn rằng Metamask của bạn đã được cài",
+    "browser_not_support_metamask": "Metamask không được hỗ trợ trên trình duyệt ${browser}. </br>Vui lòng chuyển sang Chrome hoặc FireFox",
+    "browser_not_support_ledger": "Ledger không được hỗ trợ trêntrình duyệt ${browser}.</br>Vui lòng chuyển sang Chrome để sử dụng",
 
     "gas_price_not_number":"Giá Gas không phải là số",
     "rate_not_number":"Rate không là số",
@@ -157,7 +169,13 @@
     "issue_balance":"Lỗi do tài khoản token nhỏ hơn số tiền gửi",
     "issue_ether_amount":"Lỗi do người dùng đã không gửi chính xác số lượng eths",
     "issue_user_cap":"Lỗi do số lượng ban đầu vượt quá giới hạn người dùng",
-    "min_rate_too_high":"Rate của bạn quá cao!"
+    "min_rate_too_high":"Rate của bạn quá cao!",
+
+    "ledger_global_err": "<div class='text-left'>Không thể kết nối đến Leger của bạn. Kiểm tra lại nếu như:<br/>- Bạn đã kết nối đến Ledger.<br/>- Bạn đã đăng nhập vào Ledger.<br/>- Bạn đã truy cập vào Ethereum app trên Ledger.<br/>- Bạn đã bật chế độ \"Browser support\" trên Ledger. Xem hướng dẫn tại  <a href=\"${link}\" target=\"_blank\">đây</a>.</div>",
+    "need_to_config_env_ledger": "Bạn phải cài đặt trên thiết bị Linux để truy cập Ledger. Xem hướng dẫn tại <a href=\"${link}\" target=\"_blank\">đây</a>.",
+    "invalid_path_or_session_expired": "Không thể lấy địa chỉ từ đường dẫn. Kiểm tra lại đường dẫn hoặc đăng nhập lại Ledger của bạn",
+    "path_is_invalid": "Sai đường dẫn. Hãy chọn một đường dẫn khác.",
+    "ledger_time_out": "Phiên trên Ledger của bạn đã hết hạn. Đăng nhập lại để tiếp tục dụng."
   },
 
   "import": {

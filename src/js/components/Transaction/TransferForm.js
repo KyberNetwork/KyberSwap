@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from 'react-router-dom'
+import ReactTooltip from 'react-tooltip'
 
 const TransferForm = (props) => {
   var render = (
@@ -41,8 +42,12 @@ const TransferForm = (props) => {
                   </label>
                   <div class="address-balance clearfix">
                     <span class="note">{props.translate("transaction.address_balance") || "Address Balance"}</span>
-                    <a className="value" onClick={props.setAmount} title={props.balance.value}>
-                      {props.balance.roundingValue} {props.tokenSymbol}
+                    <a className="value" onClick={props.setAmount}>
+                      <span title={props.balance.value}>
+                        {props.balance.roundingValue} {props.tokenSymbol}
+                      </span>
+                      <span class="k k-info k-2x ml-3" data-tip={props.translate('transaction.click_to_transfer_all_balance') || 'Click to transfer all balance'} data-for="balance-notice-tip" currentitem="false"></span>
+                      <ReactTooltip place="bottom" id="balance-notice-tip" type="light"/>
                     </a>
                   </div>
                 </div>

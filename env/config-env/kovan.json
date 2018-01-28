@@ -10,7 +10,7 @@
     ],
     "ws": "wss://kovan.kyber.network/ws/"
   },
-  "history_endpoint": "http://0.0.0.0:3001",
+  "history_endpoint": "https://cache.kyber.network",
   "api_usd":"https://api.coinmarketcap.com",
   "tokens": {
     "ETH": {
@@ -58,7 +58,7 @@
       "address": "0xcc112cd38362bf3c07d226768fd5869e65296083",
       "symbol": "SALT",
       "icon": "salt.svg",
-      "decimal": 18,
+      "decimal": 8,
       "usd_id":"salt"
     }
   },
@@ -75,5 +75,6 @@
   "server_logs": {
     "url": "kovan.etherscan.io",
     "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
-  }
+  },
+  "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json"
 }

@@ -313,17 +313,16 @@ export function resetMinRate() {
 }
 
 
-export function estimateGas(ethereum, exchange) {
+export function estimateGas() {
   return {
     type: "EXCHANGE.ESTIMATE_GAS_USED",
-    payload: { ethereum, exchange }
   }
 }
 
-export function setEstimateGas(estimatedGas) {
+export function setEstimateGas(gas) {
   return {
-    type: "EXCHANGE.SET_ESTIMATE_GAS_USED",
-    payload: { estimatedGas }
+    type: "EXCHANGE.SET_GAS_USED",
+    payload: { gas }
   }
 }
 
@@ -366,5 +365,30 @@ export function setAnalyzeError(networkIssues, reserveIssues){
   return {
     type: "EXCHANGE.SET_ANALYZE_ERROR",
     payload: { networkIssues, reserveIssues }
+  }
+}
+
+
+export function fetchGas(){
+  return {
+    type: "EXCHANGE.FETCH_GAS"
+  }
+}
+export function fetchGasSuccess(){
+  return {
+    type: "EXCHANGE.FETCH_GAS_SUCCESS"
+  }
+}
+
+export function checkKyberEnable(){
+  return {
+    type: "EXCHANGE.CHECK_KYBER_ENABLE"
+  }
+}
+
+export function setKyberEnable(enable){
+  return {
+    type: "EXCHANGE.SET_KYBER_ENABLE",
+    payload: enable
   }
 }

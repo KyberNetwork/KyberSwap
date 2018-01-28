@@ -9,6 +9,10 @@ import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 
 
 import { getLanguage } from "../services/language"
 import Language from "../../../lang"
+import constants from "../services/constants"
+
+import * as converter from "../utils/converter"
+import { store } from '../store'
 
 export function* getLatestBlock(action) {
   const ethereum = action.payload
@@ -22,8 +26,6 @@ export function* updateHistoryExchange(action) {
   const newLogs = yield call(ethereum.call("getLogOneColumn"), page, itemPerPage)
   yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
 }
-
-
 
 export function* goToRoute(action) {
   yield put(push(action.payload));
@@ -90,7 +92,10 @@ export function* checkConnection(action) {
         return
       }
       if (count === maxCount) {
-        yield put(actionsUtils.openInfoModal("error.error_occurred", "error.network_error"))
+        let translate = getTranslate(store.getState().locale)
+        let titleModal = translate('error.error_occurred') || 'Error occurred'
+        let contentModal = translate('error.network_error') || 'Cannot connect to node right now. Please check your network!'
+        yield put(actionsUtils.openInfoModal(titleModal, contentModal))
         yield put(closeImportLoading())
         yield put(actions.updateCountConnection(++count))
         return
@@ -103,28 +108,75 @@ export function* checkConnection(action) {
   }
 }
 
-export function* setGasPrice(action) {
-  try{
-    const ethereum = action.payload
-    const gasPrice = yield call([ethereum, ethereum.call("getGasPrice")])
-    yield put(actions.setGasPriceComplete(gasPrice))
-  }catch(err)
-  {
-    console.log(err)
+function compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
+  if (fastGas > maxGas) {
+    var returnSuggest = {}
+    returnSuggest.fastGas = maxGas
+    returnSuggest.standardGas = maxGas
+    returnSuggest.safeLowGas = maxGas - maxGas * 30 / 100
+    returnSuggest.defaultGas = maxGas
+    return returnSuggest
+  } else {
+    return {safeLowGas, standardGas, fastGas, defaultGas}
   }
-  
+}
+
+export function* setGasPrice(action) {
+  var safeLowGas, standardGas, fastGas, defaultGas
+  var state = store.getState()
+  var maxGasPrice = state.exchange.maxGasPrice
+  try {
+   // if((env !== "mainnet") || (env !== "internal_mainnet"))  throw "get suggest rate from node"
+
+    const ethereum = action.payload
+    const gasStationPrice = yield call([ethereum, ethereum.call("getGasFromEthgasstation")])
+    var safeLowGas, standardGas, fastGas, defaultGas
+
+    safeLowGas = gasStationPrice.safeLow / 10
+    standardGas = defaultGas = ( gasStationPrice.average / 10 + gasStationPrice.fast / 10) / 2
+
+    fastGas = gasStationPrice.fast / 10
+
+    var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
+    yield put(actions.setGasPriceComplete(compareWithMax))
+  }
+  catch (err) {
+    console.log(err)
+    try {
+      const ethereum = action.payload
+      const gasPrice = yield call([ethereum, ethereum.call("getGasPrice")])
+      var gasPriceGwei = converter.weiToGwei(gasPrice)
+
+      if(gasPriceGwei >= 20){
+        defaultGas = 20
+        safeLowGas = 20
+        standardGas = +gasPriceGwei
+        fastGas = +gasPriceGwei * 1.3
+      } else {
+        standardGas = gasPriceGwei
+        safeLowGas = gasPriceGwei - gasPriceGwei * 30 / 100
+        fastGas = gasPriceGwei + gasPriceGwei * 30 / 100
+        defaultGas = standardGas
+      }
+
+      var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
+      yield put(actions.setGasPriceComplete(compareWithMax))
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
 }
 
 export function* setMaxGasPrice(action) {
-  try{
+  try {
     const ethereum = action.payload
     const maxGasPrice = yield call(ethereum.call("getMaxGasPrice"))
     yield put(actionsExchange.setMaxGasPriceComplete(maxGasPrice))
-  }catch(err)
-  {
+  } catch (err) {
     console.log(err)
   }
-  
+
 }
 
 

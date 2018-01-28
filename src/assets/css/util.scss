@@ -13,6 +13,10 @@
 }
 .text-success{
     color: $k-success;
+    .color-white{
+        color: #fff;
+        margin: 0 5px;
+    }
 }
 .text-uppercase{
     text-transform: uppercase;
@@ -43,6 +47,12 @@
 }
 .d-flex{
     display: flex;
+}
+.justify-content-between{
+    justify-content: space-between;
+}
+.justify-content-around{
+    justify-content: space-around;
 }
 .align-center{
     align-items: center;

@@ -31,13 +31,7 @@ export default class InfoModal extends React.Component {
 
   content = () => {
     return (
-      <div>
-        <div class="title">Kyber Testnet</div>
-        <a className="x" onClick={this.closeModal}>&times;</a>
-        <div class="content">
-          <InfoKyber />
-        </div>
-      </div>
+      <InfoKyber closeModal={this.closeModal}/>      
     )
   }
 

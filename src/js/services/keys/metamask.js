@@ -9,6 +9,8 @@ export default class Metamask {
   }
 
   sealTx = (txParams, web3Service, password) => {
+    txParams.gas = txParams.gasLimit
+    delete(txParams.gasLimit)
     console.log(txParams)
     return new Promise((resolve, reject) => {
       web3Service.web3.eth.sendTransaction(txParams, function(err, transactionHash) {

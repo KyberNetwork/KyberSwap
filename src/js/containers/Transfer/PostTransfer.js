@@ -44,9 +44,11 @@ export default class PostTransfer extends React.Component {
 
       //agree terms and services
       if(!this.props.form.termAgree){
-        return this.props.dispatch(utilActions.openInfoModal("layout.terms_of_service", "error.term_error"))
+        let titleModal = this.props.translate('layout.terms_of_service') || 'Terms of Service'
+        let contentModal = this.props.translate('error.term_error') || 'You must agree terms and services!'
+        return this.props.dispatch(utilActions.openInfoModal(titleModal, contentModal))
       }
-      
+      this.props.dispatch(transferActions.fetchGas())
       //check account type
       switch (this.props.account.type) {
         case "keystore":
@@ -99,6 +101,9 @@ export default class PostTransfer extends React.Component {
         onCancel={this.closeModal}
         passwordError={this.props.form.errors.passwordError || this.props.form.bcError} 
         translate={this.props.translate}
+        isFetchingGas={this.props.form.isFetchingGas}
+        gasPrice={this.props.form.gasPrice}
+        gas={this.props.form.gas}
       />
     )
   }
@@ -108,11 +113,13 @@ export default class PostTransfer extends React.Component {
         onCancel={this.closeModal}
         onExchange={this.processTx}
         isConfirming={this.props.form.isConfirming}
+        gasPrice={this.props.form.gasPrice}
+        gas={this.props.form.gas}
+        isFetchingGas={this.props.form.isFetchingGas}
         type="transfer"
         translate={this.props.translate}
         title={this.props.translate("modal.confirm_transfer_title") || "Transfer confirm"}
       />
-
     )
   }
   createRecap = () => {
@@ -121,7 +128,15 @@ export default class PostTransfer extends React.Component {
     var destAddress = form.destAddress;
     var tokenSymbol = form.tokenSymbol;
     return (
-      <p>{this.props.translate("transaction.about_to_transfer") || "You are about to transfer"}<br /><strong>{amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}</strong>&nbsp;{this.props.translate("transaction.to") || "to"}&nbsp;<strong>{destAddress.slice(0, 7)}...{destAddress.slice(-5)}</strong></p>
+      <p>{this.props.translate("transaction.about_to_transfer") || "You are about to transfer"}
+        <br />
+        <span class="text-success">
+        <strong>
+          {amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}</strong>
+          <span className="color-white">{this.props.translate("transaction.to") || "to"}</span>
+          <strong>{destAddress.slice(0, 7)}...{destAddress.slice(-5)}</strong>
+        </span>
+      </p>
     )
   }
 

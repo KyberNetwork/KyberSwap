@@ -9,6 +9,7 @@ import * as ethUtil from 'ethereumjs-util'
 import Tx from "../services/tx"
 import { getTranslate } from 'react-localize-redux';
 import { store } from '../store';
+import BLOCKCHAIN_INFO from "../../../env"
 
 function* broadCastTx(action) {
   const { ethereum, tx, account, data } = action.payload
@@ -43,6 +44,9 @@ function* selectToken(action) {
 
   yield put(actions.checkSelectToken())
   yield call(ethereum.fetchRateExchange)
+
+  //calculate gas use
+  yield call(updateGasUsed)
 }
 
 export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
@@ -433,8 +437,9 @@ function* updateRatePending(action) {
   const { ethereum, source, dest, sourceAmount, isManual, rateInit } = action.payload
   try {
     const rate = yield call(ethereum.call("getRate"), source, dest, sourceAmount)
-   // console.log(rate)
-    yield put.sync(actions.updateRateExchangeComplete(rateInit, rate.expectedPrice, rate.slippagePrice))
+    const expectedPrice = rate.expectedRate ? rate.expectedRate : "0"
+    const slippagePrice = rate.slippageRate ? rate.slippageRate : "0"
+    yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice))
     yield put(actions.caculateAmount())
   }
   catch (err) {
@@ -443,37 +448,60 @@ function* updateRatePending(action) {
   }
 }
 
+function* fetchGas(action){
+  yield call(updateGasUsed)
+  yield put(actions.fetchGasSuccess())
+}
+
 function* updateGasUsed(action) {
+  var state = store.getState()
+  const ethereum = state.connection.ethereum
+  const exchange = state.exchange
+  const kyber_address = BLOCKCHAIN_INFO.network
+  var gas = exchange.gas_limit
+
+  var account = state.account.account
+  var destAddress = account.address
+
+  var tokens = state.tokens.tokens
+  var sourceDecimal = 18
+  var sourceTokenSymbol = exchange.sourceTokenSymbol
+  if (tokens[sourceTokenSymbol]) {
+    sourceDecimal = tokens[sourceTokenSymbol].decimal
+  }
+
   try {
-    const { ethereum, exchange } = action.payload
     const sourceToken = exchange.sourceToken
-    const sourceAmount = converter.stringToHex(exchange.sourceAmount, exchange.sourceDecimal)
+    const sourceAmount = converter.stringToHex(exchange.sourceAmount, sourceDecimal)
     const destToken = exchange.destToken
-    const destAddress = exchange.destAddress
     const maxDestAmount = converter.biggestNumber()
     const minConversionRate = converter.numberToHex(exchange.offeredRate)
-    const throwOnFailure = false
+    const throwOnFailure = "0x0000000000000000000000000000000000000000"
     var data = yield call([ethereum, ethereum.call("exchangeData")], sourceToken, sourceAmount,
       destToken, destAddress,
       maxDestAmount, minConversionRate, throwOnFailure)
     //console.log(data)
-    var value = '0x0'
+    var value = '0'
     if (exchange.sourceTokenSymbol === 'ETH') {
       value = sourceAmount
     }
     var txObj = {
       from: destAddress,
-      to: exchange.kyber_address,
+      to: kyber_address,
       data: data,
-      value: sourceAmount
+      value: value,
     }
     //console.log(txObj)
-    var estimatedGas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
-    //console.log(estimatedGas)
-    yield put(actions.setEstimateGas(estimatedGas))
+    gas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
+    gas = Math.round(gas * 120/100)
+    if (gas > exchange.gas_limit) {
+      gas = exchange.gas_limit
+    }
   } catch (e) {
-    console.log(e)
+    console.log(e.message)
   }
+ // console.log(gas)
+  yield put(actions.setEstimateGas(gas))
 }
 
 function* analyzeError(action) {
@@ -569,6 +597,19 @@ function* debug(input, blockno, ethereum) {
   yield put(actions.setAnalyzeError(networkIssues, reserveIssues))
 }
 
+function* checkKyberEnable(){
+  var state = store.getState()
+  const ethereum = state.connection.ethereum
+  try{
+    var enabled = yield call([ethereum, ethereum.call("checkKyberEnable")])
+    yield put(actions.setKyberEnable(enabled))
+  }catch(e){
+    console.log(e.message)
+    yield put(actions.setKyberEnable(false))
+  }
+  
+}
+
 
 export function* watchExchange() {
   yield takeEvery("EXCHANGE.TX_BROADCAST_PENDING", broadCastTx)
@@ -580,4 +621,8 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.UPDATE_RATE_PENDING", updateRatePending)
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", updateGasUsed)
   yield takeEvery("EXCHANGE.ANALYZE_ERROR", analyzeError)
+
+  yield takeEvery("EXCHANGE.INPUT_CHANGE", updateGasUsed)
+  yield takeEvery("EXCHANGE.FETCH_GAS", fetchGas)
+  yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
 }

@@ -69,6 +69,13 @@ $divider-color: darken($title-background-color, 5);
       font-size: 14px;
       line-height: 1.7;
     }
+    .gas-configed{
+      width: 270px;
+      white-space: nowrap;
+    }
+    hr{
+      border-color: #a5a5a5;
+    }
   }
   .footer {
     border-top: 1px solid $divider-color;

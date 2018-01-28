@@ -10,6 +10,7 @@ import { ImportByDeviceView } from "../../components/ImportAccount"
 import { importNewAccount, importLoading, closeImportLoading, throwError } from "../../actions/accountActions"
 import { toEther } from "../../utils/converter"
 import { getTranslate } from 'react-localize-redux'
+import bowser from 'bowser'
 
 @connect((store, props) => {
 	var tokens = store.tokens.tokens
@@ -71,7 +72,7 @@ export default class ImportByDevice extends React.Component {
 			this.props.dispatch(throwError("cannot find device service"))	
 			return
 		}
-		this.props.deviceService.getPublicKey(selectedPath)
+		this.props.deviceService.getPublicKey(selectedPath, this.state.modalOpen)
 			.then((result) => {
 				this.dPath = (dpath != 0) ? result.dPath : dpath;
 				this.generateAddress(result);
@@ -201,6 +202,13 @@ export default class ImportByDevice extends React.Component {
 	}
 
 	showLoading(walletType) {
+		let browser = bowser.name;
+		if(walletType == 'ledger' && browser != 'Chrome'){
+			let erroMsg = this.props.translate("error.browser_not_support_ledger", {browser: browser}) || `Ledger is not supported on ${browser}, you can use Chrome instead.`
+			this.props.dispatch(throwError(erroMsg));
+			return;
+		}
+
 		this.props.dispatch(importLoading());
 		this.connectDevice(walletType);
 	}
