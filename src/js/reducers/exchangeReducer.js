@@ -299,7 +299,9 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.SET_GAS_USED": {
-      newState.gas = action.payload.gas
+      const {gas, gas_approve} = action.payload
+      newState.gas = gas
+      newState.gas_approve = gas_approve
       return newState
     }
     case "EXCHANGE.SET_PREV_SOURCE": {

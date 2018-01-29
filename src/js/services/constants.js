@@ -59,10 +59,11 @@ const INIT_EXCHANGE_FORM_STATE = {
   gas: 330000,
   max_gas: 330000,
 
-  gas_approve: 100000,
+  gas_approve: 0,
   max_gas_approve: 100000,
   
-  max_gas_total: 500000,
+  //max_gas_total: 430000,
+
   isFetchingGas: false,
   gasPrice: 20,
   gasPriceSuggest: {

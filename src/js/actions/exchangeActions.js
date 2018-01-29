@@ -319,10 +319,10 @@ export function estimateGas() {
   }
 }
 
-export function setEstimateGas(gas) {
+export function setEstimateGas(gas, gas_approve) {
   return {
     type: "EXCHANGE.SET_GAS_USED",
-    payload: { gas }
+    payload: { gas, gas_approve }
   }
 }
 

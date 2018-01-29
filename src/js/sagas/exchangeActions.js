@@ -448,7 +448,7 @@ function* updateRatePending(action) {
   }
 }
 
-function* fetchGas(action){
+function* fetchGas(action) {
   yield call(updateGasUsed)
   yield put(actions.fetchGasSuccess())
 }
@@ -458,10 +458,12 @@ function* updateGasUsed(action) {
   const ethereum = state.connection.ethereum
   const exchange = state.exchange
   const kyber_address = BLOCKCHAIN_INFO.network
-  var gas = exchange.max_gas_total
+
+  var gas = exchange.max_gas
+  var gas_approve = 0
 
   var account = state.account.account
-  var destAddress = account.address
+  var address = account.address
 
   var tokens = state.tokens.tokens
   var sourceDecimal = 18
@@ -478,30 +480,49 @@ function* updateGasUsed(action) {
     const minConversionRate = converter.numberToHex(exchange.offeredRate)
     const throwOnFailure = "0x0000000000000000000000000000000000000000"
     var data = yield call([ethereum, ethereum.call("exchangeData")], sourceToken, sourceAmount,
-      destToken, destAddress,
+      destToken, address,
       maxDestAmount, minConversionRate, throwOnFailure)
-    //console.log(data)
     var value = '0'
     if (exchange.sourceTokenSymbol === 'ETH') {
       value = sourceAmount
+    } else {
+      //calculate gas approve
+      const remainStr = yield call(ethereum.call("getAllowance"), sourceToken, address)
+      const remain = converter.hexToBigNumber(remainStr)
+      const sourceAmountBig = converter.hexToBigNumber(sourceAmount)
+      if (!remain.greaterThanOrEqualTo(sourceAmountBig)) {
+        //calcualte gas approve
+        var txObjApprove = {
+          from: address,
+          to: sourceToken,
+          data: ethereum.call("approveTokenData")(sourceToken, converter.biggestNumber()),
+          value: '0x0',
+        }
+        gas_approve = yield call([ethereum, ethereum.call("estimateGas")], txObjApprove)
+        gas_approve = Math.round(gas_approve * 120 / 100)
+        if (gas_approve > exchange.max_gas_approve) {
+          gas = exchange.max_gas_approve
+        }
+      } else {
+        gas_approve = 0
+      }
     }
     var txObj = {
-      from: destAddress,
+      from: address,
       to: kyber_address,
       data: data,
       value: value,
     }
-    //console.log(txObj)
     gas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
-    gas = Math.round(gas * 120/100)
-    if (gas > exchange.gas_limit) {
-      gas = exchange.gas_limit
+    gas = Math.round(gas * 120 / 100)
+    if (gas > exchange.max_gas) {
+      gas = exchange.max_gas
     }
   } catch (e) {
     console.log(e.message)
   }
- // console.log(gas)
-  yield put(actions.setEstimateGas(gas))
+  //console.log(gas, gas_approve)
+  yield put(actions.setEstimateGas(gas, gas_approve))
 }
 
 function* analyzeError(action) {
@@ -509,7 +530,7 @@ function* analyzeError(action) {
   try {
     //var txHash = exchange.txHash
     var tx = yield call([ethereum, ethereum.call("getTx")], txHash)
-   // console.log(tx)
+    // console.log(tx)
     var value = tx.value
     var owner = tx.from
     var gas_price = tx.gasPrice
@@ -586,29 +607,29 @@ function* debug(input, blockno, ethereum) {
     reserveIssues["reason"] = reasons
   } else {
     //var chosenReserve = yield call([ethereum, ethereum.call("wrapperGetChosenReserve")], input, blockno)
-   // var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], chosenReserve, input, blockno)
- //   console.log(rates)
-  //  console.log(input.minConversionRate)
-    if(converter.compareTwoNumber(input.minConversionRate, rates.expectedPrice) === 1){
+    // var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], chosenReserve, input, blockno)
+    //   console.log(rates)
+    //  console.log(input.minConversionRate)
+    if (converter.compareTwoNumber(input.minConversionRate, rates.expectedPrice) === 1) {
       reserveIssues["reason"] = translate('error.min_rate_too_high') || "Your min rate is too high!"
     }
   }
-//  console.log(reserveIssues)
-//  console.log(networkIssues)
+  //  console.log(reserveIssues)
+  //  console.log(networkIssues)
   yield put(actions.setAnalyzeError(networkIssues, reserveIssues))
 }
 
-function* checkKyberEnable(){
+function* checkKyberEnable() {
   var state = store.getState()
   const ethereum = state.connection.ethereum
-  try{
+  try {
     var enabled = yield call([ethereum, ethereum.call("checkKyberEnable")])
     yield put(actions.setKyberEnable(enabled))
-  }catch(e){
+  } catch (e) {
     console.log(e.message)
     yield put(actions.setKyberEnable(false))
   }
-  
+
 }
 
 
