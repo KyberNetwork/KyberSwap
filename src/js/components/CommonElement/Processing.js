@@ -9,10 +9,10 @@ const ProcessingModal = (props) => {
           <div>
             {props.checkTimeImportLedger ?
               <React.Fragment>
-                Please make sure: <br />
+                {props.translate("error.please_make_sure") || "Please make sure"}: <br />
                 <div class="text-left">
-                  - Your Ledger is properly plugged in.<br />
-                  - You have logged into your Ledger.<br />
+                {props.translate("error.ledger_plugged_in") || "- Your Ledger is properly plugged in."}<br />
+                {props.translate("error.ledger_logged_in") || "- You have logged into your Ledger."}<br />
                 </div>
               </React.Fragment>              
             : ''}

@@ -34,8 +34,13 @@ const ConfirmTransferModal = (props) => {
                   <p>{props.translate("modal.press_confirm_if_really_want") || "Press confirm to continue"}</p>
                 )
               }
-
             </center>
+            {props.errors ? (
+              <div className="ledger-error">
+                {props.errors}
+              </div>
+              ): ''
+            }
           </div>
         </div>
       </div>

@@ -102,7 +102,7 @@ export default class Exchange extends React.Component {
     if (token) {
       var balanceBig = stringToBigNumber(token.balance)
       if (tokenSymbol === "ETH") {
-        var gasLimit = this.props.exchange.gas_limit
+        var gasLimit = this.props.exchange.gas
         var gasPrice = stringToBigNumber(gweiToWei(this.props.exchange.gasPrice))
         var totalGas = gasPrice.mul(gasLimit)
 
