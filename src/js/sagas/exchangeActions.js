@@ -261,7 +261,6 @@ export function* exchangeETHtoTokenColdWallet(action) {
     let msg = ''
     if(type == 'ledger'){
       msg = keyService.getLedgerError(e.native)
-      keyService.close_async()
     }else{
       msg = e.message
     }
