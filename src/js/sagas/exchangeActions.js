@@ -576,6 +576,8 @@ function* debug(input, blockno, ethereum) {
       networkIssues["allowance"] = translate('error.issue_allowance') || "Failed because allowance is lower than srcAmount"
     }
     var balance = yield call([ethereum, ethereum.call("getTokenBalance")], input.source, input.owner, blockno)
+    console.log(balance)
+    console.log(input.srcAmount)
     if (converter.compareTwoNumber(balance, input.srcAmount) === -1) {
       networkIssues["balance"] = translate('error.issue_balance') || "Failed because token balance is lower than srcAmount"
     }
@@ -608,14 +610,14 @@ function* debug(input, blockno, ethereum) {
   } else {
     //var chosenReserve = yield call([ethereum, ethereum.call("wrapperGetChosenReserve")], input, blockno)
     // var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], chosenReserve, input, blockno)
-    //   console.log(rates)
-    //  console.log(input.minConversionRate)
+       console.log(rates)
+      console.log(input.minConversionRate)
     if (converter.compareTwoNumber(input.minConversionRate, rates.expectedPrice) === 1) {
       reserveIssues["reason"] = translate('error.min_rate_too_high') || "Your min rate is too high!"
     }
   }
-  //  console.log(reserveIssues)
-  //  console.log(networkIssues)
+    console.log(reserveIssues)
+    console.log(networkIssues)
   yield put(actions.setAnalyzeError(networkIssues, reserveIssues))
 }
 

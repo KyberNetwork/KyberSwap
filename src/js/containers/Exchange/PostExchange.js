@@ -311,7 +311,7 @@ export default class PostExchange extends React.Component {
         translate={this.props.translate}
         isFetchingGas={this.props.form.isFetchingGas}
         gasPrice={this.props.form.gasPrice}
-        gas={this.props.form.gas}
+        gas={this.props.form.gas + this.props.form.gas_approve}
       />
     )
   }
@@ -321,7 +321,7 @@ export default class PostExchange extends React.Component {
         onCancel={this.closeModalConfirm}
         onExchange={this.processTx}
         gasPrice={this.props.form.gasPrice}
-        gas={this.props.form.gas}
+        gas={this.props.account.type==="privateKey"? this.props.form.gas + this.props.form.gas_approve: this.props.form.gas}
         isConfirming={this.props.form.isConfirming}
         isFetchingGas = {this.props.form.isFetchingGas}
         type="exchange"
@@ -340,6 +340,9 @@ export default class PostExchange extends React.Component {
         onSubmit={this.processExchangeAfterApprove}
         translate={this.props.translate}
         address={addressShort}
+        gasPrice={this.props.form.gasPrice}
+        gas={this.props.form.gas_approve}
+        isFetchingGas = {this.props.form.isFetchingGas}
       />
     )
   }
