@@ -566,7 +566,7 @@ function* debug(input, blockno, ethereum) {
   if (converter.compareTwoNumber(input.gas_price, gasCap) === 1) {
     networkIssues["gas_price"] = translate('error.gas_price_exceeded_limit') || "Gas price exceeded max limit"
   }
-  console.log(translate('import.from_private_key_input_title'))
+  //console.log(translate('import.from_private_key_input_title'))
   if (input.source !== constants.ETHER_ADDRESS) {
     if (converter.compareTwoNumber(input.value, 0) === 1) {
       networkIssues["token_ether"] = translate('error.issue_token_ether') || "Failed because of sending ether along the tx when it is trying to trade token to ether"
