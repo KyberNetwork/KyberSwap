@@ -105,13 +105,13 @@ export default class EthereumService extends React.Component {
 
     //this.fetchGasExchange()
     //this.fetchGasTransfer()
-    this.testAnalize()
+   // this.testAnalize()
   }
 
   testAnalize(){
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    store.dispatch(analyzeError(ethereum, "0x7ba372befd10b31413508d9063e989c886d6dfdb852195bac0083eceb2f445c6"))
+    store.dispatch(analyzeError(ethereum, "0xd6ad28719d85a7602f0cd2b9f4db61603c734388453ea9fb9eeb9ee997ad25fd"))
   }
   
   fetchRateData() {
