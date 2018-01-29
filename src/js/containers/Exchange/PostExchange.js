@@ -268,7 +268,7 @@ export default class PostExchange extends React.Component {
     const params = this.formParams()
     const account = this.props.account
     const ethereum = this.props.ethereum
-    this.props.dispatch(exchangeActions.doApprove(ethereum, params.sourceToken, params.sourceAmount, params.nonce, params.gas, params.gasPrice,
+    this.props.dispatch(exchangeActions.doApprove(ethereum, params.sourceToken, params.sourceAmount, params.nonce, params.gas_appove, params.gasPrice,
       account.keystring, account.password, account.type, account, this.props.keyService))
   }
 

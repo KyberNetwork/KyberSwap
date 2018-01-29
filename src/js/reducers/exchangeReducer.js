@@ -123,6 +123,7 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED": {
       newState.broadcasting = false
+      newState.bcError = action.payload ? action.payload : ""
       newState.showConfirmApprove = false
       newState.isApproving = false
       newState.deviceError = action.payload ? action.payload : ''

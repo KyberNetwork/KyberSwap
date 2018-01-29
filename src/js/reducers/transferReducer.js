@@ -111,6 +111,7 @@ const transfer = (state = initState, action) => {
     }
     case "TRANSFER.TX_BROADCAST_REJECTED": {
       newState.broadcasting = false
+      newState.bcError = action.payload ? action.payload : ""
       newState.isConfirming = false
       newState.deviceError = action.payload ? action.payload : ''
       return newState
