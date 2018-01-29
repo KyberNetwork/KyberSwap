@@ -458,7 +458,7 @@ function* updateGasUsed(action) {
   const ethereum = state.connection.ethereum
   const exchange = state.exchange
   const kyber_address = BLOCKCHAIN_INFO.network
-  var gas = exchange.gas_limit
+  var gas = exchange.max_gas_total
 
   var account = state.account.account
   var destAddress = account.address
@@ -587,13 +587,14 @@ function* debug(input, blockno, ethereum) {
   } else {
     //var chosenReserve = yield call([ethereum, ethereum.call("wrapperGetChosenReserve")], input, blockno)
    // var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], chosenReserve, input, blockno)
-
+ //   console.log(rates)
+  //  console.log(input.minConversionRate)
     if(converter.compareTwoNumber(input.minConversionRate, rates.expectedPrice) === 1){
       reserveIssues["reason"] = translate('error.min_rate_too_high') || "Your min rate is too high!"
     }
   }
-  console.log(reserveIssues)
-  console.log(networkIssues)
+//  console.log(reserveIssues)
+//  console.log(networkIssues)
   yield put(actions.setAnalyzeError(networkIssues, reserveIssues))
 }
 

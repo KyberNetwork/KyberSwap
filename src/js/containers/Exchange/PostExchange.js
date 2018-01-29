@@ -50,6 +50,10 @@ import { RateBetweenToken } from "../Exchange"
 })
 
 export default class PostExchange extends React.Component {
+  constructor(){
+    super()
+    this.state = {form:{}}
+  }
   clickExchange = () => {
     if(!this.props.form.kyber_enabled){
       this.props.dispatch(utilActions.openInfoModal(this.props.translate("transaction.notification"), this.props.translate("transaction.kyber_down")))
@@ -75,6 +79,8 @@ export default class PostExchange extends React.Component {
           return this.props.dispatch(utilActions.openInfoModal(titleModal, contentModal))
         }
         //check account type
+        //save a copy of form
+        this.setState({form: this.formParams()})
         switch (this.props.account.type) {
           case "keystore":
             this.props.dispatch(exchangeActions.fetchGas())
@@ -272,7 +278,11 @@ export default class PostExchange extends React.Component {
         password = document.getElementById("passphrase").value
         document.getElementById("passphrase").value = ''
       }
-      const params = this.formParams()
+      //const params = this.formParams()
+      const params = this.state.form
+      //check nonce
+      params.nonce = validators.verifyNonce(this.props.account.getUsableNonce())
+
       var account = this.props.account
       var ethereum = this.props.ethereum
 
