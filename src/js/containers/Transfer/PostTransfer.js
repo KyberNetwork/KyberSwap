@@ -119,6 +119,7 @@ export default class PostTransfer extends React.Component {
         type="transfer"
         translate={this.props.translate}
         title={this.props.translate("modal.confirm_transfer_title") || "Transfer confirm"}
+        errors={this.props.form.deviceError}
       />
     )
   }

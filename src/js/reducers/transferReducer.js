@@ -113,6 +113,11 @@ const transfer = (state = initState, action) => {
       newState.broadcasting = false
       newState.bcError = action.payload ? action.payload : ""
       newState.isConfirming = false
+      newState.deviceError = action.payload ? action.payload : ''
+      return newState
+    }
+    case "TRANSFER.RESET_DEVICE_ERROR": {
+      newState.deviceError = ''
       return newState
     }
     case "TRANSFER.FINISH_TRANSACTION": {

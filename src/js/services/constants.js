@@ -85,6 +85,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   isConfirming: false,
   isApproving: false,
   confirmColdWallet: false,
+  deviceError: "",
   balanceData:{
     sourceName: "Ether",
     sourceSymbol: "ETH",
@@ -146,6 +147,7 @@ const INIT_TRANSFER_FORM_STATE = {
   tempTx: {},
   isConfirming: false,
   confirmColdWallet: false,
+  deviceError: "",
   balanceData:{
     tokenName: "Ether",
     tokenSymbol: "ETH",
