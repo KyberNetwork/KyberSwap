@@ -21,10 +21,14 @@ export function* getLatestBlock(action) {
 }
 
 export function* updateHistoryExchange(action) {
-  const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
-  var latestBlock = yield call(ethereum.call("getLatestBlock"))
-  const newLogs = yield call(ethereum.call("getLogOneColumn"))
-  yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
+  try{
+    const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
+    var latestBlock = yield call(ethereum.call("getLatestBlock"))
+    const newLogs = yield call(ethereum.call("getLogOneColumn"))
+    yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
+  }catch(e){
+    console.log(e.message)
+  }
 }
 
 export function* goToRoute(action) {
