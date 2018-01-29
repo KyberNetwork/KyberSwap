@@ -205,10 +205,12 @@ export default class PostExchange extends React.Component {
   closeModalConfirm = (event) => {
     if (this.props.form.isConfirming) return
     this.props.dispatch(exchangeActions.hideConfirm())
+    this.props.dispatch(exchangeActions.resetDeviceError())
   }
   closeModalApprove = (event) => {
     if (this.props.form.isApproving) return
     this.props.dispatch(exchangeActions.hideApprove())
+    this.props.dispatch(exchangeActions.resetDeviceError())
   }
   changePassword = (event) => {
     this.props.dispatch(exchangeActions.changePassword())
@@ -327,6 +329,7 @@ export default class PostExchange extends React.Component {
         type="exchange"
         translate={this.props.translate}
         title={this.props.translate("modal.confirm_exchange_title") || "Exchange confirm"}
+        errors={this.props.form.deviceError}
       />
     )
   }
@@ -342,7 +345,8 @@ export default class PostExchange extends React.Component {
         address={addressShort}
         gasPrice={this.props.form.gasPrice}
         gas={this.props.form.gas_approve}
-        isFetchingGas = {this.props.form.isFetchingGas}
+        isFetchingGas={this.props.form.isFetchingGas}
+        errors={this.props.form.deviceError}
       />
     )
   }

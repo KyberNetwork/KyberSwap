@@ -60,17 +60,16 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   yield put(addTx(tx))
   yield put(actions.doTransactionComplete(hash))
   yield put(actions.finishExchange())
+  yield put(actions.resetDeviceError())
 }
 
 function* doTransactionFail(ethereum, account, e) {
   yield put(actions.doTransactionFail(e))
-  //yield put(incManualNonceAccount(account.address))
   yield put(updateAccount(ethereum, account))
 }
 
 function* doApproveTransactionFail(ethereum, account, e) {
   yield put(actions.doApprovalTransactionFail(e))
-  //yield put(incManualNonceAccount(account.address))
   yield put(updateAccount(ethereum, account))
 }
 
@@ -120,8 +119,13 @@ export function* processApproveByColdWallet(action) {
     yield put(actions.hideApprove())
     yield put(actions.showConfirm())
   } catch (e) {
-    console.log(e)
-    yield call(doApproveTransactionFail, ethereum, account, e.message)
+    let msg = ''
+    if(accountType == 'ledger'){
+      msg = keyService.getLedgerError(e.native)
+    }else{
+      msg = e.message
+    }
+    yield call(doApproveTransactionFail, ethereum, account, msg)
   }
 }
 
@@ -254,8 +258,14 @@ export function* exchangeETHtoTokenColdWallet(action) {
     const hash = yield call(ethereum.call("sendRawTransaction"), txRaw, ethereum)
     yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
   } catch (e) {
-    console.log(e)
-    yield call(doTransactionFail, ethereum, account, e.message)
+    let msg = ''
+    if(type == 'ledger'){
+      msg = keyService.getLedgerError(e.native)
+      keyService.close_async()
+    }else{
+      msg = e.message
+    }
+    yield call(doTransactionFail, ethereum, account, msg)
     return
   }
 }
@@ -404,8 +414,13 @@ function* exchangeTokentoETHColdWallet(action) {
     const hash = yield call(ethereum.call("sendRawTransaction"), txRaw, ethereum)
     yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
   } catch (e) {
-    console.log(e)
-    yield call(doTransactionFail, ethereum, account, e.message)
+    let msg = ''
+    if(type == 'ledger'){
+      msg = keyService.getLedgerError(e.native)
+    }else{
+      msg = e.message
+    }
+    yield call(doTransactionFail, ethereum, account, msg)
     return
   }
 }
@@ -566,7 +581,6 @@ function* debug(input, blockno, ethereum) {
   if (converter.compareTwoNumber(input.gas_price, gasCap) === 1) {
     networkIssues["gas_price"] = translate('error.gas_price_exceeded_limit') || "Gas price exceeded max limit"
   }
-  console.log(translate('import.from_private_key_input_title'))
   if (input.source !== constants.ETHER_ADDRESS) {
     if (converter.compareTwoNumber(input.value, 0) === 1) {
       networkIssues["token_ether"] = translate('error.issue_token_ether') || "Failed because of sending ether along the tx when it is trying to trade token to ether"
@@ -576,8 +590,6 @@ function* debug(input, blockno, ethereum) {
       networkIssues["allowance"] = translate('error.issue_allowance') || "Failed because allowance is lower than srcAmount"
     }
     var balance = yield call([ethereum, ethereum.call("getTokenBalance")], input.source, input.owner, blockno)
-    console.log(balance)
-    console.log(input.srcAmount)
     if (converter.compareTwoNumber(balance, input.srcAmount) === -1) {
       networkIssues["balance"] = translate('error.issue_balance') || "Failed because token balance is lower than srcAmount"
     }

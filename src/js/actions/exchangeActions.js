@@ -279,6 +279,12 @@ export function doApprovalTransactionFail(error) {
   }
 }
 
+export function resetDeviceError() {
+  return {
+    type: "EXCHANGE.RESET_DEVICE_ERROR",
+  }
+}
+
 export function makeNewExchange() {
   return {
     type: "EXCHANGE.MAKE_NEW_EXCHANGE"

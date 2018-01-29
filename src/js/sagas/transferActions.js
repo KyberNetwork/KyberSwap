@@ -102,8 +102,13 @@ function* transferColdWallet(action, callService) {
     const hash = yield call(ethereum.call("sendRawTransaction"), rawTx, ethereum)
     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
   } catch (e) {
-    console.log(e)
-    yield call(doTransactionFail, ethereum, account, e.message)
+    let msg = ''
+    if(type == 'ledger'){
+      msg = keyService.getLedgerError(e.native)
+    }else{
+      msg = e.message
+    }
+    yield call(doTransactionFail, ethereum, account, msg)
     return
   }
 }

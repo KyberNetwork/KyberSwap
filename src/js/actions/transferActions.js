@@ -169,6 +169,12 @@ export function doTransactionFail(error) {
   }
 }
 
+export function resetDeviceError() {
+  return {
+    type: "TRANSFER.RESET_DEVICE_ERROR",
+  }
+}
+
 export function throwErrorSignTransferTransaction(error) {
   return {
     type: "TRANSFER.THROW_ERROR_SIGN_TRANSACTION",

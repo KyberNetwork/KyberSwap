@@ -160,6 +160,9 @@
     "metamask_not_install":"无法连接至metamask。请确认您已经安装了metamask。",
     "browser_not_support_metamask": "Metamask is not supported on ${browser} browser. </br>Please use Chrome or FireFox instead.",
     "browser_not_support_ledger": "Ledger is not supported on ${browser} browser. </br>Please use Chrome instead.",
+    "please_make_sure": "Please make sure",
+    "ledger_plugged_in": "- Your Ledger is properly plugged in.",
+    "ledger_logged_in": "- You have logged into your Ledger.",
 
     "gas_price_not_number":"燃料价格不是数字",
     "rate_not_number":"交易价格不是数字",
