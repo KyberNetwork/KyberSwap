@@ -51,7 +51,7 @@ const PassphraseModal = (props) => {
               </div>
               <label className={!!props.passwordError ? "error" : ""}>
                 <div className="input-reveal">
-                  <input className="text-center" id="passphrase" type="password" 
+                  <input className="text-center" id="passphrase" type="password" autoComplete="off"
                   //placeholder={props.translate("modal.enter_password_placeholder") ||"Enter your password to confirm"}
                     onChange={(e) => props.onChange(e)} autoFocus onKeyPress={(e) => submit(e)} />
                     <a className="toggle" onClick={() => toggleShowPw()}></a>
