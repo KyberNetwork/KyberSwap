@@ -13,8 +13,8 @@ const ApproveModal = (props) => {
           <div className="column">
             <center>
               <p className="message">
-                {props.translate('modal.approve_exchange', { token: props.token, address: props.address }) || 
-                <span>You need to grant permission for Kyber Wallet to interact with  {props.token} on address {props.address}.</span>}
+                {props.translate('modal.approve_exchange', { token: props.token, address: props.address }) ||
+                  <span>You need to grant permission for Kyber Wallet to interact with  {props.token} on address {props.address}.</span>}
               </p>
 
               <div className="gas-configed text-light text-center">
@@ -31,16 +31,21 @@ const ApproveModal = (props) => {
                 </div>
                 <hr className="mt-0" />
               </div>
-
-
+              {props.isConfirming ? (
+                <p>{props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</p>
+              )
+                : (
+                  <p>{props.translate("modal.press_approve") || "Press approve to continue"}</p>
+                )
+              }
             </center>
             {props.errors ? (
               <div className="ledger-error">
                 {props.errors}
               </div>
-              ): ''
+            ): ''
             }
-            
+
           </div>
 
         </div>

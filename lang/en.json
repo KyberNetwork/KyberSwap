@@ -113,6 +113,7 @@
     "custom_path": "Your Custom Path",
     "view_on_etherscan": "View on Etherscan",
     "press_confirm_if_really_want": "Press confirm to continue",
+    "press_approve": "Press approve to continue",
     "waiting_for_confirmation": "Waiting for confirmation from your wallet",
     "confirm_exchange_title": "Exchange confirm",
     "confirm_transfer_title": "Transfer confirm",
