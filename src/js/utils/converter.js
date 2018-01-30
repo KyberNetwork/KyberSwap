@@ -312,6 +312,7 @@ export function compareTwoNumber(num1, num2){
   var num2Big = new BigNumber(num2.toString())
   return num1Big.comparedTo(num2Big)
 }
+
 export function findNetworkName(networkId){
   switch(networkId){
     case 0:
@@ -329,4 +330,11 @@ export function findNetworkName(networkId){
     default:
       return null
   }
+}
+
+export function sliceErrorMsg(err){
+  if(err.length > 70){
+    err = err.slice(0,70) + '...'
+  }
+  return err
 }

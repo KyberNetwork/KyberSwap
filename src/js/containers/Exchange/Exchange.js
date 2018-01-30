@@ -183,7 +183,7 @@ export default class Exchange extends React.Component {
         type="exchange"        
         balanceInfo={balanceInfo}
         broadcasting={this.props.exchange.broadcasting}
-        broadcastingError={this.props.exchange.bcError}
+        broadcastingError={this.props.exchange.broadcastError}
         analyze = {analyze}
       />
     )
