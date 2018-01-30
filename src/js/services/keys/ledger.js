@@ -66,7 +66,8 @@ export default class Ledger {
         return 
       }
       default : {
-        return translate('error.ledger_global_err')
+        let link = LEDGER_SUPPORT_LINK
+        return translate("error.ledger_global_err", {link: link})
       }
     }
   }
