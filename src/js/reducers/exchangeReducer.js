@@ -126,11 +126,29 @@ const exchange = (state = initState, action) => {
       newState.bcError = action.payload ? action.payload : ""
       newState.showConfirmApprove = false
       newState.isApproving = false
-      newState.deviceError = action.payload ? action.payload : ''
       return newState
     }
-    case "EXCHANGE.RESET_DEVICE_ERROR": {
-      newState.deviceError = ''
+    case "EXCHANGE.SET_SIGN_ERROR": {
+      newState.signError = action.payload ? action.payload : ""
+      newState.isApproving = false
+      newState.isConfirming = false
+      return newState
+    }
+    case "EXCHANGE.RESET_SIGN_ERROR": {
+      newState.signError = ''
+      return newState
+    }
+    case "EXCHANGE.SET_BROADCAST_ERROR": {
+      newState.broadcasting = false
+      newState.broadcastError = action.payload ? action.payload : ""
+      newState.confirmApprove = false
+      newState.isApproving = false
+      newState.isConfirming = false
+      newState.step = 3
+      return newState
+    }
+    case "EXCHANGE.RESET_BROADCAST_ERROR": {
+      newState.broadcastError = ''
       return newState
     }
     case "EXCHANGE.TX_BROADCAST_FULFILLED": {
@@ -187,7 +205,7 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.HIDE_APPROVE": {
       newState.confirmApprove = false
       newState.isApproving = false
-      newState.deviceError = ''
+      newState.signError = ''
       return newState
     }
     case "EXCHANGE.SHOW_APPROVE": {

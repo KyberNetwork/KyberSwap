@@ -119,7 +119,7 @@ export default class PostTransfer extends React.Component {
         type="transfer"
         translate={this.props.translate}
         title={this.props.translate("modal.confirm_transfer_title") || "Transfer confirm"}
-        errors={this.props.form.deviceError}
+        errors={this.props.form.signError}
       />
     )
   }
@@ -159,6 +159,7 @@ export default class PostTransfer extends React.Component {
       case "ledger":
         if(this.props.form.isConfirming) return
         this.props.dispatch(transferActions.hideConfirm())
+        this.props.dispatch(transferActions.resetSignError())
         break
     }
   }

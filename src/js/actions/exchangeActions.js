@@ -279,9 +279,29 @@ export function doApprovalTransactionFail(error) {
   }
 }
 
-export function resetDeviceError() {
+export function resetSignError() {
   return {
-    type: "EXCHANGE.RESET_DEVICE_ERROR",
+    type: "EXCHANGE.RESET_SIGN_ERROR",
+  }
+}
+
+export function setSignError(error) {
+  return {
+    type: "EXCHANGE.SET_SIGN_ERROR",
+    payload: error,
+  }
+}
+
+export function resetBroadcastError() {
+  return {
+    type: "EXCHANGE.RESET_BROADCAST_ERROR",
+  }
+}
+
+export function setBroadcastError(error) {
+  return {
+    type: "EXCHANGE.SET_BROADCAST_ERROR",
+    payload: error,
   }
 }
 
