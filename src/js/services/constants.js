@@ -57,7 +57,13 @@ const INIT_EXCHANGE_FORM_STATE = {
 
   throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 330000,
-  gas_limit: 500000,
+  max_gas: 330000,
+
+  gas_approve: 0,
+  max_gas_approve: 100000,
+  
+  //max_gas_total: 430000,
+
   isFetchingGas: false,
   gasPrice: 20,
   gasPriceSuggest: {
@@ -79,6 +85,8 @@ const INIT_EXCHANGE_FORM_STATE = {
   isConfirming: false,
   isApproving: false,
   confirmColdWallet: false,
+  signError: "",
+  broadcastError: "",
   balanceData:{
     sourceName: "Ether",
     sourceSymbol: "ETH",
@@ -140,6 +148,8 @@ const INIT_TRANSFER_FORM_STATE = {
   tempTx: {},
   isConfirming: false,
   confirmColdWallet: false,
+  signError: "",
+  broadcastError: "",
   balanceData:{
     tokenName: "Ether",
     tokenSymbol: "ETH",
@@ -189,7 +199,7 @@ const CONNECTION_CHECKER = {
 const CONFIG_ENV_LEDGER_LINK = "https://support.ledgerwallet.com/hc/en-us/articles/115005165269-What-if-Ledger-Wallet-is-not-recognized-on-Linux-"
 const LEDGER_SUPPORT_LINK = "https://support.ledgerwallet.com/hc/en-us/articles/115005198565"
 
-const STORAGE_KEY = "54"
+const STORAGE_KEY = "55"
 
 module.exports = {
   ERC20, KYBER_NETWORK, KYBER_WRAPPER, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,

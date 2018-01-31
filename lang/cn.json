@@ -112,6 +112,7 @@
     "custom_path": "您的自定义路径",
     "view_on_etherscan": "在Etherscan上查看",
     "press_confirm_if_really_want": "请按确认以继续",
+    "press_approve": "Press approve to continue",
     "waiting_for_confirmation": "正在等待您钱包的确认信息",
     "confirm_exchange_title": "交易确认",
     "confirm_transfer_title": "转移确认",
@@ -160,6 +161,9 @@
     "metamask_not_install":"无法连接至metamask。请确认您已经安装了metamask。",
     "browser_not_support_metamask": "Metamask is not supported on ${browser} browser. </br>Please use Chrome or FireFox instead.",
     "browser_not_support_ledger": "Ledger is not supported on ${browser} browser. </br>Please use Chrome instead.",
+    "please_make_sure": "Please make sure",
+    "ledger_plugged_in": "- Your Ledger is properly plugged in.",
+    "ledger_logged_in": "- You have logged into your Ledger.",
 
     "gas_price_not_number":"燃料价格不是数字",
     "rate_not_number":"交易价格不是数字",
@@ -175,9 +179,11 @@
 
     "ledger_global_err": "<div class='text-left'>Cannot connect to your Ledger. Please check if:<br/>- Your Ledger is properly plugged in.<br/>- You have logged into your Ledger.<br/>- You have launched Ethereum Application on your Ledger.<br/>- Browser Support has been enabled in your Ledger. Learn to enable Browser Support <a href=\"${link}\" target=\"_blank\">here</a>.</div>",
     "need_to_config_env_ledger": "You need to configure your Linux device to access Ledger. Instruction <a href=\"${link}\" target=\"_blank\">here</a>.",
+    "ledger_not_enable_contract": "Please check if: </br>- \"Contract Data\" has been enabled in your Ledger. Instruction <a href=\"${link}\" target=\"_blank\">here</a>.",
     "invalid_path_or_session_expired": "Cannot get address from this path. Please check your path is valid or Ledger is connected.",
     "path_is_invalid": "Invalid path. Please choose another one.",
-    "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue."
+    "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue.",
+    "eth_balance_not_enough_for_fee": "Your Eth balance is not enough for transaction fee"
   },
 
   "import": {

@@ -169,6 +169,33 @@ export function doTransactionFail(error) {
   }
 }
 
+
+export function resetSignError() {
+  return {
+    type: "TRANSFER.RESET_SIGN_ERROR",
+  }
+}
+
+export function setSignError(error) {
+  return {
+    type: "TRANSFER.SET_SIGN_ERROR",
+    payload: error,
+  }
+}
+
+export function resetBroadcastError() {
+  return {
+    type: "TRANSFER.RESET_BROADCAST_ERROR",
+  }
+}
+
+export function setBroadcastError(error) {
+  return {
+    type: "TRANSFER.SET_BROADCAST_ERROR",
+    payload: error,
+  }
+}
+
 export function throwErrorSignTransferTransaction(error) {
   return {
     type: "TRANSFER.THROW_ERROR_SIGN_TRANSACTION",
