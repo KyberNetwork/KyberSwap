@@ -76,10 +76,11 @@ export default class PostTransfer extends React.Component {
 
     var testBalanceWithFee = validators.verifyBalanceForTransaction(false, converters.toT(this.props.tokens.tokens['ETH'].balance),
             this.props.form.tokenSymbol, this.props.form.amount, this.props.form.gas, this.props.form.gasPrice)
-    check = false
+    
 
     if(testBalanceWithFee){
       this.props.dispatch(transferActions.thowErrorAmount("error.eth_balance_not_enough_for_fee"))
+      check = false
     }
     var testGasPrice = parseFloat(this.props.form.gasPrice)
     if (isNaN(testGasPrice)) {
