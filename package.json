@@ -93,8 +93,11 @@
     "build-kovan": "NODE_ENV=production webpack --env.chain=kovan --env.build=true",
     "build-mainnet": "NODE_ENV=production webpack --env.chain=mainnet --env.build=true",
     "build-internal-mainnet": "NODE_ENV=production webpack --env.chain=internal_mainnet --env.build=true",
-    "build-stagging": "NODE_ENV=production webpack --env.chain=stagging --env.build=true",
     "build-ropsten": "NODE_ENV=production webpack --env.chain=ropsten --env.build=true",
+
+    "build-stagging": "NODE_ENV=production webpack --env.chain=stagging --env.build=true",
+    "build-production": "NODE_ENV=production webpack --env.chain=production --env.build=true",
+
     "mainnet": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=mainnet",
     "internal_mainnet": "webpack-dev-server --https --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=internal_mainnet",
     "stagging": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=stagging",
