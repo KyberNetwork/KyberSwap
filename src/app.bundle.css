@@ -3505,6 +3505,9 @@
 .d-flex {
   display: flex; }
 
+.d-none {
+  display: none; }
+
 .justify-content-between {
   justify-content: space-between; }
 
@@ -4527,6 +4530,12 @@ ul.broadcast-steps {
       white-space: nowrap; }
     .reveal .content hr {
       border-color: #a5a5a5; }
+    .reveal .content .ledger-error {
+      font-size: 0.9em;
+      margin-bottom: 25px;
+      color: #ff5d00;
+      border-top: 1px solid #a5a5a5;
+      padding-top: 24px; }
   .reveal .footer {
     border-top: 1px solid #cae8e2;
     padding: 25px 10px;
