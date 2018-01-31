@@ -180,7 +180,8 @@
     "ledger_not_enable_contract": "Kiểm tra lại nếu: </br>- \"Contract Data\" đã được bật trên Ledger của bạn. Hướng dẫn tại <a href=\"${link}\" target=\"_blank\">đây</a>.",
     "invalid_path_or_session_expired": "Không thể lấy địa chỉ từ đường dẫn. Kiểm tra lại đường dẫn hoặc đăng nhập lại Ledger của bạn",
     "path_is_invalid": "Sai đường dẫn. Hãy chọn một đường dẫn khác.",
-    "ledger_time_out": "Phiên trên Ledger của bạn đã hết hạn. Đăng nhập lại để tiếp tục dụng."
+    "ledger_time_out": "Phiên trên Ledger của bạn đã hết hạn. Đăng nhập lại để tiếp tục dụng.",
+    "eth_balance_not_enough_for_fee": "Your Eth balance is not enough for transaction fee"
   },
 
   "import": {

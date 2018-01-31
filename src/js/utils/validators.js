@@ -80,23 +80,23 @@ export function verifyBalanceForTransaction(
   var bigGasPrice = new BigNumber(gasPrice)
   var bigFee = bigGas.times(bigGasPrice).div(1000000000)
 
-  if(isExchange){
-    if(sourceSymbol.toUpperCase() == "ETH"){
-      // exchange eth -> token
-      if(bigEthBalance.lt( bigTransactionAmount.add(bigFee) )) return "not enough"
-    } else {
-      //exchange token -> eth
-      if(bigEthBalance.lt(bigFee)) return "not enough"
-    }
+  // if(isExchange){
+  if(sourceSymbol.toUpperCase() == "ETH"){
+    // exchange eth -> token
+    if(bigEthBalance.lt( bigTransactionAmount.add(bigFee) )) return "not enough"
   } else {
-    if(sourceSymbol.toUpperCase() == "ETH"){
-      // transfer eth
-      if(bigEthBalance.lt( bigTransactionAmount.add(bigFee) )) return "not enough"
-    } else {
-      // transfer token
-      if(bigEthBalance.lt(bigFee)) return "not enough"
-    }
+    //exchange token -> eth
+    if(bigEthBalance.lt(bigFee)) return "not enough"
   }
+  // } else {
+  //   if(sourceSymbol.toUpperCase() == "ETH"){
+  //     // transfer eth
+  //     if(bigEthBalance.lt( bigTransactionAmount.add(bigFee) )) return "not enough"
+  //   } else {
+  //     // transfer token
+  //     if(bigEthBalance.lt(bigFee)) return "not enough"
+  //   }
+  // }
 
   return null
 }
