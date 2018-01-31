@@ -68,6 +68,39 @@ export function verifyAmount(sourceAmount,
   return null
 }
 
+export function verifyBalanceForTransaction(
+  isExchange, ethBalance, sourceSymbol, transactionAmount, 
+  gas, gasPrice
+) {
+
+  var bigEthBalance = new BigNumber(ethBalance)
+  var bigTransactionAmount = new BigNumber(transactionAmount)
+  var bigGas = new BigNumber(gas)
+  // var bigGasApprove = new BigNumber(gasApprove)
+  var bigGasPrice = new BigNumber(gasPrice)
+  var bigFee = bigGas.times(bigGasPrice).div(1000000000)
+
+  if(isExchange){
+    if(sourceSymbol.toUpperCase() == "ETH"){
+      // exchange eth -> token
+      if(bigEthBalance.lt( bigTransactionAmount.add(bigFee) )) return "not enough"
+    } else {
+      //exchange token -> eth
+      if(bigEthBalance.lt(bigFee)) return "not enough"
+    }
+  } else {
+    if(sourceSymbol.toUpperCase() == "ETH"){
+      // transfer eth
+      if(bigEthBalance.lt( bigTransactionAmount.add(bigFee) )) return "not enough"
+    } else {
+      // transfer token
+      if(bigEthBalance.lt(bigFee)) return "not enough"
+    }
+  }
+
+  return null
+}
+
 export function verifyNumber(amount) {
   var result = new BigNumber(amount)
   if (result == 'NaN' || result == 'Infinity') {
