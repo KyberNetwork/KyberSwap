@@ -23,6 +23,17 @@ export default class Footer extends React.Component {
                 <a>{this.props.translate('help') || 'Help'}</a>
               </li>
             </ul>
+            <ul className="links">
+              <li>
+                <a href="https://t.me/kybernetwork" target="_blank">Telegram</a>
+              </li>
+              <li>
+                <a href="https://github.com/kyberNetwork/" target="_blank">GitHub</a>
+              </li>
+              <li>
+                <a href="https://twitter.com/KyberNetwork" target="_blank">Twitter</a>
+              </li>
+            </ul>
           </div>
           <div className="column medium-6 small-12 text-right text-xs-only-center">
             Developed with <span className="emoji"> ❤️ </span> and <span className="emoji"> ☕ </span>
