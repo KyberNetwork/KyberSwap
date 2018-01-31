@@ -10,4 +10,6 @@ Improvements:
 - Estimate gas in approve transactions
 - Improve css (footer, errors in modals)
 
+Compatability:
+- This release version only work with Mainnet ethereum
 
