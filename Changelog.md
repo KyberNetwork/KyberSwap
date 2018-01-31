@@ -1,15 +1,16 @@
 # 0.3.0 (2018-01-31)
-Features: 
-- Make Wallet work with new caching server 
 
-Bugfixes:
-- Stop min_rate update when user click confirm
-- Handle errors for Ledger
+## Features: 
+- Integrate with new APIs from new cache server 
 
-Improvements:
-- Estimate gas in approve transactions
-- Improve css (footer, errors in modals)
+## Bugfixes:
+- Prevent `min_rate` from being updated when user is at confirming screen
+- Handle more errors for Ledger
 
-Compatability:
-- This release version only work with Mainnet ethereum
+## Improvements:
+- More acurrate gas estimation for approval transactions
+- Better css styling (footer, errors in modals)
+
+## Compatability:
+- This version only works with KyberNetwork smart contracts version 0.3.0
 
