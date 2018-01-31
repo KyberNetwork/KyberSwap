@@ -29,6 +29,7 @@ import { getTranslate } from 'react-localize-redux';
   return {
     account: store.account.account,
     transfer: store.transfer,
+    tokens: store.tokens,
     form: { ...store.transfer, balance, decimal, tokenName },
     ethereum: store.connection.ethereum,
     keyService: props.keyService,
@@ -71,6 +72,14 @@ export default class PostTransfer extends React.Component {
     if (validators.verifyAccount(this.props.form.destAddress.trim()) !== null) {
       this.props.dispatch(transferActions.throwErrorDestAddress("error.dest_address"))
       check = false
+    }
+
+    var testBalanceWithFee = validators.verifyBalanceForTransaction(false, converters.toT(this.props.tokens.tokens['ETH'].balance),
+            this.props.form.tokenSymbol, this.props.form.amount, this.props.form.gas, this.props.form.gasPrice)
+    check = false
+
+    if(testBalanceWithFee){
+      this.props.dispatch(transferActions.thowErrorAmount("error.eth_balance_not_enough_for_fee"))
     }
     var testGasPrice = parseFloat(this.props.form.gasPrice)
     if (isNaN(testGasPrice)) {
