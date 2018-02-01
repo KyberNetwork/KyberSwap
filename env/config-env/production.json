@@ -63,7 +63,7 @@
     },
     "ethScanUrl": "https://etherscan.io/",
     "bank": "0x0",
-    "reserve": "0x668d6003399d2d3bad858553eaf4b9477ff0962d",
+    "reserve": "0xd836715f1c6a249237feb47fa4d4186591da0f22",
     "network": "0x6bc0e45a62e952171fbd7562e7b5f30c50e564ac",
     "wrapper": "0x28e9221a3bb961bd89641ea55b4dfa4ae464e9cf",
     "trade_topic":"0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
