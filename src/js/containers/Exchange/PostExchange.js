@@ -144,15 +144,15 @@ export default class PostExchange extends React.Component {
         break
     } 
 
-    // if(this.props.form.sourceAmount){
-    //   var validateWithFee = validators.verifyBalanceForTransaction(true, converters.toT(this.props.tokens.tokens['ETH'].balance), this.props.form.sourceTokenSymbol, 
-    //   this.props.form.sourceAmount, this.props.form.gas + this.props.form.gas_approve, this.props.form.gasPrice)
+    if(this.props.form.sourceAmount){
+      var validateWithFee = validators.verifyBalanceForTransaction(true, converters.toT(this.props.tokens.tokens['ETH'].balance), this.props.form.sourceTokenSymbol, 
+      this.props.form.sourceAmount, this.props.form.gas + this.props.form.gas_approve, this.props.form.gasPrice)
 
-    //   if(validateWithFee){
-    //     this.props.dispatch(exchangeActions.thowErrorSourceAmount("error.eth_balance_not_enough_for_fee"))
-    //     check = false
-    //   }
-    // }
+      if(validateWithFee){
+        this.props.dispatch(exchangeActions.thowErrorSourceAmount("error.eth_balance_not_enough_for_fee"))
+        check = false
+      }
+    }
 
     if (this.props.form.slippagePrice === "0") {
       sourceAmountErrorKey = "error.source_amount_too_high"
