@@ -87,11 +87,10 @@ var indexConfig = function (env) {
     entry: ['./src/client.min.js'],
     output: {
       path: __dirname + dist,
-      filename: 'client.min.js'
+      filename: 'client.min.js?v=' + Date.now()
     },
     plugins: [
       new HtmlWebpackPlugin({
-        hash: true,
         title: "Wallet - kyber.network",
         template: './src/app.html.template',
         inject: 'body',
