@@ -145,7 +145,7 @@ export default class PostExchange extends React.Component {
     } 
 
     if(this.props.form.sourceAmount){
-      var validateWithFee = validators.verifyBalanceForTransaction(true, converters.toT(this.props.tokens.tokens['ETH'].balance), this.props.form.sourceTokenSymbol, 
+      var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens.tokens['ETH'].balance, this.props.form.sourceTokenSymbol, 
       this.props.form.sourceAmount, this.props.form.gas + this.props.form.gas_approve, this.props.form.gasPrice)
 
       if(validateWithFee){

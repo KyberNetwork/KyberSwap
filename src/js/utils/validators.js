@@ -69,34 +69,29 @@ export function verifyAmount(sourceAmount,
 }
 
 export function verifyBalanceForTransaction(
-  isExchange, ethBalance, sourceSymbol, transactionAmount, 
+  ethBalance, sourceSymbol, sourceAmount, 
   gas, gasPrice
 ) {
 
   var bigEthBalance = new BigNumber(ethBalance)
-  var bigTransactionAmount = new BigNumber(transactionAmount)
-  var bigGas = new BigNumber(gas)
-  // var bigGasApprove = new BigNumber(gasApprove)
-  var bigGasPrice = new BigNumber(gasPrice)
-  var bigFee = bigGas.times(bigGasPrice).div(1000000000)
 
-  // if(isExchange){
-  if(sourceSymbol.toUpperCase() == "ETH"){
-    // exchange eth -> token
-    if(bigEthBalance.lt( bigTransactionAmount.add(bigFee) )) return "not enough"
-  } else {
-    //exchange token -> eth
-    if(bigEthBalance.lt(bigFee)) return "not enough"
+  //calcualte tx fee
+  var gasPriceBig = new BigNumber(gasPrice)
+  var txFee = gasPriceBig.times(1000000000).times(gas)
+
+  var totalFee
+  if (sourceSymbol === "ETH"){
+    var value = new BigNumber(sourceAmount)
+    value = value.times(1000000000000000000)
+    totalFee = txFee.add(value)
+  } else{
+    totalFee = txFee
+  } 
+  
+
+  if (bigEthBalance.cmp(totalFee) === -1){
+    return "not enough"
   }
-  // } else {
-  //   if(sourceSymbol.toUpperCase() == "ETH"){
-  //     // transfer eth
-  //     if(bigEthBalance.lt( bigTransactionAmount.add(bigFee) )) return "not enough"
-  //   } else {
-  //     // transfer token
-  //     if(bigEthBalance.lt(bigFee)) return "not enough"
-  //   }
-  // }
 
   return null
 }
