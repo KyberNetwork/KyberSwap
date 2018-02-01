@@ -62,9 +62,9 @@ export default class BaseEthereumProvider {
       }).then((response) => {
         return response.json()
       }).then((data) => {
-        if(data.success){
+        if (data.success) {
           resolve(data)
-        }else{
+        } else {
           throw "get rate from blockchain"
         }
       })
@@ -79,18 +79,32 @@ export default class BaseEthereumProvider {
 
   }
 
-  getBalance(address) {
+  getBalance(address, blockNo) {
     return new Promise((resolve, reject) => {
-      this.rpc.eth.getBalance(address)
-        .then((balance) => {
-          if (balance != null) {
-            resolve(balance)
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-          reject(err)
-        })
+      if (blockNo) {
+        this.rpc.eth.getBalance(address, blockNo)
+          .then((balance) => {
+            if (balance != null) {
+              resolve(balance)
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+            reject(err)
+          })
+
+      } else {
+        this.rpc.eth.getBalance(address)
+          .then((balance) => {
+            if (balance != null) {
+              resolve(balance)
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+            reject(err)
+          })
+      }
     })
   }
 
@@ -126,7 +140,7 @@ export default class BaseEthereumProvider {
   }
 
   getMaxCap(address, blockno) {
-    var data =  this.networkContract.methods.getUserCapInWei(address).encodeABI()
+    var data = this.networkContract.methods.getUserCapInWei(address).encodeABI()
     return new Promise((resolve, reject) => {
       this.rpc.eth.call({
         to: BLOCKCHAIN_INFO.network,
@@ -190,19 +204,6 @@ export default class BaseEthereumProvider {
           reject(err)
         })
     })
-
-    // return new Promise((resolve, reject) => {
-    //   instance.methods.balanceOf(ownerAddr).call()
-    //     .then((result) => {
-    //       if (result != null) {
-    //         resolve(result)
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       reject(err)
-    //     })
-    // }) 
-
   }
 
   estimateGas(txObj) {
@@ -305,7 +306,7 @@ export default class BaseEthereumProvider {
     })
   }
 
-  checkKyberEnable(){
+  checkKyberEnable() {
     return new Promise((resolve, reject) => {
       this.networkContract.methods.enabled().call()
         .then((result) => {
@@ -373,7 +374,7 @@ export default class BaseEthereumProvider {
           return response.json()
         })
         .then((result) => {
-          if(result.success){
+          if (result.success) {
             var data = result.data.filter(item => {
               return (this.tokenIsSupported(item.dest) && this.tokenIsSupported(item.source))
             })
@@ -385,7 +386,7 @@ export default class BaseEthereumProvider {
             //   })
             // }
             resolve(data)
-          }else{
+          } else {
             rejected(new Error("Events in server not fetching"))
           }
         })
@@ -605,7 +606,7 @@ export default class BaseEthereumProvider {
       var decoded = abiDecoder.decodeMethod(data);
       resolve(decoded.params)
     })
-  }  
+  }
 
   wrapperGetGasCap(input, blockno) {
     return new Promise((resolve, reject) => {
@@ -653,7 +654,7 @@ export default class BaseEthereumProvider {
 
   wrapperGetConversionRate(reserve, input, blockno) {
     var data = this.networkContract.methods.getExpectedRate(input.source, input.dest, input.srcAmount).encodeABI()
-   // console.log(data)
+    // console.log(data)
     return new Promise((resolve, reject) => {
       this.rpc.eth.call({
         to: BLOCKCHAIN_INFO.network,
@@ -663,11 +664,11 @@ export default class BaseEthereumProvider {
           var rates = this.rpc.eth.abi.decodeParameters([{
             type: 'uint256',
             name: 'expectedPrice'
-        },{
+          }, {
             type: 'uint256',
             name: 'slippagePrice'
-        }], result)
-         resolve(rates)
+          }], result)
+          resolve(rates)
         }).catch((err) => {
           // console.log(err)
           reject(err)
@@ -685,18 +686,18 @@ export default class BaseEthereumProvider {
     })
   }
 
-  getGasFromEthgasstation(){
+  getGasFromEthgasstation() {
     return new Promise((resolve, rejected) => {
       fetch(BLOCKCHAIN_INFO.gasstation_endpoint)
-      .then((response) => {
-        return response.json()
-      })
-      .then((data) => {
-        resolve(data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+        .then((response) => {
+          return response.json()
+        })
+        .then((data) => {
+          resolve(data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     })
   }
 }

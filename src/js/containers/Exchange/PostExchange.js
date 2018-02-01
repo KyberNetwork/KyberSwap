@@ -55,10 +55,10 @@ export default class PostExchange extends React.Component {
     this.state = {form:{}}
   }
   clickExchange = () => {
-    if(!this.props.form.kyber_enabled){
-      this.props.dispatch(utilActions.openInfoModal(this.props.translate("transaction.notification"), this.props.translate("transaction.kyber_down")))
-      return
-    }
+    // if(!this.props.form.kyber_enabled){
+    //   this.props.dispatch(utilActions.openInfoModal(this.props.translate("transaction.notification"), this.props.translate("transaction.kyber_down")))
+    //   return
+    // }
     if(this.props.form.maxCap == 0){
       let titleModal = this.props.translate('transaction.notification') || 'Notification'
       let contentModal = this.props.translate('transaction.not_enable_exchange') || 'Your address is not enabled for exchange'

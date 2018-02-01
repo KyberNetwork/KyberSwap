@@ -15,7 +15,7 @@ function* broadCastTx(action) {
   const { ethereum, tx, account, data } = action.payload
   try {
     yield put(actions.prePareBroadcast())
-    const hash = yield call(ethereum.call("sendRawTransaction"), tx, ethereum)
+    const hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", tx)
     yield call(runAfterBroadcastTx, ethereum, tx, hash, account, data)
   }
   catch (e) {
@@ -27,7 +27,7 @@ function* broadCastTx(action) {
 function* approveTx(action) {
   try {
     const { ethereum, tx, callback } = action.payload
-    const hash = yield call(ethereum.call("sendRawTransaction"), tx, ethereum)
+    const hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", tx)
     callback(hash, tx)
     yield put(actions.doApprovalTransactionComplete(hash, action.meta))
   }
@@ -81,7 +81,7 @@ export function* checkTokenBalanceOfColdWallet(action) {
     throwOnFailure, nonce, gas,
     gasPrice, keystring, type, password, account, data, keyService } = action.payload
 
-  const remainStr = yield call(ethereum.call("getAllowance"), sourceToken, address)
+  const remainStr = yield call([ethereum, ethereum.call], "getAllowanceAtLatestBlock", sourceToken, address)
   const remain = converter.hexToBigNumber(remainStr)
   const sourceAmountBig = converter.hexToBigNumber(sourceAmount)
   if (!remain.greaterThanOrEqualTo(sourceAmountBig)) {
@@ -111,7 +111,7 @@ export function* processApproveByColdWallet(action) {
   try {
     const rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
       keystring, password, accountType, account.address)
-    const hashApprove = yield call(ethereum.call("sendRawTransaction"), rawApprove, ethereum)
+    const hashApprove = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", rawApprove)
     console.log(hashApprove)
     //increase nonce 
     yield put(incManualNonceAccount(account.address))
@@ -210,7 +210,7 @@ export function* exchangeETHtoTokenKeystore(action) {
   }
   try {
     yield put(actions.prePareBroadcast(balanceData))
-    const hash = yield call(ethereum.call("sendRawTransaction"), txRaw, ethereum)
+    const hash = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", txRaw)
     yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
   } catch (e) {
     console.log(e)
@@ -232,7 +232,7 @@ export function* exchangeETHtoTokenPrivateKey(action) {
       throwOnFailure, nonce, gas,
       gasPrice, keystring, type, password)
     yield put(actions.prePareBroadcast(balanceData))
-    const hash = yield call(ethereum.call("sendRawTransaction"), txRaw, ethereum)
+    const hash = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", txRaw)
     yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
   } catch (e) {
     console.log(e)
@@ -255,7 +255,7 @@ export function* exchangeETHtoTokenColdWallet(action) {
       gasPrice, keystring, type, password)
 
     yield put(actions.prePareBroadcast(balanceData))
-    const hash = yield call(ethereum.call("sendRawTransaction"), txRaw, ethereum)
+    const hash = yield call( [ethereum, ethereum.callMultiNode],"sendRawTransaction", txRaw)
     yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
   } catch (e) {
     let msg = ''
@@ -298,7 +298,7 @@ function* exchangeTokentoETHKeystore(action) {
     maxDestAmount, minConversionRate,
     throwOnFailure, nonce, gas,
     gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
-  var remainStr = yield call(ethereum.call("getAllowance"), sourceToken, address)
+  var remainStr = yield call([ethereum, ethereum.call],"getAllowanceAtLatestBlock", sourceToken, address)
   console.log("remain: " + remainStr)
   var remain = converter.hexToBigNumber(remainStr)
   var sourceAmountBig = converter.hexToBigNumber(sourceAmount)
@@ -314,7 +314,7 @@ function* exchangeTokentoETHKeystore(action) {
     }
     try {
       yield put(actions.prePareBroadcast(balanceData))
-      var hashApprove = yield call(ethereum.call("sendRawTransaction"), rawApprove, ethereum)
+      var hashApprove = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", rawApprove)
       console.log("approve: " + hashApprove)
       //increase nonce 
       yield put(incManualNonceAccount(account.address))
@@ -326,7 +326,7 @@ function* exchangeTokentoETHKeystore(action) {
         throwOnFailure, nonce, gas,
         gasPrice, keystring, type, password)
       yield put(actions.prePareBroadcast(balanceData))
-      var hash = yield call(ethereum.call("sendRawTransaction"), txRaw, ethereum)
+      var hash = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", txRaw)
       yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
     } catch (e) {
       console.log(e)
@@ -353,7 +353,7 @@ function* exchangeTokentoETHKeystore(action) {
     }
     try {
       yield put(actions.prePareBroadcast(balanceData))
-      const hash = yield call(ethereum.call("sendRawTransaction"), txRaw, ethereum)
+      const hash = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", txRaw)
       yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
     } catch (e) {
       console.log(e)
@@ -369,14 +369,14 @@ export function* exchangeTokentoETHPrivateKey(action) {
     throwOnFailure, nonce, gas,
     gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
   try {
-    var remainStr = yield call(ethereum.call("getAllowance"), sourceToken, address)
+    var remainStr = yield call([ethereum, ethereum.call],"getAllowanceAtLatestBlock", sourceToken, address)
     var remain = converter.hexToBigNumber(remainStr)
     var sourceAmountBig = converter.hexToBigNumber(sourceAmount)
     if (!remain.greaterThanOrEqualTo(sourceAmountBig)) {
       var rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
         keystring, password, type, address)
       yield put(actions.prePareBroadcast(balanceData))
-      var hashApprove = yield call(ethereum.call("sendRawTransaction"), rawApprove, ethereum)
+      var hashApprove = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", rawApprove)
       console.log(hashApprove)
       //increase nonce 
       yield put(incManualNonceAccount(account.address))
@@ -388,7 +388,7 @@ export function* exchangeTokentoETHPrivateKey(action) {
       throwOnFailure, nonce, gas,
       gasPrice, keystring, type, password)
     yield put(actions.prePareBroadcast(balanceData))
-    var hash = yield call(ethereum.call("sendRawTransaction"), txRaw, ethereum)
+    var hash = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", txRaw)
     yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
   } catch (e) {
     console.log(e)
@@ -410,7 +410,7 @@ function* exchangeTokentoETHColdWallet(action) {
       throwOnFailure, nonce, gas,
       gasPrice, keystring, type, password)
     yield put(actions.prePareBroadcast(balanceData))
-    const hash = yield call(ethereum.call("sendRawTransaction"), txRaw, ethereum)
+    const hash = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", txRaw)
     yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
   } catch (e) {
     let msg = ''
@@ -450,7 +450,7 @@ export function* exchangeTokentoETHMetamask(action) {
 function* updateRatePending(action) {
   const { ethereum, source, dest, sourceAmount, isManual, rateInit } = action.payload
   try {
-    const rate = yield call(ethereum.call("getRate"), source, dest, sourceAmount)
+    const rate = yield call([ethereum, ethereum.call],"getRate", source, dest, sourceAmount)
     const expectedPrice = rate.expectedRate ? rate.expectedRate : "0"
     const slippagePrice = rate.slippageRate ? rate.slippageRate : "0"
     yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice))
@@ -493,7 +493,7 @@ function* updateGasUsed(action) {
     const maxDestAmount = converter.biggestNumber()
     const minConversionRate = converter.numberToHex(exchange.offeredRate)
     const throwOnFailure = "0x0000000000000000000000000000000000000000"
-    var data = yield call([ethereum, ethereum.call("exchangeData")], sourceToken, sourceAmount,
+    var data = yield call([ethereum, ethereum.call],"exchangeData", sourceToken, sourceAmount,
       destToken, address,
       maxDestAmount, minConversionRate, throwOnFailure)
     var value = '0'
@@ -501,18 +501,19 @@ function* updateGasUsed(action) {
       value = sourceAmount
     } else {
       //calculate gas approve
-      const remainStr = yield call(ethereum.call("getAllowance"), sourceToken, address)
+      const remainStr = yield call([ethereum, ethereum.call],"getAllowanceAtLatestBlock", sourceToken, address)
       const remain = converter.hexToBigNumber(remainStr)
       const sourceAmountBig = converter.hexToBigNumber(sourceAmount)
       if (!remain.greaterThanOrEqualTo(sourceAmountBig)) {
         //calcualte gas approve
+        var dataApprove = yield call([ethereum, ethereum.call], "approveTokenData", sourceToken, converter.biggestNumber())
         var txObjApprove = {
           from: address,
           to: sourceToken,
-          data: ethereum.call("approveTokenData")(sourceToken, converter.biggestNumber()),
+          data: dataApprove,
           value: '0x0',
         }
-        gas_approve = yield call([ethereum, ethereum.call("estimateGas")], txObjApprove)
+        gas_approve = yield call([ethereum, ethereum.call], "estimateGas", txObjApprove)
         gas_approve = Math.round(gas_approve * 120 / 100)
         if (gas_approve > exchange.max_gas_approve) {
           gas = exchange.max_gas_approve
@@ -527,7 +528,7 @@ function* updateGasUsed(action) {
       data: data,
       value: value,
     }
-    gas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
+    gas = yield call([ethereum, ethereum.call],"estimateGas", txObj)
     gas = Math.round(gas * 120 / 100)
     if (gas > exchange.max_gas) {
       gas = exchange.max_gas
@@ -543,14 +544,14 @@ function* analyzeError(action) {
   const { ethereum, txHash } = action.payload
   try {
     //var txHash = exchange.txHash
-    var tx = yield call([ethereum, ethereum.call("getTx")], txHash)
+    var tx = yield call([ethereum, ethereum.call],"getTx", txHash)
     // console.log(tx)
     var value = tx.value
     var owner = tx.from
     var gas_price = tx.gasPrice
     var blockNumber = tx.blockNumber
 
-    var result = yield call([ethereum, ethereum.call("exactExchangeData")], tx.input)
+    var result = yield call([ethereum, ethereum.call],"exactExchangeData", tx.input)
     var source = result[0].value
     var srcAmount = result[1].value
     var dest = result[2].value
@@ -558,7 +559,7 @@ function* analyzeError(action) {
     var maxDestAmount = result[4].value
     var minConversionRate = result[5].value
     var walletID = result[6].value
-    var reserves = yield call([ethereum, ethereum.call("getListReserve")])
+    var reserves = yield call([ethereum, ethereum.call],"getListReserve")
 
     var input = {
       value, owner, gas_price, source, srcAmount, dest,
@@ -576,7 +577,7 @@ function* debug(input, blockno, ethereum) {
   var networkIssues = {}
   var reserveIssues = {}
   var translate = getTranslate(store.getState().locale)
-  var gasCap = yield call([ethereum, ethereum.call("wrapperGetGasCap")], blockno)
+  var gasCap = yield call([ethereum, ethereum.call],"wrapperGetGasCap", blockno)
   if (converter.compareTwoNumber(input.gas_price, gasCap) === 1) {
     networkIssues["gas_price"] = translate('error.gas_price_exceeded_limit') || "Gas price exceeded max limit"
   }
@@ -584,11 +585,11 @@ function* debug(input, blockno, ethereum) {
     if (converter.compareTwoNumber(input.value, 0) === 1) {
       networkIssues["token_ether"] = translate('error.issue_token_ether') || "Failed because of sending ether along the tx when it is trying to trade token to ether"
     }
-    var remainStr = yield call([ethereum, ethereum.call("getAllowance")], input.source, input.owner, blockno)
+    var remainStr = yield call([ethereum, ethereum.call],"getAllowanceAtSpecificBlock", input.source, input.owner, blockno)
     if (converter.compareTwoNumber(remainStr, input.srcAmount) === -1) {
       networkIssues["allowance"] = translate('error.issue_allowance') || "Failed because allowance is lower than srcAmount"
     }
-    var balance = yield call([ethereum, ethereum.call("getTokenBalance")], input.source, input.owner, blockno)
+    var balance = yield call([ethereum, ethereum.call],"getTokenBalanceAtSpecificBlock", input.source, input.owner, blockno)
     if (converter.compareTwoNumber(balance, input.srcAmount) === -1) {
       networkIssues["balance"] = translate('error.issue_balance') || "Failed because token balance is lower than srcAmount"
     }
@@ -599,24 +600,24 @@ function* debug(input, blockno, ethereum) {
   }
 
   if (input.source === constants.ETHER_ADDRESS) {
-    var userCap = yield call([ethereum, ethereum.call("getMaxCap")], input.owner, blockno)
+    var userCap = yield call([ethereum, ethereum.call],"getMaxCapAtSpecificBlock", input.owner, blockno)
     if (converter.compareTwoNumber(input.srcAmount, userCap) === 1) {
       networkIssues["user_cap"] = translate('error.issue_user_cap') || "Failed because the source amount exceeded user cap"
     }
   }
 
   if (input.dest === constants.ETHER_ADDRESS) {
-    var userCap = yield call([ethereum, ethereum.call("getMaxCap")], input.owner, blockno)
+    var userCap = yield call([ethereum, ethereum.call],"getMaxCapAtSpecificBlock", input.owner, blockno)
     if (input.destAmount > userCap) {
       networkIssues["user_cap"] = translate('error.issue_user_cap') || "Failed because the source amount exceeded user cap"
     }
   }
 
   //Reserve scops
-  var rates = yield call([ethereum, ethereum.call("wrapperGetConversionRate")]
+  var rates = yield call([ethereum, ethereum.call],"wrapperGetConversionRate"
     , input.reserves[0], input, blockno)
   if (converter.compareTwoNumber(rates.expectedPrice, 0) === 0) {
-    var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], input.reserves[0], input, blockno)
+    var reasons = yield call([ethereum, ethereum.call],"wrapperGetReasons", input.reserves[0], input, blockno)
     reserveIssues["reason"] = reasons
   } else {
     //var chosenReserve = yield call([ethereum, ethereum.call("wrapperGetChosenReserve")], input, blockno)
@@ -636,7 +637,7 @@ function* checkKyberEnable() {
   var state = store.getState()
   const ethereum = state.connection.ethereum
   try {
-    var enabled = yield call([ethereum, ethereum.call("checkKyberEnable")])
+    var enabled = yield call([ethereum, ethereum.call], "checkKyberEnable")
     yield put(actions.setKyberEnable(enabled))
   } catch (e) {
     console.log(e.message)
