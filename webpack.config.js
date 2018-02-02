@@ -93,10 +93,10 @@ var indexConfig = function (env) {
       new HtmlWebpackPlugin({
         title: "Wallet - kyber.network",
         template: './src/app.html.template',
+        favicon: './src/assets/img/favicon.png',
         inject: 'body',
         styleFile: 'app.bundle.css?v=' + Date.now()
-      }),
-
+      })
     ]
   }
 }

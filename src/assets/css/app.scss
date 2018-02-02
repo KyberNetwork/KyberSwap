@@ -561,3 +561,16 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
     font-weight: normal;
   }
 }
+#private_key{
+  background-color: transparent;
+  color: inherit;
+  border-bottom: 1px solid #ddd;
+  &:focus{
+    background-color: transparent
+  }
+  &.security{
+    -webkit-text-security:disc;
+    -moz-text-security:disc;
+    font-size: 50px;
+  }
+}
