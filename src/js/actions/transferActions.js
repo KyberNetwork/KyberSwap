@@ -169,9 +169,30 @@ export function doTransactionFail(error) {
   }
 }
 
-export function resetDeviceError() {
+
+export function resetSignError() {
   return {
-    type: "TRANSFER.RESET_DEVICE_ERROR",
+    type: "TRANSFER.RESET_SIGN_ERROR",
+  }
+}
+
+export function setSignError(error) {
+  return {
+    type: "TRANSFER.SET_SIGN_ERROR",
+    payload: error,
+  }
+}
+
+export function resetBroadcastError() {
+  return {
+    type: "TRANSFER.RESET_BROADCAST_ERROR",
+  }
+}
+
+export function setBroadcastError(error) {
+  return {
+    type: "TRANSFER.SET_BROADCAST_ERROR",
+    payload: error,
   }
 }
 

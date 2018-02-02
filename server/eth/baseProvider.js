@@ -200,7 +200,9 @@ class BaseEthereumProvider {
   getAllRate(sources, dests, quantity) {
     var serverPoint = BLOCKCHAIN_INFO.server_logs.url
     var api = BLOCKCHAIN_INFO.server_logs.api_key
-
+   // console.log(sources)
+   // console.log(dests)
+   // console.log(quantity)
     var dataAbi = this.wrapperContract.methods.getExpectedRates(this.networkAddress, sources, dests, quantity).encodeABI()
     var options = {
       host: serverPoint,
@@ -401,7 +403,7 @@ class BaseEthereumProvider {
       host: serverPoint,
       path: `/api?module=logs&action=getLogs&fromBlock=${fromBlock}&toBlock=${toBlock}&address=${contractAddress}&topic0=${tradeTopic}&apikey=${api}`
     }
-    //console.log(options)
+    console.log(options)
     return new Promise((resolve, rejected) => {
       https.get(options, res => {
         var statusCode = res.statusCode;
@@ -441,7 +443,7 @@ class BaseEthereumProvider {
     var tradeTopic = BLOCKCHAIN_INFO.trade_topic
 
     return new Promise((resolve, rejected) => {
-      this.networkContract.getPastEvents('Trade', {
+      this.networkContract.getPastEvents('ExecuteTrade', {
         filter: { topic0: tradeTopic },
         fromBlock: fromBlock,
         toBlock: toBlock

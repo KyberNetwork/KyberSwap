@@ -6,6 +6,7 @@
 $accent-gradient: linear-gradient(169deg, #36d9ac, #049696);
 $alert-color : #ff5d00;
 
+@import 'foundation';
 @import 'elements';
 @import 'broadcast';
 @import 'modals';

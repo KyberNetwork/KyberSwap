@@ -1,0 +1,79 @@
+{
+    "connections": {
+      "http": [
+        "https://mainnet.infura.io/DtzEYY0Km2BA3YwyJcBG",
+        "https://mainnet.infura.io/aFvzEJSCQtTUJJ0Ec0mW",
+        "https://mainnet.infura.io/Ho4cy66JFfTvvAVlXvii",
+        "https://mainnet.infura.io/uF2YCXrIz7yUFEXd2yo0",
+        "https://mainnet.infura.io/NhLyl78p5UrUgBN5GSty"
+      ],
+      "ws": "wss://mainnet.infura.io/ws"
+    },
+    "history_endpoint": "http://production-cache.kyber.network/",
+    "api_usd":"https://api.coinmarketcap.com",
+    "tokens": {
+      "ETH": {
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "icon": "eth.svg",
+        "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "decimal": 18,
+        "usd_id":"ethereum"
+      },
+      "KNC": {
+        "name": "KyberNetwork",
+        "symbol": "KNC",
+        "icon": "knc.svg",
+        "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+        "decimal": 18,
+        "usd_id":"kyber-network"
+      },
+      "OMG": {
+        "name": "OmiseGO",
+        "symbol": "OMG",
+        "icon": "omg.svg",
+        "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+        "decimal": 18,
+        "usd_id":"omisego"
+      },
+      "EOS": {
+        "name": "Eos",
+        "symbol": "EOS",
+        "icon": "eos.svg",
+        "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
+        "decimal": 18,
+        "usd_id":"eos"
+      },
+      "SALT": {
+        "name":"Salt",
+        "address": "0x4156d3342d5c385a87d264f90653733592000581",
+        "symbol": "SALT",
+        "icon": "salt.svg",
+        "decimal": 8,
+        "usd_id":"salt"
+      },
+      "SNT": {
+        "name":"Status",
+        "address": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
+        "symbol": "SNT",
+        "icon": "snt.svg",
+        "decimal": 18,
+        "usd_id":"status"
+      }
+    },
+    "ethScanUrl": "https://etherscan.io/",
+    "bank": "0x0",
+    "reserve": "0xd836715f1c6a249237feb47fa4d4186591da0f22",
+    "network": "0x6bc0e45a62e952171fbd7562e7b5f30c50e564ac",
+    "wrapper": "0x28e9221a3bb961bd89641ea55b4dfa4ae464e9cf",
+    "trade_topic":"0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
+    "endpoint": "wss://mainnet.infura.io/ws",
+    "averageBlockTime": 15000,
+    "networkId": 1,
+    "chainName": "Mainnet",
+    "server_logs": {
+      "url": "api.etherscan.io",
+      "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
+    },
+    "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json"
+  }

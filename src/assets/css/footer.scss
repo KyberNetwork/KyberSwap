@@ -3,10 +3,6 @@
     letter-spacing: .5px;
     font-size: 0.8rem;
     line-height: 25px;
-
-    .emoji{
-        margin:0px 5px;
-    }
 }
 .footer-menu {
     font-size: 0.8rem;
@@ -14,7 +10,7 @@
       padding: 0;
       list-style: none;
       margin: 0px;
-      margin-top: 1rem;
+      margin-bottom: 5px;
       > li {
         display: inline-block;
         &:not(:last-child) > a:after {
@@ -37,7 +33,6 @@
         }
       }
       @include breakpoint(small only){
-        padding: 10px 0;
         margin: 0 auto 10px;
         width: 70%;
       }

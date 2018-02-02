@@ -44,6 +44,7 @@ import { RateBetweenToken } from "../Exchange"
     },
     account: store.account.account,
     ethereum: store.connection.ethereum,
+    tokens: store.tokens,
     keyService: props.keyService,
     translate: getTranslate(store.locale),
   }
@@ -141,7 +142,18 @@ export default class PostExchange extends React.Component {
       case "too high for reserve":
         sourceAmountErrorKey = "error.source_amount_too_high_for_reserve"
         break
+    } 
+
+    if(this.props.form.sourceAmount){
+      var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens.tokens['ETH'].balance, this.props.form.sourceTokenSymbol, 
+      this.props.form.sourceAmount, this.props.form.gas + this.props.form.gas_approve, this.props.form.gasPrice)
+
+      if(validateWithFee){
+        this.props.dispatch(exchangeActions.thowErrorSourceAmount("error.eth_balance_not_enough_for_fee"))
+        check = false
+      }
     }
+
     if (this.props.form.slippagePrice === "0") {
       sourceAmountErrorKey = "error.source_amount_too_high"
     }
@@ -201,16 +213,17 @@ export default class PostExchange extends React.Component {
 
   closeModal = (event) => {
     this.props.dispatch(exchangeActions.hidePassphrase())
+    this.props.dispatch(exchangeActions.resetSignError())
   }
   closeModalConfirm = (event) => {
     if (this.props.form.isConfirming) return
     this.props.dispatch(exchangeActions.hideConfirm())
-    this.props.dispatch(exchangeActions.resetDeviceError())
+    this.props.dispatch(exchangeActions.resetSignError())
   }
   closeModalApprove = (event) => {
     if (this.props.form.isApproving) return
     this.props.dispatch(exchangeActions.hideApprove())
-    this.props.dispatch(exchangeActions.resetDeviceError())
+    this.props.dispatch(exchangeActions.resetSignError())
   }
   changePassword = (event) => {
     this.props.dispatch(exchangeActions.changePassword())
@@ -231,6 +244,7 @@ export default class PostExchange extends React.Component {
     var nonce = validators.verifyNonce(this.props.account.getUsableNonce())
     // should use estimated gas
     var gas = converters.numberToHex(this.props.form.gas)
+    var gas_approve = converters.numberToHex(this.props.form.gas_approve)
     // should have better strategy to determine gas price
     var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.form.gasPrice))
     var balanceData = {
@@ -246,7 +260,7 @@ export default class PostExchange extends React.Component {
     return {
       selectedAccount, sourceToken, sourceAmount, destToken,
       minConversionRate, destAddress, maxDestAmount,
-      throwOnFailure, nonce, gas, gasPrice, balanceData
+      throwOnFailure, nonce, gas,gas_approve, gasPrice, balanceData
     }
   }
   checkTokenBalanceOfColdWallet = () => {
@@ -266,9 +280,10 @@ export default class PostExchange extends React.Component {
 
   processExchangeAfterApprove = () => {
     const params = this.formParams()
+    console.log(params)
     const account = this.props.account
     const ethereum = this.props.ethereum
-    this.props.dispatch(exchangeActions.doApprove(ethereum, params.sourceToken, params.sourceAmount, params.nonce, params.gas_appove, params.gasPrice,
+    this.props.dispatch(exchangeActions.doApprove(ethereum, params.sourceToken, params.sourceAmount, params.nonce, params.gas_approve, params.gasPrice,
       account.keystring, account.password, account.type, account, this.props.keyService))
   }
 
@@ -329,7 +344,7 @@ export default class PostExchange extends React.Component {
         type="exchange"
         translate={this.props.translate}
         title={this.props.translate("modal.confirm_exchange_title") || "Exchange confirm"}
-        errors={this.props.form.deviceError}
+        errors={this.props.form.signError}
       />
     )
   }
@@ -346,7 +361,7 @@ export default class PostExchange extends React.Component {
         gasPrice={this.props.form.gasPrice}
         gas={this.props.form.gas_approve}
         isFetchingGas={this.props.form.isFetchingGas}
-        errors={this.props.form.deviceError}
+        errors={this.props.form.signError}
       />
     )
   }
