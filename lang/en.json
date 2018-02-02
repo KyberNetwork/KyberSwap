@@ -135,7 +135,7 @@
     "source_amount_too_high": "Source amount is too high. Your balance is insufficient",
     "source_amount_too_high_cap": "Source amount is over your cap. You should exchange smaller than ${ cap } ETH",
     "source_amount_too_small": "Source amount is too small",
-    "source_amount_rate_error": "Cannot exchange at the moment",
+    "source_amount_rate_error": "Cannot exchange at the moment. Please come back later",
     "source_amount_too_high_for_reserve": "Source amount is too high (pair is not available for trading at the moment)",
     "source_amount_is_not_number": "Source amount is not a number",
 

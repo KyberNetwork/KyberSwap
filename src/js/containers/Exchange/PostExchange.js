@@ -111,11 +111,11 @@ export default class PostExchange extends React.Component {
   }
 
   validateExchange = () => {
-    // if(this.props.form.offeredRate === "0"){
-    //   this.props.dispatch(utilActions.openInfoModal(this.props.translate("error.error_occurred"),
-    //                     this.props.translate("error.source_amount_rate_error")))
-    //   return false
-    // }
+    if(this.props.form.offeredRate === "0"){
+      this.props.dispatch(utilActions.openInfoModal(this.props.translate("error.error_occurred"),
+                        this.props.translate("error.source_amount_rate_error")))
+      return false
+    }
     //check source amount
     var check = true
     var validateAmount = validators.verifyAmount(this.props.form.sourceAmount,
@@ -144,19 +144,19 @@ export default class PostExchange extends React.Component {
         break
     } 
 
-    // if(this.props.form.sourceAmount){
-    //   var validateWithFee = validators.verifyBalanceForTransaction(true, converters.toT(this.props.tokens.tokens['ETH'].balance), this.props.form.sourceTokenSymbol, 
-    //   this.props.form.sourceAmount, this.props.form.gas + this.props.form.gas_approve, this.props.form.gasPrice)
+    if(this.props.form.sourceAmount){
+      var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens.tokens['ETH'].balance, this.props.form.sourceTokenSymbol, 
+      this.props.form.sourceAmount, this.props.form.gas + this.props.form.gas_approve, this.props.form.gasPrice)
 
-    //   if(validateWithFee){
-    //     this.props.dispatch(exchangeActions.thowErrorSourceAmount("error.eth_balance_not_enough_for_fee"))
-    //     check = false
-    //   }
-    // }
-
-    if (this.props.form.slippagePrice === "0") {
-      sourceAmountErrorKey = "error.source_amount_too_high"
+      if(validateWithFee){
+        this.props.dispatch(exchangeActions.thowErrorSourceAmount("error.eth_balance_not_enough_for_fee"))
+        check = false
+      }
     }
+
+    // if (this.props.form.offeredRate === "0") {
+    //   sourceAmountErrorKey = "error.kyber_down"
+    // }
     if (sourceAmountErrorKey) {
       this.props.dispatch(exchangeActions.thowErrorSourceAmount(sourceAmountErrorKey))
       check = false
