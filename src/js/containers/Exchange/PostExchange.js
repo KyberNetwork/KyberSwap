@@ -111,11 +111,11 @@ export default class PostExchange extends React.Component {
   }
 
   validateExchange = () => {
-    // if(this.props.form.offeredRate === "0"){
-    //   this.props.dispatch(utilActions.openInfoModal(this.props.translate("error.error_occurred"),
-    //                     this.props.translate("error.source_amount_rate_error")))
-    //   return false
-    // }
+    if(this.props.form.offeredRate === "0"){
+      this.props.dispatch(utilActions.openInfoModal(this.props.translate("error.error_occurred"),
+                        this.props.translate("error.source_amount_rate_error")))
+      return false
+    }
     //check source amount
     var check = true
     var validateAmount = validators.verifyAmount(this.props.form.sourceAmount,
@@ -154,9 +154,9 @@ export default class PostExchange extends React.Component {
       }
     }
 
-    if (this.props.form.slippagePrice === "0") {
-      sourceAmountErrorKey = "error.source_amount_too_high"
-    }
+    // if (this.props.form.offeredRate === "0") {
+    //   sourceAmountErrorKey = "error.kyber_down"
+    // }
     if (sourceAmountErrorKey) {
       this.props.dispatch(exchangeActions.thowErrorSourceAmount(sourceAmountErrorKey))
       check = false
