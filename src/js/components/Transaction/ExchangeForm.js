@@ -68,7 +68,10 @@ const ExchangeForm = (props) => {
                   </div>
                 </div>
                 <div class="column medium-2 exchange-icon hide-for-small-only">
-                  <i className="k k-exchange k-3x cur-pointer" onClick = {(e) => props.swapToken(e)}></i>
+                  <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
+                    <i className="k k-exchange k-3x cur-pointer" onClick = {(e) => props.swapToken(e)}></i>
+                  </span>
+                  <ReactTooltip place="bottom" id="swap" type="light"/>
                 </div>
                 <div class="column medium-5">
                   <label>

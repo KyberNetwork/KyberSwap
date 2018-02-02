@@ -86,6 +86,7 @@
     "to": "đến",
     "best_rate": "Rate tốt nhất",
     "token_amount": "Token/Số lượng",
+    "click_to_swap": "Click để hoán đổi",
 
     "transfer_tooltip": "Chuyển eth hoặc token đến một tài khoản khác",
     "transaction_gasprice_50": "Giá Gas càng cao, giao dịch càng nhanh. Giá Gas lớn nhất 50 Gwei",
@@ -235,5 +236,8 @@
   },
 
   "product_feedback": "Phản hồi sản phẩm",
-  "help": "Hỗ trợ"
+  "help": "Hỗ trợ",
+  "low": "Chậm",
+  "standard": "Thường",
+  "fast": "Nhanh"
 }

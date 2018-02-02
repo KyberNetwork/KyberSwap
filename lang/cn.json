@@ -85,6 +85,7 @@
     "to": "至",
     "best_rate": "最小价格",
     "token_amount": "代币／数量",
+    "click_to_swap": "Click to swap",
 
     "transfer_tooltip": "转移以太或代币至其它地址",
     "transaction_gasprice_50": "更高的燃料价格，更快的交易速度。最高燃料价格：50 Gwei",
@@ -246,5 +247,8 @@
   },
 
   "product_feedback": "产品反馈",
-  "help": "帮助"
+  "help": "帮助",
+  "low": "Low",
+  "standard": "Standard",
+  "fast": "Fast"
 }

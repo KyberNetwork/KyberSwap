@@ -34,13 +34,19 @@ const TransactionConfig = (props) => {
                 <span className="unit text-lowercase">gwei</span>
                 {gasPriceError}
                 <div className="d-flex justify-content-between gas-select">
-                  <button onClick={() => specifyGasPrice(gasPriceSuggest.safeLowGas)} data-tip={tooltipGasSuggest(30)} data-for="low">Low</button>
+                  <button onClick={() => specifyGasPrice(gasPriceSuggest.safeLowGas)} data-tip={tooltipGasSuggest(30)} data-for="low">
+                    {props.translate("low") || 'Low'}
+                  </button>
                   <ReactTooltip place="bottom" id="low" type="light" />
 
-                  <button onClick={() => specifyGasPrice(gasPriceSuggest.standardGas)} data-tip={tooltipGasSuggest(5)} data-for="standard">Standard</button>
+                  <button onClick={() => specifyGasPrice(gasPriceSuggest.standardGas)} data-tip={tooltipGasSuggest(5)} data-for="standard">
+                    {props.translate("standard") || 'Standard'}
+                  </button>
                   <ReactTooltip place="bottom" id="standard" type="light" />
 
-                  <button onClick={() => specifyGasPrice(gasPriceSuggest.fastGas)} data-tip={tooltipGasSuggest(2)} data-for="fast">Fast</button>
+                  <button onClick={() => specifyGasPrice(gasPriceSuggest.fastGas)} data-tip={tooltipGasSuggest(2)} data-for="fast">
+                    {props.translate("fast") || 'Fast'}
+                  </button>
                   <ReactTooltip place="bottom" id="fast" type="light" />
                 </div>
                 {props.translate("transaction.transaction_fee") || "Transaction Fee"}: <span className="text-success font-w-b">{props.totalGas} ETH</span>

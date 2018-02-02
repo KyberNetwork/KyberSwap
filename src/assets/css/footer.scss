@@ -33,8 +33,15 @@
         }
       }
       @include breakpoint(small only){
-        margin: 0 auto 10px;
-        width: 70%;
+        margin: 0 auto;
       }
     }
-  }
+    @include breakpoint(small only){
+      text-align: center;
+      > div {
+        border-top: 1px solid #ddd;
+        margin-top: 10px;
+        padding-top: 10px;
+      }
+    }
+}

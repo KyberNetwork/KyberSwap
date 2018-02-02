@@ -84,6 +84,7 @@
     "to": "하려면",
     "best_rate": "최소 속도",
     "token_amount": "토큰/금액",
+    "click_to_swap": "Click to swap",
 
     "transfer_tooltip": "이더 또는 토큰을 다른 주소로 전송하십시오",
     "transaction_gasprice_50": "높은 Gss 가격, 더 빠른 거래 속도, 최대 Gas 비용: 50 Gwei",
@@ -245,6 +246,8 @@
   },
 
   "product_feedback": "제품 비드백하기",
-  "help": "도움말"
-
+  "help": "도움말",
+  "low": "Low",
+  "standard": "Standard",
+  "fast": "Fast"
 }

@@ -86,6 +86,7 @@
     "to": "to",
     "best_rate": "Min Rate",
     "token_amount": "Token/Amount",
+    "click_to_swap": "Click to swap",
 
     "transfer_tooltip": "Transfer ether or tokens to other addresses",
     "transaction_gasprice_50": "Higher gas price, faster transaction. Max gas price: 50 Gwei",
@@ -246,5 +247,8 @@
   },
 
   "product_feedback": "Product Feedback",
-  "help": "Help"
+  "help": "Help",
+  "low": "Low",
+  "standard": "Standard",
+  "fast": "Fast"
 }
