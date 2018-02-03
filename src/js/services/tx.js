@@ -28,7 +28,7 @@ export default class Tx {
 
   sync = (ethereum, tx) => {
     return new Promise((resolve, reject) => {
-      ethereum.call("txMined")(tx.hash).then((receipt) => {
+      ethereum.call("txMined", tx.hash).then((receipt) => {
         var newTx = tx.shallowClone()
         newTx.address = receipt.contractAddress
         newTx.gas = receipt.gasUsed

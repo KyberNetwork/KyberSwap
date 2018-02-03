@@ -13,7 +13,7 @@ function* broadCastTx(action) {
   const { ethereum, tx, account, data } = action.payload
   try {
     yield put(actions.prePareBroadcast())
-    const hash = yield call(ethereum.call("sendRawTransaction"), tx, ethereum)
+    const hash = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", tx)
     yield call(runAfterBroadcastTx, ethereum, tx, hash, account, data)
   }
   catch (e) {
@@ -82,7 +82,7 @@ function* transferKeystore(action, callService) {
   }
   try {
     yield put(actions.prePareBroadcast(balanceData))
-    const hash = yield call(ethereum.call("sendRawTransaction"), rawTx, ethereum)
+    const hash = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", rawTx)
     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
   } catch (e) {
     yield call(doTxFail, ethereum, account, e.message)
@@ -114,7 +114,7 @@ function* transferColdWallet(action, callService) {
     }
     
     yield put(actions.prePareBroadcast(balanceData))
-    const hash = yield call(ethereum.call("sendRawTransaction"), rawTx, ethereum)
+    const hash = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", rawTx)
     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
   } catch (e) {
     let msg = ''
@@ -249,7 +249,7 @@ function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, source
         to:internalAdrr
       }
       try{
-        gas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
+        gas = yield call([ethereum, ethereum.call],"estimateGas", txObj)
         yield put(actions.setGasUsed(gas))
       }catch(e){
         console.log(e.message)
@@ -258,14 +258,14 @@ function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, source
     }else{
       try{
         var destAddr = transfer.destAddress !== "" ? transfer.destAddress : internalAdrr
-        var data = yield call([ethereum, ethereum.call("sendTokenData")],tokenAddr, amount, destAddr)
+        var data = yield call([ethereum, ethereum.call],"sendTokenData", tokenAddr, amount, destAddr)
         txObj = {
           from : fromAddr,
           value:"0",
           to:tokenAddr,
           data: data
         }
-        gas = yield call([ethereum, ethereum.call("estimateGas")], txObj)
+        gas = yield call([ethereum, ethereum.call],"estimateGas", txObj)
         gas = Math.round(gas * 120 / 100)
         yield put(actions.setGasUsed(gas))
       }catch(e){

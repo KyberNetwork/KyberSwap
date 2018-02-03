@@ -1,12 +1,14 @@
 {
   "connections": {
     "http": [
-      "https://kovan.infura.io/DtzEYY0Km2BA3YwyJcBG",
-      "https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi",
-      "https://kovan.infura.io/Ho4cy66JFfTvvAVlXvii",
-      "https://kovan.infura.io/aFvzEJSCQtTUJJ0Ec0mW",
-      "https://kovan.infura.io/uF2YCXrIz7yUFEXd2yo0",
-      "https://kovan.infura.io/NhLyl78p5UrUgBN5GSty"
+      {
+        "endPoint" : "https://cache.kyber.network",
+        "type": "cached"
+      },
+      {
+        "endPoint" : "https://kovan.infura.io/DtzEYY0Km2BA3YwyJcBG",
+        "type": "prune"
+      }
     ],
     "ws": "wss://kovan.kyber.network/ws/"
   },
