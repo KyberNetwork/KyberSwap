@@ -5,11 +5,16 @@ import { unlock } from "../../utils/keys"
 export default class KeyStore {
 
   callSignTransaction = (funcName, ...args) =>{
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       keyService[funcName](...args).then(result => {
         const { txParams, keystring, password } = result
-        const tx = this.sealTx(txParams, keystring, password)
-        resolve(tx)
+        try {
+          const tx = this.sealTx(txParams, keystring, password)
+          resolve(tx)
+        }catch(e) {
+          console.log(e)
+          reject(e)
+        }
       })
     })
   }

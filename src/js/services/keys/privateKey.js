@@ -1,13 +1,26 @@
 import * as keyService from "./baseKey"
 import EthereumTx from "ethereumjs-tx"
 
-export default class KeyStore {
+export default class PrivateKey {
   callSignTransaction = (funcName, ...args) => {
-    const { txParams, keystring, } = keyService[funcName](...args)
-    const tx = this.sealTx(txParams, keystring)
-    return new Promise((resolve) => {
-      resolve(tx)
+    return new Promise((resolve, reject) => {
+      keyService[funcName](...args).then(result => {
+        const { txParams, keystring, } = result
+        const tx = this.sealTx(txParams, keystring)
+        resolve(tx)
+      }).catch(e => {
+        console.log(e)
+        reject(e)
+      })
     })
+
+    // const { txParams, keystring, } = keyService[funcName](...args)
+    // console.log(txParams, keystring)
+    // const tx = this.sealTx(txParams, keystring)
+    // console.log(tx)
+    // return new Promise((resolve) => {
+    //   resolve(tx)
+    // })
   }
 
   sealTx = (params, keystring) => {

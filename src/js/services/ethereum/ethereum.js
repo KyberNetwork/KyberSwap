@@ -152,8 +152,8 @@ export default class EthereumService extends React.Component {
 
     this.fetchGasprice()
 
-    this.fetchGasExchange()
-    this.fetchGasTransfer()
+   // this.fetchGasExchange()
+   // this.fetchGasTransfer()
 
     // this.testAnalize()
   }
@@ -306,21 +306,6 @@ export default class EthereumService extends React.Component {
     if (pathname !== "/exchange") {
       return
     }
-
-    // var ethereum = state.connection.ethereum
-    // var exchange = state.exchange
-    // var tokens = state.tokens.tokens
-
-    // var sourceDecimal = 18
-    // var sourceTokenSymbol = exchange.sourceTokenSymbol
-    // if (tokens[sourceTokenSymbol]) {
-    //   sourceDecimal = tokens[sourceTokenSymbol].decimal
-    // }
-
-    // var kyber_address = BLOCKCHAIN_INFO.network
-    // var destAddress = account.address
-    // store.dispatch(estimateGas(ethereum, {...state.exchange, sourceDecimal, kyber_address, destAddress}))
-
     store.dispatch(estimateGas())
   }
 
