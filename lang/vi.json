@@ -154,8 +154,8 @@
 
     "path_not_support_by_trezor": "Đường dẫn này không được Trezor hỗ trợ",
     "check_right_application_selected": "Kiểm tra lại để chắc chắn bạn đã sử dụng đúng ứng dụng",
-    "network_not_match": "Metamask cần chạy ở ${expectedName}. Hiện đang trên ${currentName}",
-    "network_not_match_unknow": "Metamask cần chạy ${expectedName}",
+    "network_not_match": "Metamask cần chạy ở <strong>${expectedName}</strong>. Hiện đang trên <strong>${currentName}</strong>",
+    "network_not_match_unknow": "Metamask cần chạy <strong>${expectedName}</strong>",
     "not_supported": "Không hỗ trợ",
     "metamask_not_install":"Không thể kết nối đến Metamask. Hãy chắc chắn rằng Metamask của bạn đã được cài",
     "browser_not_support_metamask": "Metamask không được hỗ trợ trên trình duyệt ${browser}. </br>Vui lòng chuyển sang Chrome hoặc FireFox",

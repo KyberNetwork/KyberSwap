@@ -157,8 +157,8 @@
 
     "path_not_support_by_trezor": "This path is not supported by Trezor",
     "check_right_application_selected": "Check if right application is selected",
-    "network_not_match": "Metamask should be on ${expectedName}. Currently on ${currentName}",
-    "network_not_match_unknow": "Metamask should be on ${expectedName}",
+    "network_not_match": "Metamask should be on <strong>${expectedName}</strong>. Currently on <strong>${currentName}</strong>",
+    "network_not_match_unknow": "Metamask should be on <strong>${expectedName}</strong>",
     "not_supported": "not supported",
     "metamask_not_install":"Cannot connect to metamask. Please make sure you have metamask installed",
     "browser_not_support_metamask": "Metamask is not supported on ${browser} browser. </br>Please use Chrome or FireFox instead.",

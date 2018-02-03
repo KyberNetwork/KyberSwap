@@ -24,13 +24,19 @@ $divider-color: darken($title-background-color, 5);
   .message {
     margin-bottom: 25px;
   }
-  a.x {
+  a{
+    color: #00ffd6;
+    &:hover{
+      text-decoration: underline;
+    }
+    &.x {
     display: block;
     position: absolute;
     right: 20px;
     top: 10px;
     font-size: 32px;
     color: $white;
+    }
   }
   .title {
     font-weight: bold;
