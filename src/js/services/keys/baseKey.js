@@ -17,7 +17,7 @@ export const sendEtherFromAccount = (
     // EIP 155 chainId - mainnet: 1, ropsten: 3
     chainId: BLOCKCHAIN_INFO.networkId
   }
-  return new Promise(resolve, reject => {
+  return new Promise((resolve, reject) => {
     resolve({ txParams, keystring, password })
   })
 }
@@ -27,7 +27,7 @@ export const sendTokenFromAccount = (
   destAddress, nonce, gas, gasPrice, keystring, accountType,
   password) => {
 
-  return new Promise(resolve, reject => {
+  return new Promise((resolve, reject) => {
     ethereum.call("sendTokenData", sourceToken, sourceAmount, destAddress).then(result => {
       const txParams = {
         from: account,
@@ -51,7 +51,7 @@ export const etherToOthersFromAccount = (
   throwOnFailure, nonce, gas, gasPrice, keystring, accountType,
   password) => {
 
-  return new Promise(resolve, reject => {
+  return new Promise((resolve, reject) => {
     ethereum.call("exchangeData",
       sourceToken, sourceAmount, destToken, destAddress,
       maxDestAmount, minConversionRate, throwOnFailure).then(result => {
@@ -74,7 +74,7 @@ export const etherToOthersFromAccount = (
 export const getAppoveToken = (ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
   keystring, password, accountType, account) => {
   //const approvalData = ethereum.approveTokenData(sourceToken, sourceAmount)  
-  return new Promise(resolve, reject => {
+  return new Promise((resolve, reject) => {
     ethereum.call("approveTokenData", sourceToken, biggestNumber()).then(result => {
       const txParams = {
         from: account,
@@ -97,7 +97,7 @@ export const tokenToOthersFromAccount = (
   destAddress, maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas, gasPrice, keystring, accountType,
   password) => {
-  return new Promise(resolve, reject => {
+  return new Promise((resolve, reject) => {
     ethereum.call("exchangeData",
       sourceToken, sourceAmount, destToken, destAddress,
       maxDestAmount, minConversionRate, throwOnFailure).then(result => {

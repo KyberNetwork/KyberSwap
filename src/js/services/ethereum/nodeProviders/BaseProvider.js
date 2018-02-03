@@ -19,7 +19,7 @@ export default class BaseProvider {
     version() {
         return this.rpc.version.api
     }
-    
+
 
     isConnectNode() {
         return new Promise((resolve, reject) => {
@@ -35,7 +35,7 @@ export default class BaseProvider {
         })
     }
 
-    getLatestBlock () {
+    getLatestBlock() {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getBlock("latest", false).then((block) => {
                 if (block != null) {
@@ -490,12 +490,27 @@ export default class BaseProvider {
                 })
         })
     }
-    
-    getGasPrice(){
+
+    getGasPrice() {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getGasPrice()
                 .then(result => {
-                    resolve(result)
+                    var gasPrice = parseInt(result, 10)
+                    if (gasPrice > 2000000000) {
+                        resolve({
+                            low: "2000000000",
+                            defaultGas: "2000000000",
+                            standard: "2000000000",
+                            fast: (2000000000 * 1.3).toString()
+                        })
+                    } else {
+                        resolve({
+                            low: (gasPrice * 0.7).toString(),
+                            defaultGas: gasPrice.toString(),
+                            standard: gasPrice.toString(),
+                            fast: (gasPrice * 1.7).toString()
+                        })
+                    }
                 }).catch((err) => {
                     reject(err)
                 })

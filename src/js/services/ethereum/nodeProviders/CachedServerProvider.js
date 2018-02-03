@@ -10,8 +10,89 @@ export default class CachedServerProvider extends React.Component {
     }
 
     getGasPrice() {
-        return new Promise((resolve, reject) => {
-            reject(new Error("This api /getGasPrice will coming soon"))
+        return new Promise((resolve, rejected) => {
+            fetch(this.rpcUrl + '/getGasPrice', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => {
+                return response.json()
+            }).then((result) => {
+                if (result.success) {
+                    resolve(result.data)
+                } else {
+                    rejected(new Error("Cannot get gas price from server"))
+                }
+            })
+                .catch((err) => {
+                    console.log(err.message)
+                    rejected(new Error("Cannot get gas price from server"))
+                })
+        })
+    }
+
+    // getGasFromEthgasstation() {
+    //     return new Promise((resolve, rejected) => {
+    //         fetch(BLOCKCHAIN_INFO.gasstation_endpoint)
+    //             .then((response) => {
+    //                 return response.json()
+    //             })
+    //             .then((data) => {
+    //                 resolve(data)
+    //             })
+    //             .catch((err) => {
+    //                 rejected(err)
+    //             })
+    //     })
+    // }
+
+    checkKyberEnable() {
+        return new Promise((resolve, rejected) => {
+            fetch(this.rpcUrl + '/getKyberEnabled', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => {
+                return response.json()
+            }).then((result) => {
+                if (result.success) {
+                    resolve(result.data)
+                } else {
+                    rejected(new Error("Cannot check kyber enable from server"))
+                }
+            })
+                .catch((err) => {
+                    console.log(err.message)
+                    rejected(new Error("Cannot check kyber enable from server"))
+                })
+        })
+    }
+
+    getMaxGasPrice() {
+        return new Promise((resolve, rejected) => {
+            fetch(this.rpcUrl + '/getMaxGasPrice', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => {
+                return response.json()
+            }).then((result) => {
+                if (result.success) {
+                    resolve(result.data)
+                } else {
+                    rejected(new Error("Cannot get max gas price from server"))
+                }
+            })
+                .catch((err) => {
+                    console.log(err.message)
+                    rejected(new Error("Cannot get max gas price from server"))
+                })
         })
     }
 
@@ -25,9 +106,9 @@ export default class CachedServerProvider extends React.Component {
                 }
             }).then((response) => {
                 return response.json()
-            }).then((data) => {
-                if (data.success) {
-                    resolve(data)
+            }).then((result) => {
+                if (result.success) {
+                    resolve(result.data)
                 } else {
                     rejected(new Error("Cannot get latest block from server"))
                 }
@@ -35,19 +116,6 @@ export default class CachedServerProvider extends React.Component {
                 .catch((err) => {
                     rejected(new Error("Cannot get latest block from server"))
                 })
-        })
-    }
-
-
-    getMaxCap(address, blockno) {
-        return new Promise((resolve, reject) => {
-            reject(new Error("This api /getMaxCap will coming soon"))
-        })
-    }
-
-    checkKyberEnable() {
-        return new Promise((resolve, reject) => {
-            reject(new Error("This api /checkKyberEnable will coming soon"))
         })
     }
 
@@ -133,31 +201,6 @@ export default class CachedServerProvider extends React.Component {
     getLanguagePack(lang) {
         return new Promise((resolve, rejected) => {
             rejected(new Error("This api /getLanguagePack will comming soon"))
-        })
-    }
-
-    getMaxGasPrice() {
-        return new Promise((resolve, reject) => {
-            reject(new Error("This api /getMaxGasPrice will coming soon"))
-        })
-    }
-
-
-
-
-
-    getGasFromEthgasstation() {
-        return new Promise((resolve, rejected) => {
-            fetch(BLOCKCHAIN_INFO.gasstation_endpoint)
-                .then((response) => {
-                    return response.json()
-                })
-                .then((data) => {
-                    resolve(data)
-                })
-                .catch((err) => {
-                    rejected(err)
-                })
         })
     }
 
