@@ -4,7 +4,7 @@
 @import "util";
 
 $accent-gradient: linear-gradient(169deg, #36d9ac, #049696);
-$alert-color : #ff5d00;
+$alert-color: #ff5d00;
 
 @import 'foundation';
 @import 'elements';
@@ -40,6 +40,12 @@ $alert-color : #ff5d00;
   font-style: normal;
   font-weight: 600;
   src: url(../fonts/Montserrat-SemiBold.ttf);
+}
+@font-face{
+  font-family: 'text-security-disc';
+  font-style: normal;
+  font-weight: normal;
+  src: url(../fonts/text-security-disc.ttf);
 }
 
 body{
@@ -407,20 +413,29 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
       vertical-align: baseline;
       margin-right: 15px;
     }
-    // @media screen and (max-width: 640px) {
-    //   img{
-    //     vertical-align: bottom;
-    //   }
-    //   > div{
-    //     width: calc(100% - 50px);
-    //     .symbol{
-    //       float: left;
-    //     }
-    //     .balance{
-    //       float: right;
-    //     }
-    //   }
-    // }
+    + .__react_component_tooltip{
+      border: 1px solid #ddd;
+      &.show{
+        opacity: 1;
+      }
+      &.place-bottom{
+        &::before{
+          border-left-width: 10px;
+          border-right-width: 10px;
+          border-bottom: 8px solid #ddd;
+        }
+        &::after{
+          border-bottom-width: 7px;
+          top: -7px;
+        }
+      }
+      &.place-right::before{
+        border-right: 8px solid #ddd;
+      }
+      &.place-left::before{
+        border-left: 8px solid #ddd;
+      }
+    }
   }
   .expand{
     border-top: 1px solid #eee;
@@ -559,5 +574,17 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
 #import-account{
   .title{
     font-weight: normal;
+  }
+}
+#private_key{
+  background-color: transparent;
+  color: inherit;
+  border-bottom: 1px solid #ddd;
+  &:focus{
+    background-color: transparent
+  }
+  &.security{
+    font-family: 'text-security-disc';
+    font-size: 25px;
   }
 }

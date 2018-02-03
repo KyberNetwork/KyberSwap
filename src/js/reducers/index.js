@@ -35,7 +35,8 @@ const appReducer = combineReducers({
 })
 
 const rootReducer = (state, action) => {
-  if (action.type === 'GLOBAL.CLEAR_SESSION_FULFILLED') {
+  let isGoToRoot = action.type === '@@router/LOCATION_CHANGE' && action.payload.pathname === '/'
+  if (action.type === 'GLOBAL.CLEAR_SESSION_FULFILLED' || isGoToRoot) {
     state = {
               utils: state.utils, 
               tokens: state.tokens, 
@@ -43,6 +44,12 @@ const rootReducer = (state, action) => {
               connection: state.connection,
               locale: state.locale
             }
+  }
+
+  
+  let isGoToExchange = action.type === '@@router/LOCATION_CHANGE' && action.payload.pathname === '/exchange'
+  if(isGoToExchange && !state.account.account){
+    window.location.href = '/'
   }
   return appReducer(state, action)
 }

@@ -1,6 +1,7 @@
 import React from "react"
 import * as converts from "../../utils/converter"
 import BigNumber from "bignumber.js"
+import ReactTooltip from 'react-tooltip'
 
 const AccountBalanceView = (props) => {
 
@@ -18,13 +19,17 @@ const AccountBalanceView = (props) => {
         var bigBalance = new BigNumber(token.balance)
         return (
           props.showZeroBalance || bigBalance.greaterThanOrEqualTo(tokenEpsilon) ?
-            <div title={displayBalance(balance, token.rateUSD)} className="columns my-2" key={token.symbol} onClick={(e) => props.selectToken(e, token.symbol, token.address)}>
+            <div data-tip={displayBalance(balance, token.rateUSD)}
+              className="columns my-2" key={token.symbol} data-for={token.symbol}
+              onClick={(e) => props.selectToken(e, token.symbol, token.address)}
+            >
               <div className={'balance-item ' + (token.symbol == props.sourceActive ? 'active' : '')}>
                 <div className="d-inline-block">
                   <div className="symbol font-w-b">{token.symbol}</div>
                   <div className="balance">{converts.roundingNumber(balance)}</div>
                 </div>
               </div>
+              <ReactTooltip place="bottom" id={token.symbol} type="light"/>
             </div>
             : <div key={token.symbol} />
         )

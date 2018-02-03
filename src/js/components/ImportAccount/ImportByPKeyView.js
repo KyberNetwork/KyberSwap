@@ -16,11 +16,11 @@ const ImportByPKeyView = (props) => {
 
 	function toggleShowPw() {
 		let input = document.getElementById('private_key')
-		if (input.type == 'password') {
-			input.type = 'text'
+		if (input.classList.contains('security')) {
+			input.classList.remove('security')
 			input.parentElement.classList.add('unlock')
 		} else if (input.type == 'text') {
-			input.type = 'password'
+			input.classList.add('security')
 			input.parentElement.classList.remove('unlock')
 		}
 	}
@@ -47,15 +47,17 @@ const ImportByPKeyView = (props) => {
 									<center>
 										<label className={!!props.pKeyError ? "error" : ""}>
 											<div className="input-reveal">
-												<input className="text-center" id="private_key"
-													type="password"
-													onChange={(e) => props.onChange(e)}
-													onKeyPress={(e) => submit(e)}
-													autoFocus
-													autoComplete="off"
-													//placeholder={ props.translate("import.from_private_key_input_title_placehoder") || "Enter your private key"} 
-													required />
-												<a className="toggle" onClick={() => toggleShowPw()}></a>
+												<input className="text-center security" id="private_key"
+												type="text"
+												onChange={(e) => props.onChange(e)}
+												onKeyPress={(e) => submit(e)}
+												value={props.privateKey}
+												autoFocus
+												autoComplete="off"
+												spellCheck="false"
+												required />
+												<p>{props.privateKeyVisible}</p>
+												<a className="toggle" onClick={toggleShowPw}></a>
 											</div>
 											{!!props.pKeyError &&
 												<span className="error-text">{props.pKeyError}</span>
@@ -66,7 +68,7 @@ const ImportByPKeyView = (props) => {
 							</div>
 						</div>
 						<div className="overlap">
-							<button className="button accent" id="submit_pkey" onClick={() => handldeSubmit()} >{props.translate("modal.import") || "Import"}</button>
+							<button className="button accent cur-pointer" id="submit_pkey" onClick={() => handldeSubmit()} >{props.translate("modal.import") || "Import"}</button>
 						</div>
 
 					</div>
