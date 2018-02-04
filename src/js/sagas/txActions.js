@@ -24,8 +24,7 @@ function* updateTx(action) {
   const newTx = yield call(tx.sync, ethereum, tx)	
 
 
-  var txInfo = yield call([ethereum, ethereum.call],"getTx", newTx.hash)
-  var blockNumber = txInfo.blockNumber
+  var blockNumber = newTx.blockNumber
 
   
   if(tx.type === "exchange"){

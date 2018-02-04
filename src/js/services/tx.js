@@ -17,13 +17,15 @@ export default class Tx {
     this.threw = false
     this.error = null
     this.errorInfo = null
+    this.eventTrade = null
+    this.blockNumber = null
   }
 
   shallowClone() {
     return new Tx(
       this.hash, this.from, this.gas, this.gasPrice, this.nonce,
       this.status, this.type, this.data, this.address, this.threw,
-      this.error, this.errorInfo, this.recap)
+      this.error, this.errorInfo, this.recap, this.eventTrade, this.blockNumber)
   }
 
   sync = (ethereum, tx) => {
@@ -32,6 +34,7 @@ export default class Tx {
         var newTx = tx.shallowClone()
         newTx.address = receipt.contractAddress
         newTx.gas = receipt.gasUsed
+        newTx.blockNumber = receipt.blockNumber
         var logs = receipt.logs
         if (newTx.type == "exchange") {
           if (logs.length == 0) {
@@ -44,6 +47,7 @@ export default class Tx {
               if (logs[i].address.toLowerCase() == BLOCKCHAIN_INFO.network &&
                 logs[i].topics[0].toLowerCase() == BLOCKCHAIN_INFO.trade_topic) {
                 theLog = logs[i]
+                newTx.eventTrade = theLog.data
                 break
               }
             }

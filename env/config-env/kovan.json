@@ -2,7 +2,7 @@
   "connections": {
     "http": [
       {
-        "endPoint" : "https://cache.kyber.network",
+        "endPoint" : "http://0.0.0.0:3001",
         "type": "cached"
       },
       {
@@ -12,7 +12,6 @@
     ],
     "ws": "wss://kovan.kyber.network/ws/"
   },
-  "history_endpoint": "https://cache.kyber.network",
   "api_usd":"https://api.coinmarketcap.com",
   "tokens": {
     "ETH": {
@@ -74,9 +73,5 @@
   "averageBlockTime": 6000,
   "networkId": 42,
   "chainName": "Kovan",
-  "server_logs": {
-    "url": "kovan.etherscan.io",
-    "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
-  },
   "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json"
 }

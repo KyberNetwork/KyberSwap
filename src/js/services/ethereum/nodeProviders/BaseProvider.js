@@ -498,15 +498,16 @@ export default class BaseProvider {
                     var gasPrice = parseInt(result, 10)
                     if (gasPrice > 2000000000) {
                         resolve({
-                            low: "2000000000",
-                            defaultGas: "2000000000",
-                            standard: "2000000000",
-                            fast: (2000000000 * 1.3).toString()
+                            low: "20",
+                            default: "20",
+                            standard: "20",
+                            fast: (20 * 1.3).toString()
                         })
                     } else {
+                        gasPrice = gasPrice / 1000000000
                         resolve({
                             low: (gasPrice * 0.7).toString(),
-                            defaultGas: gasPrice.toString(),
+                            default: gasPrice.toString(),
                             standard: gasPrice.toString(),
                             fast: (gasPrice * 1.7).toString()
                         })
