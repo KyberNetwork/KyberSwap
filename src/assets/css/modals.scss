@@ -26,9 +26,6 @@ $divider-color: darken($title-background-color, 5);
   }
   a{
     color: #00ffd6;
-    &:hover{
-      text-decoration: underline;
-    }
     &.x {
     display: block;
     position: absolute;

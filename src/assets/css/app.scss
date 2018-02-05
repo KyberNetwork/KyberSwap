@@ -2,11 +2,11 @@
 @import '../bower/animate.css/animate.css';
 @import 'settings';
 @import "util";
+@import 'foundation';
 
 $accent-gradient: linear-gradient(169deg, #36d9ac, #049696);
 $alert-color: #ff5d00;
 
-@import 'foundation';
 @import 'elements';
 @import 'broadcast';
 @import 'modals';
@@ -414,7 +414,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
       margin-right: 15px;
     }
     + .__react_component_tooltip{
-      border: 1px solid #ddd;
+      border: 1px solid #afafaf;
       &.show{
         opacity: 1;
       }
@@ -422,7 +422,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
         &::before{
           border-left-width: 10px;
           border-right-width: 10px;
-          border-bottom: 8px solid #ddd;
+          border-bottom: 8px solid #afafaf;
         }
         &::after{
           border-bottom-width: 7px;
@@ -430,10 +430,10 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
         }
       }
       &.place-right::before{
-        border-right: 8px solid #ddd;
+        border-right: 8px solid #afafaf;
       }
       &.place-left::before{
-        border-left: 8px solid #ddd;
+        border-left: 8px solid #afafaf;
       }
     }
   }
@@ -576,7 +576,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
     font-weight: normal;
   }
 }
-#private_key{
+#private_key, #passphrase{
   background-color: transparent;
   color: inherit;
   border-bottom: 1px solid #ddd;

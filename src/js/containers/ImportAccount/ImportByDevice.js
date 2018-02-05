@@ -81,6 +81,10 @@ export default class ImportByDevice extends React.Component {
 			.catch((err) => {
 				this.props.dispatch(throwError(err))
 				this.props.dispatch(closeImportLoading());
+				if(this.walletType == 'ledger'){
+					clearTimeout(this.ledgerLoading);
+					this.props.dispatch(resetCheckTimeImportLedger())
+				}
 			})
 		this.walletType = walletType;
 	}
@@ -188,7 +192,7 @@ export default class ImportByDevice extends React.Component {
 
 	getBalance(address) {
 		return new Promise((resolve, reject) => {
-			this.props.ethereumNode.call("getBalance")(address).then((balance) => {
+			this.props.ethereumNode.call("getBalanceAtLatestBlock",address).then((balance) => {
 				resolve(toEther(balance))
 			})
 		})

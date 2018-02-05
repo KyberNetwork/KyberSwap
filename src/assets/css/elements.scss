@@ -144,6 +144,7 @@ input.error {
     position: relative;
     white-space: nowrap;
     border: none;
+    color: #fff;
     cursor: default;
     &.waiting {
       color: rgba(white, .5);
