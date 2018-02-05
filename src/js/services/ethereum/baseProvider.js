@@ -62,10 +62,10 @@ export default class BaseEthereumProvider {
       }).then((response) => {
         return response.json()
       }).then((data) => {
-        if (data && typeof data == 'number' && data > 0) {
+        if(data.success){
           resolve(data)
-        } else {
-          throw ('cannot get lastest block from server')
+        }else{
+          throw "get rate from blockchain"
         }
       })
         .catch((err) => {
@@ -360,7 +360,7 @@ export default class BaseEthereumProvider {
     })
   }
 
-  getLogOneColumn(page, itemPerPage) {
+  getLogOneColumn() {
     return new Promise((resolve, rejected) => {
       fetch(BLOCKCHAIN_INFO.history_endpoint + '/getHistoryOneColumn', {
         method: 'GET',
@@ -372,14 +372,22 @@ export default class BaseEthereumProvider {
         .then((response) => {
           return response.json()
         })
-        .then((data) => {
-          for (let key in data) {
-            data[key] = data[key].filter(item => {
-              return (this.tokenIsSupported(item.dest)
-                && this.tokenIsSupported(item.source))
+        .then((result) => {
+          if(result.success){
+            var data = result.data.filter(item => {
+              return (this.tokenIsSupported(item.dest) && this.tokenIsSupported(item.source))
             })
+
+            // for (let key in data) {
+            //   data[key] = data[key].filter(item => {
+            //     return (this.tokenIsSupported(item.dest)
+            //       && this.tokenIsSupported(item.source))
+            //   })
+            // }
+            resolve(data)
+          }else{
+            rejected(new Error("Events in server not fetching"))
           }
-          resolve(data);
         })
         .catch((err) => {
           console.log(err)
@@ -413,7 +421,7 @@ export default class BaseEthereumProvider {
   tokenIsSupported(address) {
     let tokens = BLOCKCHAIN_INFO.tokens
     for (let token in tokens) {
-      if (tokens[token].address == address) {
+      if (tokens[token].address.toLowerCase() == address.toLowerCase()) {
         return true
       }
     }

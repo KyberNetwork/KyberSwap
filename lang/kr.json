@@ -111,6 +111,7 @@
     "custom_path": "맞춤 경로",
     "view_on_etherscan": "Etherscan에서 보기",
     "press_confirm_if_really_want": "계속하시려면 버튼을 눌러주세요",
+    "press_approve": "Press approve to continue",
     "waiting_for_confirmation": "지갑에서 확인을 기다리는 중입니다",
     "confirm_exchange_title": "환전확인",
     "confirm_transfer_title": "송금확인",
@@ -159,6 +160,9 @@
     "metamask_not_install":"메타마스크에 연결할 수 없습니다. 메타마스크가 설치 되어 있는지 확인 해 주세요.",
     "browser_not_support_metamask": "Metamask is not supported on ${browser} browser. </br>Please use Chrome or FireFox instead.",
     "browser_not_support_ledger": "Ledger is not supported on ${browser} browser. </br>Please use Chrome instead.",
+    "please_make_sure": "Please make sure",
+    "ledger_plugged_in": "- Your Ledger is properly plugged in.",
+    "ledger_logged_in": "- You have logged into your Ledger.",
 
     "gas_price_not_number":"Gas 가격은 숫자만 입력하셔야 합니다.",
     "rate_not_number":"가격은 숫자만 입력하셔야 합니다.",
@@ -174,9 +178,11 @@
 
     "ledger_global_err": "<div class='text-left'>Cannot connect to your Ledger. Please check if:<br/>- Your Ledger is properly plugged in.<br/>- You have logged into your Ledger.<br/>- You have launched Ethereum Application on your Ledger.<br/>- Browser Support has been enabled in your Ledger.  Learn to enable Browser Support <a href=\"${link}\" target=\"_blank\">here</a>.</div>",
     "need_to_config_env_ledger": "You need to configure your Linux device to access Ledger. Instruction <a href=\"${link}\" target=\"_blank\">here</a>.",
+    "ledger_not_enable_contract": "Please check if: </br>- \"Contract Data\" has been enabled in your Ledger. Instruction <a href=\"${link}\" target=\"_blank\">here</a>.",
     "invalid_path_or_session_expired": "Cannot get address from this path. Please check your path is valid or Ledger is connected.",
     "path_is_invalid": "Invalid path. Please choose another one.",
-    "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue."
+    "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue.",
+    "eth_balance_not_enough_for_fee": "Your Eth balance is not enough for transaction fee"
   },
 
   "import": {

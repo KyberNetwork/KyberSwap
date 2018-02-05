@@ -279,6 +279,32 @@ export function doApprovalTransactionFail(error) {
   }
 }
 
+export function resetSignError() {
+  return {
+    type: "EXCHANGE.RESET_SIGN_ERROR",
+  }
+}
+
+export function setSignError(error) {
+  return {
+    type: "EXCHANGE.SET_SIGN_ERROR",
+    payload: error,
+  }
+}
+
+export function resetBroadcastError() {
+  return {
+    type: "EXCHANGE.RESET_BROADCAST_ERROR",
+  }
+}
+
+export function setBroadcastError(error) {
+  return {
+    type: "EXCHANGE.SET_BROADCAST_ERROR",
+    payload: error,
+  }
+}
+
 export function makeNewExchange() {
   return {
     type: "EXCHANGE.MAKE_NEW_EXCHANGE"
@@ -319,10 +345,10 @@ export function estimateGas() {
   }
 }
 
-export function setEstimateGas(gas) {
+export function setEstimateGas(gas, gas_approve) {
   return {
     type: "EXCHANGE.SET_GAS_USED",
-    payload: { gas }
+    payload: { gas, gas_approve }
   }
 }
 

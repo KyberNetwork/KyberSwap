@@ -67,14 +67,14 @@
     "current_address_balance": "当前地址余额",
     "transaction_error": "交易错误",
 
-    "notification": "Notification",
-    "not_enable_exchange": "Your address is not eligible for exchange at the moment. Come back later!",
-    "kyber_down" : "Kyber exchange is not enabled at the moment. <br/>Please come back later!",
+    "notification": "通知",
+    "not_enable_exchange": "你的地址目前展示无法交易。请稍后再回来！",
+    "kyber_down" : "Kyber交易目前无法使用。<br/>请稍后回来！",
 
-    "transaction_time": "Transaction time: < ${time} minutes",
+    "transaction_time": "交易时间：< ${time} 分钟",
     "waiting_transaction": "您的交易正在等待被挖掘",
-    "click_to_ex_all_balance": "Click to exchange all balance",
-    "click_to_transfer_all_balance": "Click to transfer all balance",
+    "click_to_ex_all_balance": "点击交易所有余额",
+    "click_to_transfer_all_balance": "点击转移所有余额",
 
     "about_to_exchange": "您将开始交易",
     "about_to_transfer": "您将开始转移",
@@ -112,6 +112,7 @@
     "custom_path": "您的自定义路径",
     "view_on_etherscan": "在Etherscan上查看",
     "press_confirm_if_really_want": "请按确认以继续",
+    "press_approve": "请按批准以继续",
     "waiting_for_confirmation": "正在等待您钱包的确认信息",
     "confirm_exchange_title": "交易确认",
     "confirm_transfer_title": "转移确认",
@@ -158,8 +159,11 @@
     "network_not_match_unknow": "Metamask需要连接到${expectedName}",
     "not_supported": "不支持",
     "metamask_not_install":"无法连接至metamask。请确认您已经安装了metamask。",
-    "browser_not_support_metamask": "Metamask is not supported on ${browser} browser. </br>Please use Chrome or FireFox instead.",
-    "browser_not_support_ledger": "Ledger is not supported on ${browser} browser. </br>Please use Chrome instead.",
+    "browser_not_support_metamask": "${browser}浏览器并不支持Metamask。 </br>请使用谷歌或者火狐浏览器。",
+    "browser_not_support_ledger": "${browser}浏览器并不支持Ledger。</br>请使用谷歌浏览器。",
+    "please_make_sure": "请检查是否",
+    "ledger_plugged_in": "- 你的Ledger硬件钱包插入无误。",
+    "ledger_logged_in": "- 你已经登录进你的Ledger了。",
 
     "gas_price_not_number":"燃料价格不是数字",
     "rate_not_number":"交易价格不是数字",
@@ -173,11 +177,13 @@
     "issue_user_cap":"交易失败，由于原始数量超过了用户限额。",
     "min_rate_too_high":"你设置的最交易低价格太高了！",
 
-    "ledger_global_err": "<div class='text-left'>Cannot connect to your Ledger. Please check if:<br/>- Your Ledger is properly plugged in.<br/>- You have logged into your Ledger.<br/>- You have launched Ethereum Application on your Ledger.<br/>- Browser Support has been enabled in your Ledger. Learn to enable Browser Support <a href=\"${link}\" target=\"_blank\">here</a>.</div>",
-    "need_to_config_env_ledger": "You need to configure your Linux device to access Ledger. Instruction <a href=\"${link}\" target=\"_blank\">here</a>.",
+    "ledger_global_err": "<div class='text-left'>无法连接至Ledger. 请检查是否:<br/>- 你的Ledger硬件钱包插入无误。<br/>- 你已经登录进你的Ledger了。<br/>- 你已经启动了Ledger上的以太坊应用。<br/>- 你的Ledger中的“浏览器支持“已经启用。 <a href=\"${link}\" target=\"_blank\">在这</a>里学习如何启用Ledger中的“浏览器支持“。</div>",
+    "need_to_config_env_ledger": "你需要调试你的Linux设备来使用Ledger。说明请看<a href=\"${link}\" target=\"_blank\">这里</a>。",
+    "ledger_not_enable_contract": "请检查是否: </br>- 你Ledger中的”合约数据“已经被启用。 说明请看<a href=\"${link}\" target=\"_blank\">这里</a>。",
     "invalid_path_or_session_expired": "Cannot get address from this path. Please check your path is valid or Ledger is connected.",
-    "path_is_invalid": "Invalid path. Please choose another one.",
-    "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue."
+    "path_is_invalid": "错误的路径。请选择另一个。",
+    "ledger_time_out": "你Ledger上的对话已经过期。请重新登录。",
+    "eth_balance_not_enough_for_fee": "您的ETH余额不足以支付交易费用"
   },
 
   "import": {

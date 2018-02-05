@@ -17,7 +17,7 @@ const TransactionListView = (props) => {
 
   function getTokenSymbol(address) {
     for (let key in props.tokens) {
-      if (address === props.tokens[key].address) {
+      if (address.toLowerCase() === props.tokens[key].address.toLowerCase()) {
         return { key, decimal: props.tokens[key].decimal }
       }
     }
