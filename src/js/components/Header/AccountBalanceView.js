@@ -6,8 +6,12 @@ import ReactTooltip from 'react-tooltip'
 const AccountBalanceView = (props) => {
 
   function displayBalance(balance, rateUSD) {
-    return props.showBalance ? `${props.translate("address.my_balance") || "Balance"}: ${balance} <br/>${props.translate("address.estimated_value") || "Estimated value"}: ${converts.roundingNumber(balance * rateUSD)} USD` :
-      `${props.translate("address.my_balance") || "Balance"}: ${balance}`
+    return props.showBalance ? 
+    `${props.translate("address.my_balance") || "Balance"}: 
+    <strong>${balance}</strong>
+    <br/>${props.translate("address.estimated_value") || "Estimated value"}: 
+    <strong>${converts.roundingNumber(balance * rateUSD)}</strong> USD`
+    : `${props.translate("address.my_balance") || "Balance"}: <strong>${balance}</strong>`
   }
 
   function getBalances() {
@@ -29,7 +33,7 @@ const AccountBalanceView = (props) => {
                   <div className="balance">{converts.roundingNumber(balance)}</div>
                 </div>
               </div>
-              <ReactTooltip place="bottom" id={token.symbol} type="light" html="true"/>
+              <ReactTooltip place="bottom" id={token.symbol} type="light" html={true}/>
             </div>
             : <div key={token.symbol} />
         )

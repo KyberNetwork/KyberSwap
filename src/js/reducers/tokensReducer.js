@@ -136,13 +136,8 @@ const tokens = (state = initState, action) => {
       return Object.assign({}, state, { tokens: newTokens }) 
     }
     case 'GLOBAL.CLEAR_SESSION_FULFILLED': {
-      let tokens = {}
-      Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
-        tokens[key] = BLOCKCHAIN_INFO.tokens[key]
-        tokens[key].rate = 0
-        tokens[key].minRate = 0
-        tokens[key].rateEth = 0
-        tokens[key].minRateEth = 0
+      let tokens = {...state.tokens}
+      Object.keys(state.tokens).forEach((key) => {
         tokens[key].balance = 0
       })
       state.tokens = tokens
