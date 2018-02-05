@@ -123,7 +123,8 @@
     "path_not_support_by_trezor": "This path is not supported by Trezor",
     "check_right_application_selected": "Check if right application is selected",
     "network_not_match": "Network is not matched",
-    "not_supported": "not supported"
+    "not_supported": "not supported",
+    "eth_balance_not_enough_for_fee": "Your Eth balance is not enough for transaction fee"
   },
 
   "import": {

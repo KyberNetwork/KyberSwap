@@ -6,6 +6,7 @@
 $accent-gradient: linear-gradient(169deg, #36d9ac, #049696);
 $alert-color : #ff5d00;
 
+@import 'foundation';
 @import 'elements';
 @import 'broadcast';
 @import 'modals';
@@ -51,6 +52,17 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
 }
 
 #waiting {
+  &.ledger{
+    .caption{
+      max-width: none;
+      > div{
+        border-top: 1px solid #ddd;
+        margin-top: 10px;
+        padding-top: 10px;
+        color: #777;
+      }
+    }
+  }
   background-color: rgba($dark-gray, .5);
   position: fixed;
   top: 0;
@@ -84,6 +96,13 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
     background-size: 32px 32px;
     background-repeat: no-repeat;
     background-position: center top 30px;
+    > div{
+      opacity: 0;
+      transition: opacity .5s;
+      &:not(:empty){
+        opacity: 1;
+      }
+    }
   }
 }
 

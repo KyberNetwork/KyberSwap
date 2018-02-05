@@ -55,6 +55,23 @@ export default class Ledger {
     return this.sealTx(txParams)
   }
 
+  getLedgerError(errorCode){
+    let translate = getTranslate(store.getState().locale)
+    switch(errorCode){
+      case 'Invalid status 6a80' : {
+        let link = 'https://support.ledgerwallet.com/hc/en-us/articles/115005200709'
+        return translate('error.ledger_not_enable_contract', {link: link})
+      }
+      case 'Invalid status 6985' : {
+        return 
+      }
+      default : {
+        let link = LEDGER_SUPPORT_LINK
+        return translate("error.ledger_global_err", {link: link})
+      }
+    }
+  }
+
   sealTx = (params) => {
     const eTx = new EthereumTx(params)
     eTx.raw[6] = Buffer.from([params.chainId])

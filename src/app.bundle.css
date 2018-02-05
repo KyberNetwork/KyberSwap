@@ -3505,6 +3505,9 @@
 .d-flex {
   display: flex; }
 
+.d-none {
+  display: none; }
+
 .justify-content-between {
   justify-content: space-between; }
 
@@ -4527,6 +4530,12 @@ ul.broadcast-steps {
       white-space: nowrap; }
     .reveal .content hr {
       border-color: #a5a5a5; }
+    .reveal .content .ledger-error {
+      font-size: 0.9em;
+      margin-bottom: 25px;
+      color: #ff5d00;
+      border-top: 1px solid #a5a5a5;
+      padding-top: 24px; }
   .reveal .footer {
     border-top: 1px solid #cae8e2;
     padding: 25px 10px;
@@ -5259,8 +5268,6 @@ input[type=number] {
   letter-spacing: .5px;
   font-size: 0.8rem;
   line-height: 25px; }
-  #footer .emoji {
-    margin: 0px 5px; }
 
 .footer-menu {
   font-size: 0.8rem; }
@@ -5268,7 +5275,7 @@ input[type=number] {
     padding: 0;
     list-style: none;
     margin: 0px;
-    margin-top: 1rem; }
+    margin-bottom: 5px; }
     .footer-menu ul.links > li {
       display: inline-block; }
       .footer-menu ul.links > li:not(:last-child) > a:after {
@@ -5286,7 +5293,6 @@ input[type=number] {
         vertical-align: middle; }
     @media screen and (max-width: 39.9375em) {
       .footer-menu ul.links {
-        padding: 10px 0;
         margin: 0 auto 10px;
         width: 70%; } }
 
@@ -5324,6 +5330,13 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   bottom: 0;
   left: 0;
   z-index: 1000; }
+  #waiting.ledger .caption {
+    max-width: none; }
+    #waiting.ledger .caption > div {
+      border-top: 1px solid #ddd;
+      margin-top: 10px;
+      padding-top: 10px;
+      color: #777; }
   #waiting.pending {
     background-color: rgba(255, 255, 255, 0.3); }
     #waiting.pending h4 {
@@ -5348,6 +5361,11 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     background-size: 32px 32px;
     background-repeat: no-repeat;
     background-position: center top 30px; }
+    #waiting .caption > div {
+      opacity: 0;
+      transition: opacity .5s; }
+      #waiting .caption > div:not(:empty) {
+        opacity: 1; }
 
 .info-menu {
   font-size: 0.8rem; }

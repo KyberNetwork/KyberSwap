@@ -4,6 +4,7 @@ import { gweiToEth, stringToBigNumber } from "../../utils/converter";
 const ConfirmTransferModal = (props) => {
   var gasPrice = stringToBigNumber(gweiToEth(props.gasPrice))
   var totalGas = gasPrice.mul(props.gas)
+  var haveError = props.errors ? true : false
   return (
     <div>
       <div className="title text-center">{props.title}</div>
@@ -25,17 +26,24 @@ const ConfirmTransferModal = (props) => {
                     : <span>{totalGas.toString()}</span>
                   } ETH</p>
                 </div>
-                <hr className="mt-0" />
+                <hr className={haveError ? 'd-none' : 'mt-0'} />
               </div>
-              {props.isConfirming ? (
-                <p>{props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</p>
-              )
-                : (
-                  <p>{props.translate("modal.press_confirm_if_really_want") || "Press confirm to continue"}</p>
+              {haveError ?
+                '' :
+                props.isConfirming ? (
+                  <p>{props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</p>
                 )
+                  : (
+                    <p>{props.translate("modal.press_confirm_if_really_want") || "Press confirm to continue"}</p>
+                  )
               }
-
             </center>
+            {haveError ? (
+              <div className="ledger-error">
+                {props.errors}
+              </div>
+              ): ''
+            }
           </div>
         </div>
       </div>

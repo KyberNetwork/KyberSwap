@@ -22,7 +22,6 @@ function* broadCastTx(action) {
   }
 }
 
-
 export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   const tx = new Tx(
     hash, account.address, ethUtil.bufferToInt(txRaw.gas),
@@ -41,6 +40,10 @@ function* doTransactionFail(ethereum, account, e) {
   yield put(updateAccount(ethereum, account))
 }
 
+function* doTxFail(ethereum, account, e) {
+  yield put(actions.setBroadcastError(e))
+  yield put(updateAccount(ethereum, account))
+}
 
 export function* processTransfer(action) {
   const { formId, ethereum, address,
@@ -82,7 +85,7 @@ function* transferKeystore(action, callService) {
     const hash = yield call(ethereum.call("sendRawTransaction"), rawTx, ethereum)
     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
   } catch (e) {
-    yield call(doTransactionFail, ethereum, account, e.message)
+    yield call(doTxFail, ethereum, account, e.message)
   }
 
 }
@@ -94,16 +97,33 @@ function* transferColdWallet(action, callService) {
     gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
   try {
     var rawTx
-    rawTx = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
-      token, amount,
-      destAddress, nonce, gas,
-      gasPrice, keystring, type, password)
+    try {
+      rawTx = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
+        token, amount,
+        destAddress, nonce, gas,
+        gasPrice, keystring, type, password)
+    } catch (e) {
+      let msg = ''
+      if(e.native && type == 'ledger'){
+        msg = keyService.getLedgerError(e.native)
+      }else{
+        msg = e.message
+      }
+      yield put(actions.setSignError(msg))
+      return
+    }
+    
     yield put(actions.prePareBroadcast(balanceData))
     const hash = yield call(ethereum.call("sendRawTransaction"), rawTx, ethereum)
     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
   } catch (e) {
-    console.log(e)
-    yield call(doTransactionFail, ethereum, account, e.message)
+    let msg = ''
+    if(type == 'ledger'){
+      msg = keyService.getLedgerError(e.native)
+    }else{
+      msg = e.message
+    }
+    yield call(doTxFail, ethereum, account, msg)
     return
   }
 }
@@ -114,16 +134,26 @@ function* transferMetamask(action, callService) {
     destAddress, nonce, gas,
     gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
   try {
-    const hash = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
-      token, amount,
-      destAddress, nonce, gas,
-      gasPrice, keystring, type, password)
+    var hash
+    try {
+      hash = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
+        token, amount,
+        destAddress, nonce, gas,
+        gasPrice, keystring, type, password)
+    } catch (e) {
+      console.log(e)
+      let msg = converter.sliceErrorMsg(e.message)
+      yield put(actions.setSignError(msg))
+      return
+    }
+    
     yield put(actions.prePareBroadcast(balanceData))
     const rawTx = {gas, gasPrice, nonce}
     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
   } catch (e) {
     console.log(e)
-    yield call(doTransactionFail, ethereum, account, e.message)
+    let msg = converter.sliceErrorMsg(e.message)
+    yield call(doTxFail, ethereum, account, msg)
     return
   }
 }
