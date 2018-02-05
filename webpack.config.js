@@ -5,6 +5,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 var CompressionPlugin = require('compression-webpack-plugin')
 
 var scriptConfig = function (env) {
+  var dist = env.chain ? '/dist/' + env.chain : '/src'
   return {
     context: path.join(__dirname, "src"),
     devtool: (env && env.build !== "true") ? "inline-sourcemap" : false,
@@ -37,7 +38,7 @@ var scriptConfig = function (env) {
       ]
     },
     output: {
-      path: __dirname + "/src/",
+      path: __dirname + dist,
       filename: "client.min.js"
     },
     plugins: (env && env.build !== "true") ? [
@@ -81,15 +82,15 @@ var scriptConfig = function (env) {
 
 var indexConfig = function (env) {
   var HtmlWebpackPlugin = require('html-webpack-plugin')
+  var dist = env.chain ? '/dist/' + env.chain : '/src'
   return {
     entry: ['./src/client.min.js'],
     output: {
-      path: __dirname + '/src',
-      filename: 'client.min.js'
+      path: __dirname + dist,
+      filename: 'client.min.js?v=' + Date.now()
     },
     plugins: [
       new HtmlWebpackPlugin({
-        hash: true,
         title: "Wallet - kyber.network",
         template: './src/app.html.template',
         inject: 'body',

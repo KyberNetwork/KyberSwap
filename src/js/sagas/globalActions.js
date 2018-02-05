@@ -21,10 +21,14 @@ export function* getLatestBlock(action) {
 }
 
 export function* updateHistoryExchange(action) {
-  const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
-  var latestBlock = yield call(ethereum.call("getLatestBlock"))
-  const newLogs = yield call(ethereum.call("getLogOneColumn"), page, itemPerPage)
-  yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
+  try{
+    const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
+    var latestBlock = yield call(ethereum.call("getLatestBlock"))
+    const newLogs = yield call(ethereum.call("getLogOneColumn"))
+    yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
+  }catch(e){
+    console.log(e.message)
+  }
 }
 
 export function* goToRoute(action) {
@@ -40,7 +44,12 @@ export function* updateAllRate(action) {
   const { ethereum, tokens } = action.payload
   try {
     const rates = yield call([ethereum, ethereum.call("getAllRatesFromServer")], tokens)
-    yield put(actions.updateAllRateComplete(rates))
+    if(rates.success){
+      yield put(actions.updateAllRateComplete(rates.data))
+    }else{
+      const rates = yield call([ethereum, ethereum.call("getAllRatesFromBlockchain")], tokens)
+      yield put(actions.updateAllRateComplete(rates))
+    }
   }
   catch (err) {
     //get rate from blockchain
@@ -58,8 +67,13 @@ export function* updateRateUSD(action) {
   const { ethereum, tokens } = action.payload
   try {
     const rates = yield call([ethereum, ethereum.call("getAllRatesUSDFromServer")], tokens)
-    yield put(actions.updateAllRateUSDComplete(rates))
-    yield put(actions.showBalanceUSD())
+    if(rates.success){
+      yield put(actions.updateAllRateUSDComplete(rates.data))
+      yield put(actions.showBalanceUSD())
+    }else{
+      yield put(actions.hideBalanceUSD())  
+    }
+    
   }
   catch (err) {
     yield put(actions.hideBalanceUSD())

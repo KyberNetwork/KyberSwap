@@ -124,9 +124,31 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED": {
       newState.broadcasting = false
       newState.bcError = action.payload ? action.payload : ""
-      newState.confirmApprove = false
       newState.showConfirmApprove = false
       newState.isApproving = false
+      return newState
+    }
+    case "EXCHANGE.SET_SIGN_ERROR": {
+      newState.signError = action.payload ? action.payload : ""
+      newState.isApproving = false
+      newState.isConfirming = false
+      return newState
+    }
+    case "EXCHANGE.RESET_SIGN_ERROR": {
+      newState.signError = ''
+      return newState
+    }
+    case "EXCHANGE.SET_BROADCAST_ERROR": {
+      newState.broadcasting = false
+      newState.broadcastError = action.payload ? action.payload : ""
+      newState.confirmApprove = false
+      newState.isApproving = false
+      newState.isConfirming = false
+      newState.step = 3
+      return newState
+    }
+    case "EXCHANGE.RESET_BROADCAST_ERROR": {
+      newState.broadcastError = ''
       return newState
     }
     case "EXCHANGE.TX_BROADCAST_FULFILLED": {
@@ -138,6 +160,7 @@ const exchange = (state = initState, action) => {
       newState.broadcasting = false
       newState.bcError = action.payload ? action.payload : ""
       newState.isConfirming = false
+      newState.deviceError = action.payload ? action.payload : ''
       return newState
     }
     case "EXCHANGE.UPDATE_RATE":
@@ -182,6 +205,7 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.HIDE_APPROVE": {
       newState.confirmApprove = false
       newState.isApproving = false
+      newState.signError = ''
       return newState
     }
     case "EXCHANGE.SHOW_APPROVE": {
@@ -299,7 +323,9 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.SET_GAS_USED": {
-      newState.gas = action.payload.gas
+      const {gas, gas_approve} = action.payload
+      newState.gas = gas
+      newState.gas_approve = gas_approve
       return newState
     }
     case "EXCHANGE.SET_PREV_SOURCE": {

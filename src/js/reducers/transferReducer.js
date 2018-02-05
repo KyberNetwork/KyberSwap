@@ -113,6 +113,30 @@ const transfer = (state = initState, action) => {
       newState.broadcasting = false
       newState.bcError = action.payload ? action.payload : ""
       newState.isConfirming = false
+      newState.deviceError = action.payload ? action.payload : ''
+      return newState
+    }
+    case "TRANSFER.SET_SIGN_ERROR": {
+      newState.signError = action.payload ? action.payload : ""
+      newState.isApproving = false
+      newState.isConfirming = false
+      return newState
+    }
+    case "TRANSFER.RESET_SIGN_ERROR": {
+      newState.signError = ''
+      return newState
+    }
+    case "TRANSFER.SET_BROADCAST_ERROR": {
+      newState.broadcasting = false
+      newState.broadcastError = action.payload ? action.payload : ""
+      newState.confirmApprove = false
+      newState.isApproving = false
+      newState.isConfirming = false
+      newState.step = 3
+      return newState
+    }
+    case "TRANSFER.RESET_BROADCAST_ERROR": {
+      newState.broadcastError = ''
       return newState
     }
     case "TRANSFER.FINISH_TRANSACTION": {

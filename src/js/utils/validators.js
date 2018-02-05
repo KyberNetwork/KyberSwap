@@ -68,6 +68,34 @@ export function verifyAmount(sourceAmount,
   return null
 }
 
+export function verifyBalanceForTransaction(
+  ethBalance, sourceSymbol, sourceAmount, 
+  gas, gasPrice
+) {
+
+  var bigEthBalance = new BigNumber(ethBalance)
+
+  //calcualte tx fee
+  var gasPriceBig = new BigNumber(gasPrice)
+  var txFee = gasPriceBig.times(1000000000).times(gas)
+
+  var totalFee
+  if (sourceSymbol === "ETH"){
+    var value = new BigNumber(sourceAmount)
+    value = value.times(1000000000000000000)
+    totalFee = txFee.add(value)
+  } else{
+    totalFee = txFee
+  } 
+  
+
+  if (bigEthBalance.cmp(totalFee) === -1){
+    return "not enough"
+  }
+
+  return null
+}
+
 export function verifyNumber(amount) {
   var result = new BigNumber(amount)
   if (result == 'NaN' || result == 'Infinity') {

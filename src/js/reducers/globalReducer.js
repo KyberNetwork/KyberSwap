@@ -52,18 +52,15 @@ const global = (state = initState, action) => {
       const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
       if (!isAutoFetch) {
         history.isFetching = true
-      }
+      }      
       return Object.assign({}, state, { history: history })
       break
     }
     case "GLOBAL.UPDATE_HISTORY": {
       const { logs, latestBlock, page, isAutoFetch } = action.payload
       var history = { ...state.history }
-      if(logs){        
-        if(logs.events) history.logs = logs.events
-        //if(logs.eth) history.logsEth = logs.eth
-        //if(logs.token) history.logsToken = logs.token
-      }
+
+      if(logs) history.logs = logs      
       history.currentBlock = latestBlock
       history.page = page
       // history.eventsCount = eventsCount
