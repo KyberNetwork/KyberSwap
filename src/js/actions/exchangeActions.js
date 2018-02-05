@@ -194,7 +194,7 @@ export function processExchange(formId, ethereum, address, sourceToken,
   sourceAmount, destToken, destAddress,
   maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas,
-  gasPrice, keystring, type, password, account, data, keyService, balanceData) {
+  gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol) {
   return {
     type: "EXCHANGE.PROCESS_EXCHANGE",
     payload: {
@@ -202,7 +202,7 @@ export function processExchange(formId, ethereum, address, sourceToken,
       sourceAmount, destToken, destAddress,
       maxDestAmount, minConversionRate,
       throwOnFailure, nonce, gas,
-      gasPrice, keystring, type, password, account, data, keyService, balanceData
+      gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol
     }
   }
 }
@@ -225,12 +225,12 @@ export function checkTokenBalanceOfColdWallet(formId, ethereum, address, sourceT
 }
 
 export function doApprove(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-  keystring, password, accountType, account, keyService) {
+  keystring, password, accountType, account, keyService, sourceTokenSymbol) {
   return {
     type: "EXCHANGE.PROCESS_APPROVE",
     payload: {
       ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-      keystring, password, accountType, account, keyService
+      keystring, password, accountType, account, keyService, sourceTokenSymbol
     }
   }
 }
@@ -416,5 +416,19 @@ export function setKyberEnable(enable){
   return {
     type: "EXCHANGE.SET_KYBER_ENABLE",
     payload: enable
+  }
+}
+
+export function setApproveTx(hash, symbol){
+  return {
+    type: "EXCHANGE.SET_APPROVE_TX",
+    payload: {hash, symbol}
+  }
+}
+
+export function removeApproveTx(symbol){
+  return {
+    type: "EXCHANGE.REMOVE_APPROVE_TX",
+    payload: {symbol}
   }
 }

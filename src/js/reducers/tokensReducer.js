@@ -143,6 +143,18 @@ const tokens = (state = initState, action) => {
       state.tokens = tokens
       return state
     }
+    case 'EXCHANGE.SET_APPROVE_TX':{
+      const {hash, symbol} = action.payload
+      var tokens = { ...state.tokens }
+      tokens[symbol].approveTx = hash
+      return Object.assign({}, state, { tokens: tokens }) 
+    }
+    case 'EXCHANGE.REMOVE_APPROVE_TX':{
+      const {symbol} = action.payload
+      var tokens = { ...state.tokens }
+      delete tokens[symbol].approveTx
+      return Object.assign({}, state, { tokens: tokens }) 
+    }
     default: return state
   }
 }

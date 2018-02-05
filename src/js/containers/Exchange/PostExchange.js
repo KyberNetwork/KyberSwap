@@ -247,6 +247,7 @@ export default class PostExchange extends React.Component {
     var gas_approve = converters.numberToHex(this.props.form.gas_approve)
     // should have better strategy to determine gas price
     var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.form.gasPrice))
+    var sourceTokenSymbol = this.props.form.sourceTokenSymbol
     var balanceData = {
       sourceName: this.props.form.sourceName,
       sourceSymbol: this.props.form.sourceTokenSymbol,
@@ -260,7 +261,7 @@ export default class PostExchange extends React.Component {
     return {
       selectedAccount, sourceToken, sourceAmount, destToken,
       minConversionRate, destAddress, maxDestAmount,
-      throwOnFailure, nonce, gas,gas_approve, gasPrice, balanceData
+      throwOnFailure, nonce, gas,gas_approve, gasPrice, balanceData, sourceTokenSymbol
     }
   }
   checkTokenBalanceOfColdWallet = () => {
@@ -284,7 +285,7 @@ export default class PostExchange extends React.Component {
     const account = this.props.account
     const ethereum = this.props.ethereum
     this.props.dispatch(exchangeActions.doApprove(ethereum, params.sourceToken, params.sourceAmount, params.nonce, params.gas_approve, params.gasPrice,
-      account.keystring, account.password, account.type, account, this.props.keyService))
+      account.keystring, account.password, account.type, account, this.props.keyService, params.sourceTokenSymbol))
   }
 
   processTx = () => {
@@ -309,7 +310,7 @@ export default class PostExchange extends React.Component {
         params.sourceAmount, params.destToken, params.destAddress,
         params.maxDestAmount, params.minConversionRate,
         params.throwOnFailure, params.nonce, params.gas,
-        params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService, params.balanceData))
+        params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService, params.balanceData, params.sourceTokenSymbol))
 
 
     } catch (e) {

@@ -259,9 +259,9 @@ export default class BaseProvider {
     txMined(hash) {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getTransactionReceipt(hash).then((result) => {
-                if (result != null) {
                     resolve(result)
-                }
+            }).catch(err => {
+                reject(err)
             })
         })
 
@@ -425,19 +425,6 @@ export default class BaseProvider {
 
     extractExchangeEventData(data) {
         return new Promise((resolve, rejected) => {
-            console.log( this.rpc.eth.abi.decodeParameters([{
-                type:"address",
-                name: "src"
-            },{
-                type:"address",
-                name: "dest"
-            },{
-                type:"uint256",
-                name: "srcAmount"
-            },{
-                type:"uint256",
-                name: "destAmount"
-            }], data))
             const {src, dest, srcAmount, destAmount} = this.rpc.eth.abi.decodeParameters([{
                 type:"address",
                 name: "src"
@@ -451,8 +438,6 @@ export default class BaseProvider {
                 type:"uint256",
                 name: "destAmount"
             }], data)
-            
-            console.log({src, dest, srcAmount, destAmount})
             resolve({src, dest, srcAmount, destAmount})
         })
     }

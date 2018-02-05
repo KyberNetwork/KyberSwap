@@ -9,7 +9,7 @@ import {
   updateHistoryExchange, checkConnection, setGasPrice, setMaxGasPrice
 } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
-import { updateTx } from "../../actions/txActions"
+import { updateTx, updateApproveTxsData } from "../../actions/txActions"
 import { updateRateExchange, estimateGas, analyzeError, checkKyberEnable } from "../../actions/exchangeActions"
 import { estimateGasTransfer } from "../../actions/transferActions"
 import BLOCKCHAIN_INFO from "../../../../env"
@@ -137,6 +137,7 @@ export default class EthereumService extends React.Component {
     this.checkKyberEnable()
 
      this.fetchTxsData()
+     this.fetchApproveTxsData()
 
     this.fetchRateData()
     this.fetchRateUSD()
@@ -226,6 +227,11 @@ export default class EthereumService extends React.Component {
 
       }
     })
+  }
+
+
+  fetchApproveTxsData = () =>{
+    store.dispatch(updateApproveTxsData())
   }
 
   fetchAccountData = () => {

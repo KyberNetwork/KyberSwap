@@ -58,6 +58,8 @@ export default class Tx {
           newTx.status = "success"
         }
         resolve(newTx)
+      }).catch(err => {
+        reject(err)
       })
     })
   }
