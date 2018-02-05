@@ -111,8 +111,8 @@ export default class Exchange extends React.Component {
         }
         balanceBig = balanceBig.minus(totalGas)
       }
-      var balance = balanceBig.div(Math.pow(10, token.decimal)).toString()
-      balance = toPrimitiveNumber(balance)
+      var balance = balanceBig.div(Math.pow(10, token.decimal)).toString(10)
+      //balance = toPrimitiveNumber(balance)
 
       this.focusSource()
       
