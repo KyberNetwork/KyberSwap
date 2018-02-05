@@ -27,7 +27,7 @@ export function* updateHistoryExchange(action) {
     const newLogs = yield call([ethereum, ethereum.call], "getLog")
     yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
   }catch(e){
-    console.log(e.message)
+    console.log(e)
   }
 }
 

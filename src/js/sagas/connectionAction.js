@@ -9,7 +9,6 @@ export function* createNewConnection(action) {
   yield put(setConnection(connectionInstance))
   connectionInstance.subcribe()
 
-  
   // var state = store.getState()
   // var ethereum = action.payload.ethereum
   // var ethereum = state.connection.ethereum

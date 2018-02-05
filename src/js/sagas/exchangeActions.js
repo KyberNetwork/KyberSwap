@@ -623,7 +623,7 @@ function* analyzeError(action) {
     var gas_price = tx.gasPrice
     var blockNumber = tx.blockNumber
 
-    var result = yield call([ethereum, ethereum.call],"exactExchangeData", tx.input)
+    var result = yield call([ethereum, ethereum.call],"exactTradeData", tx.input)
     var source = result[0].value
     var srcAmount = result[1].value
     var dest = result[2].value

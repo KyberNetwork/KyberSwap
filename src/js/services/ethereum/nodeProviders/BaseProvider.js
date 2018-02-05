@@ -423,12 +423,47 @@ export default class BaseProvider {
         return false
     }
 
-    exactExchangeData(data) {
+    extractExchangeEventData(data) {
+        return new Promise((resolve, rejected) => {
+            console.log( this.rpc.eth.abi.decodeParameters([{
+                type:"address",
+                name: "src"
+            },{
+                type:"address",
+                name: "dest"
+            },{
+                type:"uint256",
+                name: "srcAmount"
+            },{
+                type:"uint256",
+                name: "destAmount"
+            }], data))
+            const {src, dest, srcAmount, destAmount} = this.rpc.eth.abi.decodeParameters([{
+                type:"address",
+                name: "src"
+            },{
+                type:"address",
+                name: "dest"
+            },{
+                type:"uint256",
+                name: "srcAmount"
+            },{
+                type:"uint256",
+                name: "destAmount"
+            }], data)
+            
+            console.log({src, dest, srcAmount, destAmount})
+            resolve({src, dest, srcAmount, destAmount})
+        })
+    }
+
+    exactTradeData(data) {
         return new Promise((resolve, rejected) => {
             //get trade abi from 
-            var tradeAbi = this.getAbiByName("ExecuteTrade", constants.KYBER_NETWORK)
+            var tradeAbi = this.getAbiByName("trade", constants.KYBER_NETWORK)
             abiDecoder.addABI(tradeAbi)
             var decoded = abiDecoder.decodeMethod(data);
+          //  console.log(decoded)
             resolve(decoded.params)
         })
     }
