@@ -79,7 +79,7 @@ export default class PostTransfer extends React.Component {
     
 
     if(testBalanceWithFee){
-      this.props.dispatch(transferActions.thowErrorAmount("error.eth_balance_not_enough_for_fee"))
+      this.props.dispatch(transferActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
       check = false
     }
     var testGasPrice = parseFloat(this.props.form.gasPrice)

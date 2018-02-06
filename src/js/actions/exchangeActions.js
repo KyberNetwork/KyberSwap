@@ -48,6 +48,13 @@ export function thowErrorSourceAmount(message) {
   }
 }
 
+export function thowErrorEthBalance(message){
+  return {
+    type: "EXCHANGE.THROW_ETH_BALANCE_ERROR",
+    payload: message
+  }
+}
+
 export function thowErrorGasPrice(message) {
   return {
     type: "EXCHANGE.THROW_GAS_PRICE_ERROR",

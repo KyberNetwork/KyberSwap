@@ -222,7 +222,7 @@ export default class Exchange extends React.Component {
     var errors = {
       selectSameToken: this.props.exchange.errors.selectSameToken || '',
       selectTokenToken: this.props.exchange.errors.selectTokenToken || '',
-      sourceAmount: this.props.exchange.errors.sourceAmountError || '',
+      sourceAmount: this.props.exchange.errors.sourceAmountError || this.props.exchange.errors.ethBalanceError || '',
       tokenSource: ''
     }
 

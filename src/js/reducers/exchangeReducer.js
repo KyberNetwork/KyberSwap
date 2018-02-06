@@ -99,6 +99,10 @@ const exchange = (state = initState, action) => {
       newState.errors.sourceAmountError = action.payload
       return newState
     }
+    case "EXCHANGE.THROW_ETH_BALANCE_ERROR": {
+      newState.errors.ethBalanceError = action.payload
+      return newState
+    }
     case "EXCHANGE.THROW_GAS_PRICE_ERROR": {
       newState.errors.gasPriceError = action.payload
       return newState
@@ -115,7 +119,7 @@ const exchange = (state = initState, action) => {
       newState.gasPrice = action.payload
       newState.isEditGasPrice = true
       newState.errors.gasPriceError = ""
-      newState.errors.sourceAmountError = ""
+      newState.errors.ethBalanceError = ""
       return newState
     }
     case "EXCHANGE.TOGGLE_ADVANCE": {
@@ -286,6 +290,7 @@ const exchange = (state = initState, action) => {
       if (focus == "source") {
         newState.sourceAmount = value
         newState.errors.sourceAmountError = ""
+        newState.errors.ethBalanceError = ""
         if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
         newState.destAmount = caculateDestAmount(value, state.offeredRate, 6)
       }
