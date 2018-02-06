@@ -115,6 +115,7 @@ const exchange = (state = initState, action) => {
       newState.gasPrice = action.payload
       newState.isEditGasPrice = true
       newState.errors.gasPriceError = ""
+      newState.errors.sourceAmountError = ""
       return newState
     }
     case "EXCHANGE.TOGGLE_ADVANCE": {

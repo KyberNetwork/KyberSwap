@@ -61,6 +61,7 @@ const transfer = (state = initState, action) => {
       newState.gasPrice = action.payload
       newState.isEditGasPrice = true
       newState.errors.gasPrice = ""
+      newState.errors.amountTransfer = ""
       return newState
     case "TRANSFER.TOGGLE_ADVANCE":
       newState.advanced = !newState.advanced
