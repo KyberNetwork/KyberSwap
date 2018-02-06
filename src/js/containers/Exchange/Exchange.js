@@ -177,7 +177,8 @@ export default class Exchange extends React.Component {
       analizeError : this.props.exchange.analizeError
     }
     var transactionLoadingScreen = (
-      <TransactionLoading tx={this.props.exchange.txHash}
+      <TransactionLoading 
+        tx={this.props.exchange.txHash}
         tempTx={this.props.exchange.tempTx}
         makeNewTransaction={this.makeNewExchange}
         type="exchange"        

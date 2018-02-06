@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from 'react-router-dom'
 import { Rate, Address } from "../Header"
+import AnalyzeLogModal from '../Transaction/AnalyzeLogModal'
 
 const HeaderView = (props) => {
   let logoLink = props.account ? '/exchange' : ''
@@ -19,6 +20,13 @@ const HeaderView = (props) => {
           </div>
         </div>
       </section>
+
+      <AnalyzeLogModal 
+        analyze={props.analyze} 
+        onRequestClose={props.onRequestClose}
+        isOpen={props.isOpen}
+        translate={props.translate}
+      />
 
       {props.balance &&
         <section id="balance-account">
