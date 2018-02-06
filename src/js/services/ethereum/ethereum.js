@@ -368,7 +368,8 @@ export default class EthereumService extends React.Component {
   promiseMultiNode(list, index, fn, callBackSuccess, callBackFail, results, errors, ...args) {
     if (!list[index]) {
       if(results.length > 0){
-        callBackSuccess(results[0])
+       // callBackSuccess(results[0])
+       console.log("resolve "+fn+" successfully in some nodes")
       }else{
         callBackFail(errors)
       }      
@@ -384,6 +385,7 @@ export default class EthereumService extends React.Component {
       console.log("Call " + fn + " successfully in " + list[index].rpcUrl)
       results.push(result)
       this.promiseMultiNode(list, ++index, fn, callBackSuccess, callBackFail, results, errors, ...args)
+      callBackSuccess(result)
     }).catch(err => {
       console.log(err.message + " -In provider: " + list[index].rpcUrl)
       errors.push(err)

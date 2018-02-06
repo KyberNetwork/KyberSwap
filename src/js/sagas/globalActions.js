@@ -6,7 +6,7 @@ import { closeImportLoading } from '../actions/accountActions'
 import { Rate } from "../services/rate"
 import { push } from 'react-router-redux';
 import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
-
+import { getTranslate } from 'react-localize-redux';
 import { getLanguage } from "../services/language"
 import Language from "../../../lang"
 import constants from "../services/constants"
@@ -68,14 +68,14 @@ export function* updateRateUSD(action) {
 
 export function* checkConnection(action) {
   var { ethereum, count, maxCount, isCheck } = action.payload
-  const isConnected = yield call([ethereum, ethereum.call], "isConnectNode")
-  //console.log(isConnected)
-  if (isConnected) {
+  try {
+    const isConnected = yield call([ethereum, ethereum.call], "isConnectNode")
     if (!isCheck) {
       yield put(actions.updateIsCheck(true))
       yield put(actions.updateCountConnection(0))
     }
-  } else {
+  }catch(err){
+    console.log(err)
     if (isCheck) {
       if (count > maxCount) {
         yield put(actions.updateIsCheck(false))

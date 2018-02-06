@@ -54,7 +54,6 @@ function* updateTx(action) {
         const destDecimal = tokens[newTx.data.destTokenSymbol].decimal
         newTx.data.sourceAmount = converters.toT(srcAmount, sourceDecimal)
         newTx.data.destAmount = converters.toT(destAmount, destDecimal)
-        console.log(newTx)
 
       } else {
         var tokenBalance = yield call(getBalance, account.address,
