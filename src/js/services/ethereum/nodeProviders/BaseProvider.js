@@ -24,13 +24,9 @@ export default class BaseProvider {
     isConnectNode() {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getBlock("latest", false).then((block) => {
-                if (block != null) {
-                    resolve(true)
-                } else {
-                    resolve(false)
-                }
+                resolve(true)
             }).catch((errr) => {
-                resolve(false)
+                reject(false)
             })
         })
     }
@@ -58,7 +54,6 @@ export default class BaseProvider {
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
                     reject(err)
                 })
         })
@@ -249,9 +244,9 @@ export default class BaseProvider {
         tokenContract.options.address = token
         return new Promise((resolve, reject) => {
             tokenContract.methods.decimals().call().then((result) => {
-                if (result !== null) {
-                    resolve(result)
-                }
+                resolve(result)
+            }).catch(err => {
+                reject(err)
             })
         })
     }
@@ -259,7 +254,7 @@ export default class BaseProvider {
     txMined(hash) {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getTransactionReceipt(hash).then((result) => {
-                    resolve(result)
+                resolve(result)
             }).catch(err => {
                 reject(err)
             })
@@ -276,7 +271,6 @@ export default class BaseProvider {
                     }
                 })
                 .catch((err) => {
-                    // console.log(err)
                     reject(err)
                 })
         })
@@ -286,12 +280,9 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             this.networkContract.methods.enabled().call()
                 .then((result) => {
-                    if (result != null) {
-                        resolve(result)
-                    }
+                    resolve(result)
                 })
                 .catch((err) => {
-                    // console.log(err)
                     reject(err)
                 })
         })
@@ -323,7 +314,7 @@ export default class BaseProvider {
     getAllRate(sources, dests, quantity) {
         var dataAbi = this.wrapperContract.methods.getExpectedRates(this.networkAddress, sources, dests, quantity).encodeABI()
 
-        return new Promise((resolve, rejected) => {
+        return new Promise((resolve, reject) => {
             this.rpc.eth.call({
                 to: this.wrapperAddress,
                 data: dataAbi
@@ -342,13 +333,11 @@ export default class BaseProvider {
                         ], data)
                         resolve(dataMapped)
                     } catch (e) {
-                        console.log(e)
-                        resolve([])
+                        reject(err)
                     }
                 })
                 .catch((err) => {
-                    console.log("GET request error")
-                    resolve([])
+                    reject(err)
                 })
         })
     }
@@ -425,31 +414,41 @@ export default class BaseProvider {
 
     extractExchangeEventData(data) {
         return new Promise((resolve, rejected) => {
-            const {src, dest, srcAmount, destAmount} = this.rpc.eth.abi.decodeParameters([{
-                type:"address",
-                name: "src"
-            },{
-                type:"address",
-                name: "dest"
-            },{
-                type:"uint256",
-                name: "srcAmount"
-            },{
-                type:"uint256",
-                name: "destAmount"
-            }], data)
-            resolve({src, dest, srcAmount, destAmount})
+            try {
+                const { src, dest, srcAmount, destAmount } = this.rpc.eth.abi.decodeParameters([{
+                    type: "address",
+                    name: "src"
+                }, {
+                    type: "address",
+                    name: "dest"
+                }, {
+                    type: "uint256",
+                    name: "srcAmount"
+                }, {
+                    type: "uint256",
+                    name: "destAmount"
+                }], data)
+                resolve({ src, dest, srcAmount, destAmount })
+            } catch (e) {
+                reject(e)
+            }
+
         })
     }
 
     exactTradeData(data) {
-        return new Promise((resolve, rejected) => {
-            //get trade abi from 
-            var tradeAbi = this.getAbiByName("trade", constants.KYBER_NETWORK)
-            abiDecoder.addABI(tradeAbi)
-            var decoded = abiDecoder.decodeMethod(data);
-          //  console.log(decoded)
-            resolve(decoded.params)
+        return new Promise((resolve, reject) => {
+            try {
+                //get trade abi from 
+                var tradeAbi = this.getAbiByName("trade", constants.KYBER_NETWORK)
+                abiDecoder.addABI(tradeAbi)
+                var decoded = abiDecoder.decodeMethod(data);
+                //  console.log(decoded)
+                resolve(decoded.params)
+            } catch (e) {
+                reject(e)
+            }
+
         })
     }
 
@@ -461,12 +460,9 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getBalance(address, blockno)
                 .then((balance) => {
-                    if (balance != null) {
-                        resolve(balance)
-                    }
+                    resolve(balance)
                 })
                 .catch((err) => {
-                    console.log(err)
                     reject(err)
                 })
         })
@@ -483,7 +479,6 @@ export default class BaseProvider {
                     var cap = this.rpc.eth.abi.decodeParameters(['uint256'], result)
                     resolve(cap[0])
                 }).catch((err) => {
-                    // console.log(err)
                     reject(err)
                 })
         })
@@ -505,7 +500,6 @@ export default class BaseProvider {
                     var balance = this.rpc.eth.abi.decodeParameters(['uint256'], result)
                     resolve(balance[0])
                 }).catch((err) => {
-                    // console.log(err)
                     reject(err)
                 })
         })
@@ -576,7 +570,6 @@ export default class BaseProvider {
 
     wrapperGetConversionRate(reserve, input, blockno) {
         var data = this.networkContract.methods.getExpectedRate(input.source, input.dest, input.srcAmount).encodeABI()
-        // console.log(data)
         return new Promise((resolve, reject) => {
             this.rpc.eth.call({
                 to: BLOCKCHAIN_INFO.network,
@@ -592,7 +585,6 @@ export default class BaseProvider {
                     }], result)
                     resolve(rates)
                 }).catch((err) => {
-                    // console.log(err)
                     reject(err)
                 })
         })

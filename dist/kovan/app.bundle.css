@@ -8175,11 +8175,11 @@ label {
 
 .error > input,
 input.error {
-  box-shadow: inset 0 -1px 0 0 rgba(229, 0, 0, 0.25), 0 10px 40px 0 rgba(229, 0, 0, 0.1); }
+  box-shadow: inset 0 -1px 0 0 rgba(255, 93, 0, 0.25), 0 10px 40px 0 rgba(255, 93, 0, 0.1); }
 
 .error + span.error-text,
 .error span.error-text {
-  color: #E50000;
+  color: #ff5d00;
   font-size: 13px;
   font-weight: normal;
   display: block;
@@ -8209,6 +8209,7 @@ input.error {
   position: relative;
   white-space: nowrap;
   border: none;
+  color: #fff;
   cursor: default; }
   .button.accent.waiting {
     color: rgba(255, 255, 255, 0.5);
@@ -8461,7 +8462,7 @@ label.switch-caption {
         color: #a5a5a5;
         border-radius: 25px; }
     .gas-config .advanced-content .error-text {
-      color: #E50000; }
+      color: #ff5d00; }
     .gas-config .advanced-content .gas-price input {
       padding-right: 40px; }
     .gas-config .advanced-content .gas-price .unit {
@@ -8536,7 +8537,7 @@ ul.broadcast-steps {
     ul.broadcast-steps > li.success {
       font-weight: bold; }
     ul.broadcast-steps > li.failed h4 {
-      color: #E50000; }
+      color: #ff5d00; }
     ul.broadcast-steps > li.failed .reason {
       text-align: center;
       margin-top: 5px;
@@ -8607,8 +8608,6 @@ ul.broadcast-steps {
     margin-bottom: 25px; }
   .reveal a {
     color: #00ffd6; }
-    .reveal a:hover {
-      text-decoration: underline; }
     .reveal a.x {
       display: block;
       position: absolute;
@@ -8660,7 +8659,7 @@ ul.broadcast-steps {
     .reveal .content .ledger-error {
       font-size: 0.9em;
       margin-bottom: 25px;
-      color: #E50000;
+      color: #ff5d00;
       border-top: 1px solid #a5a5a5;
       padding-top: 24px; }
   .reveal .footer {
@@ -8950,7 +8949,7 @@ label.address-path-stamp {
   width: 100%;
   min-height: 64px; }
   .token-input.error {
-    box-shadow: inset 0 -1px 0 0 rgba(229, 0, 0, 0.25), 0 10px 40px 0 rgba(229, 0, 0, 0.1); }
+    box-shadow: inset 0 -1px 0 0 rgba(255, 93, 0, 0.25), 0 10px 40px 0 rgba(255, 93, 0, 0.1); }
   .token-input input {
     appearance: none;
     display: table-cell;
@@ -9015,7 +9014,7 @@ label.address-path-stamp {
     .token-compare span.up {
       color: #2A9A8D; }
     .token-compare span.down {
-      color: #E50000; }
+      color: #ff5d00; }
 
 .ReactModal__Body--open {
   overflow: hidden; }
@@ -9275,7 +9274,7 @@ input[type=number] {
       .token-selector .list-item .token-item > img {
         width: 30px; }
       .token-selector .list-item .token-item .unsupported {
-        color: #E50000; }
+        color: #ff5d00; }
       .token-selector .list-item .token-item:hover {
         background-color: rgba(36, 173, 151, 0.45); }
   .token-selector.close .select-item {
@@ -9584,7 +9583,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
       position: relative;
       margin-top: 5px; }
       #header .user-bar .notifications-toggle span.counter {
-        background-color: #E50000;
+        background-color: #ff5d00;
         color: white;
         display: inline-block;
         position: absolute;
@@ -9691,7 +9690,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
           font-size: 12px;
           margin-top: 4px; }
         #header .user-bar ul.notifications > li .reason {
-          color: #E50000;
+          color: #ff5d00;
           font-size: 12px;
           margin-top: 8px; }
 
@@ -9750,20 +9749,20 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
       vertical-align: baseline;
       margin-right: 15px; }
     #balance-account .balance-item + .__react_component_tooltip {
-      border: 1px solid #ddd; }
+      border: 1px solid #afafaf; }
       #balance-account .balance-item + .__react_component_tooltip.show {
         opacity: 1; }
       #balance-account .balance-item + .__react_component_tooltip.place-bottom::before {
         border-left-width: 10px;
         border-right-width: 10px;
-        border-bottom: 8px solid #ddd; }
+        border-bottom: 8px solid #afafaf; }
       #balance-account .balance-item + .__react_component_tooltip.place-bottom::after {
         border-bottom-width: 7px;
         top: -7px; }
       #balance-account .balance-item + .__react_component_tooltip.place-right::before {
-        border-right: 8px solid #ddd; }
+        border-right: 8px solid #afafaf; }
       #balance-account .balance-item + .__react_component_tooltip.place-left::before {
-        border-left: 8px solid #ddd; }
+        border-left: 8px solid #afafaf; }
   #balance-account .expand {
     border-top: 1px solid #eee;
     height: 8px;
@@ -9873,12 +9872,12 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 #import-account .title {
   font-weight: normal; }
 
-#private_key {
+#private_key, #passphrase {
   background-color: transparent;
   color: inherit;
   border-bottom: 1px solid #ddd; }
-  #private_key:focus {
+  #private_key:focus, #passphrase:focus {
     background-color: transparent; }
-  #private_key.security {
+  #private_key.security, #passphrase.security {
     font-family: 'text-security-disc';
     font-size: 25px; }
