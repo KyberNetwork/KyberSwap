@@ -4,6 +4,7 @@ import { push } from 'react-router-redux';
 import constants from "../../services/constants"
 import { TransactionLoadingView } from "../../components/Transaction"
 import { getTranslate } from 'react-localize-redux'
+import exchangeActions from "../../actions/exchangeActions"
 
 @connect((store, props) => {
     var returnProps = {}

@@ -1,5 +1,7 @@
 import { take, put, call, fork, select, takeEvery, all, apply } from 'redux-saga/effects'
 import * as actions from '../actions/exchangeActions'
+import * as globalActions from "../actions/globalActions"
+
 import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
 import { addTx } from '../actions/txActions'
 import * as utilActions from '../actions/utilActions'
@@ -634,6 +636,7 @@ function* updateGasUsed(action) {
 
 function* analyzeError(action) {
   const { ethereum, txHash } = action.payload
+  yield put(globalActions.openAnalyze(txHash))
   try {
     //var txHash = exchange.txHash
     var tx = yield call([ethereum, ethereum.call], "getTx", txHash)
@@ -655,7 +658,7 @@ function* analyzeError(action) {
 
     var input = {
       value, owner, gas_price, source, srcAmount, dest,
-      destAddress, maxDestAmount, minConversionRate, walletID, reserves
+      destAddress, maxDestAmount, minConversionRate, walletID, reserves, txHash
     }
 
     yield call(debug, input, blockNumber, ethereum)
@@ -666,6 +669,7 @@ function* analyzeError(action) {
 }
 
 function* debug(input, blockno, ethereum) {
+  
   var networkIssues = {}
   var reserveIssues = {}
   var translate = getTranslate(store.getState().locale)
@@ -720,9 +724,10 @@ function* debug(input, blockno, ethereum) {
       reserveIssues["reason"] = translate('error.min_rate_too_high') || "Your min rate is too high!"
     }
   }
+  console.log("_________________________")
   console.log(reserveIssues)
   console.log(networkIssues)
-  yield put(actions.setAnalyzeError(networkIssues, reserveIssues))
+  yield put(globalActions.setAnalyzeError(networkIssues, reserveIssues, input.txHash))
 }
 
 function* checkKyberEnable() {

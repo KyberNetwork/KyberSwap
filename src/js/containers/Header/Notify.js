@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { NotifyView } from "../../components/Header"
 import { clearTxs } from "../../actions/txActions"
 import { toggleNotify } from '../../actions/utilActions'
+import { analyzeError } from "../../actions/exchangeActions"
 import constants from "../../services/constants"
 import { getTranslate } from 'react-localize-redux';
 
@@ -10,7 +11,8 @@ import { getTranslate } from 'react-localize-redux';
     return {
         txs: store.txs,
         utils: store.utils,
-        translate: getTranslate(store.locale)
+        translate: getTranslate(store.locale),
+        ethereum: store.connection.ethereum,
     }
 })
 
@@ -26,6 +28,10 @@ export default class Notify extends React.Component {
 
     }
 
+    handleAnalyzeError = (txHash) => {
+        this.props.dispatch(analyzeError(this.props.ethereum, txHash))
+    }
+
     render() {
         return (
             <NotifyView displayTransactions={this.displayTransactions}
@@ -33,6 +39,7 @@ export default class Notify extends React.Component {
                 displayTrans={this.props.utils.showNotify}
                 txs={this.props.txs}
                 translate={this.props.translate}    
+                handleAnalyze={this.handleAnalyzeError.bind(this)}
             />
         )
     }

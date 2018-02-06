@@ -9,12 +9,13 @@ const AnalyzelogModal = (props) => {
             <img src={require("../../../assets/img/spinner.svg")} width="90"/>
         </div>
     )
-    if (props.analyze.isAnalizeComplete) {
+    if (props.analyze.isAnalizeComplete && props.analyze.analizeError && props.analyze.analizeError[props.analyze.selectedAnalyzeHash]) {
         var isEmpty = true
-        listErrors = Object.keys(props.analyze.analizeError).map(key => {
-            if(Object.keys(props.analyze.analizeError[key]).length > 0) isEmpty = false
-            var list = Object.keys(props.analyze.analizeError[key]).map(keyItem => {
-                return (<div key={key + keyItem} className="reason-item">{props.analyze.analizeError[key][keyItem]}</div>)
+        var data = props.analyze.analizeError[props.analyze.selectedAnalyzeHash]
+        listErrors = Object.keys(data).map(key => {
+            if(Object.keys(data[key]).length > 0) isEmpty = false
+            var list = Object.keys(data[key]).map(keyItem => {
+                return (<div key={key + keyItem} className="reason-item">{data[key][keyItem]}</div>)
             })
             return list
         })
