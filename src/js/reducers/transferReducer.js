@@ -53,6 +53,7 @@ const transfer = (state = initState, action) => {
     case "TRANSFER.TRANSFER_SPECIFY_AMOUNT":
       newState.amount = action.payload
       newState.errors.amountTransfer = ''
+      newState.errors.ethBalanceError = ""
       return newState
     case "TRANSFER_SPECIFY_GAS":
       newState.gas = action.payload
@@ -61,6 +62,7 @@ const transfer = (state = initState, action) => {
       newState.gasPrice = action.payload
       newState.isEditGasPrice = true
       newState.errors.gasPrice = ""
+      newState.errors.ethBalanceError = ""
       return newState
     case "TRANSFER.TOGGLE_ADVANCE":
       newState.advanced = !newState.advanced
@@ -85,6 +87,10 @@ const transfer = (state = initState, action) => {
       return newState
     case "TRANSFER.THROW_AMOUNT_ERROR": {
       newState.errors.amountTransfer = action.payload
+      return newState
+    }
+    case "TRANSFER.THROW_ETH_BALANCE_ERROR": {
+      newState.errors.ethBalanceError = action.payload
       return newState
     }
     case "TRANSFER.THROW_GAS_PRICE_ERROR": {

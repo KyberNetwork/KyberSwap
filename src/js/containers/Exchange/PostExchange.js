@@ -149,7 +149,7 @@ export default class PostExchange extends React.Component {
       this.props.form.sourceAmount, this.props.form.gas + this.props.form.gas_approve, this.props.form.gasPrice)
 
       if(validateWithFee){
-        this.props.dispatch(exchangeActions.thowErrorSourceAmount("error.eth_balance_not_enough_for_fee"))
+        this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
         check = false
       }
     }
@@ -174,7 +174,7 @@ export default class PostExchange extends React.Component {
 
     var testRate = parseFloat(this.props.form.minConversionRate)
     if (isNaN(testRate)) {
-      this.props.dispatch(exchangeActions.thowErrorRate("error.rate_not_number"))
+      this.props.dispatch(exchangeActions.thowErrorRate(this.props.translate("error.rate_not_number") || "Rate is not number"))
       check = false
     }
     return check

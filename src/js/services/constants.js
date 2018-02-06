@@ -108,7 +108,8 @@ const INIT_EXCHANGE_FORM_STATE = {
     gasError: '',
     passwordError: '',
     signTransaction: '',
-    rateError: ''
+    rateError: '',
+    ethBalanceError: ''
   },
   isAnalize: false,
   isAnalizeComplete: false,
@@ -162,7 +163,8 @@ const INIT_TRANSFER_FORM_STATE = {
     destAddress: '',
     amountTransfer: '',
     passwordError: '',
-    signTransaction: ''
+    signTransaction: '',
+    ethBalanceError: ''
   }
 }
 
