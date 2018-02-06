@@ -174,7 +174,7 @@ export default class PostExchange extends React.Component {
 
     var testRate = parseFloat(this.props.form.minConversionRate)
     if (isNaN(testRate)) {
-      this.props.dispatch(exchangeActions.thowErrorRate("error.rate_not_number"))
+      this.props.dispatch(exchangeActions.thowErrorRate(this.props.translate("error.rate_not_number") || "Rate is not number"))
       check = false
     }
     return check
