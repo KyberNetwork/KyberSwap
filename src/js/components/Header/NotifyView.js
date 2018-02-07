@@ -66,9 +66,9 @@ const Notify = (props) => {
             {/* <div class="reason">{props.translate(tx.error || tx.errorInfo) || "Transaction is not mined"}</div> */}
             
           </a>
-          <a className="analyze" onClick={(e) => props.handleAnalyze(tx.hash)}>
+          <button className="analyze" onClick={(e) => props.handleAnalyze(tx.hash)}>
               {props.translate('transaction.analyze') || "Show reasons"}
-            </a>
+          </button>
         </li>
       )
     } else {

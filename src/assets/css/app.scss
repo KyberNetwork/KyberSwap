@@ -263,6 +263,10 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
       > li {
         font-size: 12px;
         position: relative;
+        transition: background-color .4s ease-in-out;
+        &:hover {
+          background-color: lighten($light-gray, 18);
+        }
         &:not(:last-child) {
           &:before {
             content: '';
@@ -296,9 +300,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
         > a {
           display: block;
           padding: 20px 10px 20px 55px;
-          transition: background-color .4s ease-in-out;
           &:hover {
-            background-color: lighten($light-gray, 18);
             .link{
               color: #2A9A8D
             }
@@ -322,6 +324,20 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
             background-image: url(../img/failed.svg);
             background-repeat: no-repeat;
             background-position: top 22px left 20px;
+            + .analyze{
+              padding: 4px 12px;
+              border-radius: 17px;
+              border: 1px solid #ff5d00;
+              font-weight: normal;
+              margin-left: 55px;
+              margin-bottom: 10px;
+              cursor: pointer;
+              transform: translateY(-8px);
+              transition: background-color .3s;
+              &:hover{
+                background-color: #fff8f6;
+              }
+            }
           }
         }
         span.amount {
