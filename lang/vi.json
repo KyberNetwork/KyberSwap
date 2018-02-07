@@ -186,8 +186,8 @@
   },
 
   "import": {
-    "from_metamask": "Kêt nối <br> metamask",
-    "from_keystore": "Chọn hoặc kéo<br />keystore",
+    "from_metamask": "Kêt nối <br> Metamask",
+    "from_keystore": "Chọn hoặc kéo<br />Keystore",
     "from_trezor": "Nhập từ<br />Trezor",
     "from_ledger": "Nhập từ<br />Ledger",
     "from_private_key": "Điền<br />private key",
@@ -239,5 +239,6 @@
   "help": "Hỗ trợ",
   "low": "Chậm",
   "standard": "Thường",
-  "fast": "Nhanh"
+  "fast": "Nhanh",
+  "search": "Tìm kiếm"
 }

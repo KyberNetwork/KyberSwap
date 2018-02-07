@@ -76,18 +76,15 @@ const AccountBalanceView = (props) => {
         <div className={'row small-up-3 medium-up-6 large-up-8 ' + (props.expanded ? 'active' : '')}>
           {getBalances()}
         </div>
-        {Object.keys(props.tokens).length > 8 && (
-          <div className="expand">
-            <div className="row align-right">
-              <div className="text-right">
-                <button onClick={props.toggleBalances}>
-                  <i className={'k k-angle ' + (props.expanded ? 'up' : '')}></i>
-                </button>
-              </div>
+        <div className={"expand " + (Object.keys(props.tokens).length > 8 ? "" : "d-none-md")}>
+          <div className="row align-right">
+            <div className="text-right">
+              <button onClick={props.toggleBalances}>
+                <i className={'k k-angle ' + (props.expanded ? 'up' : '')}></i>
+              </button>
             </div>
           </div>
-        )
-        }
+        </div>
       </div>
     </div>
   )
