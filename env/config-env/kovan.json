@@ -2,7 +2,7 @@
   "connections": {
     "http": [
       {
-        "endPoint" : "http://192.168.25.102:3001",
+        "endPoint" : "http://192.168.25.1:3001",
         "type": "cached"
       },
       {
