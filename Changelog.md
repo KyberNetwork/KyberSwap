@@ -17,5 +17,5 @@
 - Optimize build, remove console.log, comment.
 
 ## Compatability:
-- This version only works with KyberNetwork smart contracts version 0.4.0
+- This version works with KyberNetwork smart contracts version 0.4.0 (Kovan and Mainnet)
 
