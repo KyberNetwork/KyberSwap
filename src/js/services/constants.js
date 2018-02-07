@@ -69,7 +69,11 @@ const INIT_EXCHANGE_FORM_STATE = {
   gasPriceSuggest: {
     fastGas: 20,
     standardGas: 20,
-    safeLowGas: 20
+    safeLowGas: 20,
+    
+    fastTime: 2, //minutes
+    standardTime: 5,
+    lowTime: 30
   },
   maxGasPrice: 50,
   isEditGasPrice: false,
@@ -137,7 +141,11 @@ const INIT_TRANSFER_FORM_STATE = {
   gasPriceSuggest: {
     fastGas: 20,
     standardGas: 20,
-    safeLowGas: 20
+    safeLowGas: 20,
+    
+    fastTime: 2, //minutes
+    standardTime: 5,
+    lowTime: 30
   },
   maxGasPrice: 50,
   isEditGasPrice: false,
