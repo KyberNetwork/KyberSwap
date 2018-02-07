@@ -192,9 +192,9 @@ export default class ImportByDevice extends React.Component {
 
 	getBalance(address) {
 		return new Promise((resolve, reject) => {
-			this.props.ethereumNode.call("getBalanceAtLatestBlock",address).then((balance) => {
+			this.props.ethereumNode.call("getBalanceAtLatestBlock",address).then(balance => {
 				resolve(toEther(balance))
-			})
+			}).catch(err => console.log)
 		})
 	}
 

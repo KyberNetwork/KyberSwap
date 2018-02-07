@@ -134,8 +134,6 @@ export function* processApproveByColdWallet(action) {
       let msg = ''
       if (e.native && accountType == 'ledger') {
         msg = keyService.getLedgerError(e.native)
-      } else {
-        msg = e.message
       }
       yield put(actions.setSignError(msg))
       return
@@ -174,9 +172,7 @@ export function* processApproveByMetamask(action) {
     yield put(actions.hideApprove())
     yield put(actions.showConfirm())
   } catch (e) {
-    let msg = converter.sliceErrorMsg(e.message)
-    console.log(msg)
-    yield put(actions.setSignError(msg))
+    yield put(actions.setSignError(''))
   }
 }
 
@@ -299,10 +295,7 @@ export function* exchangeETHtoTokenColdWallet(action) {
       let msg = ''
       if (e.native && type == 'ledger') {
         msg = keyService.getLedgerError(e.native)
-      } else {
-        msg = e.message
       }
-      console.log(e)
       yield put(actions.setSignError(msg))
       return
     }
@@ -331,8 +324,7 @@ function* exchangeETHtoTokenMetamask(action) {
         throwOnFailure, nonce, gas,
         gasPrice, keystring, type, password)
     } catch (e) {
-      let msg = converter.sliceErrorMsg(e.message)
-      yield put(actions.setSignError(msg))
+      yield put(actions.setSignError(''))
       return
     }
 
@@ -345,7 +337,6 @@ function* exchangeETHtoTokenMetamask(action) {
     return
   }
 }
-
 
 function* exchangeTokentoETHKeystore(action) {
   var { formId, ethereum, address, sourceToken,
@@ -495,8 +486,6 @@ function* exchangeTokentoETHColdWallet(action) {
       let msg = ''
       if (e.native && type == 'ledger') {
         msg = keyService.getLedgerError(e.native)
-      } else {
-        msg = e.message
       }
       yield put(actions.setSignError(msg))
       return
@@ -526,8 +515,7 @@ export function* exchangeTokentoETHMetamask(action) {
         throwOnFailure, nonce, gas,
         gasPrice, keystring, type, password)
     } catch (e) {
-      let msg = converter.sliceErrorMsg(e.message)
-      yield put(actions.setSignError(msg))
+      yield put(actions.setSignError(''))
       return
     }
 
