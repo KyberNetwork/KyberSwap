@@ -12,8 +12,8 @@
 - Prevent browser save private key, password
 
 ## Improvements:
-- Allow user re-check reason a transaction fail in notification
-- Improve tooltip, languages
+- Allow user re-check reason a transaction failed in notification
+- Improve tooltips, languages
 - Optimize build, remove console.log, comment.
 
 ## Compatability:
