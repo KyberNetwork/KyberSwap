@@ -20,12 +20,22 @@ import { getTranslate } from 'react-localize-redux'
 })
 
 export default class ImportAccount extends React.Component {
+
+  constructor(){
+    super()
+    this.state = {
+      isInLandingPage: true
+    }
+  }
+
   goExchange = (e) => {
-    this.props.dispatch(visitExchange())
+    this.setState({
+      isInLandingPage: false
+    })
   }
 
   render() {
-    if (this.props.isVisitFirstTime) {
+    if (this.state.isInLandingPage) {
       return <LandingPage goExchange={this.goExchange} translate={this.props.translate}/>
     } else {
       return (
