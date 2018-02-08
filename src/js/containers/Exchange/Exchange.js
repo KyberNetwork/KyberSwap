@@ -14,7 +14,8 @@ import { anyErrors } from "../../utils/validators"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import * as exchangeActions from "../../actions/exchangeActions"
 //import { randomForExchange } from "../../utils/random"
-import { getTranslate } from 'react-localize-redux';
+import { getTranslate } from 'react-localize-redux'
+import { default as _ } from 'underscore'
 
 @connect((store) => {
   const ethereum = store.connection.ethereum
@@ -33,6 +34,12 @@ export default class Exchange extends React.Component {
     this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
   }
 
+  dispatchUpdateRateExchange = (ethereum, source, dest, sourceAmountHex, isManual, rateInit) => {
+    this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceAmountHex, isManual, rateInit))
+  }
+
+  lazyUpdateRateExchange = _.debounce(this.dispatchUpdateRateExchange, 500)
+  
   changeSourceAmount = (e) => {
     var value = e.target.value
     if (value < 0) return 
@@ -40,33 +47,50 @@ export default class Exchange extends React.Component {
 
     var sourceDecimal = 18
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
-    var minRate = 0
+    //var minRate = 0
     var tokens = this.props.tokens
     if (tokens[sourceTokenSymbol]) {
       sourceDecimal = tokens[sourceTokenSymbol].decimal
-      minRate = tokens[sourceTokenSymbol].minRate
+      //minRate = tokens[sourceTokenSymbol].minRate
     }
-    //check amount to reset rate
-    var differenceValue = getDifferentAmount(value, 
-                            this.props.exchange.prevAmount,  
-                            sourceDecimal, minRate, sourceTokenSymbol)
-    //console.log(differenceValue)
-    if(differenceValue > this.props.exchange.rangeSetRate){
-      var ethereum = this.props.ethereum
-      var source = this.props.exchange.sourceToken
-      var dest = this.props.exchange.destToken
-      var destTokenSymbol = this.props.exchange.destTokenSymbol
-      var sourceAmountHex = stringToHex(value, sourceDecimal)
-      var rateInit = 0
-      if(sourceTokenSymbol === 'ETH' && destTokenSymbol !=='ETH'){
-        rateInit = this.props.tokens[destTokenSymbol].minRateEth
-      }
-      if(sourceTokenSymbol !== 'ETH' && destTokenSymbol ==='ETH'){
-        rateInit = this.props.tokens[sourceTokenSymbol].minRate
-      }
-      this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceAmountHex, true, rateInit))
-      this.props.dispatch(exchangeActions.updatePrevSource(value))
+
+    var ethereum = this.props.ethereum
+    var source = this.props.exchange.sourceToken
+    var dest = this.props.exchange.destToken
+    var destTokenSymbol = this.props.exchange.destTokenSymbol
+    var sourceAmountHex = stringToHex(value, sourceDecimal)
+    var rateInit = 0
+    if(sourceTokenSymbol === 'ETH' && destTokenSymbol !=='ETH'){
+      rateInit = this.props.tokens[destTokenSymbol].minRateEth
     }
+    if(sourceTokenSymbol !== 'ETH' && destTokenSymbol ==='ETH'){
+      rateInit = this.props.tokens[sourceTokenSymbol].minRate
+    }
+
+    // this.lazyUpdateRateExchange(ethereum, source, dest, sourceAmountHex, true, rateInit)
+    this.lazyUpdateRateExchange(ethereum, source, dest, sourceAmountHex, true, rateInit)
+
+    // //check amount to reset rate
+    // var differenceValue = getDifferentAmount(value, 
+    //                         this.props.exchange.prevAmount,  
+    //                         sourceDecimal, minRate, sourceTokenSymbol)
+    // //console.log(differenceValue)
+    // if(differenceValue > this.props.exchange.rangeSetRate){
+    //   var ethereum = this.props.ethereum
+    //   var source = this.props.exchange.sourceToken
+    //   var dest = this.props.exchange.destToken
+    //   var destTokenSymbol = this.props.exchange.destTokenSymbol
+    //   var sourceAmountHex = stringToHex(value, sourceDecimal)
+    //   var rateInit = 0
+    //   if(sourceTokenSymbol === 'ETH' && destTokenSymbol !=='ETH'){
+    //     rateInit = this.props.tokens[destTokenSymbol].minRateEth
+    //   }
+    //   if(sourceTokenSymbol !== 'ETH' && destTokenSymbol ==='ETH'){
+    //     rateInit = this.props.tokens[sourceTokenSymbol].minRate
+    //   }
+    //   this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceAmountHex, true, rateInit))
+    //   this.props.dispatch(exchangeActions.updatePrevSource(value))
+    // }
   }
 
   changeDestAmount = (e) => {
@@ -225,7 +249,7 @@ export default class Exchange extends React.Component {
       selectTokenToken: this.props.exchange.errors.selectTokenToken || '',
       sourceAmount: this.props.exchange.errors.sourceAmountError || this.props.exchange.errors.ethBalanceError || '',
       tokenSource: '',
-      rateEqualZero : this.props.exchange.errors.rateEqualZero
+      rateSystem : this.props.exchange.errors.rateSystem
     }
 
     var input = {

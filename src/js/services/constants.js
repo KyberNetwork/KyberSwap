@@ -48,7 +48,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   minConversionRate: 0,
   minDestAmount: 0,
   maxDestAmount: 0,
-  rangeSetRate: 0.5, // 5 eth
+ // rangeSetRate: 0.5, // 5 eth
   prevAmount:0,
 
   offeredRate: 0,
