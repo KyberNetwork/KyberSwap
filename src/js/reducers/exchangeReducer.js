@@ -179,9 +179,9 @@ const exchange = (state = initState, action) => {
       }
       
       if(expectedPrice === "0" && rateInit !== "0"){
-        newState.error_rate_amount = true
+        newState.errors.rateAmount = "Kyber cannot handle your amount, please reduce amount"
       }else{
-        newState.error_rate_amount = false
+        newState.errors.rateAmount = ""
       }
 
     

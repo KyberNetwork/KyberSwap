@@ -106,8 +106,8 @@ const INIT_EXCHANGE_FORM_STATE = {
     nextDest: 0
   },
 
-  error_rate_amount: false,
-  error_rate_system: false,
+  // error_rate_amount: false,
+  // error_rate_system: false,
   errors: {
     selectSameToken: '',
     selectTokenToken: '',

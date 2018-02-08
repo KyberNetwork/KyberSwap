@@ -23,7 +23,7 @@ import { default as _ } from 'underscore'
   const exchange = store.exchange
   const tokens = store.tokens.tokens
   const translate = getTranslate(store.locale)
-  
+
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
   var sourceBalance = 0
   var sourceDecimal = 18
@@ -44,8 +44,12 @@ import { default as _ } from 'underscore'
     destName = tokens[destTokenSymbol].name
   }
 
-  return { account, ethereum, tokens, translate,exchange : { ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
-    sourceName, destName} }
+  return {
+    account, ethereum, tokens, translate, exchange: {
+      ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
+      sourceName, destName
+    }
+  }
 })
 
 
@@ -59,11 +63,11 @@ export default class Exchange extends React.Component {
     this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceAmountHex, isManual, rateInit))
   }
 
- 
-  
+
+
 
   validateSourceAmount = (value) => {
-   // var check = true
+    // var check = true
     var sourceAmount = value
     var validateAmount = validators.verifyAmount(sourceAmount,
       this.props.exchange.sourceBalance,
@@ -72,7 +76,7 @@ export default class Exchange extends React.Component {
       this.props.exchange.offeredRate,
       this.props.exchange.destDecimal,
       this.props.exchange.maxCap)
-    var sourceAmountErrorKey
+    var sourceAmountErrorKey = false
     switch (validateAmount) {
       case "not a number":
         sourceAmountErrorKey = "error.source_amount_is_not_number"
@@ -89,34 +93,41 @@ export default class Exchange extends React.Component {
       case "too high for reserve":
         sourceAmountErrorKey = "error.source_amount_too_high_for_reserve"
         break
-    } 
+    }
 
-    if (sourceAmountErrorKey !== "error.source_amount_is_not_number") {
+    if (sourceAmountErrorKey !== false && sourceAmountErrorKey !== "error.source_amount_is_not_number") {
       this.props.dispatch(exchangeActions.thowErrorSourceAmount(sourceAmountErrorKey))
       return
       //check = false
     }
 
-    if(sourceAmount){
-      var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol, 
+    var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
       sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, this.props.exchange.gasPrice)
 
-      if(validateWithFee){
-        this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
-        return
-       // check = false
-      }
-    }    
+    if (validateWithFee) {
+      this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
+      return
+      // check = false
+    }
+  }
+
+  validateTxFee = (gasPrice) => {
+    var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
+    this.props.exchange.sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, gasPrice)
+
+    if (validateWithFee) {
+      this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
+      return
+      // check = false
+    }
   }
 
   lazyUpdateRateExchange = _.debounce(this.dispatchUpdateRateExchange, 500)
   lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
+  lazyValidateTransactionFee = _.debounce(this.validateTxFee, 500)
 
-  changeSourceAmount = (e) => {
-    var value = e.target.value
-    if (value < 0) return 
-    this.props.dispatch(exchangeActions.inputChange('source', value));
-
+ 
+  validateRateAndSource = (sourceValue) => {
     var sourceDecimal = 18
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
     //var minRate = 0
@@ -130,19 +141,26 @@ export default class Exchange extends React.Component {
     var source = this.props.exchange.sourceToken
     var dest = this.props.exchange.destToken
     var destTokenSymbol = this.props.exchange.destTokenSymbol
-    var sourceAmountHex = stringToHex(value, sourceDecimal)
+    var sourceAmountHex = stringToHex(sourceValue, sourceDecimal)
     var rateInit = 0
-    if(sourceTokenSymbol === 'ETH' && destTokenSymbol !=='ETH'){
+    if (sourceTokenSymbol === 'ETH' && destTokenSymbol !== 'ETH') {
       rateInit = this.props.tokens[destTokenSymbol].minRateEth
     }
-    if(sourceTokenSymbol !== 'ETH' && destTokenSymbol ==='ETH'){
+    if (sourceTokenSymbol !== 'ETH' && destTokenSymbol === 'ETH') {
       rateInit = this.props.tokens[sourceTokenSymbol].minRate
     }
 
     // this.lazyUpdateRateExchange(ethereum, source, dest, sourceAmountHex, true, rateInit)
     this.lazyUpdateRateExchange(ethereum, source, dest, sourceAmountHex, true, rateInit)
 
-    this.lazyUpdateValidateSourceAmount(value)
+    this.lazyUpdateValidateSourceAmount(sourceValue)
+  }
+  changeSourceAmount = (e) => {
+    var value = e.target.value
+    if (value < 0) return
+    this.props.dispatch(exchangeActions.inputChange('source', value));
+
+    this.validateRateAndSource(value)
     // //check amount to reset rate
     // var differenceValue = getDifferentAmount(value, 
     //                         this.props.exchange.prevAmount,  
@@ -168,8 +186,21 @@ export default class Exchange extends React.Component {
 
   changeDestAmount = (e) => {
     var value = e.target.value
-    if (value < 0 ) return 
-    this.props.dispatch(exchangeActions.inputChange('dest', value));
+    if (value < 0) return
+    this.props.dispatch(exchangeActions.inputChange('dest', value))
+
+    var valueSource = caculateSourceAmount(value, this.props.exchange.offeredRate, 6)
+    this.validateRateAndSource(valueSource)
+  }
+
+  specifyGas = (event) => {
+    var value = event.target.value
+    this.props.dispatch(exchangeActions.specifyGas(value))
+  }
+
+  specifyGasPrice = (value) => {
+    this.props.dispatch(exchangeActions.specifyGasPrice(value + ""))
+    this.lazyValidateTransactionFee(value)
   }
 
   focusSource = () => {
@@ -182,16 +213,7 @@ export default class Exchange extends React.Component {
 
   makeNewExchange = () => {
     this.props.dispatch(exchangeActions.makeNewExchange());
-  }
-
-  specifyGas = (event) => {
-    var value = event.target.value
-    this.props.dispatch(exchangeActions.specifyGas(value))
-  }
-
-  specifyGasPrice = (value) => {
-    this.props.dispatch(exchangeActions.specifyGasPrice(value + ""))
-  }
+  }  
 
   setAmount = () => {
     var tokenSymbol = this.props.exchange.sourceTokenSymbol
@@ -212,7 +234,7 @@ export default class Exchange extends React.Component {
       //balance = toPrimitiveNumber(balance)
 
       this.focusSource()
-      
+
       this.props.dispatch(exchangeActions.inputChange('source', balance));
     }
   }
@@ -225,7 +247,7 @@ export default class Exchange extends React.Component {
   analyze = () => {
     var ethereum = this.props.ethereum
     var exchange = this.props.exchange
-   //var tokens = this.props.tokens
+    //var tokens = this.props.tokens
     this.props.dispatch(exchangeActions.analyzeError(ethereum, exchange.txHash))
   }
 
@@ -245,12 +267,12 @@ export default class Exchange extends React.Component {
 
     //for transaction loading screen
     var balance = {
-      prevValue:toT(this.props.exchange.balanceData.prevSource, this.props.exchange.balanceData.sourceDecimal),
-      nextValue:toT(this.props.exchange.balanceData.nextSource, this.props.exchange.balanceData.sourceDecimal)
+      prevValue: toT(this.props.exchange.balanceData.prevSource, this.props.exchange.balanceData.sourceDecimal),
+      nextValue: toT(this.props.exchange.balanceData.nextSource, this.props.exchange.balanceData.sourceDecimal)
     }
     var balanceDest = {
-      prevValue:toT(this.props.exchange.balanceData.prevDest, this.props.exchange.balanceData.destDecimal),
-      nextValue:toT(this.props.exchange.balanceData.nextDest, this.props.exchange.balanceData.destDecimal),
+      prevValue: toT(this.props.exchange.balanceData.prevDest, this.props.exchange.balanceData.destDecimal),
+      nextValue: toT(this.props.exchange.balanceData.nextDest, this.props.exchange.balanceData.destDecimal),
       // value: toT(tokenDest.balance, tokenDest.decimal),
       // roundingValue: roundingNumber(toT(tokenDest.balance, tokenDest.decimal)),
     }
@@ -271,18 +293,18 @@ export default class Exchange extends React.Component {
       action: this.analyze,
       isAnalize: this.props.exchange.isAnalize,
       isAnalizeComplete: this.props.exchange.isAnalizeComplete,
-      analizeError : this.props.exchange.analizeError
+      analizeError: this.props.exchange.analizeError
     }
     var transactionLoadingScreen = (
-      <TransactionLoading 
+      <TransactionLoading
         tx={this.props.exchange.txHash}
         tempTx={this.props.exchange.tempTx}
         makeNewTransaction={this.makeNewExchange}
-        type="exchange"        
+        type="exchange"
         balanceInfo={balanceInfo}
         broadcasting={this.props.exchange.broadcasting}
         broadcastingError={this.props.exchange.broadcastError}
-        analyze = {analyze}
+        analyze={analyze}
       />
     )
 
@@ -291,28 +313,28 @@ export default class Exchange extends React.Component {
     var isNotSupport = false
     Object.keys(this.props.tokens).map((key, i) => {
       isNotSupport = false
-      if (this.props.exchange.sourceTokenSymbol === key){
+      if (this.props.exchange.sourceTokenSymbol === key) {
         isNotSupport = true
       }
-      if(this.props.exchange.sourceTokenSymbol !=="ETH" && key !== "ETH"){
+      if (this.props.exchange.sourceTokenSymbol !== "ETH" && key !== "ETH") {
         isNotSupport = true
-      } 
-      tokenDest[key] = {...this.props.tokens[key], isNotSupport: isNotSupport}
+      }
+      tokenDest[key] = { ...this.props.tokens[key], isNotSupport: isNotSupport }
     })
-      
+
     var tokenSourceSelect = (
       <TokenSelector type="source"
-                      focusItem = {this.props.exchange.sourceTokenSymbol}
-                      listItem = {this.props.tokens}
-                      chooseToken = {this.chooseToken}
-                      />
+        focusItem={this.props.exchange.sourceTokenSymbol}
+        listItem={this.props.tokens}
+        chooseToken={this.chooseToken}
+      />
     )
     var tokenDestSelect = (
       <TokenSelector type="des"
-                      focusItem = {this.props.exchange.destTokenSymbol}
-                      listItem = {tokenDest}
-                      chooseToken = {this.chooseToken}
-                      />
+        focusItem={this.props.exchange.destTokenSymbol}
+        listItem={tokenDest}
+        chooseToken={this.chooseToken}
+      />
     )
     //--------End
 
@@ -322,7 +344,8 @@ export default class Exchange extends React.Component {
       selectTokenToken: this.props.exchange.errors.selectTokenToken || '',
       sourceAmount: this.props.exchange.errors.sourceAmountError || this.props.exchange.errors.ethBalanceError || '',
       tokenSource: '',
-      rateSystem : this.props.exchange.errors.rateSystem
+      rateSystem: this.props.exchange.errors.rateSystem,
+      rateAmount : this.props.exchange.errors.rateAmount
     }
 
     var input = {
@@ -339,11 +362,11 @@ export default class Exchange extends React.Component {
         onFocus: this.focusDest
       }
     }
-   // console.log(input)
+    // console.log(input)
     var exchangeButton = (
       <PostExchangeWithKey />
     )
-    
+
 
     var gasPrice = stringToBigNumber(gweiToEth(this.props.exchange.gasPrice))
     var totalGas = gasPrice.mul(this.props.exchange.gas + this.props.exchange.gas_approve)
@@ -384,7 +407,7 @@ export default class Exchange extends React.Component {
         sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
         setAmount={this.setAmount}
         translate={this.props.translate}
-        swapToken = {this.swapToken}
+        swapToken={this.swapToken}
         maxCap={toEther(this.props.exchange.maxCap)}
       />
     )
