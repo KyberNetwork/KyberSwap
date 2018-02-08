@@ -95,11 +95,17 @@ export default class Exchange extends React.Component {
         break
     }
 
+    if(sourceAmountErrorKey === "error.source_amount_is_not_number"){
+      return
+    }
+
     if (sourceAmountErrorKey !== false && sourceAmountErrorKey !== "error.source_amount_is_not_number") {
       this.props.dispatch(exchangeActions.thowErrorSourceAmount(sourceAmountErrorKey))
       return
       //check = false
     }
+
+    
 
     var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
       sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, this.props.exchange.gasPrice)
