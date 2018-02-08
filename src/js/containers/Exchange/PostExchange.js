@@ -206,7 +206,7 @@ export default class PostExchange extends React.Component {
 
     var sourceAmount = this.props.snapshot.sourceAmount.toString();
     var destAmount = this.props.snapshot.destAmount.toString()
-    var sourceTokenSymbol = this.props.snapshot.sourceTokenSymbol;
+    var sourceTokenSymbol = this.props.snapshot.sourceTokenSymbol
     var destTokenSymbol = this.props.snapshot.destTokenSymbol
     return (
       <p>{this.props.translate("transaction.about_to_exchange") || "You are about to exchange"}
@@ -214,8 +214,14 @@ export default class PostExchange extends React.Component {
         <span class="text-success">
           <strong>{sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}</strong>
               <span className="color-white">{this.props.translate("transaction.for") || "for"}</span>
-            <strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}
-            </strong>
+            
+                {this.props.snapshot.isFetchingRate ?
+                    <img src={require('../../../assets/img/waiting-white.svg')} /> 
+                    : 
+                    <strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''}
+                    {destTokenSymbol}
+                    </strong>
+                  }
         </span>
       </p>
     )

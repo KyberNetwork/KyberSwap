@@ -13,10 +13,7 @@ const ConfirmTransferModal = (props) => {
         <div className="row">
           <div className="column">
             <center>
-              {props.isFetchingRate ?
-                <img src={require('../../../assets/img/waiting-white.svg')} /> 
-                : props.recap
-              }
+              {props.recap}
               <div className="gas-configed text-light text-center">
                 <div className="row">
                   <p className="column small-6">Gas Price</p>
@@ -51,7 +48,7 @@ const ConfirmTransferModal = (props) => {
         </div>
       </div>
       <div className="overlap">
-        <a className={"button accent process-submit " + (props.isConfirming || props.isFetchingGas ? "waiting" : "next")} onClick={(e) => props.onExchange(e)}>{props.translate("modal.confirm") || "Confirm"}</a>
+        <a className={"button accent process-submit " + (props.isConfirming || props.isFetchingGas || props.isFetchingRate ? "waiting" : "next")} onClick={(e) => props.onExchange(e)}>{props.translate("modal.confirm") || "Confirm"}</a>
       </div>
     </div>
   )

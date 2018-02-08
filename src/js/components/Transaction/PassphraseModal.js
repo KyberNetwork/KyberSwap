@@ -35,10 +35,7 @@ const PassphraseModal = (props) => {
         <div className="row">
           <div className="column">
             <center>
-            {props.isFetchingRate ?
-                <img src={require('../../../assets/img/waiting-white.svg')} /> 
-                : props.recap
-              }
+            {props.recap}
               <div className="gas-configed text-light">
                 <div class="d-flex justify-content-around">
                   <p>Gas Price</p>
