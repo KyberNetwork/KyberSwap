@@ -10,16 +10,16 @@
           "type": "prune"
         },        
         {
-          "endPoint" : "https://api.mycryptoapi.com/eth",
-          "type": "none_prune"
+          "endPoint" : "https://node.kyber.network",
+          "type": "prune"
         },
         {
           "endPoint" : "https://mew.giveth.io/",
           "type": "prune"
         },
         {
-          "endPoint" : "https://node.kyber.network",
-          "type": "prune"
+          "endPoint" : "https://api.mycryptoapi.com/eth",
+          "type": "none_prune"
         }
       ],
       "ws": "wss://mainnet.infura.io/ws"
@@ -69,7 +69,7 @@
         "name":"Aelf",
         "address": "0xbf2179859fc6d5bee9bf9158632dc51678a4100e",
         "symbol": "ELF",
-        "icon": "poker-chip.svg",
+        "icon": "aelf.svg",
         "decimal": 18,
         "usd_id":"aelf"
       },
@@ -77,7 +77,7 @@
         "name":"Power Ledger",
         "address": "0x595832f8fc6bf59c85c527fec3740a1b7a361269",
         "symbol": "POWR",
-        "icon": "poker-chip.svg",
+        "icon": "pwr.svg",
         "decimal": 6,
         "usd_id":"power-ledger"
       },
@@ -85,7 +85,7 @@
         "name":"Mana",
         "address": "0x0f5d2fb29fb7d3cfee444a200298f468908cc942",
         "symbol": "MANA",
-        "icon": "poker-chip.svg",
+        "icon": "mana.svg",
         "decimal": 18,
         "usd_id":"decentraland"
       },
@@ -93,7 +93,7 @@
         "name":"Basic Attention Token",
         "address": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
         "symbol": "BAT",
-        "icon": "poker-chip.svg",
+        "icon": "bat.svg",
         "decimal": 18,
         "usd_id":"basic-attention-token"
       },
@@ -101,7 +101,7 @@
         "name":"Request",
         "address": "0x8f8221afbb33998d8584a2b05749ba73c37a938a",
         "symbol": "REQ",
-        "icon": "poker-chip.svg",
+        "icon": "req.svg",
         "decimal": 18,
         "usd_id":"request-network"
       },
@@ -109,7 +109,7 @@
         "name":"Gifto",
         "address": "0xc5bbae50781be1669306b9e001eff57a2957b09d",
         "symbol": "GTO",
-        "icon": "poker-chip.svg",
+        "icon": "gifto.svg",
         "decimal": 5,
         "usd_id":"gifto"
       }

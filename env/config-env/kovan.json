@@ -2,7 +2,7 @@
   "connections": {
     "http": [
       {
-        "endPoint" : "http://192.168.25.1:3001",
+        "endPoint" : "https://kovan-cache.kyber.network",
         "type": "cached"
       },
       {
