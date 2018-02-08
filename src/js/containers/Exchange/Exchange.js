@@ -9,7 +9,7 @@ import { ExchangeForm, TransactionConfig } from "../../components/Transaction"
 
 import { TokenSelector, TransactionLoading, Token } from "../CommonElements"
 
-import { anyErrors } from "../../utils/validators"
+import * as validators from "../../utils/validators"
 
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import * as exchangeActions from "../../actions/exchangeActions"
@@ -24,7 +24,28 @@ import { default as _ } from 'underscore'
   const tokens = store.tokens.tokens
   const translate = getTranslate(store.locale)
   
-  return { account, ethereum, exchange, tokens, translate }
+  var sourceTokenSymbol = store.exchange.sourceTokenSymbol
+  var sourceBalance = 0
+  var sourceDecimal = 18
+  var sourceName = "Ether"
+  if (tokens[sourceTokenSymbol]) {
+    sourceBalance = tokens[sourceTokenSymbol].balance
+    sourceDecimal = tokens[sourceTokenSymbol].decimal
+    sourceName = tokens[sourceTokenSymbol].name
+  }
+
+  var destTokenSymbol = store.exchange.destTokenSymbol
+  var destBalance = 0
+  var destDecimal = 18
+  var destName = "Kybernetwork"
+  if (tokens[destTokenSymbol]) {
+    destBalance = tokens[destTokenSymbol].balance
+    destDecimal = tokens[destTokenSymbol].decimal
+    destName = tokens[destTokenSymbol].name
+  }
+
+  return { account, ethereum, tokens, translate,exchange : { ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
+    sourceName, destName} }
 })
 
 
@@ -38,8 +59,59 @@ export default class Exchange extends React.Component {
     this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceAmountHex, isManual, rateInit))
   }
 
-  lazyUpdateRateExchange = _.debounce(this.dispatchUpdateRateExchange, 500)
+ 
   
+
+  validateSourceAmount = (value) => {
+   // var check = true
+    var sourceAmount = value
+    var validateAmount = validators.verifyAmount(sourceAmount,
+      this.props.exchange.sourceBalance,
+      this.props.exchange.sourceTokenSymbol,
+      this.props.exchange.sourceDecimal,
+      this.props.exchange.offeredRate,
+      this.props.exchange.destDecimal,
+      this.props.exchange.maxCap)
+    var sourceAmountErrorKey
+    switch (validateAmount) {
+      case "not a number":
+        sourceAmountErrorKey = "error.source_amount_is_not_number"
+        break
+      case "too high":
+        sourceAmountErrorKey = "error.source_amount_too_high"
+        break
+      case "too high cap":
+        sourceAmountErrorKey = "error.source_amount_too_high_cap"
+        break
+      case "too small":
+        sourceAmountErrorKey = "error.source_amount_too_small"
+        break
+      case "too high for reserve":
+        sourceAmountErrorKey = "error.source_amount_too_high_for_reserve"
+        break
+    } 
+
+    if (sourceAmountErrorKey !== "error.source_amount_is_not_number") {
+      this.props.dispatch(exchangeActions.thowErrorSourceAmount(sourceAmountErrorKey))
+      return
+      //check = false
+    }
+
+    if(sourceAmount){
+      var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol, 
+      sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, this.props.exchange.gasPrice)
+
+      if(validateWithFee){
+        this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
+        return
+       // check = false
+      }
+    }    
+  }
+
+  lazyUpdateRateExchange = _.debounce(this.dispatchUpdateRateExchange, 500)
+  lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
+
   changeSourceAmount = (e) => {
     var value = e.target.value
     if (value < 0) return 
@@ -70,6 +142,7 @@ export default class Exchange extends React.Component {
     // this.lazyUpdateRateExchange(ethereum, source, dest, sourceAmountHex, true, rateInit)
     this.lazyUpdateRateExchange(ethereum, source, dest, sourceAmountHex, true, rateInit)
 
+    this.lazyUpdateValidateSourceAmount(value)
     // //check amount to reset rate
     // var differenceValue = getDifferentAmount(value, 
     //                         this.props.exchange.prevAmount,  
