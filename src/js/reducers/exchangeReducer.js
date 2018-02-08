@@ -173,7 +173,7 @@ const exchange = (state = initState, action) => {
 
 
       if(expectedPrice === "0" && rateInit === "0"){
-        newState.errors.rateSystem = "Kyber exchange is under maintainance"
+        newState.errors.rateSystem = "Kyber exchange is under maintainance this pair"
       }else{
         newState.errors.rateSystem = ""
       }
@@ -226,7 +226,7 @@ const exchange = (state = initState, action) => {
 
     }
     case "EXCHANGE.SET_RATE_ERROR_SYSTEM":{
-      newState.errors.rateSystem = "Kyber exchange is under maintainance"
+      newState.errors.rateSystem = "Kyber exchange is under maintainance this pair"
       return newState
     }
     case "EXCHANGE.OPEN_PASSPHRASE": {
