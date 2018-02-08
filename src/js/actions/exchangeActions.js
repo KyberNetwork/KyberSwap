@@ -133,6 +133,18 @@ export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePric
 
 }
 
+export function setErrorRateExchange(){
+  return {
+    type: "EXCHANGE.ERROR_RATE_ZERO"
+  }
+}
+
+export function clearErrorRateExchange(){
+  return {
+    type: "EXCHANGE.CLEAR_ERROR_RATE_ZERO"
+  }
+}
+
 
 export function openPassphrase() {
   return {

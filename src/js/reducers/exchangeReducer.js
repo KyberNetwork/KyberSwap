@@ -171,12 +171,15 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.UPDATE_RATE":
       const { rateInit, expectedPrice, slippagePrice, rateInitSlippage } = action.payload
 
-
+    
       var slippageRate = slippagePrice === "0" ? rateInitSlippage : slippagePrice
       var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
 
-      newState.slippageRate = slippagePrice
+      newState.slippageRate = slippageRate
       newState.offeredRate = expectedRate
+
+      newState.actualSlippageRate = slippagePrice
+      newState.actualOfferedRate = expectedPrice
 
       if (newState.sourceAmount !== "") {
         newState.minDestAmount = calculateDest(newState.sourceAmount, expectedRate).toString(10)
@@ -320,6 +323,14 @@ const exchange = (state = initState, action) => {
       newState.minConversionRate = action.payload.value
       newState.errors.rateError = ''
       newState.isEditRate = true
+      return newState
+    }
+    case "EXCHANGE.ERROR_RATE_ZERO":{
+      newState.errors.rateEqualZero = "Cannot get rate from exchange"
+      return newState
+    }
+    case "EXCHANGE.CLEAR_ERROR_RATE_ZERO":{
+      newState.errors.rateEqualZero = ""
       return newState
     }
     case "EXCHANGE.RESET_MIN_RATE": {

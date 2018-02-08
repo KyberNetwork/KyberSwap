@@ -48,12 +48,15 @@ const INIT_EXCHANGE_FORM_STATE = {
   minConversionRate: 0,
   minDestAmount: 0,
   maxDestAmount: 0,
-  rangeSetRate: 5, // 5 eth
+  rangeSetRate: 0.5, // 5 eth
   prevAmount:0,
 
   offeredRate: 0,
   isEditRate : false,
   slippageRate: 0,
+  actualSlippageRate: 0,
+  actualOfferedRate: 0, 
+  
 
   throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 330000,
@@ -113,6 +116,7 @@ const INIT_EXCHANGE_FORM_STATE = {
     passwordError: '',
     signTransaction: '',
     rateError: '',
+    rateEqualZero: '',
     ethBalanceError: ''
   },
   isAnalize: false,
