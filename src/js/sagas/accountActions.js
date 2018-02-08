@@ -56,17 +56,17 @@ export function* importNewAccount(action) {
       var token = { ...token }
       newTokens[token.symbol] = token
     })
-    var randomToken = [
-      {
-        address: newTokens['ETH'].address,
-        symbol: newTokens['ETH'].symbol
-      },
-      {
-        address: newTokens['KNC'].address,
-        symbol: newTokens['KNC'].symbol
-      },
-    ]
-    yield put(setRandomExchangeSelectedToken(randomToken))
+    // var randomToken = [
+    //   {
+    //     address: newTokens['ETH'].address,
+    //     symbol: newTokens['ETH'].symbol
+    //   },
+    //   {
+    //     address: newTokens['KNC'].address,
+    //     symbol: newTokens['KNC'].symbol
+    //   },
+    // ]
+    // yield put(setRandomExchangeSelectedToken(randomToken))
     
     //todo set random token for exchange
     

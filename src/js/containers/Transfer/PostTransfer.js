@@ -41,6 +41,7 @@ import { getTranslate } from 'react-localize-redux';
 
 export default class PostTransfer extends React.Component {
   clickTransfer = () => {
+    if (validators.anyErrors(this.props.form.errors)) return
     if (this.validateTransfer()) {
 
       //agree terms and services
