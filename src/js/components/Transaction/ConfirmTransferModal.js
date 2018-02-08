@@ -13,7 +13,10 @@ const ConfirmTransferModal = (props) => {
         <div className="row">
           <div className="column">
             <center>
-              {props.recap}
+              {props.isFetchingRate ?
+                <img src={require('../../../assets/img/waiting-white.svg')} /> 
+                : props.recap
+              }
               <div className="gas-configed text-light text-center">
                 <div className="row">
                   <p className="column small-6">Gas Price</p>
