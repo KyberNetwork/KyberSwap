@@ -54,8 +54,6 @@ const INIT_EXCHANGE_FORM_STATE = {
   offeredRate: 0,
   isEditRate : false,
   slippageRate: 0,
-  actualSlippageRate: 0,
-  actualOfferedRate: 0, 
   
 
   throwOnFailure: "0x0000000000000000000000000000000000000000",
@@ -107,6 +105,9 @@ const INIT_EXCHANGE_FORM_STATE = {
     prevDest: 0,
     nextDest: 0
   },
+
+  error_rate_amount: false,
+  error_rate_system: false,
   errors: {
     selectSameToken: '',
     selectTokenToken: '',
@@ -116,7 +117,8 @@ const INIT_EXCHANGE_FORM_STATE = {
     passwordError: '',
     signTransaction: '',
     rateError: '',
-    rateEqualZero: '',
+    rateAmount: '',
+    rateSystem: '',
     ethBalanceError: ''
   },
   isAnalize: false,

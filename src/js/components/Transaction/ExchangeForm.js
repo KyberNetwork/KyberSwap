@@ -42,7 +42,7 @@ const ExchangeForm = (props) => {
                       {props.translate("transaction.exchange_from") || "From"}
                     </span>
 
-                    <div className={errorToken !== "" || props.errors.sourceAmount != '' ? "error select-token-panel" : "select-token-panel"}>
+                    <div className={errorToken !== "" || props.errors.sourceAmount != '' || props.errors.rateSystem !== '' ? "error select-token-panel" : "select-token-panel"}>
                       {props.tokenSourceSelect}
                       <input id="inputSource" type={props.input.sourceAmount.type} className="source-input" value={props.input.sourceAmount.value} onFocus={props.input.sourceAmount.onFocus} onChange={props.input.sourceAmount.onChange} min="0" step="0.000001" placeholder="0" autoFocus />
                     </div>
@@ -51,6 +51,9 @@ const ExchangeForm = (props) => {
                     }
                     {props.errors.sourceAmount !== '' &&
                       <span class="error-text">{props.translate(props.errors.sourceAmount, { cap: maxCap })}</span>
+                    }
+                    {props.errors.rateSystem !== '' && 
+                      <span class="error-text">{props.errors.rateSystem}</span>
                     }
                   </label>
                   <div class="address-balance">

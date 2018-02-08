@@ -556,17 +556,10 @@ function* updateRatePending(action) {
     const slippagePrice = rate.slippageRate ? rate.slippageRate : "0"
     yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice))
     yield put(actions.caculateAmount())
-    if (expectedPrice === "0") {
-      yield put(actions.setErrorRateExchange())
-    }else{
-      yield put(actions.clearErrorRateExchange())
-    }
   }
   catch (err) {    
     console.log(err)
-    yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0"))
-    yield put(actions.caculateAmount())
-    yield put(actions.setErrorRateExchange())
+    yield put(actions.setRateSystemError())
   }
 }
 

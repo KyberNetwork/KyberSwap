@@ -133,17 +133,35 @@ export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePric
 
 }
 
-export function setErrorRateExchange(){
+
+export function setRateSystemError(){
   return {
-    type: "EXCHANGE.ERROR_RATE_ZERO"
-  }
+    type: "EXCHANGE.SET_RATE_ERROR_SYSTEM"
+  }  
 }
 
-export function clearErrorRateExchange(){
-  return {
-    type: "EXCHANGE.CLEAR_ERROR_RATE_ZERO"
-  }
-}
+// export function setErrorRateSystem(){
+//   return {
+//     type: "EXCHANGE.SET_RATE_ERROR_SYSTEM"
+//   }  
+// }
+// export function setErrorRateExchange(){
+//   return {
+//     type: "EXCHANGE.ERROR_RATE_ZERO"
+//   }
+// }
+
+// export function clearErrorRateExchange(){
+//   return {
+//     type: "EXCHANGE.CLEAR_ERROR_RATE_ZERO"
+//   }
+// }
+
+// export function setErrorRateEqualZero(){
+//   return {
+//     type: "EXCHANGE.SET_RATE_ERROR_ZERO"
+//   }
+// }
 
 
 export function openPassphrase() {
