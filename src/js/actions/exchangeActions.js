@@ -27,6 +27,12 @@ export function caculateAmount() {
   }
 }
 
+export function caculateAmountInSnapshot(){
+  return {
+    type: "EXCHANGE.CACULATE_AMOUNT_SNAPSHOT"
+  }
+}
+
 export function inputChange(focus, value) {
   return {
     type: "EXCHANGE.INPUT_CHANGE",
@@ -111,6 +117,13 @@ export function updateRateExchange(ethereum, source, dest,
   }
 }
 
+export function updateRateSnapshot(ethereum){
+  return {
+    type: "EXCHANGE.UPDATE_RATE_SNAPSHOT",
+    payload: ethereum
+  }
+}
+
 export function updatePrevSource(value) {
   return {
     type: "EXCHANGE.SET_PREV_SOURCE",
@@ -128,6 +141,21 @@ export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePric
   //var reserveBalance = rate[2]
   return {
     type: "EXCHANGE.UPDATE_RATE",
+    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage:  converter.toT(rateInit, 18)}
+  }
+
+}
+
+export function updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice) {
+  // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
+  //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
+
+  //var rateBig = converter.stringToBigNumber(rate[0])
+  //  var offeredRate = rate.expectedPrice
+  //var expirationBlock = rate[1]
+  //var reserveBalance = rate[2]
+  return {
+    type: "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE",
     payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage:  converter.toT(rateInit, 18)}
   }
 
@@ -467,5 +495,13 @@ export function removeApproveTx(symbol){
   return {
     type: "EXCHANGE.REMOVE_APPROVE_TX",
     payload: {symbol}
+  }
+}
+
+export function setSnapshot(data){
+  data.isFetchingRate = true
+  return {
+    type: "EXCHANGE.SET_SNAPSHOT",
+    payload: data
   }
 }

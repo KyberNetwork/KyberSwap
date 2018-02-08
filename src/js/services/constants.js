@@ -126,7 +126,8 @@ const INIT_EXCHANGE_FORM_STATE = {
   },
   isAnalize: false,
   isAnalizeComplete: false,
-  analizeError : {}
+  analizeError : {},
+  snapshot: {}
 }
 
 const INIT_TRANSFER_FORM_STATE = {

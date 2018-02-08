@@ -563,6 +563,33 @@ function* updateRatePending(action) {
   }
 }
 
+function* updateRateSnapshot(action){
+  const ethereum = action.payload
+  var state = store.getState()
+  var exchangeSnapshot = state.exchange.snapshot
+
+  try {
+    var source = exchangeSnapshot.sourceToken
+    var dest = exchangeSnapshot.destToken
+    var destTokenSymbol = exchangeSnapshot.destTokenSymbol
+    var sourceAmount = exchangeSnapshot.sourceAmount
+    var sourceDecimal = exchangeSnapshot.sourceDecimal
+    var sourceAmountHex = converter.stringToHex(sourceAmount, sourceDecimal)
+    var rateInit = 0
+
+    const rate = yield call([ethereum, ethereum.call], "getRate", source, dest, sourceAmountHex)
+    const expectedPrice = rate.expectedRate ? rate.expectedRate : "0"
+    const slippagePrice = rate.slippageRate ? rate.slippageRate : "0"
+
+    yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
+    yield put(actions.caculateAmountInSnapshot())
+  }
+  catch (err) {
+    console.log("===================")
+    console.log(err)
+  }
+}
+
 function* fetchGas(action) {
   yield call(updateGasUsed)
   yield put(actions.fetchGasSuccess())
@@ -759,6 +786,7 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.PROCESS_APPROVE", processApprove)
   yield takeEvery("EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET", checkTokenBalanceOfColdWallet)
   yield takeEvery("EXCHANGE.UPDATE_RATE_PENDING", updateRatePending)
+  yield takeEvery("EXCHANGE.UPDATE_RATE_SNAPSHOT", updateRateSnapshot)
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", updateGasUsed)
   yield takeEvery("EXCHANGE.ANALYZE_ERROR", analyzeError)
 

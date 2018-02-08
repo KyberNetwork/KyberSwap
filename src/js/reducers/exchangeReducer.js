@@ -202,6 +202,29 @@ const exchange = (state = initState, action) => {
       newState.isSelectToken = false
       return newState
     }
+    case "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE": {
+      var { rateInit, expectedPrice, slippagePrice, rateInitSlippage } = action.payload
+
+
+      var slippageRate = slippagePrice === "0" ? rateInitSlippage : slippagePrice
+      var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
+
+      newState.snapshot.slippageRate = slippagePrice
+      newState.snapshot.offeredRate = expectedRate
+
+      if (newState.sourceAmount !== "") {
+        newState.snapshot.minDestAmount = calculateDest(newState.snapshot.sourceAmount, expectedRate).toString(10)
+      }
+      //newState.offeredRateBalance = action.payload.reserveBalance
+      // newState.offeredRateExpiryBlock = action.payload.expirationBlock
+      if (!newState.isEditRate) {
+        newState.snapshot.minConversionRate = slippageRate
+      }
+      newState.snapshot.isSelectToken = false
+
+      return newState
+
+    }
     case "EXCHANGE.SET_RATE_ERROR_SYSTEM":{
       newState.errors.rateSystem = "Kyber exchange is under maintainance"
       return newState
@@ -300,6 +323,18 @@ const exchange = (state = initState, action) => {
       } else {
         newState.destAmount = caculateDestAmount(state.sourceAmount, state.offeredRate, 6)
       }
+      return newState
+    }
+    case "EXCHANGE.CACULATE_AMOUNT_SNAPSHOT": {
+      if (newState.snapshot.errors.selectSameToken || state.snapshot.errors.selectTokenToken) return newState
+      if (newState.snapshot.inputFocus == "dest") {
+        newState.snapshot.sourceAmount = caculateSourceAmount(state.snapshot.destAmount, state.snapshot.offeredRate, 6)
+      } else {
+        newState.snapshot.destAmount = caculateDestAmount(state.snapshot.sourceAmount, state.snapshot.offeredRate, 6)
+      }
+      newState.snapshot.isFetchingRate = false
+      console.log("***************")
+      console.log(newState)
       return newState
     }
     case "EXCHANGE.INPUT_CHANGE": {
@@ -426,6 +461,11 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.SET_KYBER_ENABLE":{
       newState.kyber_enabled = action.payload
+      return newState
+    }
+    case "EXCHANGE.SET_SNAPSHOT": {
+      var snapshot  = action.payload
+      newState.snapshot = {...snapshot}
       return newState
     }
   }
