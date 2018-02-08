@@ -133,6 +133,10 @@ export default class PostExchange extends React.Component {
                         this.props.translate("error.source_amount_rate_error")))
       return false
     }
+    // if(this.props.form.error_rate_system){
+    //   this.props.dispatch(exchangeActions.setErrorRateSystem())
+    //   return false
+    // }
     //check source amount
     var check = true
     var validateAmount = validators.verifyAmount(this.props.form.sourceAmount,

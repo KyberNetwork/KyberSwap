@@ -168,14 +168,27 @@ const exchange = (state = initState, action) => {
       newState.deviceError = action.payload ? action.payload : ''
       return newState
     }
-    case "EXCHANGE.UPDATE_RATE":
+    case "EXCHANGE.UPDATE_RATE":{
       const { rateInit, expectedPrice, slippagePrice, rateInitSlippage } = action.payload
 
 
+      if(expectedPrice === "0" && rateInit === "0"){
+        newState.errors.rateSystem = "Kyber exchange is under maintainance"
+      }else{
+        newState.errors.rateSystem = ""
+      }
+      
+      if(expectedPrice === "0" && rateInit !== "0"){
+        newState.errors.rateAmount = "Kyber cannot handle your amount, please reduce amount"
+      }else{
+        newState.errors.rateAmount = ""
+      }
+
+    
       var slippageRate = slippagePrice === "0" ? rateInitSlippage : slippagePrice
       var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
 
-      newState.slippageRate = slippagePrice
+      newState.slippageRate = slippageRate
       newState.offeredRate = expectedRate
 
       if (newState.sourceAmount !== "") {
@@ -188,8 +201,8 @@ const exchange = (state = initState, action) => {
       }
       newState.isSelectToken = false
       return newState
-
-    case "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE":
+    }
+    case "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE": {
       var { rateInit, expectedPrice, slippagePrice, rateInitSlippage } = action.payload
 
 
@@ -211,6 +224,11 @@ const exchange = (state = initState, action) => {
 
       return newState
 
+    }
+    case "EXCHANGE.SET_RATE_ERROR_SYSTEM":{
+      newState.errors.rateSystem = "Kyber exchange is under maintainance"
+      return newState
+    }
     case "EXCHANGE.OPEN_PASSPHRASE": {
       newState.passphrase = true
       return newState
@@ -357,6 +375,18 @@ const exchange = (state = initState, action) => {
       newState.isEditRate = true
       return newState
     }
+    // case "EXCHANGE.ERROR_RATE_ZERO":{
+    //   newState.rateEqualZero = true
+    //   return newState
+    // }
+    // case "EXCHANGE.CLEAR_ERROR_RATE_ZERO":{
+    //   newState.rateEqualZero = false
+    //   newState.errors.rateEqualZero = ""
+    //   return newState
+    // }
+    // case "EXCHANGE.SET_RATE_ERROR_ZERO":{
+    //   newState.errors.rateEqualZero = "Cannot get rate from exchange"
+    // }
     case "EXCHANGE.RESET_MIN_RATE": {
       newState.minConversionRate = newState.offeredRate
       newState.isEditRate = true

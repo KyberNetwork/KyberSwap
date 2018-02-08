@@ -48,12 +48,13 @@ const INIT_EXCHANGE_FORM_STATE = {
   minConversionRate: 0,
   minDestAmount: 0,
   maxDestAmount: 0,
-  rangeSetRate: 5, // 5 eth
+ // rangeSetRate: 0.5, // 5 eth
   prevAmount:0,
 
   offeredRate: 0,
   isEditRate : false,
   slippageRate: 0,
+  
 
   throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 330000,
@@ -69,7 +70,11 @@ const INIT_EXCHANGE_FORM_STATE = {
   gasPriceSuggest: {
     fastGas: 20,
     standardGas: 20,
-    safeLowGas: 20
+    safeLowGas: 20,
+    
+    fastTime: 2, //minutes
+    standardTime: 5,
+    lowTime: 30
   },
   maxGasPrice: 50,
   isEditGasPrice: false,
@@ -100,6 +105,9 @@ const INIT_EXCHANGE_FORM_STATE = {
     prevDest: 0,
     nextDest: 0
   },
+
+  // error_rate_amount: false,
+  // error_rate_system: false,
   errors: {
     selectSameToken: '',
     selectTokenToken: '',
@@ -109,6 +117,8 @@ const INIT_EXCHANGE_FORM_STATE = {
     passwordError: '',
     signTransaction: '',
     rateError: '',
+    rateAmount: '',
+    rateSystem: '',
     ethBalanceError: ''
   },
   isAnalize: false,
@@ -138,7 +148,11 @@ const INIT_TRANSFER_FORM_STATE = {
   gasPriceSuggest: {
     fastGas: 20,
     standardGas: 20,
-    safeLowGas: 20
+    safeLowGas: 20,
+    
+    fastTime: 2, //minutes
+    standardTime: 5,
+    lowTime: 30
   },
   maxGasPrice: 50,
   isEditGasPrice: false,

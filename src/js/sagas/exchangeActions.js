@@ -63,6 +63,13 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   yield put(actions.doTransactionComplete(hash))
   yield put(actions.finishExchange())
   yield put(actions.resetSignError())
+
+  //estimate time for tx
+  var state = store.getState()
+  var gasInfo = state.exchange.gasPriceSuggest
+  var gasPrice = state.exchange.gasPrice
+  estimateTime = estimateTimeTx(...gasInfo, gasPrice)
+  console.log(estimateTime)
 }
 
 function* doTransactionFail(ethereum, account, e) {
@@ -550,9 +557,9 @@ function* updateRatePending(action) {
     yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice))
     yield put(actions.caculateAmount())
   }
-  catch (err) {
-    console.log("===================")
+  catch (err) {    
     console.log(err)
+    yield put(actions.setRateSystemError())
   }
 }
 
