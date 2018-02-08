@@ -4,7 +4,6 @@ import { push } from 'react-router-redux'
 import constants from "../../services/constants"
 
 import AddressGenerator from "../../services/device/addressGenerator";
-import { getTrezorPublicKey, connectLedger, getLedgerPublicKey } from "../../services/device/device";
 import { ImportByDeviceView } from "../../components/ImportAccount"
 
 import { importNewAccount, importLoading, closeImportLoading, throwError, checkTimeImportLedger, resetCheckTimeImportLedger } from "../../actions/accountActions"

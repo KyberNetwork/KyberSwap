@@ -9,7 +9,8 @@ const TransactionConfig = (props) => {
   }
 
   function handleChangeGasPrice(e) {
-    filterInputNumber(e, e.target.value)
+    let maxLength = 10
+    filterInputNumber(e, e.target.value, maxLength)
     props.gasPriceHandler(e.target.value)
   }
 
