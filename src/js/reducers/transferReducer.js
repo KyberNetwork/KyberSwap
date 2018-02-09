@@ -215,6 +215,21 @@ const transfer = (state = initState, action) => {
       }
       return newState
     }
+    case "TRANSFER.SET_ESTIMATE_TIME_PROGRESS":{
+      const {time} = action.payload
+      newState.progress.estimateTime = time
+      return newState
+    }
+    case "TRANSFER.SET_CURRENT_TIME_PROGRESS":{
+      const {time} = action.payload
+      newState.progress.currentTime = time
+      return newState
+    }
+
+    case "TRANSFER.SHOW_INFO_PROGRESS":{
+      newState.progress.isShowInfo = true
+      return newState
+    }
   }
   return state
 }

@@ -24,7 +24,8 @@ import exchangeActions from "../../actions/exchangeActions"
             balanceInfo: props.balanceInfo,
             txHash: props.tx,
             analyze: props.analyze,
-            address: props.address
+            address: props.address,
+            progress : props.progress
         }
     }
     return { ...returnProps, translate: getTranslate(store.locale) }
@@ -76,6 +77,7 @@ export default class TransactionLoading extends React.Component {
                 isCopied={this.state.isCopied}
                 handleCopy={this.handleCopy.bind(this)}
                 resetCopy={this.resetCopy.bind(this)}
+                progress = {this.props.progress}
             />
 
         )

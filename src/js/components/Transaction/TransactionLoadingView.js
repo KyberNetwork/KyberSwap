@@ -160,23 +160,26 @@ const TransactionLoadingView = (props) => {
                     <img src={require("../../../assets/img/error.svg")} />
                     {props.translate("transaction.transaction_error") || "Transaction error"}
                   </h4>
-                  {/* <div class="reason">{props.translate(props.error) || "Warning! Error encountered during contract execution"}</div> */}
                   {analyzeBtn}
-                  {/* <AnalyzeLogModal analyze={props.analyze} 
-                    onRequestClose={props.toogleModal}
-                    isOpen={props.isOpenModal}
-                    translate={props.translate}
-                  /> */}
-                  {/* {props.type==="exchange" && (
-                    <div class="reason">
-                      <a onClick={(e)=>props.analyze.action(e)}>Analyze</a>
-                    </div>
-                  )} */}
                 </li>
               }
               {props.status === "pending" &&
                 <li class={props.status}>
                   <h4 class="font-w-b">{props.translate("transaction.waiting_transaction") || "Waiting for your transaction to be mined"}</h4>
+
+                  <div>
+                    {props.progress.isShowInfo && 
+                      <div>Due to network congrestion, transaction may take long time to proccess</div>
+                    }
+
+                    {!props.progress.isShowInfo && 
+                      <div>
+                        Estimate time: {props.progress.estimateTime}
+                        Percent: {props.progress.estimateTime === 0? 0 : Math.round(props.progress.currentTime/props.progress.estimateTime * 100)}
+                      </div>
+                    }
+                  </div>
+                  
                 </li>
               }
             </ul>

@@ -34,7 +34,13 @@ const ExchangeForm = (props) => {
   var errorSelectSameToken = props.errors.selectSameToken !== '' ? props.translate(props.errors.selectSameToken) : ''
   var errorSelectTokenToken = props.errors.selectTokenToken !== '' ? props.translate(props.errors.selectTokenToken) : ''
   var errorToken = errorSelectSameToken + errorSelectTokenToken
- // 
+ 
+
+  var errorSource = []
+  if (errorToken !== "") errorSource.push(<span class="error-text">{errorToken}</span>)
+  if (props.errors.sourceAmount !== "") errorSource.push( <span class="error-text">{props.translate(props.errors.sourceAmount, { cap: maxCap })}</span>)
+  if (props.errors.rateAmount !== "") errorSource.push(  <span class="error-text">{props.errors.rateAmount}</span>)
+  if (props.errors.rateSystem  !== "") errorSource.push( <span class="error-text">{props.errors.rateSystem}</span>)
  //var maxCap = props.sourceTokenSymbol === "ETH"?props.maxCap: props.maxCap*constants.MAX_CAP_PERCENT
  var maxCap = props.maxCap
   var render = (
@@ -54,7 +60,7 @@ const ExchangeForm = (props) => {
                       {props.translate("transaction.exchange_from") || "From"}
                     </span>
 
-                    <div className={errorToken !== "" || props.errors.sourceAmount != '' ? "error select-token-panel" : "select-token-panel"}>
+                    <div className={errorToken !== "" || props.errors.sourceAmount != '' || props.errors.rateSystem !== '' || props.errors.rateAmount !== '' ? "error select-token-panel" : "select-token-panel"}>
                       {props.tokenSourceSelect}
                       <input id="inputSource" className="source-input" min="0" step="0.000001"
                         placeholder="0" autoFocus
@@ -64,12 +70,7 @@ const ExchangeForm = (props) => {
                         onChange={handleChangeSource}
                       />
                     </div>
-                    {errorToken !== "" &&
-                      <span class="error-text">{errorToken}</span>
-                    }
-                    {props.errors.sourceAmount !== '' &&
-                      <span class="error-text">{props.translate(props.errors.sourceAmount, { cap: maxCap })}</span>
-                    }
+                    {errorSource[0]}
                   </label>
                   <div class="address-balance">
                     <span class="note">{props.translate("transaction.address_balance") || "Address Balance"}</span>

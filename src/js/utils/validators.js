@@ -82,6 +82,7 @@ export function verifyBalanceForTransaction(
 
   var totalFee
   if (sourceSymbol === "ETH"){
+    console.log(sourceAmount)
     var value = new BigNumber(sourceAmount)
     value = value.times(1000000000000000000)
     totalFee = txFee.add(value)

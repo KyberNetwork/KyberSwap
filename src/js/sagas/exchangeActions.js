@@ -1,4 +1,5 @@
 import { take, put, call, fork, select, takeEvery, all, apply } from 'redux-saga/effects'
+import { delay } from 'redux-saga';
 import * as actions from '../actions/exchangeActions'
 import * as globalActions from "../actions/globalActions"
 
@@ -7,11 +8,13 @@ import { addTx } from '../actions/txActions'
 import * as utilActions from '../actions/utilActions'
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
+import * as common from "../utils/common"
 import * as ethUtil from 'ethereumjs-util'
 import Tx from "../services/tx"
 import { getTranslate } from 'react-localize-redux';
 import { store } from '../store';
 import BLOCKCHAIN_INFO from "../../../env"
+
 
 function* broadCastTx(action) {
   const { ethereum, tx, account, data } = action.payload
@@ -63,6 +66,46 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   yield put(actions.doTransactionComplete(hash))
   yield put(actions.finishExchange())
   yield put(actions.resetSignError())
+
+  //estimate time for tx
+  var state = store.getState()
+  var gasInfo = state.exchange.gasPriceSuggest
+  var gasPrice = state.exchange.gasPrice
+  var estimateTime = common.estimateTimeTx({...gasInfo, gasPrice})
+  
+  var estimateTimeSecond = estimateTime * 60000
+  
+  store.dispatch(actions.setEstimateTimeProgress(estimateTimeSecond))
+
+  var watchProgress = yield fork(watchProgressFunc, estimateTimeSecond)
+
+  yield take('GLOBAL.CLEAR_SESSION')
+  yield cancel(watchProgress)  
+}
+
+export function* watchProgressFunc(estimateTime){
+  var step = Math.round(estimateTime / 100)
+  var stepProgress = Math.max(3000, step)
+  console.log(stepProgress)
+  var runner = 0
+  while(true){
+    console.log("Progress_running_exchange")
+    if (runner > estimateTime) {
+      store.dispatch(actions.showInfoProgress())  
+      return
+    }
+    //check tx is mined
+    var state = store.getState()
+    var hash = state.exchange.txHash
+    var txs = state.txs
+    if (txs[hash] && txs[hash].status !== "pending"){
+      return
+    }
+    
+    store.dispatch(actions.setCurrentTimeProgress(runner))
+    runner += stepProgress
+    yield call(delay, stepProgress)
+  }
 }
 
 function* doTransactionFail(ethereum, account, e) {
@@ -538,6 +581,33 @@ function* updateRatePending(action) {
     yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice))
     yield put(actions.caculateAmount())
   }
+  catch (err) {    
+    console.log(err)
+    yield put(actions.setRateSystemError())
+  }
+}
+
+function* updateRateSnapshot(action){
+  const ethereum = action.payload
+  var state = store.getState()
+  var exchangeSnapshot = state.exchange.snapshot
+
+  try {
+    var source = exchangeSnapshot.sourceToken
+    var dest = exchangeSnapshot.destToken
+    var destTokenSymbol = exchangeSnapshot.destTokenSymbol
+    var sourceAmount = exchangeSnapshot.sourceAmount
+    var sourceDecimal = exchangeSnapshot.sourceDecimal
+    var sourceAmountHex = converter.stringToHex(sourceAmount, sourceDecimal)
+    var rateInit = 0
+
+    const rate = yield call([ethereum, ethereum.call], "getRate", source, dest, sourceAmountHex)
+    const expectedPrice = rate.expectedRate ? rate.expectedRate : "0"
+    const slippagePrice = rate.slippageRate ? rate.slippageRate : "0"
+
+    yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
+    yield put(actions.caculateAmountInSnapshot())
+  }
   catch (err) {
     console.log("===================")
     console.log(err)
@@ -740,6 +810,7 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.PROCESS_APPROVE", processApprove)
   yield takeEvery("EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET", checkTokenBalanceOfColdWallet)
   yield takeEvery("EXCHANGE.UPDATE_RATE_PENDING", updateRatePending)
+  yield takeEvery("EXCHANGE.UPDATE_RATE_SNAPSHOT", updateRateSnapshot)
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", updateGasUsed)
   yield takeEvery("EXCHANGE.ANALYZE_ERROR", analyzeError)
 

@@ -1,16 +1,21 @@
-# 0.3.0 (2018-01-31)
+# 0.4.0 (2018-02-07)
 
 ## Features: 
 - Integrate with new APIs from new cache server 
+- Add fetching multi nodes, fall back to backup node when a node is unavailable
+- Broadcast transaction to multi node
 
 ## Bugfixes:
-- Prevent `min_rate` from being updated when user is at confirming screen
-- Handle more errors for Ledger
+- Prevent approve twice when user first exchange from token to eth
+- Fix handle input errors in exchange screen
+- Prevent user exchange when rate is set 0
+- Prevent browser save private key, password
 
 ## Improvements:
-- More acurrate gas estimation for approval transactions
-- Better css styling (footer, errors in modals)
+- Allow user re-check reason a transaction failed in notification
+- Improve tooltips, languages
+- Optimize build, remove console.log, comment.
 
 ## Compatability:
-- This version only works with KyberNetwork smart contracts version 0.3.0
+- This version works with KyberNetwork smart contracts version 0.4.0 (Kovan and Mainnet)
 

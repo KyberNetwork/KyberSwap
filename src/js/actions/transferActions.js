@@ -255,3 +255,24 @@ export function setGasUsed(gas){
     payload: {gas}
   }
 }
+
+
+export function setEstimateTimeProgress(time) {
+  return {
+    type: "TRANSFER.SET_ESTIMATE_TIME_PROGRESS",
+    payload: {time}
+  }
+}
+
+export function setCurrentTimeProgress(time) {
+  return {
+    type: "TRANSFER.SET_CURRENT_TIME_PROGRESS",
+    payload: {time}
+  }
+}
+
+export function showInfoProgress() {
+  return {
+    type: "TRANSFER.SHOW_INFO_PROGRESS"
+  }
+}
