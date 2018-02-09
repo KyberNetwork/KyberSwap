@@ -17,8 +17,7 @@ import { filterInputNumber } from "../../utils/validators";
 export default class MinRate extends React.Component {
 
   changeMinRate = (e) => {
-    let maxLength = 20
-    filterInputNumber(e, e.target.value, maxLength)
+    filterInputNumber(e, e.target.value)
     this.props.dispatch(actions.setMinRate(e.target.value))
   }
 
@@ -32,7 +31,9 @@ export default class MinRate extends React.Component {
           <ReactTooltip place="bottom" id="rate-tip" type="light"/>
         </label>
         <div className="column small-12 medium-6 end p-relative">
-          <input type="text" value={minConversionRate} onChange={(e) => this.changeMinRate(e)} />
+          <input type="text" value={minConversionRate} maxLength="20"
+            onChange={(e) => this.changeMinRate(e)} 
+          />
           <span className="error-text">{this.props.exchange.errors.rateError}</span>
         </div>
       </div>

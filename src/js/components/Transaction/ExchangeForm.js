@@ -63,7 +63,7 @@ const ExchangeForm = (props) => {
                     <div className={errorToken !== "" || props.errors.sourceAmount != '' || props.errors.rateSystem !== '' || props.errors.rateAmount !== '' ? "error select-token-panel" : "select-token-panel"}>
                       {props.tokenSourceSelect}
                       <input id="inputSource" className="source-input" min="0" step="0.000001"
-                        placeholder="0" autoFocus
+                        placeholder="0" autoFocus maxLength="30"
                         type="text"
                         value={props.input.sourceAmount.value}
                         onFocus={props.input.sourceAmount.onFocus}
@@ -100,7 +100,7 @@ const ExchangeForm = (props) => {
                     <div className="select-token-panel">
                       {props.tokenDestSelect}
                       <input className="des-input" step="0.000001" placeholder="0" min="0" 
-                        type="text"
+                        type="text" maxLength="30"
                         value={props.input.destAmount.value}
                         onFocus={props.input.destAmount.onFocus} 
                         onChange={handleChangeDest} />

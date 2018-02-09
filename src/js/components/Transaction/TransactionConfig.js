@@ -9,8 +9,7 @@ const TransactionConfig = (props) => {
   }
 
   function handleChangeGasPrice(e) {
-    let maxLength = 10
-    filterInputNumber(e, e.target.value, maxLength)
+    filterInputNumber(e, e.target.value)
     props.gasPriceHandler(e.target.value)
   }
 
@@ -36,7 +35,10 @@ const TransactionConfig = (props) => {
               <ReactTooltip place="bottom" id="gas-price-tip" type="light" />
             </label>
             <div className="column small-12 medium-6 end p-relative">
-              <input type="text" min="0" max="99" className="gas-price-input" step="0.1" value={props.gasPrice} onChange={handleChangeGasPrice} />
+              <input type="text" min="0" max="99" step="0.1" maxLength="10"
+                className="gas-price-input" 
+                value={props.gasPrice} onChange={handleChangeGasPrice}
+              />
               <div class="mt-2">
                 <span className="unit text-lowercase">gwei</span>
                 {gasPriceError}
