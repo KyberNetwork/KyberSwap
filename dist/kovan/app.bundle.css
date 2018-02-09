@@ -9379,7 +9379,7 @@ input[type=number] {
       background: transparent;
       border-color: #8b8f91;
       color: #8b8f91; }
-  #get-start a:hover {
+  #get-start a:hover, #get-start a:focus {
     color: #3ee6c1; }
 
 #footer {

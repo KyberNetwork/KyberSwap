@@ -243,13 +243,17 @@ function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, source
     var internalAdrr = "0x3cf628d49ae46b49b210f0521fbd9f82b461a9e1"
     var txObj
     if (tokenSymbol === 'ETH'){
+      var destAddr = transfer.destAddress !== "" ? transfer.destAddress : internalAdrr
       txObj = {
         from : fromAddr,
         value: amount,
-        to:internalAdrr
+        to:destAddr
       }
       try{
         gas = yield call([ethereum, ethereum.call],"estimateGas", txObj)
+        if(gas > 21000){
+          gas = Math.round(gas * 120 / 100)
+        }
         yield put(actions.setGasUsed(gas))
       }catch(e){
         console.log(e.message)
