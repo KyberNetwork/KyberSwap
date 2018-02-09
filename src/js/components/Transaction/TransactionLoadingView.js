@@ -63,7 +63,6 @@ const TransactionLoadingView = (props) => {
 
   var handleAnalyze = (e) => {
     props.analyze.action(e)
-    // props.toogleModal()
   }
 
   var getTooltipCopy = () => {
@@ -72,9 +71,7 @@ const TransactionLoadingView = (props) => {
       (props.translate("transaction.copy_tx") || "Copy transaction hash")
   }
 
-  var classPending = props.status === "pending" ? " pulse" : ""
   var analyzeBtn = ""
-
   if (props.type === "exchange") {
     analyzeBtn = (
       <a className="analyze" onClick={(e) => handleAnalyze(e)}>
@@ -82,6 +79,11 @@ const TransactionLoadingView = (props) => {
       </a>
     )
   }
+
+  var estimateTime = props.progress.estimateTime
+  var estimateSecond = Math.floor(estimateTime / 1000)
+  var estimateMinute = Math.floor(estimateSecond / 60)
+  var percentProgress = estimateTime === 0 ? 0 : Math.round(props.progress.currentTime/estimateTime * 100)
   return (
     <div>
       <div class="frame tx-loading">
@@ -166,31 +168,29 @@ const TransactionLoadingView = (props) => {
               {props.status === "pending" &&
                 <li class={props.status}>
                   <h4 class="font-w-b">{props.translate("transaction.waiting_transaction") || "Waiting for your transaction to be mined"}</h4>
-
                   <div>
+                    <div class="text-center my-7">
+                      <img src={require("../../../assets/img/spinner.svg")} width="60"/>
+                    </div>
                     {props.progress.isShowInfo && 
-                      <div>Due to network congrestion, transaction may take long time to proccess</div>
+                      <div class="text-white my-4">Due to network congrestion, transaction may take long time to proccess</div>
                     }
-
                     {!props.progress.isShowInfo && 
-                      <div>
-                        Estimate time: {props.progress.estimateTime}
-                        Percent: {props.progress.estimateTime === 0? 0 : Math.round(props.progress.currentTime/props.progress.estimateTime * 100)}
+                      <div class="k-progress">
+                        <img src={require('../../../assets/img/transaction.svg')} className="mr-4"/>
+                        <div className="w-100">
+                          <div class="text-right">Estimated Time: {estimateMinute} mins</div>
+                          <div className="bar">
+                            <div style={{animationDuration: estimateSecond + 's'}}></div>
+                          </div>
+                          <div className="text-left text-white">{percentProgress}% complete</div>
+                        </div>
                       </div>
                     }
                   </div>
-                  
                 </li>
               }
             </ul>
-            {classPending != "" ? (
-              <div class="text-center">
-                <div className={"broadcast-animation"}>
-                  {!props.error ? <img src={require('../../../assets/img/broadcast.svg')} /> : <img src={require('../../../assets/img/finish.svg')} />}
-                </div>
-              </div>
-            ) : ''
-            }
           </div>
         </div>
       </div>
