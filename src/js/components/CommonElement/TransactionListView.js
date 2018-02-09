@@ -17,7 +17,7 @@ const TransactionListView = (props) => {
 
   function getTokenSymbol(address) {
     for (let key in props.tokens) {
-      if (address === props.tokens[key].address) {
+      if (address.toLowerCase() === props.tokens[key].address.toLowerCase()) {
         return { key, decimal: props.tokens[key].decimal }
       }
     }
@@ -79,7 +79,7 @@ const TransactionListView = (props) => {
               <span className="mr-auto">
                 {sourceAmount} {sourceToken.key} 
                 &nbsp;{props.translate('transaction.for') || 'For'}&nbsp;
-                {desAmount} {destToken.key}
+                {desAmount} {destToken.key} {props.translate('history.in')}
               </span>
               <i className="k k-angle right"></i>
             </div>

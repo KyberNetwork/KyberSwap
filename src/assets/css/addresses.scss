@@ -1,6 +1,5 @@
 span.address {
   font-weight: bold;
-  font-family: $font-family-monospace;
 }
 
 ul.address-balances {
@@ -18,7 +17,6 @@ ul.address-balances {
   span.balance {
     text-align: right;
     font-weight: bold;
-    font-family: $font-family-monospace;
     white-space: nowrap;
   }
 }
@@ -174,9 +172,9 @@ ul.address-list {
     text-align: right;
     margin-left: 5px;
     color: $white;
-    &:hover{
-      color: #3ee6c1;
-    }
+    // &:hover{
+    //   color: #3ee6c1;
+    // }
   }
 }
 

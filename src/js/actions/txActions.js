@@ -6,6 +6,12 @@ export function addTx(tx) {
   }
 }
 
+export function updateApproveTxsData(){
+  return {
+    type: "TX.UPDATE_APPROVE_TXS",
+  }
+}
+
 export function updateTx(ethereum, tx, account, listToken) {
   return {
     type: "TX.UPDATE_TX_PENDING",

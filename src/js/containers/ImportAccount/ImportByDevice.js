@@ -7,9 +7,10 @@ import AddressGenerator from "../../services/device/addressGenerator";
 import { getTrezorPublicKey, connectLedger, getLedgerPublicKey } from "../../services/device/device";
 import { ImportByDeviceView } from "../../components/ImportAccount"
 
-import { importNewAccount, importLoading, closeImportLoading, throwError } from "../../actions/accountActions"
+import { importNewAccount, importLoading, closeImportLoading, throwError, checkTimeImportLedger, resetCheckTimeImportLedger } from "../../actions/accountActions"
 import { toEther } from "../../utils/converter"
 import { getTranslate } from 'react-localize-redux'
+import bowser from 'bowser'
 
 @connect((store, props) => {
 	var tokens = store.tokens.tokens
@@ -25,7 +26,7 @@ import { getTranslate } from 'react-localize-redux'
 		content: props.content,
 		translate: getTranslate(store.locale)
 	}
-}, null,null,{ withRef: true })
+}, null, null, { withRef: true })
 
 export default class ImportByDevice extends React.Component {
 	constructor(props) {
@@ -67,11 +68,11 @@ export default class ImportByDevice extends React.Component {
 
 	connectDevice(walletType, selectedPath, dpath) {
 		this.setDeviceState();
-		if(!this.props.deviceService){
-			this.props.dispatch(throwError("cannot find device service"))	
+		if (!this.props.deviceService) {
+			this.props.dispatch(throwError("cannot find device service"))
 			return
 		}
-		this.props.deviceService.getPublicKey(selectedPath)
+		this.props.deviceService.getPublicKey(selectedPath, this.state.modalOpen)
 			.then((result) => {
 				this.dPath = (dpath != 0) ? result.dPath : dpath;
 				this.generateAddress(result);
@@ -80,8 +81,12 @@ export default class ImportByDevice extends React.Component {
 			.catch((err) => {
 				this.props.dispatch(throwError(err))
 				this.props.dispatch(closeImportLoading());
+				if(this.walletType == 'ledger'){
+					clearTimeout(this.ledgerLoading);
+					this.props.dispatch(resetCheckTimeImportLedger())
+				}
 			})
-		this.walletType = walletType;		
+		this.walletType = walletType;
 	}
 
 	generateAddress(data) {
@@ -108,6 +113,10 @@ export default class ImportByDevice extends React.Component {
 	}
 
 	openModal() {
+		if(this.walletType == 'ledger'){
+			clearTimeout(this.ledgerLoading);
+			this.props.dispatch(resetCheckTimeImportLedger())
+		}
 		this.setState({
 			modalOpen: true,
 		})
@@ -183,7 +192,7 @@ export default class ImportByDevice extends React.Component {
 
 	getBalance(address) {
 		return new Promise((resolve, reject) => {
-			this.props.ethereumNode.call("getBalance")(address).then((balance) => {
+			this.props.ethereumNode.call("getBalanceAtLatestBlock",address).then((balance) => {
 				resolve(toEther(balance))
 			})
 		})
@@ -201,8 +210,23 @@ export default class ImportByDevice extends React.Component {
 	}
 
 	showLoading(walletType) {
-		this.props.dispatch(importLoading());
-		this.connectDevice(walletType);
+		let browser = bowser.name;
+		this.props.dispatch(resetCheckTimeImportLedger())
+		if (walletType == 'ledger') {
+			if (browser != 'Chrome') {
+				let erroMsg = this.props.translate("error.browser_not_support_ledger", { browser: browser }) || `Ledger is not supported on ${browser}, you can use Chrome instead.`
+				this.props.dispatch(throwError(erroMsg));
+				return;
+			}
+			this.props.dispatch(importLoading());
+			this.connectDevice(walletType);
+			this.ledgerLoading = setTimeout(() => {
+				this.props.dispatch(checkTimeImportLedger())
+			}, 6000);
+		} else {
+			this.props.dispatch(importLoading());
+			this.connectDevice(walletType);
+		}
 	}
 
 	render() {

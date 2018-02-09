@@ -2,18 +2,13 @@ import React from "react"
 import { connect } from "react-redux"
 import { Route } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
-
 import InfoKyber from "../../components/InfoKyber"
-
 import { Exchange } from "../../containers/Exchange"
-
 import { Transfer } from "../../containers/Transfer"
-
 import { Header, Rate } from "../../containers/Header"
-
 import { ImportAccount } from "../ImportAccount"
 
-//import { Footer } from "../Layout"
+import { Footer } from "../Layout"
 
 import { Processing, ExchangeHistory, TransactionList } from "../../containers/CommonElements/"
 import constanst from "../../services/constants"
@@ -70,7 +65,10 @@ export default class Layout extends React.Component {
     if (!this.props.account.account) return;
     if (this.props.utils.infoModal && this.props.utils.infoModal.open) return;
     if (this.idleTime >= this.timeoutEndSession) {
-      this.props.dispatch(openInfoModal("Time out error", (this.props.translate("error.clear_data_timeout") || "We've cleared all your data because you idle over ") + (constanst.IDLE_TIME_OUT / 60) + (this.props.translate("error.minutes") || " minutes")));
+      let timeOut = constanst.IDLE_TIME_OUT/60
+      let titleModal = this.props.translate('error.time_out') || 'Time out'
+      let contentModal = this.props.translate('error.clear_data_timeout', {time: timeOut}) || `We've cleared all your data because your session is timed out ${timeOut} minutes`
+      this.props.dispatch(openInfoModal(titleModal, contentModal));
       this.endSession();
     } else {
       this.idleTime++;
@@ -93,7 +91,7 @@ export default class Layout extends React.Component {
 
   render() {
     var exchangeHistory = this.props.showBalance?<TransactionList />:""
-    //var footer = <Footer />
+    var footer = <Footer />
     var rate = <Rate />
     return (
       <LayoutView
@@ -106,6 +104,7 @@ export default class Layout extends React.Component {
         supportedLanguages={Language.supportLanguage}
         setActiveLanguage={this.setActiveLanguage}
         rate={rate}
+        footer = {footer}
       />
     )
   }

@@ -135,6 +135,26 @@ const tokens = (state = initState, action) => {
       })
       return Object.assign({}, state, { tokens: newTokens }) 
     }
+    case 'GLOBAL.CLEAR_SESSION_FULFILLED': {
+      let tokens = {...state.tokens}
+      Object.keys(state.tokens).forEach((key) => {
+        tokens[key].balance = 0
+      })
+      state.tokens = tokens
+      return state
+    }
+    case 'EXCHANGE.SET_APPROVE_TX':{
+      const {hash, symbol} = action.payload
+      var tokens = { ...state.tokens }
+      tokens[symbol].approveTx = hash
+      return Object.assign({}, state, { tokens: tokens }) 
+    }
+    case 'EXCHANGE.REMOVE_APPROVE_TX':{
+      const {symbol} = action.payload
+      var tokens = { ...state.tokens }
+      delete tokens[symbol].approveTx
+      return Object.assign({}, state, { tokens: tokens }) 
+    }
     default: return state
   }
 }

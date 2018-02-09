@@ -13,6 +13,10 @@
 }
 .text-success{
     color: $k-success;
+    .color-white{
+        color: #fff;
+        margin: 0 5px;
+    }
 }
 .text-uppercase{
     text-transform: uppercase;
@@ -44,11 +48,20 @@
 .d-flex{
     display: flex;
 }
+.d-none{
+    display: none;
+}
+.justify-content-between{
+    justify-content: space-between;
+}
+.justify-content-around{
+    justify-content: space-around;
+}
 .align-center{
     align-items: center;
 }
 .cur-pointer{
-    cursor: pointer;
+    cursor: pointer!important;
 }
 .table-responsive{
     display: block;
@@ -64,6 +77,11 @@
 }
 .w-100{
     width: 100%;
+}
+.text-xs-only-center{
+    @include breakpoint(small only){
+        text-align: center;
+    }
 }
 @include breakpoint(medium){
     .float-left-md{

@@ -16,7 +16,6 @@
     display: table-cell;
     font-size: 24px;
     font-weight: bold;
-    font-family: $font-family-monospace;
     border: none;
     text-align: center;
     padding: 12px 15px;
@@ -74,21 +73,20 @@
   }
 }
 
-p.token-compare {
+.token-compare {
   color: #00ffd6;
   font-weight: bold;
   letter-spacing: .5px;
-  font-family: $font-family-monospace;
-  cursor: pointer;
+  //cursor: pointer;
   text-align: center;
   span {
     margin-left: 10px;
-    &:before {
-      content: '(';
-    }
-    &:after {
-      content: ')'
-    }
+    // &:before {
+    //   content: '(';
+    // }
+    // &:after {
+    //   content: ')'
+    // }
     &.up {
       color: $primary-color;
     }

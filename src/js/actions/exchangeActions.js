@@ -27,6 +27,12 @@ export function caculateAmount() {
   }
 }
 
+export function caculateAmountInSnapshot(){
+  return {
+    type: "EXCHANGE.CACULATE_AMOUNT_SNAPSHOT"
+  }
+}
+
 export function inputChange(focus, value) {
   return {
     type: "EXCHANGE.INPUT_CHANGE",
@@ -44,6 +50,13 @@ export function focusInput(focus) {
 export function thowErrorSourceAmount(message) {
   return {
     type: "EXCHANGE.THROW_SOURCE_AMOUNT_ERROR",
+    payload: message
+  }
+}
+
+export function thowErrorEthBalance(message){
+  return {
+    type: "EXCHANGE.THROW_ETH_BALANCE_ERROR",
     payload: message
   }
 }
@@ -96,11 +109,18 @@ export function setRandomExchangeSelectedToken(random) {
   }
 }
 
-export function updateRateExchange(ethereum, source, dest, 
+export function updateRateExchange(ethereum, source, dest,
   sourceAmount, isManual = false, rateInit = "0") {
   return {
     type: "EXCHANGE.UPDATE_RATE_PENDING",
     payload: { ethereum, source, dest, sourceAmount, isManual, rateInit }
+  }
+}
+
+export function updateRateSnapshot(ethereum){
+  return {
+    type: "EXCHANGE.UPDATE_RATE_SNAPSHOT",
+    payload: ethereum
   }
 }
 
@@ -111,22 +131,65 @@ export function updatePrevSource(value) {
   }
 }
 
-export function updateRateExchangeComplete(rateInit, slippagePrice) {
-    // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
-    //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
+export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice) {
+  // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
+  //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
 
-    //var rateBig = converter.stringToBigNumber(rate[0])
+  //var rateBig = converter.stringToBigNumber(rate[0])
   //  var offeredRate = rate.expectedPrice
-   // var minConversionRate = rate.slippagePrice
-
-    //var expirationBlock = rate[1]
-    //var reserveBalance = rate[2]
+  //var expirationBlock = rate[1]
+  //var reserveBalance = rate[2]
   return {
     type: "EXCHANGE.UPDATE_RATE",
-    payload: { rateInit, slippagePrice }
+    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage:  converter.toT(rateInit, 18)}
   }
-  
+
 }
+
+export function updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice) {
+  // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
+  //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
+
+  //var rateBig = converter.stringToBigNumber(rate[0])
+  //  var offeredRate = rate.expectedPrice
+  //var expirationBlock = rate[1]
+  //var reserveBalance = rate[2]
+  return {
+    type: "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE",
+    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage:  converter.toT(rateInit, 18)}
+  }
+
+}
+
+
+export function setRateSystemError(){
+  return {
+    type: "EXCHANGE.SET_RATE_ERROR_SYSTEM"
+  }  
+}
+
+// export function setErrorRateSystem(){
+//   return {
+//     type: "EXCHANGE.SET_RATE_ERROR_SYSTEM"
+//   }  
+// }
+// export function setErrorRateExchange(){
+//   return {
+//     type: "EXCHANGE.ERROR_RATE_ZERO"
+//   }
+// }
+
+// export function clearErrorRateExchange(){
+//   return {
+//     type: "EXCHANGE.CLEAR_ERROR_RATE_ZERO"
+//   }
+// }
+
+// export function setErrorRateEqualZero(){
+//   return {
+//     type: "EXCHANGE.SET_RATE_ERROR_ZERO"
+//   }
+// }
 
 
 export function openPassphrase() {
@@ -196,7 +259,7 @@ export function processExchange(formId, ethereum, address, sourceToken,
   sourceAmount, destToken, destAddress,
   maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas,
-  gasPrice, keystring, type, password, account, data, keyService, balanceData) {
+  gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol) {
   return {
     type: "EXCHANGE.PROCESS_EXCHANGE",
     payload: {
@@ -204,7 +267,7 @@ export function processExchange(formId, ethereum, address, sourceToken,
       sourceAmount, destToken, destAddress,
       maxDestAmount, minConversionRate,
       throwOnFailure, nonce, gas,
-      gasPrice, keystring, type, password, account, data, keyService, balanceData
+      gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol
     }
   }
 }
@@ -227,12 +290,12 @@ export function checkTokenBalanceOfColdWallet(formId, ethereum, address, sourceT
 }
 
 export function doApprove(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-  keystring, password, accountType, account, keyService) {
+  keystring, password, accountType, account, keyService, sourceTokenSymbol) {
   return {
     type: "EXCHANGE.PROCESS_APPROVE",
     payload: {
       ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-      keystring, password, accountType, account, keyService
+      keystring, password, accountType, account, keyService, sourceTokenSymbol
     }
   }
 }
@@ -281,6 +344,32 @@ export function doApprovalTransactionFail(error) {
   }
 }
 
+export function resetSignError() {
+  return {
+    type: "EXCHANGE.RESET_SIGN_ERROR",
+  }
+}
+
+export function setSignError(error) {
+  return {
+    type: "EXCHANGE.SET_SIGN_ERROR",
+    payload: error,
+  }
+}
+
+export function resetBroadcastError() {
+  return {
+    type: "EXCHANGE.RESET_BROADCAST_ERROR",
+  }
+}
+
+export function setBroadcastError(error) {
+  return {
+    type: "EXCHANGE.SET_BROADCAST_ERROR",
+    payload: error,
+  }
+}
+
 export function makeNewExchange() {
   return {
     type: "EXCHANGE.MAKE_NEW_EXCHANGE"
@@ -301,31 +390,30 @@ export function setTermAndServices(value) {
   }
 }
 
-export function setOfferedRate(value) {
+export function setMinRate(value) {
   return {
-    type: "EXCHANGE.SET_OFFERED_RATE",
+    type: "EXCHANGE.SET_MIN_RATE",
     payload: { value }
   }
 }
 
-export function resetOfferedRate() {
+export function resetMinRate() {
   return {
-    type: "EXCHANGE.RESET_OFFERED_RATE",
+    type: "EXCHANGE.RESET_MIN_RATE",
   }
 }
 
 
-export function estimateGas(ethereum, exchange) {
+export function estimateGas() {
   return {
     type: "EXCHANGE.ESTIMATE_GAS_USED",
-    payload: { ethereum, exchange }
   }
 }
 
-export function setEstimateGas(estimatedGas) {
+export function setEstimateGas(gas, gas_approve) {
   return {
-    type: "EXCHANGE.SET_ESTIMATE_GAS_USED",
-    payload: { estimatedGas }
+    type: "EXCHANGE.SET_GAS_USED",
+    payload: { gas, gas_approve }
   }
 }
 
@@ -342,17 +430,78 @@ export function setCapExchange(maxCap) {
   }
 }
 
-export function setMaxGasPrice(ethereum){
+export function setMaxGasPrice(ethereum) {
   return {
     type: "EXCHANGE.SET_MAX_GAS_PRICE",
     payload: ethereum
   }
 }
 
-export function setMaxGasPriceComplete(maxGasPrice){
+export function setMaxGasPriceComplete(maxGasPrice) {
   var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
   return {
     type: "EXCHANGE.SET_MAX_GAS_PRICE_COMPLETE",
     payload: maxGasPriceGwei
+  }
+}
+
+export function analyzeError(ethereum, txHash) {
+  return {
+    type: "EXCHANGE.ANALYZE_ERROR",
+    payload: { ethereum, txHash}
+  }
+}
+
+export function setAnalyzeError(networkIssues, reserveIssues){
+  return {
+    type: "EXCHANGE.SET_ANALYZE_ERROR",
+    payload: { networkIssues, reserveIssues }
+  }
+}
+
+
+export function fetchGas(){
+  return {
+    type: "EXCHANGE.FETCH_GAS"
+  }
+}
+export function fetchGasSuccess(){
+  return {
+    type: "EXCHANGE.FETCH_GAS_SUCCESS"
+  }
+}
+
+export function checkKyberEnable(){
+  return {
+    type: "EXCHANGE.CHECK_KYBER_ENABLE"
+  }
+}
+
+export function setKyberEnable(enable){
+  return {
+    type: "EXCHANGE.SET_KYBER_ENABLE",
+    payload: enable
+  }
+}
+
+export function setApproveTx(hash, symbol){
+  return {
+    type: "EXCHANGE.SET_APPROVE_TX",
+    payload: {hash, symbol}
+  }
+}
+
+export function removeApproveTx(symbol){
+  return {
+    type: "EXCHANGE.REMOVE_APPROVE_TX",
+    payload: {symbol}
+  }
+}
+
+export function setSnapshot(data){
+  data.isFetchingRate = true
+  return {
+    type: "EXCHANGE.SET_SNAPSHOT",
+    payload: data
   }
 }

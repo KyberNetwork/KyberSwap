@@ -7,7 +7,7 @@
       "https://mainnet.infura.io/uF2YCXrIz7yUFEXd2yo0",
       "https://mainnet.infura.io/NhLyl78p5UrUgBN5GSty"
     ],
-    "ws": "wss://mainnet.infura.io/ws"
+    "ws": "wss://mainnet.infura.io"
   },
   "history_endpoint": "http://0.0.0.0:3001",
   "api_usd":"https://api.coinmarketcap.com",
@@ -20,19 +20,11 @@
       "decimal": 18,
       "usd_id":"ethereum"
     },
-    "STORM": {
-      "name": "Storm",
-      "symbol": "STORM",
-      "icon": "storm.jpg",
-      "address": "0xd0a4b8946cb52f0661273bfbc6fd0e0c75fc6433",
-      "decimal": 18,
-      "usd_id":"storm"
-    },
     "KNC": {
       "name": "KyberNetwork",
       "symbol": "KNC",
       "icon": "knc.svg",
-      "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+      "address": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
       "decimal": 18,
       "usd_id":"kyber-network"
     },
@@ -40,96 +32,41 @@
       "name": "OmiseGO",
       "symbol": "OMG",
       "icon": "omg.svg",
-      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+      "address": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
       "decimal": 18,
       "usd_id":"omisego"
-    },
-    "DGD": {
-      "name": "Digix",
-      "symbol": "DGD",
-      "icon": "dgd.svg",
-      "address": "0xe0b7927c4af23765cb51314a0e0521a9645f0e2a",
-      "decimal": 9,
-      "usd_id":"digixdao"
-    },
-    "CVC": {
-      "name": "Civic",
-      "symbol": "CVC",
-      "icon": "cvc.svg",
-      "address": "0x41e5560054824ea6b0732e656e3ad64e20e94e45",
-      "decimal": 8,
-      "usd_id":"civic"
-    },
-    "FUN": {
-      "name": "FunFair",
-      "symbol": "FUN",
-      "icon": "fun.svg",
-      "address": "0x419d0d8bdd9af5e606ae2232ed285aff190e711b",
-      "decimal": 8,
-      "usd_id":"funfair"
-    },
-    "MCO": {
-      "name": "Monaco",
-      "symbol": "MCO",
-      "icon": "mco.svg",
-      "address": "0xb63b606ac810a52cca15e44bb630fd42d8d1d83d",
-      "decimal": 8,
-      "usd_id":"monaco"
-    },
-    "GNT": {
-      "name": "Golem",
-      "symbol": "GNT",
-      "icon": "gnt.svg",
-      "address": "0xa74476443119a942de498590fe1f2454d7d4ac0d",
-      "decimal": 18,
-      "usd_id":"golem-network-tokens"
-    },
-    "ADX": {
-      "name": "Adex",
-      "symbol": "ADX",
-      "icon": "adx.svg",
-      "address": "0x4470bb87d77b963a013db939be332f927f2b992e",
-      "decimal": 4,
-      "usd_id":"adx-net"
-    },
-    "PAY": {
-      "name": "TenX",
-      "symbol": "PAY",
-      "icon": "pay.svg",
-      "address": "0xb97048628db6b661d4c2aa833e95dbe1a905b280",
-      "decimal": 18,
-      "usd_id":"tenx"
-    },
-    "BAT": {
-      "name": "BasicAttention",
-      "symbol": "BAT",
-      "icon": "bat.svg",
-      "address": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
-      "decimal": 18,
-      "usd_id":"basic-attention-token"
     },
     "EOS": {
       "name": "Eos",
       "symbol": "EOS",
       "icon": "eos.svg",
-      "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
+      "address": "0x86Fa049857E0209aa7D9e616F7eb3b3B78ECfdb0",
       "decimal": 18,
       "usd_id":"eos"
     },
-    "LINK": {
-      "name": "ChainLink",
-      "symbol": "LINK",
-      "icon": "link.svg",
-      "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+    "SNT": {
+      "name":"Status",
+      "address": "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E",
+      "symbol": "SNT",
+      "icon": "snt.svg",
       "decimal": 18,
-      "usd_id":"chainlink"
+      "usd_id":"status"
+    },
+    "SALT": {
+      "name":"Salt",
+      "address": "0x4156D3342D5c385a87D264F90653733592000581",
+      "symbol": "SALT",
+      "icon": "salt.svg",
+      "decimal": 8,
+      "usd_id":"salt"
     }
   },
   "ethScanUrl": "https://etherscan.io/",
   "bank": "0x0",
-  "reserve": "0x582ea0af091ae0d98fdf08216cb2846711a65f6a",
-  "network": "0x842182360dfae06c6a84e8a47d37aeeadb115694",
-  "wrapper": "0x307d4d560d20bc2416aadfca79e10c22c424fdfC",
+  "reserve": "0x749dd52D7f22CBc3897a0fc20b55393B1f78B4fE",
+  "network": "0x803e2b13a11c21ec0616cead4a3d2ebe1326f5b0",
+  "wrapper": "0x69569ec8ddf4dbd0a48a96bf7ab37e62cfe2c3ec",
+  "trade_topic":"0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
   "endpoint": "wss://mainnet.infura.io/ws",
   "averageBlockTime": 15000,
   "networkId": 1,
@@ -137,5 +74,6 @@
   "server_logs": {
     "url": "api.etherscan.io",
     "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
-  }
+  },
+  "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json"
 }

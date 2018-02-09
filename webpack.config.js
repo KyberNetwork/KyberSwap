@@ -1,9 +1,11 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
-//const Uglify = require("uglifyjs-webpack-plugin")
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+var CompressionPlugin = require('compression-webpack-plugin')
 
 var scriptConfig = function (env) {
+  var dist = env.chain ? '/dist/' + env.chain : '/src'
   return {
     context: path.join(__dirname, "src"),
     devtool: (env && env.build !== "true") ? "inline-sourcemap" : false,
@@ -23,7 +25,7 @@ var scriptConfig = function (env) {
         loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader']),
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
+        test: /\.(jpe?g|png|gif|svg|ttf)$/i,
         use: [
           {
             loader: 'url-loader',
@@ -36,7 +38,7 @@ var scriptConfig = function (env) {
       ]
     },
     output: {
-      path: __dirname + "/src/",
+      path: __dirname + dist,
       filename: "client.min.js"
     },
     plugins: (env && env.build !== "true") ? [
@@ -47,20 +49,19 @@ var scriptConfig = function (env) {
       new webpack.DefinePlugin({
         'env': JSON.stringify(env.chain),
         'process.env': {
-          'logger': env.logger
+          'logger': 'true'
         }
       })
     ] : [
-        // new Uglify({
-        //   sourceMap: true,
-        //   compress: {
-        //     warnings: false
-        //   },
-        //   output: {
-        //       comments: false
-        //   }
-        // }
-        // ),
+        new UglifyJsPlugin({
+          uglifyOptions: {
+            comments: false,
+            compress: {
+              drop_console: true,
+              warnings: false
+            }
+          }
+        }),
         new ExtractTextPlugin({ // define where to save the file
           filename: 'app.bundle.css',
           allChunks: true,
@@ -68,9 +69,15 @@ var scriptConfig = function (env) {
         new webpack.DefinePlugin({
           'env': JSON.stringify(env.chain),
           'process.env': {
-            'NODE_ENV': JSON.stringify("production"),
-            'logger': env.logger
+            'NODE_ENV': JSON.stringify("production")
           }
+        }),
+        new CompressionPlugin({ 
+          asset: "[path].gz[query]",
+          algorithm: "gzip",
+          test: /\.js$|\.css$|\.html$/,
+          threshold: 10240,
+          minRatio: 0.8
         })
       ],
     devServer: {
@@ -83,21 +90,21 @@ var scriptConfig = function (env) {
 
 var indexConfig = function (env) {
   var HtmlWebpackPlugin = require('html-webpack-plugin')
+  var dist = env.chain ? '/dist/' + env.chain : '/src'
   return {
     entry: ['./src/client.min.js'],
     output: {
-      path: __dirname + '/src',
-      filename: 'client.min.js'
+      path: __dirname + dist,
+      filename: 'client.min.js?v=' + Date.now()
     },
     plugins: [
       new HtmlWebpackPlugin({
-        hash: true,
         title: "Wallet - kyber.network",
         template: './src/app.html.template',
+        favicon: './src/assets/img/favicon.png',
         inject: 'body',
         styleFile: 'app.bundle.css?v=' + Date.now()
-      }),
-
+      })
     ]
   }
 }

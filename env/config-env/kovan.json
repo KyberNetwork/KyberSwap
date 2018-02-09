@@ -1,16 +1,17 @@
 {
   "connections": {
     "http": [
-      "https://kovan.infura.io/DtzEYY0Km2BA3YwyJcBG",
-      "https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi",
-      "https://kovan.infura.io/Ho4cy66JFfTvvAVlXvii",
-      "https://kovan.infura.io/aFvzEJSCQtTUJJ0Ec0mW",
-      "https://kovan.infura.io/uF2YCXrIz7yUFEXd2yo0",
-      "https://kovan.infura.io/NhLyl78p5UrUgBN5GSty"
+      {
+        "endPoint" : "https://kovan-cache.kyber.network",
+        "type": "cached"
+      },
+      {
+        "endPoint" : "https://kovan.infura.io/DtzEYY0Km2BA3YwyJcBG",
+        "type": "prune"
+      }
     ],
     "ws": "wss://kovan.kyber.network/ws/"
   },
-  "history_endpoint": "http://0.0.0.0:3001",
   "api_usd":"https://api.coinmarketcap.com",
   "tokens": {
     "ETH": {
@@ -25,7 +26,7 @@
       "name": "KyberNetwork",
       "symbol": "KNC",
       "icon": "knc.svg",
-      "address": "0x8ac48aa26a7e25be12a9ddc83f6bbde1594414bb",
+      "address": "0x8dc114d77e857558aefbe8e1a50b460ff9578f1a",
       "decimal": 18,
       "usd_id":"kyber-network"
     },
@@ -33,102 +34,44 @@
       "name": "OmiseGO",
       "symbol": "OMG",
       "icon": "omg.svg",
-      "address": "0x1795b4560491c941c0635451f07332effe3ee7b3",
+      "address": "0x7606bd550f467546212649a9c25623dfca88dcd7",
       "decimal": 18,
       "usd_id":"omisego"
-    },
-    "DGD": {
-      "name": "DigixDAO",
-      "symbol": "DGD",
-      "icon": "dgd.svg",
-      "address": "0x9e973ef5ac3f207d6704b9f4e804691eebe9ecbc",
-      "decimal": 9,
-      "usd_id":"digixdao"
-    },
-    "CVC": {
-      "name": "Civic",
-      "symbol": "CVC",
-      "icon": "cvc.svg",
-      "address": "0x3dee201f9c9f82c958375069e16ab709bfcf3237",
-      "decimal": 8,
-      "usd_id":"civic"
-    },
-    "FUN": {
-      "name": "FunFair",
-      "symbol": "FUN",
-      "icon": "fun.svg",
-      "address": "0xf07d6f773c533ec6876128c9ffa978fb9553aac0",
-      "decimal": 8,
-      "usd_id":"funfair"
-    },
-    "MCO": {
-      "name": "Monaco",
-      "symbol": "MCO",
-      "icon": "mco.svg",
-      "address": "0x4728ddfe54845cd373867a1c7a2fcfa8605f47f2",
-      "decimal": 8,
-      "usd_id":"monaco"
-    },
-    "GNT": {
-      "name": "Golem",
-      "symbol": "GNT",
-      "icon": "gnt.svg",
-      "address": "0x3876980df96a717151cd99d8396f7cb0f4c43616",
-      "decimal": 18,
-      "usd_id":"golem-network-tokens"
-    },
-    "ADX": {
-      "name": "AdEx",
-      "symbol": "ADX",
-      "icon": "adx.svg",
-      "address": "0xe3a1b5e644db09ab25d8292a1a23d4a052ff447e",
-      "decimal": 4,
-      "usd_id":"adx-net"
-    },
-    "PAY": {
-      "name": "TenX",
-      "symbol": "PAY",
-      "icon": "pay.svg",
-      "address": "0x6700b0584e77f75aed0d26047df527cec33e45b6",
-      "decimal": 18,
-      "usd_id":"tenx"
-    },
-    "BAT": {
-      "name": "BasicAttention",
-      "symbol": "BAT",
-      "icon": "bat.svg",
-      "address": "0x59e7daeccd2c9d4bac099ef13b52f5aa8f66dbbc",
-      "decimal": 18,
-      "usd_id":"basic-attention-token"
     },
     "EOS": {
       "name": "Eos",
       "symbol": "EOS",
       "icon": "eos.svg",
-      "address": "0x5e0aa6e99e13781edc2c93b8b49b4c5bc2df1f30",
+      "address": "0x15fb2a9d7dadbb88f260f78dcbb574b3b76a8e06",
       "decimal": 18,
       "usd_id":"eos"
     },
-    "LINK": {
-      "name": "ChainLink",
-      "symbol": "LINK",
-      "icon": "link.svg",
-      "address": "0x2fcb4cbc0d1c9cff28fdfaf62ec33f11f5c0f979",
+    "SNT": {
+      "name":"Status",
+      "address": "0x676f650000f420485b99ef0377a2e1c96eb3e821",
+      "symbol": "SNT",
+      "icon": "snt.svg",
       "decimal": 18,
-      "usd_id":"chainlink"
+      "usd_id":"status"
+    },
+    "SALT": {
+      "name":"Salt",
+      "address": "0xcc112cd38362bf3c07d226768fd5869e65296083",
+      "symbol": "SALT",
+      "icon": "salt.svg",
+      "decimal": 8,
+      "usd_id":"salt"
     }
   },
   "ethScanUrl": "https://kovan.etherscan.io/",
-  "bank": "0xbe6eda3ea42f262a0d35a578b31dc13e125cb697",
-  "reserve": "0xc1b22a5269bd5a8b1d214f2f9d23b888d05a98fb",
-  "network": "0x2b7f9ae5a29ff7c387c8b794ed1f3cc45bbc57d0",
-  "wrapper": "0x6df1b11442616eb5d10f9bd8218ce2cded069082",
+  "bank": "0x2eb59a43644451b279a2c1a44a9bfecb055527d0",
+  "reserve": "0x2d1ceabd5a1cd16581ad199031601615a434a2cd",
+  "network": "0x643211b405c9a14139142e1104250bbcd94bd0ef",
+  "wrapper": "0xa54f27b5a72fc1ddc5c4bc6ed50391f457e4a46a",
+  "trade_topic":"0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
   "endpoint": "https://kovan.infura.io/DtzEYY0Km2BA3YwyJcBG",
   "averageBlockTime": 6000,
   "networkId": 42,
   "chainName": "Kovan",
-  "server_logs": {
-    "url": "kovan.etherscan.io",
-    "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
-  }
+  "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json"
 }

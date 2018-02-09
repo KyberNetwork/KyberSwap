@@ -3,13 +3,15 @@ Kyber web wallet helps users to interact directly with KyberNetwork in order to 
 You can see a walkthrough on Youtube [here](https://www.youtube.com/watch?v=v2bdcChFEuQ).
 
 ## Live deployment
-We deployed the [MVP](https://github.com/KyberNetwork/KyberWallet/releases/tag/MVP) of the wallet at [https://testnet-wallet.kyber.network](https://testnet-wallet.kyber.network). Any other websites that claims to be Kyber Wallet is fake and might contain malicious scripts to scam or steal your assets.
+We deployed the [Testnet version](https://github.com/KyberNetwork/KyberWallet/releases/tag/v0.1.0) of the wallet at [https://ropsten.kyber.network/](https://ropsten.kyber.network/). Any other websites that claims to be Kyber Wallet is fake and might contain malicious scripts to scam or steal your assets.
 
 ## Install dependencies
 The wallet is developed on `Nodejs`, we assume users have it installed in their environment. *We suggest to use Node v7.3.0*
 ```
 npm install
+npm install web3@1.0.0-beta.18 
 ```
+We have the second install command due to web3 is unstable now
 
 ## Run in development mode (kovan chain)
 ```
@@ -29,6 +31,14 @@ npm run server --chain=[option_chain] --port=[option_port]  --init=[option_delet
 Option_chain default is kovan, option_port default is 3001, option_delete_db default is false .
 
 After running server, please edit history_enpoint in /env/config-env/kovan.json. For example: `http:localhost:3001`
+
+You can also run cached server with docker
+```
+docker build . -t kyber/server
+docker run -p 3001:3001 kyber/server
+```
+
+
 ## Build production app
 ```
 npm run build-mainnet

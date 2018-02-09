@@ -8,6 +8,7 @@ textarea{
     color: $white;
     font-weight: bold;
     resize: none;
+    margin-bottom: 0;
   }
 }
 
@@ -16,15 +17,9 @@ textarea{
   font-size: 15px;
 }
 
-.unlock input, input[type=password] {
-  background-color: transparent;
-  border-bottom: 1px solid $white;
+.unlock input {
   height: 50px;
   color: $white;
-  &:focus{
-    background-color: transparent;
-    border-bottom: 1px solid $white;
-  }
 }
 input {
   &[type=password],
@@ -33,12 +28,22 @@ input {
     padding: 10px 15px 10px 15px;
     min-height: 40px;
     height: 40px;
-    font-size: 13px;
+    font-size: 14px;
     border-radius: 0;
   }
+  &[type=password]{
+    font:small-caption;
+    font-size: 30px;
+  }
+  // &::-webkit-input-placeholder,
+  //   &::-moz-placeholder,
+  //   &::-ms-input-placeholder{
+  //     font:normal !important;
+  //     font-size: 14px !important;
+  //     color: red;
+  //   }
   &[type=number], &.address, &.hash {
     font-weight: bold;
-    font-family: $font-family-monospace;
   }
   &::-webkit-input-placeholder {
     color: #ddd;
@@ -104,8 +109,7 @@ input.error {
 .error + span.error-text,
 .error span.error-text {
   color: $alert-color;
-  //font-size: 12px;
- // font-style: italic;
+  font-size: 13px;
   font-weight: normal;
   display: block;
   text-transform: none;
@@ -138,13 +142,18 @@ input.error {
     letter-spacing: 1.25px;
     text-transform: uppercase;
     position: relative;
-    //margin-bottom: 50px;
     white-space: nowrap;
+    border: none;
+    color: #fff;
+    cursor: default;
     &.waiting {
       color: rgba(white, .5);
       pointer-events: none;
       animation: button-accent-waiting 2s ease infinite;
       position: relative;
+    }
+    &.next{
+      cursor: pointer;
     }
   }
 }
@@ -265,7 +274,7 @@ p.note {
     background-image: url(../img/json.jpg)
   }
   &.pkey {
-    background-image: url(../img/pkey.jpeg)
+    background-image: url(../img/pkey.jpg)
   }
   &.trezor {
     background-image: url(../img/trezor.jpg)
@@ -360,9 +369,6 @@ span.help {
     margin-bottom: 0px;
     display: flex;
     align-items: center;
-    .term-text{
-      color: rgba(255,255,255, 0.5)
-    }
     .view-term{
       border: 1px solid white;
       padding: 5px;
@@ -463,7 +469,7 @@ label.switch-caption {
       }
     }
     .error-text{
-      color: #ff5d00;
+      color: $alert-color;
     }
     .gas-price{
       input{
@@ -474,6 +480,24 @@ label.switch-caption {
         top: 9px;
         right: 25px;
         color: inherit;
+      }
+      .gas-select{
+        margin-bottom: 10px;
+        margin-top: 15px;
+        button{
+          padding: 7px 13px;
+          border-radius: 20px;
+          background-color: #1b2e36;
+          color: #a5a5a5;
+          min-width: 80px;
+          border: 1px solid transparent;
+          cursor: pointer;
+          &:hover{
+            border-color: $k-success;
+            color: $k-success;
+            background-color: #2b4552;
+          }
+        }
       }
     }
   }

@@ -1,4 +1,5 @@
 import React from "react"
+import { gweiToEth, stringToBigNumber } from "../../utils/converter"
 
 const PassphraseModal = (props) => {
   function submitTransaction(e) {
@@ -15,14 +16,17 @@ const PassphraseModal = (props) => {
 
   function toggleShowPw() {
     let input = document.getElementById('passphrase')
-    if (input.type == 'password') {
-      input.type = 'text'
-      input.parentElement.classList.add('unlock')
-    } else if (input.type == 'text') {
-      input.type = 'password'
-      input.parentElement.classList.remove('unlock')
-    }
+		if (input.classList.contains('security')) {
+			input.classList.remove('security')
+			input.parentElement.classList.add('unlock')
+		} else if (input.type == 'text') {
+			input.classList.add('security')
+			input.parentElement.classList.remove('unlock')
+		}
   }
+
+  var gasPrice = stringToBigNumber(gweiToEth(props.gasPrice))
+  var totalGas = gasPrice.mul(props.gas)
   return (
     <div >
       <div className="title text-center">{props.translate("modal.enter_password") || "Enter Password"}</div>
@@ -31,10 +35,24 @@ const PassphraseModal = (props) => {
         <div className="row">
           <div className="column">
             <center>
-              {props.recap}
+            {props.recap}
+              <div className="gas-configed text-light">
+                <div class="d-flex justify-content-around">
+                  <p>Gas Price</p>
+                  <p>{props.gasPrice} Gwei</p>
+                </div>
+                <div class="d-flex justify-content-around">
+                  <p>{props.translate("transaction.transaction_fee") || "Transaction Fee"}</p>
+                  <p>{props.isFetchingGas ?
+                    <img src={require('../../../assets/img/waiting-white.svg')} /> 
+                    : <span>{totalGas.toString()}</span>
+                  } ETH</p>
+                </div>
+              </div>
               <label className={!!props.passwordError ? "error" : ""}>
                 <div className="input-reveal">
-                  <input className="text-center" id="passphrase" type="password" placeholder={props.translate("modal.enter_password_placeholder") ||"Enter your password to confirm"}
+                  <input className="text-center security" id="passphrase" type="text" 
+                    autoComplete="off" spellCheck="false"
                     onChange={(e) => props.onChange(e)} autoFocus onKeyPress={(e) => submit(e)} />
                     <a className="toggle" onClick={() => toggleShowPw()}></a>
                 </div>
@@ -47,7 +65,7 @@ const PassphraseModal = (props) => {
         </div>
       </div>
       <div className="overlap">
-        <a className="button accent process-submit"
+        <a className={"button accent process-submit" + (props.isConfirming ? " waiting" : " next")}
           onClick={(e) => submitTransaction(e)}>
           {props.translate("modal.confirm") || "Confirm"}
         </a>

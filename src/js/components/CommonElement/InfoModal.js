@@ -1,5 +1,5 @@
 import React from "react"
-// import Modal from 'react-modal'
+import { IDLE_TIME_OUT } from "../../services/constants";
 import {Modal} from '../CommonElement'
 
 const InfoModal = (props) => {
@@ -19,7 +19,7 @@ const InfoModal = (props) => {
   )
   return (
     <Modal
-    className={
+      className={
       {
         base: 'reveal tiny',
         afterOpen: 'reveal tiny'

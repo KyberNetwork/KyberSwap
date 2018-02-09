@@ -2,6 +2,7 @@ import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
 import { calculateDest, caculateDestAmount, caculateSourceAmount } from "../utils/converter"
 //import { randomToken, randomForExchange } from "../utils/random"
+import BLOCKCHAIN_INFO from "../../../env"
 
 
 const initState = constants.INIT_EXCHANGE_FORM_STATE
@@ -27,9 +28,13 @@ const exchange = (state = initState, action) => {
       //newState.gasPrice = initState.gasPrice
       newState.bcError = ""
       newState.step = initState.step
-      newState.offeredRate = newState.minConversionRate
+      newState.minConversionRate = newState.slippageRate
+
       newState.isEditRate = false
       newState.isEditGasPrice = false
+
+      newState.isAnalize = false
+      newState.isAnalizeComplete = false
       return newState
     }
     case "EXCHANGE.SELECT_TOKEN_ASYNC": {
@@ -40,10 +45,35 @@ const exchange = (state = initState, action) => {
       if (action.payload.type === "source") {
         newState.sourceTokenSymbol = action.payload.symbol
         newState.sourceToken = action.payload.address
+
+        if (newState.sourceTokenSymbol === 'ETH') {
+          if (newState.destTokenSymbol === 'ETH') {
+            newState.destTokenSymbol = 'KNC'
+            newState.destToken = BLOCKCHAIN_INFO.tokens['KNC'].address
+          }
+        } else {
+          newState.destTokenSymbol = 'ETH'
+          newState.destToken = BLOCKCHAIN_INFO.tokens['ETH'].address
+        }
       } else if (action.payload.type === "des") {
         newState.destTokenSymbol = action.payload.symbol
         newState.destToken = action.payload.address
+
+        if (newState.destTokenSymbol === 'ETH') {
+          if (newState.sourceTokenSymbol === 'ETH') {
+            newState.sourceTokenSymbol = 'KNC'
+            newState.sourceToken = BLOCKCHAIN_INFO.tokens['KNC'].address
+          }
+        } else {
+          newState.sourceTokenSymbol = 'ETH'
+          newState.sourceToken = BLOCKCHAIN_INFO.tokens['ETH'].address
+        }
       }
+      //reset all error
+      for (var key in newState.errors) {
+        newState.errors[key] = ""
+      }
+
       newState.selected = true
       newState.isEditRate = false
       return newState
@@ -69,6 +99,10 @@ const exchange = (state = initState, action) => {
       newState.errors.sourceAmountError = action.payload
       return newState
     }
+    case "EXCHANGE.THROW_ETH_BALANCE_ERROR": {
+      newState.errors.ethBalanceError = action.payload
+      return newState
+    }
     case "EXCHANGE.THROW_GAS_PRICE_ERROR": {
       newState.errors.gasPriceError = action.payload
       return newState
@@ -85,6 +119,7 @@ const exchange = (state = initState, action) => {
       newState.gasPrice = action.payload
       newState.isEditGasPrice = true
       newState.errors.gasPriceError = ""
+      newState.errors.ethBalanceError = ""
       return newState
     }
     case "EXCHANGE.TOGGLE_ADVANCE": {
@@ -94,9 +129,31 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED": {
       newState.broadcasting = false
       newState.bcError = action.payload ? action.payload : ""
-      newState.confirmApprove = false
       newState.showConfirmApprove = false
       newState.isApproving = false
+      return newState
+    }
+    case "EXCHANGE.SET_SIGN_ERROR": {
+      newState.signError = action.payload ? action.payload : ""
+      newState.isApproving = false
+      newState.isConfirming = false
+      return newState
+    }
+    case "EXCHANGE.RESET_SIGN_ERROR": {
+      newState.signError = ''
+      return newState
+    }
+    case "EXCHANGE.SET_BROADCAST_ERROR": {
+      newState.broadcasting = false
+      newState.broadcastError = action.payload ? action.payload : ""
+      newState.confirmApprove = false
+      newState.isApproving = false
+      newState.isConfirming = false
+      newState.step = 3
+      return newState
+    }
+    case "EXCHANGE.RESET_BROADCAST_ERROR": {
+      newState.broadcastError = ''
       return newState
     }
     case "EXCHANGE.TX_BROADCAST_FULFILLED": {
@@ -108,24 +165,70 @@ const exchange = (state = initState, action) => {
       newState.broadcasting = false
       newState.bcError = action.payload ? action.payload : ""
       newState.isConfirming = false
+      newState.deviceError = action.payload ? action.payload : ''
       return newState
     }
-    case "EXCHANGE.UPDATE_RATE":
-      const { rateInit, slippagePrice } = action.payload
-      newState.slippagePrice = slippagePrice
-      
-      var rate = slippagePrice === "0" ? rateInit : slippagePrice      
-      newState.minConversionRate = rate
+    case "EXCHANGE.UPDATE_RATE":{
+      const { rateInit, expectedPrice, slippagePrice, rateInitSlippage } = action.payload
+
+
+      if(expectedPrice === "0" && rateInit === "0"){
+        newState.errors.rateSystem = "Kyber exchange is under maintainance this pair"
+      }else{
+        newState.errors.rateSystem = ""
+      }
+
+      if(expectedPrice === "0" && rateInit !== "0"){
+        newState.errors.rateAmount = "Kyber cannot handle your amount, please reduce amount"
+      }else{
+        newState.errors.rateAmount = ""
+      }
+
+    
+      var slippageRate = slippagePrice === "0" ? rateInitSlippage : slippagePrice
+      var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
+
+      newState.slippageRate = slippageRate
+      newState.offeredRate = expectedRate
+
       if (newState.sourceAmount !== "") {
-        newState.minDestAmount = calculateDest(newState.sourceAmount, rate).toString(10)
+        newState.minDestAmount = calculateDest(newState.sourceAmount, expectedRate).toString(10)
       }
       //newState.offeredRateBalance = action.payload.reserveBalance
       // newState.offeredRateExpiryBlock = action.payload.expirationBlock
       if (!newState.isEditRate) {
-        newState.offeredRate = rate
+        newState.minConversionRate = slippageRate
       }
       newState.isSelectToken = false
       return newState
+    }
+    case "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE": {
+      var { rateInit, expectedPrice, slippagePrice, rateInitSlippage } = action.payload
+
+
+      var slippageRate = slippagePrice === "0" ? rateInitSlippage : slippagePrice
+      var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
+
+      newState.snapshot.slippageRate = slippagePrice
+      newState.snapshot.offeredRate = expectedRate
+
+      if (newState.sourceAmount !== "") {
+        newState.snapshot.minDestAmount = calculateDest(newState.snapshot.sourceAmount, expectedRate).toString(10)
+      }
+      //newState.offeredRateBalance = action.payload.reserveBalance
+      // newState.offeredRateExpiryBlock = action.payload.expirationBlock
+      if (!newState.isEditRate) {
+        newState.snapshot.minConversionRate = slippageRate
+      }
+      newState.snapshot.isSelectToken = false
+
+      return newState
+
+    }
+    case "EXCHANGE.SET_RATE_ERROR_SYSTEM":{
+      newState.errors.rateSystem = "Kyber exchange is under maintainance this pair"
+      return newState
+    }
     case "EXCHANGE.OPEN_PASSPHRASE": {
       newState.passphrase = true
       return newState
@@ -147,6 +250,8 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.HIDE_APPROVE": {
       newState.confirmApprove = false
+      newState.isApproving = false
+      newState.signError = ''
       return newState
     }
     case "EXCHANGE.SHOW_APPROVE": {
@@ -220,12 +325,25 @@ const exchange = (state = initState, action) => {
       }
       return newState
     }
+    case "EXCHANGE.CACULATE_AMOUNT_SNAPSHOT": {
+      if (newState.snapshot.errors.selectSameToken || state.snapshot.errors.selectTokenToken) return newState
+      if (newState.snapshot.inputFocus == "dest") {
+        newState.snapshot.sourceAmount = caculateSourceAmount(state.snapshot.destAmount, state.snapshot.offeredRate, 6)
+      } else {
+        newState.snapshot.destAmount = caculateDestAmount(state.snapshot.sourceAmount, state.snapshot.offeredRate, 6)
+      }
+      newState.snapshot.isFetchingRate = false
+      console.log("***************")
+      console.log(newState)
+      return newState
+    }
     case "EXCHANGE.INPUT_CHANGE": {
       let focus = action.payload.focus
       let value = action.payload.value
       if (focus == "source") {
         newState.sourceAmount = value
         newState.errors.sourceAmountError = ""
+        newState.errors.ethBalanceError = ""
         if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
         newState.destAmount = caculateDestAmount(value, state.offeredRate, 6)
       }
@@ -251,20 +369,34 @@ const exchange = (state = initState, action) => {
       newState.termAgree = action.payload.value
       return newState
     }
-    case "EXCHANGE.SET_OFFERED_RATE": {
-      newState.offeredRate = action.payload.value
+    case "EXCHANGE.SET_MIN_RATE": {
+      newState.minConversionRate = action.payload.value
       newState.errors.rateError = ''
       newState.isEditRate = true
       return newState
     }
-    case "EXCHANGE.RESET_OFFERED_RATE": {
-      newState.offeredRate = newState.minConversionRate
-      newState.isEditRate = false
+    // case "EXCHANGE.ERROR_RATE_ZERO":{
+    //   newState.rateEqualZero = true
+    //   return newState
+    // }
+    // case "EXCHANGE.CLEAR_ERROR_RATE_ZERO":{
+    //   newState.rateEqualZero = false
+    //   newState.errors.rateEqualZero = ""
+    //   return newState
+    // }
+    // case "EXCHANGE.SET_RATE_ERROR_ZERO":{
+    //   newState.errors.rateEqualZero = "Cannot get rate from exchange"
+    // }
+    case "EXCHANGE.RESET_MIN_RATE": {
+      newState.minConversionRate = newState.offeredRate
+      newState.isEditRate = true
       newState.errors.rateError = ''
       return newState
     }
-    case "EXCHANGE.SET_ESTIMATE_GAS_USED": {
-      newState.gas_estimate = action.payload.estimatedGas
+    case "EXCHANGE.SET_GAS_USED": {
+      const {gas, gas_approve} = action.payload
+      newState.gas = gas
+      newState.gas_approve = gas_approve
       return newState
     }
     case "EXCHANGE.SET_PREV_SOURCE": {
@@ -289,11 +421,11 @@ const exchange = (state = initState, action) => {
     }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
       if (!newState.isEditGasPrice) {
-        if (action.payload > newState.maxGasPrice) {
-          newState.gasPrice = newState.maxGasPrice
-        } else {
-          newState.gasPrice = action.payload
-        }
+        var { safeLowGas, standardGas, fastGas, defaultGas } = action.payload
+        newState.gasPriceSuggest.fastGas = fastGas
+        newState.gasPriceSuggest.standardGas = standardGas
+        newState.gasPriceSuggest.safeLowGas = safeLowGas
+        newState.gasPrice = defaultGas
       }
       return newState
     }
@@ -306,6 +438,34 @@ const exchange = (state = initState, action) => {
       if (isManual) {
         newState.isSelectToken = true
       }
+      return newState
+    }
+    case "EXCHANGE.ANALYZE_ERROR": {
+      newState.isAnalize = true
+      return newState
+    }
+    case "EXCHANGE.SET_ANALYZE_ERROR": {
+      const { networkIssues, reserveIssues } = action.payload
+      newState.analizeError = { networkIssues, reserveIssues }
+      newState.isAnalize = false
+      newState.isAnalizeComplete = true
+      return newState
+    }
+    case "EXCHANGE.FETCH_GAS":{
+      newState.isFetchingGas = true
+      return newState
+    }
+    case "EXCHANGE.FETCH_GAS_SUCCESS":{
+      newState.isFetchingGas = false
+      return newState
+    }
+    case "EXCHANGE.SET_KYBER_ENABLE":{
+      newState.kyber_enabled = action.payload
+      return newState
+    }
+    case "EXCHANGE.SET_SNAPSHOT": {
+      var snapshot  = action.payload
+      newState.snapshot = {...snapshot}
       return newState
     }
   }

@@ -24,13 +24,16 @@ $divider-color: darken($title-background-color, 5);
   .message {
     margin-bottom: 25px;
   }
-  a.x {
+  a{
+    color: #00ffd6;
+    &.x {
     display: block;
     position: absolute;
     right: 20px;
     top: 10px;
     font-size: 32px;
     color: $white;
+    }
   }
   .title {
     font-weight: bold;
@@ -68,6 +71,20 @@ $divider-color: darken($title-background-color, 5);
     p {
       font-size: 14px;
       line-height: 1.7;
+    }
+    .gas-configed{
+      width: 270px;
+      white-space: nowrap;
+    }
+    hr{
+      border-color: #a5a5a5;
+    }
+    .ledger-error{
+      font-size: 0.9em;
+      margin-bottom: 25px;
+      color: $alert-color;
+      border-top: 1px solid #a5a5a5;
+      padding-top: 24px;
     }
   }
   .footer {

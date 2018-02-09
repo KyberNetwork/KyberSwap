@@ -20,9 +20,10 @@ const routeMiddleware = routerMiddleware(history)
 const sagaMiddleware = createSagaMiddleware()
 
 var middlewareArray = [sagaMiddleware, routeMiddleware]
-if(process.env.logger){
-  middlewareArray.push(logger)
+if(process.env && process.env.logger){
+  // middlewareArray.push(logger)
 }
+
 const middleware = applyMiddleware(
   ...middlewareArray
 )

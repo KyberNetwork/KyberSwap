@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from 'react-router-dom'
 import { Rate, Address } from "../Header"
+import AnalyzeLogModal from '../Transaction/AnalyzeLogModal'
 
 const HeaderView = (props) => {
   let logoLink = props.account ? '/exchange' : ''
@@ -9,7 +10,7 @@ const HeaderView = (props) => {
       <section id="header">
         <div class="row small-11 medium-12 large-12">
           <div class="row column">
-            <div class="column small-6 medium-6 large-6">
+            <div class="column small-3">
               <Link to={logoLink} className="logo">
                 <img src={require("../../../assets/img/logo.svg")} />
               </Link>
@@ -19,6 +20,13 @@ const HeaderView = (props) => {
           </div>
         </div>
       </section>
+
+      <AnalyzeLogModal 
+        analyze={props.analyze} 
+        onRequestClose={props.onRequestClose}
+        isOpen={props.isOpen}
+        translate={props.translate}
+      />
 
       {props.balance &&
         <section id="balance-account">

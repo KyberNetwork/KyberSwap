@@ -5,6 +5,7 @@ const initState = {
   isStoreReady: false,
   account: false,
   loading: false,
+  checkTimeImportLedger: false,
   error: "",
   showError: false,
   pKey: {
@@ -20,6 +21,12 @@ const account = (state=initState, action) => {
     }
     case "ACCOUNT.LOADING": {
       return {...state, loading: true}
+    }
+    case "ACCOUNT.CHECK_TIME_IMPORT_LEDGER": {
+      return {...state, checkTimeImportLedger: true}
+    }
+    case "ACCOUNT.RESET_CHECK_TIME_IMPORT_LEDGER": {
+      return {...state, checkTimeImportLedger: false}
     }
     case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED": {
       return {...state, account: action.payload, loading: false, isStoreReady: true}

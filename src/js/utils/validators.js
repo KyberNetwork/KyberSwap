@@ -59,9 +59,42 @@ export function verifyAmount(sourceAmount,
   //verify max cap
   //estimate value based on eth
   var maxCap = new BigNumber(maxCap)
+  if(sourceSymbol !=="ETH"){
+    maxCap = maxCap.mul(constants.MAX_CAP_PERCENT)
+  }
   if (estimateValue.cmp(maxCap) > 0) {
     return "too high cap"
   }
+  return null
+}
+
+export function verifyBalanceForTransaction(
+  ethBalance, sourceSymbol, sourceAmount, 
+  gas, gasPrice
+) {
+
+  var bigEthBalance = new BigNumber(ethBalance)
+
+  //calcualte tx fee
+  if (gasPrice === "") gasPrice = 0
+  var gasPriceBig = new BigNumber(gasPrice)
+  var txFee = gasPriceBig.times(1000000000).times(gas)
+
+  var totalFee
+  if (sourceSymbol === "ETH"){
+    console.log(sourceAmount)
+    var value = new BigNumber(sourceAmount)
+    value = value.times(1000000000000000000)
+    totalFee = txFee.add(value)
+  } else{
+    totalFee = txFee
+  } 
+  
+
+  if (bigEthBalance.cmp(totalFee) === -1){
+    return "not enough"
+  }
+
   return null
 }
 

@@ -1,7 +1,7 @@
 {
   "pack": "vi",
   "pack_icon": "vi.svg",
-  "pack_label": "Việt Nam",
+  "pack_label": "Tiếng Việt",
   "pack_active": true,
   "layout": {
     "info": "Thông tin",
@@ -43,17 +43,39 @@
     "next": "Tiếp",
     "exit": "THOÁT",
     "back": "Trang đầu",
+    "new_tx": "Tạo giao dịch mới",
+    "new_ex": "Tạo giao dịch mới",
+    "done": "Thành công!",
+    "failed": "Thất bại!",
+    "broadcasted": "Đã gửi!",
+    "broadcasting": "Đang gửi!",
+    "success_ex_msg": "Trao đổi thành công ${source} và ${dest}",
+    "success_tx_msg": "Chuyển khoản thành công ${token} đến ${address}",
+    "copy_tx": "Copy địa chỉ giao dịch",
+    "analyze_error": "Nguyên nhân lỗi",
+    "copied": "Đã sao chép!",
+    "analyze": "Xem nguyên nhân",
+    "no_reason_found": "Không tìm thấy nguyên nhân nào",
 
     "broadcast": "Gửi",
     "transaction": "Giao dịch",
     "broadcasted_title": "Giao dịch của bạn đã được gửi đến blockchain",
     "close_browser_or_make_new_exchange": "Bạn đã có thể đóng cửa sổ hiện tại hoặc tiếp tục trao đổi",
     "close_browser_or_make_new_transfer": "Bạn đã có thể đóng cửa sổ hiện tại hoặc tiếp tục chuyển khoangr",
-    "broadcasting": "Đang truyền dữ liêu ra mạng",
+    "broadcasting_blockchain": "Đang truyền dữ liêu ra mạng",
     "cound_not_broadcast": "Không thể gửi giao dịch của bạn đến blockchain",
     "current_address_balance": "Số dư hiện tại",
+
     "transaction_error": "Lỗi giao dịch",
+    
+    "notification": "Thồng báo",
+    "not_enable_exchange": "Địa chỉ của bạn không phù hợp để trao đổi tại thời điểm hiện tại.",
+    "kyber_down" : "Kyber hiện tại không hỗ trợ trao đổi. <br/>Xin bạn vui lòng quay laị sau!",
+
+    "transaction_time": "Thời gian giao dịch: < ${time} phút",
     "waiting_transaction": "Đang đợi giao dịch được xác thực",
+    "click_to_ex_all_balance": "Trao đổi toàn bộ tài khoản",
+    "click_to_transfer_all_balance": "Chuyển toàn bộ tài khoản",
 
     "about_to_exchange": "Bạn chuẩn bị chuyển đổi",
     "about_to_transfer": "Bạn chuẩn bị gửi",
@@ -64,12 +86,15 @@
     "to": "đến",
     "best_rate": "Rate tốt nhất",
     "token_amount": "Token/Số lượng",
+    "click_to_swap": "Click để hoán đổi",
 
     "transfer_tooltip": "Chuyển eth hoặc token đến một tài khoản khác",
     "transaction_gasprice_50": "Giá Gas càng cao, giao dịch càng nhanh. Giá Gas lớn nhất 50 Gwei",
     "transaction_gasprice": "Giá Gas càng cao, giao dịch càng nhanh",
     "best_rate_tooltip": "Rate thấp hơn cho khả năng thành công cao hơn khi thị trường biến động",
-    "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>"
+    "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>",
+    "no_pedding_tx": "Không có giao dịch nào",
+    "rate_info": "Rate có thể thay đổi. <br/>Bạn có thể  chỉ định rate nhỏ nhất bởi click \"NÂNG CAO\""
   },
 
   "modal": {
@@ -84,6 +109,8 @@
     "custom_path": "Path Tùy Chỉnh",
     "view_on_etherscan": "Xem trên Etherscan",
     "press_confirm_if_really_want": "Click xác nhận nếu bạn thật sự muốn.",
+    "press_approve": "Bấm đồng ý để tiếp tục",
+    "waiting_for_confirmation": "Đang chờ xác nhận từ ví của bạn",
     "confirm_exchange_title": "Xác nhận giao dịch",
     "confirm_transfer_title": "Xác nhận giao dịch",
 
@@ -119,13 +146,43 @@
     "cannot_connect_ledger": "Không thể kết nối ledger",
     "invalid_private_key": "Private key không đúng định dạng",
     "no_balance": "Tài khoản của bạn hiện không có đủ số dư ở tất cả token, hãy nhập một tài khoản khác",
-    "clear_data_timeout": "Chúng tôi đã xóa hết dữ liêu bởi vì bạn đã không sử dụng trong ",
+    "clear_data_timeout": "Chúng tôi đã xóa hết dữ liêu bởi vì bạn đã không sử dụng trong ${time} phút",
     "minutes": " phút",
+    "time_out": "Hết phiên đăng nhập",
+    "network_error": "Không thể kết nối đến blockchain. Hãy kiểm tra lại mạng Internet!",
+    "term_error": "Bạn phải đồng với các điều khoản và dịch vụ!",
 
     "path_not_support_by_trezor": "Đường dẫn này không được Trezor hỗ trợ",
     "check_right_application_selected": "Kiểm tra lại để chắc chắn bạn đã sử dụng đúng ứng dụng",
-    "network_not_match": "Network không đúng",
-    "not_supported": "Không hỗ trợ"
+    "network_not_match": "Metamask cần chạy ở <strong>${expectedName}</strong>. </br>Hiện đang trên <strong>${currentName}</strong>",
+    "network_not_match_unknow": "Metamask cần chạy <strong>${expectedName}</strong>",
+    "not_supported": "Không hỗ trợ",
+    "metamask_not_install":"Không thể kết nối đến Metamask. Hãy chắc chắn rằng Metamask của bạn đã được cài",
+    "browser_not_support_metamask": "Metamask không được hỗ trợ trên trình duyệt <strong>${browser}</strong>. </br>Vui lòng chuyển sang <strong>Chrome</strong> hoặc <strong>FireFox</strong>",
+    "browser_not_support_ledger": "Ledger không được hỗ trợ trên trình duyệt <strong>${browser}</strong>.</br>Vui lòng chuyển sang <strong>Chrome</strong> để sử dụng",
+    "please_make_sure": "Kiểm tra lại nếu",
+    "ledger_plugged_in": "- Bạn đã kết nối với Ledger.",
+    "ledger_logged_in": "- Bạn đã đăng nhập vào Ledger.",
+
+    "gas_price_not_number":"Giá Gas không phải là số",
+    "rate_not_number":"Rate không là số",
+    "gas_price_limit":"Giá gas cần nhỏ hơn ${maxGas} Gwei",
+    "passphrase_error":"Không thể giải mã key",
+    "gas_price_exceeded_limit":"Giá Gas vượt quá giới hạn",
+    "issue_token_ether":"Lỗi do gửi ether khi đang thực hiện trao đổi token sang ether",
+    "issue_allowance":"Lỗi do mức cho phép nhỏ hơn số tiền gửi",
+    "issue_balance":"Lỗi do tài khoản token nhỏ hơn số tiền gửi",
+    "issue_ether_amount":"Lỗi do người dùng đã không gửi chính xác số lượng eths",
+    "issue_user_cap":"Lỗi do số lượng ban đầu vượt quá giới hạn người dùng",
+    "min_rate_too_high":"Rate của bạn quá cao!",
+
+    "ledger_global_err": "<div class='text-left'>Không thể kết nối đến Leger của bạn. Kiểm tra lại nếu như:<br/>- Bạn đã kết nối đến Ledger.<br/>- Bạn đã đăng nhập vào Ledger.<br/>- Bạn đã truy cập vào Ethereum app trên Ledger.<br/>- Bạn đã bật chế độ \"Browser support\" trên Ledger. Xem hướng dẫn tại  <a href=\"${link}\" target=\"_blank\">đây</a>.</div>",
+    "need_to_config_env_ledger": "Bạn phải cài đặt trên thiết bị Linux để truy cập Ledger. Xem hướng dẫn tại <a href=\"${link}\" target=\"_blank\">đây</a>.",
+    "ledger_not_enable_contract": "Kiểm tra lại nếu: </br>- \"Contract Data\" đã được bật trên Ledger của bạn. Hướng dẫn tại <a href=\"${link}\" target=\"_blank\">đây</a>.",
+    "invalid_path_or_session_expired": "Không thể lấy địa chỉ từ đường dẫn. Kiểm tra lại đường dẫn hoặc đăng nhập lại Ledger của bạn",
+    "path_is_invalid": "Sai đường dẫn. Hãy chọn một đường dẫn khác.",
+    "ledger_time_out": "Phiên trên Ledger của bạn đã hết hạn. Đăng nhập lại để tiếp tục dụng.",
+    "eth_balance_not_enough_for_fee": "Your Eth balance is not enough for transaction fee"
   },
 
   "import": {
@@ -170,11 +227,17 @@
   },
 
   "landing_page":{
-    "title": "Trust-Free Exchange for Ethereum tokens",
-    "trustless": "Trustless",
-    "instant": "Instant",
-    "liquid": "Liquid",
-    "compatible": "Compatible",
-    "get_started": "Get Started"
-  }
+    "title": "Trao đổi Ethereum tokens",
+    "trustless": "Tin tưởng",
+    "instant": "Tức thì",
+    "liquid": "Thanh khoản",
+    "compatible": "Tương thích",
+    "get_started": "Bắt đầu"
+  },
+
+  "product_feedback": "Phản hồi sản phẩm",
+  "help": "Hỗ trợ",
+  "low": "Chậm",
+  "standard": "Thường",
+  "fast": "Nhanh"
 }

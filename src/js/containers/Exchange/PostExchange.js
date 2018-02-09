@@ -38,17 +38,35 @@ import { RateBetweenToken } from "../Exchange"
   }
 
   return {
-    form: { ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal, 
-              sourceName, destName },
+    form: {
+      ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
+      sourceName, destName
+    },
+    snapshot: store.exchange.snapshot,
     account: store.account.account,
     ethereum: store.connection.ethereum,
+    tokens: store.tokens,
     keyService: props.keyService,
     translate: getTranslate(store.locale),
   }
 })
 
 export default class PostExchange extends React.Component {
+  constructor(){
+    super()
+    this.state = {form:{}}
+  }
   clickExchange = () => {
+    // if(!this.props.form.kyber_enabled){
+    //   this.props.dispatch(utilActions.openInfoModal(this.props.translate("transaction.notification"), this.props.translate("transaction.kyber_down")))
+    //   return
+    // }
+    if(this.props.form.maxCap == 0){
+      let titleModal = this.props.translate('transaction.notification') || 'Notification'
+      let contentModal = this.props.translate('transaction.not_enable_exchange') || 'Your address is not enabled for exchange'
+      this.props.dispatch(utilActions.openInfoModal(titleModal, contentModal))
+      return
+    }
     if (validators.anyErrors(this.props.form.errors)) return;
     if (this.props.form.step == 1) {
       if (!validators.anyErrors(this.props.form.errors)) {
@@ -58,20 +76,43 @@ export default class PostExchange extends React.Component {
       if (this.validateExchange()) {
         //agree terms and services
         if (!this.props.form.termAgree) {
-          return this.props.dispatch(utilActions.openInfoModal("Agree terms and services", "You must agree terms and services!"))
+          let titleModal = this.props.translate('layout.terms_of_service') || 'Terms of Service'
+          let contentModal = this.props.translate('error.term_error') || 'You must agree terms and services!'
+          return this.props.dispatch(utilActions.openInfoModal(titleModal, contentModal))
         }
         //check account type
+        //save a copy of form
+        // this.setState({form: this.formParams()})
+
+        this.props.dispatch(exchangeActions.setSnapshot(this.props.form))
+
+        // var ethereum = this.props.ethereum
+        // var source = this.props.form.sourceToken
+        // var dest = this.props.form.destToken
+        // var destTokenSymbol = this.props.form.destTokenSymbol
+        // var sourceAmount = this.props.form.sourceAmount
+        // var sourceDecimal = this.props.form.sourceDecimal
+        // var sourceAmountHex = converters.stringToHex(sourceAmount, sourceDecimal)
+        // var rateInit = 0
+        
+        // this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceAmountHex, true, rateInit))
+
+        this.props.dispatch(exchangeActions.updateRateSnapshot(this.props.ethereum))
+
         switch (this.props.account.type) {
           case "keystore":
+            this.props.dispatch(exchangeActions.fetchGas())
             this.props.dispatch(exchangeActions.openPassphrase())
             break
           case "privateKey":
+            this.props.dispatch(exchangeActions.fetchGas())
             this.props.dispatch(exchangeActions.showConfirm())
             break
           case "trezor":
           case "ledger":
           case "metamask":
             if (this.props.form.sourceTokenSymbol === "ETH") {
+              this.props.dispatch(exchangeActions.fetchGas())
               this.props.dispatch(exchangeActions.showConfirm())
             } else {
               this.checkTokenBalanceOfColdWallet()
@@ -87,9 +128,13 @@ export default class PostExchange extends React.Component {
   }
 
   validateExchange = () => {
-    // if(this.props.form.offeredRate === "0"){
-    //   this.props.dispatch(utilActions.openInfoModal(this.props.translate("error.error_occurred"),
-    //                     this.props.translate("error.source_amount_rate_error")))
+    if(this.props.form.offeredRate === "0"){
+      this.props.dispatch(utilActions.openInfoModal(this.props.translate("error.error_occurred"),
+                        this.props.translate("error.source_amount_rate_error")))
+      return false
+    }
+    // if(this.props.form.error_rate_system){
+    //   this.props.dispatch(exchangeActions.setErrorRateSystem())
     //   return false
     // }
     //check source amount
@@ -98,7 +143,7 @@ export default class PostExchange extends React.Component {
       this.props.form.sourceBalance,
       this.props.form.sourceTokenSymbol,
       this.props.form.sourceDecimal,
-      this.props.form.minConversionRate,
+      this.props.form.offeredRate,
       this.props.form.destDecimal,
       this.props.form.maxCap)
     var sourceAmountErrorKey
@@ -118,41 +163,67 @@ export default class PostExchange extends React.Component {
       case "too high for reserve":
         sourceAmountErrorKey = "error.source_amount_too_high_for_reserve"
         break
+    } 
+
+    if(this.props.form.sourceAmount){
+      var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens.tokens['ETH'].balance, this.props.form.sourceTokenSymbol, 
+      this.props.form.sourceAmount, this.props.form.gas + this.props.form.gas_approve, this.props.form.gasPrice)
+
+      if(validateWithFee){
+        this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
+        check = false
+      }
     }
-    if(this.props.form.slippagePrice === "0"){
-      sourceAmountErrorKey = "error.source_amount_too_high"
-    }
+
+    // if (this.props.form.offeredRate === "0") {
+    //   sourceAmountErrorKey = "error.kyber_down"
+    // }
     if (sourceAmountErrorKey) {
       this.props.dispatch(exchangeActions.thowErrorSourceAmount(sourceAmountErrorKey))
       check = false
     }
     var testGasPrice = parseFloat(this.props.form.gasPrice)
     if (isNaN(testGasPrice)) {
-      this.props.dispatch(exchangeActions.thowErrorGasPrice("Gas price is not number"))
+      this.props.dispatch(exchangeActions.thowErrorGasPrice("error.gas_price_not_number"))
       check = false
-    }else{
-      if (parseFloat(this.props.form.gasPrice) > this.props.form.maxGasPrice){
-        this.props.dispatch(exchangeActions.thowErrorGasPrice("Gas price must be smaller than "+this.props.form.maxGasPrice+" Gwei"))
+    } else {
+      if (parseFloat(this.props.form.gasPrice) > this.props.form.maxGasPrice) {
+        this.props.dispatch(exchangeActions.thowErrorGasPrice("error.gas_price_limit"))
         check = false
       }
     }
 
-    var testRate = parseFloat(this.props.form.offeredRate)
+    var testRate = parseFloat(this.props.form.minConversionRate)
     if (isNaN(testRate)) {
-      this.props.dispatch(exchangeActions.thowErrorRate("Rate is not number"))
+      this.props.dispatch(exchangeActions.thowErrorRate(this.props.translate("error.rate_not_number") || "Rate is not number"))
       check = false
     }
     return check
   }
 
   createRecap = () => {
-    var sourceAmount = this.props.form.sourceAmount.toString();
-    var destAmount = this.props.form.destAmount.toString()
-    var sourceTokenSymbol = this.props.form.sourceTokenSymbol;
-    var destTokenSymbol = this.props.form.destTokenSymbol
-    // var recap = `exchange ${this.props.form.sourceAmount.toString().slice(0, 7)}${this.props.form.sourceAmount.toString().length > 7 ? '...' : ''} ${this.props.form.sourceTokenSymbol} for ${this.getDesAmount().toString().slice(0, 7)}${this.getDesAmount().toString().length > 7 ? '...' : ''} ${this.props.form.destTokenSymbol}`
+    if(!this.props.snapshot || !Object.keys(this.props.snapshot).length) return
+
+    var sourceAmount = this.props.snapshot.sourceAmount.toString();
+    var destAmount = this.props.snapshot.destAmount.toString()
+    var sourceTokenSymbol = this.props.snapshot.sourceTokenSymbol
+    var destTokenSymbol = this.props.snapshot.destTokenSymbol
     return (
-      <p>{this.props.translate("transaction.about_to_exchange") || "You are about to exchange"}<br /><strong>{sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}</strong>&nbsp;{this.props.translate("transaction.for") || "for"}&nbsp;<strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}</strong></p>
+      <p>{this.props.translate("transaction.about_to_exchange") || "You are about to exchange"}
+        <br />
+        <span class="text-success">
+          <strong>{sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}</strong>
+              <span className="color-white">{this.props.translate("transaction.for") || "for"}</span>
+            
+                {this.props.snapshot.isFetchingRate ?
+                    <img src={require('../../../assets/img/waiting-white.svg')} /> 
+                    : 
+                    <strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''}
+                    {destTokenSymbol}
+                    </strong>
+                  }
+        </span>
+      </p>
     )
   }
   getDesAmount = () => {
@@ -160,10 +231,10 @@ export default class PostExchange extends React.Component {
   }
 
   recap = () => {
-    var sourceAmount = this.props.form.sourceAmount;
-    var sourceTokenSymbol = this.props.form.sourceTokenSymbol;
-    var destAmount = this.props.form.destAmount
-    var destTokenSymbol = this.props.form.destTokenSymbol;
+    var sourceAmount = this.props.snapshot.sourceAmount;
+    var sourceTokenSymbol = this.props.snapshot.sourceTokenSymbol;
+    var destAmount = this.props.snapshot.destAmount
+    var destTokenSymbol = this.props.snapshot.destTokenSymbol;
     return {
       sourceAmount, sourceTokenSymbol, destAmount, destTokenSymbol
     }
@@ -171,14 +242,17 @@ export default class PostExchange extends React.Component {
 
   closeModal = (event) => {
     this.props.dispatch(exchangeActions.hidePassphrase())
+    this.props.dispatch(exchangeActions.resetSignError())
   }
   closeModalConfirm = (event) => {
-    if(this.props.form.isConfirming) return
+    if (this.props.form.isConfirming) return
     this.props.dispatch(exchangeActions.hideConfirm())
+    this.props.dispatch(exchangeActions.resetSignError())
   }
   closeModalApprove = (event) => {
-    if(this.props.form.isApproving) return
+    if (this.props.form.isApproving) return
     this.props.dispatch(exchangeActions.hideApprove())
+    this.props.dispatch(exchangeActions.resetSignError())
   }
   changePassword = (event) => {
     this.props.dispatch(exchangeActions.changePassword())
@@ -189,15 +263,20 @@ export default class PostExchange extends React.Component {
     var sourceToken = this.props.form.sourceToken
     var sourceAmount = converters.stringToHex(this.props.form.sourceAmount, this.props.form.sourceDecimal)
     var destToken = this.props.form.destToken
-    var minConversionRate = converters.numberToHex(this.props.form.offeredRate)
+
+    var minConversionRate = converters.toTWei(this.props.form.minConversionRate)
+    minConversionRate = converters.numberToHex(minConversionRate)
+
     var destAddress = this.props.account.address
     var maxDestAmount = converters.biggestNumber()
     var throwOnFailure = this.props.form.throwOnFailure
     var nonce = validators.verifyNonce(this.props.account.getUsableNonce())
     // should use estimated gas
     var gas = converters.numberToHex(this.props.form.gas)
+    var gas_approve = converters.numberToHex(this.props.form.gas_approve)
     // should have better strategy to determine gas price
     var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.form.gasPrice))
+    var sourceTokenSymbol = this.props.form.sourceTokenSymbol
     var balanceData = {
       sourceName: this.props.form.sourceName,
       sourceSymbol: this.props.form.sourceTokenSymbol,
@@ -211,7 +290,43 @@ export default class PostExchange extends React.Component {
     return {
       selectedAccount, sourceToken, sourceAmount, destToken,
       minConversionRate, destAddress, maxDestAmount,
-      throwOnFailure, nonce, gas, gasPrice, balanceData
+      throwOnFailure, nonce, gas,gas_approve, gasPrice, balanceData, sourceTokenSymbol
+    }
+  }
+
+  formParamOfSnapshot = () => {
+    var selectedAccount = this.props.account.address
+    var sourceToken = this.props.snapshot.sourceToken
+    var sourceAmount = converters.stringToHex(this.props.snapshot.sourceAmount, this.props.snapshot.sourceDecimal)
+    var destToken = this.props.snapshot.destToken
+
+    var minConversionRate = converters.toTWei(this.props.snapshot.minConversionRate)
+    minConversionRate = converters.numberToHex(minConversionRate)
+
+    var destAddress = this.props.account.address
+    var maxDestAmount = converters.biggestNumber()
+    var throwOnFailure = this.props.snapshot.throwOnFailure
+    var nonce = validators.verifyNonce(this.props.account.getUsableNonce())
+    // should use estimated gas
+    var gas = converters.numberToHex(this.props.snapshot.gas)
+    var gas_approve = converters.numberToHex(this.props.snapshot.gas_approve)
+    // should have better strategy to determine gas price
+    var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.snapshot.gasPrice))
+    var sourceTokenSymbol = this.props.snapshot.sourceTokenSymbol
+    var balanceData = {
+      sourceName: this.props.snapshot.sourceName,
+      sourceSymbol: this.props.snapshot.sourceTokenSymbol,
+      sourceDecimal: this.props.snapshot.sourceDecimal,
+      source: this.props.snapshot.sourceBalance.toString(),
+      destName: this.props.snapshot.destName,
+      destDecimal: this.props.snapshot.destDecimal,
+      destSymbol: this.props.snapshot.destTokenSymbol,
+      dest: this.props.snapshot.destBalance.toString()
+    }
+    return {
+      selectedAccount, sourceToken, sourceAmount, destToken,
+      minConversionRate, destAddress, maxDestAmount,
+      throwOnFailure, nonce, gas,gas_approve, gasPrice, balanceData, sourceTokenSymbol
     }
   }
   checkTokenBalanceOfColdWallet = () => {
@@ -231,10 +346,11 @@ export default class PostExchange extends React.Component {
 
   processExchangeAfterApprove = () => {
     const params = this.formParams()
+    console.log(params)
     const account = this.props.account
     const ethereum = this.props.ethereum
-    this.props.dispatch(exchangeActions.doApprove(ethereum, params.sourceToken, params.sourceAmount, params.nonce, params.gas, params.gasPrice,
-      account.keystring, account.password, account.type, account, this.props.keyService))
+    this.props.dispatch(exchangeActions.doApprove(ethereum, params.sourceToken, params.sourceAmount, params.nonce, params.gas_approve, params.gasPrice,
+      account.keystring, account.password, account.type, account, this.props.keyService, params.sourceTokenSymbol))
   }
 
   processTx = () => {
@@ -245,7 +361,11 @@ export default class PostExchange extends React.Component {
         password = document.getElementById("passphrase").value
         document.getElementById("passphrase").value = ''
       }
-      const params = this.formParams()
+      //const params = this.formParams()
+      const params = this.formParamOfSnapshot()
+      //check nonce
+      params.nonce = validators.verifyNonce(this.props.account.getUsableNonce())
+
       var account = this.props.account
       var ethereum = this.props.ethereum
 
@@ -255,12 +375,12 @@ export default class PostExchange extends React.Component {
         params.sourceAmount, params.destToken, params.destAddress,
         params.maxDestAmount, params.minConversionRate,
         params.throwOnFailure, params.nonce, params.gas,
-        params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService, params.balanceData))
+        params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService, params.balanceData, params.sourceTokenSymbol))
 
 
     } catch (e) {
       console.log(e)
-      this.props.dispatch(exchangeActions.throwPassphraseError("Key derivation failed"))
+      this.props.dispatch(exchangeActions.throwPassphraseError(this.props.translate("error.passphrase_error")))
     }
   }
 
@@ -272,22 +392,33 @@ export default class PostExchange extends React.Component {
         onCancel={this.closeModal}
         passwordError={this.props.form.errors.passwordError || this.props.form.bcError.message}
         translate={this.props.translate}
+        isFetchingGas={this.props.form.isFetchingGas}
+        gasPrice={this.props.form.gasPrice}
+        gas={this.props.form.gas + this.props.form.gas_approve}
+        isFetchingRate = {this.props.snapshot.isFetchingRate}
       />
     )
   }
   contentConfirm = () => {
     return (
-      <ConfirmTransferModal recap={this.createRecap()}
+      <ConfirmTransferModal 
+        recap={this.createRecap()}
         onCancel={this.closeModalConfirm}
         onExchange={this.processTx}
+        gasPrice={this.props.form.gasPrice}
+        gas={this.props.account.type==="privateKey"? this.props.form.gas + this.props.form.gas_approve: this.props.form.gas}
         isConfirming={this.props.form.isConfirming}
+        isFetchingGas = {this.props.form.isFetchingGas}
+        isFetchingRate = {this.props.snapshot.isFetchingRate}
         type="exchange"
         translate={this.props.translate}
         title={this.props.translate("modal.confirm_exchange_title") || "Exchange confirm"}
+        errors={this.props.form.signError}
       />
     )
   }
   contentApprove = () => {
+    var addressShort = this.props.account.address.slice(0, 8) + "..." + this.props.account.address.slice(-6)
     return (
       <ApproveModal recap="Please approve"
         onCancel={this.closeModalApprove}
@@ -295,6 +426,11 @@ export default class PostExchange extends React.Component {
         token={this.props.form.sourceTokenSymbol}
         onSubmit={this.processExchangeAfterApprove}
         translate={this.props.translate}
+        address={addressShort}
+        gasPrice={this.props.form.gasPrice}
+        gas={this.props.form.gas_approve}
+        isFetchingGas={this.props.form.isFetchingGas}
+        errors={this.props.form.signError}
       />
     )
   }
@@ -349,15 +485,15 @@ export default class PostExchange extends React.Component {
       className += " animated infinite pulse next"
     }
     var termAndServices = (
-      <TermAndServices 
+      <TermAndServices
         clickCheckbox={this.clickCheckbox}
-        termAgree={this.props.form.termAgree} 
+        termAgree={this.props.form.termAgree}
       />
     )
 
     var exchangeRate = {
       sourceToken: this.props.form.sourceTokenSymbol,
-      rate: converters.toT(this.props.form.minConversionRate),
+      rate: converters.toT(this.props.form.offeredRate),
       destToken: this.props.form.destTokenSymbol,
       percent: "-"
     }

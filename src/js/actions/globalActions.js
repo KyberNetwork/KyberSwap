@@ -151,17 +151,42 @@ export function setGasPrice(ethereum){
   }
 }
 
-export function setGasPriceComplete(gasPrice){
-  var gasPriceGwei = converter.weiToGwei(gasPrice)
-  var gasPriceFixed = gasPriceGwei < 1? 1: Math.ceil(gasPriceGwei)
+export function setGasPriceComplete(suggestGasData){
   return {
     type: "GLOBAL.SET_GAS_PRICE_COMPLETE",
-    payload: gasPriceFixed
+    payload: suggestGasData
   }
 }
 
 export function visitExchange(){
   return {
     type: "GLOBAL.VISIT_EXCHANGE",
+  }
+}
+
+export function caculateGasPrice(gasStationPrice){
+  return {
+    type: "GLOBAL.CACULATE_GASPRICE",
+    payload: gasStationPrice
+  }
+}
+
+export function toggleAnalyze(){
+  return {
+    type: "GLOBAL.TOGGLE_ANALYZE"
+  }
+}
+
+export function openAnalyze(txHash){
+  return {
+    type: "GLOBAL.OPEN_ANALYZE",
+    payload: txHash
+  }
+}
+
+export function setAnalyzeError(networkIssues, reserveIssues, txHash){
+  return {
+    type: "GLOBAL.SET_ANALYZE_ERROR",
+    payload: { networkIssues, reserveIssues, txHash }
   }
 }

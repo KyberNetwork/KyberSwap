@@ -33,9 +33,9 @@ const transfer = (state = initState, action) => {
     case "TRANSFER.SELECT_TOKEN":
       newState.tokenSymbol = action.payload.symbol
       newState.token = action.payload.address
-      if(newState.tokenSymbol ==='ETH'){
+      if (newState.tokenSymbol === 'ETH') {
         newState.gas_estimate = newState.gas_limit_transfer_eth
-      }else{
+      } else {
         newState.gas_estimate = newState.gas_limit_transfer_token
       }
       newState.selected = true
@@ -53,6 +53,7 @@ const transfer = (state = initState, action) => {
     case "TRANSFER.TRANSFER_SPECIFY_AMOUNT":
       newState.amount = action.payload
       newState.errors.amountTransfer = ''
+      newState.errors.ethBalanceError = ""
       return newState
     case "TRANSFER_SPECIFY_GAS":
       newState.gas = action.payload
@@ -61,6 +62,7 @@ const transfer = (state = initState, action) => {
       newState.gasPrice = action.payload
       newState.isEditGasPrice = true
       newState.errors.gasPrice = ""
+      newState.errors.ethBalanceError = ""
       return newState
     case "TRANSFER.TOGGLE_ADVANCE":
       newState.advanced = !newState.advanced
@@ -87,7 +89,11 @@ const transfer = (state = initState, action) => {
       newState.errors.amountTransfer = action.payload
       return newState
     }
-    case "TRANSFER.THROW_GAS_PRICE_ERROR":{
+    case "TRANSFER.THROW_ETH_BALANCE_ERROR": {
+      newState.errors.ethBalanceError = action.payload
+      return newState
+    }
+    case "TRANSFER.THROW_GAS_PRICE_ERROR": {
       newState.errors.gasPrice = action.payload
       return newState
     }
@@ -113,6 +119,30 @@ const transfer = (state = initState, action) => {
       newState.broadcasting = false
       newState.bcError = action.payload ? action.payload : ""
       newState.isConfirming = false
+      newState.deviceError = action.payload ? action.payload : ''
+      return newState
+    }
+    case "TRANSFER.SET_SIGN_ERROR": {
+      newState.signError = action.payload ? action.payload : ""
+      newState.isApproving = false
+      newState.isConfirming = false
+      return newState
+    }
+    case "TRANSFER.RESET_SIGN_ERROR": {
+      newState.signError = ''
+      return newState
+    }
+    case "TRANSFER.SET_BROADCAST_ERROR": {
+      newState.broadcasting = false
+      newState.broadcastError = action.payload ? action.payload : ""
+      newState.confirmApprove = false
+      newState.isApproving = false
+      newState.isConfirming = false
+      newState.step = 3
+      return newState
+    }
+    case "TRANSFER.RESET_BROADCAST_ERROR": {
+      newState.broadcastError = ''
       return newState
     }
     case "TRANSFER.FINISH_TRANSACTION": {
@@ -156,17 +186,32 @@ const transfer = (state = initState, action) => {
       }
       return newState
     }
-    case "TRANSFER.UPDATE_CURRENT_BALANCE":{
-      newState.balanceData.next = action.payload.tokenBalance 
+    case "TRANSFER.UPDATE_CURRENT_BALANCE": {
+      newState.balanceData.next = action.payload.tokenBalance
       return newState
     }
-    case "TRANSFER.SET_TERM_AND_SERVICES":{
+    case "TRANSFER.SET_TERM_AND_SERVICES": {
       newState.termAgree = action.payload.value
       return newState
     }
-    case "GLOBAL.SET_GAS_PRICE_COMPLETE":{
-      if(!newState.isEditGasPrice){
-        newState.gasPrice = action.payload
+    case "TRANSFER.SET_GAS_USED":{
+      newState.gas = action.payload.gas
+    }
+    case "TRANSFER.FETCH_GAS":{
+      newState.isFetchingGas = true
+      return newState
+    }
+    case "TRANSFER.FETCH_GAS_SUCCESS":{
+      newState.isFetchingGas = false
+      return newState
+    }
+    case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
+      if (!newState.isEditGasPrice) {
+        var { safeLowGas, standardGas, fastGas, defaultGas } = action.payload
+        newState.gasPriceSuggest.fastGas = fastGas
+        newState.gasPriceSuggest.standardGas = standardGas
+        newState.gasPriceSuggest.safeLowGas = safeLowGas
+        newState.gasPrice = defaultGas
       }
       return newState
     }

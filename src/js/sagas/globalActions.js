@@ -6,24 +6,30 @@ import { closeImportLoading } from '../actions/accountActions'
 import { Rate } from "../services/rate"
 import { push } from 'react-router-redux';
 import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
-
+import { getTranslate } from 'react-localize-redux';
 import { getLanguage } from "../services/language"
 import Language from "../../../lang"
+import constants from "../services/constants"
+
+import * as converter from "../utils/converter"
+import { store } from '../store'
 
 export function* getLatestBlock(action) {
   const ethereum = action.payload
-  const block = yield call(ethereum.call("getLatestBlock"))
+  const block = yield call([ethereum, ethereum.call], "getLatestBlock")
   yield put(actions.updateBlockComplete(block))
 }
 
 export function* updateHistoryExchange(action) {
-  const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
-  var latestBlock = yield call(ethereum.call("getLatestBlock"))
-  const newLogs = yield call(ethereum.call("getLogOneColumn"), page, itemPerPage)
-  yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
+  try{
+    const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
+    var latestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
+    const newLogs = yield call([ethereum, ethereum.call], "getLog")
+    yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
+  }catch(e){
+    console.log(e)
+  }
 }
-
-
 
 export function* goToRoute(action) {
   yield put(push(action.payload));
@@ -37,37 +43,24 @@ export function* clearSession(action) {
 export function* updateAllRate(action) {
   const { ethereum, tokens } = action.payload
   try {
-    const rates = yield call([ethereum, ethereum.call("getAllRatesFromServer")], tokens)
+    const rates = yield call([ethereum, ethereum.call],"getAllRates", tokens)
     yield put(actions.updateAllRateComplete(rates))
   }
   catch (err) {
     //get rate from blockchain
-    try {
-      const rates = yield call([ethereum, ethereum.call("getAllRatesFromBlockchain")], tokens)
-      yield put(actions.updateAllRateComplete(rates))
-    }
-    catch (err) {
-      console.log(err)
-    }
+    console.log(err.message)
   }
 }
 
 export function* updateRateUSD(action) {
   const { ethereum, tokens } = action.payload
   try {
-    const rates = yield call([ethereum, ethereum.call("getAllRatesUSDFromServer")], tokens)
+    const rates = yield call([ethereum, ethereum.call],"getAllRatesUSD")
     yield put(actions.updateAllRateUSDComplete(rates))
-    yield put(actions.showBalanceUSD())
+    yield put(actions.showBalanceUSD())        
   }
   catch (err) {
     yield put(actions.hideBalanceUSD())
-    //get rate from blockchain
-    // try {
-    //   const rates = yield call([ethereum, ethereum.call("getAllRatesUSDFromThirdParty")], tokens)
-    //   yield put(actions.updateAllRateUSDComplete(rates))
-    // } catch (err) {
-    //   console.log(err)
-    // }
   }
 }
 
@@ -75,14 +68,14 @@ export function* updateRateUSD(action) {
 
 export function* checkConnection(action) {
   var { ethereum, count, maxCount, isCheck } = action.payload
-  const isConnected = yield call([ethereum, ethereum.call("isConnectNode")])
-  //console.log(isConnected)
-  if (isConnected) {
+  try {
+    const isConnected = yield call([ethereum, ethereum.call], "isConnectNode")
     if (!isCheck) {
       yield put(actions.updateIsCheck(true))
       yield put(actions.updateCountConnection(0))
     }
-  } else {
+  }catch(err){
+    console.log(err)
     if (isCheck) {
       if (count > maxCount) {
         yield put(actions.updateIsCheck(false))
@@ -90,7 +83,10 @@ export function* checkConnection(action) {
         return
       }
       if (count === maxCount) {
-        yield put(actionsUtils.openInfoModal("Error modal", "Cannot connect to node right now. Please check your network!"))
+        let translate = getTranslate(store.getState().locale)
+        let titleModal = translate('error.error_occurred') || 'Error occurred'
+        let contentModal = translate('error.network_error') || 'Cannot connect to node right now. Please check your network!'
+        yield put(actionsUtils.openInfoModal(titleModal, contentModal))
         yield put(closeImportLoading())
         yield put(actions.updateCountConnection(++count))
         return
@@ -103,28 +99,50 @@ export function* checkConnection(action) {
   }
 }
 
-export function* setGasPrice(action) {
-  try{
-    const ethereum = action.payload
-    const gasPrice = yield call([ethereum, ethereum.call("getGasPrice")])
-    yield put(actions.setGasPriceComplete(gasPrice))
-  }catch(err)
-  {
-    console.log(err)
+function compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
+  if (fastGas > maxGas) {
+    var returnSuggest = {}
+    returnSuggest.fastGas = maxGas
+    returnSuggest.standardGas = maxGas
+    returnSuggest.safeLowGas = maxGas - maxGas * 30 / 100
+    returnSuggest.defaultGas = maxGas
+    return returnSuggest
+  } else {
+    return {safeLowGas, standardGas, fastGas, defaultGas}
   }
-  
+}
+
+export function* setGasPrice(action) {
+  var safeLowGas, standardGas, fastGas, defaultGas
+  var state = store.getState()
+  var maxGasPrice = state.exchange.maxGasPrice
+
+  try {
+    const ethereum = action.payload
+    const gasPrice = yield call([ethereum, ethereum.call], "getGasPrice")
+
+    safeLowGas = gasPrice.low
+    standardGas = gasPrice.standard
+    defaultGas = gasPrice.default
+    fastGas = gasPrice.fast
+
+    var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
+    yield put(actions.setGasPriceComplete(compareWithMax))
+
+  }catch (err) {
+    console.log(err.message)
+  }
 }
 
 export function* setMaxGasPrice(action) {
-  try{
+  try {
     const ethereum = action.payload
-    const maxGasPrice = yield call(ethereum.call("getMaxGasPrice"))
+    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
     yield put(actionsExchange.setMaxGasPriceComplete(maxGasPrice))
-  }catch(err)
-  {
+  } catch (err) {
     console.log(err)
   }
-  
+
 }
 
 
@@ -137,7 +155,7 @@ export function* changelanguage(action) {
     if (!Language.loadAll && lang !== Language.defaultLanguage) {
       activeLang = lang == Language.defaultLanguage ? Language.defaultLanguage : Language.defaultAndActive[1]
       if (!locale || locale.translations["pack"][1] !== lang) {
-        var languagePack = yield call(ethereum.call("getLanguagePack"), lang)
+        var languagePack = yield call(ethereum.call,"getLanguagePack", lang)
         if (!languagePack) return;
 
         yield put.sync(addTranslationForLanguage(languagePack, activeLang))

@@ -94,6 +94,13 @@ export function thowErrorAmount(message) {
   }
 }
 
+export function thowErrorEthBalance(message){
+  return {
+    type: "TRANSFER.THROW_ETH_BALANCE_ERROR",
+    payload: message
+  }
+}
+
 export function thowErrorGasPrice(message) {
   return {
     type: "TRANSFER.THROW_GAS_PRICE_ERROR",
@@ -169,6 +176,33 @@ export function doTransactionFail(error) {
   }
 }
 
+
+export function resetSignError() {
+  return {
+    type: "TRANSFER.RESET_SIGN_ERROR",
+  }
+}
+
+export function setSignError(error) {
+  return {
+    type: "TRANSFER.SET_SIGN_ERROR",
+    payload: error,
+  }
+}
+
+export function resetBroadcastError() {
+  return {
+    type: "TRANSFER.RESET_BROADCAST_ERROR",
+  }
+}
+
+export function setBroadcastError(error) {
+  return {
+    type: "TRANSFER.SET_BROADCAST_ERROR",
+    payload: error,
+  }
+}
+
 export function throwErrorSignTransferTransaction(error) {
   return {
     type: "TRANSFER.THROW_ERROR_SIGN_TRANSACTION",
@@ -195,5 +229,29 @@ export function setTermAndServices(value){
   return {
     type: "TRANSFER.SET_TERM_AND_SERVICES",
     payload: {value}
+  }
+}
+
+
+export function fetchGas(){
+  return {
+    type: "TRANSFER.FETCH_GAS"
+  }
+}
+export function fetchGasSuccess(){
+  return {
+    type: "TRANSFER.FETCH_GAS_SUCCESS"
+  }
+}
+export function estimateGasTransfer(){
+  return {
+    type: "TRANSFER.ESTIMATE_GAS_USED"
+  }
+}
+
+export function setGasUsed(gas){
+  return {
+    type: "TRANSFER.SET_GAS_USED",
+    payload: {gas}
   }
 }
