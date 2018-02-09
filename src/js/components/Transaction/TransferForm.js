@@ -42,7 +42,7 @@ const TransferForm = (props) => {
                     <div className={props.errors.amountTransfer !== '' ? "error select-token-panel" : "select-token-panel"}>
                       {props.tokenTransferSelect}
                       <input type="text" min="0" step="0.000001" placeholder="0" 
-                        value={props.input.amount.value} className="amount-input" 
+                        value={props.input.amount.value} className="amount-input" maxLength="30"
                         onChange={handleChangeAmount}
                       />
                     </div>
