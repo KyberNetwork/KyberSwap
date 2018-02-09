@@ -130,3 +130,12 @@ export function verifyPassphrase(passphrase, repassphrase) {
     return null
   }
 }
+
+export function filterInputNumber(event, value, maxLength = 30) {
+  let str = value.replace(/[^0-9.]/g, '').replace(/\./g, (val,i) => {
+    if(value.indexOf('.') != i) val = ''
+    return val
+  })
+  str = str.slice(0,maxLength)
+  event.target.value = str
+}

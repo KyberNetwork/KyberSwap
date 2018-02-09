@@ -20,7 +20,7 @@ const ApproveModal = (props) => {
 
               <div className="gas-configed text-light text-center">
                 <div className="row">
-                  <p className="column small-6">Gas Price</p>
+                  <p className="column small-6">{props.translate("transaction.gas_price") || 'Gas price'}</p>
                   <p className="column small-6">{props.gasPrice} Gwei</p>
                 </div>
                 <div className="row">

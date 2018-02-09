@@ -131,3 +131,20 @@ ul.broadcast-steps {
     }
   }
 }
+.k-progress{
+  display: flex;
+  .bar{
+    height: 5px;
+    background-color: #ddd;
+    margin: 5px 0;
+    > div{
+      background-color: $k-success;
+      animation: progress;
+      height: 100%;
+    }
+  }
+}
+@-webkit-keyframes progress {
+  0%   { width: 0%}
+  100% { width: 100%}
+}

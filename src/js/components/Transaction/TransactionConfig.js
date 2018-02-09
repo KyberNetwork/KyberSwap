@@ -1,10 +1,17 @@
 import React from "react"
 import ReactTooltip from 'react-tooltip'
+import { filterInputNumber } from "../../utils/validators";
 
 const TransactionConfig = (props) => {
 
   function specifyGasPrice(value) {
     props.gasPriceHandler(value)
+  }
+
+  function handleChangeGasPrice(e) {
+    let maxLength = 10
+    filterInputNumber(e, e.target.value, maxLength)
+    props.gasPriceHandler(e.target.value)
   }
 
   function tooltipGasSuggest(time) {
@@ -29,7 +36,7 @@ const TransactionConfig = (props) => {
               <ReactTooltip place="bottom" id="gas-price-tip" type="light" />
             </label>
             <div className="column small-12 medium-6 end p-relative">
-              <input type="number" min="0" max="99" className="gas-price-input" step="0.1" onKeyPress={props.onGasPricePress} value={props.gasPrice} onChange={e => specifyGasPrice(e.target.value)} />
+              <input type="text" min="0" max="99" className="gas-price-input" step="0.1" value={props.gasPrice} onChange={handleChangeGasPrice} />
               <div class="mt-2">
                 <span className="unit text-lowercase">gwei</span>
                 {gasPriceError}
