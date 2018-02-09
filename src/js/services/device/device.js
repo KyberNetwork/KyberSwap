@@ -19,9 +19,9 @@ export function getTrezorPublicKey(path = defaultDPath) {
 }
 
 
-export function connectLedger() {
+export function connectLedger(time) {
     return new Promise((resolve, reject) => {
-        ledgerU2f.create_async()
+        ledgerU2f.create_async(time)
             .then((comm) => {
                 var eth = new ledgerEth(comm);
                 resolve(eth);
