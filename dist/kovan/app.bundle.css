@@ -9365,8 +9365,10 @@ input[type=number] {
     text-transform: uppercase; }
   #get-start .term-services {
     margin: 50px 0; }
+    #get-start .term-services img {
+      box-sizing: content-box; }
     #get-start .term-services .term-text {
-      vertical-align: middle; }
+      vertical-align: text-top; }
   #get-start button {
     padding: 0 30px;
     margin-bottom: 70px;
