@@ -28,9 +28,19 @@ export default class Trezor {
   }
 
   callSignTransaction = (funcName, ...args) => {
-    const { txParams, keystring, } = keyService[funcName](...args)
-    txParams.address_n = keystring
-    return this.sealTx(txParams)
+    return new Promise((resolve, reject) => {
+      keyService[funcName](...args).then(result => {
+        const { txParams, keystring, } = result
+        txParams.address_n = keystring
+        this.sealTx(txParams).then(result => {
+          resolve(result)
+        }).catch(e => {
+          reject(e)
+        })
+      }).catch(e => {
+          reject(e)
+      })
+    })
   }
 
   sealTx = (params) => {

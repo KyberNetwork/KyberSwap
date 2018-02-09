@@ -48,7 +48,7 @@ const ConfirmTransferModal = (props) => {
         </div>
       </div>
       <div className="overlap">
-        <a className={"button accent process-submit " + (props.isConfirming || props.isFetchingGas ? "waiting" : "next")} onClick={(e) => props.onExchange(e)}>{props.translate("modal.confirm") || "Confirm"}</a>
+        <a className={"button accent process-submit " + (props.isConfirming || props.isFetchingGas || props.isFetchingRate ? "waiting" : "next")} onClick={(e) => props.onExchange(e)}>{props.translate("modal.confirm") || "Confirm"}</a>
       </div>
     </div>
   )

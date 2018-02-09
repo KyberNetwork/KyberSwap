@@ -11,7 +11,13 @@ const initState = {
   history: constants.HISTORY_EXCHANGE,
   count: {storageKey: constants.STORAGE_KEY},
   conn_checker: constants.CONNECTION_CHECKER,
-  isVisitFirstTime: true
+  isVisitFirstTime: true,
+
+  isOpenAnalyze: false,
+  isAnalize: false,
+  isAnalizeComplete: false,
+  analizeError : {},
+  selectedAnalyzeHash: ''
 }
 
 const global = (state = initState, action) => {
@@ -47,6 +53,27 @@ const global = (state = initState, action) => {
     case "GLOBAL.EXIT_IDLE_MODE": {
       return { ...state, idleMode: false }
     }
+    case "GLOBAL.TOGGLE_ANALYZE": {
+      var oldStateOpenAnalyze = state.isOpenAnalyze
+      return {...state, isOpenAnalyze: !oldStateOpenAnalyze}
+    }
+    case "GLOBAL.OPEN_ANALYZE": {
+      var txHash = action.payload
+      var newState = {...state}
+      newState.selectedAnalyzeHash = txHash
+      newState.isOpenAnalyze = true
+
+      return newState
+    }
+    case "GLOBAL.SET_ANALYZE_ERROR": {
+      const { networkIssues, reserveIssues, txHash } = action.payload
+      var newState = {...state}
+      newState.analizeError[txHash] = { networkIssues, reserveIssues }
+      newState.isAnalize = false
+      newState.isAnalizeComplete = true
+      return newState
+    }
+
     case "GLOBAL.UPDATE_HISTORY_EXCHANGE": {
       var history = { ...state.history }
       const { ethereum, page, itemPerPage, isAutoFetch } = action.payload

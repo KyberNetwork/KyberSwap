@@ -55,18 +55,36 @@ const Notify = (props) => {
         break
     }
     var tx = props.txs[hash]
-    return (
-      <li key={hash}>
-        <a class={classTx} href={hashDetailLink(tx.hash)} target="_blank">
-          <div class="title"><span class="amount">{createRecap(tx.type, tx.data)}</span></div>
 
-          <div class="link">{tx.hash.slice(0, 10)} ... {tx.hash.slice(-6)}</div>
-          {classTx === "failed" &&
-            <div class="reason">{props.translate(tx.error || tx.errorInfo) || "Transaction is not mined"}</div>
-          }
-        </a>
-      </li>
-    )
+    if(tx && tx.error == "transaction.error_tx_log" && classTx === "failed"){
+      return (
+        <li key={hash}>
+          <a class={classTx} href={hashDetailLink(tx.hash)} target="_blank">
+            <div class="title"><span class="amount">{createRecap(tx.type, tx.data)}</span></div>
+  
+            <div class="link">{tx.hash.slice(0, 10)} ... {tx.hash.slice(-6)}</div>
+            {/* <div class="reason">{props.translate(tx.error || tx.errorInfo) || "Transaction is not mined"}</div> */}
+            
+          </a>
+          <button className="analyze" onClick={(e) => props.handleAnalyze(tx.hash)}>
+              {props.translate('transaction.analyze') || "Show reasons"}
+          </button>
+        </li>
+      )
+    } else {
+      return (
+        <li key={hash}>
+          <a class={classTx} href={hashDetailLink(tx.hash)} target="_blank">
+            <div class="title"><span class="amount">{createRecap(tx.type, tx.data)}</span></div>
+  
+            <div class="link">{tx.hash.slice(0, 10)} ... {tx.hash.slice(-6)}</div>
+            {classTx === "failed" &&
+              <div class="reason">{props.translate(tx.error || tx.errorInfo) || "Transaction is not mined"}</div>
+            }
+          </a>
+        </li>
+      )
+    }
   });
 
   return (

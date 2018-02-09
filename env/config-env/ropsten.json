@@ -1,16 +1,17 @@
 {
   "connections": {
     "http": [
-      "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",
-      "https://ropsten.infura.io/0BRKxQ0SFvAxGL72cbXi",
-      "https://ropsten.infura.io/Ho4cy66JFfTvvAVlXvii",
-      "https://ropsten.infura.io/aFvzEJSCQtTUJJ0Ec0mW",
-      "https://ropsten.infura.io/uF2YCXrIz7yUFEXd2yo0",
-      "https://ropsten.infura.io/NhLyl78p5UrUgBN5GSty"
+      {
+        "endPoint" : "https://cache.kyber.network",
+        "type": "cached"
+      },
+      {
+        "endPoint" : "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",
+        "type": "prune"
+      }
     ],
     "ws": "wss://ropsten.kyber.network/ws/"
   },
-  "history_endpoint": "https://cache.kyber.network",
   "api_usd":"https://api.coinmarketcap.com",
   "tokens": {
     "ETH": {

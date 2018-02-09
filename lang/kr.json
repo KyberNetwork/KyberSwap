@@ -54,7 +54,7 @@
     "analyze_error": "실패원인",
     "copied": "복사완료",
     "analyze": "원인 파악하기",
-    "no_reason_found": "No any reason was found",
+    "no_reason_found": "귀하의 거래에 대한 어떠한 이유도 찾을 수 없습니다. 잠시 후 다시 시도하십시오.",
 
     "broadcast": "전송",
     "transaction": "거래",
@@ -66,14 +66,14 @@
     "current_address_balance": "현재 주소 잔액",
 
     "transaction_error": "거래 오류",
-    "notification": "Notification",
-    "not_enable_exchange": "Your address is not eligible for exchange at the moment. Come back later!",
-    "kyber_down" : "Kyber exchange is not enabled at the moment. <br/>Please come back later!",
+    "notification": "공고",
+    "not_enable_exchange": "귀하의 주소는 현재 교환 대상이 아닙니다. 나중에 다시 오십시오!",
+    "kyber_down" : "현재 Kyber 교환은 사용할 수 없습니다. 나중에 다시 오시기 바랍니다!",
 
-    "transaction_time": "Transaction time: < ${time} minutes",
+    "transaction_time": "거래 시간 : <${time} 분",
     "waiting_transaction": "거래 대기 중에 있습니다",
-    "click_to_ex_all_balance": "Click to exchange all balance",
-    "click_to_transfer_all_balance": "Click to transfer all balance",
+    "click_to_ex_all_balance": "모든 잔액을 교환하려면 클릭하십시오.",
+    "click_to_transfer_all_balance": "모든 잔액을 송금하려면 클릭하십시오",
 
     "about_to_exchange": "환전을 시작합니다",
     "about_to_transfer": "송금을 시작합니다",
@@ -84,6 +84,7 @@
     "to": "하려면",
     "best_rate": "최소 속도",
     "token_amount": "토큰/금액",
+    "click_to_swap": "스왑하려면 클릭하십시오.",
 
     "transfer_tooltip": "이더 또는 토큰을 다른 주소로 전송하십시오",
     "transaction_gasprice_50": "높은 Gss 가격, 더 빠른 거래 속도, 최대 Gas 비용: 50 Gwei",
@@ -111,7 +112,7 @@
     "custom_path": "맞춤 경로",
     "view_on_etherscan": "Etherscan에서 보기",
     "press_confirm_if_really_want": "계속하시려면 버튼을 눌러주세요",
-    "press_approve": "Press approve to continue",
+    "press_approve": "계속하려면 승인을 누르십시오.",
     "waiting_for_confirmation": "지갑에서 확인을 기다리는 중입니다",
     "confirm_exchange_title": "환전확인",
     "confirm_transfer_title": "송금확인",
@@ -151,18 +152,18 @@
     "time_out": "시간초과",
     "network_error": "블록체인 연결이 원할하지 않습니다, 잠시 후 다시 시도해주세요",
     "term_error": "이용약관 동의는 필수입니다.",
-
+    
     "path_not_support_by_trezor": "TREZOR는 해당 경로를 지원하지 않습니다",
     "check_right_application_selected": "올바른 응용프로그램이 선택되었는지 확인하십시오",
-    "network_not_match": "Metamask should be on ${expectedName}. Currently on ${currentName}",
-    "network_not_match_unknow": "Metamask should be on ${expectedName}",
+    "network_not_match": "Metamask는 <strong>${expectedName}</strong>에 있어야합니다. </br>현재 <strong>${currentName}</strong> 있습니다.",
+    "network_not_match_unknow": "Metamask는 <strong>${expectedName}</strong>에 있어야합니다.",
     "not_supported": "지원하지 않습니다",
     "metamask_not_install":"메타마스크에 연결할 수 없습니다. 메타마스크가 설치 되어 있는지 확인 해 주세요.",
-    "browser_not_support_metamask": "Metamask is not supported on ${browser} browser. </br>Please use Chrome or FireFox instead.",
-    "browser_not_support_ledger": "Ledger is not supported on ${browser} browser. </br>Please use Chrome instead.",
-    "please_make_sure": "Please make sure",
-    "ledger_plugged_in": "- Your Ledger is properly plugged in.",
-    "ledger_logged_in": "- You have logged into your Ledger.",
+    "browser_not_support_metamask": "Metamask는 <strong>${browser}</strong> 브라우저에서 지원되지 않습니다. </br>대신 <strong>Chrome</strong> 또는 <strong>FireFox</strong>를 사용하기를 바랍니다.",
+    "browser_not_support_ledger": "Ledger는 <strong>${browser}</strong> 브라우저에서 지원되지 않습니다. </br>대신 <strong>Chrome</strong> 사용하기를 바랍니다.",
+    "please_make_sure": "다음 사항을 확인하십시오",
+    "ledger_plugged_in": "- 귀하의 Ledger이 올바르게 연결되어 있습니다.",
+    "ledger_logged_in": "- 귀하는 귀하의 Ledger에 로그인하셨습니다.",
 
     "gas_price_not_number":"Gas 가격은 숫자만 입력하셔야 합니다.",
     "rate_not_number":"가격은 숫자만 입력하셔야 합니다.",
@@ -176,13 +177,13 @@
     "issue_user_cap":"입력하신 토큰 금액이 사용자 총 한도를 넘었습니다.",
     "min_rate_too_high":"입력하신 최저 가격이 너무 높습니다.",
 
-    "ledger_global_err": "<div class='text-left'>Cannot connect to your Ledger. Please check if:<br/>- Your Ledger is properly plugged in.<br/>- You have logged into your Ledger.<br/>- You have launched Ethereum Application on your Ledger.<br/>- Browser Support has been enabled in your Ledger.  Learn to enable Browser Support <a href=\"${link}\" target=\"_blank\">here</a>.</div>",
-    "need_to_config_env_ledger": "You need to configure your Linux device to access Ledger. Instruction <a href=\"${link}\" target=\"_blank\">here</a>.",
-    "ledger_not_enable_contract": "Please check if: </br>- \"Contract Data\" has been enabled in your Ledger. Instruction <a href=\"${link}\" target=\"_blank\">here</a>.",
-    "invalid_path_or_session_expired": "Cannot get address from this path. Please check your path is valid or Ledger is connected.",
-    "path_is_invalid": "Invalid path. Please choose another one.",
-    "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue.",
-    "eth_balance_not_enough_for_fee": "Your Eth balance is not enough for transaction fee"
+    "ledger_global_err": "<div class='text-left'>Ledger에 연결할 수 없습니다. 다음 사항을 확인하십시오:<br/>- 귀하의 Ledger이 올바르게 연결되어 있습니다.<br/>- 귀하는 귀하의 Ledger에 로그인하셨습니다.<br/>- 귀하의 Ledger에서 이더리움 신청서를 시작했습니다.<br/>- 귀하의 Ledger에서 \"브라우저 지원\"이 활성화되었습니다. <a href=\"${link}\" target=\"_blank\">여기</a>에서 \"브라우저 지원\"을 사용하는 법을 배우십시오.</div>",
+    "need_to_config_env_ledger": "Ledger에 액세스하려면 Linux 디바이스를 구성해야합니다. <a href=\"${link}\" target=\"_blank\">여기</a>.",
+    "ledger_not_enable_contract": "다음 사항을 확인하십시오: </br>- 귀하의 Ledger에서 \"계약 데이터\"가 활성화되었습니다. <a href=\"${link}\" target=\"_blank\">여기</a> 지시.",
+    "invalid_path_or_session_expired": "이 경로에서 주소를 가져올 수 없습니다. 경로가 유효한지 또는 Ledger가 연결되어 있는지 확인하십시오.",
+    "path_is_invalid": "유효하지 않은 경로. 다른 것을 선택하십시오.",
+    "ledger_time_out": "Ledger에 세션이 만료되었습니다. 계속하려면 다시 로그인하십시오.",
+    "eth_balance_not_enough_for_fee": "Eth 잔액는 거래 비용으로 충분하지 않습니다."
   },
 
   "import": {
@@ -232,7 +233,7 @@
     "content":"Kyber testnet wallet은 교환 및 지불 서비스를 실험하고 이해할 수있는 플랫폼을 제공합니다. 현재의 구현은 안전하지 않을 수 있습니다. 이를 사용하면 자금 손실이 발생할 수 있으며 사용자의 개인 정보가 손상 될 수 있습니다. 사용자는 Kyber testnet wallet을 사용하는 결과에 대한 전적인 책임이 있습니다",
     "use_testnet":"반드시 테스트넷 계정을 사용하시기 바랍니다!!!!",
     "use_real":"진짜 이더리움 계정은 사용하시면 안됩니다!!!",
-    "accept":"Accept"
+    "accept":"수락됨"
   },
 
   "landing_page":{
@@ -245,6 +246,8 @@
   },
 
   "product_feedback": "제품 비드백하기",
-  "help": "도움말"
-
+  "help": "도움말",
+  "low": "낮기",
+  "standard": "표준",
+  "fast": "빠르기"
 }

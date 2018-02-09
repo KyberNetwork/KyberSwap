@@ -16,7 +16,7 @@ const Address = (props) => {
           <div className="address d-inline-block">
             <div className="float-left-md">{props.translate("address.address") || "ADDRESS"}</div>
             <div className="float-right-md">
-              <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "/address/" + props.address}>{props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}</a>
+              <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.address}>{props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}</a>
             </div>
           </div>
           <a onClick={props.endSession} className="exit mr-3">

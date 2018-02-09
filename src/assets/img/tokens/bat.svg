@@ -1,32 +1,25 @@
-<svg width="28" height="28" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<title>bat</title>
-<desc>Created using Figma</desc>
-<g id="Canvas" transform="translate(-709 35)">
-<g id="bat">
-<g id="bg">
-<use xlink:href="#path0_fill" transform="translate(709 -35)" fill="#E3D2DB"/>
-</g>
-<g id="bat">
-<g id="Vector">
-<use xlink:href="#path1_fill" transform="translate(714 -20.3261)" fill="#662D91"/>
-</g>
-<g id="Vector">
-<use xlink:href="#path2_fill" transform="translate(723.043 -31)" fill="#9E1F63"/>
-</g>
-<g id="Vector">
-<use xlink:href="#path3_fill" transform="translate(714 -31)" fill="#FF5000"/>
-</g>
-<g id="Vector">
-<use xlink:href="#path4_fill" transform="translate(719.327 -24.5249)" fill="#E3D2DB"/>
-</g>
-</g>
-</g>
-</g>
-<defs>
-<path id="path0_fill" d="M 28 14C 28 21.732 21.732 28 14 28C 6.26801 28 0 21.732 0 14C 0 6.26801 6.26801 0 14 0C 21.732 0 28 6.26801 28 14Z"/>
-<path id="path1_fill" d="M 18 5.30411L 9.04311 2.72688e-07L 0 5.32607L 18 5.30411Z"/>
-<path id="path2_fill" d="M 0.00287987 0L -1.97754e-07 10.6739L 8.95689 15.978L 0.00287987 0Z"/>
-<path id="path3_fill" d="M 0 16L 9.04311 10.6739L 9.04599 0L 0 16Z"/>
-<path id="path4_fill" d="M 3.69765 0L 0 6.38744L 7.41186 6.38744L 3.69765 0Z"/>
-</defs>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>BAT</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#000000" offset="0%"></stop>
+            <stop stop-color="#000000" stop-opacity="0" offset="97.8336256%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="BAT">
+            <g>
+                <path d="M28,14 C28,21.73206 21.73206,28 14,28 C6.26808,28 0,21.73206 0,14 C0,6.26794 6.26808,0 14,0 C21.73206,0 28,6.26794 28,14" id="Fill-256" fill="#672893"></path>
+                <path d="M24.6449794,21.1606979 C22.3267147,24.2812226 18.6104663,26.3030303 14.4235399,26.3030303 C13.6114448,26.3030303 12.8176148,26.2271598 12.0476699,26.0810389 C6.15365779,24.9682719 1.6969697,19.7922193 1.6969697,13.5764601 C1.6969697,6.54720077 7.39428061,0.848484848 14.4235399,0.848484848 C21.4527992,0.848484848 27.1515152,6.54720077 27.1515152,13.5764601 C27.1515152,16.417388 26.2199943,19.0419445 24.6449794,21.1606979 Z" id="Fill-258" fill="#FFFFFF"></path>
+                <polygon id="Fill-260" fill="#FF4F00" points="15.2727273 11.1966035 11.5359657 17.3109331 11.6308433 17.3109331 5.99938782 20.3636364 5.93939394 20.3636364 15.2727273 5.09090909"></polygon>
+                <polygon id="Fill-262" fill="#672893" points="5.93939394 19.5151515 11.0756675 16.969697 17.7789885 16.969697 22.9060739 19.5108313"></polygon>
+                <polygon id="Fill-264" fill="#A01A63" points="18.1337791 17.31508 18.1619079 17.31508 14.4242424 11.1986755 14.4242424 5.09090909 23.7575758 20.3636364"></polygon>
+                <polygon id="Fill-266" fill="#FFFFFF" points="14.4242424 11.030303 11.030303 16.969697 17.8181818 16.969697"></polygon>
+                <path d="M6,20 L12.1971887,26.5615636 C12.9594596,26.7105306 13.7452342,26.7878788 14.5489495,26.7878788 C18.693528,26.7878788 22.3719267,24.7266921 24.6666667,21.5455319 L23.2063776,20 L6,20 Z" id="Fill-269" fill="url(#linearGradient-1)" opacity="0.100000001"></path>
+            </g>
+        </g>
+    </g>
 </svg>

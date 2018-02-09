@@ -5,11 +5,10 @@ import { setMaxGasPrice } from "../actions/exchangeActions"
 import { delay } from 'redux-saga'
 
 export function* createNewConnection(action) {
-  var connectionInstance = new EthereumService({ default: 'http' })
+  var connectionInstance = new EthereumService()
   yield put(setConnection(connectionInstance))
   connectionInstance.subcribe()
 
-  
   // var state = store.getState()
   // var ethereum = action.payload.ethereum
   // var ethereum = state.connection.ethereum

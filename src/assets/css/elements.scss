@@ -17,15 +17,9 @@ textarea{
   font-size: 15px;
 }
 
-.unlock input, input[type=password] {
-  background-color: transparent;
-  border-bottom: 1px solid $white;
+.unlock input {
   height: 50px;
   color: $white;
-  &:focus{
-    background-color: transparent;
-    border-bottom: 1px solid $white;
-  }
 }
 input {
   &[type=password],
@@ -150,6 +144,7 @@ input.error {
     position: relative;
     white-space: nowrap;
     border: none;
+    color: #fff;
     cursor: default;
     &.waiting {
       color: rgba(white, .5);
@@ -374,9 +369,6 @@ span.help {
     margin-bottom: 0px;
     display: flex;
     align-items: center;
-    .term-text{
-      color: rgba(255,255,255, 0.5)
-    }
     .view-term{
       border: 1px solid white;
       padding: 5px;
@@ -477,7 +469,7 @@ label.switch-caption {
       }
     }
     .error-text{
-      color: #ff5d00;
+      color: $alert-color;
     }
     .gas-price{
       input{

@@ -16,13 +16,13 @@ const PassphraseModal = (props) => {
 
   function toggleShowPw() {
     let input = document.getElementById('passphrase')
-    if (input.type == 'password') {
-      input.type = 'text'
-      input.parentElement.classList.add('unlock')
-    } else if (input.type == 'text') {
-      input.type = 'password'
-      input.parentElement.classList.remove('unlock')
-    }
+		if (input.classList.contains('security')) {
+			input.classList.remove('security')
+			input.parentElement.classList.add('unlock')
+		} else if (input.type == 'text') {
+			input.classList.add('security')
+			input.parentElement.classList.remove('unlock')
+		}
   }
 
   var gasPrice = stringToBigNumber(gweiToEth(props.gasPrice))
@@ -35,7 +35,7 @@ const PassphraseModal = (props) => {
         <div className="row">
           <div className="column">
             <center>
-              {props.recap}
+            {props.recap}
               <div className="gas-configed text-light">
                 <div class="d-flex justify-content-around">
                   <p>Gas Price</p>
@@ -51,8 +51,8 @@ const PassphraseModal = (props) => {
               </div>
               <label className={!!props.passwordError ? "error" : ""}>
                 <div className="input-reveal">
-                  <input className="text-center" id="passphrase" type="password" autoComplete="off"
-                  //placeholder={props.translate("modal.enter_password_placeholder") ||"Enter your password to confirm"}
+                  <input className="text-center security" id="passphrase" type="text" 
+                    autoComplete="off" spellCheck="false"
                     onChange={(e) => props.onChange(e)} autoFocus onKeyPress={(e) => submit(e)} />
                     <a className="toggle" onClick={() => toggleShowPw()}></a>
                 </div>

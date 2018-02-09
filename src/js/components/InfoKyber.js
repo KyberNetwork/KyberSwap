@@ -23,7 +23,7 @@ export default class InfoKyber extends React.Component {
           <div id="info">
             <div class="font-s-down-1">
               <span class="mr-2">
-                <span class="font-w-b">{this.props.translate("info.version") || "Version"}</span>: 0.3.0
+                <span class="font-w-b">{this.props.translate("info.version") || "Version"}</span>: 0.4.0
           </span>
               <span>
                 <span class="font-w-b">{this.props.translate("info.chain") || "Chain"}</span>: {BLOCKCHAIN_INFO.chainName}
@@ -33,11 +33,11 @@ export default class InfoKyber extends React.Component {
             <div class="address">{BLOCKCHAIN_INFO.endpoint}</div>
             <p class="mt-4 mb-1 font-w-b">{this.props.translate("info.reserve_address") || "Reserve contract address"}</p>
             <div class="address">
-              <a href={BLOCKCHAIN_INFO.ethScanUrl + "/address/" + BLOCKCHAIN_INFO.reserve} target="_blank">{BLOCKCHAIN_INFO.reserve}</a>
+              <a href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + BLOCKCHAIN_INFO.reserve} target="_blank">{BLOCKCHAIN_INFO.reserve}</a>
             </div>
             <p class="mt-4 mb-1 font-w-b">{this.props.translate("info.network_address") || "Network contract address"}</p>
             <div class="address">
-              <a href={BLOCKCHAIN_INFO.ethScanUrl + "/address/" + BLOCKCHAIN_INFO.network} target="_blank">{BLOCKCHAIN_INFO.network}</a>
+              <a href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + BLOCKCHAIN_INFO.network} target="_blank">{BLOCKCHAIN_INFO.network}</a>
             </div>
             <div class="mt-6">
               <p class="mb-1 font-s-down-1">

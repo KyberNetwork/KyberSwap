@@ -24,13 +24,16 @@ $divider-color: darken($title-background-color, 5);
   .message {
     margin-bottom: 25px;
   }
-  a.x {
+  a{
+    color: #00ffd6;
+    &.x {
     display: block;
     position: absolute;
     right: 20px;
     top: 10px;
     font-size: 32px;
     color: $white;
+    }
   }
   .title {
     font-weight: bold;
@@ -79,7 +82,7 @@ $divider-color: darken($title-background-color, 5);
     .ledger-error{
       font-size: 0.9em;
       margin-bottom: 25px;
-      color: #ff5d00;
+      color: $alert-color;
       border-top: 1px solid #a5a5a5;
       padding-top: 24px;
     }

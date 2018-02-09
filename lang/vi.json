@@ -86,6 +86,7 @@
     "to": "đến",
     "best_rate": "Rate tốt nhất",
     "token_amount": "Token/Số lượng",
+    "click_to_swap": "Click để hoán đổi",
 
     "transfer_tooltip": "Chuyển eth hoặc token đến một tài khoản khác",
     "transaction_gasprice_50": "Giá Gas càng cao, giao dịch càng nhanh. Giá Gas lớn nhất 50 Gwei",
@@ -153,12 +154,12 @@
 
     "path_not_support_by_trezor": "Đường dẫn này không được Trezor hỗ trợ",
     "check_right_application_selected": "Kiểm tra lại để chắc chắn bạn đã sử dụng đúng ứng dụng",
-    "network_not_match": "Metamask cần chạy ở ${expectedName}. Hiện đang trên ${currentName}",
-    "network_not_match_unknow": "Metamask cần chạy ${expectedName}",
+    "network_not_match": "Metamask cần chạy ở <strong>${expectedName}</strong>. </br>Hiện đang trên <strong>${currentName}</strong>",
+    "network_not_match_unknow": "Metamask cần chạy <strong>${expectedName}</strong>",
     "not_supported": "Không hỗ trợ",
     "metamask_not_install":"Không thể kết nối đến Metamask. Hãy chắc chắn rằng Metamask của bạn đã được cài",
-    "browser_not_support_metamask": "Metamask không được hỗ trợ trên trình duyệt ${browser}. </br>Vui lòng chuyển sang Chrome hoặc FireFox",
-    "browser_not_support_ledger": "Ledger không được hỗ trợ trêntrình duyệt ${browser}.</br>Vui lòng chuyển sang Chrome để sử dụng",
+    "browser_not_support_metamask": "Metamask không được hỗ trợ trên trình duyệt <strong>${browser}</strong>. </br>Vui lòng chuyển sang <strong>Chrome</strong> hoặc <strong>FireFox</strong>",
+    "browser_not_support_ledger": "Ledger không được hỗ trợ trên trình duyệt <strong>${browser}</strong>.</br>Vui lòng chuyển sang <strong>Chrome</strong> để sử dụng",
     "please_make_sure": "Kiểm tra lại nếu",
     "ledger_plugged_in": "- Bạn đã kết nối với Ledger.",
     "ledger_logged_in": "- Bạn đã đăng nhập vào Ledger.",
@@ -235,5 +236,8 @@
   },
 
   "product_feedback": "Phản hồi sản phẩm",
-  "help": "Hỗ trợ"
+  "help": "Hỗ trợ",
+  "low": "Chậm",
+  "standard": "Thường",
+  "fast": "Nhanh"
 }

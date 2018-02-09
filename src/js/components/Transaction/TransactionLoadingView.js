@@ -63,7 +63,7 @@ const TransactionLoadingView = (props) => {
 
   var handleAnalyze = (e) => {
     props.analyze.action(e)
-    props.toogleModal()
+    // props.toogleModal()
   }
 
   var getTooltipCopy = () => {
@@ -162,11 +162,11 @@ const TransactionLoadingView = (props) => {
                   </h4>
                   {/* <div class="reason">{props.translate(props.error) || "Warning! Error encountered during contract execution"}</div> */}
                   {analyzeBtn}
-                  <AnalyzeLogModal analyze={props.analyze} 
+                  {/* <AnalyzeLogModal analyze={props.analyze} 
                     onRequestClose={props.toogleModal}
                     isOpen={props.isOpenModal}
                     translate={props.translate}
-                  />
+                  /> */}
                   {/* {props.type==="exchange" && (
                     <div class="reason">
                       <a onClick={(e)=>props.analyze.action(e)}>Analyze</a>

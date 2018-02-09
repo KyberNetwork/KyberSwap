@@ -55,7 +55,7 @@
     "analyze_error": "失败原因",
     "copied": "拷贝成功",
     "analyze": "显示原因",
-    "no_reason_found": "No any reason was found",
+    "no_reason_found": "我们无法找出您交易的任何原因。请稍后再尝试",
 
     "broadcast": "交易上链",
     "transaction": "交易",
@@ -85,6 +85,7 @@
     "to": "至",
     "best_rate": "最小价格",
     "token_amount": "代币／数量",
+    "click_to_swap": "点击交换",
 
     "transfer_tooltip": "转移以太或代币至其它地址",
     "transaction_gasprice_50": "更高的燃料价格，更快的交易速度。最高燃料价格：50 Gwei",
@@ -112,7 +113,7 @@
     "custom_path": "您的自定义路径",
     "view_on_etherscan": "在Etherscan上查看",
     "press_confirm_if_really_want": "请按确认以继续",
-    "press_approve": "请按批准以继续",
+    "press_approve": "请按准许以继续",
     "waiting_for_confirmation": "正在等待您钱包的确认信息",
     "confirm_exchange_title": "交易确认",
     "confirm_transfer_title": "转移确认",
@@ -155,12 +156,12 @@
 
     "path_not_support_by_trezor": "Trezor不支持这个路径",
     "check_right_application_selected": "检查是否选择了正确的应用",
-    "network_not_match": "Metamask需要连接到${expectedName}网络，而您现在连接的是${currentName}",
-    "network_not_match_unknow": "Metamask需要连接到${expectedName}",
+    "network_not_match": "Metamask需要连接到<strong>${expectedName}</strong>网络，</br>而您现在连接的是<strong>${currentName}</strong>",
+    "network_not_match_unknow": "Metamask需要连接到<strong>${expectedName}</strong>",
     "not_supported": "不支持",
     "metamask_not_install":"无法连接至metamask。请确认您已经安装了metamask。",
-    "browser_not_support_metamask": "${browser}浏览器并不支持Metamask。 </br>请使用谷歌或者火狐浏览器。",
-    "browser_not_support_ledger": "${browser}浏览器并不支持Ledger。</br>请使用谷歌浏览器。",
+    "browser_not_support_metamask": "<strong>${browser}</strong>浏览器并不支持Metamask。</br>请使用<strong>谷歌</strong>或者<strong>火狐</strong>浏览器。",
+    "browser_not_support_ledger": "<strong>${browser}</strong>浏览器并不支持Ledger。</br>请使用<strong>谷歌</strong>浏览器。",
     "please_make_sure": "请检查是否",
     "ledger_plugged_in": "- 你的Ledger硬件钱包插入无误。",
     "ledger_logged_in": "- 你已经登录进你的Ledger了。",
@@ -180,7 +181,7 @@
     "ledger_global_err": "<div class='text-left'>无法连接至Ledger. 请检查是否:<br/>- 你的Ledger硬件钱包插入无误。<br/>- 你已经登录进你的Ledger了。<br/>- 你已经启动了Ledger上的以太坊应用。<br/>- 你的Ledger中的“浏览器支持“已经启用。 <a href=\"${link}\" target=\"_blank\">在这</a>里学习如何启用Ledger中的“浏览器支持“。</div>",
     "need_to_config_env_ledger": "你需要调试你的Linux设备来使用Ledger。说明请看<a href=\"${link}\" target=\"_blank\">这里</a>。",
     "ledger_not_enable_contract": "请检查是否: </br>- 你Ledger中的”合约数据“已经被启用。 说明请看<a href=\"${link}\" target=\"_blank\">这里</a>。",
-    "invalid_path_or_session_expired": "Cannot get address from this path. Please check your path is valid or Ledger is connected.",
+    "invalid_path_or_session_expired": "无法从此路径得到地址。请检查您路径的有效性或Ledger的连接",
     "path_is_invalid": "错误的路径。请选择另一个。",
     "ledger_time_out": "你Ledger上的对话已经过期。请重新登录。",
     "eth_balance_not_enough_for_fee": "您的ETH余额不足以支付交易费用"
@@ -233,7 +234,7 @@
     "content":"Kyber测试网络钱包提供了一个让大家能够实验和了解我们的交易和支付的服务平台。 目前的版本可能不安全。 使用它可能会导致资金损失，并可能危及用户的隐私。 用户对使用Kyber测试网络钱包的任何结果承担全部责任。",
     "use_testnet":"请务必使用测试网络的钱包！！！",
     "use_real":"请千万不要使用真实的以太坊账户！！！",
-    "accept":"Accept"
+    "accept":"接受"
   },
 
   "landing_page":{
@@ -246,5 +247,8 @@
   },
 
   "product_feedback": "产品反馈",
-  "help": "帮助"
+  "help": "帮助",
+  "low": "低",
+  "standard": "标准",
+  "fast": "快"
 }

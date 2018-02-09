@@ -1,16 +1,29 @@
 {
     "connections": {
       "http": [
-        "https://mainnet.infura.io/DtzEYY0Km2BA3YwyJcBG",
-        "https://mainnet.infura.io/aFvzEJSCQtTUJJ0Ec0mW",
-        "https://mainnet.infura.io/Ho4cy66JFfTvvAVlXvii",
-        "https://mainnet.infura.io/uF2YCXrIz7yUFEXd2yo0",
-        "https://mainnet.infura.io/NhLyl78p5UrUgBN5GSty"
+        {
+          "endPoint" : "https://staging-cache.kyber.network",
+          "type": "cached"
+        },
+        {
+          "endPoint" : "https://mainnet.infura.io",
+          "type": "prune"
+        },        
+        {
+          "endPoint" : "https://node.kyber.network",
+          "type": "prune"
+        },
+        {
+          "endPoint" : "https://mew.giveth.io/",
+          "type": "prune"
+        },
+        {
+          "endPoint" : "https://api.mycryptoapi.com/eth",
+          "type": "none_prune"
+        }
       ],
       "ws": "wss://mainnet.infura.io/ws"
     },
-    "history_endpoint": "https://staging-cache.kyber.network",
-    "api_usd":"https://api.coinmarketcap.com",
     "tokens": {
       "ETH": {
         "name": "Ethereum",
@@ -44,14 +57,6 @@
         "decimal": 18,
         "usd_id":"eos"
       },
-      "SALT": {
-        "name":"Salt",
-        "address": "0x4156d3342d5c385a87d264f90653733592000581",
-        "symbol": "SALT",
-        "icon": "salt.svg",
-        "decimal": 8,
-        "usd_id":"salt"
-      },
       "SNT": {
         "name":"Status",
         "address": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
@@ -59,21 +64,64 @@
         "icon": "snt.svg",
         "decimal": 18,
         "usd_id":"status"
+      },
+      "ELF": {
+        "name":"Aelf",
+        "address": "0xbf2179859fc6d5bee9bf9158632dc51678a4100e",
+        "symbol": "ELF",
+        "icon": "aelf.svg",
+        "decimal": 18,
+        "usd_id":"aelf"
+      },
+      "POWR": {
+        "name":"Power Ledger",
+        "address": "0x595832f8fc6bf59c85c527fec3740a1b7a361269",
+        "symbol": "POWR",
+        "icon": "pwr.svg",
+        "decimal": 6,
+        "usd_id":"power-ledger"
+      },
+      "MANA": {
+        "name":"Mana",
+        "address": "0x0f5d2fb29fb7d3cfee444a200298f468908cc942",
+        "symbol": "MANA",
+        "icon": "mana.svg",
+        "decimal": 18,
+        "usd_id":"decentraland"
+      },
+      "BAT": {
+        "name":"Basic Attention Token",
+        "address": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
+        "symbol": "BAT",
+        "icon": "bat.svg",
+        "decimal": 18,
+        "usd_id":"basic-attention-token"
+      },
+      "REQ": {
+        "name":"Request",
+        "address": "0x8f8221afbb33998d8584a2b05749ba73c37a938a",
+        "symbol": "REQ",
+        "icon": "req.svg",
+        "decimal": 18,
+        "usd_id":"request-network"
+      },
+      "GTO": {
+        "name":"Gifto",
+        "address": "0xc5bbae50781be1669306b9e001eff57a2957b09d",
+        "symbol": "GTO",
+        "icon": "gifto.svg",
+        "decimal": 5,
+        "usd_id":"gifto"
       }
     },
     "ethScanUrl": "https://etherscan.io/",
-    "bank": "0x0",
-    "reserve": "0x668d6003399d2d3bad858553eaf4b9477ff0962d",
-    "network": "0x6bc0e45a62e952171fbd7562e7b5f30c50e564ac",
-    "wrapper": "0x28e9221a3bb961bd89641ea55b4dfa4ae464e9cf",
+    "reserve": "0x2c5a182d280eeb5824377b98cd74871f78d6b8bc",
+    "network": "0xd2d21fdef0d054d2864ce328cc56d1238d6b239e",
+    "wrapper": "0x865aa8818615ba9dfa8bcb6a1432b0fc506dbd58",
     "trade_topic":"0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
     "endpoint": "wss://mainnet.infura.io/ws",
     "averageBlockTime": 15000,
     "networkId": 1,
     "chainName": "Mainnet",
-    "server_logs": {
-      "url": "api.etherscan.io",
-      "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
-    },
     "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json"
   }

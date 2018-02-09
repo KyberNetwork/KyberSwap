@@ -86,6 +86,7 @@
     "to": "to",
     "best_rate": "Min Rate",
     "token_amount": "Token/Amount",
+    "click_to_swap": "Click to swap",
 
     "transfer_tooltip": "Transfer ether or tokens to other addresses",
     "transaction_gasprice_50": "Higher gas price, faster transaction. Max gas price: 50 Gwei",
@@ -156,12 +157,12 @@
 
     "path_not_support_by_trezor": "This path is not supported by Trezor",
     "check_right_application_selected": "Check if right application is selected",
-    "network_not_match": "Metamask should be on ${expectedName}. Currently on ${currentName}",
-    "network_not_match_unknow": "Metamask should be on ${expectedName}",
+    "network_not_match": "Metamask should be on <strong>${expectedName}</strong>. </br>Currently on <strong>${currentName}</strong>",
+    "network_not_match_unknow": "Metamask should be on <strong>${expectedName}</strong>",
     "not_supported": "not supported",
     "metamask_not_install":"Cannot connect to metamask. Please make sure you have metamask installed",
-    "browser_not_support_metamask": "Metamask is not supported on ${browser} browser. </br>Please use Chrome or FireFox instead.",
-    "browser_not_support_ledger": "Ledger is not supported on ${browser} browser. </br>Please use Chrome instead.",
+    "browser_not_support_metamask": "Metamask is not supported on <strong>${browser}</strong> browser. </br>Please use <strong>Chrome</strong> or <strong>FireFox</strong> instead.",
+    "browser_not_support_ledger": "Ledger is not supported on <strong>${browser}</strong> browser. </br>Please use <strong>Chrome</strong> instead.",
     "please_make_sure": "Please make sure",
     "ledger_plugged_in": "- Your Ledger is properly plugged in.",
     "ledger_logged_in": "- You have logged into your Ledger.",
@@ -246,5 +247,8 @@
   },
 
   "product_feedback": "Product Feedback",
-  "help": "Help"
+  "help": "Help",
+  "low": "Low",
+  "standard": "Standard",
+  "fast": "Fast"
 }

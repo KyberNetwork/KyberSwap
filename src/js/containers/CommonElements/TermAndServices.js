@@ -13,21 +13,6 @@ import { getTranslate } from 'react-localize-redux';
 
 export default class TermAndServices extends React.Component {
 
-  constructor() {
-    super()
-    this.state = {
-      isOpen: false,
-    }
-  }
-
-  showTerms = () => {
-    this.setState({ isOpen: true })
-  }
-
-  onRequestClose = () => {
-    this.setState({ isOpen: false })
-  }
-
   changeCheckbox = (e) => {
     this.props.clickCheckbox(!this.props.termAgree)
   }
@@ -74,35 +59,14 @@ export default class TermAndServices extends React.Component {
   }
 
   render() {
-    var checkBox = this.props.termAgree ? <img src={require("../../../assets/img/checkmark-selected.svg")} />
-      : <img src={require("../../../assets/img/checkmark-unselected.svg")} />
+    var src = this.props.termAgree ? require("../../../assets/img/checkmark-selected.svg")
+      : require("../../../assets/img/checkmark-unselected.svg")
     return (
-      <div>
-        <div className="term-services">
-          {/* <input type="checkbox" onChange={(e) => this.changeCheckbox(e)} checked={this.props.termAgree} /> */}
-          <span onClick={(e) => this.changeCheckbox(e)}>
-            {checkBox}
+      <div className="term-services">
+        <img className="pr-2 cur-pointer" onClick={(e) => this.changeCheckbox(e)} src={src} width="14" />
+        <span className="term-text">
+          <span className="cur-pointer" onClick={(e) => this.changeCheckbox(e)}>Accept</span> <a className="text-success" href="#" target="_blank">Terms and Conditions</a> to get started
           </span>
-          <span onClick={this.showTerms}>
-            <a className="term-text">
-              {this.props.translate("transaction.terms_and_conditions") || <span>Terms and <br className="show-for-small-only"></br> Conditions </span>}
-            </a>
-          </span>
-
-          {/* <span  onClick={this.showTerms} className="view-term">
-            <a>VIEW</a>
-          </span> */}
-        </div>
-
-        <Modal className={{
-          base: 'reveal medium',
-          afterOpen: 'reveal medium'
-        }}
-          isOpen={this.state.isOpen}
-          onRequestClose={this.onRequestClose}
-          contentLabel="Terms and Services"
-          content={this.content()}
-        />
       </div>
     )
   }

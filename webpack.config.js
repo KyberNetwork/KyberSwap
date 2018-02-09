@@ -53,7 +53,15 @@ var scriptConfig = function (env) {
         }
       })
     ] : [
-        new UglifyJsPlugin(),
+        new UglifyJsPlugin({
+          uglifyOptions: {
+            comments: false,
+            compress: {
+              drop_console: true,
+              warnings: false
+            }
+          }
+        }),
         new ExtractTextPlugin({ // define where to save the file
           filename: 'app.bundle.css',
           allChunks: true,
@@ -93,10 +101,10 @@ var indexConfig = function (env) {
       new HtmlWebpackPlugin({
         title: "Wallet - kyber.network",
         template: './src/app.html.template',
+        favicon: './src/assets/img/favicon.png',
         inject: 'body',
         styleFile: 'app.bundle.css?v=' + Date.now()
-      }),
-
+      })
     ]
   }
 }

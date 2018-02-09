@@ -6,7 +6,7 @@ import { closeImportLoading } from '../actions/accountActions'
 import { Rate } from "../services/rate"
 import { push } from 'react-router-redux';
 import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
-
+import { getTranslate } from 'react-localize-redux';
 import { getLanguage } from "../services/language"
 import Language from "../../../lang"
 import constants from "../services/constants"
@@ -16,18 +16,18 @@ import { store } from '../store'
 
 export function* getLatestBlock(action) {
   const ethereum = action.payload
-  const block = yield call(ethereum.call("getLatestBlock"))
+  const block = yield call([ethereum, ethereum.call], "getLatestBlock")
   yield put(actions.updateBlockComplete(block))
 }
 
 export function* updateHistoryExchange(action) {
   try{
     const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
-    var latestBlock = yield call(ethereum.call("getLatestBlock"))
-    const newLogs = yield call(ethereum.call("getLogOneColumn"))
+    var latestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
+    const newLogs = yield call([ethereum, ethereum.call], "getLog")
     yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
   }catch(e){
-    console.log(e.message)
+    console.log(e)
   }
 }
 
@@ -43,47 +43,24 @@ export function* clearSession(action) {
 export function* updateAllRate(action) {
   const { ethereum, tokens } = action.payload
   try {
-    const rates = yield call([ethereum, ethereum.call("getAllRatesFromServer")], tokens)
-    if(rates.success){
-      yield put(actions.updateAllRateComplete(rates.data))
-    }else{
-      const rates = yield call([ethereum, ethereum.call("getAllRatesFromBlockchain")], tokens)
-      yield put(actions.updateAllRateComplete(rates))
-    }
+    const rates = yield call([ethereum, ethereum.call],"getAllRates", tokens)
+    yield put(actions.updateAllRateComplete(rates))
   }
   catch (err) {
     //get rate from blockchain
-    try {
-      const rates = yield call([ethereum, ethereum.call("getAllRatesFromBlockchain")], tokens)
-      yield put(actions.updateAllRateComplete(rates))
-    }
-    catch (err) {
-      console.log(err)
-    }
+    console.log(err.message)
   }
 }
 
 export function* updateRateUSD(action) {
   const { ethereum, tokens } = action.payload
   try {
-    const rates = yield call([ethereum, ethereum.call("getAllRatesUSDFromServer")], tokens)
-    if(rates.success){
-      yield put(actions.updateAllRateUSDComplete(rates.data))
-      yield put(actions.showBalanceUSD())
-    }else{
-      yield put(actions.hideBalanceUSD())  
-    }
-    
+    const rates = yield call([ethereum, ethereum.call],"getAllRatesUSD")
+    yield put(actions.updateAllRateUSDComplete(rates))
+    yield put(actions.showBalanceUSD())        
   }
   catch (err) {
     yield put(actions.hideBalanceUSD())
-    //get rate from blockchain
-    // try {
-    //   const rates = yield call([ethereum, ethereum.call("getAllRatesUSDFromThirdParty")], tokens)
-    //   yield put(actions.updateAllRateUSDComplete(rates))
-    // } catch (err) {
-    //   console.log(err)
-    // }
   }
 }
 
@@ -91,14 +68,14 @@ export function* updateRateUSD(action) {
 
 export function* checkConnection(action) {
   var { ethereum, count, maxCount, isCheck } = action.payload
-  const isConnected = yield call([ethereum, ethereum.call("isConnectNode")])
-  //console.log(isConnected)
-  if (isConnected) {
+  try {
+    const isConnected = yield call([ethereum, ethereum.call], "isConnectNode")
     if (!isCheck) {
       yield put(actions.updateIsCheck(true))
       yield put(actions.updateCountConnection(0))
     }
-  } else {
+  }catch(err){
+    console.log(err)
     if (isCheck) {
       if (count > maxCount) {
         yield put(actions.updateIsCheck(false))
@@ -139,53 +116,28 @@ export function* setGasPrice(action) {
   var safeLowGas, standardGas, fastGas, defaultGas
   var state = store.getState()
   var maxGasPrice = state.exchange.maxGasPrice
+
   try {
-   // if((env !== "mainnet") || (env !== "internal_mainnet"))  throw "get suggest rate from node"
-
     const ethereum = action.payload
-    const gasStationPrice = yield call([ethereum, ethereum.call("getGasFromEthgasstation")])
-    var safeLowGas, standardGas, fastGas, defaultGas
+    const gasPrice = yield call([ethereum, ethereum.call], "getGasPrice")
 
-    safeLowGas = gasStationPrice.safeLow / 10
-    standardGas = defaultGas = ( gasStationPrice.average / 10 + gasStationPrice.fast / 10) / 2
-
-    fastGas = gasStationPrice.fast / 10
+    safeLowGas = gasPrice.low
+    standardGas = gasPrice.standard
+    defaultGas = gasPrice.default
+    fastGas = gasPrice.fast
 
     var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
     yield put(actions.setGasPriceComplete(compareWithMax))
-  }
-  catch (err) {
-    console.log(err)
-    try {
-      const ethereum = action.payload
-      const gasPrice = yield call([ethereum, ethereum.call("getGasPrice")])
-      var gasPriceGwei = converter.weiToGwei(gasPrice)
 
-      if(gasPriceGwei >= 20){
-        defaultGas = 20
-        safeLowGas = 20
-        standardGas = +gasPriceGwei
-        fastGas = +gasPriceGwei * 1.3
-      } else {
-        standardGas = gasPriceGwei
-        safeLowGas = gasPriceGwei - gasPriceGwei * 30 / 100
-        fastGas = gasPriceGwei + gasPriceGwei * 30 / 100
-        defaultGas = standardGas
-      }
-
-      var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
-      yield put(actions.setGasPriceComplete(compareWithMax))
-    }
-    catch (err) {
-      console.log(err)
-    }
+  }catch (err) {
+    console.log(err.message)
   }
 }
 
 export function* setMaxGasPrice(action) {
   try {
     const ethereum = action.payload
-    const maxGasPrice = yield call(ethereum.call("getMaxGasPrice"))
+    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
     yield put(actionsExchange.setMaxGasPriceComplete(maxGasPrice))
   } catch (err) {
     console.log(err)
@@ -203,7 +155,7 @@ export function* changelanguage(action) {
     if (!Language.loadAll && lang !== Language.defaultLanguage) {
       activeLang = lang == Language.defaultLanguage ? Language.defaultLanguage : Language.defaultAndActive[1]
       if (!locale || locale.translations["pack"][1] !== lang) {
-        var languagePack = yield call(ethereum.call("getLanguagePack"), lang)
+        var languagePack = yield call(ethereum.call,"getLanguagePack", lang)
         if (!languagePack) return;
 
         yield put.sync(addTranslationForLanguage(languagePack, activeLang))

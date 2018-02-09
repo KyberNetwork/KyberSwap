@@ -170,3 +170,23 @@ export function caculateGasPrice(gasStationPrice){
     payload: gasStationPrice
   }
 }
+
+export function toggleAnalyze(){
+  return {
+    type: "GLOBAL.TOGGLE_ANALYZE"
+  }
+}
+
+export function openAnalyze(txHash){
+  return {
+    type: "GLOBAL.OPEN_ANALYZE",
+    payload: txHash
+  }
+}
+
+export function setAnalyzeError(networkIssues, reserveIssues, txHash){
+  return {
+    type: "GLOBAL.SET_ANALYZE_ERROR",
+    payload: { networkIssues, reserveIssues, txHash }
+  }
+}

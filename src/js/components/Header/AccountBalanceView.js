@@ -1,12 +1,17 @@
 import React from "react"
 import * as converts from "../../utils/converter"
 import BigNumber from "bignumber.js"
+import ReactTooltip from 'react-tooltip'
 
 const AccountBalanceView = (props) => {
 
   function displayBalance(balance, rateUSD) {
-    return props.showBalance ? `${props.translate("address.my_balance") || "Balance"}: ${balance} \n${props.translate("address.estimated_value") || "Estimated value"}: ${converts.roundingNumber(balance * rateUSD)} USD` :
-      `${props.translate("address.my_balance") || "Balance"}: ${balance}`
+    return props.showBalance ? 
+    `${props.translate("address.my_balance") || "Balance"}: 
+    <strong>${balance}</strong>
+    <br/>${props.translate("address.estimated_value") || "Estimated value"}: 
+    <strong>${converts.roundingNumber(balance * rateUSD)}</strong> USD`
+    : `${props.translate("address.my_balance") || "Balance"}: <strong>${balance}</strong>`
   }
 
   function getBalances() {
@@ -18,13 +23,17 @@ const AccountBalanceView = (props) => {
         var bigBalance = new BigNumber(token.balance)
         return (
           props.showZeroBalance || bigBalance.greaterThanOrEqualTo(tokenEpsilon) ?
-            <div title={displayBalance(balance, token.rateUSD)} className="columns my-2" key={token.symbol} onClick={(e) => props.selectToken(e, token.symbol, token.address)}>
+            <div data-tip={displayBalance(balance, token.rateUSD)}
+              className="columns my-2" key={token.symbol} data-for={token.symbol}
+              onClick={(e) => props.selectToken(e, token.symbol, token.address)}
+            >
               <div className={'balance-item ' + (token.symbol == props.sourceActive ? 'active' : '')}>
                 <div className="d-inline-block">
                   <div className="symbol font-w-b">{token.symbol}</div>
                   <div className="balance">{converts.roundingNumber(balance)}</div>
                 </div>
               </div>
+              <ReactTooltip place="bottom" id={token.symbol} type="light" html={true}/>
             </div>
             : <div key={token.symbol} />
         )

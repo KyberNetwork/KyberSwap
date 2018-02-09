@@ -154,7 +154,7 @@ class EthereumService {
      // console.log("get logs")
       try {
         var events = await this.currentProvider.getLogExchange(currentBlock, toBlock)
-        //console.log("events etherscan: " + events)
+        //console.log("events etherscan: " + JSON.stringify(events))
         this.handleEvent(events)
         // var events = await this.currentProvider.getLogExchangeFromNode(currentBlock, toBlock)
         // this.handleEventFromNode(events, latestBlock)
@@ -217,6 +217,7 @@ class EthereumService {
 
 
   async handleEvent(logs) {
+   // console.log(logs)
     var arrayAddressToken = Object.keys(BLOCKCHAIN_INFO.tokens).map((tokenName) => { return BLOCKCHAIN_INFO.tokens[tokenName].address })
     for (var i = 0; i < logs.length; i++) {
       var savedEvent = this.getEvent(logs[i])

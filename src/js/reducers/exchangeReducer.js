@@ -99,6 +99,10 @@ const exchange = (state = initState, action) => {
       newState.errors.sourceAmountError = action.payload
       return newState
     }
+    case "EXCHANGE.THROW_ETH_BALANCE_ERROR": {
+      newState.errors.ethBalanceError = action.payload
+      return newState
+    }
     case "EXCHANGE.THROW_GAS_PRICE_ERROR": {
       newState.errors.gasPriceError = action.payload
       return newState
@@ -115,6 +119,7 @@ const exchange = (state = initState, action) => {
       newState.gasPrice = action.payload
       newState.isEditGasPrice = true
       newState.errors.gasPriceError = ""
+      newState.errors.ethBalanceError = ""
       return newState
     }
     case "EXCHANGE.TOGGLE_ADVANCE": {
@@ -163,14 +168,27 @@ const exchange = (state = initState, action) => {
       newState.deviceError = action.payload ? action.payload : ''
       return newState
     }
-    case "EXCHANGE.UPDATE_RATE":
+    case "EXCHANGE.UPDATE_RATE":{
       const { rateInit, expectedPrice, slippagePrice, rateInitSlippage } = action.payload
 
 
+      if(expectedPrice === "0" && rateInit === "0"){
+        newState.errors.rateSystem = "Kyber exchange is under maintainance this pair"
+      }else{
+        newState.errors.rateSystem = ""
+      }
+
+      if(expectedPrice === "0" && rateInit !== "0"){
+        newState.errors.rateAmount = "Kyber cannot handle your amount, please reduce amount"
+      }else{
+        newState.errors.rateAmount = ""
+      }
+
+    
       var slippageRate = slippagePrice === "0" ? rateInitSlippage : slippagePrice
       var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
 
-      newState.slippageRate = slippagePrice
+      newState.slippageRate = slippageRate
       newState.offeredRate = expectedRate
 
       if (newState.sourceAmount !== "") {
@@ -183,6 +201,34 @@ const exchange = (state = initState, action) => {
       }
       newState.isSelectToken = false
       return newState
+    }
+    case "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE": {
+      var { rateInit, expectedPrice, slippagePrice, rateInitSlippage } = action.payload
+
+
+      var slippageRate = slippagePrice === "0" ? rateInitSlippage : slippagePrice
+      var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
+
+      newState.snapshot.slippageRate = slippagePrice
+      newState.snapshot.offeredRate = expectedRate
+
+      if (newState.sourceAmount !== "") {
+        newState.snapshot.minDestAmount = calculateDest(newState.snapshot.sourceAmount, expectedRate).toString(10)
+      }
+      //newState.offeredRateBalance = action.payload.reserveBalance
+      // newState.offeredRateExpiryBlock = action.payload.expirationBlock
+      if (!newState.isEditRate) {
+        newState.snapshot.minConversionRate = slippageRate
+      }
+      newState.snapshot.isSelectToken = false
+
+      return newState
+
+    }
+    case "EXCHANGE.SET_RATE_ERROR_SYSTEM":{
+      newState.errors.rateSystem = "Kyber exchange is under maintainance this pair"
+      return newState
+    }
     case "EXCHANGE.OPEN_PASSPHRASE": {
       newState.passphrase = true
       return newState
@@ -279,12 +325,25 @@ const exchange = (state = initState, action) => {
       }
       return newState
     }
+    case "EXCHANGE.CACULATE_AMOUNT_SNAPSHOT": {
+      if (newState.snapshot.errors.selectSameToken || state.snapshot.errors.selectTokenToken) return newState
+      if (newState.snapshot.inputFocus == "dest") {
+        newState.snapshot.sourceAmount = caculateSourceAmount(state.snapshot.destAmount, state.snapshot.offeredRate, 6)
+      } else {
+        newState.snapshot.destAmount = caculateDestAmount(state.snapshot.sourceAmount, state.snapshot.offeredRate, 6)
+      }
+      newState.snapshot.isFetchingRate = false
+      console.log("***************")
+      console.log(newState)
+      return newState
+    }
     case "EXCHANGE.INPUT_CHANGE": {
       let focus = action.payload.focus
       let value = action.payload.value
       if (focus == "source") {
         newState.sourceAmount = value
         newState.errors.sourceAmountError = ""
+        newState.errors.ethBalanceError = ""
         if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
         newState.destAmount = caculateDestAmount(value, state.offeredRate, 6)
       }
@@ -316,6 +375,18 @@ const exchange = (state = initState, action) => {
       newState.isEditRate = true
       return newState
     }
+    // case "EXCHANGE.ERROR_RATE_ZERO":{
+    //   newState.rateEqualZero = true
+    //   return newState
+    // }
+    // case "EXCHANGE.CLEAR_ERROR_RATE_ZERO":{
+    //   newState.rateEqualZero = false
+    //   newState.errors.rateEqualZero = ""
+    //   return newState
+    // }
+    // case "EXCHANGE.SET_RATE_ERROR_ZERO":{
+    //   newState.errors.rateEqualZero = "Cannot get rate from exchange"
+    // }
     case "EXCHANGE.RESET_MIN_RATE": {
       newState.minConversionRate = newState.offeredRate
       newState.isEditRate = true
@@ -390,6 +461,11 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.SET_KYBER_ENABLE":{
       newState.kyber_enabled = action.payload
+      return newState
+    }
+    case "EXCHANGE.SET_SNAPSHOT": {
+      var snapshot  = action.payload
+      newState.snapshot = {...snapshot}
       return newState
     }
   }

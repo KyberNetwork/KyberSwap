@@ -4,7 +4,8 @@ import { persistReducer } from 'redux-persist'
 import localForage from 'localforage'
 
 import { routerReducer } from 'react-router-redux'
-
+import * as BLOCKCHAIN_INFO from "../../../env"
+import constants from "../services/constants"
 
 import account from './accountReducer'
 import tokens from './tokensReducer'
@@ -30,19 +31,24 @@ const appReducer = combineReducers({
   global: persistReducer({
     key: 'global',
     storage: localForage,
-    blacklist: ['conn_checker']
+    blacklist: ['conn_checker', 'analizeError', 'isOpenAnalyze']
   }, global)
 })
 
 const rootReducer = (state, action) => {
-  if (action.type === 'GLOBAL.CLEAR_SESSION_FULFILLED') {
+  let isGoToRoot = action.type === '@@router/LOCATION_CHANGE' && action.payload.pathname === '/'
+  if (action.type === 'GLOBAL.CLEAR_SESSION_FULFILLED' || isGoToRoot) {
     state = {
-              utils: state.utils, 
-              tokens: state.tokens, 
-              global: state.global,
-              connection: state.connection,
-              locale: state.locale
-            }
+      utils: state.utils, 
+      global: state.global,
+      connection: state.connection,
+      locale: state.locale
+    }
+  }
+  
+  let isGoToExchange = action.type === '@@router/LOCATION_CHANGE' && action.payload.pathname === '/exchange'
+  if(isGoToExchange && !state.account.account){
+    window.location.href = '/'
   }
   return appReducer(state, action)
 }

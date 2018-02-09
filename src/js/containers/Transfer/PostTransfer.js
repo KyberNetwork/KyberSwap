@@ -9,7 +9,7 @@ import * as converters from "../../utils/converter"
 import * as transferActions from "../../actions/transferActions"
 import * as utilActions from "../../actions/utilActions"
 
-import {TermAndServices} from "../../containers/CommonElements"
+import { TermAndServices } from "../../containers/CommonElements"
 import { PassphraseModal, ConfirmTransferModal, PostTransferBtn } from "../../components/Transaction"
 
 import { Modal } from "../../components/CommonElement"
@@ -41,10 +41,11 @@ import { getTranslate } from 'react-localize-redux';
 
 export default class PostTransfer extends React.Component {
   clickTransfer = () => {
+    if (validators.anyErrors(this.props.form.errors)) return
     if (this.validateTransfer()) {
 
       //agree terms and services
-      if(!this.props.form.termAgree){
+      if (!this.props.form.termAgree) {
         let titleModal = this.props.translate('layout.terms_of_service') || 'Terms of Service'
         let contentModal = this.props.translate('error.term_error') || 'You must agree terms and services!'
         return this.props.dispatch(utilActions.openInfoModal(titleModal, contentModal))
@@ -74,24 +75,26 @@ export default class PostTransfer extends React.Component {
       check = false
     }
 
-    var testBalanceWithFee = validators.verifyBalanceForTransaction(this.props.tokens.tokens['ETH'].balance,
-            this.props.form.tokenSymbol, this.props.form.amount, this.props.form.gas, this.props.form.gasPrice)
-    
-
-    if(testBalanceWithFee){
-      this.props.dispatch(transferActions.thowErrorAmount("error.eth_balance_not_enough_for_fee"))
+    if (isNaN(parseFloat(this.props.form.amount))) {
+      this.props.dispatch(transferActions.thowErrorAmount("error.amount_must_be_number"))
       check = false
+      checkNumber = false
+    } else {
+      var testBalanceWithFee = validators.verifyBalanceForTransaction(this.props.tokens.tokens['ETH'].balance,
+        this.props.form.tokenSymbol, this.props.form.amount, this.props.form.gas, this.props.form.gasPrice)
+      if (testBalanceWithFee) {
+        this.props.dispatch(transferActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
+        check = false
+      }
     }
+
+
     var testGasPrice = parseFloat(this.props.form.gasPrice)
     if (isNaN(testGasPrice)) {
       this.props.dispatch(transferActions.thowErrorGasPrice("error.gas_price_not_number"))
       check = false
     }
-    if (isNaN(parseFloat(this.props.form.amount))) {
-      this.props.dispatch(transferActions.thowErrorAmount("error.amount_must_be_number"))
-      check = false
-      checkNumber = false
-    }
+
     if (!checkNumber) {
       return false
     }
@@ -109,7 +112,7 @@ export default class PostTransfer extends React.Component {
         onChange={this.changePassword}
         onClick={this.processTx}
         onCancel={this.closeModal}
-        passwordError={this.props.form.errors.passwordError || this.props.form.bcError} 
+        passwordError={this.props.form.errors.passwordError || this.props.form.bcError}
         translate={this.props.translate}
         isFetchingGas={this.props.form.isFetchingGas}
         gasPrice={this.props.form.gasPrice}
@@ -142,8 +145,8 @@ export default class PostTransfer extends React.Component {
       <p>{this.props.translate("transaction.about_to_transfer") || "You are about to transfer"}
         <br />
         <span class="text-success">
-        <strong>
-          {amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}</strong>
+          <strong>
+            {amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}</strong>
           <span className="color-white">{this.props.translate("transaction.to") || "to"}</span>
           <strong>{destAddress.slice(0, 7)}...{destAddress.slice(-5)}</strong>
         </span>
@@ -167,7 +170,8 @@ export default class PostTransfer extends React.Component {
       case "trezor":
       case "metamask":
       case "ledger":
-        if(this.props.form.isConfirming) return
+      case "privateKey":
+        if (this.props.form.isConfirming) return
         this.props.dispatch(transferActions.hideConfirm())
         this.props.dispatch(transferActions.resetSignError())
         break
@@ -193,11 +197,11 @@ export default class PostTransfer extends React.Component {
     // should have better strategy to determine gas price
     var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.form.gasPrice))
     var balanceData = {
-      balance: this.props.form.balance.toString(), 
+      balance: this.props.form.balance.toString(),
       name: this.props.form.tokenName,
       decimal: this.props.form.decimal,
       tokenSymbol: this.props.form.tokenSymbol,
-      }
+    }
     return {
       selectedAccount, token, amount, destAddress,
       throwOnFailure, nonce, gas, gasPrice, balanceData
@@ -224,13 +228,13 @@ export default class PostTransfer extends React.Component {
       this.props.dispatch(transferActions.throwPassphraseError(this.props.translate("error.passphrase_error")))
     }
   }
-  
+
   openConfig = () => {
     this.props.dispatch(transferActions.toggleAdvance());
   }
 
   render() {
-    
+
     var modalPassphrase = this.props.account.type === "keystore" ? (
       <Modal
         className={{
@@ -259,15 +263,15 @@ export default class PostTransfer extends React.Component {
       className += " animated infinite pulse next"
     }
 
-    var termAndServices = (<TermAndServices clickCheckbox = {this.clickCheckbox}
-      termAgree = {this.props.form.termAgree}/>)
+    var termAndServices = (<TermAndServices clickCheckbox={this.clickCheckbox}
+      termAgree={this.props.form.termAgree} />)
 
     return (
-      <PostTransferBtn 
+      <PostTransferBtn
         className={className}
         modalPassphrase={modalPassphrase}
-        submit={this.clickTransfer} 
-        accountType = {this.props.account.type}
+        submit={this.clickTransfer}
+        accountType={this.props.account.type}
         isConfirming={this.props.form.isConfirming}
         translate={this.props.translate}
         step={this.props.transfer.step}

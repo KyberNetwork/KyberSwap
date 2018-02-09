@@ -31,7 +31,7 @@ export function* updateAccount(action) {
 export function* updateTokenBalance(action) {
   try {
     const { ethereum, address, tokens } = action.payload
-    const balanceTokens = yield call([ethereum, ethereum.call("getAllBalancesToken")], address, tokens)
+    const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtLatestBlock", address, tokens)
     yield put(setBalanceToken(balanceTokens))
   }
   catch (err) {
@@ -48,7 +48,7 @@ export function* importNewAccount(action) {
     yield put(actions.importNewAccountComplete(account))
     yield put(goToRoute('/exchange'))
 
-    var maxCapOneExchange = yield call([ethereum, ethereum.call("getMaxCap")], address)
+    var maxCapOneExchange = yield call([ethereum, ethereum.call], "getMaxCapAtLatestBlock", address)
     yield put(setCapExchange(maxCapOneExchange))
     //update token and token balance
     var newTokens = {}
@@ -56,24 +56,24 @@ export function* importNewAccount(action) {
       var token = { ...token }
       newTokens[token.symbol] = token
     })
-    var randomToken = [
-      {
-        address: newTokens['ETH'].address,
-        symbol: newTokens['ETH'].symbol
-      },
-      {
-        address: newTokens['KNC'].address,
-        symbol: newTokens['KNC'].symbol
-      },
-    ]
-    yield put(setRandomExchangeSelectedToken(randomToken))
+    // var randomToken = [
+    //   {
+    //     address: newTokens['ETH'].address,
+    //     symbol: newTokens['ETH'].symbol
+    //   },
+    //   {
+    //     address: newTokens['KNC'].address,
+    //     symbol: newTokens['KNC'].symbol
+    //   },
+    // ]
+    // yield put(setRandomExchangeSelectedToken(randomToken))
     
     //todo set random token for exchange
     
 
     yield call(ethereum.fetchRateExchange)
 
-    const balanceTokens = yield call([ethereum, ethereum.call("getAllBalancesToken")], address, tokens)
+    const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtLatestBlock", address, tokens)
     //map balance
     var mapBalance = {}
     balanceTokens.map(token => {

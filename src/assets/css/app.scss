@@ -2,11 +2,11 @@
 @import '../bower/animate.css/animate.css';
 @import 'settings';
 @import "util";
+@import 'foundation';
 
 $accent-gradient: linear-gradient(169deg, #36d9ac, #049696);
-$alert-color : #ff5d00;
+$alert-color: #ff5d00;
 
-@import 'foundation';
 @import 'elements';
 @import 'broadcast';
 @import 'modals';
@@ -40,6 +40,12 @@ $alert-color : #ff5d00;
   font-style: normal;
   font-weight: 600;
   src: url(../fonts/Montserrat-SemiBold.ttf);
+}
+@font-face{
+  font-family: 'text-security-disc';
+  font-style: normal;
+  font-weight: normal;
+  src: url(../fonts/text-security-disc.ttf);
 }
 
 body{
@@ -257,6 +263,10 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
       > li {
         font-size: 12px;
         position: relative;
+        transition: background-color .4s ease-in-out;
+        &:hover {
+          background-color: lighten($light-gray, 18);
+        }
         &:not(:last-child) {
           &:before {
             content: '';
@@ -290,9 +300,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
         > a {
           display: block;
           padding: 20px 10px 20px 55px;
-          transition: background-color .4s ease-in-out;
           &:hover {
-            background-color: lighten($light-gray, 18);
             .link{
               color: #2A9A8D
             }
@@ -316,6 +324,20 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
             background-image: url(../img/failed.svg);
             background-repeat: no-repeat;
             background-position: top 22px left 20px;
+            + .analyze{
+              padding: 4px 12px;
+              border-radius: 17px;
+              border: 1px solid #ff5d00;
+              font-weight: normal;
+              margin-left: 55px;
+              margin-bottom: 10px;
+              cursor: pointer;
+              transform: translateY(-8px);
+              transition: background-color .3s;
+              &:hover{
+                background-color: #fff8f6;
+              }
+            }
           }
         }
         span.amount {
@@ -407,20 +429,29 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
       vertical-align: baseline;
       margin-right: 15px;
     }
-    // @media screen and (max-width: 640px) {
-    //   img{
-    //     vertical-align: bottom;
-    //   }
-    //   > div{
-    //     width: calc(100% - 50px);
-    //     .symbol{
-    //       float: left;
-    //     }
-    //     .balance{
-    //       float: right;
-    //     }
-    //   }
-    // }
+    + .__react_component_tooltip{
+      border: 1px solid #afafaf;
+      &.show{
+        opacity: 1;
+      }
+      &.place-bottom{
+        &::before{
+          border-left-width: 10px;
+          border-right-width: 10px;
+          border-bottom: 8px solid #afafaf;
+        }
+        &::after{
+          border-bottom-width: 7px;
+          top: -7px;
+        }
+      }
+      &.place-right::before{
+        border-right: 8px solid #afafaf;
+      }
+      &.place-left::before{
+        border-left: 8px solid #afafaf;
+      }
+    }
   }
   .expand{
     border-top: 1px solid #eee;
@@ -559,5 +590,17 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
 #import-account{
   .title{
     font-weight: normal;
+  }
+}
+#private_key, #passphrase{
+  background-color: transparent;
+  color: inherit;
+  border-bottom: 1px solid #ddd;
+  &:focus{
+    background-color: transparent
+  }
+  &.security{
+    font-family: 'text-security-disc';
+    font-size: 25px;
   }
 }

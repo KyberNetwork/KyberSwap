@@ -27,6 +27,12 @@ export function caculateAmount() {
   }
 }
 
+export function caculateAmountInSnapshot(){
+  return {
+    type: "EXCHANGE.CACULATE_AMOUNT_SNAPSHOT"
+  }
+}
+
 export function inputChange(focus, value) {
   return {
     type: "EXCHANGE.INPUT_CHANGE",
@@ -44,6 +50,13 @@ export function focusInput(focus) {
 export function thowErrorSourceAmount(message) {
   return {
     type: "EXCHANGE.THROW_SOURCE_AMOUNT_ERROR",
+    payload: message
+  }
+}
+
+export function thowErrorEthBalance(message){
+  return {
+    type: "EXCHANGE.THROW_ETH_BALANCE_ERROR",
     payload: message
   }
 }
@@ -104,6 +117,13 @@ export function updateRateExchange(ethereum, source, dest,
   }
 }
 
+export function updateRateSnapshot(ethereum){
+  return {
+    type: "EXCHANGE.UPDATE_RATE_SNAPSHOT",
+    payload: ethereum
+  }
+}
+
 export function updatePrevSource(value) {
   return {
     type: "EXCHANGE.SET_PREV_SOURCE",
@@ -125,6 +145,51 @@ export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePric
   }
 
 }
+
+export function updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice) {
+  // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
+  //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
+
+  //var rateBig = converter.stringToBigNumber(rate[0])
+  //  var offeredRate = rate.expectedPrice
+  //var expirationBlock = rate[1]
+  //var reserveBalance = rate[2]
+  return {
+    type: "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE",
+    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage:  converter.toT(rateInit, 18)}
+  }
+
+}
+
+
+export function setRateSystemError(){
+  return {
+    type: "EXCHANGE.SET_RATE_ERROR_SYSTEM"
+  }  
+}
+
+// export function setErrorRateSystem(){
+//   return {
+//     type: "EXCHANGE.SET_RATE_ERROR_SYSTEM"
+//   }  
+// }
+// export function setErrorRateExchange(){
+//   return {
+//     type: "EXCHANGE.ERROR_RATE_ZERO"
+//   }
+// }
+
+// export function clearErrorRateExchange(){
+//   return {
+//     type: "EXCHANGE.CLEAR_ERROR_RATE_ZERO"
+//   }
+// }
+
+// export function setErrorRateEqualZero(){
+//   return {
+//     type: "EXCHANGE.SET_RATE_ERROR_ZERO"
+//   }
+// }
 
 
 export function openPassphrase() {
@@ -194,7 +259,7 @@ export function processExchange(formId, ethereum, address, sourceToken,
   sourceAmount, destToken, destAddress,
   maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas,
-  gasPrice, keystring, type, password, account, data, keyService, balanceData) {
+  gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol) {
   return {
     type: "EXCHANGE.PROCESS_EXCHANGE",
     payload: {
@@ -202,7 +267,7 @@ export function processExchange(formId, ethereum, address, sourceToken,
       sourceAmount, destToken, destAddress,
       maxDestAmount, minConversionRate,
       throwOnFailure, nonce, gas,
-      gasPrice, keystring, type, password, account, data, keyService, balanceData
+      gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol
     }
   }
 }
@@ -225,12 +290,12 @@ export function checkTokenBalanceOfColdWallet(formId, ethereum, address, sourceT
 }
 
 export function doApprove(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-  keystring, password, accountType, account, keyService) {
+  keystring, password, accountType, account, keyService, sourceTokenSymbol) {
   return {
     type: "EXCHANGE.PROCESS_APPROVE",
     payload: {
       ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-      keystring, password, accountType, account, keyService
+      keystring, password, accountType, account, keyService, sourceTokenSymbol
     }
   }
 }
@@ -416,5 +481,27 @@ export function setKyberEnable(enable){
   return {
     type: "EXCHANGE.SET_KYBER_ENABLE",
     payload: enable
+  }
+}
+
+export function setApproveTx(hash, symbol){
+  return {
+    type: "EXCHANGE.SET_APPROVE_TX",
+    payload: {hash, symbol}
+  }
+}
+
+export function removeApproveTx(symbol){
+  return {
+    type: "EXCHANGE.REMOVE_APPROVE_TX",
+    payload: {symbol}
+  }
+}
+
+export function setSnapshot(data){
+  data.isFetchingRate = true
+  return {
+    type: "EXCHANGE.SET_SNAPSHOT",
+    payload: data
   }
 }
