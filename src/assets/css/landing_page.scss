@@ -13,8 +13,11 @@
   }
   .term-services{
     margin: 50px 0;
+    img{
+      box-sizing: content-box;
+    }
     .term-text{
-      vertical-align: middle;
+      vertical-align: text-top;
     }
   }
   button{

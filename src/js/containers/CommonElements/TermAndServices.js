@@ -79,9 +79,9 @@ export default class TermAndServices extends React.Component {
     return (
       <div>
         <div className="term-services">
-          <img className="mr-1" onClick={(e) => this.changeCheckbox(e)} src={src} width="20"/>
+          <img className="pr-2 cur-pointer" onClick={(e) => this.changeCheckbox(e)} src={src} width="14"/>
           <span className="term-text">
-            Accept <a className="text-success" onClick={this.showTerms}>Terms and Conditions</a> to get started
+            <span className="cur-pointer" onClick={(e) => this.changeCheckbox(e)}>Accept</span> <a className="text-success" onClick={this.showTerms}>Terms and Conditions</a> to get started
           </span>
         </div>
 
