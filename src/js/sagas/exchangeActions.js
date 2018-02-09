@@ -559,6 +559,7 @@ function* updateRatePending(action) {
   }
   catch (err) {    
     console.log(err)
+    yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0"))
     yield put(actions.setRateSystemError())
   }
 }
