@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="43px" height="51px" viewBox="0 0 43 51" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>transaction</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M29.8136373,0 L42.5871088,12.8 L42.5871088,49.9213042 C42.5871088,50.6275084 42.0146172,51.2 41.308413,51.2 L2.99069577,51.2 C2.2844916,51.2 1.712,50.6275084 1.712,49.9213042 L1.712,1.27869577 C1.712,0.572491599 2.2844916,2.12812905e-15 2.99069577,1.99840144e-15 L29.8136373,0 Z" id="path-1"></path>
+        <path d="M42.3734715,13.0133333 L42.3734715,1.49202911 C42.3734715,0.785824932 41.8009799,0.213333333 41.0947757,0.213333333 L29.6,0.213333333" id="path-2"></path>
+    </defs>
+    <g id="F_4_Estimated_Time" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-466.000000, -433.000000)">
+        <g id="png_107" transform="translate(466.000000, 433.000000)">
+            <g id="png_128">
+                <g id="mimetype_png_1b">
+                    <g id="Rectangle-36">
+                        <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        <path stroke="#31C09E" stroke-width="0.5" d="M29.709932,0.25 L2.99069577,0.25 C2.42256279,0.25 1.962,0.710562786 1.962,1.27869577 L1.962,49.9213042 C1.962,50.4894372 2.42256279,50.95 2.99069577,50.95 L41.308413,50.95 C41.876546,50.95 42.3371088,50.4894372 42.3371088,49.9213042 L42.3371088,12.9034015 L29.709932,0.25 Z"></path>
+                    </g>
+                    <g id="Path-50-Copy" transform="translate(35.986736, 6.613333) scale(-1, -1) translate(-35.986736, -6.613333) ">
+                        <use fill-opacity="0.5" fill="#31C09E" fill-rule="evenodd" xlink:href="#path-2"></use>
+                        <path stroke="#31C09E" stroke-width="0.5" d="M42.1234715,12.4088934 L42.1234715,1.49202911 C42.1234715,0.923896119 41.6629087,0.463333333 41.0947757,0.463333333 L30.2026691,0.463333333 L42.1234715,12.4088934 Z"></path>
+                    </g>
+                    <g id="Rectangle-37-+-png" transform="translate(0.000000, 18.851883)">
+                        <rect id="Rectangle-37" fill="#31C09E" x="0" y="0" width="40.446" height="13.7104603" rx="1.07112971"></rect>
+                        <text id="TX" font-family="SourceSansPro-Bold, Source Sans Pro" font-size="7.71213389" font-weight="bold" fill="#FFFFFF">
+                            <tspan x="6.634" y="9.92803347">TX</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
