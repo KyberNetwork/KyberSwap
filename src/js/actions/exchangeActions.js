@@ -505,3 +505,26 @@ export function setSnapshot(data){
     payload: data
   }
 }
+
+
+export function setEstimateTimeProgress(time) {
+  return {
+    type: "EXCHANGE.SET_ESTIMATE_TIME_PROGRESS",
+    payload: {time}
+  }
+}
+
+export function setCurrentTimeProgress(time) {
+  return {
+    type: "EXCHANGE.SET_CURRENT_TIME_PROGRESS",
+    payload: {time}
+  }
+}
+
+export function showInfoProgress() {
+  return {
+    type: "EXCHANGE.SHOW_INFO_PROGRESS"
+  }
+}
+
+

@@ -468,6 +468,21 @@ const exchange = (state = initState, action) => {
       newState.snapshot = {...snapshot}
       return newState
     }
+    case "EXCHANGE.SET_ESTIMATE_TIME_PROGRESS":{
+      const {time} = action.payload
+      newState.progress.estimateTime = time
+      return newState
+    }
+    case "EXCHANGE.SET_CURRENT_TIME_PROGRESS":{
+      const {time} = action.payload
+      newState.progress.currentTime = time
+      return newState
+    }
+
+    case "EXCHANGE.SHOW_INFO_PROGRESS":{
+      newState.progress.isShowInfo = true
+      return newState
+    }
   }
   return state
 }

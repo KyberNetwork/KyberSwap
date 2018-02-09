@@ -188,6 +188,7 @@ export default class Transfer extends React.Component {
         broadcasting={this.props.transfer.broadcasting}
         broadcastingError={this.props.transfer.bcError}
         address={destAdressShort}
+        progress = {this.props.transfer.progress}
       />
     )
 

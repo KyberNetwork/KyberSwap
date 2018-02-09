@@ -311,6 +311,7 @@ export default class Exchange extends React.Component {
         broadcasting={this.props.exchange.broadcasting}
         broadcastingError={this.props.exchange.broadcastError}
         analyze={analyze}
+        progress = {this.props.exchange.progress}
       />
     )
 

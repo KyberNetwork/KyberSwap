@@ -79,6 +79,11 @@ const INIT_EXCHANGE_FORM_STATE = {
     standardTime: 5,
     lowTime: 30
   },
+  progress : {
+    estimateTime : 0,
+    currentTime : 0,
+    isShowInfo : false,
+  },
   maxGasPrice: 50,
   isEditGasPrice: false,
 
@@ -156,6 +161,11 @@ const INIT_TRANSFER_FORM_STATE = {
     fastTime: 2, //minutes
     standardTime: 5,
     lowTime: 30
+  },
+  progress : {
+    estimateTime : 0,
+    currentTime : 0,
+    isShowInfo : false,
   },
   maxGasPrice: 50,
   isEditGasPrice: false,
