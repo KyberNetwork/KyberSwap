@@ -1,8 +1,15 @@
 import React from "react"
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
+import { filterInputNumber } from "../../utils/validators";
 
 const TransferForm = (props) => {
+
+  function handleChangeAmount(e) {
+    filterInputNumber(e, e.target.value)
+    props.input.amount.onChange(e)
+  }
+
   var render = (
     <div id="transfer-screen">
       <div class="frame">
@@ -34,7 +41,10 @@ const TransferForm = (props) => {
 
                     <div className={props.errors.amountTransfer !== '' ? "error select-token-panel" : "select-token-panel"}>
                       {props.tokenTransferSelect}
-                      <input type="number" min="0" step="0.000001" placeholder="0" value={props.input.amount.value} className="amount-input" onChange={props.input.amount.onChange} />
+                      <input type="text" min="0" step="0.000001" placeholder="0" 
+                        value={props.input.amount.value} className="amount-input" maxLength="30"
+                        onChange={handleChangeAmount}
+                      />
                     </div>
                     {props.errors.amountTransfer &&
                       <span class="error-text">{props.translate(props.errors.amountTransfer)}</span>

@@ -16,8 +16,12 @@ import { store } from '../store'
 
 export function* getLatestBlock(action) {
   const ethereum = action.payload
-  const block = yield call([ethereum, ethereum.call], "getLatestBlock")
-  yield put(actions.updateBlockComplete(block))
+  try {
+    const block = yield call([ethereum, ethereum.call], "getLatestBlock")
+    yield put(actions.updateBlockComplete(block))
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export function* updateHistoryExchange(action) {

@@ -129,3 +129,10 @@ export function verifyPassphrase(passphrase, repassphrase) {
     return null
   }
 }
+
+export function filterInputNumber(event, value) {
+  event.target.value = value.replace(/[^0-9.]/g, '').replace(/\./g, (val,i) => {
+    if(value.indexOf('.') != i) val = ''
+    return val
+  })
+}
