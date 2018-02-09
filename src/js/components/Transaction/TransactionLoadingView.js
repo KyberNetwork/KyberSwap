@@ -183,7 +183,7 @@ const TransactionLoadingView = (props) => {
                           <div className="bar">
                             <div style={{animationDuration: estimateSecond + 's'}}></div>
                           </div>
-                          <div className="text-left text-white">{percentProgress}% complete</div>
+                          <div className="text-left text-white">{percentProgress}% Completed</div>
                         </div>
                       </div>
                     }
