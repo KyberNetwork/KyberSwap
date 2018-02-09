@@ -32,7 +32,7 @@
       color: #8b8f91;
     }
   }
-  a:hover{
+  a:hover, a:focus{
     color: $k-success;
   }
 }
