@@ -50,7 +50,7 @@ const ExchangeForm = (props) => {
 
                     <div className={errorToken !== "" || props.errors.sourceAmount != '' || props.errors.rateSystem !== '' || props.errors.rateAmount !== '' ? "error select-token-panel" : "select-token-panel"}>
                       {props.tokenSourceSelect}
-                      <input id="inputSource" type={props.input.sourceAmount.type} className="source-input" value={props.input.sourceAmount.value} onFocus={props.input.sourceAmount.onFocus} onChange={props.input.sourceAmount.onChange} min="0" step="0.000001" placeholder="0" autoFocus />
+                      <input id="inputSource" type={props.input.sourceAmount.type} className="source-input" value={props.input.sourceAmount.value} onFocus={props.input.sourceAmount.onFocus} onChange={props.input.sourceAmount.onChange} min="0" step="0.000001" placeholder="0" autoFocus autoComplete="off"/>
                     </div>
                     {errorSource[0]}
                   </label>
@@ -81,7 +81,7 @@ const ExchangeForm = (props) => {
                     </span>
                     <div className="select-token-panel">
                       {props.tokenDestSelect}
-                      <input type={props.input.destAmount.type} className="des-input" value={props.input.destAmount.value} onFocus={props.input.destAmount.onFocus} onChange={props.input.destAmount.onChange} min="0" step="0.000001" placeholder="0" />
+                      <input type={props.input.destAmount.type} className="des-input" value={props.input.destAmount.value} onFocus={props.input.destAmount.onFocus} onChange={props.input.destAmount.onChange} min="0" step="0.000001" placeholder="0" autoComplete="off" />
                     </div>
                   </label>
                 </div>

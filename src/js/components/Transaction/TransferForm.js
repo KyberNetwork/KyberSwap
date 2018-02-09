@@ -34,7 +34,7 @@ const TransferForm = (props) => {
 
                     <div className={props.errors.amountTransfer !== '' ? "error select-token-panel" : "select-token-panel"}>
                       {props.tokenTransferSelect}
-                      <input type="number" min="0" step="0.000001" placeholder="0" value={props.input.amount.value} className="amount-input" onChange={props.input.amount.onChange} />
+                      <input type="number" min="0" step="0.000001" placeholder="0" value={props.input.amount.value} className="amount-input" onChange={props.input.amount.onChange} autoComplete="off"/>
                     </div>
                     {props.errors.amountTransfer &&
                       <span class="error-text">{props.translate(props.errors.amountTransfer)}</span>
