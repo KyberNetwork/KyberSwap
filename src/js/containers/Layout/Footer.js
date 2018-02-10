@@ -17,13 +17,13 @@ export default class Footer extends React.Component {
           <div className="column medium-6 small-12 footer-menu">
             <ul className="links">
               <li>
-                <a>{this.props.translate('product_feedback') || 'Product Feedback'}</a>
+                <a href="mailto:support@kyber.network">{this.props.translate('product_feedback') || 'Product Feedback'}</a>
               </li>
               <li>
-                <a>{this.props.translate('help') || 'Help'}</a>
+                <a href="https://kybernetwork.zendesk.com/" target="_blank">{this.props.translate('help') || 'Help'}</a>
               </li>
             </ul>
-            ©️ 2018 KYBER NETWORK
+            ©️ 2018 Kyber Network
           </div>
           <div className="column medium-6 small-12 footer-menu text-right">
             <div className="d-inline-block">

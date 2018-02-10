@@ -53,7 +53,7 @@ const ApproveModal = (props) => {
         </div>
       </div>
       <div className="overlap">
-        <a className={"button accent submit-approve " + (props.isApproving ? "waiting" : "next")}
+        <a className={"button accent submit-approve " + (props.isApproving || props.isFetchingGas ? "waiting" : "next")}
           onClick={(e) => props.onSubmit(e)}
         >{props.translate("modal.approve") || "Approve"}</a>
       </div>

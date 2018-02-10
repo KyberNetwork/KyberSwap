@@ -8203,7 +8203,7 @@ input.error {
   border-radius: 1000px;
   background: linear-gradient(169deg, #36d9ac, #049696);
   font-size: 13px;
-  font-weight: bold;
+  font-weight: 800;
   letter-spacing: 1.25px;
   text-transform: uppercase;
   position: relative;
@@ -8255,6 +8255,7 @@ a.has-tip {
 
 h1.title {
   font-size: 24px;
+  font-weight: 500;
   letter-spacing: .5px;
   padding: 20px 0; }
   h1.title a {
@@ -8423,7 +8424,7 @@ span.help {
   display: flex; }
   .advanced-switch .switch-caption {
     margin-right: 10px;
-    font-weight: bold;
+    font-weight: 600;
     font-size: inherit; }
 
 label.switch-caption {
@@ -9004,7 +9005,7 @@ label.address-path-stamp {
 
 .token-compare {
   color: #00ffd6;
-  font-weight: bold;
+  font-weight: 600;
   letter-spacing: .5px;
   text-align: center; }
   .token-compare span {
@@ -9360,15 +9361,25 @@ input[type=number] {
   #get-start .frame {
     background-color: rgba(42, 69, 82, 0.8); }
   #get-start .title {
-    font-weight: bold;
     margin-top: 70px;
-    text-transform: uppercase; }
+    font-weight: 600;
+    font-size: 44px; }
+    @media screen and (max-width: 39.9375em) {
+      #get-start .title {
+        font-size: 31px; } }
+    #get-start .title .flag img {
+      margin-top: -38px;
+      margin-left: 8px;
+      width: 28px; }
+      #get-start .title .flag img + span {
+        margin-left: -24px; }
   #get-start .term-services {
     margin: 50px 0; }
     #get-start .term-services img {
       box-sizing: content-box; }
     #get-start .term-services .term-text {
-      vertical-align: text-top; }
+      vertical-align: text-top;
+      font-weight: 500; }
   #get-start button {
     padding: 0 30px;
     margin-bottom: 70px;
@@ -9376,9 +9387,10 @@ input[type=number] {
     border: 1px solid;
     border-color: #0ea199; }
     #get-start button.disable {
-      background: transparent;
-      border-color: #8b8f91;
-      color: #8b8f91; }
+      background: linear-gradient(to right, #868f96, #596164);
+      font-weight: 800;
+      border-color: #5a6266;
+      color: #ffffff; }
   #get-start a:hover, #get-start a:focus {
     color: #3ee6c1; }
 
@@ -9539,11 +9551,22 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   border-bottom: 1px solid #ddd;
   min-height: 75px; }
   #header a.logo img {
-    width: 100px;
-    margin-top: 10px; }
+    width: 108px;
+    margin-top: 7px; }
+    #header a.logo img + .beta {
+      font-weight: 600;
+      color: #18252b;
+      font-size: 11px;
+      padding: 1px 10px;
+      border: 2px solid #446574;
+      display: inline-block;
+      position: relative;
+      margin-left: 10px;
+      top: 6px; }
     @media screen and (max-width: 450px) {
       #header a.logo img {
-        width: 70px; } }
+        width: 85px;
+        margin-top: 15px; } }
   #header .user-bar {
     margin-top: 14px;
     position: relative;
