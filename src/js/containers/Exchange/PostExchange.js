@@ -115,6 +115,7 @@ export default class PostExchange extends React.Component {
               this.props.dispatch(exchangeActions.fetchGas())
               this.props.dispatch(exchangeActions.showConfirm())
             } else {
+              this.props.dispatch(exchangeActions.fetchGas())
               this.checkTokenBalanceOfColdWallet()
             }
             break
@@ -429,7 +430,7 @@ export default class PostExchange extends React.Component {
         address={addressShort}
         gasPrice={this.props.form.gasPrice}
         gas={this.props.form.gas_approve}
-        isFetchingGas={this.props.form.isFetchingGas}
+        isFetchingGas = {this.props.form.isFetchingGas}
         errors={this.props.form.signError}
       />
     )
@@ -481,7 +482,7 @@ export default class PostExchange extends React.Component {
       )
     }
     let className = "button accent "
-    if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree) {
+    if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree && !this.props.form.isSelectToken) {
       className += " animated infinite pulse next"
     }
     var termAndServices = (

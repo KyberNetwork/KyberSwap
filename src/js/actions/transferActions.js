@@ -217,10 +217,10 @@ export function makeNewTransfer() {
 }
 
 
-export function updateCurrentBalance(tokenBalance) {
+export function updateCurrentBalance(tokenBalance, txHash) {
   return {
     type: "TRANSFER.UPDATE_CURRENT_BALANCE",
-    payload: { tokenBalance }
+    payload: { tokenBalance, txHash }
   }
 }
 
