@@ -16,13 +16,17 @@ export default class LandingPage extends React.Component {
 		this.typeIt(textArr)
 	}
 
+	componentWillUnmount() {
+		clearInterval(this.SI);
+	}
+
 	typeIt(words) {
 		let letterIndex = 0;
 		let wordIndex = 0;
 
 		let nextWord = () => {
 			let h1 = ''
-			let SI = setInterval(() => {
+			this.SI = setInterval(() => {
 				h1 += words[wordIndex][letterIndex]
 				this.setState({
 					text: h1
@@ -31,7 +35,7 @@ export default class LandingPage extends React.Component {
 				if (letterIndex === words[wordIndex].length) {
 					wordIndex = (wordIndex + 1) % words.length;
 					letterIndex = 0;
-					clearInterval(SI);
+					clearInterval(this.SI);
 					setTimeout(() => {
 						nextWord();
 					}, 2000);
