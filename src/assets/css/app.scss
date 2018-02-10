@@ -163,10 +163,22 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
   border-bottom: 1px solid #ddd;
   min-height: 75px;
   a.logo img{
-    width: 100px;
-    margin-top: 10px;
+    width: 108px;
+    margin-top: 7px;
+    + .beta{
+      font-weight: 600;
+      color: #18252b;
+      font-size: 11px;
+      padding: 1px 10px;
+      border: 2px solid #446574;
+      display: inline-block;
+      position: relative;
+      margin-left: 10px;
+      top: 6px;
+    }
     @media screen and (max-width: 450px){
-      width: 70px;
+      width: 85px;
+      margin-top: 15px;
     }
   }
   .user-bar {

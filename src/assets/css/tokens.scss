@@ -75,18 +75,11 @@
 
 .token-compare {
   color: #00ffd6;
-  font-weight: bold;
+  font-weight: 600;
   letter-spacing: .5px;
-  //cursor: pointer;
   text-align: center;
   span {
     margin-left: 10px;
-    // &:before {
-    //   content: '(';
-    // }
-    // &:after {
-    //   content: ')'
-    // }
     &.up {
       color: $primary-color;
     }

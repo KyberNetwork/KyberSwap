@@ -23,7 +23,7 @@ export default class Footer extends React.Component {
                 <a href="https://kybernetwork.zendesk.com/" target="_blank">{this.props.translate('help') || 'Help'}</a>
               </li>
             </ul>
-            ©️ 2018 KYBER NETWORK
+            ©️ 2018 Kyber Network
           </div>
           <div className="column medium-6 small-12 footer-menu text-right">
             <div className="d-inline-block">
