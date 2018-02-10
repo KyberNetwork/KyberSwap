@@ -3,12 +3,44 @@ import TermAndServices from "../../containers/CommonElements/TermAndServices";
 
 export default class LandingPage extends React.Component {
 
-	constructor(){
+	constructor() {
 		super()
 		this.state = {
-			termAgree: false
+			termAgree: false,
+			text: ''
 		}
 	}
+
+	componentDidMount() {
+		let textArr = ['Decentralized', 'Trustless', 'Instant', 'Liquid', 'Compatible']
+		this.typeIt(textArr)
+	}
+
+	typeIt(words) {
+		let letterIndex = 0;
+		let wordIndex = 0;
+
+		let nextWord = () => {
+			let h1 = ''
+			let SI = setInterval(() => {
+				h1 += words[wordIndex][letterIndex]
+				this.setState({
+					text: h1
+				})
+				letterIndex++;
+				if (letterIndex === words[wordIndex].length) {
+					wordIndex = (wordIndex + 1) % words.length;
+					letterIndex = 0;
+					clearInterval(SI);
+					setTimeout(() => {
+						nextWord();
+					}, 2000);
+				}
+			}, 150);
+		}
+		nextWord();
+	}
+
 
 	clickCheckbox = () => {
 		this.setState({
@@ -17,30 +49,37 @@ export default class LandingPage extends React.Component {
 	}
 
 	goExchange = () => {
-		if(this.state.termAgree){
+		if (this.state.termAgree) {
 			this.props.goExchange()
 		}
 	}
 
-	render(){
+	render() {
 		return (
 			<div id="get-start">
-					<div class="frame">
-							<div className="row">
-									<div className="column text-center">
-											<h3 class="title">{this.props.translate("landing_page.title") || "Decentralized Exchange  for Ethereum tokens"}</h3>
-											<TermAndServices 
-												termAgree={this.state.termAgree}
-												clickCheckbox={this.clickCheckbox}
-											/>
-											<button class={"button accent " + (this.state.termAgree ? "next" : "disable")} 
-												onClick={this.goExchange}>
-												{this.props.translate("landing_page.get_started") || "Get Started"}
-											</button>
-									</div>
-							</div>
+				<div class="frame">
+					<div className="row">
+						<div className="column text-center">
+							<h3 class="title">
+								<span>{this.state.text}</span> 
+								<span class="flag"> 
+									<img src={require('../../../assets/img/kyber-flag.svg')}/>
+									<span> exchange </span><br/>
+									<span>for Cryptocurrencies</span>
+								</span>
+							</h3>
+							<TermAndServices
+								termAgree={this.state.termAgree}
+								clickCheckbox={this.clickCheckbox}
+							/>
+							<button class={"button accent " + (this.state.termAgree ? "next" : "disable")}
+								onClick={this.goExchange}>
+								{this.props.translate("landing_page.get_started") || "Get Started"}
+							</button>
+						</div>
 					</div>
+				</div>
 			</div>
 		)
-  }
+	}
 }

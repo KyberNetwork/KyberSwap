@@ -138,7 +138,7 @@ input.error {
     border-radius: 1000px;
     background: $accent-gradient;
     font-size: 13px;
-    font-weight: bold;
+    font-weight: 800;
     letter-spacing: 1.25px;
     text-transform: uppercase;
     position: relative;
@@ -205,7 +205,7 @@ a.has-tip {
 }
 h1.title {
   font-size: 24px;
-  //font-weight: bold;
+  font-weight: 500;
   letter-spacing: .5px;
   padding: 20px 0;
   a{
@@ -423,7 +423,7 @@ span.help {
   display: flex;
   .switch-caption{
     margin-right: 10px;
-    font-weight: bold;
+    font-weight: 600;
     font-size: inherit;
   }
 }
