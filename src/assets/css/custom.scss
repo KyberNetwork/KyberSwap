@@ -11,8 +11,8 @@
     
     $half: -50%;
     .reveal.tiny{
-        width: 55%;
-        max-width: 500px;
+        max-width: 70%;
+        width: 500px;
         top: 40%;
         -ms-transform: translateY($half);
         -webkit-transform: translateY($half);
@@ -22,7 +22,8 @@
 }
 @include breakpoint(large){
     .reveal.tiny{
-        width: 30%;
+        max-width: 45%;
+        width: 420px;
     } 
 }
 
