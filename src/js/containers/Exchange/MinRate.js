@@ -17,8 +17,8 @@ import { filterInputNumber } from "../../utils/validators"
 export default class MinRate extends React.Component {
 
   changeMinRate = (e) => {
-    filterInputNumber(e, e.target.value)
-    this.props.dispatch(actions.setMinRate(e.target.value))
+    var check = filterInputNumber(e, e.target.value, this.props.exchange.minConversionRate)
+    if(check) this.props.dispatch(actions.setMinRate(e.target.value))
   }
 
   render = () => {

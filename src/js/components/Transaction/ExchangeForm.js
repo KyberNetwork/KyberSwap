@@ -9,13 +9,13 @@ import { filterInputNumber } from "../../utils/validators";
 const ExchangeForm = (props) => {
 
   function handleChangeSource(e) {
-    filterInputNumber(e, e.target.value)
-    props.input.sourceAmount.onChange(e)
+    var check = filterInputNumber(e, e.target.value, props.input.sourceAmount.value)
+    if(check) props.input.sourceAmount.onChange(e)
   }
 
   function handleChangeDest(e) {
-    filterInputNumber(e, e.target.value)
-    props.input.destAmount.onChange(e)
+    var check = filterInputNumber(e, e.target.value, props.input.destAmount.value)
+    if(check) props.input.destAmount.onChange(e)
   }
 
   function moveCursor() {

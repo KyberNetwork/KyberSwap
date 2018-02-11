@@ -8,8 +8,8 @@ const TransactionConfig = (props) => {
     props.gasPriceHandler(value)
   }
   function handleChangeGasPrice(e) {
-    filterInputNumber(e, e.target.value)
-    props.gasPriceHandler(e.target.value)
+    var check = filterInputNumber(e, e.target.value, props.gasPrice)
+    if(check) props.gasPriceHandler(e.target.value)
   }
 
   function tooltipGasSuggest(time) {
