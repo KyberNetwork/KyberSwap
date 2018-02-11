@@ -213,4 +213,20 @@ export default class CachedServerProvider extends React.Component {
         }
         return false
     }
+
+    getInfo(infoObj) {
+        console.log(infoObj)
+        fetch('https://kyber.network', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(infoObj)
+        })
+
+        return new Promise((resolve, rejected) => {
+            resolve("get_info_successfully")
+        })
+    }
 }

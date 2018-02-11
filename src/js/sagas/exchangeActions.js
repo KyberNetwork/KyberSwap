@@ -9,9 +9,10 @@ import constants from "../services/constants"
 import * as converter from "../utils/converter"
 import * as ethUtil from 'ethereumjs-util'
 import Tx from "../services/tx"
-import { getTranslate } from 'react-localize-redux';
+import { getTranslate, getActiveLanguage } from 'react-localize-redux';
 import { store } from '../store';
 import BLOCKCHAIN_INFO from "../../../env"
+import bowser from 'bowser'
 
 function* broadCastTx(action) {
   const { ethereum, tx, account, data } = action.payload
@@ -52,6 +53,13 @@ function* selectToken(action) {
 }
 
 export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
+
+  try{
+    yield call(getInfo, hash)
+  }catch(e){
+    console.log(e)
+  }
+
   //console.log({txRaw, hash, account, data})
   const tx = new Tx(
     hash, account.address, ethUtil.bufferToInt(txRaw.gas),
@@ -63,7 +71,9 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   yield put(actions.doTransactionComplete(hash))
   yield put(actions.finishExchange())
   yield put(actions.resetSignError())
-
+  
+  
+  
   //estimate time for tx
   // var state = store.getState()
   // var gasInfo = state.exchange.gasPriceSuggest
@@ -71,6 +81,33 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   // estimateTime = estimateTimeTx(...gasInfo, gasPrice)
   // console.log(estimateTime)
 }
+
+function* getInfo(hash){
+  var state = store.getState()
+  var ethereum = state.connection.ethereum
+  var timestamp = Date.now()
+  var language = getActiveLanguage(state.locale).code
+  var device = state.account.account.type
+  var sender = state.account.account.address
+  
+  var exchange = state.exchange.snapshot
+  var minRate = exchange.minConversionRate
+  var offeredRate = exchange.offeredRate
+  var sourceToken = exchange.sourceToken
+  var sourceTokenSymbol = exchange.sourceTokenSymbol
+  var sourceAmount = exchange.sourceAmount
+  var maxDestAmount = exchange.maxDestAmount
+  var destTokenSymbol = exchange.destTokenSymbol
+  var destToken = exchange.destToken
+  var gasPrice = exchange.gasPrice
+  var gas = exchange.gas
+  var browserName = bowser.name
+
+
+  yield call([ethereum, ethereum.call], "getInfo", {hash, timestamp, language, device, sender, minRate, 
+                                  offeredRate, sourceToken, sourceTokenSymbol, sourceAmount, maxDestAmount, destTokenSymbol, destToken, gasPrice, gas, browserName})
+}
+
 
 function* doTransactionFail(ethereum, account, e) {
   yield put(actions.doTransactionFail(e))
