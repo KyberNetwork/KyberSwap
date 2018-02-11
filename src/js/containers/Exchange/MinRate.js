@@ -3,8 +3,9 @@ import React from "react"
 import { connect } from "react-redux"
 import * as converter from "../../utils/converter"
 import * as actions from "../../actions/exchangeActions"
-import { getTranslate } from 'react-localize-redux';
+import { getTranslate } from 'react-localize-redux'
 import ReactTooltip from 'react-tooltip'
+import { filterInputNumber } from "../../utils/validators"
 
 @connect((store) => {
   return { 
@@ -16,22 +17,12 @@ import ReactTooltip from 'react-tooltip'
 export default class MinRate extends React.Component {
 
   changeMinRate = (e) => {
-    var value = e.target.value
-    this.props.dispatch(actions.setMinRate(value))
-    // if (value === "" || isNaN(value)) {
-    //   this.props.dispatch(actions.setMinRate(value))
-    // } else {
-    //   var valueB = converter.toTWei(value)
-    //   this.props.dispatch(actions.setMinRate(valueB.toString()))
-    // }
-    //this.props.dispatch(actions.caculateAmount())
+    var check = filterInputNumber(e, e.target.value, this.props.exchange.minConversionRate)
+    if(check) this.props.dispatch(actions.setMinRate(e.target.value))
   }
 
   render = () => {
     var minConversionRate = this.props.exchange.minConversionRate
-    // if (minConversionRate !== "" && !isNaN(minConversionRate)) {
-    //   minConversionRate = converter.toT(minConversionRate, 18)
-    // }
     return (
       <div className="row min-rate small-12 medium-8">
         <label className="column small-12 medium-3 text-right">
@@ -40,7 +31,7 @@ export default class MinRate extends React.Component {
           <ReactTooltip place="bottom" id="rate-tip" type="light"/>
         </label>
         <div className="column small-12 medium-6 end p-relative">
-          <input type="number" value={minConversionRate} onChange={(e) => this.changeMinRate(e)} autoComplete="off"/>
+          <input type="text" maxLength="20" value={minConversionRate} onChange={(e) => this.changeMinRate(e)} autoComplete="off"/>
           <span className="error-text">{this.props.exchange.errors.rateError}</span>
         </div>
       </div>
