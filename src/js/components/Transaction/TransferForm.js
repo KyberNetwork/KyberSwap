@@ -1,12 +1,12 @@
 import React from "react"
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
-import { filterInputNumber } from "../../utils/validators";
+import { filterInputNumber, restrictInputNumber } from "../../utils/validators";
 
 const TransferForm = (props) => {
   function handleChangeAmount(e) {
-    filterInputNumber(e, e.target.value)
-    props.input.amount.onChange(e)
+    var check = filterInputNumber(e, e.target.value, props.input.amount.value)
+    if(check) props.input.amount.onChange(e)
   }
 
   var render = (
