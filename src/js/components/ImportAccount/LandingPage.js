@@ -18,6 +18,7 @@ export default class LandingPage extends React.Component {
 
 	componentWillUnmount() {
 		clearInterval(this.SI);
+		clearTimeout(this.ST);
 	}
 
 	typeIt(words) {
@@ -36,7 +37,7 @@ export default class LandingPage extends React.Component {
 					wordIndex = (wordIndex + 1) % words.length;
 					letterIndex = 0;
 					clearInterval(this.SI);
-					setTimeout(() => {
+					this.ST = setTimeout(() => {
 						nextWord();
 					}, 2000);
 				}
