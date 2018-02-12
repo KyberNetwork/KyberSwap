@@ -131,3 +131,14 @@ export function verifyPassphrase(passphrase, repassphrase) {
     return null
   }
 }
+
+export function filterInputNumber(event, value, preVal) {
+  var strRemoveText = value.replace(/[^0-9.]/g, '')
+  var str = strRemoveText.replace(/\./g, (val, i) => {
+    if (strRemoveText.indexOf('.') != i) val = ''
+    return val
+  })
+  event.target.value = str
+  if(preVal == str) return false
+  return true
+}

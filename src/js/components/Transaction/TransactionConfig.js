@@ -1,18 +1,23 @@
 import React from "react"
 import ReactTooltip from 'react-tooltip'
+import { filterInputNumber } from "../../utils/validators";
 
 const TransactionConfig = (props) => {
 
   function specifyGasPrice(value) {
     props.gasPriceHandler(value)
   }
+  function handleChangeGasPrice(e) {
+    var check = filterInputNumber(e, e.target.value, props.gasPrice)
+    if(check) props.gasPriceHandler(e.target.value)
+  }
 
   function tooltipGasSuggest(time) {
-    return props.translate("transaction.transaction_time", {time: time })
+    return props.translate("transaction.transaction_time", { time: time })
   }
 
   var caption = props.maxGasPrice ?
-    props.translate("transaction.transaction_gasprice_50") || "Higher gas price, faster transaction. Max gas price: 50 Gwei" : 
+    props.translate("transaction.transaction_gasprice_50") || "Higher gas price, faster transaction. Max gas price: 50 Gwei" :
     props.translate("transaction.transaction_gasprice") || "Higher gas price, faster transaction"
   var gasPriceError = props.gasPriceError !== "" &&
     <p class="error-text mb-1">{props.translate(props.gasPriceError, { maxGas: props.maxGasPrice })}</p>
@@ -29,7 +34,7 @@ const TransactionConfig = (props) => {
               <ReactTooltip place="bottom" id="gas-price-tip" type="light" />
             </label>
             <div className="column small-12 medium-6 end p-relative">
-              <input type="number" min="0" max="99" className="gas-price-input" step="0.1" onKeyPress={props.onGasPricePress} value={props.gasPrice} onChange={e => specifyGasPrice(e.target.value)} autoComplete="off"/>
+              <input type="text" min="0" max="99" className="gas-price-input" step="0.1" value={props.gasPrice} onChange={handleChangeGasPrice} maxLength="20" autoComplete="off" />
               <div class="mt-2">
                 <span className="unit text-lowercase">gwei</span>
                 {gasPriceError}

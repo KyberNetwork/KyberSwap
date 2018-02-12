@@ -44,7 +44,7 @@ export default class BaseProvider {
             })
         })
     }
-
+    
     getBalanceAtLatestBlock(address) {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getBalance(address)
