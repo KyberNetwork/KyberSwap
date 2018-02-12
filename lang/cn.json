@@ -68,7 +68,7 @@
     "transaction_error": "交易错误",
 
     "notification": "通知",
-    "not_enable_exchange": "你的地址目前展示无法交易。请稍后再回来！",
+    "not_enable_exchange": "你的地址目前暂时无法交易。请稍后再回来！",
     "kyber_down" : "Kyber交易目前无法使用。<br/>请稍后回来！",
 
     "transaction_time": "交易时间：< ${time} 分钟",
