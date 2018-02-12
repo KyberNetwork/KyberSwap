@@ -62,7 +62,7 @@ const ExchangeForm = (props) => {
                       {props.tokenSourceSelect}
                       <input id="inputSource" className="source-input" min="0" step="0.000001"
                         placeholder="0" autoFocus
-                        type="text" maxLength="30" autoComplete="off"
+                        type="text" maxLength="50" autoComplete="off"
                         value={props.input.sourceAmount.value}
                         onFocus={props.input.sourceAmount.onFocus}
                         onChange={handleChangeSource}
@@ -98,7 +98,7 @@ const ExchangeForm = (props) => {
                     <div className="select-token-panel">
                       {props.tokenDestSelect}
                       <input className="des-input" step="0.000001" placeholder="0" min="0"
-                        type="text" maxLength="30" autoComplete="off"
+                        type="text" maxLength="50" autoComplete="off"
                         value={props.input.destAmount.value}
                         onFocus={props.input.destAmount.onFocus}
                         onChange={handleChangeDest} />

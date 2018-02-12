@@ -34,7 +34,7 @@ const TransactionConfig = (props) => {
               <ReactTooltip place="bottom" id="gas-price-tip" type="light" />
             </label>
             <div className="column small-12 medium-6 end p-relative">
-              <input type="text" min="0" max="99" className="gas-price-input" step="0.1" value={props.gasPrice} onChange={handleChangeGasPrice} maxLength="10" autoComplete="off" />
+              <input type="text" min="0" max="99" className="gas-price-input" step="0.1" value={props.gasPrice} onChange={handleChangeGasPrice} maxLength="20" autoComplete="off" />
               <div class="mt-2">
                 <span className="unit text-lowercase">gwei</span>
                 {gasPriceError}

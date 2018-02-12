@@ -43,7 +43,7 @@ const TransferForm = (props) => {
                       <input type="text" min="0" step="0.000001" placeholder="0"
                         value={props.input.amount.value} className="amount-input"
                         onChange={handleChangeAmount}
-                        maxLength="30" autoComplete="off"
+                        maxLength="50" autoComplete="off"
                       />
                     </div>
                     {props.errors.amountTransfer &&
