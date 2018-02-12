@@ -170,7 +170,7 @@ const TransactionLoadingView = (props) => {
                   <h4 class="font-w-b">{props.translate("transaction.waiting_transaction") || "Waiting for your transaction to be mined"}</h4>
                   <div>
                     <div class="text-center my-7">
-                      <img src={require("../../../assets/img/spinner.svg")} width="60"/>
+                      <img src={require("../../../assets/img/spinner.svg")} width="50"/>
                     </div>
                     {props.progress.isShowInfo && 
                       <div class="text-white my-4">Due to network congrestion, transaction may take long time to proccess</div>
