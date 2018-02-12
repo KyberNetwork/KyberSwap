@@ -21,6 +21,7 @@ function* getBalance(accAddr, tokenAddr, tokenSymbol, ethereum, blockNumber) {
   }
   return balance
 }
+
 function* updateTx(action) {
   try {
     const { tx, ethereum, tokens, account, listToken } = action.payload
@@ -43,7 +44,7 @@ function* updateTx(action) {
         var destBalance = yield call(getBalance, account.address,
           listToken.dest.address, listToken.dest.symbol, ethereum, blockNumber)
 
-        yield put(exchangeActions.updateCurrentBalance(sourceBalance, destBalance))
+        yield put(exchangeActions.updateCurrentBalance(sourceBalance, destBalance, newTx.hash))
 
         //update source amount in header
         const { src, dest, srcAmount, destAmount } = yield call([ethereum, ethereum.call], "extractExchangeEventData", newTx.eventTrade)
@@ -59,7 +60,7 @@ function* updateTx(action) {
         var tokenBalance = yield call(getBalance, account.address,
           listToken.token.address, listToken.token.symbol, ethereum, blockNumber)
 
-        yield put(transferActions.updateCurrentBalance(tokenBalance))
+        yield put(transferActions.updateCurrentBalance(tokenBalance, newTx.hash))
       }
     }
 

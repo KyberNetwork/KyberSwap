@@ -31,7 +31,7 @@ export default class MinRate extends React.Component {
           <ReactTooltip place="bottom" id="rate-tip" type="light"/>
         </label>
         <div className="column small-12 medium-6 end p-relative">
-          <input type="text" value={minConversionRate} maxLength="20"
+          <input type="text" value={minConversionRate} maxLength="30"  autoComplete="off"
             onChange={(e) => this.changeMinRate(e)} 
           />
           <span className="error-text">{this.props.exchange.errors.rateError}</span>

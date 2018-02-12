@@ -132,7 +132,7 @@ function* processApprove(action) {
 export function* processApproveByColdWallet(action) {
   const { ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
     keystring, password, accountType, account, keyService, sourceTokenSymbol } = action.payload
-  try {
+  //try {
     let rawApprove
     try {
       rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
@@ -145,21 +145,29 @@ export function* processApproveByColdWallet(action) {
       yield put(actions.setSignError(msg))
       return
     }
-    const hashApprove = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApprove)
+    var hashApprove
+    try{
+      hashApprove = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApprove)
+      console.log(hashApprove)
+      yield put(actions.setApproveTx(hashApprove, sourceTokenSymbol))
+
+      //increase nonce 
+      yield put(incManualNonceAccount(account.address))
+
+      yield put(actions.hideApprove())
+      yield put(actions.showConfirm())
+    }catch(e){
+      console.log(e)
+      yield call(doTxFail, ethereum, account, e.message)
+    }
 
     //save approve to store
-    console.log(hashApprove)
-    yield put(actions.setApproveTx(hashApprove, sourceTokenSymbol))
 
-    //increase nonce 
-    yield put(incManualNonceAccount(account.address))
-
-    yield put(actions.hideApprove())
-    yield put(actions.showConfirm())
-  } catch (e) {
+    
+ // } catch (e) {
     //console.log(e)
-    yield call(doTxFail, ethereum, account, e.message)
-  }
+    
+ // }
 }
 
 export function* processApproveByMetamask(action) {
@@ -547,6 +555,7 @@ function* updateRatePending(action) {
   }
   catch (err) {    
     console.log(err)
+    yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0"))
     yield put(actions.setRateSystemError())
   }
 }

@@ -35,14 +35,14 @@ const ExchangeForm = (props) => {
   var errorSelectTokenToken = props.errors.selectTokenToken !== '' ? props.translate(props.errors.selectTokenToken) : ''
   var errorToken = errorSelectSameToken + errorSelectTokenToken
  
-
+  var maxCap = props.maxCap
   var errorSource = []
   if (errorToken !== "") errorSource.push(<span class="error-text">{errorToken}</span>)
   if (props.errors.sourceAmount !== "") errorSource.push( <span class="error-text">{props.translate(props.errors.sourceAmount, { cap: maxCap })}</span>)
   if (props.errors.rateAmount !== "") errorSource.push(  <span class="error-text">{props.errors.rateAmount}</span>)
   if (props.errors.rateSystem  !== "") errorSource.push( <span class="error-text">{props.errors.rateSystem}</span>)
  //var maxCap = props.sourceTokenSymbol === "ETH"?props.maxCap: props.maxCap*constants.MAX_CAP_PERCENT
- var maxCap = props.maxCap
+ 
   var render = (
     <div>
       <div class="frame">
@@ -68,6 +68,7 @@ const ExchangeForm = (props) => {
                         value={props.input.sourceAmount.value}
                         onFocus={props.input.sourceAmount.onFocus}
                         onChange={handleChangeSource}
+                        autoComplete="off"
                       />
                     </div>
                     {errorSource[0]}
@@ -103,7 +104,9 @@ const ExchangeForm = (props) => {
                         type="text" maxLength="30"
                         value={props.input.destAmount.value}
                         onFocus={props.input.destAmount.onFocus} 
-                        onChange={handleChangeDest} />
+                        onChange={handleChangeDest} 
+                        autoComplete="off"
+                        />
                     </div>
                   </label>
                 </div>

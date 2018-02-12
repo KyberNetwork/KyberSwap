@@ -104,6 +104,11 @@ export function* checkConnection(action) {
 }
 
 function compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
+  var safeLowGas = parseFloat(safeLowGas)
+  var standardGas = parseFloat(standardGas)
+  var fastGas = parseFloat(fastGas)
+  var defaultGas = parseFloat(defaultGas)
+  var maxGas = parseFloat(maxGas)
   if (fastGas > maxGas) {
     var returnSuggest = {}
     returnSuggest.fastGas = maxGas
