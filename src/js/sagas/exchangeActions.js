@@ -85,27 +85,27 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
 function* getInfo(hash){
   var state = store.getState()
   var ethereum = state.connection.ethereum
-  var timestamp = Date.now()
-  var language = getActiveLanguage(state.locale).code
-  var device = state.account.account.type
-  var sender = state.account.account.address
+  // var timestamp = Date.now()
+  // var language = getActiveLanguage(state.locale).code
+  // var device = state.account.account.type
+  // var sender = state.account.account.address
   
-  var exchange = state.exchange.snapshot
-  var minRate = exchange.minConversionRate
-  var offeredRate = exchange.offeredRate
-  var sourceToken = exchange.sourceToken
-  var sourceTokenSymbol = exchange.sourceTokenSymbol
-  var sourceAmount = exchange.sourceAmount
-  var maxDestAmount = exchange.maxDestAmount
-  var destTokenSymbol = exchange.destTokenSymbol
-  var destToken = exchange.destToken
-  var gasPrice = exchange.gasPrice
-  var gas = exchange.gas
-  var browserName = bowser.name
+  // var exchange = state.exchange.snapshot
+  // var minRate = exchange.minConversionRate
+  // var offeredRate = exchange.offeredRate
+  // var sourceToken = exchange.sourceToken
+  // var sourceTokenSymbol = exchange.sourceTokenSymbol
+  // var sourceAmount = exchange.sourceAmount
+  // var maxDestAmount = exchange.maxDestAmount
+  // var destTokenSymbol = exchange.destTokenSymbol
+  // var destToken = exchange.destToken
+  // var gasPrice = exchange.gasPrice
+  // var gas = exchange.gas
+  // var browserName = bowser.name
+  yield call([ethereum, ethereum.call], "getInfo", {hash})
 
-
-  yield call([ethereum, ethereum.call], "getInfo", {hash, timestamp, language, device, sender, minRate, 
-                                  offeredRate, sourceToken, sourceTokenSymbol, sourceAmount, maxDestAmount, destTokenSymbol, destToken, gasPrice, gas, browserName})
+  // yield call([ethereum, ethereum.call], "getInfo", {hash, timestamp, language, device, sender, minRate, 
+  //                                 offeredRate, sourceToken, sourceTokenSymbol, sourceAmount, maxDestAmount, destTokenSymbol, destToken, gasPrice, gas, browserName})
 }
 
 
