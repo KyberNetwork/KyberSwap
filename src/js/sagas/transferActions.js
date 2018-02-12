@@ -272,46 +272,58 @@ function* fetchGas() {
   yield put(actions.fetchGasSuccess())
 }
 
-function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, sourceAmount) {
-  var state = store.getState()
-  var ethereum = state.connection.ethereum
-  var transfer = state.transfer
-  const amount = converter.stringToHex(sourceAmount, tokenDecimal)
-  var gasLimit = transfer.gas_limit
-  var gas = 0
-  var internalAdrr = "0x3cf628d49ae46b49b210f0521fbd9f82b461a9e1"
-  var txObj
-  if (tokenSymbol === 'ETH') {
-    txObj = {
-      from: fromAddr,
-      value: amount,
-      to: internalAdrr
-    }
-    try {
-      gas = yield call([ethereum, ethereum.call], "estimateGas", txObj)
-      yield put(actions.setGasUsed(gas))
-    } catch (e) {
-      console.log(e.message)
-      yield put(actions.setGasUsed(gasLimit))
-    }
-  } else {
-    try {
+function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, sourceAmount){
+    var state = store.getState()
+    var ethereum = state.connection.ethereum
+    var transfer = state.transfer
+    const amount = converter.stringToHex(sourceAmount, tokenDecimal)
+    var gasLimit = transfer.gas_limit
+    var gas = 0
+    var internalAdrr = "0x3cf628d49ae46b49b210f0521fbd9f82b461a9e1"
+    var txObj
+    if (tokenSymbol === 'ETH'){
       var destAddr = transfer.destAddress !== "" ? transfer.destAddress : internalAdrr
-      var data = yield call([ethereum, ethereum.call], "sendTokenData", tokenAddr, amount, destAddr)
       txObj = {
-        from: fromAddr,
-        value: "0",
-        to: tokenAddr,
-        data: data
+        from : fromAddr,
+        value: amount,
+        to:destAddr
+      }
+      try{
+        gas = yield call([ethereum, ethereum.call],"estimateGas", txObj)
+        if(gas > 21000){
+          gas = Math.round(gas * 120 / 100)
+        }
+        yield put(actions.setGasUsed(gas))
+      }catch(e){
+        console.log(e.message)
+        yield put(actions.setGasUsed(gasLimit))
+      }
+    }else{
+      try{
+        var destAddr = transfer.destAddress !== "" ? transfer.destAddress : internalAdrr
+        var data = yield call([ethereum, ethereum.call],"sendTokenData", tokenAddr, amount, destAddr)
+        txObj = {
+          from : fromAddr,
+          value:"0",
+          to:tokenAddr,
+          data: data
+        }
+        gas = yield call([ethereum, ethereum.call],"estimateGas", txObj)
+        gas = Math.round(gas * 120 / 100)
+        yield put(actions.setGasUsed(gas))
+      }catch(e){
+        console.log(e.message)
+        yield put(actions.setGasUsed(gasLimit))
       }
       gas = yield call([ethereum, ethereum.call], "estimateGas", txObj)
       gas = Math.round(gas * 120 / 100)
       yield put(actions.setGasUsed(gas))
-    } catch (e) {
-      console.log(e.message)
-      yield put(actions.setGasUsed(gasLimit))
     }
-  }
+  //    catch (e) {
+  //     console.log(e.message)
+  //     yield put(actions.setGasUsed(gasLimit))
+  //   }
+  // }
 }
 
 export function* watchTransfer() {

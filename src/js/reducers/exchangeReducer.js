@@ -145,7 +145,7 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.SET_BROADCAST_ERROR": {
       newState.broadcasting = false
-      newState.broadcastError = action.payload ? action.payload : ""
+      newState.broadcastError = action.payload ? action.payload : "Cannot broadcast transaction to blockchain"
       newState.confirmApprove = false
       newState.isApproving = false
       newState.isConfirming = false
@@ -361,8 +361,11 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.UPDATE_CURRENT_BALANCE": {
-      newState.balanceData.nextSource = action.payload.sourceBalance
-      newState.balanceData.nextDest = action.payload.destBalance
+      const {sourceBalance, destBalance, txHash} = action.payload
+      if (txHash === newState.txHash) {
+        newState.balanceData.nextSource = action.payload.sourceBalance
+        newState.balanceData.nextDest = action.payload.destBalance
+      }
       return newState
     }
     case "EXCHANGE.SET_TERM_AND_SERVICES": {

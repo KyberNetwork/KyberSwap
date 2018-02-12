@@ -376,10 +376,10 @@ export function makeNewExchange() {
   }
 }
 
-export function updateCurrentBalance(sourceBalance, destBalance) {
+export function updateCurrentBalance(sourceBalance, destBalance, txHash) {
   return {
     type: "EXCHANGE.UPDATE_CURRENT_BALANCE",
-    payload: { sourceBalance, destBalance }
+    payload: { sourceBalance, destBalance, txHash }
   }
 }
 

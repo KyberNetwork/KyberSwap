@@ -37,7 +37,7 @@ const TransactionConfig = (props) => {
             <div className="column small-12 medium-6 end p-relative">
               <input type="text" min="0" max="99" step="0.1" maxLength="10"
                 className="gas-price-input" 
-                value={props.gasPrice} onChange={handleChangeGasPrice}
+                value={props.gasPrice} onChange={handleChangeGasPrice} autoComplete="off"
               />
               <div class="mt-2">
                 <span className="unit text-lowercase">gwei</span>

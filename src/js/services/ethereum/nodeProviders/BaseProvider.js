@@ -139,12 +139,9 @@ export default class BaseProvider {
 
     getNonce(address) {
         return new Promise((resolve, reject) => {
-            this.rpc.eth.getTransactionCount(address, "pending")
+            this.rpc.eth.getTransactionCount(address)
                 .then((nonce) => {
-                    //console.log(nonce)
-                    if (nonce != null) {
                         resolve(nonce)
-                    }
                 })
                 .catch((err) => {
                     reject(err)

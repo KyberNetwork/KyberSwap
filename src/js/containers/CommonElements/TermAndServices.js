@@ -13,21 +13,6 @@ import { getTranslate } from 'react-localize-redux';
 
 export default class TermAndServices extends React.Component {
 
-  constructor() {
-    super()
-    this.state = {
-      isOpen: false,
-    }
-  }
-
-  showTerms = () => {
-    this.setState({ isOpen: true })
-  }
-
-  onRequestClose = () => {
-    this.setState({ isOpen: false })
-  }
-
   changeCheckbox = (e) => {
     this.props.clickCheckbox(!this.props.termAgree)
   }
@@ -77,23 +62,11 @@ export default class TermAndServices extends React.Component {
     var src = this.props.termAgree ? require("../../../assets/img/checkmark-selected.svg")
       : require("../../../assets/img/checkmark-unselected.svg")
     return (
-      <div>
-        <div className="term-services">
-          <img className="pr-2 cur-pointer" onClick={(e) => this.changeCheckbox(e)} src={src} width="14"/>
-          <span className="term-text">
-            <span className="cur-pointer" onClick={(e) => this.changeCheckbox(e)}>Accept</span> <a className="text-success" onClick={this.showTerms}>Terms and Conditions</a> to get started
+      <div className="term-services">
+        <img className="pr-2 cur-pointer" onClick={(e) => this.changeCheckbox(e)} src={src} width="14" />
+        <span className="term-text">
+          <span className="cur-pointer" onClick={(e) => this.changeCheckbox(e)}>Accept</span> <a className="text-success" href="https://home.kyber.network/assets/tac.pdf" target="_blank">Terms and Conditions</a> to get started
           </span>
-        </div>
-
-        <Modal className={{
-          base: 'reveal medium',
-          afterOpen: 'reveal medium'
-        }}
-          isOpen={this.state.isOpen}
-          onRequestClose={this.onRequestClose}
-          contentLabel="Terms and Services"
-          content={this.content()}
-        />
       </div>
     )
   }

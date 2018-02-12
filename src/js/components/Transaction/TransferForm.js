@@ -43,7 +43,7 @@ const TransferForm = (props) => {
                       {props.tokenTransferSelect}
                       <input type="text" min="0" step="0.000001" placeholder="0" 
                         value={props.input.amount.value} className="amount-input" maxLength="30"
-                        onChange={handleChangeAmount}
+                        onChange={handleChangeAmount}  autoComplete="off"
                       />
                     </div>
                     {props.errors.amountTransfer &&

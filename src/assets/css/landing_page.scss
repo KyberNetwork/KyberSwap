@@ -7,9 +7,22 @@
     background-color: rgba(42, 69, 82, 0.8);
   }
   .title{
-    font-weight: bold;
     margin-top: 70px;
-    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 44px;
+    @include breakpoint(small only){
+      font-size: 31px;
+    }
+    .flag{
+      img{
+        margin-top: -38px;
+        margin-left: 8px;
+        width: 28px;
+        + span{
+          margin-left: -24px;
+        }
+      }
+    }
   }
   .term-services{
     margin: 50px 0;
@@ -18,6 +31,7 @@
     }
     .term-text{
       vertical-align: text-top;
+      font-weight: 500;
     }
   }
   button{
@@ -27,12 +41,13 @@
     border: 1px solid;
     border-color: #0ea199;
     &.disable{
-      background: transparent;
-      border-color: #8b8f91;
-      color: #8b8f91;
+      background: linear-gradient(to right, #868f96 , #596164);
+      font-weight: 800;
+      border-color: #5a6266;
+      color: #ffffff;
     }
   }
-  a:hover{
+  a:hover, a:focus{
     color: $k-success;
   }
 }
