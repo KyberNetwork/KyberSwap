@@ -39,6 +39,8 @@ const ExchangeForm = (props) => {
   if (props.errors.sourceAmount !== "") errorSource.push(<span class="error-text">{props.translate(props.errors.sourceAmount, { cap: maxCap })}</span>)
   if (props.errors.rateAmount !== "") errorSource.push(<span class="error-text">{props.errors.rateAmount}</span>)
   if (props.errors.rateSystem !== "") errorSource.push(<span class="error-text">{props.errors.rateSystem}</span>)
+  if (props.errors.notPossessKgt !== "" ) errorSource.push(<span class="error-text">{props.errors.notPossessKgt}</span>)
+
   //var maxCap = props.sourceTokenSymbol === "ETH"?props.maxCap: props.maxCap*constants.MAX_CAP_PERCENT
 
   var render = (
@@ -58,7 +60,7 @@ const ExchangeForm = (props) => {
                       {props.translate("transaction.exchange_from") || "From"}
                     </span>
 
-                    <div className={errorToken !== "" || props.errors.sourceAmount != '' || props.errors.rateSystem !== '' || props.errors.rateAmount !== '' ? "error select-token-panel" : "select-token-panel"}>
+                    <div className={errorToken !== "" || props.errors.sourceAmount != '' || props.errors.rateSystem !== '' || props.errors.rateAmount !== '' || props.errors.notPossessKgt != '' ? "error select-token-panel" : "select-token-panel"}>
                       {props.tokenSourceSelect}
                       <input id="inputSource" className="source-input" min="0" step="0.000001"
                         placeholder="0" autoFocus

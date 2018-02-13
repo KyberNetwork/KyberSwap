@@ -471,6 +471,10 @@ const exchange = (state = initState, action) => {
       newState.snapshot = {...snapshot}
       return newState
     }
+    case "EXCHANGE.THROW_NOT_POSSESS_KGT_ERROR": {
+      newState.errors.notPossessKgt = action.payload
+      return newState
+    }
   }
   return state
 }

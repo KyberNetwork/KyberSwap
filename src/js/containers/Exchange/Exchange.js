@@ -351,7 +351,8 @@ export default class Exchange extends React.Component {
       sourceAmount: this.props.exchange.errors.sourceAmountError || this.props.exchange.errors.ethBalanceError || '',
       tokenSource: '',
       rateSystem: this.props.exchange.errors.rateSystem,
-      rateAmount : this.props.exchange.errors.rateAmount
+      rateAmount : this.props.exchange.errors.rateAmount,
+      notPossessKgt: this.props.exchange.errors.notPossessKgt
     }
 
     var input = {

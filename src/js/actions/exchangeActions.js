@@ -430,6 +430,13 @@ export function setCapExchange(maxCap) {
   }
 }
 
+export function thowErrorNotPossessKGt(message) {
+  return {
+    type: "EXCHANGE.THROW_NOT_POSSESS_KGT_ERROR",
+    payload: message
+  }
+}
+
 export function setMaxGasPrice(ethereum) {
   return {
     type: "EXCHANGE.SET_MAX_GAS_PRICE",

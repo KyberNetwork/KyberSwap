@@ -57,6 +57,9 @@ export default class PostExchange extends React.Component {
     this.state = {form:{}}
   }
   clickExchange = () => {
+    if(this.props.form.errors && this.props.form.errors.notPossessKgt){
+      return
+    }
     if(this.props.form.isSelectToken){
       return
     }
