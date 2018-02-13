@@ -33,12 +33,8 @@ export default class BaseProvider {
 
     getLatestBlock() {
         return new Promise((resolve, reject) => {
-            this.rpc.eth.getBlock("latest", false).then((block) => {
-                if (block != null) {
+            this.rpc.eth.getBlockNumber().then((block) => {
                     resolve(block)
-                } else {
-                    reject(new Error("Cannot get latest block from: " + this.rpcUrl))
-                }
             }).catch((err) => {
                 reject(err)
             })
@@ -432,15 +428,18 @@ export default class BaseProvider {
 
         })
     }
-
+    
+    
     exactTradeData(data) {
         return new Promise((resolve, reject) => {
             try {
                 //get trade abi from 
                 var tradeAbi = this.getAbiByName("trade", constants.KYBER_NETWORK)
+                console.log(tradeAbi)
                 abiDecoder.addABI(tradeAbi)
+                console.log(abiDecoder)
                 var decoded = abiDecoder.decodeMethod(data);
-                //  console.log(decoded)
+                  console.log(decoded)
                 resolve(decoded.params)
             } catch (e) {
                 reject(e)
@@ -565,8 +564,8 @@ export default class BaseProvider {
         })
     }
 
-    wrapperGetConversionRate(reserve, input, blockno) {
-        var data = this.networkContract.methods.getExpectedRate(input.source, input.dest, input.srcAmount).encodeABI()
+    getRateAtSpecificBlock(source, dest, srcAmount, blockno) {
+        var data = this.networkContract.methods.getExpectedRate(source, dest, srcAmount).encodeABI()
         return new Promise((resolve, reject) => {
             this.rpc.eth.call({
                 to: BLOCKCHAIN_INFO.network,

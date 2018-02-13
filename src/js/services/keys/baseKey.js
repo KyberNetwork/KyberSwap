@@ -50,7 +50,7 @@ export const etherToOthersFromAccount = (
   destAddress, maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas, gasPrice, keystring, accountType,
   password) => {
-
+    var throwOnFailure = "0x0000000000000000000000000000000000000000"
   return new Promise((resolve, reject) => {
     ethereum.call("exchangeData",
       sourceToken, sourceAmount, destToken, destAddress,
@@ -66,7 +66,9 @@ export const etherToOthersFromAccount = (
           // EIP 155 chainId - mainnet: 1, ropsten: 3
           chainId: BLOCKCHAIN_INFO.networkId
         }
-        resolve({ txParams, keystring, password })
+        console.log(result)
+        reject(new Error("aaaa"))
+        //resolve({ txParams, keystring, password })
       })
   })
 }

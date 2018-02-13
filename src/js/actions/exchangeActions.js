@@ -131,7 +131,7 @@ export function updatePrevSource(value) {
   }
 }
 
-export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice) {
+export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, blockNo) {
   // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
   //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
 
@@ -141,7 +141,7 @@ export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePric
   //var reserveBalance = rate[2]
   return {
     type: "EXCHANGE.UPDATE_RATE",
-    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage:  converter.toT(rateInit, 18)}
+    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage:  converter.toT(rateInit, 18), blockNo}
   }
 
 }
@@ -259,7 +259,7 @@ export function processExchange(formId, ethereum, address, sourceToken,
   sourceAmount, destToken, destAddress,
   maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas,
-  gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol) {
+  gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo) {
   return {
     type: "EXCHANGE.PROCESS_EXCHANGE",
     payload: {
@@ -267,7 +267,7 @@ export function processExchange(formId, ethereum, address, sourceToken,
       sourceAmount, destToken, destAddress,
       maxDestAmount, minConversionRate,
       throwOnFailure, nonce, gas,
-      gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol
+      gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo
     }
   }
 }
