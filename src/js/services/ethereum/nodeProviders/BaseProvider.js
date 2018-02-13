@@ -184,10 +184,14 @@ export default class BaseProvider {
 
     exchangeData(sourceToken, sourceAmount, destToken, destAddress,
         maxDestAmount, minConversionRate, walletId) {
+
+        if (!this.rpc.utils.isAddress(walletId)){
+            walletId = "0x" + Array(41).join("0")
+        }  
         var data = this.networkContract.methods.trade(
             sourceToken, sourceAmount, destToken, destAddress,
             maxDestAmount, minConversionRate, walletId).encodeABI()
-
+                 
         return new Promise((resolve, reject) => {
             resolve(data)
         })
@@ -435,11 +439,11 @@ export default class BaseProvider {
             try {
                 //get trade abi from 
                 var tradeAbi = this.getAbiByName("trade", constants.KYBER_NETWORK)
-                console.log(tradeAbi)
+              //  console.log(tradeAbi)
                 abiDecoder.addABI(tradeAbi)
-                console.log(abiDecoder)
+              //  console.log(abiDecoder)
                 var decoded = abiDecoder.decodeMethod(data);
-                  console.log(decoded)
+            //      console.log(decoded)
                 resolve(decoded.params)
             } catch (e) {
                 reject(e)
@@ -505,8 +509,10 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getGasPrice()
                 .then(result => {
+                    
+                    console.log(result)
                     var gasPrice = parseInt(result, 10)
-                    if (gasPrice > 2000000000) {
+                    if (gasPrice > 20000000000) {
                         resolve({
                             low: "20",
                             default: "20",
@@ -515,12 +521,22 @@ export default class BaseProvider {
                         })
                     } else {
                         gasPrice = gasPrice / 1000000000
-                        resolve({
-                            low: (gasPrice * 0.7).toString(),
-                            default: gasPrice.toString(),
-                            standard: gasPrice.toString(),
-                            fast: (gasPrice * 1.7).toString()
-                        })
+                        if (gasPrice < 1){
+                            resolve({
+                                low: 1,
+                                default: 1,
+                                standard: 1,
+                                fast: 1
+                            })
+                        }else{
+                            resolve({
+                                low: gasPrice.toString(),
+                                default: gasPrice.toString(),
+                                standard: gasPrice.toString(),
+                                fast: (gasPrice * 1.7).toString()
+                            })
+                        }
+                        
                     }
                 }).catch((err) => {
                     reject(err)

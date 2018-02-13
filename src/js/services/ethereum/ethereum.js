@@ -156,7 +156,7 @@ export default class EthereumService extends React.Component {
    // this.fetchGasExchange()
    // this.fetchGasTransfer()
 
-  // this.testAnalize()
+   //this.testAnalize()
   }
 
   testAnalize() {

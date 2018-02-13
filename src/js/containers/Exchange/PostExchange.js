@@ -303,7 +303,7 @@ export default class PostExchange extends React.Component {
     var minConversionRate = converters.toTWei(this.props.snapshot.minConversionRate)
     minConversionRate = converters.numberToHex(minConversionRate)
 
-    var blockNo = converters.numberToHex(this.props.snapshot.blockNo)
+    var blockNo = converters.numberToHexAddress(this.props.snapshot.blockNo)
 
     var destAddress = this.props.account.address
     var maxDestAmount = converters.biggestNumber()

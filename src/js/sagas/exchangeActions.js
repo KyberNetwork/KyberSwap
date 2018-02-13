@@ -561,7 +561,7 @@ function* updateRatePending(action) {
   try {
     //get latestblock
     const lastestBlock = yield call([ethereum, ethereum.call],"getLatestBlock")
-    console.log(lastestBlock)
+   // console.log(lastestBlock)
     const rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmount, lastestBlock)
     const expectedPrice = rate.expectedPrice ? rate.expectedPrice : "0"
     const slippagePrice = rate.slippagePrice ? rate.slippagePrice : "0"
@@ -632,7 +632,7 @@ function* updateGasUsed(action) {
     const destToken = exchange.destToken
     const maxDestAmount = converter.biggestNumber()
     const minConversionRate = converter.numberToHex(exchange.offeredRate)
-    const blockNo = converter.numberToHex(exchange.blockNo)
+    const blockNo = converter.numberToHexAddress(exchange.blockNo)
     const throwOnFailure = "0x0000000000000000000000000000000000000000"
     var data = yield call([ethereum, ethereum.call], "exchangeData", sourceToken, sourceAmount,
       destToken, address,
@@ -720,7 +720,7 @@ function* analyzeError(action) {
 }
 
 function* debug(input, blockno, ethereum) {
-  
+// console.log({input, blockno})
   var networkIssues = {}
   var reserveIssues = {}
   var translate = getTranslate(store.getState().locale)
@@ -761,7 +761,7 @@ function* debug(input, blockno, ethereum) {
   }
 
   //Reserve scops
-  var rates = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", input.source,input.dest, input.sourceAmount, blockno)
+  var rates = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", input.source,input.dest, input.srcAmount, blockno)
   if (converter.compareTwoNumber(rates.expectedPrice, 0) === 0) {
     var reasons = yield call([ethereum, ethereum.call], "wrapperGetReasons", input.reserves[0], input, blockno)
     reserveIssues["reason"] = reasons
