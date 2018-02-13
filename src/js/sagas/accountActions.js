@@ -5,7 +5,7 @@ import { clearSession, setGasPrice, setBalanceToken } from "../actions/globalAct
 import { openInfoModal } from '../actions/utilActions'
 
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
-import { randomToken, setRandomExchangeSelectedToken, setCapExchange } from "../actions/exchangeActions"
+import { randomToken, setRandomExchangeSelectedToken, setCapExchange, thowErrorNotPossessKGt } from "../actions/exchangeActions"
 import { setRandomTransferSelectedToken } from "../actions/transferActions"
 //import { randomForExchange } from "../utils/random"
 
@@ -16,6 +16,7 @@ import { Rate, updateAllRatePromise } from "../services/rate"
 import { findNetworkName } from "../utils/converter"
 
 import { getTranslate } from 'react-localize-redux'
+import { store } from '../store';
 
 export function* updateAccount(action) {
   const { account, ethereum } = action.payload
@@ -50,6 +51,11 @@ export function* importNewAccount(action) {
 
     var maxCapOneExchange = yield call([ethereum, ethereum.call], "getMaxCapAtLatestBlock", address)
     yield put(setCapExchange(maxCapOneExchange))
+
+    if (+maxCapOneExchange == 0){
+      var translate = getTranslate(store.getState().locale)
+      yield put(thowErrorNotPossessKGt(translate("error.not_possess_kgt") || "It appears that your wallet does not possess Kyber Network Genesis Token (KGT) to participate in the pilot run."))
+    }
     //update token and token balance
     var newTokens = {}
     Object.values(tokens).map(token => {
