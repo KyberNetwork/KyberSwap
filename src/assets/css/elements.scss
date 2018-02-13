@@ -73,6 +73,15 @@ label {
       height: auto;
       padding: 10px!important;
     }
+    > input, > input:focus{
+      text-align: right;
+      color: white;
+      margin-bottom: 0px;
+      font-size: 20px;
+      font-weight: bold;
+      background-color: transparent!important;
+      border-top: 1px solid #2a4654!important;
+    }
   }
   .exchange-label{
     font-size: 14px;
