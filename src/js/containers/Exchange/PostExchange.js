@@ -57,6 +57,9 @@ export default class PostExchange extends React.Component {
     this.state = {form:{}}
   }
   clickExchange = () => {
+    if(this.props.form.errorNotPossessKgt){
+      return
+    }
     if(this.props.form.isSelectToken){
       return
     }
@@ -483,7 +486,7 @@ export default class PostExchange extends React.Component {
       )
     }
     let className = "button accent "
-    if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree && !this.props.form.isSelectToken) {
+    if (!this.props.form.errorNotPossessKgt && !validators.anyErrors(this.props.form.errors) && this.props.form.termAgree && !this.props.form.isSelectToken) {
       className += " animated infinite pulse next"
     }
     var termAndServices = (
