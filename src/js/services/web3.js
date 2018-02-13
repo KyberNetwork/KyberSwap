@@ -7,7 +7,7 @@ export default class Web3Service {
   }
 
   isTrust = () => {
-    if (web3.provider.isTrust === true){
+    if (web3.currentProvider.isTrust === true){
       return true
     }
     return false
