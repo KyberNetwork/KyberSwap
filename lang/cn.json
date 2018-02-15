@@ -69,7 +69,7 @@
     "transaction_error": "交易错误",
 
     "notification": "通知",
-    "not_enable_exchange": "你的地址目前展示无法交易。请稍后再回来！",
+    "not_enable_exchange": "你的地址目前暂时无法交易。请稍后再回来！",
     "kyber_down" : "Kyber交易目前无法使用。<br/>请稍后回来！",
 
     "transaction_time": "交易时间：< ${time} 分钟",
@@ -138,6 +138,7 @@
     "source_amount_rate_error": "当前无法交易",
     "source_amount_too_high_for_reserve": "原始数量过高 （交易对目前还不支持）",
     "source_amount_is_not_number": "原始数量不是一个数字",
+    "not_possess_kgt": "您没有Kyber Network Token（KGT），需要拥有KGT才可以参加试点运行。",
 
     "dest_address": "这不是一个地址",
     "amount_transfer_too_hign": "数量过高",

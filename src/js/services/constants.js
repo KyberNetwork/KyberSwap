@@ -124,6 +124,7 @@ const INIT_EXCHANGE_FORM_STATE = {
     rateSystem: '',
     ethBalanceError: ''
   },
+  errorNotPossessKgt: '',
   isAnalize: false,
   isAnalizeComplete: false,
   analizeError : {},

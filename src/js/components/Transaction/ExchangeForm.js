@@ -9,19 +9,18 @@ import { filterInputNumber } from "../../utils/validators";
 const ExchangeForm = (props) => {
 
   function handleChangeSource(e) {
-    filterInputNumber(e, e.target.value)
-    props.input.sourceAmount.onChange(e)
+    var check = filterInputNumber(e, e.target.value, props.input.sourceAmount.value)
+    if(check) props.input.sourceAmount.onChange(e)
   }
 
   function handleChangeDest(e) {
-    filterInputNumber(e, e.target.value)
-    props.input.destAmount.onChange(e)
+    var check = filterInputNumber(e, e.target.value, props.input.destAmount.value)
+    if(check) props.input.destAmount.onChange(e)
   }
 
   function moveCursor() {
     let inp = document.getElementById('inputSource')
     inp.focus();
-    // inp.setAttribute('type', 'text');
     if (inp.createTextRange) {
       var part = inp.createTextRange();
       part.move("character", 0);
@@ -29,20 +28,22 @@ const ExchangeForm = (props) => {
     } else if (inp.setSelectionRange) {
       inp.setSelectionRange(0, 0);
     }
-    // inp.setAttribute('type', 'number');
   }
   var errorSelectSameToken = props.errors.selectSameToken !== '' ? props.translate(props.errors.selectSameToken) : ''
   var errorSelectTokenToken = props.errors.selectTokenToken !== '' ? props.translate(props.errors.selectTokenToken) : ''
   var errorToken = errorSelectSameToken + errorSelectTokenToken
- 
+
   var maxCap = props.maxCap
   var errorSource = []
+  if (props.errorNotPossessKgt !== "" ) errorSource.push(<span class="error-text">{props.errorNotPossessKgt}</span>)
   if (errorToken !== "") errorSource.push(<span class="error-text">{errorToken}</span>)
-  if (props.errors.sourceAmount !== "") errorSource.push( <span class="error-text">{props.translate(props.errors.sourceAmount, { cap: maxCap })}</span>)
-  if (props.errors.rateAmount !== "") errorSource.push(  <span class="error-text">{props.errors.rateAmount}</span>)
-  if (props.errors.rateSystem  !== "") errorSource.push( <span class="error-text">{props.errors.rateSystem}</span>)
- //var maxCap = props.sourceTokenSymbol === "ETH"?props.maxCap: props.maxCap*constants.MAX_CAP_PERCENT
- 
+  if (props.errors.sourceAmount !== "") errorSource.push(<span class="error-text">{props.translate(props.errors.sourceAmount, { cap: maxCap })}</span>)
+  if (props.errors.rateAmount !== "") errorSource.push(<span class="error-text">{props.errors.rateAmount}</span>)
+  if (props.errors.rateSystem !== "") errorSource.push(<span class="error-text">{props.errors.rateSystem}</span>)
+  
+
+  //var maxCap = props.sourceTokenSymbol === "ETH"?props.maxCap: props.maxCap*constants.MAX_CAP_PERCENT
+
   var render = (
     <div>
       <div class="frame">
@@ -60,15 +61,14 @@ const ExchangeForm = (props) => {
                       {props.translate("transaction.exchange_from") || "From"}
                     </span>
 
-                    <div className={errorToken !== "" || props.errors.sourceAmount != '' || props.errors.rateSystem !== '' || props.errors.rateAmount !== '' ? "error select-token-panel" : "select-token-panel"}>
+                    <div className={props.errorNotPossessKgt != '' || errorToken !== "" || props.errors.sourceAmount != '' || props.errors.rateSystem !== '' || props.errors.rateAmount !== '' ? "error select-token-panel" : "select-token-panel"}>
                       {props.tokenSourceSelect}
                       <input id="inputSource" className="source-input" min="0" step="0.000001"
-                        placeholder="0" autoFocus maxLength="30"
-                        type="text"
+                        placeholder="0" autoFocus
+                        type="text" maxLength="50" autoComplete="off"
                         value={props.input.sourceAmount.value}
                         onFocus={props.input.sourceAmount.onFocus}
                         onChange={handleChangeSource}
-                        autoComplete="off"
                       />
                     </div>
                     {errorSource[0]}
@@ -83,15 +83,15 @@ const ExchangeForm = (props) => {
                         {props.balance.roundingValue} {props.sourceTokenSymbol}
                       </span>
                       <span class="k k-info k-2x ml-3" data-tip={props.translate('transaction.click_to_ex_all_balance') || 'Click to exchange all balance'} data-for="balance-notice-tip" currentitem="false"></span>
-                      <ReactTooltip place="right" id="balance-notice-tip" type="light"/>
+                      <ReactTooltip place="right" id="balance-notice-tip" type="light" />
                     </a>
                   </div>
                 </div>
                 <div class="column medium-2 exchange-icon hide-for-small-only">
                   <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
-                    <i className="k k-exchange k-3x cur-pointer" onClick = {(e) => props.swapToken(e)}></i>
+                    <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
                   </span>
-                  <ReactTooltip place="bottom" id="swap" type="light"/>
+                  <ReactTooltip place="bottom" id="swap" type="light" />
                 </div>
                 <div class="column medium-5">
                   <label>
@@ -100,13 +100,11 @@ const ExchangeForm = (props) => {
                     </span>
                     <div className="select-token-panel">
                       {props.tokenDestSelect}
-                      <input className="des-input" step="0.000001" placeholder="0" min="0" 
-                        type="text" maxLength="30"
+                      <input className="des-input" step="0.000001" placeholder="0" min="0"
+                        type="text" maxLength="50" autoComplete="off"
                         value={props.input.destAmount.value}
-                        onFocus={props.input.destAmount.onFocus} 
-                        onChange={handleChangeDest} 
-                        autoComplete="off"
-                        />
+                        onFocus={props.input.destAmount.onFocus}
+                        onChange={handleChangeDest} />
                     </div>
                   </label>
                 </div>

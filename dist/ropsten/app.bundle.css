@@ -9038,8 +9038,8 @@ label.address-path-stamp {
   .reveal.large {
     top: 54px; }
   .reveal.tiny {
-    width: 55%;
-    max-width: 500px;
+    max-width: 70%;
+    width: 500px;
     top: 40%;
     -ms-transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
@@ -9048,7 +9048,8 @@ label.address-path-stamp {
 
 @media print, screen and (min-width: 64em) {
   .reveal.tiny {
-    width: 30%; } }
+    max-width: 45%;
+    width: 420px; } }
 
 button:focus {
   outline: none; }
