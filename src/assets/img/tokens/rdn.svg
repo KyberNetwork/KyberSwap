@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>rdn</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="rdn">
+            <path d="M28,14 C28,21.73192 21.73206,28 14,28 C6.26794,28 0,21.73192 0,14 C0,6.26794 6.26794,0 14,0 C21.73206,0 28,6.26794 28,14" id="Fill-359" fill="#03070A"></path>
+            <path d="M20.9917738,15.6470588 C20.9917738,15.6470588 21.4032128,9.74015336 16.4065659,5.35294118 L8.64705882,5.35294118 C8.64705882,5.35294118 17.0824713,8.39246467 17.1119501,15.6470588 L20.9917738,15.6470588 Z" id="Fill-361" fill="#FFFFFF"></path>
+            <polygon id="Fill-363" fill="#FFFFFF" points="11.5294118 12.3529412 11.5294118 24.2941176 16.4705882 21.1686079"></polygon>
+        </g>
+    </g>
+</svg>
