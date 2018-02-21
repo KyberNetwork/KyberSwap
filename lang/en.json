@@ -190,10 +190,10 @@
   },
 
   "import": {
-    "from_metamask": "Connect to <br> metamask",
-    "from_keystore": "Select or drag<br />your keystore",
-    "from_trezor": "Exchange from<br />trezor",
-    "from_ledger": "Exchange from<br />ledger",
+    "from_metamask": "Connect to <br> Metamask",
+    "from_keystore": "Select or drag<br />your Keystore",
+    "from_trezor": "Exchange from<br />Trezor",
+    "from_ledger": "Exchange from<br />Ledger",
     "from_private_key": "Enter your<br />private key",
     "from_private_key_input_title": "ENTER YOUR PRIVATE KEY",
     "from_private_key_input_title_placehoder": "Enter your private key"
@@ -251,5 +251,6 @@
   "help": "Help",
   "low": "Low",
   "standard": "Standard",
-  "fast": "Fast"
+  "fast": "Fast",
+  "search": "Search"
 }

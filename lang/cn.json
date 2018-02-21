@@ -17,6 +17,7 @@
     "address": "地址",
     "import_address": "导入地址",
     "my_balance": "余额",
+    "estimated_value": "估值",
     "total": "估值",
     "hide_zero_balance": "隐藏小额资产"
   },
@@ -189,7 +190,7 @@
   },
 
   "import": {
-    "from_metamask": "连接至<br>Metatmask",
+    "from_metamask": "连接至<br>Metamask",
     "from_keystore": "选择或拖动<br />您的密钥库",
     "from_trezor": "从<br />Trezor导入",
     "from_ledger": "从<br />Ledger导入",
@@ -251,5 +252,6 @@
   "help": "帮助",
   "low": "低",
   "standard": "标准",
-  "fast": "快"
+  "fast": "快",
+  "search": "搜索"
 }

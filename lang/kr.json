@@ -17,6 +17,7 @@
     "address": "주소",
     "import_address": "주소 가져오기",
     "my_balance": "잔액",
+    "estimated_value": "추정 가치",
     "total": "추정 가치",
     "hide_zero_balance": "잔액 숨기기"
   },
@@ -190,8 +191,8 @@
   "import": {
     "from_metamask": "Metamask에 <br> 연결하기",
     "from_keystore": "키 저장소를 선택 또는 <br /> 드래그 하십시오",
-    "from_trezor": "TREZOR에서 <br /> 가져오기",
-    "from_ledger": "LEDGER에서 <br /> 가져오기",
+    "from_trezor": "Trezor에서 <br /> 가져오기",
+    "from_ledger": "Ledger에서 <br /> 가져오기",
     "from_private_key": "개인키 <br /> 입력하기",
     "from_private_key_input_title": "개인키 입력하기",
     "from_private_key_input_title_placehoder": "개인키 입력하기"
@@ -250,5 +251,6 @@
   "help": "도움말",
   "low": "낮기",
   "standard": "표준",
-  "fast": "빠르기"
+  "fast": "빠르기",
+  "search": "찾기"
 }

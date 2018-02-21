@@ -3528,9 +3528,14 @@
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar; }
 
+.d-none-md {
+  display: block; }
+
 @media print, screen and (min-width: 40em) {
   .d-inline-block-md {
-    display: inline-block; } }
+    display: inline-block; }
+  .d-none-md {
+    display: none; } }
 
 .w-100 {
   width: 100%; }
@@ -8660,6 +8665,7 @@ ul.broadcast-steps {
       line-height: 1.7; }
     .reveal .content .gas-configed {
       width: 270px;
+      max-width: 100%;
       white-space: nowrap; }
     .reveal .content hr {
       border-color: #a5a5a5; }
