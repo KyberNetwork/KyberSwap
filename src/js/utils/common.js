@@ -2,6 +2,11 @@
 
 export function estimateTimeTx(gasObj){
     var {fastGas, standardGas, safeLowGas, fastTime, standardTime, lowTime, gasPrice} = gasObj
+
+    fastTime = 2
+    standardTime = 5
+    lowTime = 10
+
     fastGas = parseInt(fastGas, 10)
     standardGas = parseInt(standardGas, 10)
     safeLowGas = parseInt(safeLowGas, 10)

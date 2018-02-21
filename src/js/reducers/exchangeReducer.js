@@ -169,7 +169,7 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.UPDATE_RATE":{
-      const { rateInit, expectedPrice, slippagePrice, rateInitSlippage } = action.payload
+      const { rateInit, expectedPrice, slippagePrice, rateInitSlippage, blockNo } = action.payload
 
 
       if(expectedPrice === "0" && rateInit === "0"){
@@ -190,6 +190,7 @@ const exchange = (state = initState, action) => {
 
       newState.slippageRate = slippageRate
       newState.offeredRate = expectedRate
+      newState.blockNo = blockNo
 
       if (newState.sourceAmount !== "") {
         newState.minDestAmount = calculateDest(newState.sourceAmount, expectedRate).toString(10)
@@ -481,9 +482,12 @@ const exchange = (state = initState, action) => {
       newState.progress.currentTime = time
       return newState
     }
-
     case "EXCHANGE.SHOW_INFO_PROGRESS":{
       newState.progress.isShowInfo = true
+      return newState
+    }
+    case "EXCHANGE.THROW_NOT_POSSESS_KGT_ERROR": {
+      newState.errorNotPossessKgt = action.payload
       return newState
     }
   }

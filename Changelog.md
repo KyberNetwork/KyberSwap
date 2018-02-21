@@ -1,3 +1,10 @@
+# 0.4.1 (2018-02-19)
+## Features:
+- List more 4 tokens (eng, salt, appc, rdn)
+
+## Compatability:
+- This version works with KyberNetwork smart contracts version 0.4.0 (Kovan and Mainnet)
+
 # 0.4.0 (2018-02-07)
 
 ## Features: 

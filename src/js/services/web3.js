@@ -5,6 +5,13 @@ export default class Web3Service {
   constructor(web3Instance) {
     this.web3 = web3Instance
   }
+
+  isTrust = () => {
+    if (web3.currentProvider && web3.currentProvider.isTrust === true){
+      return true
+    }
+    return false
+  }
   getNetworkId = ()=> {
     return new Promise((resolve, reject)=>{
       this.web3.version.getNetwork((error, result) => { 

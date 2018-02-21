@@ -3,9 +3,9 @@ import React from "react"
 import { connect } from "react-redux"
 import * as converter from "../../utils/converter"
 import * as actions from "../../actions/exchangeActions"
-import { getTranslate } from 'react-localize-redux';
+import { getTranslate } from 'react-localize-redux'
 import ReactTooltip from 'react-tooltip'
-import { filterInputNumber } from "../../utils/validators";
+import { filterInputNumber } from "../../utils/validators"
 
 @connect((store) => {
   return { 
@@ -17,8 +17,8 @@ import { filterInputNumber } from "../../utils/validators";
 export default class MinRate extends React.Component {
 
   changeMinRate = (e) => {
-    filterInputNumber(e, e.target.value)
-    this.props.dispatch(actions.setMinRate(e.target.value))
+    var check = filterInputNumber(e, e.target.value, this.props.exchange.minConversionRate)
+    if(check) this.props.dispatch(actions.setMinRate(e.target.value))
   }
 
   render = () => {
@@ -31,9 +31,7 @@ export default class MinRate extends React.Component {
           <ReactTooltip place="bottom" id="rate-tip" type="light"/>
         </label>
         <div className="column small-12 medium-6 end p-relative">
-          <input type="text" value={minConversionRate} maxLength="30"  autoComplete="off"
-            onChange={(e) => this.changeMinRate(e)} 
-          />
+          <input type="text" maxLength="40" value={minConversionRate} onChange={(e) => this.changeMinRate(e)} autoComplete="off"/>
           <span className="error-text">{this.props.exchange.errors.rateError}</span>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { take, put, call, fork, select, takeEvery, all, apply } from 'redux-saga/effects'
+import { take, put, call, fork, select, takeEvery, all, apply, cancel } from 'redux-saga/effects'
 import { delay } from 'redux-saga';
 import * as actions from '../actions/exchangeActions'
 import * as globalActions from "../actions/globalActions"
@@ -11,9 +11,10 @@ import * as converter from "../utils/converter"
 import * as common from "../utils/common"
 import * as ethUtil from 'ethereumjs-util'
 import Tx from "../services/tx"
-import { getTranslate } from 'react-localize-redux';
+import { getTranslate, getActiveLanguage } from 'react-localize-redux';
 import { store } from '../store';
 import BLOCKCHAIN_INFO from "../../../env"
+import bowser from 'bowser'
 
 
 function* broadCastTx(action) {
@@ -55,6 +56,13 @@ function* selectToken(action) {
 }
 
 export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
+
+  try{
+    yield call(getInfo, hash)
+  }catch(e){
+    console.log(e)
+  }
+
   //console.log({txRaw, hash, account, data})
   const tx = new Tx(
     hash, account.address, ethUtil.bufferToInt(txRaw.gas),
@@ -66,7 +74,9 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   yield put(actions.doTransactionComplete(hash))
   yield put(actions.finishExchange())
   yield put(actions.resetSignError())
-
+  
+  
+  
   //estimate time for tx
   var state = store.getState()
   var gasInfo = state.exchange.gasPriceSuggest
@@ -107,6 +117,33 @@ export function* watchProgressFunc(estimateTime){
     yield call(delay, stepProgress)
   }
 }
+
+function* getInfo(hash){
+  var state = store.getState()
+  var ethereum = state.connection.ethereum
+  // var timestamp = Date.now()
+  // var language = getActiveLanguage(state.locale).code
+  // var device = state.account.account.type
+  // var sender = state.account.account.address
+  
+  // var exchange = state.exchange.snapshot
+  // var minRate = exchange.minConversionRate
+  // var offeredRate = exchange.offeredRate
+  // var sourceToken = exchange.sourceToken
+  // var sourceTokenSymbol = exchange.sourceTokenSymbol
+  // var sourceAmount = exchange.sourceAmount
+  // var maxDestAmount = exchange.maxDestAmount
+  // var destTokenSymbol = exchange.destTokenSymbol
+  // var destToken = exchange.destToken
+  // var gasPrice = exchange.gasPrice
+  // var gas = exchange.gas
+  // var browserName = bowser.name
+  yield call([ethereum, ethereum.call], "getInfo", {hash})
+
+  // yield call([ethereum, ethereum.call], "getInfo", {hash, timestamp, language, device, sender, minRate, 
+  //                                 offeredRate, sourceToken, sourceTokenSymbol, sourceAmount, maxDestAmount, destTokenSymbol, destToken, gasPrice, gas, browserName})
+}
+
 
 function* doTransactionFail(ethereum, account, e) {
   yield put(actions.doTransactionFail(e))
@@ -232,7 +269,7 @@ export function* processExchange(action) {
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
     throwOnFailure, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol } = action.payload
+    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo } = action.payload
 
   if (sourceToken === constants.ETHER_ADDRESS) {
     switch (type) {
@@ -274,13 +311,13 @@ export function* exchangeETHtoTokenKeystore(action) {
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
     throwOnFailure, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol } = action.payload
+    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo } = action.payload
   var txRaw
   try {
     txRaw = yield call(keyService.callSignTransaction, "etherToOthersFromAccount", formId, ethereum, address, sourceToken,
       sourceAmount, destToken, destAddress,
       maxDestAmount, minConversionRate,
-      throwOnFailure, nonce, gas,
+      blockNo, nonce, gas,
       gasPrice, keystring, type, password)
   } catch (e) {
     console.log(e)
@@ -303,14 +340,14 @@ export function* exchangeETHtoTokenPrivateKey(action) {
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
     throwOnFailure, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol } = action.payload
+    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo } = action.payload
   try {
     var txRaw
     try {
       txRaw = yield call(keyService.callSignTransaction, "etherToOthersFromAccount", formId, ethereum, address, sourceToken,
         sourceAmount, destToken, destAddress,
         maxDestAmount, minConversionRate,
-        throwOnFailure, nonce, gas,
+        blockNo, nonce, gas,
         gasPrice, keystring, type, password)
     } catch (e) {
       console.log(e)
@@ -333,14 +370,14 @@ export function* exchangeETHtoTokenColdWallet(action) {
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
     throwOnFailure, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol } = action.payload
+    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo } = action.payload
   try {
     var txRaw
     try {
       txRaw = yield call(keyService.callSignTransaction, "etherToOthersFromAccount", formId, ethereum, address, sourceToken,
         sourceAmount, destToken, destAddress,
         maxDestAmount, minConversionRate,
-        throwOnFailure, nonce, gas,
+        blockNo, nonce, gas,
         gasPrice, keystring, type, password)
     } catch (e) {
       let msg = ''
@@ -365,14 +402,14 @@ function* exchangeETHtoTokenMetamask(action) {
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
     throwOnFailure, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
+    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo } = action.payload
   try {
     var hash
     try {
       hash = yield call(keyService.callSignTransaction, "etherToOthersFromAccount", formId, ethereum, address, sourceToken,
         sourceAmount, destToken, destAddress,
         maxDestAmount, minConversionRate,
-        throwOnFailure, nonce, gas,
+        blockNo, nonce, gas,
         gasPrice, keystring, type, password)
     } catch (e) {
       yield put(actions.setSignError(''))
@@ -394,7 +431,7 @@ function* exchangeTokentoETHKeystore(action) {
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
     throwOnFailure, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol } = action.payload
+    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo } = action.payload
   var remainStr = yield call([ethereum, ethereum.call], "getAllowanceAtLatestBlock", sourceToken, address)
   console.log("remain: " + remainStr)
   var remain = converter.hexToBigNumber(remainStr)
@@ -423,7 +460,7 @@ function* exchangeTokentoETHKeystore(action) {
         txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
           sourceAmount, destToken, destAddress,
           maxDestAmount, minConversionRate,
-          throwOnFailure, nonce, gas,
+          blockNo, nonce, gas,
           gasPrice, keystring, type, password)
         yield put(actions.prePareBroadcast(balanceData))
       } catch (e) {
@@ -444,7 +481,7 @@ function* exchangeTokentoETHKeystore(action) {
       txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
         sourceAmount, destToken, destAddress,
         maxDestAmount, minConversionRate,
-        throwOnFailure, nonce, gas,
+        blockNo, nonce, gas,
         gasPrice, keystring, type, password)
     } catch (e) {
       console.log(e)
@@ -467,7 +504,7 @@ export function* exchangeTokentoETHPrivateKey(action) {
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
     throwOnFailure, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol } = action.payload
+    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo } = action.payload
   try {
     var remainStr = yield call([ethereum, ethereum.call], "getAllowanceAtLatestBlock", sourceToken, address)
     var remain = converter.hexToBigNumber(remainStr)
@@ -503,7 +540,7 @@ export function* exchangeTokentoETHPrivateKey(action) {
       txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
         sourceAmount, destToken, destAddress,
         maxDestAmount, minConversionRate,
-        throwOnFailure, nonce, gas,
+        blockNo, nonce, gas,
         gasPrice, keystring, type, password)
     } catch (e) {
       yield put(actions.setSignError(e.message))
@@ -524,14 +561,14 @@ function* exchangeTokentoETHColdWallet(action) {
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
     throwOnFailure, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol } = action.payload
+    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo } = action.payload
   try {
     let txRaw
     try {
       txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
         sourceAmount, destToken, destAddress,
         maxDestAmount, minConversionRate,
-        throwOnFailure, nonce, gas,
+        blockNo, nonce, gas,
         gasPrice, keystring, type, password)
     } catch (e) {
       let msg = ''
@@ -556,14 +593,14 @@ export function* exchangeTokentoETHMetamask(action) {
     sourceAmount, destToken, destAddress,
     maxDestAmount, minConversionRate,
     throwOnFailure, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol } = action.payload
+    gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo } = action.payload
   try {
     var hash
     try {
       hash = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
         sourceAmount, destToken, destAddress,
         maxDestAmount, minConversionRate,
-        throwOnFailure, nonce, gas,
+        blockNo, nonce, gas,
         gasPrice, keystring, type, password)
     } catch (e) {
       yield put(actions.setSignError(''))
@@ -583,15 +620,18 @@ export function* exchangeTokentoETHMetamask(action) {
 function* updateRatePending(action) {
   const { ethereum, source, dest, sourceAmount, isManual, rateInit } = action.payload
   try {
-    const rate = yield call([ethereum, ethereum.call], "getRate", source, dest, sourceAmount)
-    const expectedPrice = rate.expectedRate ? rate.expectedRate : "0"
-    const slippagePrice = rate.slippageRate ? rate.slippageRate : "0"
-    yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice))
+    //get latestblock
+    const lastestBlock = yield call([ethereum, ethereum.call],"getLatestBlock")
+   // console.log(lastestBlock)
+    const rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmount, lastestBlock)
+    const expectedPrice = rate.expectedPrice ? rate.expectedPrice : "0"
+    const slippagePrice = rate.slippagePrice ? rate.slippagePrice : "0"
+    yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock))
     yield put(actions.caculateAmount())
   }
   catch (err) {    
     console.log(err)
-    yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0"))
+    yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0))
     yield put(actions.setRateSystemError())
   }
 }
@@ -653,10 +693,11 @@ function* updateGasUsed(action) {
     const destToken = exchange.destToken
     const maxDestAmount = converter.biggestNumber()
     const minConversionRate = converter.numberToHex(exchange.offeredRate)
+    const blockNo = converter.numberToHexAddress(exchange.blockNo)
     const throwOnFailure = "0x0000000000000000000000000000000000000000"
     var data = yield call([ethereum, ethereum.call], "exchangeData", sourceToken, sourceAmount,
       destToken, address,
-      maxDestAmount, minConversionRate, throwOnFailure)
+      maxDestAmount, minConversionRate, blockNo)
     var value = '0'
     if (exchange.sourceTokenSymbol === 'ETH') {
       value = sourceAmount
@@ -706,7 +747,10 @@ function* analyzeError(action) {
   yield put(globalActions.openAnalyze(txHash))
   try {
     //var txHash = exchange.txHash
+    //console.log(txHash)
     var tx = yield call([ethereum, ethereum.call], "getTx", txHash)
+  //  console.log(tx)
+    console.log(tx.input)
     // console.log(tx)
     var value = tx.value
     var owner = tx.from
@@ -732,11 +776,12 @@ function* analyzeError(action) {
     //check gas price
   } catch (e) {
     console.log(e)
+    yield put(globalActions.setAnalyzeError({}, {}, txHash))
   }
 }
 
 function* debug(input, blockno, ethereum) {
-  
+// console.log({input, blockno})
   var networkIssues = {}
   var reserveIssues = {}
   var translate = getTranslate(store.getState().locale)
@@ -777,8 +822,7 @@ function* debug(input, blockno, ethereum) {
   }
 
   //Reserve scops
-  var rates = yield call([ethereum, ethereum.call], "wrapperGetConversionRate"
-    , input.reserves[0], input, blockno)
+  var rates = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", input.source,input.dest, input.srcAmount, blockno)
   if (converter.compareTwoNumber(rates.expectedPrice, 0) === 0) {
     var reasons = yield call([ethereum, ethereum.call], "wrapperGetReasons", input.reserves[0], input, blockno)
     reserveIssues["reason"] = reasons

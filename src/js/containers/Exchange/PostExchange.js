@@ -57,6 +57,9 @@ export default class PostExchange extends React.Component {
     this.state = {form:{}}
   }
   clickExchange = () => {
+    if(this.props.form.errorNotPossessKgt){
+      return
+    }
     if(this.props.form.isSelectToken){
       return
     }
@@ -303,6 +306,8 @@ export default class PostExchange extends React.Component {
     var minConversionRate = converters.toTWei(this.props.snapshot.minConversionRate)
     minConversionRate = converters.numberToHex(minConversionRate)
 
+    var blockNo = converters.numberToHexAddress(this.props.snapshot.blockNo)
+
     var destAddress = this.props.account.address
     var maxDestAmount = converters.biggestNumber()
     var throwOnFailure = this.props.snapshot.throwOnFailure
@@ -326,7 +331,7 @@ export default class PostExchange extends React.Component {
     return {
       selectedAccount, sourceToken, sourceAmount, destToken,
       minConversionRate, destAddress, maxDestAmount,
-      throwOnFailure, nonce, gas,gas_approve, gasPrice, balanceData, sourceTokenSymbol
+      throwOnFailure, nonce, gas,gas_approve, gasPrice, balanceData, sourceTokenSymbol, blockNo
     }
   }
   checkTokenBalanceOfColdWallet = () => {
@@ -375,7 +380,7 @@ export default class PostExchange extends React.Component {
         params.sourceAmount, params.destToken, params.destAddress,
         params.maxDestAmount, params.minConversionRate,
         params.throwOnFailure, params.nonce, params.gas,
-        params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService, params.balanceData, params.sourceTokenSymbol))
+        params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService, params.balanceData, params.sourceTokenSymbol, params.blockNo))
 
 
     } catch (e) {
@@ -481,7 +486,7 @@ export default class PostExchange extends React.Component {
       )
     }
     let className = "button accent "
-    if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree && !this.props.form.isSelectToken) {
+    if (!this.props.form.errorNotPossessKgt && !validators.anyErrors(this.props.form.errors) && this.props.form.termAgree && !this.props.form.isSelectToken) {
       className += " animated infinite pulse next"
     }
     var termAndServices = (

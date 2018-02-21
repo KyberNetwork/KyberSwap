@@ -1,13 +1,12 @@
 import React from "react"
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
-import { filterInputNumber } from "../../utils/validators";
+import { filterInputNumber, restrictInputNumber } from "../../utils/validators";
 
 const TransferForm = (props) => {
-
   function handleChangeAmount(e) {
-    filterInputNumber(e, e.target.value)
-    props.input.amount.onChange(e)
+    var check = filterInputNumber(e, e.target.value, props.input.amount.value)
+    if(check) props.input.amount.onChange(e)
   }
 
   var render = (
@@ -24,7 +23,7 @@ const TransferForm = (props) => {
                 <div class="column small-12 medium-7">
 
                   <label className={props.errors.destAddress !== '' ? "error" : ""}>
-                    <span className="transaction-label">{props.translate("address.address") ||  "Address"}</span>
+                    <span className="transaction-label">{props.translate("address.address") || "Address"}</span>
                     <textarea className="hash" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange}>
                     </textarea>
                     {props.errors.destAddress &&
@@ -41,9 +40,10 @@ const TransferForm = (props) => {
 
                     <div className={props.errors.amountTransfer !== '' ? "error select-token-panel" : "select-token-panel"}>
                       {props.tokenTransferSelect}
-                      <input type="text" min="0" step="0.000001" placeholder="0" 
-                        value={props.input.amount.value} className="amount-input" maxLength="30"
-                        onChange={handleChangeAmount}  autoComplete="off"
+                      <input type="text" min="0" step="0.000001" placeholder="0"
+                        value={props.input.amount.value} className="amount-input"
+                        onChange={handleChangeAmount}
+                        maxLength="50" autoComplete="off"
                       />
                     </div>
                     {props.errors.amountTransfer &&
@@ -57,34 +57,11 @@ const TransferForm = (props) => {
                         {props.balance.roundingValue} {props.tokenSymbol}
                       </span>
                       <span class="k k-info k-2x ml-3" data-tip={props.translate('transaction.click_to_transfer_all_balance') || 'Click to transfer all balance'} data-for="balance-notice-tip" currentitem="false"></span>
-                      <ReactTooltip place="bottom" id="balance-notice-tip" type="light"/>
+                      <ReactTooltip place="bottom" id="balance-notice-tip" type="light" />
                     </a>
                   </div>
                 </div>
               </div>
-
-
-              {/* <div class="row">
-                <div class="column medium-6">
-                  {props.tokenTransferSelect}
-                </div>
-                <div class="column medium-6">
-                  <label>{props.translate("transaction.amount") || "Amount"}
-                    <div className={props.errors.amountTransfer !== '' ? "token-amount error" : "token-amount"}>
-                      <input type="number" min="0" step="0.000001" placeholder="0" value={props.input.amount.value} className="amount-input" onChange={props.input.amount.onChange} /><span class="name">{props.tokenSymbol}</span>
-                      {props.errors.amountTransfer &&
-                        <span class="error-text">{props.translate(props.errors.amountTransfer)}</span>
-                      }
-                    </div>
-                    <div class="address-balance clearfix">
-                      <span class="note">{props.translate("transaction.address_balance") || "Address Balance"}</span>
-                      <a className="value" onClick={props.setAmount} title={props.balance.value}>
-                        {props.balance.roundingValue} {props.tokenSymbol}
-                      </a>
-                    </div>
-                  </label>
-                </div>
-              </div> */}
             </form>
           </div>
         </div>
@@ -92,7 +69,6 @@ const TransferForm = (props) => {
 
       {props.gasConfig}
       {props.transferButton}
-      {/* {props.tokenModal} */}
     </div>
   )
   return (
