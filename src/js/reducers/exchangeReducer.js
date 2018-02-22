@@ -333,8 +333,8 @@ const exchange = (state = initState, action) => {
         newState.snapshot.destAmount = caculateDestAmount(state.snapshot.sourceAmount, state.snapshot.offeredRate, 6)
       }
       newState.snapshot.isFetchingRate = false
-      console.log("***************")
-      console.log(newState)
+    //  console.log("***************")
+    //  console.log(newState)
       return newState
     }
     case "EXCHANGE.INPUT_CHANGE": {

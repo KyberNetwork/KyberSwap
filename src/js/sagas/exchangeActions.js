@@ -2,6 +2,8 @@ import { take, put, call, fork, select, takeEvery, all, apply } from 'redux-saga
 import * as actions from '../actions/exchangeActions'
 import * as globalActions from "../actions/globalActions"
 
+import * as common from "./common"
+
 import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
 import { addTx } from '../actions/txActions'
 import * as utilActions from '../actions/utilActions'
@@ -609,6 +611,11 @@ function* updateRatePending(action) {
   }
 }
 
+
+
+function* getRateSnapshot(ethereum, source, dest, sourceAmountHex){
+  return yield call([ethereum, ethereum.call], "getRate", source, dest, sourceAmountHex)
+}
 function* updateRateSnapshot(action){
   const ethereum = action.payload
   var state = store.getState()
@@ -623,12 +630,28 @@ function* updateRateSnapshot(action){
     var sourceAmountHex = converter.stringToHex(sourceAmount, sourceDecimal)
     var rateInit = 0
 
-    const rate = yield call([ethereum, ethereum.call], "getRate", source, dest, sourceAmountHex)
-    const expectedPrice = rate.expectedRate ? rate.expectedRate : "0"
-    const slippagePrice = rate.slippageRate ? rate.slippageRate : "0"
+    var rateRequest = yield call(common.handleRequest, getRateSnapshot, ethereum, source, dest, sourceAmountHex)
+    if (rateRequest.status === "success"){
+      var rate = rateRequest.data
+      const expectedPrice = rate.expectedRate ? rate.expectedRate : "0"
+      const slippagePrice = rate.slippageRate ? rate.slippageRate : "0"
 
-    yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
-    yield put(actions.caculateAmountInSnapshot())
+      yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
+      yield put(actions.caculateAmountInSnapshot())
+    }
+    if (rateRequest.status === "timeout"){
+      yield put(actions.hideApprove())
+      yield put(actions.hideConfirm())
+      yield put(actions.hidePassphrase())
+      yield put(utilActions.openInfoModal("Error", "There are some problems with nodes. Please try again in a while"))
+    }
+
+    // const rate = yield call([ethereum, ethereum.call], "getRate", source, dest, sourceAmountHex)
+    // const expectedPrice = rate.expectedRate ? rate.expectedRate : "0"
+    // const slippagePrice = rate.slippageRate ? rate.slippageRate : "0"
+
+    // yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
+    // yield put(actions.caculateAmountInSnapshot())
   }
   catch (err) {
     console.log("===================")
@@ -637,9 +660,26 @@ function* updateRateSnapshot(action){
 }
 
 function* fetchGas(action) {
-  yield call(updateGasUsed)
+ // yield call(updateGasUsed)
+
+  var gasRequest = yield call(common.handleRequest, updateGasUsed, action)
+  if (gasRequest.status === "success"){
+    const {gas, gas_approve} = gasRequest.data
+    yield put(actions.setEstimateGas(gas, gas_approve))
+  }
+  if (gasRequest.status === "timeout"){
+    console.log("timeout")
+    var state = store.getState()
+    const exchange = state.exchange
+    var gas = exchange.max_gas
+    var gas_approve = 0
+    yield put(actions.setEstimateGas(gas, gas_approve))
+  }
+
   yield put(actions.fetchGasSuccess())
 }
+
+
 
 function* updateGasUsed(action) {
   var state = store.getState()
@@ -702,16 +742,27 @@ function* updateGasUsed(action) {
       data: data,
       value: value,
     }
-    gas = yield call([ethereum, ethereum.call], "estimateGas", txObj)
+    // var gasRequest = yield call(common.handleRequest, api.estimateGas, ethereum, txObj)
+    // if (gasRequest.status === "success"){
+    //   gas = gasRequest.data
+    // }
+    // if (gasRequest.status === "timeout"){
+    //   console.log("timeout")
+    // }
+    gas =  yield call([ethereum, ethereum.call], "estimateGas", txObj)
+    
     gas = Math.round(gas * 120 / 100)
     if (gas > exchange.max_gas) {
       gas = exchange.max_gas
     }
+
+    return {gas, gas_approve}
   } catch (e) {
-    console.log(e.message)
+    console.log("Cannot estimate gas")
+    console.log(e)
   }
   //console.log(gas, gas_approve)
-  yield put(actions.setEstimateGas(gas, gas_approve))
+  //yield put(actions.setEstimateGas(gas, gas_approve))
 }
 
 function* analyzeError(action) {
