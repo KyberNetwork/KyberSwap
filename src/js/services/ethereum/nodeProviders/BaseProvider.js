@@ -273,6 +273,20 @@ export default class BaseProvider {
         })
     }
 
+    // getRateTest(source, dest, quantity) {
+    //     return new Promise((resolve, reject) => {
+    //         this.networkContract.methods.getExpectedRate(source, dest, quantity).call()
+    //             .then((result) => {
+    //                 if (result != null) {
+    //                    // resolve(result)
+    //                 }
+    //             })
+    //             .catch((err) => {
+    //                 reject(err)
+    //             })
+    //     })
+    // }
+
     checkKyberEnable() {
         return new Promise((resolve, reject) => {
             this.networkContract.methods.enabled().call()
