@@ -614,7 +614,13 @@ function* updateRatePending(action) {
 
 
 function* getRateSnapshot(ethereum, source, dest, sourceAmountHex){
-  return yield call([ethereum, ethereum.call], "getRate", source, dest, sourceAmountHex)
+  try{
+    var rate = yield call([ethereum, ethereum.call], "getRate", source, dest, sourceAmountHex)
+    return {status:"success", res: rate}
+  }catch(e){
+    console.log(e)
+    return {status:"fail", err: e}
+  }
 }
 function* updateRateSnapshot(action){
   const ethereum = action.payload
@@ -639,7 +645,7 @@ function* updateRateSnapshot(action){
       yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
       yield put(actions.caculateAmountInSnapshot())
     }
-    if (rateRequest.status === "timeout"){
+    if ((rateRequest.status === "timeout")  || (rateRequest.status === "fail")){
       yield put(actions.hideApprove())
       yield put(actions.hideConfirm())
       yield put(actions.hidePassphrase())
@@ -667,7 +673,7 @@ function* fetchGas(action) {
     const {gas, gas_approve} = gasRequest.data
     yield put(actions.setEstimateGas(gas, gas_approve))
   }
-  if (gasRequest.status === "timeout"){
+  if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
     console.log("timeout")
     var state = store.getState()
     const exchange = state.exchange
@@ -756,10 +762,11 @@ function* updateGasUsed(action) {
       gas = exchange.max_gas
     }
 
-    return {gas, gas_approve}
+    return {status:"success", res: {gas, gas_approve}}
   } catch (e) {
     console.log("Cannot estimate gas")
     console.log(e)
+    return {status:"fail", err: e}
   }
   //console.log(gas, gas_approve)
   //yield put(actions.setEstimateGas(gas, gas_approve))

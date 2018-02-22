@@ -8193,6 +8193,9 @@ input.error {
   display: block;
   text-transform: none;
   margin-top: 10px; }
+  .error + span.error-text a,
+  .error span.error-text a {
+    color: #3ee6c1; }
 
 @keyframes button-accent-waiting {
   0% {

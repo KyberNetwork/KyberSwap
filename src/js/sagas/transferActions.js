@@ -180,7 +180,7 @@ function* estimateGasUsed(action){
     const gas = gasRequest.data
     yield put(actions.setGasUsed(gas))
   }
-  if (gasRequest.status === "timeout"){
+  if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
     var state = store.getState()
     var transfer = state.transfer
     var gasLimit = transfer.gas_limit
@@ -212,7 +212,7 @@ function* estimateGasUsedWhenSelectToken(action){
     const gas = gasRequest.data
     yield put(actions.setGasUsed(gas))
   }
-  if (gasRequest.status === "timeout"){
+  if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
     var state = store.getState()
     var transfer = state.transfer
     var gasLimit = transfer.gas_limit
@@ -243,7 +243,7 @@ function* estimateGasUsedWhenChangeAmount(action){
     const gas = gasRequest.data
     yield put(actions.setGasUsed(gas))
   }
-  if (gasRequest.status === "timeout"){
+  if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
     var state = store.getState()
     var transfer = state.transfer
     var gasLimit = transfer.gas_limit
@@ -275,7 +275,7 @@ function* fetchGas(){
     const gas = gasRequest.data
     yield put(actions.setGasUsed(gas))
   }
-  if (gasRequest.status === "timeout"){
+  if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
     var state = store.getState()
     var transfer = state.transfer
     var gasLimit = transfer.gas_limit
@@ -307,11 +307,11 @@ function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, source
         if(gas > 21000){
           gas = Math.round(gas * 120 / 100)
         }
-        return gas
+        return {status: "success", res: gas}
       //  yield put(actions.setGasUsed(gas))
       }catch(e){
         console.log(e.message)
-        return gasLimit
+        return {"status": "success", res: gasLimit}
         //yield put(actions.setGasUsed(gasLimit))
       }
     }else{
@@ -326,11 +326,13 @@ function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, source
         }
         gas = yield call([ethereum, ethereum.call],"estimateGas", txObj)
         gas = Math.round(gas * 120 / 100)
-        return gas
+        return {"status": "success", res: gas}
+        //return gas
       //  yield put(actions.setGasUsed(gas))
       }catch(e){
         console.log(e.message)
-        return gasLimit
+        return {"status": "success", res: gasLimit}
+        //return gasLimit
         //yield put(actions.setGasUsed(gasLimit))
       }
     }
