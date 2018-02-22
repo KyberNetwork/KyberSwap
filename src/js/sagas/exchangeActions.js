@@ -142,19 +142,25 @@ export function* checkTokenBalanceOfColdWallet(action) {
     throwOnFailure, nonce, gas,
     gasPrice, keystring, type, password, account, data, keyService } = action.payload
 
-  const remainStr = yield call([ethereum, ethereum.call], "getAllowanceAtLatestBlock", sourceToken, address)
-  const remain = converter.hexToBigNumber(remainStr)
-  const sourceAmountBig = converter.hexToBigNumber(sourceAmount)
+  try{
+    const remainStr = yield call([ethereum, ethereum.call], "getAllowanceAtLatestBlock", sourceToken, address)
+    const remain = converter.hexToBigNumber(remainStr)
+    const sourceAmountBig = converter.hexToBigNumber(sourceAmount)
 
 
-  if (!remain.greaterThanOrEqualTo(sourceAmountBig) && !isApproveTxPending()) {
-    yield put(actions.showApprove())
-    yield call(fetchGasApprove)
-    //fetch gas approve
+    if (!remain.greaterThanOrEqualTo(sourceAmountBig) && !isApproveTxPending()) {
+      yield put(actions.showApprove())
+      yield call(fetchGasApprove)
+      //fetch gas approve
 
-  } else {
-    yield put(actions.showConfirm())
+    } else {
+      yield put(actions.showConfirm())
+    }
+  }catch(e){
+     console.log(e)
+     yield put(utilActions.openInfoModal("Error", "There are some problems with nodes. Please try again in a while"))
   }
+  
 }
 
 function* processApprove(action) {
