@@ -256,6 +256,7 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.SHOW_APPROVE": {
       newState.confirmApprove = true
+      newState.isFetchingGas = true
       return newState
     }
     case "EXCHANGE.CHANGE_PASSPHRASE": {

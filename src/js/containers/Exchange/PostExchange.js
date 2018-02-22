@@ -117,7 +117,7 @@ export default class PostExchange extends React.Component {
               this.props.dispatch(exchangeActions.fetchGas())
               this.props.dispatch(exchangeActions.showConfirm())
             } else {
-              this.props.dispatch(exchangeActions.fetchGas())
+             // this.props.dispatch(exchangeActions.fetchGas())
               this.checkTokenBalanceOfColdWallet()
             }
             break

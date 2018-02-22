@@ -149,6 +149,9 @@ export function* checkTokenBalanceOfColdWallet(action) {
 
   if (!remain.greaterThanOrEqualTo(sourceAmountBig) && !isApproveTxPending()) {
     yield put(actions.showApprove())
+    yield call(fetchGasApprove)
+    //fetch gas approve
+
   } else {
     yield put(actions.showConfirm())
   }
@@ -685,7 +688,58 @@ function* fetchGas(action) {
   yield put(actions.fetchGasSuccess())
 }
 
+function* fetchGasApprove() {
+  // yield call(updateGasUsed)
+  var state = store.getState()
+  const exchange = state.exchange
+  var gas = exchange.max_gas
+  var gas_approve
 
+   var gasRequest = yield call(common.handleRequest, getGasApprove)
+   if (gasRequest.status === "success"){
+     const gas_approve = gasRequest.data
+     yield put(actions.setEstimateGas(gas, gas_approve))
+   }
+   if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
+     console.log("timeout")
+     
+     gas_approve = exchange.max_gas_approve
+     yield put(actions.setEstimateGas(gas, gas_approve))
+   }
+ 
+   yield put(actions.fetchGasSuccess())
+ }
+
+function* getGasApprove(){
+  var state = store.getState()
+  const ethereum = state.connection.ethereum
+  const exchange = state.exchange
+  const sourceToken = exchange.sourceToken
+
+  var account = state.account.account
+  var address = account.address
+
+  var gas_approve = 0
+  try{
+    var dataApprove = yield call([ethereum, ethereum.call], "approveTokenData", sourceToken, converter.biggestNumber())
+    var txObjApprove = {
+      from: address,
+      to: sourceToken,
+      data: dataApprove,
+      value: '0x0',
+    }
+    gas_approve = yield call([ethereum, ethereum.call], "estimateGas", txObjApprove)
+    gas_approve = Math.round(gas_approve * 120 / 100)
+    if (gas_approve > exchange.max_gas_approve) {
+      gas_approve = exchange.max_gas_approve
+    }
+    return {status:"success", res: gas_approve}
+  }catch(e){
+    console.log(e)
+    return {status:"fail", err: e}
+  }
+ 
+}
 
 function* updateGasUsed(action) {
   var state = store.getState()
@@ -736,7 +790,7 @@ function* updateGasUsed(action) {
         gas_approve = yield call([ethereum, ethereum.call], "estimateGas", txObjApprove)
         gas_approve = Math.round(gas_approve * 120 / 100)
         if (gas_approve > exchange.max_gas_approve) {
-          gas = exchange.max_gas_approve
+          gas_approve = exchange.max_gas_approve
         }
       } else {
         gas_approve = 0
@@ -756,8 +810,9 @@ function* updateGasUsed(action) {
     //   console.log("timeout")
     // }
     gas =  yield call([ethereum, ethereum.call], "estimateGas", txObj)
-    
+  //  console.log("gas ne: " + gas)
     gas = Math.round(gas * 120 / 100)
+    //console.log("gas ne: " + gas)
     if (gas > exchange.max_gas) {
       gas = exchange.max_gas
     }
@@ -891,10 +946,10 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET", checkTokenBalanceOfColdWallet)
   yield takeEvery("EXCHANGE.UPDATE_RATE_PENDING", updateRatePending)
   yield takeEvery("EXCHANGE.UPDATE_RATE_SNAPSHOT", updateRateSnapshot)
-  yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", updateGasUsed)
+  yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", fetchGas)
   yield takeEvery("EXCHANGE.ANALYZE_ERROR", analyzeError)
 
-  yield takeEvery("EXCHANGE.INPUT_CHANGE", updateGasUsed)
+  yield takeEvery("EXCHANGE.INPUT_CHANGE", fetchGas)
   yield takeEvery("EXCHANGE.FETCH_GAS", fetchGas)
   yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
 }
