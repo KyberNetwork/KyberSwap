@@ -678,7 +678,7 @@ function* fetchGas(action) {
     var state = store.getState()
     const exchange = state.exchange
     var gas = exchange.max_gas
-    var gas_approve = 0
+    var gas_approve = exchange.max_gas_approve
     yield put(actions.setEstimateGas(gas, gas_approve))
   }
 
