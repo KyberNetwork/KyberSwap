@@ -131,7 +131,7 @@ export function updatePrevSource(value) {
   }
 }
 
-export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, blockNo) {
+export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess) {
   // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
   //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
 
@@ -141,7 +141,7 @@ export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePric
   //var reserveBalance = rate[2]
   return {
     type: "EXCHANGE.UPDATE_RATE",
-    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage:  converter.toT(rateInit, 18), blockNo}
+    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage:  converter.toT(rateInit, 18), blockNo, isManual, isSuccess}
   }
 
 }
@@ -162,11 +162,17 @@ export function updateRateSnapshotComplete(rateInit, expectedPrice, slippagePric
 }
 
 
-export function setRateSystemError(){
-  return {
-    type: "EXCHANGE.SET_RATE_ERROR_SYSTEM"
-  }  
-}
+// export function setRateSystemError(){
+//   return {
+//     type: "EXCHANGE.SET_RATE_ERROR_SYSTEM"
+//   }  
+// }
+
+// export function setRateFailError(){
+//   return {
+//     type: "EXCHANGE.SET_RATE_ERROR_FAIL"
+//   }  
+// }
 
 // export function setErrorRateSystem(){
 //   return {

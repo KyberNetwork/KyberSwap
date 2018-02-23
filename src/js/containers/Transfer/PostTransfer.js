@@ -133,6 +133,7 @@ export default class PostTransfer extends React.Component {
         translate={this.props.translate}
         title={this.props.translate("modal.confirm_transfer_title") || "Transfer confirm"}
         errors={this.props.form.signError}
+        walletType={this.props.account.type}
       />
     )
   }

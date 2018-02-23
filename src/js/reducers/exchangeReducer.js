@@ -170,20 +170,33 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.UPDATE_RATE":{
-      const { rateInit, expectedPrice, slippagePrice, rateInitSlippage, blockNo } = action.payload
+      const { rateInit, expectedPrice, slippagePrice, rateInitSlippage, blockNo ,isManual, isSuccess} = action.payload
 
-
-      if(expectedPrice === "0" && rateInit === "0"){
-        newState.errors.rateSystem = "Kyber exchange is under maintainance this pair"
+      if (!isSuccess) {
+        newState.errors.rateSystem = "Cannot get rate from blockchain"
       }else{
-        newState.errors.rateSystem = ""
+        if(expectedPrice === "0"){
+          if(rateInit === "0"){
+            newState.errors.rateSystem = "Kyber exchange is under maintainance this pair"
+          }else{
+            newState.errors.rateSystem = "Kyber cannot handle your amount, please reduce amount"
+          }
+        }else{
+          newState.errors.rateSystem = ""
+        }
       }
 
-      if(expectedPrice === "0" && rateInit !== "0"){
-        newState.errors.rateAmount = "Kyber cannot handle your amount, please reduce amount"
-      }else{
-        newState.errors.rateAmount = ""
-      }
+      // if(expectedPrice === "0" && rateInit === "0"){
+      //   newState.errors.rateSystem = "Kyber exchange is under maintainance this pair"
+      // }else{
+      //   newState.errors.rateSystem = ""
+      // }
+
+      // if(expectedPrice === "0" && rateInit !== "0"){
+      //   newState.errors.rateAmount = "Kyber cannot handle your amount, please reduce amount"
+      // }else{
+      //   newState.errors.rateAmount = ""
+      // }
 
     
       var slippageRate = slippagePrice === "0" ? rateInitSlippage : slippagePrice
@@ -227,10 +240,14 @@ const exchange = (state = initState, action) => {
       return newState
 
     }
-    case "EXCHANGE.SET_RATE_ERROR_SYSTEM":{
-      newState.errors.rateSystem = "Kyber exchange is under maintainance this pair"
-      return newState
-    }
+    // case "EXCHANGE.SET_RATE_ERROR_SYSTEM":{
+    //   newState.errors.rateSystem = "Kyber exchange is under maintainance this pair"
+    //   return newState
+    // }
+    // case "EXCHANGE.SET_RATE_ERROR_FAIL":{
+    //   newState.errors.rateSystem = "Kyber exchange is under maintainance this pair"
+    //   return newState
+    // }
     case "EXCHANGE.OPEN_PASSPHRASE": {
       newState.passphrase = true
       return newState

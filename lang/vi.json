@@ -150,6 +150,7 @@
     "minutes": " phút",
     "time_out": "Hết phiên đăng nhập",
     "network_error": "Không thể kết nối đến blockchain. Hãy kiểm tra lại mạng Internet!",
+    "node_error": "Đang có vấn đề với node, hãy thử lại sau một lúc nữa.",
     "term_error": "Bạn phải đồng với các điều khoản và dịch vụ!",
 
     "path_not_support_by_trezor": "Đường dẫn này không được Trezor hỗ trợ",

@@ -80,12 +80,30 @@ $divider-color: darken($title-background-color, 5);
     hr{
       border-color: #a5a5a5;
     }
-    .ledger-error{
+    .modal-error{
       font-size: 0.9em;
       margin-bottom: 25px;
       color: $alert-color;
       border-top: 1px solid #a5a5a5;
       padding-top: 24px;
+      &.metamask{
+        max-height: 200px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        &.full{
+          white-space: normal;
+        }
+        + .show-full{
+          font-size: 0.8em;
+          margin-top: -20px;
+          margin-bottom: 15px;
+          cursor: pointer;
+          color: #ff5d00;
+          font-style: italic;
+        }
+      }
     }
   }
   .footer {
