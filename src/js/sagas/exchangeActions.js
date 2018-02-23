@@ -645,21 +645,19 @@ function* updateRateSnapshot(action){
 
       yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
       yield put(actions.caculateAmountInSnapshot())
-    }
-    var isReqTimeout = rateRequest.status === "timeout"
-    var isReqFail = rateRequest.status === "fail"
-    if (isReqTimeout || isReqFail){
+    }else{
       yield put(actions.hideApprove())
       yield put(actions.hideConfirm())
       yield put(actions.hidePassphrase())
-      let title = translate("error.error_occurred") || "Error occurred"
-      let content = ''
-      if(isReqTimeout){
-        content = translate("error.node_error") || "There are some problems with nodes. Please try again in a while."
-      }
-      if(isReqFail){
-        content = translate("error.network_error") || "Cannot connect to node right now. Please check your network!"
-      }
+    }
+    var title = translate("error.error_occurred") || "Error occurred"
+    var content = ''
+    if(rateRequest.status === "timeout"){
+      content = translate("error.node_error") || "There are some problems with nodes. Please try again in a while."
+      yield put(utilActions.openInfoModal(title, content))
+    }
+    if(rateRequest.status === "fail"){
+      content = translate("error.network_error") || "Cannot connect to node right now. Please check your network!"
       yield put(utilActions.openInfoModal(title, content))
     }
 
