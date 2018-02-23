@@ -71,7 +71,7 @@ class ConfirmTransferModal extends React.Component {
                       : <span>{totalGas.toString()}</span>
                     } ETH</p>
                   </div>
-                  <hr className={haveError ? 'd-none' : 'mt-0'} />
+                  <hr className={this.props.errors ? 'd-none' : 'mt-0'} />
                 </div>
                 {this.msgHtml()}
               </center>
