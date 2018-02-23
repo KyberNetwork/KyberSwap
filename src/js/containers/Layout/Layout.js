@@ -90,7 +90,7 @@ export default class Layout extends React.Component {
   }
 
   render() {
-    var exchangeHistory = this.props.showBalance?<TransactionList />:""
+    var exchangeHistory = <TransactionList />
     var footer = <Footer />
     var rate = <Rate />
     return (
