@@ -4,6 +4,9 @@ import * as utilActions from '../actions/utilActions'
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
 import * as ethUtil from 'ethereumjs-util'
+
+import * as common from "./common"
+
 import Tx from "../services/tx"
 import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
 import { addTx } from '../actions/txActions'
@@ -168,7 +171,19 @@ function* estimateGasUsed(action){
 
   var account = state.account.account
   var fromAddr = account.address
-  yield call(calculateGasUse, fromAddr, transfer.tokenSymbol, transfer.token, decimal, transfer.amount)
+
+  var gasRequest = yield call(common.handleRequest, calculateGasUse, fromAddr, transfer.tokenSymbol, transfer.token, decimal, transfer.amount)
+  if (gasRequest.status === "success"){
+    const gas = gasRequest.data
+    yield put(actions.setGasUsed(gas))
+  }
+  if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
+    var state = store.getState()
+    var transfer = state.transfer
+    var gasLimit = transfer.gas_limit
+    yield put(actions.setGasUsed(gasLimit))
+  }
+//  yield call(calculateGasUse, fromAddr, transfer.tokenSymbol, transfer.token, decimal, transfer.amount)
 }
 
 
@@ -189,7 +204,19 @@ function* estimateGasUsedWhenSelectToken(action){
   var account = state.account.account
   var fromAddr = account.address
 
-  yield call(calculateGasUse, fromAddr, tokenSymbol, address, decimal, transfer.amount)
+  var gasRequest = yield call(common.handleRequest, calculateGasUse, fromAddr, tokenSymbol, address, decimal, transfer.amount)
+  if (gasRequest.status === "success"){
+    const gas = gasRequest.data
+    yield put(actions.setGasUsed(gas))
+  }
+  if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
+    var state = store.getState()
+    var transfer = state.transfer
+    var gasLimit = transfer.gas_limit
+    yield put(actions.setGasUsed(gasLimit))
+  }
+
+  //yield call(calculateGasUse, fromAddr, tokenSymbol, address, decimal, transfer.amount)
 }
 
 function* estimateGasUsedWhenChangeAmount(action){
@@ -208,7 +235,19 @@ function* estimateGasUsedWhenChangeAmount(action){
   var account = state.account.account
   var fromAddr = account.address
 
-  yield call(calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimal, amount)
+  var gasRequest = yield call(common.handleRequest, calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimal, amount)
+  if (gasRequest.status === "success"){
+    const gas = gasRequest.data
+    yield put(actions.setGasUsed(gas))
+  }
+  if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
+    var state = store.getState()
+    var transfer = state.transfer
+    var gasLimit = transfer.gas_limit
+    yield put(actions.setGasUsed(gasLimit))
+  }
+
+ // yield call(calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimal, amount)
 }
 
 
@@ -226,7 +265,21 @@ function* fetchGas(){
   var account = state.account.account
   var fromAddr = account.address
 
-  yield call(calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimal, transfer.amount)
+
+
+  var gasRequest = yield call(common.handleRequest, calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimal, transfer.amount)
+  if (gasRequest.status === "success"){
+    const gas = gasRequest.data
+    yield put(actions.setGasUsed(gas))
+  }
+  if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
+    var state = store.getState()
+    var transfer = state.transfer
+    var gasLimit = transfer.gas_limit
+    yield put(actions.setGasUsed(gasLimit))
+  }
+
+  //yield call(calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimal, transfer.amount)
   yield put(actions.fetchGasSuccess())
 }
 
@@ -251,10 +304,12 @@ function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, source
         if(gas > 21000){
           gas = Math.round(gas * 120 / 100)
         }
-        yield put(actions.setGasUsed(gas))
+        return {status: "success", res: gas}
+      //  yield put(actions.setGasUsed(gas))
       }catch(e){
         console.log(e.message)
-        yield put(actions.setGasUsed(gasLimit))
+        return {"status": "success", res: gasLimit}
+        //yield put(actions.setGasUsed(gasLimit))
       }
     }else{
       try{
@@ -268,10 +323,14 @@ function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, source
         }
         gas = yield call([ethereum, ethereum.call],"estimateGas", txObj)
         gas = Math.round(gas * 120 / 100)
-        yield put(actions.setGasUsed(gas))
+        return {"status": "success", res: gas}
+        //return gas
+      //  yield put(actions.setGasUsed(gas))
       }catch(e){
         console.log(e.message)
-        yield put(actions.setGasUsed(gasLimit))
+        return {"status": "success", res: gasLimit}
+        //return gasLimit
+        //yield put(actions.setGasUsed(gasLimit))
       }
     }
 }

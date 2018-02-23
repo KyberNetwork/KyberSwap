@@ -256,6 +256,7 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.SHOW_APPROVE": {
       newState.confirmApprove = true
+      newState.isFetchingGas = true
       return newState
     }
     case "EXCHANGE.CHANGE_PASSPHRASE": {
@@ -333,8 +334,8 @@ const exchange = (state = initState, action) => {
         newState.snapshot.destAmount = caculateDestAmount(state.snapshot.sourceAmount, state.snapshot.offeredRate, 6)
       }
       newState.snapshot.isFetchingRate = false
-      console.log("***************")
-      console.log(newState)
+    //  console.log("***************")
+    //  console.log(newState)
       return newState
     }
     case "EXCHANGE.INPUT_CHANGE": {

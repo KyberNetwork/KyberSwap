@@ -138,7 +138,7 @@
     "source_amount_rate_error": "当前无法交易",
     "source_amount_too_high_for_reserve": "原始数量过高 （交易对目前还不支持）",
     "source_amount_is_not_number": "原始数量不是一个数字",
-    "not_possess_kgt": "您没有Kyber Network Token（KGT），需要拥有KGT才可以参加试点运行。",
+    "not_possess_kgt": "您没有Kyber Network Token（KGT），需要拥有KGT才可以参加试点运行。为了让我们在我们向更多人开放平台时通知您，请在<a href=\"${link}\" target=\"_blank\">此</a>注册",
 
     "dest_address": "这不是一个地址",
     "amount_transfer_too_hign": "数量过高",
