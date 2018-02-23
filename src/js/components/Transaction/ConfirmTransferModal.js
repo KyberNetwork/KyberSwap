@@ -1,27 +1,62 @@
 import React from "react"
 import { gweiToEth, stringToBigNumber } from "../../utils/converter";
 
-const ConfirmTransferModal = (props) => {
-  var gasPrice = stringToBigNumber(gweiToEth(props.gasPrice))
-  var totalGas = gasPrice.mul(props.gas)
-  var haveError = props.errors ? true : false
+class ConfirmTransferModal extends React.Component {
+
+  constructor() {
+    super()
+    this.state = {
+      isFullError: false
+    }
+  }
+
+  toggleFullErr = () => {
+    this.setState({
+      isFullError: !this.state.isFullError
+    })
+  }
+
+  errorHtml = () => {
+    if (this.props.errors) {
+      let isMetaMaskAcc = this.props.walletType === 'metamask'
+      let metaMaskClass = isMetaMaskAcc ? 'metamask' : ''
+      return (
+        <React.Fragment>
+          <div className={'modal-error ' + metaMaskClass + (this.state.isFullError ? ' full' : '')}>
+            {this.props.errors}
+          </div>
+          {isMetaMaskAcc ? 
+            <div onClick={this.toggleFullErr} className="show-full">
+              {this.state.isFullError ? 'Hide »' : 'Read full error »'}
+            </div>
+            : ''
+          }
+        </React.Fragment>
+      )
+    }
+  }
+
+  render() {
+    var gasPrice = stringToBigNumber(gweiToEth(this.props.gasPrice))
+    var totalGas = gasPrice.mul(this.props.gas)
+    var haveError = this.props.errors ? true : false
   return (
     <div>
-      <div className="title text-center">{props.title}</div>
-      <a className="x" onClick={(e) => props.onCancel(e)}>&times;</a>
+        <div className="title text-center">{this.props.title}</div>
+        <a className="x" onClick={(e) => this.props.onCancel(e)}>&times;</a>
       <div className="content with-overlap">
         <div className="row">
           <div className="column">
             <center>
-              {props.recap}
+                {this.props.recap}
               <div className="gas-configed text-light text-center">
                 <div className="row">
-                  <p className="column small-6">{props.translate("transaction.gas_price") || 'Gas price'}</p>
-                  <p className="column small-6">{props.gasPrice} Gwei</p>
+                    <p className="column small-6">{this.props.translate("transaction.gas_price") || 'Gas price'}</p>
+                    <p className="column small-6">{this.props.gasPrice} Gwei</p>
                 </div>
                 <div className="row">
-                  <p className="column small-6">{props.translate("transaction.transaction_fee") || "Transaction Fee"}</p>
-                  <p className="column small-6">{props.isFetchingGas ?
+                    <p className="column small-6">{this.props.translate("transaction.transaction_fee") || "Transaction Fee"}</p>
+                    <p className="column small-6">{this.props.isFetchingGas ?
                     <img src={require('../../../assets/img/waiting-white.svg')} /> 
                     : <span>{totalGas.toString()}</span>
                   } ETH</p>
@@ -30,28 +65,24 @@ const ConfirmTransferModal = (props) => {
               </div>
               {haveError ?
                 '' :
-                props.isConfirming ? (
-                  <p>{props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</p>
+                  this.props.isConfirming ? (
+                    <p>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</p>
                 )
                   : (
-                    <p>{props.translate("modal.press_confirm_if_really_want") || "Press confirm to continue"}</p>
+                      <p>{this.props.translate("modal.press_confirm_if_really_want") || "Press confirm to continue"}</p>
                   )
               }
             </center>
-            {haveError ? (
-              <div className="ledger-error">
-                {props.errors}
-              </div>
-              ): ''
-            }
+            {this.errorHtml()}
           </div>
         </div>
       </div>
       <div className="overlap">
-        <a className={"button accent process-submit " + (props.isConfirming || props.isFetchingGas || props.isFetchingRate ? "waiting" : "next")} onClick={(e) => props.onExchange(e)}>{props.translate("modal.confirm") || "Confirm"}</a>
+          <a className={"button accent process-submit " + (this.props.isConfirming || this.props.isFetchingGas || this.props.isFetchingRate ? "waiting" : "next")} onClick={(e) => this.props.onExchange(e)}>{this.props.translate("modal.confirm") || "Confirm"}</a>
       </div>
     </div>
   )
+}
 }
 
 export default ConfirmTransferModal

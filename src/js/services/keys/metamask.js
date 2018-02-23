@@ -28,8 +28,8 @@ export default class Metamask {
         if (!err){
           resolve(transactionHash)
         }else{
-          console.log(err.message)
-          reject(err)
+          console.log(err)
+          reject(err.message)
         }
       })
     })

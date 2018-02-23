@@ -141,7 +141,7 @@ export function* checkTokenBalanceOfColdWallet(action) {
     maxDestAmount, minConversionRate,
     throwOnFailure, nonce, gas,
     gasPrice, keystring, type, password, account, data, keyService } = action.payload
-
+  let translate = getTranslate(store.getState().locale)
   try{
     const remainStr = yield call([ethereum, ethereum.call], "getAllowanceAtLatestBlock", sourceToken, address)
     const remain = converter.hexToBigNumber(remainStr)
@@ -157,8 +157,9 @@ export function* checkTokenBalanceOfColdWallet(action) {
       yield put(actions.showConfirm())
     }
   }catch(e){
-     console.log(e)
-     yield put(utilActions.openInfoModal("Error", "There are some problems with nodes. Please try again in a while"))
+    let title = translate("error.error_occurred") || "Error occurred"
+    let content = translate("error.network_error") || "Cannot connect to node right now. Please check your network!"
+    yield put(utilActions.openInfoModal(title, content))
   }
   
 }
@@ -235,7 +236,7 @@ export function* processApproveByMetamask(action) {
     yield put(actions.hideApprove())
     yield put(actions.showConfirm())
   } catch (e) {
-    yield put(actions.setSignError(''))
+    yield put(actions.setSignError(e))
   }
 }
 
@@ -387,7 +388,7 @@ function* exchangeETHtoTokenMetamask(action) {
         blockNo, nonce, gas,
         gasPrice, keystring, type, password)
     } catch (e) {
-      yield put(actions.setSignError(''))
+      yield put(actions.setSignError(e))
       return
     }
 
@@ -578,7 +579,7 @@ export function* exchangeTokentoETHMetamask(action) {
         blockNo, nonce, gas,
         gasPrice, keystring, type, password)
     } catch (e) {
-      yield put(actions.setSignError(''))
+      yield put(actions.setSignError(e))
       return
     }
 
@@ -626,7 +627,7 @@ function* updateRateSnapshot(action){
   const ethereum = action.payload
   var state = store.getState()
   var exchangeSnapshot = state.exchange.snapshot
-
+  var translate = getTranslate(state.locale)
   try {
     var source = exchangeSnapshot.sourceToken
     var dest = exchangeSnapshot.destToken
@@ -644,12 +645,20 @@ function* updateRateSnapshot(action){
 
       yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
       yield put(actions.caculateAmountInSnapshot())
-    }
-    if ((rateRequest.status === "timeout")  || (rateRequest.status === "fail")){
+    }else{
       yield put(actions.hideApprove())
       yield put(actions.hideConfirm())
       yield put(actions.hidePassphrase())
-      yield put(utilActions.openInfoModal("Error", "There are some problems with nodes. Please try again in a while"))
+    }
+    var title = translate("error.error_occurred") || "Error occurred"
+    var content = ''
+    if(rateRequest.status === "timeout"){
+      content = translate("error.node_error") || "There are some problems with nodes. Please try again in a while."
+      yield put(utilActions.openInfoModal(title, content))
+    }
+    if(rateRequest.status === "fail"){
+      content = translate("error.network_error") || "Cannot connect to node right now. Please check your network!"
+      yield put(utilActions.openInfoModal(title, content))
     }
 
     // const rate = yield call([ethereum, ethereum.call], "getRate", source, dest, sourceAmountHex)

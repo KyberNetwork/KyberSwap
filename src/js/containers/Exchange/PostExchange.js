@@ -419,6 +419,7 @@ export default class PostExchange extends React.Component {
         translate={this.props.translate}
         title={this.props.translate("modal.confirm_exchange_title") || "Exchange confirm"}
         errors={this.props.form.signError}
+        walletType={this.props.account.type}
       />
     )
   }
@@ -436,6 +437,7 @@ export default class PostExchange extends React.Component {
         gas={this.props.form.gas_approve}
         isFetchingGas = {this.props.form.isFetchingGas}
         errors={this.props.form.signError}
+        walletType={this.props.account.type}
       />
     )
   }

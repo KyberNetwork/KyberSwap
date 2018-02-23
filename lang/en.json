@@ -154,6 +154,7 @@
     "minutes": " minutes",
     "time_out": "Time out",
     "network_error": "Cannot connect to node right now. Please check your network!",
+    "node_error": "There are some problems with nodes. Please try again in a while",
     "term_error": "You must agree terms and services!",
 
     "path_not_support_by_trezor": "This path is not supported by Trezor",
