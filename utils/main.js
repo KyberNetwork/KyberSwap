@@ -22,13 +22,13 @@ var erc20Contract = new rpc.eth.Contract(constants.ERC20)
 
 
 
-//console.log(resetApproveKyber("KNC"))
+console.log(resetApproveKyber("KNC"))
 
 function resetApproveKyber(tokenSymbol){
     var tokenContract = erc20Contract
     tokenContract.options.address = "0xdd974d5c2e2928dea5f71b9825b8b646686bd200"
    // console.log(tokenAddress)
-    return tokenContract.methods.approve("0x803e2b13a11c21ec0616cead4a3d2ebe1326f5b0", '0x0').encodeABI()
+    return tokenContract.methods.approve(kyberAddress, '0x0').encodeABI()
 }
 
 // for (i = 5137330 - 10; i< 5137330 + 10;i++ ){

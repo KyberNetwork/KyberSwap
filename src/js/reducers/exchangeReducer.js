@@ -5,7 +5,8 @@ import { calculateDest, caculateDestAmount, caculateSourceAmount } from "../util
 import BLOCKCHAIN_INFO from "../../../env"
 
 
-const initState = constants.INIT_EXCHANGE_FORM_STATE
+var initState = constants.INIT_EXCHANGE_FORM_STATE
+initState.snapshot = constants.INIT_EXCHANGE_FORM_STATE
 
 const exchange = (state = initState, action) => {
   var newState = { ...state, errors: { ...state.errors } }
@@ -399,9 +400,11 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.SET_GAS_USED": {
-      const {gas, gas_approve} = action.payload
+      const {gas, gas_approve} = action.payload      
       newState.gas = gas
       newState.gas_approve = gas_approve
+      newState.snapshot.gas = gas
+      newState.snapshot.gas_approve = gas_approve
       return newState
     }
     case "EXCHANGE.SET_PREV_SOURCE": {

@@ -56,9 +56,9 @@ function* selectToken(action) {
 
 export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
 
-  try{
+  try {
     yield call(getInfo, hash)
-  }catch(e){
+  } catch (e) {
     console.log(e)
   }
 
@@ -73,9 +73,9 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   yield put(actions.doTransactionComplete(hash))
   yield put(actions.finishExchange())
   yield put(actions.resetSignError())
-  
-  
-  
+
+
+
   //estimate time for tx
   // var state = store.getState()
   // var gasInfo = state.exchange.gasPriceSuggest
@@ -84,14 +84,14 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   // console.log(estimateTime)
 }
 
-function* getInfo(hash){
+function* getInfo(hash) {
   var state = store.getState()
   var ethereum = state.connection.ethereum
   // var timestamp = Date.now()
   // var language = getActiveLanguage(state.locale).code
   // var device = state.account.account.type
   // var sender = state.account.account.address
-  
+
   // var exchange = state.exchange.snapshot
   // var minRate = exchange.minConversionRate
   // var offeredRate = exchange.offeredRate
@@ -104,7 +104,7 @@ function* getInfo(hash){
   // var gasPrice = exchange.gasPrice
   // var gas = exchange.gas
   // var browserName = bowser.name
-  yield call([ethereum, ethereum.call], "getInfo", {hash})
+  yield call([ethereum, ethereum.call], "getInfo", { hash })
 
   // yield call([ethereum, ethereum.call], "getInfo", {hash, timestamp, language, device, sender, minRate, 
   //                                 offeredRate, sourceToken, sourceTokenSymbol, sourceAmount, maxDestAmount, destTokenSymbol, destToken, gasPrice, gas, browserName})
@@ -142,7 +142,7 @@ export function* checkTokenBalanceOfColdWallet(action) {
     throwOnFailure, nonce, gas,
     gasPrice, keystring, type, password, account, data, keyService } = action.payload
 
-  try{
+  try {
     const remainStr = yield call([ethereum, ethereum.call], "getAllowanceAtLatestBlock", sourceToken, address)
     const remain = converter.hexToBigNumber(remainStr)
     const sourceAmountBig = converter.hexToBigNumber(sourceAmount)
@@ -156,11 +156,11 @@ export function* checkTokenBalanceOfColdWallet(action) {
     } else {
       yield put(actions.showConfirm())
     }
-  }catch(e){
-     console.log(e)
-     yield put(utilActions.openInfoModal("Error", "There are some problems with nodes. Please try again in a while"))
+  } catch (e) {
+    console.log(e)
+    yield put(utilActions.openInfoModal("Error", "There are some problems with nodes. Please try again in a while"))
   }
-  
+
 }
 
 function* processApprove(action) {
@@ -181,41 +181,41 @@ export function* processApproveByColdWallet(action) {
   const { ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
     keystring, password, accountType, account, keyService, sourceTokenSymbol } = action.payload
   //try {
-    let rawApprove
-    try {
-      rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-        keystring, password, accountType, account.address)
-    } catch (e) {
-      let msg = ''
-      if (e.native && accountType == 'ledger') {
-        msg = keyService.getLedgerError(e.native)
-      }
-      yield put(actions.setSignError(msg))
-      return
+  let rawApprove
+  try {
+    rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+      keystring, password, accountType, account.address)
+  } catch (e) {
+    let msg = ''
+    if (e.native && accountType == 'ledger') {
+      msg = keyService.getLedgerError(e.native)
     }
-    var hashApprove
-    try{
-      hashApprove = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApprove)
-      console.log(hashApprove)
-      yield put(actions.setApproveTx(hashApprove, sourceTokenSymbol))
+    yield put(actions.setSignError(msg))
+    return
+  }
+  var hashApprove
+  try {
+    hashApprove = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApprove)
+    console.log(hashApprove)
+    yield put(actions.setApproveTx(hashApprove, sourceTokenSymbol))
 
-      //increase nonce 
-      yield put(incManualNonceAccount(account.address))
+    //increase nonce 
+    yield put(incManualNonceAccount(account.address))
 
-      yield put(actions.hideApprove())
-      yield put(actions.showConfirm())
-    }catch(e){
-      console.log(e)
-      yield call(doTxFail, ethereum, account, e.message)
-    }
+    yield put(actions.hideApprove())
+    yield put(actions.showConfirm())
+  } catch (e) {
+    console.log(e)
+    yield call(doTxFail, ethereum, account, e.message)
+  }
 
-    //save approve to store
+  //save approve to store
 
-    
- // } catch (e) {
-    //console.log(e)
-    
- // }
+
+  // } catch (e) {
+  //console.log(e)
+
+  // }
 }
 
 export function* processApproveByMetamask(action) {
@@ -592,37 +592,85 @@ export function* exchangeTokentoETHMetamask(action) {
   }
 }
 
-function* updateRatePending(action) {
-  const { ethereum, source, dest, sourceAmount, isManual, rateInit } = action.payload
+function* getRate(ethereum, source, dest, sourceAmount) {
   try {
     //get latestblock
-    const lastestBlock = yield call([ethereum, ethereum.call],"getLatestBlock")
-   // console.log(lastestBlock)
+    const lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
+    // console.log(lastestBlock)
     const rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmount, lastestBlock)
     const expectedPrice = rate.expectedPrice ? rate.expectedPrice : "0"
     const slippagePrice = rate.slippagePrice ? rate.slippagePrice : "0"
-    yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock))
-    yield put(actions.caculateAmount())
+    return { status: "success", res: { expectedPrice, slippagePrice, lastestBlock } }
   }
-  catch (err) {    
+  catch (err) {
     console.log(err)
-    yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0))
-    yield put(actions.setRateSystemError())
+    return { status: "success", res: { expectedPrice: "0", slippagePrice: "0", lastestBlock: 0 } }
+    //yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0))
+    //yield put(actions.setRateSystemError())
+  }
+}
+
+function* updateRatePending(action) {
+  const { ethereum, source, dest, sourceAmount, isManual, rateInit } = action.payload
+
+
+  if (isManual) {
+    var rateRequest = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmount)
+    if (rateRequest.status === "success") {
+      const { expectedPrice, slippagePrice, lastestBlock } = rateRequest.data
+      yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock))
+      if (lastestBlock === 0) {
+        yield put(actions.setRateSystemError())
+      }else{
+        yield put(actions.caculateAmount())
+      }
+    }
+    if ((rateRequest.status === "timeout") || (rateRequest.status === "fail")) {
+      yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0))
+      yield put(actions.setRateSystemError())
+      yield put(utilActions.openInfoModal("Error", "There are some problems with nodes. Please try again in a while"))
+    }
+
+  } else {
+    const rates = yield call(getRate, ethereum, source, dest, sourceAmount)
+    const { expectedPrice, slippagePrice, lastestBlock } = rates.res
+    yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock))
+    if (lastestBlock === 0) {
+      yield put(actions.setRateSystemError())
+    }else{
+      yield put(actions.caculateAmount())
+    }
+
+    // try {
+    //   //get latestblock
+    //   const lastestBlock = yield call([ethereum, ethereum.call],"getLatestBlock")
+    //  // console.log(lastestBlock)
+    //   const rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmount, lastestBlock)
+    //   const expectedPrice = rate.expectedPrice ? rate.expectedPrice : "0"
+    //   const slippagePrice = rate.slippagePrice ? rate.slippagePrice : "0"
+    //   yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock))
+    //   yield put(actions.caculateAmount())
+    // }
+    // catch (err) {    
+    //   console.log(err)
+    //   yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0))
+    //   yield put(actions.setRateSystemError())
+    // }
   }
 }
 
 
 
-function* getRateSnapshot(ethereum, source, dest, sourceAmountHex){
-  try{
+function* getRateSnapshot(ethereum, source, dest, sourceAmountHex) {
+  try {
     var rate = yield call([ethereum, ethereum.call], "getRate", source, dest, sourceAmountHex)
-    return {status:"success", res: rate}
-  }catch(e){
+    return { status: "success", res: rate }
+  } catch (e) {
     console.log(e)
-    return {status:"fail", err: e}
+    return { status: "fail", err: e }
   }
 }
-function* updateRateSnapshot(action){
+function* updateRateSnapshot(action) {
   const ethereum = action.payload
   var state = store.getState()
   var exchangeSnapshot = state.exchange.snapshot
@@ -637,7 +685,7 @@ function* updateRateSnapshot(action){
     var rateInit = 0
 
     var rateRequest = yield call(common.handleRequest, getRateSnapshot, ethereum, source, dest, sourceAmountHex)
-    if (rateRequest.status === "success"){
+    if (rateRequest.status === "success") {
       var rate = rateRequest.data
       const expectedPrice = rate.expectedRate ? rate.expectedRate : "0"
       const slippagePrice = rate.slippageRate ? rate.slippageRate : "0"
@@ -645,7 +693,7 @@ function* updateRateSnapshot(action){
       yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
       yield put(actions.caculateAmountInSnapshot())
     }
-    if ((rateRequest.status === "timeout")  || (rateRequest.status === "fail")){
+    if ((rateRequest.status === "timeout") || (rateRequest.status === "fail")) {
       yield put(actions.hideApprove())
       yield put(actions.hideConfirm())
       yield put(actions.hidePassphrase())
@@ -666,14 +714,14 @@ function* updateRateSnapshot(action){
 }
 
 function* fetchGas(action) {
- // yield call(updateGasUsed)
+  // yield call(updateGasUsed)
 
   var gasRequest = yield call(common.handleRequest, updateGasUsed, action)
-  if (gasRequest.status === "success"){
-    const {gas, gas_approve} = gasRequest.data
+  if (gasRequest.status === "success") {
+    const { gas, gas_approve } = gasRequest.data
     yield put(actions.setEstimateGas(gas, gas_approve))
   }
-  if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
+  if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")) {
     console.log("timeout")
     var state = store.getState()
     const exchange = state.exchange
@@ -692,22 +740,22 @@ function* fetchGasApprove() {
   var gas = exchange.max_gas
   var gas_approve
 
-   var gasRequest = yield call(common.handleRequest, getGasApprove)
-   if (gasRequest.status === "success"){
-     const gas_approve = gasRequest.data
-     yield put(actions.setEstimateGas(gas, gas_approve))
-   }
-   if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
-     console.log("timeout")
-     
-     gas_approve = exchange.max_gas_approve
-     yield put(actions.setEstimateGas(gas, gas_approve))
-   }
- 
-   yield put(actions.fetchGasSuccess())
- }
+  var gasRequest = yield call(common.handleRequest, getGasApprove)
+  if (gasRequest.status === "success") {
+    const gas_approve = gasRequest.data
+    yield put(actions.setEstimateGas(gas, gas_approve))
+  }
+  if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")) {
+    console.log("timeout")
 
-function* getGasApprove(){
+    gas_approve = exchange.max_gas_approve
+    yield put(actions.setEstimateGas(gas, gas_approve))
+  }
+
+  yield put(actions.fetchGasSuccess())
+}
+
+function* getGasApprove() {
   var state = store.getState()
   const ethereum = state.connection.ethereum
   const exchange = state.exchange
@@ -717,7 +765,7 @@ function* getGasApprove(){
   var address = account.address
 
   var gas_approve = 0
-  try{
+  try {
     var dataApprove = yield call([ethereum, ethereum.call], "approveTokenData", sourceToken, converter.biggestNumber())
     var txObjApprove = {
       from: address,
@@ -730,12 +778,12 @@ function* getGasApprove(){
     if (gas_approve > exchange.max_gas_approve) {
       gas_approve = exchange.max_gas_approve
     }
-    return {status:"success", res: gas_approve}
-  }catch(e){
+    return { status: "success", res: gas_approve }
+  } catch (e) {
     console.log(e)
-    return {status:"fail", err: e}
+    return { status: "fail", err: e }
   }
- 
+
 }
 
 function* updateGasUsed(action) {
@@ -807,19 +855,19 @@ function* updateGasUsed(action) {
     // if (gasRequest.status === "timeout"){
     //   console.log("timeout")
     // }
-    gas =  yield call([ethereum, ethereum.call], "estimateGas", txObj)
-  //  console.log("gas ne: " + gas)
+    gas = yield call([ethereum, ethereum.call], "estimateGas", txObj)
+    //  console.log("gas ne: " + gas)
     gas = Math.round(gas * 120 / 100)
     //console.log("gas ne: " + gas)
     if (gas > exchange.max_gas) {
       gas = exchange.max_gas
     }
 
-    return {status:"success", res: {gas, gas_approve}}
+    return { status: "success", res: { gas, gas_approve } }
   } catch (e) {
     console.log("Cannot estimate gas")
     console.log(e)
-    return {status:"fail", err: e}
+    return { status: "fail", err: e }
   }
   //console.log(gas, gas_approve)
   //yield put(actions.setEstimateGas(gas, gas_approve))
@@ -832,7 +880,7 @@ function* analyzeError(action) {
     //var txHash = exchange.txHash
     //console.log(txHash)
     var tx = yield call([ethereum, ethereum.call], "getTx", txHash)
-  //  console.log(tx)
+    //  console.log(tx)
     console.log(tx.input)
     // console.log(tx)
     var value = tx.value
@@ -864,7 +912,7 @@ function* analyzeError(action) {
 }
 
 function* debug(input, blockno, ethereum) {
-// console.log({input, blockno})
+  // console.log({input, blockno})
   var networkIssues = {}
   var reserveIssues = {}
   var translate = getTranslate(store.getState().locale)
@@ -905,7 +953,7 @@ function* debug(input, blockno, ethereum) {
   }
 
   //Reserve scops
-  var rates = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", input.source,input.dest, input.srcAmount, blockno)
+  var rates = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", input.source, input.dest, input.srcAmount, blockno)
   if (converter.compareTwoNumber(rates.expectedPrice, 0) === 0) {
     var reasons = yield call([ethereum, ethereum.call], "wrapperGetReasons", input.reserves[0], input, blockno)
     reserveIssues["reason"] = reasons
