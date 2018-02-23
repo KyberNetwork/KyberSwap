@@ -419,6 +419,7 @@ export default class PostExchange extends React.Component {
         translate={this.props.translate}
         title={this.props.translate("modal.confirm_exchange_title") || "Exchange confirm"}
         errors={this.props.form.signError}
+        walletType={this.props.account.type}
       />
     )
   }

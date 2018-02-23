@@ -153,6 +153,7 @@
     "minutes": " 분",
     "time_out": "시간초과",
     "network_error": "블록체인 연결이 원할하지 않습니다, 잠시 후 다시 시도해주세요",
+    "node_error": "노드에는 몇 가지 문제점이 있습니다. 잠시 후 다시 해보십시오",
     "term_error": "이용약관 동의는 필수입니다.",
     
     "path_not_support_by_trezor": "TREZOR는 해당 경로를 지원하지 않습니다",
@@ -247,7 +248,7 @@
     "get_started": "시작"
   },
 
-  "product_feedback": "제품 비드백하기",
+  "product_feedback": "제품 피드백하기",
   "help": "도움말",
   "low": "낮기",
   "standard": "표준",

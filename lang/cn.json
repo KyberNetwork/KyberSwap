@@ -154,6 +154,7 @@
     "minutes": " 分钟",
     "time_out": "超时",
     "network_error": "目前无法连接到区块链。请稍后再尝试。",
+    "node_error": "节点有一些问题。请稍后再试",
     "term_error": "您必须先同意服务条款！",
 
     "path_not_support_by_trezor": "Trezor不支持这个路径",

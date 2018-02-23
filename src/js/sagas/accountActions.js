@@ -43,6 +43,7 @@ export function* updateTokenBalance(action) {
 export function* importNewAccount(action) {
   yield put(actions.importLoading())
   const { address, type, keystring, ethereum, tokens, metamask } = action.payload
+  var translate = getTranslate(store.getState().locale)
   try {
     const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
     yield put(actions.closeImportLoading())
@@ -53,7 +54,6 @@ export function* importNewAccount(action) {
     yield put(setCapExchange(maxCapOneExchange))
 
     if (+maxCapOneExchange == 0){
-      var translate = getTranslate(store.getState().locale)
       var linkReg = 'https://docs.google.com/forms/d/e/1FAIpQLScmvJukGWrbpiW07nENUEhIKz3yfAwA21nQg03Wl44YOYD5fQ/viewform'
       yield put(thowErrorNotPossessKGt(translate("error.not_possess_kgt", {link: linkReg}) || "It appears that your wallet does not possess Kyber Network Genesis Token (KGT) to participate in the pilot run."))
     }
@@ -63,20 +63,6 @@ export function* importNewAccount(action) {
       var token = { ...token }
       newTokens[token.symbol] = token
     })
-    // var randomToken = [
-    //   {
-    //     address: newTokens['ETH'].address,
-    //     symbol: newTokens['ETH'].symbol
-    //   },
-    //   {
-    //     address: newTokens['KNC'].address,
-    //     symbol: newTokens['KNC'].symbol
-    //   },
-    // ]
-    // yield put(setRandomExchangeSelectedToken(randomToken))
-    
-    //todo set random token for exchange
-    
 
     yield call(ethereum.fetchRateExchange)
 
@@ -90,7 +76,7 @@ export function* importNewAccount(action) {
   }
   catch (err) {
     console.log(err)
-    yield put(actions.throwError('Cannot connet to blockchain right now. Please try again later.'))
+    yield put(actions.throwError(translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
     yield put(actions.closeImportLoading())
   }
 

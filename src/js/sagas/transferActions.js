@@ -143,7 +143,7 @@ function* transferMetamask(action, callService) {
         gasPrice, keystring, type, password)
     } catch (e) {
       console.log(e)
-      yield put(actions.setSignError(''))
+      yield put(actions.setSignError(e))
       return
     }
     
