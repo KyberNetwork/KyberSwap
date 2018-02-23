@@ -1,4 +1,7 @@
 # 0.4.2 (2018-02-23)
+## Features:
+- Add block in trade transaction
+
 ## Bugfixes:
 - Add timeout in fetching rate and gas
 - Remove confirm message in private key
