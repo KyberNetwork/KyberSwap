@@ -437,6 +437,7 @@ export default class PostExchange extends React.Component {
         gas={this.props.form.gas_approve}
         isFetchingGas = {this.props.form.isFetchingGas}
         errors={this.props.form.signError}
+        walletType={this.props.account.type}
       />
     )
   }
