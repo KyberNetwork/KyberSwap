@@ -25,7 +25,7 @@ class ConfirmTransferModal extends React.Component {
           <div className={'modal-error ' + metaMaskClass + (this.state.isFullError ? ' full' : '')}>
             {this.props.errors}
           </div>
-          {isMetaMaskAcc ? 
+          {isMetaMaskAcc ?
             <div onClick={this.toggleFullErr} className="show-full">
               {this.state.isFullError ? 'Hide »' : 'Read full error »'}
             </div>
@@ -36,53 +36,55 @@ class ConfirmTransferModal extends React.Component {
     }
   }
 
+  msgHtml = () => {
+    if (!this.props.errors) {
+      if(this.props.isConfirming){
+        let isPKeyAcc = this.props.walletType === 'privateKey'
+        return isPKeyAcc ? '' : <p>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</p>
+      }else{
+        return <p>{this.props.translate("modal.press_confirm_if_really_want") || "Press confirm to continue"}</p>
+      }
+    }
+  }
+
   render() {
     var gasPrice = stringToBigNumber(gweiToEth(this.props.gasPrice))
     var totalGas = gasPrice.mul(this.props.gas)
-    var haveError = this.props.errors ? true : false
-  return (
-    <div>
+    return (
+      <div>
         <div className="title text-center">{this.props.title}</div>
         <a className="x" onClick={(e) => this.props.onCancel(e)}>&times;</a>
-      <div className="content with-overlap">
-        <div className="row">
-          <div className="column">
-            <center>
+        <div className="content with-overlap">
+          <div className="row">
+            <div className="column">
+              <center>
                 {this.props.recap}
-              <div className="gas-configed text-light text-center">
-                <div className="row">
+                <div className="gas-configed text-light text-center">
+                  <div className="row">
                     <p className="column small-6">{this.props.translate("transaction.gas_price") || 'Gas price'}</p>
                     <p className="column small-6">{this.props.gasPrice} Gwei</p>
-                </div>
-                <div className="row">
+                  </div>
+                  <div className="row">
                     <p className="column small-6">{this.props.translate("transaction.transaction_fee") || "Transaction Fee"}</p>
                     <p className="column small-6">{this.props.isFetchingGas ?
-                    <img src={require('../../../assets/img/waiting-white.svg')} /> 
-                    : <span>{totalGas.toString()}</span>
-                  } ETH</p>
+                      <img src={require('../../../assets/img/waiting-white.svg')} />
+                      : <span>{totalGas.toString()}</span>
+                    } ETH</p>
+                  </div>
+                  <hr className={haveError ? 'd-none' : 'mt-0'} />
                 </div>
-                <hr className={haveError ? 'd-none' : 'mt-0'} />
-              </div>
-              {haveError ?
-                '' :
-                  this.props.isConfirming ? (
-                    <p>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</p>
-                )
-                  : (
-                      <p>{this.props.translate("modal.press_confirm_if_really_want") || "Press confirm to continue"}</p>
-                  )
-              }
-            </center>
-            {this.errorHtml()}
+                {this.msgHtml()}
+              </center>
+              {this.errorHtml()}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="overlap">
+        <div className="overlap">
           <a className={"button accent process-submit " + (this.props.isConfirming || this.props.isFetchingGas || this.props.isFetchingRate ? "waiting" : "next")} onClick={(e) => this.props.onExchange(e)}>{this.props.translate("modal.confirm") || "Confirm"}</a>
+        </div>
       </div>
-    </div>
-  )
-}
+    )
+  }
 }
 
 export default ConfirmTransferModal
