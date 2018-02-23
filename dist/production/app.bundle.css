@@ -8672,12 +8672,27 @@ ul.broadcast-steps {
       white-space: nowrap; }
     .reveal .content hr {
       border-color: #a5a5a5; }
-    .reveal .content .ledger-error {
+    .reveal .content .modal-error {
       font-size: 0.9em;
       margin-bottom: 25px;
       color: #ff5d00;
       border-top: 1px solid #a5a5a5;
       padding-top: 24px; }
+      .reveal .content .modal-error.metamask {
+        max-height: 200px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
+        .reveal .content .modal-error.metamask.full {
+          white-space: normal; }
+        .reveal .content .modal-error.metamask + .show-full {
+          font-size: 0.8em;
+          margin-top: -20px;
+          margin-bottom: 15px;
+          cursor: pointer;
+          color: #ff5d00;
+          font-style: italic; }
   .reveal .footer {
     border-top: 1px solid #cae8e2;
     padding: 25px 10px;
