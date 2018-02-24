@@ -596,20 +596,29 @@ export default class BaseProvider {
 
     getRateAtSpecificBlock(source, dest, srcAmount, blockno) {
         var data = this.networkContract.methods.getExpectedRate(source, dest, srcAmount).encodeABI()
+        
         return new Promise((resolve, reject) => {
             this.rpc.eth.call({
                 to: BLOCKCHAIN_INFO.network,
                 data: data
             }, blockno)
                 .then(result => {
-                    var rates = this.rpc.eth.abi.decodeParameters([{
-                        type: 'uint256',
-                        name: 'expectedPrice'
-                    }, {
-                        type: 'uint256',
-                        name: 'slippagePrice'
-                    }], result)
-                    resolve(rates)
+                    try{
+                        var rates = this.rpc.eth.abi.decodeParameters([{
+                            type: 'uint256',
+                            name: 'expectedPrice'
+                        }, {
+                            type: 'uint256',
+                            name: 'slippagePrice'
+                        }], result)
+                        console.log(rates)
+                        resolve(rates)
+                    }catch(e){
+                        resolve({
+                            expectedPrice: "0",
+                            slippagePrice: "0"
+                        })
+                    }
                 }).catch((err) => {
                     reject(err)
                 })
