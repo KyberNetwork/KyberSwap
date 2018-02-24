@@ -821,30 +821,61 @@ function* getGasConfirm() {
   var state = store.getState()
   const ethereum = state.connection.ethereum
   const exchange = state.exchange
-  const sourceToken = exchange.sourceToken
+  const kyber_address = BLOCKCHAIN_INFO.network
+
+  var gas = exchange.max_gas
+  var gas_approve = 0
 
   var account = state.account.account
   var address = account.address
 
-  var gas_approve = 0
-  try {
-    var dataApprove = yield call([ethereum, ethereum.call], "approveTokenData", sourceToken, converter.biggestNumber())
-    var txObjApprove = {
-      from: address,
-      to: sourceToken,
-      data: dataApprove,
-      value: '0x0',
+  var tokens = state.tokens.tokens
+  var sourceDecimal = 18
+  var sourceTokenSymbol = exchange.sourceTokenSymbol
+  if (tokens[sourceTokenSymbol]) {
+    sourceDecimal = tokens[sourceTokenSymbol].decimal
+  }
+
+  const sourceToken = exchange.sourceToken
+  const sourceAmount = converter.stringToHex(exchange.sourceAmount, sourceDecimal)
+  const destToken = exchange.destToken
+  const maxDestAmount = converter.biggestNumber()
+  const minConversionRate = converter.numberToHex(exchange.offeredRate)
+  const blockNo = converter.numberToHexAddress(exchange.blockNo)
+  const throwOnFailure = "0x0000000000000000000000000000000000000000"
+  var data = yield call([ethereum, ethereum.call], "exchangeData", sourceToken, sourceAmount,
+    destToken, address,
+    maxDestAmount, minConversionRate, blockNo)
+
+  var gas = 0
+
+  var txObj = {
+    from: address,
+    to: kyber_address,
+    data: data,
+    value: "0",
+  }
+  // var gasRequest = yield call(common.handleRequest, api.estimateGas, ethereum, txObj)
+  // if (gasRequest.status === "success"){
+  //   gas = gasRequest.data
+  // }
+  // if (gasRequest.status === "timeout"){
+  //   console.log("timeout")
+  // }
+  try{
+    gas = yield call([ethereum, ethereum.call], "estimateGas", txObj)
+  //  console.log("gas ne: " + gas)
+    gas = Math.round(gas * 120 / 100)
+    //console.log("gas ne: " + gas)
+    if (gas > exchange.max_gas) {
+      gas = exchange.max_gas
     }
-    gas_approve = yield call([ethereum, ethereum.call], "estimateGas", txObjApprove)
-    gas_approve = Math.round(gas_approve * 120 / 100)
-    if (gas_approve > exchange.max_gas_approve) {
-      gas_approve = exchange.max_gas_approve
-    }
-    return { status: "success", res: gas_approve }
-  } catch (e) {
+    return { status: "success", res: gas }
+  }catch(e){
     console.log(e)
     return { status: "fail", err: e }
   }
+  
 
 }
 
