@@ -598,6 +598,7 @@ export function* exchangeTokentoETHMetamask(action) {
 }
 
 function* getRate(ethereum, source, dest, sourceAmount) {
+ // console.log({source, dest, sourceAmount})
   try {
     //get latestblock
     const lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")

@@ -23,7 +23,7 @@ export default class InfoKyber extends React.Component {
           <div id="info">
             <div class="font-s-down-1">
               <span class="mr-2">
-                <span class="font-w-b">{this.props.translate("info.version") || "Version"}</span>: 0.4.1
+                <span class="font-w-b">{this.props.translate("info.version") || "Version"}</span>: 0.4.2
           </span>
               <span>
                 <span class="font-w-b">{this.props.translate("info.chain") || "Chain"}</span>: {BLOCKCHAIN_INFO.chainName}
