@@ -70,9 +70,15 @@
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
 }
+.d-none-md{
+    display: block;
+}
 @include breakpoint(medium){
     .d-inline-block-md{
         display: inline-block;
+    }
+    .d-none-md{
+        display: none;
     }
 }
 .w-100{

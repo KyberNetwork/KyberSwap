@@ -109,8 +109,6 @@ function* transferColdWallet(action, callService) {
       let msg = ''
       if(e.native && type == 'ledger'){
         msg = keyService.getLedgerError(e.native)
-      }else{
-        msg = e.message
       }
       yield put(actions.setSignError(msg))
       return
@@ -145,8 +143,7 @@ function* transferMetamask(action, callService) {
         gasPrice, keystring, type, password)
     } catch (e) {
       console.log(e)
-      let msg = converter.sliceErrorMsg(e.message)
-      yield put(actions.setSignError(msg))
+      yield put(actions.setSignError(e))
       return
     }
     

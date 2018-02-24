@@ -154,6 +154,7 @@
     "minutes": " minutes",
     "time_out": "Time out",
     "network_error": "Cannot connect to node right now. Please check your network!",
+    "node_error": "There are some problems with nodes. Please try again in a while",
     "term_error": "You must agree terms and services!",
 
     "path_not_support_by_trezor": "This path is not supported by Trezor",
@@ -190,10 +191,10 @@
   },
 
   "import": {
-    "from_metamask": "Connect to <br> metamask",
-    "from_keystore": "Select or drag<br />your keystore",
-    "from_trezor": "Exchange from<br />trezor",
-    "from_ledger": "Exchange from<br />ledger",
+    "from_metamask": "Connect to <br> Metamask",
+    "from_keystore": "Select or drag<br />your Keystore",
+    "from_trezor": "Exchange from<br />Trezor",
+    "from_ledger": "Exchange from<br />Ledger",
     "from_private_key": "Enter your<br />private key",
     "from_private_key_input_title": "ENTER YOUR PRIVATE KEY",
     "from_private_key_input_title_placehoder": "Enter your private key"
@@ -251,5 +252,6 @@
   "help": "Help",
   "low": "Low",
   "standard": "Standard",
-  "fast": "Fast"
+  "fast": "Fast",
+  "search": "Search"
 }

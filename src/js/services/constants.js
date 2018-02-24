@@ -57,7 +57,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   offeredRate: 0,
   isEditRate : false,
   slippageRate: 0,
-  
+  blockNo: 0,
 
   throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 330000,
@@ -220,7 +220,7 @@ const CONNECTION_CHECKER = {
 const CONFIG_ENV_LEDGER_LINK = "https://support.ledgerwallet.com/hc/en-us/articles/115005165269-What-if-Ledger-Wallet-is-not-recognized-on-Linux-"
 const LEDGER_SUPPORT_LINK = "https://support.ledgerwallet.com/hc/en-us/articles/115005198565"
 
-const STORAGE_KEY = "70"
+const STORAGE_KEY = "71"
 
 module.exports = {
   ERC20, KYBER_NETWORK, KYBER_WRAPPER, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,

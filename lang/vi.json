@@ -18,14 +18,14 @@
     "import_address": "Nhập địa chỉ",
     "my_balance": "Số dư",
     "estimated_value": "Giá trị ước tính",
-    "total": "Tất cả",
+    "total": "Tổng giá trị",
     "hide_zero_balance": "Ẩn số dư nhỏ"
   },
 
   "transaction": {
     "exchange": "TRAO ĐỔI",
-    "exchange_from": "ĐỔI TỪ",
-    "exchange_to": "ĐỔI SANG",
+    "exchange_from": "Đổi từ",
+    "exchange_to": "Đổi sang",
 
     "transfer": "CHUYỂN KHOẢN",
     "transfer_to_address": "CHUYỂN ĐẾN ĐỊA CHỈ",
@@ -84,16 +84,16 @@
     "gas_price": "Giá Gas",
     "for": "đổi lấy",
     "to": "đến",
-    "best_rate": "Rate tốt nhất",
+    "best_rate": "Tỷ giá tốt nhất",
     "token_amount": "Token/Số lượng",
     "click_to_swap": "Click để hoán đổi",
 
     "transfer_tooltip": "Chuyển eth hoặc token đến một tài khoản khác",
     "transaction_gasprice_50": "Giá Gas càng cao, giao dịch càng nhanh. Giá Gas lớn nhất 50 Gwei",
     "transaction_gasprice": "Giá Gas càng cao, giao dịch càng nhanh",
-    "best_rate_tooltip": "Rate thấp hơn cho khả năng thành công cao hơn khi thị trường biến động",
+    "best_rate_tooltip": "Tỷ giá thấp hơn cho khả năng thành công cao hơn khi thị trường biến động",
     "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>",
-    "no_pedding_tx": "Không có giao dịch nào",
+    "no_pedding_tx": "Không có giao dịch nào đang chờ",
     "rate_info": "Rate có thể thay đổi. <br/>Bạn có thể  chỉ định rate nhỏ nhất bởi click \"NÂNG CAO\""
   },
 
@@ -150,6 +150,7 @@
     "minutes": " phút",
     "time_out": "Hết phiên đăng nhập",
     "network_error": "Không thể kết nối đến blockchain. Hãy kiểm tra lại mạng Internet!",
+    "node_error": "Đang có vấn đề với node, hãy thử lại sau một lúc nữa.",
     "term_error": "Bạn phải đồng với các điều khoản và dịch vụ!",
 
     "path_not_support_by_trezor": "Đường dẫn này không được Trezor hỗ trợ",
@@ -186,8 +187,8 @@
   },
 
   "import": {
-    "from_metamask": "Kêt nối <br> metamask",
-    "from_keystore": "Chọn hoặc kéo<br />keystore",
+    "from_metamask": "Kêt nối <br> Metamask",
+    "from_keystore": "Chọn hoặc kéo<br />Keystore",
     "from_trezor": "Nhập từ<br />Trezor",
     "from_ledger": "Nhập từ<br />Ledger",
     "from_private_key": "Điền<br />private key",
@@ -239,5 +240,6 @@
   "help": "Hỗ trợ",
   "low": "Chậm",
   "standard": "Thường",
-  "fast": "Nhanh"
+  "fast": "Nhanh",
+  "search": "Tìm kiếm"
 }

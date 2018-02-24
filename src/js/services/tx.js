@@ -31,6 +31,7 @@ export default class Tx {
   sync = (ethereum, tx) => {
     return new Promise((resolve, reject) => {
       ethereum.call("txMined", tx.hash).then((receipt) => {
+        console.log(receipt)
         var newTx = tx.shallowClone()
         newTx.address = receipt.contractAddress
         newTx.gas = receipt.gasUsed
@@ -44,8 +45,8 @@ export default class Tx {
           } else {
             var theLog
             for (var i = 0; i < logs.length; i++) {
-              if (logs[i].address.toLowerCase() == BLOCKCHAIN_INFO.network &&
-                logs[i].topics[0].toLowerCase() == BLOCKCHAIN_INFO.trade_topic) {
+              if (logs[i].address.toLowerCase() == BLOCKCHAIN_INFO.network.toLowerCase() &&
+                logs[i].topics[0].toLowerCase() == BLOCKCHAIN_INFO.trade_topic.toLowerCase()) {
                 theLog = logs[i]
                 newTx.eventTrade = theLog.data
                 break

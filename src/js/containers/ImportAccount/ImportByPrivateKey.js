@@ -36,6 +36,9 @@ export default class ImportByPrivateKey extends React.Component {
 
   importPrivateKey(privateKey) {
     try {
+      if (privateKey.match(/^0[x | X].{3,}$/)) {
+          privateKey = privateKey.substring(2)
+      }    
       let address = addressFromPrivateKey(privateKey)
       this.props.dispatch(closePkeyModal());    
       this.props.dispatch(importNewAccount(address,
@@ -45,6 +48,7 @@ export default class ImportByPrivateKey extends React.Component {
         this.props.tokens))
     }
     catch (e) {
+      console.log(e)
       this.props.dispatch(throwPKeyError(this.props.translate("error.invalid_private_key") || 'Invalid private key'))
     }
 
