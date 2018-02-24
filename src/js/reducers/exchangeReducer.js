@@ -265,6 +265,7 @@ const exchange = (state = initState, action) => {
       newState.confirmApprove = false
       newState.showConfirmApprove = false
       newState.confirmColdWallet = true
+      newState.isFetchingGas = true
       return newState
     }
     case "EXCHANGE.HIDE_APPROVE": {
