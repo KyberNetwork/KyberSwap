@@ -50,8 +50,9 @@ function* selectToken(action) {
   yield put(actions.checkSelectToken())
   yield call(ethereum.fetchRateExchange)
 
+  yield call(fetchGas)
   //calculate gas use
-  yield call(updateGasUsed)
+ // yield call(updateGasUsed)
 }
 
 export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
@@ -155,6 +156,7 @@ export function* checkTokenBalanceOfColdWallet(action) {
 
     } else {
       yield put(actions.showConfirm())
+      yield call(fetchGasConfirm)
     }
   }catch(e){
     let title = translate("error.error_occurred") || "Error occurred"
@@ -205,6 +207,7 @@ export function* processApproveByColdWallet(action) {
 
     yield put(actions.hideApprove())
     yield put(actions.showConfirm())
+    yield put(actions.fetchGasSuccess())
   } catch (e) {
     console.log(e)
     yield call(doTxFail, ethereum, account, e.message)
@@ -235,6 +238,7 @@ export function* processApproveByMetamask(action) {
 
     yield put(actions.hideApprove())
     yield put(actions.showConfirm())
+    yield put(actions.fetchGasSuccess())
   } catch (e) {
     yield put(actions.setSignError(e))
   }
@@ -747,11 +751,14 @@ function* updateRateSnapshot(action) {
     console.log(err)
   }
 }
+function* fetchGasManual() {
+  yield call(fetchGas)
+  yield put(actions.fetchGasSuccess())
+}
 
-function* fetchGas(action) {
-  // yield call(updateGasUsed)
+function* fetchGas() {
 
-  var gasRequest = yield call(common.handleRequest, updateGasUsed, action)
+  var gasRequest = yield call(common.handleRequest, getGasUsed)
   if (gasRequest.status === "success") {
     const { gas, gas_approve } = gasRequest.data
     yield put(actions.setEstimateGas(gas, gas_approve))
@@ -765,11 +772,31 @@ function* fetchGas(action) {
     yield put(actions.setEstimateGas(gas, gas_approve))
   }
 
+//  yield put(actions.fetchGasSuccess())
+}
+
+function* fetchGasConfirm() {
+  var state = store.getState()
+  const exchange = state.exchange
+  var gas
+  var gas_approve = 0
+
+  var gasRequest = yield call(common.handleRequest, getGasConfirm)
+  if (gasRequest.status === "success") {
+    const gas = gasRequest.data
+    yield put(actions.setEstimateGas(gas, gas_approve))
+  }
+  if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")) {
+    console.log("timeout")
+
+    gas = exchange.max_gas
+    yield put(actions.setEstimateGas(gas, gas_approve))
+  }
+
   yield put(actions.fetchGasSuccess())
 }
 
 function* fetchGasApprove() {
-  // yield call(updateGasUsed)
   var state = store.getState()
   const exchange = state.exchange
   var gas = exchange.max_gas
@@ -788,6 +815,37 @@ function* fetchGasApprove() {
   }
 
   yield put(actions.fetchGasSuccess())
+}
+
+function* getGasConfirm() {
+  var state = store.getState()
+  const ethereum = state.connection.ethereum
+  const exchange = state.exchange
+  const sourceToken = exchange.sourceToken
+
+  var account = state.account.account
+  var address = account.address
+
+  var gas_approve = 0
+  try {
+    var dataApprove = yield call([ethereum, ethereum.call], "approveTokenData", sourceToken, converter.biggestNumber())
+    var txObjApprove = {
+      from: address,
+      to: sourceToken,
+      data: dataApprove,
+      value: '0x0',
+    }
+    gas_approve = yield call([ethereum, ethereum.call], "estimateGas", txObjApprove)
+    gas_approve = Math.round(gas_approve * 120 / 100)
+    if (gas_approve > exchange.max_gas_approve) {
+      gas_approve = exchange.max_gas_approve
+    }
+    return { status: "success", res: gas_approve }
+  } catch (e) {
+    console.log(e)
+    return { status: "fail", err: e }
+  }
+
 }
 
 function* getGasApprove() {
@@ -821,7 +879,7 @@ function* getGasApprove() {
 
 }
 
-function* updateGasUsed(action) {
+function* getGasUsed() {
   var state = store.getState()
   const ethereum = state.connection.ethereum
   const exchange = state.exchange
@@ -1024,7 +1082,7 @@ function* checkKyberEnable() {
 export function* watchExchange() {
   yield takeEvery("EXCHANGE.TX_BROADCAST_PENDING", broadCastTx)
   yield takeEvery("EXCHANGE.APPROVAL_TX_BROADCAST_PENDING", approveTx)
-  yield takeEvery("EXCHANGE.SELECT_TOKEN_ASYNC", selectToken)
+  
   yield takeEvery("EXCHANGE.PROCESS_EXCHANGE", processExchange)
   yield takeEvery("EXCHANGE.PROCESS_APPROVE", processApprove)
   yield takeEvery("EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET", checkTokenBalanceOfColdWallet)
@@ -1033,7 +1091,9 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", fetchGas)
   yield takeEvery("EXCHANGE.ANALYZE_ERROR", analyzeError)
 
+  yield takeEvery("EXCHANGE.SELECT_TOKEN_ASYNC", selectToken)
   yield takeEvery("EXCHANGE.INPUT_CHANGE", fetchGas)
-  yield takeEvery("EXCHANGE.FETCH_GAS", fetchGas)
+  yield takeEvery("EXCHANGE.FETCH_GAS", fetchGasManual)
+
   yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
 }
