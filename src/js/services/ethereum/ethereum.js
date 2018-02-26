@@ -10,7 +10,7 @@ import {
 } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx, updateApproveTxsData } from "../../actions/txActions"
-import { updateRateExchange, estimateGas, analyzeError, checkKyberEnable, verifyExchange } from "../../actions/exchangeActions"
+import { updateRateExchange, estimateGas, analyzeError, checkKyberEnable, verifyExchange, caculateAmount } from "../../actions/exchangeActions"
 import { estimateGasTransfer, verifyTransfer } from "../../actions/transferActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
@@ -344,6 +344,7 @@ export default class EthereumService extends React.Component {
       return
     }
     store.dispatch(verifyExchange())
+    store.dispatch(caculateAmount())
   }
 
   verifyTransfer = () => {
