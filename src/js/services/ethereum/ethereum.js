@@ -10,8 +10,8 @@ import {
 } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx, updateApproveTxsData } from "../../actions/txActions"
-import { updateRateExchange, estimateGas, analyzeError, checkKyberEnable } from "../../actions/exchangeActions"
-import { estimateGasTransfer } from "../../actions/transferActions"
+import { updateRateExchange, estimateGas, analyzeError, checkKyberEnable, verifyExchange, caculateAmount } from "../../actions/exchangeActions"
+import { estimateGasTransfer, verifyTransfer } from "../../actions/transferActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
 import { setConnection } from "../../actions/connectionActions"
@@ -152,6 +152,9 @@ export default class EthereumService extends React.Component {
     this.checkConnection()
 
     this.fetchGasprice()
+
+    this.verifyExchange()
+    this.verifyTransfer()
 
    // this.fetchGasExchange()
    // this.fetchGasTransfer()
@@ -328,6 +331,36 @@ export default class EthereumService extends React.Component {
     }
     store.dispatch(estimateGasTransfer())
   }
+
+  verifyExchange = () => {
+    var state = store.getState()
+    var account = state.account.account
+    if (!account.address) {
+      return
+    }
+
+    var pathname = state.router.location.pathname
+    if (pathname !== "/exchange") {
+      return
+    }
+    store.dispatch(verifyExchange())
+    store.dispatch(caculateAmount())
+  }
+
+  verifyTransfer = () => {
+    var state = store.getState()
+    var account = state.account.account
+    if (!account.address) {
+      return
+    }
+
+    var pathname = state.router.location.pathname
+    if (pathname !== "/transfer") {
+      return
+    }
+    store.dispatch(verifyTransfer())
+  }
+
   checkConnection = () => {
     var state = store.getState()
     var checker = state.global.conn_checker
