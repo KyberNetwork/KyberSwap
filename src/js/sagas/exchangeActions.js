@@ -86,10 +86,9 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   var estimateTimeSecond = estimateTime * 60000
   
   store.dispatch(actions.setEstimateTimeProgress(estimateTimeSecond))
-
+  
   var watchProgress = yield fork(watchProgressFunc, estimateTimeSecond)
-
-  yield take('GLOBAL.CLEAR_SESSION')
+  yield take(['GLOBAL.CLEAR_SESSION', 'EXCHANGE.MAKE_NEW_EXCHANGE'])
   yield cancel(watchProgress)  
 }
 
