@@ -6,6 +6,7 @@ import * as converter from "../utils/converter"
 import * as ethUtil from 'ethereumjs-util'
 
 import * as common from "./common"
+import * as validators from "../utils/validators"
 
 import Tx from "../services/tx"
 import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
@@ -335,6 +336,20 @@ function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, source
     }
 }
 
+export function* verifyTransfer(){
+  var state = store.getState()
+  var transfer = state.transfer
+
+  var testBalanceWithFee = validators.verifyBalanceForTransaction(state.tokens.tokens['ETH'].balance,
+  transfer.tokenSymbol, transfer.amount, transfer.gas, transfer.gasPrice)
+
+  if (testBalanceWithFee) {
+    yield put(actions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
+  }else{
+    yield put(actions.thowErrorEthBalance(""))
+  }
+}
+
 export function* watchTransfer() {
   yield takeEvery("TRANSFER.TX_BROADCAST_PENDING", broadCastTx)
   yield takeEvery("TRANSFER.PROCESS_TRANSFER", processTransfer)
@@ -343,4 +358,5 @@ export function* watchTransfer() {
   yield takeEvery("TRANSFER.SELECT_TOKEN", estimateGasUsedWhenSelectToken)
   yield takeEvery("TRANSFER.TRANSFER_SPECIFY_AMOUNT", estimateGasUsedWhenChangeAmount)
   yield takeEvery("TRANSFER.FETCH_GAS", fetchGas)
+  yield takeEvery("TRANSFER.VERIFY_TRANSFER", verifyTransfer)
 }

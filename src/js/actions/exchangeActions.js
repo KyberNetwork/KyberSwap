@@ -518,3 +518,9 @@ export function setSnapshot(data){
     payload: data
   }
 }
+
+export function verifyExchange(){
+  return {
+    type: "EXCHANGE.VERIFY_EXCHANGE",
+  }
+}
