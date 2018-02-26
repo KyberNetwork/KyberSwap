@@ -3,6 +3,7 @@ import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
 import { clearSession, setGasPrice, setBalanceToken } from "../actions/globalActions"
 import { openInfoModal } from '../actions/utilActions'
+import * as common from "./common"
 
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
 import { randomToken, setRandomExchangeSelectedToken, setCapExchange, thowErrorNotPossessKGt } from "../actions/exchangeActions"
@@ -40,12 +41,46 @@ export function* updateTokenBalance(action) {
   }
 }
 
+
+function* createNewAccount(address, type, keystring, ethereum){
+  try{
+    const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
+    return {status: "success", res: account}
+  }catch(e){
+    console.log(e)
+    return {status: "fail"}
+  }
+}
+
 export function* importNewAccount(action) {
   yield put(actions.importLoading())
   const { address, type, keystring, ethereum, tokens, metamask } = action.payload
   var translate = getTranslate(store.getState().locale)
   try {
-    const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
+    var  account
+    var accountRequest = yield call(common.handleRequest, createNewAccount, address, type, keystring, ethereum)
+
+    if (accountRequest.status === "timeout") {
+      console.log("timeout")
+      let translate = getTranslate(store.getState().locale)
+      yield put(actions.closeImportLoading())
+      yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred", 
+                                          translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+      return
+    }
+    if (accountRequest.status === "fail") {
+      let translate = getTranslate(store.getState().locale)
+      yield put(actions.closeImportLoading())
+      yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred", 
+                                          translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
+      return
+    }
+
+    if (accountRequest.status === "success") {
+      account = accountRequest.data
+    }    
+
+   // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
     yield put(actions.closeImportLoading())
     yield put(actions.importNewAccountComplete(account))
     yield put(goToRoute('/exchange'))
