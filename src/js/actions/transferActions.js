@@ -255,3 +255,9 @@ export function setGasUsed(gas){
     payload: {gas}
   }
 }
+
+export function verifyTransfer(){
+  return {
+    type: "TRANSFER.VERIFY_TRANSFER",
+  }
+}

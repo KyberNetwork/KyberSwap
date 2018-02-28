@@ -3,6 +3,7 @@ import * as actions from '../actions/exchangeActions'
 import * as globalActions from "../actions/globalActions"
 
 import * as common from "./common"
+import * as validators from "../utils/validators"
 
 import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
 import { addTx } from '../actions/txActions'
@@ -1110,6 +1111,80 @@ function* checkKyberEnable() {
 
 }
 
+function* verifyExchange(){
+  var state = store.getState()
+
+  //const ethereum = state.connection.ethereum
+  const exchange = state.exchange
+  const offeredRate = state.exchange.offeredRate
+
+  var sourceTokenSymbol = exchange.sourceTokenSymbol  
+  var tokens = state.tokens.tokens
+  var sourceBalance = 0
+  var sourceDecimal = 18
+  var sourceName = "Ether"
+  if (tokens[sourceTokenSymbol]) {
+    sourceBalance = tokens[sourceTokenSymbol].balance
+    sourceDecimal = tokens[sourceTokenSymbol].decimal
+    sourceName = tokens[sourceTokenSymbol].name
+  }
+
+  var destTokenSymbol = exchange.destTokenSymbol
+  var destBalance = 0
+  var destDecimal = 18
+  var destName = "Kybernetwork"
+  if (tokens[destTokenSymbol]) {
+    destBalance = tokens[destTokenSymbol].balance
+    destDecimal = tokens[destTokenSymbol].decimal
+    destName = tokens[destTokenSymbol].name
+  }
+
+  const sourceAmount = exchange.sourceAmount
+
+  var validateAmount = validators.verifyAmount(sourceAmount,
+    sourceBalance,
+    sourceTokenSymbol,
+    sourceDecimal,
+    offeredRate,
+    destDecimal,
+    exchange.maxCap)
+
+  var sourceAmountErrorKey
+  switch (validateAmount) {
+    // case "not a number":
+    //   sourceAmountErrorKey = "error.source_amount_is_not_number"
+    //   break
+    case "too high":
+      sourceAmountErrorKey = "error.source_amount_too_high"
+      break
+    case "too high cap":
+      sourceAmountErrorKey = "error.source_amount_too_high_cap"
+      break
+    case "too small":
+      sourceAmountErrorKey = "error.source_amount_too_small"
+      break
+    case "too high for reserve":
+      sourceAmountErrorKey = "error.source_amount_too_high_for_reserve"
+      break
+  } 
+  if (sourceAmountErrorKey) {
+    yield put(actions.thowErrorSourceAmount(sourceAmountErrorKey))
+  }else{
+    yield put(actions.thowErrorSourceAmount(""))
+  }
+
+  if(sourceAmount){
+    var validateWithFee = validators.verifyBalanceForTransaction(tokens['ETH'].balance, sourceTokenSymbol, 
+    sourceAmount, exchange.gas + exchange.gas_approve, exchange.gasPrice)
+
+    if(validateWithFee){
+      yield put(actions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
+    }else{
+      yield put(actions.thowErrorEthBalance(""))
+    }
+  }
+}
+
 
 export function* watchExchange() {
   yield takeEvery("EXCHANGE.TX_BROADCAST_PENDING", broadCastTx)
@@ -1128,4 +1203,5 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.FETCH_GAS", fetchGasManual)
 
   yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
+  yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
 }

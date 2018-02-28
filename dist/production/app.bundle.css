@@ -8753,12 +8753,12 @@ ul.address-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: 0;
   overflow: hidden; }
   ul.address-list > li {
     padding: 10px 0;
     background-color: transparent;
-    transition: background-color 0.1s ease-in-out; }
+    transition: background-color 0.1s ease-in-out;
+    cursor: pointer; }
     ul.address-list > li::before, ul.address-list > li::after {
       display: table;
       content: ' ';
@@ -8768,39 +8768,30 @@ ul.address-list {
       clear: both; }
     ul.address-list > li:not(:last-child) {
       border-bottom: 1px solid rgba(254, 254, 254, 0.12); }
-    ul.address-list > li:hover {
-      background-color: #233a44; }
-    ul.address-list > li label {
-      color: rgba(255, 255, 255, 0.56); }
     ul.address-list > li .info {
-      float: right;
-      margin-top: 5px;
       float: right;
       text-align: right;
       white-space: nowrap; }
       ul.address-list > li .info .link {
-        color: rgba(255, 255, 255, 0.56);
-        cursor: pointer;
+        color: #ffffff;
         text-align: right;
         font-size: 14px;
-        padding-right: 25px;
-        background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTdweCIgaGVpZ2h0PSIxN3B4IiB2aWV3Qm94PSIwIDAgMTcgMTciIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDQ4LjIgKDQ3MzI3KSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT5saW5rPC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGRlZnM+PC9kZWZzPgogICAgPGcgaWQ9IkdfSW1wb3J0QWRkcmVzc18yX1RyZXpvciIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTExNTIuMDAwMDAwLCAtNjY0LjAwMDAwMCkiPgogICAgICAgIDxnIGlkPSJHcm91cC0xMiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjIwLjAwMDAwMCwgNzMuMDAwMDAwKSIgZmlsbD0iI0ZGRkZGRiIgZmlsbC1ydWxlPSJub256ZXJvIj4KICAgICAgICAgICAgPGcgaWQ9Ikdyb3VwLTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQ4LjAwMDAwMCwgNTcwLjAwMDAwMCkiPgogICAgICAgICAgICAgICAgPGcgaWQ9ImxpbmsiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDg4NC4wMDAwMDAsIDIxLjAwMDAwMCkiPgogICAgICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik05LjY4MiwxMC45OTggQzguNzM5LDEwLjk5OCA3Ljc5NiwxMC42MzkgNy4wNzgsOS45MjEgQzYuODgzLDkuNzI2IDYuODgzLDkuNDA5IDcuMDc4LDkuMjE0IEM3LjI3Myw5LjAxOSA3LjU5LDkuMDE5IDcuNzg1LDkuMjE0IEM4LjgzMSwxMC4yNiAxMC41MzIsMTAuMjYgMTEuNTc4LDkuMjE0IEwxNS4yMTQsNS41NzggQzE2LjI2LDQuNTMyIDE2LjI2LDIuODMxIDE1LjIxNCwxLjc4NSBDMTQuMTY4LDAuNzM5IDEyLjQ2NywwLjczOSAxMS40MjEsMS43ODUgTDguMzUzLDQuODUzIEM4LjE1OCw1LjA0OCA3Ljg0MSw1LjA0OCA3LjY0Niw0Ljg1MyBDNy40NTEsNC42NTggNy40NTEsNC4zNDEgNy42NDYsNC4xNDYgTDEwLjcxNCwxLjA3OCBDMTIuMTUsLTAuMzU4IDE0LjQ4NiwtMC4zNTggMTUuOTIxLDEuMDc4IEMxNy4zNTYsMi41MTQgMTcuMzU3LDQuODUgMTUuOTIxLDYuMjg1IEwxMi4yODUsOS45MjEgQzExLjU2NywxMC42MzkgMTAuNjI0LDEwLjk5OCA5LjY4MSwxMC45OTggTDkuNjgyLDEwLjk5OCBaIiBpZD0iU2hhcGUiPjwvcGF0aD4KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMy42ODIsMTYuOTk4IEMyLjczOSwxNi45OTggMS43OTYsMTYuNjM5IDEuMDc4LDE1LjkyMSBDLTAuMzU4LDE0LjQ4NSAtMC4zNTgsMTIuMTQ5IDEuMDc4LDEwLjcxNCBMNC43MTQsNy4wNzggQzYuMTUsNS42NDIgOC40ODYsNS42NDIgOS45MjEsNy4wNzggQzEwLjExNiw3LjI3MyAxMC4xMTYsNy41OSA5LjkyMSw3Ljc4NSBDOS43MjYsNy45OCA5LjQwOSw3Ljk4IDkuMjE0LDcuNzg1IEM4LjE2OCw2LjczOSA2LjQ2Nyw2LjczOSA1LjQyMSw3Ljc4NSBMMS43ODUsMTEuNDIxIEMwLjczOSwxMi40NjcgMC43MzksMTQuMTY4IDEuNzg1LDE1LjIxNCBDMi44MzEsMTYuMjYgNC41MzIsMTYuMjYgNS41NzgsMTUuMjE0IEw4LjY0NiwxMi4xNDYgQzguODQxLDExLjk1MSA5LjE1OCwxMS45NTEgOS4zNTMsMTIuMTQ2IEM5LjU0OCwxMi4zNDEgOS41NDgsMTIuNjU4IDkuMzUzLDEyLjg1MyBMNi4yODUsMTUuOTIxIEM1LjU2NywxNi42MzkgNC42MjQsMTYuOTk4IDMuNjgxLDE2Ljk5OCBMMy42ODIsMTYuOTk4IFoiIGlkPSJTaGFwZSI+PC9wYXRoPgogICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4=);
-        background-repeat: no-repeat;
-        background-size: 16px 16px;
-        background-position: center right;
         font-weight: normal; }
+      ul.address-list > li .info .import {
+        font-size: 0.8em;
+        padding: 5px 15px;
+        margin-left: 20px;
+        border: 1px solid #2a8184;
+        color: #fff;
+        border-radius: 1px; }
+    ul.address-list > li:hover .name label {
+      color: #3ee6c1; }
+    ul.address-list > li:hover .info .import {
+      background: linear-gradient(135deg, #30968e, #298083); }
     ul.address-list > li .name {
-      float: left;
-      display: block;
-      color: #0B0F1A;
-      white-space: nowrap; }
+      float: left; }
       ul.address-list > li .name label {
-        font-size: 14px;
-        font-weight: normal; }
-      ul.address-list > li .name img {
-        width: 36px;
-        height: 36px;
-        margin-right: 15px; }
+        font-size: 14px; }
 
 .address-list-navigation {
   margin: 10px 0; }

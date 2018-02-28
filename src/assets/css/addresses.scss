@@ -25,54 +25,49 @@ ul.address-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: 0;
   overflow: hidden;
   > li {
     padding: 10px 0;
     background-color: transparent;
     transition: background-color 0.1s ease-in-out;
+    cursor: pointer;
     @include clearfix;
     &:not(:last-child) {
       border-bottom: 1px solid $k-divider-light;
     }
-    &:hover {
-      background-color: $k-primary-darker;
-    }
-    label{
-      color: $white-light;
-    }
     .info {
-      float: right;
-      margin-top: 5px;
       float: right;
       text-align: right;
       white-space: nowrap;
       .link {
-        color: $white-light;
-        cursor: pointer;
+        color: $white;
         text-align: right;
         font-size: 14px;
-        padding-right: 25px;
-        background-image: url(../img/link-white.svg);
-        background-repeat: no-repeat;
-        background-size: 16px 16px;
-        background-position: center right;
         font-weight: normal;
+      }
+      .import{
+        font-size: 0.8em;
+        padding: 5px 15px;
+        margin-left: 20px;
+        border: 1px solid #2a8184;
+        color: #fff;
+        border-radius: 1px;
+      }
+    }
+    &:hover{
+      .name label{
+        color: $k-success;
+      }
+      .info{
+        .import{
+          background: linear-gradient(135deg, #30968e, #298083);
+        }
       }
     }
     .name {
       float: left;
-      display: block;
-      color: $dark-gray;
-      white-space: nowrap;
       label{
         font-size: 14px;
-        font-weight: normal;
-      }
-      img {
-        width: 36px;
-        height: 36px;
-        margin-right: 15px;
       }
     }
   }
