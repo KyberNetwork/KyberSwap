@@ -190,7 +190,8 @@
     "eth_balance_not_enough_for_fee": "Your Eth balance is not enough for transaction fee",
     "handle_amount":"Kyber cannot handle your amount, please reduce amount",
     "kyber_maintain":"Kyber exchange is under maintainance this pair",
-    "get_rate":"Cannot get rate from blockchain"
+    "get_rate":"Cannot get rate from blockchain",
+    "exchange_enable":"You have exceeded your daily limit! You might trade again tomorrow at 00:00 UTC+0"
   },
 
   "import": {

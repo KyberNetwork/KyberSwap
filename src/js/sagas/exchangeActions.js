@@ -638,15 +638,13 @@ function* updateRatePending(action) {
     //  yield put(actions.setRateFailError())
     }
 
-    var title = translate("error.error_occurred") || "Error occurred"
-    var content = ''
     if(rateRequest.status === "timeout"){
-      content = translate("error.node_error") || "There are some problems with nodes. Please try again in a while."
-      yield put(utilActions.openInfoModal(title, content))
+      yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred", 
+                                          translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
     }
     if(rateRequest.status === "fail"){
-      content = translate("error.network_error") || "Cannot connect to node right now. Please check your network!"
-      yield put(utilActions.openInfoModal(title, content))
+      yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+                                                  translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
     }
 
     // if ((rateRequest.status === "timeout") || (rateRequest.status === "fail")) {
@@ -1186,6 +1184,33 @@ function* verifyExchange(){
 }
 
 
+export function* fetchExchangeEnable(){
+  var enableRequest = yield call(common.handleRequest, getExchangeEnable)
+  if (enableRequest.status === "success") {
+    yield put(actions.setExchangeEnable(enableRequest.data))
+  }
+  if ((enableRequest.status === "timeout") || (enableRequest.status === "fail")) {
+    yield put(actions.setExchangeEnable(true))
+  }
+}
+
+export function* getExchangeEnable(){
+  var state = store.getState()
+  const ethereum = state.connection.ethereum
+  
+  var account = state.account.account
+  var address = account.address
+
+  try {
+    var enabled = yield call([ethereum, ethereum.call], "getExchangeEnable", address)
+    return {status:"success", res: enabled}
+  } catch (e) {
+    console.log(e.message)
+    return {status:"success", res: true}
+  }
+}
+
+
 export function* watchExchange() {
   yield takeEvery("EXCHANGE.TX_BROADCAST_PENDING", broadCastTx)
   yield takeEvery("EXCHANGE.APPROVAL_TX_BROADCAST_PENDING", approveTx)
@@ -1204,4 +1229,6 @@ export function* watchExchange() {
 
   yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
   yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
+
+  yield takeEvery("EXCHANGE.FETCH_EXCHANGE_ENABLE", fetchExchangeEnable)
 }

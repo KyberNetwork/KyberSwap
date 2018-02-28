@@ -10,7 +10,7 @@ import {
 } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx, updateApproveTxsData } from "../../actions/txActions"
-import { updateRateExchange, estimateGas, analyzeError, checkKyberEnable, verifyExchange, caculateAmount } from "../../actions/exchangeActions"
+import { updateRateExchange, estimateGas, analyzeError, checkKyberEnable, verifyExchange, caculateAmount, fetchExchangeEnable } from "../../actions/exchangeActions"
 import { estimateGasTransfer, verifyTransfer } from "../../actions/transferActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
@@ -157,8 +157,9 @@ export default class EthereumService extends React.Component {
 
     this.fetchGasprice()
 
-    this.verifyExchange()
-    this.verifyTransfer()
+    this.fetchExchangeEnable()
+    //this.verifyExchange()
+    //this.verifyTransfer()
 
    // this.fetchGasExchange()
    // this.fetchGasTransfer()
@@ -167,8 +168,12 @@ export default class EthereumService extends React.Component {
   }
 
   fetchDataSync() {
-    this.verifyExchange()
-    this.verifyTransfer()
+    var state = store.getState()
+    var account = state.account
+    if (account.isGetAllBalance){
+      this.verifyExchange()
+      this.verifyTransfer()
+    }
   }
 
   testAnalize() {
@@ -379,6 +384,20 @@ export default class EthereumService extends React.Component {
 
   checkKyberEnable = () => {
     store.dispatch(checkKyberEnable())
+  }
+
+  fetchExchangeEnable = () => {
+    var state = store.getState()
+    var account = state.account.account
+    if (!account.address) {
+      return
+    }
+
+    var pathname = state.router.location.pathname
+    if (pathname !== "/exchange") {
+      return
+    }
+    store.dispatch(fetchExchangeEnable())
   }
 
   promiseOneNode(list, index, fn, callBackSuccess, callBackFail, ...args) {

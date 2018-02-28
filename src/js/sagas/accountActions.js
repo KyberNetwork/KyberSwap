@@ -2,6 +2,8 @@ import { take, put, call, fork, select, takeEvery, all, cancel } from 'redux-sag
 import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
 import { clearSession, setGasPrice, setBalanceToken } from "../actions/globalActions"
+import { fetchExchangeEnable } from "../actions/exchangeActions"
+
 import { openInfoModal } from '../actions/utilActions'
 import * as common from "./common"
 
@@ -84,6 +86,8 @@ export function* importNewAccount(action) {
     yield put(actions.closeImportLoading())
     yield put(actions.importNewAccountComplete(account))
     yield put(goToRoute('/exchange'))
+
+    yield put(fetchExchangeEnable())
 
     var maxCapOneExchange = yield call([ethereum, ethereum.call], "getMaxCapAtLatestBlock", address)
     yield put(setCapExchange(maxCapOneExchange))

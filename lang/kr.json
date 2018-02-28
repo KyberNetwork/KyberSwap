@@ -189,7 +189,8 @@
     "eth_balance_not_enough_for_fee": "Eth 잔액는 거래 비용으로 충분하지 않습니다.",
     "handle_amount":"카이버는 금액을 처리 할 수 없으므로 금액을 줄이십시오!",
     "kyber_maintain":"카이버 교환은 이 쌍을 유지 보수 중입니다.",
-    "get_rate":"블록 체인에서 요금을 받을 수 없습니다."
+    "get_rate":"블록 체인에서 요금을 받을 수 없습니다.",
+    "exchange_enable":"거래는 일일 한도를 초과했습니다! 내일 00:00 UTC+0 다시 거래 할 수도 있습니다"
   },
 
   "import": {

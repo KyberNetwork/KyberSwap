@@ -502,6 +502,14 @@ const exchange = (state = initState, action) => {
       newState.errorNotPossessKgt = action.payload
       return newState
     }
+    case "EXCHANGE.SET_EXCHANGE_ENABLE":{
+      if(!action.payload){
+        newState.errors.exchange_enable = ""
+      }else{
+        newState.errors.exchange_enable = "error.exchange_enable"
+      }
+      return newState
+    }  
   }
   return state
 }

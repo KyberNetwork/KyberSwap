@@ -352,7 +352,8 @@ export default class Exchange extends React.Component {
       tokenSource: '',
       rateSystem: this.props.exchange.errors.rateSystem,
       rateAmount : this.props.exchange.errors.rateAmount,
-      notPossessKgt: this.props.exchange.errors.notPossessKgt
+      notPossessKgt: this.props.exchange.errors.notPossessKgt,
+      exchange_enable: this.props.exchange.errors.exchange_enable
     }
 
     var input = {
@@ -416,7 +417,7 @@ export default class Exchange extends React.Component {
         translate={this.props.translate}
         swapToken={this.swapToken}
         maxCap={toEther(this.props.exchange.maxCap)}
-        errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}
+        errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}        
       />
     )
   }
