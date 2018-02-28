@@ -1,7 +1,8 @@
 
-textarea{
-  &.hash {
-    font-size: 15px;
+input{
+  &.hashAddr {
+    font-size: 18px;
+    text-align: center;
     letter-spacing: 1.25px;
     background-color: #415b68;
     height: 97px;
@@ -9,6 +10,10 @@ textarea{
     font-weight: bold;
     resize: none;
     margin-bottom: 0;
+    outline: none;
+    border: none;
+    padding: 10px;
+    width: 100%;
   }
 }
 

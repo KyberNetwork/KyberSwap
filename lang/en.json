@@ -14,7 +14,7 @@
   },
 
   "address": {
-    "address": "Address",
+    "address": "Receiving Address",
     "import_address": "Import Address",
     "my_balance": "Balance",
     "estimated_value": "Estimated value",
@@ -85,7 +85,7 @@
     "for": "for",
     "to": "to",
     "best_rate": "Min Rate",
-    "token_amount": "Token/Amount",
+    "token_amount": "Token & Amount To Send",
     "click_to_swap": "Click to swap",
 
     "transfer_tooltip": "Transfer ether or tokens to other addresses",

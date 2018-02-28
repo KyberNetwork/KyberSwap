@@ -57,10 +57,13 @@ export default class EthereumService extends React.Component {
   }
 
   subcribe(callBack) {
-    var callBack = this.fetchData.bind(this)
+    var callBackAsync = this.fetchData.bind(this)
+    callBackAsync()
+    this.intervalAsyncID = setInterval(callBackAsync, 10000)
 
-    callBack()
-    this.intervalID = setInterval(callBack, 10000)
+    var callBackSync = this.fetchDataSync.bind(this)
+    callBackSync()
+    this.intervalSyncID = setInterval(callBackSync, 5000)
   }
 
   clearSubcription() {
