@@ -4,12 +4,12 @@
     <title>checkmark-selected-4px</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Beta_Version-Copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-548.000000, -366.000000)">
-        <g id="checkmark-selected-4px" transform="translate(549.000000, 367.000000)">
-            <rect id="Rectangle-9" stroke="#FFFFFF" stroke-width="2" x="0" y="0" width="15" height="15" rx="1"></rect>
-            <g id="checkmark" transform="translate(2.608696, 3.260870)" fill="#31C09E" fill-rule="nonzero">
-                <polygon id="Rectangle-2-Copy-8" transform="translate(6.472611, 3.991696) scale(-1, 1) rotate(-135.000000) translate(-6.472611, -3.991696) " points="1.96543824 3.24130544 10.9797833 3.24130544 10.9797833 4.74208708 1.96543824 4.74208708"></polygon>
-                <polygon id="Rectangle-2-Copy-10" transform="translate(2.448719, 5.224850) rotate(-135.000000) translate(-2.448719, -5.224850) " points="-0.263096455 4.47445879 5.16053443 4.47445879 5.16053443 5.97524042 -0.263096455 5.97524042"></polygon>
+    <g id="Beta_Version-Copy_2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-548.000000, -366.000000)">
+        <g id="checkmark-selected-4px_2" transform="translate(549.000000, 367.000000)">
+            <rect id="Rectangle-9_2" stroke="#FFFFFF" stroke-width="2" x="0" y="0" width="15" height="15" rx="1"></rect>
+            <g id="checkmark_2" transform="translate(2.608696, 3.260870)" fill="#31C09E" fill-rule="nonzero">
+                <polygon id="Rectangle-2-Copy-8_2" transform="translate(6.472611, 3.991696) scale(-1, 1) rotate(-135.000000) translate(-6.472611, -3.991696) " points="1.96543824 3.24130544 10.9797833 3.24130544 10.9797833 4.74208708 1.96543824 4.74208708"></polygon>
+                <polygon id="Rectangle-2-Copy-10_2" transform="translate(2.448719, 5.224850) rotate(-135.000000) translate(-2.448719, -5.224850) " points="-0.263096455 4.47445879 5.16053443 4.47445879 5.16053443 5.97524042 -0.263096455 5.97524042"></polygon>
             </g>
         </g>
     </g>

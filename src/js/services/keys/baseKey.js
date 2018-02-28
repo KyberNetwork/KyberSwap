@@ -50,7 +50,7 @@ export const etherToOthersFromAccount = (
   destAddress, maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas, gasPrice, keystring, accountType,
   password) => {
-
+   // var throwOnFailure = "0x0000000000000000000000000000000000000000"
   return new Promise((resolve, reject) => {
     ethereum.call("exchangeData",
       sourceToken, sourceAmount, destToken, destAddress,

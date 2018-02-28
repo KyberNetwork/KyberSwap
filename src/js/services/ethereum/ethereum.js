@@ -10,8 +10,8 @@ import {
 } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx, updateApproveTxsData } from "../../actions/txActions"
-import { updateRateExchange, estimateGas, analyzeError, checkKyberEnable } from "../../actions/exchangeActions"
-import { estimateGasTransfer } from "../../actions/transferActions"
+import { updateRateExchange, estimateGas, analyzeError, checkKyberEnable, verifyExchange, caculateAmount } from "../../actions/exchangeActions"
+import { estimateGasTransfer, verifyTransfer } from "../../actions/transferActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
 import { setConnection } from "../../actions/connectionActions"
@@ -63,11 +63,12 @@ export default class EthereumService extends React.Component {
 
     var callBackSync = this.fetchDataSync.bind(this)
     callBackSync()
-    this.intervalSyncID = setInterval(callBackSync, 5000)
+    this.intervalSyncID = setInterval(callBackSync, 3000)
   }
 
   clearSubcription() {
     clearInterval(this.intervalID)
+    clearInterval(this.intervalSyncID)
   }
 
 
@@ -156,16 +157,24 @@ export default class EthereumService extends React.Component {
 
     this.fetchGasprice()
 
+    this.verifyExchange()
+    this.verifyTransfer()
+
    // this.fetchGasExchange()
    // this.fetchGasTransfer()
 
    //this.testAnalize()
   }
 
+  fetchDataSync() {
+    this.verifyExchange()
+    this.verifyTransfer()
+  }
+
   testAnalize() {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    store.dispatch(analyzeError(ethereum, "0x1cf83dd3668d65ee40b7dc169a9de8f10323cce9a4b1b8cdf4656faee4655b13"))
+    store.dispatch(analyzeError(ethereum, "0x9219e71f9172549595e42ce6d8cc2d3c7ac052236f461b0005128f25d331bec1"))
   }
 
   fetchRateData() {
@@ -331,6 +340,36 @@ export default class EthereumService extends React.Component {
     }
     store.dispatch(estimateGasTransfer())
   }
+
+  verifyExchange = () => {
+    var state = store.getState()
+    var account = state.account.account
+    if (!account.address) {
+      return
+    }
+
+    var pathname = state.router.location.pathname
+    if (pathname !== "/exchange") {
+      return
+    }
+    store.dispatch(verifyExchange())
+    store.dispatch(caculateAmount())
+  }
+
+  verifyTransfer = () => {
+    var state = store.getState()
+    var account = state.account.account
+    if (!account.address) {
+      return
+    }
+
+    var pathname = state.router.location.pathname
+    if (pathname !== "/transfer") {
+      return
+    }
+    store.dispatch(verifyTransfer())
+  }
+
   checkConnection = () => {
     var state = store.getState()
     var checker = state.global.conn_checker

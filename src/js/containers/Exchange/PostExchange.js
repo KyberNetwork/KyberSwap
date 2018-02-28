@@ -117,7 +117,7 @@ export default class PostExchange extends React.Component {
               this.props.dispatch(exchangeActions.fetchGas())
               this.props.dispatch(exchangeActions.showConfirm())
             } else {
-              this.props.dispatch(exchangeActions.fetchGas())
+             // this.props.dispatch(exchangeActions.fetchGas())
               this.checkTokenBalanceOfColdWallet()
             }
             break
@@ -306,6 +306,8 @@ export default class PostExchange extends React.Component {
     var minConversionRate = converters.toTWei(this.props.snapshot.minConversionRate)
     minConversionRate = converters.numberToHex(minConversionRate)
 
+    var blockNo = converters.numberToHexAddress(this.props.snapshot.blockNo)
+
     var destAddress = this.props.account.address
     var maxDestAmount = converters.biggestNumber()
     var throwOnFailure = this.props.snapshot.throwOnFailure
@@ -329,7 +331,7 @@ export default class PostExchange extends React.Component {
     return {
       selectedAccount, sourceToken, sourceAmount, destToken,
       minConversionRate, destAddress, maxDestAmount,
-      throwOnFailure, nonce, gas,gas_approve, gasPrice, balanceData, sourceTokenSymbol
+      throwOnFailure, nonce, gas,gas_approve, gasPrice, balanceData, sourceTokenSymbol, blockNo
     }
   }
   checkTokenBalanceOfColdWallet = () => {
@@ -378,7 +380,7 @@ export default class PostExchange extends React.Component {
         params.sourceAmount, params.destToken, params.destAddress,
         params.maxDestAmount, params.minConversionRate,
         params.throwOnFailure, params.nonce, params.gas,
-        params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService, params.balanceData, params.sourceTokenSymbol))
+        params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService, params.balanceData, params.sourceTokenSymbol, params.blockNo))
 
 
     } catch (e) {
@@ -417,6 +419,7 @@ export default class PostExchange extends React.Component {
         translate={this.props.translate}
         title={this.props.translate("modal.confirm_exchange_title") || "Exchange confirm"}
         errors={this.props.form.signError}
+        walletType={this.props.account.type}
       />
     )
   }
@@ -434,6 +437,7 @@ export default class PostExchange extends React.Component {
         gas={this.props.form.gas_approve}
         isFetchingGas = {this.props.form.isFetchingGas}
         errors={this.props.form.signError}
+        walletType={this.props.account.type}
       />
     )
   }

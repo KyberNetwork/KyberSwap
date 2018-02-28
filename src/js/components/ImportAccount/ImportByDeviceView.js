@@ -14,9 +14,8 @@ const ImportByDeviceView = (props) => {
         props.choosePath(selectedPath, dpath);
     }
 
-    function getAddress() {
-        let formAddress = JSON.parse(document.getElementById('formAddress').address.value),
-            data = {
+    function getAddress(formAddress) {
+        let data = {
                 address: formAddress.addressString,
                 type: props.walletType,
                 path: props.currentDPath + '/' + formAddress.index,
@@ -29,27 +28,20 @@ const ImportByDeviceView = (props) => {
         const addressLink = BLOCKCHAIN_INFO.ethScanUrl + 'address/';
         let currentListHtml = props.currentAddresses.map((address, index) => {
             return (
-                <li key={address.addressString}>
-                    <a class="name">
-                        <label for={'address-' + address.addressString} style={{ marginBottom: 0, cursor: 'pointer', textTransform: 'lowercase' }}>
+                <li key={address.addressString} onClick={() => getAddress(address)}>
+                    <a class="name text-lowercase">
+                        <label class="mb-0">
                             <span class="hash">{address.addressString}</span>
                         </label>
-                        <input type="radio" id={'address-' + address.addressString}
-                            name="address"
-                            value={JSON.stringify(address)}
-                            onClick={() => getAddress()}
-                            style={{ display: 'none' }}
-                        />
                     </a>
                     <div class="info">
-                        <a class="link has-tip top explore" href={addressLink + address.addressString} target="_blank" title="View on Etherscan">
-                            <span title={address.balance}>
-                                {address.balance == '-1' ?
-                                    <img src={require('../../../assets/img/waiting-white.svg')} />
-                                    : roundingNumber(address.balance)
-                                } ETH
-                            </span>
+                        <a class="link has-tip top explore" title={address.balance}>
+                            {address.balance == '-1' ?
+                                <img src={require('../../../assets/img/waiting-white.svg')} />
+                                : roundingNumber(address.balance)
+                            } ETH
                         </a>
+                        <a class="import">Import</a>
                     </div>
                 </li>
             )
@@ -122,11 +114,9 @@ const ImportByDeviceView = (props) => {
                             <div class="block-title">
                                 {props.translate("modal.select_address") || "Select the address you would like to interact with"}
                             </div>
-                            <form id="formAddress">
-                                <ul class="address-list animated fadeIn">
-                                    {getCurrentList()}
-                                </ul>
-                            </form>
+                            <ul class="address-list animated fadeIn">
+                                {getCurrentList()}
+                            </ul>
                             <div class="address-list-navigation animated fadeIn">
                                 <a class={'previous ' + (props.isFirstList ? 'disabled' : '')} onClick={props.getPreAddress}>
                                     <i className="k k-angle left mr-2"></i>

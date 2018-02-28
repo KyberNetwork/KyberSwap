@@ -2,23 +2,7 @@
     "connections": {
       "http": [
         {
-          "endPoint" : "https://internal-mainnet-cache.kyber.network",
-          "type": "cached"
-        },
-        {
-          "endPoint" : "https://mainnet.infura.io",
-          "type": "prune"
-        },
-        {
-          "endPoint" : "https://node.kyber.network",
-          "type": "prune"
-        },
-        {
-          "endPoint" : "https://api.mycryptoapi.com/eth",
-          "type": "none_prune"
-        },        
-        {
-          "endPoint" : "https://mew.giveth.io/",
+          "endPoint" : "https://semi-node.kyber.network",
           "type": "prune"
         }
       ],
@@ -113,6 +97,38 @@
         "icon": "gifto.svg",
         "decimal": 5,
         "usd_id":"gifto"
+      },
+      "RDN": {
+        "name":"Raiden",
+        "address": "0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6",
+        "symbol": "RDN",
+        "icon": "rdn.svg",
+        "decimal": 18,
+        "usd_id":"raiden-network-token"
+      },
+      "APPC": {
+        "name":"AppCoins",
+        "address": "0x1a7a8bd9106f2b8d977e08582dc7d24c723ab0db",
+        "symbol": "APPC",
+        "icon": "appc.svg",
+        "decimal": 18,
+        "usd_id":"appcoins"
+      },
+      "ENG": {
+        "name":"Enigma",
+        "address": "0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4",
+        "symbol": "ENG",
+        "icon": "eng.svg",
+        "decimal": 8,
+        "usd_id":"enigma-project"
+      },
+      "SALT": {
+        "name":"Salt",
+        "address": "0x4156d3342d5c385a87d264f90653733592000581",
+        "symbol": "SALT",
+        "icon": "salt.svg",
+        "decimal": 8,
+        "usd_id":"salt"
       }
     },
     "ethScanUrl": "https://etherscan.io/",
@@ -125,9 +141,5 @@
     "averageBlockTime": 15000,
     "networkId": 1,
     "chainName": "Mainnet",
-    "server_logs": {
-      "url": "api.etherscan.io",
-      "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
-    },
     "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json"
   }
