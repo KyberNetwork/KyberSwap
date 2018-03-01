@@ -197,6 +197,15 @@ export function numberToHex(number) {
   return "0x" + (new BigNumber(number)).toString(16)
 }
 
+export function numberToHexAddress(number){
+  var hex =  (new BigNumber(number)).toString(16)
+  if(hex.length > 40){
+    return  "0x" + Array(41).join("0")
+  }else{
+    return  "0x" + Array(40 - hex.length + 1).join("0") + hex.toLowerCase()
+  }
+}
+
 export function biggestNumber() {
   var initNumber = new BigNumber(2)
   return "0x" + (initNumber.pow(255).toString(16))

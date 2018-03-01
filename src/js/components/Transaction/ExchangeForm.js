@@ -35,12 +35,18 @@ const ExchangeForm = (props) => {
 
   var maxCap = props.maxCap
   var errorSource = []
-  if (props.errorNotPossessKgt !== "" ) errorSource.push(<span class="error-text">{props.errorNotPossessKgt}</span>)
-  if (errorToken !== "") errorSource.push(<span class="error-text">{errorToken}</span>)
-  if (props.errors.sourceAmount !== "") errorSource.push(<span class="error-text">{props.translate(props.errors.sourceAmount, { cap: maxCap })}</span>)
-  if (props.errors.rateAmount !== "") errorSource.push(<span class="error-text">{props.errors.rateAmount}</span>)
-  if (props.errors.rateSystem !== "") errorSource.push(<span class="error-text">{props.errors.rateSystem}</span>)
-  
+  if (props.errorNotPossessKgt !== "" ) {
+    errorSource.push(props.errorNotPossessKgt)
+  }else{
+    if (errorToken !== "") errorSource.push(<span class="error-text">{errorToken}</span>)
+    if (props.errors.sourceAmount !== "") errorSource.push(props.translate(props.errors.sourceAmount, { cap: maxCap }))
+    //if (props.errors.rateAmount !== "") errorSource.push(<span class="error-text">{props.errors.rateAmount}</span>)
+    if (props.errors.rateSystem !== "") errorSource.push(props.errors.rateSystem)
+  }
+
+  var errorShow = errorSource.map((value, index) => {
+    return <span class="error-text" key={index}>{value}</span> 
+  })  
 
   //var maxCap = props.sourceTokenSymbol === "ETH"?props.maxCap: props.maxCap*constants.MAX_CAP_PERCENT
 
@@ -71,7 +77,9 @@ const ExchangeForm = (props) => {
                         onChange={handleChangeSource}
                       />
                     </div>
-                    {errorSource[0]}
+                    <div className={props.errorNotPossessKgt != '' || errorToken !== "" || props.errors.sourceAmount != '' || props.errors.rateSystem !== '' ? "error" : ""}>
+                      {errorShow}
+                    </div>
                   </label>
                   <div class="address-balance">
                     <span class="note">{props.translate("transaction.address_balance") || "Address Balance"}</span>

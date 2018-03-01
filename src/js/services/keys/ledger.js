@@ -88,7 +88,8 @@ export default class Ledger {
     eTx.raw[6] = Buffer.from([params.chainId])
     let txToSign = ethUtil.rlp.encode(eTx.raw)
     return new Promise((resolve, reject) => {
-      connectLedger().then((eth) => {
+      let timeout = 60
+      connectLedger(timeout).then((eth) => {
         signLedgerTransaction(eth, params.address_n, txToSign.toString('hex')).then((response) => {
           if (response.status) {
             params.v = "0x" + response['v']

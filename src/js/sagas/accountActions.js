@@ -3,6 +3,7 @@ import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
 import { clearSession, setGasPrice, setBalanceToken } from "../actions/globalActions"
 import { openInfoModal } from '../actions/utilActions'
+import * as common from "./common"
 
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
 import { randomToken, setRandomExchangeSelectedToken, setCapExchange, thowErrorNotPossessKGt } from "../actions/exchangeActions"
@@ -40,11 +41,46 @@ export function* updateTokenBalance(action) {
   }
 }
 
+
+function* createNewAccount(address, type, keystring, ethereum){
+  try{
+    const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
+    return {status: "success", res: account}
+  }catch(e){
+    console.log(e)
+    return {status: "fail"}
+  }
+}
+
 export function* importNewAccount(action) {
   yield put(actions.importLoading())
   const { address, type, keystring, ethereum, tokens, metamask } = action.payload
+  var translate = getTranslate(store.getState().locale)
   try {
-    const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
+    var  account
+    var accountRequest = yield call(common.handleRequest, createNewAccount, address, type, keystring, ethereum)
+
+    if (accountRequest.status === "timeout") {
+      console.log("timeout")
+      let translate = getTranslate(store.getState().locale)
+      yield put(actions.closeImportLoading())
+      yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred", 
+                                          translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+      return
+    }
+    if (accountRequest.status === "fail") {
+      let translate = getTranslate(store.getState().locale)
+      yield put(actions.closeImportLoading())
+      yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred", 
+                                          translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
+      return
+    }
+
+    if (accountRequest.status === "success") {
+      account = accountRequest.data
+    }    
+
+   // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
     yield put(actions.closeImportLoading())
     yield put(actions.importNewAccountComplete(account))
     yield put(goToRoute('/exchange'))
@@ -53,8 +89,8 @@ export function* importNewAccount(action) {
     yield put(setCapExchange(maxCapOneExchange))
 
     if (+maxCapOneExchange == 0){
-      var translate = getTranslate(store.getState().locale)
-      yield put(thowErrorNotPossessKGt(translate("error.not_possess_kgt") || "It appears that your wallet does not possess Kyber Network Genesis Token (KGT) to participate in the pilot run."))
+      var linkReg = 'https://docs.google.com/forms/d/e/1FAIpQLScmvJukGWrbpiW07nENUEhIKz3yfAwA21nQg03Wl44YOYD5fQ/viewform'
+      yield put(thowErrorNotPossessKGt(translate("error.not_possess_kgt", {link: linkReg}) || "It appears that your wallet does not possess Kyber Network Genesis Token (KGT) to participate in the pilot run."))
     }
     //update token and token balance
     var newTokens = {}
@@ -62,20 +98,6 @@ export function* importNewAccount(action) {
       var token = { ...token }
       newTokens[token.symbol] = token
     })
-    // var randomToken = [
-    //   {
-    //     address: newTokens['ETH'].address,
-    //     symbol: newTokens['ETH'].symbol
-    //   },
-    //   {
-    //     address: newTokens['KNC'].address,
-    //     symbol: newTokens['KNC'].symbol
-    //   },
-    // ]
-    // yield put(setRandomExchangeSelectedToken(randomToken))
-    
-    //todo set random token for exchange
-    
 
     yield call(ethereum.fetchRateExchange)
 
@@ -89,7 +111,7 @@ export function* importNewAccount(action) {
   }
   catch (err) {
     console.log(err)
-    yield put(actions.throwError('Cannot connet to blockchain right now. Please try again later.'))
+    yield put(actions.throwError(translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
     yield put(actions.closeImportLoading())
   }
 

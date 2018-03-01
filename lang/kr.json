@@ -17,6 +17,7 @@
     "address": "주소",
     "import_address": "주소 가져오기",
     "my_balance": "잔액",
+    "estimated_value": "추정 가치",
     "total": "추정 가치",
     "hide_zero_balance": "잔액 숨기기"
   },
@@ -136,7 +137,7 @@
     "source_amount_rate_error": "현재 거래할 수 없습니다",
     "source_amount_too_high_for_reserve": "보내시려는 토큰 수량이 너무 큽니다 (현재 지원되지 않는 토큰입니다)",
     "source_amount_is_not_number": "보내시려는 토큰 수량이 숫자가 아닙니다",
-    "not_possess_kgt": "파일럿 메인넷 참여에 필요한 Kyber Network Genesis Token (KGT) 토큰이 지갑에 없습니다.",
+    "not_possess_kgt": "파일럿 메인넷 참여에 필요한 Kyber Network Genesis Token (KGT) 토큰이 지갑에 없습니다. 우리 더 많은 사람들에게 플랫폼을 공개 할 때 알려드릴게요. <a href=\"${link}\" target=\"_blank\">여기</a> 신청하십시오!",
 
     "dest_address": "이것은 주소가 아닙니다",
     "amount_transfer_too_hign": "금액이 너무 높습니다",
@@ -152,6 +153,7 @@
     "minutes": " 분",
     "time_out": "시간초과",
     "network_error": "블록체인 연결이 원할하지 않습니다, 잠시 후 다시 시도해주세요",
+    "node_error": "노드에는 몇 가지 문제점이 있습니다. 잠시 후 다시 해보십시오",
     "term_error": "이용약관 동의는 필수입니다.",
     
     "path_not_support_by_trezor": "TREZOR는 해당 경로를 지원하지 않습니다",
@@ -190,8 +192,8 @@
   "import": {
     "from_metamask": "Metamask에 <br> 연결하기",
     "from_keystore": "키 저장소를 선택 또는 <br /> 드래그 하십시오",
-    "from_trezor": "TREZOR에서 <br /> 가져오기",
-    "from_ledger": "LEDGER에서 <br /> 가져오기",
+    "from_trezor": "Trezor에서 <br /> 가져오기",
+    "from_ledger": "Ledger에서 <br /> 가져오기",
     "from_private_key": "개인키 <br /> 입력하기",
     "from_private_key_input_title": "개인키 입력하기",
     "from_private_key_input_title_placehoder": "개인키 입력하기"
@@ -246,9 +248,10 @@
     "get_started": "시작"
   },
 
-  "product_feedback": "제품 비드백하기",
+  "product_feedback": "제품 피드백하기",
   "help": "도움말",
   "low": "낮기",
   "standard": "표준",
-  "fast": "빠르기"
+  "fast": "빠르기",
+  "search": "찾기"
 }

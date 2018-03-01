@@ -12,6 +12,11 @@ const TransactionConfig = (props) => {
     if(check) props.gasPriceHandler(e.target.value)
   }
 
+  function handleChangeGasPrice(e) {
+    filterInputNumber(e, e.target.value)
+    props.gasPriceHandler(e.target.value)
+  }
+
   function tooltipGasSuggest(time) {
     return props.translate("transaction.transaction_time", { time: time })
   }

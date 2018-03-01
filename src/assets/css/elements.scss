@@ -123,6 +123,9 @@ input.error {
   display: block;
   text-transform: none;
   margin-top: 10px;
+  a{
+    color: $k-success;
+  }
 }
 
 @keyframes button-accent-waiting {
