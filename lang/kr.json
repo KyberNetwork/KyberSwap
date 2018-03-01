@@ -186,7 +186,11 @@
     "invalid_path_or_session_expired": "이 경로에서 주소를 가져올 수 없습니다. 경로가 유효한지 또는 Ledger가 연결되어 있는지 확인하십시오.",
     "path_is_invalid": "유효하지 않은 경로. 다른 것을 선택하십시오.",
     "ledger_time_out": "Ledger에 세션이 만료되었습니다. 계속하려면 다시 로그인하십시오.",
-    "eth_balance_not_enough_for_fee": "Eth 잔액는 거래 비용으로 충분하지 않습니다."
+    "eth_balance_not_enough_for_fee": "Eth 잔액는 거래 비용으로 충분하지 않습니다.",
+    "handle_amount":"카이버는 금액을 처리 할 수 없으므로 금액을 줄이십시오!",
+    "kyber_maintain":"카이버 교환은 이 쌍을 유지 보수 중입니다.",
+    "get_rate":"블록 체인에서 요금을 받을 수 없습니다.",
+    "exchange_enable":"거래는 일일 한도를 초과했습니다! 내일 00:00 UTC+0 다시 거래 할 수도 있습니다"
   },
 
   "import": {
@@ -236,7 +240,9 @@
     "content":"Kyber testnet wallet은 교환 및 지불 서비스를 실험하고 이해할 수있는 플랫폼을 제공합니다. 현재의 구현은 안전하지 않을 수 있습니다. 이를 사용하면 자금 손실이 발생할 수 있으며 사용자의 개인 정보가 손상 될 수 있습니다. 사용자는 Kyber testnet wallet을 사용하는 결과에 대한 전적인 책임이 있습니다",
     "use_testnet":"반드시 테스트넷 계정을 사용하시기 바랍니다!!!!",
     "use_real":"진짜 이더리움 계정은 사용하시면 안됩니다!!!",
-    "accept":"수락됨"
+    "accept":"수락됨",
+    "terms_and_condition":" 이용 약관 ",
+    "to_get_started":"에 동의하십시오!"
   },
 
   "landing_page":{
@@ -245,9 +251,10 @@
     "instant": "빠른",
     "liquid": "유동성",
     "compatible": "호환 가능",
-    "get_started": "시작"
+    "get_started": "시작",
+    "exchange":" 거래소"
   },
-
+  "home": "홈",
   "product_feedback": "제품 피드백하기",
   "help": "도움말",
   "low": "낮기",

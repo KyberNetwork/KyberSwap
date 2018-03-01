@@ -46,7 +46,7 @@ export default class Transfer extends React.Component {
       // this.props.dispatch(transferActions.thowErrorAmount("error.amount_must_be_number"))
     } else {
       var amountBig = converters.stringEtherToBigNumber(this.props.transfer.amount, this.props.transfer.decimal)
-      if (amountBig.greaterThan(this.props.transfer.balance)) {
+      if (amountBig.isGreaterThan(this.props.transfer.balance)) {
         this.props.dispatch(transferActions.thowErrorAmount("error.amount_transfer_too_hign"))
         return
       }
@@ -104,9 +104,9 @@ export default class Transfer extends React.Component {
       if (tokenSymbol === "ETH") {
         var gasLimit = this.props.transfer.gas
         var gasPrice = converters.stringToBigNumber(converters.gweiToWei(this.props.transfer.gasPrice))
-        var totalGas = gasPrice.multipliedBymul(gasLimit)
+        var totalGas = gasPrice.multipliedBy(gasLimit)
 
-        if (!balanceBig.greaterThanOrEqualTo(totalGas)) {
+        if (!balanceBig.isGreaterThanOrEqualTo(totalGas)) {
           return false
         }
         balanceBig = balanceBig.minus(totalGas)

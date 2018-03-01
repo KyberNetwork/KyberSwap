@@ -70,10 +70,14 @@ const exchange = (state = initState, action) => {
           newState.sourceToken = BLOCKCHAIN_INFO.tokens['ETH'].address
         }
       }
+
       //reset all error
       for (var key in newState.errors) {
         newState.errors[key] = ""
       }
+      
+      newState.sourceAmount = ""
+      newState.destAmount = 0
 
       newState.selected = true
       newState.isEditRate = false
@@ -173,13 +177,13 @@ const exchange = (state = initState, action) => {
       const { rateInit, expectedPrice, slippagePrice, rateInitSlippage, blockNo ,isManual, isSuccess} = action.payload
 
       if (!isSuccess) {
-        newState.errors.rateSystem = "Cannot get rate from blockchain"
+        newState.errors.rateSystem = "error.get_rate"
       }else{
         if(expectedPrice === "0"){
           if(rateInit === "0"){
-            newState.errors.rateSystem = "Kyber exchange is under maintainance this pair"
+            newState.errors.rateSystem = "error.kyber_maintain"
           }else{
-            newState.errors.rateSystem = "Kyber cannot handle your amount, please reduce amount"
+            newState.errors.rateSystem = "error.handle_amount"
           }
         }else{
           newState.errors.rateSystem = ""
@@ -498,6 +502,14 @@ const exchange = (state = initState, action) => {
       newState.errorNotPossessKgt = action.payload
       return newState
     }
+    case "EXCHANGE.SET_EXCHANGE_ENABLE":{
+      if(!action.payload){
+        newState.errors.exchange_enable = ""
+      }else{
+        newState.errors.exchange_enable = "error.exchange_enable"
+      }
+      return newState
+    }  
   }
   return state
 }

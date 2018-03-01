@@ -89,6 +89,11 @@ const account = (state=initState, action) => {
       newState.pKey.modalOpen = false
       return newState
     }
+    case "GLOBAL.SET_BALANCE_TOKEN":{
+      let newState = {...state}
+      newState.isGetAllBalance = true
+      return newState
+    }  
   }
   return state
 }

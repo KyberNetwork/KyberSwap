@@ -22,7 +22,7 @@ const AccountBalanceView = (props) => {
         var tokenEpsilon = converts.caculateTokenEpsilon(token.rate, token.decimal, token.symbol)
         var bigBalance = new BigNumber(token.balance)
         return (
-          props.showZeroBalance || bigBalance.greaterThanOrEqualTo(tokenEpsilon) ?
+          props.showZeroBalance || bigBalance.isGreaterThanOrEqualTo(tokenEpsilon) ?
             <div data-tip={displayBalance(balance, token.rateUSD)}
               className="columns my-2" key={token.symbol} data-for={token.symbol}
               onClick={(e) => props.selectToken(e, token.symbol, token.address)}

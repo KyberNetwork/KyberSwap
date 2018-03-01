@@ -125,7 +125,7 @@ export function toTWei(number) {
   } else if (acceptableTyping(number)) {
     return number
   } else {
-    return bigNumber.times(1000000000000000000).toFixed().toString()
+    return bigNumber.times(1000000000000000000).toFixed()
   }
 }
 
@@ -183,7 +183,7 @@ export function toT(number, decimal, round) {
     result = bigNumber.div(1000000000000000000)
   }
   if (round) {
-    return result.toFixed(round).toString()
+    return result.toFixed(round)
   } else {
     return result.toString()
   }
@@ -255,7 +255,9 @@ export function stringToHex(number, decimal) {
   if (number === "" || isNaN(number)) return "0x0"
   var param = new BigNumber(10).pow(decimal ? decimal : 18)
   var bigNumber = new BigNumber(number).times(param)
-  bigNumber = bigNumber.toFixed()
+
+  bigNumber = new BigNumber(bigNumber.toFixed())
+
   return "0x" + bigNumber.toString(16)
 }
 

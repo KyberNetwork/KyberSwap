@@ -6,13 +6,13 @@
           "type": "cached"
         },
         {
-          "endPoint" : "https://semi-node.kyber.network",
+          "endPoint" : "https://mainnet.infura.io",
           "type": "prune"
         },
         {
-          "endPoint" : "https://mainnet.infura.io",
+          "endPoint" : "https://semi-node.kyber.network",
           "type": "prune"
-        },        
+        },           
         {
           "endPoint" : "https://api.mycryptoapi.com/eth",
           "type": "none_prune"
@@ -20,7 +20,7 @@
         {
           "endPoint" : "https://mew.giveth.io/",
           "type": "prune"
-        }
+        }        
       ],
       "ws": "wss://mainnet.infura.io/ws"
     },

@@ -524,3 +524,16 @@ export function verifyExchange(){
     type: "EXCHANGE.VERIFY_EXCHANGE",
   }
 }
+
+export function fetchExchangeEnable(){
+  return {
+    type: "EXCHANGE.FETCH_EXCHANGE_ENABLE",
+  }
+}
+
+export function setExchangeEnable(enable){
+  return {
+    type: "EXCHANGE.SET_EXCHANGE_ENABLE",
+    payload: enable
+  }
+}
