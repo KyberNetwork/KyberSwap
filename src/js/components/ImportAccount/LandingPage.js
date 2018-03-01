@@ -1,6 +1,14 @@
 import React from "react"
 import TermAndServices from "../../containers/CommonElements/TermAndServices";
+import { connect } from "react-redux"
+import { getTranslate } from 'react-localize-redux';
 
+@connect((store, props) => {
+	return {
+	  translate: getTranslate(store.locale)
+	}
+  })
+  
 export default class LandingPage extends React.Component {
 
 	constructor() {

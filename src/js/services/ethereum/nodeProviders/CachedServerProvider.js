@@ -228,4 +228,32 @@ export default class CachedServerProvider extends React.Component {
             resolve("get_info_successfully")
         })
     }
+
+
+   
+    getExchangeEnable(address){
+        return new Promise((resolve, rejected) => {
+            fetch('https://mainnet-data.kyber.network/richguy/' + address, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then((response) => {
+                return response.json()
+            })
+            .then( (result) => {
+                if(result.success){
+                    resolve(result.data)
+                }else{
+                    resolve(false)
+                }  
+            })
+            .catch((err) => {
+                console.log(err)
+                resolve(false)
+            })
+        })
+    }
 }
