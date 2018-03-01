@@ -659,7 +659,6 @@ function* updateGasUsed(action) {
   if (tokens[sourceTokenSymbol]) {
     sourceDecimal = tokens[sourceTokenSymbol].decimal
   }
-
   try {
     const sourceToken = exchange.sourceToken
     const sourceAmount = converter.stringToHex(exchange.sourceAmount, sourceDecimal)

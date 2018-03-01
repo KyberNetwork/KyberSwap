@@ -91,7 +91,7 @@ export function shortEthBalance(tokens){
     shortedTokens = Object.values(removedEth).sort((a, b) => {
       var balanceEthA = new BigNumber(caculateEthBalance(a)) 
       var balanceEthB = new BigNumber(caculateEthBalance(b)) 
-      return balanceEthB.sub(balanceEthA)
+      return balanceEthB.minus(balanceEthA)
     })
   } 
   if(tokens[constants.ETH.symbol]){
@@ -125,7 +125,7 @@ export function toTWei(number) {
   } else if (acceptableTyping(number)) {
     return number
   } else {
-    return bigNumber.times(1000000000000000000).round().toString()
+    return bigNumber.times(1000000000000000000).toFixed().toString()
   }
 }
 
@@ -183,7 +183,7 @@ export function toT(number, decimal, round) {
     result = bigNumber.div(1000000000000000000)
   }
   if (round) {
-    return result.round(round).toString()
+    return result.toFixed(round).toString()
   } else {
     return result.toString()
   }
@@ -246,7 +246,7 @@ export function stringToHex(number, decimal) {
   if (number === "" || isNaN(number)) return "0x0"
   var param = new BigNumber(10).pow(decimal ? decimal : 18)
   var bigNumber = new BigNumber(number).times(param)
-  bigNumber = bigNumber.round()
+  bigNumber = bigNumber.toFixed()
   return "0x" + bigNumber.toString(16)
 }
 
@@ -301,7 +301,7 @@ export function getDifferentAmount(sourceAmount, prevAmount, sourceDecimal,
       rate = rate.div(rateWeight)
 
       var value = new BigNumber(valueChange + "")
-      value = value.mul(rate)
+      value = value.multipliedBy(rate)
 
       return value.toNumber()
     }

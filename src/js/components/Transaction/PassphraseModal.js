@@ -26,7 +26,7 @@ const PassphraseModal = (props) => {
   }
 
   var gasPrice = stringToBigNumber(gweiToEth(props.gasPrice))
-  var totalGas = gasPrice.mul(props.gas)
+  var totalGas = gasPrice.multipliedBy(props.gas)
   return (
     <div >
       <div className="title text-center">{props.translate("modal.enter_password") || "Enter Password"}</div>

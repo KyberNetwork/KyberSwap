@@ -3,7 +3,7 @@ import { gweiToEth, stringToBigNumber } from "../../utils/converter";
 
 const ApproveModal = (props) => {
   var gasPrice = stringToBigNumber(gweiToEth(props.gasPrice))
-  var totalGas = gasPrice.mul(props.gas)
+  var totalGas = gasPrice.multipliedBy(props.gas)
   var haveError = props.errors ? true : false
   return (
     <div>

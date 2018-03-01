@@ -104,7 +104,7 @@ export default class Transfer extends React.Component {
       if (tokenSymbol === "ETH") {
         var gasLimit = this.props.transfer.gas
         var gasPrice = converters.stringToBigNumber(converters.gweiToWei(this.props.transfer.gasPrice))
-        var totalGas = gasPrice.mul(gasLimit)
+        var totalGas = gasPrice.multipliedBymul(gasLimit)
 
         if (!balanceBig.greaterThanOrEqualTo(totalGas)) {
           return false
@@ -192,7 +192,7 @@ export default class Transfer extends React.Component {
     )
 
     var gasPrice = converters.stringToBigNumber(converters.gweiToEth(this.props.transfer.gasPrice))
-    var totalGas = gasPrice.mul(this.props.transfer.gas)
+    var totalGas = gasPrice.multipliedBy(this.props.transfer.gas)
     var gasConfig = (
       <TransactionConfig gas={this.props.transfer.gas}
         gasPrice={this.props.transfer.gasPrice}
