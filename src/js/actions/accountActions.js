@@ -105,6 +105,12 @@ export function incManualNonceAccount(address) {
   }
 }
 
+export function goToImport() {
+  return {
+    type: "ACCOUNT.GO_TO_IMPORT",
+  }
+}
+
 export function importAccountMetamask(web3Service, networkId, ethereum, tokens, translate) {
   return {
     type: "ACCOUNT.IMPORT_ACCOUNT_METAMASK",

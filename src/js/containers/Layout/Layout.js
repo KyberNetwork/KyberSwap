@@ -104,6 +104,7 @@ export default class Layout extends React.Component {
         supportedLanguages={Language.supportLanguage}
         setActiveLanguage={this.setActiveLanguage}
         rate={rate}
+        isInLandingPage={this.props.account.isInLandingPage}
         footer = {footer}
       />
     )
