@@ -767,8 +767,16 @@ function* fetchGas() {
     console.log("timeout")
     var state = store.getState()
     const exchange = state.exchange
+
+    const sourceTokenSymbol = exchange.sourceTokenSymbol
     var gas = exchange.max_gas
-    var gas_approve = exchange.max_gas_approve
+    var gas_approve 
+    if(sourceTokenSymbol === "ETH"){
+      gas_approve = 0
+    }else{
+      gas_approve = exchange.max_gas_approve
+    }
+    
     yield put(actions.setEstimateGas(gas, gas_approve))
   }
 
@@ -1170,7 +1178,9 @@ function* verifyExchange(){
     yield put(actions.thowErrorSourceAmount(""))
   }
 
-  if(!sourceAmount) sourceAmount = 0 
+  if (isNaN(sourceAmount) || sourceAmount === "") {
+    sourceAmount = 0
+  }
   var validateWithFee = validators.verifyBalanceForTransaction(tokens['ETH'].balance, sourceTokenSymbol, 
   sourceAmount, exchange.gas + exchange.gas_approve, exchange.gasPrice)
 

@@ -16,6 +16,9 @@ export function calculateMinAmount(source, rate) {
 }
 
 export function calculateDest(source, rate) {
+  if (isNaN(source) || source === ""){
+    source = 0
+  }
   var bigSource = new BigNumber(source)
   var bigRate = new BigNumber(rate)
   if (bigSource == 'NaN' || bigSource == 'Infinity' || acceptableTyping(source) ||
