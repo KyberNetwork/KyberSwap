@@ -12,50 +12,8 @@ import Slider from "react-slick"
 
 export default class LandingPage extends React.Component {
 
-	constructor() {
-		super()
-		this.state = {
-			termAgree: false,
-			text: ''
-		}
-	}
-
-	// componentDidMount() {
-	// 	let textArr = ['Decentralized', 'Trustless', 'Instant', 'Liquid', 'Compatible']
-	// 	this.typeIt(textArr)
-	// }
-
-	// componentWillUnmount() {
-	// 	clearInterval(this.SI);
-	// 	clearTimeout(this.ST);
-	// }
-
-	// typeIt(words) {
-	// 	let letterIndex = 0;
-	// 	let wordIndex = 0;
-
-	// 	let nextWord = () => {
-	// 		let h1 = ''
-	// 		this.SI = setInterval(() => {
-	// 			h1 += words[wordIndex][letterIndex]
-	// 			this.setState({
-	// 				text: h1
-	// 			})
-	// 			letterIndex++;
-	// 			if (letterIndex === words[wordIndex].length) {
-	// 				wordIndex = (wordIndex + 1) % words.length;
-	// 				letterIndex = 0;
-	// 				clearInterval(this.SI);
-	// 				this.ST = setTimeout(() => {
-	// 					nextWord();
-	// 				}, 2000);
-	// 			}
-	// 		}, 150);
-	// 	}
-	// 	nextWord();
-	// }
 	componentDidMount() {
-    setTimeout(() => { window.dispatchEvent(new Event('resize')); }, 150);
+    setTimeout(() => { window.dispatchEvent(new Event('resize')); }, 0);
   }
 
 	render() {
@@ -75,7 +33,7 @@ export default class LandingPage extends React.Component {
 						<div className="m-auto text-center text-white">
 							<h2>Open to Public</h2>
 							<p>Our Exchange Service is now open to everyone! Sign up for an user account to start exchange</p>
-							<a className="button" target="_blank" href="https://account.kyber.network/users/sign_up">Sign up</a>
+							<a className="button" target="_blank" href="https://account.kyber.network/users/sign_up">Register</a>
 						</div>
 					</div>
 					<div className="d-flex slide slide-2">
