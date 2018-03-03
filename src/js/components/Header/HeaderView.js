@@ -10,11 +10,13 @@ const HeaderView = (props) => {
       <section id="header">
         <div class="row small-11 medium-12 large-12">
           <div class="row column">
-            <div class="column small-3">
+            <div class={"column " + (props.account ? 'small-3' : 'small-7')}>
               <Link to={logoLink} className="logo">
                 <img src={require("../../../assets/img/logo-beta.svg")} />
-                {/* <span class="beta">Beta</span> */}
               </Link>
+              {props.isInLandingPage && 
+                <button className="hollow button mb-0 ml-8" onClick={props.openInfoModal}>Exchange</button>
+              }
             </div>
             {props.infoMenu}
             {props.address}

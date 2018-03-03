@@ -46,7 +46,7 @@
     display: inline-block;
 }
 .d-flex{
-    display: flex;
+    display: flex!important;
 }
 .d-none{
     display: none;
@@ -131,6 +131,9 @@
 .mx-auto{
     margin-left: auto;
     margin-right: auto;
+}
+.m-auto{
+    margin: auto;
 }
 .mr-auto{
     margin-right: auto;

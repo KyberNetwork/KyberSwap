@@ -51,3 +51,86 @@
     color: $k-success;
   }
 }
+#carousel{
+  .slide{
+    height: 460px;
+    background-size: cover;
+    h2{
+      font-weight: 500;
+    }
+    .button{
+      background-color: #000000;
+      border: 1px solid #797979;
+      padding: 10px 30px;
+      &:hover{
+        background-color: #3d3d3d;
+      }
+    }
+    &.slide-1{
+      background-image: url(../img/slider1.png);
+    }
+    &.slide-2{
+      background-image: url(../img/slider2.jpg);
+      h2{
+        font-size: 3.5rem;
+      }
+      .button{
+        background-color: rgba(255, 255, 255, 0.17);
+        border-color: transparent;
+        &:hover{
+          background-color: rgba(255, 255, 255, 0.35);
+        }
+      }
+    }
+  }
+  .slick-dots{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+    margin-left: 0;
+    li{
+      position: relative;
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin: 0 5px;
+      padding: 0;
+      cursor: pointer;
+      button{ 
+        font-size: 0;
+        line-height: 0;
+        display: block;
+        width: 10px;
+        height: 10px;
+        padding: 5px;
+        cursor: pointer;
+        border: 0;
+        outline: none;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 50%;
+        &::before{
+          font-family: 'slick';
+          font-size: 6px;
+          line-height: 10px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 10px;
+          height: 10px;
+          content: '';
+          text-align: center;
+          opacity: .25;
+          color: black;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+      }
+      &.slick-active{
+        button{
+          background-color: #fff;
+        }
+      }
+    }
+  }
+}

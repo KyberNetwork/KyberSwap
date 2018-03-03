@@ -7,17 +7,21 @@ import exchangeActions from "../../actions/exchangeActions"
 import * as globalActions from "../../actions/globalActions"
 
 import HeaderView from '../../components/Header/HeaderView'
+import { openInfoModal, closeInfoModal } from "../../actions/utilActions";
+import { TermModal } from '../../components/CommonElement'
+import { goToImport } from "../../actions/accountActions";
 
 @connect((store) => {
 
   var location = "/"
-  if (store.router.location){
+  if (store.router.location) {
     location = store.router.location.pathname
   }
-  return { 
+  return {
     location: location,
     txs: store.txs,
     account: store.account.account,
+    isInLandingPage: store.account.isInLandingPage,
     global: store.global,
     translate: getTranslate(store.locale)
   }
@@ -31,33 +35,42 @@ export default class Header extends React.Component {
 
   toggleModal = () => {
     this.props.dispatch(globalActions.toggleAnalyze())
-}
-
-
-  render() {
-  var infoMenu = this.props.location === "/"? <InfoLink />:""
-  var balance = this.props.account?<AccountBalance />:false 
-
-  var analyze = {
-    action: this.analyze,
-    isAnalize: this.props.global.isAnalize,
-    isAnalizeComplete: this.props.global.isAnalizeComplete,
-    analizeError : this.props.global.analizeError,
-    selectedAnalyzeHash: this.props.global.selectedAnalyzeHash
   }
 
-    return (
-      <HeaderView 
-        account={this.props.account}
-        address={<Address 
-          path={this.props.location.pathname}
-          translate={this.props.translate}
-          />}
-        rate={<Rate />}
-        balance = {balance}
-        infoMenu = {infoMenu}
+  goToImportAccount = () => {
+    this.props.dispatch(closeInfoModal())
+    this.props.dispatch(goToImport())
+  }
 
-        analyze={analyze} 
+  openInfoModal = () => {
+    var termModal = <TermModal translate={this.props.translate} goToImport={this.goToImportAccount}/>
+    this.props.dispatch(openInfoModal('Terms of Service', termModal, true))
+  }
+
+  render() {
+    console.log(this.props.account)
+    var infoMenu = this.props.location === "/" ? <InfoLink /> : ""
+    var balance = this.props.account ? <AccountBalance /> : false
+    var analyze = {
+      action: this.analyze,
+      isAnalize: this.props.global.isAnalize,
+      isAnalizeComplete: this.props.global.isAnalizeComplete,
+      analizeError: this.props.global.analizeError,
+      selectedAnalyzeHash: this.props.global.selectedAnalyzeHash
+    }
+    var address = <Address path={this.props.location.pathname} translate={this.props.translate}/>
+    var rate = <Rate />
+
+    return (
+      <HeaderView
+        account={this.props.account}
+        isInLandingPage={this.props.isInLandingPage}
+        address={address}
+        rate={rate}
+        openInfoModal={this.openInfoModal}
+        balance={balance}
+        infoMenu={infoMenu}
+        analyze={analyze}
         onRequestClose={this.toggleModal}
         isOpen={this.props.global.isOpenAnalyze}
         translate={this.props.translate}
