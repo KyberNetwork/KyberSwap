@@ -11,7 +11,7 @@ history.listen(function (location) {
     try {
       console.log(location.pathname + location.search)
       window.ga('set', 'page', location.pathname + location.search)
-      window.ga('send', 'pageview', location.pathname + location.search)
+      window.ga('send', 'pageview')
     } catch (e) {
       console.log(e)
     }
