@@ -185,7 +185,12 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
     vertical-align: sub;
     color: #000;
     padding: 13px 11px;
+    margin-left: 36px;
     font-weight: 500;
+    @include breakpoint(small only){
+      margin-top: 10px;
+      margin-left: 0;
+    }
   }
   .user-bar {
     margin-top: 14px;

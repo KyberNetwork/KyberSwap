@@ -32,7 +32,7 @@ export default class LandingPage extends React.Component {
 					<div className="d-flex slide slide-1">
 						<div className="m-auto text-center text-white">
 							<h2>Open to Public</h2>
-							<p>Our Exchange Service is now open to everyone! Sign up for an user account to start exchange</p>
+							<p>Our Exchange Service is now open to everyone! Register for an user account to start exchange</p>
 							<a className="button" target="_blank" href="https://account.kyber.network/users/sign_up">Register</a>
 						</div>
 					</div>
