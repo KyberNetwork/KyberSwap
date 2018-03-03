@@ -45,7 +45,7 @@ const TransactionConfig = (props) => {
                 {gasPriceError}
                 <div className="d-flex justify-content-between gas-select">
                   <button onClick={() => specifyGasPrice(gasPriceSuggest.safeLowGas)} data-tip={tooltipGasSuggest(30)} data-for="low">
-                    {props.translate("low") || 'Low'}
+                    {props.translate("low") || 'Slow'}
                   </button>
                   <ReactTooltip place="bottom" id="low" type="light" />
 
