@@ -23,7 +23,7 @@ const TransferForm = (props) => {
                 <div class="column small-12 medium-7">
 
                   <label className={props.errors.destAddress !== '' ? "error" : ""}>
-                    <span className="transaction-label">{props.translate("address.address") || "Receiving Address"}</span>
+                    <span className="transaction-label">{props.translate("transaction.address") || "Receiving Address"}</span>
                     <input className="hashAddr" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange}>
                     </input>
                     {props.errors.destAddress &&

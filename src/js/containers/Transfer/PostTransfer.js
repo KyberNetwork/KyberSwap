@@ -99,7 +99,7 @@ export default class PostTransfer extends React.Component {
       return false
     }
     var amountBig = converters.stringEtherToBigNumber(this.props.form.amount, this.props.form.decimal)
-    if (amountBig.greaterThan(this.props.form.balance)) {
+    if (amountBig.isGreaterThan(this.props.form.balance)) {
       this.props.dispatch(transferActions.thowErrorAmount("error.amount_transfer_too_hign"))
       check = false
     }

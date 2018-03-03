@@ -49,7 +49,7 @@ class ConfirmTransferModal extends React.Component {
 
   render() {
     var gasPrice = stringToBigNumber(gweiToEth(this.props.gasPrice))
-    var totalGas = gasPrice.mul(this.props.gas)
+    var totalGas = gasPrice.multipliedBy(this.props.gas)
     return (
       <div>
         <div className="title text-center">{this.props.title}</div>

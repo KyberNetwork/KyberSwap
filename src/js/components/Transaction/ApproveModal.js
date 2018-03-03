@@ -38,7 +38,7 @@ class ApproveModal extends React.Component {
 
   render(){
     var gasPrice = stringToBigNumber(gweiToEth(this.props.gasPrice))
-    var totalGas = gasPrice.mul(this.props.gas)
+    var totalGas = gasPrice.multipliedBy(this.props.gas)
     var haveError = this.props.errors ? true : false
     return (
       <div>

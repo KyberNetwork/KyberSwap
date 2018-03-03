@@ -96,7 +96,8 @@
     "error_tx_log":"로그가 비어있는 상태입니다",
     "error_tx_contract":"해당 토큰을 지원하지 않습니다",
     "no_pedding_tx": "미체결 거래가 없습니다",
-    "rate_info": "결제 과정에서 가격이 변경 될 수 있습니다. <br> \"고급 옵션\"을 클릭하면 최저 가격을 표시 할 수 있습니다."
+    "rate_info": "결제 과정에서 가격이 변경 될 수 있습니다. <br> \"고급 옵션\"을 클릭하면 최저 가격을 표시 할 수 있습니다.",
+    "address": "받는 주소"
   },
 
   "modal": {
@@ -137,7 +138,7 @@
     "source_amount_rate_error": "현재 거래할 수 없습니다",
     "source_amount_too_high_for_reserve": "보내시려는 토큰 수량이 너무 큽니다 (현재 지원되지 않는 토큰입니다)",
     "source_amount_is_not_number": "보내시려는 토큰 수량이 숫자가 아닙니다",
-    "not_possess_kgt": "파일럿 메인넷 참여에 필요한 Kyber Network Genesis Token (KGT) 토큰이 지갑에 없습니다. 우리 더 많은 사람들에게 플랫폼을 공개 할 때 알려드릴게요. <a href=\"${link}\" target=\"_blank\">여기</a> 신청하십시오!",
+    "not_possess_kgt": "귀하의 지갑은 우리 플랫폼을 테스트 할 수있는 허용 목록에 포함되어 있지 않습니다. 파일럿 실행에 참여하려면 <a href=\"${link}\" target=\"_blank\"> 여기 </a>에 등록하십시오. 공개 출시는 앞으로 공지 될 예정입니다.",
 
     "dest_address": "이것은 주소가 아닙니다",
     "amount_transfer_too_hign": "금액이 너무 높습니다",

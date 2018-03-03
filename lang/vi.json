@@ -94,7 +94,8 @@
     "best_rate_tooltip": "Tỷ giá thấp hơn cho khả năng thành công cao hơn khi thị trường biến động",
     "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>",
     "no_pedding_tx": "Không có giao dịch nào đang chờ",
-    "rate_info": "Rate có thể thay đổi. <br/>Bạn có thể  chỉ định rate nhỏ nhất bởi click \"NÂNG CAO\""
+    "rate_info": "Rate có thể thay đổi. <br/>Bạn có thể  chỉ định rate nhỏ nhất bởi click \"NÂNG CAO\"",
+    "address": "Địa chỉ nhận"
   },
 
   "modal": {
@@ -175,7 +176,7 @@
     "issue_balance":"Lỗi do tài khoản token nhỏ hơn số tiền gửi",
     "issue_ether_amount":"Lỗi do người dùng đã không gửi chính xác số lượng eths",
     "issue_user_cap":"Lỗi do số lượng ban đầu vượt quá giới hạn người dùng",
-    "min_rate_too_high":"Rate của bạn quá cao!",
+    "min_rate_too_high":"Tỉ giá của bạn quá cao!",
 
     "ledger_global_err": "<div class='text-left'>Không thể kết nối đến Leger của bạn. Kiểm tra lại nếu như:<br/>- Bạn đã kết nối đến Ledger.<br/>- Bạn đã đăng nhập vào Ledger.<br/>- Bạn đã truy cập vào Ethereum app trên Ledger.<br/>- Bạn đã bật chế độ \"Browser support\" trên Ledger. Xem hướng dẫn tại  <a href=\"${link}\" target=\"_blank\">đây</a>.</div>",
     "need_to_config_env_ledger": "Bạn phải cài đặt trên thiết bị Linux để truy cập Ledger. Xem hướng dẫn tại <a href=\"${link}\" target=\"_blank\">đây</a>.",
@@ -183,7 +184,11 @@
     "invalid_path_or_session_expired": "Không thể lấy địa chỉ từ đường dẫn. Kiểm tra lại đường dẫn hoặc đăng nhập lại Ledger của bạn",
     "path_is_invalid": "Sai đường dẫn. Hãy chọn một đường dẫn khác.",
     "ledger_time_out": "Phiên trên Ledger của bạn đã hết hạn. Đăng nhập lại để tiếp tục dụng.",
-    "eth_balance_not_enough_for_fee": "Your Eth balance is not enough for transaction fee"
+    "eth_balance_not_enough_for_fee": "Tài khoản của bạn không đủ ETH cho giao dịch",
+    "handle_amount":"Số lượng điền quá lớn, vui lòng giảm số lương giao dịch",
+    "kyber_maintain":"Kyber hiện không cho giao dịch cặp này",
+    "get_rate":"Không thể lấy tỉ giá từ blockchain",
+    "exchange_enable":"Bạn đã giao dịch quá lượng 1 ngày! Bạn có thể giao dịch vào ngày mai tại thời điểm 00:00 UTC+0"
   },
 
   "import": {
@@ -225,6 +230,16 @@
     "rate": "Tỉ Giá",
     "description": "Mô tả",
     "amount": "Số lượng"
+  },
+
+  "terms":{
+    "title" : "KyberWallet - Điều khoản sử dụng",
+    "content":"Kyber testnet wallet provides a platform for experimenting and understanding our exchange and payment services. The current implementation is not secure in any way. Using it may cause loss of funds and could compromise user privacy. The user is accountable and responsible for any outcome for the use of Kyber testnet wallet.",
+    "use_testnet":"USE ONLY TESTNET ACCOUNTS!!!",
+    "use_real":"DO NOT USE REAL ETHEREUM ACCOUNTS!!!",
+    "accept":"Chấp nhận",
+    "terms_and_condition":" Điều khoản sử dụng ",
+    "to_get_started":"để bắt đầu"
   },
 
   "landing_page":{
