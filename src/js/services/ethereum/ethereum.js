@@ -164,7 +164,7 @@ export default class EthereumService extends React.Component {
    // this.fetchGasExchange()
    // this.fetchGasTransfer()
 
-   //this.testAnalize()
+  // this.testAnalize()
   }
 
   fetchDataSync() {
@@ -179,7 +179,7 @@ export default class EthereumService extends React.Component {
   testAnalize() {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    store.dispatch(analyzeError(ethereum, "0x9219e71f9172549595e42ce6d8cc2d3c7ac052236f461b0005128f25d331bec1"))
+    store.dispatch(analyzeError(ethereum, "0xf5d4cce67f3ad3d6519490a299c5426e109a14e06061d758c76d0027bb6b47c0"))
   }
 
   fetchRateData() {

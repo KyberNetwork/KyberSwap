@@ -8,6 +8,7 @@ const initState = {
   checkTimeImportLedger: false,
   error: "",
   showError: false,
+  isInLandingPage: true,
   pKey: {
     error: '',
     modalOpen: false
@@ -87,6 +88,11 @@ const account = (state=initState, action) => {
     case "ACCOUNT.CLOSE_PKEY_MODAL": {
       let newState = {...state}
       newState.pKey.modalOpen = false
+      return newState
+    }
+    case "ACCOUNT.GO_TO_IMPORT": {
+      let newState = {...state}
+      newState.isInLandingPage = false
       return newState
     }
     case "GLOBAL.SET_BALANCE_TOKEN":{

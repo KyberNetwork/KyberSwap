@@ -23,6 +23,7 @@ export default class Info extends React.Component {
       <InfoModal 
           isOpen={this.props.modal.open}
           title={this.props.modal.title} 
+          isHtml={this.props.modal.isHtml} 
           translate={this.props.translate} 
           content={this.props.modal.content} 
           closeModal={this.exitIdleMode.bind(this)}          
