@@ -1,4 +1,4 @@
-import TrezorConnect from "./trezor/trezor-connect";
+import TrezorConnect from "trezor-connect";
 import ledgerU2f from './ledger/ledger-comm-u2f';
 import ledgerEth from './ledger/ledger-eth';
 
