@@ -190,11 +190,12 @@ export function* processApproveByColdWallet(action) {
     rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
       keystring, password, accountType, account.address)
   } catch (e) {
-    let msg = ''
-    if (e.native && accountType == 'ledger') {
-      msg = keyService.getLedgerError(e.native)
-    }
-    yield put(actions.setSignError(msg))
+    // let msg = ''
+    // if (e.native && accountType == 'ledger') {
+    //   msg = keyService.getLedgerError(e.native)
+    // }
+    console.log(e)
+    yield put(actions.setSignError(e.message))
     return
   }
   var hashApprove
@@ -361,11 +362,12 @@ export function* exchangeETHtoTokenColdWallet(action) {
         blockNo, nonce, gas,
         gasPrice, keystring, type, password)
     } catch (e) {
-      let msg = ''
-      if (e.native && type == 'ledger') {
-        msg = keyService.getLedgerError(e.native)
-      }
-      yield put(actions.setSignError(msg))
+      // let msg = ''
+      // if (e.native && type == 'ledger') {
+      //   msg = keyService.getLedgerError(e.native)
+      // }
+      console.log(e)
+      yield put(actions.setSignError(e.message))
       return
     }
     yield put(actions.prePareBroadcast(balanceData))
@@ -552,11 +554,12 @@ function* exchangeTokentoETHColdWallet(action) {
         blockNo, nonce, gas,
         gasPrice, keystring, type, password)
     } catch (e) {
-      let msg = ''
-      if (e.native && type == 'ledger') {
-        msg = keyService.getLedgerError(e.native)
-      }
-      yield put(actions.setSignError(msg))
+      // let msg = ''
+      // if (e.native && type == 'ledger') {
+      //   msg = keyService.getLedgerError(e.native)
+      // }
+      console.log(e)
+      yield put(actions.setSignError(e.message))
       return
     }
 
