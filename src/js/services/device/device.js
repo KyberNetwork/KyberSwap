@@ -1,10 +1,7 @@
-import TrezorConnect from "./trezor/trezor-connect";
+import TrezorConnect from "trezor-connect";
 
 import TransportU2F from "@ledgerhq/hw-transport-u2f";
 import Eth from "@ledgerhq/hw-app-eth";
-
-//import ledgerU2f from './ledger/ledger-comm-u2f';
-//import ledgerEth from './ledger/ledger-eth';
 
 const defaultDPath = "m/44'/60'/0'/0";
 const ledgerPath = "m/44'/60'/0'";
