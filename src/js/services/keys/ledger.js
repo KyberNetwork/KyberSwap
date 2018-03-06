@@ -1,6 +1,6 @@
 import * as keyService from "./baseKey"
 import EthereumTx from "ethereumjs-tx"
-import { signLedgerTransaction, connectLedger } from "../../services/device/device"
+import { signLedgerTransaction, connectLedger, getLedgerPublicKey } from "../../services/device/device"
 import * as ethUtil from 'ethereumjs-util'
 
 import { store } from "../../store"
@@ -15,15 +15,17 @@ export default class Ledger {
     var translate = getTranslate(store.getState().locale)
     return new Promise((resolve, reject) => {
       connectLedger().then((eth) => {
-        eth.getAddress_async(path, false, true)
+        getLedgerPublicKey(eth, path)
+      //  eth.getAddress_async(path, false, true)
           .then((result) => {
             result.dPath = path;
             resolve(result);
           })
-          .fail((err) => {
+          .catch((err) => {
+            console.log(err)
             let errorMsg
-            switch (err) {
-              case 'Invalid status 6801':
+            switch (err.statusCode) {
+              case 26625:
                 if (isOpenModal) {
                   errorMsg = translate("error.invalid_path_or_session_expired") || 'Cannot get address from this path. Please check your path is valid or Ledger is connected.'
                 } else {
@@ -45,7 +47,9 @@ export default class Ledger {
             }
             reject(errorMsg)
           });
-      });
+      }).catch(e => {
+        reject(e.message)
+      })
     });
   }
 
@@ -102,6 +106,7 @@ export default class Ledger {
           }
         })
       }).catch((err) => {
+        console.log(err)
         reject(err)
       })
     })
