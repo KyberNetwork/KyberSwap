@@ -1,10 +1,7 @@
-import TrezorConnect from "./trezor/trezor-connect";
+import TrezorConnect from "../device/trezor/trezor-connect";
 
 import TransportU2F from "@ledgerhq/hw-transport-u2f";
 import Eth from "@ledgerhq/hw-app-eth";
-
-//import ledgerU2f from './ledger/ledger-comm-u2f';
-//import ledgerEth from './ledger/ledger-eth';
 
 const defaultDPath = "m/44'/60'/0'/0";
 const ledgerPath = "m/44'/60'/0'";
@@ -24,9 +21,9 @@ export function getTrezorPublicKey(path = defaultDPath) {
 
 
 
-export function connectLedger(time) {
+export function connectLedger() {
     return new Promise((resolve, reject) => {
-        TransportU2F.create().then(transport => {
+        TransportU2F.create(20000).then(transport => {
             var eth = new Eth(transport)
             resolve(eth)
         }).catch(e => {

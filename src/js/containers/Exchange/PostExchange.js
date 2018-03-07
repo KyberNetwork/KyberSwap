@@ -103,18 +103,18 @@ export default class PostExchange extends React.Component {
 
         switch (this.props.account.type) {
           case "keystore":
-            this.props.dispatch(exchangeActions.fetchGas())
+            this.props.dispatch(exchangeActions.fetchGasSnapshot())
             this.props.dispatch(exchangeActions.openPassphrase())
             break
           case "privateKey":
-            this.props.dispatch(exchangeActions.fetchGas())
+            this.props.dispatch(exchangeActions.fetchGasSnapshot())
             this.props.dispatch(exchangeActions.showConfirm())
             break
           case "trezor":
           case "ledger":
           case "metamask":
             if (this.props.form.sourceTokenSymbol === "ETH") {
-              this.props.dispatch(exchangeActions.fetchGas())
+              this.props.dispatch(exchangeActions.fetchGasSnapshot())
               this.props.dispatch(exchangeActions.showConfirm())
             } else {
              // this.props.dispatch(exchangeActions.fetchGas())
@@ -350,7 +350,7 @@ export default class PostExchange extends React.Component {
   }
 
   processExchangeAfterApprove = () => {
-    const params = this.formParams()
+    const params = this.formParamOfSnapshot()
     console.log(params)
     const account = this.props.account
     const ethereum = this.props.ethereum
@@ -397,9 +397,9 @@ export default class PostExchange extends React.Component {
         onCancel={this.closeModal}
         passwordError={this.props.form.errors.passwordError || this.props.form.bcError.message}
         translate={this.props.translate}
-        isFetchingGas={this.props.form.isFetchingGas}
-        gasPrice={this.props.form.gasPrice}
-        gas={this.props.form.gas + this.props.form.gas_approve}
+        isFetchingGas={this.props.form.snapshot.isFetchingGas}
+        gasPrice={this.props.form.snapshot.gasPrice}
+        gas={this.props.form.snapshot.gas + this.props.form.snapshot.gas_approve}
         isFetchingRate = {this.props.snapshot.isFetchingRate}
       />
     )
@@ -410,11 +410,11 @@ export default class PostExchange extends React.Component {
         recap={this.createRecap()}
         onCancel={this.closeModalConfirm}
         onExchange={this.processTx}
-        gasPrice={this.props.form.gasPrice}
-        gas={this.props.account.type==="privateKey"? this.props.form.gas + this.props.form.gas_approve: this.props.form.gas}
+        gasPrice={this.props.form.snapshot.gasPrice}
+        gas={this.props.account.type==="privateKey"? this.props.form.snapshot.gas + this.props.form.snapshot.gas_approve: this.props.form.snapshot.gas}
         isConfirming={this.props.form.isConfirming}
-        isFetchingGas = {this.props.form.isFetchingGas}
-        isFetchingRate = {this.props.snapshot.isFetchingRate}
+        isFetchingGas = {this.props.form.snapshot.isFetchingGas}
+        isFetchingRate = {this.props.form.snapshot.isFetchingRate}
         type="exchange"
         translate={this.props.translate}
         title={this.props.translate("modal.confirm_exchange_title") || "Exchange confirm"}
@@ -433,9 +433,9 @@ export default class PostExchange extends React.Component {
         onSubmit={this.processExchangeAfterApprove}
         translate={this.props.translate}
         address={addressShort}
-        gasPrice={this.props.form.gasPrice}
-        gas={this.props.form.gas_approve}
-        isFetchingGas = {this.props.form.isFetchingGas}
+        gasPrice={this.props.form.snapshot.gasPrice}
+        gas={this.props.form.snapshot.gas_approve}
+        isFetchingGas = {this.props.form.snapshot.isFetchingGas}
         errors={this.props.form.signError}
         walletType={this.props.account.type}
       />

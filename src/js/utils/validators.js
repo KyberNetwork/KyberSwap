@@ -36,14 +36,6 @@ export function verifyAmount(sourceAmount,
   var weiParam = new BigNumber(10)
   sourceAmountWei = sourceAmountWei.times(weiParam.pow(sourceDecimal))
 
-  //verify balance for source amount
-  var sourceBalance = new BigNumber(balance)
-  if (sourceBalance == 'NaN' || sourceBalance == 'Infinity') {
-    throw new Error("Invalid upper bound for amount")
-  }
-  if (sourceAmountWei.isGreaterThan(sourceBalance)) {
-    return "too high"
-  }
 
   //verify min source amount
   var rateBig = new BigNumber(rate)
@@ -59,17 +51,28 @@ export function verifyAmount(sourceAmount,
   //verify max cap
   //estimate value based on eth
   var maxCap = new BigNumber(maxCap)
-  if(sourceSymbol !=="ETH"){
+  if (sourceSymbol !== "ETH") {
     maxCap = maxCap.multipliedBy(constants.MAX_CAP_PERCENT)
   }
   if (estimateValue.isGreaterThan(maxCap)) {
     return "too high cap"
   }
+
+  //verify balance for source amount
+  var sourceBalance = new BigNumber(balance)
+  if (sourceBalance == 'NaN' || sourceBalance == 'Infinity') {
+    throw new Error("Invalid upper bound for amount")
+  }
+  if (sourceAmountWei.isGreaterThan(sourceBalance)) {
+    return "too high"
+  }
+
+
   return null
 }
 
 export function verifyBalanceForTransaction(
-  ethBalance, sourceSymbol, sourceAmount, 
+  ethBalance, sourceSymbol, sourceAmount,
   gas, gasPrice
 ) {
 
@@ -81,18 +84,18 @@ export function verifyBalanceForTransaction(
   var txFee = gasPriceBig.times(1000000000).times(gas)
 
   var totalFee
-  if (sourceSymbol === "ETH"){
+  if (sourceSymbol === "ETH") {
     console.log(sourceAmount)
     if (sourceAmount === "") sourceAmount = 0
     var value = new BigNumber(sourceAmount)
     value = value.times(1000000000000000000)
     totalFee = txFee.plus(value)
-  } else{
+  } else {
     totalFee = txFee
-  } 
-  
+  }
 
-  if (totalFee.isGreaterThan(bigEthBalance)){
+
+  if (totalFee.isGreaterThan(bigEthBalance)) {
     return "not enough"
   }
 
@@ -139,6 +142,6 @@ export function filterInputNumber(event, value, preVal) {
     return val
   })
   event.target.value = str
-  if(preVal == str) return false
+  if (preVal == str) return false
   return true
 }

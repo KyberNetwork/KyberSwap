@@ -32,23 +32,21 @@ export default class Ledger {
                   errorMsg = translate("error.ledger_time_out") || 'Your session on Ledger is expired. Please log in  again to continue.'
                 }
                 break
-              case 'Invalid status 6a80':
-              case 'Invalid status 6804':
-                errorMsg = translate("error.path_is_invalid") || 'Invalid path. Please choose another one.'
-                break
+              // case 'Invalid status 6a80':
+              // case 'Invalid status 6804':
+              //   errorMsg = translate("error.path_is_invalid") || 'Invalid path. Please choose another one.'
+              //   break
               default:
                 if (err.errorCode == 1) {
-                  let link = CONFIG_ENV_LEDGER_LINK
-                  errorMsg = translate("error.need_to_config_env_ledger", { link: link })
+                  errorMsg = translate("error.need_to_config_env_ledger", { link: CONFIG_ENV_LEDGER_LINK })
                 } else {
-                  let link = LEDGER_SUPPORT_LINK
-                  errorMsg = translate("error.ledger_global_err", { link: link })
+                  errorMsg = translate("error.ledger_global_err", { link: LEDGER_SUPPORT_LINK })
                 }
             }
             reject(errorMsg)
           });
       }).catch(e => {
-        reject(e.message)
+        reject(translate("error.ledger_global_err", { link: LEDGER_SUPPORT_LINK }))
       })
     });
   }
@@ -70,15 +68,16 @@ export default class Ledger {
     // return this.sealTx(txParams)
   }
 
-  getLedgerError(errorCode) {
+  getLedgerError(error) {
     let translate = getTranslate(store.getState().locale)
-    switch (errorCode) {
-      case 'Invalid status 6a80': {
+    switch (error.statusCode) {
+      case 27264: {
         let link = 'https://support.ledgerwallet.com/hc/en-us/articles/115005200709'
         return translate('error.ledger_not_enable_contract', { link: link })
       }
-      case 'Invalid status 6985': {
-        return
+      case 27013: {
+        //user denied
+        return ""
       }
       default: {
         let link = LEDGER_SUPPORT_LINK
@@ -92,8 +91,8 @@ export default class Ledger {
     eTx.raw[6] = Buffer.from([params.chainId])
     let txToSign = ethUtil.rlp.encode(eTx.raw)
     return new Promise((resolve, reject) => {
-      let timeout = 60
-      connectLedger(timeout).then((eth) => {
+      //let timeout = 60
+      connectLedger().then((eth) => {
         signLedgerTransaction(eth, params.address_n, txToSign.toString('hex')).then((response) => {
           params.v = "0x" + response['v']
           params.r = "0x" + response['r']

@@ -54,6 +54,13 @@ export function thowErrorSourceAmount(message) {
   }
 }
 
+export function thowErrorMaxCap(){
+  return {
+    type: "EXCHANGE.THROW_SOURCE_AMOUNT_ERROR",
+    payload: message
+  }
+}
+
 export function thowErrorEthBalance(message){
   return {
     type: "EXCHANGE.THROW_ETH_BALANCE_ERROR",
@@ -423,6 +430,13 @@ export function setEstimateGas(gas, gas_approve) {
   }
 }
 
+export function setEstimateGasSnapshot(gas, gas_approve){
+  return {
+    type: "EXCHANGE.SET_GAS_USED_SNAPSHOT",
+    payload: { gas, gas_approve }
+  }
+}
+
 export function swapToken() {
   return {
     type: "EXCHANGE.SWAP_TOKEN",
@@ -478,9 +492,21 @@ export function fetchGas(){
     type: "EXCHANGE.FETCH_GAS"
   }
 }
+export function fetchGasSnapshot(){
+  return {
+    type: "EXCHANGE.FETCH_GAS_SNAPSHOT"
+  }
+}
+
 export function fetchGasSuccess(){
   return {
     type: "EXCHANGE.FETCH_GAS_SUCCESS"
+  }
+}
+
+export function fetchGasSuccessSnapshot(){
+  return {
+    type: "EXCHANGE.FETCH_GAS_SUCCESS_SNAPSHOT"
   }
 }
 
