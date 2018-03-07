@@ -22,7 +22,7 @@ class ApproveModal extends React.Component {
       let metaMaskClass = isMetaMaskAcc ? 'metamask' : ''
       return (
         <React.Fragment>
-          <div className={'modal-error ' + metaMaskClass + (this.state.isFullError ? ' full' : '')}>
+          <div className={'modal-error custom-scroll ' + metaMaskClass + (this.state.isFullError ? ' full' : '')}>
             {this.props.errors}
           </div>
           {isMetaMaskAcc ? 
