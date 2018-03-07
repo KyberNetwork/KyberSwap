@@ -232,17 +232,28 @@ export function setTermAndServices(value){
   }
 }
 
+export function fetchGasSnapshot(){
+  return {
+    type: "TRANSFER.FETCH_GAS_SNAPSHOT"
+  }
+}
 
-export function fetchGas(){
+export function fetchSnapshotGasSuccess(){
   return {
-    type: "TRANSFER.FETCH_GAS"
+    type: "TRANSFER.FETCH_SNAPSHOT_GAS_SUCCESS"
   }
 }
-export function fetchGasSuccess(){
-  return {
-    type: "TRANSFER.FETCH_GAS_SUCCESS"
-  }
-}
+
+// export function fetchGas(){
+//   return {
+//     type: "TRANSFER.FETCH_GAS"
+//   }
+// }
+// export function fetchGasSuccess(){
+//   return {
+//     type: "TRANSFER.FETCH_GAS_SUCCESS"
+//   }
+// }
 export function estimateGasTransfer(){
   return {
     type: "TRANSFER.ESTIMATE_GAS_USED"
@@ -256,8 +267,22 @@ export function setGasUsed(gas){
   }
 }
 
+export function setGasUsedSnapshot(gas){
+  return {
+    type: "TRANSFER.SET_GAS_USED_SNAPSHOT",
+    payload: {gas}
+  }
+}
+
 export function verifyTransfer(){
   return {
     type: "TRANSFER.VERIFY_TRANSFER",
+  }
+}
+
+export function setSnapshot(data){
+  return {
+    type: "TRANSFER.SET_SNAPSHOT",
+    payload: data
   }
 }

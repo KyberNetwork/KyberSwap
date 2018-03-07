@@ -152,12 +152,12 @@ export function* checkTokenBalanceOfColdWallet(action) {
 
     if (!remain.isGreaterThanOrEqualTo(sourceAmountBig) && !isApproveTxPending()) {
       yield put(actions.showApprove())
-      yield call(fetchGasApprove)
+      yield call(fetchGasApproveSnapshot)
       //fetch gas approve
 
     } else {
       yield put(actions.showConfirm())
-      yield call(fetchGasConfirm)
+      yield call(fetchGasConfirmSnapshot)
     }
   }catch(e){
     let title = translate("error.error_occurred") || "Error occurred"
@@ -190,9 +190,12 @@ export function* processApproveByColdWallet(action) {
     rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
       keystring, password, accountType, account.address)
   } catch (e) {
+    console.log(e)
     let msg = ''
-    if (e.native && accountType == 'ledger') {
-      msg = keyService.getLedgerError(e.native)
+    if (accountType === 'ledger') {
+      msg = keyService.getLedgerError(e)
+    }else{
+      msg = e.message
     }
     yield put(actions.setSignError(msg))
     return
@@ -361,9 +364,12 @@ export function* exchangeETHtoTokenColdWallet(action) {
         blockNo, nonce, gas,
         gasPrice, keystring, type, password)
     } catch (e) {
+      console.log(e)
       let msg = ''
-      if (e.native && type == 'ledger') {
-        msg = keyService.getLedgerError(e.native)
+      if (type === 'ledger') {
+        msg = keyService.getLedgerError(e)
+      }else{
+        msg = e.message
       }
       yield put(actions.setSignError(msg))
       return
@@ -552,9 +558,12 @@ function* exchangeTokentoETHColdWallet(action) {
         blockNo, nonce, gas,
         gasPrice, keystring, type, password)
     } catch (e) {
+      console.log(e)
       let msg = ''
-      if (e.native && type == 'ledger') {
-        msg = keyService.getLedgerError(e.native)
+      if (type === 'ledger') {
+        msg = keyService.getLedgerError(e)
+      }else{
+        msg = e.message
       }
       yield put(actions.setSignError(msg))
       return
@@ -751,12 +760,12 @@ function* updateRateSnapshot(action) {
     console.log(err)
   }
 }
-function* fetchGasManual() {
-  yield call(fetchGas)
-  yield put(actions.fetchGasSuccess())
-}
 
 function* fetchGas() {
+  yield call(estimateGas)
+}
+
+function* estimateGas() {
 
   var gasRequest = yield call(common.handleRequest, getGasUsed)
   if (gasRequest.status === "success") {
@@ -779,11 +788,39 @@ function* fetchGas() {
     
     yield put(actions.setEstimateGas(gas, gas_approve))
   }
-
-//  yield put(actions.fetchGasSuccess())
 }
 
-function* fetchGasConfirm() {
+function* fetchGasSnapshot() {
+  yield call(estimateGasSnapshot)
+  yield put(actions.fetchGasSuccessSnapshot())
+}
+
+function* estimateGasSnapshot() {
+
+  var gasRequest = yield call(common.handleRequest, getGasUsed)
+  if (gasRequest.status === "success") {
+    const { gas, gas_approve } = gasRequest.data
+    yield put(actions.setEstimateGasSnapshot(gas, gas_approve))
+  }
+  if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")) {
+    console.log("timeout")
+    var state = store.getState()
+    const exchange = state.exchange
+
+    const sourceTokenSymbol = exchange.sourceTokenSymbol
+    var gas = exchange.max_gas
+    var gas_approve 
+    if(sourceTokenSymbol === "ETH"){
+      gas_approve = 0
+    }else{
+      gas_approve = exchange.max_gas_approve
+    }
+    
+    yield put(actions.setEstimateGasSnapshot(gas, gas_approve))
+  }
+}
+
+function* fetchGasConfirmSnapshot() {
   var state = store.getState()
   const exchange = state.exchange
   var gas
@@ -792,19 +829,19 @@ function* fetchGasConfirm() {
   var gasRequest = yield call(common.handleRequest, getGasConfirm)
   if (gasRequest.status === "success") {
     const gas = gasRequest.data
-    yield put(actions.setEstimateGas(gas, gas_approve))
+    yield put(actions.setEstimateGasSnapshot(gas, gas_approve))
   }
   if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")) {
     console.log("timeout")
 
     gas = exchange.max_gas
-    yield put(actions.setEstimateGas(gas, gas_approve))
+    yield put(actions.setEstimateGasSnapshot(gas, gas_approve))
   }
 
-  yield put(actions.fetchGasSuccess())
+  yield put(actions.fetchGasSuccessSnapshot())
 }
 
-function* fetchGasApprove() {
+function* fetchGasApproveSnapshot() {
   var state = store.getState()
   const exchange = state.exchange
   var gas = exchange.max_gas
@@ -813,16 +850,16 @@ function* fetchGasApprove() {
   var gasRequest = yield call(common.handleRequest, getGasApprove)
   if (gasRequest.status === "success") {
     const gas_approve = gasRequest.data
-    yield put(actions.setEstimateGas(gas, gas_approve))
+    yield put(actions.setEstimateGasSnapshot(gas, gas_approve))
   }
   if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")) {
     console.log("timeout")
 
     gas_approve = exchange.max_gas_approve
-    yield put(actions.setEstimateGas(gas, gas_approve))
+    yield put(actions.setEstimateGasSnapshot(gas, gas_approve))
   }
 
-  yield put(actions.fetchGasSuccess())
+  yield put(actions.fetchGasSuccessSnapshot())
 }
 
 function* getGasConfirm() {
@@ -1234,7 +1271,8 @@ export function* watchExchange() {
 
   yield takeEvery("EXCHANGE.SELECT_TOKEN_ASYNC", selectToken)
   yield takeEvery("EXCHANGE.INPUT_CHANGE", fetchGas)
-  yield takeEvery("EXCHANGE.FETCH_GAS", fetchGasManual)
+  //yield takeEvery("EXCHANGE.FETCH_GAS", fetchGasManual)
+  yield takeEvery("EXCHANGE.FETCH_GAS_SNAPSHOT", fetchGasSnapshot)
 
   yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
   yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
