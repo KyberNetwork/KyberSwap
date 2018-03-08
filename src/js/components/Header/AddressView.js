@@ -19,9 +19,11 @@ const Address = (props) => {
               <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.address}>{props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}</a>
             </div>
           </div>
-          <a onClick={props.endSession} className="exit mr-3">
-            {props.translate("transaction.exit") || "Exit"}
-          </a>
+          {!props.isTrust && 
+            <a onClick={props.endSession} className="exit mr-3">
+              {props.translate("transaction.exit") || "Exit"}
+            </a>
+          }
           {props.notify}
         </div>
       </div>
