@@ -180,7 +180,7 @@ const exchange = (state = initState, action) => {
         newState.errors.rateSystem = "error.get_rate"
       }else{
         if(expectedPrice === "0"){
-          if(rateInit === "0"){
+          if(rateInit === "0" || rateInit === 0 || rateInit === undefined || rateInit === null){
             newState.errors.rateSystem = "error.kyber_maintain"
           }else{
             newState.errors.rateSystem = "error.handle_amount"
