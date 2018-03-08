@@ -10,16 +10,16 @@
           "type": "prune"
         },
         {
+          "endPoint" : "https://semi-node.kyber.network",
+          "type": "prune"
+        },      
+        {
           "endPoint" : "https://mew.giveth.io/",
           "type": "prune"
         },
         {
           "endPoint" : "https://api.mycryptoapi.com/eth",
           "type": "none_prune"
-        },
-        {
-          "endPoint" : "https://node.kyber.network",
-          "type": "prune"
         }
       ],
       "ws": "wss://mainnet.infura.io/ws"
