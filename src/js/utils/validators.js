@@ -36,14 +36,6 @@ export function verifyAmount(sourceAmount,
   var weiParam = new BigNumber(10)
   sourceAmountWei = sourceAmountWei.times(weiParam.pow(sourceDecimal))
 
-  //verify balance for source amount
-  var sourceBalance = new BigNumber(balance)
-  if (sourceBalance == 'NaN' || sourceBalance == 'Infinity') {
-    throw new Error("Invalid upper bound for amount")
-  }
-  if (sourceAmountWei.cmp(sourceBalance) > 0) {
-    return "too high"
-  }
 
   //verify min source amount
   var rateBig = new BigNumber(rate)
@@ -52,24 +44,35 @@ export function verifyAmount(sourceAmount,
     estimateValue = rateBig.times(sourceAmountWei).div(weiParam.pow(sourceDecimal))
   }
   var epsilon = new BigNumber(constants.EPSILON)
-  if (estimateValue.cmp(epsilon) < 0) {
+  if (estimateValue.isLessThan(epsilon)) {
     return "too small"
   }
 
   //verify max cap
   //estimate value based on eth
   var maxCap = new BigNumber(maxCap)
-  if(sourceSymbol !=="ETH"){
-    maxCap = maxCap.mul(constants.MAX_CAP_PERCENT)
+  if (sourceSymbol !== "ETH") {
+    maxCap = maxCap.multipliedBy(constants.MAX_CAP_PERCENT)
   }
-  if (estimateValue.cmp(maxCap) > 0) {
+  if (estimateValue.isGreaterThan(maxCap)) {
     return "too high cap"
   }
+
+  //verify balance for source amount
+  var sourceBalance = new BigNumber(balance)
+  if (sourceBalance == 'NaN' || sourceBalance == 'Infinity') {
+    throw new Error("Invalid upper bound for amount")
+  }
+  if (sourceAmountWei.isGreaterThan(sourceBalance)) {
+    return "too high"
+  }
+
+
   return null
 }
 
 export function verifyBalanceForTransaction(
-  ethBalance, sourceSymbol, sourceAmount, 
+  ethBalance, sourceSymbol, sourceAmount,
   gas, gasPrice
 ) {
 
@@ -81,18 +84,18 @@ export function verifyBalanceForTransaction(
   var txFee = gasPriceBig.times(1000000000).times(gas)
 
   var totalFee
-  if (sourceSymbol === "ETH"){
+  if (sourceSymbol === "ETH") {
     console.log(sourceAmount)
     if (sourceAmount === "") sourceAmount = 0
     var value = new BigNumber(sourceAmount)
     value = value.times(1000000000000000000)
-    totalFee = txFee.add(value)
-  } else{
+    totalFee = txFee.plus(value)
+  } else {
     totalFee = txFee
-  } 
-  
+  }
 
-  if (bigEthBalance.cmp(totalFee) === -1){
+
+  if (totalFee.isGreaterThan(bigEthBalance)) {
     return "not enough"
   }
 
@@ -104,7 +107,7 @@ export function verifyNumber(amount) {
   if (result == 'NaN' || result == 'Infinity') {
     return "invalid number"
   }
-  if (result.cmp(0) < 0) {
+  if (result.isLessThan(0) < 0) {
     return "nagative"
   }
   return null
@@ -139,6 +142,6 @@ export function filterInputNumber(event, value, preVal) {
     return val
   })
   event.target.value = str
-  if(preVal == str) return false
+  if (preVal == str) return false
   return true
 }

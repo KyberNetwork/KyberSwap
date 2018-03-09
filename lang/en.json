@@ -85,7 +85,7 @@
     "for": "for",
     "to": "to",
     "best_rate": "Min Rate",
-    "token_amount": "Token/Amount",
+    "token_amount": "Token & Amount To Send",
     "click_to_swap": "Click to swap",
 
     "transfer_tooltip": "Transfer ether or tokens to other addresses",
@@ -97,7 +97,8 @@
     "error_tx_log":"Warning! Log is empty",
     "error_tx_contract":"Warning! Error encountered during contract execution",
     "no_pedding_tx": "No pending transaction",
-    "rate_info": "Rates might be changed during settlement. <br/>You can indicate your minimum rate by clicking \"Advanced\""
+    "rate_info": "Rates might be changed during settlement. <br/>You can indicate your minimum rate by clicking \"Advanced\"",
+    "address": "Receiving Address"
   },
 
   "modal": {
@@ -133,12 +134,13 @@
     "select_same_token": "Cannot exchange the same token",
     "select_token_token": "This token pair is not supported yet",
     "source_amount_too_high": "Source amount is too high. Your balance is insufficient",
-    "source_amount_too_high_cap": "Source amount is over your cap. You should exchange smaller than ${ cap } ETH",
+    "source_amount_too_high_cap": "Amount is over your cap. Source amount should smaller than ${ cap } ETH",
+    "dest_amount_too_high_cap": "Amount is over your cap. Dest amount should smaller than ${ cap } ETH",
     "source_amount_too_small": "Source amount is too small",
     "source_amount_rate_error": "Cannot exchange at the moment. Please come back later",
     "source_amount_too_high_for_reserve": "Source amount is too high (pair is not available for trading at the moment)",
     "source_amount_is_not_number": "Source amount is not a number",
-    "not_possess_kgt": "Your wallet does not possess Kyber Network Genesis Token (KGT) to participate in the pilot run. Register <a href=\"${link}\" target=\"_blank\">here</a> to let us inform you when we open our platform to more people.",
+    "not_possess_kgt": "Your wallet has not been whitelisted to test our platform. Register <a href=\"${link}\" target=\"_blank\">here</a> to join our pilot run. The public launch will be announced in the future.",
 
     "dest_address": "This is not an address",
     "amount_transfer_too_hign": "Amount is too high",
@@ -187,7 +189,11 @@
     "invalid_path_or_session_expired": "Cannot get address from this path. Please check your path is valid or Ledger is connected.",
     "path_is_invalid": "Invalid path. Please choose another one.",
     "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue.", 
-    "eth_balance_not_enough_for_fee": "Your Eth balance is not enough for transaction fee"
+    "eth_balance_not_enough_for_fee": "Your Eth balance is not enough for transaction fee",
+    "handle_amount":"Kyber cannot handle your amount, please reduce amount",
+    "kyber_maintain":"Kyber exchange is under maintainance this pair",
+    "get_rate":"Cannot get rate from blockchain",
+    "exchange_enable":"You have exceeded your daily limit! You might trade again tomorrow at 00:00 UTC+0"
   },
 
   "import": {
@@ -236,7 +242,9 @@
     "content":"Kyber testnet wallet provides a platform for experimenting and understanding our exchange and payment services. The current implementation is not secure in any way. Using it may cause loss of funds and could compromise user privacy. The user is accountable and responsible for any outcome for the use of Kyber testnet wallet.",
     "use_testnet":"USE ONLY TESTNET ACCOUNTS!!!",
     "use_real":"DO NOT USE REAL ETHEREUM ACCOUNTS!!!",
-    "accept":"Accept"
+    "accept":"Accept",
+    "terms_and_condition":" Terms and Conditions ",
+    "to_get_started":"to get started"
   },
 
   "landing_page":{
@@ -245,12 +253,14 @@
     "instant": "Instant",
     "liquid": "Liquid",
     "compatible": "Compatible",
-    "get_started": "Get Started"
+    "get_started": "Get Started",
+    "exchange":"exchange"
   },
 
+  "home": "Home",
   "product_feedback": "Product Feedback",
   "help": "Help",
-  "low": "Low",
+  "low": "Slow",
   "standard": "Standard",
   "fast": "Fast",
   "search": "Search"

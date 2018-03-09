@@ -22,7 +22,7 @@ class ConfirmTransferModal extends React.Component {
       let metaMaskClass = isMetaMaskAcc ? 'metamask' : ''
       return (
         <React.Fragment>
-          <div className={'modal-error ' + metaMaskClass + (this.state.isFullError ? ' full' : '')}>
+          <div className={'modal-error custom-scroll ' + metaMaskClass + (this.state.isFullError ? ' full' : '')}>
             {this.props.errors}
           </div>
           {isMetaMaskAcc ?
@@ -49,7 +49,7 @@ class ConfirmTransferModal extends React.Component {
 
   render() {
     var gasPrice = stringToBigNumber(gweiToEth(this.props.gasPrice))
-    var totalGas = gasPrice.mul(this.props.gas)
+    var totalGas = gasPrice.multipliedBy(this.props.gas)
     return (
       <div>
         <div className="title text-center">{this.props.title}</div>

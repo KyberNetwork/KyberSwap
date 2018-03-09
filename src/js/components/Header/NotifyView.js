@@ -1,5 +1,7 @@
-import React from "react"
+import React, { Fragment } from "react"
 import BLOCKCHAIN_INFO from "../../../../env"
+import Menu, {SubMenu, MenuItem} from 'rc-menu';
+
 const Notify = (props) => {
   var classNotify = ""
   if (!props.displayTrans) {
@@ -88,7 +90,7 @@ const Notify = (props) => {
   });
 
   return (
-    <React.Fragment>
+    <Fragment>
       <a className="notifications-toggle" href="#notifications" onClick={(e) => props.displayTransactions(e)}>
         <img src={require('../../../assets/img/menu.svg')} />{counter}
       </a>
@@ -101,7 +103,7 @@ const Notify = (props) => {
           </li>
         }
       </ul>
-    </React.Fragment>
+      </Fragment>
   )
 }
 

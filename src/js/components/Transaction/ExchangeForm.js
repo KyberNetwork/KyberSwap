@@ -35,14 +35,62 @@ const ExchangeForm = (props) => {
 
   var maxCap = props.maxCap
   var errorSource = []
-  if (props.errorNotPossessKgt !== "" ) {
+  var errorExchange = false
+  if (props.errorNotPossessKgt !== ""){
     errorSource.push(props.errorNotPossessKgt)
+    errorExchange = true
   }else{
-    if (errorToken !== "") errorSource.push(<span class="error-text">{errorToken}</span>)
-    if (props.errors.sourceAmount !== "") errorSource.push(props.translate(props.errors.sourceAmount, { cap: maxCap }))
-    //if (props.errors.rateAmount !== "") errorSource.push(<span class="error-text">{props.errors.rateAmount}</span>)
-    if (props.errors.rateSystem !== "") errorSource.push(props.errors.rateSystem)
+    if (props.errors.exchange_enable !== ""){
+      errorSource.push(props.translate(props.errors.exchange_enable))
+      errorExchange = true
+    }else{
+      if (errorToken !== "") {
+        errorSource.push(errorToken)
+        errorExchange = true
+      }
+      if (props.errors.sourceAmount !== ""){
+        if (props.errors.sourceAmount === "error.source_amount_too_high_cap") {
+          if(props.sourceTokenSymbol === "ETH"){
+            errorSource.push(props.translate("error.source_amount_too_high_cap", { cap: maxCap }))
+          }else{
+            errorSource.push(props.translate("error.dest_amount_too_high_cap", { cap: maxCap*constants.MAX_CAP_PERCENT }))
+          }
+        }else{
+          errorSource.push(props.translate(props.errors.sourceAmount))
+        }
+        errorExchange = true
+      }
+      // if (props.errors.sourceAmount === "error.source_amount_too_high_cap") {
+      //   if(props.sourceTokenSymbol === "ETH"){
+      //     errorSource.push(props.translate("error.source_amount_too_high_cap", { cap: maxCap }))
+      //   }else{
+      //     errorSource.push(props.translate("error.dest_amount_too_high_cap", { cap: maxCap*constants.MAX_CAP_PERCENT }))
+      //   }
+      //   errorExchange = true
+
+      // }else if (props.errors.sourceAmount !== ""){
+      //   errorSource.push(props.translate(props.errors.sourceAmount))
+      //   errorExchange = true
+      // }
+      // if (props.errors.sourceAmount !== "") {
+      //   errorSource.push(props.translate(props.errors.sourceAmount, { cap: maxCap }))
+      //   errorExchange = true
+      // }
+      //if (props.errors.rateAmount !== "") errorSource.push(<span class="error-text">{props.errors.rateAmount}</span>)
+      if (props.errors.rateSystem !== "") {
+        errorSource.push(props.translate(props.errors.rateSystem))
+        errorExchange = true
+      }
+    }
   }
+  // if (props.errorNotPossessKgt !== "" ) {
+  //   errorSource.push(props.errorNotPossessKgt)
+  // }else{
+  //   if (errorToken !== "") errorSource.push(<span class="error-text">{errorToken}</span>)
+  //   if (props.errors.sourceAmount !== "") errorSource.push(props.translate(props.errors.sourceAmount, { cap: maxCap }))
+  //   //if (props.errors.rateAmount !== "") errorSource.push(<span class="error-text">{props.errors.rateAmount}</span>)
+  //   if (props.errors.rateSystem !== "") errorSource.push(props.translate(props.errors.rateSystem))
+  // }
 
   var errorShow = errorSource.map((value, index) => {
     return <span class="error-text" key={index}>{value}</span> 
@@ -67,7 +115,7 @@ const ExchangeForm = (props) => {
                       {props.translate("transaction.exchange_from") || "From"}
                     </span>
 
-                    <div className={props.errorNotPossessKgt != '' || errorToken !== "" || props.errors.sourceAmount != '' || props.errors.rateSystem !== '' || props.errors.rateAmount !== '' ? "error select-token-panel" : "select-token-panel"}>
+                    <div className={errorExchange ? "error select-token-panel" : "select-token-panel"}>
                       {props.tokenSourceSelect}
                       <input id="inputSource" className="source-input" min="0" step="0.000001"
                         placeholder="0" autoFocus
@@ -77,7 +125,7 @@ const ExchangeForm = (props) => {
                         onChange={handleChangeSource}
                       />
                     </div>
-                    <div className={props.errorNotPossessKgt != '' || errorToken !== "" || props.errors.sourceAmount != '' || props.errors.rateSystem !== '' ? "error" : ""}>
+                    <div className={errorExchange ? "error" : ""}>
                       {errorShow}
                     </div>
                   </label>

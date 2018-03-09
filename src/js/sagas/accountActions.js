@@ -2,6 +2,8 @@ import { take, put, call, fork, select, takeEvery, all, cancel } from 'redux-sag
 import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
 import { clearSession, setGasPrice, setBalanceToken } from "../actions/globalActions"
+import { fetchExchangeEnable } from "../actions/exchangeActions"
+
 import { openInfoModal } from '../actions/utilActions'
 import * as common from "./common"
 
@@ -85,11 +87,13 @@ export function* importNewAccount(action) {
     yield put(actions.importNewAccountComplete(account))
     yield put(goToRoute('/exchange'))
 
+    yield put(fetchExchangeEnable())
+
     var maxCapOneExchange = yield call([ethereum, ethereum.call], "getMaxCapAtLatestBlock", address)
     yield put(setCapExchange(maxCapOneExchange))
 
     if (+maxCapOneExchange == 0){
-      var linkReg = 'https://docs.google.com/forms/d/e/1FAIpQLScmvJukGWrbpiW07nENUEhIKz3yfAwA21nQg03Wl44YOYD5fQ/viewform'
+      var linkReg = 'https://account.kyber.network/users/sign_up'
       yield put(thowErrorNotPossessKGt(translate("error.not_possess_kgt", {link: linkReg}) || "It appears that your wallet does not possess Kyber Network Genesis Token (KGT) to participate in the pilot run."))
     }
     //update token and token balance

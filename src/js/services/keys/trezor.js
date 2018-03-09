@@ -1,5 +1,5 @@
 import * as keyService from "./baseKey"
-import TrezorConnect from "../../services/device/trezor/trezor-connect";
+import TrezorConnect from "../device/trezor/trezor-connect";
 import EthereumTx from "ethereumjs-tx"
 import { numberToHex } from "../../utils/converter"
 import { getTranslate } from 'react-localize-redux'

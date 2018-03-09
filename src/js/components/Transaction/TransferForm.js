@@ -23,9 +23,9 @@ const TransferForm = (props) => {
                 <div class="column small-12 medium-7">
 
                   <label className={props.errors.destAddress !== '' ? "error" : ""}>
-                    <span className="transaction-label">{props.translate("address.address") || "Address"}</span>
-                    <textarea className="hash" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange}>
-                    </textarea>
+                    <span className="transaction-label">{props.translate("transaction.address") || "Receiving Address"}</span>
+                    <input className="hashAddr" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange}>
+                    </input>
                     {props.errors.destAddress &&
                       <span class="error-text">{props.translate(props.errors.destAddress)}</span>
                     }
@@ -35,7 +35,7 @@ const TransferForm = (props) => {
                 <div class="column small-12 medium-5">
                   <label>
                     <span className="transaction-label">
-                      {props.translate("transaction.token_amount") || "Token/Amount"}
+                      {props.translate("transaction.token_amount") || "Token & Amount To Send"}
                     </span>
 
                     <div className={props.errors.amountTransfer !== '' ? "error select-token-panel" : "select-token-panel"}>

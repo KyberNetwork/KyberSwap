@@ -23,7 +23,7 @@ export default class InfoKyber extends React.Component {
           <div id="info">
             <div class="font-s-down-1">
               <span class="mr-2">
-                <span class="font-w-b">{this.props.translate("info.version") || "Version"}</span>: 0.4.2
+                <span class="font-w-b">{this.props.translate("info.version") || "Version"}</span>: 0.5.0
           </span>
               <span>
                 <span class="font-w-b">{this.props.translate("info.chain") || "Chain"}</span>: {BLOCKCHAIN_INFO.chainName}
@@ -42,7 +42,7 @@ export default class InfoKyber extends React.Component {
             <div class="mt-6">
               <p class="mb-1 font-s-down-1">
                 {this.props.translate("info.kyber_homepage") || "Kyber homepage"}:&nbsp;
-          <a href="https://kyber.network" target="_blank">https://kyber.network</a>
+          <a href="https://home.kyber.network" target="_blank">https://home.kyber.network</a>
               </p>
               {BLOCKCHAIN_INFO.chainName !== "Mainnet" && (
                 <div>

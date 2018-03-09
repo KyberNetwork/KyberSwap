@@ -17,7 +17,7 @@ export default class Footer extends React.Component {
           <div className="column medium-6 small-12 footer-menu">
             <ul className="links">
                <li>
-                <a href="https://home.kyber.network" target="_blank">Home</a>
+                <a href="https://home.kyber.network" target="_blank">{this.props.translate('home') || 'Home'}</a>
               </li>
               <li>
                 <a href="mailto:support@kyber.network">{this.props.translate('product_feedback') || 'Product Feedback'}</a>

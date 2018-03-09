@@ -199,13 +199,18 @@ const transfer = (state = initState, action) => {
     }
     case "TRANSFER.SET_GAS_USED":{
       newState.gas = action.payload.gas
-    }
-    case "TRANSFER.FETCH_GAS":{
-      newState.isFetchingGas = true
       return newState
     }
-    case "TRANSFER.FETCH_GAS_SUCCESS":{
-      newState.isFetchingGas = false
+    case "TRANSFER.SET_GAS_USED_SNAPSHOT":{
+      newState.snapshot.gas = action.payload.gas
+      return newState
+    }
+    case "TRANSFER.FETCH_GAS_SNAPSHOT":{
+      newState.snapshot.isFetchingGas = true
+      return newState
+    }
+    case "TRANSFER.FETCH_SNAPSHOT_GAS_SUCCESS":{
+      newState.snapshot.isFetchingGas = false
       return newState
     }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
@@ -216,6 +221,12 @@ const transfer = (state = initState, action) => {
         newState.gasPriceSuggest.safeLowGas = safeLowGas
         newState.gasPrice = defaultGas
       }
+      return newState
+    }
+
+    case "TRANSFER.SET_SNAPSHOT": {
+      var snapshot  = action.payload
+      newState.snapshot = {...snapshot}
       return newState
     }
   }

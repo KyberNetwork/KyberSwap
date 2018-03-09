@@ -136,6 +136,11 @@ export function* setGasPrice(action) {
     defaultGas = gasPrice.default
     fastGas = gasPrice.fast
 
+    var fastGasFloat = parseFloat(fastGas)
+    if (fastGasFloat <= 20){
+      defaultGas = gasPrice.fast
+    }
+
     var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
     yield put(actions.setGasPriceComplete(compareWithMax))
 

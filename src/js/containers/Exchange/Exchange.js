@@ -227,11 +227,11 @@ export default class Exchange extends React.Component {
     if (token) {
       var balanceBig = stringToBigNumber(token.balance)
       if (tokenSymbol === "ETH") {
-        var gasLimit = this.props.exchange.gas
+        var gasLimit = this.props.exchange.max_gas
         var gasPrice = stringToBigNumber(gweiToWei(this.props.exchange.gasPrice))
-        var totalGas = gasPrice.mul(gasLimit)
+        var totalGas = gasPrice.multipliedBy(gasLimit)
 
-        if (!balanceBig.greaterThanOrEqualTo(totalGas)) {
+        if (!balanceBig.isGreaterThanOrEqualTo(totalGas)) {
           return false
         }
         balanceBig = balanceBig.minus(totalGas)
@@ -352,7 +352,8 @@ export default class Exchange extends React.Component {
       tokenSource: '',
       rateSystem: this.props.exchange.errors.rateSystem,
       rateAmount : this.props.exchange.errors.rateAmount,
-      notPossessKgt: this.props.exchange.errors.notPossessKgt
+      notPossessKgt: this.props.exchange.errors.notPossessKgt,
+      exchange_enable: this.props.exchange.errors.exchange_enable
     }
 
     var input = {
@@ -376,7 +377,7 @@ export default class Exchange extends React.Component {
 
 
     var gasPrice = stringToBigNumber(gweiToEth(this.props.exchange.gasPrice))
-    var totalGas = gasPrice.mul(this.props.exchange.gas + this.props.exchange.gas_approve)
+    var totalGas = gasPrice.multipliedBy(this.props.exchange.gas + this.props.exchange.gas_approve)
     var gasConfig = (
       <TransactionConfig gas={this.props.exchange.gas + this.props.exchange.gas_approve}
         gasPrice={this.props.exchange.gasPrice}
@@ -416,7 +417,7 @@ export default class Exchange extends React.Component {
         translate={this.props.translate}
         swapToken={this.swapToken}
         maxCap={toEther(this.props.exchange.maxCap)}
-        errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}
+        errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}        
       />
     )
   }

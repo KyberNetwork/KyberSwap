@@ -35,8 +35,8 @@ function resetApproveKyber(tokenSymbol){
 //     console.log(i)
 //     getRateAtSpecificBlock("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "0xbf2179859fc6d5bee9bf9158632dc51678a4100e", "0x0", i)
 // }
-getRateAtSpecificBlock("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "0xdd974d5c2e2928dea5f71b9825b8b646686bd200", "0x0", 5137121)
-getRateAtSpecificBlock("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "0xdd974d5c2e2928dea5f71b9825b8b646686bd200", "0x0", 5136836)
+//getRateAtSpecificBlock("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "0xdd974d5c2e2928dea5f71b9825b8b646686bd200", "0x0", 5137121)
+//getRateAtSpecificBlock("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "0xdd974d5c2e2928dea5f71b9825b8b646686bd200", "0x0", 5136836)
 // getRateAtSpecificBlock("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "0xbf2179859fc6d5bee9bf9158632dc51678a4100e", "0x0", 5137322)
 // getRateAtSpecificBlock("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "0xbf2179859fc6d5bee9bf9158632dc51678a4100e", "0x0", 5137323)
 // getRateAtSpecificBlock("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "0xbf2179859fc6d5bee9bf9158632dc51678a4100e", "0x0", 5137324)

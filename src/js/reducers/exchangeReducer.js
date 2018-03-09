@@ -70,10 +70,14 @@ const exchange = (state = initState, action) => {
           newState.sourceToken = BLOCKCHAIN_INFO.tokens['ETH'].address
         }
       }
+
       //reset all error
       for (var key in newState.errors) {
         newState.errors[key] = ""
       }
+      
+      newState.sourceAmount = ""
+      newState.destAmount = 0
 
       newState.selected = true
       newState.isEditRate = false
@@ -173,13 +177,13 @@ const exchange = (state = initState, action) => {
       const { rateInit, expectedPrice, slippagePrice, rateInitSlippage, blockNo ,isManual, isSuccess} = action.payload
 
       if (!isSuccess) {
-        newState.errors.rateSystem = "Cannot get rate from blockchain"
+        newState.errors.rateSystem = "error.get_rate"
       }else{
         if(expectedPrice === "0"){
-          if(rateInit === "0"){
-            newState.errors.rateSystem = "Kyber exchange is under maintainance this pair"
+          if(rateInit === "0" || rateInit === 0 || rateInit === undefined || rateInit === null){
+            newState.errors.rateSystem = "error.kyber_maintain"
           }else{
-            newState.errors.rateSystem = "Kyber cannot handle your amount, please reduce amount"
+            newState.errors.rateSystem = "error.handle_amount"
           }
         }else{
           newState.errors.rateSystem = ""
@@ -421,6 +425,10 @@ const exchange = (state = initState, action) => {
       const {gas, gas_approve} = action.payload      
       newState.gas = gas
       newState.gas_approve = gas_approve
+      return newState
+    }
+    case "EXCHANGE.SET_GAS_USED_SNAPSHOT": {
+      const {gas, gas_approve} = action.payload      
       newState.snapshot.gas = gas
       newState.snapshot.gas_approve = gas_approve
       return newState
@@ -477,12 +485,20 @@ const exchange = (state = initState, action) => {
       newState.isAnalizeComplete = true
       return newState
     }
-    case "EXCHANGE.FETCH_GAS":{
-      newState.isFetchingGas = true
+    // case "EXCHANGE.FETCH_GAS":{
+    //   newState.isFetchingGas = true
+    //   return newState
+    // }
+    // case "EXCHANGE.FETCH_GAS_SUCCESS":{
+    //   newState.isFetchingGas = false
+    //   return newState
+    // }
+    case "EXCHANGE.FETCH_GAS_SNAPSHOT":{
+      newState.snapshot.isFetchingGas = true
       return newState
     }
-    case "EXCHANGE.FETCH_GAS_SUCCESS":{
-      newState.isFetchingGas = false
+    case "EXCHANGE.FETCH_GAS_SUCCESS_SNAPSHOT":{
+      newState.snapshot.isFetchingGas = false
       return newState
     }
     case "EXCHANGE.SET_KYBER_ENABLE":{
@@ -498,6 +514,14 @@ const exchange = (state = initState, action) => {
       newState.errorNotPossessKgt = action.payload
       return newState
     }
+    case "EXCHANGE.SET_EXCHANGE_ENABLE":{
+      if(!action.payload){
+        newState.errors.exchange_enable = ""
+      }else{
+        newState.errors.exchange_enable = "error.exchange_enable"
+      }
+      return newState
+    }  
   }
   return state
 }

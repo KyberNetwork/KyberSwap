@@ -50,7 +50,10 @@ export default class PostTransfer extends React.Component {
         let contentModal = this.props.translate('error.term_error') || 'You must agree terms and services!'
         return this.props.dispatch(utilActions.openInfoModal(titleModal, contentModal))
       }
-      this.props.dispatch(transferActions.fetchGas())
+
+      this.props.dispatch(transferActions.setSnapshot(this.props.form))
+      this.props.dispatch(transferActions.fetchGasSnapshot())
+
       //check account type
       switch (this.props.account.type) {
         case "keystore":
@@ -99,7 +102,7 @@ export default class PostTransfer extends React.Component {
       return false
     }
     var amountBig = converters.stringEtherToBigNumber(this.props.form.amount, this.props.form.decimal)
-    if (amountBig.greaterThan(this.props.form.balance)) {
+    if (amountBig.isGreaterThan(this.props.form.balance)) {
       this.props.dispatch(transferActions.thowErrorAmount("error.amount_transfer_too_hign"))
       check = false
     }
@@ -114,9 +117,9 @@ export default class PostTransfer extends React.Component {
         onCancel={this.closeModal}
         passwordError={this.props.form.errors.passwordError || this.props.form.bcError}
         translate={this.props.translate}
-        isFetchingGas={this.props.form.isFetchingGas}
-        gasPrice={this.props.form.gasPrice}
-        gas={this.props.form.gas}
+        isFetchingGas={this.props.form.snapshot.isFetchingGas}
+        gasPrice={this.props.form.snapshot.gasPrice}
+        gas={this.props.form.snapshot.gas}
       />
     )
   }
@@ -126,9 +129,9 @@ export default class PostTransfer extends React.Component {
         onCancel={this.closeModal}
         onExchange={this.processTx}
         isConfirming={this.props.form.isConfirming}
-        gasPrice={this.props.form.gasPrice}
-        gas={this.props.form.gas}
-        isFetchingGas={this.props.form.isFetchingGas}
+        gasPrice={this.props.form.snapshot.gasPrice}
+        gas={this.props.form.snapshot.gas}
+        isFetchingGas={this.props.form.snapshot.isFetchingGas}
         type="transfer"
         translate={this.props.translate}
         title={this.props.translate("modal.confirm_transfer_title") || "Transfer confirm"}
