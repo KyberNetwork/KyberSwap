@@ -81,4 +81,12 @@ describe('roundingNumber function ', () => {
         let result = roundingNumber(1.9999999);
         expect(result).toBe('2.000000');
     })
+    it('number = 0.0125678', () => {
+        let result = roundingNumber(0.0125678);
+        expect(result).toBe('0.012568');
+    })
+    it('number = 0.000125678', () => {
+        let result = roundingNumber(0.000125678);
+        expect(result).toBe('0.000126');
+    })
 })
