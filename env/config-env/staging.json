@@ -6,6 +6,10 @@
           "type": "cached"
         },
         {
+          "endPoint" : "https://semi-node.kyber.network",
+          "type": "prune"
+        },      
+        {
           "endPoint" : "https://mainnet.infura.io",
           "type": "prune"
         },
@@ -16,10 +20,6 @@
         {
           "endPoint" : "https://api.mycryptoapi.com/eth",
           "type": "none_prune"
-        },
-        {
-          "endPoint" : "https://node.kyber.network",
-          "type": "prune"
         }
       ],
       "ws": "wss://mainnet.infura.io/ws"
@@ -82,7 +82,7 @@
         "usd_id":"power-ledger"
       },
       "MANA": {
-        "name":"Mana",
+        "name":"Decentraland",
         "address": "0x0f5d2fb29fb7d3cfee444a200298f468908cc942",
         "symbol": "MANA",
         "icon": "mana.svg",
@@ -144,6 +144,14 @@
         "icon": "salt.svg",
         "decimal": 8,
         "usd_id":"salt"
+      },
+      "BQX": {
+        "name" : "Ethos",
+        "address": "0x5af2be193a6abca9c8817001f45744777db30756",
+        "symbol": "BQX",
+        "decimal": 8,
+        "icon": "bqx.svg",
+        "usd_id":"ethos"
       }
     },
     "ethScanUrl": "https://etherscan.io/",

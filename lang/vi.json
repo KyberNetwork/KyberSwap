@@ -130,7 +130,10 @@
     "select_same_token": "Không thể đổi giữa hai token giống nhau",
     "select_token_token": "Cặp token này chưa được hỗ trợ",
     "source_amount_too_high": "Số lượng chuyển quá lớn",
-    "source_amount_too_high_cap": "Số lượng chuyển vượt quá limit. Giới hạn ${ cap } ETH",
+
+    "source_amount_too_high_cap": "Số lượng chuyển vượt quá limit. Nguồn phải nhỏ hơn ${ cap } ETH",
+    "dest_amount_too_high_cap": "Số lượng chuyển vượt quá limit. Đích phải nhỏ hơn ${ cap } ETH",
+
     "source_amount_too_small": "Số lượng chuyển quá nhỏ",
     "source_amount_rate_error": "Không thể chuyển đổi tại thời điểm hiện tại",
     "source_amount_too_high_for_reserve": "Số lượng chuyển quá lớn (hiện không có sẵn token để giao dịch tại thời điểm này)",
@@ -142,7 +145,7 @@
     "amount_must_be_number": "Số lượng chuyển sai định dạng",
 
     "error_occurred": "Có lỗi xảy ra",
-    "cannot_connect_metamask": "Không thể kết nối đến tài khoản Metamask",
+    "cannot_connect_metamask": "Không thể kết nối đến tài khoản Metamask, có thể do bạn chưa đăng nhập Metamask",
     "cannot_connect_trezor": "Không thể kết nối trezor",
     "cannot_connect_ledger": "Không thể kết nối ledger",
     "invalid_private_key": "Private key không đúng định dạng",

@@ -134,7 +134,8 @@
     "select_same_token": "无法和同种代币进行交易",
     "select_token_token": "这个代币交易对目前还不支持",
     "source_amount_too_high": "原始数量过高",
-    "source_amount_too_high_cap": "原始数量超过了你的额度。你的额度是 ${ cap } ETH",
+    "source_amount_too_high_cap": "数量超过您的限额。 原始数量应该小于${ cap }个ETH",
+    "dest_amount_too_high_cap": "数量超过您的限额。 目标数量应该小于${ cap }个ETH",
     "source_amount_too_small": "原始数量过低",
     "source_amount_rate_error": "当前无法交易",
     "source_amount_too_high_for_reserve": "原始数量过高 （交易对目前还不支持）",
@@ -146,7 +147,7 @@
     "amount_must_be_number": "数量必须是一个数字",
 
     "error_occurred": "发生错误",
-    "cannot_connect_metamask": "无法获取Metamask账户",
+    "cannot_connect_metamask": "无法获取metamask帐户，可能是因为您没有登录metamask",
     "cannot_connect_trezor": "无法连接至Trezor",
     "cannot_connect_ledger": "无法连接至Ledger",
     "invalid_private_key": "无效的密钥",
@@ -244,7 +245,7 @@
     "use_real":"请千万不要使用真实的以太坊账户！！！",
     "accept":"接受",
     "terms_and_condition":"条款和条件",
-    "to_get_started":"开始"
+    "to_get_started":"以开始"
   },
 
   "landing_page":{

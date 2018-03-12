@@ -1,3 +1,14 @@
+# 0.5.0 (2018-03-08)
+## Features:
+- Add BQX token 
+
+## Bugfixes:
+- Inconsistent between fee display in modal and in devices
+
+## Improvements:
+- Fix copies
+- Manage device by using offical libs
+
 # 0.4.2 (2018-02-23)
 ## Features:
 - Add block in trade transaction
@@ -20,9 +31,8 @@
 - This version works with KyberNetwork smart contracts version 0.4.0 (Kovan and Mainnet)
 
 # 0.4.0 (2018-02-07)
-
-## Features: 
-- Integrate with new APIs from new cache server 
+## Features:
+- Integrate with new APIs from new cache server
 - Add fetching multi nodes, fall back to backup node when a node is unavailable
 - Broadcast transaction to multi node
 
@@ -40,3 +50,20 @@
 ## Compatability:
 - This version works with KyberNetwork smart contracts version 0.4.0 (Kovan and Mainnet)
 
+# 0.3.0 (2018-01-31)
+
+## Features: 
+- Integrate with new APIs from new cache server 
+
+## Bugfixes:
+- Prevent `min_rate` from being updated when user is at confirming screen
+- Handle more errors for Ledger
+
+## Improvements:
+- More acurrate gas estimation for approval transactions
+- Better css styling (footer, errors in modals)
+
+## Compatability:
+- This version only works with KyberNetwork smart contracts version 0.3.0
+
+ 

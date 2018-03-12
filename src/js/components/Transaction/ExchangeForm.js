@@ -48,10 +48,34 @@ const ExchangeForm = (props) => {
         errorSource.push(errorToken)
         errorExchange = true
       }
-      if (props.errors.sourceAmount !== "") {
-        errorSource.push(props.translate(props.errors.sourceAmount, { cap: maxCap }))
+      if (props.errors.sourceAmount !== ""){
+        if (props.errors.sourceAmount === "error.source_amount_too_high_cap") {
+          if(props.sourceTokenSymbol === "ETH"){
+            errorSource.push(props.translate("error.source_amount_too_high_cap", { cap: maxCap }))
+          }else{
+            errorSource.push(props.translate("error.dest_amount_too_high_cap", { cap: maxCap*constants.MAX_CAP_PERCENT }))
+          }
+        }else{
+          errorSource.push(props.translate(props.errors.sourceAmount))
+        }
         errorExchange = true
       }
+      // if (props.errors.sourceAmount === "error.source_amount_too_high_cap") {
+      //   if(props.sourceTokenSymbol === "ETH"){
+      //     errorSource.push(props.translate("error.source_amount_too_high_cap", { cap: maxCap }))
+      //   }else{
+      //     errorSource.push(props.translate("error.dest_amount_too_high_cap", { cap: maxCap*constants.MAX_CAP_PERCENT }))
+      //   }
+      //   errorExchange = true
+
+      // }else if (props.errors.sourceAmount !== ""){
+      //   errorSource.push(props.translate(props.errors.sourceAmount))
+      //   errorExchange = true
+      // }
+      // if (props.errors.sourceAmount !== "") {
+      //   errorSource.push(props.translate(props.errors.sourceAmount, { cap: maxCap }))
+      //   errorExchange = true
+      // }
       //if (props.errors.rateAmount !== "") errorSource.push(<span class="error-text">{props.errors.rateAmount}</span>)
       if (props.errors.rateSystem !== "") {
         errorSource.push(props.translate(props.errors.rateSystem))
