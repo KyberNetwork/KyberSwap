@@ -64,6 +64,15 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
     console.log(e)
   }
 
+  //track facebook
+  try {
+    if (typeof window.fbq === 'function') {
+        window.fbq('trackCustom', "CompleteTrade", {hash: hash})
+    }
+  } catch (e) {
+    console.log(e)
+  }
+
   //console.log({txRaw, hash, account, data})
   const tx = new Tx(
     hash, account.address, ethUtil.bufferToInt(txRaw.gas),
@@ -76,6 +85,8 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   yield put(actions.finishExchange())
   yield put(actions.resetSignError())
 
+
+  
 
 
   //estimate time for tx
