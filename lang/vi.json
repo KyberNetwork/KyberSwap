@@ -145,7 +145,7 @@
     "amount_must_be_number": "Số lượng chuyển sai định dạng",
 
     "error_occurred": "Có lỗi xảy ra",
-    "cannot_connect_metamask": "Không thể kết nối đến tài khoản Metamask",
+    "cannot_connect_metamask": "Không thể kết nối đến tài khoản Metamask, có thể do bạn chưa đăng nhập Metamask",
     "cannot_connect_trezor": "Không thể kết nối trezor",
     "cannot_connect_ledger": "Không thể kết nối ledger",
     "invalid_private_key": "Private key không đúng định dạng",

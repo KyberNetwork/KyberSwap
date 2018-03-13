@@ -372,8 +372,13 @@ export function* verifyTransfer(){
   var state = store.getState()
   var transfer = state.transfer
 
+  var amount = 0
+  if (isNaN(transfer.amount) || transfer.amount === "") {
+    amount = 0
+  }
+  
   var testBalanceWithFee = validators.verifyBalanceForTransaction(state.tokens.tokens['ETH'].balance,
-  transfer.tokenSymbol, transfer.amount, transfer.gas, transfer.gasPrice)
+  transfer.tokenSymbol, amount, transfer.gas, transfer.gasPrice)
 
   if (testBalanceWithFee) {
     yield put(actions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
