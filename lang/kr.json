@@ -149,7 +149,7 @@
     "amount_must_be_number": "수량은 반드시 숫자로 기입해 주시기 바랍니다",
 
     "error_occurred": "에러가 발생했습니다",
-    "cannot_connect_metamask": "Metamask 계정을 가져올 수 없습니다",
+    "cannot_connect_metamask": "Metamask 계정에 연결할 수 없습니다. 아마도 Metamask에 로그인하지 않았습니다",
     "cannot_connect_trezor": "TREZOR에 연결할 수 없습니다",
     "cannot_connect_ledger": "LEDGER에 연결할 수 없습니다",
     "invalid_private_key": "잘못된 키입니다",

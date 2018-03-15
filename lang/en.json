@@ -147,7 +147,7 @@
     "amount_must_be_number": "Amount must be a number",
 
     "error_occurred": "Error occurred",
-    "cannot_connect_metamask": "Cannot get metamask account",
+    "cannot_connect_metamask": "Cannot get metamask account. You probably did not login in Metamask",
     "cannot_connect_trezor": "Cannot connect to trezor",
     "cannot_connect_ledger": "Cannot connect to ledger",
     "invalid_private_key": "Invalid private key",

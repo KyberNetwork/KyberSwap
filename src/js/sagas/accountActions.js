@@ -162,7 +162,7 @@ export function* importMetamask(action) {
     ))
   } catch (e) {
     console.log(e)
-    yield put(actions.throwError(translate("error.cannot_connect_metamask") || "Cannot get metamask account"))
+    yield put(actions.throwError(translate("error.cannot_connect_metamask") || "Cannot get metamask account. You probably did not login in Metamask"))
   }
 }
 
