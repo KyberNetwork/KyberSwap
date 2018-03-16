@@ -7,9 +7,16 @@ export default class Web3Service {
   }
 
   isTrust = () => {
+    //is trust
     if (web3.currentProvider && web3.currentProvider.isTrust === true){
       return true
     }
+
+    //is cipher
+    if(!!window.CIPHER){
+      return true
+    }
+    
     return false
   }
   getNetworkId = ()=> {
