@@ -284,11 +284,13 @@ export default class PostExchange extends React.Component {
       sourceName: this.props.form.sourceName,
       sourceSymbol: this.props.form.sourceTokenSymbol,
       sourceDecimal: this.props.form.sourceDecimal,
-      source: this.props.form.sourceBalance.toString(),
+      //source: this.props.form.sourceBalance.toString(),
       destName: this.props.form.destName,
       destDecimal: this.props.form.destDecimal,
       destSymbol: this.props.form.destTokenSymbol,
-      dest: this.props.form.destBalance.toString()
+      //dest: this.props.form.destBalance.toString()
+      sourceAmount: this.props.form.balanceData.sourceAmount,
+      destAmount: this.props.form.balanceData.destAmount,
     }
     return {
       selectedAccount, sourceToken, sourceAmount, destToken,
@@ -322,11 +324,14 @@ export default class PostExchange extends React.Component {
       sourceName: this.props.snapshot.sourceName,
       sourceSymbol: this.props.snapshot.sourceTokenSymbol,
       sourceDecimal: this.props.snapshot.sourceDecimal,
-      source: this.props.snapshot.sourceBalance.toString(),
+     // source: this.props.snapshot.sourceBalance.toString(),
       destName: this.props.snapshot.destName,
       destDecimal: this.props.snapshot.destDecimal,
       destSymbol: this.props.snapshot.destTokenSymbol,
-      dest: this.props.snapshot.destBalance.toString()
+    //  dest: this.props.snapshot.destBalance.toString(),
+
+      sourceAmount: this.props.form.balanceData.sourceAmount,
+      destAmount: this.props.form.balanceData.destAmount,
     }
     return {
       selectedAccount, sourceToken, sourceAmount, destToken,

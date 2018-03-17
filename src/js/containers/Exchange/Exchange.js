@@ -272,24 +272,22 @@ export default class Exchange extends React.Component {
     }
 
     //for transaction loading screen
-    var balance = {
-      prevValue: toT(this.props.exchange.balanceData.prevSource, this.props.exchange.balanceData.sourceDecimal),
-      nextValue: toT(this.props.exchange.balanceData.nextSource, this.props.exchange.balanceData.sourceDecimal)
-    }
-    var balanceDest = {
-      prevValue: toT(this.props.exchange.balanceData.prevDest, this.props.exchange.balanceData.destDecimal),
-      nextValue: toT(this.props.exchange.balanceData.nextDest, this.props.exchange.balanceData.destDecimal),
-      // value: toT(tokenDest.balance, tokenDest.decimal),
-      // roundingValue: roundingNumber(toT(tokenDest.balance, tokenDest.decimal)),
-    }
-
+    // var balance = {
+    //   prevValue: toT(this.props.exchange.balanceData.prevSource, this.props.exchange.balanceData.sourceDecimal),
+    //   nextValue: toT(this.props.exchange.balanceData.nextSource, this.props.exchange.balanceData.sourceDecimal)
+    // }
+    // var balanceDest = {
+    //   prevValue: toT(this.props.exchange.balanceData.prevDest, this.props.exchange.balanceData.destDecimal),
+    //   nextValue: toT(this.props.exchange.balanceData.nextDest, this.props.exchange.balanceData.destDecimal),
+    // }
+    //console.log(this.props.exchange.balanceData)
     var balanceInfo = {
       //sourceTokenSymbol: this.props.exchange.sourceTokenSymbol,
-      sourceAmount: balance,
+      sourceAmount: toT(this.props.exchange.balanceData.sourceAmount, this.props.exchange.balanceData.sourceDecimal),
       sourceSymbol: this.props.exchange.balanceData.sourceSymbol,
       sourceTokenName: this.props.exchange.balanceData.sourceName,
       //destTokenSymbol: this.props.exchange.destTokenSymbol,
-      destAmount: balanceDest,
+      destAmount: toT(this.props.exchange.balanceData.destAmount, this.props.exchange.balanceData.destDecimal),
       destTokenName: this.props.exchange.balanceData.destName,
       destSymbol: this.props.exchange.balanceData.destSymbol,
     }

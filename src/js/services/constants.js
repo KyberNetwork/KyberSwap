@@ -99,14 +99,17 @@ const INIT_EXCHANGE_FORM_STATE = {
     sourceName: "Ether",
     sourceSymbol: "ETH",
     sourceDecimal: 18,
-    prevSource : 0,
-    nextSource: 0,
+    // prevSource : 0,
+    // nextSource: 0,
 
     destName: "Kyber",
     destSymbol: "KNC",
     destDecimal: 18,
-    prevDest: 0,
-    nextDest: 0
+    // prevDest: 0,
+    // nextDest: 0,
+
+    sourceAmount: 0,
+    destAmount: 0
   },
 
   // error_rate_amount: false,
@@ -222,7 +225,7 @@ const CONNECTION_CHECKER = {
 const CONFIG_ENV_LEDGER_LINK = "https://support.ledgerwallet.com/hc/en-us/articles/115005165269-What-if-Ledger-Wallet-is-not-recognized-on-Linux-"
 const LEDGER_SUPPORT_LINK = "https://support.ledgerwallet.com/hc/en-us/articles/115005198565"
 
-const STORAGE_KEY = "81"
+const STORAGE_KEY = "82"
 
 module.exports = {
   ERC20, KYBER_NETWORK, KYBER_WRAPPER, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,

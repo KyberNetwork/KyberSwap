@@ -312,14 +312,17 @@ const exchange = (state = initState, action) => {
         sourceName: action.payload.balanceData.sourceName,
         sourceDecimal: action.payload.balanceData.sourceDecimal,
         sourceSymbol: action.payload.balanceData.sourceSymbol,
-        prevSource: action.payload.balanceData.source,
-        nextSource: 0,
+      //  prevSource: action.payload.balanceData.source,
+        //nextSource: 0,
 
         destName: action.payload.balanceData.destName,
         destDecimal: action.payload.balanceData.destDecimal,
         destSymbol: action.payload.balanceData.destSymbol,
-        prevDest: action.payload.balanceData.dest,
-        nextDest: 0
+
+        sourceAmount: action.payload.balanceData.sourceAmount,
+        destAmount: action.payload.balanceData.destAmount,
+       // prevDest: action.payload.balanceData.dest,
+       // nextDest: 0
       }
       return newState
     }
@@ -388,8 +391,8 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.UPDATE_CURRENT_BALANCE": {
       const {sourceBalance, destBalance, txHash} = action.payload
       if (txHash === newState.txHash) {
-        newState.balanceData.nextSource = action.payload.sourceBalance
-        newState.balanceData.nextDest = action.payload.destBalance
+        newState.balanceData.nextSource = sourceBalance
+        newState.balanceData.nextDest = destBalance
       }
       return newState
     }
@@ -521,7 +524,15 @@ const exchange = (state = initState, action) => {
         newState.errors.exchange_enable = "error.exchange_enable"
       }
       return newState
-    }  
+    }
+    case "EXCHANGE.UPDATE_BALANCE_DATA":{
+      const {balanceData, hash} = action.payload
+      if (hash === newState.txHash){
+        newState.balanceData.sourceAmount = balanceData.srcAmount
+        newState.balanceData.destAmount = balanceData.destAmount
+      }
+      return newState
+    }
   }
   return state
 }

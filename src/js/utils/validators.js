@@ -76,7 +76,7 @@ export function verifyBalanceForTransaction(
   gas, gasPrice
 ) {
 
-  var bigEthBalance = new BigNumber(ethBalance)
+  var bigEthBalance = new BigNumber(ethBalance.toString())
 
   //calcualte tx fee
   if (gasPrice === "") gasPrice = 0
@@ -85,9 +85,8 @@ export function verifyBalanceForTransaction(
 
   var totalFee
   if (sourceSymbol === "ETH") {
-    console.log(sourceAmount)
     if (sourceAmount === "") sourceAmount = 0
-    var value = new BigNumber(sourceAmount)
+    var value = new BigNumber(sourceAmount.toString())
     value = value.times(1000000000000000000)
     totalFee = txFee.plus(value)
   } else {
