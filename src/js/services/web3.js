@@ -13,9 +13,12 @@ export default class Web3Service {
     }
 
     //is cipher
-    if(!!window.CIPHER){
+    if((!!window.__CIPHER__) && (web3.currentProvider && web3.currentProvider.constructor && web3.currentProvider.constructor.name === "CipherProvider")){
       return true
     }
+  //  if (web3.currentProvider && web3.currentProvider.constructor && web3.currentProvider.constructor.name === "CipherProvider"){
+  //    return true
+  //  }
     
     return false
   }
