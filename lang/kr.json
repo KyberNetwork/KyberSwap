@@ -82,6 +82,7 @@
     "gas_limit": "Gas 한도",
     "gas_price": "Gas 가격",
     "for": "를",
+    "exchange_for": "근사치",
     "to": "하려면",
     "best_rate": "최소 속도",
     "token_amount": "토큰/금액",
@@ -97,7 +98,9 @@
     "error_tx_contract":"해당 토큰을 지원하지 않습니다",
     "no_pedding_tx": "미체결 거래가 없습니다",
     "rate_info": "결제 과정에서 가격이 변경 될 수 있습니다. <br> \"고급 옵션\"을 클릭하면 최저 가격을 표시 할 수 있습니다.",
-    "address": "받는 주소"
+    "address": "받는 주소",
+    "slippage_tip": "요금이 변경 될 수 있습니다. 고급 옵션에서 최소 비율을 조절하여 최대 미끄럼 비율을 변경할 수 있습니다.",
+    "max_slippage": "가치를 잃은 ${percent}%로 최대입니다"
   },
 
   "modal": {

@@ -258,7 +258,8 @@ export default class PostExchange extends React.Component {
                       {destTokenSymbol}
                       </strong>
                     <span className="info-text">
-                      with maximum {slippagePercent}% slippage <span className="k k-info k-2x ml-2" data-tip={caption} data-for='slippage-tip'></span>
+                      {this.props.translate("transaction.max_slippage", { percent: slippagePercent}) || "with maximum "+slippagePercent+"% slippage"}
+                       <span className="k k-info k-2x ml-2" data-tip={caption} data-for='slippage-tip'></span>
                       <ReactTooltip place="bottom" id="slippage-tip" type="light" />
                     </span>
                       </span>

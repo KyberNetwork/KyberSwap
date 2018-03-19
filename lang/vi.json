@@ -83,6 +83,7 @@
     "gas_limit": "Gas giới hạn",
     "gas_price": "Giá Gas",
     "for": "đổi lấy",
+    "exchange_for": "cho xấp xỉ",
     "to": "đến",
     "best_rate": "Tỷ giá tốt nhất",
     "token_amount": "Token/Số lượng",
@@ -95,7 +96,9 @@
     "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>",
     "no_pedding_tx": "Không có giao dịch nào đang chờ",
     "rate_info": "Rate có thể thay đổi. <br/>Bạn có thể  chỉ định rate nhỏ nhất bởi click \"NÂNG CAO\"",
-    "address": "Địa chỉ nhận"
+    "address": "Địa chỉ nhận",
+    "slippage_tip": "Tỉ giá có thể thay đổi, bạn có thể chỉnh tỉ giá trong lựa chọn nâng cao",
+    "max_slippage": "với tối đa ${percent}% trượt giá"
   },
 
   "modal": {
