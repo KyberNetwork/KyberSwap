@@ -201,10 +201,11 @@ export default class PostTransfer extends React.Component {
     // should have better strategy to determine gas price
     var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.form.gasPrice))
     var balanceData = {
-      balance: this.props.form.balance.toString(),
+      //balance: this.props.form.balance.toString(),
       name: this.props.form.tokenName,
       decimal: this.props.form.decimal,
       tokenSymbol: this.props.form.tokenSymbol,
+      amount: this.props.form.amount
     }
     return {
       selectedAccount, token, amount, destAddress,

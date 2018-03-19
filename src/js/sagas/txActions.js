@@ -33,21 +33,27 @@ function* updateTx(action) {
       return
     }
     
-
+    console.log("new tx: ")
+    console.log(newTx)
     if (newTx.status === "success") {
-      var blockNumber = newTx.blockNumber
+     // var blockNumber = newTx.blockNumber
       if (newTx.type === "exchange") {
         //update balance if tokens
-        var sourceBalance = yield call(getBalance, account.address,
-          listToken.source.address, listToken.source.symbol, ethereum, blockNumber)
+        // var sourceBalance = yield call(getBalance, account.address,
+        //   listToken.source.address, listToken.source.symbol, ethereum, blockNumber)
 
-        var destBalance = yield call(getBalance, account.address,
-          listToken.dest.address, listToken.dest.symbol, ethereum, blockNumber)
+        // var destBalance = yield call(getBalance, account.address,
+        //   listToken.dest.address, listToken.dest.symbol, ethereum, blockNumber)
 
-        yield put(exchangeActions.updateCurrentBalance(sourceBalance, destBalance, newTx.hash))
+        // yield put(exchangeActions.updateCurrentBalance(sourceBalance, destBalance, newTx.hash))
 
         //update source amount in header
         const { src, dest, srcAmount, destAmount } = yield call([ethereum, ethereum.call], "extractExchangeEventData", newTx.eventTrade)
+
+        //console.log("new tx")
+        //console.log({src, dest, srcAmount, destAmount})
+
+        yield put(exchangeActions.updateBalanceData({src, dest, srcAmount, destAmount}, newTx.hash))
 
         var state = store.getState()
         const tokens = state.tokens.tokens
@@ -56,12 +62,15 @@ function* updateTx(action) {
         newTx.data.sourceAmount = converters.toT(srcAmount, sourceDecimal)
         newTx.data.destAmount = converters.toT(destAmount, destDecimal)
 
-      } else {
-        var tokenBalance = yield call(getBalance, account.address,
-          listToken.token.address, listToken.token.symbol, ethereum, blockNumber)
+      } 
+      //else {
+        // var tokenBalance = yield call(getBalance, account.address,
+        //   listToken.token.address, listToken.token.symbol, ethereum, blockNumber)
 
-        yield put(transferActions.updateCurrentBalance(tokenBalance, newTx.hash))
-      }
+        //yield put(transferActions.updateCurrentBalance(tokenBalance, newTx.hash))
+
+      //  yield put(transferActions.updateBalanceData({src, dest, srcAmount, destAmount}, newTx.hash))
+      //}
     }
 
     yield put(updateTxComplete(newTx))

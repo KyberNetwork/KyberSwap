@@ -18,6 +18,9 @@ ul.broadcast-steps {
   padding: 0;
   list-style: none;
   font-size: 0;
+  .text-success {
+    line-height: 35px;
+  }
   .pending, .success, .failed{
     h4{
       font-size: 1.2rem;

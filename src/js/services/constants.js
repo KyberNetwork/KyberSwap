@@ -99,14 +99,17 @@ const INIT_EXCHANGE_FORM_STATE = {
     sourceName: "Ether",
     sourceSymbol: "ETH",
     sourceDecimal: 18,
-    prevSource : 0,
-    nextSource: 0,
+    // prevSource : 0,
+    // nextSource: 0,
 
     destName: "Kyber",
     destSymbol: "KNC",
     destDecimal: 18,
-    prevDest: 0,
-    nextDest: 0
+    // prevDest: 0,
+    // nextDest: 0,
+
+    sourceAmount: 0,
+    destAmount: 0
   },
 
   // error_rate_amount: false,

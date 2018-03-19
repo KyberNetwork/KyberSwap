@@ -8529,6 +8529,8 @@ ul.broadcast-steps {
   padding: 0;
   list-style: none;
   font-size: 0; }
+  ul.broadcast-steps .text-success {
+    line-height: 35px; }
   ul.broadcast-steps .pending h4, ul.broadcast-steps .success h4, ul.broadcast-steps .failed h4 {
     font-size: 1.2rem; }
   ul.broadcast-steps ul.address-balances {

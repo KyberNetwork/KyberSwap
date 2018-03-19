@@ -168,13 +168,13 @@ export default class Transfer extends React.Component {
       <PostTransferWithKey />
     )
 
-    var balance = {
-      prev: converters.toT(this.props.transfer.balanceData.prev, this.props.transfer.balanceData.tokenDecimal),
-      next: converters.toT(this.props.transfer.balanceData.next, this.props.transfer.balanceData.tokenDecimal)
-    }
+    // var balance = {
+    //   prev: converters.toT(this.props.transfer.balanceData.prev, this.props.transfer.balanceData.tokenDecimal),
+    //   next: converters.toT(this.props.transfer.balanceData.next, this.props.transfer.balanceData.tokenDecimal)
+    // }
     var balanceInfo = {
       tokenName: this.props.transfer.balanceData.tokenName,
-      amount: balance,
+      amount: this.props.transfer.balanceData.amount,
       tokenSymbol: this.props.transfer.balanceData.tokenSymbol
       // tokenSymbol: this.props.transfer.tokenSymbol
     }
