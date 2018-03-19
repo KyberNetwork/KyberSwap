@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import ReactTooltip from 'react-tooltip'
 
 import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
@@ -211,23 +212,62 @@ export default class PostExchange extends React.Component {
     var destAmount = this.props.snapshot.destAmount.toString()
     var sourceTokenSymbol = this.props.snapshot.sourceTokenSymbol
     var destTokenSymbol = this.props.snapshot.destTokenSymbol
-    return (
-      <p>{this.props.translate("transaction.about_to_exchange") || "You are about to exchange"}
-        <br />
-        <span class="text-success">
-          <strong>{sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}</strong>
-              <span className="color-white">{this.props.translate("transaction.for") || "for"}</span>
-            
-                {this.props.snapshot.isFetchingRate ?
-                    <img src={require('../../../assets/img/waiting-white.svg')} /> 
-                    : 
-                    <strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''}
-                    {destTokenSymbol}
-                    </strong>
-                  }
-        </span>
-      </p>
-    )
+
+   // var isEditRate = this.props.form.isEditRate
+    var minRate = this.props.snapshot.minConversionRate
+    var offeredRate = this.props.snapshot.offeredRate
+//console.log({minRate, offeredRate})
+    if (converters.compareRate(minRate, offeredRate) === 1 ){
+      return (
+        <p>{this.props.translate("transaction.about_to_exchange") || "You are about to exchange"}
+          <br />
+          <span class="text-success exchange-caption">
+            <strong>{sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}</strong>
+                <span className="color-white">{this.props.translate("transaction.exchange_for") || "for approximate"}</span>
+              
+                  {this.props.snapshot.isFetchingRate ?
+                      <img src={require('../../../assets/img/waiting-white.svg')} /> 
+                      : 
+                      <span>
+                         <strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''}
+                      {destTokenSymbol}
+                      </strong>
+                        <span className="error-text">
+                        {this.props.translate("error.min_rate_greater_expected_rate") || "Your configured minimal exchange rate is higher than what is recommended by KyberNetwork. Your exchange has high chance to fail"}
+                        </span>
+                      </span>
+                    }
+          </span>
+        </p>
+      )
+    }else{
+      var slippagePercent = converters.calculatePercentRate(minRate,offeredRate)
+      var caption = this.props.translate("transaction.slippage_tip") || "You can change slippage rate with advanced exchange option"
+      return (
+        <div>{this.props.translate("transaction.about_to_exchange") || "You are about to exchange"}
+          <br />
+          <span class="text-success exchange-caption">
+            <strong>{sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}</strong>
+                <span className="color-white">{this.props.translate("transaction.exchange_for") || "for approximate"}</span>
+              
+                  {this.props.snapshot.isFetchingRate ?
+                      <img src={require('../../../assets/img/waiting-white.svg')} /> 
+                      : 
+                     <span> 
+                      <strong>{destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''}
+                      {destTokenSymbol}
+                      </strong>
+                    <span className="info-text">
+                      with maximum {slippagePercent}% slippage <span className="k k-info k-2x ml-2" data-tip={caption} data-for='slippage-tip'></span>
+                      <ReactTooltip place="bottom" id="slippage-tip" type="light" />
+                    </span>
+                      </span>
+                    }
+          </span>
+        </div>
+      )
+    }
+    
   }
   getDesAmount = () => {
     return this.props.form.sourceAmount * converters.toT(this.props.form.offeredRate)

@@ -157,3 +157,15 @@ $divider-color: darken($title-background-color, 5);
     max-width: 400px;
   }
 }
+
+.exchange-caption {
+  .error-text{
+    display: block;
+    color: #ff5d00;
+  }
+  .info-text{
+    display: block;
+    color: #a5a5a5;
+    margin-bottom: 15px;
+  }
+}

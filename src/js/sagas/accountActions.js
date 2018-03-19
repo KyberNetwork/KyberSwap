@@ -93,8 +93,8 @@ export function* importNewAccount(action) {
     yield put(setCapExchange(maxCapOneExchange))
 
     if (+maxCapOneExchange == 0){
-      var linkReg = 'https://account.kyber.network/users/sign_up'
-      yield put(thowErrorNotPossessKGt(translate("error.not_possess_kgt", {link: linkReg}) || "It appears that your wallet does not possess Kyber Network Genesis Token (KGT) to participate in the pilot run."))
+      var linkReg = 'https://kybernetwork.zendesk.com'
+      yield put(thowErrorNotPossessKGt(translate("error.not_possess_kgt", {link: linkReg}) || "There seems to be a problem with your address, please contact us for more details"))
     }
     //update token and token balance
     var newTokens = {}

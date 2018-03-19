@@ -83,6 +83,7 @@
     "gas_limit": "Gas limit",
     "gas_price": "Gas price",
     "for": "for",
+    "exchange_for": "for approximate",
     "to": "to",
     "best_rate": "Min Rate",
     "token_amount": "Token & Amount To Send",
@@ -98,7 +99,8 @@
     "error_tx_contract":"Warning! Error encountered during contract execution",
     "no_pedding_tx": "No pending transaction",
     "rate_info": "Rates might be changed during settlement. <br/>You can indicate your minimum rate by clicking \"Advanced\"",
-    "address": "Receiving Address"
+    "address": "Receiving Address",
+    "slippage_tip": "You can change slippage rate with advanced exchange option"
   },
 
   "modal": {
@@ -140,7 +142,7 @@
     "source_amount_rate_error": "Cannot exchange at the moment. Please come back later",
     "source_amount_too_high_for_reserve": "Source amount is too high (pair is not available for trading at the moment)",
     "source_amount_is_not_number": "Source amount is not a number",
-    "not_possess_kgt": "Your wallet has not been whitelisted to test our platform. Register <a href=\"${link}\" target=\"_blank\">here</a> to join our pilot run. The public launch will be announced in the future.",
+    "not_possess_kgt": "There seems to be a problem with your address, please <a href=\"${link}\" target=\"_blank\">contact us</a> for more details",
 
     "dest_address": "This is not an address",
     "amount_transfer_too_hign": "Amount is too high",
@@ -193,7 +195,8 @@
     "handle_amount":"Kyber cannot handle your amount, please reduce amount",
     "kyber_maintain":"Kyber exchange is under maintainance this pair",
     "get_rate":"Cannot get rate from blockchain",
-    "exchange_enable":"You have exceeded your daily limit! You might trade again tomorrow at 00:00 UTC+0"
+    "exchange_enable":"You have exceeded your daily limit! You might trade again tomorrow at 00:00 UTC+0",
+    "min_rate_greater_expected_rate": "Your configured minimal exchange rate is higher than what is recommended by KyberNetwork. Your exchange has high chance to fail"
   },
 
   "import": {

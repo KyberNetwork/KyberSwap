@@ -447,6 +447,7 @@ const exchange = (state = initState, action) => {
       newState.sourceAmount = ""
       newState.destAmount = 0
       newState.isSelectToken = true
+      newState.isEditRate = false
       return newState
     }
     case "EXCHANGE.SET_CAP_EXCHANGE": {
