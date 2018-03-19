@@ -678,8 +678,9 @@ function* updateRatePending(action) {
     if(rateRequest.status === "success"){
       const { expectedPrice, slippagePrice, lastestBlock } = rateRequest.res
       yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
-    }else{
-      yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
+    }
+    else{
+      //yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
 
       //yield put(actions.setRateFailError())
     }

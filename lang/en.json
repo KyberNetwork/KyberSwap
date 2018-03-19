@@ -49,8 +49,8 @@
     "failed": "Failed!",
     "broadcasted": "Broadcasted!",
     "broadcasting": "Broadcasting!",
-    "success_ex_msg": "Successfully exchanged from ${source} to ${dest}",
-    "success_tx_msg": "Successfully transferred ${token} to ${address}",
+    "success_ex_msg": "Successfully exchanged from </br> ${sourceAmount} ${sourceSymbol} to ${destAmount} ${destSymbol}",
+    "success_tx_msg": "Successfully transferred </br> ${amount} ${token} to ${address}",
     "copy_tx": "Copy transaction hash",
     "analyze_error": "Reasons the transaction failed",
     "copied": "Copied!",
@@ -83,6 +83,7 @@
     "gas_limit": "Gas limit",
     "gas_price": "Gas price",
     "for": "for",
+    "exchange_for": "for approximate",
     "to": "to",
     "best_rate": "Min Rate",
     "token_amount": "Token & Amount To Send",
@@ -98,7 +99,9 @@
     "error_tx_contract":"Warning! Error encountered during contract execution",
     "no_pedding_tx": "No pending transaction",
     "rate_info": "Rates might be changed during settlement. <br/>You can indicate your minimum rate by clicking \"Advanced\"",
-    "address": "Receiving Address"
+    "address": "Receiving Address",
+    "slippage_tip": "Rate may change. You can change maximum slippage rate by adjusting min rate in advanced option",
+    "max_slippage": "with maximum ${percent}% slippage"
   },
 
   "modal": {
@@ -140,7 +143,7 @@
     "source_amount_rate_error": "Cannot exchange at the moment. Please come back later",
     "source_amount_too_high_for_reserve": "Source amount is too high (pair is not available for trading at the moment)",
     "source_amount_is_not_number": "Source amount is not a number",
-    "not_possess_kgt": "Your wallet has not been whitelisted to test our platform. Register <a href=\"${link}\" target=\"_blank\">here</a> to join our pilot run. The public launch will be announced in the future.",
+    "not_possess_kgt": "您的地址似乎存在问题，请<a href=\"${link}\" target=\"_blank\">联系我们</a>以了解更多信息",
 
     "dest_address": "This is not an address",
     "amount_transfer_too_hign": "Amount is too high",
@@ -193,7 +196,8 @@
     "handle_amount":"Kyber cannot handle your amount, please reduce amount",
     "kyber_maintain":"Kyber exchange is under maintainance this pair",
     "get_rate":"Cannot get rate from blockchain",
-    "exchange_enable":"You have exceeded your daily limit! You might trade again tomorrow at 00:00 UTC+0"
+    "exchange_enable":"You have exceeded your daily limit! You might trade again tomorrow at 00:00 UTC+0",
+    "min_rate_greater_expected_rate": "Your configured minimal exchange rate is higher than what is recommended by KyberNetwork. Your exchange has high chance to fail"
   },
 
   "import": {

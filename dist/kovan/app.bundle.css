@@ -7794,7 +7794,9 @@ table {
   width: 100%;
   margin-bottom: 1rem;
   border-radius: 4px; }
-  thead, tbody, tfoot {
+  thead,
+  tbody,
+  tfoot {
     border: 1px solid #f2f2f2;
     background-color: #ffffff; }
   caption {
@@ -7806,13 +7808,18 @@ table {
   tfoot {
     background: #f2f2f2;
     color: #0B0F1A; }
-  thead tr, tfoot tr {
+  thead tr,
+  tfoot tr {
     background: transparent; }
-  thead th, thead td, tfoot th, tfoot td {
+  thead th,
+  thead td,
+  tfoot th,
+  tfoot td {
     padding: 0.5rem 0.625rem 0.625rem;
     font-weight: bold;
     text-align: left; }
-  tbody th, tbody td {
+  tbody th,
+  tbody td {
     padding: 0.5rem 0.625rem 0.625rem; }
   tbody tr:nth-child(even) {
     border-bottom: 0;
@@ -8522,6 +8529,8 @@ ul.broadcast-steps {
   padding: 0;
   list-style: none;
   font-size: 0; }
+  ul.broadcast-steps .text-success {
+    line-height: 35px; }
   ul.broadcast-steps .pending h4, ul.broadcast-steps .success h4, ul.broadcast-steps .failed h4 {
     font-size: 1.2rem; }
   ul.broadcast-steps ul.address-balances {
@@ -8735,6 +8744,15 @@ ul.broadcast-steps {
 @media print, screen and (min-width: 40em) {
   #request-trezor-access-modal {
     max-width: 400px; } }
+
+.exchange-caption .error-text {
+  display: block;
+  color: #ff5d00; }
+
+.exchange-caption .info-text {
+  display: block;
+  color: #a5a5a5;
+  margin-bottom: 15px; }
 
 span.address {
   font-weight: bold; }
@@ -9491,7 +9509,12 @@ body {
   font-family: "Montserrat", "My-Montserrat", sans-serif;
   min-width: 350px; }
 
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
   font-family: "Montserrat", "My-Montserrat", sans-serif; }
 
 #waiting {

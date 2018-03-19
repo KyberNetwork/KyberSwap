@@ -49,8 +49,8 @@
     "failed": "Thất bại!",
     "broadcasted": "Đã gửi!",
     "broadcasting": "Đang gửi!",
-    "success_ex_msg": "Trao đổi thành công ${source} và ${dest}",
-    "success_tx_msg": "Chuyển khoản thành công ${token} đến ${address}",
+    "success_ex_msg": "Trao đổi thành công từ </br> ${sourceAmount} ${sourceSymbol} ra ${destAmount} ${destSymbol}",
+    "success_tx_msg": "Chuyển khoản thành công </br> ${amount} ${token} đến ${address}",
     "copy_tx": "Copy địa chỉ giao dịch",
     "analyze_error": "Nguyên nhân lỗi",
     "copied": "Đã sao chép!",
@@ -83,6 +83,7 @@
     "gas_limit": "Gas giới hạn",
     "gas_price": "Giá Gas",
     "for": "đổi lấy",
+    "exchange_for": "cho xấp xỉ",
     "to": "đến",
     "best_rate": "Tỷ giá tốt nhất",
     "token_amount": "Token/Số lượng",
@@ -95,7 +96,9 @@
     "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>",
     "no_pedding_tx": "Không có giao dịch nào đang chờ",
     "rate_info": "Rate có thể thay đổi. <br/>Bạn có thể  chỉ định rate nhỏ nhất bởi click \"NÂNG CAO\"",
-    "address": "Địa chỉ nhận"
+    "address": "Địa chỉ nhận",
+    "slippage_tip": "Tỉ giá có thể thay đổi, bạn có thể chỉnh tỉ giá trong lựa chọn nâng cao",
+    "max_slippage": "với tối đa ${percent}% trượt giá"
   },
 
   "modal": {
@@ -138,7 +141,7 @@
     "source_amount_rate_error": "Không thể chuyển đổi tại thời điểm hiện tại",
     "source_amount_too_high_for_reserve": "Số lượng chuyển quá lớn (hiện không có sẵn token để giao dịch tại thời điểm này)",
     "source_amount_is_not_number": "Số lượng chuyển sai định dạng",
-    "not_possess_kgt": "Tài khoản của bạn không có Kyber Network Genesis Token (KGT) để sử dụng sản phẩm của chúng tôi trong thời gian này. Đăng ký tại <a href=\"${link}\" target=\"_blank\">đây</a> để chúng tôi thông báo cho bạn khi chúng tôi mở nền tảng của chúng tôi cho nhiều người hơn",
+    "not_possess_kgt": "Tài khoản của bạn không giao dịch được, vui lòng <a href=\"${link}\" target=\"_blank\">liên hệ</a> chúng tôi để biết thêm chi tiết",
 
     "dest_address": "Địa chỉ không hợp lệ",
     "amount_transfer_too_hign": "Số lượng quá lớn",
@@ -191,11 +194,12 @@
     "handle_amount":"Số lượng điền quá lớn, vui lòng giảm số lương giao dịch",
     "kyber_maintain":"Kyber hiện không cho giao dịch cặp này",
     "get_rate":"Không thể lấy tỉ giá từ blockchain",
-    "exchange_enable":"Bạn đã giao dịch quá lượng 1 ngày! Bạn có thể giao dịch vào ngày mai tại thời điểm 00:00 UTC+0"
+    "exchange_enable":"Bạn đã giao dịch quá lượng 1 ngày! Bạn có thể giao dịch vào ngày mai tại thời điểm 00:00 UTC+0",
+    "min_rate_greater_expected_rate": "Bạn đã chỉnh tỉ giá lớn hơn tỉ giá đề nghị bởi KyberNetwork. Giao dịch của bạn nhiều khả năng thất bại"
   },
 
   "import": {
-    "from_metamask": "Kêt nối <br> Metamask",
+    "from_metamask": "Kết nối <br> Metamask",
     "from_keystore": "Chọn hoặc kéo<br />Keystore",
     "from_trezor": "Nhập từ<br />Trezor",
     "from_ledger": "Nhập từ<br />Ledger",

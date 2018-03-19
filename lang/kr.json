@@ -49,8 +49,8 @@
     "failed": "실패!",
     "broadcasted": "전송 완료!",
     "broadcasting": "전송 중!",
-    "success_ex_msg": "성공적으로 ${source} 를 ${dest} 로 교환 하였습니다",
-    "success_tx_msg": "성공적으로 ${token} 를 ${address} 주소로 송금 하였습니다",
+    "success_ex_msg": "성공적으로 </br> ${sourceAmount} ${sourceSymbol} 를 ${destAmount} ${destSymbol} 로 교환 하였습니다",
+    "success_tx_msg": "성공적으로 </br> ${amount} ${token} 를 ${address} 주소로 송금 하였습니다",
     "copy_tx": "트랜잭션 해시 복사",
     "analyze_error": "실패원인",
     "copied": "복사완료",
@@ -82,6 +82,7 @@
     "gas_limit": "Gas 한도",
     "gas_price": "Gas 가격",
     "for": "를",
+    "exchange_for": "근사치",
     "to": "하려면",
     "best_rate": "최소 속도",
     "token_amount": "토큰/금액",
@@ -97,7 +98,9 @@
     "error_tx_contract":"해당 토큰을 지원하지 않습니다",
     "no_pedding_tx": "미체결 거래가 없습니다",
     "rate_info": "결제 과정에서 가격이 변경 될 수 있습니다. <br> \"고급 옵션\"을 클릭하면 최저 가격을 표시 할 수 있습니다.",
-    "address": "받는 주소"
+    "address": "받는 주소",
+    "slippage_tip": "요금이 변경 될 수 있습니다. 고급 옵션에서 최소 비율을 조절하여 최대 미끄럼 비율을 변경할 수 있습니다.",
+    "max_slippage": "가치를 잃은 ${percent}%로 최대입니다"
   },
 
   "modal": {
@@ -142,7 +145,7 @@
     "source_amount_rate_error": "현재 거래할 수 없습니다",
     "source_amount_too_high_for_reserve": "보내시려는 토큰 수량이 너무 큽니다 (현재 지원되지 않는 토큰입니다)",
     "source_amount_is_not_number": "보내시려는 토큰 수량이 숫자가 아닙니다",
-    "not_possess_kgt": "귀하의 지갑은 우리 플랫폼을 테스트 할 수있는 허용 목록에 포함되어 있지 않습니다. 파일럿 실행에 참여하려면 <a href=\"${link}\" target=\"_blank\"> 여기 </a>에 등록하십시오. 공개 출시는 앞으로 공지 될 예정입니다.",
+    "not_possess_kgt": "귀하의 주소에 문제가 있는 것 같습니다. 자세한 내용을 알기 위해 <a href=\"${link}\" target=\"_blank\">저희에게 연락</a> 하십시오.",
 
     "dest_address": "이것은 주소가 아닙니다",
     "amount_transfer_too_hign": "금액이 너무 높습니다",
@@ -195,7 +198,8 @@
     "handle_amount":"카이버는 금액을 처리 할 수 없으므로 금액을 줄이십시오!",
     "kyber_maintain":"카이버 교환은 이 쌍을 유지 보수 중입니다.",
     "get_rate":"블록 체인에서 요금을 받을 수 없습니다.",
-    "exchange_enable":"거래는 일일 한도를 초과했습니다! 내일 00:00 UTC+0 다시 거래 할 수도 있습니다"
+    "exchange_enable":"거래는 일일 한도를 초과했습니다! 내일 00:00 UTC+0 다시 거래 할 수도 있습니다",
+    "min_rate_greater_expected_rate": "구성된 최소 환율은 카이버 네트워크에서 권장하는 것보다 높습니다. 귀하의 거래소는 실패 할 확률이 높습니다."
   },
 
   "import": {
