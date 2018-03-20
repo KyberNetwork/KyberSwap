@@ -155,7 +155,7 @@
     "cannot_connect_ledger": "无法连接至Ledger",
     "invalid_private_key": "无效的密钥",
     "no_balance": "您的地址上没有我们支持的代币。请导入其它的地址。",
-    "clear_data_timeout": "由于您的会话超时，我们清除了您的数据 ${time} 分钟",
+    "clear_data_timeout": "由于您的会话超时${time} 分钟，我们清除了您的数据",
     "minutes": " 分钟",
     "time_out": "超时",
     "network_error": "目前无法连接到区块链。请稍后再尝试。",
