@@ -227,16 +227,25 @@
   },
 
   "history": {
-    "second_ago": "giây trước",
+    "seconds_ago": "giây trước",
     "minutes_ago": "phút trước",
     "hours_ago": "giờ trước",
     "days_ago": "ngày trước",
     "months_ago": "tháng trước",
     "years_ago": "năm trước",
+
+    "second_ago": "giây trước",
+    "minute_ago": "phút trước",
+    "hour_ago": "giờ trước",
+    "day_ago": "ngày trước",
+    "month_ago": "tháng trước",
+    "year_ago": "năm trước",
+
     "date": "Thời gian",
     "rate": "Tỉ Giá",
     "description": "Mô tả",
-    "amount": "Số lượng"
+    "amount": "Số lượng",
+    "recent": "Gần đây"
   },
 
   "terms":{

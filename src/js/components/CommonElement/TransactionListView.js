@@ -24,6 +24,15 @@ const TransactionListView = (props) => {
   }
 
   function calculateTimeStamp(timeStamp) {
+
+    if(timeStamp === "" || isNaN(timeStamp)){
+      return (props.translate('history.recent') || 'Recently')
+    }
+
+    var timeStamp = parseInt(timeStamp)
+   //  var now = Date.now() 
+    // console.log({timeStamp, now})
+
     var msPerMinute = 60 * 1000;
     var msPerHour = msPerMinute * 60;
     var msPerDay = msPerHour * 24;
@@ -32,28 +41,58 @@ const TransactionListView = (props) => {
 
     var elapsed = Date.now() - timeStamp * 1000;
 
+    if(elapsed <= 0){
+      return (props.translate('history.recent') || 'Recently')
+    }
+
     if (elapsed < msPerMinute) {
-      return Math.round(elapsed / 1000) + ' ' + (props.translate('history.second_ago') || 'seconds ago');
+      return '1 ' + (props.translate('history.minute_ago') || 'minute ago');
     }
 
     else if (elapsed < msPerHour) {
-      return Math.round(elapsed / msPerMinute) + ' ' + (props.translate('history.minutes_ago') || 'minutes ago');
+      var minute = Math.round(elapsed / msPerMinute)
+      if(minute === 1){
+        return minute + ' ' + (props.translate('history.minute_ago') || 'minute ago');  
+      }else{
+        return minute + ' ' + (props.translate('history.minutes_ago') || 'minutes ago');
+      }
     }
 
     else if (elapsed < msPerDay) {
-      return Math.round(elapsed / msPerHour) + ' ' + (props.translate('history.hours_ago') || 'hours ago');
+      var hour = Math.round(elapsed / msPerHour)
+      if (hour === 1) {
+        return hour + ' ' + (props.translate('history.hour_ago') || 'hour ago');
+      }else{
+        return hour + ' ' + (props.translate('history.hours_ago') || 'hours ago');
+      }
     }
 
     else if (elapsed < msPerMonth) {
-      return Math.round(elapsed / msPerDay) + ' ' + (props.translate('history.days_ago') || 'days ago');
+      var day = Math.round(elapsed / msPerDay)
+      if (day === 1) {
+        return day + ' ' + (props.translate('history.day_ago') || 'day ago');
+      }else{
+        return day + ' ' + (props.translate('history.days_ago') || 'days ago');
+      }
+      
     }
 
     else if (elapsed < msPerYear) {
-      return Math.round(elapsed / msPerMonth) + ' ' + (props.translate('history.months_ago') || 'months ago');
+      var month = Math.round(elapsed / msPerMonth)
+      if (month === 1){
+        return month + ' ' + (props.translate('history.month_ago') || 'month ago');  
+      }else{
+        return month + ' ' + (props.translate('history.months_ago') || 'months ago');
+      }
     }
 
     else {
-      return Math.round(elapsed / msPerYear) + ' ' + (props.translate('history.years_ago') || 'years ago');
+      var year = Math.round(elapsed / msPerYear)
+      if (year === 1){
+        return year + ' ' + (props.translate('history.year_ago') || 'year ago');
+      }else{
+        return year + ' ' + (props.translate('history.years_ago') || 'years ago');
+      }
     }
   }
 

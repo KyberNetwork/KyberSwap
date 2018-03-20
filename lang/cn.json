@@ -236,10 +236,19 @@
     "days_ago": "天之前",
     "months_ago": "月之前",
     "years_ago": "年之前",
+
+    "second_ago": "秒之前",
+    "minute_ago": "分钟之前",
+    "hour_ago": "小时之前",
+    "day_ago": "天之前",
+    "month_ago": "月之前",
+    "year_ago": "年之前",
+
     "date": "日期",
     "rate": "汇率",
     "description": "描述",
-    "amount": "数量"
+    "amount": "数量",
+    "recent": "最近"
   },
 
   "terms":{
