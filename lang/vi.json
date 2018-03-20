@@ -87,7 +87,7 @@
     "to": "đến",
     "best_rate": "Tỷ giá tốt nhất",
     "token_amount": "Token/Số lượng",
-    "click_to_swap": "Click để hoán đổi",
+    "click_to_swap": "Kích để hoán đổi",
 
     "transfer_tooltip": "Chuyển eth hoặc token đến một tài khoản khác",
     "transaction_gasprice_50": "Giá Gas càng cao, giao dịch càng nhanh. Giá Gas lớn nhất 50 Gwei",
@@ -95,7 +95,7 @@
     "best_rate_tooltip": "Tỷ giá thấp hơn cho khả năng thành công cao hơn khi thị trường biến động",
     "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>",
     "no_pedding_tx": "Không có giao dịch nào đang chờ",
-    "rate_info": "Rate có thể thay đổi. <br/>Bạn có thể  chỉ định rate nhỏ nhất bởi click \"NÂNG CAO\"",
+    "rate_info": "Tỉ giá có thể thay đổi. <br/>Bạn có thể  chỉ định tỉ giá nhỏ nhất bởi kích \"NÂNG CAO\"",
     "address": "Địa chỉ nhận",
     "slippage_tip": "Tỉ giá có thể thay đổi, bạn có thể chỉnh tỉ giá trong lựa chọn nâng cao",
     "max_slippage": "với tối đa ${percent}% trượt giá"
@@ -112,7 +112,7 @@
     "more_addresses": "Thêm Địa chỉ",
     "custom_path": "Path Tùy Chỉnh",
     "view_on_etherscan": "Xem trên Etherscan",
-    "press_confirm_if_really_want": "Click xác nhận nếu bạn thật sự muốn.",
+    "press_confirm_if_really_want": "Kích xác nhận nếu bạn thật sự muốn.",
     "press_approve": "Bấm đồng ý để tiếp tục",
     "waiting_for_confirmation": "Đang chờ xác nhận từ ví của bạn",
     "confirm_exchange_title": "Xác nhận giao dịch",
@@ -134,8 +134,8 @@
     "select_token_token": "Cặp token này chưa được hỗ trợ",
     "source_amount_too_high": "Số lượng chuyển quá lớn",
 
-    "source_amount_too_high_cap": "Số lượng chuyển vượt quá limit. Nguồn phải nhỏ hơn ${ cap } ETH",
-    "dest_amount_too_high_cap": "Số lượng chuyển vượt quá limit. Đích phải nhỏ hơn ${ cap } ETH",
+    "source_amount_too_high_cap": "Số lượng chuyển vượt quá hạn mức. Nguồn phải nhỏ hơn ${ cap } ETH",
+    "dest_amount_too_high_cap": "Số lượng chuyển vượt quá hạn mức. Đích phải nhỏ hơn ${ cap } ETH",
 
     "source_amount_too_small": "Số lượng chuyển quá nhỏ",
     "source_amount_rate_error": "Không thể chuyển đổi tại thời điểm hiện tại",
@@ -173,7 +173,7 @@
     "ledger_logged_in": "- Bạn đã đăng nhập vào Ledger.",
 
     "gas_price_not_number":"Giá Gas không phải là số",
-    "rate_not_number":"Rate không là số",
+    "rate_not_number":"Tỉ giá không là số",
     "gas_price_limit":"Giá gas cần nhỏ hơn ${maxGas} Gwei",
     "passphrase_error":"Không thể giải mã key",
     "gas_price_exceeded_limit":"Giá Gas vượt quá giới hạn",
@@ -191,7 +191,7 @@
     "path_is_invalid": "Sai đường dẫn. Hãy chọn một đường dẫn khác.",
     "ledger_time_out": "Phiên trên Ledger của bạn đã hết hạn. Đăng nhập lại để tiếp tục dụng.",
     "eth_balance_not_enough_for_fee": "Tài khoản của bạn không đủ ETH cho giao dịch",
-    "handle_amount":"Số lượng điền quá lớn, vui lòng giảm số lương giao dịch",
+    "handle_amount":"Số lượng điền quá lớn, vui lòng giảm số lượng giao dịch",
     "kyber_maintain":"Kyber hiện không cho giao dịch cặp này",
     "get_rate":"Không thể lấy tỉ giá từ blockchain",
     "exchange_enable":"Bạn đã giao dịch quá lượng 1 ngày! Bạn có thể giao dịch vào ngày mai tại thời điểm 00:00 UTC+0",
