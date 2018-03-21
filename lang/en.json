@@ -229,16 +229,23 @@
   },
 
   "history": {
-    "second_ago": "seconds ago",
+    "seconds_ago": "seconds ago",
     "minutes_ago": "minutes ago",
     "hours_ago": "hours ago",
     "days_ago": "days ago",
     "months_ago": "months ago",
     "years_ago": "years ago",
+    "second_ago": "second ago",
+    "minute_ago": "minute ago",
+    "hour_ago": "hour ago",
+    "day_ago": "day ago",
+    "month_ago": "month ago",
+    "year_ago": "year ago",
     "date": "Date",
     "rate": "Rate",
     "description": "Description",
-    "amount": "Amount"
+    "amount": "Amount",
+    "recent": "Recently"
   },
 
   "terms":{

@@ -140,7 +140,11 @@ export function filterInputNumber(event, value, preVal) {
     if (strRemoveText.indexOf('.') != i) val = ''
     return val
   })
+  if(str ==="."){
+    str = "0."
+  }
   event.target.value = str
+
   if (preVal == str) return false
   return true
 }

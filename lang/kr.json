@@ -89,8 +89,8 @@
     "click_to_swap": "스왑하려면 클릭하십시오.",
 
     "transfer_tooltip": "이더 또는 토큰을 다른 주소로 전송하십시오",
-    "transaction_gasprice_50": "높은 Gss 가격, 더 빠른 거래 속도, 최대 Gas 비용: 50 Gwei",
-    "transaction_gasprice": "높은 Gss 가격, 더 빠른 거래 속도",
+    "transaction_gasprice_50": "높은 Gas 가격, 더 빠른 거래 속도, 최대 Gas 비용: 50 Gwei",
+    "transaction_gasprice": "높은 Gas 가격, 더 빠른 거래 속도",
     "best_rate_tooltip": "시장이 변동될 때 가격을 낮추면 성공률이 높아질 수 있습니다",
     "terms_and_conditions": "<span>이용 약관 및 <br  class='show-for-small-only'>조건</span>",
 
@@ -157,7 +157,7 @@
     "cannot_connect_ledger": "LEDGER에 연결할 수 없습니다",
     "invalid_private_key": "잘못된 키입니다",
     "no_balance": "주소에 지원가능한 토큰이 없습니다. 다른 주소를 사용해주세요",
-    "clear_data_timeout": "세션 초과로 인해 데이터를 모두 삭제하였습니다 ${time} 분",
+    "clear_data_timeout": "세션 ${time}분 초과로 인해 데이터를 모두 삭제하였습니다",
     "minutes": " 분",
     "time_out": "시간초과",
     "network_error": "블록체인 연결이 원할하지 않습니다, 잠시 후 다시 시도해주세요",
@@ -238,11 +238,20 @@
     "days_ago": "일 전",
     "months_ago": "달 전",
     "years_ago": "년 전",
+    
+    "second_ago":"초 전",
+     "minute_ago":"분 전",
+     "hour_ago":"시간 전",
+     "day_ago":"일 전",
+     "month_ago":"달 전",
+     "year_ago":"년 전",
+
     "date": "날짜",
     "rate": "환율",
     "description": "설명",
     "amount": "수량",
-    "in": "로"
+    "in": "로",
+    "recent": "최근"
   },
   "terms":{
     "title" : "Kyber Wallet- 이용 약관",
@@ -266,8 +275,8 @@
   "home": "홈",
   "product_feedback": "제품 피드백하기",
   "help": "도움말",
-  "low": "낮기",
-  "standard": "표준",
-  "fast": "빠르기",
-  "search": "찾기"
+  "low": "느리다",
+  "standard": "보통",
+  "fast": "빠르다",
+  "search": "찾기"   
 }
