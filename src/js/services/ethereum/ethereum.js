@@ -266,7 +266,7 @@ export default class EthereumService extends React.Component {
     store.dispatch(updateBlock(ethereum))
   }
 
-  fetchRateExchange = () => {
+  fetchRateExchange = (isManual = false) => {
     var state = store.getState()
     var ethereum = state.connection.ethereum
     var source = state.exchange.sourceToken
@@ -291,7 +291,7 @@ export default class EthereumService extends React.Component {
       rateInit = tokens[sourceTokenSymbol].minRate
     }
 
-    store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmountHex, false, rateInit))
+    store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmountHex, isManual, rateInit))
   }
 
   fetchHistoryExchange = () => {
