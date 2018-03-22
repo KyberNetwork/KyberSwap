@@ -247,7 +247,7 @@ export default class Exchange extends React.Component {
 
   swapToken = () => {
     this.props.dispatch(exchangeActions.swapToken())
-    this.props.ethereum.fetchRateExchange()
+    this.props.ethereum.fetchRateExchange(true)
   }
 
   analyze = () => {
