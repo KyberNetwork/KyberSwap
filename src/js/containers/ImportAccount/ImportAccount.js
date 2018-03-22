@@ -11,7 +11,7 @@ import {
 import { importAccountMetamask } from "../../actions/accountActions"
 import {visitExchange} from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux'
-import Web3Service from "../../services/web3"
+import{ Web3Service } from "../../services/web3"
 import BLOCKCHAIN_INFO from "../../../../env"
 
 @connect((store) => {
@@ -49,10 +49,15 @@ export default class ImportAccount extends React.Component {
   componentDidMount = () => {
     if (typeof web3 !== "undefined") {
         var web3Service = new Web3Service(web3)
-        if(web3Service.isTrust()){
+        var walletType = web3Service.getWalletType()
+        if (walletType !== "kyber"){
           this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-            this.props.ethereum, this.props.tokens, this.props.translate))       
+            this.props.ethereum, this.props.tokens, this.props.translate, walletType))       
         }
+        // if(web3Service.isTrust()){
+        //   this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
+        //     this.props.ethereum, this.props.tokens, this.props.translate))       
+        // }
       }   
     }
 

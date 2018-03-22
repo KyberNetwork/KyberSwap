@@ -44,9 +44,9 @@ export function* updateTokenBalance(action) {
 }
 
 
-function* createNewAccount(address, type, keystring, ethereum){
+function* createNewAccount(address, type, keystring, ethereum, walletType){
   try{
-    const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
+    const account = yield call(service.newAccountInstance, address, type, keystring, ethereum, walletType)
     return {status: "success", res: account}
   }catch(e){
     console.log(e)
@@ -56,11 +56,11 @@ function* createNewAccount(address, type, keystring, ethereum){
 
 export function* importNewAccount(action) {
   yield put(actions.importLoading())
-  const { address, type, keystring, ethereum, tokens, metamask } = action.payload
+  const { address, type, keystring, ethereum, tokens, metamask, walletType } = action.payload
   var translate = getTranslate(store.getState().locale)
   try {
     var  account
-    var accountRequest = yield call(common.handleRequest, createNewAccount, address, type, keystring, ethereum)
+    var accountRequest = yield call(common.handleRequest, createNewAccount, address, type, keystring, ethereum, walletType)
 
     if (accountRequest.status === "timeout") {
       console.log("timeout")
@@ -133,7 +133,7 @@ export function* importNewAccount(action) {
 }
 
 export function* importMetamask(action) {
-  const { web3Service, networkId, ethereum, tokens, translate } = action.payload
+  const { web3Service, networkId, ethereum, tokens, translate, walletType } = action.payload
   try {
     const currentId = yield call([web3Service, web3Service.getNetworkId])
     if (parseInt(currentId, 10) !== networkId) {
@@ -158,7 +158,8 @@ export function* importMetamask(action) {
       web3Service,
       ethereum,
       tokens,
-      metamask
+      metamask,
+      walletType
     ))
   } catch (e) {
     console.log(e)

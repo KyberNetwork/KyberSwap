@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 
 import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
-
+import {getWalletId} from "../../services/web3"
 
 import * as exchangeActions from "../../actions/exchangeActions"
 import * as utilActions from "../../actions/utilActions"
@@ -306,7 +306,14 @@ export default class PostExchange extends React.Component {
     var minConversionRate = converters.toTWei(this.props.snapshot.minConversionRate)
     minConversionRate = converters.numberToHex(minConversionRate)
 
-    var blockNo = converters.numberToHexAddress(this.props.snapshot.blockNo)
+
+    // check wallet type
+    var walletType = this.props.account.walletType
+    var blockNo =  getWalletId (walletType, this.props.snapshot.blockNo)
+    //console.log("wallet_type")
+   // console.log(walletType)
+ 
+    
 
     var destAddress = this.props.account.address
     var maxDestAmount = converters.biggestNumber()
