@@ -49,7 +49,7 @@ function* selectToken(action) {
   yield put(utilActions.hideSelectToken())
 
   yield put(actions.checkSelectToken())
-  yield call(ethereum.fetchRateExchange)
+  yield call(ethereum.fetchRateExchange, true)
 
   yield call(fetchGas)
   //calculate gas use
@@ -67,7 +67,7 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   //track facebook
   try {
     if (typeof window.fbq === 'function') {
-        window.fbq('trackCustom', "CompleteTrade", {hash: hash})
+        window.fbq('trackCustom', "CompleteTrade", {hash: hash, wallet: "kyber"})
     }
   } catch (e) {
     console.log(e)
