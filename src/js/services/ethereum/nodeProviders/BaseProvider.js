@@ -524,7 +524,7 @@ export default class BaseProvider {
             this.rpc.eth.getGasPrice()
                 .then(result => {
                     
-                    console.log(result)
+                //    console.log(result)
                     var gasPrice = parseInt(result, 10)
                     if (gasPrice > 20000000000) {
                         resolve({
@@ -603,8 +603,8 @@ export default class BaseProvider {
                 data: data
             }, blockno)
                 .then(result => {
-                    console.log({source, dest, srcAmount, blockno})
-                    console.log("rate: " + result)
+                  //  console.log({source, dest, srcAmount, blockno})
+                  //  console.log("rate: " + result)
                     try{
                         var rates = this.rpc.eth.abi.decodeParameters([{
                             type: 'uint256',
@@ -613,7 +613,7 @@ export default class BaseProvider {
                             type: 'uint256',
                             name: 'slippagePrice'
                         }], result)
-                        console.log(rates)
+                  //      console.log(rates)
                         resolve(rates)
                     }catch(e){
                         resolve({

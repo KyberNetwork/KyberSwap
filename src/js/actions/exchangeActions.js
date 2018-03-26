@@ -563,3 +563,10 @@ export function setExchangeEnable(enable){
     payload: enable
   }
 }
+
+export function updateBalanceData(balanceData, hash){
+  return {
+    type: "EXCHANGE.UPDATE_BALANCE_DATA",
+    payload: {balanceData, hash}
+  }
+}
