@@ -143,7 +143,7 @@
     "source_amount_rate_error": "Cannot exchange at the moment. Please come back later",
     "source_amount_too_high_for_reserve": "Source amount is too high (pair is not available for trading at the moment)",
     "source_amount_is_not_number": "Source amount is not a number",
-    "not_possess_kgt": "您的地址似乎存在问题，请<a href=\"${link}\" target=\"_blank\">联系我们</a>以了解更多信息",
+    "not_possess_kgt": "There seems to be a problem with your address, please <a href=\"${link}\" target=\"_blank\">contact us</a> for more details",
 
     "dest_address": "This is not an address",
     "amount_transfer_too_hign": "Amount is too high",
