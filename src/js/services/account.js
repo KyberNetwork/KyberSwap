@@ -1,16 +1,17 @@
 export default class Account {
-  constructor(address, type, keystring, balance = 0, nonce = 0, manualNonce = 0) {
+  constructor(address, type, keystring, walletType, balance = 0, nonce = 0, manualNonce = 0) {
     this.address = address
     this.type = type
     this.keystring = keystring
     this.balance = balance
     this.nonce = nonce
     this.manualNonce = manualNonce
+    this.walletType = walletType
   }
 
   shallowClone() {
     return new Account(
-      this.address, this.type, this.keystring,
+      this.address, this.type, this.keystring, this.walletType,
       this.balance, this.nonce, this.manualNonce, this.event)
   }
 

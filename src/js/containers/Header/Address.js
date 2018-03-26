@@ -7,7 +7,7 @@ import { AddressView } from "../../components/Header"
 import { Notify } from "../Header";
 import { getTranslate } from 'react-localize-redux'
 
-import Web3Service from "../../services/web3"
+import {Web3Service} from "../../services/web3"
 
 
 @connect((store, props) => {

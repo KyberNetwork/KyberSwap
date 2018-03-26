@@ -50,8 +50,8 @@
     "failed": "失败!",
     "broadcasted": "交易上链完成!",
     "broadcasting": "交易上链中!",
-    "success_ex_msg": "成功地将 ${source} 交易为 ${dest} 了",
-    "success_tx_msg": "成功地将 ${token} 转移至 ${address}",
+    "success_ex_msg": "成功地将 </br> ${sourceAmount} ${sourceSymbol} 交易为 ${destAmount} ${destSymbol} 了",
+    "success_tx_msg": "成功地将 </br> ${amount} ${token} 转移至 ${address}",
     "copy_tx": "拷贝交易哈希",
     "analyze_error": "失败原因",
     "copied": "拷贝成功",
@@ -83,6 +83,7 @@
     "gas_limit": "燃料限额",
     "gas_price": "燃料价格",
     "for": "换至",
+    "exchange_for": "约为",
     "to": "至",
     "best_rate": "最小价格",
     "token_amount": "代币／数量",
@@ -98,7 +99,9 @@
     "error_tx_contract":"警告！合约执行过程中发生了错误",
     "no_pedding_tx": "没有待处理的交易",
     "rate_info": "价格也许会在结算过程中发生变化。<br> 您可以点击\"高级选项\"来显示您的最低价格。",
-    "address": "接收的地址"
+    "address": "接收的地址",
+    "slippage_tip": "费率可能会改变。 您可以在高级选项中调整最小价格来更改最大滑点率",
+    "max_slippage": "滑点率至多为${percent}%"
   },
 
   "modal": {
@@ -152,7 +155,7 @@
     "cannot_connect_ledger": "无法连接至Ledger",
     "invalid_private_key": "无效的密钥",
     "no_balance": "您的地址上没有我们支持的代币。请导入其它的地址。",
-    "clear_data_timeout": "由于您的会话超时，我们清除了您的数据 ${time} 分钟",
+    "clear_data_timeout": "由于您的会话超时${time} 分钟，我们清除了您的数据",
     "minutes": " 分钟",
     "time_out": "超时",
     "network_error": "目前无法连接到区块链。请稍后再尝试。",
@@ -193,7 +196,8 @@
     "handle_amount":"Kyber无法处理您的数量，请减少数量",
     "kyber_maintain":"Kyber交易所正在维修这对代币",
     "get_rate":"无法从区块链获得利率",
-    "exchange_enable":"您已经超过了您的每日限额！ 您可以在明天00:00 UTC+0再次进行交易"
+    "exchange_enable":"您已经超过了您的每日限额！ 您可以在明天00:00 UTC+0再次进行交易",
+    "min_rate_greater_expected_rate": "您设置的最低汇率高于KyberNetwork推荐的汇率。 您的交易很有可能失败。"
   },
 
   "import": {
@@ -232,10 +236,19 @@
     "days_ago": "天之前",
     "months_ago": "月之前",
     "years_ago": "年之前",
+
+    "second_ago": "秒之前",
+    "minute_ago": "分钟之前",
+    "hour_ago": "小时之前",
+    "day_ago": "天之前",
+    "month_ago": "月之前",
+    "year_ago": "年之前",
+
     "date": "日期",
     "rate": "汇率",
     "description": "描述",
-    "amount": "数量"
+    "amount": "数量",
+    "recent": "最近"
   },
 
   "terms":{
