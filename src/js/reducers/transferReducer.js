@@ -33,11 +33,13 @@ const transfer = (state = initState, action) => {
     case "TRANSFER.SELECT_TOKEN":
       newState.tokenSymbol = action.payload.symbol
       newState.token = action.payload.address
-      if (newState.tokenSymbol === 'ETH') {
-        newState.gas_estimate = newState.gas_limit_transfer_eth
-      } else {
-        newState.gas_estimate = newState.gas_limit_transfer_token
-      }
+      newState.amount = ""
+      newState.errors = initState.errors
+      // if (newState.tokenSymbol === 'ETH') {
+      //   newState.gas_estimate = newState.gas_limit_transfer_eth
+      // } else {
+      //   newState.gas_estimate = newState.gas_limit_transfer_token
+      // }
       newState.selected = true
       return newState
     case "TRANSFER.THOW_ERROR_SELECT_TOKEN":
@@ -162,8 +164,9 @@ const transfer = (state = initState, action) => {
         tokenName: action.payload.balanceData.name,
         tokenDecimal: action.payload.balanceData.decimal,
         tokenSymbol: action.payload.balanceData.tokenSymbol,
-        prev: action.payload.balanceData.balance,
-        next: 0
+        amount: action.payload.balanceData.amount,
+        // prev: action.payload.balanceData.balance,
+        // next: 0
       }
       return newState
     }

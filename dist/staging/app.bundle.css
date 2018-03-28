@@ -8529,6 +8529,8 @@ ul.broadcast-steps {
   padding: 0;
   list-style: none;
   font-size: 0; }
+  ul.broadcast-steps .text-success {
+    line-height: 35px; }
   ul.broadcast-steps .pending h4, ul.broadcast-steps .success h4, ul.broadcast-steps .failed h4 {
     font-size: 1.2rem; }
   ul.broadcast-steps ul.address-balances {
@@ -8742,6 +8744,15 @@ ul.broadcast-steps {
 @media print, screen and (min-width: 40em) {
   #request-trezor-access-modal {
     max-width: 400px; } }
+
+.exchange-caption .error-text {
+  display: block;
+  color: #ff5d00; }
+
+.exchange-caption .info-text {
+  display: block;
+  color: #a5a5a5;
+  margin-bottom: 15px; }
 
 span.address {
   font-weight: bold; }
@@ -8973,6 +8984,28 @@ label.address-path-stamp {
         color: white; }
       .address-paths input[type=radio]:checked + .address-path-stamp .note {
         color: #BBDAD5; }
+
+.user-bar .dropdown {
+  display: inline-block; }
+  .user-bar .dropdown .dropdown-menu {
+    position: absolute;
+    top: -20px !important;
+    z-index: 10;
+    outline: 0;
+    border: 0; }
+    .user-bar .dropdown .dropdown-menu:focus {
+      border: 0;
+      outline: 0; }
+
+.dropdown {
+  display: inline-block; }
+
+.dropdown__content {
+  display: none;
+  position: absolute; }
+
+.dropdown--active .dropdown__content {
+  display: block; }
 
 .token-input {
   background-color: white;
@@ -9247,6 +9280,30 @@ input[type=number] {
   color: #ffffff;
   cursor: pointer;
   background-color: #415b68; }
+  .token-selector .dropdown {
+    width: 100%; }
+    .token-selector .dropdown.dropdown--active {
+      background-color: #243c48; }
+      .token-selector .dropdown.dropdown--active .focus-item {
+        border-color: #ffffff;
+        border-bottom: 1px solid #4c636f; }
+      .token-selector .dropdown.dropdown--active .select-item {
+        display: block;
+        border: 2px solid #ffffff;
+        border-top: none; }
+    .token-selector .dropdown .dropdown__content {
+      width: 100%;
+      margin-top: -1px; }
+    .token-selector .dropdown .dropdown-menu {
+      width: 100%;
+      top: -17px !important;
+      z-index: 5;
+      height: 0px;
+      outline: 0;
+      border: 0; }
+      .token-selector .dropdown .dropdown-menu:focus {
+        border: 0;
+        outline: 0; }
   .token-selector .token-name {
     color: #aaa; }
   .token-selector input {
@@ -9264,6 +9321,8 @@ input[type=number] {
     padding: 6px 12px;
     border: 2px solid transparent;
     border-bottom: 1px solid transparent;
+    color: white;
+    align-items: center;
     font-size: 15px; }
     .token-selector .focus-item .icon {
       margin-right: 10px;
@@ -9284,15 +9343,6 @@ input[type=number] {
     .token-selector .select-item .search-item {
       padding: 10px 15px 0px 15px;
       margin-bottom: 10px; }
-  .token-selector.open {
-    background-color: #243c48; }
-    .token-selector.open .focus-item {
-      border-color: #ffffff;
-      border-bottom: 1px solid #4c636f; }
-    .token-selector.open .select-item {
-      display: block;
-      border: 2px solid #ffffff;
-      border-top: none; }
   .token-selector .list-item {
     height: 200px;
     overflow-y: auto; }
@@ -9303,6 +9353,10 @@ input[type=number] {
       .token-selector .list-item .token-item .item-icon {
         width: 35px;
         display: inline-block; }
+      .token-selector .list-item .token-item > div > span {
+        color: white; }
+      .token-selector .list-item .token-item > div span.token-name {
+        color: #aaa; }
       .token-selector .list-item .token-item > div .item-name {
         margin-left: 10px;
         margin-right: 5px; }
@@ -9661,7 +9715,8 @@ h6, .h6 {
       list-style: none;
       font-size: 0;
       text-align: left;
-      top: 50px;
+      top: 23px;
+      right: -20px;
       z-index: 5;
       width: 330px;
       left: auto; }

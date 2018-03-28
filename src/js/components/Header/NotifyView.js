@@ -1,12 +1,13 @@
 import React, { Fragment } from "react"
 import BLOCKCHAIN_INFO from "../../../../env"
-import Menu, {SubMenu, MenuItem} from 'rc-menu';
+import Menu, { SubMenu, MenuItem } from 'rc-menu'
+import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
 
 const Notify = (props) => {
   var classNotify = ""
-  if (!props.displayTrans) {
-    classNotify += "hide"
-  }
+  // if (!props.displayTrans) {
+  //   classNotify += "hide"
+  // }
   var counter = ""
   if (props.transactionsNum !== 0) {
     counter = <span class="counter">{props.transactionsNum}</span>
@@ -58,18 +59,18 @@ const Notify = (props) => {
     }
     var tx = props.txs[hash]
 
-    if(tx && tx.error == "transaction.error_tx_log" && classTx === "failed"){
+    if (tx && tx.error == "transaction.error_tx_log" && classTx === "failed") {
       return (
         <li key={hash}>
           <a class={classTx} href={hashDetailLink(tx.hash)} target="_blank">
             <div class="title"><span class="amount">{createRecap(tx.type, tx.data)}</span></div>
-  
+
             <div class="link">{tx.hash.slice(0, 10)} ... {tx.hash.slice(-6)}</div>
             {/* <div class="reason">{props.translate(tx.error || tx.errorInfo) || "Transaction is not mined"}</div> */}
-            
+
           </a>
           <button className="analyze" onClick={(e) => props.handleAnalyze(tx.hash)}>
-              {props.translate('transaction.analyze') || "Show reasons"}
+            {props.translate('transaction.analyze') || "Show reasons"}
           </button>
         </li>
       )
@@ -78,7 +79,7 @@ const Notify = (props) => {
         <li key={hash}>
           <a class={classTx} href={hashDetailLink(tx.hash)} target="_blank">
             <div class="title"><span class="amount">{createRecap(tx.type, tx.data)}</span></div>
-  
+
             <div class="link">{tx.hash.slice(0, 10)} ... {tx.hash.slice(-6)}</div>
             {classTx === "failed" &&
               <div class="reason">{props.translate(tx.error || tx.errorInfo) || "Transaction is not mined"}</div>
@@ -90,20 +91,37 @@ const Notify = (props) => {
   });
 
   return (
-    <Fragment>
-      <a className="notifications-toggle" href="#notifications" onClick={(e) => props.displayTransactions(e)}>
+    <Dropdown onHide = {(e) => props.displayTransactions(e)}>
+      <DropdownTrigger className="notifications-toggle">
         <img src={require('../../../assets/img/menu.svg')} />{counter}
-      </a>
-      <ul className={"notifications animated fadeIn " + classNotify}>
-        {transactions}
-        {props.transactionsNum === 0 &&
-          <li className="empty">
-            <img src={require('../../../assets/img/empty.svg')} />
-            <p>{props.translate('transaction.no_pedding_tx') || 'No pending transaction'}</p>
-          </li>
-        }
-      </ul>
-      </Fragment>
+      </DropdownTrigger>
+      <DropdownContent>
+        <ul className={"notifications animated fadeIn " + classNotify}>
+          {transactions}
+          {props.transactionsNum === 0 &&
+            <li className="empty">
+              <img src={require('../../../assets/img/empty.svg')} />
+              <p>{props.translate('transaction.no_pedding_tx') || 'No pending transaction'}</p>
+            </li>
+          }
+        </ul>
+      </DropdownContent>
+    </Dropdown>
+
+    // <Fragment>
+    //   <a className="notifications-toggle" href="#notifications" onClick={(e) => props.displayTransactions(e)}>
+    //     <img src={require('../../../assets/img/menu.svg')} />{counter}
+    //   </a>
+    //   <ul className={"notifications animated fadeIn " + classNotify}>
+    //     {transactions}
+    //     {props.transactionsNum === 0 &&
+    //       <li className="empty">
+    //         <img src={require('../../../assets/img/empty.svg')} />
+    //         <p>{props.translate('transaction.no_pedding_tx') || 'No pending transaction'}</p>
+    //       </li>
+    //     }
+    //   </ul>
+    //   </Fragment>
   )
 }
 

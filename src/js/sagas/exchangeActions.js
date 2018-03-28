@@ -49,7 +49,7 @@ function* selectToken(action) {
   yield put(utilActions.hideSelectToken())
 
   yield put(actions.checkSelectToken())
-  yield call(ethereum.fetchRateExchange)
+  yield call(ethereum.fetchRateExchange, true)
 
   yield call(fetchGas)
   //calculate gas use
@@ -67,7 +67,7 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   //track facebook
   try {
     if (typeof window.fbq === 'function') {
-        window.fbq('trackCustom', "CompleteTrade", {hash: hash})
+        window.fbq('trackCustom', "CompleteTrade", {hash: hash, wallet: "kyber"})
     }
   } catch (e) {
     console.log(e)
@@ -678,8 +678,9 @@ function* updateRatePending(action) {
     if(rateRequest.status === "success"){
       const { expectedPrice, slippagePrice, lastestBlock } = rateRequest.res
       yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
-    }else{
-      yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
+    }
+    else{
+      //yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
 
       //yield put(actions.setRateFailError())
     }

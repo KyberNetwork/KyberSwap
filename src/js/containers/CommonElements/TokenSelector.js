@@ -27,12 +27,19 @@ export default class TokenSelector extends React.Component {
     this.setState({ searchWord: value })
   }
 
-  toggleOpen = (e) => {
-    this.setState({ open: !this.state.open })
+  showTokens = (e) => {
+    this.setState({ open: true })
   }
+
+  hideTokens = (e) => {
+    this.setState({ open: false })
+  }
+
   selectItem = (event, symbol, address) => {
     this.props.chooseToken(symbol, address, this.props.type)
-    this.setState({ open: false })
+    //this.toggleOpen()
+    //console.log("toggle 2: " + this.state.open)
+   // this.setState({ open: false })
   }
 
   render() {
@@ -46,6 +53,8 @@ export default class TokenSelector extends React.Component {
         changeWord={this.changeWord}
         selectItem={this.selectItem}
         translate={this.props.translate}
+        showTokens = {this.showTokens}
+        hideTokens = {this.hideTokens}
       />
     )
   }

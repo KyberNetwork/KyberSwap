@@ -150,7 +150,7 @@ export function gweiToEth(number) {
   if (number === "" || isNaN(number)) {
     return "0"
   }
-  var bigNumber = new BigNumber(number)
+  var bigNumber = new BigNumber(number.toString())
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
     return number
   } else if (acceptableTyping(number)) {
@@ -333,6 +333,40 @@ export function compareTwoNumber(num1, num2){
   var num2Big = new BigNumber(num2.toString())
   return num1Big.comparedTo(num2Big)
 }
+
+export function compareRate(minRate, expectedRate){
+  if((minRate === "") || isNaN(minRate)) return -1
+  if((expectedRate === "") || isNaN(expectedRate)) return -1
+
+  var minRateBig = new BigNumber(minRate)
+  var rateWeight = new BigNumber(10).pow(18)
+  minRateBig = minRateBig.times(rateWeight)
+
+  var expectedRateBig = new BigNumber(expectedRate)
+  return minRateBig.comparedTo(expectedRateBig)
+}
+
+export function calculatePercentRate(minRate, expectedRate){
+  if((minRate === "") || isNaN(minRate)) return 0
+  if((expectedRate === "") || isNaN(expectedRate)) return 0
+
+  var minRateBig = new BigNumber(minRate)
+  var rateWeight = new BigNumber(10).pow(20)
+  minRateBig = minRateBig.times(rateWeight)
+
+  var expectedRateBig = new BigNumber(expectedRate)
+
+  var percent = minRateBig.dividedBy(expectedRate)
+
+  var fullNumber = new BigNumber(100)
+
+  var remainPercent = fullNumber.minus(percent)
+  
+  var remainPercentStr = remainPercent.toFixed(1)
+
+  return parseFloat(remainPercentStr)
+}
+
 
 export function findNetworkName(networkId){
   switch(networkId){

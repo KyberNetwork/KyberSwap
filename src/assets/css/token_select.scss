@@ -3,6 +3,51 @@
   color: $white;
   cursor: pointer;
   background-color: #415b68;
+  .dropdown{
+    width: 100%;
+
+    &.dropdown--active{
+      background-color: #243c48;
+      .focus-item{
+        border-color: $white;
+        border-bottom: 1px solid #4c636f;
+      }
+      .select-item{
+        display: block;
+        border: 2px solid $white;
+        border-top: none;
+      }
+    }
+    .dropdown__content{
+      width: 100%;
+      margin-top: -1px;
+    }
+    // input{
+    //   outline: 0;
+    //   border: 0;
+    //   &:focus{
+    //     outline: 0;
+    //     border: 0;
+    //   }
+    // }
+    // button{      
+    //   &.btn{
+    //     width: 100%;
+    //   }      
+    // } 
+    .dropdown-menu{
+      width: 100%;
+      top: -17px !important;
+      z-index: 5;
+      height: 0px;
+      outline: 0;
+      border: 0;
+      &:focus{
+        border: 0;
+        outline: 0;
+      }
+    }
+  }
   .token-name{
     color: #aaa;
   }
@@ -25,6 +70,8 @@
     padding: 6px 12px;
     border: 2px solid transparent;
     border-bottom: 1px solid transparent;
+    color: white;
+    align-items: center;
     font-size: 15px;
     .icon{
       margin-right: 10px;
@@ -51,18 +98,18 @@
       margin-bottom: 10px;
     }
   }
-  &.open{
-    background-color: #243c48;
-    .focus-item{
-      border-color: $white;
-      border-bottom: 1px solid #4c636f;
-    }
-    .select-item{
-      display: block;
-      border: 2px solid $white;
-      border-top: none;
-    }
-  }
+  // &.open{
+  //   background-color: #243c48;
+  //   .focus-item{
+  //     border-color: $white;
+  //     border-bottom: 1px solid #4c636f;
+  //   }
+  //   .select-item{
+  //     display: block;
+  //     border: 2px solid $white;
+  //     border-top: none;
+  //   }
+  // }
 
   .list-item{
     height: 200px;
@@ -78,6 +125,12 @@
         display: inline-block;
       }
       >div{
+        >span{
+          color: white
+        }
+        span.token-name{
+          color: #aaa;
+        }
         .item-name{
           margin-left: 10px;
           margin-right: 5px;
