@@ -176,6 +176,22 @@
         "decimal": 18,
         "icon": "rcn.svg",
         "usd_id": "ripio-credit-network"
+      },
+      "ZIL": {
+        "name": "Zilliqa",
+        "address": "0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27",
+        "symbol": "ZIL",
+        "decimal": 12,
+        "icon": "zil.svg",
+        "usd_id":"zilliqa"
+      },
+      "LINK": {
+        "name": "Chain Link",
+        "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+        "symbol": "LINK",
+        "decimal": 18,
+        "icon": "link.svg",
+        "usd_id":"chainlink"
       }
     },
     "ethScanUrl": "https://etherscan.io/",
