@@ -619,7 +619,7 @@ export function* exchangeTokentoETHMetamask(action) {
 }
 
 function* getRate(ethereum, source, dest, sourceAmount) {
-  console.log({source, dest, sourceAmount})
+  //console.log({source, dest, sourceAmount})
   try {
     //get latestblock
     const lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
@@ -643,8 +643,10 @@ function* updateRatePending(action) {
  // var exchangeSnapshot = state.exchange.snapshot
   var translate = getTranslate(state.locale)
 
+  console.log("is_manual: " + isManual)
   if (isManual) {
     var rateRequest = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmount)
+    console.log("rate_request_manual: " + JSON.stringify(rateRequest))
     if (rateRequest.status === "success") {
       const { expectedPrice, slippagePrice, lastestBlock } = rateRequest.data
       yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
@@ -653,10 +655,10 @@ function* updateRatePending(action) {
       // }else{
       //   yield put(actions.caculateAmount())
       // }
-    }else{
-      yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
-    //  yield put(actions.setRateFailError())
     }
+    // else{
+    //   yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
+    // }
 
     if(rateRequest.status === "timeout"){
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred", 
@@ -674,10 +676,17 @@ function* updateRatePending(action) {
 
   } else {
     const rateRequest = yield call(getRate, ethereum, source, dest, sourceAmount)
-
+    console.log("rate_request_manual_not: " + JSON.stringify(rateRequest))
     if(rateRequest.status === "success"){
       const { expectedPrice, slippagePrice, lastestBlock } = rateRequest.res
+
       yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
+
+      // if (expectedPrice.toString() !== "0"){
+      //   yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
+      // }
+
+      
     }
     else{
       //yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))

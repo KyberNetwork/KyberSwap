@@ -272,7 +272,16 @@ export function roundingNumber(number) {
     return Math.floor(number).toLocaleString();
   }
 
-  let precision = number.toPrecision((number < 1 && number > 0) ? MAX_DIGIS - 1 : MAX_DIGIS),
+  let count_0 = 0
+  for (let j of numberStr) {
+    if(j == '.') continue
+    if(j == 0) 
+      count_0++ 
+    else 
+      break
+  }
+
+  let precision = number.toPrecision((number < 1 && number > 0) ? MAX_DIGIS - count_0 : MAX_DIGIS),
     arr = precision.split('.'),
     intPart = arr[0],
     i = intPart.length % SIZE || SIZE,

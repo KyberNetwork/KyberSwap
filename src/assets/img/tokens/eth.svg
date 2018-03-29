@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
     <title>eth</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="eth">
-            <path d="M13,2 C6.37258857,2 1,7.37258857 1,14 C1,20.6274286 6.37258857,26 13,26 C19.6274286,26 25,20.6274286 25,14 C25,7.37258857 19.6274286,2 13,2 Z" id="path0_fill-path" fill="#FFFFFF"></path>
-            <path d="M14,0 C6.26802,0 0,6.26802 0,14 C0,21.732 6.26802,28 14,28 C21.732,28 28,21.732 28,14 C28,6.26802 21.732,0 14,0 Z" id="path0_fill-path" fill="#FFFFFF"></path>
-            <path d="M14,0 C6.26802,0 0,6.26802 0,14 C0,21.732 6.26802,28 14,28 C21.732,28 28,21.732 28,14 C28,6.26802 21.732,0 14,0 Z M13.8185,23.2754 L8.28586,15.4491 L13.8185,18.6884 L13.8185,23.2754 Z M13.8185,17.5414 L8.24843,14.2786 L13.8185,11.8387 L13.8185,17.5414 Z M13.8185,11.4467 L8.42782,13.8078 L13.8185,4.75068 L13.8185,11.4467 Z M14.1775,4.74796 L19.644,13.8414 L14.1775,11.4467 L14.1775,4.74796 Z M14.1775,23.2754 L14.1775,18.6884 L19.7102,15.4491 L14.1775,23.2754 Z M14.1775,17.5415 L14.1775,11.8388 L19.7517,14.2805 L14.1775,17.5415 Z" id="path0_fill" fill="#8B9FF7" fill-rule="nonzero"></path>
+    <g id="Wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop" transform="translate(-128.000000, -320.000000)">
+            <g id="eth" transform="translate(128.000000, 320.000000)">
+                <circle id="Oval" fill="#FFFFFF" cx="14" cy="14" r="14"></circle>
+                <g id="eth-shape" transform="translate(8.000000, 4.181818)" stroke-width="1">
+                    <g id="eth">
+                        <polygon id="Shape" fill="#343434" fill-rule="nonzero" points="5.99824104 0 5.86729642 0.454497108 5.86729642 13.6408961 5.99824104 13.7743136 11.9964821 10.1564847"></polygon>
+                        <polygon id="Shape" fill="#8C8C8C" fill-rule="nonzero" points="5.99824104 0 0 10.1564847 5.99824104 13.7745131"></polygon>
+                        <polygon id="Shape" fill="#3C3C3B" fill-rule="nonzero" points="5.99824104 14.9335904 5.92436482 15.0255268 5.92436482 19.7234594 5.99824104 19.9428306 12 11.3175563"></polygon>
+                        <polygon id="Shape" fill="#8C8C8C" fill-rule="nonzero" points="5.99824104 19.9428306 5.99824104 14.9333909 0 11.3175563"></polygon>
+                        <polyline id="Shape" fill="#141414" fill-rule="nonzero" points="5.99824104 13.7745131 11.9962866 10.1564847 5.99824104 7.37445988 5.99824104 13.7745131"></polyline>
+                        <polyline id="Shape" fill="#393939" fill-rule="nonzero" points="0 10.1564847 5.9980456 13.7745131 5.9980456 7.37426045"></polyline>
+                    </g>
+                </g>
+            </g>
         </g>
     </g>
 </svg>

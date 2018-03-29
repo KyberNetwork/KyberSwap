@@ -241,7 +241,8 @@ export default class Exchange extends React.Component {
 
       this.focusSource()
 
-      this.props.dispatch(exchangeActions.inputChange('source', balance));
+      this.props.dispatch(exchangeActions.inputChange('source', balance))
+      this.props.ethereum.fetchRateExchange(true)
     }
   }
 
