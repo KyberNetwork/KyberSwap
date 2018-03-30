@@ -135,16 +135,18 @@ export function verifyPassphrase(passphrase, repassphrase) {
 }
 
 export function filterInputNumber(event, value, preVal) {
+  console.log("filter_input")
+  console.log({ value, preVal})
   var strRemoveText = value.replace(/[^0-9.]/g, '')
   var str = strRemoveText.replace(/\./g, (val, i) => {
     if (strRemoveText.indexOf('.') != i) val = ''
     return val
   })
-  if(str ==="."){
+  if(str === "."){
     str = "0."
   }
   event.target.value = str
 
-  if (preVal == str) return false
+  if (preVal === str) return false
   return true
 }
