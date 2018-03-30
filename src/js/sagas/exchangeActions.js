@@ -5,6 +5,7 @@ import * as globalActions from "../actions/globalActions"
 import * as common from "./common"
 import * as validators from "../utils/validators"
 import {getWalletId} from "../services/web3"
+import * as analytics from "../utils/analytics"
 
 import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
 import { addTx } from '../actions/txActions'
@@ -66,14 +67,9 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
     console.log(e)
   }
 
-  //track facebook
-  try {
-    if (typeof window.fbq === 'function') {
-        window.fbq('trackCustom', "CompleteTrade", {hash: hash, wallet: account.walletType})
-    }
-  } catch (e) {
-    console.log(e)
-  }
+  //track complete trade
+  analytics.trackCoinExchange(data)
+  analytics.completeTrade(hash, "kyber", "exchange")
 
   //console.log({txRaw, hash, account, data})
   const tx = new Tx(
@@ -621,7 +617,7 @@ export function* exchangeTokentoETHMetamask(action) {
 }
 
 function* getRate(ethereum, source, dest, sourceAmount) {
- // console.log({source, dest, sourceAmount})
+  //console.log({source, dest, sourceAmount})
   try {
     //get latestblock
     const lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
@@ -645,9 +641,10 @@ function* updateRatePending(action) {
  // var exchangeSnapshot = state.exchange.snapshot
   var translate = getTranslate(state.locale)
 
-  console.log({isManual})
+  console.log("is_manual: " + isManual)
   if (isManual) {
     var rateRequest = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmount)
+    console.log("rate_request_manual: " + JSON.stringify(rateRequest))
     if (rateRequest.status === "success") {
       const { expectedPrice, slippagePrice, lastestBlock } = rateRequest.data
       yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
@@ -656,10 +653,10 @@ function* updateRatePending(action) {
       // }else{
       //   yield put(actions.caculateAmount())
       // }
-    }else{
-      yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
-    //  yield put(actions.setRateFailError())
     }
+    // else{
+    //   yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
+    // }
 
     if(rateRequest.status === "timeout"){
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred", 
@@ -677,10 +674,17 @@ function* updateRatePending(action) {
 
   } else {
     const rateRequest = yield call(getRate, ethereum, source, dest, sourceAmount)
-
+    console.log("rate_request_manual_not: " + JSON.stringify(rateRequest))
     if(rateRequest.status === "success"){
       const { expectedPrice, slippagePrice, lastestBlock } = rateRequest.res
+
       yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
+
+      // if (expectedPrice.toString() !== "0"){
+      //   yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
+      // }
+
+      
     }
     else{
       //yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
@@ -1215,10 +1219,12 @@ function* verifyExchange(){
     exchange.maxCap)
 
   var sourceAmountErrorKey
+  var isNotNumber = false
   switch (validateAmount) {
-    // case "not a number":
-    //   sourceAmountErrorKey = "error.source_amount_is_not_number"
-    //   break
+    case "not a number":
+      sourceAmountErrorKey = "error.source_amount_is_not_number"
+      isNotNumber = true
+      break
     case "too high":
       sourceAmountErrorKey = "error.source_amount_too_high"
       break
@@ -1232,11 +1238,18 @@ function* verifyExchange(){
       sourceAmountErrorKey = "error.source_amount_too_high_for_reserve"
       break
   } 
-  if (sourceAmountErrorKey) {
-    yield put(actions.thowErrorSourceAmount(sourceAmountErrorKey))
-  }else{
-    yield put(actions.thowErrorSourceAmount(""))
+  if(!isNotNumber){
+    if (sourceAmountErrorKey) {
+      yield put(actions.thowErrorSourceAmount(sourceAmountErrorKey))
+    }else{
+      yield put(actions.thowErrorSourceAmount(""))
+    }
   }
+  // if (sourceAmountErrorKey) {
+  //   yield put(actions.thowErrorSourceAmount(sourceAmountErrorKey))
+  // }else{
+  //   yield put(actions.thowErrorSourceAmount(""))
+  // }
 
   if (isNaN(sourceAmount) || sourceAmount === "") {
     sourceAmount = 0

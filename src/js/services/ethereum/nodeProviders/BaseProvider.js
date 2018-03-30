@@ -603,8 +603,12 @@ export default class BaseProvider {
                 data: data
             }, blockno)
                 .then(result => {
-                  //  console.log({source, dest, srcAmount, blockno})
-                  //  console.log("rate: " + result)
+                    console.log({source, dest, srcAmount, blockno})
+                    console.log("rate: " + result)
+                    if (result === "0x"){
+                        reject(new Error("Cannot get rate"))
+                        return
+                    }
                     try{
                         var rates = this.rpc.eth.abi.decodeParameters([{
                             type: 'uint256',
@@ -616,10 +620,11 @@ export default class BaseProvider {
                   //      console.log(rates)
                         resolve(rates)
                     }catch(e){
-                        resolve({
-                            expectedPrice: "0",
-                            slippagePrice: "0"
-                        })
+                        reject(e)
+                        // resolve({
+                        //     expectedPrice: "0",
+                        //     slippagePrice: "0"
+                        // })
                     }
                 }).catch((err) => {
                     reject(err)

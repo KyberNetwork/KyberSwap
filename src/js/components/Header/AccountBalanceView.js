@@ -44,9 +44,13 @@ const AccountBalanceView = (props) => {
   function getBalanceUsd() {
     var total = 0
     Object.values(props.tokens).map(token => {
+      if (!token.rateUSD){
+        return
+      }
       var balance = converts.toT(token.balance, token.decimal)
       total += balance * token.rateUSD
     })
+    console.log("total: " + total)
     var roundingTotal = converts.roundingNumber(total)
     return roundingTotal
   }

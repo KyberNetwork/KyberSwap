@@ -6,6 +6,7 @@ import { fetchExchangeEnable } from "../actions/exchangeActions"
 
 import { openInfoModal } from '../actions/utilActions'
 import * as common from "./common"
+import * as analytics from "../utils/analytics"
 
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
 import { randomToken, setRandomExchangeSelectedToken, setCapExchange, thowErrorNotPossessKGt } from "../actions/exchangeActions"
@@ -85,6 +86,12 @@ export function* importNewAccount(action) {
    // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
     yield put(actions.closeImportLoading())
     yield put(actions.importNewAccountComplete(account))
+
+
+    //track login wallet
+    analytics.loginWallet(type)
+    
+
     yield put(goToRoute('/exchange'))
 
     yield put(fetchExchangeEnable())
