@@ -4,6 +4,8 @@ import * as globalActions from "../actions/globalActions"
 
 import * as common from "./common"
 import * as validators from "../utils/validators"
+import {getWalletId} from "../services/web3"
+import * as analytics from "../utils/analytics"
 
 import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
 import { addTx } from '../actions/txActions'
@@ -58,20 +60,16 @@ function* selectToken(action) {
 
 export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
 
+  //console.log("wallet_type: " + account.walletType)
   try {
     yield call(getInfo, hash)
   } catch (e) {
     console.log(e)
   }
 
-  //track facebook
-  try {
-    if (typeof window.fbq === 'function') {
-        window.fbq('trackCustom', "CompleteTrade", {hash: hash, wallet: "kyber"})
-    }
-  } catch (e) {
-    console.log(e)
-  }
+  //track complete trade
+  analytics.trackCoinExchange(data)
+  analytics.completeTrade(hash, "kyber", "exchange")
 
   //console.log({txRaw, hash, account, data})
   const tx = new Tx(
@@ -893,6 +891,7 @@ function* getGasConfirm() {
   var gas_approve = 0
 
   var account = state.account.account
+  var walletType = account.walletType
   var address = account.address
 
   var tokens = state.tokens.tokens
@@ -907,7 +906,8 @@ function* getGasConfirm() {
   const destToken = exchange.destToken
   const maxDestAmount = converter.biggestNumber()
   const minConversionRate = converter.numberToHex(exchange.offeredRate)
-  const blockNo = converter.numberToHexAddress(exchange.blockNo)
+  const blockNo = getWalletId(walletType, exchange.blockNo)
+  //console.log({blockNumber, walletType})
   const throwOnFailure = "0x0000000000000000000000000000000000000000"
   var data = yield call([ethereum, ethereum.call], "exchangeData", sourceToken, sourceAmount,
     destToken, address,
@@ -981,13 +981,18 @@ function* getGasUsed() {
   const ethereum = state.connection.ethereum
   const exchange = state.exchange
   const kyber_address = BLOCKCHAIN_INFO.network
+  // const account = state.account.account
+  // const walletType = account.walletType  
 
   var gas = exchange.max_gas
   var gas_approve = 0
 
   var account = state.account.account
+  var walletType = account.walletType
   var address = account.address
 
+  //console.log(getWalletId(walletType, exchange.blockNo))
+  
   var tokens = state.tokens.tokens
   var sourceDecimal = 18
   var sourceTokenSymbol = exchange.sourceTokenSymbol
@@ -1000,7 +1005,8 @@ function* getGasUsed() {
     const destToken = exchange.destToken
     const maxDestAmount = converter.biggestNumber()
     const minConversionRate = converter.numberToHex(exchange.offeredRate)
-    const blockNo = converter.numberToHexAddress(exchange.blockNo)
+
+    const blockNo = getWalletId(walletType, exchange.blockNo)
     const throwOnFailure = "0x0000000000000000000000000000000000000000"
     var data = yield call([ethereum, ethereum.call], "exchangeData", sourceToken, sourceAmount,
       destToken, address,
@@ -1213,10 +1219,12 @@ function* verifyExchange(){
     exchange.maxCap)
 
   var sourceAmountErrorKey
+  var isNotNumber = false
   switch (validateAmount) {
-    // case "not a number":
-    //   sourceAmountErrorKey = "error.source_amount_is_not_number"
-    //   break
+    case "not a number":
+      sourceAmountErrorKey = "error.source_amount_is_not_number"
+      isNotNumber = true
+      break
     case "too high":
       sourceAmountErrorKey = "error.source_amount_too_high"
       break
@@ -1230,11 +1238,18 @@ function* verifyExchange(){
       sourceAmountErrorKey = "error.source_amount_too_high_for_reserve"
       break
   } 
-  if (sourceAmountErrorKey) {
-    yield put(actions.thowErrorSourceAmount(sourceAmountErrorKey))
-  }else{
-    yield put(actions.thowErrorSourceAmount(""))
+  if(!isNotNumber){
+    if (sourceAmountErrorKey) {
+      yield put(actions.thowErrorSourceAmount(sourceAmountErrorKey))
+    }else{
+      yield put(actions.thowErrorSourceAmount(""))
+    }
   }
+  // if (sourceAmountErrorKey) {
+  //   yield put(actions.thowErrorSourceAmount(sourceAmountErrorKey))
+  // }else{
+  //   yield put(actions.thowErrorSourceAmount(""))
+  // }
 
   if (isNaN(sourceAmount) || sourceAmount === "") {
     sourceAmount = 0
