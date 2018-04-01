@@ -7,6 +7,7 @@ import * as ethUtil from 'ethereumjs-util'
 
 import * as common from "./common"
 import * as validators from "../utils/validators"
+import * as analytics from "../utils/analytics"
 
 import Tx from "../services/tx"
 import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
@@ -27,6 +28,11 @@ function* broadCastTx(action) {
 }
 
 export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
+
+  //track complete trade
+  analytics.trackCoinTransfer(data.tokenSymbol)
+  analytics.completeTrade(hash, "kyber", "transfer")
+
   const tx = new Tx(
     hash, account.address, ethUtil.bufferToInt(txRaw.gas),
     converter.weiToGwei(ethUtil.bufferToInt(txRaw.gasPrice)),

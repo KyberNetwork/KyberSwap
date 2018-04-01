@@ -4,6 +4,7 @@ import * as globalActions from "../actions/globalActions"
 
 import * as common from "./common"
 import * as validators from "../utils/validators"
+import * as analytics from "../utils/analytics"
 
 import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
 import { addTx } from '../actions/txActions'
@@ -64,14 +65,9 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
     console.log(e)
   }
 
-  //track facebook
-  try {
-    if (typeof window.fbq === 'function') {
-        window.fbq('trackCustom', "CompleteTrade", {hash: hash, wallet: "kyber"})
-    }
-  } catch (e) {
-    console.log(e)
-  }
+  //track complete trade
+  analytics.trackCoinExchange(data)
+  analytics.completeTrade(hash, "kyber", "exchange")
 
   //console.log({txRaw, hash, account, data})
   const tx = new Tx(
@@ -1213,10 +1209,12 @@ function* verifyExchange(){
     exchange.maxCap)
 
   var sourceAmountErrorKey
+  var isNotNumber = false
   switch (validateAmount) {
-    // case "not a number":
-    //   sourceAmountErrorKey = "error.source_amount_is_not_number"
-    //   break
+    case "not a number":
+      sourceAmountErrorKey = "error.source_amount_is_not_number"
+      isNotNumber = true
+      break
     case "too high":
       sourceAmountErrorKey = "error.source_amount_too_high"
       break
@@ -1230,11 +1228,18 @@ function* verifyExchange(){
       sourceAmountErrorKey = "error.source_amount_too_high_for_reserve"
       break
   } 
-  if (sourceAmountErrorKey) {
-    yield put(actions.thowErrorSourceAmount(sourceAmountErrorKey))
-  }else{
-    yield put(actions.thowErrorSourceAmount(""))
+  if(!isNotNumber){
+    if (sourceAmountErrorKey) {
+      yield put(actions.thowErrorSourceAmount(sourceAmountErrorKey))
+    }else{
+      yield put(actions.thowErrorSourceAmount(""))
+    }
   }
+  // if (sourceAmountErrorKey) {
+  //   yield put(actions.thowErrorSourceAmount(sourceAmountErrorKey))
+  // }else{
+  //   yield put(actions.thowErrorSourceAmount(""))
+  // }
 
   if (isNaN(sourceAmount) || sourceAmount === "") {
     sourceAmount = 0
