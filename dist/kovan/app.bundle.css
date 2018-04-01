@@ -9275,11 +9275,10 @@ input[type=number] {
     padding: 6px 12px;
     border: 2px solid transparent;
     border-bottom: 1px solid transparent;
+    height: 47px;
     font-size: 15px; }
     .token-selector .focus-item .icon {
-      margin-right: 10px;
-      border-radius: 20px;
-      border: 2px solid #ffffff; }
+      margin-right: 10px; }
       .token-selector .focus-item .icon img {
         vertical-align: top; }
   .token-selector .select-item {

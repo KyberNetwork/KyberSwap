@@ -61,6 +61,14 @@ const TransactionLoadingView = (props) => {
     )
   }
 
+  var displayRoundingNumber = (amount) => {
+    var roundingAmount = roundingNumber(amount)
+    if (isNaN(roundingAmount)){
+      return roundingAmount
+    }
+    return +roundingAmount
+  }
+
   var handleAnalyze = (e) => {
     props.analyze.action(e)
     // props.toogleModal()
@@ -119,13 +127,13 @@ const TransactionLoadingView = (props) => {
                   <h4 class="text-success font-w-b">
                     {props.type === "exchange" && 
                       (props.translate("transaction.success_ex_msg", 
-                      {sourceAmount: props.balanceInfo.sourceAmount, sourceSymbol: props.balanceInfo.sourceSymbol, 
-                        destAmount: props.balanceInfo.destAmount, destSymbol: props.balanceInfo.destSymbol}) 
-                      ||`Successfully exchanged from </br> ${props.balanceInfo.sourceAmount} ${props.balanceInfo.sourceSymbol} to ${props.balanceInfo.destAmount} ${props.balanceInfo.destSymbol}`)
+                      {sourceAmount: displayRoundingNumber(props.balanceInfo.sourceAmount), sourceSymbol: props.balanceInfo.sourceSymbol, 
+                        destAmount: displayRoundingNumber(props.balanceInfo.destAmount), destSymbol: props.balanceInfo.destSymbol}) 
+                      ||`Successfully exchanged from </br> ${displayRoundingNumber(props.balanceInfo.sourceAmount)} ${props.balanceInfo.sourceSymbol} to ${displayRoundingNumber(props.balanceInfo.destAmount)} ${props.balanceInfo.destSymbol}`)
                     }
                     {props.type === "transfer" && 
-                      (props.translate("transaction.success_tx_msg", {amount: props.balanceInfo.amount, token: props.balanceInfo.tokenSymbol, address: props.address}) ||
-                      `Successfully transferred </br> ${props.balanceInfo.amount} ${props.balanceInfo.tokenSymbol} to ${props.address}`)
+                      (props.translate("transaction.success_tx_msg", {amount: displayRoundingNumber(props.balanceInfo.amount), token: props.balanceInfo.tokenSymbol, address: props.address}) ||
+                      `Successfully transferred </br> ${displayRoundingNumber(props.balanceInfo.amount)} ${props.balanceInfo.tokenSymbol} to ${props.address}`)
                     }
                   </h4>
                   {/* {props.type === "exchange" &&
