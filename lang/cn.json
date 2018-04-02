@@ -197,7 +197,8 @@
     "kyber_maintain":"Kyber交易所正在维修这对代币",
     "get_rate":"无法从区块链获得利率",
     "exchange_enable":"您已经超过了您的每日限额！ 您可以在明天00:00 UTC+0再次进行交易",
-    "min_rate_greater_expected_rate": "您设置的最低汇率高于KyberNetwork推荐的汇率。 您的交易很有可能失败。"
+    "min_rate_greater_expected_rate": "您设置的最低汇率高于KyberNetwork推荐的汇率。 您的交易很有可能失败。",
+    "exceed_daily_volumn": "您可能需要<a target='_blank' href='${link}'>在我们这里注册</a>才能有更高的交易限额"
   },
 
   "import": {

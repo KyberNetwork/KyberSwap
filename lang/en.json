@@ -197,7 +197,8 @@
     "kyber_maintain":"Kyber exchange is under maintenance this pair",
     "get_rate":"Cannot get rate from blockchain",
     "exchange_enable":"You have exceeded your daily limit! You might trade again tomorrow at 00:00 UTC+0",
-    "min_rate_greater_expected_rate": "Your configured minimal exchange rate is higher than what is recommended by KyberNetwork. Your exchange has high chance to fail"
+    "min_rate_greater_expected_rate": "Your configured minimal exchange rate is higher than what is recommended by KyberNetwork. Your exchange has high chance to fail",
+    "exceed_daily_volumn": "You may want to <a target='_blank' href='${link}'>register with us</a> to have higher trade limits"
   },
 
   "import": {
