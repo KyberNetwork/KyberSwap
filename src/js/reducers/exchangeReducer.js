@@ -451,6 +451,10 @@ const exchange = (state = initState, action) => {
       newState.destAmount = 0
       newState.isSelectToken = true
       newState.isEditRate = false
+
+      newState.errors.sourceAmountError = initState.errors.sourceAmountError
+      newState.errors.ethBalanceError = initState.errors.ethBalanceError
+
       return newState
     }
     case "EXCHANGE.SET_CAP_EXCHANGE": {

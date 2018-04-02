@@ -29,17 +29,18 @@ const transfer = (state = initState, action) => {
       newState.gasPrice = transfer.gasPrice
       newState.advanced = false
       newState.isEditGasPrice = false
-      return newState;
+      return newState
     case "TRANSFER.SELECT_TOKEN":
       newState.tokenSymbol = action.payload.symbol
       newState.token = action.payload.address
+      if (newState.tokenSymbol === 'ETH') {
+        newState.gas_estimate = newState.gas_limit_transfer_eth
+      } else {
+        newState.gas_estimate = newState.gas_limit_transfer_token
+      }      
       newState.amount = ""
-      newState.errors = initState.errors
-      // if (newState.tokenSymbol === 'ETH') {
-      //   newState.gas_estimate = newState.gas_limit_transfer_eth
-      // } else {
-      //   newState.gas_estimate = newState.gas_limit_transfer_token
-      // }
+      newState.errors.amountTransfer = ""
+      newState.errors.ethBalanceError = ""
       newState.selected = true
       return newState
     case "TRANSFER.THOW_ERROR_SELECT_TOKEN":

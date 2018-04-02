@@ -3,6 +3,12 @@
   color: $white;
   cursor: pointer;
   background-color: #415b68;
+  // .k-angle{
+  //   -webkit-font-smoothing: antialiased;
+  //   -webkit-backface-visibility: hidden;
+  //   -webkit-transform-style: preserve-3d;
+  //   -webkit-transform:translate3d(0,0,0);
+  // }
   .dropdown{
     width: 100%;
 
@@ -10,7 +16,7 @@
       background-color: #243c48;
       .focus-item{
         border-color: $white;
-        border-bottom: 1px solid #4c636f;
+        border-bottom: 1px solid #4c636f;        
       }
       .select-item{
         display: block;
@@ -72,12 +78,13 @@
     border-bottom: 1px solid transparent;
     color: white;
     align-items: center;
+    height: 47px;
     font-size: 15px;
     .icon{
       margin-right: 10px;
-      border-radius: 20px;
+     // border-radius: 20px;
      // background-color: $white;
-      border: 2px solid $white;
+   //   border: 2px solid $white;
       img{
         vertical-align: top;
       }

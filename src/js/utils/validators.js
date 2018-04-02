@@ -80,7 +80,7 @@ export function verifyBalanceForTransaction(
 
   //calcualte tx fee
   if (gasPrice === "") gasPrice = 0
-  var gasPriceBig = new BigNumber(gasPrice)
+  var gasPriceBig = new BigNumber(gasPrice.toString())
   var txFee = gasPriceBig.times(1000000000).times(gas)
 
   var totalFee
@@ -135,16 +135,18 @@ export function verifyPassphrase(passphrase, repassphrase) {
 }
 
 export function filterInputNumber(event, value, preVal) {
+  console.log("filter_input")
+  console.log({ value, preVal})
   var strRemoveText = value.replace(/[^0-9.]/g, '')
   var str = strRemoveText.replace(/\./g, (val, i) => {
     if (strRemoveText.indexOf('.') != i) val = ''
     return val
   })
-  if(str ==="."){
+  if(str === "."){
     str = "0."
   }
   event.target.value = str
 
-  if (preVal == str) return false
+  if (preVal === str) return false
   return true
 }

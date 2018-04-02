@@ -103,6 +103,8 @@ export function shortEthBalance(tokens){
   return shortedTokens
 }
 
+
+
 function acceptableTyping(number) {
   // ends with a dot
   if (number.length > 0 && number[number.length - 1] == ".") {
@@ -349,6 +351,7 @@ export function compareRate(minRate, expectedRate){
 export function calculatePercentRate(minRate, expectedRate){
   if((minRate === "") || isNaN(minRate)) return 0
   if((expectedRate === "") || isNaN(expectedRate)) return 0
+  if (+expectedRate == 0) return 0
 
   var minRateBig = new BigNumber(minRate)
   var rateWeight = new BigNumber(10).pow(20)
@@ -367,6 +370,12 @@ export function calculatePercentRate(minRate, expectedRate){
   return parseFloat(remainPercentStr)
 }
 
+
+export function calculateGasFee(gasPrice, gasUsed){
+  var gasPrice = stringToBigNumber(gweiToEth(gasPrice))
+  var totalGas = gasPrice.multipliedBy(gasUsed)
+  return roundingNumber(totalGas.toString())
+}
 
 export function findNetworkName(networkId){
   switch(networkId){
@@ -393,3 +402,4 @@ export function sliceErrorMsg(err){
   }
   return err
 }
+
