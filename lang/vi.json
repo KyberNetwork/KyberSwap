@@ -195,7 +195,8 @@
     "kyber_maintain":"Kyber hiện không cho giao dịch cặp này",
     "get_rate":"Không thể lấy tỉ giá từ blockchain",
     "exchange_enable":"Bạn đã giao dịch quá lượng 1 ngày! Bạn có thể giao dịch vào ngày mai tại thời điểm 00:00 UTC+0",
-    "min_rate_greater_expected_rate": "Bạn đã chỉnh tỉ giá lớn hơn tỉ giá đề nghị bởi KyberNetwork. Giao dịch của bạn nhiều khả năng thất bại"
+    "min_rate_greater_expected_rate": "Bạn đã chỉnh tỉ giá lớn hơn tỉ giá đề nghị bởi KyberNetwork. Giao dịch của bạn nhiều khả năng thất bại",
+    "exceed_daily_volumn": "Bạn có thể phải <a target='_blank' href='${link}'>đăng kí</a> với chúng tôi để có hạn mức giao dịch cao hơn"
   },
 
   "import": {
