@@ -55,7 +55,7 @@ function* selectToken(action) {
 
   yield call(fetchGas)
   //calculate gas use
- // yield call(updateGasUsed)
+  // yield call(updateGasUsed)
 }
 
 export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
@@ -84,7 +84,7 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   yield put(actions.resetSignError())
 
 
-  
+
 
 
   //estimate time for tx
@@ -153,7 +153,7 @@ export function* checkTokenBalanceOfColdWallet(action) {
     throwOnFailure, nonce, gas,
     gasPrice, keystring, type, password, account, data, keyService } = action.payload
   let translate = getTranslate(store.getState().locale)
-  try{
+  try {
     const remainStr = yield call([ethereum, ethereum.call], "getAllowanceAtLatestBlock", sourceToken, address)
     const remain = converter.hexToBigNumber(remainStr)
     const sourceAmountBig = converter.hexToBigNumber(sourceAmount)
@@ -168,7 +168,7 @@ export function* checkTokenBalanceOfColdWallet(action) {
       yield put(actions.showConfirm())
       yield call(fetchGasConfirmSnapshot)
     }
-  }catch(e){
+  } catch (e) {
     let title = translate("error.error_occurred") || "Error occurred"
     let content = translate("error.network_error") || "Cannot connect to node right now. Please check your network!"
     yield put(utilActions.openInfoModal(title, content))
@@ -203,7 +203,7 @@ export function* processApproveByColdWallet(action) {
     let msg = ''
     if (accountType === 'ledger') {
       msg = keyService.getLedgerError(e)
-    }else{
+    } else {
       msg = e.message
     }
     yield put(actions.setSignError(msg))
@@ -377,7 +377,7 @@ export function* exchangeETHtoTokenColdWallet(action) {
       let msg = ''
       if (type === 'ledger') {
         msg = keyService.getLedgerError(e)
-      }else{
+      } else {
         msg = e.message
       }
       yield put(actions.setSignError(msg))
@@ -571,7 +571,7 @@ function* exchangeTokentoETHColdWallet(action) {
       let msg = ''
       if (type === 'ledger') {
         msg = keyService.getLedgerError(e)
-      }else{
+      } else {
         msg = e.message
       }
       yield put(actions.setSignError(msg))
@@ -638,7 +638,7 @@ function* getRate(ethereum, source, dest, sourceAmount) {
 function* updateRatePending(action) {
   const { ethereum, source, dest, sourceAmount, isManual, rateInit } = action.payload
   var state = store.getState()
- // var exchangeSnapshot = state.exchange.snapshot
+  // var exchangeSnapshot = state.exchange.snapshot
   var translate = getTranslate(state.locale)
 
   console.log("is_manual: " + isManual)
@@ -658,24 +658,24 @@ function* updateRatePending(action) {
     //   yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
     // }
 
-    if(rateRequest.status === "timeout"){
-      yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred", 
-                                          translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
-    }
-    if(rateRequest.status === "fail"){
+    if (rateRequest.status === "timeout") {
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-                                                  translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
+        translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+    }
+    if (rateRequest.status === "fail") {
+      yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+        translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
     }
 
     // if ((rateRequest.status === "timeout") || (rateRequest.status === "fail")) {
-      
+
     //   yield put(utilActions.openInfoModal("Error", "There are some problems with nodes. Please try again in a while"))
     // }
 
   } else {
     const rateRequest = yield call(getRate, ethereum, source, dest, sourceAmount)
     console.log("rate_request_manual_not: " + JSON.stringify(rateRequest))
-    if(rateRequest.status === "success"){
+    if (rateRequest.status === "success") {
       const { expectedPrice, slippagePrice, lastestBlock } = rateRequest.res
 
       yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
@@ -684,9 +684,9 @@ function* updateRatePending(action) {
       //   yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
       // }
 
-      
+
     }
-    else{
+    else {
       //yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
 
       //yield put(actions.setRateFailError())
@@ -751,18 +751,18 @@ function* updateRateSnapshot(action) {
 
       yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
       yield put(actions.caculateAmountInSnapshot())
-    }else{
+    } else {
       yield put(actions.hideApprove())
       yield put(actions.hideConfirm())
       yield put(actions.hidePassphrase())
     }
     var title = translate("error.error_occurred") || "Error occurred"
     var content = ''
-    if(rateRequest.status === "timeout"){
+    if (rateRequest.status === "timeout") {
       content = translate("error.node_error") || "There are some problems with nodes. Please try again in a while."
       yield put(utilActions.openInfoModal(title, content))
     }
-    if(rateRequest.status === "fail"){
+    if (rateRequest.status === "fail") {
       content = translate("error.network_error") || "Cannot connect to node right now. Please check your network!"
       yield put(utilActions.openInfoModal(title, content))
     }
@@ -798,13 +798,13 @@ function* estimateGas() {
 
     const sourceTokenSymbol = exchange.sourceTokenSymbol
     var gas = exchange.max_gas
-    var gas_approve 
-    if(sourceTokenSymbol === "ETH"){
+    var gas_approve
+    if (sourceTokenSymbol === "ETH") {
       gas_approve = 0
-    }else{
+    } else {
       gas_approve = exchange.max_gas_approve
     }
-    
+
     yield put(actions.setEstimateGas(gas, gas_approve))
   }
 }
@@ -828,13 +828,13 @@ function* estimateGasSnapshot() {
 
     const sourceTokenSymbol = exchange.sourceTokenSymbol
     var gas = exchange.max_gas
-    var gas_approve 
-    if(sourceTokenSymbol === "ETH"){
+    var gas_approve
+    if (sourceTokenSymbol === "ETH") {
       gas_approve = 0
-    }else{
+    } else {
       gas_approve = exchange.max_gas_approve
     }
-    
+
     yield put(actions.setEstimateGasSnapshot(gas, gas_approve))
   }
 }
@@ -928,20 +928,20 @@ function* getGasConfirm() {
   // if (gasRequest.status === "timeout"){
   //   console.log("timeout")
   // }
-  try{
+  try {
     gas = yield call([ethereum, ethereum.call], "estimateGas", txObj)
-  //  console.log("gas ne: " + gas)
+    //  console.log("gas ne: " + gas)
     gas = Math.round(gas * 120 / 100)
     //console.log("gas ne: " + gas)
     if (gas > exchange.max_gas) {
       gas = exchange.max_gas
     }
     return { status: "success", res: gas }
-  }catch(e){
+  } catch (e) {
     console.log(e)
     return { status: "fail", err: e }
   }
-  
+
 
 }
 
@@ -1180,14 +1180,14 @@ function* checkKyberEnable() {
 
 }
 
-function* verifyExchange(){
+function* verifyExchange() {
   var state = store.getState()
 
   //const ethereum = state.connection.ethereum
   const exchange = state.exchange
   const offeredRate = state.exchange.offeredRate
 
-  var sourceTokenSymbol = exchange.sourceTokenSymbol  
+  var sourceTokenSymbol = exchange.sourceTokenSymbol
   var tokens = state.tokens.tokens
   var sourceBalance = 0
   var sourceDecimal = 18
@@ -1237,11 +1237,11 @@ function* verifyExchange(){
     case "too high for reserve":
       sourceAmountErrorKey = "error.source_amount_too_high_for_reserve"
       break
-  } 
-  if(!isNotNumber){
+  }
+  if (!isNotNumber) {
     if (sourceAmountErrorKey) {
       yield put(actions.thowErrorSourceAmount(sourceAmountErrorKey))
-    }else{
+    } else {
       yield put(actions.thowErrorSourceAmount(""))
     }
   }
@@ -1254,21 +1254,29 @@ function* verifyExchange(){
   if (isNaN(sourceAmount) || sourceAmount === "") {
     sourceAmount = 0
   }
-  var validateWithFee = validators.verifyBalanceForTransaction(tokens['ETH'].balance, sourceTokenSymbol, 
-  sourceAmount, exchange.gas + exchange.gas_approve, exchange.gasPrice)
+  var validateWithFee = validators.verifyBalanceForTransaction(tokens['ETH'].balance, sourceTokenSymbol,
+    sourceAmount, exchange.gas + exchange.gas_approve, exchange.gasPrice)
 
-  if(validateWithFee){
+  if (validateWithFee) {
     yield put(actions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
-  }else{
+  } else {
     yield put(actions.thowErrorEthBalance(""))
   }
 
 }
 
 
-export function* fetchExchangeEnable(){
+export function* fetchExchangeEnable() {
   var enableRequest = yield call(common.handleRequest, getExchangeEnable)
   if (enableRequest.status === "success") {
+    var state = store.getState()
+    var exchange = state.exchange
+    if (enableRequest.data === true && exchange.errors.exchange_enable === "") {
+      var translate = getTranslate(state.locale)
+      var kycLink = "https://account.kyber.network/users/sign_up"
+      yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+        translate("error.exceed_daily_volumn", { link: kycLink }) || "You may want to register with us to have higher trade limits " + kycLink))
+    }
     yield put(actions.setExchangeEnable(enableRequest.data))
   }
   if ((enableRequest.status === "timeout") || (enableRequest.status === "fail")) {
@@ -1276,19 +1284,19 @@ export function* fetchExchangeEnable(){
   }
 }
 
-export function* getExchangeEnable(){
+export function* getExchangeEnable() {
   var state = store.getState()
   const ethereum = state.connection.ethereum
-  
+
   var account = state.account.account
   var address = account.address
 
   try {
     var enabled = yield call([ethereum, ethereum.call], "getExchangeEnable", address)
-    return {status:"success", res: enabled}
+    return { status: "success", res: enabled }
   } catch (e) {
     console.log(e.message)
-    return {status:"success", res: true}
+    return { status: "success", res: true }
   }
 }
 
@@ -1296,7 +1304,7 @@ export function* getExchangeEnable(){
 export function* watchExchange() {
   yield takeEvery("EXCHANGE.TX_BROADCAST_PENDING", broadCastTx)
   yield takeEvery("EXCHANGE.APPROVAL_TX_BROADCAST_PENDING", approveTx)
-  
+
   yield takeEvery("EXCHANGE.PROCESS_EXCHANGE", processExchange)
   yield takeEvery("EXCHANGE.PROCESS_APPROVE", processApprove)
   yield takeEvery("EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET", checkTokenBalanceOfColdWallet)
