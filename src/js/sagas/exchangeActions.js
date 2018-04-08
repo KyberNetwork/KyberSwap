@@ -886,7 +886,7 @@ function* getMaxGasExchange(){
   if (exchange.sourceTokenSymbol !== 'DGX' && exchange.destTokenSymbol !== 'DGX') {
     return exchange.max_gas
   }else{
-    return 1000000
+    return 650000
   }
 }
 
