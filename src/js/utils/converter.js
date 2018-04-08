@@ -121,16 +121,14 @@ function acceptableTyping(number) {
   return false
 }
 
-export function toTWei(number, decimal = 18) {
-  console.log({number, decimal})
-  var bigNumber = new BigNumber(number.toString())
+export function toTWei(number) {
+  var bigNumber = new BigNumber(number)
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
     return number
   } else if (acceptableTyping(number)) {
     return number
   } else {
-
-    return bigNumber.times(Math.pow(10, decimal)).toFixed(0)
+    return bigNumber.times(1000000000000000000).toFixed(0)
   }
 }
 
@@ -214,12 +212,9 @@ export function numberToHexAddress(number){
 export function biggestNumber() {
   var initNumber = new BigNumber(2)
   return "0x" + (initNumber.pow(255).toString(16))
+  //return "0x" + (new BigNumber(Math.pow(2,256)-1)).toString(16)
 }
 
-export function biggestNumberDecimal() {
-  var initNumber = new BigNumber(10)
-  return initNumber.pow(30).toString(10)
-}
 
 export function hexToNumber(hex) {
   return new BigNumber(hex).toNumber()
