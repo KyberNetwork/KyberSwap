@@ -30,7 +30,7 @@ export default class InfoKyber extends React.Component {
               </span>
             </div>
             <p class="mt-6 mb-1 font-w-b">{this.props.translate("info.node_endpoint") || "Node endpoint"}</p>
-            <div class="address">{BLOCKCHAIN_INFO.endpoint}</div>
+            <div class="address"><a>{BLOCKCHAIN_INFO.endpoint}</a></div>
             <p class="mt-4 mb-1 font-w-b">{this.props.translate("info.reserve_address") || "Reserve contract address"}</p>
             <div class="address">
               <a href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + BLOCKCHAIN_INFO.reserve} target="_blank">{BLOCKCHAIN_INFO.reserve}</a>

@@ -8491,7 +8491,7 @@ label.switch-caption {
     .gas-config .advanced-content .error-text {
       color: #ff5d00; }
     .gas-config .advanced-content .gas-price input {
-      padding-right: 40px; }
+      padding-right: 50px; }
     .gas-config .advanced-content .gas-price .unit {
       position: absolute;
       top: 9px;
@@ -9976,12 +9976,15 @@ h6, .h6 {
   #info .address {
     text-align: center;
     background-color: #f4f4f4;
-    padding: 17px 0;
+    padding: 17px 10px;
     font-weight: bold;
     font-size: 13px;
     color: #0B0F1A; }
     #info .address a {
-      color: inherit; }
+      color: inherit;
+      width: 100%;
+      display: block;
+      overflow: auto; }
 
 .exchange-icon {
   text-align: center;
