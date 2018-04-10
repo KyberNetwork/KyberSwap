@@ -38,7 +38,7 @@ const PostExchangeBtn = (props) => {
       {props.modalPassphrase}
       {props.modalConfirm}
       {props.modalApprove}
-      <PendingOverlay isEnable={props.isConfirming || props.isApproving} />
+      {/* <PendingOverlay isEnable={props.isConfirming || props.isApproving} /> */}
     </div>
   )
 }
