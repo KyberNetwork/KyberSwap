@@ -81,7 +81,7 @@ class ConfirmTransferModal extends React.Component {
           </div>
         </div>
         <div className="overlap">
-          <a className={"button accent process-submit " + (this.props.isConfirming || this.props.isFetchingGas || this.props.isFetchingRate ? "waiting" : "next")} onClick={(e) => this.props.onExchange(e)}>{this.props.translate("modal.confirm") || "Confirm"}</a>
+          <a className={"button accent process-submit " + (this.props.isFetchingGas || this.props.isFetchingRate ? "waiting" : "next")} onClick={(e) => this.props.onExchange(e)}>{this.props.translate("modal.confirm") || "Confirm"}</a>
         </div>
       </div>
     )
