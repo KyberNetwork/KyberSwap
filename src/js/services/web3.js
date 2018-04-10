@@ -16,24 +16,26 @@ export class Web3Service {
     if((!!window.__CIPHER__) && (web3.currentProvider && web3.currentProvider.constructor && web3.currentProvider.constructor.name === "CipherProvider")){
       return "cipher"
     }
-    return "kyber"
+    
+    //return "kyber"
+    return "unknow"
   }
 
   isTrust = () => {
     //is trust
-    if (web3.currentProvider && web3.currentProvider.isTrust === true){
-      return true
-    }
+    // if (web3.currentProvider && web3.currentProvider.isTrust === true){
+    //   return true
+    // }
 
     //is cipher
-    if((!!window.__CIPHER__) && (web3.currentProvider && web3.currentProvider.constructor && web3.currentProvider.constructor.name === "CipherProvider")){
-      return true
-    }
+    // if((!!window.__CIPHER__) && (web3.currentProvider && web3.currentProvider.constructor && web3.currentProvider.constructor.name === "CipherProvider")){
+    //   return true
+    // }
   //  if (web3.currentProvider && web3.currentProvider.constructor && web3.currentProvider.constructor.name === "CipherProvider"){
   //    return true
   //  }
     
-    return false
+    return true
   }
   getNetworkId = ()=> {
     return new Promise((resolve, reject)=>{
