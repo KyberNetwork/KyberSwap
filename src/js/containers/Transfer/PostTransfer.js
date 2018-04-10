@@ -175,7 +175,7 @@ export default class PostTransfer extends React.Component {
       case "metamask":
       case "ledger":
       case "privateKey":
-        if (this.props.form.isConfirming) return
+        //if (this.props.form.isConfirming) return
         this.props.dispatch(transferActions.hideConfirm())
         this.props.dispatch(transferActions.resetSignError())
         break
