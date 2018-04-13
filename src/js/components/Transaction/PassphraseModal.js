@@ -1,5 +1,5 @@
 import React from "react"
-import { gweiToEth, stringToBigNumber } from "../../utils/converter"
+import { gweiToEth, stringToBigNumber, calculateGasFee, roundingNumber } from "../../utils/converter"
 
 const PassphraseModal = (props) => {
   function submitTransaction(e) {
@@ -26,7 +26,8 @@ const PassphraseModal = (props) => {
   }
 
   var gasPrice = stringToBigNumber(gweiToEth(props.gasPrice))
-  var totalGas = gasPrice.multipliedBy(props.gas)
+  var totalGas = +calculateGasFee(props.gasPrice, props.gas)
+  //var totalGas = gasPrice.multipliedBy(props.gas)
   return (
     <div >
       <div className="title text-center">{props.translate("modal.enter_password") || "Enter Password"}</div>
@@ -39,7 +40,7 @@ const PassphraseModal = (props) => {
               <div className="gas-configed text-light">
                 <div class="d-flex justify-content-around">
                   <p>Gas Price</p>
-                  <p>{props.gasPrice} Gwei</p>
+                  <p>{+roundingNumber(props.gasPrice)} Gwei</p>
                 </div>
                 <div class="d-flex justify-content-around">
                   <p>{props.translate("transaction.transaction_fee") || "Transaction Fee"}</p>
@@ -65,7 +66,11 @@ const PassphraseModal = (props) => {
         </div>
       </div>
       <div className="overlap">
-        <a className={"button accent process-submit" + (props.isConfirming || props.isFetchingGas || props.isFetchingRate ? " waiting" : " next")}
+        {/* <a className={"button accent process-submit" + (props.isConfirming || props.isFetchingGas || props.isFetchingRate ? " waiting" : " next")}
+          onClick={(e) => submitTransaction(e)}>
+          {props.translate("modal.confirm") || "Confirm"}
+        </a> */}
+        <a className={"button accent process-submit" + (props.isFetchingGas || props.isFetchingRate ? " waiting" : " next")}
           onClick={(e) => submitTransaction(e)}>
           {props.translate("modal.confirm") || "Confirm"}
         </a>

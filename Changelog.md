@@ -1,3 +1,15 @@
+# 0.6.0 (2018-04-10)
+## Features:
+- Add ADX, AST, RCN, ZIL, LINK tokens
+- Add GA, facebook tracker
+
+## Bugfixes:
+- Fix estimate gas price
+- Fix return wrong message when input very large amount
+
+## Improvements:
+- Improve copies, layout
+
 # 0.5.0 (2018-03-08)
 ## Features:
 - Add BQX token 

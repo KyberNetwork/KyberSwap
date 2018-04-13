@@ -18,14 +18,34 @@ import { getTranslate } from 'react-localize-redux';
 
 export default class Notify extends React.Component {
 
+    // constructor(props) {
+    //     super(props)
+
+    //     this.toggleTxs = this.toggleTxs.bind(this);
+    //     this.state = {
+    //         dropdownOpen: false
+    //     };
+    // }
+
+    // toggleTxs = () => {
+    //     this.props.dispatch(toggleNotify())
+    //     if (Object.keys(this.props.txs).length > 0) {
+    //         if (this.props.utils.showNotify) {
+    //             this.props.dispatch(clearTxs());
+    //         }
+    //     }
+    // }
+
+
     displayTransactions = () => {
-        this.props.dispatch(toggleNotify())
+        
         if (Object.keys(this.props.txs).length > 0) {
-            if (this.props.utils.showNotify) {
+         //   if (this.props.utils.showNotify) {
                 this.props.dispatch(clearTxs());
-            }
+          //  }
         }
 
+      //  this.props.dispatch(toggleNotify())
     }
 
     handleAnalyzeError = (txHash) => {
@@ -34,12 +54,15 @@ export default class Notify extends React.Component {
 
     render() {
         return (
-            <NotifyView displayTransactions={this.displayTransactions}
+            <NotifyView
+                displayTransactions={this.displayTransactions}
                 transactionsNum={Object.keys(this.props.txs).length}
-                displayTrans={this.props.utils.showNotify}
+               // displayTrans={this.props.utils.showNotify}
                 txs={this.props.txs}
-                translate={this.props.translate}    
+                translate={this.props.translate}
                 handleAnalyze={this.handleAnalyzeError.bind(this)}
+                //dropdownOpen={this.state.dropdownOpen}
+                //'toggleTxs={this.toggleTxs}
             />
         )
     }

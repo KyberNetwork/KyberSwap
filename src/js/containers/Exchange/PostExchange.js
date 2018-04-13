@@ -289,12 +289,12 @@ export default class PostExchange extends React.Component {
     this.props.dispatch(exchangeActions.resetSignError())
   }
   closeModalConfirm = (event) => {
-    if (this.props.form.isConfirming) return
+    //if (this.props.form.isConfirming) return
     this.props.dispatch(exchangeActions.hideConfirm())
     this.props.dispatch(exchangeActions.resetSignError())
   }
   closeModalApprove = (event) => {
-    if (this.props.form.isApproving) return
+    //if (this.props.form.isApproving) return
     this.props.dispatch(exchangeActions.hideApprove())
     this.props.dispatch(exchangeActions.resetSignError())
   }

@@ -34,7 +34,7 @@ const PostTransferBtn = (props) => {
         </div>
       }
       {props.modalPassphrase}
-      <PendingOverlay isEnable={props.isConfirming} />
+      {/* <PendingOverlay isEnable={props.isConfirming} /> */}
     </div>
   )
 }
