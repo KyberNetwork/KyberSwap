@@ -240,7 +240,8 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
       list-style: none;
       font-size: 0;
       text-align: left;
-      top: 50px;
+      top: 23px;
+      right: -20px;
       z-index: 5;
       width: 330px;
       left: auto;
@@ -586,12 +587,15 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
   .address{
     text-align: center;
     background-color: $k-gray;
-    padding: 17px 0;
+    padding: 17px 10px;
     font-weight: bold;
     font-size: 13px;
     color: #0B0F1A;
     a{
       color: inherit;
+      width: 100%;
+      display: block;
+      overflow: auto;
     }
   }
 }

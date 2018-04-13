@@ -173,6 +173,10 @@ const exchange = (state = initState, action) => {
       newState.deviceError = action.payload ? action.payload : ''
       return newState
     }
+    case "EXCHANGE.HANDLE_AMOUNT":{
+      newState.errors.rateSystem = "error.handle_amount"
+      return newState
+    }
     case "EXCHANGE.UPDATE_RATE":{
       const { rateInit, expectedPrice, slippagePrice, rateInitSlippage, blockNo ,isManual, isSuccess} = action.payload
 
@@ -189,19 +193,6 @@ const exchange = (state = initState, action) => {
           newState.errors.rateSystem = ""
         }
       }
-
-      // if(expectedPrice === "0" && rateInit === "0"){
-      //   newState.errors.rateSystem = "Kyber exchange is under maintainance this pair"
-      // }else{
-      //   newState.errors.rateSystem = ""
-      // }
-
-      // if(expectedPrice === "0" && rateInit !== "0"){
-      //   newState.errors.rateAmount = "Kyber cannot handle your amount, please reduce amount"
-      // }else{
-      //   newState.errors.rateAmount = ""
-      // }
-
     
       var slippageRate = slippagePrice === "0" ? rateInitSlippage : slippagePrice
       var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
@@ -451,6 +442,10 @@ const exchange = (state = initState, action) => {
       newState.destAmount = 0
       newState.isSelectToken = true
       newState.isEditRate = false
+
+      newState.errors.sourceAmountError = initState.errors.sourceAmountError
+      newState.errors.ethBalanceError = initState.errors.ethBalanceError
+
       return newState
     }
     case "EXCHANGE.SET_CAP_EXCHANGE": {

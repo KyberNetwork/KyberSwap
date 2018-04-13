@@ -23,14 +23,14 @@ export default class InfoKyber extends React.Component {
           <div id="info">
             <div class="font-s-down-1">
               <span class="mr-2">
-                <span class="font-w-b">{this.props.translate("info.version") || "Version"}</span>: 0.5.0
+                <span class="font-w-b">{this.props.translate("info.version") || "Version"}</span>: 0.6.0
           </span>
               <span>
                 <span class="font-w-b">{this.props.translate("info.chain") || "Chain"}</span>: {BLOCKCHAIN_INFO.chainName}
               </span>
             </div>
             <p class="mt-6 mb-1 font-w-b">{this.props.translate("info.node_endpoint") || "Node endpoint"}</p>
-            <div class="address">{BLOCKCHAIN_INFO.endpoint}</div>
+            <div class="address"><a>{BLOCKCHAIN_INFO.endpoint}</a></div>
             <p class="mt-4 mb-1 font-w-b">{this.props.translate("info.reserve_address") || "Reserve contract address"}</p>
             <div class="address">
               <a href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + BLOCKCHAIN_INFO.reserve} target="_blank">{BLOCKCHAIN_INFO.reserve}</a>

@@ -744,12 +744,20 @@ function* updateRateSnapshot(action) {
     var rateRequest = yield call(common.handleRequest, getRateSnapshot, ethereum, source, dest, sourceAmountHex)
     if (rateRequest.status === "success") {
       var rate = rateRequest.data
-      const expectedPrice = rate.expectedRate ? rate.expectedRate : "0"
-      const slippagePrice = rate.slippageRate ? rate.slippageRate : "0"
-
-      yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
-      yield put(actions.caculateAmountInSnapshot())
-    } else {
+      var expectedPrice = rate.expectedRate ? rate.expectedRate : "0"
+      var slippagePrice = rate.slippageRate ? rate.slippageRate : "0"
+     // expectedPrice = "0"
+      if (expectedPrice  == 0){
+        yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred", 
+                                            translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+        yield put(actions.hideApprove())
+        yield put(actions.hideConfirm())
+        yield put(actions.hidePassphrase())
+      }else{
+        yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
+        yield put(actions.caculateAmountInSnapshot())
+      }
+    }else{
       yield put(actions.hideApprove())
       yield put(actions.hideConfirm())
       yield put(actions.hidePassphrase())
@@ -886,7 +894,7 @@ function* getMaxGasExchange(){
   if (exchange.sourceTokenSymbol !== 'DGX' && exchange.destTokenSymbol !== 'DGX') {
     return exchange.max_gas
   }else{
-    return 1000000
+    return 650000
   }
 }
 

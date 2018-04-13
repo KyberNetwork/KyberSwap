@@ -570,3 +570,9 @@ export function updateBalanceData(balanceData, hash){
     payload: {balanceData, hash}
   }
 }
+
+export function throwErrorHandleAmount(){
+  return {
+    type: "EXCHANGE.HANDLE_AMOUNT"
+  }
+}
