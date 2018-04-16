@@ -603,8 +603,8 @@ export default class BaseProvider {
                 data: data
             }, blockno)
                 .then(result => {
-                    console.log({source, dest, srcAmount, blockno})
-                    console.log("rate: " + result)
+                //    console.log({source, dest, srcAmount, blockno})
+               //     console.log("rate: " + result)
                     if (result === "0x"){
                         reject(new Error("Cannot get rate"))
                         return
@@ -617,7 +617,7 @@ export default class BaseProvider {
                             type: 'uint256',
                             name: 'slippagePrice'
                         }], result)
-                        console.log(rates)
+                     //   console.log(rates)
                         resolve(rates)
                     }catch(e){
                         reject(e)

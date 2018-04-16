@@ -76,6 +76,7 @@ export function verifyBalanceForTransaction(
   gas, gasPrice
 ) {
 
+  console.log({ethBalance, sourceSymbol, sourceAmount, gas, gasPrice})
   var bigEthBalance = new BigNumber(ethBalance.toString())
 
   //calcualte tx fee
