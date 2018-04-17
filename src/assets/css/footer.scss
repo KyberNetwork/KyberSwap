@@ -36,9 +36,30 @@
         margin: 0 auto;
       }
     }
+    @include breakpoint(large up){
+      >div{
+        .link-group{
+          display: inline-block;
+          &:first-child{
+            &:after {
+              content: '|';
+              font-size: 12px;
+              font-weight: lighter;
+              color: $light-gray;
+              margin: 0 15px;
+              display: inline-block;
+            }
+            ul{
+              display: inline-block;
+            }
+          }
+        }
+      }
+      
+    }
     @include breakpoint(small only){
       text-align: center;
-      > div {
+      .footer-social{
         border-top: 1px solid #ddd;
         margin-top: 10px;
         padding-top: 10px;
