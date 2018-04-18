@@ -9512,10 +9512,22 @@ input[type=number] {
     @media screen and (max-width: 39.9375em) {
       .footer-menu ul.links {
         margin: 0 auto; } }
+  @media screen and (min-width: 64em) {
+    .footer-menu > div .link-group {
+      display: inline-block; }
+      .footer-menu > div .link-group:first-child:after {
+        content: '|';
+        font-size: 12px;
+        font-weight: lighter;
+        color: #BBDAD5;
+        margin: 0 15px;
+        display: inline-block; }
+      .footer-menu > div .link-group:first-child ul {
+        display: inline-block; } }
   @media screen and (max-width: 39.9375em) {
     .footer-menu {
       text-align: center; }
-      .footer-menu > div {
+      .footer-menu .footer-social {
         border-top: 1px solid #ddd;
         margin-top: 10px;
         padding-top: 10px; } }
