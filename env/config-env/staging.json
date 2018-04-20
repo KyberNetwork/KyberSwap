@@ -4,22 +4,18 @@
       {
         "endPoint": "https://staging-cache.kyber.network",
         "type": "cached"
+      },      
+      {
+        "endPoint": "https://mainnet.infura.io",
+        "type": "prune"
+      },      
+      {
+        "endPoint": "https://api.mycryptoapi.com/eth",
+        "type": "none_prune"
       },
       {
         "endPoint": "https://semi-node.kyber.network",
         "type": "prune"
-      },
-      {
-        "endPoint": "https://mainnet.infura.io",
-        "type": "prune"
-      },
-      {
-        "endPoint": "https://mew.giveth.io/",
-        "type": "prune"
-      },
-      {
-        "endPoint": "https://api.mycryptoapi.com/eth",
-        "type": "none_prune"
       }
     ],
     "ws": "wss://mainnet.infura.io/ws"
