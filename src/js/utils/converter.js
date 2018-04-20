@@ -16,7 +16,7 @@ export function calculateMinAmount(source, rate) {
 }
 
 export function calculateDest(source, rate) {
-  console.log({source, rate})
+  //console.log({source, rate})
   if (isNaN(source) || source === ""){
     source = 0
   }
@@ -125,7 +125,7 @@ function acceptableTyping(number) {
 }
 
 export function toTWei(number, decimal = 18) {
-  console.log({number, decimal})
+  //console.log({number, decimal})
   var bigNumber = new BigNumber(number.toString())
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
     return number
