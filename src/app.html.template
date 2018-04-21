@@ -63,7 +63,7 @@
     <!-- End Facebook Pixel Code -->
 
   </head>
-  <body>
+  <body class="notranslate">
     <div id="app"></div>
   </body>
 </html>
