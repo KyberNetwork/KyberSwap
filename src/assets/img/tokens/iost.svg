@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="28px" viewBox="0 0 24 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>iost</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop" transform="translate(-370.000000, -390.000000)">
+            <g id="iost" transform="translate(368.000000, 390.000000)">
+                <g id="logo">
+                    <rect id="bound" x="0" y="0" width="28" height="28"></rect>
+                    <g id="iost-shape" transform="translate(2.057692, 0.500000)" fill-rule="nonzero">
+                        <polygon id="Shape" fill="#FFFFFF" points="24 6.75 12 0 0 6.75 0 20.25 12 27 24 20.25"></polygon>
+                        <polygon id="Shape" fill="#0A0A08" points="11.5068202 21.6 2.66666667 16.4453777 2.70197815 13.9400292 11.5011908 19.0888945 15.7426631 16.5851162 3.00647574 9.06488385 11.5017026 4.05 19.5168979 8.72469657 17.3690385 10.0001372 11.5063084 6.56110548 7.2653479 9.06488385 20 16.5851162"></polygon>
+                        <polygon id="Shape" fill="#0A0A08" points="8.82054674 13.5 6.66666667 12.2015887 11.1794533 9.45 13.3333333 10.7484113"></polygon>
+                        <polygon id="Shape" fill="#0A0A08" points="12.8209198 16.2 10.6666667 14.9015887 15.1790802 12.15 17.3333333 13.4484113"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
