@@ -196,6 +196,22 @@
       "decimal": 18,
       "icon": "link.svg",
       "usd_id":"chainlink"
+    },
+    "STORM": {
+      "name": "Storm",
+      "address": "0xd0a4b8946cb52f0661273bfbc6fd0e0c75fc6433",
+      "symbol": "STORM",
+      "decimal": 18,
+      "icon": "storm.svg",
+      "usd_id":"storm"
+    },
+    "IOST": {
+      "name": "IOStoken",
+      "address": "0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab",
+      "symbol": "IOST",
+      "decimal": 18,
+      "icon": "iost.svg",
+      "usd_id":"iostoken"
     }
   },
   "ethScanUrl": "https://etherscan.io/",
