@@ -18,42 +18,38 @@ import Modal from 'react-modal';
 //   os: platform.os.family
 // }
 
-// console.log("client: ", clientPlatform)
+//  console.log("client: ", clientPlatform)
 
-// var illegal = false
+var illegal = false
 // for (var i = 0; i < blackList.length; i++) {
-//   if (clientPlatform.name !== blackList[i].name) {
-//     continue
+//   if ((clientPlatform.name === blackList[i].name) && (clientPlatform.os === blackList[i].os)) {
+//     illegal = true
+//     break
 //   }
-//   if (clientPlatform.version.substring(0, blackList[i].version.length) !== blackList[i].version) {
-//     continue
-//   }
-//   if (clientPlatform.os.indexOf(blackList[i].os) === -1) {
-//     continue
-//   }
-//   illegal = true
-//   break
+//   // if (clientPlatform.version.substring(0, blackList[i].version.length) !== blackList[i].version) {
+//   //   continue
+//   // }
+//   // if (clientPlatform.os.indexOf(blackList[i].os) === -1) {
+//   //   continue
+//   // }
+//   // illegal = true
+//   // break
 // }
 
 Modal.setAppElement('body');
 
-// if (illegal) {
-//   ReactDOM.render(
-//     <NotSupportPage client={clientPlatform} />
-//     , document.getElementById("app"));
-// } else {
-//   ReactDOM.render(
-//     <PersistGate persistor={persistor}>
-//       <Provider store={store}>
-//         <Layout />
-//       </Provider>
-//     </PersistGate>, document.getElementById("app"));
-// }
+if (illegal) {
+  ReactDOM.render(
+    <NotSupportPage client={clientPlatform} />
+    , document.getElementById("app"));
+} else {
+  ReactDOM.render(
+    <PersistGate persistor={persistor}>
+      <Provider store={store}>
+        <Layout />
+      </Provider>
+    </PersistGate>, document.getElementById("app"));
+}
 
-ReactDOM.render(
-  <PersistGate persistor={persistor}>
-    <Provider store={store}>
-      <Layout />
-    </Provider>
-  </PersistGate>, document.getElementById("app"));
+
 
