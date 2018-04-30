@@ -642,10 +642,10 @@ function* updateRatePending(action) {
   // var exchangeSnapshot = state.exchange.snapshot
   var translate = getTranslate(state.locale)
 
-  console.log("is_manual: " + isManual)
+  //console.log("is_manual: " + isManual)
   if (isManual) {
     var rateRequest = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmount)
-    console.log("rate_request_manual: " + JSON.stringify(rateRequest))
+   // console.log("rate_request_manual: " + JSON.stringify(rateRequest))
     if (rateRequest.status === "success") {
       const { expectedPrice, slippagePrice, lastestBlock } = rateRequest.data
       yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
@@ -675,7 +675,7 @@ function* updateRatePending(action) {
 
   } else {
     const rateRequest = yield call(getRate, ethereum, source, dest, sourceAmount)
-    console.log("rate_request_manual_not: " + JSON.stringify(rateRequest))
+    //console.log("rate_request_manual_not: " + JSON.stringify(rateRequest))
     if (rateRequest.status === "success") {
       const { expectedPrice, slippagePrice, lastestBlock } = rateRequest.res
 
@@ -826,6 +826,7 @@ function* fetchGasSnapshot() {
 function* estimateGasSnapshot() {
 
   var gasRequest = yield call(common.handleRequest, getGasUsed)
+  console.log("gas_request:" + JSON.stringify(gasRequest))
   if (gasRequest.status === "success") {
     const { gas, gas_approve } = gasRequest.data
     yield put(actions.setEstimateGasSnapshot(gas, gas_approve))
@@ -1091,6 +1092,7 @@ function* getGasUsed() {
     //   console.log("timeout")
     // }
     gas = yield call([ethereum, ethereum.call], "estimateGas", txObj)
+    console.log("get_gas:" + gas)
     gas = Math.round(gas * 120 / 100)
     //console.log("gas ne: " + gas)
     if (gas > maxGas) {

@@ -16,6 +16,7 @@ export function calculateMinAmount(source, rate) {
 }
 
 export function calculateDest(source, rate) {
+  //console.log({source, rate})
   if (isNaN(source) || source === ""){
     source = 0
   }
@@ -107,9 +108,9 @@ export function shortEthBalance(tokens){
 
 function acceptableTyping(number) {
   // ends with a dot
-  if (number.length > 0 && number[number.length - 1] == ".") {
-    return true
-  }
+  // if (number.length > 0 && number[number.length - 1] == ".") {
+  //   return true
+  // }
 
   // TODO refactor format
   // zero suffixed with real number
@@ -124,7 +125,7 @@ function acceptableTyping(number) {
 }
 
 export function toTWei(number, decimal = 18) {
-  console.log({number, decimal})
+  //console.log({number, decimal})
   var bigNumber = new BigNumber(number.toString())
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
     return number

@@ -6,11 +6,11 @@ export function* handleRequest(sendRequest, ...args) {
 
 	const { res, timeout } = yield race({
 		res: join(task),
-		timeout: call(delay, 8 * 1000)
+		timeout: call(delay, 9 * 1000)
     })
         
 	if (timeout) {     
-        console.log("timeout")
+        //console.log("timeout")
         yield cancel(task)
         return {status: "timeout"}   
     }

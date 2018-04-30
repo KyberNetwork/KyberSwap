@@ -4,11 +4,11 @@
       {
         "endPoint": "https://staging-cache.kyber.network",
         "type": "cached"
-      },      
+      },
       {
         "endPoint": "https://mainnet.infura.io",
         "type": "prune"
-      },      
+      },
       {
         "endPoint": "https://api.mycryptoapi.com/eth",
         "type": "none_prune"
@@ -212,6 +212,14 @@
       "decimal": 18,
       "icon": "iost.svg",
       "usd_id":"iostoken"
+    },
+    "DGX": {
+      "name" : "Digix Gold Token",
+      "address": "0x4f3afec4e5a3f2a6a1a411def7d7dfe50ee057bf",
+      "symbol":"DGX",
+      "decimal": 9,
+      "icon": "dgx.png",
+      "usd_id":"dgx"
     }
   },
   "ethScanUrl": "https://etherscan.io/",

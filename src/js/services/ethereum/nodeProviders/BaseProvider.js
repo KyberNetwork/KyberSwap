@@ -7,7 +7,7 @@ import abiDecoder from "abi-decoder"
 export default class BaseProvider {
 
     initContract() {
-        this.rpc = new Web3(new Web3.providers.HttpProvider(this.rpcUrl, 9000))
+        this.rpc = new Web3(new Web3.providers.HttpProvider(this.rpcUrl, 3000))
 
         this.erc20Contract = new this.rpc.eth.Contract(constants.ERC20)
         this.networkAddress = BLOCKCHAIN_INFO.network
@@ -172,11 +172,13 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             this.rpc.eth.estimateGas(txObj)
                 .then((result) => {
+                    console.log("gas_result: " + result)
                     if (result != null) {
                         resolve(result)
                     }
                 })
                 .catch((err) => {
+                    console.log(err)
                     reject(err)
                 })
         })
@@ -603,8 +605,8 @@ export default class BaseProvider {
                 data: data
             }, blockno)
                 .then(result => {
-                    console.log({source, dest, srcAmount, blockno})
-                    console.log("rate: " + result)
+                //    console.log({source, dest, srcAmount, blockno})
+               //     console.log("rate: " + result)
                     if (result === "0x"){
                         reject(new Error("Cannot get rate"))
                         return
