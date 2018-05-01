@@ -213,6 +213,14 @@
         "decimal": 18,
         "icon": "iost.svg",
         "usd_id":"iostoken"
+      },
+      "MOT": {
+        "name": "Olympus Labs",
+        "address": "0x263c618480dbe35c300d8d5ecda19bbb986acaed",
+        "symbol": "MOT",
+        "decimal": 18,
+        "icon": "mot.svg",
+        "usd_id":"olympus-labs"
       }
     },
     "ethScanUrl": "https://etherscan.io/",
