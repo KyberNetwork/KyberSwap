@@ -4,18 +4,18 @@
         {
           "endPoint" : "https://production-cache.kyber.network",
           "type": "cached"
-        },        
+        },       
         {
           "endPoint" : "https://mainnet.infura.io",
           "type": "prune"
-        },
-        {
-          "endPoint" : "https://semi-node.kyber.network",
-          "type": "prune"
-        },                   
+        },          
         {
           "endPoint" : "https://api.mycryptoapi.com/eth",
           "type": "none_prune"
+        },     
+        {
+          "endPoint" : "https://semi-node.kyber.network",
+          "type": "prune"
         }
       ],
       "ws": "wss://mainnet.infura.io/ws"
@@ -197,6 +197,30 @@
         "decimal": 18,
         "icon": "link.svg",
         "usd_id":"chainlink"
+      },
+      "STORM": {
+        "name": "Storm",
+        "address": "0xd0a4b8946cb52f0661273bfbc6fd0e0c75fc6433",
+        "symbol": "STORM",
+        "decimal": 18,
+        "icon": "storm.svg",
+        "usd_id":"storm"
+      },
+      "IOST": {
+        "name": "IOStoken",
+        "address": "0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab",
+        "symbol": "IOST",
+        "decimal": 18,
+        "icon": "iost.svg",
+        "usd_id":"iostoken"
+      },
+      "MOT": {
+        "name": "Olympus Labs",
+        "address": "0x263c618480dbe35c300d8d5ecda19bbb986acaed",
+        "symbol": "MOT",
+        "decimal": 18,
+        "icon": "mot.svg",
+        "usd_id":"olympus-labs"
       }
     },
     "ethScanUrl": "https://etherscan.io/",
