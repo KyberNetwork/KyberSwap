@@ -1,6 +1,5 @@
 import React, { Fragment } from "react"
 import BLOCKCHAIN_INFO from "../../../../env"
-import Menu, { SubMenu, MenuItem } from 'rc-menu'
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
 
 const Notify = (props) => {

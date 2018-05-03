@@ -76,6 +76,7 @@ export function verifyBalanceForTransaction(
   gas, gasPrice
 ) {
 
+ // console.log({ethBalance, sourceSymbol, sourceAmount, gas, gasPrice})
   var bigEthBalance = new BigNumber(ethBalance.toString())
 
   //calcualte tx fee
@@ -135,8 +136,8 @@ export function verifyPassphrase(passphrase, repassphrase) {
 }
 
 export function filterInputNumber(event, value, preVal) {
-  console.log("filter_input")
-  console.log({ value, preVal})
+ // console.log("filter_input")
+ // console.log({ value, preVal})
   var strRemoveText = value.replace(/[^0-9.]/g, '')
   var str = strRemoveText.replace(/\./g, (val, i) => {
     if (strRemoveText.indexOf('.') != i) val = ''
