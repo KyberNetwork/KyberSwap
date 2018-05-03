@@ -15,8 +15,7 @@ const HeaderView = (props) => {
                 <img src={require("../../../assets/img/logo-header.svg")} />
                 {/* <span class="beta">Beta</span> */}
               </Link>
-            </div>
-            {props.infoMenu}
+            </div>          
             {props.address}
           </div>
         </div>

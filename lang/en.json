@@ -16,7 +16,7 @@
   "address": {
     "address": "Address",
     "import_address": "Import Address",
-    "my_balance": "Balance",
+    "my_balance": "My Balance",
     "estimated_value": "Estimated value",
     "total": "Total value",
     "hide_zero_balance": "Hide zero balance"

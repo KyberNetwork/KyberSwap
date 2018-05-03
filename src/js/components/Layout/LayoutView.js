@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 import { Processing, InfoModal } from "../../containers/CommonElements/"
 import { Link } from 'react-router-dom'
-import { Rate } from "../Header"
+//import { Rate } from "../Header"
 
 const LayoutView = (props) => {
   return (
@@ -18,9 +18,9 @@ const LayoutView = (props) => {
             <Route exact path="/transfer" component={props.Transfer} />
             <Redirect from="*" to="/" />
           </Switch>
-          <div id="rate-bar" class="mb-8">
+          {/* <div id="rate-bar" class="mb-8">
             {props.rate}
-          </div>
+          </div> */}
           
           <Processing />
           {props.exchangeHistory}
