@@ -101,11 +101,7 @@
     "build-production": "NODE_ENV=production webpack --env.chain=production --env.build=true",
     "build-all": "npm run build-staging && npm run build-production && npm run build-kovan  && npm run build-ropsten",
     "build-all-mainnet": "npm run build-staging && npm run build-production",
-<<<<<<< HEAD
     "staging": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=staging",
-=======
-    "staging": "webpack-dev-server --https --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=staging",
->>>>>>> f65d32b1652ffefafc0edf168652f9652eaa27ec
     "production": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=production",
     "kovan": "webpack-dev-server --https --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=kovan",
     "ropsten": "webpack-dev-server --https --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=ropsten --env.logger=true",

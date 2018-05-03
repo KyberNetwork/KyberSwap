@@ -214,6 +214,14 @@
         "icon": "iost.svg",
         "usd_id":"iostoken"
       },
+      "MOT": {
+        "name": "Olympus Labs",
+        "address": "0x263c618480dbe35c300d8d5ecda19bbb986acaed",
+        "symbol": "MOT",
+        "decimal": 18,
+        "icon": "mot.svg",
+        "usd_id":"olympus-labs"
+      },
       "DGX": {
         "name" : "Digix Gold Token",
         "address": "0x4f3afec4e5a3f2a6a1a411def7d7dfe50ee057bf",
