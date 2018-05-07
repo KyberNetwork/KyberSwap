@@ -165,6 +165,17 @@ function* transferMetamask(action, callService) {
   }
 }
 
+
+function* getMaxGasTransfer(){
+  var state = store.getState()
+  const transfer = state.transfer
+  if (transfer.tokenSymbol !== 'DGX') {
+    return transfer.gas_limit
+  }else{
+    return 250000
+  }
+}
+
 function* estimateGasUsed(action){
   var state = store.getState()
   var transfer = state.transfer
@@ -185,9 +196,9 @@ function* estimateGasUsed(action){
     yield put(actions.setGasUsed(gas))
   }
   if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
-    var state = store.getState()
-    var transfer = state.transfer
-    var gasLimit = transfer.gas_limit
+    //var state = store.getState()
+    //var transfer = state.transfer
+    var gasLimit = yield call(getMaxGasTransfer)
     yield put(actions.setGasUsed(gasLimit))
   }
 //  yield call(calculateGasUse, fromAddr, transfer.tokenSymbol, transfer.token, decimal, transfer.amount)
@@ -217,9 +228,10 @@ function* estimateGasUsedWhenSelectToken(action){
     yield put(actions.setGasUsed(gas))
   }
   if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
-    var state = store.getState()
-    var transfer = state.transfer
-    var gasLimit = transfer.gas_limit
+    // var state = store.getState()
+    // var transfer = state.transfer
+    // var gasLimit = transfer.gas_limit
+    var gasLimit = yield call(getMaxGasTransfer)
     yield put(actions.setGasUsed(gasLimit))
   }
 
@@ -248,9 +260,10 @@ function* estimateGasUsedWhenChangeAmount(action){
     yield put(actions.setGasUsed(gas))
   }
   if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
-    var state = store.getState()
-    var transfer = state.transfer
-    var gasLimit = transfer.gas_limit
+    // var state = store.getState()
+    // var transfer = state.transfer
+    // var gasLimit = transfer.gas_limit
+    var gasLimit = yield call(getMaxGasTransfer)
     yield put(actions.setGasUsed(gasLimit))
   }
 
@@ -312,9 +325,9 @@ function* fetchGasSnapshot(){
     yield put(actions.setGasUsedSnapshot(gas))
   }
   if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
-    var state = store.getState()
-    var transfer = state.transfer
-    var gasLimit = transfer.gas_limit
+    // var state = store.getState()
+    // var transfer = state.transfer
+    var gasLimit = yield call(getMaxGasTransfer)
     yield put(actions.setGasUsedSnapshot(gasLimit))
   }
 
@@ -327,7 +340,7 @@ function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, source
     var ethereum = state.connection.ethereum
     var transfer = state.transfer
     const amount = converter.stringToHex(sourceAmount, tokenDecimal)
-    var gasLimit = transfer.gas_limit
+    var gasLimit = yield call(getMaxGasTransfer)
     var gas = 0
     var internalAdrr = "0x3cf628d49ae46b49b210f0521fbd9f82b461a9e1"
     var txObj

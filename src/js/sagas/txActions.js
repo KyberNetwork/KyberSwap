@@ -33,8 +33,8 @@ function* updateTx(action) {
       return
     }
     
-    console.log("new tx: ")
-    console.log(newTx)
+    //console.log("new tx: ")
+    //console.log(newTx)
     if (newTx.status === "success") {
      // var blockNumber = newTx.blockNumber
       if (newTx.type === "exchange") {

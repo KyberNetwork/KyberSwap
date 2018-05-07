@@ -55,9 +55,29 @@ export default class Tx {
             newTx.status = theLog ? "success" : "failed"
             newTx.error = theLog ? "" : "transaction.error_tx_contract"
           }
-        } else {
-          newTx.status = "success"
         }
+        if (newTx.type === "transfer"){
+          if(newTx.data.tokenSymbol === "ETH") {
+            newTx.status = "success"
+          }else{
+            if (logs.length == 0) {
+              newTx.threw = true
+              newTx.status = "failed"
+              newTx.error = "transaction.error_tx_log"
+            } else {
+              var theLog
+              for (var i = 0; i < logs.length; i++) {
+                if (logs[i].topics[0].toLowerCase() == constants.TRANSFER_TOPIC.toLowerCase()) {
+                  theLog = logs[i]
+                  newTx.eventTrade = theLog.data
+                  break
+                }
+              }
+              newTx.status = theLog ? "success" : "failed"
+              newTx.error = theLog ? "" : "transaction.error_tx_contract"
+            }
+          }
+        }         
         resolve(newTx)
       }).catch(err => {
         reject(err)

@@ -41,7 +41,7 @@ const ImportByDeviceView = (props) => {
                                 : roundingNumber(address.balance)
                             } ETH
                         </a>
-                        <a class="import">Import</a>
+                        <a class="import">{props.translate('modal.import') || 'Import'}</a>
                     </div>
                 </li>
             )
@@ -73,7 +73,7 @@ const ImportByDeviceView = (props) => {
                                 </div>
                             ) : (
                                 <div>
-                                    <div class="name">{dPath.desc}</div>
+                                    <div class="name">{props.translate(dPath.desc) || dPath.desc}</div>
                                     <div class="address-path-input">
                                         <input type="text" name="customPath" defaultValue={dPath.defaultP} />
                                         <a class="submit"
