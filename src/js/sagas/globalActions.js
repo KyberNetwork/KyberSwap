@@ -25,16 +25,16 @@ export function* getLatestBlock(action) {
   
 }
 
-export function* updateHistoryExchange(action) {
-  try{
-    const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
-    var latestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
-    const newLogs = yield call([ethereum, ethereum.call], "getLog")
-    yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
-  }catch(e){
-    console.log(e)
-  }
-}
+// export function* updateHistoryExchange(action) {
+//   try{
+//     const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
+//     var latestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
+//     const newLogs = yield call([ethereum, ethereum.call], "getLog")
+//     yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
+//   }catch(e){
+//     console.log(e)
+//   }
+// }
 
 export function* goToRoute(action) {
   yield put(push(action.payload));
@@ -188,7 +188,7 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.GO_TO_ROUTE", goToRoute)
   yield takeEvery("GLOBAL.CLEAR_SESSION", clearSession)
 
-  yield takeEvery("GLOBAL.UPDATE_HISTORY_EXCHANGE", updateHistoryExchange)
+  //yield takeEvery("GLOBAL.UPDATE_HISTORY_EXCHANGE", updateHistoryExchange)
   yield takeEvery("GLOBAL.CHANGE_LANGUAGE", changelanguage)
   yield takeEvery("GLOBAL.CHECK_CONNECTION", checkConnection)
   yield takeEvery("GLOBAL.SET_GAS_PRICE", setGasPrice)

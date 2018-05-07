@@ -1,17 +1,83 @@
 import React from "react"
 import { connect } from "react-redux"
-import {ExchangeBody, Advance} from "../Exchange"
+import {ExchangeBody, MinRate} from "../Exchange"
+//import {GasConfig} from "../TransactionCommon"
+import {AdvanceConfigLayout, GasConfig} from "../../components/TransactionCommon"
 import {AccountBalance} from "../TransactionCommon"
 
 import {TransactionLayout} from "../../components/TransactionCommon"
+import { getTranslate } from 'react-localize-redux'
+
+import * as converter from "../../utils/converter"
+import * as validators from "../../utils/validators"
+import * as exchangeActions from "../../actions/exchangeActions"
+import { default as _ } from 'underscore'
+
+@connect((store) => {
+  const translate = getTranslate(store.locale)
+  var location = "/"
+  if (store.router.location){
+    location = store.router.location.pathname
+  }
+  const tokens = store.tokens.tokens
+  const exchange = store.exchange
+  console.log("location: " + location)
+  return {
+      translate, location, exchange, tokens
+    }  
+})
+
 
 export default class Exchange extends React.Component {
+  
+  validateTxFee = (gasPrice) => {
+    var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
+    this.props.exchange.sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, gasPrice)
+
+    if (validateWithFee) {
+      this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
+      return
+      // check = false
+    }
+  }
+  lazyValidateTransactionFee = _.debounce(this.validateTxFee, 500)
+
+  specifyGas = (event) => {
+    var value = event.target.value
+    this.props.dispatch(exchangeActions.specifyGas(value))
+  }
+
+  specifyGasPrice = (value) => {
+    this.props.dispatch(exchangeActions.specifyGasPrice(value + ""))
+    this.lazyValidateTransactionFee(value)
+  }
 
   render() {
+    var gasPrice = converter.stringToBigNumber(converter.gweiToEth(this.props.exchange.gasPrice))
+    var totalGas = gasPrice.multipliedBy(this.props.exchange.gas + this.props.exchange.gas_approve)
+    var gasConfig = (
+      <GasConfig 
+        gas={this.props.exchange.gas + this.props.exchange.gas_approve}
+        gasPrice={this.props.exchange.gasPrice}
+        maxGasPrice={this.props.exchange.maxGasPrice}
+        gasHandler={this.specifyGas}
+        gasPriceHandler={this.specifyGasPrice}
+        gasPriceError={this.props.exchange.errors.gasPriceError}
+        gasError={this.props.exchange.errors.gasError}
+        totalGas={totalGas.toString()}
+        translate={this.props.translate}        
+        gasPriceSuggest={this.props.exchange.gasPriceSuggest}        
+      />
+    )
+
+    var minRate = <MinRate />    
+    var advanceConfig = <AdvanceConfigLayout minRate = {minRate} gasConfig = {gasConfig}/>
     return (
       <TransactionLayout 
+        translate = {this.props.translate}
+        location = {this.props.location}
         balance = {<AccountBalance />}
-        advance = {<Advance />}
+        advance = {advanceConfig}
         content = {<ExchangeBody />}
       />
     )

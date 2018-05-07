@@ -6,7 +6,7 @@ import constants from "../constants"
 
 import {
   updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRateUSD,
-  updateHistoryExchange, checkConnection, setGasPrice, setMaxGasPrice
+  checkConnection, setGasPrice, setMaxGasPrice
 } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx, updateApproveTxsData } from "../../actions/txActions"
@@ -151,7 +151,7 @@ export default class EthereumService extends React.Component {
 
     this.fetchRateExchange()
 
-    this.fetchHistoryExchange()
+    //this.fetchHistoryExchange()
 
     this.checkConnection()
 
@@ -299,15 +299,13 @@ export default class EthereumService extends React.Component {
     store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmountHex, isManual, rateInit))
   }
 
-  fetchHistoryExchange = () => {
-    var state = store.getState()
-    var history = state.global.history
-    var ethereum = state.connection.ethereum
-    store.dispatch(updateBlock(ethereum))
-    //if (history.page,){      
-    store.dispatch(updateHistoryExchange(ethereum, history.page, history.itemPerPage, true))
-    //}
-  }
+  // fetchHistoryExchange = () => {
+  //   var state = store.getState()
+  //   var history = state.global.history
+  //   var ethereum = state.connection.ethereum
+  //   store.dispatch(updateBlock(ethereum))
+  //   store.dispatch(updateHistoryExchange(ethereum, history.page, history.itemPerPage, true))
+  // }
 
   fetchGasprice = () => {
     var state = store.getState()

@@ -23,7 +23,7 @@ const LayoutView = (props) => {
           </div> */}
           
           <Processing />
-          {props.exchangeHistory}
+          {props.market}
           <div id="footer">
             {props.footer}
           </div>

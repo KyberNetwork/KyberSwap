@@ -78,7 +78,7 @@ const AccountBalanceLayout = (props) => {
       </div>
       <div id="search-balance">
          <div>  
-           <input placeholder="search" onChange=""/>
+           <input placeholder="search"/>
         </div>   
         <div>
           Sort

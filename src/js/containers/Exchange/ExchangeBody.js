@@ -9,7 +9,9 @@ import { TransactionConfig } from "../../components/Transaction"
 
 import { ExchangeBodyLayout }  from "../../components/Exchange"
 
-import { TokenSelector, TransactionLoading, Token } from "../CommonElements"
+import { TransactionLoading, Token } from "../CommonElements"
+
+import { TokenSelector } from "../TransactionCommon"
 
 import * as validators from "../../utils/validators"
 
@@ -154,20 +156,20 @@ export default class ExchangeBody extends React.Component {
     }
   }
 
-  validateTxFee = (gasPrice) => {
-    var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
-    this.props.exchange.sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, gasPrice)
+  // validateTxFee = (gasPrice) => {
+  //   var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
+  //   this.props.exchange.sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, gasPrice)
 
-    if (validateWithFee) {
-      this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
-      return
-      // check = false
-    }
-  }
+  //   if (validateWithFee) {
+  //     this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
+  //     return
+  //     // check = false
+  //   }
+  // }
 
   lazyUpdateRateExchange = _.debounce(this.dispatchUpdateRateExchange, 500)
   lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
-  lazyValidateTransactionFee = _.debounce(this.validateTxFee, 500)
+ // lazyValidateTransactionFee = _.debounce(this.validateTxFee, 500)
 
  
   validateRateAndSource = (sourceValue) => {
@@ -215,15 +217,15 @@ export default class ExchangeBody extends React.Component {
     this.validateRateAndSource(valueSource)
   }
 
-  specifyGas = (event) => {
-    var value = event.target.value
-    this.props.dispatch(exchangeActions.specifyGas(value))
-  }
+  // specifyGas = (event) => {
+  //   var value = event.target.value
+  //   this.props.dispatch(exchangeActions.specifyGas(value))
+  // }
 
-  specifyGasPrice = (value) => {
-    this.props.dispatch(exchangeActions.specifyGasPrice(value + ""))
-    this.lazyValidateTransactionFee(value)
-  }
+  // specifyGasPrice = (value) => {
+  //   this.props.dispatch(exchangeActions.specifyGasPrice(value + ""))
+  //   this.lazyValidateTransactionFee(value)
+  // }
 
   focusSource = () => {
     this.props.dispatch(exchangeActions.focusInput('source'));
@@ -391,23 +393,23 @@ export default class ExchangeBody extends React.Component {
     )
 
 
-    var gasPrice = stringToBigNumber(gweiToEth(this.props.exchange.gasPrice))
-    var totalGas = gasPrice.multipliedBy(this.props.exchange.gas + this.props.exchange.gas_approve)
-    var gasConfig = (
-      <TransactionConfig gas={this.props.exchange.gas + this.props.exchange.gas_approve}
-        gasPrice={this.props.exchange.gasPrice}
-        maxGasPrice={this.props.exchange.maxGasPrice}
-        gasHandler={this.specifyGas}
-        gasPriceHandler={this.specifyGasPrice}
-        gasPriceError={this.props.exchange.errors.gasPriceError}
-        gasError={this.props.exchange.errors.gasError}
-        totalGas={totalGas.toString()}
-        translate={this.props.translate}
-        minRate={<MinRate />}
-        gasPriceSuggest={this.props.exchange.gasPriceSuggest}
-        advanced={this.props.exchange.advanced}
-      />
-    )
+    // var gasPrice = stringToBigNumber(gweiToEth(this.props.exchange.gasPrice))
+    // var totalGas = gasPrice.multipliedBy(this.props.exchange.gas + this.props.exchange.gas_approve)
+    // var gasConfig = (
+    //   <TransactionConfig gas={this.props.exchange.gas + this.props.exchange.gas_approve}
+    //     gasPrice={this.props.exchange.gasPrice}
+    //     maxGasPrice={this.props.exchange.maxGasPrice}
+    //     gasHandler={this.specifyGas}
+    //     gasPriceHandler={this.specifyGasPrice}
+    //     gasPriceError={this.props.exchange.errors.gasPriceError}
+    //     gasError={this.props.exchange.errors.gasError}
+    //     totalGas={totalGas.toString()}
+    //     translate={this.props.translate}
+    //     minRate={<MinRate />}
+    //     gasPriceSuggest={this.props.exchange.gasPriceSuggest}
+    //     advanced={this.props.exchange.advanced}
+    //   />
+    // )
 
     var addressBalance = ""
     var token = this.props.tokens[this.props.exchange.sourceTokenSymbol]
@@ -421,7 +423,7 @@ export default class ExchangeBody extends React.Component {
       <ExchangeBodyLayout step={this.props.exchange.step}
         tokenSourceSelect={tokenSourceSelect}
         tokenDestSelect={tokenDestSelect}
-        gasConfig={gasConfig}
+        //gasConfig={gasConfig}
         exchangeButton={exchangeButton}
         transactionLoadingScreen={transactionLoadingScreen}
         errors={errors}

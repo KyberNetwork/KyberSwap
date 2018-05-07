@@ -108,19 +108,19 @@ export function goToRoute(route) {
 }
 
 
-export function updateHistoryExchange(ethereum, page, itemPerPage, isAutoFetch) {
-  return {
-    type: "GLOBAL.UPDATE_HISTORY_EXCHANGE",
-    payload: { ethereum, page, itemPerPage, isAutoFetch }
-  }
-}
+// export function updateHistoryExchange(ethereum, page, itemPerPage, isAutoFetch) {
+//   return {
+//     type: "GLOBAL.UPDATE_HISTORY_EXCHANGE",
+//     payload: { ethereum, page, itemPerPage, isAutoFetch }
+//   }
+// }
 
-export function updateHistory(logs, latestBlock, page, eventsCount, isAutoFetch) {
-  return {
-    type: "GLOBAL.UPDATE_HISTORY",
-    payload: { logs, latestBlock, page, eventsCount, isAutoFetch }
-  }
-}
+// export function updateHistory(logs, latestBlock, page, eventsCount, isAutoFetch) {
+//   return {
+//     type: "GLOBAL.UPDATE_HISTORY",
+//     payload: { logs, latestBlock, page, eventsCount, isAutoFetch }
+//   }
+// }
 
 export function checkConnection(ethereum, count, maxCount, isCheck) {
   return {

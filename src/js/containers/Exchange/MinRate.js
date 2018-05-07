@@ -25,7 +25,16 @@ export default class MinRate extends React.Component {
     var minConversionRate = this.props.exchange.minConversionRate
     return (
       <div className="row min-rate small-12 medium-8">
-        <label className="column small-12 medium-3 text-right">
+        <div>
+          A high percentage will lead to a higher success rate during market volatility
+        </div>
+        <div>
+          <label>Percentage rate</label>
+          <input type="text" maxLength="40" value={minConversionRate} onChange={(e) => this.changeMinRate(e)} autoComplete="off"/>
+          <span className="error-text">{this.props.exchange.errors.rateError}</span>
+          <span>Lower rate typically results in better success rate when the market is volatle</span>
+        </div>
+        {/* <label className="column small-12 medium-3 text-right">
           <span>{this.props.translate("transaction.best_rate") || "Min Rate"}</span>
           <span className="k k-info k-2x ml-3" data-for="rate-tip" data-tip={this.props.translate("transaction.best_rate_tooltip") || "Lower rates for better success chance during market volatility"}></span>
           <ReactTooltip place="bottom" id="rate-tip" type="light"/>
@@ -33,7 +42,7 @@ export default class MinRate extends React.Component {
         <div className="column small-12 medium-6 end p-relative">
           <input type="text" maxLength="40" value={minConversionRate} onChange={(e) => this.changeMinRate(e)} autoComplete="off"/>
           <span className="error-text">{this.props.exchange.errors.rateError}</span>
-        </div>
+        </div> */}
       </div>
     )
   }

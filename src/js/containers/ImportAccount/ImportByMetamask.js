@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { importAccountMetamask, throwError } from "../../actions/accountActions"
 import { ImportByMetamaskView } from "../../components/ImportAccount"
 import BLOCKCHAIN_INFO from "../../../../env"
-import {Web3Service} from "../../services/web3"
+import Web3Service from "../../services/web3"
 import { getTranslate } from 'react-localize-redux'
 import bowser from 'bowser'
 

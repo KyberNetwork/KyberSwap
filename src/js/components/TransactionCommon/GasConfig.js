@@ -3,7 +3,7 @@ import React from "react"
 import ReactTooltip from 'react-tooltip'
 import { filterInputNumber } from "../../utils/validators";
 
-const AdvancedConfig = (props) => {
+const GasConfig = (props) => {
 
   function specifyGasPrice(value) {
     props.gasPriceHandler(value)
@@ -30,9 +30,38 @@ const AdvancedConfig = (props) => {
   var gasPriceSuggest = props.gasPriceSuggest
   return (
     <div className="gas-config">
-      <div className="row small-11 medium-12 hide-on-choose-token-pair">
-        <div className="advanced-content" disabled={props.advanced ? false : true}>
-          {props.minRate}
+      <div>
+        <label>Gas price (inclusive in the rate)</label>
+        </div>
+        <div>
+          <input type="text" min="0" max="99" className="gas-price-input" step="0.1" value={props.gasPrice} onChange={handleChangeGasPrice} maxLength="20" autoComplete="off" />
+        </div>
+        <div>
+        <span>Higher gas price, faster transaction. Max gas price: 50 Gwei</span>
+        </div>
+        <div>
+        <button onClick={() => specifyGasPrice(gasPriceSuggest.safeLowGas)} data-tip={tooltipGasSuggest(30)} data-for="low">
+                    {props.translate("low") || 'Slow'}
+                  </button>
+                  <ReactTooltip place="bottom" id="low" type="light" />
+
+                  <button onClick={() => specifyGasPrice(gasPriceSuggest.standardGas)} data-tip={tooltipGasSuggest(5)} data-for="standard">
+                    {props.translate("standard") || 'Standard'}
+                  </button>
+                  <ReactTooltip place="bottom" id="standard" type="light" />
+
+                  <button onClick={() => specifyGasPrice(gasPriceSuggest.fastGas)} data-tip={tooltipGasSuggest(2)} data-for="fast">
+                    {props.translate("fast") || 'Fast'}
+                  </button>
+        </div>
+        <div>
+          <label>Transaction fee</label>
+          <span className="text-success font-w-b">{props.totalGas} ETH</span>
+        </div>
+
+
+      {/* <div className="row small-11 medium-12 hide-on-choose-token-pair">
+        <div className="advanced-content">          
           <div className="row gas-price text-light small-12 medium-8 mt-3">
             <label className="column small-12 medium-3">
               <span>{props.translate("transaction.gas_price") || "Gas price"}</span>
@@ -65,8 +94,8 @@ const AdvancedConfig = (props) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
-export default AdvancedConfig
+export default GasConfig

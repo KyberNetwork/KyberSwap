@@ -45,10 +45,18 @@ const TokenSelectorView = (props) => {
       <Dropdown onShow = {(e) => props.showTokens(e)} onHide = {(e) => props.hideTokens(e)}>
         <DropdownTrigger className="notifications-toggle">
           <div className="focus-item d-flex">
-            <div className="icon">
-              <img src={require("../../../assets/img/tokens/" + focusItem.icon)} />
+            <div>
+              <div className="icon">
+                <img src={require("../../../assets/img/tokens/" + focusItem.icon)} />
+              </div>
+              <div>
+                <div>{focusItem.name}</div>
+                <div>
+                  <span className="token-balance" title = {toT(focusItem.balance)}>{roundingNumber(toT(focusItem.balance, focusItem.decimal))}</span>
+                  <span className="token-symbol">{focusItem.symbol}</span>
+                </div>
+              </div>
             </div>
-            <div className="mr-auto"><span className="font-w-b">{focusItem.symbol}</span><span className="show-for-large token-name"> - {focusItem.name}</span></div>
             <div><i className={'k k-angle white ' + (props.open ? 'up' : 'down')}></i></div>
           </div>
         </DropdownTrigger>

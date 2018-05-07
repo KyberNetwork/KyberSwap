@@ -12,7 +12,9 @@ import * as utilActions from "../../actions/utilActions"
 import { Modal } from "../../components/CommonElement"
 import { TermAndServices } from "../../containers/CommonElements"
 
-import { PassphraseModal, ConfirmTransferModal, ApproveModal, PostExchangeBtn } from "../../components/Transaction"
+import { PassphraseModal, ConfirmTransferModal, ApproveModal } from "../../components/Transaction"
+import {PostExchangeBtn } from "../../components/Exchange"
+
 import { getTranslate } from 'react-localize-redux';
 import { RateBetweenToken } from "../Exchange"
 
