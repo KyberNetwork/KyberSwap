@@ -24,9 +24,9 @@ const LayoutView = (props) => {
           
           <Processing />
           {props.market}
-          <div id="footer">
+          {/* <div id="footer">
             {props.footer}
-          </div>
+          </div> */}
         </section>
         <section id="modals">
           <InfoModal />

@@ -8,7 +8,7 @@ import { Transfer } from "../../containers/Transfer"
 import { Header } from "../../containers/Header"
 import { ImportAccount } from "../ImportAccount"
 
-import { Footer } from "../Layout"
+//import { Footer } from "../Layout"
 
 import { Processing, ExchangeHistory } from "../../containers/CommonElements/"
 import {MarketTable} from "../Market"
@@ -93,7 +93,7 @@ export default class Layout extends React.Component {
   render() {
    // var exchangeHistory = <TransactionList />
     var market = <MarketTable />
-    var footer = <Footer />
+    //var footer = <Footer />
    // var rate = <Rate />
     return (
       <LayoutView
@@ -105,7 +105,7 @@ export default class Layout extends React.Component {
         market={market}
         supportedLanguages={Language.supportLanguage}
         setActiveLanguage={this.setActiveLanguage}        
-        footer = {footer}
+       // footer = {footer}
       />
     )
   }
