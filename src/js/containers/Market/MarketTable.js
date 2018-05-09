@@ -1,157 +1,82 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import { default as _ } from 'underscore'
+import ReactTable from 'react-table'
+//import "react-table/react-table.css";
 import { getTranslate } from 'react-localize-redux'
 
-import {Selector} from "../CommonElements"
+
 
 @connect((store) => {
-  
-  var tokens = [
-    {
-      symbol :"KNC",
-      change:"3%",
-      increase:true,
-      volumn_24h:230,
-      market_cap:230,
-      circulating_supply:230,
-      last_price:120,
-      sell_price:120,
-      buy_price:120
-    },
-    {
-      symbol :"OMG",
-      change:"3%",
-      increase:false,
-      volumn_24h:230,
-      market_cap:230,
-      circulating_supply:230,
-      last_price:120,
-      sell_price:120,
-      buy_price:120
-    },
-    {
-      symbol :"DGD",
-      change:"36%",
-      increase:false,
-      volumn_24h:230,
-      market_cap:230,
-      circulating_supply:230,
-      last_price:120,
-      sell_price:120,
-      buy_price:120
-    }
-  ]
+  var searchWord = store.market.configs.searchWord
+  var currency = store.market.configs.currency.focus
+  var tokens = store.market.tokens
+  var data = []
+  Object.keys(tokens).forEach((key) => {     
+    if (key === "ETH") return     
+    if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
 
+    var item = tokens[key]
+    item.market = (
+        <div>
+          <div>
+            <img src={require("../../../assets/img/tokens/" + tokens[key].info.icon)} />
+            <img src={require("../../../assets/img/tokens/eth.svg")} />
+          </div>
+          <div>{key} / {currency}</div>
+        </div>
+    )    
+    item = {...item, ...item[currency]}
+    data.push(item)
+  })
   return {
     translate: getTranslate(store.locale),
+    searchWord,
+    currency,
+    sort: store.market.configs.sort.focus,
+    displayColumn: store.market.configs.column.display.active,
+    showActive: store.market.configs.column.shows.active,
+    listShowColumn: store.market.configs.column.shows.listItem,
+    data: data
   }
 })
 
 export default class MarketTable extends React.Component {
-  constructor() {
-		super();
-		this.state = {
-      search_word: "",
-      currency: {        
-         listItem : {
-           "ETH" : "ETH",
-           "USD" : "USD"
-         },
-          focus:"ETH"
-      },
-      sort: {
-        support : [
-          {name : "Highest price", code : 0},
-          {name : "Lowest price", code : 1},
-        ],
-        active: 0
-      },
-      column: {
-        display: {
-          support : [
-            {name : "Normal", code : 0},
-          ],
-          active: 0
-        },
-        shows : {
-          last_7d:{
-            name : "last 7d",
-            active: true
-          },
-          change:{
-            name : "% change",
-            active: true
-          },
-          last_price:{
-            name : "Last price",
-            active: true
-          },
-          volume:{
-            name : "Volume",
-            active: true
-          }
-        }
-      }
-		}
-  } 
-  
 
-
-
-  // setSearchWord = (value) => {
-  //   this.setState({search_word:value})
-  // }
-  // lazySearchWord = _.debounce(this.setSearchWord, 500)
-  changeSearch = (e) => {
-    var value  = e.target.value
-    this.setState({search_word:value})
-  }  
-
-  getSearchTokensFragment = () =>{
-    return <div>
-      <label>Search</label>
-      <input placeholder="Try Searching for Token" value ={this.state.search_word} onChange={(e) => this.changeSearch(e)}/>
-    </div>
+  getColumn = () => {
+    var columns = [{
+      Header: 'Maket',
+      accessor: 'market' // String-based value accessors!
+    }, {
+      Header: 'Sell price',
+      accessor: 'sellPrice',      
+    }, {
+      Header: 'Buy price', // Required because our accessor is not a string
+      accessor: 'buyPrice',
+    }
+  ]
+  Object.keys(this.props.listShowColumn).map((key,i) => {
+    var index = this.props.showActive.indexOf(key)
+    if (index !== -1) {
+      columns.push({
+        Header: this.props.listShowColumn[key],
+        accessor: key
+      })
+    }          
+  })
+    return columns
   }
 
-  getCurrencyFragment = () =>{
-    return <div>
-      <label>Currency</label>
-      <Selector 
-        defaultItem = {this.state.currency.listItem[this.state.currency.focus]}
-        listItem = {this.state.currency.listItem}
-      />
-    </div>
-  }
-  getSortFragment = () =>{
-    return <div>Sort fragment</div>
-  }
-  getColumnFragment = () =>{
-    return <div>Column fragment</div>
-  }
-
-  getTableFragment = () => {
-    return <div>Table fragment</div>
-  }
 
   render() {
-    return <div>
-      <h2>Ethereum Markets</h2>
-      <div>
-        <div>
-          {this.getSearchTokensFragment()}
-          {this.getCurrencyFragment()}
-          {this.getSortFragment()}
-        </div>
-        <div>
-          {this.getColumnFragment()}
-        </div>
-      </div>
-      <div>
-        {this.getTableFragment()}
-      </div>
-    </div>
+    const columns = this.getColumn()
+  
+
+    return (
+    <ReactTable
+      data={this.props.data}
+      columns={columns}
+    />
+    )
   }
 }

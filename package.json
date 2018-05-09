@@ -44,6 +44,7 @@
     "react-router-redux": "next",
     "react-simple-dropdown": "^3.2.0",
     "react-slick": "^0.18.1",
+    "react-table": "^6.8.2",
     "react-test-renderer": "^16.2.0",
     "react-tooltip": "^3.4.0",
     "react-transition-group": "^1.2.1",

@@ -11,7 +11,7 @@ import { ImportAccount } from "../ImportAccount"
 //import { Footer } from "../Layout"
 
 import { Processing, ExchangeHistory } from "../../containers/CommonElements/"
-import {MarketTable} from "../Market"
+import {Market} from "../Market"
 import constanst from "../../services/constants"
 // import { createNewConnection } from "../../services/ethereum/connection"
 
@@ -92,7 +92,7 @@ export default class Layout extends React.Component {
 
   render() {
    // var exchangeHistory = <TransactionList />
-    var market = <MarketTable />
+    var market = <Market />
     //var footer = <Footer />
    // var rate = <Rate />
     return (

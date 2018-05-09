@@ -12,6 +12,9 @@ import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx, updateApproveTxsData } from "../../actions/txActions"
 import { updateRateExchange, estimateGas, analyzeError, checkKyberEnable, verifyExchange, caculateAmount, fetchExchangeEnable } from "../../actions/exchangeActions"
 import { estimateGasTransfer, verifyTransfer } from "../../actions/transferActions"
+
+import { getMarketData } from "../../actions/marketActions"
+
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
 import { setConnection } from "../../actions/connectionActions"
@@ -163,6 +166,8 @@ export default class EthereumService extends React.Component {
 
     this.fetchGasExchange()
     this.fetchGasTransfer()
+
+    this.fetMarketData()
 
    //this.testAnalize()
   // this.testEstimateGas()
@@ -347,6 +352,10 @@ export default class EthereumService extends React.Component {
       return
     }
     store.dispatch(estimateGasTransfer())
+  }
+
+  fetMarketData = () => {
+    store.dispatch(getMarketData())
   }
 
   verifyExchange = () => {

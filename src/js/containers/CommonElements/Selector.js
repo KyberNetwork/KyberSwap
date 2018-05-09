@@ -6,6 +6,8 @@ import { getTranslate } from 'react-localize-redux';
 export default class Selector extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props.defaultItem)
+        console.log(props.listItem)
         this.state = {
             open: false,
             focus: { value: props.defaultItem, name: props.listItem[props.defaultItem] },
@@ -34,7 +36,7 @@ export default class Selector extends React.Component {
             focus: { value: value, name: name },
             open: false
         })
-        if (this.state.onChange) this.state.onChange()
+        if (this.state.onChange) this.state.onChange(value)
     }
 
     getListItem = () => {
@@ -50,7 +52,7 @@ export default class Selector extends React.Component {
     render() {
         return (
             <div className="token-selector">
-                <Dropdown onShow={(e) => this.showSelector(e)} onHide={(e) => this.hideSelector(e)}>
+                <Dropdown onShow={(e) => this.showSelector(e)} onHide={(e) => this.hideSelector(e)}  active ={this.props.open}>
                     <DropdownTrigger className="notifications-toggle">
                         <div className="focus-item d-flex">
                             <div>
