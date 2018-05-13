@@ -237,6 +237,14 @@
         "symbol":"ABT",        
         "icon": "abt.svg",
         "usd_id":"arcblock"
+      },
+      "ENJ": {
+        "name": "Enjin Coin",
+        "address": "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c",
+        "decimal": 18,
+        "symbol":"ENJ",        
+        "icon": "enj.svg",
+        "usd_id":"enjin-coin"
       }
     },
     "ethScanUrl": "https://etherscan.io/",
