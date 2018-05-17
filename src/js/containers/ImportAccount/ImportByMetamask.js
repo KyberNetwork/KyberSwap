@@ -31,7 +31,8 @@ export default class ImportByMetamask extends React.Component {
     var web3Service = new Web3Service(web3)
     
     let browser = bowser.name
-		if(browser != 'Chrome' && browser != 'Firefox'){
+    console.log("browser: " + browser)
+		if(browser != 'Chrome' && browser != 'Firefox' && browser !== "Chromium"){
       if(!web3Service.isTrust()){
         let erroMsg = this.props.translate("error.browser_not_support_metamask", {browser: browser}) || `Metamask is not supported on ${browser}, you can use Chrome or Firefox instead.`
         this.props.dispatch(throwError(erroMsg))
