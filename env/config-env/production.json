@@ -229,6 +229,22 @@
         "decimal": 9,
         "icon": "dgx.png",
         "usd_id":"dgx"
+      },
+      "ABT": {
+        "name": "ArcBlock",
+        "address": "0xb98d4c97425d9908e66e53a6fdf673acca0be986",
+        "decimal": 18,
+        "symbol":"ABT",        
+        "icon": "abt.svg",
+        "usd_id":"arcblock"
+      },
+      "ENJ": {
+        "name": "Enjin Coin",
+        "address": "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c",
+        "decimal": 18,
+        "symbol":"ENJ",        
+        "icon": "enj.svg",
+        "usd_id":"enjin-coin"
       }
     },
     "ethScanUrl": "https://etherscan.io/",
