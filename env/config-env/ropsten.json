@@ -26,7 +26,7 @@
         "name": "KyberNetwork",
         "symbol": "KNC",
         "icon": "knc.svg",
-        "address": "0xE5585362D0940519d87d29362115D4cc060C56B3",
+        "address": "0x4e470dc7321e84ca96fcaedd0c8abcebbaeb68c6",
         "decimal": 18,
         "usd_id":"kyber-network"
       },
@@ -34,7 +34,7 @@
         "name": "OmiseGO",
         "symbol": "OMG",
         "icon": "omg.svg",
-        "address": "0x5b9a857e0C3F2acc5b94f6693536d3Adf5D6e6Be",
+        "address": "0x4bfba4a8f28755cb2061c413459ee562c6b9c51b",
         "decimal": 18,
         "usd_id":"omisego"
       },
@@ -42,13 +42,13 @@
         "name": "Eos",
         "symbol": "EOS",
         "icon": "eos.svg",
-        "address": "0xd3c64BbA75859Eb808ACE6F2A6048ecdb2d70817",
+        "address": "0xd5b4218b950a53ff07985e2d88346925c335eae7",
         "decimal": 18,
         "usd_id":"eos"
       },
       "SNT": {
         "name":"Status",
-        "address": "0xF739577d63cdA4a534B0fB92ABf8BBf6EA48d36c",
+        "address": "0xbf5d8683b9be6c43fca607eb2a6f2626a18837a6",
         "symbol": "SNT",
         "icon": "snt.svg",
         "decimal": 18,
@@ -56,7 +56,7 @@
       },
       "ELF": {
         "name":"Aelf",
-        "address": "0x7174FCb9C2A49c027C9746983D8262597b5EcCb1",
+        "address": "0x9fcc27c7320703c43368cf1a4bf076402cd0d6b4",
         "symbol": "ELF",
         "icon": "aelf.svg",
         "decimal": 18,
@@ -64,7 +64,7 @@
       },
       "POWR": {
         "name":"Power Ledger",
-        "address": "0x2C4EfAa21f09c3C6EEF0Edb001E9bffDE7127D3B",
+        "address": "0xa577731515303f0c0d00e236041855a5c4f114dc",
         "symbol": "POWR",
         "icon": "pwr.svg",
         "decimal": 6,
@@ -72,7 +72,7 @@
       },
       "MANA": {
         "name":"Mana",
-        "address": "0xf5E314c435B3B2EE7c14eA96fCB3307C3a3Ef608",
+        "address": "0x72fd6c7c1397040a66f33c2ecc83a0f71ee46d5c",
         "symbol": "MANA",
         "icon": "mana.svg",
         "decimal": 18,
@@ -80,7 +80,7 @@
       },
       "BAT": {
         "name":"Basic Attention Token",
-        "address": "0x04A34c8f5101Dcc50bF4c64D1C7C124F59bb988c",
+        "address": "0xdb0040451f373949a4be60dcd7b6b8d6e42658b6",
         "symbol": "BAT",
         "icon": "bat.svg",
         "decimal": 18,
@@ -88,7 +88,7 @@
       },
       "REQ": {
         "name":"Request",
-        "address": "0xa448cD1DB463ae738a171C483C56157d6B83B97f",
+        "address": "0xb43d10bbe7222519da899b72bf2c7f094b6f79d7",
         "symbol": "REQ",
         "icon": "req.svg",
         "decimal": 18,
@@ -96,19 +96,121 @@
       },
       "GTO": {
         "name":"Gifto",
-        "address": "0x6B07b8360832c6bBf05A39D9d443A705032bDc4d",
+        "address": "0xe55c607d58c53b2b06a8e38f67f4c0fcaeed2c31",
         "symbol": "GTO",
         "icon": "gifto.svg",
         "decimal": 5,
         "usd_id":"gifto"
+      },
+      "RDN": {
+        "name":"Raiden",
+        "address": "0x5422ef695ed0b1213e2b953cfa877029637d9d26",
+        "symbol": "RDN",
+        "icon": "rdn.svg",
+        "decimal": 18,
+        "usd_id":"raiden-network-token"
+      },
+      "APPC": {
+        "name":"AppCoins",
+        "address": "0x2799f05b55d56be756ca01af40bf7350787f48d4",
+        "symbol": "APPC",
+        "icon": "appc.svg",
+        "decimal": 18,
+        "usd_id":"appcoins"
+      },
+      "ENG": {
+        "name":"Enigma",
+        "address": "0x95cc8d8f29d0f7fcc425e8708893e759d1599c97",
+        "symbol": "ENG",
+        "icon": "eng.svg",
+        "decimal": 8,
+        "usd_id":"enigma-project"
+      },
+      "SALT": {
+        "name":"Salt",
+        "address": "0xb47f1a9b121ba114d5e98722a8948e274d0f4042",
+        "symbol": "SALT",
+        "icon": "salt.svg",
+        "decimal": 8,
+        "usd_id":"salt"
+      },
+      "BQX": {
+        "name" : "Ethos",
+        "address": "0x9504a86a881f63da06302fb3639d4582022097db",
+        "symbol": "BQX",
+        "decimal": 8,
+        "icon": "bqx.svg",
+        "usd_id":"ethos"
+      },
+      "ADX": {
+        "name": "AdEx",
+        "address": "0x499990db50b34687cdafb2c8dabae4e99d6f38a7",
+        "symbol": "ADX",
+        "decimal": 4,
+        "icon": "adx.svg",
+        "usd_id": "adx-net"
+      },
+      "AST": {
+        "name": "AirSwap",
+        "address": "0xef06f410c26a0ff87b3a43927459cce99268a2ef",
+        "symbol": "AST",
+        "decimal": 4,
+        "icon": "ast.svg",
+        "usd_id": "airswap"
+      },
+      "RCN": {
+        "name": "Ripio Credit Network",
+        "address": "0x99338aa9218c6c23aa9d8cc2f3efaf29954ea26b",
+        "symbol": "RCN",
+        "decimal": 18,
+        "icon": "rcn.svg",
+        "usd_id": "ripio-credit-network"
+      },
+      "ZIL": {
+        "name": "Zilliqa",
+        "address": "0xad78afbbe48ba7b670fbc54c65708cbc17450167",
+        "symbol": "ZIL",
+        "decimal": 12,
+        "icon": "zil.svg",
+        "usd_id":"zilliqa"
+      },
+      "DAI": {
+        "name" : "DAI",
+        "symbol": "DAI",
+        "icon": "dai.svg",
+        "address": "0xad6d458402f60fd3bd25163575031acdce07538d",
+        "decimal": 18,
+        "usd_id":"dai"
+      },
+      "LINK": {
+        "name": "Chain Link",
+        "address": "0xb4f7332ed719eb4839f091eddb2a3ba309739521",
+        "symbol": "LINK",
+        "decimal": 18,
+        "icon": "link.svg",
+        "usd_id":"chainlink"
+      },
+      "IOST": {
+        "name": "IOStoken",
+        "address": "0x27db28a6c4ac3d82a08d490cfb746e6f02bc467c",
+        "symbol": "IOST",
+        "decimal": 18,
+        "icon": "iost.svg",
+        "usd_id":"iostoken"
+      },
+      "STORM": {
+        "name": "Storm",
+        "address": "0x8fff7de21de8ad9c510704407337542073fdc44b",
+        "symbol": "STORM",
+        "decimal": 18,
+        "icon": "storm.svg",
+        "usd_id":"storm"
       }
   },
   "ethScanUrl": "https://ropsten.etherscan.io/",
-  "bank": "0xcbae93b11b0a7a944649f26f17ab5566a1526f6f",
-  "reserve": "0x0FC1CF3e7DD049F7B42e6823164A64F76fC06Be0",
-  "pricing": "0x535DE1F5a982c2a896da62790a42723A71c0c12B",
-  "network": "0x0a56d8a49E71da8d7F9C65F95063dB48A3C9560B",
-  "wrapper": "0x9de0a60F4A489e350cD8E3F249f4080858Af41d3",
+  "reserve": "0x0fc1cf3e7dd049f7b42e6823164a64f76fc06be0",
+  "network": "0xd19559b3121c1b071481d8813d5dbcdc5869e2e8",
+  "wrapper": "0x665d34f192f4940da4e859ff7768c0a80ed3ae10",
   "trade_topic":"0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
   "endpoint": "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",
   "averageBlockTime": 6000,
