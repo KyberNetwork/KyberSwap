@@ -1,0 +1,105 @@
+#balance-account{
+    padding: 0.5rem;
+    .balance-header{      
+      .title{
+        font-size: 1.2rem;
+        // line-height: 25px;
+        // margin-bottom: 16px;
+        // margin-right: 10px;
+      }      
+      .estimate-value{
+        font-size: 0.9rem;
+      }
+    //   @media screen and (max-width: 640px) {
+    //     min-height: 0;
+    //     font-size: 0.85em;
+    //     .title{
+    //       font-size: 1.4em;
+    //     }
+    //   }
+    }
+    .balances{
+    //   position: absolute;
+    //   width: 100%;
+    //   top: 40px;
+    //   background-color: #fff;
+    //   z-index: 3;
+      > .row{
+        max-height: 75px;
+        overflow-y: hidden;
+        transition: max-height .3s;
+        &.active{
+          overflow: auto;
+          max-height: 400px;
+        }
+        @include breakpoint(medium){
+          &.active{
+            overflow: hidden;
+          }
+        }
+        @media screen and (max-width: 640px) {
+          max-height: 0;
+          padding: 0;
+        }
+      }
+    }
+    .balance-item{
+      border-radius: 15px;
+      line-height: 20px;
+      padding: 10px 15px;
+      font-size: 13px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      &.active, &:hover{
+        background-color: #f0f0f0;
+        border-color: #d5d5d5;
+      }
+      h4{
+        line-height: 29px;
+      }
+      img{
+        vertical-align: baseline;
+        margin-right: 15px;
+      }
+      + .__react_component_tooltip{
+        border: 1px solid #afafaf;
+        &.show{
+          opacity: 1;
+        }
+        &.place-bottom{
+          &::before{
+            border-left-width: 10px;
+            border-right-width: 10px;
+            border-bottom: 8px solid #afafaf;
+          }
+          &::after{
+            border-bottom-width: 7px;
+            top: -7px;
+          }
+        }
+        &.place-right::before{
+          border-right: 8px solid #afafaf;
+        }
+        &.place-left::before{
+          border-left: 8px solid #afafaf;
+        }
+      }
+    }
+    .expand{
+      border-top: 1px solid #eee;
+      height: 8px;
+      margin-top: 10px;
+      background-color: #fff;
+      .row{
+        position: relative;
+        button{
+          position: absolute;
+          background-color: #fff;
+          padding: 7px 22px;
+          right: 30px;
+          border-radius: 2px;
+          cursor: pointer;
+        }
+      }
+    }
+  }

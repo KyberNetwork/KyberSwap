@@ -60,53 +60,22 @@ const ExchangeBodyLayout = (props) => {
         }
         errorExchange = true
       }
-      // if (props.errors.sourceAmount === "error.source_amount_too_high_cap") {
-      //   if(props.sourceTokenSymbol === "ETH"){
-      //     errorSource.push(props.translate("error.source_amount_too_high_cap", { cap: maxCap }))
-      //   }else{
-      //     errorSource.push(props.translate("error.dest_amount_too_high_cap", { cap: maxCap*constants.MAX_CAP_PERCENT }))
-      //   }
-      //   errorExchange = true
-
-      // }else if (props.errors.sourceAmount !== ""){
-      //   errorSource.push(props.translate(props.errors.sourceAmount))
-      //   errorExchange = true
-      // }
-      // if (props.errors.sourceAmount !== "") {
-      //   errorSource.push(props.translate(props.errors.sourceAmount, { cap: maxCap }))
-      //   errorExchange = true
-      // }
-      //if (props.errors.rateAmount !== "") errorSource.push(<span class="error-text">{props.errors.rateAmount}</span>)
       if (props.errors.rateSystem !== "") {
         errorSource.push(props.translate(props.errors.rateSystem))
         errorExchange = true
       }
     }
   }
-  // if (props.errorNotPossessKgt !== "" ) {
-  //   errorSource.push(props.errorNotPossessKgt)
-  // }else{
-  //   if (errorToken !== "") errorSource.push(<span class="error-text">{errorToken}</span>)
-  //   if (props.errors.sourceAmount !== "") errorSource.push(props.translate(props.errors.sourceAmount, { cap: maxCap }))
-  //   //if (props.errors.rateAmount !== "") errorSource.push(<span class="error-text">{props.errors.rateAmount}</span>)
-  //   if (props.errors.rateSystem !== "") errorSource.push(props.translate(props.errors.rateSystem))
-  // }
 
   var errorShow = errorSource.map((value, index) => {
     return <span class="error-text" key={index}>{value}</span>
   })
-
-  //var maxCap = props.sourceTokenSymbol === "ETH"?props.maxCap: props.maxCap*constants.MAX_CAP_PERCENT
 
   var render = (
     <div>
       <div>
         <div class="row small-11 medium-12 large-12">
           <div class="column">
-            {/* <h1 class="title">
-              <Link to="/exchange" className="disable">{props.translate("transaction.exchange") || "Exchange"}</Link>
-              <Link to="/transfer">{props.translate("transaction.transfer") || "Transfer"}</Link>
-            </h1> */}
             <form action="#" method="get">
               <div class="row">
                 <div class="column medium-5">
@@ -147,17 +116,6 @@ const ExchangeBodyLayout = (props) => {
                         {props.balance.roundingValue}
                       </span>
                     </div>
-
-                    {/* <a className="value" onClick={() => {
-                      props.setAmount()
-                      setTimeout(moveCursor, 0);
-                    }}>
-                      <span title={props.balance.value}>
-                        {props.balance.roundingValue} {props.sourceTokenSymbol}
-                      </span>
-                      <span class="k k-info k-2x ml-3" data-tip={props.translate('transaction.click_to_ex_all_balance') || 'Click to exchange all balance'} data-for="balance-notice-tip" currentitem="false"></span>
-                      <ReactTooltip place="right" id="balance-notice-tip" type="light" />
-                    </a> */}
                   </div>
                 </div>
                 <div class="column medium-2 exchange-icon hide-for-small-only">
@@ -191,9 +149,7 @@ const ExchangeBodyLayout = (props) => {
           </div>
         </div>
       </div>
-      {/* {props.gasConfig} */}
       {props.exchangeButton}
-      {/* {props.selectTokenModal} */}
     </div>
   )
   return (

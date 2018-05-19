@@ -59,23 +59,19 @@ const AccountBalanceLayout = (props) => {
   //   : <img src={require("../../../assets/img/checkmark-unselected-dark.svg")} />
 
   return (
-    <div>
-      <div className="row balance-header small-11 medium-12 large-12">
-        <div className="column">
-          <div className="mt-3 clearfix">
-            <h4 className="title font-w-b float-left">{props.translate("address.my_balance") || "My balance"}</h4>
-            <div onClick={props.toggleZeroBalance} class="float-left">
-              {/* {checkBox} */}
-            </div>
-            {props.showBalance && (
-              <p className="float-right estimate-value">
+    <div id="balance-account">
+      <div className="balance-header">
+        <div className="title">
+          {props.translate("address.my_balance") || "My balance"}
+        </div>
+        {props.showBalance && (
+              <p className="estimate-value">
                 <span className="text-capitalize">{props.translate("address.total") || "Total value"}</span>
                 <span className="font-w-b font-s-up-1 ml-2">{getBalanceUsd()}</span> USD
               </p>
             )}
-          </div>
-        </div>
       </div>
+      
       <div id="search-balance">
          <div>  
            <input placeholder="search"/>
