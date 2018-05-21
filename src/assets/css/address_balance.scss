@@ -1,12 +1,8 @@
 #balance-account{
-    padding: 0.5rem;
+  border-right: 1px solid #ddd;
+    padding: 1rem;
     .balance-header{      
-      .title{
-        font-size: 1.2rem;
-        // line-height: 25px;
-        // margin-bottom: 16px;
-        // margin-right: 10px;
-      }      
+
       .estimate-value{
         font-size: 0.9rem;
       }
@@ -18,29 +14,54 @@
     //     }
     //   }
     }
+    input{
+      border-radius: 5px;
+      margin-bottom: 0.6rem;
+      border: 1px solid #aaa;
+    }
     .balances{
-    //   position: absolute;
-    //   width: 100%;
-    //   top: 40px;
-    //   background-color: #fff;
-    //   z-index: 3;
-      > .row{
-        max-height: 75px;
-        overflow-y: hidden;
-        transition: max-height .3s;
-        &.active{
-          overflow: auto;
-          max-height: 400px;
+      display: inline-block;
+      height: 500px;
+      overflow: auto;
+      direction: rtl;
+
+      &.custom-radio{
+        ul{
+          padding: 10px;
+          direction: ltr;
         }
-        @include breakpoint(medium){
+        li{
+          width: 50%;
+          float: left;
+          height: 50px;
+          border-radius: 30px;
+          &.hide{
+            display: none;
+          }
           &.active{
-            overflow: hidden;
+            box-shadow: 0 0 5px #aaa;
+          }
+          .check{
+            top: 14px;
           }
         }
-        @media screen and (max-width: 640px) {
-          max-height: 0;
-          padding: 0;
+        label{
+          position: relative;
+          top: -9px;
+          left: 10px;
         }
+      }
+    }
+
+    #search-balance{
+      margin-bottom: 1.2rem;
+      .sort-balance{
+        text-align: center;
+        width: 40px;
+        height: 40px;
+        padding: 0px;
+        border: 1px solid #aaa;
+        border-radius: 5px;
       }
     }
     .balance-item{
@@ -51,8 +72,8 @@
       border: 1px solid transparent;
       cursor: pointer;
       &.active, &:hover{
-        background-color: #f0f0f0;
-        border-color: #d5d5d5;
+       // background-color: #f0f0f0;
+     //   border-color: #d5d5d5;
       }
       h4{
         line-height: 29px;
@@ -82,23 +103,6 @@
         }
         &.place-left::before{
           border-left: 8px solid #afafaf;
-        }
-      }
-    }
-    .expand{
-      border-top: 1px solid #eee;
-      height: 8px;
-      margin-top: 10px;
-      background-color: #fff;
-      .row{
-        position: relative;
-        button{
-          position: absolute;
-          background-color: #fff;
-          padding: 7px 22px;
-          right: 30px;
-          border-radius: 2px;
-          cursor: pointer;
         }
       }
     }

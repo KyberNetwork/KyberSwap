@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import { AccountBalanceLayout } from '../../components/TransactionCommon'
+import { AccountBalanceLayout } from '../../components/Exchange'
 import { selectTokenAsync } from '../../actions/exchangeActions'
 import { selectToken } from '../../actions/transferActions'
 import { hideSelectToken } from "../../actions/utilActions"
@@ -32,27 +32,16 @@ import { getTranslate } from 'react-localize-redux';
 
 export default class AccountBalance extends React.Component {
 
-  constructor() {
+  constructor(){
     super()
     this.state = {
-      expanded: false,
-      showZeroBalance: true,
-      
+      searchWord: ""
     }
   }
-
-  toggleBalances() {
-    this.setState({
-      expanded: !this.state.expanded
-    })
+  changeSearchBalance = (e) => {
+    var value = e.target.value
+    this.setState({searchWord:value})
   }
-
-  toggleZeroBalance(){
-    this.setState({
-      showZeroBalance: !this.state.showZeroBalance
-    })
-  }
-
   selectToken(e, symbol, address) {
     if(this.props.brocastStep){
       return
@@ -63,23 +52,18 @@ export default class AccountBalance extends React.Component {
       this.props.dispatch(selectToken(symbol, address))
       this.props.dispatch(hideSelectToken())
     }
-    this.setState({
-      expanded: false
-    })
   }
 
   render() {
     return (
       <AccountBalanceLayout
         tokens={this.props.tokens}
-        expanded={this.state.expanded}
-        toggleBalances={this.toggleBalances.bind(this)}
         translate={this.props.translate}
         sourceActive={this.props.sourceActive}
         selectToken={this.selectToken.bind(this)}
         showBalance = {this.props.showBalance}
-        showZeroBalance={this.state.showZeroBalance}
-        toggleZeroBalance={this.toggleZeroBalance.bind(this)}
+        changeSearchBalance = {this.changeSearchBalance}
+        searchWord = {this.state.searchWord}
       />
     )
   }

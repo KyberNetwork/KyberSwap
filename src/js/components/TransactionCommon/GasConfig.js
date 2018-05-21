@@ -5,19 +5,19 @@ import { filterInputNumber } from "../../utils/validators";
 
 const GasConfig = (props) => {
 
-  function specifyGasPrice(e, value) {
+  function specifyGasPrice(e, value, level) {
     var checked = e.target.value
     console.log("check value: " + checked)
-    props.gasPriceHandler(value)
+    props.selectedGasHandler(value, level)
   }
-  function handleChangeGasPrice(e) {
-    var check = filterInputNumber(e, e.target.value, props.gasPrice)
-    if (check) props.gasPriceHandler(e.target.value)
-  }
+  // function handleChangeGasPrice(e) {
+  //   var check = filterInputNumber(e, e.target.value, props.gasPrice)
+  //   if (check) props.gasPriceHandler(e.target.value)
+  // }
 
   function handleChangeGasPrice(e) {
     filterInputNumber(e, e.target.value)
-    props.gasPriceHandler(e.target.value)
+    props.inputGasPriceHandler(e.target.value)
   }
 
   function tooltipGasSuggest(time) {
@@ -33,7 +33,7 @@ const GasConfig = (props) => {
   return (
     <div className="gas-config">
       <div>
-        <span className="title">GAS PRICE (inclusive in the rate)</span>
+        <span className="sub_title">GAS PRICE (inclusive in the rate)</span>
       </div>
       <div className={!props.gasPriceError ? "" : "error"}>
         <input type="text" min="0" max="99" className="gas-price-input" step="0.1" value={props.gasPrice} onChange={handleChangeGasPrice} maxLength="20" autoComplete="off" />
@@ -43,20 +43,20 @@ const GasConfig = (props) => {
       <div className ="custom-radio">
         <ul>
           <li>
-            <input type="radio" id="f-option" name="selector" onChange= {(e) => specifyGasPrice(e, gasPriceSuggest.fastGas)}/>
+            <input checked={props.selectedGas === "f"?true:false} type="radio" id="f-option" name="selector" onChange= {(e) => specifyGasPrice(e, gasPriceSuggest.fastGas, "f")}/>
             <label for="f-option">{props.translate("fast") || 'Fast'}</label>
             <div class="check"></div>
           </li>
           
           <li>
-            <input type="radio" id="s-option" name="selector" onChange= {(e) => specifyGasPrice(e, gasPriceSuggest.safeLowGas)} />
+            <input checked={props.selectedGas === "l"?true:false} type="radio" id="s-option" name="selector" onChange= {(e) => specifyGasPrice(e, gasPriceSuggest.safeLowGas, "l")} />
             <label for="s-option">{props.translate("low") || 'Slow'}</label>
             
             <div class="check"><div class="inside"></div></div>
           </li>
           
           <li>
-            <input type="radio" id="t-option" name="selector" onChange= {(e) => specifyGasPrice(e, gasPriceSuggest.standardGas)} />
+            <input checked={props.selectedGas === "s"?true:false} type="radio" id="t-option" name="selector" onChange= {(e) => specifyGasPrice(e, gasPriceSuggest.standardGas, "s")} />
             <label for="t-option">{props.translate("standard") || 'Standard'}</label>
             
             <div class="check"><div class="inside"></div></div>

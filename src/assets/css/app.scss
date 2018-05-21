@@ -27,6 +27,7 @@ $alert-color: #ff5d00;
 @import "landing_page";
 @import "footer";
 @import "advance_config";
+@import "exchange";
 
 @font-face{
   font-family: 'My-Montserrat';
@@ -424,58 +425,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
   }
 }
 
-#exchange {
-  .token-input {
-    .info {
-      height: auto;
-      transition: width .4s ease-in-out;
-    }
-    input {
-      transition: width .4s ease-in-out;
-    }
-  }
-  label{
-    margin-bottom: 8px;
-  }
-  .token-compare {
-    margin-bottom: 10px;
-  }
-  .show-on-choose-token-pair {
-    display: none;
-  }
-  .hide-on-choose-token-pair {
-    display: block;
-  }
-  &.choose-token-pair {
-    .title {
-      &:after {
-        content: 'Select Token Pair';
-        font-size: 14px;
-        margin-left: 20px;
-        color: lighten($dark-gray, 20);
-      }
-    }
-    .token-input {
-      input {
-        width: 0;
-        opacity: 0;
-        padding: 0;
-      }
-      .info {
-        width: 100%;
-        &:before {
-          opacity: 0;
-        }
-      }
-    }
-    .hide-on-choose-token-pair {
-      display: none;
-    }
-    .show-on-choose-token-pair {
-      display: block;
-    }
-  }
-}
+
 
 #info{
   padding: 10px;

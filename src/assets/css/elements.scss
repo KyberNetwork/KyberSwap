@@ -71,23 +71,7 @@ label {
   font-size: 12px;
   //margin-bottom: 10px !important;
   //text-transform: uppercase;
-  .select-token-panel{
-    background-color: #415b68;
-    cursor: pointer;
-    input{
-      height: auto;
-      padding: 10px!important;
-    }
-    > input, > input:focus{
-      text-align: right;
-      color: white;
-      margin-bottom: 0px;
-      font-size: 20px;
-      font-weight: bold;
-      background-color: transparent!important;
-      border-top: 1px solid #2a4654!important;
-    }
-  }
+
   .exchange-label{
     font-size: 14px;
   }
@@ -220,21 +204,27 @@ a.has-tip {
     border-bottom-color: $dark-gray;
   }
 }
+.frame-tab{
+  text-align: center
+}
 h1.title {
   font-size: 24px;
   font-weight: 500;
   letter-spacing: .5px;
   padding: 20px 0;
+  div{
+    display: inline-block;
+    box-shadow: 0 0 2px #aaa;
+  }
   a{
-    color: #91a1a7;
-    
-    &:first-child{
-      margin-right: 15px;
-      padding-right: 15px;
-      border-right: 1px solid #91a1a7;
-    }
+    color: #aaa;  
+    background-color: white;
+    padding: 10px;
+    display: inline-block;
+
     &.disable{
-      color: white;  
+      color: #5E9F7B;
+    background-color: #EEF7F3;
       cursor: initial;
       pointer-events: none;
     }
@@ -242,8 +232,34 @@ h1.title {
 }
 .frame {
   padding: 30px 0;
-  background-color: $k-primary;
-  color: $white;
+  // background-color: $k-primary;
+  // color: $white;
+  .title{
+    font-size: 1.2rem;
+    // &.main-title{
+    //   margin-bottom: 2.5rem;
+    // }
+  }      
+  .sub_title{
+    font-size: 0.8rem;
+  }
+  .exchange-pd{
+    padding: 2rem;
+  }
+  .frame-left, .frame-right{
+    padding-top: 1rem;
+  }
+  .frame-left{
+    box-shadow: 0 0 2px #aaa;
+    padding:0px;
+  }
+  .button.accent{
+    position: relative;
+    margin-top: -25px;
+  }
+  .columns-nopading{
+    padding: 0px;
+  }
   .info {
     margin: 0;
     label {
@@ -360,7 +376,9 @@ span.help {
 
 .transaction-footer{
   position: relative;
+  background-color:#FDFDFD; 
   margin-top: 80px;
+  padding-bottom: 2rem;
   .term, .adv-btn{
     position: absolute;
     top: -45px;

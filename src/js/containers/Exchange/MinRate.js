@@ -29,7 +29,7 @@ export default class MinRate extends React.Component {
           A high percentage will lead to a higher success rate during market volatility
         </div>
         <div className = {!this.props.exchange.errors.rateError? "":"error"}>
-          <span  className="title">PERCENTAGE RATE</span>
+          <span  className="sub_title">PERCENTAGE RATE</span>
           <input type="text" maxLength="40" value={minConversionRate} onChange={(e) => this.changeMinRate(e)} autoComplete="off"/>
           {this.props.exchange.errors.rateError && <div className="error-text">{this.props.exchange.errors.rateError}</div>}
           <div className="des-down">Lower rate typically results in better success rate when the market is volatle</div>

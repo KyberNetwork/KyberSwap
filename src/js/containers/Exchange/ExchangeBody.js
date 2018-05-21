@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 
 import { gweiToWei, stringToHex, getDifferentAmount, toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber, stringToBigNumber, toEther } from "../../utils/converter"
 
-import { PostExchangeWithKey, MinRate } from "../Exchange"
+import { PostExchangeWithKey, MinRate, AccountBalance } from "../Exchange"
 import { TransactionConfig } from "../../components/Transaction"
 
 import { ExchangeBodyLayout }  from "../../components/Exchange"
@@ -393,24 +393,6 @@ export default class ExchangeBody extends React.Component {
     )
 
 
-    // var gasPrice = stringToBigNumber(gweiToEth(this.props.exchange.gasPrice))
-    // var totalGas = gasPrice.multipliedBy(this.props.exchange.gas + this.props.exchange.gas_approve)
-    // var gasConfig = (
-    //   <TransactionConfig gas={this.props.exchange.gas + this.props.exchange.gas_approve}
-    //     gasPrice={this.props.exchange.gasPrice}
-    //     maxGasPrice={this.props.exchange.maxGasPrice}
-    //     gasHandler={this.specifyGas}
-    //     gasPriceHandler={this.specifyGasPrice}
-    //     gasPriceError={this.props.exchange.errors.gasPriceError}
-    //     gasError={this.props.exchange.errors.gasError}
-    //     totalGas={totalGas.toString()}
-    //     translate={this.props.translate}
-    //     minRate={<MinRate />}
-    //     gasPriceSuggest={this.props.exchange.gasPriceSuggest}
-    //     advanced={this.props.exchange.advanced}
-    //   />
-    // )
-
     var addressBalance = ""
     var token = this.props.tokens[this.props.exchange.sourceTokenSymbol]
     if (token) {
@@ -430,11 +412,14 @@ export default class ExchangeBody extends React.Component {
         input={input}
         balance={addressBalance}
         sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
+        destTokenSymbol = {this.props.exchange.destTokenSymbol}
         setAmount={this.setAmount}
         translate={this.props.translate}
         swapToken={this.swapToken}
         maxCap={toEther(this.props.exchange.maxCap)}
-        errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}        
+        errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}      
+
+        balanceList = {<AccountBalance />}  
       />
     )
   }

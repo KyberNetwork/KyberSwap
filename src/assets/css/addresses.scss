@@ -153,7 +153,7 @@ ul.address-list {
 
 .address-balance {
   @include clearfix;
-  color: $white;
+  //color: $white;
   line-height: 25px;
   text-align: right;
   .note {

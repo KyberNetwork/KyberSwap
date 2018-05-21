@@ -3,8 +3,8 @@ import React from "react"
 
 const AdvanceConfigLayout = (props) => {
   return (
-    <div className="advance-config large-2">
-      <h2>Advanced</h2>
+    <div className="advance-config">
+      <div className="title">Advanced</div>
       <div>
           {props.minRate}
       </div>

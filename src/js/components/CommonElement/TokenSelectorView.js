@@ -21,19 +21,31 @@ const TokenSelectorView = (props) => {
         var balance = toT(item.balance, item.decimal)
         return (
           <div key={key} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item">
-            <div>
-              <span className="item-icon">
+            <div className="d-flex">
+              <div className="item-icon">
                 <img src={require("../../../assets/img/tokens/" + item.icon)} />
-              </span>
-              <span className="item-name">
-                <span className="font-w-b">{item.symbol}</span><span className="show-for-large token-name"> - {item.name}</span></span>
-              {item.isNotSupport &&
+              </div>
+
+              <div>
+                <div>{item.name}</div>
+                <div className="item-balance">
+                  <span title={balance}>
+                    {roundingNumber(balance)}
+                  </span>
+                  <span class="item-symbol">
+                    {item.symbol}
+                  </span>
+                </div>
+                {/* <div className="font-w-b">{item.symbol}</span><span className="show-for-large token-name"> - {item.name}</div> */}
+              </div>
+
+              {/* {item.isNotSupport &&
                 <span className="unsupported">{props.translate("error.not_supported") || "not supported"}</span>
-              }
+              } */}
             </div>
-            <div>
+            {/* <div>
               <span title={balance}>{roundingNumber(balance)}</span>
-            </div>
+            </div> */}
           </div>
         )
       }
@@ -45,19 +57,19 @@ const TokenSelectorView = (props) => {
       <Dropdown onShow = {(e) => props.showTokens(e)} onHide = {(e) => props.hideTokens(e)}>
         <DropdownTrigger className="notifications-toggle">
           <div className="focus-item d-flex">
-            <div>
+            <div className="d-flex">
               <div className="icon">
                 <img src={require("../../../assets/img/tokens/" + focusItem.icon)} />
               </div>
               <div>
-                <div>{focusItem.name}</div>
-                <div>
+                <div className="focus-name">{focusItem.name}</div>
+                <div className="focus-balance">
                   <span className="token-balance" title = {toT(focusItem.balance)}>{roundingNumber(toT(focusItem.balance, focusItem.decimal))}</span>
                   <span className="token-symbol">{focusItem.symbol}</span>
                 </div>
               </div>
             </div>
-            <div><i className={'k k-angle white ' + (props.open ? 'up' : 'down')}></i></div>
+            <div><i className={'k k-angle ' + (props.open ? 'up' : 'down')}></i></div>
           </div>
         </DropdownTrigger>
         <DropdownContent>

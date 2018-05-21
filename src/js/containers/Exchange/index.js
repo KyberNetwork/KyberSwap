@@ -6,3 +6,4 @@ export { default as RateBetweenToken } from './RateBetweenToken.js'
 export { default as MinRate } from './MinRate.js'
 
 export { default as ExchangeBody } from './ExchangeBody.js'
+export { default as AccountBalance } from './AccountBalance.js'

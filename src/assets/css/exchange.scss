@@ -1,0 +1,62 @@
+#exchange {
+    .token-input {
+      .info {
+        height: auto;
+        transition: width .4s ease-in-out;
+      }
+      input {
+        transition: width .4s ease-in-out;
+      }
+    }
+    label{
+      margin-bottom: 8px;
+    }
+    .token-compare {
+        color: #aaa;
+        font-weight: 600;
+        letter-spacing: .5px;
+        text-align: center;
+        margin-bottom: 10px;
+        margin-top: 1rem;
+        .seperator{
+            
+
+        }
+      }
+
+    .show-on-choose-token-pair {
+      display: none;
+    }
+    .hide-on-choose-token-pair {
+      display: block;
+    }
+    &.choose-token-pair {
+      .title {
+        &:after {
+          content: 'Select Token Pair';
+          font-size: 14px;
+          margin-left: 20px;
+          color: lighten($dark-gray, 20);
+        }
+      }
+      .token-input {
+        input {
+          width: 0;
+          opacity: 0;
+          padding: 0;
+        }
+        .info {
+          width: 100%;
+          &:before {
+            opacity: 0;
+          }
+        }
+      }
+      .hide-on-choose-token-pair {
+        display: none;
+      }
+      .show-on-choose-token-pair {
+        display: block;
+      }
+    }
+  }
