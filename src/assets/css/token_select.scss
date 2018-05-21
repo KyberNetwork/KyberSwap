@@ -1,15 +1,16 @@
 .select-token-panel{
   //background-color: #415b68;
+  margin-top: 5px;
   cursor: pointer;
   input{
     height: auto;
-    padding: 10px!important;
+    // padding: 10px!important;
   }
   .amount-input{
     border-bottom: 1px solid #aaa;
     display: flex;
     justify-content: space-between;
-    margin-top: 1rem;
+    margin-top: 3rem;
     &.focus{
       color: #5D9E7A;
       border-bottom: 1px solid #5D9E7A;
@@ -19,6 +20,16 @@
     }
     input{
       margin-bottom: 0px;
+      padding: 0;
+      font-size: 20px;
+      color: #aaa;
+      &:focus {
+        color: #32AB7B;
+      }
+    }
+    span {
+      font-size: 14px;
+      padding-top: 12px;
     }
     span{
       display: flex;
@@ -112,12 +123,12 @@
     }
   }
   .focus-item{
-    padding: 6px 12px;
+    padding: 10px 12px;
     border: 2px solid transparent;
     border-bottom: 1px solid transparent;
-    border-radius: 30px;
+    border-radius: 35px;
   //  color: white;
-    box-shadow: 0 0 2px #aaa;
+    box-shadow: 0 0 15px #ddd;
     align-items: center;
     font-size: 15px;
     &.d-flex{
@@ -127,10 +138,14 @@
       align-items: center;
     }
     .focus-name{
-      color: #555
+      color: #545268;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 600;
     }
     .focus-balance{
-      color: #aaa;
+      color: #9997A5;
+      font-weight: 500;
       font-size: 0.8rem;
       .token-symbol{
         margin-left: 5px;

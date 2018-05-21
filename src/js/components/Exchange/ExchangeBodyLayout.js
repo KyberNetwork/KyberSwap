@@ -112,11 +112,9 @@ const ExchangeBodyLayout = (props) => {
                         </div>
                       </div>
                       <div class="address-balance">
-                        <div className="balance-intro">
-                          <div class="info-up">{props.translate("transaction.address_balance") || "Address Balance"}</div>
-                          <div class="info-down">Click to exchange all balance</div>
-                        </div>
-                        <div className="balance-amount">
+                        <p class="note">{props.translate("transaction.address_balance") || "Address Balance"}</p>
+                        <div>
+                          <span>Click to exchange all balance</span>
                           <span title={props.balance.value} onClick={() => {
                             props.setAmount()
                             setTimeout(moveCursor, 0);

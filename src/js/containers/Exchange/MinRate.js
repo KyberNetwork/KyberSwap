@@ -26,7 +26,7 @@ export default class MinRate extends React.Component {
     return (
       <div className="min-rate">
         <div className="des-up">
-          A high percentage will lead to a higher success rate during market volatility
+          A higher percentage will lead to a higher success rate during market volatility
         </div>
         <div className = {!this.props.exchange.errors.rateError? "":"error"}>
           <span  className="sub_title">PERCENTAGE RATE</span>

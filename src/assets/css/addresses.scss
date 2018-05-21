@@ -162,6 +162,7 @@
       left: 5px;
       margin-top: -18px;
     }
+
     span.hash {
       line-height: 36px;
       font-size: 14px;
@@ -172,47 +173,36 @@
 
   .address-balance {
     @include clearfix;
-    //color: $white;
-    //line-height: 25px;
-    text-align: right;
-    display: flex;
     margin-top: 1.2rem;
-    justify-content: space-between;
-    align-items: flex-end;
-    .balance-intro{
-      .info-up{
-        font-size: 0.6rem;
-        text-transform: uppercase;
-        text-align: left;
-      }
-      .info-down{
-        font-size: 0.6rem;
-        text-align: left;
-      }
+    justify-content: space-between;  
+    .note {
+      font-size: 10px;
+      text-transform: uppercase;
+      margin-top: 3em;
+      margin-bottom: 0px;
+      letter-spacing: .5px;
+      font-style: normal;
+      font-weight: 600;
     }
-    .balance-amount{
-      cursor: pointer;
-      span{
-        padding: 5px;
-      background-color: #F0F3FB;
-      border-radius: 17px;
-      font-size: 0.8rem;
+    div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      span {
+        font-size: 11px;
+      }
+      span:nth-child(2) {
+        font-size: 12px;
         color: #404EA0;
+        padding-right: 10px;
+        padding-left: 10px;
+        border: 1px solid #EFF1FD;
+        border-radius: 25px;
+        background-color: #EFF1FD;
+        line-height: 20px;
+        font-weight: 500;
       }
     }
-
-    // .note {
-    //   font-size: 13px;
-    //   text-transform: none;
-    //   margin-right:10px;
-    //   letter-spacing: .5px;
-    // }
-    // .value {
-    //   font-size: 14px;
-    //   text-align: right;
-    //   margin-left: 5px;
-    //   color: $white;
-    // }
   }
 
   label.address-path-stamp {
