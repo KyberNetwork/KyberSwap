@@ -389,12 +389,12 @@ span.help {
   .adv-btn{
     right: 0.9375rem;
   }
-  @include breakpoint(medium){
-    margin-top: 0;
-    .term, .adv-btn{
-      top: 50%;
-    }
-  }
+  // @include breakpoint(medium){
+  //   margin-top: 0;
+  //   .term, .adv-btn{
+  //     top: 50%;
+  //   }
+  // }
   label{
     margin-bottom: 0px;
     display: flex;

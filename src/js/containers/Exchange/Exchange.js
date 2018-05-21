@@ -97,6 +97,7 @@ export default class Exchange extends React.Component {
        
         advance = {advanceConfig}
         content = {exchangeBody}
+        page="exchange"
       />
     )
   }

@@ -14,10 +14,10 @@ const TransferForm = (props) => {
       <div class="frame">
         <div class="row small-11 medium-12 large-12">
           <div class="column">
-            <h1 class="title">
+            {/* <h1 class="title">
               <Link to="/exchange">{props.translate("transaction.exchange") || "Exchange"}</Link>
               <Link to="/transfer" className="disable">{props.translate("transaction.transfer") || "Transfer"}</Link>
-            </h1>
+            </h1> */}
             <form action="#" method="get">
               <div class="row">
                 <div class="column small-12 medium-7">
@@ -67,7 +67,6 @@ const TransferForm = (props) => {
         </div>
       </div>
 
-      {props.gasConfig}
       {props.transferButton}
     </div>
   )

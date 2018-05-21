@@ -156,21 +156,43 @@ ul.address-list {
   //color: $white;
   line-height: 25px;
   text-align: right;
-  .note {
-    font-size: 13px;
-    text-transform: none;
-    margin-right:10px;
-    letter-spacing: .5px;
+  display: flex;
+  margin-top: 1.2rem;
+  justify-content: space-between;
+  align-items: flex-end;
+  .balance-intro{
+    .info-up{
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .info-down{
+      font-size: 0.6rem;
+      text-align: left;
+    }
   }
-  .value {
-    font-size: 14px;
-    text-align: right;
-    margin-left: 5px;
-    color: $white;
-    // &:hover{
-    //   color: #3ee6c1;
-    // }
+  .balance-amount{
+    span{
+      padding: 5px;
+    background-color: #F0F3FB;
+    border-radius: 17px;
+    font-size: 0.8rem;
+      color: #404EA0;
+    }
   }
+
+  // .note {
+  //   font-size: 13px;
+  //   text-transform: none;
+  //   margin-right:10px;
+  //   letter-spacing: .5px;
+  // }
+  // .value {
+  //   font-size: 14px;
+  //   text-align: right;
+  //   margin-left: 5px;
+  //   color: $white;
+  // }
 }
 
 label.address-path-stamp {
