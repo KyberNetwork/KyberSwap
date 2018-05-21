@@ -205,6 +205,13 @@
         "decimal": 18,
         "icon": "storm.svg",
         "usd_id":"storm"
+      },
+      "BBO" : {
+        "name": "BigBom",
+        "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+        "symbol" : "BBO",
+        "decimal": 18,
+        "icon": "bbo.png"
       }
   },
   "ethScanUrl": "https://ropsten.etherscan.io/",
