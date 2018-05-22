@@ -58,6 +58,12 @@ import { default as _ } from 'underscore'
 
 
 export default class ExchangeBody extends React.Component {
+  constructor(){
+    super()
+    this.state = {
+      focus : ""
+    }
+  }
 
   chooseToken = (symbol, address, type) => {
     this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
@@ -173,31 +179,7 @@ export default class ExchangeBody extends React.Component {
 
  
   validateRateAndSource = (sourceValue) => {
-    // var sourceDecimal = 18
-    // var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
-    // //var minRate = 0
-    // var tokens = this.props.tokens
-    // if (tokens[sourceTokenSymbol]) {
-    //   sourceDecimal = tokens[sourceTokenSymbol].decimal
-    //   //minRate = tokens[sourceTokenSymbol].minRate
-    // }
-
-    // var ethereum = this.props.ethereum
-    // var source = this.props.exchange.sourceToken
-    // var dest = this.props.exchange.destToken
-    // var destTokenSymbol = this.props.exchange.destTokenSymbol
-    // var sourceAmountHex = stringToHex(sourceValue, sourceDecimal)
-    // var rateInit = 0
-    // if (sourceTokenSymbol === 'ETH' && destTokenSymbol !== 'ETH') {
-    //   rateInit = this.props.tokens[destTokenSymbol].minRateEth
-    // }
-    // if (sourceTokenSymbol !== 'ETH' && destTokenSymbol === 'ETH') {
-    //   rateInit = this.props.tokens[sourceTokenSymbol].minRate
-    // }
-
-    // this.lazyUpdateRateExchange(ethereum, source, dest, sourceAmountHex, true, rateInit)
     this.lazyUpdateRateExchange(sourceValue)
-
     this.lazyUpdateValidateSourceAmount(sourceValue)
   }
   changeSourceAmount = (e) => {
@@ -217,22 +199,22 @@ export default class ExchangeBody extends React.Component {
     this.validateRateAndSource(valueSource)
   }
 
-  // specifyGas = (event) => {
-  //   var value = event.target.value
-  //   this.props.dispatch(exchangeActions.specifyGas(value))
-  // }
-
-  // specifyGasPrice = (value) => {
-  //   this.props.dispatch(exchangeActions.specifyGasPrice(value + ""))
-  //   this.lazyValidateTransactionFee(value)
-  // }
-
   focusSource = () => {
     this.props.dispatch(exchangeActions.focusInput('source'));
+    this.setState({focus:"source"})
+  }
+
+  blurSource = () => {
+    this.setState({focus:""})
   }
 
   focusDest = () => {
     this.props.dispatch(exchangeActions.focusInput('dest'));
+    this.setState({focus:"dest"})
+  }
+
+  blurDest = () => {
+    this.setState({focus:""})
   }
 
   makeNewExchange = () => {
@@ -378,13 +360,15 @@ export default class ExchangeBody extends React.Component {
         type: 'number',
         value: this.props.exchange.sourceAmount,
         onChange: this.changeSourceAmount,
-        onFocus: this.focusSource
+        onFocus: this.focusSource,
+        onBlur: this.blurSource
       },
       destAmount: {
         type: 'number',
         value: this.props.exchange.destAmount,
         onChange: this.changeDestAmount,
-        onFocus: this.focusDest
+        onFocus: this.focusDest,
+        onBlur: this.blurDest
       }
     }
     // console.log(input)
@@ -420,6 +404,7 @@ export default class ExchangeBody extends React.Component {
         errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}      
 
         balanceList = {<AccountBalance />}  
+        focus = {this.state.focus}
       />
     )
   }

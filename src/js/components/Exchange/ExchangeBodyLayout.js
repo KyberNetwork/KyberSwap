@@ -29,6 +29,7 @@ const ExchangeBodyLayout = (props) => {
       inp.setSelectionRange(0, 0);
     }
   }
+  
   var errorSelectSameToken = props.errors.selectSameToken !== '' ? props.translate(props.errors.selectSameToken) : ''
   var errorSelectTokenToken = props.errors.selectTokenToken !== '' ? props.translate(props.errors.selectTokenToken) : ''
   var errorToken = errorSelectSameToken + errorSelectTokenToken
@@ -93,12 +94,13 @@ const ExchangeBodyLayout = (props) => {
                         <div className={errorExchange ? "error select-token-panel" : "select-token-panel"}>
 
                           {props.tokenSourceSelect}
-                          <div className="amount-input">
+                          <div className={props.focus === "source"?"amount-input focus": "amount-input"}>
                             <input id="inputSource" className="source-input" min="0" step="0.000001"
                               placeholder="0" autoFocus
                               type="text" maxLength="50" autoComplete="off"
                               value={props.input.sourceAmount.value}
                               onFocus={props.input.sourceAmount.onFocus}
+                              onBlur = {props.input.sourceAmount.onBlur}
                               onChange={handleChangeSource}
                             />
                             <span>{props.sourceTokenSymbol}</span>
@@ -139,11 +141,12 @@ const ExchangeBodyLayout = (props) => {
 
                           {props.tokenDestSelect}
 
-                          <div className="amount-input">
+                          <div className={props.focus==="dest"?"amount-input focus":"amount-input"}>
                             <input className="des-input" step="0.000001" placeholder="0" min="0"
                               type="text" maxLength="50" autoComplete="off"
                               value={props.input.destAmount.value}
                               onFocus={props.input.destAmount.onFocus}
+                              onBlur = {props.input.destAmount.onBlur}
                               onChange={handleChangeDest} />
                             <span>{props.destTokenSymbol}</span>
                           </div>

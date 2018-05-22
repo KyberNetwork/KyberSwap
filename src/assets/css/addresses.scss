@@ -154,7 +154,7 @@ ul.address-list {
 .address-balance {
   @include clearfix;
   //color: $white;
-  line-height: 25px;
+  //line-height: 25px;
   text-align: right;
   display: flex;
   margin-top: 1.2rem;
@@ -172,6 +172,7 @@ ul.address-list {
     }
   }
   .balance-amount{
+    cursor: pointer;
     span{
       padding: 5px;
     background-color: #F0F3FB;

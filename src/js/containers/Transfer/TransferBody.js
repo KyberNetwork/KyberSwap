@@ -9,7 +9,9 @@ import * as validators from "../../utils/validators"
 
 import { TransferForm } from "../../components/Transaction"
 import { PostTransferWithKey } from "../Transfer"
-import { TokenSelector, TransactionLoading } from "../CommonElements"
+import { TransactionLoading } from "../CommonElements"
+
+import { TokenSelector } from "../TransactionCommon"
 
 import { hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
@@ -39,6 +41,12 @@ import { default as _ } from 'underscore'
 })
 
 export default class Transfer extends React.Component {
+  constructor(){
+    super()
+    this.state = {
+      focus: "transfer"
+    }
+  }
 
   validateSourceAmount = (value, gasPrice) => {
     var checkNumber
@@ -83,6 +91,15 @@ export default class Transfer extends React.Component {
 
   makeNewTransfer = () => {
     this.props.dispatch(transferActions.makeNewTransfer());
+  }
+
+
+  onFocus = () => { 
+    this.setState({focus:"transfer"})
+  }
+
+  onBlur = () => { 
+    this.setState({focus:""})
   }
 
 //   specifyGas = (event) => {
@@ -218,6 +235,9 @@ export default class Transfer extends React.Component {
         balance={addressBalance}
         setAmount={this.setAmount}
         translate={this.props.translate}
+        onBlur = {this.onBlur}
+        onFocus = {this.onFocus}
+        focus = {this.state.focus}
       />
     )
   }

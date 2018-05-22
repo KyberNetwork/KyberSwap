@@ -10,6 +10,13 @@
     display: flex;
     justify-content: space-between;
     margin-top: 1rem;
+    &.focus{
+      color: #5D9E7A;
+      border-bottom: 1px solid #5D9E7A;
+      input{
+        color: #5D9E7A;
+      }
+    }
     input{
       margin-bottom: 0px;
     }

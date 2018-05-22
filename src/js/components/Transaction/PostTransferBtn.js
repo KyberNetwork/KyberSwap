@@ -4,15 +4,15 @@ import { PendingOverlay } from "../../components/CommonElement"
 const PostTransferBtn = (props) => {
 
   return (
-    <div className="bg-primary py-4">
+    <div className="py-4">
       {props.step !== 2 ?
-        <div class="row small-11 medium-12 large-12">
+        <div class="small-11 medium-12 large-12">
           <div className="column transaction-footer">
             <div className="small-12 medium-4 text-center mx-auto">
               <a className={'submit-transfer ' + props.className} data-open="passphrase-modal" onClick={props.submit}>{props.translate("transaction.transfer") || "Transfer"}</a>
             </div>
 
-            <div className="adv-btn">
+            {/* <div className="adv-btn">
               <div class="clearfix">
                 <div class="advanced-switch base-line float-right">
                   <label class="switch-caption" for="advanced">{props.translate("transaction.advanced") || "Advance"}</label>
@@ -22,12 +22,12 @@ const PostTransferBtn = (props) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             
           </div>
         </div>
         :
-        <div class="row">
+        <div>
           <div class="column small-11 medium-10 large-9 small-centered text-center">
             <a className={'submit-transfer ' + props.className} data-open="passphrase-modal" onClick={props.submit}>{props.translate("transaction.transfer") || "Transfer"}</a>
           </div>
