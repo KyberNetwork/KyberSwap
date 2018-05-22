@@ -51,7 +51,9 @@ $divider-color: darken($title-background-color, 5);
     padding: 50px 50px;
     align-items: center;
     span{
-      color: white;
+      &:not(.error-text){
+        color: white;
+      }
     }
     .button {
       margin: 0;
@@ -190,6 +192,11 @@ $divider-color: darken($title-background-color, 5);
 
 
 .confirm-exchange-modal{
+  .message{
+    font-weight: bold;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+  }
   .modal-title{
     font-size: 0.8rem;
   }
@@ -209,6 +216,15 @@ $divider-color: darken($title-background-color, 5);
   }
   .description{
     margin-top: 0.5rem;
+  }
+ 
+}
+
+.password-input{
+  text-align: left;
+  >span{
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
   }
 }
 

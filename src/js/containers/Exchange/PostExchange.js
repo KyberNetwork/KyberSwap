@@ -217,7 +217,7 @@ export default class PostExchange extends React.Component {
     if (converters.compareRate(minRate, offeredRate) === 1) {
       return (
         <div className="confirm-exchange-modal">
-          <div className="modal-title">
+          <div className="modal-title message">
             {this.props.translate("transaction.about_to_exchange") || "You are about to exchange"}
           </div>
           <div className="amount">
@@ -461,6 +461,7 @@ export default class PostExchange extends React.Component {
         gasPrice={this.props.form.snapshot.gasPrice}
         gas={this.props.form.snapshot.gas + this.props.form.snapshot.gas_approve}
         isFetchingRate={this.props.snapshot.isFetchingRate}
+        title="Confirm exchange"
       />
     )
   }
@@ -513,14 +514,14 @@ export default class PostExchange extends React.Component {
     if (this.props.account.type === "keystore") {
       modalPassphrase = (<Modal
         className={{
-          base: 'reveal tiny',
-          afterOpen: 'reveal tiny'
+          base: 'reveal medium',
+          afterOpen: 'reveal medium'
         }}
         isOpen={this.props.form.passphrase}
         onRequestClose={this.closeModal}
         contentLabel="password modal"
         content={this.content()}
-        size="tiny"
+        size="medium"
       />)
     } else {
       modalConfirm = (<Modal
