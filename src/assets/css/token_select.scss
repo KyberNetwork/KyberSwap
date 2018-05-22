@@ -20,6 +20,10 @@
     input{
       margin-bottom: 0px;
     }
+    span{
+      display: flex;
+      align-items: center;
+    }
   }
   > input, > input:focus{
     text-align: right;

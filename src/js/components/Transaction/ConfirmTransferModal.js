@@ -37,13 +37,11 @@ class ConfirmTransferModal extends React.Component {
   }
 
   msgHtml = () => {
-    if (!this.props.errors) {
-      if(this.props.isConfirming){
-        let isPKeyAcc = this.props.walletType === 'privateKey'
-        return isPKeyAcc ? '' : <p>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</p>
-      }else{
-        return <p>{this.props.translate("modal.press_confirm_if_really_want") || "Press confirm to continue"}</p>
-      }
+    if (this.props.isConfirming) {
+      let isPKeyAcc = this.props.walletType === 'privateKey'
+      return isPKeyAcc ? '' : <span>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</span>
+    } else {
+      return <span>{this.props.translate("modal.press_confirm_if_really_want") || "Press confirm to continue"}</span>
     }
   }
 
@@ -53,35 +51,36 @@ class ConfirmTransferModal extends React.Component {
     //var totalGas = gasPrice.multipliedBy(this.props.gas)
     return (
       <div>
-        <div className="title text-center">{this.props.title}</div>
+        <div className="title">{this.props.title}</div>
         <a className="x" onClick={(e) => this.props.onCancel(e)}>&times;</a>
         <div className="content with-overlap">
           <div className="row">
-            <div className="column">
-              <center>
+            <div>
+              <div>
                 {this.props.recap}
-                <div className="gas-configed text-light text-center">
+                <div className="gas-configed">
                   <div className="row">
-                    <p className="column small-6">{this.props.translate("transaction.gas_price") || 'Gas price'}</p>
-                    <p className="column small-6">{+roundingNumber(this.props.gasPrice)} Gwei</p>
+                    <span className="column small-6 font-w-b">{this.props.translate("transaction.gas_price") || 'Gas price'}</span>
+                    <span className="column small-6">{+roundingNumber(this.props.gasPrice)} Gwei</span>
                   </div>
                   <div className="row">
-                    <p className="column small-6">{this.props.translate("transaction.transaction_fee") || "Transaction Fee"}</p>
-                    <p className="column small-6">{this.props.isFetchingGas ?
+                    <span className="column small-6 font-w-b">{this.props.translate("transaction.transaction_fee") || "Transaction Fee"}</span>
+                    <span className="column small-6">{this.props.isFetchingGas ?
                       <img src={require('../../../assets/img/waiting-white.svg')} />
                       : <span>{totalGas.toString()}</span>
-                    } ETH</p>
+                    } ETH</span>
                   </div>
-                  <hr className={this.props.errors ? 'd-none' : 'mt-0'} />
                 </div>
-                {this.msgHtml()}
-              </center>
+              </div>
               {this.errorHtml()}
             </div>
           </div>
         </div>
         <div className="overlap">
-          <a className={"button accent process-submit " + (this.props.isConfirming || this.props.isFetchingGas || this.props.isFetchingRate ? "waiting" : "next")} onClick={(e) => this.props.onExchange(e)}>{this.props.translate("modal.confirm") || "Confirm"}</a>
+          <div>{this.msgHtml()}</div>
+          <div>
+            <a className={"button process-submit " + (this.props.isConfirming || this.props.isFetchingGas || this.props.isFetchingRate ? "waiting" : "next")} onClick={(e) => this.props.onExchange(e)}>{this.props.translate("modal.confirm") || "Confirm"}</a>
+          </div>
         </div>
       </div>
     )

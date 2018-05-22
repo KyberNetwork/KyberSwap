@@ -151,7 +151,7 @@ export default class PostTransfer extends React.Component {
         <span class="text-success">
           <strong>
             {amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}</strong>
-          <span className="color-white">{this.props.translate("transaction.to") || "to"}</span>
+          <span>{this.props.translate("transaction.to") || "to"}</span>
           <strong>{destAddress.slice(0, 7)}...{destAddress.slice(-5)}</strong>
         </span>
       </p>

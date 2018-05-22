@@ -12,10 +12,10 @@ $divider-color: darken($title-background-color, 5);
   position: relative;
   overflow: visible;
   border-radius: 0;
-  color: $white;
+  //color: $white;
   outline: none;
-  background-color: $k-primary;
-  border: 2px solid $white;
+  // background-color: $k-primary;
+  // border: 2px solid $white;
   box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
   @include breakpoint(small only) {
     top: 0 !important;
@@ -27,33 +27,42 @@ $divider-color: darken($title-background-color, 5);
   a{
     color: #00ffd6;
     &.x {
-    display: block;
-    position: absolute;
-    right: 20px;
-    top: 10px;
-    font-size: 32px;
-    color: $white;
+      display: block;
+      position: absolute;
+      right: 20px;
+      top: 0px;
+      font-size: 3rem;
+      color: #aaa;
+    //color: $white;
     }
   }
   .title {
     font-weight: bold;
-    font-size: 20px;
-    padding: 20px 25px;
-    background-color: $k-primary-darker;
+    font-size: 1.8rem;
+    padding: 50px 50px 0px 50px;
+  //  background-color: $k-primary-darker;
   }
   .overlap {
     width: 100%;
     text-align: center;
-    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    background-color: #8CBCAE;
+    padding: 50px 50px;
+    align-items: center;
+    span{
+      color: white;
+    }
     .button {
       margin: 0;
     }
   }
   .content {
-    padding: 20px 10px;
-    @include breakpoint(medium) {
-      padding: 15px;
-    }
+    padding: 0 50px;
+    // padding: 20px 10px;
+    // @include breakpoint(medium) {
+    //   padding: 15px;
+    // }
     &.with-overlap {
       padding-bottom: 25px;
     }
@@ -76,6 +85,15 @@ $divider-color: darken($title-background-color, 5);
       width: 270px;
       max-width: 100%;
       white-space: nowrap;
+      text-align: left;
+      font-size: 0.8rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      >div{
+        &:first-child{
+          margin-bottom: 0.6rem;
+        }
+      }
     }
     hr{
       border-color: #a5a5a5;
@@ -167,5 +185,62 @@ $divider-color: darken($title-background-color, 5);
     display: block;
     color: #a5a5a5;
     margin-bottom: 15px;
+  }
+}
+
+
+.confirm-exchange-modal{
+  .modal-title{
+    font-size: 0.8rem;
+  }
+  .amount{
+    display: flex;
+    margin-top: 0.8rem;
+    justify-content: space-between;
+    .amount-item{
+      text-align: center;
+      padding: 10px;
+      width: 45%;
+      background-color: #F2FBF4;
+      color: #A8CEB9;
+      font-size: 1.2rem;
+      border: 1px solid #A8CEB9;
+    }      
+  }
+  .description{
+    margin-top: 0.5rem;
+  }
+}
+
+
+.approve-modal{
+  .message{
+    font-weight: bold;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+  }
+  .address{
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+   >span{
+     &:first-child{
+       color: #aaa;
+       font-weight: bold;
+     }
+     &:last-child{
+       margin-right: 10px;
+       font-weight: bold;
+     }
+   } 
+  }
+  .content{
+    max-width: 450px;
+  }
+  .gas-configed{
+    margin-top: 2rem;
   }
 }

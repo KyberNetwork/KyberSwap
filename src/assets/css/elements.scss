@@ -157,6 +157,19 @@ input.error {
       cursor: pointer;
     }
   }
+  &.process-submit{
+    background: white;
+    font-weight: bold;
+    color: #3D4B9C;
+    box-shadow: 0 0 2px #555;
+    &.next{
+      cursor: pointer;
+      color: #3D4B9C;
+    }
+    &.waiting{
+      color: #aaa;
+    }
+  }  
 }
 
 .row {
