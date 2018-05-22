@@ -454,12 +454,13 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
   }
 }
 #private_key, #passphrase{
-  background-color: transparent;
-  color: inherit;
-  border-bottom: 1px solid #ddd;
-  &:focus{
-    background-color: transparent
-  }
+  background-color: #ACD0C6;
+  color: white;
+  width: 250px;
+  //border-bottom: 1px solid #ddd;
+  // &:focus{
+  //   background-color: transparent
+  // }
   &.security{
     font-family: 'text-security-disc';
     font-size: 25px;
