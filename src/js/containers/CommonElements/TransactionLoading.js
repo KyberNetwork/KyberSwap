@@ -85,6 +85,7 @@ export default class TransactionLoading extends React.Component {
                 handleCopy={this.handleCopy.bind(this)}
                 resetCopy={this.resetCopy.bind(this)}
             />
+            console.log("step: " +  this.state.step)
         return (
             <Modal
             className={{
