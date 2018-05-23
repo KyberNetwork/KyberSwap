@@ -5,6 +5,8 @@ import constants from "../../services/constants"
 import { TransactionLoadingView } from "../../components/Transaction"
 import { getTranslate } from 'react-localize-redux'
 import exchangeActions from "../../actions/exchangeActions"
+import { Modal } from "../../components/CommonElement"
+
 
 @connect((store, props) => {
     var returnProps = {}
@@ -24,7 +26,8 @@ import exchangeActions from "../../actions/exchangeActions"
             balanceInfo: props.balanceInfo,
             txHash: props.tx,
             analyze: props.analyze,
-            address: props.address
+            address: props.address,
+            step: props.step
         }
     }
     return { ...returnProps, translate: getTranslate(store.locale) }
@@ -32,11 +35,12 @@ import exchangeActions from "../../actions/exchangeActions"
 
 export default class TransactionLoading extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             isOpenModal: false,
-            isCopied: false
+            isCopied: false,
+            step: props.step
         }
     }
 
@@ -58,9 +62,13 @@ export default class TransactionLoading extends React.Component {
         })
     }
 
+    closeModal = () => {
+        this.setState({step:1})
+    }
+
     render() {
-        return (
-            <TransactionLoadingView
+        var loadingView = 
+        <TransactionLoadingView
                 broadcasting={this.props.broadcasting}
                 error={this.props.error}
                 type={this.props.type}
@@ -77,7 +85,18 @@ export default class TransactionLoading extends React.Component {
                 handleCopy={this.handleCopy.bind(this)}
                 resetCopy={this.resetCopy.bind(this)}
             />
-
+        return (
+            <Modal
+            className={{
+              base: 'reveal medium',
+              afterOpen: 'reveal medium'
+            }}
+            isOpen={this.state.step === 3}
+            onRequestClose={this.closeModal}
+            contentLabel="confirm modal"
+            content={loadingView}
+            size="medium"
+          />
         )
     }
 }

@@ -310,6 +310,7 @@ export default class ExchangeBody extends React.Component {
         broadcasting={this.props.exchange.broadcasting}
         broadcastingError={this.props.exchange.broadcastError}
         analyze={analyze}
+        step={this.props.exchange.step}
       />
     )
 

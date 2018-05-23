@@ -168,10 +168,12 @@ const ExchangeBodyLayout = (props) => {
   return (
 
     <div className={props.step === 1 ? "choose-token-pair" : ""} id="exchange">
-      {props.step !== 3 ? render : ''}
+      {render}
+      {props.transactionLoadingScreen}
+      {/* {props.step !== 3 ? render : ''}
       <div class="page-3">
         {props.step == 3 ? props.transactionLoadingScreen : ''}
-      </div>
+      </div> */}
     </div>
   )
 }
