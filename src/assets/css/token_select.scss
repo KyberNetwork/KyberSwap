@@ -88,6 +88,8 @@
    //   border: 2px solid $white;
       img{
         vertical-align: top;
+        width: 28px;
+        max-height: 28px;
       }
     }
   }
@@ -132,7 +134,8 @@
         width: 35px;
         display: inline-block;
         img{
-          max-width: 30px;
+          width: 28px;
+          max-height: 28px;
         }
       }
       >div{
