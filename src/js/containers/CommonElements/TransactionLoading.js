@@ -4,11 +4,21 @@ import { push } from 'react-router-redux';
 import constants from "../../services/constants"
 import { TransactionLoadingView } from "../../components/Transaction"
 import { getTranslate } from 'react-localize-redux'
-import exchangeActions from "../../actions/exchangeActions"
+import * as exchangeActions from "../../actions/exchangeActions"
+import * as transferActions from "../../actions/transferActions"
 import { Modal } from "../../components/CommonElement"
 
 
 @connect((store, props) => {
+    var type = props.type
+    var isOpen = false
+    if (props.type === "exchange"){
+        isOpen = store.exchange.step === 3
+    }
+    if (props.type === "transfer"){
+        isOpen = store.transfer.step === 3
+    }
+    
     var returnProps = {}
     if (props.broadcasting) {
         returnProps = {
@@ -27,7 +37,7 @@ import { Modal } from "../../components/CommonElement"
             txHash: props.tx,
             analyze: props.analyze,
             address: props.address,
-            step: props.step
+            isOpen
         }
     }
     return { ...returnProps, translate: getTranslate(store.locale) }
@@ -35,12 +45,11 @@ import { Modal } from "../../components/CommonElement"
 
 export default class TransactionLoading extends React.Component {
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             isOpenModal: false,
             isCopied: false,
-            step: props.step
         }
     }
 
@@ -62,9 +71,9 @@ export default class TransactionLoading extends React.Component {
         })
     }
 
-    closeModal = () => {
-        this.setState({step:1})
-    }
+    // closeModal = () => {
+    //    this.props.makeNewTransaction()
+    // }
 
     render() {
         var loadingView = 
@@ -84,16 +93,16 @@ export default class TransactionLoading extends React.Component {
                 isCopied={this.state.isCopied}
                 handleCopy={this.handleCopy.bind(this)}
                 resetCopy={this.resetCopy.bind(this)}
+                onCancel = {this.props.makeNewTransaction}
             />
-            console.log("step: " +  this.state.step)
         return (
             <Modal
             className={{
               base: 'reveal medium',
               afterOpen: 'reveal medium'
             }}
-            isOpen={this.state.step === 3}
-            onRequestClose={this.closeModal}
+            isOpen={this.props.isOpen}
+            onRequestClose={this.props.makeNewTransaction}
             contentLabel="confirm modal"
             content={loadingView}
             size="medium"
