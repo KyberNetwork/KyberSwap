@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 
 import { getTranslate } from 'react-localize-redux'
-import {Currency, ManageColumn, MarketTable, SearchWord, SortColumn} from "../Market"
+import { Currency, ManageColumn, MarketTable, SearchWord, SortColumn, TradingView } from "../Market"
 
 
 @connect((store) => {
@@ -13,22 +13,25 @@ import {Currency, ManageColumn, MarketTable, SearchWord, SortColumn} from "../Ma
 })
 
 export default class Market extends React.Component {
-  
+
   render() {
-    return <div>
+    return (
       <div>
+        <div>
           <div>
-              <SearchWord />
-              <Currency />
-              <SortColumn />
+            <SearchWord />
+            <Currency />
+            <SortColumn />
           </div>
           <div>
-              <ManageColumn />
+            <ManageColumn />
           </div>
-      </div>
-      <div>
+        </div>
+        <div>
           <MarketTable />
+        </div>
+        <TradingView />
       </div>
-    </div>
+    )
   }
 }

@@ -205,6 +205,7 @@ export default class Transfer extends React.Component {
         broadcasting={this.props.transfer.broadcasting}
         broadcastingError={this.props.transfer.bcError}
         address={destAdressShort}
+        isOpen={this.props.transfer.step === 2}
       />
     )
 

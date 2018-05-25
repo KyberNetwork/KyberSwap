@@ -239,7 +239,7 @@ export default class PostExchange extends React.Component {
             </div>
           </div>
           {!this.props.snapshot.isFetchingRate &&
-            <div className="description">
+            <div className="description error">
               <span className="error-text">
                 {this.props.translate("error.min_rate_greater_expected_rate") || "Your configured minimal exchange rate is higher than what is recommended by KyberNetwork. Your exchange has high chance to fail"}
               </span>

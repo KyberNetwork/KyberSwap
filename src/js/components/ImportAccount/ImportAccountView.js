@@ -1,7 +1,8 @@
 import React from "react"
+import { Modal } from "../../components/CommonElement"
 
 const ImportAccountView = (props) => {
-  return (
+  var contentRender = (
     <div id="import-account">
       <div class="frame">
         <div className="row">
@@ -34,6 +35,19 @@ const ImportAccountView = (props) => {
       </div>
     </div>
   )
+
+  return <Modal
+  className={{
+    base: 'reveal large',
+    afterOpen: 'reveal large'
+  }}
+  isOpen={props.isOpen}
+  onRequestClose={props.closeModal}
+  contentLabel="import modal"
+  content={contentRender}
+  size="medium"
+/>
+
 }
 
 export default ImportAccountView

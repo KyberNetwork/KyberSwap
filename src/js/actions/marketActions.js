@@ -53,3 +53,16 @@ export function getMarketDataComplete(data){
     payload: data
   }
 }
+
+export function showTradingViewChart(symbol){
+  return {
+    type: "MARKET.SHOW_TRADINGVIEW_CHART",
+    payload: {symbol}
+  }
+}
+
+export function hideTradingViewChart(){
+  return {
+    type: "MARKET.HIDE_TRADINGVIEW_CHART"
+  }
+}

@@ -107,10 +107,12 @@ const TransferForm = (props) => {
   return (
 
     <div>
-      {props.step !== 2 ? render : ''}
+       {render}
+        {props.transactionLoadingScreen}
+      {/* {props.step !== 2 ? render : ''}
       <div class="page-3">
         {props.step == 2 ? props.transactionLoadingScreen : ''}
-      </div>
+      </div> */}
     </div>
   )
 }

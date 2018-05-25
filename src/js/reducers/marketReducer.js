@@ -8,25 +8,8 @@ const initState = function () {
     Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
         tokens[key] = {}
         tokens[key].info = BLOCKCHAIN_INFO.tokens[key]
-        //tokens[key].sellPrice = 0
-        //tokens[key].buyPrice = 0
 
-        
-
-       // tokens[key].lastPrice = 0
-       // tokens[key].column = 0
-       // tokens[key].marketcap = 0
         tokens[key].circulatingSupply = 0
-
-        //tokens[key].balance = 0
-
-        // tokens[key].sellPriceEth = 0
-        // tokens[key].buyPriceEth = 0
-        // tokens[key].minSellPrice = 0
-        // tokens[key].minBuyPrice = 0
-
-        // tokens[key].sellPriceUsd = 1
-        // tokens[key].buyPriceUsd = 1
 
         tokens[key]["ETH"] = {
             sellPrice: 0,
@@ -50,6 +33,8 @@ const initState = function () {
     return {
         tokens,
         configs: {
+            isShowTradingChart: false,
+            selectedSymbol: "KNC",
             searchWord: "",
             currency: {
                 listItem: {
@@ -126,6 +111,17 @@ const market = (state = initState, action) => {
             }
             var listItem = newState.configs.column.shows.listItem
             newState.configs.column.shows = { listItem, active }
+            return newState
+        }
+
+        case 'MARKET.SHOW_TRADINGVIEW_CHART': {
+            var {symbol} = action.payload
+            newState.configs.isShowTradingChart = true
+            newState.configs.selectedSymbol = symbol
+            return newState
+        }
+        case 'MARKET.HIDE_TRADINGVIEW_CHART': {
+            newState.configs.isShowTradingChart = false
             return newState
         }
         

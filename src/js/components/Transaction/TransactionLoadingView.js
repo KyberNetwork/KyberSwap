@@ -124,9 +124,9 @@ const TransactionLoadingView = (props) => {
       <a className="x" onClick={(e) => props.onCancel(e)}>&times;</a>
       <div className="content with-overlap">
         <div className="row">
-          <div class="info text-light font-s-down-1 tx-title">
+          <div class="info tx-title">
             <div>{props.translate("transaction.transaction") || "Transaction hash"}</div>
-            <div>
+            <div className="tx-hash">
               <a class="text-light" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank"
                 title={props.translate("modal.view_on_etherscan") || "View on Etherscan"} >
                 {props.txHash.slice(0, 12)} ... {props.txHash.slice(-10)}
@@ -154,10 +154,11 @@ const TransactionLoadingView = (props) => {
                   }
                 </h4>
                 </div>
-                <div>
+                <div className="broadcast-img">
                   <img src={require('../../../assets/img/finish.svg')} />
+                  <div>Done</div>
                 </div>
-                <div>Broadcasted</div>
+               
               </li>
             }
             {props.status === "failed" &&
@@ -169,21 +170,24 @@ const TransactionLoadingView = (props) => {
                   </h4>
                   {analyzeBtn}
                 </div>
-                <div>
+                <div className="broadcast-img">
                   <img src={require('../../../assets/img/error_state.svg')} />
+                  <div>Error!</div>
                 </div>
-                <div>Error!</div>
               </li>
             }
             {props.status === "pending" &&
               <li class={props.status}>
                 <div>
-                  <h4>{props.translate("transaction.waiting_transaction") || "Waiting for your transaction to be mined"}</h4>
+                  <h4>
+                    <p>{props.translate("transaction.waiting_transaction") || "Waiting for your transaction to be mined"}
+                    </p>
+                  </h4>
                 </div>
-                <div>
+                <div className="broadcast-img">
                   <img src={require('../../../assets/img/broadcast.svg')} />
+                  <div>Broadcasted</div>
                 </div>
-                <div>Done</div>
               </li>
             }
           </ul>
@@ -191,7 +195,7 @@ const TransactionLoadingView = (props) => {
 
         </div>
         <div class="row">
-          <div class="column small-11 medium-10 large-9 small-centered text-center">
+          <div class="tx-actions">
             <a className="new-transaction" onClick={props.makeNewTransaction}>
               {props.type === "exchange" ?
                 props.translate("transaction.new_ex") || "New exchange"

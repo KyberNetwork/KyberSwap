@@ -10,14 +10,14 @@ import { Modal } from "../../components/CommonElement"
 
 
 @connect((store, props) => {
-    var type = props.type
-    var isOpen = false
-    if (props.type === "exchange"){
-        isOpen = store.exchange.step === 3
-    }
-    if (props.type === "transfer"){
-        isOpen = store.transfer.step === 3
-    }
+    // var type = props.type
+    // var isOpen = false
+    // if (props.type === "exchange"){
+    //     isOpen = store.exchange.step === 3
+    // }
+    // if (props.type === "transfer"){
+    //     isOpen = store.transfer.step === 3
+    // }
     
     var returnProps = {}
     if (props.broadcasting) {
@@ -37,7 +37,7 @@ import { Modal } from "../../components/CommonElement"
             txHash: props.tx,
             analyze: props.analyze,
             address: props.address,
-            isOpen
+            isOpen: props.isOpen
         }
     }
     return { ...returnProps, translate: getTranslate(store.locale) }
