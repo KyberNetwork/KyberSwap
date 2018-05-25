@@ -35,7 +35,7 @@ const TransactionLoadingView = (props) => {
             </ul>
             <div class="text-center">
               <div className={"broadcast-animation"}>
-                {!props.error ? <img src={require('../../../assets/img/broadcast.svg')} /> : <img src={require('../../../assets/img/finish.svg')} />}
+                {!props.error ? <img src={require('../../../assets/img/broadcast.svg')} /> : <img src={require('../../../assets/img/error_state.svg')} />}
               </div>
             </div>
           </div>
@@ -117,7 +117,7 @@ const TransactionLoadingView = (props) => {
   return (
     <div>
       <div className="title">
-        {props.status === "success" && (props.translate('transaction.done') || "Done!")}
+        {props.status === "success" && (props.translate('transaction.done') || "Broadcasted")}
         {props.status === "failed" && (props.translate('transaction.failed') || "Failed!")}
         {props.status === "pending" && (props.translate('transaction.broadcasted') || "Broadcasted")}
       </div>
@@ -125,62 +125,68 @@ const TransactionLoadingView = (props) => {
       <div className="content with-overlap">
         <div className="row">
           <div class="info text-light font-s-down-1 tx-title">
-            <span className="font-w-b ">{props.translate("transaction.transaction") || "Transaction"}</span>
-            <a class="text-light" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank"
-              title={props.translate("modal.view_on_etherscan") || "View on Etherscan"} >
-              {props.txHash.slice(0, 12)} ... {props.txHash.slice(-10)}
-            </a>
-            <a className="copy-tx" data-for='copy-tx-tip' data-tip=""
-              onClick={props.handleCopy}
-              onMouseLeave={props.resetCopy} >
-              <CopyToClipboard text={props.txHash}>
-                <img src={require("../../../assets/img/copy.svg")} />
-              </CopyToClipboard>
-            </a>
-            <ReactTooltip getContent={[() => getTooltipCopy()]} place="right" id="copy-tx-tip" type="light" />
+            <div>{props.translate("transaction.transaction") || "Transaction hash"}</div>
+            <div>
+              <a class="text-light" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank"
+                title={props.translate("modal.view_on_etherscan") || "View on Etherscan"} >
+                {props.txHash.slice(0, 12)} ... {props.txHash.slice(-10)}
+              </a>
+              <a className="copy-tx" data-for='copy-tx-tip' data-tip=""
+                onClick={props.handleCopy}
+                onMouseLeave={props.resetCopy} >
+                <CopyToClipboard text={props.txHash}>
+                  <img src={require("../../../assets/img/copy.svg")} />
+                </CopyToClipboard>
+              </a>
+              <ReactTooltip getContent={[() => getTooltipCopy()]} place="right" id="copy-tx-tip" type="light" />
+            </div>
           </div>
           <ul class="broadcast-steps">
             {props.status === "success" &&
               <li class={props.status}>
-                <h4 class="text-success font-w-b">
+                <div>
+                <h4>
                   {props.type === "exchange" &&
-                    (props.translate("transaction.success_ex_msg",
-                      {
-                        sourceAmount: displayRoundingNumber(props.balanceInfo.sourceAmount), sourceSymbol: props.balanceInfo.sourceSymbol,
-                        destAmount: displayRoundingNumber(props.balanceInfo.destAmount), destSymbol: props.balanceInfo.destSymbol
-                      })
-                      || `Successfully exchanged from </br> ${displayRoundingNumber(props.balanceInfo.sourceAmount)} ${props.balanceInfo.sourceSymbol} to ${displayRoundingNumber(props.balanceInfo.destAmount)} ${props.balanceInfo.destSymbol}`)
+                    <p>Successfully exchanged from <span className="tx-underline">{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceSymbol}</span> to <span className="tx-underline">{displayRoundingNumber(props.balanceInfo.destAmount)} {props.balanceInfo.destSymbol}</span></p>
                   }
                   {props.type === "transfer" &&
-                    (props.translate("transaction.success_tx_msg", { amount: displayRoundingNumber(props.balanceInfo.amount), token: props.balanceInfo.tokenSymbol, address: props.address }) ||
-                      `Successfully transferred </br> ${displayRoundingNumber(props.balanceInfo.amount)} ${props.balanceInfo.tokenSymbol} to ${props.address}`)
+                      <p>Successfully transferred <span className="tx-underline">{displayRoundingNumber(props.balanceInfo.amount)} {props.balanceInfo.tokenSymbol}</span> to <span className="tx-underline">{props.address}</span></p>
                   }
                 </h4>
+                </div>
+                <div>
+                  <img src={require('../../../assets/img/finish.svg')} />
+                </div>
+                <div>Broadcasted</div>
               </li>
             }
             {props.status === "failed" &&
               <li class={props.status}>
-                <h4 class="font-w-b d-inline-block">
-                  <img src={require("../../../assets/img/error.svg")} />
-                  {props.translate("transaction.transaction_error") || "Transaction error"}
-                </h4>
-                {analyzeBtn}
+                <div>
+                  <h4 class="font-w-b d-inline-block">
+                    <img src={require("../../../assets/img/error.svg")} />
+                    {props.translate("transaction.transaction_error") || "Transaction error"}
+                  </h4>
+                  {analyzeBtn}
+                </div>
+                <div>
+                  <img src={require('../../../assets/img/error_state.svg')} />
+                </div>
+                <div>Error!</div>
               </li>
             }
             {props.status === "pending" &&
               <li class={props.status}>
-                <h4 class="font-w-b">{props.translate("transaction.waiting_transaction") || "Waiting for your transaction to be mined"}</h4>
+                <div>
+                  <h4>{props.translate("transaction.waiting_transaction") || "Waiting for your transaction to be mined"}</h4>
+                </div>
+                <div>
+                  <img src={require('../../../assets/img/broadcast.svg')} />
+                </div>
+                <div>Done</div>
               </li>
             }
           </ul>
-          {classPending != "" ? (
-            <div class="text-center">
-              <div className={"broadcast-animation"}>
-                {!props.error ? <img src={require('../../../assets/img/broadcast.svg')} /> : <img src={require('../../../assets/img/finish.svg')} />}
-              </div>
-            </div>
-          ) : ''
-          }
 
 
         </div>
