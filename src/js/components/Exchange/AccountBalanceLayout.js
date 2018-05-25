@@ -73,18 +73,16 @@ const AccountBalanceLayout = (props) => {
         </div>
         {props.showBalance && (
               <p className="estimate-value">
-                <span className="text-capitalize">{props.translate("address.total") || "Total value"}</span>
-                <span className="font-w-b font-s-up-1 ml-2">{getBalanceUsd()}</span> USD
+                <span className="text-upcase">{props.translate("address.total") || "Total"} {getBalanceUsd()} USD</span>
               </p>
             )}
       </div>
       
       <div id="search-balance" className="row">
-         <div className="column small-8">  
-           <input type="text" placeholder="search" onChange={(e) => props.changeSearchBalance(e)} value = {props.searchWord}/>
+        <div className="column small-10">
+          <input type="text" placeholder="Search" onChange={(e) => props.changeSearchBalance(e)} value = {props.searchWord}/>
         </div>   
-        <div className="column small-4 sort-balance">
-          Sort
+        <div className="column small-2 sort-balance">
         </div>
       </div>
       <div className="balances custom-radio custom-scroll">

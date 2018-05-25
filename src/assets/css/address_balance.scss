@@ -1,10 +1,20 @@
 #balance-account{
   border-right: 1px solid #ddd;
-    padding: 1rem;
-    .balance-header{      
-
+    padding: 1rem 0.5rem;
+    .balance-header {
+      padding: 0 1.1rem;
+      .title {
+        font-size: 1.25rem;
+        color: #4B4860;
+        font-weight: 600;
+      }      
       .estimate-value{
         font-size: 0.9rem;
+        .text-upcase {
+          text-transform: uppercase;
+          font-weight: 500;
+          color: #4B4860;
+        }
       }
     //   @media screen and (max-width: 640px) {
     //     min-height: 0;
@@ -15,53 +25,80 @@
     //   }
     }
     input{
-      border-radius: 5px;
+      border-radius: 3px;
       margin-bottom: 0.6rem;
-      border: 1px solid #aaa;
+      border: 1px solid #ccc;
+      min-height: 33px;
+      height: 33px;
+      background-image: url(../img/search.png);
+      background-repeat: no-repeat;
+      background-position: 0.3rem;
+      background-size: auto 65%;
+      text-indent: 15px;
     }
     .balances{
       display: inline-block;
       height: 500px;
       overflow: auto;
       direction: rtl;
+      width: 100%;
 
       &.custom-radio{
         ul{
           padding: 10px;
           direction: ltr;
+          width: 100%;
         }
         li{
           width: 50%;
           float: left;
           height: 50px;
           border-radius: 30px;
+          margin: 5px 0;
           &.hide{
             display: none;
           }
           &.active{
-            box-shadow: 0 0 5px #aaa;
+            box-shadow: 0 0 15px #aaa;
           }
           .check{
             top: 14px;
+          }
+          &:hover {
+            background-color: #F2FAF7;
           }
         }
         label{
           position: relative;
           top: -9px;
           left: 10px;
+          color: #4B4860;
         }
       }
     }
 
     #search-balance{
+      padding: 0 1.1rem;
+      .column {
+        padding-right: 0.5rem;
+        .search-icon {
+          height: 33px;
+          width: 33px;
+          background-color: red;
+        }
+      }
       margin-bottom: 1.2rem;
       .sort-balance{
         text-align: center;
-        width: 40px;
-        height: 40px;
+        width: 33px;
+        height: 33px;
         padding: 0px;
-        border: 1px solid #aaa;
-        border-radius: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        background-image: url(../img/sort.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 50% 50%;
       }
     }
     .balance-item{

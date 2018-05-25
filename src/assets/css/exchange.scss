@@ -1,63 +1,104 @@
 #exchange {
+  @media print, screen and (min-width: 40em) {
+    .medium-5 {
+      width: 45%;
+      padding-right: 0;
+      padding-left: 0;
+    }
+    .medium-2 {
+      width: 10%;
+      padding-left: 0;
+      padding-right: 0;
+      // background-image: url(../img/exchange.svg);
+      // background-repeat: no-repeat;
+      // background-position: center;
+      // background-size: 75% 75%;
+    }
+  }
+  .main-title  {
+    padding-top: 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  .token-input {
+    .info {
+      height: auto;
+      transition: width .4s ease-in-out;
+    }
+    input {
+      transition: width .4s ease-in-out;
+    }
+  }
+  label{
+    margin-bottom: 8px;
+  }
+
+  .accent {
+    margin-top: 50px;
+    line-height: 55px;
+    padding: 0 35px;
+    background: #510CA7;
+    font-size: 1.3rem;
+    border-radius: 50px;
+    box-shadow: 0 10px 15px #ccc;
+  }
+
+  .token-compare {
+      color: #ccc;
+      font-weight: 600;
+      letter-spacing: .5px;
+      text-align: center;
+      margin-bottom: 10px;
+      margin-top: 1rem;
+      .seperator{
+          
+      }
+      div {
+        font-size: 0.97rem;
+        letter-spacing: 0.1px;
+      }
+      div:first-child {
+        text-align: right;
+      }
+
+      div:nth-child(3) {
+        text-align: left;
+      }
+    }
+
+  .show-on-choose-token-pair {
+    display: none;
+  }
+  .hide-on-choose-token-pair {
+    display: block;
+  }
+  &.choose-token-pair {
+    .title {
+      &:after {
+        content: 'Select Token Pair';
+        font-size: 14px;
+        margin-left: 20px;
+        color: lighten($dark-gray, 20);
+      }
+    }
     .token-input {
-      .info {
-        height: auto;
-        transition: width .4s ease-in-out;
-      }
       input {
-        transition: width .4s ease-in-out;
+        width: 0;
+        opacity: 0;
+        padding: 0;
       }
-    }
-    label{
-      margin-bottom: 8px;
-    }
-    .token-compare {
-        color: #aaa;
-        font-weight: 600;
-        letter-spacing: .5px;
-        text-align: center;
-        margin-bottom: 10px;
-        margin-top: 1rem;
-        .seperator{
-            
-
-        }
-      }
-
-    .show-on-choose-token-pair {
-      display: none;
-    }
-    .hide-on-choose-token-pair {
-      display: block;
-    }
-    &.choose-token-pair {
-      .title {
-        &:after {
-          content: 'Select Token Pair';
-          font-size: 14px;
-          margin-left: 20px;
-          color: lighten($dark-gray, 20);
-        }
-      }
-      .token-input {
-        input {
-          width: 0;
+      .info {
+        width: 100%;
+        &:before {
           opacity: 0;
-          padding: 0;
         }
-        .info {
-          width: 100%;
-          &:before {
-            opacity: 0;
-          }
-        }
-      }
-      .hide-on-choose-token-pair {
-        display: none;
-      }
-      .show-on-choose-token-pair {
-        display: block;
       }
     }
   }
-
+  .hide-on-choose-token-pair {
+    display: none;
+  }
+  .show-on-choose-token-pair {
+    display: block;
+  }
+}

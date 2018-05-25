@@ -52,6 +52,7 @@ const ImportByDeviceView = (props) => {
     function getListPathHtml() {
         let listPath = props.dPath.map((dPath, index) => {
             let disabledPath = (props.walletType == 'ledger' && dPath.notSupport) ? true : false;
+            let disabled = disabledPath? 'disabled' : ''
             let active = (props.currentDPath == dPath.path) ? 'active' : ''
             return (
                 <div class="column" key={dPath.path}>
@@ -59,7 +60,7 @@ const ImportByDeviceView = (props) => {
                         defaultValue={dPath.path}
                         disabled={disabledPath}
                     />
-                    <label class={'address-path-stamp ' + active}
+                    <label class={'address-path-stamp ' + active + disabled}
                         onClick={() => {
                             if (dPath.path && !disabledPath) choosePath(dPath.path)
                         }}
