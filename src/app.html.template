@@ -32,6 +32,10 @@
     <link rel="shortcut icon" href="favicon.png" type="image/png">
     <link rel="stylesheet" href="<%= htmlWebpackPlugin.options.styleFile %>">
 
+    <script src="%PUBLIC_URL%/charting_library/charting_library.min.js"></script>
+		<script src="%PUBLIC_URL%/datafeeds/udf/dist/polyfills.js"></script>
+		<script src="%PUBLIC_URL%/datafeeds/udf/dist/bundle.js"></script>	
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-99578428-2"></script>
     <script>

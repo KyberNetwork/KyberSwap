@@ -19,7 +19,8 @@ input{
 
 .transaction-label{
   font-weight: bold;
-  font-size: 15px;
+  font-size: 12px;
+  padding-left: 25px;
 }
 
 .unlock input {
@@ -254,16 +255,18 @@ h1.title {
     // }
   }      
   .sub_title{
-    font-size: 0.8rem;
+    font-size: 0.65rem;
+    font-weight: 550;
+    color: #4B4860;
   }
   .exchange-pd{
-    padding: 2rem;
+    padding: 2rem 4.5rem;
   }
   .frame-left, .frame-right{
     padding-top: 1rem;
   }
   .frame-left{
-    box-shadow: 0 0 2px #aaa;
+    box-shadow: 0 7px 25px #ddd;
     padding:0px;
   }
   .button.accent{
@@ -385,12 +388,10 @@ span.help {
   vertical-align: middle;
 }
 
-
-
 .transaction-footer{
   position: relative;
   background-color:#FDFDFD; 
-  margin-top: 80px;
+  margin-top: 10px;
   padding-bottom: 2rem;
   .term, .adv-btn{
     position: absolute;

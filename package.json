@@ -59,7 +59,7 @@
     "slick-carousel": "^1.8.1",
     "sqlite3": "^3.1.13",
     "underscore": "^1.8.3",
-    "web3": "^1.0.0-beta.34",
+    "web3": "^1.0.0-beta.18",
     "web3-providers-ws": "^1.0.0-beta.34",
     "webpack-dev-server": "^2.9.7",
     "websocket": "^1.0.25"
@@ -105,7 +105,7 @@
     "staging": "webpack-dev-server --https --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=staging",
     "production": "webpack-dev-server --https --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=production",
     "kovan": "webpack-dev-server --https --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=kovan",
-    "ropsten": "webpack-dev-server --https --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=ropsten --env.logger=true",
+    "ropsten": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=ropsten --env.logger=true",
     "dev": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=ropsten --env.logger=true",
     "mainnet_test": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=mainnet_test --env.logger=true",
     "test": "jest --setupTestFrameworkScriptFile=raf/polyfill",
