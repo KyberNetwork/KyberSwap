@@ -3,27 +3,17 @@ import { connect } from "react-redux"
 
 
 import { Selector } from "../CommonElements"
-import {Modal} from "../../components/CommonElement"
 
 import { getTranslate } from 'react-localize-redux';
-import * as marketActions from "../../actions/marketActions"
-
-
-@connect((store) => {
-    return {
-        translate: getTranslate(store.locale),
-        isOpen: store.market.configs.isShowTradingChart,
-        selectedSymbol: store.market.configs.selectedSymbol
-    }
-})
 
 
 
 
-export default class TradingViewChart extends React.Component {
+
+export default class TradingView extends React.Component {
 
 
-    static defaultProps = {
+	static defaultProps = {
 		symbol: 'AAPL',
 		interval: 'D',
 		containerId: 'tv_chart_container',
@@ -38,17 +28,19 @@ export default class TradingViewChart extends React.Component {
 		studiesOverrides: {},
 	};
 
-    getLanguageFromURL = () => {
-        const regex = new RegExp('[\\?&]lang=([^&#]*)');
-        const results = regex.exec(window.location.search);
-        return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    }
 
-    componentDidMount() {
+
+	getLanguageFromURL = () => {
+		const regex = new RegExp('[\\?&]lang=([^&#]*)');
+		const results = regex.exec(window.location.search);
+		return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
+	}
+
+	componentDidMount() {
 		const widgetOptions = {
 			symbol: this.props.symbol,
 			// BEWARE: no trailing slash is expected in feed URL
-			datafeed: new datafeeds.UDFCompatibleDatafeed(this.props.datafeedUrl),
+			datafeed: new window.Datafeeds.UDFCompatibleDatafeed(this.props.datafeedUrl),
 			interval: this.props.interval,
 			container_id: this.props.containerId,
 			library_path: this.props.libraryPath,
@@ -64,9 +56,9 @@ export default class TradingViewChart extends React.Component {
 			autosize: this.props.autosize,
 			studies_overrides: this.props.studiesOverrides,
 		};
-		window.TradingView.onready(() => (() => {
+	//	window.TradingView.onready(() => {
 			const widget = window.tvWidget = new window.TradingView.widget(widgetOptions);
-			console.log({widget})
+
 			widget.onChartReady(() => {
 				const button = widget.createButton()
 					.attr('title', 'Click to show a notification popup')
@@ -81,39 +73,16 @@ export default class TradingViewChart extends React.Component {
 
 				button[0].innerHTML = 'Check API';
 			});
-		});
-    }
-    
-    closeModal = () => {
-        this.props.dispatch(marketActions.hideTradingViewChart())
-    }
+	//	});
+	}
 
-    content = () => {
-        return (
-            <div
-				id={ this.props.containerId }
-				className={ 'TVChartContainer' }
+
+	render() {
+		return (
+			<div style={{height:600}}
+				id={this.props.containerId}
+				className={'TVChartContainer'}
 			/>
-        )
-    }
-
-    render() {
-        return (
-			<div>
-				charding view
-			{this.content()}
-			</div>
-            // <Modal
-            //         className={{
-            //         base: 'reveal large',
-            //         afterOpen: 'reveal large'
-            //         }}
-            //         isOpen={this.props.isOpen}
-            //         onRequestClose={this.closeModal}
-            //         contentLabel="trading view modal"
-            //         content={this.content()}
-            //         size="large"
-            //     />
-        )
-    }
+		)
+	}
 }
