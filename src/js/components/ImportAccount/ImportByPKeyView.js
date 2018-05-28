@@ -30,9 +30,9 @@ const ImportByPKeyView = (props) => {
 			<div className="importer pkey">
 				<a onClick={() => props.modalOpen()} id="importPKey">
 					<img src={require('../../../assets/img/pkey.svg')} />
-					<div className="description">{props.translate("import.from_private_key") || <span>Enter your<br />private key</span>}</div>
 				</a>
 			</div>
+			<div className="description">{props.translate("import.from_private_key") || <span>private key</span>}</div>
 
 			<Modal
 				className={{ base: 'reveal tiny', afterOpen: 'reveal tiny' }}
