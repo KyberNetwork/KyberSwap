@@ -28,6 +28,7 @@ $alert-color: #ff5d00;
 @import "footer";
 @import "advance_config";
 @import "exchange";
+@import "import_account";
 
 @font-face{
   font-family: 'My-Montserrat';
@@ -425,8 +426,6 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
   }
 }
 
-
-
 #info{
   padding: 10px;
   .address{
@@ -448,11 +447,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
   text-align: center;
   margin-top: 50px;
 }
-#import-account{
-  .title{
-    font-weight: normal;
-  }
-}
+
 #private_key, #passphrase{
   background-color: #ACD0C6;
   color: white;

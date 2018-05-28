@@ -6,9 +6,9 @@ const ImportByMetamaskView = (props) => {
             <div className="importer metamask">
                 <a onClick={(e) => props.connect(e)}>
                     <img src={require('../../../assets/img/metamask.svg')} />
-                    <div className="description">{props.translate("import.from_metamask") || <span>Connect to <br />metamask</span>}</div>
                 </a>
             </div>
+            <div className="description">{props.translate("import.from_metamask") || <span>Metamask</span>}</div>            
         </div>
     )
 }

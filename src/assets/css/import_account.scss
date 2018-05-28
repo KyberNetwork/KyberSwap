@@ -1,0 +1,106 @@
+.import-account-modal {
+  @include breakpoint(medium) {
+    &.large {
+      top: 125px;
+      width: 70%;
+    }
+  }
+  #import-account{
+    background: linear-gradient(180deg, #6292A7 50%, $white 50%);
+    .title{
+      font-weight: bold;
+      color: $white;
+    }
+    .sub-title {
+      font-size: 0.8rem;
+      color: $white;
+      padding: 0px 50px 30px 50px;
+    }
+    .import-account {
+      padding: 0 60px;
+      .column {
+        padding: 7px;
+        .column-block {
+          padding: 0px;
+          box-shadow: 0 1px 0 #ccc;
+          margin-bottom: 6rem;
+          .importer {
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 0;
+            padding-top: 100%;
+            position: relative;
+            height: 170px;
+            // @include breakpoint(large){
+            //   height: 240px;
+            //   padding-top: 0;
+            //   img {
+            //     margin-top: 20px;
+            //   }
+            // }
+            border-radius: 2px;
+            overflow: hidden;
+            // box-shadow: 0px 1px 13px $k-divider;
+            &.json {
+              background-image: url(../img/json.jpg)
+            }
+            &.pkey {
+              background-image: url(../img/pkey.jpg)
+            }
+            &.trezor {
+              background-image: url(../img/trezor.jpg)
+            }
+            &.ledger {
+              background-image: url(../img/ledger.jpg)
+            }
+            &.metamask {
+              background-image: url(../img/metamask.jpg)
+            }
+            > a {
+              position: absolute;
+              top: 0;
+              right: 0;
+              bottom: 0;
+              left: 0;
+              display: block;
+              background-color: rgba($dark-gray, .7);
+              text-align: center;
+              &:hover{
+                background: linear-gradient(178deg, rgba(54, 217, 172, 0.7), rgba(4, 150, 150, 0.7));
+              }
+            }
+            img {
+              width: 100%;
+            }
+            // .description {
+            //   @include breakpoint(large){
+            //     margin-top: 20px;
+            //   }
+            //   @include breakpoint(medium only){
+            //     margin-top: 15px;
+            //   }
+            //   @include breakpoint(small only){
+            //     margin-top: 5px;
+            //   }
+              
+            //   padding: 0 15px;
+            //   color: $white;
+            //   font-size: 15px;
+            //   line-height: 1.6;
+            // }
+          }
+          .description {
+            padding: 25px 0 10px 10px;
+            text-transform: uppercase;
+            color: blue;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border: 0.5px solid #ddd;          
+          }
+        }
+      }
+    }
+  }
+
+}

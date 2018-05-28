@@ -30,10 +30,11 @@ const DropFile = (props) => {
   return (
     <Dropzone onDrop={props.onDrop} disablePreview={true} className="column column-block">
       <div className="importer json">
-        <a ><img src={require('../../../assets/img/json.svg')}/>
-          <div className="description">{props.translate("import.from_keystore") || <span>Select or drag<br />your keystore</span>}</div>
+        <a >
+          <img src={require('../../../assets/img/json.svg')}/>
         </a>
       </div>
+      <div className="description">{props.translate("import.from_keystore") || <span>Keystore</span>}</div>
       {message}
     </Dropzone>
   )  
