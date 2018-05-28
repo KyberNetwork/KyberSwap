@@ -20,8 +20,8 @@ export default class SortColumn extends React.Component {
     }
     render() {
         return (
-            <div>
-                <label>Currency</label>
+            <div className="market-sort">
+                <div className="header-label">Sort</div>
                 <Selector
                     defaultItem={this.props.sort.focus}
                     listItem={this.props.sort.listItem}

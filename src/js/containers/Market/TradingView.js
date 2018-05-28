@@ -7,26 +7,32 @@ import { Selector } from "../CommonElements"
 import { getTranslate } from 'react-localize-redux';
 
 
-
+@connect((store) => {
+	return {
+		selectedSymbol: store.market.configs.selectedSymbol
+	}
+})
 
 
 export default class TradingView extends React.Component {
-
+	constructor(){
+		super()
+		this.state = {
+			rateType : "sell",
+		}
+	}
 
 	static defaultProps = {
-		symbol: 'AAPL',
-		interval: 'D',
+	//	symbol: this.props.selectedSymbol,
+		interval: '60',
+		locale: 'en',		
 		containerId: 'tv_chart_container',
-		datafeedUrl: 'http://demo_feed.tradingview.com',
+		datafeedUrl: 'http://52.77.238.156:3000/chart',
+		updateFrequency: 5000, // 1 minutes
 		libraryPath: '/charting_library/',
-		chartsStorageUrl: 'https://saveload.tradingview.com',
-		chartsStorageApiVersion: '1.1',
-		clientId: 'tradingview.com',
-		userId: 'public_user_id',
 		fullscreen: false,
-		autosize: true,
-		studiesOverrides: {},
-	};
+		autosize: true
+	  };
 
 
 
@@ -36,50 +42,62 @@ export default class TradingView extends React.Component {
 		return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
 	}
 
+	createButton = (widget, data) => {
+		const button = widget.createButton()
+			.attr('title', data.title)
+			.addClass('apply-common-tooltip')
+			.on('click', () => {
+				window.KyberRateType = data.value;
+				this.setState({rateType : data.value})
+			});
+		button[0].innerHTML = data.content;
+	}
 	componentDidMount() {
+		const feeder = new window.Datafeeds.UDFCompatibleDatafeed(
+			this.props.datafeedUrl, this.props.updateFrequency);
 		const widgetOptions = {
-			symbol: this.props.symbol,
-			// BEWARE: no trailing slash is expected in feed URL
-			datafeed: new window.Datafeeds.UDFCompatibleDatafeed(this.props.datafeedUrl),
+			symbol: this.props.selectedSymbol,
+			datafeed: feeder,
 			interval: this.props.interval,
 			container_id: this.props.containerId,
 			library_path: this.props.libraryPath,
-
-			locale: this.getLanguageFromURL() || 'en',
-			disabled_features: ['use_localstorage_for_settings'],
-			enabled_features: ['study_templates'],
-			charts_storage_url: this.props.chartsStorageUrl,
-			charts_storage_api_version: this.props.chartsStorageApiVersion,
-			client_id: this.props.clientId,
-			user_id: this.props.userId,
+			timeframe: this.props.timeframe,
+			time_frames: this.props.time_frames,
+			locale: this.getLanguageFromURL() || this.props.locale,
 			fullscreen: this.props.fullscreen,
-			autosize: this.props.autosize,
-			studies_overrides: this.props.studiesOverrides,
+			autosize: this.props.autosize
 		};
+
 	//	window.TradingView.onready(() => {
 			const widget = window.tvWidget = new window.TradingView.widget(widgetOptions);
 
 			widget.onChartReady(() => {
-				const button = widget.createButton()
-					.attr('title', 'Click to show a notification popup')
-					.addClass('apply-common-tooltip')
-					.on('click', () => widget.showNoticeDialog({
-						title: 'Notification',
-						body: 'TradingView Charting Library API works correctly',
-						callback: () => {
-							console.log('Noticed!');
-						},
-					}));
-
-				button[0].innerHTML = 'Check API';
+				this.createButton(widget, {content: "Sell", value:"sell", title: "Sell price"})
+				this.createButton(widget, {content: "Buy", value:"buy", title: "Buy price"})
+				this.createButton(widget, {content: "Mid", value:"mid", title: "Mid price"})
 			});
 	//	});
 	}
 
 
+
 	render() {
+		try{
+			if (window.tvWidget) {
+				const chart = window.tvWidget.chart();
+				const oldR = chart.resolution();
+				const newR = (oldR == "M") ? "W" : "M";
+				
+				chart.setResolution(newR, function(){
+					chart.setResolution(oldR);
+				});
+			}
+		}catch(e){
+			console.log(e)
+		}
+		
 		return (
-			<div style={{height:600}}
+			<div style={{height:600, padding: 40}}
 				id={this.props.containerId}
 				className={'TVChartContainer'}
 			/>

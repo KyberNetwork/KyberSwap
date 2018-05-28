@@ -27,8 +27,21 @@ export function* getData(action) {
     }
 }
 
+export function* getGeneralTokenInfo(action){
+    var state = store.getState()
+    var ethereum = state.connection.ethereum
+    var rateUSD = state.tokens.tokens.ETH.rateUSD 
+    try {
+        var data = yield call([ethereum, ethereum.call], "getGeneralTokenInfo")
+        yield put(marketActions.getGeneralTokenInfoComplete(data, rateUSD))
+    }catch(e){
+        console.log(e)
+    }
+}
+
 export function* watchMarket() {
   yield takeEvery("MARKET.GET_MARKET_DATA", getData)
+  yield takeEvery("MARKET.GET_GENERAL_INFO_TOKENS", getGeneralTokenInfo)
 
 }
 

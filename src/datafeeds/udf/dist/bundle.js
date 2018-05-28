@@ -62,6 +62,7 @@ var HistoryProvider = /** @class */ (function () {
             resolution: resolution,
             from: rangeStartDate,
             to: rangeEndDate,
+            rateType: (window.KyberRateType || "sell")
         };
         return new Promise(function (resolve, reject) {
             _this._requester.sendRequest(_this._datafeedUrl, 'history', requestParams)

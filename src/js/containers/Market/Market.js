@@ -16,18 +16,24 @@ export default class Market extends React.Component {
 
   render() {
     return (
-      <div>
-        <div>
-          <div>
-            <SearchWord />
-            <Currency />
-            <SortColumn />
+      <div className="market row">
+        <div className="market-header columns large-12">
+          <div className="market-header-left columns large-8">
+            <div className="columns large-4">
+              <SearchWord />
+            </div>
+            <div className="columns large-4">
+              <Currency />
+            </div>
+            {/* <div className="columns large-4">
+              <SortColumn />
+            </div> */}
           </div>
-          <div>
+          <div className="market-header-right columns large-4">
             <ManageColumn />
           </div>
         </div>
-        <div>
+        <div className="market-table columns large-12">
           <MarketTable />
         </div>
         <TradingViewModal />

@@ -60,9 +60,9 @@ export default class ManageColumn extends React.Component {
             return (
                 <div key={key} className="shows-item">
                     <input type="checkbox" onChange = {(e) => this.selectShowsColumn(e, key)} checked = {checked}/>
-                    <label>
+                    <div className="column-label">
                         {this.props.shows.listItem[key]}    
-                    </label>
+                    </div>
                     
                 </div>
             )
@@ -81,9 +81,9 @@ export default class ManageColumn extends React.Component {
                     <DropdownContent>
                         <div className="select-item">
                             <div className="list-item custom-scroll">
-                                <div>
+                                {/* <div>
                                     {this.getDisplayColumn()}
-                                </div>
+                                </div> */}
                                 <div>
                                     {this.getShowsColumn()}
                                 </div>

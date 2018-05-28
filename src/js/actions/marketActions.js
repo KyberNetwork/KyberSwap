@@ -66,3 +66,16 @@ export function hideTradingViewChart(){
     type: "MARKET.HIDE_TRADINGVIEW_CHART"
   }
 }
+
+export function getGeneralInfoTokens(){
+  return {
+    type: "MARKET.GET_GENERAL_INFO_TOKENS"
+  }
+}
+
+export function getGeneralTokenInfoComplete(tokens, rateUSD){
+  return {
+    type: "MARKET.GET_GENERAL_INFO_TOKENS_COMPLETE",
+    payload:{tokens, rateUSD}
+  }
+}

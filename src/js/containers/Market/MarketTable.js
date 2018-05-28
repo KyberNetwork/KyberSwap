@@ -22,7 +22,6 @@ import * as actions from "../../actions/marketActions"
       <div>
         <div>
           <img src={require("../../../assets/img/tokens/" + tokens[key].info.icon)} />
-          <img src={require("../../../assets/img/tokens/eth.svg")} />
         </div>
         <div>{key} / {currency}</div>
       </div>

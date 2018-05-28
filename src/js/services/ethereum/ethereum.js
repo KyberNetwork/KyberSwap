@@ -13,7 +13,7 @@ import { updateTx, updateApproveTxsData } from "../../actions/txActions"
 import { updateRateExchange, estimateGas, analyzeError, checkKyberEnable, verifyExchange, caculateAmount, fetchExchangeEnable } from "../../actions/exchangeActions"
 import { estimateGasTransfer, verifyTransfer } from "../../actions/transferActions"
 
-import { getMarketData } from "../../actions/marketActions"
+import * as marketActions from "../../actions/marketActions"
 
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
@@ -167,7 +167,9 @@ export default class EthereumService extends React.Component {
     this.fetchGasExchange()
     this.fetchGasTransfer()
 
-    this.fetMarketData()
+    //this.fetMarketData()
+
+    this.fetGeneralInfoTokens()
 
    //this.testAnalize()
   // this.testEstimateGas()
@@ -194,13 +196,12 @@ export default class EthereumService extends React.Component {
 
   fetchRateData() {
     var state = store.getState()
-    var ethereum = state.connection.ethereum
-    // for (var k = 0; k < constants.RESERVES.length; k++) {
-    //   var reserve = constants.RESERVES[k]
-    //   store.dispatch(updateAllRate(ethereum, BLOCKCHAIN_INFO.tokens, reserve))
-    // }
+    var ethereum = state.connection.ethereum  
     store.dispatch(updateAllRate(ethereum, BLOCKCHAIN_INFO.tokens))
   }
+
+
+
 
   fetchTokenBalance() {
     var state = store.getState()
@@ -355,7 +356,11 @@ export default class EthereumService extends React.Component {
   }
 
   fetMarketData = () => {
-    store.dispatch(getMarketData())
+    store.dispatch(marketActions.getMarketData())
+  }
+
+  fetGeneralInfoTokens() {
+    store.dispatch(marketActions.getGeneralInfoTokens())
   }
 
   verifyExchange = () => {

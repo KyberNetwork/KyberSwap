@@ -197,6 +197,25 @@ export function toT(number, decimal, round) {
   }
 }
 
+export function convertSellRate(rate){
+  var bigNumber = new BigNumber(rate.toString())
+  var  result = bigNumber.div(Math.pow(10, 18));
+  return result.toString()
+}
+
+export function convertBuyRate(rate){
+  var bigNumber = new BigNumber(rate.toString())
+  var  result = bigNumber.div(Math.pow(10, 18));
+  var zero = new BigNumber(0)
+  if (result.comparedTo(zero) !== 0){
+    var oneNumber = new BigNumber(1)
+    result = oneNumber.div(result)
+    return result.toString()
+  }else{
+    return 0
+  }
+}
+
 export function pairID(source, dest) {
   return source.address + "-" + dest.address
 }

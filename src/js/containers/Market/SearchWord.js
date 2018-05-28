@@ -17,9 +17,11 @@ export default class SearchWord extends React.Component {
         }
     render() {
         return (
-            <div>
-                <label>Search</label>
-                <input placeholder="Try Searching for Token" value={this.props.searchWord} onChange={(e) => this.changeSearch(e)} />
+            <div className="search-symbol">
+                <div className="header-label">Search</div>
+                <div>
+                    <input placeholder="Try Searching for Token" value={this.props.searchWord} onChange={(e) => this.changeSearch(e)} />
+                </div>
             </div>
         )
     }
