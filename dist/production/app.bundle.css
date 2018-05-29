@@ -9328,6 +9328,7 @@ input[type=number] {
     .token-selector .focus-item .icon {
       margin-right: 10px; }
       .token-selector .focus-item .icon img {
+        width: 30px;
         vertical-align: top; }
   .token-selector .select-item {
     padding-bottom: 20px;

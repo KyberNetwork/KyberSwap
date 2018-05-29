@@ -273,6 +273,13 @@
       "symbol":"BLZ", 
       "address": "0x5732046a883704404f284ce41ffadd5b007fd668",
       "icon": "blz.svg"
+    },
+    "PAL": {
+      "name": "PolicyPal",
+      "decimal": 18,
+      "symbol":"PAL", 
+      "address": "0xfedae5642668f8636a11987ff386bfd215f942ee",
+      "icon": "pal.svg"
     }
   },
   "ethScanUrl": "https://etherscan.io/",
