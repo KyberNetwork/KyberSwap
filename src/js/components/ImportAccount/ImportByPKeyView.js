@@ -35,7 +35,7 @@ const ImportByPKeyView = (props) => {
 			<div className="description">{props.translate("import.from_private_key") || <span>private key</span>}</div>
 
 			<Modal
-				className={{ base: 'reveal tiny', afterOpen: 'reveal tiny' }}
+				className={{ base: 'reveal tiny', afterOpen: 'reveal tiny import-privatekey' }}
 				isOpen={props.isOpen}
 				onRequestClose={() => props.onRequestClose()}
 				content={

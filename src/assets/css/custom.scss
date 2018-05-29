@@ -97,11 +97,7 @@ a.disabled{
         width: 20%;
     }
 }
-#transfer-screen{
-    label{
-        margin-bottom: 8px;
-    }
-}
+
 @include breakpoint(medium){
     @media screen and (max-height: 790px){
         .frame{

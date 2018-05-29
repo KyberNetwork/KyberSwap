@@ -104,3 +104,34 @@
   }
 
 }
+
+.import-privatekey {
+  .title {
+    font-weight: 500;
+    font-size: 1.2rem;
+    padding: 50px 50px 10px 50px;
+  }
+  .content {
+    padding-left: 30px;
+  }
+  .overlap {
+    justify-content: center;
+    background-color: $white;
+    .accent {
+      // margin-top: 50px;
+      line-height: 55px;
+      padding: 0 35px;
+      background: #510CA7;
+      font-size: 1.3rem;
+      border-radius: 50px;
+      box-shadow: 0 10px 15px #ccc;
+    }
+  }
+  #private_key {
+    width: 300px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #32AB7B;
+  }
+}
