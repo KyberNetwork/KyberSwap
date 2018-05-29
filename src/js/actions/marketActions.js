@@ -79,3 +79,16 @@ export function getGeneralTokenInfoComplete(tokens, rateUSD){
     payload:{tokens, rateUSD}
   }
 }
+
+export function getVolumn(){
+  return {
+    type: "MARKET.GET_VOLUMN"
+  }
+}
+
+export function getVolumnSuccess(data){
+  return {
+    type: "MARKET.GET_VOLUMN_SUCCESS",
+    payload: {data}
+  }
+}

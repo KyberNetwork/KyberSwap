@@ -67,6 +67,10 @@ export default class EthereumService extends React.Component {
     var callBackSync = this.fetchDataSync.bind(this)
     callBackSync()
     this.intervalSyncID = setInterval(callBackSync, 3000)
+
+    var callBack10Min = this.fetchData10Min.bind(this)
+    callBack10Min()
+    var interval10Min = setInterval(callBack10Min, 600000)
   }
 
   clearSubcription() {
@@ -175,6 +179,11 @@ export default class EthereumService extends React.Component {
   // this.testEstimateGas()
   }
 
+
+  fetchData10Min(){
+    this.fetchVolumn()
+  }
+
   fetchDataSync() {
     var state = store.getState()
     var account = state.account
@@ -193,7 +202,11 @@ export default class EthereumService extends React.Component {
   // testEstimateGas() {
   //   this.call("estimateGasContract")
   // }
-
+  
+  fetchVolumn () {
+    store.dispatch(marketActions.getVolumn())
+  }
+  
   fetchRateData() {
     var state = store.getState()
     var ethereum = state.connection.ethereum  

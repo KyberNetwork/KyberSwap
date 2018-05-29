@@ -17,7 +17,7 @@ export default class Market extends React.Component {
   render() {
     return (
       <div className="market row">
-        <div className="market-header columns large-12">
+        <div className="market-header row large-12">
           <div className="market-header-left columns large-8">
             <div className="columns large-4">
               <SearchWord />

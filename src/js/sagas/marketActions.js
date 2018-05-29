@@ -39,10 +39,21 @@ export function* getGeneralTokenInfo(action){
     }
 }
 
+export function* getVolumn(){
+    var state = store.getState()
+    var ethereum = state.connection.ethereum
+    try {
+        var data = yield call([ethereum, ethereum.call], "getVolumnChart")
+        yield put(marketActions.getVolumnSuccess(data))
+    }catch(e){
+        console.log(e)
+    }
+}
+
 export function* watchMarket() {
   yield takeEvery("MARKET.GET_MARKET_DATA", getData)
   yield takeEvery("MARKET.GET_GENERAL_INFO_TOKENS", getGeneralTokenInfo)
-
+  yield takeEvery("MARKET.GET_VOLUMN", getVolumn)
 }
 
 

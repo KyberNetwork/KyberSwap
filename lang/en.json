@@ -16,6 +16,7 @@
   "address": {
     "address": "Address",
     "import_address": "Import Address",
+    "exchange_from": "Exchange from",
     "my_balance": "My Balance",
     "estimated_value": "Estimated value",
     "total": "Total",
@@ -202,11 +203,11 @@
   },
 
   "import": {
-    "from_metamask": "Connect to <br> Metamask",
-    "from_keystore": "Select or drag<br />your Keystore",
-    "from_trezor": "Exchange from<br />Trezor",
-    "from_ledger": "Exchange from<br />Ledger",
-    "from_private_key": "Enter your<br />private key",
+    "from_metamask": "Metamask",
+    "from_keystore": "Keystore",
+    "from_trezor": "Trezor",
+    "from_ledger": "Ledger",
+    "from_private_key": "Private key",
     "from_private_key_input_title": "ENTER YOUR PRIVATE KEY",
     "from_private_key_input_title_placehoder": "Enter your private key"
   },

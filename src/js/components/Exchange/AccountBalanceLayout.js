@@ -80,7 +80,7 @@ const AccountBalanceLayout = (props) => {
       
       <div id="search-balance" className="row">
         <div className="column small-10">
-          <input type="text" placeholder="Search" onChange={(e) => props.changeSearchBalance(e)} value = {props.searchWord}/>
+          <input type="text" placeholder="Search" onChange={(e) => props.changeSearchBalance(e)} value = {props.searchWord}  className="search-input"/>
         </div>   
         <div className="column small-2 sort-balance">
         </div>

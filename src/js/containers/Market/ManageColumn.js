@@ -61,7 +61,7 @@ export default class ManageColumn extends React.Component {
                 <div key={key} className="shows-item">
                     <input type="checkbox" onChange = {(e) => this.selectShowsColumn(e, key)} checked = {checked}/>
                     <div className="column-label">
-                        {this.props.shows.listItem[key]}    
+                        {this.props.shows.listItem[key].title}    
                     </div>
                     
                 </div>

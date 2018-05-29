@@ -428,3 +428,11 @@ export function sliceErrorMsg(err){
   return err
 }
 
+
+
+export function calculatePercent(numerator, denumerator){
+  if (denumerator === 0) return 0
+  var percent =  ((numerator / denumerator) - 1) * 100
+  var roundPercent = Math.round(percent * 10) / 10 
+  return roundPercent
+}

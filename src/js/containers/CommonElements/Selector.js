@@ -58,7 +58,7 @@ export default class Selector extends React.Component {
                             <div>
                                 {this.state.focus.name}
                             </div>
-                            <div><i className={'k k-angle white ' + (this.state.open ? 'up' : 'down')}></i></div>
+                            <div><i className={'k k-angle ' + (this.state.open ? 'up' : 'down')}></i></div>
                         </div>
                     </DropdownTrigger>
                     <DropdownContent>

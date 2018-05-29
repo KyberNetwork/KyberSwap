@@ -4,6 +4,9 @@ import * as BLOCKCHAIN_INFO from "../../../env"
 import constants from "../services/constants"
 import * as converters from "../utils/converter"
 
+
+
+
 const initState = function () {
     var tokens = {}
     Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
@@ -15,23 +18,23 @@ const initState = function () {
         tokens[key]["ETH"] = {
             sellPrice: 0,
             buyPrice: 0,
-            lastPrice: 0,
             market_cap: 0,
             circulating_supply: 0,
             total_supply: 0,
             last_7d: 0,
-            change: 0
+            change: 0,
+            volume: 0
         }
 
         tokens[key]["USD"] = {
             sellPrice: 0,
             buyPrice: 0,
-            lastPrice: 0,
             market_cap: 0,
             circulating_supply: 0,
             total_supply: 0,
             last_7d: 0,
-            change: 0
+            change: 0,
+            volume: 0
         }
 
     })
@@ -65,16 +68,15 @@ const initState = function () {
                     active: "B"
                 },
                 shows: {
-                    listItem: {
-                        "last_7d": "Last 7D",
-                        "change": "%Change",
-                        "last_price": "Last Price",
-                        "volumn": "Volume (24h)",
-                        "market_cap": "Market cap",
-                        "circulating_supply": "Circulating Supply",
-                        "total_supply": "Total Supply",
+                    listItem: {                        
+                        "change": {title: "%Change"},
+                        "volume": {title: "Volume (24h)"},
+                        "market_cap": {title: "Market cap" },
+                        "circulating_supply": {title: "Circulating Supply"},
+                        "total_supply": {title: "Total Supply"},
+                        "last_7d": {title: "Last 7d", type: "chart"}
                     },
-                    active: ["last_7d", "change"]
+                    active: ["volume", "change"]
                 }
             }
         },
@@ -188,6 +190,32 @@ const market = (state = initState, action) => {
             return  {...newState, tokens: {...newTokens}}
         }
 
+        case 'MARKET.GET_VOLUMN_SUCCESS':{
+            const {data} = action.payload
+            var tokens = newState.tokens
+            Object.keys(data).map(key=>{
+                var token = data[key]
+                tokens[key].ETH.volume = Math.round(token.e)
+                tokens[key].ETH.last_7d =  token.p
+                tokens[key].USD.volume = Math.round(token.u)
+                tokens[key].USD.last_7d =  token.p
+
+                //calculate % change
+                var buyPrice = parseFloat(tokens[key].ETH.buyPrice)
+                var sellPrice = parseFloat(tokens[key].ETH.sellPrice)
+                var midlePrice = (buyPrice + sellPrice) / 2
+                var price24h = token.r
+                var change = "0%"
+                if (midlePrice > price24h){
+                    change = converters.calculatePercent(midlePrice, price24h) + "%"
+                }else{
+                    change = "-" + converters.calculatePercent(price24h, midlePrice) + "%"
+                }
+                tokens[key].USD.change = tokens[key].ETH.change = change
+            })
+            return  {...newState, tokens: {...tokens}}
+        }
+
         case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
             const { rates, rateUSD } = action.payload
             if (!rates) {
@@ -215,6 +243,7 @@ const market = (state = initState, action) => {
             })
             return  {...newState, tokens: {...tokens}}
         }
+        
 
         default: return state
     }

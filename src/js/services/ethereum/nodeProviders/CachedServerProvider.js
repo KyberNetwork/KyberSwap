@@ -304,4 +304,20 @@ export default class CachedServerProvider extends React.Component {
                 })
         })
     }
+
+    getVolumnChart(){
+        return new Promise((resolve, rejected) => {
+            fetch('http://52.77.238.156:3000/api/tokens/rates', {
+            }).then((response) => {
+                return response.json()
+            })
+                .then((result) => {
+                    resolve(result)                    
+                })
+                .catch((err) => {
+                    console.log(err)
+                    rejected(err)
+                })
+        })
+    }
 }

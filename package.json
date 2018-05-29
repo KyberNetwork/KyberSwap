@@ -36,6 +36,7 @@
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.2.0",
     "react-dropzone": "^4.2.3",
+    "react-linechart": "^1.1.12",
     "react-localize-redux": "^2.13.7",
     "react-modal": "^3.1.10",
     "react-redux": "^5.0.5",

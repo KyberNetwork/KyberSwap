@@ -6,6 +6,8 @@ import ReactTable from 'react-table'
 import { getTranslate } from 'react-localize-redux'
 import * as actions from "../../actions/marketActions"
 
+import LineChart from 'react-linechart';
+//import '../node_modules/react-linechart/dist/styles.css';
 
 
 @connect((store) => {
@@ -43,6 +45,34 @@ import * as actions from "../../actions/marketActions"
 
 export default class MarketTable extends React.Component {
 
+
+  drawChart = (input) => {
+    var point = []
+    input.map((item, index) => {
+      point.push({
+        x: index, 
+        y: item
+      })
+    })
+
+    var data = [
+			{									
+				color: "steelblue", 
+				points: point
+			}
+    ]
+    return (
+    <LineChart 
+            width={200}
+            height={150}
+            margins={{ top: 0, right: 0, bottom: 0, left: 0 }}
+            data={data}
+            hideXAxis = {true}
+            hideYAxis = {true}
+            hidePoints = {true}
+					/>
+    )
+  }
   getColumn = () => {
     var columns = [{
       Header: 'Maket',
@@ -56,12 +86,27 @@ export default class MarketTable extends React.Component {
     }
     ]
     Object.keys(this.props.listShowColumn).map((key, i) => {
+      var item = this.props.listShowColumn[key]
       var index = this.props.showActive.indexOf(key)
       if (index !== -1) {
-        columns.push({
-          Header: this.props.listShowColumn[key],
-          accessor: key
-        })
+        switch (item.type){
+          case "chart":{
+            columns.push({
+              Header: item.title,
+              accessor: key,
+              Cell: props => this.drawChart(props.value)
+            })            
+            break
+          }
+          default: {
+            columns.push({
+              Header: item.title,
+              accessor: key
+            })
+            break
+          }
+        }
+        
       }
     })
     return columns
