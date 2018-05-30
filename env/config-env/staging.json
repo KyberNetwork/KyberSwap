@@ -244,6 +244,27 @@
       "symbol":"ENJ",        
       "icon": "enj.svg",
       "usd_id":"enjin-coin"
+    },
+    "AION": {
+      "name": "Aion",
+      "decimal": 8,
+      "symbol":"AION", 
+      "address": "0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466",
+      "icon": "aion.svg"
+    },
+    "AE": {
+      "name": "Aeternity",
+      "decimal": 18,
+      "symbol":"AE", 
+      "address": "0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d",
+      "icon": "ae.svg"
+    },
+    "BLZ": {
+      "name": "Bluezelle",
+      "decimal": 18,
+      "symbol":"BLZ", 
+      "address": "0x5732046a883704404f284ce41ffadd5b007fd668",
+      "icon": "blz.svg"
     }
   },
   "ethScanUrl": "https://etherscan.io/",
