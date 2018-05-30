@@ -65,7 +65,6 @@ export default class MarketTable extends React.Component {
     <LineChart 
             width={200}
             height={150}
-            margins={{ top: 0, right: 0, bottom: 0, left: 0 }}
             data={data}
             hideXAxis = {true}
             hideYAxis = {true}

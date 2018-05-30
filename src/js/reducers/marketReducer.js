@@ -194,6 +194,7 @@ const market = (state = initState, action) => {
             const {data} = action.payload
             var tokens = newState.tokens
             Object.keys(data).map(key=>{
+                if (!tokens[key]) return
                 var token = data[key]
                 tokens[key].ETH.volume = Math.round(token.e)
                 tokens[key].ETH.last_7d =  token.p
