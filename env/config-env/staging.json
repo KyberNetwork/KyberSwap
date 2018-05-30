@@ -53,14 +53,6 @@
       "decimal": 18,
       "usd_id": "omisego"
     },
-    "EOS": {
-      "name": "Eos",
-      "symbol": "EOS",
-      "icon": "eos.svg",
-      "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
-      "decimal": 18,
-      "usd_id": "eos"
-    },
     "SNT": {
       "name": "Status",
       "address": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
