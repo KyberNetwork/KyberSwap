@@ -52,7 +52,7 @@ export default class Selector extends React.Component {
     render() {
         return (
             <div className="token-selector">
-                <Dropdown onShow={(e) => this.showSelector(e)} onHide={(e) => this.hideSelector(e)}  active ={this.props.open}>
+                <Dropdown onShow={(e) => this.showSelector(e)} onHide={(e) => this.hideSelector(e)} active={this.state.open}>
                     <DropdownTrigger className="notifications-toggle">
                         <div className="focus-item d-flex">
                             <div>

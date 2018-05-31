@@ -59,11 +59,10 @@ export default class ManageColumn extends React.Component {
             var checked = index === -1? false: true
             return (
                 <div key={key} className="shows-item">
-                    <input type="checkbox" onChange = {(e) => this.selectShowsColumn(e, key)} checked = {checked}/>
-                    <div className="column-label">
-                        {this.props.shows.listItem[key].title}    
-                    </div>
-                    
+                    <input id={this.props.shows.listItem[key].title} type="checkbox" onChange = {(e) => this.selectShowsColumn(e, key)} checked = {checked}/>
+                    <label for={this.props.shows.listItem[key].title} className="column-label">
+                        {this.props.shows.listItem[key].title}
+                    </label>
                 </div>
             )
         })
@@ -75,7 +74,8 @@ export default class ManageColumn extends React.Component {
                 <Dropdown onShow={(e) => this.showSelector(e)} onHide={(e) => this.hideSelector(e)}  active ={this.state.open}>
                     <DropdownTrigger className="notifications-toggle">
                         <div className="focus-item d-flex">
-                            Manage columns
+                            <div>Manage columns</div>
+                            <div><i class="k k-angle down"></i></div>
                         </div>
                     </DropdownTrigger>
                     <DropdownContent>

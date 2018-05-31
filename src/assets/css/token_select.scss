@@ -47,6 +47,30 @@
   }
 }
 
+.market-header-right {
+  .token-selector {
+    .d-flex {
+      margin-top: 15px;
+    }
+    .shows-item {
+      display: flex;
+      align-items: center;
+      input {
+        height: 25px;
+        margin: 10px 10px;
+        width: 20px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+      label {
+        color: #0B0F1A;
+        font-size: 15px;
+      }
+    }
+  }
+}
+
 .token-selector{
   position: relative;  
   cursor: pointer;
@@ -63,7 +87,7 @@
     &.dropdown--active{
      // background-color: #243c48;
       .focus-item{
-        border-color: $white;
+        // border-color: $white;
         border-bottom: 1px solid #4c636f;        
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
@@ -123,12 +147,12 @@
     }
   }
   .focus-item{
-    padding: 10px 12px;
-    border: 2px solid transparent;
-    border-bottom: 1px solid transparent;
-    border-radius: 35px;
+    padding: 12px 12px;
+    border: 1px solid #ccc;
+    // border-bottom: 1px solid transparent;
+    border-radius: 3px;
   //  color: white;
-    box-shadow: 0 0 15px #ddd;
+    // box-shadow: 0 0 15px #ddd;
     align-items: center;
     font-size: 15px;
     &.d-flex{
