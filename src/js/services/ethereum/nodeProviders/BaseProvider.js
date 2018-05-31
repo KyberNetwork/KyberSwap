@@ -56,34 +56,29 @@ export default class BaseProvider {
     }
 
     getAllBalancesTokenAtLatestBlock(address, tokens) {
-        var promises = Object.keys(tokens).map(index => {
+        var listToken = []
+        var listSymbol = []
+        Object.keys(tokens).map(index => {
             var token = tokens[index]
-            if (token.symbol === 'ETH') {
-                return new Promise((resolve, reject) => {
-                    this.getBalanceAtLatestBlock(address).then(result => {
-                        resolve({
-                            symbol: 'ETH',
-                            balance: result
-                        })
-                    }).catch(err => {
-                        reject(new Error("Cannot get balance of ETH"))
-                    })
-                })
-
-            } else {
-                return new Promise((resolve, reject) => {
-                    this.getTokenBalanceAtLatestBlock(token.address, address).then(result => {
-                        resolve({
-                            symbol: token.symbol,
-                            balance: result
-                        })
-                    }).catch(err => {
-                        reject(new Error("Cannot get balance of " + token.symbol))
-                    })
-                })
-            }
+            listToken.push(token.address)
+            listSymbol.push(token.symbol)
         })
-        return Promise.all(promises)
+
+        return new Promise((resolve, reject) => {
+            var data = this.wrapperContract.methods.getBalances(address, listToken).call().then(result => {
+                var listTokenBalances = []
+                listSymbol.map((symbol, index) => {
+                    listTokenBalances.push({
+                        symbol: symbol,
+                        balance: result[index]
+                    })
+                })
+                resolve(listTokenBalances)
+            }).catch(err => {
+                console.log(err)
+                reject(err)
+            })
+        })
     }
 
     getAllBalancesTokenAtSpecificBlock(address, tokens, blockno) {
