@@ -70,20 +70,18 @@ const TransferForm = (props) => {
                     }
                   </div>
                   <div class="address-balance">
-                        <div className="balance-intro">
-                          <div class="info-up">{props.translate("transaction.address_balance") || "Address Balance"}</div>
-                          <div class="info-down">Click to exchange all balance</div>
-                        </div>
-                        <div className="balance-amount">
-                          <span title={props.balance.value} onClick={() => {
-                            props.setAmount()
-                            setTimeout(moveCursor, 0);
-                          }}>
-                            {props.balance.roundingValue}
-                          </span>
-                        </div>
-                      </div>
-
+                    <p class="note">{props.translate("transaction.address_balance") || "Address Balance"}</p>
+                    <div>
+                      <span>Click to exchange all balance</span>
+                      <span title={props.balance.value} onClick={() => {
+                        props.setAmount()
+                        setTimeout(moveCursor, 0);
+                      }}>
+                        {props.balance.roundingValue}
+                      </span>
+                    </div>
+                  </div>
+                  {props.transferButton}                  
                   {/* <div class="address-balance clearfix">
                     <span class="note">{props.translate("transaction.address_balance") || "Address Balance"}</span>
                     <a className="value" onClick={props.setAmount}>
@@ -100,8 +98,6 @@ const TransferForm = (props) => {
           </div>
         </div>
       </div>
-
-      {props.transferButton}
     </div>
   )
   return (

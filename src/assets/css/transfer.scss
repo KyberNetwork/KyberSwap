@@ -1,0 +1,29 @@
+#transfer-screen{
+  label{
+      margin-bottom: 8px;
+  }
+  .main-title {
+    padding-top: 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  .transaction-label{
+	  font-weight: 500;
+	  font-size: 11px;
+	 	text-transform: uppercase;
+	 	padding-left: 0;
+	}
+	.accent {
+    margin-top: 50px;
+    line-height: 55px;
+    padding: 0 35px;
+    background: #510CA7;
+    font-size: 1.3rem;
+    border-radius: 50px;
+    box-shadow: 0 10px 15px #ccc;
+  }
+  .text-center {
+  	display: flex;
+  	justify-content: center;
+  }
+}
