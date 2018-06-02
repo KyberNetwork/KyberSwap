@@ -271,7 +271,7 @@ export function stringToHex(number, decimal) {
 }
 
 export function roundingNumber(number) {
-  const MAX_DIGIS = 7, SIZE = 3;
+  var MAX_DIGIS = 7, SIZE = 3;
   number = +number;
   let numberStr = number.toString();
   if (isNaN(number) || number <= 0) number = 0;
@@ -289,7 +289,9 @@ export function roundingNumber(number) {
       break
   }
 
-  let precision = number.toPrecision((number < 1 && number > 0) ? MAX_DIGIS - count_0 : MAX_DIGIS),
+  let minDisplay = MAX_DIGIS - count_0 < 4? 4: MAX_DIGIS - count_0
+
+  let precision = number.toPrecision((number < 1 && number > 0) ? minDisplay : MAX_DIGIS),
     arr = precision.split('.'),
     intPart = arr[0],
     i = intPart.length % SIZE || SIZE,
@@ -303,6 +305,10 @@ export function roundingNumber(number) {
   }
   return result;
 }
+
+// export function displayRate(number){
+//   return roundingNumber(number
+// }
 
 export function toPrimitiveNumber(x) {
   var bigNum = new BigNumber(x)
