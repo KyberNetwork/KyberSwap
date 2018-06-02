@@ -7,6 +7,7 @@ import { getTranslate } from 'react-localize-redux'
 import * as actions from "../../actions/marketActions"
 
 import LineChart from 'react-linechart';
+import {Line} from 'react-chartjs-2';
 //import '../node_modules/react-linechart/dist/styles.css';
 
 
@@ -44,32 +45,58 @@ import LineChart from 'react-linechart';
 })
 
 export default class MarketTable extends React.Component {
-
-
   drawChart = (input) => {
     var point = []
+    var labels = []
     input.map((item, index) => {
-      point.push({
-        x: index, 
-        y: item
-      })
+      labels.push(index)
+      point.push(item)
     })
 
-    var data = [
-			{									
-				color: "steelblue", 
-				points: point
-			}
-    ]
+    var data = {
+      labels: labels,
+      datasets: [{
+        data: point,
+        backgroundColor: "#F5FAFF",
+        fill: true,
+        borderColor: "rgb(18, 149, 229)",
+        borderWidth: 1.5
+      }]
+    }
+    var options = {
+      elements: {
+        point: {
+          radius: 0
+        }
+      },
+      legend: {
+        display: false
+      },
+      scales: { 
+        xAxes: [{ 
+          display: false,
+          gridLines: {
+            display:false
+          }
+        }],
+        yAxes: [{
+          display: false,
+          gridLines: {
+            display:false
+          }
+        }]
+      }
+    } 
     return (
-    <LineChart 
-            width={200}
-            height={150}
-            data={data}
-            hideXAxis = {true}
-            hideYAxis = {true}
-            hidePoints = {true}
-					/>
+      <Line 
+        width={225}
+        height={75}
+        data={data}
+        options={options}
+        hideXAxis = {true}
+        hideYAxis = {true}
+        hidePoints = {true}
+  		/>
     )
   }
   getColumn = () => {
@@ -90,11 +117,13 @@ export default class MarketTable extends React.Component {
       if (index !== -1) {
         switch (item.type){
           case "chart":{
-            columns.push({
-              Header: item.title,
-              accessor: key,
-              Cell: props => this.drawChart(props.value)
-            })            
+            if (this.props.currency != "USD") {
+              columns.push({
+                Header: item.title,
+                accessor: key,
+                Cell: props => this.drawChart(props.value)
+              })            
+            }
             break
           }
           default: {

@@ -26,4 +26,48 @@
   	display: flex;
   	justify-content: center;
   }
+  .token-selector {
+    .dropdown {
+      &.dropdown--active {
+        .focus-item{
+          border-color: $white;
+        }
+      }
+    }
+    .focus-item {
+      padding: 10px 12px;
+      border: 2px solid transparent;
+      border-bottom: 1px solid transparent;
+      border-radius: 35px;
+      box-shadow: 0 0 15px #ddd;
+      align-items: center;
+      font-size: 15px;
+      &.d-flex{
+        justify-content: space-between;
+      }
+      .d-flex{
+        align-items: center;
+      }
+      .focus-name{
+        color: #545268;
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .focus-balance{
+        color: #9997A5;
+        font-weight: 500;
+        font-size: 0.8rem;
+        .token-symbol{
+          margin-left: 5px;
+        }
+      }
+      .icon{
+        margin-right: 10px;
+        img{
+          vertical-align: top;
+        }
+      }
+    }
+  }
 }

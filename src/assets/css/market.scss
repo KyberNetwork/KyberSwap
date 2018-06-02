@@ -1,15 +1,63 @@
 .market{
-    .market-header{
-        padding: 1rem 0;
-        margin-bottom: 5px;
+  .market-header{
+    padding: 1rem 0;
+    margin-bottom: 5px;
+  }
+  .header-label{
+    text-transform: uppercase;
+    font-size: 0.7rem;
+  }
+  .search-input{
+    padding: 15px;
+    width: 250px;
+    font-size: 14px;
+  }
+  .market-table {
+    margin-bottom: 50px;
+    .rt-th {
+      outline: none;
+      padding: 10px;
     }
-    .header-label{
-        text-transform: uppercase;
-        font-size: 0.7rem;
+    .rt-td {
+      padding-top: 35px;
+      text-align: center;
     }
-    .search-input{
-        padding: 10px;
-        width: 250px;
-        font-size: 14px;
+    .rt-td > div {
+      display: flex;
+      align-items: center;
+      div {
+        padding-left: 10px;
+      }
     }
+    .pagination-bottom > div {
+      height: 100px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      .-btn {
+        width: 50%;
+        margin: auto;
+        background: #510CA7;
+        font-weight: 550;
+        color: $white;
+        &:hover {
+          background: #510CA7;
+          color: $white;
+          font-weight: 550;
+          box-shadow: 0 0 15px #ccc;
+        }
+      }
+    }
+    .-center {
+      .-pageJump {
+        input {
+          margin-bottom: 0;
+        }
+      }
+      .select-wrap {
+        select {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
 }
