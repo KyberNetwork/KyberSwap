@@ -267,7 +267,7 @@
     },
     "ELEC": {
       "name": "ElectrifyAsia",
-      "decimals": 18,
+      "decimal": 18,
       "address": "0xd49ff13661451313ca1553fd6954bd1d9b6e02b9",
       "symbol":"ELEC", 
       "icon": "elec.svg"
