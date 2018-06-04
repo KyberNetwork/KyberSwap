@@ -33,15 +33,17 @@ export function verifyAmount(sourceAmount,
   if (sourceAmountWei == 'NaN' || sourceAmountWei == 'Infinity') {
     return "not a number"
   }
-  var weiParam = new BigNumber(10)
-  sourceAmountWei = sourceAmountWei.times(weiParam.pow(sourceDecimal))
+  // var weiParam = new BigNumber(10)
+  // sourceAmountWei = sourceAmountWei.times(weiParam.pow(sourceDecimal))
+  sourceAmountWei = sourceAmountWei.times(Math.pow(10, sourceDecimal))
 
 
   //verify min source amount
   var rateBig = new BigNumber(rate)
   var estimateValue = sourceAmountWei
   if (sourceSymbol !== "ETH") {
-    estimateValue = rateBig.times(sourceAmountWei).div(weiParam.pow(sourceDecimal))
+    //estimateValue = rateBig.times(sourceAmountWei).div(weiParam.pow(sourceDecimal))
+    estimateValue = rateBig.times(sourceAmountWei).div(Math.pow(10, sourceDecimal))
   }
   var epsilon = new BigNumber(constants.EPSILON)
   if (estimateValue.isLessThan(epsilon)) {
