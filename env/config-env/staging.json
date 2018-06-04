@@ -264,6 +264,13 @@
       "symbol":"PAL", 
       "address": "0xfedae5642668f8636a11987ff386bfd215f942ee",
       "icon": "pal.svg"
+    },
+    "ELEC": {
+      "name": "ElectrifyAsia",
+      "decimals": 18,
+      "address": "0xd49ff13661451313ca1553fd6954bd1d9b6e02b9",
+      "symbol":"ELEC", 
+      "icon": "elec.svg"
     }
   },
   "ethScanUrl": "https://etherscan.io/",
