@@ -79,8 +79,10 @@ export function caculateEthBalance(token){
   } else {
     var rateBig = new BigNumber(token.rate)
     var balanceBig = new BigNumber(token.balance)
-    var weiParam = new BigNumber(10)
-    var balanceToken = balanceBig.div(weiParam.pow(token.decimal))
+
+    var balanceToken = balanceBig.div(Math.pow(10, token.decimal))
+    // var weiParam = new BigNumber(10)
+    // var balanceToken = balanceBig.div(weiParam.pow(token.decimal))
 
     var balanceEth = balanceToken.times(rateBig)
     return balanceEth.toString()
@@ -315,7 +317,8 @@ export function caculateTokenEpsilon(rate, decimal, symbol) {
   if (symbol === "ETH") {
     tokenRate = new BigNumber(10).pow(18)
   }
-  var ts = new BigNumber(10).pow(decimal).times(constants.EPSILON)
+  var epsilon = new BigNumber(constants.EPSILON)
+  var ts = epsilon.times(Math.pow(10, decimal))
   return ts.div(tokenRate)
 }
 
@@ -327,7 +330,9 @@ export function getDifferentAmount(sourceAmount, prevAmount, sourceDecimal,
     }else{
       var valueChange = Math.abs(sourceAmount - prevAmount) 
       var rate = new BigNumber(minRate)
-      var rateWeight = new BigNumber(10).pow(18)
+
+      //var rateWeight = new BigNumber(10).pow(18)
+      var rateWeight = Math.pow(10, 18)
       rate = rate.div(rateWeight)
 
       var value = new BigNumber(valueChange + "")
