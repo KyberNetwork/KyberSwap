@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="344px" height="346px" viewBox="0 0 344 346" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 6</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M0.906,173.093 C0.906,268.277 77.637,345.441 172.292,345.441 C266.945,345.441 343.676,268.277 343.676,173.093 C343.676,77.907 266.945,0.744 172.292,0.744 C77.637,0.744 0.906,77.907 0.906,173.093 Z" id="path-1"></path>
+    </defs>
+    <g id="Home-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home-Zoom-Graph" transform="translate(-906.000000, -208.000000)">
+            <g id="Page-1" transform="translate(-8.000000, 46.000000)">
+                <g id="Group-6" transform="translate(914.000000, 162.010000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Clip-4"></g>
+                    <polygon id="Fill-3" fill="#3C4664" mask="url(#mask-2)" points="-808.842 2184.463 739.403 2184.463 739.403 -161.013 -808.842 -161.013"></polygon>
+                    <polygon id="Fill-5" fill="#3C4664" mask="url(#mask-2)" points="-3.908 350.255 348.491 350.255 348.491 -4.07 -3.908 -4.07"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
