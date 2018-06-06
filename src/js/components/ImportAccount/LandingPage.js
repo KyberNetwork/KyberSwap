@@ -74,12 +74,8 @@ export default class LandingPage extends React.Component {
 					<div className="row">
 						<div className="column text-center">
 							<h3 class="title">
-								<span>{this.state.text}</span> 
-								<span class="flag"> 
-									<img src={require('../../../assets/img/kyber-flag.svg')}/>
-									<span> exchange </span><br/>
-									<span>for Cryptocurrencies</span>
-								</span>
+								<div className="tagline">Convert Tokens Instantly</div>
+								<div className="subtitle">Safest and Fastest Cryptocurrency Exchange</div>
 							</h3>
 							<TermAndServices
 								termAgree={this.state.termAgree}
