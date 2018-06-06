@@ -23,10 +23,7 @@ import {Line} from 'react-chartjs-2';
     var item = tokens[key]
     item.market = (
       <div>
-        <div>
-          <img src={require("../../../assets/img/tokens/" + tokens[key].info.icon)} />
-        </div>
-        <div>{key} / {currency}</div>
+        {key} / {currency}
       </div>
     )
     item = { ...item, ...item[currency] }

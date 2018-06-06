@@ -70,27 +70,29 @@ export default class ManageColumn extends React.Component {
 
     render() {
         return (
-            <div className="token-selector">
-                <Dropdown onShow={(e) => this.showSelector(e)} onHide={(e) => this.hideSelector(e)}  active ={this.state.open}>
-                    <DropdownTrigger className="notifications-toggle">
-                        <div className="focus-item d-flex">
-                            <div>Manage columns</div>
-                            <div><i class="k k-angle down"></i></div>
-                        </div>
-                    </DropdownTrigger>
-                    <DropdownContent>
-                        <div className="select-item">
-                            <div className="list-item custom-scroll">
-                                {/* <div>
-                                    {this.getDisplayColumn()}
-                                </div> */}
-                                <div>
-                                    {this.getShowsColumn()}
+            <div>
+                <div className="header-label">Sort</div>
+                <div className="token-selector">
+                    <Dropdown onShow={(e) => this.showSelector(e)} onHide={(e) => this.hideSelector(e)}  active ={this.state.open}>
+                        <DropdownTrigger className="notifications-toggle">
+                            <div className="focus-item d-flex">
+                                <img src={require("../../../assets/img/landing/setting.svg")} />
+                            </div>
+                        </DropdownTrigger>
+                        <DropdownContent>
+                            <div className="select-item">
+                                <div className="list-item custom-scroll">
+                                    {/* <div>
+                                        {this.getDisplayColumn()}
+                                    </div> */}
+                                    <div>
+                                        {this.getShowsColumn()}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </DropdownContent>
-                </Dropdown>
+                        </DropdownContent>
+                    </Dropdown>
+                </div>
             </div>
         )
     }

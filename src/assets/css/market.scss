@@ -1,33 +1,126 @@
 .market{
+  max-width: 70rem;
+  margin-top: 60px;
+  .market-title {
+    text-align: center;
+    font-size: 32px;
+  }
   .market-header{
     padding: 1rem 0;
     margin-bottom: 5px;
+    margin-left: 0;
+    margin-right: 0;
+    .market-header-left {
+      padding-left: 0;
+      div:first-child {
+        &.columns {
+          padding-left: 0;          
+        }
+      }
+      .focus-item {
+        border: 1px solid #EAEAEA;
+        div:first-child {
+          color: #2c2c2c;
+        }
+      }
+    }
+    .market-header-right {
+      padding-right: 0;
+      .header-label {
+        color: $white;
+      }
+      .token-selector {
+        .d-flex {
+          margin-top: 0;
+          width: 45px;
+          float: right;
+          border: 1px solid #EAEAEA;
+          border-radius: 2px;
+          background-color: #F5F5F5;
+        }
+      }
+      .data-selector {
+        .select-data {
+          background-image: url(../img/landing/setting.svg);
+          background-repeat: no-repeat;
+        }
+      }
+    }
   }
   .header-label{
     text-transform: uppercase;
     font-size: 0.7rem;
+    font-weight: 500;
   }
   .search-input{
     padding: 15px;
-    width: 250px;
+    width: 100%;
     font-size: 14px;
+    background-position: 98%;
+    border: 1px solid #EAEAEA;
+    text-indent: 0;
+    &::placeholder {
+      color: #2c2c2c;
+    }
   }
   .market-table {
+    background-color: #F9F8FB;
     margin-bottom: 50px;
+    box-shadow: 0 0 5px #bbb;
+    padding: 15px 70px;
+    .ReactTable {
+      border: none;
+      .rt-table {
+        .rt-thead {
+          &.-header {
+            box-shadow: none;
+            border-bottom: 2px solid #00D8A0;
+            padding: 10px 0;
+            margin-bottom: 15px;
+          }
+        }
+      }
+      .rt-tbody {
+        .rt-tr-group {
+          border-bottom: none;
+          &:first-child {
+            .rt-rt {
+              margin-top: 25px;
+            }
+          }
+          .rt-tr {
+            min-height: 65px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background-color: $white;
+            border: 1px solid #eee;
+            box-shadow: 0 2px 5px #ccc;
+            &:hover {
+              box-shadow: 5px 5px 8px #ccc;
+              cursor: pointer;
+            }
+            .rt-td {
+              padding-top: 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            .rt-td:nth-child(1), .rt-td:nth-child(3) {
+              font-weight: 500;
+            }
+          }
+        }
+      }
+    }
     .rt-th {
       outline: none;
+      border-right: none;
       padding: 10px;
     }
     .rt-td {
       padding-top: 35px;
       text-align: center;
-    }
-    .rt-td > div {
-      display: flex;
-      align-items: center;
-      div {
-        padding-left: 10px;
-      }
+      border: none;
     }
     .pagination-bottom > div {
       height: 100px;
