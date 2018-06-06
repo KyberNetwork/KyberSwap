@@ -8,6 +8,9 @@ const HeaderView = (props) => {
   return (
     <div>
       <section id="header">
+        <div className="notice">
+          <p><span><a href="#" target="blank">Click here</a></span> to know more about Kyber Network 2.0</p>
+        </div>
         <div class="row small-11 medium-12 large-12">
           <div class="row column">
             <div class="column small-3">

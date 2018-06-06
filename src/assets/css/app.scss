@@ -160,8 +160,38 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
 #header {
   background-color: white;
   padding: 10px 0;
+  padding-top: 0;
   border-bottom: 1px solid #ddd;
   min-height: 75px;
+  .notice {
+    height: 55px;
+    padding: 0 10px;
+    background-image: url(../img/landing/cover.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    p {
+      line-height: 55px;
+      color: $white;
+      font-weight: 550;
+      span {
+        padding: 10px;
+        background: #355C71;
+        border-radius: 3px;
+        &:hover {
+          cursor: pointer;
+          box-shadow: 0 0 15px #fff;
+        }
+        a {
+          color: $white;
+          &:hover {
+            color: $white;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
   a.logo img{
     width: 108px;
     margin-top: 7px;
