@@ -9468,6 +9468,10 @@ input[type=number] {
       width: 28px; }
       #get-start .title .flag img + span {
         margin-left: -24px; }
+  #get-start .subtitle {
+    font-size: 1.2rem;
+    font-weight: normal;
+    margin-top: 0.6rem; }
   #get-start .term-services {
     margin: 50px 0; }
     #get-start .term-services img {
