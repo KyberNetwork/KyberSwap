@@ -60,9 +60,12 @@ export default class ManageColumn extends React.Component {
             return (
                 <div key={key} className="shows-item">
                     <input id={this.props.shows.listItem[key].title} type="checkbox" onChange = {(e) => this.selectShowsColumn(e, key)} checked = {checked}/>
-                    <label for={this.props.shows.listItem[key].title} className="column-label">
-                        {this.props.shows.listItem[key].title}
-                    </label>
+                    <span className="new-checkbox"></span>
+                    <span>
+                        <label for={this.props.shows.listItem[key].title} className="column-label">
+                            {this.props.shows.listItem[key].title}
+                        </label>
+                    </span>
                 </div>
             )
         })
@@ -81,7 +84,11 @@ export default class ManageColumn extends React.Component {
                         </DropdownTrigger>
                         <DropdownContent>
                             <div className="select-item">
-                                <div className="list-item custom-scroll">
+                                <div className="setting-header">
+                                    <img src={require("../../../assets/img/landing/setting.svg")} />
+                                    <span>settings</span>
+                                </div>
+                                <div className="list-setting">
                                     {/* <div>
                                         {this.getDisplayColumn()}
                                     </div> */}

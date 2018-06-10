@@ -69,7 +69,7 @@ const initState = function () {
                 },
                 shows: {
                     listItem: {                        
-                        "change": {title: "%Change"},
+                        "change": {title: "24HR Change"},
                         "volume": {title: "Volume (24h)"},
                         "market_cap": {title: "Market cap" },
                         "circulating_supply": {title: "Circulating Supply"},
