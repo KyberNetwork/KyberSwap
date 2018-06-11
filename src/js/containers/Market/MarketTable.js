@@ -29,7 +29,6 @@ import {Line} from 'react-chartjs-2';
     item = { ...item, ...item[currency] }
     data.push(item)
   })
-  console.log("data: ", tokens, data)
   return {
     translate: getTranslate(store.locale),
     searchWord,
