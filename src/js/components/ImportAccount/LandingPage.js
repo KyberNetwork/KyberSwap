@@ -62,9 +62,7 @@ export default class LandingPage extends React.Component {
 	}
 
 	goExchange = () => {
-		if (this.state.termAgree) {
-			this.props.goExchange()
-		}
+		this.props.goExchange()
 	}
 
 	render() {
@@ -75,7 +73,7 @@ export default class LandingPage extends React.Component {
 						<div className="convert-tokens">
 							<h1>Convert Tokens Instantly</h1>
 							<p>No deposit, No registration</p>
-							<button>Swap now</button>
+							<button onClick={this.goExchange}>Swap now</button>
 						</div>
 						<div className="group">
 							<img src={require('../../../assets/img/landing/group.svg')} />
