@@ -103,6 +103,7 @@
               align-items: center;
               img {
                 padding-right: 10px;
+                height: 20px;
               }
             }
           }
@@ -132,7 +133,25 @@
               display: flex;
               align-items: center;
               justify-content: center;
-              padding-bottom: 0;
+              // padding-bottom: 0;
+              span {
+                padding: 2px 25px;
+                width: 85px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                &.negative {
+                  background-color: #F6EAEC;
+                  color: #EB7576;
+                }
+                &.positive {
+                  background-color: #EDFBF6;
+                  color: #1FDCAB;
+                }
+                img {
+                  padding: 3px;
+                }
+              }
             }
             .rt-td:nth-child(1), .rt-td:nth-child(3) {
               font-weight: 500;

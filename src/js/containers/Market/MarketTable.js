@@ -97,6 +97,17 @@ export default class MarketTable extends React.Component {
   		/>
     )
   }
+  addClassChange = (input) => {
+    if (input.includes("-")) {
+      return (
+        <span className = "negative">{input}<img src={require("../../../assets/img/landing/arrow_red.svg")}/></span>
+      )
+    } else {
+      return (
+        <span className = "positive">{input}<img src={require("../../../assets/img/landing/arrow_green.svg")}/></span>
+      )
+    }
+  }
   getColumn = () => {
     var columns = [{
       Header: 'Maket',
@@ -133,14 +144,15 @@ export default class MarketTable extends React.Component {
             break
           }
           default: {
-            if (item.title === "24HR Change") {
+            if (key === "change") {
               columns.push({
                 Header: () => (
                   <div className="rt-th-img">
                     <img src={require("../../../assets/img/landing/sort.svg")} />{item.title}
                   </div>
                 ),
-                accessor: key
+                accessor: key,
+                Cell: props => this.addClassChange(props.value)
               })
             } else {
               columns.push({
@@ -151,7 +163,6 @@ export default class MarketTable extends React.Component {
             break
           }
         }
-        
       }
     })
     return columns

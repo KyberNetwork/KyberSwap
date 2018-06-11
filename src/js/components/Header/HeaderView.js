@@ -7,19 +7,19 @@ const HeaderView = (props) => {
   let logoLink = props.account ? '/exchange' : ''
   return (
     <div>
-      <section id="header">
+      {/* <section id="header">
         <div class="row small-11 medium-12 large-12">
           <div class="row column">
             <div class="column small-3">
               <Link to={logoLink} className="logo">
                 <img src={require("../../../assets/img/logo-header.svg")} />
-                {/* <span class="beta">Beta</span> */}
+                <span class="beta">Beta</span>
               </Link>
             </div>          
             {props.address}
           </div>
         </div>
-      </section>
+      </section> */}
 
       <AnalyzeLogModal 
         analyze={props.analyze} 
