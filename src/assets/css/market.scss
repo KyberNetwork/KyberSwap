@@ -165,6 +165,22 @@
       outline: none;
       border-right: none;
       padding: 10px;
+      &.-sort-asc {
+        box-shadow: none;
+        .rt-th-img {
+          img {
+            content:url(../img/landing/sort-active-asc.svg);
+          }
+        }
+      }
+      &.-sort-desc {
+        box-shadow: none;
+        .rt-th-img {
+          img {
+            content:url(../img/landing/sort-active.svg);
+          }
+        }
+      }
     }
     .rt-td {
       padding-top: 35px;
