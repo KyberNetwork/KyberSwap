@@ -72,23 +72,13 @@ export default class LandingPage extends React.Component {
 			<div id="get-start">
 				<div class="frame">
 					<div className="row">
-						<div className="column text-center">
-							<h3 class="title">
-								<span>{this.state.text}</span> 
-								<span class="flag"> 
-									<img src={require('../../../assets/img/kyber-flag.svg')}/>
-									<span> exchange </span><br/>
-									<span>for Cryptocurrencies</span>
-								</span>
-							</h3>
-							<TermAndServices
-								termAgree={this.state.termAgree}
-								clickCheckbox={this.clickCheckbox}
-							/>
-							<button class={"button accent " + (this.state.termAgree ? "next" : "disable")}
-								onClick={this.goExchange}>
-								{this.props.translate("landing_page.get_started") || "Get Started"}
-							</button>
+						<div className="convert-tokens">
+							<h1>Convert Tokens Instantly</h1>
+							<p>No deposit, No registration</p>
+							<button>Swap now</button>
+						</div>
+						<div className="group">
+							<img src={require('../../../assets/img/landing/group.svg')} />
 						</div>
 					</div>
 				</div>

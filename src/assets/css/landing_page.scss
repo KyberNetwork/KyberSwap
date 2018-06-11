@@ -1,10 +1,33 @@
 #get-start{
   color: #f2f4f4;
-  background-image: url(../img/bg_start.jpg);
+  background-image: url(../img/landing/cover.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   .frame{
-    background-color: rgba(42, 69, 82, 0.8);
+    // background-color: rgba(42, 69, 82, 0.8);
+    .row {
+      max-width: 70rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .convert-tokens {
+        width: 50%;
+        h1 {
+          font-weight: 550;
+        }
+        button {
+          background-color: $white;
+          border-radius: 3px;
+          height: 42px;
+          width: 275px;
+          color: #787878;
+          font-weight: 550;
+        }
+      }
+      .group {
+        text-align: center;
+      }
+    }
   }
   .title{
     margin-top: 70px;

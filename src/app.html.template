@@ -68,6 +68,6 @@
 
   </head>
   <body class="notranslate">
-    <div id="app"></div>
+    <div id="swap-app"></div>
   </body>
 </html>

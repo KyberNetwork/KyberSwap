@@ -2,7 +2,7 @@
 @import '../bower/animate.css/animate.css';
 @import 'settings';
 @import "util";
-@import 'foundation';
+//@import 'foundation';
 
 $accent-gradient: linear-gradient(169deg, #36d9ac, #049696);
 $alert-color: #ff5d00;
@@ -447,6 +447,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
     }
   }
 }
+
 .exchange-icon{
   text-align: center;
   margin-top: 50px;
