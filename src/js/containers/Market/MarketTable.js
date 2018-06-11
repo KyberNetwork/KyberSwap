@@ -23,15 +23,13 @@ import {Line} from 'react-chartjs-2';
     var item = tokens[key]
     item.market = (
       <div>
-        <div>
-          <img src={require("../../../assets/img/tokens/" + tokens[key].info.icon)} />
-        </div>
-        <div>{key} / {currency}</div>
+        {key} / {currency}
       </div>
     )
     item = { ...item, ...item[currency] }
     data.push(item)
   })
+  console.log("data: ", data)
   return {
     translate: getTranslate(store.locale),
     searchWord,
@@ -99,15 +97,34 @@ export default class MarketTable extends React.Component {
   		/>
     )
   }
+  addClassChange = (input) => {
+    if (input.includes("-")) {
+      return (
+        <span className = "negative">{input}<img src={require("../../../assets/img/landing/arrow_red.svg")}/></span>
+      )
+    } else {
+      return (
+        <span className = "positive">{input}<img src={require("../../../assets/img/landing/arrow_green.svg")}/></span>
+      )
+    }
+  }
   getColumn = () => {
     var columns = [{
       Header: 'Maket',
       accessor: 'market' // String-based value accessors!
     }, {
-      Header: 'Sell price',
+      Header: () => (
+        <div className="rt-th-img">
+          <img src={require("../../../assets/img/landing/sort.svg")} />Sell Price
+        </div>
+      ),
       accessor: 'sellPrice',
     }, {
-      Header: 'Buy price', // Required because our accessor is not a string
+      Header: () => (
+        <div className="rt-th-img">
+          <img src={require("../../../assets/img/landing/sort.svg")} />Buy Price
+        </div>
+      ), // Required because our accessor is not a string
       accessor: 'buyPrice',
     }
     ]
@@ -127,14 +144,25 @@ export default class MarketTable extends React.Component {
             break
           }
           default: {
-            columns.push({
-              Header: item.title,
-              accessor: key
-            })
+            if (key === "change") {
+              columns.push({
+                Header: () => (
+                  <div className="rt-th-img">
+                    <img src={require("../../../assets/img/landing/sort.svg")} />{item.title}
+                  </div>
+                ),
+                accessor: key,
+                Cell: props => this.addClassChange(props.value)
+              })
+            } else {
+              columns.push({
+                Header: item.title,
+                accessor: key
+              })
+            }
             break
           }
         }
-        
       }
     })
     return columns

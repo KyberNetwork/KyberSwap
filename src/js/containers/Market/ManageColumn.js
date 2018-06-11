@@ -58,39 +58,43 @@ export default class ManageColumn extends React.Component {
             var index = this.props.shows.active.indexOf(key)
             var checked = index === -1? false: true
             return (
-                <div key={key} className="shows-item">
+                <label key={key} for={this.props.shows.listItem[key].title} className="column-label">{this.props.shows.listItem[key].title}
                     <input id={this.props.shows.listItem[key].title} type="checkbox" onChange = {(e) => this.selectShowsColumn(e, key)} checked = {checked}/>
-                    <label for={this.props.shows.listItem[key].title} className="column-label">
-                        {this.props.shows.listItem[key].title}
-                    </label>
-                </div>
+                    <span className="checkmark"></span>
+                </label>
             )
         })
     }
-
+    //<div key={key} className="column-label">
     render() {
         return (
-            <div className="token-selector">
-                <Dropdown onShow={(e) => this.showSelector(e)} onHide={(e) => this.hideSelector(e)}  active ={this.state.open}>
-                    <DropdownTrigger className="notifications-toggle">
-                        <div className="focus-item d-flex">
-                            <div>Manage columns</div>
-                            <div><i class="k k-angle down"></i></div>
-                        </div>
-                    </DropdownTrigger>
-                    <DropdownContent>
-                        <div className="select-item">
-                            <div className="list-item custom-scroll">
-                                {/* <div>
-                                    {this.getDisplayColumn()}
-                                </div> */}
-                                <div>
-                                    {this.getShowsColumn()}
+            <div>
+                <div className="header-label">Sort</div>
+                <div className="token-selector">
+                    <Dropdown onShow={(e) => this.showSelector(e)} onHide={(e) => this.hideSelector(e)}  active ={this.state.open}>
+                        <DropdownTrigger className="notifications-toggle">
+                            <div className="focus-item d-flex">
+                                <img src={require("../../../assets/img/landing/setting.svg")} />
+                            </div>
+                        </DropdownTrigger>
+                        <DropdownContent>
+                            <div className="select-item">
+                                <div className="setting-header">
+                                    <img src={require("../../../assets/img/landing/setting.svg")} />
+                                    <span>settings</span>
+                                </div>
+                                <div className="list-setting">
+                                    {/* <div>
+                                        {this.getDisplayColumn()}
+                                    </div> */}
+                                    <div>
+                                        {this.getShowsColumn()}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </DropdownContent>
-                </Dropdown>
+                        </DropdownContent>
+                    </Dropdown>
+                </div>
             </div>
         )
     }
