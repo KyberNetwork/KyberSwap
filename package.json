@@ -96,7 +96,8 @@
     "style-loader": "^0.20.1",
     "uglifyjs-webpack-plugin": "^1.1.6",
     "url-loader": "^0.6.2",
-    "webpack": "^3.10.0"
+    "webpack": "^3.10.0",
+    "webpack-shell-plugin": "^0.5.0"
   },
   "scripts": {
     "build-kovan": "NODE_ENV=production webpack --env.chain=kovan --env.build=true",
@@ -113,7 +114,12 @@
     "mainnet_test": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=mainnet_test --env.logger=true",
     "test": "jest --setupTestFrameworkScriptFile=raf/polyfill",
     "server": "node server/server_http.js",
-    "kovan-https": "webpack-dev-server --https --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=kovan --env.logger=true"
+    "kovan-https": "webpack-dev-server --https --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=kovan --env.logger=true",
+
+    "ieo_ropsten": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=ropsten --progress --profile --colors --env.build=true",
+    "build_ieo_ropsten": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=ropsten --progress --profile --colors --env.build=true",
+    "ieo_production": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=production --progress --profile --colors --env.build=true",
+    "build_ieo_production": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=production --progress --profile --colors --env.build=true"
   },
   "jest": {
     "globals": {
