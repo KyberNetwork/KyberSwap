@@ -21,13 +21,15 @@ const ENV = process.env.ENV
 console.log("bundle name ----------------___++++++", BUNDLE_NAME)
 //let jsName = ENV == 'production' ? BUNDLE_NAME + '.js.gz' : BUNDLE_NAME + '.js'
 
+var now = new Date().getTime()
+
 let view = `
 #swap-app 
 script src="/trading_view/charting_library/charting_library.min.js"
 script src="/trading_view/datafeeds/udf/dist/polyfills.js"
 script src="/trading_view/datafeeds/udf/dist/bundle.js"
-script src="/swap/${chain}/${BUNDLE_NAME}.js"
-link rel="stylesheet" href="/swap/${chain}/${BUNDLE_NAME}.css" type="text/css"
+script src="/swap/${chain}/client.min.js?v=${now}"
+link rel="stylesheet" href="/swap/${chain}/app.bundle.css?v=${now}" type="text/css"
 `
 
 // let view = `

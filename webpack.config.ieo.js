@@ -49,11 +49,11 @@ var scriptConfig = function (env) {
       // filename: "client.min.js"
       publicPath: '/',
       path: path.join(__dirname, '../public/swap/', chain),
-      filename: `[hash].js`
+      filename: `client.min.js`
     },
     plugins: (env && env.build !== "true") ? [
       new ExtractTextPlugin({ // define where to save the file
-        filename: '[hash].css',
+        filename: 'app.bundle.css',
         allChunks: true,
       }),
       new webpack.DefinePlugin({
@@ -73,7 +73,7 @@ var scriptConfig = function (env) {
           }
         }),
         new ExtractTextPlugin({ // define where to save the file
-          filename: '[hash].css',
+          filename: 'app.bundle.css',
           allChunks: true,
         }),
         new webpack.DefinePlugin({
