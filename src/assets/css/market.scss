@@ -20,7 +20,7 @@
       .focus-item {
         border: 1px solid #EAEAEA;
         div:first-child {
-          color: #2c2c2c;
+          color: #7A7A7A;
         }
       }
     }
@@ -72,6 +72,7 @@
     text-transform: uppercase;
     font-size: 0.7rem;
     font-weight: 500;
+    padding-bottom: 5px;
   }
   .search-input{
     padding: 15px;
@@ -81,7 +82,7 @@
     border: 1px solid #EAEAEA;
     text-indent: 0;
     &::placeholder {
-      color: #2c2c2c;
+      color: #7A7A7A;
     }
   }
   .market-table {
@@ -105,6 +106,7 @@
               img {
                 padding-right: 10px;
                 height: 20px;
+                width: 20px;
               }
             }
           }
@@ -237,7 +239,7 @@
   input {
     position: absolute;
     opacity: 0;
-    cursor: pointer;
+    display: none;
   }
   /* Create a custom checkbox */
   .checkmark {
