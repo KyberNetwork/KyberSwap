@@ -42,6 +42,7 @@
           .select-item {
             width: 325px;            
             border-radius: 0;
+            box-shadow: 0 15px 50px #aaa;
             .setting-header {
               img {
                 height: 25px;
@@ -54,7 +55,7 @@
               }
             }
             .list-setting {
-              padding: 10px 50px 20px;
+              padding: 30px 50px 20px;
               border-top: 1px solid #ccc;
               .show-item {
                 label {
@@ -215,7 +216,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: green;
+  color: #54AE85;
   font-weight: bold;
   input {
     position: absolute;
@@ -239,7 +240,7 @@
 
   /* When the checkbox is checked, add a blue background */
   & input:checked ~ .checkmark {
-    background-color: green;
+    background-color: #54AE85;
   }
 
   /* Create the checkmark/indicator (hidden when not checked) */
