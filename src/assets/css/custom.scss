@@ -4,6 +4,9 @@
 .ReactModal__Body--open{
     overflow: hidden;
 }
+.react-modal{
+    margin-left: 50% !important;
+}
 @include breakpoint(medium){
     .react-modal{
         margin-bottom: 50px!important; 

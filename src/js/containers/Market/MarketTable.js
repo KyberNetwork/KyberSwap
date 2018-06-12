@@ -43,10 +43,9 @@ import {Line} from 'react-chartjs-2';
 
 export default class MarketTable extends React.Component {
   drawChart = (props) => {
-    var input = props.value
     var lineColor = ""
     var backgroundColor = ""
-    if (props["original"]["change"].includes("-")) {
+    if (props["original"]["change"] < 0) {
       lineColor = "#EB7576"
       backgroundColor = "#F6EAEC"
     } else {
@@ -55,6 +54,7 @@ export default class MarketTable extends React.Component {
     }
     var point = []
     var labels = []
+    var input = props.value
     input.map((item, index) => {
       labels.push(index)
       point.push(item)
@@ -107,15 +107,27 @@ export default class MarketTable extends React.Component {
     )
   }
   addClassChange = (input) => {
-    if (input.includes("-")) {
+    if (input < 0) {
       return (
-        <span className = "negative">{input}<img src={require("../../../assets/img/landing/arrow_red.svg")}/></span>
+        <span className = "negative">{input} %<img src={require("../../../assets/img/landing/arrow_red.svg")}/></span>
       )
     } else {
       return (
-        <span className = "positive">{input}<img src={require("../../../assets/img/landing/arrow_green.svg")}/></span>
+        <span className = "positive">{input} %<img src={require("../../../assets/img/landing/arrow_green.svg")}/></span>
       )
     }
+  }
+  numberWithCommas = (x) => {
+    if (x > 1000) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
+    return x
+  }
+
+  addUnit = (input, currency) => {
+    return (
+      <span>{this.numberWithCommas(input)} {currency}</span>
+    )
   }
   getColumn = () => {
     var columns = [{
@@ -128,6 +140,7 @@ export default class MarketTable extends React.Component {
         </div>
       ),
       accessor: 'sellPrice',
+      Cell: props => this.addUnit(props.value, this.props.currency)
     }, {
       Header: () => (
         <div className="rt-th-img">
@@ -135,6 +148,7 @@ export default class MarketTable extends React.Component {
         </div>
       ), // Required because our accessor is not a string
       accessor: 'buyPrice',
+      Cell: props => this.addUnit(props.value, this.props.currency)
     }
     ]
     Object.keys(this.props.listShowColumn).map((key, i) => {
@@ -153,21 +167,40 @@ export default class MarketTable extends React.Component {
             break
           }
           default: {
-            if (key === "change") {
-              columns.push({
-                Header: () => (
-                  <div className="rt-th-img">
-                    <img src={require("../../../assets/img/landing/sort.svg")} />{item.title}
-                  </div>
-                ),
-                accessor: key,
-                Cell: props => this.addClassChange(props.value)
-              })
-            } else {
-              columns.push({
-                Header: item.title,
-                accessor: key
-              })
+            switch (key) {
+              case "change": {
+                columns.push({
+                  Header: () => (
+                    <div className="rt-th-img">
+                      <img src={require("../../../assets/img/landing/sort.svg")} />{item.title}
+                    </div>
+                  ),
+                  accessor: key,
+                  Cell: props => this.addClassChange(props.value)
+                })
+                break
+              }
+              case "volume": {
+                columns.push({
+                  Header: item.title,
+                  accessor: key,
+                  Cell: props => this.addUnit(props.value, this.props.currency)
+                })
+                break
+              }
+              case "last_7d": {
+                columns.push({
+                  Header: item.title,
+                  accessor: key,
+                })
+                break
+              }
+              default: {
+                columns.push({
+                  Header: item.title,
+                  accessor: key
+                })
+              }
             }
             break
           }

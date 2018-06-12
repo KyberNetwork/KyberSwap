@@ -320,7 +320,7 @@ export function roundingNumber(number) {
   if (arr[1]) {
     result += '.' + arr[1];
   }
-  return result;
+  return result * 1;
 }
 
 export function toPrimitiveNumber(x) {
@@ -433,6 +433,6 @@ export function sliceErrorMsg(err){
 export function calculatePercent(numerator, denumerator){
   if (denumerator === 0) return 0
   var percent =  ((numerator / denumerator) - 1) * 100
-  var roundPercent = Math.round(percent * 10) / 10 
+  var roundPercent = Math.round(percent * 10) / 10
   return roundPercent
 }

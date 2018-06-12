@@ -29,7 +29,7 @@ export default class TradingView extends React.Component {
 		containerId: 'tv_chart_container',
 		datafeedUrl: 'http://52.77.238.156:3000/chart',
 		updateFrequency: 5000, // 1 minutes
-		libraryPath: '/charting_library/',
+		libraryPath: '/trading_view/charting_library/',
 		fullscreen: false,
 		autosize: true
 	  };

@@ -206,11 +206,11 @@ const market = (state = initState, action) => {
                 var sellPrice = parseFloat(tokens[key].ETH.sellPrice)
                 var midlePrice = (buyPrice + sellPrice) / 2
                 var price24h = token.r
-                var change = "0%"
+                var change = 0
                 if (midlePrice > price24h){
-                    change = converters.calculatePercent(midlePrice, price24h) + "%"
+                    change = converters.calculatePercent(midlePrice, price24h)
                 }else{
-                    change = "-" + converters.calculatePercent(price24h, midlePrice) + "%"
+                    change = converters.calculatePercent(price24h, midlePrice) * -1
                 }
                 tokens[key].USD.change = tokens[key].ETH.change = change
             })
@@ -228,6 +228,7 @@ const market = (state = initState, action) => {
                     if (tokens[rate.source]) {
                         var sellPriceETH = converters.convertSellRate(rate.rate)
                         tokens[rate.source].ETH.sellPrice = converters.roundingNumber(sellPriceETH)
+                        console.log(converters.roundingNumber(sellPriceETH))
                         tokens[rate.source].USD.sellPrice = converters.roundingNumber(sellPriceETH * rateUSD)
                     } else {
                         return
