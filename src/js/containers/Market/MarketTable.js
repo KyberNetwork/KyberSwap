@@ -42,7 +42,17 @@ import {Line} from 'react-chartjs-2';
 })
 
 export default class MarketTable extends React.Component {
-  drawChart = (input) => {
+  drawChart = (props) => {
+    var input = props.value
+    var lineColor = ""
+    var backgroundColor = ""
+    if (props["original"]["change"].includes("-")) {
+      lineColor = "#EB7576"
+      backgroundColor = "#F6EAEC"
+    } else {
+      lineColor = "#1FDCAB"
+      backgroundColor = "#EDFBF6"
+    }
     var point = []
     var labels = []
     input.map((item, index) => {
@@ -54,10 +64,10 @@ export default class MarketTable extends React.Component {
       labels: labels,
       datasets: [{
         data: point,
-        backgroundColor: "#F5FAFF",
+        backgroundColor: backgroundColor,
         fill: true,
-        borderColor: "rgb(18, 149, 229)",
-        borderWidth: 1.5
+        borderColor: lineColor,
+        borderWidth: 1.2
       }]
     }
     var options = {
@@ -137,7 +147,7 @@ export default class MarketTable extends React.Component {
               columns.push({
                 Header: item.title,
                 accessor: key,
-                Cell: props => this.drawChart(props.value)
+                Cell: props => this.drawChart(props)
               })            
             }
             break
