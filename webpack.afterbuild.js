@@ -13,7 +13,7 @@ if (chain === 'production'){
   chain_folder = "_" + chain
 }
 
-const file = `../app/views/kyber_swap/index${chain_folder}.html.slim`
+const file = `../app/views/swap/index${chain_folder}.html.slim`
 const ENV = process.env.ENV
 
 
