@@ -76,7 +76,7 @@ const initState = function () {
                         "total_supply": {title: "Total Supply"},
                         "last_7d": {title: "Last 7d", type: "chart"}
                     },
-                    active: ["volume", "change"]
+                    active: ["change", "last_7d"]
                 }
             }
         },
