@@ -113,6 +113,7 @@
         }
       }
       .rt-tbody {
+        overflow: unset;
         .rt-tr-group {
           border-bottom: none;
           &:first-child {

@@ -4,11 +4,7 @@
         {
           "endPoint" : "http://localhost:3001",
           "type": "cached"
-        },       
-        {
-          "endPoint" : "https://production-cache.kyber.network",
-          "type": "cached"
-        },       
+        },      
         {
           "endPoint" : "https://mainnet.infura.io",
           "type": "prune"

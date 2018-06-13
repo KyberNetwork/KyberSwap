@@ -5,6 +5,7 @@ import ReactTable from 'react-table'
 //import "react-table/react-table.css";
 import { getTranslate } from 'react-localize-redux'
 import * as actions from "../../actions/marketActions"
+import * as converters from "../../utils/converter"
 
 import LineChart from 'react-linechart';
 import {Line} from 'react-chartjs-2';
@@ -21,11 +22,7 @@ import {Line} from 'react-chartjs-2';
     if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
 
     var item = tokens[key]
-    item.market = (
-      <div>
-        {key} / {currency}
-      </div>
-    )
+    item.market = key + ' / ' + currency
     item = { ...item, ...item[currency] }
     data.push(item)
   })
@@ -117,40 +114,42 @@ export default class MarketTable extends React.Component {
       )
     }
   }
-  numberWithCommas = (x) => {
-    if (x > 1000) {
-      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  formatNumber = (number) => {
+    if (number > 1000) {
+      return converters.formatNumber(number)
     }
-    return x
+    return number
   }
 
   addUnit = (input, currency) => {
     return (
-      <span>{this.numberWithCommas(input)} {currency}</span>
+      <span>{this.formatNumber(input)} {currency}</span>
     )
   }
+  
+  getSortHeader = (title) => {
+    return (
+      <div className="rt-th-img">
+        <img src={require("../../../assets/img/landing/sort.svg")} />{title}
+      </div>
+    )
+  }
+
   getColumn = () => {
     var columns = [{
-      Header: 'Maket',
+      Header: this.getSortHeader("Market"),
       accessor: 'market' // String-based value accessors!
     }, {
-      Header: () => (
-        <div className="rt-th-img">
-          <img src={require("../../../assets/img/landing/sort.svg")} />Sell Price
-        </div>
-      ),
+      Header: this.getSortHeader("Sell Price"),
       accessor: 'sellPrice',
-      Cell: props => this.addUnit(props.value, this.props.currency)
+      Cell: props => this.addUnit(props.value, this.props.currency),
+      minWidth: 150
     }, {
-      Header: () => (
-        <div className="rt-th-img">
-          <img src={require("../../../assets/img/landing/sort.svg")} />Buy Price
-        </div>
-      ), // Required because our accessor is not a string
+      Header: this.getSortHeader("Buy Price"), // Required because our accessor is not a string
       accessor: 'buyPrice',
-      Cell: props => this.addUnit(props.value, this.props.currency)
-    }
-    ]
+      Cell: props => this.addUnit(props.value, this.props.currency),
+      minWidth: 150
+    }]
     Object.keys(this.props.listShowColumn).map((key, i) => {
       var item = this.props.listShowColumn[key]
       var index = this.props.showActive.indexOf(key)
@@ -161,7 +160,9 @@ export default class MarketTable extends React.Component {
               columns.push({
                 Header: item.title,
                 accessor: key,
-                Cell: props => this.drawChart(props)
+                Cell: props => this.drawChart(props),
+                sortable: false,
+                minWidth: 200
               })            
             }
             break
@@ -170,36 +171,37 @@ export default class MarketTable extends React.Component {
             switch (key) {
               case "change": {
                 columns.push({
-                  Header: () => (
-                    <div className="rt-th-img">
-                      <img src={require("../../../assets/img/landing/sort.svg")} />{item.title}
-                    </div>
-                  ),
+                  Header: this.getSortHeader(item.title),
                   accessor: key,
-                  Cell: props => this.addClassChange(props.value)
+                  Cell: props => this.addClassChange(props.value),
+                  minWidth: 200
                 })
                 break
               }
               case "volume": {
                 columns.push({
-                  Header: item.title,
+                  Header: this.getSortHeader(item.title),
                   accessor: key,
-                  Cell: props => this.addUnit(props.value, this.props.currency)
+                  Cell: props => this.addUnit(props.value, this.props.currency),
+                  minWidth: 150
                 })
                 break
               }
-              case "last_7d": {
+              case "circulating_supply": {
                 columns.push({
-                  Header: item.title,
+                  Header: this.getSortHeader(item.title),
                   accessor: key,
+                  minWidth: 200
                 })
                 break
               }
               default: {
                 columns.push({
-                  Header: item.title,
-                  accessor: key
+                  Header: this.getSortHeader(item.title),
+                  accessor: key,
+                  minWidth: 150
                 })
+                break
               }
             }
             break

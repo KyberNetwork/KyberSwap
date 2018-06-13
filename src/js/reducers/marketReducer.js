@@ -227,17 +227,16 @@ const market = (state = initState, action) => {
                 if (rate.source !== "ETH") {
                     if (tokens[rate.source]) {
                         var sellPriceETH = converters.convertSellRate(rate.rate)
-                        tokens[rate.source].ETH.sellPrice = converters.roundingNumber(sellPriceETH)
-                        console.log(converters.roundingNumber(sellPriceETH))
-                        tokens[rate.source].USD.sellPrice = converters.roundingNumber(sellPriceETH * rateUSD)
+                        tokens[rate.source].ETH.sellPrice = parseFloat(converters.roundingNumber(sellPriceETH))
+                        tokens[rate.source].USD.sellPrice = parseFloat(converters.roundingNumber(sellPriceETH * rateUSD))
                     } else {
                         return
                     }
                 } else {
                     if (tokens[rate.dest]) {
                         var buyPriceETH = converters.convertBuyRate(rate.rate)
-                        tokens[rate.dest].ETH.buyPrice = converters.roundingNumber(buyPriceETH)
-                        tokens[rate.dest].USD.buyPrice = converters.roundingNumber(buyPriceETH * rateUSD)
+                        tokens[rate.dest].ETH.buyPrice = parseFloat(converters.roundingNumber(buyPriceETH))
+                        tokens[rate.dest].USD.buyPrice = parseFloat(converters.roundingNumber(buyPriceETH * rateUSD))
                     } else {
                         return
                     }

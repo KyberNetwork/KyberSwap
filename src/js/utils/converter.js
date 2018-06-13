@@ -320,7 +320,7 @@ export function roundingNumber(number) {
   if (arr[1]) {
     result += '.' + arr[1];
   }
-  return result * 1;
+  return result;
 }
 
 export function toPrimitiveNumber(x) {
@@ -435,4 +435,15 @@ export function calculatePercent(numerator, denumerator){
   var percent =  ((numerator / denumerator) - 1) * 100
   var roundPercent = Math.round(percent * 10) / 10
   return roundPercent
+}
+
+export function formatNumber(number) {
+  var format = {
+    decimalSeparator: '.',
+    groupSeparator: ',',
+    groupSize: 3,
+  }
+  BigNumber.config({ FORMAT: format })
+  var numberFormat = new BigNumber(number)
+  return numberFormat.toFormat()
 }
