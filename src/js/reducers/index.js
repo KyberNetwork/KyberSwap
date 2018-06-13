@@ -37,7 +37,11 @@ const appReducer = combineReducers({
     key: 'global',
     storage: localForage,
     blacklist: ['conn_checker', 'analizeError', 'isOpenAnalyze']
-  }, global)
+  }, global),
+  txs: persistReducer({
+    key: 'txs',
+    storage: localForage,
+  }, txs)
 })
 
 const rootReducer = (state, action) => {
