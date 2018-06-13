@@ -34,6 +34,7 @@ const txs = (state = initState, action) => {
       }
     }
   }
+  localStorage.setItem("txs",JSON.stringify(state));
   return state
 }
 
