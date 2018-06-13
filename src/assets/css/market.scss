@@ -113,6 +113,7 @@
         }
       }
       .rt-tbody {
+        overflow: unset;
         .rt-tr-group {
           border-bottom: none;
           &:first-child {
@@ -143,6 +144,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                font-weight: 500;
                 &.negative {
                   background-color: #F6EAEC;
                   color: #EB7576;
@@ -167,11 +169,12 @@
       outline: none;
       border-right: none;
       padding: 10px;
+      font-weight: 600;
       &.-sort-asc {
         box-shadow: none;
         .rt-th-img {
           img {
-            content:url(../img/landing/sort-active-asc.svg);
+            content:url(../img/landing/sort-active.svg);
           }
         }
       }
@@ -179,7 +182,7 @@
         box-shadow: none;
         .rt-th-img {
           img {
-            content:url(../img/landing/sort-active.svg);
+            content:url(../img/landing/sort-active-asc.svg);
           }
         }
       }
