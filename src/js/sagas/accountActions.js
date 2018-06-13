@@ -92,7 +92,7 @@ export function* importNewAccount(action) {
     analytics.loginWallet(type)
     
 
-    yield put(goToRoute('/exchange'))
+    yield put(goToRoute(constants.BASE_HOST + '/exchange'))
 
     yield put(fetchExchangeEnable())
 

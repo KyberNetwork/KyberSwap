@@ -15,15 +15,15 @@ import { default as _ } from 'underscore'
 
 @connect((store) => {
   const translate = getTranslate(store.locale)
-  var location = "/"
-  if (store.router.location){
-    location = store.router.location.pathname
-  }
+  // var location = "/"
+  // if (store.router.location){
+  //   location = store.router.location.pathname
+  // }
   const tokens = store.tokens.tokens
   const exchange = store.exchange
-  console.log("location: " + location)
+  //console.log("location: " + location)
   return {
-      translate, location, exchange, tokens
+      translate, exchange, tokens
     }  
 })
 
@@ -93,7 +93,7 @@ export default class Exchange extends React.Component {
     return (
       <TransactionLayout 
         translate = {this.props.translate}
-        location = {this.props.location}
+        // location = {this.props.location}
        
         advance = {advanceConfig}
         content = {exchangeBody}
