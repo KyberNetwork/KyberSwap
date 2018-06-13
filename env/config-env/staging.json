@@ -279,6 +279,13 @@
       "address": "0xd49ff13661451313ca1553fd6954bd1d9b6e02b9",
       "symbol":"ELEC", 
       "icon": "elec.svg"
+    },
+    "BBO": {
+      "name": "Bigbom",
+      "decimal": 18,
+      "address": "0x84f7c44b6fed1080f647e354d552595be2cc602f",
+      "symbol":"BBO", 
+      "icon": "bbo.svg"
     }
   },
   "ethScanUrl": "https://etherscan.io/",
