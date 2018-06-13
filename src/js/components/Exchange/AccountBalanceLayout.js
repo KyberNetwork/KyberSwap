@@ -37,7 +37,7 @@ const AccountBalanceLayout = (props) => {
               <div className='balance-item'>
                 <input checked={token.symbol === props.sourceActive?true: false} 
                         type="radio" id={token.symbol + "options"} name="b-selector"
-                        onChange={(e)=>console.log}/>
+                        onChange={(e)=>console.log()}/>
                 <div class="check"></div>
 
                 <label className="label-radio" for={token.symbol + "options"}>
@@ -81,7 +81,7 @@ const AccountBalanceLayout = (props) => {
       <div id="search-balance" className="row">
         <div className="column small-10">
           <input type="text" placeholder="Search" onChange={(e) => props.changeSearchBalance(e)} value = {props.searchWord}  className="search-input"/>
-        </div>   
+        </div>
         <div className="column small-2 sort-balance">
         </div>
       </div>

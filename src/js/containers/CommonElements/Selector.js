@@ -6,8 +6,8 @@ import { getTranslate } from 'react-localize-redux';
 export default class Selector extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props.defaultItem)
-        console.log(props.listItem)
+        // console.log(props.defaultItem)
+        // console.log(props.listItem)
         this.state = {
             open: false,
             focus: { value: props.defaultItem, name: props.listItem[props.defaultItem] },

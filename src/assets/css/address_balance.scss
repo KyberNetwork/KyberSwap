@@ -1,35 +1,35 @@
 #balance-account{
   border-right: 1px solid #ddd;
     padding: 1rem 0.5rem;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
     .balance-header {
       padding: 0 1.1rem;
       .title {
-        font-size: 1.25rem;
-        color: #4B4860;
-        font-weight: 600;
-      }      
+        font-size: 20px;
+        color: #474d5f;
+        font-family: Raleway;
+      }
       .estimate-value{
-        font-size: 0.9rem;
+        font-size: 12px;
+        font-weight: 500;
         .text-upcase {
+          font-family: OpenSans;
           text-transform: uppercase;
-          font-weight: 500;
-          color: #4B4860;
+          color: #454e5f;
         }
       }
-    //   @media screen and (max-width: 640px) {
-    //     min-height: 0;
-    //     font-size: 0.85em;
-    //     .title{
-    //       font-size: 1.4em;
-    //     }
-    //   }
     }
     input{
-      border-radius: 3px;
-      border: 1px solid #ccc;
       text-indent: 15px;
-      min-height: 33px;
-      height: 33px;      
+      min-height: 29px;
+      height: 29px;
+      opacity: 0.3;
+      border-radius: 2px;
+      border: solid 1px #979797;
     }
     .balances{
       display: inline-block;
@@ -48,13 +48,18 @@
           width: 50%;
           float: left;
           height: 50px;
-          border-radius: 30px;
+          border-radius: 25px;
           margin: 5px 0;
           &.hide{
             display: none;
           }
           &.active{
-            box-shadow: 0 0 15px #aaa;
+            box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.2);
+            .balance-item{
+              .label-radio{
+                color: #44a076;
+              }
+            }
           }
           .check{
             top: 14px;
@@ -85,15 +90,17 @@
       margin-bottom: 1.2rem;
       .sort-balance{
         text-align: center;
-        width: 33px;
-        height: 33px;
+        width: 29px;
+        height: 29px;
         padding: 0px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        background-image: url(../img/sort.png);
+        // border: 1px solid #ccc;
+        // border-radius: 3px;
+        background-image: url(../img/sort_icon.svg);
         background-repeat: no-repeat;
         background-position: center;
         background-size: 50% 50%;
+        border-radius: 2px;
+        border: solid 1px #979797;
       }
     }
     .balance-item{
@@ -103,10 +110,6 @@
       font-size: 13px;
       border: 1px solid transparent;
       cursor: pointer;
-      &.active, &:hover{
-       // background-color: #f0f0f0;
-     //   border-color: #d5d5d5;
-      }
       h4{
         line-height: 29px;
       }
@@ -135,6 +138,16 @@
         }
         &.place-left::before{
           border-left: 8px solid #afafaf;
+        }
+      }
+      .label-radio{
+        font-family: OpenSans;
+        color: #474d5f;
+        .symbol{
+          font-size: 11px;
+        }
+        .balance{
+          font-size: 10px;
         }
       }
     }
