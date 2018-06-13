@@ -9,7 +9,10 @@ var scriptConfig = function (env) {
   return {
     context: path.join(__dirname, "src"),
     devtool: (env && env.build !== "true") ? "inline-sourcemap" : false,
-    entry: ['babel-polyfill', "./js/client.js", "./assets/css/app.scss"],
+    entry: {
+      app: ['babel-polyfill', "./js/client.js", "./assets/css/app.scss"],
+      other: "./assets/css/foundation.scss"
+    },
     module: {
       loaders: [{
         test: /\.jsx?$/,
@@ -39,11 +42,11 @@ var scriptConfig = function (env) {
     },
     output: {
       path: __dirname + dist,
-      filename: "client.min.js"
+      filename: "[name].min.js"
     },
     plugins: (env && env.build !== "true") ? [
       new ExtractTextPlugin({ // define where to save the file
-        filename: 'app.bundle.css',
+        filename: '[name].bundle.css',
         allChunks: true,
       }),
       new webpack.DefinePlugin({
@@ -63,7 +66,7 @@ var scriptConfig = function (env) {
           }
         }),
         new ExtractTextPlugin({ // define where to save the file
-          filename: 'app.bundle.css',
+          filename: '[name].bundle.css',
           allChunks: true,
         }),
         new webpack.DefinePlugin({
@@ -92,7 +95,7 @@ var indexConfig = function (env) {
   var HtmlWebpackPlugin = require('html-webpack-plugin')
   var dist = env.chain ? '/dist/' + env.chain : '/src'
   return {
-    entry: ['./src/client.min.js'],
+    entry: [ __dirname + dist + '/app.min.js',__dirname + dist + '/other.min.js'],
     output: {
       path: __dirname + dist,
       filename: 'client.min.js?v=' + Date.now()
@@ -103,7 +106,8 @@ var indexConfig = function (env) {
         template: './src/app.html.template',
         favicon: './src/assets/img/favicon.png',
         inject: 'body',
-        styleFile: 'app.bundle.css?v=' + Date.now()
+        styleFile: 'app.bundle.css?v=' + Date.now(),
+        otherFile: 'other.bundle.css?v=' + Date.now()
       })
     ]
   }

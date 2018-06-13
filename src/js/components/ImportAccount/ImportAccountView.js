@@ -10,25 +10,27 @@ const ImportAccountView = (props) => {
             <h1 class="title">{props.translate("address.import_address") || "Import address"}</h1>
             <h3 class="sub-title">{props.translate("address.exchange_from") || "Exchange from"}</h3>
             <div class="row import-account">
-              <div class="small-6 medium-4 large-2dot4 column">
+              <div class="small-0 medium-1 large-2dot4 column">
+              </div>
+              <div class="small-6 medium-2 large-2dot4 column">
                 {props.firstKey}
               </div>
-
-              <div class="small-6 medium-4 large-2dot4 column">
+              <div class="small-6 medium-2 large-2dot4 column">
                 {props.secondKey}
               </div>
-              <div class="small-6 medium-4 large-2dot4 column">
+              <div class="small-6 medium-2 large-2dot4 column">
                 {props.thirdKey}
               </div>
 
-              <div class="small-6 medium-4 medium-offset-2 large-2dot4 large-offset-0 column">
+              <div class="small-6 medium-2 large-2dot4 column">
                 {props.fourthKey}
               </div>
               
-              <div class="small-6 small-offset-3 medium-4 medium-offset-0 large-2dot4 large-offset-0 column end">
+              <div class="small-6 medium-2 large-2dot4 column">
                 {props.fifthKey}
               </div>
-
+              <div class="small-0 medium-1 large-2dot4 column end">
+              </div>
             </div>
           </div>
         </div>
