@@ -433,6 +433,17 @@ export function sliceErrorMsg(err){
 export function calculatePercent(numerator, denumerator){
   if (denumerator === 0) return 0
   var percent =  ((numerator / denumerator) - 1) * 100
-  var roundPercent = Math.round(percent * 10) / 10 
+  var roundPercent = Math.round(percent * 10) / 10
   return roundPercent
+}
+
+export function formatNumber(number) {
+  var format = {
+    decimalSeparator: '.',
+    groupSeparator: ',',
+    groupSize: 3,
+  }
+  BigNumber.config({ FORMAT: format })
+  var numberFormat = new BigNumber(number)
+  return numberFormat.toFormat()
 }

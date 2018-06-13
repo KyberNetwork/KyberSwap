@@ -5,6 +5,7 @@ import ReactTable from 'react-table'
 //import "react-table/react-table.css";
 import { getTranslate } from 'react-localize-redux'
 import * as actions from "../../actions/marketActions"
+import * as converters from "../../utils/converter"
 
 import LineChart from 'react-linechart';
 import {Line} from 'react-chartjs-2';
@@ -21,15 +22,10 @@ import {Line} from 'react-chartjs-2';
     if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
 
     var item = tokens[key]
-    item.market = (
-      <div>
-        {key} / {currency}
-      </div>
-    )
+    item.market = key + ' / ' + currency
     item = { ...item, ...item[currency] }
     data.push(item)
   })
-  // console.log("data: ", tokens, data)
   return {
     translate: getTranslate(store.locale),
     searchWord,
@@ -43,9 +39,19 @@ import {Line} from 'react-chartjs-2';
 })
 
 export default class MarketTable extends React.Component {
-  drawChart = (input) => {
+  drawChart = (props) => {
+    var lineColor = ""
+    var backgroundColor = ""
+    if (props["original"]["change"] < 0) {
+      lineColor = "#EB7576"
+      backgroundColor = "#F6EAEC"
+    } else {
+      lineColor = "#1FDCAB"
+      backgroundColor = "#EDFBF6"
+    }
     var point = []
     var labels = []
+    var input = props.value
     input.map((item, index) => {
       labels.push(index)
       point.push(item)
@@ -55,10 +61,10 @@ export default class MarketTable extends React.Component {
       labels: labels,
       datasets: [{
         data: point,
-        backgroundColor: "#F5FAFF",
+        backgroundColor: backgroundColor,
         fill: true,
-        borderColor: "rgb(18, 149, 229)",
-        borderWidth: 1.5
+        borderColor: lineColor,
+        borderWidth: 1.2
       }]
     }
     var options = {
@@ -98,36 +104,52 @@ export default class MarketTable extends React.Component {
     )
   }
   addClassChange = (input) => {
-    if (input.includes("-")) {
+    if (input < 0) {
       return (
-        <span className = "negative">{input}<img src={require("../../../assets/img/landing/arrow_red.svg")}/></span>
+        <span className = "negative">{input} %<img src={require("../../../assets/img/landing/arrow_red.svg")}/></span>
       )
     } else {
       return (
-        <span className = "positive">{input}<img src={require("../../../assets/img/landing/arrow_green.svg")}/></span>
+        <span className = "positive">{input} %<img src={require("../../../assets/img/landing/arrow_green.svg")}/></span>
       )
     }
   }
+  formatNumber = (number) => {
+    if (number > 1000) {
+      return converters.formatNumber(number)
+    }
+    return number
+  }
+
+  addUnit = (input, currency) => {
+    return (
+      <span>{this.formatNumber(input)} {currency}</span>
+    )
+  }
+  
+  getSortHeader = (title) => {
+    return (
+      <div className="rt-th-img">
+        <img src={require("../../../assets/img/landing/sort.svg")} />{title}
+      </div>
+    )
+  }
+
   getColumn = () => {
     var columns = [{
-      Header: 'Maket',
+      Header: this.getSortHeader("Market"),
       accessor: 'market' // String-based value accessors!
     }, {
-      Header: () => (
-        <div className="rt-th-img">
-          <img src={require("../../../assets/img/landing/sort.svg")} />Sell Price
-        </div>
-      ),
+      Header: this.getSortHeader("Sell Price"),
       accessor: 'sellPrice',
+      Cell: props => this.addUnit(props.value, this.props.currency),
+      minWidth: 150
     }, {
-      Header: () => (
-        <div className="rt-th-img">
-          <img src={require("../../../assets/img/landing/sort.svg")} />Buy Price
-        </div>
-      ), // Required because our accessor is not a string
+      Header: this.getSortHeader("Buy Price"), // Required because our accessor is not a string
       accessor: 'buyPrice',
-    }
-    ]
+      Cell: props => this.addUnit(props.value, this.props.currency),
+      minWidth: 150
+    }]
     Object.keys(this.props.listShowColumn).map((key, i) => {
       var item = this.props.listShowColumn[key]
       var index = this.props.showActive.indexOf(key)
@@ -138,27 +160,49 @@ export default class MarketTable extends React.Component {
               columns.push({
                 Header: item.title,
                 accessor: key,
-                Cell: props => this.drawChart(props.value)
+                Cell: props => this.drawChart(props),
+                sortable: false,
+                minWidth: 200
               })            
             }
             break
           }
           default: {
-            if (key === "change") {
-              columns.push({
-                Header: () => (
-                  <div className="rt-th-img">
-                    <img src={require("../../../assets/img/landing/sort.svg")} />{item.title}
-                  </div>
-                ),
-                accessor: key,
-                Cell: props => this.addClassChange(props.value)
-              })
-            } else {
-              columns.push({
-                Header: item.title,
-                accessor: key
-              })
+            switch (key) {
+              case "change": {
+                columns.push({
+                  Header: this.getSortHeader(item.title),
+                  accessor: key,
+                  Cell: props => this.addClassChange(props.value),
+                  minWidth: 200
+                })
+                break
+              }
+              case "volume": {
+                columns.push({
+                  Header: this.getSortHeader(item.title),
+                  accessor: key,
+                  Cell: props => this.addUnit(props.value, this.props.currency),
+                  minWidth: 150
+                })
+                break
+              }
+              case "circulating_supply": {
+                columns.push({
+                  Header: this.getSortHeader(item.title),
+                  accessor: key,
+                  minWidth: 200
+                })
+                break
+              }
+              default: {
+                columns.push({
+                  Header: this.getSortHeader(item.title),
+                  accessor: key,
+                  minWidth: 150
+                })
+                break
+              }
             }
             break
           }

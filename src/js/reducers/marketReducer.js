@@ -76,7 +76,7 @@ const initState = function () {
                         "total_supply": {title: "Total Supply"},
                         "last_7d": {title: "Last 7d", type: "chart"}
                     },
-                    active: ["volume", "change"]
+                    active: ["change", "last_7d"]
                 }
             }
         },
@@ -206,11 +206,11 @@ const market = (state = initState, action) => {
                 var sellPrice = parseFloat(tokens[key].ETH.sellPrice)
                 var midlePrice = (buyPrice + sellPrice) / 2
                 var price24h = token.r
-                var change = "0%"
+                var change = 0
                 if (midlePrice > price24h){
-                    change = converters.calculatePercent(midlePrice, price24h) + "%"
+                    change = converters.calculatePercent(midlePrice, price24h)
                 }else{
-                    change = "-" + converters.calculatePercent(price24h, midlePrice) + "%"
+                    change = converters.calculatePercent(price24h, midlePrice) * -1
                 }
                 tokens[key].USD.change = tokens[key].ETH.change = change
             })
@@ -227,16 +227,16 @@ const market = (state = initState, action) => {
                 if (rate.source !== "ETH") {
                     if (tokens[rate.source]) {
                         var sellPriceETH = converters.convertSellRate(rate.rate)
-                        tokens[rate.source].ETH.sellPrice = converters.roundingNumber(sellPriceETH)
-                        tokens[rate.source].USD.sellPrice = converters.roundingNumber(sellPriceETH * rateUSD)
+                        tokens[rate.source].ETH.sellPrice = parseFloat(converters.roundingNumber(sellPriceETH))
+                        tokens[rate.source].USD.sellPrice = parseFloat(converters.roundingNumber(sellPriceETH * rateUSD))
                     } else {
                         return
                     }
                 } else {
                     if (tokens[rate.dest]) {
                         var buyPriceETH = converters.convertBuyRate(rate.rate)
-                        tokens[rate.dest].ETH.buyPrice = converters.roundingNumber(buyPriceETH)
-                        tokens[rate.dest].USD.buyPrice = converters.roundingNumber(buyPriceETH * rateUSD)
+                        tokens[rate.dest].ETH.buyPrice = parseFloat(converters.roundingNumber(buyPriceETH))
+                        tokens[rate.dest].USD.buyPrice = parseFloat(converters.roundingNumber(buyPriceETH * rateUSD))
                     } else {
                         return
                     }
