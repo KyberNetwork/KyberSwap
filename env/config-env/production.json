@@ -2,7 +2,7 @@
     "connections": {
       "http": [
         {
-          "endPoint" : "http://localhost:3001",
+          "endPoint" : "http://52.77.238.156:4000",
           "type": "cached"
         },       
         {

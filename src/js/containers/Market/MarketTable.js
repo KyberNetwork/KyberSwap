@@ -178,6 +178,33 @@ export default class MarketTable extends React.Component {
                 })
                 break
               }
+              case "circulating_supply":{
+                columns.push({
+                  Header: this.getSortHeader(item.title),
+                  accessor: key,
+                  Cell: props => this.formatNumber(props.value),
+                  minWidth: 150
+                })
+                break
+              }
+              case "total_supply":{
+                columns.push({
+                  Header: this.getSortHeader(item.title),
+                  accessor: key,
+                  Cell: props => this.formatNumber(props.value),
+                  minWidth: 150
+                })
+                break
+              }
+              case "market_cap":{
+                columns.push({
+                  Header: this.getSortHeader(item.title),
+                  accessor: key,
+                  Cell: props => this.addUnit(props.value, this.props.currency),
+                  minWidth: 150
+                })
+                break
+              }
               case "volume": {
                 columns.push({
                   Header: this.getSortHeader(item.title),
