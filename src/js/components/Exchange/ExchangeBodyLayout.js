@@ -74,25 +74,23 @@ const ExchangeBodyLayout = (props) => {
 
   var render = (
     <div>
-      <div className="columns large-4 columns-nopading">
+      <div className="columns large-3 columns-nopading">
         {props.balanceList}
       </div>
-      <div className="columns large-8 columns-nopading">
+      <div className="columns large-9 columns-nopading">
         <div>
           <div className="title main-title exchange-pd">Exchange</div>
           <div>
             <div class="small-11 medium-12 large-12">
               <div class="column exchange-pd">
                 <form action="#" method="get">
-                  <div class="row">
+                  <div class="row content-exchange-body">
                     <div class="column medium-5">
                       <div>
                         <span className="transaction-label">
                           {props.translate("transaction.exchange_from") || "From"}
                         </span>
-
                         <div className={errorExchange ? "error select-token-panel" : "select-token-panel"}>
-
                           {props.tokenSourceSelect}
                           <div className={props.focus === "source"?"amount-input focus": "amount-input"}>
                             <input id="inputSource" className="source-input" min="0" step="0.000001"
@@ -105,7 +103,6 @@ const ExchangeBodyLayout = (props) => {
                             />
                             <span>{props.sourceTokenSymbol}</span>
                           </div>
-
                         </div>
                         <div className={errorExchange ? "error" : ""}>
                           {errorShow}

@@ -12,28 +12,36 @@
     justify-content: space-between;
     margin-top: 3rem;
     &.focus{
-      color: #5D9E7A;
+      color: #44a076;
       border-bottom: 1px solid #5D9E7A;
       input{
-        color: #5D9E7A;
+        color: #44a076;
       }
     }
     input{
+      font-family: OpenSans;
+      font-size: 25px;
+      font-weight: 600;
       margin-bottom: 0px;
       padding: 0;
-      font-size: 20px;
+      // font-size: 20px;
       color: #aaa;
       &:focus {
-        color: #32AB7B;
+        color: #44a076;
       }
+      border:none;
+      box-shadow: none;
+      margin-right:-35px; 
     }
     span {
-      font-size: 14px;
+      font-family: OpenSans;
+      font-size: 15px;
       padding-top: 12px;
-    }
-    span{
       display: flex;
       align-items: center;
+      &:focus{
+        color: #44a076;
+      }
     }
   }
   > input, > input:focus{
