@@ -52,21 +52,28 @@ export default class MarketTable extends React.Component {
     var point = []
     var labels = []
     var input = props.value
-    input.map((item, index) => {
-      labels.push(index)
-      point.push(item)
-    })
-
-    var data = {
-      labels: labels,
-      datasets: [{
-        data: point,
-        backgroundColor: backgroundColor,
-        fill: true,
-        borderColor: lineColor,
-        borderWidth: 1.2
-      }]
+    if (Array.isArray(input)) {
+      input.map((item, index) => {
+        labels.push(index)
+        point.push(item)
+      })
+  
+      var data = {
+        labels: labels,
+        datasets: [{
+          data: point,
+          backgroundColor: backgroundColor,
+          fill: true,
+          borderColor: lineColor,
+          borderWidth: 1.2
+        }]
+      }
+    } else {
+      return (
+        <div></div>
+      )
     }
+    
     var options = {
       elements: {
         point: {
@@ -93,8 +100,8 @@ export default class MarketTable extends React.Component {
     } 
     return (
       <Line 
-        width={225}
-        height={75}
+        width={200}
+        height={70}
         data={data}
         options={options}
         hideXAxis = {true}
@@ -162,7 +169,9 @@ export default class MarketTable extends React.Component {
                 accessor: key,
                 Cell: props => this.drawChart(props),
                 sortable: false,
-                minWidth: 200
+                maxWidth: 200,
+                minWidth: 150,
+                height: 70
               })            
             }
             break
@@ -183,7 +192,7 @@ export default class MarketTable extends React.Component {
                   Header: this.getSortHeader(item.title),
                   accessor: key,
                   Cell: props => this.formatNumber(props.value),
-                  minWidth: 150
+                  minWidth: 200
                 })
                 break
               }
