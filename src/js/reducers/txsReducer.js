@@ -34,7 +34,12 @@ const txs = (state = initState, action) => {
       }
     }
   }
-  localStorage.setItem("txs",JSON.stringify(state));
+  let tsx = null;
+  if(localStorage.getItem("txs")){
+    tsx = JSON.parse(localStorage.getItem("txs"))
+  }
+  let merged = {...tsx, ...state};
+  localStorage.setItem("txs",JSON.stringify(merged));
   return state
 }
 

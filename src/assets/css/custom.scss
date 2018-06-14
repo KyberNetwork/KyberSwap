@@ -7,13 +7,16 @@
 .react-modal{
     margin-left: 50% !important;
 }
+.confirm-exchange{
+    margin-left: 0% !important;
+}
 @include breakpoint(medium){
     .react-modal{
         margin-bottom: 50px!important; 
     }
-    .reveal.large{
-        top: 54px;
-    }
+    // .reveal.large{
+    //     top: 54px;
+    // }
     
     $half: -50%;
     .reveal.tiny{

@@ -98,8 +98,8 @@ export default class TransactionLoading extends React.Component {
         return (
             <Modal
             className={{
-              base: 'reveal medium',
-              afterOpen: 'reveal medium'
+              base: 'reveal medium confirm-exchange',
+              afterOpen: 'reveal medium confirm-exchange'
             }}
             isOpen={this.props.isOpen}
             onRequestClose={this.props.makeNewTransaction}
