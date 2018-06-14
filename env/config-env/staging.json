@@ -53,14 +53,6 @@
       "decimal": 18,
       "usd_id": "omisego"
     },
-    "EOS": {
-      "name": "Eos",
-      "symbol": "EOS",
-      "icon": "eos.svg",
-      "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
-      "decimal": 18,
-      "usd_id": "eos"
-    },
     "SNT": {
       "name": "Status",
       "address": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
@@ -244,6 +236,48 @@
       "symbol":"ENJ",        
       "icon": "enj.svg",
       "usd_id":"enjin-coin"
+    },
+    "AION": {
+      "name": "Aion",
+      "decimal": 8,
+      "symbol":"AION", 
+      "address": "0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466",
+      "icon": "aion.svg"
+    },
+    "AE": {
+      "name": "Aeternity",
+      "decimal": 18,
+      "symbol":"AE", 
+      "address": "0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d",
+      "icon": "ae.svg"
+    },
+    "BLZ": {
+      "name": "Bluezelle",
+      "decimal": 18,
+      "symbol":"BLZ", 
+      "address": "0x5732046a883704404f284ce41ffadd5b007fd668",
+      "icon": "blz.svg"
+    },
+    "PAL": {
+      "name": "PolicyPal Network",
+      "decimal": 18,
+      "symbol":"PAL", 
+      "address": "0xfedae5642668f8636a11987ff386bfd215f942ee",
+      "icon": "pal.svg"
+    },
+    "ELEC": {
+      "name": "ElectrifyAsia",
+      "decimal": 18,
+      "address": "0xd49ff13661451313ca1553fd6954bd1d9b6e02b9",
+      "symbol":"ELEC", 
+      "icon": "elec.svg"
+    },
+    "BBO": {
+      "name": "Bigbom",
+      "decimal": 18,
+      "address": "0x84f7c44b6fed1080f647e354d552595be2cc602f",
+      "symbol":"BBO", 
+      "icon": "bbo.svg"
     }
   },
   "ethScanUrl": "https://etherscan.io/",

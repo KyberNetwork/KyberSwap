@@ -9435,9 +9435,12 @@ input[type=number] {
       .token-selector .focus-item .focus-balance .token-symbol {
         margin-left: 5px; }
     .token-selector .focus-item .icon {
-      margin-right: 10px; }
+      margin-right: 10px;
+      max-width: 30px; }
       .token-selector .focus-item .icon img {
-        vertical-align: top; }
+        vertical-align: top;
+        width: 28px;
+        max-height: 28px; }
   .token-selector .select-item {
     padding-bottom: 20px;
     position: absolute;
@@ -9468,8 +9471,17 @@ input[type=number] {
         margin-left: 5px; }
       .token-selector .list-item .token-item .item-icon {
         width: 35px;
+<<<<<<< HEAD
         display: inline-block;
         margin-right: 10px; }
+=======
+        display: inline-block; }
+        .token-selector .list-item .token-item .item-icon img {
+          width: 28px;
+          max-height: 28px; }
+      .token-selector .list-item .token-item > div > span {
+        color: white; }
+>>>>>>> ea92d2e3f5f79005dd0f2db1062aca22189b0f4e
       .token-selector .list-item .token-item > div span.token-name {
         color: #aaa; }
       .token-selector .list-item .token-item > div .item-name {
@@ -9580,6 +9592,10 @@ input[type=number] {
       width: 28px; }
       #get-start .title .flag img + span {
         margin-left: -24px; }
+  #get-start .subtitle {
+    font-size: 1.2rem;
+    font-weight: normal;
+    margin-top: 0.6rem; }
   #get-start .term-services {
     margin: 50px 0; }
     #get-start .term-services img {
@@ -10017,8 +10033,8 @@ h6, .h6 {
 #header {
   background-color: white;
   padding: 10px 0;
-  border-bottom: 1px solid #ddd;
-  min-height: 75px; }
+  padding-top: 0;
+  border-bottom: 1px solid #ddd; }
   #header a.logo img {
     width: 108px;
     margin-top: 7px; }
