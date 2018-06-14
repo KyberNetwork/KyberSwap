@@ -526,8 +526,8 @@ export default class PostExchange extends React.Component {
     } else {
       modalConfirm = (<Modal
         className={{
-          base: 'reveal medium',
-          afterOpen: 'reveal medium'
+          base: 'reveal medium confirm-exchange',
+          afterOpen: 'reveal medium confirm-exchange'
         }}
         isOpen={this.props.form.confirmColdWallet}
         onRequestClose={this.closeModalConfirm}
