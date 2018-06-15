@@ -20,11 +20,11 @@ import market from './marketReducer'
 // import { localeReducer } from 'react-localize-redux';
 
 const appReducer = combineReducers({
-  account, exchange, transfer, txs, connection, router: routerReducer,utils,
-  market: persistReducer({
-    key: 'market',
-    storage: localForage
-  }, market),  
+  account, exchange, transfer, txs, connection, router: routerReducer,utils, market,
+  // market: persistReducer({
+  //   key: 'market',
+  //   storage: localForage
+  // }, market),  
   locale: persistReducer({
     key: 'locale',
     storage: localForage
