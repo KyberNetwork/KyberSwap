@@ -12,8 +12,8 @@ const TransactionLayout = (props) => {
           <Link to={constansts.BASE_HOST + "/transfer"} className={props.page === "transfer" ? "disable" : ""}>{props.translate("transaction.transfer") || "Transfer"}</Link>
         </div>
       </h1>
-      <div className="row">
-        <div className="columns large-9 frame-left">
+      <div className="exchange-content row">
+        <div className="columns large-10 frame-left">
           {props.content}
           {/* <div className="columns large-4">
             {props.balance}
@@ -22,7 +22,7 @@ const TransactionLayout = (props) => {
             {props.content}
           </div> */}
         </div>
-        <div className="columns large-3 frame-right">
+        <div className="columns large-2 frame-right">
           {props.advance}
         </div>
       </div>
