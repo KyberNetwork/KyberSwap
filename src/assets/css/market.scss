@@ -152,6 +152,10 @@
                   background-color: #EDFBF6;
                   color: #1FDCAB;
                 }
+                &.zero-value {
+                  background: #ddd;
+                  color: #767677;
+                }
                 img {
                   padding: 3px;
                 }
