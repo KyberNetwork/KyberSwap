@@ -80,3 +80,49 @@
     color: $k-success;
   }
 }
+
+#comming-soon {
+  background-image: url(../img/landing/conver-coming-soon.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  min-height: 450px;
+  width: 100%;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .notification {
+    color: $white;
+    text-align: center;
+    h4 {
+      color: #ddd;
+    }
+  }
+  .notice {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    text-align: center;
+    color: $white;
+    background-color: rgba(0, 0, 0, 0.4);
+    p {
+      margin: 10px 0;
+      color: #ddd;
+      font-family: "Montserrat", "My-Montserrat", sans-serif;
+      @media screen and (max-width: 40em) {
+        font-size: 13px;
+      }
+      a {
+        color: $white;
+        padding: 3px 0;
+        margin-left: 6px;
+        border-bottom: 1px solid #00D8A0;
+        &:hover {
+          color: $white;
+        }
+      }
+    }
+  }
+}
