@@ -45,6 +45,9 @@ export default class MarketTable extends React.Component {
     if (props["original"]["change"] < 0) {
       lineColor = "#EB7576"
       backgroundColor = "#F6EAEC"
+    } else if (props["original"]["change"] === 0) {
+      lineColor = "#767677"
+      backgroundColor = "#eee"
     } else {
       lineColor = "#1FDCAB"
       backgroundColor = "#EDFBF6"
@@ -114,6 +117,10 @@ export default class MarketTable extends React.Component {
     if (input < 0) {
       return (
         <span className = "negative">{input} %<img src={require("../../../assets/img/landing/arrow_red.svg")}/></span>
+      )
+    } else if (input === 0){
+      return (
+        <span className = "zero-value">{input} %</span>
       )
     } else {
       return (
