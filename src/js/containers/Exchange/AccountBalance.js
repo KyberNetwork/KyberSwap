@@ -12,7 +12,9 @@ import { getTranslate } from 'react-localize-redux';
   var location = store.router.location.pathname
   var sourceActive = 'ETH'
   var brocastStep = false
-  if (location === "/exchange") {
+  // alert(location)
+  let location_ = location.split("/");
+  if (location_.slice(-1).pop() && location_.slice(-1).pop() === "exchange") {
     sourceActive = store.exchange.sourceTokenSymbol
     brocastStep = store.exchange.step === 3? true: false
   } else {
@@ -46,7 +48,9 @@ export default class AccountBalance extends React.Component {
     if(this.props.brocastStep){
       return
     }
-    if (this.props.location === "/exchange") {
+    // alert(this.props.location)
+    let location = this.props.location.split("/");
+    if (location.slice(-1).pop() && location.slice(-1).pop() === "exchange") {
       this.props.dispatch(selectTokenAsync(symbol, address, "source", this.props.ethereum))
     } else {
       this.props.dispatch(selectToken(symbol, address))
