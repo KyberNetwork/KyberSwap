@@ -14,23 +14,23 @@ import * as marketActions from "../../actions/marketActions"
 	return {
 		translate: getTranslate(store.locale),
 		isOpen: store.market.configs.isShowTradingChart,
-		selectedSymbol: store.market.configs.selectedSymbol
+		selectedSymbol: store.market.configs.selectedSymbol,
+		currency: store.market.configs.currency.focus
 	}
 })
 
-
-
-
 export default class TradingViewModal extends React.Component {
-
-
 	closeModal = () => {
 		this.props.dispatch(marketActions.hideTradingViewChart())
 	}
 
 	content = () => {
+		const {currency} = this.props
 		return (
-			<TradingView />
+			<div className="trading-view-modal">
+				{ currency==="USD" && <p>Now support only pairs with ETH, not support pairs with USD yet.</p>}
+				<TradingView />
+			</div>
 		)
 	}
 

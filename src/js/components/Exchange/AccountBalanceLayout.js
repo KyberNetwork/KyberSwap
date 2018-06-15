@@ -30,7 +30,6 @@ const AccountBalanceLayout = (props) => {
         if (!symbolL.includes(searchWord)) classBalance += " hide"
         
         return (
-      
             <li key={token.symbol} data-for={token.symbol}
               onClick={(e) => props.selectToken(e, token.symbol, token.address)} className = {classBalance}
             >
