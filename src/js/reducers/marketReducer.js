@@ -87,38 +87,24 @@ const initState = function () {
 const market = (state = initState, action) => {
     var newState = { ...state }
     switch (action.type) {
-        case REHYDRATE: {
-            if (action.key === "market") {
-                if (action.payload) {
-                    var {tokens, count, configs} = action.payload
+        // case REHYDRATE: {
+        //     if (action.key === "market") {
+        //         if (action.payload) {
+        //             var {tokens, count, configs} = action.payload
 
-                    if (action.payload.count && action.payload.count.storageKey === constants.STORAGE_KEY) {
-                        return {...state, tokens:{...tokens},  count: { storageKey: constants.STORAGE_KEY }, configs: {...configs}}                        
-                    }else{
-                        return initState
-                    }
+        //             if (action.payload.count && action.payload.count.storageKey === constants.STORAGE_KEY) {
+        //                 return {...state, tokens:{...tokens},  count: { storageKey: constants.STORAGE_KEY }, configs: {...configs}}                        
+        //             }else{
+        //                 return initState
+        //             }
 
                     
-                } else {
-                    return initState
-                }
-
-
-                // if (action.payload && action.payload.history) {
-                //   var history = action.payload.history
-
-                //   // check load from loaclforage or initstate
-                //   if(action.payload.count && action.payload.count.storageKey !== constants.STORAGE_KEY){
-                //     history = constants.HISTORY_EXCHANGE
-                //   } 
-                //   return {...state,
-                //     history: {...history},
-                //     count: {storageKey: constants.STORAGE_KEY}
-                //    }
-                // }
-            }
-            return initState
-        }
+        //         } else {
+        //             return initState
+        //         }
+        //     }
+        //     return initState
+        // }
         case 'MARKET.CHANGE_SEARCH_WORD': {
             var searchWord = action.payload
             var configs = newState.configs
@@ -190,16 +176,21 @@ const market = (state = initState, action) => {
 
         case 'MARKET.GET_VOLUMN_SUCCESS':{
             const {data} = action.payload
-            var tokens = newState.tokens
+            var tokens = {...newState.tokens}
             Object.keys(data).map(key=>{
                 if (!tokens[key]) return
+                
                 var token = data[key]
+
                 tokens[key].ETH.volume = Math.round(token.e)
                 tokens[key].ETH.last_7d =  token.p
                 tokens[key].USD.volume = Math.round(token.u)
                 tokens[key].USD.last_7d =  token.p
 
-                //calculate % change
+                //calculate % change                
+                //get buy price
+                
+
                 var buyPrice = parseFloat(tokens[key].ETH.buyPrice)
                 var sellPrice = parseFloat(tokens[key].ETH.sellPrice)
                 var midlePrice = (buyPrice + sellPrice) / 2

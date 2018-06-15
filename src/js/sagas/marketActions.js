@@ -3,6 +3,7 @@ import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effect
 // import * as actionsExchange from '../actions/exchangeActions'
 // import * as actionsUtils from '../actions/utilActions'
 import * as marketActions from "../actions/marketActions"
+import * as globalActions from "../actions/globalActions"
 // import { closeImportLoading } from '../actions/accountActions'
 // import { Rate } from "../services/rate"
 // import { push } from 'react-router-redux';
@@ -42,7 +43,12 @@ export function* getGeneralTokenInfo(action){
 export function* getVolumn(){
     var state = store.getState()
     var ethereum = state.connection.ethereum
+    var tokens = state.tokens.tokens
+    var rateUSD = tokens.ETH.rateUSD 
     try {
+        const rates = yield call([ethereum, ethereum.call],"getAllRates", tokens)
+        yield put.sync(globalActions.updateAllRateComplete(rates))
+
         var data = yield call([ethereum, ethereum.call], "getVolumnChart")
         yield put(marketActions.getVolumnSuccess(data))
     }catch(e){
