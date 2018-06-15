@@ -92,17 +92,15 @@ const market = (state = initState, action) => {
                 if (action.payload) {
                     var {tokens, count, configs} = action.payload
 
-                    //console.log(action.payload)
-
                     if (action.payload.count && action.payload.count.storageKey === constants.STORAGE_KEY) {
                         return {...state, tokens:{...tokens},  count: { storageKey: constants.STORAGE_KEY }, configs: {...configs}}                        
                     }else{
-                        return state
+                        return initState
                     }
 
                     
                 } else {
-                    return state
+                    return initState
                 }
 
 
@@ -119,7 +117,7 @@ const market = (state = initState, action) => {
                 //    }
                 // }
             }
-            return state
+            return initState
         }
         case 'MARKET.CHANGE_SEARCH_WORD': {
             var searchWord = action.payload

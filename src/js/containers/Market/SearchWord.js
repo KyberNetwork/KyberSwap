@@ -20,7 +20,7 @@ export default class SearchWord extends React.Component {
             <div className="search-symbol">
                 <div className="header-label">Search</div>
                 <div>
-                    <input className="search-input" placeholder="Try Searching for Token" value={this.props.searchWord} onChange={(e) => this.changeSearch(e)} />
+                    <input type="text" className="search-input" placeholder="Try Searching for Token" value={this.props.searchWord} onChange={(e) => this.changeSearch(e)} />
                 </div>
             </div>
         )

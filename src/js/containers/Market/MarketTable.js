@@ -14,6 +14,8 @@ import {Line} from 'react-chartjs-2';
 
 @connect((store) => {
   var searchWord = store.market.configs.searchWord
+  if (typeof searchWord === "undefined") searchWord = ""
+
   var currency = store.market.configs.currency.focus
   var tokens = store.market.tokens
   var data = []
