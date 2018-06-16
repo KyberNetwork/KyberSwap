@@ -18,7 +18,7 @@ $divider-color: darken($title-background-color, 5);
   // border: 2px solid $white;
   box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
   @include breakpoint(small only) {
-    top: 0 !important;
+    // top: 0 !important;
     height: auto;
   }
   .message {
@@ -258,5 +258,17 @@ $divider-color: darken($title-background-color, 5);
   }
   .gas-configed{
     margin-top: 2rem;
+  }
+}
+
+
+.trading_view_modal_wrapper{
+  padding: 10px;
+  .trading-view-modal{
+      p.trading-title{
+          margin-top: 50px;
+          text-align: center;
+          color: red;
+      }
   }
 }
