@@ -102,6 +102,7 @@
     padding: 15px 20px;
     .ReactTable {
       border: none;
+      overflow: visible;
       .rt-table {
         .rt-thead {
           &.-header {
@@ -132,7 +133,7 @@
             }
           }
           .rt-tr {
-            margin: 10px 8px;
+            margin: 10px 0px;
             height: 75px;
             background-color: $white;
             border: 1px solid #eee;
