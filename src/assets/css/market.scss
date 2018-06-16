@@ -211,16 +211,27 @@
       padding-top: 20px;
       padding-bottom: 20px;
       .-btn {
-        width: 50%;
         margin: auto;
-        background: #510CA7;
+        width: 50%;
+        background: #5DADE2;
         font-weight: 550;
         color: $white;
         &:hover {
-          background: #510CA7;
+          background: #5DADE2;
           color: $white;
           font-weight: 550;
           box-shadow: 0px 0px 5px #eee;
+        }
+      }
+      @include breakpoint(small only) {
+        font-size: 13px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        .-next, .-previous {
+          margin: 0 10px;
+        }
+        .select-wrap {
+          display: none;
         }
       }
     }
