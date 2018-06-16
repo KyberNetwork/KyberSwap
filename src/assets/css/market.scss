@@ -1,6 +1,10 @@
 .market{
   max-width: 70rem;
   margin-top: 60px;
+
+  .token-selector .focus-item{
+    padding: 8px 12px;
+  }
   .market-title {
     text-align: center;
     font-size: 32px;
@@ -11,12 +15,15 @@
     margin-left: 0;
     margin-right: 0;
     .market-header-left {
-      padding-left: 0;
-      div:first-child {
-        &.columns {
-          padding-left: 0;          
-        }
-      }
+      
+      // @media print, screen and (min-width: 64em){
+      //   padding-left: 0;
+      // }
+      // div:first-child {
+      //   &.columns {
+      //     padding-left: 0;          
+      //   }
+      // }
       .focus-item {
         border: 1px solid #EAEAEA;
         div:first-child {
@@ -25,7 +32,10 @@
       }
     }
     .market-header-right {
-      padding-right: 0;
+      // padding-right: 0;
+      >div{
+        margin-top: 15px        
+      }
       .header-label {
         color: $white;
       }
@@ -89,7 +99,7 @@
     background-color: #F9F8FB;
     margin-bottom: 50px;
     box-shadow: 0 0 5px #bbb;
-    padding: 15px 70px;
+    padding: 15px 20px;
     .ReactTable {
       border: none;
       .rt-table {

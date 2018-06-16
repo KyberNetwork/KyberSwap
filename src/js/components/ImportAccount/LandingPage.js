@@ -88,7 +88,7 @@ export default class LandingPage extends React.Component {
 				</div>
 				<div className="notice">
 					<p>
-						In the meanwhile, please use our existing exchange for swapping tokens.
+						In the meanwhile, please visit our existing exchange for swapping tokens.
 						<a href="https://kyber.network" target="_blank">https://kyber.network</a>
 					</p>
 				</div>
