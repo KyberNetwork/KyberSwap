@@ -19,20 +19,13 @@ export default class Market extends React.Component {
       <div className="market row market-landing">
         <h1 className="market-title">Ethereum Market</h1>
         <div className="market-header row">
-          <div className="market-header-left columns large-10">
+          <div className="market-header-left large-10">
             <div className="columns large-5 market-search">
               <SearchWord />
             </div>
             <div className="columns large-2 market-choose-currency">
               <Currency />
             </div>
-            {/* <div className="columns large-3 market-sort">
-              <Currency />              
-            </div> */}
-            <div className="columns large-3"></div>
-            {/* <div className="columns large-4">
-              <SortColumn />
-            </div> */}
           </div>
           <div className="market-header-right columns large-2">
             <ManageColumn />

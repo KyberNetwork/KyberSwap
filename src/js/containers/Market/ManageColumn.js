@@ -68,7 +68,7 @@ export default class ManageColumn extends React.Component {
     //<div key={key} className="column-label">
     render() {
         return (
-            <div className="columns">                
+            <div>                
                 <div className="token-selector">
                     <Dropdown onShow={(e) => this.showSelector(e)} onHide={(e) => this.hideSelector(e)}  active ={this.state.open}>
                         <DropdownTrigger className="notifications-toggle">

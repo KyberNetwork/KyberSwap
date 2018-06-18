@@ -1,7 +1,7 @@
 import React from "react"
 import * as converts from "../../utils/converter"
 import BigNumber from "bignumber.js"
-import ReactTooltip from 'react-tooltip'
+//import ReactTooltip from 'react-tooltip'
 
 const AccountBalanceLayout = (props) => {
 
