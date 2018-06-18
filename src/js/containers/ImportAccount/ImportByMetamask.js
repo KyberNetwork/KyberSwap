@@ -17,7 +17,8 @@ import bowser from 'bowser'
     account: store.account,
     ethereum: store.connection.ethereum,
     tokens: supportTokens,
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    metamask: store.global.metamask
   }
 })
 
@@ -52,6 +53,7 @@ export default class ImportByMetamask extends React.Component {
       <ImportByMetamaskView 
         connect={this.connect}
         translate={this.props.translate}
+        metamask = {this.props.metamask}
       />
     )
   }

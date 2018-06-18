@@ -348,7 +348,8 @@ export default class EthereumService extends React.Component {
       return
     }
     var pathname = state.router.location.pathname
-    if (pathname !== "/exchange") {
+    console.log(pathname)
+    if (pathname !== constants.BASE_HOST + "/exchange") {
       return
     }
     store.dispatch(estimateGas())
@@ -362,7 +363,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== "/transfer") {
+    if (pathname !== constants.BASE_HOST + "/transfer") {
       return
     }
     store.dispatch(estimateGasTransfer())
@@ -384,7 +385,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== "/exchange") {
+    if (pathname !== constants.BASE_HOST + "/exchange") {
       return
     }
     store.dispatch(verifyExchange())
@@ -399,7 +400,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== "/transfer") {
+    if (pathname !== constants.BASE_HOST + "/transfer") {
       return
     }
     store.dispatch(verifyTransfer())
@@ -424,7 +425,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== "/exchange") {
+    if (pathname !== constants.BASE_HOST + "/exchange") {
       return
     }
     store.dispatch(fetchExchangeEnable())

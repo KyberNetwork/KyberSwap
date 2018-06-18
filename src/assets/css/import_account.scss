@@ -35,7 +35,7 @@
           margin-bottom: 6rem;
           .importer {
             position: relative;
-            height: 270px;
+            height: 300px;
             border-radius: 2px;
             overflow: hidden;
             background-color: #fff;
@@ -43,6 +43,12 @@
             margin-top: 35px;
             
             max-width: 200px;
+            &.metamask{
+              .more-info{
+                text-align: left;
+                color: #999;
+              }
+            }
             >div{
               &:not(.how-to-use){
                 margin-top: 20px;

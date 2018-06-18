@@ -190,3 +190,18 @@ export function setAnalyzeError(networkIssues, reserveIssues, txHash){
     payload: { networkIssues, reserveIssues, txHash }
   }
 }
+
+
+export function throwErrorMematamask(err){
+  return {
+    type: "GLOBAL.THROW_ERROR_METAMASK",
+    payload: { err }
+  }
+}
+
+export function updateMetamaskAccount(address, balance){
+  return {
+    type: "GLOBAL.UPDATE_METAMASK_ACCOUNT",
+    payload: { address, balance }
+  }
+}
