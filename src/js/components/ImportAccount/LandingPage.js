@@ -5,10 +5,10 @@ import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
 	return {
-	  translate: getTranslate(store.locale)
+		translate: getTranslate(store.locale)
 	}
-  })
-  
+})
+
 export default class LandingPage extends React.Component {
 
 	constructor() {
@@ -62,37 +62,94 @@ export default class LandingPage extends React.Component {
 	}
 
 	goExchange = () => {
+		// if (this.state.termAgree) {
 		this.props.goExchange()
+		// }
 	}
 
 	render() {
 		return (
-			// <div id="get-start">
-			// 	<div class="frame">
-			// 		<div className="row">
-			// 			<div className="convert-tokens">
-			// 				<h1>Convert Tokens Instantly</h1>
-			// 				<p>No deposit, No registration</p>
-			// 				<button onClick={this.goExchange}>Swap now</button>
-			// 			</div>
-			// 			<div className="group">
-			// 				<img src={require('../../../assets/img/landing/group.svg')} />
-			// 			</div>
-			// 		</div>
-			// 	</div>
-			// </div>
-			<div id="comming-soon">
-				<div className="notification">
-					<h1>kyberSwap</h1>
-					<h4>Coming Soon</h4>
-				</div>
-				<div className="notice">
-					<p>
-						In the meanwhile, please visit our existing exchange for swapping tokens.
-						<a href="https://kyber.network" target="_blank">https://kyber.network</a>
-					</p>
+			<div id="get-start">
+				<div class="frame">
+					<div className="row">
+						<div className="convert-tokens">
+							<div>
+								<h1>Instant and Secure Token Swaps.<br></br>No orderbooks, no deposits, pure joy.</h1>
+								<p>Want to purchase different tokens without any hassle? Do it in a few simple clicks.</p>
+							</div>
+
+							<div className="accept-term">
+								<TermAndServices
+									termAgree={this.state.termAgree}
+									clickCheckbox={this.clickCheckbox}
+								/>
+								<div className="accept-btn">
+									<button class={"button"}
+										onClick={this.goExchange}>
+										ACCEPT
+									</button>
+								</div>
+							</div>
+
+							<div className="account-type grid-x">
+								<div className="item small-4 medium-4 large-2 columns">
+									<div>
+										<div>
+										<img src="../../../assets/img/landing/metamask_disable.png" />
+										<span>METAMASK</span>
+										</div>
+									</div>
+
+								</div>
+								<div className="item small-4 medium-4 large-2 columns">
+									<div>
+									<div>
+										<img src="../../../assets/img/landing/keystore_disable.png" />
+										<span>KEYSTORE</span>
+										</div>
+									</div>
+								</div>
+								<div className="item small-4 medium-4 large-2 columns">
+									<div>
+									<div>
+										<img src="../../../assets/img/landing/trezor_disable.png" />
+										<span>TREZOR</span>
+										</div>
+									</div>
+								</div>
+								<div className="item small-4 medium-4 large-2 columns">
+									<div>
+									<div>
+										<img src="../../../assets/img/landing/ledger_disable.png" />
+										<span>LEDGER</span>
+										</div>
+									</div>
+								</div>
+								<div className="item small-4 medium-4 large-2 columns">
+									<div>
+									<div>
+										<img src="../../../assets/img/landing/privatekey_disable.png" />
+										<span>PRIVATE KEY</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
+			// <div id="comming-soon">
+			// 	<div className="notification">
+			// 		<h1>kyberSwap</h1>
+			// 		<h4>Coming Soon</h4>
+			// 	</div>
+			// 	<div className="notice">
+			// 		<p>
+			// 			In the meanwhile, please visit our existing exchange for swapping tokens.
+			// 			<a href="https://kyber.network" target="_blank">https://kyber.network</a>
+			// 		</p>
+			// 	</div>
+			// </div>
 		)
 	}
 }

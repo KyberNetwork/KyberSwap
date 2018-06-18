@@ -60,7 +60,7 @@ var scriptConfig = function (env) {
     devtool: (env && env.build !== "true") ? "inline-sourcemap" : false,
     entry: {
       app: ['babel-polyfill', "./js/client.js", "./assets/css/app.scss"],
-      other: "./assets/css/foundation.scss"
+      other: ["./assets/css/foundation-float.min.css", "./assets/css/foundation-prototype.min.css"]
     },
     module: {
       loaders: [{
@@ -71,6 +71,10 @@ var scriptConfig = function (env) {
           presets: ['react', 'es2015', 'stage-0'],
           plugins: ['react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties'],
         }
+      },
+      {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ],
       },
       {
         test: /\.scss$/,

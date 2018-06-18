@@ -1,62 +1,84 @@
-.import-account-modal {
-  @include breakpoint(medium) {
-    &.large {
-      // top: 125px;
-      width: 70%;
-    }
-  }
+// .import-account-modal {
+//   @include breakpoint(medium) {
+//     &.large {
+//       // top: 125px;
+//       width: 70%;
+//     }
+//   }
   #import-account{
-    background: linear-gradient(180deg, #6292A7 50%, $white 50%);
+    // background: linear-gradient(180deg, #6292A7 50%, $white 50%);
+    padding-top: 4rem;
+    
     .title{
       font-weight: bold;
-      color: $white;
+      color: #000;
+      text-align: center;
+      font-size: 2.5rem;
     }
     .sub-title {
       font-size: 0.8rem;
       color: $white;
       padding: 0px 50px 30px 50px;
     }
+
+    
+
     .import-account {
       padding: 0 60px;
+      text-align: center;
+      justify-content: center;
+
       .column {
         padding: 7px;
         .column-block {
           padding: 0px;
-          box-shadow: 0 1px 0 #ccc;
           margin-bottom: 6rem;
           .importer {
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            height: 0;
-            padding-top: 100%;
             position: relative;
-            height: 170px;
-            // @include breakpoint(large){
-            //   height: 240px;
-            //   padding-top: 0;
-            //   img {
-            //     margin-top: 20px;
-            //   }
-            // }
+            height: 270px;
             border-radius: 2px;
             overflow: hidden;
+            background-color: #fff;
+            padding: 15px;
+            margin-top: 35px;
+            
+            max-width: 200px;
+            >div{
+              &:not(.how-to-use){
+                margin-top: 20px;
+              }
+            }
+
+            .how-to-use{
+              width: 20px;
+              height: 20px;
+              position: absolute;
+              top: 10px;
+              right: 10px;
+              background-image: url(../img/landing/notice.svg);
+              &:hover{
+                background-image: url(../img/landing/notice_grey.svg);
+              }
+            }
+
+
+
             // box-shadow: 0px 1px 13px $k-divider;
-            &.json {
-              background-image: url(../img/json.jpg)
-            }
-            &.pkey {
-              background-image: url(../img/pkey.jpg)
-            }
-            &.trezor {
-              background-image: url(../img/trezor.jpg)
-            }
-            &.ledger {
-              background-image: url(../img/ledger.jpg)
-            }
-            &.metamask {
-              background-image: url(../img/metamask.jpg)
-            }
+            // &.json {
+            //   background-image: url(../img/json.jpg)
+            // }
+            // &.pkey {
+            //   background-image: url(../img/pkey.jpg)
+            // }
+            // &.trezor {
+            //   background-image: url(../img/trezor.jpg)
+            // }
+            // &.ledger {
+            //   background-image: url(../img/ledger.jpg)
+            // }
+            // &.metamask {
+            //   background-image: url(../img/metamask.jpg)
+            // }
             > a {
               position: absolute;
               top: 0;
@@ -70,9 +92,17 @@
                 background: linear-gradient(178deg, rgba(54, 217, 172, 0.7), rgba(4, 150, 150, 0.7));
               }
             }
-            img {
-              width: 100%;
+            button{
+              padding: 10px;
+            background-color: #EF8102;
+            color: #fff;
+            border-radius: 5px;
+            width: 100%;
+            cursor: pointer;
             }
+            // img {
+            //   width: 100%;
+            // }
             // .description {
             //   @include breakpoint(large){
             //     margin-top: 20px;
@@ -103,7 +133,7 @@
     }
   }
 
-}
+// }
 
 .import-privatekey {
   .title {

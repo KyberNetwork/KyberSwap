@@ -28,7 +28,9 @@ export default class TradingViewModal extends React.Component {
 		const {currency} = this.props
 		return (
 			<div className="trading-view-modal">
-				{ currency==="USD" && <p>Now support only pairs with ETH, not support pairs with USD yet.</p>}
+			 	<a className="x" onClick={(e) => this.closeModal(e)}>&times;</a>
+				{ currency==="USD" && <p className="trading-title">Now support only pairs with ETH, not support pairs with USD yet.</p>}
+				{ currency==="ETH" && <p className="trading-title">{this.props.selectedSymbol} - ETH</p>}
 				<TradingView />
 			</div>
 		)
@@ -38,7 +40,7 @@ export default class TradingViewModal extends React.Component {
 		return (
 			<Modal
 			        className={{
-			        base: 'reveal large',
+			        base: 'reveal large trading_view_modal_wrapper',
 			        afterOpen: 'reveal large'
 			        }}
 			        isOpen={this.props.isOpen}

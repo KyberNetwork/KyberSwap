@@ -30,12 +30,23 @@ const DropFile = (props) => {
   return (
     <Dropzone onDrop={props.onDrop} disablePreview={true} className="column column-block">
       <div className="importer json">
-        <a >
+        <div className="how-to-use">                    
+        </div>
+        <div>
+            <img src={require('../../../assets/img/landing/keystore_active.svg')} />
+        </div>
+        <div>
+            KEYSTORE
+        </div>
+        <div>
+            <button onClick={(e) => props.onDrop(e)}>Connect</button>
+        </div>  
+        {/* <a >
           <img src={require('../../../assets/img/json.svg')}/>
-        </a>
+        </a> */}
       </div>
-      <div className="description">{props.translate("import.from_keystore") || <span>Keystore</span>}</div>
-      {message}
+      {/* <div className="description">{props.translate("import.from_keystore") || <span>Keystore</span>}</div>
+      {message} */}
     </Dropzone>
   )  
 }

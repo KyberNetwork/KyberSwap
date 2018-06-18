@@ -97,7 +97,7 @@ export default class TradingView extends React.Component {
 		}
 		
 		return (
-			<div style={{height:600, padding: 40}}
+			<div style={{height:600, padding: 20, marginTop: 10}}
 				id={this.props.containerId}
 				className={'TVChartContainer'}
 			/>

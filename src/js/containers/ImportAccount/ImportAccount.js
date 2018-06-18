@@ -24,45 +24,29 @@ export default class ImportAccount extends React.Component {
   constructor(){
     super()
     this.state = {
-      isOpen: false
+      isOpen: false,
+      isInLandingPage: true
     }
   }
 
-  // goExchange = (e) => {
-  //   this.setState({
-  //     isInLandingPage: false
-  //   })
+  goExchange = (e) => {
+    this.setState({
+      isInLandingPage: false
+    })
+  }
+
+  // closeModal = (e) => {
+  //   this.setState({isOpen: false})
   // }
 
-  closeModal = (e) => {
-    this.setState({isOpen: false})
-  }
-
-  openModal = (e) => {
-    this.setState({isOpen: true})
-  }
+  // openModal = (e) => {
+  //   this.setState({isOpen: true})
+  // }
 
   render() {
-    return (
-      <div>
-        <LandingPage goExchange={this.openModal} translate={this.props.translate}/>
-        <ImportAccountView
-          firstKey={<ImportByMetamask />}
-          secondKey={<ImportKeystore />}
-          thirdKey={<ImportByDeviceWithTrezor />}
-          fourthKey={<ImportByDeviceWithLedger />}
-          fifthKey={<ImportByPrivateKey />}
-          errorModal={<ErrorModal />}
-          translate={this.props.translate}
-          isOpen = {this.state.isOpen}
-          closeModal = {this.closeModal}
-        />
-      </div>
-    )
-    // if (this.state.isInLandingPage) {
-    //   return <LandingPage goExchange={this.goExchange} translate={this.props.translate}/>
-    // } else {
-    //   return (
+    // return (
+    //   <div>
+    //     <LandingPage goExchange={this.openModal} translate={this.props.translate}/>
     //     <ImportAccountView
     //       firstKey={<ImportByMetamask />}
     //       secondKey={<ImportKeystore />}
@@ -71,8 +55,32 @@ export default class ImportAccount extends React.Component {
     //       fifthKey={<ImportByPrivateKey />}
     //       errorModal={<ErrorModal />}
     //       translate={this.props.translate}
+    //       isOpen = {this.state.isOpen}
+    //       closeModal = {this.closeModal}
     //     />
-    //   )
-    // }
+    //   </div>
+    // )    
+    var content
+    if (this.state.isInLandingPage) {
+      content =  <LandingPage goExchange={this.goExchange} translate={this.props.translate}/>
+    } else {
+      content =  (
+        <ImportAccountView
+          firstKey={<ImportByMetamask />}
+          secondKey={<ImportKeystore />}
+          thirdKey={<ImportByDeviceWithTrezor />}
+          fourthKey={<ImportByDeviceWithLedger />}
+          fifthKey={<ImportByPrivateKey />}
+          errorModal={<ErrorModal />}
+          translate={this.props.translate}
+        />
+      )
+    }
+
+    return (
+      <div id="landing_page">{content}</div>
+    )
+
+
   }
 }

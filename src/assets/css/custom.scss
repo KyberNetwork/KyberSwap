@@ -4,9 +4,12 @@
 .ReactModal__Body--open{
     overflow: hidden;
 }
-.react-modal{
-    margin-left: 50% !important;
-}
+// .react-modal{
+//     margin-left: 50% !important; 
+//     @include breakpoint(small only) {
+//         margin-left: 0% !important;
+//     }
+// }
 .confirm-exchange{
     margin-left: 0% !important;
 }
@@ -173,10 +176,4 @@ input[type=number] {
 }
 .content-exchange-body{
     padding: 0 3rem;
-}
-.trading-view-modal{
-    p{
-        padding: 1rem 0 0 6rem;
-        color: red;
-    }
 }
