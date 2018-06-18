@@ -65,7 +65,14 @@ export default class TradingView extends React.Component {
 			time_frames: this.props.time_frames,
 			locale: this.getLanguageFromURL() || this.props.locale,
 			fullscreen: this.props.fullscreen,
-			autosize: this.props.autosize
+			autosize: this.props.autosize,
+      overrides: {
+        'mainSeriesProperties.candleStyle.upColor': '#31CB9E',
+        'mainSeriesProperties.candleStyle.downColor': '#F95555',
+				'mainSeriesProperties.candleStyle.wickUpColor': '#31CB9E',
+				'mainSeriesProperties.candleStyle.wickDownColor': '#F95555',
+        'mainSeriesProperties.candleStyle.drawBorder': false,
+      }
 		};
 
 	//	window.TradingView.onready(() => {
