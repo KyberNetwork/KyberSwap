@@ -47,15 +47,15 @@ export default class Layout extends React.Component {
     this.intervalIdle = null;
   }
   componentWillMount() {
-    document.onload = this.resetTimmer;
-    document.onmousemove = this.resetTimmer;
-    document.onmousedown = this.resetTimmer; // touchscreen presses
-    document.ontouchstart = this.resetTimmer;
-    document.onclick = this.resetTimmer;     // touchpad clicks
-    document.onscroll = this.resetTimmer;    // scrolling with arrow keys
-    document.onkeypress = this.resetTimmer;
+    // document.onload = this.resetTimmer;
+    // document.onmousemove = this.resetTimmer;
+    // document.onmousedown = this.resetTimmer; // touchscreen presses
+    // document.ontouchstart = this.resetTimmer;
+    // document.onclick = this.resetTimmer;     // touchpad clicks
+    // document.onscroll = this.resetTimmer;    // scrolling with arrow keys
+    // document.onkeypress = this.resetTimmer;
 
-    this.intervalIdle = setInterval(this.checkTimmer.bind(this), 10000)
+    // this.intervalIdle = setInterval(this.checkTimmer.bind(this), 10000)
 
     this.props.dispatch(createNewConnectionInstance())
     // createNewConnection()

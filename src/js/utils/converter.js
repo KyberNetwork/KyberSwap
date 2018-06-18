@@ -290,7 +290,6 @@ export function roundingNumber(number) {
   }
 
   let minDisplay = MAX_DIGIS - count_0 < 4? 4: MAX_DIGIS - count_0
-
   let precision = number.toPrecision((number < 1 && number > 0) ? minDisplay : MAX_DIGIS),
     arr = precision.split('.'),
     intPart = arr[0],
@@ -333,7 +332,9 @@ export function getDifferentAmount(sourceAmount, prevAmount, sourceDecimal,
     }else{
       var valueChange = Math.abs(sourceAmount - prevAmount) 
       var rate = new BigNumber(minRate)
-      var rateWeight = new BigNumber(10).pow(18)
+
+      //var rateWeight = new BigNumber(10).pow(18)
+      var rateWeight = Math.pow(10, 18)
       rate = rate.div(rateWeight)
 
       var value = new BigNumber(valueChange + "")

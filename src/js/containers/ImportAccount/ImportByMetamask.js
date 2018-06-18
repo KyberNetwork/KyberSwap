@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { importAccountMetamask, throwError } from "../../actions/accountActions"
 import { ImportByMetamaskView } from "../../components/ImportAccount"
 import BLOCKCHAIN_INFO from "../../../../env"
-import Web3Service from "../../services/web3"
+import {Web3Service} from "../../services/web3"
 import { getTranslate } from 'react-localize-redux'
 import bowser from 'bowser'
 
@@ -43,8 +43,9 @@ export default class ImportByMetamask extends React.Component {
   }
 
   dispatchAccMetamask(web3Service){
+    var walletType = web3Service.getWalletType()
     this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-      this.props.ethereum, this.props.tokens, this.props.translate))
+      this.props.ethereum, this.props.tokens, this.props.translate, walletType))
   }
 
   render() {

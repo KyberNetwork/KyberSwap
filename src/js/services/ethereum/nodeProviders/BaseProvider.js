@@ -520,8 +520,8 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getGasPrice()
                 .then(result => {
-
-                    console.log(result)
+                    
+                //    console.log(result)
                     var gasPrice = parseInt(result, 10)
                     if (gasPrice > 20000000000) {
                         resolve({
@@ -614,7 +614,7 @@ export default class BaseProvider {
                             type: 'uint256',
                             name: 'slippagePrice'
                         }], result)
-                        //   console.log(rates)
+                  //      console.log(rates)
                         resolve(rates)
                     } catch (e) {
                         reject(e)
