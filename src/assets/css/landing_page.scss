@@ -1,27 +1,35 @@
 #get-start{
-  color: #f2f4f4;
-  background-image: url(../img/landing/cover.jpg);
+  color: #000;
+  background-image: url(../img/landing/swap.png);
   background-repeat: no-repeat;
   background-size: cover;
+  text-align: center;
   .frame{
-    .row {
+    padding-top: 80px;
+    >div {
       max-width: 70rem;
       display: flex;
       align-items: center;
       justify-content: center;
       .convert-tokens {
-        width: 50%;
+        width: 100%;
+        // width: 50%;
         h1 {
           font-weight: 550;
         }
+        p{
+        }
         button {
-          background-color: $white;
           border-radius: 3px;
-          height: 42px;
-          width: 275px;
-          color: #787878;
+          padding: 10px;
+          color: #fff;
+          background-color: #EF8102;
           font-weight: 550;
+          margin: 0;
           cursor: pointer;
+          &.disable{
+            cursor: initial;
+          }
         }
       }
       .group {
@@ -53,31 +61,71 @@
     margin-top: 0.6rem;
   }
   .term-services{
-    margin: 50px 0;
-    img{
-      box-sizing: content-box;
-    }
+    height: 65px;
+    background-color: #fff;
+    color: #757575;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 15px 50px #aaa;
+    position: relative;
     .term-text{
       vertical-align: text-top;
       font-weight: 500;
+      padding: 20px;
+      padding-right: 40px;
+      font-size: 15px;
     }
   }
-  button{
-    padding: 0 30px;
-    margin-bottom: 70px;
-    min-width: 135px;
-    &.disable{
-      background: linear-gradient(to right, #868f96 , #596164);
-      font-weight: 800;
-      border-color: #5a6266;
-      color: #ffffff;
+  // button{
+  //   padding: 0 30px;
+  //   margin-bottom: 70px;
+  //   min-width: 135px;
+  //   cursor: pointer;
+  //   &.disable{
+  //     cursor: initial;
+  //   }
+  // }
+  // a:hover, a:focus{
+  //   color: $k-success;
+  // }
+    a{
+      border-bottom: 1px solid #EF8102;
+      color: inherit
     }
+    .accept-btn{
+      position: absolute;
+      right: -18px;
+    }
+  .accept-term{
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    position: relative;
+    max-width: 356px;
   }
-  a:hover, a:focus{
-    color: $k-success;
+  .account-type{
+    .item{
+      margin: 20px;
+      >div{
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        width: 200px;
+        text-align: center;
+        height: 200px;
+        span{
+          display: block;
+          width: 100%;
+        }
+      }
+    }
   }
 }
-
+/* Accept Terms and Con: */
 // #comming-soon {
 //   background-image: url(../img/landing/landing.png);
 //   background-repeat: no-repeat;
