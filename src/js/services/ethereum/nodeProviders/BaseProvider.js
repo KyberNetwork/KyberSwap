@@ -34,13 +34,13 @@ export default class BaseProvider {
     getLatestBlock() {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getBlockNumber().then((block) => {
-                    resolve(block)
+                resolve(block)
             }).catch((err) => {
                 reject(err)
             })
         })
     }
-    
+
     getBalanceAtLatestBlock(address) {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getBalance(address)
@@ -132,7 +132,7 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getTransactionCount(address)
                 .then((nonce) => {
-                        resolve(nonce)
+                    resolve(nonce)
                 })
                 .catch((err) => {
                     reject(err)
@@ -182,13 +182,13 @@ export default class BaseProvider {
     exchangeData(sourceToken, sourceAmount, destToken, destAddress,
         maxDestAmount, minConversionRate, walletId) {
 
-        if (!this.rpc.utils.isAddress(walletId)){
+        if (!this.rpc.utils.isAddress(walletId)) {
             walletId = "0x" + Array(41).join("0")
-        }  
+        }
         var data = this.networkContract.methods.trade(
             sourceToken, sourceAmount, destToken, destAddress,
             maxDestAmount, minConversionRate, walletId).encodeABI()
-                 
+
         return new Promise((resolve, reject) => {
             resolve(data)
         })
@@ -443,18 +443,18 @@ export default class BaseProvider {
 
         })
     }
-    
-    
+
+
     exactTradeData(data) {
         return new Promise((resolve, reject) => {
             try {
                 //get trade abi from 
                 var tradeAbi = this.getAbiByName("trade", constants.KYBER_NETWORK)
-              //  console.log(tradeAbi)
+                //  console.log(tradeAbi)
                 abiDecoder.addABI(tradeAbi)
-              //  console.log(abiDecoder)
+                //  console.log(abiDecoder)
                 var decoded = abiDecoder.decodeMethod(data);
-            //      console.log(decoded)
+                //      console.log(decoded)
                 resolve(decoded.params)
             } catch (e) {
                 reject(e)
@@ -532,14 +532,14 @@ export default class BaseProvider {
                         })
                     } else {
                         gasPrice = gasPrice / 1000000000
-                        if (gasPrice < 1){
+                        if (gasPrice < 1) {
                             resolve({
                                 low: 1,
                                 default: 1,
                                 standard: 1,
                                 fast: 1
                             })
-                        }else{
+                        } else {
                             resolve({
                                 low: gasPrice.toString(),
                                 default: gasPrice.toString(),
@@ -547,7 +547,7 @@ export default class BaseProvider {
                                 fast: (gasPrice * 1.7).toString()
                             })
                         }
-                        
+
                     }
                 }).catch((err) => {
                     reject(err)
@@ -593,20 +593,20 @@ export default class BaseProvider {
 
     getRateAtSpecificBlock(source, dest, srcAmount, blockno) {
         var data = this.networkContract.methods.getExpectedRate(source, dest, srcAmount).encodeABI()
-        
+
         return new Promise((resolve, reject) => {
             this.rpc.eth.call({
                 to: BLOCKCHAIN_INFO.network,
                 data: data
             }, blockno)
                 .then(result => {
-                //    console.log({source, dest, srcAmount, blockno})
-               //     console.log("rate: " + result)
-                    if (result === "0x"){
+                    //    console.log({source, dest, srcAmount, blockno})
+                    //     console.log("rate: " + result)
+                    if (result === "0x") {
                         reject(new Error("Cannot get rate"))
                         return
                     }
-                    try{
+                    try {
                         var rates = this.rpc.eth.abi.decodeParameters([{
                             type: 'uint256',
                             name: 'expectedPrice'
@@ -616,7 +616,7 @@ export default class BaseProvider {
                         }], result)
                   //      console.log(rates)
                         resolve(rates)
-                    }catch(e){
+                    } catch (e) {
                         reject(e)
                         // resolve({
                         //     expectedPrice: "0",

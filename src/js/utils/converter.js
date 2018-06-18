@@ -79,10 +79,8 @@ export function caculateEthBalance(token){
   } else {
     var rateBig = new BigNumber(token.rate)
     var balanceBig = new BigNumber(token.balance)
-
+    //var weiParam = new BigNumber(10)
     var balanceToken = balanceBig.div(Math.pow(10, token.decimal))
-    // var weiParam = new BigNumber(10)
-    // var balanceToken = balanceBig.div(weiParam.pow(token.decimal))
 
     var balanceEth = balanceToken.times(rateBig)
     return balanceEth.toString()
@@ -273,7 +271,7 @@ export function stringToHex(number, decimal) {
 }
 
 export function roundingNumber(number) {
-  const MAX_DIGIS = 7, SIZE = 3;
+  var MAX_DIGIS = 7, SIZE = 3;
   number = +number;
   let numberStr = number.toString();
   if (isNaN(number) || number <= 0) number = 0;
@@ -306,6 +304,10 @@ export function roundingNumber(number) {
   }
   return result;
 }
+
+// export function displayRate(number){
+//   return roundingNumber(number
+// }
 
 export function toPrimitiveNumber(x) {
   var bigNum = new BigNumber(x)
@@ -353,7 +355,7 @@ export function compareRate(minRate, expectedRate){
   if((expectedRate === "") || isNaN(expectedRate)) return -1
 
   var minRateBig = new BigNumber(minRate)
-  var rateWeight = new BigNumber(10).pow(18)
+  var rateWeight = Math.pow(10, 18)
   minRateBig = minRateBig.times(rateWeight)
 
   var expectedRateBig = new BigNumber(expectedRate)

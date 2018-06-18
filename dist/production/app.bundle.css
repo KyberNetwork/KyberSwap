@@ -9326,10 +9326,13 @@ input[type=number] {
     height: 47px;
     font-size: 15px; }
     .token-selector .focus-item .icon {
-      margin-right: 10px; }
+      margin-right: 10px;
+      max-width: 30px; }
       .token-selector .focus-item .icon img {
         width: 30px;
-        vertical-align: top; }
+        vertical-align: top;
+        width: 28px;
+        max-height: 28px; }
   .token-selector .select-item {
     padding-bottom: 20px;
     position: absolute;
@@ -9353,6 +9356,9 @@ input[type=number] {
       .token-selector .list-item .token-item .item-icon {
         width: 35px;
         display: inline-block; }
+        .token-selector .list-item .token-item .item-icon img {
+          width: 28px;
+          max-height: 28px; }
       .token-selector .list-item .token-item > div > span {
         color: white; }
       .token-selector .list-item .token-item > div span.token-name {
@@ -9657,8 +9663,8 @@ h6, .h6 {
 #header {
   background-color: white;
   padding: 10px 0;
-  border-bottom: 1px solid #ddd;
-  min-height: 75px; }
+  padding-top: 0;
+  border-bottom: 1px solid #ddd; }
   #header a.logo img {
     width: 108px;
     margin-top: 7px; }

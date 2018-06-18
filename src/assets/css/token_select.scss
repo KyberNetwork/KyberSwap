@@ -82,12 +82,15 @@
     font-size: 15px;
     .icon{
       margin-right: 10px;
+      max-width: 30px;
      // border-radius: 20px;
      // background-color: $white;
    //   border: 2px solid $white;
       img{
         width: 30px;
         vertical-align: top;
+        width: 28px;
+        max-height: 28px;
       }
     }
   }
@@ -131,6 +134,10 @@
         // background-color: $white;
         width: 35px;
         display: inline-block;
+        img{
+          width: 28px;
+          max-height: 28px;
+        }
       }
       >div{
         >span{
