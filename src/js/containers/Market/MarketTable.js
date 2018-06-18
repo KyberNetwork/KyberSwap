@@ -274,6 +274,13 @@ export default class MarketTable extends React.Component {
           }
         }
         }
+        getPaginationProps={() => {
+          return {
+            previousText: (<img src={require("../../../assets/img/market/arrow-left.png")} />),
+            nextText:  (<img src={require("../../../assets/img/market/arrow-right.svg")} />)
+          }
+        }
+        }
       />
     )
   }

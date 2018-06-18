@@ -1,5 +1,9 @@
 .market{
   margin-top: 60px;
+
+  .token-selector .focus-item{
+    padding: 8px 12px;
+  }
   .market-title {
     text-align: center;
     font-size: 32px;
@@ -10,15 +14,15 @@
     margin-left: 0;
     margin-right: 0;
     .market-header-left {
-      padding-left: 0;
-      div:first-child {
-        &.columns {
-          padding-left: 0;
-          @media only screen and (max-width: 1023px) {
-            padding-left: 1.9375rem;
-          }
-        }
-      }
+      
+      // @media print, screen and (min-width: 64em){
+      //   padding-left: 0;
+      // }
+      // div:first-child {
+      //   &.columns {
+      //     padding-left: 0;          
+      //   }
+      // }
       .focus-item {
         border: 1px solid #EAEAEA;
         div:first-child {
@@ -40,7 +44,10 @@
       // }
     }
     .market-header-right {
-      padding-right: 0;
+      // padding-right: 0;
+      >div{
+        margin-top: 15px        
+      }
       .header-label {
         color: $white;
       }
@@ -107,9 +114,10 @@
     background-color: #F9F8FB;
     margin-bottom: 50px;
     box-shadow: 0 0 5px #bbb;
-    padding: 15px 70px;
+    padding: 15px 20px;
     .ReactTable {
       border: none;
+      overflow: visible;
       .rt-table {
         .rt-thead {
           &.-header {
@@ -140,7 +148,7 @@
             }
           }
           .rt-tr {
-            margin: 10px 8px;
+            margin: 10px 0px;
             height: 75px;
             background-color: $white;
             border: 1px solid #eee;
@@ -218,16 +226,27 @@
       padding-top: 20px;
       padding-bottom: 20px;
       .-btn {
-        width: 50%;
         margin: auto;
-        background: #510CA7;
+        width: 50%;
+        background: #5DADE2;
         font-weight: 550;
         color: $white;
         &:hover {
-          background: #510CA7;
+          background: #5DADE2;
           color: $white;
           font-weight: 550;
           box-shadow: 0px 0px 5px #eee;
+        }
+      }
+      @include breakpoint(small only) {
+        font-size: 13px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        .-next, .-previous {
+          margin: 0 10px;
+        }
+        .select-wrap {
+          display: none;
         }
       }
     }

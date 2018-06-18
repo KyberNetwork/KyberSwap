@@ -38,8 +38,10 @@ export default class Market extends React.Component {
             <ManageColumn />
           </div>
         </div>
-        <div className="market-table columns large-12">
-          <MarketTable />
+        <div className="market-table">
+            <div className="columns row">
+              <MarketTable />
+            </div>
         </div>
         <TradingViewModal />
       </div>
