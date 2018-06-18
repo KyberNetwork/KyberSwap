@@ -266,9 +266,10 @@ $divider-color: darken($title-background-color, 5);
   padding: 10px;
   .trading-view-modal{
       p.trading-title{
-          margin-top: 50px;
-          text-align: center;
-          color: red;
+        margin-top: 50px;
+        text-align: center;
+        color: #666;
+        font-weight: 600;
       }
   }
 }

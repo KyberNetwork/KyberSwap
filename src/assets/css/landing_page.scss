@@ -1,16 +1,17 @@
-
-
-
 #landing_page{
   background-image: url(../img/landing/swap.png);
   background-repeat: no-repeat;
   background-size: cover;
 }
 #get-start{
+  margin-bottom: 140px;
+  padding: 0 15px;
   color: #000;
   text-align: center;
+
   .frame{
-    padding-top: 80px;
+    padding: 80px 0 0;
+
     >div {
       max-width: 70rem;
       display: flex;
@@ -104,29 +105,62 @@
       right: -18px;
     }
   .accept-term{
-    margin: 0 auto;
+    margin: 40px auto 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 40px;
     position: relative;
     max-width: 356px;
   }
-  .account-type{
-    .item{
-      margin: 20px;
-      >div{
-        background-color: #fff;
-        display: flex;
-        align-items: center;
-        width: 200px;
-        text-align: center;
-        height: 200px;
-        span{
-          display: block;
-          width: 100%;
-        }
+
+  .account-type {
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+    position: relative;
+
+    &__content {
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    &__item {
+      background: white;
+      width: 185px;
+      height: 170px;
+      margin: 0 12px 25px;
+      position: relative;
+      top: 50px;
+      box-shadow: 0 4px 10px #666;
+    }
+
+    &__text {
+      color: #ccc;
+      font-size: 20px;
+      margin-top: 10px;
+    }
+  }
+
+  @media screen and (max-width: 1060px) {
+    .account-type {
+      flex-wrap: wrap;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .accept-term {
+      left: 20px;
+
+      .accept-btn {
+        position: relative;
+        right: 20px;
       }
+    }
+
+    .account-type {
+      margin-top: 30px;
     }
   }
 }

@@ -91,46 +91,35 @@ export default class LandingPage extends React.Component {
 								</div>
 							</div>
 
-							<div className="account-type grid-x">
-								<div className="item small-4 medium-4 large-2 columns">
-									<div>
-										<div>
+							<div className="account-type">
+								<div className="account-type__item">
+									<div className="account-type__content">
 										<img src="../../../assets/img/landing/metamask_disable.png" />
-										<span>METAMASK</span>
-										</div>
+										<div className="account-type__text">METAMASK</div>
 									</div>
-
 								</div>
-								<div className="item small-4 medium-4 large-2 columns">
-									<div>
-									<div>
+								<div className="account-type__item">
+                  <div className="account-type__content">
 										<img src="../../../assets/img/landing/keystore_disable.png" />
-										<span>KEYSTORE</span>
-										</div>
+										<div className="account-type__text">KEYSTORE</div>
 									</div>
 								</div>
-								<div className="item small-4 medium-4 large-2 columns">
-									<div>
-									<div>
+								<div className="account-type__item">
+                  <div className="account-type__content">
 										<img src="../../../assets/img/landing/trezor_disable.png" />
-										<span>TREZOR</span>
-										</div>
+										<div className="account-type__text">TREZOR</div>
 									</div>
 								</div>
-								<div className="item small-4 medium-4 large-2 columns">
-									<div>
-									<div>
+								<div className="account-type__item">
+                  <div className="account-type__content">
 										<img src="../../../assets/img/landing/ledger_disable.png" />
-										<span>LEDGER</span>
-										</div>
+										<div className="account-type__text">LEDGER</div>
 									</div>
 								</div>
-								<div className="item small-4 medium-4 large-2 columns">
-									<div>
-									<div>
+								<div className="account-type__item">
+                  <div className="account-type__content">
 										<img src="../../../assets/img/landing/privatekey_disable.png" />
-										<span>PRIVATE KEY</span>
-										</div>
+										<div className="account-type__text">PRIVATE KEY</div>
 									</div>
 								</div>
 							</div>
