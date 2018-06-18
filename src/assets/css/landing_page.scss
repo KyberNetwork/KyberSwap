@@ -1,10 +1,12 @@
+#landing_page{
+  background-image: url(../img/landing/swap.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 #get-start{
   margin-bottom: 140px;
   padding: 0 15px;
   color: #000;
-  background-image: url(../img/landing/swap.png);
-  background-repeat: no-repeat;
-  background-size: cover;
   text-align: center;
 
   .frame{
