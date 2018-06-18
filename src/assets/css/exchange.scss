@@ -16,10 +16,12 @@
     }
   }
   .main-title  {
-    padding-top: 1rem;
+    line-height: 1.2;
+    letter-spacing: -0.1px;
+    padding: 3.5rem 0 0 3.5rem;
     font-size: 1.25rem;
     font-weight: 600;
-    color: #4B4860;
+    color: #141927;
   }
   .token-input {
     .info {
@@ -38,26 +40,24 @@
     margin-top: 50px;
     line-height: 55px;
     padding: 0 35px;
-    background: #510CA7;
+    background: #ef8102;
     font-size: 1.3rem;
-    border-radius: 50px;
+    border-radius: 4px;
     box-shadow: 0 10px 15px #ccc;
   }
 
   .token-compare {
-    color: #ccc;
+    color: #666666;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: .5px;
     text-align: center;
     margin-bottom: 10px;
     margin-top: 1rem;
-    .seperator{
-        
-    }
-    div {
-      font-size: 0.97rem;
-      letter-spacing: 0.1px;
-    }
+    // div {
+    //   font-size: 0.97rem;
+    //   letter-spacing: 0.1px;
+    // }
     div:first-child {
       text-align: right;
     }
@@ -83,6 +83,7 @@
       }
     }
     .token-input {
+      opacity: 0.5;
       input {
         width: 0;
         opacity: 0;
@@ -111,11 +112,11 @@
       }
     }
     .focus-item {
+      border-radius: 5px;
+      box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
+      background-color: #ffffff;
+      border: solid 0.8px rgba(204, 204, 204, 0.72);
       padding: 10px 12px;
-      border: 2px solid transparent;
-      border-bottom: 1px solid transparent;
-      border-radius: 32.5px;
-      box-shadow: 0 0 15px #ddd;
       align-items: center;
       font-size: 15px;
       &.d-flex{

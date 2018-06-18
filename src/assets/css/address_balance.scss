@@ -1,5 +1,5 @@
 #balance-account{
-  border-right: 1px solid #ddd;
+    border-right: 1px solid #ddd;
     padding: 1rem 0.5rem;
     font-weight: 600;
     font-style: normal;
@@ -17,7 +17,6 @@
         font-size: 12px;
         font-weight: 500;
         .text-upcase {
-          font-family: OpenSans;
           text-transform: uppercase;
           color: #454e5f;
         }
@@ -57,7 +56,7 @@
             box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.2);
             .balance-item{
               .label-radio{
-                color: #44a076;
+                color: #ef8102;
               }
             }
           }
@@ -143,6 +142,7 @@
       .label-radio{
         font-family: OpenSans;
         color: #474d5f;
+        opacity: 0.8;
         .symbol{
           font-size: 11px;
         }
