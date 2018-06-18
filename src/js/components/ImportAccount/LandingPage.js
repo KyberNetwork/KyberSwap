@@ -67,32 +67,32 @@ export default class LandingPage extends React.Component {
 
 	render() {
 		return (
-			// <div id="get-start">
-			// 	<div class="frame">
-			// 		<div className="row">
-			// 			<div className="convert-tokens">
-			// 				<h1>Convert Tokens Instantly</h1>
-			// 				<p>No deposit, No registration</p>
-			// 				<button onClick={this.goExchange}>Swap now</button>
-			// 			</div>
-			// 			<div className="group">
-			// 				<img src={require('../../../assets/img/landing/group.svg')} />
-			// 			</div>
-			// 		</div>
-			// 	</div>
-			// </div>
-			<div id="comming-soon">
-				<div className="notification">
-					<h1>kyberSwap</h1>
-					<h4>Coming Soon</h4>
-				</div>
-				<div className="notice">
-					<p>
-						In the meanwhile, please visit our existing exchange for swapping tokens.
-						<a href="https://kyber.network" target="_blank">https://kyber.network</a>
-					</p>
+			<div id="get-start">
+				<div class="frame">
+					<div className="row">
+						<div className="convert-tokens">
+							<h1>Convert Tokens Instantly</h1>
+							<p>No deposit, No registration</p>
+							<button onClick={this.goExchange}>Swap now</button>
+						</div>
+						<div className="group">
+							<img src={require('../../../assets/img/landing/group.svg')} />
+						</div>
+					</div>
 				</div>
 			</div>
+			// <div id="comming-soon">
+			// 	<div className="notification">
+			// 		<h1>kyberSwap</h1>
+			// 		<h4>Coming Soon</h4>
+			// 	</div>
+			// 	<div className="notice">
+			// 		<p>
+			// 			In the meanwhile, please visit our existing exchange for swapping tokens.
+			// 			<a href="https://kyber.network" target="_blank">https://kyber.network</a>
+			// 		</p>
+			// 	</div>
+			// </div>
 		)
 	}
 }
