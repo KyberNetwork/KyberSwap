@@ -45,15 +45,20 @@ const GasConfig = (props) => {
               <DropdownContent>
                 <div className ="custom-radio">
                     <ul>
-                      <li onClick= {(e) => specifyGasPrice(e, gasPriceSuggest.fastGas, "f")}>
+                    {props.selectedGas === "f"&&<li onClick= {(e) => specifyGasPrice(e, gasPriceSuggest.fastGas, "f")}>
                         <label for="f-option">{props.translate("fast") || 'Fast'}</label>
                       </li>
+                    }
+                    {props.selectedGas !== "l"&&
                       <li onClick= {(e) => specifyGasPrice(e, gasPriceSuggest.safeLowGas, "l")}>
                         <label for="s-option">{props.translate("low") || 'Slow'}</label>
                       </li>
+                    }
+                    {props.selectedGas !== "s"&&
                       <li onClick= {(e) => specifyGasPrice(e, gasPriceSuggest.standardGas, "s")}>
                         <label for="t-option">{props.translate("standard") || 'Standard'}</label>
                       </li>
+                    }
                     </ul>
                 </div>
               </DropdownContent>
