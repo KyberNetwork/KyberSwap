@@ -34,10 +34,10 @@ const GasConfig = (props) => {
       </div>
       <div className={!props.gasPriceError ? "" : "error"}>
         <div className="row">
-          <div className="column small-9">
+          <div className="column small-7">
             <input type="text" min="0" max="99" className="gas-price-input" step="0.1" value={props.gasPrice} onChange={handleChangeGasPrice} maxLength="20" autoComplete="off" />
           </div>
-          <div className="column small-3">
+          <div className="column small-5">
           <GasOption gasOptions={gas_option} focus={props.selectedGas} onChange={specifyGasPrice}/>
           </div>
         </div>
