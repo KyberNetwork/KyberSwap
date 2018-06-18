@@ -37,14 +37,20 @@ $radio-color: #5D9E7A;
     }
 
     .des-up{
-        font-size: 0.8rem;
-        color: #787887;
+        font-size: 0.6875rem;
         padding-bottom: 1rem;
+        line-height: 1.36;
+        letter-spacing: 0.3px;
+        color: #666666;
     }
 
     .des-down{
-        font-size: 0.6rem;
-        color: #aaa;
+      font-size: 0.6875rem;
+      opacity: 0.4;
+      padding-bottom: 1rem;
+      line-height: 1.36;
+      letter-spacing: 0.3px;
+      color: #666666;
     }
 
     .error{

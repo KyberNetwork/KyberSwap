@@ -11,15 +11,16 @@
     display: flex;
     justify-content: space-between;
     margin-top: 3rem;
+    opacity: 0.5;
     &.focus{
-      color: #44a076;
-      border-bottom: 1px solid #5D9E7A;
+      opacity: 1;
+      color: #ef8102;
+      border-bottom: 1px solid #ef8102;
       input{
-        color: #44a076;
+        color: #ef8102;
       }
     }
     input{
-      font-family: OpenSans;
       font-size: 25px;
       font-weight: 600;
       margin-bottom: 0px;
@@ -27,23 +28,25 @@
       // font-size: 20px;
       color: #aaa;
       &:focus {
-        color: #44a076;
+        color: #ef8102;
       }
       border:none;
       box-shadow: none;
       margin-right:-35px; 
     }
     span {
-      font-family: OpenSans;
       font-size: 15px;
+      font-weight: 600;
       padding-top: 12px;
       display: flex;
       align-items: center;
+      color: #aaa;
       &:focus{
-        color: #44a076;
+        color: #ef8102;
       }
     }
   }
+
   > input, > input:focus{
     text-align: right;
     //color: white;
@@ -227,7 +230,7 @@
   // }
 
   .list-item{
-    height: 200px;
+    // height: 200px;
     overflow-y: auto;
     .token-item{
       padding: 9px 20px;

@@ -1,5 +1,4 @@
 .market{
-  max-width: 70rem;
   margin-top: 60px;
 
   .token-selector .focus-item{
@@ -33,6 +32,19 @@
           color: #7A7A7A;
         }
       }
+      // .market-search{
+      //   @media only screen and (max-width: 1023px) {
+      //     padding-left: 1.9375rem;
+      //   }
+      // }
+      .market-choose-currency{
+        @media only screen and (max-width: 1023px) {
+          padding-left: .9375rem;
+        }
+      }
+      // @media only screen and (max-width: 1023px) {
+      //   padding-left: .9375rem;
+      // }
     }
     .market-header-right {
       // padding-right: 0;
@@ -78,6 +90,9 @@
             }
           }
         }
+      }
+      @media only screen and (max-width: 1023px) {
+        padding-right: 1.9375rem;
       }
     }
   }
@@ -250,6 +265,9 @@
         }
       }
     }
+    @media only screen and (max-width: 1023px) {
+      padding: 0 0 0 0;
+    }
   }
 
   .column-label{
@@ -316,5 +334,8 @@
       -ms-transform: rotate(45deg);
       transform: rotate(45deg);
     }
+  }
+  @media only screen and (max-width: 1296px) {
+    max-width: 60rem;
   }
 }

@@ -74,21 +74,19 @@ const ExchangeBodyLayout = (props) => {
 
   var render = (
     <div>
-      <div className="columns large-3 columns-nopading">
+      <div className="columns large-4 columns-nopading">
         {props.balanceList}
       </div>
-      <div className="columns large-9 columns-nopading">
-        <div>
-          <div className="title main-title exchange-pd">Exchange</div>
-          <div>
+      <div className="columns large-8 columns-nopading">
             <div class="small-11 medium-12 large-12">
+              <div className="title main-title">Exchange</div>
               <div class="column exchange-pd">
                 <form action="#" method="get">
                   <div class="row content-exchange-body">
                     <div class="column medium-5">
                       <div>
                         <span className="transaction-label">
-                          {props.translate("transaction.exchange_from") || "From"}
+                          {props.translate("transaction.exchange_from").toUpperCase() || "FROM"}
                         </span>
                         <div className={errorExchange ? "error select-token-panel" : "select-token-panel"}>
                           {props.tokenSourceSelect}
@@ -130,7 +128,7 @@ const ExchangeBodyLayout = (props) => {
                     <div class="column medium-5">
                       <div>
                         <span className="transaction-label">
-                          {props.translate("transaction.exchange_to") || "To"}
+                          {props.translate("transaction.exchange_to").toUpperCase() || "TO"}
                         </span>
                         <div className="select-token-panel">
 
@@ -151,14 +149,10 @@ const ExchangeBodyLayout = (props) => {
                   </div>
                 </form>
               </div>
-            </div>
-          </div>
           {props.exchangeButton}
         </div>
       </div>
     </div>
-
-
   )
   return (
 

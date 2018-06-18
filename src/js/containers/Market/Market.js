@@ -23,13 +23,13 @@ export default class Market extends React.Component {
             <div className="columns large-5 market-search">
               <SearchWord />
             </div>
-            <div className="columns large-3 market-choose-currency">
+            <div className="columns large-2 market-choose-currency">
               <Currency />
             </div>
             {/* <div className="columns large-3 market-sort">
               <Currency />              
             </div> */}
-            <div className="columns large-1"></div>
+            <div className="columns large-3"></div>
             {/* <div className="columns large-4">
               <SortColumn />
             </div> */}
