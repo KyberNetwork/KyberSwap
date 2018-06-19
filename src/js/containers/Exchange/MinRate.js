@@ -20,8 +20,13 @@ export default class MinRate extends React.Component {
   constructor(props) {
     super(props);
     const {minConversionRate,offeredRate}  = this.props.exchange
+    let disable = false
+    if(converter.caculatorPercentageToRate(minConversionRate,offeredRate)==0){
+      disable = true
+    }
     this.state = {
-      value: converter.caculatorPercentageToRate(minConversionRate,offeredRate)
+      value: converter.caculatorPercentageToRate(minConversionRate,offeredRate),
+      disable:disable
     };
   }
   onSliderChange = (value) => {
@@ -35,6 +40,7 @@ export default class MinRate extends React.Component {
   }
   render = () => {
     const {minConversionRate,slippageRate,offeredRate}  = this.props.exchange
+    const {disabled,value} = this.state
     return (
       <div className="min-rate">
         <div className="des-up">
@@ -42,12 +48,13 @@ export default class MinRate extends React.Component {
         </div>
         <div className = {!this.props.exchange.errors.rateError? "":"error"}>
           <span  className="sub_title">PERCENTAGE RATE</span>
-          <Slider value={this.state.value} 
+          <Slider value={value} 
                   defaultValue={converter.caculatorPercentageToRate(slippageRate,offeredRate)} 
                   min={0} max={100}
                   onChange={this.onSliderChange} 
                   onAfterChange={this.onAfterChange}
                   trackStyle={{ backgroundColor: '#EEEE00', height: 4 }}
+                  disabled={disabled}
                   handleStyle={{
                     borderColor: '#EEEE00',
                     borderRadius:0

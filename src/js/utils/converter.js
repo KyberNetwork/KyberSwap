@@ -459,8 +459,12 @@ export function caculatorPercentageToRate(number,total){
   if(new BigNumber(total)!==0){
     return (new BigNumber(number)/new BigNumber(total))*100000000000000000000
   }
+  return 0;
 }
 
 export function caculatorRateToPercentage(number,total){
+  if(new BigNumber(total)!==0){
     return (new BigNumber(number)*new BigNumber(total))/100000000000000000000
+  }
+  return 0;
 }
