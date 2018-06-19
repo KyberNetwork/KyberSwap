@@ -194,17 +194,18 @@ input[type=number] {
 .gas_input{
     padding-right: 0;
     input{
-        border-right: none
+        border-right: none !important;
+        border-radius: 0!important;
     }
 }
 .gas_input-lable{
     padding-left: 0;
     padding-right: 0;
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 0;
     align-items: center;
     padding-top: 10px;
-    padding-bottom: 12px;
+    padding-bottom: 11px;
     border-left: none;
     border-right: none;
     font-size: 14px;
@@ -219,7 +220,8 @@ input[type=number] {
             font-weight: bold;
             line-height: 1.08;
             color: #666666;
-            padding: 15px 12px;
+            padding: 14.5px 12px;
+            border-radius:0;
         }
         .select-item{
             font-size: 12px;

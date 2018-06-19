@@ -47,7 +47,7 @@ export default class MinRate extends React.Component {
         <div className = {!this.props.exchange.errors.rateError? "":"error"}>
           <span  className="sub_title">PERCENTAGE RATE</span>
           <Slider value={value} 
-                  defaultValue={converter.caculatorPercentageToRate(slippageRate,offeredRate)} 
+                  defaultValue={parseInt(converter.caculatorPercentageToRate(slippageRate,offeredRate))} 
                   min={0} max={100}
                   onChange={this.onSliderChange} 
                   onAfterChange={this.onAfterChange}
