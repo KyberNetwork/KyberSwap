@@ -23,18 +23,21 @@ export default class MinRate extends React.Component {
       disable = true
     }
     this.state = {
-      value: converter.caculatorPercentageToRate(minConversionRate,offeredRate),
+      value: parseInt(converter.caculatorPercentageToRate(minConversionRate,offeredRate)),
       disable:disable
     };
   }
   onSliderChange = (value) => {
+    const {offeredRate}  = this.props.exchange
+    this.props.dispatch(actions.setMinRate(converter.caculatorRateToPercentage(value,offeredRate)))
     this.setState({
       value,
     });
   }
   onAfterChange = (value) => {
-    const {offeredRate}  = this.props.exchange
-    this.props.dispatch(actions.setMinRate(converter.caculatorRateToPercentage(value,offeredRate)))
+    // const {offeredRate}  = this.props.exchange
+    // this.props.dispatch(actions.setMinRate(converter.caculatorRateToPercentage(value,offeredRate)))
+    console.log(value)
   }
   render = () => {
     const {minConversionRate,slippageRate,offeredRate}  = this.props.exchange
@@ -47,7 +50,7 @@ export default class MinRate extends React.Component {
         <div className = {!this.props.exchange.errors.rateError? "":"error"}>
           <span  className="sub_title">PERCENTAGE RATE</span>
           <Slider value={value} 
-                  defaultValue={converter.caculatorPercentageToRate(slippageRate,offeredRate)} 
+                  defaultValue={parseInt(converter.caculatorPercentageToRate(slippageRate,offeredRate))} 
                   min={0} max={100}
                   onChange={this.onSliderChange} 
                   onAfterChange={this.onAfterChange}
