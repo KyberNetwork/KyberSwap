@@ -237,8 +237,9 @@ h1.title {
     display: inline-block;
 
     &.disable{
-      color: #5E9F7B;
-    background-color: #EEF7F3;
+      color: #ffffff;
+      background-color: #3c4664;
+      box-shadow: 0 2px 8px 0 rgba(184, 184, 184, 0.5);
       cursor: initial;
       pointer-events: none;
     }

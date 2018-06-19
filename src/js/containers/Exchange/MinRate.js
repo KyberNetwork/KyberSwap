@@ -6,6 +6,8 @@ import * as actions from "../../actions/exchangeActions"
 import { getTranslate } from 'react-localize-redux'
 import ReactTooltip from 'react-tooltip'
 import { filterInputNumber } from "../../utils/validators"
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 @connect((store) => {
   return { 
@@ -15,14 +17,24 @@ import { filterInputNumber } from "../../utils/validators"
 })
 
 export default class MinRate extends React.Component {
-
-  changeMinRate = (e) => {
-    var check = filterInputNumber(e, e.target.value, this.props.exchange.minConversionRate)
-    if(check) this.props.dispatch(actions.setMinRate(e.target.value))
+  constructor(props) {
+    super(props);
+    const {minConversionRate,offeredRate}  = this.props.exchange
+    this.state = {
+      value: converter.caculatorPercentageToRate(minConversionRate,offeredRate)
+    };
   }
-
+  onSliderChange = (value) => {
+    this.setState({
+      value,
+    });
+  }
+  onAfterChange = (value) => {
+    const {offeredRate}  = this.props.exchange
+    this.props.dispatch(actions.setMinRate(converter.caculatorRateToPercentage(value,offeredRate)))
+  }
   render = () => {
-    var minConversionRate = this.props.exchange.minConversionRate
+    const {minConversionRate,slippageRate,offeredRate}  = this.props.exchange
     return (
       <div className="min-rate">
         <div className="des-up">
@@ -30,19 +42,33 @@ export default class MinRate extends React.Component {
         </div>
         <div className = {!this.props.exchange.errors.rateError? "":"error"}>
           <span  className="sub_title">PERCENTAGE RATE</span>
-          <input type="text" maxLength="40" value={minConversionRate} onChange={(e) => this.changeMinRate(e)} autoComplete="off"/>
+          <Slider value={this.state.value} 
+                  defaultValue={converter.caculatorPercentageToRate(slippageRate,offeredRate)} 
+                  min={0} max={100}
+                  onChange={this.onSliderChange} 
+                  onAfterChange={this.onAfterChange}
+                  trackStyle={{ backgroundColor: '#EEEE00', height: 4 }}
+                  handleStyle={{
+                    borderColor: '#EEEE00',
+                    borderRadius:0
+                    // height: 4,
+                    // width: 28,
+                    // borderRadius:"none",
+                    // marginLeft: 0,
+                    // marginTop: 0,
+                    // backgroundColor: '#EEEE00',
+                  }}
+                  
+                  // railStyle={{ backgroundColor: 'red', height: 10 }}
+          />
+          <div className="row small-12">
+          <div className="column small-1"><label className="des-down">0%</label></div>
+          <div className="column small-9 min-convention-rate"><span>{minConversionRate}</span></div>
+          <div className="column small-1"><label className="des-down">100%</label></div>
+          </div>
           {this.props.exchange.errors.rateError && <div className="error-text">{this.props.exchange.errors.rateError}</div>}
           <div className="des-down">Lower rate typically results in better success rate when the market is volatle</div>
         </div>
-        {/* <label className="column small-12 medium-3 text-right">
-          <span>{this.props.translate("transaction.best_rate") || "Min Rate"}</span>
-          <span className="k k-info k-2x ml-3" data-for="rate-tip" data-tip={this.props.translate("transaction.best_rate_tooltip") || "Lower rates for better success chance during market volatility"}></span>
-          <ReactTooltip place="bottom" id="rate-tip" type="light"/>
-        </label>
-        <div className="column small-12 medium-6 end p-relative">
-          <input type="text" maxLength="40" value={minConversionRate} onChange={(e) => this.changeMinRate(e)} autoComplete="off"/>
-          <span className="error-text">{this.props.exchange.errors.rateError}</span>
-        </div> */}
       </div>
     )
   }
