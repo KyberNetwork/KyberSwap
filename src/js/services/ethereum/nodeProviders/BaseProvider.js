@@ -66,11 +66,12 @@ export default class BaseProvider {
 
         return new Promise((resolve, reject) => {
             var data = this.wrapperContract.methods.getBalances(address, listToken).call().then(result => {
+                console.log(result)
                 var listTokenBalances = []
                 listSymbol.map((symbol, index) => {
                     listTokenBalances.push({
                         symbol: symbol,
-                        balance: result[index]
+                        balance: result[index] ? result[index]: 0
                     })
                 })
                 resolve(listTokenBalances)
@@ -80,6 +81,8 @@ export default class BaseProvider {
             })
         })
     }
+
+    
 
     getAllBalancesTokenAtSpecificBlock(address, tokens, blockno) {
         var promises = Object.keys(tokens).map(index => {

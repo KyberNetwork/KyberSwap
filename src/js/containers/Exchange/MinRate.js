@@ -42,7 +42,7 @@ export default class MinRate extends React.Component {
     const {disable,value} = this.state
 
     var percent = converter.caculatorPercentageToRate(slippageRate,offeredRate)
-    percent = parseFloat(percent)
+    percent = Math.round(parseFloat(percent))
 
     return (
       <div className="min-rate">
