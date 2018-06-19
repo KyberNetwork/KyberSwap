@@ -63,12 +63,15 @@
           .check{
             top: 14px;
           }
-          &:hover {
-            // background-color: #F2FAF7;
-            .check{
-              border: 2px solid #54AE85 ;
+          &:not(.active){
+            &:hover {
+              // background-color: #F2FAF7;
+              .check{
+                border: 2px solid #54AE85 ;
+              }
             }
           }
+          
         }
         label{
           position: relative;

@@ -10,9 +10,9 @@
 //         margin-left: 0% !important;
 //     }
 // }
-.confirm-exchange{
-    margin-left: 0% !important;
-}
+// .confirm-exchange{
+//     margin-left: 0% !important;
+// }
 @include breakpoint(medium){
     .react-modal{
         margin-bottom: 50px!important; 
@@ -176,4 +176,12 @@ input[type=number] {
 }
 .content-exchange-body{
     padding: 0 3rem;
+}
+.min-convention-rate{
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    line-height: 1.54;
+    letter-spacing: 0px;
+    color: #2660d0;
 }

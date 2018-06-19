@@ -2,12 +2,17 @@
 import React from "react"
 import ReactTooltip from 'react-tooltip'
 import { filterInputNumber } from "../../utils/validators";
-import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
+import GasOption from './GasOption';
 
 const GasConfig = (props) => {
-
-  function specifyGasPrice(e, value, level) {
-    props.selectedGasHandler(value, level)
+  let gas_option = {"f":props.translate("fast") || 'Fast',"l":props.translate("low") || 'Slow',"s":props.translate("standard") || 'Standard'}
+  function specifyGasPrice(value) {
+    if(value==="f")
+      props.selectedGasHandler(gasPriceSuggest.fastGas, value)
+    else if(value==="l")
+      props.selectedGasHandler(gasPriceSuggest.safeLowGas, value)
+    else if(value==="s")
+      props.selectedGasHandler(gasPriceSuggest.standardGas, value)
   }
   function handleChangeGasPrice(e) {
     filterInputNumber(e, e.target.value)
@@ -29,40 +34,11 @@ const GasConfig = (props) => {
       </div>
       <div className={!props.gasPriceError ? "" : "error"}>
         <div className="row">
-          <div className="column small-9">
+          <div className="column small-7">
             <input type="text" min="0" max="99" className="gas-price-input" step="0.1" value={props.gasPrice} onChange={handleChangeGasPrice} maxLength="20" autoComplete="off" />
           </div>
-          <div className="column small-3">
-          <Dropdown>
-            <DropdownTrigger className="gas-config-toggle">
-                  <div>
-                    {props.selectedGas === "f"&&<label for="f-option">{props.translate("fast") || 'Fast'}</label>}
-                    {props.selectedGas === "l"&&<label for="s-option">{props.translate("low") || 'Slow'}</label>}
-                    {props.selectedGas === "s"&&<label for="t-option">{props.translate("standard") || 'Standard'}</label>}
-                    <img src={require("../../../assets/img/dropdow-keyboard.svg")}/>
-                  </div>
-            </DropdownTrigger>
-              <DropdownContent>
-                <div className ="custom-radio">
-                    <ul>
-                    {props.selectedGas === "f"&&<li onClick= {(e) => specifyGasPrice(e, gasPriceSuggest.fastGas, "f")}>
-                        <label for="f-option">{props.translate("fast") || 'Fast'}</label>
-                      </li>
-                    }
-                    {props.selectedGas !== "l"&&
-                      <li onClick= {(e) => specifyGasPrice(e, gasPriceSuggest.safeLowGas, "l")}>
-                        <label for="s-option">{props.translate("low") || 'Slow'}</label>
-                      </li>
-                    }
-                    {props.selectedGas !== "s"&&
-                      <li onClick= {(e) => specifyGasPrice(e, gasPriceSuggest.standardGas, "s")}>
-                        <label for="t-option">{props.translate("standard") || 'Standard'}</label>
-                      </li>
-                    }
-                    </ul>
-                </div>
-              </DropdownContent>
-          </Dropdown>
+          <div className="column small-5">
+          <GasOption gasOptions={gas_option} focus={props.selectedGas} onChange={specifyGasPrice}/>
           </div>
         </div>
         {props.gasPriceError && <div class="error-text mb-1">{props.translate(props.gasPriceError, { maxGas: props.maxGasPrice })}</div>}
