@@ -23,20 +23,22 @@ export default class MinRate extends React.Component {
       disable = true
     }
     this.state = {
-      value: converter.caculatorPercentageToRate(minConversionRate,offeredRate),
+      value: parseInt(converter.caculatorPercentageToRate(minConversionRate,offeredRate)),
       disable:disable
     };
   }
   onSliderChange = (value) => {
+    const {offeredRate}  = this.props.exchange
+    var minRate = converter.caculatorRateToPercentage(value,offeredRate)
+    this.props.dispatch(actions.setMinRate(minRate.toString()))
     this.setState({
       value,
     });
   }
-  onAfterChange = (value) => {
-    const {offeredRate}  = this.props.exchange
-    var minRate = converter.caculatorRateToPercentage(value,offeredRate)
-    this.props.dispatch(actions.setMinRate(minRate.toString()))
-  }
+  // onAfterChange = (value) => {
+  //   // const {offeredRate}  = this.props.exchange
+  //   // this.props.dispatch(actions.setMinRate(converter.caculatorRateToPercentage(value,offeredRate)))
+  // }
   render = () => {
     const {minConversionRate,slippageRate,offeredRate}  = this.props.exchange
     const {disable,value} = this.state
@@ -54,8 +56,7 @@ export default class MinRate extends React.Component {
           <Slider value={value} 
                   defaultValue={percent} 
                   min={0} max={100}
-                  onChange={this.onSliderChange} 
-                  onAfterChange={this.onAfterChange}
+                  onChange={this.onSliderChange}                   
                   trackStyle={{ backgroundColor: '#666666', height: 4 }}
                   disabled={disable}
                   handleStyle={{
