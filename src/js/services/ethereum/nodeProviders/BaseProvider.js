@@ -71,7 +71,7 @@ export default class BaseProvider {
                 listSymbol.map((symbol, index) => {
                     listTokenBalances.push({
                         symbol: symbol,
-                        balance: result[index] ? result[index]: 0
+                        balance: result[index] ? result[index]: "0"
                     })
                 })
                 resolve(listTokenBalances)

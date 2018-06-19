@@ -11,7 +11,7 @@ const ImportByLedgerView = (props) => {
 					<img src={require('../../../assets/img/landing/ledger_active.svg')} />
 				</div>
 				<div>
-					TREZOR
+					LEDGER
 				</div>
 				<div>
 					<button onClick={(e) => props.showLoading('ledger')}>Connect</button>
