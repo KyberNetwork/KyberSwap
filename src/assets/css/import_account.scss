@@ -5,135 +5,112 @@
 //       width: 70%;
 //     }
 //   }
-  #import-account{
-    // background: linear-gradient(180deg, #6292A7 50%, $white 50%);
-    padding-top: 4rem;
-    
-    .title{
+  #import-account {
+    padding-top: 80px;
+
+    .title {
       font-weight: bold;
       color: #000;
       text-align: center;
       font-size: 2.5rem;
+      padding: 0;
+      margin: 0;
     }
+
     .sub-title {
       font-size: 0.8rem;
       color: $white;
       padding: 0px 50px 30px 50px;
     }
 
-    
-
     .import-account {
-      padding: 0 60px;
-      text-align: center;
+      display: flex;
       justify-content: center;
+      position: relative;
 
-      .column {
-        padding: 7px;
-        .column-block {
-          padding: 0px;
-          margin-bottom: 6rem;
-          .importer {
-            position: relative;
-            height: 300px;
-            border-radius: 2px;
-            overflow: hidden;
-            background-color: #fff;
-            padding: 15px;
-            margin-top: 35px;
-            
-            max-width: 200px;
-            &.metamask{
-              .more-info{
-                text-align: left;
-                color: #999;
-              }
-            }
-            >div{
-              &:not(.how-to-use){
-                margin-top: 20px;
-              }
-            }
+      &__item {
+        padding-top: 50px;
+        background: white;
+        width: 185px;
+        max-height: 170px;
+        margin: 0 12px 25px;
+        box-shadow: 0 1px 10px #b7b5b5;
+        position: relative;
+        bottom: -280px;
+        text-align: center;
+        transition: all .3s;
+        animation: moving-up 1s forwards;
 
-            .how-to-use{
-              width: 20px;
-              height: 20px;
-              position: absolute;
-              top: 10px;
-              right: 10px;
-              background-image: url(../img/landing/notice.svg);
-              &:hover{
-                background-image: url(../img/landing/notice_grey.svg);
-              }
-            }
+        .importer {
+          &__name {
+            font-weight: bold;
+            font-size: 20px;
+            margin: 10px 0;
+          }
 
-
-
-            // box-shadow: 0px 1px 13px $k-divider;
-            // &.json {
-            //   background-image: url(../img/json.jpg)
-            // }
-            // &.pkey {
-            //   background-image: url(../img/pkey.jpg)
-            // }
-            // &.trezor {
-            //   background-image: url(../img/trezor.jpg)
-            // }
-            // &.ledger {
-            //   background-image: url(../img/ledger.jpg)
-            // }
-            // &.metamask {
-            //   background-image: url(../img/metamask.jpg)
-            // }
-            > a {
-              position: absolute;
-              top: 0;
-              right: 0;
-              bottom: 0;
-              left: 0;
-              display: block;
-              background-color: rgba($dark-gray, .7);
-              text-align: center;
-              &:hover{
-                background: linear-gradient(178deg, rgba(54, 217, 172, 0.7), rgba(4, 150, 150, 0.7));
-              }
-            }
-            button{
-              padding: 10px;
-            background-color: #EF8102;
-            color: #fff;
-            border-radius: 5px;
+          &__button {
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
             width: 100%;
             cursor: pointer;
-            }
-            // img {
-            //   width: 100%;
-            // }
-            // .description {
-            //   @include breakpoint(large){
-            //     margin-top: 20px;
-            //   }
-            //   @include breakpoint(medium only){
-            //     margin-top: 15px;
-            //   }
-            //   @include breakpoint(small only){
-            //     margin-top: 5px;
-            //   }
-              
-            //   padding: 0 15px;
-            //   color: $white;
-            //   font-size: 15px;
-            //   line-height: 1.6;
-            // }
+            padding: 10px 0;
+            margin-bottom: 15px;
+            border-radius: 3px;
+            background-color: $swap-color;
           }
-          .description {
-            padding: 25px 0 10px 10px;
-            text-transform: uppercase;
-            color: blue;
-            font-weight: 500;
-            font-size: 0.9rem;
-            border: 0.5px solid #ddd;          
+          
+          .more-info {
+            font-size: 14px;
           }
+
+          &__button,
+          .more-info {
+            opacity: 0;
+            animation: fade-in 1s forwards;
+          }
+        }
+
+        .how-to-use {
+          width: 20px;
+          height: 20px;
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          background-image: url(../img/landing/notice.svg);
+
+          &:hover {
+            background-image: url(../img/landing/notice_grey.svg);
+          }
+        }
+
+        @keyframes moving-up {
+          to {
+            bottom: -80px;
+            max-height: 500px;
+          }
+        }
+
+        @keyframes fade-in {
+          to {
+            opacity: 1;
+          }
+        }
+      }
+
+      @include screen-max-width(xlarge) {
+        flex-wrap: wrap;
+
+        &__item {
+          width: 30%;
+          margin: 0 1% 25px;
+        }
+      }
+
+      @include screen-max-width(medium) {
+        &__item {
+          width: 48%;
+          margin: 0 1% 25px;
         }
       }
     }
