@@ -5,6 +5,8 @@
 //       width: 70%;
 //     }
 //   }
+$animationTime :0.5s;
+
   #import-account {
     padding-top: 80px;
 
@@ -39,7 +41,7 @@
         bottom: -280px;
         text-align: center;
         transition: all .3s;
-        animation: moving-up 1s forwards;
+        animation: moving-up $animationTime forwards;
 
         .importer {
           &__name {
@@ -62,12 +64,14 @@
           
           .more-info {
             font-size: 14px;
+            text-align: left;
+            color: #999;
           }
 
           &__button,
           .more-info {
             opacity: 0;
-            animation: fade-in 1s forwards;
+            animation: fade-in $animationTime forwards;
           }
         }
 

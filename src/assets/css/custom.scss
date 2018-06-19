@@ -192,3 +192,9 @@ input[type=number] {
     box-shadow: none;
 }
 
+.rc-slider-disabled{
+    background-color: transparent !important;
+    .rc-slider-track{
+        background-color: transparent !important;
+    }
+}
