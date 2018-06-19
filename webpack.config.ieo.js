@@ -28,6 +28,10 @@ var scriptConfig = function (env) {
         }
       },
       {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ],
+      },
+      {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader']),
       },

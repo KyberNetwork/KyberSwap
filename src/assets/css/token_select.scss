@@ -1,10 +1,8 @@
 .select-token-panel{
-  //background-color: #415b68;
   margin-top: 5px;
   cursor: pointer;
   input{
     height: auto;
-    // padding: 10px!important;
   }
   .amount-input{
     border-bottom: 1px solid #aaa;
@@ -25,14 +23,12 @@
       font-weight: 600;
       margin-bottom: 0px;
       padding: 0;
-      // font-size: 20px;
       color: #aaa;
       &:focus {
         color: #ef8102;
       }
       border:none;
       box-shadow: none;
-      margin-right:-35px; 
     }
     span {
       font-size: 15px;

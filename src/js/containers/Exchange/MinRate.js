@@ -4,8 +4,6 @@ import { connect } from "react-redux"
 import * as converter from "../../utils/converter"
 import * as actions from "../../actions/exchangeActions"
 import { getTranslate } from 'react-localize-redux'
-import ReactTooltip from 'react-tooltip'
-import { filterInputNumber } from "../../utils/validators"
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
@@ -58,25 +56,21 @@ export default class MinRate extends React.Component {
                   min={0} max={100}
                   onChange={this.onSliderChange} 
                   onAfterChange={this.onAfterChange}
-                  trackStyle={{ backgroundColor: '#EEEE00', height: 4 }}
+                  trackStyle={{ backgroundColor: '#666666', height: 4 }}
                   disabled={disable}
                   handleStyle={{
-                    borderColor: '#EEEE00',
-                    borderRadius:0
-                    // height: 4,
-                    // width: 28,
-                    // borderRadius:"none",
-                    // marginLeft: 0,
-                    // marginTop: 0,
-                    // backgroundColor: '#EEEE00',
+                    border:'none',
+                    borderRadius:0,
+                    background: `url(${require("../../../assets/img/precent-rate.svg")})`,
+                    backgroundRepeat: "repeat",
+                    width: 23,
+                    height: 15,
                   }}
-                  
-                  // railStyle={{ backgroundColor: 'red', height: 10 }}
           />
           <div className="row small-12">
           <div className="column small-1"><label className="des-down">0%</label></div>
           <div className="column small-9 min-convention-rate"><span>{minConversionRate}</span></div>
-          <div className="column small-1"><label className="des-down">100%</label></div>
+          <div className="column small-1"><label className="des-down">{value}%</label></div>
           </div>
           {this.props.exchange.errors.rateError && <div className="error-text">{this.props.exchange.errors.rateError}</div>}
           <div className="des-down">Lower rate typically results in better success rate when the market is volatle</div>
