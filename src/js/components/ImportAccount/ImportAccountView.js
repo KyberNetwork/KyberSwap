@@ -5,23 +5,24 @@ const ImportAccountView = (props) => {
   return (
     <div id="import-account">
       <div className="frame">
-        <div className="grid-x">
-          <div className="column small-11 large-12 small-centered" id="import-acc">
+        <div className="container">
+          <div className="small-centered" id="import-acc">
             <h1 className="title">{props.translate("address.import_address") || "Import address"}</h1>
-            <div className="grid-x import-account">
-              <div className="small-6 medium-4 large-2 column">
+
+            <div className="import-account">
+              <div className="import-account__item">
                 {props.firstKey}
               </div>
-              <div className="small-6 medium-4 large-2 column">
+              <div className="import-account__item">
                 {props.secondKey}
               </div>
-              <div className="small-6 medium-4 large-2 column">
+              <div className="import-account__item">
                 {props.thirdKey}
               </div>
-              <div className="small-6 medium-4 large-2 column">
+              <div className="import-account__item">
                 {props.fourthKey}
               </div>
-              <div className="small-6 medium-4 large-2 column">
+              <div className="import-account__item">
                 {props.fifthKey}
               </div>
             </div>

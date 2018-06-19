@@ -71,7 +71,7 @@ export default class LandingPage extends React.Component {
 		return (
 			<div id="get-start">
 				<div class="frame">
-					<div className="row">
+					<div className="container">
 						<div className="convert-tokens">
 							<div>
 								<h1>Instant and Secure Token Swaps.<br></br>No orderbooks, no deposits, pure joy.</h1>
