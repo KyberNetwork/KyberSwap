@@ -40,7 +40,7 @@ export default class MinRate extends React.Component {
   }
   render = () => {
     const {minConversionRate,slippageRate,offeredRate}  = this.props.exchange
-    const {disabled,value} = this.state
+    const {disable,value} = this.state
     return (
       <div className="min-rate">
         <div className="des-up">
@@ -54,7 +54,7 @@ export default class MinRate extends React.Component {
                   onChange={this.onSliderChange} 
                   onAfterChange={this.onAfterChange}
                   trackStyle={{ backgroundColor: '#EEEE00', height: 4 }}
-                  disabled={disabled}
+                  disabled={disable}
                   handleStyle={{
                     borderColor: '#EEEE00',
                     borderRadius:0
