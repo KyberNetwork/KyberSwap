@@ -23,18 +23,21 @@ export default class MinRate extends React.Component {
       disable = true
     }
     this.state = {
-      value: converter.caculatorPercentageToRate(minConversionRate,offeredRate),
+      value: parseInt(converter.caculatorPercentageToRate(minConversionRate,offeredRate)),
       disable:disable
     };
   }
   onSliderChange = (value) => {
+    const {offeredRate}  = this.props.exchange
+    this.props.dispatch(actions.setMinRate(converter.caculatorRateToPercentage(value,offeredRate)))
     this.setState({
       value,
     });
   }
   onAfterChange = (value) => {
-    const {offeredRate}  = this.props.exchange
-    this.props.dispatch(actions.setMinRate(converter.caculatorRateToPercentage(value,offeredRate)))
+    // const {offeredRate}  = this.props.exchange
+    // this.props.dispatch(actions.setMinRate(converter.caculatorRateToPercentage(value,offeredRate)))
+    console.log(value)
   }
   render = () => {
     const {minConversionRate,slippageRate,offeredRate}  = this.props.exchange
