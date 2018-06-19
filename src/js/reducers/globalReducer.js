@@ -17,7 +17,12 @@ const initState = {
   isAnalize: false,
   isAnalizeComplete: false,
   analizeError : {},
-  selectedAnalyzeHash: ''
+  selectedAnalyzeHash: '',
+  metamask: {
+    address: "",
+    balance: "",
+    error: "Address is loading"
+  }
 }
 
 const global = (state = initState, action) => {
@@ -119,6 +124,17 @@ const global = (state = initState, action) => {
     }
     case "GLOBAL.VISIT_EXCHANGE":{
       return Object.assign({}, state, { isVisitFirstTime: false })
+    }
+    case "GLOBAL.THROW_ERROR_METAMASK":{
+      const {err} = action.payload
+      var metamask = {error: err}
+      return Object.assign({}, state, { metamask: metamask })
+    }
+    case "GLOBAL.UPDATE_METAMASK_ACCOUNT":{
+      const {address, balance} = action.payload
+      const error = ""
+      var metamask = {address, balance, error}
+      return Object.assign({}, state, { metamask: metamask })
     }
   }
   return state

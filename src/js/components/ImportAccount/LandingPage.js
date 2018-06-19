@@ -94,31 +94,31 @@ export default class LandingPage extends React.Component {
 							<div className="account-type">
 								<div className="account-type__item">
 									<div className="account-type__content">
-										<img src="../../../assets/img/landing/metamask_disable.png" />
+										<img src={require("../../../assets/img/landing/metamask_disable.png")} />
 										<div className="account-type__text">METAMASK</div>
 									</div>
 								</div>
 								<div className="account-type__item">
                   <div className="account-type__content">
-										<img src="../../../assets/img/landing/keystore_disable.png" />
+										<img src={require("../../../assets/img/landing/keystore_disable.png")} />
 										<div className="account-type__text">KEYSTORE</div>
 									</div>
 								</div>
 								<div className="account-type__item">
                   <div className="account-type__content">
-										<img src="../../../assets/img/landing/trezor_disable.png" />
+										<img src={require("../../../assets/img/landing/trezor_disable.png")} />
 										<div className="account-type__text">TREZOR</div>
 									</div>
 								</div>
 								<div className="account-type__item">
                   <div className="account-type__content">
-										<img src="../../../assets/img/landing/ledger_disable.png" />
+										<img src={require("../../../assets/img/landing/ledger_disable.png")} />
 										<div className="account-type__text">LEDGER</div>
 									</div>
 								</div>
 								<div className="account-type__item">
                   <div className="account-type__content">
-										<img src="../../../assets/img/landing/privatekey_disable.png" />
+										<img src={require("../../../assets/img/landing/privatekey_disable.png")} />
 										<div className="account-type__text">PRIVATE KEY</div>
 									</div>
 								</div>
