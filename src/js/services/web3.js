@@ -48,6 +48,8 @@ export default class Web3Service {
     if((!!window.__CIPHER__) && (this.web3.currentProvider && this.web3.currentProvider.constructor && this.web3.currentProvider.constructor.name === "CipherProvider")){
       return "cipher"
     }
+
+    return "unknown"
         
   }
 
