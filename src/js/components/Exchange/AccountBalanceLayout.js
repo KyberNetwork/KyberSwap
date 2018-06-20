@@ -15,6 +15,7 @@ const AccountBalanceLayout = (props) => {
   }
 
   function getBalances() {
+    console.log(props.tokens)
     var balances = converts.shortEthBalance(props.tokens)
       .map(token => {
         var balance = converts.toT(token.balance, token.decimal)

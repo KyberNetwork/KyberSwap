@@ -78,6 +78,9 @@ $foundation-palette: (
   warning: #ffae00,
   alert: #E50000,
 );
+
+$base-color: #666;
+$swap-color: #EF8102;
 $light-gray: #BBDAD5;
 $medium-gray: #262C41;
 $dark-gray: #0B0F1A;
@@ -112,6 +115,11 @@ $global-button-cursor: auto;
 $global-color-pick-contrast-tolerance: 0;
 $print-transparent-backgrounds: true;
 
+$container-max-width: 77rem;
+$container-side-padding: 1rem;
+
+$image-path: '../img/';
+
 @include add-foundation-colors;
 
 // 2. Breakpoints
@@ -119,6 +127,7 @@ $print-transparent-backgrounds: true;
 
 $breakpoints: (
   small: 0,
+  mid-small: 480px,
   medium: 640px,
   large: 1024px,
   xlarge: 1200px,
@@ -884,3 +893,8 @@ $grid-container-padding: $grid-padding-gutters;
 $grid-container-max: $global-width;
 $xy-block-grid-max: 8;
 
+@mixin screen-max-width($breakpoint) {
+  @media screen and (max-width: #{map-get($breakpoints, $breakpoint)}) {
+    @content;
+  }
+}

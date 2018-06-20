@@ -230,18 +230,20 @@ h1.title {
     display: inline-block;
     box-shadow: 0 0 2px #aaa;
   }
+  /* Transfer: */
   a{
-    color: #aaa;  
-    background-color: white;
+    color: #474D5F;
+    background-color: #FCFCFE;
+    width: 120px;
     padding: 10px;
     display: inline-block;
-
+    font-weight: normal;
     &.disable{
-      color: #ffffff;
-      background-color: #3c4664;
-      box-shadow: 0 2px 8px 0 rgba(184, 184, 184, 0.5);
+      color: #fff;
+      background-color: #3C4664;
       cursor: initial;
       pointer-events: none;
+    
     }
   }
 }

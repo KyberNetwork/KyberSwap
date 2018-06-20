@@ -112,6 +112,7 @@ export function* importNewAccount(action) {
 
     yield call(ethereum.fetchRateExchange)
 
+    console.log(address)
     const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtLatestBlock", address, tokens)
     //map balance
     var mapBalance = {}

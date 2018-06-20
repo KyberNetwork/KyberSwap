@@ -10,9 +10,9 @@
 //         margin-left: 0% !important;
 //     }
 // }
-.confirm-exchange{
-    margin-left: 0% !important;
-}
+// .confirm-exchange{
+//     margin-left: 0% !important;
+// }
 @include breakpoint(medium){
     .react-modal{
         margin-bottom: 50px!important; 
@@ -191,40 +191,10 @@ input[type=number] {
 .rc-slider-handle:active {
     box-shadow: none;
 }
-.gas_input{
-    padding-right: 0;
-    input{
-        border-right: none !important;
-        border-radius: 0!important;
-    }
-}
-.gas_input-lable{
-    padding-left: 0;
-    padding-right: 0;
-    border: 1px solid #ccc;
-    border-radius: 0;
-    align-items: center;
-    padding-top: 10px;
-    padding-bottom: 11px;
-    border-left: none;
-    border-right: none;
-    font-size: 14px;
-    line-height: 1.43;
-    color: #999999;
-}
-.gas_input-option{
-    padding-left: 0;
-    .gas-option{
-        .focus-item{
-            font-size: 12px;
-            font-weight: bold;
-            line-height: 1.08;
-            color: #666666;
-            padding: 14.5px 12px;
-            border-radius:0;
-        }
-        .select-item{
-            font-size: 12px;
-        }
+
+.rc-slider-disabled{
+    background-color: transparent !important;
+    .rc-slider-track{
+        background-color: transparent !important;
     }
 }

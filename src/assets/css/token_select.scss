@@ -4,6 +4,10 @@
   input{
     height: auto;
   }
+  .list-item{
+    height: 250px;
+    overflow: auto;
+  }
   .amount-input{
     border-bottom: 1px solid #aaa;
     display: flex;
@@ -23,6 +27,7 @@
       font-weight: 600;
       margin-bottom: 0px;
       padding: 0;
+      padding-right: 15px;
       color: #aaa;
       &:focus {
         color: #ef8102;
@@ -103,8 +108,8 @@
         display: block;
         border: 2px solid $white;
         border-top: none;
-        border-bottom-right-radius: 30px;
-        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
       }
     }
     .dropdown__content{
@@ -196,7 +201,6 @@
     }
   }
   .select-item{
-    padding-bottom: 20px;
     position: absolute;
     transition: 0.2s;
     width: 100%;

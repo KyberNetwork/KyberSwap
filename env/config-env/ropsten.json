@@ -2,17 +2,17 @@
   "connections": {
     "http": [
       {
-        "endPoint": "https://ropsten-cache.kyber.network",
+        "endPoint" : "https://ropsten-cache.kyber.network",
         "type": "cached"
       },
       {
-        "endPoint": "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",
+        "endPoint" : "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",
         "type": "prune"
       }
     ],
     "ws": "wss://ropsten.kyber.network/ws/"
   },
-  "api_usd": "https://api.coinmarketcap.com",
+  "api_usd":"https://api.coinmarketcap.com",
   "tokens": {
       "ETH": {
         "name": "Ethereum",
@@ -230,7 +230,7 @@
   "averageBlockTime": 6000,
   "networkId": 3,
   "chainName": "Ropsten",
-  "faucet": "https://faucet.kyber.network/",
+  "faucet":"https://faucet.kyber.network/",
   "server_logs": {
     "url": "ropsten.etherscan.io",
     "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
