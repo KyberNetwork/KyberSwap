@@ -1,17 +1,71 @@
 #landing_page{
-  background-image: url(../img/landing/swap.png);
-  background-repeat: no-repeat;
-  background-size: cover;
+  // background-image: url(../img/landing/swap.png);
+  // background-repeat: no-repeat;
+  // background-size: cover;
   min-height: 600px;
   margin-bottom: 130px;
+  position: relative;
+  .landing-background{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(../img/landing/landing_swap_1.png);
+
+    &:after{
+      content: '';
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(96% 100%, #EB8114 3%, #EEB43D 99%);
+      opacity: 0.1;
+      position: absolute;
+    }
+    // >div{
+    //   margin: 0 auto;
+    // }
+  }
+  .frame{
+    position: relative;
+    z-index: 3;
+  }
 }
 #get-start{
-  color: #000;
+  color: #fff;
   text-align: center;
+  position: relative;
+
+  .tagline{
+    text-align: left;
+  }
+  
+  // .accept-term{
+  //   text-align: center;
+  // }
+  // .account-type{
+  //   text-align: center;
+  // }
+  /* Rectangle 4: */
+  
 
   .frame{
     padding: 80px 0 0;
+       z-index: 2;
+    position: relative;
 
+    .accept-term{
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      max-width: 356px;
+      align-items: center;
+    }
     >div {
       display: flex;
       align-items: center;
@@ -147,14 +201,13 @@
     left: 240px;
   }
 
-  .accept-term{
-    margin: 40px auto 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    max-width: 356px;
-  }
+  // .accept-term{
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   position: relative;
+  //   max-width: 356px;
+  // }
 
   .account-type {
     display: flex;

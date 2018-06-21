@@ -70,12 +70,16 @@ export default class LandingPage extends React.Component {
 	render() {
 		return (
 			<div id="get-start">
+				<div className="landing-background">
+				</div>
 				<div class="frame">
+
 					<div className="container">
 						<div className="convert-tokens">
-							<div>
-								<h1>Instant and Secure Token Swaps.<br></br>No orderbooks, no deposits, pure joy.</h1>
-								<p>Want to purchase different tokens without any hassle? Do it in a few simple clicks.</p>
+							<div className="tagline">
+								<h1>Instant and Secure Token Swaps.</h1>
+								<h2>No orderbooks, no deposits, pure joy.</h2>
+								<p>Want to purchase different tokens without any hassle? <br></br> Do it in a few simple clicks.</p>
 							</div>
 
 							<div className="accept-term">
@@ -99,25 +103,25 @@ export default class LandingPage extends React.Component {
 									</div>
 								</div>
 								<div className="account-type__item">
-                  <div className="account-type__content">
+									<div className="account-type__content">
 										<img src={require("../../../assets/img/landing/keystore_disable.png")} />
 										<div className="account-type__text">KEYSTORE</div>
 									</div>
 								</div>
 								<div className="account-type__item">
-                  <div className="account-type__content">
+									<div className="account-type__content">
 										<img src={require("../../../assets/img/landing/trezor_disable.png")} />
 										<div className="account-type__text">TREZOR</div>
 									</div>
 								</div>
 								<div className="account-type__item">
-                  <div className="account-type__content">
+									<div className="account-type__content">
 										<img src={require("../../../assets/img/landing/ledger_disable.png")} />
 										<div className="account-type__text">LEDGER</div>
 									</div>
 								</div>
 								<div className="account-type__item">
-                  <div className="account-type__content">
+									<div className="account-type__content">
 										<img src={require("../../../assets/img/landing/privatekey_disable.png")} />
 										<div className="account-type__text">PRIVATE KEY</div>
 									</div>
