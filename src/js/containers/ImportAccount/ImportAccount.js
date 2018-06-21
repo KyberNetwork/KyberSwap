@@ -54,14 +54,14 @@ export default class ImportAccount extends React.Component {
   }
 
   componentDidMount = () => {
-    if (typeof web3 !== "undefined") {
-        var web3Service = new Web3Service(web3)
-        var walletType = web3Service.getWalletType()
-        if (walletType !== "metamask"){
-          this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-            this.props.ethereum, this.props.tokens, this.props.translate, walletType))       
-        }
-      }   
+    // if (typeof web3 !== "undefined") {
+    //     var web3Service = new Web3Service(web3)
+    //     var walletType = web3Service.getWalletType()
+    //     if (walletType !== "metamask"){
+    //       this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
+    //         this.props.ethereum, this.props.tokens, this.props.translate, walletType))       
+    //     }
+    //   }   
     }
 
   // closeModal = (e) => {
