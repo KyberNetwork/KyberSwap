@@ -12,6 +12,7 @@ import * as converter from "../../utils/converter"
 import * as validators from "../../utils/validators"
 import * as transferActions from "../../actions/transferActions"
 import { default as _ } from 'underscore'
+import { clearSession } from "../../actions/globalActions"
 
 @connect((store) => {
   const translate = getTranslate(store.locale)
@@ -84,6 +85,10 @@ export default class Exchange extends React.Component {
     this.specifyGasPrice(value)
   }
 
+  handleEndSession = () => {
+    this.props.dispatch(clearSession()) 
+  }
+
   render() {
     var gasPrice = converter.stringToBigNumber(converter.gweiToEth(this.props.transfer.gasPrice))
     var totalGas = gasPrice.multipliedBy(this.props.transfer.gas)
@@ -108,6 +113,7 @@ export default class Exchange extends React.Component {
     var transferBody = <TransferBody />
     return (
       <TransactionLayout 
+        endSession = {this.handleEndSession}
         translate = {this.props.translate}
         //location = {this.props.location}
        

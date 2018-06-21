@@ -230,6 +230,15 @@
                   padding: 3px;
                 }
               }
+              div.token-pair {
+                width: 150px;
+                text-align: left;
+                padding-left: 10px;
+                img {
+                  margin-right: 10px;
+                  width: 28px;
+                }
+              }
             }
             .rt-td:nth-child(1), .rt-td:nth-child(3) {
               font-weight: 500;

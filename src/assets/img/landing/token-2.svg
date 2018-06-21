@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="138px" height="137px" viewBox="0 0 138 137" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>DAI</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Home-Swap-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Swap-home1" transform="translate(-800.000000, -354.000000)">
+            <g id="DAI" style="mix-blend-mode: multiply;" transform="translate(810.000000, 364.000000)">
+                <g id="Oval-4">
+                    <g id="Group">
+                        <ellipse id="Oval-4" fill="#FFFFFF" cx="59" cy="58.5" rx="53.1" ry="52.65"></ellipse>
+                        <ellipse id="Oval-4" stroke="#FFFFFF" stroke-width="2" opacity="0.306305804" cx="59" cy="58.5" rx="59" ry="58.5"></ellipse>
+                    </g>
+                </g>
+                <g style="mix-blend-mode: multiply;" transform="translate(28.000000, 29.000000)" fill-rule="nonzero">
+                    <rect id="Rectangle-path" fill="#FDC526" transform="translate(30.000000, 30.000000) rotate(-45.000000) translate(-30.000000, -30.000000) " x="9.13043478" y="9.13043478" width="41.7391304" height="41.7391304"></rect>
+                    <polygon id="Shape" fill="#FEAE16" points="30.0031704 1.30434783 1.30434783 30.2146233 30.187056 40.4347826 58.6956522 30.2146233"></polygon>
+                    <polygon id="Shape" fill="#231F20" opacity="0.2" points="60 30.0031704 31.3043478 58.6956522 31.3043478 1.30434783"></polygon>
+                    <polygon id="Shape" fill="#FEFEFE" points="30.9900214 7.82608696 11.7391304 28.6956522 24.9344262 28.6956522 30.9836066 22.729131 37.3727726 28.6956522 50.8695652 28.6956522"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

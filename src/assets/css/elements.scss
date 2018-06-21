@@ -226,9 +226,29 @@ h1.title {
   font-weight: 500;
   letter-spacing: .5px;
   padding: 20px 0;
+  &.frame-tab {
+    max-width: 75rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
   div{
     display: inline-block;
     box-shadow: 0 0 2px #aaa;
+  }
+  div.back-home {
+    box-shadow: none;
+    float: left;
+    line-height: 2.4;
+    cursor: pointer;
+    img.back-arrow {
+      padding: 5px;
+      border-radius: 50%;
+      background-color: #EFEFEF;
+      margin: 0 10px 0 20px;
+    }
+    span {
+      font-size: 15px;
+    }
   }
   /* Transfer: */
   a{

@@ -1,11 +1,34 @@
 #transfer-screen{
+  .frame {
+    .exchange-pd {
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+      .row {
+        &.transfer-detail {
+          .select-token-panel {
+            margin-top: 0;
+          }
+          input.hashAddr {
+            border-radius: 5px;
+            @media screen and (min-width: 40em){
+              height: 245px;        
+            }
+            @media screen and (max-width: 40em){
+              margin-bottom: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
   label{
       margin-bottom: 8px;
   }
   .main-title {
-    padding-top: 1rem;
+    padding-top: 1.5rem;
     font-size: 1.25rem;
     font-weight: 600;
+    padding-bottom: 0;
   }
   .transaction-label{
 	  font-weight: 500;
@@ -13,13 +36,13 @@
 	 	text-transform: uppercase;
 	 	padding-left: 0;
 	}
-	.accent {
+  .accent {
     margin-top: 50px;
     line-height: 55px;
     padding: 0 35px;
-    background: #510CA7;
+    background: #ef8102;
     font-size: 1.3rem;
-    border-radius: 50px;
+    border-radius: 4px;
     box-shadow: 0 10px 15px #ccc;
   }
   .text-center {
@@ -35,11 +58,11 @@
       }
     }
     .focus-item {
+      border-radius: 5px;
+      box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
+      background-color: #ffffff;
+      border: solid 0.8px rgba(204, 204, 204, 0.72);
       padding: 10px 12px;
-      border: 2px solid transparent;
-      border-bottom: 1px solid transparent;
-      border-radius: 35px;
-      box-shadow: 0 0 15px #ddd;
       align-items: center;
       font-size: 15px;
       &.d-flex{

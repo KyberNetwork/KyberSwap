@@ -2,6 +2,7 @@ import React from "react"
 import TermAndServices from "../../containers/CommonElements/TermAndServices";
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux';
+import config from '../../config';
 
 @connect((store, props) => {
 	return {
@@ -70,26 +71,39 @@ export default class LandingPage extends React.Component {
 	render() {
 		return (
 			<div id="get-start">
+				<div className="landing-background">
+				</div>
 				<div class="frame">
 					<div className="container">
 						<div className="convert-tokens">
-							<div>
-								<h1>Instant and Secure Token Swaps.<br></br>No orderbooks, no deposits, pure joy.</h1>
-								<p>Want to purchase different tokens without any hassle? Do it in a few simple clicks.</p>
-							</div>
+              <div className="landing-page__container">
+                <div className="landing-page__content">
+                  <div className="landing-page__content-tagline">
+                    <h1 className="landing-page__content-title">Instant and Secure<br/>Token Swaps.</h1>
+                    <h2 className="landing-page__content-description">No orderbooks, no deposits, pure joy.</h2>
+                    <p className="landing-page__content-pr">Want to purchase different tokens without any hassle?<br/>Do it in a few simple clicks.</p>
+                  </div>
 
-							<div className="accept-term">
-								<TermAndServices
-									termAgree={this.state.termAgree}
-									clickCheckbox={this.clickCheckbox}
-								/>
-								<div className="accept-btn">
-									<button class={"button"}
-										onClick={this.goExchange}>
-										ACCEPT
-									</button>
-								</div>
-							</div>
+                  <div className="landing-page__content-term">
+                    <TermAndServices termAgree={this.state.termAgree} clickCheckbox={this.clickCheckbox}/>
+                    <div className="landing-page__content-btn-container">
+                      <button className="landing-page__content-btn button" onClick={this.goExchange}>ACCEPT</button>
+                    </div>
+                  </div>
+                </div>
+                <div className="landing-page__content">
+                  <div className="landing-page__content-circle">
+                    <img src={config.imagePath + 'landing/token-1.svg'} />
+                    <img src={config.imagePath + 'landing/token-2.svg'} />
+                    <img src={config.imagePath + 'landing/token-3.svg'} />
+                    <img src={config.imagePath + 'landing/token-4.svg'} />
+                    <img src={config.imagePath + 'landing/token-5.svg'} />
+                    <img src={config.imagePath + 'landing/token-6.svg'} />
+                    <img src={config.imagePath + 'landing/token-7.svg'} />
+                    <img src={config.imagePath + 'landing/swap-token.svg'} />
+                  </div>
+                </div>
+              </div>
 
 							<div className="account-type">
 								<div className="account-type__item">
@@ -99,25 +113,25 @@ export default class LandingPage extends React.Component {
 									</div>
 								</div>
 								<div className="account-type__item">
-                  <div className="account-type__content">
+									<div className="account-type__content">
 										<img src={require("../../../assets/img/landing/keystore_disable.png")} />
 										<div className="account-type__text">KEYSTORE</div>
 									</div>
 								</div>
 								<div className="account-type__item">
-                  <div className="account-type__content">
+									<div className="account-type__content">
 										<img src={require("../../../assets/img/landing/trezor_disable.png")} />
 										<div className="account-type__text">TREZOR</div>
 									</div>
 								</div>
 								<div className="account-type__item">
-                  <div className="account-type__content">
+									<div className="account-type__content">
 										<img src={require("../../../assets/img/landing/ledger_disable.png")} />
 										<div className="account-type__text">LEDGER</div>
 									</div>
 								</div>
 								<div className="account-type__item">
-                  <div className="account-type__content">
+									<div className="account-type__content">
 										<img src={require("../../../assets/img/landing/privatekey_disable.png")} />
 										<div className="account-type__text">PRIVATE KEY</div>
 									</div>
