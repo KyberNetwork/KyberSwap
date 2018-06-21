@@ -7,7 +7,7 @@ export default class Web3Service {
   }
 
   isTrust = () => {
-    if (web3.currentProvider && web3.currentProvider.isTrust === true){
+    if (this.web3.currentProvider && this.web3.currentProvider.isTrust === true){
       return true
     }
     return false
@@ -23,6 +23,34 @@ export default class Web3Service {
         }
       })
     })
+  }
+
+  getWalletType = () => {
+
+    if (this.web3.currentProvider && web3.currentProvider.isMetaMask){
+      return "metamask"
+    }
+
+    if (this.web3.isDAppBrowser && this.web3.isDAppBrowser()){
+      return "dapp"
+    }
+
+    if (this.web3.currentProvider && web3.currentProvider.isTrust === true){
+      return "trust"
+    }
+
+    //is trust
+    if (this.web3.currentProvider && web3.currentProvider.isTrust === true){
+      return "trust"
+    }
+
+    //is cipher
+    if((!!window.__CIPHER__) && (this.web3.currentProvider && this.web3.currentProvider.constructor && this.web3.currentProvider.constructor.name === "CipherProvider")){
+      return "cipher"
+    }
+
+    return "unknown"
+        
   }
 
   getCoinbase(){
