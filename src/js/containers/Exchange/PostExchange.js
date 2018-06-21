@@ -221,19 +221,32 @@ export default class PostExchange extends React.Component {
             {this.props.translate("transaction.about_to_exchange") || "You are about to exchange"}
           </div>
           <div className="amount">
-            <div className="amount-item">
+          <div className="amount-item amount-left">
+            <div className="d-flex">
+              <div className="item-icon">
+              <img src={require("../../../assets/img/tokens/" + sourceTokenSymbol.toLowerCase()+".svg")} />
+              </div>
               <span>
                 {sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}
               </span>
             </div>
-            <div></div>
-            <div className="amount-item">
+            </div>
+            <div className="space"><img src={require("../../../assets/img/confirm-exchange-arrow.svg")}/></div>
+            <div className="amount-item amount-right">
               {this.props.snapshot.isFetchingRate ?
                 <img src={require('../../../assets/img/waiting-white.svg')} />
                 :
+                <div className="d-flex">
+                <div className="item-icon">
+                  <img src={require("../../../assets/img/tokens/" + destTokenSymbol.toLowerCase()+".svg")} />
+                </div>
                 <span>
                   {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}
                 </span>
+              </div>
+                // <span>
+                //   {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}
+                // </span>
               }
 
             </div>
@@ -251,34 +264,53 @@ export default class PostExchange extends React.Component {
       var slippagePercent = converters.calculatePercentRate(minRate, offeredRate)
       return (
         <div className="confirm-exchange-modal">
-          <div>
+          <div className="title-description">
             {this.props.translate("transaction.about_to_exchange") || "You are about to exchange"}
           </div>
           <div className="amount">
-            <div className="amount-item">
-              <span>
+            <div className="amount-item amount-left">
+              <div className="d-flex">
+                <div className="item-icon">
+                  <img src={require("../../../assets/img/tokens/" + sourceTokenSymbol.toLowerCase()+".svg")} />
+                </div>
+                <span>
+                  {sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}
+                </span>
+              </div>
+              {/* <span>
                 {sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}
-              </span>
+              </span> */}
             </div>
-            <div></div>
-            <div className="amount-item">
+            <div className="space"><img src={require("../../../assets/img/confirm-exchange-arrow.svg")}/></div>
+            <div className="amount-item amount-right">
               {this.props.snapshot.isFetchingRate ?
                 <img src={require('../../../assets/img/waiting-white.svg')} />
                 :
+                <div className="d-flex">
+                <div className="item-icon">
+                  <img src={require("../../../assets/img/tokens/" + destTokenSymbol.toLowerCase()+".svg")} />
+                </div>
                 <span>
                   {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}
                 </span>
+              </div>
+                // <span>
+                //   {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}
+                // </span>
               }
 
             </div>
           </div>
-          {!this.props.snapshot.isFetchingRate &&
+          {/* {!this.props.snapshot.isFetchingRate &&
             <div className="description">
               <span>
-                {this.props.translate("transaction.max_slippage", {  percent: slippagePercent }) || "with maximum " + slippagePercent + "% slippage"}
+                {this.props.translate("transaction.max_slippage", {  percent: slippagePercent }) || "with maximum " + slippagePercent + "% slippage may change."}
               </span>
+              <div>
+                You can change maximum slippage rate by adjusting min rate in advanced option
+              </div>
             </div>
-          }
+          } */}
         </div>
       )
     }
@@ -462,6 +494,8 @@ export default class PostExchange extends React.Component {
         gas={this.props.form.snapshot.gas + this.props.form.snapshot.gas_approve}
         isFetchingRate={this.props.snapshot.isFetchingRate}
         title="Confirm exchange"
+        minRate = {this.props.snapshot.minConversionRate}
+        offeredRate = {this.props.snapshot.offeredRate}
       />
     )
   }
@@ -481,6 +515,8 @@ export default class PostExchange extends React.Component {
         title="Confirm exchange"
         errors={this.props.form.signError}
         walletType={this.props.account.type}
+        minRate = {this.props.snapshot.minConversionRate}
+        offeredRate = {this.props.snapshot.offeredRate}
       />
     )
   }
