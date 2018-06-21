@@ -2,6 +2,7 @@ import React from "react"
 import TermAndServices from "../../containers/CommonElements/TermAndServices";
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux';
+import config from '../../config';
 
 @connect((store, props) => {
 	return {
@@ -73,27 +74,36 @@ export default class LandingPage extends React.Component {
 				<div className="landing-background">
 				</div>
 				<div class="frame">
-
 					<div className="container">
 						<div className="convert-tokens">
-							<div className="tagline">
-								<h1>Instant and Secure Token Swaps.</h1>
-								<h2>No orderbooks, no deposits, pure joy.</h2>
-								<p>Want to purchase different tokens without any hassle? <br></br> Do it in a few simple clicks.</p>
-							</div>
+              <div className="landing-page__container">
+                <div className="landing-page__content">
+                  <div className="landing-page__content-tagline">
+                    <h1 className="landing-page__content-title">Instant and Secure<br/>Token Swaps.</h1>
+                    <h2 className="landing-page__content-description">No orderbooks, no deposits, pure joy.</h2>
+                    <p className="landing-page__content-pr">Want to purchase different tokens without any hassle?<br/>Do it in a few simple clicks.</p>
+                  </div>
 
-							<div className="accept-term">
-								<TermAndServices
-									termAgree={this.state.termAgree}
-									clickCheckbox={this.clickCheckbox}
-								/>
-								<div className="accept-btn">
-									<button class={"button"}
-										onClick={this.goExchange}>
-										ACCEPT
-									</button>
-								</div>
-							</div>
+                  <div className="landing-page__content-term">
+                    <TermAndServices termAgree={this.state.termAgree} clickCheckbox={this.clickCheckbox}/>
+                    <div className="landing-page__content-btn-container">
+                      <button className="landing-page__content-btn button" onClick={this.goExchange}>ACCEPT</button>
+                    </div>
+                  </div>
+                </div>
+                <div className="landing-page__content">
+                  <div className="landing-page__content-circle">
+                    <img src={config.imagePath + 'landing/token-1.svg'} />
+                    <img src={config.imagePath + 'landing/token-2.svg'} />
+                    <img src={config.imagePath + 'landing/token-3.svg'} />
+                    <img src={config.imagePath + 'landing/token-4.svg'} />
+                    <img src={config.imagePath + 'landing/token-5.svg'} />
+                    <img src={config.imagePath + 'landing/token-6.svg'} />
+                    <img src={config.imagePath + 'landing/token-7.svg'} />
+                    <img src={config.imagePath + 'landing/swap-token.svg'} />
+                  </div>
+                </div>
+              </div>
 
 							<div className="account-type">
 								<div className="account-type__item">

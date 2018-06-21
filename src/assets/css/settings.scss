@@ -81,6 +81,7 @@ $foundation-palette: (
 
 $base-color: #666;
 $swap-color: #EF8102;
+$color-swap-light: #F2A657;
 $light-gray: #BBDAD5;
 $medium-gray: #262C41;
 $dark-gray: #0B0F1A;
@@ -160,6 +161,9 @@ $block-grid-max: 8;
 $header-font-family: 'Montserrat', sans-serif;
 $header-font-weight: $global-weight-normal;
 $header-font-style: normal;
+
+$font-cera: 'Cera', 'Open Sans', sans-serif;
+$font-openSans: 'Open Sans', sans-serif;
 
 $header-color: inherit;
 $header-lineheight: 1.4;
