@@ -47,8 +47,7 @@ const rootReducer = (state, action) => {
       utils: state.utils, 
       global: state.global,
       connection: state.connection,
-      locale: state.locale,
-      market: state.market
+      locale: state.locale
     }
   }
   
