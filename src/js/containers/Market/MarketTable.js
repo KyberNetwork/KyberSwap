@@ -168,7 +168,7 @@ export default class MarketTable extends React.Component {
       Header: this.getSortHeader("Market"),
       accessor: 'market', // String-based value accessors!
       Cell: props => this.addIcon(props.value),
-      minWidth: 150
+      minWidth: 175
     }, {
       Header: this.getSortHeader("Sell Price"),
       accessor: 'sellPrice',
