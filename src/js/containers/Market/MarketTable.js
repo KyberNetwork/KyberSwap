@@ -36,7 +36,8 @@ import {Line} from 'react-chartjs-2';
     displayColumn: store.market.configs.column.display.active,
     showActive: store.market.configs.column.shows.active,
     listShowColumn: store.market.configs.column.shows.listItem,
-    data: data
+    data: data,
+    tokens: tokens
   }
 })
 
@@ -151,10 +152,23 @@ export default class MarketTable extends React.Component {
     )
   }
 
+  addIcon = (input) => {
+    var tokenPair = input.split(" / ")
+    var key = tokenPair[0]
+    return (
+      <div className="token-pair">
+        <img src={require("../../../assets/img/tokens/" + this.props.tokens[key].info.icon)} />
+        {input}
+      </div>
+    )
+  } 
+
   getColumn = () => {
     var columns = [{
       Header: this.getSortHeader("Market"),
-      accessor: 'market' // String-based value accessors!
+      accessor: 'market', // String-based value accessors!
+      Cell: props => this.addIcon(props.value),
+      minWidth: 150
     }, {
       Header: this.getSortHeader("Sell Price"),
       accessor: 'sellPrice',
