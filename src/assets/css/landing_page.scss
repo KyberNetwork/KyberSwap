@@ -78,10 +78,10 @@
         align-items: center;
       }
 
-      &-btn-container {
-        position: absolute;
-        left: 223px;
-      }
+      // &-btn-container {
+      //   position: absolute;
+      //   left: 223px;
+      // }
 
       &-btn {
         border-radius: 3px;
@@ -142,20 +142,27 @@
       }
 
       .term-services {
-        background-color: #fff;
-        color: #757575;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 3px 10px #aaa;
-        position: relative;
-        padding: 20px 158px 20px 20px;
-        border-radius: 3px;
-
+        
+     background-color: #fff;
+     color: #757575;
+     font-size: 14px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     box-shadow: 0 3px 10px #aaa;
+     position: relative;
+     padding: 10px 20px;
+     border-radius: 3px;
+     
+     @include screen-max-width(xlarge) {
+        margin: 0 auto; 
+      }
         .term-text {
           font-size: 14px;
-          color: #757575;
+    color: #757575;
+    margin-right: 20px;
+
+    
         }
       }
 

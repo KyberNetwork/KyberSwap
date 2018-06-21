@@ -104,6 +104,23 @@ export function shortEthBalance(tokens){
   return shortedTokens
 }
 
+export function shortASCEthBalance(tokens){
+  var shortedTokens = []
+  let removedEth = {...tokens}
+  delete removedEth[constants.ETH.symbol]
+  if(tokens){
+    shortedTokens = Object.values(removedEth).sort((a, b) => {
+      var balanceEthA = new BigNumber(caculateEthBalance(a)) 
+      var balanceEthB = new BigNumber(caculateEthBalance(b)) 
+      return balanceEthA.minus(balanceEthB)
+    })
+  } 
+  if(tokens[constants.ETH.symbol]){
+    shortedTokens.unshift(tokens[constants.ETH.symbol])
+  }
+  return shortedTokens
+}
+
 
 
 function acceptableTyping(number) {

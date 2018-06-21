@@ -6,6 +6,19 @@
     font-stretch: normal;
     line-height: normal;
     letter-spacing: normal;
+    .balance-address{
+      padding: 0 1.1rem;
+      margin-bottom: 20px;
+      color: #474d5f;
+      
+      .title{
+        font-family: Raleway;
+      }
+      a{
+        color: inherit;
+        font-weight: normal;
+      }
+    }
     .balance-header {
       padding: 0 1.1rem;
       .title {
@@ -61,7 +74,7 @@
             }
           }
           .check{
-            top: 14px;
+            top: 17px;
           }
           &:not(.active){
             &:hover {
@@ -75,8 +88,8 @@
         }
         label{
           position: relative;
-          top: -9px;
-          left: 10px;
+    top: -10px;
+    left: 10px;
           color: #4B4860;
         }
       }
@@ -84,6 +97,26 @@
 
     #search-balance{
       padding: 0 1.1rem;
+
+      .dropdown--active{
+        position: relative;
+        .dropdown__content {
+          right: 0;
+          .select-item{
+            background-color: white;
+            box-shadow: 0 7px 25px #ddd;
+            right: 0;
+            >div{
+              padding: 10px 30px 10px 15px;
+              font-weight: normal;
+              &:hover{
+                background-color: #F9F9FB;
+                cursor: pointer;
+              }          
+            }
+          }
+        }
+      }
       .column {
         padding-right: 0.5rem;
         .search-icon {
@@ -150,10 +183,11 @@
         color: #474d5f;
         // opacity: 0.8;
         .symbol{
-          font-size: 11px;
+          font-size: 13px;
         }
         .balance{
-          font-size: 10px;
+          font-size: 12px;
+          margin-top: -7px;
         }
       }
     }

@@ -7,7 +7,8 @@ import { getTranslate } from 'react-localize-redux';
   return {
     clickCheckbox: props.clickCheckbox,
     termAgree: props.termAgree,
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    onClick: props.onClick
   }
 })
 
@@ -72,6 +73,11 @@ export default class TermAndServices extends React.Component {
               {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}  
                 </a> 
           </span>
+
+          <div className="landing-page__content-btn-container">
+                      <button className="landing-page__content-btn button" onClick={this.props.onClick}>ACCEPT</button>
+                    </div>
+
       </div>
     )
   }
