@@ -32,7 +32,7 @@ const TransferForm = (props) => {
               <Link to="/transfer" className="disable">{props.translate("transaction.transfer") || "Transfer"}</Link>
             </h1> */}
             <form action="#" method="get">
-              <div class="row">
+              <div class="row transfer-detail">
                 <div class="column small-12 medium-7">
 
                   <div className={props.errors.destAddress !== '' ? "error" : ""}>

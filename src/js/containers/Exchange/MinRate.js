@@ -51,7 +51,7 @@ export default class MinRate extends React.Component {
 
     var percent = converter.caculatorPercentageToRate(minConversionRate,offeredRate)
     percent = Math.round(parseFloat(percent))
-
+    if (isNaN(percent)) percent = 0
     return (
       <div className="min-rate">
         <div className="des-up">
