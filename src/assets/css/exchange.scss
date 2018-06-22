@@ -376,10 +376,10 @@
         -webkit-transition: opacity .5s ease-in-out;
         -o-transition: opacity .5s ease-in-out;
         transition: opacity .5s ease-in-out;
-        background-image: url(../img/lock-pass.svg);
+        background-image: url(../img/unlock-pass.svg);
       }
       &.unlock .toggle {
-        background-image: url(../img/unlock-pass.svg);
+        background-image: url(../img/lock-pass.svg);
       }
       .tootip{
         opacity: .4;
