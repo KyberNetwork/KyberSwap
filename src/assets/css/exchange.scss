@@ -161,15 +161,8 @@
     width: 100%;
     text-align: left;
     background-color: #f5f5f5;
-    padding: 0px 50px 50px 30px;
+    padding: 20px 50px 50px 30px;
     align-items: center;
-    .img{
-      text-align: center;
-      // padding-top: 20px;
-    }
-    img{
-      padding: 20px;
-    }
     span{
       &:not(.error-text){
         font-size: 20px;
@@ -179,6 +172,7 @@
       }
     }
     .type-password{
+      padding-top: 20px;
       font-size: 14px;
       color: #666666;
     }
@@ -316,6 +310,7 @@
     border: none;
     box-shadow: none;
     padding-bottom: 20px;
+    padding-top: 20px;
     &.security{
       font-family: 'text-security-disc';
       font-size: 14px;

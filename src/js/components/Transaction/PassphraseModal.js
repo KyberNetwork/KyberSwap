@@ -82,9 +82,6 @@ const PassphraseModal = (props) => {
         </div>
       </div>
       <div className="overlap">
-      <div className="img">
-        <img src={require('../../../assets/img/step-confirm-1.svg')}/>
-      </div>
         <div className={!!props.passwordError ? "error password-input" : "password-input"}>
           <div class="type-password">Type a password before progressing</div>
           <div className="input-passpharse row">
