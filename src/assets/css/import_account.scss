@@ -61,10 +61,29 @@ $animationTime :0.5s;
             border-radius: 3px;
             background-image: linear-gradient(to right, $swap-color 50%, $color-swap-light 50%);
             background-size: 200% 100%;
+            position: relative;
             transition: all .3s;
+
+            &::after {
+              content: '';
+              position: absolute;
+              width: 6px;
+              height: 9px;
+              right: 10px;
+              top: 50%;
+              opacity: 0;
+              transform: translateY(-50%);
+              background: url($image-path + 'angle-right.svg') no-repeat;
+              background-size: contain;
+              transition: opacity .25s;
+            }
 
             &:hover {
               background-position: -100% 0;
+
+              &::after {
+                opacity: 1;
+              }
             }
           }
           
