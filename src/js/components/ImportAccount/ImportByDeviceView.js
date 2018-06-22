@@ -41,7 +41,10 @@ const ImportByDeviceView = (props) => {
                                 : roundingNumber(address.balance)
                             } ETH
                         </a>
-                        <a class="import">Import</a>
+                        <a class="import">
+                            Import
+                            <img src={require('../../../assets/img/import-account/arrow_right_orange.svg')}/>
+                        </a>
                     </div>
                 </li>
             )
@@ -56,36 +59,44 @@ const ImportByDeviceView = (props) => {
             let active = (props.currentDPath == dPath.path) ? 'active' : ''
             return (
                 <div class="column" key={dPath.path}>
-                    <input type="radio" name="path"
-                        defaultValue={dPath.path}
-                        disabled={disabledPath}
-                    />
-                    <label class={'address-path-stamp ' + active + disabled}
-                        onClick={() => {
-                            if (dPath.path && !disabledPath) choosePath(dPath.path)
-                        }}
-                        for={'path-' + index}
-                        style={disabledPath ? { opacity: .5 } : {}}>
-                        {
-                            dPath.path ? (
-                                <div>
-                                    <div class="name">{dPath.path}</div>
-                                    <div class="note">{dPath.desc}</div>
-                                </div>
-                            ) : (
-                                <div>
-                                    <div class="name">{dPath.desc}</div>
-                                    <div class="address-path-input">
-                                        <input type="text" name="customPath" defaultValue={dPath.defaultP} />
-                                        <a class="submit"
-                                            style={{ display: 'block' }}
-                                            onClick={() => choosePath(dPath.path)}
-                                        ></a>
+                    <div className="column-content">
+                        <input type="radio" name="path"
+                            defaultValue={dPath.path}
+                            disabled={disabledPath}
+                        />
+                        <label class={'address-path-stamp ' + active + disabled}
+                            onClick={() => {
+                                if (dPath.path && !disabledPath) choosePath(dPath.path)
+                            }}
+                            for={'path-' + index}
+                            style={disabledPath ? { opacity: .5 } : {}}>
+                            {
+                                dPath.path ? (
+                                    <div>
+                                        <div class="name">{dPath.path}</div>
+                                        <div class="note">{dPath.desc}</div>
                                     </div>
-                                </div>
-                            )
-                        }
-                    </label>
+                                ) : (
+                                    <div>
+                                        <div class="name">{dPath.desc}</div>
+                                        <div class="address-path-input">
+                                            <input type="text" name="customPath" defaultValue={dPath.defaultP} />
+                                            {/* <a class="submit"
+                                                style={{ display: 'block' }}
+                                                onClick={() => choosePath(dPath.path)}
+                                            ></a> */}
+                                            <img src={require('../../../assets/img/import-account/arrow-down-orange.svg')} onClick={() => choosePath(dPath.path)}/>
+                                        </div>
+                                    </div>
+                                )
+                            }
+                        </label>
+                        <div className="choose-path-button">
+                            <img src={require('../../../assets/img/import-account/arrow_right_orange.svg')} width="30" height="30" onClick={() => {
+                                if (dPath.path && !disabledPath) choosePath(dPath.path)
+                            }}/>
+                        </div>
+                    </div>
                 </div>
             )
         })
@@ -102,7 +113,7 @@ const ImportByDeviceView = (props) => {
                                 {props.translate("modal.select_hd_path") || "Select HD derivation path"}
                             </div>
                             <form id="formPath" onSubmit={(e) => e.preventDefault()}>
-                                <div class="row small-up-2 medium-up-3 large-up-3 address-paths gutter-15">
+                                <div class="row small-up-2 medium-up-3 large-up-4 address-paths gutter-15">
                                     {getListPathHtml()}
                                 </div>
                             </form>
@@ -120,12 +131,12 @@ const ImportByDeviceView = (props) => {
                             </ul>
                             <div class="address-list-navigation animated fadeIn">
                                 <a class={'previous ' + (props.isFirstList ? 'disabled' : '')} onClick={props.getPreAddress}>
-                                    <i className="k k-angle left mr-2"></i>
+                                    <img src={require('../../../assets/img/import-account/arrows_left_icon.svg')} />
                                     {props.translate("modal.previous_addresses") || "Previous Addresses"}
                                 </a>
                                 <a class="next" onClick={props.getMoreAddress}>
                                     {props.translate("modal.more_addresses") || "More Addresses"}
-                                    <i className="k k-angle right ml-2"></i>
+                                    <img src={require('../../../assets/img/import-account/arrows_right_icon.svg')} />
                                 </a>
                             </div>
                         </div>
