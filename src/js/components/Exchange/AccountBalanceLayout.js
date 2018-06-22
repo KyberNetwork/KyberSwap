@@ -2,6 +2,8 @@ import React from "react"
 import * as converts from "../../utils/converter"
 import BigNumber from "bignumber.js"
 //import ReactTooltip from 'react-tooltip'
+import BLOCKCHAIN_INFO from "../../../../env"
+import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 
 const AccountBalanceLayout = (props) => {
 
@@ -14,9 +16,38 @@ const AccountBalanceLayout = (props) => {
     : `${props.translate("address.my_balance") || "Balance"}: <strong>${balance}</strong>`
   }
 
+  function reorderToken(tokens){
+      if (props.sortType === "Price"){
+        if (props.sortValue){
+          return converts.shortEthBalance(tokens)
+        }else{
+          return converts.shortASCEthBalance(tokens)
+        }
+      }else{
+        if (props.sortValue){
+          var ordered = []
+          console.log(tokens)
+          Object.keys(tokens).sort().forEach(function(key) {
+            ordered.push(tokens[key])
+          })
+          console.log(ordered)
+          return ordered
+        }else{
+          var ordered = []
+          console.log(tokens)          
+          Object.keys(tokens).sort().reverse().forEach(function(key) {
+            ordered.push(tokens[key])
+          })
+          console.log(ordered)
+          return ordered
+        }
+      }
+      
+  }
+
   function getBalances() {
-    console.log(props.tokens)
-    var balances = converts.shortEthBalance(props.tokens)
+    var tokens = reorderToken(props.tokens)
+    var balances = tokens 
       .map(token => {
         var balance = converts.toT(token.balance, token.decimal)
 
@@ -41,7 +72,7 @@ const AccountBalanceLayout = (props) => {
                 <div class="check"></div>
 
                 <label className="label-radio" for={token.symbol + "options"}>
-                  <div className="symbol font-w-b">{token.symbol}</div>
+                  <div className="symbol">{token.symbol}</div>
                   <div className="balance">{converts.roundingNumber(balance)}</div>
                 </label>
               </div>
@@ -65,8 +96,31 @@ const AccountBalanceLayout = (props) => {
     return roundingTotal
   }
 
+  function getWalletType(walletType){
+    switch(walletType){
+      case "metamask":
+        return "Metamask"
+      case "trezor":
+        return "Trezor"
+      case "ledger":
+        return "Ledger"
+      case "keystore":
+        return "Json"
+      case "privateKey":
+        return "Private Key"
+      default:
+        return ""
+    }
+  }
+
   return (
     <div id="balance-account">
+      <div className="balance-address">
+        <div className="title">{getWalletType(props.walletType)} Address</div>
+        <div>
+          <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.address}>{props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}</a>
+        </div>
+      </div>
       <div className="balance-header">
         <div className="title">
           {props.translate("address.my_balance") || "My balance"}
@@ -82,8 +136,20 @@ const AccountBalanceLayout = (props) => {
         <div className="column small-10">
           <input type="text" placeholder="Search" onChange={(e) => props.changeSearchBalance(e)} value = {props.searchWord}  className="search-input"/>
         </div>
-        <div className="column small-2 sort-balance">
-        </div>
+
+        
+        <Dropdown  onShow = {(e) => props.showSort(e)} onHide = {(e) => props.hideSort(e)} active={props.sortActive}>
+        <DropdownTrigger className="notifications-toggle">
+          <div className="column small-2 sort-balance"></div>
+        </DropdownTrigger>
+        <DropdownContent>
+          <div className="select-item">
+           <div onClick={(e)=>props.sortSymbol()}>SYMBOL</div>
+           <div onClick={(e)=>props.sortPrice()}>PRICE</div>
+          </div>
+        </DropdownContent>
+      </Dropdown>
+        
       </div>
       <div className="balances custom-radio custom-scroll">
         <ul>

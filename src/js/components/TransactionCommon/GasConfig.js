@@ -50,7 +50,7 @@ const GasConfig = (props) => {
       
       <div className="transaction-fee">
         <div className="title-fee">Transaction fee</div>
-        <div className="font-w-b">{props.totalGas} ETH</div>
+        <div>{props.totalGas} ETH</div>
       </div>
     </div>
   )

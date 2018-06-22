@@ -28,7 +28,9 @@ import { getTranslate } from 'react-localize-redux';
     showBalance: store.global.showBalance,
     brocastStep,
     sourceActive,
-    location 
+    location,
+    walletType: store.account.account.type,
+    address: store.account.account.address
   }
 })
 
@@ -37,7 +39,11 @@ export default class AccountBalance extends React.Component {
   constructor(){
     super()
     this.state = {
-      searchWord: ""
+      searchWord: "",
+      sortValueSymbol_DES:  false,
+      sortValuePrice_DES:  true,
+      sortType: 'Price',
+      sortActive: false
     }
   }
   changeSearchBalance = (e) => {
@@ -58,7 +64,27 @@ export default class AccountBalance extends React.Component {
     }
   }
 
+  showSort = (e) =>{
+    this.setState({sortActive: true})
+  }
+  hideSort = (e) =>{
+    this.setState({sortActive: false})
+  }
+
+  sortSymbol = (e) =>{
+    this.setState({sortType: "Symbol", sortValueSymbol_DES: !this.state.sortValueSymbol_DES})
+    this.hideSort()
+  }
+
+  sortPrice = (e) =>{
+    this.setState({sortType: "Price", sortValuePrice_DES: !this.state.sortValuePrice_DES})
+    this.hideSort()
+  }
+
+  
+
   render() {
+    var sortValue = this.state.sortType === "Price" ? this.state.sortValuePrice_DES : this.state.sortValueSymbol_DES
     return (
       <AccountBalanceLayout
         tokens={this.props.tokens}
@@ -68,6 +94,17 @@ export default class AccountBalance extends React.Component {
         showBalance = {this.props.showBalance}
         changeSearchBalance = {this.changeSearchBalance}
         searchWord = {this.state.searchWord}
+        walletType = {this.props.walletType}
+        address = {this.props.address}
+
+        showSort = {this.showSort}
+        hideSort = {this.hideSort}
+        sortActive = {this.state.sortActive}
+
+        sortSymbol = {this.sortSymbol}
+        sortPrice = {this.sortPrice}
+        sortType = {this.state.sortType}
+        sortValue = {sortValue}
       />
     )
   }

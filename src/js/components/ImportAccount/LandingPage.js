@@ -85,22 +85,19 @@ export default class LandingPage extends React.Component {
                   </div>
 
                   <div className="landing-page__content-term">
-                    <TermAndServices termAgree={this.state.termAgree} clickCheckbox={this.clickCheckbox}/>
-                    <div className="landing-page__content-btn-container">
-                      <button className="landing-page__content-btn button" onClick={this.goExchange}>ACCEPT</button>
-                    </div>
+                    <TermAndServices termAgree={this.state.termAgree} clickCheckbox={this.clickCheckbox} onClick={this.goExchange}/>                    
                   </div>
                 </div>
                 <div className="landing-page__content">
                   <div className="landing-page__content-circle">
-                    <img src={config.imagePath + 'landing/token-1.svg'} />
-                    <img src={config.imagePath + 'landing/token-2.svg'} />
-                    <img src={config.imagePath + 'landing/token-3.svg'} />
-                    <img src={config.imagePath + 'landing/token-4.svg'} />
-                    <img src={config.imagePath + 'landing/token-5.svg'} />
-                    <img src={config.imagePath + 'landing/token-6.svg'} />
-                    <img src={config.imagePath + 'landing/token-7.svg'} />
-                    <img src={config.imagePath + 'landing/swap-token.svg'} />
+                    <img src={require('../../../assets/img/landing/token-1.svg')} />
+                    <img src={require('../../../assets/img/landing/token-2.svg')} />
+                    <img src={require('../../../assets/img/landing/token-3.svg')} />
+                    <img src={require('../../../assets/img/landing/token-4.svg')} />
+                    <img src={require('../../../assets/img/landing/token-5.svg')} />
+                    <img src={require('../../../assets/img/landing/token-6.svg')} />
+                    <img src={require('../../../assets/img/landing/token-7.svg')} />
+                    <img src={require('../../../assets/img/landing/swap-token.svg')} />
                   </div>
                 </div>
               </div>
