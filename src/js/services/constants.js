@@ -227,7 +227,7 @@ const LEDGER_SUPPORT_LINK = "https://support.ledgerwallet.com/hc/en-us/articles/
 
 const BASE_HOST = "/swap"
 
-const STORAGE_KEY = "112"
+const STORAGE_KEY = "113"
 module.exports = {
   ERC20, KYBER_NETWORK, KYBER_WRAPPER, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,
   KYBER_WALLET_DATA, INIT_EXCHANGE_FORM_STATE, INIT_TRANSFER_FORM_STATE,

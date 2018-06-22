@@ -114,8 +114,7 @@ ul.broadcast-steps {
   }
   > li {
     font-size: 14px;
-    font-weight: bold;
-    color: $k-success;
+    font-weight: bold;    
     display: inline-block;
     background-repeat: no-repeat;
     background-position: top 2px left;
@@ -126,23 +125,43 @@ ul.broadcast-steps {
       margin-bottom: 12px;
     }
     &.success {
-      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: normal;
+      .title{
+        color: #EF8102;
+        font-weight: 500;
+      }
+      .content{
+        span{
+          margin-left: 10px;
+          strong{
+            font-weight: 500;
+          }
+        }
+      }
     }
     &.failed {
       h4{
-        color: $alert-color;
-      }
-      .reason {
-        text-align: center;
-        margin-top: 5px;
-        color: $white;
+        border-bottom: 1px solid #ff5d00;
+        color: #666;
         font-weight: normal;
+        cursor: pointer;
+        margin-top: 10px;
+        display: inline-block;
       }
-      img{
-        width: 20px;
-        vertical-align: baseline;
-        margin-right: 5px;
-      }
+      // .reason {
+      //   text-align: center;
+      //   margin-top: 5px;
+      //   color: $white;
+      //   font-weight: normal;
+      // }
+      // img{
+      //   width: 20px;
+      //   vertical-align: baseline;
+      //   margin-right: 5px;
+      // }
     }
   }
   
@@ -163,7 +182,7 @@ ul.broadcast-steps {
 
   .new-transaction {
     border-radius: 3px;
-    padding: 14px 50px 14px 10px;
+    padding: 14px 70px 14px 30px;
     color: #fff;
     font-size: 14px;
     background-color: #EF8102;
@@ -179,7 +198,7 @@ ul.broadcast-steps {
       position: absolute;
       width: 28px;
       height: 28px;
-      right: 11px;
+      margin-left: 10px;
       top: 50%;
       border-radius: 50%;
       transform: translateY(-50%);

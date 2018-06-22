@@ -105,15 +105,15 @@ const TransactionLoadingView = (props) => {
   }
 
   var classPending = props.status === "pending" ? " pulse" : ""
-  var analyzeBtn = ""
+  // var analyzeBtn = ""
 
-  if (props.type === "exchange") {
-    analyzeBtn = (
-      <a className="analyze" onClick={(e) => handleAnalyze(e)}>
-        {props.translate('transaction.analyze') || "Show reasons"}
-      </a>
-    )
-  }
+  // if (props.type === "exchange") {
+  //   analyzeBtn = (
+  //     <a className="analyze" onClick={(e) => handleAnalyze(e)}>
+  //       {props.translate('transaction.analyze') || "Show reasons"}
+  //     </a>
+  //   )
+  // }
   return (
     <div>
       <div className="title">
@@ -160,33 +160,47 @@ const TransactionLoadingView = (props) => {
             {props.status === "success" &&
               <li class={props.status}>
                 <div>
-                <h4>
+                <div>
                   {props.type === "exchange" &&
-                    <p>Successfully exchanged from <span className="tx-underline">{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceSymbol}</span> to <span className="tx-underline">{displayRoundingNumber(props.balanceInfo.destAmount)} {props.balanceInfo.destSymbol}</span></p>
+                    <div>
+                      <div className="title">Successfully exchanged from</div>
+                      <div className="content">
+                        <span>
+                          <strong>{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceSymbol}</strong> 
+                        </span>
+                        <span> to </span>
+                        <span><strong>{displayRoundingNumber(props.balanceInfo.destAmount)} {props.balanceInfo.destSymbol}</strong></span>
+                      </div>
+                    </div>
                   }
                   {props.type === "transfer" &&
-                      <p>Successfully transferred <span className="tx-underline">{displayRoundingNumber(props.balanceInfo.amount)} {props.balanceInfo.tokenSymbol}</span> to <span className="tx-underline">{props.address}</span></p>
+                      <div>
+                          <div className="title">Successfully transferred</div>
+                          <div className="content">
+                            <span>
+                            <strong>{displayRoundingNumber(props.balanceInfo.amount)} {props.balanceInfo.tokenSymbol}</strong>
+                            </span>
+                            <span> to</span>
+                            <span><strong>{props.address}</strong></span>
+                          </div>                           
+                      </div>
                   }
-                </h4>
                 </div>
-                <div className="broadcast-img">
+                </div>
+                {/* <div className="broadcast-img">
                   <img src={require('../../../assets/img/finish.svg')} />
                   <div>Done</div>
-                </div>
+                </div> */}
               </li>
             }
             {props.status === "failed" &&
               <li class={props.status}>
                 <div>
-                  <h4 class="font-w-b d-inline-block">
-                    <img src={require("../../../assets/img/error.svg")} />
-                    {props.translate("transaction.transaction_error") || "Transaction error"}
-                  </h4>
-                  {analyzeBtn}
-                </div>
-                <div className="broadcast-img">
-                  <img src={require('../../../assets/img/error_state.svg')} />
-                  <div>Error!</div>
+                  {props.type==="exchange" && (
+                    <h4 class="font-w-b d-inline-blocka" onClick={(e) => handleAnalyze(e)}>                    
+                      {props.translate("transaction.transaction_error") || "Transaction error"}
+                    </h4>
+                  )}                                    
                 </div>
               </li>
             }

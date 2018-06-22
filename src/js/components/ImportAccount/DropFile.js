@@ -29,7 +29,7 @@ const DropFile = (props) => {
   }
   //console.log(keystring)
   return (
-    <Dropzone onDrop={props.onDrop} disablePreview={true} className="column column-block">
+    <Dropzone onDrop={(e) => props.onDrop(e)} disablePreview={true} className="column column-block">
       <div className="importer json">
         <div className="how-to-use" data-for="keystore-tip" data-tip="How to use"></div>
         <img src={require('../../../assets/img/landing/keystore_active.svg')} />
