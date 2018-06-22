@@ -1,19 +1,23 @@
 #balance-account{
     border-right: 1px solid #ddd;
     padding: 1rem 0.5rem;
-    font-weight: 600;
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
     letter-spacing: normal;
+    color: #474D5F;
+    .title{
+      font-size: 20px;
+      font-weight: normal;
+    }
     .balance-address{
       padding: 0 1.1rem;
       margin-bottom: 20px;
       color: #474d5f;
       
-      .title{
-        font-family: Raleway;
-      }
+      // .title{
+      //   font-family: Raleway;
+      // }
       a{
         color: inherit;
         font-weight: normal;
@@ -22,13 +26,12 @@
     .balance-header {
       padding: 0 1.1rem;
       .title {
-        font-size: 20px;
         color: #474d5f;
-        font-family: Raleway;
+        // font-family: Raleway;
       }
       .estimate-value{
         font-size: 12px;
-        font-weight: 500;
+        
         .text-upcase {
           text-transform: uppercase;
           color: #454e5f;
@@ -184,10 +187,12 @@
         // opacity: 0.8;
         .symbol{
           font-size: 13px;
+          font-weight: normal;
         }
         .balance{
           font-size: 12px;
           margin-top: -7px;
+          font-weight: normal;
         }
       }
     }

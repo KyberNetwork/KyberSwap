@@ -72,7 +72,7 @@ const AccountBalanceLayout = (props) => {
                 <div class="check"></div>
 
                 <label className="label-radio" for={token.symbol + "options"}>
-                  <div className="symbol font-w-b">{token.symbol}</div>
+                  <div className="symbol">{token.symbol}</div>
                   <div className="balance">{converts.roundingNumber(balance)}</div>
                 </label>
               </div>

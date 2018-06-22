@@ -323,7 +323,6 @@
     margin-bottom: 0px;
     letter-spacing: .5px;
     font-style: normal;
-    font-weight: 600;
     color: #787878;
   }
   .balance{
@@ -335,6 +334,7 @@
     align-items: center;
     span {
       font-size: 11px;
+      color: #999;
     }
     span:nth-child(2) {
       font-size: 12px;

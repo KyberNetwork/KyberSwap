@@ -24,7 +24,6 @@
     }
     input{
       font-size: 25px;
-      font-weight: 600;
       margin-bottom: 0px;
       padding: 0;
       padding-right: 15px;
@@ -37,7 +36,6 @@
     }
     span {
       font-size: 15px;
-      font-weight: 600;
       padding-top: 12px;
       display: flex;
       align-items: center;
@@ -93,6 +91,7 @@
   //   -webkit-transform-style: preserve-3d;
   //   -webkit-transform:translate3d(0,0,0);
   // }
+  color: #545268;
   .dropdown{
     width: 100%;
 
@@ -110,6 +109,7 @@
         border-top: none;
         border-bottom-right-radius: 10px;
         border-bottom-left-radius: 10px;
+        color: inherit;
       }
     }
     .dropdown__content{
@@ -177,11 +177,9 @@
       color: #545268;
       text-transform: uppercase;
       font-size: 14px;
-      font-weight: 600;
     }
     .focus-balance{
       color: #9997A5;
-      font-weight: 500;
       font-size: 0.8rem;
       .token-symbol{
         margin-left: 5px;

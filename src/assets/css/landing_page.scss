@@ -273,9 +273,9 @@
       .convert-tokens {
         width: 100%;
 
-        h1 {
-          font-weight: 500;
-        }
+        // h1 {
+        //   font-weight: 500;
+        // }
       }
       .group {
         text-align: center;
@@ -284,7 +284,6 @@
   }
   .title{
     margin-top: 70px;
-    font-weight: 600;
     font-size: 44px;
     @include breakpoint(small only){
       font-size: 31px;
