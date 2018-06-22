@@ -63,6 +63,7 @@ const ImportByPKeyView = (props) => {
 												required />
 												<p>{props.privateKeyVisible}</p>
 												<a className="toggle" onClick={toggleShowPw}></a>
+												<a className="tootip"></a>
 											</div>
 											{!!props.pKeyError &&
 												<span className="error-text">{props.pKeyError}</span>

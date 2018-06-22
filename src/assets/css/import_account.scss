@@ -147,6 +147,7 @@ $animationTime :0.5s;
 // }
 
 .import-privatekey {
+  padding: 20px;
   .title {
     font-size: 1.2rem;
     padding: 50px 50px 10px 50px;
@@ -161,17 +162,45 @@ $animationTime :0.5s;
       // margin-top: 50px;
       line-height: 55px;
       padding: 0 35px;
-      background: #510CA7;
+      background: #ef8102;
       font-size: 1.3rem;
-      border-radius: 50px;
+      border-radius: 4px;
       box-shadow: 0 10px 15px #ccc;
     }
   }
   #private_key {
-    width: 300px;
+    text-align: left;
+    width: 100%;
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 3px;
-    color: #32AB7B;
+    color: #666666;
+  }
+}
+.input-reveal{
+  .toggle{
+    right: 12px;
+    left: unset;
+    background-image: url(../img/unlock-pass.svg);
+  }
+  &.unlock .toggle {
+    background-image: url(../img/lock-pass.svg);
+  }
+  .tootip{
+    opacity: .4;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-size: contains;
+    background-position: center;
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    left: 12px;
+    -webkit-transition: opacity .5s ease-in-out;
+    -o-transition: opacity .5s ease-in-out;
+    transition: opacity .5s ease-in-out;
+    background-image: url(../img/toot-tip-pass.svg);
   }
 }
