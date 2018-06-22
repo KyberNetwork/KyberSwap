@@ -33,7 +33,8 @@ import BLOCKCHAIN_INFO from "../../../../env"
     isVisitFirstTime: store.global.isVisitFirstTime,
     ethereum: store.connection.ethereum,
     tokens: supportTokens,
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    termOfServiceAccepted: store.global.termOfServiceAccepted
   }
 })
 
@@ -43,15 +44,15 @@ export default class ImportAccount extends React.Component {
     super()
     this.state = {
       isOpen: false,
-      isInLandingPage: true
+     // isInLandingPage: true
     }
   }
 
-  goExchange = (e) => {
-    this.setState({
-      isInLandingPage: false
-    })
-  }
+  // goExchange = (e) => {
+  //   this.setState({
+  //     isInLandingPage: false
+  //   })
+  // }
 
   componentDidMount = () => {
     if (typeof web3 !== "undefined") {
@@ -90,8 +91,8 @@ export default class ImportAccount extends React.Component {
     //   </div>
     // )    
     var content
-    if (this.state.isInLandingPage) {
-      content =  <LandingPage goExchange={this.goExchange} translate={this.props.translate}/>
+    if (!this.props.termOfServiceAccepted) {
+      content =  <LandingPage translate={this.props.translate}/>
     } else {
       content =  (
         <ImportAccountView

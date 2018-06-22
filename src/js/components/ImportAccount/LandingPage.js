@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux';
 import config from '../../config';
 
+import {acceptTermOfService} from "../../actions/globalActions"
 @connect((store, props) => {
 	return {
 		translate: getTranslate(store.locale)
@@ -56,15 +57,15 @@ export default class LandingPage extends React.Component {
 	}
 
 
-	clickCheckbox = () => {
-		this.setState({
-			termAgree: !this.state.termAgree
-		})
-	}
+	// clickCheckbox = () => {
+	// 	this.setState({
+	// 		termAgree: !this.state.termAgree
+	// 	})
+	// }
 
-	goExchange = () => {
+	acceptTerm = () => {
 		// if (this.state.termAgree) {
-		this.props.goExchange()
+		this.props.dispatch(acceptTermOfService())
 		// }
 	}
 
@@ -85,7 +86,7 @@ export default class LandingPage extends React.Component {
                   </div>
 
                   <div className="landing-page__content-term">
-                    <TermAndServices termAgree={this.state.termAgree} clickCheckbox={this.clickCheckbox} onClick={this.goExchange}/>                    
+                    <TermAndServices onClick={this.acceptTerm}/>                    
                   </div>
                 </div>
                 <div className="landing-page__content">

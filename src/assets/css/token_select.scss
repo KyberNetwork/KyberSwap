@@ -146,10 +146,12 @@
   //   color: #aaa;
   // }
   input{
-      outline: none;
+    outline: none;
     border: 1px solid #aaa;
     width: 100%;
     height: 40px;
+    padding: 10px;
+    border-radius: 29px;
 
 
     &:-webkit-outer-spin-button,

@@ -15,12 +15,15 @@
       margin-bottom: 20px;
       color: #474d5f;
       
+      
       // .title{
       //   font-family: Raleway;
       // }
       a{
         color: inherit;
-        font-weight: normal;
+      font-weight: normal;
+      font-size: 12px;
+      text-transform: uppercase;
       }
     }
     .balance-header {
@@ -42,9 +45,9 @@
       text-indent: 15px;
       min-height: 29px;
       height: 29px;
-      opacity: 0.3;
+      // opacity: 0.3;
       border-radius: 2px;
-      border: solid 1px #979797;
+      border: 1px solid #ccc;
     }
     .balances{
       display: inline-block;
@@ -141,7 +144,7 @@
         background-position: center;
         background-size: 50% 50%;
         border-radius: 2px;
-        border: solid 1px #979797;
+        border: 1px solid #ccc;
       }
     }
     .balance-item{

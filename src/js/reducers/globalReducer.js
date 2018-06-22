@@ -27,30 +27,16 @@ const initState = {
 
 const global = (state = initState, action) => {
   switch (action.type) {
-    case REHYDRATE: {
-      if (action.key === "global") {
-        if (action.payload){
-          return {...state,
-            count: {storageKey: constants.STORAGE_KEY}
-           }
-        }
-        
-
-        // if (action.payload && action.payload.history) {
-        //   var history = action.payload.history
-          
-        //   // check load from loaclforage or initstate
-        //   if(action.payload.count && action.payload.count.storageKey !== constants.STORAGE_KEY){
-        //     history = constants.HISTORY_EXCHANGE
-        //   } 
-        //   return {...state,
-        //     history: {...history},
-        //     count: {storageKey: constants.STORAGE_KEY}
-        //    }
-        // }
-      }
-      return state
-    }
+    // case REHYDRATE: {
+    //   if (action.key === "global") {
+    //     if (action.payload){
+    //       return {...state,
+    //         count: {storageKey: constants.STORAGE_KEY}
+    //        }
+    //     }
+    //   }
+    //   return state
+    // }
     // case "GLOBAL.NEW_BLOCK_INCLUDED_FULFILLED": {
     //   var history = { ...state.history }
     //   history.currentBlock = action.payload

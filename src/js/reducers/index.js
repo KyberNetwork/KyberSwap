@@ -20,7 +20,7 @@ import market from './marketReducer'
 // import { localeReducer } from 'react-localize-redux';
 
 const appReducer = combineReducers({
-  account, exchange, transfer, txs, connection, router: routerReducer,utils, market,
+  account, exchange, transfer, txs, connection, router: routerReducer,utils, market,global,
   // market: persistReducer({
   //   key: 'market',
   //   storage: localForage
@@ -33,26 +33,28 @@ const appReducer = combineReducers({
     key: 'tokens',
     storage: localForage
   }, tokens),  
-  global: persistReducer({
-    key: 'global',
-    storage: localForage,
-    blacklist: ['conn_checker', 'analizeError', 'isOpenAnalyze']
-  }, global)
+  // global: persistReducer({
+  //   key: 'global',
+  //   storage: localForage,
+  //   blacklist: ['conn_checker', 'analizeError', 'isOpenAnalyze', 'termOfServiceAccepted']
+  // }, global)
 })
 
 const rootReducer = (state, action) => {
-  let isGoToRoot = action.type === '@@router/LOCATION_CHANGE' && action.payload.pathname === '/'
-  if (action.type === 'GLOBAL.CLEAR_SESSION_FULFILLED' || isGoToRoot) {
+  //let isGoToRoot = action.type === '@@router/LOCATION_CHANGE' && action.payload.pathname === constants.BASE_HOST 
+  if (action.type === 'GLOBAL.CLEAR_SESSION_FULFILLED') {
+    var global = {...state.global}
+    global.termOfServiceAccepted = true
     state = {
       utils: state.utils, 
-      global: state.global,
+      global: global,
       connection: state.connection,
       locale: state.locale,
       tokens: state.tokens
     }
   }
   
-  let isGoToExchange = action.type === '@@router/LOCATION_CHANGE' && action.payload.pathname === '/exchange'
+  let isGoToExchange = action.type === '@@router/LOCATION_CHANGE' && ( (action.payload.pathname === constants.BASE_HOST + '/exchange')&&(action.payload.pathname === constants.BASE_HOST + '/transfer') )
   if(isGoToExchange && !state.account.account){
     window.location.href = '/'
   }
