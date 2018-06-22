@@ -1,23 +1,19 @@
-#landing_page{
-  // background-image: url(../img/landing/swap.png);
-  // background-repeat: no-repeat;
-  // background-size: cover;
+#landing_page {
   min-height: 600px;
   margin-bottom: 130px;
   position: relative;
-  .landing-background{
+
+  .landing-background {
     display: flex;
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
-
-    background-repeat: no-repeat;
+    background: url($image-path + 'landing/landing_swap_1.png') center center no-repeat;
     background-size: cover;
-    background-image: url(../img/landing/landing_swap_1.png);
 
-    &:after{
+    &:after {
       content: '';
       z-index: 1;
       width: 100%;
@@ -26,11 +22,19 @@
       opacity: 0.1;
       position: absolute;
     }
-    // >div{
-    //   margin: 0 auto;
-    // }
+
+    @include screen-max-width(xlarge) {
+      &::before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0, 0, 0, .3);
+      }
+    }
   }
-  .frame{
+
+  .frame {
     position: relative;
     z-index: 3;
   }
@@ -76,11 +80,6 @@
         display: flex;
         position: relative;
         align-items: center;
-      }
-
-      &-btn-container {
-        position: absolute;
-        left: 223px;
       }
 
       &-btn {
@@ -150,12 +149,13 @@
         justify-content: center;
         box-shadow: 0 3px 10px #aaa;
         position: relative;
-        padding: 20px 158px 20px 20px;
+        padding: 10px 20px;
         border-radius: 3px;
 
         .term-text {
           font-size: 14px;
           color: #757575;
+          margin-right: 20px;
         }
       }
 
@@ -223,22 +223,27 @@
     }
 
     @include screen-max-width(xlarge) {
-      &__container {
-
-      }
-
       &__content {
         &:first-child {
           width: 100%;
         }
 
         &:last-child {
+          width: 100%;
           position: absolute;
           top: 0;
           left: 0;
-          right: 0;
           z-index: -1;
           opacity: 0.3;
+        }
+
+        &-circle {
+          left: 0;
+          right: 0;
+          margin: 0 auto;
+        }
+
+        .term-services {
           margin: 0 auto;
         }
 
@@ -266,9 +271,9 @@
       .convert-tokens {
         width: 100%;
 
-        h1 {
-          font-weight: 500;
-        }
+        // h1 {
+        //   font-weight: 500;
+        // }
       }
       .group {
         text-align: center;
@@ -277,7 +282,6 @@
   }
   .title{
     margin-top: 70px;
-    font-weight: 600;
     font-size: 44px;
     @include breakpoint(small only){
       font-size: 31px;

@@ -198,7 +198,7 @@ const TransactionLoadingView = (props) => {
           <div class="tx-actions">
             <a className="new-transaction" onClick={props.makeNewTransaction}>
               {props.type === "exchange" ?
-                props.translate("transaction.new_ex") || "New exchange"
+                "New swap"
                 : props.translate("transaction.new_tx") || "New transfer"}
             </a>
           </div>

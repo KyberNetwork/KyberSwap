@@ -7,18 +7,27 @@ $radio-color: #5D9E7A;
 }
 
 .advance-config{
+  .min-convention-rate{
+    text-align: center;
+    font-size: 0.7rem;    
+    line-height: 1.54;
+    letter-spacing: 0px;
+    color: #666666;
+  }
   .gas-change{
     padding-top: 6px;
     padding-bottom: 6px;
     display: flex;
     align-items: center;
-    border: 2px solid #eee;
-    border-radius: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
   }
-  input {
-    padding-top: 0;
-    padding-bottom: 0;
-    color: #aaa;
+  .gas_input{
+    input {
+      padding-top: 0;
+      padding-bottom: 0;
+      color: #aaa;
+    }
   }
   .gas_input-lable{
     padding-left: 10px;
@@ -61,7 +70,7 @@ $radio-color: #5D9E7A;
         .select-item{
           font-size: 12px;
         }
-      }
+      }		       
     }
   }
   .select-item{
@@ -82,8 +91,7 @@ $radio-color: #5D9E7A;
       }
     }
   }
-  .title {
-    font-weight: 600;
+  .title {      
     font-size: 1.25rem;
     padding-bottom: 0.5rem;
     color: #4B4860;
@@ -120,19 +128,19 @@ $radio-color: #5D9E7A;
   }
 
   .error{
-    input{
-      border: 1px solid $error-color;
-      background: transparent;
-      color: #e8827f;
-    }
-    .error-text{
-      color: $error-color;
-      font-size: 0.8rem;
-    }
+      input{
+          border: 1px solid $error-color;
+          background: transparent;
+          color: #e8827f;
+      }
+      .error-text{
+          color: $error-color;
+          font-size: 0.8rem;
+      }
   }
 
   .min-rate{
-    margin-bottom: 1.5rem;
+      margin-bottom: 1.5rem;
   }
   .gas-config{
     input{
@@ -152,8 +160,7 @@ $radio-color: #5D9E7A;
       .gas-price, .min-rate{
         margin: 0 auto;
         label{
-          text-align: left;
-          font-weight: 700;
+          text-align: left;              
           color: $white;
           margin-top: 7px;
           font-size: inherit;
@@ -208,17 +215,15 @@ $radio-color: #5D9E7A;
         color: #6A6B7D;
         .title-fee{
             text-transform: uppercase;
-            font-weight: 550;
             font-size: 0.8rem;
             margin-bottom: 0.4rem;
         }
-    }
-    .custom-radio{
+      }
+      .custom-radio{
         margin-top: 1rem
+      }
     }
   }
-}
-
 
 .custom-radio {
   ul {
@@ -243,8 +248,7 @@ $radio-color: #5D9E7A;
   
   ul li label{
     display: block;
-    position: relative;
-    font-weight: 600;
+    position: relative;      
     font-size: 0.8em;
     padding: 5px 0px 0px 20px;
     color: #A2A2AE;
@@ -253,7 +257,7 @@ $radio-color: #5D9E7A;
     -webkit-transition: all 0.25s linear;
     text-transform: uppercase;
   }
-  
+
   ul li .check{
     display: block;
     position: absolute;
@@ -263,10 +267,10 @@ $radio-color: #5D9E7A;
     width: 18px;
     top: 9px;
     z-index: 5;
-    transition: border .25s linear;
-    -webkit-transition: border .25s linear;
+      transition: border .25s linear;
+      -webkit-transition: border .25s linear;
   }
-  
+
   ul li .check::before {
     display: block;
     position: absolute;
@@ -280,10 +284,12 @@ $radio-color: #5D9E7A;
   }
   
   input[type=radio]:checked ~ .check {
+    // border: 2px solid $radio-color;
     border: none;
   }
   
   input[type=radio]:checked ~ .check::before{
+    // background: $radio-color;
     background-image: url("../img/checked.svg")
   }
   
