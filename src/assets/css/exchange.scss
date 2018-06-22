@@ -154,9 +154,11 @@
   padding-left: 0 !important;
   padding-right: 0 !important;
   padding-bottom: 0 !important;
+  
   .title {
     font-family: $font-cera;
     line-height: 1;
+    font-weight: normal;
     letter-spacing: -0.1px;
     color: #141927;
     padding: 0;
@@ -184,6 +186,15 @@
       }
     }
   }
+  .recap-transfer{
+    display: flex;
+  padding: 10px;
+  border: 1px solid #ebebeb;
+  margin-top: 25px;
+    >div{
+      margin-right: 10px;
+    }
+  }
   .overlap {
     display: inherit;
     width: 100%;
@@ -193,8 +204,7 @@
     align-items: center;
     span{
       &:not(.error-text){
-        font-size: 20px;
-        font-weight: bold;
+        font-size: 1rem;
         line-height: 1;
         color: #666666;
       }
@@ -209,12 +219,15 @@
       padding: 14px 50px 14px 10px;
       color: #fff;
       font-size: 14px;
-      background-color: $swap-color;
-      font-weight: bold;
+      background-color: #EF8102;
+      font-weight: normal;
       margin: 0;
       cursor: pointer;
       position: relative;
       transition: all .3s;
+      border: none;
+      outline: none;
+      box-shadow: none;
 
       &::after {
         content: '';
@@ -228,6 +241,7 @@
         background: rgba(255, 255, 255, 0.1) url($image-path + 'arrow-right-thick.svg') center center no-repeat;
       }
     }
+   
   }
   .content {
     padding: 0 50px;
@@ -253,7 +267,7 @@
       width: 95%;
       white-space: nowrap;
       text-align: left;
-      font-size: 0.8rem;
+      font-size: 1rem;
       margin-top: 0;
       margin-bottom: 1rem;
       opacity: 0.77;
@@ -261,7 +275,7 @@
       padding: 25px;
       margin: 0 auto;
       .font-w-b{
-        font-size: 0.8rem;
+        font-size: 1rem;
         line-height: 1.03;
         color: #666666;
       }
@@ -323,12 +337,11 @@
     }
     
     .title-description{
-      font-size: 0.8rem;
-      font-weight: 600;
+      font-size: 1rem;
       line-height: 0.92;
       color: #666666;
       padding-top: 10px;
-      padding-bottom: 35px;
+      margin-bottom: 35px;
     }
   }
   #passphrase{
@@ -355,6 +368,8 @@
   }
   .input-confirm{
     padding: 50px 0px 0px 0px;
+    display: flex;
+    align-items: center;
   }
   .input-passpharse{
     margin-top: 10px;
@@ -385,10 +400,10 @@
         -webkit-transition: opacity .5s ease-in-out;
         -o-transition: opacity .5s ease-in-out;
         transition: opacity .5s ease-in-out;
-        background-image: url(../img/lock-pass.svg);
+        background-image: url(../img/unlock-pass.svg);
       }
       &.unlock .toggle {
-        background-image: url(../img/unlock-pass.svg);
+        background-image: url(../img/lock-pass.svg);
       }
       .tootip{
         opacity: .4;

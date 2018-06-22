@@ -38,13 +38,13 @@ const PassphraseModal = (props) => {
             <div>
             {props.recap}
               <div className="gas-configed">
-                <div><b>Included</b></div>
+                <div>Included</div>
                 <div className="row">
-                  <span className="column small-6 font-w-b">{props.translate("transaction.gas_price") || 'Gas price'}</span>
+                  <span className="column small-6">{props.translate("transaction.gas_price") || 'Gas price'}</span>
                   <span className="column small-6 font-w-i">{+roundingNumber(props.gasPrice)} Gwei</span>
                 </div>
                 <div className="row">
-                  <span className="column small-6 font-w-b">{props.translate("transaction.transaction_fee") || "Transaction Fee"}</span>
+                  <span className="column small-6">{props.translate("transaction.transaction_fee") || "Transaction Fee"}</span>
                   <span className="column small-6 font-w-i">{props.isFetchingGas ?
                     <img src={require('../../../assets/img/waiting-white.svg')} />
                     : <span>{totalGas.toString()}</span>

@@ -44,11 +44,11 @@ $radio-color: #5D9E7A;
     padding-left: 0;
     .gas-option{
       .token-selector {
-        border-left: 1px solid #bbb;
+        border-left: 1px solid #E8E8E8;
         .focus-item{
           font-size: 12px;
           line-height: 1.08;
-          color: #8F8FB6;
+          color: #666666;
           padding: 0 10px 0 0px;
           border-radius:0;
           border: none;
@@ -62,7 +62,6 @@ $radio-color: #5D9E7A;
             display: flex;
             align-items: center;
             img {
-              width: 40px;
               min-width: 13px;
             }
           }
@@ -85,7 +84,7 @@ $radio-color: #5D9E7A;
     box-shadow: 0 0 5px #aaa;
     .token-item{
       text-transform: uppercase;
-      color: #8F8FB6;
+      color: #666;
       &:hover {
         background: #F9F8FB;
       }
