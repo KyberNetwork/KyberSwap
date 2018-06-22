@@ -146,17 +146,20 @@ $animationTime :0.5s;
 // }
 
 .import-privatekey {
-  padding: 20px;
+  
   .title {
     font-size: 1.2rem;
-    padding: 50px 50px 10px 50px;
+    font-weight: normal;
+    text-align: center;
+    margin-bottom: 20px;
   }
   .content {
     padding-left: 30px;
   }
   .overlap {
     justify-content: center;
-    background-color: $white;
+    background-color: #fcfcfc;
+    margin-top: 10px;
     .accent {
       // margin-top: 50px;
       line-height: 55px;
@@ -174,6 +177,7 @@ $animationTime :0.5s;
     border: 1px solid #ccc;
     border-radius: 3px;
     color: #666666;
+    height: 50px;
   }
 }
 .input-reveal{
