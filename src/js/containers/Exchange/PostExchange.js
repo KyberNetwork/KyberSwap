@@ -577,8 +577,8 @@ export default class PostExchange extends React.Component {
       />)
       modalApprove = (
         <Modal className={{
-          base: 'reveal medium',
-          afterOpen: 'reveal medium'
+          base: 'reveal medium confirm-exchange',
+          afterOpen: 'reveal medium confirm-exchange'
         }}
           isOpen={this.props.form.confirmApprove}
           onRequestClose={this.closeModalApprove}
