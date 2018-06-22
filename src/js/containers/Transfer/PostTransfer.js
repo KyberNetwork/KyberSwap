@@ -120,6 +120,7 @@ export default class PostTransfer extends React.Component {
         isFetchingGas={this.props.form.snapshot.isFetchingGas}
         gasPrice={this.props.form.snapshot.gasPrice}
         gas={this.props.form.snapshot.gas}
+        isFetchingRate={true}
       />
     )
   }
@@ -137,6 +138,7 @@ export default class PostTransfer extends React.Component {
         title={this.props.translate("modal.confirm_transfer_title") || "Transfer confirm"}
         errors={this.props.form.signError}
         walletType={this.props.account.type}
+        isFetchingRate={true}
       />
     )
   }
@@ -243,25 +245,25 @@ export default class PostTransfer extends React.Component {
     var modalPassphrase = this.props.account.type === "keystore" ? (
       <Modal
         className={{
-          base: 'reveal tiny',
-          afterOpen: 'reveal tiny'
+          base: 'reveal medium confirm-exchange',
+          afterOpen: 'reveal medium confirm-exchange'
         }}
         isOpen={this.props.form.passphrase}
         onRequestClose={this.closeModal}
         contentLabel="password modal"
         content={this.content()}
-        size="tiny"
+        size="medium"
       />
     ) : <Modal
         className={{
-          base: 'reveal tiny',
-          afterOpen: 'reveal tiny'
+          base: 'reveal medium confirm-exchange',
+          afterOpen: 'reveal medium confirm-exchange'
         }}
         isOpen={this.props.form.confirmColdWallet}
         onRequestClose={this.closeModal}
         contentLabel="confirm modal"
         content={this.contentConfirm()}
-        size="tiny"
+        size="medium"
       />
     let className = "button accent "
     if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree) {
