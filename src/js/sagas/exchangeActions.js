@@ -1100,7 +1100,7 @@ function* getGasUsed() {
 
 function* analyzeError(action) {
   const { ethereum, txHash } = action.payload
-  yield put(globalActions.openAnalyze(txHash))
+  //yield put(globalActions.openAnalyze(txHash))
   try {
     //var txHash = exchange.txHash
     //console.log(txHash)
@@ -1123,25 +1123,35 @@ function* analyzeError(action) {
     var walletID = result[6].value
     var reserves = yield call([ethereum, ethereum.call], "getListReserve")
 
+    var receipt = yield call([ethereum, ethereum.call], 'txMined', txHash)
+    var transaction = {
+      gasUsed: receipt.gasUsed,
+      status: receipt.status,
+      gas: tx.gas
+    }
     var input = {
       value, owner, gas_price, source, srcAmount, dest,
-      destAddress, maxDestAmount, minConversionRate, walletID, reserves, txHash
+      destAddress, maxDestAmount, minConversionRate, walletID, reserves, txHash, transaction
     }
 
     yield call(debug, input, blockNumber, ethereum)
     //check gas price
   } catch (e) {
     console.log(e)
-    yield put(globalActions.setAnalyzeError({}, {}, txHash))
+    yield put(actions.setAnalyzeError({}, txHash))
+    //yield put(globalActions.setAnalyzeError({}, {}, txHash))
   }
 }
 
 function* debug(input, blockno, ethereum) {
   // console.log({input, blockno})
   var networkIssues = {}
-  var reserveIssues = {}
+  // var reserveIssues = {}
   var translate = getTranslate(store.getState().locale)
   var gasCap = yield call([ethereum, ethereum.call], "wrapperGetGasCap", blockno)
+
+  if(input.transaction.gasUsed === input.transaction.gas && !input.transaction.status) networkIssues["gas_used"] = "Your transaction is run out of gas"
+
   if (converter.compareTwoNumber(input.gas_price, gasCap) === 1) {
     networkIssues["gas_price"] = translate('error.gas_price_exceeded_limit') || "Gas price exceeded max limit"
   }
@@ -1181,20 +1191,25 @@ function* debug(input, blockno, ethereum) {
   var rates = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", input.source, input.dest, input.srcAmount, blockno)
   if (converter.compareTwoNumber(rates.expectedPrice, 0) === 0) {
     var reasons = yield call([ethereum, ethereum.call], "wrapperGetReasons", input.reserves[0], input, blockno)
-    reserveIssues["reason"] = reasons
+    ///reserveIssues["reason"] = reasons
+    networkIssues["rateError"] = reasons
   } else {
     //var chosenReserve = yield call([ethereum, ethereum.call("wrapperGetChosenReserve")], input, blockno)
     // var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], chosenReserve, input, blockno)
     console.log(rates)
     console.log(input.minConversionRate)
     if (converter.compareTwoNumber(input.minConversionRate, rates.expectedPrice) === 1) {
-      reserveIssues["reason"] = translate('error.min_rate_too_high') || "Your min rate is too high!"
+//      reserveIssues["reason"] = translate('error.min_rate_too_high') || "Your min rate is too high!"
+
+        networkIssues["rateZero"] = translate('error.min_rate_too_high') || "Your min rate is too high!"
     }
   }
   console.log("_________________________")
-  console.log(reserveIssues)
+  //console.log(reserveIssues)
   console.log(networkIssues)
-  yield put(globalActions.setAnalyzeError(networkIssues, reserveIssues, input.txHash))
+  //yield put(globalActions.setAnalyzeError(networkIssues, reserveIssues, input.txHash))
+
+  yield put(actions.setAnalyzeError(networkIssues, input.txHash))
 }
 
 function* checkKyberEnable() {

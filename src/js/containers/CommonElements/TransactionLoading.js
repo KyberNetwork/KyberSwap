@@ -37,7 +37,7 @@ import { Modal } from "../../components/CommonElement"
             txHash: props.tx,
             analyze: props.analyze,
             address: props.address,
-            isOpen: props.isOpen
+            isOpen: props.isOpen,
         }
     }
     return { ...returnProps, translate: getTranslate(store.locale) }
@@ -93,7 +93,7 @@ export default class TransactionLoading extends React.Component {
                 isCopied={this.state.isCopied}
                 handleCopy={this.handleCopy.bind(this)}
                 resetCopy={this.resetCopy.bind(this)}
-                onCancel = {this.props.makeNewTransaction}
+                onCancel = {this.props.makeNewTransaction}                
             />
         return (
             <Modal

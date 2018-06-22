@@ -479,10 +479,10 @@ export function analyzeError(ethereum, txHash) {
   }
 }
 
-export function setAnalyzeError(networkIssues, reserveIssues){
+export function setAnalyzeError(networkIssues, txHash){
   return {
     type: "EXCHANGE.SET_ANALYZE_ERROR",
-    payload: { networkIssues, reserveIssues }
+    payload: { networkIssues  , txHash}
   }
 }
 

@@ -4,7 +4,7 @@ import BLOCKCHAIN_INFO from "../../../../env"
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import AnalyzeLogModal from './AnalyzeLogModal'
+//import AnalyzeLogModal from './AnalyzeLogModal'
 
 const TransactionLoadingView = (props) => {
   if (props.broadcasting) {
@@ -104,6 +104,36 @@ const TransactionLoadingView = (props) => {
       (props.translate("transaction.copy_tx") || "Copy transaction hash")
   }
 
+
+  var getError = () => {
+
+    console.log(props.analyze)
+
+    var reason = ""
+
+    if (props.analyze.isAnalize && !props.analyze.isAnalizeComplete){
+      reason = <div className="analyze-panel">
+                <div className="loading">...loading</div>
+              </div>
+    }
+    if (!props.analyze.isAnalize && props.analyze.isAnalizeComplete) {
+      if (Object.keys(props.analyze.analizeError).length === 0){
+        reason = <div className="analyze-panel">
+                  <div className="empty-error">Cannot find any reason for your failed transaction. Please try again in a while</div>
+                </div>
+      }else{
+        reason = 
+          <div className="analyze-panel">{
+            Object.keys(props.analyze.analizeError).map(key => {
+              return <div key={key}>{props.analyze.analizeError[key]}</div>
+            })}
+          </div>
+      }
+    }
+
+    return reason
+  }
+
   var classPending = props.status === "pending" ? " pulse" : ""
   // var analyzeBtn = ""
 
@@ -197,10 +227,15 @@ const TransactionLoadingView = (props) => {
               <li class={props.status}>
                 <div>
                   {props.type==="exchange" && (
-                    <h4 class="font-w-b d-inline-blocka" onClick={(e) => handleAnalyze(e)}>                    
-                      {props.translate("transaction.transaction_error") || "Transaction error"}
-                    </h4>
-                  )}                                    
+                    <div>
+                      <h4 class="font-w-b d-inline-blocka analyze-btn" onClick={(e) => handleAnalyze(e)}>                    
+                        {props.translate("transaction.transaction_error") || "Transaction error"}
+                      </h4>
+                      <div>
+                        {getError()}
+                      </div>
+                    </div>
+                  )}                       
                 </div>
               </li>
             }

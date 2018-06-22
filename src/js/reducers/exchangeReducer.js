@@ -474,14 +474,19 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.ANALYZE_ERROR": {
-      newState.isAnalize = true
+      const {txHash} = action.payload
+      if (txHash === newState.txHash){
+        newState.isAnalize = true
+      }
       return newState
     }
     case "EXCHANGE.SET_ANALYZE_ERROR": {
-      const { networkIssues, reserveIssues } = action.payload
-      newState.analizeError = { networkIssues, reserveIssues }
-      newState.isAnalize = false
-      newState.isAnalizeComplete = true
+      const { networkIssues, txHash } = action.payload
+      if (txHash === newState.txHash){
+        newState.analizeError = { ...networkIssues }
+        newState.isAnalize = false
+        newState.isAnalizeComplete = true
+      }
       return newState
     }
     // case "EXCHANGE.FETCH_GAS":{
