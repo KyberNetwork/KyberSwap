@@ -550,8 +550,8 @@ export default class PostExchange extends React.Component {
     if (this.props.account.type === "keystore") {
       modalPassphrase = (<Modal
         className={{
-          base: 'reveal medium',
-          afterOpen: 'reveal medium'
+          base: 'reveal medium confirm-exchange',
+          afterOpen: 'reveal medium confirm-exchange'
         }}
         isOpen={this.props.form.passphrase}
         onRequestClose={this.closeModal}

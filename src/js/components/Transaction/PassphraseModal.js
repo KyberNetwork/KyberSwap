@@ -88,7 +88,6 @@ const PassphraseModal = (props) => {
         <img src={require('../../../assets/img/step-confirm-1.svg')}/>
       </div>
         <div className={!!props.passwordError ? "error password-input" : "password-input"}>
-          <span>Step 1 </span>
           <div class="type-password">Type a password before progressing</div>
           <div className="input-passpharse row">
             <div className="input-reveal columns small-9">              
