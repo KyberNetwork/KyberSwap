@@ -69,6 +69,21 @@
       }
 
       .token-selector {
+        .dropdown {
+          &.dropdown--active {
+            .focus-item {
+              img {
+                @include rotate-icon(90deg);
+                transition: 0.5s;
+              }
+            }
+          }
+          &.dropdown {
+            img {
+              transition: 0.5s;
+            }
+          }
+        }
         .d-flex {
           padding: 0;
           width: 50px;
@@ -333,7 +348,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    color: #54AE85;
+    color: #666666;
     font-weight: bold;
     input {
       position: absolute;
@@ -342,22 +357,29 @@
     }
     /* Create a custom checkbox */
     .checkmark {
+      margin: 5px 0;
       position: absolute;
       top: 0;
       left: 0;
-      height: 25px;
-      width: 25px;
-      background-color: #eee;
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      border: 2px solid #eee;
     }
   
     /* On mouse-over, add a grey background color */
     &:hover input ~ .checkmark {
-      background-color: #ccc;
+      border-color: #F08400;
     }
   
     /* When the checkbox is checked, add a blue background */
     & input:checked ~ .checkmark {
-      background-color: #54AE85;
+      background-color: #F08400;
+      border-color: #F08400;
+    }
+
+    .item-title {
+      color: #F08400;
     }
   
     /* Create the checkmark/indicator (hidden when not checked) */
@@ -374,8 +396,8 @@
   
     /* Style the checkmark/indicator */
     & .checkmark:after {
-      left: 9px;
-      top: 5px;
+      left: 6px;
+      top: 2px;
       width: 5px;
       height: 10px;
       border: solid white;

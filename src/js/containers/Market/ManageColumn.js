@@ -58,7 +58,8 @@ export default class ManageColumn extends React.Component {
             var index = this.props.shows.active.indexOf(key)
             var checked = index === -1? false: true
             return (
-                <label key={key} for={this.props.shows.listItem[key].title} className="column-label">{this.props.shows.listItem[key].title}
+                <label key={key} for={this.props.shows.listItem[key].title} className="column-label">
+                    <span className={checked ? "item-title" : ""}>{this.props.shows.listItem[key].title}</span>
                     <input id={this.props.shows.listItem[key].title} type="checkbox" onChange = {(e) => this.selectShowsColumn(e, key)} checked = {checked}/>
                     <span className="checkmark"></span>
                 </label>

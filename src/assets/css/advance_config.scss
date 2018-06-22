@@ -7,294 +7,287 @@ $radio-color: #5D9E7A;
 }
 
 .advance-config{
-    //padding: 10px;
-    // h2{
-    //     font-size: 1.2rem;
-    // }
-
-    // .title{
-    //     margin-top: 1rem;
-    //     display: block;
-    //     font-size: 0.8rem;
-    //     margin-bottom: 0.3rem;
-
-    
-    // }
-.gas-change{
-  display: flex;
-  align-items: center;
-  border: 2px solid #eee;
-  border-radius: 10px;
-}
-    .gas_input{
-      padding-right: 0;      
+  .gas-change{
+    padding-top: 6px;
+    padding-bottom: 6px;
+    display: flex;
+    align-items: center;
+    border: 2px solid #eee;
+    border-radius: 10px;
+  }
+  input {
+    padding-top: 0;
+    padding-bottom: 0;
+    color: #aaa;
   }
   .gas_input-lable{
     padding-left: 10px;
     padding-right: 10px;
-      
-      border-radius: 0;
-      align-items: center;
-      padding-top: 10px;
-      padding-bottom: 11px;
-      border-left: none;
-      border-right: none;
-      font-size: 14px;
-      line-height: 1.43;
-      color: #999999;
+    border-radius: 0;
+    align-items: center;
+    border-left: none;
+    border-right: none;
+    font-size: 14px;
+    line-height: 1.43;
+    color: #999999;
   }
   .gas_input-option{
-      padding-left: 0;
-      .gas-option{
-          .focus-item{
-              font-size: 12px;
-              font-weight: bold;
-              line-height: 1.08;
-              color: #666666;
-              padding: 14.5px 12px;
-              border-radius:0;
-              border: none;
-          }
-          .select-item{
-              font-size: 12px;
-          }
-      }
-  }
-.select-item{
-  width: 100px;
-  right: 0;
-  background-color: #fff;
-  padding-bottom: 0;
-  padding: 0;
-  margin: 0;
-  border: none !important;
-  .token-item{
-    text-transform: uppercase;
-  }
-}
-    .title {
-      font-weight: 600;
-      font-size: 1.25rem;
-      padding-bottom: 0.5rem;
-      color: #4B4860;
-    }
-
-    input{
-        border-radius: 3px;
-        margin-bottom: 0.6rem;
-        border: none;
-        margin: 0;
-        box-shadow: none;
-        font-weight: 500;
-        color: #4B4860;
-        &:focus{
+    padding-left: 0;
+    .gas-option{
+      .token-selector {
+        border-left: 1px solid #bbb;
+        .focus-item{
+          font-size: 12px;
+          line-height: 1.08;
+          color: #8F8FB6;
+          padding: 0 10px 0 0px;
+          border-radius:0;
           border: none;
-          outline: none;
-          box-shadow: none;
-        }
-    }
-
-    .des-up{
-        font-size: 0.6875rem;
-        padding-bottom: 1rem;
-        line-height: 1.36;
-        letter-spacing: 0.3px;
-        color: #666666;
-    }
-
-    .des-down{
-      font-size: 0.6875rem;
-      opacity: 0.4;
-      padding-bottom: 1rem;
-      line-height: 1.36;
-      letter-spacing: 0.3px;
-      color: #666666;
-    }
-
-    .error{
-        input{
-            border: 1px solid $error-color;
-            background: transparent;
-            color: #e8827f;
-        }
-        .error-text{
-            color: $error-color;
-            font-size: 0.8rem;
-        }
-    }
-
-    .min-rate{
-        margin-bottom: 1.5rem;
-    }
-    .gas-config{
-        //background-color: #243c48;
-        input{
-          height: auto;
-          min-height: auto;
-        }
-        .advanced-content {
-          padding: 40px 0;
-          transition: 0.3s;
-          font-size: 0.8em;
-          &[disabled] {
-            padding: 0px;
-            height: 0px;
-            overflow: hidden;
-            pointer-events: none;
+          align-items: center;
+          justify-content: center;
+          div:first-child {
+            margin: 0 10px;
+            text-transform: uppercase;
           }
-          .gas-price, .min-rate{
-            margin: 0 auto;
-            label{
-              text-align: left;
-              font-weight: 700;
-              color: $white;
-              margin-top: 7px;
-              font-size: inherit;
-              @include breakpoint(medium){
-                text-align: right;
-              }
-            }
-            input{
-              margin-bottom: 8px;
-              background-color: #1b2e36;
-              color: #a5a5a5;
-              // border-radius: 25px;
-            }
-          }
-          .error-text{
-            color: $alert-color;
-          }
-          .gas-price{
-            input{
-              padding-right: 50px;
-            }
-            .unit{
-              position: absolute;
-              top: 9px;
-              right: 25px;
-              color: inherit;
-            }
-            .gas-select{
-              margin-bottom: 10px;
-              margin-top: 15px;
-              button{
-                padding: 7px 13px;
-                border-radius: 20px;
-                background-color: #1b2e36;
-                color: #a5a5a5;
-                min-width: 80px;
-                border: 1px solid transparent;
-                cursor: pointer;
-                &:hover{
-                  border-color: $k-success;
-                  color: $k-success;
-                  background-color: #2b4552;
-                }
-              }
+          div:last-child {
+            display: flex;
+            align-items: center;
+            img {
+              width: 40px;
+              min-width: 13px;
             }
           }
         }
-        .transaction-fee{
-            margin-top: 1.2rem;
-            border-top: 1px solid #aaa;
-            padding-top: 0.5rem;
-            color: #6A6B7D;
-            .title-fee{
-                text-transform: uppercase;
-                font-weight: 550;
-                font-size: 0.8rem;
-                margin-bottom: 0.4rem;
-            }
-        }
-        .custom-radio{
-            margin-top: 1rem
+        .select-item{
+          font-size: 12px;
         }
       }
+    }
+  }
+  .select-item{
+    width: 100px;
+    top: -28px;
+    right: 0;
+    background-color: #fff;
+    padding: 10px 0;
+    border-radius: 2px !important;
+    margin: 0;
+    border: none !important;
+    box-shadow: 0 0 5px #aaa;
+    .token-item{
+      text-transform: uppercase;
+      color: #8F8FB6;
+      &:hover {
+        background: #F9F8FB;
+      }
+    }
+  }
+  .title {
+    font-weight: 600;
+    font-size: 1.25rem;
+    padding-bottom: 0.5rem;
+    color: #4B4860;
+  }
+
+  input{
+    border-radius: 3px;
+    margin-bottom: 0.6rem;
+    border: none;
+    margin: 0;
+    box-shadow: none;
+    &:focus{
+      border: none;
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  .des-up{
+    font-size: 0.6875rem;
+    padding-bottom: 1rem;
+    line-height: 1.36;
+    letter-spacing: 0.3px;
+    color: #666666;
+  }
+
+  .des-down{
+    font-size: 0.6875rem;
+    opacity: 0.4;
+    padding-bottom: 1rem;
+    line-height: 1.36;
+    letter-spacing: 0.3px;
+    color: #666666;
+  }
+
+  .error{
+    input{
+      border: 1px solid $error-color;
+      background: transparent;
+      color: #e8827f;
+    }
+    .error-text{
+      color: $error-color;
+      font-size: 0.8rem;
+    }
+  }
+
+  .min-rate{
+    margin-bottom: 1.5rem;
+  }
+  .gas-config{
+    input{
+      height: auto;
+      min-height: auto;
+    }
+    .advanced-content {
+      padding: 40px 0;
+      transition: 0.3s;
+      font-size: 0.8em;
+      &[disabled] {
+        padding: 0px;
+        height: 0px;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .gas-price, .min-rate{
+        margin: 0 auto;
+        label{
+          text-align: left;
+          font-weight: 700;
+          color: $white;
+          margin-top: 7px;
+          font-size: inherit;
+          @include breakpoint(medium){
+            text-align: right;
+          }
+        }
+        input{
+          margin-bottom: 8px;
+          background-color: #1b2e36;
+          color: #a5a5a5;
+          // border-radius: 25px;
+        }
+      }
+      .error-text{
+        color: $alert-color;
+      }
+      .gas-price{
+        input{
+          padding-right: 50px;
+        }
+        .unit{
+          position: absolute;
+          top: 9px;
+          right: 25px;
+          color: inherit;
+        }
+        .gas-select{
+          margin-bottom: 10px;
+          margin-top: 15px;
+          button{
+            padding: 7px 13px;
+            border-radius: 20px;
+            background-color: #1b2e36;
+            color: #a5a5a5;
+            min-width: 80px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            &:hover{
+              border-color: $k-success;
+              color: $k-success;
+              background-color: #2b4552;
+            }
+          }
+        }
+      }
+    }
+    .transaction-fee{
+        margin-top: 1.2rem;
+        border-top: 1px solid #aaa;
+        padding-top: 0.5rem;
+        color: #6A6B7D;
+        .title-fee{
+            text-transform: uppercase;
+            font-weight: 550;
+            font-size: 0.8rem;
+            margin-bottom: 0.4rem;
+        }
+    }
+    .custom-radio{
+        margin-top: 1rem
+    }
+  }
 }
 
 
 .custom-radio {
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: inline-block;
-    }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+  }
 
-    ul li {
-      color: #AAAAAA;
-      display: block;
-      position: relative;
-      float: left;
-      width: 100%;
-    }
-      
-    ul li input[type=radio]{
-      position: absolute;
-      visibility: hidden;
-    }
+  ul li {
+    color: #AAAAAA;
+    display: block;
+    position: relative;
+    float: left;
+    width: 100%;
+  }
     
-    ul li label{
-      display: block;
-      position: relative;
-      font-weight: 600;
-      font-size: 0.8em;
-      padding: 5px 0px 0px 20px;
-      // color: #aaa;
-      color: #A2A2AE;
-     // margin: 10px auto;
-      // height: 30px;
-      z-index: 9;
-      cursor: pointer;
-      -webkit-transition: all 0.25s linear;
-      text-transform: uppercase;
-    }
-    
-    // ul li:hover label{
-    //     color: #FFFFFF;
-    // }
-    
-    ul li .check{
-      display: block;
-      position: absolute;
-      border: 2px solid #EBEBEB;
-      border-radius: 100%;
-      height: 18px;
-      width: 18px;
-      top: 9px;
-      z-index: 5;
-        transition: border .25s linear;
-        -webkit-transition: border .25s linear;
-    }
-    
-    // ul li:hover .check {
-    //   border: 2px solid #aaa;
-    // }
-    
-    ul li .check::before {
-      display: block;
-      position: absolute;
-      content: '';
-      border-radius: 100%;
-      height: 16px;
-      width: 16px;
-      margin: auto;
-      transition: background 0.25s linear;
-      -webkit-transition: background 0.25s linear;
-    }
-    
-    input[type=radio]:checked ~ .check {
-      // border: 2px solid $radio-color;
-      border: none;
-    }
-    
-    input[type=radio]:checked ~ .check::before{
-      // background: $radio-color;
-      background-image: url("../img/checked.svg")
-
-    }
-    
-    input[type=radio]:checked ~ label{
-      color: $radio-color;
-    }
+  ul li input[type=radio]{
+    position: absolute;
+    visibility: hidden;
+  }
+  
+  ul li label{
+    display: block;
+    position: relative;
+    font-weight: 600;
+    font-size: 0.8em;
+    padding: 5px 0px 0px 20px;
+    color: #A2A2AE;
+    z-index: 9;
+    cursor: pointer;
+    -webkit-transition: all 0.25s linear;
+    text-transform: uppercase;
+  }
+  
+  ul li .check{
+    display: block;
+    position: absolute;
+    border: 2px solid #EBEBEB;
+    border-radius: 100%;
+    height: 18px;
+    width: 18px;
+    top: 9px;
+    z-index: 5;
+    transition: border .25s linear;
+    -webkit-transition: border .25s linear;
+  }
+  
+  ul li .check::before {
+    display: block;
+    position: absolute;
+    content: '';
+    border-radius: 100%;
+    height: 16px;
+    width: 16px;
+    margin: auto;
+    transition: background 0.25s linear;
+    -webkit-transition: background 0.25s linear;
+  }
+  
+  input[type=radio]:checked ~ .check {
+    border: none;
+  }
+  
+  input[type=radio]:checked ~ .check::before{
+    background-image: url("../img/checked.svg")
+  }
+  
+  input[type=radio]:checked ~ label{
+    color: $radio-color;
+  }
 }
