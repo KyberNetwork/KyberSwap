@@ -156,11 +156,35 @@
   padding-bottom: 0 !important;
   
   .title {
-    font-size: 2rem;
+    font-family: $font-cera;
+    line-height: 1;
     font-weight: normal;
     letter-spacing: -0.1px;
     color: #141927;
-    padding: 50px 50px 0px 50px;
+    padding: 0;
+    text-align: center;
+    font-size: 36px;
+    margin: 60px 0 20px;
+
+    .icon {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px;
+      background-size: contain;
+      background-repeat: no-repeat;
+
+      &--broadcasted {
+        background-image: url($image-path + 'broadcasted-circle.svg');
+      }
+
+      &--failed {
+        background-image: url($image-path + 'failed.svg');
+      }
+
+      &--success {
+        background-image: url($image-path + 'checked-circle-orange.svg');
+      }
+    }
   }
   .recap-transfer{
     display: flex;

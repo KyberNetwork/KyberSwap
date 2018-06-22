@@ -30,7 +30,7 @@ const GasConfig = (props) => {
   return (
     <div className="gas-config">
       <div>
-        <span className="sub_title">GAS PRICE (inclusive in the rate)</span>
+        <span className="sub_title">GAS PRICE</span>
       </div>
       <div className={!props.gasPriceError ? "" : "error"}>
         <div className="gas-change">
@@ -45,7 +45,7 @@ const GasConfig = (props) => {
           </div>
         </div>
         {props.gasPriceError && <div class="error-text mb-1">{props.translate(props.gasPriceError, { maxGas: props.maxGasPrice })}</div>}
-        <div className="des-down">Higher gas price, faster transaction. Max gas price: 50 Gwei</div>
+        <div className="des-down">Higher gas price, faster transaction.<br></br> Max gas price: 50 Gwei</div>
       </div>
       
       <div className="transaction-fee">
