@@ -47,6 +47,7 @@ $animationTime :0.5s;
           &__name {
             font-size: 20px;
             margin: 10px 0;
+            font-weight: 600;
           }
 
           &__button {
@@ -54,7 +55,7 @@ $animationTime :0.5s;
             font-size: 0.8rem;            
             width: 100%;
             cursor: pointer;
-            padding: 10px 0;
+            padding: 13px 0;
             margin-bottom: 15px;
             border-radius: 3px;
             background-image: linear-gradient(to right, $swap-color 50%, $color-swap-light 50%);
@@ -146,7 +147,7 @@ $animationTime :0.5s;
 // }
 
 .import-privatekey {
-  
+  padding: 0px;
   .title {
     font-size: 1.2rem;
     font-weight: normal;

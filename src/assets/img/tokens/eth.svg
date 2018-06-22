@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
     <title>eth</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Desktop" transform="translate(-128.000000, -320.000000)">
-            <g id="eth" transform="translate(128.000000, 320.000000)">
-                <circle id="Oval" fill="#FFFFFF" cx="14" cy="14" r="14"></circle>
-                <g id="eth-shape" transform="translate(8.000000, 4.181818)" stroke-width="1">
-                    <g id="eth">
-                        <polygon id="Shape" fill="#343434" fill-rule="nonzero" points="5.99824104 0 5.86729642 0.454497108 5.86729642 13.6408961 5.99824104 13.7743136 11.9964821 10.1564847"></polygon>
-                        <polygon id="Shape" fill="#8C8C8C" fill-rule="nonzero" points="5.99824104 0 0 10.1564847 5.99824104 13.7745131"></polygon>
-                        <polygon id="Shape" fill="#3C3C3B" fill-rule="nonzero" points="5.99824104 14.9335904 5.92436482 15.0255268 5.92436482 19.7234594 5.99824104 19.9428306 12 11.3175563"></polygon>
-                        <polygon id="Shape" fill="#8C8C8C" fill-rule="nonzero" points="5.99824104 19.9428306 5.99824104 14.9333909 0 11.3175563"></polygon>
-                        <polyline id="Shape" fill="#141414" fill-rule="nonzero" points="5.99824104 13.7745131 11.9962866 10.1564847 5.99824104 7.37445988 5.99824104 13.7745131"></polyline>
-                        <polyline id="Shape" fill="#393939" fill-rule="nonzero" points="0 10.1564847 5.9980456 13.7745131 5.9980456 7.37426045"></polyline>
-                    </g>
+    <g id="IOS?-(for-Mike-Le)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-2-Copy" transform="translate(-446.000000, -51.000000)">
+            <g id="eth" transform="translate(446.000000, 51.000000)">
+                <circle id="Oval-2" fill="#7986CB" cx="14" cy="14" r="14"></circle>
+                <g id="ethereum" stroke-width="1" transform="translate(8.166667, 4.277778)" fill="#FFFFFF">
+                    <polygon id="Shape" fill-rule="nonzero" opacity="0.688616071" points="0.0343894477 9.58247421 5.80975415 12.9945706 5.80975415 0"></polygon>
+                    <polygon id="Shape" fill-rule="nonzero" opacity="0.686328125" points="5.80975415 0 5.80975415 12.9945706 11.5828487 9.58247421"></polygon>
+                    <polygon id="Shape" fill-rule="nonzero" opacity="0.800000012" points="0.0343894477 10.676706 5.80975415 18.8130689 5.80975415 14.0888024"></polygon>
+                    <polygon id="Shape" fill-rule="nonzero" opacity="0.900000036" points="5.80975415 14.0888024 5.80975415 18.8130689 11.587389 10.676706"></polygon>
+                    <polygon id="Shape" fill-rule="nonzero" opacity="0.698270089" points="5.80975415 6.95586377 0.0343894477 9.58247421 5.80975415 12.9945706 11.5828487 9.58247421"></polygon>
                 </g>
             </g>
         </g>

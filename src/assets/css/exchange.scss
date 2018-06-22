@@ -278,11 +278,13 @@
         font-size: 1rem;
         line-height: 1.03;
         color: #666666;
+        padding-bottom: 10px;
       }
       .font-w-i{
         font-size: 0.8rem;
         line-height: 1.03;
         color: #666666;
+        padding-bottom: 10px;
       }
     }
     .des{
@@ -422,6 +424,44 @@
         transition: opacity .5s ease-in-out;
         background-image: url(../img/toot-tip-pass.svg);
       }
+    }
+  }
+  .approve-modal{
+    .title{
+      padding-left: 50px;
+      text-align: left;
+    }
+    .message{
+      font-weight: bold;
+      font-size: 0.8rem;
+      margin-top: 1rem;
+    }
+    .tx-title{
+      text-align: left;
+    }
+    .address{
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+     >span{
+       &:first-child{
+         color: #aaa;
+         font-weight: bold;
+       }
+       &:last-child{
+         margin-right: 10px;
+         font-weight: bold;
+       }
+     } 
+    }
+    .content{
+      max-width: 90%;
+    }
+    .gas-configed{
+      margin-top: 2rem;
     }
   }
 }

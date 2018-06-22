@@ -5,6 +5,7 @@
     text-align: center;
     font-size: 32px;
     margin-bottom: 20px;
+    font-weight: 500;
   }
 
   &__header {
@@ -230,14 +231,17 @@
                 &.negative {
                   background-color: #F6EAEC;
                   color: #EB7576;
+                  font-weight: bold;
                 }
                 &.positive {
                   background-color: #EDFBF6;
                   color: #1FDCAB;
+                  font-weight: bold;
                 }
                 &.zero-value {
                   background: #eee;
                   color: #767677;
+                  font-weight: bold;
                 }
                 img {
                   padding: 3px;
@@ -267,6 +271,7 @@
       &.-sort-asc {
         box-shadow: none;
         .rt-th-img {
+          font-weight: bold;
           img {
             content:url(../img/landing/sort-active-asc.svg);
           }
