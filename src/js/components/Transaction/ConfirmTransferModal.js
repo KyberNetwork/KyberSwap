@@ -1,7 +1,5 @@
 import React from "react"
 import { gweiToEth, stringToBigNumber, calculateGasFee, roundingNumber } from "../../utils/converter";
-import * as converters from "../../utils/converter"
-
 class ConfirmTransferModal extends React.Component {
 
   constructor() {
@@ -49,7 +47,6 @@ class ConfirmTransferModal extends React.Component {
   render() {
     var gasPrice = stringToBigNumber(gweiToEth(this.props.gasPrice))
     var totalGas = +calculateGasFee(this.props.gasPrice, this.props.gas)
-    var slippagePercent = converters.calculatePercentRate(this.props.minRate, this.props.offeredRate)
     //var totalGas = gasPrice.multipliedBy(this.props.gas)
     return (
       <div>
@@ -79,7 +76,7 @@ class ConfirmTransferModal extends React.Component {
                   <div><img src={require('../../../assets/img/with-confirm-exchange.svg')}/></div>
                   <div className="description">
                     <span>
-                      {this.props.translate("transaction.max_slippage", {  percent: slippagePercent }) || "with maximum " + slippagePercent + "% slippage may change."}
+                      {this.props.translate("transaction.max_slippage", {  percent: this.props.slippagePercent }) || "with maximum " + this.props.slippagePercent + "% slippage may change."}
                     </span>
                     <div>
                       You can change maximum slippage rate by adjusting min rate in advanced option

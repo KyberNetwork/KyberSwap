@@ -482,6 +482,9 @@ export default class PostExchange extends React.Component {
   }
 
   content = () => {
+    var minRate = this.props.snapshot.minConversionRate
+    var offeredRate = this.props.snapshot.offeredRate
+    var slippagePercent = converters.calculatePercentRate(minRate, offeredRate)
     return (
       <PassphraseModal recap={this.createRecap()}
         onChange={this.changePassword}
@@ -494,12 +497,14 @@ export default class PostExchange extends React.Component {
         gas={this.props.form.snapshot.gas + this.props.form.snapshot.gas_approve}
         isFetchingRate={this.props.snapshot.isFetchingRate}
         title="Confirm exchange"
-        minRate = {this.props.snapshot.minConversionRate}
-        offeredRate = {this.props.snapshot.offeredRate}
+        slippagePercent = {slippagePercent}
       />
     )
   }
   contentConfirm = () => {
+    var minRate = this.props.snapshot.minConversionRate
+    var offeredRate = this.props.snapshot.offeredRate
+    var slippagePercent = converters.calculatePercentRate(minRate, offeredRate)
     return (
       <ConfirmTransferModal
         recap={this.createRecap()}
@@ -515,8 +520,7 @@ export default class PostExchange extends React.Component {
         title="Confirm exchange"
         errors={this.props.form.signError}
         walletType={this.props.account.type}
-        minRate = {this.props.snapshot.minConversionRate}
-        offeredRate = {this.props.snapshot.offeredRate}
+        slippagePercent = {slippagePercent}
       />
     )
   }
