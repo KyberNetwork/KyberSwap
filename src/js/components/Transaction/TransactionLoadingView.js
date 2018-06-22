@@ -7,37 +7,52 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 //import AnalyzeLogModal from './AnalyzeLogModal'
 
 const TransactionLoadingView = (props) => {
-  if (props.broadcasting) {
+  var isBroadcasting = props.broadcasting
+  var broadcastError = props.error
+
+  isBroadcasting = props.broadcasting
+  broadcastError = props.error
+
+  if (isBroadcasting) {
     var classPending = !props.error ? " pulse" : ""
     return (
       <div>
         <div className="title">
-          {props.error ?
-            props.translate("error.failed") || 'Failed!'
-            : props.translate("transaction.broadcasting") || 'Broadcasting'}
+        {broadcastError  &&
+           <div>
+              <div className="icon icon--failed"></div>
+              <div>{ props.translate('transaction.failed') || "Failed!" }</div>
+            </div>
+        }
+        {!broadcastError &&
+          <div>
+            <div className="icon icon--broadcasted"></div>
+            <div>{ props.translate('transaction.broadcasting') || "Broadcasting!" }</div>
+          </div>
+        }
         </div>
         <a className="x" onClick={(e) => props.onCancel(e)}>&times;</a>
         <div className="content with-overlap tx-loading">
           <div className="row">
             <ul class="broadcast-steps">
-              {!props.error &&
+              {!broadcastError &&
                 <li class="pending">
                   <h4 class="font-w-b">{props.translate("transaction.broadcasting_blockchain") || "Broadcasting the transaction to the blockchain"}
                   </h4>
                 </li>
               }
-              {props.error &&
+              {broadcastError &&
                 <li class="failed">
                   <h4 class="font-w-b">{props.translate("transaction.cound_not_broadcast") || "Couldn't broadcast your transaction to the blockchain"}</h4>
-                  <div class="reason">{props.error}</div>
+                  <div class="reason">{broadcastError}</div>
                 </li>
               }
             </ul>
-            <div class="text-center">
+            {/* <div class="text-center">
               <div className={"broadcast-animation"}>
                 {!props.error ? <img src={require('../../../assets/img/broadcast.svg')} /> : <img src={require('../../../assets/img/error_state.svg')} />}
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         {/* 
