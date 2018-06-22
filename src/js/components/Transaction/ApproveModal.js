@@ -67,11 +67,11 @@ class ApproveModal extends React.Component {
                 </div>
                 <div className="gas-configed">
                   <div className="row">
-                    <span className="column small-6 font-w-b">{this.props.translate("transaction.gas_price") || 'Gas price'}</span>
+                    <span className="column small-6">{this.props.translate("transaction.gas_price") || 'Gas price'}</span>
                     <span className="column small-6">{+roundingNumber(this.props.gasPrice)} Gwei</span>
                   </div>
                   <div className="row">
-                    <span className="column small-6 font-w-b">{this.props.translate("transaction.transaction_fee") || "Transaction Fee"}</span>
+                    <span className="column small-6">{this.props.translate("transaction.transaction_fee") || "Transaction Fee"}</span>
                     <span className="column small-6">{this.props.isFetchingGas ?
                       <img src={require('../../../assets/img/waiting-white.svg')} />
                       : <span>{totalGas.toString()}</span>

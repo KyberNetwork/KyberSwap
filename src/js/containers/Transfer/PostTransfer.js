@@ -148,15 +148,24 @@ export default class PostTransfer extends React.Component {
     var destAddress = form.destAddress;
     var tokenSymbol = form.tokenSymbol;
     return (
-      <p>{this.props.translate("transaction.about_to_transfer") || "You are about to transfer"}
-        <br />
-        <span class="text-success">
-          <strong>
-            {amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}</strong>
-          <span>{this.props.translate("transaction.to") || "to"}</span>
-          <strong>{destAddress.slice(0, 7)}...{destAddress.slice(-5)}</strong>
-        </span>
-      </p>
+      <div>
+        <div>
+          {this.props.translate("transaction.about_to_transfer") || "You are about to transfer"}
+        </div>
+        <div className="recap-transfer">
+          <div>
+            <strong>
+            {amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}
+            </strong>
+          </div>
+          <div>{this.props.translate("transaction.to") || "to"}</div>
+          <div>
+            <strong>
+              {destAddress.slice(0, 7)}...{destAddress.slice(-5)}
+            </strong>
+          </div>
+        </div>
+      </div>
     )
   }
 
