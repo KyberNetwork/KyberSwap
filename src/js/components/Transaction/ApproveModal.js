@@ -1,6 +1,5 @@
 import React from "react"
 import { gweiToEth, stringToBigNumber, calculateGasFee, roundingNumber } from "../../utils/converter";
-
 class ApproveModal extends React.Component {
   
   constructor() {
@@ -61,18 +60,27 @@ class ApproveModal extends React.Component {
                 <div className="message">                 
                     You need to grant permission for Kyber Wallet to interact with {this.props.token} with address
                 </div>
-                <div className="address">
+                <div class="info tx-title">
+                  <div className="row">
+                    <div className="column small-3 tx-title-text">Address:</div>
+                    <div className="column small-9 tx-hash">
+                        {this.props.address}
+                    </div>
+                  </div>
+                </div>
+                {/* <div className="address">
                   <span>Address</span>
                   <span>{this.props.address}</span>
-                </div>
+                </div> */}
                 <div className="gas-configed">
+                  <div><b>Included</b></div>
                   <div className="row">
-                    <span className="column small-6">{this.props.translate("transaction.gas_price") || 'Gas price'}</span>
-                    <span className="column small-6">{+roundingNumber(this.props.gasPrice)} Gwei</span>
+                    <span className="column small-6 font-w-b">{this.props.translate("transaction.gas_price") || 'Gas price'}</span>
+                    <span className="column small-6 font-w-i">{+roundingNumber(this.props.gasPrice)} Gwei</span>
                   </div>
                   <div className="row">
-                    <span className="column small-6">{this.props.translate("transaction.transaction_fee") || "Transaction Fee"}</span>
-                    <span className="column small-6">{this.props.isFetchingGas ?
+                    <span className="column small-6 font-w-b">{this.props.translate("transaction.transaction_fee") || "Transaction Fee"}</span>
+                    <span className="column small-6 font-w-i">{this.props.isFetchingGas ?
                       <img src={require('../../../assets/img/waiting-white.svg')} />
                       : <span>{totalGas.toString()}</span>
                     } ETH</span>
@@ -94,11 +102,13 @@ class ApproveModal extends React.Component {
           </div>
         </div>
         <div className="overlap">
-          <div>{this.msgHtml()}</div>
-          <div>
-            <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "waiting" : "next")}
-              onClick={(e) => this.props.onSubmit(e)}
-            >{this.props.translate("modal.approve") || "Approve"}</a>
+          <div className="input-confirm row">
+            <div className="columns small-8">{this.msgHtml()}</div>
+              <div className="columns small-4">
+                <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "waiting" : "next")}
+                onClick={(e) => this.props.onSubmit(e)}
+              >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a>
+            </div>
           </div>
         </div>
       </div>
