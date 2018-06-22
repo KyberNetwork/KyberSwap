@@ -1,6 +1,5 @@
 import React from "react"
 import { gweiToEth, stringToBigNumber, calculateGasFee, roundingNumber } from "../../utils/converter";
-import BLOCKCHAIN_INFO from "../../../../env"
 class ApproveModal extends React.Component {
   
   constructor() {
@@ -65,10 +64,7 @@ class ApproveModal extends React.Component {
                   <div className="row">
                     <div className="column small-3 tx-title-text">Address:</div>
                     <div className="column small-9 tx-hash">
-                      {/* <a class="text-light" href={BLOCKCHAIN_INFO.ethScanUrl + 'address/' + this.props.address} target="_blank"
-                        title={this.props.translate("modal.view_on_etherscan") || "View on Etherscan"} > */}
                         {this.props.address}
-                      {/* </a> */}
                     </div>
                   </div>
                 </div>
