@@ -2,27 +2,53 @@
   background-color: $k-primary
 }
 
+.tx-title {
+  font-size: 18rem;
+  margin-top: 50px;
+  text-align: center;
 
-.tx-title{
-  font-size: 0.8rem;
-  margin-top: 0.8rem;
-  font-weight: bold;
+  .tx-title-text {
+    font-family: $font-cera;
+    font-size: 18px;
+    color: #666;
+  }
 }
 
-.tx-hash{
-  margin-top: 1rem;
-  a{
+.tx-hash {
+  margin-top: 5px;
+  position: relative;
+
+  a {
     padding: 10px;
+
     &:first-child{
-      border: 1px solid #aaa;
-      padding-right: 100px;
-      color: #A4CCB6;
-      background-color: #F4FDF6;
+      width: 100%;
+      border: 1px solid #E5E5E5;
+      padding-right: 50px;
+      color: #666;
+      font-family: $font-cera;
+      white-space: nowrap;
+      overflow:hidden !important;
+      text-overflow: ellipsis;
+      border-radius: 4px;
+      font-size: 16px;
+      text-align: left;
+      display: inline-block;
     }
-    &.copy-tx{
-      border-bottom: 1px solid #aaa;
-      border-right: 1px solid #aaa;
-      border-top: 1px solid #aaa;
+
+    &.copy-tx {
+      padding: 5px 10px;
+      background-color: #F5F5F5;
+      border-radius: 6px;
+      position: absolute;
+      right: 5px;
+      top: 5px;
+
+      img {
+        position: relative;
+        bottom: 1px;
+        width: 20px;
+      }
     }
   }
 }
@@ -40,27 +66,20 @@
     }
   }
 ul.broadcast-steps {
-  margin: 0 0 20px 0;
+  margin: 0;
   padding: 0;
   list-style: none;
   font-size: 0;
   p{
-    margin-top: 4rem;
-    text-align: center;
-    color: black;
+    margin: 40px 0 20px;
+    text-align: left;
+    color: #666;
+    font-size: 14px;
+    font-family: $font-cera;
+
     .tx-underline{
       border-bottom: 1px solid;
       padding-bottom: 2px;
-    }
-  }
-  .broadcast-img{
-    text-align: center;
-    margin-top: 4rem;
-    div{
-      text-align: center;
-      margin-top: 0.6rem;
-      font-size: 1rem;
-      color: #9EC8B1;
     }
   }
   .text-success {
@@ -101,9 +120,8 @@ ul.broadcast-steps {
     background-repeat: no-repeat;
     background-position: top 2px left;
     width: 100%;
-    // @include breakpoint(500px){
-    //   width: 430px;
-    // }
+    text-align: left;
+
     &:not(:last-child) {
       margin-bottom: 12px;
     }
@@ -139,18 +157,34 @@ ul.broadcast-steps {
 }
 
 .tx-actions{
-  text-align: right;
-  margin-top: 1rem;
-  .new-transaction{
-    background: white;
-    padding: 15px 25px;
-    display: inline-block;
-    color: blue !important;
+  text-align: center;
+  background: #F5F5F5;
+  padding: 50px 0;
+
+  .new-transaction {
+    border-radius: 3px;
+    padding: 14px 50px 14px 10px;
+    color: #fff;
+    font-size: 14px;
+    background-color: #EF8102;
     font-weight: bold;
-    margin-bottom: 20px;
-    box-shadow: 0 0 5px #aaa;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    transition: all .3s;
     text-transform: uppercase;
-    font-size: 0.8rem;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      right: 11px;
+      top: 50%;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.1) url($image-path + 'arrow-right-thick.svg') center center no-repeat;
+    }
   }
 }
 

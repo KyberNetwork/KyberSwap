@@ -117,25 +117,40 @@ const TransactionLoadingView = (props) => {
   return (
     <div>
       <div className="title">
-        {props.status === "success" && (props.translate('transaction.done') || "Broadcasted")}
-        {props.status === "failed" && (props.translate('transaction.failed') || "Failed!")}
-        {props.status === "pending" && (props.translate('transaction.broadcasted') || "Broadcasted")}
+        {props.status === "success" &&
+          <div>
+            <div className="icon icon--success"></div>
+            <div>{ props.translate('transaction.done') || "Success!" }</div>
+          </div>
+        }
+        {props.status === "failed" &&
+          <div>
+            <div className="icon icon--failed"></div>
+            <div>{ props.translate('transaction.failed') || "Failed!" }</div>
+          </div>
+        }
+        {props.status === "pending" &&
+          <div>
+            <div className="icon icon--broadcasted"></div>
+            <div>{ props.translate('transaction.broadcasted') || "Broadcasted!" }</div>
+          </div>
+        }
       </div>
       <a className="x" onClick={(e) => props.onCancel(e)}>&times;</a>
       <div className="content with-overlap">
         <div className="row">
           <div class="info tx-title">
-            <div>{props.translate("transaction.transaction") || "Transaction hash"}</div>
+            <div className="tx-title-text">{props.translate("transaction.transaction") || "Transaction hash"}</div>
             <div className="tx-hash">
               <a class="text-light" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank"
                 title={props.translate("modal.view_on_etherscan") || "View on Etherscan"} >
-                {props.txHash.slice(0, 12)} ... {props.txHash.slice(-10)}
+                {props.txHash}
               </a>
               <a className="copy-tx" data-for='copy-tx-tip' data-tip=""
                 onClick={props.handleCopy}
                 onMouseLeave={props.resetCopy} >
                 <CopyToClipboard text={props.txHash}>
-                  <img src={require("../../../assets/img/copy.svg")} />
+                  <img src={require("../../../assets/img/copy-address.svg")} />
                 </CopyToClipboard>
               </a>
               <ReactTooltip getContent={[() => getTooltipCopy()]} place="right" id="copy-tx-tip" type="light" />
@@ -158,7 +173,6 @@ const TransactionLoadingView = (props) => {
                   <img src={require('../../../assets/img/finish.svg')} />
                   <div>Done</div>
                 </div>
-               
               </li>
             }
             {props.status === "failed" &&
@@ -184,25 +198,17 @@ const TransactionLoadingView = (props) => {
                     </p>
                   </h4>
                 </div>
-                <div className="broadcast-img">
-                  <img src={require('../../../assets/img/broadcast.svg')} />
-                  <div>Broadcasted</div>
-                </div>
               </li>
             }
           </ul>
-
-
         </div>
-        <div class="row">
-          <div class="tx-actions">
-            <a className="new-transaction" onClick={props.makeNewTransaction}>
-              {props.type === "exchange" ?
-                "New swap"
-                : props.translate("transaction.new_tx") || "New transfer"}
-            </a>
-          </div>
-        </div>
+      </div>
+      <div className="tx-actions">
+        <a className="new-transaction" onClick={props.makeNewTransaction}>
+          {props.type === "exchange" ?
+            "New swap"
+            : props.translate("transaction.new_tx") || "New transfer"}
+        </a>
       </div>
 
       {/* <div class="frame tx-loading">
