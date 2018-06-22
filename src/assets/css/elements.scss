@@ -140,7 +140,6 @@ input.error {
     border-radius: 1000px;
     background: $accent-gradient;
     font-size: 13px;
-    font-weight: 800;
     letter-spacing: 1.25px;
     text-transform: uppercase;
     position: relative;
@@ -223,7 +222,8 @@ a.has-tip {
 }
 h1.title {
   font-size: 24px;
-  font-weight: 500;
+  // font-weight: 500;
+  color: #666666;
   letter-spacing: .5px;
   padding: 20px 0;
   &.frame-tab {
