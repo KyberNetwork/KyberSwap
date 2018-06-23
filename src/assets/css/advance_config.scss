@@ -15,6 +15,20 @@ $radio-color: #5D9E7A;
     border-radius: 5px;
     text-align: right;
     cursor: pointer;
+    >div {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      img {
+        width: 13px;
+        transition: 0.2s;
+        margin-left: 13px;
+        &.advance-arrow-up {
+          transform: rotate(180deg);
+          transition: 0.2s;
+        }
+      }
+    }
     @media screen and (min-width: $break-point-large){
       display: none  
     }
@@ -67,6 +81,7 @@ $radio-color: #5D9E7A;
     align-items: center;
     border: 1px solid #ddd;
     border-radius: 4px;
+    background-color: white;
   }
   .gas_input{
     input {
