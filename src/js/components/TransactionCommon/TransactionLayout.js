@@ -6,6 +6,19 @@ import constansts from "../../services/constants"
 const TransactionLayout = (props) => {
   return (
     <div class="frame">
+      <div className="swap-navigation">        
+        <div>
+          <Link to="/">Home</Link>
+        </div>
+        <div className="seperator">/</div>
+        <div>
+          <Link to={constansts.BASE_HOST }>KyberSwap</Link>
+        </div>
+        <div className="seperator">/</div>
+        <div className="active">
+          <Link to={constansts.BASE_HOST + "/" + props.page }>{props.page === "exchange" ? "Exchange": "Transfer"}</Link>
+        </div>
+      </div>
       <h1 class="title frame-tab">
         <div className="back-home" onClick={(e) => props.endSession(e)}>
           <img src={require("../../../assets/img/arrow_left.svg")} className="back-arrow"/>
@@ -17,18 +30,13 @@ const TransactionLayout = (props) => {
         </div>
       </h1>
       <div className="row">
-        <div className="columns large-9 frame-left">
-          {props.content}
-          {/* <div className="columns large-4">
-            {props.balance}
-          </div>
-          <div className="columns large-8">
-            {props.content}
-          </div> */}
+        {props.content}
+        {/* <div className="columns large-9 frame-left">
+          {props.content}          
         </div>
         <div className="columns large-3 frame-right">
           {props.advance}
-        </div>
+        </div> */}
       </div>
     </div>
   )

@@ -110,14 +110,14 @@ export default class Exchange extends React.Component {
     )
 
     var advanceConfig = <AdvanceConfigLayout gasConfig = {gasConfig}/>
-    var transferBody = <TransferBody />
+    var transferBody = <TransferBody advanceLayout = {advanceConfig}/>
     return (
       <TransactionLayout 
         endSession = {this.handleEndSession}
         translate = {this.props.translate}
         //location = {this.props.location}
        
-        advance = {advanceConfig}
+       // advance = {advanceConfig}
         content = {transferBody}
         page="transfer"
       />

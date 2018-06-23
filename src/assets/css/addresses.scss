@@ -224,23 +224,6 @@
       font-size: 12px;
       color: #999999;
     }
-    // &.active{
-    //   background: $white;
-    //   box-shadow: 0 5px 20px #aaa;
-    //   .address-path-input{
-    //     input[type=text] {
-    //       // background-color: rgba(35, 102, 102, 0.88);
-    //       color: #2FA979;
-    //       border-bottom: 1px solid #2FA979;
-    //     }
-    //     a.submit {
-    //       background-color: #5F25BD;
-    //       &:after{
-    //         border-left-color: $white;
-    //       }
-    //     }
-    //   }
-    // }
 
     &.disabled {
       &:hover {
@@ -337,6 +320,7 @@
           border: 1px solid #ccc;
           border-radius: 4px;
           margin-bottom: 15px;
+          cursor: pointer;
           .choose-path-button {
             margin: 10px 0;
             text-align: center;
@@ -348,7 +332,7 @@
               width: 40px;
             }
           }
-          &:hover {
+          &:hover, &.active {
             .choose-path-button {
               img {
                 background-color: #F08400;

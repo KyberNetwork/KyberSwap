@@ -37,6 +37,7 @@ import { default as _ } from 'underscore'
     account: store.account,
     tokens: tokens,
     translate: getTranslate(store.locale),
+    advanceLayout : props.advanceLayout
   }
 })
 
@@ -239,6 +240,7 @@ export default class Transfer extends React.Component {
         onBlur = {this.onBlur}
         onFocus = {this.onFocus}
         focus = {this.state.focus}
+        advanceLayout = {this.props.advanceLayout}
       />
     )
   }
