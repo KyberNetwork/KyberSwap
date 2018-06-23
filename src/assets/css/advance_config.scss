@@ -9,14 +9,16 @@ $radio-color: #5D9E7A;
 .advance-config{
   .min-convention-rate{
     text-align: center;
-    font-size: 0.7rem;    
+    font-size: 0.95rem;    
     line-height: 1.54;
     letter-spacing: 0px;
-    color: #666666;
+    color: #F08400;
+    margin-top: 6px;
+    padding-left: 35px;
   }
   .gas-change{
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 0px;
+    padding-bottom: 0px;
     display: flex;
     align-items: center;
     border: 1px solid #ddd;
@@ -24,6 +26,7 @@ $radio-color: #5D9E7A;
   }
   .gas_input{
     input {
+      padding-left: 10px;
       padding-top: 0;
       padding-bottom: 0;
       color: #aaa;
@@ -37,7 +40,6 @@ $radio-color: #5D9E7A;
     border-left: none;
     border-right: none;
     font-size: 14px;
-    line-height: 1.43;
     color: #999999;
     border-right: 1px solid #E8E8E8;
   }
@@ -46,9 +48,9 @@ $radio-color: #5D9E7A;
     .gas-option{
       .token-selector {
         .focus-item{
-          font-size: 12px;
+          font-size: 13px;
           color: #666666;
-          padding: 3px 10px 3px 0px;
+          padding: 10px 10px 10px 0px;
           border-radius:0;
           border: none;
           align-items: center;
@@ -61,7 +63,7 @@ $radio-color: #5D9E7A;
             display: flex;
             align-items: center;
             img {
-              min-width: 13px;
+              min-width: 11px;
               content: url(../img/exchange/arrow-down-swap.svg)
             }
           }
@@ -93,7 +95,7 @@ $radio-color: #5D9E7A;
   .title {      
     font-size: 1.25rem;
     padding-bottom: 0.5rem;
-    color: #4B4860;
+    color: #4B4A60;
   }
 
   input{
@@ -110,7 +112,7 @@ $radio-color: #5D9E7A;
   }
 
   .des-up{
-    font-size: 0.6875rem;
+    font-size: 0.86rem;
     padding-bottom: 1rem;
     line-height: 1.36;
     letter-spacing: 0.3px;
@@ -118,8 +120,7 @@ $radio-color: #5D9E7A;
   }
 
   .des-down{
-    font-size: 0.6875rem;
-    opacity: 0.4;
+    font-size: 0.86rem;
     padding-bottom: 1rem;
     line-height: 1.36;
     letter-spacing: 0.3px;
@@ -138,10 +139,42 @@ $radio-color: #5D9E7A;
       }
   }
 
-  .min-rate{
-      margin-bottom: 1.5rem;
+  .min-rate, .gas-config {
+    .sub_title {
+      font-size: 1rem;
+      color: #4B4A60;
+    }
   }
+
+  .min-rate{
+    margin-bottom: 1.5rem;
+    .rc-slider {
+      .rc-slider-rail {
+        height: 1px !important;
+      }
+    }
+    .rc-slider-handle {
+      margin-top: -13px;
+      &:focus, &:active {
+        outline: none;
+        border: none;
+        box-shadow: none;
+      }
+    }
+  }
+
   .gas-config{
+    .sub_title {
+      font-size: 0.9rem;
+    }
+    p.sub_title {
+      margin-top: 0;
+    }
+    .des-down {
+      opacity: 0.5;
+      font-style: italic;
+      margin-top: 5px;
+    }
     input{
       height: auto;
       min-height: auto;
@@ -208,21 +241,22 @@ $radio-color: #5D9E7A;
       }
     }
     .transaction-fee{
-        margin-top: 1.2rem;
-        border-top: 1px solid #aaa;
-        padding-top: 0.5rem;
-        color: #6A6B7D;
-        .title-fee{
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            margin-bottom: 0.4rem;
-        }
-      }
-      .custom-radio{
-        margin-top: 1rem
+      font-weight: 600;      
+      margin-top: 1.2rem;
+      border-top: 1px solid #ddd;
+      padding-top: 0.5rem;
+      color: #6A6B7D;
+      .title-fee{
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        margin-bottom: 0.4rem;
       }
     }
+    .custom-radio{
+      margin-top: 1rem
+    }
   }
+}
 
 .custom-radio {
   ul {
