@@ -21,12 +21,12 @@ export default class RateBetweenToken extends React.Component {
   render = () => {
     var tokenRate = this.props.isSelectToken ? <img src={require('../../../assets/img/waiting-white.svg')} /> : roundingNumber(this.props.exchangeRate.rate)
     return (
-      <div class="token-compare">
-        <div className="columns small-12 medium-5">
+      <div class="token-compare grid-x">
+        <div className="cell large-5">
           1 {this.props.exchangeRate.sourceToken} = {tokenRate} {this.props.exchangeRate.destToken}
         </div>
-        <div className="columns show-for-medium-up medium-2 seperator">|</div>
-        <div className="columns small-12 medium-5">
+        <div className="cell large-2 seperator">|</div>
+        <div className="cell large-5">
           1 ETH = {this.props.rateEthUsd} USD
         </div>
       </div>

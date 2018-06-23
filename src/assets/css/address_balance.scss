@@ -6,6 +6,33 @@
     line-height: normal;
     letter-spacing: normal;
     color: #474D5F;
+
+    .balance-large{
+      @media screen and (max-width: 640px) {
+        display: none
+      }
+    }
+
+    .balance-medium{
+      cursor: pointer;
+      @media screen and (min-width: 640px) {
+        display: none;
+      }
+    }
+
+    #balance-content{
+      @media screen and (max-width: 640px) {
+        display: none;
+        padding: 10px;
+        background-color: #f5f5f5;
+      }      
+      &.show-balance{
+        @media screen and (max-width: 640px) {
+          display: block
+        }
+      }
+    }
+
     .title{
       font-size: 20px;
       font-weight: normal;

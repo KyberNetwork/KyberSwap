@@ -13,8 +13,8 @@ const AdvanceConfigLayout = (props) => {
   }
   return (
     <div className="advance-config">
-      <div className="title hide-for-small-only">Advanced</div>
-      <div className="advance-title-mobile title show-for-small-only" onClick={(e) => toggleShowAdvance()}>
+      <div className="title advance-title-desktop">Advanced</div>
+      <div className="advance-title-mobile title" onClick={(e) => toggleShowAdvance()}>
         <div>
           Advanced
         </div>        

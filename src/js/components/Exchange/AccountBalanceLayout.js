@@ -113,6 +113,15 @@ const AccountBalanceLayout = (props) => {
     }
   }
 
+  function toggleShowBalance(e) {
+    var advanceContent = document.getElementById("balance-content");
+    if (advanceContent.className === "show-balance") {
+        advanceContent.className = "";
+    } else {
+        advanceContent.className = "show-balance";
+    }
+  }
+
   return (
     <div id="balance-account">
       <div className="balance-address">
@@ -121,7 +130,8 @@ const AccountBalanceLayout = (props) => {
           <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.address}>{props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}</a>
         </div>
       </div>
-      <div className="balance-header">
+
+      <div className="balance-header balance-large">
         <div className="title">
           {props.translate("address.my_balance") || "My balance"}
         </div>
@@ -132,29 +142,44 @@ const AccountBalanceLayout = (props) => {
             )}
       </div>
       
-      <div id="search-balance" className="row">
-        <div className="column small-10">
-          <input type="text" placeholder="Search" onChange={(e) => props.changeSearchBalance(e)} value = {props.searchWord}  className="search-input"/>
+      <div className="balance-header balance-medium" onClick={(e) => toggleShowBalance()}>
+          <div className="title">
+          {props.translate("address.my_balance") || "My balance"}
         </div>
-
-        
-        <Dropdown  onShow = {(e) => props.showSort(e)} onHide = {(e) => props.hideSort(e)} active={props.sortActive}>
-        <DropdownTrigger className="notifications-toggle">
-          <div className="column small-2 sort-balance"></div>
-        </DropdownTrigger>
-        <DropdownContent>
-          <div className="select-item">
-           <div onClick={(e)=>props.sortSymbol()}>SYMBOL</div>
-           <div onClick={(e)=>props.sortPrice()}>PRICE</div>
-          </div>
-        </DropdownContent>
-      </Dropdown>
-        
+        {props.showBalance && (
+              <p className="estimate-value">
+                <span className="text-upcase">{props.translate("address.total") || "Total"} {getBalanceUsd()} USD</span>
+              </p>
+            )}    
       </div>
-      <div className="balances custom-radio custom-scroll">
-        <ul>
-          {getBalances()}
-        </ul>
+      
+      <div id="balance-content">
+        <div className="balance-panel">
+          <div id="search-balance" className="row">
+            <div className="column small-10">
+              <input type="text" placeholder="Search" onChange={(e) => props.changeSearchBalance(e)} value = {props.searchWord}  className="search-input"/>
+            </div>
+
+            
+            <Dropdown  onShow = {(e) => props.showSort(e)} onHide = {(e) => props.hideSort(e)} active={props.sortActive}>
+            <DropdownTrigger className="notifications-toggle">
+              <div className="column small-2 sort-balance"></div>
+            </DropdownTrigger>
+            <DropdownContent>
+              <div className="select-item">
+              <div onClick={(e)=>props.sortSymbol()}>SYMBOL</div>
+              <div onClick={(e)=>props.sortPrice()}>PRICE</div>
+              </div>
+            </DropdownContent>
+          </Dropdown>
+            
+          </div>
+          <div className="balances custom-radio custom-scroll">
+            <ul>
+              {getBalances()}
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   )

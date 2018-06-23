@@ -7,26 +7,47 @@ $radio-color: #5D9E7A;
 }
 
 .advance-config{
-
-
+  // max-width: 300px;  
+  
   .advance-title-mobile{
     padding: 10px;
     background-color: #F5F5F5;
     border-radius: 5px;
     text-align: right;
     cursor: pointer;
+    @media screen and (min-width: $break-point-large){
+      display: none  
+    }
+  }
+  .advance-title-desktop{
+    @media screen and (max-width: $break-point-large){
+      display: none  
+    }
   }
   #advance-content{
-    @include breakpoint(small only) {
+    @media screen and (max-width: $break-point-large){
       display: none;
       padding: 10px;
       background-color: #f5f5f5;
-    }
-    &.show-advance{
-      @include breakpoint(small only) {
-        display: block
+      &.show-advance{
+        @media screen and (max-width: $break-point-large){
+          display: block  
+        }
+        // @include breakpoint(small only) {
+        //   display: block
+        // }
       }
     }
+    // @include breakpoint(small only) {
+    //   display: none;
+    //   padding: 10px;
+    //   background-color: #f5f5f5;
+    // }
+    // &.show-advance{
+    //   @include breakpoint(small only) {
+    //     display: block
+    //   }
+    // }
   }
   
 

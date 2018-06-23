@@ -15,6 +15,49 @@
       // background-size: 75% 75%;
     }
   }
+
+  @media screen and (max-width: $break-point-large){
+    .exchange-col-1, .exchange-col-2, .exchange-col-3{
+      padding: 1rem;
+    }
+    .exchange-col-1-2{
+      margin-top: 30px
+    }
+    .exchange-wrapper-btn{
+      .button{
+        width: 100%;
+      }
+    }
+    .amount-input{
+      margin-top: 1rem;
+    }
+  } 
+  @media screen and (min-width: $break-point-large){
+    .exchange-wrapper-btn{
+      text-align: center;
+    }
+    .exchange-col-1{
+      padding: 0 3rem;
+    }    
+    .exchange-col-3{
+      .exchange-wrapper-btn{
+        position: absolute;
+        margin-top: -250px;
+      }
+    }
+    .exchange-col{
+      position: relative;
+      height: 100%;
+    }
+  }
+
+  .exchange-icon{
+    text-align: center;
+    margin-top: 50px;
+    @media screen and (max-width: $break-point-large){
+      display: none;
+    }    
+  }
   .main-title  {
     line-height: 1.2;
     letter-spacing: -0.1px;
@@ -53,17 +96,37 @@
     text-align: center;
     margin-bottom: 10px;
     margin-top: 1rem;
+
+
+    
+
     // div {
     //   font-size: 0.97rem;
     //   letter-spacing: 0.1px;
     // }
-    div:first-child {
-      text-align: right;
+    .seperator{
+      @media screen and (max-width: $break-point-large) {
+        display: none;
+      }
     }
 
-    div:nth-child(3) {
-      text-align: left;
+
+    @media screen and (min-width: $break-point-large) {
+      width: 400px;
+      margin: 0 auto;
+      margin-top: 1rem;
     }
+
+    @media screen and (max-width: $break-point-large) {
+      text-align: left;      
+    }
+    // div:first-child {
+    //   text-align: right;
+    // }
+
+    // div:nth-child(3) {
+    //   text-align: left;
+    // }
   }
 
   .show-on-choose-token-pair {

@@ -126,6 +126,10 @@ $image-path: '../img/';
 // 2. Breakpoints
 // --------------
 
+
+$break-point-large: 1024px;
+$break-point-medium: 768px;
+$break-point-small: 640px;
 $breakpoints: (
   small: 0,
   mid-small: 480px,
