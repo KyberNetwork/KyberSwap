@@ -16,7 +16,7 @@ var plugins = [
     favicon: './assets/img/favicon.png',
     inject: 'body',
     styleFile: 'app.bundle.css?v=' + Date.now(),
-    otherFile: 'other.bundle.css?v=' + Date.now()
+    //otherFile: 'other.bundle.css?v=' + Date.now()
   })
 ]
 var scriptConfig = function (env) {

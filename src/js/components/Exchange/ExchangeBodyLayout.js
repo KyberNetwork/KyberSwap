@@ -74,7 +74,7 @@ const ExchangeBodyLayout = (props) => {
 
   var render = (
     <div className="grid-x">
-      <div className="cell medium-6 large-3">
+      <div className="cell medium-6 large-3 balance-wrapper">
         {props.balanceList}
       </div>
       <div className="cell medium-6 large-9">

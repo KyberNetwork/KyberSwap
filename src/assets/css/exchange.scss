@@ -9,14 +9,9 @@
       width: 10%;
       padding-left: 0;
       padding-right: 0;
-      // background-image: url(../img/exchange.svg);
-      // background-repeat: no-repeat;
-      // background-position: center;
-      // background-size: 75% 75%;
     }
   }
-
-  @media screen and (max-width: $break-point-large){
+  @include screen-max-width(large) {
     .exchange-col-1, .exchange-col-2, .exchange-col-3{
       padding: 1rem;
     }
@@ -32,7 +27,10 @@
       margin-top: 1rem;
     }
   } 
-  @media screen and (min-width: $break-point-large){
+  @include screen-min-width(large) {
+    .balance-wrapper{
+      border: 1px solid #ddd;
+    }
     .exchange-wrapper-btn{
       text-align: center;
     }
@@ -40,9 +38,13 @@
       padding: 0 3rem;
     }    
     .exchange-col-3{
+      >div{
+        position: relative;
+      }
       .exchange-wrapper-btn{
         position: absolute;
         margin-top: -250px;
+        width: 100%;
       }
     }
     .exchange-col{
@@ -54,7 +56,7 @@
   .exchange-icon{
     text-align: center;
     margin-top: 50px;
-    @media screen and (max-width: $break-point-large){
+    @include screen-max-width(large) {
       display: none;
     }    
   }
@@ -105,19 +107,19 @@
     //   letter-spacing: 0.1px;
     // }
     .seperator{
-      @media screen and (max-width: $break-point-large) {
+      @include screen-max-width(large) {
         display: none;
       }
     }
 
 
-    @media screen and (min-width: $break-point-large) {
+    @include screen-min-width(large) {
       width: 400px;
       margin: 0 auto;
       margin-top: 1rem;
     }
 
-    @media screen and (max-width: $break-point-large) {
+    @include screen-max-width(large) {
       text-align: left;      
     }
     // div:first-child {

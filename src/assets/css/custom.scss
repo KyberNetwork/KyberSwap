@@ -136,13 +136,6 @@ a.disabled{
             // }
         }
     }
-    @media screen and (max-height: 670px){
-        @media screen and (min-width: 790px) and (max-width: 1024px){
-            #import-acc{
-                width: 70%;
-            }
-        }
-    }
 }
 
 input[type=number]::-webkit-outer-spin-button,
