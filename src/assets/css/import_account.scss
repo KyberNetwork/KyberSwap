@@ -11,12 +11,12 @@ $animationTime :0.5s;
     padding-top: 80px;
 
     .title {
-      font-weight: bold;
       color: #fff;
       text-align: center;
-      font-size: 2.5rem;
+      font-size: 42px;
       padding: 0;
       margin: 0;
+      font-family: $font-cera;
     }
 
     .sub-title {
@@ -48,6 +48,7 @@ $animationTime :0.5s;
             font-size: 20px;
             margin: 10px 0;
             font-weight: 600;
+            font-family: $font-cera;
           }
 
           &__button {
@@ -68,7 +69,7 @@ $animationTime :0.5s;
               position: absolute;
               width: 6px;
               height: 9px;
-              right: 10px;
+              right: 5px;
               top: 50%;
               opacity: 0;
               transform: translateY(-50%);
@@ -130,16 +131,107 @@ $animationTime :0.5s;
         flex-wrap: wrap;
 
         &__item {
-          width: 30%;
-          margin: 0 1% 25px;
+          width: 32%;
+          margin: 0 1% 15px;
+
+          &:first-child {
+            margin-left: 0;
+          }
+
+          &:nth-child(3) {
+            margin-right: 0;
+          }
         }
       }
 
-      @include screen-max-width(medium) {
+      @include screen-max-width(mid-small) {
         &__item {
-          width: 48%;
-          margin: 0 1% 25px;
+          width: calc(50% - 10px);
+          margin: 0 10px 20px;
+          padding-top: 30px;
+
+          .column-block {
+            margin-bottom: 0;
+          }
+
+          .importer {
+            &__button {
+              padding: 8px 5px;
+              line-height: 1.2;
+            }
+
+            &__name {
+              font-size: 16px;
+            }
+          }
+
+          .how-to-use {
+            display: none;
+          }
+
+          &:first-child {
+            margin: 0 0 20px;
+            width: 100%;
+            text-align: left;
+
+            .importer {
+              padding-bottom: 60px;
+
+              &__symbol {
+                display: inline-block;
+                text-align: center;
+              }
+
+              &__button {
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 1.25rem;
+                margin: 0 auto;
+                width: calc(100% - 1.25rem);
+              }
+
+              .more-info {
+                display: inline-block;
+                margin-left: 30px;
+              }
+            }
+          }
+
+          &:nth-child(3) {
+            margin-right: 10px;
+          }
+
+          &:nth-child(odd) {
+            margin-right: 0;
+          }
+
+          &:nth-child(even) {
+            margin-left: 0;
+          }
         }
+      }
+    }
+
+    @include screen-max-width(medium) {
+      padding-top: 10px;
+
+      .import-account {
+        margin-top: 40px;
+      }
+
+      @keyframes moving-up {
+        to {
+          bottom: 0;
+          max-height: 1000px;
+        }
+      }
+    }
+
+    @include screen-max-width(mid-small) {
+      .title {
+        font-size: 30px;
+        text-align: left;
       }
     }
   }

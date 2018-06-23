@@ -128,7 +128,8 @@
     }
 
     @include screen-max-width(medium) {
-      display: block;
+      display: flex;
+      flex-direction: column-reverse;
 
       &-left {
         width: 100%;
