@@ -15,6 +15,15 @@ $radio-color: #5D9E7A;
     border-radius: 5px;
     text-align: right;
     cursor: pointer;
+    >div {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      img {
+        margin-left: 10px;
+        width: 15px;
+      }
+    }
   }
   #advance-content{
     @include breakpoint(small only) {
@@ -24,7 +33,21 @@ $radio-color: #5D9E7A;
     }
     &.show-advance{
       @include breakpoint(small only) {
-        display: block
+        display: block;
+        .gas-config {
+          .gas-change {
+            background-color: white;
+          }
+          .gas_input-option {
+            .gas-option {
+              .token-selector {
+                .focus-item {
+                  box-shadow: none;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -79,7 +102,7 @@ $radio-color: #5D9E7A;
           align-items: center;
           justify-content: center;
           div:first-child {
-            margin: 0 10px;
+            margin: 0 10px 0 0;
             text-transform: uppercase;
           }
           div:last-child {
@@ -99,8 +122,8 @@ $radio-color: #5D9E7A;
   }
   .select-item{
     width: 100px;
-    top: -28px;
-    right: 0;
+    top: -48px;
+    right: -5px;
     background-color: #fff;
     padding: 10px 0;
     border-radius: 2px !important;

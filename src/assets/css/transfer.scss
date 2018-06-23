@@ -17,7 +17,7 @@ $padding-col-left : 2rem;
       // padding-left: 2.5rem;
       // padding-right: 2.5rem;
       // .row {
-        
+
         .transfer-col-3{
           .transfer-col-3-1{
             @include breakpoint(medium) {
@@ -27,6 +27,7 @@ $padding-col-left : 2rem;
           .submit-transfer{
             @include breakpoint(small only) {
               width: 100%;
+              animation: none;
             }
           }
         }
@@ -36,6 +37,9 @@ $padding-col-left : 2rem;
           .transfer-col-1-2{
             @include breakpoint(medium up) {
               padding-left: $padding-col-left;
+            }
+            @include breakpoint(small up) {
+              margin-top: 10px;
             }
           }
           
@@ -121,10 +125,10 @@ $padding-col-left : 2rem;
       border-radius: 5px;
       box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
       background-color: #ffffff;
-      border: solid 0.8px rgba(204, 204, 204, 0.72);
+      // border: solid 0.8px rgba(204, 204, 204, 0.72);
       padding: 10px 12px;
       align-items: center;
-      font-size: 15px;
+      font-size: 14px;
       &.d-flex{
         justify-content: space-between;
       }
