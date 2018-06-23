@@ -22,16 +22,6 @@
       opacity: 0.1;
       position: absolute;
     }
-
-    @include screen-max-width(xlarge) {
-      &::before {
-        content: '';
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        background: rgba(0, 0, 0, .3);
-      }
-    }
   }
 
   .frame {
@@ -48,10 +38,18 @@
     &__container {
       display: flex;
       align-items: center;
+      margin-bottom: -160px;
+      height: 600px;
     }
 
     &__content {
-      width: 50%;
+      &:first-child {
+        width: 45%
+      }
+
+      &:last-child {
+        width: 55%;
+      }
 
       &-tagline {
         text-align: left;
@@ -158,69 +156,19 @@
       }
 
       &-circle {
-        top: 0;
-        width: 550px;
-        height: 550px;
-        border-radius: 50%;
-        background-image: url($image-path + 'landing/circle-particle.svg');
-        background-size: contain;
-        position: absolute;
-
         img {
-          position: absolute;
-          bottom: 0;
-
-          &:nth-child(1) {
-            bottom: 145px;
-            left: 60px;
-          }
-
-          &:nth-child(2) {
-            top: 50%;
-            transform: translateY(-50%);
-            left: -30px;
-          }
-
-          &:nth-child(3) {
-            top: 100px;
-            left: 95px;
-          }
-
-          &:nth-child(4) {
-            top: 15px;
-            left: 0;
-            right: 0;
-            margin: 0 auto;
-          }
-
-          &:nth-child(5) {
-            top: 25px;
-            right: 70px;
-          }
-
-          &:nth-child(6) {
-            top: 50%;
-            transform: translateY(-50%);
-            right: -50px;
-          }
-
-          &:nth-child(7) {
-            bottom: 100px;
-            right: 50px;
-          }
-
-          &:nth-child(8) {
-            top: 50%;
-            transform: translateY(-50%);
-            left: 0;
-            right: 0;
-            margin: 0 auto;
-          }
+          width: 100%;
         }
       }
     }
 
-    @include screen-max-width(xlarge) {
+    @include screen-max-width(large) {
+      &__container {
+        margin-bottom: 0;
+        flex-direction: column-reverse;
+        height: unset;
+      }
+
       &__content {
         &:first-child {
           width: 100%;
@@ -228,36 +176,45 @@
 
         &:last-child {
           width: 100%;
-          position: absolute;
-          top: 0;
-          left: 0;
-          z-index: -1;
-          opacity: 0.3;
         }
 
         &-circle {
-          left: 0;
-          right: 0;
-          margin: 0 auto;
+          margin-top: 30px;
+
+          img {
+            width: 500px;
+          }
+        }
+      }
+    }
+
+    @include screen-max-width(mid-small) {
+      &__content {
+        &-btn {
+          padding: 14px 60px;
+
+          &:hover {
+            padding: 14px 75px;
+          }
         }
 
         .term-services {
-          margin: 0 auto;
-        }
+          display: block;
+          width: 100%;
+          padding: 15px 0 20px;
 
-        &-title {
-          font-weight: bold !important;
-        }
-
-        &-tagline {
-          text-align: center;
+          .term-text {
+            display: block;
+            margin-right: 0;
+            margin-bottom: 12px;
+          }
         }
       }
     }
   }
 
   .frame {
-    padding: 90px 0 0;
+    padding: 0;
     z-index: 2;
     position: relative;
 
@@ -314,11 +271,13 @@
 
     &::after {
       content: '';
-      width: 100%;
-      height: 1px;
+      width: 98%;
+      height: 2px;
       position: absolute;
-      bottom: 2px;
+      bottom: 1px;
       left: 0;
+      right: 0;
+      margin: 0 auto;
       background-color: $swap-color;
     }
   }
@@ -327,6 +286,8 @@
     display: flex;
     justify-content: center;
     position: relative;
+    margin: 0 auto;
+    z-index: -1;
 
     &__content {
       width: 100%;
@@ -337,7 +298,7 @@
 
     &__item {
       background: white;
-      width: 185px;
+      width: 170px;
       height: 170px;
       margin: 0 12px 25px;
       position: relative;
@@ -350,25 +311,46 @@
       color: #ccc;
       font-size: 20px;
       margin-top: 10px;
+      font-family: $font-cera;
+      font-weight: 400;
     }
   }
 
   @include screen-max-width(xlarge) {
     .account-type {
       flex-wrap: wrap;
+      margin: -40px 0 25px;
+    }
+  }
+
+  @include screen-max-width(large) {
+    .account-type {
+      justify-content: end;
 
       &__item {
-        width: 30%;
-        margin: 0 1% 25px;
+        margin: 0 12px 25px 0;
       }
     }
   }
 
-  @include screen-max-width(medium) {
+  @include screen-max-width(mid-small) {
     .account-type {
       &__item {
-        width: 48%;
-        margin: 0 1% 25px;
+        width: calc(50% - 10px);
+        height: 130px;
+        margin: 0 10px 20px;
+
+        &:nth-child(odd) {
+          margin-left: 0;
+        }
+
+        &:nth-child(even) {
+          margin-right: 0;
+        }
+      }
+
+      &__text {
+        font-size: 16px;
       }
     }
   }

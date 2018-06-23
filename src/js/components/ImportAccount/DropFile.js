@@ -32,8 +32,10 @@ const DropFile = (props) => {
     <Dropzone onDrop={(e) => props.onDrop(e)} disablePreview={true} className="column column-block">
       <div className="importer json">
         {/* <div className="how-to-use" data-for="keystore-tip" data-tip="How to use"></div> */}
-        <img src={require('../../../assets/img/landing/keystore_active.svg')} />
-        <div className="importer__name">KEYSTORE</div>
+        <div className="importer__symbol">
+          <img src={require('../../../assets/img/landing/keystore_active.svg')} />
+          <div className="importer__name">KEYSTORE</div>
+        </div>
         <button className="importer__button" onClick={(e) => props.onDrop(e)}>Select or Drag</button>
       </div>
       {/* <ReactTooltip place="top" id="keystore-tip" type="dark" /> */}
