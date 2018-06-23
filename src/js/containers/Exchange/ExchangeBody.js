@@ -21,7 +21,7 @@ import * as exchangeActions from "../../actions/exchangeActions"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
 
-@connect((store) => {
+@connect((store, props) => {
   const ethereum = store.connection.ethereum
   const account = store.account
   const exchange = store.exchange
@@ -51,7 +51,8 @@ import { default as _ } from 'underscore'
   return {
     account, ethereum, tokens, translate, exchange: {
       ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
-      sourceName, destName
+      sourceName, destName,
+      advanceLayout : props.advanceLayout
     }
   }
 })
@@ -404,6 +405,7 @@ export default class ExchangeBody extends React.Component {
         maxCap={toEther(this.props.exchange.maxCap)}
         errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}      
 
+        advanceLayout = {this.props.advanceLayout}
         balanceList = {<AccountBalance />}  
         focus = {this.state.focus}
       />

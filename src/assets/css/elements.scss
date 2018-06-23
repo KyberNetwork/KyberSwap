@@ -1,24 +1,24 @@
 
-input{
-  &.hashAddr {
-    font-size: 18px;
-    text-align: center;
-    letter-spacing: 1.25px;
-    //background-color: #415b68;
-    height: 155px;
-    border: 1px solid #ddd;
-    //color: $white;
-    resize: none;
-    margin-bottom: 0;
-    outline: none;
-    padding: 10px;
-    width: 100%;
-  }
-}
+// input{
+//   &.hashAddr {
+//     font-size: 18px;
+//     text-align: center;
+//     letter-spacing: 1.25px;
+//     //background-color: #415b68;
+//     height: 155px;
+//     border: 1px solid #ddd;
+//     //color: $white;
+//     resize: none;
+//     margin-bottom: 0;
+//     outline: none;
+//     padding: 10px;
+//     width: 100%;
+//   }
+// }
 
 .transaction-label{
   // font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   // padding-left: 25px;
 }
 
@@ -234,16 +234,27 @@ h1.title {
     display: inline-block;
     box-shadow: 0 0 2px #aaa;
   }
+  .switch-button{
+    @include breakpoint(small only) {
+      width: 100%;
+      a{
+        width: 50%;
+      }
+    }
+  }
   div.back-home {
     box-shadow: none;
     float: left;
     line-height: 2.4;
     cursor: pointer;
+    @include breakpoint(small only) {
+      display: none;
+    }
     img.back-arrow {
       padding: 5px;
       border-radius: 50%;
       background-color: #EFEFEF;
-      margin: 0 10px 0 20px;
+      margin-right: 10px;
     }
     span {
       font-size: 15px;
@@ -267,7 +278,7 @@ h1.title {
   }
 }
 .frame {
-  padding: 30px 0;
+  // padding: 30px 0;
   // background-color: $k-primary;
   // color: $white;
   .title{
@@ -343,55 +354,46 @@ span.help {
   vertical-align: middle;
 }
 
-.transaction-footer{
-  position: relative;
-  background-color:#FDFDFD; 
-  margin-top: 10px;
-  padding-bottom: 2rem;
-  .term, .adv-btn{
-    position: absolute;
-    top: -45px;
-    -moz-transform: translateY(-50%);
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
-  .adv-btn{
-    right: 0.9375rem;
-  }
-  // @include breakpoint(medium){
-  //   margin-top: 0;
-  //   .term, .adv-btn{
-  //     top: 50%;
-  //   }
-  // }
-  label{
-    margin-bottom: 0px;
-    display: flex;
-    align-items: center;
-  }
-  .term-services{
-    margin-bottom: 0px;
-    display: flex;
-    align-items: center;
-    .view-term{
-      border: 1px solid white;
-      padding: 5px;
-    }
-    span{
-      line-height: 15px;
-      font-size: 13px;
-      &:not(:first-child){
-        margin-left: 15px;
-      }
-      &:nth-child(2){
-        color: #ccc;
-      }
-      // a{
-      //   color: white;
-      // }
-    }
-  }
-}
+// .transaction-footer{
+//   position: relative;
+//   background-color:#FDFDFD; 
+//   margin-top: 10px;
+//   padding-bottom: 2rem;
+//   .term, .adv-btn{
+//     position: absolute;
+//     top: -45px;
+//     -moz-transform: translateY(-50%);
+//     -webkit-transform: translateY(-50%);
+//     transform: translateY(-50%);
+//   }
+//   .adv-btn{
+//     right: 0.9375rem;
+//   }
+//   label{
+//     margin-bottom: 0px;
+//     display: flex;
+//     align-items: center;
+//   }
+//   .term-services{
+//     margin-bottom: 0px;
+//     display: flex;
+//     align-items: center;
+//     .view-term{
+//       border: 1px solid white;
+//       padding: 5px;
+//     }
+//     span{
+//       line-height: 15px;
+//       font-size: 13px;
+//       &:not(:first-child){
+//         margin-left: 15px;
+//       }
+//       &:nth-child(2){
+//         color: #ccc;
+//       }
+//     }
+//   }
+// }
 // advanced switch
 
 .switch {

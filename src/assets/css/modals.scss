@@ -39,6 +39,7 @@ $divider-color: darken($title-background-color, 5);
   .title {
     font-size: 1.8rem;
     margin-top: 20px;
+    margin-bottom: 20px;
   //  background-color: $k-primary-darker;
   }
   .overlap {
@@ -59,7 +60,7 @@ $divider-color: darken($title-background-color, 5);
     }
   }
   .content {
-    padding: 0 50px;
+    // padding: 0 50px;
     // padding: 20px 10px;
     // @include breakpoint(medium) {
     //   padding: 15px;

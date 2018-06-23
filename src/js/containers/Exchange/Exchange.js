@@ -94,14 +94,14 @@ export default class Exchange extends React.Component {
 
     var minRate = <MinRate />    
     var advanceConfig = <AdvanceConfigLayout minRate = {minRate} gasConfig = {gasConfig}/>
-    var exchangeBody = <ExchangeBody />
+    var exchangeBody = <ExchangeBody advanceLayout = {advanceConfig} />
     return (
       <TransactionLayout 
         endSession = {this.handleEndSession}
         translate = {this.props.translate}
         // location = {this.props.location}
        
-        advance = {advanceConfig}
+        // advance = {advanceConfig}
         content = {exchangeBody}
         page="exchange"
       />

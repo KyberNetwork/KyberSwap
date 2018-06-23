@@ -19,8 +19,9 @@
     line-height: 1.2;
     letter-spacing: -0.1px;
     padding: 3.5rem 0 0 3.5rem;
-    font-size: 1.25rem;
+    font-size: 24px;
     color: #141927;
+    margin-bottom: 20px;
   }
   .token-input {
     .info {
@@ -461,6 +462,25 @@
     }
     .gas-configed{
       margin-top: 2rem;
+    }
+  }
+}
+
+
+.swap-navigation{
+  display: flex;
+  align-items: center;
+  max-width: 75rem;
+  margin: 0 auto;
+  >div{
+      margin-right: 10px;
+      a{
+        color: #999999;
+    }
+  }
+  .active{
+    a{
+      color: #666666;
     }
   }
 }

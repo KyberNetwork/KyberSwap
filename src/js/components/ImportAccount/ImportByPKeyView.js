@@ -1,6 +1,6 @@
 import React from "react"
 import { Modal } from '../CommonElement'
-import ReactTooltip from 'react-tooltip'
+//import ReactTooltip from 'react-tooltip'
 
 const ImportByPKeyView = (props) => {
 
@@ -29,7 +29,7 @@ const ImportByPKeyView = (props) => {
 	return (
 		<div className="column column-block">
 			<div className="importer pkey">
-				<div className="how-to-use" data-for="private-key-tip" data-tip="How to use"></div>
+				{/* <div className="how-to-use" data-for="private-key-tip" data-tip="How to use"></div> */}
 				<img src={require('../../../assets/img/landing/privatekey_active.svg')} />
 				<div className="importer__name">PRIVATE KEY</div>
 				<button className="importer__button" onClick={(e) => props.modalOpen()}>Enter your Private key</button>
@@ -37,7 +37,7 @@ const ImportByPKeyView = (props) => {
 					<img src={require('../../../assets/img/pkey.svg')} />
 				</a> */}
 			</div>
-			<ReactTooltip place="top" id="private-key-tip" type="dark" />
+			{/* <ReactTooltip place="top" id="private-key-tip" type="dark" /> */}
 
 			<Modal
 				className={{ base: 'reveal tiny', afterOpen: 'reveal tiny import-privatekey' }}

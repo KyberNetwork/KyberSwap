@@ -130,10 +130,13 @@ $breakpoints: (
   small: 0,
   mid-small: 480px,
   medium: 640px,
+  mid-medium: 768px,
   large: 1024px,
   xlarge: 1200px,
   xxlarge: 1440px,
 );
+
+
 $print-breakpoint: large;
 $breakpoint-classes: (small medium large);
 

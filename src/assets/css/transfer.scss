@@ -1,25 +1,85 @@
+
+$small-break-point : 40rem;
+$padding-col : 1rem;
+
+$padding-col-left : 2rem;
+
 #transfer-screen{
+  display: inline-block;
+  width: 100%;
+
+
+  .transfer-col{
+    padding: $padding-col;
+  }
   .frame {
-    .exchange-pd {
-      padding-left: 2.5rem;
-      padding-right: 2.5rem;
-      .row {
-        &.transfer-detail {
-          .select-token-panel {
-            margin-top: 0;
-          }
-          input.hashAddr {
-            border-radius: 5px;
-            @media screen and (min-width: 40em){
-              height: 153px;        
+    // .exchange-pd {
+      // padding-left: 2.5rem;
+      // padding-right: 2.5rem;
+      // .row {
+        
+        .transfer-col-3{
+          .transfer-col-3-1{
+            @include breakpoint(medium) {
+              padding-left: $padding-col-left;
             }
-            @media screen and (max-width: 40em){
-              margin-bottom: 10px;
+          }
+          .submit-transfer{
+            @include breakpoint(small only) {
+              width: 100%;
             }
           }
         }
-      }
-    }
+        .transfer-detail {
+
+
+          .transfer-col-1-2{
+            @include breakpoint(medium up) {
+              padding-left: $padding-col-left;
+            }
+          }
+          
+
+          
+          .change-amount{
+            
+              padding-left: 1.2rem;
+              @include breakpoint(small only) {
+                @media screen and (min-width: 40em){
+                  height: 153px;        
+                }
+                padding-left: 0;
+              }
+          }
+          .select-token-panel {
+            margin-top: 0;
+          }
+          .hashAddr {
+                font-size: 18px;
+                text-align: center;
+                letter-spacing: 1.25px;
+                //background-color: #415b68;
+                height: 155px;
+                border: 1px solid #ddd;
+                //color: $white;
+                resize: none;
+                margin-bottom: 0;
+                outline: none;
+                padding: 10px;
+                width: 100%;
+                border-radius: 5px;
+            
+            // @media screen and (min-width: 40em){
+            //   height: 153px;        
+            // }
+            @include breakpoint(small only) {
+              margin-bottom: 20px;
+              height: 120px;
+            }
+          }
+        }
+      //}
+    //}
   }
   label{
       margin-bottom: 8px;
@@ -28,9 +88,11 @@
     padding-top: 1.5rem;
     font-size: 1.25rem;
     padding-bottom: 0;
+    font-size: 24px;
+    margin-bottom: 20px;
   }
   .transaction-label{
-	  font-size: 11px;
+	  font-size: 14px;
 	 	text-transform: uppercase;
 	 	padding-left: 0;
 	}
