@@ -15,8 +15,8 @@ $radio-color: #5D9E7A;
     color: #666666;
   }
   .gas-change{
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     display: flex;
     align-items: center;
     border: 1px solid #ddd;
@@ -39,17 +39,16 @@ $radio-color: #5D9E7A;
     font-size: 14px;
     line-height: 1.43;
     color: #999999;
+    border-right: 1px solid #E8E8E8;
   }
   .gas_input-option{
     padding-left: 0;
     .gas-option{
       .token-selector {
-        border-left: 1px solid #E8E8E8;
         .focus-item{
           font-size: 12px;
-          line-height: 1.08;
           color: #666666;
-          padding: 0 10px 0 0px;
+          padding: 3px 10px 3px 0px;
           border-radius:0;
           border: none;
           align-items: center;
@@ -63,6 +62,7 @@ $radio-color: #5D9E7A;
             align-items: center;
             img {
               min-width: 13px;
+              content: url(../img/exchange/arrow-down-swap.svg)
             }
           }
         }
