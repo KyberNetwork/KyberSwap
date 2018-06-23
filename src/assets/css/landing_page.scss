@@ -189,6 +189,10 @@
     }
 
     @include screen-max-width(mid-small) {
+      &__container {
+        margin-bottom: 80px;
+      }
+
       &__content {
         &-btn {
           padding: 14px 60px;
@@ -335,17 +339,25 @@
 
   @include screen-max-width(mid-small) {
     .account-type {
+      margin-bottom: 10px;
+
       &__item {
         width: calc(50% - 10px);
         height: 130px;
         margin: 0 10px 20px;
+        top: 0;
+
+        &:first-child {
+          width: 100%;
+          margin: 0 0 20px;
+        }
 
         &:nth-child(odd) {
-          margin-left: 0;
+          margin-right: 0;
         }
 
         &:nth-child(even) {
-          margin-right: 0;
+          margin-left: 0;
         }
       }
 
