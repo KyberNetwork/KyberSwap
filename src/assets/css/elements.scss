@@ -106,8 +106,8 @@ input.error {
 
 .error + span.error-text,
 .error span.error-text {
-  color: $alert-color;
-  font-size: 13px;
+  color: $error-color;
+  font-size: 14px;
   font-weight: normal;
   display: block;
   text-transform: none;
@@ -229,6 +229,9 @@ h1.title {
     max-width: 75rem;
     margin-left: auto;
     margin-right: auto;
+    @include screen-max-width(large) {
+      margin: 10px;
+    }
   }
   div{
     display: inline-block;

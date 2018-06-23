@@ -269,13 +269,15 @@ export default class PostExchange extends React.Component {
           </div>
           <div className="amount">
             <div className="amount-item amount-left">
-              <div className="d-flex">
-                <div className="item-icon">
+              <div className="grid-x">
+                <div className="item-icon cell medium-4">
                   <img src={require("../../../assets/img/tokens/" + sourceTokenSymbol.toLowerCase()+".svg")} />
                 </div>
-                <span>
-                  {sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}
-                </span>
+                <div className="cell medium-8">
+                  <span>
+                    {sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}
+                  </span>
+                </div>
               </div>
               {/* <span>
                 {sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}
@@ -286,13 +288,15 @@ export default class PostExchange extends React.Component {
               {this.props.snapshot.isFetchingRate ?
                 <img src={require('../../../assets/img/waiting-white.svg')} />
                 :
-                <div className="d-flex">
-                <div className="item-icon">
+                <div className="grid-x">
+                <div className="item-icon cell medium-4">
                   <img src={require("../../../assets/img/tokens/" + destTokenSymbol.toLowerCase()+".svg")} />
                 </div>
-                <span>
-                  {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}
-                </span>
+                <div className=" cell medium-8">
+                  <span>
+                    {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}
+                  </span>
+                </div>
               </div>
                 // <span>
                 //   {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}

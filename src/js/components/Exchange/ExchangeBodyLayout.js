@@ -85,7 +85,7 @@ const ExchangeBodyLayout = (props) => {
             </div> */}            
               {/* <div> */}
                 <div className="grid-x exchange-col">
-                  <div className="cell large-9 exchange-col-1">
+                  <div className="cell large-8 exchange-col-1">
                     <div className="title main-title">Swap</div>
                     <div className="grid-x">
                       <div className="cell large-5">
@@ -152,7 +152,7 @@ const ExchangeBodyLayout = (props) => {
                     </div>
 
                   </div>
-                  <div className="cell large-3 exchange-col-2">
+                  <div className="cell large-4 exchange-col-2">
                     {props.advanceLayout}
                   </div>
                 </div>

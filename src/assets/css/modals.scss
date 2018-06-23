@@ -180,7 +180,7 @@ $divider-color: darken($title-background-color, 5);
 .exchange-caption {
   .error-text{
     display: block;
-    color: #ff5d00;
+    color: $error-color;
   }
   .info-text{
     display: block;

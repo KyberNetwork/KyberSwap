@@ -12,6 +12,10 @@
     }
   }
   @include screen-max-width(large) {
+    box-shadow: 0 7px 25px #ddd;
+    margin: 10px;
+  }
+  @include screen-max-width(large) {
     .exchange-col-1, .exchange-col-2, .exchange-col-3{
       padding: 1rem;
     }
@@ -36,7 +40,12 @@
     }
     .exchange-col-1{
       padding: 0 3rem;
+      border: 1px solid #ddd;
+      border-left: none;
     }    
+    .exchange-col-2{
+      padding-left: 20px;
+    }
     .exchange-col-3{
       >div{
         position: relative;
@@ -63,10 +72,14 @@
   .main-title  {
     line-height: 1.2;
     letter-spacing: -0.1px;
-    padding: 3.5rem 0 0 3.5rem;
+    
     font-size: 24px;
     color: #141927;
     margin-bottom: 20px;
+    @include screen-min-width(large) {
+      margin-top: 3rem;
+      margin-bottom: 2rem;
+    }
   }
   .token-input {
     .info {
@@ -310,6 +323,9 @@
   }
   .content {
     padding: 0 50px;
+    @include screen-max-width(medium){
+      padding: 0 10px;
+    }
     &.with-overlap {
       padding-bottom: 25px;
     }
@@ -336,9 +352,15 @@
       margin-top: 0;
       margin-bottom: 1rem;
       opacity: 0.77;
-      border: solid 1px #ebebeb;
-      padding: 25px;
-      margin: 0 auto;
+      
+      @include screen-min-width(medium){
+        border: solid 1px #ebebeb;
+        padding: 25px;
+        margin: 0 auto;
+      }
+      @include screen-max-width(medium){
+        margin-top: 20px;
+      }
       .font-w-b{
         font-size: 1rem;
         line-height: 1.03;
@@ -349,7 +371,7 @@
         font-size: 0.8rem;
         line-height: 1.03;
         color: #666666;
-        padding-bottom: 10px;
+        // padding-bottom: 10px;
       }
     }
     .des{
@@ -380,13 +402,18 @@
         border: solid 0.8px rgba(204, 204, 204, 0.72);
         border-radius: 1px;
         color: unset;
-        padding: unset;
-        .d-flex{
-          padding: 10px 10px 10px 20px;
-          span{
-            padding-left: 10px;
+        padding: 10px;
+        @include screen-max-width(medium){
+          .item-icon {
+            margin-bottom: 10px;
           }
         }
+        // .d-flex{
+        //   padding: 10px 10px 10px 20px;
+        //   span{
+        //     padding-left: 10px;
+        //   }
+        // }
       }
       .amount-left{
         margin-right: -15px;
@@ -537,6 +564,9 @@
   align-items: center;
   max-width: 75rem;
   margin: 0 auto;
+  @include screen-max-width(large){
+    margin: 10px;
+  }
   >div{
       margin-right: 10px;
       a{

@@ -1,5 +1,5 @@
 
-$error-color: #E8827F;
+$error-color: #F1637D;
 $radio-color: #5D9E7A;
 
 .frame-right {
@@ -96,7 +96,8 @@ $radio-color: #5D9E7A;
           color: #666666;
           padding: 10px 10px 10px 0px;
           border-radius:0;
-          border: none;
+          border: none !important;
+          box-shadow: none !important;
           align-items: center;
           justify-content: center;
           div:first-child {
@@ -172,8 +173,11 @@ $radio-color: #5D9E7A;
   }
 
   .error{
+    .gas-change{
+      border: 1px solid $error-color;
+    }
       input{
-          border: 1px solid $error-color;
+          // border: 1px solid $error-color;
           background: transparent;
           color: #e8827f;
       }
@@ -222,6 +226,7 @@ $radio-color: #5D9E7A;
     input{
       height: auto;
       min-height: auto;
+      background: transparent;
     }
     .advanced-content {
       padding: 40px 0;
@@ -252,7 +257,7 @@ $radio-color: #5D9E7A;
         }
       }
       .error-text{
-        color: $alert-color;
+        color: $error-color;
       }
       .gas-price{
         input{

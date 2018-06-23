@@ -1,6 +1,6 @@
 #balance-account{
     // border-right: 1px solid #ddd;
-    padding: 1rem 0.5rem;
+    padding-top: 1.5rem;
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
@@ -54,7 +54,12 @@
       }
     }
     .balance-header {
-      padding: 0 1.1rem;
+      padding: 0.5rem 1rem;
+
+      @include screen-max-width(medium) {
+        background-color: #F5F5F5;
+      }
+
       .title {
         color: #474d5f;
         // font-family: Raleway;

@@ -65,10 +65,10 @@ const AccountBalanceLayout = (props) => {
           {props.translate("address.my_balance") || "My balance"}
         </div>
         {props.showBalance && (
-              <p className="estimate-value">
+              <div className="estimate-value">
                 <span className="text-capitalize">{props.translate("address.total") || "Total value"}</span>
                 <span className="font-w-b font-s-up-1 ml-2">{getBalanceUsd()}</span> USD
-              </p>
+              </div>
             )}
       </div>
       

@@ -42,7 +42,7 @@ const ImportByPKeyView = (props) => {
 			{/* <ReactTooltip place="top" id="private-key-tip" type="dark" /> */}
 
 			<Modal
-				className={{ base: 'reveal tiny', afterOpen: 'reveal tiny import-privatekey' }}
+				className={{ base: 'reveal medium', afterOpen: 'reveal medium import-privatekey' }}
 				isOpen={props.isOpen}
 				onRequestClose={() => props.onRequestClose()}
 				content={

@@ -350,6 +350,7 @@
 
 .address-balance {
   @include clearfix;
+  max-width: 213px;
   justify-content: space-between;  
   .note {
     font-size: 12px;

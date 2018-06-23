@@ -5,12 +5,25 @@ $padding-col : 1rem;
 $padding-col-left : 2rem;
 
 #transfer-screen{
-  display: inline-block;
-  width: 100%;
-
+  // display: inline-block;
+  // width: 100%;
+  @include screen-max-width(large){
+    margin: 10px;
+    box-shadow: 0 7px 25px #ddd;
+  }
 
   .transfer-col{
     padding: $padding-col;
+  }
+  @include screen-min-width(large){
+    .transfer-col-1{
+      box-shadow: 0 7px 25px #ddd;
+      min-height: 550px;
+    }
+    .transfer-col-3-1{
+      position: relative;
+      top: -200px;
+    }
   }
   .frame {
     // .exchange-pd {

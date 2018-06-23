@@ -62,6 +62,18 @@ const TransferForm = (props) => {
                     <span class="error-text">{props.translate(props.errors.amountTransfer)}</span>
                   }
                 </div>
+                <div class="address-balance">
+                  <p class="note">{props.translate("transaction.address_balance") || "Address Balance"}</p>
+                  <div>
+                    <span>Click to transfer all balance</span>
+                    <span className="balance" title={props.balance.value} onClick={() => {
+                      props.setAmount()
+                      setTimeout(moveCursor, 0);
+                    }}>
+                      {props.balance.roundingValue}
+                    </span>
+                  </div>
+                </div>
               </div>
 
             </div>

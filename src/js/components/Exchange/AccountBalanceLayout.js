@@ -136,9 +136,9 @@ const AccountBalanceLayout = (props) => {
           {props.translate("address.my_balance") || "My balance"}
         </div>
         {props.showBalance && (
-              <p className="estimate-value">
+              <div className="estimate-value">
                 <span className="text-upcase">{props.translate("address.total") || "Total"} {getBalanceUsd()} USD</span>
-              </p>
+              </div>
             )}
       </div>
       
@@ -147,9 +147,9 @@ const AccountBalanceLayout = (props) => {
           {props.translate("address.my_balance") || "My balance"}
         </div>
         {props.showBalance && (
-              <p className="estimate-value">
+              <div className="estimate-value">
                 <span className="text-upcase">{props.translate("address.total") || "Total"} {getBalanceUsd()} USD</span>
-              </p>
+              </div>
             )}    
       </div>
       
