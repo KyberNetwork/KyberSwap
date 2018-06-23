@@ -59,7 +59,9 @@ const ImportByDeviceView = (props) => {
             let active = (props.currentDPath == dPath.path) ? 'active' : ''
             return (
                 <div class="column" key={dPath.path}>
-                    <div className="column-content">
+                    <div className="column-content" onClick={() => {
+                        if (dPath.path && !disabledPath) choosePath(dPath.path)
+                    }}>
                         <input type="radio" name="path"
                             defaultValue={dPath.path}
                             disabled={disabledPath}
