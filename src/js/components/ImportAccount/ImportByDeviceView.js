@@ -59,15 +59,14 @@ const ImportByDeviceView = (props) => {
             let active = (props.currentDPath == dPath.path) ? 'active' : ''
             return (
                 <div class="column" key={dPath.path}>
-                    <div className="column-content">
+                    <div className={"column-content " + active} onClick={() => {
+                        if (dPath.path && !disabledPath) choosePath(dPath.path)
+                    }}>
                         <input type="radio" name="path"
                             defaultValue={dPath.path}
                             disabled={disabledPath}
                         />
-                        <label class={'address-path-stamp ' + active + disabled}
-                            onClick={() => {
-                                if (dPath.path && !disabledPath) choosePath(dPath.path)
-                            }}
+                        <label class={'address-path-stamp ' + disabled}
                             for={'path-' + index}
                             style={disabledPath ? { opacity: .5 } : {}}>
                             {
@@ -92,9 +91,7 @@ const ImportByDeviceView = (props) => {
                             }
                         </label>
                         <div className="choose-path-button">
-                            <img src={require('../../../assets/img/import-account/arrow_right_orange.svg')} width="30" height="30" onClick={() => {
-                                if (dPath.path && !disabledPath) choosePath(dPath.path)
-                            }}/>
+                            <img src={require('../../../assets/img/import-account/arrow_right_orange.svg')} width="30" height="30" />
                         </div>
                     </div>
                 </div>
