@@ -63,20 +63,22 @@ export default class MinRate extends React.Component {
                   defaultValue={percent} 
                   min={0} max={100}
                   onChange={this.onSliderChange}                   
-                  trackStyle={{ backgroundColor: '#666666', height: 4 }}
+                  trackStyle={{ backgroundColor: '#666666', height: 2 }}
                   disabled={disable}
                   handleStyle={{
                     border:'none',
                     borderRadius:0,
                     background: `url(${require("../../../assets/img/precent-rate.svg")})`,
-                    backgroundRepeat: "repeat",
-                    width: 23,
-                    height: 15,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    backgroundSize: "100%",
+                    height: 30,
+                    width: 30
                   }}
           />
           <div className="row small-12">
           <div className="column small-1"><label className="des-down">0%</label></div>
-          <div className="column small-9 min-convention-rate"><span>{minConversionRate}</span></div>
+          <div className="column small-9 min-convention-rate"><span>{converter.roundingNumber(minConversionRate)}</span></div>
           <div className="column small-1"><label className="des-down">{percent}%</label></div>
           </div>
           {this.props.exchange.errors.rateError && <div className="error-text">{this.props.exchange.errors.rateError}</div>}
