@@ -129,7 +129,7 @@ const ExchangeForm = (props) => {
                       {errorShow}
                     </div>
                   </label>
-                  <div class="address-balance">
+                  <div class="address-balance large-6">
                     <span class="note">{props.translate("transaction.address_balance") || "Address Balance"}</span>
                     <a className="value" onClick={() => {
                       props.setAmount()
