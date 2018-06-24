@@ -80,20 +80,20 @@ export default class LandingPage extends React.Component {
               <div className="landing-page__container">
                 <div className="landing-page__content">
                   <div className="landing-page__content-tagline">
-                    <h1 className="landing-page__content-title">Instant and Secure<br/>Token Swaps.</h1>
+                    <h1 className="landing-page__content-title">Instant and Secure Token Swaps.</h1>
                     <h2 className="landing-page__content-description">No orderbooks, no deposits, pure joy.</h2>
-                    <p className="landing-page__content-pr">Want to purchase different tokens without any hassle?<br/>Do it in a few simple clicks.</p>
+                    {/* <p className="landing-page__content-pr">Want to purchase different tokens without any hassle?<br/>Do it in a few simple clicks.</p> */}
                   </div>
 
                   <div className="landing-page__content-term">
                     <TermAndServices onClick={this.acceptTerm}/>                    
                   </div>
                 </div>
-                <div className="landing-page__content">
+                {/* <div className="landing-page__content">
                   <div className="landing-page__content-circle">
                     <img src={require("../../../assets/img/landing/token-wheel.svg")} />
                   </div>
-                </div>
+                </div> */}
               </div>
 
 							<div className="account-type">

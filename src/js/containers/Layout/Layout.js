@@ -47,6 +47,7 @@ export default class Layout extends React.Component {
     this.idleMode = false;
     this.intervalIdle = null;
   }
+
   componentWillMount() {
     document.onload = this.resetTimmer;
     document.onmousemove = this.resetTimmer;
