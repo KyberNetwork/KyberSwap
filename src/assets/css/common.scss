@@ -3,15 +3,3 @@
   padding: 0 $container-side-padding;
   margin: 0 auto;
 }
-
-.token-selector {
-  .dropdown {
-    &.dropdown--active {
-      .dropdown__content {
-        .select-item {
-          animation: rollOut 0.3s ease-in-out;
-        }
-      }
-    }
-  }
-}
