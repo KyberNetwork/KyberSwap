@@ -324,15 +324,18 @@
     .account-type {
       flex-wrap: wrap;
       margin: -40px 0 25px;
-    }
-  }
-
-  @include screen-max-width(large) {
-    .account-type {
-      justify-content: end;
 
       &__item {
-        margin: 0 12px 25px 0;
+        width: 32%;
+        margin: 0 1% 15px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &:nth-child(3) {
+          margin-right: 0;
+        }
       }
     }
   }

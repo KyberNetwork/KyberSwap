@@ -163,6 +163,10 @@ $animationTime :0.5s;
             &__name {
               font-size: 16px;
             }
+
+            &.metamask {
+              display: flex;
+            }
           }
 
           .how-to-use {
