@@ -5,13 +5,13 @@ import constansts from "../../services/constants"
 
 const TransactionLayout = (props) => {
   var gotoRoot = (e) => {
-    window.location.reload()
+    window.location.href = "/"
   }
   return (
     <div class="frame">
       <div className="swap-navigation">        
         <div>
-          <Link to="/" onClick={(e)=>gotoRoot(e)}>Home</Link>
+          <a onClick={(e)=>gotoRoot(e)}>Home</a>
         </div>
         <div className="seperator">/</div>
         <div>
