@@ -88,7 +88,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 99999999;
   &.pending{
     background-color: rgba($white, .3);
     h4{
