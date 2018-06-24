@@ -31,7 +31,7 @@ const GasConfig = (props) => {
     <div className="gas-config">
       <div>
         <span className="sub_title">GAS PRICE</span>
-        <p className="sub_title">(inclusive in the rate)</p>
+        {/* <p className="sub_title">(inclusive in the rate)</p> */}
       </div>
       <div className={!props.gasPriceError ? "" : "error"}>
         <div className="gas-change">

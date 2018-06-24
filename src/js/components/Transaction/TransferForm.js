@@ -86,7 +86,7 @@ const TransferForm = (props) => {
             </div>
 
           </div>
-          <div className="cell small-12 large-3 transfer-col">
+          <div className="cell small-12 large-3 transfer-col medium-5 medium-offset-7 large-offset-0">
             {props.advanceLayout}
           </div>
         </div>
