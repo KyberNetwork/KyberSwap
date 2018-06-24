@@ -5,10 +5,13 @@ const AdvanceConfigLayout = (props) => {
 
   var toggleShowAdvance = (e) => {
     var advanceContent = document.getElementById("advance-content");
+    var advanceArrow = document.getElementById("advance-arrow");
     if (advanceContent.className === "show-advance") {
         advanceContent.className = "";
+        advanceArrow.className = "";
     } else {
         advanceContent.className = "show-advance";
+        advanceArrow.className = "advance-arrow-up";
     }
   }
   return (
@@ -17,6 +20,7 @@ const AdvanceConfigLayout = (props) => {
       <div className="advance-title-mobile title" onClick={(e) => toggleShowAdvance()}>
         <div>
           Advanced
+          <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow"/>
         </div>        
       </div>
       <div id="advance-content">
