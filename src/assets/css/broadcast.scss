@@ -87,6 +87,21 @@ ul.broadcast-steps {
       font-size: 1.2rem;
     }
   }
+  .pending{
+    h4{
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      color: #666;
+      font-size: 16px;
+    }
+    
+    .cssload-container{
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+  }
   ul.address-balances{
     display: block;
     width: 90%;
@@ -253,8 +268,10 @@ ul.broadcast-steps {
 .analyze-panel{
   font-weight: normal;
   display: list-item;
-  list-style-type: disc;
   margin-left: 20px;
   margin-top: 20px;
   color: #666;
+  &:not(.loading){
+    list-style-type: disc;
+  }
 }

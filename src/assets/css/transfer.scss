@@ -128,7 +128,9 @@ $padding-col-left : 2rem;
         position: relative;
         z-index: 1;
         .focus-item{
-          border-color: $white;
+          border-color: #aaa;
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
         }
       }
     }
@@ -151,13 +153,13 @@ $padding-col-left : 2rem;
         align-items: center;
       }
       .focus-name{
-        color: #545268;
+        color: #222222;
         text-transform: initial;
-        font-size: 14px;
+        font-size: 15px;
       }
       .focus-balance{
-        color: #9997A5;
-        font-size: 0.8rem;
+        color: #666666;
+        font-size: 14px;
         .token-symbol{
           margin-left: 5px;
         }

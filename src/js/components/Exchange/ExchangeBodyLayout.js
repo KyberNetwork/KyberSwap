@@ -72,12 +72,20 @@ const ExchangeBodyLayout = (props) => {
     return <span class="error-text" key={index}>{value}</span>
   })
 
+  var classSource = "amount-input"
+  if (props.focus === "source"){
+    classSource += " focus"
+  }
+  if (errorExchange){
+    classSource += " error"
+  }
+
   var render = (
     <div className="grid-x">
       <div className="cell medium-6 large-3 balance-wrapper">
         {props.balanceList}
       </div>
-      <div className="cell medium-6 large-9">
+      <div className="cell medium-6 large-9 swap-wrapper">
             {/* <div className="grid-x">
               <div>
 
@@ -94,7 +102,7 @@ const ExchangeBodyLayout = (props) => {
                           </span>
                           <div className={errorExchange ? "error select-token-panel" : "select-token-panel"}>
                             {props.tokenSourceSelect}
-                            <div className={props.focus === "source"?"amount-input focus": "amount-input"}>
+                            <div className={classSource}>
                               <input id="inputSource" className="source-input" min="0" step="0.000001"
                                 placeholder="0" autoFocus
                                 type="text" maxLength="50" autoComplete="off"
@@ -138,7 +146,7 @@ const ExchangeBodyLayout = (props) => {
                           </div>
                       </div>
                     </div>
-                    <div class="address-balance">
+                    <div class="address-balance large-6">
                       <p class="note">{props.translate("transaction.address_balance") || "Address Balance"}</p>
                       <div>
                         <span>Click to swap all balance</span>
@@ -157,7 +165,7 @@ const ExchangeBodyLayout = (props) => {
                   </div>
                 </div>
                 <div className="grid-x exchange-col-3">
-                  <div className="cell large-9">
+                  <div className="cell large-8">
                     {props.exchangeButton}
                   </div>
                 </div>

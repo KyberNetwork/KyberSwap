@@ -350,16 +350,15 @@
 
 .address-balance {
   @include clearfix;
-  max-width: 213px;
   justify-content: space-between;  
   .note {
-    font-size: 12px;
+    font-size: 14px;
     text-transform: uppercase;
     margin-top: 3em;
     margin-bottom: 0px;
     letter-spacing: .5px;
     font-style: normal;
-    color: #787878;
+    color: #454E5F;
   }
   .balance{
     cursor: pointer;
@@ -369,8 +368,8 @@
     justify-content: space-between;
     align-items: center;
     span {
-      font-size: 11px;
-      color: #999;
+      font-size: 14px;
+      color: #666666;
     }
     span:nth-child(2) {
       font-size: 12px;

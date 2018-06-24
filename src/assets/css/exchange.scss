@@ -10,12 +10,17 @@
       padding-left: 0;
       padding-right: 0;
     }
-  }
+  }  
   @include screen-max-width(large) {
     box-shadow: 0 7px 25px #ddd;
     margin: 10px;
   }
   @include screen-max-width(large) {
+    @include screen-min-width(medium){
+      .swap-wrapper{
+        border-left: 1px solid #ddd;
+      }
+    }
     .exchange-col-1, .exchange-col-2, .exchange-col-3{
       padding: 1rem;
     }
@@ -52,7 +57,7 @@
       }
       .exchange-wrapper-btn{
         position: absolute;
-        margin-top: -250px;
+        margin-top: -230px;
         width: 100%;
       }
     }
@@ -184,7 +189,9 @@
     .dropdown {
       &.dropdown--active {
         .focus-item{
-          border-color: $white;
+          border-color: #aaa;
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
         }
       }
     }
@@ -203,13 +210,13 @@
         align-items: center;
       }
       .focus-name{
-        color: #545268;
+        color: #222222;
         text-transform: initial;
-        font-size: 14px;
+        font-size: 15px;
       }
       .focus-balance{
-        color: #9997A5;
-        font-size: 0.8rem;
+        color: #666666;
+        font-size: 14px;
         .token-symbol{
           margin-left: 5px;
         }
@@ -564,8 +571,9 @@
   align-items: center;
   max-width: 75rem;
   margin: 0 auto;
+  margin-top: 20px;
   @include screen-max-width(large){
-    margin: 10px;
+    margin: 20px 10px 10px 10px;
   }
   >div{
       margin-right: 10px;
