@@ -77,6 +77,12 @@
                 transition: 0.5s;
               }
             }
+            .dropdown__content {
+              .select-item {
+                transform: translateY(0%);
+                transition-delay: 0s, 0s, 0.3s;
+              }
+            }
           }
           &.dropdown {
             img {
@@ -100,6 +106,8 @@
             width: 325px;            
             border-radius: 0;
             box-shadow: 0 15px 50px #aaa;
+            transform: translateY(-2em);
+            transition: all 0.3s ease-in-out 0s;
 
             .setting-header {
               img {

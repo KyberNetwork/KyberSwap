@@ -115,10 +115,13 @@ const AccountBalanceLayout = (props) => {
 
   function toggleShowBalance(e) {
     var advanceContent = document.getElementById("balance-content");
+    var arrowBalance = document.getElementById("arrow-balance");
     if (advanceContent.className === "show-balance") {
         advanceContent.className = "";
+        arrowBalance.className = "";
     } else {
         advanceContent.className = "show-balance";
+        arrowBalance.className = "arrow-balance-up";
     }
   }
 
@@ -143,14 +146,17 @@ const AccountBalanceLayout = (props) => {
       </div>
       
       <div className="balance-header balance-medium" onClick={(e) => toggleShowBalance()}>
-          <div className="title">
-          {props.translate("address.my_balance") || "My balance"}
-        </div>
-        {props.showBalance && (
+          <div>
+            <div className="title">
+              {props.translate("address.my_balance") || "My balance"}
+            </div>
+            {props.showBalance && (
               <div className="estimate-value">
                 <span className="text-upcase">{props.translate("address.total") || "Total"} {getBalanceUsd()} USD</span>
               </div>
-            )}    
+            )}
+          </div>
+          <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="arrow-balance"/> 
       </div>
       
       <div id="balance-content">
