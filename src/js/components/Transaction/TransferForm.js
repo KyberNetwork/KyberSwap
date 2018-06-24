@@ -21,6 +21,13 @@ const TransferForm = (props) => {
     }
   }
 
+  var classSource = "amount-input"
+  if (props.focus === "source"){
+    classSource += " focus"
+  }
+  if (props.errors.amountTransfer){
+    classSource += " error"
+  }
   var render = (
     <div id="transfer-screen">
       <div class="frame">        
@@ -46,7 +53,7 @@ const TransferForm = (props) => {
                   <div className={props.errors.amountTransfer !== '' ? "error select-token-panel" : "select-token-panel"}>
                     {props.tokenTransferSelect}
 
-                    <div className={props.focus === "transfer" ? "amount-input focus" : "amount-input"}>
+                    <div className={classSource}>
                       <input type="text" min="0" step="0.000001" placeholder="0"
                         id="inputTransfer"
                         value={props.input.amount.value} className="transfer-input"

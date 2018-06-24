@@ -13,9 +13,18 @@
     display: flex;
     justify-content: space-between;
     margin-top: 3rem;
-    opacity: 0.5;
+    //opacity: 0.5;
+    &.error{
+      border-bottom: 1px solid $error-color;
+      input{
+        color: $error-color !important;
+      }
+      span{
+        color: $error-color !important;
+      }
+    }
     &.focus{
-      opacity: 1;
+    //  opacity: 1;
       color: #ef8102;
       border-bottom: 1px solid #ef8102;
       input{
@@ -288,7 +297,7 @@
         color:$alert-color;
       }
       &:hover{
-        background-color: rgba(239, 129, 2, 0.2)
+        background-color: rgba(239, 129, 2, 0.1)
       }
     }
   }

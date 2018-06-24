@@ -127,8 +127,12 @@ const TransactionLoadingView = (props) => {
     var reason = ""
 
     if (props.analyze.isAnalize && !props.analyze.isAnalizeComplete){
-      reason = <div className="analyze-panel">
-                <div className="loading">...loading</div>
+      reason = <div className="analyze-panel loading">
+                <div>
+                  <div class="cssload-container">
+                    <div class="cssload-double-torus"></div>
+                  </div>
+                </div>
               </div>
     }
     if (!props.analyze.isAnalize && props.analyze.isAnalizeComplete) {
@@ -258,8 +262,11 @@ const TransactionLoadingView = (props) => {
               <li class={props.status}>
                 <div>
                   <h4>
-                    <p>{props.translate("transaction.waiting_transaction") || "Waiting for your transaction to be mined"}
-                    </p>
+                          <div class="cssload-container">
+                            <div class="cssload-double-torus"></div>
+                          </div>
+                    <div>{props.translate("transaction.waiting_transaction") || "Waiting for your transaction to be mined"}
+                    </div>
                   </h4>
                 </div>
               </li>
