@@ -169,7 +169,7 @@ const TransactionLoadingView = (props) => {
         {props.status === "success" &&
           <div>
             <div className="icon icon--success"></div>
-            <div>{ props.translate('transaction.done') || "Success!" }</div>
+            <div>Done</div>
           </div>
         }
         {props.status === "failed" &&

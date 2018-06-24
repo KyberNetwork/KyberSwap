@@ -474,6 +474,17 @@
   }
   .input-passpharse{
     margin-top: 10px;
+    @include screen-min-width(medium){
+      .process-submit{
+        float: right;
+      }
+    }
+    @include screen-max-width(medium){
+      .process-submit{
+        margin-top: 20px;
+        width: 100%;
+      }
+    }
     .input-reveal{
       border-radius: 4px;
       background-color: #ffffff;

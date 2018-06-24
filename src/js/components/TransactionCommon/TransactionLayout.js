@@ -4,11 +4,14 @@ import constansts from "../../services/constants"
 
 
 const TransactionLayout = (props) => {
+  var gotoRoot = (e) => {
+    window.location.reload()
+  }
   return (
     <div class="frame">
       <div className="swap-navigation">        
         <div>
-          <Link to="/">Home</Link>
+          <Link to="/" onClick={(e)=>gotoRoot(e)}>Home</Link>
         </div>
         <div className="seperator">/</div>
         <div>
