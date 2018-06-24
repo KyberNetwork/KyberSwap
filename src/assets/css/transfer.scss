@@ -125,6 +125,8 @@ $padding-col-left : 2rem;
   .token-selector {
     .dropdown {
       &.dropdown--active {
+        position: relative;
+        z-index: 1;
         .focus-item{
           border-color: #aaa;
           border-bottom-left-radius: 0;

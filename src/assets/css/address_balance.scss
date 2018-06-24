@@ -15,6 +15,18 @@
 
     .balance-medium{
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+      img {
+        width: 13px;
+        transition: 0.3s;
+        &.arrow-balance-up {
+          transform: rotate(180deg);
+        }
+      }
       @media screen and (min-width: 640px) {
         display: none;
       }
@@ -28,7 +40,8 @@
       }      
       &.show-balance{
         @media screen and (max-width: 640px) {
-          display: block
+          display: block;
+          animation: rollOut 0.3s ease-in-out;
         }
       }
     }
