@@ -41,6 +41,7 @@ export default class MinRate extends React.Component {
   // }
   render = () => {
     const {minConversionRate,slippageRate,offeredRate}  = this.props.exchange
+    var desToken = this.props.exchange.destTokenSymbol
     // const {disable,value} = this.state
 
     var disable = false
@@ -55,10 +56,10 @@ export default class MinRate extends React.Component {
     return (
       <div className="min-rate">
         <div className="des-up">
-        Higher Lowest rate typically results in lower success rate when the market is volatile. <strong>{converter.roundingNumber(slippageRate)}</strong> is our suggested Lowest rate by default.
+        Higher Min acceptable rate typically results in lower success rate when the market is volatile. <strong>{converter.roundingNumber(slippageRate) + " " + desToken}</strong> is our suggested Min acceptable rate by default.
         </div>
         <div className = {!this.props.exchange.errors.rateError? "":"error"}>
-          <span  className="sub_title">LOWEST RATE</span>
+          <span  className="sub_title">MIN ACCEPTABLE RATE</span>
           <Slider value={percent} 
                   defaultValue={percent} 
                   min={0} max={100}
@@ -78,7 +79,7 @@ export default class MinRate extends React.Component {
           />
           <div className="row small-12">
           <div className="column small-1"><label className="des-down">0%</label></div>
-          <div className="column small-9 min-convention-rate"><span>{converter.roundingNumber(minConversionRate)}</span></div>
+          <div className="column small-9 min-convention-rate"><span>{converter.roundingNumber(minConversionRate) + " " + desToken}</span></div>
           <div className="column small-1"><label className="des-down">{percent}%</label></div>
           </div>
           {this.props.exchange.errors.rateError && <div className="error-text">{this.props.exchange.errors.rateError}</div>}
