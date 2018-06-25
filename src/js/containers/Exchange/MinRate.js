@@ -55,10 +55,10 @@ export default class MinRate extends React.Component {
     return (
       <div className="min-rate">
         <div className="des-up">
-          A higher percentage will lead to a higher success rate during market volatility
+        Higher Lowest rate typically results in lower success rate when the market is volatile. <strong>{converter.roundingNumber(slippageRate)}</strong> is our suggested Lowest rate by default.
         </div>
         <div className = {!this.props.exchange.errors.rateError? "":"error"}>
-          <span  className="sub_title">PERCENTAGE RATE</span>
+          <span  className="sub_title">LOWEST RATE</span>
           <Slider value={percent} 
                   defaultValue={percent} 
                   min={0} max={100}
@@ -82,7 +82,6 @@ export default class MinRate extends React.Component {
           <div className="column small-1"><label className="des-down">{percent}%</label></div>
           </div>
           {this.props.exchange.errors.rateError && <div className="error-text">{this.props.exchange.errors.rateError}</div>}
-          <div className="des-down">Lower rate typically results in better success rate when the market is volatle</div>
         </div>
       </div>
     )
