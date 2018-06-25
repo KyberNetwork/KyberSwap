@@ -15,6 +15,10 @@ import { default as _ } from 'underscore'
 import { clearSession } from "../../actions/globalActions"
 
 @connect((store) => {
+  const account = store.account.account
+  if (account === false) {
+    window.location.href = "/swap"
+  }
   const translate = getTranslate(store.locale)
   // var location = "/"
   // if (store.router.location){
