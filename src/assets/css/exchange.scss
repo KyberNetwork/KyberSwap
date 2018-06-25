@@ -54,11 +54,11 @@
     .exchange-col-3{
       >div{
         position: relative;
-      }
-      .exchange-wrapper-btn{
-        position: absolute;
-        margin-top: -230px;
-        width: 100%;
+        .exchange-wrapper-btn{
+          position: absolute;
+          margin-top: -230px;
+          width: 100%;
+        }
       }
     }
     .exchange-col{
@@ -82,8 +82,8 @@
     color: #141927;
     margin-bottom: 20px;
     @include screen-min-width(large) {
-      margin-top: 3rem;
-      margin-bottom: 2rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.2rem;
     }
   }
   .token-input {
@@ -107,6 +107,9 @@
     font-size: 1.3rem;
     border-radius: 4px;
     box-shadow: 0 10px 15px #ccc;
+    @include screen-max-width(large) {
+      margin-top: 30px;
+    }
   }
 
   .token-compare {
@@ -233,6 +236,11 @@
         width: 13px;
         background-size: 13px 13px;
       }
+    }
+  }
+  .gas-option {
+    .focus-item {
+      padding-left: 0;
     }
   }
 }

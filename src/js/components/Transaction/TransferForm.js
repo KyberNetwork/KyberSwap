@@ -91,7 +91,7 @@ const TransferForm = (props) => {
           </div>
         </div>
         <div className="grid-x transfer-col transfer-col-3">
-          <div className="cell transfer-btn small-12 large-9">
+          <div className={ props.errors.amountTransfer !== '' ? "cell transfer-btn small-12 large-9 error" : "cell transfer-btn small-12 large-9"}>
             <div className="grid-x">
               <div className="cell medium-5 medium-offset-7 transfer-col-3-1">
                 {props.transferButton}

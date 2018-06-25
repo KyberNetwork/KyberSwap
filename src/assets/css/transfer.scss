@@ -108,15 +108,24 @@ $padding-col-left : 2rem;
 	  font-size: 14px;
 	 	text-transform: uppercase;
 	 	padding-left: 0;
-	}
-  .accent {
-    margin-top: 50px;
-    line-height: 55px;
-    padding: 0 35px;
-    background: #ef8102;
-    font-size: 1.3rem;
-    border-radius: 4px;
-    box-shadow: 0 10px 15px #ccc;
+  }
+  .transfer-btn {
+    .accent {
+      margin-top: 15px;
+      line-height: 55px;
+      padding: 0 35px;
+      background: #ef8102;
+      font-size: 1.3rem;
+      border-radius: 4px;
+      box-shadow: 0 10px 15px #ccc;
+    }
+    &.error {
+      .accent {
+        @include screen-min-width(large) {
+          margin-top: 40px;
+        }
+      }
+    }
   }
   .text-center {
   	display: flex;
@@ -170,6 +179,12 @@ $padding-col-left : 2rem;
           vertical-align: top;
         }
       }
+    }
+  }
+  
+  .gas-option {
+    .focus-item {
+      padding-left: 0;
     }
   }
 }
