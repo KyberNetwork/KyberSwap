@@ -24,26 +24,30 @@ import { RateBetweenToken } from "../Exchange"
   var sourceBalance = 0
   var sourceDecimal = 18
   var sourceName = "Ether"
+  var sourceIcon = "eth.svg"  
   if (tokens[sourceTokenSymbol]) {
     sourceBalance = tokens[sourceTokenSymbol].balance
     sourceDecimal = tokens[sourceTokenSymbol].decimal
     sourceName = tokens[sourceTokenSymbol].name
+    sourceIcon = tokens[sourceTokenSymbol].icon
   }
 
   var destTokenSymbol = store.exchange.destTokenSymbol
   var destBalance = 0
   var destDecimal = 18
   var destName = "Kybernetwork"
+  var destIcon = "knc.svg"
   if (tokens[destTokenSymbol]) {
     destBalance = tokens[destTokenSymbol].balance
     destDecimal = tokens[destTokenSymbol].decimal
     destName = tokens[destTokenSymbol].name
+    destIcon = tokens[destTokenSymbol].icon
   }
 
   return {
     form: {
       ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
-      sourceName, destName
+      sourceName, destName, sourceIcon, destIcon
     },
     snapshot: store.exchange.snapshot,
     account: store.account.account,
@@ -211,6 +215,8 @@ export default class PostExchange extends React.Component {
     var destAmount = this.props.snapshot.destAmount.toString()
     var sourceTokenSymbol = this.props.snapshot.sourceTokenSymbol
     var destTokenSymbol = this.props.snapshot.destTokenSymbol
+    var sourceIcon = this.props.form.sourceIcon
+    var destIcon = this.props.form.destIcon
 
     var minRate = this.props.snapshot.minConversionRate
     var offeredRate = this.props.snapshot.offeredRate
@@ -224,7 +230,7 @@ export default class PostExchange extends React.Component {
           <div className="amount-item amount-left">
             <div className="d-flex">
               <div className="item-icon">
-              <img src={require("../../../assets/img/tokens/" + sourceTokenSymbol.toLowerCase()+".svg")} />
+              <img src={require("../../../assets/img/tokens/" + sourceIcon)} />
               </div>
               <span>
                 {sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}
@@ -238,7 +244,7 @@ export default class PostExchange extends React.Component {
                 :
                 <div className="d-flex">
                 <div className="item-icon">
-                  <img src={require("../../../assets/img/tokens/" + destTokenSymbol.toLowerCase()+".svg")} />
+                  <img src={require("../../../assets/img/tokens/" +destIcon)} />
                 </div>
                 <span>
                   {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}
@@ -271,7 +277,7 @@ export default class PostExchange extends React.Component {
             <div className="amount-item amount-left">
               <div className="grid-x">
                 <div className="item-icon cell medium-4">
-                  <img src={require("../../../assets/img/tokens/" + sourceTokenSymbol.toLowerCase()+".svg")} />
+                  <img src={require("../../../assets/img/tokens/" + sourceIcon)} />
                 </div>
                 <div className="cell medium-8">
                   <span>
@@ -290,7 +296,7 @@ export default class PostExchange extends React.Component {
                 :
                 <div className="grid-x">
                 <div className="item-icon cell medium-4">
-                  <img src={require("../../../assets/img/tokens/" + destTokenSymbol.toLowerCase()+".svg")} />
+                  <img src={require("../../../assets/img/tokens/" + destIcon)} />
                 </div>
                 <div className=" cell medium-8">
                   <span>

@@ -47,8 +47,12 @@ export function initLanguage(store){
   let languagePack, packName
   try {
     packName = getParameterByName('locale')
-    console.log("------------- language params: ", packName)
-    languagePack = require("../../../lang/" + packName + ".json")
+    if (packName){
+      languagePack = require("../../../lang/" + packName + ".json")
+    }else{
+      packName = Language.defaultLanguage
+      languagePack = require("../../../lang/" + packName + ".json")  
+    }
   } catch (e) {
     console.log(e)
     packName = Language.defaultLanguage

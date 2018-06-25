@@ -15,7 +15,7 @@
 
   "address": {
     "address": "Address",
-    "import_address": "Import Address",
+    "import_address": "Access Your Wallet",
     "exchange_from": "Exchange from",
     "my_balance": "My Balance",
     "estimated_value": "Estimated value",
