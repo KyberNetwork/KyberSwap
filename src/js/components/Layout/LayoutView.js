@@ -15,7 +15,7 @@ const LayoutView = (props) => {
         <section id="content">
           <Switch>
             <Route exact path={constansts.BASE_HOST} component={props.ImportAccount} />
-            <Route exact path={constansts.BASE_HOST + "/exchange"} component={props.Exchange} />
+            <Route exact path={constansts.BASE_HOST + "/swap"} component={props.Exchange} />
             <Route exact path={constansts.BASE_HOST + "/transfer"} component={props.Transfer} />            
           </Switch>
           {/* <div id="rate-bar" class="mb-8">

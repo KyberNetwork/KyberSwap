@@ -19,7 +19,7 @@ const TransactionLayout = (props) => {
         </div>
         <div className="seperator">/</div>
         <div className="active">
-          <Link to={constansts.BASE_HOST + "/" + props.page }>{props.page === "exchange" ? "Exchange": "Transfer"}</Link>
+          <a>{props.page === "exchange" ? "Swap": "Transfer"}</a>
         </div>
       </div>
       <h1 class="title frame-tab">
@@ -28,7 +28,7 @@ const TransactionLayout = (props) => {
           <span>Back</span>
         </div>
         <div className="switch-button">
-          <Link to={constansts.BASE_HOST + "/exchange"} className={props.page === "exchange" ? "disable" : ""}>{props.translate("transaction.swap") || "Swap"}</Link>
+          <Link to={constansts.BASE_HOST + "/swap"} className={props.page === "exchange" ? "disable" : ""}>{props.translate("transaction.swap") || "Swap"}</Link>
           <Link to={constansts.BASE_HOST + "/transfer"} className={props.page === "transfer" ? "disable" : ""}>{props.translate("transaction.transfer") || "Transfer"}</Link>
         </div>
       </h1>
