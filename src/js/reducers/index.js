@@ -17,6 +17,8 @@ import utils from './utilsReducer'
 import txs from './txsReducer'
 import locale from './languageReducer'
 import market from './marketReducer'
+
+import { localeReducer } from 'react-localize-redux';
 // import { localeReducer } from 'react-localize-redux';
 
 const appReducer = combineReducers({
@@ -25,10 +27,11 @@ const appReducer = combineReducers({
   //   key: 'market',
   //   storage: localForage
   // }, market),  
-  locale: persistReducer({
-    key: 'locale',
-    storage: localForage
-  }, locale),  
+  locale : localeReducer,
+  // locale: persistReducer({
+  //   key: 'locale',
+  //   storage: localForage
+  // }, locale),  
   tokens: persistReducer({
     key: 'tokens',
     storage: localForage
