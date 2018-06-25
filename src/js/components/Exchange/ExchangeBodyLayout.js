@@ -82,7 +82,7 @@ const ExchangeBodyLayout = (props) => {
 
   var render = (
     <div className="grid-x">
-      <div className="cell medium-6 large-3 balance-wrapper">
+      <div className={errorExchange ? "cell medium-6 large-3 balance-wrapper error" : "cell medium-6 large-3 balance-wrapper"} id="balance-account-wrapper">
         {props.balanceList}
       </div>
       <div className="cell medium-6 large-9 swap-wrapper">
@@ -158,7 +158,6 @@ const ExchangeBodyLayout = (props) => {
                         </span>
                       </div>
                     </div>
-
                   </div>
                   <div className="cell large-4 exchange-col-2">
                     {props.advanceLayout}

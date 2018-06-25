@@ -1,3 +1,24 @@
+#balance-account-wrapper {
+  #balance-account {
+    .balances {
+      height: 330px;
+      @include screen-max-width(large) {
+        height: 540px;
+      }
+    }
+  }
+  &.error {
+    #balance-account {
+      .balances {
+        height: 460px;
+        @include screen-max-width(large) {
+          height: 630px;
+        }
+      }
+    }
+  }
+}
+
 #balance-account{
     // border-right: 1px solid #ddd;
     padding-top: 1.5rem;
@@ -33,6 +54,9 @@
     }
 
     #balance-content{
+      .balance-panel {
+        padding-bottom: 5px;
+      }
       @media screen and (max-width: 640px) {
         display: none;
         padding: 10px;
@@ -88,15 +112,14 @@
     }
     input{
       text-indent: 15px;
-      min-height: 29px;
-      height: 29px;
+      min-height: 33px;
+      height: 33px;
       // opacity: 0.3;
       border-radius: 2px;
       border: 1px solid #ccc;
     }
     .balances{
       display: inline-block;
-      height: 500px;
       overflow: auto;
       direction: rtl;
       width: 100%;
@@ -179,8 +202,8 @@
       margin-bottom: 1.2rem;
       .sort-balance{
         text-align: center;
-        width: 29px;
-        height: 29px;
+        width: 33px;
+        height: 33px;
         padding: 0px;
         // border: 1px solid #ccc;
         // border-radius: 3px;
