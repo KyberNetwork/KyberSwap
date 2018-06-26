@@ -48,7 +48,7 @@ function* watchMetamaskAccount(ethereum, web3Service){
         if (parseInt(currentId, 10) !== networkId) {
           const currentName = converter.findNetworkName(parseInt(currentId, 10))
           const expectedName = converter.findNetworkName(networkId)
-          yield put(globalActions.throwErrorMematamask(`Metamask should be on ${expectedName}. Currently on ${currentName} Network`))
+          yield put(globalActions.throwErrorMematamask(`Metamask should be on ${expectedName}. Currently on ${currentName}`))
           return
         }
 

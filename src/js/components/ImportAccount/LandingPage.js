@@ -106,7 +106,7 @@ export default class LandingPage extends React.Component {
 								<div className="account-type__item">
 									<div className="account-type__content">
 										<img src={require("../../../assets/img/landing/keystore_disable.png")} />
-										<div className="account-type__text">KEYSTORE</div>
+										<div className="account-type__text">JSON</div>
 									</div>
 								</div>
 								<div className="account-type__item">
