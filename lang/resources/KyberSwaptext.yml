@@ -1,0 +1,65 @@
+kyberswap_notaccept:
+  text_banner1: Instant and Secure Token Swaps
+  text_banner_2: No orderbooks, no deposits, pure joy
+  Accept_button: Accept
+  Ethereum_Market_pannel_1: Search
+  Ethereum_Market_pannel_2: Try Searching for Token
+  Ethereum_Market_pannel_3: Currency
+  Ethereum_Market_pannel_4: Market
+  Ethereum_Market_pannel_5: Sell price
+  Ethereum_Market_pannel_6: Buy Price
+  Ethereum_Market_pannel_7: 24h Change
+  Ethereum_Market_pannel_8: Volume (24h)
+  Ethereum_Market_pannel_9: Market cap
+  Ethereum_Market_pannel_10: Circulating Supply
+  Ethereum_Market_pannel_11: Total supply
+  Ethereum_Market_pannel_12: Last 7d
+  Ethereum_Market_pannel_13: Page 
+  Ethereum_Market_pannel_14: of
+  Ethereum_Market_pannel_15: Rows
+  Ethereum_Market_pannel_16: Settings
+  Ethereum_Market_pannel_17: Ethereum Market
+kyberswap_accept:
+  Metamask_1: Connect
+  Metamask_2: Address
+  Metamask_3: Balance
+  Keystore: Select or Drag
+  Trezor: Swap from Trezor
+  Ledger: Swap from Ledger
+  Private_Key: Enter your Private key
+Connected_Wallet:
+  Back_button: Back
+  Swap_button: Swap
+  Advanced_panel_1: Advanced
+  Advanced_panel_2: Higher Lowest rate typically results in lower success rate when the market it volatile. 555.7031 is our suggested Lowest rate by default.
+  Advanced_panel_3: LOWEST RATE
+  Advanced_panel_4: Gas price
+  Advanced_panel_5: Higher gas price, faster transaction.
+                    Max gas price
+  Advanced_panel_6: Transaction fee
+  Swap_screen_1: Symbol
+  Swap_screen_2: Price
+  Swap_screen_3: Search
+  Swap_screen_4: Metamask address
+  Swap_screen_5: Json Address
+  Swap_screen_6: Trezor Address
+  Swap_screen_7: Ledger Address
+  Swap_screen_8: Private Key Address
+  Swap_screen_9: Click to swap all balance
+  Swap_screen_10: NEW SWAP
+  Swap_screen_11: You can change maximum slippage rate by adjusting min rate in advanced option
+  Swap_screen_12: Done
+  Swap_screen_13: Successfully exchanged from
+  Swap_screen_14: Included
+  Swap_screen_15: Confirm exchange
+  Trezor/Ledger_connected_1: Network
+  Trezor/Ledger_connected_2: Import
+  Transfer_screen_1: Transfer
+  Transfer_screen_2: Click to transfer all balance
+  Transfer_screen_3: Successfully transferred
+  Swap/Transfer_screen_Keystore: Type a password before progressing
+
+
+
+
+          
