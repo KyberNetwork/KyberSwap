@@ -128,7 +128,7 @@ const AccountBalanceLayout = (props) => {
   return (
     <div id="balance-account">
       <div className="balance-address">
-        <div className="title">{getWalletType(props.walletType)} {" " + props.translate("address.address") || "Address"}</div>
+        <div className="title">Your Wallet Address</div>
         <div>
           <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.address}>{props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}</a>
         </div>
