@@ -96,7 +96,7 @@ export default class Transfer extends React.Component {
 
 
   onFocus = () => { 
-    this.setState({focus:"transfer"})
+    this.setState({focus:"source"})
   }
 
   onBlur = () => { 
@@ -132,7 +132,10 @@ export default class Transfer extends React.Component {
       var balance = balanceBig.div(Math.pow(10, token.decimal)).toString()
       balance = converters.toPrimitiveNumber(balance)
       this.props.dispatch(transferActions.specifyAmountTransfer(balance))
+
+      this.onFocus()
     }
+
   }
 
   render() {
