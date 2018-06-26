@@ -11,7 +11,7 @@ const TransferForm = (props) => {
 
   function moveCursor() {
     let inp = document.getElementById('inputTransfer')
-    inp.focus();
+    //inp.focus();
     if (inp.createTextRange) {
       var part = inp.createTextRange();
       part.move("character", 0);

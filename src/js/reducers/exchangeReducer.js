@@ -32,7 +32,7 @@ const exchange = (state = initState, action) => {
       newState.minConversionRate = newState.slippageRate
 
       newState.isEditRate = false
-      newState.isEditGasPrice = false
+      //newState.isEditGasPrice = false
 
       newState.isAnalize = false
       newState.isAnalizeComplete = false

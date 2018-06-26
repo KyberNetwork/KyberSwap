@@ -9,37 +9,61 @@ import { getTranslate } from 'react-localize-redux';
 
 @connect((store) => {
 	return {
-		selectedSymbol: store.market.configs.selectedSymbol
+		selectedSymbol: store.market.configs.selectedSymbol,
+		locale: store.locale
 	}
 })
 
 
 export default class TradingView extends React.Component {
-	constructor(){
+	constructor() {
 		super()
 		this.state = {
-			rateType : "sell",
+			rateType: "sell",
 		}
 	}
 
 	static defaultProps = {
-	//	symbol: this.props.selectedSymbol,
+		//	symbol: this.props.selectedSymbol,
 		interval: '60',
-		locale: 'en',		
+		locale: 'en',
 		containerId: 'tv_chart_container',
 		datafeedUrl: 'https://tracker.kyber.network/chart',
 		updateFrequency: 5000, // 1 minutes
 		libraryPath: '/trading_view/charting_library/',
 		fullscreen: false,
 		autosize: true
-	  };
+	};
+
 
 
 
 	getLanguageFromURL = () => {
-		const regex = new RegExp('[\\?&]lang=([^&#]*)');
-		const results = regex.exec(window.location.search);
-		return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
+		// const regex = new RegExp('[\\?&]lang=([^&#]*)');
+		// const results = regex.exec(window.location.search);
+		// return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
+		var locale = this.props.locale
+		var defaultValue = 'en'
+		if (Array.isArray(locale.languages) && locale.languages.length === 1) {
+			var language = locale.languages[0]
+			switch (language.code) {
+				case 'en':
+					defaultValue = 'en'
+					break;
+				case 'cn':
+					defaultValue = 'zh'
+					break;
+				case 'kr':
+					defaultValue = 'ko'
+					break;
+				case 'vi':
+					defaultValue = 'vi'
+					break;
+				default:
+					defaultValue = 'en'
+			}
+		}
+		return defaultValue
 	}
 
 	createButton = (widget, data) => {
@@ -48,11 +72,12 @@ export default class TradingView extends React.Component {
 			.addClass('apply-common-tooltip')
 			.on('click', () => {
 				window.KyberRateType = data.value;
-				this.setState({rateType : data.value})
+				this.setState({ rateType: data.value })
 			});
 		button[0].innerHTML = data.content;
 	}
 	componentDidMount() {
+		console.log(this.props)
 		const feeder = new window.Datafeeds.UDFCompatibleDatafeed(
 			this.props.datafeedUrl, this.props.updateFrequency);
 		const widgetOptions = {
@@ -61,50 +86,50 @@ export default class TradingView extends React.Component {
 			interval: this.props.interval,
 			container_id: this.props.containerId,
 			library_path: this.props.libraryPath,
-			timeframe: this.props.timeframe,
-			time_frames: this.props.time_frames,
+			// timeframe: this.props.timeframe,
+			// time_frames: this.props.time_frames,
 			locale: this.getLanguageFromURL() || this.props.locale,
 			fullscreen: this.props.fullscreen,
 			autosize: this.props.autosize,
-      overrides: {
-        'mainSeriesProperties.candleStyle.upColor': '#31CB9E',
-        'mainSeriesProperties.candleStyle.downColor': '#F95555',
+			overrides: {
+				'mainSeriesProperties.candleStyle.upColor': '#31CB9E',
+				'mainSeriesProperties.candleStyle.downColor': '#F95555',
 				'mainSeriesProperties.candleStyle.wickUpColor': '#31CB9E',
 				'mainSeriesProperties.candleStyle.wickDownColor': '#F95555',
-        'mainSeriesProperties.candleStyle.drawBorder': false,
-      }
+				'mainSeriesProperties.candleStyle.drawBorder': false,
+			}
 		};
 
-	//	window.TradingView.onready(() => {
-			const widget = window.tvWidget = new window.TradingView.widget(widgetOptions);
+		//	window.TradingView.onready(() => {
+		const widget = window.tvWidget = new window.TradingView.widget(widgetOptions);
 
-			widget.onChartReady(() => {
-				this.createButton(widget, {content: "Sell", value:"sell", title: "Sell price"})
-				this.createButton(widget, {content: "Buy", value:"buy", title: "Buy price"})
-				this.createButton(widget, {content: "Mid", value:"mid", title: "Mid price"})
-			});
-	//	});
+		widget.onChartReady(() => {
+			this.createButton(widget, { content: "Sell", value: "sell", title: "Sell price" })
+			this.createButton(widget, { content: "Buy", value: "buy", title: "Buy price" })
+			this.createButton(widget, { content: "Mid", value: "mid", title: "Mid price" })
+		});
+		//	});
 	}
 
 
 
 	render() {
-		try{
-			if (window.tvWidget) {
-				const chart = window.tvWidget.chart();
-				const oldR = chart.resolution();
-				const newR = (oldR == "M") ? "W" : "M";
-				
-				chart.setResolution(newR, function(){
-					chart.setResolution(oldR);
-				});
-			}
-		}catch(e){
-			console.log(e)
-		}
-		
+		// try {
+		// 	if (window.tvWidget) {
+		// 		const chart = window.tvWidget.chart();
+		// 		const oldR = chart.resolution();
+		// 		const newR = (oldR == "M") ? "W" : "M";
+
+		// 		chart.setResolution(newR, function () {
+		// 			chart.setResolution(oldR);
+		// 		});
+		// 	}
+		// } catch (e) {
+		// 	console.log(e)
+		// }
+
 		return (
-			<div style={{height:600, padding: 20, marginTop: 10}}
+			<div style={{ height: 600, padding: 20, marginTop: 10 }}
 				id={this.props.containerId}
 				className={'TVChartContainer'}
 			/>

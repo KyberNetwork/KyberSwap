@@ -20,7 +20,7 @@ const ExchangeBodyLayout = (props) => {
 
   function moveCursor() {
     let inp = document.getElementById('inputSource')
-    inp.focus();
+    //inp.focus();
     if (inp.createTextRange) {
       var part = inp.createTextRange();
       part.move("character", 0);

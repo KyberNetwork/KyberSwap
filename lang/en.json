@@ -15,7 +15,7 @@
 
   "address": {
     "address": "Address",
-    "import_address": "Import Address",
+    "import_address": "Access Your Wallet",
     "exchange_from": "Exchange from",
     "my_balance": "My Balance",
     "estimated_value": "Estimated value",
@@ -186,7 +186,7 @@
 
     "gas_price_not_number":"Gas price is not number",
     "rate_not_number":"Rate is not number",
-    "gas_price_limit":"Gas price must be smaller than ${maxGas} Gwei",
+    "gas_price_limit":"Gas price must be smaller than or equal to ${maxGas} Gwei",
     "passphrase_error":"Key derivation failed",
     "gas_price_exceeded_limit":"Gas price exceeded max limit",
     "issue_token_ether":"Failed because of sending ether along the tx when it is trying to trade token to ether",
@@ -290,7 +290,7 @@
     "instant_and_secure_token_swap": "Instant and Secure Token Swaps.",
     "no_oderbooks_no_deposit": "No orderbooks, no deposits, pure joy.",
     "metamask": "METAMASK",
-    "keystore": "KEYSTORE",
+    "json": "JSON",
     "ledger": "LEDGER",
     "private_key": "PRIVATE KEY"
   },
