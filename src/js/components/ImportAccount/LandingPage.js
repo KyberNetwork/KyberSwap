@@ -80,8 +80,8 @@ export default class LandingPage extends React.Component {
               <div className="landing-page__container">
                 <div className="landing-page__content">
                   <div className="landing-page__content-tagline">
-                    <h1 className="landing-page__content-title">Instant and Secure Token Swaps.</h1>
-                    <h2 className="landing-page__content-description">No orderbooks, no deposits, pure joy.</h2>
+                    <h1 className="landing-page__content-title">{this.props.translate("landing_page.instant_and_secure_token_swap") || "Instant and Secure Token Swaps."}</h1>
+                    <h2 className="landing-page__content-description">{this.props.translate("landing_page.no_oderbooks_no_deposit") || "No orderbooks, no deposits, pure joy."}</h2>
                     {/* <p className="landing-page__content-pr">Want to purchase different tokens without any hassle?<br/>Do it in a few simple clicks.</p> */}
                   </div>
 
@@ -100,31 +100,31 @@ export default class LandingPage extends React.Component {
 								<div className="account-type__item">
 									<div className="account-type__content">
 										<img src={require("../../../assets/img/landing/metamask_disable.png")} />
-										<div className="account-type__text">METAMASK</div>
+										<div className="account-type__text">{this.props.translate("landing_page.metamask") || "METAMASK"}</div>
 									</div>
 								</div>
 								<div className="account-type__item">
 									<div className="account-type__content">
 										<img src={require("../../../assets/img/landing/keystore_disable.png")} />
-										<div className="account-type__text">KEYSTORE</div>
+										<div className="account-type__text">{this.props.translate("landing_page.keystore") || "KEYSTORE"}</div>
 									</div>
 								</div>
 								<div className="account-type__item">
 									<div className="account-type__content">
 										<img src={require("../../../assets/img/landing/trezor_disable.png")} />
-										<div className="account-type__text">TREZOR</div>
+										<div className="account-type__text">{this.props.translate("landing_page.trezor") || "TREZOR"}</div>
 									</div>
 								</div>
 								<div className="account-type__item">
 									<div className="account-type__content">
 										<img src={require("../../../assets/img/landing/ledger_disable.png")} />
-										<div className="account-type__text">LEDGER</div>
+										<div className="account-type__text">{this.props.translate("landing_page.ledger") || "LEDGER"}</div>
 									</div>
 								</div>
 								<div className="account-type__item">
 									<div className="account-type__content">
 										<img src={require("../../../assets/img/landing/privatekey_disable.png")} />
-										<div className="account-type__text">PRIVATE KEY</div>
+										<div className="account-type__text">{this.props.translate("landing_page.private_key") || "PRIVATE KEY"}</div>
 									</div>
 								</div>
 							</div>

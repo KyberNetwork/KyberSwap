@@ -21,7 +21,7 @@ export default class Currency extends React.Component {
     render() {
         return (
             <div className="market-choose-currency">
-                <div className="header-label">Currency</div>
+                <div className="header-label">{this.props.translate("market.currency") || "Currency"}</div>
                 <Selector
                     defaultItem={this.props.currency.focus}
                     listItem={this.props.currency.listItem}

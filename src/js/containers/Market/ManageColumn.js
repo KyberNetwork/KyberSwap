@@ -81,7 +81,7 @@ export default class ManageColumn extends React.Component {
                             <div className="select-item">
                                 <div className="setting-header">
                                     <img src={require("../../../assets/img/landing/setting.svg")} />
-                                    <span>settings</span>
+                                    <span>{this.props.translate("market.settings") || "Settings"}</span>
                                 </div>
                                 <div className="list-setting">
                                     {/* <div>

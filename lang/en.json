@@ -20,7 +20,9 @@
     "my_balance": "My Balance",
     "estimated_value": "Estimated value",
     "total": "Total",
-    "hide_zero_balance": "Hide zero balance"
+    "hide_zero_balance": "Hide zero balance",
+    "symbol": "SYMBOL",
+    "price": "PRICE"
   },
 
   "transaction": {
@@ -43,7 +45,7 @@
     "password_needed_transfer": "Password is needed for every transfer transaction",
     "next": "Next",
     "exit": "EXIT",
-    "back": "Frontpage",
+    "back": "Back",
     "new_tx": "New transfer",
     "new_ex": "New exchange",
     "done": "Broadcasted",
@@ -68,21 +70,27 @@
     "current_address_balance": "Current address balance",
 
     "transaction_error": "Transaction error",
-
     "notification": "Notification",
     "not_enable_exchange": "Your address is not eligible for exchange at the moment. Please come back later!",
     "kyber_down" : "Kyber exchange is not enabled at the moment.<br/> Please come back later!",
 
+    "swap": "Swap",
     "transaction_time": "Transaction time: < ${time} minutes",
     "waiting_transaction": "Waiting for the transaction to be mined",
-    "click_to_ex_all_balance": "Click to exchange all balance",
+    "click_to_swap_all_balance": "Click to swap all balance",
     "click_to_transfer_all_balance": "Click to transfer all balance",
+
+    "higher_min_acceptable_rate": "Higher Min acceptable rate typically results in lower success rate when the market is volatile.",
+    "our_suggest": "<strong>${suggestRate}</strong> is our suggested Min acceptable rate by default.",
+    "min_acceptable_rate": "MIN ACCEPTABLE RATE",
 
     "about_to_exchange": "You are about to exchange",
     "about_to_transfer": "You are about to transfer",
     "processing": "Processing",
     "gas_limit": "Gas limit",
     "gas_price": "Gas price",
+    "gas_price_upcase": "GAS PRICE",
+    "gwei": "Gwei",
     "for": "for",
     "exchange_for": "for approximate",
     "to": "to",
@@ -92,7 +100,8 @@
 
     "transfer_tooltip": "Transfer ether or tokens to other addresses",
     "transaction_gasprice_50": "Higher gas price, faster transaction. Max gas price: 50 Gwei",
-    "transaction_gasprice": "Higher gas price, faster transaction",
+    "transaction_gasprice": "Higher gas price, faster transaction.",
+    "max_gas_price": "Max gas price: 50 Gwei",
     "best_rate_tooltip": "Lower rate typically results in better success rate when the market is volatile",
     "terms_and_conditions": "<span>Terms and <br  class='show-for-small-only'>conditions</span>",
 
@@ -203,13 +212,20 @@
   },
 
   "import": {
-    "from_metamask": "Metamask",
-    "from_keystore": "Keystore",
-    "from_trezor": "Trezor",
-    "from_ledger": "Ledger",
-    "from_private_key": "Private key",
+    "from_metamask": "METAMASK",
+    "from_keystore": "KEYSTORE",
+    "from_trezor": "TREZOR",
+    "from_ledger": "LEDGER",
+    "from_private_key": "PRIVATE KEY",
     "from_private_key_input_title": "ENTER YOUR PRIVATE KEY",
-    "from_private_key_input_title_placehoder": "Enter your private key"
+    "from_private_key_input_title_placehoder": "Enter your private key",
+    "connect": "Connect",
+    "address": "Address",
+    "balance": "Balance",
+    "eth": "ETH",
+    "import": "Import",
+    "swap_from_ledger": "Swap from Ledger",
+    "swap_from_trezor": "Swap from Trezor"
   },
 
   "info": {
@@ -237,16 +253,19 @@
     "days_ago": "days ago",
     "months_ago": "months ago",
     "years_ago": "years ago",
+
     "second_ago": "second ago",
     "minute_ago": "minute ago",
     "hour_ago": "hour ago",
     "day_ago": "day ago",
     "month_ago": "month ago",
     "year_ago": "year ago",
+
     "date": "Date",
     "rate": "Rate",
     "description": "Description",
     "amount": "Amount",
+    "in": "In",
     "recent": "Recently"
   },
 
@@ -267,7 +286,31 @@
     "liquid": "Liquid",
     "compatible": "Compatible",
     "get_started": "Get Started",
-    "exchange":"exchange"
+    "exchange":"exchange",
+    "instant_and_secure_token_swap": "Instant and Secure Token Swaps.",
+    "no_oderbooks_no_deposit": "No orderbooks, no deposits, pure joy.",
+    "metamask": "METAMASK",
+    "keystore": "KEYSTORE",
+    "ledger": "LEDGER",
+    "private_key": "PRIVATE KEY"
+  },
+
+  "market": {
+    "eth_market": "Ethereum Market",
+    "search": "Search",
+    "currency": "Currency",
+    "settings": "Settings",
+    "market": "Market",
+    "sell_price": "Sell Price",
+    "buy_price": "Buy Price",
+    "try_searching_for_token": "Try Searching for Token",
+    "market_cap": "Market Cap",
+    "circulating_supply": "Circulating Supply",
+    "total_supply": "Total Supply",
+    "last_7d": "Last 7D",
+    "change": "24HR Change",
+    "volume": "Volume (24h)",
+    "support_eth_only": "Now support only pairs with ETH, not support pairs with USD yet."
   },
 
   "home": "Home",

@@ -8,9 +8,9 @@ const ImportByLedgerView = (props) => {
 				{/*<div className="how-to-use" data-for="ledger-tip" data-tip="How to use"></div>*/}
         <div className="importer__symbol">
           <img src={require('../../../assets/img/landing/ledger_active.svg')} />
-          <div className="importer__name">LEDGER</div>
+          <div className="importer__name">{props.translate("import.from_ledger") || "LEDGER"}</div>
         </div>
-				<button className="importer__button" onClick={(e) => props.showLoading('ledger')}>Swap from Ledger</button>
+				<button className="importer__button" onClick={(e) => props.showLoading('ledger')}>{props.translate("import.swap_from_ledger") || "Swap from Ledger"}</button>
 			</div>
 			{/* <ReactTooltip place="top" id="ledger-tip" type="dark" /> */}
 		</div>

@@ -30,7 +30,7 @@ const GasConfig = (props) => {
   return (
     <div className="gas-config">
       <div>
-        <span className="sub_title">GAS PRICE</span>
+        <span className="sub_title">{props.translate("transaction.gas_price_upcase") || "GAS PRICE"}</span>
         {/* <p className="sub_title">(inclusive in the rate)</p> */}
       </div>
       <div className={!props.gasPriceError ? "" : "error"}>
@@ -39,18 +39,18 @@ const GasConfig = (props) => {
             <input type="text" min="0" max="99" className="gas-price-input" step="0.1" value={props.gasPrice} onChange={handleChangeGasPrice} maxLength="20" autoComplete="off" />
           </div>
           <div className="gas_input-lable">
-            Gwei
+            {props.translate("transaction.gwei") || "Gwei"}
           </div>
           <div className="gas_input-option">
             <GasOption gasOptions={gas_option} focus={props.selectedGas} onChange={specifyGasPrice}/>
           </div>
         </div>
         {props.gasPriceError && <div class="error-text mb-1">{props.translate(props.gasPriceError, { maxGas: props.maxGasPrice })}</div>}
-        <div className="des-down">Higher gas price, faster transaction.<br></br> Max gas price: 50 Gwei</div>
+        <div className="des-down">{props.translate("transaction.transaction_gasprice") || "Higher gas price, faster transaction."}<br></br> {props.translate("transaction.max_gas_price") || "Max gas price: 50 Gwei"}</div>
       </div>
       
       <div className="transaction-fee">
-        <div className="title-fee">Transaction fee</div>
+        <div className="title-fee">{props.translate("transaction.transaction_fee") || "Transaction fee"}</div>
         <div>{props.totalGas} ETH</div>
       </div>
     </div>

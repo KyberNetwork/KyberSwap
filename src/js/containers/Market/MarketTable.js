@@ -144,10 +144,10 @@ export default class MarketTable extends React.Component {
     )
   }
   
-  getSortHeader = (title) => {
+  getSortHeader = (title, key) => {
     return (
       <div className="rt-th-img">
-        <img src={require("../../../assets/img/landing/sort.svg")} />{title}
+        <img src={require("../../../assets/img/landing/sort.svg")} />{this.props.translate("market." + key) || title}
       </div>
     )
   }
@@ -165,17 +165,17 @@ export default class MarketTable extends React.Component {
 
   getColumn = () => {
     var columns = [{
-      Header: this.getSortHeader("Market"),
+      Header: this.getSortHeader(this.props.translate("market.market") || "Market"),
       accessor: 'market', // String-based value accessors!
       Cell: props => this.addIcon(props.value),
       minWidth: 175
     }, {
-      Header: this.getSortHeader("Sell Price"),
+      Header: this.getSortHeader(this.props.translate("market.sell_price") || "Sell Price"),
       accessor: 'sellPrice',
       Cell: props => this.addUnit(props.value, this.props.currency),
       minWidth: 150
     }, {
-      Header: this.getSortHeader("Buy Price"), // Required because our accessor is not a string
+      Header: this.getSortHeader(this.props.translate("market.buy_price") || "Buy Price"), // Required because our accessor is not a string
       accessor: 'buyPrice',
       Cell: props => this.addUnit(props.value, this.props.currency),
       minWidth: 150
@@ -203,7 +203,7 @@ export default class MarketTable extends React.Component {
             switch (key) {
               case "change": {
                 columns.push({
-                  Header: this.getSortHeader(item.title),
+                  Header: this.getSortHeader(item.title, key),
                   accessor: key,
                   Cell: props => this.addClassChange(props.value),
                   minWidth: 200
@@ -212,7 +212,7 @@ export default class MarketTable extends React.Component {
               }
               case "circulating_supply":{
                 columns.push({
-                  Header: this.getSortHeader(item.title),
+                  Header: this.getSortHeader(item.title, key),
                   accessor: key,
                   Cell: props => this.formatNumber(props.value),
                   minWidth: 200
@@ -221,7 +221,7 @@ export default class MarketTable extends React.Component {
               }
               case "total_supply":{
                 columns.push({
-                  Header: this.getSortHeader(item.title),
+                  Header: this.getSortHeader(item.title, key),
                   accessor: key,
                   Cell: props => this.formatNumber(props.value),
                   minWidth: 150
@@ -230,7 +230,7 @@ export default class MarketTable extends React.Component {
               }
               case "market_cap":{
                 columns.push({
-                  Header: this.getSortHeader(item.title),
+                  Header: this.getSortHeader(item.title, key),
                   accessor: key,
                   Cell: props => this.addUnit(props.value, this.props.currency),
                   minWidth: 150
@@ -239,7 +239,7 @@ export default class MarketTable extends React.Component {
               }
               case "volume": {
                 columns.push({
-                  Header: this.getSortHeader(item.title),
+                  Header: this.getSortHeader(item.title, key),
                   accessor: key,
                   Cell: props => this.addUnit(props.value, this.props.currency),
                   minWidth: 150
@@ -248,7 +248,7 @@ export default class MarketTable extends React.Component {
               }
               case "circulating_supply": {
                 columns.push({
-                  Header: this.getSortHeader(item.title),
+                  Header: this.getSortHeader(item.title, key),
                   accessor: key,
                   minWidth: 200
                 })
@@ -256,7 +256,7 @@ export default class MarketTable extends React.Component {
               }
               default: {
                 columns.push({
-                  Header: this.getSortHeader(item.title),
+                  Header: this.getSortHeader(item.title, key),
                   accessor: key,
                   minWidth: 150
                 })

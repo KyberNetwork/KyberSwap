@@ -101,6 +101,7 @@
         border: none;
         transition: all .3s;
         animation: change-background-color 1.5s infinite ease-in-out;
+        text-transform: uppercase;
 
         &::after {
           content: '';

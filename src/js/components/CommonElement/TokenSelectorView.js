@@ -8,7 +8,7 @@ const TokenSelectorView = (props) => {
   Object.keys(props.listItem).map((key, i) => {
     var token = props.listItem[key],
       matchName = token.name.toLowerCase().includes(props.searchWord),
-      matchSymbol = token.symbol.toLowerCase().includes(props.searchWord)
+      matchSymbol = token.symbol.toLowerCase().includes(props.bn)
     if (matchSymbol || matchName) {
       listShow[key] = props.listItem[key]
     }
@@ -52,6 +52,13 @@ const TokenSelectorView = (props) => {
     })
   }
 
+  var shortName = (name) => {
+    if (name && name.length > 15) {
+      return name.substring(0, 5) + "..." + name.substring(name.length - 5)
+    }
+    return name
+  }
+
   return (
     <div className="token-selector">
       <Dropdown onShow = {(e) => props.showTokens(e)} onHide = {(e) => props.hideTokens(e)}>
@@ -62,7 +69,7 @@ const TokenSelectorView = (props) => {
                 <img src={require("../../../assets/img/tokens/" + focusItem.icon)} />
               </div>
               <div>
-                <div className="focus-name">{focusItem.name}</div>
+                <div className="focus-name">{shortName(focusItem.name)}</div>
                 <div className="focus-balance">
                   <span className="token-balance" title = {toT(focusItem.balance)}>{roundingNumber(toT(focusItem.balance, focusItem.decimal))}</span>
                   <span className="token-symbol">{focusItem.symbol}</span>
