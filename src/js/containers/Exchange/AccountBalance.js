@@ -11,22 +11,12 @@ import { getTranslate } from 'react-localize-redux';
 @connect((store, props) => {
   var location = store.router.location.pathname
   var sourceActive = 'ETH'
-  var brocastStep = false
-  // alert(location)
-  let location_ = location.split("/");
-  if (location_.slice(-1).pop() && location_.slice(-1).pop() === "exchange") {
-    sourceActive = store.exchange.sourceTokenSymbol
-    brocastStep = store.exchange.step === 3? true: false
-  } else {
-    sourceActive = store.transfer.tokenSymbol
-    brocastStep = store.transfer.step === 2? true: false
-  }
+  sourceActive = store.exchange.sourceTokenSymbol
   return {
     tokens: store.tokens.tokens,
     translate: getTranslate(store.locale),
     ethereum: store.connection.ethereum,
     showBalance: store.global.showBalance,
-    brocastStep,
     sourceActive,
     location,
     walletType: store.account.account.type,
