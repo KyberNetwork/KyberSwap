@@ -892,10 +892,32 @@ function* fetchGasApproveSnapshot() {
 function* getMaxGasExchange(){
   var state = store.getState()
   const exchange = state.exchange
-  if (exchange.sourceTokenSymbol !== 'DGX' && exchange.destTokenSymbol !== 'DGX') {
-    return exchange.max_gas
-  }else{
-    return 650000
+
+  if (exchange.sourceTokenSymbol === 'DGX'){
+    if (exchange.destTokenSymbol === 'ETH'){
+      return 650000
+    }else{
+      return (650000 + exchange.max_gas)
+    }
+  }
+  if (exchange.sourceTokenSymbol === 'ETH'){
+    if (exchange.destTokenSymbol === 'DGX'){
+      return 650000
+    }else{
+      return exchange.max_gas
+    }
+  }
+
+  if (exchange.sourceTokenSymbol !== 'ETH'){
+    if (exchange.destTokenSymbol === 'DGX'){
+      return 650000 + exchange.max_gas
+    }
+    if (exchange.destTokenSymbol === 'ETH'){
+      return 650000 + exchange.max_gas
+    }
+    else{
+      return exchange.max_gas * 2
+    }
   }
 }
 
