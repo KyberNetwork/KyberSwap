@@ -42,7 +42,7 @@ const ImportByDeviceView = (props) => {
                             } ETH
                         </a>
                         <a class="import">
-                            Import
+                            {props.translate("import.import") || "Import"}
                             <img src={require('../../../assets/img/import-account/arrow_right_orange.svg')}/>
                         </a>
                     </div>

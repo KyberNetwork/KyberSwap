@@ -39,6 +39,11 @@ export default class MinRate extends React.Component {
   //   // const {offeredRate}  = this.props.exchange
   //   // this.props.dispatch(actions.setMinRate(converter.caculatorRateToPercentage(value,offeredRate)))
   // }
+
+  suggestRate = (slippageRate, desToken) => {
+    return converter.roundingNumber(slippageRate) + " " + desToken
+  }
+
   render = () => {
     const {minConversionRate,slippageRate,offeredRate}  = this.props.exchange
     var desToken = this.props.exchange.destTokenSymbol
@@ -56,12 +61,15 @@ export default class MinRate extends React.Component {
     return (
       <div className="min-rate">
         <div className="des-up">
-        Higher Min acceptable rate typically results in lower success rate when the market is volatile. <strong>{converter.roundingNumber(slippageRate) + " " + desToken}</strong> is our suggested Min acceptable rate by default.
+          {this.props.translate("transaction.higher_min_acceptable_rate") 
+            || "Higher Min acceptable rate typically results in lower success rate when the market is volatile."}
+          {this.props.translate("transaction.our_suggest", { suggestRate: this.suggestRate(slippageRate, desToken)}) 
+            || (`<strong> ${this.suggestRate(slippageRate, desToken)}</strong> is our suggested Min acceptable rate by default.`)}
         </div>
         <div className = {!this.props.exchange.errors.rateError? "":"error"}>
-          <span  className="sub_title">MIN ACCEPTABLE RATE</span>
+          <span  className="sub_title">{this.props.translate("transaction.min_acceptable_rate") || "MIN ACCEPTABLE RATE"}</span>
           <Slider value={percent} 
-                  defaultValue={percent} 
+                  defaultValue={percent}
                   min={0} max={100}
                   onChange={this.onSliderChange}                   
                   trackStyle={{ backgroundColor: '#666666', height: 2 }}

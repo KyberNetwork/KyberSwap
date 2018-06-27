@@ -17,7 +17,7 @@ export default class Market extends React.Component {
   render() {
     return (
       <div className="market container">
-        <h1 className="market__title">Ethereum Market</h1>
+        <h1 className="market__title">{this.props.translate("market.eth_market") || "Ethereum Market"}</h1>
         <div className="market__header">
           <div className="market__header-left">
             <div className="market__header-search"><SearchWord /></div>

@@ -29,7 +29,7 @@ export default class TradingViewModal extends React.Component {
 		return (
 			<div className="trading-view-modal">
 			 	<a className="x" onClick={(e) => this.closeModal(e)}>&times;</a>
-				{ currency==="USD" && <p className="trading-title">Now support only pairs with ETH, not support pairs with USD yet.</p>}
+				{ currency==="USD" && <p className="trading-title">{this.props.translate("market.support_eth_only") || "Now support only pairs with ETH, not support pairs with USD yet."}</p>}
 				{ currency==="ETH" && <p className="trading-title">{this.props.selectedSymbol} - ETH</p>}
 				<TradingView />
 			</div>

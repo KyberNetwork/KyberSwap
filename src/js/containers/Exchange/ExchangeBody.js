@@ -387,6 +387,9 @@ export default class ExchangeBody extends React.Component {
         roundingValue: roundingNumber(toT(token.balance, token.decimal))
       }
     }
+    var accountBalance = <AccountBalance 
+      chooseToken = {this.chooseToken}
+    />
     return (
       <ExchangeBodyLayout step={this.props.exchange.step}
         tokenSourceSelect={tokenSourceSelect}
@@ -406,7 +409,7 @@ export default class ExchangeBody extends React.Component {
         errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}      
 
         advanceLayout = {this.props.advanceLayout}
-        balanceList = {<AccountBalance />}  
+        balanceList = {accountBalance}
         focus = {this.state.focus}
       />
     )

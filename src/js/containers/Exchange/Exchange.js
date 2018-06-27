@@ -79,6 +79,7 @@ export default class Exchange extends React.Component {
   render() {
     var gasPrice = converter.stringToBigNumber(converter.gweiToEth(this.props.exchange.gasPrice))
     var totalGas = gasPrice.multipliedBy(this.props.exchange.gas + this.props.exchange.gas_approve)
+    var page = "exchange"
     var gasConfig = (
       <GasConfig 
         gas={this.props.exchange.gas + this.props.exchange.gas_approve}
@@ -92,12 +93,13 @@ export default class Exchange extends React.Component {
         totalGas={totalGas.toString()}
         translate={this.props.translate}        
         gasPriceSuggest={this.props.exchange.gasPriceSuggest}    
-        selectedGas = {this.state.selectedGas}    
+        selectedGas = {this.state.selectedGas}
+        page = {page}
       />
     )
 
     var minRate = <MinRate />    
-    var advanceConfig = <AdvanceConfigLayout minRate = {minRate} gasConfig = {gasConfig}/>
+    var advanceConfig = <AdvanceConfigLayout minRate = {minRate} gasConfig = {gasConfig} translate = {this.props.translate}/>
     var exchangeBody = <ExchangeBody advanceLayout = {advanceConfig} />
     return (
       <TransactionLayout 
@@ -107,7 +109,7 @@ export default class Exchange extends React.Component {
        
         // advance = {advanceConfig}
         content = {exchangeBody}
-        page="exchange"
+        page = {page}
       />
     )
   }
