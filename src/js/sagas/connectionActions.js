@@ -30,7 +30,7 @@ export function* createNewConnection(action) {
   }
 
 
-  var notiService = new NotiService({type: "localStorage"})
+  var notiService = new NotiService({type: "session"})
   yield put(globalActions.setNotiHandler(notiService))
 
 //  const watchConnectionTask = yield fork(watchToSwitchConnection, connectionInstance)

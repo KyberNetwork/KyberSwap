@@ -12,6 +12,9 @@ export default class NotiService extends React.Component {
       case "localStorage":
         this.provider = new providers.LocalStorageNoti({maxNoti: MAX_SAVE_NOTI})
         break
+      case "session":
+        this.provider = new providers.SessionNoti({maxNoti: MAX_SAVE_NOTI})
+        break
       default:
         this.provider = new providers.LocalStorageNoti({maxNoti: MAX_SAVE_NOTI})
         break

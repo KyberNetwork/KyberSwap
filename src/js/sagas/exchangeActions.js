@@ -83,9 +83,14 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   yield put(actions.resetSignError())
 
 
-  var state = store.getState()
-  var notiService = state.global.notiService
-  notiService.callFunc("setNewTx",{hash: hash})
+  try{
+    var state = store.getState()
+    var notiService = state.global.notiService
+    notiService.callFunc("setNewTx",{hash: hash})
+  }catch(e){
+    console.log(e)
+  }
+  
 
 
   //estimate time for tx

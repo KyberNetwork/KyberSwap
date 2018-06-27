@@ -73,9 +73,14 @@ function* updateTx(action) {
       //}
     }
 
-    var state = store.getState()
-    var notiService = state.global.notiService
-    notiService.callFunc("changeStatusTx",newTx)
+    try{
+      var state = store.getState()
+      var notiService = state.global.notiService
+      notiService.callFunc("changeStatusTx",newTx)
+    }catch(e){
+      console.log(e)
+    }
+    
     
     yield put(updateTxComplete(newTx))
   }

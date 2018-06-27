@@ -44,10 +44,14 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   yield put(addTx(tx))
   yield put(actions.doTransactionComplete(hash))
   yield put(actions.finishTransfer())
-
-  var state = store.getState()
-  var notiService = state.global.notiService
-  notiService.callFunc("setNewTx",{hash: hash})
+  
+  try{
+    var state = store.getState()
+    var notiService = state.global.notiService
+    notiService.callFunc("setNewTx",{hash: hash})
+  }catch(e){
+    console.log(e)
+  }
 }
 
 function* doTransactionFail(ethereum, account, e) {
