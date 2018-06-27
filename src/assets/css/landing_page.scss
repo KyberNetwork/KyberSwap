@@ -1,5 +1,5 @@
 #landing_page {
-  min-height: 540px;
+  min-height: 450px;
 
   @include screen-max-width(large){
     margin-bottom: 80px;
@@ -24,7 +24,7 @@
       z-index: 1;
       width: 100%;
       height: 100%;
-      background-image: radial-gradient(96% 100%, #EB8114 3%, #EEB43D 99%);
+      background-image: linear-gradient(to left, #fac77d, #eeb43d);
       //background-color: #FAC77D
    //   opacity: 0.8;
       position: absolute;
@@ -40,6 +40,7 @@
   color: #fff;
   text-align: center;
   position: relative;
+  margin-bottom: 120px;
 
   .landing-page {
     &__container {
@@ -67,6 +68,8 @@
       &-title {
         font-size: 42px;
         line-height: 1.07;
+        letter-spacing: -0.9px;
+
         @include screen-max-width(large){
           margin-top: 30px;
         }
@@ -75,6 +78,7 @@
       &-description {
         font-size: 28px;
         line-height: 1.3;
+        letter-spacing: -0.8px;
         margin: 20px 0 10px;
       }
 
@@ -84,18 +88,15 @@
       }
 
       &-term {
-        margin-top: 30px;
+        margin: 40px auto 30px;
         display: flex;
         position: relative;
         align-items: center;
-        @include screen-min-width(medium){
-          margin-bottom: 30px;
-        }
       }
 
       &-btn {
         border-radius: 3px;
-        padding: 14px 50px 14px 10px;
+        padding: 14px 55px 14px 20px;
         color: #fff;
         font-size: 14px;
         background-image: linear-gradient(to right, $swap-color 50%, $color-swap-light 50%);
@@ -106,7 +107,7 @@
         position: relative;
         border: none;
         transition: all .3s;
-        animation: change-background-color 1.5s infinite ease-in-out;
+        animation: change-background-color 1.5s 4 ease-in-out;
         text-transform: uppercase;
 
         &::after {
@@ -123,8 +124,8 @@
         }
 
         &:hover {
-          background-color: $color-swap-light;
-          padding: 14px 55px 14px 20px;
+          background-image: linear-gradient(to right, $color-swap-light 100%, $color-swap-light 100%);
+          padding: 14px 60px 14px 25px;
 
           &::after {
             right: 15px;
@@ -317,13 +318,13 @@
     }
 
     &__item {
-      background: white;
+      background: #fcfcfe;
       width: 170px;
       height: 170px;
       margin: 0 12px 25px;
       position: relative;
-      top: 75px;
-      box-shadow: 0 1px 10px #ccc;
+      top: 100px;
+      box-shadow: 0 2px 6px 0 rgba(184, 184, 184, 0.5);
       transition: all .3s;
     }
 
