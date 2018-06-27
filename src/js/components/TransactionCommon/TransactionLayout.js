@@ -8,7 +8,7 @@ const TransactionLayout = (props) => {
     window.location.href = "/"
   }
   return (
-    <div class="frame">
+    <div class="frame exchange-frame">
       <div className="swap-navigation">        
         <div>
           <a onClick={(e)=>gotoRoot(e)}>Home</a>
