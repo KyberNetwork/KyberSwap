@@ -23,7 +23,7 @@ const ImportByMetamaskView = (props) => {
                           <div>{props.metamask.address.slice(0, 8)}...{props.metamask.address.slice(-6)}</div>
                       </div>
                       <div className="address">
-                        <div><b>{props.translate("import.balance") || "Balance"}: {props.metamask.balance} {" " + props.translate("import.eth") || "ETH"}</b></div>
+                        <div><b>{props.translate("import.balance") || "Balance"}: {props.metamask.balance} ETH</b></div>
                       </div>
                   </div>
               )}

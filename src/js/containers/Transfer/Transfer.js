@@ -15,11 +15,11 @@ import { default as _ } from 'underscore'
 import { clearSession } from "../../actions/globalActions"
 
 @connect((store) => {
-  const translate = getTranslate(store.locale)
   const account = store.account.account
   if (account === false) {
     window.location.href = "/swap"
   }
+  const translate = getTranslate(store.locale)
   // var location = "/"
   // if (store.router.location){
   //   location = store.router.location.pathname
@@ -96,6 +96,7 @@ export default class Exchange extends React.Component {
   render() {
     var gasPrice = converter.stringToBigNumber(converter.gweiToEth(this.props.transfer.gasPrice))
     var totalGas = gasPrice.multipliedBy(this.props.transfer.gas)
+    var page = "transfer"
     var gasConfig = (
       <GasConfig 
         gas={this.props.transfer.gas}
@@ -109,11 +110,12 @@ export default class Exchange extends React.Component {
         totalGas={totalGas.toString()}
         translate={this.props.translate}        
         gasPriceSuggest={this.props.transfer.gasPriceSuggest}    
-        selectedGas = {this.state.selectedGas}    
+        selectedGas = {this.state.selectedGas}
+        page = {page}
       />
     )
 
-    var advanceConfig = <AdvanceConfigLayout gasConfig = {gasConfig}/>
+    var advanceConfig = <AdvanceConfigLayout gasConfig = {gasConfig} translate = {this.props.translate}/>
     var transferBody = <TransferBody advanceLayout = {advanceConfig}/>
     return (
       <TransactionLayout 
@@ -123,7 +125,7 @@ export default class Exchange extends React.Component {
        
        // advance = {advanceConfig}
         content = {transferBody}
-        page="transfer"
+        page = {page}
       />
     )
   }

@@ -211,6 +211,14 @@
       }
       .d-flex{
         align-items: center;
+        div:nth-child(2) {
+          overflow: hidden;
+          .focus-name {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }          
+        }
       }
       .focus-name{
         color: #222222;

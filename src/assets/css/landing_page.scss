@@ -1,6 +1,12 @@
 #landing_page {
-  min-height: 600px;
-  margin-bottom: 80px;
+  min-height: 540px;
+
+  @include screen-max-width(large){
+    margin-bottom: 80px;
+    min-height: 600px !important;
+  }
+  
+ // margin-bottom: 80px;
   position: relative;
 
   .landing-background {
@@ -40,7 +46,7 @@
       display: flex;
       align-items: center;
       margin-bottom: -160px;
-      height: 430px;
+      height: 400px;
     }
 
     &__content {

@@ -1,4 +1,4 @@
-      {
+{
   "pack": "vi",
   "pack_icon": "vi.svg",
   "pack_label": "Tiếng Việt",
@@ -22,7 +22,8 @@
     "total": "Tổng giá trị",
     "hide_zero_balance": "Ẩn số dư nhỏ",
     "symbol": "SYMBOL",
-    "price": "PRICE"
+    "price": "PRICE",
+    "your_wallet_address": "Your Wallet Address"
   },
 
   "transaction": {
@@ -81,7 +82,7 @@
     "click_to_transfer_all_balance": "Chuyển toàn bộ tài khoản",
 
     "higher_min_acceptable_rate": "Higher Min acceptable rate typically results in lower success rate when the market is volatile.",
-    "our_suggest": "<strong>${suggestRate}</strong> is our suggested Min acceptable rate by default.",
+    "our_suggest": "<strong> ${suggestRate}</strong> is our suggested Min acceptable rate by default.",
     "min_acceptable_rate": "MIN ACCEPTABLE RATE",
 
     "about_to_exchange": "Bạn chuẩn bị chuyển đổi",
@@ -101,7 +102,7 @@
     "transfer_tooltip": "Chuyển eth hoặc token đến một tài khoản khác",
     "transaction_gasprice_50": "Giá Gas càng cao, giao dịch càng nhanh. Giá Gas lớn nhất 50 Gwei",
     "transaction_gasprice": "Giá Gas càng cao, giao dịch càng nhanh",
-    "max_gas_price": "Max gas price: 50 Gwei",
+    "max_gas_price": "Max gas price: ${maxGas} Gwei",
     "best_rate_tooltip": "Tỷ giá thấp hơn cho khả năng thành công cao hơn khi thị trường biến động",
     "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>",
 
@@ -222,7 +223,6 @@
     "connect": "Connect",
     "address": "Address",
     "balance": "Balance",
-    "eth": "ETH",
     "import": "Import",
     "swap_from_ledger": "Swap from Ledger",
     "swap_from_trezor": "Swap from Trezor"
@@ -300,7 +300,7 @@
     "search": "Search",
     "currency": "Currency",
     "settings": "Settings",
-    "market": "Market",
+    "market_title": "Market",
     "sell_price": "Sell Price",
     "buy_price": "Buy Price",
     "try_searching_for_token": "Try Searching for Token",

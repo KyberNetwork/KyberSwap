@@ -22,7 +22,8 @@
     "total": "Total",
     "hide_zero_balance": "Hide zero balance",
     "symbol": "SYMBOL",
-    "price": "PRICE"
+    "price": "PRICE",
+    "your_wallet_address": "Your Wallet Address"
   },
 
   "transaction": {
@@ -81,7 +82,7 @@
     "click_to_transfer_all_balance": "Click to transfer all balance",
 
     "higher_min_acceptable_rate": "Higher Min acceptable rate typically results in lower success rate when the market is volatile.",
-    "our_suggest": "<strong>${suggestRate}</strong> is our suggested Min acceptable rate by default.",
+    "our_suggest": "<strong> ${suggestRate}</strong> is our suggested Min acceptable rate by default.",
     "min_acceptable_rate": "MIN ACCEPTABLE RATE",
 
     "about_to_exchange": "You are about to exchange",
@@ -101,7 +102,7 @@
     "transfer_tooltip": "Transfer ether or tokens to other addresses",
     "transaction_gasprice_50": "Higher gas price, faster transaction. Max gas price: 50 Gwei",
     "transaction_gasprice": "Higher gas price, faster transaction.",
-    "max_gas_price": "Max gas price: 50 Gwei",
+    "max_gas_price": "Max gas price: ${maxGas} Gwei",
     "best_rate_tooltip": "Lower rate typically results in better success rate when the market is volatile",
     "terms_and_conditions": "<span>Terms and <br  class='show-for-small-only'>conditions</span>",
 
@@ -222,7 +223,6 @@
     "connect": "Connect",
     "address": "Address",
     "balance": "Balance",
-    "eth": "ETH",
     "import": "Import",
     "swap_from_ledger": "Swap from Ledger",
     "swap_from_trezor": "Swap from Trezor"
@@ -307,7 +307,7 @@
     "market_cap": "Market Cap",
     "circulating_supply": "Circulating Supply",
     "total_supply": "Total Supply",
-    "last_7d": "Last 7D",
+    "last_7d": "Last 7d",
     "change": "24HR Change",
     "volume": "Volume (24h)",
     "support_eth_only": "Now support only pairs with ETH, not support pairs with USD yet."

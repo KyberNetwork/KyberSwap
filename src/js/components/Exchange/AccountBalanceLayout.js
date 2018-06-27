@@ -128,7 +128,7 @@ const AccountBalanceLayout = (props) => {
   return (
     <div id="balance-account">
       <div className="balance-address">
-        <div className="title">Your Wallet Address</div>
+        <div className="title">{props.translate("address.your_wallet_address") || "Your Wallet Address"}</div>
         <div>
           <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.address}>{props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}</a>
         </div>
@@ -173,8 +173,8 @@ const AccountBalanceLayout = (props) => {
             </DropdownTrigger>
             <DropdownContent>
               <div className="select-item">
-              <div onClick={(e)=>props.sortSymbol()}>{" " + props.translate("address.symbol") || "SYMBOL"}</div>
-              <div onClick={(e)=>props.sortPrice()}>{" " + props.translate("address.price") || "PRICE"}</div>
+              <div onClick={(e)=>props.sortSymbol()}>{props.translate("address.symbol") || "SYMBOL"}</div>
+              <div onClick={(e)=>props.sortPrice()}>{props.translate("address.price") || "PRICE"}</div>
               </div>
             </DropdownContent>
           </Dropdown>

@@ -143,11 +143,43 @@ export default class MarketTable extends React.Component {
       <span>{this.formatNumber(input)} {currency}</span>
     )
   }
+
+  getTranslateKey = (key) => {
+    switch (key) {
+      case "market": {
+        return "market.market"
+      }
+      case "sell_price": {
+        return "market.sell_price"
+      }
+      case "buy_price": {
+        return "market.buy_price"
+      }
+      case "last_7d": {
+        return "market.last_7d"
+      }
+      case "change": {
+        return "market.change"
+      }
+      case "circulating_supply": {
+        return "market.circulating_supply"
+      }
+      case "total_supply": {
+        return "market.total_supply"
+      }
+      case "market_cap": {
+        return "market.market_cap"
+      }
+      case "volume": {
+        return "market.volume"
+      }
+    }
+  }
   
   getSortHeader = (title, key) => {
     return (
       <div className="rt-th-img">
-        <img src={require("../../../assets/img/landing/sort.svg")} />{this.props.translate("market." + key) || title}
+        <img src={require("../../../assets/img/landing/sort.svg")} />{this.props.translate(this.getTranslateKey(key)) || title}
       </div>
     )
   }
@@ -165,17 +197,17 @@ export default class MarketTable extends React.Component {
 
   getColumn = () => {
     var columns = [{
-      Header: this.getSortHeader(this.props.translate("market.market") || "Market"),
+      Header: this.getSortHeader("Market", "market"),
       accessor: 'market', // String-based value accessors!
       Cell: props => this.addIcon(props.value),
       minWidth: 175
     }, {
-      Header: this.getSortHeader(this.props.translate("market.sell_price") || "Sell Price"),
+      Header: this.getSortHeader("Sell Price", "sell_price"),
       accessor: 'sellPrice',
       Cell: props => this.addUnit(props.value, this.props.currency),
       minWidth: 150
     }, {
-      Header: this.getSortHeader(this.props.translate("market.buy_price") || "Buy Price"), // Required because our accessor is not a string
+      Header: this.getSortHeader("Buy Price", "buy_price"), // Required because our accessor is not a string
       accessor: 'buyPrice',
       Cell: props => this.addUnit(props.value, this.props.currency),
       minWidth: 150
@@ -188,7 +220,7 @@ export default class MarketTable extends React.Component {
           case "chart":{
             if (this.props.currency != "USD") {
               columns.push({
-                Header: item.title,
+                Header: this.props.translate(this.getTranslateKey(key)) || item.title,
                 accessor: key,
                 Cell: props => this.drawChart(props),
                 sortable: false,

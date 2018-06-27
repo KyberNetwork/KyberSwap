@@ -41,8 +41,9 @@ export default class MinRate extends React.Component {
   // }
 
   suggestRate = (slippageRate, desToken) => {
-    return " " + converter.roundingNumber(slippageRate) + " " + desToken
+    return converter.roundingNumber(slippageRate) + " " + desToken
   }
+
   render = () => {
     const {minConversionRate,slippageRate,offeredRate}  = this.props.exchange
     var desToken = this.props.exchange.destTokenSymbol
@@ -63,7 +64,7 @@ export default class MinRate extends React.Component {
           {this.props.translate("transaction.higher_min_acceptable_rate") 
             || "Higher Min acceptable rate typically results in lower success rate when the market is volatile."}
           {this.props.translate("transaction.our_suggest", { suggestRate: this.suggestRate(slippageRate, desToken)}) 
-            || (`<strong>${this.suggestRate(slippageRate, desToken)}</strong> is our suggested Min acceptable rate by default.`)}
+            || (`<strong> ${this.suggestRate(slippageRate, desToken)}</strong> is our suggested Min acceptable rate by default.`)}
         </div>
         <div className = {!this.props.exchange.errors.rateError? "":"error"}>
           <span  className="sub_title">{this.props.translate("transaction.min_acceptable_rate") || "MIN ACCEPTABLE RATE"}</span>
