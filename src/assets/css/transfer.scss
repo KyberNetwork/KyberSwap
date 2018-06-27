@@ -15,6 +15,11 @@ $padding-col-left : 2rem;
   .transfer-col{
     padding: $padding-col;
   }
+
+  .transfer-col-1 {
+    background: white;
+  }
+
   @include screen-min-width(large){
     .transfer-col-1{
       box-shadow: 0 7px 25px #ddd;

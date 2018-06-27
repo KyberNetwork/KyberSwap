@@ -21,6 +21,7 @@
   @include screen-max-width(large) {
     box-shadow: 0 7px 25px #ddd;
     margin: 10px;
+    background: white;
   }
   @include screen-max-width(large) {
     @include screen-min-width(medium){
