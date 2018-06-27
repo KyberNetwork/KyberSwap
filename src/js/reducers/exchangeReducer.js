@@ -47,28 +47,28 @@ const exchange = (state = initState, action) => {
         newState.sourceTokenSymbol = action.payload.symbol
         newState.sourceToken = action.payload.address
 
-        if (newState.sourceTokenSymbol === 'ETH') {
-          if (newState.destTokenSymbol === 'ETH') {
-            newState.destTokenSymbol = 'KNC'
-            newState.destToken = BLOCKCHAIN_INFO.tokens['KNC'].address
-          }
-        } else {
-          newState.destTokenSymbol = 'ETH'
-          newState.destToken = BLOCKCHAIN_INFO.tokens['ETH'].address
-        }
+        // if (newState.sourceTokenSymbol === 'ETH') {
+        //   if (newState.destTokenSymbol === 'ETH') {
+        //     newState.destTokenSymbol = 'KNC'
+        //     newState.destToken = BLOCKCHAIN_INFO.tokens['KNC'].address
+        //   }
+        // } else {
+        //   newState.destTokenSymbol = 'ETH'
+        //   newState.destToken = BLOCKCHAIN_INFO.tokens['ETH'].address
+        // }
       } else if (action.payload.type === "des") {
         newState.destTokenSymbol = action.payload.symbol
         newState.destToken = action.payload.address
 
-        if (newState.destTokenSymbol === 'ETH') {
-          if (newState.sourceTokenSymbol === 'ETH') {
-            newState.sourceTokenSymbol = 'KNC'
-            newState.sourceToken = BLOCKCHAIN_INFO.tokens['KNC'].address
-          }
-        } else {
-          newState.sourceTokenSymbol = 'ETH'
-          newState.sourceToken = BLOCKCHAIN_INFO.tokens['ETH'].address
-        }
+        // if (newState.destTokenSymbol === 'ETH') {
+        //   if (newState.sourceTokenSymbol === 'ETH') {
+        //     newState.sourceTokenSymbol = 'KNC'
+        //     newState.sourceToken = BLOCKCHAIN_INFO.tokens['KNC'].address
+        //   }
+        // } else {
+        //   newState.sourceTokenSymbol = 'ETH'
+        //   newState.sourceToken = BLOCKCHAIN_INFO.tokens['ETH'].address
+        // }
       }
 
       //reset all error
@@ -89,12 +89,12 @@ const exchange = (state = initState, action) => {
         newState.errors.selectTokenToken = ''
         return newState
       }
-      if ((newState.sourceTokenSymbol !== "ETH") &&
-        (newState.destTokenSymbol !== "ETH")) {
-        newState.errors.selectSameToken = ''
-        newState.errors.selectTokenToken = "error.select_token_token"
-        return newState
-      }
+      // if ((newState.sourceTokenSymbol !== "ETH") &&
+      //   (newState.destTokenSymbol !== "ETH")) {
+      //   newState.errors.selectSameToken = ''
+      //   newState.errors.selectTokenToken = "error.select_token_token"
+      //   return newState
+      // }
       newState.errors.selectSameToken = ''
       newState.errors.selectTokenToken = ''
       newState.errors.sourceAmountError = ''
