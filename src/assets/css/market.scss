@@ -1,6 +1,8 @@
 .market {
-  margin-top: 60px;
-
+  margin-top: 30px;
+  @include screen-min-width(large){
+    margin-bottom: 80px;
+  }
   &__title {
     text-align: center;
     font-size: 32px;
