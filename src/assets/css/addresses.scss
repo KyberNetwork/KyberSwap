@@ -25,6 +25,7 @@
     .block-title {
       font-size: 16px;
       color: #666666;
+      padding-left: 5px;
     }
   }
 
@@ -60,9 +61,6 @@
       @include clearfix;
       &:not(:last-child) {
         border-bottom: 1px solid $k-divider-light;
-      }
-      &:nth-child(2n+1) {
-        background-color: #FBFBFB;
       }
       .info {
         float: right;

@@ -34,7 +34,7 @@ const DropFile = (props) => {
         {/* <div className="how-to-use" data-for="keystore-tip" data-tip="How to use"></div> */}
         <div className="importer__symbol">
           <img src={require('../../../assets/img/landing/keystore_active.svg')} />
-          <div className="importer__name">JSON</div>
+          <div className="importer__name">{props.translate("import.json") || "JSON"}</div>
         </div>
         <button className="importer__button" onClick={(e) => props.onDrop(e)}>Select or Drag</button>
       </div>
