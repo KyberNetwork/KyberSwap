@@ -122,6 +122,11 @@ const global = (state = initState, action) => {
       var metamask = {address, balance, error}
       return Object.assign({}, state, { metamask: metamask })
     }
+
+    case "GLOBAL.SET_NOTI_HANDLER":{
+      const {notiService} = action.payload
+      return Object.assign({}, state, { notiService: notiService })
+    }
   }
   return state
 }

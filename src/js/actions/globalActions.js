@@ -205,3 +205,10 @@ export function updateMetamaskAccount(address, balance){
     payload: { address, balance }
   }
 }
+
+export function setNotiHandler(notiService) {
+  return {
+    type: "GLOBAL.SET_NOTI_HANDLER",
+    payload: { notiService }
+  }
+}
