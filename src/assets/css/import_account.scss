@@ -5,18 +5,26 @@
 //       width: 70%;
 //     }
 //   }
-$animationTime :0.5s;
+$animationTime: 0.5s;
 
   #import-account {
-    padding-top: 80px;
+    padding-top: 50px;
+    text-align: center;
+
+    #import-acc {
+      display: inline-block;
+    }
 
     .title {
       color: #fff;
-      text-align: center;
+      text-align: left;
       font-size: 42px;
+      letter-spacing: -0.9px;
+      opacity: 0;
       padding: 0;
       margin: 0;
       font-family: $font-cera;
+      animation: fade-in $animationTime forwards;
     }
 
     .sub-title {
@@ -27,7 +35,6 @@ $animationTime :0.5s;
 
     .import-account {
       display: flex;
-      justify-content: center;
       position: relative;
 
       &__item {
@@ -42,6 +49,10 @@ $animationTime :0.5s;
         text-align: center;
         transition: all .3s;
         animation: moving-up $animationTime forwards;
+
+        &:first-child {
+          margin-left: 0;
+        }
 
         .importer {
           &__name {
@@ -112,23 +123,12 @@ $animationTime :0.5s;
             background-image: url(../img/landing/notice_grey.svg);
           }
         }
-
-        @keyframes moving-up {
-          to {
-            bottom: -80px;
-            max-height: 500px;
-          }
-        }
-
-        @keyframes fade-in {
-          to {
-            opacity: 1;
-          }
-        }
       }
 
       @include screen-max-width(xlarge) {
         flex-wrap: wrap;
+        justify-content: center;
+        padding-bottom: 30px;
 
         &__item {
           width: 32%;
@@ -220,10 +220,6 @@ $animationTime :0.5s;
     @include screen-max-width(medium) {
       padding-top: 40px;
 
-      .import-account {
-        margin-top: 40px;
-      }
-
       @keyframes moving-up {
         to {
           bottom: 0;
@@ -236,6 +232,19 @@ $animationTime :0.5s;
       .title {
         font-size: 30px;
         text-align: left;
+      }
+    }
+
+    @keyframes moving-up {
+      to {
+        bottom: -20px;
+        max-height: 500px;
+      }
+    }
+
+    @keyframes fade-in {
+      to {
+        opacity: 1;
       }
     }
   }
