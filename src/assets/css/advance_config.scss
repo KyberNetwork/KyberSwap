@@ -156,6 +156,7 @@ $radio-color: #5D9E7A;
     font-size: 20px;
     padding-bottom: 0.5rem;
     color: #4B4A60;
+    font-weight: 500;
     // position: relative;
     // z-index: 1;
   }
@@ -206,6 +207,7 @@ $radio-color: #5D9E7A;
 
   .min-rate, .gas-config {
     .sub_title {
+      font-weight: 500;
       font-size: 1rem;
       color: #4B4A60;
     }

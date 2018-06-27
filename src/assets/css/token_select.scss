@@ -52,7 +52,8 @@
       padding-top: 12px;
       display: flex;
       align-items: center;
-      color: #454E5F;
+      color: rgba(69, 78, 95, .5);
+      font-weight: 500;
       &:focus{
         color: #ef8102;
       }

@@ -17,9 +17,9 @@
 // }
 
 .transaction-label{
-  // font-weight: bold;
   font-size: 14px;
-  // padding-left: 25px;
+  font-weight: 500;
+  color: #474d5f;
 }
 
 .unlock input {
@@ -235,7 +235,7 @@ h1.title {
   }
   div{
     display: inline-block;
-    box-shadow: 0 0 2px #aaa;
+    box-shadow: 0 2px 6px 0 rgba(184, 184, 184, 0.5);
   }
   .switch-button{
     @include breakpoint(small only) {
@@ -265,12 +265,15 @@ h1.title {
   }
   /* Transfer: */
   a{
-    color: #474D5F;
     background-color: #FCFCFE;
-    min-width: 120px;
-    padding: 10px;
+    min-width: 150px;
+    padding: 15px;
     display: inline-block;
-    font-weight: normal;
+    font-weight: bold;
+    font-size: 15px;
+    color: rgba(71, 77, 95, .5);
+    text-transform: uppercase;
+
     &.disable{
       color: #fff;
       background-color: #3C4664;
