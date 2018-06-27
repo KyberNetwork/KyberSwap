@@ -215,6 +215,7 @@
   "import": {
     "from_metamask": "METAMASK",
     "from_keystore": "KEYSTORE",
+    "json": "JSON",
     "from_trezor": "TREZOR",
     "from_ledger": "LEDGER",
     "from_private_key": "PRIVATE KEY",

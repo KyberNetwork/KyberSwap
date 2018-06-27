@@ -2,6 +2,8 @@ import React from "react";
 import { SelectAddressModal } from "../ImportAccount";
 import { roundingNumber } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
+import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
+import PathSelector from "../../containers/CommonElements/PathSelector";
 
 const ImportByDeviceView = (props) => {
 
@@ -24,6 +26,12 @@ const ImportByDeviceView = (props) => {
         props.getAddress(data);
     }
 
+    function shortAddress(address) {
+        var firstPhrase = address.substring(0, 10)
+        var secondPhrase = address.substring(address.length - 9)
+        return `${firstPhrase}...${secondPhrase}`
+    }
+
     function getCurrentList() {
         const addressLink = BLOCKCHAIN_INFO.ethScanUrl + 'address/';
         let currentListHtml = props.currentAddresses.map((address, index) => {
@@ -31,7 +39,7 @@ const ImportByDeviceView = (props) => {
                 <li key={address.addressString} onClick={() => getAddress(address)}>
                     <a class="name text-lowercase">
                         <label class="mb-0">
-                            <span class="hash">{address.addressString}</span>
+                            <span class="hash">{shortAddress(address.addressString)}</span>
                         </label>
                     </a>
                     <div class="info">
@@ -53,67 +61,71 @@ const ImportByDeviceView = (props) => {
     }
 
     function getListPathHtml() {
-        let listPath = props.dPath.map((dPath, index) => {
-            let disabledPath = (props.walletType == 'ledger' && dPath.notSupport) ? true : false;
-            let disabled = disabledPath? ' disabled' : ''
-            let active = (props.currentDPath == dPath.path) ? 'active' : ''
-            return (
-                <div class= {"column" + disabled} key={dPath.path}>
-                    <div className={"column-content " + active} onClick={() => {
-                        if (dPath.path && !disabledPath) choosePath(dPath.path)
-                    }}>
-                        <input type="radio" name="path"
-                            defaultValue={dPath.path}
-                            disabled={disabledPath}
-                        />
-                        <label class={'address-path-stamp' + disabled}
-                            for={'path-' + index}
-                            style={disabledPath ? { opacity: .5 } : {}}>
-                            {
-                                dPath.path ? (
-                                    <div>
-                                        <div class="name">{dPath.path}</div>
-                                        <div class="note">{dPath.desc}</div>
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <div class="name">{dPath.desc}</div>
-                                        <div class="address-path-input">
-                                            <input type="text" name="customPath" defaultValue={dPath.defaultP} />
-                                            {/* <a class="submit"
-                                                style={{ display: 'block' }}
-                                                onClick={() => choosePath(dPath.path)}
-                                            ></a> */}
-                                            <img src={require('../../../assets/img/import-account/arrow-down-orange.svg')} onClick={() => choosePath(dPath.path)}/>
-                                        </div>
-                                    </div>
-                                )
-                            }
-                        </label>
-                        <div className="choose-path-button">
-                            <img src={require('../../../assets/img/import-account/arrow_right_orange.svg')} width="30" height="30" />
-                        </div>
-                    </div>
-                </div>
-            )
-        })
-        return listPath;
+        console.log("list path", props.dPath,props.currentDPath)
+        return (<PathSelector
+            listItem = {props.dPath}
+            choosePath = {choosePath}
+            walletType = {props.walletType}
+            currentDPath = {props.currentDPath}
+        />)
+        // let listPath = props.dPath.map((dPath, index) => {
+        //     let disabledPath = (props.walletType == 'ledger' && dPath.notSupport) ? true : false;
+        //     let disabled = disabledPath? ' disabled' : ''
+        //     let active = (props.currentDPath == dPath.path) ? 'active' : ''
+        //     return (
+        //         <div class= {"column" + disabled} key={dPath.path}>
+        //             <div className={"column-content " + active} onClick={() => {
+        //                 if (dPath.path && !disabledPath) choosePath(dPath.path)
+        //             }}>
+        //                 <input type="radio" name="path"
+        //                     defaultValue={dPath.path}
+        //                     disabled={disabledPath}
+        //                 />
+        //                 <label class={'address-path-stamp' + disabled}
+        //                     for={'path-' + index}
+        //                     style={disabledPath ? { opacity: .5 } : {}}>
+        //                     {
+        //                         dPath.path ? (
+        //                             <div>
+        //                                 <div class="name">{dPath.path}</div>
+        //                                 <div class="note">{dPath.desc}</div>
+        //                             </div>
+        //                         ) : (
+        //                             <div>
+        //                                 <div class="name">{dPath.desc}</div>
+        //                                 <div class="address-path-input">
+        //                                     <input type="text" name="customPath" defaultValue={dPath.defaultP} />
+        //                                     <img src={require('../../../assets/img/import-account/arrow-down-orange.svg')} onClick={() => choosePath(dPath.path)}/>
+        //                                 </div>
+        //                             </div>
+        //                         )
+        //                     }
+        //                 </label>
+        //                 <div className="choose-path-button">
+        //                     <img src={require('../../../assets/img/import-account/arrow_right_orange.svg')} width="30" height="30" />
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     )
+        // })
+        // return listPath;
     }
 
     function getSelectAddressHtml() {
         return (
             <div>
                 <div class="content">
-                    <div class="row">
-                        <div class="column">
-                            <div class="block-title">
-                                {props.translate("modal.select_hd_path") || "Select HD derivation path"}
-                            </div>
-                            <form id="formPath" onSubmit={(e) => e.preventDefault()}>
-                                <div class="row small-up-2 medium-up-3 large-up-4 address-paths gutter-15">
+                    <div className="top-wrapper">
+                        <div class="title">{props.translate(`modal.select_${props.walletType}_address`) || 'Select address'}</div><a class="x" onClick={props.onRequestClose}>&times;</a>
+                        <div class="row">
+                            <div class="column">
+                                <div class="block-title">
+                                    {props.translate("modal.select_hd_path") || "Select HD derivation path"}
+                                </div>
+                                <div className="block-choose-path">
                                     {getListPathHtml()}
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>

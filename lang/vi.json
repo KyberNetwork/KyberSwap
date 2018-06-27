@@ -216,6 +216,7 @@
     "from_metamask": "Kết nối <br> Metamask",
     "from_keystore": "Chọn hoặc kéo<br />Keystore",
     "from_trezor": "Nhập từ<br />Trezor",
+    "json": "Nhập từ<br />JSON",
     "from_ledger": "Nhập từ<br />Ledger",
     "from_private_key": "Điền<br />private key",
     "from_private_key_input_title": "ĐIỀN PRIVATEKEY",
