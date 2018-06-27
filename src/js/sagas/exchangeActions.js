@@ -24,10 +24,7 @@ function* broadCastTx(action) {
     yield put(actions.prePareBroadcast())
     const hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", tx)
     yield call(runAfterBroadcastTx, ethereum, tx, hash, account, data)
-
-    var state = store.getState()
-    var notiService = state.global.notiService
-    notiService.callFunc("setNewTx",{hash: hash})
+    
   }
   catch (e) {
     console.log(e)
@@ -86,7 +83,9 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   yield put(actions.resetSignError())
 
 
-
+  var state = store.getState()
+  var notiService = state.global.notiService
+  notiService.callFunc("setNewTx",{hash: hash})
 
 
   //estimate time for tx

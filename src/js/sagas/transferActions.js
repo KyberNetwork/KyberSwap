@@ -21,9 +21,7 @@ function* broadCastTx(action) {
     const hash = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", tx)
     yield call(runAfterBroadcastTx, ethereum, tx, hash, account, data)
 
-    var state = store.getState()
-    var notiService = state.global.notiService
-    notiService.callFunc("setNewTx",{hash: hash})
+    
   }
   catch (e) {
     console.log(e)
@@ -46,6 +44,10 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   yield put(addTx(tx))
   yield put(actions.doTransactionComplete(hash))
   yield put(actions.finishTransfer())
+
+  var state = store.getState()
+  var notiService = state.global.notiService
+  notiService.callFunc("setNewTx",{hash: hash})
 }
 
 function* doTransactionFail(ethereum, account, e) {
