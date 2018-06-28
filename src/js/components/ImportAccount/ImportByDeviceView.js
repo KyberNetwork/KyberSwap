@@ -8,10 +8,11 @@ import PathSelector from "../../containers/CommonElements/PathSelector";
 const ImportByDeviceView = (props) => {
 
     function choosePath(dpath) {
-        let formPath = document.getElementById('formPath'),
+        let inputPath = document.getElementById('form-input-custom-path'),
             selectedPath = dpath;
         if (!dpath) {
-            selectedPath = formPath.customPath.value;
+            console.log("inputpath: ", inputPath.value)
+            selectedPath = inputPath.value;
         }
         props.choosePath(selectedPath, dpath);
     }
@@ -61,7 +62,6 @@ const ImportByDeviceView = (props) => {
     }
 
     function getListPathHtml() {
-        console.log("list path", props.dPath,props.currentDPath)
         return (<PathSelector
             listItem = {props.dPath}
             choosePath = {choosePath}
@@ -141,10 +141,10 @@ const ImportByDeviceView = (props) => {
                             <div class="address-list-navigation animated fadeIn">
                                 <a class={'previous ' + (props.isFirstList ? 'disabled' : '')} onClick={props.getPreAddress}>
                                     <img src={require('../../../assets/img/import-account/arrows_left_icon.svg')} />
-                                    {props.translate("modal.previous_addresses") || "Previous Addresses"}
+                                    <span>{props.translate("modal.previous_addresses") || "Previous Addresses"}</span>
                                 </a>
                                 <a class="next" onClick={props.getMoreAddress}>
-                                    {props.translate("modal.more_addresses") || "More Addresses"}
+                                    <span>{props.translate("modal.more_addresses") || "More Addresses"}</span>
                                     <img src={require('../../../assets/img/import-account/arrows_right_icon.svg')} />
                                 </a>
                             </div>

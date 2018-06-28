@@ -165,8 +165,8 @@ export default class EthereumService extends React.Component {
     this.fetchGasprice()
 
     this.fetchExchangeEnable()
-    //this.verifyExchange()
-    //this.verifyTransfer()
+    // this.verifyExchange()
+    // this.verifyTransfer()
 
     this.fetchGasExchange()
     this.fetchGasTransfer()
@@ -385,7 +385,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== constants.BASE_HOST + "/exchange") {
+    if (pathname !== constants.BASE_HOST + "/swap") {
       return
     }
     store.dispatch(verifyExchange())

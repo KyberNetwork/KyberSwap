@@ -153,6 +153,13 @@
         margin-left: 15px;
       }
     }
+    .previous, .next {
+      @include screen-max-width(medium) {
+        span {
+          display: none;
+        }
+      }
+    }
   }
 
   .address-list-from-path {
