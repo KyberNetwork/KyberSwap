@@ -225,7 +225,7 @@ const CONNECTION_CHECKER = {
 const CONFIG_ENV_LEDGER_LINK = "https://support.ledgerwallet.com/hc/en-us/articles/115005165269-What-if-Ledger-Wallet-is-not-recognized-on-Linux-"
 const LEDGER_SUPPORT_LINK = "https://support.ledgerwallet.com/hc/en-us/articles/115005198565"
 
-const STORAGE_KEY = "101"
+const STORAGE_KEY = "102"
 module.exports = {
   ERC20, KYBER_NETWORK, KYBER_WRAPPER, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,
   KYBER_WALLET_DATA, INIT_EXCHANGE_FORM_STATE, INIT_TRANSFER_FORM_STATE,
