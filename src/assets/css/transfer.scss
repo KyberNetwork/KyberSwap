@@ -104,10 +104,10 @@ $padding-col-left : 2rem;
   }
   .main-title {
     padding-top: 1.5rem;
-    font-size: 1.25rem;
     padding-bottom: 0;
     font-size: 24px;
     margin-bottom: 20px;
+    font-weight: bold;
   }
   .transaction-label{
 	  font-size: 14px;
@@ -120,9 +120,11 @@ $padding-col-left : 2rem;
       line-height: 55px;
       padding: 0 35px;
       background: #ef8102;
-      font-size: 1.3rem;
       border-radius: 4px;
       box-shadow: 0 10px 15px #ccc;
+      font-size: 20px;
+      font-weight: 600;
+      text-transform: unset;
     }
     &.error {
       .accent {
@@ -168,12 +170,12 @@ $padding-col-left : 2rem;
       }
       .focus-name{
         color: #222222;
-        text-transform: initial;
-        font-size: 15px;
+        font-weight: bold;
       }
       .focus-balance{
         color: #666666;
         font-size: 14px;
+        font-weight: bold;
         .token-symbol{
           margin-left: 5px;
         }

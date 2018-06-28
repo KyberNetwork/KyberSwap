@@ -118,6 +118,7 @@ $radio-color: #5D9E7A;
           div:first-child {
             margin: 0 10px;
             text-transform: uppercase;
+            font-weight: bold;
           }
           div:last-child {
             display: flex;
@@ -156,7 +157,7 @@ $radio-color: #5D9E7A;
     font-size: 20px;
     padding-bottom: 0.5rem;
     color: #4B4A60;
-    font-weight: 500;
+    font-weight: bold;
     // position: relative;
     // z-index: 1;
   }
@@ -207,7 +208,7 @@ $radio-color: #5D9E7A;
 
   .min-rate, .gas-config {
     .sub_title {
-      font-weight: 500;
+      font-weight: bold;
       font-size: 1rem;
       color: #4B4A60;
     }
@@ -316,8 +317,18 @@ $radio-color: #5D9E7A;
       color: #6A6B7D;
       .title-fee{
         text-transform: uppercase;
-        font-size: 0.8rem;
+        font-size: 14px;
         margin-bottom: 0.4rem;
+      }
+
+      .title-fee,
+      div:nth-child(2) {
+        font-weight: bold;
+        color: #222;
+      }
+
+      div:nth-child(2) {
+        font-size: 18px;
       }
     }
     .custom-radio{

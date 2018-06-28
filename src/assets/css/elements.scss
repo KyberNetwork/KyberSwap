@@ -18,7 +18,7 @@
 
 .transaction-label{
   font-size: 14px;
-  font-weight: 500;
+  font-weight: bold;
   color: #474d5f;
 }
 
@@ -250,6 +250,9 @@ h1.title {
     float: left;
     line-height: 2.4;
     cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+
     @include breakpoint(small only) {
       display: none;
     }
