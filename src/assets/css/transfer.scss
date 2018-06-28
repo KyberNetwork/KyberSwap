@@ -107,7 +107,7 @@ $padding-col-left : 2rem;
     padding-bottom: 0;
     font-size: 24px;
     margin-bottom: 20px;
-    font-weight: bold;
+    font-weight: 600;
   }
   .transaction-label{
 	  font-size: 14px;
@@ -170,12 +170,12 @@ $padding-col-left : 2rem;
       }
       .focus-name{
         color: #222222;
-        font-weight: bold;
+        font-weight: 600;
       }
       .focus-balance{
         color: #666666;
         font-size: 14px;
-        font-weight: bold;
+        font-weight: 600;
         .token-symbol{
           margin-left: 5px;
         }

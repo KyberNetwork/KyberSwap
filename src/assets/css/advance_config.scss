@@ -118,7 +118,7 @@ $radio-color: #5D9E7A;
           div:first-child {
             margin: 0 10px;
             text-transform: uppercase;
-            font-weight: bold;
+            font-weight: 600;
           }
           div:last-child {
             display: flex;
@@ -157,7 +157,7 @@ $radio-color: #5D9E7A;
     font-size: 20px;
     padding-bottom: 0.5rem;
     color: #4B4A60;
-    font-weight: bold;
+    font-weight: 600;
     // position: relative;
     // z-index: 1;
   }
@@ -208,7 +208,7 @@ $radio-color: #5D9E7A;
 
   .min-rate, .gas-config {
     .sub_title {
-      font-weight: bold;
+      font-weight: 600;
       font-size: 1rem;
       color: #4B4A60;
     }

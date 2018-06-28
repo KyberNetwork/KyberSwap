@@ -90,7 +90,7 @@
     font-size: 24px;
     color: #141927;
     margin-bottom: 20px;
-    font-weight: bold;
+    font-weight: 600;
 
     @include screen-min-width(large) {
       margin-top: 1.5rem;
@@ -133,7 +133,7 @@
     text-align: center;
     margin-bottom: 10px;
     margin-top: 1rem;
-    font-weight: bold;
+    font-weight: 600;
 
     .seperator{
       @include screen-max-width(large) {
@@ -231,14 +231,14 @@
       .focus-name{
         color: #222222;
         font-size: 14px;
-        font-weight: bold;
+        font-weight: 600;
         text-transform: uppercase;
         letter-spacing: -0.4px;
       }
       .focus-balance{
         color: #666666;
         font-size: 14px;
-        font-weight: bold;
+        font-weight: 600;
 
         .token-symbol{
           margin-left: 5px;
