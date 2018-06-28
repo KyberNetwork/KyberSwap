@@ -121,8 +121,8 @@
     "import": "가져오기",
     "enter_password_placeholder": "확인하려면 지갑 암호를 입력주시기 바랍니다",
     "select_hd_path": "하드디스크에서 파생된 경로 선택",
-    "select_trezor_address": "TREZOR 주소선택",
-    "select_ledger_address": "LEDGER 주소 선택",
+    "select_trezor_address": "Trezor 주소선택",
+    "select_ledger_address": "Ledger 주소 선택",
     "select_address": "사용할 주소를 선택하세요",
     "previous_addresses": "이전 주소",
     "more_addresses": "더 많은 주소",
@@ -215,6 +215,7 @@
   "import": {
     "from_metamask": "Metamask에 <br> 연결하기",
     "from_keystore": "키 저장소를 선택 또는 <br /> 드래그 하십시오",
+    "json": "JSON <br />",
     "from_trezor": "Trezor에서 <br /> 가져오기",
     "from_ledger": "Ledger에서 <br /> 가져오기",
     "from_private_key": "개인키 <br /> 입력하기",
