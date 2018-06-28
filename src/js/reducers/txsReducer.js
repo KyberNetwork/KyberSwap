@@ -39,7 +39,7 @@ const txs = (state = initState, action) => {
   //   tsx = JSON.parse(localStorage.getItem("txs"))
   // }
   // let merged = {...tsx, ...state};
-  localStorage.setItem("txs",JSON.stringify(state));
+  //localStorage.setItem("txs",JSON.stringify(state));
   return state
 }
 

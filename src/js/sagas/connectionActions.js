@@ -10,6 +10,8 @@ import Web3Service from "../services/web3"
 import BLOCKCHAIN_INFO from "../../../env"
 import * as converter from "../utils/converter"
 
+import NotiService from "../services/noti_service/noti_service"
+
 export function* createNewConnection(action) {
   var connectionInstance = new EthereumService()
   yield put(setConnection(connectionInstance))
@@ -26,6 +28,10 @@ export function* createNewConnection(action) {
     const web3Service = new Web3Service(web3)
     const watchMetamask = yield fork(watchMetamaskAccount, connectionInstance, web3Service)
   }
+
+
+  var notiService = new NotiService({type: "session"})
+  yield put(globalActions.setNotiHandler(notiService))
 
 //  const watchConnectionTask = yield fork(watchToSwitchConnection, connectionInstance)
 

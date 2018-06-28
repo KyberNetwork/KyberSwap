@@ -8,10 +8,10 @@ const TransactionLayout = (props) => {
     window.location.href = "/"
   }
   return (
-    <div class="frame">
+    <div class="frame exchange-frame">
       <div className="swap-navigation">        
         <div>
-          <a onClick={(e)=>gotoRoot(e)}>Home</a>
+          <a onClick={(e)=>gotoRoot(e)}>{props.translate("home") || "Home"}</a>
         </div>
         <div className="seperator">/</div>
         <div>
@@ -25,7 +25,7 @@ const TransactionLayout = (props) => {
       <h1 class="title frame-tab">
         <div className="back-home" onClick={(e) => props.endSession(e)}>
           <img src={require("../../../assets/img/arrow_left.svg")} className="back-arrow"/>
-          <span>Back</span>
+          <span>{props.translate("transaction.back") || "Back"}</span>
         </div>
         <div className="switch-button">
           <Link to={constansts.BASE_HOST + "/swap"} className={props.page === "exchange" ? "disable" : ""}>{props.translate("transaction.swap") || "Swap"}</Link>

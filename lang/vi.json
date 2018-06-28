@@ -16,10 +16,14 @@
   "address": {
     "address": "Địa chỉ",
     "import_address": "Nhập địa chỉ",
+    "exchange_from": "Exchange from",
     "my_balance": "Số dư",
     "estimated_value": "Giá trị ước tính",
     "total": "Tổng giá trị",
-    "hide_zero_balance": "Ẩn số dư nhỏ"
+    "hide_zero_balance": "Ẩn số dư nhỏ",
+    "symbol": "SYMBOL",
+    "price": "PRICE",
+    "your_wallet_address": "Your Wallet Address"
   },
 
   "transaction": {
@@ -67,15 +71,19 @@
     "current_address_balance": "Số dư hiện tại",
 
     "transaction_error": "Lỗi giao dịch",
-    
     "notification": "Thồng báo",
     "not_enable_exchange": "Địa chỉ của bạn không phù hợp để trao đổi tại thời điểm hiện tại.",
     "kyber_down" : "Kyber hiện tại không hỗ trợ trao đổi. <br/>Xin bạn vui lòng quay laị sau!",
 
+    "swap": "Swap",
     "transaction_time": "Thời gian giao dịch: < ${time} phút",
     "waiting_transaction": "Đang đợi giao dịch được xác thực",
     "click_to_ex_all_balance": "Trao đổi toàn bộ tài khoản",
     "click_to_transfer_all_balance": "Chuyển toàn bộ tài khoản",
+
+    "higher_min_acceptable_rate": "Higher Min acceptable rate typically results in lower success rate when the market is volatile.",
+    "our_suggest": "<strong> ${suggestRate}</strong> is our suggested Min acceptable rate by default.",
+    "min_acceptable_rate": "MIN ACCEPTABLE RATE",
 
     "about_to_exchange": "Bạn chuẩn bị chuyển đổi",
     "about_to_transfer": "Bạn chuẩn bị gửi",
@@ -83,6 +91,8 @@
     "gas_limit": "Gas giới hạn",
     "gas_price": "Giá Gas",
     "for": "đổi lấy",
+    "gwei": "Gwei",
+    "for": "for",
     "exchange_for": "cho xấp xỉ",
     "to": "đến",
     "best_rate": "Tỷ giá tốt nhất",
@@ -92,8 +102,12 @@
     "transfer_tooltip": "Chuyển eth hoặc token đến một tài khoản khác",
     "transaction_gasprice_50": "Giá Gas càng cao, giao dịch càng nhanh. Giá Gas lớn nhất 50 Gwei",
     "transaction_gasprice": "Giá Gas càng cao, giao dịch càng nhanh",
+    "max_gas_price": "Max gas price: ${maxGas} Gwei",
     "best_rate_tooltip": "Tỷ giá thấp hơn cho khả năng thành công cao hơn khi thị trường biến động",
     "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>",
+
+    "error_tx_log":"Warning! Log is empty",
+    "error_tx_contract":"Warning! Error encountered during contract execution",
     "no_pedding_tx": "Không có giao dịch nào đang chờ",
     "rate_info": "Tỉ giá có thể thay đổi. <br/>Bạn có thể  chỉ định tỉ giá nhỏ nhất bởi kích \"NÂNG CAO\"",
     "address": "Địa chỉ nhận",
@@ -107,6 +121,8 @@
     "import": "Nhập",
     "enter_password_placeholder": "Nhập mật khẩu xác nhận",
     "select_hd_path": "Chọn HD derivation path",
+    "select_trezor_address": "Select TREZOR address",
+    "select_ledger_address": "Select LEDGER address",
     "select_address": "Chọn địa chỉ bạn muốn sử dụng",
     "previous_addresses": "Địa chỉ Trước",
     "more_addresses": "Thêm Địa chỉ",
@@ -128,15 +144,12 @@
     "approve": "Đồng ý"
   },
 
-
   "error": {
     "select_same_token": "Không thể đổi giữa hai token giống nhau",
     "select_token_token": "Cặp token này chưa được hỗ trợ",
     "source_amount_too_high": "Số lượng chuyển quá lớn",
-
     "source_amount_too_high_cap": "Số lượng chuyển vượt quá hạn mức. Nguồn phải nhỏ hơn ${ cap } ETH",
     "dest_amount_too_high_cap": "Số lượng chuyển vượt quá hạn mức. Đích phải nhỏ hơn ${ cap } ETH",
-
     "source_amount_too_small": "Số lượng chuyển quá nhỏ",
     "source_amount_rate_error": "Không thể chuyển đổi tại thời điểm hiện tại",
     "source_amount_too_high_for_reserve": "Số lượng chuyển quá lớn (hiện không có sẵn token để giao dịch tại thời điểm này)",
@@ -206,7 +219,13 @@
     "from_ledger": "Nhập từ<br />Ledger",
     "from_private_key": "Điền<br />private key",
     "from_private_key_input_title": "ĐIỀN PRIVATEKEY",
-    "from_private_key_input_title_placehoder": "Điền private key"
+    "from_private_key_input_title_placehoder": "Điền private key",
+    "connect": "Connect",
+    "address": "Address",
+    "balance": "Balance",
+    "import": "Import",
+    "swap_from_ledger": "Swap from Ledger",
+    "swap_from_trezor": "Swap from Trezor"
   },
 
   "info": {
@@ -246,6 +265,7 @@
     "rate": "Tỉ Giá",
     "description": "Mô tả",
     "amount": "Số lượng",
+    "in": "Trong",
     "recent": "Gần đây"
   },
 
@@ -265,9 +285,35 @@
     "instant": "Tức thì",
     "liquid": "Thanh khoản",
     "compatible": "Tương thích",
-    "get_started": "Bắt đầu"
+    "get_started": "Bắt đầu",
+    "exchange":"exchange",
+    "instant_and_secure_token_swap": "Instant and Secure Token Swaps.",
+    "no_oderbooks_no_deposit": "No orderbooks, no deposits, pure joy.",
+    "metamask": "METAMASK",
+    "json": "JSON",
+    "ledger": "LEDGER",
+    "private_key": "PRIVATE KEY"
   },
 
+  "market": {
+    "eth_market": "Ethereum Market",
+    "search": "Search",
+    "currency": "Currency",
+    "settings": "Settings",
+    "market_title": "Market",
+    "sell_price": "Sell Price",
+    "buy_price": "Buy Price",
+    "try_searching_for_token": "Try Searching for Token",
+    "market_cap": "Market Cap",
+    "circulating_supply": "Circulating Supply",
+    "total_supply": "Total Supply",
+    "last_7d": "Last 7D",
+    "change": "24HR Change",
+    "volume": "Volume (24h)",
+    "support_eth_only": "Now support only pairs with ETH, not support pairs with USD yet."
+  },
+
+  "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",
   "tracker": "Thông tin",
   "help": "Hỗ trợ",

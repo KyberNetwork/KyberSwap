@@ -1,4 +1,11 @@
+.exchange-frame {
+  background: #f5f5f5;
+  padding-top: 40px !important;
+}
+
 #exchange {
+  margin-bottom: 50px;
+
   @media print, screen and (min-width: 40em) {
     .medium-5 {
       width: 45%;
@@ -14,6 +21,7 @@
   @include screen-max-width(large) {
     box-shadow: 0 7px 25px #ddd;
     margin: 10px;
+    background: white;
   }
   @include screen-max-width(large) {
     @include screen-min-width(medium){
@@ -39,6 +47,7 @@
   @include screen-min-width(large) {
     .balance-wrapper{
       border: 1px solid #ddd;
+      background: white;
     }
     .exchange-wrapper-btn{
       text-align: center;
@@ -47,6 +56,7 @@
       padding: 0 3rem;
       border: 1px solid #ddd;
       border-left: none;
+      background: white;
     }    
     .exchange-col-2{
       padding-left: 20px;
@@ -77,10 +87,11 @@
   .main-title  {
     line-height: 1.2;
     letter-spacing: -0.1px;
-    
     font-size: 24px;
     color: #141927;
     margin-bottom: 20px;
+    font-weight: 500;
+
     @include screen-min-width(large) {
       margin-top: 1.5rem;
       margin-bottom: 1.2rem;
@@ -119,14 +130,8 @@
     text-align: center;
     margin-bottom: 10px;
     margin-top: 1rem;
+    font-weight: 500;
 
-
-    
-
-    // div {
-    //   font-size: 0.97rem;
-    //   letter-spacing: 0.1px;
-    // }
     .seperator{
       @include screen-max-width(large) {
         display: none;
@@ -211,15 +216,27 @@
       }
       .d-flex{
         align-items: center;
+        div:nth-child(2) {
+          overflow: hidden;
+          .focus-name {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }          
+        }
       }
       .focus-name{
         color: #222222;
-        text-transform: initial;
-        font-size: 15px;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: -0.4px;
       }
       .focus-balance{
         color: #666666;
         font-size: 14px;
+        font-weight: 500;
+
         .token-symbol{
           margin-left: 5px;
         }
@@ -590,7 +607,6 @@
   align-items: center;
   max-width: 75rem;
   margin: 0 auto;
-  margin-top: 20px;
   @include screen-max-width(large){
     margin: 20px 10px 10px 10px;
   }
