@@ -90,7 +90,7 @@
     font-size: 24px;
     color: #141927;
     margin-bottom: 20px;
-    font-weight: 500;
+    font-weight: bold;
 
     @include screen-min-width(large) {
       margin-top: 1.5rem;
@@ -115,9 +115,12 @@
     line-height: 55px;
     padding: 0 35px;
     background: #ef8102;
-    font-size: 1.3rem;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: unset;
     border-radius: 4px;
     box-shadow: 0 10px 15px #ccc;
+
     @include screen-max-width(large) {
       margin-top: 30px;
     }
@@ -130,7 +133,7 @@
     text-align: center;
     margin-bottom: 10px;
     margin-top: 1rem;
-    font-weight: 500;
+    font-weight: bold;
 
     .seperator{
       @include screen-max-width(large) {
@@ -228,14 +231,14 @@
       .focus-name{
         color: #222222;
         font-size: 14px;
-        font-weight: 500;
+        font-weight: bold;
         text-transform: uppercase;
         letter-spacing: -0.4px;
       }
       .focus-balance{
         color: #666666;
         font-size: 14px;
-        font-weight: 500;
+        font-weight: bold;
 
         .token-symbol{
           margin-left: 5px;
@@ -619,6 +622,7 @@
   .active{
     a{
       color: #666666;
+      font-weight: 600;
     }
   }
 }

@@ -62,16 +62,14 @@ $alert-color: #ff5d00;
   src: url(../fonts/text-security-disc.ttf);
 }
 
-body{
+html body{
   color: $black;
-  font-family: $code-font-family;
-  // min-width: 350px;
-}
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
-  font-family: $code-font-family;
-}
+  font-family: $font-openSans;
 
-
+  h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
+    font-family: $font-cera;
+  }
+}
 
 #waiting {
   &.ledger{
