@@ -6,15 +6,21 @@ import { getTranslate } from 'react-localize-redux';
 export default class PathSelector extends React.Component {
     constructor(props) {
         super(props);
-        // console.log(props.defaultItem)
-        // console.log(props.listItem)
+        var description
+        (props.listItem).map((dPath, index) => {
+            if (dPath.path === props.currentDPath) {
+                description = props.listItem[index].desc
+                return
+            }
+        })
         this.state = {
             open: false,
             focus: {name: props.currentDPath},
             list: props.listItem,
             onChange: props.choosePath ? props.choosePath : null,
             walletType: props.walletType,
-            currentDPath: props.currentDPath
+            currentDPath: props.currentDPath,
+            description: description
         }
     }
 
@@ -33,10 +39,12 @@ export default class PathSelector extends React.Component {
 
     selectItem = (e, index) => {
         var path = this.state.list[index].path
+        var desc = this.state.list[index].desc
         this.setState({
             focus: { name: path },
             open: false,
-            currentDPath: path
+            currentDPath: path,
+            description: desc
         })
         if (this.state.onChange) this.state.onChange(path)
     }
@@ -47,7 +55,11 @@ export default class PathSelector extends React.Component {
             if (!disabledPath) {
                 return (
                     <div key={dPath + index} className="token-item" onClick={(e) => {
-                        if (dPath.path) this.selectItem(e, index)
+                        if (dPath.path === this.state.currentDPath) {
+                            this.setState({
+                                open: false
+                            })
+                        } else if (dPath.path) this.selectItem(e, index)
                         }}>
                         { 
                             dPath.path ? (
@@ -58,15 +70,20 @@ export default class PathSelector extends React.Component {
                             ) : (
                                 <div className="input-custom-path">
                                     <div class="">
-                                        <input type="text" name="customPath" defaultValue={dPath.defaultP}  placeholder="Your Custom Path" />
+                                        <input id="form-input-custom-path" type="text" name="customPath" defaultValue={dPath.defaultP}  placeholder="Your Custom Path" />
                                         <img src={require('../../../assets/img/angle-right.svg')} onClick={(e) => {
                                             if (this.state.onChange){
                                                 this.setState({
                                                     focus: { name: dPath.defaultP },
                                                     open: false,
-                                                    currentDPath: dPath.path
+                                                    currentDPath: dPath.path,
+                                                    description: dPath.desc
                                                 })
-                                                this.state.onChange(dPath.path)
+                                                if (dPath.path === this.state.currentDPath) {
+                                                    this.setState({
+                                                        open: false
+                                                    })
+                                                } else this.state.onChange(dPath.path)
                                             } 
                                         }}/>
                                     </div>
@@ -75,7 +92,7 @@ export default class PathSelector extends React.Component {
                         }
                         {
                             (this.state.currentDPath === dPath.path) ? 
-                            <img src={require('../../../assets/img/checkmark-selected.svg')}/>
+                            <img src={require('../../../assets/img/import-account/checked-arrow.svg')}/>
                             : ""
                         }
                     </div>
@@ -91,7 +108,7 @@ export default class PathSelector extends React.Component {
                     <DropdownTrigger className="notifications-toggle">
                         <div className="focus-item d-flex">
                             <div>
-                                {this.state.focus.name}
+                                {`${this.state.focus.name} - ${this.state.description}`}
                             </div>
                             {/* <div><i className={'k k-angle ' + (this.state.open ? 'up' : 'down')}></i></div> */}
                             <div>
