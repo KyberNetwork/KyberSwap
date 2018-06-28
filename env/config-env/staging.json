@@ -286,7 +286,35 @@
       "address": "0x84f7c44b6fed1080f647e354d552595be2cc602f",
       "symbol":"BBO", 
       "icon": "bbo.svg"
-    }
+    },
+    "POLY": {
+      "name": "Polymath",
+      "decimal": 18,
+      "address": "0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec",
+      "symbol":"POLY", 
+      "icon": "poly.svg"
+    },
+    "LBA": {
+      "name": "Libra Credit",
+      "decimal": 18,
+      "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
+      "symbol":"LBA", 
+      "icon": "lba.svg"
+    },
+    "EDU": {
+      "name": "EduCoin",
+      "decimal": 18,
+      "address": "0xf263292e14d9d8ecd55b58dad1f1df825a874b7c",
+      "symbol":"EDU", 
+      "icon": "edu.svg"
+    },
+    "CVC": {
+      "name": "Civic",
+      "decimal": 8,
+      "address": "0x41e5560054824ea6b0732e656e3ad64e20e94e45",
+      "symbol":"CVC", 
+      "icon": "cvc.svg"
+    } 
   },
   "ethScanUrl": "https://etherscan.io/",
   "reserve": "0x2c5a182d280eeb5824377b98cd74871f78d6b8bc",
