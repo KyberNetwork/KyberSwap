@@ -140,7 +140,10 @@ export default class MarketTable extends React.Component {
 
   addUnit = (input, currency) => {
     return (
-      <span>{this.formatNumber(input)} {currency}</span>
+      <div className="symbol-price">
+        <span className="value">{this.formatNumber(input)}</span>
+         <span className="unit">{currency}</span>
+      </div>
     )
   }
 
@@ -311,6 +314,7 @@ export default class MarketTable extends React.Component {
       <ReactTable
         data={this.props.data}
         columns={columns}
+        showPagination = {false}
         getTrProps={(state, rowInfo) => {
           return {
             onClick: (e) => {
