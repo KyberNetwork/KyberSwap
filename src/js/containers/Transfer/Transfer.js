@@ -19,7 +19,7 @@ import { clearSession } from "../../actions/globalActions"
   if (account === false) {
     window.location.href = "/swap"
   }
-  const translate = getTranslate(store.locale)
+  var translate = getTranslate(store.locale)
   // var location = "/"
   // if (store.router.location){
   //   location = store.router.location.pathname

@@ -4,11 +4,18 @@ import { connect } from "react-redux"
 import { roundingNumber } from "../../utils/converter"
 import * as actions from "../../actions/exchangeActions"
 import { getTranslate } from 'react-localize-redux';
+import * as converter from '../../utils/converter'
 //import ReactTooltip from 'react-tooltip'
 
 @connect((store, props) => {
   var rateEthUsd = store.tokens.tokens.ETH.rateUSD
-  return {...props, translate: getTranslate(store.locale), rateEthUsd}
+  var sourceToken = props.exchangeRate.sourceToken
+  var tokens = store.tokens.tokens
+  var rateUSD = 0
+  if (tokens[sourceToken]){
+    rateUSD = tokens[sourceToken].rateUSD
+  }
+  return {...props, translate: getTranslate(store.locale), rateEthUsd, rateUSD}
 })
 
 export default class RateBetweenToken extends React.Component {
@@ -27,7 +34,8 @@ export default class RateBetweenToken extends React.Component {
         </div>
         <div className="cell large-2 seperator">|</div>
         <div className="cell large-5">
-          1 ETH = {this.props.rateEthUsd} USD
+
+          1 {this.props.exchangeRate.sourceToken} = {converter.roundingNumber(this.props.rateUSD)} USD
         </div>
       </div>
     )

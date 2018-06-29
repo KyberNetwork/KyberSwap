@@ -204,6 +204,18 @@
     box-shadow: 0 0 5px #bbb;
     padding: 15px 20px;
     color: #666666;
+    .symbol-price{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      span{
+        width: auto !important;
+        padding: 0px !important;
+        &:first-child{
+          margin-right: 5px;
+        }
+      }
+    }
     .ReactTable {
       border: none;
       overflow: visible;
