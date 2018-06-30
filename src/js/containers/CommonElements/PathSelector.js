@@ -2,32 +2,16 @@ import React from "react"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import { getTranslate } from 'react-localize-redux';
 
-
 export default class PathSelector extends React.Component {
     constructor(props) {
         super(props);
-        var description
-        (props.listItem).map((dPath, index) => {
-            if (dPath.path === props.currentDPath) {
-                description = props.listItem[index].desc
-                return
-            }
-        })
         this.state = {
             open: false,
-            focus: {name: props.currentDPath},
             list: props.listItem,
             onChange: props.choosePath ? props.choosePath : null,
             walletType: props.walletType,
-            currentDPath: props.currentDPath,
-            description: description
         }
     }
-
-    //   changeWord = (e) => {
-    //     var value = e.target.value.toLowerCase()
-    //     this.setState({ searchWord: value })
-    //   }
 
     showSelector = (e) => {
         this.setState({ open: true })
@@ -49,13 +33,25 @@ export default class PathSelector extends React.Component {
         if (this.state.onChange) this.state.onChange(path)
     }
 
+    focusItem = () => {
+        return (this.props.listItem).map((dPath, index) => {
+            if (dPath.path === this.props.currentDPath) {
+                var description = dPath.desc
+                if (dPath.path) {
+                    return `${dPath.path} - ${description}`
+                }
+                return `${dPath.defaultP} - ${description}`
+            }
+        })
+    }
+
     getListItem = () => {
         return (this.state.list).map((dPath, index) => {
             let disabledPath = (this.state.walletType == 'ledger' && dPath.notSupport) ? true : false
             if (!disabledPath) {
                 return (
                     <div key={dPath + index} className="token-item" onClick={(e) => {
-                        if (dPath.path === this.state.currentDPath) {
+                        if (dPath.path === this.props.currentDPath) {
                             this.setState({
                                 open: false
                             })
@@ -72,18 +68,15 @@ export default class PathSelector extends React.Component {
                                     <div class="">
                                         <input id="form-input-custom-path" type="text" name="customPath" defaultValue={dPath.defaultP}  placeholder="Your Custom Path" />
                                         <img src={require('../../../assets/img/angle-right.svg')} onClick={(e) => {
-                                            if (this.state.onChange){
+                                            if (dPath.path === this.props.currentDPath) {
                                                 this.setState({
-                                                    focus: { name: dPath.defaultP },
-                                                    open: false,
-                                                    currentDPath: dPath.path,
-                                                    description: dPath.desc
+                                                    open: false
                                                 })
-                                                if (dPath.path === this.state.currentDPath) {
-                                                    this.setState({
-                                                        open: false
-                                                    })
-                                                } else this.state.onChange(dPath.path)
+                                            } else if (this.state.onChange){
+                                                this.setState({
+                                                    open: false                                                
+                                                })
+                                                this.state.onChange(dPath.path)
                                             } 
                                         }}/>
                                     </div>
@@ -91,7 +84,7 @@ export default class PathSelector extends React.Component {
                             )
                         }
                         {
-                            (this.state.currentDPath === dPath.path) ? 
+                            (this.props.currentDPath === dPath.path) ? 
                             <img src={require('../../../assets/img/import-account/checked-arrow.svg')}/>
                             : ""
                         }
@@ -108,9 +101,8 @@ export default class PathSelector extends React.Component {
                     <DropdownTrigger className="notifications-toggle">
                         <div className="focus-item d-flex">
                             <div>
-                                {`${this.state.focus.name} - ${this.state.description}`}
+                                {this.focusItem()}
                             </div>
-                            {/* <div><i className={'k k-angle ' + (this.state.open ? 'up' : 'down')}></i></div> */}
                             <div>
                                 <img src={require('../../../assets/img/exchange/arrow-down-swap.svg')} />
                             </div>                            

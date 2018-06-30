@@ -64,7 +64,6 @@
       }
       .info {
         float: right;
-        text-align: right;
         white-space: nowrap;
         .link {
           color: #666666;
@@ -87,9 +86,12 @@
             margin-left: 5px;
           }
         }
-        @media screen and (max-width: 40em) {
+        @include screen-min-width(medium) {
+          text-align: right;
+        }
+        @include screen-max-width(medium) {
           float: left;
-          padding-left: 5px;
+          padding: 10px 0 10px 5px;
         }
       }
       &:hover{
@@ -106,9 +108,16 @@
       .name {
         float: left;
         padding-left: 5px;
+        width: 100%;
         label{
           // color: #666666;
           font-size: 14px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          @include screen-min-width(medium) {
+            padding-right: 15px;
+          }
         }
       }
     }
