@@ -409,9 +409,6 @@
       }
 
       .row {
-        font-weight: 600;
-        color: #666;
-
         &:first-child {
           margin-bottom: 3px;
         }
@@ -453,8 +450,6 @@
         font-size: 14px;
         line-height: 1.71;
         letter-spacing: 0.8px;
-        color: #666666;
-        font-weight: 600;
       }
     }
   }
@@ -469,24 +464,35 @@
         background-color: #ffffff;
         border: solid 0.8px rgba(204, 204, 204, 0.72);
         border-radius: 1px;
-        color: unset;
+        color: #666;
         padding: 10px;
+
+        .grid-x {
+          div {
+
+            &:first-child {
+              margin: 0 10px 0 15px;
+            }
+
+            &:last-child {
+              position: relative;
+              top: 2px;
+            }
+          }
+        }
+
         @include screen-max-width(medium){
           .item-icon {
             margin-bottom: 10px;
           }
         }
-        // .d-flex{
-        //   padding: 10px 10px 10px 20px;
-        //   span{
-        //     padding-left: 10px;
-        //   }
-        // }
       }
       .amount-left{
+        font-weight: 600;
         margin-right: -15px;
       }
       .amount-right{
+        font-weight: 600;
         margin-left: -15px;
       }
       .space{
