@@ -16,14 +16,14 @@
   "address": {
     "address": "주소",
     "import_address": "주소 가져오기",
-    "exchange_from": "Exchange from",
+    "exchange_from": "다음에서 교환하기",
     "my_balance": "잔액",
     "estimated_value": "추정 가치",
     "total": "추정 가치",
     "hide_zero_balance": "잔액 숨기기",
     "symbol": "SYMBOL",
     "price": "PRICE",
-    "your_wallet_address": "Your Wallet Address"
+    "your_wallet_address": "지갑 주소"
   },
 
   "transaction": {
@@ -70,7 +70,7 @@
     "cound_not_broadcast": "블록체인에 거래를 전송 할 수 없습니다",
     "current_address_balance": "현재 주소 잔액",
 
-    "swap": "Swap",
+    "swap": "교환하기",
     "transaction_error": "거래 오류",
     "notification": "공고",
     "not_enable_exchange": "귀하의 주소는 현재 교환 대상이 아닙니다. 나중에 다시 오십시오!",
@@ -81,9 +81,9 @@
     "click_to_ex_all_balance": "모든 잔액을 교환하려면 클릭하십시오.",
     "click_to_transfer_all_balance": "모든 잔액을 송금하려면 클릭하십시오",
 
-    "higher_min_acceptable_rate": "Higher Min acceptable rate typically results in lower success rate when the market is volatile.",
-    "our_suggest": "<strong> ${suggestRate}</strong> is our suggested Min acceptable rate by default.",
-    "min_acceptable_rate": "MIN ACCEPTABLE RATE",
+    "higher_min_acceptable_rate": "변동이 심한 시장 상황에서 '허용 가능 최소 비율'을 높게 설정할 시, 거래가 원활하게 진행되지 않을 수 있습니다.",
+    "our_suggest": "<strong> ${suggestRate}</strong>저희들이 제시하는 현재 '허용 가능 최소 비율 값'입니다.",
+    "min_acceptable_rate": "허용 가능 최소 비율",
 
     "about_to_exchange": "환전을 시작합니다",
     "about_to_transfer": "송금을 시작합니다",
@@ -111,7 +111,7 @@
     "no_pedding_tx": "미체결 거래가 없습니다",
     "rate_info": "결제 과정에서 가격이 변경 될 수 있습니다. <br> \"고급 옵션\"을 클릭하면 최저 가격을 표시 할 수 있습니다.",
     "address": "받는 주소",
-    "slippage_tip": "요금이 변경 될 수 있습니다. 고급 옵션에서 최소 비율을 조절하여 최대 미끄럼 비율을 변경할 수 있습니다.",
+    "slippage_tip": "고급 옵션에서 최소 비율을 조절하여 최대 미끄럼 비율을 변경할 수 있습니다.",
     "max_slippage": "가치를 잃은 ${percent}%로 최대입니다"
   },
 
@@ -221,12 +221,12 @@
     "from_private_key": "개인키 <br /> 입력하기",
     "from_private_key_input_title": "개인키 입력하기",
     "from_private_key_input_title_placehoder": "개인키 입력하기",
-    "connect": "Connect",
-    "address": "Address",
-    "balance": "Balance",
-    "import": "Import",
-    "swap_from_ledger": "Swap from Ledger",
-    "swap_from_trezor": "Swap from Trezor"
+    "connect": "연결하기",
+    "address": "주소",
+    "balance": "잔액",
+    "import": "가져오기",
+    "swap_from_ledger": " Ledger에서 교환하기",
+    "swap_from_trezor": "Trezor에서 교환하기"
   },
 
   "info": {
@@ -273,8 +273,8 @@
   "terms":{
     "title" : "Kyber Wallet- 이용 약관",
     "content":"Kyber testnet wallet은 교환 및 지불 서비스를 실험하고 이해할 수있는 플랫폼을 제공합니다. 현재의 구현은 안전하지 않을 수 있습니다. 이를 사용하면 자금 손실이 발생할 수 있으며 사용자의 개인 정보가 손상 될 수 있습니다. 사용자는 Kyber testnet wallet을 사용하는 결과에 대한 전적인 책임이 있습니다",
-    "use_testnet":"반드시 테스트넷 계정을 사용하시기 바랍니다!!!!",
-    "use_real":"진짜 이더리움 계정은 사용하시면 안됩니다!!!",
+    "use_testnet":"반드시 테스트넷 계정을 사용하시기 바랍니다.",
+    "use_real":"진짜 이더리움 계정은 사용하시면 안됩니다!",
     "accept":"시작하려면",
     "terms_and_condition":" 이용 약관 ",
     "to_get_started":"에 동의하십시오!"
@@ -288,8 +288,8 @@
     "compatible": "호환 가능",
     "get_started": "시작",
     "exchange":" 거래소",
-    "no_oderbooks_no_deposit": "No orderbooks, no deposits, pure joy.",
-    "instant_and_secure_token_swap": "Instant and Secure Token Swaps.",
+    "no_oderbooks_no_deposit": "오더북과 입금 절차 없이 쉽고 편하게 즐길 수 있습니다.",
+    "instant_and_secure_token_swap": "빠르고 안전한 토큰 교환.",
     "metamask": "METAMASK",
     "json": "JSON",
     "ledger": "LEDGER",
@@ -298,20 +298,20 @@
 
   "market": {
     "eth_market": "Ethereum Market",
-    "search": "Search",
-    "currency": "Currency",
-    "settings": "Settings",
+    "search": "검색",
+    "currency": "통화",
+    "settings": "세팅",
     "market_title": "Market",
-    "sell_price": "Sell Price",
-    "buy_price": "Buy Price",
-    "try_searching_for_token": "Try Searching for Token",
-    "market_cap": "Market Cap",
-    "circulating_supply": "Circulating Supply",
-    "total_supply": "Total Supply",
-    "last_7d": "Last 7D",
-    "change": "24HR Change",
-    "volume": "Volume (24h)",
-    "support_eth_only": "Now support only pairs with ETH, not support pairs with USD yet."
+    "sell_price": "판매 가격",
+    "buy_price": "구매 가격",
+    "try_searching_for_token": "토큰을 검색하세요.",
+    "market_cap": "시가총액",
+    "circulating_supply": "유통 공급량",
+    "total_supply": "총 공급량",
+    "last_7d": "지난 7일",
+    "change": "24시간 병동",
+    "volume": "볼륨 (24h)",
+    "support_eth_only": "현재 ETH페어만 지원합니다. USD페어는 아직 지원되지 않습니다.."
   },
 
   "home": "홈",

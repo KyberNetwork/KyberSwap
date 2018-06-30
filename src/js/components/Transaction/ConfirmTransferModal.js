@@ -79,7 +79,7 @@ class ConfirmTransferModal extends React.Component {
                       {this.props.translate("transaction.max_slippage", {  percent: this.props.slippagePercent }) || "with maximum " + this.props.slippagePercent + "% slippage may change."}
                     </span>
                     <div>
-                      You can change maximum slippage rate by adjusting min rate in advanced option
+                      {this.props.translate("transaction.slippage_tip") || "You can change maximum slippage rate by adjusting min rate in advanced option"}
                     </div>
                   </div>
                 </div>

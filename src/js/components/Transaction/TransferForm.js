@@ -33,7 +33,7 @@ const TransferForm = (props) => {
       <div class="frame">        
         <div className="transfer-detail grid-x">
           <div className="cell small-12 large-9 transfer-col transfer-col-1">
-            <div className="title main-title">Transfer</div>
+            <div className="title main-title">{props.translate("transaction.transfer") || "Transfer"}</div>
             <div className="grid-x">
               <div className="cell small-12 medium-7">                
                 <div className={props.errors.destAddress !== '' ? "error" : ""}>
@@ -72,7 +72,7 @@ const TransferForm = (props) => {
                 <div class="address-balance">
                   <p class="note">{props.translate("transaction.address_balance") || "Address Balance"}</p>
                   <div>
-                    <span>Click to transfer all balance</span>
+                    <span>{props.translate("transaction.click_to_transfer_all_balance") || "Click to transfer all balance"}</span>
                     <span className="balance" title={props.balance.value} onClick={() => {
                       props.setAmount()
                       setTimeout(moveCursor, 0);

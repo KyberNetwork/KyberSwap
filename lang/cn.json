@@ -22,7 +22,7 @@
     "hide_zero_balance": "隐藏小额资产",
     "symbol": "SYMBOL",
     "price": "PRICE",
-    "your_wallet_address": "Your Wallet Address"
+    "your_wallet_address": "您的钱包地址"
   },
 
   
@@ -75,12 +75,12 @@
     "not_enable_exchange": "你的地址目前暂时无法交易。请稍后再回来！",
     "kyber_down" : "Kyber交易目前无法使用。<br/>请稍后回来！",
 
-    "swap": "Swap",
-    "click_to_swap_all_balance": "Click to swap all balance",
+    "swap": "兑换",
+    "click_to_swap_all_balance": "点击兑换所有余额",
 
-    "higher_min_acceptable_rate": "Higher Min acceptable rate typically results in lower success rate when the market is volatile.",
-    "our_suggest": "<strong> ${suggestRate}</strong> is our suggested Min acceptable rate by default.",
-    "min_acceptable_rate": "MIN ACCEPTABLE RATE",
+    "higher_min_acceptable_rate": "当市场波动时，较高的最低可接受比率通常意味着较低的成功率。",
+    "our_suggest": "<strong> ${suggestRate}</strong>是我们默认的最低可接受比率。",
+    "min_acceptable_rate": "最低可接受比率",
 
     "transaction_time": "交易时间：< ${time} 分钟",
     "waiting_transaction": "您的交易正在等待被挖掘",
@@ -103,7 +103,7 @@
     "transaction_gasprice_50": "更高的燃料价格，更快的交易速度。最高燃料价格：50 Gwei",
     "transaction_gasprice": "更高的燃料价格，更快的交易速度",
     "best_rate_tooltip": "市场波动时，更低的价格可以带来更好的成功率",
-    "terms_and_conditions": "<span>条款和 <br  class='show-for-small-only'>条件</span>",
+    "terms_and_conditions": "<span>条款和<br  class='show-for-small-only'>条件</span>",
 
     "error_tx_log":"空的日志",
     "error_tx_contract":"警告！合约执行过程中发生了错误",
@@ -177,7 +177,7 @@
     "network_not_match": "Metamask需要连接到<strong>${expectedName}</strong>网络，</br>而您现在连接的是<strong>${currentName}</strong>",
     "network_not_match_unknow": "Metamask需要连接到<strong>${expectedName}</strong>",
     "not_supported": "不支持",
-    "metamask_not_install":"无法连接至metamask。请确认您已经安装了metamask。",
+    "metamask_not_install":"无法连接至metamask。请确认您已经安装了Metamask。",
     "browser_not_support_metamask": "<strong>${browser}</strong>浏览器并不支持Metamask。</br>请使用<strong>谷歌</strong>或者<strong>火狐</strong>浏览器。",
     "browser_not_support_ledger": "<strong>${browser}</strong>浏览器并不支持Ledger。</br>请使用<strong>谷歌</strong>浏览器。",
     "please_make_sure": "请检查是否",
@@ -219,12 +219,12 @@
     "from_private_key": "请输入您的<br />密钥",
     "from_private_key_input_title": "请输入您的密钥",
     "from_private_key_input_title_placehoder": "请输入您的密钥",
-    "connect": "Connect",
-    "address": "Address",
-    "balance": "Balance",
-    "import": "Import",
-    "swap_from_ledger": "Swap from Ledger",
-    "swap_from_trezor": "Swap from Trezor"
+    "connect": "连接",
+    "address": "地址",
+    "balance": "余额",
+    "import": "导入",
+    "swap_from_ledger": "用Ledger进行兑换",
+    "swap_from_trezor": "用Trezor进行兑换"
   },
 
   "info": {
@@ -286,31 +286,31 @@
     "compatible": "兼容",
     "get_started": "开始",
     "exchange":"交易所",
-    "instant_and_secure_token_swap": "Instant and Secure Token Swaps",
-    "no_oderbooks_no_deposit": "No orderbooks, no deposits, no wrapping",
-    "power_by": "Power by Kyber's Decentralized Liquidity Network",
+    "instant_and_secure_token_swap": "即时和安全的代币交换",
+    "no_oderbooks_no_deposit": "无需订单，无需充值，无需包装",
+    "power_by": "由Kyber的去中心化流动性网络提供支持",
     "metamask": "METAMASK",
     "json": "JSON",
     "ledger": "LEDGER",
-    "private_key": "PRIVATE KEY"
+    "private_key": "私钥"
   },
 
   "market": {
-    "eth_market": "Ethereum Market",
-    "search": "Search",
-    "currency": "Currency",
-    "settings": "Settings",
-    "market": "Market",
-    "sell_price": "Sell Price",
-    "buy_price": "Buy Price",
-    "try_searching_for_token": "Try Searching for Token",
-    "market_cap": "Market Cap",
-    "circulating_supply": "Circulating Supply",
-    "total_supply": "Total Supply",
-    "last_7d": "Last 7d",
-    "change": "24HR Change",
-    "volume": "Volume (24h)",
-    "support_eth_only": "Now support only pairs with ETH, not support pairs with USD yet."
+    "eth_market": "以太坊市场",
+    "search": "搜索",
+    "currency": "货币",
+    "settings": "设置",
+    "market": "市场",
+    "sell_price": "卖价",
+    "buy_price": "买价",
+    "try_searching_for_token": "尝试搜索代币",
+    "market_cap": "市值",
+    "circulating_supply": "流通量",
+    "total_supply": "总量",
+    "last_7d": "过去7天",
+    "change": "24小时变化",
+    "volume": "交易量 (24小时)",
+    "support_eth_only": "现在只支持与ETH的交易对，不支持美元交易对。"
   },
 
   "home": "主页",
