@@ -135,7 +135,7 @@ export default class PostTransfer extends React.Component {
         isFetchingGas={this.props.form.snapshot.isFetchingGas}
         type="transfer"
         translate={this.props.translate}
-        title={this.props.translate("modal.confirm_transfer_title") || "Transfer confirm"}
+        title={this.props.translate("modal.confirm_transfer_title") || "Transfer Confirm"}
         errors={this.props.form.signError}
         walletType={this.props.account.type}
         isFetchingRate={true}
@@ -149,7 +149,7 @@ export default class PostTransfer extends React.Component {
     var tokenSymbol = form.tokenSymbol;
     return (
       <div>
-        <div>
+        <div className="recap-sum-up">
           {this.props.translate("transaction.about_to_transfer") || "You are about to transfer"}
         </div>
         <div className="recap-transfer">

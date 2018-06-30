@@ -19,7 +19,10 @@
     "my_balance": "余额",
     "estimated_value": "估值",
     "total": "估值",
-    "hide_zero_balance": "隐藏小额资产"
+    "hide_zero_balance": "隐藏小额资产",
+    "symbol": "SYMBOL",
+    "price": "PRICE",
+    "your_wallet_address": "您的钱包地址"
   },
 
   
@@ -72,6 +75,13 @@
     "not_enable_exchange": "你的地址目前暂时无法交易。请稍后再回来！",
     "kyber_down" : "Kyber交易目前无法使用。<br/>请稍后回来！",
 
+    "swap": "兑换",
+    "click_to_swap_all_balance": "点击兑换所有余额",
+
+    "higher_min_acceptable_rate": "当市场波动时，较高的最低可接受比率通常意味着较低的成功率。",
+    "our_suggest": "<strong> ${suggestRate}</strong>是我们默认的最低可接受比率。",
+    "min_acceptable_rate": "最低可接受比率",
+
     "transaction_time": "交易时间：< ${time} 分钟",
     "waiting_transaction": "您的交易正在等待被挖掘",
     "click_to_ex_all_balance": "点击交易所有余额",
@@ -93,7 +103,7 @@
     "transaction_gasprice_50": "更高的燃料价格，更快的交易速度。最高燃料价格：50 Gwei",
     "transaction_gasprice": "更高的燃料价格，更快的交易速度",
     "best_rate_tooltip": "市场波动时，更低的价格可以带来更好的成功率",
-    "terms_and_conditions": "<span>条款和 <br  class='show-for-small-only'>条件</span>",
+    "terms_and_conditions": "<span>条款和<br  class='show-for-small-only'>条件</span>",
 
     "error_tx_log":"空的日志",
     "error_tx_contract":"警告！合约执行过程中发生了错误",
@@ -167,7 +177,7 @@
     "network_not_match": "Metamask需要连接到<strong>${expectedName}</strong>网络，</br>而您现在连接的是<strong>${currentName}</strong>",
     "network_not_match_unknow": "Metamask需要连接到<strong>${expectedName}</strong>",
     "not_supported": "不支持",
-    "metamask_not_install":"无法连接至metamask。请确认您已经安装了metamask。",
+    "metamask_not_install":"无法连接至metamask。请确认您已经安装了Metamask。",
     "browser_not_support_metamask": "<strong>${browser}</strong>浏览器并不支持Metamask。</br>请使用<strong>谷歌</strong>或者<strong>火狐</strong>浏览器。",
     "browser_not_support_ledger": "<strong>${browser}</strong>浏览器并不支持Ledger。</br>请使用<strong>谷歌</strong>浏览器。",
     "please_make_sure": "请检查是否",
@@ -208,7 +218,13 @@
     "from_ledger": "从<br />Ledger导入",
     "from_private_key": "请输入您的<br />密钥",
     "from_private_key_input_title": "请输入您的密钥",
-    "from_private_key_input_title_placehoder": "请输入您的密钥"
+    "from_private_key_input_title_placehoder": "请输入您的密钥",
+    "connect": "连接",
+    "address": "地址",
+    "balance": "余额",
+    "import": "导入",
+    "swap_from_ledger": "用Ledger进行兑换",
+    "swap_from_trezor": "用Trezor进行兑换"
   },
 
   "info": {
@@ -231,7 +247,7 @@
 
 
   "history": {
-    "second_ago": "秒之前",
+    "seconds_ago": "秒之前",
     "minutes_ago": "分钟之前",
     "hours_ago": "小时之前",
     "days_ago": "天之前",
@@ -269,8 +285,34 @@
     "liquid": "流动性",
     "compatible": "兼容",
     "get_started": "开始",
-    "exchange":"交易所"
+    "exchange":"交易所",
+    "instant_and_secure_token_swap": "即时和安全的代币交换",
+    "no_oderbooks_no_deposit": "无需订单，无需充值，无需包装",
+    "power_by": "由Kyber的去中心化流动性网络提供支持",
+    "metamask": "METAMASK",
+    "json": "JSON",
+    "ledger": "LEDGER",
+    "private_key": "私钥"
   },
+
+  "market": {
+    "eth_market": "以太坊市场",
+    "search": "搜索",
+    "currency": "货币",
+    "settings": "设置",
+    "market": "市场",
+    "sell_price": "卖价",
+    "buy_price": "买价",
+    "try_searching_for_token": "尝试搜索代币",
+    "market_cap": "市值",
+    "circulating_supply": "流通量",
+    "total_supply": "总量",
+    "last_7d": "过去7天",
+    "change": "24小时变化",
+    "volume": "交易量 (24小时)",
+    "support_eth_only": "现在只支持与ETH的交易对，不支持美元交易对。"
+  },
+
   "home": "主页",
   "tracker": "跟踪网站",
   "product_feedback": "产品反馈",

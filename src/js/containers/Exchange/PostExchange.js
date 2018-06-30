@@ -276,10 +276,10 @@ export default class PostExchange extends React.Component {
           <div className="amount">
             <div className="amount-item amount-left">
               <div className="grid-x">
-                <div className="item-icon cell medium-4">
+                <div>
                   <img src={require("../../../assets/img/tokens/" + sourceIcon)} />
                 </div>
-                <div className="cell medium-8">
+                <div>
                   <span>
                     {sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}
                   </span>
@@ -295,14 +295,14 @@ export default class PostExchange extends React.Component {
                 <img src={require('../../../assets/img/waiting-white.svg')} />
                 :
                 <div className="grid-x">
-                <div className="item-icon cell medium-4">
-                  <img src={require("../../../assets/img/tokens/" + destIcon)} />
-                </div>
-                <div className=" cell medium-8">
-                  <span>
-                    {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}
-                  </span>
-                </div>
+                  <div>
+                    <img src={require("../../../assets/img/tokens/" + destIcon)} />
+                  </div>
+                  <div>
+                    <span>
+                      {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}
+                    </span>
+                  </div>
               </div>
                 // <span>
                 //   {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}

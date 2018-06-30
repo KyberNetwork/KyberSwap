@@ -16,14 +16,14 @@
   "address": {
     "address": "Địa chỉ",
     "import_address": "Nhập địa chỉ",
-    "exchange_from": "Exchange from",
+    "exchange_from": "Giao dịch từ",
     "my_balance": "Số dư",
     "estimated_value": "Giá trị ước tính",
     "total": "Tổng giá trị",
     "hide_zero_balance": "Ẩn số dư nhỏ",
-    "symbol": "SYMBOL",
-    "price": "PRICE",
-    "your_wallet_address": "Your Wallet Address"
+    "symbol": "MÃ",
+    "price": "GIÁ",
+    "your_wallet_address": "Địa chỉ ví của bạn"
   },
 
   "transaction": {
@@ -121,12 +121,12 @@
     "import": "Nhập",
     "enter_password_placeholder": "Nhập mật khẩu xác nhận",
     "select_hd_path": "Chọn HD derivation path",
-    "select_trezor_address": "Select Trezor address",
-    "select_ledger_address": "Select Ledger address",
+    "select_trezor_address": "Chọn địa chỉ Trezor",
+    "select_ledger_address": "Chọn địa chỉ Ledger",
     "select_address": "Chọn địa chỉ bạn muốn sử dụng",
     "previous_addresses": "Địa chỉ Trước",
     "more_addresses": "Thêm Địa chỉ",
-    "custom_path": "Path Tùy Chỉnh",
+    "custom_path": "Tùy chỉnh Đường dẫn",
     "view_on_etherscan": "Xem trên Etherscan",
     "press_confirm_if_really_want": "Kích xác nhận nếu bạn thật sự muốn.",
     "press_approve": "Bấm đồng ý để tiếp tục",
@@ -221,12 +221,12 @@
     "from_private_key": "Điền<br />private key",
     "from_private_key_input_title": "ĐIỀN PRIVATEKEY",
     "from_private_key_input_title_placehoder": "Điền private key",
-    "connect": "Connect",
-    "address": "Address",
-    "balance": "Balance",
-    "import": "Import",
-    "swap_from_ledger": "Swap from Ledger",
-    "swap_from_trezor": "Swap from Trezor"
+    "connect": "Kết nối",
+    "address": "Địa chỉ",
+    "balance": "Số dư",
+    "import": "Nhập",
+    "swap_from_ledger": "Giao dịch từ Ledger",
+    "swap_from_trezor": "Giao dịch từ Trezor"
   },
 
   "info": {
@@ -238,7 +238,7 @@
     "network_address": "Địa chỉ contract network",
     "kyber_homepage": "Trang chủ Kyber",
     "get_free_kovan": "Lấy",
-    "warning": "Không nên chuyển bất kỳ ether nào cho các địa chỉ phía trên.</br>Các địa chỉ trên chỉ sử dụng trong môi trường test và chúng tôi có khả năng không sử dụng trong phiên bản chính thức.",
+    "warning": "Không nên chuyển bất kỳ ether nào cho các địa chỉ phía trên.</br>Các địa chỉ trên chỉ sử dụng trong môi trường thử nghiệm và chúng tôi có khả năng không sử dụng trong phiên bản chính thức.",
     "here": "tại đây"
   },
     
@@ -272,9 +272,9 @@
 
   "terms":{
     "title" : "KyberWallet - Điều khoản sử dụng",
-    "content":"Kyber testnet wallet provides a platform for experimenting and understanding our exchange and payment services. The current implementation is not secure in any way. Using it may cause loss of funds and could compromise user privacy. The user is accountable and responsible for any outcome for the use of Kyber testnet wallet.",
-    "use_testnet":"USE ONLY TESTNET ACCOUNTS!!!",
-    "use_real":"DO NOT USE REAL ETHEREUM ACCOUNTS!!!",
+    "content":"Ví Kyber trên testnet cung cấp một nền tảng cho phép người dùng thử nghiệm và tìm hiểu về cách thức dịch vụ thanh toán và sàn giao dịch của chúng tôi hoạt động. Phiên bản hiện tại có thể không đảm bảo về bảo mật, việc sử dụng nền tảng này có thể dẫn đến thất thoát tài sản và ảnh hưởng đến quyền riêng tư của người dùng. Người dùng phải chịu trách nhiệm với bất cứ rủi ro nào khi sử dụng ví Kyber trên testnet.",
+    "use_testnet":"CHỈ SỬ DỤNG TÀI KHOẢN THỬ NGHIỆM!!!",
+    "use_real":"ĐỪNG SỬ DỤNG TÀI KHOẢN VÍ ETHEREUM CHÍNH THỨC!!!",
     "accept":"Chấp nhận",
     "terms_and_condition":" Điều khoản sử dụng ",
     "to_get_started":"để bắt đầu"
@@ -287,9 +287,9 @@
     "liquid": "Thanh khoản",
     "compatible": "Tương thích",
     "get_started": "Bắt đầu",
-    "exchange":"exchange",
-    "instant_and_secure_token_swap": "Instant and Secure Token Swaps.",
-    "no_oderbooks_no_deposit": "No orderbooks, no deposits, pure joy.",
+    "exchange":"giao dịch",
+    "instant_and_secure_token_swap": "Trao đổi Token một cách tức thì và đảm bảo.",
+    "no_oderbooks_no_deposit": "Không lệnh giao dịch, không cần gửi tiền.",
     "metamask": "METAMASK",
     "json": "JSON",
     "ledger": "LEDGER",
@@ -297,21 +297,21 @@
   },
 
   "market": {
-    "eth_market": "Ethereum Market",
-    "search": "Search",
-    "currency": "Currency",
-    "settings": "Settings",
-    "market_title": "Market",
-    "sell_price": "Sell Price",
-    "buy_price": "Buy Price",
-    "try_searching_for_token": "Try Searching for Token",
-    "market_cap": "Market Cap",
-    "circulating_supply": "Circulating Supply",
-    "total_supply": "Total Supply",
-    "last_7d": "Last 7D",
-    "change": "24HR Change",
-    "volume": "Volume (24h)",
-    "support_eth_only": "Now support only pairs with ETH, not support pairs with USD yet."
+    "eth_market": "Thị trường Ethereum",
+    "search": "Tìm kiếm",
+    "currency": "Tiền tệ",
+    "settings": "Điều chỉnh",
+    "market_title": "Thị trường",
+    "sell_price": "Giá Bán",
+    "buy_price": "Giá Mua",
+    "try_searching_for_token": "Tìm kiếm Token",
+    "market_cap": "Vốn hóa",
+    "circulating_supply": "Số lượng lưu hành",
+    "total_supply": "Tổng cung",
+    "last_7d": "7 ngày qua",
+    "change": "Thay đổi 24h",
+    "volume": "Lượng giao dịch (24h)",
+    "support_eth_only": "Chỉ hỗ trợ các cặp giao dịch với ETH, chưa hỗ trợ giao dịch với USD."
   },
 
   "home": "Trang chủ",

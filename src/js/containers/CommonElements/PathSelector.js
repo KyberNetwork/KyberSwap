@@ -1,11 +1,6 @@
 import React from "react"
-import { connect } from "react-redux"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import { getTranslate } from 'react-localize-redux';
-
-// @connect((store, props) => {
-//   console.log("props.currentDPath: ", props.currentDPath)  
-// })
 
 export default class PathSelector extends React.Component {
     constructor(props) {

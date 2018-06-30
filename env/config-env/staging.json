@@ -288,7 +288,7 @@
     },
     "LBA": {
       "name": "Libra Credit",
-      "decimals": 18,
+      "decimal": 18,
       "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
       "symbol":"LBA", 
       "icon": "lba.svg"

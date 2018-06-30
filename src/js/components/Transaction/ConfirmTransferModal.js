@@ -40,7 +40,7 @@ class ConfirmTransferModal extends React.Component {
       let isPKeyAcc = this.props.walletType === 'privateKey'
       return isPKeyAcc ? '' : <span>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</span>
     } else {
-      return <span>{this.props.translate("modal.press_confirm_if_really_want") || "Press confirm to continue"}</span>
+      return <span>{this.props.translate("modal.press_confirm_if_really_want") || "Press Confirm to continue"}</span>
     }
   }
 
@@ -50,40 +50,38 @@ class ConfirmTransferModal extends React.Component {
     //var totalGas = gasPrice.multipliedBy(this.props.gas)
     return (
       <div>
-        <div className="title">{this.props.title}</div>
         <a className="x" onClick={(e) => this.props.onCancel(e)}>&times;</a>
         <div className="content with-overlap">
           <div className="row">
             <div>
               <div>
+                <div className="title">{this.props.title}</div>
                 {this.props.recap}
                 <div className="gas-configed">
                 <div>Included</div>
-                  <div className="row">
-                    <span className="column small-6">{this.props.translate("transaction.gas_price") || 'Gas price'}</span>
-                    <span className="column small-6 font-w-i">{+roundingNumber(this.props.gasPrice)} Gwei</span>
-                  </div>
-                  <div className="row">
-                    <span className="column small-6">{this.props.translate("transaction.transaction_fee") || "Transaction Fee"}</span>
-                    <span className="column small-6 font-w-i">{this.props.isFetchingGas ?
-                      <img src={require('../../../assets/img/waiting-white.svg')} />
-                      : <span>{totalGas.toString()}</span>
-                    } ETH</span>
-                  </div>
+                <div className="row">
+                  <span className="column small-6">{this.props.translate("transaction.gas_price") || 'Gas price'}</span>
+                  <span className="column small-6">{+roundingNumber(this.props.gasPrice)} Gwei</span>
+                </div>
+                <div className="row">
+                  <span className="column small-6">{this.props.translate("transaction.transaction_fee") || "Transaction Fee"}</span>
+                  <span className="column small-6">
+                    {this.props.isFetchingGas ?
+                    <img src={require('../../../assets/img/waiting-white.svg')} />
+                    : <span>{totalGas.toString()}</span>
+                    } ETH
+                  </span>
+                </div>
                 </div>
                 {!this.props.isFetchingRate &&
-                <div className="des">
-                  <div><img src={require('../../../assets/img/with-confirm-exchange.svg')}/></div>
-                  <div className="description">
-                    <span>
-                      {this.props.translate("transaction.max_slippage", {  percent: this.props.slippagePercent }) || "with maximum " + this.props.slippagePercent + "% slippage may change."}
-                    </span>
-                    <div>
-                      You can change maximum slippage rate by adjusting min rate in advanced option
+                  <div className="des">
+                    <div><img src={require('../../../assets/img/with-confirm-exchange.svg')}/></div>
+                    <div className="description">
+                      <span>{this.props.translate("transaction.max_slippage", {  percent: this.props.slippagePercent }) || "With maximum " + this.props.slippagePercent + "% slippage"}</span>
+                      <span> {this.props.translate("transaction.slippage_tip") || "Rate may change. You can change maximum slippage rate by adjusting min rate in advanced option"}</span>
                     </div>
                   </div>
-                </div>
-          }
+                }
               </div>
               {this.errorHtml()}
             </div>
@@ -91,7 +89,7 @@ class ConfirmTransferModal extends React.Component {
         </div>
         <div className="overlap">
         <div className="input-confirm row">
-          <div className="columns small-8">{this.msgHtml()}</div>
+          <div className="small-8">{this.msgHtml()}</div>
           <div className="columns small-4">
             <a className={"button process-submit " + (this.props.isConfirming || this.props.isFetchingGas || this.props.isFetchingRate ? "waiting" : "next")} onClick={(e) => this.props.onExchange(e)}>{this.props.translate("modal.confirm").toLocaleUpperCase() || "Confirm".toLocaleUpperCase()}</a>
           </div>

@@ -27,13 +27,6 @@ const ImportByDeviceView = (props) => {
         props.getAddress(data);
     }
 
-    function shortAddress(address) {
-        var firstPhrase = address.substring(0, 10)
-        var secondPhrase = address.substring(address.length - 9)
-        // return `${firstPhrase}...${secondPhrase}`
-        return address
-    }
-
     function getCurrentList() {
         const addressLink = BLOCKCHAIN_INFO.ethScanUrl + 'address/';
         let currentListHtml = props.currentAddresses.map((address, index) => {
@@ -43,7 +36,7 @@ const ImportByDeviceView = (props) => {
                         <div className="cell medium-6 small-12">
                             <a class="name text-lowercase">
                                 <label class="mb-0">
-                                    <span class="hash">{shortAddress(address.addressString)}</span>
+                                    <span class="hash">{address.addressString}</span>
                                 </label>
                             </a>
                         </div>
