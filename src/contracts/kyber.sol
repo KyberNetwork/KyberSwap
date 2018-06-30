@@ -43,7 +43,7 @@ contract PermissionGroups {
     address[] operatorsGroup;
     address[] alertersGroup;
 
-    function PermissionGroups() public {
+    constructor() public {
         admin = msg.sender;
     }
 
@@ -181,7 +181,7 @@ contract KyberNetwork is Withdrawable, KyberConstants {
     bool                  public enable = true; // network is enabled
     mapping(address=>mapping(bytes32=>bool)) perReserveListedPairs;
 
-    function KyberNetwork(address _admin) public {
+    constructor(address _admin) public {
         admin = _admin;
     }
 
@@ -564,7 +564,7 @@ contract FeeBurner is Withdrawable, FeeBurnerInterface {
     address public kyberNetwork;
     uint public KNCPerETHRate = 300;
 
-    function FeeBurner(address _admin, BurnableToken KNCToken) public {
+    constructor(address _admin, BurnableToken KNCToken) public {
         admin = _admin;
         KNC = KNCToken;
     }
@@ -646,7 +646,7 @@ contract KyberReserve is Withdrawable, KyberConstants {
     SanityPricingInterface public sanityPricingContract;
     mapping(bytes32=>bool) public approvedWithdrawAddresses; // sha3(token,address)=>bool
 
-    function KyberReserve(address _kyberNetwork, Pricing _pricingContract, address _admin) public {
+    constructor(address _kyberNetwork, Pricing _pricingContract, address _admin) public {
         kyberNetwork = _kyberNetwork;
         pricingContract = _pricingContract;
         admin = _admin;
@@ -877,7 +877,7 @@ contract KyberReserve is Withdrawable, KyberConstants {
 contract SanityPricing is SanityPricingInterface, Withdrawable {
     mapping(bytes32=>uint) prices;
 
-    function SanityPricing(address _admin) public {
+    constructor(address _admin) public {
         admin = _admin;
     }
 
@@ -900,7 +900,7 @@ contract ExpectedRate is Withdrawable, ExpectedRateInterface {
     KyberNetwork kyberNetwork;
     uint quantityFactor = 2;
 
-    function ExpectedRate(KyberNetwork _kyberNetwork, address _admin) public {
+    constructor(KyberNetwork _kyberNetwork, address _admin) public {
         kyberNetwork = _kyberNetwork;
         admin = _admin;
     }
@@ -952,7 +952,7 @@ contract VolumeImbalanceRecorder is Withdrawable {
 
     mapping(address => mapping(uint=>uint)) tokenImbalanceData;
 
-    function VolumeImbalanceRecorder(address _admin) public {
+    constructor(address _admin) public {
         admin = _admin;
     }
 
@@ -1156,7 +1156,7 @@ contract Pricing is VolumeImbalanceRecorder {
     uint constant NUM_TOKENS_IN_COMPACT_DATA = 14;
     uint constant BYTES_14_OFFSET = (2 ** (8 * NUM_TOKENS_IN_COMPACT_DATA));
 
-    function Pricing(address _admin) public VolumeImbalanceRecorder(_admin) { }
+    constructor(address _admin) public VolumeImbalanceRecorder(_admin) { }
 
     function addToken(ERC20 token) public onlyAdmin {
 
@@ -1410,7 +1410,7 @@ contract KyberWhiteList is Withdrawable {
     mapping (address=>uint) public userCategory; // each user has a category that defines cap on trade amount. 0 will be standard
     mapping (uint=>uint)    public categoryCap;  // will define cap on trade amount per category in singapore Dollar.
 
-    function KyberWhiteList(address _admin) public {
+    constructor(address _admin) public {
         admin = _admin;
     }
 
