@@ -7,7 +7,7 @@ import { getTranslate } from 'react-localize-redux'
 import * as actions from "../../actions/marketActions"
 import * as converters from "../../utils/converter"
 
-import LineChart from 'react-linechart';
+//import LineChart from 'react-linechart';
 import {Line} from 'react-chartjs-2';
 //import '../node_modules/react-linechart/dist/styles.css';
 
@@ -59,13 +59,13 @@ export default class MarketTable extends React.Component {
     }
     var point = []
     var labels = []
-    var input = props.value
+    var input = props.value    
     if (Array.isArray(input)) {
       input.map((item, index) => {
         labels.push(index)
         point.push(item)
       })
-  
+      
       var data = {
         labels: labels,
         datasets: [{

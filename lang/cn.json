@@ -48,7 +48,7 @@
     "exit": "退出",
     "back": "主页",
     "new_tx": "新的转移",
-    "new_ex": "新的交易",
+    "new_ex": "新的兑换",
     "done": "完成!",
     "failed": "失败!",
     "broadcasted": "交易上链完成!",
@@ -102,6 +102,7 @@
     "transfer_tooltip": "转移以太或代币至其它地址",
     "transaction_gasprice_50": "更高的燃料价格，更快的交易速度。最高燃料价格：50 Gwei",
     "transaction_gasprice": "更高的燃料价格，更快的交易速度",
+    "max_gas_price": "最大燃料价格: ${maxGas} Gwei",
     "best_rate_tooltip": "市场波动时，更低的价格可以带来更好的成功率",
     "terms_and_conditions": "<span>条款和<br  class='show-for-small-only'>条件</span>",
 
