@@ -30,7 +30,8 @@ const ImportByDeviceView = (props) => {
     function shortAddress(address) {
         var firstPhrase = address.substring(0, 10)
         var secondPhrase = address.substring(address.length - 9)
-        return `${firstPhrase}...${secondPhrase}`
+        // return `${firstPhrase}...${secondPhrase}`
+        return address
     }
 
     function getCurrentList() {
@@ -38,22 +39,26 @@ const ImportByDeviceView = (props) => {
         let currentListHtml = props.currentAddresses.map((address, index) => {
             return (
                 <li key={address.addressString} onClick={() => getAddress(address)}>
-                    <a class="name text-lowercase">
-                        <label class="mb-0">
-                            <span class="hash">{shortAddress(address.addressString)}</span>
-                        </label>
-                    </a>
-                    <div class="info">
-                        <a class="link has-tip top explore" title={address.balance}>
-                            {address.balance == '-1' ?
-                                <img src={require('../../../assets/img/waiting-white.svg')} />
-                                : roundingNumber(address.balance)
-                            } ETH
-                        </a>
-                        <a class="import">
-                            {props.translate("import.import") || "Import"}
-                            <img src={require('../../../assets/img/import-account/arrow_right_orange.svg')}/>
-                        </a>
+                    <div className="grid-x">
+                        <div className="cell medium-6 small-12">
+                            <a class="name text-lowercase">
+                                <label class="mb-0">
+                                    <span class="hash">{shortAddress(address.addressString)}</span>
+                                </label>
+                            </a>
+                        </div>
+                        <div class="info cell medium-6 small-12">
+                            <a class="link has-tip top explore" title={address.balance}>
+                                {address.balance == '-1' ?
+                                    <img src={require('../../../assets/img/waiting-white.svg')} />
+                                    : roundingNumber(address.balance)
+                                } ETH
+                            </a>
+                            <a class="import">
+                                {props.translate("import.import") || "Import"}
+                                <img src={require('../../../assets/img/import-account/arrow_right_orange.svg')}/>
+                            </a>
+                        </div>
                     </div>
                 </li>
             )
