@@ -18,6 +18,7 @@ import {Line} from 'react-chartjs-2';
 
   var currency = store.market.configs.currency.focus
   var tokens = store.market.tokens
+  var tokenLength = Object.keys(tokens).length - 1
   var data = []
   Object.keys(tokens).forEach((key) => {
     if (key === "ETH") return
@@ -37,7 +38,8 @@ import {Line} from 'react-chartjs-2';
     showActive: store.market.configs.column.shows.active,
     listShowColumn: store.market.configs.column.shows.listItem,
     data: data,
-    tokens: tokens
+    tokens: tokens,
+    tokenLength
   }
 })
 
@@ -315,6 +317,7 @@ export default class MarketTable extends React.Component {
         data={this.props.data}
         columns={columns}
         showPagination = {false}
+        defaultPageSize = {this.props.tokenLength}
         getTrProps={(state, rowInfo) => {
           return {
             onClick: (e) => {

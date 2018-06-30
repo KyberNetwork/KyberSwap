@@ -29,7 +29,7 @@ export default class TradingView extends React.Component {
 		locale: 'en',
 		containerId: 'tv_chart_container',
 		datafeedUrl: 'https://tracker.kyber.network/chart',
-		updateFrequency: 5000, // 1 minutes
+		updateFrequency: 300000, // 1 minutes
 		libraryPath: '/trading_view/charting_library/',
 		fullscreen: false,
 		autosize: true
