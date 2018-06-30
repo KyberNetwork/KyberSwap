@@ -111,8 +111,8 @@
     "no_pedding_tx": "No pending transaction",
     "rate_info": "Rates might be changed during settlement. <br/>You can indicate your minimum rate by clicking \"Advanced\"",
     "address": "Receiving Address",
-    "slippage_tip": "You can change maximum slippage rate by adjusting min rate in advanced option",
-    "max_slippage": "with maximum ${percent}% slippage"
+    "slippage_tip": "Rate may change. You can change maximum slippage rate by adjusting min rate in advanced option",
+    "max_slippage": "With maximum ${percent}% slippage"
   },
 
   "modal": {
@@ -128,11 +128,11 @@
     "more_addresses": "More Addresses",
     "custom_path": "Your Custom Path",
     "view_on_etherscan": "View on Etherscan",
-    "press_confirm_if_really_want": "Press confirm to continue",
+    "press_confirm_if_really_want": "Press Confirm to continue",
     "press_approve": "Press approve to continue",
     "waiting_for_confirmation": "Waiting for confirmation from your wallet",
-    "confirm_exchange_title": "Exchange confirm",
-    "confirm_transfer_title": "Transfer confirm",
+    "confirm_exchange_title": "Exchange Confirm",
+    "confirm_transfer_title": "Transfer Confirm",
 
     "select_your_language": "Select your language",
     "select_source_token": "Select source token",
