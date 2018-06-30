@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.24;
 
 interface ExpectedRateInterface {
     function getExpectedRate(ERC20 source, ERC20 dest, uint srcQty) public view
