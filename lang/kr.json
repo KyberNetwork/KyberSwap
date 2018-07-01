@@ -74,7 +74,7 @@
     "transaction_error": "거래 오류",
     "notification": "공고",
     "not_enable_exchange": "귀하의 주소는 현재 교환 대상이 아닙니다. 나중에 다시 오십시오!",
-    "kyber_down" : "현재 Kyber 교환은 사용할 수 없습니다. 나중에 다시 오시기 바랍니다!",
+    "kyber_down": "현재 Kyber 교환은 사용할 수 없습니다. 나중에 다시 오시기 바랍니다!",
 
     "transaction_time": "거래 시간 : <${time} 분",
     "waiting_transaction": "거래 대기 중에 있습니다",
@@ -106,8 +106,8 @@
     "best_rate_tooltip": "시장이 변동될 때 가격을 낮추면 성공률이 높아질 수 있습니다",
     "terms_and_conditions": "<span>이용 약관 및 <br  class='show-for-small-only'>조건</span>",
 
-    "error_tx_log":"로그가 비어있는 상태입니다",
-    "error_tx_contract":"해당 토큰을 지원하지 않습니다",
+    "error_tx_log": "로그가 비어있는 상태입니다",
+    "error_tx_contract": "해당 토큰을 지원하지 않습니다",
     "no_pedding_tx": "미체결 거래가 없습니다",
     "rate_info": "결제 과정에서 가격이 변경 될 수 있습니다. <br> \"고급 옵션\"을 클릭하면 최저 가격을 표시 할 수 있습니다.",
     "address": "받는 주소",
@@ -148,8 +148,8 @@
     "select_same_token": "동일한 토큰으로 교환할 수 없습니다",
     "select_token_token": "해당 토큰은 지원되지 않습니다",
     "source_amount_too_high": "수량이 너무 큽니다",
-    "source_amount_too_high_cap": "금액이 한도를 넘어섭니다. 출처 금액은 ${ cap } ETH보다 작아야합니다.",
-    "dest_amount_too_high_cap": "금액이 한도를 넘어섭니다. 도착지 크기가 ${ cap } ETH보다 작아야합니다.",
+    "source_amount_too_high_cap": "금액이 한도를 넘어섭니다. 출처 금액은 ${ cap } ETH보다 작아야 합니다.",
+    "dest_amount_too_high_cap": "금액이 한도를 넘어섭니다. 도착지 크기가 ${ cap } ETH보다 작아야 합니다.",
     "source_amount_too_small": "보내시려는 토큰 수량이 너무 작습니다",
     "source_amount_rate_error": "현재 거래할 수 없습니다",
     "source_amount_too_high_for_reserve": "보내시려는 토큰 수량이 너무 큽니다 (현재 지원되지 않는 토큰입니다)",
@@ -172,30 +172,30 @@
     "network_error": "블록체인 연결이 원할하지 않습니다, 잠시 후 다시 시도해주세요",
     "node_error": "노드에는 몇 가지 문제점이 있습니다. 잠시 후 다시 해보십시오",
     "term_error": "이용약관 동의는 필수입니다.",
-    
+
     "path_not_support_by_trezor": "TREZOR는 해당 경로를 지원하지 않습니다",
     "check_right_application_selected": "올바른 응용프로그램이 선택되었는지 확인하십시오",
     "network_not_match": "Metamask는 <strong>${expectedName}</strong>에 있어야합니다. </br>현재 <strong>${currentName}</strong> 있습니다.",
     "network_not_match_unknow": "Metamask는 <strong>${expectedName}</strong>에 있어야합니다.",
     "not_supported": "지원하지 않습니다",
-    "metamask_not_install":"메타마스크에 연결할 수 없습니다. 메타마스크가 설치 되어 있는지 확인 해 주세요.",
+    "metamask_not_install": "메타마스크에 연결할 수 없습니다. 메타마스크가 설치되어 있는지 확인 해 주세요.",
     "browser_not_support_metamask": "Metamask는 <strong>${browser}</strong> 브라우저에서 지원되지 않습니다. </br>대신 <strong>Chrome</strong> 또는 <strong>FireFox</strong>를 사용하기를 바랍니다.",
     "browser_not_support_ledger": "Ledger는 <strong>${browser}</strong> 브라우저에서 지원되지 않습니다. </br>대신 <strong>Chrome</strong> 사용하기를 바랍니다.",
     "please_make_sure": "다음 사항을 확인하십시오",
     "ledger_plugged_in": "- 귀하의 Ledger이 올바르게 연결되어 있습니다.",
     "ledger_logged_in": "- 귀하는 귀하의 Ledger에 로그인하셨습니다.",
 
-    "gas_price_not_number":"Gas 가격은 숫자만 입력하셔야 합니다.",
-    "rate_not_number":"가격은 숫자만 입력하셔야 합니다.",
-    "gas_price_limit":"Gas 가격은 ${maxGas} Gwei 보다 작아야 합니다.",
-    "passphrase_error":"키 경로 파악 실패",
-    "gas_price_exceeded_limit":"Gas 가격이 최대 한도를 넘었습니다.",
-    "issue_token_ether":"토큰을 이더리움으로 바꾸기 위해서는 이더리움 외의 토큰을 넣어 주셔야 합니다.",
-    "issue_allowance":"허용량이 입력하신 토큰 금액보다 낮습니다.",
-    "issue_balance":"입력하신 토큰 금액이 보유 토큰 잔액보다 많습니다.",
-    "issue_ether_amount":"전송하실 이더리움 수치를 정확히 넣어 주셔야 합니다.",
-    "issue_user_cap":"입력하신 토큰 금액이 사용자 총 한도를 넘었습니다.",
-    "min_rate_too_high":"입력하신 최저 가격이 너무 높습니다.",
+    "gas_price_not_number": "Gas 가격은 숫자만 입력하셔야 합니다.",
+    "rate_not_number": "가격은 숫자만 입력하셔야 합니다.",
+    "gas_price_limit": "Gas 가격은 ${maxGas} Gwei 보다 작아야 합니다.",
+    "passphrase_error": "키 경로 파악 실패",
+    "gas_price_exceeded_limit": "Gas 가격이 최대 한도를 넘었습니다.",
+    "issue_token_ether": "토큰을 이더리움으로 바꾸기 위해서는 이더리움 외의 토큰을 넣어 주셔야 합니다.",
+    "issue_allowance": "허용량이 입력하신 토큰 금액보다 낮습니다.",
+    "issue_balance": "입력하신 토큰 금액이 보유 토큰 잔액보다 많습니다.",
+    "issue_ether_amount": "전송하실 이더리움 수치를 정확히 넣어 주셔야 합니다.",
+    "issue_user_cap": "입력하신 토큰 금액이 사용자 총 한도를 넘었습니다.",
+    "min_rate_too_high": "입력하신 최저 가격이 너무 높습니다.",
 
     "ledger_global_err": "<div class='text-left'>Ledger에 연결할 수 없습니다. 다음 사항을 확인하십시오:<br/>- 귀하의 Ledger이 올바르게 연결되어 있습니다.<br/>- 귀하는 귀하의 Ledger에 로그인하셨습니다.<br/>- 귀하의 Ledger에서 이더리움 신청서를 시작했습니다.<br/>- 귀하의 Ledger에서 \"브라우저 지원\"이 활성화되었습니다. <a href=\"${link}\" target=\"_blank\">여기</a>에서 \"브라우저 지원\"을 사용하는 법을 배우십시오.</div>",
     "need_to_config_env_ledger": "Ledger에 액세스하려면 Linux 디바이스를 구성해야합니다. <a href=\"${link}\" target=\"_blank\">여기</a>.",
@@ -204,10 +204,10 @@
     "path_is_invalid": "유효하지 않은 경로. 다른 것을 선택하십시오.",
     "ledger_time_out": "Ledger에 세션이 만료되었습니다. 계속하려면 다시 로그인하십시오.",
     "eth_balance_not_enough_for_fee": "Eth 잔액는 거래 비용으로 충분하지 않습니다.",
-    "handle_amount":"카이버는 금액을 처리 할 수 없으므로 금액을 줄이십시오!",
-    "kyber_maintain":"카이버 교환은 이 쌍을 유지 보수 중입니다.",
-    "get_rate":"블록 체인에서 요금을 받을 수 없습니다.",
-    "exchange_enable":"거래는 일일 한도를 초과했습니다! 내일 00:00 UTC+0 다시 거래 할 수도 있습니다",
+    "handle_amount": "카이버는 금액을 처리 할 수 없으므로 금액을 줄이십시오!",
+    "kyber_maintain": "카이버 교환은 이 쌍을 유지 보수 중입니다.",
+    "get_rate": "블록 체인에서 요금을 받을 수 없습니다.",
+    "exchange_enable": "거래는 일일 한도를 초과했습니다! 내일 00:00 UTC+0 다시 거래 할 수도 있습니다",
     "min_rate_greater_expected_rate": "구성된 최소 환율은 카이버 네트워크에서 권장하는 것보다 높습니다. 귀하의 거래소는 실패 할 확률이 높습니다.",
     "exceed_daily_volumn": "귀하는 <a target='_blank' href='${link}'>더 높은 거래 한도를 가지려면</a> 저희에게 등록하십시오"
   },
@@ -231,7 +231,7 @@
 
   "info": {
     "title": "카이버 테스트넷",
-    "version": "버젼",
+    "version": "버전",
     "chain": "체인",
     "node_endpoint": "노드 끝",
     "reserve_address": "리저브 계약 주소",
@@ -241,7 +241,7 @@
     "warning": "위의 주소 있는 주소들에게 실제 이더나 토큰을 보내지 마십시오. <br> </ br> 그들은 testnet 주소입니다!",
     "here": "여기"
   },
-  
+
   "footer": {
     "info": "정보",
     "language": "언어"
@@ -254,13 +254,13 @@
     "days_ago": "일 전",
     "months_ago": "달 전",
     "years_ago": "년 전",
-    
-    "second_ago":"초 전",
-    "minute_ago":"분 전",
-    "hour_ago":"시간 전",
-    "day_ago":"일 전",
-    "month_ago":"달 전",
-    "year_ago":"년 전",
+
+    "second_ago": "초 전",
+    "minute_ago": "분 전",
+    "hour_ago": "시간 전",
+    "day_ago": "일 전",
+    "month_ago": "달 전",
+    "year_ago": "년 전",
 
     "date": "날짜",
     "rate": "환율",
@@ -270,24 +270,24 @@
     "recent": "최근"
   },
 
-  "terms":{
-    "title" : "Kyber Wallet- 이용 약관",
-    "content":"Kyber testnet wallet은 교환 및 지불 서비스를 실험하고 이해할 수있는 플랫폼을 제공합니다. 현재의 구현은 안전하지 않을 수 있습니다. 이를 사용하면 자금 손실이 발생할 수 있으며 사용자의 개인 정보가 손상 될 수 있습니다. 사용자는 Kyber testnet wallet을 사용하는 결과에 대한 전적인 책임이 있습니다",
-    "use_testnet":"반드시 테스트넷 계정을 사용하시기 바랍니다.",
-    "use_real":"진짜 이더리움 계정은 사용하시면 안됩니다!",
-    "accept":"시작하려면",
-    "terms_and_condition":" 이용 약관 ",
-    "to_get_started":"에 동의하십시오!"
+  "terms": {
+    "title": "Kyber Wallet - 이용 약관",
+    "content": "카이버 테스트넷 지갑은 교환 및 지불 서비스를 실험하고 이해할 수 있는 플랫폼을 제공합니다. 현재의 구현은 안전하지 않을 수 있습니다. 이를 사용하면 자금 손실이 발생할 수 있으며 사용자의 개인 정보가 손상 될 수 있습니다. 사용자는 카이버 테스트넷 지갑을 사용하는 결과에 대한 전적인 책임이 있습니다",
+    "use_testnet": "반드시 테스트넷 계정을 사용하시기 바랍니다.",
+    "use_real": "진짜 이더리움 계정은 사용하시면 안됩니다!",
+    "accept": "시작하려면",
+    "terms_and_condition": " 이용 약관 ",
+    "to_get_started": "에 동의하십시오!"
   },
 
-  "landing_page":{
+  "landing_page": {
     "title": "분권화된 이더리움 토큰 거래소",
     "trustless": "무신뢰",
     "instant": "빠른",
     "liquid": "유동성",
     "compatible": "호환 가능",
     "get_started": "시작",
-    "exchange":" 거래소",
+    "exchange": " 거래소",
     "no_oderbooks_no_deposit": "오더북과 입금 절차 없이 쉽고 편하게 즐길 수 있습니다.",
     "instant_and_secure_token_swap": "빠르고 안전한 토큰 교환.",
     "metamask": "METAMASK",
@@ -309,7 +309,7 @@
     "circulating_supply": "유통 공급량",
     "total_supply": "총 공급량",
     "last_7d": "지난 7일",
-    "change": "24시간 병동",
+    "change": "24시간 변동",
     "volume": "볼륨 (24h)",
     "support_eth_only": "현재 ETH페어만 지원합니다. USD페어는 아직 지원되지 않습니다.."
   },
@@ -321,5 +321,5 @@
   "low": "느리다",
   "standard": "보통",
   "fast": "빠르다",
-  "search": "찾기"   
+  "search": "찾기"
 }
