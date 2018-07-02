@@ -36,7 +36,7 @@ const DropFile = (props) => {
           <img src={require('../../../assets/img/landing/keystore_active.svg')} />
           <div className="importer__name">{props.translate("import.json") || "JSON"}</div>
         </div>
-        <button className="importer__button" onClick={(e) => props.onDrop(e)}>Select or Drag</button>
+        <button className="importer__button" onClick={(e) => props.onDrop(e)}>{props.translate("import.select_or_drag") || "Select or Drag"}</button>
       </div>
       {/* <ReactTooltip place="top" id="keystore-tip" type="dark" /> */}
     </Dropzone>

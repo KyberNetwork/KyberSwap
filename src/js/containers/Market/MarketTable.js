@@ -59,13 +59,40 @@ export default class MarketTable extends React.Component {
     }
     var point = []
     var labels = []
-    var input = props.value    
+    var input = props.value
+
     if (Array.isArray(input)) {
+      var maxValue = input[0]
+      var minValue = maxValue
       input.map((item, index) => {
         labels.push(index)
         point.push(item)
+        if (item > maxValue) {
+          maxValue = item
+        } else if (item < minValue) {
+          minValue = item
+        }
       })
       
+      if ((maxValue - minValue) / minValue * 100 < 5) {
+        var yOption = {
+          display: false,
+          gridLines: {
+            display:false
+          },
+          ticks: {
+            min: minValue / 2
+          }
+        }
+      } else {
+        var yOption = {
+          display: false,
+          gridLines: {
+            display:false
+          }
+        }
+      }
+
       var data = {
         labels: labels,
         datasets: [{
@@ -98,12 +125,7 @@ export default class MarketTable extends React.Component {
             display:false
           }
         }],
-        yAxes: [{
-          display: false,
-          gridLines: {
-            display:false
-          }
-        }]
+        yAxes: [yOption]
       }
     } 
     return (
@@ -149,7 +171,7 @@ export default class MarketTable extends React.Component {
     )
   }
 
-  getTranslateKey = (key) => {
+  getTranslateFromKey = (key) => {
     switch (key) {
       case "market": {
         return "market.market"
@@ -184,7 +206,7 @@ export default class MarketTable extends React.Component {
   getSortHeader = (title, key) => {
     return (
       <div className="rt-th-img">
-        <img src={require("../../../assets/img/landing/sort.svg")} />{this.props.translate(this.getTranslateKey(key)) || title}
+        <img src={require("../../../assets/img/landing/sort.svg")} />{this.props.translate(this.getTranslateFromKey(key)) || title}
       </div>
     )
   }
@@ -225,7 +247,7 @@ export default class MarketTable extends React.Component {
           case "chart":{
             if (this.props.currency != "USD") {
               columns.push({
-                Header: this.props.translate(this.getTranslateKey(key)) || item.title,
+                Header: this.props.translate(this.getTranslateFromKey(key)) || item.title,
                 accessor: key,
                 Cell: props => this.drawChart(props),
                 sortable: false,
@@ -317,7 +339,8 @@ export default class MarketTable extends React.Component {
         data={this.props.data}
         columns={columns}
         showPagination = {false}
-        defaultPageSize = {this.props.tokenLength}
+        pageSize = {this.props.data.length}
+        minRows = {3}
         getTrProps={(state, rowInfo) => {
           return {
             onClick: (e) => {

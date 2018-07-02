@@ -226,7 +226,9 @@
     "balance": "Số dư",
     "import": "Nhập",
     "swap_from_ledger": "Giao dịch từ Ledger",
-    "swap_from_trezor": "Giao dịch từ Trezor"
+    "swap_from_trezor": "Giao dịch từ Trezor",
+    "select_or_drag": "Chọn hoặc kéo file",
+    "address_is_loading": "Đang tải thông tin địa chỉ..."
   },
 
   "info": {
@@ -290,6 +292,7 @@
     "exchange":"giao dịch",
     "instant_and_secure_token_swap": "Trao đổi Token một cách tức thì và đảm bảo.",
     "no_oderbooks_no_deposit": "Không lệnh giao dịch, không cần gửi tiền.",
+    "power_by": "Power by Kyber's Decentralized Liquidity Network",
     "metamask": "METAMASK",
     "json": "JSON",
     "ledger": "LEDGER",
@@ -312,6 +315,15 @@
     "change": "Thay đổi 24h",
     "volume": "Lượng giao dịch (24h)",
     "support_eth_only": "Chỉ hỗ trợ các cặp giao dịch với ETH, chưa hỗ trợ giao dịch với USD."
+  },
+
+  "trading_view": {
+    "buy": "Mua",
+    "buy_price": "Giá Mua",
+    "sell": "Bán",
+    "sell_price": "Giá bán",
+    "mid": "Trung bình",
+    "mid_price": "Giá trung bình"
   },
 
   "home": "Trang chủ",

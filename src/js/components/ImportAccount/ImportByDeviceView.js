@@ -66,47 +66,6 @@ const ImportByDeviceView = (props) => {
             walletType = {props.walletType}
             currentDPath = {props.currentDPath}
         />)
-        // let listPath = props.dPath.map((dPath, index) => {
-        //     let disabledPath = (props.walletType == 'ledger' && dPath.notSupport) ? true : false;
-        //     let disabled = disabledPath? ' disabled' : ''
-        //     let active = (props.currentDPath == dPath.path) ? 'active' : ''
-        //     return (
-        //         <div class= {"column" + disabled} key={dPath.path}>
-        //             <div className={"column-content " + active} onClick={() => {
-        //                 if (dPath.path && !disabledPath) choosePath(dPath.path)
-        //             }}>
-        //                 <input type="radio" name="path"
-        //                     defaultValue={dPath.path}
-        //                     disabled={disabledPath}
-        //                 />
-        //                 <label class={'address-path-stamp' + disabled}
-        //                     for={'path-' + index}
-        //                     style={disabledPath ? { opacity: .5 } : {}}>
-        //                     {
-        //                         dPath.path ? (
-        //                             <div>
-        //                                 <div class="name">{dPath.path}</div>
-        //                                 <div class="note">{dPath.desc}</div>
-        //                             </div>
-        //                         ) : (
-        //                             <div>
-        //                                 <div class="name">{dPath.desc}</div>
-        //                                 <div class="address-path-input">
-        //                                     <input type="text" name="customPath" defaultValue={dPath.defaultP} />
-        //                                     <img src={require('../../../assets/img/import-account/arrow-down-orange.svg')} onClick={() => choosePath(dPath.path)}/>
-        //                                 </div>
-        //                             </div>
-        //                         )
-        //                     }
-        //                 </label>
-        //                 <div className="choose-path-button">
-        //                     <img src={require('../../../assets/img/import-account/arrow_right_orange.svg')} width="30" height="30" />
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     )
-        // })
-        // return listPath;
     }
 
     function getSelectAddressHtml() {

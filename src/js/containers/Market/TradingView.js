@@ -10,7 +10,8 @@ import { getTranslate } from 'react-localize-redux';
 @connect((store) => {
 	return {
 		selectedSymbol: store.market.configs.selectedSymbol,
-		locale: store.locale
+		locale: store.locale,
+		translate: getTranslate(store.locale)
 	}
 })
 
@@ -104,9 +105,9 @@ export default class TradingView extends React.Component {
 		const widget = window.tvWidget = new window.TradingView.widget(widgetOptions);
 
 		widget.onChartReady(() => {
-			this.createButton(widget, { content: "Sell", value: "sell", title: "Sell price" })
-			this.createButton(widget, { content: "Buy", value: "buy", title: "Buy price" })
-			this.createButton(widget, { content: "Mid", value: "mid", title: "Mid price" })
+			this.createButton(widget, { content: this.props.translate("trading_view.sell") || "Sell", value: "sell", title: this.props.translate("trading_view.sell_price") || "Sell price" })
+			this.createButton(widget, { content: this.props.translate("trading_view.buy") || "Buy", value: "buy", title: this.props.translate("trading_view.buy_price") || "Buy price" })
+			this.createButton(widget, { content: this.props.translate("trading_view.mid") || "Mid", value: "mid", title: this.props.translate("trading_view.mid_price") || "Mid price" })
 		});
 		//	});
 	}
