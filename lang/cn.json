@@ -214,6 +214,7 @@
   "import": {
     "from_metamask": "连接至<br>Metamask",
     "from_keystore": "选择或拖动<br />您的密钥库",
+    "json": "从<br />JSON文件导入",
     "from_trezor": "从<br />Trezor导入",
     "from_ledger": "从<br />Ledger导入",
     "from_private_key": "请输入您的<br />密钥",
@@ -224,7 +225,9 @@
     "balance": "余额",
     "import": "导入",
     "swap_from_ledger": "用Ledger进行兑换",
-    "swap_from_trezor": "用Trezor进行兑换"
+    "swap_from_trezor": "用Trezor进行兑换",
+    "select_or_drag": "选择或拖动",
+    "address_is_loading": "地址正在加载中..."
   },
 
   "info": {
@@ -311,6 +314,15 @@
     "change": "24小时变化",
     "volume": "交易量 (24小时)",
     "support_eth_only": "现在只支持与ETH的交易对，不支持美元交易对。"
+  },
+
+  "trading_view": {
+    "buy": "买",
+    "buy_price": "买价",
+    "sell": "卖",
+    "sell_price": "卖价",
+    "mid": "中间",
+    "mid_price": "中间价"
   },
 
   "home": "主页",
