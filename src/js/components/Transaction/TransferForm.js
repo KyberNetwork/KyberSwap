@@ -22,20 +22,20 @@ const TransferForm = (props) => {
   }
 
   var classSource = "amount-input"
-  if (props.focus === "source"){
+  if (props.focus === "source") {
     classSource += " focus"
   }
-  if (props.errors.amountTransfer){
+  if (props.errors.amountTransfer) {
     classSource += " error"
   }
   var render = (
     <div id="transfer-screen">
-      <div class="frame">        
+      <div class="frame">
         <div className="transfer-detail grid-x">
           <div className="cell small-12 large-9 transfer-col transfer-col-1">
             <div className="title main-title">{props.translate("transaction.transfer") || "Transfer"}</div>
             <div className="grid-x">
-              <div className="cell small-12 medium-7">                
+              <div className="cell small-12 medium-7">
                 <div className={props.errors.destAddress !== '' ? "error" : ""}>
                   <span className="transaction-label">{props.translate("transaction.address") || "Receiving Address"}</span>
                   <input className="hashAddr" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange}>
@@ -54,15 +54,19 @@ const TransferForm = (props) => {
                     {props.tokenTransferSelect}
 
                     <div className={classSource}>
-                      <input type="text" min="0" step="0.000001" placeholder="0"
-                        id="inputTransfer"
-                        value={props.input.amount.value} className="transfer-input"
-                        onChange={handleChangeAmount}
-                        onBlur={props.onBlur}
-                        onFocus={props.onFocus}
-                        maxLength="50" autoComplete="off"
-                      />
-                      <span>{props.tokenSymbol}</span>
+                      <div>
+                        <input type="text" min="0" step="0.000001" placeholder="0"
+                          id="inputTransfer"
+                          value={props.input.amount.value} className="transfer-input"
+                          onChange={handleChangeAmount}
+                          onBlur={props.onBlur}
+                          onFocus={props.onFocus}
+                          maxLength="50" autoComplete="off"
+                        />
+                      </div>
+                      <div>
+                        <span>{props.tokenSymbol}</span>
+                      </div>
                     </div>
                   </div>
                   {props.errors.amountTransfer &&
@@ -91,7 +95,7 @@ const TransferForm = (props) => {
           </div>
         </div>
         <div className="grid-x transfer-col transfer-col-3">
-          <div className={ props.errors.amountTransfer !== '' ? "cell transfer-btn small-12 large-9 error" : "cell transfer-btn small-12 large-9"}>
+          <div className={props.errors.amountTransfer !== '' ? "cell transfer-btn small-12 large-9 error" : "cell transfer-btn small-12 large-9"}>
             <div className="grid-x">
               <div className="cell medium-5 medium-offset-7 transfer-col-3-1">
                 {props.transferButton}

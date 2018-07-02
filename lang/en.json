@@ -81,8 +81,8 @@
     "click_to_swap_all_balance": "Click to swap all balance",
     "click_to_transfer_all_balance": "Click to transfer all balance",
 
-    "higher_min_acceptable_rate": "Higher Min acceptable rate typically results in lower success rate when the market is volatile.",
-    "our_suggest": "<strong> ${suggestRate}</strong> is our suggested Min acceptable rate by default.",
+    "higher_min_acceptable_rate": "Higher MIN ACCEPTABLE RATE typically results in lower success rate when the market is volatile.",
+    "our_suggest": "<strong> ${suggestRate}</strong> is our suggested MIN ACCEPTABLE RATE by default.",
     "min_acceptable_rate": "MIN ACCEPTABLE RATE",
 
     "about_to_exchange": "You are about to exchange",
@@ -226,7 +226,9 @@
     "balance": "Balance",
     "import": "Import",
     "swap_from_ledger": "Swap from Ledger",
-    "swap_from_trezor": "Swap from Trezor"
+    "swap_from_trezor": "Swap from Trezor",
+    "select_or_drag": "Select or Drag",
+    "address_is_loading": "Address is loading..."
   },
 
   "info": {
@@ -313,6 +315,15 @@
     "change": "24HR Change",
     "volume": "Volume (24h)",
     "support_eth_only": "Now support only pairs with ETH, not support pairs with USD yet."
+  },
+
+  "trading_view": {
+    "buy": "Buy",
+    "buy_price": "Buy price",
+    "sell": "Sell",
+    "sell_price": "Sell Price",
+    "mid": "Mid",
+    "mid_price": "Mid Price"
   },
 
   "home": "Home",

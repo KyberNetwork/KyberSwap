@@ -14,6 +14,9 @@
     justify-content: space-between;
     margin-top: 2rem;
     //opacity: 0.5;
+    .focus-name{
+      text-transform: initial;
+    }
     &.error{
       border-bottom: 1px solid $error-color;
       input{

@@ -52,7 +52,9 @@ const GasConfig = (props) => {
             <br></br>
             {props.translate("transaction.max_gas_price", { maxGas: props.maxGasPrice }) || `Max gas price: ${props.maxGasPrice} Gwei`}
           </div>
-          : ""
+          : <div className="des-down">{props.translate("transaction.transaction_gasprice") 
+            || "Higher gas price, faster transaction."}                        
+          </div>
         }
       </div>
       
