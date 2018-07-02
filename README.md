@@ -7,6 +7,19 @@ We deployed the [Testnet version](https://github.com/KyberNetwork/KyberWallet/re
 
 ## Install dependencies
 The wallet is developed on `Nodejs`, we assume users have it installed in their environment. *We suggest to use Node v7.3.0*
+
+To control the version of Node, like Node v7.3.0, the easiest way on Ubuntu and OSX is to use the [Node Version Manager](https://github.com/creationix/nvm).
+
+To install NVM for Linux/OSX, simply copy paste the following in a terminal:
+
+```
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash
+nvm install v7.3.0
+nvm use v7.3.0
+```
+
+Now, install dependencies
+
 ```
 npm install
 npm install web3@1.0.0-beta.18 
