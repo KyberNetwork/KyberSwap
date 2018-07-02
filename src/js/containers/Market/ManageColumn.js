@@ -15,10 +15,10 @@ import * as marketActions from "../../actions/marketActions"
 })
 
 export default class ManageColumn extends React.Component {
-    constructor(){
+    constructor() {
         super()
         this.state = {
-            open:false
+            open: false
         }
     }
 
@@ -32,7 +32,7 @@ export default class ManageColumn extends React.Component {
 
 
     selectDisplayColumn = (e, key) => {
-        this.props.dispatch(marketActions.changeDisplayColumn(key))        
+        this.props.dispatch(marketActions.changeDisplayColumn(key))
     }
 
     selectShowsColumn = (e, key) => {
@@ -53,14 +53,47 @@ export default class ManageColumn extends React.Component {
         })
     }
 
+    getTranslateFromKey = (key) => {
+        switch (key) {
+            case "market": {
+                return "market.market"
+            }
+            case "sell_price": {
+                return "market.sell_price"
+            }
+            case "buy_price": {
+                return "market.buy_price"
+            }
+            case "last_7d": {
+                return "market.last_7d"
+            }
+            case "change": {
+                return "market.change"
+            }
+            case "circulating_supply": {
+                return "market.circulating_supply"
+            }
+            case "total_supply": {
+                return "market.total_supply"
+            }
+            case "market_cap": {
+                return "market.market_cap"
+            }
+            case "volume": {
+                return "market.volume"
+            }
+        }
+    }
+
     getShowsColumn = (e) => {
         return Object.keys(this.props.shows.listItem).map((key, i) => {
             var index = this.props.shows.active.indexOf(key)
-            var checked = index === -1? false: true
+            var checked = index === -1 ? false : true
+            var title = this.props.shows.listItem[key].title
             return (
                 <label key={key} for={this.props.shows.listItem[key].title} className="column-label">
-                    <span className={checked ? "item-title" : ""}>{this.props.shows.listItem[key].title}</span>
-                    <input id={this.props.shows.listItem[key].title} type="checkbox" onChange = {(e) => this.selectShowsColumn(e, key)} checked = {checked}/>
+                    <span className={checked ? "item-title" : ""}>{this.props.translate(this.getTranslateFromKey(key)) || title}</span>
+                    <input id={this.props.shows.listItem[key].title} type="checkbox" onChange={(e) => this.selectShowsColumn(e, key)} checked={checked} />
                     <span className="checkmark"></span>
                 </label>
             )
@@ -69,9 +102,9 @@ export default class ManageColumn extends React.Component {
     //<div key={key} className="column-label">
     render() {
         return (
-            <div>                
+            <div>
                 <div className="token-selector">
-                    <Dropdown onShow={(e) => this.showSelector(e)} onHide={(e) => this.hideSelector(e)}  active ={this.state.open}>
+                    <Dropdown onShow={(e) => this.showSelector(e)} onHide={(e) => this.hideSelector(e)} active={this.state.open}>
                         <DropdownTrigger className="notifications-toggle">
                             <div className="focus-item d-flex">
                                 <img src={require("../../../assets/img/landing/setting.svg")} />

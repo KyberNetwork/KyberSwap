@@ -226,7 +226,9 @@
     "balance": "Balance",
     "import": "Import",
     "swap_from_ledger": "Swap from Ledger",
-    "swap_from_trezor": "Swap from Trezor"
+    "swap_from_trezor": "Swap from Trezor",
+    "select_or_drag": "Select or Drag",
+    "address_is_loading": "Address is loading..."
   },
 
   "info": {
@@ -313,6 +315,15 @@
     "change": "24HR Change",
     "volume": "Volume (24h)",
     "support_eth_only": "Now support only pairs with ETH, not support pairs with USD yet."
+  },
+
+  "trading_view": {
+    "buy": "Buy",
+    "buy_price": "Buy price",
+    "sell": "Sell",
+    "sell_price": "Sell Price",
+    "mid": "Mid",
+    "mid_price": "Mid Price"
   },
 
   "home": "Home",
