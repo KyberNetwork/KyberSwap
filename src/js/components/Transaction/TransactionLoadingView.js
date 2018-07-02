@@ -48,54 +48,8 @@ const TransactionLoadingView = (props) => {
                 </li>
               }
             </ul>
-            {/* <div class="text-center">
-              <div className={"broadcast-animation"}>
-                {!props.error ? <img src={require('../../../assets/img/broadcast.svg')} /> : <img src={require('../../../assets/img/error_state.svg')} />}
-              </div>
-            </div> */}
           </div>
         </div>
-        {/* 
-        <div class="frame tx-loading">
-          <div class="row">
-            <div class="text-center">
-              <h1 class="title mb-0 font-w-b">
-              {props.error? 
-                props.translate("error.failed") || 'Failed!'
-                : props.translate("transaction.broadcasting") || 'Broadcasting'}
-              
-              </h1>
-              <ul class="broadcast-steps">
-                {!props.error &&
-                  <li class="pending">
-                    <h4 class="font-w-b">{props.translate("transaction.broadcasting_blockchain") || "Broadcasting the transaction to the blockchain"}
-                    </h4>
-                  </li>
-                }
-                {props.error &&
-                  <li class="failed">
-                    <h4 class="font-w-b">{props.translate("transaction.cound_not_broadcast") || "Couldn't broadcast your transaction to the blockchain"}</h4>
-                    <div class="reason">{props.error}</div>
-                  </li>
-                }
-              </ul>
-              <div class="text-center">
-                <div className={"broadcast-animation"}>
-                  {!props.error ? <img src={require('../../../assets/img/broadcast.svg')} /> : <img src={require('../../../assets/img/finish.svg')} />}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="column small-11 medium-10 large-9 small-centered text-center">
-            <a className="new-transaction" onClick={props.makeNewTransaction}>
-              {props.type === "exchange"?
-                props.translate("transaction.new_ex") || "New exchange"
-                : props.translate("transaction.new_tx") || "New transfer"}
-            </a>
-          </div>
-        </div> */}
       </div>
     )
   }
@@ -277,7 +231,7 @@ const TransactionLoadingView = (props) => {
       <div className="tx-actions">
         <a className="new-transaction" onClick={props.makeNewTransaction}>
           {props.type === "exchange" ?
-            "New swap"
+            props.translate("transaction.new_ex") || "New swap"            
             : props.translate("transaction.new_tx") || "New transfer"}
         </a>
       </div>

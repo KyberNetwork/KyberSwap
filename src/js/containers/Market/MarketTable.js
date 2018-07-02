@@ -7,7 +7,7 @@ import { getTranslate } from 'react-localize-redux'
 import * as actions from "../../actions/marketActions"
 import * as converters from "../../utils/converter"
 
-import LineChart from 'react-linechart';
+//import LineChart from 'react-linechart';
 import {Line} from 'react-chartjs-2';
 //import '../node_modules/react-linechart/dist/styles.css';
 
@@ -73,6 +73,7 @@ export default class MarketTable extends React.Component {
           minValue = item
         }
       })
+      
       if ((maxValue - minValue) / minValue * 100 < 5) {
         var yOption = {
           display: false,
