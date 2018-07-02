@@ -179,7 +179,7 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.UPDATE_RATE":{
       const { rateInit, expectedPrice, slippagePrice, rateInitSlippage, blockNo ,isManual, isSuccess} = action.payload
-
+      
       if (!isSuccess) {
         newState.errors.rateSystem = "error.get_rate"
       }else{

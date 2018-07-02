@@ -25,11 +25,14 @@ import { RateBetweenToken } from "../Exchange"
   var sourceDecimal = 18
   var sourceName = "Ether"
   var sourceIcon = "eth.svg"  
+
+  var rateSourceToEth = 0
   if (tokens[sourceTokenSymbol]) {
     sourceBalance = tokens[sourceTokenSymbol].balance
     sourceDecimal = tokens[sourceTokenSymbol].decimal
     sourceName = tokens[sourceTokenSymbol].name
     sourceIcon = tokens[sourceTokenSymbol].icon
+    rateSourceToEth = tokens[sourceTokenSymbol].rate
   }
 
   var destTokenSymbol = store.exchange.destTokenSymbol
@@ -47,7 +50,7 @@ import { RateBetweenToken } from "../Exchange"
   return {
     form: {
       ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
-      sourceName, destName, sourceIcon, destIcon
+      sourceName, destName, sourceIcon, destIcon, rateSourceToEth
     },
     snapshot: store.exchange.snapshot,
     account: store.account.account,
@@ -153,7 +156,8 @@ export default class PostExchange extends React.Component {
       this.props.form.sourceBalance,
       this.props.form.sourceTokenSymbol,
       this.props.form.sourceDecimal,
-      this.props.form.offeredRate,
+      this.props.form.rateSourceToEth,
+      //this.props.form.offeredRate,      
       this.props.form.destDecimal,
       this.props.form.maxCap)
     var sourceAmountErrorKey

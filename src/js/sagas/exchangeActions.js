@@ -642,7 +642,7 @@ function* getRate(ethereum, source, dest, sourceAmount) {
 }
 
 function* updateRatePending(action) {
-  const { ethereum, source, dest, sourceAmount, isManual, rateInit } = action.payload
+  const { ethereum, source, dest, sourceAmount, isManual } = action.payload
   var state = store.getState()
   // var exchangeSnapshot = state.exchange.snapshot
   var translate = getTranslate(state.locale)
@@ -651,8 +651,27 @@ function* updateRatePending(action) {
   if (isManual) {
     var rateRequest = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmount)
    // console.log("rate_request_manual: " + JSON.stringify(rateRequest))
-    if (rateRequest.status === "success") {
-      const { expectedPrice, slippagePrice, lastestBlock } = rateRequest.data
+    if (rateRequest.status === "success") {      
+      var { expectedPrice, slippagePrice, lastestBlock } = rateRequest.data      
+      var rateInit = "0"
+      if (expectedPrice.toString() === "0"){
+        var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, "0x0")
+
+        //console.log(rateRequestZeroAmount.data)
+        if (rateRequestZeroAmount.status === "success"){
+          rateInit = rateRequestZeroAmount.data.expectedPrice
+        }
+        if (rateRequestZeroAmount.status === "timeout") {
+          yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+            translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+            return
+        }
+        if (rateRequestZeroAmount.status === "fail") {
+          yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+            translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
+            return
+        }
+      }
       yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
       // if (expectedPrice === "0") {
       //   yield put(actions.setRateSystemError())
@@ -680,10 +699,30 @@ function* updateRatePending(action) {
 
   } else {
     const rateRequest = yield call(getRate, ethereum, source, dest, sourceAmount)
-    //console.log("rate_request_manual_not: " + JSON.stringify(rateRequest))
+   // console.log("rate_request_manual_not: " + JSON.stringify(rateRequest))
     if (rateRequest.status === "success") {
-      const { expectedPrice, slippagePrice, lastestBlock } = rateRequest.res
+      var { expectedPrice, slippagePrice, lastestBlock } = rateRequest.res
+    //  console.log(rateRequest.res)
+      var rateInit = "0"
+      if (expectedPrice.toString() === "0"){
+        var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, "0x0")
 
+    //    console.log(rateRequestZeroAmount.data)
+        if (rateRequestZeroAmount.status === "success"){
+          rateInit = rateRequestZeroAmount.data.expectedPrice
+        }
+        if (rateRequestZeroAmount.status === "timeout") {
+          yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+            translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+            return
+        }
+        if (rateRequestZeroAmount.status === "fail") {
+          yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+            translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
+            return
+        }
+      }
+      
       yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
 
       // if (expectedPrice.toString() !== "0"){
@@ -1267,10 +1306,12 @@ function* verifyExchange() {
   var sourceBalance = 0
   var sourceDecimal = 18
   var sourceName = "Ether"
+  var rateSourceToEth = 0
   if (tokens[sourceTokenSymbol]) {
     sourceBalance = tokens[sourceTokenSymbol].balance
     sourceDecimal = tokens[sourceTokenSymbol].decimal
     sourceName = tokens[sourceTokenSymbol].name
+    rateSourceToEth = tokens[sourceTokenSymbol].rate
   }
 
   var destTokenSymbol = exchange.destTokenSymbol
@@ -1289,7 +1330,7 @@ function* verifyExchange() {
     sourceBalance,
     sourceTokenSymbol,
     sourceDecimal,
-    offeredRate,
+    rateSourceToEth,
     destDecimal,
     exchange.maxCap)
 

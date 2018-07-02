@@ -32,10 +32,12 @@ import { default as _ } from 'underscore'
   var sourceBalance = 0
   var sourceDecimal = 18
   var sourceName = "Ether"
+  var rateSourceToEth = 0
   if (tokens[sourceTokenSymbol]) {
     sourceBalance = tokens[sourceTokenSymbol].balance
     sourceDecimal = tokens[sourceTokenSymbol].decimal
     sourceName = tokens[sourceTokenSymbol].name
+    rateSourceToEth = tokens[sourceTokenSymbol].rate
   }
 
   var destTokenSymbol = store.exchange.destTokenSymbol
@@ -51,7 +53,7 @@ import { default as _ } from 'underscore'
   return {
     account, ethereum, tokens, translate, exchange: {
       ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
-      sourceName, destName,
+      sourceName, destName, rateSourceToEth,
       advanceLayout : props.advanceLayout
     }
   }
@@ -119,7 +121,8 @@ export default class ExchangeBody extends React.Component {
       this.props.exchange.sourceBalance,
       this.props.exchange.sourceTokenSymbol,
       this.props.exchange.sourceDecimal,
-      this.props.exchange.offeredRate,
+      //this.props.exchange.offeredRate,
+      this.props.exchange.rateSourceToEth,
       this.props.exchange.destDecimal,
       this.props.exchange.maxCap)
     var sourceAmountErrorKey = false
