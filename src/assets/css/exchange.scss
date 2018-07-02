@@ -223,6 +223,7 @@
           overflow: hidden;
           .focus-name {
             text-overflow: ellipsis;
+            text-transform: initial;
             overflow: hidden;
             white-space: nowrap;
           }          
@@ -231,8 +232,7 @@
       .focus-name{
         color: #222222;
         font-size: 14px;
-        font-weight: 600;
-        text-transform: uppercase;
+        font-weight: 600;        
         letter-spacing: -0.4px;
       }
       .focus-balance{
