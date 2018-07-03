@@ -139,7 +139,7 @@ export function* setGasPrice(action) {
     standardGas = gasPrice.standard
     defaultGas = gasPrice.default
     fastGas = gasPrice.fast
-    yield put(actionsTransfer.setGasPriceTransferComplete(gasPrice))
+    yield put(actionsTransfer.setGasPriceTransferComplete(safeLowGas, standardGas, defaultGas, fastGas))
 
     var fastGasFloat = parseFloat(fastGas)
     if (fastGasFloat <= 20){
@@ -147,7 +147,7 @@ export function* setGasPrice(action) {
     }
 
     var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
-    yield put(actionsExchange.setGasPriceSwapComplete(compareWithMax))
+    yield put(actionsExchange.setGasPriceSwapComplete(compareWithMax.safeLowGas, compareWithMax.standardGas, compareWithMax.defaultGas, compareWithMax.fastGas))
 
   }catch (err) {
     console.log(err.message)

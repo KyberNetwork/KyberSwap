@@ -219,11 +219,15 @@ const transfer = (state = initState, action) => {
     }
     case "TRANSFER.SET_GAS_PRICE_TRANSFER_COMPLETE": {
       if (!newState.isEditGasPrice) {
-        var gasPrice = action.payload
-        newState.gasPriceSuggest.fastGas = gasPrice.fast
-        newState.gasPriceSuggest.standardGas = gasPrice.standard
-        newState.gasPriceSuggest.safeLowGas = gasPrice.low
-        newState.gasPrice = gasPrice.default
+        var { safeLowGas, standardGas, fastGas, defaultGas } = action.payload
+
+        var gasPriceSuggest = newState.gasPriceSuggest
+        gasPriceSuggest.fastGas = fastGas
+        gasPriceSuggest.standardGas = standardGas
+        gasPriceSuggest.safeLowGas = safeLowGas
+
+        newState.gasPriceSuggest = {...gasPriceSuggest}
+        newState.gasPrice = defaultGas
       }
       return newState
     }

@@ -453,11 +453,17 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.SET_GAS_PRICE_SWAP_COMPLETE": {
+
       if (!newState.isEditGasPrice) {
         var { safeLowGas, standardGas, fastGas, defaultGas } = action.payload
-        newState.gasPriceSuggest.fastGas = fastGas
-        newState.gasPriceSuggest.standardGas = standardGas
-        newState.gasPriceSuggest.safeLowGas = safeLowGas
+
+        var gasPriceSuggest = {...newState.gasPriceSuggest}
+        
+        gasPriceSuggest.fastGas = fastGas
+        gasPriceSuggest.standardGas = standardGas
+        gasPriceSuggest.safeLowGas = safeLowGas
+
+        newState.gasPriceSuggest = {...gasPriceSuggest}
         newState.gasPrice = defaultGas
       }
       return newState

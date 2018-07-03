@@ -472,10 +472,10 @@ export function setMaxGasPriceComplete(maxGasPrice) {
   }
 }
 
-export function setGasPriceSwapComplete(suggestGasData) {
+export function setGasPriceSwapComplete(safeLowGas, standardGas, defaultGas, fastGas) {
   return {
     type: "EXCHANGE.SET_GAS_PRICE_SWAP_COMPLETE",
-    payload: suggestGasData
+    payload: {safeLowGas, standardGas, defaultGas, fastGas}
   }
 }
 
