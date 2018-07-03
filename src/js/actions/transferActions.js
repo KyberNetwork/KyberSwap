@@ -287,9 +287,9 @@ export function setSnapshot(data){
   }
 }
 
-export function setGasPriceTransferComplete(suggestGasData){
+export function setGasPriceTransferComplete(safeLowGas, standardGas, defaultGas, fastGas){
   return {
     type: "TRANSFER.SET_GAS_PRICE_TRANSFER_COMPLETE",
-    payload: suggestGasData
+    payload: {safeLowGas, standardGas, defaultGas, fastGas}
   }
 }
