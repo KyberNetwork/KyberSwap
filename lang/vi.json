@@ -23,7 +23,8 @@
     "hide_zero_balance": "Ẩn số dư nhỏ",
     "symbol": "MÃ",
     "price": "GIÁ",
-    "your_wallet_address": "Địa chỉ ví của bạn"
+    "your_wallet_address": "Địa chỉ ví của bạn",
+    "search": "Tìm kiếm"
   },
 
   "transaction": {
@@ -75,15 +76,15 @@
     "not_enable_exchange": "Địa chỉ của bạn không phù hợp để trao đổi tại thời điểm hiện tại.",
     "kyber_down" : "Kyber hiện tại không hỗ trợ trao đổi. <br/>Xin bạn vui lòng quay laị sau!",
 
-    "swap": "Swap",
+    "swap": "Trao đổi",
     "transaction_time": "Thời gian giao dịch: < ${time} phút",
     "waiting_transaction": "Đang đợi giao dịch được xác thực",
     "click_to_ex_all_balance": "Trao đổi toàn bộ tài khoản",
     "click_to_transfer_all_balance": "Chuyển toàn bộ tài khoản",
 
-    "higher_min_acceptable_rate": "Higher Min acceptable rate typically results in lower success rate when the market is volatile.",
-    "our_suggest": "<strong> ${suggestRate}</strong> is our suggested Min acceptable rate by default.",
-    "min_acceptable_rate": "MIN ACCEPTABLE RATE",
+    "higher_min_acceptable_rate": "Tỷ giá thấp hơn cho khả năng giáo dịch thành công cao hơn khi thị trường biến động.",
+    "our_suggest": "<strong> ${suggestRate}</strong> là tỷ giá thấp nhất chấp nhận được mà chúng tôi đề xuất.",
+    "min_acceptable_rate": "Tỷ giá thấp nhật được chấp nhận",
 
     "about_to_exchange": "Bạn chuẩn bị chuyển đổi",
     "about_to_transfer": "Bạn chuẩn bị gửi",
@@ -102,7 +103,7 @@
     "transfer_tooltip": "Chuyển eth hoặc token đến một tài khoản khác",
     "transaction_gasprice_50": "Giá Gas càng cao, giao dịch càng nhanh. Giá Gas lớn nhất 50 Gwei",
     "transaction_gasprice": "Giá Gas càng cao, giao dịch càng nhanh",
-    "max_gas_price": "Max gas price: ${maxGas} Gwei",
+    "max_gas_price": "Giá gas lớn nhất: ${maxGas} Gwei",
     "best_rate_tooltip": "Tỷ giá thấp hơn cho khả năng thành công cao hơn khi thị trường biến động",
     "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>",
 

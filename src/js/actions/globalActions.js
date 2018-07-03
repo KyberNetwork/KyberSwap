@@ -151,13 +151,6 @@ export function setGasPrice(ethereum){
   }
 }
 
-export function setGasPriceComplete(suggestGasData){
-  return {
-    type: "GLOBAL.SET_GAS_PRICE_COMPLETE",
-    payload: suggestGasData
-  }
-}
-
 export function visitExchange(){
   return {
     type: "GLOBAL.VISIT_EXCHANGE",
@@ -210,5 +203,12 @@ export function setNotiHandler(notiService) {
   return {
     type: "GLOBAL.SET_NOTI_HANDLER",
     payload: { notiService }
+  }
+}
+
+export function setMaxGasPrice(ethereum) {
+  return {
+    type: "GLOBAL.SET_MAX_GAS_PRICE",
+    payload: { ethereum }
   }
 }
