@@ -10,7 +10,7 @@
   &.error {
     #balance-account {
       .balances {
-        height: 460px;
+        height: 455px;
         @include screen-max-width(large) {
           height: 630px;
         }

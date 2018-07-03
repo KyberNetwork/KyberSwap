@@ -106,11 +106,14 @@ $divider-color: darken($title-background-color, 5);
       color: $alert-color;
       padding-top: 24px;
       &.metamask{
-        max-height: 200px;
+        height: 65px;
         overflow-y: auto;
         overflow-x: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+        word-wrap: break-word;
+        margin: 24px;
+        padding: 5px 5px;
+        margin-left: 10px;
+        margin-bottom: 0;
         &.full{
           white-space: normal;
         }

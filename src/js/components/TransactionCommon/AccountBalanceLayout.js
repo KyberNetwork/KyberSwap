@@ -74,7 +74,7 @@ const AccountBalanceLayout = (props) => {
       
       <div id="search-balance">
          <div>  
-           <input placeholder="search"/>
+           <input placeholder={props.translate("address.search") || "Search"}/>
         </div>   
         <div>
           Sort
