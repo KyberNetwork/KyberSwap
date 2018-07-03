@@ -464,8 +464,7 @@ export function setMaxGasPrice(ethereum) {
   }
 }
 
-export function setMaxGasPriceComplete(maxGasPrice) {
-  var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
+export function setMaxGasPriceComplete(maxGasPriceGwei) { 
   return {
     type: "EXCHANGE.SET_MAX_GAS_PRICE_COMPLETE",
     payload: maxGasPriceGwei

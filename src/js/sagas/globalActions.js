@@ -108,12 +108,41 @@ export function* checkConnection(action) {
   }
 }
 
+
+export function* setMaxGasPrice(action) {
+  var state = store.getState()
+  var ethereum = state.connection.ethereum
+  try {
+    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
+    var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
+    yield put(actionsExchange.setMaxGasPriceComplete(maxGasPriceGwei))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export function* getMaxGasPrice(action){
+  var state = store.getState()
+  var ethereum = state.connection.ethereum
+  try {
+    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
+    var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
+    return maxGasPriceGwei
+  } catch (err) {
+    console.log(err)
+    return 50
+  }
+}
+
+
 function compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
   var safeLowGas = parseFloat(safeLowGas)
   var standardGas = parseFloat(standardGas)
   var fastGas = parseFloat(fastGas)
   var defaultGas = parseFloat(defaultGas)
   var maxGas = parseFloat(maxGas)
+  console.log("max gas....")
+  console.log(maxGas)
   if (fastGas > maxGas) {
     var returnSuggest = {}
     returnSuggest.fastGas = maxGas
@@ -129,7 +158,8 @@ function compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGas
 export function* setGasPrice(action) {
   var safeLowGas, standardGas, fastGas, defaultGas
   var state = store.getState()
-  var maxGasPrice = state.exchange.maxGasPrice
+
+  var maxGasPrice = yield call(getMaxGasPrice)   
 
   try {
     const ethereum = action.payload
@@ -154,15 +184,7 @@ export function* setGasPrice(action) {
   }
 }
 
-export function* setMaxGasPrice(action) {
-  try {
-    const ethereum = action.payload
-    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
-    yield put(actionsExchange.setMaxGasPriceComplete(maxGasPrice))
-  } catch (err) {
-    console.log(err)
-  }
-}
+
 
 export function* changelanguage(action) {
   const { ethereum, lang, locale } = action.payload
@@ -200,5 +222,5 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.UPDATE_RATE_USD_PENDING", updateRateUSD)
 
 
-  yield takeEvery("EXCHANGE.SET_MAX_GAS_PRICE", setMaxGasPrice)
+  yield takeEvery("GLOBAL.SET_MAX_GAS_PRICE", setMaxGasPrice)
 }

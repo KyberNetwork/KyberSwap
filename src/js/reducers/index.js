@@ -58,7 +58,7 @@ const rootReducer = (state, action) => {
     }
   }
   
-  let isGoToExchange = action.type === '@@router/LOCATION_CHANGE' && ( (action.payload.pathname === constants.BASE_HOST + '/exchange')&&(action.payload.pathname === constants.BASE_HOST + '/transfer') )
+  let isGoToExchange = action.type === '@@router/LOCATION_CHANGE' && ( (action.payload.pathname === constants.BASE_HOST + '/swap')&&(action.payload.pathname === constants.BASE_HOST + '/transfer') )
   if(isGoToExchange && !state.account.account){
     window.location.href = '/'
   }

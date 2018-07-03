@@ -162,8 +162,10 @@ export default class EthereumService extends React.Component {
 
     this.checkConnection()
 
-    this.fetchGasprice()
+
     this.fetchMaxGasPrice()
+    this.fetchGasprice()
+    
 
     this.fetchExchangeEnable()
     // this.verifyExchange()
@@ -332,8 +334,7 @@ export default class EthereumService extends React.Component {
 
   fetchMaxGasPrice = () => {
     var state = store.getState()
-    var ethereum = state.connection.ethereum
-    store.dispatch(setMaxGasPrice(ethereum))
+    store.dispatch(setMaxGasPrice())
   }
 
   fetchGasExchange = () => {
@@ -344,7 +345,7 @@ export default class EthereumService extends React.Component {
     }
     var pathname = state.router.location.pathname
     console.log(pathname)
-    if (pathname !== constants.BASE_HOST + "/exchange") {
+    if (pathname !== constants.BASE_HOST + "/swap") {
       return
     }
     store.dispatch(estimateGas())
@@ -420,7 +421,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== constants.BASE_HOST + "/exchange") {
+    if (pathname !== constants.BASE_HOST + "/swap") {
       return
     }
     store.dispatch(fetchExchangeEnable())
