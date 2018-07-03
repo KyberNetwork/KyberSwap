@@ -23,7 +23,11 @@ import { clearSession } from "../../actions/globalActions"
   })
   const account = store.account.account
   if (account === false) {
-    window.location.href = `/swap?lang=${currentLang}`
+    if (currentLang[0] === 'en') {
+      window.location.href = "/swap"  
+    } else {
+      window.location.href = `/swap?lang=${currentLang}`
+    }
   }
   var translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens

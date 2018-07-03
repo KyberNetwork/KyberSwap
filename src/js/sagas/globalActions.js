@@ -1,6 +1,7 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/globalActions'
 import * as actionsExchange from '../actions/exchangeActions'
+import * as actionsTransfer from '../actions/transferActions'
 import * as actionsUtils from '../actions/utilActions'
 import { closeImportLoading } from '../actions/accountActions'
 import { Rate } from "../services/rate"
@@ -138,6 +139,7 @@ export function* setGasPrice(action) {
     standardGas = gasPrice.standard
     defaultGas = gasPrice.default
     fastGas = gasPrice.fast
+    yield put(actionsTransfer.setGasPriceTransferComplete(gasPrice))
 
     var fastGasFloat = parseFloat(fastGas)
     if (fastGasFloat <= 20){
@@ -145,7 +147,7 @@ export function* setGasPrice(action) {
     }
 
     var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
-    yield put(actions.setGasPriceComplete(compareWithMax))
+    yield put(actionsExchange.setGasPriceSwapComplete(compareWithMax))
 
   }catch (err) {
     console.log(err.message)
@@ -160,9 +162,7 @@ export function* setMaxGasPrice(action) {
   } catch (err) {
     console.log(err)
   }
-
 }
-
 
 export function* changelanguage(action) {
   const { ethereum, lang, locale } = action.payload
@@ -202,5 +202,3 @@ export function* watchGlobal() {
 
   yield takeEvery("EXCHANGE.SET_MAX_GAS_PRICE", setMaxGasPrice)
 }
-
-

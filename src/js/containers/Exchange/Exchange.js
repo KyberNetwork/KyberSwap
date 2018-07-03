@@ -23,7 +23,11 @@ import { clearSession } from "../../actions/globalActions"
   })
   const account = store.account.account
   if (account === false) {
-    window.location.href = `/swap?lang=${currentLang}`
+    if (currentLang[0] === 'en') {
+      window.location.href = "/swap"  
+    } else {
+      window.location.href = `/swap?lang=${currentLang}`
+    }
   }
   const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
@@ -111,7 +115,7 @@ export default class Exchange extends React.Component {
         // advance = {advanceConfig}
         content = {exchangeBody}
         page = {page}
-        currentLang = {this.props.currentLang}
+        currentLang = {this.props.currentLang[0]}
       />
     )
   }

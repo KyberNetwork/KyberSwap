@@ -5,7 +5,11 @@ import constansts from "../../services/constants"
 
 const TransactionLayout = (props) => {
   var gotoRoot = (e) => {
-    window.location.href = `/?lang=${props.currentLang}`
+    if (props.currentLang === 'en') {
+      window.location.href = "/"
+    } else {
+      window.location.href = `/?lang=${props.currentLang}`
+    }
   }
   var transfer = props.translate("transaction.transfer") || "Transfer"
   var swap = props.translate("transaction.swap") || "Swap"
