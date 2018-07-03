@@ -147,7 +147,7 @@ export default class MarketTable extends React.Component {
       )
     } else if (input === 0){
       return (
-        <span className = "zero-value">{input} %</span>
+        <span className = "zero-value">--- %</span>
       )
     } else {
       return (
@@ -165,8 +165,8 @@ export default class MarketTable extends React.Component {
   addUnit = (input, currency) => {
     return (
       <div className="symbol-price">
-        <span className="value">{this.formatNumber(input)}</span>
-         <span className="unit">{currency}</span>
+        <span className="value">{input === 0 ? "---" : this.formatNumber(input)}</span>
+        <span className="unit">{currency}</span>
       </div>
     )
   }

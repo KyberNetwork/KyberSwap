@@ -82,9 +82,9 @@
     "click_to_ex_all_balance": "Trao đổi toàn bộ tài khoản",
     "click_to_transfer_all_balance": "Chuyển toàn bộ tài khoản",
 
-    "higher_min_acceptable_rate": "Higher Min acceptable rate typically results in lower success rate when the market is volatile.",
-    "our_suggest": "<strong> ${suggestRate}</strong> is our suggested Min acceptable rate by default.",
-    "min_acceptable_rate": "MIN ACCEPTABLE RATE",
+    "higher_min_acceptable_rate": "Tỷ giá thấp hơn cho khả năng giáo dịch thành công cao hơn khi thị trường biến động.",
+    "our_suggest": "<strong> ${suggestRate}</strong> là tỷ giá thấp nhất chấp nhận được mà chúng tôi đề xuất.",
+    "min_acceptable_rate": "Tỷ giá thấp nhật được chấp nhận",
 
     "about_to_exchange": "Bạn chuẩn bị chuyển đổi",
     "about_to_transfer": "Bạn chuẩn bị gửi",
