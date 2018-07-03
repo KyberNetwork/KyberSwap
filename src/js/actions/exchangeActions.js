@@ -472,6 +472,13 @@ export function setMaxGasPriceComplete(maxGasPrice) {
   }
 }
 
+export function setGasPriceSwapComplete(suggestGasData) {
+  return {
+    type: "EXCHANGE.SET_GAS_PRICE_SWAP_COMPLETE",
+    payload: suggestGasData
+  }
+}
+
 export function analyzeError(ethereum, txHash) {
   return {
     type: "EXCHANGE.ANALYZE_ERROR",

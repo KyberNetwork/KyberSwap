@@ -23,7 +23,8 @@
     "hide_zero_balance": "Hide zero balance",
     "symbol": "SYMBOL",
     "price": "PRICE",
-    "your_wallet_address": "Your Wallet Address"
+    "your_wallet_address": "Your Wallet Address",
+    "search": "Search"
   },
 
   "transaction": {

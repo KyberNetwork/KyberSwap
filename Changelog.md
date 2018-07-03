@@ -1,3 +1,24 @@
+# 0.10.0 (2018-07-03)
+## Features:
+- Intergrate new UI for kyber 2.0
+- Support swap from token to token
+- List many new tokens
+- Support trading view for market table
+
+## Bugfixes:
+- Update multi languages for Chinese, Korean, Vietnamese
+
+## Improvements:
+- Improve copies, layout
+
+## Bugfixes:
+- Fix estimate gas price
+- Fix return wrong message when input very large amount
+
+## Improvements:
+- Improve copies, layout
+
+
 # 0.6.0 (2018-04-10)
 ## Features:
 - Add ADX, AST, RCN, ZIL, LINK tokens

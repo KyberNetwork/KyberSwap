@@ -15,20 +15,25 @@ import { default as _ } from 'underscore'
 import { clearSession } from "../../actions/globalActions"
 
 @connect((store) => {
+  var langs = store.locale.languages
+  const currentLang = langs.map((item) => {
+    if (item.active) {
+      return item.code
+    }
+  })
   const account = store.account.account
   if (account === false) {
-    window.location.href = "/swap"
+    if (currentLang[0] === 'en') {
+      window.location.href = "/swap"  
+    } else {
+      window.location.href = `/swap?lang=${currentLang}`
+    }
   }
   const translate = getTranslate(store.locale)
-  // var location = "/"
-  // if (store.router.location){
-  //   location = store.router.location.pathname
-  // }
   const tokens = store.tokens.tokens
   const exchange = store.exchange
-  //console.log("location: " + location)
   return {
-      translate, exchange, tokens
+      translate, exchange, tokens, currentLang
     }  
 })
 
@@ -110,6 +115,7 @@ export default class Exchange extends React.Component {
         // advance = {advanceConfig}
         content = {exchangeBody}
         page = {page}
+        currentLang = {this.props.currentLang[0]}
       />
     )
   }

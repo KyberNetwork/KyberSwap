@@ -24,12 +24,6 @@ class ApproveModal extends React.Component {
           <div className={'modal-error custom-scroll ' + metaMaskClass + (this.state.isFullError ? ' full' : '')}>
             {this.props.errors}
           </div>
-          {isMetaMaskAcc ? 
-            <div onClick={this.toggleFullErr} className="show-full">
-              {this.state.isFullError ? 'Hide »' : 'Read full error »'}
-            </div>
-            : ''
-          }
         </React.Fragment>
       )
     }
