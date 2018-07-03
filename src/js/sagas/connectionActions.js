@@ -23,7 +23,7 @@ export function* createNewConnection(action) {
   yield put(setMaxGasPrice(connectionInstance))
 
   if (typeof web3 === "undefined") {
-    yield put(globalActions.throwErrorMematamask("Memamask is not installed"))
+    yield put(globalActions.throwErrorMematamask("Metamask is not installed"))
   } else {
     const web3Service = new Web3Service(web3)
     const watchMetamask = yield fork(watchMetamaskAccount, connectionInstance, web3Service)

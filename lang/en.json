@@ -82,8 +82,8 @@
     "click_to_swap_all_balance": "Click to swap all balance",
     "click_to_transfer_all_balance": "Click to transfer all balance",
 
-    "higher_min_acceptable_rate": "Higher Min acceptable rate typically results in lower success rate when the market is volatile.",
-    "our_suggest": "<strong> ${suggestRate}</strong> is our suggested Min acceptable rate by default.",
+    "higher_min_acceptable_rate": "Higher MIN ACCEPTABLE RATE typically results in lower success rate when the market is volatile.",
+    "our_suggest": "<strong> ${suggestRate}</strong> is our suggested MIN ACCEPTABLE RATE by default.",
     "min_acceptable_rate": "MIN ACCEPTABLE RATE",
 
     "about_to_exchange": "You are about to exchange",

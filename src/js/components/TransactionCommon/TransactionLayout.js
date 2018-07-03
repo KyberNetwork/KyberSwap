@@ -4,17 +4,8 @@ import constansts from "../../services/constants"
 
 
 const TransactionLayout = (props) => {
-  var currentLang = () => {
-    var langs = props.locale.languages
-    return langs.map((item) => {
-      if (item.active) {
-        return item.code
-      }
-    })
-  }
   var gotoRoot = (e) => {
-    var langs = currentLang()
-    window.location.href = `/?lang=${langs[0]}`
+    window.location.href = `/?lang=${props.currentLang}`
   }
   var transfer = props.translate("transaction.transfer") || "Transfer"
   var swap = props.translate("transaction.swap") || "Swap"

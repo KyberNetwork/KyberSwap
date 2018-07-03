@@ -11,6 +11,10 @@ $animationTime: 0.5s;
     padding-top: 50px;
     text-align: center;
 
+    @include screen-min-width(large){
+      padding-bottom: 40px;
+    }
+
     #import-acc {
       display: inline-block;
     }
