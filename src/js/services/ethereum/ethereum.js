@@ -163,6 +163,7 @@ export default class EthereumService extends React.Component {
     this.checkConnection()
 
     this.fetchGasprice()
+    this.fetchMaxGasPrice()
 
     this.fetchExchangeEnable()
     // this.verifyExchange()
@@ -212,9 +213,6 @@ export default class EthereumService extends React.Component {
     var ethereum = state.connection.ethereum  
     store.dispatch(updateAllRate(ethereum, BLOCKCHAIN_INFO.tokens))
   }
-
-
-
 
   fetchTokenBalance() {
     var state = store.getState()
@@ -332,14 +330,11 @@ export default class EthereumService extends React.Component {
     store.dispatch(setGasPrice(ethereum))
   }
 
-  // fetchMaxGasPrice = () => {
-  //   var state = store.getState()
-  //   var ethereum = state.connection.ethereum
-
-  //   console.log("++++++++++++++++++++++")
-  //   console.log(ethereum)
-  //   store.dispatch(setMaxGasPrice(ethereum))
-  // }
+  fetchMaxGasPrice = () => {
+    var state = store.getState()
+    var ethereum = state.connection.ethereum
+    store.dispatch(setMaxGasPrice(ethereum))
+  }
 
   fetchGasExchange = () => {
     var state = store.getState()

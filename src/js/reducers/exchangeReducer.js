@@ -452,7 +452,7 @@ const exchange = (state = initState, action) => {
       newState.maxCap = action.payload.maxCap
       return newState
     }
-    case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
+    case "EXCHANGE.SET_GAS_PRICE_SWAP_COMPLETE": {
       if (!newState.isEditGasPrice) {
         var { safeLowGas, standardGas, fastGas, defaultGas } = action.payload
         newState.gasPriceSuggest.fastGas = fastGas

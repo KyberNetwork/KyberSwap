@@ -217,13 +217,13 @@ const transfer = (state = initState, action) => {
       newState.snapshot.isFetchingGas = false
       return newState
     }
-    case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
+    case "TRANSFER.SET_GAS_PRICE_TRANSFER_COMPLETE": {
       if (!newState.isEditGasPrice) {
-        var { safeLowGas, standardGas, fastGas, defaultGas } = action.payload
-        newState.gasPriceSuggest.fastGas = fastGas
-        newState.gasPriceSuggest.standardGas = standardGas
-        newState.gasPriceSuggest.safeLowGas = safeLowGas
-        newState.gasPrice = defaultGas
+        var gasPrice = action.payload
+        newState.gasPriceSuggest.fastGas = gasPrice.fast
+        newState.gasPriceSuggest.standardGas = gasPrice.standard
+        newState.gasPriceSuggest.safeLowGas = gasPrice.low
+        newState.gasPrice = gasPrice.default
       }
       return newState
     }

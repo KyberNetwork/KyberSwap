@@ -5,8 +5,14 @@ import constansts from "../../services/constants"
 
 const TransactionLayout = (props) => {
   var gotoRoot = (e) => {
-    window.location.href = "/"
+    if (props.currentLang === 'en') {
+      window.location.href = "/"
+    } else {
+      window.location.href = `/?lang=${props.currentLang}`
+    }
   }
+  var transfer = props.translate("transaction.transfer") || "Transfer"
+  var swap = props.translate("transaction.swap") || "Swap"
   return (
     <div class="frame exchange-frame">
       <div className="swap-navigation">        
@@ -19,7 +25,7 @@ const TransactionLayout = (props) => {
         </div>
         <div className="seperator">/</div>
         <div className="active">
-          <a>{props.page === "exchange" ? "Swap": "Transfer"}</a>
+          <a>{props.page === "exchange" ? swap : transfer}</a>
         </div>
       </div>
       <h1 class="title frame-tab">
@@ -28,8 +34,8 @@ const TransactionLayout = (props) => {
           <span>{props.translate("transaction.back") || "Back"}</span>
         </div>
         <div className="switch-button">
-          <Link to={constansts.BASE_HOST + "/swap"} className={props.page === "exchange" ? "disable" : ""}>{props.translate("transaction.swap") || "Swap"}</Link>
-          <Link to={constansts.BASE_HOST + "/transfer"} className={props.page === "transfer" ? "disable" : ""}>{props.translate("transaction.transfer") || "Transfer"}</Link>
+          <Link to={constansts.BASE_HOST + "/swap"} className={props.page === "exchange" ? "disable" : ""}>{swap}</Link>
+          <Link to={constansts.BASE_HOST + "/transfer"} className={props.page === "transfer" ? "disable" : ""}>{transfer}</Link>
         </div>
       </h1>
       <div className="row">

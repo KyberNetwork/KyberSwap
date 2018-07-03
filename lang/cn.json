@@ -16,13 +16,15 @@
   "address": {
     "address": "地址",
     "import_address": "导入地址",
+    "exchange_from": "从",
     "my_balance": "余额",
     "estimated_value": "估值",
     "total": "估值",
     "hide_zero_balance": "隐藏小额资产",
-    "symbol": "SYMBOL",
-    "price": "PRICE",
-    "your_wallet_address": "您的钱包地址"
+    "symbol": "符号",
+    "price": "价格",
+    "your_wallet_address": "您的钱包地址",
+    "search": "搜索"
   },
 
   
@@ -46,7 +48,7 @@
     "password_needed_transfer": "每笔转移都需要密码",
     "next": "下一个",
     "exit": "退出",
-    "back": "主页",
+    "back": "回去",
     "new_tx": "新的转移",
     "new_ex": "新的兑换",
     "done": "完成!",
