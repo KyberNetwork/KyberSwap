@@ -543,6 +543,7 @@ export default class BaseProvider {
                             fast: (gasPrice * 1.3).toString()
                         })
                     }
+
                 }).catch((err) => {
                     reject(err)
                 })
