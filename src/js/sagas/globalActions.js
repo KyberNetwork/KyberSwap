@@ -130,7 +130,6 @@ export function* setGasPrice(action) {
   var safeLowGas, standardGas, fastGas, defaultGas
   var state = store.getState()
   var maxGasPrice = state.exchange.maxGasPrice
-  console.log("max gas price: ", maxGasPrice, state)
 
   try {
     const ethereum = action.payload

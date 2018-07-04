@@ -45,6 +45,7 @@ import {Line} from 'react-chartjs-2';
 
 export default class MarketTable extends React.Component {
   drawChart = (props) => {
+    const dataLength = 29
     var lineColor = ""
     var backgroundColor = ""
     if (props["original"]["change"] < 0) {
@@ -62,10 +63,19 @@ export default class MarketTable extends React.Component {
     var input = props.value
 
     if (Array.isArray(input)) {
+      var addLength = 0
+      var inputLength = input.length
+      if (inputLength < dataLength) {
+        addLength = dataLength - inputLength
+        for (let index = 0; index < addLength; index++) {
+          point.push(0)
+          labels.push(index)
+        }
+      }
       var maxValue = input[0]
       var minValue = maxValue
       input.map((item, index) => {
-        labels.push(index)
+        labels.push(index + addLength)
         point.push(item)
         if (item > maxValue) {
           maxValue = item
@@ -73,7 +83,7 @@ export default class MarketTable extends React.Component {
           minValue = item
         }
       })
-      
+
       if ((maxValue - minValue) / minValue * 100 < 5) {
         var yOption = {
           display: false,
