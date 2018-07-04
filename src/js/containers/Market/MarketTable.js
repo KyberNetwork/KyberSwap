@@ -340,7 +340,7 @@ export default class MarketTable extends React.Component {
         columns={columns}
         showPagination = {false}
         pageSize = {this.props.data.length}
-        minRows = {3}
+        minRows = {1}
         getTrProps={(state, rowInfo) => {
           return {
             onClick: (e) => {
@@ -356,6 +356,11 @@ export default class MarketTable extends React.Component {
             nextText:  (<img src={require("../../../assets/img/market/arrow-right.svg")} />)
           }
         }
+        }
+        getNoDataProps={(state, rowInfo) => {
+          if(this.props.data.length==0) return { style: { border: 'none' ,top:'75%',padding:'0px'} };
+          return {};
+          }
         }
       />
     )
