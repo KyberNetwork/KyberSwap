@@ -108,6 +108,9 @@ $padding-col-left : 2rem;
     font-size: 24px;
     margin-bottom: 20px;
     font-weight: 600;
+    @include screen-max-width(medium) {
+      display: none;
+    }
   }
   .transaction-label{
 	  font-size: 14px;

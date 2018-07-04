@@ -147,7 +147,7 @@ export default class MarketTable extends React.Component {
       )
     } else if (input === 0){
       return (
-        <span className = "zero-value">---</span>
+        <span>---</span>
       )
     } else {
       return (
