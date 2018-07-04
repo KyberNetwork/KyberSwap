@@ -44,7 +44,7 @@ const appReducer = combineReducers({
 })
 
 const rootReducer = (state, action) => {
-  //let isGoToRoot = action.type === '@@router/LOCATION_CHANGE' && action.payload.pathname === constants.BASE_HOST 
+  //let isGoToRoot = action.type === '@@router/LOCATION_CHANGE' && action.payload.pathname === constants.BASE_HOST
   if (action.type === 'GLOBAL.CLEAR_SESSION_FULFILLED') {
     var global = {...state.global}
     global.termOfServiceAccepted = true
@@ -54,7 +54,8 @@ const rootReducer = (state, action) => {
       connection: state.connection,
       locale: state.locale,
       tokens: state.tokens,
-      txs: state.txs
+      txs: state.txs,
+      exchange: state.exchange
     }
   }
   
