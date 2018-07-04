@@ -147,7 +147,7 @@
   },
 
   "error": {
-    "metamask_not_installed": "Metamask is not installed",
+    "metamask_not_installed": "Metamask未安装",
 
     "select_same_token": "无法和同种代币进行交易",
     "select_token_token": "这个代币交易对目前还不支持",

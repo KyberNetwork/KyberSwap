@@ -48,6 +48,16 @@ const rootReducer = (state, action) => {
   if (action.type === 'GLOBAL.CLEAR_SESSION_FULFILLED') {
     var global = {...state.global}
     global.termOfServiceAccepted = true
+
+    var initState = constants.INIT_EXCHANGE_FORM_STATE
+    initState.snapshot = constants.INIT_EXCHANGE_FORM_STATE
+
+    initState.maxGasPrice = state.exchange.maxGasPrice
+    initState.gasPrice = state.exchange.gasPrice
+
+    initState.gasPriceSuggest = {...state.exchange.gasPriceSuggest}
+    var exchange = {...initState}
+
     state = {
       utils: state.utils, 
       global: global,
@@ -55,7 +65,7 @@ const rootReducer = (state, action) => {
       locale: state.locale,
       tokens: state.tokens,
       txs: state.txs,
-      exchange: state.exchange
+      exchange: exchange
     }
   }
   

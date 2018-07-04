@@ -13,9 +13,8 @@ import * as converter from "../utils/converter"
 import { getTranslate } from 'react-localize-redux'
 import NotiService from "../services/noti_service/noti_service"
 
-const translate = getTranslate(store.getState().locale)
-
 export function* createNewConnection(action) {
+  var translate = getTranslate(store.getState().locale)
   var connectionInstance = new EthereumService()
   yield put(setConnection(connectionInstance))
   connectionInstance.subcribe()
@@ -44,6 +43,7 @@ export function* createNewConnection(action) {
 
 function* watchMetamaskAccount(ethereum, web3Service) {
   //check 
+  var translate = getTranslate(store.getState().locale)
   while (true) {
     try {
       var state = store.getState()

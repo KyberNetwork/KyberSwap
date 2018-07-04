@@ -21,7 +21,7 @@ const TransactionLayout = (props) => {
         </div>
         <div className="seperator">/</div>
         <div>
-          <Link to={constansts.BASE_HOST }>KyberSwap</Link>
+          <Link onClick={(e) => props.endSession(e)} to={constansts.BASE_HOST }>KyberSwap</Link>
         </div>
         <div className="seperator">/</div>
         <div className="active">
