@@ -10,7 +10,10 @@ import Web3Service from "../services/web3"
 import BLOCKCHAIN_INFO from "../../../env"
 import * as converter from "../utils/converter"
 
+import { getTranslate } from 'react-localize-redux'
 import NotiService from "../services/noti_service/noti_service"
+
+const translate = getTranslate(store.getState().locale)
 
 export function* createNewConnection(action) {
   var connectionInstance = new EthereumService()
@@ -23,7 +26,7 @@ export function* createNewConnection(action) {
   yield put(setMaxGasPrice(connectionInstance))
 
   if (typeof web3 === "undefined") {
-    yield put(globalActions.throwErrorMematamask("Metamask is not installed"))
+    yield put(globalActions.throwErrorMematamask(translate("error.metamask_not_installed") || "Metamask is not installed"))
   } else {
     const web3Service = new Web3Service(web3)
     const watchMetamask = yield fork(watchMetamaskAccount, connectionInstance, web3Service)
@@ -55,7 +58,7 @@ function* watchMetamaskAccount(ethereum, web3Service) {
           if (parseInt(currentId, 10) !== networkId) {
             const currentName = converter.findNetworkName(parseInt(currentId, 10))
             const expectedName = converter.findNetworkName(networkId)
-            yield put(globalActions.throwErrorMematamask(`Metamask should be on ${expectedName}. Currently on ${currentName}`))
+            yield put(globalActions.throwErrorMematamask(translate("error.network_not_match", {expectedName: expectedName, currentName: currentName}) || `Metamask should be on ${expectedName}. Currently on ${currentName}`))
             return
           }
 
@@ -67,7 +70,7 @@ function* watchMetamaskAccount(ethereum, web3Service) {
             yield put(globalActions.updateMetamaskAccount(coinbase, balance))
           } catch (e) {
             console.log(e)
-            yield put(globalActions.throwErrorMematamask(`Cannot get metamask account. You probably did not login in Metamask`))
+            yield put(globalActions.throwErrorMematamask(translate("error.cannot_connect_metamask") || `Cannot get metamask account. You probably did not login in Metamask`))
           }
 
         }

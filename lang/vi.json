@@ -146,6 +146,8 @@
   },
 
   "error": {
+    "metamask_not_installed": "Metamask chưa được cài đặt",
+
     "select_same_token": "Không thể đổi giữa hai token giống nhau",
     "select_token_token": "Cặp token này chưa được hỗ trợ",
     "source_amount_too_high": "Số lượng chuyển quá lớn",
