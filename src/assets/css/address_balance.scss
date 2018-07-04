@@ -28,6 +28,11 @@
     letter-spacing: normal;
     color: #474D5F;
 
+    @include screen-max-width(medium) {
+      margin-bottom: 10px;      
+    }
+
+
     .balance-large{
       @media screen and (max-width: 640px) {
         display: none
@@ -92,7 +97,7 @@
       padding: 0.5rem 1rem;
 
       @include screen-max-width(medium) {
-        background-color: #F5F5F5;
+        background-color: #F5F5F5;        
       }
 
       .title {

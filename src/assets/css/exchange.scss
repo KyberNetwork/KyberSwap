@@ -92,6 +92,9 @@
     margin-bottom: 20px;
     font-weight: 600;
 
+    @include screen-max-width(medium) {
+      display: none;
+    }
     @include screen-min-width(large) {
       margin-top: 1.5rem;
       margin-bottom: 1.2rem;
@@ -649,6 +652,9 @@
   align-items: center;
   max-width: 75rem;
   margin: 0 auto;
+  @include screen-max-width(medium){
+    display: none;
+  }
   @include screen-max-width(large){
     margin: 20px 10px 10px 10px;
   }

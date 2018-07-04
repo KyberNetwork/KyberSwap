@@ -307,7 +307,7 @@ export default class CachedServerProvider extends React.Component {
 
     getVolumnChart(){
         return new Promise((resolve, rejected) => {
-            fetch('https://tracker.kyber.network/api/tokens/rates', {
+            fetch(BLOCKCHAIN_INFO.tracker + '/api/tokens/rates', {
             }).then((response) => {
                 return response.json()
             })

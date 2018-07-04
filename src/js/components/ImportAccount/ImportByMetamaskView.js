@@ -14,7 +14,7 @@ const ImportByMetamaskView = (props) => {
 
                <div className="more-info">
               {props.metamask.error !== "" && (
-                  <div className="error">{props.translate("import.address_is_loading") || props.metamask.error}</div>
+                  <div className="error">{props.metamask.error}</div>
               )}
               {props.metamask.error === "" && (
                   <div className="info">

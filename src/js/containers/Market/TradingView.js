@@ -6,6 +6,8 @@ import { Selector } from "../CommonElements"
 
 import { getTranslate } from 'react-localize-redux';
 
+import BLOCKCHAIN_INFO from "../../../../env"
+
 
 @connect((store) => {
 	return {
@@ -29,7 +31,7 @@ export default class TradingView extends React.Component {
 		interval: '60',
 		locale: 'en',
 		containerId: 'tv_chart_container',
-		datafeedUrl: 'https://tracker.kyber.network/chart',
+		datafeedUrl: BLOCKCHAIN_INFO.tracker + '/chart',
 		updateFrequency: 300000, // 1 minutes
 		libraryPath: '/trading_view/charting_library/',
 		fullscreen: false,
