@@ -230,7 +230,7 @@ h1.title {
     margin-left: auto;
     margin-right: auto;
     @include screen-max-width(large) {
-      margin: 10px;
+      margin: 0 10px;
     }
   }
   div{
