@@ -207,7 +207,7 @@
     "ledger_time_out": "你Ledger上的对话已经过期。请重新登录。",
     "eth_balance_not_enough_for_fee": "您的ETH余额不足以支付交易费用",
     "handle_amount":"Kyber无法处理您的数量，请减少数量",
-    "kyber_maintain":"Kyber交易所正在维修这对代币",
+    "kyber_maintain":"此对正在暂时维修中",
     "get_rate":"无法从区块链获得利率",
     "exchange_enable":"您已经超过了您的每日限额！ 您可以在明天00:00 UTC+0再次进行交易",
     "min_rate_greater_expected_rate": "您设置的最低汇率高于KyberNetwork推荐的汇率。 您的交易很有可能失败。",
