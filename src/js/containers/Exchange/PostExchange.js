@@ -544,8 +544,8 @@ export default class PostExchange extends React.Component {
     if (this.props.account.type === "keystore") {
       modalPassphrase = (<Modal
         className={{
-          base: 'reveal medium confirm-exchange',
-          afterOpen: 'reveal medium confirm-exchange'
+          base: 'reveal medium confirm-modal',
+          afterOpen: 'reveal medium confirm-modal'
         }}
         isOpen={this.props.form.passphrase}
         onRequestClose={this.closeModal}
@@ -556,8 +556,8 @@ export default class PostExchange extends React.Component {
     } else {
       modalConfirm = (<Modal
         className={{
-          base: 'reveal medium confirm-exchange',
-          afterOpen: 'reveal medium confirm-exchange'
+          base: 'reveal medium confirm-modal',
+          afterOpen: 'reveal medium confirm-modal'
         }}
         isOpen={this.props.form.confirmColdWallet}
         onRequestClose={this.closeModalConfirm}
@@ -567,8 +567,8 @@ export default class PostExchange extends React.Component {
       />)
       modalApprove = (
         <Modal className={{
-          base: 'reveal medium confirm-exchange',
-          afterOpen: 'reveal medium confirm-exchange'
+          base: 'reveal medium confirm-modal',
+          afterOpen: 'reveal medium confirm-modal'
         }}
           isOpen={this.props.form.confirmApprove}
           onRequestClose={this.closeModalApprove}

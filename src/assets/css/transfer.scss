@@ -8,7 +8,7 @@ $padding-col-left : 2rem;
   // display: inline-block;
   // width: 100%;
   @include screen-max-width(large){
-    margin: 10px;
+    margin:  0 10px 10px 10px;
     box-shadow: 0 7px 25px #ddd;
   }
 
@@ -158,7 +158,7 @@ $padding-col-left : 2rem;
       box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
       background-color: #ffffff;
       border: solid 0.8px rgba(204, 204, 204, 0.72);
-      padding: 10px 12px;
+      padding: 8px 12px;
       align-items: center;
       font-size: 15px;
       &.d-flex{

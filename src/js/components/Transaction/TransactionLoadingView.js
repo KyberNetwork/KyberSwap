@@ -21,13 +21,13 @@ const TransactionLoadingView = (props) => {
         {broadcastError  &&
            <div>
               <div className="icon icon--failed"></div>
-              <div>{ props.translate('transaction.failed') || "Failed!" }</div>
+              <div className="title-status">{ props.translate('transaction.failed') || "Failed!" }</div>
             </div>
         }
         {!broadcastError &&
           <div>
             <div className="icon icon--broadcasted"></div>
-            <div>{ props.translate('transaction.broadcasting') || "Broadcasting!" }</div>
+            <div className="title-status">{ props.translate('transaction.broadcasting') || "Broadcasting!" }</div>
           </div>
         }
         </div>
@@ -124,19 +124,19 @@ const TransactionLoadingView = (props) => {
         {props.status === "success" &&
           <div>
             <div className="icon icon--success"></div>
-            <div className="title-status">{props.translate('transaction.done') || "Done"}</div>
+            <div className="title">{props.translate('transaction.done') || "Done"}</div>
           </div>
         }
         {props.status === "failed" &&
           <div>
             <div className="icon icon--failed"></div>
-            <div className="title-status">{ props.translate('transaction.failed') || "Failed!" }</div>
+            <div className="title">{ props.translate('transaction.failed') || "Failed!" }</div>
           </div>
         }
         {props.status === "pending" &&
           <div>
             <div className="icon icon--broadcasted"></div>
-            <div className="title-status">{ props.translate('transaction.broadcasted') || "Broadcasted!" }</div>
+            <div className="title">{ props.translate('transaction.broadcasted') || "Broadcasted!" }</div>
           </div>
         }
       </div>
@@ -167,7 +167,7 @@ const TransactionLoadingView = (props) => {
                 <div>
                   {props.type === "exchange" &&
                     <div>
-                      <div className="title">{ props.translate('transaction.success_swap_msg') || "Successfully exchanged from" }</div>
+                      <div className="title final-status">{ props.translate('transaction.success_swap_msg') || "Successfully exchanged from" }</div>
                       <div className="content">
                         <span>
                           <strong>{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceSymbol}</strong> 
@@ -179,7 +179,7 @@ const TransactionLoadingView = (props) => {
                   }
                   {props.type === "transfer" &&
                       <div>
-                          <div className="title">{ props.translate('transaction.success_transfer_msg') || "Successfully transferred" }</div>
+                          <div className="title final-status">{ props.translate('transaction.success_transfer_msg') || "Successfully transferred" }</div>
                           <div className="content">
                             <span>
                             <strong>{displayRoundingNumber(props.balanceInfo.amount)} {props.balanceInfo.tokenSymbol}</strong>
