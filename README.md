@@ -47,4 +47,7 @@ npm run build-mainnet
 ## Code structure
 This wallet is using `Reactjs` and `Redux` and following their naming conventions. Source code of the wallet is in `src`. Most of the logic is in `src/js`.
 
-
+## Migrate media data
+```
+bundle exec rake master_data:media_post
+```

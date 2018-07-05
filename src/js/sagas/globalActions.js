@@ -141,8 +141,6 @@ function compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGas
   var fastGas = parseFloat(fastGas)
   var defaultGas = parseFloat(defaultGas)
   var maxGas = parseFloat(maxGas)
-  console.log("max gas....")
-  console.log(maxGas)
   if (fastGas > maxGas) {
     var returnSuggest = {}
     returnSuggest.fastGas = maxGas

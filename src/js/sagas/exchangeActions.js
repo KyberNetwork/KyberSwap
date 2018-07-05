@@ -960,7 +960,7 @@ function* getMaxGasExchange(){
       return 650000 + exchange.max_gas
     }
     if (exchange.destTokenSymbol === 'ETH'){
-      return 650000 + exchange.max_gas
+      return exchange.max_gas
     }
     else{
       return exchange.max_gas * 2
@@ -985,6 +985,7 @@ function* getGasConfirm() {
   const kyber_address = BLOCKCHAIN_INFO.network
 
   const maxGas = yield call(getMaxGasExchange)
+  
   var gas = maxGas
   var gas_approve = 0
 
@@ -1086,6 +1087,9 @@ function* getGasUsed() {
 
 
   const maxGas = yield call(getMaxGasExchange)
+
+  //console.log("max gas exchange:" + maxGas)
+
   const maxGasApprove = yield call(getMaxGasApprove)
   var gas = maxGas
   var gas_approve = 0
