@@ -278,7 +278,8 @@
     letter-spacing: -0.2px;
     color: #141927;
     margin-bottom: 30px;
-    text-align: center;
+    text-align: left;
+    margin-top: 60px;
 
     .icon {
       width: 100px;
@@ -298,6 +299,11 @@
       &--success {
         background-image: url($image-path + 'checked-circle-orange.svg');
       }
+    }
+
+    .title-status {
+      // padding-left: 20px;
+      text-align: center;
     }
   }
 
@@ -374,12 +380,19 @@
         background-color: $color-swap-light;
       }
     }
-   
+    @include screen-max-width(medium){
+      padding-left: 20px;
+      padding-right: 20px;
+      .button {
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
   }
   .content {
     padding: 0 50px;
     @include screen-max-width(medium){
-      padding: 0 10px;
+      padding: 0 20px;
     }
     &.with-overlap {
       padding-bottom: 25px;
@@ -419,7 +432,7 @@
       }
       
       @include screen-min-width(medium){
-        border: solid 1px #ebebeb;
+        border-bottom: solid 1px #ebebeb;
         padding: 25px;
         margin: 0 auto;
       }
@@ -441,7 +454,7 @@
     }
     .des{
       display: flex;
-      margin-left: 10px;
+      // margin-left: 10px;
       margin-top: 20px;
 
       img {
@@ -473,14 +486,22 @@
 
         .grid-x {
           div {
-
             &:first-child {
-              margin: 0 10px 0 15px;
+              
             }
 
             &:last-child {
               position: relative;
               top: 2px;
+              text-align: left;
+            }
+          }
+          @include screen-max-width(medium){
+            padding-left: 10px;
+            div {
+              &:first-child {
+                text-align: left;
+              }
             }
           }
         }
@@ -493,17 +514,18 @@
       }
       .amount-left{
         font-weight: 600;
-        margin-right: -15px;
       }
       .amount-right{
         font-weight: 600;
-        margin-left: -15px;
       }
       .space{
         position: relative;
-        padding-top: 4px;
+        padding: 12px 12px;
         img{
-          width: 70px;
+          width: 40px;
+        }
+        @include screen-max-width(medium){
+          padding: 40px 12px;
         }
       }     
     }
@@ -610,6 +632,9 @@
     .title{
       padding-left: 50px;
       text-align: left;
+      @include screen-max-width(medium) {
+        padding-left: 20px;
+      }
     }
     .message{
       font-weight: bold;
@@ -618,6 +643,19 @@
     }
     .tx-title{
       text-align: left;
+      .address-info {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        span {
+          &:first-child {
+            color: #2c2c2c;
+            font-weight: 600;
+          }
+          &:last-child {
+            padding: 0 15px;
+          }
+        }
+      }
     }
     .address{
       font-size: 0.8rem;
@@ -626,7 +664,7 @@
       padding: 10px 0;
       border-top: 1px solid #ddd;
       border-bottom: 1px solid #ddd;
-     >span{
+     >span{ 
        &:first-child{
          color: #aaa;
          font-weight: bold;
@@ -638,10 +676,10 @@
      } 
     }
     .content{
-      max-width: 90%;
+      max-width: unset;
     }
     .gas-configed{
-      margin-top: 2rem;
+      margin-top: 1rem;
     }
   }
 }

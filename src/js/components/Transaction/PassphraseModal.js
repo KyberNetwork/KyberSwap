@@ -30,15 +30,15 @@ const PassphraseModal = (props) => {
   //var totalGas = gasPrice.multipliedBy(props.gas)
   return (
     <div >
-      <div className="title">{props.title}</div>
       <a className="x" onClick={() => props.onCancel()}>&times;</a>
       <div className="content with-overlap">
+        <div className="title">{props.title}</div>
         <div className="row">
           <div>
             <div>
             {props.recap}
               <div className="gas-configed">
-                <div>Included</div>
+                <div>{props.translate("transaction.included") || 'Included'}</div>
                 <div className="row">
                   <span className="column small-6">{props.translate("transaction.gas_price") || 'Gas price'}</span>
                   <span className="column small-6 font-w-i">{+roundingNumber(props.gasPrice)} Gwei</span>
@@ -53,13 +53,13 @@ const PassphraseModal = (props) => {
               </div>
               {!props.isFetchingRate &&
                 <div className="des">
-                  <div><img src={require('../../../assets/img/with-confirm-exchange.svg')}/></div>
+                  <div><img src={require('../../../assets/img/exchange/exclaimed.svg')}/></div>
                   <div className="description">
                     <span>
                       {props.translate("transaction.max_slippage", {  percent: props.slippagePercent }) || "with maximum " + props.slippagePercent + "% slippage may change."}
                     </span>
                     <div>
-                      You can change maximum slippage rate by adjusting min rate in advanced option
+                    {props.translate("transaction.slippage_tip") || "Rate may change. You can change maximum slippage rate by adjusting min rate in advanced option"}
                     </div>
                   </div>
                 </div>
