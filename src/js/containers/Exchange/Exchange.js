@@ -78,7 +78,7 @@ export default class Exchange extends React.Component {
   }
 
   handleEndSession = () => {
-    this.props.dispatch(clearSession()) 
+    this.props.dispatch(clearSession())
   }
 
   render() {

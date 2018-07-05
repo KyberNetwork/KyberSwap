@@ -146,6 +146,8 @@
   },
 
   "error": {
+    "metamask_not_installed": "메타마스크가 설치되지 않았습니다",
+
     "select_same_token": "동일한 토큰으로 교환할 수 없습니다",
     "select_token_token": "해당 토큰은 지원되지 않습니다",
     "source_amount_too_high": "수량이 너무 큽니다",
