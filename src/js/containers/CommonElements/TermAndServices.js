@@ -67,7 +67,7 @@ export default class TermAndServices extends React.Component {
           <span className="cur-pointer"> 
             {this.props.translate("terms.accept") || "Accept"}
           </span> 
-              <a href="https://home.kyber.network/assets/tac.pdf" target="_blank">
+              <a href="https://files.kyber.network/tac.html" target="_blank">
               {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}  
                 </a> 
           </span>
