@@ -246,7 +246,7 @@ export default class PostExchange extends React.Component {
                   <div className="item-icon">
                     <img src={require("../../../assets/img/tokens/" +destIcon)} />
                   </div>
-                  <span>
+                  <span className="grid-x">
                     {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}
                   </span>
                 </div>
@@ -277,9 +277,14 @@ export default class PostExchange extends React.Component {
                   <img src={require("../../../assets/img/tokens/" + sourceIcon)} />
                 </div>
                 <div className="cell medium-9 small-12">
-                  <span>
-                    {sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}
-                  </span>
+                  <div className="grid-x amount-detail">
+                    <div className="cell medium-8 small-12">
+                      {sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''}
+                    </div>
+                    <div className="cell medium-4 small-12">
+                      {sourceTokenSymbol}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -293,9 +298,14 @@ export default class PostExchange extends React.Component {
                     <img src={require("../../../assets/img/tokens/" + destIcon)} />
                   </div>
                   <div className="cell medium-9 small-12">
-                    <span>
-                      {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}
-                    </span>
+                    <div className="grid-x amount-detail">
+                      <div className="cell medium-8 small-12">
+                        {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''}
+                      </div>
+                      <div className="cell medium-4 small-12">
+                        {destTokenSymbol}
+                      </div>
+                    </div>
                   </div>
                 </div>
               }
