@@ -377,6 +377,7 @@ $divider-color: darken($title-background-color, 5);
         line-height: 1.03;
         color: #666666;
         padding-bottom: 10px;
+        font-weight: normal;
       }
       .font-w-i{
         font-size: 0.8rem;
@@ -617,6 +618,10 @@ $divider-color: darken($title-background-color, 5);
   }
 }
 
+.reveal.transaction-loading {
+  padding: 1rem 0 0 0;
+  width: 650px;
+}
 .transaction-loading {
   .title {
     font-weight: 600;
@@ -645,6 +650,14 @@ $divider-color: darken($title-background-color, 5);
         background-image: url($image-path + 'checked-circle-orange.svg');
       }
     }
+    .title {
+      margin-top: 12px;
+      margin-bottom: -15px;
+    }
+  }
+  .content.with-overlap {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
   .final-status {
     text-align: center;
@@ -653,6 +666,7 @@ $divider-color: darken($title-background-color, 5);
     margin-bottom: 15px;
   }
   .tx-loading {
+    padding: 60px 0;
     ul.broadcast-steps {
       li.pending {
         h4 {
@@ -662,6 +676,11 @@ $divider-color: darken($title-background-color, 5);
       .li.failed {
         text-align: center;
       }
+    }
+  }
+  .tx-title {
+    .tx-title-text, .tx-hash {
+      margin-right: 0;
     }
   }
 }
