@@ -1,3 +1,14 @@
+# 0.10.1 (2018-07-06)
+## Features:
+- Remove total supply, cỉculating supply, volume of kyber, add volume of CMC in ETHEREUM MARKET
+- User must accept term when access WEB3 browser
+
+## Bugfixes:
+- Get max gas price from contract 
+
+## Improvements:
+- Fix UI/ languages, compact layout in mobile
+
 # 0.10.0 (2018-07-03)
 ## Features:
 - Intergrate new UI for kyber 2.0
