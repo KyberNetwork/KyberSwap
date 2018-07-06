@@ -213,7 +213,8 @@
     "get_rate":"无法从区块链获得利率",
     "exchange_enable":"您已经超过了您的每日限额！ 您可以在明天00:00 UTC+0再次进行交易",
     "min_rate_greater_expected_rate": "您设置的最低汇率高于KyberNetwork推荐的汇率。 您的交易很有可能失败。",
-    "exceed_daily_volumn": "您可能需要<a target='_blank' href='${link}'>在我们这里注册</a>才能有更高的交易限额"
+    "exceed_daily_volumn": "您可能需要<a target='_blank' href='${link}'>在我们这里注册</a>才能有更高的交易限额",
+    "broadcast_tx": "可能会失败！我们无法将交易上传到区块链。请在<a target='_blank' href='${link}'>Etherscan</a>上检查。"
   },
 
   "import": {

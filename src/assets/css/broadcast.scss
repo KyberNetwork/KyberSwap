@@ -162,6 +162,13 @@ ul.broadcast-steps {
         cursor: pointer;
         margin-top: 10px;
         display: inline-block;
+        width: 100%;
+      }
+      .reason{
+        margin-top: 20px;
+        a{
+          text-decoration: underline;
+        }
       }
       // .reason {
       //   text-align: center;

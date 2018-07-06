@@ -1,6 +1,6 @@
 {
   "connections": {
-    "http": [
+    "http": [      
       {
         "endPoint" : "https://ropsten-cache.kyber.network",
         "type": "cached"

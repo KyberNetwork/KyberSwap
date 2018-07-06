@@ -34,7 +34,7 @@ class ApproveModal extends React.Component {
       let isPKeyAcc = this.props.walletType === 'privateKey'
       return isPKeyAcc ? '' : <span>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</span>
     } else {
-      return <span>{this.props.translate("modal.press_confirm_if_really_want") || "Press confirm to continue"}</span>
+      return <span>{this.props.translate("modal.press_approve") || "Press approve to continue"}</span>
     }
   }
 

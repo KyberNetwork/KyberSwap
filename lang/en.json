@@ -212,7 +212,8 @@
     "get_rate":"Cannot get rate from blockchain",
     "exchange_enable":"You have exceeded your daily limit! You might trade again tomorrow at 00:00 UTC+0",
     "min_rate_greater_expected_rate": "Your configured minimal exchange rate is higher than what is recommended by KyberNetwork. Your exchange has high chance to fail",
-    "exceed_daily_volumn": "You may want to <a target='_blank' href='${link}'>register with us</a> to have higher trade limits"
+    "exceed_daily_volumn": "You may want to <a target='_blank' href='${link}'>register with us</a> to have higher trade limits",
+    "broadcast_tx": "Potentially Failed! We likely couldn't broadcast the transaction to the blockchain. Please check on <a target='_blank' href='${link}'>Etherscan</a> to verify."
   },
 
   "import": {
@@ -316,7 +317,7 @@
     "total_supply": "Total Supply",
     "last_7d": "Last 7d",
     "change": "24HR Change",
-    "volume": "Volume (24h)",
+    "volume": "Market Volume (24h)",
     "support_eth_only": "Now support only pairs with ETH, not support pairs with USD yet."
   },
 

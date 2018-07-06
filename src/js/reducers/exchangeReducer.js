@@ -150,7 +150,11 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.SET_BROADCAST_ERROR": {
       newState.broadcasting = false
-      newState.broadcastError = action.payload ? action.payload : "Cannot broadcast transaction to blockchain"
+      if (action.payload){
+        newState.broadcastError = action.payload
+      }else{
+        newState.broadcastError = "Cannot broadcast transaction to blockchain"
+      }
       newState.confirmApprove = false
       newState.isApproving = false
       newState.isConfirming = false

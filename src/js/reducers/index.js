@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import { persistReducer } from 'redux-persist'
-//import session from 'redux-persist/lib/storage/session'
-import localForage from 'localforage'
+import session from 'redux-persist/lib/storage/session'
+//import localForage from 'localforage'
 
 import { routerReducer } from 'react-router-redux'
 import * as BLOCKCHAIN_INFO from "../../../env"
@@ -34,7 +34,7 @@ const appReducer = combineReducers({
   // }, locale),  
   tokens: persistReducer({
     key: 'tokens',
-    storage: localForage
+    storage: session
   }, tokens),  
   // global: persistReducer({
   //   key: 'global',

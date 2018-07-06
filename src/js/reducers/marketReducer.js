@@ -70,10 +70,8 @@ const initState = function () {
                 shows: {
                     listItem: {                        
                         "change": {title: "24HR Change"},
-                        "volume": {title: "Volume (24h)"},
-                        "market_cap": {title: "Market cap" },
-                        "circulating_supply": {title: "Circulating Supply"},
-                        "total_supply": {title: "Total Supply"},
+                        "volume": {title: "Market Volume (24h)"},
+                        "market_cap": {title: "Market cap" },                        
                         "last_7d": {title: "Last 7d", type: "chart"}
                     },
                     active: ["change", "last_7d"]
@@ -164,10 +162,12 @@ const market = (state = initState, action) => {
                     newTokens[key].ETH.market_cap = token.market_cap
                     newTokens[key].ETH.circulating_supply = token.circulating_supply
                     newTokens[key].ETH.total_supply = token.total_supply
+                    newTokens[key].ETH.volume = token.Quotes.ETH.volume_24h ? Math.round(token.Quotes.ETH.volume_24h): 0
 
                     newTokens[key].USD.market_cap = Math.round(token.market_cap * rateUSD)
                     newTokens[key].USD.circulating_supply = token.circulating_supply
                     newTokens[key].USD.total_supply = token.total_supply
+                    newTokens[key].USD.volume = token.Quotes.USD.volume_24h ? Math.round(token.Quotes.USD.volume_24h): 0
                 }
             })
 
@@ -184,7 +184,7 @@ const market = (state = initState, action) => {
 
                 tokens[key].ETH.volume = Math.round(token.e)
                 tokens[key].ETH.last_7d =  token.p
-                tokens[key].USD.volume = Math.round(token.u)
+                //tokens[key].USD.volume = Math.round(token.u)
                 tokens[key].USD.last_7d =  token.p
 
                 //calculate % change                

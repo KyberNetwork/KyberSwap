@@ -118,13 +118,13 @@
   .accent {
     margin-top: 35px;
     line-height: 55px;
-    padding: 0 35px;
+    padding: 0 50px;
     background: #ef8102;
     font-size: 20px;
     font-weight: 600;
     text-transform: unset;
     border-radius: 4px;
-    box-shadow: 0 10px 15px #ccc;
+    //box-shadow: 0 10px 15px #ccc;
 
     @include screen-max-width(large) {
       margin-top: 30px;

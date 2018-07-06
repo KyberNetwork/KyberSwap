@@ -276,7 +276,8 @@ export default class PostTransfer extends React.Component {
       />
     let className = "button accent "
     if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree) {
-      className += " animated infinite pulse next"
+      //className += " animated infinite pulse next"
+      className += " next"
     }
 
     var termAndServices = (<TermAndServices clickCheckbox={this.clickCheckbox}

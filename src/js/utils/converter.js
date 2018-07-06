@@ -468,7 +468,7 @@ export function formatNumber(number) {
     groupSize: 3,
   }
   BigNumber.config({ FORMAT: format })
-  var numberFormat = new BigNumber(number)
+  var numberFormat = new BigNumber(number.toString())
   return numberFormat.toFormat()
 }
 
