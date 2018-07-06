@@ -16,7 +16,13 @@ $padding-col-left : 2rem;
   }
 
   .transfer-col{
-    padding: 0 1rem 1rem 2rem;
+    padding: 1rem;
+    &.transfer-advanced {
+      padding-bottom: 0;
+      @include screen-min-width(medium) {
+        padding: 1rem 1rem 0 2rem;
+      }
+    }
   }
 
   .transfer-col-1 {
