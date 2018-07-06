@@ -10,10 +10,13 @@ $padding-col-left : 2rem;
   @include screen-max-width(large){
     margin:  0 10px 10px 10px;
     box-shadow: 0 7px 25px #ddd;
+    .transfer-col {
+      background-color: white;
+    }
   }
 
   .transfer-col{
-    padding: $padding-col;
+    padding: 0 1rem 1rem 2rem;
   }
 
   .transfer-col-1 {
@@ -49,7 +52,9 @@ $padding-col-left : 2rem;
           }
         }
         .transfer-detail {
-
+          @include screen-max-width(large) {
+            background-color: white;
+          }
 
           .transfer-col-1-2{
             @include breakpoint(medium up) {

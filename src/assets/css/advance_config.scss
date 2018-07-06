@@ -9,7 +9,9 @@ $radio-color: #5D9E7A;
 .advance-config{
   // max-width: 300px;  
   .advance-title-mobile{
-    padding: 10px;
+    &.title {
+      padding: 12px 10px;
+    }
     background-color: #F5F5F5;
     border-radius: 5px;
     text-align: right;

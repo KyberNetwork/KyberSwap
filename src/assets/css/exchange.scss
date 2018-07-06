@@ -127,7 +127,7 @@
     //box-shadow: 0 10px 15px #ccc;
 
     @include screen-max-width(large) {
-      margin-top: 30px;
+      margin-top: 0;
     }
   }
 
