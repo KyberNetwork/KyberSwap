@@ -191,8 +191,11 @@ ul.broadcast-steps {
 
 .tx-actions{
   text-align: center;
-  background: #F5F5F5;
   padding: 50px 0;
+
+  @include screen-min-width(medium) {
+    background: #F5F5F5;
+  }
 
   .new-transaction {
     border-radius: 3px;
