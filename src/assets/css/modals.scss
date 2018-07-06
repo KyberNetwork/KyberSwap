@@ -217,6 +217,23 @@ $divider-color: darken($title-background-color, 5);
       font-size: 1.2rem;
       border: 1px solid #A8CEB9;
     }      
+    .amount-icon{
+      @include screen-max-width(medium) {
+        text-align: center !important;
+        margin-top: 5px;
+      }
+    }
+    .amount-detail{
+      @include screen-max-width(medium) {
+        text-align: center !important;
+        margin-top: 10px;
+      }
+      >span{
+        &:first-child{
+          margin-right: 5px;
+        }
+      }
+    }
   }
   .description{
     margin-top: 1rem;
@@ -418,7 +435,7 @@ $divider-color: darken($title-background-color, 5);
         color: #666;
         padding: 10px;
 
-        .grid-x {
+        .grid-x { 
           div {
             &:first-child {
               
@@ -431,7 +448,7 @@ $divider-color: darken($title-background-color, 5);
             }
           }
           @include screen-max-width(medium){
-            padding-left: 10px;
+            //padding-left: 10px;
             div {
               &:first-child {
                 text-align: left;
