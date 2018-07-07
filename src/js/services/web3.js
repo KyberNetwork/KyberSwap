@@ -26,7 +26,6 @@ export default class Web3Service {
   }
 
   getWalletType = () => {
-
     if (this.web3.currentProvider && web3.currentProvider.isMetaMask){
       return "metamask"
     }
