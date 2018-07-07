@@ -1,10 +1,10 @@
 #landing_page {
 //  min-height: 450px;
 
-  @include screen-max-width(large){
-    margin-bottom: 80px;
-    min-height: 600px !important;
-  }
+  // @include screen-max-width(large){
+  //   margin-bottom: 80px;
+  //   min-height: 600px !important;
+  // }
   
  // margin-bottom: 80px;
   position: relative;
@@ -40,7 +40,9 @@
   color: #fff;
   text-align: center;
   position: relative;
-  margin-bottom: 120px;
+  @include screen-min-width(medium) {
+    margin-bottom: 120px;
+  }
 
   .landing-page {
     &__container {
@@ -207,7 +209,7 @@
 
     @include screen-max-width(mid-small) {
       &__container {
-        margin-bottom: 80px;
+        margin-bottom: 20px;
       }
 
       &__content {
@@ -309,6 +311,10 @@
     position: relative;
     margin: 0 auto;
     z-index: -1;
+    
+    @include screen-max-width(medium) {
+      display: none;
+    }
 
     &__content {
       width: 100%;

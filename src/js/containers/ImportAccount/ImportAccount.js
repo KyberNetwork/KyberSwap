@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 
 
-import { importAccountMetamask } from "../../actions/accountActions"
+
 
 import { LandingPage, ImportAccountView } from '../../components/ImportAccount'
 import {
@@ -11,28 +11,18 @@ import {
   ImportByDeviceWithLedger, ImportByDeviceWithTrezor
 } from "../ImportAccount"
 
-import {visitExchange} from "../../actions/globalActions"
+import { visitExchange } from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux'
 
 
-import Web3Service  from "../../services/web3"
-import BLOCKCHAIN_INFO from "../../../../env"
 
 
-@connect((store) => {
-
-  var tokens = store.tokens.tokens
-  var supportTokens = []
-  Object.keys(tokens).forEach((key) => {
-    supportTokens.push(tokens[key])
-  })
+@connect((store) => {  
 
   return {
     ...store.account,
     translate: getTranslate(store.locale),
     isVisitFirstTime: store.global.isVisitFirstTime,
-    ethereum: store.connection.ethereum,
-    tokens: supportTokens,
     translate: getTranslate(store.locale),
     termOfServiceAccepted: store.global.termOfServiceAccepted
   }
@@ -40,11 +30,11 @@ import BLOCKCHAIN_INFO from "../../../../env"
 
 export default class ImportAccount extends React.Component {
 
-  constructor(){
+  constructor() {
     super()
     this.state = {
       isOpen: false,
-     // isInLandingPage: true
+      // isInLandingPage: true
     }
   }
 
@@ -55,17 +45,8 @@ export default class ImportAccount extends React.Component {
   // }
   componentDidMount = () => {
     var swapPage = document.getElementById("swap-app")
-    swapPage.className = swapPage.className === ""? "no-min-height": swapPage.className + " no-min-height"
-
-    if (typeof web3 !== "undefined") {
-        var web3Service = new Web3Service(web3)
-        var walletType = web3Service.getWalletType()
-        if (walletType !== "metamask"){
-          this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-            this.props.ethereum, this.props.tokens, this.props.translate, walletType))       
-        }
-      }   
-    }
+    swapPage.className = swapPage.className === "" ? "no-min-height" : swapPage.className + " no-min-height"
+  }
 
   // closeModal = (e) => {
   //   this.setState({isOpen: false})
@@ -94,9 +75,9 @@ export default class ImportAccount extends React.Component {
     // )    
     var content
     if (!this.props.termOfServiceAccepted) {
-      content =  <LandingPage translate={this.props.translate}/>
+      content = <LandingPage translate={this.props.translate} />
     } else {
-      content =  (
+      content = (
         <ImportAccountView
           firstKey={<ImportByMetamask />}
           secondKey={<ImportKeystore />}

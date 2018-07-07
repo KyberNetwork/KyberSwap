@@ -254,8 +254,8 @@ export default class PostTransfer extends React.Component {
     var modalPassphrase = this.props.account.type === "keystore" ? (
       <Modal
         className={{
-          base: 'reveal medium confirm-exchange',
-          afterOpen: 'reveal medium confirm-exchange'
+          base: 'reveal medium confirm-modal',
+          afterOpen: 'reveal medium confirm-modal'
         }}
         isOpen={this.props.form.passphrase}
         onRequestClose={this.closeModal}
@@ -265,8 +265,8 @@ export default class PostTransfer extends React.Component {
       />
     ) : <Modal
         className={{
-          base: 'reveal medium confirm-exchange',
-          afterOpen: 'reveal medium confirm-exchange'
+          base: 'reveal medium confirm-modal',
+          afterOpen: 'reveal medium confirm-modal'
         }}
         isOpen={this.props.form.confirmColdWallet}
         onRequestClose={this.closeModal}
@@ -276,7 +276,8 @@ export default class PostTransfer extends React.Component {
       />
     let className = "button accent "
     if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree) {
-      className += " animated infinite pulse next"
+      //className += " animated infinite pulse next"
+      className += " next"
     }
 
     var termAndServices = (<TermAndServices clickCheckbox={this.clickCheckbox}

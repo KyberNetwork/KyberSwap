@@ -50,17 +50,20 @@
     "back": "Back",
     "new_tx": "New transfer",
     "new_ex": "New swap",
-    "done": "Broadcasted",
+    "done": "Done!",
     "failed": "Failed!",
     "broadcasted": "Broadcasted!",
     "broadcasting": "Broadcasting!",
     "success_ex_msg": "Successfully exchanged from </br> ${sourceAmount} ${sourceSymbol} to ${destAmount} ${destSymbol}",
+    "success_swap_msg": "Successfully swapped from",
     "success_tx_msg": "Successfully transferred </br> ${amount} ${token} to ${address}",
+    "success_transfer_msg": "Successfully transferred",
     "copy_tx": "Copy transaction hash",
     "analyze_error": "Reasons the transaction failed",
     "copied": "Copied!",
     "analyze": "Show reasons",
     "no_reason_found": "We cannot find any reason for your transaction. Please try again in a while.",
+    "error_no_reason": "Cannot find any reason for your failed transaction. Please try again in a while.",
     
     "broadcast": "Broadcast",
     "transaction": "Transaction hash",
@@ -86,7 +89,7 @@
     "our_suggest": "<strong> ${suggestRate}</strong> is our suggested MIN ACCEPTABLE RATE by default.",
     "min_acceptable_rate": "MIN ACCEPTABLE RATE",
 
-    "about_to_exchange": "You are about to exchange",
+    "about_to_swap": "You are about to swap",
     "about_to_transfer": "You are about to transfer",
     "processing": "Processing",
     "gas_limit": "Gas limit",
@@ -113,7 +116,8 @@
     "rate_info": "Rates might be changed during settlement. <br/>You can indicate your minimum rate by clicking \"Advanced\"",
     "address": "Receiving Address",
     "slippage_tip": "Rate may change. You can change maximum slippage rate by adjusting min rate in advanced option",
-    "max_slippage": "With maximum ${percent}% slippage"
+    "max_slippage": "With maximum ${percent}% slippage",
+    "included": "Included"
   },
 
   "modal": {
@@ -133,16 +137,19 @@
     "press_approve": "Press approve to continue",
     "waiting_for_confirmation": "Waiting for confirmation from your wallet",
     "confirm_exchange_title": "Exchange Confirm",
-    "confirm_transfer_title": "Transfer Confirm",
+    "confirm_swap": "Confirm Swap",
+    "confirm_transfer_title": "Confirm Transfer",
 
     "select_your_language": "Select your language",
     "select_source_token": "Select source token",
     "select_dest_token": "Select destination token",
     "select_trasfer_from_token": "SELECT \"TRANSFER FROM\" TOKEN",
 
-    "approve_exchange": "You need to grant permission for Kyber Swap to interact with <strong>${ token }</strong> with address <strong>${address}</strong>",
+    "approve_exchange": "You need to grant permission for Kyber Swap to interact with <strong>${ token }</strong> with this address",
     "eth_token_exchange": "ETH token exchange",
-    "approve": "Approve"
+    "approve": "Approve",
+    "address": "Address",
+    "approve_token": "Approve token"
   },
 
   "error": {
@@ -212,7 +219,8 @@
     "get_rate":"Cannot get rate from blockchain",
     "exchange_enable":"You have exceeded your daily limit! You might trade again tomorrow at 00:00 UTC+0",
     "min_rate_greater_expected_rate": "Your configured minimal exchange rate is higher than what is recommended by KyberNetwork. Your exchange has high chance to fail",
-    "exceed_daily_volumn": "You may want to <a target='_blank' href='${link}'>register with us</a> to have higher trade limits"
+    "exceed_daily_volumn": "You may want to <a target='_blank' href='${link}'>register with us</a> to have higher trade limits",
+    "broadcast_tx": "Potentially Failed! We likely couldn't broadcast the transaction to the blockchain. Please check on <a target='_blank' href='${link}'>Etherscan</a> to verify."
   },
 
   "import": {

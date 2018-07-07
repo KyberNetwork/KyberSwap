@@ -3,11 +3,24 @@ import TermAndServices from "../../containers/CommonElements/TermAndServices";
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux';
 import config from '../../config';
+import Web3Service from "../../services/web3"
 
 import {acceptTermOfService} from "../../actions/globalActions"
+import { importAccountMetamask } from "../../actions/accountActions"
+import BLOCKCHAIN_INFO from "../../../../env"
+
+
 @connect((store, props) => {
+	var tokens = store.tokens.tokens
+	var supportTokens = []
+	Object.keys(tokens).forEach((key) => {
+		supportTokens.push(tokens[key])
+	})
+
 	return {
-		translate: getTranslate(store.locale)
+		translate: getTranslate(store.locale),
+		ethereum: store.connection.ethereum,
+		tokens: supportTokens,
 	}
 })
 
@@ -65,7 +78,21 @@ export default class LandingPage extends React.Component {
 
 	acceptTerm = () => {
 		// if (this.state.termAgree) {
-		this.props.dispatch(acceptTermOfService())
+		
+
+		if (typeof web3 !== "undefined") {
+			var web3Service = new Web3Service(web3)
+			var walletType = web3Service.getWalletType()
+			if (walletType !== "metamask") {
+				//alert(walletType)
+				this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
+				this.props.ethereum, this.props.tokens, this.props.translate, walletType))
+			}else{
+				this.props.dispatch(acceptTermOfService())
+			}
+		}else{
+			this.props.dispatch(acceptTermOfService())
+		}		
 		// }
 	}
 

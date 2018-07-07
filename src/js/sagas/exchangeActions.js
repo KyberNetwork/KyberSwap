@@ -139,7 +139,15 @@ function* doApproveTransactionFail(ethereum, account, e) {
 }
 
 function* doTxFail(ethereum, account, e) {
-  yield put(actions.setBroadcastError(e))
+  console.log("tx failed")
+  console.log({account, e})
+  var error = e
+  if (!error){
+    var translate = getTranslate(store.getState().locale)
+    var link = BLOCKCHAIN_INFO.ethScanUrl + "address/" + account.address
+    error = translate("error.broadcast_tx", {link: link}) || "Potentially Failed! We likely couldn't broadcast the transaction to the blockchain. Please check on Etherscan to verify."
+  }
+  yield put(actions.setBroadcastError(error))
   yield put(updateAccount(ethereum, account))
 }
 

@@ -151,19 +151,26 @@ export default class MarketTable extends React.Component {
     )
   }
   addClassChange = (input) => {
+    if (input === "---"){
+      return (
+        <span>---</span>
+      )
+    }
     if (input < 0) {
       return (
         <span className = "negative">{input} %<img src={require("../../../assets/img/landing/arrow_red.svg")}/></span>
       )
-    } else if (input === 0){
+    }
+    if (input === 0){
       return (
-        <span>---</span>
+        <span>0 %</span>
       )
-    } else {
+    }
+    if (input > 0){
       return (
         <span className = "positive">{input} %<img src={require("../../../assets/img/landing/arrow_green.svg")}/></span>
       )
-    }
+    }     
   }
   formatNumber = (number) => {
     if (number > 1000) {

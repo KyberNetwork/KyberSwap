@@ -56,12 +56,15 @@
     "broadcasted": "交易上链完成!",
     "broadcasting": "交易上链中!",
     "success_ex_msg": "成功地将 </br> ${sourceAmount} ${sourceSymbol} 交易为 ${destAmount} ${destSymbol} 了",
+    "success_swap_msg": "成功地将",
     "success_tx_msg": "成功地将 </br> ${amount} ${token} 转移至 ${address}",
+    "success_transfer_msg": "成功地将",
     "copy_tx": "拷贝交易哈希",
     "analyze_error": "失败原因",
     "copied": "拷贝成功",
     "analyze": "显示原因",
     "no_reason_found": "我们无法找出您交易的任何原因。请稍后再尝试",
+    "error_no_reason": "无法找到任何交易失败的原因。请稍后重试.",
 
     "broadcast": "交易上链",
     "transaction": "交易",
@@ -89,7 +92,7 @@
     "click_to_ex_all_balance": "点击交易所有余额",
     "click_to_transfer_all_balance": "点击转移所有余额",
 
-    "about_to_exchange": "您将开始交易",
+    "about_to_swap": "您将开始交易",
     "about_to_transfer": "您将开始转移",
     "processing": "处理中",
     "gas_limit": "燃料限额",
@@ -114,7 +117,8 @@
     "rate_info": "价格也许会在结算过程中发生变化。<br> 您可以点击\"高级选项\"来显示您的最低价格。",
     "address": "接收的地址",
     "slippage_tip": "费率可能会改变。 您可以在高级选项中调整最小价格来更改最大滑点率",
-    "max_slippage": "滑点率至多为${percent}%"
+    "max_slippage": "滑点率至多为${percent}%",
+    "included": "包括"
   },
 
   "modal": {
@@ -134,6 +138,7 @@
     "press_approve": "请按准许以继续",
     "waiting_for_confirmation": "正在等待您钱包的确认信息",
     "confirm_exchange_title": "交易确认",
+    "confirm_swap": "确认兑换",
     "confirm_transfer_title": "转移确认",
 
     "select_your_language": "选择你的语言",
@@ -143,7 +148,9 @@
 
     "approve_exchange": "您需要获取Kyber钱包的许可才能在当前地址与<strong>${ token }</strong>交互",
     "eth_token_exchange": "ETH代币交易",
-    "approve": "批准"
+    "approve": "批准",
+    "address": "地址",
+    "approve_token": "批准代币"
   },
 
   "error": {
@@ -213,7 +220,8 @@
     "get_rate":"无法从区块链获得利率",
     "exchange_enable":"您已经超过了您的每日限额！ 您可以在明天00:00 UTC+0再次进行交易",
     "min_rate_greater_expected_rate": "您设置的最低汇率高于KyberNetwork推荐的汇率。 您的交易很有可能失败。",
-    "exceed_daily_volumn": "您可能需要<a target='_blank' href='${link}'>在我们这里注册</a>才能有更高的交易限额"
+    "exceed_daily_volumn": "您可能需要<a target='_blank' href='${link}'>在我们这里注册</a>才能有更高的交易限额",
+    "broadcast_tx": "可能会失败！我们无法将交易上传到区块链。请在<a target='_blank' href='${link}'>Etherscan</a>上检查。"
   },
 
   "import": {

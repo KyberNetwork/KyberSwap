@@ -4,7 +4,7 @@
 
 .tx-title {
   font-size: 18rem;
-  margin-top: 50px;
+  margin-top: 35px;
   text-align: center;
 
   .tx-title-text {
@@ -32,6 +32,7 @@
       font-size: 16px;
       text-align: left;
       display: inline-block;
+      font-weight: 600;
     }
 
     &.copy-tx {
@@ -155,6 +156,7 @@ ul.broadcast-steps {
       }
     }
     &.failed {
+      text-align: center;
       h4{
         border-bottom: 1px solid #ff5d00;
         color: #666;
@@ -162,6 +164,13 @@ ul.broadcast-steps {
         cursor: pointer;
         margin-top: 10px;
         display: inline-block;
+        width: 100%;
+      }
+      .reason{
+        margin-top: 20px;
+        a{
+          text-decoration: underline;
+        }
       }
       // .reason {
       //   text-align: center;
@@ -189,8 +198,11 @@ ul.broadcast-steps {
 
 .tx-actions{
   text-align: center;
-  background: #F5F5F5;
   padding: 50px 0;
+
+  @include screen-min-width(medium) {
+    background: #F5F5F5;
+  }
 
   .new-transaction {
     border-radius: 3px;

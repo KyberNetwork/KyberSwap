@@ -55,12 +55,15 @@
     "broadcasted": "Đã gửi!",
     "broadcasting": "Đang gửi!",
     "success_ex_msg": "Trao đổi thành công từ </br> ${sourceAmount} ${sourceSymbol} ra ${destAmount} ${destSymbol}",
+    "success_swap_msg": "Trao đổi thành công từ",
     "success_tx_msg": "Chuyển khoản thành công </br> ${amount} ${token} đến ${address}",
+    "success_transfer_msg": "Chuyển khoản thành công",
     "copy_tx": "Copy địa chỉ giao dịch",
     "analyze_error": "Nguyên nhân lỗi",
     "copied": "Đã sao chép!",
     "analyze": "Xem nguyên nhân",
     "no_reason_found": "Không tìm thấy nguyên nhân nào",
+    "error_no_reason": "Không thể tìm thấy nguyên nhân giao dịch thất bại. Vui lòng thử lại trong chốc lát.",
 
     "broadcast": "Gửi",
     "transaction": "Giao dịch",
@@ -86,14 +89,13 @@
     "our_suggest": "<strong> ${suggestRate}</strong> là tỷ giá thấp nhất chấp nhận được mà chúng tôi đề xuất.",
     "min_acceptable_rate": "Tỷ giá thấp nhật được chấp nhận",
 
-    "about_to_exchange": "Bạn chuẩn bị chuyển đổi",
+    "about_to_swap": "Bạn chuẩn bị chuyển đổi",
     "about_to_transfer": "Bạn chuẩn bị gửi",
     "processing": "Đang xử lý",
     "gas_limit": "Gas giới hạn",
     "gas_price": "Giá Gas",
     "for": "đổi lấy",
     "gwei": "Gwei",
-    "for": "for",
     "exchange_for": "cho xấp xỉ",
     "to": "đến",
     "best_rate": "Tỷ giá tốt nhất",
@@ -113,7 +115,8 @@
     "rate_info": "Tỉ giá có thể thay đổi. <br/>Bạn có thể  chỉ định tỉ giá nhỏ nhất bởi kích \"NÂNG CAO\"",
     "address": "Địa chỉ nhận",
     "slippage_tip": "Tỉ giá có thể thay đổi, bạn có thể chỉnh tỉ giá trong lựa chọn nâng cao",
-    "max_slippage": "với tối đa ${percent}% trượt giá"
+    "max_slippage": "với tối đa ${percent}% trượt giá",
+    "included": "Bao gồm"
   },
 
   "modal": {
@@ -133,6 +136,7 @@
     "press_approve": "Bấm đồng ý để tiếp tục",
     "waiting_for_confirmation": "Đang chờ xác nhận từ ví của bạn",
     "confirm_exchange_title": "Xác nhận giao dịch",
+    "confirm_swap": "Xác nhận trao đổi",
     "confirm_transfer_title": "Xác nhận giao dịch",
 
     "select_your_language": "Lựa chọn ngôn ngữ",
@@ -142,7 +146,9 @@
 
     "approve_exchange": "Bạn cần cấp phép cho Kyber để có thể tương tác với <strong>${ token }</strong> trên địa chỉ này",
     "eth_token_exchange": "Chuyển đổi eth token",
-    "approve": "Đồng ý"
+    "approve": "Đồng ý",
+    "address": "Địa chỉ",
+    "approve_token": "Cho phép sử dụng token"
   },
 
   "error": {
@@ -212,7 +218,8 @@
     "get_rate":"Không thể lấy tỉ giá từ blockchain",
     "exchange_enable":"Bạn đã giao dịch quá lượng 1 ngày! Bạn có thể giao dịch vào ngày mai tại thời điểm 00:00 UTC+0",
     "min_rate_greater_expected_rate": "Bạn đã chỉnh tỉ giá lớn hơn tỉ giá đề nghị bởi KyberNetwork. Giao dịch của bạn nhiều khả năng thất bại",
-    "exceed_daily_volumn": "Bạn có thể phải <a target='_blank' href='${link}'>đăng kí</a> với chúng tôi để có hạn mức giao dịch cao hơn"
+    "exceed_daily_volumn": "Bạn có thể phải <a target='_blank' href='${link}'>đăng kí</a> với chúng tôi để có hạn mức giao dịch cao hơn",
+    "broadcast_tx": "Giao dịch có khả năng bị thất bại! Chúng tôi không thể đưa giao dịch của bạn lên blockchain. Vui lòng kiểm tra tại <a target='_blank' href='${link}'>Etherscan</a>"
   },
 
   "import": {

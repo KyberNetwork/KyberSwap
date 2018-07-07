@@ -10,10 +10,19 @@ $padding-col-left : 2rem;
   @include screen-max-width(large){
     margin:  0 10px 10px 10px;
     box-shadow: 0 7px 25px #ddd;
+    .transfer-col {
+      background-color: white;
+    }
   }
 
   .transfer-col{
-    padding: $padding-col;
+    padding: 1rem;
+    &.transfer-advanced {
+      padding-bottom: 0;
+      @include screen-min-width(medium) {
+        padding: 1rem 1rem 0 2rem;
+      }
+    }
   }
 
   .transfer-col-1 {
@@ -49,7 +58,9 @@ $padding-col-left : 2rem;
           }
         }
         .transfer-detail {
-
+          @include screen-max-width(large) {
+            background-color: white;
+          }
 
           .transfer-col-1-2{
             @include breakpoint(medium up) {
@@ -124,7 +135,7 @@ $padding-col-left : 2rem;
       padding: 0 35px;
       background: #ef8102;
       border-radius: 4px;
-      box-shadow: 0 10px 15px #ccc;
+      //box-shadow: 0 10px 15px #ccc;
       font-size: 20px;
       font-weight: 600;
       text-transform: unset;

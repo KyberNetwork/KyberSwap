@@ -55,12 +55,15 @@
     "broadcasted": "전송 완료!",
     "broadcasting": "전송 중!",
     "success_ex_msg": "성공적으로 </br> ${sourceAmount} ${sourceSymbol} 를 ${destAmount} ${destSymbol} 로 교환 하였습니다",
+    "success_swap_msg": "교환 성공했습니다",
     "success_tx_msg": "성공적으로 </br> ${amount} ${token} 를 ${address} 주소로 송금 하였습니다",
+    "success_transfer_msg": "교환 성공했습니다",
     "copy_tx": "트랜잭션 해시 복사",
     "analyze_error": "실패원인",
     "copied": "복사완료",
     "analyze": "원인 파악하기",
     "no_reason_found": "귀하의 거래에 대한 어떠한 이유도 찾을 수 없습니다. 잠시 후 다시 시도하십시오.",
+    "error_no_reason": "실패한 거래하는 이유를 찾을 수 없습니다. 잠시 후 다시 시도하세요.",
 
     "broadcast": "전송",
     "transaction": "거래",
@@ -86,7 +89,7 @@
     "our_suggest": "<strong> ${suggestRate}</strong>저희들이 제시하는 현재 '허용 가능 최소 비율 값'입니다.",
     "min_acceptable_rate": "허용 가능 최소 비율",
 
-    "about_to_exchange": "환전을 시작합니다",
+    "about_to_swap": "환전을 시작합니다",
     "about_to_transfer": "송금을 시작합니다",
     "processing": "진행중",
     "gas_limit": "Gas 한도",
@@ -113,7 +116,8 @@
     "rate_info": "결제 과정에서 가격이 변경 될 수 있습니다. <br> \"고급 옵션\"을 클릭하면 최저 가격을 표시 할 수 있습니다.",
     "address": "받는 주소",
     "slippage_tip": "고급 옵션에서 최소 비율을 조절하여 최대 미끄럼 비율을 변경할 수 있습니다.",
-    "max_slippage": "가치를 잃은 ${percent}%로 최대입니다"
+    "max_slippage": "가치를 잃은 ${percent}%로 최대입니다",
+    "included": "포함"
   },
 
   "modal": {
@@ -133,6 +137,7 @@
     "press_approve": "계속하려면 승인을 누르십시오.",
     "waiting_for_confirmation": "지갑에서 확인을 기다리는 중입니다",
     "confirm_exchange_title": "환전확인",
+    "confirm_swap": "교환 확인",
     "confirm_transfer_title": "송금확인",
 
     "select_your_language": "언어를 선택해주세요 ",
@@ -140,9 +145,11 @@
     "select_dest_token": "환전을 받고자 하는 토큰을 선택해주세요",
     "select_trasfer_from_token": "선택 \"TRANSFER FROM\" 토큰",
 
-    "approve_exchange": "현재 주소에서 <strong>${ token }</strong>와 통합 작용하려면 Kyber Wallet의 허가가 있어야합니다.",
+    "approve_exchange": "현재 주소에서 <strong>${ token }</strong>와 통합 작용하려면 Kyber Swap의 허가가 있어야합니다.",
     "eth_token_exchange": "ETH 토큰 거래",
-    "approve": "승인"
+    "approve": "승인",
+    "address": "주소",
+    "approve_token": "토큰 승인하기"
   },
 
   "error": {
@@ -212,7 +219,8 @@
     "get_rate":"블록 체인에서 요금을 받을 수 없습니다.",
     "exchange_enable":"거래는 일일 한도를 초과했습니다! 내일 00:00 UTC+0 다시 거래 할 수도 있습니다",
     "min_rate_greater_expected_rate": "구성된 최소 환율은 카이버 네트워크에서 권장하는 것보다 높습니다. 귀하의 거래소는 실패 할 확률이 높습니다.",
-    "exceed_daily_volumn": "귀하는 <a target='_blank' href='${link}'>더 높은 거래 한도를 가지려면</a> 저희에게 등록하십시오"
+    "exceed_daily_volumn": "귀하는 <a target='_blank' href='${link}'>더 높은 거래 한도를 가지려면</a> 저희에게 등록하십시오",
+    "broadcast_tx": "죄송합니다! 트랜잭션을 블록체인에 브로드 캐스팅 할 수 없었습니다. <a target='_blank' href='${link}'> Etherscan </a>에서 확인하세요"
   },
 
   "import": {
