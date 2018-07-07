@@ -73,33 +73,21 @@ export default class MarketTable extends React.Component {
         }
       }
       var maxValue = input[0]
-      var minValue = maxValue
       input.map((item, index) => {
         labels.push(index + addLength)
         point.push(item)
         if (item > maxValue) {
           maxValue = item
-        } else if (item < minValue) {
-          minValue = item
         }
       })
 
-      if ((maxValue - minValue) / minValue * 100 < 5) {
-        var yOption = {
-          display: false,
-          gridLines: {
-            display:false
-          },
-          ticks: {
-            min: minValue / 2
-          }
-        }
-      } else {
-        var yOption = {
-          display: false,
-          gridLines: {
-            display:false
-          }
+      var yOption = {
+        display: false,
+        gridLines: {
+          display:false
+        },
+        ticks: {
+          max: maxValue * 1.1
         }
       }
 
@@ -118,7 +106,7 @@ export default class MarketTable extends React.Component {
         <div></div>
       )
     }
-    
+
     var options = {
       elements: {
         point: {
