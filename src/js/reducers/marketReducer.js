@@ -70,7 +70,7 @@ const initState = function () {
                 shows: {
                     listItem: {                        
                         "change": {title: "24HR Change"},
-                        "volume": {title: "Market Volume (24h)"},
+                        "volume": {title: "Volume (24h)"},
                         "market_cap": {title: "Market cap" },                        
                         "last_7d": {title: "Last 7d", type: "chart"}
                     },

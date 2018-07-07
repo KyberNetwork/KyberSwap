@@ -25,11 +25,11 @@ var now = new Date().getTime()
 
 let view = `
 #swap-app 
+link rel="stylesheet" href="/swap/${chain}/app.bundle.css?v=${now}" type="text/css"
 script src="/trading_view/charting_library/charting_library.min.js"
 script src="/trading_view/datafeeds/udf/dist/polyfills.js"
 script src="/trading_view/datafeeds/udf/dist/bundle.js"
 script src="/swap/${chain}/client.min.js?v=${now}"
-link rel="stylesheet" href="/swap/${chain}/app.bundle.css?v=${now}" type="text/css"
 `
 
 // let view = `

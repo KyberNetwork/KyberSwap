@@ -92,8 +92,7 @@ export default class LandingPage extends React.Component {
 			}
 		}else{
 			this.props.dispatch(acceptTermOfService())
-		}
-		this.props.dispatch(acceptTermOfService())
+		}		
 		// }
 	}
 

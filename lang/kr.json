@@ -145,7 +145,7 @@
     "select_dest_token": "환전을 받고자 하는 토큰을 선택해주세요",
     "select_trasfer_from_token": "선택 \"TRANSFER FROM\" 토큰",
 
-    "approve_exchange": "현재 주소에서 <strong>${ token }</strong>와 통합 작용하려면 Kyber Wallet의 허가가 있어야합니다.",
+    "approve_exchange": "현재 주소에서 <strong>${ token }</strong>와 통합 작용하려면 Kyber Swap의 허가가 있어야합니다.",
     "eth_token_exchange": "ETH 토큰 거래",
     "approve": "승인",
     "address": "주소",
@@ -284,7 +284,7 @@
   },
 
   "terms":{
-    "title" : "Kyber Wallet- 이용 약관",
+    "title" : "Kyber Swap- 이용 약관",
     "content":"Kyber testnet wallet은 교환 및 지불 서비스를 실험하고 이해할 수있는 플랫폼을 제공합니다. 현재의 구현은 안전하지 않을 수 있습니다. 이를 사용하면 자금 손실이 발생할 수 있으며 사용자의 개인 정보가 손상 될 수 있습니다. 사용자는 Kyber testnet wallet을 사용하는 결과에 대한 전적인 책임이 있습니다",
     "use_testnet":"반드시 테스트넷 계정을 사용하시기 바랍니다.",
     "use_real":"진짜 이더리움 계정은 사용하시면 안됩니다!",
