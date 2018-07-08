@@ -1,4 +1,4 @@
-# KyberNetwork inhouse web wallet
+# KyberSwap: Instantly Convert Your Tokens
 KyberSwap allows users to directly interact with Kyber's decentralized liquidity network and instantly swap/ trade their tokens.
 You can see a walkthrough on Youtube [here](https://www.youtube.com/watch?v=v2bdcChFEuQ).
 
