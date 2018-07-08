@@ -1,13 +1,25 @@
+
+
+
 .ReactModal__Body--open{
     overflow: hidden;
 }
+// .react-modal{
+//     margin-left: 50% !important; 
+//     @include breakpoint(small only) {
+//         margin-left: 0% !important;
+//     }
+// }
+// .confirm-exchange{
+//     margin-left: 0% !important;
+// }
 @include breakpoint(medium){
     .react-modal{
         margin-bottom: 50px!important; 
     }
-    .reveal.large{
-        top: 54px;
-    }
+    // .reveal.large{
+    //     top: 54px;
+    // }
     
     $half: -50%;
     .reveal.tiny{
@@ -94,11 +106,7 @@ a.disabled{
         width: 20%;
     }
 }
-#transfer-screen{
-    label{
-        margin-bottom: 8px;
-    }
-}
+
 @include breakpoint(medium){
     @media screen and (max-height: 790px){
         .frame{
@@ -123,16 +131,9 @@ a.disabled{
                     margin-top: 5px;
                 }
             }
-            .address-balance{
-                margin-top: 5px;
-            }
-        }
-    }
-    @media screen and (max-height: 670px){
-        @media screen and (min-width: 790px) and (max-width: 1024px){
-            #import-acc{
-                width: 70%;
-            }
+            // .address-balance{
+            //     margin-top: 5px;
+            // }
         }
     }
 }
@@ -147,18 +148,39 @@ input[type=number] {
 }
 .custom-scroll::-webkit-scrollbar-track{
     -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
-    background-color: #1a2c35;
+    background-color: #eee;
 }
 .custom-scroll::-webkit-scrollbar{
     width: 6px;
-    background-color: #1a2c35;
+    background-color: #eee;
 }
 .custom-scroll::-webkit-scrollbar-thumb{
-    background-color: #7b868b;
+    background-color: #aaa;
 }
 .column:last-child:not(:first-child){
     float: left;
 }
 .__react_component_tooltip{
     font-weight: initial;
+}
+
+.exchange-content{
+    max-width: 98rem;
+}
+.content-exchange-body{
+    padding: 0 3rem;
+}
+
+.rc-slider-handle:focus {
+    box-shadow: none;
+}
+.rc-slider-handle:active {
+    box-shadow: none;
+}
+
+.rc-slider-disabled{
+    background-color: transparent !important;
+    .rc-slider-track{
+        background-color: transparent !important;
+    }
 }

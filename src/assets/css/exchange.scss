@@ -1,0 +1,296 @@
+.exchange-frame {
+  background: #f5f5f5;
+  @include screen-min-width(medium) {
+    padding-top: 40px !important;
+  }
+}
+
+#exchange {
+  margin-bottom: 50px;
+
+  @media print, screen and (min-width: 40em) {
+    .medium-5 {
+      width: 45%;
+      padding-right: 0;
+      padding-left: 0;
+    }
+    .medium-2 {
+      width: 10%;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }  
+  @include screen-max-width(large) {
+    box-shadow: 0 7px 25px #ddd;
+    margin:  0 10px 10px 10px;
+    background: white;
+  }
+  @include screen-max-width(large) {
+    @include screen-min-width(medium){
+      .swap-wrapper{
+        border-left: 1px solid #ddd;
+      }
+    }
+    .exchange-col-1, .exchange-col-2, .exchange-col-3{
+      padding: 1rem;
+    }
+    .exchange-col-1-2{
+      margin-top: 30px
+    }
+    .exchange-wrapper-btn{
+      .button{
+        width: 100%;
+      }
+    }
+    .amount-input{
+      margin-top: 1rem;
+    }
+  } 
+  @include screen-min-width(large) {
+    .balance-wrapper{
+      border: 1px solid #ddd;
+      background: white;
+    }
+    .exchange-wrapper-btn{
+      text-align: center;
+    }
+    .exchange-col-1{
+      padding: 0 3rem;
+      border: 1px solid #ddd;
+      border-left: none;
+      background: white;
+    }    
+    .exchange-col-2{
+      padding-left: 20px;
+    }
+    .exchange-col-3{
+      >div{
+        position: relative;
+        .exchange-wrapper-btn{
+          position: absolute;
+          margin-top: -215px;
+          width: 100%;
+        }
+      }
+    }
+    .exchange-col{
+      position: relative;
+      height: 100%;
+    }
+  }
+
+  .exchange-icon{
+    text-align: center;
+    margin-top: 50px;
+    @include screen-max-width(large) {
+      display: none;
+    }    
+  }
+  .main-title  {
+    line-height: 1.2;
+    letter-spacing: -0.1px;
+    font-size: 24px;
+    color: #141927;
+    margin-bottom: 20px;
+    font-weight: 600;
+
+    @include screen-max-width(medium) {
+      display: none;
+    }
+    @include screen-min-width(large) {
+      margin-top: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+  }
+  .token-input {
+    .info {
+      height: auto;
+      transition: width .4s ease-in-out;
+    }
+    input {
+      transition: width .4s ease-in-out;
+    }
+  }
+  label{
+    margin-bottom: 8px;
+  }
+
+  .accent {
+    margin-top: 35px;
+    line-height: 55px;
+    padding: 0 50px;
+    background: #ef8102;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: unset;
+    border-radius: 4px;
+    //box-shadow: 0 10px 15px #ccc;
+
+    @include screen-max-width(large) {
+      margin-top: 0;
+    }
+  }
+
+  .token-compare {
+    color: #666666;
+    font-size: 14px;
+    letter-spacing: .5px;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 1rem;
+    font-weight: 600;
+
+    .seperator{
+      @include screen-max-width(large) {
+        display: none;
+      }
+    }
+
+
+    @include screen-min-width(large) {
+      width: 450px;
+      margin: 0 auto;
+      margin-top: 1rem;
+    }
+
+    @include screen-max-width(large) {
+      text-align: left;      
+    }
+    // div:first-child {
+    //   text-align: right;
+    // }
+
+    // div:nth-child(3) {
+    //   text-align: left;
+    // }
+  }
+
+  .show-on-choose-token-pair {
+    display: none;
+  }
+  .hide-on-choose-token-pair {
+    display: block;
+  }
+  &.choose-token-pair {
+    .title {
+      &:after {
+        content: 'Select Token Pair';
+        font-size: 14px;
+        margin-left: 20px;
+        color: lighten($dark-gray, 20);
+      }
+    }
+    .token-input {
+      opacity: 0.5;
+      input {
+        width: 0;
+        opacity: 0;
+        padding: 0;
+      }
+      .info {
+        width: 100%;
+        &:before {
+          opacity: 0;
+        }
+      }
+    }
+  }
+  .hide-on-choose-token-pair {
+    display: none;
+  }
+  .show-on-choose-token-pair {
+    display: block;
+  }
+  .token-selector {
+    .dropdown {
+      &.dropdown--active {
+        .focus-item{
+          border-color: #aaa;
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+    }
+    .focus-item {
+      border-radius: 5px;
+      box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
+      background-color: #ffffff;
+      border: solid 0.8px rgba(204, 204, 204, 0.72);
+      padding: 8px 12px;
+      align-items: center;
+      font-size: 15px;
+      &.d-flex{
+        justify-content: space-between;
+      }
+      .d-flex{
+        align-items: center;
+        div:nth-child(2) {
+          overflow: hidden;
+          .focus-name {
+            text-overflow: ellipsis;
+            text-transform: initial;
+            overflow: hidden;
+            white-space: nowrap;
+          }          
+        }
+      }
+      .focus-name{
+        color: #222222;
+        font-size: 14px;
+        font-weight: 600;        
+        letter-spacing: -0.4px;
+      }
+      .focus-balance{
+        color: #666666;
+        font-size: 14px;
+        font-weight: 600;
+
+        .token-symbol{
+          margin-left: 5px;
+        }
+      }
+      .icon{
+        margin-right: 10px;
+        img{
+          vertical-align: top;
+        }
+      }
+      i.k-angle {
+        background-image: url(../img/exchange/arrow-down-swap.svg);
+        height: 10px;
+        width: 13px;
+        background-size: 13px 13px;
+      }
+    }
+  }
+  .gas-option {
+    .focus-item {
+      padding-left: 0;
+    }
+  }
+}
+
+.swap-navigation{
+  display: flex;
+  align-items: center;
+  max-width: 75rem;
+  margin: 0 auto;
+  @include screen-max-width(medium){
+    display: none;
+  }
+  @include screen-max-width(large){
+    margin: 20px 10px 10px 10px;
+  }
+  >div{
+      margin-right: 10px;
+      a{
+        color: #999999;
+    }
+  }
+  .active{
+    a{
+      color: #666666;
+      font-weight: 600;
+    }
+  }
+}

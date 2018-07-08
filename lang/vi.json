@@ -16,10 +16,15 @@
   "address": {
     "address": "Địa chỉ",
     "import_address": "Nhập địa chỉ",
+    "exchange_from": "Giao dịch từ",
     "my_balance": "Số dư",
     "estimated_value": "Giá trị ước tính",
     "total": "Tổng giá trị",
-    "hide_zero_balance": "Ẩn số dư nhỏ"
+    "hide_zero_balance": "Ẩn số dư nhỏ",
+    "symbol": "MÃ",
+    "price": "GIÁ",
+    "your_wallet_address": "Địa chỉ ví của bạn",
+    "search": "Tìm kiếm"
   },
 
   "transaction": {
@@ -50,12 +55,15 @@
     "broadcasted": "Đã gửi!",
     "broadcasting": "Đang gửi!",
     "success_ex_msg": "Trao đổi thành công từ </br> ${sourceAmount} ${sourceSymbol} ra ${destAmount} ${destSymbol}",
+    "success_swap_msg": "Trao đổi thành công từ",
     "success_tx_msg": "Chuyển khoản thành công </br> ${amount} ${token} đến ${address}",
+    "success_transfer_msg": "Chuyển khoản thành công",
     "copy_tx": "Copy địa chỉ giao dịch",
     "analyze_error": "Nguyên nhân lỗi",
     "copied": "Đã sao chép!",
     "analyze": "Xem nguyên nhân",
     "no_reason_found": "Không tìm thấy nguyên nhân nào",
+    "error_no_reason": "Không thể tìm thấy nguyên nhân giao dịch thất bại. Vui lòng thử lại trong chốc lát.",
 
     "broadcast": "Gửi",
     "transaction": "Giao dịch",
@@ -67,22 +75,27 @@
     "current_address_balance": "Số dư hiện tại",
 
     "transaction_error": "Lỗi giao dịch",
-    
     "notification": "Thồng báo",
     "not_enable_exchange": "Địa chỉ của bạn không phù hợp để trao đổi tại thời điểm hiện tại.",
     "kyber_down" : "Kyber hiện tại không hỗ trợ trao đổi. <br/>Xin bạn vui lòng quay laị sau!",
 
+    "swap": "Trao đổi",
     "transaction_time": "Thời gian giao dịch: < ${time} phút",
     "waiting_transaction": "Đang đợi giao dịch được xác thực",
     "click_to_ex_all_balance": "Trao đổi toàn bộ tài khoản",
     "click_to_transfer_all_balance": "Chuyển toàn bộ tài khoản",
 
-    "about_to_exchange": "Bạn chuẩn bị chuyển đổi",
+    "higher_min_acceptable_rate": "Tỷ giá thấp hơn cho khả năng giáo dịch thành công cao hơn khi thị trường biến động.",
+    "our_suggest": "<strong> ${suggestRate}</strong> là tỷ giá thấp nhất chấp nhận được mà chúng tôi đề xuất.",
+    "min_acceptable_rate": "Tỷ giá thấp nhất được chấp nhận",
+
+    "about_to_swap": "Bạn chuẩn bị chuyển đổi",
     "about_to_transfer": "Bạn chuẩn bị gửi",
     "processing": "Đang xử lý",
     "gas_limit": "Gas giới hạn",
     "gas_price": "Giá Gas",
     "for": "đổi lấy",
+    "gwei": "Gwei",
     "exchange_for": "cho xấp xỉ",
     "to": "đến",
     "best_rate": "Tỷ giá tốt nhất",
@@ -92,13 +105,18 @@
     "transfer_tooltip": "Chuyển eth hoặc token đến một tài khoản khác",
     "transaction_gasprice_50": "Giá Gas càng cao, giao dịch càng nhanh. Giá Gas lớn nhất 50 Gwei",
     "transaction_gasprice": "Giá Gas càng cao, giao dịch càng nhanh",
+    "max_gas_price": "Giá gas lớn nhất: ${maxGas} Gwei",
     "best_rate_tooltip": "Tỷ giá thấp hơn cho khả năng thành công cao hơn khi thị trường biến động",
     "terms_and_conditions": "<span>Điều khoản sử dụng <br/> Chính sách bảo mật</span>",
+
+    "error_tx_log":"Warning! Log is empty",
+    "error_tx_contract":"Warning! Error encountered during contract execution",
     "no_pedding_tx": "Không có giao dịch nào đang chờ",
     "rate_info": "Tỉ giá có thể thay đổi. <br/>Bạn có thể  chỉ định tỉ giá nhỏ nhất bởi kích \"NÂNG CAO\"",
     "address": "Địa chỉ nhận",
     "slippage_tip": "Tỉ giá có thể thay đổi, bạn có thể chỉnh tỉ giá trong lựa chọn nâng cao",
-    "max_slippage": "với tối đa ${percent}% trượt giá"
+    "max_slippage": "với tối đa ${percent}% trượt giá",
+    "included": "Bao gồm"
   },
 
   "modal": {
@@ -107,15 +125,18 @@
     "import": "Nhập",
     "enter_password_placeholder": "Nhập mật khẩu xác nhận",
     "select_hd_path": "Chọn HD derivation path",
+    "select_trezor_address": "Chọn địa chỉ Trezor",
+    "select_ledger_address": "Chọn địa chỉ Ledger",
     "select_address": "Chọn địa chỉ bạn muốn sử dụng",
     "previous_addresses": "Địa chỉ Trước",
     "more_addresses": "Thêm Địa chỉ",
-    "custom_path": "Path Tùy Chỉnh",
+    "custom_path": "Tùy chỉnh Đường dẫn",
     "view_on_etherscan": "Xem trên Etherscan",
     "press_confirm_if_really_want": "Kích xác nhận nếu bạn thật sự muốn.",
     "press_approve": "Bấm đồng ý để tiếp tục",
     "waiting_for_confirmation": "Đang chờ xác nhận từ ví của bạn",
     "confirm_exchange_title": "Xác nhận giao dịch",
+    "confirm_swap": "Xác nhận trao đổi",
     "confirm_transfer_title": "Xác nhận giao dịch",
 
     "select_your_language": "Lựa chọn ngôn ngữ",
@@ -125,18 +146,19 @@
 
     "approve_exchange": "Bạn cần cấp phép cho Kyber để có thể tương tác với <strong>${ token }</strong> trên địa chỉ này",
     "eth_token_exchange": "Chuyển đổi eth token",
-    "approve": "Đồng ý"
+    "approve": "Đồng ý",
+    "address": "Địa chỉ",
+    "approve_token": "Cho phép sử dụng token"
   },
 
-
   "error": {
+    "metamask_not_installed": "Metamask chưa được cài đặt",
+
     "select_same_token": "Không thể đổi giữa hai token giống nhau",
     "select_token_token": "Cặp token này chưa được hỗ trợ",
     "source_amount_too_high": "Số lượng chuyển quá lớn",
-
     "source_amount_too_high_cap": "Số lượng chuyển vượt quá hạn mức. Nguồn phải nhỏ hơn ${ cap } ETH",
     "dest_amount_too_high_cap": "Số lượng chuyển vượt quá hạn mức. Đích phải nhỏ hơn ${ cap } ETH",
-
     "source_amount_too_small": "Số lượng chuyển quá nhỏ",
     "source_amount_rate_error": "Không thể chuyển đổi tại thời điểm hiện tại",
     "source_amount_too_high_for_reserve": "Số lượng chuyển quá lớn (hiện không có sẵn token để giao dịch tại thời điểm này)",
@@ -192,21 +214,31 @@
     "ledger_time_out": "Phiên trên Ledger của bạn đã hết hạn. Đăng nhập lại để tiếp tục dụng.",
     "eth_balance_not_enough_for_fee": "Tài khoản của bạn không đủ ETH cho giao dịch",
     "handle_amount":"Số lượng điền quá lớn, vui lòng giảm số lượng giao dịch",
-    "kyber_maintain":"Kyber hiện không cho giao dịch cặp này",
+    "kyber_maintain":"Cặp token này tạm thời đang được bảo trì",
     "get_rate":"Không thể lấy tỉ giá từ blockchain",
     "exchange_enable":"Bạn đã giao dịch quá lượng 1 ngày! Bạn có thể giao dịch vào ngày mai tại thời điểm 00:00 UTC+0",
     "min_rate_greater_expected_rate": "Bạn đã chỉnh tỉ giá lớn hơn tỉ giá đề nghị bởi KyberNetwork. Giao dịch của bạn nhiều khả năng thất bại",
-    "exceed_daily_volumn": "Bạn có thể phải <a target='_blank' href='${link}'>đăng kí</a> với chúng tôi để có hạn mức giao dịch cao hơn"
+    "exceed_daily_volumn": "Bạn có thể phải <a target='_blank' href='${link}'>đăng kí</a> với chúng tôi để có hạn mức giao dịch cao hơn",
+    "broadcast_tx": "Giao dịch có khả năng bị thất bại! Chúng tôi không thể đưa giao dịch của bạn lên blockchain. Vui lòng kiểm tra tại <a target='_blank' href='${link}'>Etherscan</a>"
   },
 
   "import": {
     "from_metamask": "Kết nối <br> Metamask",
     "from_keystore": "Chọn hoặc kéo<br />Keystore",
     "from_trezor": "Nhập từ<br />Trezor",
+    "json": "Nhập từ<br />JSON",
     "from_ledger": "Nhập từ<br />Ledger",
     "from_private_key": "Điền<br />private key",
     "from_private_key_input_title": "ĐIỀN PRIVATEKEY",
-    "from_private_key_input_title_placehoder": "Điền private key"
+    "from_private_key_input_title_placehoder": "Điền private key",
+    "connect": "Kết nối",
+    "address": "Địa chỉ",
+    "balance": "Số dư",
+    "import": "Nhập",
+    "swap_from_ledger": "Giao dịch từ Ledger",
+    "swap_from_trezor": "Giao dịch từ Trezor",
+    "select_or_drag": "Chọn hoặc kéo file",
+    "address_is_loading": "Đang tải thông tin địa chỉ..."
   },
 
   "info": {
@@ -218,7 +250,7 @@
     "network_address": "Địa chỉ contract network",
     "kyber_homepage": "Trang chủ Kyber",
     "get_free_kovan": "Lấy",
-    "warning": "Không nên chuyển bất kỳ ether nào cho các địa chỉ phía trên.</br>Các địa chỉ trên chỉ sử dụng trong môi trường test và chúng tôi có khả năng không sử dụng trong phiên bản chính thức.",
+    "warning": "Không nên chuyển bất kỳ ether nào cho các địa chỉ phía trên.</br>Các địa chỉ trên chỉ sử dụng trong môi trường thử nghiệm và chúng tôi có khả năng không sử dụng trong phiên bản chính thức.",
     "here": "tại đây"
   },
     
@@ -246,14 +278,15 @@
     "rate": "Tỉ Giá",
     "description": "Mô tả",
     "amount": "Số lượng",
+    "in": "Trong",
     "recent": "Gần đây"
   },
 
   "terms":{
-    "title" : "KyberWallet - Điều khoản sử dụng",
-    "content":"Kyber testnet wallet provides a platform for experimenting and understanding our exchange and payment services. The current implementation is not secure in any way. Using it may cause loss of funds and could compromise user privacy. The user is accountable and responsible for any outcome for the use of Kyber testnet wallet.",
-    "use_testnet":"USE ONLY TESTNET ACCOUNTS!!!",
-    "use_real":"DO NOT USE REAL ETHEREUM ACCOUNTS!!!",
+    "title" : "KyberSwap - Điều khoản sử dụng",
+    "content":"Ví Kyber trên testnet cung cấp một nền tảng cho phép người dùng thử nghiệm và tìm hiểu về cách thức dịch vụ thanh toán và sàn giao dịch của chúng tôi hoạt động. Phiên bản hiện tại có thể không đảm bảo về bảo mật, việc sử dụng nền tảng này có thể dẫn đến thất thoát tài sản và ảnh hưởng đến quyền riêng tư của người dùng. Người dùng phải chịu trách nhiệm với bất cứ rủi ro nào khi sử dụng ví Kyber trên testnet.",
+    "use_testnet":"CHỈ SỬ DỤNG TÀI KHOẢN THỬ NGHIỆM!!!",
+    "use_real":"ĐỪNG SỬ DỤNG TÀI KHOẢN VÍ ETHEREUM CHÍNH THỨC!!!",
     "accept":"Chấp nhận",
     "terms_and_condition":" Điều khoản sử dụng ",
     "to_get_started":"để bắt đầu"
@@ -265,9 +298,45 @@
     "instant": "Tức thì",
     "liquid": "Thanh khoản",
     "compatible": "Tương thích",
-    "get_started": "Bắt đầu"
+    "get_started": "Bắt đầu",
+    "exchange":"giao dịch",
+    "instant_and_secure_token_swap": "Trao đổi Token một cách tức thì và đảm bảo.",
+    "no_oderbooks_no_deposit": "Không lệnh giao dịch, không cần gửi tiền.",
+    "power_by": "Power by Kyber's Decentralized Liquidity Network",
+    "metamask": "METAMASK",
+    "json": "JSON",
+    "ledger": "LEDGER",
+    "private_key": "PRIVATE KEY"
   },
 
+  "market": {
+    "eth_market": "Thị trường Ethereum",
+    "search": "Tìm kiếm",
+    "currency": "Tiền tệ",
+    "settings": "Điều chỉnh",
+    "market_title": "Thị trường",
+    "sell_price": "Giá Bán",
+    "buy_price": "Giá Mua",
+    "try_searching_for_token": "Tìm kiếm Token",
+    "market_cap": "Vốn hóa",
+    "circulating_supply": "Số lượng lưu hành",
+    "total_supply": "Tổng cung",
+    "last_7d": "7 ngày qua",
+    "change": "Thay đổi 24h",
+    "volume": "Lượng giao dịch (24h)",
+    "support_eth_only": "Chỉ hỗ trợ các cặp giao dịch với ETH, chưa hỗ trợ giao dịch với USD."
+  },
+
+  "trading_view": {
+    "buy": "Mua",
+    "buy_price": "Giá Mua",
+    "sell": "Bán",
+    "sell_price": "Giá bán",
+    "mid": "Trung bình",
+    "mid_price": "Giá trung bình"
+  },
+
+  "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",
   "tracker": "Thông tin",
   "help": "Hỗ trợ",

@@ -11,3 +11,5 @@ export { default as InfoModal} from "./InfoModal.js"
 export { default as TransactionListView } from "./TransactionListView.js"
 
 export { default as TokenSelectorView } from "./TokenSelectorView.js"
+
+export { default as Selector } from "./Selector.js"

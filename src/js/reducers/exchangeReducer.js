@@ -32,7 +32,7 @@ const exchange = (state = initState, action) => {
       newState.minConversionRate = newState.slippageRate
 
       newState.isEditRate = false
-      newState.isEditGasPrice = false
+      //newState.isEditGasPrice = false
 
       newState.isAnalize = false
       newState.isAnalizeComplete = false
@@ -47,28 +47,28 @@ const exchange = (state = initState, action) => {
         newState.sourceTokenSymbol = action.payload.symbol
         newState.sourceToken = action.payload.address
 
-        if (newState.sourceTokenSymbol === 'ETH') {
-          if (newState.destTokenSymbol === 'ETH') {
-            newState.destTokenSymbol = 'KNC'
-            newState.destToken = BLOCKCHAIN_INFO.tokens['KNC'].address
-          }
-        } else {
-          newState.destTokenSymbol = 'ETH'
-          newState.destToken = BLOCKCHAIN_INFO.tokens['ETH'].address
-        }
+        // if (newState.sourceTokenSymbol === 'ETH') {
+        //   if (newState.destTokenSymbol === 'ETH') {
+        //     newState.destTokenSymbol = 'KNC'
+        //     newState.destToken = BLOCKCHAIN_INFO.tokens['KNC'].address
+        //   }
+        // } else {
+        //   newState.destTokenSymbol = 'ETH'
+        //   newState.destToken = BLOCKCHAIN_INFO.tokens['ETH'].address
+        // }
       } else if (action.payload.type === "des") {
         newState.destTokenSymbol = action.payload.symbol
         newState.destToken = action.payload.address
 
-        if (newState.destTokenSymbol === 'ETH') {
-          if (newState.sourceTokenSymbol === 'ETH') {
-            newState.sourceTokenSymbol = 'KNC'
-            newState.sourceToken = BLOCKCHAIN_INFO.tokens['KNC'].address
-          }
-        } else {
-          newState.sourceTokenSymbol = 'ETH'
-          newState.sourceToken = BLOCKCHAIN_INFO.tokens['ETH'].address
-        }
+        // if (newState.destTokenSymbol === 'ETH') {
+        //   if (newState.sourceTokenSymbol === 'ETH') {
+        //     newState.sourceTokenSymbol = 'KNC'
+        //     newState.sourceToken = BLOCKCHAIN_INFO.tokens['KNC'].address
+        //   }
+        // } else {
+        //   newState.sourceTokenSymbol = 'ETH'
+        //   newState.sourceToken = BLOCKCHAIN_INFO.tokens['ETH'].address
+        // }
       }
 
       //reset all error
@@ -89,12 +89,12 @@ const exchange = (state = initState, action) => {
         newState.errors.selectTokenToken = ''
         return newState
       }
-      if ((newState.sourceTokenSymbol !== "ETH") &&
-        (newState.destTokenSymbol !== "ETH")) {
-        newState.errors.selectSameToken = ''
-        newState.errors.selectTokenToken = "error.select_token_token"
-        return newState
-      }
+      // if ((newState.sourceTokenSymbol !== "ETH") &&
+      //   (newState.destTokenSymbol !== "ETH")) {
+      //   newState.errors.selectSameToken = ''
+      //   newState.errors.selectTokenToken = "error.select_token_token"
+      //   return newState
+      // }
       newState.errors.selectSameToken = ''
       newState.errors.selectTokenToken = ''
       newState.errors.sourceAmountError = ''
@@ -150,7 +150,11 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.SET_BROADCAST_ERROR": {
       newState.broadcasting = false
-      newState.broadcastError = action.payload ? action.payload : "Cannot broadcast transaction to blockchain"
+      if (action.payload){
+        newState.broadcastError = action.payload
+      }else{
+        newState.broadcastError = "Cannot broadcast transaction to blockchain"
+      }
       newState.confirmApprove = false
       newState.isApproving = false
       newState.isConfirming = false
@@ -179,7 +183,7 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.UPDATE_RATE":{
       const { rateInit, expectedPrice, slippagePrice, rateInitSlippage, blockNo ,isManual, isSuccess} = action.payload
-
+      
       if (!isSuccess) {
         newState.errors.rateSystem = "error.get_rate"
       }else{
@@ -452,12 +456,18 @@ const exchange = (state = initState, action) => {
       newState.maxCap = action.payload.maxCap
       return newState
     }
-    case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
+    case "EXCHANGE.SET_GAS_PRICE_SWAP_COMPLETE": {
+
       if (!newState.isEditGasPrice) {
         var { safeLowGas, standardGas, fastGas, defaultGas } = action.payload
-        newState.gasPriceSuggest.fastGas = fastGas
-        newState.gasPriceSuggest.standardGas = standardGas
-        newState.gasPriceSuggest.safeLowGas = safeLowGas
+
+        var gasPriceSuggest = {...newState.gasPriceSuggest}
+        
+        gasPriceSuggest.fastGas = fastGas
+        gasPriceSuggest.standardGas = standardGas
+        gasPriceSuggest.safeLowGas = safeLowGas
+
+        newState.gasPriceSuggest = {...gasPriceSuggest}
         newState.gasPrice = defaultGas
       }
       return newState
@@ -474,14 +484,19 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.ANALYZE_ERROR": {
-      newState.isAnalize = true
+      const {txHash} = action.payload
+      if (txHash === newState.txHash){
+        newState.isAnalize = true
+      }
       return newState
     }
     case "EXCHANGE.SET_ANALYZE_ERROR": {
-      const { networkIssues, reserveIssues } = action.payload
-      newState.analizeError = { networkIssues, reserveIssues }
-      newState.isAnalize = false
-      newState.isAnalizeComplete = true
+      const { networkIssues, txHash } = action.payload
+      if (txHash === newState.txHash){
+        newState.analizeError = { ...networkIssues }
+        newState.isAnalize = false
+        newState.isAnalizeComplete = true
+      }
       return newState
     }
     // case "EXCHANGE.FETCH_GAS":{

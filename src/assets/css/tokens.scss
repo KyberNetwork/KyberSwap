@@ -73,18 +73,3 @@
   }
 }
 
-.token-compare {
-  color: #00ffd6;
-  font-weight: 600;
-  letter-spacing: .5px;
-  text-align: center;
-  span {
-    margin-left: 10px;
-    &.up {
-      color: $primary-color;
-    }
-    &.down {
-      color: $alert-color;
-    }
-  }
-}

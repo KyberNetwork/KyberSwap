@@ -1,0 +1,7 @@
+
+node_modules/
+.vscode
+
+# Ignore build folder
+dist
+node_modules

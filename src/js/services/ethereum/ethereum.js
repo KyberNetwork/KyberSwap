@@ -6,12 +6,15 @@ import constants from "../constants"
 
 import {
   updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRateUSD,
-  updateHistoryExchange, checkConnection, setGasPrice, setMaxGasPrice
+  checkConnection, setGasPrice, setMaxGasPrice
 } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx, updateApproveTxsData } from "../../actions/txActions"
 import { updateRateExchange, estimateGas, analyzeError, checkKyberEnable, verifyExchange, caculateAmount, fetchExchangeEnable } from "../../actions/exchangeActions"
 import { estimateGasTransfer, verifyTransfer } from "../../actions/transferActions"
+
+import * as marketActions from "../../actions/marketActions"
+
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
 import { setConnection } from "../../actions/connectionActions"
@@ -64,6 +67,10 @@ export default class EthereumService extends React.Component {
     var callBackSync = this.fetchDataSync.bind(this)
     callBackSync()
     this.intervalSyncID = setInterval(callBackSync, 3000)
+
+    var callBack10Min = this.fetchData10Min.bind(this)
+    callBack10Min()
+    var interval10Min = setInterval(callBack10Min, 600000)
   }
 
   clearSubcription() {
@@ -140,8 +147,8 @@ export default class EthereumService extends React.Component {
   fetchData() {
     this.checkKyberEnable()
 
-     this.fetchTxsData()
-     this.fetchApproveTxsData()
+    this.fetchTxsData()
+    this.fetchApproveTxsData()
 
     this.fetchRateData()
     this.fetchRateUSD()
@@ -151,21 +158,33 @@ export default class EthereumService extends React.Component {
 
     this.fetchRateExchange()
 
-    this.fetchHistoryExchange()
+    //this.fetchHistoryExchange()
 
     this.checkConnection()
 
+
+    this.fetchMaxGasPrice()
     this.fetchGasprice()
+    
 
     this.fetchExchangeEnable()
-    //this.verifyExchange()
-    //this.verifyTransfer()
+    // this.verifyExchange()
+    // this.verifyTransfer()
 
     this.fetchGasExchange()
     this.fetchGasTransfer()
 
+    //this.fetMarketData()
+
+    this.fetGeneralInfoTokens()
+
    //this.testAnalize()
   // this.testEstimateGas()
+  }
+
+
+  fetchData10Min(){
+    this.fetchVolumn()
   }
 
   fetchDataSync() {
@@ -180,20 +199,20 @@ export default class EthereumService extends React.Component {
   testAnalize() {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    store.dispatch(analyzeError(ethereum, "0x9219e71f9172549595e42ce6d8cc2d3c7ac052236f461b0005128f25d331bec1"))
+    store.dispatch(analyzeError(ethereum, "0xf410222fe20c4a4e3daa4355ca6cf80e1762f6cf55c20bf6289fccb273d233cf"))
   }
 
   // testEstimateGas() {
   //   this.call("estimateGasContract")
   // }
-
+  
+  fetchVolumn () {
+    store.dispatch(marketActions.getVolumn())
+  }
+  
   fetchRateData() {
     var state = store.getState()
-    var ethereum = state.connection.ethereum
-    // for (var k = 0; k < constants.RESERVES.length; k++) {
-    //   var reserve = constants.RESERVES[k]
-    //   store.dispatch(updateAllRate(ethereum, BLOCKCHAIN_INFO.tokens, reserve))
-    // }
+    var ethereum = state.connection.ethereum  
     store.dispatch(updateAllRate(ethereum, BLOCKCHAIN_INFO.tokens))
   }
 
@@ -287,27 +306,25 @@ export default class EthereumService extends React.Component {
 
     var sourceAmountHex = stringToHex(sourceAmount, sourceDecimal)
 
-    var destTokenSymbol = state.exchange.destTokenSymbol
-    var rateInit = 0
-    if (sourceTokenSymbol === 'ETH' && destTokenSymbol !== 'ETH') {
-      rateInit = tokens[destTokenSymbol].minRateEth
-    }
-    if (sourceTokenSymbol !== 'ETH' && destTokenSymbol === 'ETH') {
-      rateInit = tokens[sourceTokenSymbol].minRate
-    }
+    // var destTokenSymbol = state.exchange.destTokenSymbol
+    // var rateInit = 0
+    // if (sourceTokenSymbol === 'ETH' && destTokenSymbol !== 'ETH') {
+    //   rateInit = tokens[destTokenSymbol].minRateEth
+    // }
+    // if (sourceTokenSymbol !== 'ETH' && destTokenSymbol === 'ETH') {
+    //   rateInit = tokens[sourceTokenSymbol].minRate
+    // }
 
-    store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmountHex, isManual, rateInit))
+    store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmountHex, isManual))
   }
 
-  fetchHistoryExchange = () => {
-    var state = store.getState()
-    var history = state.global.history
-    var ethereum = state.connection.ethereum
-    store.dispatch(updateBlock(ethereum))
-    //if (history.page,){      
-    store.dispatch(updateHistoryExchange(ethereum, history.page, history.itemPerPage, true))
-    //}
-  }
+  // fetchHistoryExchange = () => {
+  //   var state = store.getState()
+  //   var history = state.global.history
+  //   var ethereum = state.connection.ethereum
+  //   store.dispatch(updateBlock(ethereum))
+  //   store.dispatch(updateHistoryExchange(ethereum, history.page, history.itemPerPage, true))
+  // }
 
   fetchGasprice = () => {
     var state = store.getState()
@@ -315,14 +332,10 @@ export default class EthereumService extends React.Component {
     store.dispatch(setGasPrice(ethereum))
   }
 
-  // fetchMaxGasPrice = () => {
-  //   var state = store.getState()
-  //   var ethereum = state.connection.ethereum
-
-  //   console.log("++++++++++++++++++++++")
-  //   console.log(ethereum)
-  //   store.dispatch(setMaxGasPrice(ethereum))
-  // }
+  fetchMaxGasPrice = () => {
+    var state = store.getState()
+    store.dispatch(setMaxGasPrice())
+  }
 
   fetchGasExchange = () => {
     var state = store.getState()
@@ -331,7 +344,8 @@ export default class EthereumService extends React.Component {
       return
     }
     var pathname = state.router.location.pathname
-    if (pathname !== "/exchange") {
+    console.log(pathname)
+    if (pathname !== constants.BASE_HOST + "/swap") {
       return
     }
     store.dispatch(estimateGas())
@@ -345,10 +359,18 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== "/transfer") {
+    if (pathname !== constants.BASE_HOST + "/transfer") {
       return
     }
     store.dispatch(estimateGasTransfer())
+  }
+
+  fetMarketData = () => {
+    store.dispatch(marketActions.getMarketData())
+  }
+
+  fetGeneralInfoTokens() {
+    store.dispatch(marketActions.getGeneralInfoTokens())
   }
 
   verifyExchange = () => {
@@ -359,7 +381,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== "/exchange") {
+    if (pathname !== constants.BASE_HOST + "/swap") {
       return
     }
     store.dispatch(verifyExchange())
@@ -374,7 +396,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== "/transfer") {
+    if (pathname !== constants.BASE_HOST + "/transfer") {
       return
     }
     store.dispatch(verifyTransfer())
@@ -399,7 +421,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== "/exchange") {
+    if (pathname !== constants.BASE_HOST + "/swap") {
       return
     }
     store.dispatch(fetchExchangeEnable())

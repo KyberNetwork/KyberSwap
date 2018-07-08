@@ -66,11 +66,12 @@ export default class BaseProvider {
 
         return new Promise((resolve, reject) => {
             var data = this.wrapperContract.methods.getBalances(address, listToken).call().then(result => {
+                console.log(result)
                 var listTokenBalances = []
                 listSymbol.map((symbol, index) => {
                     listTokenBalances.push({
                         symbol: symbol,
-                        balance: result[index]
+                        balance: result[index] ? result[index]: "0"
                     })
                 })
                 resolve(listTokenBalances)
@@ -80,6 +81,8 @@ export default class BaseProvider {
             })
         })
     }
+
+    
 
     getAllBalancesTokenAtSpecificBlock(address, tokens, blockno) {
         var promises = Object.keys(tokens).map(index => {
@@ -520,35 +523,27 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getGasPrice()
                 .then(result => {
-
+                    console.log("gas price")
                     console.log(result)
+
                     var gasPrice = parseInt(result, 10)
-                    if (gasPrice > 20000000000) {
+                    gasPrice = gasPrice / 1000000000
+                    if (gasPrice < 1) {
                         resolve({
-                            low: "20",
-                            default: "20",
-                            standard: "20",
-                            fast: (20 * 1.3).toString()
+                            low: 1,
+                            default: 1,
+                            standard: 1,
+                            fast: 1
                         })
                     } else {
-                        gasPrice = gasPrice / 1000000000
-                        if (gasPrice < 1) {
-                            resolve({
-                                low: 1,
-                                default: 1,
-                                standard: 1,
-                                fast: 1
-                            })
-                        } else {
-                            resolve({
-                                low: gasPrice.toString(),
-                                default: gasPrice.toString(),
-                                standard: gasPrice.toString(),
-                                fast: (gasPrice * 1.7).toString()
-                            })
-                        }
-
+                        resolve({
+                            low: gasPrice.toString(),
+                            default: gasPrice.toString(),
+                            standard: gasPrice.toString(),
+                            fast: (gasPrice * 1.3).toString()
+                        })
                     }
+
                 }).catch((err) => {
                     reject(err)
                 })

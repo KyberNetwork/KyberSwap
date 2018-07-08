@@ -2,18 +2,23 @@
 @import '../bower/animate.css/animate.css';
 @import 'settings';
 @import "util";
-@import 'foundation';
+//@import 'foundation';
 
 $accent-gradient: linear-gradient(169deg, #36d9ac, #049696);
 $alert-color: #ff5d00;
 
+@import 'common';
 @import 'elements';
 @import 'broadcast';
 @import 'modals';
 @import 'addresses';
 @import 'tokens';
 @import 'custom';
-@import "~slick-carousel/slick/slick.css";
+
+@import 'address_balance';
+
+//@import "~slick-carousel/slick/slick.css";
+@import "~react-table/react-table.css";
 //@import "history";
 @import "transaction_list";
 @import "language";
@@ -22,6 +27,15 @@ $alert-color: #ff5d00;
 @import "icon";
 @import "landing_page";
 @import "footer";
+@import "advance_config";
+@import "exchange";
+@import "market";
+@import "import_account";
+@import "transfer";
+@import "cold_wallet";
+@import "animation";
+
+@import '~react-linechart/dist/styles.css';
 
 @font-face{
   font-family: 'My-Montserrat';
@@ -48,13 +62,13 @@ $alert-color: #ff5d00;
   src: url(../fonts/text-security-disc.ttf);
 }
 
-body{
+html body{
   color: $black;
-  font-family: $code-font-family;
-  min-width: 350px;
-}
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
-  font-family: $code-font-family;
+  font-family: $font-openSans;
+
+  h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
+    font-family: $font-cera;
+  }
 }
 
 #waiting {
@@ -75,7 +89,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 99999999;
   &.pending{
     background-color: rgba($white, .3);
     h4{
@@ -92,7 +106,6 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
     display: inline-block;
     color: $medium-gray;
     font-size: 14px;
-    font-weight: bold;
     text-align: center;
     background-color: white;
     padding: 60px 30px 30px 30px;
@@ -397,120 +410,10 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
           margin-top: 4px;
         }
         .reason {
-          color: $alert-color;
+          color: $error-color;
           font-size: 12px;
           margin-top: 8px;
         }
-      }
-    }
-  }
-}
-
-#balance-account{
-  position: relative;
-  .balance-header{
-    min-height: 130px;
-    .title{
-      font-size: 1.2rem;
-      line-height: 25px;
-      margin-bottom: 16px;
-      margin-right: 10px;
-    }
-    img{
-      width: 15px;
-    }
-    .estimate-value{
-      font-size: 0.9rem;
-    }
-    @media screen and (max-width: 640px) {
-      min-height: 0;
-      font-size: 0.85em;
-      .title{
-        font-size: 1.4em;
-      }
-    }
-  }
-  .balances{
-    position: absolute;
-    width: 100%;
-    top: 40px;
-    background-color: #fff;
-    z-index: 3;
-    > .row{
-      max-height: 75px;
-      overflow-y: hidden;
-      transition: max-height .3s;
-      &.active{
-        overflow: auto;
-        max-height: 400px;
-      }
-      @include breakpoint(medium){
-        &.active{
-          overflow: hidden;
-        }
-      }
-      @media screen and (max-width: 640px) {
-        max-height: 0;
-        padding: 0;
-      }
-    }
-  }
-  .balance-item{
-    border-radius: 15px;
-    line-height: 20px;
-    padding: 10px 15px;
-    font-size: 13px;
-    border: 1px solid transparent;
-    cursor: pointer;
-    &.active, &:hover{
-      background-color: #f0f0f0;
-      border-color: #d5d5d5;
-    }
-    h4{
-      line-height: 29px;
-    }
-    img{
-      vertical-align: baseline;
-      margin-right: 15px;
-    }
-    + .__react_component_tooltip{
-      border: 1px solid #afafaf;
-      &.show{
-        opacity: 1;
-      }
-      &.place-bottom{
-        &::before{
-          border-left-width: 10px;
-          border-right-width: 10px;
-          border-bottom: 8px solid #afafaf;
-        }
-        &::after{
-          border-bottom-width: 7px;
-          top: -7px;
-        }
-      }
-      &.place-right::before{
-        border-right: 8px solid #afafaf;
-      }
-      &.place-left::before{
-        border-left: 8px solid #afafaf;
-      }
-    }
-  }
-  .expand{
-    border-top: 1px solid #eee;
-    height: 8px;
-    margin-top: 10px;
-    background-color: #fff;
-    .row{
-      position: relative;
-      button{
-        position: absolute;
-        background-color: #fff;
-        padding: 7px 22px;
-        right: 30px;
-        border-radius: 2px;
-        cursor: pointer;
       }
     }
   }
@@ -560,59 +463,6 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
   }
 }
 
-#exchange {
-  .token-input {
-    .info {
-      height: auto;
-      transition: width .4s ease-in-out;
-    }
-    input {
-      transition: width .4s ease-in-out;
-    }
-  }
-  label{
-    margin-bottom: 8px;
-  }
-  .token-compare {
-    margin-bottom: 10px;
-  }
-  .show-on-choose-token-pair {
-    display: none;
-  }
-  .hide-on-choose-token-pair {
-    display: block;
-  }
-  &.choose-token-pair {
-    .title {
-      &:after {
-        content: 'Select Token Pair';
-        font-size: 14px;
-        margin-left: 20px;
-        color: lighten($dark-gray, 20);
-      }
-    }
-    .token-input {
-      input {
-        width: 0;
-        opacity: 0;
-        padding: 0;
-      }
-      .info {
-        width: 100%;
-        &:before {
-          opacity: 0;
-        }
-      }
-    }
-    .hide-on-choose-token-pair {
-      display: none;
-    }
-    .show-on-choose-token-pair {
-      display: block;
-    }
-  }
-}
-
 #info{
   padding: 10px;
   .address{
@@ -630,22 +480,20 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
     }
   }
 }
-.exchange-icon{
-  text-align: center;
-  margin-top: 70px;
-}
-#import-account{
-  .title{
-    font-weight: normal;
-  }
-}
-#private_key, #passphrase{
-  background-color: transparent;
-  color: inherit;
-  border-bottom: 1px solid #ddd;
-  &:focus{
-    background-color: transparent
-  }
+
+// .exchange-icon{
+//   text-align: center;
+//   margin-top: 50px;
+// }
+
+#private_key{
+  background-color: #ACD0C6;
+  color: white;
+  width: 250px;
+  //border-bottom: 1px solid #ddd;
+  // &:focus{
+  //   background-color: transparent
+  // }
   &.security{
     font-family: 'text-security-disc';
     font-size: 25px;

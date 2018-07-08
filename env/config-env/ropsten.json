@@ -1,6 +1,6 @@
 {
   "connections": {
-    "http": [
+    "http": [      
       {
         "endPoint" : "https://ropsten-cache.kyber.network",
         "type": "cached"
@@ -235,5 +235,6 @@
     "url": "ropsten.etherscan.io",
     "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
   },
-  "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json"
+  "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
+  "tracker":"https://tracker.kyber.network"
 }

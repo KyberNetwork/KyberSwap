@@ -1,5 +1,6 @@
 import React from "react"
 import { Modal } from '../CommonElement'
+//import ReactTooltip from 'react-tooltip'
 
 const ImportByPKeyView = (props) => {
 
@@ -28,14 +29,20 @@ const ImportByPKeyView = (props) => {
 	return (
 		<div className="column column-block">
 			<div className="importer pkey">
-				<a onClick={() => props.modalOpen()} id="importPKey">
+				{/*<div className="how-to-use" data-for="private-key-tip" data-tip="How to use"></div>*/}
+        <div className="importer__symbol">
+          <img src={require('../../../assets/img/landing/privatekey_active.svg')} />
+          <div className="importer__name">{props.translate("import.from_private_key") || "PRIVATE KEY"}</div>
+        </div>
+				<button className="importer__button" onClick={(e) => props.modalOpen()}>{props.translate("import.from_private_key_input_title_placehoder") || "Enter your Private key"}</button>
+				{/* <a onClick={() => props.modalOpen()} id="importPKey">
 					<img src={require('../../../assets/img/pkey.svg')} />
-					<div className="description">{props.translate("import.from_private_key") || <span>Enter your<br />private key</span>}</div>
-				</a>
+				</a> */}
 			</div>
+			{/* <ReactTooltip place="top" id="private-key-tip" type="dark" /> */}
 
 			<Modal
-				className={{ base: 'reveal tiny', afterOpen: 'reveal tiny' }}
+				className={{ base: 'reveal medium', afterOpen: 'reveal medium import-privatekey' }}
 				isOpen={props.isOpen}
 				onRequestClose={() => props.onRequestClose()}
 				content={
@@ -58,6 +65,7 @@ const ImportByPKeyView = (props) => {
 												required />
 												<p>{props.privateKeyVisible}</p>
 												<a className="toggle" onClick={toggleShowPw}></a>
+												<a className="tootip"></a>
 											</div>
 											{!!props.pKeyError &&
 												<span className="error-text">{props.pKeyError}</span>

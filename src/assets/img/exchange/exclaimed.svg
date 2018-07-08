@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Desktop---Swap-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Swap-ConfirmPopup3" transform="translate(-568.000000, -700.000000)" fill="#999999" fill-rule="nonzero">
+            <g id="Group-15" transform="translate(488.000000, 327.000000)">
+                <g id="Group-3" transform="translate(70.000000, 256.000000)">
+                    <path d="M20,117.833333 C14.94,117.833333 10.8333333,121.94 10.8333333,127 C10.8333333,132.06 14.94,136.166667 20,136.166667 C25.06,136.166667 29.1666667,132.06 29.1666667,127 C29.1666667,121.94 25.06,117.833333 20,117.833333 Z M20.9166667,131.583333 L19.0833333,131.583333 L19.0833333,129.75 L20.9166667,129.75 L20.9166667,131.583333 Z M20.9166667,127.916667 L19.0833333,127.916667 L19.0833333,122.416667 L20.9166667,122.416667 L20.9166667,127.916667 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -28,7 +28,7 @@ const transfer = (state = initState, action) => {
       newState.tokenSymbol = transfer.tokenSymbol
       newState.gasPrice = transfer.gasPrice
       newState.advanced = false
-      newState.isEditGasPrice = false
+    //  newState.isEditGasPrice = false
       return newState
     case "TRANSFER.SELECT_TOKEN":
       newState.tokenSymbol = action.payload.symbol
@@ -217,12 +217,16 @@ const transfer = (state = initState, action) => {
       newState.snapshot.isFetchingGas = false
       return newState
     }
-    case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
+    case "TRANSFER.SET_GAS_PRICE_TRANSFER_COMPLETE": {
       if (!newState.isEditGasPrice) {
         var { safeLowGas, standardGas, fastGas, defaultGas } = action.payload
-        newState.gasPriceSuggest.fastGas = fastGas
-        newState.gasPriceSuggest.standardGas = standardGas
-        newState.gasPriceSuggest.safeLowGas = safeLowGas
+
+        var gasPriceSuggest = newState.gasPriceSuggest
+        gasPriceSuggest.fastGas = fastGas
+        gasPriceSuggest.standardGas = standardGas
+        gasPriceSuggest.safeLowGas = safeLowGas
+
+        newState.gasPriceSuggest = {...gasPriceSuggest}
         newState.gasPrice = defaultGas
       }
       return newState

@@ -1,6 +1,7 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
 import * as actions from '../actions/globalActions'
 import * as actionsExchange from '../actions/exchangeActions'
+import * as actionsTransfer from '../actions/transferActions'
 import * as actionsUtils from '../actions/utilActions'
 import { closeImportLoading } from '../actions/accountActions'
 import { Rate } from "../services/rate"
@@ -25,16 +26,16 @@ export function* getLatestBlock(action) {
   
 }
 
-export function* updateHistoryExchange(action) {
-  try{
-    const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
-    var latestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
-    const newLogs = yield call([ethereum, ethereum.call], "getLog")
-    yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
-  }catch(e){
-    console.log(e)
-  }
-}
+// export function* updateHistoryExchange(action) {
+//   try{
+//     const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
+//     var latestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
+//     const newLogs = yield call([ethereum, ethereum.call], "getLog")
+//     yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
+//   }catch(e){
+//     console.log(e)
+//   }
+// }
 
 export function* goToRoute(action) {
   yield put(push(action.payload));
@@ -42,14 +43,17 @@ export function* goToRoute(action) {
 
 export function* clearSession(action) {
   yield put(actions.clearSessionComplete())
-  yield put(actions.goToRoute('/'));
+  yield put(actions.goToRoute(constants.BASE_HOST));
 }
 
 export function* updateAllRate(action) {
+  var state = store.getState()
+  
+  var rateUSD = state.tokens.tokens.ETH.rateUSD 
   const { ethereum, tokens } = action.payload
   try {
     const rates = yield call([ethereum, ethereum.call],"getAllRates", tokens)
-    yield put(actions.updateAllRateComplete(rates))
+    yield put(actions.updateAllRateComplete(rates, rateUSD))
   }
   catch (err) {
     //get rate from blockchain
@@ -104,6 +108,33 @@ export function* checkConnection(action) {
   }
 }
 
+
+export function* setMaxGasPrice(action) {
+  var state = store.getState()
+  var ethereum = state.connection.ethereum
+  try {
+    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
+    var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
+    yield put(actionsExchange.setMaxGasPriceComplete(maxGasPriceGwei))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export function* getMaxGasPrice(action){
+  var state = store.getState()
+  var ethereum = state.connection.ethereum
+  try {
+    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
+    var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
+    return maxGasPriceGwei
+  } catch (err) {
+    console.log(err)
+    return 50
+  }
+}
+
+
 function compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
   var safeLowGas = parseFloat(safeLowGas)
   var standardGas = parseFloat(standardGas)
@@ -125,7 +156,8 @@ function compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGas
 export function* setGasPrice(action) {
   var safeLowGas, standardGas, fastGas, defaultGas
   var state = store.getState()
-  var maxGasPrice = state.exchange.maxGasPrice
+
+  var maxGasPrice = yield call(getMaxGasPrice)   
 
   try {
     const ethereum = action.payload
@@ -135,6 +167,7 @@ export function* setGasPrice(action) {
     standardGas = gasPrice.standard
     defaultGas = gasPrice.default
     fastGas = gasPrice.fast
+    yield put(actionsTransfer.setGasPriceTransferComplete(safeLowGas, standardGas, defaultGas, fastGas))
 
     var fastGasFloat = parseFloat(fastGas)
     if (fastGasFloat <= 20){
@@ -142,23 +175,13 @@ export function* setGasPrice(action) {
     }
 
     var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
-    yield put(actions.setGasPriceComplete(compareWithMax))
+    yield put(actionsExchange.setGasPriceSwapComplete(compareWithMax.safeLowGas, compareWithMax.standardGas, compareWithMax.defaultGas, compareWithMax.fastGas))
 
   }catch (err) {
     console.log(err.message)
   }
 }
 
-export function* setMaxGasPrice(action) {
-  try {
-    const ethereum = action.payload
-    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
-    yield put(actionsExchange.setMaxGasPriceComplete(maxGasPrice))
-  } catch (err) {
-    console.log(err)
-  }
-
-}
 
 
 export function* changelanguage(action) {
@@ -188,7 +211,7 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.GO_TO_ROUTE", goToRoute)
   yield takeEvery("GLOBAL.CLEAR_SESSION", clearSession)
 
-  yield takeEvery("GLOBAL.UPDATE_HISTORY_EXCHANGE", updateHistoryExchange)
+  //yield takeEvery("GLOBAL.UPDATE_HISTORY_EXCHANGE", updateHistoryExchange)
   yield takeEvery("GLOBAL.CHANGE_LANGUAGE", changelanguage)
   yield takeEvery("GLOBAL.CHECK_CONNECTION", checkConnection)
   yield takeEvery("GLOBAL.SET_GAS_PRICE", setGasPrice)
@@ -197,7 +220,5 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.UPDATE_RATE_USD_PENDING", updateRateUSD)
 
 
-  yield takeEvery("EXCHANGE.SET_MAX_GAS_PRICE", setMaxGasPrice)
+  yield takeEvery("GLOBAL.SET_MAX_GAS_PRICE", setMaxGasPrice)
 }
-
-

@@ -120,6 +120,7 @@ export default class PostTransfer extends React.Component {
         isFetchingGas={this.props.form.snapshot.isFetchingGas}
         gasPrice={this.props.form.snapshot.gasPrice}
         gas={this.props.form.snapshot.gas}
+        isFetchingRate={true}
       />
     )
   }
@@ -134,9 +135,10 @@ export default class PostTransfer extends React.Component {
         isFetchingGas={this.props.form.snapshot.isFetchingGas}
         type="transfer"
         translate={this.props.translate}
-        title={this.props.translate("modal.confirm_transfer_title") || "Transfer confirm"}
+        title={this.props.translate("modal.confirm_transfer_title") || "Transfer Confirm"}
         errors={this.props.form.signError}
         walletType={this.props.account.type}
+        isFetchingRate={true}
       />
     )
   }
@@ -146,15 +148,24 @@ export default class PostTransfer extends React.Component {
     var destAddress = form.destAddress;
     var tokenSymbol = form.tokenSymbol;
     return (
-      <p>{this.props.translate("transaction.about_to_transfer") || "You are about to transfer"}
-        <br />
-        <span class="text-success">
-          <strong>
-            {amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}</strong>
-          <span className="color-white">{this.props.translate("transaction.to") || "to"}</span>
-          <strong>{destAddress.slice(0, 7)}...{destAddress.slice(-5)}</strong>
-        </span>
-      </p>
+      <div>
+        <div className="recap-sum-up">
+          {this.props.translate("transaction.about_to_transfer") || "You are about to transfer"}
+        </div>
+        <div className="recap-transfer">
+          <div>
+            <strong>
+            {amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}
+            </strong>
+          </div>
+          <div>{this.props.translate("transaction.to") || "to"}</div>
+          <div>
+            <strong>
+              {destAddress.slice(0, 7)}...{destAddress.slice(-5)}
+            </strong>
+          </div>
+        </div>
+      </div>
     )
   }
 
@@ -243,29 +254,30 @@ export default class PostTransfer extends React.Component {
     var modalPassphrase = this.props.account.type === "keystore" ? (
       <Modal
         className={{
-          base: 'reveal tiny',
-          afterOpen: 'reveal tiny'
+          base: 'reveal medium confirm-modal',
+          afterOpen: 'reveal medium confirm-modal'
         }}
         isOpen={this.props.form.passphrase}
         onRequestClose={this.closeModal}
         contentLabel="password modal"
         content={this.content()}
-        size="tiny"
+        size="medium"
       />
     ) : <Modal
         className={{
-          base: 'reveal tiny',
-          afterOpen: 'reveal tiny'
+          base: 'reveal medium confirm-modal',
+          afterOpen: 'reveal medium confirm-modal'
         }}
         isOpen={this.props.form.confirmColdWallet}
         onRequestClose={this.closeModal}
         contentLabel="confirm modal"
         content={this.contentConfirm()}
-        size="tiny"
+        size="medium"
       />
     let className = "button accent "
     if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree) {
-      className += " animated infinite pulse next"
+      //className += " animated infinite pulse next"
+      className += " next"
     }
 
     var termAndServices = (<TermAndServices clickCheckbox={this.clickCheckbox}

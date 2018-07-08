@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="104px" height="102px" viewBox="0 0 104 102" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 3</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Home-Swap-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Swap--Broadcasted" transform="translate(-748.000000, -355.000000)">
+            <g id="Group-3" transform="translate(749.000000, 356.000000)">
+                <ellipse id="Oval" stroke="#EF8102" stroke-width="2" fill="#FFFFFF" cx="51" cy="50" rx="51" ry="50"></ellipse>
+                <g id="baseline-done-24px" transform="translate(19.000000, 17.000000)">
+                    <polygon id="Shape" points="0 0 70 0 70 69 0 69"></polygon>
+                </g>
+                <g id="baseline-cell_wifi-24px" transform="translate(21.000000, 32.000000)" fill="#EF8102" fill-rule="nonzero">
+                    <path d="M9.25839695e-15,12.1914222 L5.37879859,17.5544007 C18.6798587,4.29246152 40.3201413,4.29246152 53.6212014,17.5544007 L59,12.1914222 C42.6968198,-4.06380739 16.2614841,-4.06380739 9.25839695e-15,12.1914222 Z M21.4318021,33.5601894 L29.4791519,41.5838705 L37.5265018,33.5601894 C33.0650177,29.1534009 25.8932862,29.1534009 21.4318021,33.5601894 Z M10.7159011,22.8758058 L16.0946996,28.2387844 C23.4749117,20.8802789 35.4833922,20.8802789 42.9053004,28.2387844 L48.2424028,22.8758058 C37.9017668,12.5655835 21.0565371,12.5655835 10.7159011,22.8758058 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

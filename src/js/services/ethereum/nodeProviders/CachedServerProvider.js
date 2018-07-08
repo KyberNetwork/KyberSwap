@@ -256,4 +256,68 @@ export default class CachedServerProvider extends React.Component {
             })
         })
     }
+
+    getMarketData() {
+        return new Promise((resolve, rejected) => {
+            fetch(this.rpcUrl + '/getMarketData', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+            }).then((response) => {
+                return response.json()
+            })
+                .then( (result) => {
+                    if(result.success){
+                        resolve(result.data)
+                    }else{
+                        rejected(new Error("Market data is not fetching"))
+                    }  
+                })
+                .catch((err) => {
+                    rejected(err)
+                })
+        })
+    }
+
+    getGeneralTokenInfo(){
+        return new Promise((resolve, rejected) => {
+            fetch(this.rpcUrl + '/getTokenInfo', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+            }).then((response) => {
+                return response.json()
+            })
+                .then( (result) => {
+                    if(result.success){
+                        resolve(result.data)
+                    }else{
+                        rejected(new Error("Market data is not fetching"))
+                    }  
+                })
+                .catch((err) => {
+                    rejected(err)
+                })
+        })
+    }
+
+    getVolumnChart(){
+        return new Promise((resolve, rejected) => {
+            fetch(BLOCKCHAIN_INFO.tracker + '/api/tokens/rates', {
+            }).then((response) => {
+                return response.json()
+            })
+                .then((result) => {
+                    resolve(result)                    
+                })
+                .catch((err) => {
+                    console.log(err)
+                    rejected(err)
+                })
+        })
+    }
 }
