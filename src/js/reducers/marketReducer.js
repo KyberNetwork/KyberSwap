@@ -182,7 +182,7 @@ const market = (state = initState, action) => {
                 
                 var token = data[key]
 
-                tokens[key].ETH.volume = Math.round(token.e)
+                //tokens[key].ETH.volume = Math.round(token.e)
                 tokens[key].ETH.last_7d =  token.p
                 //tokens[key].USD.volume = Math.round(token.u)
                 tokens[key].USD.last_7d =  token.p
