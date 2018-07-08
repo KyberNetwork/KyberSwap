@@ -4,8 +4,8 @@ import { connect } from "react-redux"
 import * as converter from "../../utils/converter"
 import * as actions from "../../actions/exchangeActions"
 import { getTranslate } from 'react-localize-redux'
-import ReactTooltip from 'react-tooltip'
-import { filterInputNumber } from "../../utils/validators"
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 @connect((store) => {
   return { 
@@ -15,24 +15,82 @@ import { filterInputNumber } from "../../utils/validators"
 })
 
 export default class MinRate extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  //   const {minConversionRate,offeredRate}  = this.props.exchange
+  //   let disable = false
+  //   if(converter.caculatorPercentageToRate(minConversionRate,offeredRate)==0){
+  //     disable = true
+  //   }
+  //   this.state = {
+  //     value: parseInt(converter.caculatorPercentageToRate(minConversionRate,offeredRate)),
+  //     disable:disable
+  //   };
+  // }
+  onSliderChange = (value) => {
+    const {offeredRate}  = this.props.exchange
+    var minRate = converter.caculatorRateToPercentage(value,offeredRate)
+    this.props.dispatch(actions.setMinRate(minRate.toString()))
+    // this.setState({
+    //   value,
+    // });
+  }
+  // onAfterChange = (value) => {
+  //   // const {offeredRate}  = this.props.exchange
+  //   // this.props.dispatch(actions.setMinRate(converter.caculatorRateToPercentage(value,offeredRate)))
+  // }
 
-  changeMinRate = (e) => {
-    var check = filterInputNumber(e, e.target.value, this.props.exchange.minConversionRate)
-    if(check) this.props.dispatch(actions.setMinRate(e.target.value))
+  suggestRate = (slippageRate, desToken) => {
+    return converter.roundingNumber(slippageRate) + " " + desToken
   }
 
   render = () => {
-    var minConversionRate = this.props.exchange.minConversionRate
+    const {minConversionRate,slippageRate,offeredRate}  = this.props.exchange
+    var desToken = this.props.exchange.destTokenSymbol
+    // const {disable,value} = this.state
+
+    var disable = false
+    if(converter.caculatorPercentageToRate(slippageRate,offeredRate)===0){
+      disable = true
+    }
+
+
+    var percent = converter.caculatorPercentageToRate(minConversionRate,offeredRate)
+    percent = Math.round(parseFloat(percent))
+    if (isNaN(percent)) percent = 0
     return (
-      <div className="row min-rate small-12 medium-8">
-        <label className="column small-12 medium-3 text-right">
-          <span>{this.props.translate("transaction.best_rate") || "Min Rate"}</span>
-          <span className="k k-info k-2x ml-3" data-for="rate-tip" data-tip={this.props.translate("transaction.best_rate_tooltip") || "Lower rates for better success chance during market volatility"}></span>
-          <ReactTooltip place="bottom" id="rate-tip" type="light"/>
-        </label>
-        <div className="column small-12 medium-6 end p-relative">
-          <input type="text" maxLength="40" value={minConversionRate} onChange={(e) => this.changeMinRate(e)} autoComplete="off"/>
-          <span className="error-text">{this.props.exchange.errors.rateError}</span>
+      <div className="min-rate">
+        <div className="des-up">
+          {this.props.translate("transaction.higher_min_acceptable_rate") 
+            || "Higher Min acceptable rate typically results in lower success rate when the market is volatile."}
+          {this.props.translate("transaction.our_suggest", { suggestRate: this.suggestRate(slippageRate, desToken)}) 
+            || (`<strong> ${this.suggestRate(slippageRate, desToken)}</strong> is our suggested Min acceptable rate by default.`)}
+        </div>
+        <div className = {!this.props.exchange.errors.rateError? "":"error"}>
+          <span  className="sub_title">{this.props.translate("transaction.min_acceptable_rate") || "MIN ACCEPTABLE RATE"}</span>
+          <Slider value={percent} 
+                  defaultValue={percent}
+                  min={0} max={100}
+                  onChange={this.onSliderChange}                   
+                  trackStyle={{ backgroundColor: '#666666', height: 2 }}
+                  disabled={disable}
+                  handleStyle={{
+                    border:'none',
+                    borderRadius:0,
+                    background: `url(${require("../../../assets/img/precent-rate.svg")})`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    backgroundSize: "100%",
+                    height: 30,
+                    width: 30
+                  }}
+          />
+          <div className="row small-12">
+          <div className="column small-1"><label className="des-down">0%</label></div>
+          <div className="column small-9 min-convention-rate"><span>{converter.roundingNumber(minConversionRate) + " " + desToken}</span></div>
+          <div className="column small-1"><label className="des-down">{percent}%</label></div>
+          </div>
+          {this.props.exchange.errors.rateError && <div className="error-text">{this.props.exchange.errors.rateError}</div>}
         </div>
       </div>
     )

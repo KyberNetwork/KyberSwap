@@ -7,23 +7,19 @@ const HeaderView = (props) => {
   let logoLink = props.account ? '/exchange' : ''
   return (
     <div>
-      <section id="header">
-        {/* <div className="notice">
-          <p><span><a href="https://youtu.be/0Ka5t1OeiJw" target="blank">Click here</a></span> to know more about Kyber Network 2.0</p>
-        </div> */}
+      {/* <section id="header">
         <div class="row small-11 medium-12 large-12">
           <div class="row column">
             <div class="column small-3">
               <Link to={logoLink} className="logo">
                 <img src={require("../../../assets/img/logo-header.svg")} />
-                {/* <span class="beta">Beta</span> */}
+                <span class="beta">Beta</span>
               </Link>
-            </div>
-            {props.infoMenu}
+            </div>          
             {props.address}
           </div>
         </div>
-      </section>
+      </section> */}
 
       <AnalyzeLogModal 
         analyze={props.analyze} 

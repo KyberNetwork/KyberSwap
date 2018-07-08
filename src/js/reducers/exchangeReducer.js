@@ -32,7 +32,7 @@ const exchange = (state = initState, action) => {
       newState.minConversionRate = newState.slippageRate
 
       newState.isEditRate = false
-      newState.isEditGasPrice = false
+      //newState.isEditGasPrice = false
 
       newState.isAnalize = false
       newState.isAnalizeComplete = false
@@ -150,7 +150,11 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.SET_BROADCAST_ERROR": {
       newState.broadcasting = false
-      newState.broadcastError = action.payload ? action.payload : "Cannot broadcast transaction to blockchain"
+      if (action.payload){
+        newState.broadcastError = action.payload
+      }else{
+        newState.broadcastError = "Cannot broadcast transaction to blockchain"
+      }
       newState.confirmApprove = false
       newState.isApproving = false
       newState.isConfirming = false
@@ -452,12 +456,18 @@ const exchange = (state = initState, action) => {
       newState.maxCap = action.payload.maxCap
       return newState
     }
-    case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
+    case "EXCHANGE.SET_GAS_PRICE_SWAP_COMPLETE": {
+
       if (!newState.isEditGasPrice) {
         var { safeLowGas, standardGas, fastGas, defaultGas } = action.payload
-        newState.gasPriceSuggest.fastGas = fastGas
-        newState.gasPriceSuggest.standardGas = standardGas
-        newState.gasPriceSuggest.safeLowGas = safeLowGas
+
+        var gasPriceSuggest = {...newState.gasPriceSuggest}
+        
+        gasPriceSuggest.fastGas = fastGas
+        gasPriceSuggest.standardGas = standardGas
+        gasPriceSuggest.safeLowGas = safeLowGas
+
+        newState.gasPriceSuggest = {...gasPriceSuggest}
         newState.gasPrice = defaultGas
       }
       return newState
@@ -474,14 +484,19 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.ANALYZE_ERROR": {
-      newState.isAnalize = true
+      const {txHash} = action.payload
+      if (txHash === newState.txHash){
+        newState.isAnalize = true
+      }
       return newState
     }
     case "EXCHANGE.SET_ANALYZE_ERROR": {
-      const { networkIssues, reserveIssues } = action.payload
-      newState.analizeError = { networkIssues, reserveIssues }
-      newState.isAnalize = false
-      newState.isAnalizeComplete = true
+      const { networkIssues, txHash } = action.payload
+      if (txHash === newState.txHash){
+        newState.analizeError = { ...networkIssues }
+        newState.isAnalize = false
+        newState.isAnalizeComplete = true
+      }
       return newState
     }
     // case "EXCHANGE.FETCH_GAS":{

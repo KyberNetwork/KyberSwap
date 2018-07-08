@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>LRC</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="IOS?-(for-Mike-Le)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-2-Copy" transform="translate(-97.000000, -73.000000)">
+            <g id="LRC" transform="translate(97.000000, 73.000000)">
+                <circle id="Oval-2" stroke="#2B70FA" fill="#FFFFFF" cx="14" cy="14" r="13.5"></circle>
+                <g transform="translate(4.500000, 3.500000)" fill="#2B70FA" fill-rule="nonzero" id="Shape">
+                    <path d="M9.55478781,0 C12.7129434,4.38648 15.8419478,8.79732 19,13.185585 C15.8505622,15.785175 12.7055695,18.38998 9.56502176,21 C6.37264962,18.398625 3.19423286,15.78339 0,13.185585 C3.195749,8.799035 6.38067827,4.40384 9.55478781,0 Z M3.94678999,12.6735 C5.33933079,13.800465 6.71481502,14.946645 8.11087051,16.068465 C8.11428183,13.019055 8.12451578,9.967965 8.10570185,6.916875 C6.73538629,8.84772 5.32568553,10.749165 3.94678999,12.6735 Z M11.0021164,6.96549 C10.9952249,9.99579 10.9952249,13.02721 11.0021164,16.05975 C12.3502067,14.91525 13.725691,13.805715 15.0789499,12.66825 C13.717111,10.768275 12.3518607,8.8725 11.0021164,6.96528 L11.0021164,6.96549 Z"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

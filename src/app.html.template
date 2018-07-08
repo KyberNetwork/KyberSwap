@@ -31,8 +31,12 @@
 
     <title>Kyber Network | instant Exchange | No Fees</title>
 
-    <link rel="shortcut icon" href="favicon.png" type="image/png">
-    <link rel="stylesheet" href="<%= htmlWebpackPlugin.options.styleFile %>">
+    <link rel="shortcut icon" href="favicon.png" type="image/png">    
+    <link rel="stylesheet" href="<%= htmlWebpackPlugin.options.otherFile %>">
+
+    <script src="trading_view/charting_library/charting_library.min.js"></script>
+		<script src="trading_view/datafeeds/udf/dist/polyfills.js"></script>
+		<script src="trading_view/datafeeds/udf/dist/bundle.js"></script>	
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-99578428-2"></script>
@@ -66,6 +70,6 @@
 
   </head>
   <body class="notranslate">
-    <div id="app"></div>
+    <div id="swap-app"></div>
   </body>
 </html>

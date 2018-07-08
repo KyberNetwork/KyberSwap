@@ -472,6 +472,13 @@ export function setMaxGasPriceComplete(maxGasPrice) {
   }
 }
 
+export function setGasPriceSwapComplete(safeLowGas, standardGas, defaultGas, fastGas) {
+  return {
+    type: "EXCHANGE.SET_GAS_PRICE_SWAP_COMPLETE",
+    payload: {safeLowGas, standardGas, defaultGas, fastGas}
+  }
+}
+
 export function analyzeError(ethereum, txHash) {
   return {
     type: "EXCHANGE.ANALYZE_ERROR",
@@ -479,10 +486,10 @@ export function analyzeError(ethereum, txHash) {
   }
 }
 
-export function setAnalyzeError(networkIssues, reserveIssues){
+export function setAnalyzeError(networkIssues, txHash){
   return {
     type: "EXCHANGE.SET_ANALYZE_ERROR",
-    payload: { networkIssues, reserveIssues }
+    payload: { networkIssues  , txHash}
   }
 }
 

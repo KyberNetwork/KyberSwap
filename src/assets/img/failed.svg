@@ -1,18 +1,19 @@
-<svg width="19" height="19" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<title>failed</title>
-<desc>Created using Figma</desc>
-<g id="Canvas" transform="translate(-644 1726)">
-<g id="failed">
-<g id="Vector">
-<use xlink:href="#path0_fill" transform="translate(648.5 -1721)" fill="#E50000"/>
-</g>
-<g id="Vector">
-<use xlink:href="#path1_fill" transform="translate(644 -1726)" fill="#E50000"/>
-</g>
-</g>
-</g>
-<defs>
-<path id="path0_fill" d="M 9.83252 8.12611L 5.75252 4.50011L 9.83252 0.874115C 10.0385 0.691115 10.0575 0.375115 9.87452 0.168115C 9.69152 -0.0388851 9.37552 -0.0568854 9.16852 0.126115L 5.00052 3.83112L 0.832516 0.126115C 0.626516 -0.0568854 0.310516 -0.0388851 0.126516 0.168115C -0.0574838 0.375115 -0.0384835 0.690115 0.168517 0.874115L 4.24852 4.50011L 0.168517 8.12611C -0.0374835 8.30911 -0.0564838 8.62511 0.126516 8.83211C 0.225516 8.94311 0.362516 9.00011 0.500516 9.00011C 0.618516 9.00011 0.737516 8.95811 0.832516 8.87411L 5.00052 5.16911L 9.16852 8.87411C 9.26352 8.95911 9.38252 9.00011 9.50052 9.00011C 9.63852 9.00011 9.77552 8.94311 9.87452 8.83211C 10.0575 8.62611 10.0395 8.31011 9.83252 8.12611Z"/>
-<path id="path1_fill" d="M 9.5 19C 6.962 19 4.577 18.012 2.782 16.218C 0.987 14.424 0 12.038 0 9.501C 0 6.963 0.988 4.578 2.782 2.783C 4.576 0.988 6.962 -1.33227e-15 9.5 -1.33227e-15C 12.038 -1.33227e-15 14.423 0.988 16.218 2.783C 18.013 4.578 19 6.963 19 9.501C 19 12.039 18.012 14.424 16.218 16.218C 14.424 18.012 12.038 19 9.5 19ZM 9.5 1C 4.813 1 1 4.813 1 9.5C 1 14.187 4.813 18 9.5 18C 14.187 18 18 14.187 18 9.5C 18 4.813 14.187 1 9.5 1Z"/>
-</defs>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="104px" height="102px" viewBox="0 0 104 102" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 3</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Desktop---Swap-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Swap--Failed" transform="translate(-748.000000, -225.000000)">
+            <g id="Group-3" transform="translate(749.000000, 226.000000)">
+                <ellipse id="Oval" stroke="#F1637D" stroke-width="2" fill="#FFFFFF" cx="51" cy="50" rx="51" ry="50"></ellipse>
+                <g id="baseline-done-24px" transform="translate(19.000000, 17.000000)">
+                    <polygon id="Shape" points="0 0 70 0 70 69 0 69"></polygon>
+                </g>
+                <polygon id="Path" fill="#F1637D" points="55.7154948 71.8333333 49 71.8333333 49 64.3713542 55.7154948 64.3713542"></polygon>
+                <polygon id="Path" fill="#F1637D" points="55.7154948 56.909375 49 56.909375 49 34.5234375 55.7154948 34.5234375"></polygon>
+            </g>
+        </g>
+    </g>
 </svg>

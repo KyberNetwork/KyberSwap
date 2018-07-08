@@ -1,6 +1,6 @@
 {
   "connections": {
-    "http": [
+    "http": [      
       {
         "endPoint" : "https://ropsten-cache.kyber.network",
         "type": "cached"
@@ -223,7 +223,7 @@
   },
   "ethScanUrl": "https://ropsten.etherscan.io/",
   "reserve": "0x0fc1cf3e7dd049f7b42e6823164a64f76fc06be0",
-  "network": "0x2a21728dF01992cCEE34ad8f9c32A0a2AE1e181b",
+  "network": "0x2a21728df01992ccee34ad8f9c32a0a2ae1e181b",
   "wrapper": "0x665d34f192f4940da4e859ff7768c0a80ed3ae10",
   "trade_topic":"0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
   "endpoint": "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",
@@ -235,5 +235,6 @@
     "url": "ropsten.etherscan.io",
     "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
   },
-  "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json"
+  "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
+  "tracker":"https://tracker.kyber.network"
 }

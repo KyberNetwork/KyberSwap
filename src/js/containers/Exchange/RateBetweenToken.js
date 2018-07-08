@@ -4,10 +4,18 @@ import { connect } from "react-redux"
 import { roundingNumber } from "../../utils/converter"
 import * as actions from "../../actions/exchangeActions"
 import { getTranslate } from 'react-localize-redux';
-import ReactTooltip from 'react-tooltip'
+import * as converter from '../../utils/converter'
+//import ReactTooltip from 'react-tooltip'
 
 @connect((store, props) => {
-  return {...props, translate: getTranslate(store.locale)}
+  var rateEthUsd = store.tokens.tokens.ETH.rateUSD
+  var sourceToken = props.exchangeRate.sourceToken
+  var tokens = store.tokens.tokens
+  var rateUSD = 0
+  if (tokens[sourceToken]){
+    rateUSD = tokens[sourceToken].rateUSD
+  }
+  return {...props, translate: getTranslate(store.locale), rateEthUsd, rateUSD}
 })
 
 export default class RateBetweenToken extends React.Component {
@@ -20,14 +28,15 @@ export default class RateBetweenToken extends React.Component {
   render = () => {
     var tokenRate = this.props.isSelectToken ? <img src={require('../../../assets/img/waiting-white.svg')} /> : roundingNumber(this.props.exchangeRate.rate)
     return (
-      <div class="token-compare">
-        <span>
+      <div class="token-compare grid-x">
+        <div className="cell large-5">
           1 {this.props.exchangeRate.sourceToken} = {tokenRate} {this.props.exchangeRate.destToken}
-        </span>
-        <span className="k k-info k-2x ml-3" data-tip data-for='rate-notice-tip'></span>
-        <ReactTooltip id='rate-notice-tip' place="right" type='light' effect='solid' data-multiline={true} data-html={true}>
-          {this.props.translate("transaction.rate_info") || "Rates might be changed during settlement.<br> You can indicate your minimum rate by clicking \"Advanced\""}
-        </ReactTooltip>
+        </div>
+        <div className="cell large-2 seperator">|</div>
+        <div className="cell large-5">
+
+          1 {this.props.exchangeRate.sourceToken} = {converter.roundingNumber(this.props.rateUSD)} USD
+        </div>
       </div>
     )
   }

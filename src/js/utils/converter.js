@@ -104,6 +104,23 @@ export function shortEthBalance(tokens){
   return shortedTokens
 }
 
+export function shortASCEthBalance(tokens){
+  var shortedTokens = []
+  let removedEth = {...tokens}
+  delete removedEth[constants.ETH.symbol]
+  if(tokens){
+    shortedTokens = Object.values(removedEth).sort((a, b) => {
+      var balanceEthA = new BigNumber(caculateEthBalance(a)) 
+      var balanceEthB = new BigNumber(caculateEthBalance(b)) 
+      return balanceEthA.minus(balanceEthB)
+    })
+  } 
+  if(tokens[constants.ETH.symbol]){
+    shortedTokens.unshift(tokens[constants.ETH.symbol])
+  }
+  return shortedTokens
+}
+
 
 
 function acceptableTyping(number) {
@@ -194,6 +211,25 @@ export function toT(number, decimal, round) {
     return result.toFixed(round)
   } else {
     return result.toString()
+  }
+}
+
+export function convertSellRate(rate){
+  var bigNumber = new BigNumber(rate.toString())
+  var  result = bigNumber.div(Math.pow(10, 18));
+  return result.toString()
+}
+
+export function convertBuyRate(rate){
+  var bigNumber = new BigNumber(rate.toString())
+  var  result = bigNumber.div(Math.pow(10, 18));
+  var zero = new BigNumber(0)
+  if (result.comparedTo(zero) !== 0){
+    var oneNumber = new BigNumber(1)
+    result = oneNumber.div(result)
+    return result.toString()
+  }else{
+    return 0
   }
 }
 
@@ -416,3 +452,36 @@ export function sliceErrorMsg(err){
   return err
 }
 
+
+
+export function calculatePercent(numerator, denumerator){
+  if (denumerator === 0) return 0
+  var percent =  ((numerator / denumerator) - 1) * 100
+  var roundPercent = Math.round(percent * 10) / 10
+  return roundPercent
+}
+
+export function formatNumber(number) {
+  var format = {
+    decimalSeparator: '.',
+    groupSeparator: ',',
+    groupSize: 3,
+  }
+  BigNumber.config({ FORMAT: format })
+  var numberFormat = new BigNumber(number.toString())
+  return numberFormat.toFormat()
+}
+
+export function caculatorPercentageToRate(number,total){
+  if(new BigNumber(total)!==0){
+    return (new BigNumber(number)/new BigNumber(total))*100000000000000000000
+  }
+  return 0;
+}
+
+export function caculatorRateToPercentage(number,total){
+  if(new BigNumber(total)!==0){
+    return (new BigNumber(number)*new BigNumber(total))/100000000000000000000
+  }
+  return 0;
+}

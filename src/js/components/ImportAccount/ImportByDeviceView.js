@@ -2,14 +2,17 @@ import React from "react";
 import { SelectAddressModal } from "../ImportAccount";
 import { roundingNumber } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
+import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
+import PathSelector from "../../containers/CommonElements/PathSelector";
 
 const ImportByDeviceView = (props) => {
 
     function choosePath(dpath) {
-        let formPath = document.getElementById('formPath'),
+        let inputPath = document.getElementById('form-input-custom-path'),
             selectedPath = dpath;
         if (!dpath) {
-            selectedPath = formPath.customPath.value;
+            console.log("inputpath: ", inputPath.value)
+            selectedPath = inputPath.value;
         }
         props.choosePath(selectedPath, dpath);
     }
@@ -29,19 +32,26 @@ const ImportByDeviceView = (props) => {
         let currentListHtml = props.currentAddresses.map((address, index) => {
             return (
                 <li key={address.addressString} onClick={() => getAddress(address)}>
-                    <a class="name text-lowercase">
-                        <label class="mb-0">
-                            <span class="hash">{address.addressString}</span>
-                        </label>
-                    </a>
-                    <div class="info">
-                        <a class="link has-tip top explore" title={address.balance}>
-                            {address.balance == '-1' ?
-                                <img src={require('../../../assets/img/waiting-white.svg')} />
-                                : roundingNumber(address.balance)
-                            } ETH
-                        </a>
-                        <a class="import">Import</a>
+                    <div className="grid-x">
+                        <div className="cell medium-6 small-12">
+                            <a class="name text-lowercase">
+                                <label class="mb-0">
+                                    <span class="hash">{address.addressString}</span>
+                                </label>
+                            </a>
+                        </div>
+                        <div class="info cell medium-6 small-12">
+                            <a class="link has-tip top explore" title={address.balance}>
+                                {address.balance == '-1' ?
+                                    <img src={require('../../../assets/img/waiting-white.svg')} />
+                                    : roundingNumber(address.balance)
+                                } ETH
+                            </a>
+                            <a class="import">
+                                {props.translate("import.import") || "Import"}
+                                <img src={require('../../../assets/img/import-account/arrow_right_orange.svg')}/>
+                            </a>
+                        </div>
                     </div>
                 </li>
             )
@@ -50,61 +60,29 @@ const ImportByDeviceView = (props) => {
     }
 
     function getListPathHtml() {
-        let listPath = props.dPath.map((dPath, index) => {
-            let disabledPath = (props.walletType == 'ledger' && dPath.notSupport) ? true : false;
-            let active = (props.currentDPath == dPath.path) ? 'active' : ''
-            return (
-                <div class="column" key={dPath.path}>
-                    <input type="radio" name="path"
-                        defaultValue={dPath.path}
-                        disabled={disabledPath}
-                    />
-                    <label class={'address-path-stamp ' + active}
-                        onClick={() => {
-                            if (dPath.path && !disabledPath) choosePath(dPath.path)
-                        }}
-                        for={'path-' + index}
-                        style={disabledPath ? { opacity: .5 } : {}}>
-                        {
-                            dPath.path ? (
-                                <div>
-                                    <div class="name">{dPath.path}</div>
-                                    <div class="note">{dPath.desc}</div>
-                                </div>
-                            ) : (
-                                <div>
-                                    <div class="name">{dPath.desc}</div>
-                                    <div class="address-path-input">
-                                        <input type="text" name="customPath" defaultValue={dPath.defaultP} />
-                                        <a class="submit"
-                                            style={{ display: 'block' }}
-                                            onClick={() => choosePath(dPath.path)}
-                                        ></a>
-                                    </div>
-                                </div>
-                            )
-                        }
-                    </label>
-                </div>
-            )
-        })
-        return listPath;
+        return (<PathSelector
+            listItem = {props.dPath}
+            choosePath = {choosePath}
+            walletType = {props.walletType}
+            currentDPath = {props.currentDPath}
+        />)
     }
 
     function getSelectAddressHtml() {
         return (
             <div>
                 <div class="content">
-                    <div class="row">
-                        <div class="column">
-                            <div class="block-title">
-                                {props.translate("modal.select_hd_path") || "Select HD derivation path"}
-                            </div>
-                            <form id="formPath" onSubmit={(e) => e.preventDefault()}>
-                                <div class="row small-up-2 medium-up-3 large-up-3 address-paths gutter-15">
+                    <div className="top-wrapper">
+                        <div class="title">{props.translate(`modal.select_${props.walletType}_address`) || 'Select address'}</div><a class="x" onClick={props.onRequestClose}>&times;</a>
+                        <div class="row">
+                            <div class="column">
+                                <div class="block-title">
+                                    {props.translate("modal.select_hd_path") || "Select HD derivation path"}
+                                </div>
+                                <div className="block-choose-path">
                                     {getListPathHtml()}
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -119,12 +97,12 @@ const ImportByDeviceView = (props) => {
                             </ul>
                             <div class="address-list-navigation animated fadeIn">
                                 <a class={'previous ' + (props.isFirstList ? 'disabled' : '')} onClick={props.getPreAddress}>
-                                    <i className="k k-angle left mr-2"></i>
-                                    {props.translate("modal.previous_addresses") || "Previous Addresses"}
+                                    <img src={require('../../../assets/img/import-account/arrows_left_icon.svg')} />
+                                    <span>{props.translate("modal.previous_addresses") || "Previous Addresses"}</span>
                                 </a>
                                 <a class="next" onClick={props.getMoreAddress}>
-                                    {props.translate("modal.more_addresses") || "More Addresses"}
-                                    <i className="k k-angle right ml-2"></i>
+                                    <span>{props.translate("modal.more_addresses") || "More Addresses"}</span>
+                                    <img src={require('../../../assets/img/import-account/arrows_right_icon.svg')} />
                                 </a>
                             </div>
                         </div>

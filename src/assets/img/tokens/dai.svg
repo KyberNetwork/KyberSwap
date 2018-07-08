@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
     <title>dai</title>
     <desc>Created with Sketch.</desc>
     <defs>
-        <circle id="path-1" cx="14" cy="14" r="14"></circle>
+        <circle id="path-1" cx="13.9672627" cy="13.9672627" r="13.5"></circle>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="dai" transform="translate(1.000000, 1.000000)">
-            <circle id="Oval" stroke="#FEAE16" stroke-width="1" stroke-linecap="square" cx="14" cy="14" r="14.5"></circle>
-            <g id="Oval" stroke-linecap="square">
+        <g id="dai">
+            <circle id="Oval" stroke="#FEAE16" cx="13.9672627" cy="13.9672627" r="13"></circle>
+            <g id="Oval-Copy">
                 <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
-                <circle stroke="#FEAE16" stroke-width="0.5" cx="14" cy="14" r="14.25"></circle>
+                <circle stroke="#FEAE16" stroke-width="1" cx="13.9672627" cy="13.9672627" r="13"></circle>
             </g>
-            <g id="DAI" stroke-width="1" fill-rule="evenodd" transform="translate(4.000000, 4.000000)">
-                <rect id="Rectangle-path" fill="#FDC526" fill-rule="nonzero" transform="translate(10.052862, 10.054348) rotate(-45.000000) translate(-10.052862, -10.054348) " x="3.09633993" y="3.09782609" width="13.9130435" height="13.9130435"></rect>
-                <polygon id="Shape" fill="#FEAE16" fill-rule="nonzero" points="10.0565217 0.217391304 0.217391304 10.0565217 10.1195652 13.5347826 19.8934783 10.0565217"></polygon>
-                <polygon id="Shape" fill="#231F20" fill-rule="nonzero" opacity="0.2" points="19.9565217 10.0565217 10.1195652 19.8934783 10.1195652 0.217391304"></polygon>
-                <polygon id="Shape" fill="#FEFEFE" fill-rule="nonzero" points="10.1217391 2.56086957 3.59782609 9.40434783 8.06956522 9.40434783 10.1195652 7.44782609 12.2847826 9.40434783 16.8586957 9.40434783"></polygon>
+            <g id="DAI" transform="translate(4.967263, 4.967263)" fill-rule="nonzero">
+                <rect id="Rectangle-path" fill="#FDC526" transform="translate(9.047575, 9.048913) rotate(-45.000000) translate(-9.047575, -9.048913) " x="2.78670592" y="2.78804373" width="12.5217392" height="12.5217392"></rect>
+                <polygon id="Shape" fill="#FEAE16" points="9.05086953 0.195652174 0.195652174 9.05086953 9.10760868 12.1813043 17.9041305 9.05086953"></polygon>
+                <polygon id="Shape" fill="#231F20" opacity="0.2" points="17.9608695 9.05086953 9.10760868 17.9041305 9.10760868 0.195652174"></polygon>
+                <polygon id="Shape" fill="#FEFEFE" points="9.10956519 2.30478261 3.23804348 8.46391305 7.2626087 8.46391305 9.10760868 6.70304348 11.0563043 8.46391305 15.1728261 8.46391305"></polygon>
             </g>
         </g>
     </g>

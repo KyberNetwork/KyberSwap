@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>wing</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="IOS?-(for-Mike-Le)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-2-Copy" transform="translate(-152.000000, -173.000000)">
+            <g id="wing" transform="translate(152.000000, 173.000000)">
+                <circle id="Oval-2" stroke="#0DC9F7" fill="#FFFFFF" cx="14" cy="14" r="13.5"></circle>
+                <g id="wings" transform="translate(3.000000, 7.000000)" fill-rule="nonzero">
+                    <polyline id="Shape" fill="#030819" points="11.7495956 11.7530088 15.9995465 10.0517841 11.7495956 3.50762776 1 3 9.19082677 5.01675991 11.3677304 12 16 10.0517841"></polyline>
+                    <polyline id="Shape" fill="#93F2FF" points="3 16 20.4850538 3 22 6.22986544 20.0124702 5.70287642 19.9429222 9.05422648"></polyline>
+                    <polygon id="Shape" fill="#0DC9F7" points="18 9.6205286 12.9127313 0.677910813 0 0 9.8409302 2.69674167 12.5093591 12"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

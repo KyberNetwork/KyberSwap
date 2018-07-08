@@ -1,26 +1,31 @@
-<svg width="28" height="28" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<title>adx</title>
-<desc>Created using Figma</desc>
-<g id="Canvas" transform="translate(-861 35)">
-<g id="adx">
-<g id="bg">
-<use xlink:href="#path0_fill" transform="translate(861 -35)" fill="#E1F0FC"/>
-</g>
-<g id="Vector">
-<use xlink:href="#path1_fill" transform="translate(868 -27.7598)" fill="#1B75BC"/>
-</g>
-<g id="Vector">
-<use xlink:href="#path2_fill" transform="translate(870.867 -32)" fill="#3C3C3B"/>
-</g>
-<g id="Vector">
-<use xlink:href="#path3_fill" transform="translate(870.867 -16.0701)" fill="#3C3C3B"/>
-</g>
-</g>
-</g>
-<defs>
-<path id="path0_fill" d="M 14 28C 21.732 28 28 21.732 28 14C 28 6.26801 21.732 0 14 0C 6.26801 0 0 6.26801 0 14C 0 21.732 6.26801 28 14 28Z"/>
-<path id="path1_fill" d="M 14 10.9795L 9.59351 6.73247L 14 2.49224L 11.4029 -1.04188e-07L 6.99645 4.24022L 2.58996 -1.04188e-07L 0 2.49224L 4.40649 6.73247L 0 10.9795L 2.58996 13.4718L 6.99645 9.23153L 11.4029 13.4718L 14 10.9795Z"/>
-<path id="path2_fill" d="M 8.2666 3.97393L 6.30816 2.08939L 4.12975 0L 1.95844 2.08939L 1.08273e-07 3.97393L 2.17841 6.07014L 4.12975 4.1856L 6.08819 6.07014L 8.2666 3.97393Z"/>
-<path id="path3_fill" d="M 1.08273e-07 2.09621L 1.95844 3.98076L 4.12975 6.07014L 6.30816 3.98076L 8.2666 2.09621L 6.08819 2.08376e-07L 4.12975 1.88454L 2.17841 2.08376e-07L 1.08273e-07 2.09621Z"/>
-</defs>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>adx</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="adx" fill-rule="nonzero">
+            <g id="bg" fill="#E1F0FC">
+                <g id="path0_fill-link">
+                    <path d="M14,28 C21.732,28 28,21.732 28,14 C28,6.26801 21.732,0 14,0 C6.26801,0 0,6.26801 0,14 C0,21.732 6.26801,28 14,28 Z" id="path0_fill"></path>
+                </g>
+            </g>
+            <g id="Vector" transform="translate(7.000000, 7.000000)" fill="#1B75BC">
+                <g id="path1_fill-link" transform="translate(0.000000, 0.240200)">
+                    <polygon id="path1_fill" points="14 10.9795 9.59351 6.73247 14 2.49224 11.4029 -1.04188e-07 6.99645 4.24022 2.58996 -1.04188e-07 0 2.49224 4.40649 6.73247 0 10.9795 2.58996 13.4718 6.99645 9.23153 11.4029 13.4718"></polygon>
+                </g>
+            </g>
+            <g id="Vector" transform="translate(9.000000, 3.000000)" fill="#3C3C3B">
+                <g id="path2_fill-link" transform="translate(0.867000, 0.000000)">
+                    <polygon id="path2_fill" points="8.2666 3.97393 6.30816 2.08939 4.12975 0 1.95844 2.08939 1.08273e-07 3.97393 2.17841 6.07014 4.12975 4.1856 6.08819 6.07014"></polygon>
+                </g>
+            </g>
+            <g id="Vector" transform="translate(9.000000, 18.000000)" fill="#3C3C3B">
+                <g id="path3_fill-link" transform="translate(0.867000, 0.929900)">
+                    <polygon id="path3_fill" points="1.08273e-07 2.09621 1.95844 3.98076 4.12975 6.07014 6.30816 3.98076 8.2666 2.09621 6.08819 2.08376e-07 4.12975 1.88454 2.17841 2.08376e-07"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
 </svg>

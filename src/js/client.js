@@ -43,14 +43,14 @@ Modal.setAppElement('body');
 if (illegal) {
   ReactDOM.render(
     <NotSupportPage client={clientPlatform} />
-    , document.getElementById("app"));
+    , document.getElementById("swap-app"));
 } else {
   ReactDOM.render(
     <PersistGate persistor={persistor}>
       <Provider store={store}>
         <Layout />
       </Provider>
-    </PersistGate>, document.getElementById("app"));
+    </PersistGate>, document.getElementById("swap-app"));
 }
 
 

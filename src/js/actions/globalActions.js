@@ -35,10 +35,10 @@ export function updateAllRate(ethereum, tokens) {
   }
 }
 
-export function updateAllRateComplete(rates) {
+export function updateAllRateComplete(rates,rateUSD) {
   return {
     type: 'GLOBAL.ALL_RATE_UPDATED_FULFILLED',
-    payload: { rates }
+    payload: { rates, rateUSD}
   }
 }
 
@@ -108,19 +108,19 @@ export function goToRoute(route) {
 }
 
 
-export function updateHistoryExchange(ethereum, page, itemPerPage, isAutoFetch) {
-  return {
-    type: "GLOBAL.UPDATE_HISTORY_EXCHANGE",
-    payload: { ethereum, page, itemPerPage, isAutoFetch }
-  }
-}
+// export function updateHistoryExchange(ethereum, page, itemPerPage, isAutoFetch) {
+//   return {
+//     type: "GLOBAL.UPDATE_HISTORY_EXCHANGE",
+//     payload: { ethereum, page, itemPerPage, isAutoFetch }
+//   }
+// }
 
-export function updateHistory(logs, latestBlock, page, eventsCount, isAutoFetch) {
-  return {
-    type: "GLOBAL.UPDATE_HISTORY",
-    payload: { logs, latestBlock, page, eventsCount, isAutoFetch }
-  }
-}
+// export function updateHistory(logs, latestBlock, page, eventsCount, isAutoFetch) {
+//   return {
+//     type: "GLOBAL.UPDATE_HISTORY",
+//     payload: { logs, latestBlock, page, eventsCount, isAutoFetch }
+//   }
+// }
 
 export function checkConnection(ethereum, count, maxCount, isCheck) {
   return {
@@ -148,13 +148,6 @@ export function setGasPrice(ethereum){
   return {
     type: "GLOBAL.SET_GAS_PRICE",
     payload: ethereum
-  }
-}
-
-export function setGasPriceComplete(suggestGasData){
-  return {
-    type: "GLOBAL.SET_GAS_PRICE_COMPLETE",
-    payload: suggestGasData
   }
 }
 
@@ -188,5 +181,34 @@ export function setAnalyzeError(networkIssues, reserveIssues, txHash){
   return {
     type: "GLOBAL.SET_ANALYZE_ERROR",
     payload: { networkIssues, reserveIssues, txHash }
+  }
+}
+
+
+export function throwErrorMematamask(err){
+  return {
+    type: "GLOBAL.THROW_ERROR_METAMASK",
+    payload: { err }
+  }
+}
+
+export function updateMetamaskAccount(address, balance){
+  return {
+    type: "GLOBAL.UPDATE_METAMASK_ACCOUNT",
+    payload: { address, balance }
+  }
+}
+
+export function setNotiHandler(notiService) {
+  return {
+    type: "GLOBAL.SET_NOTI_HANDLER",
+    payload: { notiService }
+  }
+}
+
+export function setMaxGasPrice(ethereum) {
+  return {
+    type: "GLOBAL.SET_MAX_GAS_PRICE",
+    payload: { ethereum }
   }
 }

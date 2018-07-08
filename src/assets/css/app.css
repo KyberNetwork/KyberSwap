@@ -63,7 +63,7 @@ span.error-text {
 .error + span.error-text,
 .error span.error-text {
   color: #ff5d00;
-  font-size: 12px;
+  font-size: 14px;
   font-style: italic;
   font-weight: normal;
   display: block;

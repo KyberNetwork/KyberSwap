@@ -286,3 +286,10 @@ export function setSnapshot(data){
     payload: data
   }
 }
+
+export function setGasPriceTransferComplete(safeLowGas, standardGas, defaultGas, fastGas){
+  return {
+    type: "TRANSFER.SET_GAS_PRICE_TRANSFER_COMPLETE",
+    payload: {safeLowGas, standardGas, defaultGas, fastGas}
+  }
+}

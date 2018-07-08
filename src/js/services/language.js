@@ -10,27 +10,62 @@ const onMissingTranslation = (key, languageCode) => {
   // console.log(languageCode)
 };
 
-export function initLanguage(store){
-  const defaultLanguagePack = require("../../../lang/" + Language.defaultLanguage + ".json")
-  const arrayLangInit = Language.loadAll? Language.supportLanguage : Language.defaultAndActive 
 
-  store.dispatch(initialize(arrayLangInit, { 
+
+function getParameterByName(name, url) {
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+export function initLanguage(store){
+  // const defaultLanguagePack = require("../../../lang/" + Language.defaultLanguage + ".json")
+  // const arrayLangInit = Language.loadAll? Language.supportLanguage : Language.defaultAndActive 
+
+  // store.dispatch(initialize(arrayLangInit, { 
+  //   missingTranslationCallback: onMissingTranslation, 
+  //   showMissingTranslationMsg: false,
+  //   defaultLanguage: Language.defaultLanguage
+  // }));
+  // store.dispatch(addTranslationForLanguage(defaultLanguagePack, Language.defaultLanguage));
+
+  // if(Language.loadAll){
+  //   Language.otherLang.map((langName) => {
+  //     try{
+  //       let langData = require("../../../lang/" + langName + ".json")
+  //       store.dispatch(addTranslationForLanguage(langData, langName));
+  //     }catch(err){
+  //       console.log(err)
+  //     }
+  //   })
+  // }
+
+  let languagePack, packName
+  try {
+    packName = getParameterByName('lang')
+    if (packName){
+      languagePack = require("../../../lang/" + packName + ".json")
+    }else{
+      packName = Language.defaultLanguage
+      languagePack = require("../../../lang/" + packName + ".json")  
+    }
+  } catch (e) {
+    console.log(e)
+    packName = Language.defaultLanguage
+    languagePack = require("../../../lang/" + packName + ".json")
+  }
+  console.log("________________ load loanguage ", packName)
+  store.dispatch(initialize([packName], { 
     missingTranslationCallback: onMissingTranslation, 
     showMissingTranslationMsg: false,
-    defaultLanguage: Language.defaultLanguage
+    defaultLanguage: packName
   }));
-  store.dispatch(addTranslationForLanguage(defaultLanguagePack, Language.defaultLanguage));
+  store.dispatch(addTranslationForLanguage(languagePack, packName));
 
-  if(Language.loadAll){
-    Language.otherLang.map((langName) => {
-      try{
-        let langData = require("../../../lang/" + langName + ".json")
-        store.dispatch(addTranslationForLanguage(langData, langName));
-      }catch(err){
-        console.log(err)
-      }
-    })
-  }
 }
 
 export function getLanguage(key){

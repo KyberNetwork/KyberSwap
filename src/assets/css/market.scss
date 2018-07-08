@@ -1,0 +1,461 @@
+.market {
+  margin-top: 30px;
+  @include screen-min-width(large){
+    margin-bottom: 80px;
+  }
+  &__title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  &__header {
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+
+    &-left {
+      width: 90%;
+      display: flex;
+
+      .focus-item {
+        padding: 13px 15px;
+        border: 1px solid #EAEAEA;
+        
+        div:first-child {
+          color: #7A7A7A;
+        }
+      }
+
+      .header-label {
+        font-size: 12px;
+        color: $base-color;
+        text-transform: uppercase;
+        padding-bottom: 5px;
+      }
+
+      .search-input {
+        padding: 24px 15px;
+        width: 100%;
+        font-size: 14px;
+        background-position: 98%;
+        border: 1px solid #EAEAEA;
+        text-indent: 0;
+        box-shadow: none;
+
+        &::placeholder {
+          color: #7A7A7A;
+        }
+      }
+    }
+
+    &-search {
+      width: 100%;
+      max-width: 300px;
+      margin-right: 20px;
+    }
+
+    &-currency {
+      width: 100%;
+      max-width: 200px;
+      .token-selector {
+        .dropdown {
+          .focus-item {
+            img {
+              content: url(../img/exchange/arrow-down-swap.svg);
+              transition: 0.3s;
+            }
+          }
+          .dropdown__content {
+            .select-item {
+              padding: 10px 0 12px;
+              box-shadow: none;
+              border: 1px solid #eee;
+              border-bottom-left-radius: 4px;
+              border-bottom-right-radius: 4px;
+            }
+          }
+          &.dropdown--active {
+            .focus-item {
+              img {
+                transform: rotate(180deg);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &-right {
+      width: 10%;
+      display: flex;
+      justify-content: flex-end;
+
+      > div {
+        margin-top: 23px
+      }
+
+      .token-selector {
+        .dropdown {
+          &.dropdown--active {
+            .focus-item {
+              img {
+                @include rotate-icon(90deg);
+                transition: 0.3s;
+              }
+            }
+          }
+          &.dropdown {
+            img {
+              transition: 0.3s;
+            }
+          }
+        }
+        .d-flex {
+          padding: 0;
+          width: 50px;
+          height: 50px;
+          border: 1px solid #EAEAEA;
+          border-radius: 2px;
+          background-color: #F5F5F5;
+          justify-content: center;
+        }
+
+        .dropdown__content {
+          .select-item {
+            right: 0;
+            width: 325px;            
+            border-radius: 0;
+            box-shadow: 0 15px 50px #aaa;
+
+            .setting-header {
+              img {
+                height: 25px;
+                margin: 30px 12px 30px 30px;
+              }
+              span {
+                text-transform: uppercase;
+                font-size: 15px;
+              }
+            }
+
+            .list-setting {
+              padding: 30px 50px 20px;
+              border-top: 1px solid #ccc;
+
+              .show-item {
+                label {
+                  font-size: 14px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    @include screen-max-width(medium) {
+      display: flex;
+      flex-direction: column-reverse;
+
+      &-left {
+        width: 100%;
+      }
+
+      &-search {
+        max-width: 50%;
+      }
+
+      &-currency {
+        max-width: 50%;
+      }
+
+      &-right {
+        width: 100%;
+      }
+    }
+
+    @include screen-max-width(mid-small) {
+      &-left {
+        flex-wrap: wrap;
+      }
+
+      &-search {
+        max-width: 100%;
+        margin-right: 0;
+      }
+
+      &-currency {
+        max-width: 100%;
+      }
+
+      &-right {
+        > div {
+          margin-top: 15px
+        }
+      }
+    }
+  }
+
+  .market-table {
+    background-color: #F9F8FB;
+    margin-bottom: 50px;
+    box-shadow: 0 0 5px #bbb;
+    padding: 15px 20px;
+    color: #666666;
+    .symbol-price{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      span{
+        width: auto !important;
+        padding: 0px !important;
+        &:first-child{
+          margin-right: 5px;
+        }
+      }
+    }
+    .ReactTable {
+      border: none;
+      overflow: visible;
+      .rt-table {
+        .rt-thead {
+          &.-header {
+            box-shadow: none;
+            border-bottom: 2px solid #ef8102;
+            padding: 10px 0;
+            margin: 0 8px 15px;
+            .rt-th-img {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              img {
+                padding-right: 10px;
+                height: 20px;
+                width: 20px;
+              }
+            }
+          }
+        }
+      }
+      .rt-tbody {
+        overflow: unset;
+        .rt-tr-group {
+          border-bottom: none;
+          &:first-child {
+            .rt-rt {
+              margin-top: 25px;
+            }
+          }
+          .rt-tr {
+            margin: 10px 0px;
+            height: 75px;
+            background-color: $white;
+            border: 1px solid #eee;
+            box-shadow: 0 2px 5px #eee;
+            &:hover {
+              box-shadow: 0 3px 18px #bbb;
+              cursor: pointer;
+            }
+            .rt-td {
+              padding-top: 5px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              span {
+                padding: 2px 25px;
+                width: 85px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                &.negative {
+                  background-color: #F6EAEC;
+                  color: #EB7576;
+                  font-weight: bold;
+                }
+                &.positive {
+                  background-color: #EDFBF6;
+                  color: #1FDCAB;
+                  font-weight: bold;
+                }
+                &.zero-value {
+                  background: #eee;
+                  color: #767677;
+                  font-weight: bold;
+                }
+                img {
+                  padding: 3px;
+                }
+              }
+              div.token-pair {
+                width: 150px;
+                text-align: left;
+                padding-left: 10px;
+                img {
+                  margin-right: 10px;
+                  width: 24px;
+                  height: 24px;
+                  position: relative;
+                  top: -2px;
+                }
+              }
+            }
+            // .rt-td:nth-child(1), .rt-td:nth-child(3) {
+            //   font-weight: 500;
+            // }
+          }
+        }
+      }
+      .rt-noData {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+    }
+    .rt-th {
+      outline: none;
+      border-right: none;
+      padding: 10px;
+      &.-sort-asc {
+        box-shadow: none;
+        .rt-th-img {
+          font-weight: bold;
+          img {
+            content:url(../img/landing/sort-active-asc.svg);
+          }
+        }
+      }
+      &.-sort-desc {
+        box-shadow: none;
+        .rt-th-img {
+          img {
+            content:url(../img/landing/sort-active.svg);
+          }
+        }
+      }
+    }
+    .rt-td {
+      padding-top: 35px;
+      text-align: center;
+      border: none;
+    }
+    .pagination-bottom > div {
+      height: 100px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      .-btn {
+        margin: auto;
+        width: 50%;
+        background: #ef8102;
+        color: $white;
+        &:hover {
+          background: #ef8102;
+          color: $white;
+          box-shadow: 0px 0px 5px #eee;
+        }
+      }
+      @include breakpoint(small only) {
+        font-size: 13px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        .-next, .-previous {
+          margin: 0 10px;
+        }
+        .select-wrap {
+          display: none;
+        }
+      }
+    }
+    .-center {
+      .-pageJump {
+        input {
+          margin-bottom: 0;
+        }
+      }
+      .select-wrap {
+        select {
+          margin-bottom: 0;
+        }
+      }
+    }
+    @media only screen and (max-width: 1023px) {
+      padding: 0 0 0 0;
+    }
+  }
+
+  .column-label{
+    // display: block;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #666666;
+    text-transform: uppercase;
+    input {
+      position: absolute;
+      opacity: 0;
+      display: none;
+    }
+    /* Create a custom checkbox */
+    .checkmark {
+      margin: 5px 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      border: 2px solid #eee;
+    }
+  
+    /* On mouse-over, add a grey background color */
+    &:hover input ~ .checkmark {
+      border-color: #F08400;
+    }
+  
+    /* When the checkbox is checked, add a blue background */
+    & input:checked ~ .checkmark {
+      background-color: #F08400;
+      border-color: #F08400;
+    }
+
+    .item-title {
+      color: #F08400;
+    }
+  
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+  
+    /* Show the checkmark when checked */
+    & input:checked ~ .checkmark:after {
+      display: block;
+    }
+  
+    /* Style the checkmark/indicator */
+    & .checkmark:after {
+      left: 6px;
+      top: 2px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+  }
+  @media only screen and (max-width: 1296px) {
+    max-width: 60rem;
+  }
+}
