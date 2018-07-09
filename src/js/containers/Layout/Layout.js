@@ -5,12 +5,13 @@ import { ConnectedRouter } from 'react-router-redux'
 import InfoKyber from "../../components/InfoKyber"
 import { Exchange } from "../../containers/Exchange"
 import { Transfer } from "../../containers/Transfer"
-import { Header, Rate } from "../../containers/Header"
+import { Header } from "../../containers/Header"
 import { ImportAccount } from "../ImportAccount"
 
-import { Footer } from "../Layout"
+//import { Footer } from "../Layout"
 
-import { Processing, ExchangeHistory, TransactionList } from "../../containers/CommonElements/"
+import { Processing, ExchangeHistory } from "../../containers/CommonElements/"
+import {Market} from "../Market"
 import constanst from "../../services/constants"
 // import { createNewConnection } from "../../services/ethereum/connection"
 
@@ -21,10 +22,13 @@ import { setConnection, createNewConnectionInstance } from "../../actions/connec
 import { default as _ } from 'underscore';
 import { LayoutView } from "../../components/Layout"
 import { getTranslate } from 'react-localize-redux'
+import * as common from "../../utils/common"
 
 import Language from "../../../../lang"
 
 @connect((store) => {
+
+
   return {
     ethereumNode: store.connection.ethereum,
     currentBlock: store.global.currentBlock,
@@ -46,6 +50,7 @@ export default class Layout extends React.Component {
     this.idleMode = false;
     this.intervalIdle = null;
   }
+
   componentWillMount() {
     document.onload = this.resetTimmer;
     document.onmousemove = this.resetTimmer;
@@ -90,21 +95,24 @@ export default class Layout extends React.Component {
   }
 
   render() {
-    var exchangeHistory = <TransactionList />
-    var footer = <Footer />
-    var rate = <Rate />
+
+    var currentLanguage = common.getActiveLanguage(this.props.locale.languages)
+   // var exchangeHistory = <TransactionList />
+    var market = <Market />
+    //var footer = <Footer />
+   // var rate = <Rate />
     return (
       <LayoutView
         history={history}
         Header={Header}
-        ImportAccount={ImportAccount}
+        // ImportAccount={ImportAccount}
         Exchange={Exchange}
         Transfer={Transfer}
-        exchangeHistory={exchangeHistory}
+        market={market}
         supportedLanguages={Language.supportLanguage}
-        setActiveLanguage={this.setActiveLanguage}
-        rate={rate}
-        footer = {footer}
+        setActiveLanguage={this.setActiveLanguage}      
+        currentLanguage = {currentLanguage}  
+       // footer = {footer}
       />
     )
   }

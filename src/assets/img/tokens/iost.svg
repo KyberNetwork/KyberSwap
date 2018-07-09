@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
-    <title>iost</title>
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>iost copy</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Desktop" transform="translate(-370.000000, -390.000000)">
-            <g id="iost" transform="translate(368.000000, 390.000000)">
-                <g id="logo">
-                    <rect id="bound" x="0" y="0" width="28" height="28"></rect>
-                    <g id="iost-shape" transform="translate(2.057692, 0.500000)" fill-rule="nonzero">
-                        <polygon id="Shape" fill="#FFFFFF" points="24 6.75 12 0 0 6.75 0 20.25 12 27 24 20.25"></polygon>
-                        <polygon id="Shape" fill="#0A0A08" points="11.5068202 21.6 2.66666667 16.4453777 2.70197815 13.9400292 11.5011908 19.0888945 15.7426631 16.5851162 3.00647574 9.06488385 11.5017026 4.05 19.5168979 8.72469657 17.3690385 10.0001372 11.5063084 6.56110548 7.2653479 9.06488385 20 16.5851162"></polygon>
-                        <polygon id="Shape" fill="#0A0A08" points="8.82054674 13.5 6.66666667 12.2015887 11.1794533 9.45 13.3333333 10.7484113"></polygon>
-                        <polygon id="Shape" fill="#0A0A08" points="12.8209198 16.2 10.6666667 14.9015887 15.1790802 12.15 17.3333333 13.4484113"></polygon>
-                    </g>
+    <g id="iost-copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g>
+            <rect id="bound" x="0" y="0" width="28" height="28"></rect>
+            <g id="iost-shape" transform="translate(2.057692, 0.500000)" fill="#0A0A08" fill-rule="nonzero">
+                <path d="M23.8846154,6.75 L11.9423077,-2.22044605e-16 L0,6.75 L0,20.25 L11.9423077,27 L23.8846154,20.25 L23.8846154,6.75 Z M11.9423077,-1.14868216 L24.8846154,6.16653523 L24.8846154,20.8334648 L11.9423077,28.1486822 L-1,20.8334648 L-1,6.16653523 L11.9423077,-1.14868216 Z" id="Shape"></path>
+                <g id="Group" transform="translate(3.317308, 4.725000)">
+                    <polygon id="Shape" points="8.79765279 17.55 0 12.3953777 0.0351417183 9.89002922 8.79205049 15.0388945 13.0131311 12.5351162 0.338175376 5.01488385 8.79255979 0 16.7692205 4.67469657 14.6316873 5.95013718 8.79714349 2.51110548 4.57657219 5.01488385 17.25 12.5351162"></polygon>
+                    <polygon id="Shape" points="6.12429411 9.45 3.98076923 8.15158866 8.47185974 5.4 10.6153846 6.69841134"></polygon>
+                    <polygon id="Shape" points="10.1054346 12.15 7.96153846 10.8515887 12.4522577 8.1 14.5961538 9.39841134"></polygon>
                 </g>
             </g>
         </g>

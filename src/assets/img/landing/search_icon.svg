@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Home-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home-Zoom-Graph" transform="translate(-496.000000, -815.000000)" fill="#666666" fill-rule="nonzero">
+            <g id="Group-2" transform="translate(216.000000, 774.000000)">
+                <path d="M292.5,52 L291.71,52 L291.43,51.73 C292.41,50.59 293,49.11 293,47.5 C293,43.91 290.09,41 286.5,41 C282.91,41 280,43.91 280,47.5 C280,51.09 282.91,54 286.5,54 C288.11,54 289.59,53.41 290.73,52.43 L291,52.71 L291,53.5 L296,58.49 L297.49,57 L292.5,52 Z M286.5,52 C284.01,52 282,49.99 282,47.5 C282,45.01 284.01,43 286.5,43 C288.99,43 291,45.01 291,47.5 C291,49.99 288.99,52 286.5,52 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

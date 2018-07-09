@@ -34,13 +34,13 @@ export default class BaseProvider {
     getLatestBlock() {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getBlockNumber().then((block) => {
-                    resolve(block)
+                resolve(block)
             }).catch((err) => {
                 reject(err)
             })
         })
     }
-    
+
     getBalanceAtLatestBlock(address) {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getBalance(address)
@@ -56,35 +56,33 @@ export default class BaseProvider {
     }
 
     getAllBalancesTokenAtLatestBlock(address, tokens) {
-        var promises = Object.keys(tokens).map(index => {
+        var listToken = []
+        var listSymbol = []
+        Object.keys(tokens).map(index => {
             var token = tokens[index]
-            if (token.symbol === 'ETH') {
-                return new Promise((resolve, reject) => {
-                    this.getBalanceAtLatestBlock(address).then(result => {
-                        resolve({
-                            symbol: 'ETH',
-                            balance: result
-                        })
-                    }).catch(err => {
-                        reject(new Error("Cannot get balance of ETH"))
-                    })
-                })
-
-            } else {
-                return new Promise((resolve, reject) => {
-                    this.getTokenBalanceAtLatestBlock(token.address, address).then(result => {
-                        resolve({
-                            symbol: token.symbol,
-                            balance: result
-                        })
-                    }).catch(err => {
-                        reject(new Error("Cannot get balance of " + token.symbol))
-                    })
-                })
-            }
+            listToken.push(token.address)
+            listSymbol.push(token.symbol)
         })
-        return Promise.all(promises)
+
+        return new Promise((resolve, reject) => {
+            var data = this.wrapperContract.methods.getBalances(address, listToken).call().then(result => {
+                //console.log(result)
+                var listTokenBalances = []
+                listSymbol.map((symbol, index) => {
+                    listTokenBalances.push({
+                        symbol: symbol,
+                        balance: result[index] ? result[index]: "0"
+                    })
+                })
+                resolve(listTokenBalances)
+            }).catch(err => {
+                console.log(err)
+                reject(err)
+            })
+        })
     }
+
+    
 
     getAllBalancesTokenAtSpecificBlock(address, tokens, blockno) {
         var promises = Object.keys(tokens).map(index => {
@@ -137,7 +135,7 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getTransactionCount(address)
                 .then((nonce) => {
-                        resolve(nonce)
+                    resolve(nonce)
                 })
                 .catch((err) => {
                     reject(err)
@@ -172,7 +170,7 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             this.rpc.eth.estimateGas(txObj)
                 .then((result) => {
-                    console.log("gas_result: " + result)
+                   // console.log("gas_result: " + result)
                     if (result != null) {
                         resolve(result)
                     }
@@ -187,13 +185,13 @@ export default class BaseProvider {
     exchangeData(sourceToken, sourceAmount, destToken, destAddress,
         maxDestAmount, minConversionRate, walletId) {
 
-        if (!this.rpc.utils.isAddress(walletId)){
+        if (!this.rpc.utils.isAddress(walletId)) {
             walletId = "0x" + Array(41).join("0")
-        }  
+        }
         var data = this.networkContract.methods.trade(
             sourceToken, sourceAmount, destToken, destAddress,
             maxDestAmount, minConversionRate, walletId).encodeABI()
-                 
+
         return new Promise((resolve, reject) => {
             resolve(data)
         })
@@ -448,18 +446,18 @@ export default class BaseProvider {
 
         })
     }
-    
-    
+
+
     exactTradeData(data) {
         return new Promise((resolve, reject) => {
             try {
                 //get trade abi from 
                 var tradeAbi = this.getAbiByName("trade", constants.KYBER_NETWORK)
-              //  console.log(tradeAbi)
+                //  console.log(tradeAbi)
                 abiDecoder.addABI(tradeAbi)
-              //  console.log(abiDecoder)
+                //  console.log(abiDecoder)
                 var decoded = abiDecoder.decodeMethod(data);
-            //      console.log(decoded)
+                //      console.log(decoded)
                 resolve(decoded.params)
             } catch (e) {
                 reject(e)
@@ -525,35 +523,27 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getGasPrice()
                 .then(result => {
-                    
-                    console.log(result)
+                    // console.log("gas price")
+                    // console.log(result)
+
                     var gasPrice = parseInt(result, 10)
-                    if (gasPrice > 20000000000) {
+                    gasPrice = gasPrice / 1000000000
+                    if (gasPrice < 1) {
                         resolve({
-                            low: "20",
-                            default: "20",
-                            standard: "20",
-                            fast: (20 * 1.3).toString()
+                            low: 1,
+                            default: 1,
+                            standard: 1,
+                            fast: 1
                         })
                     } else {
-                        gasPrice = gasPrice / 1000000000
-                        if (gasPrice < 1){
-                            resolve({
-                                low: 1,
-                                default: 1,
-                                standard: 1,
-                                fast: 1
-                            })
-                        }else{
-                            resolve({
-                                low: gasPrice.toString(),
-                                default: gasPrice.toString(),
-                                standard: gasPrice.toString(),
-                                fast: (gasPrice * 1.7).toString()
-                            })
-                        }
-                        
+                        resolve({
+                            low: gasPrice.toString(),
+                            default: gasPrice.toString(),
+                            standard: gasPrice.toString(),
+                            fast: (gasPrice * 1.3).toString()
+                        })
                     }
+
                 }).catch((err) => {
                     reject(err)
                 })
@@ -598,20 +588,20 @@ export default class BaseProvider {
 
     getRateAtSpecificBlock(source, dest, srcAmount, blockno) {
         var data = this.networkContract.methods.getExpectedRate(source, dest, srcAmount).encodeABI()
-        
+
         return new Promise((resolve, reject) => {
             this.rpc.eth.call({
                 to: BLOCKCHAIN_INFO.network,
                 data: data
             }, blockno)
                 .then(result => {
-                //    console.log({source, dest, srcAmount, blockno})
-               //     console.log("rate: " + result)
-                    if (result === "0x"){
+                    //    console.log({source, dest, srcAmount, blockno})
+                    //     console.log("rate: " + result)
+                    if (result === "0x") {
                         reject(new Error("Cannot get rate"))
                         return
                     }
-                    try{
+                    try {
                         var rates = this.rpc.eth.abi.decodeParameters([{
                             type: 'uint256',
                             name: 'expectedPrice'
@@ -619,9 +609,9 @@ export default class BaseProvider {
                             type: 'uint256',
                             name: 'slippagePrice'
                         }], result)
-                     //   console.log(rates)
+                        //   console.log(rates)
                         resolve(rates)
-                    }catch(e){
+                    } catch (e) {
                         reject(e)
                         // resolve({
                         //     expectedPrice: "0",

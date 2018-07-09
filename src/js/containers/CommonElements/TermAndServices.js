@@ -5,17 +5,16 @@ import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
   return {
-    clickCheckbox: props.clickCheckbox,
-    termAgree: props.termAgree,
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    onClick: props.onClick
   }
 })
 
 export default class TermAndServices extends React.Component {
 
-  changeCheckbox = (e) => {
-    this.props.clickCheckbox(!this.props.termAgree)
-  }
+  // changeCheckbox = (e) => {
+  //   this.props.clickCheckbox()
+  // }
 
   content = () => {
     return (<div>
@@ -63,17 +62,18 @@ export default class TermAndServices extends React.Component {
       : require("../../../assets/img/checkmark-unselected.png")
     return (
       <div className="term-services">
-        <img className="pr-2 cur-pointer" onClick={(e) => this.changeCheckbox(e)} src={src} width="14" />
+        {/* <img className="pr-2 cur-pointer" onClick={(e) => this.changeCheckbox(e)} src={src} width="14" /> */}
         <span className="term-text">
-          <span className="cur-pointer" onClick={(e) => this.changeCheckbox(e)}> 
+          <span className="cur-pointer"> 
             {this.props.translate("terms.accept") || "Accept"}
           </span> 
-              <a className="text-success" href="https://home.kyber.network/assets/tac.pdf" target="_blank">
+              <a href="https://files.kyber.network/tac.html" target="_blank">
               {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}  
                 </a> 
-                {this.props.translate("terms.to_get_started") || " to get started"}  
-              
           </span>
+          <div className="landing-page__content-btn-container">
+            <button className="landing-page__content-btn button" onClick={this.props.onClick}>{this.props.translate("terms.accept") || "Accept"}</button>
+          </div>
       </div>
     )
   }

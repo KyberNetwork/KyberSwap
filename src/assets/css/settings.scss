@@ -69,15 +69,19 @@
 // ---------
 
 $global-font-size: 100%;
-$global-width: rem-calc(1024);
+$global-width: rem-calc(1280px);
 $global-lineheight: 1.5;
 $foundation-palette: (
-  primary: #2A9A8D,
+  primary: white,
   secondary: #262C41,
   success: #00FF7A,
   warning: #ffae00,
   alert: #E50000,
 );
+
+$base-color: #666;
+$swap-color: #EF8102;
+$color-swap-light: #F2A657;
 $light-gray: #BBDAD5;
 $medium-gray: #262C41;
 $dark-gray: #0B0F1A;
@@ -112,18 +116,31 @@ $global-button-cursor: auto;
 $global-color-pick-contrast-tolerance: 0;
 $print-transparent-backgrounds: true;
 
+$container-max-width: 77rem;
+$container-side-padding: 1rem;
+
+$image-path: '../img/';
+
 @include add-foundation-colors;
 
 // 2. Breakpoints
 // --------------
 
+
+$break-point-large: 1024px;
+$break-point-medium: 768px;
+$break-point-small: 640px;
 $breakpoints: (
   small: 0,
+  mid-small: 480px,
   medium: 640px,
+  mid-medium: 768px,
   large: 1024px,
   xlarge: 1200px,
   xxlarge: 1440px,
 );
+
+
 $print-breakpoint: large;
 $breakpoint-classes: (small medium large);
 
@@ -151,6 +168,9 @@ $block-grid-max: 8;
 $header-font-family: 'Montserrat', sans-serif;
 $header-font-weight: $global-weight-normal;
 $header-font-style: normal;
+
+$font-cera: 'Cera', 'Open Sans', sans-serif;
+$font-openSans: 'Open Sans', sans-serif;
 
 $header-color: inherit;
 $header-lineheight: 1.4;
@@ -884,3 +904,17 @@ $grid-container-padding: $grid-padding-gutters;
 $grid-container-max: $global-width;
 $xy-block-grid-max: 8;
 
+@mixin screen-max-width($breakpoint) {
+  @media screen and (max-width: #{map-get($breakpoints, $breakpoint)}) {
+    @content;
+  }
+}
+
+@mixin screen-min-width($breakpoint) {
+  @media screen and (min-width: #{map-get($breakpoints, $breakpoint)}) {
+    @content;
+  }
+}
+
+
+$error-color: #F1637D;

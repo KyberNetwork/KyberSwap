@@ -35,8 +35,8 @@ export default class Header extends React.Component {
 
 
   render() {
-  var infoMenu = this.props.location === "/"? <InfoLink />:""
-  var balance = this.props.account?<AccountBalance />:false 
+//  var infoMenu = this.props.location === "/"? <InfoLink />:""
+  //var balance = this.props.account?<AccountBalance />:false 
 
   var analyze = {
     action: this.analyze,
@@ -52,10 +52,8 @@ export default class Header extends React.Component {
         address={<Address 
           path={this.props.location.pathname}
           translate={this.props.translate}
-          />}
-        rate={<Rate />}
-        balance = {balance}
-        infoMenu = {infoMenu}
+          />}                
+     //   infoMenu = {infoMenu}
 
         analyze={analyze} 
         onRequestClose={this.toggleModal}

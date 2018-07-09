@@ -79,8 +79,8 @@ export function caculateEthBalance(token){
   } else {
     var rateBig = new BigNumber(token.rate)
     var balanceBig = new BigNumber(token.balance)
-    var weiParam = new BigNumber(10)
-    var balanceToken = balanceBig.div(weiParam.pow(token.decimal))
+    //var weiParam = new BigNumber(10)
+    var balanceToken = balanceBig.div(Math.pow(10, token.decimal))
 
     var balanceEth = balanceToken.times(rateBig)
     return balanceEth.toString()
@@ -96,6 +96,23 @@ export function shortEthBalance(tokens){
       var balanceEthA = new BigNumber(caculateEthBalance(a)) 
       var balanceEthB = new BigNumber(caculateEthBalance(b)) 
       return balanceEthB.minus(balanceEthA)
+    })
+  } 
+  if(tokens[constants.ETH.symbol]){
+    shortedTokens.unshift(tokens[constants.ETH.symbol])
+  }
+  return shortedTokens
+}
+
+export function shortASCEthBalance(tokens){
+  var shortedTokens = []
+  let removedEth = {...tokens}
+  delete removedEth[constants.ETH.symbol]
+  if(tokens){
+    shortedTokens = Object.values(removedEth).sort((a, b) => {
+      var balanceEthA = new BigNumber(caculateEthBalance(a)) 
+      var balanceEthB = new BigNumber(caculateEthBalance(b)) 
+      return balanceEthA.minus(balanceEthB)
     })
   } 
   if(tokens[constants.ETH.symbol]){
@@ -197,6 +214,25 @@ export function toT(number, decimal, round) {
   }
 }
 
+export function convertSellRate(rate){
+  var bigNumber = new BigNumber(rate.toString())
+  var  result = bigNumber.div(Math.pow(10, 18));
+  return result.toString()
+}
+
+export function convertBuyRate(rate){
+  var bigNumber = new BigNumber(rate.toString())
+  var  result = bigNumber.div(Math.pow(10, 18));
+  var zero = new BigNumber(0)
+  if (result.comparedTo(zero) !== 0){
+    var oneNumber = new BigNumber(1)
+    result = oneNumber.div(result)
+    return result.toString()
+  }else{
+    return 0
+  }
+}
+
 export function pairID(source, dest) {
   return source.address + "-" + dest.address
 }
@@ -271,7 +307,7 @@ export function stringToHex(number, decimal) {
 }
 
 export function roundingNumber(number) {
-  const MAX_DIGIS = 7, SIZE = 3;
+  var MAX_DIGIS = 7, SIZE = 3;
   number = +number;
   let numberStr = number.toString();
   if (isNaN(number) || number <= 0) number = 0;
@@ -289,7 +325,9 @@ export function roundingNumber(number) {
       break
   }
 
-  let precision = number.toPrecision((number < 1 && number > 0) ? MAX_DIGIS - count_0 : MAX_DIGIS),
+  let minDisplay = MAX_DIGIS - count_0 < 4? 4: MAX_DIGIS - count_0
+
+  let precision = number.toPrecision((number < 1 && number > 0) ? minDisplay : MAX_DIGIS),
     arr = precision.split('.'),
     intPart = arr[0],
     i = intPart.length % SIZE || SIZE,
@@ -304,6 +342,10 @@ export function roundingNumber(number) {
   return result;
 }
 
+// export function displayRate(number){
+//   return roundingNumber(number
+// }
+
 export function toPrimitiveNumber(x) {
   var bigNum = new BigNumber(x)
   return bigNum.toString(10)
@@ -314,7 +356,8 @@ export function caculateTokenEpsilon(rate, decimal, symbol) {
   if (symbol === "ETH") {
     tokenRate = new BigNumber(10).pow(18)
   }
-  var ts = new BigNumber(10).pow(decimal).times(constants.EPSILON)
+  var epsilon = new BigNumber(constants.EPSILON)
+  var ts = epsilon.times(Math.pow(10, decimal))
   return ts.div(tokenRate)
 }
 
@@ -347,7 +390,7 @@ export function compareRate(minRate, expectedRate){
   if((expectedRate === "") || isNaN(expectedRate)) return -1
 
   var minRateBig = new BigNumber(minRate)
-  var rateWeight = new BigNumber(10).pow(18)
+  var rateWeight = Math.pow(10, 18)
   minRateBig = minRateBig.times(rateWeight)
 
   var expectedRateBig = new BigNumber(expectedRate)
@@ -409,3 +452,63 @@ export function sliceErrorMsg(err){
   return err
 }
 
+
+
+export function calculatePercent(numerator, denumerator){
+  if (denumerator === 0) return 0
+  var percent =  ((numerator / denumerator) - 1) * 100
+  var roundPercent = Math.round(percent * 10) / 10
+  return roundPercent
+}
+
+export function formatNumber(number) {
+  var format = {
+    decimalSeparator: '.',
+    groupSeparator: ',',
+    groupSize: 3,
+  }
+  BigNumber.config({ FORMAT: format })
+  var numberFormat = new BigNumber(number.toString())
+  return numberFormat.toFormat()
+}
+
+export function caculatorPercentageToRate(number,total){
+  if(new BigNumber(total)!==0){
+    return (new BigNumber(number)/new BigNumber(total))*100000000000000000000
+  }
+  return 0;
+}
+
+export function caculatorRateToPercentage(number,total){
+  if(new BigNumber(total)!==0){
+    return (new BigNumber(number)*new BigNumber(total))/100000000000000000000
+  }
+  return 0;
+}
+
+
+export function estimateSlippagerate(expectedRate){
+  var bigNumber = new BigNumber(expectedRate.toString())
+  var result = bigNumber.div(1000000000000000000).times(0.97)
+  return result.toString()
+}
+
+
+export function getMinrate(rate, minRate){
+  if (isNaN(rate) || rate === ""){
+    rate = 0
+  }
+  if (isNaN(minRate) || minRate === ""){
+    minRate = 0
+  }
+  rate = rate.toString()
+  minRate = minRate.toString()
+
+  if(minRate === "0"){
+    var bigNumber = new BigNumber(rate)
+    var result = bigNumber.div(1000000000000000000).times(0.97)
+    return result.toString()
+  }else{
+    return minRate
+  }
+}

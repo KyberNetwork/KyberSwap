@@ -92,7 +92,7 @@ export function* importNewAccount(action) {
     analytics.loginWallet(type)
     
 
-    yield put(goToRoute('/exchange'))
+//    yield put(goToRoute(constants.BASE_HOST + '/swap'))
 
     yield put(fetchExchangeEnable())
 
@@ -112,6 +112,7 @@ export function* importNewAccount(action) {
 
     yield call(ethereum.fetchRateExchange)
 
+    console.log(address)
     const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtLatestBlock", address, tokens)
     //map balance
     var mapBalance = {}

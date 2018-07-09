@@ -26,16 +26,16 @@
     top: 66px;
   }
 
-  #exchange .address-balance{
+  /* #exchange .address-balance{
     margin-bottom: 25px !important;
-  }
+  } */
 
   #transfer-screen .frame h1.title {
     margin: 10px 0 15px 0;
   }
-  #transfer-screen .address-balance{
+  /* #transfer-screen .address-balance{
     margin-bottom: 0px !important;
-  }
+  } */
 
   #transfer-screen label {
     margin-bottom: 15px;

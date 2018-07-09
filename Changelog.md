@@ -1,3 +1,35 @@
+# 0.10.1 (2018-07-06)
+## Features:
+- Remove total supply, cỉculating supply, volume of kyber, add volume of CMC in ETHEREUM MARKET
+- User must accept term when access WEB3 browser
+
+## Bugfixes:
+- Get max gas price from contract 
+
+## Improvements:
+- Fix UI/ languages, compact layout in mobile
+
+# 0.10.0 (2018-07-03)
+## Features:
+- Intergrate new UI for kyber 2.0
+- Support swap from token to token
+- List many new tokens
+- Support trading view for market table
+
+## Bugfixes:
+- Update multi languages for Chinese, Korean, Vietnamese
+
+## Improvements:
+- Improve copies, layout
+
+## Bugfixes:
+- Fix estimate gas price
+- Fix return wrong message when input very large amount
+
+## Improvements:
+- Improve copies, layout
+
+
 # 0.6.0 (2018-04-10)
 ## Features:
 - Add ADX, AST, RCN, ZIL, LINK tokens
@@ -77,5 +109,8 @@
 
 ## Compatability:
 - This version only works with KyberNetwork smart contracts version 0.3.0
+
+
+
 
  

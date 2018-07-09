@@ -1,0 +1,112 @@
+.reveal.large {
+  &.reveal-cold-wallet {
+    max-width: 544px;
+    border-radius: 5px;
+    padding: 0;
+    overflow: unset;
+    #cold-wallet {
+      .address-list-path {
+        .content {
+          background-color: #F5F5F5;
+          padding: 60px 35px 20px;
+          .top-wrapper {
+            padding: 20px 0px;
+            .title {
+              margin-top: 0;
+              padding: 0 .9375rem;
+              margin-bottom: 30px;
+            }
+            .token-selector {
+              .focus-item {
+                padding: 10px 5px;
+                background-color: white;
+                >div {
+                  color: #5F5F5F;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  padding: 0 10px 0 8px;
+                  &:hover {
+                    color: #5F5F5F;
+                  }
+                }
+                div:nth-child(2) {
+                  padding: 0 10px 0 15px;
+                  border-left: 1px solid #eee;
+                  img {
+                    width: 16px;
+                  }
+                }
+              }
+              .select-item {
+                top: -45px;
+                box-shadow: 0 0 23px #232323;
+                border-radius: 5px;
+                max-height: 450px;
+                overflow-y: auto;
+                border: none;
+                .list-item {
+                  .token-item {
+                    >div {
+                      color: #232323;
+                    }
+                    div:nth-child(2) {
+                      color: #bbb;
+                    }
+                    &:hover {
+                      background-color: #eee;
+                    }
+                    >img {
+                      width: 16px;
+                      margin-left: 20px;
+                    }
+                  }
+                  .input-custom-path {
+                    width: 100%;
+                    padding: 3px;
+                    border: 1px solid #eee;
+                    border-radius: 5px;
+                    background-color: white;
+                    >div {
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      input {
+                        margin: 0;
+                        border: none;
+                        border-radius: 0;
+                        box-shadow: none;
+                        height: unset;
+                        padding: 0 10px;
+                        &::placehoder {
+                          font-style: italic;
+                          color: #ccc;
+                        }
+                      }
+                      img {
+                        width: 35px;
+                        height: 35px;
+                        padding: 10px;
+                        border-radius: 8px;
+                        background-color: #8F8FB6;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          &.white {
+            background-color: white;
+            padding: 0px 35px;
+            margin-bottom: 20px;
+          }
+        }
+      }
+    }
+    @include screen-max-width(medium) {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}

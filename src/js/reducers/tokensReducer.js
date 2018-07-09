@@ -3,6 +3,8 @@ import Rate from "../services/rate"
 import * as BLOCKCHAIN_INFO from "../../../env"
 import constants from "../services/constants"
 
+import * as converter from "../utils/converter"
+
 const initState = function () {
   let tokens = {}
   Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
@@ -72,14 +74,14 @@ const tokens = (state = initState, action) => {
           if (!mapToken[rate.source]) {
             mapToken[rate.source] = {}
           }
-          mapToken[rate.source].rate = rate.rate
-          mapToken[rate.source].minRate = rate.minRate
+          mapToken[rate.source].rate = rate.rate          
+          mapToken[rate.source].minRate = converter.getMinrate(rate.rate, rate.minRate)
         } else {
           if (!mapToken[rate.dest]) {
             mapToken[rate.dest] = {}
           }
           mapToken[rate.dest].rateEth = rate.rate
-          mapToken[rate.dest].minRateEth = rate.minRate
+          mapToken[rate.dest].minRateEth = converter.getMinrate(rate.rate, rate.minRate) 
         }
       })
 

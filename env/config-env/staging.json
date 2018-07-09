@@ -53,14 +53,6 @@
       "decimal": 18,
       "usd_id": "omisego"
     },
-    "EOS": {
-      "name": "Eos",
-      "symbol": "EOS",
-      "icon": "eos.svg",
-      "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
-      "decimal": 18,
-      "usd_id": "eos"
-    },
     "SNT": {
       "name": "Status",
       "address": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
@@ -226,18 +218,105 @@
       "address": "0x4f3afec4e5a3f2a6a1a411def7d7dfe50ee057bf",
       "symbol":"DGX",
       "decimal": 9,
-      "icon": "dgx.png",
+      "icon": "dgx.svg",
       "usd_id":"dgx"
-    }
+    },
+    "ABT": {
+      "name": "ArcBlock",
+      "address": "0xb98d4c97425d9908e66e53a6fdf673acca0be986",
+      "decimal": 18,
+      "symbol":"ABT",        
+      "icon": "abt.svg",
+      "usd_id":"arcblock"
+    },
+    "ENJ": {
+      "name": "Enjin Coin",
+      "address": "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c",
+      "decimal": 18,
+      "symbol":"ENJ",        
+      "icon": "enj.svg",
+      "usd_id":"enjin-coin"
+    },
+    "AION": {
+      "name": "Aion",
+      "decimal": 8,
+      "symbol":"AION", 
+      "address": "0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466",
+      "icon": "aion.svg"
+    },
+    "AE": {
+      "name": "Aeternity",
+      "decimal": 18,
+      "symbol":"AE", 
+      "address": "0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d",
+      "icon": "ae.svg"
+    },
+    "BLZ": {
+      "name": "Bluezelle",
+      "decimal": 18,
+      "symbol":"BLZ", 
+      "address": "0x5732046a883704404f284ce41ffadd5b007fd668",
+      "icon": "blz.svg"
+    },
+    "PAL": {
+      "name": "PolicyPal Network",
+      "decimal": 18,
+      "symbol":"PAL", 
+      "address": "0xfedae5642668f8636a11987ff386bfd215f942ee",
+      "icon": "pal.svg"
+    },
+    "ELEC": {
+      "name": "ElectrifyAsia",
+      "decimal": 18,
+      "address": "0xd49ff13661451313ca1553fd6954bd1d9b6e02b9",
+      "symbol":"ELEC", 
+      "icon": "elec.svg"
+    },
+    "BBO": {
+      "name": "Bigbom",
+      "decimal": 18,
+      "address": "0x84f7c44b6fed1080f647e354d552595be2cc602f",
+      "symbol":"BBO", 
+      "icon": "bbo.svg"
+    },
+    "POLY": {
+      "name": "Polymath",
+      "decimal": 18,
+      "address": "0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec",
+      "symbol":"POLY", 
+      "icon": "poly.svg"
+    },
+    "LBA": {
+      "name": "Libra Credit",
+      "decimal": 18,
+      "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
+      "symbol":"LBA", 
+      "icon": "lba.svg"
+    },
+    "EDU": {
+      "name": "EduCoin",
+      "decimal": 18,
+      "address": "0xf263292e14d9d8ecd55b58dad1f1df825a874b7c",
+      "symbol":"EDU", 
+      "icon": "edu.svg"
+    },
+    "CVC": {
+      "name": "Civic",
+      "decimal": 8,
+      "address": "0x41e5560054824ea6b0732e656e3ad64e20e94e45",
+      "symbol":"CVC", 
+      "icon": "cvc.svg"
+    } 
   },
   "ethScanUrl": "https://etherscan.io/",
   "reserve": "0x2c5a182d280eeb5824377b98cd74871f78d6b8bc",
-  "network": "0xd2d21fdef0d054d2864ce328cc56d1238d6b239e",
-  "wrapper": "0x865aa8818615ba9dfa8bcb6a1432b0fc506dbd58",
+  "network": "0xc14f34233071543e979f6a79aa272b0ab1b4947d",
+  "wrapper": "0x6172AFC8c00c46E0D07ce3AF203828198194620a",
   "trade_topic": "0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
   "endpoint": "wss://mainnet.infura.io/ws",
   "averageBlockTime": 15000,
   "networkId": 1,
   "chainName": "Mainnet",
-  "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json"
+  "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
+  "tracker":"https://staging-tracker.knstats.com"
 }

@@ -11,6 +11,8 @@ import { PersistGate } from 'redux-persist/lib/integration/react'
 import { persistor, store } from "./store"
 import Modal from 'react-modal';
 
+
+//console.log(platform)
 //check browser compatible
 // var clientPlatform = {
 //   name: platform.name,
@@ -41,14 +43,14 @@ Modal.setAppElement('body');
 if (illegal) {
   ReactDOM.render(
     <NotSupportPage client={clientPlatform} />
-    , document.getElementById("app"));
+    , document.getElementById("swap-app"));
 } else {
   ReactDOM.render(
     <PersistGate persistor={persistor}>
       <Provider store={store}>
         <Layout />
       </Provider>
-    </PersistGate>, document.getElementById("app"));
+    </PersistGate>, document.getElementById("swap-app"));
 }
 
 

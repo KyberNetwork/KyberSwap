@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
     <title>zil</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="zil">
-            <circle id="Oval-3" fill="#FFFFFF" cx="14" cy="14" r="14"></circle>
-            <g stroke-width="1" transform="translate(6.000000, 5.000000)" id="g3766">
-                <g fill-rule="nonzero">
-                    <polygon id="polygon3768" fill="#49C1BF" points="10.9926303 6.31772391 0.0494289562 1.22879461 0.0494289562 4.0173165 7.57761077 7.51824242 0.0494289562 11.0729057 0.0494289562 13.8614916 10.9926303 18.9504209 10.9926303 16.161835 3.60323232 12.7254579 10.9926303 9.10637374"></polygon>
-                    <polygon id="polygon3770" fill="#298E97" points="10.9926303 6.32949495 13.8350923 5.10338721 13.8350923 7.86318519 10.9926303 9.08922896"></polygon>
-                    <polygon id="polygon3772" fill="#298E97" points="10.9926303 18.950037 13.8350923 17.7292391 13.8350923 9.20578788 10.9926303 10.4265859"></polygon>
-                    <polygon id="polygon3774" fill="#077A8F" points="2.91096296 0.0232861953 0.0494289562 1.22879461 0.091796633 1.24849832 10.9926303 6.32949495 13.8350923 5.10338721"></polygon>
+    <g id="IOS?-(for-Mike-Le)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-2-Copy" transform="translate(-216.000000, -73.000000)">
+            <g id="zil" transform="translate(216.000000, 73.000000)">
+                <circle id="Oval-3" stroke="#298E97" fill="#FFFFFF" cx="14" cy="14" r="13.5"></circle>
+                <g transform="translate(7.000000, 5.000000)" fill-rule="nonzero" id="g3766">
+                    <g>
+                        <polygon id="polygon3768" fill="#49C1BF" points="10.1276574 6.35466966 0.0455395589 1.23598055 0.0455395589 4.04080958 6.98135422 7.56220875 0.0455395589 11.1376596 0.0455395589 13.9425529 10.1276574 19.0612421 10.1276574 16.2563487 3.31970616 12.7998758 10.1276574 9.15962738"></polygon>
+                        <polygon id="polygon3770" fill="#298E97" points="10.1276574 6.36650954 12.7464556 5.13323158 12.7464556 7.90916872 10.1276574 9.14238234"></polygon>
+                        <polygon id="polygon3772" fill="#298E97" points="10.1276574 19.060856 12.7464556 17.8329188 12.7464556 9.2596229 10.1276574 10.48756"></polygon>
+                        <polygon id="polygon3774" fill="#077A8F" points="2.68190913 0.0234223719 0.0455395589 1.23598055 0.0845734665 1.25579948 10.1276574 6.36650954 12.7464556 5.13323158"></polygon>
+                    </g>
                 </g>
             </g>
         </g>

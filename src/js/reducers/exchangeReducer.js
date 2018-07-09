@@ -1,6 +1,7 @@
 import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
-import { calculateDest, caculateDestAmount, caculateSourceAmount } from "../utils/converter"
+//import { calculateDest, caculateDestAmount, caculateSourceAmount } from "../utils/converter"
+import * as converter from "../utils/converter"
 //import { randomToken, randomForExchange } from "../utils/random"
 import BLOCKCHAIN_INFO from "../../../env"
 
@@ -32,7 +33,7 @@ const exchange = (state = initState, action) => {
       newState.minConversionRate = newState.slippageRate
 
       newState.isEditRate = false
-      newState.isEditGasPrice = false
+      //newState.isEditGasPrice = false
 
       newState.isAnalize = false
       newState.isAnalizeComplete = false
@@ -47,28 +48,28 @@ const exchange = (state = initState, action) => {
         newState.sourceTokenSymbol = action.payload.symbol
         newState.sourceToken = action.payload.address
 
-        if (newState.sourceTokenSymbol === 'ETH') {
-          if (newState.destTokenSymbol === 'ETH') {
-            newState.destTokenSymbol = 'KNC'
-            newState.destToken = BLOCKCHAIN_INFO.tokens['KNC'].address
-          }
-        } else {
-          newState.destTokenSymbol = 'ETH'
-          newState.destToken = BLOCKCHAIN_INFO.tokens['ETH'].address
-        }
+        // if (newState.sourceTokenSymbol === 'ETH') {
+        //   if (newState.destTokenSymbol === 'ETH') {
+        //     newState.destTokenSymbol = 'KNC'
+        //     newState.destToken = BLOCKCHAIN_INFO.tokens['KNC'].address
+        //   }
+        // } else {
+        //   newState.destTokenSymbol = 'ETH'
+        //   newState.destToken = BLOCKCHAIN_INFO.tokens['ETH'].address
+        // }
       } else if (action.payload.type === "des") {
         newState.destTokenSymbol = action.payload.symbol
         newState.destToken = action.payload.address
 
-        if (newState.destTokenSymbol === 'ETH') {
-          if (newState.sourceTokenSymbol === 'ETH') {
-            newState.sourceTokenSymbol = 'KNC'
-            newState.sourceToken = BLOCKCHAIN_INFO.tokens['KNC'].address
-          }
-        } else {
-          newState.sourceTokenSymbol = 'ETH'
-          newState.sourceToken = BLOCKCHAIN_INFO.tokens['ETH'].address
-        }
+        // if (newState.destTokenSymbol === 'ETH') {
+        //   if (newState.sourceTokenSymbol === 'ETH') {
+        //     newState.sourceTokenSymbol = 'KNC'
+        //     newState.sourceToken = BLOCKCHAIN_INFO.tokens['KNC'].address
+        //   }
+        // } else {
+        //   newState.sourceTokenSymbol = 'ETH'
+        //   newState.sourceToken = BLOCKCHAIN_INFO.tokens['ETH'].address
+        // }
       }
 
       //reset all error
@@ -89,12 +90,12 @@ const exchange = (state = initState, action) => {
         newState.errors.selectTokenToken = ''
         return newState
       }
-      if ((newState.sourceTokenSymbol !== "ETH") &&
-        (newState.destTokenSymbol !== "ETH")) {
-        newState.errors.selectSameToken = ''
-        newState.errors.selectTokenToken = "error.select_token_token"
-        return newState
-      }
+      // if ((newState.sourceTokenSymbol !== "ETH") &&
+      //   (newState.destTokenSymbol !== "ETH")) {
+      //   newState.errors.selectSameToken = ''
+      //   newState.errors.selectTokenToken = "error.select_token_token"
+      //   return newState
+      // }
       newState.errors.selectSameToken = ''
       newState.errors.selectTokenToken = ''
       newState.errors.sourceAmountError = ''
@@ -150,7 +151,11 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.SET_BROADCAST_ERROR": {
       newState.broadcasting = false
-      newState.broadcastError = action.payload ? action.payload : "Cannot broadcast transaction to blockchain"
+      if (action.payload){
+        newState.broadcastError = action.payload
+      }else{
+        newState.broadcastError = "Cannot broadcast transaction to blockchain"
+      }
       newState.confirmApprove = false
       newState.isApproving = false
       newState.isConfirming = false
@@ -178,8 +183,10 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.UPDATE_RATE":{
-      const { rateInit, expectedPrice, slippagePrice, rateInitSlippage, blockNo ,isManual, isSuccess} = action.payload
+      const { rateInit, expectedPrice, slippagePrice, blockNo ,isManual, isSuccess} = action.payload
 
+     // console.log({rateInit, expectedPrice, slippagePrice, blockNo ,isManual, isSuccess})
+      
       if (!isSuccess) {
         newState.errors.rateSystem = "error.get_rate"
       }else{
@@ -194,15 +201,17 @@ const exchange = (state = initState, action) => {
         }
       }
     
-      var slippageRate = slippagePrice === "0" ? rateInitSlippage : slippagePrice
+      var slippageRate = slippagePrice === "0" ? converter.estimateSlippagerate(rateInit, 18) : converter.toT(slippagePrice, 18)
       var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
 
+
+    
       newState.slippageRate = slippageRate
       newState.offeredRate = expectedRate
       newState.blockNo = blockNo
 
       if (newState.sourceAmount !== "") {
-        newState.minDestAmount = calculateDest(newState.sourceAmount, expectedRate).toString(10)
+        newState.minDestAmount = converter.calculateDest(newState.sourceAmount, expectedRate).toString(10)
       }
       //newState.offeredRateBalance = action.payload.reserveBalance
       // newState.offeredRateExpiryBlock = action.payload.expirationBlock
@@ -223,7 +232,7 @@ const exchange = (state = initState, action) => {
       newState.snapshot.offeredRate = expectedRate
 
       if (newState.sourceAmount !== "") {
-        newState.snapshot.minDestAmount = calculateDest(newState.snapshot.sourceAmount, expectedRate).toString(10)
+        newState.snapshot.minDestAmount = converter.calculateDest(newState.snapshot.sourceAmount, expectedRate).toString(10)
       }
       //newState.offeredRateBalance = action.payload.reserveBalance
       // newState.offeredRateExpiryBlock = action.payload.expirationBlock
@@ -338,18 +347,18 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.CACULATE_AMOUNT": {
       if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
       if (state.inputFocus == "dest") {
-        newState.sourceAmount = caculateSourceAmount(state.destAmount, state.offeredRate, 6)
+        newState.sourceAmount = converter.caculateSourceAmount(state.destAmount, state.offeredRate, 6)
       } else {
-        newState.destAmount = caculateDestAmount(state.sourceAmount, state.offeredRate, 6)
+        newState.destAmount = converter.caculateDestAmount(state.sourceAmount, state.offeredRate, 6)
       }
       return newState
     }
     case "EXCHANGE.CACULATE_AMOUNT_SNAPSHOT": {
       if (newState.snapshot.errors.selectSameToken || state.snapshot.errors.selectTokenToken) return newState
       if (newState.snapshot.inputFocus == "dest") {
-        newState.snapshot.sourceAmount = caculateSourceAmount(state.snapshot.destAmount, state.snapshot.offeredRate, 6)
+        newState.snapshot.sourceAmount = converter.caculateSourceAmount(state.snapshot.destAmount, state.snapshot.offeredRate, 6)
       } else {
-        newState.snapshot.destAmount = caculateDestAmount(state.snapshot.sourceAmount, state.snapshot.offeredRate, 6)
+        newState.snapshot.destAmount = converter.caculateDestAmount(state.snapshot.sourceAmount, state.snapshot.offeredRate, 6)
       }
       newState.snapshot.isFetchingRate = false
     //  console.log("***************")
@@ -364,14 +373,14 @@ const exchange = (state = initState, action) => {
         newState.errors.sourceAmountError = ""
         newState.errors.ethBalanceError = ""
         if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
-        newState.destAmount = caculateDestAmount(value, state.offeredRate, 6)
+        newState.destAmount = converter.caculateDestAmount(value, state.offeredRate, 6)
       }
       else if (focus == "dest") {
         newState.destAmount = value
         newState.errors.destAmountError = ""
         newState.errors.sourceAmountError = ""
         if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
-        newState.sourceAmount = caculateSourceAmount(value, state.offeredRate, 6)
+        newState.sourceAmount = converter.caculateSourceAmount(value, state.offeredRate, 6)
       }
       return newState
     }
@@ -452,12 +461,18 @@ const exchange = (state = initState, action) => {
       newState.maxCap = action.payload.maxCap
       return newState
     }
-    case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
+    case "EXCHANGE.SET_GAS_PRICE_SWAP_COMPLETE": {
+
       if (!newState.isEditGasPrice) {
         var { safeLowGas, standardGas, fastGas, defaultGas } = action.payload
-        newState.gasPriceSuggest.fastGas = fastGas
-        newState.gasPriceSuggest.standardGas = standardGas
-        newState.gasPriceSuggest.safeLowGas = safeLowGas
+
+        var gasPriceSuggest = {...newState.gasPriceSuggest}
+        
+        gasPriceSuggest.fastGas = fastGas
+        gasPriceSuggest.standardGas = standardGas
+        gasPriceSuggest.safeLowGas = safeLowGas
+
+        newState.gasPriceSuggest = {...gasPriceSuggest}
         newState.gasPrice = defaultGas
       }
       return newState
@@ -474,14 +489,19 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.ANALYZE_ERROR": {
-      newState.isAnalize = true
+      const {txHash} = action.payload
+      if (txHash === newState.txHash){
+        newState.isAnalize = true
+      }
       return newState
     }
     case "EXCHANGE.SET_ANALYZE_ERROR": {
-      const { networkIssues, reserveIssues } = action.payload
-      newState.analizeError = { networkIssues, reserveIssues }
-      newState.isAnalize = false
-      newState.isAnalizeComplete = true
+      const { networkIssues, txHash } = action.payload
+      if (txHash === newState.txHash){
+        newState.analizeError = { ...networkIssues }
+        newState.isAnalize = false
+        newState.isAnalizeComplete = true
+      }
       return newState
     }
     // case "EXCHANGE.FETCH_GAS":{
@@ -528,6 +548,16 @@ const exchange = (state = initState, action) => {
         newState.balanceData.destAmount = balanceData.destAmount
       }
       return newState
+    }
+    case "GLOBAL.CLEAR_SESSION_FULFILLED":{
+      var resetState = {...initState}
+      resetState.sourceToken = newState.sourceToken
+      resetState.sourceTokenSymbol = newState.sourceTokenSymbol
+      
+      resetState.destToken = newState.destToken
+      resetState.destTokenSymbol = newState.destTokenSymbol
+
+      return resetState
     }
   }
   return state

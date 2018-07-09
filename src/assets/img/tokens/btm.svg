@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>BTM</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="IOS?-(for-Mike-Le)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-2-Copy" transform="translate(-151.000000, -73.000000)">
+            <g id="BTM" transform="translate(151.000000, 73.000000)">
+                <circle id="Oval-2" stroke="#666666" fill="#FFFFFF" cx="14" cy="14" r="13.5"></circle>
+                <g transform="translate(5.000000, 5.500000)" fill-rule="nonzero" id="Group" opacity="0.8">
+                    <g fill="#040000">
+                        <polygon id="Shape" points="5.88693 2.61987 10.5128 7.24574 6.58886 0 3.308115 3.31007"></polygon>
+                        <polygon id="Shape" points="11.11307 14.38013 6.4872 9.75426 10.41114 17 13.68993 13.68993"></polygon>
+                        <polygon id="Shape" points="2.61987 11.11307 5.58586 4.82528 1.04601 9.367085 5.68434189e-14 10.41114 3.31007 13.68993"></polygon>
+                        <polygon id="Shape" points="14.382085 5.884975 9.75426 10.5128 17 6.58886 13.68993 3.308115"></polygon>
+                    </g>
+                    <g transform="translate(3.000000, 0.000000)" fill="#323333">
+                        <polygon id="Shape" points="9.30098109 5.583905 4.88171395 1.04601 3.86539007 -5.68434189e-14 7.68510638 7.24574"></polygon>
+                        <polygon id="Shape" points="2.15055556 11.41414 7.58614657 17 3.76643026 9.75426"></polygon>
+                        <polygon id="Shape" points="4.5048227 6.4872 2.88903073 4.82528 0.00182033097 11.11307"></polygon>
+                        <polygon id="Shape" points="8.56250591 12.172765 14 6.58886 6.94671395 10.5128"></polygon>
+                    </g>
+                    <g fill="#555555">
+                        <polygon id="Shape" points="1.394 1.392045 0 6.58886 2.838915 5.063875"></polygon>
+                        <polygon id="Shape" points="15.607955 15.607955 17 10.41114 14.16117 11.934255"></polygon>
+                        <polygon id="Shape" points="1.394 15.606 6.58886 17 5.06583 14.159215"></polygon>
+                        <polygon id="Shape" points="15.607955 1.392045 10.41114 0 11.934255 2.838915"></polygon>
+                    </g>
+                    <g fill="#323333">
+                        <polygon id="Shape" points="3.308115 3.31007 6.58886 0 1.394 1.392045 2.838915 5.063875"></polygon>
+                        <polygon id="Shape" points="13.68993 13.68993 10.41114 17 15.607955 15.607955 14.16117 11.934255"></polygon>
+                        <polygon id="Shape" points="3.31007 13.68993 0 10.41114 1.394 15.606 5.06583 14.159215"></polygon>
+                        <polygon id="Shape" points="13.68993 3.308115 17 6.58886 15.607955 1.392045 11.934255 2.838915"></polygon>
+                    </g>
+                    <g fill="#040000">
+                        <polygon id="Shape" points="2.838915 5.063875 0 6.58886 0.65892 7.24574"></polygon>
+                        <polygon id="Shape" points="14.16117 11.934255 17 10.41114 16.34108 9.75426"></polygon>
+                        <polygon id="Shape" points="6.58886 17 7.24574 16.34108 5.06583 14.159215"></polygon>
+                        <polygon id="Shape" points="10.41114 0 9.75426 0.65892 11.934255 2.838915"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
