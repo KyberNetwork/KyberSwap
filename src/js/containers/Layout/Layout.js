@@ -100,7 +100,7 @@ export default class Layout extends React.Component {
       <LayoutView
         history={history}
         Header={Header}
-        ImportAccount={ImportAccount}
+        // ImportAccount={ImportAccount}
         Exchange={Exchange}
         Transfer={Transfer}
         market={market}

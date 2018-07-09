@@ -265,14 +265,14 @@ export default class ExchangeBody extends React.Component {
   render() {
     if (this.props.account.isStoreReady) {
       if (!!!this.props.account.account.address) {
-        setTimeout(() => this.props.dispatch(push("/")), 1000)
+        //setTimeout(() => this.props.dispatch(push("/")), 1000)
         return (
-          <div></div>
+          <div>exchange is not ready</div>
         )
       }
     } else {
       return (
-        <div></div>
+        <div>exchange is not ready111</div>
       )
     }
 

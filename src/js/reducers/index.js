@@ -69,10 +69,10 @@ const rootReducer = (state, action) => {
     }
   }
   
-  let isGoToExchange = action.type === '@@router/LOCATION_CHANGE' && ( (action.payload.pathname === constants.BASE_HOST + '/swap')&&(action.payload.pathname === constants.BASE_HOST + '/transfer') )
-  if(isGoToExchange && !state.account.account){
-    window.location.href = '/'
-  }
+  // let isGoToExchange = action.type === '@@router/LOCATION_CHANGE' && ( (action.payload.pathname === constants.BASE_HOST + '/swap')&&(action.payload.pathname === constants.BASE_HOST + '/transfer') )
+  // if(isGoToExchange && !state.account.account){
+  //   window.location.href = '/'
+  // }
   return appReducer(state, action)
 }
 

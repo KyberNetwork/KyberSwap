@@ -5,11 +5,11 @@ import constansts from "../../services/constants"
 
 const TransactionLayout = (props) => {
   var gotoRoot = (e) => {
-    if (props.currentLang === 'en') {
-      window.location.href = "/"
-    } else {
-      window.location.href = `/?lang=${props.currentLang}`
-    }
+    // if (props.currentLang === 'en') {
+    //   window.location.href = "/"
+    // } else {
+    //   window.location.href = `/?lang=${props.currentLang}`
+    // }
   }
   var transfer = props.translate("transaction.transfer") || "Transfer"
   var swap = props.translate("transaction.swap") || "Swap"
@@ -34,8 +34,8 @@ const TransactionLayout = (props) => {
           <span>{props.translate("transaction.back") || "Back"}</span>
         </div>
         <div className="switch-button">
-          <Link to={constansts.BASE_HOST + "/swap"} className={props.page === "exchange" ? "disable" : ""}>{swap}</Link>
-          <Link to={constansts.BASE_HOST + "/transfer"} className={props.page === "transfer" ? "disable" : ""}>{transfer}</Link>
+          <Link to={constansts.BASE_HOST + "/swap/eth_knc"} className={props.page === "exchange" ? "disable" : ""}>{swap}</Link>
+          <Link to={constansts.BASE_HOST + "/transfer/eth"} className={props.page === "transfer" ? "disable" : ""}>{transfer}</Link>
         </div>
       </h1>
       <div className="row">

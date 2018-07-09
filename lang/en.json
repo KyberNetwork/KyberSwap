@@ -86,6 +86,7 @@
     "click_to_transfer_all_balance": "Click to transfer all balance",
 
     "higher_min_acceptable_rate": "Higher MIN ACCEPTABLE RATE typically results in lower success rate when the market is volatile.",
+    "our_suggest_loading": "<img src='${src}'/> ${desToken} is our suggested MIN ACCEPTABLE RATE by default.",
     "our_suggest": "<strong> ${suggestRate}</strong> is our suggested MIN ACCEPTABLE RATE by default.",
     "min_acceptable_rate": "MIN ACCEPTABLE RATE",
 

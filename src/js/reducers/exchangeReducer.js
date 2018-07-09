@@ -1,6 +1,7 @@
 import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
-import { calculateDest, caculateDestAmount, caculateSourceAmount } from "../utils/converter"
+//import { calculateDest, caculateDestAmount, caculateSourceAmount } from "../utils/converter"
+import * as converter from "../utils/converter"
 //import { randomToken, randomForExchange } from "../utils/random"
 import BLOCKCHAIN_INFO from "../../../env"
 
@@ -182,7 +183,9 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.UPDATE_RATE":{
-      const { rateInit, expectedPrice, slippagePrice, rateInitSlippage, blockNo ,isManual, isSuccess} = action.payload
+      const { rateInit, expectedPrice, slippagePrice, blockNo ,isManual, isSuccess} = action.payload
+
+     // console.log({rateInit, expectedPrice, slippagePrice, blockNo ,isManual, isSuccess})
       
       if (!isSuccess) {
         newState.errors.rateSystem = "error.get_rate"
@@ -198,15 +201,17 @@ const exchange = (state = initState, action) => {
         }
       }
     
-      var slippageRate = slippagePrice === "0" ? rateInitSlippage : slippagePrice
+      var slippageRate = slippagePrice === "0" ? converter.estimateSlippagerate(rateInit, 18) : converter.toT(slippagePrice, 18)
       var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
 
+
+    
       newState.slippageRate = slippageRate
       newState.offeredRate = expectedRate
       newState.blockNo = blockNo
 
       if (newState.sourceAmount !== "") {
-        newState.minDestAmount = calculateDest(newState.sourceAmount, expectedRate).toString(10)
+        newState.minDestAmount = converter.calculateDest(newState.sourceAmount, expectedRate).toString(10)
       }
       //newState.offeredRateBalance = action.payload.reserveBalance
       // newState.offeredRateExpiryBlock = action.payload.expirationBlock
@@ -227,7 +232,7 @@ const exchange = (state = initState, action) => {
       newState.snapshot.offeredRate = expectedRate
 
       if (newState.sourceAmount !== "") {
-        newState.snapshot.minDestAmount = calculateDest(newState.snapshot.sourceAmount, expectedRate).toString(10)
+        newState.snapshot.minDestAmount = converter.calculateDest(newState.snapshot.sourceAmount, expectedRate).toString(10)
       }
       //newState.offeredRateBalance = action.payload.reserveBalance
       // newState.offeredRateExpiryBlock = action.payload.expirationBlock
@@ -342,18 +347,18 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.CACULATE_AMOUNT": {
       if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
       if (state.inputFocus == "dest") {
-        newState.sourceAmount = caculateSourceAmount(state.destAmount, state.offeredRate, 6)
+        newState.sourceAmount = converter.caculateSourceAmount(state.destAmount, state.offeredRate, 6)
       } else {
-        newState.destAmount = caculateDestAmount(state.sourceAmount, state.offeredRate, 6)
+        newState.destAmount = converter.caculateDestAmount(state.sourceAmount, state.offeredRate, 6)
       }
       return newState
     }
     case "EXCHANGE.CACULATE_AMOUNT_SNAPSHOT": {
       if (newState.snapshot.errors.selectSameToken || state.snapshot.errors.selectTokenToken) return newState
       if (newState.snapshot.inputFocus == "dest") {
-        newState.snapshot.sourceAmount = caculateSourceAmount(state.snapshot.destAmount, state.snapshot.offeredRate, 6)
+        newState.snapshot.sourceAmount = converter.caculateSourceAmount(state.snapshot.destAmount, state.snapshot.offeredRate, 6)
       } else {
-        newState.snapshot.destAmount = caculateDestAmount(state.snapshot.sourceAmount, state.snapshot.offeredRate, 6)
+        newState.snapshot.destAmount = converter.caculateDestAmount(state.snapshot.sourceAmount, state.snapshot.offeredRate, 6)
       }
       newState.snapshot.isFetchingRate = false
     //  console.log("***************")
@@ -368,14 +373,14 @@ const exchange = (state = initState, action) => {
         newState.errors.sourceAmountError = ""
         newState.errors.ethBalanceError = ""
         if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
-        newState.destAmount = caculateDestAmount(value, state.offeredRate, 6)
+        newState.destAmount = converter.caculateDestAmount(value, state.offeredRate, 6)
       }
       else if (focus == "dest") {
         newState.destAmount = value
         newState.errors.destAmountError = ""
         newState.errors.sourceAmountError = ""
         if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
-        newState.sourceAmount = caculateSourceAmount(value, state.offeredRate, 6)
+        newState.sourceAmount = converter.caculateSourceAmount(value, state.offeredRate, 6)
       }
       return newState
     }

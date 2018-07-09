@@ -14,6 +14,8 @@ import * as exchangeActions from "../../actions/exchangeActions"
 import { default as _ } from 'underscore'
 import { clearSession } from "../../actions/globalActions"
 
+import { ImportAccount } from "../ImportAccount"
+
 @connect((store) => {
   var langs = store.locale.languages
   const currentLang = langs.map((item) => {
@@ -22,18 +24,19 @@ import { clearSession } from "../../actions/globalActions"
     }
   })
   const account = store.account.account
-  if (account === false) {
-    if (currentLang[0] === 'en') {
-      window.location.href = "/swap"  
-    } else {
-      window.location.href = `/swap?lang=${currentLang}`
-    }
-  }
+  // if (account === false) {
+  //   console.log("go to exchange")
+    // if (currentLang[0] === 'en') {
+    //   window.location.href = "/swap"  
+    // } else {
+    //   window.location.href = `/swap?lang=${currentLang}`
+    // }
+ // }
   const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
   const exchange = store.exchange
   return {
-      translate, exchange, tokens, currentLang
+      translate, exchange, tokens, currentLang, account
     }  
 })
 
@@ -82,6 +85,9 @@ export default class Exchange extends React.Component {
   }
 
   render() {
+    if (this.props.account === false){
+      return <ImportAccount />
+    }
     var gasPrice = converter.stringToBigNumber(converter.gweiToEth(this.props.exchange.gasPrice))
     var totalGas = gasPrice.multipliedBy(this.props.exchange.gas + this.props.exchange.gas_approve)
     var page = "exchange"
