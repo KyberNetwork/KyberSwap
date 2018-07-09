@@ -549,6 +549,16 @@ const exchange = (state = initState, action) => {
       }
       return newState
     }
+    case "GLOBAL.CLEAR_SESSION_FULFILLED":{
+      var resetState = {...initState}
+      resetState.sourceToken = newState.sourceToken
+      resetState.sourceTokenSymbol = newState.sourceTokenSymbol
+      
+      resetState.destToken = newState.destToken
+      resetState.destTokenSymbol = newState.destTokenSymbol
+
+      return resetState
+    }
   }
   return state
 }

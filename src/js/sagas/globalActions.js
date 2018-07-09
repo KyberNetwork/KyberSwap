@@ -43,7 +43,7 @@ export function* goToRoute(action) {
 
 export function* clearSession(action) {
   yield put(actions.clearSessionComplete())
-  yield put(actions.goToRoute(constants.BASE_HOST));
+  //yield put(actions.goToRoute(constants.BASE_HOST));
 }
 
 export function* updateAllRate(action) {

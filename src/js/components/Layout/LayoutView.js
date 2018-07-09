@@ -30,7 +30,7 @@ function getAllPathToken(){
 
 const LayoutView = (props) => {
   var listToken = getAllPathToken()
-  console.log(listToken)
+  //console.log(listToken)
   return (
     <ConnectedRouter history={props.history}>
       <div>

@@ -5,7 +5,8 @@ import {ExchangeBody, MinRate} from "../Exchange"
 import {AdvanceConfigLayout, GasConfig} from "../../components/TransactionCommon"
 
 
-import {TransactionLayout} from "../../components/TransactionCommon"
+
+//import {TransactionLayout} from "../../components/TransactionCommon"
 import { getTranslate } from 'react-localize-redux'
 
 import * as converter from "../../utils/converter"
@@ -16,7 +17,11 @@ import { clearSession } from "../../actions/globalActions"
 
 import { ImportAccount } from "../ImportAccount"
 
-@connect((store) => {
+import {HeaderTransaction} from "../TransactionCommon"
+
+
+@connect((store, props) => {
+  //console.log(props)
   var langs = store.locale.languages
   const currentLang = langs.map((item) => {
     if (item.active) {
@@ -35,8 +40,12 @@ import { ImportAccount } from "../ImportAccount"
   const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
   const exchange = store.exchange
+  const ethereum = store.connection.ethereum
+  
   return {
-      translate, exchange, tokens, currentLang, account
+      translate, exchange, tokens, currentLang, account, ethereum,
+      params: {...props.match.params},
+
     }  
 })
 
@@ -46,6 +55,21 @@ export default class Exchange extends React.Component {
     super(props)
     this.state = {
       selectedGas: props.exchange.gasPrice <= 20? "f": "s", 
+    }
+  }
+
+  componentDidMount = () =>{
+    if ((this.props.params.source.toLowerCase() !== this.props.exchange.sourceTokenSymbol.toLowerCase()) || 
+        (this.props.params.dest.toLowerCase() !== this.props.exchange.destTokenSymbol.toLowerCase()) ){
+          
+          var sourceSymbol = this.props.params.source.toUpperCase()
+          var sourceAddress = this.props.tokens[sourceSymbol].address
+
+          var destSymbol = this.props.params.dest.toUpperCase()
+          var destAddress = this.props.tokens[destSymbol].address
+
+          this.props.dispatch(exchangeActions.selectTokenAsync(sourceSymbol, sourceAddress, "source", this.props.ethereum))
+          this.props.dispatch(exchangeActions.selectTokenAsync(destSymbol, destAddress, "des", this.props.ethereum))
     }
   }
   validateTxFee = (gasPrice) => {
@@ -80,11 +104,11 @@ export default class Exchange extends React.Component {
     this.specifyGasPrice(value)
   }
 
-  handleEndSession = () => {
-    this.props.dispatch(clearSession())
-  }
+  // handleEndSession = () => {
+  //   this.props.dispatch(clearSession())
+  // }
 
-  render() {
+  render() {    
     if (this.props.account === false){
       return <ImportAccount />
     }
@@ -112,17 +136,16 @@ export default class Exchange extends React.Component {
     var minRate = <MinRate />    
     var advanceConfig = <AdvanceConfigLayout minRate = {minRate} gasConfig = {gasConfig} translate = {this.props.translate}/>
     var exchangeBody = <ExchangeBody advanceLayout = {advanceConfig} />
+
+    var headerTransaction = <HeaderTransaction page="exchange" />
+
     return (
-      <TransactionLayout 
-        endSession = {this.handleEndSession}
-        translate = {this.props.translate}
-        // location = {this.props.location}
-       
-        // advance = {advanceConfig}
-        content = {exchangeBody}
-        page = {page}
-        currentLang = {this.props.currentLang[0]}
-      />
+      <div class="frame exchange-frame">  
+        {headerTransaction}
+        <div className="row">
+          {exchangeBody}
+        </div>
+      </div>     
     )
   }
 }
