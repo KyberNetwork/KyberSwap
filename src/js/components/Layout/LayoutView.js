@@ -30,6 +30,10 @@ function getAllPathToken(){
 
 const LayoutView = (props) => {
   var listToken = getAllPathToken()
+  var defaultPath = constansts.BASE_HOST + "/swap/eth_knc"
+  if (props.currentLanguage !== "en"){
+    defaultPath += "?lang=" + props.currentLanguage
+  }
   //console.log(listToken)
   return (
     <ConnectedRouter history={props.history}>
@@ -42,7 +46,7 @@ const LayoutView = (props) => {
             <Route exact path={constansts.BASE_HOST + `/swap/:source${listToken}_:dest${listToken}`} component={props.Exchange} />
             <Route exact path={constansts.BASE_HOST + `/transfer/:source${listToken}`} component={props.Transfer} />       
             {/* <Route component={props.ImportAccount}/>      */}
-            <Redirect to={constansts.BASE_HOST + "/swap/eth_knc"} />
+            <Redirect to={defaultPath} />
           </Switch>
           {/* <div id="rate-bar" class="mb-8">
             {props.rate}
