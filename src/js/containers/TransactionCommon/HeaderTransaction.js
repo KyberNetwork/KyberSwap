@@ -8,6 +8,8 @@ import constansts from "../../services/constants"
 //import { TransactionLayout } from "../../components/TransactionCommon"
 import { getTranslate } from 'react-localize-redux'
 
+import * as common from "../../utils/common"
+
 // import * as converter from "../../utils/converter"
 // import * as validators from "../../utils/validators"
 //import * as exchangeActions from "../../actions/exchangeActions"
@@ -21,13 +23,12 @@ import { Link } from 'react-router-dom'
 
 @connect((store, props) => {
     //console.log(props)
-    var langs = store.locale.languages
-    const currentLang = langs.map((item) => {
-        if (item.active) {
-            return item.code
-        }
-    })
+    const langs = store.locale.languages
+    var currentLang = common.getActiveLanguage(langs)
 
+
+
+    //console.log("currentlang: " + currentLang)
 
     //const account = store.account.account
     // if (account === false) {

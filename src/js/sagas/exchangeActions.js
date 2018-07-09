@@ -14,7 +14,7 @@ import * as converter from "../utils/converter"
 import * as ethUtil from 'ethereumjs-util'
 import Tx from "../services/tx"
 import { getTranslate, getActiveLanguage } from 'react-localize-redux';
-import { store } from '../store';
+import { store } from '../store'
 import BLOCKCHAIN_INFO from "../../../env"
 import bowser from 'bowser'
 

@@ -22,12 +22,12 @@ import {HeaderTransaction} from "../TransactionCommon"
 
 @connect((store, props) => {
   //console.log(props)
-  var langs = store.locale.languages
-  const currentLang = langs.map((item) => {
-    if (item.active) {
-      return item.code
-    }
-  })
+  // var langs = store.locale.languages
+  // const currentLang = langs.map((item) => {
+  //   if (item.active) {
+  //     return item.code
+  //   }
+  // })
   const account = store.account.account
   // if (account === false) {
   //   console.log("go to exchange")
@@ -43,7 +43,7 @@ import {HeaderTransaction} from "../TransactionCommon"
   const ethereum = store.connection.ethereum
   
   return {
-      translate, exchange, tokens, currentLang, account, ethereum,
+      translate, exchange, tokens, account, ethereum,
       params: {...props.match.params},
 
     }  

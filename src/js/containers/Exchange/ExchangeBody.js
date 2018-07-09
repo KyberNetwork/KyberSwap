@@ -14,7 +14,7 @@ import { TransactionLoading, Token } from "../CommonElements"
 import { TokenSelector } from "../TransactionCommon"
 
 import * as validators from "../../utils/validators"
-
+import * as common from "../../utils/common"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 
 import * as globalActions from "../../actions/globalActions"
@@ -30,11 +30,7 @@ import { default as _ } from 'underscore'
 @connect((store, props) => {
 
   const langs = store.locale.languages
-  const currentLang = langs.map((item) => {
-      if (item.active) {
-          return item.code
-      }
-  })
+  var currentLang = common.getActiveLanguage(langs)
 
   const ethereum = store.connection.ethereum
   const account = store.account

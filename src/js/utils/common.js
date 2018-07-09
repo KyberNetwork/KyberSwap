@@ -7,3 +7,13 @@ export function getParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+
+
+export function getActiveLanguage(langs){
+    for (var i = 0; i< langs.length; i++){
+      if (langs[i].active){
+        return langs[i].code
+      }
+    }
+    return "en"
+}

@@ -15,6 +15,8 @@ import { TokenSelector } from "../TransactionCommon"
 
 import { hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
+import * as common from "../../utils/common"
+
 
 import * as globalActions from "../../actions/globalActions"
 import constansts from "../../services/constants"
@@ -27,11 +29,7 @@ import { default as _ } from 'underscore'
 @connect((store, props) => {
 
   const langs = store.locale.languages
-  const currentLang = langs.map((item) => {
-      if (item.active) {
-          return item.code
-      }
-  })
+  var currentLang = common.getActiveLanguage(langs)
 
   const tokens = store.tokens.tokens
   const tokenSymbol = store.transfer.tokenSymbol

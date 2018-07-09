@@ -19,12 +19,7 @@ import { ImportAccount } from "../ImportAccount"
 import {HeaderTransaction} from "../TransactionCommon"
 
 @connect((store, props) => {
-  var langs = store.locale.languages
-  const currentLang = langs.map((item) => {
-    if (item.active) {
-      return item.code
-    }
-  })
+
   const account = store.account.account
   // if (account === false) {
   //   if (currentLang[0] === 'en') {
@@ -37,7 +32,7 @@ import {HeaderTransaction} from "../TransactionCommon"
   const tokens = store.tokens.tokens
   const transfer = store.transfer
   return {
-      translate, transfer, tokens, currentLang, account,
+      translate, transfer, tokens, account,
       params: {...props.match.params}
     }  
 })
