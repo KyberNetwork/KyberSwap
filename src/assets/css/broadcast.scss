@@ -156,15 +156,24 @@ ul.broadcast-steps {
       }
     }
     &.failed {
-      text-align: center;
       h4{
-        border-bottom: 1px solid #ff5d00;
+        border-bottom: 2px solid #EF8102;
         color: #666;
         font-weight: normal;
         cursor: pointer;
         margin-top: 10px;
         display: inline-block;
-        width: 100%;
+        // width: 100%;
+      }
+      .list-err {
+        padding-left: 6px;
+        margin-bottom: 15px;
+        div {
+          margin-top: 5px;
+          &:first-child.analyze-panel {
+            margin-top: 16px;
+          }
+        }
       }
       .reason{
         margin-top: 20px;
