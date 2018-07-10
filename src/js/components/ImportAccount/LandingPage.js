@@ -105,7 +105,7 @@ export default class LandingPage extends React.Component {
               <div className="landing-page__container">
                 <div className="landing-page__content">
                   <div className="landing-page__content-tagline">
-                    <h1 className="landing-page__content-title">{this.props.translate("landing_page.instant_and_secure_token_swap") || "Instant and Secure Token Swaps."}</h1>
+                    <h1 className="landing-page__content-title">{this.props.translate("landing_page.instant_and_secure_token_swap") || "Instant and Secure Token to Token Swaps"}</h1>
                     <h2 className="landing-page__content-description">{this.props.translate("landing_page.no_oderbooks_no_deposit") || "No orderbooks, no deposits, pure joy."}</h2>
                     {/* <p className="landing-page__content-pr">Want to purchase different tokens without any hassle?<br/>Do it in a few simple clicks.</p> */}
                   </div>
