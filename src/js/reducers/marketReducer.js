@@ -22,7 +22,7 @@ const initState = function () {
             circulating_supply: 0,
             total_supply: 0,
             last_7d: 0,
-            change: 0,
+            change: '---',
             volume: 0
         }
 
@@ -33,7 +33,7 @@ const initState = function () {
             circulating_supply: 0,
             total_supply: 0,
             last_7d: 0,
-            change: 0,
+            change: '---',
             volume: 0
         }
 
@@ -154,24 +154,24 @@ const market = (state = initState, action) => {
         }
 
         case 'MARKET.GET_GENERAL_INFO_TOKENS_COMPLETE': {
-            const { tokens, rateUSD } = action.payload
-            var newTokens = newState.tokens
-            Object.keys(tokens).map(key => {
-                var token = tokens[key]
-                if (newTokens[key]) {
-                    // newTokens[key].ETH.market_cap = token.market_cap
-                    newTokens[key].ETH.circulating_supply = token.circulating_supply
-                    newTokens[key].ETH.total_supply = token.total_supply
-                    // newTokens[key].ETH.volume = token.Quotes.ETH.volume_24h ? Math.round(token.Quotes.ETH.volume_24h): 0
+            // const { tokens, rateUSD } = action.payload
+            // var newTokens = newState.tokens
+            // Object.keys(tokens).map(key => {
+            //     var token = tokens[key]
+            //     if (newTokens[key]) {
+            //         newTokens[key].ETH.market_cap = token.market_cap
+            //         newTokens[key].ETH.circulating_supply = token.circulating_supply
+            //         newTokens[key].ETH.total_supply = token.total_supply
+            //         newTokens[key].ETH.volume = token.Quotes.ETH.volume_24h ? Math.round(token.Quotes.ETH.volume_24h): 0
 
-                    // newTokens[key].USD.market_cap = Math.round(token.market_cap * rateUSD)
-                    newTokens[key].USD.circulating_supply = token.circulating_supply
-                    newTokens[key].USD.total_supply = token.total_supply
-                    // newTokens[key].USD.volume = token.Quotes.USD.volume_24h ? Math.round(token.Quotes.USD.volume_24h): 0
-                }
-            })
+            //         newTokens[key].USD.market_cap = Math.round(token.market_cap * rateUSD)
+            //         newTokens[key].USD.circulating_supply = token.circulating_supply
+            //         newTokens[key].USD.total_supply = token.total_supply
+            //         newTokens[key].USD.volume = token.Quotes.USD.volume_24h ? Math.round(token.Quotes.USD.volume_24h): 0
+            //     }
+            // })
 
-            return  {...newState, tokens: {...newTokens}}
+            // return  {...newState, tokens: {...newTokens}}
         }
 
         case 'MARKET.GET_VOLUMN_SUCCESS':{

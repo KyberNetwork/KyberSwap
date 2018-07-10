@@ -60,12 +60,11 @@ export default class MarketTable extends React.Component {
     var point = []
     var labels = []
     var input = props.value
+    var dataLength = 28
 
     if (Array.isArray(input)) {
-      if (input.length === 28 || input.length === 29) {
-        var dataLength = input.length
-      } else {
-        var dataLength = 29
+      if (input.length === 29) {
+        input.shift()
       }
       var addLength = 0
       var inputLength = input.length
