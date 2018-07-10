@@ -61,10 +61,12 @@ import { default as _ } from 'underscore'
   }
 
   return {
-    account, ethereum, tokens, translate, currentLang, exchange: {
+    account, ethereum, tokens, translate, currentLang, 
+    global: store.global,
+    exchange: {
       ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
       sourceName, destName, rateSourceToEth,
-      advanceLayout : props.advanceLayout
+      advanceLayout : props.advanceLayout      
     }
   }
 })
@@ -440,6 +442,7 @@ export default class ExchangeBody extends React.Component {
         advanceLayout = {this.props.advanceLayout}
         balanceList = {accountBalance}
         focus = {this.state.focus}
+        networkError ={this.props.global.network_error}
       />
     )
   }
