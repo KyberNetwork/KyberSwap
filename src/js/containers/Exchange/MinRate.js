@@ -52,11 +52,12 @@ export default class MinRate extends React.Component {
 
     var displayMinRate = this.props.exchange.isSelectToken ? <img src={require('../../../assets/img/waiting.svg')} /> : converter.roundingNumber(minConversionRate)
    // var displaySlippageRate = this.props.exchange.isSelectToken ? (<img src={require('../../../assets/img/waiting-white.svg')} /> + " " + desToken): converter.roundingNumber(slippageRate) + " " + desToken
-
+  
+   var src = require('../../../assets/img/waiting.svg')
 
    var displaySlippageRate
     if (this.props.exchange.isSelectToken){
-      displaySlippageRate = this.props.translate("transaction.our_suggest_loading", { src: '../../../assets/img/waiting.svg', desToken: desToken}) 
+      displaySlippageRate = this.props.translate("transaction.our_suggest_loading", { src: src, desToken: desToken}) 
             || (<span><strong> <img src={require('../../../assets/img/waiting.svg')} /> {desToken}</strong> is our suggested Min acceptable rate by default.</span>)
     }else{
       displaySlippageRate = this.props.translate("transaction.our_suggest", { suggestRate: converter.roundingNumber(slippageRate) + " " + desToken}) 

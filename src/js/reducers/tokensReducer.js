@@ -23,44 +23,44 @@ const initState = function () {
 
 const tokens = (state = initState, action) => {
   switch (action.type) {
-    case REHYDRATE: {
-      if (action.key === "tokens") {
-        var payload = action.payload
-        var tokens = {}
-        if (payload) {
-          // check load from loaclforage or initstate
-          var loadedTokens = payload.tokens
-          if (payload.count && payload.count.storageKey !== constants.STORAGE_KEY) {
-            loadedTokens = initState.tokens
-          }
+    // case REHYDRATE: {
+    //   if (action.key === "tokens") {
+    //     var payload = action.payload
+    //     var tokens = {}
+    //     if (payload) {
+    //       // check load from loaclforage or initstate
+    //       var loadedTokens = payload.tokens
+    //       if (payload.count && payload.count.storageKey !== constants.STORAGE_KEY) {
+    //         loadedTokens = initState.tokens
+    //       }
 
-          Object.keys(loadedTokens).forEach((id) => {
-            var tokenMap = loadedTokens[id]
-            var token = new Rate(
-              tokenMap.name,
-              tokenMap.symbol,
-              tokenMap.icon,
-              tokenMap.address,
-              tokenMap.decimal,
-              tokenMap.rate ? tokenMap.rate : 0,
-              tokenMap.minRate ? tokenMap.minRate : 0,
-              0,
-              tokenMap.rateEth ? tokenMap.rateEth : 0,
-              tokenMap.minRateEth ? tokenMap.minRateEth : 0,
-              tokenMap.rateUSD ? tokenMap.rateUSD : 0
-            )
-            tokens[id] = token
-          })
-          return Object.assign({}, state, {
-            tokens: tokens,
-            count: { storageKey: constants.STORAGE_KEY }
-          })
-        } else {
-          return state;
-        }
-      }
-      return state
-    }
+    //       Object.keys(loadedTokens).forEach((id) => {
+    //         var tokenMap = loadedTokens[id]
+    //         var token = new Rate(
+    //           tokenMap.name,
+    //           tokenMap.symbol,
+    //           tokenMap.icon,
+    //           tokenMap.address,
+    //           tokenMap.decimal,
+    //           tokenMap.rate ? tokenMap.rate : 0,
+    //           tokenMap.minRate ? tokenMap.minRate : 0,
+    //           0,
+    //           tokenMap.rateEth ? tokenMap.rateEth : 0,
+    //           tokenMap.minRateEth ? tokenMap.minRateEth : 0,
+    //           tokenMap.rateUSD ? tokenMap.rateUSD : 0
+    //         )
+    //         tokens[id] = token
+    //       })
+    //       return Object.assign({}, state, {
+    //         tokens: tokens,
+    //         count: { storageKey: constants.STORAGE_KEY }
+    //       })
+    //     } else {
+    //       return state;
+    //     }
+    //   }
+    //   return state
+    // }
     case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
       var tokens = { ...state.tokens }
       var rates = action.payload.rates

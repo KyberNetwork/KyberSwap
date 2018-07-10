@@ -82,7 +82,7 @@ const ExchangeBodyLayout = (props) => {
 
   var render = (
     <div className="grid-x">
-      <div className={errorExchange ? "cell medium-6 large-3 balance-wrapper error" : "cell medium-6 large-3 balance-wrapper"} id="balance-account-wrapper">
+      <div className={errorExchange ||  props.networkError !== ""? "cell medium-6 large-3 balance-wrapper error" : "cell medium-6 large-3 balance-wrapper"} id="balance-account-wrapper">
         {props.balanceList}
       </div>
       <div className="cell medium-6 large-9 swap-wrapper">
@@ -94,6 +94,19 @@ const ExchangeBodyLayout = (props) => {
         {/* <div> */}
         <div className="grid-x exchange-col">
           <div className="cell large-8 exchange-col-1">
+            {props.networkError !== "" && (
+              <div className="network_error"> 
+                <span>
+                  <img src={require("../../../assets/img/warning.svg")} />
+                </span>
+                <span>
+                  {props.networkError}
+                </span>
+                {/* <span>
+                  <img src={require("../../../assets/img/loading.svg")} />
+                </span> */}
+              </div>
+  )}
             <div className="title main-title">{props.translate("transaction.swap") || "Swap"}</div>
             <div className="grid-x">
               <div className="cell large-5">

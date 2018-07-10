@@ -459,3 +459,18 @@ input.search-input {
   text-indent: 30px;
   outline: none;  
 }
+
+
+.network_error{
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  color: #EE344E;
+  padding: 10px;
+  justify-content: center;
+  >span{
+    &:not(:first-child){
+      margin-left: 5px;
+    }
+  }
+}
