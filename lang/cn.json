@@ -84,6 +84,7 @@
     "click_to_swap_all_balance": "点击兑换所有余额",
 
     "higher_min_acceptable_rate": "当市场波动时，较高的最低可接受比率通常意味着较低的成功率。",
+    "our_suggest_loading": "<img src=\"${src}\"/> ${desToken}是我们默认的最低可接受比率。",
     "our_suggest": "<strong> ${suggestRate}</strong>是我们默认的最低可接受比率。",
     "min_acceptable_rate": "最低可接受比率",
 

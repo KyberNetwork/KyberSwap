@@ -205,7 +205,7 @@ const TransactionLoadingView = (props) => {
                       <h4 class="font-w-b d-inline-blocka analyze-btn" onClick={(e) => handleAnalyze(e)}>                    
                         {props.translate("transaction.transaction_error") || "Transaction error"}
                       </h4>
-                      <div>
+                      <div className="list-err">
                         {getError()}
                       </div>
                     </div>

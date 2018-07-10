@@ -148,7 +148,7 @@ export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePric
   //var reserveBalance = rate[2]
   return {
     type: "EXCHANGE.UPDATE_RATE",
-    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage:  converter.toT(rateInit, 18), blockNo, isManual, isSuccess}
+    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess}
   }
 
 }

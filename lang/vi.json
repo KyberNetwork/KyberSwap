@@ -86,6 +86,7 @@
     "click_to_transfer_all_balance": "Chuyển toàn bộ tài khoản",
 
     "higher_min_acceptable_rate": "Tỷ giá thấp hơn cho khả năng giáo dịch thành công cao hơn khi thị trường biến động.",
+    "our_suggest_loading": "<img src=\"${src}\"/> ${desToken} là tỷ giá thấp nhất chấp nhận được mà chúng tôi đề xuất.",
     "our_suggest": "<strong> ${suggestRate}</strong> là tỷ giá thấp nhất chấp nhận được mà chúng tôi đề xuất.",
     "min_acceptable_rate": "Tỷ giá thấp nhất được chấp nhận",
 

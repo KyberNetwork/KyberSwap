@@ -485,3 +485,30 @@ export function caculatorRateToPercentage(number,total){
   }
   return 0;
 }
+
+
+export function estimateSlippagerate(expectedRate){
+  var bigNumber = new BigNumber(expectedRate.toString())
+  var result = bigNumber.div(1000000000000000000).times(0.97)
+  return result.toString()
+}
+
+
+export function getMinrate(rate, minRate){
+  if (isNaN(rate) || rate === ""){
+    rate = 0
+  }
+  if (isNaN(minRate) || minRate === ""){
+    minRate = 0
+  }
+  rate = rate.toString()
+  minRate = minRate.toString()
+
+  if(minRate === "0"){
+    var bigNumber = new BigNumber(rate)
+    var result = bigNumber.div(1000000000000000000).times(0.97)
+    return result.toString()
+  }else{
+    return minRate
+  }
+}

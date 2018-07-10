@@ -178,7 +178,7 @@ export default class EthereumService extends React.Component {
 
     this.fetGeneralInfoTokens()
 
-   //this.testAnalize()
+  // this.testAnalize()
   // this.testEstimateGas()
   }
 
@@ -199,7 +199,7 @@ export default class EthereumService extends React.Component {
   testAnalize() {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    store.dispatch(analyzeError(ethereum, "0xf410222fe20c4a4e3daa4355ca6cf80e1762f6cf55c20bf6289fccb273d233cf"))
+   // store.dispatch(analyzeError(ethereum, "0x65f0b209035d3424c73f5cbcca20b57787940e756f6a193cd2464b5d02f0a1b7"))
   }
 
   // testEstimateGas() {
@@ -345,7 +345,7 @@ export default class EthereumService extends React.Component {
     }
     var pathname = state.router.location.pathname
     console.log(pathname)
-    if (pathname !== constants.BASE_HOST + "/swap") {
+    if (!pathname.includes(constants.BASE_HOST + "/swap")) {
       return
     }
     store.dispatch(estimateGas())
@@ -359,7 +359,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== constants.BASE_HOST + "/transfer") {
+    if (!pathname.includes(constants.BASE_HOST + "/transfer")) {
       return
     }
     store.dispatch(estimateGasTransfer())
@@ -381,7 +381,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== constants.BASE_HOST + "/swap") {
+    if (!pathname.includes(constants.BASE_HOST + "/swap")) {
       return
     }
     store.dispatch(verifyExchange())
@@ -396,7 +396,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== constants.BASE_HOST + "/transfer") {
+    if (!pathname.includes(constants.BASE_HOST + "/transfer")) {
       return
     }
     store.dispatch(verifyTransfer())
@@ -421,7 +421,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== constants.BASE_HOST + "/swap") {
+    if (!pathname.includes(constants.BASE_HOST + "/swap")) {
       return
     }
     store.dispatch(fetchExchangeEnable())

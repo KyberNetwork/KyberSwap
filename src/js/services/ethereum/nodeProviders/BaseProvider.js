@@ -66,7 +66,7 @@ export default class BaseProvider {
 
         return new Promise((resolve, reject) => {
             var data = this.wrapperContract.methods.getBalances(address, listToken).call().then(result => {
-                console.log(result)
+                //console.log(result)
                 var listTokenBalances = []
                 listSymbol.map((symbol, index) => {
                     listTokenBalances.push({
@@ -170,7 +170,7 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             this.rpc.eth.estimateGas(txObj)
                 .then((result) => {
-                    console.log("gas_result: " + result)
+                   // console.log("gas_result: " + result)
                     if (result != null) {
                         resolve(result)
                     }
@@ -523,8 +523,8 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getGasPrice()
                 .then(result => {
-                    console.log("gas price")
-                    console.log(result)
+                    // console.log("gas price")
+                    // console.log(result)
 
                     var gasPrice = parseInt(result, 10)
                     gasPrice = gasPrice / 1000000000

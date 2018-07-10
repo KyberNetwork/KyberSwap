@@ -86,6 +86,7 @@
     "click_to_transfer_all_balance": "Click to transfer all balance",
 
     "higher_min_acceptable_rate": "Higher MIN ACCEPTABLE RATE typically results in lower success rate when the market is volatile.",
+    "our_suggest_loading": "<img src=\"${src}\"/> ${desToken} is our suggested MIN ACCEPTABLE RATE by default.",
     "our_suggest": "<strong> ${suggestRate}</strong> is our suggested MIN ACCEPTABLE RATE by default.",
     "min_acceptable_rate": "MIN ACCEPTABLE RATE",
 
@@ -179,7 +180,7 @@
     "clear_data_timeout": "We've cleared all your data because your session is timed out ${time} minutes",
     "minutes": " minutes",
     "time_out": "Time out",
-    "network_error": "Cannot connect to node right now. Please check your network!",
+    "network_error": "Cannot connect to node right now. Trying to reconnect...",
     "node_error": "There are some problems with nodes. Please try again in a while",
     "term_error": "You must agree terms and services!",
 
