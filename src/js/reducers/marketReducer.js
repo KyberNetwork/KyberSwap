@@ -242,7 +242,7 @@ const market = (state = initState, action) => {
                     }
                 }
                 tokens[key].USD.change = tokens[key].ETH.change = change
-                if (newTokens[key]) {
+                if (newTokens[key] && token.quotes) {
                     newTokens[key].ETH.market_cap = token.quotes.ETH.market_cap
                     newTokens[key].ETH.volume = token.quotes.ETH.volume_24h ? Math.round(token.quotes.ETH.volume_24h): 0
 
