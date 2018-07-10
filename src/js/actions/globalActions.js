@@ -211,3 +211,11 @@ export function setMaxGasPrice() {
     type: "GLOBAL.SET_MAX_GAS_PRICE",
   }
 }
+
+
+export function setNetworkError(error){
+  return {
+    type: "GLOBAL.SET_NETWORK_ERROR",
+    payload: {error}
+  }
+}

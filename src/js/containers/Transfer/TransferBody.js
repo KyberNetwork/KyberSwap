@@ -46,6 +46,7 @@ import { default as _ } from 'underscore'
     transfer: { ...store.transfer, balance, decimal, tokenName },
     account: store.account,
     tokens: tokens,
+    global: store.global,
     translate: getTranslate(store.locale),
     advanceLayout : props.advanceLayout,
     currentLang
@@ -264,6 +265,7 @@ export default class Transfer extends React.Component {
         onFocus = {this.onFocus}
         focus = {this.state.focus}
         advanceLayout = {this.props.advanceLayout}
+        networkError ={this.props.global.network_error}
       />
     )
   }
