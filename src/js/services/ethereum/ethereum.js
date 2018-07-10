@@ -68,9 +68,9 @@ export default class EthereumService extends React.Component {
     callBackSync()
     this.intervalSyncID = setInterval(callBackSync, 3000)
 
-    var callBack10Min = this.fetchData10Min.bind(this)
-    callBack10Min()
-    var interval10Min = setInterval(callBack10Min, 600000)
+    var callBack5Min = this.fetchData5Min.bind(this)
+    callBack5Min()
+    var interval5Min = setInterval(callBack5Min, 300000)
   }
 
   clearSubcription() {
@@ -183,7 +183,7 @@ export default class EthereumService extends React.Component {
   }
 
 
-  fetchData10Min(){
+  fetchData5Min(){
     this.fetchVolumn()
   }
 
