@@ -45,7 +45,6 @@ import {Line} from 'react-chartjs-2';
 
 export default class MarketTable extends React.Component {
   drawChart = (props) => {
-    const dataLength = 29
     var lineColor = ""
     var backgroundColor = ""
     if (props["original"]["change"] < 0) {
@@ -63,6 +62,11 @@ export default class MarketTable extends React.Component {
     var input = props.value
 
     if (Array.isArray(input)) {
+      if (input.length === 28 || input.length === 29) {
+        var dataLength = input.length
+      } else {
+        var dataLength = 29
+      }
       var addLength = 0
       var inputLength = input.length
       if (inputLength < dataLength) {

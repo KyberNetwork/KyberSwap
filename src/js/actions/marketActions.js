@@ -92,3 +92,10 @@ export function getVolumnSuccess(data){
     payload: {data}
   }
 }
+
+export function getMarketInfoSuccess(data, rateUSD) {
+  return {
+    type: "MARKET.GET_MARKET_INFO_SUCCESS",
+    payload: {data, rateUSD}
+  }
+}

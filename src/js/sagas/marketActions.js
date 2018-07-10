@@ -49,8 +49,12 @@ export function* getVolumn(){
         const rates = yield call([ethereum, ethereum.call],"getAllRates", tokens)
         yield put.sync(globalActions.updateAllRateComplete(rates))
 
-        var data = yield call([ethereum, ethereum.call], "getVolumnChart")
-        yield put(marketActions.getVolumnSuccess(data))
+        // var data = yield call([ethereum, ethereum.call], "getVolumnChart")
+        // yield put(marketActions.getVolumnSuccess(data))
+
+        // use new cached api
+        var newData = yield call([ethereum, ethereum.call], "getMarketInfo")
+        yield put(marketActions.getMarketInfoSuccess(newData.data, rateUSD))
     }catch(e){
         console.log(e)
     }
