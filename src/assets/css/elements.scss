@@ -461,7 +461,7 @@ input.search-input {
 }
 
 
-.network_error{
+.network_error {
   display: flex;
   align-items: center;
   font-size: 11px;
@@ -471,6 +471,36 @@ input.search-input {
   >span{
     &:not(:first-child){
       margin-left: 5px;
+      position: relative;
+      bottom: 1px;
+      line-height: 1;
+
+      > span {
+        > span {
+          opacity: 0;
+          margin-left: 2px;
+          font-size: 19px;
+          animation: waiting 1.4s infinite;
+
+          &:nth-child(2) {
+            animation-delay: .2s;
+          }
+
+          &:nth-child(3) {
+            animation-delay: .4s;
+          }
+
+          @keyframes waiting {
+            20% {
+              opacity: 1;
+            }
+
+            100% {
+              opacity: 0;
+            }
+          }
+        }
+      }
     }
   }
 }
