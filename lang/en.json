@@ -180,7 +180,7 @@
     "clear_data_timeout": "We've cleared all your data because your session is timed out ${time} minutes",
     "minutes": " minutes",
     "time_out": "Time out",
-    "network_error": "Cannot connect to node right now. Trying to reconnect...",
+    "network_error": "Cannot connect to node right now. Trying to reconnect<span>.</span><span>.</span><span>.</span>",
     "node_error": "There are some problems with nodes. Please try again in a while",
     "term_error": "You must agree terms and services!",
 

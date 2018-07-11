@@ -181,7 +181,7 @@
     "clear_data_timeout": "由于您的会话超时${time} 分钟，我们清除了您的数据",
     "minutes": " 分钟",
     "time_out": "超时",
-    "network_error": "目前无法连接到区块链。请稍后再尝试。",
+    "network_error": "目前无法连接到区块链。请稍后再尝试<span>.</span><span>.</span><span>.</span>",
     "node_error": "节点有一些问题。请稍后再试",
     "term_error": "您必须先同意服务条款！",
 
