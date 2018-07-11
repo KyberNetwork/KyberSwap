@@ -362,7 +362,14 @@
       "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
       "symbol":"BNT", 
       "icon": "bnt.svg"
-    } 
+    }, 
+    "TUSD": {
+      "name": "TrueUSD",
+      "decimal": 18,
+      "address": "0x8dd5fbce2f6a956c3022ba3663759011dd51e73e",
+      "symbol":"TUSD", 
+      "icon": "tusd.svg"
+    }
   },
   "ethScanUrl": "https://etherscan.io/",
   "reserve": "0x2c5a182d280eeb5824377b98cd74871f78d6b8bc",
