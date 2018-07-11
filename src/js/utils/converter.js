@@ -512,3 +512,38 @@ export function getMinrate(rate, minRate){
     return minRate
   }
 }
+
+
+export function calculateMinSource(sourceAmount, decimal, rateSell){
+  console.log({sourceAmount, decimal, rateSell})
+  if ((sourceAmount === "") || isNaN(sourceAmount)) sourceAmount = 0
+
+  var minSourceAllow = new BigNumber(getSourceAmountZero(decimal, rateSell))
+
+  var sourceAmountBig = new BigNumber(sourceAmount.toString())
+  sourceAmountBig = sourceAmountBig.times(Math.pow(10, decimal))
+
+  if (minSourceAllow.comparedTo(sourceAmountBig) === 1){
+    return "0x" + minSourceAllow.toString(16)
+  }else{
+    return "0x" + sourceAmountBig.toString(16)
+  }
+}
+
+
+export function getSourceAmountZero(decimal, rateSell){
+  var epsilon = constants.EPSILON
+  var minETHAllow = new BigNumber(epsilon.toString())
+  var rate = new BigNumber(rateSell)
+  if (rate.comparedTo(0) === 0){
+    return "0"
+  }
+  var minSourceAllow = minETHAllow.div(rate).times(Math.pow(10,decimal))
+  return  minSourceAllow.toFixed(0)
+}
+
+
+export function toHex(number){
+  var bigNumber = new BigNumber(number)
+  return "0x" + bigNumber.toString(16)
+}

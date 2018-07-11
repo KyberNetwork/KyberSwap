@@ -121,7 +121,7 @@ export default class ExchangeBody extends React.Component {
     var source = this.props.exchange.sourceToken
     var dest = this.props.exchange.destToken
     var destTokenSymbol = this.props.exchange.destTokenSymbol
-    var sourceAmountHex = stringToHex(sourceValue, sourceDecimal)
+    //var sourceAmountHex = stringToHex(sourceValue, sourceDecimal)
     var rateInit = 0
     if (sourceTokenSymbol === 'ETH' && destTokenSymbol !== 'ETH') {
       rateInit = this.props.tokens[destTokenSymbol].minRateEth
@@ -130,7 +130,7 @@ export default class ExchangeBody extends React.Component {
       rateInit = this.props.tokens[sourceTokenSymbol].minRate
     }
 
-    this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceAmountHex, true, rateInit))
+    this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, rateInit))
   }
 
 

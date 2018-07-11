@@ -304,7 +304,7 @@ export default class EthereumService extends React.Component {
       sourceDecimal = tokens[sourceTokenSymbol].decimal
     }
 
-    var sourceAmountHex = stringToHex(sourceAmount, sourceDecimal)
+//    var sourceAmountHex = stringToHex(sourceAmount, sourceDecimal)
 
     // var destTokenSymbol = state.exchange.destTokenSymbol
     // var rateInit = 0
@@ -315,7 +315,7 @@ export default class EthereumService extends React.Component {
     //   rateInit = tokens[sourceTokenSymbol].minRate
     // }
 
-    store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmountHex, isManual))
+    store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual))
   }
 
   // fetchHistoryExchange = () => {

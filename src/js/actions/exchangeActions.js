@@ -117,10 +117,10 @@ export function setRandomExchangeSelectedToken(random) {
 }
 
 export function updateRateExchange(ethereum, source, dest,
-  sourceAmount, isManual = false) {
+  sourceAmount, sourceTokenSymbol, isManual = false) {
   return {
     type: "EXCHANGE.UPDATE_RATE_PENDING",
-    payload: { ethereum, source, dest, sourceAmount, isManual }
+    payload: { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual }
   }
 }
 
