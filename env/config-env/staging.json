@@ -369,6 +369,13 @@
       "address": "0x8dd5fbce2f6a956c3022ba3663759011dd51e73e",
       "symbol":"TUSD", 
       "icon": "tusd.svg"
+    },
+    "TOMO": {
+      "name": "Tomocoin",
+      "decimal": 18,
+      "address": "0x8b353021189375591723e7384262f45709a3c3dc",
+      "symbol":"TOMO", 
+      "icon": "tomo.png"
     }
   },
   "ethScanUrl": "https://etherscan.io/",
