@@ -514,11 +514,11 @@ export function getMinrate(rate, minRate){
 }
 
 
-export function calculateMinSource(sourceAmount, decimal, rateSell){
+export function calculateMinSource(sourceTokenSymbol, sourceAmount, decimal, rateSell){
   console.log({sourceAmount, decimal, rateSell})
   if ((sourceAmount === "") || isNaN(sourceAmount)) sourceAmount = 0
 
-  var minSourceAllow = new BigNumber(getSourceAmountZero(decimal, rateSell))
+  var minSourceAllow = new BigNumber(getSourceAmountZero(sourceTokenSymbol, decimal, rateSell))
 
   var sourceAmountBig = new BigNumber(sourceAmount.toString())
   sourceAmountBig = sourceAmountBig.times(Math.pow(10, decimal))
@@ -526,14 +526,20 @@ export function calculateMinSource(sourceAmount, decimal, rateSell){
   if (minSourceAllow.comparedTo(sourceAmountBig) === 1){
     return "0x" + minSourceAllow.toString(16)
   }else{
-    return "0x" + sourceAmountBig.toFixed(0).toString(16)
+    var sourceAmountDecimal = sourceAmountBig.toFixed(0)
+    var sourceAmountHex = new BigNumber(sourceAmountDecimal)
+    return "0x" + sourceAmountHex.toString(16)
   }
 }
 
 
-export function getSourceAmountZero(decimal, rateSell){
+export function getSourceAmountZero(sourceTokenSymbol, decimal, rateSell){
   var epsilon = constants.EPSILON
   var minETHAllow = new BigNumber(epsilon.toString())
+
+  if (sourceTokenSymbol === "ETH"){
+    return minETHAllow.toFixed(0)
+  }
   var rate = new BigNumber(rateSell)
   if (rate.comparedTo(0) === 0){
     return "0"
