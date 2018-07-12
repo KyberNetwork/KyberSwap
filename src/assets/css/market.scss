@@ -222,6 +222,8 @@
       .rt-table {
         .rt-thead {
           font-weight: bold;
+          text-transform: uppercase;
+          font-size: 14px;
           &.-header {
             box-shadow: none;
             border-bottom: 2px solid #ef8102;
@@ -326,7 +328,7 @@
         .rt-th-img {
           font-weight: bold;
           img {
-            content:url(../img/landing/sort-active-asc.svg);
+            content:url(../img/landing/sort-active-asc-orange.svg);
           }
         }
       }
@@ -334,7 +336,7 @@
         box-shadow: none;
         .rt-th-img {
           img {
-            content:url(../img/landing/sort-active.svg);
+            content:url(../img/landing/sort-active-orange.svg);
           }
         }
       }
