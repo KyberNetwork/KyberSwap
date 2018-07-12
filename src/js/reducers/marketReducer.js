@@ -22,7 +22,7 @@ const initState = function () {
             circulating_supply: 0,
             total_supply: 0,
             last_7d: 0,
-            change: '---',
+            change: -9999,
             volume: 0
         }
 
@@ -33,7 +33,7 @@ const initState = function () {
             circulating_supply: 0,
             total_supply: 0,
             last_7d: 0,
-            change: '---',
+            change: -9999,
             volume: 0
         }
 
@@ -231,7 +231,7 @@ const market = (state = initState, action) => {
                 var change = 0
 
                 if ((sellPrice <= 0) || (buyPrice <=0)){
-                    change = "---"
+                    change = -9999
                 }else{
                     var midlePrice = (buyPrice + sellPrice) / 2
                     var price24h = token.rates.r
