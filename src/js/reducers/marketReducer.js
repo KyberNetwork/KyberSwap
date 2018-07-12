@@ -221,26 +221,29 @@ const market = (state = initState, action) => {
                 if (!tokens[key]) return
                 
                 var token = data[key]
+                var change = -9999
 
-                tokens[key].ETH.last_7d =  token.rates.p
-                tokens[key].USD.last_7d =  token.rates.p
+                if (token.rates) {
+                    tokens[key].ETH.last_7d =  token.rates.p
+                    tokens[key].USD.last_7d =  token.rates.p
 
-                //get 24h change                
-                var buyPrice = parseFloat(tokens[key].ETH.buyPrice)
-                var sellPrice = parseFloat(tokens[key].ETH.sellPrice)
-                var change = 0
+                    //get 24h change                
+                    var buyPrice = parseFloat(tokens[key].ETH.buyPrice)
+                    var sellPrice = parseFloat(tokens[key].ETH.sellPrice)
 
-                if ((sellPrice <= 0) || (buyPrice <=0)){
-                    change = -9999
-                }else{
-                    var midlePrice = (buyPrice + sellPrice) / 2
-                    var price24h = token.rates.r
-                    if (midlePrice > price24h){
-                        change = converters.calculatePercent(midlePrice, price24h)
+                    if ((sellPrice <= 0) || (buyPrice <=0)){
+                        change = -9999
                     }else{
-                        change = converters.calculatePercent(price24h, midlePrice) * -1
+                        var midlePrice = (buyPrice + sellPrice) / 2
+                        var price24h = token.rates.r
+                        if (midlePrice > price24h){
+                            change = converters.calculatePercent(midlePrice, price24h)
+                        }else{
+                            change = converters.calculatePercent(price24h, midlePrice) * -1
+                        }
                     }
                 }
+
                 tokens[key].USD.change = tokens[key].ETH.change = change
                 if (newTokens[key] && token.quotes) {
                     newTokens[key].ETH.market_cap = token.quotes.ETH.market_cap
