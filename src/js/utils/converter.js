@@ -526,7 +526,7 @@ export function calculateMinSource(sourceAmount, decimal, rateSell){
   if (minSourceAllow.comparedTo(sourceAmountBig) === 1){
     return "0x" + minSourceAllow.toString(16)
   }else{
-    return "0x" + sourceAmountBig.toString(16)
+    return "0x" + sourceAmountBig.toFixed(0).toString(16)
   }
 }
 
