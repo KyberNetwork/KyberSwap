@@ -223,7 +223,7 @@
   },
   "ethScanUrl": "https://ropsten.etherscan.io/",
   "reserve": "0x0fc1cf3e7dd049f7b42e6823164a64f76fc06be0",
-  "network": "0x2a21728dF01992cCEE34ad8f9c32A0a2AE1e181b",
+  "network": "0x818E6FECD516Ecc3849DAf6845e3EC868087B755",
   "wrapper": "0x665d34f192f4940da4e859ff7768c0a80ed3ae10",
   "trade_topic":"0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
   "endpoint": "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",

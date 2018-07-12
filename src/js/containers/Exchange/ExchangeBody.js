@@ -14,14 +14,24 @@ import { TransactionLoading, Token } from "../CommonElements"
 import { TokenSelector } from "../TransactionCommon"
 
 import * as validators from "../../utils/validators"
-
+import * as common from "../../utils/common"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
+
+import * as globalActions from "../../actions/globalActions"
+
 import * as exchangeActions from "../../actions/exchangeActions"
+
+import constansts from "../../services/constants"
+
 //import { randomForExchange } from "../../utils/random"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
 
 @connect((store, props) => {
+
+  const langs = store.locale.languages
+  var currentLang = common.getActiveLanguage(langs)
+
   const ethereum = store.connection.ethereum
   const account = store.account
   const exchange = store.exchange
@@ -51,10 +61,12 @@ import { default as _ } from 'underscore'
   }
 
   return {
-    account, ethereum, tokens, translate, exchange: {
+    account, ethereum, tokens, translate, currentLang, 
+    global: store.global,
+    exchange: {
       ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
       sourceName, destName, rateSourceToEth,
-      advanceLayout : props.advanceLayout
+      advanceLayout : props.advanceLayout      
     }
   }
 })
@@ -70,6 +82,16 @@ export default class ExchangeBody extends React.Component {
 
   chooseToken = (symbol, address, type) => {
     this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
+    var path
+    if (type === "source"){
+      path = constansts.BASE_HOST + "/swap/" + symbol.toLowerCase() + "_" + this.props.exchange.destTokenSymbol.toLowerCase()
+    }else{
+      path = constansts.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "_" + symbol.toLowerCase()
+    }
+    if (this.props.currentLang !== "en"){
+      path += "?lang=" + this.props.currentLang
+    }
+    this.props.dispatch(globalActions.goToRoute(path))
   }
 
   dispatchUpdateRateExchange = (sourceValue) => {
@@ -99,7 +121,7 @@ export default class ExchangeBody extends React.Component {
     var source = this.props.exchange.sourceToken
     var dest = this.props.exchange.destToken
     var destTokenSymbol = this.props.exchange.destTokenSymbol
-    var sourceAmountHex = stringToHex(sourceValue, sourceDecimal)
+    //var sourceAmountHex = stringToHex(sourceValue, sourceDecimal)
     var rateInit = 0
     if (sourceTokenSymbol === 'ETH' && destTokenSymbol !== 'ETH') {
       rateInit = this.props.tokens[destTokenSymbol].minRateEth
@@ -108,7 +130,7 @@ export default class ExchangeBody extends React.Component {
       rateInit = this.props.tokens[sourceTokenSymbol].minRate
     }
 
-    this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceAmountHex, true, rateInit))
+    this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, rateInit))
   }
 
 
@@ -253,6 +275,12 @@ export default class ExchangeBody extends React.Component {
   swapToken = () => {
     this.props.dispatch(exchangeActions.swapToken())
     this.props.ethereum.fetchRateExchange(true)
+
+    var path = constansts.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "_" + this.props.exchange.sourceTokenSymbol.toLowerCase()
+    if (this.props.currentLang !== "en"){
+      path += "?lang=" + this.props.currentLang
+    }
+    this.props.dispatch(globalActions.goToRoute(path))
   }
 
   analyze = () => {
@@ -263,18 +291,18 @@ export default class ExchangeBody extends React.Component {
   }
 
   render() {
-    if (this.props.account.isStoreReady) {
-      if (!!!this.props.account.account.address) {
-        setTimeout(() => this.props.dispatch(push("/")), 1000)
-        return (
-          <div></div>
-        )
-      }
-    } else {
-      return (
-        <div></div>
-      )
-    }
+    // if (this.props.account.isStoreReady) {
+    //   if (!!!this.props.account.account.address) {
+    //     setTimeout(() => this.props.dispatch(push("/")), 1000)
+    //     return (
+    //       <div>exchange is not ready</div>
+    //     )
+    //   }
+    // } else {
+    //   return (
+    //     <div>exchange is not ready111</div>
+    //   )
+    // }
 
     //for transaction loading screen
     // var balance = {
@@ -414,6 +442,7 @@ export default class ExchangeBody extends React.Component {
         advanceLayout = {this.props.advanceLayout}
         balanceList = {accountBalance}
         focus = {this.state.focus}
+        networkError ={this.props.global.network_error}
       />
     )
   }

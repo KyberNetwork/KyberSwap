@@ -95,12 +95,14 @@ var scriptConfig = function (env) {
     },
     output: {
       path: __dirname + dist,
+      publicPath: '/',
       filename: "[name].min.js"
     },
     plugins: plugins,
     devServer: {
       compress: true,
       disableHostCheck: true,
+      contentBase: path.join(__dirname, 'src'),
     }
   }
 };

@@ -94,6 +94,10 @@ const account = (state=initState, action) => {
       newState.isGetAllBalance = true
       return newState
     }  
+    case "GLOBAL.CLEAR_SESSION_FULFILLED":{
+      let newState = {...initState}
+      return newState
+    }
   }
   return state
 }

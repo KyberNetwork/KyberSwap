@@ -13,6 +13,8 @@ import * as converter from "../utils/converter"
 import { getTranslate } from 'react-localize-redux'
 import NotiService from "../services/noti_service/noti_service"
 
+
+
 export function* createNewConnection(action) {
   var translate = getTranslate(store.getState().locale)
   var connectionInstance = new EthereumService()
@@ -47,10 +49,12 @@ function* watchMetamaskAccount(ethereum, web3Service) {
   while (true) {
     try {
       var state = store.getState()
-      if (state.router && state.router.location) {
-        var pathname = state.router.location.pathname
-        console.log(pathname)
-        if (pathname === constants.BASE_HOST) {
+      const account = state.account.account
+      if (account === false){
+
+      // if (state.router && state.router.location) {
+      //   var pathname = state.router.location.pathname
+      //   if (pathname === constants.BASE_HOST) {
 
           //test network id
           const currentId = yield call([web3Service, web3Service.getNetworkId])
@@ -73,7 +77,7 @@ function* watchMetamaskAccount(ethereum, web3Service) {
             yield put(globalActions.throwErrorMematamask(translate("error.cannot_connect_metamask") || `Cannot get metamask account. You probably did not login in Metamask`))
           }
 
-        }
+        
       }
     } catch (e) {
       console.log(e)

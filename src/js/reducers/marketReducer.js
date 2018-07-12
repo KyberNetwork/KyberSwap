@@ -22,7 +22,7 @@ const initState = function () {
             circulating_supply: 0,
             total_supply: 0,
             last_7d: 0,
-            change: 0,
+            change: '---',
             volume: 0
         }
 
@@ -33,7 +33,7 @@ const initState = function () {
             circulating_supply: 0,
             total_supply: 0,
             last_7d: 0,
-            change: 0,
+            change: '---',
             volume: 0
         }
 
@@ -154,24 +154,24 @@ const market = (state = initState, action) => {
         }
 
         case 'MARKET.GET_GENERAL_INFO_TOKENS_COMPLETE': {
-            const { tokens, rateUSD } = action.payload
-            var newTokens = newState.tokens
-            Object.keys(tokens).map(key => {
-                var token = tokens[key]
-                if (newTokens[key]) {
-                    newTokens[key].ETH.market_cap = token.market_cap
-                    newTokens[key].ETH.circulating_supply = token.circulating_supply
-                    newTokens[key].ETH.total_supply = token.total_supply
-                    newTokens[key].ETH.volume = token.Quotes.ETH.volume_24h ? Math.round(token.Quotes.ETH.volume_24h): 0
+            // const { tokens, rateUSD } = action.payload
+            // var newTokens = newState.tokens
+            // Object.keys(tokens).map(key => {
+            //     var token = tokens[key]
+            //     if (newTokens[key]) {
+            //         newTokens[key].ETH.market_cap = token.market_cap
+            //         newTokens[key].ETH.circulating_supply = token.circulating_supply
+            //         newTokens[key].ETH.total_supply = token.total_supply
+            //         newTokens[key].ETH.volume = token.Quotes.ETH.volume_24h ? Math.round(token.Quotes.ETH.volume_24h): 0
 
-                    newTokens[key].USD.market_cap = Math.round(token.market_cap * rateUSD)
-                    newTokens[key].USD.circulating_supply = token.circulating_supply
-                    newTokens[key].USD.total_supply = token.total_supply
-                    newTokens[key].USD.volume = token.Quotes.USD.volume_24h ? Math.round(token.Quotes.USD.volume_24h): 0
-                }
-            })
+            //         newTokens[key].USD.market_cap = Math.round(token.market_cap * rateUSD)
+            //         newTokens[key].USD.circulating_supply = token.circulating_supply
+            //         newTokens[key].USD.total_supply = token.total_supply
+            //         newTokens[key].USD.volume = token.Quotes.USD.volume_24h ? Math.round(token.Quotes.USD.volume_24h): 0
+            //     }
+            // })
 
-            return  {...newState, tokens: {...newTokens}}
+            // return  {...newState, tokens: {...newTokens}}
         }
 
         case 'MARKET.GET_VOLUMN_SUCCESS':{
@@ -182,7 +182,7 @@ const market = (state = initState, action) => {
                 
                 var token = data[key]
 
-                //tokens[key].ETH.volume = Math.round(token.e)
+                // tokens[key].ETH.volume = Math.round(token.e)
                 tokens[key].ETH.last_7d =  token.p
                 //tokens[key].USD.volume = Math.round(token.u)
                 tokens[key].USD.last_7d =  token.p
@@ -208,6 +208,47 @@ const market = (state = initState, action) => {
                 }
                 
                 tokens[key].USD.change = tokens[key].ETH.change = change
+            })
+            return  {...newState, tokens: {...tokens}}
+        }
+
+        case 'MARKET.GET_MARKET_INFO_SUCCESS': {
+            const {data, rateUSD} = action.payload
+            // console.log("new api data: ", data)
+            var tokens = {...newState.tokens}
+            var newTokens = newState.tokens
+            Object.keys(data).map(key=>{
+                if (!tokens[key]) return
+                
+                var token = data[key]
+
+                tokens[key].ETH.last_7d =  token.rates.p
+                tokens[key].USD.last_7d =  token.rates.p
+
+                //get 24h change                
+                var buyPrice = parseFloat(tokens[key].ETH.buyPrice)
+                var sellPrice = parseFloat(tokens[key].ETH.sellPrice)
+                var change = 0
+
+                if ((sellPrice <= 0) || (buyPrice <=0)){
+                    change = "---"
+                }else{
+                    var midlePrice = (buyPrice + sellPrice) / 2
+                    var price24h = token.rates.r
+                    if (midlePrice > price24h){
+                        change = converters.calculatePercent(midlePrice, price24h)
+                    }else{
+                        change = converters.calculatePercent(price24h, midlePrice) * -1
+                    }
+                }
+                tokens[key].USD.change = tokens[key].ETH.change = change
+                if (newTokens[key] && token.quotes) {
+                    newTokens[key].ETH.market_cap = token.quotes.ETH.market_cap
+                    newTokens[key].ETH.volume = token.quotes.ETH.volume_24h ? Math.round(token.quotes.ETH.volume_24h): 0
+
+                    newTokens[key].USD.market_cap = Math.round(token.quotes.ETH.market_cap * rateUSD)
+                    newTokens[key].USD.volume = token.quotes.USD.volume_24h ? Math.round(token.quotes.USD.volume_24h): 0
+                }
             })
             return  {...newState, tokens: {...tokens}}
         }

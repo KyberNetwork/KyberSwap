@@ -237,6 +237,13 @@ const transfer = (state = initState, action) => {
       newState.snapshot = {...snapshot}
       return newState
     }
+
+    case "GLOBAL.CLEAR_SESSION_FULFILLED":{
+      var resetState = {...initState}
+      resetState.token = newState.token
+      resetState.tokenSymbol = newState.tokenSymbol
+      return resetState
+    }
   }
   return state
 }

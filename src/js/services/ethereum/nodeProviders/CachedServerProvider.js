@@ -320,4 +320,20 @@ export default class CachedServerProvider extends React.Component {
                 })
         })
     }
+
+    getMarketInfo() {
+        return new Promise((resolve, rejected) => {
+            fetch(this.rpcUrl + '/getMarketInfo', {
+            }).then((response) => {
+                return response.json()
+            })
+                .then((result) => {
+                    resolve(result)                    
+                })
+                .catch((err) => {
+                    console.log(err)
+                    rejected(err)
+                })
+        })
+    }
 }

@@ -48,6 +48,23 @@ export default class MinRate extends React.Component {
     const {minConversionRate,slippageRate,offeredRate}  = this.props.exchange
     var desToken = this.props.exchange.destTokenSymbol
     // const {disable,value} = this.state
+    
+
+    var displayMinRate = this.props.exchange.isSelectToken ? <img src={require('../../../assets/img/waiting.svg')} /> : converter.roundingNumber(minConversionRate)
+   // var displaySlippageRate = this.props.exchange.isSelectToken ? (<img src={require('../../../assets/img/waiting-white.svg')} /> + " " + desToken): converter.roundingNumber(slippageRate) + " " + desToken
+  
+   var src = require('../../../assets/img/waiting.svg')
+
+   var displaySlippageRate
+    if (this.props.exchange.isSelectToken){
+      displaySlippageRate = this.props.translate("transaction.our_suggest_loading", { src: src, desToken: desToken}) 
+            || (<span><strong> <img src={require('../../../assets/img/waiting.svg')} /> {desToken}</strong> is our suggested Min acceptable rate by default.</span>)
+    }else{
+      displaySlippageRate = this.props.translate("transaction.our_suggest", { suggestRate: converter.roundingNumber(slippageRate) + " " + desToken}) 
+        || (<span><strong> {converter.roundingNumber(slippageRate) + " " + desToken}</strong> is our suggested Min acceptable rate by default.</span>)
+    }
+
+    //console.log(displaySlippageRate)
 
     var disable = false
     if(converter.caculatorPercentageToRate(slippageRate,offeredRate)===0){
@@ -63,8 +80,7 @@ export default class MinRate extends React.Component {
         <div className="des-up">
           {this.props.translate("transaction.higher_min_acceptable_rate") 
             || "Higher Min acceptable rate typically results in lower success rate when the market is volatile."}
-          {this.props.translate("transaction.our_suggest", { suggestRate: this.suggestRate(slippageRate, desToken)}) 
-            || (`<strong> ${this.suggestRate(slippageRate, desToken)}</strong> is our suggested Min acceptable rate by default.`)}
+            {displaySlippageRate}
         </div>
         <div className = {!this.props.exchange.errors.rateError? "":"error"}>
           <span  className="sub_title">{this.props.translate("transaction.min_acceptable_rate") || "MIN ACCEPTABLE RATE"}</span>
@@ -87,7 +103,7 @@ export default class MinRate extends React.Component {
           />
           <div className="row small-12">
           <div className="column small-1"><label className="des-down">0%</label></div>
-          <div className="column small-9 min-convention-rate"><span>{converter.roundingNumber(minConversionRate) + " " + desToken}</span></div>
+          <div className="column small-9 min-convention-rate"><span>{displayMinRate} {" " + desToken}</span></div>
           <div className="column small-1"><label className="des-down">{percent}%</label></div>
           </div>
           {this.props.exchange.errors.rateError && <div className="error-text">{this.props.exchange.errors.rateError}</div>}

@@ -86,6 +86,7 @@
     "click_to_transfer_all_balance": "모든 잔액을 송금하려면 클릭하십시오",
 
     "higher_min_acceptable_rate": "변동이 심한 시장 상황에서 '허용 가능 최소 비율'을 높게 설정할 시, 거래가 원활하게 진행되지 않을 수 있습니다.",
+    "our_suggest_loading": "<img src=\"${src}\"/> ${desToken}저희들이 제시하는 현재 '허용 가능 최소 비율 값'입니다.",
     "our_suggest": "<strong> ${suggestRate}</strong>저희들이 제시하는 현재 '허용 가능 최소 비율 값'입니다.",
     "min_acceptable_rate": "허용 가능 최소 비율",
 
@@ -179,7 +180,7 @@
     "clear_data_timeout": "세션 ${time}분 초과로 인해 데이터를 모두 삭제하였습니다",
     "minutes": " 분",
     "time_out": "시간초과",
-    "network_error": "블록체인 연결이 원할하지 않습니다, 잠시 후 다시 시도해주세요",
+    "network_error": "블록체인 연결이 원할하지 않습니다, 잠시 후 다시 시도해주세요<span>.</span><span>.</span><span>.</span>",
     "node_error": "노드에는 몇 가지 문제점이 있습니다. 잠시 후 다시 해보십시오",
     "term_error": "이용약관 동의는 필수입니다.",
     
@@ -302,7 +303,7 @@
     "get_started": "시작",
     "exchange":" 거래소",
     "no_oderbooks_no_deposit": "오더북과 입금 절차 없이 쉽고 편하게 즐길 수 있습니다.",
-    "instant_and_secure_token_swap": "빠르고 안전한 토큰 교환.",
+    "instant_and_secure_token_swap": "안전하고 빠른 토큰과 토큰으로 교환",
     "metamask": "METAMASK",
     "json": "JSON",
     "ledger": "LEDGER",

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>bancor-bnt</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="New" transform="translate(-401.000000, -195.000000)">
+            <g id="bancor-bnt" transform="translate(401.000000, 195.000000)">
+                <g id="bancor-bnt-seeklogo.com">
+                    <circle id="Oval" fill="#000D2B" fill-rule="nonzero" cx="14" cy="14" r="14"></circle>
+                    <path d="M13.93,5.14458 L9.9764,7.46116 L13.93,9.77774 L17.9578,7.46116 L13.93,5.14458 Z M14.58016,17.51232 L14.58016,22.14534 L19.95,19.082 L19.95,14.448 L14.58016,17.51232 Z M18.6074,8.918 L18.6074,13.552 L14.5796,15.86858 L14.5796,11.23458 L18.6074,8.918 Z M8.91128,13.552 L12.93908,15.86858 L12.93908,11.23458 L8.91128,8.918 L8.91128,13.552 Z M8.91128,19.8289 L12.93908,22.14548 L12.93908,17.51232 L8.91128,15.19574 L8.91128,19.82876 L8.91128,19.8289 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

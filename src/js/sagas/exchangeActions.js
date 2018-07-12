@@ -14,7 +14,7 @@ import * as converter from "../utils/converter"
 import * as ethUtil from 'ethereumjs-util'
 import Tx from "../services/tx"
 import { getTranslate, getActiveLanguage } from 'react-localize-redux';
-import { store } from '../store';
+import { store } from '../store'
 import BLOCKCHAIN_INFO from "../../../env"
 import bowser from 'bowser'
 
@@ -649,21 +649,54 @@ function* getRate(ethereum, source, dest, sourceAmount) {
   }
 }
 
+
+
+function* getSourceAmount(sourceTokenSymbol, sourceAmount){
+  var state = store.getState()
+  var tokens = state.tokens.tokens
+
+  var sourceAmountHex = "0x0"
+  if (tokens[sourceTokenSymbol]){
+    var decimal = tokens[sourceTokenSymbol].decimal
+    var rateSell = tokens[sourceTokenSymbol].rate
+    console.log({sourceAmount, decimal, rateSell})
+    sourceAmountHex = converter.calculateMinSource(sourceAmount, decimal, rateSell)
+  }else{
+    sourceAmountHex = converter.stringToHex(sourceAmount, 18)
+  }
+  return sourceAmountHex
+}
+
+function* getSourceAmountZero(sourceTokenSymbol){
+  var state = store.getState()
+  var tokens = state.tokens.tokens
+  var sourceAmountHex = "0x0"
+  if (tokens[sourceTokenSymbol]){
+    var decimal = tokens[sourceTokenSymbol].decimal
+    var rateSell = tokens[sourceTokenSymbol].rate
+    sourceAmountHex = converter.toHex(converter.getSourceAmountZero(decimal, rateSell))
+  }
+  return sourceAmountHex
+}
+
 function* updateRatePending(action) {
-  const { ethereum, source, dest, sourceAmount, isManual } = action.payload
+  const { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual } = action.payload
   var state = store.getState()
   // var exchangeSnapshot = state.exchange.snapshot
   var translate = getTranslate(state.locale)
-
+  
+  var sourceAmoutRefined = yield call(getSourceAmount, sourceTokenSymbol, sourceAmount)
+  var sourceAmoutZero = yield call(getSourceAmountZero, sourceTokenSymbol)
+  console.log({sourceAmoutRefined, sourceAmoutZero})
   //console.log("is_manual: " + isManual)
   if (isManual) {
-    var rateRequest = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmount)
+    var rateRequest = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutRefined)
    // console.log("rate_request_manual: " + JSON.stringify(rateRequest))
     if (rateRequest.status === "success") {      
       var { expectedPrice, slippagePrice, lastestBlock } = rateRequest.data      
-      var rateInit = "0"
+      var rateInit = expectedPrice.toString()
       if (expectedPrice.toString() === "0"){
-        var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, "0x0")
+        var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutZero)
 
         //console.log(rateRequestZeroAmount.data)
         if (rateRequestZeroAmount.status === "success"){
@@ -706,16 +739,16 @@ function* updateRatePending(action) {
     // }
 
   } else {
-    const rateRequest = yield call(getRate, ethereum, source, dest, sourceAmount)
+    const rateRequest = yield call(getRate, ethereum, source, dest, sourceAmoutRefined)
    // console.log("rate_request_manual_not: " + JSON.stringify(rateRequest))
     if (rateRequest.status === "success") {
       var { expectedPrice, slippagePrice, lastestBlock } = rateRequest.res
     //  console.log(rateRequest.res)
-      var rateInit = "0"
+      var rateInit = expectedPrice.toString()
       if (expectedPrice.toString() === "0"){
-        var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, "0x0")
+        var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutZero)
 
-    //    console.log(rateRequestZeroAmount.data)
+     //   console.log(rateRequestZeroAmount.data)
         if (rateRequestZeroAmount.status === "success"){
           rateInit = rateRequestZeroAmount.data.expectedPrice
         }
@@ -950,14 +983,14 @@ function* getMaxGasExchange(){
 
   if (exchange.sourceTokenSymbol === 'DGX'){
     if (exchange.destTokenSymbol === 'ETH'){
-      return 650000
+      return 750000
     }else{
-      return (650000 + exchange.max_gas)
+      return (750000 + exchange.max_gas)
     }
   }
   if (exchange.sourceTokenSymbol === 'ETH'){
     if (exchange.destTokenSymbol === 'DGX'){
-      return 650000
+      return 750000
     }else{
       return exchange.max_gas
     }
@@ -965,7 +998,7 @@ function* getMaxGasExchange(){
 
   if (exchange.sourceTokenSymbol !== 'ETH'){
     if (exchange.destTokenSymbol === 'DGX'){
-      return 650000 + exchange.max_gas
+      return 750000 + exchange.max_gas
     }
     if (exchange.destTokenSymbol === 'ETH'){
       return exchange.max_gas
@@ -1197,6 +1230,7 @@ function* analyzeError(action) {
     var result = yield call([ethereum, ethereum.call], "exactTradeData", tx.input)
     var source = result[0].value
     var srcAmount = result[1].value
+   
     var dest = result[2].value
     var destAddress = result[3].value
     var maxDestAmount = result[4].value
@@ -1215,6 +1249,7 @@ function* analyzeError(action) {
       destAddress, maxDestAmount, minConversionRate, walletID, reserves, txHash, transaction
     }
 
+    console.log(input)
     yield call(debug, input, blockNumber, ethereum)
     //check gas price
   } catch (e) {
