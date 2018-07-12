@@ -172,7 +172,7 @@ const TransactionLoadingView = (props) => {
                         <span>
                           <strong>{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceSymbol}</strong> 
                         </span>
-                        <span> to </span>
+                        <span> {props.translate('transaction.to') || "to"} </span>
                         <span><strong>{displayRoundingNumber(props.balanceInfo.destAmount)} {props.balanceInfo.destSymbol}</strong></span>
                       </div>
                     </div>
@@ -184,7 +184,7 @@ const TransactionLoadingView = (props) => {
                             <span>
                             <strong>{displayRoundingNumber(props.balanceInfo.amount)} {props.balanceInfo.tokenSymbol}</strong>
                             </span>
-                            <span> to</span>
+                            <span> {props.translate('transaction.to') || "to"} </span>
                             <span><strong>{props.address}</strong></span>
                           </div>                           
                       </div>
