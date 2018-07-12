@@ -369,7 +369,7 @@
         "decimal": 18,
         "address": "0x8b353021189375591723e7384262f45709a3c3dc",
         "symbol":"TOMO", 
-        "icon": "tomo.png"
+        "icon": "tomo.svg"
       }
     },
     "ethScanUrl": "https://etherscan.io/",

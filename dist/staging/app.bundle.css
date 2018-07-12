@@ -7038,19 +7038,21 @@ input[type=number] {
     .market .market-table .ReactTable {
       border: none;
       overflow: visible; }
-      .market .market-table .ReactTable .rt-table .rt-thead.-header {
-        box-shadow: none;
-        border-bottom: 2px solid #ef8102;
-        padding: 10px 0;
-        margin: 0 8px 15px; }
-        .market .market-table .ReactTable .rt-table .rt-thead.-header .rt-th-img {
-          display: flex;
-          justify-content: center;
-          align-items: center; }
-          .market .market-table .ReactTable .rt-table .rt-thead.-header .rt-th-img img {
-            padding-right: 10px;
-            height: 20px;
-            width: 20px; }
+      .market .market-table .ReactTable .rt-table .rt-thead {
+        font-weight: bold; }
+        .market .market-table .ReactTable .rt-table .rt-thead.-header {
+          box-shadow: none;
+          border-bottom: 2px solid #ef8102;
+          padding: 10px 0;
+          margin: 0 8px 15px; }
+          .market .market-table .ReactTable .rt-table .rt-thead.-header .rt-th-img {
+            display: flex;
+            justify-content: center;
+            align-items: center; }
+            .market .market-table .ReactTable .rt-table .rt-thead.-header .rt-th-img img {
+              padding-right: 10px;
+              height: 20px;
+              width: 20px; }
       .market .market-table .ReactTable .rt-tbody {
         overflow: unset; }
         .market .market-table .ReactTable .rt-tbody .rt-tr-group {
@@ -7066,36 +7068,39 @@ input[type=number] {
             .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr:hover {
               box-shadow: 0 3px 18px #bbb;
               cursor: pointer; }
-            .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr .rt-td {
+            .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr div.rt-td {
               padding-top: 5px;
               display: flex;
               align-items: center;
-              justify-content: center; }
-              .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr .rt-td span {
+              justify-content: center;
+              color: #666666; }
+              .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr div.rt-td:nth-child(2n+1) {
+                color: #222222; }
+              .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr div.rt-td span {
                 padding: 2px 25px;
                 width: 85px;
                 display: flex;
                 align-items: center;
                 justify-content: center; }
-                .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr .rt-td span.negative {
+                .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr div.rt-td span.negative {
                   background-color: #F6EAEC;
                   color: #EB7576;
                   font-weight: bold; }
-                .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr .rt-td span.positive {
+                .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr div.rt-td span.positive {
                   background-color: #EDFBF6;
                   color: #1FDCAB;
                   font-weight: bold; }
-                .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr .rt-td span.zero-value {
+                .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr div.rt-td span.zero-value {
                   background: #eee;
                   color: #767677;
                   font-weight: bold; }
-                .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr .rt-td span img {
+                .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr div.rt-td span img {
                   padding: 3px; }
-              .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr .rt-td div.token-pair {
+              .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr div.rt-td div.token-pair {
                 width: 150px;
                 text-align: left;
                 padding-left: 10px; }
-                .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr .rt-td div.token-pair img {
+                .market .market-table .ReactTable .rt-tbody .rt-tr-group .rt-tr div.rt-td div.token-pair img {
                   margin-right: 10px;
                   width: 24px;
                   height: 24px;
@@ -7380,7 +7385,9 @@ input[type=number] {
     font-size: 1.2rem;
     font-weight: normal;
     text-align: center;
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+    margin-top: 0;
+    padding-top: 70px; }
   .import-privatekey .overlap {
     justify-content: center;
     background-color: #fcfcfc;
