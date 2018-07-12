@@ -2,10 +2,6 @@
     "connections": {
       "http": [
         {
-          "endPoint" : "http://localhost:3001",
-          "type": "cached"
-        },      
-        {
           "endPoint" : "https://production-cache.kyber.network",
           "type": "cached"
         },       
@@ -311,7 +307,70 @@
         "address": "0x41e5560054824ea6b0732e656e3ad64e20e94e45",
         "symbol":"CVC", 
         "icon": "cvc.svg"
-      } 
+      },
+      "WAX": {
+        "name": "Wax",
+        "decimal": 8,
+        "address": "0x39bb259f66e1c59d5abef88375979b4d20d98022",
+        "symbol":"WAX", 
+        "icon": "wax.svg"
+      },
+      "SUB": {
+        "name": "Substratum",
+        "decimal": 2,
+        "address": "0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a",
+        "symbol":"SUB", 
+        "icon": "sub.svg"
+      },
+      "POE": {
+        "name": "Po.et",
+        "decimal": 8,
+        "address": "0x0e0989b1f9b8a38983c2ba8053269ca62ec9b195",
+        "symbol":"POE", 
+        "icon": "poe.svg"
+      },
+      "PAY": {
+        "name": "TenX",
+        "decimal": 18,
+        "address": "0xb97048628db6b661d4c2aa833e95dbe1a905b280",
+        "symbol":"PAY", 
+        "icon": "pay.svg"
+      },
+      "CHAT": {
+        "name": "Chatcoin",
+        "decimal": 18,
+        "address": "0x442bc47357919446eabc18c7211e57a13d983469",
+        "symbol":"CHAT", 
+        "icon": "chat.svg"
+      },
+      "DTA": {
+        "name": "Data",
+        "decimal": 18,
+        "address": "0x69b148395ce0015c13e36bffbad63f49ef874e03",
+        "symbol":"DTA", 
+        "icon": "dta.svg"
+      },
+      "BNT": {
+        "name": "Bancor",
+        "decimal": 18,
+        "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
+        "symbol":"BNT", 
+        "icon": "bnt.svg"
+      }, 
+      "TUSD": {
+        "name": "TrueUSD",
+        "decimal": 18,
+        "address": "0x8dd5fbce2f6a956c3022ba3663759011dd51e73e",
+        "symbol":"TUSD", 
+        "icon": "tusd.svg"
+      },
+      "TOMO": {
+        "name": "Tomocoin",
+        "decimal": 18,
+        "address": "0x8b353021189375591723e7384262f45709a3c3dc",
+        "symbol":"TOMO", 
+        "icon": "tomo.png"
+      }
     },
     "ethScanUrl": "https://etherscan.io/",
     "bank": "0x0",

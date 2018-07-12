@@ -141,7 +141,7 @@ export function* getMaxGasPrice(action){
 }
 
 
-function compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
+function getGasExchange(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
   var safeLowGas = parseFloat(safeLowGas)
   var standardGas = parseFloat(standardGas)
   var fastGas = parseFloat(fastGas)
@@ -173,15 +173,18 @@ export function* setGasPrice(action) {
     standardGas = gasPrice.standard
     defaultGas = gasPrice.default
     fastGas = gasPrice.fast
-    yield put(actionsTransfer.setGasPriceTransferComplete(safeLowGas, standardGas, defaultGas, fastGas))
-
+    
+    var selectedGas = 's'
     var fastGasFloat = parseFloat(fastGas)
     if (fastGasFloat <= 20){
       defaultGas = gasPrice.fast
+      selectedGas = 'f'
     }
 
-    var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
-    yield put(actionsExchange.setGasPriceSwapComplete(compareWithMax.safeLowGas, compareWithMax.standardGas, compareWithMax.defaultGas, compareWithMax.fastGas))
+    yield put(actionsTransfer.setGasPriceTransferComplete(safeLowGas, standardGas, fastGas, defaultGas, selectedGas))
+
+    var gasExchange = getGasExchange(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
+    yield put(actionsExchange.setGasPriceSwapComplete(gasExchange.safeLowGas, gasExchange.standardGas, gasExchange.fastGas, gasExchange.defaultGas, selectedGas))
 
   }catch (err) {
     console.log(err.message)

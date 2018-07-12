@@ -51,12 +51,12 @@ import {HeaderTransaction} from "../TransactionCommon"
 
 
 export default class Exchange extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      selectedGas: props.exchange.gasPrice <= 20? "f": "s", 
-    }
-  }
+  // constructor(props){
+  //   super(props)
+  //   this.state = {
+  //     selectedGas: props.exchange.gasPrice <= 20? "f": "s", 
+  //   }
+  // }
 
   componentDidMount = () =>{
     if ((this.props.params.source.toLowerCase() !== this.props.exchange.sourceTokenSymbol.toLowerCase()) || 
@@ -95,12 +95,14 @@ export default class Exchange extends React.Component {
   }
 
   inputGasPriceHandler = (value) => {
-    this.setState({selectedGas: "undefined"})
+   // this.setState({selectedGas: "undefined"})
     this.specifyGasPrice(value)
   }
 
   selectedGasHandler = (value, level) => {
-    this.setState({selectedGas: level})
+
+    //this.setState({selectedGas: level})
+    this.props.dispatch(exchangeActions.seSelectedGas(level)) 
     this.specifyGasPrice(value)
   }
 
@@ -128,7 +130,7 @@ export default class Exchange extends React.Component {
         totalGas={totalGas.toString()}
         translate={this.props.translate}        
         gasPriceSuggest={this.props.exchange.gasPriceSuggest}    
-        selectedGas = {this.state.selectedGas}
+        selectedGas = {this.props.exchange.selectedGas}
         page = {page}
       />
     )

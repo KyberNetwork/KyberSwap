@@ -39,12 +39,12 @@ import {HeaderTransaction} from "../TransactionCommon"
 
 
 export default class Exchange extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      selectedGas: props.transfer.gasPrice <= 20? "f": "s", 
-    }
-  }
+  // constructor(props){
+  //   super(props)
+  //   this.state = {
+  //     selectedGas: props.transfer.gasPrice <= 20? "f": "s", 
+  //   }
+  // }
 
 
   componentDidMount = () =>{
@@ -96,12 +96,14 @@ export default class Exchange extends React.Component {
   }
 
   inputGasPriceHandler = (value) => {
-    this.setState({selectedGas: "undefined"})
+    //this.setState({selectedGas: "undefined"})
     this.specifyGasPrice(value)
   }
 
   selectedGasHandler = (value, level) => {
-    this.setState({selectedGas: level})
+    //this.setState({selectedGas: level})
+
+    this.props.dispatch(transferActions.seSelectedGas(level)) 
     this.specifyGasPrice(value)
   }
 
@@ -131,7 +133,7 @@ export default class Exchange extends React.Component {
         totalGas={totalGas.toString()}
         translate={this.props.translate}        
         gasPriceSuggest={this.props.transfer.gasPriceSuggest}    
-        selectedGas = {this.state.selectedGas}
+        selectedGas = {this.props.transfer.selectedGas}
         page = {page}
       />
     )

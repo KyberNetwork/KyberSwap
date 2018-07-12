@@ -4216,6 +4216,34 @@ input.search-input {
   text-indent: 30px;
   outline: none; }
 
+.network_error {
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  color: #EE344E;
+  padding: 10px;
+  justify-content: center; }
+  .network_error > span:not(:first-child) {
+    margin-left: 5px;
+    position: relative;
+    bottom: 1px;
+    line-height: 1; }
+    .network_error > span:not(:first-child) > span > span {
+      opacity: 0;
+      margin-left: 2px;
+      font-size: 19px;
+      animation: waiting 1.4s infinite; }
+      .network_error > span:not(:first-child) > span > span:nth-child(2) {
+        animation-delay: .2s; }
+      .network_error > span:not(:first-child) > span > span:nth-child(3) {
+        animation-delay: .4s; }
+
+@keyframes waiting {
+  20% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+
 .page-3 {
   background-color: #2a4552; }
 
@@ -4331,20 +4359,24 @@ ul.broadcast-steps {
         margin-left: 5px; }
         ul.broadcast-steps > li.success .content span strong {
           font-weight: 600; }
-    ul.broadcast-steps > li.failed {
-      text-align: center; }
-      ul.broadcast-steps > li.failed h4 {
-        border-bottom: 1px solid #ff5d00;
-        color: #666;
-        font-weight: normal;
-        cursor: pointer;
-        margin-top: 10px;
-        display: inline-block;
-        width: 100%; }
-      ul.broadcast-steps > li.failed .reason {
-        margin-top: 20px; }
-        ul.broadcast-steps > li.failed .reason a {
-          text-decoration: underline; }
+    ul.broadcast-steps > li.failed h4 {
+      border-bottom: 2px solid #EF8102;
+      color: #666;
+      font-weight: normal;
+      cursor: pointer;
+      margin-top: 10px;
+      display: inline-block; }
+    ul.broadcast-steps > li.failed .list-err {
+      padding-left: 6px;
+      margin-bottom: 15px; }
+      ul.broadcast-steps > li.failed .list-err div {
+        margin-top: 5px; }
+        ul.broadcast-steps > li.failed .list-err div:first-child.analyze-panel {
+          margin-top: 16px; }
+    ul.broadcast-steps > li.failed .reason {
+      margin-top: 20px; }
+      ul.broadcast-steps > li.failed .reason a {
+        text-decoration: underline; }
   ul.broadcast-steps .analyze {
     margin-left: 15px;
     padding: 4px 12px;
@@ -5551,9 +5583,6 @@ input[type=number] {
   line-height: normal;
   letter-spacing: normal;
   color: #474D5F; }
-  @media screen and (max-width: 640px) {
-    #balance-account {
-      margin-bottom: 10px; } }
   @media screen and (max-width: 640px) {
     #balance-account .balance-large {
       display: none; } }
