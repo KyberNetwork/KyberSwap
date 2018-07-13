@@ -48,13 +48,8 @@ export function* getVolumn(){
         const rates = yield call([ethereum, ethereum.call],"getAllRates", tokens)
         yield put.sync(globalActions.updateAllRateComplete(rates))
 
-        const ratesUSD = yield call([ethereum, ethereum.call],"getAllRatesUSD")
-        var rateUSDETH = 0
-        for (var i = 0 ;i < ratesUSD.length; i++){
-            if (ratesUSD[i].symbol === "ETH"){
-                rateUSDETH = ratesUSD[i].price_usd
-            }
-        }
+        const rateUSDETH = yield call([ethereum, ethereum.call],"getRateETH")
+
         // var data = yield call([ethereum, ethereum.call], "getVolumnChart")
         // yield put(marketActions.getVolumnSuccess(data))
 
