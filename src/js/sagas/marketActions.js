@@ -44,17 +44,23 @@ export function* getVolumn(){
     var state = store.getState()
     var ethereum = state.connection.ethereum
     var tokens = state.tokens.tokens
-    var rateUSD = tokens.ETH.rateUSD 
     try {
         const rates = yield call([ethereum, ethereum.call],"getAllRates", tokens)
         yield put.sync(globalActions.updateAllRateComplete(rates))
 
+        const ratesUSD = yield call([ethereum, ethereum.call],"getAllRatesUSD")
+        var rateUSDETH = 0
+        for (var i = 0 ;i < ratesUSD.length; i++){
+            if (ratesUSD[i].symbol === "ETH"){
+                rateUSDETH = ratesUSD[i].price_usd
+            }
+        }
         // var data = yield call([ethereum, ethereum.call], "getVolumnChart")
         // yield put(marketActions.getVolumnSuccess(data))
 
         // use new cached api
         var newData = yield call([ethereum, ethereum.call], "getMarketInfo")
-        yield put(marketActions.getMarketInfoSuccess(newData.data, rateUSD))
+        yield put(marketActions.getMarketInfoSuccess(newData.data, rateUSDETH))
     }catch(e){
         console.log(e)
     }

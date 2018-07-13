@@ -14,6 +14,7 @@ const initState = function () {
     tokens[key].rateEth = 0
     tokens[key].minRateEth = 0
     tokens[key].balance = 0
+    tokens[key].rateUSD = 0
   })
   return {
     tokens: tokens,

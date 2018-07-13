@@ -142,7 +142,7 @@ export default class MarketTable extends React.Component {
     )
   }
   addClassChange = (input) => {
-    if (input === "---"){
+    if (input === -9999){
       return (
         <span>---</span>
       )
@@ -154,7 +154,7 @@ export default class MarketTable extends React.Component {
     }
     if (input === 0){
       return (
-        <span>0 %</span>
+        <span>{input} %</span>
       )
     }
     if (input > 0){

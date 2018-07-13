@@ -464,7 +464,7 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.SET_GAS_PRICE_SWAP_COMPLETE": {
 
       if (!newState.isEditGasPrice) {
-        var { safeLowGas, standardGas, fastGas, defaultGas } = action.payload
+        var { safeLowGas, standardGas, fastGas, defaultGas, selectedGas } = action.payload
 
         var gasPriceSuggest = {...newState.gasPriceSuggest}
         
@@ -474,6 +474,8 @@ const exchange = (state = initState, action) => {
 
         newState.gasPriceSuggest = {...gasPriceSuggest}
         newState.gasPrice = defaultGas
+
+        newState.selectedGas = selectedGas
       }
       return newState
     }
@@ -549,10 +551,19 @@ const exchange = (state = initState, action) => {
       }
       return newState
     }
+    case "EXCHANGE.SET_SELECTED_GAS":{
+      const {level} = action.payload
+      newState.selectedGas = level
+      return newState
+    }
     case "GLOBAL.CLEAR_SESSION_FULFILLED":{
       var resetState = {...initState}
       resetState.sourceToken = newState.sourceToken
       resetState.sourceTokenSymbol = newState.sourceTokenSymbol
+      
+      resetState.gasPrice = newState.gasPrice
+      resetState.selectedGas = newState.selectedGas
+      resetState.isEditGasPrice = newState.isEditGasPrice
       
       resetState.destToken = newState.destToken
       resetState.destTokenSymbol = newState.destTokenSymbol

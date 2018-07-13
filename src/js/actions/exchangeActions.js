@@ -96,6 +96,13 @@ export function specifyGas(value) {
   }
 }
 
+export function seSelectedGas(level){
+  return {
+    type: "EXCHANGE.SET_SELECTED_GAS",
+    payload: {level: level}
+  }
+}
+
 export function specifyGasPrice(value) {
   return {
     type: "EXCHANGE.SPECIFY_GAS_PRICE",
@@ -471,10 +478,10 @@ export function setMaxGasPriceComplete(maxGasPriceGwei) {
   }
 }
 
-export function setGasPriceSwapComplete(safeLowGas, standardGas, defaultGas, fastGas) {
+export function setGasPriceSwapComplete(safeLowGas, standardGas, fastGas, defaultGas, selectedGas) {
   return {
     type: "EXCHANGE.SET_GAS_PRICE_SWAP_COMPLETE",
-    payload: {safeLowGas, standardGas, defaultGas, fastGas}
+    payload: {safeLowGas, standardGas, defaultGas, fastGas, selectedGas}
   }
 }
 

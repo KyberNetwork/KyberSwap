@@ -70,6 +70,7 @@ const INIT_EXCHANGE_FORM_STATE = {
 
   isFetchingGas: false,
   gasPrice: 20,
+  selectedGas: 'f',
   gasPriceSuggest: {
     fastGas: 20,
     standardGas: 20,
@@ -153,6 +154,7 @@ const INIT_TRANSFER_FORM_STATE = {
   // gas_limit_transfer_eth: 21000,
   // gas_limit_transfer_token: 50000,
   gasPrice: 20,
+  selectedGas: 'f',
   gasPriceSuggest: {
     fastGas: 20,
     standardGas: 20,

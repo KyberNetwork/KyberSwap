@@ -67,7 +67,7 @@ export default class MinRate extends React.Component {
     //console.log(displaySlippageRate)
 
     var disable = false
-    if(converter.caculatorPercentageToRate(slippageRate,offeredRate)===0){
+    if((converter.caculatorPercentageToRate(slippageRate,offeredRate)===0) || (this.props.exchange.isSelectToken)){
       disable = true
     }
 

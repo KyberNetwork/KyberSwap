@@ -221,6 +221,9 @@
       overflow: visible;
       .rt-table {
         .rt-thead {
+          font-weight: bold;
+          text-transform: uppercase;
+          font-size: 14px;
           &.-header {
             box-shadow: none;
             border-bottom: 2px solid #ef8102;
@@ -258,11 +261,15 @@
               box-shadow: 0 3px 18px #bbb;
               cursor: pointer;
             }
-            .rt-td {
+            div.rt-td {
               padding-top: 5px;
               display: flex;
               align-items: center;
               justify-content: center;
+              color: #666666;
+              &:nth-child(2n+1) {
+                color: #222222;
+              }
               span {
                 padding: 2px 25px;
                 width: 85px;
@@ -321,7 +328,7 @@
         .rt-th-img {
           font-weight: bold;
           img {
-            content:url(../img/landing/sort-active-asc.svg);
+            content:url(../img/landing/sort-active-asc-orange.svg);
           }
         }
       }
@@ -329,7 +336,7 @@
         box-shadow: none;
         .rt-th-img {
           img {
-            content:url(../img/landing/sort-active.svg);
+            content:url(../img/landing/sort-active-orange.svg);
           }
         }
       }
