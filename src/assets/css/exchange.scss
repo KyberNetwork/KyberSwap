@@ -49,7 +49,7 @@
   @include screen-min-width(large) {
     .balance-wrapper,
     .exchange-col-1 {
-      box-shadow: 0 10px 20px 0 rgba(135, 136, 136, 0.26), 0 6px 6px 0 rgba(173, 177, 176, 0.26);
+      box-shadow: $box-shadow-tab;
     }
 
     .balance-wrapper{
