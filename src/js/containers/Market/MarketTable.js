@@ -18,6 +18,7 @@ import {Line} from 'react-chartjs-2';
 
   var currency = store.market.configs.currency.focus
   var tokens = store.market.tokens
+  console.log("original data: ", store.market.configs.page)
   var tokenLength = Object.keys(tokens).length - 1
   var data = []
   Object.keys(tokens).forEach((key) => {
@@ -39,11 +40,16 @@ import {Line} from 'react-chartjs-2';
     listShowColumn: store.market.configs.column.shows.listItem,
     data: data,
     tokens: tokens,
-    tokenLength
+    tokenLength,
+    isLoading: store.market.configs.isLoading
   }
 })
 
 export default class MarketTable extends React.Component {
+  getMoreData = () => {
+    this.props.dispatch(actions.getMoreData())
+  }
+
   drawChart = (props) => {
     var lineColor = ""
     var backgroundColor = ""
@@ -338,12 +344,24 @@ export default class MarketTable extends React.Component {
     return columns
   }
 
+  isBottom = (el) => {
+    return el[0].scrollHeight - el[0].scrollTop === el[0].clientHeight
+  }
+
+  trackScrolling = () => {
+    const tableBody = document.getElementsByClassName('rt-tbody')
+    if (this.isBottom(tableBody) && !this.props.isLoading) {
+      console.log('bottom reached')
+      this.getMoreData()
+    }
+  }
 
   render() {
     const columns = this.getColumn()
 
     return (
       <ReactTable
+        className={this.props.data.length > 10 ? 'long-table' : ''}
         data={this.props.data}
         columns={columns}
         showPagination = {false}
@@ -369,6 +387,14 @@ export default class MarketTable extends React.Component {
           if(this.props.data.length==0) return { style: { border: 'none' ,top:'75%',padding:'0px'} };
           return {};
           }
+        }
+        getTbodyProps={() => {
+          return {
+            onScroll: (e) => {
+              this.trackScrolling()
+            }
+          }
+        }
         }
       />
     )

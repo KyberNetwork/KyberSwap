@@ -99,3 +99,24 @@ export function getMarketInfoSuccess(data, rateUSD) {
     payload: {data, rateUSD}
   }
 }
+
+export function getMoreData() {
+  return {
+    type: "MARKET.GET_MORE_DATA",
+    payload: {}
+  }
+}
+
+export function updatePageNum(nextPage) {
+  return {
+    type: "MARKET.UPDATE_PAGE_NUM_SUCCESS",
+    payload: {nextPage}
+  }
+}
+
+export function getMoreDataSuccess(data, rateUSD) {
+  return {
+    type: "MARKET.GET_MORE_DATA_SUCCESS",
+    payload: {data, rateUSD}
+  }
+}
