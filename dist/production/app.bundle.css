@@ -6739,9 +6739,22 @@ input[type=number] {
     #exchange .amount-input {
       margin-top: 1rem; } }
   @media screen and (min-width: 1024px) {
+    #exchange .balance-wrapper,
+    #exchange .exchange-col-1 {
+      box-shadow: 0 10px 20px 0 rgba(135, 136, 136, 0.26), 0 6px 6px 0 rgba(173, 177, 176, 0.26); }
     #exchange .balance-wrapper {
       border: 1px solid #ddd;
-      background: white; }
+      background: white;
+      position: relative;
+      z-index: 1; }
+      #exchange .balance-wrapper::after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 100%;
+        background: #ffffff;
+        top: 0;
+        right: -11px; }
     #exchange .exchange-wrapper-btn {
       text-align: center; }
     #exchange .exchange-col-1 {
@@ -7455,7 +7468,7 @@ input[type=number] {
 
 @media screen and (min-width: 1024px) {
   #transfer-screen .transfer-col-1 {
-    box-shadow: 0 7px 25px #ddd;
+    box-shadow: 0 10px 20px 0 rgba(135, 136, 136, 0.26), 0 6px 6px 0 rgba(173, 177, 176, 0.26);
     min-height: 550px; }
   #transfer-screen .transfer-col-3-1 {
     position: relative;
