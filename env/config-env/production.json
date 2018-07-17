@@ -399,12 +399,12 @@
         "symbol":"MTL", 
         "icon": "mtl.svg"
       },
-      "WAB": {
+      "WABI": {
         "name": "WaBi",
         "decimal": 18,
         "address": "0x286bda1413a2df81731d4930ce2f862a35a609fe",
-        "symbol":"WAB", 
-        "icon": "wab.svg"
+        "symbol":"WABI", 
+        "icon": "wabi.svg"
       },
       "NULS": {
         "name": "Nuls",
