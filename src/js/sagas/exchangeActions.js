@@ -687,11 +687,12 @@ function* updateRatePending(action) {
   
   var sourceAmoutRefined = yield call(getSourceAmount, sourceTokenSymbol, sourceAmount)
   var sourceAmoutZero = yield call(getSourceAmountZero, sourceTokenSymbol)
-  console.log({sourceAmoutRefined, sourceAmoutZero})
+  //console.log({sourceAmoutRefined, sourceAmoutZero})
   //console.log("is_manual: " + isManual)
   if (isManual) {
     var rateRequest = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutRefined)
-   // console.log("rate_request_manual: " + JSON.stringify(rateRequest))
+    console.log("rate_request_manual: " + JSON.stringify(rateRequest))
+    console.log("source_amount: " + JSON.stringify(sourceAmoutRefined))
     if (rateRequest.status === "success") {      
       var { expectedPrice, slippagePrice, lastestBlock } = rateRequest.data      
       var rateInit = expectedPrice.toString()
