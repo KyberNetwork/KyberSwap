@@ -41,6 +41,11 @@ import { getTranslate } from 'react-localize-redux';
 
 export default class PostTransfer extends React.Component {
   clickTransfer = () => {
+    if (this.props.account === false){
+      this.props.dispatch(transferActions.openImportAccount())
+      return
+    }
+
     if (validators.anyErrors(this.props.form.errors)) return
     if (this.validateTransfer()) {
 

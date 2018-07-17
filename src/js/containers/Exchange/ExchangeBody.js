@@ -8,6 +8,7 @@ import { PostExchangeWithKey, MinRate, AccountBalance } from "../Exchange"
 import { TransactionConfig } from "../../components/Transaction"
 
 import { ExchangeBodyLayout }  from "../../components/Exchange"
+import { AddressBalance }  from "../../components/TransactionCommon"
 
 import { TransactionLoading, Token } from "../CommonElements"
 
@@ -425,6 +426,14 @@ export default class ExchangeBody extends React.Component {
       chooseToken = {this.chooseToken}
     />
     }
+
+    var addressBalanceLayout = ""
+    if (this.props.account.account !== false){      
+      addressBalanceLayout = (<AddressBalance setAmount={this.setAmount}
+                                            balance={addressBalance}
+                                            translate={this.props.translate}/>)
+  
+    }
     
     return (
       <ExchangeBodyLayout step={this.props.exchange.step}
@@ -435,10 +444,12 @@ export default class ExchangeBody extends React.Component {
         transactionLoadingScreen={transactionLoadingScreen}
         errors={errors}
         input={input}
-        balance={addressBalance}
+
+        addressBalanceLayout = {addressBalanceLayout}
+
         sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
         destTokenSymbol = {this.props.exchange.destTokenSymbol}
-        setAmount={this.setAmount}
+        
         translate={this.props.translate}
         swapToken={this.swapToken}
         maxCap={toEther(this.props.exchange.maxCap)}

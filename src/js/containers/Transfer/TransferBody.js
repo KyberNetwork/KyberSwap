@@ -11,6 +11,8 @@ import { TransferForm } from "../../components/Transaction"
 import { PostTransferWithKey } from "../Transfer"
 import { TransactionLoading } from "../CommonElements"
 
+import { AddressBalance }  from "../../components/TransactionCommon"
+
 import { TokenSelector } from "../TransactionCommon"
 
 import { hideSelectToken } from "../../actions/utilActions"
@@ -250,6 +252,13 @@ export default class Transfer extends React.Component {
     //   />
     // )
 
+    var addressBalanceLayout = ""
+    if (this.props.account.account !== false){      
+      addressBalanceLayout = (<AddressBalance setAmount={this.setAmount}
+                                            balance={addressBalance}
+                                            translate={this.props.translate}/>)
+      }
+
     return (
       <TransferForm step={this.props.transfer.step}
         tokenSymbol={this.props.transfer.tokenSymbol}
@@ -258,8 +267,10 @@ export default class Transfer extends React.Component {
         transactionLoadingScreen={transactionLoadingScreen}
         input={input}
         errors={errors}
-        balance={addressBalance}
-        setAmount={this.setAmount}
+
+        addressBalanceLayout = {addressBalanceLayout}
+        // balance={addressBalance}
+        // setAmount={this.setAmount}
         translate={this.props.translate}
         onBlur = {this.onBlur}
         onFocus = {this.onFocus}

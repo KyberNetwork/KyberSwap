@@ -9,17 +9,17 @@ const TransferForm = (props) => {
     if (check) props.input.amount.onChange(e)
   }
 
-  function moveCursor() {
-    let inp = document.getElementById('inputTransfer')
-    //inp.focus();
-    if (inp.createTextRange) {
-      var part = inp.createTextRange();
-      part.move("character", 0);
-      part.select();
-    } else if (inp.setSelectionRange) {
-      inp.setSelectionRange(0, 0);
-    }
-  }
+  // function moveCursor() {
+  //   let inp = document.getElementById('inputTransfer')
+  //   //inp.focus();
+  //   if (inp.createTextRange) {
+  //     var part = inp.createTextRange();
+  //     part.move("character", 0);
+  //     part.select();
+  //   } else if (inp.setSelectionRange) {
+  //     inp.setSelectionRange(0, 0);
+  //   }
+  // }
 
   var classSource = "amount-input"
   if (props.focus === "source") {
@@ -71,7 +71,7 @@ const TransferForm = (props) => {
                     <div className={classSource}>
                       <div>
                         <input type="text" min="0" step="0.000001" placeholder="0"
-                          id="inputTransfer"
+                          id="inputSource"
                           value={props.input.amount.value} className="transfer-input"
                           onChange={handleChangeAmount}
                           onBlur={props.onBlur}
@@ -88,7 +88,8 @@ const TransferForm = (props) => {
                     <span class="error-text">{props.translate(props.errors.amountTransfer)}</span>
                   }
                 </div>
-                <div class="address-balance">
+                {props.addressBalanceLayout}
+                {/* <div class="address-balance">
                   <p class="note">{props.translate("transaction.address_balance") || "Address Balance"}</p>
                   <div>
                     <span>{props.translate("transaction.click_to_transfer_all_balance") || "Click to transfer all balance"}</span>
@@ -99,7 +100,7 @@ const TransferForm = (props) => {
                       {props.balance.roundingValue}
                     </span>
                   </div>
-                </div>
+                </div> */}
               </div>
 
             </div>
