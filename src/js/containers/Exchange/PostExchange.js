@@ -552,57 +552,63 @@ export default class PostExchange extends React.Component {
   }
 
   render() {
-    var modalPassphrase = ""
-    var modalConfirm = ""
-    var modalApprove = ""
-    if (this.props.account.type === "keystore") {
-      modalPassphrase = (<Modal
-        className={{
-          base: 'reveal medium confirm-modal',
-          afterOpen: 'reveal medium confirm-modal'
-        }}
-        isOpen={this.props.form.passphrase}
-        onRequestClose={this.closeModal}
-        contentLabel="password modal"
-        content={this.content()}
-        size="medium"
-      />)
-    } else {
-      modalConfirm = (<Modal
-        className={{
-          base: 'reveal medium confirm-modal',
-          afterOpen: 'reveal medium confirm-modal'
-        }}
-        isOpen={this.props.form.confirmColdWallet}
-        onRequestClose={this.closeModalConfirm}
-        contentLabel="confirm modal"
-        content={this.contentConfirm()}
-        size="medium"
-      />)
-      modalApprove = (
-        <Modal className={{
-          base: 'reveal medium confirm-modal',
-          afterOpen: 'reveal medium confirm-modal'
-        }}
-          isOpen={this.props.form.confirmApprove}
-          onRequestClose={this.closeModalApprove}
-          contentLabel="approve modal"
-          content={this.contentApprove()}
+
+    var modalExchange = ""
+    if (this.props.account !== false){      
+      var modalPassphrase = ""
+      var modalConfirm = ""
+      var modalApprove = ""
+      if (this.props.account.type === "keystore") {
+        modalPassphrase = (<Modal
+          className={{
+            base: 'reveal medium confirm-modal',
+            afterOpen: 'reveal medium confirm-modal'
+          }}
+          isOpen={this.props.form.passphrase}
+          onRequestClose={this.closeModal}
+          contentLabel="password modal"
+          content={this.content()}
           size="medium"
-        />
-      )
+        />)
+      } else {
+        modalConfirm = (<Modal
+          className={{
+            base: 'reveal medium confirm-modal',
+            afterOpen: 'reveal medium confirm-modal'
+          }}
+          isOpen={this.props.form.confirmColdWallet}
+          onRequestClose={this.closeModalConfirm}
+          contentLabel="confirm modal"
+          content={this.contentConfirm()}
+          size="medium"
+        />)
+        modalApprove = (
+          <Modal className={{
+            base: 'reveal medium confirm-modal',
+            afterOpen: 'reveal medium confirm-modal'
+          }}
+            isOpen={this.props.form.confirmApprove}
+            onRequestClose={this.closeModalApprove}
+            contentLabel="approve modal"
+            content={this.contentApprove()}
+            size="medium"
+          />
+        )
+      }
+      modalExchange = <div>{modalPassphrase} {modalConfirm} {modalApprove}</div>
     }
+
     let className = "button accent "
     if (!this.props.form.errorNotPossessKgt && !validators.anyErrors(this.props.form.errors) && this.props.form.termAgree && !this.props.form.isSelectToken) {
       //className += " animated infinite pulse next"
       className += " next"
     }
-    var termAndServices = (
-      <TermAndServices
-        clickCheckbox={this.clickCheckbox}
-        termAgree={this.props.form.termAgree}
-      />
-    )
+    // var termAndServices = (
+    //   <TermAndServices
+    //     clickCheckbox={this.clickCheckbox}
+    //     termAgree={this.props.form.termAgree}
+    //   />
+    // )
 
     var exchangeRate = {
       sourceToken: this.props.form.sourceTokenSymbol,
@@ -619,20 +625,18 @@ export default class PostExchange extends React.Component {
     )
     return (
       <PostExchangeBtn
-        step={this.props.form.step}
         submit={this.clickExchange}
-        modalPassphrase={modalPassphrase}
-        modalConfirm={modalConfirm}
-        modalApprove={modalApprove}
+        // modalPassphrase={modalPassphrase}
+        // modalConfirm={modalConfirm}
+        // modalApprove={modalApprove}
+
+        modalExchange = {modalExchange}
+
         className={className}
-        accountType={this.props.account.type}
         isConfirming={this.props.form.isConfirming}
         isApproving={this.props.form.isApproving}
         translate={this.props.translate}
-        termAndServices={termAndServices}
         rateToken={rateToken}
-        openConfig={this.openConfig}
-        advanced={this.props.form.advanced}
       />
     )
   }

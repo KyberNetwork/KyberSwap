@@ -9,11 +9,8 @@ const PostExchangeBtn = (props) => {
           <a class={props.className} onClick={props.submit} data-open="passphrase-modal">{props.translate("transaction.swap") ||  "Swap" }</a>
         </div>
           {props.rateToken}
-      </div>      
-      
-      {props.modalPassphrase}
-      {props.modalConfirm}
-      {props.modalApprove}
+      </div>                
+      {props.modalExchange}
       <PendingOverlay isEnable={props.isConfirming || props.isApproving} />
     </div >
   )

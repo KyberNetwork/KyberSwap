@@ -104,7 +104,7 @@ export default class ExchangeBody extends React.Component {
         return 
       }
     }else{
-      var destValue = caculateDestAmount(sourceValue, this.props.exchange.offeredRate, 6)
+      var destValue = caculateDestAmount(sourceValue, this.props.exchange.rateSourceToEth, 6)
       if(parseFloat(destValue) > 1000){
         this.props.dispatch(exchangeActions.throwErrorHandleAmount())
         return 
@@ -418,9 +418,14 @@ export default class ExchangeBody extends React.Component {
         roundingValue: roundingNumber(toT(token.balance, token.decimal))
       }
     }
-    var accountBalance = <AccountBalance 
+
+    var accountBalance = ""
+    if (this.props.account.account !== false){      
+      accountBalance = <AccountBalance 
       chooseToken = {this.chooseToken}
     />
+    }
+    
     return (
       <ExchangeBodyLayout step={this.props.exchange.step}
         tokenSourceSelect={tokenSourceSelect}

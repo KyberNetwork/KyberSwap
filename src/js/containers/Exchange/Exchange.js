@@ -15,7 +15,7 @@ import * as exchangeActions from "../../actions/exchangeActions"
 import { default as _ } from 'underscore'
 import { clearSession } from "../../actions/globalActions"
 
-import { ImportAccount } from "../ImportAccount"
+//import { ImportAccount } from "../ImportAccount"
 
 import {HeaderTransaction} from "../TransactionCommon"
 
@@ -111,9 +111,9 @@ export default class Exchange extends React.Component {
   // }
 
   render() {    
-    if (this.props.account === false){
-      return <ImportAccount />
-    }
+    // if (this.props.account === false){
+    //   return <ImportAccount />
+    // }
     var gasPrice = converter.stringToBigNumber(converter.gweiToEth(this.props.exchange.gasPrice))
     var totalGas = gasPrice.multipliedBy(this.props.exchange.gas + this.props.exchange.gas_approve)
     var page = "exchange"
