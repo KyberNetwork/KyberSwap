@@ -376,7 +376,7 @@
         "decimal": 18,
         "address": "0x66186008c1050627f979d464eabb258860563dbe",
         "symbol":"MDS", 
-        "icon": "mds.png"
+        "icon": "mds.svg"
       },
       "LEND": {
         "name": "EthLend",
@@ -397,14 +397,14 @@
         "decimal": 8,
         "address": "0xf433089366899d83a9f26a773d59ec7ecf30355e",
         "symbol":"MTL", 
-        "icon": "mtl.png"
+        "icon": "mtl.svg"
       },
       "WAB": {
         "name": "WaBi",
         "decimal": 18,
         "address": "0x286bda1413a2df81731d4930ce2f862a35a609fe",
         "symbol":"WAB", 
-        "icon": "wab.png"
+        "icon": "wab.svg"
       },
       "NULS": {
         "name": "Nuls",
