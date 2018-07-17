@@ -301,3 +301,15 @@ export function seSelectedGas(level){
     payload: {level: level}
   }
 }
+
+export function openImportAccount(){
+  return {
+    type: "TRANSFER.OPEN_IMPORT_ACCOUNT"
+  }
+}
+
+export function closeImportAccountTransfer(){
+  return {
+    type: "TRANSFER.CLOSE_IMPORT_ACCOUNT"
+  }
+}

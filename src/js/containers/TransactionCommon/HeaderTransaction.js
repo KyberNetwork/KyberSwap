@@ -8,6 +8,9 @@ import constansts from "../../services/constants"
 //import { TransactionLayout } from "../../components/TransactionCommon"
 import { getTranslate } from 'react-localize-redux'
 
+import {openImportAccount as openImportAccountExchange} from "../../actions/exchangeActions"
+import {openImportAccount as openImportAccountTransfer} from "../../actions/transferActions"
+
 import * as common from "../../utils/common"
 
 // import * as converter from "../../utils/converter"
@@ -74,7 +77,11 @@ export default class HeaderTransaction extends React.Component {
 
 
     handleEndSession = () => {
-        this.props.dispatch(clearSession())
+        if (this.props.page === "exchange"){
+            this.props.dispatch(openImportAccountExchange())
+        }else{
+            this.props.dispatch(openImportAccountTransfer())
+        }
       }
 
     render() {

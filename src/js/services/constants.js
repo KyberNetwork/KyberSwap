@@ -31,6 +31,7 @@ const ETHER_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 var secondKey = Object.keys(BLOCKCHAIN_INFO.tokens)[1]
 
 const INIT_EXCHANGE_FORM_STATE = {
+  isOpenImportAcount: false,
   kyber_enabled: false,
   advanced: false,
   termAgree: true,
@@ -137,6 +138,7 @@ const INIT_EXCHANGE_FORM_STATE = {
 }
 
 const INIT_TRANSFER_FORM_STATE = {
+  isOpenImportAcount: false,
   advanced: false,
   termAgree:  true,
   passphrase: false,

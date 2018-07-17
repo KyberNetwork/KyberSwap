@@ -245,6 +245,15 @@ const transfer = (state = initState, action) => {
       return newState
     }
 
+    case "TRANSFER.OPEN_IMPORT_ACCOUNT":{
+      newState.isOpenImportAcount = true
+      return newState
+    }
+    case "TRANSFER.CLOSE_IMPORT_ACCOUNT":{
+      newState.isOpenImportAcount = false
+      return newState
+    }
+
     case "GLOBAL.CLEAR_SESSION_FULFILLED":{
       var resetState = {...initState}
       resetState.token = newState.token

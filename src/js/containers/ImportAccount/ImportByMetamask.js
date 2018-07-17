@@ -7,7 +7,7 @@ import Web3Service from "../../services/web3"
 import { getTranslate } from 'react-localize-redux'
 import bowser from 'bowser'
 
-@connect((store) => {
+@connect((store, props) => {
   var tokens = store.tokens.tokens
   var supportTokens = []
   Object.keys(tokens).forEach((key) => {
@@ -18,7 +18,8 @@ import bowser from 'bowser'
     ethereum: store.connection.ethereum,
     tokens: supportTokens,
     translate: getTranslate(store.locale),
-    metamask: store.global.metamask
+    metamask: store.global.metamask,
+    screen: props.screen
   }
 })
 
@@ -46,7 +47,7 @@ export default class ImportByMetamask extends React.Component {
 
   dispatchAccMetamask(web3Service){
     this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-      this.props.ethereum, this.props.tokens, this.props.translate))
+      this.props.ethereum, this.props.tokens, this.props.translate, this.props.screen))
   }
 
   render() {

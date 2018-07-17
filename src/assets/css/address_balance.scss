@@ -1,20 +1,28 @@
 #balance-account-wrapper {
-  height: 550px;
+  min-height: 525px;
     @include screen-max-width(large) {
-      height: 640px;
+      min-height: 640px;
     }
-  // #balance-account {
-  //   .balances {
-  //     height: 330px;
-  //     @include screen-max-width(large) {
-  //       height: 540px;
-  //     }
-  //   }
-  // }
+  #balance-account {
+    .balances {
+      height: 330px;
+      @include screen-max-width(large) {
+        height: 540px;
+      }
+    }
+  }
   &.error {
-    height: 640px;
+    min-height: 640px;
     @include screen-max-width(large) {
-      height: 670px;
+      min-height: 670px;
+    }
+    #balance-account {
+      .balances {
+        height: 455px;
+        @include screen-max-width(large) {
+          height: 630px;
+        }
+      }
     }
   }
 }

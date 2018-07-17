@@ -67,6 +67,10 @@ export default class PostExchange extends React.Component {
     this.state = { form: {} }
   }
   clickExchange = () => {
+    if (this.props.account === false){
+      this.props.dispatch(exchangeActions.openImportAccount())
+      return
+    }
     if (this.props.form.errorNotPossessKgt) {
       return
     }

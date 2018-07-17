@@ -113,8 +113,12 @@ export default class Exchange extends React.Component {
 
   render() {
 
-    if (this.props.account === false){
-      return <ImportAccount />
+    // if (this.props.account === false){
+    //   return <ImportAccount />
+    // }
+
+    if (this.props.transfer.isOpenImportAcount){
+      return <ImportAccount screen="transfer"/>
     }
 
     var gasPrice = converter.stringToBigNumber(converter.gweiToEth(this.props.transfer.gasPrice))

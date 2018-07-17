@@ -7,7 +7,7 @@ import { verifyKey, anyErrors } from "../../utils/validators"
 import { addressFromKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
 
-@connect((store) => {
+@connect((store, props) => {
   var tokens = store.tokens.tokens
   var supportTokens = []
   Object.keys(tokens).forEach((key) => {
@@ -17,7 +17,8 @@ import { getTranslate } from 'react-localize-redux'
     account: store.account,
     ethereum: store.connection.ethereum,
     tokens: supportTokens,
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    screen: props.screen
   }
 })
 
@@ -48,7 +49,7 @@ export default class ImportKeystore extends React.Component {
             "keystore",
             keystring,
             this.props.ethereum,
-            this.props.tokens))
+            this.props.tokens, this.props.screen))
         }
 
       }

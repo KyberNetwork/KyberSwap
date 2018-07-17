@@ -9,8 +9,8 @@ import * as common from "./common"
 import * as analytics from "../utils/analytics"
 
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
-import { randomToken, setRandomExchangeSelectedToken, setCapExchange, thowErrorNotPossessKGt } from "../actions/exchangeActions"
-import { setRandomTransferSelectedToken } from "../actions/transferActions"
+import { randomToken, setRandomExchangeSelectedToken, setCapExchange, thowErrorNotPossessKGt, closeImportAccountExchange } from "../actions/exchangeActions"
+import { setRandomTransferSelectedToken, closeImportAccountTransfer } from "../actions/transferActions"
 //import { randomForExchange } from "../utils/random"
 
 import * as service from "../services/accounts"
@@ -57,7 +57,7 @@ function* createNewAccount(address, type, keystring, ethereum){
 
 export function* importNewAccount(action) {
   yield put(actions.importLoading())
-  const { address, type, keystring, ethereum, tokens, metamask } = action.payload
+  const { address, type, keystring, ethereum, tokens, metamask, screen } = action.payload
   var translate = getTranslate(store.getState().locale)
   try {
     var  account
@@ -90,6 +90,13 @@ export function* importNewAccount(action) {
 
     //track login wallet
     analytics.loginWallet(type)
+    
+
+    if (screen === "exchange"){
+      yield put(closeImportAccountExchange())
+    }else{
+      yield put(closeImportAccountTransfer())
+    }
     
 
 //    yield put(goToRoute(constants.BASE_HOST + '/swap'))
@@ -141,7 +148,7 @@ export function* importNewAccount(action) {
 }
 
 export function* importMetamask(action) {
-  const { web3Service, networkId, ethereum, tokens, translate } = action.payload
+  const { web3Service, networkId, ethereum, tokens, translate, screen } = action.payload
   try {
     const currentId = yield call([web3Service, web3Service.getNetworkId])
     if (parseInt(currentId, 10) !== networkId) {
@@ -166,6 +173,7 @@ export function* importMetamask(action) {
       web3Service,
       ethereum,
       tokens,
+      screen,
       metamask
     ))
   } catch (e) {

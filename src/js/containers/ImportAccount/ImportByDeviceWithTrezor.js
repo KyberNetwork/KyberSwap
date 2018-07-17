@@ -6,9 +6,10 @@ import { Trezor } from "../../services/keys"
 import { ImportByTrezorView } from "../../components/ImportAccount"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
-@connect((store) => {
+@connect((store, props) => {
   return {
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    screen: props.screen
   }
 })
 export default class ImportByDeviceWithTrezor extends React.Component {
@@ -29,6 +30,7 @@ export default class ImportByDeviceWithTrezor extends React.Component {
       <ImportByDevice ref="child"
         deviceService={this.deviceService} 
         content={importContent}
+        screen={this.props.screen}
       />
     )
   }

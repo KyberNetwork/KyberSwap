@@ -23,7 +23,8 @@ import bowser from 'bowser'
 		tokens: supportTokens,
 		deviceService: props.deviceService,
 		content: props.content,
-		translate: getTranslate(store.locale)
+		translate: getTranslate(store.locale),
+		screen: props.screen
 	}
 }, null, null, { withRef: true })
 
@@ -180,7 +181,7 @@ export default class ImportByDevice extends React.Component {
 	}
 
 	getAddress(data) {
-		this.props.dispatch(importNewAccount(data.address, data.type, data.path, this.props.ethereumNode, this.props.tokens))
+		this.props.dispatch(importNewAccount(data.address, data.type, data.path, this.props.ethereumNode, this.props.tokens, this.props.screen))
 		this.closeModal()
 	}
 

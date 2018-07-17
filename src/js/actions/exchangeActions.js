@@ -589,3 +589,15 @@ export function throwErrorHandleAmount(){
     type: "EXCHANGE.HANDLE_AMOUNT"
   }
 }
+
+export function openImportAccount(){
+  return {
+    type: "EXCHANGE.OPEN_IMPORT_ACCOUNT"
+  }
+}
+
+export function closeImportAccountExchange(){
+  return {
+    type: "EXCHANGE.CLOSE_IMPORT_ACCOUNT"
+  }
+}

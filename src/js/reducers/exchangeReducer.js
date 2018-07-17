@@ -556,6 +556,14 @@ const exchange = (state = initState, action) => {
       newState.selectedGas = level
       return newState
     }
+    case "EXCHANGE.OPEN_IMPORT_ACCOUNT":{
+      newState.isOpenImportAcount = true
+      return newState
+    }
+    case "EXCHANGE.CLOSE_IMPORT_ACCOUNT":{
+      newState.isOpenImportAcount = false
+      return newState
+    }
     case "GLOBAL.CLEAR_SESSION_FULFILLED":{
       var resetState = {...initState}
       resetState.sourceToken = newState.sourceToken
