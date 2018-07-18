@@ -41,27 +41,22 @@ export function* getData(action) {
 // }
 
 export function* getVolumn(){
+    console.log("run volumn")
     var state = store.getState()
     var ethereum = state.connection.ethereum
     var tokens = state.tokens.tokens
+
+    // page config
     var pageConfig = state.market.configs
-    var firstPageSize = pageConfig.firstPageSize
     var page = pageConfig.page
-    var queryString = ""
-    if (page === 1) {
-        let pageSize = firstPageSize
-        queryString = Object.keys(tokens).slice(0, pageSize).reduce(function(queryString, key){
-            queryString += "-" + key
-            return queryString
-        })
-    } else {
-        let pageSize = pageConfig.normalPageSize 
-        var oldPosition = pageSize * (page - 2) + firstPageSize
-        queryString = Object.keys(tokens).slice(oldPosition, oldPosition + pageSize).reduce(function(queryString, key){
-            queryString += "-" + key
-            return queryString
-        })
-    }
+    var firstPageSize = pageConfig.firstPageSize
+    let pageSize = pageConfig.normalPageSize
+
+    var tokenNum = pageSize * (page - 1) + firstPageSize
+    var queryString = Object.keys(tokens).slice(0, tokenNum).reduce(function(queryString, key){
+        queryString += "-" + key
+        return queryString
+    })
 
     try {
         const rates = yield call([ethereum, ethereum.call],"getAllRates", tokens)
@@ -82,37 +77,66 @@ export function* getVolumn(){
     }
 }
 
-export function* getMoreData() {
+export function* getNewData(action) {
     var state = store.getState()
     var pageConfig = state.market.configs
-    var nextPage = pageConfig.page + 1
-    yield put(marketActions.updatePageNum(nextPage))
-    var tokens = state.tokens.tokens
+    var searchWord = action.payload.searchWord
+    var newListTokens = action.payload.listTokens
     var firstPageSize = pageConfig.firstPageSize
+    var pageSize = pageConfig.normalPageSize
+    var tokens = state.tokens.tokens
+
     var ethereum = state.connection.ethereum
+    var listTokens = []
+    var oldPosition = 0
+    var nextPosition = firstPageSize
 
-    var pageSize = pageConfig.normalPageSize 
-    var oldPosition = pageSize * (nextPage - 2) + firstPageSize
-    var queryString = Object.keys(tokens).slice(oldPosition, oldPosition + pageSize).reduce(function(queryString, key){
-        queryString += "-" + key
-        return queryString
-    })
-    var rateUSD = tokens.ETH.rateUSD
+    if (searchWord) {
+        Object.keys(tokens).forEach((key) => {
+            if (key === "ETH") return
+            if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
+        
+            listTokens.push(key)
+        })
+        if (listTokens.length < nextPosition) {
+            nextPosition = listTokens.length
+        }
+    }
+    if (newListTokens) {
+        listTokens = newListTokens
+        var nextPage = pageConfig.page + 1
+        yield put(marketActions.updatePageNum(nextPage))
+        oldPosition = pageSize * (nextPage - 2) + firstPageSize
+        nextPosition = listTokens.length
+        if (oldPosition + pageSize <= listTokens.length) {
+            nextPosition = oldPosition + pageSize
+        }
+    }
 
-    try {
-        var newData = yield call([ethereum, ethereum.call], "getMarketInfo", queryString)
-        console.log("new Data: ", newData)
-        yield put(marketActions.getMoreDataSuccess(newData.data, rateUSD))
-    }catch(e){
-        console.log(e)
+    var currentListToken = listTokens.slice(oldPosition, nextPosition)
+    if (currentListToken.length > 0) {
+        var queryString = currentListToken.reduce(function(queryString, key){
+            queryString += "-" + key
+            return queryString
+        })
+        var rateUSD = tokens.ETH.rateUSD
+        try {
+            var newData = yield call([ethereum, ethereum.call], "getMarketInfo", queryString)
+            console.log("new Data: ", newData)
+            yield put(marketActions.getMoreDataSuccess(newData.data, rateUSD))
+        }catch(e){
+            console.log(e)
+            yield put(marketActions.getMoreDataSuccess({}, rateUSD))
+        }
     }
 }
 
 export function* watchMarket() {
   yield takeEvery("MARKET.GET_MARKET_DATA", getData)
   //yield takeEvery("MARKET.GET_GENERAL_INFO_TOKENS", getGeneralTokenInfo)
-  yield takeEvery("MARKET.GET_MORE_DATA", getMoreData)
+  yield takeEvery("MARKET.GET_MORE_DATA", getNewData)
   yield takeEvery("MARKET.GET_VOLUMN", getVolumn)
+  yield takeEvery("MARKET.RESET_LIST_TOKEN", getNewData)
 }
 
 

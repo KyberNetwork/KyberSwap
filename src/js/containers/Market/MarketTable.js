@@ -12,27 +12,18 @@ import {Line} from 'react-chartjs-2';
 //import '../node_modules/react-linechart/dist/styles.css';
 
 
-@connect((store) => {
-  var searchWord = store.market.configs.searchWord
-  if (typeof searchWord === "undefined") searchWord = ""
+@connect((store, props) => {
+  var data = props.data
+  var listTokens = props.listTokens
+  var currency = props.currency
+  var tokens = props.tokens
+  var page = props.page
+  var firstPageSize = props.firstPageSize
 
-  var currency = store.market.configs.currency.focus
-  var tokens = store.market.tokens
-  console.log("original data: ", store.market.configs.page)
-  var tokenLength = Object.keys(tokens).length - 1
-  var data = []
-  Object.keys(tokens).forEach((key) => {
-    if (key === "ETH") return
-    if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
+  var numScroll = store.market.configs.numScroll
 
-    var item = tokens[key]
-    item.market = key + ' / ' + currency
-    item = { ...item, ...item[currency] }
-    data.push(item)
-  })
   return {
     translate: getTranslate(store.locale),
-    searchWord,
     currency,
     sort: store.market.configs.sort.focus,
     displayColumn: store.market.configs.column.display.active,
@@ -40,14 +31,33 @@ import {Line} from 'react-chartjs-2';
     listShowColumn: store.market.configs.column.shows.listItem,
     data: data,
     tokens: tokens,
-    tokenLength,
-    isLoading: store.market.configs.isLoading
+    isLoading: store.market.configs.isLoading,
+    listTokens: listTokens,
+    numScroll: numScroll,
+    page: page,
+    firstPageSize: firstPageSize
   }
 })
 
 export default class MarketTable extends React.Component {
   getMoreData = () => {
-    this.props.dispatch(actions.getMoreData())
+    this.props.dispatch(actions.getMoreData(this.props.listTokens))
+  }
+
+  handleScroll = () => {
+    if (this.props.listTokens.length > this.props.firstPageSize && !this.props.isLoading && this.props.page - 1 < this.props.numScroll) {
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        this.getMoreData()
+      }
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll)
   }
 
   drawChart = (props) => {
@@ -348,7 +358,8 @@ export default class MarketTable extends React.Component {
     return el[0].scrollHeight - el[0].scrollTop === el[0].clientHeight
   }
 
-  trackScrolling = () => {
+  trackScrolling = (e) => {
+    e.preventDefault()
     const tableBody = document.getElementsByClassName('rt-tbody')
     if (this.isBottom(tableBody) && !this.props.isLoading) {
       console.log('bottom reached')
@@ -361,7 +372,7 @@ export default class MarketTable extends React.Component {
 
     return (
       <ReactTable
-        className={this.props.data.length > 10 ? 'long-table' : ''}
+        // className={this.props.data.length > 10 ? 'long-table' : ''}
         data={this.props.data}
         columns={columns}
         showPagination = {false}
@@ -388,14 +399,17 @@ export default class MarketTable extends React.Component {
           return {};
           }
         }
-        getTbodyProps={() => {
-          return {
-            onScroll: (e) => {
-              this.trackScrolling()
-            }
-          }
-        }
-        }
+        // getTbodyProps={() => {
+        //   if (this.props.data.length > 10) {
+        //     return {
+        //       onScroll: (e) => {
+        //         this.trackScrolling(e)
+        //       }
+        //     }
+        //   }
+        //   return {}
+        // }
+        // }
       />
     )
   }

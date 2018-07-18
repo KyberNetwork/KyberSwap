@@ -314,12 +314,12 @@
           }
         }
       }
-      &.long-table {
-        .rt-tbody {
-          max-height: 600px;
-          overflow-y: scroll;
-        }
-      }
+      // &.long-table {
+      //   .rt-tbody {
+      //     max-height: 600px;
+      //     overflow-y: scroll;
+      //   }
+      // }
       .rt-noData {
         border: 1px solid #ddd;
         border-radius: 5px;
@@ -393,6 +393,26 @@
     }
     @media only screen and (max-width: 1023px) {
       padding: 0 0 0 0;
+    }
+  }
+
+  .show-more {
+    text-align: center;
+    button {
+      height: 40px;
+      width: 220px;
+      border: 2px solid #E8EBF2;
+      border-radius: 3px;
+      color: #222222;
+      font-size: 14px;
+      &:hover {
+        cursor: pointer;
+        border-color: #222222;
+        &.disabled {
+          cursor: default;
+          border-color: #E8EBF2;
+        }
+      }
     }
   }
 

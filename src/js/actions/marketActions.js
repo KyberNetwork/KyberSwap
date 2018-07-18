@@ -7,6 +7,12 @@ export function changeSearchWord(value) {
      }
 }
 
+export function resetListToken(searchWord) {
+  return {
+    type: "MARKET.RESET_LIST_TOKEN",
+    payload: {searchWord}
+  }
+}
 
 export function changeCurrency(value) {
     return {
@@ -100,10 +106,10 @@ export function getMarketInfoSuccess(data, rateUSD) {
   }
 }
 
-export function getMoreData() {
+export function getMoreData(listTokens) {
   return {
-    type: "MARKET.GET_MORE_DATA",
-    payload: {}
+    type: 'MARKET.GET_MORE_DATA',
+    payload: {listTokens}
   }
 }
 
