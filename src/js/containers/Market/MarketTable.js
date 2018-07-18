@@ -40,6 +40,23 @@ import {Line} from 'react-chartjs-2';
 })
 
 export default class MarketTable extends React.Component {
+  constructor(props) {
+		super(props)
+		this.state = {
+			sortType: {}
+		}
+  }
+  
+  updateState = (key) => {
+    var newSortType = {...this.state.sortType}
+    if ((newSortType[key] && newSortType[key] === '-sort-desc') || !newSortType[key] ) {
+      newSortType[key] = '-sort-asc'
+    } else if (newSortType[key] && newSortType[key] === '-sort-asc') {
+      newSortType[key] = '-sort-desc'
+    }
+    this.setState({sortType: newSortType})
+  }
+
   getMoreData = () => {
     this.props.dispatch(actions.getMoreData(this.props.listTokens))
   }
@@ -246,22 +263,49 @@ export default class MarketTable extends React.Component {
     )
   } 
 
+  getSortArray = (key, sortType) => {
+    if ((sortType && sortType === '-sort-desc') || !sortType) {
+      this.props.dispatch(actions.sortTokensAsc(key))
+    } else if (sortType === '-sort-asc') {
+      this.props.dispatch(actions.sortTokensDesc(key))
+    }
+  }
+
   getColumn = () => {
     var columns = [{
       Header: this.getSortHeader("Market", "market"),
       accessor: 'market', // String-based value accessors!
       Cell: props => this.addIcon(props.value),
-      minWidth: 175
+      minWidth: 175,
+      getHeaderProps: () => ({
+        onClick: (e) => {
+          this.getSortArray("market")
+        }
+      })
     }, {
       Header: this.getSortHeader("Sell Price", "sell_price"),
       accessor: 'sellPrice',
       Cell: props => this.addUnit(props.value, this.props.currency),
-      minWidth: 150
+      minWidth: 150,
+      getHeaderProps: () => {
+        return {
+          className: this.state.sortType["sell_price"] ?  (this.state.sortType["sell_price"] + ' -cursor-pointer') :'-cursor-pointer',
+          onClick: (e) => {
+            this.getSortArray("sellPrice", this.state.sortType["sell_price"])
+            this.updateState(key)
+          }
+        }
+      }
     }, {
       Header: this.getSortHeader("Buy Price", "buy_price"), // Required because our accessor is not a string
       accessor: 'buyPrice',
       Cell: props => this.addUnit(props.value, this.props.currency),
-      minWidth: 150
+      minWidth: 150,
+      getHeaderProps: () => ({
+        onClick: (e) => {
+          this.getSortArray("buy_price")
+        }
+      })
     }]
     Object.keys(this.props.listShowColumn).map((key, i) => {
       var item = this.props.listShowColumn[key]
@@ -316,7 +360,16 @@ export default class MarketTable extends React.Component {
                   Header: this.getSortHeader(item.title, key),
                   accessor: key,
                   Cell: props => this.addUnit(props.value, this.props.currency),
-                  minWidth: 150
+                  minWidth: 150,
+                  getHeaderProps: () => {
+                    return {
+                      className: this.state.sortType[key] ?  (this.state.sortType[key] + ' -cursor-pointer') :'-cursor-pointer',
+                      onClick: (e) => {
+                        this.getSortArray(key, this.state.sortType[key])
+                        this.updateState(key)
+                      }
+                    }
+                  }
                 })
                 break
               }
@@ -325,7 +378,12 @@ export default class MarketTable extends React.Component {
                   Header: this.getSortHeader(item.title, key),
                   accessor: key,
                   Cell: props => this.addUnit(props.value, this.props.currency),
-                  minWidth: 150
+                  minWidth: 150,
+                  getHeaderProps: () => ({
+                    onClick: (e) => {
+                      this.getSortArray(key)
+                    }
+                  })
                 })
                 break
               }
@@ -385,6 +443,7 @@ export default class MarketTable extends React.Component {
           return {};
           }
         }
+        sortable={false}
       />
     )
   }

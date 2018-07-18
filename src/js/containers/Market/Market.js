@@ -16,14 +16,39 @@ import { toEther } from "../../utils/converter";
   var page = store.market.configs.page
   var firstPageSize = store.market.configs.firstPageSize
   var pageSize = store.market.configs.normalPageSize
+  var sortKey = store.market.configs.sortKey
+  var sortType = store.market.configs.sortType
   var currencyList = firstPageSize + (page - 1) * pageSize
   var originalTokens = store.market.tokens
   var listTokens = []
 
   Object.keys(originalTokens).forEach((key) => {
+    if (key === 'ETH') return
     if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
     listTokens.push(key)
   })
+
+  function compareString(tokenA, tokenB) {
+    var marketA = tokenA + currency
+    var marketB = tokenB + currency
+    if (marketA < marketB)
+      return -1;
+    if (marketA > marketB)
+      return 1;
+    return 0;
+  }
+
+  function compareNum(tokenA, tokenB) {
+    return originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey]
+  }
+  if (sortKey === 'market') {
+    listTokens.sort(compareString)
+  } else if (sortKey != '') {
+    listTokens.sort(compareNum)
+  }
+  if (sortType === 'desc') {
+    listTokens.reverse()
+  }
 
   var tokens = listTokens.slice(0, currencyList).reduce(function(newOb, key){
     newOb[key] = originalTokens[key]
@@ -59,7 +84,7 @@ export default class Market extends React.Component {
 
   render() {
     return (
-      <div className="market container">
+      <div className="market container" id="market-eth">
         <h1 className="market__title">{this.props.translate("market.eth_market") || "Ethereum Market"}</h1>
         <div className="market__header">
           <div className="market__header-left">

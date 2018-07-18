@@ -126,3 +126,17 @@ export function getMoreDataSuccess(data, rateUSD) {
     payload: {data, rateUSD}
   }
 }
+
+export function sortTokensAsc(key) {
+  return {
+    type: "MARKET.SORT_TOKEN_ASC",
+    payload: key
+  }
+}
+
+export function sortTokensDesc(key) {
+  return {
+    type: "MARKET.SORT_TOKEN_DESC",
+    payload: key
+  }
+}

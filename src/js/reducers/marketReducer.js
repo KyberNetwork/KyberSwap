@@ -43,9 +43,11 @@ const initState = function () {
         configs: {
             isShowTradingChart: false,
             page: 1,
-            firstPageSize: 30,
-            normalPageSize: 15,
-            numScroll: 0,
+            firstPageSize: 20,
+            normalPageSize: 5,
+            numScroll: 2,
+            sortKey: "",
+            sortType: "",
             isLoading: false,
             selectedSymbol: "KNC",
             searchWord: "",
@@ -235,6 +237,24 @@ const market = (state = initState, action) => {
             configs.isLoading = false
             configs.page = 1
             return {...newState, configs: {...configs}}
+        }
+
+        case 'MARKET.SORT_TOKEN_ASC': {
+            var key = action.payload
+            var configs = newState.configs
+            configs.isLoading = false
+            configs.page = 1
+            configs.sortKey = key
+            configs.sortType = "asc"
+        }
+
+        case 'MARKET.SORT_TOKEN_DESC': {
+            var key = action.payload
+            var configs = newState.configs
+            configs.isLoading = false
+            configs.page = 1
+            configs.sortKey = key
+            configs.sortType = "desc"
         }
 
         case 'MARKET.GET_MORE_DATA_SUCCESS': {
