@@ -43,8 +43,8 @@ const initState = function () {
         configs: {
             isShowTradingChart: false,
             page: 1,
-            firstPageSize: 20,
-            normalPageSize: 10,
+            firstPageSize: 30,
+            normalPageSize: 15,
             numScroll: 0,
             isLoading: false,
             selectedSymbol: "KNC",
