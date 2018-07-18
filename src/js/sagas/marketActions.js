@@ -41,7 +41,6 @@ export function* getData(action) {
 // }
 
 export function* getVolumn(){
-    console.log("run volumn")
     var state = store.getState()
     var ethereum = state.connection.ethereum
     var tokens = state.tokens.tokens
@@ -62,7 +61,6 @@ export function* getVolumn(){
         const rates = yield call([ethereum, ethereum.call],"getAllRates", tokens)
         yield put.sync(globalActions.updateAllRateComplete(rates))
 
-        console.log("call cached")
         const rateUSDETH = yield call([ethereum, ethereum.call],"getRateETH")
 
         // var data = yield call([ethereum, ethereum.call], "getVolumnChart")
@@ -70,7 +68,7 @@ export function* getVolumn(){
 
         // use new cached api
         var newData = yield call([ethereum, ethereum.call], "getMarketInfo", queryString)
-        console.log("new Data: ", newData)
+        // console.log("new Data: ", newData)
         yield put(marketActions.getMarketInfoSuccess(newData.data, rateUSDETH))
     }catch(e){
         console.log(e)
@@ -122,7 +120,6 @@ export function* getNewData(action) {
         var rateUSD = tokens.ETH.rateUSD
         try {
             var newData = yield call([ethereum, ethereum.call], "getMarketInfo", queryString)
-            console.log("new Data: ", newData)
             yield put(marketActions.getMoreDataSuccess(newData.data, rateUSD))
         }catch(e){
             console.log(e)

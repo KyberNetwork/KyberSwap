@@ -224,7 +224,6 @@ const market = (state = initState, action) => {
         }
 
         case 'MARKET.UPDATE_PAGE_NUM_SUCCESS': {
-            console.log("update page")
             var page = action.payload
             var configs = newState.configs
             configs.page = page.nextPage

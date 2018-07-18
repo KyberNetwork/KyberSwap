@@ -362,7 +362,6 @@ export default class MarketTable extends React.Component {
     e.preventDefault()
     const tableBody = document.getElementsByClassName('rt-tbody')
     if (this.isBottom(tableBody) && !this.props.isLoading) {
-      console.log('bottom reached')
       this.getMoreData()
     }
   }
