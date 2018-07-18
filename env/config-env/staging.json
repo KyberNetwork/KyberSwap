@@ -2,6 +2,10 @@
   "connections": {
     "http": [
       {
+        "endPoint": "https://staging-cache.knstats.com",
+        "type": "cached"
+      },
+      {
         "endPoint": "https://staging-cache.kyber.network",
         "type": "cached"
       },
