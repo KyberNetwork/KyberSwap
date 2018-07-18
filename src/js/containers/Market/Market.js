@@ -48,7 +48,7 @@ import { toEther } from "../../utils/converter";
     page: page,
     firstPageSize: firstPageSize,
     currencyList: currencyList,
-    isDisabled: currencyList > listTokens.length
+    isDisabled: currencyList > listTokens.length && listTokens.length < firstPageSize
   }
 })
 

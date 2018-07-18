@@ -176,7 +176,7 @@ export default class CachedServerProvider extends React.Component {
 
     getAllRatesUSD() {
         return new Promise((resolve, rejected) => {
-            fetch('http://localhost:3001' + '/getRateUSD', {
+            fetch(this.rpcUrl + '/getRateUSD', {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
@@ -200,7 +200,7 @@ export default class CachedServerProvider extends React.Component {
 
     getRateETH() {
         return new Promise((resolve, rejected) => {
-            fetch('http://localhost:3001' + '/getRateETH', {
+            fetch( this.rpcUrl + '/getRateETH', {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
@@ -347,7 +347,7 @@ export default class CachedServerProvider extends React.Component {
 
     getMarketInfo(queryString) {
         return new Promise((resolve, rejected) => {
-            fetch('http://localhost:3001/getMarketInfo' + '?listToken=' + queryString, {
+            fetch(this.rpcUrl + '/getMarketInfoByTokens' + '?listToken=' + queryString, {
             }).then((response) => {
                 return response.json()
             })

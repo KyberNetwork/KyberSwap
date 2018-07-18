@@ -326,7 +326,8 @@
     "last_7d": "Last 7d",
     "change": "24HR Change",
     "volume": "Volume (24h)",
-    "support_eth_only": "Now support only pairs with ETH, not support pairs with USD yet."
+    "support_eth_only": "Now support only pairs with ETH, not support pairs with USD yet.",
+    "show_more_results": "Show more results"
   },
 
   "trading_view": {

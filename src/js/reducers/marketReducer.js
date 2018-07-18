@@ -43,9 +43,9 @@ const initState = function () {
         configs: {
             isShowTradingChart: false,
             page: 1,
-            firstPageSize: 15,
-            normalPageSize: 5,
-            numScroll: 2,
+            firstPageSize: 20,
+            normalPageSize: 10,
+            numScroll: 0,
             isLoading: false,
             selectedSymbol: "KNC",
             searchWord: "",
