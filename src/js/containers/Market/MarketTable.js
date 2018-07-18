@@ -354,24 +354,11 @@ export default class MarketTable extends React.Component {
     return columns
   }
 
-  isBottom = (el) => {
-    return el[0].scrollHeight - el[0].scrollTop === el[0].clientHeight
-  }
-
-  trackScrolling = (e) => {
-    e.preventDefault()
-    const tableBody = document.getElementsByClassName('rt-tbody')
-    if (this.isBottom(tableBody) && !this.props.isLoading) {
-      this.getMoreData()
-    }
-  }
-
   render() {
     const columns = this.getColumn()
 
     return (
       <ReactTable
-        // className={this.props.data.length > 10 ? 'long-table' : ''}
         data={this.props.data}
         columns={columns}
         showPagination = {false}
@@ -398,17 +385,6 @@ export default class MarketTable extends React.Component {
           return {};
           }
         }
-        // getTbodyProps={() => {
-        //   if (this.props.data.length > 10) {
-        //     return {
-        //       onScroll: (e) => {
-        //         this.trackScrolling(e)
-        //       }
-        //     }
-        //   }
-        //   return {}
-        // }
-        // }
       />
     )
   }
