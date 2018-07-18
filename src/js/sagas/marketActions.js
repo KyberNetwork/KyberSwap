@@ -44,6 +44,19 @@ export function* getVolumn(){
     var state = store.getState()
     var ethereum = state.connection.ethereum
     var tokens = state.tokens.tokens
+
+    // page config
+    var pageConfig = state.market.configs
+    var page = pageConfig.page
+    var firstPageSize = pageConfig.firstPageSize
+    let pageSize = pageConfig.normalPageSize
+
+    var tokenNum = pageSize * (page - 1) + firstPageSize
+    var queryString = Object.keys(tokens).slice(0, tokenNum).reduce(function(queryString, key){
+        queryString += "-" + key
+        return queryString
+    })
+
     try {
         const rates = yield call([ethereum, ethereum.call],"getAllRates", tokens)
         yield put.sync(globalActions.updateAllRateComplete(rates))
@@ -54,17 +67,73 @@ export function* getVolumn(){
         // yield put(marketActions.getVolumnSuccess(data))
 
         // use new cached api
-        var newData = yield call([ethereum, ethereum.call], "getMarketInfo")
+        var newData = yield call([ethereum, ethereum.call], "getMarketInfo", queryString)
+        // console.log("new Data: ", newData)
         yield put(marketActions.getMarketInfoSuccess(newData.data, rateUSDETH))
     }catch(e){
         console.log(e)
     }
 }
 
+export function* getNewData(action) {
+    var state = store.getState()
+    var pageConfig = state.market.configs
+    var searchWord = action.payload.searchWord
+    var newListTokens = action.payload.listTokens
+    var firstPageSize = pageConfig.firstPageSize
+    var pageSize = pageConfig.normalPageSize
+    var tokens = state.tokens.tokens
+
+    var ethereum = state.connection.ethereum
+    var listTokens = []
+    var oldPosition = 0
+    var nextPosition = firstPageSize
+
+    if (searchWord) {
+        Object.keys(tokens).forEach((key) => {
+            if (key === "ETH") return
+            if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
+        
+            listTokens.push(key)
+        })
+        if (listTokens.length < nextPosition) {
+            nextPosition = listTokens.length
+        }
+    }
+    if (newListTokens) {
+        listTokens = newListTokens
+        var nextPage = pageConfig.page + 1
+        yield put(marketActions.updatePageNum(nextPage))
+        oldPosition = pageSize * (nextPage - 2) + firstPageSize
+        nextPosition = listTokens.length
+        if (oldPosition + pageSize <= listTokens.length) {
+            nextPosition = oldPosition + pageSize
+        }
+    }
+
+    var currentListToken = listTokens.slice(oldPosition, nextPosition)
+    if (currentListToken.length > 0) {
+        var queryString = currentListToken.reduce(function(queryString, key){
+            queryString += "-" + key
+            return queryString
+        })
+        var rateUSD = tokens.ETH.rateUSD
+        try {
+            var newData = yield call([ethereum, ethereum.call], "getMarketInfo", queryString)
+            yield put(marketActions.getMoreDataSuccess(newData.data, rateUSD))
+        }catch(e){
+            console.log(e)
+            yield put(marketActions.getMoreDataSuccess({}, rateUSD))
+        }
+    }
+}
+
 export function* watchMarket() {
   yield takeEvery("MARKET.GET_MARKET_DATA", getData)
   //yield takeEvery("MARKET.GET_GENERAL_INFO_TOKENS", getGeneralTokenInfo)
+  yield takeEvery("MARKET.GET_MORE_DATA", getNewData)
   yield takeEvery("MARKET.GET_VOLUMN", getVolumn)
+  yield takeEvery("MARKET.RESET_LIST_TOKEN", getNewData)
 }
 
 

@@ -42,6 +42,11 @@ const initState = function () {
         tokens,
         configs: {
             isShowTradingChart: false,
+            page: 1,
+            firstPageSize: 20,
+            normalPageSize: 10,
+            numScroll: 0,
+            isLoading: false,
             selectedSymbol: "KNC",
             searchWord: "",
             currency: {
@@ -174,47 +179,111 @@ const market = (state = initState, action) => {
             // return  {...newState, tokens: {...newTokens}}
         }
 
-        case 'MARKET.GET_VOLUMN_SUCCESS':{
-            const {data} = action.payload
+        // case 'MARKET.GET_VOLUMN_SUCCESS':{
+        //     const {data} = action.payload
+        //     var tokens = {...newState.tokens}
+        //     Object.keys(data).map(key=>{
+        //         if (!tokens[key]) return
+                
+        //         var token = data[key]
+
+        //         // tokens[key].ETH.volume = Math.round(token.e)
+        //         tokens[key].ETH.last_7d =  token.p
+        //         //tokens[key].USD.volume = Math.round(token.u)
+        //         tokens[key].USD.last_7d =  token.p
+
+        //         //calculate % change                
+        //         //get buy price
+                
+
+        //         var buyPrice = parseFloat(tokens[key].ETH.buyPrice)
+        //         var sellPrice = parseFloat(tokens[key].ETH.sellPrice)
+        //         var change = 0
+
+        //         if ((sellPrice <= 0) || (buyPrice <=0)){
+        //             change = "---"
+        //         }else{
+        //             var midlePrice = (buyPrice + sellPrice) / 2
+        //             var price24h = token.r
+        //             if (midlePrice > price24h){
+        //                 change = converters.calculatePercent(midlePrice, price24h)
+        //             }else{
+        //                 change = converters.calculatePercent(price24h, midlePrice) * -1
+        //             }
+        //         }
+                
+        //         tokens[key].USD.change = tokens[key].ETH.change = change
+        //     })
+        //     return  {...newState, tokens: {...tokens}}
+        // }
+
+        case 'MARKET.GET_MORE_DATA': {
+            var configs = newState.configs
+            configs.isLoading = true
+            return {...newState, configs: {...configs}}
+        }
+
+        case 'MARKET.UPDATE_PAGE_NUM_SUCCESS': {
+            var page = action.payload
+            var configs = newState.configs
+            configs.page = page.nextPage
+            return {...newState, configs: {...configs}}
+        }
+
+        case 'MARKET.RESET_LIST_TOKEN': {
+            var configs = newState.configs
+            configs.isLoading = false
+            configs.page = 1
+            return {...newState, configs: {...configs}}
+        }
+
+        case 'MARKET.GET_MORE_DATA_SUCCESS': {
+            var {data, rateUSD} = action.payload
             var tokens = {...newState.tokens}
+            var newTokens = newState.tokens
             Object.keys(data).map(key=>{
                 if (!tokens[key]) return
                 
                 var token = data[key]
+                var change = -9999
 
-                // tokens[key].ETH.volume = Math.round(token.e)
-                tokens[key].ETH.last_7d =  token.p
-                //tokens[key].USD.volume = Math.round(token.u)
-                tokens[key].USD.last_7d =  token.p
+                if (token.rates) {
+                    tokens[key].ETH.last_7d =  token.rates.p
+                    tokens[key].USD.last_7d =  token.rates.p
 
-                //calculate % change                
-                //get buy price
-                
+                    //get 24h change                
+                    var buyPrice = parseFloat(tokens[key].ETH.buyPrice)
+                    var sellPrice = parseFloat(tokens[key].ETH.sellPrice)
 
-                var buyPrice = parseFloat(tokens[key].ETH.buyPrice)
-                var sellPrice = parseFloat(tokens[key].ETH.sellPrice)
-                var change = 0
-
-                if ((sellPrice <= 0) || (buyPrice <=0)){
-                    change = "---"
-                }else{
-                    var midlePrice = (buyPrice + sellPrice) / 2
-                    var price24h = token.r
-                    if (midlePrice > price24h){
-                        change = converters.calculatePercent(midlePrice, price24h)
+                    if ((sellPrice <= 0) || (buyPrice <=0)){
+                        change = -9999
                     }else{
-                        change = converters.calculatePercent(price24h, midlePrice) * -1
+                        var midlePrice = (buyPrice + sellPrice) / 2
+                        var price24h = token.rates.r
+                        if (midlePrice > price24h){
+                            change = converters.calculatePercent(midlePrice, price24h)
+                        }else{
+                            change = converters.calculatePercent(price24h, midlePrice) * -1
+                        }
                     }
                 }
-                
+
                 tokens[key].USD.change = tokens[key].ETH.change = change
+                if (newTokens[key] && token.quotes) {
+                    newTokens[key].ETH.market_cap = token.quotes.ETH.market_cap
+                    newTokens[key].ETH.volume = token.quotes.ETH.volume_24h ? Math.round(token.quotes.ETH.volume_24h): 0
+
+                    newTokens[key].USD.market_cap = Math.round(token.quotes.ETH.market_cap * rateUSD)
+                    newTokens[key].USD.volume = token.quotes.USD.volume_24h ? Math.round(token.quotes.USD.volume_24h): 0
+                }
             })
-            return  {...newState, tokens: {...tokens}}
+            var configs = newState.configs
+            configs.isLoading = false
+            return {...newState, configs: {...configs}, tokens: {...tokens}}
         }
 
         case 'MARKET.GET_MARKET_INFO_SUCCESS': {
             const {data, rateUSD} = action.payload
-            // console.log("new api data: ", data)
             var tokens = {...newState.tokens}
             var newTokens = newState.tokens
             Object.keys(data).map(key=>{
