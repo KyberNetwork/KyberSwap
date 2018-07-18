@@ -4625,6 +4625,9 @@ ul.broadcast-steps {
     .confirm-exchange-modal .amount .amount-icon {
       text-align: center !important;
       margin-top: 5px; } }
+  .confirm-exchange-modal .amount .amount-icon img {
+    max-width: 28px;
+    max-height: 28px; }
   @media screen and (max-width: 640px) {
     .confirm-exchange-modal .amount .amount-detail {
       text-align: center !important;
@@ -7171,6 +7174,24 @@ input[type=number] {
     @media only screen and (max-width: 1023px) {
       .market .market-table {
         padding: 0 0 0 0; } }
+  .market .show-more {
+    text-align: center; }
+    @media screen and (max-width: 640px) {
+      .market .show-more {
+        margin-bottom: 20px; } }
+    .market .show-more button {
+      height: 40px;
+      width: 220px;
+      border: 2px solid #E8EBF2;
+      border-radius: 3px;
+      color: #222222;
+      font-size: 14px; }
+      .market .show-more button:hover {
+        cursor: pointer;
+        border-color: #222222; }
+        .market .show-more button:hover.disabled {
+          cursor: default;
+          border-color: #E8EBF2; }
   .market .column-label {
     display: flex;
     align-items: center;
