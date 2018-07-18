@@ -207,7 +207,9 @@ export default class ExchangeBody extends React.Component {
  
   validateRateAndSource = (sourceValue) => {
     this.lazyUpdateRateExchange(sourceValue)
-    this.lazyUpdateValidateSourceAmount(sourceValue)
+    if (this.props.account.account !== false){
+      this.lazyUpdateValidateSourceAmount(sourceValue)
+    }
   }
   changeSourceAmount = (e) => {
     var value = e.target.value

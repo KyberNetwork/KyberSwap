@@ -190,6 +190,8 @@ export default class EthereumService extends React.Component {
   fetchDataSync() {
     var state = store.getState()
     var account = state.account
+    // console.log("verify account")
+    // console.log(account)
     if (account.isGetAllBalance){
       this.verifyExchange()
       this.verifyTransfer()

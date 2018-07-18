@@ -92,7 +92,9 @@ export default class Exchange extends React.Component {
   specifyGasPrice = (value) => {
     this.props.dispatch(transferActions.specifyGasPrice(value))
 
-    this.lazyUpdateValidateSourceAmount(this.props.transfer.amount, value)
+    if (this.props.account !== false){
+      this.lazyUpdateValidateSourceAmount(this.props.transfer.amount, value)
+    }
   }
 
   inputGasPriceHandler = (value) => {

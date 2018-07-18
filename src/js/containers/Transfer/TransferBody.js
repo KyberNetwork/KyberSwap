@@ -97,7 +97,9 @@ export default class Transfer extends React.Component {
     var value = event.target.value
     this.props.dispatch(transferActions.specifyAmountTransfer(value))
 
-    this.lazyUpdateValidateSourceAmount(value, this.props.transfer.gasPrice)
+    if (this.props.account.account !== false){
+      this.lazyUpdateValidateSourceAmount(value, this.props.transfer.gasPrice)
+    }
   }
 
   chooseToken = (symbol, address, type) => {

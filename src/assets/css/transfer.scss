@@ -191,9 +191,12 @@ $padding-col-left : 2rem;
         color: #666666;
         font-size: 14px;
         font-weight: 600;
-        .token-symbol{
-          margin-left: 5px;
+        .token-balance{
+          margin-right: 5px;
         }
+        // .token-symbol{
+        //   margin-left: 5px;
+        // }
       }
       .icon{
         margin-right: 10px;

@@ -29,9 +29,11 @@ const TokenSelectorView = (props) => {
               <div>
                 <div>{item.name}</div>
                 <div className="item-balance">
-                  <span title={balance}>
-                    {roundingNumber(balance)}
-                  </span>
+                  {props.account !== false && (
+                    <span title={balance} class="item-balance-value">
+                      {roundingNumber(balance)}
+                    </span>
+                  )}
                   <span class="item-symbol">
                     {item.symbol}
                   </span>
@@ -64,7 +66,9 @@ const TokenSelectorView = (props) => {
               <div>
                 <div className="focus-name">{focusItem.name}</div>
                 <div className="focus-balance">
-                  <span className="token-balance" title = {toT(focusItem.balance)}>{roundingNumber(toT(focusItem.balance, focusItem.decimal))}</span>
+                  {props.account !== false && (
+                    <span className="token-balance" title = {toT(focusItem.balance)}>{roundingNumber(toT(focusItem.balance, focusItem.decimal))}</span>
+                  )}
                   <span className="token-symbol">{focusItem.symbol}</span>
                 </div>
               </div>
