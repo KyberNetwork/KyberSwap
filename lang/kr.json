@@ -325,7 +325,8 @@
     "last_7d": "지난 7일",
     "change": "24시간 변동",
     "volume": "볼륨 (24h)",
-    "support_eth_only": "현재 ETH페어만 지원합니다. USD페어는 아직 지원되지 않습니다.."
+    "support_eth_only": "현재 ETH페어만 지원합니다. USD페어는 아직 지원되지 않습니다.",
+    "show_more_results": "더 보기"
   },
 
   "trading_view": {

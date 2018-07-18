@@ -7,6 +7,12 @@ export function changeSearchWord(value) {
      }
 }
 
+export function resetListToken(searchWord) {
+  return {
+    type: "MARKET.RESET_LIST_TOKEN",
+    payload: {searchWord}
+  }
+}
 
 export function changeCurrency(value) {
     return {
@@ -96,6 +102,27 @@ export function getVolumnSuccess(data){
 export function getMarketInfoSuccess(data, rateUSD) {
   return {
     type: "MARKET.GET_MARKET_INFO_SUCCESS",
+    payload: {data, rateUSD}
+  }
+}
+
+export function getMoreData(listTokens) {
+  return {
+    type: 'MARKET.GET_MORE_DATA',
+    payload: {listTokens}
+  }
+}
+
+export function updatePageNum(nextPage) {
+  return {
+    type: "MARKET.UPDATE_PAGE_NUM_SUCCESS",
+    payload: {nextPage}
+  }
+}
+
+export function getMoreDataSuccess(data, rateUSD) {
+  return {
+    type: "MARKET.GET_MORE_DATA_SUCCESS",
     payload: {data, rateUSD}
   }
 }
