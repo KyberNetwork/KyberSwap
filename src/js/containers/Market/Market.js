@@ -82,7 +82,7 @@ import { toEther } from "../../utils/converter";
     page: page,
     firstPageSize: firstPageSize,
     currencyList: currencyList,
-    isDisabled: currencyList > listTokens.length || listTokens.length < firstPageSize,
+    // isDisabled: currencyList > listTokens.length || listTokens.length < firstPageSize,
     originalTokens: originalTokens,
     searchWord: searchWord,
     sortType: sortType
@@ -120,11 +120,11 @@ export default class Market extends React.Component {
               />
             </div>
         </div>
-        <div className="show-more">
+        {/* <div className="show-more">
           <button className={this.props.isDisabled ? 'disabled' : ''} onClick={(e) => {if(!this.props.isDisabled) this.getMoreData(e)}}>
             {this.props.translate("market.show_more_results") || "Show more results"}
           </button>
-        </div>
+        </div> */}
         <TradingViewModal />
       </div>
     )
