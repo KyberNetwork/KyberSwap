@@ -38,16 +38,18 @@ const initState = function () {
         }
 
     })
+    var sortedTokens = []
     return {
         tokens,
+        sortedTokens,
         configs: {
             isShowTradingChart: false,
             page: 1,
             firstPageSize: 20,
-            normalPageSize: 5,
-            numScroll: 2,
+            normalPageSize: 15,
+            numScroll: 5,
             sortKey: "",
-            sortType: "",
+            sortType: {},
             isLoading: false,
             selectedSymbol: "KNC",
             searchWord: "",
@@ -114,7 +116,7 @@ const market = (state = initState, action) => {
             var searchWord = action.payload
             var configs = newState.configs
             configs.searchWord = searchWord
-            return {...newState, configs: {...configs}}
+            return {...newState, configs: {...configs}, sortedTokens: []}
         }
         case 'MARKET.CHANGE_CURRENCY': {
             var value = action.payload
@@ -239,22 +241,25 @@ const market = (state = initState, action) => {
             return {...newState, configs: {...configs}}
         }
 
-        case 'MARKET.SORT_TOKEN_ASC': {
-            var key = action.payload
+        case 'MARKET.UPDATE_SORT_STATE': {
+            var {sortKey, sortType} = action.payload
+            console.log("sort: ", sortKey, sortType)
+            var newSortType = {}
+            newSortType[sortKey] = sortType
             var configs = newState.configs
-            configs.isLoading = false
-            configs.page = 1
-            configs.sortKey = key
-            configs.sortType = "asc"
+            configs.sortKey = sortKey
+            configs.sortType = newSortType
+            return {...newState, configs: {...configs}} 
         }
 
-        case 'MARKET.SORT_TOKEN_DESC': {
-            var key = action.payload
+        case 'MARKET.UPDATE_SORTED_TOKENS': {
+            var newSortedTokens = action.payload.sortedTokens
             var configs = newState.configs
+            var sortedTokens = newState.sortedTokens
             configs.isLoading = false
             configs.page = 1
-            configs.sortKey = key
-            configs.sortType = "desc"
+            sortedTokens = newSortedTokens
+            return {...newState, configs: {...configs}, sortedTokens: sortedTokens}
         }
 
         case 'MARKET.GET_MORE_DATA_SUCCESS': {

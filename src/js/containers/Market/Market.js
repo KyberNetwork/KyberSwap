@@ -16,38 +16,48 @@ import { toEther } from "../../utils/converter";
   var page = store.market.configs.page
   var firstPageSize = store.market.configs.firstPageSize
   var pageSize = store.market.configs.normalPageSize
-  var sortKey = store.market.configs.sortKey
-  var sortType = store.market.configs.sortType
   var currencyList = firstPageSize + (page - 1) * pageSize
   var originalTokens = store.market.tokens
+  var sortedTokens = store.market.sortedTokens
   var listTokens = []
+  var sortKey = store.market.configs.sortKey
+  var sortType = store.market.configs.sortType
 
-  Object.keys(originalTokens).forEach((key) => {
-    if (key === 'ETH') return
-    if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
-    listTokens.push(key)
-  })
-
-  function compareString(tokenA, tokenB) {
-    var marketA = tokenA + currency
-    var marketB = tokenB + currency
-    if (marketA < marketB)
-      return -1;
-    if (marketA > marketB)
-      return 1;
-    return 0;
+  if (sortedTokens.length > 0) {
+    listTokens = sortedTokens
+  } else {
+    Object.keys(originalTokens).forEach((key) => {
+      if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
+      listTokens.push(key)
+    })
+    if (sortKey === 'market') {
+      listTokens.sort(compareString(currency))
+    } else if (sortKey != '') {
+      listTokens.sort(compareNum(originalTokens, currency, sortKey))
+    }
+    
+    if (sortType[sortKey] && sortType[sortKey] === '-sort-desc') {
+      listTokens.reverse()
+    }
   }
 
-  function compareNum(tokenA, tokenB) {
-    return originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey]
+  function compareString(currency) {
+    return function(tokenA, tokenB) {
+      var marketA = tokenA + currency
+      var marketB = tokenB + currency
+      if (marketA < marketB)
+        return -1;
+      if (marketA > marketB)
+        return 1;
+      return 0;
+    }
   }
-  if (sortKey === 'market') {
-    listTokens.sort(compareString)
-  } else if (sortKey != '') {
-    listTokens.sort(compareNum)
-  }
-  if (sortType === 'desc') {
-    listTokens.reverse()
+
+  function compareNum(originalTokens, currency, sortKey) {
+    return function(tokenA, tokenB) {
+      // console.log("sort num: ", originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey])
+      return 1 * (originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey])
+    }
   }
 
   var tokens = listTokens.slice(0, currencyList).reduce(function(newOb, key){
@@ -73,7 +83,10 @@ import { toEther } from "../../utils/converter";
     page: page,
     firstPageSize: firstPageSize,
     currencyList: currencyList,
-    isDisabled: currencyList > listTokens.length || listTokens.length < firstPageSize
+    isDisabled: currencyList > listTokens.length || listTokens.length < firstPageSize,
+    originalTokens: originalTokens,
+    searchWord: searchWord,
+    sortType: sortType
   }
 })
 
@@ -102,6 +115,9 @@ export default class Market extends React.Component {
                 listTokens = {this.props.listTokens}
                 page = {this.props.page}
                 firstPageSize = {this.props.firstPageSize}
+                originalTokens = {this.props.originalTokens}
+                searchWord = {this.props.searchWord}
+                sortType = {this.props.sortType}
               />
             </div>
         </div>

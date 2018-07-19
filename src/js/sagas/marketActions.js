@@ -80,6 +80,8 @@ export function* getNewData(action) {
     var pageConfig = state.market.configs
     var searchWord = action.payload.searchWord
     var newListTokens = action.payload.listTokens
+    var sortedTokens = action.payload.sortedTokens
+
     var firstPageSize = pageConfig.firstPageSize
     var pageSize = pageConfig.normalPageSize
     var tokens = state.tokens.tokens
@@ -100,6 +102,14 @@ export function* getNewData(action) {
             nextPosition = listTokens.length
         }
     }
+
+    if (Array.isArray(sortedTokens) && sortedTokens.length > 0) {
+        listTokens = sortedTokens
+        if (listTokens.length < nextPosition) {
+            nextPosition = listTokens.length
+        }
+    }
+
     if (newListTokens) {
         listTokens = newListTokens
         var nextPage = pageConfig.page + 1
@@ -134,6 +144,7 @@ export function* watchMarket() {
   yield takeEvery("MARKET.GET_MORE_DATA", getNewData)
   yield takeEvery("MARKET.GET_VOLUMN", getVolumn)
   yield takeEvery("MARKET.RESET_LIST_TOKEN", getNewData)
+  yield takeEvery("MARKET.UPDATE_SORTED_TOKENS", getNewData)
 }
 
 

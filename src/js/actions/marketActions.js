@@ -127,16 +127,18 @@ export function getMoreDataSuccess(data, rateUSD) {
   }
 }
 
-export function sortTokensAsc(key) {
+export function updateSortedTokens(sortedTokens) {
+  console.log("UPDATE_SORTED_TOKENS: ", sortedTokens)
   return {
-    type: "MARKET.SORT_TOKEN_ASC",
-    payload: key
+    type: "MARKET.UPDATE_SORTED_TOKENS",
+    payload: {sortedTokens}
   }
 }
 
-export function sortTokensDesc(key) {
+export function updateSortState(sortKey, sortType) {
+  console.log("inaction: ", sortKey, sortType)
   return {
-    type: "MARKET.SORT_TOKEN_DESC",
-    payload: key
+    type: "MARKET.UPDATE_SORT_STATE",
+    payload: {sortKey, sortType}
   }
 }
