@@ -49,17 +49,18 @@ export default class MarketTable extends React.Component {
 
   handleScroll = () => {
     if (this.props.listTokens.length > this.props.firstPageSize && !this.props.isLoading && this.props.page - 1 < this.props.numScroll) {
-      // var element = document.getElementById("my-element");
-      // var scrollTop     = window.scrollY,
-      //   elementOffset = element.offsetTop,
-      //   elementHeight = element.offsetHeight,
-      //   windowH       = window.innerHeight,
-      //   distance      = (elementHeight + elementOffset - scrollTop - windowH);
       var market = document.getElementById("market-eth")
-
-      if ((window.innerHeight + window.scrollY) >= market.offsetHeight) {
-        this.getMoreData()
-      }
+      // if ((window.innerHeight + window.scrollY) >= market.offsetHeight) {
+      //   this.getMoreData()
+      // }
+      var scrollTop   = window.scrollY,
+        elementOffset = market.offsetTop,
+        elementHeight = market.clientHeight,
+        windowH       = window.innerHeight,
+        distance      = (elementHeight + elementOffset - scrollTop - windowH);
+        if (distance <= 200) {
+          this.getMoreData()
+        }
     }
   }
 
