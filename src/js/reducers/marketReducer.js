@@ -43,7 +43,7 @@ const initState = function () {
         configs: {
             isShowTradingChart: false,
             page: 1,
-            firstPageSize: 40,
+            firstPageSize: 60,
             normalPageSize: 40,
             numScroll: 0,
             isLoading: false,

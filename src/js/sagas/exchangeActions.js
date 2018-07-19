@@ -753,16 +753,16 @@ function* updateRatePending(action) {
         if (rateRequestZeroAmount.status === "success"){
           rateInit = rateRequestZeroAmount.data.expectedPrice
         }
-        if (rateRequestZeroAmount.status === "timeout") {
-          yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-            translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
-            return
-        }
-        if (rateRequestZeroAmount.status === "fail") {
-          yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-            translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
-            return
-        }
+        // if (rateRequestZeroAmount.status === "timeout") {
+        //   yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+        //     translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+        //     return
+        // }
+        // if (rateRequestZeroAmount.status === "fail") {
+        //   yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+        //     translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
+        //     return
+        // }
       }
       
       yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
