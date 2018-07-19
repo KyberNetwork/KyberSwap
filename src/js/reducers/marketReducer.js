@@ -231,6 +231,7 @@ const market = (state = initState, action) => {
             var page = action.payload
             var configs = newState.configs
             configs.page = page.nextPage
+            configs.isLoading = false
             return {...newState, configs: {...configs}}
         }
 
@@ -302,7 +303,7 @@ const market = (state = initState, action) => {
                 }
             })
             var configs = newState.configs
-            configs.isLoading = false
+            //configs.isLoading = false
             return {...newState, configs: {...configs}, tokens: {...tokens}}
         }
 
