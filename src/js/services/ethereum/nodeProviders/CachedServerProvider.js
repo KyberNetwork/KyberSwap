@@ -360,4 +360,36 @@ export default class CachedServerProvider extends React.Component {
                 })
         })
     }
+
+    getRightMarketInfo() {
+        return new Promise((resolve, rejected) => {
+            fetch(this.rpcUrl + '/getRightMarketInfo', {
+            }).then((response) => {
+                return response.json()
+            })
+                .then((result) => {
+                    resolve(result)                    
+                })
+                .catch((err) => {
+                    console.log(err)
+                    rejected(err)
+                })
+        })
+    }
+    
+    getLast7D(queryString) {
+        return new Promise((resolve, rejected) => {
+            fetch(this.rpcUrl + '/getLast7D' + '?listToken=' + queryString, {
+            }).then((response) => {
+                return response.json()
+            })
+                .then((result) => {
+                    resolve(result)                    
+                })
+                .catch((err) => {
+                    console.log(err)
+                    rejected(err)
+                })
+        })
+    }
 }

@@ -67,9 +67,12 @@ export function* getVolumn(){
         // yield put(marketActions.getVolumnSuccess(data))
 
         // use new cached api
-        var newData = yield call([ethereum, ethereum.call], "getMarketInfo", queryString)
-        // console.log("new Data: ", newData)
+        var newData = yield call([ethereum, ethereum.call], "getRightMarketInfo")
         yield put(marketActions.getMarketInfoSuccess(newData.data, rateUSDETH))
+
+        // new api last 7d
+        var last7D = yield call([ethereum, ethereum.call], "getLast7D", queryString)
+        yield put(marketActions.getLast7DSuccess(last7D.data))
     }catch(e){
         console.log(e)
     }
@@ -127,13 +130,12 @@ export function* getNewData(action) {
             queryString += "-" + key
             return queryString
         })
-        var rateUSD = tokens.ETH.rateUSD
         try {
-            var newData = yield call([ethereum, ethereum.call], "getMarketInfo", queryString)
-            yield put(marketActions.getMoreDataSuccess(newData.data, rateUSD))
+            var newData = yield call([ethereum, ethereum.call], "getLast7D", queryString)
+            yield put(marketActions.getMoreDataSuccess(newData.data))
         }catch(e){
             console.log(e)
-            yield put(marketActions.getMoreDataSuccess({}, rateUSD))
+            yield put(marketActions.getMoreDataSuccess({}))
         }
     }
 }

@@ -106,6 +106,13 @@ export function getMarketInfoSuccess(data, rateUSD) {
   }
 }
 
+export function getLast7DSuccess(last7D) {
+  return {
+    type: "MARKET.GET_LAST_7D_SUCCESS",
+    payload: last7D
+  }
+}
+
 export function getMoreData(listTokens) {
   return {
     type: 'MARKET.GET_MORE_DATA',
@@ -120,10 +127,10 @@ export function updatePageNum(nextPage) {
   }
 }
 
-export function getMoreDataSuccess(data, rateUSD) {
+export function getMoreDataSuccess(data) {
   return {
     type: "MARKET.GET_MORE_DATA_SUCCESS",
-    payload: {data, rateUSD}
+    payload: {data}
   }
 }
 
