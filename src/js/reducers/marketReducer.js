@@ -243,7 +243,6 @@ const market = (state = initState, action) => {
 
         case 'MARKET.UPDATE_SORT_STATE': {
             var {sortKey, sortType} = action.payload
-            console.log("sort: ", sortKey, sortType)
             var newSortType = {}
             newSortType[sortKey] = sortType
             var configs = newState.configs

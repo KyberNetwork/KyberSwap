@@ -55,8 +55,7 @@ import { toEther } from "../../utils/converter";
 
   function compareNum(originalTokens, currency, sortKey) {
     return function(tokenA, tokenB) {
-      // console.log("sort num: ", originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey])
-      return 1 * (originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey])
+      return originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey]
     }
   }
 
