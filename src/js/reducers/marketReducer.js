@@ -38,14 +38,18 @@ const initState = function () {
         }
 
     })
+    var sortedTokens = []
     return {
         tokens,
+        sortedTokens,
         configs: {
             isShowTradingChart: false,
             page: 1,
-            firstPageSize: 60,
-            normalPageSize: 40,
-            numScroll: 0,
+            firstPageSize: 20,
+            normalPageSize: 15,
+            numScroll: 5,
+            sortKey: "",
+            sortType: {},
             isLoading: false,
             selectedSymbol: "KNC",
             searchWord: "",
@@ -112,7 +116,7 @@ const market = (state = initState, action) => {
             var searchWord = action.payload
             var configs = newState.configs
             configs.searchWord = searchWord
-            return {...newState, configs: {...configs}}
+            return {...newState, configs: {...configs}, sortedTokens: []}
         }
         case 'MARKET.CHANGE_CURRENCY': {
             var value = action.payload
@@ -235,6 +239,26 @@ const market = (state = initState, action) => {
             configs.isLoading = false
             configs.page = 1
             return {...newState, configs: {...configs}}
+        }
+
+        case 'MARKET.UPDATE_SORT_STATE': {
+            var {sortKey, sortType} = action.payload
+            var newSortType = {}
+            newSortType[sortKey] = sortType
+            var configs = newState.configs
+            configs.sortKey = sortKey
+            configs.sortType = newSortType
+            return {...newState, configs: {...configs}} 
+        }
+
+        case 'MARKET.UPDATE_SORTED_TOKENS': {
+            var newSortedTokens = action.payload.sortedTokens
+            var configs = newState.configs
+            var sortedTokens = newState.sortedTokens
+            configs.isLoading = false
+            configs.page = 1
+            sortedTokens = newSortedTokens
+            return {...newState, configs: {...configs}, sortedTokens: sortedTokens}
         }
 
         case 'MARKET.GET_MORE_DATA_SUCCESS': {
