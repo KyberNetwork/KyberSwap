@@ -392,6 +392,9 @@
 
   .show-more {
     text-align: center;
+    @include screen-max-width(medium){
+      margin-bottom: 20px;
+    }
     button {
       height: 40px;
       width: 220px;

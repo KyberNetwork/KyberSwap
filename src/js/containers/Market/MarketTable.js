@@ -42,12 +42,6 @@ import {Line} from 'react-chartjs-2';
 })
 
 export default class MarketTable extends React.Component {
-  // constructor(props) {
-	// 	super(props)
-	// 	this.state = {
-	// 		sortType: {}
-	// 	}
-  // }
 
   getMoreData = () => {
     this.props.dispatch(actions.getMoreData(this.props.listTokens))

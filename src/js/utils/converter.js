@@ -31,12 +31,17 @@ export function calculateDest(source, rate) {
 }
 
 export function caculateSourceAmount(destAmount, offeredRate, precision) {
+  console.log({destAmount, offeredRate, precision})
   if (!destAmount || !offeredRate || acceptableTyping(destAmount) || acceptableTyping(offeredRate)) {
     return "0"
   }
-  var bigDest = new BigNumber(destAmount)
   var bigOfferedRate = new BigNumber(offeredRate)
 
+  if (bigOfferedRate.comparedTo(0) === 0){
+    return ""
+  }
+
+  var bigDest = new BigNumber(destAmount)
   bigOfferedRate = bigOfferedRate.div(1000000000000000000)
   var result = bigDest.div(bigOfferedRate)
   if (precision) {

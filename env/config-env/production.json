@@ -1,6 +1,6 @@
 {
     "connections": {
-      "http": [
+      "http": [        
         {
           "endPoint" : "https://production-cache.kyber.network",
           "type": "cached"
@@ -370,12 +370,47 @@
         "address": "0x8b353021189375591723e7384262f45709a3c3dc",
         "symbol":"TOMO", 
         "icon": "tomo.svg"
+      },
+      "MDS": {
+        "name": "MediShares",
+        "decimal": 18,
+        "address": "0x66186008c1050627f979d464eabb258860563dbe",
+        "symbol":"MDS", 
+        "icon": "mds.svg"
+      },
+      "LEND": {
+        "name": "EthLend",
+        "decimal": 18,
+        "address": "0x80fb784b7ed66730e8b1dbd9820afd29931aab03",
+        "symbol":"LEND", 
+        "icon": "lend.svg"
+      },
+      "WINGS": {
+        "name": "WINGS",
+        "decimal": 18,
+        "address": "0x667088b212ce3d06a1b553a7221e1fd19000d9af",
+        "symbol":"WINGS", 
+        "icon": "wings.svg"
+      },
+      "MTL": {
+        "name": "Metal",
+        "decimal": 8,
+        "address": "0xf433089366899d83a9f26a773d59ec7ecf30355e",
+        "symbol":"MTL", 
+        "icon": "mtl.svg"
+      },
+      "WABI": {
+        "name": "WaBi",
+        "decimal": 18,
+        "address": "0x286bda1413a2df81731d4930ce2f862a35a609fe",
+        "symbol":"WABI", 
+        "icon": "wabi.svg"
       }
     },
     "ethScanUrl": "https://etherscan.io/",
     "bank": "0x0",
     "reserve": "0x63825c174ab367968ec60f061753d3bbd36a0d8f",
-    "network": "0x818E6FECD516Ecc3849DAf6845e3EC868087B755",
+    "network": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
     "wrapper": "0x6172afc8c00c46e0d07ce3af203828198194620a",
     "trade_topic":"0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
     "endpoint": "wss://mainnet.infura.io/ws",
