@@ -1,18 +1,18 @@
 
 
-export function changeSearchWord(value) {
+export function changeSearchWord(searchWord) {
     return {
        type: "MARKET.CHANGE_SEARCH_WORD",
-       payload: value
+       payload: {searchWord}
      }
 }
 
-export function resetListToken(searchWord) {
-  return {
-    type: "MARKET.RESET_LIST_TOKEN",
-    payload: {searchWord}
-  }
-}
+// export function resetListToken(searchWord) {
+//   return {
+//     type: "MARKET.RESET_LIST_TOKEN",
+//     payload: {searchWord}
+//   }
+// }
 
 export function changeCurrency(value) {
     return {
@@ -127,10 +127,10 @@ export function updatePageNum(nextPage) {
   }
 }
 
-export function getMoreDataSuccess(data) {
+export function getMoreDataSuccess(data, timeStamp) {
   return {
     type: "MARKET.GET_MORE_DATA_SUCCESS",
-    payload: {data}
+    payload: {data, timeStamp}
   }
 }
 
@@ -145,5 +145,12 @@ export function updateSortState(sortKey, sortType) {
   return {
     type: "MARKET.UPDATE_SORT_STATE",
     payload: {sortKey, sortType}
+  }
+}
+
+export function updateFilteredTokensSuccess(filteredTokens) {
+  return {
+    type: "MARKET.UPDATE_FILETERED_TOKENS_SUCCESS",
+    payload: filteredTokens
   }
 }

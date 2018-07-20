@@ -18,45 +18,15 @@ import { toEther } from "../../utils/converter";
   var pageSize = store.market.configs.normalPageSize
   var currencyList = firstPageSize + (page - 1) * pageSize
   var originalTokens = store.market.tokens
-  var sortedTokens = store.market.sortedTokens
+  var filteredTokens = store.market.filteredTokens
   var listTokens = []
-  var sortKey = store.market.configs.sortKey
+  // var sortKey = store.market.configs.sortKey
   var sortType = store.market.configs.sortType
 
-  if (sortedTokens.length > 0) {
-    listTokens = sortedTokens
+  if (filteredTokens.length > 0) {
+    listTokens = filteredTokens
   } else {
-    Object.keys(originalTokens).forEach((key) => {
-      if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
-      listTokens.push(key)
-    })
-    if (sortKey === 'market') {
-      listTokens.sort(compareString(currency))
-    } else if (sortKey != '') {
-      listTokens.sort(compareNum(originalTokens, currency, sortKey))
-    }
-    
-    if (sortType[sortKey] && sortType[sortKey] === '-sort-desc') {
-      listTokens.reverse()
-    }
-  }
-
-  function compareString(currency) {
-    return function(tokenA, tokenB) {
-      var marketA = tokenA + currency
-      var marketB = tokenB + currency
-      if (marketA < marketB)
-        return -1;
-      if (marketA > marketB)
-        return 1;
-      return 0;
-    }
-  }
-
-  function compareNum(originalTokens, currency, sortKey) {
-    return function(tokenA, tokenB) {
-      return originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey]
-    }
+    listTokens = Object.keys(originalTokens)
   }
 
   var tokens = listTokens.slice(0, currencyList).reduce(function(newOb, key){

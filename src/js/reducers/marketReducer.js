@@ -39,9 +39,11 @@ const initState = function () {
 
     })
     var sortedTokens = []
+    var filteredTokens = []
     return {
         tokens,
         sortedTokens,
+        filteredTokens,
         configs: {
             isShowTradingChart: false,
             page: 1,
@@ -51,6 +53,7 @@ const initState = function () {
             sortKey: "",
             sortType: {},
             isLoading: false,
+            timeUpdateData: 0,
             selectedSymbol: "KNC",
             searchWord: "",
             currency: {
@@ -113,10 +116,11 @@ const market = (state = initState, action) => {
         //     return initState
         // }
         case 'MARKET.CHANGE_SEARCH_WORD': {
-            var searchWord = action.payload
+            var searchWord = action.payload.searchWord
             var configs = newState.configs
             configs.searchWord = searchWord
-            return {...newState, configs: {...configs}, sortedTokens: []}
+            configs.page = 1
+            return {...newState, configs: {...configs}}
         }
         case 'MARKET.CHANGE_CURRENCY': {
             var value = action.payload
@@ -221,6 +225,11 @@ const market = (state = initState, action) => {
         //     return  {...newState, tokens: {...tokens}}
         // }
 
+        case 'MARKET.UPDATE_FILETERED_TOKENS_SUCCESS': {
+            var filteredTokens = action.payload
+            return {...newState, filteredTokens: filteredTokens} 
+        }
+
         case 'MARKET.GET_MORE_DATA': {
             var configs = newState.configs
             configs.isLoading = true
@@ -249,6 +258,7 @@ const market = (state = initState, action) => {
             var configs = newState.configs
             configs.sortKey = sortKey
             configs.sortType = newSortType
+            configs.page = 1
             return {...newState, configs: {...configs}} 
         }
 
@@ -264,6 +274,7 @@ const market = (state = initState, action) => {
 
         case 'MARKET.GET_MORE_DATA_SUCCESS': {
             var last7D = action.payload.data
+            var timeStamp = action.payload.timeStamp
             var tokens = {...newState.tokens}
             Object.keys(last7D).map(key=>{
                 if (!tokens[key]) return
@@ -273,7 +284,9 @@ const market = (state = initState, action) => {
                     tokens[key].USD.last_7d =  last_7d
                 }
             })
-            return  {...newState, tokens: {...tokens}}
+            var configs = newState.configs
+            configs.timeUpdateData = timeStamp
+            return  {...newState, tokens: {...tokens}, configs: {...configs}}
         }
 
         case 'MARKET.GET_MARKET_INFO_SUCCESS': {
@@ -286,7 +299,7 @@ const market = (state = initState, action) => {
                 var token = data[key]
                 var change = -9999
 
-                if (token.rate) {
+                if (token.r) {
 
                     //get 24h change                
                     var buyPrice = parseFloat(tokens[key].ETH.buyPrice)
@@ -296,7 +309,7 @@ const market = (state = initState, action) => {
                         change = -9999
                     }else{
                         var midlePrice = (buyPrice + sellPrice) / 2
-                        var price24h = token.rate
+                        var price24h = token.r
                         if (midlePrice > price24h){
                             change = converters.calculatePercent(midlePrice, price24h)
                         }else{
@@ -306,12 +319,12 @@ const market = (state = initState, action) => {
                 }
 
                 tokens[key].USD.change = tokens[key].ETH.change = change
-                if (newTokens[key] && token.quotes) {
-                    newTokens[key].ETH.market_cap = token.quotes.ETH.market_cap
-                    newTokens[key].ETH.volume = token.quotes.ETH.volume_24h ? Math.round(token.quotes.ETH.volume_24h): 0
+                if (newTokens[key] && token.q) {
+                    newTokens[key].ETH.market_cap = token.q.ETH.market_cap
+                    newTokens[key].ETH.volume = token.q.ETH.volume_24h ? Math.round(token.q.ETH.volume_24h): 0
 
-                    newTokens[key].USD.market_cap = Math.round(token.quotes.ETH.market_cap * rateUSD)
-                    newTokens[key].USD.volume = token.quotes.USD.volume_24h ? Math.round(token.quotes.USD.volume_24h): 0
+                    newTokens[key].USD.market_cap = Math.round(token.q.ETH.market_cap * rateUSD)
+                    newTokens[key].USD.volume = token.q.USD.volume_24h ? Math.round(token.q.USD.volume_24h): 0
                 }
             })
             return  {...newState, tokens: {...tokens}}

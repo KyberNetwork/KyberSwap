@@ -69,6 +69,7 @@ export function* getVolumn(){
         // use new cached api
         var newData = yield call([ethereum, ethereum.call], "getRightMarketInfo")
         yield put(marketActions.getMarketInfoSuccess(newData.data, rateUSDETH))
+        console.log("rateETH: ", rateUSDETH)
 
         // new api last 7d
         var last7D = yield call([ethereum, ethereum.call], "getLast7D", queryString)
@@ -140,13 +141,100 @@ export function* getNewData(action) {
     }
 }
 
+function compareString(currency) {
+    return function(tokenA, tokenB) {
+    var marketA = tokenA + currency
+    var marketB = tokenB + currency
+    if (marketA < marketB)
+        return -1;
+    if (marketA > marketB)
+        return 1;
+    return 0;
+    }
+}
+
+function compareNum(originalTokens, currency, sortKey) {
+    return function(tokenA, tokenB) {
+    return originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey]
+    }
+}
+
+export function* resetFilteredTokens(action) {
+    // filter tokens and update tokens here
+    var state = store.getState()
+    var searchWord = action.payload.searchWord
+    if (!searchWord) {
+        searchWord = state.market.configs.searchWord
+    }
+    // console.log("run here: ", searchWord)
+    var tokens = state.market.tokens
+    var filteredTokens = []
+    // console.log("run here: ", searchWord)
+    Object.keys(tokens).forEach((key) => {
+        if (key === "ETH") return
+        if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
+    
+        filteredTokens.push(key)
+    })
+    var sortKey = action.payload.sortKey
+    var sortType = action.payload.sortType
+    if (!sortKey && !sortType) {
+        if (state.market.configs.sortKey != "") {
+            sortKey = state.market.configs.sortKey
+            sortType = state.market.configs.sortType[sortKey]
+        }
+    }
+    if (sortKey && sortKey != "") {
+        if (sortKey === 'market') {
+            filteredTokens.sort(compareString('ETH'))
+        } else if (sortKey != '') {
+            filteredTokens.sort(compareNum(tokens, 'ETH', sortKey))
+        }
+        if (sortType === '-sort-desc') {
+            filteredTokens.reverse()
+        }
+    }
+    console.log("run here: ", sortKey, sortType, filteredTokens)
+    var nextPosition = state.market.configs.firstPageSize
+    if (filteredTokens.length < nextPosition) {
+        nextPosition = filteredTokens.length
+    }
+    yield put(marketActions.updateFilteredTokensSuccess(filteredTokens))
+    var timeNow = Date.now() / 1000
+    var listTokens = filteredTokens.slice(0, nextPosition)
+    var queryString = ""
+    if (timeNow - state.market.configs.timeUpdateData > 5*60) {
+        queryString = listTokens.reduce((result, key) => {
+            result += "-" + key
+            return result
+        })
+    } else {
+        listTokens.forEach((key) => {
+            if (!tokens[key].ETH.last_7d || !tokens[key].USD.last_7d) {
+                queryString += key + "-"
+            }
+        })
+    }
+    if (queryString != "") {
+        try {
+            var newData = yield call([ethereum, ethereum.call], "getLast7D", queryString)
+            yield put(marketActions.getMoreDataSuccess(newData.data, newData.timeStamp))
+        }catch(e){
+            console.log(e)
+            yield put(marketActions.getMoreDataSuccess({}))
+        }
+    }
+}
+
 export function* watchMarket() {
   yield takeEvery("MARKET.GET_MARKET_DATA", getData)
   //yield takeEvery("MARKET.GET_GENERAL_INFO_TOKENS", getGeneralTokenInfo)
   yield takeEvery("MARKET.GET_MORE_DATA", getNewData)
   yield takeEvery("MARKET.GET_VOLUMN", getVolumn)
-  yield takeEvery("MARKET.RESET_LIST_TOKEN", getNewData)
   yield takeEvery("MARKET.UPDATE_SORTED_TOKENS", getNewData)
+
+  yield takeEvery("MARKET.CHANGE_SEARCH_WORD", resetFilteredTokens)
+  yield takeEvery("MARKET.UPDATE_SORT_STATE", resetFilteredTokens)
 }
 
 
