@@ -96,7 +96,7 @@ var scriptConfig = function (env) {
     output: {
       path: __dirname + dist,
       publicPath: '/',
-      filename: "[name].min.js"
+      filename: "[name].min.js?v=" + Date.now()
     },
     plugins: plugins,
     devServer: {
@@ -107,4 +107,26 @@ var scriptConfig = function (env) {
   }
 };
 
-module.exports = scriptConfig;
+// var indexConfig = function (env) {
+//   var HtmlWebpackPlugin = require('html-webpack-plugin')
+//   return {
+//     entry: ['./src/app.min.js'],
+//     output: {
+//       path: __dirname + '/src',
+//       filename: 'app.min.js'
+//     },
+//     plugins: [
+//       new HtmlWebpackPlugin({
+//         hash: true,
+//         title: "Swap - kyber.network",
+//         template: './src/app.html.template',
+//         inject: 'body',
+//         styleFile: 'app.bundle.css?v=' + Date.now()
+//       }),
+
+//     ]
+//   }
+// }
+
+
+module.exports = [scriptConfig];

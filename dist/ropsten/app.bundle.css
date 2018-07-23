@@ -4625,6 +4625,9 @@ ul.broadcast-steps {
     .confirm-exchange-modal .amount .amount-icon {
       text-align: center !important;
       margin-top: 5px; } }
+  .confirm-exchange-modal .amount .amount-icon img {
+    max-width: 28px;
+    max-height: 28px; }
   @media screen and (max-width: 640px) {
     .confirm-exchange-modal .amount .amount-detail {
       text-align: center !important;
@@ -6739,9 +6742,22 @@ input[type=number] {
     #exchange .amount-input {
       margin-top: 1rem; } }
   @media screen and (min-width: 1024px) {
+    #exchange .balance-wrapper,
+    #exchange .exchange-col-1 {
+      box-shadow: 0 10px 20px 0 rgba(135, 136, 136, 0.26), 0 6px 6px 0 rgba(173, 177, 176, 0.26); }
     #exchange .balance-wrapper {
       border: 1px solid #ddd;
-      background: white; }
+      background: white;
+      position: relative;
+      z-index: 1; }
+      #exchange .balance-wrapper::after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 100%;
+        background: #ffffff;
+        top: 0;
+        right: -11px; }
     #exchange .exchange-wrapper-btn {
       text-align: center; }
     #exchange .exchange-col-1 {
@@ -7158,6 +7174,24 @@ input[type=number] {
     @media only screen and (max-width: 1023px) {
       .market .market-table {
         padding: 0 0 0 0; } }
+  .market .show-more {
+    text-align: center; }
+    @media screen and (max-width: 640px) {
+      .market .show-more {
+        margin-bottom: 20px; } }
+    .market .show-more button {
+      height: 40px;
+      width: 220px;
+      border: 2px solid #E8EBF2;
+      border-radius: 3px;
+      color: #222222;
+      font-size: 14px; }
+      .market .show-more button:hover {
+        cursor: pointer;
+        border-color: #222222; }
+        .market .show-more button:hover.disabled {
+          cursor: default;
+          border-color: #E8EBF2; }
   .market .column-label {
     display: flex;
     align-items: center;
@@ -7455,7 +7489,7 @@ input[type=number] {
 
 @media screen and (min-width: 1024px) {
   #transfer-screen .transfer-col-1 {
-    box-shadow: 0 7px 25px #ddd;
+    box-shadow: 0 10px 20px 0 rgba(135, 136, 136, 0.26), 0 6px 6px 0 rgba(173, 177, 176, 0.26);
     min-height: 550px; }
   #transfer-screen .transfer-col-3-1 {
     position: relative;

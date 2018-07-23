@@ -325,7 +325,8 @@
     "last_7d": "7 ngày qua",
     "change": "Thay đổi 24h",
     "volume": "Lượng giao dịch (24h)",
-    "support_eth_only": "Chỉ hỗ trợ các cặp giao dịch với ETH, chưa hỗ trợ giao dịch với USD."
+    "support_eth_only": "Chỉ hỗ trợ các cặp giao dịch với ETH, chưa hỗ trợ giao dịch với USD.",
+    "show_more_results": "Hiển thị thêm kết quả"
   },
 
   "trading_view": {
