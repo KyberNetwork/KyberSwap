@@ -1,18 +1,9 @@
-
-
 export function changeSearchWord(searchWord) {
     return {
        type: "MARKET.CHANGE_SEARCH_WORD",
        payload: {searchWord}
      }
 }
-
-// export function resetListToken(searchWord) {
-//   return {
-//     type: "MARKET.RESET_LIST_TOKEN",
-//     payload: {searchWord}
-//   }
-// }
 
 export function changeCurrency(value) {
     return {
@@ -21,14 +12,12 @@ export function changeCurrency(value) {
      }
 }
 
-
 export function changeSort(value) {
     return {
        type: "MARKET.CHANGE_SORT",
        payload: value
      }
 }
-
 
 export function changeDisplayColumn(value) {
     return {
@@ -37,15 +26,12 @@ export function changeDisplayColumn(value) {
      }
 }
 
-
-
 export function changeShowColumn(column, show) {
     return {
        type: "MARKET.CHANGE_SHOW_COLUMN",
        payload: {column, show}
      }
 }
-
 
 export function getMarketData(){
   return {

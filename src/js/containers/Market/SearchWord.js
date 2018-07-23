@@ -14,7 +14,6 @@ export default class SearchWord extends React.Component {
     changeSearch = (e) => {
         var value = e.target.value
         this.props.dispatch(marketActions.changeSearchWord(value))
-        // this.props.dispatch(marketActions.resetListToken(value))
     }
     render() {
         return (

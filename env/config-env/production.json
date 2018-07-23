@@ -2,7 +2,7 @@
     "connections": {
       "http": [        
         {
-          "endPoint" : "http://localhost:3001",
+          "endPoint" : "https://production-cache.kyber.network",
           "type": "cached"
         },       
         {

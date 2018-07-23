@@ -69,7 +69,6 @@ export function* getVolumn(){
         // use new cached api
         var newData = yield call([ethereum, ethereum.call], "getRightMarketInfo")
         yield put(marketActions.getMarketInfoSuccess(newData.data, rateUSDETH))
-        console.log("rateETH: ", rateUSDETH)
 
         // new api last 7d
         var last7D = yield call([ethereum, ethereum.call], "getLast7D", queryString)
@@ -139,7 +138,7 @@ function compareString(currency) {
 
 function compareNum(originalTokens, currency, sortKey) {
     return function(tokenA, tokenB) {
-    return originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey]
+        return originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey]
     }
 }
 
