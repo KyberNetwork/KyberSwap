@@ -409,13 +409,6 @@
       "symbol":"WABI", 
       "icon": "wabi.svg"
     },
-    "WABI": {
-      "name": "WaBi",
-      "decimal": 18,
-      "address": "0x286bda1413a2df81731d4930ce2f862a35a609fe",
-      "symbol":"WABI", 
-      "icon": "wabi.svg"
-    },
     "COFI":{
       "name": "CoinFi",
       "decimal": 18,
