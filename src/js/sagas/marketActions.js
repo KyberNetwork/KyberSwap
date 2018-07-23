@@ -73,7 +73,7 @@ export function* getVolumn(){
 
         // new api last 7d
         var last7D = yield call([ethereum, ethereum.call], "getLast7D", queryString)
-        yield put(marketActions.getLast7DSuccess(last7D.data))
+        yield put(marketActions.getLast7DSuccess(last7D.data, last7D.timeStamp))
     }catch(e){
         console.log(e)
     }
@@ -81,62 +81,46 @@ export function* getVolumn(){
 
 export function* getNewData(action) {
     var state = store.getState()
-    var pageConfig = state.market.configs
-    var searchWord = action.payload.searchWord
+    var marketConfig = state.market.configs
     var newListTokens = action.payload.listTokens
-    var sortedTokens = action.payload.sortedTokens
 
-    var firstPageSize = pageConfig.firstPageSize
-    var pageSize = pageConfig.normalPageSize
-    var tokens = state.tokens.tokens
-
-    var ethereum = state.connection.ethereum
+    var firstPageSize = marketConfig.firstPageSize
+    var pageSize = marketConfig.normalPageSize
+    var tokens = state.market.tokens
     var listTokens = []
-    var oldPosition = 0
-    var nextPosition = firstPageSize
 
-    if (searchWord) {
-        Object.keys(tokens).forEach((key) => {
-            if (key === "ETH") return
-            if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
-        
-            listTokens.push(key)
-        })
-        if (listTokens.length < nextPosition) {
-            nextPosition = listTokens.length
-        }
-    }
-
-    if (Array.isArray(sortedTokens) && sortedTokens.length > 0) {
-        listTokens = sortedTokens
-        if (listTokens.length < nextPosition) {
-            nextPosition = listTokens.length
-        }
-    }
-
-    if (newListTokens) {
-        listTokens = newListTokens
-        var nextPage = pageConfig.page + 1
-        yield put(marketActions.updatePageNum(nextPage))
-        oldPosition = pageSize * (nextPage - 2) + firstPageSize
-        nextPosition = listTokens.length
-        if (oldPosition + pageSize <= listTokens.length) {
-            nextPosition = oldPosition + pageSize
-        }
+    listTokens = newListTokens
+    var nextPage = marketConfig.page + 1
+    yield put(marketActions.updatePageNum(nextPage))
+    var oldPosition = pageSize * (nextPage - 2) + firstPageSize
+    
+    var nextPosition = listTokens.length
+    if (oldPosition + pageSize <= listTokens.length) {
+        nextPosition = oldPosition + pageSize
     }
 
     var currentListToken = listTokens.slice(oldPosition, nextPosition)
-    if (currentListToken.length > 0) {
-        var queryString = currentListToken.reduce(function(queryString, key){
-            queryString += "-" + key
-            return queryString
-        })
+    var timeNow = Date.now() / 1000
+    var queryString = ""
+
+    currentListToken.forEach((key) => {
+        if (key === 'ETH') return
+        var dataAge = 0
+        if (marketConfig.timeUpdateData[key]) {
+            dataAge = timeNow - marketConfig.timeUpdateData[key]
+        }
+        if (tokens[key].ETH.last_7d === 0 || tokens[key].USD.last_7d === 0 || dataAge > 300) {
+            queryString += key + "-"
+        }
+    })
+
+    if (queryString != "") {
+        var ethereum = state.connection.ethereum
         try {
             var newData = yield call([ethereum, ethereum.call], "getLast7D", queryString)
-            yield put(marketActions.getMoreDataSuccess(newData.data))
+            yield put(marketActions.getMoreDataSuccess(newData.data, newData.timeStamp))
         }catch(e){
             console.log(e)
-            yield put(marketActions.getMoreDataSuccess({}))
         }
     }
 }
@@ -166,12 +150,10 @@ export function* resetFilteredTokens(action) {
     if (!searchWord) {
         searchWord = state.market.configs.searchWord
     }
-    // console.log("run here: ", searchWord)
     var tokens = state.market.tokens
     var filteredTokens = []
-    // console.log("run here: ", searchWord)
     Object.keys(tokens).forEach((key) => {
-        if (key === "ETH") return
+        // if (key === "ETH") return
         if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
     
         filteredTokens.push(key)
@@ -194,7 +176,6 @@ export function* resetFilteredTokens(action) {
             filteredTokens.reverse()
         }
     }
-    console.log("run here: ", sortKey, sortType, filteredTokens)
     var nextPosition = state.market.configs.firstPageSize
     if (filteredTokens.length < nextPosition) {
         nextPosition = filteredTokens.length
@@ -203,25 +184,26 @@ export function* resetFilteredTokens(action) {
     var timeNow = Date.now() / 1000
     var listTokens = filteredTokens.slice(0, nextPosition)
     var queryString = ""
-    if (timeNow - state.market.configs.timeUpdateData > 5*60) {
-        queryString = listTokens.reduce((result, key) => {
-            result += "-" + key
-            return result
-        })
-    } else {
-        listTokens.forEach((key) => {
-            if (!tokens[key].ETH.last_7d || !tokens[key].USD.last_7d) {
-                queryString += key + "-"
-            }
-        })
-    }
+    var marketConfig = state.market.configs
+
+    listTokens.forEach((key) => {
+        if (key === 'ETH') return
+        var dataAge = 0
+        if (marketConfig.timeUpdateData[key]) {
+            dataAge = timeNow - marketConfig.timeUpdateData[key]
+        }
+        if (tokens[key].ETH.last_7d === 0 || tokens[key].USD.last_7d === 0 || dataAge > 300) {
+            queryString += key + "-"
+        }
+    })
+
     if (queryString != "") {
+        var ethereum = state.connection.ethereum
         try {
             var newData = yield call([ethereum, ethereum.call], "getLast7D", queryString)
             yield put(marketActions.getMoreDataSuccess(newData.data, newData.timeStamp))
         }catch(e){
             console.log(e)
-            yield put(marketActions.getMoreDataSuccess({}))
         }
     }
 }
@@ -231,7 +213,6 @@ export function* watchMarket() {
   //yield takeEvery("MARKET.GET_GENERAL_INFO_TOKENS", getGeneralTokenInfo)
   yield takeEvery("MARKET.GET_MORE_DATA", getNewData)
   yield takeEvery("MARKET.GET_VOLUMN", getVolumn)
-  yield takeEvery("MARKET.UPDATE_SORTED_TOKENS", getNewData)
 
   yield takeEvery("MARKET.CHANGE_SEARCH_WORD", resetFilteredTokens)
   yield takeEvery("MARKET.UPDATE_SORT_STATE", resetFilteredTokens)

@@ -276,30 +276,6 @@ export default class MarketTable extends React.Component {
     }
   }
 
-  getSortArray = (sortKey, sortType) => {
-    var listTokens = this.props.listTokens
-    var searchWord = this.props.searchWord
-    if (sortKey === 'market') {
-      listTokens.sort(this.compareString(this.props.currency))
-    } else if (sortKey != '') {
-       listTokens.sort(this.compareNum(this.props.originalTokens, this.props.currency, sortKey))
-    }
-    
-    var sortedTokens = []
-    listTokens.forEach((key) => {
-      if (key === 'ETH') return
-      if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
-      sortedTokens.push(key)
-    })
-    
-    if (sortType === '-sort-desc') {
-      sortedTokens.reverse()
-      this.props.dispatch(actions.updateSortedTokens(sortedTokens))
-    } else if (sortType === '-sort-asc') {
-      this.props.dispatch(actions.updateSortedTokens(sortedTokens))
-    }
-  }
-
   updateSortState = (key, sortType) => {
     this.props.dispatch(actions.updateSortState(key, sortType))
   }
@@ -333,7 +309,6 @@ export default class MarketTable extends React.Component {
         return {
           className: this.props.sortType['market'] ?  (this.props.sortType['market'] + ' -cursor-pointer') :'-cursor-pointer',
           onClick: (e) => {
-            // this.getSortArray('market', this.getSortType('market'))
             this.updateSortState('market', this.getSortType('market'))
           }
         }
@@ -347,7 +322,6 @@ export default class MarketTable extends React.Component {
         return {
           className: this.props.sortType["sellPrice"] ?  (this.props.sortType["sellPrice"] + ' -cursor-pointer') :'-cursor-pointer',
           onClick: (e) => {
-            // this.getSortArray("sellPrice", this.getSortType("sellPrice"))
             this.updateSortState("sellPrice", this.getSortType("sellPrice"))
           }
         }
@@ -361,7 +335,6 @@ export default class MarketTable extends React.Component {
         return {
           className: this.props.sortType["buyPrice"] ?  (this.props.sortType["buyPrice"] + ' -cursor-pointer') :'-cursor-pointer',
           onClick: (e) => {
-            // this.getSortArray("buyPrice", this.getSortType("buyPrice"))
             this.updateSortState("buyPrice", this.getSortType("buyPrice"))
           }
         }
@@ -398,7 +371,6 @@ export default class MarketTable extends React.Component {
                     return {
                       className: this.props.sortType[key] ?  (this.props.sortType[key] + ' -cursor-pointer') :'-cursor-pointer',
                       onClick: (e) => {
-                        // this.getSortArray(key, this.getSortType(key))
                         this.updateSortState(key, this.getSortType(key))
                       }
                     }
@@ -434,7 +406,6 @@ export default class MarketTable extends React.Component {
                     return {
                       className: this.props.sortType[key] ?  (this.props.sortType[key] + ' -cursor-pointer') :'-cursor-pointer',
                       onClick: (e) => {
-                        // this.getSortArray(key, this.getSortType(key))
                         this.updateSortState(key, this.getSortType(key))
                       }
                     }
@@ -452,7 +423,6 @@ export default class MarketTable extends React.Component {
                     return {
                       className: this.props.sortType[key] ?  (this.props.sortType[key] + ' -cursor-pointer') :'-cursor-pointer',
                       onClick: (e) => {
-                        // this.getSortArray(key, this.getSortType(key))
                         this.updateSortState(key, this.getSortType(key))
                       }
                     }

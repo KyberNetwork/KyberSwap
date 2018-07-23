@@ -49,9 +49,10 @@ export function* clearSession(action) {
 export function* updateAllRate(action) {
   var state = store.getState()
   
-  var rateUSD = state.tokens.tokens.ETH.rateUSD
+  // var rateUSD = state.tokens.tokens.ETH.rateUSD
   const { ethereum, tokens } = action.payload
   try {
+    const rateUSD = yield call([ethereum, ethereum.call],"getRateETH")
     const rates = yield call([ethereum, ethereum.call],"getAllRates", tokens)
     yield put(actions.updateAllRateComplete(rates, rateUSD))
   }

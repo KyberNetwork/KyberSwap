@@ -53,7 +53,7 @@ const initState = function () {
             sortKey: "",
             sortType: {},
             isLoading: false,
-            timeUpdateData: 0,
+            timeUpdateData: {},
             selectedSymbol: "KNC",
             searchWord: "",
             currency: {
@@ -276,16 +276,16 @@ const market = (state = initState, action) => {
             var last7D = action.payload.data
             var timeStamp = action.payload.timeStamp
             var tokens = {...newState.tokens}
+            var configs = newState.configs
             Object.keys(last7D).map(key=>{
                 if (!tokens[key]) return
                 var last_7d = last7D[key]
                 if (last_7d && last_7d.length > 0) {
                     tokens[key].ETH.last_7d =  last_7d
                     tokens[key].USD.last_7d =  last_7d
+                    configs.timeUpdateData[key] = timeStamp
                 }
             })
-            var configs = newState.configs
-            configs.timeUpdateData = timeStamp
             return  {...newState, tokens: {...tokens}, configs: {...configs}}
         }
 
@@ -331,17 +331,19 @@ const market = (state = initState, action) => {
         }
 
         case 'MARKET.GET_LAST_7D_SUCCESS': {
-            var last7D = action.payload
+            var {last7D, timeStamp} = action.payload
             var tokens = {...newState.tokens}
+            var configs = {...newState.configs}
             Object.keys(last7D).map(key=>{
                 if (!tokens[key]) return
                 var last_7d = last7D[key]
                 if (last_7d && last_7d.length > 0) {
                     tokens[key].ETH.last_7d =  last_7d
                     tokens[key].USD.last_7d =  last_7d
+                    configs.timeUpdateData[key] = timeStamp
                 }
-            })
-            return  {...newState, tokens: {...tokens}}
+            }) 
+            return  {...newState, tokens: {...tokens}, configs: {...configs}}
         }
 
         case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
