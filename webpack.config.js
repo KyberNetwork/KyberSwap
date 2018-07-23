@@ -107,26 +107,26 @@ var scriptConfig = function (env) {
   }
 };
 
-var indexConfig = function (env) {
-  var HtmlWebpackPlugin = require('html-webpack-plugin')
-  return {
-    entry: ['./src/client.min.js'],
-    output: {
-      path: __dirname + '/src',
-      filename: 'client.min.js'
-    },
-    plugins: [
-      new HtmlWebpackPlugin({
-        hash: true,
-        title: "Swap - kyber.network",
-        template: './src/app.html.template',
-        inject: 'body',
-        styleFile: 'app.bundle.css?v=' + Date.now()
-      }),
+// var indexConfig = function (env) {
+//   var HtmlWebpackPlugin = require('html-webpack-plugin')
+//   return {
+//     entry: ['./src/app.min.js'],
+//     output: {
+//       path: __dirname + '/src',
+//       filename: 'app.min.js'
+//     },
+//     plugins: [
+//       new HtmlWebpackPlugin({
+//         hash: true,
+//         title: "Swap - kyber.network",
+//         template: './src/app.html.template',
+//         inject: 'body',
+//         styleFile: 'app.bundle.css?v=' + Date.now()
+//       }),
 
-    ]
-  }
-}
+//     ]
+//   }
+// }
 
 
-module.exports = [scriptConfig, indexConfig];
+module.exports = [scriptConfig];
