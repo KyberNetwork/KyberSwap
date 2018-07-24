@@ -19,9 +19,9 @@ const AccountBalanceLayout = (props) => {
   function reorderToken(tokens){
       if (props.sortType === "Price"){
         if (props.sortValue){
-          return converts.shortEthBalance(tokens)
+          return converts.sortEthBalance(tokens)
         }else{
-          return converts.shortASCEthBalance(tokens)
+          return converts.sortASCEthBalance(tokens)
         }
       }else{
         if (props.sortValue){
@@ -51,8 +51,8 @@ const AccountBalanceLayout = (props) => {
       .map(token => {
         var balance = converts.toT(token.balance, token.decimal)
 
-        var tokenEpsilon = converts.caculateTokenEpsilon(token.rate, token.decimal, token.symbol)
-        var bigBalance = new BigNumber(token.balance)
+        // var tokenEpsilon = converts.caculateTokenEpsilon(token.rate, token.decimal, token.symbol)
+        // var bigBalance = new BigNumber(token.balance)
 
         var searchWord = props.searchWord.toLowerCase()
         var symbolL = token.symbol.toLowerCase()

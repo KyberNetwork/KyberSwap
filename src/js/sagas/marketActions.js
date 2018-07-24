@@ -43,7 +43,7 @@ export function* getData(action) {
 export function* getVolumn(){
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    var tokens = state.tokens.tokens
+    var tokens = state.market.tokens
 
     // page config
     var pageConfig = state.market.configs
