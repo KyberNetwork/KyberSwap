@@ -9,7 +9,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = env => {
 
-    const outputPath = env.chain ? '/dist/' + env.chain : '/src';
+    const outputPath = env.chain ? 'dist/' + env.chain : '/src';
 
     const timestamp = Date.now();
 
@@ -17,14 +17,13 @@ module.exports = env => {
         app: ['babel-polyfill', './js/client.js', './assets/css/app.scss']
     };
 
-    let exclude = ['kovan','ropsten','staging','production']
     console.log(outputPath)
     let plugins = [
         new webpack.ProgressPlugin(),
         new ExtractTextPlugin(`[name].bundle.${timestamp}.css`, {
             allChunks: true
         }),
-        new CleanPlugin('dist', {exclude: exclude.filter(function(e) { return e !== env.chain }), allowExternal: true}),
+        new CleanPlugin([outputPath+'/app.*']),
         new HtmlWebpackPlugin({
             title: 'Wallet - kyber.network',
             filename: 'index.html',
