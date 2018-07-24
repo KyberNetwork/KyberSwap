@@ -16,8 +16,6 @@ module.exports = env => {
     let entry = {
         app: ['babel-polyfill', './js/client.js', './assets/css/app.scss']
     };
-
-    console.log(outputPath)
     let plugins = [
         new webpack.ProgressPlugin(),
         new ExtractTextPlugin(`[name].bundle.${timestamp}.css`, {
@@ -77,7 +75,6 @@ module.exports = env => {
             filename: `[name].min.${timestamp}.js`,
             publicPath: '/'
         },
-
         module: {
             loaders: [{
                 test: /\.jsx?$/,

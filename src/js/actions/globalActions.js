@@ -206,9 +206,16 @@ export function setNotiHandler(notiService) {
   }
 }
 
-export function setMaxGasPrice(ethereum) {
+export function setMaxGasPrice() {
   return {
     type: "GLOBAL.SET_MAX_GAS_PRICE",
-    payload: { ethereum }
+  }
+}
+
+
+export function setNetworkError(error){
+  return {
+    type: "GLOBAL.SET_NETWORK_ERROR",
+    payload: {error}
   }
 }

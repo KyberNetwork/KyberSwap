@@ -96,6 +96,13 @@ export function specifyGas(value) {
   }
 }
 
+export function seSelectedGas(level){
+  return {
+    type: "EXCHANGE.SET_SELECTED_GAS",
+    payload: {level: level}
+  }
+}
+
 export function specifyGasPrice(value) {
   return {
     type: "EXCHANGE.SPECIFY_GAS_PRICE",
@@ -117,10 +124,10 @@ export function setRandomExchangeSelectedToken(random) {
 }
 
 export function updateRateExchange(ethereum, source, dest,
-  sourceAmount, isManual = false, rateInit = "0") {
+  sourceAmount, sourceTokenSymbol, isManual = false) {
   return {
     type: "EXCHANGE.UPDATE_RATE_PENDING",
-    payload: { ethereum, source, dest, sourceAmount, isManual, rateInit }
+    payload: { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual }
   }
 }
 
@@ -148,7 +155,7 @@ export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePric
   //var reserveBalance = rate[2]
   return {
     type: "EXCHANGE.UPDATE_RATE",
-    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage:  converter.toT(rateInit, 18), blockNo, isManual, isSuccess}
+    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess}
   }
 
 }
@@ -464,18 +471,17 @@ export function setMaxGasPrice(ethereum) {
   }
 }
 
-export function setMaxGasPriceComplete(maxGasPrice) {
-  var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
+export function setMaxGasPriceComplete(maxGasPriceGwei) { 
   return {
     type: "EXCHANGE.SET_MAX_GAS_PRICE_COMPLETE",
     payload: maxGasPriceGwei
   }
 }
 
-export function setGasPriceSwapComplete(safeLowGas, standardGas, defaultGas, fastGas) {
+export function setGasPriceSwapComplete(safeLowGas, standardGas, fastGas, defaultGas, selectedGas) {
   return {
     type: "EXCHANGE.SET_GAS_PRICE_SWAP_COMPLETE",
-    payload: {safeLowGas, standardGas, defaultGas, fastGas}
+    payload: {safeLowGas, standardGas, defaultGas, fastGas, selectedGas}
   }
 }
 

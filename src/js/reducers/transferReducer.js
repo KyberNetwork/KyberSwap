@@ -219,7 +219,7 @@ const transfer = (state = initState, action) => {
     }
     case "TRANSFER.SET_GAS_PRICE_TRANSFER_COMPLETE": {
       if (!newState.isEditGasPrice) {
-        var { safeLowGas, standardGas, fastGas, defaultGas } = action.payload
+        var { safeLowGas, standardGas, fastGas, defaultGas, selectedGas } = action.payload
 
         var gasPriceSuggest = newState.gasPriceSuggest
         gasPriceSuggest.fastGas = fastGas
@@ -228,6 +228,7 @@ const transfer = (state = initState, action) => {
 
         newState.gasPriceSuggest = {...gasPriceSuggest}
         newState.gasPrice = defaultGas
+        newState.selectedGas = selectedGas
       }
       return newState
     }
@@ -236,6 +237,24 @@ const transfer = (state = initState, action) => {
       var snapshot  = action.payload
       newState.snapshot = {...snapshot}
       return newState
+    }
+
+    case "TRANSFER.SET_SELECTED_GAS":{
+      const {level} = action.payload
+      newState.selectedGas = level
+      return newState
+    }
+
+    case "GLOBAL.CLEAR_SESSION_FULFILLED":{
+      var resetState = {...initState}
+      resetState.token = newState.token
+
+      resetState.gasPrice = newState.gasPrice
+      resetState.selectedGas = newState.selectedGas
+      resetState.isEditGasPrice = newState.isEditGasPrice
+
+      resetState.tokenSymbol = newState.tokenSymbol
+      return resetState
     }
   }
   return state

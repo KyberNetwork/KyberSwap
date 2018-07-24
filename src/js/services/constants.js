@@ -70,6 +70,7 @@ const INIT_EXCHANGE_FORM_STATE = {
 
   isFetchingGas: false,
   gasPrice: 20,
+  selectedGas: 'f',
   gasPriceSuggest: {
     fastGas: 20,
     standardGas: 20,
@@ -153,6 +154,7 @@ const INIT_TRANSFER_FORM_STATE = {
   // gas_limit_transfer_eth: 21000,
   // gas_limit_transfer_token: 50000,
   gasPrice: 20,
+  selectedGas: 'f',
   gasPriceSuggest: {
     fastGas: 20,
     standardGas: 20,
@@ -225,9 +227,9 @@ const CONNECTION_CHECKER = {
 const CONFIG_ENV_LEDGER_LINK = "https://support.ledgerwallet.com/hc/en-us/articles/115005165269-What-if-Ledger-Wallet-is-not-recognized-on-Linux-"
 const LEDGER_SUPPORT_LINK = "https://support.ledgerwallet.com/hc/en-us/articles/115005198565"
 
-const BASE_HOST = "/swap"
+const BASE_HOST = ""
 
-const STORAGE_KEY = "127"
+const STORAGE_KEY = "130"
 module.exports = {
   ERC20, KYBER_NETWORK, KYBER_WRAPPER, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,
   KYBER_WALLET_DATA, INIT_EXCHANGE_FORM_STATE, INIT_TRANSFER_FORM_STATE,

@@ -28,14 +28,15 @@ const appReducer = combineReducers({
   //   storage: localForage
   // }, market),  
   locale : localeReducer,
+  tokens,
   // locale: persistReducer({
   //   key: 'locale',
   //   storage: localForage
   // }, locale),  
-  tokens: persistReducer({
-    key: 'tokens',
+  txs: persistReducer({
+    key: 'txs',
     storage: session
-  }, tokens),  
+  }, txs),  
   // global: persistReducer({
   //   key: 'global',
   //   storage: localForage,
@@ -45,34 +46,34 @@ const appReducer = combineReducers({
 
 const rootReducer = (state, action) => {
   //let isGoToRoot = action.type === '@@router/LOCATION_CHANGE' && action.payload.pathname === constants.BASE_HOST
-  if (action.type === 'GLOBAL.CLEAR_SESSION_FULFILLED') {
-    var global = {...state.global}
-    global.termOfServiceAccepted = true
+  // if (action.type === 'GLOBAL.CLEAR_SESSION_FULFILLED') {
+  //   var global = {...state.global}
+  //   global.termOfServiceAccepted = true
 
-    var initState = constants.INIT_EXCHANGE_FORM_STATE
-    initState.snapshot = constants.INIT_EXCHANGE_FORM_STATE
+  //   var initState = constants.INIT_EXCHANGE_FORM_STATE
+  //   initState.snapshot = constants.INIT_EXCHANGE_FORM_STATE
 
-    initState.maxGasPrice = state.exchange.maxGasPrice
-    initState.gasPrice = state.exchange.gasPrice
+  //   initState.maxGasPrice = state.exchange.maxGasPrice
+  //   initState.gasPrice = state.exchange.gasPrice
 
-    initState.gasPriceSuggest = {...state.exchange.gasPriceSuggest}
-    var exchange = {...initState}
+  //   initState.gasPriceSuggest = {...state.exchange.gasPriceSuggest}
+  //   var exchange = {...initState}
 
-    state = {
-      utils: state.utils, 
-      global: global,
-      connection: state.connection,
-      locale: state.locale,
-      tokens: state.tokens,
-      txs: state.txs,
-      exchange: exchange
-    }
-  }
+  //   state = {
+  //     utils: state.utils, 
+  //     global: global,
+  //     connection: state.connection,
+  //     locale: state.locale,
+  //     tokens: state.tokens,
+  //     txs: state.txs,
+  //     exchange: exchange
+  //   }
+  // }
   
-  let isGoToExchange = action.type === '@@router/LOCATION_CHANGE' && ( (action.payload.pathname === constants.BASE_HOST + '/exchange')&&(action.payload.pathname === constants.BASE_HOST + '/transfer') )
-  if(isGoToExchange && !state.account.account){
-    window.location.href = '/'
-  }
+  // let isGoToExchange = action.type === '@@router/LOCATION_CHANGE' && ( (action.payload.pathname === constants.BASE_HOST + '/swap')&&(action.payload.pathname === constants.BASE_HOST + '/transfer') )
+  // if(isGoToExchange && !state.account.account){
+  //   window.location.href = '/'
+  // }
   return appReducer(state, action)
 }
 

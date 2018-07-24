@@ -222,6 +222,10 @@ $divider-color: darken($title-background-color, 5);
         text-align: center !important;
         margin-top: 5px;
       }
+      img{
+        max-width: 28px;
+        max-height: 28px;
+      }
     }
     .amount-detail{
       @include screen-max-width(medium) {

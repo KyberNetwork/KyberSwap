@@ -22,10 +22,13 @@ import { setConnection, createNewConnectionInstance } from "../../actions/connec
 import { default as _ } from 'underscore';
 import { LayoutView } from "../../components/Layout"
 import { getTranslate } from 'react-localize-redux'
+import * as common from "../../utils/common"
 
 import Language from "../../../../lang"
 
 @connect((store) => {
+
+
   return {
     ethereumNode: store.connection.ethereum,
     currentBlock: store.global.currentBlock,
@@ -92,6 +95,8 @@ export default class Layout extends React.Component {
   }
 
   render() {
+
+    var currentLanguage = common.getActiveLanguage(this.props.locale.languages)
    // var exchangeHistory = <TransactionList />
     var market = <Market />
     //var footer = <Footer />
@@ -100,12 +105,13 @@ export default class Layout extends React.Component {
       <LayoutView
         history={history}
         Header={Header}
-        ImportAccount={ImportAccount}
+        // ImportAccount={ImportAccount}
         Exchange={Exchange}
         Transfer={Transfer}
         market={market}
         supportedLanguages={Language.supportLanguage}
-        setActiveLanguage={this.setActiveLanguage}        
+        setActiveLanguage={this.setActiveLanguage}      
+        currentLanguage = {currentLanguage}  
        // footer = {footer}
       />
     )

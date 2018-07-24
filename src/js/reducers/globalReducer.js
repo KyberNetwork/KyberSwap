@@ -18,6 +18,7 @@ const initState = {
   isAnalizeComplete: false,
   analizeError : {},
   selectedAnalyzeHash: '',
+  network_error:"",
   metamask: {
     address: "",
     balance: "",
@@ -126,6 +127,11 @@ const global = (state = initState, action) => {
     case "GLOBAL.SET_NOTI_HANDLER":{
       const {notiService} = action.payload
       return Object.assign({}, state, { notiService: notiService })
+    }
+
+    case "GLOBAL.SET_NETWORK_ERROR":{
+      const {error} = action.payload
+      return Object.assign({}, state, { network_error: error })
     }
   }
   return state

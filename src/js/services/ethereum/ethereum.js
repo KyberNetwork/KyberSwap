@@ -68,9 +68,9 @@ export default class EthereumService extends React.Component {
     callBackSync()
     this.intervalSyncID = setInterval(callBackSync, 3000)
 
-    var callBack10Min = this.fetchData10Min.bind(this)
-    callBack10Min()
-    var interval10Min = setInterval(callBack10Min, 600000)
+    var callBack5Min = this.fetchData5Min.bind(this)
+    callBack5Min()
+    var interval5Min = setInterval(callBack5Min, 300000)
   }
 
   clearSubcription() {
@@ -162,8 +162,10 @@ export default class EthereumService extends React.Component {
 
     this.checkConnection()
 
-    this.fetchGasprice()
+
     this.fetchMaxGasPrice()
+    this.fetchGasprice()
+    
 
     this.fetchExchangeEnable()
     // this.verifyExchange()
@@ -176,12 +178,12 @@ export default class EthereumService extends React.Component {
 
     this.fetGeneralInfoTokens()
 
-   //this.testAnalize()
+  //   this.testAnalize()
   // this.testEstimateGas()
   }
 
 
-  fetchData10Min(){
+  fetchData5Min(){
     this.fetchVolumn()
   }
 
@@ -197,7 +199,7 @@ export default class EthereumService extends React.Component {
   testAnalize() {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    store.dispatch(analyzeError(ethereum, "0xf410222fe20c4a4e3daa4355ca6cf80e1762f6cf55c20bf6289fccb273d233cf"))
+    store.dispatch(analyzeError(ethereum, "0x8abab8d7af17fdac7113c58658e69ffc5627913f06760c11c437bdd338f69630"))
   }
 
   // testEstimateGas() {
@@ -302,18 +304,18 @@ export default class EthereumService extends React.Component {
       sourceDecimal = tokens[sourceTokenSymbol].decimal
     }
 
-    var sourceAmountHex = stringToHex(sourceAmount, sourceDecimal)
+//    var sourceAmountHex = stringToHex(sourceAmount, sourceDecimal)
 
-    var destTokenSymbol = state.exchange.destTokenSymbol
-    var rateInit = 0
-    if (sourceTokenSymbol === 'ETH' && destTokenSymbol !== 'ETH') {
-      rateInit = tokens[destTokenSymbol].minRateEth
-    }
-    if (sourceTokenSymbol !== 'ETH' && destTokenSymbol === 'ETH') {
-      rateInit = tokens[sourceTokenSymbol].minRate
-    }
+    // var destTokenSymbol = state.exchange.destTokenSymbol
+    // var rateInit = 0
+    // if (sourceTokenSymbol === 'ETH' && destTokenSymbol !== 'ETH') {
+    //   rateInit = tokens[destTokenSymbol].minRateEth
+    // }
+    // if (sourceTokenSymbol !== 'ETH' && destTokenSymbol === 'ETH') {
+    //   rateInit = tokens[sourceTokenSymbol].minRate
+    // }
 
-    store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmountHex, isManual, rateInit))
+    store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual))
   }
 
   // fetchHistoryExchange = () => {
@@ -332,8 +334,7 @@ export default class EthereumService extends React.Component {
 
   fetchMaxGasPrice = () => {
     var state = store.getState()
-    var ethereum = state.connection.ethereum
-    store.dispatch(setMaxGasPrice(ethereum))
+    store.dispatch(setMaxGasPrice())
   }
 
   fetchGasExchange = () => {
@@ -344,7 +345,7 @@ export default class EthereumService extends React.Component {
     }
     var pathname = state.router.location.pathname
     console.log(pathname)
-    if (pathname !== constants.BASE_HOST + "/swap") {
+    if (!pathname.includes(constants.BASE_HOST + "/swap")) {
       return
     }
     store.dispatch(estimateGas())
@@ -358,7 +359,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== constants.BASE_HOST + "/transfer") {
+    if (!pathname.includes(constants.BASE_HOST + "/transfer")) {
       return
     }
     store.dispatch(estimateGasTransfer())
@@ -380,7 +381,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== constants.BASE_HOST + "/swap") {
+    if (!pathname.includes(constants.BASE_HOST + "/swap")) {
       return
     }
     store.dispatch(verifyExchange())
@@ -395,7 +396,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== constants.BASE_HOST + "/transfer") {
+    if (!pathname.includes(constants.BASE_HOST + "/transfer")) {
       return
     }
     store.dispatch(verifyTransfer())
@@ -420,7 +421,7 @@ export default class EthereumService extends React.Component {
     }
 
     var pathname = state.router.location.pathname
-    if (pathname !== constants.BASE_HOST + "/swap") {
+    if (!pathname.includes(constants.BASE_HOST + "/swap")) {
       return
     }
     store.dispatch(fetchExchangeEnable())

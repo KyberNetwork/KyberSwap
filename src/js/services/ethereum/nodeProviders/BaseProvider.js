@@ -12,6 +12,8 @@ export default class BaseProvider {
         this.erc20Contract = new this.rpc.eth.Contract(constants.ERC20)
         this.networkAddress = BLOCKCHAIN_INFO.network
         this.wrapperAddress = BLOCKCHAIN_INFO.wrapper
+        console.log(BLOCKCHAIN_INFO)
+        console.log(this.wrapperAddress)
         this.networkContract = new this.rpc.eth.Contract(constants.KYBER_NETWORK, this.networkAddress)
         this.wrapperContract = new this.rpc.eth.Contract(constants.KYBER_WRAPPER, this.wrapperAddress)
     }
@@ -66,7 +68,7 @@ export default class BaseProvider {
 
         return new Promise((resolve, reject) => {
             var data = this.wrapperContract.methods.getBalances(address, listToken).call().then(result => {
-                console.log(result)
+                //console.log(result)
                 var listTokenBalances = []
                 listSymbol.map((symbol, index) => {
                     listTokenBalances.push({
@@ -170,7 +172,7 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             this.rpc.eth.estimateGas(txObj)
                 .then((result) => {
-                    console.log("gas_result: " + result)
+                   // console.log("gas_result: " + result)
                     if (result != null) {
                         resolve(result)
                     }
@@ -331,6 +333,7 @@ export default class BaseProvider {
                 data: dataAbi
             })
                 .then((data) => {
+                   // console.log(data)
                     try {
                         var dataMapped = this.rpc.eth.abi.decodeParameters([
                             {
@@ -523,8 +526,9 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getGasPrice()
                 .then(result => {
-                    console.log("gas price")
-                    console.log(result)
+                    // console.log("gas price")
+                    // console.log(result)
+
                     var gasPrice = parseInt(result, 10)
                     gasPrice = gasPrice / 1000000000
                     if (gasPrice < 1) {

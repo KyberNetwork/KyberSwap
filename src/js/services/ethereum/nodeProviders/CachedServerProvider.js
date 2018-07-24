@@ -198,6 +198,30 @@ export default class CachedServerProvider extends React.Component {
         })
     }
 
+    getRateETH() {
+        return new Promise((resolve, rejected) => {
+            fetch( this.rpcUrl + '/getRateETH', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+            }).then((response) => {
+                return response.json()
+            })
+                .then( (result) => {
+                    if(result.success){
+                        resolve(result.data)
+                    }else{
+                        rejected(new Error("RateETHs server is not fetching"))
+                    }  
+                })
+                .catch((err) => {
+                    rejected(err)
+                })
+        })
+    }
+
     getLanguagePack(lang) {
         return new Promise((resolve, rejected) => {
             rejected(new Error("This api /getLanguagePack will comming soon"))
@@ -308,6 +332,54 @@ export default class CachedServerProvider extends React.Component {
     getVolumnChart(){
         return new Promise((resolve, rejected) => {
             fetch(BLOCKCHAIN_INFO.tracker + '/api/tokens/rates', {
+            }).then((response) => {
+                return response.json()
+            })
+                .then((result) => {
+                    resolve(result)                    
+                })
+                .catch((err) => {
+                    console.log(err)
+                    rejected(err)
+                })
+        })
+    }
+
+    getMarketInfo(queryString) {
+        return new Promise((resolve, rejected) => {
+            fetch(this.rpcUrl + '/getMarketInfoByTokens' + '?listToken=' + queryString, {
+            }).then((response) => {
+                return response.json()
+            })
+                .then((result) => {
+                    resolve(result)                    
+                })
+                .catch((err) => {
+                    console.log(err)
+                    rejected(err)
+                })
+        })
+    }
+
+    getRightMarketInfo() {
+        return new Promise((resolve, rejected) => {
+            fetch(this.rpcUrl + '/getRightMarketInfo', {
+            }).then((response) => {
+                return response.json()
+            })
+                .then((result) => {
+                    resolve(result)                    
+                })
+                .catch((err) => {
+                    console.log(err)
+                    rejected(err)
+                })
+        })
+    }
+    
+    getLast7D(queryString) {
+        return new Promise((resolve, rejected) => {
+            fetch(this.rpcUrl + '/getLast7D' + '?listToken=' + queryString, {
             }).then((response) => {
                 return response.json()
             })

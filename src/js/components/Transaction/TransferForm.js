@@ -33,6 +33,21 @@ const TransferForm = (props) => {
       <div class="frame">
         <div className="transfer-detail grid-x">
           <div className="cell small-12 large-9 transfer-col transfer-col-1">
+
+          {props.networkError !== "" && (
+              <div className="network_error"> 
+                <span>
+                  <img src={require("../../../assets/img/warning.svg")} />
+                </span>
+                <span>
+                  {props.networkError}
+                </span>
+                {/* <span>
+                  <img src={require("../../../assets/img/loading.svg")} />
+                </span> */}
+              </div>
+  )}
+
             <div className="title main-title">{props.translate("transaction.transfer") || "Transfer"}</div>
             <div className="grid-x">
               <div className="cell small-12 medium-7">

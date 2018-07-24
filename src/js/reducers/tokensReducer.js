@@ -3,6 +3,8 @@ import Rate from "../services/rate"
 import * as BLOCKCHAIN_INFO from "../../../env"
 import constants from "../services/constants"
 
+import * as converter from "../utils/converter"
+
 const initState = function () {
   let tokens = {}
   Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
@@ -12,6 +14,7 @@ const initState = function () {
     tokens[key].rateEth = 0
     tokens[key].minRateEth = 0
     tokens[key].balance = 0
+    tokens[key].rateUSD = 0
   })
   return {
     tokens: tokens,
@@ -21,44 +24,44 @@ const initState = function () {
 
 const tokens = (state = initState, action) => {
   switch (action.type) {
-    case REHYDRATE: {
-      if (action.key === "tokens") {
-        var payload = action.payload
-        var tokens = {}
-        if (payload) {
-          // check load from loaclforage or initstate
-          var loadedTokens = payload.tokens
-          if (payload.count && payload.count.storageKey !== constants.STORAGE_KEY) {
-            loadedTokens = initState.tokens
-          }
+    // case REHYDRATE: {
+    //   if (action.key === "tokens") {
+    //     var payload = action.payload
+    //     var tokens = {}
+    //     if (payload) {
+    //       // check load from loaclforage or initstate
+    //       var loadedTokens = payload.tokens
+    //       if (payload.count && payload.count.storageKey !== constants.STORAGE_KEY) {
+    //         loadedTokens = initState.tokens
+    //       }
 
-          Object.keys(loadedTokens).forEach((id) => {
-            var tokenMap = loadedTokens[id]
-            var token = new Rate(
-              tokenMap.name,
-              tokenMap.symbol,
-              tokenMap.icon,
-              tokenMap.address,
-              tokenMap.decimal,
-              tokenMap.rate ? tokenMap.rate : 0,
-              tokenMap.minRate ? tokenMap.minRate : 0,
-              0,
-              tokenMap.rateEth ? tokenMap.rateEth : 0,
-              tokenMap.minRateEth ? tokenMap.minRateEth : 0,
-              tokenMap.rateUSD ? tokenMap.rateUSD : 0
-            )
-            tokens[id] = token
-          })
-          return Object.assign({}, state, {
-            tokens: tokens,
-            count: { storageKey: constants.STORAGE_KEY }
-          })
-        } else {
-          return state;
-        }
-      }
-      return state
-    }
+    //       Object.keys(loadedTokens).forEach((id) => {
+    //         var tokenMap = loadedTokens[id]
+    //         var token = new Rate(
+    //           tokenMap.name,
+    //           tokenMap.symbol,
+    //           tokenMap.icon,
+    //           tokenMap.address,
+    //           tokenMap.decimal,
+    //           tokenMap.rate ? tokenMap.rate : 0,
+    //           tokenMap.minRate ? tokenMap.minRate : 0,
+    //           0,
+    //           tokenMap.rateEth ? tokenMap.rateEth : 0,
+    //           tokenMap.minRateEth ? tokenMap.minRateEth : 0,
+    //           tokenMap.rateUSD ? tokenMap.rateUSD : 0
+    //         )
+    //         tokens[id] = token
+    //       })
+    //       return Object.assign({}, state, {
+    //         tokens: tokens,
+    //         count: { storageKey: constants.STORAGE_KEY }
+    //       })
+    //     } else {
+    //       return state;
+    //     }
+    //   }
+    //   return state
+    // }
     case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
       var tokens = { ...state.tokens }
       var rates = action.payload.rates
@@ -72,14 +75,14 @@ const tokens = (state = initState, action) => {
           if (!mapToken[rate.source]) {
             mapToken[rate.source] = {}
           }
-          mapToken[rate.source].rate = rate.rate
-          mapToken[rate.source].minRate = rate.minRate
+          mapToken[rate.source].rate = rate.rate          
+          mapToken[rate.source].minRate = converter.getMinrate(rate.rate, rate.minRate)
         } else {
           if (!mapToken[rate.dest]) {
             mapToken[rate.dest] = {}
           }
           mapToken[rate.dest].rateEth = rate.rate
-          mapToken[rate.dest].minRateEth = rate.minRate
+          mapToken[rate.dest].minRateEth = converter.getMinrate(rate.rate, rate.minRate) 
         }
       })
 

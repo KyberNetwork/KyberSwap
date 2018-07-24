@@ -47,9 +47,26 @@
     }
   } 
   @include screen-min-width(large) {
+    .balance-wrapper,
+    .exchange-col-1 {
+      box-shadow: $box-shadow-tab;
+    }
+
     .balance-wrapper{
       border: 1px solid #ddd;
       background: white;
+      position: relative;
+      z-index: 1;
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 100%;
+        background: $white;
+        top: 0;
+        right: -11px;
+      }
     }
     .exchange-wrapper-btn{
       text-align: center;
@@ -59,7 +76,7 @@
       border: 1px solid #ddd;
       border-left: none;
       background: white;
-    }    
+    }
     .exchange-col-2{
       padding-left: 20px;
     }

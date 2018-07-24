@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>mtl</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop" transform="translate(-230.000000, -346.000000)">
+            <g id="mtl" transform="translate(230.000000, 346.000000)">
+                <rect id="Rectangle-path" x="0" y="0" width="28" height="28"></rect>
+                <g id="_2080950552896">
+                    <circle id="Oval" fill="#1E1F25" cx="14" cy="14" r="14"></circle>
+                    <polygon id="Shape" fill="#FFFFFF" points="7.64580645 7.53290323 8.58967742 7.53290323 8.58967742 20.4851613 7.64580645 20.4851613"></polygon>
+                    <polygon id="Shape" fill="#FFFFFF" points="11.3219355 9.6916129 12.3245161 9.6916129 12.3245161 18.1458065 11.3219355 18.1458065"></polygon>
+                    <polygon id="Shape" fill="#FFFFFF" points="15.4722581 11.9316129 16.4206452 11.9316129 16.4206452 16.0051613 15.4722581 16.0051613"></polygon>
+                    <polygon id="Shape" fill="#FFFFFF" points="19.4103226 7.51483871 20.3541935 7.51483871 20.3541935 20.4670968 19.4103226 20.4670968"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

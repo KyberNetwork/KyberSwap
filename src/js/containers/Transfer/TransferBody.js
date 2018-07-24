@@ -15,12 +15,22 @@ import { TokenSelector } from "../TransactionCommon"
 
 import { hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
+import * as common from "../../utils/common"
+
+
+import * as globalActions from "../../actions/globalActions"
+import constansts from "../../services/constants"
+
 // import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase, throwErrorDestAddress, thowErrorAmount, makeNewTransfer } from '../../actions/transferActions';
 import * as transferActions from "../../actions/transferActions"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
 
 @connect((store, props) => {
+
+  const langs = store.locale.languages
+  var currentLang = common.getActiveLanguage(langs)
+
   const tokens = store.tokens.tokens
   const tokenSymbol = store.transfer.tokenSymbol
   var balance = 0
@@ -36,8 +46,10 @@ import { default as _ } from 'underscore'
     transfer: { ...store.transfer, balance, decimal, tokenName },
     account: store.account,
     tokens: tokens,
+    global: store.global,
     translate: getTranslate(store.locale),
-    advanceLayout : props.advanceLayout
+    advanceLayout : props.advanceLayout,
+    currentLang
   }
 })
 
@@ -85,9 +97,18 @@ export default class Transfer extends React.Component {
 
     this.lazyUpdateValidateSourceAmount(value, this.props.transfer.gasPrice)
   }
+
   chooseToken = (symbol, address, type) => {
     this.props.dispatch(transferActions.selectToken(symbol, address))
     this.props.dispatch(hideSelectToken())
+
+    var path = constansts.BASE_HOST + "/transfer/" + symbol.toLowerCase()
+
+    if (this.props.currentLang !== "en"){
+      path += "?lang=" + this.props.currentLang
+    }
+    
+    this.props.dispatch(globalActions.goToRoute(path))
   }
 
   makeNewTransfer = () => {
@@ -139,18 +160,18 @@ export default class Transfer extends React.Component {
   }
 
   render() {
-    if (this.props.account.isStoreReady) {
-      if (!!!this.props.account.account.address) {
-        setTimeout(() => this.props.dispatch(push("/")), 1000)
-        return (
-          <div></div>
-        )
-      }
-    } else {
-      return (
-        <div></div>
-      )
-    }
+    // if (this.props.account.isStoreReady) {
+    //   if (!!!this.props.account.account.address) {
+    //     setTimeout(() => this.props.dispatch(push("/")), 1000)
+    //     return (
+    //       <div></div>
+    //     )
+    //   }
+    // } else {
+    //   return (
+    //     <div></div>
+    //   )
+    // }
 
     var addressBalance = ""
     var token = this.props.tokens[this.props.transfer.tokenSymbol]
@@ -244,6 +265,7 @@ export default class Transfer extends React.Component {
         onFocus = {this.onFocus}
         focus = {this.state.focus}
         advanceLayout = {this.props.advanceLayout}
+        networkError ={this.props.global.network_error}
       />
     )
   }

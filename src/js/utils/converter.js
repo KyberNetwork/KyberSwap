@@ -31,12 +31,17 @@ export function calculateDest(source, rate) {
 }
 
 export function caculateSourceAmount(destAmount, offeredRate, precision) {
+  console.log({destAmount, offeredRate, precision})
   if (!destAmount || !offeredRate || acceptableTyping(destAmount) || acceptableTyping(offeredRate)) {
     return "0"
   }
-  var bigDest = new BigNumber(destAmount)
   var bigOfferedRate = new BigNumber(offeredRate)
 
+  if (bigOfferedRate.comparedTo(0) === 0){
+    return ""
+  }
+
+  var bigDest = new BigNumber(destAmount)
   bigOfferedRate = bigOfferedRate.div(1000000000000000000)
   var result = bigDest.div(bigOfferedRate)
   if (precision) {
@@ -484,4 +489,72 @@ export function caculatorRateToPercentage(number,total){
     return (new BigNumber(number)*new BigNumber(total))/100000000000000000000
   }
   return 0;
+}
+
+
+export function estimateSlippagerate(expectedRate){
+  var bigNumber = new BigNumber(expectedRate.toString())
+  var result = bigNumber.div(1000000000000000000).times(0.97)
+  return result.toString()
+}
+
+
+export function getMinrate(rate, minRate){
+  if (isNaN(rate) || rate === ""){
+    rate = 0
+  }
+  if (isNaN(minRate) || minRate === ""){
+    minRate = 0
+  }
+  rate = rate.toString()
+  minRate = minRate.toString()
+
+  if(minRate === "0"){
+    var bigNumber = new BigNumber(rate)
+    var result = bigNumber.div(1000000000000000000).times(0.97)
+    return result.toString()
+  }else{
+    return minRate
+  }
+}
+
+
+export function calculateMinSource(sourceTokenSymbol, sourceAmount, decimal, rateSell){
+  console.log({sourceAmount, decimal, rateSell})
+  if ((sourceAmount === "") || isNaN(sourceAmount)) sourceAmount = 0
+
+  var minSourceAllow = new BigNumber(getSourceAmountZero(sourceTokenSymbol, decimal, rateSell))
+
+  var sourceAmountBig = new BigNumber(sourceAmount.toString())
+  sourceAmountBig = sourceAmountBig.times(Math.pow(10, decimal))
+
+  if (minSourceAllow.comparedTo(sourceAmountBig) === 1){
+    return "0x" + minSourceAllow.toString(16)
+  }else{
+    var sourceAmountDecimal = sourceAmountBig.toFixed(0)
+    var sourceAmountHex = new BigNumber(sourceAmountDecimal)
+    return "0x" + sourceAmountHex.toString(16)
+  }
+}
+
+
+export function getSourceAmountZero(sourceTokenSymbol, decimal, rateSell){
+  var epsilon = constants.EPSILON
+  var minETHAllow = new BigNumber(epsilon.toString())
+
+  if (sourceTokenSymbol === "ETH"){
+    return minETHAllow.toFixed(0)
+  }
+  var rate = new BigNumber(rateSell)
+  if (rate.comparedTo(0) === 0){
+    return "0"
+  }
+  var minSourceAllow = minETHAllow.div(rate).times(Math.pow(10,decimal))
+  return  minSourceAllow.toFixed(0)
+}
+
+
+export function toHex(number){
+  var bigNumber = new BigNumber(number)
+  return "0x" + bigNumber.toString(16)
 }

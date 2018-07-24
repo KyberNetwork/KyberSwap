@@ -43,7 +43,7 @@ export function* goToRoute(action) {
 
 export function* clearSession(action) {
   yield put(actions.clearSessionComplete())
-  yield put(actions.goToRoute(constants.BASE_HOST));
+  //yield put(actions.goToRoute(constants.BASE_HOST));
 }
 
 export function* updateAllRate(action) {
@@ -79,24 +79,30 @@ export function* checkConnection(action) {
   var { ethereum, count, maxCount, isCheck } = action.payload
   try {
     const isConnected = yield call([ethereum, ethereum.call], "isConnectNode")
-    if (!isCheck) {
-      yield put(actions.updateIsCheck(true))
+    if (isConnected){
+      yield put(actions.setNetworkError(""))
       yield put(actions.updateCountConnection(0))
     }
+    // if (!isCheck) {
+    //   yield put(actions.updateIsCheck(true))
+    //   yield put(actions.updateCountConnection(0))
+    // }
   }catch(err){
     console.log(err)
-    if (isCheck) {
-      if (count > maxCount) {
-        yield put(actions.updateIsCheck(false))
-        yield put(actions.updateCountConnection(0))
-        return
-      }
-      if (count === maxCount) {
+    //if (isCheck) {
+      // if (count > maxCount) {
+      //   yield put(actions.updateIsCheck(false))
+      //   yield put(actions.updateCountConnection(0))
+      //   return
+      // }
+      if (count >= maxCount) {
         let translate = getTranslate(store.getState().locale)
-        let titleModal = translate('error.error_occurred') || 'Error occurred'
-        let contentModal = translate('error.network_error') || 'Cannot connect to node right now. Please check your network!'
-        yield put(actionsUtils.openInfoModal(titleModal, contentModal))
-        yield put(closeImportLoading())
+        yield put(actions.setNetworkError(translate('error.network_error') || 'Cannot connect to node right now. Please check your network!'))
+
+        // let titleModal = translate('error.error_occurred') || 'Error occurred'
+        // let contentModal = translate('error.network_error') || 'Cannot connect to node right now. Please check your network!'
+        // yield put(actionsUtils.openInfoModal(titleModal, contentModal))
+        // yield put(closeImportLoading())
         yield put(actions.updateCountConnection(++count))
         return
       }
@@ -104,11 +110,38 @@ export function* checkConnection(action) {
         yield put(actions.updateCountConnection(++count))
         return
       }
-    }
+    //}
   }
 }
 
-function compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
+
+export function* setMaxGasPrice(action) {
+  var state = store.getState()
+  var ethereum = state.connection.ethereum
+  try {
+    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
+    var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
+    yield put(actionsExchange.setMaxGasPriceComplete(maxGasPriceGwei))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export function* getMaxGasPrice(action){
+  var state = store.getState()
+  var ethereum = state.connection.ethereum
+  try {
+    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
+    var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
+    return maxGasPriceGwei
+  } catch (err) {
+    console.log(err)
+    return 50
+  }
+}
+
+
+function getGasExchange(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
   var safeLowGas = parseFloat(safeLowGas)
   var standardGas = parseFloat(standardGas)
   var fastGas = parseFloat(fastGas)
@@ -129,7 +162,8 @@ function compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGas
 export function* setGasPrice(action) {
   var safeLowGas, standardGas, fastGas, defaultGas
   var state = store.getState()
-  var maxGasPrice = state.exchange.maxGasPrice
+
+  var maxGasPrice = yield call(getMaxGasPrice)   
 
   try {
     const ethereum = action.payload
@@ -139,30 +173,25 @@ export function* setGasPrice(action) {
     standardGas = gasPrice.standard
     defaultGas = gasPrice.default
     fastGas = gasPrice.fast
-    yield put(actionsTransfer.setGasPriceTransferComplete(safeLowGas, standardGas, defaultGas, fastGas))
-
+    
+    var selectedGas = 's'
     var fastGasFloat = parseFloat(fastGas)
     if (fastGasFloat <= 20){
       defaultGas = gasPrice.fast
+      selectedGas = 'f'
     }
 
-    var compareWithMax = compareMaxGasPrice(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
-    yield put(actionsExchange.setGasPriceSwapComplete(compareWithMax.safeLowGas, compareWithMax.standardGas, compareWithMax.defaultGas, compareWithMax.fastGas))
+    yield put(actionsTransfer.setGasPriceTransferComplete(safeLowGas, standardGas, fastGas, defaultGas, selectedGas))
+
+    var gasExchange = getGasExchange(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
+    yield put(actionsExchange.setGasPriceSwapComplete(gasExchange.safeLowGas, gasExchange.standardGas, gasExchange.fastGas, gasExchange.defaultGas, selectedGas))
 
   }catch (err) {
     console.log(err.message)
   }
 }
 
-export function* setMaxGasPrice(action) {
-  try {
-    const ethereum = action.payload
-    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
-    yield put(actionsExchange.setMaxGasPriceComplete(maxGasPrice))
-  } catch (err) {
-    console.log(err)
-  }
-}
+
 
 export function* changelanguage(action) {
   const { ethereum, lang, locale } = action.payload
@@ -200,5 +229,5 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.UPDATE_RATE_USD_PENDING", updateRateUSD)
 
 
-  yield takeEvery("EXCHANGE.SET_MAX_GAS_PRICE", setMaxGasPrice)
+  yield takeEvery("GLOBAL.SET_MAX_GAS_PRICE", setMaxGasPrice)
 }

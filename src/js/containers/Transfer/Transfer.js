@@ -5,7 +5,7 @@ import {TransferBody} from "../Transfer"
 import {AdvanceConfigLayout, GasConfig} from "../../components/TransactionCommon"
 
 
-import {TransactionLayout} from "../../components/TransactionCommon"
+//import {TransactionLayout} from "../../components/TransactionCommon"
 import { getTranslate } from 'react-localize-redux'
 
 import * as converter from "../../utils/converter"
@@ -14,35 +14,46 @@ import * as transferActions from "../../actions/transferActions"
 import { default as _ } from 'underscore'
 import { clearSession } from "../../actions/globalActions"
 
-@connect((store) => {
-  var langs = store.locale.languages
-  const currentLang = langs.map((item) => {
-    if (item.active) {
-      return item.code
-    }
-  })
+import { ImportAccount } from "../ImportAccount"
+
+import {HeaderTransaction} from "../TransactionCommon"
+
+@connect((store, props) => {
+
   const account = store.account.account
-  if (account === false) {
-    if (currentLang[0] === 'en') {
-      window.location.href = "/swap"  
-    } else {
-      window.location.href = `/swap?lang=${currentLang}`
-    }
-  }
+  // if (account === false) {
+  //   if (currentLang[0] === 'en') {
+  //     window.location.href = "/swap"  
+  //   } else {
+  //     window.location.href = `/swap?lang=${currentLang}`
+  //   }
+  // }
   var translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
   const transfer = store.transfer
   return {
-      translate, transfer, tokens, currentLang
+      translate, transfer, tokens, account,
+      params: {...props.match.params}
     }  
 })
 
 
 export default class Exchange extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      selectedGas: props.transfer.gasPrice <= 20? "f": "s", 
+  // constructor(props){
+  //   super(props)
+  //   this.state = {
+  //     selectedGas: props.transfer.gasPrice <= 20? "f": "s", 
+  //   }
+  // }
+
+
+  componentDidMount = () =>{
+    if (this.props.params.source.toLowerCase() !== this.props.transfer.tokenSymbol.toLowerCase()){
+          
+          var sourceSymbol = this.props.params.source.toUpperCase()
+          var sourceAddress = this.props.tokens[sourceSymbol].address
+
+          this.props.dispatch(transferActions.selectToken(sourceSymbol, sourceAddress))
     }
   }
 
@@ -85,20 +96,27 @@ export default class Exchange extends React.Component {
   }
 
   inputGasPriceHandler = (value) => {
-    this.setState({selectedGas: "undefined"})
+    //this.setState({selectedGas: "undefined"})
     this.specifyGasPrice(value)
   }
 
   selectedGasHandler = (value, level) => {
-    this.setState({selectedGas: level})
+    //this.setState({selectedGas: level})
+
+    this.props.dispatch(transferActions.seSelectedGas(level)) 
     this.specifyGasPrice(value)
   }
 
-  handleEndSession = () => {
-    this.props.dispatch(clearSession()) 
-  }
+  // handleEndSession = () => {
+  //   this.props.dispatch(clearSession()) 
+  // }
 
   render() {
+
+    if (this.props.account === false){
+      return <ImportAccount />
+    }
+
     var gasPrice = converter.stringToBigNumber(converter.gweiToEth(this.props.transfer.gasPrice))
     var totalGas = gasPrice.multipliedBy(this.props.transfer.gas)
     var page = "transfer"
@@ -115,24 +133,22 @@ export default class Exchange extends React.Component {
         totalGas={totalGas.toString()}
         translate={this.props.translate}        
         gasPriceSuggest={this.props.transfer.gasPriceSuggest}    
-        selectedGas = {this.state.selectedGas}
+        selectedGas = {this.props.transfer.selectedGas}
         page = {page}
       />
     )
 
     var advanceConfig = <AdvanceConfigLayout gasConfig = {gasConfig} translate = {this.props.translate}/>
     var transferBody = <TransferBody advanceLayout = {advanceConfig}/>
+
+    var headerTransaction = <HeaderTransaction page="transfer" />
     return (
-      <TransactionLayout 
-        endSession = {this.handleEndSession}
-        translate = {this.props.translate}
-        //location = {this.props.location}
-       
-       // advance = {advanceConfig}
-        content = {transferBody}
-        page = {page}
-        currentLang = {this.props.currentLang}
-      />
+      <div class="frame exchange-frame">  
+        {headerTransaction}
+        <div className="row">
+          {transferBody}
+        </div>
+      </div>   
     )
   }
 }

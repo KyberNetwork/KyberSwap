@@ -1,6 +1,6 @@
 {
     "connections": {
-      "http": [
+      "http": [        
         {
           "endPoint" : "https://production-cache.kyber.network",
           "type": "cached"
@@ -219,7 +219,7 @@
         "address": "0x4f3afec4e5a3f2a6a1a411def7d7dfe50ee057bf",
         "symbol":"DGX",
         "decimal": 9,
-        "icon": "dgx.png",
+        "icon": "dgx.svg",
         "usd_id":"dgx"
       },
       "ABT": {
@@ -307,12 +307,110 @@
         "address": "0x41e5560054824ea6b0732e656e3ad64e20e94e45",
         "symbol":"CVC", 
         "icon": "cvc.svg"
-      } 
+      },
+      "WAX": {
+        "name": "Wax",
+        "decimal": 8,
+        "address": "0x39bb259f66e1c59d5abef88375979b4d20d98022",
+        "symbol":"WAX", 
+        "icon": "wax.svg"
+      },
+      "SUB": {
+        "name": "Substratum",
+        "decimal": 2,
+        "address": "0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a",
+        "symbol":"SUB", 
+        "icon": "sub.svg"
+      },
+      "POE": {
+        "name": "Po.et",
+        "decimal": 8,
+        "address": "0x0e0989b1f9b8a38983c2ba8053269ca62ec9b195",
+        "symbol":"POE", 
+        "icon": "poe.svg"
+      },
+      "PAY": {
+        "name": "TenX",
+        "decimal": 18,
+        "address": "0xb97048628db6b661d4c2aa833e95dbe1a905b280",
+        "symbol":"PAY", 
+        "icon": "pay.svg"
+      },
+      "CHAT": {
+        "name": "Chatcoin",
+        "decimal": 18,
+        "address": "0x442bc47357919446eabc18c7211e57a13d983469",
+        "symbol":"CHAT", 
+        "icon": "chat.svg"
+      },
+      "DTA": {
+        "name": "Data",
+        "decimal": 18,
+        "address": "0x69b148395ce0015c13e36bffbad63f49ef874e03",
+        "symbol":"DTA", 
+        "icon": "dta.svg"
+      },
+      "BNT": {
+        "name": "Bancor",
+        "decimal": 18,
+        "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
+        "symbol":"BNT", 
+        "icon": "bnt.svg"
+      }, 
+      "TUSD": {
+        "name": "TrueUSD",
+        "decimal": 18,
+        "address": "0x8dd5fbce2f6a956c3022ba3663759011dd51e73e",
+        "symbol":"TUSD", 
+        "icon": "tusd.svg"
+      },
+      "TOMO": {
+        "name": "Tomocoin",
+        "decimal": 18,
+        "address": "0x8b353021189375591723e7384262f45709a3c3dc",
+        "symbol":"TOMO", 
+        "icon": "tomo.svg"
+      },
+      "MDS": {
+        "name": "MediShares",
+        "decimal": 18,
+        "address": "0x66186008c1050627f979d464eabb258860563dbe",
+        "symbol":"MDS", 
+        "icon": "mds.svg"
+      },
+      "LEND": {
+        "name": "EthLend",
+        "decimal": 18,
+        "address": "0x80fb784b7ed66730e8b1dbd9820afd29931aab03",
+        "symbol":"LEND", 
+        "icon": "lend.svg"
+      },
+      "WINGS": {
+        "name": "WINGS",
+        "decimal": 18,
+        "address": "0x667088b212ce3d06a1b553a7221e1fd19000d9af",
+        "symbol":"WINGS", 
+        "icon": "wings.svg"
+      },
+      "MTL": {
+        "name": "Metal",
+        "decimal": 8,
+        "address": "0xf433089366899d83a9f26a773d59ec7ecf30355e",
+        "symbol":"MTL", 
+        "icon": "mtl.svg"
+      },
+      "WABI": {
+        "name": "WaBi",
+        "decimal": 18,
+        "address": "0x286bda1413a2df81731d4930ce2f862a35a609fe",
+        "symbol":"WABI", 
+        "icon": "wabi.svg"
+      }
     },
     "ethScanUrl": "https://etherscan.io/",
     "bank": "0x0",
     "reserve": "0x63825c174ab367968ec60f061753d3bbd36a0d8f",
-    "network": "0x964f35fae36d75b1e72770e244f6595b68508cf5",
+    "network": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
     "wrapper": "0x6172afc8c00c46e0d07ce3af203828198194620a",
     "trade_topic":"0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
     "endpoint": "wss://mainnet.infura.io/ws",
