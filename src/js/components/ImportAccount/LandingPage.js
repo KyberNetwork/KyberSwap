@@ -79,11 +79,9 @@ export default class LandingPage extends React.Component {
 
 	acceptTerm = () => {
 		// if (this.state.termAgree) {
-		console.log("type of web3: ", typeof web3)
 		if (typeof web3 !== "undefined") {
 			var web3Service = new Web3Service(web3)
 			var walletType = web3Service.getWalletType()
-			console.log("type of web3: ", walletType)
 			if (walletType !== "metamask") {
 				//alert(walletType)
 				this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,

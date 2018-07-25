@@ -26,19 +26,19 @@ const AccountBalanceLayout = (props) => {
       }else{
         if (props.sortValue){
           var ordered = []
-          console.log(tokens)
+          //console.log(tokens)
           Object.keys(tokens).sort().forEach(function(key) {
             ordered.push(tokens[key])
           })
-          console.log(ordered)
+          //console.log(ordered)
           return ordered
         }else{
           var ordered = []
-          console.log(tokens)          
+          //console.log(tokens)          
           Object.keys(tokens).sort().reverse().forEach(function(key) {
             ordered.push(tokens[key])
           })
-          console.log(ordered)
+          //console.log(ordered)
           return ordered
         }
       }
