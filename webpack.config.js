@@ -40,6 +40,7 @@ module.exports = env => {
             }
         }));
     } else {
+        entry['libary'] = ['./assets/css/foundation-float.min.css', './assets/css/foundation-prototype.min.css']
         plugins.push(new UglifyJsPlugin({
             uglifyOptions: {
                 comments: false,

@@ -180,8 +180,7 @@
         "icon": "dai.svg",
         "address": "0xad6d458402f60fd3bd25163575031acdce07538d",
         "decimal": 18,
-        "usd_id":"dai",
-        "isNew": true
+        "usd_id":"dai"
       },
       "LINK": {
         "name": "Chain Link",
@@ -205,16 +204,14 @@
         "symbol": "STORM",
         "decimal": 18,
         "icon": "storm.svg",
-        "usd_id":"storm",
-        "isNew": true
+        "usd_id":"storm"
       },
       "BBO" : {
         "name": "BigBom",
         "address": "0xa94758d328af7ef1815e73053e95b5f86588c16d",
         "symbol" : "BBO",
         "decimal": 18,
-        "icon": "bbo.svg",
-        "isNew": true
+        "icon": "bbo.svg"
       },
       "COFI": {
         "name": "ConFi",
@@ -222,6 +219,14 @@
         "symbol" : "COFI",
         "address": "0xb91786188f8d4e35d6d67799e9f162587bf4da03",
         "icon": "cofi.svg"
+      },
+      "BITX": {
+        "name": "BitScreenerToken",
+        "decimal": 18,
+        "symbol" : "BITX",
+        "address": "0x7a17267576318efb728bc4a0833e489a46ba138f",
+        "icon": "bitx.png",
+        "isNew": true
       }
   },
   "ethScanUrl": "https://ropsten.etherscan.io/",
