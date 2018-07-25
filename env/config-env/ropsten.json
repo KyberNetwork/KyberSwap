@@ -180,7 +180,8 @@
         "icon": "dai.svg",
         "address": "0xad6d458402f60fd3bd25163575031acdce07538d",
         "decimal": 18,
-        "usd_id":"dai"
+        "usd_id":"dai",
+        "isNew": true
       },
       "LINK": {
         "name": "Chain Link",
@@ -204,14 +205,16 @@
         "symbol": "STORM",
         "decimal": 18,
         "icon": "storm.svg",
-        "usd_id":"storm"
+        "usd_id":"storm",
+        "isNew": true
       },
       "BBO" : {
         "name": "BigBom",
         "address": "0xa94758d328af7ef1815e73053e95b5f86588c16d",
         "symbol" : "BBO",
         "decimal": 18,
-        "icon": "bbo.svg"
+        "icon": "bbo.svg",
+        "isNew": true
       },
       "COFI": {
         "name": "ConFi",
