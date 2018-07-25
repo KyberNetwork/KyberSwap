@@ -9,6 +9,7 @@ import * as converters from "../../utils/converter"
 
 //import LineChart from 'react-linechart';
 import {Line} from 'react-chartjs-2';
+import * as analytics from "../../utils/analytics"
 //import '../node_modules/react-linechart/dist/styles.css';
 
 
@@ -500,6 +501,7 @@ export default class MarketTable extends React.Component {
             onClick: (e) => {
               var symbol = rowInfo.original.info.symbol
               this.props.dispatch(actions.showTradingViewChart(symbol))
+              analytics.tokenForCharting(symbol)
             }
           }
         }
