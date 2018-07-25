@@ -92,6 +92,7 @@ export function caculateEthBalance(token){
   }
 }
 
+<<<<<<< HEAD
 function mergeSort (arr, sortType) {
   let type = sortType && sortType === 'asc' ? -1 : 1
   if (arr.length === 1) {
@@ -105,6 +106,18 @@ function mergeSort (arr, sortType) {
   return merge(
     mergeSort(left),
     mergeSort(right),
+=======
+function mergeSort (arr, type) {
+  if (arr.length === 1) {
+    return arr
+  }
+  const middle = Math.floor(arr.length / 2)
+  const left = arr.slice(0, middle)
+  const right = arr.slice(middle)
+  return merge(
+    mergeSort(left, type),
+    mergeSort(right, type),
+>>>>>>> 6be30285f769ebcccde1522e7732804d7a3df0c2
     type
   )
 }
@@ -144,7 +157,11 @@ export function sortEthBalance(tokens){
   let removedEth = {...tokens} 
   delete removedEth[constants.ETH.symbol]
   if(tokens){
+<<<<<<< HEAD
     sortedTokens = mergeSort(Object.values(removedEth))
+=======
+    sortedTokens = mergeSort(Object.values(removedEth), 1)
+>>>>>>> 6be30285f769ebcccde1522e7732804d7a3df0c2
   }
   if(tokens[constants.ETH.symbol]){
     sortedTokens.unshift(tokens[constants.ETH.symbol])
@@ -157,7 +174,11 @@ export function sortASCEthBalance(tokens){
   let removedEth = {...tokens} 
   delete removedEth[constants.ETH.symbol]
   if(tokens){
+<<<<<<< HEAD
     sortedTokens = mergeSort(Object.values(removedEth), 'asc')
+=======
+    sortedTokens = mergeSort(Object.values(removedEth), -1)
+>>>>>>> 6be30285f769ebcccde1522e7732804d7a3df0c2
   }
   if(tokens[constants.ETH.symbol]){
     sortedTokens.unshift(tokens[constants.ETH.symbol])
