@@ -72,43 +72,22 @@ export function completeTrade(hash, walletType, tradeType) {
 
 
 export function trackCoinExchange(data) {
-    if (data.sourceTokenSymbol !== "ETH") {
-        if (typeof window.gtag === 'function') {
-            try {
-                window.gtag('event', 'SellToken', {
-                    'event_category': "sell",
-                    'event_label': data.sourceTokenSymbol
-                })
-            } catch (e) {
-                console.log(e)
-            }
+    if (typeof window.gtag === 'function') {
+        try {
+            window.gtag('event', 'Swap', {
+                'event_category': "Swap",
+                'event_label': `${data.sourceTokenSymbol}_${data.destTokenSymbol}`
+            })
+        } catch (e) {
+            console.log(e)
         }
+    }
 
-        if (typeof window.fbq === 'function') {
-            try {
-                window.fbq('trackCustom', "SellToken", { token: data.sourceTokenSymbol })
-            } catch (e) {
-                console.log(e)
-            }
-        }
-    } else {
-        if (typeof window.gtag === 'function') {
-            try {
-                window.gtag('event', 'BuyToken', {
-                    'event_category': "buy",
-                    'event_label': data.destTokenSymbol
-                })
-            } catch (e) {
-                console.log(e)
-            }
-        }
-
-        if (typeof window.fbq === 'function') {
-            try {
-                window.fbq('trackCustom', "BuyToken", { token: data.destTokenSymbol })
-            } catch (e) {
-                console.log(e)
-            }
+    if (typeof window.fbq === 'function') {
+        try {
+            window.fbq('trackCustom', "Swap", { source: data.sourceTokenSymbol, dest: data.destTokenSymbol })
+        } catch (e) {
+            console.log(e)
         }
     }
 }
@@ -128,6 +107,106 @@ export function trackCoinTransfer(token){
     if (typeof window.fbq === 'function') {
         try {
             window.fbq('trackCustom', "Transfer", { token: token })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export function tokenForCharting(token){
+    if (typeof window.gtag === 'function') {
+        try {
+            window.gtag('event', 'ViewChart', {
+                'event_category': "viewChart",
+                'event_label': token
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    if (typeof window.fbq === 'function') {
+        try {
+            window.fbq('trackCustom', "ViewChart", { token: token })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export function acceptTerm(){
+    if (typeof window.gtag === 'function') {
+        try {
+            window.gtag('event', 'AcceptTerm', {
+                'event_category': "AcceptTerm",
+                'event_label': "Accepted"
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    if (typeof window.fbq === 'function') {
+        try {
+            window.fbq('trackCustom', "AcceptTerm", { accept: 'Accepted' })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export function trackBaseCurrency(currency){
+    if (typeof window.gtag === 'function') {
+        try {
+            window.gtag('event', 'chooseBaseCurrency', {
+                'event_category': "currency",
+                'event_label': currency
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    if (typeof window.fbq === 'function') {
+        try {
+            window.fbq('trackCustom', "chooseBaseCurrency", { currency: currency })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export function trackMarketSetting(field, value){
+    if (typeof window.gtag === 'function') {
+        try {
+            window.gtag('event', 'marketSetting', {
+                'event_category': "option",
+                'event_label': `${field}_${value}`
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    if (typeof window.fbq === 'function') {
+        try {
+            window.fbq('trackCustom', "marketSetting", { field: value })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export function trackChooseGas(gas, type){
+    if (typeof window.gtag === 'function') {
+        try {
+            window.gtag('event', 'chooseGasPrice', {
+                'event_category': "gasPrice",
+                'event_label': `${type}_${gas}`
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    if (typeof window.fbq === 'function') {
+        try {
+            window.fbq('trackCustom', "chooseGasPrice", {type: gas})
         } catch (e) {
             console.log(e)
         }

@@ -10,6 +10,37 @@ import * as converters from "../utils/converter"
 const initState = function () {
     var tokens = {}
     Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
+        if (!BLOCKCHAIN_INFO.tokens[key].isNew) return
+        tokens[key] = {}
+        tokens[key].info = BLOCKCHAIN_INFO.tokens[key]
+
+        tokens[key].circulatingSupply = 0
+
+        tokens[key]["ETH"] = {
+            sellPrice: 0,
+            buyPrice: 0,
+            market_cap: 0,
+            circulating_supply: 0,
+            total_supply: 0,
+            last_7d: 0,
+            change: -9999,
+            volume: 0
+        }
+
+        tokens[key]["USD"] = {
+            sellPrice: 0,
+            buyPrice: 0,
+            market_cap: 0,
+            circulating_supply: 0,
+            total_supply: 0,
+            last_7d: 0,
+            change: -9999,
+            volume: 0
+        }
+
+    })
+    Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
+        if (BLOCKCHAIN_INFO.tokens[key].isNew) return
         tokens[key] = {}
         tokens[key].info = BLOCKCHAIN_INFO.tokens[key]
 

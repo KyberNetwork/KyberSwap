@@ -8,11 +8,11 @@ const GasConfig = (props) => {
   let gas_option = {"f":props.translate("fast") || 'Fast',"l":props.translate("low") || 'Slow',"s":props.translate("standard") || 'Standard'}
   function specifyGasPrice(value) {
     if(value==="f")
-      props.selectedGasHandler(gasPriceSuggest.fastGas, value)
+      props.selectedGasHandler(gasPriceSuggest.fastGas, value, gas_option[value])
     else if(value==="l")
-      props.selectedGasHandler(gasPriceSuggest.safeLowGas, value)
+      props.selectedGasHandler(gasPriceSuggest.safeLowGas, value, gas_option[value])
     else if(value==="s")
-      props.selectedGasHandler(gasPriceSuggest.standardGas, value)
+      props.selectedGasHandler(gasPriceSuggest.standardGas, value, gas_option[value])
   }
   function handleChangeGasPrice(e) {
     filterInputNumber(e, e.target.value)

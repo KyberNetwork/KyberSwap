@@ -9,6 +9,7 @@ import * as converters from "../../utils/converter"
 
 //import LineChart from 'react-linechart';
 import {Line} from 'react-chartjs-2';
+import * as analytics from "../../utils/analytics"
 //import '../node_modules/react-linechart/dist/styles.css';
 
 
@@ -251,7 +252,7 @@ export default class MarketTable extends React.Component {
     var tokenPair = input.split(" / ")
     var key = tokenPair[0]
     return (
-      <div className="token-pair">
+      <div className={this.props.tokens[key].info.isNew ? "token-pair new-token" : "token-pair"}>
         <img src={require("../../../assets/img/tokens/" + this.props.tokens[key].info.icon)} />
         {input}
       </div>
@@ -470,6 +471,7 @@ export default class MarketTable extends React.Component {
             onClick: (e) => {
               var symbol = rowInfo.original.info.symbol
               this.props.dispatch(actions.showTradingViewChart(symbol))
+              analytics.tokenForCharting(symbol)
             }
           }
         }
