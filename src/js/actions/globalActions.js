@@ -42,17 +42,17 @@ export function updateAllRateComplete(rates,rateUSD) {
   }
 }
 
-export function updateAllRateUSD(ethereum, tokens){
+export function updateAllRateUSD(ethereum){
   return {
     type: 'GLOBAL.UPDATE_RATE_USD_PENDING',
-    payload: { ethereum, tokens}
+    payload: {ethereum}
   }
 }
 
-export function updateAllRateUSDComplete(rates){
+export function updateAllRateUSDComplete(rateETHUSD){
   return {
     type: 'GLOBAL.UPDATE_RATE_USD_FULFILLED',
-    payload: {rates}
+    payload: {rateETHUSD}
   }
 }
 

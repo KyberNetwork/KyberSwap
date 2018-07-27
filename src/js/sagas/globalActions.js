@@ -49,10 +49,12 @@ export function* clearSession(action) {
 export function* updateAllRate(action) {
   var state = store.getState()
   
-  // var rateUSD = state.tokens.tokens.ETH.rateUSD
+  var rateUSD = state.tokens.tokens.ETH.rateUSD
   const { ethereum, tokens } = action.payload
   try {
-    const rateUSD = yield call([ethereum, ethereum.call],"getRateETH")
+    if (!rateUSD) {
+      rateUSD = yield call([ethereum, ethereum.call],"getRateETH")
+    }
     const rates = yield call([ethereum, ethereum.call],"getAllRates", tokens)
     yield put(actions.updateAllRateComplete(rates, rateUSD))
   }
@@ -63,10 +65,10 @@ export function* updateAllRate(action) {
 }
 
 export function* updateRateUSD(action) {
-  const { ethereum, tokens } = action.payload
+  const { ethereum } = action.payload
   try {
-    const rates = yield call([ethereum, ethereum.call],"getAllRatesUSD")
-    yield put(actions.updateAllRateUSDComplete(rates))
+    const rateETHUSD = yield call([ethereum, ethereum.call],"getRateETH")
+    yield put(actions.updateAllRateUSDComplete(rateETHUSD))
     yield put(actions.showBalanceUSD())        
   }
   catch (err) {

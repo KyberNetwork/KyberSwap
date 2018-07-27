@@ -92,10 +92,10 @@ export function getMarketInfoSuccess(data, rateUSD) {
   }
 }
 
-export function getLast7DSuccess(last7D, timeStamp) {
+export function getLast7DSuccess(last7D, timeUpdateData) {
   return {
     type: "MARKET.GET_LAST_7D_SUCCESS",
-    payload: {last7D, timeStamp}
+    payload: {last7D, timeUpdateData}
   }
 }
 
@@ -113,10 +113,10 @@ export function updatePageNum(nextPage) {
   }
 }
 
-export function getMoreDataSuccess(data, timeStamp) {
+export function getMoreDataSuccess(data, timeUpdateData) {
   return {
     type: "MARKET.GET_MORE_DATA_SUCCESS",
-    payload: {data, timeStamp}
+    payload: {data, timeUpdateData}
   }
 }
 

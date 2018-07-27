@@ -305,7 +305,7 @@ const market = (state = initState, action) => {
 
         case 'MARKET.GET_MORE_DATA_SUCCESS': {
             var last7D = action.payload.data
-            var timeStamp = action.payload.timeStamp
+            var timeUpdateData = {...action.payload.timeUpdateData}
             var tokens = {...newState.tokens}
             var configs = newState.configs
             Object.keys(last7D).map(key=>{
@@ -314,9 +314,9 @@ const market = (state = initState, action) => {
                 if (last_7d && last_7d.length > 0) {
                     tokens[key].ETH.last_7d =  last_7d
                     tokens[key].USD.last_7d =  last_7d
-                    configs.timeUpdateData[key] = timeStamp
                 }
             })
+            configs.timeUpdateData = timeUpdateData
             return  {...newState, tokens: {...tokens}, configs: {...configs}}
         }
 
@@ -362,7 +362,7 @@ const market = (state = initState, action) => {
         }
 
         case 'MARKET.GET_LAST_7D_SUCCESS': {
-            var {last7D, timeStamp} = action.payload
+            var {last7D, timeUpdateData} = action.payload
             var tokens = {...newState.tokens}
             var configs = {...newState.configs}
             Object.keys(last7D).map(key=>{
@@ -371,7 +371,7 @@ const market = (state = initState, action) => {
                 if (last_7d && last_7d.length > 0) {
                     tokens[key].ETH.last_7d =  last_7d
                     tokens[key].USD.last_7d =  last_7d
-                    configs.timeUpdateData[key] = timeStamp
+                    configs.timeUpdateData[key] = timeUpdateData
                 }
             }) 
             return  {...newState, tokens: {...tokens}, configs: {...configs}}

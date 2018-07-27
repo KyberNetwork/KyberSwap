@@ -71,8 +71,9 @@ export function* getVolumn(){
         yield put(marketActions.getMarketInfoSuccess(newData.data, rateUSDETH))
 
         // new api last 7d
+        var timeNow = Date.now() / 1000
         var last7D = yield call([ethereum, ethereum.call], "getLast7D", queryString)
-        yield put(marketActions.getLast7DSuccess(last7D.data, last7D.timeStamp))
+        yield put(marketActions.getLast7DSuccess(last7D.data, timeNow))
     }catch(e){
         console.log(e)
     }
@@ -102,11 +103,17 @@ export function* getNewData(action) {
     var timeNow = Date.now() / 1000
     var queryString = ""
 
+    var timeUpdateData = {...marketConfig.timeUpdateData}
     currentListToken.forEach((key) => {
         if (key === 'ETH') return
         var dataAge = 0
-        if (marketConfig.timeUpdateData[key]) {
-            dataAge = timeNow - marketConfig.timeUpdateData[key]
+        if (timeUpdateData[key]) {
+            dataAge = timeNow - timeUpdateData[key]
+            if (dataAge > 300) {
+                timeUpdateData[key] = timeNow
+            }
+        } else {
+            timeUpdateData[key] = timeNow            
         }
         if (tokens[key].ETH.last_7d === 0 || tokens[key].USD.last_7d === 0 || dataAge > 300) {
             queryString += key + "-"
@@ -117,7 +124,7 @@ export function* getNewData(action) {
         var ethereum = state.connection.ethereum
         try {
             var newData = yield call([ethereum, ethereum.call], "getLast7D", queryString)
-            yield put(marketActions.getMoreDataSuccess(newData.data, newData.timeStamp))
+            yield put(marketActions.getMoreDataSuccess(newData.data, timeUpdateData))
         }catch(e){
             console.log(e)
         }
@@ -185,11 +192,17 @@ export function* resetFilteredTokens(action) {
     var queryString = ""
     var marketConfig = state.market.configs
 
+    var timeUpdateData = {...marketConfig.timeUpdateData}
     listTokens.forEach((key) => {
         if (key === 'ETH') return
         var dataAge = 0
-        if (marketConfig.timeUpdateData[key]) {
-            dataAge = timeNow - marketConfig.timeUpdateData[key]
+        if (timeUpdateData[key]) {
+            dataAge = timeNow - timeUpdateData[key]
+            if (dataAge > 300) {
+                timeUpdateData[key] = timeNow
+            }
+        } else {
+            timeUpdateData[key] = timeNow            
         }
         if (tokens[key].ETH.last_7d === 0 || tokens[key].USD.last_7d === 0 || dataAge > 300) {
             queryString += key + "-"
@@ -200,7 +213,7 @@ export function* resetFilteredTokens(action) {
         var ethereum = state.connection.ethereum
         try {
             var newData = yield call([ethereum, ethereum.call], "getLast7D", queryString)
-            yield put(marketActions.getMoreDataSuccess(newData.data, newData.timeStamp))
+            yield put(marketActions.getMoreDataSuccess(newData.data, timeUpdateData))
         }catch(e){
             console.log(e)
         }
