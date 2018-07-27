@@ -104,14 +104,11 @@ const tokens = (state = initState, action) => {
       return Object.assign({}, state, { tokens: newTokens })
     }
     case 'GLOBAL.UPDATE_RATE_USD_FULFILLED': {
-      var tokens = { ...state.tokens }
-      var token = tokens['ETH']
+      var newTokens = { ...state.tokens }
       var rateETHUSD = action.payload.rateETHUSD
 
       //push data
-      var newTokens = {}
-      token.rateUSD = rateETHUSD
-      newTokens['ETH'] = token
+      newTokens['ETH'].rateEth = rateETHUSD
       return Object.assign({}, state, { tokens: newTokens })
     }
     case 'GLOBAL.SET_BALANCE_TOKEN':{
