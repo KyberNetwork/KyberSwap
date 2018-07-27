@@ -1,17 +1,8 @@
-
-
-export function changeSearchWord(value) {
+export function changeSearchWord(searchWord) {
     return {
        type: "MARKET.CHANGE_SEARCH_WORD",
-       payload: value
+       payload: {searchWord}
      }
-}
-
-export function resetListToken(searchWord) {
-  return {
-    type: "MARKET.RESET_LIST_TOKEN",
-    payload: {searchWord}
-  }
 }
 
 export function changeCurrency(value) {
@@ -21,14 +12,12 @@ export function changeCurrency(value) {
      }
 }
 
-
 export function changeSort(value) {
     return {
        type: "MARKET.CHANGE_SORT",
        payload: value
      }
 }
-
 
 export function changeDisplayColumn(value) {
     return {
@@ -37,15 +26,12 @@ export function changeDisplayColumn(value) {
      }
 }
 
-
-
 export function changeShowColumn(column, show) {
     return {
        type: "MARKET.CHANGE_SHOW_COLUMN",
        payload: {column, show}
      }
 }
-
 
 export function getMarketData(){
   return {
@@ -106,10 +92,10 @@ export function getMarketInfoSuccess(data, rateUSD) {
   }
 }
 
-export function getLast7DSuccess(last7D) {
+export function getLast7DSuccess(last7D, timeUpdateData) {
   return {
     type: "MARKET.GET_LAST_7D_SUCCESS",
-    payload: last7D
+    payload: {last7D, timeUpdateData}
   }
 }
 
@@ -127,17 +113,10 @@ export function updatePageNum(nextPage) {
   }
 }
 
-export function getMoreDataSuccess(data) {
+export function getMoreDataSuccess(data, timeUpdateData) {
   return {
     type: "MARKET.GET_MORE_DATA_SUCCESS",
-    payload: {data}
-  }
-}
-
-export function updateSortedTokens(sortedTokens) {
-  return {
-    type: "MARKET.UPDATE_SORTED_TOKENS",
-    payload: {sortedTokens}
+    payload: {data, timeUpdateData}
   }
 }
 
@@ -145,5 +124,12 @@ export function updateSortState(sortKey, sortType) {
   return {
     type: "MARKET.UPDATE_SORT_STATE",
     payload: {sortKey, sortType}
+  }
+}
+
+export function updateFilteredTokensSuccess(filteredTokens) {
+  return {
+    type: "MARKET.UPDATE_FILETERED_TOKENS_SUCCESS",
+    payload: filteredTokens
   }
 }

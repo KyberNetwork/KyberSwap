@@ -2,11 +2,11 @@ import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effect
 import { updateTxComplete, removeApproveTx } from '../actions/txActions'
 
 import * as exchangeActions from '../actions/exchangeActions'
-import * as transferActions from '../actions/transferActions'
+// import * as transferActions from '../actions/transferActions'
 
-import { Rate } from "../services/rate"
-import { updateAllRateComplete } from "../actions/globalActions"
-import constants from "../services/constants"
+// import { Rate } from "../services/rate"
+// import { updateAllRateComplete } from "../actions/globalActions"
+// import constants from "../services/constants"
 
 import * as converters from "../utils/converter"
 

@@ -22,6 +22,7 @@ export function changePath(path) {
 }
 
 export function loginWallet(wallet) {
+    if (wallet === 'keystore') wallet = 'json'
     if (typeof window.gtag === 'function') {
         try {
             window.gtag('event', 'LoginWallet', {
@@ -178,7 +179,7 @@ export function trackMarketSetting(field, value){
         try {
             window.gtag('event', 'marketSetting', {
                 'event_category': "option",
-                'event_label': `${field}_${value}`
+                'event_label': `${field}: ${value}`
             })
         } catch (e) {
             console.log(e)
@@ -186,7 +187,7 @@ export function trackMarketSetting(field, value){
     }
     if (typeof window.fbq === 'function') {
         try {
-            window.fbq('trackCustom', "marketSetting", { field: value })
+            window.fbq('trackCustom', "marketSetting", { setting: field,  value: value})
         } catch (e) {
             console.log(e)
         }
@@ -198,7 +199,7 @@ export function trackChooseGas(gas, type){
         try {
             window.gtag('event', 'chooseGasPrice', {
                 'event_category': "gasPrice",
-                'event_label': `${type}_${gas}`
+                'event_label': `${type}: ${gas}`
             })
         } catch (e) {
             console.log(e)
@@ -206,7 +207,7 @@ export function trackChooseGas(gas, type){
     }
     if (typeof window.fbq === 'function') {
         try {
-            window.fbq('trackCustom', "chooseGasPrice", {type: gas})
+            window.fbq('trackCustom', "chooseGasPrice", {type: type, gasPrice: gas})
         } catch (e) {
             console.log(e)
         }

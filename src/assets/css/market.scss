@@ -300,14 +300,23 @@
                 text-align: left;
                 padding-left: 10px;
                 position: relative;
-                img {
+                display: flex;
+                align-items: center;
+                .token-icon {
+                  background-size: contain;
+                  background-repeat: no-repeat;
+                  width: 28px;
+                  height: 28px;
                   margin-right: 10px;
-                  width: 24px;
-                  height: 24px;
-                  position: relative;
-                  top: -2px;
                 }
-                &.new-token::after {
+                // img {
+                //   margin-right: 10px;
+                //   width: 24px;
+                //   height: 24px;
+                //   position: relative;
+                //   top: -2px;
+                // }
+                .new-token::after {
                   content: '';
                   background-image: url(../img/market/new.svg);
                   position: absolute;

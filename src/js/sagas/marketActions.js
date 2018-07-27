@@ -71,8 +71,9 @@ export function* getVolumn(){
         yield put(marketActions.getMarketInfoSuccess(newData.data, rateUSDETH))
 
         // new api last 7d
+        var timeNow = Date.now() / 1000
         var last7D = yield call([ethereum, ethereum.call], "getLast7D", queryString)
-        yield put(marketActions.getLast7DSuccess(last7D.data))
+        yield put(marketActions.getLast7DSuccess(last7D.data, timeNow))
     }catch(e){
         console.log(e)
     }
@@ -80,62 +81,141 @@ export function* getVolumn(){
 
 export function* getNewData(action) {
     var state = store.getState()
-    var pageConfig = state.market.configs
-    var searchWord = action.payload.searchWord
+    var marketConfig = state.market.configs
     var newListTokens = action.payload.listTokens
-    var sortedTokens = action.payload.sortedTokens
 
-    var firstPageSize = pageConfig.firstPageSize
-    var pageSize = pageConfig.normalPageSize
-    var tokens = state.tokens.tokens
-
-    var ethereum = state.connection.ethereum
+    var firstPageSize = marketConfig.firstPageSize
+    var pageSize = marketConfig.normalPageSize
+    var tokens = state.market.tokens
     var listTokens = []
-    var oldPosition = 0
-    var nextPosition = firstPageSize
 
-    if (searchWord) {
-        Object.keys(tokens).forEach((key) => {
-            if (key === "ETH") return
-            if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
-        
-            listTokens.push(key)
-        })
-        if (listTokens.length < nextPosition) {
-            nextPosition = listTokens.length
-        }
-    }
-
-    if (Array.isArray(sortedTokens) && sortedTokens.length > 0) {
-        listTokens = sortedTokens
-        if (listTokens.length < nextPosition) {
-            nextPosition = listTokens.length
-        }
-    }
-
-    if (newListTokens) {
-        listTokens = newListTokens
-        var nextPage = pageConfig.page + 1
-        yield put(marketActions.updatePageNum(nextPage))
-        oldPosition = pageSize * (nextPage - 2) + firstPageSize
-        nextPosition = listTokens.length
-        if (oldPosition + pageSize <= listTokens.length) {
-            nextPosition = oldPosition + pageSize
-        }
+    listTokens = newListTokens
+    var nextPage = marketConfig.page + 1
+    yield put(marketActions.updatePageNum(nextPage))
+    var oldPosition = pageSize * (nextPage - 2) + firstPageSize
+    
+    var nextPosition = listTokens.length
+    if (oldPosition + pageSize <= listTokens.length) {
+        nextPosition = oldPosition + pageSize
     }
 
     var currentListToken = listTokens.slice(oldPosition, nextPosition)
-    if (currentListToken.length > 0) {
-        var queryString = currentListToken.reduce(function(queryString, key){
-            queryString += "-" + key
-            return queryString
-        })
+    var timeNow = Date.now() / 1000
+    var queryString = ""
+
+    var timeUpdateData = {...marketConfig.timeUpdateData}
+    currentListToken.forEach((key) => {
+        if (key === 'ETH') return
+        var dataAge = 0
+        if (timeUpdateData[key]) {
+            dataAge = timeNow - timeUpdateData[key]
+            if (dataAge > 300) {
+                timeUpdateData[key] = timeNow
+            }
+        } else {
+            timeUpdateData[key] = timeNow            
+        }
+        if (tokens[key].ETH.last_7d === 0 || tokens[key].USD.last_7d === 0 || dataAge > 300) {
+            queryString += key + "-"
+        }
+    })
+
+    if (queryString != "") {
+        var ethereum = state.connection.ethereum
         try {
             var newData = yield call([ethereum, ethereum.call], "getLast7D", queryString)
-            yield put(marketActions.getMoreDataSuccess(newData.data))
+            yield put(marketActions.getMoreDataSuccess(newData.data, timeUpdateData))
         }catch(e){
             console.log(e)
-            yield put(marketActions.getMoreDataSuccess({}))
+        }
+    }
+}
+
+function compareString(currency) {
+    return function(tokenA, tokenB) {
+    var marketA = tokenA + currency
+    var marketB = tokenB + currency
+    if (marketA < marketB)
+        return -1;
+    if (marketA > marketB)
+        return 1;
+    return 0;
+    }
+}
+
+function compareNum(originalTokens, currency, sortKey) {
+    return function(tokenA, tokenB) {
+        return originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey]
+    }
+}
+
+export function* resetFilteredTokens(action) {
+    // filter tokens and update tokens here
+    var state = store.getState()
+    var searchWord = action.payload.searchWord
+    if (!searchWord) {
+        searchWord = state.market.configs.searchWord
+    }
+    var tokens = state.market.tokens
+    var filteredTokens = []
+    Object.keys(tokens).forEach((key) => {
+        // if (key === "ETH") return
+        if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
+    
+        filteredTokens.push(key)
+    })
+    var sortKey = action.payload.sortKey
+    var sortType = action.payload.sortType
+    if (!sortKey && !sortType) {
+        if (state.market.configs.sortKey != "") {
+            sortKey = state.market.configs.sortKey
+            sortType = state.market.configs.sortType[sortKey]
+        }
+    }
+    if (sortKey && sortKey != "") {
+        if (sortKey === 'market') {
+            filteredTokens.sort(compareString('ETH'))
+        } else if (sortKey != '') {
+            filteredTokens.sort(compareNum(tokens, 'ETH', sortKey))
+        }
+        if (sortType === '-sort-desc') {
+            filteredTokens.reverse()
+        }
+    }
+    var nextPosition = state.market.configs.firstPageSize
+    if (filteredTokens.length < nextPosition) {
+        nextPosition = filteredTokens.length
+    }
+    yield put(marketActions.updateFilteredTokensSuccess(filteredTokens))
+    var timeNow = Date.now() / 1000
+    var listTokens = filteredTokens.slice(0, nextPosition)
+    var queryString = ""
+    var marketConfig = state.market.configs
+
+    var timeUpdateData = {...marketConfig.timeUpdateData}
+    listTokens.forEach((key) => {
+        if (key === 'ETH') return
+        var dataAge = 0
+        if (timeUpdateData[key]) {
+            dataAge = timeNow - timeUpdateData[key]
+            if (dataAge > 300) {
+                timeUpdateData[key] = timeNow
+            }
+        } else {
+            timeUpdateData[key] = timeNow            
+        }
+        if (tokens[key].ETH.last_7d === 0 || tokens[key].USD.last_7d === 0 || dataAge > 300) {
+            queryString += key + "-"
+        }
+    })
+
+    if (queryString != "") {
+        var ethereum = state.connection.ethereum
+        try {
+            var newData = yield call([ethereum, ethereum.call], "getLast7D", queryString)
+            yield put(marketActions.getMoreDataSuccess(newData.data, timeUpdateData))
+        }catch(e){
+            console.log(e)
         }
     }
 }
@@ -145,8 +225,9 @@ export function* watchMarket() {
   //yield takeEvery("MARKET.GET_GENERAL_INFO_TOKENS", getGeneralTokenInfo)
   yield takeEvery("MARKET.GET_MORE_DATA", getNewData)
   yield takeEvery("MARKET.GET_VOLUMN", getVolumn)
-  yield takeEvery("MARKET.RESET_LIST_TOKEN", getNewData)
-  yield takeEvery("MARKET.UPDATE_SORTED_TOKENS", getNewData)
+
+  yield takeEvery("MARKET.CHANGE_SEARCH_WORD", resetFilteredTokens)
+  yield takeEvery("MARKET.UPDATE_SORT_STATE", resetFilteredTokens)
 }
 
 
