@@ -308,9 +308,32 @@ const market = (state = initState, action) => {
         }
 
         case 'MARKET.GET_MARKET_INFO_SUCCESS': {
-            const {data, rateUSD} = action.payload
+            const {data, rateUSD, rates} = action.payload
+            if (!rates) {
+                return {...state}
+            }
             var tokens = {...newState.tokens}
-            var newTokens = newState.tokens
+            rates.map(rate => {
+                if (rate.source !== "ETH") {
+                    if (tokens[rate.source]) {
+                        var sellPriceETH = converters.convertSellRate(rate.rate)
+                        tokens[rate.source].ETH.sellPrice = parseFloat(converters.roundingNumber(sellPriceETH))
+                        tokens[rate.source].USD.sellPrice = parseFloat(converters.roundingNumber(sellPriceETH * rateUSD))
+                    } else {
+                        return
+                    }
+                } else {
+                    if (tokens[rate.dest]) {
+                        var buyPriceETH = converters.convertBuyRate(rate.rate)
+                        tokens[rate.dest].ETH.buyPrice = parseFloat(converters.roundingNumber(buyPriceETH))
+                        tokens[rate.dest].USD.buyPrice = parseFloat(converters.roundingNumber(buyPriceETH * rateUSD))
+                    } else {
+                        return
+                    }
+                }
+            })
+            
+            var newTokens = {...newState.tokens}
             Object.keys(data).map(key=>{
                 if (!tokens[key]) return
                 
@@ -336,7 +359,7 @@ const market = (state = initState, action) => {
                     }
                 }
 
-                tokens[key].USD.change = tokens[key].ETH.change = change
+                newTokens[key].USD.change = newTokens[key].ETH.change = change
                 if (newTokens[key] && token.quotes) {
                     newTokens[key].ETH.market_cap = token.quotes.ETH.market_cap
                     newTokens[key].ETH.volume = token.quotes.ETH.volume_24h ? Math.round(token.quotes.ETH.volume_24h): 0
@@ -345,7 +368,7 @@ const market = (state = initState, action) => {
                     newTokens[key].USD.volume = token.quotes.USD.volume_24h ? Math.round(token.quotes.USD.volume_24h): 0
                 }
             })
-            return  {...newState, tokens: {...tokens}}
+            return  {...newState, tokens: {...newTokens}}
         }
 
         case 'MARKET.GET_LAST_7D_SUCCESS': {
