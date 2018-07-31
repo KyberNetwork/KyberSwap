@@ -14,7 +14,8 @@ module.exports = env => {
     const timestamp = Date.now();
 
     let entry = {
-        app: ['babel-polyfill', './js/client.js', './assets/css/app.scss']
+        app: ['babel-polyfill', './js/client.js', './assets/css/app.scss'],
+        libary: ['./assets/css/foundation-float.min.css', './assets/css/foundation-prototype.min.css']
     };
     let plugins = [
         new webpack.ProgressPlugin(),
@@ -32,7 +33,6 @@ module.exports = env => {
         new webpack.HashedModuleIdsPlugin()
     ];
     if (env && env.build !== 'true') {
-        entry['libary'] = ['./assets/css/foundation-float.min.css', './assets/css/foundation-prototype.min.css']
         plugins.push(new webpack.DefinePlugin({
             'env': JSON.stringify(env.chain),
             'process.env': {
@@ -40,7 +40,6 @@ module.exports = env => {
             }
         }));
     } else {
-        entry['libary'] = ['./assets/css/foundation-float.min.css', './assets/css/foundation-prototype.min.css']
         plugins.push(new UglifyJsPlugin({
             uglifyOptions: {
                 comments: false,
