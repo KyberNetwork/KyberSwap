@@ -151,7 +151,6 @@ export default class EthereumService extends React.Component {
     this.fetchApproveTxsData()
 
     this.fetchRateData()
-    this.fetchRateUSD()
 
     this.fetchAccountData()
     this.fetchTokenBalance()
@@ -185,6 +184,7 @@ export default class EthereumService extends React.Component {
 
   fetchData5Min(){
     this.fetchVolumn()
+    this.fetchRateUSD()
   }
 
   fetchDataSync() {
@@ -228,7 +228,7 @@ export default class EthereumService extends React.Component {
   fetchRateUSD() {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    store.dispatch(updateAllRateUSD(ethereum, BLOCKCHAIN_INFO.tokens))
+    store.dispatch(updateAllRateUSD(ethereum))
   }
 
   fetchTxsData = () => {

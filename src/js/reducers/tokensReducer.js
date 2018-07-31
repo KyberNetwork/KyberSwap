@@ -104,21 +104,11 @@ const tokens = (state = initState, action) => {
       return Object.assign({}, state, { tokens: newTokens })
     }
     case 'GLOBAL.UPDATE_RATE_USD_FULFILLED': {
-      var tokens = { ...state.tokens }
-      var rates = action.payload.rates
-      //map token
-      var mapToken = {}
-      rates.map(rate => {
-        mapToken[rate.symbol] = rate.price_usd
-      })
+      var newTokens = { ...state.tokens }
+      var rateETHUSD = action.payload.rateETHUSD
 
       //push data
-      var newTokens = {}
-      Object.keys(tokens).map(key => {
-        var token = tokens[key]
-        token.rateUSD = mapToken[token.symbol]
-        newTokens[key] = token
-      })
+      newTokens['ETH'].rateUSD = rateETHUSD
       return Object.assign({}, state, { tokens: newTokens })
     }
     case 'GLOBAL.SET_BALANCE_TOKEN':{
