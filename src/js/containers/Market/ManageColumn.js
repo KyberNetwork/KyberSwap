@@ -39,7 +39,7 @@ export default class ManageColumn extends React.Component {
     selectShowsColumn = (e, key) => {
         var value = e.target.checked
         this.props.dispatch(marketActions.changeShowColumn(key, value))
-        analytics.trackMarketSetting(key, value)
+        analytics.trackMarketSetting(this.props.shows.listItem[key].title, value)
     }
 
     getDisplayColumn = (e) => {
