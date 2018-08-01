@@ -132,7 +132,9 @@
         "symbol": "ENG",
         "icon": "eng.svg",
         "decimal": 8,
-        "usd_id":"enigma-project"
+        "usd_id":"enigma-project",
+        "isNew": true,
+        "expireDate": "2018-08-01"
       },
       "SALT": {
         "name":"Salt",

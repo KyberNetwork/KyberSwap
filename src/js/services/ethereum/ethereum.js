@@ -57,6 +57,10 @@ export default class EthereumService extends React.Component {
           break
       }
     }
+    var dataNow = new Date()
+    var timeStampNow = dataNow.getTime()
+    var endDay = dataNow.setHours(23,59,59,999)
+    this.intervalDay = endDay - timeStampNow
   }
 
   subcribe(callBack) {
@@ -71,6 +75,9 @@ export default class EthereumService extends React.Component {
     var callBack5Min = this.fetchData5Min.bind(this)
     callBack5Min()
     var interval5Min = setInterval(callBack5Min, 300000)
+
+    var callBackDay = this.updateTokenStatus.bind(this)
+    var intervalDay = setInterval(callBackDay, this.intervalDay)
   }
 
   clearSubcription() {
@@ -182,6 +189,12 @@ export default class EthereumService extends React.Component {
   // this.testEstimateGas()
   }
 
+  updateTokenStatus() {
+    this.updateTokenStatus()
+    if (this.intervalDay < 86400) {
+      this.intervalDay = 86400
+    }
+  }
 
   fetchData5Min(){
     this.fetchVolumn()
