@@ -6,7 +6,7 @@ import constants from "../constants"
 
 import {
   updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRateUSD,
-  checkConnection, setGasPrice, setMaxGasPrice
+  checkConnection, setGasPrice, setMaxGasPrice, updateTokenStatus
 } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx, updateApproveTxsData } from "../../actions/txActions"
@@ -57,10 +57,6 @@ export default class EthereumService extends React.Component {
           break
       }
     }
-    var dataNow = new Date()
-    var timeStampNow = dataNow.getTime()
-    var endDay = dataNow.setHours(23,59,59,999)
-    this.intervalDay = endDay - timeStampNow
   }
 
   subcribe(callBack) {
@@ -77,7 +73,7 @@ export default class EthereumService extends React.Component {
     var interval5Min = setInterval(callBack5Min, 300000)
 
     var callBackDay = this.updateTokenStatus.bind(this)
-    var intervalDay = setInterval(callBackDay, this.intervalDay)
+    callBackDay()
   }
 
   clearSubcription() {
@@ -189,10 +185,7 @@ export default class EthereumService extends React.Component {
   }
 
   updateTokenStatus() {
-    this.updateTokenStatus()
-    if (this.intervalDay < 86400) {
-      this.intervalDay = 86400
-    }
+    store.dispatch(updateTokenStatus())
   }
 
   fetchData5Min(){

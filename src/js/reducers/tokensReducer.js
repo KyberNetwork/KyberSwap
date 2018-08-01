@@ -149,6 +149,20 @@ const tokens = (state = initState, action) => {
       delete tokens[symbol].approveTx
       return Object.assign({}, state, { tokens: tokens }) 
     }
+    case 'GLOBAL.UPDATE_TOKEN_STATUS': {
+      var timeNow = new Date()
+      var timeStampNow = timeNow.getTime()
+      var tokens = { ...state.tokens }
+      Object.keys(tokens).map(key => {
+          if (!tokens[key]) return
+          var timeExpire = new Date(tokens[key].expireDate)
+          var expireTimeStamp = timeExpire.getTime()
+          if (timeStampNow > expireTimeStamp) {
+              tokens[key].isNew = false
+          }
+      })
+      return Object.assign({}, state, { tokens: tokens }) 
+  }
     default: return state
   }
 }

@@ -219,3 +219,9 @@ export function setNetworkError(error){
     payload: {error}
   }
 }
+
+export function updateTokenStatus() {
+  return {
+    type: "GLOBAL.UPDATE_TOKEN_STATUS"
+  }
+}
