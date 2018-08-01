@@ -149,9 +149,19 @@ export function* importMetamask(action) {
       var expectedName = findNetworkName(networkId)
       if (currentName) {
         yield put(actions.throwError(translate("error.network_not_match", { currentName: currentName, expectedName: expectedName }) || "Network is not match"))
+        if (walletType !== null && walletType !== "metamask"){
+          let title = translate("error.error_occurred") || "Error occurred"
+          let content = translate("error.network_not_match", { currentName: currentName, expectedName: expectedName }) || "Network is not match"
+          yield put(openInfoModal(title, content))
+        }
         return
       } else {
         yield put(actions.throwError(translate("error.network_not_match_unknow", { expectedName: expectedName }) || "Network is not match"))
+        if (walletType !== null && walletType !== "metamask"){
+          let title = translate("error.error_occurred") || "Error occurred"
+          let content = translate("error.network_not_match_unknow", { expectedName: expectedName }) || "Network is not match"
+          yield put(openInfoModal(title, content))
+        }
         return
       }
     }
@@ -172,6 +182,11 @@ export function* importMetamask(action) {
   } catch (e) {
     console.log(e)
     yield put(actions.throwError(translate("error.cannot_connect_metamask") || "Cannot get metamask account. You probably did not login in Metamask"))
+    if (walletType !== null && walletType !== "metamask"){
+      let title = translate("error.error_occurred") || "Error occurred"
+      let content = translate("error.cannot_connect_metamask") || "Cannot get metamask account. You probably did not login in Metamask"
+      yield put(openInfoModal(title, content))
+    }
   }
 }
 
