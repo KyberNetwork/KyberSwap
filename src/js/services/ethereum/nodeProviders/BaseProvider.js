@@ -12,8 +12,8 @@ export default class BaseProvider {
         this.erc20Contract = new this.rpc.eth.Contract(constants.ERC20)
         this.networkAddress = BLOCKCHAIN_INFO.network
         this.wrapperAddress = BLOCKCHAIN_INFO.wrapper
-        console.log(BLOCKCHAIN_INFO)
-        console.log(this.wrapperAddress)
+        // console.log(BLOCKCHAIN_INFO)
+        // console.log(this.wrapperAddress)
         this.networkContract = new this.rpc.eth.Contract(constants.KYBER_NETWORK, this.networkAddress)
         this.wrapperContract = new this.rpc.eth.Contract(constants.KYBER_WRAPPER, this.wrapperAddress)
     }

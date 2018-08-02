@@ -220,8 +220,8 @@ export function setNetworkError(error){
   }
 }
 
-export function updateTokenStatus() {
-  return {
-    type: "GLOBAL.UPDATE_TOKEN_STATUS"
-  }
-}
+// export function updateTokenStatus() {
+//   return {
+//     type: "GLOBAL.UPDATE_TOKEN_STATUS"
+//   }
+// }

@@ -9,11 +9,24 @@ import * as converters from "../utils/converter"
 
 const initState = function () {
     var tokens = {}
+    var timeNow = new Date()
+    var timeStampNow = timeNow.getTime()
+
+    
     Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
         tokens[key] = {}
-        tokens[key].info = BLOCKCHAIN_INFO.tokens[key]
+        tokens[key].info = {...BLOCKCHAIN_INFO.tokens[key]}
 
         tokens[key].circulatingSupply = 0
+
+        if(BLOCKCHAIN_INFO.tokens[key].expireDate){            
+            var timeExpire = new Date(BLOCKCHAIN_INFO.tokens[key].expireDate)
+            var expireTimeStamp = timeExpire.getTime()
+            if (timeStampNow > expireTimeStamp) {
+                tokens[key].info.isNew = false
+            }
+        }
+        
 
         tokens[key]["ETH"] = {
             sellPrice: 0,
@@ -382,20 +395,20 @@ const market = (state = initState, action) => {
             return  {...newState, tokens: {...tokens}}
         }
 
-        case 'GLOBAL.UPDATE_TOKEN_STATUS': {
-            var timeNow = new Date()
-            var timeStampNow = timeNow.getTime()
-            var tokens = newState.tokens
-            Object.keys(tokens).map(key => {
-                if (!tokens[key]) return
-                var timeExpire = new Date(tokens[key].expireDate)
-                var expireTimeStamp = timeExpire.getTime()
-                if (timeStampNow > expireTimeStamp) {
-                    tokens[key].isNew = false
-                }
-            })
-            return  {...newState, tokens: {...tokens}}
-        }
+        // case 'GLOBAL.UPDATE_TOKEN_STATUS': {
+        //     var timeNow = new Date()
+        //     var timeStampNow = timeNow.getTime()
+        //     var tokens = newState.tokens
+        //     Object.keys(tokens).map(key => {
+        //         if (!tokens[key]) return
+        //         var timeExpire = new Date(tokens[key].expireDate)
+        //         var expireTimeStamp = timeExpire.getTime()
+        //         if (timeStampNow > expireTimeStamp) {
+        //             tokens[key].isNew = false
+        //         }
+        //     })
+        //     return  {...newState, tokens: {...tokens}}
+        // }
 
         default: return state
     }
