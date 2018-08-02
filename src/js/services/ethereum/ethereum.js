@@ -71,6 +71,9 @@ export default class EthereumService extends React.Component {
     var callBack5Min = this.fetchData5Min.bind(this)
     callBack5Min()
     var interval5Min = setInterval(callBack5Min, 300000)
+
+    // var callBackDay = this.updateTokenStatus.bind(this)
+    // callBackDay()
   }
 
   clearSubcription() {
@@ -151,7 +154,6 @@ export default class EthereumService extends React.Component {
     this.fetchApproveTxsData()
 
     this.fetchRateData()
-    this.fetchRateUSD()
 
     this.fetchAccountData()
     this.fetchTokenBalance()
@@ -182,9 +184,13 @@ export default class EthereumService extends React.Component {
   // this.testEstimateGas()
   }
 
+  // updateTokenStatus() {
+  //   store.dispatch(updateTokenStatus())
+  // }
 
   fetchData5Min(){
     this.fetchVolumn()
+    this.fetchRateUSD()
   }
 
   fetchDataSync() {
@@ -228,7 +234,7 @@ export default class EthereumService extends React.Component {
   fetchRateUSD() {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    store.dispatch(updateAllRateUSD(ethereum, BLOCKCHAIN_INFO.tokens))
+    store.dispatch(updateAllRateUSD(ethereum))
   }
 
   fetchTxsData = () => {

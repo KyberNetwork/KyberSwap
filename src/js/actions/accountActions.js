@@ -64,10 +64,10 @@ export function throwPKeyError(error) {
   }
 }
 
-export function importNewAccount(address, type, keystring, ethereum, tokens, metamask = null) {
+export function importNewAccount(address, type, keystring, ethereum, tokens, walletType = null, metamask = null) {
   return {
     type: "ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING",
-    payload: { address, type, keystring, ethereum, tokens, metamask }
+    payload: { address, type, keystring, ethereum, tokens, walletType, metamask }
   }
 }
 
@@ -105,9 +105,9 @@ export function incManualNonceAccount(address) {
   }
 }
 
-export function importAccountMetamask(web3Service, networkId, ethereum, tokens, translate) {
+export function importAccountMetamask(web3Service, networkId, ethereum, tokens, translate, walletType = null) {
   return {
     type: "ACCOUNT.IMPORT_ACCOUNT_METAMASK",
-    payload: { web3Service, networkId, ethereum, tokens, translate }
+    payload: { web3Service, networkId, ethereum, tokens, translate, walletType }
   }
 }

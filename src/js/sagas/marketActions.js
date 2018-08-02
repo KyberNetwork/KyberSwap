@@ -43,7 +43,7 @@ export function* getData(action) {
 export function* getVolumn(){
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    var tokens = state.tokens.tokens
+    var tokens = state.market.tokens
 
     // page config
     var pageConfig = state.market.configs
@@ -59,7 +59,7 @@ export function* getVolumn(){
 
     try {
         const rates = yield call([ethereum, ethereum.call],"getAllRates", tokens)
-        yield put.sync(globalActions.updateAllRateComplete(rates))
+        // yield put.sync(globalActions.updateAllRateComplete(rates))
 
         const rateUSDETH = yield call([ethereum, ethereum.call],"getRateETH")
 
@@ -68,7 +68,7 @@ export function* getVolumn(){
 
         // use new cached api
         var newData = yield call([ethereum, ethereum.call], "getRightMarketInfo")
-        yield put(marketActions.getMarketInfoSuccess(newData.data, rateUSDETH))
+        yield put(marketActions.getMarketInfoSuccess(newData.data, rateUSDETH, rates))
 
         // new api last 7d
         var last7D = yield call([ethereum, ethereum.call], "getLast7D", queryString)

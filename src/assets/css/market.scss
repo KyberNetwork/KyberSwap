@@ -299,12 +299,34 @@
                 width: 150px;
                 text-align: left;
                 padding-left: 10px;
+                position: relative;
                 img {
                   margin-right: 10px;
                   width: 24px;
                   height: 24px;
                   position: relative;
                   top: -2px;
+                }
+                &.new-token::after {
+                  content: '';
+                  background-image: url(../img/market/new.svg);
+                  position: absolute;
+                  width: 26px;
+                  height: 100%;
+                  background-position: center;
+                  background-size: contain;
+                  background-repeat: no-repeat;
+                  top: -17px;
+                  margin-left: 5px;
+                  
+                  @media screen and (max-width: 1290px) {
+                    top: -23px;
+                    margin-left: -12px;
+                  }
+                  @include screen-max-width(medium) {
+                    top: -23px;
+                    margin-left: -15px;
+                  }
                 }
               }
             }

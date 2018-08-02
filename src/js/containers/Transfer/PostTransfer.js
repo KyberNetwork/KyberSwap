@@ -210,7 +210,9 @@ export default class PostTransfer extends React.Component {
     // should use estimated gas
     var gas = converters.numberToHex(this.props.form.gas)
     // should have better strategy to determine gas price
-    var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.form.gasPrice))
+    var gasPrice = Math.round(this.props.form.gasPrice*10)/10
+    gasPrice = converters.numberToHex(converters.gweiToWei(gasPrice))
+    //var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.form.gasPrice))
     var balanceData = {
       //balance: this.props.form.balance.toString(),
       name: this.props.form.tokenName,

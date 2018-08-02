@@ -72,5 +72,4 @@ typings/
 #sass
 .sass-cache
 
-#Output
 #dist/*

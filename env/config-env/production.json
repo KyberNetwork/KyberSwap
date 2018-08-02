@@ -405,6 +405,15 @@
         "address": "0x286bda1413a2df81731d4930ce2f862a35a609fe",
         "symbol":"WABI", 
         "icon": "wabi.svg"
+      },
+      "COFI":{
+        "name": "CoinFi",
+        "decimal": 18,
+        "address": "0x3136ef851592acf49ca4c825131e364170fa32b3",
+        "symbol":"COFI", 
+        "icon": "cofi.svg",
+        "isNew": true,
+        "expireDate":"2018/08/09"
       }
     },
     "ethScanUrl": "https://etherscan.io/",

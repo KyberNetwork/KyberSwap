@@ -219,6 +219,14 @@
         "symbol" : "COFI",
         "address": "0xb91786188f8d4e35d6d67799e9f162587bf4da03",
         "icon": "cofi.svg"
+      },
+      "BITX": {
+        "name": "BitScreenerToken",
+        "decimal": 18,
+        "symbol" : "BITX",
+        "address": "0x7a17267576318efb728bc4a0833e489a46ba138f",
+        "icon": "bitx.png",
+        "isNew": true
       }
   },
   "ethScanUrl": "https://ropsten.etherscan.io/",
