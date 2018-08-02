@@ -15,14 +15,14 @@ module.exports = env => {
 
     let entry = {
         app: ['babel-polyfill', './js/client.js', './assets/css/app.scss'],
-        libary: ['./assets/css/foundation-float.min.css', './assets/css/foundation-prototype.min.css']
+      //  libary: ['./assets/css/foundation-float.min.css', './assets/css/foundation-prototype.min.css']
     };
     let plugins = [
         new webpack.ProgressPlugin(),
         new ExtractTextPlugin(`[name].bundle.${timestamp}.css`, {
             allChunks: true
         }),
-        new CleanPlugin([outputPath+'/app.*']),
+        new CleanPlugin([outputPath+'/app.*', outputPath + '/libary.*']),
         new HtmlWebpackPlugin({
             title: 'Wallet - kyber.network',
             filename: 'index.html',
@@ -33,6 +33,7 @@ module.exports = env => {
         new webpack.HashedModuleIdsPlugin()
     ];
     if (env && env.build !== 'true') {
+        entry['libary'] = ['./assets/css/foundation-float.min.css', './assets/css/foundation-prototype.min.css']
         plugins.push(new webpack.DefinePlugin({
             'env': JSON.stringify(env.chain),
             'process.env': {
