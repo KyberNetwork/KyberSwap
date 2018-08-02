@@ -6,7 +6,7 @@ import constants from "../constants"
 
 import {
   updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRateUSD,
-  checkConnection, setGasPrice, setMaxGasPrice
+  checkConnection, setGasPrice, setMaxGasPrice, updateTokenStatus
 } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx, updateApproveTxsData } from "../../actions/txActions"
@@ -71,6 +71,9 @@ export default class EthereumService extends React.Component {
     var callBack5Min = this.fetchData5Min.bind(this)
     callBack5Min()
     var interval5Min = setInterval(callBack5Min, 300000)
+
+    var callBackDay = this.updateTokenStatus.bind(this)
+    callBackDay()
   }
 
   clearSubcription() {
@@ -181,6 +184,9 @@ export default class EthereumService extends React.Component {
   // this.testEstimateGas()
   }
 
+  updateTokenStatus() {
+    store.dispatch(updateTokenStatus())
+  }
 
   fetchData5Min(){
     this.fetchVolumn()
