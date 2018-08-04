@@ -27,13 +27,13 @@ import { toEther } from "../../utils/converter";
     listTokens = sortedTokens
   } else {
     Object.keys(originalTokens).forEach((key) => {
-      if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase()) || !originalTokens[key].info.isNew) return
+      if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
       listTokens.push(key)
     })
-    Object.keys(originalTokens).forEach((key) => {
-      if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase()) || originalTokens[key].info.isNew) return
-      listTokens.push(key)
-    })
+    // Object.keys(originalTokens).forEach((key) => {
+    //   if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase()) || originalTokens[key].info.isNew) return
+    //   listTokens.push(key)
+    // })
     if (sortKey === 'market') {
       listTokens.sort(compareString(currency))
     } else if (sortKey != '') {
