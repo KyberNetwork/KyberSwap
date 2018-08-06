@@ -214,7 +214,7 @@
     "invalid_path_or_session_expired": "Cannot get address from this path. Please check your path is valid or Ledger is connected.",
     "path_is_invalid": "Invalid path. Please choose another one.",
     "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue.", 
-    "eth_balance_not_enough_for_fee": "Your Eth balance is not enough for transaction fee",
+    "eth_balance_not_enough_for_fee": "Your ETH balance is not enough for transaction fee",
     "handle_amount":"Kyber cannot handle your amount, please reduce amount",
     "kyber_maintain":"This pair is temporarily under maintenance",
     "get_rate":"Cannot get rate from blockchain",
