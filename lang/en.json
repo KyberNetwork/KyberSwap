@@ -327,7 +327,8 @@
     "change": "24HR Change",
     "volume": "Volume (24h)",
     "support_eth_only": "Now support only pairs with ETH, not support pairs with USD yet.",
-    "show_more_results": "Show more results"
+    "show_more_results": "Show more results",
+    "new_token": "NEW"
   },
 
   "trading_view": {
