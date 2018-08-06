@@ -32,7 +32,7 @@ export default class TokenSelector extends React.Component {
   }
 
   hideTokens = (e) => {
-    this.setState({ open: false })
+    this.setState({ open: false, searchWord: ""})
   }
 
   selectItem = (event, symbol, address) => {
