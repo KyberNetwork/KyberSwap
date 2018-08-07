@@ -328,7 +328,8 @@
     "change": "24小时变化",
     "volume": "交易量 (24小时)",
     "support_eth_only": "现在只支持与ETH的交易对，不支持美元交易对。",
-    "show_more_results": "显示更多结果"
+    "show_more_results": "显示更多结果",
+    "new_token": "新"
   },
 
   "trading_view": {

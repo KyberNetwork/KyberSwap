@@ -252,9 +252,10 @@ export default class MarketTable extends React.Component {
     var tokenPair = input.split(" / ")
     var key = tokenPair[0]
     return (
-      <div className={this.props.tokens[key].info.isNew ? "token-pair new-token" : "token-pair"}>
+      <div className="token-pair">
         <img src={require("../../../assets/img/tokens/" + this.props.tokens[key].info.icon)} />
         {input}
+        {this.props.tokens[key].info.isNew ? <div className="new-token">{this.props.translate("market.new_token" || "NEW")}</div>:""}
       </div>
     )
   }

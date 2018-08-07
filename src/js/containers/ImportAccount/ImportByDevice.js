@@ -46,7 +46,7 @@ export default class ImportByDevice extends React.Component {
 			{ path: "m/0'/0'/0'", desc: 'SingularDTV', notSupport: true },
 			{ path: "m/44'/1'/0'/0", desc: 'Network: Testnets' },
 			{ path: "m/44'/40'/0'/0", desc: 'Network: Expanse', notSupport: true },
-			{ path: 0, desc: 'modal.custom_path', defaultP: "m/44'/60'/1'/0", custom: false },
+			{ path: 0, desc: this.props.translate("modal.custom_path" || "Your Custom Path"), defaultP: "m/44'/60'/1'/0", custom: false },
 		]
 	}
 

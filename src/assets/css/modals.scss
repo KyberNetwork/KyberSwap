@@ -641,7 +641,7 @@ $divider-color: darken($title-background-color, 5);
 
 .reveal.transaction-loading {
   @include screen-max-width(medium) {
-    padding: 0 2rem;
+    padding: 5px 2rem;
   }
   @include screen-min-width(medium) {
     width: 650px;
