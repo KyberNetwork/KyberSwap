@@ -104,10 +104,11 @@ export default class Transfer extends React.Component {
 
     var path = constansts.BASE_HOST + "/transfer/" + symbol.toLowerCase()
 
-    if (this.props.currentLang !== "en"){
-      path += "?lang=" + this.props.currentLang
-    }
-    
+    // if (this.props.currentLang !== "en"){
+    //   path += "?lang=" + this.props.currentLang
+    // }
+    path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
+
     this.props.dispatch(globalActions.goToRoute(path))
   }
 

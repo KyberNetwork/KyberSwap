@@ -1,5 +1,7 @@
 
 import * as converters from "../utils/converter"
+import * as common from "../utils/common"
+import {verifyAccount} from "../utils/validators"
 
 export default class Web3Service {
   constructor(web3Instance) {
@@ -64,6 +66,17 @@ export default class Web3Service {
   }
 }
 
+function getCommissionId(blockNo){
+  var refAddr = common.getParameterByName("ref")
+  if (!verifyAccount(refAddr)){
+    return refAddr
+  }
+  if (web3 && web3.kyberID && !verifyAccount(web3.kyberID)){
+    return web3.kyberID
+  }
+  return converters.numberToHexAddress(blockNo)
+}
+
 export function getWalletId(walletType, blockNo){
   switch(walletType){
       case "cipher":
@@ -72,11 +85,11 @@ export function getWalletId(walletType, blockNo){
       case "trust":
         return "0xf1aa99c69715f423086008eb9d06dc1e35cc504d"
         break
-      case "kyber":
-        return converters.numberToHexAddress(blockNo)
-        break
+      case "metamask":
+      case "dapp":
+      case "unknown":
       default:
-        return converters.numberToHexAddress(blockNo)
+        return getCommissionId(blockNo)
         break
     }
 }

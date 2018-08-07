@@ -44,10 +44,13 @@ import { Link } from 'react-router-dom'
     var exchangeLink = constansts.BASE_HOST + "/swap/" + exchange.sourceTokenSymbol.toLowerCase() + "_" + exchange.destTokenSymbol.toLowerCase()
     var transferLink = constansts.BASE_HOST + "/transfer/" + transfer.tokenSymbol.toLowerCase()
 
-    if (currentLang !== "en"){
-        exchangeLink += "?lang=" + currentLang
-        transferLink += "?lang=" + currentLang
-    }
+    exchangeLink = common.getPath(exchangeLink, constansts.LIST_PARAMS_SUPPORTED)
+    transferLink = common.getPath(transferLink, constansts.LIST_PARAMS_SUPPORTED)
+
+    // if (currentLang !== "en"){
+    //     exchangeLink += "?lang=" + currentLang
+    //     transferLink += "?lang=" + currentLang
+    // }
 
 
     const translate = getTranslate(store.locale)
