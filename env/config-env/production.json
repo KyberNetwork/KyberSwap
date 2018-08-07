@@ -28,7 +28,8 @@
         "icon": "eth.svg",
         "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         "decimal": 18,
-        "usd_id":"ethereum"
+        "usd_id":"ethereum",
+        "gasLimit": "0"
       },
       "KNC": {
         "name": "KyberNetwork",
@@ -44,7 +45,8 @@
         "icon": "dai.svg",
         "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
         "decimal": 18,
-        "usd_id":"dai"
+        "usd_id":"dai",
+        "gasLimit": "400000"
       },
       "OMG": {
         "name": "OmiseGO",
@@ -220,7 +222,8 @@
         "symbol":"DGX",
         "decimal": 9,
         "icon": "dgx.svg",
-        "usd_id":"dgx"
+        "usd_id":"dgx",
+        "gasLimit": "750000"
       },
       "ABT": {
         "name": "ArcBlock",

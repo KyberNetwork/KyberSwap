@@ -20,7 +20,8 @@
         "icon": "eth.svg",
         "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         "decimal": 18,
-        "usd_id":"ethereum"
+        "usd_id":"ethereum",
+        "gasLimit": "0"
       },
       "KNC": {
         "name": "KyberNetwork",
@@ -180,7 +181,8 @@
         "icon": "dai.svg",
         "address": "0xad6d458402f60fd3bd25163575031acdce07538d",
         "decimal": 18,
-        "usd_id":"dai"
+        "usd_id":"dai",
+        "gasLimit": "400000"
       },
       "LINK": {
         "name": "Chain Link",

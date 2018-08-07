@@ -981,33 +981,42 @@ function* fetchGasApproveSnapshot() {
 function* getMaxGasExchange(){
   var state = store.getState()
   const exchange = state.exchange
+  const tokens = state.tokens.tokens
 
-  if (exchange.sourceTokenSymbol === 'DGX'){
-    if (exchange.destTokenSymbol === 'ETH'){
-      return 750000
-    }else{
-      return (750000 + exchange.max_gas)
-    }
-  }
-  if (exchange.sourceTokenSymbol === 'ETH'){
-    if (exchange.destTokenSymbol === 'DGX'){
-      return 750000
-    }else{
-      return exchange.max_gas
-    }
-  }
+  var sourceToken = tokens[exchange.sourceTokenSymbol]
+  var destToken = tokens[exchange.destTokenSymbol]
 
-  if (exchange.sourceTokenSymbol !== 'ETH'){
-    if (exchange.destTokenSymbol === 'DGX'){
-      return 750000 + exchange.max_gas
-    }
-    if (exchange.destTokenSymbol === 'ETH'){
-      return exchange.max_gas
-    }
-    else{
-      return exchange.max_gas * 2
-    }
-  }
+  var sourceGasLimit = sourceToken.gasLimit ? parseInt(sourceToken.gasLimit) : exchange.max_gas
+  var destGasLimit = destToken.gasLimit ? parseInt(destToken.gasLimit) : exchange.max_gas
+
+  return sourceGasLimit + destGasLimit
+
+  // if (exchange.sourceTokenSymbol === 'DGX'){
+  //   if (exchange.destTokenSymbol === 'ETH'){
+  //     return 750000
+  //   }else{
+  //     return (750000 + exchange.max_gas)
+  //   }
+  // }
+  // if (exchange.sourceTokenSymbol === 'ETH'){
+  //   if (exchange.destTokenSymbol === 'DGX'){
+  //     return 750000
+  //   }else{
+  //     return exchange.max_gas
+  //   }
+  // }
+
+  // if (exchange.sourceTokenSymbol !== 'ETH'){
+  //   if (exchange.destTokenSymbol === 'DGX'){
+  //     return 750000 + exchange.max_gas
+  //   }
+  //   if (exchange.destTokenSymbol === 'ETH'){
+  //     return exchange.max_gas
+  //   }
+  //   else{
+  //     return exchange.max_gas * 2
+  //   }
+  // }
 }
 
 function* getMaxGasApprove(){
