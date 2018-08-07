@@ -36,7 +36,8 @@
       }
 
       .search-input {
-        padding: 24px 15px;
+        // padding: 24px 15px;
+        height: 3.15rem;
         width: 100%;
         font-size: 14px;
         background-position: 98%;
@@ -307,26 +308,42 @@
                   position: relative;
                   top: -2px;
                 }
-                &.new-token::after {
-                  content: '';
-                  background-image: url(../img/market/new.svg);
-                  position: absolute;
-                  width: 26px;
-                  height: 100%;
-                  background-position: center;
-                  background-size: contain;
-                  background-repeat: no-repeat;
-                  top: -17px;
-                  margin-left: 5px;
+                // &.new-token::after {
+                //   content: '';
+                //   background-image: url(../img/market/new.svg);
+                //   position: absolute;
+                //   width: 26px;
+                //   height: 100%;
+                //   background-position: center;
+                //   background-size: contain;
+                //   background-repeat: no-repeat;
+                //   top: -17px;
+                //   margin-left: 5px;
                   
-                  @media screen and (max-width: 1290px) {
-                    top: -23px;
-                    margin-left: -12px;
-                  }
-                  @include screen-max-width(medium) {
-                    top: -23px;
-                    margin-left: -15px;
-                  }
+                //   @media screen and (max-width: 1290px) {
+                //     top: -23px;
+                //     margin-left: -12px;
+                //   }
+                //   @include screen-max-width(medium) {
+                //     top: -23px;
+                //     margin-left: -15px;
+                //   }
+                // }
+                .new-token {
+                  position: absolute;
+                  top: -15px;
+                  right: 5px;
+                  font-size: 9px;
+                  height: 14px;
+                  width: auto;
+                  color: white;
+                  background: #EE344E;
+                  line-height: 14px;
+                  padding: 0 2px;
+                  font-weight: 600;
+                  border-radius: 2px;
+                  min-width: 25px;
+                  text-align: center;
                 }
               }
             }
