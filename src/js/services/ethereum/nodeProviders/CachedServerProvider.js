@@ -257,7 +257,7 @@ export default class CachedServerProvider extends React.Component {
    
     getExchangeEnable(address){
         return new Promise((resolve, rejected) => {
-            fetch('https://mainnet-data.kyber.network/richguy/' + address, {
+            fetch( BLOCKCHAIN_INFO.statEndPoint + '/richguy/' + address, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
@@ -388,6 +388,21 @@ export default class CachedServerProvider extends React.Component {
                 })
                 .catch((err) => {
                     console.log(err)
+                    rejected(err)
+                })
+        })
+    }
+
+    getUserMaxCap(address) {
+        return new Promise((resolve, rejected) => {
+            fetch(BLOCKCHAIN_INFO.statEndPoint + '/cap-by-address/' + address, {
+            }).then((response) => {
+                return response.json()
+            })
+                .then((result) => {
+                    resolve(result)
+                })
+                .catch((err) => {
                     rejected(err)
                 })
         })
