@@ -2,7 +2,7 @@
   "connections": {
     "http": [      
       {
-        "endPoint" : "https://ropsten-cache.kyber.network",
+        "endPoint" : "https://ropsten-cache.knstats.com",
         "type": "cached"
       },
       {
@@ -20,7 +20,8 @@
         "icon": "eth.svg",
         "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         "decimal": 18,
-        "usd_id":"ethereum"
+        "usd_id":"ethereum",
+        "gasLimit": "0"
       },
       "KNC": {
         "name": "KyberNetwork",
