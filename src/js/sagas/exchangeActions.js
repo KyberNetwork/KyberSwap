@@ -983,11 +983,13 @@ function* getMaxGasExchange(){
   const exchange = state.exchange
   const tokens = state.tokens.tokens
 
-  var sourceToken = tokens[exchange.sourceTokenSymbol]
-  var destToken = tokens[exchange.destTokenSymbol]
+  var sourceTokenLimit = tokens[exchange.sourceTokenSymbol].gasLimit
+  var destTokenLimit = tokens[exchange.destTokenSymbol].gasLimit
 
-  var sourceGasLimit = sourceToken.gasLimit ? parseInt(sourceToken.gasLimit) : exchange.max_gas
-  var destGasLimit = destToken.gasLimit ? parseInt(destToken.gasLimit) : exchange.max_gas
+  var sourceGasLimit = sourceTokenLimit ? parseInt(sourceTokenLimit) : exchange.max_gas
+  var destGasLimit = destTokenLimit ? parseInt(destTokenLimit) : exchange.max_gas
+
+  // console.log("fee tx: ", sourceGasLimit + destGasLimit)
 
   return sourceGasLimit + destGasLimit
 

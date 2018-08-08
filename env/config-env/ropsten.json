@@ -181,8 +181,7 @@
         "icon": "dai.svg",
         "address": "0xad6d458402f60fd3bd25163575031acdce07538d",
         "decimal": 18,
-        "usd_id":"dai",
-        "gasLimit": "400000"
+        "usd_id":"dai"
       },
       "LINK": {
         "name": "Chain Link",
