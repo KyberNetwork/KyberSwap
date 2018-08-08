@@ -2,7 +2,7 @@
   "connections": {
     "http": [      
       {
-        "endPoint" : "https://ropsten-cache.kyber.network",
+        "endPoint" : "https://ropsten-cache.knstats.com",
         "type": "cached"
       },
       {
