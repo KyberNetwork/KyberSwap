@@ -61,6 +61,7 @@ $padding-col-left : 2rem;
 
   @include screen-min-width(large){
     .transfer-col-1{
+      border: 1px solid #ddd;
       box-shadow: $box-shadow-tab;
       // min-height: 550px;
     }
@@ -146,7 +147,7 @@ $padding-col-left : 2rem;
       margin-bottom: 8px;
   }
   .main-title {
-    padding-top: 1.5rem;
+    // padding-top: 1.5rem;
     padding-bottom: 0;
     font-size: 24px;
     margin-bottom: 20px;
