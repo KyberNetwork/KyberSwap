@@ -133,6 +133,11 @@ input.error {
 }
 
 .button {
+  &.account-disable{
+    opacity: 0.2;
+    cursor: initial;
+    pointer-events: none;
+  }
   &.accent {
     line-height: 54px;
     padding: 0 45px;

@@ -10,18 +10,18 @@ import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
   var location = store.router.location.pathname
-  var sourceActive = 'ETH'
-  sourceActive = store.exchange.sourceTokenSymbol
+  // var sourceActive = 'ETH'
+  // sourceActive = store.exchange.sourceTokenSymbol
   return {
     tokens: store.tokens.tokens,
     translate: getTranslate(store.locale),
     ethereum: store.connection.ethereum,
-    showBalance: store.global.showBalance,
-    sourceActive,
+    showBalance: store.global.showBalance,    
     location,
     walletType: store.account.account.type,
     address: store.account.account.address,
     chooseToken: props.chooseToken,
+    sourceActive: props.sourceActive
   }
 })
 

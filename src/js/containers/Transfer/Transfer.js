@@ -119,9 +119,9 @@ export default class Exchange extends React.Component {
     //   return <ImportAccount />
     // }
 
-    if (this.props.transfer.isOpenImportAcount){
-      return <ImportAccount screen="transfer"/>
-    }
+    // if (this.props.transfer.isOpenImportAcount){
+    //   return <ImportAccount screen="transfer"/>
+    // }
 
     var gasPrice = converter.stringToBigNumber(converter.gweiToEth(this.props.transfer.gasPrice))
     var totalGas = gasPrice.multipliedBy(this.props.transfer.gas)

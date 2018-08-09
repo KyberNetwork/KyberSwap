@@ -5,7 +5,7 @@ const PostTransferBtn = (props) => {
 
   return (
     <div>        
-        <a className={'submit-transfer ' + props.className} data-open="passphrase-modal" onClick={props.submit}>{props.translate("transaction.transfer") || "Transfer"}</a>
+        <a className={'submit-transfer ' + props.className + (props.isHaveAccount ? "": " account-disable")} data-open="passphrase-modal" onClick={props.submit}>{props.translate("transaction.transfer") || "Transfer"}</a>
 
        {/* <div class="column small-11 medium-10 large-9 small-centered text-center">
           

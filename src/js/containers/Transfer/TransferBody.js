@@ -11,9 +11,11 @@ import { TransferForm } from "../../components/Transaction"
 import { PostTransferWithKey } from "../Transfer"
 import { TransactionLoading } from "../CommonElements"
 
+import { ImportAccount } from "../ImportAccount"
+
 import { AddressBalance }  from "../../components/TransactionCommon"
 
-import { TokenSelector } from "../TransactionCommon"
+import { TokenSelector, AccountBalance } from "../TransactionCommon"
 
 import { hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
@@ -238,6 +240,17 @@ export default class Transfer extends React.Component {
       />
     )
 
+
+    var accountBalance = ""
+    if (this.props.account.account !== false){      
+      accountBalance = <AccountBalance 
+      chooseToken = {this.chooseToken}
+      sourceActive = {this.props.transfer.tokenSymbol}
+    />
+    }else{
+      accountBalance = <ImportAccount />
+    }
+
     // var gasPrice = converters.stringToBigNumber(converters.gweiToEth(this.props.transfer.gasPrice))
     // var totalGas = gasPrice.multipliedBy(this.props.transfer.gas)
     // var gasConfig = (
@@ -279,6 +292,8 @@ export default class Transfer extends React.Component {
         focus = {this.state.focus}
         advanceLayout = {this.props.advanceLayout}
         networkError ={this.props.global.network_error}
+
+        accountBalance = {accountBalance}
       />
     )
   }

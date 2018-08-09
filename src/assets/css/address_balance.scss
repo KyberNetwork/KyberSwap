@@ -1,8 +1,64 @@
-#balance-account-wrapper {
-  min-height: 525px;
-    @include screen-max-width(large) {
-      min-height: 640px;
+
+
+@include screen-min-width(large) {
+  .balance-wrapper,
+  .exchange-col-1 {
+    box-shadow: $box-shadow-tab;
+  }
+
+  .balance-wrapper{
+    border: 1px solid #ddd;
+    background: white;
+    position: relative;
+    z-index: 1;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 100%;
+      background: $white;
+      top: 0;
+      right: -11px;
     }
+  }
+  .exchange-wrapper-btn{
+    text-align: center;
+  }
+  .exchange-col-1{
+    padding: 0 3rem;
+    border: 1px solid #ddd;
+    border-left: none;
+    background: white;
+  }
+  .exchange-col-2{
+    padding-left: 20px;
+  }
+  .exchange-col-3{
+    >div{
+      position: relative;
+      .exchange-wrapper-btn{
+        position: absolute;
+        margin-top: -215px;
+        width: 100%;
+      }
+    }
+  }
+  .exchange-col{
+    position: relative;
+    height: 100%;
+  }
+}
+
+#balance-account-wrapper {
+  @include screen-max-width(large){
+    background-color: white;
+  }
+  
+  // min-height: 525px;
+  //   @include screen-max-width(large) {
+  //     min-height: 640px;
+  //   }
   #balance-account {
     .balances {
       height: 330px;

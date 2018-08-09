@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 
 
 
-import {  ImportAccountView } from '../../components/ImportAccount'
+import {  ImportAccountView, LandingPage } from '../../components/ImportAccount'
 import {
   ImportKeystore, ImportByDevice, ImportByPrivateKey,
   ErrorModal, ImportByMetamask,
@@ -96,32 +96,33 @@ export default class ImportAccount extends React.Component {
     //     />
     //   </div>
     // )    
-    var content = (
-      <ImportAccountView
-        firstKey={<ImportByMetamask screen={this.props.screen}/>}
-        secondKey={<ImportKeystore screen={this.props.screen}/>}
-        thirdKey={<ImportByDeviceWithTrezor screen={this.props.screen}/>}
-        fourthKey={<ImportByDeviceWithLedger screen={this.props.screen}/>}
-        fifthKey={<ImportByPrivateKey screen={this.props.screen}/>}
-        errorModal={<ErrorModal />}
-        translate={this.props.translate}
-      />
-    )
-    // if (!this.props.termOfServiceAccepted) {
-    //   content = <LandingPage translate={this.props.translate} />
-    // } else {
-    //   content = (
-    //     <ImportAccountView
-    //       firstKey={<ImportByMetamask />}
-    //       secondKey={<ImportKeystore />}
-    //       thirdKey={<ImportByDeviceWithTrezor />}
-    //       fourthKey={<ImportByDeviceWithLedger />}
-    //       fifthKey={<ImportByPrivateKey />}
-    //       errorModal={<ErrorModal />}
-    //       translate={this.props.translate}
-    //     />
-    //   )
-    // }
+    // var content = (
+    //   <ImportAccountView
+    //     firstKey={<ImportByMetamask screen={this.props.screen}/>}
+    //     secondKey={<ImportKeystore screen={this.props.screen}/>}
+    //     thirdKey={<ImportByDeviceWithTrezor screen={this.props.screen}/>}
+    //     fourthKey={<ImportByDeviceWithLedger screen={this.props.screen}/>}
+    //     fifthKey={<ImportByPrivateKey screen={this.props.screen}/>}
+    //     errorModal={<ErrorModal />}
+    //     translate={this.props.translate}
+    //   />
+    // )
+    var content
+    if (!this.props.termOfServiceAccepted) {
+      content = <LandingPage translate={this.props.translate} />
+    } else {
+      content = (
+        <ImportAccountView
+          firstKey={<ImportByMetamask />}
+          secondKey={<ImportKeystore />}
+          thirdKey={<ImportByDeviceWithTrezor />}
+          fourthKey={<ImportByDeviceWithLedger />}
+          fifthKey={<ImportByPrivateKey />}
+          errorModal={<ErrorModal />}
+          translate={this.props.translate}
+        />
+      )
+    }
 
     return (
       <div id="landing_page">{content}</div>

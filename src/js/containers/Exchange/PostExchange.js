@@ -629,6 +629,7 @@ export default class PostExchange extends React.Component {
     )
     return (
       <PostExchangeBtn
+        isHaveAccount = {this.props.account === false ? false: true}
         submit={this.clickExchange}
         // modalPassphrase={modalPassphrase}
         // modalConfirm={modalConfirm}

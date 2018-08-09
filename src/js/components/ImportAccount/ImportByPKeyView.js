@@ -27,7 +27,7 @@ const ImportByPKeyView = (props) => {
 	}
 
 	return (
-		<div className="column column-block">
+		<div className="column-block">
 			<div className="importer pkey">
 				{/*<div className="how-to-use" data-for="private-key-tip" data-tip="How to use"></div>*/}
         <div className="importer__symbol">

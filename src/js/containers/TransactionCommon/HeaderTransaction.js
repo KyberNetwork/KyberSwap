@@ -76,13 +76,13 @@ export default class HeaderTransaction extends React.Component {
     }
 
 
-    handleEndSession = () => {
-        if (this.props.page === "exchange"){
-            this.props.dispatch(openImportAccountExchange())
-        }else{
-            this.props.dispatch(openImportAccountTransfer())
-        }
-      }
+    // handleEndSession = () => {
+    //     if (this.props.page === "exchange"){
+    //         this.props.dispatch(openImportAccountExchange())
+    //     }else{
+    //         this.props.dispatch(openImportAccountTransfer())
+    //     }
+    //   }
 
     render() {
         var transfer = this.props.translate("transaction.transfer") || "Transfer"
@@ -93,20 +93,20 @@ export default class HeaderTransaction extends React.Component {
                     <div>
                         <a onClick={(e) => this.gotoRoot(e)}>{this.props.translate("home") || "Home"}</a>
                     </div>
-                    <div className="seperator">/</div>
-                    <div>
+                    {/* <div className="seperator">/</div> */}
+                    {/* <div>
                         <a onClick={(e) => this.handleEndSession(e)}>KyberSwap</a>
-                    </div>
+                    </div> */}
                     <div className="seperator">/</div>
                     <div className="active">
                         <a>{this.props.page === "exchange" ? swap : transfer}</a>
                     </div>
                 </div>
                 <h1 class="title frame-tab">
-                    <div className="back-home" onClick={(e) => this.handleEndSession(e)}>
+                    {/* <div className="back-home" onClick={(e) => this.handleEndSession(e)}>
                         <img src={require("../../../assets/img/arrow_left.svg")} className="back-arrow" />
                         <span>{this.props.translate("transaction.back") || "Back"}</span>
-                    </div>
+                    </div> */}
                     <div className="switch-button">
                         <Link to={this.props.exchangeLink} className={this.props.page === "exchange" ? "disable" : ""}>{swap}</Link>
                         <Link to={this.props.transferLink} className={this.props.page === "transfer" ? "disable" : ""}>{transfer}</Link>

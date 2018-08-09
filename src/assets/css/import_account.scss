@@ -8,12 +8,12 @@
 $animationTime: 0.5s;
 
   #import-account {
-    padding-top: 50px;
+    // padding-top: 50px;
     text-align: center;
 
-    @include screen-min-width(large){
-      padding-bottom: 40px;
-    }
+    // @include screen-min-width(large){
+    //   padding-bottom: 40px;
+    // }
 
     #import-acc {
       display: inline-block;
@@ -129,7 +129,7 @@ $animationTime: 0.5s;
         }
       }
 
-      @include screen-max-width(xlarge) {
+      //@include screen-max-width(xlarge) {
         flex-wrap: wrap;
         justify-content: center;
         padding-bottom: 30px;
@@ -146,13 +146,15 @@ $animationTime: 0.5s;
             margin-right: 0;
           }
         }
-      }
+      //}
 
-      @include screen-max-width(mid-small) {
+      //@include screen-max-width(mid-small) {
         &__item {
           width: calc(50% - 10px);
           margin: 0 10px 20px;
-          padding-top: 30px;
+          padding-top: 20px;
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
 
           .column-block {
             margin-bottom: 0;
@@ -194,9 +196,9 @@ $animationTime: 0.5s;
                 position: absolute;
                 left: 0;
                 right: 0;
-                bottom: 1.25rem;
+                bottom: 1rem;
                 margin: 0 auto;
-                width: calc(100% - 1.25rem);
+                width: calc(100% - 1rem);
               }
 
               .more-info {
@@ -218,11 +220,11 @@ $animationTime: 0.5s;
             margin-left: 0;
           }
         }
-      }
+      //}
     }
 
-    @include screen-max-width(medium) {
-      padding-top: 40px;
+   // @include screen-max-width(medium) {
+      //padding-top: 40px;
 
       @keyframes moving-up {
         to {
@@ -230,14 +232,14 @@ $animationTime: 0.5s;
           max-height: 1000px;
         }
       }
-    }
+    //}
 
-    @include screen-max-width(mid-small) {
+   // @include screen-max-width(mid-small) {
       .title {
         font-size: 30px;
         text-align: left;
       }
-    }
+   // }
 
     @keyframes moving-up {
       to {

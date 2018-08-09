@@ -7,6 +7,32 @@ $padding-col-left : 2rem;
 #transfer-screen{
   // display: inline-block;
   // width: 100%;
+  .swap-wrapper{
+    @include screen-max-width(large){
+      background-color: white;
+    }
+  }
+  .amount-input{
+    >div{
+       &:first-child{
+        width: 100%;
+       }
+      
+    }
+  }
+  .receiveAddress{
+    margin-bottom: 25px;
+    input{
+      width: 100%;
+      height: 55px;
+      border-radius: 5px;
+      padding: 10px;
+      outline: none;
+      border: solid 0.8px rgba(204, 204, 204, 0.72);
+      box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
+    }
+  }
+
   @include screen-max-width(large){
     margin:  0 10px 10px 10px;
     box-shadow: 0 7px 25px #ddd;
@@ -16,10 +42,14 @@ $padding-col-left : 2rem;
   }
 
   .transfer-col{
+    @include screen-min-width(large) {
+      padding-left: 3rem;  
+      padding-right: 3rem;  
+    }
     padding: 1rem;
     &.transfer-advanced {
       padding-bottom: 0;
-      @include screen-min-width(medium) {
+      @include screen-min-width(large) {
         padding: 1rem 1rem 0 2rem;
       }
     }
@@ -32,27 +62,29 @@ $padding-col-left : 2rem;
   @include screen-min-width(large){
     .transfer-col-1{
       box-shadow: $box-shadow-tab;
-      min-height: 550px;
+      // min-height: 550px;
     }
     .transfer-col-3-1{
       position: relative;
-      top: -200px;
+      top: -130px;
+      left: -50px;
+      text-align: center;
     }
   }
-  .frame {
+  //.frame {
     // .exchange-pd {
       // padding-left: 2.5rem;
       // padding-right: 2.5rem;
       // .row {
         
         .transfer-col-3{
-          .transfer-col-3-1{
-            @include breakpoint(medium) {
-              padding-left: $padding-col-left;
-            }
-          }
+          // .transfer-col-3-1{
+          //   @include breakpoint(medium) {
+          //     padding-left: $padding-col-left;
+          //   }
+          // }
           .submit-transfer{
-            @include breakpoint(small only) {
+            @include screen-max-width(large) {
               width: 100%;
             }
           }
@@ -62,11 +94,11 @@ $padding-col-left : 2rem;
             background-color: white;
           }
 
-          .transfer-col-1-2{
-            @include breakpoint(medium up) {
-              padding-left: $padding-col-left;
-            }
-          }
+          // .transfer-col-1-2{
+          //   @include breakpoint(medium up) {
+          //     padding-left: $padding-col-left;
+          //   }
+          // }
           
 
           
@@ -83,33 +115,33 @@ $padding-col-left : 2rem;
           .select-token-panel {
             margin-top: 0;
           }
-          .hashAddr {
-                font-size: 18px;
-                text-align: center;
-                letter-spacing: 1.25px;
-                //background-color: #415b68;
-                height: 140px;
-                border: 1px solid #ddd;
-                //color: $white;
-                resize: none;
-                margin-bottom: 0;
-                outline: none;
-                padding: 10px;
-                width: 100%;
-                border-radius: 5px;
+          // .hashAddr {
+          //       font-size: 18px;
+          //       text-align: center;
+          //       letter-spacing: 1.25px;
+          //       //background-color: #415b68;
+          //       height: 140px;
+          //       border: 1px solid #ddd;
+          //       //color: $white;
+          //       resize: none;
+          //       margin-bottom: 0;
+          //       outline: none;
+          //       padding: 10px;
+          //       width: 100%;
+          //       border-radius: 5px;
             
-            // @media screen and (min-width: 40em){
-            //   height: 153px;        
-            // }
-            @include breakpoint(small only) {
-              margin-bottom: 20px;
-              height: 120px;
-            }
-          }
+          //   // @media screen and (min-width: 40em){
+          //   //   height: 153px;        
+          //   // }
+          //   @include breakpoint(small only) {
+          //     margin-bottom: 20px;
+          //     height: 120px;
+          //   }
+          // }
         }
       //}
     //}
-  }
+  //}
   label{
       margin-bottom: 8px;
   }

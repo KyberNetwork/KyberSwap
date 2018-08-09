@@ -9,7 +9,7 @@ const ImportAccountView = (props) => {
       <div className="frame">
         <div className="container">
           <div className="small-centered" id="import-acc">
-            <h1 className="title">{props.translate("address.import_address") || "Import address"}</h1>
+            {/* <h1 className="title">{props.translate("address.import_address") || "Import address"}</h1> */}
 
             <div className="import-account">
               <div className="import-account__item">

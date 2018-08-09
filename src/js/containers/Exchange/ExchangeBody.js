@@ -4,15 +4,17 @@ import { push } from 'react-router-redux';
 
 import { gweiToWei, stringToHex, getDifferentAmount, toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber, stringToBigNumber, toEther } from "../../utils/converter"
 
-import { PostExchangeWithKey, MinRate, AccountBalance } from "../Exchange"
+import { PostExchangeWithKey, MinRate } from "../Exchange"
 import { TransactionConfig } from "../../components/Transaction"
 
 import { ExchangeBodyLayout }  from "../../components/Exchange"
 import { AddressBalance }  from "../../components/TransactionCommon"
 
+import { ImportAccount } from "../ImportAccount"
+
 import { TransactionLoading, Token } from "../CommonElements"
 
-import { TokenSelector } from "../TransactionCommon"
+import { TokenSelector, AccountBalance } from "../TransactionCommon"
 
 import * as validators from "../../utils/validators"
 import * as common from "../../utils/common"
@@ -426,7 +428,10 @@ export default class ExchangeBody extends React.Component {
     if (this.props.account.account !== false){      
       accountBalance = <AccountBalance 
       chooseToken = {this.chooseToken}
+      sourceActive = {this.props.exchange.sourceTokenSymbol}
     />
+    }else{
+      accountBalance = <ImportAccount />
     }
 
     var addressBalanceLayout = ""
