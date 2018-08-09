@@ -14,18 +14,81 @@ const initState = function () {
 
     
     Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
+        if(!BLOCKCHAIN_INFO.tokens[key].isNew) return
+        if(BLOCKCHAIN_INFO.tokens[key].expireDate){            
+            var timeExpire = new Date(BLOCKCHAIN_INFO.tokens[key].expireDate)
+            var expireTimeStamp = timeExpire.getTime()
+            if (timeStampNow > expireTimeStamp) {
+                // tokens[key].info.isNew = false
+                return
+            }
+        }
         tokens[key] = {}
         tokens[key].info = {...BLOCKCHAIN_INFO.tokens[key]}
 
         tokens[key].circulatingSupply = 0
 
-        if(BLOCKCHAIN_INFO.tokens[key].expireDate){            
+        // if(BLOCKCHAIN_INFO.tokens[key].expireDate){            
+        //     var timeExpire = new Date(BLOCKCHAIN_INFO.tokens[key].expireDate)
+        //     var expireTimeStamp = timeExpire.getTime()
+        //     if (timeStampNow > expireTimeStamp) {
+        //         tokens[key].info.isNew = false
+        //     }
+        // }
+        
+
+        tokens[key]["ETH"] = {
+            sellPrice: 0,
+            buyPrice: 0,
+            market_cap: 0,
+            circulating_supply: 0,
+            total_supply: 0,
+            last_7d: 0,
+            change: -9999,
+            volume: 0
+        }
+
+        tokens[key]["USD"] = {
+            sellPrice: 0,
+            buyPrice: 0,
+            market_cap: 0,
+            circulating_supply: 0,
+            total_supply: 0,
+            last_7d: 0,
+            change: -9999,
+            volume: 0
+        }
+
+    })
+
+    Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
+        // if(!BLOCKCHAIN_INFO.tokens[key].isNew) return
+        if(BLOCKCHAIN_INFO.tokens[key].expireDate && BLOCKCHAIN_INFO.tokens[key].isNew){            
             var timeExpire = new Date(BLOCKCHAIN_INFO.tokens[key].expireDate)
             var expireTimeStamp = timeExpire.getTime()
-            if (timeStampNow > expireTimeStamp) {
+            if (timeStampNow <= expireTimeStamp) {
+                // tokens[key].info.isNew = false
+                return
+            } else {
+                tokens[key] = {}
+                tokens[key].info = {...BLOCKCHAIN_INFO.tokens[key]}
                 tokens[key].info.isNew = false
             }
+        } else {
+            tokens[key] = {}
+            tokens[key].info = {...BLOCKCHAIN_INFO.tokens[key]}
         }
+        // tokens[key].info = {...BLOCKCHAIN_INFO.tokens[key]}
+
+        tokens[key].circulatingSupply = 0
+
+        // if(BLOCKCHAIN_INFO.tokens[key].expireDate){            
+        //     var timeExpire = new Date(BLOCKCHAIN_INFO.tokens[key].expireDate)
+        //     var expireTimeStamp = timeExpire.getTime()
+        //     if (timeStampNow > expireTimeStamp) {
+        //         tokens[key].info.isNew = false
+        //     }
+        // }
         
 
         tokens[key]["ETH"] = {
@@ -52,6 +115,7 @@ const initState = function () {
 
     })
     var sortedTokens = []
+    console.log("tokens: ", tokens, Object.keys(tokens).length)
     return {
         tokens,
         sortedTokens,

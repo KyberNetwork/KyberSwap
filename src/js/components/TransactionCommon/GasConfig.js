@@ -5,7 +5,7 @@ import { filterInputNumber } from "../../utils/validators";
 import GasOption from './GasOption';
 
 const GasConfig = (props) => {
-  let gas_option = {"f":props.translate("fast") || 'Fast',"l":props.translate("low") || 'Slow',"s":props.translate("standard") || 'Standard'}
+  let gas_option = {"f":props.translate("fast") || 'Fast', "s":props.translate("standard") || 'Standard', "l":props.translate("low") || 'Slow'}
   function specifyGasPrice(value) {
     if(value==="f")
       props.selectedGasHandler(gasPriceSuggest.fastGas, value, gas_option[value])

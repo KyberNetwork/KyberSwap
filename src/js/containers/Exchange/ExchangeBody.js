@@ -91,9 +91,10 @@ export default class ExchangeBody extends React.Component {
     }else{
       path = constansts.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "_" + symbol.toLowerCase()
     }
-    if (this.props.currentLang !== "en"){
-      path += "?lang=" + this.props.currentLang
-    }
+    path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
+    // if (this.props.currentLang !== "en"){
+    //   path += "?lang=" + this.props.currentLang
+    // }
     this.props.dispatch(globalActions.goToRoute(path))
   }
 
@@ -284,9 +285,10 @@ export default class ExchangeBody extends React.Component {
     this.props.ethereum.fetchRateExchange(true)
 
     var path = constansts.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "_" + this.props.exchange.sourceTokenSymbol.toLowerCase()
-    if (this.props.currentLang !== "en"){
-      path += "?lang=" + this.props.currentLang
-    }
+    path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
+    // if (this.props.currentLang !== "en"){
+    //   path += "?lang=" + this.props.currentLang
+    // }
     this.props.dispatch(globalActions.goToRoute(path))
   }
 

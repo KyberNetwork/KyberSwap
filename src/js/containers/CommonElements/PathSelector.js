@@ -40,7 +40,8 @@ export default class PathSelector extends React.Component {
                 if (dPath.path) {
                     return `${dPath.path} - ${description}`
                 }
-                return `${dPath.defaultP} - ${description}`
+                let inputPath = document.getElementById('form-input-custom-path').value
+                return `${inputPath} - ${description}`
             }
         })
     }
@@ -51,11 +52,20 @@ export default class PathSelector extends React.Component {
             if (!disabledPath) {
                 return (
                     <div key={dPath + index} className="token-item" onClick={(e) => {
+                        var el = e.target.tagName
+                        if (el === "INPUT") return
                         if (dPath.path === this.props.currentDPath) {
                             this.setState({
                                 open: false
                             })
-                        } else if (dPath.path) this.selectItem(e, index)
+                        } else if (dPath.path) {
+                            this.selectItem(e, index)
+                        } else if (!dPath.path && this.state.onChange){
+                            this.setState({
+                                open: false                                                
+                            })
+                            this.state.onChange(dPath.path)
+                        }
                         }}>
                         { 
                             dPath.path ? (
@@ -67,18 +77,7 @@ export default class PathSelector extends React.Component {
                                 <div className="input-custom-path">
                                     <div class="">
                                         <input id="form-input-custom-path" type="text" name="customPath" defaultValue={dPath.defaultP}  placeholder="Your Custom Path" />
-                                        <img src={require('../../../assets/img/angle-right.svg')} onClick={(e) => {
-                                            if (dPath.path === this.props.currentDPath) {
-                                                this.setState({
-                                                    open: false
-                                                })
-                                            } else if (this.state.onChange){
-                                                this.setState({
-                                                    open: false                                                
-                                                })
-                                                this.state.onChange(dPath.path)
-                                            } 
-                                        }}/>
+                                        <img src={require('../../../assets/img/angle-right.svg')}/>
                                     </div>
                                 </div>
                             )
