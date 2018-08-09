@@ -8,6 +8,7 @@ import Web3Service from "../../services/web3"
 import {acceptTermOfService} from "../../actions/globalActions"
 import { importAccountMetamask } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
+import * as analytics from "../../utils/analytics"
 
 
 @connect((store, props) => {
@@ -92,6 +93,7 @@ export default class LandingPage extends React.Component {
 			this.props.dispatch(acceptTermOfService())
 		}		
 		// }
+		analytics.acceptTerm()
 	}
 
 	render() {

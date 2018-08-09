@@ -222,12 +222,12 @@ const transfer = (state = initState, action) => {
         var { safeLowGas, standardGas, fastGas, defaultGas, selectedGas } = action.payload
 
         var gasPriceSuggest = newState.gasPriceSuggest
-        gasPriceSuggest.fastGas = fastGas
-        gasPriceSuggest.standardGas = standardGas
-        gasPriceSuggest.safeLowGas = safeLowGas
+        gasPriceSuggest.fastGas = Math.round(fastGas * 10)/10
+        gasPriceSuggest.standardGas = Math.round(standardGas * 10)/10
+        gasPriceSuggest.safeLowGas = Math.round(safeLowGas * 10)/10
 
         newState.gasPriceSuggest = {...gasPriceSuggest}
-        newState.gasPrice = defaultGas
+        newState.gasPrice = Math.round(defaultGas * 10)/10
         newState.selectedGas = selectedGas
       }
       return newState

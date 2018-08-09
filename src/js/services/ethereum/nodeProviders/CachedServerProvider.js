@@ -200,7 +200,7 @@ export default class CachedServerProvider extends React.Component {
 
     getRateETH() {
         return new Promise((resolve, rejected) => {
-            fetch(this.rpcUrl + '/getRateETH', {
+            fetch( this.rpcUrl + '/getRateETH', {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
@@ -345,9 +345,41 @@ export default class CachedServerProvider extends React.Component {
         })
     }
 
-    getMarketInfo() {
+    getMarketInfo(queryString) {
         return new Promise((resolve, rejected) => {
-            fetch(this.rpcUrl + '/getMarketInfo', {
+            fetch(this.rpcUrl + '/getMarketInfoByTokens' + '?listToken=' + queryString, {
+            }).then((response) => {
+                return response.json()
+            })
+                .then((result) => {
+                    resolve(result)                    
+                })
+                .catch((err) => {
+                    console.log(err)
+                    rejected(err)
+                })
+        })
+    }
+
+    getRightMarketInfo() {
+        return new Promise((resolve, rejected) => {
+            fetch(this.rpcUrl + '/getRightMarketInfo', {
+            }).then((response) => {
+                return response.json()
+            })
+                .then((result) => {
+                    resolve(result)                    
+                })
+                .catch((err) => {
+                    console.log(err)
+                    rejected(err)
+                })
+        })
+    }
+    
+    getLast7D(queryString) {
+        return new Promise((resolve, rejected) => {
+            fetch(this.rpcUrl + '/getLast7D' + '?listToken=' + queryString, {
             }).then((response) => {
                 return response.json()
             })

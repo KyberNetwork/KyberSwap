@@ -101,6 +101,8 @@ export default class ExchangeBody extends React.Component {
     var sourceDecimal = 18
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
     
+    // console.log("source_token_symbol")
+    // console.log(sourceTokenSymbol)
     if (sourceTokenSymbol === "ETH"){
       if(parseFloat(sourceValue) > 1000){
         this.props.dispatch(exchangeActions.throwErrorHandleAmount())

@@ -8,7 +8,7 @@ export default class Selector extends React.Component {
         super(props);
         // console.log(props.defaultItem)
         // console.log(props.listItem)
-        console.log("list item: ", props.listItem, props.defaultItem)
+        // console.log("list item: ", props.listItem, props.defaultItem)
         this.state = {
             open: false,
             focus: { value: props.defaultItem, name: props.listItem[props.defaultItem] },

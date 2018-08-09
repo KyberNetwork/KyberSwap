@@ -31,12 +31,17 @@ export function calculateDest(source, rate) {
 }
 
 export function caculateSourceAmount(destAmount, offeredRate, precision) {
+  console.log({destAmount, offeredRate, precision})
   if (!destAmount || !offeredRate || acceptableTyping(destAmount) || acceptableTyping(offeredRate)) {
     return "0"
   }
-  var bigDest = new BigNumber(destAmount)
   var bigOfferedRate = new BigNumber(offeredRate)
 
+  if (bigOfferedRate.comparedTo(0) === 0){
+    return ""
+  }
+
+  var bigDest = new BigNumber(destAmount)
   bigOfferedRate = bigOfferedRate.div(1000000000000000000)
   var result = bigDest.div(bigOfferedRate)
   if (precision) {
@@ -74,7 +79,7 @@ export function calculateRate(source, dest) {
 }
 
 export function caculateEthBalance(token){
-  if(token.symbol.toLowerCase() == 'eth'){
+  if(token.symbol.toLowerCase() == 'eth' || token.balance === "0"){
     return token.balance
   } else {
     var rateBig = new BigNumber(token.rate)
@@ -87,41 +92,75 @@ export function caculateEthBalance(token){
   }
 }
 
-export function shortEthBalance(tokens){
-  var shortedTokens = []
-  let removedEth = {...tokens}
-  delete removedEth[constants.ETH.symbol]
-  if(tokens){
-    shortedTokens = Object.values(removedEth).sort((a, b) => {
-      var balanceEthA = new BigNumber(caculateEthBalance(a)) 
-      var balanceEthB = new BigNumber(caculateEthBalance(b)) 
-      return balanceEthB.minus(balanceEthA)
-    })
-  } 
-  if(tokens[constants.ETH.symbol]){
-    shortedTokens.unshift(tokens[constants.ETH.symbol])
+function mergeSort (arr, type) {
+  if (arr.length === 1) {
+    return arr
   }
-  return shortedTokens
+  const middle = Math.floor(arr.length / 2)
+  const left = arr.slice(0, middle)
+  const right = arr.slice(middle)
+  return merge(
+    mergeSort(left, type),
+    mergeSort(right, type),
+    type
+  )
 }
 
-export function shortASCEthBalance(tokens){
-  var shortedTokens = []
-  let removedEth = {...tokens}
-  delete removedEth[constants.ETH.symbol]
-  if(tokens){
-    shortedTokens = Object.values(removedEth).sort((a, b) => {
-      var balanceEthA = new BigNumber(caculateEthBalance(a)) 
-      var balanceEthB = new BigNumber(caculateEthBalance(b)) 
-      return balanceEthA.minus(balanceEthB)
-    })
-  } 
-  if(tokens[constants.ETH.symbol]){
-    shortedTokens.unshift(tokens[constants.ETH.symbol])
+function merge (left, right, type) {
+  let result = []
+  let indexLeft = 0
+  let indexRight = 0
+
+  while (indexLeft < left.length && indexRight < right.length) {
+    var balanceEthA = new BigNumber(caculateEthBalance(left[indexLeft]))
+    var balanceEthB = new BigNumber(caculateEthBalance(right[indexRight]))
+    if (balanceEthA.comparedTo(balanceEthB) * type > 0) {
+      result.push(left[indexLeft])
+      indexLeft++
+    } else if(balanceEthA.comparedTo(balanceEthB) * type < 0) {
+      result.push(right[indexRight])
+      indexRight++
+    } else if(balanceEthA.comparedTo(balanceEthB) === 0) {
+      var leftIsNew = left[indexLeft].isNew ? 1 : 0
+      var rightIsNew = right[indexRight].isNew ? 1 : 0
+      if (leftIsNew >= rightIsNew) {
+        result.push(left[indexLeft])
+        indexLeft++
+      } else {
+        result.push(right[indexRight])
+        indexRight++
+      }
+    }
   }
-  return shortedTokens
+
+  return result.concat(left.slice(indexLeft)).concat(right.slice(indexRight))
 }
 
+export function sortEthBalance(tokens){
+  var sortedTokens = []
+  let removedEth = {...tokens} 
+  delete removedEth[constants.ETH.symbol]
+  if(tokens){
+    sortedTokens = mergeSort(Object.values(removedEth), 1)
+  }
+  if(tokens[constants.ETH.symbol]){
+    sortedTokens.unshift(tokens[constants.ETH.symbol])
+  }
+  return sortedTokens
+}
 
+export function sortASCEthBalance(tokens){
+  var sortedTokens = []
+  let removedEth = {...tokens} 
+  delete removedEth[constants.ETH.symbol]
+  if(tokens){
+    sortedTokens = mergeSort(Object.values(removedEth), -1)
+  }
+  if(tokens[constants.ETH.symbol]){
+    sortedTokens.unshift(tokens[constants.ETH.symbol])
+  }
+  return sortedTokens
+}
 
 function acceptableTyping(number) {
   // ends with a dot

@@ -299,12 +299,34 @@
                 width: 150px;
                 text-align: left;
                 padding-left: 10px;
+                position: relative;
                 img {
                   margin-right: 10px;
                   width: 24px;
                   height: 24px;
                   position: relative;
                   top: -2px;
+                }
+                &.new-token::after {
+                  content: '';
+                  background-image: url(../img/market/new.svg);
+                  position: absolute;
+                  width: 26px;
+                  height: 100%;
+                  background-position: center;
+                  background-size: contain;
+                  background-repeat: no-repeat;
+                  top: -17px;
+                  margin-left: 5px;
+                  
+                  @media screen and (max-width: 1290px) {
+                    top: -23px;
+                    margin-left: -12px;
+                  }
+                  @include screen-max-width(medium) {
+                    top: -23px;
+                    margin-left: -15px;
+                  }
                 }
               }
             }
@@ -387,6 +409,29 @@
     }
     @media only screen and (max-width: 1023px) {
       padding: 0 0 0 0;
+    }
+  }
+
+  .show-more {
+    text-align: center;
+    @include screen-max-width(medium){
+      margin-bottom: 20px;
+    }
+    button {
+      height: 40px;
+      width: 220px;
+      border: 2px solid #E8EBF2;
+      border-radius: 3px;
+      color: #222222;
+      font-size: 14px;
+      &:hover {
+        cursor: pointer;
+        border-color: #222222;
+        &.disabled {
+          cursor: default;
+          border-color: #E8EBF2;
+        }
+      }
     }
   }
 

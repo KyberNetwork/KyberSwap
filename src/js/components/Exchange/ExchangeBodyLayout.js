@@ -1,6 +1,6 @@
 import React from "react"
 import { NavLink } from 'react-router-dom'
-import { roundingNumber } from "../../utils/converter"
+import { roundingNumber, toEther } from "../../utils/converter"
 import { Link } from 'react-router-dom'
 import constants from "../../services/constants"
 import ReactTooltip from 'react-tooltip'
@@ -46,6 +46,8 @@ const ExchangeBodyLayout = (props) => {
           } else {
             errorSource.push(props.translate("error.dest_amount_too_high_cap", { cap: maxCap * constants.MAX_CAP_PERCENT }))
           }
+        } else if (props.errors.sourceAmount === "error.source_amount_too_small") {
+          errorSource.push(props.translate("error.source_amount_too_small", {minAmount: toEther(constants.EPSILON)}))
         } else {
           errorSource.push(props.translate(props.errors.sourceAmount))
         }

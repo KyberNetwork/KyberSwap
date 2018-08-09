@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import { getTranslate } from 'react-localize-redux';
 import * as marketActions from "../../actions/marketActions"
+import * as analytics from "../../utils/analytics"
 
 
 @connect((store) => {
@@ -38,6 +39,7 @@ export default class ManageColumn extends React.Component {
     selectShowsColumn = (e, key) => {
         var value = e.target.checked
         this.props.dispatch(marketActions.changeShowColumn(key, value))
+        analytics.trackMarketSetting(this.props.shows.listItem[key].title, value)
     }
 
     getDisplayColumn = (e) => {

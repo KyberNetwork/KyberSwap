@@ -6,6 +6,7 @@ import { Selector } from "../CommonElements"
 
 import { getTranslate } from 'react-localize-redux';
 import * as marketActions from "../../actions/marketActions"
+import * as analytics from "../../utils/analytics"
 
 
 @connect((store) => {
@@ -17,6 +18,7 @@ import * as marketActions from "../../actions/marketActions"
 export default class Currency extends React.Component {
     changeCurrency = (value) => {
         this.props.dispatch(marketActions.changeCurrency(value))
+        analytics.trackBaseCurrency(value)
     }
     render() {
         return (

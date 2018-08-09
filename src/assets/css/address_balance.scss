@@ -8,6 +8,7 @@
 
   .balance-wrapper{
     border: 1px solid #ddd;
+    
     background: white;
     position: relative;
     z-index: 1;
@@ -51,6 +52,7 @@
 }
 
 #balance-account-wrapper {
+  //background-color: #f5f5f5;
   @include screen-max-width(large){
     background-color: white;
   }

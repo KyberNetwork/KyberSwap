@@ -62,8 +62,9 @@ export default class ImportAccount extends React.Component {
       if (typeof web3 !== "undefined") {
         var web3Service = new Web3Service(web3)
         var walletType = web3Service.getWalletType()
+     //   alert(walletType)
         if (walletType !== "metamask") {
-          //alert(walletType)
+          // /alert(walletType)
           this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
           this.props.ethereum, this.props.tokens, this.props.screen, this.props.translate, walletType))
         }

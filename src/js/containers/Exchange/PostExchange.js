@@ -6,8 +6,11 @@ import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
 
 
+
 import * as exchangeActions from "../../actions/exchangeActions"
 import * as utilActions from "../../actions/utilActions"
+
+import {getWalletId} from "../../services/web3"
 
 import { Modal } from "../../components/CommonElement"
 import { TermAndServices } from "../../containers/CommonElements"
@@ -373,7 +376,9 @@ export default class PostExchange extends React.Component {
     var gas = converters.numberToHex(this.props.form.gas)
     var gas_approve = converters.numberToHex(this.props.form.gas_approve)
     // should have better strategy to determine gas price
-    var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.form.gasPrice))
+    var gasPrice = Math.round(this.props.form.gasPrice*10)/10
+    gasPrice = converters.numberToHex(converters.gweiToWei(gasPrice))
+
     var sourceTokenSymbol = this.props.form.sourceTokenSymbol
     var balanceData = {
       sourceName: this.props.form.sourceName,
@@ -403,7 +408,12 @@ export default class PostExchange extends React.Component {
     var minConversionRate = converters.toTWei(this.props.snapshot.minConversionRate)
     minConversionRate = converters.numberToHex(minConversionRate)
 
-    var blockNo = converters.numberToHexAddress(this.props.snapshot.blockNo)
+    //var blockNo = converters.numberToHexAddress(this.props.snapshot.blockNo)
+     // check wallet type
+    var walletType = this.props.account.walletType
+    //alert(walletType)
+    var blockNo =  getWalletId (walletType, this.props.snapshot.blockNo)
+    //alert(blockNo)
 
     var destAddress = this.props.account.address
     var maxDestAmount = converters.biggestNumber()
@@ -413,7 +423,9 @@ export default class PostExchange extends React.Component {
     var gas = converters.numberToHex(this.props.snapshot.gas)
     var gas_approve = converters.numberToHex(this.props.snapshot.gas_approve)
     // should have better strategy to determine gas price
-    var gasPrice = converters.numberToHex(converters.gweiToWei(this.props.snapshot.gasPrice))
+    var gasPrice = Math.round(this.props.snapshot.gasPrice*10)/10
+    gasPrice = converters.numberToHex(converters.gweiToWei(gasPrice))
+
     var sourceTokenSymbol = this.props.snapshot.sourceTokenSymbol
     var balanceData = {
       sourceName: this.props.snapshot.sourceName,
