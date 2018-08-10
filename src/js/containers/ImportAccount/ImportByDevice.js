@@ -73,8 +73,6 @@ export default class ImportByDevice extends React.Component {
 		}
 		this.props.deviceService.getPublicKey(selectedPath, this.state.modalOpen)
 			.then((result) => {
-				// this.dPath = (dpath === 0) ? result.dPath : dpath;
-				// console.log("this path: ", this.dPath, selectedPath, dpath, result)
 				if (selectedPath) {
 					this.dPath = (dpath === 0) ? result.dPath : dpath
 				} else {
@@ -236,7 +234,6 @@ export default class ImportByDevice extends React.Component {
 	}
 
 	render() {
-		console.log("render path: ", this.dPath)
 		return (
 			<ImportByDeviceView
 				content={this.props.content}
