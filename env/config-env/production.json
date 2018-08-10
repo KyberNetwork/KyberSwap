@@ -429,5 +429,6 @@
     "networkId": 1,
     "chainName": "Mainnet",
     "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
-    "tracker":"https://tracker.kyber.network"
+    "tracker":"https://tracker.kyber.network",
+    "statEndPoint": "https://mainnet-data.kyber.network"
   }
