@@ -417,6 +417,14 @@
       "address": "0x3136ef851592acf49ca4c825131e364170fa32b3",
       "symbol":"COFI", 
       "icon": "cofi.svg"
+    },
+    "SURE":{
+      "name": "Surety Token",
+      "decimal": 6,
+      "address": "0x95382ac82e886a367bac9e1e23beabe569bcfed8",
+      "symbol":"SURE", 
+      "icon": "sure.svg",
+      "isNew":true
     }
   },
   "ethScanUrl": "https://etherscan.io/",
