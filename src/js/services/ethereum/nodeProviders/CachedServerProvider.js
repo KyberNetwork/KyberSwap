@@ -400,7 +400,18 @@ export default class CachedServerProvider extends React.Component {
                 return response.json()
             })
                 .then((result) => {
-                    resolve(result)
+                    if (result.data){
+                        var val = parseFloat(result.data);
+                        if(isNaN(val)){
+                            rejected(new Error("Cannot parse data user cap"))                            
+                        }else{
+                            resolve(result)
+                        }
+                    }else{
+                        rejected(new Error("Cannot parse data user cap"))
+                    }
+                    
+                   // resolve(result)
                 })
                 .catch((err) => {
                     rejected(err)

@@ -52,6 +52,10 @@ export default class Web3Service {
   getCoinbase(){
     return new Promise((resolve, reject)=>{
       this.web3.eth.getCoinbase((error, result) => {
+        // alert(error)
+        // alert(result)
+        // console.log(error)
+        //   console.log(result)      
         if (error || !result) {
           var error = new Error("Cannot get coinbase")
           reject(error)
@@ -71,7 +75,7 @@ function getCommissionId(blockNo){
   if (!verifyAccount(refAddr)){
     return refAddr
   }
-  if (web3 && web3.kyberID && !verifyAccount(web3.kyberID)){
+  if (typeof web3 !== "undefined" && web3.kyberID && !verifyAccount(web3.kyberID)){
     return web3.kyberID
   }
   return converters.numberToHexAddress(blockNo)
