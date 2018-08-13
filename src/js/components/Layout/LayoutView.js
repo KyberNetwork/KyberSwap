@@ -5,8 +5,10 @@ import { Processing, InfoModal } from "../../containers/CommonElements/"
 import { Link } from 'react-router-dom'
 
 import constansts from "../../services/constants"
+import * as common from "../../utils/common"
 
 import BLOCKCHAIN_INFO from "../../../../env"
+
 //import { Rate } from "../Header"
 
 
@@ -32,10 +34,14 @@ const LayoutView = (props) => {
   var listToken = getAllPathToken()
   var defaultPathExchange = constansts.BASE_HOST + "/swap/eth_knc"
   var defaultPathTransfer = constansts.BASE_HOST + "/transfer/eth"
-  if (props.currentLanguage !== "en"){
-    defaultPathExchange += "?lang=" + props.currentLanguage
-    defaultPathTransfer += "?lang=" + props.currentLanguage
-  }
+
+  defaultPathExchange = common.getPath(defaultPathExchange, constansts.LIST_PARAMS_SUPPORTED)
+  defaultPathTransfer = common.getPath(defaultPathTransfer, constansts.LIST_PARAMS_SUPPORTED)
+
+  // if (props.currentLanguage !== "en"){
+  //   defaultPathExchange += "?lang=" + props.currentLanguage
+  //   defaultPathTransfer += "?lang=" + props.currentLanguage
+  // }
   //console.log(listToken)
   return (
     <ConnectedRouter history={props.history}>

@@ -31,7 +31,8 @@
       "icon": "eth.svg",
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "decimal": 18,
-      "usd_id": "ethereum"      
+      "usd_id": "ethereum",
+      "gasLimit": "0"
     },
     "KNC": {
       "name": "KyberNetwork",
@@ -223,7 +224,8 @@
       "symbol":"DGX",
       "decimal": 9,
       "icon": "dgx.svg",
-      "usd_id":"dgx"
+      "usd_id":"dgx",
+      "gasLimit": "750000"
     },
     "ABT": {
       "name": "ArcBlock",
@@ -427,5 +429,6 @@
   "networkId": 1,
   "chainName": "Mainnet",
   "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
-  "tracker":"https://staging-tracker.knstats.com"
+  "tracker":"https://staging-tracker.knstats.com",
+  "statEndPoint": "https://mainnet-data.kyber.network"
 }

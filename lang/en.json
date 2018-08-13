@@ -85,7 +85,7 @@
     "click_to_swap_all_balance": "Click to swap all balance",
     "click_to_transfer_all_balance": "Click to transfer all balance",
 
-    "higher_min_acceptable_rate": "Higher MIN ACCEPTABLE RATE typically results in lower success rate when the market is volatile.",
+    "higher_min_acceptable_rate": "Guard yourself during volatile times by setting the lowest conversion rate you would accept for this transaction. Setting a high value may result in a failed transaction and you would be charged gas fees. Our recommended Min Acceptable Rate is ${displaySlippageRate}.",
     "our_suggest_loading": "<img src=\"${src}\"/> ${desToken} is our suggested MIN ACCEPTABLE RATE by default.",
     "our_suggest": "<strong> ${suggestRate}</strong> is our suggested MIN ACCEPTABLE RATE by default.",
     "min_acceptable_rate": "MIN ACCEPTABLE RATE",
@@ -214,7 +214,7 @@
     "invalid_path_or_session_expired": "Cannot get address from this path. Please check your path is valid or Ledger is connected.",
     "path_is_invalid": "Invalid path. Please choose another one.",
     "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue.", 
-    "eth_balance_not_enough_for_fee": "Your Eth balance is not enough for transaction fee",
+    "eth_balance_not_enough_for_fee": "Your ETH balance is not enough for transaction fee",
     "handle_amount":"Kyber cannot handle your amount, please reduce amount",
     "kyber_maintain":"This pair is temporarily under maintenance",
     "get_rate":"Cannot get rate from blockchain",
@@ -327,7 +327,8 @@
     "change": "24HR Change",
     "volume": "Volume (24h)",
     "support_eth_only": "Now support only pairs with ETH, not support pairs with USD yet.",
-    "show_more_results": "Show more results"
+    "show_more_results": "Show more results",
+    "new_token": "NEW"
   },
 
   "trading_view": {

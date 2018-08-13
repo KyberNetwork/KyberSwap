@@ -85,7 +85,7 @@
     "click_to_ex_all_balance": "모든 잔액을 교환하려면 클릭하십시오.",
     "click_to_transfer_all_balance": "모든 잔액을 송금하려면 클릭하십시오",
 
-    "higher_min_acceptable_rate": "변동이 심한 시장 상황에서 '허용 가능 최소 비율'을 높게 설정할 시, 거래가 원활하게 진행되지 않을 수 있습니다.",
+    "higher_min_acceptable_rate": "변동이 심한 시장에서 최소 전환 비율 세팅하여 자산을 보호하세요. 최소 전환 비율을 너무 높은 값으로 세팅 할 시, 거래가 실패할 수 있으며 가스 요금이 부과됩니다. 저희들이 권장하는 최소 전환 비율은 ${displaySlippageRate} 입니다.",
     "our_suggest_loading": "<img src=\"${src}\"/> ${desToken}저희들이 제시하는 현재 '허용 가능 최소 비율 값'입니다.",
     "our_suggest": "<strong> ${suggestRate}</strong>저희들이 제시하는 현재 '허용 가능 최소 비율 값'입니다.",
     "min_acceptable_rate": "허용 가능 최소 비율",
@@ -326,7 +326,8 @@
     "change": "24시간 변동",
     "volume": "볼륨 (24h)",
     "support_eth_only": "현재 ETH페어만 지원합니다. USD페어는 아직 지원되지 않습니다.",
-    "show_more_results": "더 보기"
+    "show_more_results": "더 보기",
+    "new_token": "새로운"
   },
 
   "trading_view": {

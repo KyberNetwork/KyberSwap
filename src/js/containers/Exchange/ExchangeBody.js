@@ -88,9 +88,10 @@ export default class ExchangeBody extends React.Component {
     }else{
       path = constansts.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "_" + symbol.toLowerCase()
     }
-    if (this.props.currentLang !== "en"){
-      path += "?lang=" + this.props.currentLang
-    }
+    path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
+    // if (this.props.currentLang !== "en"){
+    //   path += "?lang=" + this.props.currentLang
+    // }
     this.props.dispatch(globalActions.goToRoute(path))
   }
 
@@ -279,9 +280,10 @@ export default class ExchangeBody extends React.Component {
     this.props.ethereum.fetchRateExchange(true)
 
     var path = constansts.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "_" + this.props.exchange.sourceTokenSymbol.toLowerCase()
-    if (this.props.currentLang !== "en"){
-      path += "?lang=" + this.props.currentLang
-    }
+    path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
+    // if (this.props.currentLang !== "en"){
+    //   path += "?lang=" + this.props.currentLang
+    // }
     this.props.dispatch(globalActions.goToRoute(path))
   }
 
@@ -423,6 +425,11 @@ export default class ExchangeBody extends React.Component {
     var accountBalance = <AccountBalance 
       chooseToken = {this.chooseToken}
     />
+
+    var maxCap = this.props.exchange.maxCap
+    if (maxCap !== "infinity") {
+      maxCap = toEther(this.props.exchange.maxCap)
+    }
     return (
       <ExchangeBodyLayout step={this.props.exchange.step}
         tokenSourceSelect={tokenSourceSelect}
@@ -438,7 +445,7 @@ export default class ExchangeBody extends React.Component {
         setAmount={this.setAmount}
         translate={this.props.translate}
         swapToken={this.swapToken}
-        maxCap={toEther(this.props.exchange.maxCap)}
+        maxCap={maxCap}
         errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}      
 
         advanceLayout = {this.props.advanceLayout}

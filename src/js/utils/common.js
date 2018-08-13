@@ -17,3 +17,23 @@ export function getActiveLanguage(langs){
     }
     return "en"
 }
+
+
+export function getPath(path, listParams){
+    var index = 0
+    listParams.map(param => {
+        var value = getParameterByName(param.key)
+        if (!value) return
+
+        if (value === param.default) return
+
+        if (index === 0) {
+            path += `?${param.key}=${value}`
+            index ++
+            return
+        }
+
+        path += `&${param.key}=${value}`
+    })
+    return path
+}
