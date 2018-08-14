@@ -418,13 +418,13 @@
       "symbol":"COFI", 
       "icon": "cofi.svg"
     },
-    "SURE":{
-      "name": "Surety Token",
-      "decimal": 6,
-      "address": "0x95382ac82e886a367bac9e1e23beabe569bcfed8",
-      "symbol":"SURE", 
-      "icon": "sure.svg",
-      "isNew":true
+    "MOC": {
+      "name": "Moss Land",
+      "decimal": 18,
+      "symbol" : "MOC",
+      "address": "0x865ec58b06bf6305b886793aa20a2da31d034e68",
+      "icon": "moc.svg",
+      "isNew": true
     }
   },
   "ethScanUrl": "https://etherscan.io/",
