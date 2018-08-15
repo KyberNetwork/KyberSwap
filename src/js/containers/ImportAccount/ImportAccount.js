@@ -1,9 +1,5 @@
 import React from "react"
 import { connect } from "react-redux"
-
-
-
-
 import {  ImportAccountView, LandingPage } from '../../components/ImportAccount'
 import {
   ImportKeystore, ImportByDevice, ImportByPrivateKey,

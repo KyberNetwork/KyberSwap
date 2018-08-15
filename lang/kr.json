@@ -290,6 +290,7 @@
     "use_testnet":"반드시 테스트넷 계정을 사용하시기 바랍니다.",
     "use_real":"진짜 이더리움 계정은 사용하시면 안됩니다!",
     "accept":"시작하려면",
+    "accept_to_swap":"Accept to Swap",
     "terms_and_condition":" 이용 약관 ",
     "to_get_started":"에 동의하십시오!"
   },

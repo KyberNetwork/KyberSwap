@@ -291,6 +291,7 @@
     "use_testnet":"请务必使用测试网络的钱包！！！",
     "use_real":"请千万不要使用真实的以太坊账户！！！",
     "accept":"接受",
+    "accept_to_swap":"Accept to Swap",
     "terms_and_condition":"条款和条件",
     "to_get_started":"以开始"
   },

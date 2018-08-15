@@ -290,6 +290,7 @@
     "use_testnet":"USE ONLY TESTNET ACCOUNTS!!!",
     "use_real":"DO NOT USE REAL ETHEREUM ACCOUNTS!!!",
     "accept":"Accept",
+    "accept_to_swap":"Accept to Swap",
     "terms_and_condition":" Terms and Conditions ",
     "to_get_started":"to get started"
   },

@@ -1,32 +1,19 @@
 import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
-
 import { gweiToWei, stringToHex, getDifferentAmount, toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber, stringToBigNumber, toEther } from "../../utils/converter"
-
-import { PostExchangeWithKey, MinRate } from "../Exchange"
+import { MinRate } from "../Exchange"
 import { TransactionConfig } from "../../components/Transaction"
-
 import { ExchangeBodyLayout }  from "../../components/Exchange"
 import { AddressBalance }  from "../../components/TransactionCommon"
-
-import { ImportAccount } from "../ImportAccount"
-
 import { TransactionLoading, Token } from "../CommonElements"
-
-import { TokenSelector, AccountBalance } from "../TransactionCommon"
-
+import { TokenSelector } from "../TransactionCommon"
 import * as validators from "../../utils/validators"
 import * as common from "../../utils/common"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
-
 import * as globalActions from "../../actions/globalActions"
-
 import * as exchangeActions from "../../actions/exchangeActions"
-
 import constansts from "../../services/constants"
-
-//import { randomForExchange } from "../../utils/random"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
 
@@ -413,11 +400,6 @@ export default class ExchangeBody extends React.Component {
         onBlur: this.blurDest
       }
     }
-    // console.log(input)
-    var exchangeButton = (
-      <PostExchangeWithKey />
-    )
-
 
     var addressBalance = ""
     var token = this.props.tokens[this.props.exchange.sourceTokenSymbol]
@@ -428,46 +410,32 @@ export default class ExchangeBody extends React.Component {
       }
     }
 
-    var accountBalance = ""
-    if (this.props.account.account !== false){      
-      accountBalance = <AccountBalance 
-      chooseToken = {this.chooseToken}
-      sourceActive = {this.props.exchange.sourceTokenSymbol}
-    />
-    }else{
-      accountBalance = <ImportAccount />
-    }
-
     var addressBalanceLayout = ""
     if (this.props.account.account !== false){      
       addressBalanceLayout = (<AddressBalance setAmount={this.setAmount}
                                             balance={addressBalance}
                                             translate={this.props.translate}/>)
-  
     }
     
     return (
-      <ExchangeBodyLayout step={this.props.exchange.step}
+      <ExchangeBodyLayout
+        chooseToken={this.chooseToken}
+        account={this.props.account.account}
+        step={this.props.exchange.step}
         tokenSourceSelect={tokenSourceSelect}
         tokenDestSelect={tokenDestSelect}
-        //gasConfig={gasConfig}
-        exchangeButton={exchangeButton}
         transactionLoadingScreen={transactionLoadingScreen}
         errors={errors}
         input={input}
-
         addressBalanceLayout = {addressBalanceLayout}
-
         sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
         destTokenSymbol = {this.props.exchange.destTokenSymbol}
-        
         translate={this.props.translate}
         swapToken={this.swapToken}
         maxCap={toEther(this.props.exchange.maxCap)}
         errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}      
-
+        isAgreed={this.props.global.termOfServiceAccepted}
         advanceLayout = {this.props.advanceLayout}
-        balanceList = {accountBalance}
         focus = {this.state.focus}
         networkError ={this.props.global.network_error}
       />

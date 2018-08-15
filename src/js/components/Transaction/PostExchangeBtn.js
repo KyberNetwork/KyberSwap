@@ -8,7 +8,9 @@ const PostExchangeBtn = (props) => {
         <div class="column transaction-footer">
           <div class="small-12 medium-4 text-center mx-auto">
             {props.rateToken}
-            <a class={props.className} onClick={props.submit} data-open="passphrase-modal">{props.translate("transaction.exchange") || "Exchange"}</a>
+            <a class={props.className} onClick={props.submit} data-open="passphrase-modal">
+              {props.translate("transaction.exchange") || "Exchange"}
+            </a>
           </div>
         </div>
       </div>      
