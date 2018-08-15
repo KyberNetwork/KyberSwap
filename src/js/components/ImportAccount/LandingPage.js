@@ -70,13 +70,6 @@ export default class LandingPage extends React.Component {
 		nextWord();
 	}
 
-
-	// clickCheckbox = () => {
-	// 	this.setState({
-	// 		termAgree: !this.state.termAgree
-	// 	})
-	// }
-
 	acceptTerm = () => {
 		// if (this.state.termAgree) {
 		if (typeof web3 !== "undefined") {
@@ -96,84 +89,31 @@ export default class LandingPage extends React.Component {
 		analytics.acceptTerm()
 	}
 
-	render() {
-		return (
-			<div id="get-start">
-				<div className="landing-background">
-				</div>
-				<div class="frame">
-					<div className="container">
-						<div className="convert-tokens">
-              <div className="landing-page__container">
-                <div className="landing-page__content">
-                  <div className="landing-page__content-tagline">
-				  	Want to purchase different tokens without any hassle?
-					  <br></br>
-					Do it in a few simple clicks.	
-                    {/* <h1 className="landing-page__content-title">{this.props.translate("landing_page.instant_and_secure_token_swap") || "Instant and Secure Token to Token Swaps"}</h1>
-                    <h2 className="landing-page__content-description">{this.props.translate("landing_page.no_oderbooks_no_deposit") || "No orderbooks, no deposits, pure joy."}</h2> */}
-                    {/* <p className="landing-page__content-pr">Want to purchase different tokens without any hassle?<br/>Do it in a few simple clicks.</p> */}
-                  </div>
+  render() {
+    return (
+      <div id="get-start">
+        <div className="accept-term">
+          <TermAndServices onClick={this.acceptTerm}/>
+        </div>
 
-                  <div className="landing-page__content-term">
-                    <TermAndServices onClick={this.acceptTerm}/>                    
-                  </div>
-                </div>
-                {/* <div className="landing-page__content">
-                  <div className="landing-page__content-circle">
-                    <img src={require("../../../assets/img/landing/token-wheel.svg")} />
-                  </div>
-                </div> */}
-              </div>
-
-							<div className="account-type">
-								<div className="account-type__item">
-									<div className="account-type__content">
-										<img src={require("../../../assets/img/landing/metamask_disable.png")} />
-										<div className="account-type__text">{this.props.translate("landing_page.metamask") || "METAMASK"}</div>
-									</div>
-								</div>
-								<div className="account-type__item">
-									<div className="account-type__content">
-										<img src={require("../../../assets/img/landing/keystore_disable.png")} />
-										<div className="account-type__text">{this.props.translate("landing_page.json") || "JSON"}</div>
-									</div>
-								</div>
-								<div className="account-type__item">
-									<div className="account-type__content">
-										<img src={require("../../../assets/img/landing/trezor_disable.png")} />
-										<div className="account-type__text">{this.props.translate("landing_page.trezor") || "TREZOR"}</div>
-									</div>
-								</div>
-								<div className="account-type__item">
-									<div className="account-type__content">
-										<img src={require("../../../assets/img/landing/ledger_disable.png")} />
-										<div className="account-type__text">{this.props.translate("landing_page.ledger") || "LEDGER"}</div>
-									</div>
-								</div>
-								<div className="account-type__item">
-									<div className="account-type__content">
-										<img src={require("../../../assets/img/landing/privatekey_disable.png")} />
-										<div className="account-type__text">{this.props.translate("landing_page.private_key") || "PRIVATE KEY"}</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			// <div id="comming-soon">
-			// 	<div className="notification">
-			// 		<h1>kyberSwap</h1>
-			// 		<h4>Coming Soon</h4>
-			// 	</div>
-			// 	<div className="notice">
-			// 		<p>
-			// 			In the meanwhile, please visit our existing exchange for swapping tokens.
-			// 			<a href="https://kyber.network" target="_blank">https://kyber.network</a>
-			// 		</p>
-			// 	</div>
-			// </div>
-		)
-	}
+        <div className="account-type">
+          <div className="account-type__item">
+            {this.props.translate("landing_page.metamask") || "Metamask"}
+          </div>
+          <div className="account-type__item">
+            {this.props.translate("landing_page.json") || "JSON"}
+          </div>
+          <div className="account-type__item">
+            {this.props.translate("landing_page.trezor") || "Trezor"}
+          </div>
+          <div className="account-type__item">
+            {this.props.translate("landing_page.ledger") || "Ledger"}
+          </div>
+          <div className="account-type__item">
+            {this.props.translate("landing_page.private_key") || "Private Key"}
+          </div>
+        </div>
+      </div>
+    )
+  }
 }

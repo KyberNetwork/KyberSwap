@@ -1,31 +1,17 @@
-
 import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
-
-//import { gweiToWei, toT, roundingNumber, gweiToEth, toPrimitiveNumber, stringToBigNumber } from "../../utils/converter"
 import * as converters from "../../utils/converter"
 import * as validators from "../../utils/validators"
-
 import { TransferForm } from "../../components/Transaction"
-import { PostTransferWithKey } from "../Transfer"
 import { TransactionLoading } from "../CommonElements"
-
-import { ImportAccount } from "../ImportAccount"
-
 import { AddressBalance }  from "../../components/TransactionCommon"
-
-import { TokenSelector, AccountBalance } from "../TransactionCommon"
-
+import { TokenSelector } from "../TransactionCommon"
 import { hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
 import * as common from "../../utils/common"
-
-
 import * as globalActions from "../../actions/globalActions"
 import constansts from "../../services/constants"
-
-// import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase, throwErrorDestAddress, thowErrorAmount, makeNewTransfer } from '../../actions/transferActions';
 import * as transferActions from "../../actions/transferActions"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
@@ -213,10 +199,6 @@ export default class Transfer extends React.Component {
       />
     )
 
-    var transferButton = (
-      <PostTransferWithKey />
-    )
-
     // var balance = {
     //   prev: converters.toT(this.props.transfer.balanceData.prev, this.props.transfer.balanceData.tokenDecimal),
     //   next: converters.toT(this.props.transfer.balanceData.next, this.props.transfer.balanceData.tokenDecimal)
@@ -241,33 +223,6 @@ export default class Transfer extends React.Component {
       />
     )
 
-
-    var accountBalance = ""
-    if (this.props.account.account !== false){      
-      accountBalance = <AccountBalance 
-      chooseToken = {this.chooseToken}
-      sourceActive = {this.props.transfer.tokenSymbol}
-    />
-    }else{
-      accountBalance = <ImportAccount />
-    }
-
-    // var gasPrice = converters.stringToBigNumber(converters.gweiToEth(this.props.transfer.gasPrice))
-    // var totalGas = gasPrice.multipliedBy(this.props.transfer.gas)
-    // var gasConfig = (
-    //   <TransactionConfig gas={this.props.transfer.gas}
-    //     gasPrice={this.props.transfer.gasPrice}
-    //     gasHandler={this.specifyGas}
-    //     gasPriceHandler={this.specifyGasPrice}
-    //     gasPriceError={this.props.transfer.errors.gasPrice}
-    //     gasError={this.props.transfer.errors.gas}
-    //     totalGas={totalGas.toString()}
-    //     translate={this.props.translate}
-    //     advanced={this.props.transfer.advanced}
-    //     gasPriceSuggest={this.props.transfer.gasPriceSuggest}
-    //   />
-    // )
-
     var addressBalanceLayout = ""
     if (this.props.account.account !== false){      
       addressBalanceLayout = (<AddressBalance setAmount={this.setAmount}
@@ -276,25 +231,24 @@ export default class Transfer extends React.Component {
       }
 
     return (
-      <TransferForm step={this.props.transfer.step}
+      <TransferForm
+        account={this.props.account.account}
+        chooseToken={this.chooseToken}
+        sourceActive={this.props.transfer.tokenSymbol}
+        step={this.props.transfer.step}
         tokenSymbol={this.props.transfer.tokenSymbol}
         tokenTransferSelect={tokenTransferSelect}
-        transferButton={transferButton}
         transactionLoadingScreen={transactionLoadingScreen}
         input={input}
         errors={errors}
-
         addressBalanceLayout = {addressBalanceLayout}
-        // balance={addressBalance}
-        // setAmount={this.setAmount}
         translate={this.props.translate}
         onBlur = {this.onBlur}
         onFocus = {this.onFocus}
         focus = {this.state.focus}
         advanceLayout = {this.props.advanceLayout}
         networkError ={this.props.global.network_error}
-
-        accountBalance = {accountBalance}
+        isAgreed={this.props.global.termOfServiceAccepted}
       />
     )
   }

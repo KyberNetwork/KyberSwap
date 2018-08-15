@@ -20,21 +20,15 @@ import * as converter from '../../utils/converter'
 
 export default class RateBetweenToken extends React.Component {
 
-  // resetMinRate = (e)=>{
-  //   this.props.dispatch(actions.resetMinRate())
-  //   //this.props.dispatch(actions.caculateAmount())
-  // }
-
   render = () => {
     var tokenRate = this.props.isSelectToken ? <img src={require('../../../assets/img/waiting-white.svg')} /> : roundingNumber(this.props.exchangeRate.rate)
     return (
-      <div class="token-compare grid-x">
-        <div className="cell large-5">
+      <div class="token-compare">
+        <div>
           1 {this.props.exchangeRate.sourceToken} = {tokenRate} {this.props.exchangeRate.destToken}
         </div>
-        <div className="cell large-2 seperator">|</div>
-        <div className="cell large-5">
-
+        <div className="token-compare__separator">|</div>
+        <div>
           1 {this.props.exchangeRate.sourceToken} = {converter.roundingNumber(this.props.rateUSD)} USD
         </div>
       </div>

@@ -7,8 +7,6 @@
 }
 
 #exchange {
-  // margin-bottom: 50px;
-
   @media print, screen and (min-width: 40em) {
     .medium-5 {
       width: 45%;
@@ -32,17 +30,25 @@
         border-left: 1px solid #ddd;
       }
     }
+
     .exchange-col-1, .exchange-col-2, .exchange-col-3{
       padding: 1rem;
     }
+
     .exchange-col-1-2{
       margin-top: 30px
     }
-    .exchange-wrapper-btn{
-      .button{
+
+    .exchange-col-1 {
+      padding-bottom: 0;
+    }
+
+    .exchange-wrapper-btn {
+      .button {
         width: 100%;
       }
     }
+
     .amount-input{
       margin-top: 1rem;
     }
@@ -68,7 +74,6 @@
       display: none;
     }
     @include screen-min-width(large) {
-      margin-top: 1.5rem;
       margin-bottom: 1.2rem;
     }
   }
@@ -102,37 +107,31 @@
   }
 
   .token-compare {
+    width: 100%;
     color: #666666;
     font-size: 14px;
     letter-spacing: .5px;
     text-align: center;
-    margin-bottom: 10px;
-    margin-top: 1rem;
     font-weight: 600;
+    position: absolute;
+    bottom: 58px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
 
-    .seperator{
-      @include screen-max-width(large) {
-        display: none;
-      }
-    }
-
-
-    @include screen-min-width(large) {
-      width: 450px;
-      margin: 0 auto;
-      margin-top: 1rem;
+    &__separator {
+      margin: 0 10px;
     }
 
     @include screen-max-width(large) {
-      text-align: left;      
-    }
-    // div:first-child {
-    //   text-align: right;
-    // }
+      bottom: 55px;
+      display: block;
 
-    // div:nth-child(3) {
-    //   text-align: left;
-    // }
+      &__separator {
+        display: none;
+      }
+    }
   }
 
   .show-on-choose-token-pair {

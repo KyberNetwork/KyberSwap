@@ -62,18 +62,17 @@ export default class TermAndServices extends React.Component {
       : require("../../../assets/img/checkmark-unselected.png")
     return (
       <div className="term-services">
-        {/* <img className="pr-2 cur-pointer" onClick={(e) => this.changeCheckbox(e)} src={src} width="14" /> */}
-        <span className="term-text">
-          <span className="cur-pointer"> 
-            {this.props.translate("terms.accept") || "Accept"}
-          </span> 
-              <a href="https://files.kyber.network/tac.html" target="_blank">
-              {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}  
-                </a> 
-          </span>
-          <div className="landing-page__content-btn-container">
-            <button className="landing-page__content-btn button" onClick={this.props.onClick}>{this.props.translate("terms.accept") || "Accept"}</button>
-          </div>
+        <div>
+          <span className="term-services__accept">{this.props.translate("terms.accept") || "Accept"} </span>
+
+          <a className="term-services__text" href="https://files.kyber.network/tac.html" target="_blank">
+            {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}
+          </a>
+        </div>
+
+        <button className="term-services__btn" onClick={this.props.onClick}>
+          {this.props.translate("terms.accept_to_swap") || "Accept to Swap"}
+        </button>
       </div>
     )
   }
