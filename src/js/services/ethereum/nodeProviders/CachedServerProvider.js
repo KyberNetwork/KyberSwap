@@ -410,8 +410,6 @@ export default class CachedServerProvider extends React.Component {
                     }else{
                         rejected(new Error("Cannot parse data user cap"))
                     }
-                    
-                   // resolve(result)
                 })
                 .catch((err) => {
                     rejected(err)
