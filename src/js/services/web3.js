@@ -95,8 +95,9 @@ function getCommissionId(blockNo) {
   if (!verifyAccount(refAddr)) {
     return refAddr
   }
-  if (typeof web3 !== "undefined" && web3.kyberID && !verifyAccount(web3.kyberID)) {
-    return web3.kyberID
+  var web3Service = new Web3Service()
+  if ( web3Service.isHaveWeb3() && web3Service.web3.kyberID && !verifyAccount(web3Service.web3.kyberID)) {
+    return web3Service.web3.kyberID
   }
   return converters.numberToHexAddress(blockNo)
 }

@@ -79,7 +79,7 @@ export default class LandingPage extends React.Component {
 
 	acceptTerm = () => {
 		// if (this.state.termAgree) {
-		var web3Service = new Web3Service(web3)
+		var web3Service = new Web3Service()
 		
 		if (web3Service.isHaveWeb3()) {
 			var walletType = web3Service.getWalletType()
