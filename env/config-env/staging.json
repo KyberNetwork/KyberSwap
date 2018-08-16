@@ -417,6 +417,14 @@
       "address": "0x3136ef851592acf49ca4c825131e364170fa32b3",
       "symbol":"COFI", 
       "icon": "cofi.svg"
+    },
+    "MOC": {
+      "name": "Moss Land",
+      "decimal": 18,
+      "symbol" : "MOC",
+      "address": "0x865ec58b06bf6305b886793aa20a2da31d034e68",
+      "icon": "moc.svg",
+      "isNew": true
     }
   },
   "ethScanUrl": "https://etherscan.io/",
