@@ -427,6 +427,7 @@ export default class ExchangeBody extends React.Component {
     />
 
     var maxCap = this.props.exchange.maxCap
+    //alert(maxCap)
     if (maxCap !== "infinity") {
       maxCap = toEther(this.props.exchange.maxCap)
     }

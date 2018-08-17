@@ -6,7 +6,7 @@ import constants from "../constants"
 
 import {
   updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRateUSD,
-  checkConnection, setGasPrice, setMaxGasPrice, updateTokenStatus
+  checkConnection, setGasPrice, setMaxGasPrice
 } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx, updateApproveTxsData } from "../../actions/txActions"
