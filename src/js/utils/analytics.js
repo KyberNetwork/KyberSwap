@@ -26,7 +26,7 @@ export function loginWallet(wallet) {
     if (typeof window.gtag === 'function') {
         try {
             window.gtag('event', 'LoginWallet', {
-                'event_category': "wallet",
+                'event_category': wallet,
                 'event_label': wallet
             })
         } catch (e) {
@@ -118,7 +118,7 @@ export function tokenForCharting(token){
     if (typeof window.gtag === 'function') {
         try {
             window.gtag('event', 'ViewChart', {
-                'event_category': "viewChart",
+                'event_category': `viewChart: ${token}`,
                 'event_label': token
             })
         } catch (e) {
@@ -138,7 +138,7 @@ export function acceptTerm(){
     if (typeof window.gtag === 'function') {
         try {
             window.gtag('event', 'AcceptTerm', {
-                'event_category': "AcceptTerm",
+                'event_category': "Accepted",
                 'event_label': "Accepted"
             })
         } catch (e) {
@@ -158,7 +158,7 @@ export function trackBaseCurrency(currency){
     if (typeof window.gtag === 'function') {
         try {
             window.gtag('event', 'chooseBaseCurrency', {
-                'event_category': "currency",
+                'event_category': currency,
                 'event_label': currency
             })
         } catch (e) {
@@ -178,7 +178,7 @@ export function trackMarketSetting(field, value){
     if (typeof window.gtag === 'function') {
         try {
             window.gtag('event', 'marketSetting', {
-                'event_category': "option",
+                'event_category': `${field}: ${value}`,
                 'event_label': `${field}: ${value}`
             })
         } catch (e) {
