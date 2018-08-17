@@ -578,6 +578,30 @@ const exchange = (state = initState, action) => {
 
       return resetState
     }
+    case "EXCHANGE.TOGGLE_CHART_CONTENT": {
+      newState.chart.isActive = !newState.chart.isActive
+      return newState
+    }
+    case "EXCHANGE.SET_CHART_LOADING": {
+      newState.chart.isLoading = action.payload
+      return newState
+    }
+    case "EXCHANGE.SET_CHART_TIME_RANGE": {
+      newState.chart.timeRange = action.payload
+      return newState
+    }
+    case "EXCHANGE.SET_CHART_TOKEN_SYMBOL": {
+      console.log('===================');
+      console.log(action.payload);
+      newState.chart.tokenSymbol = action.payload
+      return newState
+    }
+    case "EXCHANGE.SET_CHART_TOKEN_CHANGE": {
+      console.log('===================');
+      console.log(action.payload);
+      newState.chart.tokenChange = action.payload
+      return newState
+    }
   }
   return state
 }

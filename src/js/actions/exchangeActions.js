@@ -601,3 +601,37 @@ export function closeImportAccountExchange(){
     type: "EXCHANGE.CLOSE_IMPORT_ACCOUNT"
   }
 }
+
+export function toggleChartContent() {
+  return {
+    type: "EXCHANGE.TOGGLE_CHART_CONTENT"
+  }
+}
+
+export function setChartLoading(isLoading) {
+  return {
+    type: "EXCHANGE.SET_CHART_LOADING",
+    payload: isLoading
+  }
+}
+
+export function setChartTimeRange(timeRange) {
+  return {
+    type: "EXCHANGE.SET_CHART_TIME_RANGE",
+    payload: timeRange
+  }
+}
+
+export function setChartTokenSymbol(symbol) {
+  return {
+    type: "EXCHANGE.SET_CHART_TOKEN_SYMBOL",
+    payload: symbol
+  }
+}
+
+export function setChartTokenChange(tokenChange) {
+  return {
+    type: "EXCHANGE.SET_CHART_TOKEN_CHANGE",
+    payload: tokenChange
+  }
+}

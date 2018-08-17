@@ -134,7 +134,14 @@ const INIT_EXCHANGE_FORM_STATE = {
   isAnalize: false,
   isAnalizeComplete: false,
   analizeError : {},
-  snapshot: {}
+  snapshot: {},
+  chart: {
+    isActive: true,
+    isLoading: false,
+    timeRange: '1D',
+    tokenSymbol: 'KNC',
+    tokenChange: 0
+  }
 }
 
 const INIT_TRANSFER_FORM_STATE = {

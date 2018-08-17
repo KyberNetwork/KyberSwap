@@ -54,8 +54,6 @@ function* selectToken(action) {
   yield call(ethereum.fetchRateExchange, true)
 
   yield call(fetchGas)
-  //calculate gas use
-  // yield call(updateGasUsed)
 }
 
 export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {

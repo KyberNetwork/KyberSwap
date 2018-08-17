@@ -59,7 +59,7 @@ export default class Exchange extends React.Component {
   //   }
   // }
 
-  componentDidMount = () =>{
+  componentWillMount = () =>{
     if ((this.props.params.source.toLowerCase() !== this.props.exchange.sourceTokenSymbol.toLowerCase()) || 
         (this.props.params.dest.toLowerCase() !== this.props.exchange.destTokenSymbol.toLowerCase()) ){
           

@@ -18,13 +18,13 @@ import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
 
 @connect((store, props) => {
-
   const langs = store.locale.languages
   var currentLang = common.getActiveLanguage(langs)
 
   const ethereum = store.connection.ethereum
   const account = store.account
   const exchange = store.exchange
+  const martketTokens = store.market.tokens;
   const tokens = store.tokens.tokens
   const translate = getTranslate(store.locale)
 
@@ -51,16 +51,15 @@ import { default as _ } from 'underscore'
   }
 
   return {
-    account, ethereum, tokens, translate, currentLang, 
+    account, ethereum, martketTokens, tokens, translate, currentLang,
     global: store.global,
     exchange: {
       ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
       sourceName, destName, rateSourceToEth,
-      advanceLayout : props.advanceLayout      
+      advanceLayout : props.advanceLayout
     }
   }
 })
-
 
 export default class ExchangeBody extends React.Component {
   constructor(){
@@ -70,37 +69,66 @@ export default class ExchangeBody extends React.Component {
     }
   }
 
+  componentWillMount = () => {
+    const chartTokenSymbol = this.props.exchange.destTokenSymbol !== 'ETH' ? this.props.exchange.destTokenSymbol : this.props.exchange.sourceTokenSymbol;
+
+    this.props.dispatch(exchangeActions.setChartTokenSymbol(chartTokenSymbol));
+
+    this.setChartTokenChange(chartTokenSymbol);
+  }
+
   chooseToken = (symbol, address, type) => {
     this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
-    var path
-    if (type === "source"){
-      path = constansts.BASE_HOST + "/swap/" + symbol.toLowerCase() + "_" + this.props.exchange.destTokenSymbol.toLowerCase()
-    }else{
-      path = constansts.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "_" + symbol.toLowerCase()
+    var path;
+
+    this.setChartToken(symbol, type);
+
+    if (type === "source") {
+      path = constansts.BASE_HOST + "/swap/" + symbol.toLowerCase() + "_" + this.props.exchange.destTokenSymbol.toLowerCase();
+    } else {
+      path = constansts.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "_" + symbol.toLowerCase();
     }
+
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
-    // if (this.props.currentLang !== "en"){
-    //   path += "?lang=" + this.props.currentLang
-    // }
     this.props.dispatch(globalActions.goToRoute(path))
+  }
+
+  setChartToken = (symbol, type) => {
+    let chartTokenSymbol;
+
+    if ((type === 'des' && symbol !== 'ETH') || (type === 'source' && this.props.exchange.destTokenSymbol === 'ETH')) {
+      chartTokenSymbol = symbol;
+    } else if (type === 'des' && symbol === 'ETH') {
+      chartTokenSymbol = this.props.exchange.sourceTokenSymbol
+    }
+
+    this.props.dispatch(exchangeActions.setChartTokenSymbol(chartTokenSymbol));
+
+    this.setChartTokenChange(chartTokenSymbol);
+  }
+
+  setChartTokenChange = (chartTokenSymbol) => {
+    let chartTokenInfo = _.chain(this.props.martketTokens).filter((values, symbol) => {
+      return symbol === chartTokenSymbol;
+    }).first().value();
+
+    this.props.dispatch(exchangeActions.setChartTokenChange(chartTokenInfo.ETH.change));
   }
 
   dispatchUpdateRateExchange = (sourceValue) => {
     var sourceDecimal = 18
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
-    
-    // console.log("source_token_symbol")
-    // console.log(sourceTokenSymbol)
+
     if (sourceTokenSymbol === "ETH"){
       if(parseFloat(sourceValue) > 1000){
         this.props.dispatch(exchangeActions.throwErrorHandleAmount())
-        return 
+        return
       }
     }else{
       var destValue = caculateDestAmount(sourceValue, this.props.exchange.rateSourceToEth, 6)
       if(parseFloat(destValue) > 1000){
         this.props.dispatch(exchangeActions.throwErrorHandleAmount())
-        return 
+        return
       }
     }
     //var minRate = 0
@@ -125,9 +153,6 @@ export default class ExchangeBody extends React.Component {
 
     this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, rateInit))
   }
-
-
-
 
   validateSourceAmount = (value) => {
     // var check = true
@@ -169,8 +194,6 @@ export default class ExchangeBody extends React.Component {
       //check = false
     }
 
-    
-
     var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
       sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, this.props.exchange.gasPrice)
 
@@ -181,22 +204,9 @@ export default class ExchangeBody extends React.Component {
     }
   }
 
-  // validateTxFee = (gasPrice) => {
-  //   var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
-  //   this.props.exchange.sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, gasPrice)
-
-  //   if (validateWithFee) {
-  //     this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
-  //     return
-  //     // check = false
-  //   }
-  // }
-
   lazyUpdateRateExchange = _.debounce(this.dispatchUpdateRateExchange, 500)
   lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
- // lazyValidateTransactionFee = _.debounce(this.validateTxFee, 500)
 
- 
   validateRateAndSource = (sourceValue) => {
     this.lazyUpdateRateExchange(sourceValue)
     if (this.props.account.account !== false){
@@ -273,54 +283,39 @@ export default class ExchangeBody extends React.Component {
 
     var path = constansts.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "_" + this.props.exchange.sourceTokenSymbol.toLowerCase()
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
-    // if (this.props.currentLang !== "en"){
-    //   path += "?lang=" + this.props.currentLang
-    // }
     this.props.dispatch(globalActions.goToRoute(path))
   }
 
   analyze = () => {
     var ethereum = this.props.ethereum
     var exchange = this.props.exchange
-    //var tokens = this.props.tokens
     this.props.dispatch(exchangeActions.analyzeError(ethereum, exchange.txHash))
   }
 
-  render() {
-    // if (this.props.account.isStoreReady) {
-    //   if (!!!this.props.account.account.address) {
-    //     setTimeout(() => this.props.dispatch(push("/")), 1000)
-    //     return (
-    //       <div>exchange is not ready</div>
-    //     )
-    //   }
-    // } else {
-    //   return (
-    //     <div>exchange is not ready111</div>
-    //   )
-    // }
+  changeChartRange = (value) => {
+    let test = this;
 
-    //for transaction loading screen
-    // var balance = {
-    //   prevValue: toT(this.props.exchange.balanceData.prevSource, this.props.exchange.balanceData.sourceDecimal),
-    //   nextValue: toT(this.props.exchange.balanceData.nextSource, this.props.exchange.balanceData.sourceDecimal)
-    // }
-    // var balanceDest = {
-    //   prevValue: toT(this.props.exchange.balanceData.prevDest, this.props.exchange.balanceData.destDecimal),
-    //   nextValue: toT(this.props.exchange.balanceData.nextDest, this.props.exchange.balanceData.destDecimal),
-    // }
-    //console.log(this.props.exchange.balanceData)
+    this.props.dispatch(exchangeActions.setChartLoading(true));
+    this.props.dispatch(exchangeActions.setChartTimeRange(value));
+
+    setTimeout(function () {
+      test.props.dispatch(exchangeActions.setChartLoading(false));
+    }, 3000);
+  }
+
+  toggleChartContent = () => {
+    this.props.dispatch(exchangeActions.toggleChartContent());
+  }
+
+  render() {
     var balanceInfo = {
-      //sourceTokenSymbol: this.props.exchange.sourceTokenSymbol,
       sourceAmount: toT(this.props.exchange.balanceData.sourceAmount, this.props.exchange.balanceData.sourceDecimal),
       sourceSymbol: this.props.exchange.balanceData.sourceSymbol,
       sourceTokenName: this.props.exchange.balanceData.sourceName,
-      //destTokenSymbol: this.props.exchange.destTokenSymbol,
       destAmount: toT(this.props.exchange.balanceData.destAmount, this.props.exchange.balanceData.destDecimal),
       destTokenName: this.props.exchange.balanceData.destName,
       destSymbol: this.props.exchange.balanceData.destSymbol,
     }
-
 
     var analyze = {
       action: this.analyze,
@@ -438,6 +433,9 @@ export default class ExchangeBody extends React.Component {
         advanceLayout = {this.props.advanceLayout}
         focus = {this.state.focus}
         networkError ={this.props.global.network_error}
+        chart={this.props.exchange.chart}
+        changeChartRange={this.changeChartRange}
+        toggleChartContent={this.toggleChartContent}
       />
     )
   }
