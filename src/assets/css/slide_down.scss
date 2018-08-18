@@ -1,4 +1,7 @@
 .slide-down {
+  padding: 10px;
+  transition: all .3s;
+
   &__trigger {
     position: relative;
     padding-left: 20px;
@@ -20,9 +23,12 @@
   }
 
   &__content {
+    opacity: 0;
+    transform: translateY(20px);
     overflow: hidden;
     max-height: 0;
     transition: all .3s cubic-bezier(0, 1, 0, 1);
+    //transition: all .3s;
   }
 
   &--active {
@@ -33,8 +39,10 @@
     }
 
     .slide-down__content {
+      opacity: 1;
+      transform: translateY(0);
       max-height: 9999px;
-      transition: max-height 1s ease-in-out;
+      transition: all .6s ease-in-out;
     }
   }
 }

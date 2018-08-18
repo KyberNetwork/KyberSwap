@@ -19,12 +19,10 @@ import { default as _ } from 'underscore'
 
 @connect((store, props) => {
   const langs = store.locale.languages
-  var currentLang = common.getActiveLanguage(langs)
-
+  const currentLang = common.getActiveLanguage(langs)
   const ethereum = store.connection.ethereum
   const account = store.account
   const exchange = store.exchange
-  const martketTokens = store.market.tokens;
   const tokens = store.tokens.tokens
   const translate = getTranslate(store.locale)
 
@@ -51,7 +49,7 @@ import { default as _ } from 'underscore'
   }
 
   return {
-    account, ethereum, martketTokens, tokens, translate, currentLang,
+    account, ethereum, tokens, translate, currentLang,
     global: store.global,
     exchange: {
       ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
@@ -62,26 +60,16 @@ import { default as _ } from 'underscore'
 })
 
 export default class ExchangeBody extends React.Component {
-  constructor(){
+  constructor() {
     super()
     this.state = {
       focus : ""
     }
   }
 
-  componentWillMount = () => {
-    const chartTokenSymbol = this.props.exchange.destTokenSymbol !== 'ETH' ? this.props.exchange.destTokenSymbol : this.props.exchange.sourceTokenSymbol;
-
-    this.props.dispatch(exchangeActions.setChartTokenSymbol(chartTokenSymbol));
-
-    this.setChartTokenChange(chartTokenSymbol);
-  }
-
   chooseToken = (symbol, address, type) => {
     this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
     var path;
-
-    this.setChartToken(symbol, type);
 
     if (type === "source") {
       path = constansts.BASE_HOST + "/swap/" + symbol.toLowerCase() + "_" + this.props.exchange.destTokenSymbol.toLowerCase();
@@ -91,28 +79,6 @@ export default class ExchangeBody extends React.Component {
 
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
     this.props.dispatch(globalActions.goToRoute(path))
-  }
-
-  setChartToken = (symbol, type) => {
-    let chartTokenSymbol;
-
-    if ((type === 'des' && symbol !== 'ETH') || (type === 'source' && this.props.exchange.destTokenSymbol === 'ETH')) {
-      chartTokenSymbol = symbol;
-    } else if (type === 'des' && symbol === 'ETH') {
-      chartTokenSymbol = this.props.exchange.sourceTokenSymbol
-    }
-
-    this.props.dispatch(exchangeActions.setChartTokenSymbol(chartTokenSymbol));
-
-    this.setChartTokenChange(chartTokenSymbol);
-  }
-
-  setChartTokenChange = (chartTokenSymbol) => {
-    let chartTokenInfo = _.chain(this.props.martketTokens).filter((values, symbol) => {
-      return symbol === chartTokenSymbol;
-    }).first().value();
-
-    this.props.dispatch(exchangeActions.setChartTokenChange(chartTokenInfo.ETH.change));
   }
 
   dispatchUpdateRateExchange = (sourceValue) => {
@@ -292,21 +258,6 @@ export default class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.analyzeError(ethereum, exchange.txHash))
   }
 
-  changeChartRange = (value) => {
-    let test = this;
-
-    this.props.dispatch(exchangeActions.setChartLoading(true));
-    this.props.dispatch(exchangeActions.setChartTimeRange(value));
-
-    setTimeout(function () {
-      test.props.dispatch(exchangeActions.setChartLoading(false));
-    }, 3000);
-  }
-
-  toggleChartContent = () => {
-    this.props.dispatch(exchangeActions.toggleChartContent());
-  }
-
   render() {
     var balanceInfo = {
       sourceAmount: toT(this.props.exchange.balanceData.sourceAmount, this.props.exchange.balanceData.sourceDecimal),
@@ -407,9 +358,9 @@ export default class ExchangeBody extends React.Component {
 
     var addressBalanceLayout = ""
     if (this.props.account.account !== false){      
-      addressBalanceLayout = (<AddressBalance setAmount={this.setAmount}
-                                            balance={addressBalance}
-                                            translate={this.props.translate}/>)
+      addressBalanceLayout = (
+        <AddressBalance setAmount={this.setAmount} balance={addressBalance} translate={this.props.translate}/>
+      )
     }
     
     return (
@@ -433,9 +384,6 @@ export default class ExchangeBody extends React.Component {
         advanceLayout = {this.props.advanceLayout}
         focus = {this.state.focus}
         networkError ={this.props.global.network_error}
-        chart={this.props.exchange.chart}
-        changeChartRange={this.changeChartRange}
-        toggleChartContent={this.toggleChartContent}
       />
     )
   }

@@ -8,8 +8,8 @@ import { filterInputNumber } from "../../utils/validators";
 import { ImportAccount } from "../../containers/ImportAccount";
 import { AccountBalance } from "../../containers/TransactionCommon";
 import { PostExchangeWithKey } from "../../containers/Exchange";
-import SlideDown, { SlideDownTrigger, SlideDownContent } from "../CommonElement/SlideDown";
-import { Line } from 'react-chartjs-2';
+import { TokenChart } from "../../containers/Market";
+import BLOCKCHAIN_INFO from "../../../../env";
 
 const ExchangeBodyLayout = (props) => {
 
@@ -75,83 +75,24 @@ const ExchangeBodyLayout = (props) => {
     classSource += " error"
   }
 
-  const chartRanges = ['1D', '1W', '1M', 'All'];
-  var chartRangeHtml = chartRanges.map((value, index) => {
-    return <div className={"balance-content__range-item" + (props.chart.timeRange == value ? ' balance-content__range-item--active' : '')} key={index} onClick={() => props.changeChartRange(value)}>{value}</div>
-  })
-
-  const isNegativeChange = props.chart.tokenChange < 0;
-
-  const data = {
-    labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27],
-    datasets: [{
-      data: [0.00023890315313575633, 0.0002410515240672516, 0.00024232294837384034, 0.00023674319766227563, 0.0002334445187770264, 0.00023714592042686645, 0.00024970635345897724, 0.00025016936382416937, 0.00025130158200639246, 0.0002538215460731078, 0.0002489903957961095, 0.00024758197256755294, 0.00024792595885640657, 0.000246373640359363, 0.0002464989119781937, 0.00024291638952263689, 0.0002475784636653132, 0.00025805578428904336, 0.00025178636601556285, 0.0002498348946964259, 0.00025293152927042677, 0.000243523494193389, 0.0002394060317371602, 0.00024677911489950184, 0.00024637583891663246, 0.00024479595317007164, 0.00023890446616952203, 0.0002351395207161765],
-      backgroundColor: isNegativeChange ? 'rgba(255, 99, 132, 0.2)' : 'rgba(49, 203, 158, 0.2)',
-      borderColor: isNegativeChange ? 'rgba(255,99,132,1)': '#31CB9E',
-      borderWidth: 1
-    }]
-  };
-
-  const options = {
-    elements: {
-      point: {
-        radius: 0
-      }
-    },
-    legend: {
-      display: false
-    },
-    scales: {
-      xAxes: [{
-        display: false,
-        ticks: {
-          display: false
-        },
-        gridLines: {
-          display: false
-        }
-      }],
-      yAxes: [{
-        display: false,
-        ticks: {
-          display: false
-        },
-        gridLines: {
-          display: false
-        }
-      }]
-    }
-  }
-
   var render = (
     <div className="grid-x">
       <div className={"cell medium-6 large-3 balance-wrapper" + (errorExchange ||  props.networkError?" error":"")} id="balance-account-wrapper">
-        <div className="balance-content">
-          <SlideDown active={props.chart.isActive}>
-            <SlideDownTrigger onToggleContent={() => props.toggleChartContent()}>
-              <div className="balance-content__pair">
-                {props.chart.tokenSymbol}/ETH
-              </div>
-              <div className="balance-content__rate-wrapper">
-                <div className="balance-content__rate">0.000392</div>
-                <div className={"balance-content__change" + (isNegativeChange ? ' balance-content__change--nagative' : '')}>
-                  {props.chart.tokenChange}%
-                </div>
-              </div>
-            </SlideDownTrigger>
+        {props.account !== false && (
+          <div className="balance-address">
+            <div className="title">{props.translate("address.your_wallet_address") || "Your Wallet Address"}</div>
+            <div>
+              <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}>
+                {props.account.address ? props.account.address.slice(0, 8) : ''} ... {props.account.address ? props.account.address.slice(-6) : ''}
+              </a>
+            </div>
+          </div>
+        )}
 
-            <SlideDownContent>
-              <div className={"balance-content__chart" + (props.chart.isLoading ? ' balance-content__chart--loading' : '')}>
-                <Line
-                  data={data}
-                  options={options}
-                  height={200}
-                />
-              </div>
-              <div className="balance-content__range">{chartRangeHtml}</div>
-            </SlideDownContent>
-          </SlideDown>
-        </div>
+        <TokenChart
+          sourceTokenSymbol={props.sourceTokenSymbol}
+          destTokenSymbol={props.destTokenSymbol}
+        />
 
         {props.account !== false && (
           <AccountBalance
@@ -257,8 +198,8 @@ const ExchangeBodyLayout = (props) => {
       </div>
     </div>
   )
-  return (
 
+  return (
     <div id="exchange">
       {render}
       {props.transactionLoadingScreen}

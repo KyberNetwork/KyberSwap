@@ -1474,11 +1474,9 @@ export function* getExchangeEnable() {
   }
 }
 
-
 export function* watchExchange() {
   yield takeEvery("EXCHANGE.TX_BROADCAST_PENDING", broadCastTx)
   yield takeEvery("EXCHANGE.APPROVAL_TX_BROADCAST_PENDING", approveTx)
-
   yield takeEvery("EXCHANGE.PROCESS_EXCHANGE", processExchange)
   yield takeEvery("EXCHANGE.PROCESS_APPROVE", processApprove)
   yield takeEvery("EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET", checkTokenBalanceOfColdWallet)
@@ -1486,14 +1484,10 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.UPDATE_RATE_SNAPSHOT", updateRateSnapshot)
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", fetchGas)
   yield takeEvery("EXCHANGE.ANALYZE_ERROR", analyzeError)
-
   yield takeEvery("EXCHANGE.SELECT_TOKEN_ASYNC", selectToken)
   yield takeEvery("EXCHANGE.INPUT_CHANGE", fetchGas)
-  //yield takeEvery("EXCHANGE.FETCH_GAS", fetchGasManual)
   yield takeEvery("EXCHANGE.FETCH_GAS_SNAPSHOT", fetchGasSnapshot)
-
   yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
   yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
-
   yield takeEvery("EXCHANGE.FETCH_EXCHANGE_ENABLE", fetchExchangeEnable)
 }
