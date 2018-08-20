@@ -148,7 +148,7 @@ export default class TokenChart extends React.Component {
               </div>
             )}
 
-            {shouldRenderChart !== true && (
+            {/* {shouldRenderChart !== true && (
               <div className="balance-content__contract">
                 <span className="balance-content__contract-title">Contract Address:</span>
 
@@ -160,7 +160,7 @@ export default class TokenChart extends React.Component {
                   </a>
                 )}
               </div>
-            )}
+            )} */}
           </SlideDownContent>
         </SlideDown>
       </div>
