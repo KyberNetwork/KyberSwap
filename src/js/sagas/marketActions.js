@@ -116,9 +116,11 @@ export function* getNewData(action) {
 }
 
 export function* fetchChartData(action) {
-  const { tokenSymbol, timeRange } = action.payload;
+  const { tokenSymbol, timeRange, disableLoading } = action.payload;
 
-  yield put(marketActions.setChartLoading(true));
+  if (!disableLoading) {
+    yield put(marketActions.setChartLoading(true));
+  }
 
   try {
     const response = yield call(fetch, BLOCKCHAIN_INFO.tracker + `/chart/klines?symbol=${tokenSymbol}&interval=${timeRange}`);
