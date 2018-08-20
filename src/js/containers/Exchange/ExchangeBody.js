@@ -370,6 +370,12 @@ export default class ExchangeBody extends React.Component {
         <AddressBalance setAmount={this.setAmount} balance={addressBalance} translate={this.props.translate}/>
       )
     }
+
+    var maxCap = this.props.exchange.maxCap
+    //alert(maxCap)
+    if (maxCap !== "infinity") {
+      maxCap = toEther(this.props.exchange.maxCap)
+    }
     
     return (
       <ExchangeBodyLayout
@@ -386,7 +392,7 @@ export default class ExchangeBody extends React.Component {
         destTokenSymbol = {this.props.exchange.destTokenSymbol}
         translate={this.props.translate}
         swapToken={this.swapToken}
-        maxCap={toEther(this.props.exchange.maxCap)}
+        maxCap={maxCap}
         errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}      
         isAgreed={this.props.global.termOfServiceAccepted}
         advanceLayout = {this.props.advanceLayout}

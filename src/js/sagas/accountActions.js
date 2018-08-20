@@ -106,7 +106,15 @@ export function* importNewAccount(action) {
 
     yield put(fetchExchangeEnable())
 
-    var maxCapOneExchange = yield call([ethereum, ethereum.call], "getMaxCapAtLatestBlock", address)
+    var maxCapOneExchange = "infinity"
+    try {
+      var result = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
+      if (result.success && (!result.kyc || result.kyc === "false")) {
+        maxCapOneExchange = result.data
+      }
+    } catch(e) {
+      console.log(e)
+    }
     yield put(setCapExchange(maxCapOneExchange))
 
     if (+maxCapOneExchange == 0){

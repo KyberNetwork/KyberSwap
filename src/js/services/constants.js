@@ -48,7 +48,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   destAddress: "",
   inputFocus: "source",
 
-  maxCap: 0,
+  maxCap: "infinity",
   minConversionRate: 0,
   minDestAmount: 0,
   maxDestAmount: 0,

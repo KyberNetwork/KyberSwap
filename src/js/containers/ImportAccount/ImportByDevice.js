@@ -74,11 +74,16 @@ export default class ImportByDevice extends React.Component {
 		}
 		this.props.deviceService.getPublicKey(selectedPath, this.state.modalOpen)
 			.then((result) => {
-				this.dPath = (dpath != 0) ? result.dPath : dpath;
+				if (selectedPath) {
+					this.dPath = (dpath === 0) ? result.dPath : dpath
+				} else {
+					this.dPath = result.dPath
+				}
 				this.generateAddress(result);
 				this.props.dispatch(closeImportLoading());
 			})
 			.catch((err) => {
+				err = err.toString() === "Error: Not a valid path." ? "Not a valid path" : err
 				this.props.dispatch(throwError(err))
 				this.props.dispatch(closeImportLoading());
 				if(this.walletType == 'ledger'){

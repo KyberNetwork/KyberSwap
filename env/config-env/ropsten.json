@@ -228,6 +228,14 @@
         "address": "0x7a17267576318efb728bc4a0833e489a46ba138f",
         "icon": "bitx.png",
         "isNew": true
+      },
+      "MOC": {
+        "name": "Moss Coin",
+        "decimal": 18,
+        "symbol" : "MOC",
+        "address": "0x1742c81075031b8f173d2327e3479d1fc3feaa76",
+        "icon": "moc.svg",
+        "isNew": true
       }
   },
   "ethScanUrl": "https://ropsten.etherscan.io/",
@@ -245,5 +253,6 @@
     "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
   },
   "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
-  "tracker":"https://tracker.kyber.network"
+  "tracker":"https://tracker.kyber.network",
+  "statEndPoint": "https://ropsten-data.kyber.network"
 }

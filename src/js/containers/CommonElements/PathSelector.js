@@ -23,30 +23,42 @@ export default class PathSelector extends React.Component {
 
     selectItem = (e, index) => {
         var path = this.state.list[index].path
-        var desc = this.state.list[index].desc
         this.setState({
-            focus: { name: path },
-            open: false,
-            currentDPath: path,
-            description: desc
+            open: false
         })
         if (this.state.onChange) this.state.onChange(path)
     }
 
     focusItem = () => {
-        return (this.props.listItem).map((dPath, index) => {
+        var result
+        var description = ""
+        for (let index = 0; index < this.props.listItem.length; index++) {
+            const dPath = this.props.listItem[index];
             if (dPath.path === this.props.currentDPath) {
-                var description = dPath.desc
+                description = dPath.desc
                 if (dPath.path) {
-                    return `${dPath.path} - ${description}`
+                    result = `${dPath.path} - ${description}`
+                    break
                 }
-                let inputPath = document.getElementById('form-input-custom-path').value
-                return `${inputPath} - ${description}`
             }
-        })
+            let input = document.getElementById('form-input-custom-path')
+            if (input && input.value === this.props.currentDPath && !dPath.path) {
+                description = dPath.desc
+                result = `${input.value} - ${description}`
+                break
+            }
+            if (!dPath.path && input && input.value !== this.props.currentDPath) {
+                description = dPath.desc
+                result = `${this.props.currentDPath} - ${description}`
+                break
+            }
+        }
+        return result
     }
 
     getListItem = () => {
+        let input = document.getElementById('form-input-custom-path')
+        let inputValue = input ? input.value : "" 
         return (this.state.list).map((dPath, index) => {
             let disabledPath = (this.state.walletType == 'ledger' && dPath.notSupport) ? true : false
             if (!disabledPath) {
@@ -54,13 +66,13 @@ export default class PathSelector extends React.Component {
                     <div key={dPath + index} className="token-item" onClick={(e) => {
                         var el = e.target.tagName
                         if (el === "INPUT") return
-                        if (dPath.path === this.props.currentDPath) {
+                        if (dPath.path === this.props.currentDPath || (!dPath.path && inputValue === this.props.currentDPath)) {
                             this.setState({
                                 open: false
                             })
                         } else if (dPath.path) {
                             this.selectItem(e, index)
-                        } else if (!dPath.path && this.state.onChange){
+                        } else if (!dPath.path){
                             this.setState({
                                 open: false                                                
                             })
@@ -83,7 +95,7 @@ export default class PathSelector extends React.Component {
                             )
                         }
                         {
-                            (this.props.currentDPath === dPath.path) ? 
+                            ((this.props.currentDPath === dPath.path && inputValue != dPath.path) || (!dPath.path && inputValue === this.props.currentDPath)) ? 
                             <img src={require('../../../assets/img/import-account/checked-arrow.svg')}/>
                             : ""
                         }

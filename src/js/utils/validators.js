@@ -50,12 +50,14 @@ export function verifyAmount(sourceAmount,
 
   //verify max cap
   //estimate value based on eth
-  var maxCap = new BigNumber(maxCap)
-  if (sourceSymbol !== "ETH") {
-    maxCap = maxCap.multipliedBy(constants.MAX_CAP_PERCENT)
-  }
-  if (estimateValue.isGreaterThan(maxCap)) {
-    return "too high cap"
+  if (maxCap !== "infinity") {
+    var maxCap = new BigNumber(maxCap)
+    if (sourceSymbol !== "ETH") {
+      maxCap = maxCap.multipliedBy(constants.MAX_CAP_PERCENT)
+    }
+    if (estimateValue.isGreaterThan(maxCap)) {
+      return "too high cap"
+    }
   }
 
   //verify balance for source amount

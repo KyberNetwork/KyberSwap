@@ -28,8 +28,9 @@ export default class MinRate extends React.Component {
   //   };
   // }
   onSliderChange = (value) => {
+    var rateValue = value <= 10 ? 10 : value
     const {offeredRate}  = this.props.exchange
-    var minRate = converter.caculatorRateToPercentage(value,offeredRate)
+    var minRate = converter.caculatorRateToPercentage(rateValue,offeredRate)
     this.props.dispatch(actions.setMinRate(minRate.toString()))
     // this.setState({
     //   value,
@@ -57,11 +58,9 @@ export default class MinRate extends React.Component {
 
    var displaySlippageRate
     if (this.props.exchange.isSelectToken){
-      displaySlippageRate = this.props.translate("transaction.our_suggest_loading", { src: src, desToken: desToken}) 
-            || (<span><strong> <img src={require('../../../assets/img/waiting.svg')} /> {desToken}</strong> is our suggested Min acceptable rate by default.</span>)
+      displaySlippageRate = `<span><strong> <img src=${require('../../../assets/img/waiting.svg')} />${desToken}</strong></span>`
     }else{
-      displaySlippageRate = this.props.translate("transaction.our_suggest", { suggestRate: converter.roundingNumber(slippageRate) + " " + desToken}) 
-        || (<span><strong> {converter.roundingNumber(slippageRate) + " " + desToken}</strong> is our suggested Min acceptable rate by default.</span>)
+      displaySlippageRate = `<span><strong>${converter.roundingNumber(slippageRate) + " " + desToken}</strong></span>`
     }
 
     //console.log(displaySlippageRate)
@@ -78,9 +77,8 @@ export default class MinRate extends React.Component {
     return (
       <div className="min-rate">
         <div className="des-up">
-          {this.props.translate("transaction.higher_min_acceptable_rate") 
-            || "Higher Min acceptable rate typically results in lower success rate when the market is volatile."}
-            {displaySlippageRate}
+          {this.props.translate("transaction.higher_min_acceptable_rate", {displaySlippageRate: displaySlippageRate}) 
+            || `Guard yourself during volatile times by setting the lowest conversion rate you would accept for this transaction. Setting a high value may result in a failed transaction and you would be charged gas fees. Our recommended Min Acceptable Rate is ${displaySlippageRate}`}
         </div>
         <div className = {!this.props.exchange.errors.rateError? "":"error"}>
           <span  className="sub_title">{this.props.translate("transaction.min_acceptable_rate") || "MIN ACCEPTABLE RATE"}</span>
