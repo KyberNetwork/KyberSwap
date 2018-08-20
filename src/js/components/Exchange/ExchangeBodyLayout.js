@@ -8,6 +8,7 @@ import { filterInputNumber } from "../../utils/validators";
 import { ImportAccount } from "../../containers/ImportAccount";
 import { AccountBalance } from "../../containers/TransactionCommon";
 import { PostExchangeWithKey } from "../../containers/Exchange";
+import BLOCKCHAIN_INFO from "../../../../env";
 
 const ExchangeBodyLayout = (props) => {
 
@@ -20,8 +21,6 @@ const ExchangeBodyLayout = (props) => {
     var check = filterInputNumber(e, e.target.value, props.input.destAmount.value)
     if (check) props.input.destAmount.onChange(e)
   }
-
-
 
   var errorSelectSameToken = props.errors.selectSameToken !== '' ? props.translate(props.errors.selectSameToken) : ''
   var errorSelectTokenToken = props.errors.selectTokenToken !== '' ? props.translate(props.errors.selectTokenToken) : ''
@@ -78,12 +77,11 @@ const ExchangeBodyLayout = (props) => {
   var render = (
     <div className="grid-x">
       <div className={"cell medium-6 large-3 balance-wrapper" + (errorExchange ||  props.networkError?" error":"")} id="balance-account-wrapper">
-        {props.account !== false && (
-          <AccountBalance
-            chooseToken = {props.chooseToken}
-            sourceActive = {props.sourceTokenSymbol}
-          />
-        )}
+        <AccountBalance
+          chooseToken = {props.chooseToken}
+          sourceActive = {props.sourceTokenSymbol}
+          destTokenSymbol={props.destTokenSymbol}
+        />
       </div>
 
       <div className={"cell medium-6 large-9 swap-wrapper" +
@@ -182,8 +180,8 @@ const ExchangeBodyLayout = (props) => {
       </div>
     </div>
   )
-  return (
 
+  return (
     <div id="exchange">
       {render}
       {props.transactionLoadingScreen}

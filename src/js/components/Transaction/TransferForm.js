@@ -5,6 +5,7 @@ import { filterInputNumber, restrictInputNumber , anyErrors} from "../../utils/v
 import { ImportAccount } from "../../containers/ImportAccount";
 import { AccountBalance } from "../../containers/TransactionCommon";
 import { PostTransferWithKey } from "../../containers/Transfer";
+import BLOCKCHAIN_INFO from "../../../../env";
 
 const TransferForm = (props) => {
   function handleChangeAmount(e) {
@@ -23,12 +24,11 @@ const TransferForm = (props) => {
     <div id="transfer-screen">
       <div className="grid-x">
         <div className={"cell medium-6 large-3 balance-wrapper" + (anyErrors(props.errors) ?" error": "") } id="balance-account-wrapper">
-          {props.account !== false && (
-            <AccountBalance
-              chooseToken = {props.chooseToken}
-              sourceActive = {props.tokenSymbol}
-            />
-          )}
+          <AccountBalance
+            chooseToken = {props.chooseToken}
+            sourceActive = {props.tokenSymbol}
+            destTokenSymbol='ETH'
+          />
         </div>
         <div class={"cell medium-6 large-9 swap-wrapper swap-wrapper--transfer" +
           (props.isAgreed ? ' swap-wrapper--agreed' : '') + (props.account !== false ? ' swap-wrapper--imported' : '')}>

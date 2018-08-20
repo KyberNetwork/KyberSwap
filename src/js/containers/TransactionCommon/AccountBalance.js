@@ -1,17 +1,11 @@
 import React from "react"
 import { connect } from "react-redux"
-
-import { AccountBalanceLayout } from '../../components/Exchange'
-// import { selectTokenAsync } from '../../actions/exchangeActions'
-// import { selectToken } from '../../actions/transferActions'
-// import { hideSelectToken } from "../../actions/utilActions"
-
+import { AccountBalanceLayout } from '../../components/Exchange';
 import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
   var location = store.router.location.pathname
-  // var sourceActive = 'ETH'
-  // sourceActive = store.exchange.sourceTokenSymbol
+
   return {
     tokens: store.tokens.tokens,
     translate: getTranslate(store.locale),
@@ -19,6 +13,7 @@ import { getTranslate } from 'react-localize-redux';
     showBalance: store.global.showBalance,    
     location,
     walletType: store.account.account.type,
+    account: store.account.account,
     address: store.account.account.address,
     chooseToken: props.chooseToken,
     sourceActive: props.sourceActive
@@ -26,7 +21,6 @@ import { getTranslate } from 'react-localize-redux';
 })
 
 export default class AccountBalance extends React.Component {
-
   constructor(){
     super()
     this.state = {
@@ -34,9 +28,11 @@ export default class AccountBalance extends React.Component {
       sortValueSymbol_DES:  false,
       sortValuePrice_DES:  true,
       sortType: 'Price',
-      sortActive: false
+      sortActive: false,
+      isBalanceActive: true
     }
   }
+
   changeSearchBalance = (e) => {
     var value = e.target.value
     this.setState({searchWord:value})
@@ -63,10 +59,13 @@ export default class AccountBalance extends React.Component {
     this.hideSort()
   }
 
-  
+  toggleBalanceContent = () => {
+    this.setState({ isBalanceActive: !this.state.isBalanceActive });
+  }
 
   render() {
-    var sortValue = this.state.sortType === "Price" ? this.state.sortValuePrice_DES : this.state.sortValueSymbol_DES
+    var sortValue = this.state.sortType === "Price" ? this.state.sortValuePrice_DES : this.state.sortValueSymbol_DES;
+
     return (
       <AccountBalanceLayout
         tokens={this.props.tokens}
@@ -77,18 +76,19 @@ export default class AccountBalance extends React.Component {
         changeSearchBalance = {this.changeSearchBalance}
         searchWord = {this.state.searchWord}
         walletType = {this.props.walletType}
-        address = {this.props.address}
-
         showSort = {this.showSort}
         hideSort = {this.hideSort}
         sortActive = {this.state.sortActive}
-
         sortSymbol = {this.sortSymbol}
         sortPrice = {this.sortPrice}
         sortType = {this.state.sortType}
         sortValue = {sortValue}
+        isBalanceActive={this.state.isBalanceActive}
+        toggleBalanceContent={this.toggleBalanceContent}
+        account={this.props.account}
+        sourceTokenSymbol={this.props.sourceActive}
+        destTokenSymbol={this.props.destTokenSymbol}
       />
     )
   }
 }
-

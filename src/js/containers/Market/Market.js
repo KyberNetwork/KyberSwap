@@ -86,7 +86,6 @@ import { toEther } from "../../utils/converter";
     page: page,
     firstPageSize: firstPageSize,
     currencyList: currencyList,
-    // isDisabled: currencyList > listTokens.length || listTokens.length < firstPageSize,
     originalTokens: originalTokens,
     searchWord: searchWord,
     sortType: sortType
