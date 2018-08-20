@@ -24,11 +24,10 @@
 
   &__content {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(15px);
     overflow: hidden;
     max-height: 0;
     transition: all .3s cubic-bezier(0, 1, 0, 1);
-    //transition: all .3s;
   }
 
   &--active {

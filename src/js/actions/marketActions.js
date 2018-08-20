@@ -168,10 +168,10 @@ export function setChartTimeRange(timeRange) {
   }
 }
 
-export function setChartTokenData(symbol, change, buyPrice) {
+export function setChartTokenData(symbol, change, buyPrice, contractAddress) {
   return {
     type: "MARKET.SET_CHART_TOKEN_DATA",
-    payload: { symbol, change, buyPrice }
+    payload: { symbol, change, buyPrice, contractAddress }
   }
 }
 

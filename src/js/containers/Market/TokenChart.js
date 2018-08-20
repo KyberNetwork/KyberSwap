@@ -5,6 +5,7 @@ import { Line } from 'react-chartjs-2';
 import SlideDown, { SlideDownTrigger, SlideDownContent } from "../../components/CommonElement/SlideDown";
 import { default as _ } from 'underscore';
 import { getTranslate } from 'react-localize-redux';
+import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store) => {
   const market = store.market;
@@ -13,26 +14,29 @@ import { getTranslate } from 'react-localize-redux';
     translate: getTranslate(store.locale),
     market: market,
     chart: market.chart,
-    exchange: store.exchange,
   }
 })
 export default class TokenChart extends React.Component {
   componentDidUpdate = (nextProps) => {
-    if ((this.props.sourceTokenSymbol !== nextProps.sourceTokenSymbol) || (this.props.destTokenSymbol !== nextProps.destTokenSymbol) || (this.props.market.tokens !== nextProps.market.tokens)) {
-      this.fetchAllChartData(nextProps.sourceTokenSymbol, nextProps.destTokenSymbol);
+    const isTokenListUpdated = this.props.market.tokens !== nextProps.market.tokens;
+    const isSourceTokenSymbolChanged = this.props.sourceTokenSymbol !== nextProps.sourceTokenSymbol;
+    const isdestTokenSymbolChanged = this.props.destTokenSymbol !== nextProps.destTokenSymbol;
+
+    if (isSourceTokenSymbolChanged || isdestTokenSymbolChanged || isTokenListUpdated) {
+      this.fetchAllChartData();
     }
   }
 
-  fetchAllChartData = (sourceTokenSymbol, destTokenSymbol) => {
-    const chartTokenSymbol = this.getChartToken(sourceTokenSymbol, destTokenSymbol);
+  fetchAllChartData = () => {
+    const chartTokenSymbol = this.getChartToken();
 
     this.setChartTokenData(chartTokenSymbol);
+
     this.props.dispatch(marketActions.fetchChartData(chartTokenSymbol));
   }
 
-  getChartToken = (sourceTokenSymbol, destTokenSymbol) => {
-    let chartTokenSymbol =
-      this.props.exchange.destTokenSymbol !== 'ETH' ? this.props.exchange.destTokenSymbol : this.props.exchange.sourceTokenSymbol;
+  getChartToken = () => {
+    let chartTokenSymbol = this.props.destTokenSymbol !== 'ETH' ? this.props.destTokenSymbol : this.props.sourceTokenSymbol;
 
     if (chartTokenSymbol === 'ETH') {
       chartTokenSymbol = 'KNC';
@@ -47,14 +51,12 @@ export default class TokenChart extends React.Component {
     }).first().value();
 
     this.props.dispatch(marketActions.setChartTokenData(
-      chartTokenSymbol, chartTokenInfo.ETH.change, chartTokenInfo.ETH.buyPrice
+      chartTokenSymbol, chartTokenInfo.ETH.change, chartTokenInfo.ETH.buyPrice, chartTokenInfo.info.address
     ));
   }
 
   changeChartRange = (value) => {
-    this.props.dispatch(marketActions.setChartLoading(true));
     this.props.dispatch(marketActions.setChartTimeRange(value));
-    this.props.dispatch(marketActions.setChartLoading(false));
   }
 
   toggleChartContent = () => {
@@ -133,6 +135,17 @@ export default class TokenChart extends React.Component {
                   />
                 </div>
                 <div className="balance-content__range">{chartRangeHtml}</div>
+              </div>
+            )}
+
+            {shouldRenderChart !== true && (
+              <div className="balance-content__contract">
+                <span className="balance-content__contract-title">Contract Address:</span>
+                <a className="balance-content__contract-address"
+                   href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + this.props.chart.token.contractAddress}
+                   target="_blank">
+                  {this.props.chart.token.contractAddress}
+                </a>
               </div>
             )}
           </SlideDownContent>

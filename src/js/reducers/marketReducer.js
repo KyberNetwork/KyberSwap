@@ -158,7 +158,8 @@ const initState = function () {
       token: {
         symbol: 'KNC',
         change: 0,
-        buyPrice: 0
+        buyPrice: 0,
+        contractAddress: null,
       }
     }
   }
@@ -467,11 +468,12 @@ const market = (state = initState, action) => {
       return newState
     }
     case "MARKET.SET_CHART_TOKEN_DATA": {
-      const { symbol, change, buyPrice } = action.payload;
+      const { symbol, change, buyPrice, contractAddress } = action.payload;
 
       newState.chart.token.symbol = symbol;
       newState.chart.token.change = change;
       newState.chart.token.buyPrice = buyPrice;
+      newState.chart.token.contractAddress = contractAddress;
 
       return newState
     }

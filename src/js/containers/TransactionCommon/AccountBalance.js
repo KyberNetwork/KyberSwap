@@ -13,6 +13,7 @@ import { getTranslate } from 'react-localize-redux';
     showBalance: store.global.showBalance,    
     location,
     walletType: store.account.account.type,
+    account: store.account.account,
     address: store.account.account.address,
     chooseToken: props.chooseToken,
     sourceActive: props.sourceActive
@@ -84,8 +85,10 @@ export default class AccountBalance extends React.Component {
         sortValue = {sortValue}
         isBalanceActive={this.state.isBalanceActive}
         toggleBalanceContent={this.toggleBalanceContent}
+        account={this.props.account}
+        sourceTokenSymbol={this.props.sourceActive}
+        destTokenSymbol={this.props.destTokenSymbol}
       />
     )
   }
 }
-

@@ -17,7 +17,6 @@ import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
 
 @connect((store, props) => {
-
   const langs = store.locale.languages
   var currentLang = common.getActiveLanguage(langs)
 
@@ -68,18 +67,14 @@ export default class Transfer extends React.Component {
         this.props.dispatch(transferActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
       }
     }
-   
-
   }
 
   lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
-
 
   onAddressReceiveChange = (event) => {
     var value = event.target.value
     this.props.dispatch(transferActions.specifyAddressReceive(value));
   }
-
 
   onAmountChange = (event) => {
     var value = event.target.value
@@ -96,9 +91,6 @@ export default class Transfer extends React.Component {
 
     var path = constansts.BASE_HOST + "/transfer/" + symbol.toLowerCase()
 
-    // if (this.props.currentLang !== "en"){
-    //   path += "?lang=" + this.props.currentLang
-    // }
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
 
     this.props.dispatch(globalActions.goToRoute(path))
@@ -108,7 +100,6 @@ export default class Transfer extends React.Component {
     this.props.dispatch(transferActions.makeNewTransfer());
   }
 
-
   onFocus = () => { 
     this.setState({focus:"source"})
   }
@@ -116,17 +107,6 @@ export default class Transfer extends React.Component {
   onBlur = () => { 
     this.setState({focus:""})
   }
-
-//   specifyGas = (event) => {
-//     var value = event.target.value
-//     this.props.dispatch(transferActions.specifyGas(value))
-//   }
-
-//   specifyGasPrice = (value) => {
-//     this.props.dispatch(transferActions.specifyGasPrice(value))
-
-//     this.lazyUpdateValidateSourceAmount(this.props.transfer.amount, value)
-//   }
 
   setAmount = () => {
     var tokenSymbol = this.props.transfer.tokenSymbol
@@ -153,19 +133,6 @@ export default class Transfer extends React.Component {
   }
 
   render() {
-    // if (this.props.account.isStoreReady) {
-    //   if (!!!this.props.account.account.address) {
-    //     setTimeout(() => this.props.dispatch(push("/")), 1000)
-    //     return (
-    //       <div></div>
-    //     )
-    //   }
-    // } else {
-    //   return (
-    //     <div></div>
-    //   )
-    // }
-
     var addressBalance = ""
     var token = this.props.tokens[this.props.transfer.tokenSymbol]
     if (token) {
@@ -199,15 +166,10 @@ export default class Transfer extends React.Component {
       />
     )
 
-    // var balance = {
-    //   prev: converters.toT(this.props.transfer.balanceData.prev, this.props.transfer.balanceData.tokenDecimal),
-    //   next: converters.toT(this.props.transfer.balanceData.next, this.props.transfer.balanceData.tokenDecimal)
-    // }
     var balanceInfo = {
       tokenName: this.props.transfer.balanceData.tokenName,
       amount: this.props.transfer.balanceData.amount,
       tokenSymbol: this.props.transfer.balanceData.tokenSymbol
-      // tokenSymbol: this.props.transfer.tokenSymbol
     }
     var destAdressShort = this.props.transfer.destAddress.slice(0, 8) + "..." + this.props.transfer.destAddress.slice(-6)
     var transactionLoadingScreen = (
@@ -224,11 +186,15 @@ export default class Transfer extends React.Component {
     )
 
     var addressBalanceLayout = ""
-    if (this.props.account.account !== false){      
-      addressBalanceLayout = (<AddressBalance setAmount={this.setAmount}
-                                            balance={addressBalance}
-                                            translate={this.props.translate}/>)
-      }
+    if (this.props.account.account !== false) {
+      addressBalanceLayout = (
+        <AddressBalance
+          setAmount={this.setAmount}
+          balance={addressBalance}
+          translate={this.props.translate}
+        />
+      )
+    }
 
     return (
       <TransferForm

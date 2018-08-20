@@ -8,7 +8,6 @@ import { filterInputNumber } from "../../utils/validators";
 import { ImportAccount } from "../../containers/ImportAccount";
 import { AccountBalance } from "../../containers/TransactionCommon";
 import { PostExchangeWithKey } from "../../containers/Exchange";
-import { TokenChart } from "../../containers/Market";
 import BLOCKCHAIN_INFO from "../../../../env";
 
 const ExchangeBodyLayout = (props) => {
@@ -78,28 +77,11 @@ const ExchangeBodyLayout = (props) => {
   var render = (
     <div className="grid-x">
       <div className={"cell medium-6 large-3 balance-wrapper" + (errorExchange ||  props.networkError?" error":"")} id="balance-account-wrapper">
-        {props.account !== false && (
-          <div className="balance-address">
-            <div className="title">{props.translate("address.your_wallet_address") || "Your Wallet Address"}</div>
-            <div>
-              <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}>
-                {props.account.address ? props.account.address.slice(0, 8) : ''} ... {props.account.address ? props.account.address.slice(-6) : ''}
-              </a>
-            </div>
-          </div>
-        )}
-
-        <TokenChart
-          sourceTokenSymbol={props.sourceTokenSymbol}
+        <AccountBalance
+          chooseToken = {props.chooseToken}
+          sourceActive = {props.sourceTokenSymbol}
           destTokenSymbol={props.destTokenSymbol}
         />
-
-        {props.account !== false && (
-          <AccountBalance
-            chooseToken = {props.chooseToken}
-            sourceActive = {props.sourceTokenSymbol}
-          />
-        )}
       </div>
 
       <div className={"cell medium-6 large-9 swap-wrapper" +

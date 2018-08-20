@@ -486,4 +486,25 @@
       }
     }
   }
+
+  &__contract {
+    padding: 10px 0 0 20px;
+
+    &-title {
+      font-weight: 600;
+      color: #222;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    &-address {
+      word-break: break-all;
+      color: $base-color !important;
+      transition: all .3s;
+
+      &:hover {
+        color: $swap-color !important;
+      }
+    }
+  }
 }
