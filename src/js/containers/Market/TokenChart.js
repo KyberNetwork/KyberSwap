@@ -39,16 +39,21 @@ export default class TokenChart extends React.Component {
     const isTimeRangeChanged = this.props.chartTimeRange !== nextProps.chartTimeRange;
 
     if (isSourceTokenSymbolChanged || isdestTokenSymbolChanged || isTokenListUpdated || isTimeRangeChanged) {
-      this.fetchAllChartData();
+
+      if (isTokenListUpdated) {
+        this.fetchAllChartData(true);
+      } else {
+        this.fetchAllChartData();
+      }
     }
   }
 
-  fetchAllChartData = () => {
+  fetchAllChartData = (disableLoading = false) => {
     const chartTokenSymbol = this.getChartToken();
 
     this.setChartTokenData(chartTokenSymbol);
 
-    this.props.dispatch(marketActions.fetchChartData(chartTokenSymbol, this.props.chartTimeRange));
+    this.props.dispatch(marketActions.fetchChartData(chartTokenSymbol, this.props.chartTimeRange, disableLoading));
   }
 
   getChartToken = () => {
