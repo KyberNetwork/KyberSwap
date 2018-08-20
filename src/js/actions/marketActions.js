@@ -148,33 +148,6 @@ export function updateSortState(sortKey, sortType) {
   }
 }
 
-export function toggleChartContent() {
-  return {
-    type: "MARKET.TOGGLE_CHART_CONTENT"
-  }
-}
-
-export function setChartLoading(isLoading) {
-  return {
-    type: "MARKET.SET_CHART_LOADING",
-    payload: isLoading
-  }
-}
-
-export function setChartTimeRange(timeRange) {
-  return {
-    type: "MARKET.SET_CHART_TIME_RANGE",
-    payload: timeRange
-  }
-}
-
-export function setChartTokenData(symbol, change, buyPrice, contractAddress) {
-  return {
-    type: "MARKET.SET_CHART_TOKEN_DATA",
-    payload: { symbol, change, buyPrice, contractAddress }
-  }
-}
-
 export function setChartPoints(points) {
   return {
     type: "MARKET.SET_CHART_POINTS",

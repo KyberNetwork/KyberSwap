@@ -28,6 +28,11 @@ const TransferForm = (props) => {
             chooseToken = {props.chooseToken}
             sourceActive = {props.tokenSymbol}
             destTokenSymbol='ETH'
+            isChartActive={props.isChartActive}
+            isChartLoading={props.isChartLoading}
+            chartTimeRange={props.chartTimeRange}
+            onChangeChartRange={props.onChangeChartRange}
+            onToggleChartContent={props.onToggleChartContent}
           />
         </div>
         <div class={"cell medium-6 large-9 swap-wrapper swap-wrapper--transfer" +

@@ -134,7 +134,12 @@ const INIT_EXCHANGE_FORM_STATE = {
   isAnalize: false,
   isAnalizeComplete: false,
   analizeError : {},
-  snapshot: {}
+  snapshot: {},
+  chart: {
+    isActive: true,
+    isLoading: false,
+    timeRange: '1W'
+  }
 }
 
 const INIT_TRANSFER_FORM_STATE = {
@@ -193,7 +198,12 @@ const INIT_TRANSFER_FORM_STATE = {
     signTransaction: '',
     ethBalanceError: ''
   },
-  snapshot: {}
+  snapshot: {},
+  chart: {
+    isActive: true,
+    isLoading: false,
+    timeRange: '1W'
+  }
 }
 
 

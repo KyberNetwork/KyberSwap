@@ -151,16 +151,7 @@ const initState = function () {
     },
     count: { storageKey: constants.STORAGE_KEY },
     chart: {
-      isActive: true,
-      isLoading: false,
-      timeRange: '1W',
-      points: [],
-      token: {
-        symbol: 'KNC',
-        change: 0,
-        buyPrice: 0,
-        contractAddress: null,
-      }
+      points: []
     }
   }
 }()
@@ -454,28 +445,6 @@ const market = (state = initState, action) => {
         }
       })
       return  {...newState, tokens: {...tokens}}
-    }
-    case "MARKET.TOGGLE_CHART_CONTENT": {
-      newState.chart.isActive = !newState.chart.isActive;
-      return newState;
-    }
-    case "MARKET.SET_CHART_LOADING": {
-      newState.chart.isLoading = action.payload
-      return newState
-    }
-    case "MARKET.SET_CHART_TIME_RANGE": {
-      newState.chart.timeRange = action.payload
-      return newState
-    }
-    case "MARKET.SET_CHART_TOKEN_DATA": {
-      const { symbol, change, buyPrice, contractAddress } = action.payload;
-
-      newState.chart.token.symbol = symbol;
-      newState.chart.token.change = change;
-      newState.chart.token.buyPrice = buyPrice;
-      newState.chart.token.contractAddress = contractAddress;
-
-      return newState
     }
     case "MARKET.SET_CHART_POINTS": {
       newState.chart.points = action.payload;
