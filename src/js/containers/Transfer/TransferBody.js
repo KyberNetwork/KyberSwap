@@ -223,7 +223,6 @@ export default class Transfer extends React.Component {
         networkError ={this.props.global.network_error}
         isAgreed={this.props.global.termOfServiceAccepted}
         isChartActive={this.props.transfer.chart.isActive}
-        isChartLoading={this.props.transfer.chart.isLoading}
         chartTimeRange={this.props.transfer.chart.timeRange}
         onChangeChartRange={this.changeChartRange}
         onToggleChartContent={this.toggleChartContent}

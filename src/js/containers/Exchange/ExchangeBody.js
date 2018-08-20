@@ -326,7 +326,6 @@ export default class ExchangeBody extends React.Component {
     )
     //--------End
 
-
     var errors = {
       selectSameToken: this.props.exchange.errors.selectSameToken || '',
       selectTokenToken: this.props.exchange.errors.selectTokenToken || '',
@@ -399,7 +398,6 @@ export default class ExchangeBody extends React.Component {
         focus = {this.state.focus}
         networkError ={this.props.global.network_error}
         isChartActive={this.props.exchange.chart.isActive}
-        isChartLoading={this.props.exchange.chart.isLoading}
         chartTimeRange={this.props.exchange.chart.timeRange}
         onChangeChartRange={this.changeChartRange}
         onToggleChartContent={this.toggleChartContent}

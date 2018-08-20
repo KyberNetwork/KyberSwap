@@ -135,7 +135,6 @@ const AccountBalanceLayout = (props) => {
         sourceTokenSymbol={props.sourceTokenSymbol}
         destTokenSymbol={props.destTokenSymbol}
         isChartActive={props.isChartActive}
-        isChartLoading={props.isChartLoading}
         chartTimeRange={props.chartTimeRange}
         onChangeChartRange={props.onChangeChartRange}
         onToggleChartContent={props.onToggleChartContent}

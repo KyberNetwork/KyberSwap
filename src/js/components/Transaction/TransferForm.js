@@ -29,7 +29,6 @@ const TransferForm = (props) => {
             sourceActive = {props.tokenSymbol}
             destTokenSymbol='ETH'
             isChartActive={props.isChartActive}
-            isChartLoading={props.isChartLoading}
             chartTimeRange={props.chartTimeRange}
             onChangeChartRange={props.onChangeChartRange}
             onToggleChartContent={props.onToggleChartContent}

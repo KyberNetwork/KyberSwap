@@ -29,15 +29,12 @@ export function changeSort(value) {
      }
 }
 
-
 export function changeDisplayColumn(value) {
     return {
        type: "MARKET.CHANGE_DISPLAY_COLUMN",
        payload: value
      }
 }
-
-
 
 export function changeShowColumn(column, show) {
     return {
@@ -148,6 +145,13 @@ export function updateSortState(sortKey, sortType) {
   }
 }
 
+export function setChartLoading(isLoading) {
+  return {
+    type: "MARKET.SET_CHART_LOADING",
+    payload: isLoading
+  }
+}
+
 export function setChartPoints(points) {
   return {
     type: "MARKET.SET_CHART_POINTS",
@@ -155,9 +159,9 @@ export function setChartPoints(points) {
   }
 }
 
-export function fetchChartData(tokenSymbol) {
+export function fetchChartData(tokenSymbol, timeRange) {
   return {
     type: "MARKET.FETCH_CHART_DATA",
-    payload: tokenSymbol
+    payload: { tokenSymbol, timeRange }
   }
 }

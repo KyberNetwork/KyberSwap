@@ -321,13 +321,6 @@ export function toggleChartContent(value = null) {
   }
 }
 
-export function setChartLoading(isLoading) {
-  return {
-    type: "TRANSFER.SET_CHART_LOADING",
-    payload: isLoading
-  }
-}
-
 export function setChartTimeRange(timeRange) {
   return {
     type: "TRANSFER.SET_CHART_TIME_RANGE",
