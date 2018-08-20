@@ -258,6 +258,14 @@ export default class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.analyzeError(ethereum, exchange.txHash))
   }
 
+  changeChartRange = (value) => {
+    this.props.dispatch(exchangeActions.setChartTimeRange(value))
+  }
+
+  toggleChartContent = () => {
+    this.props.dispatch(exchangeActions.toggleChartContent())
+  }
+
   render() {
     var balanceInfo = {
       sourceAmount: toT(this.props.exchange.balanceData.sourceAmount, this.props.exchange.balanceData.sourceDecimal),
@@ -384,6 +392,11 @@ export default class ExchangeBody extends React.Component {
         advanceLayout = {this.props.advanceLayout}
         focus = {this.state.focus}
         networkError ={this.props.global.network_error}
+        isChartActive={this.props.exchange.chart.isActive}
+        isChartLoading={this.props.exchange.chart.isLoading}
+        chartTimeRange={this.props.exchange.chart.timeRange}
+        onChangeChartRange={this.changeChartRange}
+        onToggleChartContent={this.toggleChartContent}
       />
     )
   }

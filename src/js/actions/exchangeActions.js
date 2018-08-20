@@ -601,3 +601,24 @@ export function closeImportAccountExchange(){
     type: "EXCHANGE.CLOSE_IMPORT_ACCOUNT"
   }
 }
+
+export function toggleChartContent(value = null) {
+  return {
+    type: "EXCHANGE.TOGGLE_CHART_CONTENT",
+    payload: value
+  }
+}
+
+export function setChartLoading(isLoading) {
+  return {
+    type: "EXCHANGE.SET_CHART_LOADING",
+    payload: isLoading
+  }
+}
+
+export function setChartTimeRange(timeRange) {
+  return {
+    type: "EXCHANGE.SET_CHART_TIME_RANGE",
+    payload: timeRange
+  }
+}

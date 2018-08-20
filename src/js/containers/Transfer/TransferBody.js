@@ -129,7 +129,14 @@ export default class Transfer extends React.Component {
 
       this.onFocus()
     }
+  }
 
+  changeChartRange = (value) => {
+    this.props.dispatch(transferActions.setChartTimeRange(value))
+  }
+
+  toggleChartContent = () => {
+    this.props.dispatch(transferActions.toggleChartContent())
   }
 
   render() {
@@ -215,6 +222,11 @@ export default class Transfer extends React.Component {
         advanceLayout = {this.props.advanceLayout}
         networkError ={this.props.global.network_error}
         isAgreed={this.props.global.termOfServiceAccepted}
+        isChartActive={this.props.transfer.chart.isActive}
+        isChartLoading={this.props.transfer.chart.isLoading}
+        chartTimeRange={this.props.transfer.chart.timeRange}
+        onChangeChartRange={this.changeChartRange}
+        onToggleChartContent={this.toggleChartContent}
       />
     )
   }

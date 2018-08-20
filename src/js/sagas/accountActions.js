@@ -3,22 +3,27 @@ import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
 import { clearSession, setGasPrice, setBalanceToken } from "../actions/globalActions"
 import { fetchExchangeEnable } from "../actions/exchangeActions"
-
 import { openInfoModal } from '../actions/utilActions'
 import * as common from "./common"
 import * as analytics from "../utils/analytics"
-
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
-import { randomToken, setRandomExchangeSelectedToken, setCapExchange, thowErrorNotPossessKGt, closeImportAccountExchange } from "../actions/exchangeActions"
-import { setRandomTransferSelectedToken, closeImportAccountTransfer } from "../actions/transferActions"
-//import { randomForExchange } from "../utils/random"
-
+import {
+  randomToken,
+  setRandomExchangeSelectedToken,
+  setCapExchange,
+  thowErrorNotPossessKGt,
+  closeImportAccountExchange,
+  toggleChartContent as toggleChartContentExchange
+} from "../actions/exchangeActions";
+import {
+  setRandomTransferSelectedToken,
+  closeImportAccountTransfer,
+  toggleChartContent as toggleChartContentTransfer
+} from "../actions/transferActions"
 import * as service from "../services/accounts"
 import constants from "../services/constants"
 import { Rate, updateAllRatePromise } from "../services/rate"
-
 import { findNetworkName } from "../utils/converter"
-
 import { getTranslate } from 'react-localize-redux'
 import { store } from '../store';
 
@@ -87,19 +92,17 @@ export function* importNewAccount(action) {
     yield put(actions.closeImportLoading())
     yield put(actions.importNewAccountComplete(account))
 
-
     //track login wallet
     analytics.loginWallet(type)
-    
 
     if (screen === "exchange"){
       yield put(closeImportAccountExchange())
     }else{
       yield put(closeImportAccountTransfer())
     }
-    
 
-//    yield put(goToRoute(constants.BASE_HOST + '/swap'))
+    yield put(toggleChartContentExchange(false));
+    yield put(toggleChartContentTransfer(false));
 
     yield put(fetchExchangeEnable())
 
@@ -110,6 +113,7 @@ export function* importNewAccount(action) {
       var linkReg = 'https://kybernetwork.zendesk.com'
       yield put(thowErrorNotPossessKGt(translate("error.not_possess_kgt", {link: linkReg}) || "There seems to be a problem with your address, please contact us for more details"))
     }
+
     //update token and token balance
     var newTokens = {}
     Object.values(tokens).map(token => {
@@ -133,9 +137,6 @@ export function* importNewAccount(action) {
     yield put(actions.throwError(translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
     yield put(actions.closeImportLoading())
   }
-
-
-
 
   //fork for metamask
   if (type === "metamask") {

@@ -17,6 +17,21 @@ import BLOCKCHAIN_INFO from "../../../../env";
   }
 })
 export default class TokenChart extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      symbol: 'KNC',
+      change: -9999,
+      buyPrice: 0,
+      contractAddress: null,
+    };
+  }
+
+  componentDidMount = () => {
+    this.fetchAllChartData();
+  }
+
   componentDidUpdate = (nextProps) => {
     const isTokenListUpdated = this.props.market.tokens !== nextProps.market.tokens;
     const isSourceTokenSymbolChanged = this.props.sourceTokenSymbol !== nextProps.sourceTokenSymbol;
@@ -50,17 +65,12 @@ export default class TokenChart extends React.Component {
       return symbol === chartTokenSymbol;
     }).first().value();
 
-    this.props.dispatch(marketActions.setChartTokenData(
-      chartTokenSymbol, chartTokenInfo.ETH.change, chartTokenInfo.ETH.buyPrice, chartTokenInfo.info.address
-    ));
-  }
-
-  changeChartRange = (value) => {
-    this.props.dispatch(marketActions.setChartTimeRange(value));
-  }
-
-  toggleChartContent = () => {
-    this.props.dispatch(marketActions.toggleChartContent());
+    this.setState({
+      symbol: chartTokenSymbol,
+      change: chartTokenInfo.ETH.change,
+      buyPrice: chartTokenInfo.ETH.buyPrice,
+      contractAddress: chartTokenInfo.info.address
+    })
   }
 
   render() {
@@ -68,15 +78,15 @@ export default class TokenChart extends React.Component {
     const chartRangeHtml = chartRanges.map((value, index) => {
       return (
         <div
-          className={"balance-content__range-item" + (this.props.chart.timeRange == value ? ' balance-content__range-item--active' : ' disabled')}
+          className={"balance-content__range-item" + (this.props.chartTimeRange == value ? ' balance-content__range-item--active' : ' disabled')}
           key={index}
-          onClick={() => this.changeChartRange(value)}>
+          onClick={() => this.props.onChangeChartRange(value)}>
             {value}
         </div>
       )
     })
-    const isNegativeChange = this.props.chart.token.change < 0;
-    const shouldRenderChart = this.props.chart.token.change !== -9999 || (this.props.chart.points.length && this.props.chart.token.change !== -9999);
+    const isNegativeChange = this.state.change < 0;
+    const shouldRenderChart = this.state.change !== -9999 || (this.props.chart.points.length && this.state.change !== -9999);
     const data = {
       labels: _.keys(this.props.chart.points),
       datasets: [{
@@ -108,17 +118,17 @@ export default class TokenChart extends React.Component {
 
     return (
       <div className="balance-content">
-        <SlideDown active={this.props.chart.isActive}>
-          <SlideDownTrigger onToggleContent={() => this.toggleChartContent()}>
+        <SlideDown active={this.props.isChartActive}>
+          <SlideDownTrigger onToggleContent={() => this.props.onToggleChartContent()}>
             <div className="balance-content__pair">
-              {this.props.chart.token.symbol}/ETH
+              {this.state.symbol}/ETH
             </div>
             <div className="balance-content__rate-wrapper">
-              <div className="balance-content__rate">{this.props.chart.token.buyPrice}</div>
+              <div className="balance-content__rate">{this.state.buyPrice}</div>
               <div className={"balance-content__change" +
               (isNegativeChange ? ' balance-content__change--nagative' : '') +
               (!shouldRenderChart ? ' balance-content__change--inactive' : '')}>
-                {shouldRenderChart ? this.props.chart.token.change + '%' : '---'}
+                {shouldRenderChart ? this.state.change + '%' : '---'}
               </div>
             </div>
           </SlideDownTrigger>
@@ -127,7 +137,7 @@ export default class TokenChart extends React.Component {
             {shouldRenderChart === true && (
               <div>
                 <div
-                  className={"balance-content__chart" + (this.props.chart.isLoading ? ' balance-content__chart--loading' : '')}>
+                  className={"balance-content__chart" + (this.props.isChartLoading ? ' balance-content__chart--loading' : '')}>
                   <Line
                     data={data}
                     options={options}
@@ -141,11 +151,14 @@ export default class TokenChart extends React.Component {
             {shouldRenderChart !== true && (
               <div className="balance-content__contract">
                 <span className="balance-content__contract-title">Contract Address:</span>
-                <a className="balance-content__contract-address"
-                   href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + this.props.chart.token.contractAddress}
-                   target="_blank">
-                  {this.props.chart.token.contractAddress}
-                </a>
+
+                {this.state.contractAddress && (
+                  <a className="balance-content__contract-address"
+                     href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + this.state.contractAddress}
+                     target="_blank">
+                    {this.state.contractAddress}
+                  </a>
+                )}
               </div>
             )}
           </SlideDownContent>

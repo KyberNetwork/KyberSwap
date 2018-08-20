@@ -265,6 +265,18 @@ const transfer = (state = initState, action) => {
       resetState.tokenSymbol = newState.tokenSymbol
       return resetState
     }
+    case "TRANSFER.TOGGLE_CHART_CONTENT": {
+      newState.chart.isActive = action.payload !== null ? action.payload : !newState.chart.isActive;
+      return newState;
+    }
+    case "TRANSFER.SET_CHART_LOADING": {
+      newState.chart.isLoading = action.payload
+      return newState
+    }
+    case "TRANSFER.SET_CHART_TIME_RANGE": {
+      newState.chart.timeRange = action.payload
+      return newState
+    }
   }
   return state
 }

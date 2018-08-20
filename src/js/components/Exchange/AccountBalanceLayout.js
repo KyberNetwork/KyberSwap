@@ -134,12 +134,17 @@ const AccountBalanceLayout = (props) => {
       <TokenChart
         sourceTokenSymbol={props.sourceTokenSymbol}
         destTokenSymbol={props.destTokenSymbol}
+        isChartActive={props.isChartActive}
+        isChartLoading={props.isChartLoading}
+        chartTimeRange={props.chartTimeRange}
+        onChangeChartRange={props.onChangeChartRange}
+        onToggleChartContent={props.onToggleChartContent}
       />
 
       {props.account !== false && (
         <SlideDown active={props.isBalanceActive}>
           <SlideDownTrigger onToggleContent={() => props.toggleBalanceContent()}>
-            <div className="balance-header balance-large">
+            <div className="balance-header">
               <div className="title">
                 {props.translate("address.my_balance") || "My balance"}
               </div>
@@ -148,20 +153,6 @@ const AccountBalanceLayout = (props) => {
                   {props.translate("address.total") || "Total"} {getBalanceUsd()} USD
                 </div>
               )}
-            </div>
-
-            <div className="balance-header balance-medium" onClick={(e) => toggleShowBalance()}>
-              <div>
-                <div className="title">
-                  {props.translate("address.my_balance") || "My balance"}
-                </div>
-                {props.showBalance && (
-                  <div className="estimate-value">
-                    <span className="text-upcase">{props.translate("address.total") || "Total"} {getBalanceUsd()} USD</span>
-                  </div>
-                )}
-              </div>
-              <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="arrow-balance"/>
             </div>
           </SlideDownTrigger>
 

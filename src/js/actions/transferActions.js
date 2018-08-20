@@ -313,3 +313,24 @@ export function closeImportAccountTransfer(){
     type: "TRANSFER.CLOSE_IMPORT_ACCOUNT"
   }
 }
+
+export function toggleChartContent(value = null) {
+  return {
+    type: "TRANSFER.TOGGLE_CHART_CONTENT",
+    payload: value
+  }
+}
+
+export function setChartLoading(isLoading) {
+  return {
+    type: "TRANSFER.SET_CHART_LOADING",
+    payload: isLoading
+  }
+}
+
+export function setChartTimeRange(timeRange) {
+  return {
+    type: "TRANSFER.SET_CHART_TIME_RANGE",
+    payload: timeRange
+  }
+}
