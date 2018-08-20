@@ -2,6 +2,7 @@ import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effect
 import * as marketActions from "../actions/marketActions"
 import * as globalActions from "../actions/globalActions"
 import { store } from '../store'
+import BLOCKCHAIN_INFO from "../../../env";
 
 export function* getData(action) {
     var state = store.getState()
@@ -115,16 +116,19 @@ export function* getNewData(action) {
 }
 
 export function* fetchChartData(action) {
-  const state = store.getState();
-  const ethereum =  state.connection.ethereum;
-  const tokenSymbol = action.payload
+  const { tokenSymbol, timeRange } = action.payload;
+
+  yield put(marketActions.setChartLoading(true));
 
   try {
-    var response = yield call([ethereum, ethereum.call], 'getLast7D', tokenSymbol);
-    yield put(marketActions.setChartPoints(response.data[tokenSymbol]));
+    const response = yield call(fetch, BLOCKCHAIN_INFO.tracker + `/chart/klines?symbol=${tokenSymbol}&interval=${timeRange}`);
+    const data = yield call([response, response.json])
+    yield put(marketActions.setChartPoints(data))
   } catch(e) {
     console.log(e);
   }
+
+  yield put(marketActions.setChartLoading(false));
 }
 
 export function* watchMarket() {

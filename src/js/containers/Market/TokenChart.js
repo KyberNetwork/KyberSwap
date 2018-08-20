@@ -36,8 +36,9 @@ export default class TokenChart extends React.Component {
     const isTokenListUpdated = this.props.market.tokens !== nextProps.market.tokens;
     const isSourceTokenSymbolChanged = this.props.sourceTokenSymbol !== nextProps.sourceTokenSymbol;
     const isdestTokenSymbolChanged = this.props.destTokenSymbol !== nextProps.destTokenSymbol;
+    const isTimeRangeChanged = this.props.chartTimeRange !== nextProps.chartTimeRange;
 
-    if (isSourceTokenSymbolChanged || isdestTokenSymbolChanged || isTokenListUpdated) {
+    if (isSourceTokenSymbolChanged || isdestTokenSymbolChanged || isTokenListUpdated || isTimeRangeChanged) {
       this.fetchAllChartData();
     }
   }
@@ -47,7 +48,7 @@ export default class TokenChart extends React.Component {
 
     this.setChartTokenData(chartTokenSymbol);
 
-    this.props.dispatch(marketActions.fetchChartData(chartTokenSymbol));
+    this.props.dispatch(marketActions.fetchChartData(chartTokenSymbol, this.props.chartTimeRange));
   }
 
   getChartToken = () => {
@@ -74,17 +75,17 @@ export default class TokenChart extends React.Component {
   }
 
   render() {
-    const chartRanges = ['1D', '1W', '1M', 'All'];
-    const chartRangeHtml = chartRanges.map((value, index) => {
+    const chartRanges = { d: '1D', w: '1W', m: '1M', y: 'All' };
+    const chartRangeHtml = _.map(chartRanges, (value, key) => {
       return (
         <div
-          className={"balance-content__range-item" + (this.props.chartTimeRange == value ? ' balance-content__range-item--active' : ' disabled')}
-          key={index}
-          onClick={() => this.props.onChangeChartRange(value)}>
+          className={"balance-content__range-item" + (this.props.chartTimeRange == key ? ' balance-content__range-item--active' : '')}
+          key={key}
+          onClick={() => this.props.onChangeChartRange(key)}>
             {value}
         </div>
       )
-    })
+    });
     const isNegativeChange = this.state.change < 0;
     const shouldRenderChart = this.state.change !== -9999 || (this.props.chart.points.length && this.state.change !== -9999);
     const data = {
@@ -137,7 +138,7 @@ export default class TokenChart extends React.Component {
             {shouldRenderChart === true && (
               <div>
                 <div
-                  className={"balance-content__chart" + (this.props.isChartLoading ? ' balance-content__chart--loading' : '')}>
+                  className={"balance-content__chart" + (this.props.chart.isLoading ? ' balance-content__chart--loading' : '')}>
                   <Line
                     data={data}
                     options={options}

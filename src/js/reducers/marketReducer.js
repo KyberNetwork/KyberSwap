@@ -151,6 +151,7 @@ const initState = function () {
     },
     count: { storageKey: constants.STORAGE_KEY },
     chart: {
+      isLoading: false,
       points: []
     }
   }
@@ -446,6 +447,12 @@ const market = (state = initState, action) => {
       })
       return  {...newState, tokens: {...tokens}}
     }
+
+    case "MARKET.SET_CHART_LOADING": {
+      newState.chart.isLoading = action.payload;
+      return newState;
+    }
+
     case "MARKET.SET_CHART_POINTS": {
       newState.chart.points = action.payload;
       return newState;

@@ -89,7 +89,6 @@ export default class AccountBalance extends React.Component {
         sourceTokenSymbol={this.props.sourceActive}
         destTokenSymbol={this.props.destTokenSymbol}
         isChartActive={this.props.isChartActive}
-        isChartLoading={this.props.isChartLoading}
         chartTimeRange={this.props.chartTimeRange}
         onChangeChartRange={this.props.onChangeChartRange}
         onToggleChartContent={this.props.onToggleChartContent}

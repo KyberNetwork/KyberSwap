@@ -137,8 +137,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   snapshot: {},
   chart: {
     isActive: true,
-    isLoading: false,
-    timeRange: '1W'
+    timeRange: 'w'
   }
 }
 
@@ -201,8 +200,7 @@ const INIT_TRANSFER_FORM_STATE = {
   snapshot: {},
   chart: {
     isActive: true,
-    isLoading: false,
-    timeRange: '1W'
+    timeRange: 'w'
   }
 }
 
