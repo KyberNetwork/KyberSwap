@@ -25,8 +25,8 @@ export function loginWallet(wallet) {
     if (wallet === 'keystore') wallet = 'json'
     if (typeof window.gtag === 'function') {
         try {
-            window.gtag('event', 'LoginWallet', {
-                'event_category': "wallet",
+            window.gtag('event', wallet, {
+                'event_category': "LoginWallet",
                 'event_label': wallet
             })
         } catch (e) {
@@ -45,6 +45,13 @@ export function loginWallet(wallet) {
 
 
 export function completeTrade(hash, walletType, tradeType) {
+    var type
+    if (tradeType === "transfer") {
+        type = "Transfer confirm"
+    }
+    if (tradeType === "exchange") {
+        type = "Swap confirm"
+    }
     if (typeof window.gtag === 'function') {
         try {
             // gtag('event', 'WalletTrade', {
@@ -52,8 +59,8 @@ export function completeTrade(hash, walletType, tradeType) {
             //     'event_label': "trade",
             //     'value': tradeType
             // })
-            window.gtag('event', 'CompleteTrade', {
-                'event_category': "trade",
+            window.gtag('event', type, {
+                'event_category': "Confirm transaction",
                 'event_label': tradeType,
             })
             //window.gtag('event', 'CompleteTrade', { hash: hash, wallet: walletType, trade: tradeType })
@@ -75,7 +82,7 @@ export function completeTrade(hash, walletType, tradeType) {
 export function trackCoinExchange(data) {
     if (typeof window.gtag === 'function') {
         try {
-            window.gtag('event', 'Swap', {
+            window.gtag('event', 'SWAP CTA', {
                 'event_category': "Swap",
                 'event_label': `${data.sourceTokenSymbol}_${data.destTokenSymbol}`
             })
@@ -97,8 +104,8 @@ export function trackCoinExchange(data) {
 export function trackCoinTransfer(token){
     if (typeof window.gtag === 'function') {
         try {
-            window.gtag('event', 'Transfer', {
-                'event_category': "transfer",
+            window.gtag('event', 'TRANSFER CTA', {
+                'event_category': "Transfer",
                 'event_label': token
             })
         } catch (e) {
@@ -118,7 +125,7 @@ export function tokenForCharting(token){
     if (typeof window.gtag === 'function') {
         try {
             window.gtag('event', 'ViewChart', {
-                'event_category': "viewChart",
+                'event_category': `viewChart: ${token}`,
                 'event_label': token
             })
         } catch (e) {
@@ -137,7 +144,7 @@ export function tokenForCharting(token){
 export function acceptTerm(){
     if (typeof window.gtag === 'function') {
         try {
-            window.gtag('event', 'AcceptTerm', {
+            window.gtag('event', 'Accepted', {
                 'event_category': "AcceptTerm",
                 'event_label': "Accepted"
             })
@@ -157,8 +164,8 @@ export function acceptTerm(){
 export function trackBaseCurrency(currency){
     if (typeof window.gtag === 'function') {
         try {
-            window.gtag('event', 'chooseBaseCurrency', {
-                'event_category': "currency",
+            window.gtag('event', currency, {
+                'event_category': "chooseBaseCurrency",
                 'event_label': currency
             })
         } catch (e) {
@@ -177,8 +184,8 @@ export function trackBaseCurrency(currency){
 export function trackMarketSetting(field, value){
     if (typeof window.gtag === 'function') {
         try {
-            window.gtag('event', 'marketSetting', {
-                'event_category': "option",
+            window.gtag('event', `${field}: ${value}`, {
+                'event_category': "marketSetting",
                 'event_label': `${field}: ${value}`
             })
         } catch (e) {
@@ -197,8 +204,8 @@ export function trackMarketSetting(field, value){
 export function trackChooseGas(gas, type){
     if (typeof window.gtag === 'function') {
         try {
-            window.gtag('event', 'chooseGasPrice', {
-                'event_category': "gasPrice",
+            window.gtag('event', `${type}: ${gas}`, {
+                'event_category': "chooseGasPrice",
                 'event_label': `${type}: ${gas}`
             })
         } catch (e) {
