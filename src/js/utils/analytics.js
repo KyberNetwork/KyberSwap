@@ -286,3 +286,153 @@ export function trackChooseGas(gas, type){
     //     }
     // }
 }
+
+export function trackSearchETHMarket(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_To_Search_ETH_Market", "Search token on ETH market")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackChooseTokenOnBalanceBoard(token){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_Choose_Token_Balance_Board", {token : token})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickSortBalanceBoard(type, sortType){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_Sort_Token_Balance_Board", {type: type, sortType: sortType})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackSearchTokenBalanceBoard(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_Search_Token_Balance_board", "Search token on balance board")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickAllIn(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_Swap_All_Balance", "swap all")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackSetNewMinrate(minrate){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Change_Min_Acceptable_Rate", {minrate: minrate})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackCustomGasPrice(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_Gas_Input", "Custom gas price")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackChooseToken(type, token){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_Choose_List_Token", {type: type, token: token})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackSearchToken(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_Search_Token", "Search token")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackSortETHMarket(field, sortType){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_Sort_ETH_Market", {field: field, sortType: sortType})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickSwapDestSrc(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_To_Swap_Dest_Src", "Click Swap Dest and Src")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickSwapButton(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_Swap_Button", "Click Swap button")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickNewTransaction(type){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_New_Transaction", {type: type})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickApproveToken(token){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_Approve_Token", {token: token})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackConfirmTransaction(token){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_Confirm_Transaction", {token: token})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}

@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 
 import { getTranslate } from 'react-localize-redux';
 import * as marketActions from "../../actions/marketActions"
+import * as analytics from "../../utils/analytics"
 
 @connect((store) => {
     return {
@@ -21,7 +22,7 @@ export default class SearchWord extends React.Component {
             <div className="search-symbol">
                 <div className="header-label">{this.props.translate("market.search") || "Search"}</div>
                 <div>
-                    <input type="text" className="search-input" placeholder={this.props.translate("market.try_searching_for_token") || "Try Searching for Token"} value={this.props.searchWord} onChange={(e) => this.changeSearch(e)} />
+                    <input type="text" className="search-input" placeholder={this.props.translate("market.try_searching_for_token") || "Try Searching for Token"} value={this.props.searchWord} onChange={(e) => this.changeSearch(e)} onClick={(e) => analytics.trackSearchETHMarket()}/>
                 </div>
             </div>
         )

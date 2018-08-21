@@ -3,6 +3,7 @@ import React from "react"
 import ReactTooltip from 'react-tooltip'
 import { filterInputNumber } from "../../utils/validators";
 import GasOption from './GasOption';
+import * as analytics from "../../utils/analytics"
 
 const GasConfig = (props) => {
   let gas_option = {"f":props.translate("fast") || 'Fast', "s":props.translate("standard") || 'Standard', "l":props.translate("low") || 'Slow'}
@@ -36,7 +37,7 @@ const GasConfig = (props) => {
       <div className={!props.gasPriceError ? "" : "error"}>
         <div className="gas-change">
           <div className="gas_input">
-            <input type="text" min="0" max="99" className="gas-price-input" step="0.1" value={props.gasPrice} onChange={handleChangeGasPrice} maxLength="20" autoComplete="off" />
+            <input type="text" min="0" max="99" className="gas-price-input" step="0.1" value={props.gasPrice} onChange={handleChangeGasPrice} onClick={(e) => analytics.trackCustomGasPrice()} maxLength="20" autoComplete="off" />
           </div>
           <div className="gas_input-lable">
             Gwei
