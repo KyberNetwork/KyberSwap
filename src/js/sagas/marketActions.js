@@ -116,16 +116,25 @@ export function* getNewData(action) {
 }
 
 export function* fetchChartData(action) {
-  const { tokenSymbol, timeRange, disableLoading } = action.payload;
+  const { tokenSymbol, timeRange } = action.payload;
 
-  if (!disableLoading) {
-    yield put(marketActions.setChartLoading(true));
-  }
+  yield put(marketActions.setChartLoading(true));
 
   try {
-    const response = yield call(fetch, BLOCKCHAIN_INFO.tracker + `/chart/klines?symbol=${tokenSymbol}&interval=${timeRange}`);
-    const data = yield call([response, response.json])
-    yield put(marketActions.setChartPoints(data))
+    if (timeRange === 'w') {
+      const state = store.getState();
+      const ethereum = state.connection.ethereum;
+
+      const last7DPoints = yield call([ethereum, ethereum.call], 'getLast7D', tokenSymbol);
+
+      yield put(marketActions.setChartPoints(last7DPoints.data[tokenSymbol]));
+    } else {
+      const response = yield call(fetch, BLOCKCHAIN_INFO.tracker + `/chart/klines?symbol=${tokenSymbol}&interval=${timeRange}`);
+      const data = yield call([response, response.json]);
+
+      yield put(marketActions.setChartPoints(data));
+    }
+
   } catch(e) {
     console.log(e);
   }

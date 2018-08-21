@@ -159,9 +159,9 @@ export function setChartPoints(points) {
   }
 }
 
-export function fetchChartData(tokenSymbol, timeRange, disableLoading = false) {
+export function fetchChartData(tokenSymbol, timeRange) {
   return {
     type: "MARKET.FETCH_CHART_DATA",
-    payload: { tokenSymbol, timeRange, disableLoading }
+    payload: { tokenSymbol, timeRange }
   }
 }
