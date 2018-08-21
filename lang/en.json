@@ -168,7 +168,7 @@
     "not_possess_kgt": "There seems to be a problem with your address, please <a href=\"${link}\" target=\"_blank\">contact us</a> for more details",
 
     "dest_address": "This is not an address",
-    "amount_transfer_too_hign": "Amount is too high",
+    "amount_transfer_too_hign": "Amount is too high. Your balance is insufficient",
     "amount_must_be_number": "Amount must be a number",
 
     "error_occurred": "Error occurred",
