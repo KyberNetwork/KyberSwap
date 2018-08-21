@@ -6,6 +6,7 @@ import SlideDown, { SlideDownTrigger, SlideDownContent } from "../../components/
 import { default as _ } from 'underscore';
 import { getTranslate } from 'react-localize-redux';
 import BLOCKCHAIN_INFO from "../../../../env";
+import constants from '../../services/constants';
 
 @connect((store) => {
   const market = store.market;
@@ -25,35 +26,43 @@ export default class TokenChart extends React.Component {
       change: -9999,
       buyPrice: 0,
       contractAddress: null,
+      shouldRefreshChartData: false,
     };
   }
 
   componentDidMount = () => {
-    this.fetchAllChartData();
+    this.fetchAllChartData(true);
+
+    this.interval = setInterval(() => {
+      this.setState({ shouldRefreshChartData: true });
+    }, constants.TOKEN_CHART_INTERVAL);
+  }
+
+  componentWillUnmount = () => {
+    clearInterval(this.interval);
   }
 
   componentDidUpdate = (nextProps) => {
-    const isTokenListUpdated = this.props.market.tokens !== nextProps.market.tokens;
     const isSourceTokenSymbolChanged = this.props.sourceTokenSymbol !== nextProps.sourceTokenSymbol;
     const isdestTokenSymbolChanged = this.props.destTokenSymbol !== nextProps.destTokenSymbol;
     const isTimeRangeChanged = this.props.chartTimeRange !== nextProps.chartTimeRange;
+    const isTokenListUpdated = this.props.market.tokens !== nextProps.market.tokens;
 
-    if (isSourceTokenSymbolChanged || isdestTokenSymbolChanged || isTokenListUpdated || isTimeRangeChanged) {
-
-      if (isTokenListUpdated) {
-        this.fetchAllChartData(true);
-      } else {
-        this.fetchAllChartData();
-      }
+    if (isSourceTokenSymbolChanged || isdestTokenSymbolChanged || isTimeRangeChanged) {
+      this.fetchAllChartData(true);
+    } else if (isTokenListUpdated) {
+      this.fetchAllChartData(this.state.shouldRefreshChartData);
+      this.setState({ shouldRefreshChartData: false });
     }
   }
 
-  fetchAllChartData = (disableLoading = false) => {
+  fetchAllChartData = (shouldFetchChartData = false) => {
     const chartTokenSymbol = this.getChartToken();
-
     this.setChartTokenData(chartTokenSymbol);
 
-    this.props.dispatch(marketActions.fetchChartData(chartTokenSymbol, this.props.chartTimeRange, disableLoading));
+    if (shouldFetchChartData) {
+      this.props.dispatch(marketActions.fetchChartData(chartTokenSymbol, this.props.chartTimeRange));
+    }
   }
 
   getChartToken = () => {
@@ -76,7 +85,7 @@ export default class TokenChart extends React.Component {
       change: chartTokenInfo.ETH.change,
       buyPrice: chartTokenInfo.ETH.buyPrice,
       contractAddress: chartTokenInfo.info.address
-    })
+    });
   }
 
   render() {
