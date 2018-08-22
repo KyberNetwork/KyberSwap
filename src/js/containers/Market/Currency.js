@@ -20,15 +20,23 @@ export default class Currency extends React.Component {
         this.props.dispatch(marketActions.changeCurrency(value))
         analytics.trackBaseCurrency(value)
     }
+
+    renderCurrency(){
+       return Object.keys(this.props.currency.listItem).map(key => {
+            return <a key={key} className='currency-item' onClick={(e)=>this.changeCurrency(key)}>{this.props.currency.listItem[key]}</a>
+        })
+    }
+
     render() {
         return (
-            <div className="market-choose-currency">
-                <div className="header-label">{this.props.translate("market.currency") || "Currency"}</div>
-                <Selector
+            <div className="market__header-currency">
+                {/* <div className="header-label">{this.props.translate("market.currency") || "Currency"}</div> */}
+                {this.renderCurrency()}
+                {/* <Selector
                     defaultItem={this.props.currency.focus}
                     listItem={this.props.currency.listItem}
                     onChange = {this.changeCurrency}
-                />
+                /> */}
             </div>
         )
     }

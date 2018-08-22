@@ -104,7 +104,7 @@ export default class ManageColumn extends React.Component {
     //<div key={key} className="column-label">
     render() {
         return (
-            <div>
+            // <div>
                 <div className="token-selector">
                     <Dropdown onShow={(e) => this.showSelector(e)} onHide={(e) => this.hideSelector(e)} active={this.state.open}>
                         <DropdownTrigger className="notifications-toggle">
@@ -130,7 +130,7 @@ export default class ManageColumn extends React.Component {
                         </DropdownContent>
                     </Dropdown>
                 </div>
-            </div>
+            // </div>
         )
     }
 }

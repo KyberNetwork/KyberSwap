@@ -107,8 +107,10 @@ export default class TokenChart extends React.Component {
       labels: _.keys(this.props.chart.points),
       datasets: [{
         data: this.props.chart.points,
-        backgroundColor: isNegativeChange ? 'rgba(255, 99, 132, 0.2)' : 'rgba(49, 203, 158, 0.2)',
-        borderColor: isNegativeChange ? 'rgba(255,99,132,1)': '#31CB9E',
+        backgroundColor: '#EBEBEB',
+        //backgroundColor: isNegativeChange ? 'rgba(255, 99, 132, 0.2)' : 'rgba(49, 203, 158, 0.2)',
+        //borderColor: isNegativeChange ? 'rgba(255,99,132,1)': '#31CB9E',
+        borderColor: '#ccc',
         borderWidth: 1
       }]
     };
