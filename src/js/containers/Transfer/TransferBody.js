@@ -160,7 +160,7 @@ export default class Transfer extends React.Component {
 
       this.onFocus()
     }
-
+    analytics.trackClickAllIn("Transfer", tokenSymbol)
   }
 
   render() {

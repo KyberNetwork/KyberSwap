@@ -76,7 +76,7 @@ const TokenSelectorView = (props) => {
         <DropdownContent>
           <div className="select-item">
             <div className="search-item">
-              <input value={props.searchWord} placeholder={props.translate("search") || "Search"} onChange={(e) => props.changeWord(e)} type="text" onClick={(e) => analytics.trackSearchToken()}/>
+              <input value={props.searchWord} placeholder={props.translate("search") || "Search"} onChange={(e) => props.changeWord(e)} type="text" onFocus={(e) => analytics.trackSearchToken()}/>
             </div>
             <div className="list-item custom-scroll">
               {getListToken()}
