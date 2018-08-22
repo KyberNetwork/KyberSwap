@@ -304,6 +304,7 @@ export default class MarketTable extends React.Component {
 
   updateSortState = (key, sortType) => {
     this.props.dispatch(actions.updateSortState(key, sortType))
+    analytics.trackSortETHMarket(key, sortType)
   }
 
   getSortType = (key) => {

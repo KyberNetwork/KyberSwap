@@ -1,6 +1,7 @@
 import React from "react"
 import { toT, roundingNumber } from "../../utils/converter"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
+import * as analytics from "../../utils/analytics"
 
 const TokenSelectorView = (props) => {
   var focusItem = props.listItem[props.focusItem]
@@ -75,7 +76,7 @@ const TokenSelectorView = (props) => {
         <DropdownContent>
           <div className="select-item">
             <div className="search-item">
-              <input value={props.searchWord} placeholder={props.translate("search") || "Search"} onChange={(e) => props.changeWord(e)} type="text"/>
+              <input value={props.searchWord} placeholder={props.translate("search") || "Search"} onChange={(e) => props.changeWord(e)} type="text" onFocus={(e) => analytics.trackSearchToken()}/>
             </div>
             <div className="list-item custom-scroll">
               {getListToken()}

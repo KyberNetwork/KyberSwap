@@ -77,7 +77,8 @@ const tokens = (state = initState, action) => {
     // }
     case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
       var tokens = { ...state.tokens }
-      var rates = action.payload.rates
+      var {rates, rateUSD} = action.payload
+      console.log("mapToken")
       if (!rates){
         return state
       }
@@ -90,19 +91,32 @@ const tokens = (state = initState, action) => {
           }
           mapToken[rate.source].rate = rate.rate          
           mapToken[rate.source].minRate = converter.getMinrate(rate.rate, rate.minRate)
+
+          mapToken[rate.source].rateUSD = converter.roundingNumber(converter.toT(rate.rate, 18)*rateUSD)
+          //mapToken[rate.source].rateUSD = rateUSD
         } else {
           if (!mapToken[rate.dest]) {
             mapToken[rate.dest] = {}
           }
           mapToken[rate.dest].rateEth = rate.rate
           mapToken[rate.dest].minRateEth = converter.getMinrate(rate.rate, rate.minRate) 
+
+         // mapToken[rate.dest].rateUSD = converter.roundingNumber(converter.toT(rate.rate, 18)*rateUSD)
         }
       })
-
+      // console.log("mapToken")
+      // console.log(mapToken)
       //push data
       var newTokens = {}
       Object.keys(tokens).map(key => {
         var token = tokens[key]
+
+        if (key === "ETH"){
+          token.rateUSD = rateUSD
+        }else{
+          token.rateUSD = mapToken[key].rateUSD
+        }
+
         if (mapToken[key] && mapToken[key].rate) {
           token.rate = mapToken[key].rate
           token.minRate = mapToken[key].minRate
@@ -111,6 +125,7 @@ const tokens = (state = initState, action) => {
           token.rateEth = mapToken[key].rateEth
           token.minRateEth = mapToken[key].minRateEth
         }
+
         newTokens[key] = token
       })
 

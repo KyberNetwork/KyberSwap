@@ -163,7 +163,7 @@ const AccountBalanceLayout = (props) => {
         <div className="balance-panel">
           <div id="search-balance" className="row">
             <div className="column small-10">
-              <input type="text" placeholder={props.translate("address.search") || "Search"} onChange={(e) => props.changeSearchBalance(e)} value = {props.searchWord}  className="search-input"/>
+              <input type="text" placeholder={props.translate("address.search") || "Search"} onChange={(e) => props.changeSearchBalance(e)} value = {props.searchWord} onFocus={ (e) => props.clickOnInput() } className="search-input"/>
             </div>
 
             

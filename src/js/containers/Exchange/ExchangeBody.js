@@ -20,6 +20,7 @@ import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import * as globalActions from "../../actions/globalActions"
 
 import * as exchangeActions from "../../actions/exchangeActions"
+import * as analytics from "../../utils/analytics"
 
 import constansts from "../../services/constants"
 
@@ -93,6 +94,7 @@ export default class ExchangeBody extends React.Component {
     //   path += "?lang=" + this.props.currentLang
     // }
     this.props.dispatch(globalActions.goToRoute(path))
+    analytics.trackChooseToken(type, symbol)
   }
 
   dispatchUpdateRateExchange = (sourceValue) => {
@@ -248,6 +250,7 @@ export default class ExchangeBody extends React.Component {
 
   makeNewExchange = () => {
     this.props.dispatch(exchangeActions.makeNewExchange());
+    analytics.trackClickNewTransaction("Swap")
   }  
 
   setAmount = () => {
@@ -273,6 +276,7 @@ export default class ExchangeBody extends React.Component {
       this.props.dispatch(exchangeActions.inputChange('source', balance))
       this.props.ethereum.fetchRateExchange(true)
     }
+    analytics.trackClickAllIn("Swap", tokenSymbol)
   }
 
   swapToken = () => {

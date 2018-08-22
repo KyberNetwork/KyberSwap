@@ -6,6 +6,7 @@ import * as actions from "../../actions/exchangeActions"
 import { getTranslate } from 'react-localize-redux'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import * as analytics from "../../utils/analytics"
 
 @connect((store) => {
   return { 
@@ -40,6 +41,10 @@ export default class MinRate extends React.Component {
   //   // const {offeredRate}  = this.props.exchange
   //   // this.props.dispatch(actions.setMinRate(converter.caculatorRateToPercentage(value,offeredRate)))
   // }
+
+  onAfterChange = (value) => {
+    analytics.trackSetNewMinrate(value)
+  }
 
   suggestRate = (slippageRate, desToken) => {
     return converter.roundingNumber(slippageRate) + " " + desToken
@@ -85,7 +90,8 @@ export default class MinRate extends React.Component {
           <Slider value={percent} 
                   defaultValue={percent}
                   min={0} max={100}
-                  onChange={this.onSliderChange}                   
+                  onChange={this.onSliderChange}
+                  onAfterChange={this.onAfterChange}
                   trackStyle={{ backgroundColor: '#666666', height: 2 }}
                   disabled={disable}
                   handleStyle={{
