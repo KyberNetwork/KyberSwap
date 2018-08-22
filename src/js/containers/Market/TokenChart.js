@@ -15,6 +15,7 @@ import constants from '../../services/constants';
     translate: getTranslate(store.locale),
     market: market,
     chart: market.chart,
+    account: store.account
   }
 })
 export default class TokenChart extends React.Component {
@@ -134,16 +135,21 @@ export default class TokenChart extends React.Component {
     return (
       <div className="balance-content">
         <SlideDown active={this.props.isChartActive}>
-          <SlideDownTrigger onToggleContent={() => this.props.onToggleChartContent()}>
+          <SlideDownTrigger onToggleContent={() => this.props.onToggleChartContent()} classNameTrigger="token-slide-trigger">
             <div className="balance-content__pair">
               {this.state.symbol}/ETH
             </div>
             <div className="balance-content__rate-wrapper">
               <div className="balance-content__rate">{this.state.buyPrice}</div>
-              <div className={"balance-content__change" +
-              (isNegativeChange ? ' balance-content__change--nagative' : '') +
-              (!shouldRenderChart ? ' balance-content__change--inactive' : '')}>
-                {shouldRenderChart ? this.state.change + '%' : '---'}
+
+              <div className="balance-content__change_wrapper">
+                <div className={"balance-content__change" +
+                (isNegativeChange ? ' balance-content__change--nagative' : '') +
+                (!shouldRenderChart ? ' balance-content__change--inactive' : '')}>
+                  {shouldRenderChart ? this.state.change + '%' : '---'}
+                </div>
+          
+                <div>in 24h</div>
               </div>
             </div>
           </SlideDownTrigger>
@@ -156,7 +162,7 @@ export default class TokenChart extends React.Component {
                   <Line
                     data={data}
                     options={options}
-                    height={200}
+                    height={298}
                   />
                 </div>
                 <div className="balance-content__range">{chartRangeHtml}</div>
