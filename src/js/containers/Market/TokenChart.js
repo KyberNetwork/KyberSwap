@@ -124,8 +124,10 @@ export default class TokenChart extends React.Component {
       labels: this.props.chart.points.t,
       datasets: [{
         data: chartData,
-        backgroundColor: isNegativeChange ? 'rgba(255, 99, 132, 0.2)' : 'rgba(49, 203, 158, 0.2)',
-        borderColor: isNegativeChange ? 'rgba(255,99,132,1)': '#31CB9E',
+        backgroundColor: '#EBEBEB',
+        //backgroundColor: isNegativeChange ? 'rgba(255, 99, 132, 0.2)' : 'rgba(49, 203, 158, 0.2)',
+        //borderColor: isNegativeChange ? 'rgba(255,99,132,1)': '#31CB9E',
+        borderColor: '#ccc',
         borderWidth: 1
       }]
     };
@@ -171,8 +173,7 @@ export default class TokenChart extends React.Component {
             var label = item.yLabel
             var rateFloat = parseFloat(label)
             if (rateFloat) {
-              var numTokens = Number((1 / rateFloat).toFixed(3))
-              return `1 ETH = ${numTokens} ${currentToken}`
+              return `1 ${currentToken} = ${roundingNumber(rateFloat, 10)} ETH`
             }
             return item.yLabel
           }

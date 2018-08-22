@@ -140,10 +140,10 @@ const initState = function () {
         },
         shows: {
           listItem: {
+            "last_7d": {title: "Last 7d", type: "chart"},
             "change": {title: "24HR Change"},
             "volume": {title: "Volume (24h)"},
-            "market_cap": {title: "Market cap" },
-            "last_7d": {title: "Last 7d", type: "chart"}
+            "market_cap": {title: "Market cap" }
           },
           active: ["change", "last_7d"]
         }

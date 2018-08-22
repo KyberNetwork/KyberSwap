@@ -172,7 +172,7 @@ const ExchangeBodyLayout = (props) => {
                 <PostExchangeWithKey/>
 
                 {props.account === false && (
-                  <ImportAccount/>
+                  <ImportAccount tradeType="swap"/>
                 )}
               </div>
             </div>
