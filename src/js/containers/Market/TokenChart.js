@@ -7,6 +7,9 @@ import { default as _ } from 'underscore';
 import { getTranslate } from 'react-localize-redux';
 import BLOCKCHAIN_INFO from "../../../../env";
 import constants from '../../services/constants';
+import { roundingNumber } from "../../utils/converter";
+// import {roundingNumber} from "../../utils/converter"
+
 
 @connect((store) => {
   const market = store.market;
@@ -101,12 +104,26 @@ export default class TokenChart extends React.Component {
         </div>
       )
     });
+    var chartData = this.props.chart.points.c
+    var currentToken = this.state.symbol
+    // if (chartData && chartData.length > 0) {
+    //   var max = chartData[0]
+    //   chartData.map(function(ele) {
+    //     if (ele > max) {
+    //       max = ele
+    //     }
+    //   })
+    // }
+    var ticks = { display: false }
+    // if (typeof(max) !== "undefined") {
+    //   ticks.max = max * 1.2
+    // }
     const isNegativeChange = this.state.change < 0;
     const shouldRenderChart = this.state.change !== -9999 || (this.props.chart.points.length && this.state.change !== -9999);
     const data = {
-      labels: _.keys(this.props.chart.points),
+      labels: this.props.chart.points.t,
       datasets: [{
-        data: this.props.chart.points,
+        data: chartData,
         backgroundColor: '#EBEBEB',
         //backgroundColor: isNegativeChange ? 'rgba(255, 99, 132, 0.2)' : 'rgba(49, 203, 158, 0.2)',
         //borderColor: isNegativeChange ? 'rgba(255,99,132,1)': '#31CB9E',
@@ -128,9 +145,39 @@ export default class TokenChart extends React.Component {
         }],
         yAxes: [{
           display: false,
-          ticks: { display: false },
+          ticks: ticks,
           gridLines: { display: false }
         }]
+      },
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+        callbacks: {
+          title: function(item, data) {
+            var title = item[0].xLabel
+            var timeStampNumber = parseInt(title)
+            if (timeStampNumber) {
+              var timeStamp = timeStampNumber * 1000
+              var date = new Date(timeStamp)
+              var day = date.getDate() > 10 ? date.getDate() : '0' + date.getDate()
+              var month = date.getMonth() + 1 > 10 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1)
+              var year = date.getFullYear()
+              var hours = date.getHours() > 10 ? date.getHours() : '0' + date.getHours()
+              var mins = date.getMinutes() > 10 ? date.getMinutes() : '0' + date.getMinutes()
+              var seconds = date.getSeconds() > 10 ? date.getSeconds() : '0' + date.getSeconds()
+              title = `${month}/${day}/${year} ${hours}:${mins}:${seconds}`
+            }
+            return title
+          },
+          label: function(item, data) {
+            var label = item.yLabel
+            var rateFloat = parseFloat(label)
+            if (rateFloat) {
+              return `1 ${currentToken} = ${roundingNumber(rateFloat, 10)} ETH`
+            }
+            return item.yLabel
+          }
+        }
       }
     }
 

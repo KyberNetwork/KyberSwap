@@ -121,19 +121,23 @@ export function* fetchChartData(action) {
   yield put(marketActions.setChartLoading(true));
 
   try {
-    if (timeRange === 'w') {
-      const state = store.getState();
-      const ethereum = state.connection.ethereum;
+    // if (timeRange === 'w') {
+    //   const state = store.getState();
+    //   const ethereum = state.connection.ethereum;
 
-      const last7DPoints = yield call([ethereum, ethereum.call], 'getLast7D', tokenSymbol);
-
-      yield put(marketActions.setChartPoints(last7DPoints.data[tokenSymbol]));
-    } else {
+    //   const last7DPoints = yield call([ethereum, ethereum.call], 'getLast7D', tokenSymbol);
+		// 	var dataLast7D = last7DPoints.data[tokenSymbol] ? last7DPoints.data[tokenSymbol] : []
+    //   yield put(marketActions.setChartPoints(dataLast7D));
+    // } else {
       const response = yield call(fetch, BLOCKCHAIN_INFO.tracker + `/chart/klines?symbol=${tokenSymbol}&interval=${timeRange}`);
       const data = yield call([response, response.json]);
-
-      yield put(marketActions.setChartPoints(data));
-    }
+			var chartData = {t: data.t, c: data.c}
+			if (data.s !== "ok" || !data.t || !data.c || data.t.length !== data.c.length) {
+				chartData.t = []
+				chartData.c = []
+			}
+      yield put(marketActions.setChartPoints(chartData));
+    // }
 
   } catch(e) {
     console.log(e);

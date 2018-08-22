@@ -30,7 +30,8 @@ import Web3Service from "../../services/web3"
     termOfServiceAccepted: store.global.termOfServiceAccepted,
     ethereum: store.connection.ethereum,
     tokens: supportTokens,
-    screen: props.screen
+    screen: props.screen,
+    tradeType: props.tradeType
   }
 })
 
@@ -107,7 +108,7 @@ export default class ImportAccount extends React.Component {
     // )
     var content
     if (!this.props.termOfServiceAccepted) {
-      content = <LandingPage translate={this.props.translate} />
+      content = <LandingPage translate={this.props.translate} tradeType={this.props.tradeType}/>
     } else {
       content = (
         <ImportAccountView

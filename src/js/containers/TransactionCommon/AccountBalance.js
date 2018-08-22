@@ -33,6 +33,12 @@ export default class AccountBalance extends React.Component {
     }
   }
 
+  componentDidMount() {
+    if (window.innerWidth < 640) {
+      this.setState({isBalanceActive: false})
+    }
+  }
+
   changeSearchBalance = (e) => {
     var value = e.target.value
     this.setState({searchWord:value})
