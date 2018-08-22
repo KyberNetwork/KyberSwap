@@ -327,10 +327,10 @@ export function trackSearchTokenBalanceBoard(){
     }
 }
 
-export function trackClickAllIn(){
+export function trackClickAllIn(type, token){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_Click_Swap_All_Balance", "swap all")
+            mixpanel.track("Swap_Click_Swap_All_Balance", {type: type, token: token})
         }catch(e){
             console.log(e)
         }

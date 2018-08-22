@@ -276,7 +276,7 @@ export default class ExchangeBody extends React.Component {
       this.props.dispatch(exchangeActions.inputChange('source', balance))
       this.props.ethereum.fetchRateExchange(true)
     }
-    analytics.trackClickAllIn()
+    analytics.trackClickAllIn("Swap", tokenSymbol)
   }
 
   swapToken = () => {
