@@ -1,5 +1,5 @@
 .swap-content {
-  padding: 25px 0 250px;
+  padding: 20px 0 250px;
   position: relative;
   height: 100%;
 
@@ -20,7 +20,7 @@
   }
 
   &--transfer {
-    padding-bottom: 220px;
+    padding-bottom: 190px;
 
     &.swap-content--agreed {
       padding-bottom: 0;
@@ -36,6 +36,11 @@
 
     #get-start .account-type {
       margin-top: 25px;
+    }
+    .transfer-col-1-2 {
+      .amount-input {
+        margin-top: 1rem;
+      }
     }
   }
 }

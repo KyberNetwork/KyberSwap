@@ -3,6 +3,26 @@
   @include screen-min-width(large){
     margin-bottom: 80px;
   }
+  .market-wrapper{
+    position: relative;
+  }
+  .search-symbol{
+    input{
+      background-image: none;
+      width: 297px;
+      height: 55px;
+      background-color: #fcfcfe;
+      border: none;
+      box-shadow: 0 2px 5px #eee;
+      position: absolute;
+      top: -38px;
+      z-index: 10;
+      left: -242px;
+      font-size: 15px;
+      padding-left: 15px;
+      text-indent: 0;
+    }
+  }
   &__title {
     text-align: center;
     font-size: 32px;
@@ -60,38 +80,63 @@
     &-currency {
       width: 100%;
       max-width: 200px;
-      .token-selector {
-        .dropdown {
-          .focus-item {
-            img {
-              content: url(../img/exchange/arrow-down-swap.svg);
-              transition: 0.3s;
-            }
+      
+      //.market-choose-currency{
+        display: flex;
+        align-items: center;
+        a{
+          display: block;
+          padding: 10px 20px;
+          background-color: #EBEBEB;
+          color: #222222;
+          &:not(:first-child){
+            margin-left: 10px;
           }
-          .dropdown__content {
-            .select-item {
-              padding: 10px 0 12px;
-              box-shadow: none;
-              border: 1px solid #eee;
-              border-bottom-left-radius: 4px;
-              border-bottom-right-radius: 4px;
-            }
-          }
-          &.dropdown--active {
-            .focus-item {
-              img {
-                transform: rotate(180deg);
-              }
-            }
+          &:hover{
+            background-color: #eee;
+            color: inherit;
           }
         }
-      }
+      //}
+      
+      // .token-selector {
+      //   .dropdown {
+      //     .focus-item {
+      //       img {
+      //         content: url(../img/exchange/arrow-down-swap.svg);
+      //         transition: 0.3s;
+      //       }
+      //     }
+      //     .dropdown__content {
+      //       .select-item {
+      //         padding: 10px 0 12px;
+      //         box-shadow: none;
+      //         border: 1px solid #eee;
+      //         border-bottom-left-radius: 4px;
+      //         border-bottom-right-radius: 4px;
+      //       }
+      //     }
+      //     &.dropdown--active {
+      //       .focus-item {
+      //         img {
+      //           transform: rotate(180deg);
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
     }
 
     &-right {
-      width: 10%;
-      display: flex;
-      justify-content: flex-end;
+      position: absolute;
+      top: -5px;
+      right: 0px;
+      .token-selector{
+        z-index: 11;
+      }
+      // width: 10%;
+      // display: flex;
+      // justify-content: flex-end;
 
       > div {
         margin-top: 23px
@@ -115,8 +160,8 @@
         }
         .d-flex {
           padding: 0;
-          width: 50px;
-          height: 50px;
+          width: 35px;
+          height: 35px;
           border: 1px solid #EAEAEA;
           border-radius: 2px;
           background-color: #F5F5F5;
@@ -172,9 +217,9 @@
         max-width: 50%;
       }
 
-      &-right {
-        width: 100%;
-      }
+      // &-right {
+      //   width: 100%;
+      // }
     }
 
     @include screen-max-width(mid-small) {
@@ -200,9 +245,9 @@
   }
 
   .market-table {
-    background-color: #F9F8FB;
+    // background-color: #F9F8FB;
     margin-bottom: 50px;
-    box-shadow: 0 0 5px #bbb;
+    // box-shadow: 0 0 5px #bbb;
     padding: 15px 20px;
     color: #666666;
     .symbol-price{
@@ -227,9 +272,9 @@
           font-size: 14px;
           &.-header {
             box-shadow: none;
-            border-bottom: 2px solid #ef8102;
+            border-bottom: 2px solid #31CB9E;
             padding: 10px 0;
-            margin: 0 8px 15px;
+            margin: 0 0 15px;
             .rt-th-img {
               display: flex;
               justify-content: center;
@@ -238,6 +283,25 @@
                 padding-right: 10px;
                 height: 20px;
                 width: 20px;
+              }
+            }
+            .rt-th-first-header{
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              .rt-th-header-title{
+                font-size: 20px;
+                margin-right: 30px;
+              }
+              .rt-th-control{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                >div{
+                  &:not(:first-child){
+                    margin-left: 10px;
+                  }
+                }
               }
             }
           }
@@ -256,7 +320,7 @@
             margin: 10px 0px;
             height: 75px;
             background-color: $white;
-            border: 1px solid #eee;
+            border: 1px solid #F4F5F7;
             box-shadow: 0 2px 5px #eee;
             &:hover {
               box-shadow: 0 3px 18px #bbb;
@@ -278,14 +342,16 @@
                 align-items: center;
                 justify-content: center;
                 &.negative {
-                  background-color: #F6EAEC;
-                  color: #EB7576;
+                  background-color: #FEF4F6;
+                  color: #F1637D;
                   font-weight: bold;
+                  border-radius: 5px;
                 }
                 &.positive {
-                  background-color: #EDFBF6;
-                  color: #1FDCAB;
+                  background-color: #0EABA3;
+                  color: white;
                   font-weight: bold;
+                  border-radius: 5px;
                 }
                 &.zero-value {
                   background: #eee;
@@ -297,10 +363,14 @@
                 }
               }
               div.token-pair {
-                width: 150px;
+                width: 100%;
                 text-align: left;
-                padding-left: 10px;
+                padding-left: 20px;
                 position: relative;
+                >div{
+                  position: relative;
+                  display: inline-block;
+                }
                 img {
                   margin-right: 10px;
                   width: 24px;
@@ -332,7 +402,7 @@
                 .new-token {
                   position: absolute;
                   top: -15px;
-                  right: 5px;
+                  right: -12px;
                   font-size: 9px;
                   height: 14px;
                   width: auto;
@@ -362,6 +432,8 @@
       outline: none;
       border-right: none;
       padding: 10px;
+      display: flex;
+      align-items: center;
       &.-sort-asc {
         box-shadow: none;
         .rt-th-img {
