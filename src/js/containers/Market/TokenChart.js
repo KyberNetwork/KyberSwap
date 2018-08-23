@@ -18,7 +18,8 @@ import { roundingNumber } from "../../utils/converter";
     translate: getTranslate(store.locale),
     market: market,
     chart: market.chart,
-    account: store.account
+    account: store.account,
+    currentLang: store.locale.languages[0].code
   }
 })
 export default class TokenChart extends React.Component {
@@ -118,6 +119,25 @@ export default class TokenChart extends React.Component {
     // if (typeof(max) !== "undefined") {
     //   ticks.max = max * 1.2
     // }
+    var weekDays = []
+    var currentLang = this.props.currentLang
+    switch (currentLang) {
+      case "vi": {
+        weekDays = ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật"]
+        break
+      }
+      case "cn": {
+        weekDays = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"]
+        break
+      }
+      case "kr": {
+        weekDays = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"]
+        break
+      }
+      default: {
+        weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+      }
+    }
     const isNegativeChange = this.state.change < 0;
     const shouldRenderChart = this.state.change !== -9999 || (this.props.chart.points.length && this.state.change !== -9999);
     const data = {
@@ -159,13 +179,32 @@ export default class TokenChart extends React.Component {
             if (timeStampNumber) {
               var timeStamp = timeStampNumber * 1000
               var date = new Date(timeStamp)
+              var dayInWeek = date.getDay()
               var day = date.getDate() > 10 ? date.getDate() : '0' + date.getDate()
               var month = date.getMonth() + 1 > 10 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1)
               var year = date.getFullYear()
               var hours = date.getHours() > 10 ? date.getHours() : '0' + date.getHours()
               var mins = date.getMinutes() > 10 ? date.getMinutes() : '0' + date.getMinutes()
               var seconds = date.getSeconds() > 10 ? date.getSeconds() : '0' + date.getSeconds()
-              title = `${month}/${day}/${year} ${hours}:${mins}:${seconds}`
+              var dateFormat = ""
+              switch (currentLang) {
+                case "vi": {
+                  dateFormat = `${day}-${month}-${year}`
+                  break
+                }
+                case "kr": {
+                  dateFormat = `${year}-${month}-${day}`
+                  break
+                }
+                case "cn": {
+                  dateFormat = `${year}-${month}-${day}`
+                  break
+                }
+                default: {
+                  dateFormat = `${month}-${day}-${year}`
+                }
+              }
+              title = `${weekDays[dayInWeek]}, ${dateFormat} ${hours}:${mins}:${seconds}`
             }
             return title
           },

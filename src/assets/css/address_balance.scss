@@ -27,7 +27,7 @@
     text-align: center;
   }
   .exchange-col-1{
-    padding: 0 3rem;
+    padding: 0 2rem;
     border: 1px solid #ddd;
     border-left: none;
     background: white;
@@ -431,6 +431,7 @@
     display: flex;
     justify-content: center;
     margin-top: 15px;
+    margin-bottom: 10px;
 
     &-item {
       padding: 3px 8px;

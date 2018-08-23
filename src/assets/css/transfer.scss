@@ -23,7 +23,7 @@ $padding-col-left : 2rem;
     }
   }
   .receiveAddress{
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     input{
       width: 100%;
       height: 55px;
@@ -45,8 +45,8 @@ $padding-col-left : 2rem;
 
   .transfer-col{
     @include screen-min-width(large) {
-      padding-left: 3rem;  
-      padding-right: 3rem;  
+      padding-left: 2rem;  
+      padding-right: 2rem;  
     }
     padding: 1rem;
     &.transfer-advanced {
@@ -66,6 +66,7 @@ $padding-col-left : 2rem;
   @include screen-min-width(large){
     .transfer-col-1{
       border: 1px solid #ddd;
+      border-left: none;
       box-shadow: $box-shadow-tab;
       // min-height: 550px;
     }
@@ -154,7 +155,7 @@ $padding-col-left : 2rem;
     // padding-top: 1.5rem;
     padding-bottom: 0;
     font-size: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-weight: 600;
     @include screen-max-width(medium) {
       display: none;

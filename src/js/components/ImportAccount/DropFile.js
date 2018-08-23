@@ -33,7 +33,7 @@ const DropFile = (props) => {
           <img src={require('../../../assets/img/landing/keystore_active.svg')} />
           <div className="importer__name">{props.translate("import.json") || "JSON"}</div>
         </div>
-        <div className="importer__button">Select or Drag</div>
+        <div className="importer__button">{props.translate("import.select_or_drag") || "Select or Drag"}</div>
       </div>
     </Dropzone>
   )  

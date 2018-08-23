@@ -159,6 +159,12 @@ export default class MarketTable extends React.Component {
           }
         }],
         yAxes: [yOption]
+      },
+      tooltips: {
+        enabled: false
+      },
+      hover: {
+        mode: null
       }
     } 
     return (
