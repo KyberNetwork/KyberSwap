@@ -96,6 +96,7 @@ var scriptConfig = function (env) {
         new WebpackShellPlugin(
             {
                 // hash: hash,
+                onBuildStart:['node webpack.beforebuild.js'],
                 onBuildEnd:[`BUNDLE_NAME=[hash] chain=${chain} node webpack.afterbuild.js`]
             }
         )
