@@ -17,6 +17,9 @@ var scriptConfig = function (env) {
     context: path.join(__dirname, "src"),
     devtool: (env && env.build !== "true") ? "inline-sourcemap" : false,
     entry: ['babel-polyfill', "./js/client.js", "./assets/css/app.scss"],
+    watchOptions: {
+      ignored: [ /node_modules/, /lang/ ]
+    },
     module: {
       loaders: [{
         test: /\.jsx?$/,
@@ -96,6 +99,7 @@ var scriptConfig = function (env) {
         new WebpackShellPlugin(
             {
                 // hash: hash,
+                onBuildStart:['node webpack.beforebuild.js'],
                 onBuildEnd:[`BUNDLE_NAME=[hash] chain=${chain} node webpack.afterbuild.js`]
             }
         )
