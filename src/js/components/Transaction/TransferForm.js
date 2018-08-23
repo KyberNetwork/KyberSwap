@@ -101,7 +101,7 @@ const TransferForm = (props) => {
                   </div>
 
                   {props.account === false && (
-                    <ImportAccount/>
+                    <ImportAccount tradeType="transfer"/>
                   )}
                 </div>
               </div>

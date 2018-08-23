@@ -6,7 +6,8 @@ import { getTranslate } from 'react-localize-redux';
 @connect((store, props) => {
   return {
     translate: getTranslate(store.locale),
-    onClick: props.onClick
+    onClick: props.onClick,
+    tradeType: props.tradeType
   }
 })
 
@@ -71,7 +72,7 @@ export default class TermAndServices extends React.Component {
         </div>
 
         <button className="term-services__btn" onClick={this.props.onClick}>
-          {this.props.translate("terms.accept_to_swap") || "Accept to Swap"}
+          {this.props.tradeType === "swap" ? this.props.translate("terms.accept_to_swap") || "Accept to Swap" : this.props.translate("terms.accept_to_transfer") || "Accept to Transfer"}
         </button>
       </div>
     )

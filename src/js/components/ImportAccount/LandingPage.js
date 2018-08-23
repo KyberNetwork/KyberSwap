@@ -22,6 +22,7 @@ import * as analytics from "../../utils/analytics"
 		translate: getTranslate(store.locale),
 		ethereum: store.connection.ethereum,
 		tokens: supportTokens,
+		tradeType: props.tradeType
 	}
 })
 
@@ -94,7 +95,7 @@ export default class LandingPage extends React.Component {
     return (
       <div id="get-start">
         <div className="accept-term">
-          <TermAndServices onClick={this.acceptTerm}/>
+          <TermAndServices onClick={this.acceptTerm} tradeType={this.props.tradeType}/>
         </div>
 
         <div className="account-type">
