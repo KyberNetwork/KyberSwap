@@ -261,15 +261,23 @@ export default class MarketTable extends React.Component {
     this.getSortArray('market', this.getSortType('market'))
     this.updateSortState('market', this.getSortType('market'))
   }
+
   getSortHeaderMarket = (title, key) => {
     return (
-      <div className="rt-th-first-header">
-        <div className='rt-th-header-title' onClick = {this.handleSortHeader}>
-          {this.props.translate(this.getTranslateFromKey(key)) || title}
+      <div>
+        <div className="for-desktop-only rt-th-first-header">
+          <div className='rt-th-header-title' onClick = {this.handleSortHeader}>
+            {this.props.translate(this.getTranslateFromKey(key)) || title}
+          </div>
+          <div className="rt-th-control">
+            {this.props.searchWordLayout}
+            {this.props.currencyLayout}
+          </div>
         </div>
-        <div className="rt-th-control">
-          {this.props.searchWordLayout}
-          {this.props.currencyLayout}
+        <div className={"for-mobile-only " +  this.props.sortType['market'] + ' -cursor-pointer'} onClick = {this.handleSortHeader}>
+          <div className="rt-th-img">
+          <img src={require("../../../assets/img/landing/sort.svg")} /> Market
+          </div>
         </div>
       </div>
     )
@@ -522,8 +530,25 @@ export default class MarketTable extends React.Component {
 
     return (
       <div className="market-wrapper">
-        <div className="market__header-right">
-        {this.props.manageColumn}
+        <div className="market-control">
+          <div>
+            <div className="for-mobile-only">
+              Ethereum Market              
+            </div>
+            <div>
+              <div className="for-mobile-only search-word-mobile">
+                {this.props.searchWordLayout}
+              </div>
+              <div className="market__header-right">        
+                {this.props.manageColumn}
+              </div>
+            </div>
+          </div>
+        
+          <div className="for-mobile-only">
+            {this.props.currencyLayout}
+          </div>
+
         </div>
 <ReactTable
         data={this.props.data}

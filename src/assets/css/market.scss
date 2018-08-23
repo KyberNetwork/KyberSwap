@@ -1,7 +1,46 @@
 .market {
   margin-top: 30px;
+  .for-mobile-only{
+    // @include screen-max-width(large){
+    //   display: none;
+    // }
+    @include screen-min-width(large){
+      display: none !important;
+    }
+  }
+  .for-desktop-only{
+    @include screen-max-width(large){
+      display: none !important;
+    }
+  }
   @include screen-min-width(large){
     margin-bottom: 80px;
+  }
+  .market-control{
+    >div{
+      &:first-child{
+        @include screen-max-width(large){
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          >div{
+            &:first-child{
+              font-size: 20px;
+              text-transform: uppercase;
+              font-weight: 600;
+            }
+            &:last-child{
+                display: flex;
+                align-items: center;
+                .search-word-mobile{
+                  margin-right: 15px;
+                }
+            }
+          }
+        }
+      }
+      
+    }
   }
   .market-wrapper{
     position: relative;
@@ -13,10 +52,10 @@
       height: 55px;
       background-color: #fcfcfe;
       border: none;
-      box-shadow: 0 2px 5px #eee;
+      box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
       position: absolute;
       top: -38px;
-      z-index: 10;
+      z-index: 15;
       left: -242px;
       font-size: 15px;
       padding-left: 15px;
@@ -79,16 +118,31 @@
 
     &-currency {
       width: 100%;
-      max-width: 200px;
+
+
+      @include screen-min-width(large){
+        max-width: 200px;
+      }
+      
       
       //.market-choose-currency{
         display: flex;
         align-items: center;
+
+        @include screen-max-width(large){
+          margin-top: 20px;
+          margin-bottom: 10px;
+        }
         a{
           display: block;
           padding: 10px 20px;
           background-color: #EBEBEB;
           color: #222222;
+          @include screen-max-width(large){
+            width: 50%;
+            text-align: center;
+          }
+
           &:not(:first-child){
             margin-left: 10px;
           }
@@ -128,9 +182,11 @@
     }
 
     &-right {
-      position: absolute;
-      top: -5px;
-      right: 0px;
+      @include screen-min-width(large){
+        position: absolute;
+        top: -5px;
+        right: 0px;
+      }
       .token-selector{
         z-index: 11;
       }
@@ -139,7 +195,9 @@
       // justify-content: flex-end;
 
       > div {
-        margin-top: 23px
+        @include screen-min-width(large){
+          margin-top: 23px;
+        }
       }
 
       .token-selector {
@@ -213,9 +271,9 @@
         max-width: 50%;
       }
 
-      &-currency {
-        max-width: 50%;
-      }
+      // &-currency {
+      //   max-width: 50%;
+      // }
 
       // &-right {
       //   width: 100%;
@@ -236,11 +294,11 @@
         max-width: 100%;
       }
 
-      &-right {
-        > div {
-          margin-top: 15px
-        }
-      }
+      // &-right {
+      //   > div {
+      //     margin-top: 15px
+      //   }
+      // }
     }
   }
 
@@ -265,8 +323,11 @@
     }
     .ReactTable {
       border: none;
-      overflow: visible;
+      //overflow: visible;
+      overflow: auto;
+      
       .rt-table {
+        overflow: initial;
         .rt-thead {
           font-weight: bold;
           text-transform: uppercase;
@@ -293,6 +354,7 @@
               .rt-th-header-title{
                 font-size: 20px;
                 margin-right: 30px;
+                cursor: pointer;
               }
               .rt-th-control{
                 display: flex;
@@ -438,7 +500,7 @@
       &:not(:first-child){
         padding-left: 10px;
       }
-      &.-sort-asc {
+      &.-sort-asc, .-sort-asc {
         box-shadow: none;
         .rt-th-img {
           font-weight: bold;
@@ -447,7 +509,7 @@
           }
         }
       }
-      &.-sort-desc {
+      &.-sort-desc, .-sort-desc {
         box-shadow: none;
         .rt-th-img {
           img {
