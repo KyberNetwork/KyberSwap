@@ -7,6 +7,22 @@
   .list-item{
     height: 250px;
     overflow: auto;
+    padding-right: 10px;
+    &.custom-scroll {
+      &::-webkit-scrollbar-track {
+        border-radius: 8px;
+        background-color: rgba(163, 165, 175, .2);
+      }
+
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        background-color: rgba(163, 165, 175, 1);
+      }
+    }
   }
   .amount-input{
     border-bottom: 1px solid #454E5F;
@@ -92,6 +108,30 @@
       text-indent: 20px;
       &::placeholder {
         color: #222;
+      }
+    }
+    .select-item {
+      padding-left: 15px;
+      padding-right: 15px;
+      .search-item {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      .list-item {
+        .token-item {
+          padding-left: 0;
+          padding-right: 0;
+          border-bottom: 1px solid #d8d8d8;
+          &:last-child {
+            border-bottom: none;
+          }
+          .item-icon {
+            padding-top: 3px;
+          }
+          .item-balance {
+            font-weight: bold;
+          }
+        }
       }
     }
   }
