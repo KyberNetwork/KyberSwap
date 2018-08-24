@@ -91,7 +91,7 @@ export default class HeaderTransaction extends React.Component {
         var transfer = this.props.translate("transaction.transfer") || "Transfer"
         var swap = this.props.translate("transaction.swap") || "Swap"
         return (
-            <div>
+            <div className="swap-navigation-ctrl">
                 <div className="swap-navigation">
                     <div>
                         <a onClick={(e) => this.gotoRoot(e)}>{this.props.translate("home") || "Home"}</a>

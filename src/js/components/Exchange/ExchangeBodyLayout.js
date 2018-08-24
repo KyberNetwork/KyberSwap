@@ -104,7 +104,7 @@ const ExchangeBodyLayout = (props) => {
                 </span>
                 </div>
               )}
-              <div className="title main-title">{props.translate("transaction.swap") || "Swap"}</div>
+              {/* <div className="title main-title">{props.translate("transaction.swap") || "Swap"}</div> */}
               <div className="grid-x">
                 <div className="cell large-5">
                 <span className="transaction-label">

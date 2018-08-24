@@ -47,7 +47,9 @@ export function* getVolumn(){
 
         // new api last 7d
         var last7D = yield call([ethereum, ethereum.call], "getLast7D", queryString)
-        yield put(marketActions.getLast7DSuccess(last7D.data))
+        if (Array.isArray(last7D.data)) {
+            yield put(marketActions.getLast7DSuccess(last7D.data))
+        }
     }catch(e){
         console.log(e)
     }

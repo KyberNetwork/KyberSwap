@@ -1,7 +1,30 @@
 .swap-content {
-  padding: 20px 0 250px;
+  padding: 65px 0 250px;
   position: relative;
   height: 100%;
+
+  .dropdown {
+    &__content {
+      .select-item {
+        top: 1px;
+        border: .8px solid hsla(0,0%,80%,.72);
+      }
+    }
+    &.dropdown--active {
+      .dropdown__content {
+        .select-item {
+          // border: .8px solid hsla(0,0%,80%,.72);
+          border: none;
+          box-shadow: 0 24px 24px 0 rgba(0,0,0,.24), 0 0 24px 0 rgba(0,0,0,.12);;
+        }
+        .search-item {
+          input {
+            border-color: #ebebeb;
+          }
+        }
+      }
+    }
+  }
 
   &--agreed {
     padding-bottom: 75px;
@@ -20,7 +43,7 @@
   }
 
   &--transfer {
-    padding-bottom: 190px;
+    padding-bottom: 174px;
 
     &.swap-content--agreed {
       padding-bottom: 0;
@@ -135,20 +158,21 @@
       display: inline-block;
       position: relative;
       transition: all .3s;
+      color: $swap-color;
 
       &:hover {
         color: $swap-color;
       }
 
-      &::after {
-        content: '';
-        display: block;
-        width: 100%;
-        height: 2px;
-        background-color: $swap-color;
-        position: relative;
-        bottom: 2px;
-      }
+      // &::after {
+      //   content: '';
+      //   display: block;
+      //   width: 100%;
+      //   height: 2px;
+      //   background-color: $swap-color;
+      //   position: relative;
+      //   bottom: 2px;
+      // }
     }
 
     &__btn {
@@ -184,6 +208,27 @@
 
     @include screen-max-width(large) {
       margin-top: 70px;
+    }
+  }
+}
+
+#content {
+  .swap-navigation-ctrl {
+    position: relative;
+    margin-bottom: 25px;
+    h1.title.frame-tab {
+      position: absolute;
+      z-index: 1;
+      left: calc(50% - 150px);
+        padding-top: 0;
+    }
+    @include screen-max-width(large) {
+      margin-bottom: 0;
+      h1.title.frame-tab {
+        position: relative;
+        left: unset;
+        padding-top: 20px;
+      }
     }
   }
 }
