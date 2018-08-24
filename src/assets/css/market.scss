@@ -4,6 +4,9 @@
     // @include screen-max-width(large){
     //   display: none;
     // }
+    &:hover {
+      cursor: pointer;
+    }
     @include screen-min-width(large){
       display: none !important;
     }
@@ -395,6 +398,11 @@
               align-items: center;
               justify-content: center;
               color: #666666;
+              &:first-child {
+                @include screen-max-width(large) {
+                  max-width: 175px;
+                }
+              }
               &:nth-child(2n+1) {
                 color: #222222;
               }
@@ -497,8 +505,14 @@
       // padding: 10px;
       display: flex;
       align-items: center;
+      justify-content: center;
+      &:first-child {
+        @include screen-max-width(large) {
+          max-width: 175px;
+        }
+      }
       &:not(:first-child){
-        padding-left: 10px;
+        // padding-left: 10px;
       }
       &.-sort-asc, .-sort-asc {
         box-shadow: none;
