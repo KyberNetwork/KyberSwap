@@ -79,7 +79,7 @@ const TokenSelectorView = (props) => {
         <DropdownContent>
           <div className="select-item">
             <div className="search-item">
-              <input value={props.searchWord} placeholder={props.translate("search") || "Search"} onChange={(e) => props.changeWord(e)} type="text"/>
+              <input value={props.searchWord} placeholder={props.translate("try_dai") || `Try "DAI"`} onChange={(e) => props.changeWord(e)} type="text"/>
             </div>
             <div className="list-item custom-scroll">
               {getListToken()}

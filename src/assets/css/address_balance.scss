@@ -333,6 +333,9 @@
   }
   .balance-content__chart{
     margin-top: 19px;
+    canvas {
+      padding-bottom: 10px;
+    }
   }
   .slide-down {
     border-top: solid 1px #e3e3e3;
