@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="39px" height="27px" viewBox="0 0 39 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>flags/greece</title>
+    <desc>Created by komninoschat with Sketch.</desc>
+    <defs></defs>
+    <g id="flags/greece" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Lines" fill="#0D5EAF">
+            <g id="Blue-Line" transform="translate(0.000000, 24.000000)">
+                <rect id="Rectangle" x="0" y="0" width="50.7" height="3"></rect>
+            </g>
+            <g id="Blue-Line" transform="translate(0.000000, 18.000000)">
+                <rect id="Rectangle" x="0" y="0" width="50.7" height="3"></rect>
+            </g>
+            <g id="Blue-Line" transform="translate(0.000000, 12.000000)">
+                <rect id="Rectangle" x="0" y="0" width="50.7" height="3"></rect>
+            </g>
+            <g id="Blue-Line" transform="translate(0.000000, 6.000000)">
+                <rect id="Rectangle" x="0" y="0" width="50.7" height="3"></rect>
+            </g>
+            <g id="Blue-Line">
+                <rect id="Rectangle" x="0" y="0" width="50.7" height="3"></rect>
+            </g>
+        </g>
+        <g id="Cross">
+            <rect id="Blue-Background" fill="#0D5EAF" x="0" y="0" width="15" height="15"></rect>
+            <rect id="Horizontal" fill="#FFFFFF" x="0" y="6" width="15" height="3"></rect>
+            <rect id="Vertical" fill="#FFFFFF" x="6" y="0" width="3" height="15"></rect>
+        </g>
+    </g>
+</svg>
