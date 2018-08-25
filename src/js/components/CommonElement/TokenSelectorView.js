@@ -26,17 +26,17 @@ const TokenSelectorView = (props) => {
                 <img src={require("../../../assets/img/tokens/" + item.icon)} />
               </div>
 
-              <div>
-                <div>{item.name}</div>
+              <div className="item-content">
+                {/* <div>{item.name}</div> */}
                 <div className="item-balance">
-                  {props.account !== false && (
-                    <span title={balance} class="item-balance-value">
-                      {roundingNumber(balance)}
-                    </span>
-                  )}
                   <span class="item-symbol">
                     {item.symbol}
                   </span>
+                  {props.account !== false && (
+                    <span title={balance} class="item-balance-value">
+                      {`${roundingNumber(balance)} ${item.symbol}`}
+                    </span>
+                  )}
                 </div>
                 {/* <div className="font-w-b">{item.symbol}</span><span className="show-for-large token-name"> - {item.name}</div> */}
               </div>

@@ -126,10 +126,27 @@
             border-bottom: none;
           }
           .item-icon {
-            padding-top: 3px;
+            // padding-top: 3px;
           }
           .item-balance {
             font-weight: bold;
+            padding-top: 5px;
+          }
+          &:hover {
+            background-color: #fcfcfc;
+            .item-balance {
+              color: $swap-color;
+            }
+          }
+          .d-flex {
+            width: 100%;
+            .item-content {
+              width: 100%;
+              .item-balance {
+                display: flex;
+                justify-content: space-between;
+              }
+            }
           }
         }
       }
