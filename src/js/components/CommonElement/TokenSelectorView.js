@@ -22,20 +22,20 @@ const TokenSelectorView = (props) => {
         return (
           <div key={key} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item">
             <div className="d-flex">
-              <div className="item-icon">
+              <div className={`item-icon item-icon-${props.account !== false ? props.type : ""}`}>
                 <img src={require("../../../assets/img/tokens/" + item.icon)} />
               </div>
 
               <div className="item-content">
                 {/* <div>{item.name}</div> */}
-                <div className="item-balance">
-                  <span class="item-symbol">
+                <div className={`item-balance item-balance-${props.type}`}>
+                  <div class="item-symbol">
                     {item.symbol}
-                  </span>
+                  </div>
                   {props.account !== false && (
-                    <span title={balance} class="item-balance-value">
+                    <div title={balance} class="item-balance-value">
                       {`${roundingNumber(balance)} ${item.symbol}`}
-                    </span>
+                    </div>
                   )}
                 </div>
                 {/* <div className="font-w-b">{item.symbol}</span><span className="show-for-large token-name"> - {item.name}</div> */}

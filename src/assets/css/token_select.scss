@@ -126,7 +126,11 @@
             border-bottom: none;
           }
           .item-icon {
-            // padding-top: 3px;
+            &-source, &-des {
+              @include screen-min-width(large) {
+                padding-top: 7px;
+              }
+            }
           }
           .item-balance {
             font-weight: bold;
@@ -143,8 +147,16 @@
             .item-content {
               width: 100%;
               .item-balance {
-                display: flex;
-                justify-content: space-between;
+                &-transfer {
+                  display: flex;
+                  justify-content: space-between;
+                }
+                &-source, &-des {
+                  @include screen-max-width(large) {
+                    display: flex;
+                    justify-content: space-between;
+                  }
+                }
               }
             }
           }
