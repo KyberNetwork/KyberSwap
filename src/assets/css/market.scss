@@ -1,5 +1,5 @@
 .market {
-  margin-top: 30px;
+  margin-top: 35px;
   .for-mobile-only{
     // @include screen-max-width(large){
     //   display: none;
@@ -199,7 +199,7 @@
 
       > div {
         @include screen-min-width(large){
-          margin-top: 23px;
+          margin-top: -15px;
         }
       }
 
