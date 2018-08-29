@@ -450,7 +450,7 @@ export function trackConfirmTransaction(token){
 export function trackClickBack(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_Click_Back")
+            mixpanel.track("Swap_*_1_Click_Back")
         }catch(e){
             console.log(e)
         }
@@ -460,7 +460,7 @@ export function trackClickBack(){
 export function trackClickBreadCrumb(path){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_Click_BreadCrumb", {path: path})
+            mixpanel.track("Swap_*_1_Click_BreadCrumb", {path: path})
         }catch(e){
             console.log(e)
         }
@@ -470,7 +470,7 @@ export function trackClickBreadCrumb(path){
 export function trackClickViewTxOnEtherscan(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_Click_View_Transaction_On_Etherscan")
+            mixpanel.track("Swap_*_3_Click_View_Transaction_On_Etherscan")
         }catch(e){
             console.log(e)
         }
@@ -480,7 +480,7 @@ export function trackClickViewTxOnEtherscan(){
 export function trackClickCopyTx(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_Click_Copy_Tx")
+            mixpanel.track("Swap_*_3_Click_Copy_Tx")
         }catch(e){
             console.log(e)
         }
@@ -490,7 +490,7 @@ export function trackClickCopyTx(){
 export function trackClickInputRecieveAddress(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_Click_To_Input_Address_Transfer")
+            mixpanel.track("Swap_4_1_Click_To_Input_Address_Transfer")
         }catch(e){
             console.log(e)
         }
@@ -500,7 +500,7 @@ export function trackClickInputRecieveAddress(){
 export function trackClickCloseModal(typeModal){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_Click_To_Close_Modal", {typeModal: typeModal})
+            mixpanel.track("Swap_*_2_Click_To_Close_Modal", {typeModal: typeModal})
         }catch(e){
             console.log(e)
         }
@@ -510,7 +510,7 @@ export function trackClickCloseModal(typeModal){
 export function trackClickGetMoreAddressDevice(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_Click_GetMore_Device_Address")
+            mixpanel.track("Swap_2_2_Click_GetMore_Device_Address")
         }catch(e){
             console.log(e)
         }
@@ -520,7 +520,7 @@ export function trackClickGetMoreAddressDevice(){
 export function trackClickGetPreAddressDevice(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_Click_GetPrevious_Device_Address")
+            mixpanel.track("Swap_2_2_Click_GetPrevious_Device_Address")
         }catch(e){
             console.log(e)
         }
@@ -530,7 +530,7 @@ export function trackClickGetPreAddressDevice(){
 export function trackOpenModalColdWallet(walletType){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_Track_Open_Modal_ColdWallet", {walletType: walletType})
+            mixpanel.track("Swap_2_1_Open_Modal_ColdWallet", {walletType: walletType})
         }catch(e){
             console.log(e)
         }
@@ -540,7 +540,7 @@ export function trackOpenModalColdWallet(walletType){
 export function trackClickCustomPathColdWallet(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_Track_Click_Custom_Path_ColdWallet")
+            mixpanel.track("Swap_2_3_Click_Custom_Path_ColdWallet")
         }catch(e){
             console.log(e)
         }
@@ -550,7 +550,17 @@ export function trackClickCustomPathColdWallet(){
 export function trackChoosePathColdWallet(path){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_Track_Click_Choose_Path_ColdWallet", {path: path})
+            mixpanel.track("Swap_2_3_Click_Choose_Path_ColdWallet", {path: path})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickShowPassword(status){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_*_2_Click_Show_Password", {status: status})
         }catch(e){
             console.log(e)
         }
