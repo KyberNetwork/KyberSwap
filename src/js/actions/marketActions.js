@@ -106,7 +106,7 @@ export function getMarketInfoSuccess(data, rateUSD, rates) {
 export function getLast7DSuccess(last7D) {
   return {
     type: "MARKET.GET_LAST_7D_SUCCESS",
-    payload: last7D
+    payload: {last7D}
   }
 }
 

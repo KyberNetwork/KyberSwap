@@ -141,9 +141,10 @@ const initState = function () {
         shows: {
           listItem: {
             "last_7d": {title: "Last 7d", type: "chart"},
-            "change": {title: "24HR Change"},
+            
             "volume": {title: "Volume (24h)"},
-            "market_cap": {title: "Market cap" }
+            "market_cap": {title: "Market cap" },
+            "change": {title: "24HR Change"}
           },
           active: ["change", "last_7d"]
         }
@@ -330,7 +331,7 @@ const market = (state = initState, action) => {
 
     case 'MARKET.GET_MORE_DATA_SUCCESS': {
       var last7D = action.payload.data
-      var tokens = {...newState.tokens}
+      var tokens = JSON.parse(JSON.stringify(newState.tokens))
       Object.keys(last7D).map(key=>{
         if (!tokens[key]) return
         var last_7d = last7D[key]
@@ -407,9 +408,11 @@ const market = (state = initState, action) => {
     }
 
     case 'MARKET.GET_LAST_7D_SUCCESS': {
-      var last7D = action.payload
-      var tokens = {...newState.tokens}
+      var {last7D} = action.payload
+      var tokens = JSON.parse(JSON.stringify(newState.tokens))
       Object.keys(last7D).map(key=>{
+        console.log("key_error")
+        console.log(key)
         if (!tokens[key]) return
         var last_7d = last7D[key]
         if (last_7d && last_7d.length > 0) {

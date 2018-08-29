@@ -187,7 +187,7 @@
     &-right {
       @include screen-min-width(large){
         position: absolute;
-        top: -5px;
+        top: 30px;
         right: 0px;
       }
       .token-selector{
@@ -335,6 +335,9 @@
           font-weight: bold;
           text-transform: uppercase;
           font-size: 14px;
+          .rt-resizable-header-content{
+            width: 100%;
+          }
           &.-header {
             box-shadow: none;
             border-bottom: 2px solid #31CB9E;
@@ -354,6 +357,7 @@
               display: flex;
               justify-content: space-between;
               align-items: center;
+              max-width: 425px;
               .rt-th-header-title{
                 font-size: 20px;
                 margin-right: 30px;
