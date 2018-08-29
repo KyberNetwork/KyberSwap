@@ -4,6 +4,7 @@ import { roundingNumber } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
 import PathSelector from "../../containers/CommonElements/PathSelector";
+import * as analytics from "../../utils/analytics"
 
 const ImportByDeviceView = (props) => {
 
@@ -15,6 +16,7 @@ const ImportByDeviceView = (props) => {
             selectedPath = inputPath.value;
         }
         props.choosePath(selectedPath, dpath);
+        analytics.trackChoosePathColdWallet(selectedPath)
     }
 
     function getAddress(formAddress) {

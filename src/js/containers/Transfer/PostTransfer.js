@@ -194,6 +194,7 @@ export default class PostTransfer extends React.Component {
         this.props.dispatch(transferActions.resetSignError())
         break
     }
+    analytics.trackClickCloseModal("ConfirmTransfer Modal")
   }
   changePassword = () => {
     this.props.dispatch(transferActions.changePassword())

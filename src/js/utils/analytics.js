@@ -446,3 +446,113 @@ export function trackConfirmTransaction(token){
         }
     }
 }
+
+export function trackClickBack(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_Back")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickBreadCrumb(path){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_BreadCrumb", {path: path})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickViewTxOnEtherscan(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_View_Transaction_On_Etherscan")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickCopyTx(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_Copy_Tx")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickInputRecieveAddress(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_To_Input_Address_Transfer")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickCloseModal(typeModal){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_To_Close_Modal", {typeModal: typeModal})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickGetMoreAddressDevice(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_GetMore_Device_Address")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickGetPreAddressDevice(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_GetPrevious_Device_Address")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackOpenModalColdWallet(walletType){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Track_Open_Modal_ColdWallet", {walletType: walletType})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickCustomPathColdWallet(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Track_Click_Custom_Path_ColdWallet")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackChoosePathColdWallet(path){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Track_Click_Choose_Path_ColdWallet", {path: path})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
