@@ -341,13 +341,16 @@ export default class PostExchange extends React.Component {
   closeModal = (event) => {
     this.props.dispatch(exchangeActions.hidePassphrase())
     this.props.dispatch(exchangeActions.resetSignError())
+    analytics.trackClickCloseModal("Passphrase Modal")
   }
   closeModalConfirm = (event) => {
+    analytics.trackClickCloseModal("ConfirmTransferModal")
     if (this.props.form.isConfirming) return
     this.props.dispatch(exchangeActions.hideConfirm())
     this.props.dispatch(exchangeActions.resetSignError())
   }
   closeModalApprove = (event) => {
+    analytics.trackClickCloseModal("Approve Modal")
     if (this.props.form.isApproving) return
     this.props.dispatch(exchangeActions.hideApprove())
     this.props.dispatch(exchangeActions.resetSignError())

@@ -7,6 +7,7 @@ import { getTranslate } from 'react-localize-redux'
 import * as exchangeActions from "../../actions/exchangeActions"
 import * as transferActions from "../../actions/transferActions"
 import { Modal } from "../../components/CommonElement"
+import * as analytics from "../../utils/analytics"
 
 
 @connect((store, props) => {
@@ -63,6 +64,7 @@ export default class TransactionLoading extends React.Component {
         this.setState({
             isCopied: true
         })
+        analytics.trackClickCopyTx()
     }
 
     resetCopy(){
