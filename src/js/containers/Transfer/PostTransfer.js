@@ -14,6 +14,7 @@ import { PassphraseModal, ConfirmTransferModal, PostTransferBtn } from "../../co
 
 import { Modal } from "../../components/CommonElement"
 import { getTranslate } from 'react-localize-redux';
+import * as analytics from "../../utils/analytics"
 
 @connect((store, props) => {
   const tokens = store.tokens.tokens
@@ -41,6 +42,7 @@ import { getTranslate } from 'react-localize-redux';
 
 export default class PostTransfer extends React.Component {
   clickTransfer = () => {
+    analytics.trackClickTransferButton()
     if (validators.anyErrors(this.props.form.errors)) return
     if (this.validateTransfer()) {
 
@@ -66,8 +68,9 @@ export default class PostTransfer extends React.Component {
           this.props.dispatch(transferActions.showConfirm())
           break
       }
-
+      
     }
+    
   }
   validateTransfer = () => {
     //check dest address is an ethereum address
