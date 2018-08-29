@@ -15,6 +15,7 @@ import * as common from "../../utils/common"
 //import * as exchangeActions from "../../actions/exchangeActions"
 //import { default as _ } from 'underscore'
 import { clearSession } from "../../actions/globalActions"
+import * as analytics from "../../utils/analytics"
 
 //import { ImportAccount } from "../ImportAccount"
 
@@ -68,6 +69,7 @@ import { Link } from 'react-router-dom'
 
 export default class HeaderTransaction extends React.Component {
     gotoRoot = (e) => {
+        analytics.trackClickBreadCrumb("Home")
         if (this.props.currentLang === 'en') {
             window.location.href = "/"
         } else {
@@ -76,8 +78,9 @@ export default class HeaderTransaction extends React.Component {
     }
 
 
-    handleEndSession = () => {
+    handleEndSession = (e, info) => {
         this.props.dispatch(clearSession())
+        info === "back" ? analytics.trackClickBack() : analytics.trackClickBreadCrumb(info)
       }
 
     render() {
@@ -91,7 +94,7 @@ export default class HeaderTransaction extends React.Component {
                     </div>
                     <div className="seperator">/</div>
                     <div>
-                        <a onClick={(e) => this.handleEndSession(e)}>KyberSwap</a>
+                        <a onClick={(e) => this.handleEndSession(e, "KyberSwap")}>KyberSwap</a>
                     </div>
                     <div className="seperator">/</div>
                     <div className="active">
@@ -99,7 +102,7 @@ export default class HeaderTransaction extends React.Component {
                     </div>
                 </div>
                 <h1 class="title frame-tab">
-                    <div className="back-home" onClick={(e) => this.handleEndSession(e)}>
+                    <div className="back-home" onClick={(e) => this.handleEndSession(e, "back")}>
                         <img src={require("../../../assets/img/arrow_left.svg")} className="back-arrow" />
                         <span>{this.props.translate("transaction.back") || "Back"}</span>
                     </div>

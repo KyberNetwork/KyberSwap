@@ -14,6 +14,7 @@ import { PassphraseModal, ConfirmTransferModal, PostTransferBtn } from "../../co
 
 import { Modal } from "../../components/CommonElement"
 import { getTranslate } from 'react-localize-redux';
+import * as analytics from "../../utils/analytics"
 
 @connect((store, props) => {
   const tokens = store.tokens.tokens
@@ -191,6 +192,7 @@ export default class PostTransfer extends React.Component {
         this.props.dispatch(transferActions.resetSignError())
         break
     }
+    analytics.trackClickCloseModal("ConfirmTransfer Modal")
   }
   changePassword = () => {
     this.props.dispatch(transferActions.changePassword())

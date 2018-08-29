@@ -2,6 +2,7 @@ import React from "react"
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import { filterInputNumber, restrictInputNumber } from "../../utils/validators";
+import * as analytics from "../../utils/analytics"
 
 const TransferForm = (props) => {
   function handleChangeAmount(e) {
@@ -53,7 +54,7 @@ const TransferForm = (props) => {
               <div className="cell small-12 medium-7">
                 <div className={props.errors.destAddress !== '' ? "error" : ""}>
                   <span className="transaction-label">{props.translate("transaction.address") || "Receiving Address"}</span>
-                  <input className="hashAddr" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange}>
+                  <input className="hashAddr" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange} onFocus={(e) => analytics.trackClickInputRecieveAddress()}>
                   </input>
                   {props.errors.destAddress &&
                     <span class="error-text">{props.translate(props.errors.destAddress)}</span>

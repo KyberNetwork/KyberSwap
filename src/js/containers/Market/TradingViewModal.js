@@ -8,6 +8,7 @@ import {TradingView} from "../Market"
 
 import { getTranslate } from 'react-localize-redux';
 import * as marketActions from "../../actions/marketActions"
+import * as analytics from "../../utils/analytics"
 
 
 @connect((store) => {
@@ -22,6 +23,7 @@ import * as marketActions from "../../actions/marketActions"
 export default class TradingViewModal extends React.Component {
 	closeModal = () => {
 		this.props.dispatch(marketActions.hideTradingViewChart())
+		analytics.trackClickCloseModal("TradingView Modal")
 	}
 
 	content = () => {
