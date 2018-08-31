@@ -2,6 +2,7 @@ import React from "react"
 import { Modal } from "../../components/CommonElement"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux';
+import * as analytics from "../../utils/analytics"
 
 @connect((store, props) => {
   return {
@@ -67,7 +68,7 @@ export default class TermAndServices extends React.Component {
           <span className="cur-pointer"> 
             {this.props.translate("terms.accept") || "Accept"}
           </span> 
-              <a href="https://files.kyber.network/tac.html" target="_blank">
+              <a href="https://files.kyber.network/tac.html" target="_blank" onClick={(e) => {analytics.trackClickShowTermAndCondition()}}>
               {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}  
                 </a> 
           </span>

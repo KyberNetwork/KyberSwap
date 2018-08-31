@@ -233,6 +233,7 @@ export default class ExchangeBody extends React.Component {
   focusSource = () => {
     this.props.dispatch(exchangeActions.focusInput('source'));
     this.setState({focus:"source"})
+    analytics.trackClickInputAmount("source")
   }
 
   blurSource = () => {
@@ -242,6 +243,7 @@ export default class ExchangeBody extends React.Component {
   focusDest = () => {
     this.props.dispatch(exchangeActions.focusInput('dest'));
     this.setState({focus:"dest"})
+    analytics.trackClickInputAmount("dest")
   }
 
   blurDest = () => {

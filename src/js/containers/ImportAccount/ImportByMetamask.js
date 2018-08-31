@@ -6,6 +6,7 @@ import BLOCKCHAIN_INFO from "../../../../env"
 import Web3Service from "../../services/web3"
 import { getTranslate } from 'react-localize-redux'
 import bowser from 'bowser'
+import * as analytics from "../../utils/analytics"
 
 @connect((store) => {
   var tokens = store.tokens.tokens
@@ -25,6 +26,7 @@ import bowser from 'bowser'
 export default class ImportByMetamask extends React.Component {
 
   connect = (e) => {   
+    analytics.trackClickImportAccount("metamask")
     if (typeof web3 === "undefined") {
       this.props.dispatch(throwError(this.props.translate('error.metamask_not_install') || 'Cannot connect to metamask. Please make sure you have metamask installed'))
       return

@@ -71,6 +71,7 @@ export default class PostExchange extends React.Component {
     this.state = { form: {} }
   }
   clickExchange = () => {
+    analytics.trackClickSwapButton()
     if (this.props.form.errorNotPossessKgt) {
       return
     }

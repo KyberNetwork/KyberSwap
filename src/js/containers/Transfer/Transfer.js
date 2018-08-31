@@ -17,6 +17,7 @@ import { clearSession } from "../../actions/globalActions"
 import { ImportAccount } from "../ImportAccount"
 
 import {HeaderTransaction} from "../TransactionCommon"
+import * as analytics from "../../utils/analytics"
 
 @connect((store, props) => {
 
@@ -105,6 +106,7 @@ export default class Exchange extends React.Component {
 
     this.props.dispatch(transferActions.seSelectedGas(level)) 
     this.specifyGasPrice(value)
+    analytics.trackChooseGas("Transfer", value, level)
   }
 
   // handleEndSession = () => {

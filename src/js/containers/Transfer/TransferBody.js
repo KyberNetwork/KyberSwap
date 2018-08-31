@@ -122,6 +122,7 @@ export default class Transfer extends React.Component {
 
   onFocus = () => { 
     this.setState({focus:"source"})
+    analytics.trackClickInputAmount("transfer")
   }
 
   onBlur = () => { 
