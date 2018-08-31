@@ -6,6 +6,8 @@ import { Trezor } from "../../services/keys"
 import { ImportByTrezorView } from "../../components/ImportAccount"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
+import * as analytics from "../../utils/analytics"
+
 @connect((store) => {
   return {
     translate: getTranslate(store.locale)
@@ -16,6 +18,7 @@ export default class ImportByDeviceWithTrezor extends React.Component {
   
   showLoading = (walletType) => {
     this.refs.child.getWrappedInstance().showLoading(walletType)
+    analytics.trackClickImportAccount(walletType)
   }
   
   render = () => {

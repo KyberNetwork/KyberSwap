@@ -259,10 +259,10 @@ export function trackMarketSetting(field, value){
     // }
 }
 
-export function trackChooseGas(gas, type){
+export function trackChooseGas(type, gas, typeGas){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_2_Click_ChooseGas", {gas, type})
+            mixpanel.track("Swap_*_2_Click_ChooseGas", {type: type, gas: gas, typeGas: typeGas})
         }catch(e){
             console.log(e)
         }
@@ -398,6 +398,7 @@ export function trackClickSwapDestSrc(){
 }
 
 export function trackClickSwapButton(){
+    console.log("click swap button")
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
             mixpanel.track("Swap_3_1_Click_Swap_Button")
@@ -561,6 +562,76 @@ export function trackClickShowPassword(status){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
             mixpanel.track("Swap_*_2_Click_Show_Password", {status: status})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickShowTermAndCondition(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_1_1_Click_Show_Term_And_Condition")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickInputPasswordWithJSON(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_4_2_Click_Input_Passphrase")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickImportAccount(type){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_2_1_Click_Import_Account", {walletType: type})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickInputPrKey(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_2_2_Click_Input_Private_Key")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickSubmitPrKey(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_2_3_Click_Submit_Private_Key")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickInputAmount(type){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_*_1_Click_Input_Amount", {type: type})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickShowAddressOnEtherescan(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_3_1_Click_Show_Address_On_Etherescan")
         }catch(e){
             console.log(e)
         }

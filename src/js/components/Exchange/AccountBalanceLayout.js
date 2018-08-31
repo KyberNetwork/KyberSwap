@@ -4,6 +4,7 @@ import BigNumber from "bignumber.js"
 //import ReactTooltip from 'react-tooltip'
 import BLOCKCHAIN_INFO from "../../../../env"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
+import * as analytics from "../../utils/analytics"
 
 const AccountBalanceLayout = (props) => {
 
@@ -130,7 +131,9 @@ const AccountBalanceLayout = (props) => {
       <div className="balance-address">
         <div className="title">{props.translate("address.your_wallet_address") || "Your Wallet Address"}</div>
         <div>
-          <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.address}>{props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}</a>
+          <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.address} onClick={(e) => {analytics.trackClickShowAddressOnEtherescan()}}>
+            {props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}
+          </a>
         </div>
       </div>
 
