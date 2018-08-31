@@ -180,7 +180,7 @@ export default class EthereumService extends React.Component {
 
     this.fetGeneralInfoTokens()
 
-  //   this.testAnalize()
+     //this.testAnalize()
   // this.testEstimateGas()
   }
 
@@ -205,7 +205,7 @@ export default class EthereumService extends React.Component {
   testAnalize() {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    store.dispatch(analyzeError(ethereum, "0x8abab8d7af17fdac7113c58658e69ffc5627913f06760c11c437bdd338f69630"))
+    store.dispatch(analyzeError(ethereum, "0xcf399849f56c126fa1f0efde76e7e03c7ecbe4dfbffe2e96e7a48fa6e6c02692"))
   }
 
   // testEstimateGas() {

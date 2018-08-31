@@ -1,7 +1,7 @@
 
 const loadAll = true
 const defaultLanguage = 'en'
-const otherLang = ['cn', 'kr' , 'vi']
+const otherLang = ['cn', 'kr' , 'vi', 'ru']
 
 const supportLanguage = [defaultLanguage, ...otherLang]
 
