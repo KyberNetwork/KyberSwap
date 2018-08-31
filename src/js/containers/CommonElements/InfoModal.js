@@ -4,6 +4,7 @@ import { push } from 'react-router-redux';
 import { InfoModal } from '../../components/CommonElement'
 import { closeInfoModal} from "../../actions/utilActions"
 import { getTranslate } from 'react-localize-redux'
+import * as analytics from "../../utils/analytics"
 
 @connect((store) => {
   var modal = store.utils.infoModal
@@ -16,6 +17,7 @@ import { getTranslate } from 'react-localize-redux'
 export default class Info extends React.Component {
   exitIdleMode = () => {
     this.props.dispatch(closeInfoModal())
+    analytics.trackClickCloseModal("Info Modal")
   }
 
   render(){

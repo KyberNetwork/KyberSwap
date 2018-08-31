@@ -4,6 +4,7 @@ import { ImportByPKeyView } from "../../components/ImportAccount"
 import { importNewAccount, throwError, pKeyChange, throwPKeyError, openPkeyModal, closePkeyModal } from "../../actions/accountActions"
 import { addressFromPrivateKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
+import * as analytics from "../../utils/analytics"
 
 @connect((store) => {
   var tokens = store.tokens.tokens
@@ -23,10 +24,12 @@ export default class ImportByPrivateKey extends React.Component {
 
   openModal() {
     this.props.dispatch(openPkeyModal());
+    analytics.trackClickImportAccount("private key")
   }
 
   closeModal() {
     this.props.dispatch(closePkeyModal());    
+    analytics.trackClickCloseModal("import private-key")
   }
 
   inputChange(e) {

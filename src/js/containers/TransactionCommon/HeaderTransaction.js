@@ -18,6 +18,7 @@ import * as common from "../../utils/common"
 //import * as exchangeActions from "../../actions/exchangeActions"
 //import { default as _ } from 'underscore'
 import { clearSession } from "../../actions/globalActions"
+import * as analytics from "../../utils/analytics"
 
 //import { ImportAccount } from "../ImportAccount"
 
@@ -71,6 +72,7 @@ import { Link } from 'react-router-dom'
 
 export default class HeaderTransaction extends React.Component {
     gotoRoot = (e) => {
+        analytics.trackClickBreadCrumb("Home")
         if (this.props.currentLang === 'en') {
             window.location.href = "/"
         } else {

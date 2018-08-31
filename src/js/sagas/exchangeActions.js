@@ -66,7 +66,7 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
 
   //track complete trade
   analytics.trackCoinExchange(data)
-  analytics.completeTrade(hash, "kyber", "exchange")
+  analytics.completeTrade(hash, "kyber", "swap")
 
   //console.log({txRaw, hash, account, data})
   const tx = new Tx(

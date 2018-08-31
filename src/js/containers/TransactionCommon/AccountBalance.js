@@ -1,6 +1,12 @@
 import React from "react"
 import { connect } from "react-redux"
-import { AccountBalanceLayout } from '../../components/Exchange';
+
+import { AccountBalanceLayout } from '../../components/Exchange'
+// import { selectTokenAsync } from '../../actions/exchangeActions'
+// import { selectToken } from '../../actions/transferActions'
+// import { hideSelectToken } from "../../actions/utilActions"
+import * as analytics from "../../utils/analytics"
+
 import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
@@ -44,8 +50,13 @@ export default class AccountBalance extends React.Component {
     this.setState({searchWord:value})
   }
 
+  clickOnInput = (e) => {
+    analytics.trackSearchTokenBalanceBoard()
+  }
+
   selectToken = (e, symbol, address) => {
     this.props.chooseToken(symbol, address, "source")
+    analytics.trackChooseTokenOnBalanceBoard(symbol)
   }
 
   showSort = (e) =>{
@@ -58,11 +69,13 @@ export default class AccountBalance extends React.Component {
   sortSymbol = (e) =>{
     this.setState({sortType: "Symbol", sortValueSymbol_DES: !this.state.sortValueSymbol_DES})
     this.hideSort()
+    analytics.trackClickSortBalanceBoard("Symbol", this.state.sortValueSymbol_DES ? "DESC" : "ASC")
   }
 
   sortPrice = (e) =>{
     this.setState({sortType: "Price", sortValuePrice_DES: !this.state.sortValuePrice_DES})
     this.hideSort()
+    analytics.trackClickSortBalanceBoard("Price", this.state.sortValuePrice_DES ? "DESC" : "ASC")
   }
 
   toggleBalanceContent = () => {
@@ -78,6 +91,7 @@ export default class AccountBalance extends React.Component {
         translate={this.props.translate}
         sourceActive={this.props.sourceActive}
         selectToken={this.selectToken}
+        clickOnInput={this.clickOnInput}
         showBalance = {this.props.showBalance}
         changeSearchBalance = {this.changeSearchBalance}
         searchWord = {this.state.searchWord}

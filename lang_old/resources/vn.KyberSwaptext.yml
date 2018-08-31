@@ -1,0 +1,65 @@
+kyberswap_notaccept:
+  text_banner1: Trao đổi Token một cách tức thì và đảm bảo
+  text_banner_2: Không lệnh giao dịch, không cần gửi tiền
+  Accept_button: Chấp nhận
+  Ethereum_Market_pannel_1: Tìm
+  Ethereum_Market_pannel_2: Tìm token
+  Ethereum_Market_pannel_3: Loại tiền
+  Ethereum_Market_pannel_4: Thị trường
+  Ethereum_Market_pannel_5: Giá bán
+  Ethereum_Market_pannel_6: Giá mua
+  Ethereum_Market_pannel_7: Thay đổi 24h
+  Ethereum_Market_pannel_8: Lượng giao dịch (24h)
+  Ethereum_Market_pannel_9: Vốn hóa
+  Ethereum_Market_pannel_10: Số lượng lưu hành
+  Ethereum_Market_pannel_11: Tổng cung
+  Ethereum_Market_pannel_12: 7 ngày qua
+  Ethereum_Market_pannel_13: Trang
+  Ethereum_Market_pannel_14: của
+  Ethereum_Market_pannel_15: Hàng
+  Ethereum_Market_pannel_16: Tùy chỉnh
+  Ethereum_Market_pannel_17: Thị trường Ethereum
+kyberswap_accept:
+  Metamask_1: Kết nối
+  Metamask_2: Địa chỉ
+  Metamask_3: Tài khoản
+  Keystore: Chọn hoặc Kéo
+  Trezor: Kết nối từ Trezor
+  Ledger: Kết nối từ Ledger
+  Private_Key: Nhập Private key
+Connected_Wallet:
+  Back_button: Quay lại
+  Swap_button: Trao đổi
+  Advanced_panel_1: Nâng cao
+  Advanced_panel_2: Tỉ giá thấp hơn cho tỉ lệ thành công cao hơn khi thị trường biến động. 555.7031 là tỉ giá thấp nhất mà chúng tôi đề xuất.
+  Advanced_panel_3: TỈ GIÁ TỐT NHẤT
+  Advanced_panel_4: Giá gas
+  Advanced_panel_5: Giá gas càng cao, giao dịch càng nhanh.
+                    Giá gas tối đa
+  Advanced_panel_6: Phí giao dịch
+  Swap_screen_1: Mã
+  Swap_screen_2: Giá
+  Swap_screen_3: Tìm
+  Swap_screen_4: Địa chỉ Metamask
+  Swap_screen_5: Địa chỉ Json
+  Swap_screen_6: Địa chỉ Trezor
+  Swap_screen_7: Địa chỉ Ledger
+  Swap_screen_8: Địa chỉ Private Key
+  Swap_screen_9: Chọn để trao đổi toàn bộ
+  Swap_screen_10: TRAO ĐỔI MỚI
+  Swap_screen_11: Bạn có thể thay đổi mức độ trượt giá tôi đa bằng việc điều chỉnh tỉ giá tối thiểu trong phần điều chỉnh nâng cao
+  Swap_screen_12: Hoàn tất
+  Swap_screen_13: Giao dịch thành công từ
+  Swap_screen_14: Bao gồm
+  Swap_screen_15: Xác nhận giao dịch
+  Trezor/Ledger_connected_1: Network
+  Trezor/Ledger_connected_2: Nhập
+  Transfer_screen_1: Chuyển khoản
+  Transfer_screen_2: Chọn để chuyển khoản toàn bộ
+  Transfer_screen_3: Chuyển khoản thành công
+  Swap/Transfer_screen_Keystore: Nhập mật khẩu để tiếp tục
+
+
+
+
+          

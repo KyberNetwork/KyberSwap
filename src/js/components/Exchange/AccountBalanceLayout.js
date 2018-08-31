@@ -5,6 +5,7 @@ import BLOCKCHAIN_INFO from "../../../../env"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import SlideDown, { SlideDownTrigger, SlideDownContent } from "../CommonElement/SlideDown";
 import { TokenChart } from "../../containers/Market";
+import * as analytics from "../../utils/analytics"
 
 const AccountBalanceLayout = (props) => {
 
@@ -124,7 +125,7 @@ const AccountBalanceLayout = (props) => {
         <div className="balance-address">
           <div className="title">{props.translate("address.your_wallet_address") || "Your Wallet Address"}</div>
           <div>
-            <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}>
+            <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address} onClick={(e) => {analytics.trackClickShowAddressOnEtherescan()}}>
               {props.account.address ? props.account.address.slice(0, 8) : ''} ... {props.account.address ? props.account.address.slice(-6) : ''}
             </a>
           </div>

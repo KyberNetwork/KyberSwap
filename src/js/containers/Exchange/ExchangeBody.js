@@ -13,6 +13,8 @@ import * as common from "../../utils/common"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import * as globalActions from "../../actions/globalActions"
 import * as exchangeActions from "../../actions/exchangeActions"
+import * as analytics from "../../utils/analytics"
+
 import constansts from "../../services/constants"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
@@ -79,6 +81,7 @@ export default class ExchangeBody extends React.Component {
 
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
     this.props.dispatch(globalActions.goToRoute(path))
+    analytics.trackChooseToken(type, symbol)
   }
 
   dispatchUpdateRateExchange = (sourceValue) => {
@@ -199,6 +202,7 @@ export default class ExchangeBody extends React.Component {
   focusSource = () => {
     this.props.dispatch(exchangeActions.focusInput('source'));
     this.setState({focus:"source"})
+    analytics.trackClickInputAmount("source")
   }
 
   blurSource = () => {
@@ -208,6 +212,7 @@ export default class ExchangeBody extends React.Component {
   focusDest = () => {
     this.props.dispatch(exchangeActions.focusInput('dest'));
     this.setState({focus:"dest"})
+    analytics.trackClickInputAmount("dest")
   }
 
   blurDest = () => {
@@ -216,6 +221,7 @@ export default class ExchangeBody extends React.Component {
 
   makeNewExchange = () => {
     this.props.dispatch(exchangeActions.makeNewExchange());
+    analytics.trackClickNewTransaction("Swap")
   }  
 
   setAmount = () => {
@@ -241,6 +247,7 @@ export default class ExchangeBody extends React.Component {
       this.props.dispatch(exchangeActions.inputChange('source', balance))
       this.props.ethereum.fetchRateExchange(true)
     }
+    analytics.trackClickAllIn("Swap", tokenSymbol)
   }
 
   swapToken = () => {
