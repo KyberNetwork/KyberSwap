@@ -8,6 +8,7 @@ const ImportByPKeyView = (props) => {
 	function handldeSubmit() {
 		let privateKey = document.getElementById("private_key").value
 		props.importPrivateKey(privateKey)
+		analytics.trackClickSubmitPrKey()
 	}
 
 	function submit(e) {
@@ -65,6 +66,7 @@ const ImportByPKeyView = (props) => {
 												autoFocus
 												autoComplete="off"
 												spellCheck="false"
+												onFocus={(e) => {analytics.trackClickInputPrKey()}}
 												required />
 												<p>{props.privateKeyVisible}</p>
 												<a className="toggle" onClick={toggleShowPw}></a>
