@@ -521,6 +521,9 @@ input.search-input {
       border-radius: 4px;
       
       cursor: pointer;
+      // @include screen-max-width(large){
+      //   display: none;
+      // }
       
   &::after{
     background-image: url("../img/dropdown_gray.svg");
@@ -565,6 +568,9 @@ input.search-input {
   color: #222;
   cursor: pointer;
   margin-top: 10px;
+  @include screen-max-width(large){
+    display: none;
+  }
   >div{
     display: inline-block;
   }
@@ -587,6 +593,9 @@ input.search-input {
     text-align: right;
     margin-bottom: 10px;
     padding-right: 10px;
+     @include screen-max-width(large){
+    display: none;
+  }
     &::before{
       background-image: url("../img/close_arrow.svg");
       background-repeat: no-repeat;

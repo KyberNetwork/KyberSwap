@@ -1,5 +1,7 @@
 .swap-content {
-  padding: 65px 0 250px;
+  @include screen-min-width(large){
+    padding: 65px 0 250px;
+  }
   position: relative;
   height: 100%;
 

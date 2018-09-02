@@ -98,6 +98,7 @@ $padding-col-left : 2rem;
         .transfer-detail {
           @include screen-max-width(large) {
             background-color: white;
+            padding-top: 15px;
           }
 
           // .transfer-col-1-2{
