@@ -23,8 +23,8 @@ const TransferForm = (props) => {
   var render = (
     <div id="transfer-screen">
       <div className="grid-x">
-        <div className={"cell medium-6 large-3 balance-wrapper" + (anyErrors(props.errors) ?" error": "") } id="balance-account-wrapper">
-          <AccountBalance
+        <div className={"cell medium-6 large-3" + (props.isOpenLeft? " balance-wrapper": "") + (anyErrors(props.errors) ?" error": "") } id="balance-account-wrapper">
+          {/* <AccountBalance
             chooseToken = {props.chooseToken}
             sourceActive = {props.tokenSymbol}
             destTokenSymbol='ETH'
@@ -32,7 +32,14 @@ const TransferForm = (props) => {
             chartTimeRange={props.chartTimeRange}
             onChangeChartRange={props.onChangeChartRange}
             onToggleChartContent={props.onToggleChartContent}
-          />
+          /> */}
+           {props.isOpenLeft && (
+                   <div className="close-indicator close-wallet" onClick={(e) => props.toggleLeftPart(false)}>
+                   <div>Close</div>
+                   </div>
+                )}
+
+        {props.balanceLayout}
         </div>
         <div class={"cell medium-6 large-9 swap-wrapper swap-wrapper--transfer" +
           (props.isAgreed ? ' swap-wrapper--agreed' : '') + (props.account !== false ? ' swap-wrapper--imported' : '')}>
@@ -107,6 +114,11 @@ const TransferForm = (props) => {
               </div>
             </div>
             <div className="cell small-12 large-4 transfer-col transfer-advanced large-offset-0">
+                 {props.isOpenRight && (
+                  <div className="close-indicator close-advance" onClick={(e) => props.toggleRightPart(false)}>
+                  <div>Close</div>
+                 </div>
+                )}
               {props.advanceLayout}
             </div>
           </div>

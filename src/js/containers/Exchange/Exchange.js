@@ -1,8 +1,8 @@
 import React from "react"
 import { connect } from "react-redux"
-import {ExchangeBody, MinRate} from "../Exchange"
+import {ExchangeBody} from "../Exchange"
 //import {GasConfig} from "../TransactionCommon"
-import {AdvanceConfigLayout, GasConfig} from "../../components/TransactionCommon"
+
 
 
 
@@ -73,42 +73,19 @@ export default class Exchange extends React.Component {
           this.props.dispatch(exchangeActions.selectTokenAsync(destSymbol, destAddress, "des", this.props.ethereum))
     }
   }
-  validateTxFee = (gasPrice) => {
-    var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
-    this.props.exchange.sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, gasPrice)
+  // validateTxFee = (gasPrice) => {
+  //   var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
+  //   this.props.exchange.sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, gasPrice)
 
-    if (validateWithFee) {
-      this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
-      return
-      // check = false
-    }
-  }
-  lazyValidateTransactionFee = _.debounce(this.validateTxFee, 500)
+  //   if (validateWithFee) {
+  //     this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
+  //     return
+  //     // check = false
+  //   }
+  // }
+  // lazyValidateTransactionFee = _.debounce(this.validateTxFee, 500)
 
-  specifyGas = (event) => {
-    var value = event.target.value
-    this.props.dispatch(exchangeActions.specifyGas(value))
-  }
 
-  specifyGasPrice = (value) => {
-    this.props.dispatch(exchangeActions.specifyGasPrice(value + ""))
-    if (this.props.account !== false){
-      this.lazyValidateTransactionFee(value)
-    }
-  }
-
-  inputGasPriceHandler = (value) => {
-   // this.setState({selectedGas: "undefined"})
-    this.specifyGasPrice(value)
-  }
-
-  selectedGasHandler = (value, level, levelString) => {
-
-    //this.setState({selectedGas: level})
-    this.props.dispatch(exchangeActions.seSelectedGas(level)) 
-    this.specifyGasPrice(value)
-    analytics.trackChooseGas(value, levelString)
-  }
 
   // handleEndSession = () => {
   //   this.props.dispatch(clearSession())
@@ -118,30 +95,8 @@ export default class Exchange extends React.Component {
     // if (this.props.exchange.isOpenImportAcount){
     //   return <ImportAccount screen="exchange"/>
     // }
-    var gasPrice = converter.stringToBigNumber(converter.gweiToEth(this.props.exchange.gasPrice))
-    var totalGas = gasPrice.multipliedBy(this.props.exchange.gas + this.props.exchange.gas_approve)
-    var page = "exchange"
-    var gasConfig = (
-      <GasConfig 
-        gas={this.props.exchange.gas + this.props.exchange.gas_approve}
-        gasPrice={this.props.exchange.gasPrice}
-        maxGasPrice={this.props.exchange.maxGasPrice}
-        gasHandler={this.specifyGas}
-        inputGasPriceHandler={this.inputGasPriceHandler}
-        selectedGasHandler={this.selectedGasHandler}
-        gasPriceError={this.props.exchange.errors.gasPriceError}
-        gasError={this.props.exchange.errors.gasError}
-        totalGas={totalGas.toString()}
-        translate={this.props.translate}        
-        gasPriceSuggest={this.props.exchange.gasPriceSuggest}    
-        selectedGas = {this.props.exchange.selectedGas}
-        page = {page}
-      />
-    )
 
-    var minRate = <MinRate />    
-    var advanceConfig = <AdvanceConfigLayout minRate = {minRate} gasConfig = {gasConfig} translate = {this.props.translate}/>
-    var exchangeBody = <ExchangeBody advanceLayout = {advanceConfig} />
+    var exchangeBody = <ExchangeBody  />
 
     var headerTransaction = <HeaderTransaction page="exchange" />
 

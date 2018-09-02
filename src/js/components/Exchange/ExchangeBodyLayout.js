@@ -6,7 +6,7 @@ import constants from "../../services/constants"
 import ReactTooltip from 'react-tooltip'
 import { filterInputNumber } from "../../utils/validators";
 import { ImportAccount } from "../../containers/ImportAccount";
-import { AccountBalance } from "../../containers/TransactionCommon";
+//import { AccountBalance } from "../../containers/TransactionCommon";
 import { PostExchangeWithKey } from "../../containers/Exchange";
 import BLOCKCHAIN_INFO from "../../../../env";
 
@@ -76,16 +76,14 @@ const ExchangeBodyLayout = (props) => {
 
   var render = (
     <div className="grid-x">
-      <div className={"cell medium-6 large-3 balance-wrapper" + (errorExchange ||  props.networkError?" error":"")} id="balance-account-wrapper">
-        <AccountBalance
-          chooseToken = {props.chooseToken}
-          sourceActive = {props.sourceTokenSymbol}
-          destTokenSymbol={props.destTokenSymbol}
-          isChartActive={props.isChartActive}
-          chartTimeRange={props.chartTimeRange}
-          onChangeChartRange={props.onChangeChartRange}
-          onToggleChartContent={props.onToggleChartContent}
-        />
+      <div className={"cell medium-6 large-3" + (props.isOpenLeft? " balance-wrapper": "") + (errorExchange ||  props.networkError?" error":"")} id="balance-account-wrapper">
+      {props.isOpenLeft && (
+                  <div className="close-indicator close-wallet" onClick={(e) => props.toggleLeftPart(false)}>
+                  <div>Close</div>
+                  </div>
+                )}
+
+        {props.balanceLayout}
       </div>
 
       <div className={"cell medium-6 large-9 swap-wrapper" +
@@ -178,6 +176,12 @@ const ExchangeBodyLayout = (props) => {
             </div>
           </div>
           <div className="cell large-4 exchange-col-2">
+                {props.isOpenRight && (
+                  <div className="close-indicator close-advance" onClick={(e) => props.toggleRightPart(false)}>
+                   <div>Close</div>
+                  </div>
+                )}
+            
             {props.advanceLayout}
           </div>
         </div>

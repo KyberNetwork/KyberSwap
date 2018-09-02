@@ -220,6 +220,7 @@ export default class TokenChart extends React.Component {
       }
     }
 
+    //console.log({data, options})
     return (
       <div className="balance-content">
         <SlideDown active={this.props.isChartActive}>

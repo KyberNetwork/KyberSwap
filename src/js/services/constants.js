@@ -138,7 +138,9 @@ const INIT_EXCHANGE_FORM_STATE = {
   chart: {
     isActive: true,
     timeRange: 'w'
-  }
+  },
+  isOpenRight: false,
+  isOpenLeft: false
 }
 
 const INIT_TRANSFER_FORM_STATE = {
@@ -201,7 +203,9 @@ const INIT_TRANSFER_FORM_STATE = {
   chart: {
     isActive: true,
     timeRange: 'w'
-  }
+  },
+  isOpenRight: false,
+  isOpenLeft: false
 }
 
 // reserves

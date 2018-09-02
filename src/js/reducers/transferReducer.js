@@ -275,6 +275,16 @@ const transfer = (state = initState, action) => {
       newState.chart.timeRange = action.payload;
       return newState;
     }
+    case "TRANSFER.TOGGLE_RIGHT_PART":{
+      var {value} = action.payload
+      newState.isOpenRight = value
+      return newState
+    }
+    case "TRANSFER.TOGGLE_LEFT_PART":{
+      var {value} = action.payload
+      newState.isOpenLeft = value
+      return newState
+    }
   }
   return state
 }

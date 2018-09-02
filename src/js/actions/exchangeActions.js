@@ -615,3 +615,18 @@ export function setChartTimeRange(timeRange) {
     payload: timeRange
   }
 }
+
+
+export function toggleRightPart(value){
+  return {
+    type: "EXCHANGE.TOGGLE_RIGHT_PART",
+    payload: {value}
+  }
+}
+
+export function toggleLeftPart(value){
+  return {
+    type: "EXCHANGE.TOGGLE_LEFT_PART",
+    payload: {value}
+  }
+}
