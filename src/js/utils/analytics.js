@@ -175,10 +175,10 @@ export function tokenForCharting(token){
     // }
 }
 
-export function acceptTerm(){
+export function acceptTerm(tradeType){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_1_1_Click_AcceptTerm")
+            mixpanel.track("Swap_1_1_Click_AcceptTerm", {type: tradeType})
         }catch(e){
             console.log(e)
         }
@@ -387,10 +387,10 @@ export function trackSortETHMarket(field, sortType){
     }
 }
 
-export function trackClickSwapDestSrc(){
+export function trackClickSwapDestSrc(sourceToken, destToken){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_3_1_Click_To_Swap_Dest_Src")
+            mixpanel.track("Swap_*_1_Click_To_Swap_Dest_Src", {sourceToken: sourceToken, destToken: destToken})
         }catch(e){
             console.log(e)
         }
@@ -591,7 +591,7 @@ export function trackClickInputPasswordWithJSON(){
 export function trackClickImportAccount(type){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_2_1_Click_Import_Account", {walletType: type})
+            mixpanel.track("Swap_1_2_Click_Import_Account", {walletType: type})
         }catch(e){
             console.log(e)
         }

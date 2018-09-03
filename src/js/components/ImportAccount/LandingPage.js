@@ -88,7 +88,7 @@ export default class LandingPage extends React.Component {
 			this.props.dispatch(acceptTermOfService())
 		}		
 		// }
-		analytics.acceptTerm()
+		analytics.acceptTerm(this.props.tradeType)
 	}
 
   render() {

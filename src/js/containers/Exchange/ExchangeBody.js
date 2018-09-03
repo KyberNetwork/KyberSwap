@@ -257,6 +257,7 @@ export default class ExchangeBody extends React.Component {
     var path = constansts.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "_" + this.props.exchange.sourceTokenSymbol.toLowerCase()
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
     this.props.dispatch(globalActions.goToRoute(path))
+    analytics.trackClickSwapDestSrc(this.props.exchange.sourceTokenSymbol, this.props.exchange.destTokenSymbol)
   }
 
   analyze = () => {
