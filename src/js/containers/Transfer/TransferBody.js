@@ -172,6 +172,7 @@ export default class Transfer extends React.Component {
 
   toggleRightPart = (value) => {
     this.props.dispatch(transferActions.toggleRightPart(value))
+    analytics.trackClickTheRightWing("transfer")
   }
 
   getAdvanceLayout = () => {
@@ -179,7 +180,7 @@ export default class Transfer extends React.Component {
       return (
         <div onClick={(e) => this.toggleRightPart(true)}>
           <div className="toogle-side toogle-advance">
-            <div>Advance</div>
+            <div>{this.props.translate("transaction.advanced") || "Advance"}</div>
           </div>
 
 <div className="advance-title-mobile title ">
@@ -220,13 +221,14 @@ export default class Transfer extends React.Component {
 
   toggleLeftPart = (value) => {
     this.props.dispatch(transferActions.toggleLeftPart(value))
+    analytics.trackClickTheLeftWing("transfer")
   }
 
   getBalanceLayout = () => {
     if (!this.props.transfer.isOpenLeft) {
       return (
         <div className="toogle-side toogle-wallet" onClick={(e) => this.toggleLeftPart(true)}>
-        <div>Wallet</div>
+        <div>{this.props.translate("transaction.wallet") || "Wallet"}}</div>
       </div>
       )
     }

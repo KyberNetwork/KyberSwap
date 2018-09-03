@@ -307,6 +307,7 @@ export default class ExchangeBody extends React.Component {
 
   toggleRightPart = (value) => {
     this.props.dispatch(exchangeActions.toggleRightPart(value))
+    analytics.trackClickTheRightWing("swap")
   }
 
   getAdvanceLayout = () => {
@@ -314,7 +315,7 @@ export default class ExchangeBody extends React.Component {
       return (
         <div onClick={(e) => this.toggleRightPart(true)}>
           <div className="toogle-side toogle-advance">
-            <div>Advance</div>
+            <div>{this.props.translate("transaction.advanced") || "Advance"}</div>
           </div>
           <div className="advance-title-mobile title ">
             <div>
@@ -354,13 +355,14 @@ export default class ExchangeBody extends React.Component {
 
   toggleLeftPart = (value) => {
     this.props.dispatch(exchangeActions.toggleLeftPart(value))
+    analytics.trackClickTheLeftWing("swap")
   }
 
   getBalanceLayout = () => {
     if (!this.props.exchange.isOpenLeft) {
       return (
         <div className="toogle-side toogle-wallet" onClick={(e) => this.toggleLeftPart(true)}>
-          <div>Wallet</div>
+          <div>{this.props.translate("transaction.wallet") || "Wallet"}</div>
         </div>
       )
       // return <div><button onClick={(e) => this.toggleLeftPart(true) }>Open left</button></div>
