@@ -46,7 +46,7 @@
 
   #balance-account {
     .balances {
-      height: 300px;
+      height: 253px;
     }
   }
 
@@ -88,9 +88,9 @@
   line-height: normal;
   letter-spacing: normal;
   color: #474D5F;
-  @include screen-min-width(large){
-    padding-top: 20px;
-  }
+  // @include screen-min-width(large){
+  //   padding-top: 10px;
+  // }
   @include screen-max-width(large){
     padding-top: 5px;
   }
