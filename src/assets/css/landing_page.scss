@@ -1,5 +1,7 @@
 .swap-content {
-  padding: 65px 0 250px;
+  @include screen-min-width(large){
+    padding: 65px 0 220px
+  }
   position: relative;
   height: 100%;
 
@@ -73,9 +75,9 @@
     position: relative;
     padding-bottom: 230px;
 
-    .advance-config {
-      margin-top: 1rem;
-    }
+    // .advance-config {
+    //   margin-top: 1rem;
+    // }
 
     &--agreed {
       padding-bottom: 510px;
@@ -218,7 +220,7 @@
     margin-bottom: 25px;
     h1.title.frame-tab {
       position: absolute;
-      z-index: 1;
+      z-index: 2;
       left: calc(50% - 150px);
         padding-top: 0;
     }

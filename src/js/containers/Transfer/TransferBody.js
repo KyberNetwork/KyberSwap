@@ -5,8 +5,8 @@ import * as converters from "../../utils/converter"
 import * as validators from "../../utils/validators"
 import { TransferForm } from "../../components/Transaction"
 import { TransactionLoading } from "../CommonElements"
-import { AddressBalance }  from "../../components/TransactionCommon"
-import { TokenSelector } from "../TransactionCommon"
+import { AddressBalance, AdvanceConfigLayout, GasConfig } from "../../components/TransactionCommon"
+import { TokenSelector, AccountBalance } from "../TransactionCommon"
 import { hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
 import * as common from "../../utils/common"
@@ -40,13 +40,13 @@ import { default as _ } from 'underscore'
     tokens: tokens,
     global: store.global,
     translate: getTranslate(store.locale),
-    advanceLayout : props.advanceLayout,
+    advanceLayout: props.advanceLayout,
     currentLang
   }
 })
 
 export default class Transfer extends React.Component {
-  constructor(){
+  constructor() {
     super()
     this.state = {
       focus: "transfer"
@@ -83,7 +83,7 @@ export default class Transfer extends React.Component {
     var value = event.target.value
     this.props.dispatch(transferActions.specifyAmountTransfer(value))
 
-    if (this.props.account.account !== false){
+    if (this.props.account.account !== false) {
       this.lazyUpdateValidateSourceAmount(value, this.props.transfer.gasPrice)
     }
   }
@@ -110,8 +110,8 @@ export default class Transfer extends React.Component {
     analytics.trackClickInputAmount("transfer")
   }
 
-  onBlur = () => { 
-    this.setState({focus:""})
+  onBlur = () => {
+    this.setState({ focus: "" })
   }
 
   setAmount = () => {
@@ -144,6 +144,105 @@ export default class Transfer extends React.Component {
 
   toggleChartContent = () => {
     this.props.dispatch(transferActions.toggleChartContent())
+  }
+
+  toggleBalanceContent = (value) => {
+    this.props.dispatch(transferActions.toggleBalanceContent(value))    
+  }
+
+  specifyGasPrice = (value) => {
+    this.props.dispatch(transferActions.specifyGasPrice(value))
+
+    if (this.props.account !== false) {
+      this.lazyUpdateValidateSourceAmount(this.props.transfer.amount, value)
+    }
+  }
+
+  inputGasPriceHandler = (value) => {
+    //this.setState({selectedGas: "undefined"})
+    this.specifyGasPrice(value)
+  }
+
+  selectedGasHandler = (value, level) => {
+    //this.setState({selectedGas: level})
+
+    this.props.dispatch(transferActions.seSelectedGas(level))
+    this.specifyGasPrice(value)
+  }
+
+  toggleRightPart = (value) => {
+    this.props.dispatch(transferActions.toggleRightPart(value))
+  }
+
+  getAdvanceLayout = () => {
+    if (!this.props.transfer.isOpenRight) {
+      return (
+        <div onClick={(e) => this.toggleRightPart(true)}>
+          <div className="toogle-side toogle-advance">
+            <div>Advance</div>
+          </div>
+
+<div className="advance-title-mobile title ">
+<div>
+  {this.props.translate("transaction.advanced") || "Advanced"}
+  <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" className="advance-arrow-up"/>
+</div>
+</div>
+
+</div>
+      
+      )
+    }
+    var gasPrice = converters.stringToBigNumber(converters.gweiToEth(this.props.transfer.gasPrice))
+    var totalGas = gasPrice.multipliedBy(this.props.transfer.gas)
+    var page = "transfer"
+    var gasConfig = (
+      <GasConfig
+        gas={this.props.transfer.gas}
+        gasPrice={this.props.transfer.gasPrice}
+        maxGasPrice={this.props.transfer.maxGasPrice}
+        gasHandler={this.specifyGas}
+        inputGasPriceHandler={this.inputGasPriceHandler}
+        selectedGasHandler={this.selectedGasHandler}
+        gasPriceError={this.props.transfer.errors.gasPriceError}
+        gasError={this.props.transfer.errors.gasError}
+        totalGas={totalGas.toString()}
+        translate={this.props.translate}
+        gasPriceSuggest={this.props.transfer.gasPriceSuggest}
+        selectedGas={this.props.transfer.selectedGas}
+        page={page}
+      />
+    )
+
+    var advanceConfig = <AdvanceConfigLayout gasConfig={gasConfig} translate={this.props.translate} />
+    return advanceConfig
+  }
+
+  toggleLeftPart = (value) => {
+    this.props.dispatch(transferActions.toggleLeftPart(value))
+  }
+
+  getBalanceLayout = () => {
+    if (!this.props.transfer.isOpenLeft) {
+      return (
+        <div className="toogle-side toogle-wallet" onClick={(e) => this.toggleLeftPart(true)}>
+        <div>Wallet</div>
+      </div>
+      )
+    }
+    return (
+      <AccountBalance
+        chooseToken={this.chooseToken}
+        sourceActive={this.props.transfer.tokenSymbol}
+        destTokenSymbol='ETH'
+        isChartActive={this.props.transfer.chart.isActive}
+        chartTimeRange={this.props.transfer.chart.timeRange}
+        onChangeChartRange={this.changeChartRange}
+        onToggleChartContent={this.toggleChartContent}
+
+        onToggleBalanceContent={this.toggleBalanceContent}
+        isBalanceActive = {this.props.transfer.isBalanceActive}
+      />)
   }
 
   render() {
@@ -221,18 +320,28 @@ export default class Transfer extends React.Component {
         transactionLoadingScreen={transactionLoadingScreen}
         input={input}
         errors={errors}
-        addressBalanceLayout = {addressBalanceLayout}
+        addressBalanceLayout={addressBalanceLayout}
         translate={this.props.translate}
-        onBlur = {this.onBlur}
-        onFocus = {this.onFocus}
-        focus = {this.state.focus}
-        advanceLayout = {this.props.advanceLayout}
-        networkError ={this.props.global.network_error}
+        onBlur={this.onBlur}
+        onFocus={this.onFocus}
+        focus={this.state.focus}
+
+        advanceLayout={this.getAdvanceLayout()}
+        balanceLayout={this.getBalanceLayout()}
+
+        networkError={this.props.global.network_error}
         isAgreed={this.props.global.termOfServiceAccepted}
         isChartActive={this.props.transfer.chart.isActive}
         chartTimeRange={this.props.transfer.chart.timeRange}
         onChangeChartRange={this.changeChartRange}
         onToggleChartContent={this.toggleChartContent}
+
+        // advanceLayout = {this.getAdvanceLayout()}
+        toggleRightPart={this.toggleRightPart}
+        isOpenRight={this.props.transfer.isOpenRight}
+
+        isOpenLeft={this.props.transfer.isOpenLeft}
+        toggleLeftPart={this.toggleLeftPart}
       />
     )
   }

@@ -10,6 +10,8 @@ import constants from '../../services/constants';
 import { roundingNumber } from "../../utils/converter";
 // import {roundingNumber} from "../../utils/converter"
 
+import { defaults } from 'react-chartjs-2';
+defaults.global.animation = false;
 
 @connect((store) => {
   const market = store.market;
@@ -220,6 +222,7 @@ export default class TokenChart extends React.Component {
       }
     }
 
+    //console.log({data, options})
     return (
       <div className="balance-content">
         <SlideDown active={this.props.isChartActive}>
@@ -250,7 +253,7 @@ export default class TokenChart extends React.Component {
                   <Line
                     data={data}
                     options={options}
-                    height={280}
+                    height={240}
                   />
                 </div>
                 <div className="balance-content__range">{chartRangeHtml}</div>

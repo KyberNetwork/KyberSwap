@@ -24,6 +24,13 @@
     margin:  0 10px 10px 10px;
     background: white;
   }
+
+  @include screen-min-width(large){
+    .exchange-col-1{
+      z-index: 1;
+    }
+   
+  }
   @include screen-max-width(large) {
     @include screen-min-width(medium){
       .swap-wrapper{

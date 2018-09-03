@@ -35,7 +35,7 @@ export default class AccountBalance extends React.Component {
       sortValuePrice_DES:  true,
       sortType: 'Price',
       sortActive: false,
-      isBalanceActive: true
+     // isBalanceActive: true
     }
   }
 
@@ -43,6 +43,11 @@ export default class AccountBalance extends React.Component {
     if (window.innerWidth < 640) {
       this.setState({isBalanceActive: false})
     }
+    // if(this.props.isChartActive){
+    //   this.setState({ isBalanceActive: false });      
+    // }else{
+    //   this.setState({ isBalanceActive: true });            
+    // }
   }
 
   changeSearchBalance = (e) => {
@@ -79,7 +84,21 @@ export default class AccountBalance extends React.Component {
   }
 
   toggleBalanceContent = () => {
-    this.setState({ isBalanceActive: !this.state.isBalanceActive });
+    if (this.props.isBalanceActive){
+      this.props.onToggleChartContent(true)          
+    }else{
+      this.props.onToggleChartContent(false)                
+    }
+    this.props.onToggleBalanceContent()    
+  }
+
+  onToggleChartContent = () => {
+    if (this.props.isChartActive){
+      this.props.onToggleBalanceContent(true)          
+    }else{
+      this.props.onToggleBalanceContent(false)                
+    }
+    this.props.onToggleChartContent()    
   }
 
   render() {
@@ -103,7 +122,7 @@ export default class AccountBalance extends React.Component {
         sortPrice = {this.sortPrice}
         sortType = {this.state.sortType}
         sortValue = {sortValue}
-        isBalanceActive={this.state.isBalanceActive}
+        isBalanceActive={this.props.isBalanceActive}
         toggleBalanceContent={this.toggleBalanceContent}
         account={this.props.account}
         sourceTokenSymbol={this.props.sourceActive}
@@ -111,7 +130,8 @@ export default class AccountBalance extends React.Component {
         isChartActive={this.props.isChartActive}
         chartTimeRange={this.props.chartTimeRange}
         onChangeChartRange={this.props.onChangeChartRange}
-        onToggleChartContent={this.props.onToggleChartContent}
+        onToggleChartContent={this.onToggleChartContent}
+        onToggleBalanceContent={this.onToggleBalanceContent}
       />
     )
   }
