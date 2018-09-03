@@ -139,6 +139,9 @@ export default class Transfer extends React.Component {
     this.props.dispatch(transferActions.toggleChartContent())
   }
 
+  toggleBalanceContent = (value) => {
+    this.props.dispatch(transferActions.toggleBalanceContent(value))    
+  }
 
   specifyGasPrice = (value) => {
     this.props.dispatch(transferActions.specifyGasPrice(value))
@@ -167,10 +170,19 @@ export default class Transfer extends React.Component {
   getAdvanceLayout = () => {
     if (!this.props.transfer.isOpenRight) {
       return (
-        
-          <div className="toogle-side toogle-advance" onClick={(e) => this.toggleRightPart(true)}>
+        <div onClick={(e) => this.toggleRightPart(true)}>
+          <div className="toogle-side toogle-advance">
             <div>Advance</div>
           </div>
+
+<div className="advance-title-mobile title ">
+<div>
+  {this.props.translate("transaction.advanced") || "Advanced"}
+  <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" className="advance-arrow-up"/>
+</div>
+</div>
+
+</div>
       
       )
     }
@@ -218,8 +230,11 @@ export default class Transfer extends React.Component {
         destTokenSymbol='ETH'
         isChartActive={this.props.transfer.chart.isActive}
         chartTimeRange={this.props.transfer.chart.timeRange}
-        onChangeChartRange={this.toggleChartContent}
+        onChangeChartRange={this.changeChartRange}
         onToggleChartContent={this.toggleChartContent}
+
+        onToggleBalanceContent={this.toggleBalanceContent}
+        isBalanceActive = {this.props.transfer.isBalanceActive}
       />)
   }
 

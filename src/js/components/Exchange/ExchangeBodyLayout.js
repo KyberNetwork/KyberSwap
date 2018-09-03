@@ -49,7 +49,7 @@ const ExchangeBodyLayout = (props) => {
             errorSource.push(props.translate("error.dest_amount_too_high_cap", { cap: maxCap * constants.MAX_CAP_PERCENT }))
           }
         } else if (props.errors.sourceAmount === "error.source_amount_too_small") {
-          errorSource.push(props.translate("error.source_amount_too_small", {minAmount: toEther(constants.EPSILON)}))
+          errorSource.push(props.translate("error.source_amount_too_small", { minAmount: toEther(constants.EPSILON) }))
         } else {
           errorSource.push(props.translate(props.errors.sourceAmount))
         }
@@ -76,12 +76,12 @@ const ExchangeBodyLayout = (props) => {
 
   var render = (
     <div className="grid-x">
-      <div className={"cell medium-6 large-3" + (props.isOpenLeft? " balance-wrapper": "") + (errorExchange ||  props.networkError?" error":"")} id="balance-account-wrapper">
-      {props.isOpenLeft && (
-                  <div className="close-indicator close-wallet" onClick={(e) => props.toggleLeftPart(false)}>
-                  <div>Close</div>
-                  </div>
-                )}
+      <div className={"cell medium-6 large-3" + (props.isOpenLeft ? " balance-wrapper" : "") + (errorExchange || props.networkError ? " error" : "")} id="balance-account-wrapper">
+        {props.isOpenLeft && (
+          <div className="close-indicator close-wallet" onClick={(e) => props.toggleLeftPart(false)}>
+            <div>Close</div>
+          </div>
+        )}
 
         {props.balanceLayout}
       </div>
@@ -94,31 +94,31 @@ const ExchangeBodyLayout = (props) => {
               (props.isAgreed ? ' swap-content--agreed' : '') + (props.account !== false ? ' swap-content--imported' : '')}>
               {props.networkError !== "" && (
                 <div className="network_error">
-                <span>
-                  <img src={require("../../../assets/img/warning.svg")} />
-                </span>
                   <span>
-                  {props.networkError}
-                </span>
+                    <img src={require("../../../assets/img/warning.svg")} />
+                  </span>
+                  <span>
+                    {props.networkError}
+                  </span>
                 </div>
               )}
               {/* <div className="title main-title">{props.translate("transaction.swap") || "Swap"}</div> */}
               <div className="grid-x">
                 <div className="cell large-5">
-                <span className="transaction-label">
-                  {props.translate("transaction.exchange_from").toUpperCase() || "FROM"}
-                </span>
+                  <span className="transaction-label">
+                    {props.translate("transaction.exchange_from").toUpperCase() || "FROM"}
+                  </span>
                   <div className={errorExchange ? "error select-token-panel" : "select-token-panel"}>
                     {props.tokenSourceSelect}
                     <div className={classSource}>
                       <div>
                         <input id="inputSource" className="source-input" min="0" step="0.000001"
-                               placeholder="0" autoFocus
-                               type="text" maxLength="50" autoComplete="off"
-                               value={props.input.sourceAmount.value}
-                               onFocus={props.input.sourceAmount.onFocus}
-                               onBlur={props.input.sourceAmount.onBlur}
-                               onChange={handleChangeSource}
+                          placeholder="0" autoFocus
+                          type="text" maxLength="50" autoComplete="off"
+                          value={props.input.sourceAmount.value}
+                          onFocus={props.input.sourceAmount.onFocus}
+                          onBlur={props.input.sourceAmount.onBlur}
+                          onChange={handleChangeSource}
                         />
                       </div>
                       <div>
@@ -132,16 +132,16 @@ const ExchangeBodyLayout = (props) => {
                 </div>
 
                 <div class="cell large-2 exchange-icon">
-                <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
-                  <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
-                </span>
+                  <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
+                    <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
+                  </span>
                   <ReactTooltip place="bottom" id="swap" type="light" />
                 </div>
 
                 <div className="cell large-5 exchange-col-1-2">
-                <span className="transaction-label">
-                  {props.translate("transaction.exchange_to").toUpperCase() || "TO"}
-                </span>
+                  <span className="transaction-label">
+                    {props.translate("transaction.exchange_to").toUpperCase() || "TO"}
+                  </span>
                   <div className="select-token-panel">
 
                     {props.tokenDestSelect}
@@ -149,11 +149,11 @@ const ExchangeBodyLayout = (props) => {
                     <div className={props.focus === "dest" ? "amount-input focus" : "amount-input"}>
                       <div>
                         <input className="des-input" step="0.000001" placeholder="0" min="0"
-                               type="text" maxLength="50" autoComplete="off"
-                               value={props.input.destAmount.value}
-                               onFocus={props.input.destAmount.onFocus}
-                               onBlur={props.input.destAmount.onBlur}
-                               onChange={handleChangeDest} />
+                          type="text" maxLength="50" autoComplete="off"
+                          value={props.input.destAmount.value}
+                          onFocus={props.input.destAmount.onFocus}
+                          onBlur={props.input.destAmount.onBlur}
+                          onChange={handleChangeDest} />
                       </div>
                       <div>
                         <span>{props.destTokenSymbol}</span>
@@ -167,21 +167,29 @@ const ExchangeBodyLayout = (props) => {
               </div>
 
               <div className="swap-button-wrapper">
-                <PostExchangeWithKey/>
+                <PostExchangeWithKey />
 
                 {props.account === false && (
-                  <ImportAccount tradeType="swap"/>
+                  <ImportAccount tradeType="swap" />
                 )}
               </div>
             </div>
           </div>
           <div className="cell large-4 exchange-col-2">
-                {props.isOpenRight && (
-                  <div className="close-indicator close-advance" onClick={(e) => props.toggleRightPart(false)}>
-                   <div>Close</div>
+            {props.isOpenRight && (
+              <div onClick={(e) => props.toggleRightPart(false)}>
+                <div className="close-indicator close-advance">
+                  <div>Close</div>
+                </div>
+                <div className="advance-title-mobile title">
+                  <div>
+                    {props.translate("transaction.advanced") || "Advanced"}
+                    <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" />
                   </div>
-                )}
-            
+                </div>
+              </div>
+            )}
+
             {props.advanceLayout}
           </div>
         </div>

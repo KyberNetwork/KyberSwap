@@ -139,6 +139,7 @@ const INIT_EXCHANGE_FORM_STATE = {
     isActive: true,
     timeRange: 'w'
   },
+  isBalanceActive: false,
   isOpenRight: false,
   isOpenLeft: false
 }
@@ -204,6 +205,7 @@ const INIT_TRANSFER_FORM_STATE = {
     isActive: true,
     timeRange: 'w'
   },
+  isBalanceActive: false,
   isOpenRight: false,
   isOpenLeft: false
 }

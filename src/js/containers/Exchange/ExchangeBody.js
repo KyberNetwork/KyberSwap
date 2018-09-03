@@ -264,10 +264,13 @@ export default class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.setChartTimeRange(value))
   }
 
-  toggleChartContent = () => {
-    this.props.dispatch(exchangeActions.toggleChartContent())
+  toggleChartContent = (value) => {
+    this.props.dispatch(exchangeActions.toggleChartContent(value))
   }
 
+  toggleBalanceContent = (value) => {
+    this.props.dispatch(exchangeActions.toggleBalanceContent(value))    
+  }
 
   specifyGas = (event) => {
     var value = event.target.value
@@ -301,8 +304,16 @@ export default class ExchangeBody extends React.Component {
   getAdvanceLayout = () => {
     if (!this.props.exchange.isOpenRight) {
       return (
-        <div className="toogle-side toogle-advance" onClick={(e) => this.toggleRightPart(true)}>
-          <div>Advance</div>
+        <div onClick={(e) => this.toggleRightPart(true)}>
+          <div className="toogle-side toogle-advance">
+            <div>Advance</div>
+          </div>
+          <div className="advance-title-mobile title ">
+            <div>
+              {this.props.translate("transaction.advanced") || "Advanced"}
+              <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" className="advance-arrow-up"/>
+            </div>
+          </div>
         </div>
       )
     }
@@ -352,9 +363,12 @@ export default class ExchangeBody extends React.Component {
         sourceActive={this.props.exchange.sourceTokenSymbol}
         destTokenSymbol={this.props.exchange.destTokenSymbol}
         isChartActive={this.props.exchange.chart.isActive}
+        
         chartTimeRange={this.props.exchange.chart.timeRange}
-        onChangeChartRange={this.toggleChartContent}
+        onChangeChartRange={this.changeChartRange}
         onToggleChartContent={this.toggleChartContent}
+        onToggleBalanceContent={this.toggleBalanceContent}
+        isBalanceActive = {this.props.exchange.isBalanceActive}
       />)
   }
 

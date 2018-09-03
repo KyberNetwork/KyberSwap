@@ -101,8 +101,8 @@ export function* importNewAccount(action) {
       yield put(closeImportAccountTransfer())
     }
 
-    yield put(toggleChartContentExchange(false));
-    yield put(toggleChartContentTransfer(false));
+    // yield put(toggleChartContentExchange(false));
+    // yield put(toggleChartContentTransfer(false));
 
     yield put(fetchExchangeEnable())
 
