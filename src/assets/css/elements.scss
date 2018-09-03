@@ -525,7 +525,9 @@ input.search-input {
         // @include screen-max-width(large){
         //   display: none;
         // }
-        
+          z-index: 0;
+          box-shadow: 0 10px 20px 0 hsla(180,0%,53%,.26), 0 6px 6px 0 hsla(165,2%,69%,.26);
+          
     &::after{
       background-image: url("../img/dropdown_gray.svg");
       background-repeat: no-repeat;

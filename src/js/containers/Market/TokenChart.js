@@ -10,6 +10,8 @@ import constants from '../../services/constants';
 import { roundingNumber } from "../../utils/converter";
 // import {roundingNumber} from "../../utils/converter"
 
+import { defaults } from 'react-chartjs-2';
+defaults.global.animation = false;
 
 @connect((store) => {
   const market = store.market;

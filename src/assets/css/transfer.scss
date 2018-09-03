@@ -68,6 +68,7 @@ $padding-col-left : 2rem;
       border: 1px solid #ddd;
       border-left: none;
       box-shadow: $box-shadow-tab;
+      z-index: 1;
       // min-height: 550px;
     }
     .transfer-col-3-1{
@@ -121,6 +122,45 @@ $padding-col-left : 2rem;
           }
           .select-token-panel {
             margin-top: 0;
+
+            @include screen-min-width(large){
+              border-radius: 5px;
+              box-shadow: 0 1px 5px 0 hsla(0,0%,56%,.15);
+              border: .8px solid hsla(0,0%,80%,.72);
+              
+              .dropdown--active{
+                .focus-item{
+                 // max-width: 100%;
+                  box-shadow: 0 24px 24px 0 rgba(0,0,0,.24), 0 12px 24px 0 rgba(0,0,0,.12);
+                }
+              }
+              .dropdown{
+                &:not(.dropdown--active){
+                  .focus-item{
+                    justify-content: initial !important;
+                    .k-angle{
+                      margin-left: 25px;
+                    }
+                  }
+                }
+              }
+              .focus-item{
+                box-shadow: none;
+                border:none;
+              //  border-radius: 0;
+              }
+              .amount-input{
+                border-bottom: none;
+                input{
+                  text-align: right;
+                  max-width: 200px;
+                  float: right;
+                  margin-top: -7px;
+                  margin-right: 6px;              
+                }
+              }
+            }
+            
           }
           // .hashAddr {
           //       font-size: 18px;

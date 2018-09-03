@@ -1,6 +1,6 @@
 .swap-content {
   @include screen-min-width(large){
-    padding: 65px 0 250px;
+    padding: 65px 0 220px
   }
   position: relative;
   height: 100%;
@@ -220,7 +220,7 @@
     margin-bottom: 25px;
     h1.title.frame-tab {
       position: absolute;
-      z-index: 1;
+      z-index: 2;
       left: calc(50% - 150px);
         padding-top: 0;
     }

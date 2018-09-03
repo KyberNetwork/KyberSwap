@@ -75,22 +75,26 @@ const TransferForm = (props) => {
                       <span className="transaction-label">
                         {props.translate("transaction.exchange_from") || "From"}
                       </span>
-                      <div className={props.errors.amountTransfer !== '' ? "error select-token-panel" : "select-token-panel"}>
-                        {props.tokenTransferSelect}
+                      <div className={props.errors.amountTransfer !== '' ? "error select-token-panel transfer-select grid-x" : "select-token-panel transfer-select grid-x"}>
+                        <div className="cell small-12 medium-12 large-6">
+                          {props.tokenTransferSelect}
+                        </div>
 
-                        <div className={classSource}>
-                          <div>
-                            <input type="text" min="0" step="0.000001" placeholder="0"
-                              id="inputSource"
-                              value={props.input.amount.value} className="transfer-input"
-                              onChange={handleChangeAmount}
-                              onBlur={props.onBlur}
-                              onFocus={props.onFocus}
-                              maxLength="50" autoComplete="off"
-                            />
-                          </div>
-                          <div>
-                            <span>{props.tokenSymbol}</span>
+                        <div className="cell small-12 medium-12 large-6">
+                          <div className={classSource}>
+                            <div>
+                              <input type="text" min="0" step="0.000001" placeholder="0"
+                                id="inputSource"
+                                value={props.input.amount.value} className="transfer-input"
+                                onChange={handleChangeAmount}
+                                onBlur={props.onBlur}
+                                onFocus={props.onFocus}
+                                maxLength="50" autoComplete="off"
+                              />
+                            </div>
+                            {/* <div>
+                              <span>{props.tokenSymbol}</span>
+                            </div> */}
                           </div>
                         </div>
                       </div>
