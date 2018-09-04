@@ -300,7 +300,7 @@ export function trackSearchETHMarket(){
 export function trackChooseTokenOnBalanceBoard(token){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_1_Click_Choose_Token_Balance_Board", {token : token})
+            mixpanel.track("Swap_*_3_Click_Choose_Token_Balance_Board", {token : token})
         }catch(e){
             console.log(e)
         }
@@ -310,7 +310,7 @@ export function trackChooseTokenOnBalanceBoard(token){
 export function trackClickSortBalanceBoard(type, sortType){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_2_Click_Sort_Token_Balance_Board", {type: type, sortType: sortType})
+            mixpanel.track("Swap_*_4_Click_Sort_Token_Balance_Board", {type: type, sortType: sortType})
         }catch(e){
             console.log(e)
         }
@@ -320,7 +320,7 @@ export function trackClickSortBalanceBoard(type, sortType){
 export function trackSearchTokenBalanceBoard(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_1_Click_Search_Token_Balance_board")
+            mixpanel.track("Swap_*_3_Click_Search_Token_Balance_board")
         }catch(e){
             console.log(e)
         }
@@ -330,7 +330,7 @@ export function trackSearchTokenBalanceBoard(){
 export function trackClickAllIn(type, token){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_1_Click_Use_All_Token_Balance", {type: type, token: token})
+            mixpanel.track("Swap_*_3_Click_Use_All_Token_Balance", {type: type, token: token})
         }catch(e){
             console.log(e)
         }
@@ -340,7 +340,7 @@ export function trackClickAllIn(type, token){
 export function trackSetNewMinrate(minrate){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_1_2_Change_Min_Acceptable_Rate", {minrate: minrate})
+            mixpanel.track("Swap_1_3_Change_Min_Acceptable_Rate", {minrate: minrate})
         }catch(e){
             console.log(e)
         }
@@ -350,7 +350,7 @@ export function trackSetNewMinrate(minrate){
 export function trackCustomGasPrice(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_2_Click_Gas_Input")
+            mixpanel.track("Swap_*_3_Click_Gas_Input")
         }catch(e){
             console.log(e)
         }
@@ -400,7 +400,7 @@ export function trackClickSwapDestSrc(sourceToken, destToken){
 export function trackClickSwapButton(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_1_1_Click_Swap_Button")
+            mixpanel.track("Swap_1_3_Click_Swap_Button")
         }catch(e){
             console.log(e)
         }
@@ -410,7 +410,7 @@ export function trackClickSwapButton(){
 export function trackClickTransferButton(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_2_1_Click_Transfer_Button")
+            mixpanel.track("Swap_2_3_Click_Transfer_Button")
         }catch(e){
             console.log(e)
         }
@@ -420,7 +420,7 @@ export function trackClickTransferButton(){
 export function trackClickNewTransaction(type){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_1_Click_New_Transaction", {type: type})
+            mixpanel.track("Swap_*_6_Click_New_Transaction", {type: type})
         }catch(e){
             console.log(e)
         }
@@ -430,7 +430,7 @@ export function trackClickNewTransaction(type){
 export function trackClickApproveToken(token){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_3_Click_Approve_Token", {token: token})
+            mixpanel.track("Swap_*_5_Click_Approve_Token", {token: token})
         }catch(e){
             console.log(e)
         }
@@ -440,22 +440,22 @@ export function trackClickApproveToken(token){
 export function trackConfirmTransaction(token){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_2_Click_Confirm_Transaction", {token: token})
+            mixpanel.track("Swap_*_5_Click_Confirm_Transaction", {token: token})
         }catch(e){
             console.log(e)
         }
     }
 }
 
-export function trackClickBack(){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-        try{
-            mixpanel.track("Swap_*_1_Click_Back")
-        }catch(e){
-            console.log(e)
-        }
-    }
-}
+// export function trackClickBack(){
+//     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+//         try{
+//             mixpanel.track("Swap_*_1_Click_Back")
+//         }catch(e){
+//             console.log(e)
+//         }
+//     }
+// }
 
 export function trackClickBreadCrumb(path){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
@@ -480,7 +480,7 @@ export function trackClickViewTxOnEtherscan(){
 export function trackClickCopyTx(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_3_Click_Copy_Tx")
+            mixpanel.track("Swap_*_6_Click_Copy_Tx")
         }catch(e){
             console.log(e)
         }
@@ -510,7 +510,7 @@ export function trackClickCloseModal(typeModal){
 export function trackClickGetMoreAddressDevice(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_2_Click_GetMore_Device_Address")
+            mixpanel.track("Swap_*_3_Click_GetMore_Device_Address")
         }catch(e){
             console.log(e)
         }
@@ -530,7 +530,7 @@ export function trackClickGetPreAddressDevice(){
 export function trackOpenModalColdWallet(walletType){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_1_Open_Modal_ColdWallet", {walletType: walletType})
+            mixpanel.track("Swap_*_2_Open_Modal_ColdWallet", {walletType: walletType})
         }catch(e){
             console.log(e)
         }
@@ -540,7 +540,7 @@ export function trackOpenModalColdWallet(walletType){
 export function trackClickCustomPathColdWallet(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_3_Click_Custom_Path_ColdWallet")
+            mixpanel.track("Swap_*_4_Click_Custom_Path_ColdWallet")
         }catch(e){
             console.log(e)
         }
@@ -550,7 +550,7 @@ export function trackClickCustomPathColdWallet(){
 export function trackChoosePathColdWallet(path){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_3_Click_Choose_Path_ColdWallet", {path: path})
+            mixpanel.track("Swap_*_4_Click_Choose_Path_ColdWallet", {path: path})
         }catch(e){
             console.log(e)
         }
@@ -580,7 +580,7 @@ export function trackClickShowTermAndCondition(){
 export function trackClickInputPasswordWithJSON(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_2_Click_Input_Passphrase")
+            mixpanel.track("Swap_*_4_Click_Input_Passphrase")
         }catch(e){
             console.log(e)
         }
@@ -600,7 +600,7 @@ export function trackClickImportAccount(type){
 export function trackClickInputPrKey(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_2_Click_Input_Private_Key")
+            mixpanel.track("Swap_*_3_Click_Input_Private_Key")
         }catch(e){
             console.log(e)
         }
