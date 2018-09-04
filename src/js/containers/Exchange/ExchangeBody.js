@@ -245,7 +245,7 @@ export default class ExchangeBody extends React.Component {
     var tokenSymbol = this.props.exchange.sourceTokenSymbol
     var token = this.props.tokens[tokenSymbol]
     if (token) {
-      var balanceBig = stringToBigNumber(token.balance)
+      var balanceBig = converters.stringToBigNumber(token.balance)
       if (tokenSymbol === "ETH") {
         var gasLimit = this.props.exchange.max_gas
         var gasPrice = converters.stringToBigNumber(converters.gweiToWei(this.props.exchange.gasPrice))
