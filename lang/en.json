@@ -104,7 +104,8 @@
     "address": "Receiving Address",
     "slippage_tip": "Rate may change. You can change maximum slippage rate by adjusting\nmin rate in advanced option",
     "max_slippage": "With maximum ${percent}% slippage",
-    "included": "Included"
+    "included": "Included",
+    "type_pass_before_progress": "Type a password before progressing"
   },
   "modal": {
     "enter_password": "Enter Password",
@@ -148,7 +149,7 @@
     "source_amount_is_not_number": "Source amount is not a number",
     "not_possess_kgt": "There seems to be a problem with your address, please <a href=\"${link}\"\ntarget=\"_blank\">contact us</a> for more details",
     "dest_address": "This is not an address",
-    "amount_transfer_too_hign": "Amount is too high. Your balance is insufficient",
+    "amount_transfer_too_hign": "Amount is too high",
     "amount_must_be_number": "Amount must be a number",
     "error_occurred": "Error occurred",
     "cannot_connect_metamask": "Cannot get metamask account. You probably did not login\nin Metamask",
@@ -197,7 +198,9 @@
     "exchange_enable": "You have exceeded your daily limit! You might trade again tomorrow\nat 00:00 UTC+0",
     "min_rate_greater_expected_rate": "Your configured minimal exchange rate is higher\nthan what is recommended by KyberNetwork. Your exchange has high chance to fail",
     "exceed_daily_volumn": "You may want to <a target='_blank' href='${link}'>register\nwith us</a> to have higher trade limits",
-    "broadcast_tx": "Potentially Failed! We likely couldn't broadcast the transaction to\nthe blockchain. Please check on <a target='_blank' href='${link}'>Etherscan</a>\nto verify."
+    "broadcast_tx": "Potentially Failed! We likely couldn't broadcast the transaction to\nthe blockchain. Please check on <a target='_blank' href='${link}'>Etherscan</a>\nto verify.",
+    "invalid_json_file": "Your uploaded JSON file is invalid. Please upload a correct JSON keystore.",
+    "key_derivation_failed": "Key derivation failed - possibly wrong password"
   },
   "import": {
     "from_metamask": "METAMASK",
@@ -253,17 +256,14 @@
     "in": "In",
     "recent": "Recently"
   },
-
-  "terms":{
-    "title" : "KyberSwap - Terms of Use",
-    "content":"Kyber testnet swap provides a platform for experimenting and understanding our exchange and payment services. The current implementation is not secure in any way. Using it may cause loss of funds and could compromise user privacy. The user is accountable and responsible for any outcome for the use of Kyber testnet wallet.",
-    "use_testnet":"USE ONLY TESTNET ACCOUNTS!!!",
-    "use_real":"DO NOT USE REAL ETHEREUM ACCOUNTS!!!",
-    "accept":"Accept",
-    "accept_to_swap":"Accept to Swap",
-    "accept_to_transfer":"Accept to Transfer",
-    "terms_and_condition":" Terms and Conditions ",
-    "to_get_started":"to get started"
+  "terms": {
+    "title": "KyberSwap - Terms of Use",
+    "content": "Kyber testnet swap provides a platform for experimenting and understanding\nour exchange and payment services. The current implementation is not secure in\nany way. Using it may cause loss of funds and could compromise user privacy. The\nuser is accountable and responsible for any outcome for the use of Kyber testnet\nwallet.",
+    "use_testnet": "USE ONLY TESTNET ACCOUNTS!!!",
+    "use_real": "DO NOT USE REAL ETHEREUM ACCOUNTS!!!",
+    "accept": "Accept",
+    "terms_and_condition": " Terms and Conditions ",
+    "to_get_started": "to get started"
   },
   "landing_page": {
     "title": "Decentralized Exchange for Ethereum tokens",
@@ -286,7 +286,7 @@
     "search": "Search",
     "currency": "Currency",
     "settings": "Settings",
-    "market": "Ethereum Market",
+    "market": "Market",
     "sell_price": "Sell Price",
     "buy_price": "Buy Price",
     "try_searching_for_token": "Try Searching for Token",
