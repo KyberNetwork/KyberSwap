@@ -29,15 +29,12 @@ export function changeSort(value) {
      }
 }
 
-
 export function changeDisplayColumn(value) {
     return {
        type: "MARKET.CHANGE_DISPLAY_COLUMN",
        payload: value
      }
 }
-
-
 
 export function changeShowColumn(column, show) {
     return {
@@ -109,7 +106,7 @@ export function getMarketInfoSuccess(data, rateUSD, rates) {
 export function getLast7DSuccess(last7D) {
   return {
     type: "MARKET.GET_LAST_7D_SUCCESS",
-    payload: last7D
+    payload: {last7D}
   }
 }
 
@@ -145,5 +142,26 @@ export function updateSortState(sortKey, sortType) {
   return {
     type: "MARKET.UPDATE_SORT_STATE",
     payload: {sortKey, sortType}
+  }
+}
+
+export function setChartLoading(isLoading) {
+  return {
+    type: "MARKET.SET_CHART_LOADING",
+    payload: isLoading
+  }
+}
+
+export function setChartPoints(points) {
+  return {
+    type: "MARKET.SET_CHART_POINTS",
+    payload: points
+  }
+}
+
+export function fetchChartData(tokenSymbol, timeRange) {
+  return {
+    type: "MARKET.FETCH_CHART_DATA",
+    payload: { tokenSymbol, timeRange }
   }
 }

@@ -1,259 +1,159 @@
-// .import-account-modal {
-//   @include breakpoint(medium) {
-//     &.large {
-//       // top: 125px;
-//       width: 70%;
-//     }
-//   }
 $animationTime: 0.5s;
 
-  #import-account {
-    padding-top: 50px;
-    text-align: center;
+#import-account {
+  margin-top: 100px;
+  text-align: center;
 
-    @include screen-min-width(large){
-      padding-bottom: 40px;
+  .column-block {
+    margin-bottom: 0;
+  }
+
+  #import-acc {
+    display: inline-block;
+  }
+
+  .frame {
+    padding: 0;
+  }
+
+  .title {
+    color: #fff;
+    text-align: left;
+    font-size: 42px;
+    letter-spacing: -0.9px;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    font-family: $font-cera;
+    animation: fade-in $animationTime forwards;
+  }
+
+  .sub-title {
+    font-size: 0.8rem;
+    color: $white;
+    padding: 0px 50px 30px 50px;
+  }
+
+  .import-account {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+
+    &__item {
+      width: 19%;
+      border-radius: 3px;
+      border: solid 1px #e5e5e5;
+      background-color: white;
+      text-align: center;
+      cursor: pointer;
+      transform: translateY(50px);
+      transition: all .3s;
+      animation: moving-up $animationTime forwards;
+
+      .importer {
+        display: flex;
+        flex-direction: column;
+        min-height: 125px;
+
+        &__symbol {
+          margin: auto;
+
+          img {
+            max-height: 22px;
+          }
+        }
+
+        &__name {
+          font-size: 14px;
+          font-weight: 600;
+          text-transform: uppercase;
+          margin-top: 10px;
+        }
+
+        &__button {
+          width: 100%;
+          min-height: 42px;
+          line-height: 1.23;
+          margin: 0;
+          padding: 3px 5px;
+          font-size: 13px;
+          color: #999999;
+          background-color: #f5f5f5;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all .3s;
+        }
+
+        .more-info {
+          font-size: 14px;
+          text-align: left;
+          color: #999;
+        }
+
+        &__button,
+        .more-info {
+          opacity: 0;
+          animation: fade-in $animationTime forwards;
+        }
+      }
+
+      .how-to-use {
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-image: url(../img/landing/notice.svg);
+
+        &:hover {
+          background-image: url(../img/landing/notice_grey.svg);
+        }
+      }
+
+      &:hover {
+        box-shadow: 0 3px 10px 0 rgba(205, 205, 205, 0.63);
+
+        .importer__button {
+          border-bottom-left-radius: 3px;
+          border-bottom-right-radius: 3px;
+          color: white;
+          background-color: $swap-color;
+        }
+      }
     }
 
-    #import-acc {
-      display: inline-block;
-    }
-
-    .title {
-      color: #fff;
-      text-align: left;
-      font-size: 42px;
-      letter-spacing: -0.9px;
-      opacity: 0;
-      padding: 0;
-      margin: 0;
-      font-family: $font-cera;
-      animation: fade-in $animationTime forwards;
-    }
-
-    .sub-title {
-      font-size: 0.8rem;
-      color: $white;
-      padding: 0px 50px 30px 50px;
-    }
-
-    .import-account {
-      display: flex;
-      position: relative;
+    @include screen-max-width(large) {
+      flex-wrap: wrap;
 
       &__item {
-        padding-top: 50px;
-        background: white;
-        width: 185px;
-        max-height: 170px;
-        margin: 0 12px 25px;
-        box-shadow: 0 1px 10px #b7b5b5;
-        position: relative;
-        bottom: -280px;
-        text-align: center;
-        transition: all .3s;
-        animation: moving-up $animationTime forwards;
+        width: 49%;
+        margin-bottom: 10px;
 
         &:first-child {
-          margin-left: 0;
+          width: 100%;
         }
-
-        .importer {
-          &__name {
-            font-size: 20px;
-            margin: 10px 0;
-            font-weight: 600;
-            font-family: $font-cera;
-          }
-
-          &__button {
-            color: white;
-            font-size: 0.8rem;            
-            width: 100%;
-            cursor: pointer;
-            padding: 13px 0;
-            margin-bottom: 15px;
-            border-radius: 3px;
-            background-image: linear-gradient(to right, $swap-color 50%, $color-swap-light 50%);
-            background-size: 200% 100%;
-            position: relative;
-            transition: all .3s;
-
-            &::after {
-              content: '';
-              position: absolute;
-              width: 6px;
-              height: 9px;
-              right: 5px;
-              top: 50%;
-              opacity: 0;
-              transform: translateY(-50%);
-              background: url($image-path + 'angle-right.svg') no-repeat;
-              background-size: contain;
-              transition: opacity .25s;
-            }
-
-            &:hover {
-              background-position: -100% 0;
-
-              &::after {
-                opacity: 1;
-              }
-            }
-          }
-          
-          .more-info {
-            font-size: 14px;
-            text-align: left;
-            color: #999;
-          }
-
-          &__button,
-          .more-info {
-            opacity: 0;
-            animation: fade-in $animationTime forwards;
-          }
-        }
-
-        .how-to-use {
-          width: 20px;
-          height: 20px;
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          background-image: url(../img/landing/notice.svg);
-
-          &:hover {
-            background-image: url(../img/landing/notice_grey.svg);
-          }
-        }
-      }
-
-      @include screen-max-width(xlarge) {
-        flex-wrap: wrap;
-        justify-content: center;
-        padding-bottom: 30px;
-
-        &__item {
-          width: 32%;
-          margin: 0 1% 15px;
-
-          &:first-child {
-            margin-left: 0;
-          }
-
-          &:nth-child(3) {
-            margin-right: 0;
-          }
-        }
-      }
-
-      @include screen-max-width(mid-small) {
-        &__item {
-          width: calc(50% - 10px);
-          margin: 0 10px 20px;
-          padding-top: 30px;
-
-          .column-block {
-            margin-bottom: 0;
-          }
-
-          .importer {
-            &__button {
-              padding: 8px 5px;
-              line-height: 1.2;
-            }
-
-            &__name {
-              font-size: 16px;
-            }
-
-            &.metamask {
-              display: flex;
-            }
-          }
-
-          .how-to-use {
-            display: none;
-          }
-
-          &:first-child {
-            margin: 0 0 20px;
-            width: 100%;
-            text-align: left;
-
-            .importer {
-              padding-bottom: 60px;
-
-              &__symbol {
-                display: inline-block;
-                text-align: center;
-              }
-
-              &__button {
-                position: absolute;
-                left: 0;
-                right: 0;
-                bottom: 1.25rem;
-                margin: 0 auto;
-                width: calc(100% - 1.25rem);
-              }
-
-              .more-info {
-                display: inline-block;
-                margin-left: 30px;
-              }
-            }
-          }
-
-          &:nth-child(3) {
-            margin-right: 10px;
-          }
-
-          &:nth-child(odd) {
-            margin-right: 0;
-          }
-
-          &:nth-child(even) {
-            margin-left: 0;
-          }
-        }
-      }
-    }
-
-    @include screen-max-width(medium) {
-      padding-top: 40px;
-
-      @keyframes moving-up {
-        to {
-          bottom: 0;
-          max-height: 1000px;
-        }
-      }
-    }
-
-    @include screen-max-width(mid-small) {
-      .title {
-        font-size: 30px;
-        text-align: left;
-      }
-    }
-
-    @keyframes moving-up {
-      to {
-        bottom: -20px;
-        max-height: 500px;
-      }
-    }
-
-    @keyframes fade-in {
-      to {
-        opacity: 1;
       }
     }
   }
 
-// }
+  .title {
+    font-size: 30px;
+    text-align: left;
+  }
+
+  @keyframes moving-up {
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    to {
+      opacity: 1;
+    }
+  }
+}
 
 .import-privatekey {
   padding: 0px;
@@ -265,9 +165,7 @@ $animationTime: 0.5s;
     margin-top: 0;
     padding-top: 70px;
   }
-  // .content {
-  //   padding-left: 30px;
-  // }
+
   .overlap {
     justify-content: center;
     background-color: #fcfcfc;
@@ -307,7 +205,7 @@ $animationTime: 0.5s;
     width: 20px;
     height: 20px;
     background-repeat: no-repeat;
-    background-size: contains;
+    background-size: contain;
     background-position: center;
     position: absolute;
     top: 50%;

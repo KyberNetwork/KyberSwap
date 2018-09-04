@@ -5,6 +5,7 @@ import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
   return {
+    account: store.account.account,
     focusItem: props.focusItem,
     listItem: props.listItem,
     type: props.type,
@@ -43,6 +44,8 @@ export default class TokenSelector extends React.Component {
   }
 
   render() {
+  console.log("account_check")
+  console.log(this.props.account)
     return (
       <TokenSelectorView
         open={this.state.open}
@@ -55,6 +58,7 @@ export default class TokenSelector extends React.Component {
         translate={this.props.translate}
         showTokens = {this.showTokens}
         hideTokens = {this.hideTokens}
+        account = {this.props.account}
       />
     )
   }

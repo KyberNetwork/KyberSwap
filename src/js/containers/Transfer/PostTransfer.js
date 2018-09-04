@@ -43,6 +43,10 @@ import * as analytics from "../../utils/analytics"
 export default class PostTransfer extends React.Component {
   clickTransfer = () => {
     analytics.trackClickTransferButton()
+    if (this.props.account === false){
+      this.props.dispatch(transferActions.openImportAccount())
+      return
+    }
     if (validators.anyErrors(this.props.form.errors)) return
     if (this.validateTransfer()) {
 
@@ -292,6 +296,7 @@ export default class PostTransfer extends React.Component {
 
     return (
       <PostTransferBtn
+        isHaveAccount = {this.props.account === false ? false: true}
         className={className}
         modalPassphrase={modalPassphrase}
         submit={this.clickTransfer}

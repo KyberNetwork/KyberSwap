@@ -556,6 +556,14 @@ const exchange = (state = initState, action) => {
       newState.selectedGas = level
       return newState
     }
+    case "EXCHANGE.OPEN_IMPORT_ACCOUNT":{
+      newState.isOpenImportAcount = true
+      return newState
+    }
+    case "EXCHANGE.CLOSE_IMPORT_ACCOUNT":{
+      newState.isOpenImportAcount = false
+      return newState
+    }
     case "GLOBAL.CLEAR_SESSION_FULFILLED":{
       var resetState = {...initState}
       resetState.sourceToken = newState.sourceToken
@@ -569,6 +577,42 @@ const exchange = (state = initState, action) => {
       resetState.destTokenSymbol = newState.destTokenSymbol
 
       return resetState
+    }
+
+    case "EXCHANGE.TOGGLE_CHART_CONTENT": {
+      newState.chart.isActive = action.payload !== null ? action.payload : !newState.chart.isActive;
+      return newState;
+    }
+
+    case "EXCHANGE.TOGGLE_BALANCE_CONTENT": {
+      newState.isBalanceActive = action.payload !== null ? action.payload : !newState.isBalanceActive;
+      return newState;
+    }
+
+    case "EXCHANGE.SET_CHART_TIME_RANGE": {
+      newState.chart.timeRange = action.payload;
+      return newState;
+    }
+
+    case "EXCHANGE.TOGGLE_RIGHT_PART":{
+      var {value} = action.payload
+      newState.isOpenRight = value
+      return newState
+    }
+    case "EXCHANGE.TOGGLE_LEFT_PART":{
+      var {value} = action.payload
+      newState.isOpenLeft = value
+      return newState
+    }
+    case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED":{
+      newState.isOpenLeft = true
+      newState.chart.isActive = false
+      newState.isBalanceActive = true
+      //check if mobile
+      if (window.innerWidth >= 1024){
+        newState.isOpenRight = true
+      }
+      return newState
     }
   }
   return state

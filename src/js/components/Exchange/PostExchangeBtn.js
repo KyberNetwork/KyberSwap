@@ -5,17 +5,18 @@ const PostExchangeBtn = (props) => {
   return (
     <div className="exchange-wrapper-btn">
       <div>
-        <div>
-          <a class={props.className} onClick={props.submit} data-open="passphrase-modal">{props.translate("transaction.swap") ||  "Swap" }</a>
-        </div>
-          {props.rateToken}
-      </div>      
-      
-      {props.modalPassphrase}
-      {props.modalConfirm}
-      {props.modalApprove}
-      <PendingOverlay isEnable={props.isConfirming || props.isApproving} />
-    </div >
+        {props.isHaveAccount &&
+          <div>
+            <a className={props.className} onClick={props.submit} data-open="passphrase-modal">
+              {props.translate("transaction.swap") || "Swap"}
+            </a>
+          </div>
+        }
+        {props.rateToken}
+      </div>
+      {props.modalExchange}
+      <PendingOverlay isEnable={props.isConfirming || props.isApproving}/>
+    </div>
   )
 }
 

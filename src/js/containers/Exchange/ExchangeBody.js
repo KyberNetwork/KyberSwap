@@ -1,38 +1,29 @@
 import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
-
-import { gweiToWei, stringToHex, getDifferentAmount, toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber, stringToBigNumber, toEther } from "../../utils/converter"
-
-import { PostExchangeWithKey, MinRate, AccountBalance } from "../Exchange"
+import * as converters from "../../utils/converter"
+import { MinRate } from "../Exchange"
 import { TransactionConfig } from "../../components/Transaction"
-
-import { ExchangeBodyLayout }  from "../../components/Exchange"
-
+import { ExchangeBodyLayout } from "../../components/Exchange"
+import { AddressBalance, AdvanceConfigLayout, GasConfig } from "../../components/TransactionCommon"
 import { TransactionLoading, Token } from "../CommonElements"
-
-import { TokenSelector } from "../TransactionCommon"
-
+import { TokenSelector, AccountBalance } from "../TransactionCommon"
 import * as validators from "../../utils/validators"
 import * as common from "../../utils/common"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
-
 import * as globalActions from "../../actions/globalActions"
-
 import * as exchangeActions from "../../actions/exchangeActions"
 import * as analytics from "../../utils/analytics"
 
 import constansts from "../../services/constants"
-
-//import { randomForExchange } from "../../utils/random"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
 
+//import {AdvanceConfigLayout, GasConfig} from "../../components/TransactionCommon"
+
 @connect((store, props) => {
-
   const langs = store.locale.languages
-  var currentLang = common.getActiveLanguage(langs)
-
+  const currentLang = common.getActiveLanguage(langs)
   const ethereum = store.connection.ethereum
   const account = store.account
   const exchange = store.exchange
@@ -62,37 +53,35 @@ import { default as _ } from 'underscore'
   }
 
   return {
-    account, ethereum, tokens, translate, currentLang, 
+    account, ethereum, tokens, translate, currentLang,
     global: store.global,
     exchange: {
       ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
       sourceName, destName, rateSourceToEth,
-      advanceLayout : props.advanceLayout      
+      advanceLayout: props.advanceLayout
     }
   }
 })
 
-
 export default class ExchangeBody extends React.Component {
-  constructor(){
+  constructor() {
     super()
     this.state = {
-      focus : ""
+      focus: ""
     }
   }
 
   chooseToken = (symbol, address, type) => {
     this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
-    var path
-    if (type === "source"){
-      path = constansts.BASE_HOST + "/swap/" + symbol.toLowerCase() + "_" + this.props.exchange.destTokenSymbol.toLowerCase()
-    }else{
-      path = constansts.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "_" + symbol.toLowerCase()
+    var path;
+
+    if (type === "source") {
+      path = constansts.BASE_HOST + "/swap/" + symbol.toLowerCase() + "_" + this.props.exchange.destTokenSymbol.toLowerCase();
+    } else {
+      path = constansts.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "_" + symbol.toLowerCase();
     }
+
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
-    // if (this.props.currentLang !== "en"){
-    //   path += "?lang=" + this.props.currentLang
-    // }
     this.props.dispatch(globalActions.goToRoute(path))
     analytics.trackChooseToken(type, symbol)
   }
@@ -100,19 +89,17 @@ export default class ExchangeBody extends React.Component {
   dispatchUpdateRateExchange = (sourceValue) => {
     var sourceDecimal = 18
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
-    
-    // console.log("source_token_symbol")
-    // console.log(sourceTokenSymbol)
-    if (sourceTokenSymbol === "ETH"){
-      if(parseFloat(sourceValue) > 1000){
+
+    if (sourceTokenSymbol === "ETH") {
+      if (parseFloat(sourceValue) > 1000) {
         this.props.dispatch(exchangeActions.throwErrorHandleAmount())
-        return 
+        return
       }
-    }else{
-      var destValue = caculateDestAmount(sourceValue, this.props.exchange.rateSourceToEth, 6)
-      if(parseFloat(destValue) > 1000){
+    } else {
+      var destValue = converters.caculateDestAmount(sourceValue, this.props.exchange.rateSourceToEth, 6)
+      if (parseFloat(destValue) > 1000) {
         this.props.dispatch(exchangeActions.throwErrorHandleAmount())
-        return 
+        return
       }
     }
     //var minRate = 0
@@ -137,9 +124,6 @@ export default class ExchangeBody extends React.Component {
 
     this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, rateInit))
   }
-
-
-
 
   validateSourceAmount = (value) => {
     // var check = true
@@ -171,7 +155,7 @@ export default class ExchangeBody extends React.Component {
         break
     }
 
-    if(sourceAmountErrorKey === "error.source_amount_is_not_number"){
+    if (sourceAmountErrorKey === "error.source_amount_is_not_number") {
       return
     }
 
@@ -180,8 +164,6 @@ export default class ExchangeBody extends React.Component {
       return
       //check = false
     }
-
-    
 
     var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
       sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, this.props.exchange.gasPrice)
@@ -193,25 +175,14 @@ export default class ExchangeBody extends React.Component {
     }
   }
 
-  // validateTxFee = (gasPrice) => {
-  //   var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
-  //   this.props.exchange.sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, gasPrice)
-
-  //   if (validateWithFee) {
-  //     this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
-  //     return
-  //     // check = false
-  //   }
-  // }
-
   lazyUpdateRateExchange = _.debounce(this.dispatchUpdateRateExchange, 500)
   lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
- // lazyValidateTransactionFee = _.debounce(this.validateTxFee, 500)
 
- 
   validateRateAndSource = (sourceValue) => {
     this.lazyUpdateRateExchange(sourceValue)
-    this.lazyUpdateValidateSourceAmount(sourceValue)
+    if (this.props.account.account !== false) {
+      this.lazyUpdateValidateSourceAmount(sourceValue)
+    }
   }
   changeSourceAmount = (e) => {
     var value = e.target.value
@@ -233,19 +204,21 @@ export default class ExchangeBody extends React.Component {
   focusSource = () => {
     this.props.dispatch(exchangeActions.focusInput('source'));
     this.setState({focus:"source"})
+    analytics.trackClickInputAmount("source")
   }
 
   blurSource = () => {
-    this.setState({focus:""})
+    this.setState({ focus: "" })
   }
 
   focusDest = () => {
     this.props.dispatch(exchangeActions.focusInput('dest'));
     this.setState({focus:"dest"})
+    analytics.trackClickInputAmount("dest")
   }
 
   blurDest = () => {
-    this.setState({focus:""})
+    this.setState({ focus: "" })
   }
 
   makeNewExchange = () => {
@@ -260,7 +233,7 @@ export default class ExchangeBody extends React.Component {
       var balanceBig = stringToBigNumber(token.balance)
       if (tokenSymbol === "ETH") {
         var gasLimit = this.props.exchange.max_gas
-        var gasPrice = stringToBigNumber(gweiToWei(this.props.exchange.gasPrice))
+        var gasPrice = converters.stringToBigNumber(converters.gweiToWei(this.props.exchange.gasPrice))
         var totalGas = gasPrice.multipliedBy(gasLimit)
 
         if (!balanceBig.isGreaterThanOrEqualTo(totalGas)) {
@@ -285,54 +258,139 @@ export default class ExchangeBody extends React.Component {
 
     var path = constansts.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "_" + this.props.exchange.sourceTokenSymbol.toLowerCase()
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
-    // if (this.props.currentLang !== "en"){
-    //   path += "?lang=" + this.props.currentLang
-    // }
     this.props.dispatch(globalActions.goToRoute(path))
+    analytics.trackClickSwapDestSrc(this.props.exchange.sourceTokenSymbol, this.props.exchange.destTokenSymbol)
   }
 
   analyze = () => {
     var ethereum = this.props.ethereum
     var exchange = this.props.exchange
-    //var tokens = this.props.tokens
     this.props.dispatch(exchangeActions.analyzeError(ethereum, exchange.txHash))
   }
 
-  render() {
-    // if (this.props.account.isStoreReady) {
-    //   if (!!!this.props.account.account.address) {
-    //     setTimeout(() => this.props.dispatch(push("/")), 1000)
-    //     return (
-    //       <div>exchange is not ready</div>
-    //     )
-    //   }
-    // } else {
-    //   return (
-    //     <div>exchange is not ready111</div>
-    //   )
-    // }
+  changeChartRange = (value) => {
+    this.props.dispatch(exchangeActions.setChartTimeRange(value))
+  }
 
-    //for transaction loading screen
-    // var balance = {
-    //   prevValue: toT(this.props.exchange.balanceData.prevSource, this.props.exchange.balanceData.sourceDecimal),
-    //   nextValue: toT(this.props.exchange.balanceData.nextSource, this.props.exchange.balanceData.sourceDecimal)
-    // }
-    // var balanceDest = {
-    //   prevValue: toT(this.props.exchange.balanceData.prevDest, this.props.exchange.balanceData.destDecimal),
-    //   nextValue: toT(this.props.exchange.balanceData.nextDest, this.props.exchange.balanceData.destDecimal),
-    // }
-    //console.log(this.props.exchange.balanceData)
+  toggleChartContent = (value) => {
+    this.props.dispatch(exchangeActions.toggleChartContent(value))
+  }
+
+  toggleBalanceContent = (value) => {
+    this.props.dispatch(exchangeActions.toggleBalanceContent(value))    
+  }
+
+  specifyGas = (event) => {
+    var value = event.target.value
+    this.props.dispatch(exchangeActions.specifyGas(value))
+  }
+
+  specifyGasPrice = (value) => {
+    this.props.dispatch(exchangeActions.specifyGasPrice(value + ""))
+    if (this.props.account !== false) {
+      this.lazyValidateTransactionFee(value)
+    }
+  }
+
+  inputGasPriceHandler = (value) => {
+    // this.setState({selectedGas: "undefined"})
+    this.specifyGasPrice(value)
+  }
+
+  selectedGasHandler = (value, level, levelString) => {
+
+    //this.setState({selectedGas: level})
+    this.props.dispatch(exchangeActions.seSelectedGas(level))
+    this.specifyGasPrice(value)
+    analytics.trackChooseGas(value, levelString)
+  }
+
+  toggleRightPart = (value) => {
+    this.props.dispatch(exchangeActions.toggleRightPart(value))
+    analytics.trackClickTheRightWing("swap")
+  }
+
+  getAdvanceLayout = () => {
+    if (!this.props.exchange.isOpenRight) {
+      return (
+        <div onClick={(e) => this.toggleRightPart(true)}>
+          <div className="toogle-side toogle-advance">
+            <div>{this.props.translate("transaction.advanced") || "Advance"}</div>
+          </div>
+          <div className="advance-title-mobile title ">
+            <div>
+              {this.props.translate("transaction.advanced") || "Advanced"}
+              <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" className="advance-arrow-up"/>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    var gasPrice = converters.stringToBigNumber(converters.gweiToEth(this.props.exchange.gasPrice))
+    var totalGas = gasPrice.multipliedBy(this.props.exchange.gas + this.props.exchange.gas_approve)
+    var page = "exchange"
+    var gasConfig = (
+      <GasConfig
+        gas={this.props.exchange.gas + this.props.exchange.gas_approve}
+        gasPrice={this.props.exchange.gasPrice}
+        maxGasPrice={this.props.exchange.maxGasPrice}
+        gasHandler={this.specifyGas}
+        inputGasPriceHandler={this.inputGasPriceHandler}
+        selectedGasHandler={this.selectedGasHandler}
+        gasPriceError={this.props.exchange.errors.gasPriceError}
+        gasError={this.props.exchange.errors.gasError}
+        totalGas={totalGas.toString()}
+        translate={this.props.translate}
+        gasPriceSuggest={this.props.exchange.gasPriceSuggest}
+        selectedGas={this.props.exchange.selectedGas}
+        page={page}
+      />
+    )
+
+    var minRate = <MinRate />
+    var advanceConfig = <AdvanceConfigLayout minRate={minRate} gasConfig={gasConfig} translate={this.props.translate} />
+    return advanceConfig
+  }
+
+  toggleLeftPart = (value) => {
+    this.props.dispatch(exchangeActions.toggleLeftPart(value))
+    analytics.trackClickTheLeftWing("swap")
+  }
+
+  getBalanceLayout = () => {
+    if (!this.props.exchange.isOpenLeft) {
+      return (
+        <div className="toogle-side toogle-wallet" onClick={(e) => this.toggleLeftPart(true)}>
+          <div>{this.props.translate("transaction.wallet") || "Wallet"}</div>
+        </div>
+      )
+      // return <div><button onClick={(e) => this.toggleLeftPart(true) }>Open left</button></div>
+    }
+    return (
+      <AccountBalance
+        chooseToken={this.chooseToken}
+        sourceActive={this.props.exchange.sourceTokenSymbol}
+        destTokenSymbol={this.props.exchange.destTokenSymbol}
+        isChartActive={this.props.exchange.chart.isActive}
+        
+        chartTimeRange={this.props.exchange.chart.timeRange}
+        onChangeChartRange={this.changeChartRange}
+        onToggleChartContent={this.toggleChartContent}
+        onToggleBalanceContent={this.toggleBalanceContent}
+        isBalanceActive = {this.props.exchange.isBalanceActive}
+      />)
+  }
+
+  render() {
     var balanceInfo = {
-      //sourceTokenSymbol: this.props.exchange.sourceTokenSymbol,
-      sourceAmount: toT(this.props.exchange.balanceData.sourceAmount, this.props.exchange.balanceData.sourceDecimal),
+      sourceAmount: converters.toT(this.props.exchange.balanceData.sourceAmount, this.props.exchange.balanceData.sourceDecimal),
       sourceSymbol: this.props.exchange.balanceData.sourceSymbol,
       sourceTokenName: this.props.exchange.balanceData.sourceName,
-      //destTokenSymbol: this.props.exchange.destTokenSymbol,
-      destAmount: toT(this.props.exchange.balanceData.destAmount, this.props.exchange.balanceData.destDecimal),
+      destAmount: converters.toT(this.props.exchange.balanceData.destAmount, this.props.exchange.balanceData.destDecimal),
       destTokenName: this.props.exchange.balanceData.destName,
       destSymbol: this.props.exchange.balanceData.destSymbol,
     }
-
 
     var analyze = {
       action: this.analyze,
@@ -384,14 +442,13 @@ export default class ExchangeBody extends React.Component {
     )
     //--------End
 
-
     var errors = {
       selectSameToken: this.props.exchange.errors.selectSameToken || '',
       selectTokenToken: this.props.exchange.errors.selectTokenToken || '',
       sourceAmount: this.props.exchange.errors.sourceAmountError || this.props.exchange.errors.ethBalanceError || '',
       tokenSource: '',
       rateSystem: this.props.exchange.errors.rateSystem,
-      rateAmount : this.props.exchange.errors.rateAmount,
+      rateAmount: this.props.exchange.errors.rateAmount,
       notPossessKgt: this.props.exchange.errors.notPossessKgt,
       exchange_enable: this.props.exchange.errors.exchange_enable
     }
@@ -412,51 +469,62 @@ export default class ExchangeBody extends React.Component {
         onBlur: this.blurDest
       }
     }
-    // console.log(input)
-    var exchangeButton = (
-      <PostExchangeWithKey />
-    )
-
 
     var addressBalance = ""
     var token = this.props.tokens[this.props.exchange.sourceTokenSymbol]
     if (token) {
       addressBalance = {
-        value: toT(token.balance, token.decimal),
-        roundingValue: roundingNumber(toT(token.balance, token.decimal))
+        value: converters.toT(token.balance, token.decimal),
+        roundingValue: converters.roundingNumber(converters.toT(token.balance, token.decimal))
       }
     }
-    var accountBalance = <AccountBalance 
-      chooseToken = {this.chooseToken}
-    />
+
+    var addressBalanceLayout = ""
+    if (this.props.account.account !== false) {
+      addressBalanceLayout = (
+        <AddressBalance setAmount={this.setAmount} balance={addressBalance} translate={this.props.translate} />
+      )
+    }
 
     var maxCap = this.props.exchange.maxCap
     //alert(maxCap)
     if (maxCap !== "infinity") {
-      maxCap = toEther(this.props.exchange.maxCap)
+      maxCap = converters.toEther(this.props.exchange.maxCap)
     }
+
     return (
-      <ExchangeBodyLayout step={this.props.exchange.step}
+      <ExchangeBodyLayout
+        chooseToken={this.chooseToken}
+        account={this.props.account.account}
+        step={this.props.exchange.step}
         tokenSourceSelect={tokenSourceSelect}
         tokenDestSelect={tokenDestSelect}
-        //gasConfig={gasConfig}
-        exchangeButton={exchangeButton}
         transactionLoadingScreen={transactionLoadingScreen}
         errors={errors}
         input={input}
-        balance={addressBalance}
+        addressBalanceLayout={addressBalanceLayout}
         sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
-        destTokenSymbol = {this.props.exchange.destTokenSymbol}
-        setAmount={this.setAmount}
+        destTokenSymbol={this.props.exchange.destTokenSymbol}
         translate={this.props.translate}
         swapToken={this.swapToken}
         maxCap={maxCap}
-        errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}      
+        errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}
+        isAgreed={this.props.global.termOfServiceAccepted}
 
-        advanceLayout = {this.props.advanceLayout}
-        balanceList = {accountBalance}
-        focus = {this.state.focus}
-        networkError ={this.props.global.network_error}
+        advanceLayout={this.getAdvanceLayout()}
+        balanceLayout={this.getBalanceLayout()}
+
+        focus={this.state.focus}
+        networkError={this.props.global.network_error}
+        // isChartActive={this.props.exchange.chart.isActive}
+        // chartTimeRange={this.props.exchange.chart.timeRange}
+        // onChangeChartRange={this.changeChartRange}
+        // onToggleChartContent={this.toggleChartContent}
+        toggleRightPart={this.toggleRightPart}
+        isOpenRight={this.props.exchange.isOpenRight}
+
+        isOpenLeft={this.props.exchange.isOpenLeft}
+        toggleLeftPart={this.toggleLeftPart}
       />
     )
   }

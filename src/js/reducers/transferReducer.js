@@ -245,6 +245,15 @@ const transfer = (state = initState, action) => {
       return newState
     }
 
+    case "TRANSFER.OPEN_IMPORT_ACCOUNT":{
+      newState.isOpenImportAcount = true
+      return newState
+    }
+    case "TRANSFER.CLOSE_IMPORT_ACCOUNT":{
+      newState.isOpenImportAcount = false
+      return newState
+    }
+
     case "GLOBAL.CLEAR_SESSION_FULFILLED":{
       var resetState = {...initState}
       resetState.token = newState.token
@@ -255,6 +264,42 @@ const transfer = (state = initState, action) => {
 
       resetState.tokenSymbol = newState.tokenSymbol
       return resetState
+    }
+
+    case "TRANSFER.TOGGLE_CHART_CONTENT": {
+      newState.chart.isActive = action.payload !== null ? action.payload : !newState.chart.isActive;
+      return newState;
+    }
+
+    case "TRANSFER.TOGGLE_BALANCE_CONTENT": {
+      newState.isBalanceActive = action.payload !== null ? action.payload : !newState.isBalanceActive;
+      return newState;
+    }
+
+    case "TRANSFER.SET_CHART_TIME_RANGE": {
+      newState.chart.timeRange = action.payload;
+      return newState;
+    }
+    case "TRANSFER.TOGGLE_RIGHT_PART":{
+      var {value} = action.payload
+      newState.isOpenRight = value
+      return newState
+    }
+    case "TRANSFER.TOGGLE_LEFT_PART":{
+      var {value} = action.payload
+      newState.isOpenLeft = value
+      return newState
+    }
+    case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED":{
+      newState.isOpenLeft = true
+      //check if mobile
+      if (window.innerWidth >= 1024){
+        newState.isOpenRight = true
+      }
+
+      newState.chart.isActive = false
+      newState.isBalanceActive = true
+      return newState
     }
   }
   return state

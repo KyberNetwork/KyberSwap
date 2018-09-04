@@ -1,10 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-
-
-
-
-import { LandingPage, ImportAccountView } from '../../components/ImportAccount'
+import {  ImportAccountView, LandingPage } from '../../components/ImportAccount'
 import {
   ImportKeystore, ImportByDevice, ImportByPrivateKey,
   ErrorModal, ImportByMetamask,
@@ -19,7 +15,7 @@ import { importAccountMetamask } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import Web3Service from "../../services/web3"
 
-@connect((store) => {  
+@connect((store, props) => {  
   var tokens = store.tokens.tokens
 	var supportTokens = []
 	Object.keys(tokens).forEach((key) => {
@@ -33,7 +29,9 @@ import Web3Service from "../../services/web3"
     translate: getTranslate(store.locale),
     termOfServiceAccepted: store.global.termOfServiceAccepted,
     ethereum: store.connection.ethereum,
-		tokens: supportTokens
+    tokens: supportTokens,
+    screen: props.screen,
+    tradeType: props.tradeType
   }
 })
 
@@ -66,7 +64,7 @@ export default class ImportAccount extends React.Component {
         if (walletType !== "metamask") {
           // /alert(walletType)
           this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-          this.props.ethereum, this.props.tokens, this.props.translate, walletType))
+          this.props.ethereum, this.props.tokens, this.props.screen, this.props.translate, walletType))
         }
       }
     }
@@ -97,9 +95,20 @@ export default class ImportAccount extends React.Component {
     //     />
     //   </div>
     // )    
+    // var content = (
+    //   <ImportAccountView
+    //     firstKey={<ImportByMetamask screen={this.props.screen}/>}
+    //     secondKey={<ImportKeystore screen={this.props.screen}/>}
+    //     thirdKey={<ImportByDeviceWithTrezor screen={this.props.screen}/>}
+    //     fourthKey={<ImportByDeviceWithLedger screen={this.props.screen}/>}
+    //     fifthKey={<ImportByPrivateKey screen={this.props.screen}/>}
+    //     errorModal={<ErrorModal />}
+    //     translate={this.props.translate}
+    //   />
+    // )
     var content
     if (!this.props.termOfServiceAccepted) {
-      content = <LandingPage translate={this.props.translate} />
+      content = <LandingPage translate={this.props.translate} tradeType={this.props.tradeType}/>
     } else {
       content = (
         <ImportAccountView

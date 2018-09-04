@@ -301,3 +301,51 @@ export function seSelectedGas(level){
     payload: {level: level}
   }
 }
+
+export function openImportAccount(){
+  return {
+    type: "TRANSFER.OPEN_IMPORT_ACCOUNT"
+  }
+}
+
+export function closeImportAccountTransfer(){
+  return {
+    type: "TRANSFER.CLOSE_IMPORT_ACCOUNT"
+  }
+}
+
+export function toggleChartContent(value = null) {
+  return {
+    type: "TRANSFER.TOGGLE_CHART_CONTENT",
+    payload: value
+  }
+}
+
+export function toggleBalanceContent(value = null){
+  return {
+    type: "TRANSFER.TOGGLE_BALANCE_CONTENT",
+    payload: value
+  }
+}
+
+export function setChartTimeRange(timeRange) {
+  return {
+    type: "TRANSFER.SET_CHART_TIME_RANGE",
+    payload: timeRange
+  }
+}
+
+
+export function toggleRightPart(value){
+  return {
+    type: "TRANSFER.TOGGLE_RIGHT_PART",
+    payload: {value}
+  }
+}
+
+export function toggleLeftPart(value){
+  return {
+    type: "TRANSFER.TOGGLE_LEFT_PART",
+    payload: {value}
+  }
+}

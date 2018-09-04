@@ -8,32 +8,7 @@ $radio-color: #5D9E7A;
 
 .advance-config{
   // max-width: 300px;  
-  .advance-title-mobile{
-    &.title {
-      padding: 12px 10px;
-    }
-    background-color: #F5F5F5;
-    border-radius: 5px;
-    text-align: right;
-    cursor: pointer;
-    >div {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      img {
-        width: 13px;
-        transition: 0.2s;
-        margin-left: 13px;
-        &.advance-arrow-up {
-          transform: rotate(180deg);
-          transition: 0.2s;
-        }
-      }
-    }
-    @media screen and (min-width: $break-point-large){
-      display: none  
-    }
-  }
+ 
   .advance-title-desktop{
     @media screen and (max-width: $break-point-large){
       display: none  
@@ -41,17 +16,13 @@ $radio-color: #5D9E7A;
   }
   #advance-content{
     @media screen and (max-width: $break-point-large){
-      display: none;
+     // display: none;
       padding: 10px;
       background-color: #f5f5f5;
-      // animation: rollOut 0.3s ease-in-out;
       &.show-advance{
         @media screen and (max-width: $break-point-large){
           display: block;
         }
-        // @include breakpoint(small only) {
-        //   display: block
-        // }
       }
     }
     // @include breakpoint(small only) {
@@ -411,5 +382,33 @@ $radio-color: #5D9E7A;
   
   input[type=radio]:checked ~ label{
     color: $radio-color;
+  }
+}
+
+
+.advance-title-mobile{
+  &.title {
+    padding: 12px 10px;
+  }
+  background-color: #F5F5F5;
+  border-radius: 5px;
+  text-align: right;
+  cursor: pointer;
+  >div {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    img {
+      width: 13px;
+      transition: 0.2s;
+      margin-left: 13px;
+      &.advance-arrow-up {
+        transform: rotate(180deg);
+        transition: 0.2s;
+      }
+    }
+  }
+  @media screen and (min-width: $break-point-large){
+    display: none  
   }
 }

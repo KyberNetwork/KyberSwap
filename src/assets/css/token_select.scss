@@ -7,12 +7,28 @@
   .list-item{
     height: 250px;
     overflow: auto;
+    padding-right: 10px;
+    &.custom-scroll {
+      &::-webkit-scrollbar-track {
+        border-radius: 8px;
+        background-color: rgba(163, 165, 175, .2);
+      }
+
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        background-color: rgba(163, 165, 175, 1);
+      }
+    }
   }
   .amount-input{
     border-bottom: 1px solid #454E5F;
     display: flex;
     justify-content: space-between;
-    margin-top: 2rem;
+    margin-top: 1.2rem;
     //opacity: 0.5;
     .focus-name{
       text-transform: initial;
@@ -64,10 +80,10 @@
   }
   .token-selector .dropdown.dropdown--active .select-item{
     display: block;
-    border: 1px solid #aaa;
+    border: 1px solid hsla(0,0%,80%,.72);
     border-top: none;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
+    // border-bottom-right-radius: 10px;
+    // border-bottom-left-radius: 10px;
     color: inherit;
     box-shadow: none;
   }
@@ -78,7 +94,75 @@
     font-size: 20px;
     font-weight: bold;
     background-color: transparent!important;
-    border-top: 1px solid #2a4654!important;
+    border-top: 1px solid #ebebeb!important;
+  }
+  .token-selector {
+    input {
+      border-radius: 0px;
+      height: 50px;
+      margin-bottom: 0;
+      background-image: url(../img/search.png);
+      background-repeat: no-repeat;
+      background-size: 30px 30px;
+      background-position-y: center;
+      text-indent: 20px;
+      &::placeholder {
+        color: #222;
+      }
+    }
+    .select-item {
+      padding-left: 15px;
+      padding-right: 15px;
+      .search-item {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      .list-item {
+        .token-item {
+          padding-left: 0;
+          padding-right: 0;
+          border-bottom: 1px solid #d8d8d8;
+          &:last-child {
+            border-bottom: none;
+          }
+          .item-icon {
+            &-source, &-des {
+              @include screen-min-width(large) {
+                padding-top: 7px;
+              }
+            }
+          }
+          .item-balance {
+            font-weight: bold;
+            padding-top: 5px;
+          }
+          &:hover {
+            background-color: #fcfcfc;
+            .item-balance {
+              color: $swap-color;
+            }
+          }
+          .d-flex {
+            width: 100%;
+            .item-content {
+              width: 100%;
+              .item-balance {
+                &-transfer {
+                  display: flex;
+                  justify-content: space-between;
+                }
+                &-source, &-des {
+                  @include screen-max-width(large) {
+                    display: flex;
+                    justify-content: space-between;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -132,8 +216,8 @@
         display: block;
         border: 2px solid $white;
         border-top: none;
-        border-bottom-right-radius: 10px;
-        border-bottom-left-radius: 10px;
+        // border-bottom-right-radius: 10px;
+        // border-bottom-left-radius: 10px;
         color: inherit;
         padding-bottom: 15px;
       }
@@ -209,9 +293,12 @@
     .focus-balance{
       color: #9997A5;
       font-size: 0.8rem;
-      .token-symbol{
-        margin-left: 5px;
+      .token-balance{
+        margin-right: 5px;
       }
+      // .token-symbol{
+      //   margin-left: 5px;
+      // }
     }
     .icon{
       margin-right: 10px;
@@ -232,7 +319,7 @@
     width: 100%;
     z-index: 2;
     background-color: #FCFCFC;
-    box-shadow: 0 0 2px #aaa;
+    // box-shadow: 0 0 2px #aaa;
   //  background-color: #243c48;
     border: 2px solid $white;
     border-top: none;
@@ -269,9 +356,12 @@
         color: #666666;
         font-size: 14px;
       }
-      .item-symbol{
-        margin-left: 5px;
+      .item-balance-value{
+        margin-right: 5px;
       }
+      // .item-symbol{
+      //   margin-left: 5px;
+      // }
       .item-icon{
         // border-radius: 20px;
         // background-color: $white;

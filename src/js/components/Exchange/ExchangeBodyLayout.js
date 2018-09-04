@@ -5,6 +5,10 @@ import { Link } from 'react-router-dom'
 import constants from "../../services/constants"
 import ReactTooltip from 'react-tooltip'
 import { filterInputNumber } from "../../utils/validators";
+import { ImportAccount } from "../../containers/ImportAccount";
+//import { AccountBalance } from "../../containers/TransactionCommon";
+import { PostExchangeWithKey } from "../../containers/Exchange";
+import BLOCKCHAIN_INFO from "../../../../env";
 
 const ExchangeBodyLayout = (props) => {
 
@@ -16,18 +20,6 @@ const ExchangeBodyLayout = (props) => {
   function handleChangeDest(e) {
     var check = filterInputNumber(e, e.target.value, props.input.destAmount.value)
     if (check) props.input.destAmount.onChange(e)
-  }
-
-  function moveCursor() {
-    let inp = document.getElementById('inputSource')
-    //inp.focus();
-    if (inp.createTextRange) {
-      var part = inp.createTextRange();
-      part.move("character", 0);
-      part.select();
-    } else if (inp.setSelectionRange) {
-      inp.setSelectionRange(0, 0);
-    }
   }
 
   var errorSelectSameToken = props.errors.selectSameToken !== '' ? props.translate(props.errors.selectSameToken) : ''
@@ -57,7 +49,7 @@ const ExchangeBodyLayout = (props) => {
             errorSource.push(props.translate("error.dest_amount_too_high_cap", { cap: maxCap * constants.MAX_CAP_PERCENT }))
           }
         } else if (props.errors.sourceAmount === "error.source_amount_too_small") {
-          errorSource.push(props.translate("error.source_amount_too_small", {minAmount: toEther(constants.EPSILON)}))
+          errorSource.push(props.translate("error.source_amount_too_small", { minAmount: toEther(constants.EPSILON) }))
         } else {
           errorSource.push(props.translate(props.errors.sourceAmount))
         }
@@ -84,189 +76,128 @@ const ExchangeBodyLayout = (props) => {
 
   var render = (
     <div className="grid-x">
-      <div className={errorExchange ||  props.networkError !== ""? "cell medium-6 large-3 balance-wrapper error" : "cell medium-6 large-3 balance-wrapper"} id="balance-account-wrapper">
-        {props.balanceList}
-      </div>
-      <div className="cell medium-6 large-9 swap-wrapper">
-        {/* <div className="grid-x">
-              <div>
+      <div className={"cell medium-6 large-3" + (props.isOpenLeft ? " balance-wrapper" : "") + (errorExchange || props.networkError ? " error" : "")} id="balance-account-wrapper">
+        {props.isOpenLeft && (
+          <div className="close-indicator close-wallet" onClick={(e) => props.toggleLeftPart(false)}>
+            <div>Close</div>
+          </div>
+        )}
 
-              </div>
-            </div> */}
-        {/* <div> */}
+        {props.balanceLayout}
+      </div>
+
+      <div className={"cell medium-6 large-9 swap-wrapper" +
+        (props.isAgreed ? ' swap-wrapper--agreed' : '') + (props.account !== false ? ' swap-wrapper--imported' : '')}>
         <div className="grid-x exchange-col">
           <div className="cell large-8 exchange-col-1">
-            {props.networkError !== "" && (
-              <div className="network_error"> 
-                <span>
-                  <img src={require("../../../assets/img/warning.svg")} />
-                </span>
-                <span>
-                  {props.networkError}
-                </span>
-                {/* <span>
-                  <img src={require("../../../assets/img/loading.svg")} />
-                </span> */}
-              </div>
-  )}
-            <div className="title main-title">{props.translate("transaction.swap") || "Swap"}</div>
-            <div className="grid-x">
-              <div className="cell large-5">
-                <span className="transaction-label">
-                  {props.translate("transaction.exchange_from").toUpperCase() || "FROM"}
-                </span>
-                <div className={errorExchange ? "error select-token-panel" : "select-token-panel"}>
-                  {props.tokenSourceSelect}
-                  <div className={classSource}>
-                    <div>
-                      <input id="inputSource" className="source-input" min="0" step="0.000001"
-                        placeholder="0" autoFocus
-                        type="text" maxLength="50" autoComplete="off"
-                        value={props.input.sourceAmount.value}
-                        onFocus={props.input.sourceAmount.onFocus}
-                        onBlur={props.input.sourceAmount.onBlur}
-                        onChange={handleChangeSource}
-                      />
-                    </div>
-                    <div>
-                      <span>{props.sourceTokenSymbol}</span>
-                    </div>
-                  </div>
+            <div className={"swap-content" +
+              (props.isAgreed ? ' swap-content--agreed' : '') + (props.account !== false ? ' swap-content--imported' : '')}>
+              {props.networkError !== "" && (
+                <div className="network_error">
+                  <span>
+                    <img src={require("../../../assets/img/warning.svg")} />
+                  </span>
+                  <span>
+                    {props.networkError}
+                  </span>
                 </div>
-                <div className={errorExchange ? "error" : ""}>
-                  {errorShow}
-                </div>
-              </div>
-
-              <div class="cell large-2 exchange-icon">
-                <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
-                  <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
-                </span>
-                <ReactTooltip place="bottom" id="swap" type="light" />
-              </div>
-
-              <div className="cell large-5 exchange-col-1-2">
-                <span className="transaction-label">
-                  {props.translate("transaction.exchange_to").toUpperCase() || "TO"}
-                </span>
-                <div className="select-token-panel">
-
-                  {props.tokenDestSelect}
-
-                  <div className={props.focus === "dest" ? "amount-input focus" : "amount-input"}>
-                  <div>
-                    <input className="des-input" step="0.000001" placeholder="0" min="0"
-                      type="text" maxLength="50" autoComplete="off"
-                      value={props.input.destAmount.value}
-                      onFocus={props.input.destAmount.onFocus}
-                      onBlur={props.input.destAmount.onBlur}
-                      onChange={handleChangeDest} />
+              )}
+              {/* <div className="title main-title">{props.translate("transaction.swap") || "Swap"}</div> */}
+              <div className="grid-x">
+                <div className="cell large-5">
+                  <span className="transaction-label">
+                    {props.translate("transaction.exchange_from").toUpperCase() || "FROM"}
+                  </span>
+                  <div className={errorExchange ? "error select-token-panel" : "select-token-panel"}>
+                    {props.tokenSourceSelect}
+                    <div className={classSource}>
+                      <div>
+                        <input id="inputSource" className="source-input" min="0" step="0.000001"
+                          placeholder="0" autoFocus
+                          type="text" maxLength="50" autoComplete="off"
+                          value={props.input.sourceAmount.value}
+                          onFocus={props.input.sourceAmount.onFocus}
+                          onBlur={props.input.sourceAmount.onBlur}
+                          onChange={handleChangeSource}
+                        />
                       </div>
                       <div>
-                    <span>{props.destTokenSymbol}</span>
+                        <span>{props.sourceTokenSymbol}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={errorExchange ? "error" : ""}>
+                    {errorShow}
+                  </div>
+                </div>
+
+                <div class="cell large-2 exchange-icon">
+                  <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
+                    <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
+                  </span>
+                  <ReactTooltip place="bottom" id="swap" type="light" />
+                </div>
+
+                <div className="cell large-5 exchange-col-1-2">
+                  <span className="transaction-label">
+                    {props.translate("transaction.exchange_to").toUpperCase() || "TO"}
+                  </span>
+                  <div className="select-token-panel">
+
+                    {props.tokenDestSelect}
+
+                    <div className={props.focus === "dest" ? "amount-input focus" : "amount-input"}>
+                      <div>
+                        <input className="des-input" step="0.000001" placeholder="0" min="0"
+                          type="text" maxLength="50" autoComplete="off"
+                          value={props.input.destAmount.value}
+                          onFocus={props.input.destAmount.onFocus}
+                          onBlur={props.input.destAmount.onBlur}
+                          onChange={handleChangeDest} />
+                      </div>
+                      <div>
+                        <span>{props.destTokenSymbol}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="address-balance large-6">
-              <p class="note">{props.translate("transaction.address_balance") || "Address Balance"}</p>
-              <div>
-                <span>{props.translate("transaction.click_to_ex_all_balance") || "Click to swap all balance"}</span>
-                <span className="balance" title={props.balance.value} onClick={() => {
-                  props.setAmount()
-                  setTimeout(moveCursor, 0);
-                }}>
-                  {props.balance.roundingValue}
-                </span>
+              <div className="large-6">
+                {props.addressBalanceLayout}
+              </div>
+
+              <div className="swap-button-wrapper">
+                <PostExchangeWithKey />
+
+                {props.account === false && (
+                  <ImportAccount tradeType="swap" />
+                )}
               </div>
             </div>
           </div>
           <div className="cell large-4 exchange-col-2">
+            {props.isOpenRight && (
+              <div onClick={(e) => props.toggleRightPart(false)}>
+                <div className="close-indicator close-advance">
+                  <div>Close</div>
+                </div>
+                <div className="advance-title-mobile title">
+                  <div>
+                    {props.translate("transaction.advanced") || "Advanced"}
+                    <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" />
+                  </div>
+                </div>
+              </div>
+            )}
+
             {props.advanceLayout}
           </div>
         </div>
-        <div className="grid-x exchange-col-3">
-          <div className="cell large-8">
-            {props.exchangeButton}
-          </div>
-        </div>
-        {/* </div> */}
-
-        {/* <div class="row content-exchange-body">
-                    <div class="column medium-5">
-                      <div>
-                        <span className="transaction-label">
-                          {props.translate("transaction.exchange_from").toUpperCase() || "FROM"}
-                        </span>
-                        <div className={errorExchange ? "error select-token-panel" : "select-token-panel"}>
-                          {props.tokenSourceSelect}
-                          <div className={props.focus === "source"?"amount-input focus": "amount-input"}>
-                            <input id="inputSource" className="source-input" min="0" step="0.000001"
-                              placeholder="0" autoFocus
-                              type="text" maxLength="50" autoComplete="off"
-                              value={props.input.sourceAmount.value}
-                              onFocus={props.input.sourceAmount.onFocus}
-                              onBlur = {props.input.sourceAmount.onBlur}
-                              onChange={handleChangeSource}
-                            />
-                            <span>{props.sourceTokenSymbol}</span>
-                          </div>
-                        </div>
-                        <div className={errorExchange ? "error" : ""}>
-                          {errorShow}
-                        </div>
-                      </div>
-                      <div class="address-balance">
-                        <p class="note">{props.translate("transaction.address_balance") || "Address Balance"}</p>
-                        <div>
-                          <span>Click to swap all balance</span>
-                          <span className="balance" title={props.balance.value} onClick={() => {
-                            props.setAmount()
-                            setTimeout(moveCursor, 0);
-                          }}>
-                            {props.balance.roundingValue}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="column medium-2 exchange-icon hide-for-small-only">
-                      <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
-                        <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
-                      </span>
-                      <ReactTooltip place="bottom" id="swap" type="light" />
-                    </div>
-                    <div class="column medium-5">
-                      <div>
-                        <span className="transaction-label">
-                          {props.translate("transaction.exchange_to").toUpperCase() || "TO"}
-                        </span>
-                        <div className="select-token-panel">
-
-                          {props.tokenDestSelect}
-
-                          <div className={props.focus==="dest"?"amount-input focus":"amount-input"}>
-                            <input className="des-input" step="0.000001" placeholder="0" min="0"
-                              type="text" maxLength="50" autoComplete="off"
-                              value={props.input.destAmount.value}
-                              onFocus={props.input.destAmount.onFocus}
-                              onBlur = {props.input.destAmount.onBlur}
-                              onChange={handleChangeDest} />
-                            <span>{props.destTokenSymbol}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div> 
-                
-              </div>
-          {props.exchangeButton}
-        </div> */}
       </div>
     </div>
   )
-  return (
 
+  return (
     <div id="exchange">
       {render}
       {props.transactionLoadingScreen}

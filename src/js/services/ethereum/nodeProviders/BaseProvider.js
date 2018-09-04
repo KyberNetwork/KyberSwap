@@ -539,6 +539,7 @@ export default class BaseProvider {
                             fast: 1
                         })
                     } else {
+                        gasPrice = Math.round(gasPrice * 10) / 10
                         resolve({
                             low: gasPrice.toString(),
                             default: gasPrice.toString(),

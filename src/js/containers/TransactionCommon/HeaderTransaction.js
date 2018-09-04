@@ -8,6 +8,9 @@ import constansts from "../../services/constants"
 //import { TransactionLayout } from "../../components/TransactionCommon"
 import { getTranslate } from 'react-localize-redux'
 
+import {openImportAccount as openImportAccountExchange} from "../../actions/exchangeActions"
+import {openImportAccount as openImportAccountTransfer} from "../../actions/transferActions"
+
 import * as common from "../../utils/common"
 
 // import * as converter from "../../utils/converter"
@@ -78,34 +81,37 @@ export default class HeaderTransaction extends React.Component {
     }
 
 
-    handleEndSession = (e, info) => {
-        this.props.dispatch(clearSession())
-        info === "back" ? analytics.trackClickBack() : analytics.trackClickBreadCrumb(info)
-      }
+    // handleEndSession = () => {
+    //     if (this.props.page === "exchange"){
+    //         this.props.dispatch(openImportAccountExchange())
+    //     }else{
+    //         this.props.dispatch(openImportAccountTransfer())
+    //     }
+    //   }
 
     render() {
         var transfer = this.props.translate("transaction.transfer") || "Transfer"
         var swap = this.props.translate("transaction.swap") || "Swap"
         return (
-            <div>
+            <div className="swap-navigation-ctrl">
                 <div className="swap-navigation">
                     <div>
                         <a onClick={(e) => this.gotoRoot(e)}>{this.props.translate("home") || "Home"}</a>
                     </div>
-                    <div className="seperator">/</div>
-                    <div>
-                        <a onClick={(e) => this.handleEndSession(e, "KyberSwap")}>KyberSwap</a>
-                    </div>
+                    {/* <div className="seperator">/</div> */}
+                    {/* <div>
+                        <a onClick={(e) => this.handleEndSession(e)}>KyberSwap</a>
+                    </div> */}
                     <div className="seperator">/</div>
                     <div className="active">
                         <a>{this.props.page === "exchange" ? swap : transfer}</a>
                     </div>
                 </div>
                 <h1 class="title frame-tab">
-                    <div className="back-home" onClick={(e) => this.handleEndSession(e, "back")}>
+                    {/* <div className="back-home" onClick={(e) => this.handleEndSession(e)}>
                         <img src={require("../../../assets/img/arrow_left.svg")} className="back-arrow" />
                         <span>{this.props.translate("transaction.back") || "Back"}</span>
-                    </div>
+                    </div> */}
                     <div className="switch-button">
                         <Link to={this.props.exchangeLink} className={this.props.page === "exchange" ? "disable" : ""}>{swap}</Link>
                         <Link to={this.props.transferLink} className={this.props.page === "transfer" ? "disable" : ""}>{transfer}</Link>

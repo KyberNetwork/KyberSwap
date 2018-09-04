@@ -31,6 +31,7 @@ const ETHER_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 var secondKey = Object.keys(BLOCKCHAIN_INFO.tokens)[1]
 
 const INIT_EXCHANGE_FORM_STATE = {
+  isOpenImportAcount: false,
   kyber_enabled: false,
   advanced: false,
   termAgree: true,
@@ -133,10 +134,18 @@ const INIT_EXCHANGE_FORM_STATE = {
   isAnalize: false,
   isAnalizeComplete: false,
   analizeError : {},
-  snapshot: {}
+  snapshot: {},
+  chart: {
+    isActive: true,
+    timeRange: 'w'
+  },
+  isBalanceActive: false,
+  isOpenRight: false,
+  isOpenLeft: false
 }
 
 const INIT_TRANSFER_FORM_STATE = {
+  isOpenImportAcount: false,
   advanced: false,
   termAgree:  true,
   passphrase: false,
@@ -191,9 +200,15 @@ const INIT_TRANSFER_FORM_STATE = {
     signTransaction: '',
     ethBalanceError: ''
   },
-  snapshot: {}
+  snapshot: {},
+  chart: {
+    isActive: true,
+    timeRange: 'w'
+  },
+  isBalanceActive: false,
+  isOpenRight: false,
+  isOpenLeft: false
 }
-
 
 // reserves
 const RESERVES = [{ index: 0, name: "Kyber official reserve" }]
@@ -206,6 +221,7 @@ const ETH = {
 };
 
 const IDLE_TIME_OUT = 900
+const TOKEN_CHART_INTERVAL = 300000;
 
 const HISTORY_EXCHANGE = {
   page: 0,
@@ -235,6 +251,6 @@ const STORAGE_KEY = "130"
 module.exports = {
   ERC20, KYBER_NETWORK, KYBER_WRAPPER, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,
   KYBER_WALLET_DATA, INIT_EXCHANGE_FORM_STATE, INIT_TRANSFER_FORM_STATE,
-  RATE_EPSILON, IDLE_TIME_OUT, HISTORY_EXCHANGE, STORAGE_KEY, CONNECTION_CHECKER,
+  RATE_EPSILON, IDLE_TIME_OUT, TOKEN_CHART_INTERVAL, HISTORY_EXCHANGE, STORAGE_KEY, CONNECTION_CHECKER,
   MAX_CAP_ONE_EXCHANGE_BASE_VALUE, MAX_CAP_ONE_EXCHANGE_BASE_RESERVE, MAX_CAP_PERCENT, CONFIG_ENV_LEDGER_LINK, LEDGER_SUPPORT_LINK, TRANSFER_TOPIC, BASE_HOST, LIST_PARAMS_SUPPORTED
 }

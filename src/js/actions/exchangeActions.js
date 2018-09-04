@@ -589,3 +589,51 @@ export function throwErrorHandleAmount(){
     type: "EXCHANGE.HANDLE_AMOUNT"
   }
 }
+
+export function openImportAccount(){
+  return {
+    type: "EXCHANGE.OPEN_IMPORT_ACCOUNT"
+  }
+}
+
+export function closeImportAccountExchange(){
+  return {
+    type: "EXCHANGE.CLOSE_IMPORT_ACCOUNT"
+  }
+}
+
+export function toggleChartContent(value = null) {
+  return {
+    type: "EXCHANGE.TOGGLE_CHART_CONTENT",
+    payload: value
+  }
+}
+
+export function toggleBalanceContent(value = null){
+  return {
+    type: "EXCHANGE.TOGGLE_BALANCE_CONTENT",
+    payload: value
+  }
+}
+
+export function setChartTimeRange(timeRange) {
+  return {
+    type: "EXCHANGE.SET_CHART_TIME_RANGE",
+    payload: timeRange
+  }
+}
+
+
+export function toggleRightPart(value){
+  return {
+    type: "EXCHANGE.TOGGLE_RIGHT_PART",
+    payload: {value}
+  }
+}
+
+export function toggleLeftPart(value){
+  return {
+    type: "EXCHANGE.TOGGLE_LEFT_PART",
+    payload: {value}
+  }
+}

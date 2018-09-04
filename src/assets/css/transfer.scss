@@ -5,8 +5,36 @@ $padding-col : 1rem;
 $padding-col-left : 2rem;
 
 #transfer-screen{
-  // display: inline-block;
-  // width: 100%;
+  .swap-wrapper{
+    @include screen-max-width(large){
+      background-color: white;
+    }
+
+    @include screen-min-width(medium){
+      border-left: 1px solid #ddd;
+    }
+  }
+  .amount-input{
+    >div{
+       &:first-child{
+        width: 100%;
+       }
+      
+    }
+  }
+  .receiveAddress{
+    margin-bottom: 15px;
+    input{
+      width: 100%;
+      height: 55px;
+      border-radius: 5px;
+      padding: 10px;
+      outline: none;
+      border: solid 0.8px rgba(204, 204, 204, 0.72);
+      box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
+    }
+  }
+
   @include screen-max-width(large){
     margin:  0 10px 10px 10px;
     box-shadow: 0 7px 25px #ddd;
@@ -16,43 +44,54 @@ $padding-col-left : 2rem;
   }
 
   .transfer-col{
+    @include screen-min-width(large) {
+      padding-left: 2rem;  
+      padding-right: 2rem;  
+    }
     padding: 1rem;
     &.transfer-advanced {
       padding-bottom: 0;
-      @include screen-min-width(medium) {
-        padding: 1rem 1rem 0 2rem;
+      @include screen-min-width(large) {
+        padding: 0 0 0 20px;
       }
     }
   }
 
   .transfer-col-1 {
     background: white;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   @include screen-min-width(large){
     .transfer-col-1{
+      border: 1px solid #ddd;
+      border-left: none;
       box-shadow: $box-shadow-tab;
-      min-height: 550px;
+      z-index: 1;
+      // min-height: 550px;
     }
     .transfer-col-3-1{
       position: relative;
-      top: -200px;
+      top: -130px;
+      left: -50px;
+      text-align: center;
     }
   }
-  .frame {
+  //.frame {
     // .exchange-pd {
       // padding-left: 2.5rem;
       // padding-right: 2.5rem;
       // .row {
         
         .transfer-col-3{
-          .transfer-col-3-1{
-            @include breakpoint(medium) {
-              padding-left: $padding-col-left;
-            }
-          }
+          // .transfer-col-3-1{
+          //   @include breakpoint(medium) {
+          //     padding-left: $padding-col-left;
+          //   }
+          // }
           .submit-transfer{
-            @include breakpoint(small only) {
+            @include screen-max-width(large) {
               width: 100%;
             }
           }
@@ -60,13 +99,14 @@ $padding-col-left : 2rem;
         .transfer-detail {
           @include screen-max-width(large) {
             background-color: white;
+            padding-top: 15px;
           }
 
-          .transfer-col-1-2{
-            @include breakpoint(medium up) {
-              padding-left: $padding-col-left;
-            }
-          }
+          // .transfer-col-1-2{
+          //   @include breakpoint(medium up) {
+          //     padding-left: $padding-col-left;
+          //   }
+          // }
           
 
           
@@ -82,42 +122,81 @@ $padding-col-left : 2rem;
           }
           .select-token-panel {
             margin-top: 0;
-          }
-          .hashAddr {
-                font-size: 18px;
-                text-align: center;
-                letter-spacing: 1.25px;
-                //background-color: #415b68;
-                height: 140px;
-                border: 1px solid #ddd;
-                //color: $white;
-                resize: none;
-                margin-bottom: 0;
-                outline: none;
-                padding: 10px;
-                width: 100%;
-                border-radius: 5px;
-            
-            // @media screen and (min-width: 40em){
-            //   height: 153px;        
-            // }
-            @include breakpoint(small only) {
-              margin-bottom: 20px;
-              height: 120px;
+
+            @include screen-min-width(large){
+              border-radius: 5px;
+              box-shadow: 0 1px 5px 0 hsla(0,0%,56%,.15);
+              border: .8px solid hsla(0,0%,80%,.72);
+              
+              .dropdown--active{
+                .focus-item{
+                 // max-width: 100%;
+                  box-shadow: 0 24px 24px 0 rgba(0,0,0,.24), 0 12px 24px 0 rgba(0,0,0,.12);
+                }
+              }
+              .dropdown{
+                &:not(.dropdown--active){
+                  .focus-item{
+                    justify-content: initial !important;
+                    .k-angle{
+                      margin-left: 25px;
+                    }
+                  }
+                }
+              }
+              .focus-item{
+                box-shadow: none;
+                border:none;
+              //  border-radius: 0;
+              }
+              .amount-input{
+                border-bottom: none;
+                input{
+                  text-align: right;
+                  max-width: 200px;
+                  float: right;
+                  margin-top: -7px;
+                  margin-right: 6px;              
+                }
+              }
             }
+            
           }
+          // .hashAddr {
+          //       font-size: 18px;
+          //       text-align: center;
+          //       letter-spacing: 1.25px;
+          //       //background-color: #415b68;
+          //       height: 140px;
+          //       border: 1px solid #ddd;
+          //       //color: $white;
+          //       resize: none;
+          //       margin-bottom: 0;
+          //       outline: none;
+          //       padding: 10px;
+          //       width: 100%;
+          //       border-radius: 5px;
+            
+          //   // @media screen and (min-width: 40em){
+          //   //   height: 153px;        
+          //   // }
+          //   @include breakpoint(small only) {
+          //     margin-bottom: 20px;
+          //     height: 120px;
+          //   }
+          // }
         }
       //}
     //}
-  }
+  //}
   label{
       margin-bottom: 8px;
   }
   .main-title {
-    padding-top: 1.5rem;
+    // padding-top: 1.5rem;
     padding-bottom: 0;
     font-size: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-weight: 600;
     @include screen-max-width(medium) {
       display: none;
@@ -129,17 +208,23 @@ $padding-col-left : 2rem;
 	 	padding-left: 0;
   }
   .transfer-btn {
+    text-align: center;
+
     .accent {
-      margin-top: 15px;
+      margin-top: 50px;
       line-height: 55px;
       padding: 0 35px;
       background: #ef8102;
       border-radius: 4px;
-      //box-shadow: 0 10px 15px #ccc;
       font-size: 20px;
       font-weight: 600;
       text-transform: unset;
+
+      @include screen-max-width(large) {
+        width: 100%;
+      }
     }
+
     &.error {
       .accent {
         @include screen-min-width(large) {
@@ -158,7 +243,7 @@ $padding-col-left : 2rem;
         position: relative;
         z-index: 1;
         .focus-item{
-          border-color: #aaa;
+          border-color:hsla(0,0%,80%,.72);
           border-bottom-left-radius: 0;
           border-bottom-right-radius: 0;
         }
@@ -191,9 +276,12 @@ $padding-col-left : 2rem;
         color: #666666;
         font-size: 14px;
         font-weight: 600;
-        .token-symbol{
-          margin-left: 5px;
+        .token-balance{
+          margin-right: 5px;
         }
+        // .token-symbol{
+        //   margin-left: 5px;
+        // }
       }
       .icon{
         margin-right: 10px;

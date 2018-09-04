@@ -11,23 +11,22 @@ import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
   var location = store.router.location.pathname
-  var sourceActive = 'ETH'
-  sourceActive = store.exchange.sourceTokenSymbol
+
   return {
     tokens: store.tokens.tokens,
     translate: getTranslate(store.locale),
     ethereum: store.connection.ethereum,
-    showBalance: store.global.showBalance,
-    sourceActive,
+    showBalance: store.global.showBalance,    
     location,
     walletType: store.account.account.type,
+    account: store.account.account,
     address: store.account.account.address,
     chooseToken: props.chooseToken,
+    sourceActive: props.sourceActive
   }
 })
 
 export default class AccountBalance extends React.Component {
-
   constructor(){
     super()
     this.state = {
@@ -35,9 +34,22 @@ export default class AccountBalance extends React.Component {
       sortValueSymbol_DES:  false,
       sortValuePrice_DES:  true,
       sortType: 'Price',
-      sortActive: false
+      sortActive: false,
+     // isBalanceActive: true
     }
   }
+
+  componentDidMount() {
+    if (window.innerWidth < 640) {
+      this.setState({isBalanceActive: false})
+    }
+    // if(this.props.isChartActive){
+    //   this.setState({ isBalanceActive: false });      
+    // }else{
+    //   this.setState({ isBalanceActive: true });            
+    // }
+  }
+
   changeSearchBalance = (e) => {
     var value = e.target.value
     this.setState({searchWord:value})
@@ -71,10 +83,27 @@ export default class AccountBalance extends React.Component {
     analytics.trackClickSortBalanceBoard("Price", this.state.sortValuePrice_DES ? "DESC" : "ASC")
   }
 
-  
+  toggleBalanceContent = () => {
+    if (this.props.isBalanceActive){
+      this.props.onToggleChartContent(true)          
+    }else{
+      this.props.onToggleChartContent(false)                
+    }
+    this.props.onToggleBalanceContent()    
+  }
+
+  onToggleChartContent = () => {
+    if (this.props.isChartActive){
+      this.props.onToggleBalanceContent(true)          
+    }else{
+      this.props.onToggleBalanceContent(false)                
+    }
+    this.props.onToggleChartContent()    
+  }
 
   render() {
-    var sortValue = this.state.sortType === "Price" ? this.state.sortValuePrice_DES : this.state.sortValueSymbol_DES
+    var sortValue = this.state.sortType === "Price" ? this.state.sortValuePrice_DES : this.state.sortValueSymbol_DES;
+
     return (
       <AccountBalanceLayout
         tokens={this.props.tokens}
@@ -86,18 +115,24 @@ export default class AccountBalance extends React.Component {
         changeSearchBalance = {this.changeSearchBalance}
         searchWord = {this.state.searchWord}
         walletType = {this.props.walletType}
-        address = {this.props.address}
-
         showSort = {this.showSort}
         hideSort = {this.hideSort}
         sortActive = {this.state.sortActive}
-
         sortSymbol = {this.sortSymbol}
         sortPrice = {this.sortPrice}
         sortType = {this.state.sortType}
         sortValue = {sortValue}
+        isBalanceActive={this.props.isBalanceActive}
+        toggleBalanceContent={this.toggleBalanceContent}
+        account={this.props.account}
+        sourceTokenSymbol={this.props.sourceActive}
+        destTokenSymbol={this.props.destTokenSymbol}
+        isChartActive={this.props.isChartActive}
+        chartTimeRange={this.props.chartTimeRange}
+        onChangeChartRange={this.props.onChangeChartRange}
+        onToggleChartContent={this.onToggleChartContent}
+        onToggleBalanceContent={this.onToggleBalanceContent}
       />
     )
   }
 }
-
