@@ -141,7 +141,7 @@ export default class TokenChart extends React.Component {
       }
     }
     const isNegativeChange = this.state.change < 0;
-    const shouldRenderChart = this.state.change !== -9999 || (this.props.chart.points.length && this.state.change !== -9999);
+    const shouldRenderChart = this.state.change !== -9999 || (this.props.chart.points.c.length && this.state.change !== -9999);
     const data = {
       labels: this.props.chart.points.t,
       datasets: [{
