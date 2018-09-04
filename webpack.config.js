@@ -26,7 +26,7 @@ module.exports = env => {
         new HtmlWebpackPlugin({
             title: 'Wallet - kyber.network',
             filename: 'index.html',
-            template: './app.html.template',
+            template: './app.html',
             favicon: './assets/img/favicon.png',
             inject: 'body'
         }),

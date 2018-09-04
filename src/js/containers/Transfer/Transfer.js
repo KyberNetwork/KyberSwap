@@ -17,6 +17,7 @@ import { clearSession } from "../../actions/globalActions"
 import { ImportAccount } from "../ImportAccount"
 
 import {HeaderTransaction} from "../TransactionCommon"
+import * as analytics from "../../utils/analytics"
 
 @connect((store, props) => {
 

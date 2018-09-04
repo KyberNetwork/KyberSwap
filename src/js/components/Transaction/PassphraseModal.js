@@ -1,5 +1,6 @@
 import React from "react"
 import { gweiToEth, stringToBigNumber, calculateGasFee, roundingNumber } from "../../utils/converter"
+import * as analytics from "../../utils/analytics"
 
 const PassphraseModal = (props) => {
   function submitTransaction(e) {
@@ -19,9 +20,11 @@ const PassphraseModal = (props) => {
     if (input.classList.contains('security')) {
       input.classList.remove('security')
       input.parentElement.classList.add('unlock')
+      analytics.trackClickShowPassword("show")
     } else if (input.type == 'text') {
       input.classList.add('security')
       input.parentElement.classList.remove('unlock')
+      analytics.trackClickShowPassword("hide")
     }
   }
 
@@ -89,6 +92,7 @@ const PassphraseModal = (props) => {
               <input className="text-center security" id="passphrase" type="text"
                 autoComplete="off" spellCheck="false"
                 placeholder="Password"
+                onFocus={(e) => {analytics.trackClickInputPasswordWithJSON()}}
                 onChange={(e) => props.onChange(e)} autoFocus onKeyPress={(e) => submit(e)} />
               <a className="toggle" onClick={() => toggleShowPw()}></a>
               <a className="tootip"></a>

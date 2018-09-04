@@ -6,6 +6,7 @@ import { ImportAccount } from "../../containers/ImportAccount";
 import { AccountBalance } from "../../containers/TransactionCommon";
 import { PostTransferWithKey } from "../../containers/Transfer";
 import BLOCKCHAIN_INFO from "../../../../env";
+import * as analytics from "../../utils/analytics"
 
 const TransferForm = (props) => {
   function handleChangeAmount(e) {
@@ -63,7 +64,7 @@ const TransferForm = (props) => {
                   <div className="cell small-12">
                     <div className={props.errors.destAddress !== '' ? "error receiveAddress" : "receiveAddress"}>
                       <span className="transaction-label">{props.translate("transaction.address") || "Receiving Address"}</span>
-                      <input className="hashAddr" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange} placeholder="0x0de...">
+                      <input className="hashAddr" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange} placeholder="0x0de..." onFocus={(e) => analytics.trackClickInputRecieveAddress()} >
                       </input>
                       {props.errors.destAddress &&
                         <span class="error-text">{props.translate(props.errors.destAddress)}</span>

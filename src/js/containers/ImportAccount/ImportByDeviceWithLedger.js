@@ -6,6 +6,8 @@ import { Ledger } from "../../services/keys"
 import { ImportByLedgerView } from "../../components/ImportAccount"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
+import * as analytics from "../../utils/analytics"
+
 @connect((store, props) => {
   return {
     translate: getTranslate(store.locale),
@@ -18,6 +20,7 @@ export default class ImportByDeviceWithLedger extends React.Component {
   
   showLoading = (walletType) => {
     this.refs.child.getWrappedInstance().showLoading(walletType)
+    analytics.trackClickImportAccount(walletType)
   }
   
   render = () => {

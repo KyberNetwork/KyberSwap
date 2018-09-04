@@ -10,6 +10,7 @@ import { importNewAccount, importLoading, closeImportLoading, throwError, checkT
 import { toEther } from "../../utils/converter"
 import { getTranslate } from 'react-localize-redux'
 import bowser from 'bowser'
+import * as analytics from "../../utils/analytics"
 
 @connect((store, props) => {
 	var tokens = store.tokens.tokens
@@ -126,6 +127,7 @@ export default class ImportByDevice extends React.Component {
 			modalOpen: true,
 		})
 		this.updateBalance();
+		analytics.trackOpenModalColdWallet(this.walletType)
 	}
 
 	closeModal() {
@@ -133,6 +135,7 @@ export default class ImportByDevice extends React.Component {
 			modalOpen: false,
 		})
 		clearInterval(this.interval);
+		analytics.trackClickCloseModal(this.walletType)
 	}
 
 	moreAddress() {
@@ -168,6 +171,7 @@ export default class ImportByDevice extends React.Component {
 		} else {
 			this.props.dispatch(throwError('Cannot connect to ' + this.walletType))
 		}
+		analytics.trackClickGetMoreAddressDevice()
 	}
 
 	preAddress() {
@@ -183,6 +187,7 @@ export default class ImportByDevice extends React.Component {
 				isFirstList: true
 			})
 		}
+		analytics.trackClickGetPreAddressDevice()
 	}
 
 	getAddress(data) {

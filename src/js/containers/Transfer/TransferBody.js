@@ -12,6 +12,9 @@ import { verifyAccount } from "../../utils/validators"
 import * as common from "../../utils/common"
 import * as globalActions from "../../actions/globalActions"
 import constansts from "../../services/constants"
+import * as analytics from "../../utils/analytics"
+
+// import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase, throwErrorDestAddress, thowErrorAmount, makeNewTransfer } from '../../actions/transferActions';
 import * as transferActions from "../../actions/transferActions"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
@@ -94,14 +97,17 @@ export default class Transfer extends React.Component {
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
 
     this.props.dispatch(globalActions.goToRoute(path))
+    analytics.trackChooseToken(type, symbol)
   }
 
   makeNewTransfer = () => {
     this.props.dispatch(transferActions.makeNewTransfer());
+    analytics.trackClickNewTransaction("Transfer")
   }
 
-  onFocus = () => {
-    this.setState({ focus: "source" })
+  onFocus = () => { 
+    this.setState({focus:"source"})
+    analytics.trackClickInputAmount("transfer")
   }
 
   onBlur = () => {
@@ -129,6 +135,7 @@ export default class Transfer extends React.Component {
 
       this.onFocus()
     }
+    analytics.trackClickAllIn("Transfer", tokenSymbol)
   }
 
   changeChartRange = (value) => {
@@ -165,6 +172,7 @@ export default class Transfer extends React.Component {
 
   toggleRightPart = (value) => {
     this.props.dispatch(transferActions.toggleRightPart(value))
+    analytics.trackClickTheRightWing("transfer")
   }
 
   getAdvanceLayout = () => {
@@ -172,7 +180,7 @@ export default class Transfer extends React.Component {
       return (
         <div onClick={(e) => this.toggleRightPart(true)}>
           <div className="toogle-side toogle-advance">
-            <div>Advance</div>
+            <div>{this.props.translate("transaction.advanced") || "Advance"}</div>
           </div>
 
 <div className="advance-title-mobile title ">
@@ -213,13 +221,14 @@ export default class Transfer extends React.Component {
 
   toggleLeftPart = (value) => {
     this.props.dispatch(transferActions.toggleLeftPart(value))
+    analytics.trackClickTheLeftWing("transfer")
   }
 
   getBalanceLayout = () => {
     if (!this.props.transfer.isOpenLeft) {
       return (
         <div className="toogle-side toogle-wallet" onClick={(e) => this.toggleLeftPart(true)}>
-        <div>Wallet</div>
+        <div>{this.props.translate("transaction.wallet") || "Wallet"}}</div>
       </div>
       )
     }

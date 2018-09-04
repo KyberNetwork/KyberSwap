@@ -13,6 +13,8 @@ import * as common from "../../utils/common"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import * as globalActions from "../../actions/globalActions"
 import * as exchangeActions from "../../actions/exchangeActions"
+import * as analytics from "../../utils/analytics"
+
 import constansts from "../../services/constants"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
@@ -81,6 +83,7 @@ export default class ExchangeBody extends React.Component {
 
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
     this.props.dispatch(globalActions.goToRoute(path))
+    analytics.trackChooseToken(type, symbol)
   }
 
   dispatchUpdateRateExchange = (sourceValue) => {
@@ -200,7 +203,8 @@ export default class ExchangeBody extends React.Component {
 
   focusSource = () => {
     this.props.dispatch(exchangeActions.focusInput('source'));
-    this.setState({ focus: "source" })
+    this.setState({focus:"source"})
+    analytics.trackClickInputAmount("source")
   }
 
   blurSource = () => {
@@ -209,7 +213,8 @@ export default class ExchangeBody extends React.Component {
 
   focusDest = () => {
     this.props.dispatch(exchangeActions.focusInput('dest'));
-    this.setState({ focus: "dest" })
+    this.setState({focus:"dest"})
+    analytics.trackClickInputAmount("dest")
   }
 
   blurDest = () => {
@@ -218,7 +223,8 @@ export default class ExchangeBody extends React.Component {
 
   makeNewExchange = () => {
     this.props.dispatch(exchangeActions.makeNewExchange());
-  }
+    analytics.trackClickNewTransaction("Swap")
+  }  
 
   setAmount = () => {
     var tokenSymbol = this.props.exchange.sourceTokenSymbol
@@ -243,6 +249,7 @@ export default class ExchangeBody extends React.Component {
       this.props.dispatch(exchangeActions.inputChange('source', balance))
       this.props.ethereum.fetchRateExchange(true)
     }
+    analytics.trackClickAllIn("Swap", tokenSymbol)
   }
 
   swapToken = () => {
@@ -252,6 +259,7 @@ export default class ExchangeBody extends React.Component {
     var path = constansts.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "_" + this.props.exchange.sourceTokenSymbol.toLowerCase()
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
     this.props.dispatch(globalActions.goToRoute(path))
+    analytics.trackClickSwapDestSrc(this.props.exchange.sourceTokenSymbol, this.props.exchange.destTokenSymbol)
   }
 
   analyze = () => {
@@ -299,6 +307,7 @@ export default class ExchangeBody extends React.Component {
 
   toggleRightPart = (value) => {
     this.props.dispatch(exchangeActions.toggleRightPart(value))
+    analytics.trackClickTheRightWing("swap")
   }
 
   getAdvanceLayout = () => {
@@ -306,7 +315,7 @@ export default class ExchangeBody extends React.Component {
       return (
         <div onClick={(e) => this.toggleRightPart(true)}>
           <div className="toogle-side toogle-advance">
-            <div>Advance</div>
+            <div>{this.props.translate("transaction.advanced") || "Advance"}</div>
           </div>
           <div className="advance-title-mobile title ">
             <div>
@@ -346,13 +355,14 @@ export default class ExchangeBody extends React.Component {
 
   toggleLeftPart = (value) => {
     this.props.dispatch(exchangeActions.toggleLeftPart(value))
+    analytics.trackClickTheLeftWing("swap")
   }
 
   getBalanceLayout = () => {
     if (!this.props.exchange.isOpenLeft) {
       return (
         <div className="toogle-side toogle-wallet" onClick={(e) => this.toggleLeftPart(true)}>
-          <div>Wallet</div>
+          <div>{this.props.translate("transaction.wallet") || "Wallet"}</div>
         </div>
       )
       // return <div><button onClick={(e) => this.toggleLeftPart(true) }>Open left</button></div>
