@@ -247,7 +247,7 @@ export default class PostTransfer extends React.Component {
         params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService, params.balanceData))
     } catch (e) {
       console.log(e)
-      this.props.dispatch(transferActions.throwPassphraseError(this.props.translate("error.passphrase_error")))
+      this.props.dispatch(transferActions.throwPassphraseError(this.props.translate("error.passphrase_error") || "Key derivation failed"))
     }
     analytics.trackConfirmTransaction(this.props.form.tokenSymbol)
   }
