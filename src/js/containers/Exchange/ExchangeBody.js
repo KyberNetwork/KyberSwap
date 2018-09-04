@@ -71,6 +71,18 @@ export default class ExchangeBody extends React.Component {
     }
   }
 
+  validateTxFee = (gasPrice) => {
+    var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
+    this.props.exchange.sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, gasPrice)
+
+    if (validateWithFee) {
+      this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
+      return
+      // check = false
+    }
+  }
+  lazyValidateTransactionFee = _.debounce(this.validateTxFee, 500)
+
   chooseToken = (symbol, address, type) => {
     this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
     var path;
