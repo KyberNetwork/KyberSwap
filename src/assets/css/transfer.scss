@@ -128,9 +128,7 @@ $padding-col-left : 2rem;
               box-shadow: 0 1px 5px 0 hsla(0,0%,56%,.15);
               border: .8px solid hsla(0,0%,80%,.72);
               
-              .focus-item{
-                margin-left: 2px;
-              }
+              
 
               .dropdown--active{
                 .focus-item{
@@ -141,6 +139,7 @@ $padding-col-left : 2rem;
               .dropdown{
                 &:not(.dropdown--active){
                   .focus-item{
+                    margin-left: 2px;
                     justify-content: initial !important;
                     .k-angle{
                       margin-left: 25px;

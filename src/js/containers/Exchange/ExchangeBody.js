@@ -72,6 +72,9 @@ export default class ExchangeBody extends React.Component {
   }
 
   validateTxFee = (gasPrice) => {
+    if (this.props.account.account === false){
+      return
+    }
     var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
     this.props.exchange.sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, gasPrice)
 
