@@ -12,7 +12,7 @@ import { getTranslate } from 'react-localize-redux'
 import * as converter from "../../utils/converter"
 import * as validators from "../../utils/validators"
 import * as exchangeActions from "../../actions/exchangeActions"
-import { default as _ } from 'underscore'
+// import { default as _ } from 'underscore'
 import { clearSession } from "../../actions/globalActions"
 
 
@@ -47,7 +47,7 @@ import * as analytics from "../../utils/analytics"
       translate, exchange, tokens, account, ethereum,
       params: {...props.match.params},
 
-    }  
+  }  
 })
 
 
