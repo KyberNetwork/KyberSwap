@@ -28,6 +28,14 @@ const PassphraseModal = (props) => {
     }
   }
 
+  var getTranslateErr = () => {
+    var translateErr = props.passwordError
+    if (translateErr === 'Key derivation failed - possibly wrong password') {
+      translateErr = props.translate("error.key_derivation_failed") || "Key derivation failed - possibly wrong password"
+    }
+    return translateErr
+  }
+
   var gasPrice = stringToBigNumber(gweiToEth(props.gasPrice))
   var totalGas = +calculateGasFee(props.gasPrice, props.gas)
   //var totalGas = gasPrice.multipliedBy(props.gas)
@@ -86,7 +94,7 @@ const PassphraseModal = (props) => {
       </div>
       <div className="overlap">
         <div className={!!props.passwordError ? "error password-input" : "password-input"}>
-          <div class="type-password">Type a password before progressing</div>
+          <div class="type-password">{props.translate("transaction.type_pass_before_progress") || "Type a password before progressing"}</div>
           <div className="input-passpharse grid-x">
             <div className="input-reveal cell small-12 medium-8">              
               <input className="text-center security" id="passphrase" type="text"
@@ -105,7 +113,7 @@ const PassphraseModal = (props) => {
             </div>
           </div>
           {!!props.passwordError &&
-              <span className="error-text">{props.passwordError}</span>
+              <span className="error-text">{getTranslateErr()}</span>
             }
         </div>
         
