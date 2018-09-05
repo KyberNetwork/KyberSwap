@@ -36,7 +36,7 @@
                 display: flex;
                 align-items: center;
                 .search-word-mobile{
-                  margin-right: 15px;
+                  margin-right: 10px;
                 }
             }
           }
@@ -48,37 +48,7 @@
   .market-wrapper{
     position: relative;
   }
-  .search-symbol{
-    position: relative;
-    margin-left: 253px;
-    top: 45px;
-    z-index: 10;
-    width: 25px;
-    @media only screen and (max-width: 1296px) {
-      margin-left: 243px;
-    }
-    @include screen-max-width(large){
-      position: absolute;
-      top: 6px;
-      margin-left: unset;
-      right: 45px;
-    }
-    input{
-      background-image: none;
-      width: 297px;
-      height: 55px;
-      background-color: #fcfcfe;
-      border: none;
-      box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19), 0 3px 15px rgba(0,0,0,0.1);
-      position: absolute;
-      top: -38px;
-      z-index: 15;
-      left: -265px;
-      font-size: 15px;
-      padding-left: 15px;
-      text-indent: 0;
-    }
-  }
+
   &__title {
     text-align: center;
     font-size: 32px;
@@ -333,6 +303,52 @@
     padding-top: 0;
     color: #666666;
     position: relative;
+    .search-space {
+      position: absolute;
+      // margin-left: 253px;
+      top: 3px;
+      z-index: 1;
+      left: 0px;
+      @include screen-max-width(large) {
+        left: unset;
+        right: 40px;
+        top: -10px;
+      }
+      // width: 25px;
+      // @media only screen and (max-width: 1296px) {
+      //   margin-left: 243px;
+      // }
+      // @include screen-max-width(large){
+      //   position: absolute;
+      //   top: 6px;
+      //   margin-left: unset;
+      //   right: 45px;
+      // }
+      input{
+        background-image: none;
+        width: 297px;
+        height: 55px;
+        background-color: #fcfcfe;
+        border: none;
+        box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19), 0 3px 15px rgba(0,0,0,0.1);
+        // position: absolute;
+        // top: -38px;
+        z-index: 15;
+        // left: -265px;
+        font-size: 15px;
+        padding-left: 15px;
+        text-indent: 0;
+      }
+    }
+    .search-symbol {
+      height: 35px;
+      width: 35px;
+      line-height: 35px;
+      text-align: center;
+      &:hover {
+        cursor: pointer;
+      }
+    }
     .symbol-price{
       width: 100%;
       display: flex;

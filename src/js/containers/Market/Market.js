@@ -5,7 +5,7 @@ import { getTranslate } from 'react-localize-redux'
 import { Currency, ManageColumn, MarketTable, SearchWord, SortColumn, TradingViewModal } from "../Market"
 import * as marketActions from "../../actions/marketActions"
 import { toEther } from "../../utils/converter";
-
+import * as analytics from "../../utils/analytics"
 
 @connect((store) => {
 
@@ -88,13 +88,37 @@ import { toEther } from "../../utils/converter";
     currencyList: currencyList,
     originalTokens: originalTokens,
     searchWord: searchWord,
-    sortType: sortType
+    sortType: sortType,
+    showSearchInput: store.market.configs.showSearchInput,
   }
 })
 
 export default class Market extends React.Component {
   getMoreData = () => {
     this.props.dispatch(marketActions.getMoreData(this.props.listTokens))
+  }
+
+  changeSearch = (e) => {
+    var value = e.target.value
+    this.props.dispatch(marketActions.changeSearchWord(value))
+    this.props.dispatch(marketActions.resetListToken(value))
+  }
+
+  handleOnClick = (e) => {
+    // this.props.dispatch(marketActions.showSearchInput(false))
+    var className = e.target.className
+    var check = e.target.id !== "search-market" && className !== "search-symbol" && className !== "search-icon" && className !== "search-img"
+    if (this.props.showSearchInput === true && check) {
+      this.props.dispatch(marketActions.showSearchInput(false))
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener('click', this.handleOnClick)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleOnClick)
   }
 
   render() {
@@ -109,7 +133,14 @@ export default class Market extends React.Component {
           <div className="market__header-right"><ManageColumn /></div>
         </div> */}
         <div className="market-table">
-            <SearchWord />
+            {/* <SearchWord /> */}
+            {this.props.showSearchInput ? <div className='search-space'>
+                <input id="search-market" type="text" className="search-input" placeholder={this.props.translate("market.try_searching_for_token") || "Try Searching for Token"} 
+                  value={this.props.searchWord} 
+                  onChange={(e) => this.changeSearch(e)} 
+                  onFocus={(e) => analytics.trackSearchETHMarket()}
+                />
+            </div> : ""}
             <div>
               <MarketTable
                 data = {this.props.data}
@@ -122,7 +153,7 @@ export default class Market extends React.Component {
                 searchWord = {this.props.searchWord}
                 sortType = {this.props.sortType}
                 manageColumn= {<ManageColumn />}
-                // searchWordLayout = {<SearchWord />}
+                searchWordLayout = {<SearchWord showSearchInput={this.props.showSearchInput}/>}
                 currencyLayout = {<Currency />}
               />
             </div>

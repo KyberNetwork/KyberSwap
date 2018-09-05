@@ -115,6 +115,7 @@ const initState = function () {
       isLoading: false,
       selectedSymbol: "KNC",
       searchWord: "",
+      showSearchInput: false,
       currency: {
         listItem: {
           "ETH": "ETH",
@@ -461,6 +462,11 @@ const market = (state = initState, action) => {
     case "MARKET.SET_CHART_POINTS": {
       newState.chart.points = action.payload;
       return newState;
+    }
+
+    case "MARKET.UPDATE_SHOW_SEARCH_INPUT": {
+      newState.configs.showSearchInput = action.payload
+      return newState
     }
 
     default: return state
