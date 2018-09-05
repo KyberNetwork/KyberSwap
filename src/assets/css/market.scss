@@ -49,17 +49,31 @@
     position: relative;
   }
   .search-symbol{
+    position: relative;
+    margin-left: 253px;
+    top: 45px;
+    z-index: 10;
+    width: 25px;
+    @media only screen and (max-width: 1296px) {
+      margin-left: 243px;
+    }
+    @include screen-max-width(large){
+      position: absolute;
+      top: 6px;
+      margin-left: unset;
+      right: 45px;
+    }
     input{
       background-image: none;
       width: 297px;
       height: 55px;
       background-color: #fcfcfe;
       border: none;
-      box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+      box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19), 0 3px 15px rgba(0,0,0,0.1);
       position: absolute;
       top: -38px;
       z-index: 15;
-      left: -242px;
+      left: -265px;
       font-size: 15px;
       padding-left: 15px;
       text-indent: 0;
@@ -227,6 +241,12 @@
           border-radius: 2px;
           background-color: #F5F5F5;
           justify-content: center;
+          @include screen-min-width(large){
+            opacity: 0.6;
+            &:hover {
+              opacity: 1;
+            }
+          }
         }
 
         .dropdown__content {
@@ -312,6 +332,7 @@
     padding: 15px 20px;
     padding-top: 0;
     color: #666666;
+    position: relative;
     .symbol-price{
       width: 100%;
       display: flex;

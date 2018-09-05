@@ -109,6 +109,7 @@ export default class Market extends React.Component {
           <div className="market__header-right"><ManageColumn /></div>
         </div> */}
         <div className="market-table">
+            <SearchWord />
             <div>
               <MarketTable
                 data = {this.props.data}
@@ -121,7 +122,7 @@ export default class Market extends React.Component {
                 searchWord = {this.props.searchWord}
                 sortType = {this.props.sortType}
                 manageColumn= {<ManageColumn />}
-                searchWordLayout = {<SearchWord />}
+                // searchWordLayout = {<SearchWord />}
                 currencyLayout = {<Currency />}
               />
             </div>
