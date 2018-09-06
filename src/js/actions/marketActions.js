@@ -165,3 +165,10 @@ export function fetchChartData(tokenSymbol, timeRange) {
     payload: { tokenSymbol, timeRange }
   }
 }
+
+export function showSearchInput(value) {
+  return {
+    type: "MARKET.UPDATE_SHOW_SEARCH_INPUT",
+    payload: value
+  }
+}

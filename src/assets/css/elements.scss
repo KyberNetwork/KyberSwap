@@ -543,6 +543,7 @@ input.search-input {
       transform: rotate(90deg);
       padding: 6px 40px 6px 25px;
       border-bottom: none;
+      box-shadow: none;
       &::after{
         transform: rotate(-90deg);
         top: 8px;
