@@ -4,7 +4,12 @@
   @include screen-min-width(medium) {
     padding-top: 40px !important;
   }
-}
+  &__open-advance {
+    @include screen-max-width(medium) {
+      padding-bottom: 465px;
+    }
+  }
+} 
 
 #exchange {
   @media print, screen and (min-width: 40em) {
@@ -61,6 +66,13 @@
     }
   } 
   
+  .exchange-col-2.advance-for-mobile {
+    @include screen-max-width(medium) {
+      position: absolute;
+      top: 100%;
+      padding: 0;
+    }
+  }
 
   .exchange-icon{
     text-align: center;

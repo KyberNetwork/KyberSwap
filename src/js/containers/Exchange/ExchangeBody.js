@@ -378,6 +378,7 @@ export default class ExchangeBody extends React.Component {
       return (
         <div className="toogle-side toogle-wallet" onClick={(e) => this.toggleLeftPart(true)}>
           <div>{this.props.translate("transaction.wallet") || "Wallet"}</div>
+          <div className="wings-dropdown"></div>
         </div>
       )
       // return <div><button onClick={(e) => this.toggleLeftPart(true) }>Open left</button></div>

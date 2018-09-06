@@ -228,8 +228,9 @@ export default class Transfer extends React.Component {
     if (!this.props.transfer.isOpenLeft) {
       return (
         <div className="toogle-side toogle-wallet" onClick={(e) => this.toggleLeftPart(true)}>
-        <div>{this.props.translate("transaction.wallet") || "Wallet"}</div>
-      </div>
+          <div>{this.props.translate("transaction.wallet") || "Wallet"}</div>
+          <div className="toogle-side-dropdown"></div>
+        </div>
       )
     }
     return (

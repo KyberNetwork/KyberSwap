@@ -80,6 +80,7 @@ const ExchangeBodyLayout = (props) => {
         {props.isOpenLeft && (
           <div className="close-indicator close-wallet" onClick={(e) => props.toggleLeftPart(false)}>
             <div>Close</div>
+            <div className="wings-dropdown"></div>
           </div>
         )}
 
@@ -175,22 +176,24 @@ const ExchangeBodyLayout = (props) => {
               </div>
             </div>
           </div>
-          <div className="cell large-4 exchange-col-2">
-            {props.isOpenRight && (
-              <div onClick={(e) => props.toggleRightPart(false)}>
-                <div className="close-indicator close-advance">
-                  <div>Close</div>
-                </div>
-                <div className="advance-title-mobile title">
-                  <div>
-                    {props.translate("transaction.advanced") || "Advanced"}
-                    <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" />
+          <div className="cell large-4 exchange-col-2 advance-for-mobile">
+            <div>
+              {props.isOpenRight && (
+                <div onClick={(e) => props.toggleRightPart(false)}>
+                  <div className="close-indicator close-advance">
+                    <div>Close</div>
+                  </div>
+                  <div className="advance-title-mobile open-advance title">
+                    <div>
+                      {props.translate("transaction.advanced") || "Advanced"}
+                      <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {props.advanceLayout}
+              {props.advanceLayout}
+            </div>
           </div>
         </div>
       </div>
