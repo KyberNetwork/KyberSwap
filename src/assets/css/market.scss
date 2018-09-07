@@ -212,7 +212,7 @@
           background-color: #F5F5F5;
           justify-content: center;
           @include screen-min-width(large){
-            opacity: 0.6;
+            opacity: 0.3;
             &:hover {
               opacity: 1;
             }

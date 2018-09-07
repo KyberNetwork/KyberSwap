@@ -605,11 +605,12 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED":{
-      newState.isOpenLeft = true
+      
       newState.chart.isActive = false
       newState.isBalanceActive = true
       //check if mobile
       if (window.innerWidth >= 1024){
+        newState.isOpenLeft = true
         newState.isOpenRight = true
       }
       return newState
