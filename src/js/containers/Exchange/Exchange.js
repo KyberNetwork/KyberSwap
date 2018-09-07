@@ -101,7 +101,7 @@ export default class Exchange extends React.Component {
     var headerTransaction = <HeaderTransaction page="exchange" />
 
     return (
-      <div class="frame exchange-frame">  
+      <div className={this.props.exchange.isOpenRight ? "frame exchange-frame exchange-frame__open-advance" : "frame exchange-frame"}>  
         {headerTransaction}
         <div className="row">
           {exchangeBody}

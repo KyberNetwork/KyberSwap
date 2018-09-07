@@ -267,7 +267,7 @@ export default class MarketTable extends React.Component {
       <div>
         <div className="for-desktop-only rt-th-first-header">
           <div className='rt-th-header-title' onClick = {this.handleSortHeader}>
-            {this.props.translate(this.getTranslateFromKey(key)) || title}
+            {this.props.translate("market.eth_market") || "Ethereum market"}
           </div>
           <div className="rt-th-control">
             {this.props.searchWordLayout}
@@ -276,7 +276,7 @@ export default class MarketTable extends React.Component {
         </div>
         <div className={"for-mobile-only " +  this.props.sortType['market'] + ' -cursor-pointer'} onClick = {this.handleSortHeader}>
           <div className="rt-th-img">
-          <img src={require("../../../assets/img/landing/sort.svg")} /> Market
+          <img src={require("../../../assets/img/landing/sort.svg")} /> {this.props.translate(this.getTranslateFromKey(key)) || title}
           </div>
         </div>
       </div>
@@ -534,7 +534,7 @@ export default class MarketTable extends React.Component {
         <div className="market-control">
           <div>
             <div className="for-mobile-only">
-              Ethereum Market              
+              {this.props.translate("market.eth_market") || "Ethereum market"}
             </div>
             <div>
               <div className="for-mobile-only search-word-mobile">

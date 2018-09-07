@@ -335,7 +335,8 @@ export default class ExchangeBody extends React.Component {
           <div className="advance-title-mobile title ">
             <div>
               {this.props.translate("transaction.advanced") || "Advanced"}
-              <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" className="advance-arrow-up"/>
+              {/* <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" className="advance-arrow-up"/> */}
+              <div id="advance-arrow" className="advance-arrow-up"></div>
             </div>
           </div>
         </div>
@@ -378,6 +379,7 @@ export default class ExchangeBody extends React.Component {
       return (
         <div className="toogle-side toogle-wallet" onClick={(e) => this.toggleLeftPart(true)}>
           <div>{this.props.translate("transaction.wallet") || "Wallet"}</div>
+          <div className="wings-dropdown"></div>
         </div>
       )
       // return <div><button onClick={(e) => this.toggleLeftPart(true) }>Open left</button></div>

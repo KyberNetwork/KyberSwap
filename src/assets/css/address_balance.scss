@@ -484,6 +484,6 @@
   }
 
   @include screen-max-width(medium) {
-    display: none;
+    // display: none;
   }
 }

@@ -57,6 +57,7 @@ $radio-color: #5D9E7A;
     background-color: white;
   }
   .gas_input{
+    width: 100%;
     input {
       padding-left: 10px;
       padding-top: 0;
@@ -398,17 +399,49 @@ $radio-color: #5D9E7A;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    img {
+    div#advance-arrow {
       width: 13px;
+      height: 13px;
       transition: 0.2s;
       margin-left: 13px;
+      background-image: url(../img/exchange/arrow-down-swap.svg);
+      background-position: center;
+      background-repeat: no-repeat;
       &.advance-arrow-up {
         transform: rotate(180deg);
-        transition: 0.2s;
+        // transition: 0.2s;
+      }
+    }
+    @include screen-max-width(medium) {
+      padding-left: 20px;
+      padding-right: 20px;
+      justify-content: space-between;
+      div#advance-arrow {
+        background-image: url(../img/dropdown_gray.svg);
+        transform: rotate(-90deg);
+        &.advance-arrow-up {
+          transform: rotate(90deg);
+          transition: 0.2s;
+        }
       }
     }
   }
   @media screen and (min-width: $break-point-large){
     display: none  
+  }
+
+  @include screen-max-width(medium) {
+    &.title {
+      padding: 6px 0;
+      font-size: 14px;
+    }
+    border: 1px solid #ddd;
+    border-radius: 0 0 4px 4px;
+    box-shadow: inset 0 7px 9px -7px rgba(0,0,0,0.05);
+    &.open-advance {
+      border: none;
+      border-bottom: 1px solid #ddd;
+      border-radius: 0;
+    }
   }
 }

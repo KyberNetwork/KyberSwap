@@ -100,19 +100,24 @@ export default class LandingPage extends React.Component {
 
         <div className="account-type">
           <div className="account-type__item">
-            {this.props.translate("landing_page.metamask") || "Metamask"}
+            <div>{this.props.translate("landing_page.metamask") || "Metamask"}</div>
+						<img src={require('../../../assets/img/landing/metamask_disable.png')} />
           </div>
           <div className="account-type__item">
-            {this.props.translate("landing_page.json") || "JSON"}
+            <div>{this.props.translate("landing_page.json") || "JSON"}</div>
+						<img src={require('../../../assets/img/landing/keystore_disable.png')} />
           </div>
           <div className="account-type__item">
-            {this.props.translate("landing_page.trezor") || "Trezor"}
+						<div>{this.props.translate("landing_page.trezor") || "Trezor"}</div>
+						<img src={require('../../../assets/img/landing/trezor_disable.png')} />
           </div>
           <div className="account-type__item">
-            {this.props.translate("landing_page.ledger") || "Ledger"}
+						<div>{this.props.translate("landing_page.ledger") || "Ledger"}</div>
+						<img src={require('../../../assets/img/landing/ledger_disable.png')} />
           </div>
           <div className="account-type__item">
-            {this.props.translate("landing_page.private_key") || "Private Key"}
+						<div>{this.props.translate("landing_page.private_key") || "Private Key"}</div>
+						<img src={require('../../../assets/img/landing/privatekey_disable.png')} />
           </div>
         </div>
       </div>
