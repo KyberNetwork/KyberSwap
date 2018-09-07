@@ -186,7 +186,7 @@ const ExchangeBodyLayout = (props) => {
                   <div className="advance-title-mobile open-advance title">
                     <div>
                       {props.translate("transaction.advanced") || "Advanced"}
-                      <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" />
+                      <div id="advance-arrow"></div>
                     </div>
                   </div>
                 </div>

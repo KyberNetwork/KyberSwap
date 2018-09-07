@@ -578,6 +578,9 @@ input.search-input {
     >div{
       display: inline-block;
     }
+    >div.wings-dropdown {
+      display: none;
+    }
     &.close-wallet{
       padding-left: 10px;
       &::after{
@@ -665,12 +668,13 @@ input.search-input {
   }
   .close-wallet {
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
     align-items: center;
     padding: 5px 10px;
     .wings-dropdown {
       transform: rotate(-90deg);
       display: block;
+      margin-left: 10px;
     }
     div:first-child {
       font-size: 14px;

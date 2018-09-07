@@ -57,6 +57,7 @@ $radio-color: #5D9E7A;
     background-color: white;
   }
   .gas_input{
+    width: 100%;
     input {
       padding-left: 10px;
       padding-top: 0;
@@ -398,22 +399,25 @@ $radio-color: #5D9E7A;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    img {
+    div#advance-arrow {
       width: 13px;
+      height: 13px;
       transition: 0.2s;
       margin-left: 13px;
+      background-image: url(../img/exchange/arrow-down-swap.svg);
+      background-position: center;
+      background-repeat: no-repeat;
       &.advance-arrow-up {
         transform: rotate(180deg);
-        transition: 0.2s;
+        // transition: 0.2s;
       }
     }
     @include screen-max-width(medium) {
       padding-left: 20px;
       padding-right: 20px;
       justify-content: space-between;
-      img {
-        width: 9px;
-        content: url(../img/dropdown_gray.svg);
+      div#advance-arrow {
+        background-image: url(../img/dropdown_gray.svg);
         transform: rotate(-90deg);
         &.advance-arrow-up {
           transform: rotate(90deg);

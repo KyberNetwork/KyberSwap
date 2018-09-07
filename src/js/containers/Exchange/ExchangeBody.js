@@ -335,7 +335,8 @@ export default class ExchangeBody extends React.Component {
           <div className="advance-title-mobile title ">
             <div>
               {this.props.translate("transaction.advanced") || "Advanced"}
-              <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" className="advance-arrow-up"/>
+              {/* <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" className="advance-arrow-up"/> */}
+              <div id="advance-arrow" className="advance-arrow-up"></div>
             </div>
           </div>
         </div>

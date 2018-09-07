@@ -202,10 +202,28 @@
       font-weight: 600;
       border-radius: 3px;
       background-color: rgba(245, 245, 245, .73);
-      text-transform: uppercase;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
+      >div {
+        text-transform: uppercase;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      img {
+        display: none;
+      }
+      @include screen-max-width(medium) {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        >div {
+          display: none;
+        }
+        img {
+          display: block;
+          max-height: 25px;
+        }
+      }
     }
 
     @include screen-max-width(large) {
