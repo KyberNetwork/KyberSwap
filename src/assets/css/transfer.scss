@@ -54,6 +54,11 @@ $padding-col-left : 2rem;
       @include screen-min-width(large) {
         padding: 0 0 0 20px;
       }
+      @include screen-max-width(medium) {
+        padding: 0;
+        position: absolute;
+        top: 100%;
+      }
     }
   }
 

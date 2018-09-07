@@ -37,6 +37,7 @@ const TransferForm = (props) => {
           {props.isOpenLeft && (
             <div className="close-indicator close-wallet" onClick={(e) => props.toggleLeftPart(false)}>
               <div>Close</div>
+              <div className="wings-dropdown"></div>
             </div>
           )}
 
@@ -124,10 +125,11 @@ const TransferForm = (props) => {
                   <div className="close-indicator close-advance">
                     <div>Close</div>
                   </div>
-                  <div className="advance-title-mobile title">
+                  <div className="advance-title-mobile open-advance title">
                     <div>
                       {props.translate("transaction.advanced") || "Advanced"}
-                      <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" />
+                      {/* <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" /> */}
+                      <div id="advance-arrow"></div>
                     </div>
                   </div>
                 </div>
