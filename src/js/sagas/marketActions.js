@@ -117,7 +117,11 @@ export function* getNewData(action) {
 
 export function* fetchChartData(action) {
   const { tokenSymbol, timeRange } = action.payload;
-
+  var state = store.getState()
+  var currentChartData = state.market.chart
+  if (tokenSymbol === currentChartData.tokenSymbol && currentChartData.points[timeRange]) {
+    return
+  }
   yield put(marketActions.setChartLoading(true));
 
   try {
@@ -136,7 +140,7 @@ export function* fetchChartData(action) {
 				chartData.t = []
 				chartData.c = []
 			}
-      yield put(marketActions.setChartPoints(chartData));
+      yield put(marketActions.setChartPoints(chartData, tokenSymbol, timeRange));
     // }
 
   } catch(e) {

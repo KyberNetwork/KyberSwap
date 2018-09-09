@@ -107,7 +107,8 @@ export default class TokenChart extends React.Component {
         </div>
       )
     });
-    var chartData = this.props.chart.points.c
+    const currentChartData = this.props.chart.points[this.props.chartTimeRange]
+    var chartData = currentChartData && currentChartData.c ? currentChartData.c : [] 
     var currentToken = this.state.symbol
     // if (chartData && chartData.length > 0) {
     //   var max = chartData[0]
@@ -141,9 +142,9 @@ export default class TokenChart extends React.Component {
       }
     }
     const isNegativeChange = this.state.change < 0;
-    const shouldRenderChart = this.state.change !== -9999 || (this.props.chart.points.c.length && this.state.change !== -9999);
+    const shouldRenderChart = this.state.change !== -9999 || (currentChartData && currentChartData.c.length && this.state.change !== -9999);
     const data = {
-      labels: this.props.chart.points.t,
+      labels: currentChartData && currentChartData.t ? currentChartData.t : [],
       datasets: [{
         data: chartData,
         backgroundColor: '#EBEBEB',

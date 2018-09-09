@@ -153,10 +153,9 @@ const initState = function () {
     },
     count: { storageKey: constants.STORAGE_KEY },
     chart: {
+      tokenSymbol: "",
       isLoading: false,
-      points: {
-        c: [], t: []
-      }
+      points: {}
     }
   }
 }()
@@ -460,7 +459,13 @@ const market = (state = initState, action) => {
     }
 
     case "MARKET.SET_CHART_POINTS": {
-      newState.chart.points = action.payload;
+      const {points, tokenSymbol, timeRange} = action.payload;
+      let newPoint =  {}
+      let currentToken = newState.chart.tokenSymbol
+      if (tokenSymbol === currentToken) newPoint = {...newState.chart.points}
+      newPoint[timeRange] = points
+      newState.chart.points = {...newPoint}
+      newState.chart.tokenSymbol = tokenSymbol
       return newState;
     }
 

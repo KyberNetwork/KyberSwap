@@ -152,10 +152,10 @@ export function setChartLoading(isLoading) {
   }
 }
 
-export function setChartPoints(points) {
+export function setChartPoints(points, tokenSymbol, timeRange) {
   return {
     type: "MARKET.SET_CHART_POINTS",
-    payload: points
+    payload: {points, tokenSymbol, timeRange}
   }
 }
 
