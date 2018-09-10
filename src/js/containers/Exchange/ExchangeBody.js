@@ -330,7 +330,9 @@ export default class ExchangeBody extends React.Component {
       return (
         <div onClick={(e) => this.toggleRightPart(true)}>
           <div className="toogle-side toogle-advance">
-            <div>{this.props.translate("transaction.advanced") || "Advance"}</div>
+            <div className="toogle-content toogle-content-advance">
+              <div>{this.props.translate("transaction.advanced") || "Advance"}</div>
+            </div>
           </div>
           <div className="advance-title-mobile title ">
             <div>
@@ -378,7 +380,9 @@ export default class ExchangeBody extends React.Component {
     if (!this.props.exchange.isOpenLeft) {
       return (
         <div className="toogle-side toogle-wallet" onClick={(e) => this.toggleLeftPart(true)}>
-          <div>{this.props.translate("transaction.wallet") || "Wallet"}</div>
+          <div className="toogle-content toogle-content-advance">
+            <div>{this.props.translate("transaction.advanced") || "Advance"}</div>
+          </div>
           <div className="wings-dropdown"></div>
         </div>
       )

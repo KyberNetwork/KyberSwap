@@ -180,18 +180,17 @@ export default class Transfer extends React.Component {
       return (
         <div onClick={(e) => this.toggleRightPart(true)}>
           <div className="toogle-side toogle-advance">
-            <div>{this.props.translate("transaction.advanced") || "Advance"}</div>
+            <div className="toogle-content toogle-content-advance">
+              <div>{this.props.translate("transaction.advanced") || "Advance"}</div>
+            </div>
           </div>
-
-<div className="advance-title-mobile title ">
-<div>
-  {this.props.translate("transaction.advanced") || "Advanced"}
-  <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" className="advance-arrow-up"/>
-</div>
-</div>
-
-</div>
-      
+          <div className="advance-title-mobile title ">
+          <div>
+            {this.props.translate("transaction.advanced") || "Advanced"}
+            <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" className="advance-arrow-up"/>
+          </div>
+          </div>
+        </div>
       )
     }
     var gasPrice = converters.stringToBigNumber(converters.gweiToEth(this.props.transfer.gasPrice))
