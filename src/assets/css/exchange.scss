@@ -4,11 +4,15 @@
   @include screen-min-width(medium) {
     padding-top: 40px !important;
   }
-  &__open-advance {
+  
     @include screen-max-width(medium) {
-      padding-bottom: 460px;
+      &__open-advance {
+        padding-bottom: 460px;
+      }
+      &__transfer-open-advance {
+        padding-bottom: 240px;
+      }
     }
-  }
 } 
 
 #exchange {

@@ -184,11 +184,13 @@ export default class Transfer extends React.Component {
               <div>{this.props.translate("transaction.advanced") || "Advance"}</div>
             </div>
           </div>
+
           <div className="advance-title-mobile title ">
-          <div>
-            {this.props.translate("transaction.advanced") || "Advanced"}
-            <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" className="advance-arrow-up"/>
-          </div>
+            <div>
+              {this.props.translate("transaction.advanced") || "Advanced"}
+              {/* <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" className="advance-arrow-up"/> */}
+              <div id="advance-arrow" className="advance-arrow-up"></div>
+            </div>
           </div>
         </div>
       )
@@ -227,8 +229,11 @@ export default class Transfer extends React.Component {
     if (!this.props.transfer.isOpenLeft) {
       return (
         <div className="toogle-side toogle-wallet" onClick={(e) => this.toggleLeftPart(true)}>
-          <div>{this.props.translate("transaction.wallet") || "Wallet"}</div>
-          <div className="toogle-side-dropdown"></div>
+          <div className="toogle-content toogle-content-wallet">
+            <div>{this.props.translate("transaction.wallet") || "Wallet"}</div>
+          </div>
+          {/* <div className="toogle-side-dropdown"></div> */}
+          <div className="wings-dropdown"></div>
         </div>
       )
     }

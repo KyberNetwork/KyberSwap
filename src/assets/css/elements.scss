@@ -526,7 +526,7 @@ input.search-input {
     //   display: none;
     // }
     z-index: 0;
-    box-shadow: 0 10px 20px 0 hsla(180,0%,53%,.26), 0 6px 6px 0 hsla(165,2%,69%,.26);
+    // box-shadow: 0 10px 20px 0 hsla(180,0%,53%,.26), 0 6px 6px 0 hsla(165,2%,69%,.26);
           
     // &::after{
     //   background-image: url("../img/dropdown_gray.svg");
@@ -563,6 +563,15 @@ input.search-input {
           right: 12px;   
         }
       }
+      &.toogle-content-wallet {
+        box-shadow: 0 10px 20px 0 hsla(180,0%,53%,.26), 0 6px 6px 0 hsla(165,2%,69%,.26);
+        padding: 6px 15px 6px 35px;
+        &::after{
+          transform: rotate(-90deg);
+          top: 8px;
+          left: 12px;   
+        }
+      }
     }
     &.toogle-advance{
       left: -91px;
@@ -579,7 +588,7 @@ input.search-input {
       float: right;
       position: relative;
       top: 60px;
-      right: -37px;
+      right: -70px;
       background-color: #f5f5f5;
       &::after{
         transform: rotate(-90deg);
