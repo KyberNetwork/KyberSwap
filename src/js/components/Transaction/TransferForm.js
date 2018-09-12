@@ -123,7 +123,7 @@ const TransferForm = (props) => {
               {props.isOpenRight && (
                 <div onClick={(e) => props.toggleRightPart(false)}>
                   <div className="close-indicator close-advance">
-                    <div>Close</div>
+                    <div>{props.translate("transaction.close") || "Close"}</div>
                   </div>
                   <div className="advance-title-mobile open-advance title">
                     <div>
