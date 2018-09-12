@@ -79,7 +79,7 @@ const ExchangeBodyLayout = (props) => {
       <div className={"cell medium-6 large-3" + (props.isOpenLeft ? " balance-wrapper" : "") + (errorExchange || props.networkError ? " error" : "")} id="balance-account-wrapper">
         {props.isOpenLeft && (
           <div className="close-indicator close-wallet" onClick={(e) => props.toggleLeftPart(false)}>
-            <div>Close</div>
+            <div>{props.translate("transaction.close") || "Close"}</div>
             <div className="wings-dropdown"></div>
           </div>
         )}

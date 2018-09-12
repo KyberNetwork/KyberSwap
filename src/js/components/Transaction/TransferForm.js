@@ -36,7 +36,7 @@ const TransferForm = (props) => {
           /> */}
           {props.isOpenLeft && (
             <div className="close-indicator close-wallet" onClick={(e) => props.toggleLeftPart(false)}>
-              <div>Close</div>
+              <div>{props.translate("transaction.close") || "Close"}</div>
               <div className="wings-dropdown"></div>
             </div>
           )}
