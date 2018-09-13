@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 
 import { AccountBalanceLayout } from '../../components/Exchange'
-// import { selectTokenAsync } from '../../actions/exchangeActions'
+import {acceptTermOfService} from "../../actions/globalActions"
 // import { selectToken } from '../../actions/transferActions'
 // import { hideSelectToken } from "../../actions/utilActions"
 import * as analytics from "../../utils/analytics"
@@ -48,6 +48,10 @@ export default class AccountBalance extends React.Component {
     // }else{
     //   this.setState({ isBalanceActive: true });            
     // }
+  }
+
+  acceptTerm = () => {
+    this.props.dispatch(acceptTermOfService())
   }
 
   changeSearchBalance = (e) => {
@@ -132,6 +136,8 @@ export default class AccountBalance extends React.Component {
         onChangeChartRange={this.props.onChangeChartRange}
         onToggleChartContent={this.onToggleChartContent}
         onToggleBalanceContent={this.onToggleBalanceContent}
+
+        acceptTerm = {this.acceptTerm}
       />
     )
   }
