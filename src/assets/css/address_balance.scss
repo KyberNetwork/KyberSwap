@@ -1,27 +1,34 @@
 
-
 @include screen-min-width(large) {
   .balance-wrapper,
   .exchange-col-1 {
     box-shadow: $box-shadow-tab;
   }
-
+  @keyframes moving-left {
+    to {
+      transform: translateX(0);
+    }
+  }
   .balance-wrapper{
     border: 1px solid #ddd;
     
     background: white;
     position: relative;
     z-index: 1;
+    
+    animation: moving-left 0.3s forwards;
+    transform: translateX(50px);
+    transition: all .3s;
 
-    &::after {
-      content: '';
-      position: absolute;
-      width: 10px;
-      height: 100%;
-      background: $white;
-      top: 0;
-      right: -11px;
-    }
+    // &::after {
+    //   content: '';
+    //   position: absolute;
+    //   width: 10px;
+    //   height: 100%;
+    //   background: $white;
+    //   top: 0;
+    //   right: -11px;
+    // }
   }
   .exchange-wrapper-btn{
     text-align: center;
@@ -46,7 +53,7 @@
 
   #balance-account {
     .balances {
-      height: 253px;
+      height: 236px;
     }
   }
 

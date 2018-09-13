@@ -176,7 +176,7 @@ const ExchangeBodyLayout = (props) => {
               </div>
             </div>
           </div>
-          <div className="cell large-4 exchange-col-2 advance-for-mobile">
+          <div className={"cell large-4 exchange-col-2 advance-for-mobile" + (props.isOpenRight ? " advance-layout" : "")}>
             <div>
               {props.isOpenRight && (
                 <div onClick={(e) => props.toggleRightPart(false)}>

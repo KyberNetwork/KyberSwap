@@ -6,6 +6,21 @@ $radio-color: #5D9E7A;
   padding-left: 2rem;
 }
 
+@include screen-min-width(large) {
+  @keyframes moving-right {
+    to {
+      transform: translateX(50);
+    }
+  }
+  .advance-layout{
+    animation: moving-left 0.3s forwards;
+    transform: translateX(-50px);
+    transition: all .3s;
+  }
+}
+
+
+
 .advance-config{
   // max-width: 300px;  
  
