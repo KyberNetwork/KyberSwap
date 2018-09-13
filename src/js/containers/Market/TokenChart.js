@@ -143,14 +143,24 @@ export default class TokenChart extends React.Component {
     }
     const isNegativeChange = this.state.change < 0;
     const shouldRenderChart = this.state.change !== -9999 || (currentChartData && currentChartData.c.length && this.state.change !== -9999);
+    var borderColor = "#31CB9E"
+    var backgroundColor = "#EDFBF6"
+    if (isNegativeChange) {
+      borderColor = "#F0506E"
+      backgroundColor = "#FEF4F6"
+    }
+    if (this.state.change === 0) {
+      borderColor = "#ccc"
+      backgroundColor = "#EBEBEB"
+    }
     const data = {
       labels: currentChartData && currentChartData.t ? currentChartData.t : [],
       datasets: [{
         data: chartData,
-        backgroundColor: '#EBEBEB',
+        backgroundColor: backgroundColor,
         //backgroundColor: isNegativeChange ? 'rgba(255, 99, 132, 0.2)' : 'rgba(49, 203, 158, 0.2)',
         //borderColor: isNegativeChange ? 'rgba(255,99,132,1)': '#31CB9E',
-        borderColor: '#ccc',
+        borderColor: borderColor,
         borderWidth: 1
       }]
     };
