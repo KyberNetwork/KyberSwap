@@ -31,6 +31,15 @@
         "usd_id":"ethereum",
         "gasLimit": "0"
       },
+      "WETH": {
+        "name": "Wrapped Ether",
+        "decimal": 18,
+        "symbol" : "WETH",
+        "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "icon": "weth.png",
+        "isNew": true,
+        "expireDate":"2018/09/30"
+      },
       "KNC": {
         "name": "KyberNetwork",
         "symbol": "KNC",
@@ -420,9 +429,7 @@
         "decimal": 18,
         "symbol" : "MOC",
         "address": "0x865ec58b06bf6305b886793aa20a2da31d034e68",
-        "icon": "moc.svg",
-        "isNew": true,
-        "expireDate":"2018/08/25"
+        "icon": "moc.svg"        
       }
     },
     "ethScanUrl": "https://etherscan.io/",
