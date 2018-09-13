@@ -1,5 +1,6 @@
 import React from "react"
 import { Modal } from '../CommonElement'
+import * as analytics from "../../utils/analytics"
 //import ReactTooltip from 'react-tooltip'
 
 const ImportByPKeyView = (props) => {
@@ -7,6 +8,7 @@ const ImportByPKeyView = (props) => {
 	function handldeSubmit() {
 		let privateKey = document.getElementById("private_key").value
 		props.importPrivateKey(privateKey)
+		analytics.trackClickSubmitPrKey()
 	}
 
 	function submit(e) {
@@ -20,9 +22,11 @@ const ImportByPKeyView = (props) => {
 		if (input.classList.contains('security')) {
 			input.classList.remove('security')
 			input.parentElement.classList.add('unlock')
+			analytics.trackClickShowPassword("show")
 		} else if (input.type == 'text') {
 			input.classList.add('security')
 			input.parentElement.classList.remove('unlock')
+			analytics.trackClickShowPassword("hide")
 		}
 	}
 
@@ -62,6 +66,7 @@ const ImportByPKeyView = (props) => {
 												autoFocus
 												autoComplete="off"
 												spellCheck="false"
+												onFocus={(e) => {analytics.trackClickInputPrKey()}}
 												required />
 												<p>{props.privateKeyVisible}</p>
 												<a className="toggle" onClick={toggleShowPw}></a>

@@ -1,0 +1,352 @@
+{
+  "pack": "cn",
+  "pack_icon": "cn.svg",
+  "pack_label": "中文",
+  "pack_active": true,
+  "layout": {
+    "info": "信息",
+    "terms_of_service": "服务条款",
+    "privacy_policies": "隐私政策"
+  },
+
+  "transaction_list": {
+    "transaction_history": "最近交易"
+  },
+
+  "address": {
+    "address": "地址",
+    "import_address": "导入地址",
+    "exchange_from": "从",
+    "my_balance": "余额",
+    "estimated_value": "估值",
+    "total": "估值",
+    "hide_zero_balance": "隐藏小额资产",
+    "symbol": "符号",
+    "price": "价格",
+    "your_wallet_address": "您的钱包地址",
+    "search": "搜索"
+  },
+
+  
+  "transaction": {
+    "exchange": "交易",
+    "exchange_from": "从",
+    "exchange_to": "到",
+
+    "transfer": "转移",
+    "transfer_to_address": "转移到地址",
+    "amount": "数量",
+    "select_token": "选择代币",
+
+    "advanced": "高级选项",
+    "transaction_fee": "交易费",
+
+    "address_balance": "地址余额",
+    "balance": "余额",
+    "password_needed_exchange": "每笔交易都需要密码",
+
+    "password_needed_transfer": "每笔转移都需要密码",
+    "next": "下一个",
+    "exit": "退出",
+    "back": "回去",
+    "new_tx": "新的转移",
+    "new_ex": "新的兑换",
+    "done": "完成!",
+    "failed": "失败!",
+    "broadcasted": "交易上链完成!",
+    "broadcasting": "交易上链中!",
+    "success_ex_msg": "成功地将 </br> ${sourceAmount} ${sourceSymbol} 交易为 ${destAmount} ${destSymbol} 了",
+    "success_swap_msg": "成功地将",
+    "success_tx_msg": "成功地将 </br> ${amount} ${token} 转移至 ${address}",
+    "success_transfer_msg": "成功地将",
+    "copy_tx": "拷贝交易哈希",
+    "analyze_error": "失败原因",
+    "copied": "拷贝成功",
+    "analyze": "显示原因",
+    "no_reason_found": "我们无法找出您交易的任何原因。请稍后再尝试",
+    "error_no_reason": "无法找到任何交易失败的原因。请稍后重试.",
+
+    "broadcast": "交易上链",
+    "transaction": "交易",
+    "broadcasted_title": "将您的交易广播至区块链",
+    "close_browser_or_make_new_exchange": "您现在可以关闭浏览器窗口或进行另一币交易",
+    "close_browser_or_make_new_transfer": "您现在可以关闭浏览器窗口或进行另一币转移",
+    "broadcasting_blockchain": "您的交易正在被上链至区块链",
+    "cound_not_broadcast": "无法将您的交易上链至区块链",
+    "current_address_balance": "当前地址余额",
+    "transaction_error": "交易错误",
+
+    "notification": "通知",
+    "not_enable_exchange": "你的地址目前暂时无法交易。请稍后再回来！",
+    "kyber_down" : "Kyber交易目前无法使用。<br/>请稍后回来！",
+
+    "swap": "兑换",
+    "click_to_swap_all_balance": "点击兑换所有余额",
+
+    "higher_min_acceptable_rate": "为了在价格剧烈波动时保护您的交易，请设置一个最低可接受汇率。一个高的最低可接受汇率可能导致低的交易成功率，并且仍会消耗燃料费。我们建议的最低可接受汇率是 ${displaySlippageRate}。",
+    "our_suggest_loading": "<img src=\"${src}\"/> ${desToken}是我们默认的最低可接受比率。",
+    "our_suggest": "<strong> ${suggestRate}</strong>是我们默认的最低可接受比率。",
+    "min_acceptable_rate": "最低可接受比率",
+
+    "transaction_time": "交易时间：< ${time} 分钟",
+    "waiting_transaction": "您的交易正在等待被挖掘",
+    "click_to_ex_all_balance": "点击交易所有余额",
+    "click_to_transfer_all_balance": "点击转移所有余额",
+
+    "about_to_swap": "您将开始交易",
+    "about_to_transfer": "您将开始转移",
+    "processing": "处理中",
+    "gas_limit": "燃料限额",
+    "gas_price": "燃料价格",
+    "for": "换至",
+    "exchange_for": "约为",
+    "to": "至",
+    "best_rate": "最小价格",
+    "token_amount": "代币／数量",
+    "click_to_swap": "点击交换",
+
+    "transfer_tooltip": "转移以太或代币至其它地址",
+    "transaction_gasprice_50": "更高的燃料价格，更快的交易速度。最高燃料价格：50 Gwei",
+    "transaction_gasprice": "更高的燃料价格，更快的交易速度",
+    "max_gas_price": "最大燃料价格: ${maxGas} Gwei",
+    "best_rate_tooltip": "市场波动时，更低的价格可以带来更好的成功率",
+    "terms_and_conditions": "<span>条款和<br  class='show-for-small-only'>条件</span>",
+
+    "error_tx_log":"空的日志",
+    "error_tx_contract":"警告！合约执行过程中发生了错误",
+    "no_pedding_tx": "没有待处理的交易",
+    "rate_info": "价格也许会在结算过程中发生变化。<br> 您可以点击\"高级选项\"来显示您的最低价格。",
+    "address": "接收的地址",
+    "slippage_tip": "费率可能会改变。 您可以在高级选项中调整最小价格来更改最大滑点率",
+    "max_slippage": "滑点率至多为${percent}%",
+    "included": "包括"
+  },
+
+  "modal": {
+    "enter_password": "输入密码",
+    "confirm": "确认",
+    "import": "导入",
+    "enter_password_placeholder": "输入钱包密码进行确认",
+    "select_hd_path": "选择硬盘派生路径",
+    "select_trezor_address": "选择TREZOR地址",
+    "select_ledger_address": "选择LEDGER地址",
+    "select_address": "选择您想要使用的地址",
+    "previous_addresses": "以前的地址",
+    "more_addresses": "更多地址",
+    "custom_path": "您的自定义路径",
+    "view_on_etherscan": "在Etherscan上查看",
+    "press_confirm_if_really_want": "请按确认以继续",
+    "press_approve": "请按准许以继续",
+    "waiting_for_confirmation": "正在等待您钱包的确认信息",
+    "confirm_exchange_title": "交易确认",
+    "confirm_swap": "确认兑换",
+    "confirm_transfer_title": "转移确认",
+
+    "select_your_language": "选择你的语言",
+    "select_source_token": "选择原始代币",
+    "select_dest_token": "选择终点代币",
+    "select_trasfer_from_token": "选择 \"TRANSFER FROM\" 代币",
+
+    "approve_exchange": "您需要获取Kyber钱包的许可才能在当前地址与<strong>${ token }</strong>交互",
+    "eth_token_exchange": "ETH代币交易",
+    "approve": "批准",
+    "address": "地址",
+    "approve_token": "批准代币"
+  },
+
+  "error": {
+    "metamask_not_installed": "Metamask未安装",
+
+    "select_same_token": "无法和同种代币进行交易",
+    "select_token_token": "这个代币交易对目前还不支持",
+    "source_amount_too_high": "原始数量过高",
+    "source_amount_too_high_cap": "数量超过您的限额。 原始数量应该小于${ cap }个ETH",
+    "dest_amount_too_high_cap": "数量超过您的限额。 目标数量应该小于${ cap }个ETH",
+    "source_amount_too_small": "原始数量过低. 最小金额相当于${minAmount} ETH.",
+    "source_amount_rate_error": "当前无法交易",
+    "source_amount_too_high_for_reserve": "原始数量过高 （交易对目前还不支持）",
+    "source_amount_is_not_number": "原始数量不是一个数字",
+    "not_possess_kgt": "您的钱包尚未被列入白名单以测试我们的平台。 注册<a href=\"${link}\" target=\"_blank\">此处</a>以加入我们的试点运行。 主网公开使用公告将在未来公布。",
+
+    "dest_address": "这不是一个地址",
+    "amount_transfer_too_hign": "数量过高",
+    "amount_must_be_number": "数量必须是一个数字",
+
+    "error_occurred": "发生错误",
+    "cannot_connect_metamask": "无法获取metamask帐户，可能是因为您没有登录metamask",
+    "cannot_connect_trezor": "无法连接至Trezor",
+    "cannot_connect_ledger": "无法连接至Ledger",
+    "invalid_private_key": "无效的密钥",
+    "no_balance": "您的地址上没有我们支持的代币。请导入其它的地址。",
+    "clear_data_timeout": "由于您的会话超时${time} 分钟，我们清除了您的数据",
+    "minutes": " 分钟",
+    "time_out": "超时",
+    "network_error": "目前无法连接到区块链。请稍后再尝试<span>.</span><span>.</span><span>.</span>",
+    "node_error": "节点有一些问题。请稍后再试",
+    "term_error": "您必须先同意服务条款！",
+
+    "path_not_support_by_trezor": "Trezor不支持这个路径",
+    "check_right_application_selected": "检查是否选择了正确的应用",
+    "network_not_match": "Metamask需要连接到<strong>${expectedName}</strong>网络，</br>而您现在连接的是<strong>${currentName}</strong>",
+    "network_not_match_unknow": "Metamask需要连接到<strong>${expectedName}</strong>",
+    "not_supported": "不支持",
+    "metamask_not_install":"无法连接至metamask。请确认您已经安装了Metamask。",
+    "browser_not_support_metamask": "<strong>${browser}</strong>浏览器并不支持Metamask。</br>请使用<strong>谷歌</strong>或者<strong>火狐</strong>浏览器。",
+    "browser_not_support_ledger": "<strong>${browser}</strong>浏览器并不支持Ledger。</br>请使用<strong>谷歌</strong>浏览器。",
+    "please_make_sure": "请检查是否",
+    "ledger_plugged_in": "- 你的Ledger硬件钱包插入无误。",
+    "ledger_logged_in": "- 你已经登录进你的Ledger了。",
+
+    "gas_price_not_number":"燃料价格不是数字",
+    "rate_not_number":"交易价格不是数字",
+    "gas_price_limit":"燃料价格必须小于 ${maxGas} Gwei",
+    "passphrase_error":"秘钥派生失败",
+    "gas_price_exceeded_limit": "燃料价格超过了最高限制。t",
+    "issue_token_ether":"交易失败，由于发送eth的同时还试图用该eth与其它代币交易。",
+    "issue_allowance":"交易失败，由于许可数量低于srcAmount",
+    "issue_balance":"交易失败，由于代币余额低于scrAmount",
+    "issue_ether_amount":"交易失败，由于用户没有发送准确的eth数量",
+    "issue_user_cap":"交易失败，由于原始数量超过了用户限额。",
+    "min_rate_too_high":"你设置的最交易低价格太高了！",
+
+    "ledger_global_err": "<div class='text-left'>无法连接至Ledger. 请检查是否:<br/>- 你的Ledger硬件钱包插入无误。<br/>- 你已经登录进你的Ledger了。<br/>- 你已经启动了Ledger上的以太坊应用。<br/>- 你的Ledger中的“浏览器支持“已经启用。 <a href=\"${link}\" target=\"_blank\">在这</a>里学习如何启用Ledger中的“浏览器支持“。</div>",
+    "need_to_config_env_ledger": "你需要调试你的Linux设备来使用Ledger。说明请看<a href=\"${link}\" target=\"_blank\">这里</a>。",
+    "ledger_not_enable_contract": "请检查是否: </br>- 你Ledger中的”合约数据“已经被启用。 说明请看<a href=\"${link}\" target=\"_blank\">这里</a>。",
+    "invalid_path_or_session_expired": "无法从此路径得到地址。请检查您路径的有效性或Ledger的连接",
+    "path_is_invalid": "错误的路径。请选择另一个。",
+    "ledger_time_out": "你Ledger上的对话已经过期。请重新登录。",
+    "eth_balance_not_enough_for_fee": "您的ETH余额不足以支付交易费用",
+    "handle_amount":"Kyber无法处理您的数量，请减少数量",
+    "kyber_maintain":"此对正在暂时维修中",
+    "get_rate":"无法从区块链获得利率",
+    "exchange_enable":"您已经超过了您的每日限额！ 您可以在明天00:00 UTC+0再次进行交易",
+    "min_rate_greater_expected_rate": "您设置的最低汇率高于KyberNetwork推荐的汇率。 您的交易很有可能失败。",
+    "exceed_daily_volumn": "您可能需要<a target='_blank' href='${link}'>在我们这里注册</a>才能有更高的交易限额",
+    "broadcast_tx": "可能会失败！我们无法将交易上传到区块链。请在<a target='_blank' href='${link}'>Etherscan</a>上检查。"
+  },
+
+  "import": {
+    "from_metamask": "连接至<br>Metamask",
+    "from_keystore": "选择或拖动<br />您的密钥库",
+    "json": "从<br />JSON文件导入",
+    "from_trezor": "从<br />Trezor导入",
+    "from_ledger": "从<br />Ledger导入",
+    "from_private_key": "请输入您的<br />密钥",
+    "from_private_key_input_title": "请输入您的密钥",
+    "from_private_key_input_title_placehoder": "请输入您的密钥",
+    "connect": "连接",
+    "address": "地址",
+    "balance": "余额",
+    "import": "导入",
+    "swap_from_ledger": "用Ledger进行兑换",
+    "swap_from_trezor": "用Trezor进行兑换",
+    "select_or_drag": "选择或拖动",
+    "address_is_loading": "地址正在加载中..."
+  },
+
+  "info": {
+    "title": "Kyber测试网络",
+    "version": "版本",
+    "chain": "链",
+    "node_endpoint": "节点端",
+    "reserve_address": "储蓄库合约地址",
+    "network_address": "网络合约地址",
+    "kyber_homepage": "Kyber主页",
+    "get_free_kovan": "获取免费的",
+    "warning": "请不要发送以太或代币到以上的任何地址.<br></br>他们都是测试网络的地址！",
+    "here": "这里"
+  },
+  
+  "footer": {
+    "info": "信息",
+    "language": "语音"
+  },
+
+
+  "history": {
+    "seconds_ago": "秒之前",
+    "minutes_ago": "分钟之前",
+    "hours_ago": "小时之前",
+    "days_ago": "天之前",
+    "months_ago": "月之前",
+    "years_ago": "年之前",
+
+    "second_ago": "秒之前",
+    "minute_ago": "分钟之前",
+    "hour_ago": "小时之前",
+    "day_ago": "天之前",
+    "month_ago": "月之前",
+    "year_ago": "年之前",
+
+    "date": "日期",
+    "rate": "汇率",
+    "description": "描述",
+    "amount": "数量",
+    "recent": "最近"
+  },
+
+  "terms":{
+    "title" : "Kyber钱包 - 使用条款",
+    "content":"Kyber测试网络钱包提供了一个让大家能够实验和了解我们的交易和支付的服务平台。 目前的版本可能不安全。 使用它可能会导致资金损失，并可能危及用户的隐私。 用户对使用Kyber测试网络钱包的任何结果承担全部责任。",
+    "use_testnet":"请务必使用测试网络的钱包！！！",
+    "use_real":"请千万不要使用真实的以太坊账户！！！",
+    "accept":"接受",
+    "terms_and_condition":"条款和条件",
+    "to_get_started":"以开始"
+  },
+
+  "landing_page":{
+    "title": "以太坊代币的去中心化交易",
+    "trustless": "无需信赖",
+    "instant": "迅速",
+    "liquid": "流动性",
+    "compatible": "兼容",
+    "get_started": "开始",
+    "exchange":"交易所",
+    "instant_and_secure_token_swap": "即时而安全的代币间兑换",
+    "no_oderbooks_no_deposit": "无需订单，无需充值，无需包装",
+    "power_by": "由Kyber的去中心化流动性网络提供支持",
+    "metamask": "METAMASK",
+    "json": "JSON",
+    "ledger": "LEDGER",
+    "private_key": "私钥"
+  },
+
+  "market": {
+    "eth_market": "以太坊市场",
+    "search": "搜索",
+    "currency": "货币",
+    "settings": "设置",
+    "market": "市场",
+    "sell_price": "卖价",
+    "buy_price": "买价",
+    "try_searching_for_token": "尝试搜索代币",
+    "market_cap": "市值",
+    "circulating_supply": "流通量",
+    "total_supply": "总量",
+    "last_7d": "过去7天",
+    "change": "24小时变化",
+    "volume": "交易量 (24小时)",
+    "support_eth_only": "现在只支持与ETH的交易对，不支持美元交易对。",
+    "show_more_results": "显示更多结果",
+    "new_token": "新"
+  },
+
+  "trading_view": {
+    "buy": "买",
+    "buy_price": "买价",
+    "sell": "卖",
+    "sell_price": "卖价",
+    "mid": "中间",
+    "mid_price": "中间价"
+  },
+
+  "home": "主页",
+  "tracker": "跟踪网站",
+  "product_feedback": "产品反馈",
+  "help": "帮助",
+  "low": "慢",
+  "standard": "标准",
+  "fast": "快",
+  "search": "搜索"
+}

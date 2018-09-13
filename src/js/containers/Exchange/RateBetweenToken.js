@@ -12,9 +12,15 @@ import * as converter from '../../utils/converter'
   var sourceToken = props.exchangeRate.sourceToken
   var tokens = store.tokens.tokens
   var rateUSD = 0
-  if (tokens[sourceToken]){
-    rateUSD = tokens[sourceToken].rateUSD
+  if (sourceToken === "ETH"){
+    rateUSD = tokens[sourceToken].rateUSD    
+  }else{
+    var rateTokenETH = converter.toT(tokens[sourceToken].rate, 18)
+    rateUSD = rateTokenETH * rateEthUsd
   }
+  // if (tokens[sourceToken]){
+  //   rateUSD = tokens[sourceToken].rateUSD
+  // }
   return {...props, translate: getTranslate(store.locale), rateEthUsd, rateUSD}
 })
 

@@ -20,6 +20,7 @@ import { PostExchangeBtn } from "../../components/Exchange"
 
 import { getTranslate } from 'react-localize-redux';
 import { RateBetweenToken } from "../Exchange"
+import * as analytics from "../../utils/analytics"
 
 @connect((store, props) => {
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
@@ -70,6 +71,7 @@ export default class PostExchange extends React.Component {
     this.state = { form: {} }
   }
   clickExchange = () => {
+    analytics.trackClickSwapButton()
     if (this.props.form.errorNotPossessKgt) {
       return
     }
@@ -340,13 +342,16 @@ export default class PostExchange extends React.Component {
   closeModal = (event) => {
     this.props.dispatch(exchangeActions.hidePassphrase())
     this.props.dispatch(exchangeActions.resetSignError())
+    analytics.trackClickCloseModal("Passphrase Modal")
   }
   closeModalConfirm = (event) => {
+    analytics.trackClickCloseModal("ConfirmTransferModal")
     if (this.props.form.isConfirming) return
     this.props.dispatch(exchangeActions.hideConfirm())
     this.props.dispatch(exchangeActions.resetSignError())
   }
   closeModalApprove = (event) => {
+    analytics.trackClickCloseModal("Approve Modal")
     if (this.props.form.isApproving) return
     this.props.dispatch(exchangeActions.hideApprove())
     this.props.dispatch(exchangeActions.resetSignError())
@@ -464,6 +469,7 @@ export default class PostExchange extends React.Component {
     const ethereum = this.props.ethereum
     this.props.dispatch(exchangeActions.doApprove(ethereum, params.sourceToken, params.sourceAmount, params.nonce, params.gas_approve, params.gasPrice,
       account.keystring, account.password, account.type, account, this.props.keyService, params.sourceTokenSymbol))
+    analytics.trackClickApproveToken(params.sourceTokenSymbol)
   }
 
   processTx = () => {
@@ -495,6 +501,7 @@ export default class PostExchange extends React.Component {
       console.log(e)
       this.props.dispatch(exchangeActions.throwPassphraseError(this.props.translate("error.passphrase_error")))
     }
+    analytics.trackConfirmTransaction(this.props.form.sourceTokenSymbol)
   }
 
   content = () => {

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 //import AnalyzeLogModal from './AnalyzeLogModal'
+import * as analytics from "../../utils/analytics"
 
 const TransactionLoadingView = (props) => {
   var isBroadcasting = props.broadcasting
@@ -146,8 +147,8 @@ const TransactionLoadingView = (props) => {
           <div class="info tx-title">
             <div className="tx-title-text">{props.translate("transaction.transaction") || "Transaction hash"}</div>
             <div className="tx-hash">
-              <a class="text-light" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank"
-                title={props.translate("modal.view_on_etherscan") || "View on Etherscan"} >
+              <a class="text-light" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank" 
+                title={props.translate("modal.view_on_etherscan") || "View on Etherscan"} onClick={(e) => analytics.trackClickViewTxOnEtherscan()}>
                 {props.txHash}
               </a>
               <a className="copy-tx" data-for='copy-tx-tip' data-tip=""

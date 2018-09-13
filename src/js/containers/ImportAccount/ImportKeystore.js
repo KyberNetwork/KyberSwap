@@ -6,6 +6,7 @@ import { importNewAccount, throwError } from "../../actions/accountActions"
 import { verifyKey, anyErrors } from "../../utils/validators"
 import { addressFromKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
+import * as analytics from "../../utils/analytics"
 
 @connect((store) => {
   var tokens = store.tokens.tokens
@@ -32,6 +33,7 @@ export default class ImportKeystore extends React.Component {
   }
 
   onDrop = (files) => {
+    analytics.trackClickImportAccount("json")
     try {
       var _this = this
       var file = files[0]

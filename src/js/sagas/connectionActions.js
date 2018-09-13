@@ -26,10 +26,14 @@ export function* createNewConnection(action) {
   // var ethereum = state.connection.ethereum
   yield put(setMaxGasPrice(connectionInstance))
 
-  if (typeof web3 === "undefined") {
+
+
+  var web3Service = new Web3Service()
+
+  if (!web3Service.isHaveWeb3()) {
     yield put(globalActions.throwErrorMematamask(translate("error.metamask_not_installed") || "Metamask is not installed"))
   } else {
-    const web3Service = new Web3Service(web3)
+    //const web3Service = new Web3Service(web3)
     const watchMetamask = yield fork(watchMetamaskAccount, connectionInstance, web3Service)
   }
 

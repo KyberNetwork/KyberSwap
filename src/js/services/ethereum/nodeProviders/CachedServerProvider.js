@@ -1,23 +1,19 @@
 import React from 'react';
 
-import Web3 from "web3"
+//import Web3 from "web3"
 import BLOCKCHAIN_INFO from "../../../../../env"
 
 export default class CachedServerProvider extends React.Component {
     constructor(props) {
         super(props)
-        this.rpcUrl = props.url        
+        this.rpcUrl = props.url
+        this.maxRequestTime = 3000
     }
 
     getGasPrice() {
         return new Promise((resolve, rejected) => {
-            fetch(this.rpcUrl + '/getGasPrice', {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
-                }
-            }).then((response) => {
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getGasPrice'))
+            .then((response) => {
                 return response.json()
             }).then((result) => {
                 if (result.success) {
@@ -50,13 +46,8 @@ export default class CachedServerProvider extends React.Component {
 
     checkKyberEnable() {
         return new Promise((resolve, rejected) => {
-            fetch(this.rpcUrl + '/getKyberEnabled', {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
-                }
-            }).then((response) => {
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getKyberEnabled'))
+            .then((response) => {
                 return response.json()
             }).then((result) => {
                 if (result.success) {
@@ -74,13 +65,8 @@ export default class CachedServerProvider extends React.Component {
 
     getMaxGasPrice() {
         return new Promise((resolve, rejected) => {
-            fetch(this.rpcUrl + '/getMaxGasPrice', {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
-                }
-            }).then((response) => {
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getMaxGasPrice'))
+            .then((response) => {
                 return response.json()
             }).then((result) => {
                 if (result.success) {
@@ -98,13 +84,8 @@ export default class CachedServerProvider extends React.Component {
 
     getLatestBlock() {
         return new Promise((resolve, rejected) => {
-            fetch(this.rpcUrl + '/getLatestBlock', {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
-                }
-            }).then((response) => {
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getLatestBlock'))
+            .then((response) => {
                 return response.json()
             }).then((result) => {
                 if (result.success) {
@@ -151,22 +132,17 @@ export default class CachedServerProvider extends React.Component {
 
     getAllRates(tokensObj) {
         return new Promise((resolve, rejected) => {
-            fetch(this.rpcUrl + '/getRate', {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
-                },
-            })
-            .then((response) => {
-                return response.json()
-            })
-                .then(result =>  {
-                    if(result.success){
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getRate'))
+            
+                .then((response) => {
+                    return response.json()
+                })
+                .then(result => {
+                    if (result.success) {
                         resolve(result.data)
-                    }else{
-                        rejected(new Error ("Rate server is not fetching"))
-                    }      
+                    } else {
+                        rejected(new Error("Rate server is not fetching"))
+                    }
                 })
                 .catch((err) => {
                     rejected(err)
@@ -176,21 +152,16 @@ export default class CachedServerProvider extends React.Component {
 
     getAllRatesUSD() {
         return new Promise((resolve, rejected) => {
-            fetch(this.rpcUrl + '/getRateUSD', {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
-                },
-            }).then((response) => {
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getRateUSD'))
+            .then((response) => {
                 return response.json()
             })
-                .then( (result) => {
-                    if(result.success){
+                .then((result) => {
+                    if (result.success) {
                         resolve(result.data)
-                    }else{
+                    } else {
                         rejected(new Error("RateUSD server is not fetching"))
-                    }  
+                    }
                 })
                 .catch((err) => {
                     rejected(err)
@@ -200,21 +171,16 @@ export default class CachedServerProvider extends React.Component {
 
     getRateETH() {
         return new Promise((resolve, rejected) => {
-            fetch( this.rpcUrl + '/getRateETH', {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
-                },
-            }).then((response) => {
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getRateETH'))
+            .then((response) => {
                 return response.json()
             })
-                .then( (result) => {
-                    if(result.success){
+                .then((result) => {
+                    if (result.success) {
                         resolve(result.data)
-                    }else{
+                    } else {
                         rejected(new Error("RateETHs server is not fetching"))
-                    }  
+                    }
                 })
                 .catch((err) => {
                     rejected(err)
@@ -254,89 +220,75 @@ export default class CachedServerProvider extends React.Component {
     }
 
 
-   
-    getExchangeEnable(address){
+
+    getExchangeEnable(address) {
         return new Promise((resolve, rejected) => {
-            fetch( BLOCKCHAIN_INFO.statEndPoint + '/richguy/' + address, {
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then((response) => {
-                return response.json()
-            })
-            .then( (result) => {
-                if(result.success){
-                    resolve(result.data)
-                }else{
+            this.timeout(this.maxRequestTime, fetch(BLOCKCHAIN_INFO.statEndPoint + '/richguy/' + address))
+            
+                .then((response) => {
+                    return response.json()
+                })
+                .then((result) => {
+                    if (result.success) {
+                        resolve(result.data)
+                    } else {
+                        resolve(false)
+                    }
+                })
+                .catch((err) => {
+                    console.log(err)
                     resolve(false)
-                }  
-            })
-            .catch((err) => {
-                console.log(err)
-                resolve(false)
-            })
+                })
         })
     }
 
     getMarketData() {
         return new Promise((resolve, rejected) => {
-            fetch(this.rpcUrl + '/getMarketData', {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
-                },
-            }).then((response) => {
-                return response.json()
-            })
-                .then( (result) => {
-                    if(result.success){
-                        resolve(result.data)
-                    }else{
-                        rejected(new Error("Market data is not fetching"))
-                    }  
-                })
-                .catch((err) => {
-                    rejected(err)
-                })
-        })
-    }
-
-    getGeneralTokenInfo(){
-        return new Promise((resolve, rejected) => {
-            fetch(this.rpcUrl + '/getTokenInfo', {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
-                },
-            }).then((response) => {
-                return response.json()
-            })
-                .then( (result) => {
-                    if(result.success){
-                        resolve(result.data)
-                    }else{
-                        rejected(new Error("Market data is not fetching"))
-                    }  
-                })
-                .catch((err) => {
-                    rejected(err)
-                })
-        })
-    }
-
-    getVolumnChart(){
-        return new Promise((resolve, rejected) => {
-            fetch(BLOCKCHAIN_INFO.tracker + '/api/tokens/rates', {
-            }).then((response) => {
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getMarketData'))
+            .then((response) => {
                 return response.json()
             })
                 .then((result) => {
-                    resolve(result)                    
+                    if (result.success) {
+                        resolve(result.data)
+                    } else {
+                        rejected(new Error("Market data is not fetching"))
+                    }
+                })
+                .catch((err) => {
+                    rejected(err)
+                })
+        })
+    }
+
+    getGeneralTokenInfo() {
+        return new Promise((resolve, rejected) => {
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getTokenInfo'))
+            .then((response) => {
+                return response.json()
+            })
+                .then((result) => {
+                    if (result.success) {
+                        resolve(result.data)
+                    } else {
+                        rejected(new Error("Market data is not fetching"))
+                    }
+                })
+                .catch((err) => {
+                    rejected(err)
+                })
+        })
+    }
+
+    getVolumnChart() {
+        return new Promise((resolve, rejected) => {
+            this.timeout(this.maxRequestTime, fetch(BLOCKCHAIN_INFO.tracker + '/api/tokens/rates'))
+            //fetch(BLOCKCHAIN_INFO.tracker + '/api/tokens/rates', {
+            .then((response) => {
+                return response.json()
+            })
+                .then((result) => {
+                    resolve(result)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -347,12 +299,13 @@ export default class CachedServerProvider extends React.Component {
 
     getMarketInfo(queryString) {
         return new Promise((resolve, rejected) => {
-            fetch(this.rpcUrl + '/getMarketInfoByTokens' + '?listToken=' + queryString, {
-            }).then((response) => {
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getMarketInfoByTokens' + '?listToken=' + queryString))
+            //fetch(this.rpcUrl + '/getMarketInfoByTokens' + '?listToken=' + queryString, {
+            .then((response) => {
                 return response.json()
             })
                 .then((result) => {
-                    resolve(result)                    
+                    resolve(result)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -363,12 +316,12 @@ export default class CachedServerProvider extends React.Component {
 
     getRightMarketInfo() {
         return new Promise((resolve, rejected) => {
-            fetch(this.rpcUrl + '/getRightMarketInfo', {
-            }).then((response) => {
+            this.timeout(this.maxRequestTime,  fetch(this.rpcUrl + '/getRightMarketInfo'))
+            .then((response) => {
                 return response.json()
             })
                 .then((result) => {
-                    resolve(result)                    
+                    resolve(result)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -376,15 +329,16 @@ export default class CachedServerProvider extends React.Component {
                 })
         })
     }
-    
+
     getLast7D(queryString) {
         return new Promise((resolve, rejected) => {
-            fetch(this.rpcUrl + '/getLast7D' + '?listToken=' + queryString, {
-            }).then((response) => {
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getLast7D' + '?listToken=' + queryString))
+            //fetch(this.rpcUrl + '/getLast7D' + '?listToken=' + queryString, {
+            .then((response) => {
                 return response.json()
             })
                 .then((result) => {
-                    resolve(result)                    
+                    resolve(result)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -395,27 +349,34 @@ export default class CachedServerProvider extends React.Component {
 
     getUserMaxCap(address) {
         return new Promise((resolve, rejected) => {
-            fetch(BLOCKCHAIN_INFO.statEndPoint + '/cap-by-address/' + address, {
-            }).then((response) => {
+            this.timeout(this.maxRequestTime,  fetch(BLOCKCHAIN_INFO.statEndPoint + '/cap-by-address/' + address))
+            .then((response) => {
                 return response.json()
             })
                 .then((result) => {
-                    if (result.data){
+                    if (result.data) {
                         var val = parseFloat(result.data);
-                        if(isNaN(val)){
-                            rejected(new Error("Cannot parse data user cap"))                            
-                        }else{
+                        if (isNaN(val)) {
+                            rejected(new Error("Cannot parse data user cap"))
+                        } else {
                             resolve(result)
                         }
-                    }else{
+                    } else {
                         rejected(new Error("Cannot parse data user cap"))
                     }
-                    
-                   // resolve(result)
                 })
                 .catch((err) => {
                     rejected(err)
                 })
+        })
+    }
+
+    timeout(ms, promise) {
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                reject(new Error("timeout"))
+            }, ms)
+            promise.then(resolve, reject)
         })
     }
 }

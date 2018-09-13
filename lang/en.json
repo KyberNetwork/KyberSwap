@@ -8,11 +8,9 @@
     "terms_of_service": "Terms of Service",
     "privacy_policies": "Privacy Policies"
   },
-
   "transaction_list": {
     "transaction_history": "Recent trades"
   },
-
   "address": {
     "address": "Address",
     "import_address": "Access Your Wallet",
@@ -26,24 +24,19 @@
     "your_wallet_address": "Your Wallet Address",
     "search": "Search"
   },
-
   "transaction": {
     "exchange": "Exchange",
     "exchange_from": "From",
     "exchange_to": "To",
-
     "transfer": "Transfer",
     "transfer_to_address": "Transfer to address",
     "amount": "amount",
     "select_token": "Select token",
-
     "advanced": "Advanced",
     "transaction_fee": "Transaction fee",
-
     "address_balance": "Address Balance",
     "balance": "Balance",
     "password_needed_exchange": "Password is needed for every exchange transaction",
-
     "password_needed_transfer": "Password is needed for every transfer transaction",
     "next": "Next",
     "exit": "EXIT",
@@ -54,7 +47,7 @@
     "failed": "Failed!",
     "broadcasted": "Broadcasted!",
     "broadcasting": "Broadcasting!",
-    "success_ex_msg": "Successfully exchanged from </br> ${sourceAmount} ${sourceSymbol} to ${destAmount} ${destSymbol}",
+    "success_ex_msg": "Successfully exchanged from </br> ${sourceAmount} ${sourceSymbol}\nto ${destAmount} ${destSymbol}",
     "success_swap_msg": "Successfully swapped from",
     "success_tx_msg": "Successfully transferred </br> ${amount} ${token} to ${address}",
     "success_transfer_msg": "Successfully transferred",
@@ -62,34 +55,29 @@
     "analyze_error": "Reasons the transaction failed",
     "copied": "Copied!",
     "analyze": "Show reasons",
-    "no_reason_found": "We cannot find any reason for your transaction. Please try again in a while.",
-    "error_no_reason": "Cannot find any reason for your failed transaction. Please try again in a while.",
-    
+    "no_reason_found": "We cannot find any reason for your transaction. Please try again\nin a while.",
+    "error_no_reason": "Cannot find any reason for your failed transaction. Please try\nagain in a while.",
     "broadcast": "Broadcast",
     "transaction": "Transaction hash",
     "broadcasted_title": "Transaction added to the blockchain",
-    "close_browser_or_make_new_exchange": "You can now close your browser window or make another exchange",
-    "close_browser_or_make_new_transfer": "You can now close your browser window or make another transfer",
+    "close_browser_or_make_new_exchange": "You can now close your browser window or make\nanother exchange",
+    "close_browser_or_make_new_transfer": "You can now close your browser window or make\nanother transfer",
     "broadcasting_blockchain": "Broadcasting the transaction to the blockchain",
     "cound_not_broadcast": "Couldn't broadcast the transaction to the blockchain",
     "current_address_balance": "Current address balance",
-
     "transaction_error": "Transaction error",
     "notification": "Notification",
-    "not_enable_exchange": "Your address is not eligible for exchange at the moment. Please come back later!",
-    "kyber_down" : "Kyber exchange is not enabled at the moment.<br/> Please come back later!",
-
+    "not_enable_exchange": "Your address is not eligible for exchange at the moment. Please\ncome back later!",
+    "kyber_down": "Kyber exchange is not enabled at the moment.<br/> Please come back later!",
     "swap": "Swap",
     "transaction_time": "Transaction time: < ${time} minutes",
     "waiting_transaction": "Waiting for the transaction to be mined",
     "click_to_swap_all_balance": "Click to swap all balance",
     "click_to_transfer_all_balance": "Click to transfer all balance",
-
-    "higher_min_acceptable_rate": "Guard yourself during volatile times by setting the lowest conversion rate you would accept for this transaction. Setting a high value may result in a failed transaction and you would be charged gas fees. Our recommended Min Acceptable Rate is ${displaySlippageRate}.",
-    "our_suggest_loading": "<img src=\"${src}\"/> ${desToken} is our suggested MIN ACCEPTABLE RATE by default.",
-    "our_suggest": "<strong> ${suggestRate}</strong> is our suggested MIN ACCEPTABLE RATE by default.",
+    "higher_min_acceptable_rate": "Guard yourself during volatile times by setting the\nlowest conversion rate you would accept for this transaction. Setting a high value\nmay result in a failed transaction and you would be charged gas fees. Our recommended\nMin Acceptable Rate is ${displaySlippageRate}.",
+    "our_suggest_loading": "<img src=\"${src}\"/> ${desToken} is our suggested MIN ACCEPTABLE\nRATE by default.",
+    "our_suggest": "<strong> ${suggestRate}</strong> is our suggested MIN ACCEPTABLE RATE\nby default.",
     "min_acceptable_rate": "MIN ACCEPTABLE RATE",
-
     "about_to_swap": "You are about to swap",
     "about_to_transfer": "You are about to transfer",
     "processing": "Processing",
@@ -103,24 +91,21 @@
     "best_rate": "Min Rate",
     "token_amount": "Token & Amount To Send",
     "click_to_swap": "Click to swap",
-
     "transfer_tooltip": "Transfer ether or tokens to other addresses",
-    "transaction_gasprice_50": "Higher gas price, faster transaction. Max gas price: 50 Gwei",
+    "transaction_gasprice_50": "Higher gas price, faster transaction. Max gas price: 50\nGwei",
     "transaction_gasprice": "Higher gas price, faster transaction.",
     "max_gas_price": "Max gas price: ${maxGas} Gwei",
-    "best_rate_tooltip": "Lower rate typically results in better success rate when the market is volatile",
+    "best_rate_tooltip": "Lower rate typically results in better success rate when the\nmarket is volatile",
     "terms_and_conditions": "<span>Terms and <br  class='show-for-small-only'>conditions</span>",
-
-    "error_tx_log":"Warning! Log is empty",
-    "error_tx_contract":"Warning! Error encountered during contract execution",
+    "error_tx_log": "Warning! Log is empty",
+    "error_tx_contract": "Warning! Error encountered during contract execution",
     "no_pedding_tx": "No pending transaction",
-    "rate_info": "Rates might be changed during settlement. <br/>You can indicate your minimum rate by clicking \"Advanced\"",
+    "rate_info": "Rates might be changed during settlement. <br/>You can indicate your\nminimum rate by clicking \"Advanced\"",
     "address": "Receiving Address",
-    "slippage_tip": "Rate may change. You can change maximum slippage rate by adjusting min rate in advanced option",
+    "slippage_tip": "Rate may change. You can change maximum slippage rate by adjusting\nmin rate in advanced option",
     "max_slippage": "With maximum ${percent}% slippage",
     "included": "Included"
   },
-
   "modal": {
     "enter_password": "Enter Password",
     "confirm": "Confirm",
@@ -140,90 +125,80 @@
     "confirm_exchange_title": "Exchange Confirm",
     "confirm_swap": "Confirm Swap",
     "confirm_transfer_title": "Confirm Transfer",
-
     "select_your_language": "Select your language",
     "select_source_token": "Select source token",
     "select_dest_token": "Select destination token",
     "select_trasfer_from_token": "SELECT \"TRANSFER FROM\" TOKEN",
-
-    "approve_exchange": "You need to grant permission for Kyber Swap to interact with <strong>${ token }</strong> with this address",
+    "approve_exchange": "You need to grant permission for Kyber Swap to interact with <strong>${\ntoken }</strong> with this address",
     "eth_token_exchange": "ETH token exchange",
     "approve": "Approve",
     "address": "Address",
     "approve_token": "Approve token"
   },
-
   "error": {
     "metamask_not_installed": "Metamask is not installed",
-
     "select_same_token": "Cannot exchange the same token",
     "select_token_token": "This token pair is not supported yet",
     "source_amount_too_high": "Source amount is too high. Your balance is insufficient",
-    "source_amount_too_high_cap": "Amount is over your cap. Source amount should be smaller than ${ cap } ETH",
-    "dest_amount_too_high_cap": "Amount is over your cap. Dest amount should be smaller than ${ cap } ETH",
-    "source_amount_too_small": "Source amount is too small. Minimum amount is ${minAmount} ETH equivalent.",
+    "source_amount_too_high_cap": "Amount is over your cap. Source amount should be smaller\nthan ${ cap } ETH",
+    "dest_amount_too_high_cap": "Amount is over your cap. Dest amount should be smaller\nthan ${ cap } ETH",
+    "source_amount_too_small": "Source amount is too small. Minimum amount is ${minAmount}\nETH equivalent.",
     "source_amount_rate_error": "Cannot exchange at the moment. Please come back later",
-    "source_amount_too_high_for_reserve": "Source amount is too high (pair is not available for trading at the moment)",
+    "source_amount_too_high_for_reserve": "Source amount is too high (pair is not available\nfor trading at the moment)",
     "source_amount_is_not_number": "Source amount is not a number",
-    "not_possess_kgt": "There seems to be a problem with your address, please <a href=\"${link}\" target=\"_blank\">contact us</a> for more details",
-
+    "not_possess_kgt": "There seems to be a problem with your address, please <a href=\"${link}\"\ntarget=\"_blank\">contact us</a> for more details",
     "dest_address": "This is not an address",
     "amount_transfer_too_hign": "Amount is too high",
     "amount_must_be_number": "Amount must be a number",
-
     "error_occurred": "Error occurred",
-    "cannot_connect_metamask": "Cannot get metamask account. You probably did not login in Metamask",
+    "cannot_connect_metamask": "Cannot get metamask account. You probably did not login\nin Metamask",
     "cannot_connect_trezor": "Cannot connect to trezor",
     "cannot_connect_ledger": "Cannot connect to ledger",
     "invalid_private_key": "Invalid private key",
-    "no_balance": "Your address does not have any tokens that we support. Please import another address",
-    "clear_data_timeout": "We've cleared all your data because your session is timed out ${time} minutes",
+    "no_balance": "Your address does not have any tokens that we support. Please import\nanother address",
+    "clear_data_timeout": "We've cleared all your data because your session is timed out\n${time} minutes",
     "minutes": " minutes",
     "time_out": "Time out",
     "network_error": "Cannot connect to node right now. Trying to reconnect<span>.</span><span>.</span><span>.</span>",
     "node_error": "There are some problems with nodes. Please try again in a while",
     "term_error": "You must agree terms and services!",
-
     "path_not_support_by_trezor": "This path is not supported by Trezor",
     "check_right_application_selected": "Check if right application is selected",
-    "network_not_match": "Metamask should be on <strong>${expectedName}</strong>. </br>Currently on <strong>${currentName}</strong>",
+    "network_not_match": "Metamask should be on <strong>${expectedName}</strong>. </br>Currently\non <strong>${currentName}</strong>",
     "network_not_match_unknow": "Metamask should be on <strong>${expectedName}</strong>",
     "not_supported": "not supported",
-    "metamask_not_install":"Cannot connect to metamask. Please make sure you have metamask installed",
-    "browser_not_support_metamask": "Metamask is not supported on <strong>${browser}</strong> browser. </br>Please use <strong>Chrome</strong> or <strong>FireFox</strong> instead.",
-    "browser_not_support_ledger": "Ledger is not supported on <strong>${browser}</strong> browser. </br>Please use <strong>Chrome</strong> instead.",
+    "metamask_not_install": "Cannot connect to metamask. Please make sure you have metamask\ninstalled",
+    "browser_not_support_metamask": "Metamask is not supported on <strong>${browser}</strong>\nbrowser. </br>Please use <strong>Chrome</strong> or <strong>FireFox</strong> instead.",
+    "browser_not_support_ledger": "Ledger is not supported on <strong>${browser}</strong>\nbrowser. </br>Please use <strong>Chrome</strong> instead.",
     "please_make_sure": "Please make sure",
     "ledger_plugged_in": "- Your Ledger is properly plugged in.",
     "ledger_logged_in": "- You have logged into your Ledger.",
-
-    "gas_price_not_number":"Gas price is not number",
-    "rate_not_number":"Rate is not number",
-    "gas_price_limit":"Gas price must be smaller than or equal to ${maxGas} Gwei",
-    "passphrase_error":"Key derivation failed",
-    "gas_price_exceeded_limit":"Gas price exceeded max limit",
-    "issue_token_ether":"Failed because of sending ether along the tx when it is trying to trade token to ether",
-    "issue_allowance":"Failed because allowance is lower than srcAmount",
-    "issue_balance":"Failed because token balance is lower than srcAmount",
-    "issue_ether_amount":"Failed because the user didn't send the exact amount of ether along",
-    "issue_user_cap":"Failed because the source amount exceeded user cap",
-    "min_rate_too_high":"Your min rate is too high!",
-
-    "ledger_global_err": "<div class='text-left'>Cannot connect to your Ledger. Please check if:<br/>- Your Ledger is properly plugged in.<br/>- You have logged into your Ledger.<br/>- You have launched Ethereum Application on your Ledger.<br/>- \"Browser Support\" has been enabled in your Ledger. Learn to enable \"Browser Support\" <a href=\"${link}\" target=\"_blank\">here</a>.</div>",
-    "need_to_config_env_ledger": "You need to configure your Linux device to access Ledger. Instruction <a href=\"${link}\" target=\"_blank\">here</a>.",
-    "ledger_not_enable_contract": "Please check if: </br>- \"Contract Data\" has been enabled in your Ledger. Instruction <a href=\"${link}\" target=\"_blank\">here</a>.",
-    "invalid_path_or_session_expired": "Cannot get address from this path. Please check your path is valid or Ledger is connected.",
+    "gas_price_not_number": "Gas price is not number",
+    "rate_not_number": "Rate is not number",
+    "gas_price_limit": "Gas price must be smaller than or equal to ${maxGas} Gwei",
+    "passphrase_error": "Key derivation failed",
+    "gas_price_exceeded_limit": "Gas price exceeded max limit",
+    "issue_token_ether": "Failed because of sending ether along the tx when it is trying\nto trade token to ether",
+    "issue_allowance": "Failed because allowance is lower than srcAmount",
+    "issue_balance": "Failed because token balance is lower than srcAmount",
+    "issue_ether_amount": "Failed because the user didn't send the exact amount of ether\nalong",
+    "issue_user_cap": "Failed because the source amount exceeded user cap",
+    "min_rate_too_high": "Your min rate is too high!",
+    "ledger_global_err": "<div class='text-left'>Cannot connect to your Ledger. Please\ncheck if:<br/>- Your Ledger is properly plugged in.<br/>- You have logged into\nyour Ledger.<br/>- You have launched Ethereum Application on your Ledger.<br/>-\n\"Browser Support\" has been enabled in your Ledger. Learn to enable \"Browser Support\"\n<a href=\"${link}\" target=\"_blank\">here</a>.</div>",
+    "need_to_config_env_ledger": "You need to configure your Linux device to access Ledger.\nInstruction <a href=\"${link}\" target=\"_blank\">here</a>.",
+    "ledger_not_enable_contract": "Please check if: </br>- \"Contract Data\" has been enabled\nin your Ledger. Instruction <a href=\"${link}\" target=\"_blank\">here</a>.",
+    "invalid_path_or_session_expired": "Cannot get address from this path. Please check\nyour path is valid or Ledger is connected.",
     "path_is_invalid": "Invalid path. Please choose another one.",
-    "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue.", 
+    "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue.",
     "eth_balance_not_enough_for_fee": "Your ETH balance is not enough for transaction fee",
-    "handle_amount":"Kyber cannot handle your amount, please reduce amount",
-    "kyber_maintain":"This pair is temporarily under maintenance",
-    "get_rate":"Cannot get rate from blockchain",
-    "exchange_enable":"You have exceeded your daily limit! You might trade again tomorrow at 00:00 UTC+0",
-    "min_rate_greater_expected_rate": "Your configured minimal exchange rate is higher than what is recommended by KyberNetwork. Your exchange has high chance to fail",
-    "exceed_daily_volumn": "You may want to <a target='_blank' href='${link}'>register with us</a> to have higher trade limits",
-    "broadcast_tx": "Potentially Failed! We likely couldn't broadcast the transaction to the blockchain. Please check on <a target='_blank' href='${link}'>Etherscan</a> to verify."
+    "handle_amount": "Kyber cannot handle your amount, please reduce amount",
+    "kyber_maintain": "This pair is temporarily under maintenance",
+    "get_rate": "Cannot get rate from blockchain",
+    "exchange_enable": "You have exceeded your daily limit! You might trade again tomorrow\nat 00:00 UTC+0",
+    "min_rate_greater_expected_rate": "Your configured minimal exchange rate is higher\nthan what is recommended by KyberNetwork. Your exchange has high chance to fail",
+    "exceed_daily_volumn": "You may want to <a target='_blank' href='${link}'>register\nwith us</a> to have higher trade limits",
+    "broadcast_tx": "Potentially Failed! We likely couldn't broadcast the transaction to\nthe blockchain. Please check on <a target='_blank' href='${link}'>Etherscan</a>\nto verify."
   },
-
   "import": {
     "from_metamask": "METAMASK",
     "from_keystore": "KEYSTORE",
@@ -242,7 +217,6 @@
     "select_or_drag": "Select or Drag",
     "address_is_loading": "Address is loading..."
   },
-
   "info": {
     "title": "Kyber Testnet",
     "version": "Version",
@@ -252,15 +226,13 @@
     "network_address": "Network contract address",
     "kyber_homepage": "Kyber homepage",
     "get_free_kovan": "Get free",
-    "warning": "DO NOT send real ethers or tokens to any of the addresses above.<br></br>They are testnet addresses only!",
+    "warning": "DO NOT send real ethers or tokens to any of the addresses above.<br></br>They\nare testnet addresses only!",
     "here": "here"
   },
-  
   "footer": {
     "info": "Info",
     "language": "Language"
   },
-
   "history": {
     "seconds_ago": "seconds ago",
     "minutes_ago": "minutes ago",
@@ -268,14 +240,12 @@
     "days_ago": "days ago",
     "months_ago": "months ago",
     "years_ago": "years ago",
-
     "second_ago": "second ago",
     "minute_ago": "minute ago",
     "hour_ago": "hour ago",
     "day_ago": "day ago",
     "month_ago": "month ago",
     "year_ago": "year ago",
-
     "date": "Date",
     "rate": "Rate",
     "description": "Description",
@@ -283,25 +253,23 @@
     "in": "In",
     "recent": "Recently"
   },
-
-  "terms":{
-    "title" : "KyberSwap - Terms of Use",
-    "content":"Kyber testnet swap provides a platform for experimenting and understanding our exchange and payment services. The current implementation is not secure in any way. Using it may cause loss of funds and could compromise user privacy. The user is accountable and responsible for any outcome for the use of Kyber testnet wallet.",
-    "use_testnet":"USE ONLY TESTNET ACCOUNTS!!!",
-    "use_real":"DO NOT USE REAL ETHEREUM ACCOUNTS!!!",
-    "accept":"Accept",
-    "terms_and_condition":" Terms and Conditions ",
-    "to_get_started":"to get started"
+  "terms": {
+    "title": "KyberSwap - Terms of Use",
+    "content": "Kyber testnet swap provides a platform for experimenting and understanding\nour exchange and payment services. The current implementation is not secure in\nany way. Using it may cause loss of funds and could compromise user privacy. The\nuser is accountable and responsible for any outcome for the use of Kyber testnet\nwallet.",
+    "use_testnet": "USE ONLY TESTNET ACCOUNTS!!!",
+    "use_real": "DO NOT USE REAL ETHEREUM ACCOUNTS!!!",
+    "accept": "Accept",
+    "terms_and_condition": " Terms and Conditions ",
+    "to_get_started": "to get started"
   },
-
-  "landing_page":{
+  "landing_page": {
     "title": "Decentralized Exchange for Ethereum tokens",
     "trustless": "Trustless",
     "instant": "Instant",
     "liquid": "Liquid",
     "compatible": "Compatible",
     "get_started": "Get Started",
-    "exchange":"exchange",
+    "exchange": "exchange",
     "instant_and_secure_token_swap": "Instant and Secure Token to Token Swaps",
     "no_oderbooks_no_deposit": "No orderbooks, no deposits, no wrapping",
     "power_by": "Power by Kyber's Decentralized Liquidity Network",
@@ -310,7 +278,6 @@
     "ledger": "LEDGER",
     "private_key": "PRIVATE KEY"
   },
-
   "market": {
     "eth_market": "Ethereum Market",
     "search": "Search",
@@ -330,7 +297,6 @@
     "show_more_results": "Show more results",
     "new_token": "NEW"
   },
-
   "trading_view": {
     "buy": "Buy",
     "buy_price": "Buy price",
@@ -339,7 +305,6 @@
     "mid": "Mid",
     "mid_price": "Mid Price"
   },
-
   "home": "Home",
   "tracker": "Tracker",
   "product_feedback": "Product Feedback",

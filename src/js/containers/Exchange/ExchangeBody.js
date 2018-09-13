@@ -20,6 +20,7 @@ import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import * as globalActions from "../../actions/globalActions"
 
 import * as exchangeActions from "../../actions/exchangeActions"
+import * as analytics from "../../utils/analytics"
 
 import constansts from "../../services/constants"
 
@@ -93,6 +94,7 @@ export default class ExchangeBody extends React.Component {
     //   path += "?lang=" + this.props.currentLang
     // }
     this.props.dispatch(globalActions.goToRoute(path))
+    analytics.trackChooseToken(type, symbol)
   }
 
   dispatchUpdateRateExchange = (sourceValue) => {
@@ -231,6 +233,7 @@ export default class ExchangeBody extends React.Component {
   focusSource = () => {
     this.props.dispatch(exchangeActions.focusInput('source'));
     this.setState({focus:"source"})
+    analytics.trackClickInputAmount("source")
   }
 
   blurSource = () => {
@@ -240,6 +243,7 @@ export default class ExchangeBody extends React.Component {
   focusDest = () => {
     this.props.dispatch(exchangeActions.focusInput('dest'));
     this.setState({focus:"dest"})
+    analytics.trackClickInputAmount("dest")
   }
 
   blurDest = () => {
@@ -248,6 +252,7 @@ export default class ExchangeBody extends React.Component {
 
   makeNewExchange = () => {
     this.props.dispatch(exchangeActions.makeNewExchange());
+    analytics.trackClickNewTransaction("Swap")
   }  
 
   setAmount = () => {
@@ -273,6 +278,7 @@ export default class ExchangeBody extends React.Component {
       this.props.dispatch(exchangeActions.inputChange('source', balance))
       this.props.ethereum.fetchRateExchange(true)
     }
+    analytics.trackClickAllIn("Swap", tokenSymbol)
   }
 
   swapToken = () => {
@@ -427,6 +433,7 @@ export default class ExchangeBody extends React.Component {
     />
 
     var maxCap = this.props.exchange.maxCap
+    //alert(maxCap)
     if (maxCap !== "infinity") {
       maxCap = toEther(this.props.exchange.maxCap)
     }

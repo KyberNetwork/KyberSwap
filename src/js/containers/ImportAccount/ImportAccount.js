@@ -56,10 +56,11 @@ export default class ImportAccount extends React.Component {
   componentDidMount = () => {
     var swapPage = document.getElementById("swap-app")
     swapPage.className = swapPage.className === "" ? "no-min-height" : swapPage.className + " no-min-height"
-
+    
     if (this.props.termOfServiceAccepted){
-      if (typeof web3 !== "undefined") {
-        var web3Service = new Web3Service(web3)
+      var web3Service = new Web3Service()
+      if (web3Service.isHaveWeb3()) {
+        //var web3Service = new Web3Service(web3)
         var walletType = web3Service.getWalletType()
      //   alert(walletType)
         if (walletType !== "metamask") {
