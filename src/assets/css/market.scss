@@ -213,6 +213,7 @@
           justify-content: center;
           @include screen-min-width(large){
             opacity: 0.3;
+            transition: 0.3s;
             &:hover {
               opacity: 1;
             }

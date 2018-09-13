@@ -119,7 +119,7 @@ const TransferForm = (props) => {
                 </div>
               </div>
             </div>
-            <div className="cell small-12 large-4 transfer-col transfer-advanced large-offset-0">
+            <div className={"cell small-12 large-4 transfer-col transfer-advanced large-offset-0" + (props.isOpenRight ? " advance-layout" : "") }>
               {props.isOpenRight && (
                 <div onClick={(e) => props.toggleRightPart(false)}>
                   <div className="close-indicator close-advance">
