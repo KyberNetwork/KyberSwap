@@ -103,8 +103,7 @@
     "address": "接收的地址",
     "slippage_tip": "费率可能会改变。 您可以在高级选项中调整最小价格来更改最大滑点率",
     "max_slippage": "滑点率至多为${percent}%",
-    "included": "包括",
-    "type_pass_before_progress": "进行之前，请输入密码"
+    "included": "包括"
   },
   "modal": {
     "enter_password": "输入密码",
@@ -197,9 +196,7 @@
     "exchange_enable": "您已经超过了您的每日限额！ 您可以在明天00:00 UTC+0再次进行交易",
     "min_rate_greater_expected_rate": "您设置的最低汇率高于KyberNetwork推荐的汇率。 您的交易很有可能失败。",
     "exceed_daily_volumn": "您可能需要<a target='_blank' href='${link}'>在我们这里注册</a>才能有更高的交易限额",
-    "broadcast_tx": "可能会失败！我们无法将交易上传到区块链。请在<a target='_blank' href='${link}'>Etherscan</a>上检查。",
-    "invalid_json_file": "您导入的JSON文件无效。 请导入正确的JSON密钥库。",
-    "key_derivation_failed": "密钥派生失败 - 可能是密码错误"
+    "broadcast_tx": "可能会失败！我们无法将交易上传到区块链。请在<a target='_blank' href='${link}'>Etherscan</a>上检查。"
   },
   "import": {
     "from_metamask": "连接至<br>Metamask",

@@ -15,6 +15,9 @@ import { importAccountMetamask } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import Web3Service from "../../services/web3"
 
+//import platform from 'platform'
+import {isMobile} from "../../utils/common"
+
 @connect((store, props) => {  
   var tokens = store.tokens.tokens
 	var supportTokens = []
@@ -41,6 +44,8 @@ export default class ImportAccount extends React.Component {
     super()
     this.state = {
       isOpen: false,
+      isAndroid: false,
+      isIos: false
       // isInLandingPage: true
     }
   }
@@ -52,12 +57,32 @@ export default class ImportAccount extends React.Component {
   // }
 
   componentDidMount = () => {
+    // console.log("playform")
+    // console.log(platform)
+
     var swapPage = document.getElementById("swap-app")
     swapPage.className = swapPage.className === "" ? "no-min-height" : swapPage.className + " no-min-height"
+
     
+    //alert("web3")
+
+    //check mobile, ios, android
+    var web3Service = new Web3Service()
+    if (!web3Service.isHaveWeb3()) {
+      if (isMobile.iOS()){
+        this.setState({isIos: true})
+      }
+  
+      if (isMobile.Android()){
+        this.setState({isAndroid: true})
+      }
+    }
+
+
     if (this.props.termOfServiceAccepted){
-      var web3Service = new Web3Service()
+    
       if (web3Service.isHaveWeb3()) {
+        
         //var web3Service = new Web3Service(web3)
         var walletType = web3Service.getWalletType()
      //   alert(walletType)
@@ -79,48 +104,42 @@ export default class ImportAccount extends React.Component {
   // }
 
   render() {
-    // return (
-    //   <div>
-    //     <LandingPage goExchange={this.openModal} translate={this.props.translate}/>
-    //     <ImportAccountView
-    //       firstKey={<ImportByMetamask />}
-    //       secondKey={<ImportKeystore />}
-    //       thirdKey={<ImportByDeviceWithTrezor />}
-    //       fourthKey={<ImportByDeviceWithLedger />}
-    //       fifthKey={<ImportByPrivateKey />}
-    //       errorModal={<ErrorModal />}
-    //       translate={this.props.translate}
-    //       isOpen = {this.state.isOpen}
-    //       closeModal = {this.closeModal}
-    //     />
-    //   </div>
-    // )    
-    // var content = (
-    //   <ImportAccountView
-    //     firstKey={<ImportByMetamask screen={this.props.screen}/>}
-    //     secondKey={<ImportKeystore screen={this.props.screen}/>}
-    //     thirdKey={<ImportByDeviceWithTrezor screen={this.props.screen}/>}
-    //     fourthKey={<ImportByDeviceWithLedger screen={this.props.screen}/>}
-    //     fifthKey={<ImportByPrivateKey screen={this.props.screen}/>}
-    //     errorModal={<ErrorModal />}
-    //     translate={this.props.translate}
-    //   />
-    // )
     var content
     if (!this.props.termOfServiceAccepted) {
       content = <LandingPage translate={this.props.translate} tradeType={this.props.tradeType}/>
     } else {
-      content = (
-        <ImportAccountView
-          firstKey={<ImportByMetamask />}
-          secondKey={<ImportKeystore />}
-          thirdKey={<ImportByDeviceWithTrezor />}
-          fourthKey={<ImportByDeviceWithLedger />}
-          fifthKey={<ImportByPrivateKey />}
-          errorModal={<ErrorModal />}
-          translate={this.props.translate}
-        />
-      )
+      if (this.state.isIos){
+        content = (<div className="download-mobile">
+          <div>
+            <div className="mobile-icon">
+
+            </div>
+            <div className="mobile-title">
+              <div>Coinbase Wallet</div>
+              <div>Ethereum Wallet & DApp Browser</div>
+            </div>
+          </div>
+          <div className="mobile-btn">
+            <a>Download</a>
+          </div>
+        </div>)
+      }
+      if (this.state.isAndroid){
+        content = <div>android</div>
+      }
+      if (!this.state.isIos && !this.state.isAndroid){
+        content = (
+          <ImportAccountView
+            firstKey={<ImportByMetamask />}
+            secondKey={<ImportKeystore />}
+            thirdKey={<ImportByDeviceWithTrezor />}
+            fourthKey={<ImportByDeviceWithLedger />}
+            fifthKey={<ImportByPrivateKey />}
+            errorModal={<ErrorModal />}
+            translate={this.props.translate}
+          />
+        )
+      }
     }
 
     return (

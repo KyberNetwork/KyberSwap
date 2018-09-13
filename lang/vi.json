@@ -103,8 +103,7 @@
     "address": "Địa chỉ nhận",
     "slippage_tip": "Tỉ giá có thể thay đổi, bạn có thể chỉnh tỉ giá trong lựa chọn nâng\ncao",
     "max_slippage": "với tối đa ${percent}% trượt giá",
-    "included": "Bao gồm",
-    "type_pass_before_progress": "Nhập mật khẩu trước khi tiến hành"
+    "included": "Bao gồm"
   },
   "modal": {
     "enter_password": "Nhập mật khẩu",
@@ -197,9 +196,7 @@
     "exchange_enable": "Bạn đã giao dịch quá lượng 1 ngày! Bạn có thể giao dịch vào ngày\nmai tại thời điểm 00:00 UTC+0",
     "min_rate_greater_expected_rate": "Bạn đã chỉnh tỉ giá lớn hơn tỉ giá đề nghị bởi KyberNetwork.\nGiao dịch của bạn nhiều khả năng thất bại",
     "exceed_daily_volumn": "Bạn có thể phải <a target='_blank' href='${link}'>đăng kí</a>\nvới chúng tôi để có hạn mức giao dịch cao hơn",
-    "broadcast_tx": "Giao dịch có khả năng bị thất bại! Chúng tôi không thể đưa giao dịch\ncủa bạn lên blockchain. Vui lòng kiểm tra tại <a target='_blank' href='${link}'>Etherscan</a>",
-    "invalid_json_file": "Cập nhật JSON file của bạn không hợp lệ. Vui lòng tải lên đúng keystore JSON.",
-    "key_derivation_failed": "Nhập khóa nguồn thất bại - có thể do sai mật khẩu"
+    "broadcast_tx": "Giao dịch có khả năng bị thất bại! Chúng tôi không thể đưa giao dịch\ncủa bạn lên blockchain. Vui lòng kiểm tra tại <a target='_blank' href='${link}'>Etherscan</a>"
   },
   "import": {
     "from_metamask": "Kết nối <br> Metamask",
