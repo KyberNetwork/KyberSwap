@@ -48,8 +48,8 @@ export default class ImportAccount extends React.Component {
 
     var web3Service = new Web3Service();
 
-    if (true) {
-      if (true) {
+    if (!web3Service.isHaveWeb3()) {
+      if (isMobile.iOS()) {
         this.props.dispatch(setIsIos(true));
       } else if (isMobile.Android()) {
         this.props.dispatch(setIsAndroid(true));
