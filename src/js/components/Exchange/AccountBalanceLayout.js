@@ -121,6 +121,16 @@ const AccountBalanceLayout = (props) => {
 
   return (
     <div id="balance-account" className={props.account !== false? "has-account":"no-account"}>
+
+    {props.account === false && (
+        <div className="balance-address">
+          <div className="title">{props.translate("address.your_wallet_address") || "Your Wallet Address"}</div>
+          <div className="lock-wallet">
+              You haven't unlocked your wallet,<br></br> <a onClick={(e)=>props.acceptTerm()}>click here</a>
+          </div>
+        </div>
+      )}
+
       {props.account !== false && (
         <div className="balance-address">
           <div className="title">
