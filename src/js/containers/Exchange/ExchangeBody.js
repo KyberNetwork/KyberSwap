@@ -73,7 +73,7 @@ export default class ExchangeBody extends React.Component {
   }
 
   componentDidMount = () => {
-    if (this.props.global.changeWalletType !== "") globalActions.closeChangeWallet()
+    if (this.props.global.changeWalletType !== "swap") this.props.dispatch(globalActions.closeChangeWallet())
   }
 
   validateTxFee = (gasPrice) => {

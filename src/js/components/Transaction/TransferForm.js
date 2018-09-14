@@ -28,7 +28,7 @@ const TransferForm = (props) => {
   if (props.focus === "source") {
     classSource += " focus"
   }
-  if (props.errors.amountTransfer) {
+  if (props.errors.amountTransfer && !props.isChangingWallet) {
     classSource += " error"
   }
   var render = (
@@ -71,11 +71,11 @@ const TransferForm = (props) => {
                 {/* <div className="title main-title">{props.translate("transaction.transfer") || "Transfer"}</div> */}
                 <div className="grid-x">
                   <div className="cell small-12">
-                    <div className={props.errors.destAddress !== '' ? "error receiveAddress" : "receiveAddress"}>
+                    <div className={props.errors.destAddress !== '' && !props.isChangingWallet ? "error receiveAddress" : "receiveAddress"}>
                       <span className="transaction-label">{props.translate("transaction.address") || "Receiving Address"}</span>
                       <input className="hashAddr" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange} placeholder="0x0de..." onFocus={(e) => analytics.trackClickInputRecieveAddress()} >
                       </input>
-                      {props.errors.destAddress &&
+                      {props.errors.destAddress && !props.isChangingWallet &&
                         <span class="error-text">{props.translate(props.errors.destAddress)}</span>
                       }
                     </div>
@@ -108,7 +108,7 @@ const TransferForm = (props) => {
                           </div>
                         </div>
                       </div>
-                      {props.errors.amountTransfer &&
+                      {props.errors.amountTransfer && !props.isChangingWallet &&
                         <span class="error-text">{props.translate(props.errors.amountTransfer)}</span>
                       }
                     </div>
