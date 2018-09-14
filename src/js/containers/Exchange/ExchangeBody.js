@@ -63,8 +63,8 @@ import Web3Service from "../../services/web3"
 })
 
 export default class ExchangeBody extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       focus: "",
       isAndroid: false,
@@ -319,7 +319,7 @@ export default class ExchangeBody extends React.Component {
 
   specifyGasPrice = (value) => {
     this.props.dispatch(exchangeActions.specifyGasPrice(value + ""))
-    if (this.props.account !== false) {
+    if (this.props.account !== false && !this.props.global.isChangingWallet) {
       this.lazyValidateTransactionFee(value)
     }
   }

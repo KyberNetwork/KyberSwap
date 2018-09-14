@@ -53,7 +53,9 @@ export default class Transfer extends React.Component {
       haveAnimationLeft: false,
       haveAnimationRight: false
     }
+  }
 
+  componentDidMount = () => {
     if (this.props.global.changeWalletType !== "transfer") globalActions.closeChangeWallet()
   }
 

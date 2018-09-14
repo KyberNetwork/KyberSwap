@@ -1,7 +1,7 @@
 import { take, put, call, fork, select, takeEvery, all, cancel } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
-import { clearSession, setGasPrice, setBalanceToken } from "../actions/globalActions"
+import { clearSession, setGasPrice, setBalanceToken, closeChangeWallet } from "../actions/globalActions"
 import { fetchExchangeEnable } from "../actions/exchangeActions"
 import { openInfoModal } from '../actions/utilActions'
 import * as common from "./common"
@@ -64,6 +64,7 @@ export function* importNewAccount(action) {
   yield put(actions.importLoading())
   const { address, type, keystring, ethereum, tokens, metamask, walletType } = action.payload
   var translate = getTranslate(store.getState().locale)
+  var isChangingWallet = store.getState().global.isChangingWallet
   try {
     var  account
     var accountRequest = yield call(common.handleRequest, createNewAccount, address, type, keystring, ethereum, walletType)
@@ -91,6 +92,7 @@ export function* importNewAccount(action) {
    // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
     yield put(actions.closeImportLoading())
     yield put(actions.importNewAccountComplete(account))
+    if (isChangingWallet) yield put(closeChangeWallet())
 
     //track login wallet
     analytics.loginWallet(type)

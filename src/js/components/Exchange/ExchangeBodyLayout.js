@@ -80,7 +80,7 @@ const ExchangeBodyLayout = (props) => {
   if (props.focus === "source") {
     classSource += " focus"
   }
-  if (errorExchange) {
+  if (errorExchange && !props.isChangingWallet) {
     classSource += " error"
   }
 
@@ -117,7 +117,7 @@ const ExchangeBodyLayout = (props) => {
                   <span className="transaction-label">
                     {props.translate("transaction.exchange_from").toUpperCase() || "FROM"}
                   </span>
-                  <div className={errorExchange ? "error select-token-panel" : "select-token-panel"}>
+                  <div className={errorExchange && !props.isChangingWallet ? "error select-token-panel" : "select-token-panel"}>
                     {props.tokenSourceSelect}
                     <div className={classSource}>
                       <div>
@@ -136,7 +136,7 @@ const ExchangeBodyLayout = (props) => {
                     </div>
                   </div>
                   <div className={errorExchange ? "error" : ""}>
-                    {errorShow}
+                    {!props.isChangingWallet ? errorShow : ''}
                   </div>
                 </div>
 
