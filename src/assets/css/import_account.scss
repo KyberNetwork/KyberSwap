@@ -190,6 +190,7 @@ $animationTime: 0.5s;
     height: 50px;
   }
 }
+
 .input-reveal{
   .toggle{
     right: 12px;
@@ -215,5 +216,63 @@ $animationTime: 0.5s;
     -o-transition: opacity .5s ease-in-out;
     transition: opacity .5s ease-in-out;
     background-image: url(../img/lock.svg);
+  }
+}
+
+.download-mobile {
+  background-color: #3c4664;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 1rem;
+  width: calc(100% + 2rem);
+  position: relative;
+  left: -1rem;
+  transform: scale(0.9);
+  opacity: 0;
+  animation: show-up 0.3s forwards;
+
+  .mobile-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .mobile-icon {
+    width: 35px;
+    height: 35px;
+    background: url(../img/toshi.svg) center no-repeat;
+    background-size: contain;
+  }
+
+  .mobile-content {
+    width: calc(100% - 35px);
+    padding: 0 10px 0 15px;
+  }
+
+  .mobile-title {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .mobile-desc {
+    font-size: 12px;
+  }
+
+  .mobile-btn {
+    background-color: $swap-color;
+    color: white;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  @keyframes show-up {
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 }

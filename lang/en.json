@@ -104,8 +104,7 @@
     "address": "Receiving Address",
     "slippage_tip": "Rate may change. You can change maximum slippage rate by adjusting\nmin rate in advanced option",
     "max_slippage": "With maximum ${percent}% slippage",
-    "included": "Included",
-    "type_pass_before_progress": "Type a password before progressing"
+    "included": "Included"
   },
   "modal": {
     "enter_password": "Enter Password",
@@ -198,9 +197,7 @@
     "exchange_enable": "You have exceeded your daily limit! You might trade again tomorrow\nat 00:00 UTC+0",
     "min_rate_greater_expected_rate": "Your configured minimal exchange rate is higher\nthan what is recommended by KyberNetwork. Your exchange has high chance to fail",
     "exceed_daily_volumn": "You may want to <a target='_blank' href='${link}'>register\nwith us</a> to have higher trade limits",
-    "broadcast_tx": "Potentially Failed! We likely couldn't broadcast the transaction to\nthe blockchain. Please check on <a target='_blank' href='${link}'>Etherscan</a>\nto verify.",
-    "invalid_json_file": "Your uploaded JSON file is invalid. Please upload a correct JSON keystore.",
-    "key_derivation_failed": "Key derivation failed - possibly wrong password"
+    "broadcast_tx": "Potentially Failed! We likely couldn't broadcast the transaction to\nthe blockchain. Please check on <a target='_blank' href='${link}'>Etherscan</a>\nto verify."
   },
   "import": {
     "from_metamask": "METAMASK",
@@ -308,6 +305,7 @@
     "mid": "Mid",
     "mid_price": "Mid Price"
   },
+  "download": "Download",
   "home": "Home",
   "tracker": "Tracker",
   "product_feedback": "Product Feedback",

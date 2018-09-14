@@ -6,20 +6,17 @@ import {
   ErrorModal, ImportByMetamask,
   ImportByDeviceWithLedger, ImportByDeviceWithTrezor
 } from "../ImportAccount"
-
 import { visitExchange } from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux'
-
-
 import { importAccountMetamask } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import Web3Service from "../../services/web3"
 
-@connect((store, props) => {  
+@connect((store, props) => {
   var tokens = store.tokens.tokens
-	var supportTokens = []
-	Object.keys(tokens).forEach((key) => {
-		supportTokens.push(tokens[key])
+  var supportTokens = []
+  Object.keys(tokens).forEach((key) => {
+    supportTokens.push(tokens[key])
   })
   
   return {
@@ -40,29 +37,20 @@ export default class ImportAccount extends React.Component {
   constructor() {
     super()
     this.state = {
-      isOpen: false,
-      // isInLandingPage: true
+      isOpen: false
     }
   }
 
-  // goExchange = (e) => {
-  //   this.setState({
-  //     isInLandingPage: false
-  //   })
-  // }
-
   componentDidMount = () => {
-    var swapPage = document.getElementById("swap-app")
+    var swapPage = document.getElementById("swap-app");
+    var web3Service = new Web3Service();
+
     swapPage.className = swapPage.className === "" ? "no-min-height" : swapPage.className + " no-min-height"
-    
+
     if (this.props.termOfServiceAccepted){
-      var web3Service = new Web3Service()
       if (web3Service.isHaveWeb3()) {
-        //var web3Service = new Web3Service(web3)
         var walletType = web3Service.getWalletType()
-     //   alert(walletType)
         if (walletType !== "metamask") {
-          // /alert(walletType)
           this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
           this.props.ethereum, this.props.tokens, this.props.screen, this.props.translate, walletType))
         }
@@ -70,63 +58,48 @@ export default class ImportAccount extends React.Component {
     }
   }
 
-  // closeModal = (e) => {
-  //   this.setState({isOpen: false})
-  // }
-
-  // openModal = (e) => {
-  //   this.setState({isOpen: true})
-  // }
+  getAppDownloadHtml(downloadLink) {
+    return (<div className="download-mobile">
+      <div className="mobile-left">
+        <div className="mobile-icon"></div>
+        <div className="mobile-content">
+          <div className="mobile-title">Coinbase Wallet</div>
+          <div className="mobile-desc">Ethereum Wallet & DApp Browser</div>
+        </div>
+      </div>
+      <a href={downloadLink} className="mobile-btn" target="_blank">
+        {this.props.translate("download") || "Download"}
+      </a>
+    </div>)
+  }
 
   render() {
-    // return (
-    //   <div>
-    //     <LandingPage goExchange={this.openModal} translate={this.props.translate}/>
-    //     <ImportAccountView
-    //       firstKey={<ImportByMetamask />}
-    //       secondKey={<ImportKeystore />}
-    //       thirdKey={<ImportByDeviceWithTrezor />}
-    //       fourthKey={<ImportByDeviceWithLedger />}
-    //       fifthKey={<ImportByPrivateKey />}
-    //       errorModal={<ErrorModal />}
-    //       translate={this.props.translate}
-    //       isOpen = {this.state.isOpen}
-    //       closeModal = {this.closeModal}
-    //     />
-    //   </div>
-    // )    
-    // var content = (
-    //   <ImportAccountView
-    //     firstKey={<ImportByMetamask screen={this.props.screen}/>}
-    //     secondKey={<ImportKeystore screen={this.props.screen}/>}
-    //     thirdKey={<ImportByDeviceWithTrezor screen={this.props.screen}/>}
-    //     fourthKey={<ImportByDeviceWithLedger screen={this.props.screen}/>}
-    //     fifthKey={<ImportByPrivateKey screen={this.props.screen}/>}
-    //     errorModal={<ErrorModal />}
-    //     translate={this.props.translate}
-    //   />
-    // )
-    var content
+    var content;
+
     if (!this.props.termOfServiceAccepted) {
       content = <LandingPage translate={this.props.translate} tradeType={this.props.tradeType}/>
     } else {
-      content = (
-        <ImportAccountView
-          firstKey={<ImportByMetamask />}
-          secondKey={<ImportKeystore />}
-          thirdKey={<ImportByDeviceWithTrezor />}
-          fourthKey={<ImportByDeviceWithLedger />}
-          fifthKey={<ImportByPrivateKey />}
-          errorModal={<ErrorModal />}
-          translate={this.props.translate}
-        />
-      )
+      if (this.props.isIos){
+        content = this.getAppDownloadHtml("https://itunes.apple.com/us/app/coinbase-wallet/id1278383455?mt=8");
+      } else if (this.props.isAndroid) {
+        content = this.getAppDownloadHtml("https://play.google.com/store/apps/details?id=org.toshi&hl=en");
+      } else {
+        content = (
+          <ImportAccountView
+            firstKey={<ImportByMetamask />}
+            secondKey={<ImportKeystore />}
+            thirdKey={<ImportByDeviceWithTrezor />}
+            fourthKey={<ImportByDeviceWithLedger />}
+            fifthKey={<ImportByPrivateKey />}
+            errorModal={<ErrorModal />}
+            translate={this.props.translate}
+          />
+        )
+      }
     }
 
     return (
       <div id="landing_page">{content}</div>
     )
-
-
   }
 }
