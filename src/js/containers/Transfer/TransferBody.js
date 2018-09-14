@@ -56,7 +56,7 @@ export default class Transfer extends React.Component {
   }
 
   componentDidMount = () => {
-    if (this.props.global.changeWalletType !== "") globalActions.closeChangeWallet()
+    if (this.props.global.changeWalletType !== "") this.props.dispatch(globalActions.closeChangeWallet())
   }
 
   validateSourceAmount = (value, gasPrice) => {
@@ -159,7 +159,7 @@ export default class Transfer extends React.Component {
   specifyGasPrice = (value) => {
     this.props.dispatch(transferActions.specifyGasPrice(value))
 
-    if (this.props.account !== false) {
+    if (this.props.account !== false && !this.props.isChangingWallet) {
       this.lazyUpdateValidateSourceAmount(this.props.transfer.amount, value)
     }
   }
