@@ -1,6 +1,6 @@
 
 @include screen-min-width(large) {
-  .balance-wrapper,
+  .balance-wrapper-opened, .balance-wrapper-opened-transfer,
   .exchange-col-1 {
     box-shadow: $box-shadow-tab;
   }
@@ -10,25 +10,20 @@
     }
   }
   .balance-wrapper{
-    min-height: 503px !important;
-    border: 1px solid #ddd;
-    
-    background: white;
-    position: relative;
-    z-index: 1;
     animation: moving-left 0.3s forwards;
     transform: translateX(50px);
-    transition: all .3s;
+    transition: transform .3s;
 
-    // &::after {
-    //   content: '';
-    //   position: absolute;
-    //   width: 10px;
-    //   height: 100%;
-    //   background: $white;
-    //   top: 0;
-    //   right: -11px;
-    // }
+    &-opened, &-opened-transfer {
+      min-height: 503px !important;
+      border: 1px solid #ddd;
+      background: white;
+      position: relative;
+      z-index: 1;
+    }
+    &-opened-transfer {
+      border-right: none;
+    }
   }
   .exchange-wrapper-btn{
     text-align: center;
@@ -55,19 +50,52 @@
     .balances {
       height: 253px;
     }
+    
+    .change-wallet {
+      font-weight: normal;
+      text-transform: capitalize;
+      font-size: 13px;
+      background: #999999;
+      color: white;
+      padding: 2px 15px 2px 8px;
+      border-radius: 4px;
+      position: relative;
+      &::after {
+        content: '';
+        background-image: url(../img/arrow-white-right.png);
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        top: 6px;
+        right: 2px;
+        background-repeat: no-repeat;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+      &--no-account {
+        text-transform: lowercase;
+        max-width: 90px;
+        margin-top: 5px;
+      }
+    }
   }
 
   .balance-address {
     padding: 10px;
     color: #474d5f;
     .lock-wallet{
-      a{
-        font-size: 15px;
-    font-weight: bold;
-    color: #f08400;
-        &:hover{
-          text-decoration: underline;
-        }
+      // a{
+      //   font-size: 15px;
+      //   font-weight: bold;
+      //   color: #f08400;
+      //   &:hover{
+      //     text-decoration: underline;
+      //   }
+      // }
+      span {
+        font-size: 14px;
+        color: #f1637d;
       }
     }
     .title {
@@ -79,29 +107,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      .change-wallet {
-        font-weight: normal;
-        text-transform: capitalize;
-        font-size: 13px;
-        background: #999999;
-        color: white;
-        padding: 2px 15px 2px 8px;
-        border-radius: 4px;
-        position: relative;
-        &::after {
-          content: '';
-          background-image: url(../img/arrow-white-right.png);
-          position: absolute;
-          width: 10px;
-          height: 10px;
-          top: 6px;
-          right: 2px;
-          background-repeat: no-repeat;
-        }
-        &:hover {
-          cursor: pointer;
-        }
-      }
       // &:before {
       //   content: '';
       //   width: 4px;

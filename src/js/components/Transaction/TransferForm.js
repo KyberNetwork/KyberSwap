@@ -24,7 +24,7 @@ const TransferForm = (props) => {
   var render = (
     <div id="transfer-screen">
       <div className="grid-x">
-        <div className={"cell medium-6 large-3" + (props.isOpenLeft && props.haveAnimationLeft ? " balance-wrapper" : "") + (anyErrors(props.errors) ? " error" : "")} id="balance-account-wrapper">
+        <div className={"cell medium-6 large-3" + (props.isOpenLeft ? " balance-wrapper-opened-transfer" : "") + (props.isOpenLeft && props.haveAnimationLeft ? " balance-wrapper" : "") + (anyErrors(props.errors) ? " error" : "")} id="balance-account-wrapper">
           {/* <AccountBalance
             chooseToken = {props.chooseToken}
             sourceActive = {props.tokenSymbol}

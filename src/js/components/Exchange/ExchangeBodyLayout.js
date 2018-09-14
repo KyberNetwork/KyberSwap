@@ -86,7 +86,7 @@ const ExchangeBodyLayout = (props) => {
 
   var render = (
     <div className="grid-x">
-      <div className={"cell medium-6 large-3" + (props.isOpenLeft && props.haveAnimationLeft ? " balance-wrapper" : "") + (errorExchange || props.networkError ? " error" : "")} id="balance-account-wrapper">
+      <div className={"cell medium-6 large-3" + (props.isOpenLeft ? " balance-wrapper-opened" : "") + (props.isOpenLeft && props.haveAnimationLeft ? " balance-wrapper" : "") + (errorExchange || props.networkError ? " error" : "")} id="balance-account-wrapper">
         {props.isOpenLeft && (
           <div className="close-indicator close-wallet" onClick={(e) => props.toggleLeftPart(false)}>
             <div>{props.translate("transaction.close") || "Close"}</div>
