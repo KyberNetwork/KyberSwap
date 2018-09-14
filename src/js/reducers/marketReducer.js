@@ -9,6 +9,7 @@ const initState = function () {
   var timeStampNow = timeNow.getTime()
 
   Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
+    //if(BLOCKCHAIN_INFO.tokens[key].exclude) return
     if(!BLOCKCHAIN_INFO.tokens[key].isNew) return
     if(BLOCKCHAIN_INFO.tokens[key].expireDate){
       var timeExpire = new Date(BLOCKCHAIN_INFO.tokens[key].expireDate)
@@ -48,6 +49,7 @@ const initState = function () {
 
   Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
     // if(!BLOCKCHAIN_INFO.tokens[key].isNew) return
+    //if(BLOCKCHAIN_INFO.tokens[key].exclude) return
     if(BLOCKCHAIN_INFO.tokens[key].expireDate && BLOCKCHAIN_INFO.tokens[key].isNew){
       var timeExpire = new Date(BLOCKCHAIN_INFO.tokens[key].expireDate)
       var expireTimeStamp = timeExpire.getTime()
