@@ -6,6 +6,7 @@ import { AccountBalanceLayout } from '../../components/Exchange'
 // import { selectToken } from '../../actions/transferActions'
 // import { hideSelectToken } from "../../actions/utilActions"
 import * as analytics from "../../utils/analytics"
+// import {openImportAccount as openImportAccountExchange} from "../../actions/exchangeActions"
 
 import { getTranslate } from 'react-localize-redux';
 
@@ -101,6 +102,10 @@ export default class AccountBalance extends React.Component {
     this.props.onToggleChartContent()    
   }
 
+  // handleEndSession = () => {
+  //   this.props.dispatch(openImportAccountExchange())
+  // }
+
   render() {
     var sortValue = this.state.sortType === "Price" ? this.state.sortValuePrice_DES : this.state.sortValueSymbol_DES;
 
@@ -132,6 +137,7 @@ export default class AccountBalance extends React.Component {
         onChangeChartRange={this.props.onChangeChartRange}
         onToggleChartContent={this.onToggleChartContent}
         onToggleBalanceContent={this.onToggleBalanceContent}
+        // handleEndSession={this.handleEndSession}
       />
     )
   }

@@ -12,7 +12,7 @@ import * as converter from "../../utils/converter"
 import * as validators from "../../utils/validators"
 import * as transferActions from "../../actions/transferActions"
 import { default as _ } from 'underscore'
-import { clearSession } from "../../actions/globalActions"
+import { clearSession, setIsChangingPath } from "../../actions/globalActions"
 
 import { ImportAccount } from "../ImportAccount"
 
@@ -40,12 +40,16 @@ import * as analytics from "../../utils/analytics"
 
 
 export default class Exchange extends React.Component {
-  // constructor(props){
-  //   super(props)
-  //   this.state = {
-  //     selectedGas: props.transfer.gasPrice <= 20? "f": "s", 
-  //   }
-  // }
+  constructor(props){
+    super(props)
+    this.state = {
+      isAnimation: false
+    }
+  }
+
+  setAnimation = () => {
+    this.setState({isAnimation: true})
+  }
 
 
   componentDidMount = () =>{

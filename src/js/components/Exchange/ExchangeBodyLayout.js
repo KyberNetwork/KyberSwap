@@ -76,7 +76,7 @@ const ExchangeBodyLayout = (props) => {
 
   var render = (
     <div className="grid-x">
-      <div className={"cell medium-6 large-3" + (props.isOpenLeft ? " balance-wrapper" : "") + (errorExchange || props.networkError ? " error" : "")} id="balance-account-wrapper">
+      <div className={"cell medium-6 large-3" + (props.isOpenLeft && props.haveAnimationLeft ? " balance-wrapper" : "") + (errorExchange || props.networkError ? " error" : "")} id="balance-account-wrapper">
         {props.isOpenLeft && (
           <div className="close-indicator close-wallet" onClick={(e) => props.toggleLeftPart(false)}>
             <div>Close</div>
@@ -176,7 +176,7 @@ const ExchangeBodyLayout = (props) => {
               </div>
             </div>
           </div>
-          <div className={"cell large-4 exchange-col-2 advance-for-mobile" + (props.isOpenRight ? " advance-layout" : "")}>
+          <div className={"cell large-4 exchange-col-2 advance-for-mobile" + (props.isOpenRight && props.haveAnimationRight ? " advance-layout" : "")}>
             <div>
               {props.isOpenRight && (
                 <div onClick={(e) => props.toggleRightPart(false)}>

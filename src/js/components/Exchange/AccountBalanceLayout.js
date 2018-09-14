@@ -123,11 +123,14 @@ const AccountBalanceLayout = (props) => {
     <div id="balance-account" className={props.account !== false? "has-account":"no-account"}>
       {props.account !== false && (
         <div className="balance-address">
-          <div className="title">{props.translate("address.your_wallet_address") || "Your Wallet Address"}</div>
+          <div className="title">
+            {props.translate("address.your_wallet_address") || "Your Wallet Address"}
+            <div className="change-wallet">{props.translate("address.change_wallet") || "Change Wallet"}</div>
+          </div>
           <div>
-            <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address} onClick={(e) => {analytics.trackClickShowAddressOnEtherescan()}}>
-              {props.account.address ? props.account.address.slice(0, 8) : ''} ... {props.account.address ? props.account.address.slice(-6) : ''}
-            </a>
+            {props.account.address ? <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address} onClick={(e) => {analytics.trackClickShowAddressOnEtherescan()}}>
+              <span>{props.account.address.slice(0, 6)}</span>{props.account.address.slice(6, -5)}<span>{props.account.address.slice(-5 )}</span>
+            </a> : ''}
           </div>
         </div>
       )}
@@ -147,6 +150,7 @@ const AccountBalanceLayout = (props) => {
             <div className="balance-header">
               <div className="title">
                 {props.translate("address.my_balance") || "My balance"}
+                <div className="arrow-balance-account"></div>
               </div>
               {props.showBalance && (
                 <div className="estimate-value">

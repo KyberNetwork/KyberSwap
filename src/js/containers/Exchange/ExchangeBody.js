@@ -67,7 +67,9 @@ export default class ExchangeBody extends React.Component {
   constructor() {
     super()
     this.state = {
-      focus: ""
+      focus: "",
+      haveAnimationLeft: false,
+      haveAnimationRight: false
     }
   }
 
@@ -322,6 +324,7 @@ export default class ExchangeBody extends React.Component {
 
   toggleRightPart = (value) => {
     this.props.dispatch(exchangeActions.toggleRightPart(value))
+    this.setState({haveAnimationRight: true})
     analytics.trackClickTheRightWing("swap")
   }
 
@@ -373,6 +376,7 @@ export default class ExchangeBody extends React.Component {
 
   toggleLeftPart = (value) => {
     this.props.dispatch(exchangeActions.toggleLeftPart(value))
+    this.setState({haveAnimationLeft: true})
     analytics.trackClickTheLeftWing("swap")
   }
 
@@ -546,6 +550,9 @@ export default class ExchangeBody extends React.Component {
 
         isOpenLeft={this.props.exchange.isOpenLeft}
         toggleLeftPart={this.toggleLeftPart}
+
+        haveAnimationLeft={this.state.haveAnimationLeft}
+        haveAnimationRight={this.state.haveAnimationRight}
       />
     )
   }

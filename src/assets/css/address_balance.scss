@@ -15,7 +15,6 @@
     background: white;
     position: relative;
     z-index: 1;
-    
     animation: moving-left 0.3s forwards;
     transform: translateX(50px);
     transition: all .3s;
@@ -58,7 +57,7 @@
   }
 
   .balance-address {
-    padding: 10px 10px 10px 30px;
+    padding: 10px;
     color: #474d5f;
 
     .title {
@@ -68,23 +67,28 @@
       text-transform: uppercase;
       position: relative;
 
-      &:before {
-        content: '';
-        width: 4px;
-        height: 4px;
-        display: block;
-        border-radius: 50%;
-        background-color: #222;
-        position: absolute;
-        left: -15px;
-        top: 50%;
-        margin-top: -2px;
-      }
+      // &:before {
+      //   content: '';
+      //   width: 4px;
+      //   height: 4px;
+      //   display: block;
+      //   border-radius: 50%;
+      //   background-color: #222;
+      //   position: absolute;
+      //   left: -15px;
+      //   top: 50%;
+      //   margin-top: -2px;
+      // }
     }
 
     a {
       font-size: 14px;
       color: #666666;
+      word-wrap: break-word;
+      span {
+        color: #222222;
+        font-weight: bold;
+      }
     }
   }
 }
@@ -113,7 +117,10 @@
   &.has-account{
     .balance-content__rate-wrapper{
       display: flex;
-      align-items: center;
+      align-items: baseline;
+      .time-change {
+        display: none;
+      }
     }
   }
 
@@ -334,8 +341,12 @@
     align-items: center;
     >div{
       &:first-child{
-        margin-right: 5px;
+        // margin-right: 5px;
       }
+    }
+    .time-change {
+      font-size: 15px;
+      text-transform: lowercase;
     }
   }
   .balance-content__chart{
@@ -369,14 +380,14 @@
   }
 
   &__change {
-    padding: 0 22px 0 7px;
+    padding: 0 22px 0 0px;
     height: 24px;
     line-height: 24px;
     font-size: 14px;
     font-weight: 600;
-    color: #ffffff;
+    color: #0eaba3;
     border-radius: 3px;
-    background-color: #0eaba3;
+    // background-color: #0eaba3;
     position: relative;
 
     &::after {
@@ -385,16 +396,18 @@
       width: 12px;
       height: 12px;
       position: absolute;
-      top: 5px;
+      top: 6px;
       right: 7px;
-      background-image: url($image-path + 'arrow-up-white.svg');
+      background-image: url($image-path + 'arrow-up-green.svg');
     }
 
     &--nagative {
-      background-color: #eb7576;
+      // background-color: #eb7576;
+      color: #eb7576;
 
       &::after {
         transform: rotate(180deg);
+        background-image: url($image-path + 'arrow-up-red.svg');
       }
     }
 

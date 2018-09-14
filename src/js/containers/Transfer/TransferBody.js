@@ -49,7 +49,9 @@ export default class Transfer extends React.Component {
   constructor() {
     super()
     this.state = {
-      focus: "transfer"
+      focus: "transfer",
+      haveAnimationLeft: false,
+      haveAnimationRight: false
     }
   }
 
@@ -172,6 +174,7 @@ export default class Transfer extends React.Component {
 
   toggleRightPart = (value) => {
     this.props.dispatch(transferActions.toggleRightPart(value))
+    this.setState({haveAnimationRight: true})
     analytics.trackClickTheRightWing("transfer")
   }
 
@@ -222,6 +225,7 @@ export default class Transfer extends React.Component {
 
   toggleLeftPart = (value) => {
     this.props.dispatch(transferActions.toggleLeftPart(value))
+    this.setState({haveAnimationLeft: true})
     analytics.trackClickTheLeftWing("transfer")
   }
 
@@ -349,6 +353,9 @@ export default class Transfer extends React.Component {
 
         isOpenLeft={this.props.transfer.isOpenLeft}
         toggleLeftPart={this.toggleLeftPart}
+
+        haveAnimationLeft={this.state.haveAnimationLeft}
+        haveAnimationRight={this.state.haveAnimationRight}
       />
     )
   }

@@ -240,6 +240,7 @@ export default class TokenChart extends React.Component {
           <SlideDownTrigger onToggleContent={() => this.props.onToggleChartContent()} classNameTrigger="token-slide-trigger">
             <div className="balance-content__pair">
               {this.state.symbol}/ETH
+              <div className="arrow-balance-account"></div>
             </div>
             <div className="balance-content__rate-wrapper">
               <div className="balance-content__rate">{this.state.buyPrice}</div>
@@ -251,14 +252,14 @@ export default class TokenChart extends React.Component {
                   {shouldRenderChart ? this.state.change + '%' : '---'}
                 </div>
           
-                <div>in 24h</div>
+                <div className="time-change">{`${this.props.translate("history.in")}`} 24h</div>
               </div>
             </div>
           </SlideDownTrigger>
 
           <SlideDownContent>
             {shouldRenderChart === true && (
-              <div>
+              <div className="chart-wrapper">
                 <div
                   className={"balance-content__chart" + (this.props.chart.isLoading ? ' balance-content__chart--loading' : '')}>
                   <Line

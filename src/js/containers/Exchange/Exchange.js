@@ -12,6 +12,7 @@ import { getTranslate } from 'react-localize-redux'
 import * as converter from "../../utils/converter"
 import * as validators from "../../utils/validators"
 import * as exchangeActions from "../../actions/exchangeActions"
+import {setIsChangingPath} from "../../actions/globalActions"
 // import { default as _ } from 'underscore'
 import { clearSession } from "../../actions/globalActions"
 
@@ -52,12 +53,16 @@ import * as analytics from "../../utils/analytics"
 
 
 export default class Exchange extends React.Component {
-  // constructor(props){
-  //   super(props)
-  //   this.state = {
-  //     selectedGas: props.exchange.gasPrice <= 20? "f": "s", 
-  //   }
-  // }
+  constructor(props){
+    super(props)
+    this.state = {
+      isAnimation: false
+    }
+  }
+
+  setAnimation = () => {
+    this.setState({isAnimation: true})
+  }
 
   componentDidMount = () =>{
     if ((this.props.params.source.toLowerCase() !== this.props.exchange.sourceTokenSymbol.toLowerCase()) || 
