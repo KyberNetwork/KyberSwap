@@ -73,14 +73,12 @@ export default class ExchangeBody extends React.Component {
   }
 
   componentDidMount = () => {
-    var web3Service = new Web3Service()
-    // if (!web3Service.isHaveWeb3()) {
-    if (true) {
+    var web3Service = new Web3Service();
+
+    if (!web3Service.isHaveWeb3()) {
       if (isMobile.iOS()) {
-      // if (true) {
         this.setState({isIos: true})
-      } else if (true) {
-      // } else if (isMobile.Android()) {
+      } else if (isMobile.Android()) {
         this.setState({isAndroid: true});
       }
     }
