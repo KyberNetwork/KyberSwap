@@ -117,7 +117,7 @@
 
       .exchange-col {
         position: relative;
-        padding-bottom: 150px;
+        padding-bottom: 80px;
       }
 
       .swap-button-wrapper {
@@ -169,7 +169,13 @@
       }
 
       &.swap-content--imported .swap-button-wrapper {
-        bottom: 50px !important;
+        @include screen-min-width(large){
+          bottom: 50px !important;
+        }
+        @include screen-max-width(large){
+          position: relative;
+          top: 20px;
+        }
       }
     }
   }
