@@ -48,7 +48,7 @@
 
   #balance-account {
     .balances {
-      height: 253px;
+      height: 226px;
     }
     
     .change-wallet {
@@ -363,7 +363,7 @@
   }
 
   .slide-down {
-    border-bottom: solid 1px #e3e3e3;
+    //border-bottom: solid 1px #e3e3e3;
 
     &--active {
       background-color: #f2f2f2;
@@ -393,6 +393,7 @@
   }
   .slide-down {
     border-top: solid 1px #e3e3e3;
+    border-bottom: solid 1px #e3e3e3;
     position: relative;
     bottom: 1px;
   }

@@ -265,7 +265,7 @@ export default class TokenChart extends React.Component {
                   <Line
                     data={data}
                     options={options}
-                    height={223}
+                    height={200}
                   />
                 </div>
                 <div className="balance-content__range">{chartRangeHtml}</div>
