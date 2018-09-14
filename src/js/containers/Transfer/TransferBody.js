@@ -56,7 +56,7 @@ export default class Transfer extends React.Component {
   }
 
   componentDidMount = () => {
-    if (this.props.global.changeWalletType !== "transfer") globalActions.closeChangeWallet()
+    if (this.props.global.changeWalletType !== "") globalActions.closeChangeWallet()
   }
 
   validateSourceAmount = (value, gasPrice) => {
@@ -345,21 +345,17 @@ export default class Transfer extends React.Component {
         onBlur={this.onBlur}
         onFocus={this.onFocus}
         focus={this.state.focus}
-
         advanceLayout={this.getAdvanceLayout()}
         balanceLayout={this.getBalanceLayout()}
-
         networkError={this.props.global.network_error}
         isAgreed={this.props.global.termOfServiceAccepted}
         isChartActive={this.props.transfer.chart.isActive}
         chartTimeRange={this.props.transfer.chart.timeRange}
         onChangeChartRange={this.changeChartRange}
         onToggleChartContent={this.toggleChartContent}
-
         // advanceLayout = {this.getAdvanceLayout()}
         toggleRightPart={this.toggleRightPart}
         isOpenRight={this.props.transfer.isOpenRight}
-
         isOpenLeft={this.props.transfer.isOpenLeft}
         toggleLeftPart={this.toggleLeftPart}
 
@@ -368,6 +364,7 @@ export default class Transfer extends React.Component {
         isChangingWallet = {this.props.global.isChangingWallet}
         changeWalletType = {this.props.global.changeWalletType}
         closeChangeWallet = {this.closeChangeWallet}
+        global={this.props.global}
       />
     )
   }

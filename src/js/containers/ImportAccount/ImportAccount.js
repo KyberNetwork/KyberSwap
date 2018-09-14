@@ -6,7 +6,7 @@ import {
   ErrorModal, ImportByMetamask,
   ImportByDeviceWithLedger, ImportByDeviceWithTrezor
 } from "../ImportAccount"
-import { visitExchange } from "../../actions/globalActions"
+import { setIsAndroid, setIsIos } from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux'
 import { importAccountMetamask } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
@@ -28,7 +28,8 @@ import Web3Service from "../../services/web3"
     ethereum: store.connection.ethereum,
     tokens: supportTokens,
     screen: props.screen,
-    tradeType: props.tradeType
+    tradeType: props.tradeType,
+    global: store.global
   }
 })
 
@@ -43,9 +44,17 @@ export default class ImportAccount extends React.Component {
 
   componentDidMount = () => {
     var swapPage = document.getElementById("swap-app");
+    swapPage.className = swapPage.className === "" ? "no-min-height" : swapPage.className + " no-min-height";
+
     var web3Service = new Web3Service();
 
-    swapPage.className = swapPage.className === "" ? "no-min-height" : swapPage.className + " no-min-height"
+    if (!web3Service.isHaveWeb3()) {
+      if (isMobile.iOS()) {
+        this.props.dispatch(setIsIos(true));
+      } else if (isMobile.Android()) {
+        this.props.dispatch(setIsAndroid(true));
+      }
+    }
 
     if (this.props.termOfServiceAccepted){
       if (web3Service.isHaveWeb3()) {
@@ -79,9 +88,9 @@ export default class ImportAccount extends React.Component {
     if (!this.props.termOfServiceAccepted) {
       content = <LandingPage translate={this.props.translate} tradeType={this.props.tradeType}/>
     } else {
-      if (this.props.isIos){
+      if (this.props.global.isIos){
         content = this.getAppDownloadHtml("https://itunes.apple.com/us/app/coinbase-wallet/id1278383455?mt=8");
-      } else if (this.props.isAndroid) {
+      } else if (this.props.global.isAndroid) {
         content = this.getAppDownloadHtml("https://play.google.com/store/apps/details?id=org.toshi&hl=en");
       } else {
         content = (

@@ -24,7 +24,7 @@ const ExchangeBodyLayout = (props) => {
   function getStatusClasses(className) {
     let classes = '';
 
-    classes += (props.isIos || props.isAndroid) ? ' ' + className + '--mobile' : '';
+    classes += (props.global.isIos || props.global.isAndroid) ? ' ' + className + '--mobile' : '';
     classes += props.isAgreed ? ' ' + className + '--agreed' : '';
     classes += props.account !== false ? ' ' + className + '--imported' : '';
     classes += props.isChangingWallet ? ' swap-content--imported__change-wallet' : ''
