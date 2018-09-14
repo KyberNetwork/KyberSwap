@@ -17,8 +17,6 @@ import * as analytics from "../../utils/analytics"
 import constansts from "../../services/constants"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore';
-import { isMobile } from "../../utils/common";
-import Web3Service from "../../services/web3"
 
 @connect((store, props) => {
   const langs = store.locale.languages
@@ -66,21 +64,7 @@ export default class ExchangeBody extends React.Component {
   constructor() {
     super()
     this.state = {
-      focus: "",
-      isAndroid: false,
-      isIos: false
-    }
-  }
-
-  componentDidMount = () => {
-    var web3Service = new Web3Service();
-
-    if (!web3Service.isHaveWeb3()) {
-      if (isMobile.iOS()) {
-        this.setState({isIos: true})
-      } else if (isMobile.Android()) {
-        this.setState({isAndroid: true});
-      }
+      focus: ""
     }
   }
 
@@ -556,8 +540,7 @@ export default class ExchangeBody extends React.Component {
         isOpenRight={this.props.exchange.isOpenRight}
         isOpenLeft={this.props.exchange.isOpenLeft}
         toggleLeftPart={this.toggleLeftPart}
-        isIos={this.state.isIos}
-        isAndroid={this.state.isAndroid}
+        global={this.props.global}
       />
     )
   }

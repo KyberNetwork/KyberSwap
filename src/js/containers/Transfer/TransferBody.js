@@ -332,23 +332,20 @@ export default class Transfer extends React.Component {
         onBlur={this.onBlur}
         onFocus={this.onFocus}
         focus={this.state.focus}
-
         advanceLayout={this.getAdvanceLayout()}
         balanceLayout={this.getBalanceLayout()}
-
         networkError={this.props.global.network_error}
         isAgreed={this.props.global.termOfServiceAccepted}
         isChartActive={this.props.transfer.chart.isActive}
         chartTimeRange={this.props.transfer.chart.timeRange}
         onChangeChartRange={this.changeChartRange}
         onToggleChartContent={this.toggleChartContent}
-
         // advanceLayout = {this.getAdvanceLayout()}
         toggleRightPart={this.toggleRightPart}
         isOpenRight={this.props.transfer.isOpenRight}
-
         isOpenLeft={this.props.transfer.isOpenLeft}
         toggleLeftPart={this.toggleLeftPart}
+        global={this.props.global}
       />
     )
   }

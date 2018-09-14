@@ -12,7 +12,6 @@ const initState = {
   count: {storageKey: constants.STORAGE_KEY},
   conn_checker: constants.CONNECTION_CHECKER,
   isVisitFirstTime: true,
-
   isOpenAnalyze: false,
   isAnalize: false,
   isAnalizeComplete: false,
@@ -23,7 +22,9 @@ const initState = {
     address: "",
     balance: "",
     error: "Address is loading"
-  }
+  },
+  isIos: false,
+  isAndroid: false
 }
 
 const global = (state = initState, action) => {
@@ -132,6 +133,14 @@ const global = (state = initState, action) => {
     case "GLOBAL.SET_NETWORK_ERROR":{
       const {error} = action.payload
       return Object.assign({}, state, { network_error: error })
+    }
+
+    case "GLOBAL.SET_IS_IOS": {
+      return Object.assign({}, state, { isIos: action.payload })
+    }
+
+    case "GLOBAL.SET_IS_ANDROID": {
+      return Object.assign({}, state, { isAndroid: action.payload })
     }
   }
   return state

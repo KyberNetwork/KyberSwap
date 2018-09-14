@@ -220,6 +220,20 @@ export function setNetworkError(error){
   }
 }
 
+export function setIsIos(isIos) {
+  return {
+    type: "GLOBAL.SET_IS_IOS",
+    payload: isIos
+  }
+}
+
+export function setIsAndroid(isAndroid) {
+  return {
+    type: "GLOBAL.SET_IS_ANDROID",
+    payload: isAndroid
+  }
+}
+
 // export function updateTokenStatus() {
 //   return {
 //     type: "GLOBAL.UPDATE_TOKEN_STATUS"
