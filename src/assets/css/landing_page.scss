@@ -13,6 +13,12 @@
       position: initial !important;
     }
   }
+
+  &--transfer.swap-wrapper--mobile {
+    .swap-button-wrapper {
+      margin-top: 50px;
+    }
+  }
 }
 
 .swap-content {
@@ -122,6 +128,10 @@
     &--transfer {
       &.swap-wrapper--agreed {
         padding-bottom: 480px;
+      }
+
+      &.swap-wrapper--agreed.swap-wrapper--mobile {
+        padding-bottom: 0;
       }
     }
   }

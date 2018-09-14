@@ -14,6 +14,16 @@ const TransferForm = (props) => {
     if (check) props.input.amount.onChange(e)
   }
 
+  function getStatusClasses(className) {
+    let classes = '';
+
+    classes += (props.global.isIos || props.global.isAndroid) ? ' ' + className + '--mobile' : '';
+    classes += props.isAgreed ? ' ' + className + '--agreed' : '';
+    classes += props.account !== false ? ' ' + className + '--imported' : '';
+
+    return classes;
+  }
+
   var classSource = "amount-input"
   if (props.focus === "source") {
     classSource += " focus"
@@ -43,12 +53,10 @@ const TransferForm = (props) => {
 
           {props.balanceLayout}
         </div>
-        <div class={"cell medium-6 large-9 swap-wrapper swap-wrapper--transfer" +
-          (props.isAgreed ? ' swap-wrapper--agreed' : '') + (props.account !== false ? ' swap-wrapper--imported' : '')}>
+        <div class={"cell medium-6 large-9 swap-wrapper swap-wrapper--transfer" + getStatusClasses("swap-wrapper")}>
           <div className="transfer-detail grid-x exchange-col">
             <div className="cell small-12 large-8 transfer-col transfer-col-1">
-              <div className={"swap-content swap-content--transfer" +
-                (props.isAgreed ? ' swap-content--agreed' : '') + (props.account !== false ? ' swap-content--imported' : '')}>
+              <div className={"swap-content swap-content--transfer" + getStatusClasses("swap-content")}>
                 {props.networkError !== "" && (
                   <div className="network_error">
                     <span>

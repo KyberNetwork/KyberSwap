@@ -17,8 +17,6 @@ import * as analytics from "../../utils/analytics"
 import constansts from "../../services/constants"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore';
-import { isMobile } from "../../utils/common";
-import Web3Service from "../../services/web3"
 
 @connect((store, props) => {
   const langs = store.locale.languages
@@ -74,19 +72,19 @@ export default class ExchangeBody extends React.Component {
     }
   }
 
-  componentDidMount = () => {
-    var web3Service = new Web3Service();
+  // componentDidMount = () => {
+  //   var web3Service = new Web3Service();
 
-    if (!web3Service.isHaveWeb3()) {
-      if (isMobile.iOS()) {
-        this.setState({isIos: true})
-      } else if (isMobile.Android()) {
-        this.setState({isAndroid: true});
-      }
-    }
+  //   if (!web3Service.isHaveWeb3()) {
+  //     if (isMobile.iOS()) {
+  //       this.setState({isIos: true})
+  //     } else if (isMobile.Android()) {
+  //       this.setState({isAndroid: true});
+  //     }
+  //   }
 
-    if (this.props.global.changeWalletType !== "swap") globalActions.closeChangeWallet()
-  }
+  //   if (this.props.global.changeWalletType !== "swap") globalActions.closeChangeWallet()
+  // }
 
   validateTxFee = (gasPrice) => {
     if (this.props.account.account === false){
@@ -575,6 +573,7 @@ export default class ExchangeBody extends React.Component {
         closeChangeWallet = {this.closeChangeWallet}
         isIos={this.state.isIos}
         isAndroid={this.state.isAndroid}
+        global={this.props.global}
       />
     )
   }
