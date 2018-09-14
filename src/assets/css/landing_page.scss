@@ -1,3 +1,20 @@
+.swap-wrapper {
+  &--agreed.swap-wrapper--mobile {
+    padding-bottom: 0;
+
+    .swap-button-wrapper {
+      padding: 0;
+      position: initial;
+    }
+
+    .token-compare {
+      margin: 15px 0;
+      text-align: left !important;
+      position: initial !important;
+    }
+  }
+}
+
 .swap-content {
   @include screen-min-width(large){
     padding: 65px 0 220px
@@ -33,6 +50,11 @@
 
     .token-compare {
       bottom: 10px !important;
+    }
+
+    &.swap-content--mobile {
+      position: static;
+      padding-bottom: 0;
     }
   }
 
@@ -79,10 +101,6 @@
   .swap-wrapper {
     position: relative;
     padding-bottom: 230px;
-
-    // .advance-config {
-    //   margin-top: 1rem;
-    // }
 
     &--agreed {
       padding-bottom: 510px;

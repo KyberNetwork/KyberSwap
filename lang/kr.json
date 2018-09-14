@@ -104,8 +104,7 @@
     "address": "받는 주소",
     "slippage_tip": "고급 옵션에서 최소 비율을 조절하여 최대 미끄럼 비율을 변경할 수 있습니다.",
     "max_slippage": "가치를 잃은 ${percent}%로 최대입니다",
-    "included": "포함",
-    "type_pass_before_progress": "비밀번호를 입력 하세요"
+    "included": "포함"
   },
   "modal": {
     "enter_password": "비밀번호 입력",
@@ -198,9 +197,7 @@
     "exchange_enable": "거래는 일일 한도를 초과했습니다! 내일 00:00 UTC+0 다시 거래 할 수도 있습니다",
     "min_rate_greater_expected_rate": "구성된 최소 환율은 카이버 네트워크에서 권장하는 것보다 높습니다. 귀하의 거래소는 실패\n할 확률이 높습니다.",
     "exceed_daily_volumn": "귀하는 <a target='_blank' href='${link}'>더 높은 거래 한도를 가지려면</a>\n저희에게 등록하십시오",
-    "broadcast_tx": "죄송합니다! 트랜잭션을 블록체인에 브로드 캐스팅 할 수 없었습니다. <a target='_blank' href='${link}'>\nEtherscan </a>에서 확인하세요",
-    "invalid_json_file": "JSON 파일이 일치하지 않습니다. 올바른 JSON 파일을 업로드 해주세요.",
-    "key_derivation_failed": "키 인증 실패 - 잘못된 패스워드"
+    "broadcast_tx": "죄송합니다! 트랜잭션을 블록체인에 브로드 캐스팅 할 수 없었습니다. <a target='_blank' href='${link}'>\nEtherscan </a>에서 확인하세요"
   },
   "import": {
     "from_metamask": "Metamask",
@@ -307,6 +304,7 @@
     "mid": "중간",
     "mid_price": "중간 가격"
   },
+  "download": "다운로드",
   "home": "홈",
   "tracker": "트래커",
   "product_feedback": "제품 피드백하기",

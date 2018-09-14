@@ -14,12 +14,11 @@ import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import * as globalActions from "../../actions/globalActions"
 import * as exchangeActions from "../../actions/exchangeActions"
 import * as analytics from "../../utils/analytics"
-
 import constansts from "../../services/constants"
 import { getTranslate } from 'react-localize-redux'
-import { default as _ } from 'underscore'
-
-//import {AdvanceConfigLayout, GasConfig} from "../../components/TransactionCommon"
+import { default as _ } from 'underscore';
+import { isMobile } from "../../utils/common";
+import Web3Service from "../../services/web3"
 
 @connect((store, props) => {
   const langs = store.locale.languages
@@ -68,8 +67,22 @@ export default class ExchangeBody extends React.Component {
     super()
     this.state = {
       focus: "",
+      isAndroid: false,
+      isIos: false,
       haveAnimationLeft: false,
       haveAnimationRight: false
+    }
+  }
+
+  componentDidMount = () => {
+    var web3Service = new Web3Service();
+
+    if (!web3Service.isHaveWeb3()) {
+      if (isMobile.iOS()) {
+        this.setState({isIos: true})
+      } else if (isMobile.Android()) {
+        this.setState({isAndroid: true});
+      }
     }
 
     if (this.props.global.changeWalletType !== "swap") globalActions.closeChangeWallet()
@@ -542,10 +555,8 @@ export default class ExchangeBody extends React.Component {
         maxCap={maxCap}
         errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}
         isAgreed={this.props.global.termOfServiceAccepted}
-
         advanceLayout={this.getAdvanceLayout()}
         balanceLayout={this.getBalanceLayout()}
-
         focus={this.state.focus}
         networkError={this.props.global.network_error}
         // isChartActive={this.props.exchange.chart.isActive}
@@ -554,7 +565,6 @@ export default class ExchangeBody extends React.Component {
         // onToggleChartContent={this.toggleChartContent}
         toggleRightPart={this.toggleRightPart}
         isOpenRight={this.props.exchange.isOpenRight}
-
         isOpenLeft={this.props.exchange.isOpenLeft}
         toggleLeftPart={this.toggleLeftPart}
 
@@ -563,6 +573,8 @@ export default class ExchangeBody extends React.Component {
         isChangingWallet = {this.props.global.isChangingWallet}
         changeWalletType = {this.props.global.changeWalletType}
         closeChangeWallet = {this.closeChangeWallet}
+        isIos={this.state.isIos}
+        isAndroid={this.state.isAndroid}
       />
     )
   }
