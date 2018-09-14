@@ -6,7 +6,6 @@ import constants from "../../services/constants"
 import ReactTooltip from 'react-tooltip'
 import { filterInputNumber } from "../../utils/validators";
 import { ImportAccount } from "../../containers/ImportAccount";
-//import { AccountBalance } from "../../containers/TransactionCommon";
 import { PostExchangeWithKey } from "../../containers/Exchange";
 import BLOCKCHAIN_INFO from "../../../../env";
 
@@ -20,6 +19,16 @@ const ExchangeBodyLayout = (props) => {
   function handleChangeDest(e) {
     var check = filterInputNumber(e, e.target.value, props.input.destAmount.value)
     if (check) props.input.destAmount.onChange(e)
+  }
+
+  function getStatusClasses(className) {
+    let classes = '';
+
+    classes += (props.isIos || props.isAndroid) ? ' ' + className + '--mobile' : '';
+    classes += props.isAgreed ? ' ' + className + '--agreed' : '';
+    classes += props.account !== false ? ' ' + className + '--imported' : '';
+
+    return classes;
   }
 
   var errorSelectSameToken = props.errors.selectSameToken !== '' ? props.translate(props.errors.selectSameToken) : ''
@@ -87,12 +96,10 @@ const ExchangeBodyLayout = (props) => {
         {props.balanceLayout}
       </div>
 
-      <div className={"cell medium-6 large-9 swap-wrapper" +
-        (props.isAgreed ? ' swap-wrapper--agreed' : '') + (props.account !== false ? ' swap-wrapper--imported' : '')}>
+      <div className={"cell medium-6 large-9 swap-wrapper" + getStatusClasses("swap-wrapper")}>
         <div className="grid-x exchange-col">
           <div className="cell large-8 exchange-col-1">
-            <div className={"swap-content" +
-              (props.isAgreed ? ' swap-content--agreed' : '') + (props.account !== false ? ' swap-content--imported' : '')}>
+            <div className={"swap-content" + getStatusClasses("swap-content")}>
               {props.networkError !== "" && (
                 <div className="network_error">
                   <span>
@@ -171,7 +178,11 @@ const ExchangeBodyLayout = (props) => {
                 <PostExchangeWithKey />
 
                 {props.account === false && (
-                  <ImportAccount tradeType="swap" />
+                  <ImportAccount
+                    tradeType="swap"
+                    isIos={props.isIos}
+                    isAndroid={props.isAndroid}
+                  />
                 )}
               </div>
             </div>

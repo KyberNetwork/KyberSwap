@@ -190,6 +190,7 @@ $animationTime: 0.5s;
     height: 50px;
   }
 }
+
 .input-reveal{
   .toggle{
     right: 12px;
@@ -217,3 +218,71 @@ $animationTime: 0.5s;
     background-image: url(../img/lock.svg);
   }
 }
+
+.download-mobile {
+  background-color: #3c4664;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 1rem;
+  width: calc(100% + 2rem);
+  position: relative;
+  left: -1rem;
+
+  .mobile-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .mobile-icon {
+    width: 35px;
+    height: 35px;
+    background: url(../img/toshi.svg) center no-repeat;
+    background-size: contain;
+  }
+
+  .mobile-content {
+    width: calc(100% - 35px);
+    padding: 0 10px 0 15px;
+  }
+
+  .mobile-title {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .mobile-desc {
+    font-size: 12px;
+  }
+
+  .mobile-btn {
+    background-color: $swap-color;
+    color: white;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+}
+
+//.swap-button-wrapper {
+//  padding: 0 !important;
+//  position: initial !important;
+//}
+//
+//.token-compare {
+//  margin: 15px 0 !important;
+//  text-align: left !important;
+//  position: initial !important;
+//}
+//
+//.cell.medium-6.large-9.swap-wrapper.swap-wrapper--agreed {
+//  padding-bottom: 0 !important;
+//}
+//
+//.swap-content.swap-content--agreed {
+//  position: static !important;
+//  padding-bottom: 0 !important;
+//}
