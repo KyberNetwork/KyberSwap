@@ -92,7 +92,7 @@ const ExchangeBodyLayout = (props) => {
         <div className="grid-x exchange-col">
           <div className="cell large-8 exchange-col-1">
             <div className={"swap-content" +
-              (props.isAgreed ? ' swap-content--agreed' : '') + (props.account !== false ? ' swap-content--imported' : '')}>
+              (props.isAgreed ? ' swap-content--agreed' : '') + (props.account !== false ? ' swap-content--imported' : '') + (props.isChangingWallet ? ' swap-content--imported__change-wallet' : '')}>
               {props.networkError !== "" && (
                 <div className="network_error">
                   <span>
@@ -163,16 +163,16 @@ const ExchangeBodyLayout = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="large-6">
+              {!props.isChangingWallet ? <div className="large-6">
                 {props.addressBalanceLayout}
-              </div>
+              </div> : ''}
 
               <div className="swap-button-wrapper">
-                <PostExchangeWithKey />
+                <PostExchangeWithKey isChangingWallet={props.isChangingWallet}/>
 
-                {props.account === false && (
-                  <ImportAccount tradeType="swap" />
-                )}
+                {(props.account === false || (props.isChangingWallet && props.changeWalletType === "swap") ) &&
+                  <ImportAccount tradeType="swap" isChangingWallet={props.isChangingWallet} closeChangeWallet={props.closeChangeWallet}/> 
+                }
               </div>
             </div>
           </div>

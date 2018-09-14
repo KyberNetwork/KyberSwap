@@ -71,6 +71,8 @@ export default class ExchangeBody extends React.Component {
       haveAnimationLeft: false,
       haveAnimationRight: false
     }
+
+    if (this.props.global.changeWalletType !== "swap") globalActions.closeChangeWallet()
   }
 
   validateTxFee = (gasPrice) => {
@@ -404,7 +406,12 @@ export default class ExchangeBody extends React.Component {
         onToggleChartContent={this.toggleChartContent}
         onToggleBalanceContent={this.toggleBalanceContent}
         isBalanceActive = {this.props.exchange.isBalanceActive}
+        tradeType = "swap"
       />)
+  }
+
+  closeChangeWallet = () => {
+    this.props.dispatch(globalActions.closeChangeWallet())
   }
 
   render() {
@@ -553,6 +560,9 @@ export default class ExchangeBody extends React.Component {
 
         haveAnimationLeft={this.state.haveAnimationLeft}
         haveAnimationRight={this.state.haveAnimationRight}
+        isChangingWallet = {this.props.global.isChangingWallet}
+        changeWalletType = {this.props.global.changeWalletType}
+        closeChangeWallet = {this.closeChangeWallet}
       />
     )
   }

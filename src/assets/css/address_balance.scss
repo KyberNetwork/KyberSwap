@@ -76,7 +76,32 @@
       color: #222222;
       text-transform: uppercase;
       position: relative;
-
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .change-wallet {
+        font-weight: normal;
+        text-transform: capitalize;
+        font-size: 13px;
+        background: #999999;
+        color: white;
+        padding: 2px 15px 2px 8px;
+        border-radius: 4px;
+        position: relative;
+        &::after {
+          content: '';
+          background-image: url(../img/arrow-white-right.png);
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          top: 6px;
+          right: 2px;
+          background-repeat: no-repeat;
+        }
+        &:hover {
+          cursor: pointer;
+        }
+      }
       // &:before {
       //   content: '';
       //   width: 4px;
@@ -92,13 +117,9 @@
     }
 
     a {
-      font-size: 14px;
+      font-size: 16px;
       color: #666666;
       word-wrap: break-word;
-      span {
-        color: #222222;
-        font-weight: bold;
-      }
     }
   }
 }

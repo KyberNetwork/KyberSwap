@@ -307,6 +307,7 @@ export default class PostTransfer extends React.Component {
         termAndServices={termAndServices}
         openConfig={this.openConfig}
         advanced={this.props.transfer.advanced}
+        isChangingWallet={this.props.isChangingWallet}
       />
     )
   }

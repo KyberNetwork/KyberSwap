@@ -135,11 +135,11 @@ const AccountBalanceLayout = (props) => {
         <div className="balance-address">
           <div className="title">
             {props.translate("address.your_wallet_address") || "Your Wallet Address"}
-            <div className="change-wallet">{props.translate("address.change_wallet") || "Change Wallet"}</div>
+            <div className="change-wallet" onClick={(e) => props.changeWallet(props.tradeType)}>{props.translate("address.change_wallet") || "Change"}</div>
           </div>
           <div>
             {props.account.address ? <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address} onClick={(e) => {analytics.trackClickShowAddressOnEtherescan()}}>
-              <span>{props.account.address.slice(0, 6)}</span>{props.account.address.slice(6, -5)}<span>{props.account.address.slice(-5 )}</span>
+              {props.account.address.slice(0, 8)}...{props.account.address.slice(-6)}
             </a> : ''}
           </div>
         </div>

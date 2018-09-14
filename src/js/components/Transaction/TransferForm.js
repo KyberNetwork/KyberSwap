@@ -104,17 +104,17 @@ const TransferForm = (props) => {
                         <span class="error-text">{props.translate(props.errors.amountTransfer)}</span>
                       }
                     </div>
-                    {props.addressBalanceLayout}
+                    {!props.isChangingWallet ? props.addressBalanceLayout : ''}
                   </div>
                 </div>
 
                 <div className="swap-button-wrapper">
                   <div className="transfer-btn">
-                    <PostTransferWithKey />
+                    <PostTransferWithKey isChangingWallet={props.isChangingWallet} />
                   </div>
 
-                  {props.account === false && (
-                    <ImportAccount tradeType="transfer" />
+                  {(props.account === false || (props.isChangingWallet && props.changeWalletType === "transfer") ) && (
+                    <ImportAccount tradeType="transfer" isChangingWallet={props.isChangingWallet} closeChangeWallet={props.closeChangeWallet} />
                   )}
                 </div>
               </div>

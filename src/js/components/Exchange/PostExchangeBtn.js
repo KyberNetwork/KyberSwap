@@ -5,7 +5,7 @@ const PostExchangeBtn = (props) => {
   return (
     <div className="exchange-wrapper-btn">
       <div>
-        {props.isHaveAccount &&
+        {props.isHaveAccount && !props.isChangingWallet &&
           <div>
             <a className={props.className} onClick={props.submit} data-open="passphrase-modal">
               {props.translate("transaction.swap") || "Swap"}

@@ -3,6 +3,13 @@ import React from "react"
 const ImportAccountView = (props) => {
   return (
     <div id="import-account">
+      {props.isChangingWallet && (
+        <div className="close-change-wallet">
+          <div>{props.translate("transaction.change_wallet") || "Change Wallet"}</div>
+          <div></div>
+          <div onClick={(e) => props.closeChangeWallet()}></div>
+        </div>
+      )}
       <div className="frame">
         <div className="small-centered" id="import-acc">
           <div className="import-account">

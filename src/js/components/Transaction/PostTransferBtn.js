@@ -5,7 +5,7 @@ const PostTransferBtn = (props) => {
 
   return (
     <div>
-      {props.isHaveAccount &&
+      {props.isHaveAccount && !props.isChangingWallet &&
         <a className={'submit-transfer ' + props.className} data-open="passphrase-modal" onClick={props.submit}>
           {props.translate("transaction.transfer") || "Transfer"}
         </a>

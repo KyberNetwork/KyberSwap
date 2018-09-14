@@ -675,6 +675,7 @@ export default class PostExchange extends React.Component {
         isApproving={this.props.form.isApproving}
         translate={this.props.translate}
         rateToken={rateToken}
+        isChangingWallet={this.props.isChangingWallet}
       />
     )
   }

@@ -53,6 +53,8 @@ export default class Transfer extends React.Component {
       haveAnimationLeft: false,
       haveAnimationRight: false
     }
+
+    if (this.props.global.changeWalletType !== "transfer") globalActions.closeChangeWallet()
   }
 
   validateSourceAmount = (value, gasPrice) => {
@@ -253,7 +255,12 @@ export default class Transfer extends React.Component {
 
         onToggleBalanceContent={this.toggleBalanceContent}
         isBalanceActive = {this.props.transfer.isBalanceActive}
+        tradeType = "transfer"
       />)
+  }
+
+  closeChangeWallet = () => {
+    this.props.dispatch(globalActions.closeChangeWallet())
   }
 
   render() {
@@ -356,6 +363,9 @@ export default class Transfer extends React.Component {
 
         haveAnimationLeft={this.state.haveAnimationLeft}
         haveAnimationRight={this.state.haveAnimationRight}
+        isChangingWallet = {this.props.global.isChangingWallet}
+        changeWalletType = {this.props.global.changeWalletType}
+        closeChangeWallet = {this.closeChangeWallet}
       />
     )
   }

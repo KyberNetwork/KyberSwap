@@ -119,6 +119,8 @@ export default class ImportAccount extends React.Component {
           fifthKey={<ImportByPrivateKey />}
           errorModal={<ErrorModal />}
           translate={this.props.translate}
+          isChangingWallet = {this.props.isChangingWallet}
+          closeChangeWallet = {this.props.closeChangeWallet}
         />
       )
     }

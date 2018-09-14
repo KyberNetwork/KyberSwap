@@ -220,6 +220,19 @@ export function setNetworkError(error){
   }
 }
 
+export function changeWallet(tradeType){
+  return {
+    type: "GLOBAL.CHANGE_WALLET",
+    payload: tradeType
+  }
+}
+
+export function closeChangeWallet(){
+  return {
+    type: "GLOBAL.CLOSE_CHANGE_WALLET"
+  }
+}
+
 // export function updateTokenStatus() {
 //   return {
 //     type: "GLOBAL.UPDATE_TOKEN_STATUS"

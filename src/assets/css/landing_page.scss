@@ -42,6 +42,11 @@
     .token-compare {
       position: initial !important;
     }
+    &__change-wallet {
+      .token-compare {
+        position: absolute !important;
+      }
+    }
   }
 
   &--transfer {

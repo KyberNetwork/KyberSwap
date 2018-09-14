@@ -7,6 +7,7 @@ import {acceptTermOfService} from "../../actions/globalActions"
 // import { hideSelectToken } from "../../actions/utilActions"
 import * as analytics from "../../utils/analytics"
 // import {openImportAccount as openImportAccountExchange} from "../../actions/exchangeActions"
+import {changeWallet} from "../../actions/globalActions"
 
 import { getTranslate } from 'react-localize-redux';
 
@@ -110,6 +111,10 @@ export default class AccountBalance extends React.Component {
   //   this.props.dispatch(openImportAccountExchange())
   // }
 
+  changeWallet = (tradeType) => {
+    this.props.dispatch(changeWallet(tradeType))
+  }
+
   render() {
     var sortValue = this.state.sortType === "Price" ? this.state.sortValuePrice_DES : this.state.sortValueSymbol_DES;
 
@@ -143,6 +148,8 @@ export default class AccountBalance extends React.Component {
         onToggleBalanceContent={this.onToggleBalanceContent}
 
         acceptTerm = {this.acceptTerm}
+        tradeType = {this.props.tradeType}
+        changeWallet = {this.changeWallet}
       />
     )
   }

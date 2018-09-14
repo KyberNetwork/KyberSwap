@@ -18,6 +18,8 @@ const initState = {
   isAnalizeComplete: false,
   analizeError : {},
   selectedAnalyzeHash: '',
+  changeWalletType: "",
+  isChangingWallet: false,
   network_error:"",
   metamask: {
     address: "",
@@ -132,6 +134,15 @@ const global = (state = initState, action) => {
     case "GLOBAL.SET_NETWORK_ERROR":{
       const {error} = action.payload
       return Object.assign({}, state, { network_error: error })
+    }
+
+    case "GLOBAL.CHANGE_WALLET": {
+      const tradeType = action.payload
+      return Object.assign({}, state, { changeWalletType: tradeType, isChangingWallet: true })
+    }
+
+    case "GLOBAL.CLOSE_CHANGE_WALLET": {
+      return Object.assign({}, state, { changeWalletType: "", isChangingWallet: false })
     }
   }
   return state
