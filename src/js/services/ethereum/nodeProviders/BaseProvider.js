@@ -623,6 +623,7 @@ export default class BaseProvider {
                         // })
                     }
                 }).catch((err) => {
+                    console.log(err)
                     reject(err)
                 })
         })
