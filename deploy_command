@@ -1,6 +1,9 @@
 
 
 
+
+scp -r /Users/andrewnguyen/Documents/user-dashboard/swap/dist/mainnet_test/* ubuntu@13.251.27.13:/home/ubuntu/swap
+
 scp -r /Users/andrewnguyen/Documents/user-dashboard/swap/dist/ropsten/* ubuntu@13.251.27.13:/home/ubuntu/swap
 
 scp -r /Users/andrewnguyen/Documents/user-dashboard/swap/dist/rinkeby/* ubuntu@13.251.27.13:/home/ubuntu/rinkeby-swap

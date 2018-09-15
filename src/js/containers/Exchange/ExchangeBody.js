@@ -217,7 +217,7 @@ export default class ExchangeBody extends React.Component {
     if (value < 0) return
     this.props.dispatch(exchangeActions.inputChange('dest', value))
 
-    var valueSource = caculateSourceAmount(value, this.props.exchange.offeredRate, 6)
+    var valueSource = converters.caculateSourceAmount(value, this.props.exchange.offeredRate, 6)
     this.validateRateAndSource(valueSource)
   }
 

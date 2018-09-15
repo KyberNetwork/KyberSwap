@@ -213,6 +213,15 @@ const exchange = (state = initState, action) => {
       if (newState.sourceAmount !== "") {
         newState.minDestAmount = converter.calculateDest(newState.sourceAmount, expectedRate).toString(10)
       }
+
+      //calculate source, dest
+      if (newState.inputFocus === 'dest'){
+        newState.sourceAmount = converter.caculateSourceAmount(newState.destAmount, expectedRate)
+      }
+      if (newState.inputFocus === 'source'){
+        newState.destAmount = converter.calculateDest(newState.sourceAmount, expectedRate)
+      }
+
       //newState.offeredRateBalance = action.payload.reserveBalance
       // newState.offeredRateExpiryBlock = action.payload.expirationBlock
       if (!newState.isEditRate) {

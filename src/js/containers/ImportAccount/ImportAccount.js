@@ -12,6 +12,8 @@ import { importAccountMetamask } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import Web3Service from "../../services/web3"
 
+import {isMobile} from '../../utils/common'
+
 @connect((store, props) => {
   var tokens = store.tokens.tokens
   var supportTokens = []
