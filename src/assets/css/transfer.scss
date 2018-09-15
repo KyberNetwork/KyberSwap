@@ -6,6 +6,7 @@ $padding-col-left : 2rem;
 
 #transfer-screen{
   .swap-wrapper{
+    position: relative;
     @include screen-max-width(large){
       background-color: white;
     }

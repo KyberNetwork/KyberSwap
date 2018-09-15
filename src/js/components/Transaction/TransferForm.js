@@ -54,6 +54,17 @@ const TransferForm = (props) => {
           {props.balanceLayout}
         </div>
         <div class={"cell medium-6 large-9 swap-wrapper swap-wrapper--transfer" + getStatusClasses("swap-wrapper")}>
+          {!props.isOpenLeft &&
+            (
+              <div className="toogle-side toogle-wallet" onClick={(e) => {props.toggleLeftPart(true)}}>
+                <div className="toogle-content toogle-content-wallet">
+                  <div>{props.translate("transaction.wallet") || "Wallet"}</div>
+                </div>
+                <div className="wings-dropdown"></div>
+              </div>
+            )
+            // return <div><button onClick={(e) => this.toggleLeftPart(true) }>Open left</button></div>
+          }
           <div className="transfer-detail grid-x exchange-col">
             <div className="cell small-12 large-8 transfer-col transfer-col-1">
               <div className={"swap-content swap-content--transfer" + getStatusClasses("swap-content")}>

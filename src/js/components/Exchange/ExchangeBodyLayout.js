@@ -98,6 +98,17 @@ const ExchangeBodyLayout = (props) => {
       </div>
 
       <div className={"cell medium-6 large-9 swap-wrapper" + getStatusClasses("swap-wrapper")}>
+        {!props.isOpenLeft &&
+          (
+            <div className="toogle-side toogle-wallet" onClick={(e) => {props.toggleLeftPart(true)}}>
+              <div className="toogle-content toogle-content-wallet">
+                <div>{props.translate("transaction.wallet") || "Wallet"}</div>
+              </div>
+              <div className="wings-dropdown"></div>
+            </div>
+          )
+          // return <div><button onClick={(e) => this.toggleLeftPart(true) }>Open left</button></div>
+        }
         <div className="grid-x exchange-col">
           <div className="cell large-8 exchange-col-1">
             <div className={"swap-content" + getStatusClasses("swap-content")}>
@@ -175,7 +186,7 @@ const ExchangeBodyLayout = (props) => {
                 {props.addressBalanceLayout}
               </div> : ''}
 
-              <div className="swap-button-wrapper">
+              <div className={`swap-button-wrapper ${!props.isOpenLeft && !props.isOpenRight && props.isChangingWallet ? 'swap__change-wallet' : ''}`}>
                 <PostExchangeWithKey isChangingWallet={props.isChangingWallet}/>
 
                 {(props.account === false || (props.isChangingWallet && props.changeWalletType === "swap") ) &&

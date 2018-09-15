@@ -385,15 +385,16 @@ export default class ExchangeBody extends React.Component {
 
   getBalanceLayout = () => {
     if (!this.props.exchange.isOpenLeft) {
-      return (
-        <div className="toogle-side toogle-wallet" onClick={(e) => this.toggleLeftPart(true)}>
-          <div className="toogle-content toogle-content-wallet">
-            <div>{this.props.translate("transaction.wallet") || "Wallet"}</div>
-          </div>
-          <div className="wings-dropdown"></div>
-        </div>
-      )
+      // return (
+      //   <div className="toogle-side toogle-wallet" onClick={(e) => this.toggleLeftPart(true)}>
+      //     <div className="toogle-content toogle-content-wallet">
+      //       <div>{this.props.translate("transaction.wallet") || "Wallet"}</div>
+      //     </div>
+      //     <div className="wings-dropdown"></div>
+      //   </div>
+      // )
       // return <div><button onClick={(e) => this.toggleLeftPart(true) }>Open left</button></div>
+      return
     }
     return (
       <AccountBalance

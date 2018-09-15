@@ -16,6 +16,9 @@
 } 
 
 #exchange {
+  .swap-wrapper {
+    position: relative;
+  }
   @media print, screen and (min-width: 40em) {
     .medium-5 {
       width: 45%;
