@@ -108,13 +108,13 @@
     }
   }
 }
-@include screen-min-width(large) {
-  .swap-content--transfer {
-    .swap-button-wrapper{
-      margin-bottom: 75px;
-    }
-  }
-}
+// @include screen-min-width(large) {
+//   .swap-content--transfer {
+//     .swap-button-wrapper{
+//       margin-bottom: 75px;
+//     }
+//   }
+//}
 @include screen-max-width(large) {
   .swap-wrapper {
     position: relative;
