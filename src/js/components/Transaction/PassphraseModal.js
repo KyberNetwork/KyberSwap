@@ -96,7 +96,7 @@ const PassphraseModal = (props) => {
         <div className={!!props.passwordError ? "error password-input" : "password-input"}>
           <div class="type-password">{props.translate("transaction.type_pass_before_progress") || "Type a password before progressing"}</div>
           <div className="input-passpharse grid-x">
-            <div className="input-reveal cell small-12 medium-8">              
+            <div className="input-reveal cell small-12 medium-6">              
               <input className="text-center security" id="passphrase" type="text"
                 autoComplete="off" spellCheck="false"
                 placeholder="Password"
@@ -105,7 +105,7 @@ const PassphraseModal = (props) => {
               <a className="toggle" onClick={() => toggleShowPw()}></a>
               <a className="tootip"></a>
             </div>
-            <div className="cell small-12 medium-4">
+            <div className="cell small-12 medium-6">
               <a className={"button process-submit" + (props.isConfirming || props.isFetchingGas || props.isFetchingRate ? " waiting" : " next")}
                 onClick={(e) => submitTransaction(e)}>
                 {props.translate("modal.confirm").toLocaleUpperCase() || "Confirm".toLocaleUpperCase()}

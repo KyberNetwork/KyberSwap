@@ -538,7 +538,7 @@ input.search-input {
     //   height: 15px;
     // }
     .toogle-content {
-      border: 1px solid #aaa;
+      border: 1px solid #DADADA;
       border-bottom: none;
       padding: 6px 35px 6px 15px;
       position: relative;
@@ -564,8 +564,8 @@ input.search-input {
         }
       }
       &.toogle-content-wallet {
-        top: 13px;
-        box-shadow: -3px -5px 12px 0 hsla(0,0%,53%,.26), -12px 0 12px 0 hsla(165,3%,69%,.26);
+        top: 12px;
+        box-shadow: -3px -5px 15px -7px hsla(0,0%,53%,.26), -10px -5px 15px 0px hsla(165,3%,69%,.26);
         padding: 6px 15px 5px 35px;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
@@ -599,8 +599,8 @@ input.search-input {
 
       background-color: #f5f5f5;
       .toogle-content-wallet{
-        border: 1px solid #ddd;
-        border-bottom: none;
+        border: 1px solid #DADADA;
+        // border-bottom: none;
       }
       &::after{
         transform: rotate(-90deg);
