@@ -326,6 +326,7 @@ export default class Transfer extends React.Component {
           setAmount={this.setAmount}
           balance={addressBalance}
           translate={this.props.translate}
+          tradeType="transfer"
         />
       )
     }
