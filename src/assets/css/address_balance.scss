@@ -7,7 +7,7 @@
 }
 
 @include screen-min-width(large) {
-  .balance-wrapper-normal, .balance-wrapper-opened-transfer,
+  .balance-wrapper-normal,
   .exchange-col-1 {
     box-shadow: $box-shadow-tab;
   }
@@ -22,15 +22,11 @@
       transition: all .3s;
     }
 
-    &-opened, &-opened-transfer {
+    &-opened {
       min-height: 503px !important;
       background: white;
       position: relative;
       z-index: 1;
-    }
-
-    &-opened-transfer {
-      border-right: none;
     }
 
     &-closed {
