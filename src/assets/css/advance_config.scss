@@ -7,15 +7,16 @@ $radio-color: #5D9E7A;
 }
 
 @include screen-min-width(large) {
-  @keyframes moving-right {
-    to {
-      transform: translateX(50);
-    }
-  }
-  .advance-layout{
-    animation: moving-left 0.3s forwards;
-    transform: translateX(-50px);
+  .advance-for-mobile {
     transition: all .3s;
+  }
+
+  .advance-layout {
+    transform: translateX(0);
+
+    &-closed {
+      transform: translateX(-50px);
+    }
   }
 }
 
