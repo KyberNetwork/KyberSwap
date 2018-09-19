@@ -595,12 +595,12 @@ input.search-input {
       z-index: 3;
       top: 60px;
       // right: -70px;
-      left: -114px;
+      left: -113px;
 
       background-color: #f5f5f5;
       .toogle-content-wallet{
         border: 1px solid #DADADA;
-        // border-bottom: none;
+         border-bottom: none;
       }
       &::after{
         transform: rotate(-90deg);
