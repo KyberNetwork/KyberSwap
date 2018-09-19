@@ -13,8 +13,6 @@ import * as common from "../../utils/common"
 import * as globalActions from "../../actions/globalActions"
 import constansts from "../../services/constants"
 import * as analytics from "../../utils/analytics"
-
-// import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase, throwErrorDestAddress, thowErrorAmount, makeNewTransfer } from '../../actions/transferActions';
 import * as transferActions from "../../actions/transferActions"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
@@ -49,9 +47,7 @@ export default class Transfer extends React.Component {
   constructor() {
     super()
     this.state = {
-      focus: "transfer",
-      haveAnimationLeft: false,
-      haveAnimationRight: false
+      focus: "transfer"
     }
   }
 
@@ -178,7 +174,6 @@ export default class Transfer extends React.Component {
 
   toggleRightPart = (value) => {
     this.props.dispatch(transferActions.toggleRightPart(value))
-    this.setState({haveAnimationRight: true})
     analytics.trackClickTheRightWing("transfer")
   }
 
@@ -229,7 +224,6 @@ export default class Transfer extends React.Component {
 
   toggleLeftPart = (value) => {
     this.props.dispatch(transferActions.toggleLeftPart(value))
-    this.setState({haveAnimationLeft: true})
     analytics.trackClickTheLeftWing("transfer")
   }
 
@@ -354,14 +348,10 @@ export default class Transfer extends React.Component {
         chartTimeRange={this.props.transfer.chart.timeRange}
         onChangeChartRange={this.changeChartRange}
         onToggleChartContent={this.toggleChartContent}
-        // advanceLayout = {this.getAdvanceLayout()}
         toggleRightPart={this.toggleRightPart}
         isOpenRight={this.props.transfer.isOpenRight}
         isOpenLeft={this.props.transfer.isOpenLeft}
         toggleLeftPart={this.toggleLeftPart}
-
-        haveAnimationLeft={this.state.haveAnimationLeft}
-        haveAnimationRight={this.state.haveAnimationRight}
         isChangingWallet = {this.props.global.isChangingWallet}
         changeWalletType = {this.props.global.changeWalletType}
         closeChangeWallet = {this.closeChangeWallet}
