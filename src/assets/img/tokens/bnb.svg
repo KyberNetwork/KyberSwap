@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="201px" height="200px" viewBox="0 0 201 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>BNB</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-414.000000, -4631.000000)">
+            <g id="BNB" transform="translate(414.000000, 4630.000000)">
+                <path d="M200.9573,100.9891 C200.9573,156.2181 156.1863,200.9891 100.9573,200.9891 C45.7283,200.9891 0.9573,156.2181 0.9573,100.9891 C0.9573,45.7601 45.7283,0.9891 100.9573,0.9891 C156.1863,0.9891 200.9573,45.7601 200.9573,100.9891" id="Fill-158" fill="#212121"></path>
+                <polygon id="Fill-160" fill="#F4BB0B" points="100.9573 120.6131 81.3323 100.9891 100.9573 81.3641 120.5823 100.9891"></polygon>
+                <polygon id="Fill-162" fill="#F4BB0B" points="145.5549 100.9891 145.4719 101.0711 163.6739 119.2721 181.9569 100.9891 163.5479 82.5791 145.3459 100.7801"></polygon>
+                <polygon id="Fill-164" fill="#F4BB0B" points="69.4138 87.9344 100.9568 56.3914 132.9638 88.3984 151.1648 70.1974 100.9568 19.9894 51.2128 69.7334"></polygon>
+                <polygon id="Fill-166" fill="#F4BB0B" points="133.0901 113.4539 100.9571 145.5869 69.1091 113.7379 50.9081 131.9389 100.9571 181.9889 151.2911 131.6549"></polygon>
+                <polygon id="Fill-168" fill="#F4BB0B" points="56.3596 100.9891 57.0316 100.3171 38.8306 82.1151 19.9576 100.9891 38.5256 119.5571 56.7266 101.3561"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
