@@ -446,7 +446,7 @@
       "name": "Augur",
       "decimal": 18,
       "symbol" : "REP",
-      "address": "0xff3daa886d63547c4e2d78449915fa9e01193f59",
+      "address": "0x1985365e9f78359a9b6ad760e32412f4a445e862",
       "icon": "rep.svg",
       "isNew": true,
       "expireDate":"2018/09/30"                
