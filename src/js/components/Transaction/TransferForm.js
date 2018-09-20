@@ -34,7 +34,7 @@ const TransferForm = (props) => {
   var render = (
     <div id="transfer-screen">
       <div className="grid-x">
-        <div className={"cell medium-6 large-3" + (props.isOpenLeft ? " balance-wrapper-opened-transfer" : "") + (props.isOpenLeft && props.haveAnimationLeft ? " balance-wrapper" : "") + (anyErrors(props.errors) ? " error" : "")} id="balance-account-wrapper">
+        <div className={"cell medium-6 large-3 balance-wrapper-normal " + (props.isOpenLeft ? "balance-wrapper-opened" : "balance-wrapper-closed") + (anyErrors(props.errors) ? " error" : "")} id="balance-account-wrapper">
           {/* <AccountBalance
             chooseToken = {props.chooseToken}
             sourceActive = {props.tokenSymbol}
@@ -138,7 +138,7 @@ const TransferForm = (props) => {
                 </div>
               </div>
             </div>
-            <div className={"cell small-12 large-4 transfer-col transfer-advanced large-offset-0" + (props.isOpenRight && props.haveAnimationRight ? " advance-layout" : "") }>
+            <div className={"cell small-12 large-4 transfer-col transfer-advanced large-offset-0 " + (props.isOpenRight ? "advance-layout" : "advance-layout-closed") }>
               {props.isOpenRight && (
                 <div onClick={(e) => props.toggleRightPart(false)}>
                   <div className="close-indicator close-advance">

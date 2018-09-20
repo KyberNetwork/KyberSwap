@@ -7,14 +7,9 @@ import { Exchange } from "../../containers/Exchange"
 import { Transfer } from "../../containers/Transfer"
 import { Header } from "../../containers/Header"
 import { ImportAccount } from "../ImportAccount"
-
-//import { Footer } from "../Layout"
-
 import { Processing, ExchangeHistory } from "../../containers/CommonElements/"
 import {Market} from "../Market"
 import constanst from "../../services/constants"
-// import { createNewConnection } from "../../services/ethereum/connection"
-
 import history from "../../history"
 import { clearSession, changeLanguage } from "../../actions/globalActions"
 import { openInfoModal } from "../../actions/utilActions"
@@ -23,12 +18,12 @@ import { default as _ } from 'underscore';
 import { LayoutView } from "../../components/Layout"
 import { getTranslate } from 'react-localize-redux'
 import * as common from "../../utils/common"
+import { toggleLeftPart as toggleExchangeLeftPart } from "../../actions/exchangeActions";
+import { toggleLeftPart as toggleTransferLeftPart } from "../../actions/transferActions";
 
 import Language from "../../../../lang"
 
 @connect((store) => {
-
-
   return {
     ethereumNode: store.connection.ethereum,
     currentBlock: store.global.currentBlock,
@@ -61,9 +56,28 @@ export default class Layout extends React.Component {
     document.onkeypress = this.resetTimmer;
 
     this.intervalIdle = setInterval(this.checkTimmer.bind(this), 10000)
-
     this.props.dispatch(createNewConnectionInstance())
-    // createNewConnection()
+    this.changeTabStatus();
+  }
+
+  componentDidMount = () => {
+    window.addEventListener("resize", this.changeTabStatus);
+  }
+
+  componentWillUnmount = () => {
+    window.removeEventListener("resize", this.changeTabStatus);
+  }
+
+  changeTabStatus = () => {
+    const width = window.innerWidth || documentElement.clientWidth || body.clientWidth;
+
+    if (width < 1024 && width >= 640) {
+      this.props.dispatch(toggleExchangeLeftPart(true));
+      this.props.dispatch(toggleTransferLeftPart(true));
+    } else if (width < 640) {
+      this.props.dispatch(toggleExchangeLeftPart(false));
+      this.props.dispatch(toggleTransferLeftPart(false));
+    }
   }
 
   checkTimmer() {

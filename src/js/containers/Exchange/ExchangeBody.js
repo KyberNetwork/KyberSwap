@@ -66,9 +66,7 @@ export default class ExchangeBody extends React.Component {
     this.state = {
       focus: "",
       isAndroid: false,
-      isIos: false,
-      haveAnimationLeft: false,
-      haveAnimationRight: false
+      isIos: false
     }
   }
 
@@ -327,7 +325,6 @@ export default class ExchangeBody extends React.Component {
 
   toggleRightPart = (value) => {
     this.props.dispatch(exchangeActions.toggleRightPart(value))
-    this.setState({haveAnimationRight: true})
     analytics.trackClickTheRightWing("swap")
   }
 
@@ -379,23 +376,10 @@ export default class ExchangeBody extends React.Component {
 
   toggleLeftPart = (value) => {
     this.props.dispatch(exchangeActions.toggleLeftPart(value))
-    this.setState({haveAnimationLeft: true})
     analytics.trackClickTheLeftWing("swap")
   }
 
   getBalanceLayout = () => {
-    if (!this.props.exchange.isOpenLeft) {
-      // return (
-      //   <div className="toogle-side toogle-wallet" onClick={(e) => this.toggleLeftPart(true)}>
-      //     <div className="toogle-content toogle-content-wallet">
-      //       <div>{this.props.translate("transaction.wallet") || "Wallet"}</div>
-      //     </div>
-      //     <div className="wings-dropdown"></div>
-      //   </div>
-      // )
-      // return <div><button onClick={(e) => this.toggleLeftPart(true) }>Open left</button></div>
-      return
-    }
     return (
       <AccountBalance
         chooseToken={this.chooseToken}
@@ -548,17 +532,10 @@ export default class ExchangeBody extends React.Component {
         balanceLayout={this.getBalanceLayout()}
         focus={this.state.focus}
         networkError={this.props.global.network_error}
-        // isChartActive={this.props.exchange.chart.isActive}
-        // chartTimeRange={this.props.exchange.chart.timeRange}
-        // onChangeChartRange={this.changeChartRange}
-        // onToggleChartContent={this.toggleChartContent}
         toggleRightPart={this.toggleRightPart}
         isOpenRight={this.props.exchange.isOpenRight}
         isOpenLeft={this.props.exchange.isOpenLeft}
         toggleLeftPart={this.toggleLeftPart}
-
-        haveAnimationLeft={this.state.haveAnimationLeft}
-        haveAnimationRight={this.state.haveAnimationRight}
         isChangingWallet = {this.props.global.isChangingWallet}
         changeWalletType = {this.props.global.changeWalletType}
         closeChangeWallet = {this.closeChangeWallet}
