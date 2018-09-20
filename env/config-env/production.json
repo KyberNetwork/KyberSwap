@@ -272,11 +272,11 @@
         "icon": "blz.svg"
       },
       "PAL": {
-        "name": "PolicyPal Network",
+        "name": "PAL Network",
         "decimal": 18,
         "symbol":"PAL", 
         "address": "0xfedae5642668f8636a11987ff386bfd215f942ee",
-        "icon": "pal.svg"
+        "icon": "pal.png"
       },
       "ELEC": {
         "name": "ElectrifyAsia",
