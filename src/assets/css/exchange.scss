@@ -1,18 +1,24 @@
 .exchange-frame {
   background: #f5f5f5;
-  padding-bottom: 50px;
+  padding-top: 50px;
+
   @include screen-min-width(medium) {
     padding-top: 40px !important;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
-  
-    @include screen-max-width(medium) {
-      &__open-advance {
-        padding-bottom: 460px;
-      }
-      &__transfer-open-advance {
-        padding-bottom: 240px;
-      }
+
+  @include screen-max-width(medium) {
+    padding-left: 0;
+    padding-right: 0;
+
+    &__open-advance {
+      padding-bottom: 460px;
     }
+    &__transfer-open-advance {
+      padding-bottom: 240px;
+    }
+  }
 } 
 
 #exchange {

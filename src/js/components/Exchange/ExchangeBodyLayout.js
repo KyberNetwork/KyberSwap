@@ -86,13 +86,17 @@ const ExchangeBodyLayout = (props) => {
 
   var render = (
     <div className="grid-x">
-      <div className={"cell medium-6 large-3 balance-wrapper-normal" + (props.isOpenLeft ? " balance-wrapper-opened" : " balance-wrapper-closed") + (props.isOpenLeft && props.haveAnimationLeft ? " balance-wrapper" : "") + (errorExchange || props.networkError ? " error" : "")} id="balance-account-wrapper">
-        <div className="close-indicator close-wallet" onClick={(e) => props.toggleLeftPart(false)}>
-          <div>{props.translate("transaction.close") || "Close"}</div>
-          <div className="wings-dropdown"></div>
-        </div>
+      <div className={"cell medium-6 large-3 balance-wrapper-normal" + (props.isOpenLeft ? " balance-wrapper-opened" : " balance-wrapper-closed") + (errorExchange || props.networkError ? " error" : "")} id="balance-account-wrapper">
+        {props.isOpenLeft && (
+          <div>
+            <div className="close-indicator close-wallet" onClick={(e) => props.toggleLeftPart(false)}>
+              <div>{props.translate("transaction.close") || "Close"}</div>
+              <div className="wings-dropdown"></div>
+            </div>
 
-        {props.balanceLayout}
+            {props.balanceLayout}
+          </div>
+        )}
       </div>
 
       <div className={"cell medium-6 large-9 swap-wrapper" + getStatusClasses("swap-wrapper")}>
@@ -197,7 +201,7 @@ const ExchangeBodyLayout = (props) => {
               </div>
             </div>
           </div>
-          <div className={"cell large-4 exchange-col-2 advance-for-mobile " + (props.isOpenRight && props.haveAnimationRight ? "advance-layout" : "advance-layout-closed")}>
+          <div className={"cell large-4 exchange-col-2 advance-for-mobile " + (props.isOpenRight ? "advance-layout" : "advance-layout-closed")}>
             <div>
               {props.isOpenRight && (
                 <div onClick={(e) => props.toggleRightPart(false)}>
