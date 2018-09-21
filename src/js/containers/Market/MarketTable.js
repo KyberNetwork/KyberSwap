@@ -24,6 +24,9 @@ import * as analytics from "../../utils/analytics"
 
   var numScroll = store.market.configs.numScroll
 
+  var isRussia = false
+  isRussia = store.locale.languages[0] && store.locale.languages[0].active && store.locale.languages[0].code === "ru"
+
   return {
     translate: getTranslate(store.locale),
     currency,
@@ -41,7 +44,8 @@ import * as analytics from "../../utils/analytics"
     sortType: sortType,
     manageColumn: props.manageColumn,
     searchWordLayout: props.searchWordLayout,
-    currencyLayout: props.currencyLayout
+    currencyLayout: props.currencyLayout,
+    isRussia: isRussia
   }
 })
 
@@ -470,7 +474,7 @@ export default class MarketTable extends React.Component {
                   Header: this.getSortHeader(item.title, key),
                   accessor: key,
                   Cell: props => this.addUnit(props.value, this.props.currency),
-                  minWidth: 150,
+                  minWidth: this.props.isRussia ? 200 : 150,
                   getHeaderProps: () => {
                     return {
                       className: this.props.sortType[key] ?  (this.props.sortType[key] + ' -cursor-pointer') :'-cursor-pointer',
@@ -513,7 +517,7 @@ export default class MarketTable extends React.Component {
                 columns.push({
                   Header: this.getSortHeader(item.title, key),
                   accessor: key,
-                  minWidth: 150
+                  minWidth: this.props.isRussia ? 175 : 150,
                 })
                 break
               }

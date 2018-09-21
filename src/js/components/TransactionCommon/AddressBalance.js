@@ -23,7 +23,7 @@ const AddressBalance = (props) => {
     <div class="address-balance">
       <p class="note">{props.translate("transaction.address_balance") || "Address Balance"}</p>
       <div>
-        <span>{props.translate("transaction.click_to_ex_all_balance") || "Click to swap all balance"}</span>
+        <span>{props.tradeType === "swap" ? (props.translate("transaction.click_to_ex_all_balance") || "Click to swap all balance") : props.translate("transaction.click_to_transfer_all_balance")}</span>
         <span className="balance" title={props.balance.value} onClick={() => {
           props.setAmount()
           setTimeout(moveCursor, 0);

@@ -500,7 +500,7 @@ export default class ExchangeBody extends React.Component {
     var addressBalanceLayout = ""
     if (this.props.account.account !== false) {
       addressBalanceLayout = (
-        <AddressBalance setAmount={this.setAmount} balance={addressBalance} translate={this.props.translate} />
+        <AddressBalance setAmount={this.setAmount} balance={addressBalance} translate={this.props.translate} tradeType="swap"/>
       )
     }
 
