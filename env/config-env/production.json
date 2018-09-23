@@ -458,7 +458,16 @@
         "icon": "zrx.svg",
         "isNew": true,
         "expireDate":"2018/09/30"                
-      }
+      },
+      "MAS":{
+        "name": "MidasProtocol",
+        "decimal": 18,
+        "symbol" : "MAS",
+        "address": "0x23ccc43365d9dd3882eab88f43d515208f832430",
+        "icon": "mas.svg",
+        "isNew": true,
+        "expireDate":"2018/09/30"                
+      }   
     },
     "ethScanUrl": "https://etherscan.io/",
     "bank": "0x0",
