@@ -27,31 +27,21 @@ $radio-color: #5D9E7A;
   // max-width: 300px;  
  
   .advance-title-desktop{
-    @media screen and (max-width: $break-point-large){
-      display: none  
+    @include screen-max-width(large) {
+      display: none
     }
   }
   #advance-content{
-    @media screen and (max-width: $break-point-large){
-     // display: none;
+    @include screen-max-width(large) {
       padding: 10px;
       background-color: #f5f5f5;
-      &.show-advance{
-        @media screen and (max-width: $break-point-large){
+
+      &.show-advance {
+        @include screen-max-width(large) {
           display: block;
         }
       }
     }
-    // @include breakpoint(small only) {
-    //   display: none;
-    //   padding: 10px;
-    //   background-color: #f5f5f5;
-    // }
-    // &.show-advance{
-    //   @include breakpoint(small only) {
-    //     display: block
-    //   }
-    // }
   }
   
 
@@ -443,8 +433,9 @@ $radio-color: #5D9E7A;
       }
     }
   }
-  @media screen and (min-width: $break-point-large){
-    display: none  
+
+  @include screen-min-width(large) {
+    display: none
   }
 
   @include screen-max-width(medium) {

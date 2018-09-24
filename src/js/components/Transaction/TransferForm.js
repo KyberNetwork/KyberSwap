@@ -20,6 +20,7 @@ const TransferForm = (props) => {
     classes += (props.global.isIos || props.global.isAndroid) ? ' ' + className + '--mobile' : '';
     classes += props.isAgreed ? ' ' + className + '--agreed' : '';
     classes += props.account !== false ? ' ' + className + '--imported' : '';
+    classes += props.isChangingWallet ? ' ' + className + '--imported__change-wallet' : '';
 
     return classes;
   }
