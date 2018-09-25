@@ -39,7 +39,7 @@
       "decimal": 18,
       "symbol" : "WETH",
       "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-      "icon": "weth.png",      
+      "icon": "weth.svg",      
       "exclude": true
     },
     "KNC": {
@@ -273,11 +273,11 @@
       "icon": "blz.svg"
     },
     "PAL": {
-      "name": "PolicyPal Network",
+      "name": "PAL Network",
       "decimal": 18,
       "symbol":"PAL", 
       "address": "0xfedae5642668f8636a11987ff386bfd215f942ee",
-      "icon": "pal.svg"
+      "icon": "pal.png"
     },
     "ELEC": {
       "name": "ElectrifyAsia",
@@ -457,6 +457,15 @@
       "symbol" : "ZRX",
       "address": "0xe41d2489571d322189246dafa5ebde1f4699f498",
       "icon": "zrx.svg",
+      "isNew": true,
+      "expireDate":"2018/09/30"                
+    },
+    "MAS":{
+      "name": "MidasProtocol",
+      "decimal": 18,
+      "symbol" : "MAS",
+      "address": "0x23ccc43365d9dd3882eab88f43d515208f832430",
+      "icon": "mas.svg",
       "isNew": true,
       "expireDate":"2018/09/30"                
     }   
