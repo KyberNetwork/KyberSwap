@@ -20,6 +20,7 @@ import { getTranslate } from 'react-localize-redux'
 import * as common from "../../utils/common"
 import { toggleLeftPart as toggleExchangeLeftPart } from "../../actions/exchangeActions";
 import { toggleLeftPart as toggleTransferLeftPart } from "../../actions/transferActions";
+import * as analytics from "../../utils/analytics"
 
 import Language from "../../../../lang"
 
@@ -61,11 +62,13 @@ export default class Layout extends React.Component {
   }
 
   componentDidMount = () => {
+    analytics.trackAccessToSwap()
     window.addEventListener("resize", this.changeTabStatus);
+    window.addEventListener("beforeunload", this.handleCloseWeb)
   }
 
-  componentWillUnmount = () => {
-    window.removeEventListener("resize", this.changeTabStatus);
+  handleCloseWeb = () => {
+    analytics.exitSwap()
   }
 
   changeTabStatus = () => {
