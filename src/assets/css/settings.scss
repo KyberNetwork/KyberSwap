@@ -906,7 +906,7 @@ $grid-container-max: $global-width;
 $xy-block-grid-max: 8;
 
 @mixin screen-max-width($breakpoint) {
-  @media screen and (max-width: #{map-get($breakpoints, $breakpoint)}) {
+  @media screen and (max-width: calc(#{map-get($breakpoints, $breakpoint)} - 1px)) {
     @content;
   }
 }
