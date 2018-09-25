@@ -637,3 +637,22 @@ export function trackClickShowAddressOnEtherescan(){
         }
     }
 }
+
+export function trackAccessToSwap(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Session_Swap_Start")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+ export function exitSwap(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Session_Swap_End")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
