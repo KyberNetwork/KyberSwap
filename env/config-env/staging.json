@@ -39,9 +39,13 @@
       "decimal": 18,
       "symbol" : "WETH",
       "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+<<<<<<< HEAD
       "icon": "weth.svg",
       "isNew": true,
       "expireDate":"2018/09/30",
+=======
+      "icon": "weth.svg",      
+>>>>>>> 4f204e829b306eb56c2551864b256bad9d5fb6c9
       "exclude": true
     },
     "KNC": {
@@ -275,11 +279,11 @@
       "icon": "blz.svg"
     },
     "PAL": {
-      "name": "PolicyPal Network",
+      "name": "PAL Network",
       "decimal": 18,
       "symbol":"PAL", 
       "address": "0xfedae5642668f8636a11987ff386bfd215f942ee",
-      "icon": "pal.svg"
+      "icon": "pal.png"
     },
     "ELEC": {
       "name": "ElectrifyAsia",
@@ -434,6 +438,42 @@
       "symbol" : "MOC",
       "address": "0x865ec58b06bf6305b886793aa20a2da31d034e68",
       "icon": "moc.svg"
+    },
+    "BNB":{
+      "name": "Binance Coin",
+      "decimal": 18,
+      "symbol" : "BNB",
+      "address": "0xb8c77482e45f1f44de1745f52c74426c631bdd52",
+      "icon": "bnb.svg",
+      "isNew": true,
+      "expireDate":"2018/09/30"        
+    },
+    "REP":{
+      "name": "Augur",
+      "decimal": 18,
+      "symbol" : "REP",
+      "address": "0x1985365e9f78359a9b6ad760e32412f4a445e862",
+      "icon": "rep.svg",
+      "isNew": true,
+      "expireDate":"2018/09/30"                
+    },
+    "ZRX":{
+      "name": "0x Protocol",
+      "decimal": 18,
+      "symbol" : "ZRX",
+      "address": "0xe41d2489571d322189246dafa5ebde1f4699f498",
+      "icon": "zrx.svg",
+      "isNew": true,
+      "expireDate":"2018/09/30"                
+    },
+    "MAS":{
+      "name": "MidasProtocol",
+      "decimal": 18,
+      "symbol" : "MAS",
+      "address": "0x23ccc43365d9dd3882eab88f43d515208f832430",
+      "icon": "mas.svg",
+      "isNew": true,
+      "expireDate":"2018/09/30"                
     }   
   },
   "ethScanUrl": "https://etherscan.io/",
