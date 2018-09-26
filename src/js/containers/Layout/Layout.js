@@ -23,6 +23,7 @@ import { default as _ } from 'underscore';
 import { LayoutView } from "../../components/Layout"
 import { getTranslate } from 'react-localize-redux'
 import * as common from "../../utils/common"
+import * as analytics from "../../utils/analytics"
 
 import Language from "../../../../lang"
 
@@ -64,6 +65,15 @@ export default class Layout extends React.Component {
 
     this.props.dispatch(createNewConnectionInstance())
     // createNewConnection()
+  }
+
+  componentDidMount = () => {
+    analytics.trackAccessToSwap()
+    window.addEventListener("beforeunload", this.handleCloseWeb)
+  }
+
+  handleCloseWeb = () => {
+    analytics.exitSwap()
   }
 
   checkTimmer() {
