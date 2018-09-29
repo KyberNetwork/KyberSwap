@@ -467,7 +467,16 @@
         "icon": "mas.svg",
         "isNew": true,
         "expireDate":"2018/09/30"                
-      }   
+      },
+      "KCC":{
+        "name": "Kyber Community Coupon",
+        "decimal": 18,
+        "symbol" : "KCC",
+        "address": "0x09677d0175dec51e2215426cddd055a71bf4228d",
+        "icon": "kcc.png",
+        "isNew": true,
+        "expireDate":"2018/10/10"    
+      }
     },
     "ethScanUrl": "https://etherscan.io/",
     "bank": "0x0",
