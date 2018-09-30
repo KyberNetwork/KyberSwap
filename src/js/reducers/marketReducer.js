@@ -402,10 +402,6 @@ const market = (state = initState, action) => {
                         if (midlePrice > price24h){
                             change = converters.calculatePercent(midlePrice, price24h)
                         }else{
-                            if (key === 'KCC'){
-                                console.log("market_price")
-                                console.log({price24h, midlePrice})
-                            }
                             change = converters.calculatePercent(price24h, midlePrice) * -1
                         }
                     }
