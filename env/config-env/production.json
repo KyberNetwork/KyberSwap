@@ -473,7 +473,7 @@
         "decimal": 18,
         "symbol" : "KCC",
         "address": "0x09677d0175dec51e2215426cddd055a71bf4228d",
-        "icon": "kcc.png",
+        "icon": "kcc.svg",
         "isNew": true,
         "expireDate":"2018/10/10"    
       }
