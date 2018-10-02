@@ -24,26 +24,27 @@ const ImportAccountView = (props) => {
       </div>
       <div className="frame">
         <div className="container">
-          <div className={`small-centered ${isOnMobile ? "import-acc-mobile" : ""}`} id="import-acc">
+          <div className="small-centered" id="import-acc">
             <h1 className="title">{props.translate("address.import_address") || "Import address"}</h1>
 
-            {isOnMobile ? downloadOnMobile : <div className="import-account">
-              <div className="import-account__item">
-                {props.firstKey}
+            <div className="import-account">
+              <div className={`import-account__item ${isOnMobile ? "onmobile-only-wrapper" : ""}`}>
+                {isOnMobile ? downloadOnMobile : props.firstKey}
+                {/* {downloadOnMobile} */}
               </div>
               <div className="import-account__item">
                 {props.secondKey}
               </div>
-              <div className="import-account__item">
+              {!isOnMobile && <div className="import-account__item">
                 {props.thirdKey}
-              </div>
-              <div className="import-account__item">
+              </div>}
+              {!isOnMobile && <div className="import-account__item">
                 {props.fourthKey}
-              </div>
+              </div>}
               <div className="import-account__item">
                 {props.fifthKey}
               </div>
-            </div>}
+            </div>
           </div>
         </div>
         {props.errorModal}

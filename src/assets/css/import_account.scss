@@ -31,55 +31,6 @@ $animationTime: 0.5s;
       animation: fade-in $animationTime forwards;
     }
 
-    #import-acc {
-      &.import-acc-mobile {
-        display: block;
-        padding-bottom: 20px;
-        .title {
-          text-align: center;
-        }
-        .onmobile-only {
-          display: flex;
-          // align-items: center;
-          justify-content: space-between;
-          padding: 20px 10px;
-          background-color: white;
-          margin-top: 15px;
-          .mobile-left {
-            display: flex;
-            &-icon {
-              width: 35px;
-              height: 35px;
-              background-size: contain;
-              background: url(../img/coinbase.svg) 50% no-repeat;
-            }
-            &-content {
-              text-align: left;
-              padding: 0 10px 0 10px;
-              &-title {
-                text-transform: uppercase;
-                font-size: 15px;
-                font-weight: 600;
-              }
-              &-desc {
-                font-size: 12px;
-              }
-            }
-          }
-          .mobile-btn {
-            background-color: #ef8102;
-            color: #fff;
-            font-size: 14px;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-            max-height: 30px;
-            margin-top: 3px;
-          }
-        }
-      }      
-    }
-
     .sub-title {
       font-size: 0.8rem;
       color: $white;
@@ -230,6 +181,48 @@ $animationTime: 0.5s;
             margin: 0 0 20px;
             width: 100%;
             text-align: left;
+
+            &.onmobile-only-wrapper {
+              padding-top: 0;
+              .onmobile-only {
+                display: flex;
+                // align-items: center;
+                justify-content: space-between;
+                padding: 30px 10px 30px 5px;
+                background-color: white;
+                .mobile-left {
+                  display: flex;
+                  &-icon {
+                    width: 35px;
+                    height: 35px;
+                    background-size: contain;
+                    background: url(../img/coinbase.svg) 50% no-repeat;
+                  }
+                  &-content {
+                    text-align: left;
+                    padding: 0 10px 0 10px;
+                    &-title {
+                      text-transform: uppercase;
+                      font-size: 15px;
+                      font-weight: 600;
+                    }
+                    &-desc {
+                      font-size: 12px;
+                    }
+                  }
+                }
+                .mobile-btn {
+                  background-color: #ef8102;
+                  color: #fff;
+                  font-size: 14px;
+                  padding: 5px 10px;
+                  border-radius: 3px;
+                  cursor: pointer;
+                  max-height: 30px;
+                  margin-top: 3px;
+                }
+              }
+            }
 
             .importer {
               padding-bottom: 60px;
