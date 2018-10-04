@@ -438,37 +438,53 @@
       "decimal": 18,
       "symbol" : "BNB",
       "address": "0xb8c77482e45f1f44de1745f52c74426c631bdd52",
-      "icon": "bnb.svg",
-      "isNew": true,
-      "expireDate":"2018/09/30"        
+      "icon": "bnb.svg"
     },
     "REP":{
       "name": "Augur",
       "decimal": 18,
       "symbol" : "REP",
       "address": "0x1985365e9f78359a9b6ad760e32412f4a445e862",
-      "icon": "rep.svg",
-      "isNew": true,
-      "expireDate":"2018/09/30"                
+      "icon": "rep.svg"
     },
     "ZRX":{
       "name": "0x Protocol",
       "decimal": 18,
       "symbol" : "ZRX",
       "address": "0xe41d2489571d322189246dafa5ebde1f4699f498",
-      "icon": "zrx.svg",
-      "isNew": true,
-      "expireDate":"2018/09/30"                
+      "icon": "zrx.svg"
     },
     "MAS":{
       "name": "MidasProtocol",
       "decimal": 18,
       "symbol" : "MAS",
       "address": "0x23ccc43365d9dd3882eab88f43d515208f832430",
-      "icon": "mas.svg",
-      "isNew": true,
-      "expireDate":"2018/09/30"                
-    }   
+      "icon": "mas.svg"
+    },
+    "DAT":{
+      "name": "Datum",
+      "decimal": 18,
+      "symbol" : "DAT",
+      "address": "0x81c9151de0c8bafcd325a57e3db5a5df1cebf79c",
+      "icon": "dat.svg",
+      "isNew": true
+    },
+    "REN":{
+      "name": "Republic Protocol",
+      "decimal": 18,
+      "symbol" : "REN",
+      "address": "0x408e41876cccdc0f92210600ef50372656052a38",
+      "icon": "ren.svg",
+      "isNew": true
+    },
+    "QKC":{
+      "name": "QuarkChain",
+      "decimal": 18,
+      "symbol" : "QKC",
+      "address": "0xea26c4ac16d4a5a106820bc8aee85fd0b7b2b664",
+      "icon": "qkc.svg",
+      "isNew": true
+    }            
   },
   "ethScanUrl": "https://etherscan.io/",
   "reserve": "0x2c5a182d280eeb5824377b98cd74871f78d6b8bc",
