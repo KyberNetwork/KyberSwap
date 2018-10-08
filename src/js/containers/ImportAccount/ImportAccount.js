@@ -11,13 +11,14 @@ import {
   ImportByDeviceWithLedger, ImportByDeviceWithTrezor
 } from "../ImportAccount"
 
-import { visitExchange } from "../../actions/globalActions"
+import { visitExchange, setOnMobile } from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux'
 
 
 import { importAccountMetamask } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import Web3Service from "../../services/web3"
+import {isMobile} from "../../utils/common"
 
 @connect((store) => {  
   var tokens = store.tokens.tokens
@@ -33,7 +34,8 @@ import Web3Service from "../../services/web3"
     translate: getTranslate(store.locale),
     termOfServiceAccepted: store.global.termOfServiceAccepted,
     ethereum: store.connection.ethereum,
-		tokens: supportTokens
+    tokens: supportTokens,
+    onMobile: store.global.onMobile
   }
 })
 
@@ -57,8 +59,8 @@ export default class ImportAccount extends React.Component {
     var swapPage = document.getElementById("swap-app")
     swapPage.className = swapPage.className === "" ? "no-min-height" : swapPage.className + " no-min-height"
     
+    var web3Service = new Web3Service()
     if (this.props.termOfServiceAccepted){
-      var web3Service = new Web3Service()
       if (web3Service.isHaveWeb3()) {
         //var web3Service = new Web3Service(web3)
         var walletType = web3Service.getWalletType()
@@ -68,6 +70,13 @@ export default class ImportAccount extends React.Component {
           this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
           this.props.ethereum, this.props.tokens, this.props.translate, walletType))
         }
+      }
+    }
+    if (!web3Service.isHaveWeb3()) {
+      if (isMobile.iOS()) {
+        this.props.dispatch(setOnMobile(true, false));
+      } else if (isMobile.Android()) {
+        this.props.dispatch(setOnMobile(false, true));
       }
     }
   }
@@ -110,6 +119,7 @@ export default class ImportAccount extends React.Component {
           fifthKey={<ImportByPrivateKey />}
           errorModal={<ErrorModal />}
           translate={this.props.translate}
+          onMobile={this.props.onMobile}
         />
       )
     }
