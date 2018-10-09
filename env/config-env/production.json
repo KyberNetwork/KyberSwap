@@ -4,15 +4,19 @@
         {
           "endPoint" : "https://production-cache.kyber.network",
           "type": "cached"
-        },       
+        },               
         {
-          "endPoint" : "https://semi-node.kyber.network",
+          "endPoint" : "https://optionally-pleasant-horse.quiknode.io/9d72a0f8-0d8b-4e4c-aef1-eb529e05cdb9/V1ZsC_tuomfETYotFo4KKA==/",
           "type": "prune"
-        },
+        },         
         {
           "endPoint" : "https://mainnet.infura.io",
           "type": "prune"
         },         
+        {
+          "endPoint" : "https://semi-node.kyber.network",
+          "type": "prune"
+        },
         {
           "endPoint" : "https://api.mycryptoapi.com/eth",
           "type": "none_prune"
@@ -474,7 +478,7 @@
         "address": "0x81c9151de0c8bafcd325a57e3db5a5df1cebf79c",
         "icon": "dat.svg",
         "isNew": true,
-        "expireDate": "2018/10/15"
+        "expireDate": "2018/10/20"
       },
       "REN":{
         "name": "Republic Protocol",
@@ -483,7 +487,7 @@
         "address": "0x408e41876cccdc0f92210600ef50372656052a38",
         "icon": "ren.svg",
         "isNew": true,
-        "expireDate": "2018/10/15"
+        "expireDate": "2018/10/20"
       },
       "QKC":{
         "name": "QuarkChain",
@@ -492,7 +496,7 @@
         "address": "0xea26c4ac16d4a5a106820bc8aee85fd0b7b2b664",
         "icon": "qkc.svg",
         "isNew": true,
-        "expireDate": "2018/10/15"
+        "expireDate": "2018/10/20"
       }  
     },
     "ethScanUrl": "https://etherscan.io/",
