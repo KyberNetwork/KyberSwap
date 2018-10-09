@@ -641,7 +641,7 @@ export function trackClickShowAddressOnEtherescan(){
 export function trackAccessToSwap(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Session_Swap_Start")
+            mixpanel.track("Session_Swap_Start", {href: window.location.href})
         }catch(e){
             console.log(e)
         }
@@ -650,7 +650,7 @@ export function trackAccessToSwap(){
  export function exitSwap(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Session_Swap_End")
+            mixpanel.track("Session_Swap_End", {href: window.location.href})
         }catch(e){
             console.log(e)
         }
