@@ -1,26 +1,19 @@
 import React from "react"
 import { connect } from "react-redux"
 import ReactTooltip from 'react-tooltip'
-
 import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
-
-
-
 import * as exchangeActions from "../../actions/exchangeActions"
 import * as utilActions from "../../actions/utilActions"
-
 import {getWalletId} from "../../services/web3"
-
 import { Modal } from "../../components/CommonElement"
 import { TermAndServices } from "../../containers/CommonElements"
-
 import { PassphraseModal, ConfirmTransferModal, ApproveModal } from "../../components/Transaction"
 import { PostExchangeBtn } from "../../components/Exchange"
-
 import { getTranslate } from 'react-localize-redux';
 import { RateBetweenToken } from "../Exchange"
-import * as analytics from "../../utils/analytics"
+import * as analytics from "../../utils/analytics";
+import { getAssetUrl } from "../../utils/common";
 
 @connect((store, props) => {
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
@@ -35,7 +28,7 @@ import * as analytics from "../../utils/analytics"
     sourceBalance = tokens[sourceTokenSymbol].balance
     sourceDecimal = tokens[sourceTokenSymbol].decimal
     sourceName = tokens[sourceTokenSymbol].name
-    sourceIcon = tokens[sourceTokenSymbol].icon
+    sourceIcon = sourceTokenSymbol + '.svg';
     rateSourceToEth = tokens[sourceTokenSymbol].rate
   }
 
@@ -48,7 +41,7 @@ import * as analytics from "../../utils/analytics"
     destBalance = tokens[destTokenSymbol].balance
     destDecimal = tokens[destTokenSymbol].decimal
     destName = tokens[destTokenSymbol].name
-    destIcon = tokens[destTokenSymbol].icon
+    destIcon = destTokenSymbol + '.svg';
   }
 
   return {
@@ -239,7 +232,7 @@ export default class PostExchange extends React.Component {
             <div className="amount-item amount-left">
               <div className="d-flex">
                 <div className="item-icon">
-                  <img src={require("../../../assets/img/tokens/" + sourceIcon)} />
+                  <img src={getAssetUrl(`tokens/${sourceIcon}`)} />
                 </div>
                 <span>
                   {sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''} {sourceTokenSymbol}
@@ -253,7 +246,7 @@ export default class PostExchange extends React.Component {
                 :
                 <div className="d-flex">
                   <div className="item-icon">
-                    <img src={require("../../../assets/img/tokens/" +destIcon)} />
+                    <img src={getAssetUrl(`tokens/${destIcon}`)} />
                   </div>
                   <span className="grid-x">
                     {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''} {destTokenSymbol}
@@ -283,7 +276,7 @@ export default class PostExchange extends React.Component {
             <div className="amount-item amount-left">
               <div className="grid-x">
                 <div className="cell medium-3 small-12 amount-icon">
-                  <img src={require("../../../assets/img/tokens/" + sourceIcon)} />
+                  <img src={getAssetUrl(`tokens/${sourceIcon}`)} />
                 </div>
                 <div className="cell medium-9 small-12">
                   <div className="amount-detail">
@@ -304,7 +297,7 @@ export default class PostExchange extends React.Component {
                 :
                 <div className="grid-x">
                   <div className="cell medium-3 small-12 amount-icon">
-                    <img src={require("../../../assets/img/tokens/" + destIcon)} />
+                    <img src={getAssetUrl(`tokens/${destIcon}`)} />
                   </div>
                   <div className="cell medium-9 small-12">
                     <div className="amount-detail">

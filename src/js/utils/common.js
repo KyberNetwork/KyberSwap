@@ -1,3 +1,5 @@
+import * as constants from '../services/constants';
+
 export function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -36,4 +38,8 @@ export function getPath(path, listParams){
         path += `&${param.key}=${value}`
     })
     return path
+}
+
+export function getAssetUrl(uri = "") {
+  return constants.ASSET_URL + uri.toLowerCase();
 }
