@@ -23,6 +23,10 @@ const initState = {
     address: "",
     balance: "",
     error: "Address is loading"
+  },
+  onMobile: {
+    isIOS: false,
+    isAndroid: false
   }
 }
 
@@ -132,6 +136,15 @@ const global = (state = initState, action) => {
     case "GLOBAL.SET_NETWORK_ERROR":{
       const {error} = action.payload
       return Object.assign({}, state, { network_error: error })
+    }
+
+    case "GLOBAL.SET_ON_MOBILE": {
+      const {isIOS, isAndroid} = action.payload
+      let onMobile = {
+        isIOS: isIOS,
+        isAndroid: isAndroid
+      }
+      return Object.assign({}, state, { onMobile: onMobile })
     }
   }
   return state
