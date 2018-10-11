@@ -238,7 +238,7 @@
       "MASR": {
         "name": "MidasProtocol Ropsten",
         "decimal": 18,
-        "symbol" : "MASR",
+        "symbol" : "MAS",
         "address": "0xc2c37d1a2cdd601ce665c4a785074670657f83ac",
         "icon": "masr.svg",
         "isNew": true
