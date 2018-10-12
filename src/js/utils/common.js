@@ -1,3 +1,5 @@
+import * as constants from '../services/constants';
+
 export function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -38,6 +40,7 @@ export function getPath(path, listParams){
     return path
 }
 
+
 export var isMobile = {
     Android: function() {
         return navigator.userAgent.match(/Android/i);
@@ -58,3 +61,8 @@ export var isMobile = {
         return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
     }
 };
+
+export function getAssetUrl(uri = "") {
+  return constants.ASSET_URL + uri.toLowerCase();
+}
+

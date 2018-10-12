@@ -1,6 +1,6 @@
 import React from "react"
-//import { toT, roundingNumber } from "../../utils/converter"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
+import { getAssetUrl } from "../../utils/common";
 
 const Selector = (props) => {
   var focusItem = props.listItem[props.focusItem]
@@ -24,7 +24,7 @@ const Selector = (props) => {
           <div key={key} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item">
             <div>
               <span className="item-icon">
-                <img src={require("../../../assets/img/tokens/" + item.icon)} />
+                <img src={getAssetUrl(`tokens/${item.symbol}.svg`)} />
               </span>
               <span className="item-name">
                 <span className="font-w-b">{item.symbol}</span><span className="show-for-large token-name"> - {item.name}</span></span>
@@ -48,7 +48,7 @@ const Selector = (props) => {
           <div className="focus-item d-flex">
             <div>
               <div className="icon">
-                <img src={require("../../../assets/img/tokens/" + focusItem.icon)} />
+                <img src={getAssetUrl(`tokens/${focusItem.symbol}.svg`)} />
               </div>
               <div>
                 <div>{focusItem.name}</div>
