@@ -348,13 +348,6 @@
         "symbol":"PAY", 
         "icon": "pay.svg"
       },
-      "CHAT": {
-        "name": "Chatcoin",
-        "decimal": 18,
-        "address": "0x442bc47357919446eabc18c7211e57a13d983469",
-        "symbol":"CHAT", 
-        "icon": "chat.svg"
-      },
       "DTA": {
         "name": "Data",
         "decimal": 18,
