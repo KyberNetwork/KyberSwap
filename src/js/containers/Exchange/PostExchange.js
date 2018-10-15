@@ -26,7 +26,7 @@ import { getAssetUrl } from "../../utils/common";
   var rateSourceToEth = 0
   if (tokens[sourceTokenSymbol]) {
     sourceBalance = tokens[sourceTokenSymbol].balance
-    sourceDecimal = tokens[sourceTokenSymbol].decimal
+    sourceDecimal = tokens[sourceTokenSymbol].decimals
     sourceName = tokens[sourceTokenSymbol].name
     sourceIcon = sourceTokenSymbol + '.svg';
     rateSourceToEth = tokens[sourceTokenSymbol].rate
@@ -39,7 +39,7 @@ import { getAssetUrl } from "../../utils/common";
   var destIcon = "knc.svg"
   if (tokens[destTokenSymbol]) {
     destBalance = tokens[destTokenSymbol].balance
-    destDecimal = tokens[destTokenSymbol].decimal
+    destDecimal = tokens[destTokenSymbol].decimals
     destName = tokens[destTokenSymbol].name
     destIcon = destTokenSymbol + '.svg';
   }

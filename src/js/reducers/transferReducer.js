@@ -163,7 +163,7 @@ const transfer = (state = initState, action) => {
       newState.broadcasting = true
       newState.balanceData = {
         tokenName: action.payload.balanceData.name,
-        tokenDecimal: action.payload.balanceData.decimal,
+        tokenDecimal: action.payload.balanceData.decimals,
         tokenSymbol: action.payload.balanceData.tokenSymbol,
         amount: action.payload.balanceData.amount,
         // prev: action.payload.balanceData.balance,

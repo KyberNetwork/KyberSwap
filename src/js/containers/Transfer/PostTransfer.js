@@ -20,18 +20,18 @@ import * as analytics from "../../utils/analytics"
   const tokens = store.tokens.tokens
   const tokenSymbol = store.transfer.tokenSymbol
   var balance = 0
-  var decimal = 18
+  var decimals = 18
   var tokenName = "kyber"
   if (tokens[tokenSymbol]) {
     balance = tokens[tokenSymbol].balance
-    decimal = tokens[tokenSymbol].decimal
+    decimals = tokens[tokenSymbol].decimals
     tokenName = tokens[tokenSymbol].name
   }
   return {
     account: store.account.account,
     transfer: store.transfer,
     tokens: store.tokens,
-    form: { ...store.transfer, balance, decimal, tokenName },
+    form: { ...store.transfer, balance, decimals, tokenName },
     ethereum: store.connection.ethereum,
     keyService: props.keyService,
     translate: getTranslate(store.locale)
@@ -104,7 +104,7 @@ export default class PostTransfer extends React.Component {
     if (!checkNumber) {
       return false
     }
-    var amountBig = converters.stringEtherToBigNumber(this.props.form.amount, this.props.form.decimal)
+    var amountBig = converters.stringEtherToBigNumber(this.props.form.amount, this.props.form.decimals)
     if (amountBig.isGreaterThan(this.props.form.balance)) {
       this.props.dispatch(transferActions.thowErrorAmount("error.amount_transfer_too_hign"))
       check = false
@@ -207,7 +207,7 @@ export default class PostTransfer extends React.Component {
   formParams = () => {
     var selectedAccount = this.props.account.address
     var token = this.props.form.token
-    var amount = converters.stringToHex(this.props.form.amount, this.props.form.decimal)
+    var amount = converters.stringToHex(this.props.form.amount, this.props.form.decimals)
     var destAddress = this.props.form.destAddress
     var throwOnFailure = this.props.form.throwOnFailure
     var nonce = validators.verifyNonce(this.props.account.getUsableNonce())
@@ -220,7 +220,7 @@ export default class PostTransfer extends React.Component {
     var balanceData = {
       //balance: this.props.form.balance.toString(),
       name: this.props.form.tokenName,
-      decimal: this.props.form.decimal,
+      decimals: this.props.form.decimals,
       tokenSymbol: this.props.form.tokenSymbol,
       amount: this.props.form.amount
     }

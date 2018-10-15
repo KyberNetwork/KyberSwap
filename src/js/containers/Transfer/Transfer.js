@@ -63,7 +63,7 @@ export default class Exchange extends React.Component {
     if (isNaN(parseFloat(value))) {
       // this.props.dispatch(transferActions.thowErrorAmount("error.amount_must_be_number"))
     } else {
-      var amountBig = converters.stringEtherToBigNumber(this.props.transfer.amount, this.props.transfer.decimal)
+      var amountBig = converters.stringEtherToBigNumber(this.props.transfer.amount, this.props.transfer.decimals)
       if (amountBig.isGreaterThan(this.props.transfer.balance)) {
         this.props.dispatch(transferActions.thowErrorAmount("error.amount_transfer_too_hign"))
         return
