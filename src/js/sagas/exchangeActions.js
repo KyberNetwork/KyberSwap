@@ -657,10 +657,12 @@ function* getSourceAmount(sourceTokenSymbol, sourceAmount){
 
   var sourceAmountHex = "0x0"
   if (tokens[sourceTokenSymbol]){
-    var decimal = tokens[sourceTokenSymbol].decimal
+    var decimals = tokens[sourceTokenSymbol].decimals
     var rateSell = tokens[sourceTokenSymbol].rate
-    console.log({sourceAmount, decimal, rateSell})
-    sourceAmountHex = converter.calculateMinSource(sourceTokenSymbol, sourceAmount, decimal, rateSell)
+    console.log(tokens[sourceTokenSymbol]);
+    console.log("=================================");
+    console.log({sourceAmount, decimals, rateSell})
+    sourceAmountHex = converter.calculateMinSource(sourceTokenSymbol, sourceAmount, decimals, rateSell)
   }else{
     sourceAmountHex = converter.stringToHex(sourceAmount, 18)
   }
@@ -672,9 +674,9 @@ function* getSourceAmountZero(sourceTokenSymbol){
   var tokens = state.tokens.tokens
   var sourceAmountHex = "0x0"
   if (tokens[sourceTokenSymbol]){
-    var decimal = tokens[sourceTokenSymbol].decimal
+    var decimals = tokens[sourceTokenSymbol].decimals
     var rateSell = tokens[sourceTokenSymbol].rate
-    sourceAmountHex = converter.toHex(converter.getSourceAmountZero(sourceTokenSymbol, decimal, rateSell))
+    sourceAmountHex = converter.toHex(converter.getSourceAmountZero(sourceTokenSymbol, decimals, rateSell))
   }
   return sourceAmountHex
 }
@@ -1049,7 +1051,7 @@ function* getGasConfirm() {
   var sourceDecimal = 18
   var sourceTokenSymbol = exchange.sourceTokenSymbol
   if (tokens[sourceTokenSymbol]) {
-    sourceDecimal = tokens[sourceTokenSymbol].decimal
+    sourceDecimal = tokens[sourceTokenSymbol].decimals
   }
 
   const sourceToken = exchange.sourceToken
@@ -1154,7 +1156,7 @@ function* getGasUsed() {
   var sourceDecimal = 18
   var sourceTokenSymbol = exchange.sourceTokenSymbol
   if (tokens[sourceTokenSymbol]) {
-    sourceDecimal = tokens[sourceTokenSymbol].decimal
+    sourceDecimal = tokens[sourceTokenSymbol].decimals
   }
   try {
     const sourceToken = exchange.sourceToken
@@ -1368,7 +1370,7 @@ function* verifyExchange() {
   var rateSourceToEth = 0
   if (tokens[sourceTokenSymbol]) {
     sourceBalance = tokens[sourceTokenSymbol].balance
-    sourceDecimal = tokens[sourceTokenSymbol].decimal
+    sourceDecimal = tokens[sourceTokenSymbol].decimals
     sourceName = tokens[sourceTokenSymbol].name
     rateSourceToEth = tokens[sourceTokenSymbol].rate
   }
@@ -1379,7 +1381,7 @@ function* verifyExchange() {
   var destName = "Kybernetwork"
   if (tokens[destTokenSymbol]) {
     destBalance = tokens[destTokenSymbol].balance
-    destDecimal = tokens[destTokenSymbol].decimal
+    destDecimal = tokens[destTokenSymbol].decimals
     destName = tokens[destTokenSymbol].name
   }
 

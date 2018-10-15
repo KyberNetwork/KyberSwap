@@ -18,7 +18,7 @@ const TransactionListView = (props) => {
   function getTokenSymbol(address) {
     for (let key in props.tokens) {
       if (address.toLowerCase() === props.tokens[key].address.toLowerCase()) {
-        return { key, decimal: props.tokens[key].decimal }
+        return { key, decimals: props.tokens[key].decimals }
       }
     }
   }
@@ -100,10 +100,10 @@ const TransactionListView = (props) => {
     var content = list.map(function (item, i) {
       var sourceToken = getTokenSymbol(item.source)
       var destToken = getTokenSymbol(item.dest)
-      var sourceAmount = toT(item.actualSrcAmount, sourceToken.decimal, 3)
-      var sourceAmountFull = toT(item.actualSrcAmount, sourceToken.decimal, 7)
-      var desAmount = toT(item.actualDestAmount, destToken.decimal, 3)
-      var desAmountFull = toT(item.actualDestAmount, destToken.decimal, 7)
+      var sourceAmount = toT(item.actualSrcAmount, sourceToken.decimals, 3)
+      var sourceAmountFull = toT(item.actualSrcAmount, sourceToken.decimals, 7)
+      var desAmount = toT(item.actualDestAmount, destToken.decimals, 3)
+      var desAmountFull = toT(item.actualDestAmount, destToken.decimals, 7)
       var rate = roundingNumber(desAmountFull / sourceAmountFull )
       return (
         <div className="clearfix" key={item.txHash} onClick={(e) => gotoLink(item.txHash)}>

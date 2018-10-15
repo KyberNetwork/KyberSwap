@@ -46,7 +46,7 @@ import { default as _ } from 'underscore'
   var rateSourceToEth = 0
   if (tokens[sourceTokenSymbol]) {
     sourceBalance = tokens[sourceTokenSymbol].balance
-    sourceDecimal = tokens[sourceTokenSymbol].decimal
+    sourceDecimal = tokens[sourceTokenSymbol].decimals
     sourceName = tokens[sourceTokenSymbol].name
     rateSourceToEth = tokens[sourceTokenSymbol].rate
   }
@@ -57,7 +57,7 @@ import { default as _ } from 'underscore'
   var destName = "Kybernetwork"
   if (tokens[destTokenSymbol]) {
     destBalance = tokens[destTokenSymbol].balance
-    destDecimal = tokens[destTokenSymbol].decimal
+    destDecimal = tokens[destTokenSymbol].decimals
     destName = tokens[destTokenSymbol].name
   }
 
@@ -118,7 +118,7 @@ export default class ExchangeBody extends React.Component {
     //var minRate = 0
     var tokens = this.props.tokens
     if (tokens[sourceTokenSymbol]) {
-      sourceDecimal = tokens[sourceTokenSymbol].decimal
+      sourceDecimal = tokens[sourceTokenSymbol].decimals
       //minRate = tokens[sourceTokenSymbol].minRate
     }
 
@@ -270,7 +270,7 @@ export default class ExchangeBody extends React.Component {
         }
         balanceBig = balanceBig.minus(totalGas)
       }
-      var balance = balanceBig.div(Math.pow(10, token.decimal)).toString(10)
+      var balance = balanceBig.div(Math.pow(10, token.decimals)).toString(10)
       //balance = toPrimitiveNumber(balance)
 
       this.focusSource()
@@ -424,8 +424,8 @@ export default class ExchangeBody extends React.Component {
     var token = this.props.tokens[this.props.exchange.sourceTokenSymbol]
     if (token) {
       addressBalance = {
-        value: toT(token.balance, token.decimal),
-        roundingValue: roundingNumber(toT(token.balance, token.decimal))
+        value: toT(token.balance, token.decimals),
+        roundingValue: roundingNumber(toT(token.balance, token.decimals))
       }
     }
     var accountBalance = <AccountBalance 
