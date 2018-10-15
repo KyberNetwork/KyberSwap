@@ -17,9 +17,9 @@ const AccountBalanceLayout = (props) => {
   function getBalances() {
     var balances = converts.shortEthBalance(props.tokens)
       .map(token => {
-        var balance = converts.toT(token.balance, token.decimal)
+        var balance = converts.toT(token.balance, token.decimals)
 
-        var tokenEpsilon = converts.caculateTokenEpsilon(token.rate, token.decimal, token.symbol)
+        var tokenEpsilon = converts.caculateTokenEpsilon(token.rate, token.decimals, token.symbol)
         var bigBalance = new BigNumber(token.balance)
         return (
           props.showZeroBalance || bigBalance.isGreaterThanOrEqualTo(tokenEpsilon) ?
@@ -47,7 +47,7 @@ const AccountBalanceLayout = (props) => {
       if (!token.rateUSD){
         return
       }
-      var balance = converts.toT(token.balance, token.decimal)
+      var balance = converts.toT(token.balance, token.decimals)
       total += balance * token.rateUSD
     })
     //console.log("total: " + total)

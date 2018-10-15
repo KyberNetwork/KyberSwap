@@ -35,16 +35,16 @@ import { default as _ } from 'underscore'
   const tokens = store.tokens.tokens
   const tokenSymbol = store.transfer.tokenSymbol
   var balance = 0
-  var decimal = 18
+  var decimals = 18
   var tokenName = "kyber"
   if (tokens[tokenSymbol]) {
     balance = tokens[tokenSymbol].balance
-    decimal = tokens[tokenSymbol].decimal
+    decimals = tokens[tokenSymbol].decimals
     tokenName = tokens[tokenSymbol].name
   }
 
   return {
-    transfer: { ...store.transfer, balance, decimal, tokenName },
+    transfer: { ...store.transfer, balance, decimals, tokenName },
     account: store.account,
     tokens: tokens,
     global: store.global,
@@ -67,7 +67,7 @@ export default class Transfer extends React.Component {
     if (isNaN(parseFloat(value))) {
       // this.props.dispatch(transferActions.thowErrorAmount("error.amount_must_be_number"))
     } else {
-      var amountBig = converters.stringEtherToBigNumber(this.props.transfer.amount, this.props.transfer.decimal)
+      var amountBig = converters.stringEtherToBigNumber(this.props.transfer.amount, this.props.transfer.decimals)
       if (amountBig.isGreaterThan(this.props.transfer.balance)) {
         this.props.dispatch(transferActions.thowErrorAmount("error.amount_transfer_too_hign"))
         return
@@ -155,7 +155,7 @@ export default class Transfer extends React.Component {
         }
         balanceBig = balanceBig.minus(totalGas)
       }
-      var balance = balanceBig.div(Math.pow(10, token.decimal)).toString()
+      var balance = balanceBig.div(Math.pow(10, token.decimals)).toString()
       balance = converters.toPrimitiveNumber(balance)
       this.props.dispatch(transferActions.specifyAmountTransfer(balance))
 
@@ -182,8 +182,8 @@ export default class Transfer extends React.Component {
     var token = this.props.tokens[this.props.transfer.tokenSymbol]
     if (token) {
       addressBalance = {
-        value: converters.toT(token.balance, token.decimal),
-        roundingValue: converters.roundingNumber(converters.toT(token.balance, token.decimal)),
+        value: converters.toT(token.balance, token.decimals),
+        roundingValue: converters.roundingNumber(converters.toT(token.balance, token.decimals)),
       }
     }
 

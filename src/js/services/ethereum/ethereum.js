@@ -307,7 +307,7 @@ export default class EthereumService extends React.Component {
     var sourceDecimal = 18
     var sourceTokenSymbol = state.exchange.sourceTokenSymbol
     if (tokens[sourceTokenSymbol]) {
-      sourceDecimal = tokens[sourceTokenSymbol].decimal
+      sourceDecimal = tokens[sourceTokenSymbol].decimals
     }
 
 //    var sourceAmountHex = stringToHex(sourceAmount, sourceDecimal)

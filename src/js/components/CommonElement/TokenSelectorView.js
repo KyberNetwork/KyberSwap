@@ -20,7 +20,7 @@ const TokenSelectorView = (props) => {
     return Object.keys(listShow).map((key, i) => {
       if (key !== props.focusItem) {
         var item = listShow[key]
-        var balance = toT(item.balance, item.decimal)
+        var balance = toT(item.balance, item.decimals)
         return (
           <div key={key} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item">
             <div className="d-flex">
@@ -66,7 +66,7 @@ const TokenSelectorView = (props) => {
               <div>
                 <div className="focus-name">{focusItem.name}</div>
                 <div className="focus-balance">
-                  <span className="token-balance" title = {toT(focusItem.balance)}>{roundingNumber(toT(focusItem.balance, focusItem.decimal))}</span>
+                  <span className="token-balance" title = {toT(focusItem.balance)}>{roundingNumber(toT(focusItem.balance, focusItem.decimals))}</span>
                   <span className="token-symbol">{focusItem.symbol}</span>
                 </div>
               </div>

@@ -191,16 +191,16 @@ function* estimateGasUsed(action){
   var transfer = state.transfer
 
   var tokens = state.tokens.tokens
-  var decimal = 18
+  var decimals = 18
   var tokenSymbol = state.transfer.tokenSymbol
   if (tokens[tokenSymbol]) {
-    decimal = tokens[tokenSymbol].decimal
+    decimals = tokens[tokenSymbol].decimals
   }
 
   var account = state.account.account
   var fromAddr = account.address
 
-  var gasRequest = yield call(common.handleRequest, calculateGasUse, fromAddr, transfer.tokenSymbol, transfer.token, decimal, transfer.amount)
+  var gasRequest = yield call(common.handleRequest, calculateGasUse, fromAddr, transfer.tokenSymbol, transfer.token, decimals, transfer.amount)
   if (gasRequest.status === "success"){
     const gas = gasRequest.data
     yield put(actions.setGasUsed(gas))
@@ -223,16 +223,16 @@ function* estimateGasUsedWhenSelectToken(action){
   var transfer = state.transfer
 
   var tokens = state.tokens.tokens
-  var decimal = 18
+  var decimals = 18
   var tokenSymbol = symbol
   if (tokens[tokenSymbol]) {
-    decimal = tokens[tokenSymbol].decimal
+    decimals = tokens[tokenSymbol].decimals
   }
 
   var account = state.account.account
   var fromAddr = account.address
 
-  var gasRequest = yield call(common.handleRequest, calculateGasUse, fromAddr, tokenSymbol, address, decimal, transfer.amount)
+  var gasRequest = yield call(common.handleRequest, calculateGasUse, fromAddr, tokenSymbol, address, decimals, transfer.amount)
   if (gasRequest.status === "success"){
     const gas = gasRequest.data
     yield put(actions.setGasUsed(gas))
@@ -255,16 +255,16 @@ function* estimateGasUsedWhenChangeAmount(action){
   var transfer = state.transfer
   var tokens = state.tokens.tokens
 
-  var decimal = 18
+  var decimals = 18
   var tokenSymbol = transfer.tokenSymbol
   if (tokens[tokenSymbol]) {
-    decimal = tokens[tokenSymbol].decimal
+    decimals = tokens[tokenSymbol].decimals
   }
 
   var account = state.account.account
   var fromAddr = account.address
 
-  var gasRequest = yield call(common.handleRequest, calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimal, amount)
+  var gasRequest = yield call(common.handleRequest, calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimals, amount)
   if (gasRequest.status === "success"){
     const gas = gasRequest.data
     yield put(actions.setGasUsed(gas))
@@ -318,10 +318,10 @@ function* fetchGasSnapshot(){
   var transfer = state.transfer
   var tokens = state.tokens.tokens
 
-  var decimal = 18
+  var decimals = 18
   var tokenSymbol = transfer.tokenSymbol
   if (tokens[tokenSymbol]) {
-    decimal = tokens[tokenSymbol].decimal
+    decimals = tokens[tokenSymbol].decimals
   }
 
   var account = state.account.account
@@ -329,7 +329,7 @@ function* fetchGasSnapshot(){
 
 
 
-  var gasRequest = yield call(common.handleRequest, calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimal, transfer.amount)
+  var gasRequest = yield call(common.handleRequest, calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimals, transfer.amount)
   if (gasRequest.status === "success"){
     const gas = gasRequest.data
     yield put(actions.setGasUsedSnapshot(gas))
