@@ -7,38 +7,27 @@ import * as converters from "../utils/converter"
 
 
 
-const initState = function () {
-    var tokens = {}
-    var timeNow = new Date()
-    var timeStampNow = timeNow.getTime()
+function initState (tokens = BLOCKCHAIN_INFO.tokens) {
+    let wrapperTokens = {}
+    var timeStampNew = Math.floor(new Date().getTime() /1000) - 604800
 
     
-    Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
-        if (BLOCKCHAIN_INFO.tokens[key].exclude) return
-        if(!BLOCKCHAIN_INFO.tokens[key].isNew) return
-        if(BLOCKCHAIN_INFO.tokens[key].expireDate){            
-            var timeExpire = new Date(BLOCKCHAIN_INFO.tokens[key].expireDate)
-            var expireTimeStamp = timeExpire.getTime()
-            if (timeStampNow > expireTimeStamp) {
-                // tokens[key].info.isNew = false
-                return
-            }
+    Object.keys(tokens).forEach((key) => {
+        if (tokens[key].exclude) return
+
+        wrapperTokens[key] = {}
+        wrapperTokens[key].info = {...tokens[key]}
+
+        if(tokens[key].listing_time && tokens[key].listing_time > timeStampNew){            
+            wrapperTokens[key].info.isNew = true
         }
-        tokens[key] = {}
-        tokens[key].info = {...BLOCKCHAIN_INFO.tokens[key]}
 
-        tokens[key].circulatingSupply = 0
+        wrapperTokens[key].circulatingSupply = 0
 
-        // if(BLOCKCHAIN_INFO.tokens[key].expireDate){            
-        //     var timeExpire = new Date(BLOCKCHAIN_INFO.tokens[key].expireDate)
-        //     var expireTimeStamp = timeExpire.getTime()
-        //     if (timeStampNow > expireTimeStamp) {
-        //         tokens[key].info.isNew = false
-        //     }
-        // }
+
         
 
-        tokens[key]["ETH"] = {
+        wrapperTokens[key]["ETH"] = {
             sellPrice: 0,
             buyPrice: 0,
             market_cap: 0,
@@ -49,7 +38,7 @@ const initState = function () {
             volume: 0
         }
 
-        tokens[key]["USD"] = {
+        wrapperTokens[key]["USD"] = {
             sellPrice: 0,
             buyPrice: 0,
             market_cap: 0,
@@ -62,115 +51,62 @@ const initState = function () {
 
     })
 
-    Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
-        if (BLOCKCHAIN_INFO.tokens[key].exclude) return
-        // if(!BLOCKCHAIN_INFO.tokens[key].isNew) return
-        if(BLOCKCHAIN_INFO.tokens[key].expireDate && BLOCKCHAIN_INFO.tokens[key].isNew){            
-            var timeExpire = new Date(BLOCKCHAIN_INFO.tokens[key].expireDate)
-            var expireTimeStamp = timeExpire.getTime()
-            if (timeStampNow <= expireTimeStamp) {
-                // tokens[key].info.isNew = false
-                return
-            } else {
-                tokens[key] = {}
-                tokens[key].info = {...BLOCKCHAIN_INFO.tokens[key]}
-                tokens[key].info.isNew = false
-            }
-        } else {
-            tokens[key] = {}
-            tokens[key].info = {...BLOCKCHAIN_INFO.tokens[key]}
-        }
-        // tokens[key].info = {...BLOCKCHAIN_INFO.tokens[key]}
+    return wrapperTokens
+}
 
-        tokens[key].circulatingSupply = 0
 
-        // if(BLOCKCHAIN_INFO.tokens[key].expireDate){            
-        //     var timeExpire = new Date(BLOCKCHAIN_INFO.tokens[key].expireDate)
-        //     var expireTimeStamp = timeExpire.getTime()
-        //     if (timeStampNow > expireTimeStamp) {
-        //         tokens[key].info.isNew = false
-        //     }
-        // }
-        
-
-        tokens[key]["ETH"] = {
-            sellPrice: 0,
-            buyPrice: 0,
-            market_cap: 0,
-            circulating_supply: 0,
-            total_supply: 0,
-            last_7d: 0,
-            change: -9999,
-            volume: 0
-        }
-
-        tokens[key]["USD"] = {
-            sellPrice: 0,
-            buyPrice: 0,
-            market_cap: 0,
-            circulating_supply: 0,
-            total_supply: 0,
-            last_7d: 0,
-            change: -9999,
-            volume: 0
-        }
-
-    })
-    var sortedTokens = []
-    console.log("tokens: ", tokens, Object.keys(tokens).length)
-    return {
-        tokens,
-        sortedTokens,
-        configs: {
-            isShowTradingChart: false,
-            page: 1,
-            firstPageSize: 20,
-            normalPageSize: 15,
-            numScroll: 5,
-            sortKey: "",
-            sortType: {},
-            isLoading: false,
-            selectedSymbol: "KNC",
-            searchWord: "",
-            currency: {
-                listItem: {
-                    "ETH": "ETH",
-                    "USD": "USD"
-                },
-                focus: "ETH"
+const initMarket = {
+    configs: {
+        isShowTradingChart: false,
+        page: 1,
+        firstPageSize: 20,
+        normalPageSize: 15,
+        numScroll: 5,
+        sortKey: "",
+        sortType: {},
+        isLoading: false,
+        selectedSymbol: "KNC",
+        searchWord: "",
+        currency: {
+            listItem: {
+                "ETH": "ETH",
+                "USD": "USD"
             },
-            sort: {
-                listItem: {
-                    "highest_price": "Highest price",
-                    "lowest_price": "Lowest price"
-                },
-                focus: "highest_price"
-            },
-            column: {
-                display: {
-                    listItem: {
-                        "B": "Bold Columns",
-                        "S": "Standard Columns",
-                        "T": "Tine Columns",
-                    },
-                    active: "B"
-                },
-                shows: {
-                    listItem: {                        
-                        "change": {title: "24HR Change"},
-                        "volume": {title: "Volume (24h)"},
-                        "market_cap": {title: "Market cap" },                        
-                        "last_7d": {title: "Last 7d", type: "chart"}
-                    },
-                    active: ["change", "last_7d"]
-                }
-            }
+            focus: "ETH"
         },
-        count: { storageKey: constants.STORAGE_KEY }
-    }
-}()
+        sort: {
+            listItem: {
+                "highest_price": "Highest price",
+                "lowest_price": "Lowest price"
+            },
+            focus: "highest_price"
+        },
+        column: {
+            display: {
+                listItem: {
+                    "B": "Bold Columns",
+                    "S": "Standard Columns",
+                    "T": "Tine Columns",
+                },
+                active: "B"
+            },
+            shows: {
+                listItem: {                        
+                    "change": {title: "24HR Change"},
+                    "volume": {title: "Volume (24h)"},
+                    "market_cap": {title: "Market cap" },                        
+                    "last_7d": {title: "Last 7d", type: "chart"}
+                },
+                active: ["change", "last_7d"]
+            }
+        }
+    },
+    count: { storageKey: constants.STORAGE_KEY },
+    sortedTokens: [],
+    tokens: initState()
+}
 
-const market = (state = initState, action) => {
+const market = (state = initMarket, action) => {
     var newState = { ...state }
     switch (action.type) {
         // case REHYDRATE: {
@@ -191,6 +127,12 @@ const market = (state = initState, action) => {
         //     }
         //     return initState
         // }
+        case 'TOKEN.INIT_TOKEN':{
+            const {tokens} = action.payload
+            var wrappeTokens = initState(tokens)
+            return  {...newState, tokens: {...wrappeTokens}}
+            //return Object.assign({}, state, { tokens: wrappeTokens })
+          }
         case 'MARKET.CHANGE_SEARCH_WORD': {
             var searchWord = action.payload
             var configs = newState.configs

@@ -25,6 +25,7 @@
       "ws": "wss://mainnet.infura.io/ws"
     },
     "api_usd":"https://api.coinmarketcap.com",
+    "api_url": "https://dev-api.knstats.com",
     "tokens": {
       "ETH": {
         "name": "Ethereum",
@@ -41,8 +42,6 @@
         "symbol" : "WETH",
         "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
         "icon": "weth.svg",
-        "isNew": true,
-        "expireDate":"2018/09/30",
         "exclude": true
       },
       "KNC": {
@@ -469,27 +468,21 @@
         "decimals": 18,
         "symbol" : "DAT",
         "address": "0x81c9151de0c8bafcd325a57e3db5a5df1cebf79c",
-        "icon": "dat.svg",
-        "isNew": true,
-        "expireDate": "2018/10/20"
+        "icon": "dat.svg"
       },
       "REN":{
         "name": "Republic Protocol",
         "decimals": 18,
         "symbol" : "REN",
         "address": "0x408e41876cccdc0f92210600ef50372656052a38",
-        "icon": "ren.svg",
-        "isNew": true,
-        "expireDate": "2018/10/20"
+        "icon": "ren.svg"
       },
       "QKC":{
         "name": "QuarkChain",
         "decimals": 18,
         "symbol" : "QKC",
         "address": "0xea26c4ac16d4a5a106820bc8aee85fd0b7b2b664",
-        "icon": "qkc.svg",
-        "isNew": true,
-        "expireDate": "2018/10/20"
+        "icon": "qkc.svg"
       }  
     },
     "ethScanUrl": "https://etherscan.io/",

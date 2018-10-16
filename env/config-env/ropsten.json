@@ -13,6 +13,7 @@
     "ws": "wss://ropsten.kyber.network/ws/"
   },
   "api_usd":"https://api.coinmarketcap.com",
+  "api_tokens": "https://dev-api.knstats.com/trading/getList/ropsten",
   "tokens": {
       "ETH": {
         "name": "Ethereum",

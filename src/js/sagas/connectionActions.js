@@ -2,6 +2,9 @@ import { take, put, call, fork, select, takeEvery, all, cancel } from 'redux-sag
 import EthereumService from "../services/ethereum/ethereum"
 import { setConnection } from "../actions/connectionActions"
 import { setMaxGasPrice } from "../actions/exchangeActions"
+
+import {initTokens} from "../actions/tokenActions"
+
 import { delay } from 'redux-saga'
 import { store } from "../store"
 import constants from "../services/constants"
@@ -15,23 +18,71 @@ import NotiService from "../services/noti_service/noti_service"
 
 
 
+//get list tokens
+function getListTokens() {
+  //var network = process.env.npm_config_chain  || 'ropsten'
+  //in ropsten
+  return new Promise((resolve, reject) => {
+    //return list of object tokens
+    fetch(BLOCKCHAIN_INFO.api_tokens, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+    }).then((response) => {
+      return response.json()
+    })
+      .then((result) => {
+        if (result.success) {
+          //check listing time
+          var now = Math.round(new Date().getTime()/1000)
+          var tokens = {}
+          result.data.map(val => {
+            if (val.time_listing > now) return
+            tokens[val.symbol] = val
+          })
+          resolve(tokens)
+
+          //resolve(result.data)
+        } else {
+          //rejected(new Error("Cannot get data"))
+          //get from snapshot
+          var tokens = BLOCKCHAIN_INFO.tokens
+          resolve(tokens)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        var tokens = BLOCKCHAIN_INFO.tokens
+        resolve(tokens)
+      })
+  })
+}
+
+
 export function* createNewConnection(action) {
+  var tokens = yield call(getListTokens)
+  // console.log("get_lis_tokens")
+  // console.log(tokens)
+  yield put.sync(initTokens(tokens))
+
   var translate = getTranslate(store.getState().locale)
   var connectionInstance = new EthereumService()
-  yield put(setConnection(connectionInstance))
+  yield put.sync(setConnection(connectionInstance))
   connectionInstance.subcribe()
 
   // var state = store.getState()
   // var ethereum = action.payload.ethereum
   // var ethereum = state.connection.ethereum
-  yield put(setMaxGasPrice(connectionInstance))
+  yield put.sync(setMaxGasPrice(connectionInstance))
 
 
 
   var web3Service = new Web3Service()
 
   if (!web3Service.isHaveWeb3()) {
-    yield put(globalActions.throwErrorMematamask(translate("error.metamask_not_installed") || "Metamask is not installed"))
+    yield put.sync(globalActions.throwErrorMematamask(translate("error.metamask_not_installed") || "Metamask is not installed"))
   } else {
     //const web3Service = new Web3Service(web3)
     const watchMetamask = yield fork(watchMetamaskAccount, connectionInstance, web3Service)
@@ -39,7 +90,7 @@ export function* createNewConnection(action) {
 
 
   var notiService = new NotiService({ type: "session" })
-  yield put(globalActions.setNotiHandler(notiService))
+  yield put.sync(globalActions.setNotiHandler(notiService))
 
   //  const watchConnectionTask = yield fork(watchToSwitchConnection, connectionInstance)
 
