@@ -39,7 +39,7 @@ function getListTokens() {
           var now = Math.round(new Date().getTime()/1000)
           var tokens = {}
           result.data.map(val => {
-            if (val.time_listing > now) return
+            if (val.listing_time > now) return
             tokens[val.symbol] = val
           })
           resolve(tokens)

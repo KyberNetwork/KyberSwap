@@ -25,7 +25,7 @@
       "ws": "wss://mainnet.infura.io/ws"
     },
     "api_usd":"https://api.coinmarketcap.com",
-    "api_url": "https://dev-api.knstats.com",
+    "api_url": "https://dev-api.knstats.com/internal/getListToken/mainnet",
     "tokens": {
       "ETH": {
         "name": "Ethereum",
