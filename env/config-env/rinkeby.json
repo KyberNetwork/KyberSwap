@@ -9,7 +9,7 @@
         "ws": "wss://rinkeby.infura.io/ws/"
     },
     "api_usd": "https://api.coinmarketcap.com",
-    "api_tokens": "https://dev-api.knstats.com/internal/getListToken/mainnet",
+    "api_tokens": "https://dev-api.knstats.com/internal/getListToken/rinkeby",
     "tokens_gas": {
         "ETH": 0,
         "DGX": 750000
