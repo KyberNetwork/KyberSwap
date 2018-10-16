@@ -1,5 +1,6 @@
 import React from "react"
 //import ReactTooltip from 'react-tooltip'
+import { getAssetUrl } from "../../utils/common";
 
 const ImportByLedgerView = (props) => {
 	return (
@@ -7,7 +8,8 @@ const ImportByLedgerView = (props) => {
 			<div className="importer ledger">
 				{/*<div className="how-to-use" data-for="ledger-tip" data-tip="How to use"></div>*/}
         <div className="importer__symbol">
-          <img src={require('../../../assets/img/landing/ledger_active.svg')} />
+					{/* <img src={require('../../../assets/img/landing/ledger_active.svg')} /> */}
+					<img src={getAssetUrl('wallets/ledger.svg')} />
           <div className="importer__name">{props.translate("import.from_ledger") || "LEDGER"}</div>
         </div>
 				<button className="importer__button" onClick={(e) => props.showLoading('ledger')}>{props.translate("import.swap_from_ledger") || "Swap from Ledger"}</button>
