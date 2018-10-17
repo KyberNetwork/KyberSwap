@@ -13,19 +13,20 @@ function initState (tokens = BLOCKCHAIN_INFO.tokens) {
 
     
     Object.keys(tokens).forEach((key) => {
-        if (tokens[key].exclude) return
+        if (BLOCKCHAIN_INFO.market_exclude && BLOCKCHAIN_INFO.market_exclude.includes(key)) return
+        //if (tokens[key].exclude) return
+
+        
+
+        if(!tokens[key].listing_time || tokens[key].listing_time <= timeStampNew){                        
+            return
+        }
 
         wrapperTokens[key] = {}
         wrapperTokens[key].info = {...tokens[key]}
-
-        if(tokens[key].listing_time && tokens[key].listing_time > timeStampNew){            
-            wrapperTokens[key].info.isNew = true
-        }
+        wrapperTokens[key].info.isNew = true
 
         wrapperTokens[key].circulatingSupply = 0
-
-
-        
 
         wrapperTokens[key]["ETH"] = {
             sellPrice: 0,
@@ -49,6 +50,39 @@ function initState (tokens = BLOCKCHAIN_INFO.tokens) {
             volume: 0
         }
 
+    })
+
+    Object.keys(tokens).forEach((key) => {
+        if (BLOCKCHAIN_INFO.market_exclude && BLOCKCHAIN_INFO.market_exclude.includes(key)) return
+        if(tokens[key].listing_time && tokens[key].listing_time > timeStampNew){            
+            return
+        }
+        wrapperTokens[key] = {}
+        wrapperTokens[key].info = {...tokens[key]}
+
+        wrapperTokens[key].circulatingSupply = 0
+
+        wrapperTokens[key]["ETH"] = {
+            sellPrice: 0,
+            buyPrice: 0,
+            market_cap: 0,
+            circulating_supply: 0,
+            total_supply: 0,
+            last_7d: 0,
+            change: -9999,
+            volume: 0
+        }
+
+        wrapperTokens[key]["USD"] = {
+            sellPrice: 0,
+            buyPrice: 0,
+            market_cap: 0,
+            circulating_supply: 0,
+            total_supply: 0,
+            last_7d: 0,
+            change: -9999,
+            volume: 0
+        }
     })
 
     return wrapperTokens

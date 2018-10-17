@@ -95,6 +95,7 @@ const tokens = (state = {tokens: initState()}, action) => {
       //map token
       var mapToken = {}
       rates.map(rate => {
+        if (!tokens[rate.source] || !tokens[rate.dest]) return
         if (rate.source !== "ETH") {
           if (!mapToken[rate.source]) {
             mapToken[rate.source] = {}
@@ -116,9 +117,15 @@ const tokens = (state = {tokens: initState()}, action) => {
       })
       // console.log("mapToken")
       // console.log(mapToken)
+      // console.log(tokens)
       //push data
       var newTokens = {}
       Object.keys(tokens).map(key => {
+
+        if (!mapToken[key]){
+          console.log(key)
+          return
+        }
         var token = tokens[key]
 
         if (key === "ETH"){

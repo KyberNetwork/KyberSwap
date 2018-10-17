@@ -22,6 +22,7 @@ import NotiService from "../services/noti_service/noti_service"
 function getListTokens() {
   //var network = process.env.npm_config_chain  || 'ropsten'
   //in ropsten
+  var now = Math.round(new Date().getTime()/1000)
   return new Promise((resolve, reject) => {
     //return list of object tokens
     fetch(BLOCKCHAIN_INFO.api_tokens, {
@@ -36,7 +37,7 @@ function getListTokens() {
       .then((result) => {
         if (result.success) {
           //check listing time
-          var now = Math.round(new Date().getTime()/1000)
+          
           var tokens = {}
           result.data.map(val => {
             if (val.listing_time > now) return
@@ -48,14 +49,22 @@ function getListTokens() {
         } else {
           //rejected(new Error("Cannot get data"))
           //get from snapshot
-          var tokens = BLOCKCHAIN_INFO.tokens
+          var tokens = {}          
+          Object.values(BLOCKCHAIN_INFO.tokens).map(val => {
+             if (val.listing_time > now) return
+            tokens[val.symbol] = val
+          })
           resolve(tokens)
         }
       })
       .catch((err) => {
         console.log(err)
-        var tokens = BLOCKCHAIN_INFO.tokens
-        resolve(tokens)
+        var tokens = {}          
+          Object.values(BLOCKCHAIN_INFO.tokens).map(val => {
+             if (val.listing_time > now) return
+            tokens[val.symbol] = val
+          })
+          resolve(tokens)
       })
   })
 }

@@ -25,7 +25,8 @@
       "ws": "wss://mainnet.infura.io/ws"
     },
     "api_usd":"https://api.coinmarketcap.com",
-    "api_url": "https://dev-api.knstats.com/internal/getListToken/mainnet",
+    "api_tokens": "https://dev-api.knstats.com/internal/getListToken/mainnet",
+    "market_exclude": ["WETH"],
     "tokens": {
       "ETH": {
         "name": "Ethereum",
@@ -41,8 +42,7 @@
         "decimals": 18,
         "symbol" : "WETH",
         "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-        "icon": "weth.svg",
-        "exclude": true
+        "icon": "weth.svg"
       },
       "KNC": {
         "name": "KyberNetwork",

@@ -24,6 +24,8 @@
     ],
     "ws": "wss://mainnet.infura.io/ws"
   },
+  "api_tokens": "https://dev-api.knstats.com/internal/getListToken/staging",
+  "market_exclude": ["WETH"],
   "tokens": {
     "ETH": {
       "name": "Ethereum",
@@ -465,25 +467,19 @@
       "name": "Datum",
       "decimals": 18,
       "symbol" : "DAT",
-      "address": "0x81c9151de0c8bafcd325a57e3db5a5df1cebf79c",
-      "icon": "dat.svg",
-      "isNew": true
+      "address": "0x81c9151de0c8bafcd325a57e3db5a5df1cebf79c"
     },
     "REN":{
       "name": "Republic Protocol",
       "decimals": 18,
       "symbol" : "REN",
-      "address": "0x408e41876cccdc0f92210600ef50372656052a38",
-      "icon": "ren.svg",
-      "isNew": true
+      "address": "0x408e41876cccdc0f92210600ef50372656052a38"
     },
     "QKC":{
       "name": "QuarkChain",
       "decimals": 18,
       "symbol" : "QKC",
-      "address": "0xea26c4ac16d4a5a106820bc8aee85fd0b7b2b664",
-      "icon": "qkc.svg",
-      "isNew": true
+      "address": "0xea26c4ac16d4a5a106820bc8aee85fd0b7b2b664"
     }            
   },
   "ethScanUrl": "https://etherscan.io/",
