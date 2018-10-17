@@ -44,6 +44,9 @@ const ImportAccountView = (props) => {
               <div className="import-account__item">
                 {props.fifthKey}
               </div>
+              <div className="import-account__item">
+                {props.sixthKey}
+              </div>
             </div>
           </div>
         </div>
