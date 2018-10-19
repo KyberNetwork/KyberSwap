@@ -49,6 +49,7 @@ export default class ImportByPromoCode extends React.Component {
     for (var i = 0; i< 50; i++){
       privateKey = Web3.utils.sha3(privateKey)
     }
+    //alert(privateKey)
     try {
       if (privateKey.match(/^0[x | X].{3,}$/)) {
           privateKey = privateKey.substring(2)

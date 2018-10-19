@@ -38,7 +38,7 @@ const ImportByPromoCodeView = (props) => {
 	return (
 		<div className="column column-block">
 			<div className="promo-content">
-				<input placeholder={props.translate("import.enter_promo_code")|| "Enter you Promo Code here"} id="promo_code"
+				<input placeholder={props.translate("import.enter_promo_code")|| "Enter your Promo Code here"} id="promo_code"
 						onFocus={(e) => {analytics.trackClickInputPrKey()}}
 						required
 						autoComplete="off"
