@@ -156,6 +156,13 @@ export default class LandingPage extends React.Component {
 									</div>
 								</div>
 							</div>
+
+							<div className="account-promo-code">
+								<div className="promo-code-content">
+									<img src={require('../../../assets/img/promo_code.svg')} />
+									<span className="promo-text">{this.props.translate("landing_page.promo_code") || "Promotion code"}</span>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

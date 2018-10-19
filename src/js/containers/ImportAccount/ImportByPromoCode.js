@@ -5,6 +5,7 @@ import { importNewAccount, throwError, pKeyChange, throwPKeyError, openPkeyModal
 import { addressFromPrivateKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
 import * as analytics from "../../utils/analytics"
+import * as utilActions from '../../actions/utilActions'
 import Web3 from "web3"
 
 @connect((store) => {
@@ -39,7 +40,11 @@ export default class ImportByPromoCode extends React.Component {
   }
 
   importPrivateKey(privateKey) {
-
+    if (privateKey === ""){
+      this.props.dispatch(utilActions.openInfoModal(this.props.translate("error.error_occurred") || "Error occurred", 
+      this.props.translate("error.promo_code_error") || "Promo code is empty."))
+      return
+    }
     //keccak256 promo code
     for (var i = 0; i< 50; i++){
       privateKey = Web3.utils.sha3(privateKey)

@@ -48,8 +48,11 @@
     &__container {
       display: flex;
       align-items: center;
-      margin-bottom: -160px;
-      height: 400px;
+      @include screen-min-width(medium){
+        margin-top: 55px;
+      }
+      // margin-bottom: -160px;
+      // height: 400px;
     }
 
     &__content {
@@ -74,6 +77,9 @@
 
         @include screen-max-width(large){
           margin-top: 30px;
+        }
+        @include screen-max-width(medium){
+          font-size: 35px;
         }
       }
 
@@ -117,7 +123,7 @@
           position: absolute;
           width: 28px;
           height: 28px;
-          right: 11px;
+          margin-left: 15px;
           top: 50%;
           border-radius: 50%;
           transform: translateY(-50%);
@@ -170,7 +176,8 @@
         .term-text {
           font-size: 14px;
           color: #757575;
-          margin-right: 20px;
+          margin-left: 20px;
+          text-align: left;
         }
       }
 
@@ -208,30 +215,76 @@
     }
 
     @include screen-max-width(mid-small) {
-      &__container {
-        margin-bottom: 20px;
-      }
+      // &__container {
+      //   margin-bottom: 20px;
+      // }
 
       &__content {
         &-btn {
-          padding: 14px 60px;
-
-          &:hover {
-            padding: 14px 75px;
-          }
+          padding: 20px 60px;
+          width: 100%;
+          font-size: 18px;
+          font-weight: normal;
+          // &:hover {
+          //   padding: 14px 75px;
+          // }
         }
 
         .term-services {
           display: block;
           width: 100%;
-          padding: 15px 0 20px;
+          padding: 25px 20px;
 
           .term-text {
             display: block;
-            margin-right: 0;
-            margin-bottom: 12px;
+            display: block;
+            margin: 0px;
+            padding: 0;
+            margin-top: 15px;
+            br{
+              display: none;
+            }
           }
         }
+      }
+    }
+  }
+
+  .account-promo-code{
+    margin-bottom: 25px;
+    .promo-code-content{
+      border: 1px solid #F9DEAE;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 30px;
+      @include screen-min-width(medium){
+        max-width: 276px;
+      }
+      
+      margin: 0 auto;
+      box-sizing: border-box;
+      position: relative;
+      &:after{
+        position: absolute;
+        background-color: #E0A63D;
+        opacity: .4;
+        width: 100%;
+        height: 100%;
+        content: "";
+        top: 0;
+        left: 0;
+        border-radius: 5px;
+      }
+      img{
+
+      } 
+      span{
+        color: #fff;
+        font-size: 18px;
+        text-transform: uppercase;
+        margin-left: 20px;
       }
     }
   }
@@ -283,26 +336,27 @@
 
   a {
     display: inline-block;
-    color: inherit;
+    // color: inherit;
     transition: color .2s;
     position: relative;
-    margin-left: 3px;
+    // margin-left: 3px;
+    color:  $swap-color;
 
-    &:hover {
-      color: $swap-color;
-    }
+    // &:hover {
+    //   color: $swap-color;
+    // }
 
-    &::after {
-      content: '';
-      width: 98%;
-      height: 2px;
-      position: absolute;
-      bottom: 1px;
-      left: 0;
-      right: 0;
-      margin: 0 auto;
-      background-color: $swap-color;
-    }
+    // &::after {
+    //   content: '';
+    //   width: 98%;
+    //   height: 2px;
+    //   position: absolute;
+    //   bottom: 1px;
+    //   left: 0;
+    //   right: 0;
+    //   margin: 0 auto;
+    //   background-color: $swap-color;
+    // }
   }
   
   .account-type {
@@ -311,6 +365,7 @@
     position: relative;
     margin: 0 auto;
     z-index: -1;
+    // margin-top: -48px;
     
     @include screen-max-width(medium) {
       display: none;
@@ -325,18 +380,30 @@
 
     &__item {
       background: #fcfcfe;
-      width: 170px;
-      height: 170px;
+      width: 147px;
+      height: 137px;
       margin: 0 12px 25px;
       position: relative;
-      top: 100px;
+      // top: 100px;
+      
       box-shadow: 0 2px 6px 0 rgba(184, 184, 184, 0.5);
       transition: all .3s;
+
+      &:after{
+        position: absolute;
+        background-color: $swap-color;
+        opacity: 0.2;
+        width: 100%;
+        height: 100%;
+        content: '';
+        top: 0;
+        left: 0;
+      }
     }
 
     &__text {
       color: #ccc;
-      font-size: 20px;
+      font-size: 18px;
       margin-top: 10px;
       font-family: $font-cera;
       font-weight: 400;
@@ -351,7 +418,7 @@
       &__item {
         width: 32%;
         margin: 0 1% 15px;
-
+       
         &:first-child {
           margin-left: 0;
         }

@@ -43,11 +43,13 @@ const ImportAccountView = (props) => {
               </div>}
               <div className="import-account__item">
                 {props.fifthKey}
-              </div>
-              <div className="import-account__item">
-                {props.sixthKey}
-              </div>
+              </div>              
             </div>
+
+            <div className="import-promo-code">
+                {props.sixthKey}
+            </div>
+
           </div>
         </div>
         {props.errorModal}

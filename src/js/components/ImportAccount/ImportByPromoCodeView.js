@@ -13,37 +13,47 @@ const ImportByPromoCodeView = (props) => {
 
 	function submit(e) {
 		if (e.key === 'Enter') {
-			handldeSubmit(e)
+			importPromocode(e)
 		}
 	}
 
-	function toggleShowPw() {
-		let input = document.getElementById('promo_code')
-		if (input.classList.contains('security')) {
-			input.classList.remove('security')
-			input.parentElement.classList.add('unlock')
-			analytics.trackClickShowPassword("show")
-		} else if (input.type == 'text') {
-			input.classList.add('security')
-			input.parentElement.classList.remove('unlock')
-			analytics.trackClickShowPassword("hide")
-		}
-	}
+	// function toggleShowPw() {
+	// 	let input = document.getElementById('promo_code')
+	// 	if (input.classList.contains('security')) {
+	// 		input.classList.remove('security')
+	// 		input.parentElement.classList.add('unlock')
+	// 		analytics.trackClickShowPassword("show")
+	// 	} else if (input.type == 'text') {
+	// 		input.classList.add('security')
+	// 		input.parentElement.classList.remove('unlock')
+	// 		analytics.trackClickShowPassword("hide")
+	// 	}
+	// }
 
+	function importPromocode(){
+		let privateKey = document.getElementById("promo_code").value		
+		props.importPrivateKey(privateKey)
+		analytics.trackClickSubmitPrKey()
+	}
 	return (
 		<div className="column column-block">
-			<div className="importer pkey">
-				{/*<div className="how-to-use" data-for="private-key-tip" data-tip="How to use"></div>*/}
+			<div className="promo-content">
+				<input placeholder={props.translate("import.enter_promo_code")|| "Enter you Promo Code here"} id="promo_code"
+						onFocus={(e) => {analytics.trackClickInputPrKey()}}
+						required
+						autoComplete="off"
+						spellCheck="false"
+						/>
+				<button onClick={(e) => importPromocode()}>{props.translate("import.apply") || "Apply"}</button>
+			</div>
+			{/* <div className="importer pkey">
         <div className="importer__symbol">
           <img src={require('../../../assets/img/landing/privatekey_active.svg')} />
           <div className="importer__name">{props.translate("import.from_promo_code") || "PROMO CODE"}</div>
         </div>
 				<button className="importer__button" onClick={(e) => props.modalOpen()}>{props.translate("import.from_promo_code_input_title_placehoder") || "Enter your Promo code"}</button>
-				{/* <a onClick={() => props.modalOpen()} id="importPKey">
-					<img src={require('../../../assets/img/pkey.svg')} />
-				</a> */}
+	
 			</div>
-			{/* <ReactTooltip place="top" id="private-key-tip" type="dark" /> */}
 
 			<Modal
 				className={{ base: 'reveal medium', afterOpen: 'reveal medium import-privatekey' }}
@@ -86,7 +96,7 @@ const ImportByPromoCodeView = (props) => {
 
 					</div>
 				}
-			/>
+			/> */}
 		</div>
 	)
 }

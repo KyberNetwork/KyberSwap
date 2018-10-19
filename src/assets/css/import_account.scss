@@ -11,8 +11,64 @@ $animationTime: 0.5s;
     padding-top: 50px;
     text-align: center;
 
-    @include screen-min-width(large){
-      padding-bottom: 40px;
+    // @include screen-min-width(large){
+    //   padding-bottom: 40px;
+    // }
+    .frame{
+      padding: 0;
+    }
+    .import-promo-code{
+      
+      
+      
+
+      display: flex;
+      justify-content: space-between;
+
+      @include screen-min-width(medium){
+        margin-top: 25px;
+      }
+
+      .promo-content{
+        input{
+          padding: 13px 20px;
+          background-color: #E0A63D;
+          outline: none;
+          border: none;
+          color: white;
+          @include screen-min-width(medium){
+            width: 270px;
+          }
+          
+          border-radius: 5px;
+          font-size: 18px;
+          &::-webkit-input-placeholder {
+            color: #eee;
+          }
+          &::-moz-placeholder {
+            color: #eee;
+          }
+          &:-ms-input-placeholder {
+            color: #eee;
+          }
+          &:-moz-placeholder {
+            color: #eee;
+          }
+        }
+        button{
+          background-color: white;
+          padding: 15px;
+          border-radius: 5px;
+          margin-left: 16px;
+          text-transform: uppercase;
+          font-size: 16px;
+          color: #666;
+          cursor: pointer;
+          &:focus{
+            background-color: #fefefe;
+          }
+        }
+      }
     }
 
     #import-acc {
@@ -20,8 +76,7 @@ $animationTime: 0.5s;
     }
 
     .title {
-      color: #fff;
-      text-align: left;
+      color: #fff;      
       font-size: 42px;
       letter-spacing: -0.9px;
       opacity: 0;

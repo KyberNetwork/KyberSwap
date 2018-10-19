@@ -240,7 +240,7 @@
         "decimal": 18,
         "symbol" : "MASR",
         "address": "0xc2c37d1a2cdd601ce665c4a785074670657f83ac",
-        "icon": "masr.svg",
+        "icon": "mas.svg",
         "isNew": true
       }
   },
