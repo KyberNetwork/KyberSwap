@@ -105,6 +105,7 @@
   "scripts": {
     "build-kovan": "NODE_ENV=production webpack --env.chain=kovan --env.build=true",
     "build-ropsten": "NODE_ENV=production webpack --env.chain=ropsten --env.build=true",
+    "build-rinkeby": "NODE_ENV=production webpack --env.chain=rinkeby --env.build=true",
     "build-staging": "NODE_ENV=production webpack --env.chain=staging --env.build=true",
     "build-production": "NODE_ENV=production webpack --env.chain=production --env.build=true",
     "build-all": "npm run build-staging && npm run build-production && npm run build-kovan  && npm run build-ropsten",
