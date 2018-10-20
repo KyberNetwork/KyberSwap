@@ -51,12 +51,14 @@ $animationTime: 0.5s;
           border: none;
           color: white;
           width: 100%;
+          font-size: 16px;
           @include screen-min-width(medium){
             width: 270px;
+            font-size: 18px;
           }
           
           border-radius: 5px;
-          font-size: 18px;
+          
           &::-webkit-input-placeholder {
             color: #eee;
           }
