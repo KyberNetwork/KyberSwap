@@ -14,7 +14,7 @@ script:
 
 install:
   - npm install
-  - npm run build-production
+  - npm run build-ropsten
 
 deploy:
   - provider: s3
@@ -23,7 +23,7 @@ deploy:
     bucket: dev-swap.knstats.com
     region: ap-southeast-1
     acl: public_read
-    local_dir: dist/production
+    local_dir: dist/ropsten
     skip_cleanup: true
     on:
       branch: develop_promo_code
