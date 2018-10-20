@@ -71,7 +71,9 @@ export default class TermAndServices extends React.Component {
           </div>
         {/* <img className="pr-2 cur-pointer" onClick={(e) => this.changeCheckbox(e)} src={src} width="14" /> */}
         <span className="term-text">
+          <i>
           By Swapping, you agree to the <br></br> {termConditions}
+          </i>
         </span>
         {/* <span className="term-text">
           <span className="cur-pointer"> 

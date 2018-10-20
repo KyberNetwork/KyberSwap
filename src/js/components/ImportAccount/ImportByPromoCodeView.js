@@ -30,21 +30,25 @@ const ImportByPromoCodeView = (props) => {
 	// 	}
 	// }
 
-	function importPromocode(){
-		let privateKey = document.getElementById("promo_code").value		
+	function importPromocode() {
+		let privateKey = document.getElementById("promo_code").value
 		props.importPrivateKey(privateKey)
 		analytics.trackClickSubmitPrKey()
 	}
 	return (
-		<div className="column column-block">
+		<div className="promo-wrapper">
 			<div className="promo-content">
-				<input placeholder={props.translate("import.enter_promo_code")|| "Enter your Promo Code here"} id="promo_code"
-						onFocus={(e) => {analytics.trackClickInputPrKey()}}
+				<div>
+					<input placeholder={props.translate("import.enter_promo_code") || "Enter your Promo Code here"} id="promo_code"
+						onFocus={(e) => { analytics.trackClickInputPrKey() }}
 						required
 						autoComplete="off"
 						spellCheck="false"
-						/>
-				<button onClick={(e) => importPromocode()}>{props.translate("import.apply") || "Apply"}</button>
+					/>
+				</div>
+				<div>
+					<button onClick={(e) => importPromocode()}>{props.translate("import.apply") || "Apply"}</button>
+				</div>
 			</div>
 			{/* <div className="importer pkey">
         <div className="importer__symbol">

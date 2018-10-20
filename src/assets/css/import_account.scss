@@ -28,14 +28,29 @@ $animationTime: 0.5s;
       @include screen-min-width(medium){
         margin-top: 25px;
       }
-
+      .promo-wrapper{
+        width: 100%;
+        margin-bottom: 25px;
+      }
       .promo-content{
+        display: flex;
+        justify-content: center;
+        @include screen-max-width(medium){
+          justify-content: space-between;
+          >div{
+            &:first-child{
+              width: 100%;
+            }
+          }
+        }
+      
         input{
           padding: 13px 20px;
           background-color: #E0A63D;
           outline: none;
           border: none;
           color: white;
+          width: 100%;
           @include screen-min-width(medium){
             width: 270px;
           }

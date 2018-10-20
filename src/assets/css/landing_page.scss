@@ -117,6 +117,9 @@
         transition: all .3s;
         animation: change-background-color 1.5s infinite ease-in-out;
         text-transform: uppercase;
+        @include screen-min-width(medium){
+          width: 130px;
+        }
 
         &::after {
           content: '';
@@ -174,7 +177,7 @@
         border-radius: 3px;
         margin: 0 auto;
         .term-text {
-          font-size: 14px;
+          font-size: 12px;
           color: #757575;
           margin-left: 20px;
           text-align: left;
