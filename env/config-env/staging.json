@@ -466,25 +466,30 @@
       "decimal": 18,
       "symbol" : "DAT",
       "address": "0x81c9151de0c8bafcd325a57e3db5a5df1cebf79c",
-      "icon": "dat.svg",
-      "isNew": true
+      "icon": "dat.svg"
     },
     "REN":{
       "name": "Republic Protocol",
       "decimal": 18,
       "symbol" : "REN",
       "address": "0x408e41876cccdc0f92210600ef50372656052a38",
-      "icon": "ren.svg",
-      "isNew": true
+      "icon": "ren.svg"
     },
     "QKC":{
       "name": "QuarkChain",
       "decimal": 18,
       "symbol" : "QKC",
       "address": "0xea26c4ac16d4a5a106820bc8aee85fd0b7b2b664",
-      "icon": "qkc.svg",
+      "icon": "qkc.svg"
+    },
+    "MKR": {
+      "name": "Maker",
+      "decimal": 18,
+      "symbol" : "MKR",
+      "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+      "icon": "mkr.svg",
       "isNew": true
-    }            
+    }
   },
   "ethScanUrl": "https://etherscan.io/",
   "reserve": "0x2c5a182d280eeb5824377b98cd74871f78d6b8bc",

@@ -29,14 +29,16 @@ const TokenSelectorView = (props) => {
 
               <div>
                 <div>{item.name}</div>
+                {(props.type === "source" || props.type === "transfer") &&
                 <div className="item-balance">
                   <span title={balance}>
                     {roundingNumber(balance)}
                   </span>
-                  <span class="item-symbol">
+                  <span className="item-symbol">
                     {item.symbol}
                   </span>
                 </div>
+                }
                 {/* <div className="font-w-b">{item.symbol}</span><span className="show-for-large token-name"> - {item.name}</div> */}
               </div>
 
