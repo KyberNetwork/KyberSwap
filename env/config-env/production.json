@@ -250,13 +250,6 @@
         "icon": "enj.svg",
         "usd_id":"enjin-coin"
       },
-      "AION": {
-        "name": "Aion",
-        "decimal": 8,
-        "symbol":"AION", 
-        "address": "0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466",
-        "icon": "aion.svg"
-      },
       "AE": {
         "name": "Aeternity",
         "decimal": 18,
