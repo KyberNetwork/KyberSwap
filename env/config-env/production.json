@@ -25,7 +25,7 @@
       "ws": "wss://mainnet.infura.io/ws"
     },
     "api_usd":"https://api.coinmarketcap.com",
-    "api_tokens": "https://dev-api.knstats.com/internal/getListToken/mainnet",
+    "api_tokens": "https://api.kyber.network/internal/currencies",
     "market_exclude": ["WETH"],
     "tokens": {
       "ETH": {

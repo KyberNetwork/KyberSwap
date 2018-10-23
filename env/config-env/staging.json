@@ -24,7 +24,7 @@
     ],
     "ws": "wss://mainnet.infura.io/ws"
   },
-  "api_tokens": "https://dev-api.knstats.com/internal/getListToken/staging",
+  "api_tokens": "https://staging-api.kyber.network/internal/currencies",
   "market_exclude": ["WETH"],
   "tokens": {
     "ETH": {

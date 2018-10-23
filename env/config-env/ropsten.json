@@ -17,7 +17,7 @@
     "ws": "wss://ropsten.kyber.network/ws/"
   },
   "api_usd":"https://api.coinmarketcap.com",
-  "api_tokens": "https://dev-api.knstats.com/internal/getListToken/ropsten",
+  "api_tokens": "https://ropsten-api.kyber.network/internal/currencies",
   "tokens": {
       "ETH": {
         "name": "Ethereum",
