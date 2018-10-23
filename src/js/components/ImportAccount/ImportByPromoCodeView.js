@@ -44,6 +44,7 @@ const ImportByPromoCodeView = (props) => {
 						required
 						autoComplete="off"
 						spellCheck="false"
+						onKeyPress={(e) => submit(e)}
 					/>
 				</div>
 				<div>
