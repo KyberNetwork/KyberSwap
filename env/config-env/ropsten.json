@@ -6,6 +6,10 @@
         "type": "cached"
       },
       {
+        "endPoint" : "https://ropsten-node.knstats.com",
+        "type": "prune"
+      },
+      {
         "endPoint" : "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",
         "type": "prune"
       }
