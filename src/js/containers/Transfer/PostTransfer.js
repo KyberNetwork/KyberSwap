@@ -249,7 +249,7 @@ export default class PostTransfer extends React.Component {
       console.log(e)
       this.props.dispatch(transferActions.throwPassphraseError(this.props.translate("error.passphrase_error")))
     }
-    analytics.trackConfirmTransaction(this.props.form.tokenSymbol)
+    analytics.trackConfirmTransaction("transfer", this.props.form.tokenSymbol)
   }
 
   openConfig = () => {

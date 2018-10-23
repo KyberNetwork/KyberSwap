@@ -106,7 +106,7 @@ export default class Exchange extends React.Component {
 
     this.props.dispatch(transferActions.seSelectedGas(level)) 
     this.specifyGasPrice(value)
-    analytics.trackChooseGas("Transfer", value, level)
+    analytics.trackChooseGas("transfer", value, level)
   }
 
   // handleEndSession = () => {

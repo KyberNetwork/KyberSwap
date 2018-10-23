@@ -494,7 +494,7 @@ export default class PostExchange extends React.Component {
       console.log(e)
       this.props.dispatch(exchangeActions.throwPassphraseError(this.props.translate("error.passphrase_error")))
     }
-    analytics.trackConfirmTransaction(this.props.form.sourceTokenSymbol)
+    analytics.trackConfirmTransaction("swap", this.props.form.sourceTokenSymbol)
   }
 
   content = () => {
