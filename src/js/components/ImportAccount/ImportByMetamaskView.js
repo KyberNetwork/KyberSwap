@@ -13,10 +13,10 @@ const ImportByMetamaskView = (props) => {
               <button className="importer__button" onClick={(e) => props.connect(e)}>{props.translate("import.connect") || "Connect"}</button>
 
                <div className="more-info">
-              {props.metamask.error !== "" && (
+              {/* {props.metamask.error !== "" && (
                   <div className="error">{props.metamask.error}</div>
-              )}
-              {props.metamask.error === "" && (
+              )} */}
+              {props.metamask.address && (
                   <div className="info">
                       <div className="address">
                           <div>{props.translate("import.address") || "Address"}:</div>
