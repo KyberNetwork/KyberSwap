@@ -86,15 +86,17 @@ export default class ExchangeBody extends React.Component {
     var path
     if (type === "source"){
       path = constansts.BASE_HOST + "/swap/" + symbol.toLowerCase() + "_" + this.props.exchange.destTokenSymbol.toLowerCase()
+      analytics.trackChooseToken("from", symbol)
     }else{
       path = constansts.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "_" + symbol.toLowerCase()
+      analytics.trackChooseToken("to", symbol)
     }
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
     // if (this.props.currentLang !== "en"){
     //   path += "?lang=" + this.props.currentLang
     // }
     this.props.dispatch(globalActions.goToRoute(path))
-    analytics.trackChooseToken(type, symbol)
+    // analytics.trackChooseToken(type, symbol)
   }
 
   dispatchUpdateRateExchange = (sourceValue) => {
@@ -233,7 +235,7 @@ export default class ExchangeBody extends React.Component {
   focusSource = () => {
     this.props.dispatch(exchangeActions.focusInput('source'));
     this.setState({focus:"source"})
-    analytics.trackClickInputAmount("source")
+    analytics.trackClickInputAmount("from")
   }
 
   blurSource = () => {
@@ -243,7 +245,7 @@ export default class ExchangeBody extends React.Component {
   focusDest = () => {
     this.props.dispatch(exchangeActions.focusInput('dest'));
     this.setState({focus:"dest"})
-    analytics.trackClickInputAmount("dest")
+    analytics.trackClickInputAmount("to")
   }
 
   blurDest = () => {
