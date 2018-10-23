@@ -70,13 +70,15 @@ export default class Web3Service {
   }
 
   getCoinbase(isManual = false) {
+    console.log("is_manual")
+    console.log(isManual)
     if (this.getWalletType() === "metamask" && window.ethereum && isManual) {
       return new Promise((resolve, reject) => {
         window.ethereum.enable().then(() => {
           this.web3.eth.getCoinbase((error, result) => {
             // alert(error)
             // alert(result)
-            // console.log(error)
+            console.log(error)
             //   console.log(result)      
             if (error || !result) {
               var error = new Error("Cannot get coinbase")
@@ -92,7 +94,7 @@ export default class Web3Service {
         this.web3.eth.getCoinbase((error, result) => {
           // alert(error)
           // alert(result)
-          // console.log(error)
+          console.log(error)
           //   console.log(result)      
           if (error || !result) {
             var error = new Error("Cannot get coinbase")
