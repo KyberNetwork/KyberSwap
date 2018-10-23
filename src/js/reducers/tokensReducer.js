@@ -109,6 +109,11 @@ const tokens = (state = initState, action) => {
       //push data
       var newTokens = {}
       Object.keys(tokens).map(key => {
+        if ( !mapToken[key]){
+          console.log("wrong_key")
+          console.log(key)
+          return
+        }
         var token = tokens[key]
 
         if (key === "ETH"){
