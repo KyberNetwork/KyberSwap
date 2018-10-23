@@ -24,7 +24,7 @@ export default class ImportByPrivateKey extends React.Component {
 
   openModal() {
     this.props.dispatch(openPkeyModal());
-    analytics.trackClickImportAccount("private key")
+    analytics.trackClickImportAccount("private_key")
   }
 
   closeModal() {
