@@ -1,5 +1,4 @@
 import React from "react"
-// import { Modal } from "../../components/CommonElement"
 
 const ImportAccountView = (props) => {
   var downloadOnMobile = (
@@ -30,11 +29,10 @@ const ImportAccountView = (props) => {
             <div className="import-account">
               <div className={`import-account__item ${isOnMobile ? "onmobile-only-wrapper" : ""}`}>
                 {isOnMobile ? downloadOnMobile : props.firstKey}
-                {/* {downloadOnMobile} */}
               </div>
-              <div className="import-account__item">
+              {!isOnMobile && <div className="import-account__item">
                 {props.secondKey}
-              </div>
+              </div>}
               {!isOnMobile && <div className="import-account__item">
                 {props.thirdKey}
               </div>}
@@ -43,34 +41,17 @@ const ImportAccountView = (props) => {
               </div>}
               <div className="import-account__item">
                 {props.fifthKey}
-              </div>              
-            </div>
-
-            <div className="import-promo-code">
+              </div>
+              <div className="import-account__item">
                 {props.sixthKey}
+              </div>
             </div>
-
           </div>
         </div>
         {props.errorModal}
       </div>
     </div>
   )
-
-  // return contentRender
-
-//   return <Modal
-//   className={{
-//     base: 'reveal large',
-//     afterOpen: 'reveal large import-account-modal'
-//   }}
-//   isOpen={props.isOpen}
-//   onRequestClose={props.closeModal}
-//   contentLabel="import modal"
-//   content={contentRender}
-//   size="medium"
-// />
-
 }
 
 export default ImportAccountView

@@ -608,6 +608,16 @@ export function trackClickInputPrKey(){
     }
 }
 
+export function trackClickInputPromoCode(){
+  if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+    try{
+      mixpanel.track("Swap_2_2_Click_Input_Promo_Code")
+    }catch(e){
+      console.log(e)
+    }
+  }
+}
+
 export function trackClickSubmitPrKey(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
@@ -616,6 +626,16 @@ export function trackClickSubmitPrKey(){
             console.log(e)
         }
     }
+}
+
+export function trackClickSubmitPromoCode(){
+  if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+    try{
+      mixpanel.track("Swap_2_3_Click_Submit_Promo_Code")
+    }catch(e){
+      console.log(e)
+    }
+  }
 }
 
 export function trackClickInputAmount(type){

@@ -64,6 +64,32 @@ export function throwPKeyError(error) {
   }
 }
 
+export function promoCodeChange(value) {
+  return {
+    type: "ACCOUNT.PROMO_CODE_CHANGE",
+    payload: value
+  }
+}
+
+export function openPromoCodeModal() {
+  return {
+    type: "ACCOUNT.OPEN_PROMO_CODE_MODAL",
+  }
+}
+
+export function closePromoCodeModal() {
+  return {
+    type: "ACCOUNT.CLOSE_PROMO_CODE_MODAL",
+  }
+}
+
+export function throwPromoCodeError(error) {
+  return {
+    type: "ACCOUNT.PROMO_CODE_ERROR",
+    payload: error
+  }
+}
+
 export function importNewAccount(address, type, keystring, ethereum, tokens, walletType = null, metamask = null) {
   return {
     type: "ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING",
