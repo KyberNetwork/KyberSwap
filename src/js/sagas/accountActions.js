@@ -174,7 +174,7 @@ export function* importMetamask(action) {
       }
     }
     //get coinbase
-    const address = yield call([web3Service, web3Service.getCoinbase])
+    const address = yield call([web3Service, web3Service.getCoinbase], true)
     yield call([web3Service, web3Service.setDefaultAddress, address])
 
     const metamask = { web3Service, address, networkId }

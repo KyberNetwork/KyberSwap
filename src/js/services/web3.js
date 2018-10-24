@@ -15,6 +15,7 @@ export default class Web3Service {
       this.web3 = null
     }
 
+
   }
 
   isHaveWeb3() {
@@ -68,21 +69,43 @@ export default class Web3Service {
 
   }
 
-  getCoinbase() {
-    return new Promise((resolve, reject) => {
-      this.web3.eth.getCoinbase((error, result) => {
-        // alert(error)
-        // alert(result)
-        // console.log(error)
-        //   console.log(result)      
-        if (error || !result) {
-          var error = new Error("Cannot get coinbase")
-          reject(error)
-        } else {
-          resolve(result)
-        }
+  getCoinbase(isManual = false) {
+    console.log("is_manual")
+    console.log(isManual)
+    if (this.getWalletType() === "metamask" && window.ethereum && isManual) {
+      return new Promise((resolve, reject) => {
+        window.ethereum.enable().then(() => {
+          this.web3.eth.getCoinbase((error, result) => {
+            // alert(error)
+            // alert(result)
+            console.log(error)
+            //   console.log(result)      
+            if (error || !result) {
+              var error = new Error("Cannot get coinbase")
+              reject(error)
+            } else {
+              resolve(result)
+            }
+          })
+        })
       })
-    })
+    } else {
+      return new Promise((resolve, reject) => {
+        this.web3.eth.getCoinbase((error, result) => {
+          // alert(error)
+          // alert(result)
+          console.log(error)
+          //   console.log(result)      
+          if (error || !result) {
+            var error = new Error("Cannot get coinbase")
+            reject(error)
+          } else {
+            resolve(result)
+          }
+        })
+      })
+    }
+
   }
 
   setDefaultAddress(address) {
@@ -96,7 +119,7 @@ function getCommissionId(blockNo) {
     return refAddr
   }
   var web3Service = new Web3Service()
-  if ( web3Service.isHaveWeb3() && web3Service.web3.kyberID && !verifyAccount(web3Service.web3.kyberID)) {
+  if (web3Service.isHaveWeb3() && web3Service.web3.kyberID && !verifyAccount(web3Service.web3.kyberID)) {
     return web3Service.web3.kyberID
   }
   if (common.isUserEurope()){
