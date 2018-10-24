@@ -123,9 +123,10 @@
     "build_ieo_ropsten": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=ropsten --progress --profile --colors --env.build=true",
     "ieo_production": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=production --progress --profile --colors --env.build=true",
     "build_ieo_production": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=production --progress --profile --colors --env.build=true",
+    "build_ieo_rinkeby": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=rinkeby --progress --profile --colors --env.build=true",
     "ieo_staging": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=staging --progress --profile --colors --env.build=true",
     "build_ieo_staging": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=staging --progress --profile --colors --env.build=true",
-    "build_all_ieo": "npm run build_ieo_ropsten & npm run build_ieo_production & npm run build_ieo_staging"
+    "build_all_ieo": "npm run build_ieo_rinkeby & npm run build_ieo_production"
   },
   "jest": {
     "globals": {

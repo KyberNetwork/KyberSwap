@@ -4,11 +4,7 @@
       {
         "endPoint" : "https://ropsten-cache.knstats.com",
         "type": "cached"
-      },
-      {
-        "endPoint" : "https://ropsten-node.knstats.com",
-        "type": "prune"
-      },
+      },      
       {
         "endPoint" : "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",
         "type": "prune"
@@ -240,12 +236,12 @@
         "address": "0x1742c81075031b8f173d2327e3479d1fc3feaa76",
         "icon": "moc.svg"
       },
-      "MASR": {
+      "MAS": {
         "name": "MidasProtocol Ropsten",
         "decimals": 18,
         "symbol" : "MAS",
         "address": "0xc2c37d1a2cdd601ce665c4a785074670657f83ac",
-        "icon": "masr.svg",
+        "icon": "mas.svg",
         "isNew": true
       }
   },

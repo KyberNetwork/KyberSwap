@@ -4,7 +4,7 @@ import * as actions from '../actions/accountActions'
 import { clearSession, setGasPrice, setBalanceToken } from "../actions/globalActions"
 import { fetchExchangeEnable } from "../actions/exchangeActions"
 
-import { openInfoModal } from '../actions/utilActions'
+import * as utilActions from '../actions/utilActions'
 import * as common from "./common"
 import * as analytics from "../utils/analytics"
 
@@ -160,7 +160,7 @@ export function* importMetamask(action) {
         if (walletType !== null && walletType !== "metamask"){
           let title = translate("error.error_occurred") || "Error occurred"
           let content = translate("error.network_not_match", { currentName: currentName, expectedName: expectedName }) || "Network is not match"
-          yield put(openInfoModal(title, content))
+          yield put(utilActions.openInfoModal(title, content))
         }
         return
       } else {
@@ -168,7 +168,7 @@ export function* importMetamask(action) {
         if (walletType !== null && walletType !== "metamask"){
           let title = translate("error.error_occurred") || "Error occurred"
           let content = translate("error.network_not_match_unknow", { expectedName: expectedName }) || "Network is not match"
-          yield put(openInfoModal(title, content))
+          yield put(utilActions.openInfoModal(title, content))
         }
         return
       }
@@ -193,7 +193,7 @@ export function* importMetamask(action) {
     if (walletType !== null && walletType !== "metamask"){
       let title = translate("error.error_occurred") || "Error occurred"
       let content = translate("error.cannot_connect_metamask") || "Cannot get metamask account. You probably did not login in Metamask"
-      yield put(openInfoModal(title, content))
+      yield put(utilActions.openInfoModal(title, content))
     }
   }
 }

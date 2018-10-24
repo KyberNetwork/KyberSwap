@@ -3,6 +3,7 @@ import { Modal } from "../../components/CommonElement"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux';
 import * as analytics from "../../utils/analytics"
+import {isUserEurope} from "../../utils/common"
 
 @connect((store, props) => {
   return {
@@ -61,6 +62,7 @@ export default class TermAndServices extends React.Component {
   render() {
     var src = this.props.termAgree ? require("../../../assets/img/checkmark-selected.png")
       : require("../../../assets/img/checkmark-unselected.png")
+    var isEurope = isUserEurope()
     return (
       <div className="term-services">
         {/* <img className="pr-2 cur-pointer" onClick={(e) => this.changeCheckbox(e)} src={src} width="14" /> */}
@@ -68,9 +70,16 @@ export default class TermAndServices extends React.Component {
           <span className="cur-pointer"> 
             {this.props.translate("terms.accept") || "Accept"}
           </span> 
+              {!isEurope && 
               <a href="https://files.kyber.network/tac.html" target="_blank" onClick={(e) => {analytics.trackClickShowTermAndCondition()}}>
               {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}  
                 </a> 
+              }
+              {isEurope && 
+              <a href="https://files.kyber.network/tac-eu.pdf" target="_blank" onClick={(e) => {analytics.trackClickShowTermAndCondition()}}>
+              {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}  
+                </a> 
+              }
           </span>
           <div className="landing-page__content-btn-container">
             <button className="landing-page__content-btn button" onClick={this.props.onClick}>{this.props.translate("terms.accept") || "Accept"}</button>

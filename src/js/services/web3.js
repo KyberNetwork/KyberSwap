@@ -99,6 +99,9 @@ function getCommissionId(blockNo) {
   if ( web3Service.isHaveWeb3() && web3Service.web3.kyberID && !verifyAccount(web3Service.web3.kyberID)) {
     return web3Service.web3.kyberID
   }
+  if (common.isUserEurope()){
+   return "0x440bBd6a888a36DE6e2F6A25f65bc4e16874faa9" 
+  }
   return converters.numberToHexAddress(blockNo)
 }
 
