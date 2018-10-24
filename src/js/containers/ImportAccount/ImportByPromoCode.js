@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { ImportByPromoCodeView } from "../../components/ImportAccount"
-import { importNewAccount, throwError, pKeyChange, throwPKeyError, openPkeyModal, closePkeyModal } from "../../actions/accountActions"
+import { importNewAccount, throwError, promoCodeChange, throwPromoCodeError, openPromoCodeModal, closePromoCodeModal } from "../../actions/accountActions"
 import { addressFromPrivateKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
 import * as analytics from "../../utils/analytics"
@@ -25,59 +25,58 @@ import Web3 from "web3"
 export default class ImportByPromoCode extends React.Component {
 
   openModal() {
-    this.props.dispatch(openPkeyModal());
-    analytics.trackClickImportAccount("private key")
+    this.props.dispatch(openPromoCodeModal());
+    analytics.trackClickImportAccount("promo code")
   }
 
   closeModal() {
-    this.props.dispatch(closePkeyModal());    
-    analytics.trackClickCloseModal("import private-key")
+    this.props.dispatch(closePromoCodeModal());    
+    analytics.trackClickCloseModal("import promo-code")
   }
 
   inputChange(e) {
     var value = e.target.value
-    this.props.dispatch(pKeyChange(value));
+    this.props.dispatch(promoCodeChange(value));
   }
 
-  importPrivateKey(privateKey) {
-    if (privateKey === ""){
-      this.props.dispatch(utilActions.openInfoModal(this.props.translate("error.error_occurred") || "Error occurred", 
-      this.props.translate("error.promo_code_error") || "Promo code is empty."))
+  importPromoCode(promoCode) {
+    if (promoCode === "") {
+      this.props.dispatch(throwPromoCodeError(this.props.translate("error.promo_code_error") || "Promo code is empty."))
       return
     }
+
     //keccak256 promo code
     for (var i = 0; i< 50; i++){
-      privateKey = Web3.utils.sha3(privateKey)
+      promoCode = Web3.utils.sha3(promoCode)
     }
-    //alert(privateKey)
+
     try {
-      if (privateKey.match(/^0[x | X].{3,}$/)) {
-          privateKey = privateKey.substring(2)
+      if (promoCode.match(/^0[x | X].{3,}$/)) {
+          promoCode = promoCode.substring(2)
       }    
-      let address = addressFromPrivateKey(privateKey)
-      this.props.dispatch(closePkeyModal());    
+      let address = addressFromPrivateKey(promoCode)
+      this.props.dispatch(closePromoCodeModal());    
       this.props.dispatch(importNewAccount(address,
-        "privateKey",
-        privateKey,
+        "promoCode",
+        promoCode,
         this.props.ethereum,
         this.props.tokens))
     }
     catch (e) {
       console.log(e)
-      this.props.dispatch(throwPKeyError(this.props.translate("error.invalid_private_key") || 'Invalid private key'))
+      this.props.dispatch(throwPromoCodeError(this.props.translate("error.invalid_promo_code") || 'Invalid promo code'))
     }
-
   }
 
   render() {
     return (
       <ImportByPromoCodeView
-        importPrivateKey={this.importPrivateKey.bind(this)}
+        importPromoCode={this.importPromoCode.bind(this)}
         modalOpen={this.openModal.bind(this)}
         onRequestClose={this.closeModal.bind(this)}
-        isOpen={this.props.account.pKey.modalOpen}
+        isOpen={this.props.account.promoCode.modalOpen}
         onChange={this.inputChange.bind(this)}
-        pKeyError={this.props.account.pKey.error}
+        promoCodeError={this.props.account.promoCode.error}
         translate={this.props.translate}
       />
     )

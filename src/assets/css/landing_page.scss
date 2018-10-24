@@ -379,6 +379,10 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
+
+      img {
+        height: 30px;
+      }
     }
 
     &__item {
@@ -416,17 +420,17 @@
   @include screen-max-width(xlarge) {
     .account-type {
       flex-wrap: wrap;
-      margin: -40px 0 25px;
+      margin: 0 0 25px;
 
       &__item {
         width: 32%;
         margin: 0 1% 15px;
-       
-        &:first-child {
+
+        &:nth-child(3n + 1) {
           margin-left: 0;
         }
 
-        &:nth-child(3) {
+        &:nth-child(3n) {
           margin-right: 0;
         }
       }
