@@ -155,6 +155,12 @@ export default class LandingPage extends React.Component {
 										<div className="account-type__text">{this.props.translate("landing_page.private_key") || "PRIVATE KEY"}</div>
 									</div>
 								</div>
+                <div className="account-type__item">
+                  <div className="account-type__content">
+                    <img src={require('../../../assets/img/promo_code.svg')} />
+                    <div className="account-type__text">{this.props.translate("landing_page.promo_code") || "PROMO CODE"}</div>
+                  </div>
+                </div>
 							</div>
 						</div>
 					</div>

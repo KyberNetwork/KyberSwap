@@ -8,7 +8,7 @@ import { LandingPage, ImportAccountView } from '../../components/ImportAccount'
 import {
   ImportKeystore, ImportByDevice, ImportByPrivateKey,
   ErrorModal, ImportByMetamask,
-  ImportByDeviceWithLedger, ImportByDeviceWithTrezor
+  ImportByDeviceWithLedger, ImportByDeviceWithTrezor, ImportByPromoCode
 } from "../ImportAccount"
 
 import { visitExchange, setOnMobile } from "../../actions/globalActions"
@@ -117,6 +117,7 @@ export default class ImportAccount extends React.Component {
           thirdKey={<ImportByDeviceWithTrezor />}
           fourthKey={<ImportByDeviceWithLedger />}
           fifthKey={<ImportByPrivateKey />}
+          sixthKey = {<ImportByPromoCode />}
           errorModal={<ErrorModal />}
           translate={this.props.translate}
           onMobile={this.props.onMobile}

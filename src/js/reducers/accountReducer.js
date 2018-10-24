@@ -11,6 +11,10 @@ const initState = {
   pKey: {
     error: '',
     modalOpen: false
+  },
+  promoCode: {
+    error: '',
+    modalOpen: false
   }
 }
 
@@ -87,6 +91,30 @@ const account = (state=initState, action) => {
     case "ACCOUNT.CLOSE_PKEY_MODAL": {
       let newState = {...state}
       newState.pKey.modalOpen = false
+      return newState
+    }
+    case "ACCOUNT.PROMO_CODE_CHANGE": {
+      let newState = {...state}
+      newState.promoCode.error = ''
+      return newState
+    }
+    case "ACCOUNT.PROMO_CODE_ERROR": {
+      let newState = {...state}
+      newState.promoCode.error = action.payload
+      return newState
+    }
+    case "ACCOUNT.OPEN_PROMO_CODE_MODAL": {
+      let newState = {...state}
+      let promoCode = {
+        error: '',
+        modalOpen: true
+      }
+      newState.promoCode = promoCode
+      return newState
+    }
+    case "ACCOUNT.CLOSE_PROMO_CODE_MODAL": {
+      let newState = {...state}
+      newState.promoCode.modalOpen = false
       return newState
     }
     case "GLOBAL.SET_BALANCE_TOKEN":{

@@ -62,28 +62,39 @@ export default class TermAndServices extends React.Component {
   render() {
     var src = this.props.termAgree ? require("../../../assets/img/checkmark-selected.png")
       : require("../../../assets/img/checkmark-unselected.png")
-    var isEurope = isUserEurope()
+
+    var termConditions
+    if (isUserEurope()){
+       termConditions = (<a href="https://files.kyber.network/tac.html" target="_blank" onClick={(e) => {analytics.trackClickShowTermAndCondition()}}>
+      {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}  
+        </a> )
+    }else{
+       termConditions = (<a href="https://files.kyber.network/tac-eu.pdf" target="_blank" onClick={(e) => {analytics.trackClickShowTermAndCondition()}}>
+    {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}  
+      </a> )
+    }
+    
     return (
       <div className="term-services">
+        <div className="landing-page__content-btn-container">
+            <button className="landing-page__content-btn button" onClick={this.props.onClick}>{this.props.translate("terms.swap") || "Swap"}</button>
+          </div>
         {/* <img className="pr-2 cur-pointer" onClick={(e) => this.changeCheckbox(e)} src={src} width="14" /> */}
         <span className="term-text">
+          <i>
+          By Swapping, you agree to the <br></br> {termConditions}
+          </i>
+        </span>
+        {/* <span className="term-text">
           <span className="cur-pointer"> 
-            {this.props.translate("terms.accept") || "Accept"}
+            {this.props.translate("terms.accept") || "Accept"}          
           </span> 
               {!isEurope && 
               <a href="https://files.kyber.network/tac.html" target="_blank" onClick={(e) => {analytics.trackClickShowTermAndCondition()}}>
               {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}  
                 </a> 
-              }
-              {isEurope && 
-              <a href="https://files.kyber.network/tac-eu.pdf" target="_blank" onClick={(e) => {analytics.trackClickShowTermAndCondition()}}>
-              {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}  
-                </a> 
-              }
-          </span>
-          <div className="landing-page__content-btn-container">
-            <button className="landing-page__content-btn button" onClick={this.props.onClick}>{this.props.translate("terms.accept") || "Accept"}</button>
-          </div>
+          </span> */}
+          
       </div>
     )
   }
