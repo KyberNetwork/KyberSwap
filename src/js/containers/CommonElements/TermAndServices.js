@@ -65,7 +65,7 @@ export default class TermAndServices extends React.Component {
 
     var termConditions
     if (isUserEurope()){
-       termConditions = (<a href="https://files.kyber.network/tac-eu.html" target="_blank" onClick={(e) => {analytics.trackClickShowTermAndCondition()}}>
+       termConditions = (<a href="https://files.kyber.network/tac-eu.pdf" target="_blank" onClick={(e) => {analytics.trackClickShowTermAndCondition()}}>
       {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}  
         </a> )
     }else{

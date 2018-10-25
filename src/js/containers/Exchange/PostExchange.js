@@ -5,7 +5,7 @@ import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
 import * as exchangeActions from "../../actions/exchangeActions"
 import * as utilActions from "../../actions/utilActions"
-import {getWalletId} from "../../services/web3"
+//import {getWalletId} from "../../services/web3"
 import { Modal } from "../../components/CommonElement"
 import { TermAndServices } from "../../containers/CommonElements"
 import { PassphraseModal, ConfirmTransferModal, ApproveModal } from "../../components/Transaction"
@@ -406,7 +406,13 @@ export default class PostExchange extends React.Component {
      // check wallet type
     var walletType = this.props.account.walletType
     //alert(walletType)
-    var blockNo =  getWalletId (walletType, this.props.snapshot.blockNo)
+    var blockNo = this.props.snapshot.blockNo
+    if (walletType){
+      blockNo = this.props.account.keystring.getWalletId(blockNo)
+    }else{
+      blockNo = converters.numberToHexAddress(blockNo)
+    }
+    //var blockNo =  getWalletId (walletType, this.props.snapshot.blockNo)
     //alert(blockNo)
 
     var destAddress = this.props.account.address
