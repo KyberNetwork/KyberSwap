@@ -57,7 +57,7 @@ export default class ImportByPromoCode extends React.Component {
       let address = addressFromPrivateKey(promoCode)
       this.props.dispatch(closePromoCodeModal());    
       this.props.dispatch(importNewAccount(address,
-        "promoCode",
+        "privateKey",
         promoCode,
         this.props.ethereum,
         this.props.tokens))
