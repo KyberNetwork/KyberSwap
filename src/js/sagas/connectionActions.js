@@ -9,7 +9,7 @@ import { delay } from 'redux-saga'
 import { store } from "../store"
 import constants from "../services/constants"
 import * as globalActions from "../actions/globalActions"
-import Web3Service from "../services/web3"
+import * as web3Package from "../services/web3"
 import BLOCKCHAIN_INFO from "../../../env"
 import * as converter from "../utils/converter"
 
@@ -88,9 +88,9 @@ export function* createNewConnection(action) {
 
 
 
-  var web3Service = new Web3Service()
+  var web3Service = web3Package.newWeb3Instance()
 
-  if (!web3Service.isHaveWeb3()) {
+  if (web3Service === false) {
     yield put.sync(globalActions.throwErrorMematamask(translate("error.metamask_not_installed") || "Metamask is not installed"))
   } else {
     //const web3Service = new Web3Service(web3)
@@ -108,6 +108,8 @@ export function* createNewConnection(action) {
 }
 
 function* watchMetamaskAccount(ethereum, web3Service) {
+  console.log("metamask_account")
+  console.log(web3Service)
   //check 
   var translate = getTranslate(store.getState().locale)
   while (true) {

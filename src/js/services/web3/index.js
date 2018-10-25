@@ -1,13 +1,15 @@
 
 
 
-import {DappBrowser} from "DappBrowser.js"
-import {ModernMetamaskBrowser} from "ModernMetamaskBrowser.js"
-import {MetamaskBrowser} from "MetamaskBrowser.js"
-import {TrustBrowser} from "TrustBrowser.js"
+//import {DappBrowser} from "./DappBrowser"
+// import {ModernMetamaskBrowser} from "./ModernMetamaskBrowser"
+// import {MetamaskBrowser} from "MetamaskBrowser.js"
+// import {TrustBrowser} from "./TrustBrowser"
+// import {CipherBrowser} from "./CipherBrowser"
 
 
-import * as common from "../utils/common"
+import * as common from "../../utils/common"
+import * as dapp from "./dapp"
 
 
 export function newWeb3Instance(){
@@ -15,29 +17,35 @@ export function newWeb3Instance(){
     var web3Instance
     switch(type){
         case "modern_metamask":
-            web3Instance = new ModernMetamaskBrowser()
-            break
-        case "metamask":
-            web3Instance = new MetamaskBrowser()
+            web3Instance = new dapp.ModernMetamaskBrowser()
             break
         case "trust":
-            web3Instance = new TrustBrowser()
+            web3Instance = new dapp.TrustBrowser()
             break
         case "cipher":
+            web3Instance = new dapp.CipherBrowser()
+            break
+        case "metamask":
         case "dapp":
         case "unknown":
-            web3Instance = new DappBrowser()
+            web3Instance = new dapp.DappBrowser()
             break
-        case "non_metamask":
+        case "non_web3":
             web3Instance = false
+            break
+        default:
+            web3Instance = false
+            break
     }
+    console.log("web3_type")
+    console.log(type)
     return web3Instance
 }   
 
 
 
 
-function* getWeb3Type(){
+function getWeb3Type(){
     if (window.ethereum){
         return "modern_metamask"
     }
@@ -56,39 +64,39 @@ function* getWeb3Type(){
         }
         return "unknown"
     }
-    return "non_metamask"    
+    return "non_web3"    
 }
 
 
 
-function getCommissionId(blockNo, walletType) {
-    var refAddr = common.getParameterByName("ref")
-    if (!verifyAccount(refAddr)) {
-      return refAddr
-    }
-    var web3Service = new Web3Service(walletType)
-    if (web3Service.isHaveWeb3() && web3Service.web3.kyberID && !verifyAccount(web3Service.web3.kyberID)) {
-      return web3Service.web3.kyberID
-    }
-    if (common.isUserEurope()){
-     return "0x440bBd6a888a36DE6e2F6A25f65bc4e16874faa9" 
-    }
-    return converters.numberToHexAddress(blockNo)
-  }
+// function getCommissionId(blockNo, walletType) {
+//     var refAddr = common.getParameterByName("ref")
+//     if (!verifyAccount(refAddr)) {
+//       return refAddr
+//     }
+//     var web3Service = new Web3Service(walletType)
+//     if (web3Service.isHaveWeb3() && web3Service.web3.kyberID && !verifyAccount(web3Service.web3.kyberID)) {
+//       return web3Service.web3.kyberID
+//     }
+//     if (common.isUserEurope()){
+//      return "0x440bBd6a888a36DE6e2F6A25f65bc4e16874faa9" 
+//     }
+//     return converters.numberToHexAddress(blockNo)
+//   }
   
-  export function getWalletId(walletType, blockNo) {
-    switch (walletType) {
-      case "cipher":
-        return "0xdd61803d4a56c597e0fc864f7a20ec7158c6cba5"
-        break
-      case "trust":
-        return "0xf1aa99c69715f423086008eb9d06dc1e35cc504d"
-        break
-      case "metamask":
-      case "dapp":
-      case "unknown":
-      default:
-        return getCommissionId(blockNo, walletType)
-        break
-    }
-  }
+//   export function getWalletId(walletType, blockNo) {
+//     switch (walletType) {
+//       case "cipher":
+//         return "0xdd61803d4a56c597e0fc864f7a20ec7158c6cba5"
+//         break
+//       case "trust":
+//         return "0xf1aa99c69715f423086008eb9d06dc1e35cc504d"
+//         break
+//       case "metamask":
+//       case "dapp":
+//       case "unknown":
+//       default:
+//         return getCommissionId(blockNo, walletType)
+//         break
+//     }
+//   }
