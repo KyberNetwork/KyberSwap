@@ -3,7 +3,7 @@ import TermAndServices from "../../containers/CommonElements/TermAndServices";
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux';
 import config from '../../config';
-import Web3Service from "../../services/web3"
+import * as web3Package from "../../services/web3"
 
 import {acceptTermOfService} from "../../actions/globalActions"
 import { importAccountMetamask } from "../../actions/accountActions"
@@ -79,9 +79,9 @@ export default class LandingPage extends React.Component {
 
 	acceptTerm = () => {
 		// if (this.state.termAgree) {
-		var web3Service = new Web3Service()
+		var web3Service = web3Package.newWeb3Instance()
 		
-		if (web3Service.isHaveWeb3()) {
+		if (web3Service !== false) {
 			var walletType = web3Service.getWalletType()
 			if (walletType !== "metamask") {
 				//alert(walletType)

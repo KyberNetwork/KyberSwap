@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { importAccountMetamask, throwError } from "../../actions/accountActions"
 import { ImportByMetamaskView } from "../../components/ImportAccount"
 import BLOCKCHAIN_INFO from "../../../../env"
-import Web3Service from "../../services/web3"
+import * as web3Package from "../../services/web3"
 import { getTranslate } from 'react-localize-redux'
 import bowser from 'bowser'
 import * as analytics from "../../utils/analytics"
@@ -27,11 +27,15 @@ export default class ImportByMetamask extends React.Component {
 
   connect = (e) => {   
     analytics.trackClickImportAccount("metamask")
-    if (typeof web3 === "undefined") {
+
+    var web3Service = web3Package.newWeb3Instance()
+
+    if (web3Service === false) {
       this.props.dispatch(throwError(this.props.translate('error.metamask_not_install') || 'Cannot connect to metamask. Please make sure you have metamask installed'))
       return
     }            
-    var web3Service = new Web3Service(web3)
+    
+    //var web3Service = new Web3Service(web3)
     
     // let browser = bowser.name
     // console.log(browser)
