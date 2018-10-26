@@ -489,6 +489,14 @@
       "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
       "icon": "mkr.svg",
       "isNew": true
+    },
+    "DCC":{
+      "name": "Distributed Credit Chain",
+      "decimals": 18,
+      "symbol" : "DCC",
+      "address": "0xffa93aacf49297d51e211817452839052fdfb961",
+      "icon": "dcc.svg",
+      "isNew": true
     }
   },
   "ethScanUrl": "https://etherscan.io/",
