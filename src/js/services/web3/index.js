@@ -26,6 +26,8 @@ export function newWeb3Instance(){
             web3Instance = new dapp.CipherBrowser()
             break
         case "metamask":
+            web3Instance = new dapp.MetamaskBrowser()
+            break
         case "dapp":
         case "unknown":
             web3Instance = new dapp.DappBrowser()

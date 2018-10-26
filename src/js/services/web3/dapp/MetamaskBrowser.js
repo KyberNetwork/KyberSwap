@@ -5,7 +5,6 @@ import DappBrowser from "./DappBrowser"
 // import * as converters from "../utils/converter"
 
 export default class MetamaskBrowser extends DappBrowser {
-
     getCoinbase() {
         return new Promise((resolve, reject) => {
           this.web3.eth.getCoinbase((error, result) => {

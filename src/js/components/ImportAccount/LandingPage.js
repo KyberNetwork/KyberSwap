@@ -83,7 +83,9 @@ export default class LandingPage extends React.Component {
 		
 		if (web3Service !== false) {
 			var walletType = web3Service.getWalletType()
-			if (walletType !== "metamask") {
+		// 	console.log("wallet_type")
+        // console.log(walletType)
+			if ((walletType !== "metamask") && (walletType !== "modern_metamask")) {
 				//alert(walletType)
 				this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
 				this.props.ethereum, this.props.tokens, this.props.translate, walletType))
