@@ -212,6 +212,11 @@ const market = (state = initMarket, action) => {
             newState.configs.selectedSymbol = symbol
             return newState
         }
+        case 'MARKET.CHANGE_SYMBOL': {
+            var symbol = action.payload
+            newState.configs.selectedSymbol = symbol
+            return newState
+        }
         case 'MARKET.HIDE_TRADINGVIEW_CHART': {
             newState.configs.isShowTradingChart = false
             return newState

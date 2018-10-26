@@ -1,13 +1,9 @@
 import React from "react"
 import { connect } from "react-redux"
-
-
 import { Selector } from "../CommonElements"
-
 import { getTranslate } from 'react-localize-redux';
-
+import { changeSymbol } from "../../actions/marketActions"
 import BLOCKCHAIN_INFO from "../../../../env"
-
 
 @connect((store) => {
 	return {
@@ -79,6 +75,7 @@ export default class TradingView extends React.Component {
 			});
 		button[0].innerHTML = data.content;
 	}
+
 	componentDidMount() {
 		console.log(this.props)
 		const feeder = new window.Datafeeds.UDFCompatibleDatafeed(
@@ -110,8 +107,11 @@ export default class TradingView extends React.Component {
 			this.createButton(widget, { content: this.props.translate("trading_view.sell") || "Sell", value: "sell", title: this.props.translate("trading_view.sell_price") || "Sell price" })
 			this.createButton(widget, { content: this.props.translate("trading_view.buy") || "Buy", value: "buy", title: this.props.translate("trading_view.buy_price") || "Buy price" })
 			this.createButton(widget, { content: this.props.translate("trading_view.mid") || "Mid", value: "mid", title: this.props.translate("trading_view.mid_price") || "Mid price" })
+
+      widget.activeChart().onSymbolChanged().subscribe(null, (symbolData) => {
+        this.props.dispatch(changeSymbol(symbolData.name))
+      })
 		});
-		//	});
 	}
 
 
