@@ -55,6 +55,7 @@ export default class TokenSelector extends React.Component {
         translate={this.props.translate}
         showTokens = {this.showTokens}
         hideTokens = {this.hideTokens}
+        type={this.props.type}
       />
     )
   }
