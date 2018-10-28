@@ -251,13 +251,6 @@
       "icon": "enj.svg",
       "usd_id":"enjin-coin"
     },
-    "AION": {
-      "name": "Aion",
-      "decimal": 8,
-      "symbol":"AION", 
-      "address": "0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466",
-      "icon": "aion.svg"
-    },
     "AE": {
       "name": "Aeternity",
       "decimal": 18,
@@ -348,13 +341,6 @@
       "address": "0xb97048628db6b661d4c2aa833e95dbe1a905b280",
       "symbol":"PAY", 
       "icon": "pay.svg"
-    },
-    "CHAT": {
-      "name": "Chatcoin",
-      "decimal": 18,
-      "address": "0x442bc47357919446eabc18c7211e57a13d983469",
-      "symbol":"CHAT", 
-      "icon": "chat.svg"
     },
     "DTA": {
       "name": "Data",
