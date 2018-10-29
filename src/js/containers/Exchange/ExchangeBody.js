@@ -46,7 +46,7 @@ import { default as _ } from 'underscore'
   var rateSourceToEth = 0
   if (tokens[sourceTokenSymbol]) {
     sourceBalance = tokens[sourceTokenSymbol].balance
-    sourceDecimal = tokens[sourceTokenSymbol].decimal
+    sourceDecimal = tokens[sourceTokenSymbol].decimals
     sourceName = tokens[sourceTokenSymbol].name
     rateSourceToEth = tokens[sourceTokenSymbol].rate
   }
@@ -57,7 +57,7 @@ import { default as _ } from 'underscore'
   var destName = "Kybernetwork"
   if (tokens[destTokenSymbol]) {
     destBalance = tokens[destTokenSymbol].balance
-    destDecimal = tokens[destTokenSymbol].decimal
+    destDecimal = tokens[destTokenSymbol].decimals
     destName = tokens[destTokenSymbol].name
   }
 
@@ -86,15 +86,17 @@ export default class ExchangeBody extends React.Component {
     var path
     if (type === "source"){
       path = constansts.BASE_HOST + "/swap/" + symbol.toLowerCase() + "_" + this.props.exchange.destTokenSymbol.toLowerCase()
+      analytics.trackChooseToken("from", symbol)
     }else{
       path = constansts.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "_" + symbol.toLowerCase()
+      analytics.trackChooseToken("to", symbol)
     }
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
     // if (this.props.currentLang !== "en"){
     //   path += "?lang=" + this.props.currentLang
     // }
     this.props.dispatch(globalActions.goToRoute(path))
-    analytics.trackChooseToken(type, symbol)
+    // analytics.trackChooseToken(type, symbol)
   }
 
   dispatchUpdateRateExchange = (sourceValue) => {
@@ -118,7 +120,7 @@ export default class ExchangeBody extends React.Component {
     //var minRate = 0
     var tokens = this.props.tokens
     if (tokens[sourceTokenSymbol]) {
-      sourceDecimal = tokens[sourceTokenSymbol].decimal
+      sourceDecimal = tokens[sourceTokenSymbol].decimals
       //minRate = tokens[sourceTokenSymbol].minRate
     }
 
@@ -233,7 +235,7 @@ export default class ExchangeBody extends React.Component {
   focusSource = () => {
     this.props.dispatch(exchangeActions.focusInput('source'));
     this.setState({focus:"source"})
-    analytics.trackClickInputAmount("source")
+    analytics.trackClickInputAmount("from")
   }
 
   blurSource = () => {
@@ -243,7 +245,7 @@ export default class ExchangeBody extends React.Component {
   focusDest = () => {
     this.props.dispatch(exchangeActions.focusInput('dest'));
     this.setState({focus:"dest"})
-    analytics.trackClickInputAmount("dest")
+    analytics.trackClickInputAmount("to")
   }
 
   blurDest = () => {
@@ -270,7 +272,7 @@ export default class ExchangeBody extends React.Component {
         }
         balanceBig = balanceBig.minus(totalGas)
       }
-      var balance = balanceBig.div(Math.pow(10, token.decimal)).toString(10)
+      var balance = balanceBig.div(Math.pow(10, token.decimals)).toString(10)
       //balance = toPrimitiveNumber(balance)
 
       this.focusSource()
@@ -424,8 +426,8 @@ export default class ExchangeBody extends React.Component {
     var token = this.props.tokens[this.props.exchange.sourceTokenSymbol]
     if (token) {
       addressBalance = {
-        value: toT(token.balance, token.decimal),
-        roundingValue: roundingNumber(toT(token.balance, token.decimal))
+        value: toT(token.balance, token.decimals),
+        roundingValue: roundingNumber(toT(token.balance, token.decimals))
       }
     }
     var accountBalance = <AccountBalance 

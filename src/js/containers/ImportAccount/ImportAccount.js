@@ -8,7 +8,7 @@ import { LandingPage, ImportAccountView } from '../../components/ImportAccount'
 import {
   ImportKeystore, ImportByDevice, ImportByPrivateKey,
   ErrorModal, ImportByMetamask,
-  ImportByDeviceWithLedger, ImportByDeviceWithTrezor
+  ImportByDeviceWithLedger, ImportByDeviceWithTrezor, ImportByPromoCode
 } from "../ImportAccount"
 
 import { visitExchange, setOnMobile } from "../../actions/globalActions"
@@ -17,7 +17,11 @@ import { getTranslate } from 'react-localize-redux'
 
 import { importAccountMetamask } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
-import Web3Service from "../../services/web3"
+//import Web3Service from "../../services/web3"
+
+import * as web3Package from "../../services/web3"
+
+
 import {isMobile} from "../../utils/common"
 
 @connect((store) => {  
@@ -58,21 +62,25 @@ export default class ImportAccount extends React.Component {
   componentDidMount = () => {
     var swapPage = document.getElementById("swap-app")
     swapPage.className = swapPage.className === "" ? "no-min-height" : swapPage.className + " no-min-height"
+
+
+    var web3Service = web3Package.newWeb3Instance()
     
-    var web3Service = new Web3Service()
+    var web3Service = web3Package.newWeb3Instance()
     if (this.props.termOfServiceAccepted){
-      if (web3Service.isHaveWeb3()) {
+      if (web3Service !== false) {
         //var web3Service = new Web3Service(web3)
         var walletType = web3Service.getWalletType()
+        
      //   alert(walletType)
-        if (walletType !== "metamask") {
+        if ((walletType !== "metamask") && (walletType !== "modern_metamask")) {
           // /alert(walletType)
           this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
           this.props.ethereum, this.props.tokens, this.props.translate, walletType))
         }
       }
     }
-    if (!web3Service.isHaveWeb3()) {
+    if (web3Service === false) {
       if (isMobile.iOS()) {
         this.props.dispatch(setOnMobile(true, false));
       } else if (isMobile.Android()) {
@@ -117,6 +125,7 @@ export default class ImportAccount extends React.Component {
           thirdKey={<ImportByDeviceWithTrezor />}
           fourthKey={<ImportByDeviceWithLedger />}
           fifthKey={<ImportByPrivateKey />}
+          sixthKey = {<ImportByPromoCode />}
           errorModal={<ErrorModal />}
           translate={this.props.translate}
           onMobile={this.props.onMobile}

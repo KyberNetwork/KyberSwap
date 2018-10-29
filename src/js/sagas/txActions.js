@@ -57,8 +57,8 @@ function* updateTx(action) {
 
         var state = store.getState()
         const tokens = state.tokens.tokens
-        const sourceDecimal = tokens[newTx.data.sourceTokenSymbol].decimal
-        const destDecimal = tokens[newTx.data.destTokenSymbol].decimal
+        const sourceDecimal = tokens[newTx.data.sourceTokenSymbol].decimals
+        const destDecimal = tokens[newTx.data.destTokenSymbol].decimals
         newTx.data.sourceAmount = converters.toT(srcAmount, sourceDecimal)
         newTx.data.destAmount = converters.toT(destAmount, destDecimal)
 

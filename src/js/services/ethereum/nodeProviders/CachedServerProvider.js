@@ -100,34 +100,7 @@ export default class CachedServerProvider extends React.Component {
         })
     }
 
-    getLog() {
-        return new Promise((resolve, rejected) => {
-            fetch(this.rpcUrl + '/getHistoryOneColumn', {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
-                },
-            })
-                .then((response) => {
-                    return response.json()
-                })
-                .then((result) => {
-                    if (result.success) {
-                        var data = result.data.filter(item => {
-                            return (this.tokenIsSupported(item.dest) && this.tokenIsSupported(item.source))
-                        })
-                        resolve(data)
-                    } else {
-                        rejected(new Error("Events in server not fetching"))
-                    }
-                })
-                .catch((err) => {
-                    console.log(err.message)
-                    rejected(new Error("Cannot get events from server"))
-                })
-        })
-    }
+
 
 
     getAllRates(tokensObj) {
@@ -194,15 +167,7 @@ export default class CachedServerProvider extends React.Component {
         })
     }
 
-    tokenIsSupported(address) {
-        let tokens = BLOCKCHAIN_INFO.tokens
-        for (let token in tokens) {
-            if (tokens[token].address.toLowerCase() == address.toLowerCase()) {
-                return true
-            }
-        }
-        return false
-    }
+
 
     getInfo(infoObj) {
         console.log(infoObj)

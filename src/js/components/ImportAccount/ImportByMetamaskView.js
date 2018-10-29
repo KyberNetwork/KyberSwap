@@ -1,5 +1,6 @@
 import React from "react"
 //import ReactTooltip from 'react-tooltip'
+import { getAssetUrl } from "../../utils/common";
 
 const ImportByMetamaskView = (props) => {
     return (
@@ -7,16 +8,16 @@ const ImportByMetamaskView = (props) => {
             <div className="importer metamask">
               {/*<div className="how-to-use" data-tip="How to use" data-for="metamask-tip"></div>*/}
               <div className="importer__symbol">
-                <img src={require('../../../assets/img/landing/metamask_active.svg')} />
+                <img src={getAssetUrl('wallets/metamask.svg')} />
                 <div className="importer__name">{props.translate("import.from_metamask") || "METAMASK"}</div>
               </div>
               <button className="importer__button" onClick={(e) => props.connect(e)}>{props.translate("import.connect") || "Connect"}</button>
 
                <div className="more-info">
-              {props.metamask.error !== "" && (
+              {/* {props.metamask.error !== "" && (
                   <div className="error">{props.metamask.error}</div>
-              )}
-              {props.metamask.error === "" && (
+              )} */}
+              {props.metamask.address && (
                   <div className="info">
                       <div className="address">
                           <div>{props.translate("import.address") || "Address"}:</div>

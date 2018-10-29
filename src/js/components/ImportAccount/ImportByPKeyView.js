@@ -2,6 +2,7 @@ import React from "react"
 import { Modal } from '../CommonElement'
 import * as analytics from "../../utils/analytics"
 //import ReactTooltip from 'react-tooltip'
+import { getAssetUrl } from "../../utils/common";
 
 const ImportByPKeyView = (props) => {
 
@@ -35,7 +36,8 @@ const ImportByPKeyView = (props) => {
 			<div className="importer pkey">
 				{/*<div className="how-to-use" data-for="private-key-tip" data-tip="How to use"></div>*/}
         <div className="importer__symbol">
-          <img src={require('../../../assets/img/landing/privatekey_active.svg')} />
+          {/* <img src={require('../../../assets/img/landing/privatekey_active.svg')} /> */}
+		  <img src={getAssetUrl('wallets/privatekey.svg')} />
           <div className="importer__name">{props.translate("import.from_private_key") || "PRIVATE KEY"}</div>
         </div>
 				<button className="importer__button" onClick={(e) => props.modalOpen()}>{props.translate("import.from_private_key_input_title_placehoder") || "Enter your Private key"}</button>

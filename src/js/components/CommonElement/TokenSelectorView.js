@@ -1,7 +1,8 @@
 import React from "react"
 import { toT, roundingNumber } from "../../utils/converter"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
-import * as analytics from "../../utils/analytics"
+import * as analytics from "../../utils/analytics";
+import { getAssetUrl } from "../../utils/common";
 
 const TokenSelectorView = (props) => {
   var focusItem = props.listItem[props.focusItem]
@@ -19,12 +20,12 @@ const TokenSelectorView = (props) => {
     return Object.keys(listShow).map((key, i) => {
       if (key !== props.focusItem) {
         var item = listShow[key]
-        var balance = toT(item.balance, item.decimal)
+        var balance = toT(item.balance, item.decimals)
         return (
           <div key={key} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item">
             <div className="d-flex">
               <div className="item-icon">
-                <img src={require("../../../assets/img/tokens/" + item.icon)} />
+                <img src={getAssetUrl(`tokens/${item.symbol}.svg`)} />
               </div>
 
               <div>
@@ -62,14 +63,14 @@ const TokenSelectorView = (props) => {
           <div className="focus-item d-flex">
             <div className="d-flex">
               <div className="icon">
-                <img src={require("../../../assets/img/tokens/" + focusItem.icon)} />
+                <img src={getAssetUrl(`tokens/${focusItem.symbol}.svg`)} />
               </div>
               <div>
                 <div className="focus-name">{focusItem.name}</div>
                 <div className="focus-balance">
                   {props.type !== "des" &&
                   <span>
-                    <span className="token-balance" title = {toT(focusItem.balance)}>{roundingNumber(toT(focusItem.balance, focusItem.decimal))}</span>
+                    <span className="token-balance" title = {toT(focusItem.balance)}>{roundingNumber(toT(focusItem.balance, focusItem.decimals))}</span>
                     <span className="token-symbol">{focusItem.symbol}</span>
                   </span>
                   }

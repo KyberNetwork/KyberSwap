@@ -2,6 +2,8 @@ import React from "react"
 
 import Dropzone from 'react-dropzone'
 //import ReactTooltip from 'react-tooltip'
+import { getAssetUrl } from "../../utils/common";
+
 
 const DropFile = (props) => {
   var keystring
@@ -33,7 +35,8 @@ const DropFile = (props) => {
       <div className="importer json">
         {/* <div className="how-to-use" data-for="keystore-tip" data-tip="How to use"></div> */}
         <div className="importer__symbol">
-          <img src={require('../../../assets/img/landing/keystore_active.svg')} />
+          {/* <img src={require('../../../assets/img/landing/keystore_active.svg')} /> */}
+          <img src={getAssetUrl('wallets/keystore.svg')} />
           <div className="importer__name">{props.translate("import.json") || "JSON"}</div>
         </div>
         <button className="importer__button" onClick={(e) => props.onDrop(e)}>{props.translate("import.select_or_drag") || "Select or Drag"}</button>

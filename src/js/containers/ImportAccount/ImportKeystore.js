@@ -33,7 +33,7 @@ export default class ImportKeystore extends React.Component {
   }
 
   onDrop = (files) => {
-    analytics.trackClickImportAccount("json")
+    analytics.trackClickImportAccount("keystore")
     try {
       var _this = this
       var file = files[0]
