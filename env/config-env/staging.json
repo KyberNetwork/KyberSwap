@@ -253,13 +253,6 @@
       "icon": "enj.svg",
       "usd_id":"enjin-coin"
     },
-    "AION": {
-      "name": "Aion",
-      "decimals": 8,
-      "symbol":"AION", 
-      "address": "0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466",
-      "icon": "aion.svg"
-    },
     "AE": {
       "name": "Aeternity",
       "decimals": 18,
@@ -350,13 +343,6 @@
       "address": "0xb97048628db6b661d4c2aa833e95dbe1a905b280",
       "symbol":"PAY", 
       "icon": "pay.svg"
-    },
-    "CHAT": {
-      "name": "Chatcoin",
-      "decimals": 18,
-      "address": "0x442bc47357919446eabc18c7211e57a13d983469",
-      "symbol":"CHAT", 
-      "icon": "chat.svg"
     },
     "DTA": {
       "name": "Data",
@@ -479,8 +465,25 @@
       "name": "QuarkChain",
       "decimals": 18,
       "symbol" : "QKC",
-      "address": "0xea26c4ac16d4a5a106820bc8aee85fd0b7b2b664"
-    }            
+      "address": "0xea26c4ac16d4a5a106820bc8aee85fd0b7b2b664",
+      "icon": "qkc.svg"
+    },
+    "MKR": {
+      "name": "Maker",
+      "decimals": 18,
+      "symbol" : "MKR",
+      "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+      "icon": "mkr.svg",
+      "isNew": true
+    },
+    "DCC":{
+      "name": "Distributed Credit Chain",
+      "decimals": 18,
+      "symbol" : "DCC",
+      "address": "0xffa93aacf49297d51e211817452839052fdfb961",
+      "icon": "dcc.svg",
+      "isNew": true
+    }
   },
   "ethScanUrl": "https://etherscan.io/",
   "reserve": "0x2c5a182d280eeb5824377b98cd74871f78d6b8bc",

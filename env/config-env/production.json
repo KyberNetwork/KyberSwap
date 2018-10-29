@@ -253,13 +253,6 @@
         "icon": "enj.svg",
         "usd_id":"enjin-coin"
       },
-      "AION": {
-        "name": "Aion",
-        "decimals": 8,
-        "symbol":"AION", 
-        "address": "0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466",
-        "icon": "aion.svg"
-      },
       "AE": {
         "name": "Aeternity",
         "decimals": 18,
@@ -483,7 +476,25 @@
         "symbol" : "QKC",
         "address": "0xea26c4ac16d4a5a106820bc8aee85fd0b7b2b664",
         "icon": "qkc.svg"
-      }  
+      },
+      "MKR": {
+        "name": "Maker",
+        "decimals": 18,
+        "symbol" : "MKR",
+        "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+        "icon": "mkr.svg",
+        "isNew": true,
+        "expireDate": "2018/11/05"
+      },
+      "DCC":{
+        "name": "Distributed Credit Chain",
+        "decimals": 18,
+        "symbol" : "DCC",
+        "address": "0xffa93aacf49297d51e211817452839052fdfb961",
+        "icon": "dcc.svg",
+        "isNew": true,
+        "expireDate": "2018/11/05"
+      }
     },
     "ethScanUrl": "https://etherscan.io/",
     "bank": "0x0",
