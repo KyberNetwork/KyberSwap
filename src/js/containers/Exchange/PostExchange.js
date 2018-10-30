@@ -5,6 +5,7 @@ import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
 import * as exchangeActions from "../../actions/exchangeActions"
 import * as utilActions from "../../actions/utilActions"
+
 //import {getWalletId} from "../../services/web3"
 import { Modal } from "../../components/CommonElement"
 import { TermAndServices } from "../../containers/CommonElements"
@@ -13,7 +14,7 @@ import { PostExchangeBtn } from "../../components/Exchange"
 import { getTranslate } from 'react-localize-redux';
 import { RateBetweenToken } from "../Exchange"
 import * as analytics from "../../utils/analytics";
-import { getAssetUrl } from "../../utils/common";
+import { getAssetUrl, isUserEurope, getParameterByName } from "../../utils/common";
 
 @connect((store, props) => {
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
@@ -353,6 +354,20 @@ export default class PostExchange extends React.Component {
     this.props.dispatch(exchangeActions.changePassword())
   }
 
+  getReferAddr = (blockNo) => {
+    var refAddr = getParameterByName("ref")
+    //  alert(refAddr)
+      
+      if (!validators.verifyAccount(refAddr)) {
+      //  alert("xxxx")
+        return refAddr
+      }
+      if (isUserEurope()){
+          return "0x440bBd6a888a36DE6e2F6A25f65bc4e16874faa9" 
+      }
+      return converters.numberToHexAddress(blockNo)
+  }
+
   formParams = () => {
     var selectedAccount = this.props.account.address
     var sourceToken = this.props.form.sourceToken
@@ -404,13 +419,16 @@ export default class PostExchange extends React.Component {
 
     //var blockNo = converters.numberToHexAddress(this.props.snapshot.blockNo)
      // check wallet type
-    var walletType = this.props.account.walletType
+    var walletType = this.props.account.type
+   // console.log("wallet_type")
+    //console.log(walletType)
     //alert(walletType)
     var blockNo = this.props.snapshot.blockNo
-    if (walletType){
+    if (walletType === "metamask"){
       blockNo = this.props.account.keystring.getWalletId(blockNo)
     }else{
-      blockNo = converters.numberToHexAddress(blockNo)
+      
+      blockNo = this.getReferAddr(blockNo)
     }
     //var blockNo =  getWalletId (walletType, this.props.snapshot.blockNo)
     //alert(blockNo)

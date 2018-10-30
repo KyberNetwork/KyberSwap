@@ -55,7 +55,10 @@ export default class DappBrowser {
   
   getWalletId(blockNo){
     var refAddr = common.getParameterByName("ref")
+  //  alert(refAddr)
+    
     if (!verifyAccount(refAddr)) {
+    //  alert("xxxx")
       return refAddr
     }
     if (common.isUserEurope()){
