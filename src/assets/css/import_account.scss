@@ -8,20 +8,93 @@
 $animationTime: 0.5s;
 
   #import-account {
-    padding-top: 50px;
+    padding: 50px 0;
     text-align: center;
 
-    @include screen-min-width(large){
-      padding-bottom: 40px;
+    // @include screen-min-width(large){
+    //   padding-bottom: 40px;
+    // }
+    .frame{
+      padding: 0;
+    }
+    .import-promo-code{
+      
+      
+      
+
+      display: flex;
+      justify-content: space-between;
+
+      @include screen-min-width(medium){
+        margin-top: 25px;
+      }
+      .promo-wrapper{
+        width: 100%;
+        margin-bottom: 25px;
+      }
+      .promo-content{
+        display: flex;
+        justify-content: center;
+        @include screen-max-width(medium){
+          justify-content: space-between;
+          >div{
+            &:first-child{
+              width: 100%;
+            }
+          }
+        }
+      
+        input{
+          padding: 13px 20px;
+          background-color: #E0A63D;
+          outline: none;
+          border: none;
+          color: white;
+          width: 100%;
+          font-size: 16px;
+          @include screen-min-width(medium){
+            width: 270px;
+            font-size: 18px;
+          }
+          
+          border-radius: 5px;
+          
+          &::-webkit-input-placeholder {
+            color: #eee;
+          }
+          &::-moz-placeholder {
+            color: #eee;
+          }
+          &:-ms-input-placeholder {
+            color: #eee;
+          }
+          &:-moz-placeholder {
+            color: #eee;
+          }
+        }
+        button{
+          background-color: white;
+          padding: 15px;
+          border-radius: 5px;
+          margin-left: 16px;
+          text-transform: uppercase;
+          font-size: 16px;
+          color: #666;
+          cursor: pointer;
+          &:focus{
+            background-color: #fefefe;
+          }
+        }
+      }
     }
 
     #import-acc {
       display: inline-block;
+      width: 100%;
     }
 
     .title {
-      color: #fff;
-      text-align: left;
+      color: #fff;      
       font-size: 42px;
       letter-spacing: -0.9px;
       opacity: 0;
@@ -44,18 +117,22 @@ $animationTime: 0.5s;
       &__item {
         padding-top: 50px;
         background: white;
-        width: 185px;
+        width: 16.66%;
         max-height: 170px;
         margin: 0 12px 25px;
         box-shadow: 0 1px 10px #b7b5b5;
         position: relative;
-        bottom: -280px;
+        transform: translateY(100px);
         text-align: center;
         transition: all .3s;
         animation: moving-up $animationTime forwards;
 
         &:first-child {
           margin-left: 0;
+        }
+
+        &:last-child {
+          margin-right: 0;
         }
 
         .importer {
@@ -67,11 +144,13 @@ $animationTime: 0.5s;
           }
 
           &__button {
+            line-height: 20px;
             color: white;
             font-size: 0.8rem;            
             width: 100%;
             cursor: pointer;
-            padding: 13px 0;
+            padding: 8px 10px;
+            height: 56px;
             margin-bottom: 15px;
             border-radius: 3px;
             background-image: linear-gradient(to right, $swap-color 50%, $color-swap-light 50%);
@@ -138,12 +217,16 @@ $animationTime: 0.5s;
           width: 32%;
           margin: 0 1% 15px;
 
-          &:first-child {
+          &:nth-child(3n + 1) {
             margin-left: 0;
           }
 
-          &:nth-child(3) {
+          &:nth-child(3n) {
             margin-right: 0;
+          }
+
+          .importer__button {
+            height: auto;
           }
         }
       }
@@ -268,7 +351,7 @@ $animationTime: 0.5s;
 
       @keyframes moving-up {
         to {
-          bottom: 0;
+          transform: translateY(0);
           max-height: 1000px;
         }
       }
@@ -283,7 +366,7 @@ $animationTime: 0.5s;
 
     @keyframes moving-up {
       to {
-        bottom: -20px;
+        transform: translateY(20px);
         max-height: 500px;
       }
     }

@@ -1,17 +1,12 @@
 import React from "react"
 import { connect } from "react-redux"
-
 import ReactTable from 'react-table'
-//import "react-table/react-table.css";
 import { getTranslate } from 'react-localize-redux'
 import * as actions from "../../actions/marketActions"
 import * as converters from "../../utils/converter"
-
-//import LineChart from 'react-linechart';
 import {Line} from 'react-chartjs-2';
-import * as analytics from "../../utils/analytics"
-//import '../node_modules/react-linechart/dist/styles.css';
-
+import * as analytics from "../../utils/analytics";
+import { getAssetUrl } from "../../utils/common";
 
 @connect((store, props) => {
   var data = props.data
@@ -253,7 +248,7 @@ export default class MarketTable extends React.Component {
     var key = tokenPair[0]
     return (
       <div className="token-pair">
-        <img src={require("../../../assets/img/tokens/" + this.props.tokens[key].info.icon)} />
+        <img src={getAssetUrl(`tokens/${this.props.tokens[key].info.symbol}.svg`)} />
         {input}
         {this.props.tokens[key].info.isNew ? <div className="new-token">{this.props.translate("market.new_token" || "NEW")}</div>:""}
       </div>

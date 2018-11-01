@@ -12,9 +12,9 @@ import BLOCKCHAIN_INFO from "../../../../env"
 //import { Rate } from "../Header"
 
 
-function getAllPathToken(){
+function getAllPathToken(listToken){
   var tokens = []
-  Object.keys(BLOCKCHAIN_INFO.tokens).map(key => {
+  Object.keys(listToken).map(key => {
     tokens.push(key)
   })
 
@@ -31,7 +31,7 @@ function getAllPathToken(){
 }
 
 const LayoutView = (props) => {
-  var listToken = getAllPathToken()
+  var listToken = getAllPathToken(props.tokens)
   var defaultPathExchange = constansts.BASE_HOST + "/swap/eth_knc"
   var defaultPathTransfer = constansts.BASE_HOST + "/transfer/eth"
 

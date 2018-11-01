@@ -219,15 +219,17 @@ export default class EthereumService extends React.Component {
   fetchRateData() {
     var state = store.getState()
     var ethereum = state.connection.ethereum  
-    store.dispatch(updateAllRate(ethereum, BLOCKCHAIN_INFO.tokens))
+    var tokens = state.tokens.tokens
+    store.dispatch(updateAllRate(ethereum, tokens))
   }
 
   fetchTokenBalance() {
     var state = store.getState()
     var ethereum = state.connection.ethereum
     var account = state.account.account
+    var tokens = state.tokens.tokens
     if (account.address) {
-      store.dispatch(updateTokenBalance(ethereum, account.address, BLOCKCHAIN_INFO.tokens))
+      store.dispatch(updateTokenBalance(ethereum, account.address, tokens))
     }
   }
 
@@ -307,7 +309,7 @@ export default class EthereumService extends React.Component {
     var sourceDecimal = 18
     var sourceTokenSymbol = state.exchange.sourceTokenSymbol
     if (tokens[sourceTokenSymbol]) {
-      sourceDecimal = tokens[sourceTokenSymbol].decimal
+      sourceDecimal = tokens[sourceTokenSymbol].decimals
     }
 
 //    var sourceAmountHex = stringToHex(sourceAmount, sourceDecimal)

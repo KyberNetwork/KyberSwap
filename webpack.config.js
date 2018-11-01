@@ -45,7 +45,7 @@ module.exports = env => {
             uglifyOptions: {
                 comments: false,
                 compress: {
-                    drop_console: true,
+                    //drop_console: true,
                     warnings: false
                 }
             }
@@ -107,7 +107,7 @@ module.exports = env => {
                         {
                             loader: 'url-loader',
                             options: {
-                                limit: 2000000
+                                limit: 10000
                             }
                         }
                     ]

@@ -4,13 +4,17 @@
         {
           "endPoint" : "https://production-cache.kyber.network",
           "type": "cached"
-        },       
+        },                       
+        {
+          "endPoint" : "https://mainnet.infura.io",
+          "type": "prune"
+        },         
         {
           "endPoint" : "https://semi-node.kyber.network",
           "type": "prune"
         },
         {
-          "endPoint" : "https://mainnet.infura.io",
+          "endPoint" : "https://optionally-pleasant-horse.quiknode.io/9d72a0f8-0d8b-4e4c-aef1-eb529e05cdb9/V1ZsC_tuomfETYotFo4KKA==/",
           "type": "prune"
         },         
         {
@@ -21,32 +25,31 @@
       "ws": "wss://mainnet.infura.io/ws"
     },
     "api_usd":"https://api.coinmarketcap.com",
+    "api_tokens": "https://api.kyber.network/internal/currencies",
+    "market_exclude": ["WETH"],
     "tokens": {
       "ETH": {
         "name": "Ethereum",
         "symbol": "ETH",
         "icon": "eth.svg",
         "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-        "decimal": 18,
+        "decimals": 18,
         "usd_id":"ethereum",
         "gasLimit": "0"
       },
       "WETH": {
         "name": "Wrapped Ether",
-        "decimal": 18,
+        "decimals": 18,
         "symbol" : "WETH",
         "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-        "icon": "weth.svg",
-        "isNew": true,
-        "expireDate":"2018/09/30",
-        "exclude": true
+        "icon": "weth.svg"
       },
       "KNC": {
         "name": "KyberNetwork",
         "symbol": "KNC",
         "icon": "knc.svg",
         "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
-        "decimal": 18,
+        "decimals": 18,
         "usd_id":"kyber-network"
       },
       "DAI": {
@@ -54,7 +57,7 @@
         "symbol": "DAI",
         "icon": "dai.svg",
         "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-        "decimal": 18,
+        "decimals": 18,
         "usd_id":"dai",
         "gasLimit": "450000"
       },
@@ -63,7 +66,7 @@
         "symbol": "OMG",
         "icon": "omg.svg",
         "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-        "decimal": 18,
+        "decimals": 18,
         "usd_id":"omisego"
       },
       "SNT": {
@@ -71,7 +74,7 @@
         "address": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
         "symbol": "SNT",
         "icon": "snt.svg",
-        "decimal": 18,
+        "decimals": 18,
         "usd_id":"status"
       },
       "ELF": {
@@ -79,7 +82,7 @@
         "address": "0xbf2179859fc6d5bee9bf9158632dc51678a4100e",
         "symbol": "ELF",
         "icon": "aelf.svg",
-        "decimal": 18,
+        "decimals": 18,
         "usd_id":"aelf"
       },
       "POWR": {
@@ -87,7 +90,7 @@
         "address": "0x595832f8fc6bf59c85c527fec3740a1b7a361269",
         "symbol": "POWR",
         "icon": "pwr.svg",
-        "decimal": 6,
+        "decimals": 6,
         "usd_id":"power-ledger"
       },
       "MANA": {
@@ -95,7 +98,7 @@
         "address": "0x0f5d2fb29fb7d3cfee444a200298f468908cc942",
         "symbol": "MANA",
         "icon": "mana.svg",
-        "decimal": 18,
+        "decimals": 18,
         "usd_id":"decentraland"
       },
       "BAT": {
@@ -103,7 +106,7 @@
         "address": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
         "symbol": "BAT",
         "icon": "bat.svg",
-        "decimal": 18,
+        "decimals": 18,
         "usd_id":"basic-attention-token"
       },
       "REQ": {
@@ -111,7 +114,7 @@
         "address": "0x8f8221afbb33998d8584a2b05749ba73c37a938a",
         "symbol": "REQ",
         "icon": "req.svg",
-        "decimal": 18,
+        "decimals": 18,
         "usd_id":"request-network"
       },
       "GTO": {
@@ -119,7 +122,7 @@
         "address": "0xc5bbae50781be1669306b9e001eff57a2957b09d",
         "symbol": "GTO",
         "icon": "gifto.svg",
-        "decimal": 5,
+        "decimals": 5,
         "usd_id":"gifto"
       },
       "RDN": {
@@ -127,7 +130,7 @@
         "address": "0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6",
         "symbol": "RDN",
         "icon": "rdn.svg",
-        "decimal": 18,
+        "decimals": 18,
         "usd_id":"raiden-network-token"
       },
       "APPC": {
@@ -135,7 +138,7 @@
         "address": "0x1a7a8bd9106f2b8d977e08582dc7d24c723ab0db",
         "symbol": "APPC",
         "icon": "appc.svg",
-        "decimal": 18,
+        "decimals": 18,
         "usd_id":"appcoins"
       },
       "ENG": {
@@ -143,7 +146,7 @@
         "address": "0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4",
         "symbol": "ENG",
         "icon": "eng.svg",
-        "decimal": 8,
+        "decimals": 8,
         "usd_id":"enigma-project"
       },
       "SALT": {
@@ -151,14 +154,14 @@
         "address": "0x4156d3342d5c385a87d264f90653733592000581",
         "symbol": "SALT",
         "icon": "salt.svg",
-        "decimal": 8,
+        "decimals": 8,
         "usd_id":"salt"
       },
       "BQX": {
         "name" : "Ethos",
         "address": "0x5af2be193a6abca9c8817001f45744777db30756",
         "symbol": "BQX",
-        "decimal": 8,
+        "decimals": 8,
         "icon": "bqx.svg",
         "usd_id":"ethos"
       },
@@ -166,7 +169,7 @@
         "name": "AdEx",
         "address": "0x4470bb87d77b963a013db939be332f927f2b992e",
         "symbol": "ADX",
-        "decimal": 4,
+        "decimals": 4,
         "icon": "adx.svg",
         "usd_id": "adx-net"
       },
@@ -174,7 +177,7 @@
         "name": "AirSwap",
         "address": "0x27054b13b1b798b345b591a4d22e6562d47ea75a",
         "symbol": "AST",
-        "decimal": 4,
+        "decimals": 4,
         "icon": "ast.svg",
         "usd_id": "airswap"
       },
@@ -182,7 +185,7 @@
         "name": "Ripio Credit Network",
         "address": "0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6",
         "symbol": "RCN",
-        "decimal": 18,
+        "decimals": 18,
         "icon": "rcn.svg",
         "usd_id": "ripio-credit-network"
       },
@@ -190,7 +193,7 @@
         "name": "Zilliqa",
         "address": "0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27",
         "symbol": "ZIL",
-        "decimal": 12,
+        "decimals": 12,
         "icon": "zil.svg",
         "usd_id":"zilliqa"
       },
@@ -198,7 +201,7 @@
         "name": "Chain Link",
         "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
         "symbol": "LINK",
-        "decimal": 18,
+        "decimals": 18,
         "icon": "link.svg",
         "usd_id":"chainlink"
       },
@@ -206,7 +209,7 @@
         "name": "Storm",
         "address": "0xd0a4b8946cb52f0661273bfbc6fd0e0c75fc6433",
         "symbol": "STORM",
-        "decimal": 18,
+        "decimals": 18,
         "icon": "storm.svg",
         "usd_id":"storm"
       },
@@ -214,7 +217,7 @@
         "name": "IOStoken",
         "address": "0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab",
         "symbol": "IOST",
-        "decimal": 18,
+        "decimals": 18,
         "icon": "iost.svg",
         "usd_id":"iostoken"
       },
@@ -222,7 +225,7 @@
         "name": "Olympus Labs",
         "address": "0x263c618480dbe35c300d8d5ecda19bbb986acaed",
         "symbol": "MOT",
-        "decimal": 18,
+        "decimals": 18,
         "icon": "mot.svg",
         "usd_id":"olympus-labs"
       },
@@ -230,7 +233,7 @@
         "name" : "Digix Gold",
         "address": "0x4f3afec4e5a3f2a6a1a411def7d7dfe50ee057bf",
         "symbol":"DGX",
-        "decimal": 9,
+        "decimals": 9,
         "icon": "dgx.svg",
         "usd_id":"dgx",
         "gasLimit": "750000"
@@ -238,7 +241,7 @@
       "ABT": {
         "name": "ArcBlock",
         "address": "0xb98d4c97425d9908e66e53a6fdf673acca0be986",
-        "decimal": 18,
+        "decimals": 18,
         "symbol":"ABT",        
         "icon": "abt.svg",
         "usd_id":"arcblock"
@@ -246,238 +249,238 @@
       "ENJ": {
         "name": "Enjin Coin",
         "address": "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c",
-        "decimal": 18,
+        "decimals": 18,
         "symbol":"ENJ",        
         "icon": "enj.svg",
         "usd_id":"enjin-coin"
       },
       "AE": {
         "name": "Aeternity",
-        "decimal": 18,
+        "decimals": 18,
         "symbol":"AE", 
         "address": "0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d",
         "icon": "ae.svg"
       },
       "BLZ": {
         "name": "Bluezelle",
-        "decimal": 18,
+        "decimals": 18,
         "symbol":"BLZ", 
         "address": "0x5732046a883704404f284ce41ffadd5b007fd668",
         "icon": "blz.svg"
       },
       "PAL": {
         "name": "PAL Network",
-        "decimal": 18,
+        "decimals": 18,
         "symbol":"PAL", 
         "address": "0xfedae5642668f8636a11987ff386bfd215f942ee",
         "icon": "pal.png"
       },
       "ELEC": {
         "name": "ElectrifyAsia",
-        "decimal": 18,
+        "decimals": 18,
         "address": "0xd49ff13661451313ca1553fd6954bd1d9b6e02b9",
         "symbol":"ELEC", 
         "icon": "elec.svg"
       },
       "BBO": {
         "name": "Bigbom",
-        "decimal": 18,
+        "decimals": 18,
         "address": "0x84f7c44b6fed1080f647e354d552595be2cc602f",
         "symbol":"BBO", 
         "icon": "bbo.svg"
       },
       "POLY": {
         "name": "Polymath",
-        "decimal": 18,
+        "decimals": 18,
         "address": "0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec",
         "symbol":"POLY", 
         "icon": "poly.svg"
       },
       "LBA": {
         "name": "Libra Credit",
-        "decimal": 18,
+        "decimals": 18,
         "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
         "symbol":"LBA", 
         "icon": "lba.svg"
       },
       "EDU": {
         "name": "EduCoin",
-        "decimal": 18,
+        "decimals": 18,
         "address": "0xf263292e14d9d8ecd55b58dad1f1df825a874b7c",
         "symbol":"EDU", 
         "icon": "edu.svg"
       },
       "CVC": {
         "name": "Civic",
-        "decimal": 8,
+        "decimals": 8,
         "address": "0x41e5560054824ea6b0732e656e3ad64e20e94e45",
         "symbol":"CVC", 
         "icon": "cvc.svg"
       },
       "WAX": {
         "name": "Wax",
-        "decimal": 8,
+        "decimals": 8,
         "address": "0x39bb259f66e1c59d5abef88375979b4d20d98022",
         "symbol":"WAX", 
         "icon": "wax.svg"
       },
       "SUB": {
         "name": "Substratum",
-        "decimal": 2,
+        "decimals": 2,
         "address": "0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a",
         "symbol":"SUB", 
         "icon": "sub.svg"
       },
       "POE": {
         "name": "Po.et",
-        "decimal": 8,
+        "decimals": 8,
         "address": "0x0e0989b1f9b8a38983c2ba8053269ca62ec9b195",
         "symbol":"POE", 
         "icon": "poe.svg"
       },
       "PAY": {
         "name": "TenX",
-        "decimal": 18,
+        "decimals": 18,
         "address": "0xb97048628db6b661d4c2aa833e95dbe1a905b280",
         "symbol":"PAY", 
         "icon": "pay.svg"
       },
       "DTA": {
         "name": "Data",
-        "decimal": 18,
+        "decimals": 18,
         "address": "0x69b148395ce0015c13e36bffbad63f49ef874e03",
         "symbol":"DTA", 
         "icon": "dta.svg"
       },
       "BNT": {
         "name": "Bancor",
-        "decimal": 18,
+        "decimals": 18,
         "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
         "symbol":"BNT", 
         "icon": "bnt.svg"
       }, 
       "TUSD": {
         "name": "TrueUSD",
-        "decimal": 18,
+        "decimals": 18,
         "address": "0x8dd5fbce2f6a956c3022ba3663759011dd51e73e",
         "symbol":"TUSD", 
         "icon": "tusd.svg"
       },
       "TOMO": {
         "name": "Tomocoin",
-        "decimal": 18,
+        "decimals": 18,
         "address": "0x8b353021189375591723e7384262f45709a3c3dc",
         "symbol":"TOMO", 
         "icon": "tomo.svg"
       },
       "MDS": {
         "name": "MediShares",
-        "decimal": 18,
+        "decimals": 18,
         "address": "0x66186008c1050627f979d464eabb258860563dbe",
         "symbol":"MDS", 
         "icon": "mds.svg"
       },
       "LEND": {
         "name": "EthLend",
-        "decimal": 18,
+        "decimals": 18,
         "address": "0x80fb784b7ed66730e8b1dbd9820afd29931aab03",
         "symbol":"LEND", 
         "icon": "lend.svg"
       },
       "WINGS": {
         "name": "WINGS",
-        "decimal": 18,
+        "decimals": 18,
         "address": "0x667088b212ce3d06a1b553a7221e1fd19000d9af",
         "symbol":"WINGS", 
         "icon": "wings.svg"
       },
       "MTL": {
         "name": "Metal",
-        "decimal": 8,
+        "decimals": 8,
         "address": "0xf433089366899d83a9f26a773d59ec7ecf30355e",
         "symbol":"MTL", 
         "icon": "mtl.svg"
       },
       "WABI": {
         "name": "WaBi",
-        "decimal": 18,
+        "decimals": 18,
         "address": "0x286bda1413a2df81731d4930ce2f862a35a609fe",
         "symbol":"WABI", 
         "icon": "wabi.svg"
       },
       "COFI":{
         "name": "CoinFi",
-        "decimal": 18,
+        "decimals": 18,
         "address": "0x3136ef851592acf49ca4c825131e364170fa32b3",
         "symbol":"COFI", 
         "icon": "cofi.svg"                
       },
       "MOC": {
         "name": "Moss Land",
-        "decimal": 18,
+        "decimals": 18,
         "symbol" : "MOC",
         "address": "0x865ec58b06bf6305b886793aa20a2da31d034e68",
         "icon": "moc.svg"        
       },
       "BNB":{
         "name": "Binance Coin",
-        "decimal": 18,
+        "decimals": 18,
         "symbol" : "BNB",
         "address": "0xb8c77482e45f1f44de1745f52c74426c631bdd52",
         "icon": "bnb.svg"
       },
       "REP":{
         "name": "Augur",
-        "decimal": 18,
+        "decimals": 18,
         "symbol" : "REP",
         "address": "0x1985365e9f78359a9b6ad760e32412f4a445e862",
         "icon": "rep.svg"
       },
       "ZRX":{
         "name": "0x Protocol",
-        "decimal": 18,
+        "decimals": 18,
         "symbol" : "ZRX",
         "address": "0xe41d2489571d322189246dafa5ebde1f4699f498",
         "icon": "zrx.svg"
       },
       "MAS":{
         "name": "MidasProtocol",
-        "decimal": 18,
+        "decimals": 18,
         "symbol" : "MAS",
         "address": "0x23ccc43365d9dd3882eab88f43d515208f832430",
         "icon": "mas.svg"
       },
       "KCC":{
         "name": "Kyber Community Coupon",
-        "decimal": 18,
+        "decimals": 18,
         "symbol" : "KCC",
         "address": "0x09677d0175dec51e2215426cddd055a71bf4228d",
         "icon": "kcc.svg"
       },
       "DAT":{
         "name": "Datum",
-        "decimal": 18,
+        "decimals": 18,
         "symbol" : "DAT",
         "address": "0x81c9151de0c8bafcd325a57e3db5a5df1cebf79c",
         "icon": "dat.svg"
       },
       "REN":{
         "name": "Republic Protocol",
-        "decimal": 18,
+        "decimals": 18,
         "symbol" : "REN",
         "address": "0x408e41876cccdc0f92210600ef50372656052a38",
         "icon": "ren.svg"
       },
       "QKC":{
         "name": "QuarkChain",
-        "decimal": 18,
+        "decimals": 18,
         "symbol" : "QKC",
         "address": "0xea26c4ac16d4a5a106820bc8aee85fd0b7b2b664",
         "icon": "qkc.svg"
       },
       "MKR": {
         "name": "Maker",
-        "decimal": 18,
+        "decimals": 18,
         "symbol" : "MKR",
         "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
         "icon": "mkr.svg",
@@ -486,7 +489,7 @@
       },
       "DCC":{
         "name": "Distributed Credit Chain",
-        "decimal": 18,
+        "decimals": 18,
         "symbol" : "DCC",
         "address": "0xffa93aacf49297d51e211817452839052fdfb961",
         "icon": "dcc.svg",

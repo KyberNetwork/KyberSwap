@@ -157,12 +157,9 @@
     margin-top: 1rem;
     font-weight: 600;
 
-    .seperator{
-      @include screen-max-width(large) {
-        display: none;
-      }
+    &__separator {
+      margin: 0 15px;
     }
-
 
     @include screen-min-width(large) {
       width: 450px;
@@ -171,15 +168,16 @@
     }
 
     @include screen-max-width(large) {
-      text-align: left;      
-    }
-    // div:first-child {
-    //   text-align: right;
-    // }
+      text-align: left;
 
-    // div:nth-child(3) {
-    //   text-align: left;
-    // }
+      &__item {
+        display: block;
+      }
+
+      &__separator {
+        display: none;
+      }
+    }
   }
 
   .show-on-choose-token-pair {

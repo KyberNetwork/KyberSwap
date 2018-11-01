@@ -18,31 +18,26 @@ import * as converter from '../../utils/converter'
     var rateTokenETH = converter.toT(tokens[sourceToken].rate, 18)
     rateUSD = rateTokenETH * rateEthUsd
   }
-  // if (tokens[sourceToken]){
-  //   rateUSD = tokens[sourceToken].rateUSD
-  // }
+
   return {...props, translate: getTranslate(store.locale), rateEthUsd, rateUSD}
 })
 
 export default class RateBetweenToken extends React.Component {
-
-  // resetMinRate = (e)=>{
-  //   this.props.dispatch(actions.resetMinRate())
-  //   //this.props.dispatch(actions.caculateAmount())
-  // }
-
   render = () => {
     var tokenRate = this.props.isSelectToken ? <img src={require('../../../assets/img/waiting-white.svg')} /> : roundingNumber(this.props.exchangeRate.rate)
     return (
-      <div class="token-compare grid-x">
-        <div className="cell large-5">
+      <div class="token-compare">
+        <span className={"token-compare__item"}>
           1 {this.props.exchangeRate.sourceToken} = {tokenRate} {this.props.exchangeRate.destToken}
-        </div>
-        <div className="cell large-2 seperator">|</div>
-        <div className="cell large-5">
-
-          1 {this.props.exchangeRate.sourceToken} = {converter.roundingNumber(this.props.rateUSD)} USD
-        </div>
+        </span>
+        {this.props.rateUSD != 0 &&
+          <span>
+            <span className={"token-compare__separator"}>|</span>
+            <span className={"token-compare__item"}>
+              1 {this.props.exchangeRate.sourceToken} = {converter.roundingNumber(this.props.rateUSD)} USD
+            </span>
+          </span>
+        }
       </div>
     )
   }
