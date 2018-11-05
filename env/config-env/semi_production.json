@@ -303,7 +303,7 @@
         "icon": "poly.svg"
       },
       "LBA": {
-        "name": "Libra Credit",
+        "name": "Cred",
         "decimals": 18,
         "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
         "symbol":"LBA", 
