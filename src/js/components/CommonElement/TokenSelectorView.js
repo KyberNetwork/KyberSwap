@@ -1,7 +1,8 @@
 import React from "react"
 import { toT, roundingNumber } from "../../utils/converter"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
-import * as analytics from "../../utils/analytics"
+import * as analytics from "../../utils/analytics";
+import { getAssetUrl } from "../../utils/common";
 
 const TokenSelectorView = (props) => {
   var focusItem = props.listItem[props.focusItem]
@@ -19,26 +20,32 @@ const TokenSelectorView = (props) => {
     return Object.keys(listShow).map((key, i) => {
       if (key !== props.focusItem) {
         var item = listShow[key]
-        var balance = toT(item.balance, item.decimal)
+        var balance = toT(item.balance, item.decimals)
         return (
           <div key={key} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item">
             <div className="d-flex">
-              <div className={`item-icon item-icon-${props.account !== false ? props.type : ""}`}>
-                <img src={require("../../../assets/img/tokens/" + item.icon)} />
+              <div className="item-icon">
+                <img src={getAssetUrl(`tokens/${item.symbol}.svg`)} />
               </div>
 
-              <div className="item-content">
-                {/* <div>{item.name}</div> */}
-                <div className={`item-balance item-balance-${props.type}`}>
-                  <div class="item-symbol">
+              <div>
+                <div>{item.name}</div>
+                {props.type !== "des" &&
+                <div className="item-balance">
+                  <span title={balance}>
+                    {roundingNumber(balance)}
+                  </span>
+                  <span className="item-symbol">
                     {item.symbol}
-                  </div>
+                  
+                  </span>
                   {props.account !== false && (
                     <div title={balance} class="item-balance-value">
                       {`${roundingNumber(balance)} ${item.symbol}`}
                     </div>
                   )}
                 </div>
+                }
                 {/* <div className="font-w-b">{item.symbol}</span><span className="show-for-large token-name"> - {item.name}</div> */}
               </div>
 
@@ -62,15 +69,17 @@ const TokenSelectorView = (props) => {
           <div className="focus-item d-flex">
             <div className="d-flex">
               <div className="icon">
-                <img src={require("../../../assets/img/tokens/" + focusItem.icon)} />
+                <img src={getAssetUrl(`tokens/${focusItem.symbol}.svg`)} />
               </div>
               <div>
                 <div className="focus-name">{focusItem.name}</div>
                 <div className="focus-balance">
-                  {props.account !== false && (
-                    <span className="token-balance" title = {toT(focusItem.balance)}>{roundingNumber(toT(focusItem.balance, focusItem.decimal))}</span>
-                  )}
-                  <span className="token-symbol">{focusItem.symbol}</span>
+                  {props.type !== "des" &&
+                  <span>
+                    <span className="token-balance" title = {toT(focusItem.balance)}>{roundingNumber(toT(focusItem.balance, focusItem.decimals))}</span>
+                    <span className="token-symbol">{focusItem.symbol}</span>
+                  </span>
+                  }
                 </div>
               </div>
             </div>

@@ -33,7 +33,8 @@ import Language from "../../../../lang"
     utils: store.utils,
     account: store.account,
     translate: getTranslate(store.locale),
-    locale: store.locale
+    locale: store.locale,
+    tokens: store.tokens.tokens
     // currentLanguage: getActiveLanguage(store.locale).code
   }
 })
@@ -83,6 +84,15 @@ export default class Layout extends React.Component {
     }
   }
 
+  componentDidMount = () => {
+    analytics.trackAccessToSwap()
+    window.addEventListener("beforeunload", this.handleCloseWeb)
+  }
+
+  handleCloseWeb = () => {
+    analytics.exitSwap()
+  }
+
   checkTimmer() {
     if (!this.props.account.account) return;
     if (this.props.utils.infoModal && this.props.utils.infoModal.open) return;
@@ -129,6 +139,7 @@ export default class Layout extends React.Component {
         supportedLanguages={Language.supportLanguage}
         setActiveLanguage={this.setActiveLanguage}      
         currentLanguage = {currentLanguage}  
+        tokens = {this.props.tokens}
        // footer = {footer}
       />
     )

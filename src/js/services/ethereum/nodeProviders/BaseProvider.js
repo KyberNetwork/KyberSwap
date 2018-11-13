@@ -320,15 +320,7 @@ export default class BaseProvider {
         })
     }
 
-    tokenIsSupported(address) {
-        let tokens = BLOCKCHAIN_INFO.tokens
-        for (let token in tokens) {
-            if (tokens[token].address.toLowerCase() == address.toLowerCase()) {
-                return true
-            }
-        }
-        return false
-    }
+
 
     getAllRate(sources, dests, quantity) {
         var dataAbi = this.wrapperContract.methods.getExpectedRates(this.networkAddress, sources, dests, quantity).encodeABI()

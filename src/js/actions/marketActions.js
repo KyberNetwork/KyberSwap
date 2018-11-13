@@ -64,6 +64,13 @@ export function showTradingViewChart(symbol){
   }
 }
 
+export function changeSymbol(symbol) {
+  return {
+    type: "MARKET.CHANGE_SYMBOL",
+    payload: symbol
+  }
+}
+
 export function hideTradingViewChart(){
   return {
     type: "MARKET.HIDE_TRADINGVIEW_CHART"

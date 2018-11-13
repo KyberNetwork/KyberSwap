@@ -62,23 +62,23 @@ export default class Exchange extends React.Component {
     }
   }
 
-  // validateSourceAmount = (value, gasPrice) => {
-  //   var checkNumber
-  //   if (isNaN(parseFloat(value))) {
-  //     // this.props.dispatch(transferActions.thowErrorAmount("error.amount_must_be_number"))
-  //   } else {
-  //     var amountBig = converters.stringEtherToBigNumber(this.props.transfer.amount, this.props.transfer.decimal)
-  //     if (amountBig.isGreaterThan(this.props.transfer.balance)) {
-  //       this.props.dispatch(transferActions.thowErrorAmount("error.amount_transfer_too_hign"))
-  //       return
-  //     }
+  validateSourceAmount = (value, gasPrice) => {
+    var checkNumber
+    if (isNaN(parseFloat(value))) {
+      // this.props.dispatch(transferActions.thowErrorAmount("error.amount_must_be_number"))
+    } else {
+      var amountBig = converters.stringEtherToBigNumber(this.props.transfer.amount, this.props.transfer.decimals)
+      if (amountBig.isGreaterThan(this.props.transfer.balance)) {
+        this.props.dispatch(transferActions.thowErrorAmount("error.amount_transfer_too_hign"))
+        return
+      }
 
-  //     var testBalanceWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance,
-  //       this.props.transfer.tokenSymbol, this.props.transfer.amount, this.props.transfer.gas, gasPrice)
-  //     if (testBalanceWithFee) {
-  //       this.props.dispatch(transferActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
-  //     }
-  //   }
+      var testBalanceWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance,
+        this.props.transfer.tokenSymbol, this.props.transfer.amount, this.props.transfer.gas, gasPrice)
+      if (testBalanceWithFee) {
+        this.props.dispatch(transferActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
+      }
+    }
    
 
   // }
@@ -110,9 +110,10 @@ export default class Exchange extends React.Component {
   // selectedGasHandler = (value, level) => {
   //   //this.setState({selectedGas: level})
 
-  //   this.props.dispatch(transferActions.seSelectedGas(level)) 
-  //   this.specifyGasPrice(value)
-  // }
+    this.props.dispatch(transferActions.seSelectedGas(level)) 
+    this.specifyGasPrice(value)
+    analytics.trackChooseGas("transfer", value, level)
+  }
 
   // handleEndSession = () => {
   //   this.props.dispatch(clearSession()) 

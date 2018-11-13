@@ -4,13 +4,20 @@ import {  ImportAccountView, LandingPage } from '../../components/ImportAccount'
 import {
   ImportKeystore, ImportByDevice, ImportByPrivateKey,
   ErrorModal, ImportByMetamask,
-  ImportByDeviceWithLedger, ImportByDeviceWithTrezor
+  ImportByDeviceWithLedger, ImportByDeviceWithTrezor, ImportByPromoCode
 } from "../ImportAccount"
 import { setIsAndroid, setIsIos } from "../../actions/globalActions"
+
+import { visitExchange, setOnMobile } from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux'
 import { importAccountMetamask } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
-import Web3Service from "../../services/web3"
+//import Web3Service from "../../services/web3"
+
+import * as web3Package from "../../services/web3"
+
+
+//import {isMobile} from "../../utils/common"
 
 import {isMobile} from '../../utils/common'
 
@@ -31,7 +38,8 @@ import {isMobile} from '../../utils/common'
     tokens: supportTokens,
     screen: props.screen,
     tradeType: props.tradeType,
-    global: store.global
+    global: store.global,
+    onMobile: store.global.onMobile
   }
 })
 
@@ -45,26 +53,31 @@ export default class ImportAccount extends React.Component {
   }
 
   componentDidMount = () => {
-    var swapPage = document.getElementById("swap-app");
-    swapPage.className = swapPage.className === "" ? "no-min-height" : swapPage.className + " no-min-height";
+    var swapPage = document.getElementById("swap-app")
+    swapPage.className = swapPage.className === "" ? "no-min-height" : swapPage.className + " no-min-height"
 
-    var web3Service = new Web3Service();
 
-    if (!web3Service.isHaveWeb3()) {
-      if (isMobile.iOS()) {
-        this.props.dispatch(setIsIos(true));
-      } else if (isMobile.Android()) {
-        this.props.dispatch(setIsAndroid(true));
-      }
-    }
-
+    var web3Service = web3Package.newWeb3Instance()
+    
+    var web3Service = web3Package.newWeb3Instance()
     if (this.props.termOfServiceAccepted){
-      if (web3Service.isHaveWeb3()) {
+      if (web3Service !== false) {
+        //var web3Service = new Web3Service(web3)
         var walletType = web3Service.getWalletType()
-        if (walletType !== "metamask") {
+        
+     //   alert(walletType)
+        if ((walletType !== "metamask") && (walletType !== "modern_metamask")) {
+          // /alert(walletType)
           this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
           this.props.ethereum, this.props.tokens, this.props.screen, this.props.translate, walletType))
         }
+      }
+    }
+    if (web3Service === false) {
+      if (isMobile.iOS()) {
+        this.props.dispatch(setOnMobile(true, false));
+      } else if (isMobile.Android()) {
+        this.props.dispatch(setOnMobile(false, true));
       }
     }
   }
@@ -90,25 +103,19 @@ export default class ImportAccount extends React.Component {
     if (!this.props.termOfServiceAccepted) {
       content = <LandingPage translate={this.props.translate} tradeType={this.props.tradeType}/>
     } else {
-      if (this.props.global.isIos){
-        content = this.getAppDownloadHtml("https://itunes.apple.com/us/app/coinbase-wallet/id1278383455?mt=8");
-      } else if (this.props.global.isAndroid) {
-        content = this.getAppDownloadHtml("https://play.google.com/store/apps/details?id=org.toshi&hl=en");
-      } else {
-        content = (
-          <ImportAccountView
-            firstKey={<ImportByMetamask />}
-            secondKey={<ImportKeystore />}
-            thirdKey={<ImportByDeviceWithTrezor />}
-            fourthKey={<ImportByDeviceWithLedger />}
-            fifthKey={<ImportByPrivateKey />}
-            errorModal={<ErrorModal />}
-            translate={this.props.translate}
-            isChangingWallet = {this.props.isChangingWallet}
-            closeChangeWallet = {this.props.closeChangeWallet}
-          />
-        )
-      }
+      content = (
+        <ImportAccountView
+          firstKey={<ImportByMetamask />}
+          secondKey={<ImportKeystore />}
+          thirdKey={<ImportByDeviceWithTrezor />}
+          fourthKey={<ImportByDeviceWithLedger />}
+          fifthKey={<ImportByPrivateKey />}
+          sixthKey = {<ImportByPromoCode />}
+          errorModal={<ErrorModal />}
+          translate={this.props.translate}
+          onMobile={this.props.onMobile}
+        />
+      )
     }
 
     return (

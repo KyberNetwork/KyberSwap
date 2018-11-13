@@ -1,26 +1,20 @@
 import React from "react"
 import { connect } from "react-redux"
 import ReactTooltip from 'react-tooltip'
-
 import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
-
-
-
 import * as exchangeActions from "../../actions/exchangeActions"
 import * as utilActions from "../../actions/utilActions"
 
-import { getWalletId } from "../../services/web3"
-
+//import {getWalletId} from "../../services/web3"
 import { Modal } from "../../components/CommonElement"
 import { TermAndServices } from "../../containers/CommonElements"
-
 import { PassphraseModal, ConfirmTransferModal, ApproveModal } from "../../components/Transaction"
 import { PostExchangeBtn } from "../../components/Exchange"
-
 import { getTranslate } from 'react-localize-redux';
 import { RateBetweenToken } from "../Exchange"
-import * as analytics from "../../utils/analytics"
+import * as analytics from "../../utils/analytics";
+import { getAssetUrl, isUserEurope, getParameterByName } from "../../utils/common";
 
 @connect((store, props) => {
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
@@ -33,9 +27,9 @@ import * as analytics from "../../utils/analytics"
   var rateSourceToEth = 0
   if (tokens[sourceTokenSymbol]) {
     sourceBalance = tokens[sourceTokenSymbol].balance
-    sourceDecimal = tokens[sourceTokenSymbol].decimal
+    sourceDecimal = tokens[sourceTokenSymbol].decimals
     sourceName = tokens[sourceTokenSymbol].name
-    sourceIcon = tokens[sourceTokenSymbol].icon
+    sourceIcon = sourceTokenSymbol + '.svg';
     rateSourceToEth = tokens[sourceTokenSymbol].rate
   }
 
@@ -46,9 +40,9 @@ import * as analytics from "../../utils/analytics"
   var destIcon = "knc.svg"
   if (tokens[destTokenSymbol]) {
     destBalance = tokens[destTokenSymbol].balance
-    destDecimal = tokens[destTokenSymbol].decimal
+    destDecimal = tokens[destTokenSymbol].decimals
     destName = tokens[destTokenSymbol].name
-    destIcon = tokens[destTokenSymbol].icon
+    destIcon = destTokenSymbol + '.svg';
   }
 
   return {
@@ -242,9 +236,9 @@ export default class PostExchange extends React.Component {
           </div>
           <div className="amount">
             <div className="amount-item amount-left">
-              <div className="grid-x">
-                <div className="cell medium-3 small-12 amount-icon">
-                  <img src={require("../../../assets/img/tokens/" + sourceIcon)} />
+              <div className="d-flex">
+                <div className="item-icon">
+                  <img src={getAssetUrl(`tokens/${sourceIcon}`)} />
                 </div>
                 <div className="cell medium-9 small-12">
                   <div className="amount-detail">
@@ -263,19 +257,9 @@ export default class PostExchange extends React.Component {
               {this.props.snapshot.isFetchingRate ?
                 <img src={require('../../../assets/img/waiting-white.svg')} />
                 :
-                <div className="grid-x">
-                  <div className="cell medium-3 small-12 amount-icon">
-                    <img src={require("../../../assets/img/tokens/" + destIcon)} />
-                  </div>
-                  <div className="cell medium-9 small-12">
-                    <div className="amount-detail">
-                      <span>
-                        {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''}
-                      </span>
-                      <span>
-                        {destTokenSymbol}
-                      </span>
-                    </div>
+                <div className="d-flex">
+                  <div className="item-icon">
+                    <img src={getAssetUrl(`tokens/${destIcon}`)} />
                   </div>
                 </div>
               }
@@ -301,7 +285,7 @@ export default class PostExchange extends React.Component {
             <div className="amount-item amount-left">
               <div className="grid-x">
                 <div className="cell medium-3 small-12 amount-icon">
-                  <img src={require("../../../assets/img/tokens/" + sourceIcon)} />
+                  <img src={getAssetUrl(`tokens/${sourceIcon}`)} />
                 </div>
                 <div className="cell medium-9 small-12">
                   <div className="amount-detail">
@@ -322,7 +306,7 @@ export default class PostExchange extends React.Component {
                 :
                 <div className="grid-x">
                   <div className="cell medium-3 small-12 amount-icon">
-                    <img src={require("../../../assets/img/tokens/" + destIcon)} />
+                    <img src={getAssetUrl(`tokens/${destIcon}`)} />
                   </div>
                   <div className="cell medium-9 small-12">
                     <div className="amount-detail">
@@ -378,6 +362,20 @@ export default class PostExchange extends React.Component {
     this.props.dispatch(exchangeActions.changePassword())
   }
 
+  getReferAddr = (blockNo) => {
+    var refAddr = getParameterByName("ref")
+    //  alert(refAddr)
+      
+      if (!validators.verifyAccount(refAddr)) {
+      //  alert("xxxx")
+        return refAddr
+      }
+      if (isUserEurope()){
+          return "0x440bBd6a888a36DE6e2F6A25f65bc4e16874faa9" 
+      }
+      return converters.numberToHexAddress(blockNo)
+  }
+
   formParams = () => {
     var selectedAccount = this.props.account.address
     var sourceToken = this.props.form.sourceToken
@@ -428,10 +426,19 @@ export default class PostExchange extends React.Component {
     minConversionRate = converters.numberToHex(minConversionRate)
 
     //var blockNo = converters.numberToHexAddress(this.props.snapshot.blockNo)
-    // check wallet type
-    var walletType = this.props.account.walletType
+     // check wallet type
+    var walletType = this.props.account.type
+   // console.log("wallet_type")
+    //console.log(walletType)
     //alert(walletType)
-    var blockNo = getWalletId(walletType, this.props.snapshot.blockNo)
+    var blockNo = this.props.snapshot.blockNo
+    if (walletType === "metamask"){
+      blockNo = this.props.account.keystring.getWalletId(blockNo)
+    }else{
+      
+      blockNo = this.getReferAddr(blockNo)
+    }
+    //var blockNo =  getWalletId (walletType, this.props.snapshot.blockNo)
     //alert(blockNo)
 
     var destAddress = this.props.account.address
@@ -519,7 +526,7 @@ export default class PostExchange extends React.Component {
       console.log(e)
       this.props.dispatch(exchangeActions.throwPassphraseError(this.props.translate("error.passphrase_error")))
     }
-    analytics.trackConfirmTransaction(this.props.form.sourceTokenSymbol)
+    analytics.trackConfirmTransaction("swap", this.props.form.sourceTokenSymbol)
   }
 
   content = () => {

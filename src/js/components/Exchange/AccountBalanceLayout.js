@@ -47,7 +47,11 @@ const AccountBalanceLayout = (props) => {
     var tokens = reorderToken(props.tokens)
     var balances = tokens 
       .map(token => {
-        var balance = converts.toT(token.balance, token.decimal)
+        var balance = converts.toT(token.balance, token.decimals)
+
+        // var tokenEpsilon = converts.caculateTokenEpsilon(token.rate, token.decimal, token.symbol)
+        // var bigBalance = new BigNumber(token.balance)
+
         var searchWord = props.searchWord.toLowerCase()
         var symbolL = token.symbol.toLowerCase()
         var classBalance = "";
@@ -82,7 +86,7 @@ const AccountBalanceLayout = (props) => {
       if (!token.rateUSD){
         return
       }
-      var balance = converts.toT(token.balance, token.decimal)
+      var balance = converts.toT(token.balance, token.decimals)
       total += balance * token.rateUSD
     })
     //console.log("total: " + total)

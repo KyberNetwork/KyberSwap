@@ -91,6 +91,11 @@ export default class Exchange extends React.Component {
   // lazyValidateTransactionFee = _.debounce(this.validateTxFee, 500)
 
 
+    //this.setState({selectedGas: level})
+  //   this.props.dispatch(exchangeActions.seSelectedGas(level)) 
+  //   this.specifyGasPrice(value)
+  //   analytics.trackChooseGas('swap', value, levelString)
+  // }
 
   // handleEndSession = () => {
   //   this.props.dispatch(clearSession())

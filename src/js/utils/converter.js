@@ -85,7 +85,7 @@ export function caculateEthBalance(token){
     var rateBig = new BigNumber(token.rate)
     var balanceBig = new BigNumber(token.balance)
     //var weiParam = new BigNumber(10)
-    var balanceToken = balanceBig.div(Math.pow(10, token.decimal))
+    var balanceToken = balanceBig.div(Math.pow(10, token.decimals))
 
     var balanceEth = balanceToken.times(rateBig)
     return balanceEth.toString()
@@ -495,7 +495,7 @@ export function sliceErrorMsg(err){
 
 export function calculatePercent(numerator, denumerator){
   if (denumerator === 0) return 0
-  var percent =  ((numerator / denumerator) - 1) * 100
+  var percent =  ((numerator - denumerator) / numerator) * 100
   var roundPercent = Math.round(percent * 10) / 10
   return roundPercent
 }

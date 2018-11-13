@@ -1,3 +1,5 @@
+import * as constants from '../services/constants';
+
 export function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -59,3 +61,29 @@ export var isMobile = {
         return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
     }
 };
+
+export function getAssetUrl(uri = "") {
+  return constants.ASSET_URL + uri.toLowerCase();
+}
+
+
+export function isUserEurope(){
+    var isEurope = getCookie("is_europe")
+    return isEurope === true || isEurope === 'true'
+}
+
+export function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');    
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}

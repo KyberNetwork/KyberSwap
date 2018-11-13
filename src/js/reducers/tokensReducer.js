@@ -5,37 +5,42 @@ import constants from "../services/constants"
 
 import * as converter from "../utils/converter"
 
-const initState = function () {
-  let tokens = {}
+function initState (tokens = BLOCKCHAIN_INFO.tokens) {
+  let wrapperTokens = {}
 
-  var timeNow = new Date()
-  var timeStampNow = timeNow.getTime()
+  //var timeNow = new Date()
+  var timeStampNew = Math.floor(new Date().getTime() /1000) - 604800
 
-  Object.keys(BLOCKCHAIN_INFO.tokens).forEach((key) => {
-    tokens[key] = {...BLOCKCHAIN_INFO.tokens[key]}
+  Object.keys(tokens).forEach((key) => {
+    wrapperTokens[key] = {...tokens[key]}
 
-    if(BLOCKCHAIN_INFO.tokens[key].expireDate){            
-        var timeExpire = new Date(BLOCKCHAIN_INFO.tokens[key].expireDate)
-        var expireTimeStamp = timeExpire.getTime()
-        if (timeStampNow > expireTimeStamp) {
-            tokens[key].isNew = false
-        }
+    if(tokens[key].listing_time && tokens[key].listing_time > timeStampNew){            
+      wrapperTokens[key].isNew = true
     }
+    // if(tokens[key].expireDate){            
+    //     var timeExpire = new Date(BLOCKCHAIN_INFO.tokens[key].expireDate)
+    //     var expireTimeStamp = timeExpire.getTime()
+    //     if (timeStampNow > expireTimeStamp) {
+    //         tokens[key].isNew = false
+    //     }
+    // }
 
-    tokens[key].rate = 0
-    tokens[key].minRate = 0
-    tokens[key].rateEth = 0
-    tokens[key].minRateEth = 0
-    tokens[key].balance = 0
-    tokens[key].rateUSD = 0
+    wrapperTokens[key].rate = 0
+    wrapperTokens[key].minRate = 0
+    wrapperTokens[key].rateEth = 0
+    wrapperTokens[key].minRateEth = 0
+    wrapperTokens[key].balance = 0
+    wrapperTokens[key].rateUSD = 0
   })
-  return {
-    tokens: tokens,
-    count: { storageKey: constants.STORAGE_KEY }
-  }
-}()
 
-const tokens = (state = initState, action) => {
+  return wrapperTokens
+  // return {
+  //   tokens: tokens,
+  //   count: { storageKey: constants.STORAGE_KEY }
+  // }
+}
+
+const tokens = (state = {tokens: initState()}, action) => {
   switch (action.type) {
     // case REHYDRATE: {
     //   if (action.key === "tokens") {
@@ -75,6 +80,11 @@ const tokens = (state = initState, action) => {
     //   }
     //   return state
     // }
+    case 'TOKEN.INIT_TOKEN':{
+      const {tokens} = action.payload
+      var wrappeTokens = initState(tokens)
+      return Object.assign({}, state, { tokens: wrappeTokens })
+    }
     case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
       var tokens = { ...state.tokens }
       var {rates, rateUSD} = action.payload
@@ -85,6 +95,7 @@ const tokens = (state = initState, action) => {
       //map token
       var mapToken = {}
       rates.map(rate => {
+        if (!tokens[rate.source] || !tokens[rate.dest]) return
         if (rate.source !== "ETH") {
           if (!mapToken[rate.source]) {
             mapToken[rate.source] = {}
@@ -106,9 +117,15 @@ const tokens = (state = initState, action) => {
       })
       // console.log("mapToken")
       // console.log(mapToken)
+      // console.log(tokens)
       //push data
       var newTokens = {}
       Object.keys(tokens).map(key => {
+
+        if (!mapToken[key]){
+          console.log(key)
+          return
+        }
         var token = tokens[key]
 
         if (key === "ETH"){

@@ -252,3 +252,10 @@ export function setIsAndroid(isAndroid) {
 //     type: "GLOBAL.UPDATE_TOKEN_STATUS"
 //   }
 // }
+
+export function setOnMobile(isIOS, isAndroid){
+  return {
+    type: "GLOBAL.SET_ON_MOBILE",
+    payload: {isIOS, isAndroid}
+  }
+}

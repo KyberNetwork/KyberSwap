@@ -3,7 +3,8 @@ import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
 import { clearSession, setGasPrice, setBalanceToken, closeChangeWallet } from "../actions/globalActions"
 import { fetchExchangeEnable } from "../actions/exchangeActions"
-import { openInfoModal } from '../actions/utilActions'
+
+import * as utilActions from '../actions/utilActions'
 import * as common from "./common"
 import * as analytics from "../utils/analytics"
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
@@ -170,7 +171,7 @@ export function* importMetamask(action) {
         if (walletType !== null && walletType !== "metamask"){
           let title = translate("error.error_occurred") || "Error occurred"
           let content = translate("error.network_not_match", { currentName: currentName, expectedName: expectedName }) || "Network is not match"
-          yield put(openInfoModal(title, content))
+          yield put(utilActions.openInfoModal(title, content))
         }
         return
       } else {
@@ -178,13 +179,13 @@ export function* importMetamask(action) {
         if (walletType !== null && walletType !== "metamask"){
           let title = translate("error.error_occurred") || "Error occurred"
           let content = translate("error.network_not_match_unknow", { expectedName: expectedName }) || "Network is not match"
-          yield put(openInfoModal(title, content))
+          yield put(utilActions.openInfoModal(title, content))
         }
         return
       }
     }
     //get coinbase
-    const address = yield call([web3Service, web3Service.getCoinbase])
+    const address = yield call([web3Service, web3Service.getCoinbase], true)
     yield call([web3Service, web3Service.setDefaultAddress, address])
 
     const metamask = { web3Service, address, networkId }
@@ -203,7 +204,7 @@ export function* importMetamask(action) {
     if (walletType !== null && walletType !== "metamask"){
       let title = translate("error.error_occurred") || "Error occurred"
       let content = translate("error.cannot_connect_metamask") || "Cannot get metamask account. You probably did not login in Metamask"
-      yield put(openInfoModal(title, content))
+      yield put(utilActions.openInfoModal(title, content))
     }
   }
 }
