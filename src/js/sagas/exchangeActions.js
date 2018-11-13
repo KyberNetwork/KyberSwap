@@ -1027,12 +1027,14 @@ function* getMaxGasExchange(){
 
 function* getMaxGasApprove(){
   var state = store.getState()
+  var tokens = state.tokens.tokens
   const exchange = state.exchange
-  if (exchange.sourceTokenSymbol !== 'DGX' && exchange.destTokenSymbol !== 'DGX') {
-    return exchange.max_gas_approve
+  var sourceSymbol = exchange.sourceTokenSymbol
+  if (tokens[sourceSymbol] && tokens[sourceSymbol].gasApprove){
+    return tokens[sourceSymbol].gasApprove
   }else{
-    return 120000
-  }
+    return exchange.max_gas_approve
+  }  
 }
 
 function* getGasConfirm() {
