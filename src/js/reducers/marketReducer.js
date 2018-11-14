@@ -84,7 +84,6 @@ const initState = function () {
       market_cap: 0,
       circulating_supply: 0,
       total_supply: 0,
-      last_7d: 0,
       change: -9999,
       volume: 0
     }
@@ -142,12 +141,11 @@ const initState = function () {
           active: "B"
         },
         shows: {
-          listItem: {
-            "last_7d": {title: "Last 7d", type: "chart"},
-            
+          listItem: {            
             "volume": {title: "Volume (24h)"},
             "market_cap": {title: "Market cap" },
-            "change": {title: "24HR Change"}
+            "change": {title: "24HR Change"},
+            "last_7d": {title: "Last 7d", type: "chart"}
           },
           active: ["change", "last_7d"]
         }

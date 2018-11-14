@@ -76,18 +76,20 @@ export default class MarketTable extends React.Component {
   }
 
   drawChart = (props) => {
-    var lineColor = ""
-    var backgroundColor = ""
-    if (props["original"]["change"] < 0) {
-      lineColor = "#F0506E"
-      backgroundColor = "#FEF4F6"
-    } else if (props["original"]["change"] === 0) {
-      lineColor = "#767677"
-      backgroundColor = "#eee"
-    } else {
-      lineColor = "#31CB9E"
-      backgroundColor = "#EDFBF6"
-    }
+    // var lineColor = ""
+    // var backgroundColor = ""
+    // if (props["original"]["change"] < 0) {
+    //   lineColor = "#F0506E"
+    //   backgroundColor = "#FEF4F6"
+    // } else if (props["original"]["change"] === 0) {
+    //   lineColor = "#767677"
+    //   backgroundColor = "#eee"
+    // } else {
+    //   lineColor = "#31CB9E"
+    //   backgroundColor = "#EDFBF6"
+    // }
+    var lineColor = "#31CB9E"
+    var backgroundColor = "#EDFBF6"
     var point = []
     var labels = []
     var input = props.value
@@ -265,11 +267,11 @@ export default class MarketTable extends React.Component {
     return (
       <div>
         <div className="for-desktop-only rt-th-first-header">
-          <div className='rt-th-header-title' onClick = {this.handleSortHeader}>
+          {/* <div className='rt-th-header-title' onClick = {this.handleSortHeader}>
             {this.props.translate("market.eth_market") || "Ethereum market"}
-          </div>
+          </div> */}
           <div className="rt-th-control">
-            {this.props.searchWordLayout}
+            {/* {this.props.searchWordLayout} */}
             {this.props.currencyLayout}
           </div>
         </div>
@@ -365,7 +367,7 @@ export default class MarketTable extends React.Component {
       Header: this.getSortHeaderMarket("Market", "market"),
       accessor: 'market', // String-based value accessors!
       Cell: props => this.addIcon(props.value),
-      minWidth: 425
+      minWidth: 150
       //sortable: false,
       // getHeaderProps: () => {
       //   return {

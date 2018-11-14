@@ -18,11 +18,12 @@ export default class SearchWord extends React.Component {
         this.state={open:false}
     }
 
-    // changeSearch = (e) => {
-    //     var value = e.target.value
-    //     this.props.dispatch(marketActions.changeSearchWord(value))
-    //     this.props.dispatch(marketActions.resetListToken(value))
-    // }
+    changeSearch = (e) => {
+        var value = e.target.value
+        this.props.dispatch(marketActions.changeSearchWord(value))
+        this.props.dispatch(marketActions.resetListToken(value))
+    }
+
     showSelector = () =>{
         // this.setState({open:true})
         if (!this.props.showSearchInput) {
@@ -38,9 +39,9 @@ export default class SearchWord extends React.Component {
     render() {
         return (
             <div className="search-symbol">
-                <div className="search-icon" onClick={(e) => this.showSelector()}>
+                {/* <div className="search-icon" onClick={(e) => this.showSelector()}>
                     <img className="search-img" src={require("../../../assets/img/search_icon.svg")} />
-                </div>
+                </div> */}
                 {/* <div className="header-label">{this.props.translate("market.search") || "Search"}</div> */}
                 {/* <Dropdown onShow={(e) => this.showSelector()} onHide={(e) => this.hideSelector()} active={this.state.open}>
                     <DropdownTrigger className="notifications-toggle">
@@ -54,9 +55,9 @@ export default class SearchWord extends React.Component {
                         </div>
                     </DropdownContent>
                 </Dropdown> */}
-
-                
-                
+                <div>
+                    <input type="text" className="search-input" placeholder={this.props.translate("market.try_searching_for_token") || "Try Searching for Token"} value={this.props.searchWord} onChange={(e) => this.changeSearch(e)} onFocus={(e) => analytics.trackSearchETHMarket()}/>
+                </div>
             </div>
         )
     }

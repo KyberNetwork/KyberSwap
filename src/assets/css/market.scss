@@ -1,5 +1,8 @@
+.market-wrapper-container {
+  background-color: #f5f5f5;
+}
 .market {
-  margin-top: 35px;
+  padding-top: 35px;
   .for-mobile-only{
     // @include screen-max-width(large){
     //   display: none;
@@ -45,6 +48,20 @@
       
     }
   }
+
+  &.container {
+    input.search-input {
+      background-image: url(../img/search_icon.svg);
+      background-size: auto 50%;
+      text-indent: 40px;
+      border: none;
+      background-color: white;
+      padding: 5px 10px;
+      background-position: 1.2rem;
+      max-width: 700px;
+      margin: auto;
+    }   
+  }
   .market-wrapper{
     position: relative;
   }
@@ -52,7 +69,7 @@
   &__title {
     text-align: center;
     font-size: 32px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     font-weight: 500;
   }
 
@@ -122,20 +139,25 @@
         }
         a{
           display: block;
-          padding: 10px 20px;
-          background-color: #EBEBEB;
-          color: #222222;
+          padding: 15px 25px;
+          // background-color: #EBEBEB;
+          border-bottom: solid 1px #f5f5f5;
+          color: #999999;
           @include screen-max-width(large){
             width: 50%;
             text-align: center;
           }
 
-          &:not(:first-child){
-            margin-left: 10px;
+          // &:not(:first-child){
+          //   margin-left: 10px;
+          // }
+          &:hover, &.active {
+            // background-color: #eee;
+            // color: inherit;
+            color: #666666;
           }
-          &:hover{
-            background-color: #eee;
-            color: inherit;
+          &.active {
+            border-bottom: solid 1px #666666;
           }
         }
       //}
@@ -171,7 +193,7 @@
     &-right {
       @include screen-min-width(large){
         position: absolute;
-        top: 30px;
+        top: 50px;
         right: 0px;
       }
       .token-selector{
@@ -207,7 +229,8 @@
           padding: 0;
           width: 35px;
           height: 35px;
-          border: 1px solid #EAEAEA;
+          // border: 1px solid #EAEAEA;
+          border: none;
           border-radius: 2px;
           background-color: #F5F5F5;
           justify-content: center;
@@ -376,10 +399,13 @@
           .rt-resizable-header-content{
             width: 100%;
           }
+          .rt-td, .rt-th {
+            padding: 0;
+          }
           &.-header {
             box-shadow: none;
-            border-bottom: 2px solid #31CB9E;
-            padding: 10px 0;
+            border-bottom: 1px solid #cccccc;
+            padding: 30px 0 0 0;
             margin: 0 0 15px;
             .rt-th-img {
               display: flex;
@@ -425,14 +451,20 @@
               margin-top: 25px;
             }
           }
+          &:last-child {
+            .rt-tr {
+              border-bottom: none;
+            }
+          }
           .rt-tr {
-            margin: 10px 0px;
-            height: 75px;
-            background-color: $white;
-            border: 1px solid #F4F5F7;
-            box-shadow: 0 2px 5px #eee;
+            // margin-top: 10px;
+            height: 80px;
+            // background-color: $white;
+            border-bottom: 0.5px solid #cccccc;
+            // box-shadow: 0 2px 5px #eee;
             &:hover {
-              box-shadow: 0 3px 18px #bbb;
+              box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+              background-color: white;
               cursor: pointer;
             }
             div.rt-td {
@@ -459,13 +491,13 @@
                   background-color: #FEF4F6;
                   color: #F1637D;
                   font-weight: bold;
-                  border-radius: 5px;
+                  border-radius: 20px;
                 }
                 &.positive {
-                  background-color: #0EABA3;
+                  background-color: #0eaba3;
                   color: white;
                   font-weight: bold;
-                  border-radius: 5px;
+                  border-radius: 20px;
                 }
                 &.zero-value {
                   background: #eee;
