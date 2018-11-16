@@ -30,7 +30,8 @@ const initState = {
   onMobile: {
     isIOS: false,
     isAndroid: false
-  }
+  },
+  isOnMobile: false
 }
 
 const global = (state = initState, action) => {
@@ -164,6 +165,9 @@ const global = (state = initState, action) => {
         isAndroid: isAndroid
       }
       return Object.assign({}, state, { onMobile: onMobile })
+    }
+    case "GLOBAL.SET_ON_MOBILE_ONLY": {
+      return Object.assign({}, state, { isOnMobile: true })
     }
   }
   return state

@@ -40,7 +40,8 @@ import { getAssetUrl } from "../../utils/common";
     manageColumn: props.manageColumn,
     searchWordLayout: props.searchWordLayout,
     currencyLayout: props.currencyLayout,
-    isRussia: isRussia
+    isRussia: isRussia,
+    isOnMobile: store.global.isOnMobile
   }
 })
 
@@ -407,6 +408,9 @@ export default class MarketTable extends React.Component {
         }
       }
     }]
+    if (this.props.isOnMobile) {
+      return columns.slice(0,2)
+    }
     Object.keys(this.props.listShowColumn).map((key, i) => {
       var item = this.props.listShowColumn[key]
       var index = this.props.showActive.indexOf(key)
@@ -559,13 +563,18 @@ export default class MarketTable extends React.Component {
         getTrProps={(state, rowInfo) => {
           return {
             onClick: (e) => {
-              var symbol = rowInfo.original.info.symbol
-              this.props.dispatch(actions.showTradingViewChart(symbol))
-              analytics.tokenForCharting(symbol)
+              // var symbol = rowInfo.original.info.symbol
+              // this.props.dispatch(actions.showTradingViewChart(symbol))
+              // analytics.tokenForCharting(symbol)
+
             }
           }
         }
         }
+        // TrComponent={(props) => {
+        //   console.log("children: ", props)
+        //   return props.children
+        // }}
         getPaginationProps={() => {
           return {
             previousText: (<img src={require("../../../assets/img/market/arrow-left.png")} />),

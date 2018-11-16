@@ -40,6 +40,9 @@
                 align-items: center;
                 .search-word-mobile{
                   margin-right: 10px;
+                  input {
+                    display: none;
+                  }
                 }
             }
           }
@@ -50,6 +53,11 @@
   }
 
   &.container {
+    .search-area {
+      .search-icon {
+        display: none;
+      }
+    }
     input.search-input {
       background-image: url(../img/search_icon.svg);
       background-size: auto 50%;
@@ -60,7 +68,12 @@
       background-position: 1.2rem;
       max-width: 700px;
       margin: auto;
-    }   
+    }
+    @include screen-max-width(large) {
+      .search-area {
+        display: none;
+      }
+    }
   }
   .market-wrapper{
     position: relative;
@@ -331,7 +344,7 @@
       position: absolute;
       // margin-left: 253px;
       top: 3px;
-      z-index: 1;
+      z-index: 15;
       left: 0px;
       @include screen-max-width(large) {
         left: unset;
@@ -437,6 +450,12 @@
                     margin-left: 10px;
                   }
                 }
+              }
+            }
+            @include screen-max-width(large) {
+              padding-top: 15px;
+              .rt-tr {
+                padding: 25px 0;
               }
             }
           }

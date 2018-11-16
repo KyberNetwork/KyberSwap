@@ -39,9 +39,9 @@ export default class SearchWord extends React.Component {
     render() {
         return (
             <div className="search-symbol">
-                {/* <div className="search-icon" onClick={(e) => this.showSelector()}>
+                <div className="search-icon" onClick={(e) => this.showSelector()}>
                     <img className="search-img" src={require("../../../assets/img/search_icon.svg")} />
-                </div> */}
+                </div>
                 {/* <div className="header-label">{this.props.translate("market.search") || "Search"}</div> */}
                 {/* <Dropdown onShow={(e) => this.showSelector()} onHide={(e) => this.hideSelector()} active={this.state.open}>
                     <DropdownTrigger className="notifications-toggle">
