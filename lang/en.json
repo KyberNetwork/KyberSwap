@@ -19,8 +19,8 @@
     "estimated_value": "Estimated value",
     "total": "Total",
     "hide_zero_balance": "Hide zero balance",
-    "symbol": "SYMBOL",
-    "price": "PRICE",
+    "symbol": "Symbol",
+    "price": "Price",
     "your_wallet_address": "Your Wallet Address",
     "search": "Search by Name"
   },

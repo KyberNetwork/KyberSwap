@@ -129,7 +129,7 @@ const AccountBalanceLayout = (props) => {
         <SlideDown active={props.isBalanceActive}>
           <SlideDownTrigger onToggleContent={() => props.toggleBalanceContent()}>
             <div className="balance-header">
-              <div className="title">
+              <div className="slide-down__trigger-container">
                 <div>
                   <span className="account-balance__address-text">Wallet </span>
                   <span className="account-balance__address-link">{props.account.address}</span>
@@ -138,11 +138,6 @@ const AccountBalanceLayout = (props) => {
                   <div className="slide-arrow"></div>
                 </div>
               </div>
-              {props.showBalance && (
-                <div className="estimate-value">
-                  {props.translate("address.total") || "Total"} {getBalanceUsd()} USD
-                </div>
-              )}
             </div>
           </SlideDownTrigger>
 
@@ -161,19 +156,19 @@ const AccountBalanceLayout = (props) => {
                   </div>
 
                   <Dropdown
-                    className={"account-balance__content-sort"}
+                    className={"account-balance__sort"}
                     onShow = {(e) => props.showSort(e)}
                     onHide = {(e) => props.hideSort(e)}
                     active={props.sortActive}
                   >
                     <DropdownTrigger>
-                      <div className={"account-balance__content-sort-dropdown"}>Price</div>
-                      <div className={"account-balance__content-sort-arrow"}></div>
+                      <div className={"account-balance__sort-dropdown"}>{props.sortType}</div>
+                      <div className={"account-balance__sort-arrow"}></div>
                     </DropdownTrigger>
                     <DropdownContent>
-                      <div>
-                        <div onClick={(e)=>props.sortSymbol()}>{props.translate("address.symbol") || "SYMBOL"}</div>
-                        <div onClick={(e)=>props.sortPrice()}>{props.translate("address.price") || "PRICE"}</div>
+                      <div className={"account-balance__sort-category"}>
+                        <div className={"account-balance__sort-item"} onClick={(e)=>props.sortSymbol()}>{props.translate("address.symbol") || "Symbol"}</div>
+                        <div className={"account-balance__sort-item"} onClick={(e)=>props.sortPrice()}>{props.translate("address.price") || "Price"}</div>
                       </div>
                     </DropdownContent>
                   </Dropdown>

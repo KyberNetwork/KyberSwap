@@ -335,7 +335,17 @@ export default class ExchangeBody extends React.Component {
     )
 
     var minRate = <MinRate />
-    var advanceConfig = <AdvanceConfigLayout minRate={minRate} gasConfig={gasConfig} translate={this.props.translate} />
+
+    var advanceConfig = (
+      <AdvanceConfigLayout
+        minRate={minRate}
+        gasConfig={gasConfig}
+        translate={this.props.translate}
+        isBalanceActive = {this.props.exchange.isBalanceActive}
+        toggleBalanceContent={this.toggleBalanceContent}
+      />
+    );
+
     return advanceConfig
   }
 

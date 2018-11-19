@@ -7,9 +7,8 @@
     transition: all .3s;
     margin-top: 10px;
     margin-bottom: 10px;
-    display: inline-block;
 
-    .balance-content__pair, .title {
+    &-container {
       display: flex;
       align-items: center;
 
@@ -29,6 +28,20 @@
         transform: rotate(-180deg);
         transition: all 0.3s;
       }
+
+      &--align-right {
+        justify-content: flex-end;
+      }
+    }
+
+    &-bold {
+      font-size: 14px;
+      color: #222222;
+    }
+
+    &-light {
+      font-size: 13px;
+      color: #666666;
     }
   }
 
@@ -55,6 +68,7 @@
       opacity: 1;
       transform: translateY(0);
       max-height: 9999px;
+      transition: none;
     }
   }
 }
