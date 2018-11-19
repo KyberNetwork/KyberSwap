@@ -10,40 +10,6 @@ import { getAssetUrl } from "../../utils/common";
 
 @connect((store, props) => {
   var data = props.data
-  // var listTokens = props.listTokens
-  // var currency = props.currency
-  // var tokens = props.tokens
-  // var page = props.page
-  // var firstPageSize = props.firstPageSize
-  // var sortType = props.sortType
-
-  // var numScroll = store.market.configs.numScroll
-
-  // var isRussia = false
-  // isRussia = store.locale.languages[0] && store.locale.languages[0].active && store.locale.languages[0].code === "ru"
-
-  // return {
-  //   translate: getTranslate(store.locale),
-  //   currency,
-  //   sort: store.market.configs.sort.focus,
-  //   displayColumn: store.market.configs.column.display.active,
-  //   showActive: store.market.configs.column.shows.active,
-  //   listShowColumn: store.market.configs.column.shows.listItem,
-  //   data: data,
-  //   tokens: tokens,
-  //   isLoading: store.market.configs.isLoading,
-  //   listTokens: listTokens,
-  //   numScroll: numScroll,
-  //   page: page,
-  //   firstPageSize: firstPageSize,
-  //   sortType: sortType,
-  //   manageColumn: props.manageColumn,
-  //   searchWordLayout: props.searchWordLayout,
-  //   currencyLayout: props.currencyLayout,
-  //   isRussia: isRussia,
-  //   isOnMobile: store.global.isOnMobile
-  // }
-  console.log("data: ", data[0])
   return {
     translate: getTranslate(store.locale),
     data: data,

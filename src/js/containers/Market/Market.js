@@ -70,7 +70,7 @@ import * as analytics from "../../utils/analytics"
 
   var data = []
   Object.keys(tokens).forEach((key) => {
-    if (key === "ETH") return
+    if (key === "ETH" || key === "WETH") return
     var item = tokens[key]
     item.market = key + ' / ' + currency
     item = { ...item, ...item[currency] }
