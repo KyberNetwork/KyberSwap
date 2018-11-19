@@ -7,6 +7,7 @@ import * as converters from "../../utils/converter"
 import {Line} from 'react-chartjs-2';
 import * as analytics from "../../utils/analytics";
 import { getAssetUrl } from "../../utils/common";
+import { MarketMobile } from "../Market"
 
 @connect((store, props) => {
   var data = props.data
@@ -40,7 +41,8 @@ import { getAssetUrl } from "../../utils/common";
     manageColumn: props.manageColumn,
     searchWordLayout: props.searchWordLayout,
     currencyLayout: props.currencyLayout,
-    isRussia: isRussia
+    isRussia: isRussia,
+    isOnMobile: store.global.isOnMobile
   }
 })
 
@@ -76,21 +78,23 @@ export default class MarketTable extends React.Component {
   }
 
   drawChart = (props) => {
-    var lineColor = ""
-    var backgroundColor = ""
-    if (props["original"]["change"] < 0) {
-      lineColor = "#F0506E"
-      backgroundColor = "#FEF4F6"
-    } else if (props["original"]["change"] === 0) {
-      lineColor = "#767677"
-      backgroundColor = "#eee"
-    } else {
-      lineColor = "#31CB9E"
-      backgroundColor = "#EDFBF6"
-    }
+    // var lineColor = ""
+    // var backgroundColor = ""
+    // if (props["original"]["change"] < 0) {
+    //   lineColor = "#F0506E"
+    //   backgroundColor = "#FEF4F6"
+    // } else if (props["original"]["change"] === 0) {
+    //   lineColor = "#767677"
+    //   backgroundColor = "#eee"
+    // } else {
+    //   lineColor = "#31CB9E"
+    //   backgroundColor = "#EDFBF6"
+    // }
+    var lineColor = "#31CB9E"
+    var backgroundColor = "#EDFBF6"
     var point = []
     var labels = []
-    var input = props.value
+    var input = props.value ? props.value : props.last_7d
     var dataLength = 28
 
     if (Array.isArray(input)) {
@@ -265,11 +269,11 @@ export default class MarketTable extends React.Component {
     return (
       <div>
         <div className="for-desktop-only rt-th-first-header">
-          <div className='rt-th-header-title' onClick = {this.handleSortHeader}>
+          {/* <div className='rt-th-header-title' onClick = {this.handleSortHeader}>
             {this.props.translate("market.eth_market") || "Ethereum market"}
-          </div>
+          </div> */}
           <div className="rt-th-control">
-            {this.props.searchWordLayout}
+            {/* {this.props.searchWordLayout} */}
             {this.props.currencyLayout}
           </div>
         </div>
@@ -360,12 +364,17 @@ export default class MarketTable extends React.Component {
     return newSortType
   }
 
+  makeSort = (key) => {
+    this.getSortArray(key, this.getSortType(key))
+    this.updateSortState(key, this.getSortType(key))
+  }
+
   getColumn = () => {
     var columns = [{
       Header: this.getSortHeaderMarket("Market", "market"),
       accessor: 'market', // String-based value accessors!
       Cell: props => this.addIcon(props.value),
-      minWidth: 425
+      minWidth: 150
       //sortable: false,
       // getHeaderProps: () => {
       //   return {
@@ -405,6 +414,7 @@ export default class MarketTable extends React.Component {
         }
       }
     }]
+
     Object.keys(this.props.listShowColumn).map((key, i) => {
       var item = this.props.listShowColumn[key]
       var index = this.props.showActive.indexOf(key)
@@ -543,41 +553,51 @@ export default class MarketTable extends React.Component {
             </div>
           </div>
         
-          <div className="for-mobile-only">
+          {!this.props.isOnMobile && <div className="for-mobile-only">
             {this.props.currencyLayout}
-          </div>
+          </div>}
 
         </div>
-<ReactTable
-        data={this.props.data}
-        columns={columns}
-        showPagination = {false}
-        pageSize = {this.props.data.length}
-        minRows = {1}
-        getTrProps={(state, rowInfo) => {
-          return {
-            onClick: (e) => {
-              var symbol = rowInfo.original.info.symbol
-              this.props.dispatch(actions.showTradingViewChart(symbol))
-              analytics.tokenForCharting(symbol)
+        {this.props.isOnMobile ? 
+          <MarketMobile 
+            data={this.props.data}
+            sortType={this.props.sortType}
+            makeSort={this.makeSort}
+            handle24hChange={this.addClassChange}
+            drawChart={this.drawChart}
+          /> :
+          <ReactTable
+            data={this.props.data}
+            columns={columns}
+            showPagination = {false}
+            pageSize = {this.props.data.length}
+            minRows = {1}
+            getTrProps={(state, rowInfo) => {
+              return {
+                onClick: (e) => {
+                  var symbol = rowInfo.original.info.symbol
+                  this.props.dispatch(actions.showTradingViewChart(symbol))
+                  analytics.tokenForCharting(symbol)
+
+                }
+              }
             }
-          }
+            }
+            getPaginationProps={() => {
+              return {
+                previousText: (<img src={require("../../../assets/img/market/arrow-left.png")} />),
+                nextText:  (<img src={require("../../../assets/img/market/arrow-right.svg")} />)
+              }
+            }
+            }
+            getNoDataProps={(state, rowInfo) => {
+              if(this.props.data.length==0) return { style: { border: 'none' ,top:'75%',padding:'0px'} };
+              return {};
+              }
+            }
+            sortable={false}
+          />
         }
-        }
-        getPaginationProps={() => {
-          return {
-            previousText: (<img src={require("../../../assets/img/market/arrow-left.png")} />),
-            nextText:  (<img src={require("../../../assets/img/market/arrow-right.svg")} />)
-          }
-        }
-        }
-        getNoDataProps={(state, rowInfo) => {
-          if(this.props.data.length==0) return { style: { border: 'none' ,top:'75%',padding:'0px'} };
-          return {};
-          }
-        }
-        sortable={false}
-      />
       </div>
       
     )

@@ -259,3 +259,9 @@ export function setOnMobile(isIOS, isAndroid){
     payload: {isIOS, isAndroid}
   }
 }
+
+export function setOnMobileOnly(){
+  return {
+    type: "GLOBAL.SET_ON_MOBILE_ONLY"
+  }
+}
