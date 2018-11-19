@@ -1,5 +1,5 @@
 .transaction-list-item{
-    border-bottom: 1px solid #eee; 
+    border-bottom: 1px solid #eee;
     cursor: pointer;
     &:hover{
       background-color: #eee;
@@ -9,16 +9,16 @@
 .example-enter {
    opacity: 0.01;
   }
-  
+
   .example-enter.example-enter-active {
     opacity: 1;
     transition: opacity 1000ms;
   }
-  
+
   .example-leave {
     display: none;
   }
-  
+
   .example-leave.example-leave-active {
     display: none;
   }

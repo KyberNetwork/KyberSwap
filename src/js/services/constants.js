@@ -44,31 +44,22 @@ const INIT_EXCHANGE_FORM_STATE = {
   destAmount: "",
   destToken: BLOCKCHAIN_INFO.tokens[secondKey].address,
   destTokenSymbol: secondKey,
-
   destAddress: "",
   inputFocus: "source",
-
   maxCap: "infinity",
   minConversionRate: 0,
   minDestAmount: 0,
   maxDestAmount: 0,
- // rangeSetRate: 0.5, // 5 eth
   prevAmount:0,
-
   offeredRate: 0,
   isEditRate : false,
   slippageRate: 0,
   blockNo: 0,
-
   throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 330000,
   max_gas: 330000,
-
   gas_approve: 0,
   max_gas_approve: 100000,
-  
-  //max_gas_total: 430000,
-
   isFetchingGas: false,
   gasPrice: 20,
   selectedGas: 'f',
@@ -83,12 +74,10 @@ const INIT_EXCHANGE_FORM_STATE = {
   },
   maxGasPrice: 50,
   isEditGasPrice: false,
-
   step: 2,
   broadcasting: true,
   bcError: "",
   txHash: "",
-  //txRaw: "",
   tempTx: {},
   txApprove: false,
   confirmApprove: false,
@@ -101,21 +90,12 @@ const INIT_EXCHANGE_FORM_STATE = {
     sourceName: "Ether",
     sourceSymbol: "ETH",
     sourceDecimal: 18,
-    // prevSource : 0,
-    // nextSource: 0,
-
     destName: "Kyber",
     destSymbol: "KNC",
     destDecimal: 18,
-    // prevDest: 0,
-    // nextDest: 0,
-
     sourceAmount: 0,
     destAmount: 0
   },
-
-  // error_rate_amount: false,
-  // error_rate_system: false,
   errors: {
     selectSameToken: '',
     selectTokenToken: '',
@@ -139,9 +119,7 @@ const INIT_EXCHANGE_FORM_STATE = {
     isActive: true,
     timeRange: 'w'
   },
-  isBalanceActive: false,
-  isOpenRight: false,
-  isOpenLeft: false
+  isBalanceActive: false
 }
 
 const INIT_TRANSFER_FORM_STATE = {

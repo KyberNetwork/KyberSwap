@@ -7,18 +7,11 @@ import {
   ImportByDeviceWithLedger, ImportByDeviceWithTrezor, ImportByPromoCode
 } from "../ImportAccount"
 import { setIsAndroid, setIsIos } from "../../actions/globalActions"
-
 import { visitExchange, setOnMobile } from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux'
 import { importAccountMetamask } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
-//import Web3Service from "../../services/web3"
-
 import * as web3Package from "../../services/web3"
-
-
-//import {isMobile} from "../../utils/common"
-
 import {isMobile} from '../../utils/common'
 
 @connect((store, props) => {
@@ -44,7 +37,6 @@ import {isMobile} from '../../utils/common'
 })
 
 export default class ImportAccount extends React.Component {
-
   constructor() {
     super()
     this.state = {
@@ -62,12 +54,9 @@ export default class ImportAccount extends React.Component {
     var web3Service = web3Package.newWeb3Instance()
     if (this.props.termOfServiceAccepted){
       if (web3Service !== false) {
-        //var web3Service = new Web3Service(web3)
         var walletType = web3Service.getWalletType()
         
-     //   alert(walletType)
         if ((walletType !== "metamask") && (walletType !== "modern_metamask")) {
-          // /alert(walletType)
           this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
           this.props.ethereum, this.props.tokens, this.props.screen, this.props.translate, walletType))
         }
@@ -98,28 +87,19 @@ export default class ImportAccount extends React.Component {
   }
 
   render() {
-    var content;
-
-    if (!this.props.termOfServiceAccepted) {
-      content = <LandingPage translate={this.props.translate} tradeType={this.props.tradeType}/>
-    } else {
-      content = (
-        <ImportAccountView
-          firstKey={<ImportByMetamask />}
-          secondKey={<ImportKeystore />}
-          thirdKey={<ImportByDeviceWithTrezor />}
-          fourthKey={<ImportByDeviceWithLedger />}
-          fifthKey={<ImportByPrivateKey />}
-          sixthKey = {<ImportByPromoCode />}
-          errorModal={<ErrorModal />}
-          translate={this.props.translate}
-          onMobile={this.props.onMobile}
-        />
-      )
-    }
-
+    {/*<LandingPage translate={this.props.translate} tradeType={this.props.tradeType}/>*/}
     return (
-      <div id="landing_page">{content}</div>
+      <ImportAccountView
+        metamaskImport={<ImportByMetamask/>}
+        keystoreImport={<ImportKeystore/>}
+        trezorImport={<ImportByDeviceWithTrezor/>}
+        ledgerImport={<ImportByDeviceWithLedger/>}
+        privateKeyImport={<ImportByPrivateKey/>}
+        promoCodeImport = {<ImportByPromoCode/>}
+        errorModal={<ErrorModal/>}
+        translate={this.props.translate}
+        onMobile={this.props.onMobile}
+      />
     )
   }
 }

@@ -34,19 +34,7 @@ export default class ImportByMetamask extends React.Component {
     if (web3Service === false) {
       this.props.dispatch(throwError(this.props.translate('error.metamask_not_install') || 'Cannot connect to metamask. Please make sure you have metamask installed'))
       return
-    }            
-    
-    //var web3Service = new Web3Service(web3)
-    
-    // let browser = bowser.name
-    // console.log(browser)
-		// if(browser != 'Chrome' && browser != 'Firefox' && browser !== 'Opera'){
-    //   if(!web3Service.isTrust()){
-    //     let erroMsg = this.props.translate("error.browser_not_support_metamask", {browser: browser}) || `Metamask is not supported on ${browser}, you can use Chrome or Firefox instead.`
-    //     this.props.dispatch(throwError(erroMsg))
-    //     return
-    //   }
-    // }
+    }
 
     this.dispatchAccMetamask(web3Service);
   }

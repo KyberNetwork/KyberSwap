@@ -27,12 +27,21 @@
         &.white{
             background-image: url(../img/arrow-white.svg);
         }
+        &.bold {
+            position: relative;
+            top: 1px;
+            background-image: url(../img/arrow-down-black.svg);
+
+            &.up {
+                top: -2px;
+            }
+        }
     }
     &.k-exchange{
-        background-image: url(../img/exchange.svg);
+        background: url(../img/exchange.svg) center no-repeat;
         background-size: 80% 80%;
-        background-position: center;
-
+        position: relative;
+        bottom: 2px;
     }
     &.k-link{
         background-image: url(../img/link-white.svg);

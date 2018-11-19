@@ -12,7 +12,6 @@ const PostExchangeBtn = (props) => {
             </a>
           </div>
         }
-        {props.rateToken}
       </div>
       {props.modalExchange}
       <PendingOverlay isEnable={props.isConfirming || props.isApproving}/>

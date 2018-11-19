@@ -1,9 +1,10 @@
 .select-token-panel{
-  margin-top: 5px;
   cursor: pointer;
-  input{
+
+  input {
     height: auto;
   }
+
   .list-item{
     height: 250px;
     overflow: auto;
@@ -82,8 +83,6 @@
     display: block;
     border: 1px solid hsla(0,0%,80%,.72);
     border-top: none;
-    // border-bottom-right-radius: 10px;
-    // border-bottom-left-radius: 10px;
     color: inherit;
     box-shadow: none;
   }
@@ -226,19 +225,7 @@
       width: 100%;
       margin-top: -1px;
     }
-    // input{
-    //   outline: 0;
-    //   border: 0;
-    //   &:focus{
-    //     outline: 0;
-    //     border: 0;
-    //   }
-    // }
-    // button{      
-    //   &.btn{
-    //     width: 100%;
-    //   }      
-    // } 
+
     .dropdown-menu{
       width: 100%;
       top: -17px !important;
@@ -252,9 +239,7 @@
       }
     }
   }
-  // .token-name{
-  //   color: #aaa;
-  // }
+
   input{
     outline: none;
     border: 1px solid #aaa;
@@ -272,23 +257,24 @@
   }
   .focus-item{
     padding: 12px 12px;
-    border: 1px solid #ccc;
-    // border-bottom: 1px solid transparent;
     border-radius: 3px;
-  //  color: white;
-    // box-shadow: 0 0 15px #ddd;
     align-items: center;
     font-size: 15px;
+
     &.d-flex{
       justify-content: space-between;
     }
     .d-flex{
       align-items: center;
+      margin-right: 15px;
     }
     .focus-name{
-      color: #545268;
       text-transform: uppercase;
       font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.4px;
+      color: #222222;
+      line-height: 1.2;
     }
     .focus-balance{
       color: #9997A5;
@@ -296,16 +282,10 @@
       .token-balance{
         margin-right: 5px;
       }
-      // .token-symbol{
-      //   margin-left: 5px;
-      // }
     }
     .icon{
       margin-right: 10px;
       max-width: 30px;
-     // border-radius: 20px;
-     // background-color: $white;
-   //   border: 2px solid $white;
       img{
         vertical-align: top;
         width: 28px;
@@ -313,14 +293,12 @@
       }
     }
   }
-  .select-item{
+  .select-item {
     position: absolute;
     transition: 0.2s;
     width: 100%;
     z-index: 2;
     background-color: #FCFCFC;
-    // box-shadow: 0 0 2px #aaa;
-  //  background-color: #243c48;
     border: 2px solid $white;
     border-top: none;
     border-bottom: none;
@@ -329,21 +307,8 @@
       margin-bottom: 10px;
     }
   }
-  // &.open{
-  //   background-color: #243c48;
-  //   .focus-item{
-  //     border-color: $white;
-  //     border-bottom: 1px solid #4c636f;
-  //   }
-  //   .select-item{
-  //     display: block;
-  //     border: 2px solid $white;
-  //     border-top: none;
-  //   }
-  // }
 
   .list-item{
-    // height: 200px;
     overflow-y: auto;
     .token-item{
       padding: 9px 20px;
@@ -359,12 +324,7 @@
       .item-balance-value{
         margin-right: 5px;
       }
-      // .item-symbol{
-      //   margin-left: 5px;
-      // }
       .item-icon{
-        // border-radius: 20px;
-        // background-color: $white;
         width: 35px;
         display: inline-block;
         margin-right: 10px;
@@ -374,9 +334,6 @@
         }
       }
       >div{
-        // >span{
-        //   color: white
-        // }
         span.token-name{
           color: #aaa;
         }

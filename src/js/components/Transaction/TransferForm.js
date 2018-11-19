@@ -14,16 +14,16 @@ const TransferForm = (props) => {
     if (check) props.input.amount.onChange(e)
   }
 
-  function getStatusClasses(className) {
-    let classes = '';
-
-    classes += (props.global.isIos || props.global.isAndroid) ? ' ' + className + '--mobile' : '';
-    classes += props.isAgreed ? ' ' + className + '--agreed' : '';
-    classes += props.account !== false ? ' ' + className + '--imported' : '';
-    classes += props.isChangingWallet ? ' ' + className + '--imported__change-wallet' : '';
-
-    return classes;
-  }
+  // function getStatusClasses(className) {
+  //   let classes = '';
+  //
+  //   classes += (props.global.isIos || props.global.isAndroid) ? ' ' + className + '--mobile' : '';
+  //   classes += props.isAgreed ? ' ' + className + '--agreed' : '';
+  //   classes += props.account !== false ? ' ' + className + '--imported' : '';
+  //   classes += props.isChangingWallet ? ' ' + className + '--imported__change-wallet' : '';
+  //
+  //   return classes;
+  // }
 
   var classSource = "amount-input"
   if (props.focus === "source") {
@@ -36,15 +36,6 @@ const TransferForm = (props) => {
     <div id="transfer-screen">
       <div className="grid-x">
         <div className={"cell medium-6 large-3 balance-wrapper-normal " + (props.isOpenLeft ? "balance-wrapper-opened" : "balance-wrapper-closed") + (anyErrors(props.errors) ? " error" : "")} id="balance-account-wrapper">
-          {/* <AccountBalance
-            chooseToken = {props.chooseToken}
-            sourceActive = {props.tokenSymbol}
-            destTokenSymbol='ETH'
-            isChartActive={props.isChartActive}
-            chartTimeRange={props.chartTimeRange}
-            onChangeChartRange={props.onChangeChartRange}
-            onToggleChartContent={props.onToggleChartContent}
-          /> */}
           {props.isOpenLeft && (
             <div className="close-indicator close-wallet" onClick={(e) => props.toggleLeftPart(false)}>
               <div>{props.translate("transaction.close") || "Close"}</div>
@@ -54,7 +45,7 @@ const TransferForm = (props) => {
 
           {props.balanceLayout}
         </div>
-        <div class={"cell medium-6 large-9 swap-wrapper swap-wrapper--transfer" + getStatusClasses("swap-wrapper")}>
+        <div class={"cell medium-6 large-9 swap-wrapper swap-wrapper--transfer"}>
           {!props.isOpenLeft &&
             (
               <div className="toogle-side toogle-wallet" onClick={(e) => {props.toggleLeftPart(true)}}>
@@ -64,11 +55,10 @@ const TransferForm = (props) => {
                 <div className="wings-dropdown"></div>
               </div>
             )
-            // return <div><button onClick={(e) => this.toggleLeftPart(true) }>Open left</button></div>
           }
           <div className="transfer-detail grid-x exchange-col">
             <div className="cell small-12 large-8 transfer-col transfer-col-1">
-              <div className={"swap-content swap-content--transfer" + getStatusClasses("swap-content")}>
+              <div className={"swap-content swap-content--transfer"}>
                 {props.networkError !== "" && (
                   <div className="network_error">
                     <span>
@@ -80,7 +70,6 @@ const TransferForm = (props) => {
                   </div>
                 )}
 
-                {/* <div className="title main-title">{props.translate("transaction.transfer") || "Transfer"}</div> */}
                 <div className="grid-x">
                   <div className="cell small-12">
                     <div className={props.errors.destAddress !== '' && !props.isChangingWallet ? "error receiveAddress" : "receiveAddress"}>
@@ -114,9 +103,6 @@ const TransferForm = (props) => {
                                 maxLength="50" autoComplete="off"
                               />
                             </div>
-                            {/* <div>
-                              <span>{props.tokenSymbol}</span>
-                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -148,7 +134,6 @@ const TransferForm = (props) => {
                   <div className="advance-title-mobile open-advance title">
                     <div>
                       {props.translate("transaction.advanced") || "Advanced"}
-                      {/* <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" /> */}
                       <div id="advance-arrow"></div>
                     </div>
                   </div>

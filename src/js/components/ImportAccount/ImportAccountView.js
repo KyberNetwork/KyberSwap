@@ -18,43 +18,51 @@ const ImportAccountView = (props) => {
   var isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid
 
   return (
-    <div id="import-account">
-      {props.isChangingWallet && (
-        <div className="close-change-wallet">
-          <div>{props.translate("transaction.change_wallet") || "Change Wallet"}</div>
-          <div></div>
-          <div onClick={(e) => props.closeChangeWallet()}></div>
-        </div>
-      )}
-      <div className="frame">
-        <div className="container">
-          <div className="small-centered" id="import-acc">
-            <h1 className="title">{props.translate("address.import_address") || "Import address"}</h1>
+    <div className="import-account">
+      {/*{props.isChangingWallet && (*/}
+        {/*<div className="close-change-wallet">*/}
+          {/*<div>{props.translate("transaction.change_wallet") || "Change Wallet"}</div>*/}
+          {/*<div></div>*/}
+          {/*<div onClick={(e) => props.closeChangeWallet()}></div>*/}
+        {/*</div>*/}
+      {/*)}*/}
 
-            <div className="import-account">
-              <div className={`import-account__item ${isOnMobile ? "onmobile-only-wrapper" : ""}`}>
-                {isOnMobile ? downloadOnMobile : props.firstKey}
-              </div>
-              {!isOnMobile && <div className="import-account__item">
-                {props.secondKey}
-              </div>}
-              {!isOnMobile && <div className="import-account__item">
-                {props.thirdKey}
-              </div>}
-              {!isOnMobile && <div className="import-account__item">
-                {props.fourthKey}
-              </div>}
-              <div className="import-account__item">
-                {props.fifthKey}
-              </div>
-              <div className="import-account__item">
-                {props.sixthKey}
-              </div>
-            </div>
+      <div className="import-account__choose-wallet-container container">
+        <h1 className="import-account__title">{props.translate("address.import_address") || "Connect your Wallet to Swap"}</h1>
+
+        <div className="import-account__content">
+          <div className={`import-account__item ${isOnMobile ? "onmobile-only-wrapper" : ""}`}>
+            {isOnMobile ? downloadOnMobile : props.metamaskImport}
+          </div>
+
+          {!isOnMobile &&
+          <div className="import-account__item">
+            {props.keystoreImport}
+          </div>
+          }
+
+          {!isOnMobile &&
+          <div className="import-account__item">
+            {props.trezorImport}
+          </div>
+          }
+
+          {!isOnMobile &&
+          <div className="import-account__item">
+            {props.ledgerImport}
+          </div>
+          }
+
+          <div className="import-account__item">
+            {props.privateKeyImport}
+          </div>
+
+          <div className="import-account__item">
+            {props.promoCodeImport}
           </div>
         </div>
-        {props.errorModal}
       </div>
+      {props.errorModal}
     </div>
   )
 }

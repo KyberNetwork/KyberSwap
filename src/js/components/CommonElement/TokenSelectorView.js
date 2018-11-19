@@ -32,13 +32,6 @@ const TokenSelectorView = (props) => {
                 <div>{item.name}</div>
                 {props.type !== "des" &&
                 <div className="item-balance">
-                  <span title={balance}>
-                    {roundingNumber(balance)}
-                  </span>
-                  <span className="item-symbol">
-                    {item.symbol}
-                  
-                  </span>
                   {props.account !== false && (
                     <div title={balance} class="item-balance-value">
                       {`${roundingNumber(balance)} ${item.symbol}`}
@@ -46,16 +39,8 @@ const TokenSelectorView = (props) => {
                   )}
                 </div>
                 }
-                {/* <div className="font-w-b">{item.symbol}</span><span className="show-for-large token-name"> - {item.name}</div> */}
               </div>
-
-              {/* {item.isNotSupport &&
-                <span className="unsupported">{props.translate("error.not_supported") || "not supported"}</span>
-              } */}
             </div>
-            {/* <div>
-              <span title={balance}>{roundingNumber(balance)}</span>
-            </div> */}
           </div>
         )
       }
@@ -73,17 +58,9 @@ const TokenSelectorView = (props) => {
               </div>
               <div>
                 <div className="focus-name">{focusItem.name}</div>
-                <div className="focus-balance">
-                  {props.type !== "des" &&
-                  <span>
-                    <span className="token-balance" title = {toT(focusItem.balance)}>{roundingNumber(toT(focusItem.balance, focusItem.decimals))}</span>
-                    <span className="token-symbol">{focusItem.symbol}</span>
-                  </span>
-                  }
-                </div>
               </div>
             </div>
-            <div><i className={'k k-angle ' + (props.open ? 'up' : 'down')}></i></div>
+            <div><i className={'k k-angle bold ' + (props.open ? 'up' : 'down')}></i></div>
           </div>
         </DropdownTrigger>
         <DropdownContent>
