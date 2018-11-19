@@ -7,6 +7,7 @@ import * as converters from "../../utils/converter"
 import {Line} from 'react-chartjs-2';
 import * as analytics from "../../utils/analytics";
 import { getAssetUrl } from "../../utils/common";
+import { MarketMobile } from "../Market"
 
 @connect((store, props) => {
   var data = props.data
@@ -93,7 +94,7 @@ export default class MarketTable extends React.Component {
     var backgroundColor = "#EDFBF6"
     var point = []
     var labels = []
-    var input = props.value
+    var input = props.value ? props.value : props.last_7d
     var dataLength = 28
 
     if (Array.isArray(input)) {
@@ -363,6 +364,11 @@ export default class MarketTable extends React.Component {
     return newSortType
   }
 
+  makeSort = (key) => {
+    this.getSortArray(key, this.getSortType(key))
+    this.updateSortState(key, this.getSortType(key))
+  }
+
   getColumn = () => {
     var columns = [{
       Header: this.getSortHeaderMarket("Market", "market"),
@@ -408,9 +414,7 @@ export default class MarketTable extends React.Component {
         }
       }
     }]
-    if (this.props.isOnMobile) {
-      return columns.slice(0,2)
-    }
+
     Object.keys(this.props.listShowColumn).map((key, i) => {
       var item = this.props.listShowColumn[key]
       var index = this.props.showActive.indexOf(key)
@@ -549,46 +553,51 @@ export default class MarketTable extends React.Component {
             </div>
           </div>
         
-          <div className="for-mobile-only">
+          {!this.props.isOnMobile && <div className="for-mobile-only">
             {this.props.currencyLayout}
-          </div>
+          </div>}
 
         </div>
-<ReactTable
-        data={this.props.data}
-        columns={columns}
-        showPagination = {false}
-        pageSize = {this.props.data.length}
-        minRows = {1}
-        getTrProps={(state, rowInfo) => {
-          return {
-            onClick: (e) => {
-              // var symbol = rowInfo.original.info.symbol
-              // this.props.dispatch(actions.showTradingViewChart(symbol))
-              // analytics.tokenForCharting(symbol)
+        {this.props.isOnMobile ? 
+          <MarketMobile 
+            data={this.props.data}
+            sortType={this.props.sortType}
+            makeSort={this.makeSort}
+            handle24hChange={this.addClassChange}
+            drawChart={this.drawChart}
+          /> :
+          <ReactTable
+            data={this.props.data}
+            columns={columns}
+            showPagination = {false}
+            pageSize = {this.props.data.length}
+            minRows = {1}
+            getTrProps={(state, rowInfo) => {
+              return {
+                onClick: (e) => {
+                  var symbol = rowInfo.original.info.symbol
+                  this.props.dispatch(actions.showTradingViewChart(symbol))
+                  analytics.tokenForCharting(symbol)
 
+                }
+              }
             }
-          }
+            }
+            getPaginationProps={() => {
+              return {
+                previousText: (<img src={require("../../../assets/img/market/arrow-left.png")} />),
+                nextText:  (<img src={require("../../../assets/img/market/arrow-right.svg")} />)
+              }
+            }
+            }
+            getNoDataProps={(state, rowInfo) => {
+              if(this.props.data.length==0) return { style: { border: 'none' ,top:'75%',padding:'0px'} };
+              return {};
+              }
+            }
+            sortable={false}
+          />
         }
-        }
-        // TrComponent={(props) => {
-        //   console.log("children: ", props)
-        //   return props.children
-        // }}
-        getPaginationProps={() => {
-          return {
-            previousText: (<img src={require("../../../assets/img/market/arrow-left.png")} />),
-            nextText:  (<img src={require("../../../assets/img/market/arrow-right.svg")} />)
-          }
-        }
-        }
-        getNoDataProps={(state, rowInfo) => {
-          if(this.props.data.length==0) return { style: { border: 'none' ,top:'75%',padding:'0px'} };
-          return {};
-          }
-        }
-        sortable={false}
-      />
       </div>
       
     )
