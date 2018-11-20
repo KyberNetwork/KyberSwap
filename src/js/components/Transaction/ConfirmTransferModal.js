@@ -89,13 +89,13 @@ class ConfirmTransferModal extends React.Component {
           </div>
         </div>
         <div className="overlap">
-        <div className="input-confirm grid-x">
-          {/* <div className="cell medium-8 small-12">{this.msgHtml()}</div> */}
-          {/* <div className="cell medium-4 small-12"> */}
-          <a className={"button process-submit cancel-process"} onClick={(e) => this.props.onCancel(e)}>Cancel</a>
-          <a className={"button process-submit " + (this.props.isConfirming || this.props.isFetchingGas || this.props.isFetchingRate ? "waiting" : "next")} onClick={(e) => this.props.onExchange(e)}>{this.props.translate("modal.confirm").toLocaleUpperCase() || "Confirm".toLocaleUpperCase()}</a>
-          {/* </div> */}
-        </div>
+          <div className="input-confirm grid-x">
+            {/* <div className="cell medium-8 small-12">{this.msgHtml()}</div> */}
+            {/* <div className="cell medium-4 small-12"> */}
+            <a className={"button process-submit cancel-process"} onClick={(e) => this.props.onCancel(e)}>Cancel</a>
+            <a className={"button process-submit " + (this.props.isConfirming || this.props.isFetchingGas || this.props.isFetchingRate ? "waiting" : "next")} onClick={(e) => this.props.onExchange(e)}>{this.props.translate("modal.confirm").toLocaleUpperCase() || "Confirm".toLocaleUpperCase()}</a>
+            {/* </div> */}
+          </div>
         </div>
       </div>
     )

@@ -334,9 +334,10 @@ $divider-color: darken($title-background-color, 5);
       }
     }
     .type-password{
-      padding-top: 20px;
+      // padding-top: 20px;
       font-size: 14px;
       color: #666666;
+      margin-bottom: 15px;
     }
     .button {
       border-radius: 3px;
@@ -388,6 +389,7 @@ $divider-color: darken($title-background-color, 5);
       padding-right: 20px;
       .button {
         width: 100%;
+        max-width: 150px;
         margin-top: 10px;
       }
     }
@@ -551,14 +553,20 @@ $divider-color: darken($title-background-color, 5);
     background-color: #ffffff;
     color: #141927;
     text-align: left;
-    border: none;
+    // border: none;
     box-shadow: none;
-    padding-bottom: 20px;
-    padding-top: 20px;
+    // padding-bottom: 20px;
+    // padding-top: 20px;
+    border: solid 1px #e5e5e5;
+    border-radius: 3px;
+    padding-left: 45px;
     &.security{
       font-family: 'text-security-disc';
       font-size: 14px;
     }
+    // &::placeholder {
+      // font-family: Open Sans,sans-serif;
+    // }
   }
   .password-input{
     text-align: left;
@@ -630,8 +638,8 @@ $divider-color: darken($title-background-color, 5);
         background-position: center;
         position: absolute;
         top: 50%;
-        margin-top: -10px;
-        left: 12px;
+        margin-top: -11px;
+        left: 20px;
         -webkit-transition: opacity .5s ease-in-out;
         -o-transition: opacity .5s ease-in-out;
         transition: opacity .5s ease-in-out;
@@ -716,7 +724,7 @@ $divider-color: darken($title-background-color, 5);
     .icon {
       width: 100px;
       height: 100px;
-      margin: 0 auto 25px;
+      margin: 0 auto 10px;
       background-size: contain;
       background-repeat: no-repeat;
 
@@ -745,9 +753,13 @@ $divider-color: darken($title-background-color, 5);
   }
   .final-status {
     text-align: center;
-    font-size: 23px;
-    margin-top: 40px;
+    font-size: 16px;
+    margin-top: 30px;
     margin-bottom: 15px;
+    line-height: 1.5;
+    letter-spacing: -0.1px;
+    font-weight: 600;
+    color: #222222;
   }
   .tx-loading {
     padding: 20px 0 60px 0;

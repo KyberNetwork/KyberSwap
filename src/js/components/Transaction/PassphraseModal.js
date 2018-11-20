@@ -101,23 +101,33 @@ const PassphraseModal = (props) => {
       </div>
       <div className="overlap">
         <div className={!!props.passwordError ? "error password-input" : "password-input"}>
-          <div class="type-password">{props.translate("transaction.type_pass_before_progress") || "Type a password before progressing"}</div>
-          <div className="input-passpharse grid-x">
-            <div className="input-reveal cell small-12 medium-6">              
-              <input className="text-center security" id="passphrase" type="text"
-                autoComplete="off" spellCheck="false"
-                placeholder="Password"
-                onFocus={(e) => {analytics.trackClickInputPasswordWithJSON()}}
-                onChange={(e) => props.onChange(e)} autoFocus onKeyPress={(e) => submit(e)} />
-              <a className="toggle" onClick={() => toggleShowPw()}></a>
-              <a className="tootip"></a>
-            </div>
+          {/* <div class="type-password">{props.translate("transaction.type_pass_before_progress") || "Type a password before progressing"}</div> */}
+          <div class="type-password">{props.translate("transaction.type_pass_to_sign") || "Enter your password/passphrase to sign and broadcast"}</div>
+          <div className="input-reveal">              
+            <input className="text-center security" id="passphrase" type="text"
+              autoComplete="off" spellCheck="false"
+              placeholder="Password"
+              onFocus={(e) => {analytics.trackClickInputPasswordWithJSON()}}
+              onChange={(e) => props.onChange(e)} autoFocus onKeyPress={(e) => submit(e)} />
+            <a className="toggle" onClick={() => toggleShowPw()}></a>
+            <a className="tootip"></a>
+          </div>
+          {/* <div className="input-passpharse grid-x">
             <div className="cell small-12 medium-6">
               <a className={"button process-submit" + (props.isConfirming || props.isFetchingGas || props.isFetchingRate ? " waiting" : " next")}
                 onClick={(e) => submitTransaction(e)}>
                 {props.translate("modal.confirm").toLocaleUpperCase() || "Confirm".toLocaleUpperCase()}
               </a>
             </div>
+          </div> */}
+          <div className="input-confirm grid-x">
+            {/* <div className="cell medium-8 small-12">{this.msgHtml()}</div> */}
+            {/* <div className="cell medium-4 small-12"> */}
+            <a className={"button process-submit cancel-process"} onClick={(e) => props.onCancel()}>Cancel</a>
+            <a className={"button process-submit " + (props.isConfirming || props.isFetchingGas || props.isFetchingRate ? "waiting" : "next")} 
+              onClick={(e) => submitTransaction(e)}>
+              {props.translate("modal.confirm").toLocaleUpperCase() || "Confirm".toLocaleUpperCase()}</a>
+            {/* </div> */}
           </div>
           {!!props.passwordError &&
               <span className="error-text">{getTranslateErr()}</span>
