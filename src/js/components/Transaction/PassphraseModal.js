@@ -49,8 +49,15 @@ const PassphraseModal = (props) => {
             <div>
             {props.recap}
               <div className="gas-configed">
-                <div>{props.translate("transaction.included") || 'Included'}</div>
-                <div className="row">
+                {/* <div>{props.translate("transaction.included") || 'Included'}</div> */}
+                <div className={"title-fee"}>{props.translate("transaction.transaction_fee") || 'Transaction Fee'}</div>
+                <div className={"total-fee"}>
+                  {totalGas.toString()} <span>ETH</span>
+                </div>
+                <div className={"fee-detail"}>
+                  {props.gasPrice} Gwei (Gas Price) * {props.gas} (Gas Limit)
+                </div> 
+                {/* <div className="row">
                   <span className="column small-6">{props.translate("transaction.gas_price") || 'Gas price'}</span>
                   <span className="column small-6 font-w-i">{+roundingNumber(props.gasPrice)} Gwei</span>
                 </div>
@@ -60,9 +67,9 @@ const PassphraseModal = (props) => {
                     <img src={require('../../../assets/img/waiting-white.svg')} />
                     : <span>{totalGas.toString()}</span>
                   } ETH</span>
-                </div>
+                </div> */}
               </div>
-              {!props.isFetchingRate &&
+              {/* {!props.isFetchingRate &&
                 <div className="des">
                   <div><img src={require('../../../assets/img/exchange/exclaimed.svg')}/></div>
                   <div className="description">
@@ -74,7 +81,7 @@ const PassphraseModal = (props) => {
                     </div>
                   </div>
                 </div>
-          }
+              } */}
               {/* <div className="gas-configed">
                 <div class="d-flex justify-content-around">
                   <p>Gas Price</p>

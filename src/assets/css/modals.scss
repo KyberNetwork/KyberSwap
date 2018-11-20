@@ -30,8 +30,8 @@ $divider-color: darken($title-background-color, 5);
       display: block;
       position: absolute;
       right: 20px;
-      top: 0px;
-      font-size: 3rem;
+      top: 5px;
+      font-size: 2rem;
       color: #aaa;
     //color: $white;
     }
@@ -87,7 +87,7 @@ $divider-color: darken($title-background-color, 5);
       line-height: 1.7;
     }
     .gas-configed{
-      width: 270px;
+      // width: 270px;
       max-width: 100%;
       white-space: nowrap;
       text-align: left;
@@ -96,8 +96,25 @@ $divider-color: darken($title-background-color, 5);
       margin-bottom: 1rem;
       >div{
         &:first-child{
-          margin-bottom: 0.6rem;
+          // margin-bottom: 0.6rem;
+          font-size: 14px;
+          font-weight: 600;
         }
+      }
+      .total-fee {
+        font-size: 36px;
+        color: #141927;
+        font-weight: 600;
+        span {
+          font-size: 16px;
+          font-weight: normal;
+        }
+      }
+      .fee-detail {
+        font-size: 11px;
+        color: #999999;
+        font-weight: normal;
+        margin-top: 10px;
       }
     }
     hr{
@@ -208,14 +225,31 @@ $divider-color: darken($title-background-color, 5);
     display: flex;
     margin-top: 0.8rem;
     justify-content: space-between;
+    background-color: white;
+    box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
+    border: solid 0.8px rgba(204, 204, 204, 0.72);
+    border-radius: 4px;
+    padding: 5px 10px;
     .amount-item{
-      text-align: center;
+      // text-align: center;
       padding: 10px;
-      width: 45%;
-      background-color: #F2FBF4;
-      color: #A8CEB9;
-      font-size: 1.2rem;
-      border: 1px solid #A8CEB9;
+      // width: 45%;
+      // background-color: #F2FBF4;
+      // color: #A8CEB9;
+      // font-size: 1.2rem;
+      // border: 1px solid #A8CEB9;
+      .rc-label {
+        color: #999999;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: -0.4px;
+      }
+      .rc-info {
+        color: #222222;
+        font-size: 20px;
+        // font-weight: 600;
+        letter-spacing: -0.5px;
+      }
     }      
     .amount-icon{
       @include screen-max-width(medium) {
@@ -250,6 +284,7 @@ $divider-color: darken($title-background-color, 5);
   padding-left: 0 !important;
   padding-right: 0 !important;
   padding-bottom: 0 !important;
+  background-color: #f5f5f5 !important;
   
   .title {
     font-weight: 600;
@@ -287,10 +322,10 @@ $divider-color: darken($title-background-color, 5);
     display: inherit;
     width: 100%;
     text-align: left;
-    background-color: #f5f5f5;
-    padding: 20px 50px 50px 50px;
+    background-color: white;
+    padding: 15px 50px 43px 50px;
     align-items: center;
-    margin-top: 20px;
+    // margin-top: 20px;
 
     span{
       &:not(.error-text){
@@ -333,6 +368,20 @@ $divider-color: darken($title-background-color, 5);
       &:hover {
         background-color: $color-swap-light;
       }
+
+      &.cancel-process {
+        background-color: #6f6f6f;
+        color: white;
+        text-transform: uppercase;
+        min-width: 135px;
+        padding: 14px;
+        &::after {
+          content: none;
+        }
+        &:hover {
+          background-color: #6f6f6f;  
+        }
+      }
     }
     @include screen-max-width(medium){
       padding-left: 20px;
@@ -367,7 +416,7 @@ $divider-color: darken($title-background-color, 5);
       line-height: 1.7;
     }
     .gas-configed{
-      width: 95%;
+      // width: 95%;
       white-space: nowrap;
       text-align: left;
       font-size: 1rem;
@@ -376,7 +425,7 @@ $divider-color: darken($title-background-color, 5);
       opacity: 0.77;
 
       div:first-child {
-        font-weight: bold;
+        // font-weight: bold;
       }
 
       .row {
@@ -386,8 +435,8 @@ $divider-color: darken($title-background-color, 5);
       }
       
       @include screen-min-width(medium){
-        border-bottom: solid 1px #ebebeb;
-        padding: 25px;
+        // border-bottom: solid 1px #ebebeb;
+        padding: 18px 5px;
         margin: 0 auto;
       }
       @include screen-max-width(medium){
@@ -432,10 +481,10 @@ $divider-color: darken($title-background-color, 5);
       justify-content: space-between;
       .amount-item{
         width: 100%;
-        box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
-        background-color: #ffffff;
-        border: solid 0.8px rgba(204, 204, 204, 0.72);
-        border-radius: 1px;
+        // box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
+        // background-color: #ffffff;
+        // border: solid 0.8px rgba(204, 204, 204, 0.72);
+        // border-radius: 1px;
         color: #666;
         padding: 10px;
 
@@ -476,8 +525,9 @@ $divider-color: darken($title-background-color, 5);
       .space{
         position: relative;
         padding: 12px 12px;
+        display: flex;
         img{
-          width: 40px;
+          width: 30px;
         }
         @include screen-max-width(medium){
           padding: 40px 12px;
@@ -486,10 +536,15 @@ $divider-color: darken($title-background-color, 5);
     }
     
     .title-description{
-      font-weight: 600;
-      line-height: 0.75;
-      color: #666666;
-      margin-bottom: 35px;
+      // font-weight: 600;
+      // line-height: 0.75;
+      color: #141927;
+      margin-bottom: 25px;
+      font-size: 14px;
+      div:last-child {
+        color: #5a5e67;
+        margin-top: 3px;
+      }
     }
   }
   #passphrase{
@@ -518,6 +573,7 @@ $divider-color: darken($title-background-color, 5);
     padding: 30px 0px 0px 0px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
   .input-passpharse{
     margin-top: 10px;
