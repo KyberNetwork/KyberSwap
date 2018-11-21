@@ -44,6 +44,8 @@ export default class TokenSelector extends React.Component {
   }
 
   render() {
+  console.log("account_check")
+  console.log(this.props.account)
     return (
       <TokenSelectorView
         open={this.state.open}
