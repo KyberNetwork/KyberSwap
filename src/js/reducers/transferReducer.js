@@ -197,10 +197,6 @@ const transfer = (state = initState, action) => {
       }
       return newState
     }
-    case "TRANSFER.SET_TERM_AND_SERVICES": {
-      newState.termAgree = action.payload.value
-      return newState
-    }
     case "TRANSFER.SET_GAS_USED":{
       newState.gas = action.payload.gas
       return newState

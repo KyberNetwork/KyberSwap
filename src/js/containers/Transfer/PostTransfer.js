@@ -204,10 +204,6 @@ export default class PostTransfer extends React.Component {
     this.props.dispatch(transferActions.changePassword())
   }
 
-  clickCheckbox = (value) => {
-    this.props.dispatch(transferActions.setTermAndServices(value))
-  }
-
   formParams = () => {
     var selectedAccount = this.props.account.address
     var token = this.props.form.token
@@ -285,26 +281,22 @@ export default class PostTransfer extends React.Component {
         content={this.contentConfirm()}
         size="medium"
       />
-    let className = "button accent "
-    if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree) {
-      //className += " animated infinite pulse next"
-      className += " next"
-    }
 
-    var termAndServices = (<TermAndServices clickCheckbox={this.clickCheckbox}
-      termAgree={this.props.form.termAgree} />)
+    let activeButtonClass = ""
+    if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree) {
+      activeButtonClass += " active"
+    }
 
     return (
       <PostTransferBtn
         isHaveAccount = {this.props.account === false ? false: true}
-        className={className}
+        activeButtonClass={activeButtonClass}
         modalPassphrase={modalPassphrase}
         submit={this.clickTransfer}
         accountType={this.props.account.type}
         isConfirming={this.props.form.isConfirming}
         translate={this.props.translate}
         step={this.props.transfer.step}
-        termAndServices={termAndServices}
         openConfig={this.openConfig}
         advanced={this.props.transfer.advanced}
         isChangingWallet={this.props.isChangingWallet}
