@@ -178,26 +178,88 @@
 }
 
 .exchange-account {
-  background-color: #f5f5f5;
+  background-color: #f9f9f9;
 
   &__container {
     max-width: 1050px;
     margin: 0 auto;
+    padding: 10px 1rem 20px;
   }
 
   &__content {
     display: flex;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid rgba(204, 204, 204, 0.36);
     margin-bottom: 30px;
+    padding-bottom: 10px;
   }
 
   &__balance {
     width: 65%;
-    padding-right: 50px;
+    padding-right: 55px;
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 88%;
+      background-color: rgba(204, 204, 204, 0.36);
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 
   &__adv-config {
     width: 35%;
     padding-left: 50px;
+  }
+}
+
+.exchange-button {
+  text-align: center;
+  margin-bottom: 10px;
+
+  &__button {
+    display: inline-block;
+    margin-bottom: 10px;
+    background-color: #ef8102;
+    text-transform: uppercase;
+    padding: 15px 46px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #f8f8f8 !important;
+    transition: background-color .3s;
+
+    i {
+      margin-right: 15px;
+      bottom: 1px !important;
+    }
+
+    &:hover {
+      background-color: #F2A657;
+    }
+
+    &:active {
+      position: relative;
+      top: 1px;
+    }
+  }
+}
+
+.exchange-terms {
+  font-size: 12px;
+  font-weight: 600;
+  font-style: italic;
+  color: #666666;
+
+  &__link {
+    color: #ef8102 !important;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }

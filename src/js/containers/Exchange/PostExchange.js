@@ -617,9 +617,9 @@ export default class PostExchange extends React.Component {
       modalExchange = <div>{modalPassphrase} {modalConfirm} {modalApprove}</div>
     }
 
-    let className = "button accent "
+    let activeButtonClass = ""
     if (!this.props.form.errorNotPossessKgt && !validators.anyErrors(this.props.form.errors) && this.props.form.termAgree && !this.props.form.isSelectToken) {
-      className += " next"
+      activeButtonClass += " active"
     }
 
     return (
@@ -627,7 +627,7 @@ export default class PostExchange extends React.Component {
         isHaveAccount={this.props.account === false ? false : true}
         submit={this.clickExchange}
         modalExchange={modalExchange}
-        className={className}
+        activeButtonClass={activeButtonClass}
         isConfirming={this.props.form.isConfirming}
         isApproving={this.props.form.isApproving}
         translate={this.props.translate}

@@ -1,0 +1,121 @@
+.advance-config {
+  padding-left: 1px;
+
+  &__block {
+    margin: 11px 0 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e1e4eb;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #141927;
+    margin-bottom: 10px;
+  }
+
+  &__option {
+    display: inline-block;
+    position: relative;
+    padding-left: 22px;
+    cursor: pointer;
+
+    &-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &--with-input {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__radio {
+    position: absolute;
+    visibility: hidden;
+    pointer-events: none;
+
+    &:checked {
+      ~.advance-config__checkmark {
+        border-color: #ef8102;
+        background-color: #ef8102;
+
+        &::after {
+          transform: translateY(-50%) scale(1);
+        }
+      }
+
+      ~.advance-config__input {
+        background-color: white !important;
+        pointer-events: initial;
+      }
+    }
+  }
+
+  &__checkmark {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    border: solid 2px #e9e9e9;
+    background-color: #ffffff;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    transition: all .3s;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #fff;
+      position: absolute;
+      right: 0;
+      left: 0;
+      margin: 0 auto;
+      top: 50%;
+      transform: translateY(-50%) scale(0);
+      transition: all .5s;
+    }
+  }
+
+  & &__input {
+    width: 44px;
+    height: 27px;
+    margin: 0 0 0 5px;
+    padding: 0 9px !important;
+    border: solid 1px #e8e8e8 !important;
+    min-height: unset !important;
+    box-shadow: none !important;
+    color: #0a0a0a !important;
+    text-align: left !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    border-radius: 3px;
+    transition: background-color .3s;
+    pointer-events: none;
+  }
+
+  &__info {
+    font-size: 14px;
+    font-style: italic;
+    color: #5a5e67;
+    margin-top: 15px;
+  }
+
+  &__gas-amount {
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: #141927;
+  }
+
+  &__gas-mode {
+    font-size: 12px;
+    color: #5a5e67;
+    text-transform: uppercase;
+  }
+}

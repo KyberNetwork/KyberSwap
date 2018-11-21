@@ -8,7 +8,9 @@ export const SlideDownTrigger = (props) => (
 
 export const SlideDownContent = (props) => (
   <div className={"slide-down__content" + (props.classNameContent ? " " + props.classNameContent : "")}>
-    {props.children}
+    <div className="slide-down__fade-in">
+      {props.children}
+    </div>
   </div>
 );
 

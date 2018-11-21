@@ -15,12 +15,14 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 5px;
   }
 
   &__token-item {
     display: flex;
     width: 21.25%;
     margin: 0 3.75% 12px 0;
+    cursor: pointer;
 
     &:nth-child(4n+3) {
       padding-left: 3%;

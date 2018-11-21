@@ -2,7 +2,6 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 import * as converters from "../../utils/converter"
-import { MinRate } from "../Exchange"
 import { TransactionConfig } from "../../components/Transaction"
 import { ExchangeBodyLayout } from "../../components/Exchange"
 import { AddressBalance, AdvanceConfigLayout, GasConfig } from "../../components/TransactionCommon"
@@ -290,20 +289,11 @@ export default class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.toggleBalanceContent(value))    
   }
 
-  specifyGas = (event) => {
-    var value = event.target.value
-    this.props.dispatch(exchangeActions.specifyGas(value))
-  }
-
   specifyGasPrice = (value) => {
     this.props.dispatch(exchangeActions.specifyGasPrice(value + ""))
     if (this.props.account !== false && !this.props.global.isChangingWallet) {
       this.lazyValidateTransactionFee(value)
     }
-  }
-
-  inputGasPriceHandler = (value) => {
-    this.specifyGasPrice(value)
   }
 
   selectedGasHandler = (value, level, levelString) => {
@@ -312,41 +302,40 @@ export default class ExchangeBody extends React.Component {
     analytics.trackChooseGas(value, levelString)
   }
 
+  handleSlippageRateChanged = (e, isInput = false) => {
+    const offeredRate  = this.props.exchange.offeredRate;
+    let value = isInput ? 100 - e.currentTarget.value : e.currentTarget.value;
+
+    if (value > 100) {
+      value = 100;
+    } else if (value < 0) {
+      value = 0;
+    }
+
+    const minRate = converters.caculatorRateToPercentage(value, offeredRate);
+
+    this.props.dispatch(exchangeActions.setMinRate(minRate.toString()));
+    analytics.trackSetNewMinrate(value)
+  }
+
   getAdvanceLayout = () => {
-    var gasPrice = converters.stringToBigNumber(converters.gweiToEth(this.props.exchange.gasPrice))
-    var totalGas = gasPrice.multipliedBy(this.props.exchange.gas + this.props.exchange.gas_approve)
-    var page = "exchange"
-    var gasConfig = (
-      <GasConfig
-        gas={this.props.exchange.gas + this.props.exchange.gas_approve}
-        gasPrice={this.props.exchange.gasPrice}
-        maxGasPrice={this.props.exchange.maxGasPrice}
-        gasHandler={this.specifyGas}
-        inputGasPriceHandler={this.inputGasPriceHandler}
-        selectedGasHandler={this.selectedGasHandler}
-        gasPriceError={this.props.exchange.errors.gasPriceError}
-        gasError={this.props.exchange.errors.gasError}
-        totalGas={totalGas.toString()}
-        translate={this.props.translate}
-        gasPriceSuggest={this.props.exchange.gasPriceSuggest}
-        selectedGas={this.props.exchange.selectedGas}
-        page={page}
-      />
-    )
-
-    var minRate = <MinRate />
-
-    var advanceConfig = (
+    return (
       <AdvanceConfigLayout
-        minRate={minRate}
-        gasConfig={gasConfig}
+        selectedGas={this.props.exchange.selectedGas}
+        selectedGasHandler={this.selectedGasHandler}
+        gasPriceSuggest={this.props.exchange.gasPriceSuggest}
+        onSlippageRateChanged={this.handleSlippageRateChanged}
+        isSelectToken={this.props.exchange.isSelectToken}
+        minConversionRate={this.props.exchange.minConversionRate}
+        offeredRate={this.props.exchange.offeredRate}
+        slippageRate={this.props.exchange.slippageRate}
+        sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
+        destTokenSymbol={this.props.exchange.destTokenSymbol}
         translate={this.props.translate}
         isBalanceActive = {this.props.exchange.isBalanceActive}
         toggleBalanceContent={this.toggleBalanceContent}
       />
-    );
-
-    return advanceConfig
+    )
   }
 
   getBalanceLayout = () => {

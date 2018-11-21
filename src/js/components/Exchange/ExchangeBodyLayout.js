@@ -156,8 +156,7 @@ const ExchangeBodyLayout = (props) => {
               exchangeRate={{
                 sourceToken: props.sourceTokenSymbol,
                 rate: converters.toT(props.exchange.offeredRate),
-                destToken: props.destTokenSymbol,
-                percent: "-"
+                destToken: props.destTokenSymbol
               }}
             />
           </div>

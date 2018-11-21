@@ -46,11 +46,14 @@
   }
 
   &__content {
-    opacity: 0;
     overflow: hidden;
     max-height: 0;
-    transform: translateY(15px);
-    transition: all .3s;
+  }
+
+  &__fade-in {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: all .4s;
   }
 
   &--active {
@@ -65,10 +68,12 @@
     }
 
     .slide-down__content {
+      max-height: unset;
+    }
+
+    .slide-down__fade-in {
       opacity: 1;
       transform: translateY(0);
-      max-height: 9999px;
-      transition: none;
     }
   }
 }
