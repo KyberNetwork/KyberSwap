@@ -23,36 +23,67 @@
     margin-bottom: 80px;
   }
   .market-control{
-    >div{
-      &:first-child{
-        @include screen-max-width(large){
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          >div{
-            &:first-child{
-              font-size: 23px;
-              text-transform: capitalize;
-              font-weight: 600;
-            }
-            &:last-child{
-                display: flex;
-                align-items: center;
-                .search-word-mobile{
-                  margin-right: 10px;
-                  input {
-                    display: none;
-                  }
-                }
+    // >div{
+    //   &:first-child{
+    //     @include screen-max-width(large){
+    //       display: flex;
+    //       align-items: center;
+    //       justify-content: space-between;
+    //       >div{
+    //         &:first-child{
+    //           font-size: 23px;
+    //           text-transform: capitalize;
+    //           font-weight: 600;
+    //         }
+    //         &:last-child{
+    //             display: flex;
+    //             align-items: center;
+    //             // .search-word-mobile{ // unused
+    //             //   margin-right: 10px;
+    //             //   input {
+    //             //     display: none;
+    //             //   }
+    //             // }
+    //         }
+    //       }
+    //     }
+    //   }
+      
+    // }
+    @include screen-max-width(large){
+      margin-top: 10px;
+      >div{
+        &:first-child{
+          @include screen-max-width(large){
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            >div{
+              &:first-child{
+                font-size: 23px;
+                text-transform: capitalize;
+                font-weight: 600;
+              }
+              &:last-child{
+                  display: flex;
+                  align-items: center;
+                  // .search-word-mobile{ // unused
+                  //   margin-right: 10px;
+                  //   input {
+                  //     display: none;
+                  //   }
+                  // }
+              }
             }
           }
         }
+        
       }
-      
     }
   }
 
   .market-mobile {
+    margin-top: 5px;
     .table-header {
       .small-6 {
         font-size: 19px;
@@ -104,9 +135,26 @@
           align-items: center;
         }
         .token-pair {
+          position: relative;
           img {
             margin-right: 10px;
             height: 28px;
+          }
+          .new-token {
+            position: absolute;
+            top: -10px;
+            right: 35px;
+            font-size: 10px;
+            height: 16px;
+            width: auto;
+            color: #fff;
+            background: #ee344e;
+            line-height: 16px;
+            padding: 0 5px;
+            font-weight: 600;
+            border-radius: 2px;
+            min-width: 25px;
+            text-align: center;
           }
         }
         .sell-price {
@@ -215,11 +263,11 @@
   }
 
   &.container {
-    .search-area {
-      .search-icon {
-        display: none;
-      }
-    }
+    // .search-area {
+      // .search-icon {
+      //   display: none;
+      // }
+    // }
     input.search-input {
       background-image: url(../img/search_icon.svg);
       background-size: auto 50%;
@@ -230,10 +278,8 @@
       background-position: 1.2rem;
       max-width: 700px;
       margin: auto;
-    }
-    @include screen-max-width(large) {
-      .search-area {
-        display: none;
+      @include screen-max-width(large) {
+        max-width: 100%;
       }
     }
   }
@@ -246,6 +292,9 @@
     font-size: 32px;
     margin-bottom: 30px;
     font-weight: 500;
+    @include screen-max-width(large) {
+      display: none;
+    }
   }
 
   &__header {
@@ -278,10 +327,10 @@
         height: 3.15rem;
         width: 100%;
         font-size: 14px;
-        background-position: 98%;
-        border: 1px solid #EAEAEA;
-        text-indent: 0;
-        box-shadow: none;
+        // background-position: 98%;
+        // border: 1px solid #EAEAEA;
+        // text-indent: 0;
+        // box-shadow: none;
 
         &::placeholder {
           color: #7A7A7A;
@@ -541,11 +590,17 @@
     }
     .search-symbol {
       height: 35px;
-      width: 35px;
+      // width: 35px;
       line-height: 35px;
       text-align: center;
       &:hover {
         cursor: pointer;
+      }
+      .search-icon {
+        display: none;
+      }
+      @include screen-max-width(large) {
+        margin-top: 10px;
       }
     }
     .symbol-price{
@@ -728,19 +783,25 @@
                 // }
                 .new-token {
                   position: absolute;
-                  top: -15px;
-                  right: -12px;
+                  top: -20px;
+                  right: 40px;
                   font-size: 9px;
-                  height: 14px;
+                  height: 16px;
                   width: auto;
                   color: white;
                   background: #EE344E;
-                  line-height: 14px;
-                  padding: 0 2px;
+                  line-height: 16px;
+                  padding: 0px 5px;
                   font-weight: 600;
                   border-radius: 2px;
                   min-width: 25px;
                   text-align: center;
+                  // @include screen-max-width(large) {
+                  //   right: 0;
+                  // }
+                  @media screen and (max-width: 1296px) {
+                    right: 0;
+                  }
                 }
               }
             }
