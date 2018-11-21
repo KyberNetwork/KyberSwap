@@ -109,7 +109,12 @@ const ExchangeBodyLayout = (props) => {
                   {/*{!props.isChangingWallet ? errorShow : ''}*/}
                 {/*</div>*/}
               </div>
-              <div className="exchange-content__label">{props.sourceTokenSymbol}</div>
+              {props.account === false && (
+                <div className="exchange-content__label">{props.sourceTokenSymbol}</div>
+              )}
+              {props.account !== false && (
+                <div className="exchange-content__label">{props.swapBalance}</div>
+              )}
             </div>
 
             <div className={"exchange-content__item--absolute"}>

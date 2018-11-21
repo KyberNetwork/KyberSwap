@@ -269,3 +269,26 @@
     }
   }
 }
+
+
+.swap-balance-modal{
+  position: relative;
+  .dropdown__content {
+    right: 0;
+    width: 170px;
+    top: 25px;
+  }
+  .select-item{
+    background-color: white;
+    border: 1px solid #eee;
+    .list-item {
+      >div{
+        padding: 10px;
+        cursor: pointer;
+        &:hover{
+          background-color: #eee;
+        }
+      }
+    }
+  }
+}

@@ -698,3 +698,13 @@ export function exitSwap(){
 }
 
 
+
+export function trackClickChooseBalance(percent){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_Choose_Blance_" + percent)
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
