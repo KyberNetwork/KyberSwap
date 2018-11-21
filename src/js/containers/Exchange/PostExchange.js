@@ -232,7 +232,9 @@ export default class PostExchange extends React.Component {
       return (
         <div className="confirm-exchange-modal">
           <div className="modal-title message">
-            {this.props.translate("transaction.about_to_swap") || "You are about to swap"}
+            {/* {this.props.translate("transaction.about_to_swap") || "You are about to swap"} */}
+            <div>{this.props.translate("transaction.your_wallet") || "Your Wallet"}</div>
+            <div>{this.props.account.address}</div>
           </div>
           <div className="amount">
             <div className="amount-item amount-left">
@@ -279,11 +281,13 @@ export default class PostExchange extends React.Component {
       return (
         <div className="confirm-exchange-modal">
           <div className="title-description">
-            {this.props.translate("transaction.about_to_swap") || "You are about to swap"}
+            {/* {this.props.translate("transaction.about_to_swap") || "You are about to swap"} */}
+            <div>{this.props.translate("transaction.your_wallet") || "Your Wallet"}</div>
+            <div>{this.props.account.address}</div>
           </div>
           <div className="amount">
             <div className="amount-item amount-left">
-              <div className="grid-x">
+              {/* <div className="grid-x">
                 <div className="cell medium-3 small-12 amount-icon">
                   <img src={getAssetUrl(`tokens/${sourceIcon}`)} />
                 </div>
@@ -297,27 +301,33 @@ export default class PostExchange extends React.Component {
                     </span>
                   </div>
                 </div>
-              </div>
+              </div> */}
+              <div className={"rc-label"}>From</div>
+              <div className={"rc-info"}>{sourceAmount} {sourceTokenSymbol}</div>
             </div>
             <div className="space"><img src={require("../../../assets/img/exchange/arrow-right-orange.svg")} /></div>
             <div className="amount-item amount-right">
               {this.props.snapshot.isFetchingRate ?
                 <img src={require('../../../assets/img/waiting-white.svg')} />
                 :
-                <div className="grid-x">
-                  <div className="cell medium-3 small-12 amount-icon">
-                    <img src={getAssetUrl(`tokens/${destIcon}`)} />
-                  </div>
-                  <div className="cell medium-9 small-12">
-                    <div className="amount-detail">
-                      <span>
-                        {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''}
-                      </span>
-                      <span>
-                        {destTokenSymbol}
-                      </span>
-                    </div>
-                  </div>
+                // <div className="grid-x">
+                //   <div className="cell medium-3 small-12 amount-icon">
+                //     <img src={getAssetUrl(`tokens/${destIcon}`)} />
+                //   </div>
+                //   <div className="cell medium-9 small-12">
+                //     <div className="amount-detail">
+                //       <span>
+                //         {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''}
+                //       </span>
+                //       <span>
+                //         {destTokenSymbol}
+                //       </span>
+                //     </div>
+                //   </div>
+                // </div>
+                <div>
+                  <div className={"rc-label"}>To</div>
+                  <div className={"rc-info"}>{destAmount} {destTokenSymbol}</div> 
                 </div>
               }
             </div>

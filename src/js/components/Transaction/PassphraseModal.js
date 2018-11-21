@@ -49,8 +49,15 @@ const PassphraseModal = (props) => {
             <div>
             {props.recap}
               <div className="gas-configed">
-                <div>{props.translate("transaction.included") || 'Included'}</div>
-                <div className="row">
+                {/* <div>{props.translate("transaction.included") || 'Included'}</div> */}
+                <div className={"title-fee"}>{props.translate("transaction.transaction_fee") || 'Transaction Fee'}</div>
+                <div className={"total-fee"}>
+                  {totalGas.toString()} <span>ETH</span>
+                </div>
+                <div className={"fee-detail"}>
+                  {props.gasPrice} Gwei (Gas Price) * {props.gas} (Gas Limit)
+                </div> 
+                {/* <div className="row">
                   <span className="column small-6">{props.translate("transaction.gas_price") || 'Gas price'}</span>
                   <span className="column small-6 font-w-i">{+roundingNumber(props.gasPrice)} Gwei</span>
                 </div>
@@ -60,9 +67,9 @@ const PassphraseModal = (props) => {
                     <img src={require('../../../assets/img/waiting-white.svg')} />
                     : <span>{totalGas.toString()}</span>
                   } ETH</span>
-                </div>
+                </div> */}
               </div>
-              {!props.isFetchingRate &&
+              {/* {!props.isFetchingRate &&
                 <div className="des">
                   <div><img src={require('../../../assets/img/exchange/exclaimed.svg')}/></div>
                   <div className="description">
@@ -74,7 +81,7 @@ const PassphraseModal = (props) => {
                     </div>
                   </div>
                 </div>
-          }
+              } */}
               {/* <div className="gas-configed">
                 <div class="d-flex justify-content-around">
                   <p>Gas Price</p>
@@ -94,23 +101,33 @@ const PassphraseModal = (props) => {
       </div>
       <div className="overlap">
         <div className={!!props.passwordError ? "error password-input" : "password-input"}>
-          <div class="type-password">{props.translate("transaction.type_pass_before_progress") || "Type a password before progressing"}</div>
-          <div className="input-passpharse grid-x">
-            <div className="input-reveal cell small-12 medium-6">              
-              <input className="text-center security" id="passphrase" type="text"
-                autoComplete="off" spellCheck="false"
-                placeholder="Password"
-                onFocus={(e) => {analytics.trackClickInputPasswordWithJSON()}}
-                onChange={(e) => props.onChange(e)} autoFocus onKeyPress={(e) => submit(e)} />
-              <a className="toggle" onClick={() => toggleShowPw()}></a>
-              <a className="tootip"></a>
-            </div>
+          {/* <div class="type-password">{props.translate("transaction.type_pass_before_progress") || "Type a password before progressing"}</div> */}
+          <div class="type-password">{props.translate("transaction.type_pass_to_sign") || "Enter your password/passphrase to sign and broadcast"}</div>
+          <div className="input-reveal">              
+            <input className="text-center security" id="passphrase" type="text"
+              autoComplete="off" spellCheck="false"
+              placeholder="Password"
+              onFocus={(e) => {analytics.trackClickInputPasswordWithJSON()}}
+              onChange={(e) => props.onChange(e)} autoFocus onKeyPress={(e) => submit(e)} />
+            <a className="toggle" onClick={() => toggleShowPw()}></a>
+            <a className="tootip"></a>
+          </div>
+          {/* <div className="input-passpharse grid-x">
             <div className="cell small-12 medium-6">
               <a className={"button process-submit" + (props.isConfirming || props.isFetchingGas || props.isFetchingRate ? " waiting" : " next")}
                 onClick={(e) => submitTransaction(e)}>
                 {props.translate("modal.confirm").toLocaleUpperCase() || "Confirm".toLocaleUpperCase()}
               </a>
             </div>
+          </div> */}
+          <div className="input-confirm grid-x">
+            {/* <div className="cell medium-8 small-12">{this.msgHtml()}</div> */}
+            {/* <div className="cell medium-4 small-12"> */}
+            <a className={"button process-submit cancel-process"} onClick={(e) => props.onCancel()}>Cancel</a>
+            <a className={"button process-submit " + (props.isConfirming || props.isFetchingGas || props.isFetchingRate ? "waiting" : "next")} 
+              onClick={(e) => submitTransaction(e)}>
+              {props.translate("modal.confirm").toLocaleUpperCase() || "Confirm".toLocaleUpperCase()}</a>
+            {/* </div> */}
           </div>
           {!!props.passwordError &&
               <span className="error-text">{getTranslateErr()}</span>
