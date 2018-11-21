@@ -2,7 +2,6 @@
 @import '../bower/animate.css/animate.css';
 @import 'settings';
 @import "util";
-//@import 'foundation';
 
 $accent-gradient: linear-gradient(169deg, #36d9ac, #049696);
 $alert-color: #ff5d00;
@@ -14,12 +13,8 @@ $alert-color: #ff5d00;
 @import 'addresses';
 @import 'tokens';
 @import 'custom';
-
-@import 'address_balance';
-
-//@import "~slick-carousel/slick/slick.css";
+@import 'account-balance';
 @import "~react-table/react-table.css";
-//@import "history";
 @import "transaction_list";
 @import "language";
 @import "token_select";
@@ -35,7 +30,6 @@ $alert-color: #ff5d00;
 @import "cold_wallet";
 @import "animation";
 @import "slide_down";
-
 @import '~react-linechart/dist/styles.css';
 
 @font-face{

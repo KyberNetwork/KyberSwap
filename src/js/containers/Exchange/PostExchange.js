@@ -5,14 +5,11 @@ import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
 import * as exchangeActions from "../../actions/exchangeActions"
 import * as utilActions from "../../actions/utilActions"
-
-//import {getWalletId} from "../../services/web3"
 import { Modal } from "../../components/CommonElement"
 import { TermAndServices } from "../../containers/CommonElements"
 import { PassphraseModal, ConfirmTransferModal, ApproveModal } from "../../components/Transaction"
 import { PostExchangeBtn } from "../../components/Exchange"
 import { getTranslate } from 'react-localize-redux';
-import { RateBetweenToken } from "../Exchange"
 import * as analytics from "../../utils/analytics";
 import { getAssetUrl, isUserEurope, getParameterByName } from "../../utils/common";
 
@@ -89,29 +86,13 @@ export default class PostExchange extends React.Component {
       }
     } else if (this.props.form.step == 2) {
       if (this.validateExchange()) {
-        //agree terms and services
         if (!this.props.form.termAgree) {
           let titleModal = this.props.translate('layout.terms_of_service') || 'Terms of Service'
           let contentModal = this.props.translate('error.term_error') || 'You must agree terms and services!'
           return this.props.dispatch(utilActions.openInfoModal(titleModal, contentModal))
         }
-        //check account type
-        //save a copy of form
-        // this.setState({form: this.formParams()})
 
         this.props.dispatch(exchangeActions.setSnapshot(this.props.form))
-
-        // var ethereum = this.props.ethereum
-        // var source = this.props.form.sourceToken
-        // var dest = this.props.form.destToken
-        // var destTokenSymbol = this.props.form.destTokenSymbol
-        // var sourceAmount = this.props.form.sourceAmount
-        // var sourceDecimal = this.props.form.sourceDecimal
-        // var sourceAmountHex = converters.stringToHex(sourceAmount, sourceDecimal)
-        // var rateInit = 0
-
-        // this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceAmountHex, true, rateInit))
-
         this.props.dispatch(exchangeActions.updateRateSnapshot(this.props.ethereum))
 
         switch (this.props.account.type) {
@@ -130,7 +111,6 @@ export default class PostExchange extends React.Component {
               this.props.dispatch(exchangeActions.fetchGasSnapshot())
               this.props.dispatch(exchangeActions.showConfirm())
             } else {
-              // this.props.dispatch(exchangeActions.fetchGas())
               this.checkTokenBalanceOfColdWallet()
             }
             break
@@ -149,10 +129,7 @@ export default class PostExchange extends React.Component {
         this.props.translate("error.source_amount_rate_error")))
       return false
     }
-    // if(this.props.form.error_rate_system){
-    //   this.props.dispatch(exchangeActions.setErrorRateSystem())
-    //   return false
-    // }
+
     //check source amount
     var check = true
     var validateAmount = validators.verifyAmount(this.props.form.sourceAmount,
@@ -160,7 +137,6 @@ export default class PostExchange extends React.Component {
       this.props.form.sourceTokenSymbol,
       this.props.form.sourceDecimal,
       this.props.form.rateSourceToEth,
-      //this.props.form.offeredRate,      
       this.props.form.destDecimal,
       this.props.form.maxCap)
     var sourceAmountErrorKey
@@ -228,7 +204,6 @@ export default class PostExchange extends React.Component {
     var minRate = this.props.snapshot.minConversionRate
     var offeredRate = this.props.snapshot.offeredRate
     if (converters.compareRate(minRate, offeredRate) === 1) {
-    //if (true) {
       return (
         <div className="confirm-exchange-modal">
           <div className="modal-title message">
@@ -652,46 +627,20 @@ export default class PostExchange extends React.Component {
       modalExchange = <div>{modalPassphrase} {modalConfirm} {modalApprove}</div>
     }
 
-    let className = "button accent "
+    let activeButtonClass = ""
     if (!this.props.form.errorNotPossessKgt && !validators.anyErrors(this.props.form.errors) && this.props.form.termAgree && !this.props.form.isSelectToken) {
-      //className += " animated infinite pulse next"
-      className += " next"
-    }
-    // var termAndServices = (
-    //   <TermAndServices
-    //     clickCheckbox={this.clickCheckbox}
-    //     termAgree={this.props.form.termAgree}
-    //   />
-    // )
-
-    var exchangeRate = {
-      sourceToken: this.props.form.sourceTokenSymbol,
-      rate: converters.toT(this.props.form.offeredRate),
-      destToken: this.props.form.destTokenSymbol,
-      percent: "-"
+      activeButtonClass += " active"
     }
 
-    var rateToken = (
-      <RateBetweenToken
-        isSelectToken={this.props.form.isSelectToken}
-        exchangeRate={exchangeRate}
-      />
-    )
     return (
       <PostExchangeBtn
         isHaveAccount={this.props.account === false ? false : true}
         submit={this.clickExchange}
-        // modalPassphrase={modalPassphrase}
-        // modalConfirm={modalConfirm}
-        // modalApprove={modalApprove}
-
         modalExchange={modalExchange}
-
-        className={className}
+        activeButtonClass={activeButtonClass}
         isConfirming={this.props.form.isConfirming}
         isApproving={this.props.form.isApproving}
         translate={this.props.translate}
-        rateToken={rateToken}
         isChangingWallet={this.props.isChangingWallet}
       />
     )

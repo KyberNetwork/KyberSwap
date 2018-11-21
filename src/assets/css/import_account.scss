@@ -1,309 +1,158 @@
-$animationTime: 0.5s;
+.import-account {
+  border-bottom: 1px solid #cccccc;
+  box-shadow: 0 0 10px 0 #ccc;
 
-#import-account {
-  margin-top: 80px;
-  text-align: center;
+  &__choose-wallet-container {
+    padding: 30px 0 35px;
+  }
 
-  .close-change-wallet {
+  &__title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #222222;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  &__content {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  &__item {
+    margin-right: 15px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__block {
+    height: 36px;
+    border: solid 0.5px #cccccc;
+    background-color: #f9f9f9;
+    display: flex;
+    padding: 5px 15px;
+    border-radius: 20px;
     align-items: center;
-    padding: 10px 0;
-    div:first-child {
-      max-width: 150px;
-      font-size: 14px;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-    div:nth-child(2) {
-      width: 100%;
-      height: 1px;
-      background: #ccc;
-      margin: 0 12px;
-    }
-    div:nth-child(3) {
-      min-width: 16px;
-      height: 16px;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: auto;
-      background-image: url(../img/x-white.png);
-      border-radius: 50%;
-      background-color: #92969d;
-      &:hover {
-        cursor: pointer;
+    cursor: pointer;
+    transition: all .4s;
+
+    &:hover {
+      border-color: transparent;
+      background-color: #ef8102;
+
+      .import-account__name {
+        color: white;
+      }
+
+      .metamask {
+        background-image: url($image-path + 'import-account/icon-metamask-white.svg');
+      }
+
+      .json {
+        background-image: url($image-path + 'import-account/icon-json-white.svg');
+      }
+
+      .trezor {
+        background-image: url($image-path + 'import-account/icon-trezor-white.svg');
+      }
+
+      .ledger {
+        background-image: url($image-path + 'import-account/icon-ledger-white.svg');
+      }
+
+      .private-key {
+        background-image: url($image-path + 'import-account/icon-private-key-white.png');
+      }
+
+      .promo-code {
+        background-image: url($image-path + 'import-account/icon-promo-code-white.svg');
       }
     }
+  }
+
+  &__icon {
+    width: 17px;
+    height: 17px;
+    margin-right: 10px;
+    background: center no-repeat;
+    background-size: contain;
+
+    &.metamask {
+      background-image: url($image-path + 'import-account/icon-metamask.svg');
+    }
+
+    &.json {
+      background-image: url($image-path + 'import-account/icon-json.svg');
+    }
+
+    &.trezor {
+      background-image: url($image-path + 'import-account/icon-trezor.svg');
+    }
+
+    &.ledger {
+      background-image: url($image-path + 'import-account/icon-ledger.svg');
+    }
+
+    &.private-key {
+      background-image: url($image-path + 'import-account/icon-private-key.svg');
+    }
+
+    &.promo-code {
+      background-image: url($image-path + 'import-account/icon-promo-code.svg');
+    }
+  }
+
+  &__name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #666666;
   }
 
   .column-block {
-    margin-bottom: 0;
-  }
-
-  #import-acc {
-    display: inline-block;
-  }
-
-  .frame {
-    padding: 0;
-  }
-
-  .title {
-    color: #fff;
-    text-align: left;
-    font-size: 42px;
-    letter-spacing: -0.9px;
-    opacity: 0;
-    padding: 0;
     margin: 0;
-    font-family: $font-cera;
-    animation: fade-in $animationTime forwards;
   }
 
-  .sub-title {
-    font-size: 0.8rem;
-    color: $white;
-    padding: 0px 50px 30px 50px;
-  }
-
-  .import-account {
+  &__wallet-container {
     display: flex;
-    position: relative;
-    justify-content: space-between;
-
-    &__item {
-      width: 19%;
-      border-radius: 3px;
-      border: solid 1px #e5e5e5;
-      background-color: white;
-      text-align: center;
-      cursor: pointer;
-      transform: translateY(50px);
-      transition: all .3s;
-      animation: moving-up $animationTime forwards;
-
-      .importer {
-        display: flex;
-        flex-direction: column;
-        min-height: 125px;
-
-        &__symbol {
-          margin: auto;
-
-          img {
-            max-height: 22px;
-          }
-        }
-
-        &__name {
-          font-size: 14px;
-          font-weight: 600;
-          text-transform: uppercase;
-          margin-top: 10px;
-        }
-
-        &__button {
-          width: 100%;
-          min-height: 42px;
-          line-height: 1.23;
-          margin: 0;
-          padding: 3px 5px;
-          font-size: 13px;
-          color: #999999;
-          background-color: #f5f5f5;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all .3s;
-        }
-
-        .more-info {
-          font-size: 14px;
-          text-align: left;
-          color: #999;
-        }
-
-        &__button,
-        .more-info {
-          opacity: 0;
-          animation: fade-in $animationTime forwards;
-        }
-      }
-
-      .how-to-use {
-        width: 20px;
-        height: 20px;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background-image: url(../img/landing/notice.svg);
-
-        &:hover {
-          background-image: url(../img/landing/notice_grey.svg);
-        }
-      }
-
-      &:hover {
-        box-shadow: 0 3px 10px 0 rgba(205, 205, 205, 0.63);
-
-        .importer__button {
-          border-bottom-left-radius: 3px;
-          border-bottom-right-radius: 3px;
-          color: white;
-          background-color: $swap-color;
-        }
-      }
-    }
-
-    @include screen-max-width(large) {
-      flex-wrap: wrap;
-
-      &__item {
-        width: 49%;
-        margin-bottom: 10px;
-
-        &:first-child {
-          width: 100%;
-        }
-      }
-    }
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 20px 1rem;
   }
 
-  .title {
-    font-size: 30px;
-    text-align: left;
-  }
-
-  @keyframes moving-up {
-    to {
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes fade-in {
-    to {
-      opacity: 1;
-    }
-  }
-}
-
-.import-privatekey {
-  padding: 0px;
-  .title {
-    font-size: 1.2rem;
-    font-weight: normal;
-    text-align: center;
-    margin-bottom: 20px;
-    margin-top: 0;
-    padding-top: 70px;
-  }
-
-  .overlap {
-    justify-content: center;
-    background-color: #fcfcfc;
-    margin-top: 10px;
-    .accent {
-      // margin-top: 50px;
-      line-height: 55px;
-      padding: 0 35px;
-      background: #ef8102;
-      font-size: 1.3rem;
-      border-radius: 4px;
-      box-shadow: 0 10px 15px #ccc;
-    }
-  }
-  #private_key {
-    text-align: left;
-    width: 100%;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+  &__wallet-connect {
+    padding-right: 20px;
+    width: 120px;
+    margin-right: 30px;
+    font-size: 13px;
     color: #666666;
-    height: 50px;
+    border-right: 1px solid #cccccc;
   }
-}
 
-.input-reveal{
-  .toggle{
-    right: 12px;
-    left: unset;
-    background-image: url(../img/unlock-pass.svg);
-  }
-  &.unlock .toggle {
-    background-image: url(../img/lock-pass.svg);
-  }
-  .tootip{
-    opacity: .4;
-    display: block;
-    width: 20px;
-    height: 20px;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    position: absolute;
-    top: 50%;
-    margin-top: -10px;
-    left: 12px;
-    -webkit-transition: opacity .5s ease-in-out;
-    -o-transition: opacity .5s ease-in-out;
-    transition: opacity .5s ease-in-out;
-    background-image: url(../img/lock.svg);
-  }
-}
-
-.download-mobile {
-  background-color: #3c4664;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 1rem;
-  width: calc(100% + 2rem);
-  position: relative;
-  left: -1rem;
-  transform: scale(0.9);
-  opacity: 0;
-  animation: show-up 0.3s forwards;
-
-  .mobile-left {
+  &__wallet-type {
     display: flex;
     align-items: center;
   }
 
-  .mobile-icon {
-    width: 35px;
-    height: 35px;
-    background: url(../img/toshi.svg) center no-repeat;
-    background-size: contain;
+  &__wallet-image {
+    height: 30px;
+    margin-right: 20px;
   }
 
-  .mobile-content {
-    width: calc(100% - 35px);
-    padding: 0 10px 0 15px;
-  }
-
-  .mobile-title {
-    text-transform: uppercase;
+  &__wallet-content {
+    font-size: 18px;
     font-weight: 600;
-    font-size: 14px;
+    color: #222222;
   }
 
-  .mobile-desc {
-    font-size: 12px;
+  &__wallet-title {
+    font-size: 16px;
   }
 
-  .mobile-btn {
-    background-color: $swap-color;
-    color: white;
-    font-size: 14px;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-
-  @keyframes show-up {
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
+  &__wallet-name {
+    font-size: 18px;
+    text-transform: uppercase;
   }
 }

@@ -13,16 +13,16 @@
   },
   "address": {
     "address": "Address",
-    "import_address": "Access Your Wallet",
+    "import_address": "Connect your Wallet to Swap",
     "exchange_from": "Exchange from",
     "my_balance": "My Balance",
     "estimated_value": "Estimated value",
     "total": "Total",
     "hide_zero_balance": "Hide zero balance",
-    "symbol": "SYMBOL",
-    "price": "PRICE",
+    "symbol": "Symbol",
+    "price": "Price",
     "your_wallet_address": "Your Wallet Address",
-    "search": "Search"
+    "search": "Search by Name"
   },
   "transaction": {
     "wallet": "Wallet",

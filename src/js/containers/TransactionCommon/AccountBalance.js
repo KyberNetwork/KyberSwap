@@ -1,14 +1,8 @@
 import React from "react"
 import { connect } from "react-redux"
-
 import { AccountBalanceLayout } from '../../components/Exchange'
 import {acceptTermOfService} from "../../actions/globalActions"
-// import { selectToken } from '../../actions/transferActions'
-// import { hideSelectToken } from "../../actions/utilActions"
 import * as analytics from "../../utils/analytics"
-// import {openImportAccount as openImportAccountExchange} from "../../actions/exchangeActions"
-import {changeWallet} from "../../actions/globalActions"
-
 import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
@@ -37,7 +31,6 @@ export default class AccountBalance extends React.Component {
       sortValuePrice_DES:  true,
       sortType: 'Price',
       sortActive: false,
-     // isBalanceActive: true
     }
   }
 
@@ -45,11 +38,6 @@ export default class AccountBalance extends React.Component {
     if (window.innerWidth < 640) {
       this.setState({isBalanceActive: false})
     }
-    // if(this.props.isChartActive){
-    //   this.setState({ isBalanceActive: false });      
-    // }else{
-    //   this.setState({ isBalanceActive: true });            
-    // }
   }
 
   acceptTerm = () => {
@@ -90,29 +78,7 @@ export default class AccountBalance extends React.Component {
   }
 
   toggleBalanceContent = () => {
-    if (this.props.isBalanceActive){
-      this.props.onToggleChartContent(true)          
-    }else{
-      this.props.onToggleChartContent(false)                
-    }
     this.props.onToggleBalanceContent()    
-  }
-
-  onToggleChartContent = () => {
-    if (this.props.isChartActive){
-      this.props.onToggleBalanceContent(true)          
-    }else{
-      this.props.onToggleBalanceContent(false)                
-    }
-    this.props.onToggleChartContent()    
-  }
-
-  // handleEndSession = () => {
-  //   this.props.dispatch(openImportAccountExchange())
-  // }
-
-  changeWallet = (tradeType) => {
-    this.props.dispatch(changeWallet(tradeType))
   }
 
   render() {
@@ -141,15 +107,9 @@ export default class AccountBalance extends React.Component {
         account={this.props.account}
         sourceTokenSymbol={this.props.sourceActive}
         destTokenSymbol={this.props.destTokenSymbol}
-        isChartActive={this.props.isChartActive}
-        chartTimeRange={this.props.chartTimeRange}
-        onChangeChartRange={this.props.onChangeChartRange}
-        onToggleChartContent={this.onToggleChartContent}
         onToggleBalanceContent={this.onToggleBalanceContent}
-
-        acceptTerm = {this.acceptTerm}
+        // acceptTerm = {this.acceptTerm}
         tradeType = {this.props.tradeType}
-        changeWallet = {this.changeWallet}
       />
     )
   }

@@ -585,17 +585,6 @@ const exchange = (state = initState, action) => {
       newState.chart.timeRange = action.payload;
       return newState;
     }
-
-    case "EXCHANGE.TOGGLE_RIGHT_PART":{
-      var {value} = action.payload
-      newState.isOpenRight = value
-      return newState
-    }
-    case "EXCHANGE.TOGGLE_LEFT_PART":{
-      var {value} = action.payload
-      newState.isOpenLeft = value
-      return newState
-    }
     case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED":{
       
       newState.chart.isActive = false

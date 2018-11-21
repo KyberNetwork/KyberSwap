@@ -1,61 +1,59 @@
 .slide-down {
-  // padding: 10px;
   transition: all .3s;
 
-
-  // .token-slide-trigger{
-  //   top: 20px;
-  // }
   &__trigger {
     position: relative;
-    padding-left: 10px;
     cursor: pointer;
     transition: all .3s;
-    // margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
 
-    // &::after {
-    //   content: '';
-    //   display: block;
-    //   position: absolute;
-    //   left: 0;
-    //   top: 7px;
-    //   width: 12px;
-    //   height: 7px;
-    //   background-image: url($image-path + 'arrow-down-black.svg');
-    //   transform: rotate(-90deg);
-    //   transition: all .3s;
-    // }
-    .balance-content__pair, .title {
+    &-container {
       display: flex;
       align-items: center;
-      .arrow-balance-account {
+
+      .slide-arrow-container {
+        background-color: #ebebeb;
+        padding: 10px 12px 10px 20px;
+        margin-left: 15px;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+      }
+
+      .slide-arrow {
         width: 12px;
         height: 12px;
-        background-image: url($image-path + 'arrow-down-black.svg');
-        background-position: center;
+        background: url($image-path + 'arrow-down-black.svg') center no-repeat;
         background-size: contain;
-        background-repeat: no-repeat;
-        margin-left: 10px;
-        transform: rotate(-90deg);
+        transform: rotate(-180deg);
         transition: all 0.3s;
       }
+
+      &--align-right {
+        justify-content: flex-end;
+      }
+    }
+
+    &-bold {
+      font-size: 14px;
+      color: #222222;
+    }
+
+    &-light {
+      font-size: 13px;
+      color: #666666;
     }
   }
 
   &__content {
-    opacity: 0;
-    // transform: translateY(15px);
     overflow: hidden;
     max-height: 0;
-    .chart-wrapper {
-      transform: translateY(-15px);
-      overflow: hidden;
-      max-height: 0;
-      //transition: all .3s
-    }
-    // transition: all .3s cubic-bezier(0, 1, 0, 1);
+  }
+
+  &__fade-in {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: all .4s;
   }
 
   &--active {
@@ -63,21 +61,19 @@
       &::after {
         transform: rotate(0);
       }
-      .arrow-balance-account {
+
+      .slide-arrow {
         transform: rotate(0);
       }
     }
 
     .slide-down__content {
-      .chart-wrapper {
-        opacity: 1;
-        transform: translateY(0);
-        max-height: 9999px;
-      }
+      max-height: unset;
+    }
+
+    .slide-down__fade-in {
       opacity: 1;
       transform: translateY(0);
-      max-height: 9999px;
-      // transition: all .6s ease-in-out;
     }
   }
 }

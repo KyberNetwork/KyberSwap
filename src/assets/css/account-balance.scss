@@ -1,0 +1,139 @@
+.account-balance {
+  &__address-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #141927;
+  }
+
+  &__address-link {
+    font-size: 13px;
+    color: #5a5e67;
+  }
+
+  &__token-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  &__token-item {
+    display: flex;
+    width: 21.25%;
+    margin: 0 3.75% 12px 0;
+    cursor: pointer;
+
+    &:nth-child(4n+3) {
+      padding-left: 3%;
+    }
+
+    &:nth-child(4n) {
+      margin-right: 0;
+      justify-content: flex-end;
+    }
+  }
+
+  &__token-symbol {
+    font-size: 14px;
+    opacity: 0.8;
+    font-weight: 600;
+    color: #222222;
+    margin-right: 5px;
+  }
+
+  &__token-balance {
+    opacity: 0.8;
+    font-size: 14px;
+    color: #666666;
+  }
+
+  &__content-input-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+
+  &__content-search-container {
+    position: relative;
+    width: calc(100% - 170px);
+
+    &::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      display: block;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-image: url($image-path + 'icon-search-black.svg');
+      background-size: contain;
+    }
+  }
+
+  & &__content-search {
+    border: none !important;
+    border-bottom: 1px solid #727171 !important;
+    padding: 10px 35px 10px 0;
+    outline: none;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    margin-bottom: 0;
+
+    &::placeholder {
+      color: #222222;
+      font-size: 14px;
+    }
+  }
+
+  &__sort {
+    width: 120px;
+    position: relative;
+
+    .dropdown__content {
+      width: 100%;
+      z-index: 1;
+    }
+
+    &.dropdown--active {
+      .account-balance__sort-arrow {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__sort-category {
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 0 1px #f5f5f5;
+    padding: 10px;
+  }
+
+  &__sort-item {
+    cursor: pointer;
+    transition: color .3s;
+
+    &:hover {
+      color: #ef8102;
+    }
+  }
+
+  &__sort-dropdown {
+    color: #222222;
+    font-size: 14px;
+    border-bottom: 1px solid #727171;
+    padding: 9px 0;
+  }
+
+  &__sort-arrow {
+    position: absolute;
+    top: 17px;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    background: url($image-path + 'arrow-down-black.svg') center no-repeat;
+    background-size: contain;
+    transition: all 0.3s;
+  }
+}

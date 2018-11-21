@@ -1,7 +1,6 @@
 import React from "react"
 import { Modal } from '../CommonElement'
 import * as analytics from "../../utils/analytics"
-import { getAssetUrl } from "../../utils/common";
 
 const ImportByPromoCodeView = (props) => {
 
@@ -18,13 +17,10 @@ const ImportByPromoCodeView = (props) => {
   }
 
   return (
-    <div className="column column-block">
-      <div className="importer promoCode">
-        <div className="importer__symbol">
-          <img src={getAssetUrl('wallets/promo_code.svg')} />
-          <div className="importer__name">{props.translate("landing_page.promo_code") || "PROMO CODE"}</div>
-        </div>
-        <button className="importer__button" onClick={(e) => props.modalOpen()}>{props.translate("import.enter_promo_code") || "Enter your Promo Code"}</button>
+    <div>
+      <div className="import-account__block" onClick={(e) => props.modalOpen()}>
+        <div className="import-account__icon promo-code"/>
+        <div className="import-account__name">{props.translate("landing_page.promo_code") || "PROMO CODE"}</div>
       </div>
 
       <Modal
