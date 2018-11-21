@@ -18,11 +18,12 @@ export default class SearchWord extends React.Component {
         this.state={open:false}
     }
 
-    // changeSearch = (e) => {
-    //     var value = e.target.value
-    //     this.props.dispatch(marketActions.changeSearchWord(value))
-    //     this.props.dispatch(marketActions.resetListToken(value))
-    // }
+    changeSearch = (e) => {
+        var value = e.target.value
+        this.props.dispatch(marketActions.changeSearchWord(value))
+        this.props.dispatch(marketActions.resetListToken(value))
+    }
+
     showSelector = () =>{
         // this.setState({open:true})
         if (!this.props.showSearchInput) {
@@ -54,9 +55,9 @@ export default class SearchWord extends React.Component {
                         </div>
                     </DropdownContent>
                 </Dropdown> */}
-
-                
-                
+                <div>
+                    <input type="text" className="search-input" placeholder={this.props.translate("market.try_searching_for_token") || "Try Searching for Token"} value={this.props.searchWord} onChange={(e) => this.changeSearch(e)} onFocus={(e) => analytics.trackSearchETHMarket()}/>
+                </div>
             </div>
         )
     }

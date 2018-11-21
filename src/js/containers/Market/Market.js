@@ -70,7 +70,7 @@ import * as analytics from "../../utils/analytics"
 
   var data = []
   Object.keys(tokens).forEach((key) => {
-    if (key === "ETH") return
+    if (key === "ETH" || key === "WETH") return
     var item = tokens[key]
     item.market = key + ' / ' + currency
     item = { ...item, ...item[currency] }
@@ -123,47 +123,50 @@ export default class Market extends React.Component {
 
   render() {
     return (
-      <div className="market container" id="market-eth">
-        {/* <h1 className="market__title">{this.props.translate("market.eth_market") || "Ethereum Market"}</h1> */}
-        {/* <div className="market__header">
-          <div className="market__header-left">
-            <div className="market__header-search"><SearchWord /></div>
-            <div className="market__header-currency"><Currency /></div>
-          </div>
-          <div className="market__header-right"><ManageColumn /></div>
-        </div> */}
-        <div className="market-table">
-            {/* <SearchWord /> */}
-            {this.props.showSearchInput ? <div className='search-space'>
-                <input id="search-market" type="text" className="search-input" placeholder={this.props.translate("market.try_searching_for_token") || "Try Searching for Token"} 
-                  value={this.props.searchWord} 
-                  onChange={(e) => this.changeSearch(e)} 
-                  onFocus={(e) => analytics.trackSearchETHMarket()}
-                />
-            </div> : ""}
-            <div>
-              <MarketTable
-                data = {this.props.data}
-                currency = {this.props.currency}
-                tokens = {this.props.tokens}
-                listTokens = {this.props.listTokens}
-                page = {this.props.page}
-                firstPageSize = {this.props.firstPageSize}
-                originalTokens = {this.props.originalTokens}
-                searchWord = {this.props.searchWord}
-                sortType = {this.props.sortType}
-                manageColumn= {<ManageColumn />}
-                searchWordLayout = {<SearchWord showSearchInput={this.props.showSearchInput}/>}
-                currencyLayout = {<Currency />}
-              />
+      <div className="market-wrapper-container">
+        <div className="market container" id="market-eth">
+          <h1 className="market__title">{this.props.translate("market.eth_market") || "Ethereum Market"}</h1>
+          {/* <div className={"search-area"}><SearchWord /></div> */}
+          {/* <div className="market__header">
+            <div className="market__header-left">
+              <div className="market__header-search"><SearchWord /></div>
+              <div className="market__header-currency"><Currency /></div>
             </div>
+            <div className="market__header-right"><ManageColumn /></div>
+          </div> */}
+          <div className="market-table">
+              {/* <SearchWord /> */}
+              {/* {this.props.showSearchInput ? <div className='search-space'>
+                  <input id="search-market" type="text" className="search-input" placeholder={this.props.translate("market.try_searching_for_token") || "Try Searching for Token"} 
+                    value={this.props.searchWord} 
+                    onChange={(e) => this.changeSearch(e)} 
+                    onFocus={(e) => analytics.trackSearchETHMarket()}
+                  />
+              </div> : ""} */}
+              <div>
+                <MarketTable
+                  data = {this.props.data}
+                  currency = {this.props.currency}
+                  tokens = {this.props.tokens}
+                  listTokens = {this.props.listTokens}
+                  page = {this.props.page}
+                  firstPageSize = {this.props.firstPageSize}
+                  originalTokens = {this.props.originalTokens}
+                  searchWord = {this.props.searchWord}
+                  sortType = {this.props.sortType}
+                  manageColumn= {<ManageColumn />}
+                  searchWordLayout = {<SearchWord />}
+                  currencyLayout = {<Currency currentCurrency={this.props.currency}/>}
+                />
+              </div>
+          </div>
+          {/* <div className="show-more">
+            <button className={this.props.isDisabled ? 'disabled' : ''} onClick={(e) => {if(!this.props.isDisabled) this.getMoreData(e)}}>
+              {this.props.translate("market.show_more_results") || "Show more results"}
+            </button>
+          </div> */}
+          <TradingViewModal />
         </div>
-        {/* <div className="show-more">
-          <button className={this.props.isDisabled ? 'disabled' : ''} onClick={(e) => {if(!this.props.isDisabled) this.getMoreData(e)}}>
-            {this.props.translate("market.show_more_results") || "Show more results"}
-          </button>
-        </div> */}
-        <TradingViewModal />
       </div>
     )
   }

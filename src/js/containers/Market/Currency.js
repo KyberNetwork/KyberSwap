@@ -23,7 +23,7 @@ export default class Currency extends React.Component {
 
     renderCurrency(){
        return Object.keys(this.props.currency.listItem).map(key => {
-            return <a key={key} className='currency-item' onClick={(e)=>this.changeCurrency(key)}>{this.props.currency.listItem[key]}</a>
+            return <a key={key} className={this.props.currentCurrency === this.props.currency.listItem[key] ? 'currency-item active' : 'currency-item'} onClick={(e)=>this.changeCurrency(key)}>{this.props.currency.listItem[key]}</a>
         })
     }
 

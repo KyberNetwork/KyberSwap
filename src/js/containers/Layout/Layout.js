@@ -11,7 +11,7 @@ import { Processing, ExchangeHistory } from "../../containers/CommonElements/"
 import {Market} from "../Market"
 import constanst from "../../services/constants"
 import history from "../../history"
-import { clearSession, changeLanguage } from "../../actions/globalActions"
+import { clearSession, changeLanguage, setOnMobileOnly } from "../../actions/globalActions"
 import { openInfoModal } from "../../actions/utilActions"
 import { setConnection, createNewConnectionInstance } from "../../actions/connectionActions"
 import { default as _ } from 'underscore';
@@ -21,6 +21,7 @@ import * as common from "../../utils/common"
 import { toggleLeftPart as toggleExchangeLeftPart } from "../../actions/exchangeActions";
 import { toggleLeftPart as toggleTransferLeftPart } from "../../actions/transferActions";
 import * as analytics from "../../utils/analytics"
+import {isMobile} from '../../utils/common'
 
 import Language from "../../../../lang"
 
@@ -66,6 +67,9 @@ export default class Layout extends React.Component {
     analytics.trackAccessToSwap()
     window.addEventListener("resize", this.changeTabStatus);
     window.addEventListener("beforeunload", this.handleCloseWeb)
+    if (isMobile.iOS() || isMobile.Android()) {
+      this.props.dispatch(setOnMobileOnly())
+    }
   }
 
   handleCloseWeb = () => {
@@ -84,10 +88,10 @@ export default class Layout extends React.Component {
     }
   }
 
-  componentDidMount = () => {
-    analytics.trackAccessToSwap()
-    window.addEventListener("beforeunload", this.handleCloseWeb)
-  }
+  // componentDidMount = () => {
+  //   analytics.trackAccessToSwap()
+  //   window.addEventListener("beforeunload", this.handleCloseWeb)
+  // }
 
   handleCloseWeb = () => {
     analytics.exitSwap()
