@@ -6,5 +6,4 @@ export { default as SearchWord } from './SearchWord.js';
 export { default as SortColumn } from './SortColumn.js';
 export { default as TradingViewModal } from './TradingViewModal.js';
 export { default as TradingView } from './TradingView.js';
-export { default as TokenChart } from './TokenChart';
 export { default as MarketMobile } from './MarketMobile.js';

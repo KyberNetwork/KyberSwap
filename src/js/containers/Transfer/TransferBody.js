@@ -178,48 +178,48 @@ export default class Transfer extends React.Component {
   }
 
   getAdvanceLayout = () => {
-    if (!this.props.transfer.isOpenRight) {
-      return (
-        <div onClick={(e) => this.toggleRightPart(true)}>
-          <div className="toogle-side toogle-advance">
-            <div className="toogle-content toogle-content-advance">
-              <div>{this.props.translate("transaction.advanced") || "Advance"}</div>
-            </div>
-          </div>
-
-          <div className="advance-title-mobile title ">
-            <div>
-              {this.props.translate("transaction.advanced") || "Advanced"}
-              {/* <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" className="advance-arrow-up"/> */}
-              <div id="advance-arrow" className="advance-arrow-up"></div>
-            </div>
-          </div>
-        </div>
-      )
-    }
-    var gasPrice = converters.stringToBigNumber(converters.gweiToEth(this.props.transfer.gasPrice))
-    var totalGas = gasPrice.multipliedBy(this.props.transfer.gas)
-    var page = "transfer"
-    var gasConfig = (
-      <GasConfig
-        gas={this.props.transfer.gas}
-        gasPrice={this.props.transfer.gasPrice}
-        maxGasPrice={this.props.transfer.maxGasPrice}
-        gasHandler={this.specifyGas}
-        inputGasPriceHandler={this.inputGasPriceHandler}
-        selectedGasHandler={this.selectedGasHandler}
-        gasPriceError={this.props.transfer.errors.gasPriceError}
-        gasError={this.props.transfer.errors.gasError}
-        totalGas={totalGas.toString()}
-        translate={this.props.translate}
-        gasPriceSuggest={this.props.transfer.gasPriceSuggest}
-        selectedGas={this.props.transfer.selectedGas}
-        page={page}
-      />
-    )
-
-    var advanceConfig = <AdvanceConfigLayout gasConfig={gasConfig} translate={this.props.translate} />
-    return advanceConfig
+    // if (!this.props.transfer.isOpenRight) {
+    //   return (
+    //     <div onClick={(e) => this.toggleRightPart(true)}>
+    //       <div className="toogle-side toogle-advance">
+    //         <div className="toogle-content toogle-content-advance">
+    //           <div>{this.props.translate("transaction.advanced") || "Advance"}</div>
+    //         </div>
+    //       </div>
+    //
+    //       <div className="advance-title-mobile title ">
+    //         <div>
+    //           {this.props.translate("transaction.advanced") || "Advanced"}
+    //           {/* <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" className="advance-arrow-up"/> */}
+    //           <div id="advance-arrow" className="advance-arrow-up"></div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   )
+    // }
+    // var gasPrice = converters.stringToBigNumber(converters.gweiToEth(this.props.transfer.gasPrice))
+    // var totalGas = gasPrice.multipliedBy(this.props.transfer.gas)
+    // var page = "transfer"
+    // var gasConfig = (
+    //   <GasConfig
+    //     gas={this.props.transfer.gas}
+    //     gasPrice={this.props.transfer.gasPrice}
+    //     maxGasPrice={this.props.transfer.maxGasPrice}
+    //     gasHandler={this.specifyGas}
+    //     inputGasPriceHandler={this.inputGasPriceHandler}
+    //     selectedGasHandler={this.selectedGasHandler}
+    //     gasPriceError={this.props.transfer.errors.gasPriceError}
+    //     gasError={this.props.transfer.errors.gasError}
+    //     totalGas={totalGas.toString()}
+    //     translate={this.props.translate}
+    //     gasPriceSuggest={this.props.transfer.gasPriceSuggest}
+    //     selectedGas={this.props.transfer.selectedGas}
+    //     page={page}
+    //   />
+    // )
+    //
+    // var advanceConfig = <AdvanceConfigLayout gasConfig={gasConfig} translate={this.props.translate} />
+    // return advanceConfig
   }
 
   toggleLeftPart = (value) => {
