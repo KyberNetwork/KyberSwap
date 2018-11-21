@@ -544,19 +544,19 @@ export default class MarketTable extends React.Component {
               {this.props.translate("market.eth_market") || "Ethereum market"}
             </div>
             <div>
-              <div className="for-mobile-only search-word-mobile">
+              {/* <div className="for-mobile-only search-word-mobile">
                 {this.props.searchWordLayout}
-              </div>
+              </div> */}
               <div className="market__header-right">        
                 {this.props.manageColumn}
               </div>
             </div>
           </div>
-        
-          {!this.props.isOnMobile && <div className="for-mobile-only">
-            {this.props.currencyLayout}
-          </div>}
 
+          {/* {!this.props.isOnMobile && <div className="for-mobile-only">
+            {this.props.currencyLayout}
+          </div>} */}
+          {this.props.searchWordLayout}
         </div>
         {this.props.isOnMobile ? 
           <MarketMobile 

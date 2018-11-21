@@ -51,6 +51,7 @@ export default class MarketMobile extends React.Component {
               <div className={"cell small-6 token-pair"}>
                 <img src={getAssetUrl(`tokens/${value.info.symbol.toLowerCase()}.svg`)} />
                 {value.market}
+                {value.info.isNew ? <div className="new-token">{this.props.translate("market.new_token" || "NEW")}</div>:""}
               </div>
               <div className={"cell small-6 sell-price"}>
                 <div>
