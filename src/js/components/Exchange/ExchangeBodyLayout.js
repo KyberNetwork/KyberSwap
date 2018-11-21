@@ -98,14 +98,15 @@ const ExchangeBodyLayout = (props) => {
                   {/*{!props.isChangingWallet ? errorShow : ''}*/}
                   {/*</div>*/}
                 </div>
-                <div className="exchange-content__label">{props.sourceTokenSymbol}</div>
-              </div>
-              {props.account === false && (
-                <div className="exchange-content__label">{props.sourceTokenSymbol}</div>
-              )}
-              {props.account !== false && (
+                {props.account === false && (
+                  <div className="exchange-content__label">{props.sourceTokenSymbol}</div>
+                )}
+                {props.account !== false && (
                 <div className="exchange-content__label">{props.swapBalance}</div>
               )}
+              </div>
+              
+              
 
               <div className={"exchange-content__item--absolute"}>
               <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
