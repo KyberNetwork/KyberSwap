@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 import * as converters from "../../utils/converter"
 import { TransactionConfig } from "../../components/Transaction"
 import { ExchangeBodyLayout } from "../../components/Exchange"
-import { AddressBalance, AdvanceConfigLayout, GasConfig } from "../../components/TransactionCommon"
+import { AdvanceConfigLayout, GasConfig, MinConversionRate } from "../../components/TransactionCommon"
 import { TransactionLoading, Token } from "../CommonElements"
 import { TokenSelector, AccountBalance } from "../TransactionCommon"
 import * as validators from "../../utils/validators"
@@ -319,21 +319,27 @@ export default class ExchangeBody extends React.Component {
   }
 
   getAdvanceLayout = () => {
+    const minConversionRate = (
+      <MinConversionRate
+        isSelectToken={this.props.exchange.isSelectToken}
+        minConversionRate={this.props.exchange.minConversionRate}
+        offeredRate={this.props.exchange.offeredRate}
+        slippageRate={this.props.exchange.slippageRate}
+        onSlippageRateChanged={this.handleSlippageRateChanged}
+        sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
+        destTokenSymbol={this.props.exchange.destTokenSymbol}
+      />
+    );
+
     return (
       <AdvanceConfigLayout
         selectedGas={this.props.exchange.selectedGas}
         selectedGasHandler={this.selectedGasHandler}
         gasPriceSuggest={this.props.exchange.gasPriceSuggest}
-        onSlippageRateChanged={this.handleSlippageRateChanged}
-        isSelectToken={this.props.exchange.isSelectToken}
-        minConversionRate={this.props.exchange.minConversionRate}
-        offeredRate={this.props.exchange.offeredRate}
-        slippageRate={this.props.exchange.slippageRate}
-        sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
-        destTokenSymbol={this.props.exchange.destTokenSymbol}
         translate={this.props.translate}
         isBalanceActive = {this.props.exchange.isBalanceActive}
         toggleBalanceContent={this.toggleBalanceContent}
+        minConversionRate={minConversionRate}
       />
     )
   }

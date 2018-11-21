@@ -5,7 +5,7 @@ import * as converters from "../../utils/converter"
 import * as validators from "../../utils/validators"
 import { TransferForm } from "../../components/Transaction"
 import { TransactionLoading } from "../CommonElements"
-import { AddressBalance, AdvanceConfigLayout, GasConfig } from "../../components/TransactionCommon"
+import { AdvanceConfigLayout, GasConfig } from "../../components/TransactionCommon"
 import { TokenSelector, AccountBalance } from "../TransactionCommon"
 import { hideSelectToken } from "../../actions/utilActions"
 import { verifyAccount } from "../../utils/validators"
@@ -161,13 +161,10 @@ export default class Transfer extends React.Component {
   }
 
   inputGasPriceHandler = (value) => {
-    //this.setState({selectedGas: "undefined"})
     this.specifyGasPrice(value)
   }
 
   selectedGasHandler = (value, level) => {
-    //this.setState({selectedGas: level})
-
     this.props.dispatch(transferActions.seSelectedGas(level))
     this.specifyGasPrice(value)
   }
@@ -178,48 +175,16 @@ export default class Transfer extends React.Component {
   }
 
   getAdvanceLayout = () => {
-    // if (!this.props.transfer.isOpenRight) {
-    //   return (
-    //     <div onClick={(e) => this.toggleRightPart(true)}>
-    //       <div className="toogle-side toogle-advance">
-    //         <div className="toogle-content toogle-content-advance">
-    //           <div>{this.props.translate("transaction.advanced") || "Advance"}</div>
-    //         </div>
-    //       </div>
-    //
-    //       <div className="advance-title-mobile title ">
-    //         <div>
-    //           {this.props.translate("transaction.advanced") || "Advanced"}
-    //           {/* <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow" className="advance-arrow-up"/> */}
-    //           <div id="advance-arrow" className="advance-arrow-up"></div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   )
-    // }
-    // var gasPrice = converters.stringToBigNumber(converters.gweiToEth(this.props.transfer.gasPrice))
-    // var totalGas = gasPrice.multipliedBy(this.props.transfer.gas)
-    // var page = "transfer"
-    // var gasConfig = (
-    //   <GasConfig
-    //     gas={this.props.transfer.gas}
-    //     gasPrice={this.props.transfer.gasPrice}
-    //     maxGasPrice={this.props.transfer.maxGasPrice}
-    //     gasHandler={this.specifyGas}
-    //     inputGasPriceHandler={this.inputGasPriceHandler}
-    //     selectedGasHandler={this.selectedGasHandler}
-    //     gasPriceError={this.props.transfer.errors.gasPriceError}
-    //     gasError={this.props.transfer.errors.gasError}
-    //     totalGas={totalGas.toString()}
-    //     translate={this.props.translate}
-    //     gasPriceSuggest={this.props.transfer.gasPriceSuggest}
-    //     selectedGas={this.props.transfer.selectedGas}
-    //     page={page}
-    //   />
-    // )
-    //
-    // var advanceConfig = <AdvanceConfigLayout gasConfig={gasConfig} translate={this.props.translate} />
-    // return advanceConfig
+    return (
+      <AdvanceConfigLayout
+        selectedGas={this.props.transfer.selectedGas}
+        selectedGasHandler={this.selectedGasHandler}
+        gasPriceSuggest={this.props.transfer.gasPriceSuggest}
+        translate={this.props.translate}
+        isBalanceActive = {this.props.transfer.isBalanceActive}
+        toggleBalanceContent={this.toggleBalanceContent}
+      />
+    )
   }
 
   toggleLeftPart = (value) => {
@@ -228,18 +193,6 @@ export default class Transfer extends React.Component {
   }
 
   getBalanceLayout = () => {
-    if (!this.props.transfer.isOpenLeft) {
-      // return (
-      //   <div className="toogle-side toogle-wallet" onClick={(e) => this.toggleLeftPart(true)}>
-      //     <div className="toogle-content toogle-content-wallet">
-      //       <div>{this.props.translate("transaction.wallet") || "Wallet"}</div>
-      //     </div>
-      //     {/* <div className="toogle-side-dropdown"></div> */}
-      //     <div className="wings-dropdown"></div>
-      //   </div>
-      // )
-      return
-    }
     return (
       <AccountBalance
         chooseToken={this.chooseToken}
@@ -249,7 +202,6 @@ export default class Transfer extends React.Component {
         chartTimeRange={this.props.transfer.chart.timeRange}
         onChangeChartRange={this.changeChartRange}
         onToggleChartContent={this.toggleChartContent}
-
         onToggleBalanceContent={this.toggleBalanceContent}
         isBalanceActive = {this.props.transfer.isBalanceActive}
         tradeType = "transfer"
@@ -313,18 +265,6 @@ export default class Transfer extends React.Component {
       />
     )
 
-    var addressBalanceLayout = ""
-    if (this.props.account.account !== false) {
-      addressBalanceLayout = (
-        <AddressBalance
-          setAmount={this.setAmount}
-          balance={addressBalance}
-          translate={this.props.translate}
-          tradeType="transfer"
-        />
-      )
-    }
-
     return (
       <TransferForm
         account={this.props.account.account}
@@ -336,7 +276,6 @@ export default class Transfer extends React.Component {
         transactionLoadingScreen={transactionLoadingScreen}
         input={input}
         errors={errors}
-        addressBalanceLayout={addressBalanceLayout}
         translate={this.props.translate}
         onBlur={this.onBlur}
         onFocus={this.onFocus}
@@ -357,6 +296,7 @@ export default class Transfer extends React.Component {
         changeWalletType = {this.props.global.changeWalletType}
         closeChangeWallet = {this.closeChangeWallet}
         global={this.props.global}
+        addressBalance={addressBalance}
       />
     )
   }
