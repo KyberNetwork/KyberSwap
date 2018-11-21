@@ -224,14 +224,6 @@ export function updateCurrentBalance(tokenBalance, txHash) {
   }
 }
 
-
-export function setTermAndServices(value){
-  return {
-    type: "TRANSFER.SET_TERM_AND_SERVICES",
-    payload: {value}
-  }
-}
-
 export function fetchGasSnapshot(){
   return {
     type: "TRANSFER.FETCH_GAS_SNAPSHOT"
@@ -244,16 +236,6 @@ export function fetchSnapshotGasSuccess(){
   }
 }
 
-// export function fetchGas(){
-//   return {
-//     type: "TRANSFER.FETCH_GAS"
-//   }
-// }
-// export function fetchGasSuccess(){
-//   return {
-//     type: "TRANSFER.FETCH_GAS_SUCCESS"
-//   }
-// }
 export function estimateGasTransfer(){
   return {
     type: "TRANSFER.ESTIMATE_GAS_USED"
