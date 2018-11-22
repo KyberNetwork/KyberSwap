@@ -31,10 +31,25 @@ const ImportByPKeyView = (props) => {
 
   return (
     <div>
-      <div className="import-account__block" onClick={(e) => props.modalOpen()}>
-        <div className="import-account__icon private-key"/>
-        <div className="import-account__name">{props.translate("import.from_private_key") || "PRIVATE KEY"}</div>
-      </div>
+      {!props.isOnMobile && (
+        <div className="import-account__block" onClick={(e) => props.modalOpen()}>
+          <div className="import-account__icon private-key"/>
+          <div className="import-account__name">{props.translate("import.from_private_key") || "PRIVATE KEY"}</div>
+        </div>
+      )}
+
+      {props.isOnMobile && (
+        <div className={"import-account__block"}>
+          <div className={"import-account__block-left"}>
+            <div className="import-account__icon private-key"/>
+            <div>
+              <div className="import-account__name">{props.translate("import.from_private_key") || "PRIVATE KEY"}</div>
+              <div className="import-account__desc">Access your Wallet</div>
+            </div>
+          </div>
+          <div className="import-account__block-right" onClick={(e) => props.modalOpen()}>Enter</div>
+        </div>
+      )}
 
       <Modal
         className={{ base: 'reveal medium', afterOpen: 'reveal medium import-privatekey' }}
