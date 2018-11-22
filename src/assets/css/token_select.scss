@@ -6,7 +6,7 @@
   }
 
   .list-item{
-    height: 250px;
+    height: 300px;
     overflow: auto;
     padding-right: 10px;
     &.custom-scroll {
@@ -81,10 +81,44 @@
   }
   .token-selector .dropdown.dropdown--active .select-item{
     display: block;
-    border: 1px solid hsla(0,0%,80%,.72);
-    border-top: none;
+    // border: 1px solid hsla(0,0%,80%,.72);
+    border: none;
     color: inherit;
-    box-shadow: none;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+    width: 350px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    padding: 25px 25px 40px;
+    right: -14px;
+    top: -63px;
+    .current-token {
+      // display: flex;
+      align-items: center;
+      justify-content: space-between;
+      >div {
+        span:first-child {
+          font-size: 14px;
+          color: #999999;
+          font-weight: 600;
+          letter-spacing: -0.4px;
+        }
+        img {
+          margin: 0 10px;
+        }
+        span:last-child {
+          text-transform: uppercase;
+          font-weight: 600;
+          font-size: 14px;
+          color: #222222;
+        } 
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    &:hover {
+      cursor: default;
+    }
   }
   > input, > input:focus{
     text-align: right;
@@ -93,7 +127,7 @@
     font-size: 20px;
     font-weight: bold;
     background-color: transparent!important;
-    border-top: 1px solid #ebebeb!important;
+    // border-top: 1px solid #ebebeb!important;
   }
   .token-selector {
     input {
@@ -103,10 +137,16 @@
       background-image: url(../img/search.png);
       background-repeat: no-repeat;
       background-size: 30px 30px;
-      background-position-y: center;
-      text-indent: 20px;
+      background-position: 8px center;
+      text-indent: 33px;
+      border: solid 1px #e8e8e8;
+      box-shadow: none;
       &::placeholder {
         color: #222;
+      }
+      &:focus {
+        outline: none;
+        box-shadow: none;
       }
     }
     .select-item {
@@ -156,6 +196,18 @@
                     justify-content: space-between;
                   }
                 }
+              }
+            }
+            .token-info {
+              margin-right: 40px;
+              display: flex;
+              align-items: center;
+              min-width: 115px;
+              .item-icon {
+                margin-right: 25px;
+              }
+              div:last-child {
+                font-size: 15px;
               }
             }
           }
@@ -304,14 +356,14 @@
     border-bottom: none;
     .search-item{
       padding: 15px;
-      margin-bottom: 10px;
+      // margin-bottom: 10px;
     }
   }
 
   .list-item{
     overflow-y: auto;
     .token-item{
-      padding: 9px 20px;
+      padding: 12px 20px;
       display: flex;
       justify-content: space-between;
       .d-flex{
@@ -349,7 +401,8 @@
         color:$alert-color;
       }
       &:hover{
-        background-color: rgba(239, 129, 2, 0.1)
+        background-color: rgba(239, 129, 2, 0.1);
+        cursor: pointer;
       }
     }
   }
