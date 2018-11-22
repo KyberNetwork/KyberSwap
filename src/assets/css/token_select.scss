@@ -268,15 +268,31 @@
       align-items: center;
       margin-right: 15px;
     }
-    .focus-name{
+
+    .focus-name {
       text-transform: uppercase;
       font-size: 14px;
       font-weight: 600;
       letter-spacing: -0.4px;
       color: #222222;
       line-height: 1.2;
+
+      &--mobile {
+        display: none;
+      }
+
+      @media screen and (max-width: 650px) {
+        &--desktop {
+          display: none;
+        }
+
+        &--mobile {
+          display: block;
+        }
+      }
     }
-    .focus-balance{
+
+    .focus-balance {
       color: #9997A5;
       font-size: 0.8rem;
       .token-balance{

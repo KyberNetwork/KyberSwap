@@ -8,6 +8,7 @@
   &__address-link {
     font-size: 13px;
     color: #5a5e67;
+    word-break: break-all;
   }
 
   &__token-list {
@@ -135,5 +136,50 @@
     background: url($image-path + 'arrow-down-black.svg') center no-repeat;
     background-size: contain;
     transition: all 0.3s;
+  }
+
+  @media screen and (max-width: 900px) {
+    &__address-text {
+      display: block;
+    }
+
+    &__content-input-container {
+      display: block;
+    }
+
+    &__content-search-container {
+      width: 100%;
+      margin-bottom: 10px;
+
+      &::before {
+        right: 0;
+      }
+    }
+
+    &__sort {
+      width: 100%;
+    }
+
+    &__sort-arrow {
+      top: 15px;
+    }
+
+    &__token-item {
+      width: 48%;
+      margin: 0;
+
+      &:nth-child(4n+3) {
+        padding-left: unset;
+      }
+
+      &:nth-child(4n) {
+        margin-right: unset;
+        justify-content: unset;
+      }
+
+      &:nth-child(2n) {
+        justify-content: flex-end;
+      }
+    }
   }
 }
