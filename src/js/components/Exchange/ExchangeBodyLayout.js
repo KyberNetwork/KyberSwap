@@ -99,15 +99,12 @@ const ExchangeBodyLayout = (props) => {
                   {/*</div>*/}
                 </div>
                 {props.account === false && (
-                  <div className="exchange-content__label">{props.sourceTokenSymbol}</div>
+                  <div className="exchange-content__label exchange-content__label--right">{props.sourceTokenSymbol}</div>
                 )}
                 {props.account !== false && (
-                <div className="exchange-content__label">{props.swapBalance}</div>
-              )}
+                  <div className="exchange-content__label exchange-content__label--right">{props.swapBalance}</div>
+                )}
               </div>
-              
-              
-
               <div className={"exchange-content__item--absolute"}>
               <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
                 <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
@@ -133,7 +130,7 @@ const ExchangeBodyLayout = (props) => {
                     onChange={handleChangeDest}
                   />
                 </div>
-                <div className="exchange-content__label">{props.destTokenSymbol}</div>
+                <div className="exchange-content__label exchange-content__label--right">{props.destTokenSymbol}</div>
               </div>
             </div>
 

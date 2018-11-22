@@ -29,7 +29,9 @@ const TransferForm = (props) => {
             )}
             <div className={"exchange-content container"}>
               <div className={"exchange-content__item exchange-content__item--left"}>
-                <div className="exchange-content__label">{props.translate("transaction.exchange_from") || "From"}</div>
+                <div className="exchange-content__label exchange-content__label--wide">
+                  {props.translate("transaction.exchange_from") || "From"}
+                </div>
                 <div className="exchange-content__select select-token-panel">{props.tokenTransferSelect}</div>
                 <div className="exchange-content__input-container">
                   <input
@@ -61,7 +63,7 @@ const TransferForm = (props) => {
               </div>
 
               <div className={"exchange-content__item exchange-content__item--right"}>
-                <div className="exchange-content__label">To Address</div>
+                <div className="exchange-content__label exchange-content__label--wide">To Address</div>
                 <div className="exchange-content__input-container exchange-content__input-container--to">
                   <input
                     className="exchange-content__input"

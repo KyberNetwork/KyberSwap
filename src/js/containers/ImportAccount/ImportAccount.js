@@ -71,21 +71,6 @@ export default class ImportAccount extends React.Component {
     }
   }
 
-  getAppDownloadHtml(downloadLink) {
-    return (<div className="download-mobile">
-      <div className="mobile-left">
-        <div className="mobile-icon"></div>
-        <div className="mobile-content">
-          <div className="mobile-title">Coinbase Wallet</div>
-          <div className="mobile-desc">Ethereum Wallet & DApp Browser</div>
-        </div>
-      </div>
-      <a href={downloadLink} className="mobile-btn" target="_blank">
-        {this.props.translate("download") || "Download"}
-      </a>
-    </div>)
-  }
-
   render() {
     {/*<LandingPage translate={this.props.translate} tradeType={this.props.tradeType}/>*/}
     return (

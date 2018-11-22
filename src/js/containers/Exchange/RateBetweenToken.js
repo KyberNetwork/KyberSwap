@@ -1,20 +1,19 @@
-
 import React from "react"
 import { connect } from "react-redux"
 import { roundingNumber } from "../../utils/converter"
 import * as actions from "../../actions/exchangeActions"
 import { getTranslate } from 'react-localize-redux';
 import * as converter from '../../utils/converter'
-//import ReactTooltip from 'react-tooltip'
 
 @connect((store, props) => {
   var rateEthUsd = store.tokens.tokens.ETH.rateUSD
   var sourceToken = props.exchangeRate.sourceToken
   var tokens = store.tokens.tokens
   var rateUSD = 0
-  if (sourceToken === "ETH"){
+
+  if (sourceToken === "ETH") {
     rateUSD = tokens[sourceToken].rateUSD    
-  }else{
+  } else {
     var rateTokenETH = converter.toT(tokens[sourceToken].rate, 18)
     rateUSD = rateTokenETH * rateEthUsd
   }
