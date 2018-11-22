@@ -56,7 +56,10 @@ const TokenSelectorView = (props) => {
                 <img src={getAssetUrl(`tokens/${focusItem.symbol}.svg`)} />
               </div>
               <div>
-                <div className="focus-name">{focusItem.name}</div>
+                <div className="focus-name">
+                  <span className={"focus-name--desktop"}>{focusItem.name}</span>
+                  <span className={"focus-name--mobile"}>{focusItem.symbol}</span>
+                </div>
               </div>
             </div>
             <div><i className={'k k-angle bold ' + (props.open ? 'up' : 'down')}></i></div>

@@ -549,23 +549,9 @@ export function closeImportAccountExchange(){
   }
 }
 
-export function toggleChartContent(value = null) {
-  return {
-    type: "EXCHANGE.TOGGLE_CHART_CONTENT",
-    payload: value
-  }
-}
-
 export function toggleBalanceContent(value = null){
   return {
     type: "EXCHANGE.TOGGLE_BALANCE_CONTENT",
     payload: value
-  }
-}
-
-export function setChartTimeRange(timeRange) {
-  return {
-    type: "EXCHANGE.SET_CHART_TIME_RANGE",
-    payload: timeRange
   }
 }

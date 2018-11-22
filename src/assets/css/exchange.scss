@@ -63,13 +63,21 @@
     align-items: center;
     position: relative;
 
-    &:first-child,
-    &:last-child {
+    &--left,
+    &--right {
       width: calc(50% - 2px);
       height: 48px;
       background-color: white;
       box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
       border: solid 0.8px rgba(204, 204, 204, 0.72);
+    }
+
+    &--left {
+      padding: 0 25px 0 20px;
+    }
+
+    &--right {
+      padding: 0 20px 0 25px;
     }
 
     &--absolute {
@@ -85,14 +93,6 @@
       justify-content: center;
       align-items: center;
       z-index: 1;
-    }
-
-    &--left {
-      padding: 0 25px 0 20px;
-    }
-
-    &--right {
-      padding: 0 20px 0 25px;
     }
   }
 
@@ -119,7 +119,7 @@
   }
 
   &__select {
-    min-width: 200px;
+    min-width: 215px;
   }
 
   &__input-container {
@@ -213,6 +213,10 @@
         }
       }
     }
+
+    &--to {
+      border-left: none;
+    }
   }
 
   & &__input {
@@ -222,6 +226,7 @@
     padding: 0 15px;
     min-height: 32px;
     height: 32px;
+    outline: none;
     border: none !important;
     box-shadow: none !important;
 
@@ -234,6 +239,103 @@
     //   transform: scaleX(3) scaleY(1.2);
     //   transform-origin: 100%;
     // }
+  }
+
+  @media screen and (max-width: 900px) {
+    $labelWidth: 40px;
+    $selectorWidth: 200px;
+
+    display: block;
+
+    &__item {
+      width: 100%;
+      border: none;
+      box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
+
+      &--left {
+        margin-bottom: 1px;
+        padding-right: 20px;
+      }
+
+      &--right {
+        padding-left: 20px;
+      }
+
+      &--absolute {
+        background-color: white;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    &__select {
+      min-width: unset;
+      width: $selectorWidth;
+    }
+
+    &__label {
+      width: $labelWidth;
+
+      &--right {
+        text-align: right;
+      }
+
+      &--wide {
+        width: 80px;
+      }
+    }
+
+    &__input-container {
+      width: calc(100% - (#{$labelWidth} + #{$labelWidth} + #{$selectorWidth}));
+
+      &--to {
+        width: calc(100% - 80px);
+
+        .exchange-content__input {
+          width: 100%;
+          padding-left: 2px;
+        }
+      }
+    }
+
+    .k.k-exchange {
+      background-image: url($image-path + 'icon-swap-down.svg');
+    }
+  }
+
+  @media screen and (max-width: 650px) {
+    &__item {
+      padding: 0 5px;
+      justify-content: space-between;
+    }
+
+    &__label {
+      display: none;
+    }
+
+    &__select {
+      width: unset;
+    }
+
+    &__input-container {
+      margin-left: 0;
+      border-left: none;
+      width: 200px;
+    }
+
+    &__input-container--to {
+      width: 100%;
+
+      .exchange-content__input {
+        padding: 0 15px 0 12px;
+        width: 100%;
+      }
+    }
+
+    &__input {
+      padding-right: 10px;
+      text-align: right;
+    }
   }
 }
 
@@ -292,6 +394,12 @@
       margin-right: 0;
     }
   }
+
+  @media screen and (max-width: 650px) {
+    &-container {
+      flex-direction: column-reverse;
+    }
+  }
 }
 
 .exchange-account {
@@ -332,6 +440,36 @@
     width: 35%;
     padding-left: 50px;
   }
+
+  @media screen and (max-width: 900px) {
+    &__content {
+      display: block;
+    }
+
+    &__balance {
+      width: 100%;
+      padding-right: 0;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    &__adv-config {
+      width: 100%;
+      padding-left: 0;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    &__container {
+      padding-bottom: 5px;
+    }
+
+    &__content {
+      margin-bottom: 25px;
+    }
+  }
 }
 
 .exchange-button {
@@ -364,11 +502,17 @@
       top: 1px;
     }
   }
+
+  @media screen and (max-width: 400px) {
+    &__button {
+      width: 100%;
+      padding: 10px 46px;
+    }
+  }
 }
 
 .exchange-terms {
   font-size: 12px;
-  font-weight: 600;
   font-style: italic;
   color: #666666;
 
@@ -377,6 +521,29 @@
 
     &:hover {
       text-decoration: underline;
+    }
+  }
+}
+
+
+.swap-balance-modal{
+  position: relative;
+  .dropdown__content {
+    right: 0;
+    width: 170px;
+    top: 25px;
+  }
+  .select-item{
+    background-color: white;
+    border: 1px solid #eee;
+    .list-item {
+      >div{
+        padding: 10px;
+        cursor: pointer;
+        &:hover{
+          background-color: #eee;
+        }
+      }
     }
   }
 }

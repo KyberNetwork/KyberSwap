@@ -126,11 +126,11 @@ $box-shadow-tab: 0 10px 20px 0 rgba(135, 136, 136, 0.26), 0 6px 6px 0 rgba(173, 
 
 // 2. Breakpoints
 // --------------
-
-
 $break-point-large: 1024px;
 $break-point-medium: 768px;
 $break-point-small: 640px;
+$print-breakpoint: large;
+$breakpoint-classes: (small medium large);
 $breakpoints: (
   small: 0,
   mid-small: 480px,
@@ -140,10 +140,6 @@ $breakpoints: (
   xlarge: 1200px,
   xxlarge: 1440px,
 );
-
-
-$print-breakpoint: large;
-$breakpoint-classes: (small medium large);
 
 // 3. The Grid
 // -----------

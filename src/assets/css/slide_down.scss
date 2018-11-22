@@ -13,11 +13,11 @@
       align-items: center;
 
       .slide-arrow-container {
-        background-color: #ebebeb;
         padding: 10px 12px 10px 20px;
         margin-left: 15px;
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
+        transition: background-color .3s;
       }
 
       .slide-arrow {
@@ -74,6 +74,16 @@
     .slide-down__fade-in {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    .slide-arrow-container {
+      background-color: #ebebeb;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    &__trigger-container {
+      justify-content: space-between;
     }
   }
 }

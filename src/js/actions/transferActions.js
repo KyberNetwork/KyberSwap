@@ -224,14 +224,6 @@ export function updateCurrentBalance(tokenBalance, txHash) {
   }
 }
 
-
-export function setTermAndServices(value){
-  return {
-    type: "TRANSFER.SET_TERM_AND_SERVICES",
-    payload: {value}
-  }
-}
-
 export function fetchGasSnapshot(){
   return {
     type: "TRANSFER.FETCH_GAS_SNAPSHOT"
@@ -244,16 +236,6 @@ export function fetchSnapshotGasSuccess(){
   }
 }
 
-// export function fetchGas(){
-//   return {
-//     type: "TRANSFER.FETCH_GAS"
-//   }
-// }
-// export function fetchGasSuccess(){
-//   return {
-//     type: "TRANSFER.FETCH_GAS_SUCCESS"
-//   }
-// }
 export function estimateGasTransfer(){
   return {
     type: "TRANSFER.ESTIMATE_GAS_USED"
@@ -314,38 +296,9 @@ export function closeImportAccountTransfer(){
   }
 }
 
-export function toggleChartContent(value = null) {
-  return {
-    type: "TRANSFER.TOGGLE_CHART_CONTENT",
-    payload: value
-  }
-}
-
 export function toggleBalanceContent(value = null){
   return {
     type: "TRANSFER.TOGGLE_BALANCE_CONTENT",
     payload: value
-  }
-}
-
-export function setChartTimeRange(timeRange) {
-  return {
-    type: "TRANSFER.SET_CHART_TIME_RANGE",
-    payload: timeRange
-  }
-}
-
-
-export function toggleRightPart(value){
-  return {
-    type: "TRANSFER.TOGGLE_RIGHT_PART",
-    payload: {value}
-  }
-}
-
-export function toggleLeftPart(value){
-  return {
-    type: "TRANSFER.TOGGLE_LEFT_PART",
-    payload: {value}
   }
 }
