@@ -55,13 +55,6 @@ const TransferForm = (props) => {
                 <div className="exchange-content__label">{props.sourceActive}</div>
               </div>
 
-              <div className={"exchange-content__item--absolute"}>
-              <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
-                <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
-              </span>
-                <ReactTooltip place="bottom" id="swap" type="light"/>
-              </div>
-
               <div className={"exchange-content__item exchange-content__item--right"}>
                 <div className="exchange-content__label exchange-content__label--wide">To Address</div>
                 <div className="exchange-content__input-container exchange-content__input-container--to">
