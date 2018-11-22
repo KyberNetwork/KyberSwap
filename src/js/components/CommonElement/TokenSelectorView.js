@@ -24,13 +24,13 @@ const TokenSelectorView = (props) => {
         return (
           <div key={key} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item">
             <div className="d-flex">
-              <div className="item-icon">
-                <img src={getAssetUrl(`tokens/${item.symbol}.svg`)} />
+              <div className={"token-info"}>
+                <div className="item-icon">
+                  <img src={getAssetUrl(`tokens/${item.symbol}.svg`)} />
+                </div>
+                <div>{item.symbol}</div>
               </div>
-
-              <div>
-                <div>{item.name}</div>
-                {props.type !== "des" &&
+              {props.type !== "des" &&
                 <div className="item-balance">
                   {props.account !== false && (
                     <div title={balance} class="item-balance-value">
@@ -38,8 +38,7 @@ const TokenSelectorView = (props) => {
                     </div>
                   )}
                 </div>
-                }
-              </div>
+              }
             </div>
           </div>
         )
@@ -49,7 +48,7 @@ const TokenSelectorView = (props) => {
 
   return (
     <div className="token-selector">
-      <Dropdown onShow = {(e) => props.showTokens(e)} onHide = {(e) => props.hideTokens(e)}>
+      <Dropdown active={props.open} onShow = {(e) => props.showTokens(e)} onHide = {(e) => props.hideTokens(e)} >
         <DropdownTrigger className="notifications-toggle">
           <div className="focus-item d-flex">
             <div className="d-flex">
@@ -68,6 +67,14 @@ const TokenSelectorView = (props) => {
         </DropdownTrigger>
         <DropdownContent>
           <div className="select-item">
+            <div onClick={(e) => props.hideTokens(e)} className="d-flex current-token">
+              <div>
+                <span>{props.type !== "des" ? "From" : "To"}</span>
+                <img src={getAssetUrl(`tokens/${focusItem.symbol}.svg`)} />
+                <span>{focusItem.name}</span>
+              </div>
+              <div><i className={'k k-angle bold ' + (props.open ? 'up' : 'down')}></i></div>
+            </div>
             <div className="search-item">
               <input value={props.searchWord} placeholder={props.translate("try_dai") || `Try "DAI"`} onChange={(e) => props.changeWord(e)} type="text" onFocus={(e) => analytics.trackSearchToken()}/>
             </div>

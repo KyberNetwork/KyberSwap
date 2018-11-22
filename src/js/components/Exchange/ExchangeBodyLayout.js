@@ -11,6 +11,7 @@ import BLOCKCHAIN_INFO from "../../../../env";
 import { RateBetweenToken } from "../../containers/Exchange";
 import * as converters from "../../utils/converter";
 import { getAssetUrl } from "../../utils/common";
+import BigInput from "./BigInput";
 
 const ExchangeBodyLayout = (props) => {
   function handleChangeSource(e) {
@@ -82,24 +83,22 @@ const ExchangeBodyLayout = (props) => {
               <div className={"exchange-content__item exchange-content__item--left"}>
                 <div className="exchange-content__label">{props.translate("transaction.exchange_from") || "From"}</div>
                 <div className="exchange-content__select select-token-panel">{props.tokenSourceSelect}</div>
-                <div className="exchange-content__input-container">
-                  <input
-                    className="exchange-content__input"
-                    min="0"
-                    step="0.000001"
-                    placeholder="0" autoFocus
-                    type="text" maxLength="50" autoComplete="off"
-                    value={props.input.sourceAmount.value}
-                    onFocus={props.input.sourceAmount.onFocus}
-                    onBlur={props.input.sourceAmount.onBlur}
-                    onChange={handleChangeSource}
-                  />
-                  {/*<div className={errorExchange ? "error" : ""}>*/}
-                  {/*{!props.isChangingWallet ? errorShow : ''}*/}
-                  {/*</div>*/}
+                <div className={`exchange-content__input-container ${errorExchange ? "error" : ""}`}>
+                <BigInput 
+                  value={props.input.sourceAmount.value}
+                  onFocus={props.input.sourceAmount.onFocus}
+                  onBlur={props.input.sourceAmount.onBlur}
+                  handleChangeValue={handleChangeSource}
+                  tokenSymbol={props.sourceTokenSymbol}
+                  type={"source"}
+                  focus={props.focus}
+                  errorExchange={errorExchange}
+                  errorShow={errorShow}
+                  isChangingWallet={props.isChangingWallet}
+                />
                 </div>
                 {props.account === false && (
-                  <div className="exchange-content__label exchange-content__label--right">{props.sourceTokenSymbol}</div>
+                  <div className={`exchange-exchange-content__label exchange-content__label--right ${errorExchange ? "error" : ""}`}>{props.sourceTokenSymbol}</div>
                 )}
                 {props.account !== false && (
                   <div className="exchange-content__label exchange-content__label--right">{props.swapBalance}</div>
@@ -115,22 +114,21 @@ const ExchangeBodyLayout = (props) => {
               <div className={"exchange-content__item exchange-content__item--right"}>
                 <div className="exchange-content__label">{props.translate("transaction.exchange_to") || "To"}</div>
                 <div className="exchange-content__select select-token-panel">{props.tokenDestSelect}</div>
-                <div className="exchange-content__input-container">
-                  <input
-                    className="exchange-content__input"
-                    step="0.000001"
-                    placeholder="0"
-                    min="0"
-                    type="text"
-                    maxLength="50"
-                    autoComplete="off"
+                <div className={`exchange-content__input-container ${errorExchange ? "error" : ""}`}>
+                  <BigInput 
                     value={props.input.destAmount.value}
                     onFocus={props.input.destAmount.onFocus}
                     onBlur={props.input.destAmount.onBlur}
-                    onChange={handleChangeDest}
+                    handleChangeValue={handleChangeDest}
+                    tokenSymbol={props.destTokenSymbol}
+                    type={"dest"}
+                    focus={props.focus}
+                    errorExchange={errorExchange}
+                    errorShow={errorShow}
+                    isChangingWallet={props.isChangingWallet}
                   />
                 </div>
-                <div className="exchange-content__label exchange-content__label--right">{props.destTokenSymbol}</div>
+                <div className={`exchange-content__label exchange-content__label--right ${errorExchange ? "error" : ""}`}>{props.destTokenSymbol}</div>
               </div>
             </div>
 
