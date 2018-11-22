@@ -156,3 +156,41 @@
     text-transform: uppercase;
   }
 }
+
+.import-privatekey {
+  padding: 0px;
+  .title {
+    font-size: 1.2rem;
+    font-weight: normal;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 0;
+    padding-top: 70px;
+  }
+  // .content {
+  //   padding-left: 30px;
+  // }
+  .overlap {
+    justify-content: center;
+    background-color: #fcfcfc;
+    margin-top: 10px;
+    .accent {
+      // margin-top: 50px;
+      line-height: 55px;
+      padding: 0 35px;
+      background: #ef8102;
+      font-size: 1.3rem;
+      border-radius: 4px;
+      box-shadow: 0 10px 15px #ccc;
+    }
+  }
+  #private_key {
+    text-align: left;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #666666;
+    height: 50px;
+  }
+}
