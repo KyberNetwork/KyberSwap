@@ -1,8 +1,7 @@
 import React from "react"
 
 const ImportAccountView = (props) => {
-  // var isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid;
-  var isOnMobile = true;
+  var isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid;
 
   return (
     <div className="import-account">
