@@ -69,7 +69,7 @@ export default class TermAndServices extends React.Component {
       {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}  
         </a> )
     }else{
-       termConditions = (<a href="https://files.kyber.network/tac.pdf" target="_blank" onClick={(e) => {analytics.trackClickShowTermAndCondition()}}>
+       termConditions = (<a href="https://files.kyber.network/tac.html" target="_blank" onClick={(e) => {analytics.trackClickShowTermAndCondition()}}>
     {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}  
       </a> )
     }
