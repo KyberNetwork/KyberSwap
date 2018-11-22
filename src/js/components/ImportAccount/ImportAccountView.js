@@ -1,21 +1,8 @@
 import React from "react"
 
 const ImportAccountView = (props) => {
-  var downloadOnMobile = (
-    <div class="onmobile-only">
-      <div className="mobile-left">
-        <div className="mobile-left-icon"></div>
-        <div className="mobile-left-content">
-          <div className="mobile-left-content-title">Coinbase Wallet</div>
-          <div className="mobile-left-content-desc">Ethereum Wallet & DApp Browser</div>
-        </div>
-      </div>
-      {props.onMobile.isIOS && <a className="mobile-btn" href="https://itunes.apple.com/us/app/coinbase-wallet/id1278383455?mt=8" target="_blank">{props.translate("address.download") || "Download"}</a>}
-      {props.onMobile.isAndroid && <a className="mobile-btn" href="https://play.google.com/store/apps/details?id=org.toshi&hl=en" target="_blank">{props.translate("address.download") || "Download"}</a>}
-    </div>
-  )
-
-  var isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid
+  // var isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid;
+  var isOnMobile = true;
 
   return (
     <div className="import-account">
@@ -31,9 +18,11 @@ const ImportAccountView = (props) => {
         <h1 className="import-account__title">{props.translate("address.import_address") || "Connect your Wallet to Swap"}</h1>
 
         <div className="import-account__content">
-          <div className={`import-account__item ${isOnMobile ? "onmobile-only-wrapper" : ""}`}>
-            {isOnMobile ? downloadOnMobile : props.metamaskImport}
+          {!isOnMobile &&
+          <div className="import-account__item">
+            {props.metamaskImport}
           </div>
+          }
 
           {!isOnMobile &&
           <div className="import-account__item">
@@ -53,11 +42,24 @@ const ImportAccountView = (props) => {
           </div>
           }
 
-          <div className="import-account__item">
+          {isOnMobile &&
+          <div class="import-account__item import-account__item--mobile">
+            <div></div>
+            <div>
+              <div>Coinbase Wallet</div>
+              <div>Ethereum Wallet & DApp Browser</div>
+            </div>
+            <a href={props.onMobile.isIOS ? "https://itunes.apple.com/us/app/coinbase-wallet/id1278383455?mt=8" : "https://play.google.com/store/apps/details?id=org.toshi&hl=en"} target="_blank">
+              {props.translate("address.download") || "Download"}
+            </a>
+          </div>
+          }
+
+          <div className={"import-account__item" + isOnMobile ? " import-account__item--mobile" : ""}>
             {props.privateKeyImport}
           </div>
 
-          <div className="import-account__item">
+          <div className={"import-account__item" + isOnMobile ? " import-account__item--mobile" : ""}>
             {props.promoCodeImport}
           </div>
         </div>
