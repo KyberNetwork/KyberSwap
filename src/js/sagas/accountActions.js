@@ -13,13 +13,11 @@ import {
   setRandomExchangeSelectedToken,
   setCapExchange,
   thowErrorNotPossessKGt,
-  closeImportAccountExchange,
-  toggleChartContent as toggleChartContentExchange
+  closeImportAccountExchange
 } from "../actions/exchangeActions";
 import {
   setRandomTransferSelectedToken,
-  closeImportAccountTransfer,
-  toggleChartContent as toggleChartContentTransfer
+  closeImportAccountTransfer
 } from "../actions/transferActions"
 import * as service from "../services/accounts"
 import constants from "../services/constants"
@@ -103,9 +101,6 @@ export function* importNewAccount(action) {
     }else{
       yield put(closeImportAccountTransfer())
     }
-
-    // yield put(toggleChartContentExchange(false));
-    // yield put(toggleChartContentTransfer(false));
 
     yield put(fetchExchangeEnable())
 

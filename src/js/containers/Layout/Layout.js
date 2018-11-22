@@ -18,8 +18,6 @@ import { default as _ } from 'underscore';
 import { LayoutView } from "../../components/Layout"
 import { getTranslate } from 'react-localize-redux'
 import * as common from "../../utils/common"
-import { toggleLeftPart as toggleExchangeLeftPart } from "../../actions/exchangeActions";
-import { toggleLeftPart as toggleTransferLeftPart } from "../../actions/transferActions";
 import * as analytics from "../../utils/analytics"
 import {isMobile} from '../../utils/common'
 
@@ -36,7 +34,6 @@ import Language from "../../../../lang"
     translate: getTranslate(store.locale),
     locale: store.locale,
     tokens: store.tokens.tokens
-    // currentLanguage: getActiveLanguage(store.locale).code
   }
 })
 
@@ -60,12 +57,10 @@ export default class Layout extends React.Component {
 
     this.intervalIdle = setInterval(this.checkTimmer.bind(this), 10000)
     this.props.dispatch(createNewConnectionInstance())
-    this.changeTabStatus();
   }
 
   componentDidMount = () => {
     analytics.trackAccessToSwap()
-    window.addEventListener("resize", this.changeTabStatus);
     window.addEventListener("beforeunload", this.handleCloseWeb)
     if (isMobile.iOS() || isMobile.Android()) {
       this.props.dispatch(setOnMobileOnly())
@@ -75,23 +70,6 @@ export default class Layout extends React.Component {
   handleCloseWeb = () => {
     analytics.exitSwap()
   }
-
-  changeTabStatus = () => {
-    const width = window.innerWidth || documentElement.clientWidth || body.clientWidth;
-
-    if (width < 1024 && width >= 640) {
-      this.props.dispatch(toggleExchangeLeftPart(true));
-      this.props.dispatch(toggleTransferLeftPart(true));
-    } else if (width < 640) {
-      this.props.dispatch(toggleExchangeLeftPart(false));
-      this.props.dispatch(toggleTransferLeftPart(false));
-    }
-  }
-
-  // componentDidMount = () => {
-  //   analytics.trackAccessToSwap()
-  //   window.addEventListener("beforeunload", this.handleCloseWeb)
-  // }
 
   handleCloseWeb = () => {
     analytics.exitSwap()
@@ -128,15 +106,12 @@ export default class Layout extends React.Component {
   render() {
 
     var currentLanguage = common.getActiveLanguage(this.props.locale.languages)
-   // var exchangeHistory = <TransactionList />
     var market = <Market />
-    //var footer = <Footer />
-   // var rate = <Rate />
+
     return (
       <LayoutView
         history={history}
         Header={Header}
-        // ImportAccount={ImportAccount}
         Exchange={Exchange}
         Transfer={Transfer}
         market={market}
@@ -144,7 +119,6 @@ export default class Layout extends React.Component {
         setActiveLanguage={this.setActiveLanguage}      
         currentLanguage = {currentLanguage}  
         tokens = {this.props.tokens}
-       // footer = {footer}
       />
     )
   }

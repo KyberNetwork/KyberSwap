@@ -140,14 +140,6 @@ export default class Transfer extends React.Component {
     analytics.trackClickAllIn("Transfer", tokenSymbol)
   }
 
-  changeChartRange = (value) => {
-    this.props.dispatch(transferActions.setChartTimeRange(value))
-  }
-
-  toggleChartContent = () => {
-    this.props.dispatch(transferActions.toggleChartContent())
-  }
-
   toggleBalanceContent = (value) => {
     this.props.dispatch(transferActions.toggleBalanceContent(value))    
   }
@@ -169,11 +161,6 @@ export default class Transfer extends React.Component {
     this.specifyGasPrice(value)
   }
 
-  toggleRightPart = (value) => {
-    this.props.dispatch(transferActions.toggleRightPart(value))
-    analytics.trackClickTheRightWing("transfer")
-  }
-
   getAdvanceLayout = () => {
     return (
       <AdvanceConfigLayout
@@ -187,21 +174,12 @@ export default class Transfer extends React.Component {
     )
   }
 
-  toggleLeftPart = (value) => {
-    this.props.dispatch(transferActions.toggleLeftPart(value))
-    analytics.trackClickTheLeftWing("transfer")
-  }
-
   getBalanceLayout = () => {
     return (
       <AccountBalance
         chooseToken={this.chooseToken}
         sourceActive={this.props.transfer.tokenSymbol}
         destTokenSymbol='ETH'
-        isChartActive={this.props.transfer.chart.isActive}
-        chartTimeRange={this.props.transfer.chart.timeRange}
-        onChangeChartRange={this.changeChartRange}
-        onToggleChartContent={this.toggleChartContent}
         onToggleBalanceContent={this.toggleBalanceContent}
         isBalanceActive = {this.props.transfer.isBalanceActive}
         tradeType = "transfer"
@@ -283,15 +261,6 @@ export default class Transfer extends React.Component {
         advanceLayout={this.getAdvanceLayout()}
         balanceLayout={this.getBalanceLayout()}
         networkError={this.props.global.network_error}
-        isAgreed={this.props.global.termOfServiceAccepted}
-        isChartActive={this.props.transfer.chart.isActive}
-        chartTimeRange={this.props.transfer.chart.timeRange}
-        onChangeChartRange={this.changeChartRange}
-        onToggleChartContent={this.toggleChartContent}
-        toggleRightPart={this.toggleRightPart}
-        isOpenRight={this.props.transfer.isOpenRight}
-        isOpenLeft={this.props.transfer.isOpenLeft}
-        toggleLeftPart={this.toggleLeftPart}
         isChangingWallet = {this.props.global.isChangingWallet}
         changeWalletType = {this.props.global.changeWalletType}
         closeChangeWallet = {this.closeChangeWallet}

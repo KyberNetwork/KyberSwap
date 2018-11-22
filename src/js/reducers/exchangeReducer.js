@@ -571,29 +571,13 @@ const exchange = (state = initState, action) => {
       return resetState
     }
 
-    case "EXCHANGE.TOGGLE_CHART_CONTENT": {
-      newState.chart.isActive = action.payload !== null ? action.payload : !newState.chart.isActive;
-      return newState;
-    }
-
     case "EXCHANGE.TOGGLE_BALANCE_CONTENT": {
       newState.isBalanceActive = action.payload !== null ? action.payload : !newState.isBalanceActive;
       return newState;
     }
 
-    case "EXCHANGE.SET_CHART_TIME_RANGE": {
-      newState.chart.timeRange = action.payload;
-      return newState;
-    }
     case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED":{
-      
-      newState.chart.isActive = false
       newState.isBalanceActive = true
-      //check if mobile
-      if (window.innerWidth >= 1024){
-        newState.isOpenLeft = true
-        newState.isOpenRight = true
-      }
       return newState
     }
   }
