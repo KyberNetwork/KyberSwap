@@ -47,7 +47,7 @@ const TokenSelectorView = (props) => {
   }
 
   return (
-    <div className="token-selector">
+    <div className={`token-selector ${props.type}`}>
       <Dropdown active={props.open} onShow = {(e) => props.showTokens(e)} onHide = {(e) => props.hideTokens(e)} >
         <DropdownTrigger className="notifications-toggle">
           <div className="focus-item d-flex">

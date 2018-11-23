@@ -417,14 +417,16 @@ export default class ExchangeBody extends React.Component {
     })
 
     var tokenSourceSelect = (
-      <TokenSelector type="source"
+      <TokenSelector
+        type="source"
         focusItem={this.props.exchange.sourceTokenSymbol}
         listItem={this.props.tokens}
         chooseToken={this.chooseToken}
       />
     )
     var tokenDestSelect = (
-      <TokenSelector type="des"
+      <TokenSelector
+        type="des"
         focusItem={this.props.exchange.destTokenSymbol}
         listItem={tokenDest}
         chooseToken={this.chooseToken}
