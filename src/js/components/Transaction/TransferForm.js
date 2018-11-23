@@ -9,6 +9,7 @@ import BLOCKCHAIN_INFO from "../../../../env";
 import * as analytics from "../../utils/analytics";
 import { RateBetweenToken } from "../../containers/Exchange";
 import { getAssetUrl } from "../../utils/common";
+import BigInput from "../Exchange/BigInput";
 
 const TransferForm = (props) => {
   function handleChangeAmount(e) {
@@ -57,32 +58,31 @@ const TransferForm = (props) => {
                 </div>
                 <div className="exchange-content__select select-token-panel">{props.tokenTransferSelect}</div>
                 <div className="exchange-content__input-container">
-                  <input
-                    className="exchange-content__input"
-                    type="text"
-                    min="0"
-                    step="0.000001"
-                    placeholder="0"
-                    id="inputSource"
+                  <BigInput
                     value={props.input.amount.value}
-                    onChange={handleChangeAmount}
-                    onBlur={props.onBlur}
                     onFocus={props.onFocus}
-                    maxLength="50"
-                    autoComplete="off"
+                    onBlur={props.onBlur}
+                    handleChangeValue={handleChangeAmount}
+                    tokenSymbol={props.sourceActive}
+                    type={"transfer"}
+                    focus={props.onFocus}
+                    errorExchange={props.errors.amountTransfer}
+                    errorShow={props.translate(props.errors.amountTransfer)}
+                    isChangingWallet={props.isChangingWallet}
                   />
-                  {/*{props.errors.amountTransfer && !props.isChangingWallet &&*/}
-                    {/*<span class="error-text">{props.translate(props.errors.amountTransfer)}</span>*/}
-                  {/*}*/}
                 </div>
                 <div className="exchange-content__label">{props.sourceActive}</div>
+              </div>
+
+              <div className={"exchange-content__item--absolute"}>
+                <i className="k k-transfer k-3x"></i>
               </div>
 
               <div className={"exchange-content__item exchange-content__item--right"}>
                 <div className="exchange-content__label exchange-content__label--wide">To Address</div>
                 <div className="exchange-content__input-container exchange-content__input-container--to">
                   <input
-                    className="exchange-content__input"
+                    className={`exchange-content__input ${props.errors.destAddress ? "error" : ''}`}
                     value={props.input.destAddress.value}
                     onChange={props.input.destAddress.onChange}
                     placeholder="0x0de..."
