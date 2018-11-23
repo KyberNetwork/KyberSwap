@@ -368,7 +368,8 @@ export default class ExchangeBody extends React.Component {
   }
 
   clearSession = (e) => {
-    this.props.dispatch(globalActions.clearSession())
+    this.props.dispatch(globalActions.clearSession(this.props.exchange.gasPrice))
+    // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
   }
 
   render() {
@@ -503,7 +504,8 @@ export default class ExchangeBody extends React.Component {
         isAndroid={this.state.isAndroid}
         global={this.props.global}
         swapBalance = {this.getSwapBalance()}
-        clearSession={this.clearSession()}
+        clearSession={this.clearSession}
+        walletName={this.props.account.walletName}
       />
     )
   }

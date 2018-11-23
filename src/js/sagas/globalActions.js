@@ -42,7 +42,7 @@ export function* goToRoute(action) {
 }
 
 export function* clearSession(action) {
-  yield put(actions.clearSessionComplete())
+  yield put(actions.clearSessionComplete(action.payload))
   //yield put(actions.goToRoute(constants.BASE_HOST));
 }
 

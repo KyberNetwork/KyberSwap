@@ -74,9 +74,10 @@ export function acceptTermOfService() {
   }
 }
 
-export function clearSession() {
+export function clearSession(gasPrice) {
   return {
-    type: "GLOBAL.CLEAR_SESSION"
+    type: "GLOBAL.CLEAR_SESSION",
+    payload: gasPrice
   }
 }
 
@@ -94,9 +95,10 @@ export function changeLanguage(ethereum, lang, locale){
   }
 }
 
-export function clearSessionComplete() {
+export function clearSessionComplete(gasPrice) {
   return {
-    type: "GLOBAL.CLEAR_SESSION_FULFILLED"
+    type: "GLOBAL.CLEAR_SESSION_FULFILLED",
+    payload: gasPrice
   }
 }
 

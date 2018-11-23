@@ -192,6 +192,7 @@ export default class Transfer extends React.Component {
 
   clearSession = (e) => {
     this.props.dispatch(globalActions.clearSession())
+    // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
   }
 
   render() {
@@ -270,7 +271,8 @@ export default class Transfer extends React.Component {
         closeChangeWallet = {this.closeChangeWallet}
         global={this.props.global}
         addressBalance={addressBalance}
-        clearSession={this.clearSession()}
+        clearSession={this.clearSession}
+        walletName={this.props.account.walletName}
       />
     )
   }
