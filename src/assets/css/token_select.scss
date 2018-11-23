@@ -80,45 +80,73 @@
     }    
   }
 
-  .token-selector .dropdown.dropdown--active .select-item {
-    display: block;
-    // border: 1px solid hsla(0,0%,80%,.72);
-    border: none;
-    color: inherit;
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
-    width: 350px;
-    background-color: #ffffff;
-    border-radius: 4px;
-    padding: 25px 25px 40px;
-    right: 12px;
-    top: -63px;
-    .current-token {
-      // display: flex;
-      align-items: center;
-      justify-content: space-between;
-      >div {
-        span:first-child {
-          font-size: 14px;
-          color: #999999;
-          font-weight: 600;
-          letter-spacing: -0.4px;
+  .token-selector {
+    .dropdown.dropdown--active .select-item {
+      display: block;
+      border: none;
+      color: inherit;
+      box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+      width: 350px;
+      background-color: #ffffff;
+      border-radius: 4px;
+      padding: 25px 25px 40px;
+      right: 0;
+      top: -63px;
+
+      .current-token {
+        align-items: center;
+        justify-content: space-between;
+        >div {
+          span:first-child {
+            font-size: 14px;
+            color: #999999;
+            font-weight: 600;
+            letter-spacing: -0.4px;
+          }
+          img {
+            margin: 0 10px;
+          }
+          span:last-child {
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 14px;
+            color: #222222;
+          }
         }
-        img {
-          margin: 0 10px;
+        &:hover {
+          cursor: pointer;
         }
-        span:last-child {
-          text-transform: uppercase;
-          font-weight: 600;
-          font-size: 14px;
-          color: #222222;
-        } 
       }
       &:hover {
-        cursor: pointer;
+        cursor: default;
       }
     }
-    &:hover {
-      cursor: default;
+
+    &.source,
+    &.transfer {
+      .dropdown.dropdown--active .select-item {
+        left: -55px;
+      }
+    }
+
+    &.des .dropdown.dropdown--active .select-item {
+      left: -40px;
+    }
+
+    @media screen and (max-width: 900px) {
+      &.des .dropdown.dropdown--active .select-item {
+        left: -55px;
+      }
+    }
+
+    @media screen and (max-width: 650px) {
+      &.source,
+      &.des,
+      &.transfer {
+        .dropdown.dropdown--active .select-item {
+          left: -5px;
+        }
+      }
     }
   }
 

@@ -17,6 +17,23 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 5px;
+    overflow: auto;
+    max-height: 116px;
+    padding-right: 20px;
+
+    &::-webkit-scrollbar-track {
+      border-radius: 8px;
+      background-color: rgba(163, 165, 175, .2);
+    }
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background-color: rgba(163, 165, 175, 1);
+    }
   }
 
   &__token-item {
@@ -25,13 +42,24 @@
     margin: 0 3.75% 12px 0;
     cursor: pointer;
 
-    // &:nth-child(4n+3) {
-    //   padding-left: 3%;
-    // }
+    &:nth-child(4n+3) {
+      padding-left: 3%;
+    }
 
     &:nth-child(4n) {
       margin-right: 0;
       justify-content: flex-end;
+    }
+
+    &:nth-last-child(-n + 4) {
+      margin-bottom: 0;
+    }
+
+    &.active {
+      .account-balance__token-symbol,
+      .account-balance__token-balance {
+        color: #ef8102;
+      }
     }
   }
 
@@ -41,12 +69,14 @@
     font-weight: 600;
     color: #222222;
     margin-right: 5px;
+    transition: color .3s;
   }
 
   &__token-balance {
     opacity: 0.8;
     font-size: 14px;
     color: #666666;
+    transition: color .3s;
   }
 
   &__content-input-container {
@@ -95,6 +125,12 @@
     .dropdown__content {
       width: 100%;
       z-index: 1;
+      box-shadow: 0 2px 5px 0 #ccc;
+      font-size: 14px;
+      line-height: 2.3;
+      color: #5a5e67;
+      padding: 10px 0;
+      background-color: white;
     }
 
     &.dropdown--active {
@@ -107,26 +143,30 @@
   &__sort-category {
     width: 100%;
     background-color: white;
-    // box-shadow: 0 0 1px #f5f5f5;
-    padding: 0 10px;
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 4px;
-    border: 0.5px solid #cccccc;
-    border-top: none;
   }
 
   &__sort-item {
+    padding-left: 40px;
     cursor: pointer;
-    transition: color .3s;
-    padding: 10px 0;
-    font-size: 14px;
+    transition: background-color .3s;
 
     &:hover {
-      color: #ef8102;
+      background-color: #EBEBEB;
     }
 
-    &:first-child {
-      border-bottom: 0.5px solid #cccccc;
+    &.active {
+      position: relative;
+
+      &::before {
+        content: '';
+        width: 18px;
+        height: 14px;
+        display: block;
+        position: absolute;
+        top: 9px;
+        left: 10px;
+        background-image: url($image-path + 'icon-checked.svg');
+      }
     }
   }
 
@@ -172,6 +212,10 @@
 
     &__sort-arrow {
       top: 15px;
+    }
+
+    &__token-list {
+      max-height: 103px;
     }
 
     &__token-item {
