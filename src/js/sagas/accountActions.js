@@ -61,7 +61,7 @@ function* createNewAccount(address, type, keystring, ethereum, walletType){
 
 export function* importNewAccount(action) {
   yield put(actions.importLoading())
-  const { address, type, keystring, ethereum, tokens, metamask, walletType } = action.payload
+  const { address, type, keystring, ethereum, tokens, metamask, walletType, walletName } = action.payload
   var translate = getTranslate(store.getState().locale)
   var isChangingWallet = store.getState().global.isChangingWallet
   try {
@@ -90,7 +90,7 @@ export function* importNewAccount(action) {
 
    // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
     yield put(actions.closeImportLoading())
-    yield put(actions.importNewAccountComplete(account))
+    yield put(actions.importNewAccountComplete(account, walletName))
     if (isChangingWallet) yield put(closeChangeWallet())
 
     //track login wallet

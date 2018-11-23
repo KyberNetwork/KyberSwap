@@ -251,12 +251,15 @@ const transfer = (state = initState, action) => {
     }
 
     case "GLOBAL.CLEAR_SESSION_FULFILLED":{
+      var gasPrice = action.payload
       var resetState = {...initState}
       resetState.token = newState.token
 
-      resetState.gasPrice = newState.gasPrice
+      // resetState.gasPrice = newState.gasPrice
+      resetState.gasPrice = gasPrice
       resetState.selectedGas = newState.selectedGas
-      resetState.isEditGasPrice = newState.isEditGasPrice
+      // resetState.isEditGasPrice = newState.isEditGasPrice
+      resetState.isEditGasPrice = false
 
       resetState.tokenSymbol = newState.tokenSymbol
       return resetState
