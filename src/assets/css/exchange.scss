@@ -321,6 +321,11 @@
     .k.k-exchange {
       background-image: url($image-path + 'icon-swap-down.svg');
     }
+
+    .k.k-transfer {
+      background-image: url($image-path + 'icon-transfer-down.svg');
+      background-size: 50%;
+    }
   }
 
   @media screen and (max-width: 650px) {

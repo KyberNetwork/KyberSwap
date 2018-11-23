@@ -14,12 +14,10 @@
   &__token-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     align-items: center;
     margin-bottom: 5px;
     overflow: auto;
     max-height: 116px;
-    padding-right: 20px;
 
     &::-webkit-scrollbar-track {
       border-radius: 8px;
@@ -39,17 +37,8 @@
   &__token-item {
     display: flex;
     width: 21.25%;
-    margin: 0 3.75% 12px 0;
+    margin: 0 3.7% 12px 0;
     cursor: pointer;
-
-    &:nth-child(4n+3) {
-      padding-left: 3%;
-    }
-
-    &:nth-child(4n) {
-      margin-right: 0;
-      justify-content: flex-end;
-    }
 
     &:nth-last-child(-n + 4) {
       margin-bottom: 0;
@@ -219,21 +208,8 @@
     }
 
     &__token-item {
-      width: 48%;
+      width: 50%;
       margin: 0;
-
-      &:nth-child(4n+3) {
-        padding-left: unset;
-      }
-
-      &:nth-child(4n) {
-        margin-right: unset;
-        justify-content: unset;
-      }
-
-      &:nth-child(2n) {
-        justify-content: flex-end;
-      }
     }
   }
 }

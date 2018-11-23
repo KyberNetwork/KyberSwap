@@ -43,6 +43,10 @@
         position: relative;
         bottom: 2px;
     }
+    &.k-transfer {
+        background: url(../img/icon-arrow-transfer.svg) center no-repeat;
+        background-size: 80%;
+    }
     &.k-link{
         background-image: url(../img/link-white.svg);
     }
