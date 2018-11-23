@@ -75,12 +75,6 @@ export default class ImportAccount extends React.Component {
     {/*<LandingPage translate={this.props.translate} tradeType={this.props.tradeType}/>*/}
     return (
       <ImportAccountView
-        metamaskImport={<ImportByMetamask/>}
-        keystoreImport={<ImportKeystore/>}
-        trezorImport={<ImportByDeviceWithTrezor/>}
-        ledgerImport={<ImportByDeviceWithLedger/>}
-        privateKeyImport={<ImportByPrivateKey/>}
-        promoCodeImport = {<ImportByPromoCode/>}
         errorModal={<ErrorModal/>}
         translate={this.props.translate}
         onMobile={this.props.onMobile}

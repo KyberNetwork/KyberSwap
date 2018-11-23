@@ -60,6 +60,7 @@ export default class ImportByPrivateKey extends React.Component {
   render() {
     return (
       <ImportByPKeyView
+        isOnMobile={this.props.isOnMobile}
         importPrivateKey={this.importPrivateKey.bind(this)}
         modalOpen={this.openModal.bind(this)}
         onRequestClose={this.closeModal.bind(this)}

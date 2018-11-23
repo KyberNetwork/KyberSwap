@@ -1,4 +1,13 @@
-import React from "react"
+import React from "react";
+import {
+  ImportKeystore,
+  ImportByDevice,
+  ImportByPrivateKey,
+  ImportByMetamask,
+  ImportByDeviceWithLedger,
+  ImportByDeviceWithTrezor,
+  ImportByPromoCode
+} from "../../containers/ImportAccount";
 
 const ImportAccountView = (props) => {
   var isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid;
@@ -16,50 +25,58 @@ const ImportAccountView = (props) => {
       <div className="import-account__choose-wallet-container container">
         <h1 className="import-account__title">{props.translate("address.import_address") || "Connect your Wallet to Swap"}</h1>
 
-        <div className="import-account__content">
+        <div className={`import-account__content ${isOnMobile ? ' import-account__content--mobile' : ''}`}>
           {!isOnMobile &&
           <div className="import-account__item">
-            {props.metamaskImport}
+            <ImportByMetamask/>
           </div>
           }
 
           {!isOnMobile &&
           <div className="import-account__item">
-            {props.keystoreImport}
+            <ImportKeystore/>
           </div>
           }
 
           {!isOnMobile &&
           <div className="import-account__item">
-            {props.trezorImport}
+            <ImportByDeviceWithTrezor/>
           </div>
           }
 
           {!isOnMobile &&
           <div className="import-account__item">
-            {props.ledgerImport}
+            <ImportByDeviceWithLedger/>
           </div>
           }
 
           {isOnMobile &&
-          <div class="import-account__item import-account__item--mobile">
-            <div></div>
-            <div>
-              <div>Coinbase Wallet</div>
-              <div>Ethereum Wallet & DApp Browser</div>
+          <div class="import-account__item">
+            <div className={"import-account__block"}>
+              <div className={"import-account__block-left"}>
+                <div className="import-account__icon coinbase"/>
+                <div>
+                  <div className="import-account__name">Coinbase Wallet</div>
+                  <div className="import-account__desc">Ethereum Wallet & DApp Browser</div>
+                </div>
+              </div>
+              <a
+                className="import-account__block-right"
+                href={props.onMobile.isIOS ? "https://itunes.apple.com/us/app/coinbase-wallet/id1278383455?mt=8" : "https://play.google.com/store/apps/details?id=org.toshi&hl=en"}
+                target="_blank"
+              >
+                {props.translate("address.download") || "Download"}
+              </a>
             </div>
-            <a href={props.onMobile.isIOS ? "https://itunes.apple.com/us/app/coinbase-wallet/id1278383455?mt=8" : "https://play.google.com/store/apps/details?id=org.toshi&hl=en"} target="_blank">
-              {props.translate("address.download") || "Download"}
-            </a>
           </div>
           }
 
-          <div className={"import-account__item" + isOnMobile ? " import-account__item--mobile" : ""}>
-            {props.privateKeyImport}
+          <div className={"import-account__item"}>
+            <ImportByPrivateKey isOnMobile={isOnMobile}/>
           </div>
 
-          <div className={"import-account__item" + isOnMobile ? " import-account__item--mobile" : ""}>
-            {props.promoCodeImport}
+          <div className={"import-account__item"}>
+            <ImportByPromoCode isOnMobile={isOnMobile}/>
           </div>
         </div>
       </div>

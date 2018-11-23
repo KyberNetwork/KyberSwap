@@ -71,6 +71,7 @@ export default class ImportByPromoCode extends React.Component {
   render() {
     return (
       <ImportByPromoCodeView
+        isOnMobile={this.props.isOnMobile}
         importPromoCode={this.importPromoCode.bind(this)}
         modalOpen={this.openModal.bind(this)}
         onRequestClose={this.closeModal.bind(this)}

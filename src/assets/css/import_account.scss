@@ -18,6 +18,96 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+
+    &--mobile {
+      display: block;
+
+      .import-account__item {
+        margin: 10px 0;
+      }
+
+      .import-account__block {
+        box-shadow: 0 2px 5px 0 #b8b8b8;
+        background-color: #fafafa;
+        border-radius: unset;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 15px;
+        height: unset;
+        cursor: initial;
+
+        &:hover {
+          border-color: #ccc;
+          background-color: #fafafa;
+
+          .import-account__name {
+            color: #222222;
+          }
+        }
+      }
+
+      .import-account__block-left {
+        display: flex;
+        align-items: center;
+      }
+
+      .import-account__icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background-color: #ef8102;
+        background-size: 12px;
+
+        &.coinbase {
+          background-size: 100%;
+          background-image: url($image-path + 'coinbase.svg');
+          background-color: transparent;
+        }
+
+        &.promo-code {
+          background-image: url($image-path + 'import-account/icon-promo-code-white.svg');
+        }
+
+        &.private-key {
+          background-size: 12px;
+          background-image: url($image-path + 'import-account/icon-private-key-white.png');
+        }
+      }
+
+      .import-account__name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #222222;
+        margin-bottom: -2px;
+      }
+
+      .import-account__desc {
+        font-size: 11px;
+        color: #666666;
+      }
+
+      .import-account__block-right {
+        display: block;
+        font-size: 11px;
+        font-weight: 600;
+        color: #666666;
+        text-transform: uppercase;
+        border: solid 1px #dfdfdf;
+        background-color: #f9f9f9;
+        width: 80px;
+        padding: 4px 0;
+        text-align: center;
+        cursor: pointer;
+        transition: all .3s;
+
+        &:hover {
+          color: white;
+          border-color: #ef8102;
+          background-color: #ef8102;
+        }
+      }
+    }
   }
 
   &__item {
