@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux';
 import * as marketActions from "../../actions/marketActions"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
+import * as analytics from "../../utils/analytics"
 
 @connect((store, props) => {
     return {
