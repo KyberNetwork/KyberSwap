@@ -367,6 +367,10 @@ export default class ExchangeBody extends React.Component {
     this.props.dispatch(globalActions.closeChangeWallet())
   }
 
+  clearSession = (e) => {
+    this.props.dispatch(globalActions.clearSession())
+  }
+
   render() {
     var balanceInfo = {
       sourceAmount: converters.toT(this.props.exchange.balanceData.sourceAmount, this.props.exchange.balanceData.sourceDecimal),
@@ -499,6 +503,7 @@ export default class ExchangeBody extends React.Component {
         isAndroid={this.state.isAndroid}
         global={this.props.global}
         swapBalance = {this.getSwapBalance()}
+        clearSession={this.clearSession()}
       />
     )
   }

@@ -190,6 +190,10 @@ export default class Transfer extends React.Component {
     this.props.dispatch(globalActions.closeChangeWallet())
   }
 
+  clearSession = (e) => {
+    this.props.dispatch(globalActions.clearSession())
+  }
+
   render() {
     var addressBalance = ""
     var token = this.props.tokens[this.props.transfer.tokenSymbol]
@@ -266,6 +270,7 @@ export default class Transfer extends React.Component {
         closeChangeWallet = {this.closeChangeWallet}
         global={this.props.global}
         addressBalance={addressBalance}
+        clearSession={this.clearSession()}
       />
     )
   }
