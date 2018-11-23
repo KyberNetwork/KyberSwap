@@ -104,22 +104,22 @@ export default class Market extends React.Component {
     this.props.dispatch(marketActions.resetListToken(value))
   }
 
-  handleOnClick = (e) => {
-    // this.props.dispatch(marketActions.showSearchInput(false))
-    var className = e.target.className
-    var check = e.target.id !== "search-market" && className !== "search-symbol" && className !== "search-icon" && className !== "search-img"
-    if (this.props.showSearchInput === true && check) {
-      this.props.dispatch(marketActions.showSearchInput(false))
-    }
-  }
+  // handleOnClick = (e) => {
+  //   // this.props.dispatch(marketActions.showSearchInput(false))
+  //   var className = e.target.className
+  //   var check = e.target.id !== "search-market" && className !== "search-symbol" && className !== "search-icon" && className !== "search-img"
+  //   if (this.props.showSearchInput === true && check) {
+  //     this.props.dispatch(marketActions.showSearchInput(false))
+  //   }
+  // }
 
-  componentDidMount() {
-    document.addEventListener('click', this.handleOnClick)
-  }
+  // componentDidMount() {
+  //   document.addEventListener('click', this.handleOnClick)
+  // }
 
-  componentWillUnmount() {
-    document.removeEventListener('click', this.handleOnClick)
-  }
+  // componentWillUnmount() {
+  //   document.removeEventListener('click', this.handleOnClick)
+  // }
 
   render() {
     return (
