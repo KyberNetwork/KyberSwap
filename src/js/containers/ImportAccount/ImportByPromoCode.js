@@ -60,7 +60,7 @@ export default class ImportByPromoCode extends React.Component {
         "privateKey",
         promoCode,
         this.props.ethereum,
-        this.props.tokens))
+        this.props.tokens, null, null, "PROMO CODE"))
     }
     catch (e) {
       console.log(e)

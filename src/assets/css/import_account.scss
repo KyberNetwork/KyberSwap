@@ -219,6 +219,9 @@
     font-size: 13px;
     color: #666666;
     border-right: 1px solid #cccccc;
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &__wallet-type {

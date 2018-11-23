@@ -16,6 +16,29 @@ const TransferForm = (props) => {
     if (check) props.input.amount.onChange(e)
   }
 
+  function getWalletName() {
+    if (props.walletName === "") {
+      switch(props.account.type) {
+        case "metamask":
+          return "METAMASK"
+        case "keystore":
+          return "JSON"
+        case "ledger":
+          return "LEDGER"
+        case "trezor":
+          return "TREZOR"
+        case "privateKey":
+          return "PRIVATE KEY"
+        case "promoCode":
+          return "PROMO CODE"
+        default:
+          return "WALLET"
+      }
+    } else {
+      return props.walletName
+    }
+  }
+
   return (
     <div>
       <div>
@@ -93,12 +116,15 @@ const TransferForm = (props) => {
           || (
             <div className="import-account">
               <div className={"import-account__wallet-container container"}>
-                <div className="import-account__wallet-connect">Connect your Wallet to Swap</div>
+                <div className="import-account__wallet-connect"
+                  onClick={(e) => props.clearSession(e)}>
+                  Connect your Wallet to Swap
+                </div>
                 <div className="import-account__wallet-type">
                   <img className="import-account__wallet-image" src={getAssetUrl(`wallets/${props.account.type}.svg`)}/>
                   <div className="import-account__wallet-content">
                     <span className="import-account__wallet-title">Your Wallet - </span>
-                    <span className="import-account__wallet-name">PRIVATE KEY</span>
+                    <span className="import-account__wallet-name">{getWalletName()}</span>
                   </div>
                 </div>
               </div>

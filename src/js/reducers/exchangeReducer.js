@@ -557,13 +557,16 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "GLOBAL.CLEAR_SESSION_FULFILLED":{
+      var gasPrice = action.payload
       var resetState = {...initState}
       resetState.sourceToken = newState.sourceToken
       resetState.sourceTokenSymbol = newState.sourceTokenSymbol
       
-      resetState.gasPrice = newState.gasPrice
+      // resetState.gasPrice = newState.gasPrice
+      resetState.gasPrice = gasPrice
       resetState.selectedGas = newState.selectedGas
-      resetState.isEditGasPrice = newState.isEditGasPrice
+      // resetState.isEditGasPrice = newState.isEditGasPrice
+      resetState.isEditGasPrice = false
       
       resetState.destToken = newState.destToken
       resetState.destTokenSymbol = newState.destTokenSymbol
