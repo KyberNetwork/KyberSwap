@@ -167,8 +167,8 @@ const AccountBalanceLayout = (props) => {
                     </DropdownTrigger>
                     <DropdownContent>
                       <div className={"account-balance__sort-category"}>
-                        <div className={"account-balance__sort-item"} onClick={(e)=>props.sortSymbol()}>{props.translate("address.symbol") || "Symbol"}</div>
-                        <div className={"account-balance__sort-item"} onClick={(e)=>props.sortPrice()}>{props.translate("address.price") || "Price"}</div>
+                        <div className={`account-balance__sort-item ${props.sortType == 'Symbol' ? 'active' : ''}`} onClick={(e)=>props.sortSymbol()}>{props.translate("address.symbol") || "Symbol"}</div>
+                        <div className={`account-balance__sort-item ${props.sortType == 'Price' ? 'active' : ''}`} onClick={(e)=>props.sortPrice()}>{props.translate("address.price") || "Price"}</div>
                       </div>
                     </DropdownContent>
                   </Dropdown>
