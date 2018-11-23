@@ -282,29 +282,27 @@ export default class PostExchange extends React.Component {
             </div>
             <div className="space"><img src={require("../../../assets/img/exchange/arrow-right-orange.svg")} /></div>
             <div className="amount-item amount-right">
-              {this.props.snapshot.isFetchingRate ?
-                <img src={require('../../../assets/img/waiting-white.svg')} />
-                :
-                // <div className="grid-x">
-                //   <div className="cell medium-3 small-12 amount-icon">
-                //     <img src={getAssetUrl(`tokens/${destIcon}`)} />
-                //   </div>
-                //   <div className="cell medium-9 small-12">
-                //     <div className="amount-detail">
-                //       <span>
-                //         {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''}
-                //       </span>
-                //       <span>
-                //         {destTokenSymbol}
-                //       </span>
-                //     </div>
-                //   </div>
-                // </div>
+                {/* <div className="grid-x">
+                  <div className="cell medium-3 small-12 amount-icon">
+                    <img src={getAssetUrl(`tokens/${destIcon}`)} />
+                  </div>
+                  <div className="cell medium-9 small-12">
+                    <div className="amount-detail">
+                      <span>
+                        {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''}
+                      </span>
+                      <span>
+                        {destTokenSymbol}
+                      </span>
+                    </div>
+                  </div>
+                </div> */}
                 <div>
                   <div className={"rc-label"}>To</div>
-                  <div className={"rc-info"}>{destAmount} {destTokenSymbol}</div> 
+                  <div className={"rc-info"}>
+                    {this.props.snapshot.isFetchingRate ? <img src={require('../../../assets/img/waiting-white.svg')} /> : destAmount} {destTokenSymbol}
+                  </div> 
                 </div>
-              }
             </div>
           </div>
         </div>

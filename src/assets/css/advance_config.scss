@@ -19,6 +19,9 @@
     position: relative;
     padding-left: 22px;
     cursor: pointer;
+    span {
+      color: #0a0a0a;
+    }
 
     &-container {
       display: flex;

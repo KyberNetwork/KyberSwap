@@ -2,9 +2,17 @@ import React from "react";
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 
 const BigInput = (props) => {
+  var id = `${props.type}-amount-input`
+  function focusInputElement(e) {
+    var element = document.getElementById(id)
+    if (element) {
+      element.focus()
+    }
+  }
+
   return (
     <div className={"big-input-wrapper"}>
-      <Dropdown>
+      <Dropdown onShow = {(e) => focusInputElement()}>
         <DropdownTrigger>
           <input
             className={`exchange-content__input ${props.errorExchange ? "error" : ""}`}
@@ -13,7 +21,7 @@ const BigInput = (props) => {
             placeholder="0" // no auto focus
             type="text" maxLength="50" autoComplete="off"
             value={props.value}
-            // onFocus={props.input.sourceAmount.onFocus}
+            onFocus={props.onFocus}
             // onBlur={props.input.sourceAmount.onBlur}
             // onChange={handleChangeSource}
           />
@@ -24,13 +32,13 @@ const BigInput = (props) => {
             <div className={"input-content"}>
               <input
                 className="big-input"
+                id={id}
                 min="0"
                 step="0.000001"
                 placeholder="0"
-                autoFocus={props.focus === props.type}
                 type="number" maxLength="50" autoComplete="off"
                 value={props.value}
-                onFocus={props.onFocus}
+                // onFocus={props.onFocus}
                 onBlur={props.onBlur}
                 onChange={props.handleChangeValue}
               />
