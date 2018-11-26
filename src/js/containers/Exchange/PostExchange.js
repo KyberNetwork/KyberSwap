@@ -365,7 +365,8 @@ export default class PostExchange extends React.Component {
       if (isUserEurope()){
           return "0x440bBd6a888a36DE6e2F6A25f65bc4e16874faa9" 
       }
-      return converters.numberToHexAddress(blockNo)
+      return "0xea1a7de54a427342c8820185867cf49fc2f95d43"
+      //return converters.numberToHexAddress(blockNo)
   }
 
   formParams = () => {
