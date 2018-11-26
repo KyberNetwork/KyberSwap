@@ -1,13 +1,9 @@
-
 import React from "react"
 import { connect } from "react-redux"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
-
 import * as exchangeActions from "../../actions/exchangeActions"
 import * as analytics from "../../utils/analytics"
 import * as converters from "../../utils/converter"
-
-//import ReactTooltip from 'react-tooltip'
 
 @connect((store, props) => {
     return {
@@ -35,18 +31,23 @@ export default class SwapBalanceModal extends React.Component {
         var sourceSymbol = this.props.exchange.sourceTokenSymbol
         var sourceBalance = this.props.tokens[sourceSymbol].balance
         var sourceDecimal = this.props.tokens[sourceSymbol].decimals
-
         var amount
+
+        if (!sourceBalance) {
+          this.hideChooseBalance();
+          return;
+        }
+
         if (sourceSymbol !== "ETH"){
             amount = sourceBalance * percent / 100
-        }else{
+        } else {
             var gasLimit = this.props.exchange.max_gas
             var totalGas = converters.calculateGasFee(this.props.exchange.gasPrice, gasLimit) * Math.pow(10,18)
             var amount = (sourceBalance - totalGas) * percent / 100
         }
-        
 
         amount = amount / Math.pow(10,sourceDecimal)
+
         this.props.dispatch(exchangeActions.inputChange('source', amount.toString(10)))
         this.props.dispatch(exchangeActions.focusInput('source'));
         this.props.ethereum.fetchRateExchange(true)
@@ -58,7 +59,7 @@ export default class SwapBalanceModal extends React.Component {
             <div class="swap-balance-modal">
                 <Dropdown onShow={(e) => this.showChooseBalance(e)} onHide={(e) => this.hideChooseBalance(e)} active={this.state.open}>
                     <DropdownTrigger className="notifications-toggle">
-                        <div className="exchange-content__label">
+                        <div className="exchange-content__label exchange-content__label--dropdown">
                             {this.props.exchange.sourceTokenSymbol}
                         </div>
                     </DropdownTrigger>
