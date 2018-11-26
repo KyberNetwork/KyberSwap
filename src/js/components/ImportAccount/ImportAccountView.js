@@ -14,14 +14,6 @@ const ImportAccountView = (props) => {
 
   return (
     <div className="import-account">
-      {/*{props.isChangingWallet && (*/}
-        {/*<div className="close-change-wallet">*/}
-          {/*<div>{props.translate("transaction.change_wallet") || "Change Wallet"}</div>*/}
-          {/*<div></div>*/}
-          {/*<div onClick={(e) => props.closeChangeWallet()}></div>*/}
-        {/*</div>*/}
-      {/*)}*/}
-
       <div className="import-account__choose-wallet-container container">
         <h1 className="import-account__title">{props.translate("address.import_address") || "Connect your Wallet to Swap"}</h1>
 

@@ -231,6 +231,10 @@
   &__wallet-type {
     display: flex;
     align-items: center;
+
+    &.mobile {
+      display: none;
+    }
   }
 
   &__wallet-image {
@@ -257,13 +261,22 @@
     border: none;
     box-shadow: none;
 
+    &__wallet-type {
+      padding: 5px 10px;
+      display: none;
+
+      &.mobile {
+        display: flex;
+      }
+    }
+
     &__wallet-container {
       display: block;
+      padding-bottom: 10px;
     }
 
     &__wallet-connect {
       padding: 0 0 0 25px;
-      margin-bottom: 20px;
       width: unset;
       border: none;
       position: relative;

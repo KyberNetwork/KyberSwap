@@ -130,10 +130,10 @@ const AccountBalanceLayout = (props) => {
             <div className="balance-header">
               <div className="slide-down__trigger-container">
                 <div>
-                  <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address} 
+                  <span className="account-balance__address-text">Wallet </span>
+                  <a className="account-balance__address-link" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
                     onClick={(e) => {analytics.trackClickShowAddressOnEtherescan()}}>
-                    <span className="account-balance__address-text">Wallet </span>
-                    <span className="account-balance__address-link">{props.account.address}</span>
+                    {props.account.address}
                   </a>
                 </div>
                 <SlideDownTrigger onToggleContent={() => props.toggleBalanceContent()}>

@@ -491,11 +491,14 @@
   @media screen and (max-width: 900px) {
     &__content {
       display: block;
+      box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+      background-color: #ffffff;
     }
 
     &__balance {
       width: 100%;
-      padding-right: 0;
+      padding: 10px 10px 0 42px;
+      border-top: solid 1px #cccccc;
 
       &::after {
         display: none;
@@ -504,7 +507,7 @@
 
     &__adv-config {
       width: 100%;
-      padding-left: 0;
+      padding: 0 10px 0 42px;
     }
   }
 
