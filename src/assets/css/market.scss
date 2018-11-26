@@ -210,6 +210,7 @@
           .row-2 {
             display: flex;
             justify-content: space-around;
+            padding-bottom: 20px;
             .price-info {
               div:first-child {
                 font-size: 14px;
@@ -430,6 +431,7 @@
       > div {
         @include screen-min-width(large){
           margin-top: -15px;
+          top: 35px;
         }
       }
 
