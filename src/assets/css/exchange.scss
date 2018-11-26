@@ -101,9 +101,11 @@
     font-weight: 600;
     letter-spacing: -0.4px;
     color: #999999;
+
     &.error {
       position: relative;
       color: #ee344e;
+
       &::before {
         content: "";
         position: absolute;
@@ -114,6 +116,22 @@
         background-repeat: no-repeat;
         background-size: contain;
         left: -30px;
+      }
+    }
+
+    &--dropdown {
+      padding-right: 15px;
+      position: relative;
+
+      &::after {
+        content: '';
+        width: 10px;
+        height: 5px;
+        display: block;
+        background-image: url($image-path + 'icon-dropdown-grey.svg');
+        position: absolute;
+        top: 9px;
+        right: 0;
       }
     }
   }
@@ -244,7 +262,7 @@
     color: #666;
     font-size: 24px;
     margin: 0;
-    padding: 0 15px;
+    padding: 0 17px 0 15px;
     min-height: 32px;
     height: 32px;
     outline: none;
