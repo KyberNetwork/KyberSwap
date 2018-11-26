@@ -91,6 +91,18 @@ const ExchangeBodyLayout = (props) => {
     }
   }
 
+  function getAccountTypeHtml(onMobile = false) {
+    return (
+      <div className={`import-account__wallet-type ${onMobile ? "mobile" : ""}`}>
+        <img className="import-account__wallet-image" src={getAssetUrl(`wallets/${props.account.type}.svg`)}/>
+        <div className="import-account__wallet-content">
+          <span className="import-account__wallet-title">Your Wallet - </span>
+          <span className="import-account__wallet-name">{getWalletName()}</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div>
@@ -192,13 +204,7 @@ const ExchangeBodyLayout = (props) => {
                   onClick={(e) => props.clearSession(e)}>
                   Connect your Wallet to Swap
                 </div>
-                <div className="import-account__wallet-type">
-                  <img className="import-account__wallet-image" src={getAssetUrl(`wallets/${props.account.type}.svg`)}/>
-                  <div className="import-account__wallet-content">
-                    <span className="import-account__wallet-title">Your Wallet - </span>
-                    <span className="import-account__wallet-name">{getWalletName()}</span>
-                  </div>
-                </div>
+                {getAccountTypeHtml()}
               </div>
             </div>
           )}
@@ -208,6 +214,7 @@ const ExchangeBodyLayout = (props) => {
           <div className="exchange-account">
             <div className="exchange-account__container container">
               <div className="exchange-account__content">
+                {getAccountTypeHtml(true)}
                 <div className="exchange-account__balance">{props.balanceLayout}</div>
                 <div className="exchange-account__adv-config">{props.advanceLayout}</div>
               </div>

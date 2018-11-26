@@ -72,7 +72,6 @@ export default class ImportAccount extends React.Component {
   }
 
   render() {
-    {/*<LandingPage translate={this.props.translate} tradeType={this.props.tradeType}/>*/}
     return (
       <ImportAccountView
         errorModal={<ErrorModal/>}

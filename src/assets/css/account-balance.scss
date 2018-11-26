@@ -9,6 +9,12 @@
     font-size: 13px;
     color: #5a5e67;
     word-break: break-all;
+    transition: color .2s;
+
+    &:hover {
+      color: #ef8102;
+      text-decoration: underline;
+    }
   }
 
   &__token-list {
@@ -178,17 +184,21 @@
   }
 
   @media screen and (max-width: 900px) {
+    &__content {
+      padding-left: 20px;
+    }
+
     &__address-text {
       display: block;
     }
 
     &__content-input-container {
       display: block;
+      margin-bottom: 15px;
     }
 
     &__content-search-container {
       width: 100%;
-      margin-bottom: 10px;
 
       &::before {
         right: 0;
