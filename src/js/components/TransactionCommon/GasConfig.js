@@ -37,7 +37,7 @@ const GasConfig = (props) => {
       <div className={!props.gasPriceError ? "" : "error"}>
         <div className="gas-change">
           <div className="gas_input">
-            <input type="text" min="0" max="99" className="gas-price-input" step="0.1" value={props.gasPrice} onChange={handleChangeGasPrice} onFocus={(e) => analytics.trackCustomGasPrice()} maxLength="20" autoComplete="off" />
+            <input type="number" min="0" max="99" className="gas-price-input" step="0.1" value={props.gasPrice} onChange={handleChangeGasPrice} onFocus={(e) => analytics.trackCustomGasPrice()} maxLength="20" autoComplete="off" />
           </div>
           <div className="gas_input-lable">
             Gwei
