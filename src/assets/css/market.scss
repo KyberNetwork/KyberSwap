@@ -290,9 +290,9 @@
 
   &__title {
     text-align: center;
-    font-size: 32px;
+    font-size: 28px;
     margin-bottom: 30px;
-    font-weight: 500;
+    font-weight: 600;
     @include screen-max-width(large) {
       display: none;
     }
