@@ -17,6 +17,8 @@ import * as analytics from "../../utils/analytics"
 import constansts from "../../services/constants"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore';
+import BLOCKCHAIN_INFO from "../../../../env";
+import * as web3Package from "../../services/web3"
 
 @connect((store, props) => {
   const langs = store.locale.languages
@@ -71,6 +73,18 @@ export default class ExchangeBody extends React.Component {
 
   componentDidMount = () => {
     if (this.props.global.changeWalletType !== "swap") this.props.dispatch(globalActions.closeChangeWallet())
+
+    const web3Service = web3Package.newWeb3Instance();
+
+    if (web3Service !== false) {
+      const walletType = web3Service.getWalletType();
+      const isDapp = (walletType !== "metamask") && (walletType !== "modern_metamask");
+
+      if (isDapp) {
+        this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
+          this.props.ethereum, this.props.tokens, this.props.translate, walletType))
+      }
+    }
   }
 
   validateTxFee = (gasPrice) => {
