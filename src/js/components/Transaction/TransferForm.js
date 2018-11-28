@@ -40,6 +40,14 @@ const TransferForm = (props) => {
     }
   }
 
+  function getWalletIconName(type, walletName) {
+    if (walletName === "PROMO CODE") {
+      return "promo_code";
+    }
+
+    return type;
+  }
+
   return (
     <div>
       <div>
@@ -121,7 +129,7 @@ const TransferForm = (props) => {
                   Connect your Wallet to Swap
                 </div>
                 <div className="import-account__wallet-type">
-                  <img className="import-account__wallet-image" src={getAssetUrl(`wallets/${props.account.type}.svg`)}/>
+                  <img className="import-account__wallet-image" src={getAssetUrl(`wallets/${getWalletIconName(props.account.type, props.walletName)}.svg`)}/>
                   <div className="import-account__wallet-content">
                     <span className="import-account__wallet-title">Your Wallet - </span>
                     <span className="import-account__wallet-name">{getWalletName()}</span>

@@ -65,9 +65,7 @@ export default class ExchangeBody extends React.Component {
   constructor() {
     super()
     this.state = {
-      focus: "",
-      isAndroid: false,
-      isIos: false
+      focus: ""
     }
   }
 
@@ -502,8 +500,6 @@ export default class ExchangeBody extends React.Component {
         isChangingWallet = {this.props.global.isChangingWallet}
         changeWalletType = {this.props.global.changeWalletType}
         closeChangeWallet = {this.closeChangeWallet}
-        isIos={this.state.isIos}
-        isAndroid={this.state.isAndroid}
         global={this.props.global}
         swapBalance = {this.getSwapBalance()}
         clearSession={this.clearSession}

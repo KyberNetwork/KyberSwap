@@ -103,10 +103,9 @@ const PassphraseModal = (props) => {
         <div className={!!props.passwordError ? "error password-input" : "password-input"}>
           {/* <div class="type-password">{props.translate("transaction.type_pass_before_progress") || "Type a password before progressing"}</div> */}
           <div class="type-password">{props.translate("transaction.type_pass_to_sign") || "Enter your password/passphrase to sign and broadcast"}</div>
-          <div className="input-reveal">              
+          <div className="input-reveal">
             <input className="text-center security" id="passphrase" type="text"
               autoComplete="off" spellCheck="false"
-              placeholder="Password"
               onFocus={(e) => {analytics.trackClickInputPasswordWithJSON()}}
               onChange={(e) => props.onChange(e)} autoFocus onKeyPress={(e) => submit(e)} />
             <a className="toggle" onClick={() => toggleShowPw()}></a>
