@@ -52,9 +52,12 @@ const transfer = (state = initState, action) => {
     case "TRANSFER.TRANSFER_SPECIFY_ADDRESS_RECEIVE":
       newState.destAddress = action.payload
       newState.errors.destAddress = ''
+      newState.errors.amountTransfer = ''
+      newState.errors.ethBalanceError = ""
       return newState
     case "TRANSFER.TRANSFER_SPECIFY_AMOUNT":
       newState.amount = action.payload
+      newState.errors.destAddress = ''
       newState.errors.amountTransfer = ''
       newState.errors.ethBalanceError = ""
       return newState

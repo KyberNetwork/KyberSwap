@@ -51,6 +51,7 @@
   position: relative;
   max-width: 1050px;
   margin: 0 auto;
+  z-index: 10;
 
   &-wrapper {
     background-image: linear-gradient(to right, #fc9920, #eeb43d);
@@ -60,7 +61,7 @@
 
   &__item {
     display: flex;
-    align-items: center;
+    // align-items: center;
     position: relative;
 
     &--left,
@@ -73,11 +74,11 @@
     }
 
     &--left {
-      padding: 0 25px 0 20px;
+      padding: 0 0px 0 20px;
     }
 
     &--right {
-      padding: 0 20px 0 25px;
+      padding: 0 0px 0 25px;
     }
 
     &--absolute {
@@ -109,13 +110,21 @@
       &::before {
         content: "";
         position: absolute;
-        width: 20px;
-        height: 20px;
+        width: 15px;
+        height: 15px;
         background-image: url(../img/exchange/error-icon.svg);
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
-        left: -30px;
+        left: -23px;
+        top: 3px;
+      }
+
+      .exchange-content__label--dropdown {
+        color: #ee344e;
+      }
+      .dropdown__content {
+        color: #999999;
       }
     }
 
@@ -134,26 +143,70 @@
         right: 0;
       }
     }
+
+    &-content {
+      display: flex;
+      align-items: center;
+    }
   }
 
   &__select {
-    min-width: 215px;
+    // min-width: 215px;
+    .focus-item {
+      justify-content: unset !important;
+      .d-flex {
+        // margin-right: 0;
+      }
+      .focus-name {
+        display: none;
+        @include screen-max-width(medium) {
+          display: block;
+        }
+      }
+    }
   }
 
   &__input-container {
-    border-left: 1px solid #cccccc;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    margin-left: 7px;
+    // margin-left: 7px;
+    width: 100%;
 
-    &.error {
-      padding-right: 30px;
+    .main-input {
+      border-left: 1px solid #cccccc;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      &__left {
+        padding-right: 25px;
+      }
+      &__right {
+        padding-right: 20px;
+      }
     }
+
+    // &.error {
+    //   padding-right: 30px;
+    // }
 
     .error {
       margin-bottom: 0 !important;
-      padding-bottom: 3px !important;
+      // padding-bottom: 3px !important;
+    }
+
+    .error-msg {
+      width: calc(100% + 1px);
+      background-color: white;
+      border: 0.5px solid #cccccc;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      // box-shadow: 0 1px 3px #cccccc;
+      padding: 15px 20px;
+      span {
+        margin-top: 5px;
+      }
+
+      div {
+        color: #f1637d;
+      }
     }
 
     .dropdown__content {
@@ -204,6 +257,16 @@
           left: unset;
         }
 
+        &.recieve-addr {
+          right: -1px;
+          left: unset;
+          .input-content {
+            input {
+              padding: 10px 15px;
+            }
+          }
+        }
+
         &.error {
           height: unset;
           color: #ee344e;
@@ -218,13 +281,14 @@
               &::before {
                 content: "";
                 position: absolute;
-                width: 20px;
-                height: 20px;
+                width: 15px;
+                height: 15px;
                 background-image: url(../img/exchange/error-icon.svg);
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: contain;
-                left: -30px;
+                left: -20px;
+                top: 3px;
               }
             }
           }
@@ -256,21 +320,34 @@
     &--to {
       border-left: none;
     }
+
+    @include screen-max-width(medium) {
+      padding: 0 12px 0 32px;
+    }
   }
 
   & &__input {
     color: #666;
     font-size: 24px;
     margin: 0;
-    padding: 0 17px 0 15px;
+    padding: 0px 5px 0 15px;
     min-height: 32px;
-    height: 32px;
+    height: 45px;
+    width: 100%;
     outline: none;
     border: none !important;
     box-shadow: none !important;
 
     &.error {
       color: #ee344e;
+      padding-right: 30px;
+      &::placeholder {
+        color: #ee344e;
+      }
+    }
+
+    @include screen-max-width(medium) {
+      padding: 0;
     }
   }
 
@@ -584,6 +661,7 @@
     right: 0;
     width: 170px;
     top: 25px;
+    position: absolute;
   }
   .select-item{
     background-color: white;

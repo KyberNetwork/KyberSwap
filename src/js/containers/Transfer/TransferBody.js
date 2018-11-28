@@ -112,6 +112,11 @@ export default class Transfer extends React.Component {
     analytics.trackClickInputAmount("transfer")
   }
 
+  onFocusAddr = () => { 
+    this.setState({focus:"to-addr"})
+    analytics.trackClickInputRecieveAddress()
+  }
+
   onBlur = () => {
     this.setState({ focus: "" })
   }
@@ -263,6 +268,7 @@ export default class Transfer extends React.Component {
         onBlur={this.onBlur}
         onFocus={this.onFocus}
         focus={this.state.focus}
+        onFocusAddr={this.onFocusAddr}
         advanceLayout={this.getAdvanceLayout()}
         balanceLayout={this.getBalanceLayout()}
         networkError={this.props.global.network_error}

@@ -1,5 +1,7 @@
 import React from "react"
 import { gweiToEth, stringToBigNumber, calculateGasFee, roundingNumber } from "../../utils/converter";
+import { FeeDetail } from "../CommonElement";
+
 class ConfirmTransferModal extends React.Component {
 
   constructor() {
@@ -51,15 +53,22 @@ class ConfirmTransferModal extends React.Component {
               <div>
                 <div className="title">{this.props.title}</div>
                 {this.props.recap}
-                <div className="gas-configed">
+                <FeeDetail 
+                  translate={this.props.translate} 
+                  gasPrice={this.props.gasPrice} 
+                  gas={this.props.gas}
+                  isFetchingGas={this.props.isFetchingGas}
+                  totalGas={totalGas}
+                />
+                {/* <div className="gas-configed"> */}
                 {/* <div>{this.props.translate("transaction.included") || 'Included'}</div> */}
-                  <div className={"title-fee"}>{this.props.translate("transaction.transaction_fee") || 'Transaction Fee'}</div>
+                  {/* <div className={"title-fee"}>{this.props.translate("transaction.transaction_fee") || 'Transaction Fee'}</div>
                   <div className={"total-fee"}>
                     {totalGas.toString()} <span>ETH</span>
                   </div>
                   <div className={"fee-detail"}>
                     {this.props.gasPrice} Gwei (Gas Price) * {this.props.gas} (Gas Limit)
-                  </div> 
+                  </div>  */}
                 {/* <div className="row">
                   <span className="column small-6">{this.props.translate("transaction.gas_price") || 'Gas price'}</span>
                   <span className="column small-6">{+roundingNumber(this.props.gasPrice)} Gwei</span>
@@ -73,7 +82,7 @@ class ConfirmTransferModal extends React.Component {
                     } ETH
                   </span>
                 </div> */}
-                </div>
+                {/* </div> */}
                 {/* {!this.props.isFetchingRate &&
                   <div className="des">
                     <div><img src={require('../../../assets/img/exchange/exclaimed.svg')}/></div>
