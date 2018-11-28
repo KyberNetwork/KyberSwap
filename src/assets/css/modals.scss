@@ -559,7 +559,7 @@ $divider-color: darken($title-background-color, 5);
     // padding-top: 20px;
     border: solid 1px #e5e5e5;
     border-radius: 3px;
-    padding-left: 45px;
+    padding-left: 35px;
     &.security{
       font-family: 'text-security-disc';
       font-size: 14px;
@@ -600,20 +600,22 @@ $divider-color: darken($title-background-color, 5);
       border-radius: 4px;
       background-color: #ffffff;
       border: solid 1px #e5e5e5;
-      input{
+
+      input {
         background-color: #ffffff;
         font-size: 14px;
         font-style: italic;
         line-height: 1.43;
         color: #141927;
       }
+
       .toggle {
         opacity: .4;
         display: block;
         width: 20px;
         height: 20px;
         background-repeat: no-repeat;
-        background-size: contains;
+        background-size: contain;
         background-position: center;
         position: absolute;
         top: 50%;
@@ -625,16 +627,18 @@ $divider-color: darken($title-background-color, 5);
         transition: opacity .5s ease-in-out;
         background-image: url(../img/unlock-pass.svg);
       }
+
       &.unlock .toggle {
         background-image: url(../img/lock-pass.svg);
       }
-      .tootip{
+
+      .tootip {
         opacity: .4;
         display: block;
         width: 20px;
         height: 20px;
         background-repeat: no-repeat;
-        background-size: contains;
+        background-size: contain;
         background-position: center;
         position: absolute;
         top: 50%;

@@ -91,10 +91,18 @@ const ExchangeBodyLayout = (props) => {
     }
   }
 
+  function getWalletIconName(type, walletName) {
+    if (walletName === "PROMO CODE") {
+      return "promo_code";
+    }
+
+    return type;
+  }
+
   function getAccountTypeHtml(onMobile = false) {
     return (
       <div className={`import-account__wallet-type ${onMobile ? "mobile" : ""}`}>
-        <img className="import-account__wallet-image" src={getAssetUrl(`wallets/${props.account.type}.svg`)}/>
+        <img className="import-account__wallet-image" src={getAssetUrl(`wallets/${getWalletIconName(props.account.type, props.walletName)}.svg`)}/>
         <div className="import-account__wallet-content">
           <span className="import-account__wallet-title">Your Wallet - </span>
           <span className="import-account__wallet-name">{getWalletName()}</span>
@@ -119,7 +127,7 @@ const ExchangeBodyLayout = (props) => {
                 <div className="exchange-content__label">{props.translate("transaction.exchange_from") || "From"}</div>
                 <div className="exchange-content__select select-token-panel">{props.tokenSourceSelect}</div>
                 <div className={`exchange-content__input-container ${errorExchange ? "error" : ""}`}>
-                <BigInput 
+                <BigInput
                   value={props.input.sourceAmount.value}
                   onFocus={props.input.sourceAmount.onFocus}
                   onBlur={props.input.sourceAmount.onBlur}
@@ -194,8 +202,6 @@ const ExchangeBodyLayout = (props) => {
             tradeType="swap"
             isChangingWallet={props.isChangingWallet}
             closeChangeWallet={props.closeChangeWallet}
-            isIos={props.isIos}
-            isAndroid={props.isAndroid}
           />
           || (
             <div className="import-account">

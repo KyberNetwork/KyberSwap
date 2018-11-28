@@ -38,14 +38,12 @@ export default class TokenSelector extends React.Component {
 
   selectItem = (event, symbol, address) => {
     this.props.chooseToken(symbol, address, this.props.type)
-    //this.toggleOpen()
-    //console.log("toggle 2: " + this.state.open)
-   // this.setState({ open: false })
   }
 
   render() {
     return (
       <TokenSelectorView
+        account={this.props.account}
         open={this.state.open}
         searchWord={this.state.searchWord}
         listItem={this.props.listItem}
@@ -54,8 +52,8 @@ export default class TokenSelector extends React.Component {
         changeWord={this.changeWord}
         selectItem={this.selectItem}
         translate={this.props.translate}
-        showTokens = {this.showTokens}
-        hideTokens = {this.hideTokens}
+        showTokens={this.showTokens}
+        hideTokens={this.hideTokens}
         type={this.props.type}
       />
     )

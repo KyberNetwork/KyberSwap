@@ -78,19 +78,39 @@ button:focus{
         width: 20px;
         height: 20px;
         background-repeat: no-repeat;
-        background-size: contains;
+        background-size: contain;
         background-position: center;
         position: absolute;
         top: 50%;
         margin-top: -10px;
-        left: 12px;
+        right: 12px;
+        left: unset;
+        -webkit-transition: opacity .5s ease-in-out;
+        -o-transition: opacity .5s ease-in-out;
+        transition: opacity .5s ease-in-out;
+        background-image: url(../img/unlock-pass.svg);
+    }
+
+    &.unlock .toggle {
+        background-image: url(../img/lock-pass.svg);
+    }
+
+    .tootip {
+        opacity: .4;
+        display: block;
+        width: 17px;
+        height: 17px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        position: absolute;
+        top: 50%;
+        margin-top: -9px;
+        left: 10px;
         -webkit-transition: opacity .5s ease-in-out;
         -o-transition: opacity .5s ease-in-out;
         transition: opacity .5s ease-in-out;
         background-image: url(../img/lock.svg);
-    }
-    &.unlock .toggle {
-        background-image: url(../img/unlock.svg);
     }
 }
 a.disabled{

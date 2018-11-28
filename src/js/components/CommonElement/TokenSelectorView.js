@@ -30,14 +30,12 @@ const TokenSelectorView = (props) => {
                 </div>
                 <div>{item.symbol}</div>
               </div>
-              {props.type !== "des" &&
-                <div className="item-balance">
-                  {props.account !== false && (
-                    <div title={balance} class="item-balance-value">
-                      {`${roundingNumber(balance)} ${item.symbol}`}
-                    </div>
-                  )}
+              {(props.type !== "des" && props.account != false) &&
+              <div className="item-balance">
+                <div title={balance} className="item-balance-value">
+                  {`${roundingNumber(balance)} ${item.symbol}`}
                 </div>
+              </div>
               }
             </div>
           </div>

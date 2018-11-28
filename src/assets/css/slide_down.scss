@@ -5,7 +5,6 @@
     position: relative;
     cursor: pointer;
     transition: all .3s;
-    margin-top: 10px;
 
     &-container {
       display: flex;
@@ -24,7 +23,6 @@
         height: 12px;
         background: url($image-path + 'arrow-down-black.svg') center no-repeat;
         background-size: contain;
-        transform: rotate(-180deg);
         transition: all 0.3s;
       }
 
@@ -48,6 +46,7 @@
   &__content {
     overflow: hidden;
     max-height: 0;
+    margin-top: 10px;
   }
 
   &__fade-in {
@@ -58,12 +57,8 @@
 
   &--active {
     .slide-down__trigger {
-      &::after {
-        transform: rotate(0);
-      }
-
       .slide-arrow {
-        transform: rotate(0);
+        transform: rotate(-180deg);
       }
     }
 
