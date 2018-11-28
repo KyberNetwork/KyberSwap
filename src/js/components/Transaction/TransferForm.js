@@ -128,7 +128,7 @@ const TransferForm = (props) => {
                     value={props.input.destAddress.value}
                     onChange={props.input.destAddress.onChange}
                     placeholder="0x0de..."
-                    onFocus={(e) => props.onFocusAddr}
+                    onFocus={props.onFocusAddr}
                     onBlur={props.onBlur}
                   />
                   {props.focus === "to-addr" && <div className={isError() ? "error-msg" : ""}>
