@@ -12,7 +12,7 @@ const PostExchangeBtn = (props) => {
               <i className="k k-exchange k-3x cur-pointer"></i>
               {props.translate("transaction.swap") || "Swap"}
             </a>
-            <TermAndServices/>
+            <TermAndServices tradeType="swap"/>
           </div>
         }
       </div>

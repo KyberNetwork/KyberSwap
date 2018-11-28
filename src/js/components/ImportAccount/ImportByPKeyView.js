@@ -16,18 +16,18 @@ const ImportByPKeyView = (props) => {
     }
   }
 
-	function toggleShowPw() {
-		let input = document.getElementById('private_key')
-		if (input.classList.contains('security')) {
-			input.classList.remove('security')
-			input.parentElement.classList.add('unlock')
-			analytics.trackClickShowPassword("show")
-		} else if (input.type == 'text') {
-			input.classList.add('security')
-			input.parentElement.classList.remove('unlock')
-			analytics.trackClickShowPassword("hide")
-		}
-	}
+  function toggleShowPw() {
+    let input = document.getElementById('private_key')
+    if (input.classList.contains('security')) {
+      input.classList.remove('security')
+      input.parentElement.classList.add('unlock')
+      analytics.trackClickShowPassword("show")
+    } else if (input.type == 'text') {
+      input.classList.add('security')
+      input.parentElement.classList.remove('unlock')
+      analytics.trackClickShowPassword("hide")
+    }
+  }
 
   return (
     <div>

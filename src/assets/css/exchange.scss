@@ -12,7 +12,7 @@
   margin: 0 auto;
 
   &__item {
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     text-transform: uppercase;
     transition: all .3s;
@@ -33,7 +33,7 @@
   }
 
   &__separator {
-    width: 2px;
+    width: 1px;
     height: 100%;
     background-color: white;
     position: absolute;
@@ -544,7 +544,7 @@
 
   &__balance {
     width: 65%;
-    padding-right: 55px;
+    padding-right: 45px;
     position: relative;
 
     &::after {
@@ -562,7 +562,7 @@
 
   &__adv-config {
     width: 35%;
-    padding-left: 50px;
+    padding-left: 35px;
   }
 
   @media screen and (max-width: 900px) {

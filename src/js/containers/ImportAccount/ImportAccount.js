@@ -1,12 +1,11 @@
 import React from "react"
 import { connect } from "react-redux"
-import {  ImportAccountView, LandingPage } from '../../components/ImportAccount'
+import {  ImportAccountView } from '../../components/ImportAccount'
 import {
   ImportKeystore, ImportByDevice, ImportByPrivateKey,
   ErrorModal, ImportByMetamask,
   ImportByDeviceWithLedger, ImportByDeviceWithTrezor, ImportByPromoCode
 } from "../ImportAccount"
-import { setIsAndroid, setIsIos } from "../../actions/globalActions"
 import { visitExchange, setOnMobile } from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux'
 import { importAccountMetamask } from "../../actions/accountActions"
@@ -37,13 +36,6 @@ import {isMobile} from '../../utils/common'
 })
 
 export default class ImportAccount extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      isOpen: false
-    }
-  }
-
   componentDidMount = () => {
     var swapPage = document.getElementById("swap-app")
     swapPage.className = swapPage.className === "" ? "no-min-height" : swapPage.className + " no-min-height"

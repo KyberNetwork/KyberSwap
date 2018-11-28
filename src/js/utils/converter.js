@@ -15,35 +15,42 @@ export function calculateMinAmount(source, rate) {
   return minAmount
 }
 
-export function calculateDest(source, rate) {
-  //console.log({source, rate})
+export function calculateDest(source, rate, precision) {
   if (isNaN(source) || source === ""){
     source = 0
   }
+
   var bigSource = new BigNumber(source)
   var bigRate = new BigNumber(rate)
   if (bigSource == 'NaN' || bigSource == 'Infinity' || acceptableTyping(source) ||
     bigRate == 'NaN' || bigRate == 'Infinity' || acceptableTyping(rate)) {
     return "0"
   }
+
   var dest = bigSource.times(bigRate).div(1000000000000000000)
+
+  if (dest != 0 && precision) {
+    return dest.toFixed(precision)
+  }
+
   return dest
 }
 
 export function caculateSourceAmount(destAmount, offeredRate, precision) {
-  console.log({destAmount, offeredRate, precision})
   if (!destAmount || !offeredRate || acceptableTyping(destAmount) || acceptableTyping(offeredRate)) {
     return "0"
   }
+
   var bigOfferedRate = new BigNumber(offeredRate)
 
-  if (bigOfferedRate.comparedTo(0) === 0){
+  if (bigOfferedRate.comparedTo(0) === 0) {
     return ""
   }
 
   var bigDest = new BigNumber(destAmount)
   bigOfferedRate = bigOfferedRate.div(1000000000000000000)
   var result = bigDest.div(bigOfferedRate)
+
   if (precision) {
     return result.toFixed(precision)
   } else {
@@ -55,11 +62,13 @@ export function caculateDestAmount(sourceAmount, offeredRate, precision) {
   if (!sourceAmount || !offeredRate || acceptableTyping(sourceAmount) || acceptableTyping(offeredRate)) {
     return "0"
   }
+
   var bigSource = new BigNumber(sourceAmount)
   var bigOfferedRate = new BigNumber(offeredRate)
 
   bigOfferedRate = bigOfferedRate.div(1000000000000000000)
   var result = bigSource.times(bigOfferedRate)
+
   if (precision) {
     return result.toFixed(precision)
   } else {
