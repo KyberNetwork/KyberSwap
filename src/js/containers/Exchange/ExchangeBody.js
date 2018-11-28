@@ -19,6 +19,7 @@ import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore';
 import BLOCKCHAIN_INFO from "../../../../env";
 import * as web3Package from "../../services/web3"
+import { importAccountMetamask } from "../../actions/accountActions"
 
 @connect((store, props) => {
   const langs = store.locale.languages
