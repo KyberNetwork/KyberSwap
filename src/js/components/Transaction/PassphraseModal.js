@@ -1,6 +1,7 @@
 import React from "react"
 import { gweiToEth, stringToBigNumber, calculateGasFee, roundingNumber } from "../../utils/converter"
 import * as analytics from "../../utils/analytics"
+import { FeeDetail } from "../CommonElement";
 
 const PassphraseModal = (props) => {
   function submitTransaction(e) {
@@ -48,15 +49,15 @@ const PassphraseModal = (props) => {
           <div>
             <div>
             {props.recap}
-              <div className="gas-configed">
+              {/* <div className="gas-configed"> */}
                 {/* <div>{props.translate("transaction.included") || 'Included'}</div> */}
-                <div className={"title-fee"}>{props.translate("transaction.transaction_fee") || 'Transaction Fee'}</div>
+                {/* <div className={"title-fee"}>{props.translate("transaction.transaction_fee") || 'Transaction Fee'}</div>
                 <div className={"total-fee"}>
                   {totalGas.toString()} <span>ETH</span>
                 </div>
                 <div className={"fee-detail"}>
                   {props.gasPrice} Gwei (Gas Price) * {props.gas} (Gas Limit)
-                </div> 
+                </div>  */}
                 {/* <div className="row">
                   <span className="column small-6">{props.translate("transaction.gas_price") || 'Gas price'}</span>
                   <span className="column small-6 font-w-i">{+roundingNumber(props.gasPrice)} Gwei</span>
@@ -68,7 +69,14 @@ const PassphraseModal = (props) => {
                     : <span>{totalGas.toString()}</span>
                   } ETH</span>
                 </div> */}
-              </div>
+              {/* </div> */}
+              <FeeDetail 
+                translate={props.translate} 
+                gasPrice={props.gasPrice} 
+                gas={props.gas}
+                isFetchingGas={props.isFetchingGas}
+                totalGas={totalGas}
+              />
               {/* {!props.isFetchingRate &&
                 <div className="des">
                   <div><img src={require('../../../assets/img/exchange/exclaimed.svg')}/></div>

@@ -124,28 +124,48 @@ const ExchangeBodyLayout = (props) => {
             )}
             <div className={"exchange-content container"}>
               <div className={"exchange-content__item exchange-content__item--left"}>
-                <div className="exchange-content__label">{props.translate("transaction.exchange_from") || "From"}</div>
-                <div className="exchange-content__select select-token-panel">{props.tokenSourceSelect}</div>
-                <div className={`exchange-content__input-container ${errorExchange ? "error" : ""}`}>
-                <BigInput
-                  value={props.input.sourceAmount.value}
-                  onFocus={props.input.sourceAmount.onFocus}
-                  onBlur={props.input.sourceAmount.onBlur}
-                  handleChangeValue={handleChangeSource}
-                  tokenSymbol={props.sourceTokenSymbol}
-                  type={"source"}
-                  focus={props.focus}
-                  errorExchange={errorExchange}
-                  errorShow={errorShow}
-                  isChangingWallet={props.isChangingWallet}
-                />
+                <div className={"exchange-content__label-content"}>
+                  <div className="exchange-content__label">{props.translate("transaction.exchange_from") || "From"}</div>
+                  <div className="exchange-content__select select-token-panel">{props.tokenSourceSelect}</div>
                 </div>
-                {props.account === false && (
-                  <div className={`exchange-content__label exchange-content__label--right ${errorExchange ? "error" : ""}`}>{props.sourceTokenSymbol}</div>
-                )}
-                {props.account !== false && (
-                  <div className="exchange-content__label exchange-content__label--right">{props.swapBalance}</div>
-                )}
+                <div className={`exchange-content__input-container ${errorExchange ? "error" : ""}`}>
+                  {/* <BigInput 
+                    value={props.input.sourceAmount.value}
+                    onFocus={props.input.sourceAmount.onFocus}
+                    onBlur={props.input.sourceAmount.onBlur}
+                    handleChangeValue={handleChangeSource}
+                    tokenSymbol={props.sourceTokenSymbol}
+                    type={"source"}
+                    focus={props.focus}
+                    errorExchange={errorExchange}
+                    errorShow={errorShow}
+                    isChangingWallet={props.isChangingWallet}
+                  /> */}
+                  <div className={"main-input main-input__left"}>
+                    <input
+                      className={`exchange-content__input ${errorExchange ? "error" : ""}`}
+                      min="0"
+                      step="0.000001"
+                      placeholder="0" autoFocus
+                      type="text" maxLength="50" autoComplete="off"
+                      value={props.input.sourceAmount.value}
+                      onFocus={props.input.sourceAmount.onFocus}
+                      onBlur={props.input.sourceAmount.onBlur}
+                      onChange={handleChangeSource}
+                    />
+                    {props.account === false && (
+                      <div className={`exchange-content__label exchange-content__label--right ${errorExchange ? "error" : ""}`}>{props.sourceTokenSymbol}</div>
+                    )}
+                    {props.account !== false && (
+                      <div className={`exchange-content__label exchange-content__label--right ${errorExchange ? "error" : ""}`}>{props.swapBalance}</div>
+                    )}
+                  </div>
+                  
+                  {props.focus === "source" && <div className={errorExchange ? "error-msg" : ""}>
+                    {/* {!props.isChangingWallet ? props.errorShow : ''} */}
+                    {errorShow}
+                  </div>}
+                </div>
               </div>
 
               <div className={"exchange-content__item--absolute"}>
@@ -156,10 +176,12 @@ const ExchangeBodyLayout = (props) => {
               </div>
 
               <div className={"exchange-content__item exchange-content__item--right"}>
-                <div className="exchange-content__label">{props.translate("transaction.exchange_to") || "To"}</div>
-                <div className="exchange-content__select select-token-panel">{props.tokenDestSelect}</div>
+                <div className={"exchange-content__label-content"}>
+                  <div className="exchange-content__label">{props.translate("transaction.exchange_to") || "To"}</div>
+                  <div className="exchange-content__select select-token-panel">{props.tokenDestSelect}</div>
+                </div>
                 <div className={`exchange-content__input-container ${errorExchange ? "error" : ""}`}>
-                  <BigInput 
+                  {/* <BigInput 
                     value={props.input.destAmount.value}
                     onFocus={props.input.destAmount.onFocus}
                     onBlur={props.input.destAmount.onBlur}
@@ -170,9 +192,28 @@ const ExchangeBodyLayout = (props) => {
                     errorExchange={errorExchange}
                     errorShow={errorShow}
                     isChangingWallet={props.isChangingWallet}
-                  />
+                  /> */}
+                  <div className={"main-input main-input__right"}>
+                    <input
+                      className={`exchange-content__input ${errorExchange ? "error" : ""}`}
+                      step="0.000001"
+                      placeholder="0"
+                      min="0"
+                      type="text"
+                      maxLength="50"
+                      autoComplete="off"
+                      value={props.input.destAmount.value}
+                      onFocus={props.input.destAmount.onFocus}
+                      onBlur={props.input.destAmount.onBlur}
+                      onChange={handleChangeDest}
+                    />
+                    <div className={`exchange-content__label exchange-content__label--right ${errorExchange ? "error" : ""}`}>{props.destTokenSymbol}</div>
+                  </div>
+                  {props.focus === "dest" && <div className={errorExchange ? "error-msg" : ""}>
+                    {/* {!props.isChangingWallet ? props.errorShow : ''} */}
+                    {errorShow}
+                  </div>}
                 </div>
-                <div className={`exchange-content__label exchange-content__label--right ${errorExchange ? "error" : ""}`}>{props.destTokenSymbol}</div>
               </div>
             </div>
 

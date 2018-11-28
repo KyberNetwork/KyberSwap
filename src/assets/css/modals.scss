@@ -331,6 +331,8 @@ $divider-color: darken($title-background-color, 5);
       &:not(.error-text){
         color: #666666;
         font-weight: 600;
+        font-size: 14px;
+        letter-spacing: normal;
       }
     }
     .type-password{
@@ -660,22 +662,45 @@ $divider-color: darken($title-background-color, 5);
       }
     }
     .message{
-      font-weight: bold;
-      font-size: 0.8rem;
+      font-size: 14px;
       margin-top: 1rem;
+      font-weight: normal;
     }
     .tx-title{
       text-align: left;
+      margin: 0;
       .address-info {
         overflow: hidden;
         text-overflow: ellipsis;
-        span {
+        display: flex;
+        justify-content: space-between;
+        background-color: #fff;
+        box-shadow: 0 1px 5px 0 hsla(0,0%,56%,.15);
+        border: .8px solid hsla(0,0%,80%,.72);
+        border-radius: 4px;
+        padding: 15px 25px;
+        margin-right: 0;
+        div {
           &:first-child {
-            color: #2c2c2c;
+            color: #141927;
             font-weight: 600;
+            font-size: 14px;
           }
           &:last-child {
-            padding: 0 15px;
+            // padding: 0 15px;
+            font-size: 14px;
+            color: #5a5e67;
+            font-weight: normal;
+          }
+        }
+        @include screen-max-width(medium) {
+          display: block;
+          div {
+            &:last-child {
+              // padding: 0 15px;
+              margin-top: 10px;
+              word-wrap: break-word;
+            }
           }
         }
       }

@@ -40,6 +40,19 @@ const TransferForm = (props) => {
     }
   }
 
+  function isError() {
+    if (props.errors.amountTransfer || props.errors.destAddress) {
+      return true
+    }
+    return false
+  }
+
+  var errorShow = (
+    <div>
+      {props.errors.amountTransfer && <div>{props.translate(props.errors.amountTransfer)}</div>}
+      {props.errors.destAddress && <div>{props.translate(props.errors.destAddress)}</div>}
+    </div>
+  )
   function getWalletIconName(type, walletName) {
     if (walletName === "PROMO CODE") {
       return "promo_code";
@@ -61,25 +74,46 @@ const TransferForm = (props) => {
             )}
             <div className={"exchange-content container"}>
               <div className={"exchange-content__item exchange-content__item--left"}>
-                <div className="exchange-content__label exchange-content__label--wide">
-                  {props.translate("transaction.exchange_from") || "From"}
+                <div className={"exchange-content__label-content"}>
+                  <div className="exchange-content__label exchange-content__label--wide">
+                    {props.translate("transaction.exchange_from") || "From"}
+                  </div>
+                  <div className="exchange-content__select select-token-panel">{props.tokenTransferSelect}</div>
                 </div>
-                <div className="exchange-content__select select-token-panel">{props.tokenTransferSelect}</div>
-                <div className="exchange-content__input-container">
-                  <BigInput
+                <div className={`exchange-content__input-container ${isError() ? "error" : ""}`}>
+                  {/* <BigInput
                     value={props.input.amount.value}
                     onFocus={props.onFocus}
                     onBlur={props.onBlur}
                     handleChangeValue={handleChangeAmount}
                     tokenSymbol={props.sourceActive}
                     type={"transfer"}
-                    focus={props.onFocus}
-                    errorExchange={props.errors.amountTransfer}
-                    errorShow={props.translate(props.errors.amountTransfer)}
+                    errorExchange={isError()}
+                    errorShow={errorShow}
                     isChangingWallet={props.isChangingWallet}
-                  />
+                  /> */}
+                  <div className={"main-input main-input__left"}>
+                    <input
+                      className={`exchange-content__input ${isError() ? "error" : ""}`}
+                      type="text"
+                      min="0"
+                      step="0.000001"
+                      placeholder="0"
+                      id="inputSource"
+                      value={props.input.amount.value}
+                      onChange={handleChangeAmount}
+                      onBlur={props.onBlur}
+                      onFocus={props.onFocus}
+                      maxLength="50"
+                      autoComplete="off"
+                    />
+                    <div className={`exchange-content__label ${isError() ? "error" : ""}`}>{props.sourceActive}</div>
+                  </div>
+                  {props.focus === "source" && <div className={isError() ? "error-msg" : ""}>
+                    {/* {!props.isChangingWallet ? props.errorShow : ''} */}
+                    {errorShow}
+                  </div>}
                 </div>
-                <div className="exchange-content__label">{props.sourceActive}</div>
               </div>
 
               <div className={"exchange-content__item--absolute"}>
@@ -90,12 +124,26 @@ const TransferForm = (props) => {
                 <div className="exchange-content__label exchange-content__label--wide">To Address</div>
                 <div className="exchange-content__input-container exchange-content__input-container--to">
                   <input
-                    className={`exchange-content__input ${props.errors.destAddress ? "error" : ''}`}
+                    className={`exchange-content__input ${isError() ? "error" : ''}`}
                     value={props.input.destAddress.value}
                     onChange={props.input.destAddress.onChange}
                     placeholder="0x0de..."
-                    onFocus={(e) => analytics.trackClickInputRecieveAddress()}
+                    onFocus={props.onFocusAddr}
+                    onBlur={props.onBlur}
                   />
+                  {props.focus === "to-addr" && <div className={isError() ? "error-msg" : ""}>
+                    {/* {!props.isChangingWallet ? props.errorShow : ''} */}
+                    {errorShow}
+                  </div>}
+                  {/* <BigInput
+                    value={props.input.destAddress.value}
+                    onFocus={(e) => analytics.trackClickInputRecieveAddress()}
+                    handleChangeValue={props.input.destAddress.onChange}
+                    type={"recieve-addr"}
+                    errorExchange={isError()}
+                    errorShow={errorShow}
+                    // isChangingWallet={props.isChangingWallet}
+                  /> */}
                   {/*{props.errors.destAddress && !props.isChangingWallet &&*/}
                     {/*<span class="error-text">{props.translate(props.errors.destAddress)}</span>*/}
                   {/*}*/}

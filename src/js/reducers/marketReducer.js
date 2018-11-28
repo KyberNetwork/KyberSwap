@@ -474,6 +474,10 @@ const market = (state = initState, action) => {
       return newState
     }
 
+    case "MARKET.CHANGE_SYMBOL": {
+      newState.configs.selectedSymbol = action.payload
+    }
+
     default: return state
   }
 }

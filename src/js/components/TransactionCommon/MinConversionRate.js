@@ -30,7 +30,7 @@ const MinConversionRate = (props) => {
           <span>Custom</span>
           <input className="advance-config__radio" type="radio" name="slippageRate"/>
           <span className="advance-config__checkmark"></span>
-          <input type="number" className="advance-config__input" onChange={(e) => props.onSlippageRateChanged(e, true)}/>
+          <input type="number" placeholder="%" className="advance-config__input" onChange={(e) => props.onSlippageRateChanged(e, true)}/>
         </label>
       </div>
       <div className={"advance-config__info"}>

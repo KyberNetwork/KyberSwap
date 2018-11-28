@@ -13,3 +13,5 @@ export { default as TransactionListView } from "./TransactionListView.js"
 export { default as TokenSelectorView } from "./TokenSelectorView.js"
 
 export { default as Selector } from "./Selector.js"
+
+export { default as FeeDetail } from "./FeeDetail.js"
