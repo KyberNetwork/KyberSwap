@@ -19,6 +19,7 @@ import { default as _ } from 'underscore'
 import BLOCKCHAIN_INFO from "../../../../env";
 import * as web3Package from "../../services/web3"
 import { importAccountMetamask } from "../../actions/accountActions"
+import EthereumService from "../../services/ethereum/ethereum"
 
 @connect((store, props) => {
   const langs = store.locale.languages
@@ -64,8 +65,10 @@ export default class Transfer extends React.Component {
       const isDapp = (walletType !== "metamask") && (walletType !== "modern_metamask");
 
       if (isDapp) {
+        const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
+
         this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-          this.props.ethereum, this.props.tokens, this.props.translate, walletType))
+          ethereumService, this.props.tokens, this.props.translate, walletType))
       }
     }
   }

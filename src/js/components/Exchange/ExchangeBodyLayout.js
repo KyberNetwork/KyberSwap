@@ -16,7 +16,6 @@ import BigInput from "./BigInput";
 const ExchangeBodyLayout = (props) => {
   function handleChangeSource(e) {
     var check = filterInputNumber(e, e.target.value, props.input.sourceAmount.value)
-    console.log("run change source: ", check)
     if (check) props.input.sourceAmount.onChange(e)
   }
 
