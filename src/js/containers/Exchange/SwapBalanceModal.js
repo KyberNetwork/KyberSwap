@@ -48,7 +48,7 @@ export default class SwapBalanceModal extends React.Component {
 
         amount = amount / Math.pow(10,sourceDecimal)
 
-        this.props.dispatch(exchangeActions.inputChange('source', amount.toString(10)))
+        this.props.dispatch(exchangeActions.inputChange('source', converters.roundingNumber(amount).toString(10)))
         this.props.dispatch(exchangeActions.focusInput('source'));
         this.props.ethereum.fetchRateExchange(true)
         this.hideChooseBalance()
