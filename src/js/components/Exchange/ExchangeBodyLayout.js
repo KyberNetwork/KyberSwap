@@ -158,7 +158,7 @@ const ExchangeBodyLayout = (props) => {
                       <div className={`exchange-content__label exchange-content__label--right ${errorExchange ? "error" : ""}`}>{props.sourceTokenSymbol}</div>
                     )}
                     {props.account !== false && (
-                      <div className={`exchange-content__label exchange-content__label--right ${errorExchange ? "error" : ""}`}>{props.swapBalance}</div>
+                      <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal ${errorExchange ? "error" : ""}`}>{props.swapBalance}</div>
                     )}
                   </div>
                   

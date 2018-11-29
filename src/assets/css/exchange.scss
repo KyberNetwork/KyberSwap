@@ -98,6 +98,7 @@
   }
 
   &__label {
+    white-space: nowrap;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: -0.4px;
@@ -180,6 +181,13 @@
       }
       &__right {
         padding-right: 20px;
+      }
+
+      @include screen-max-width(medium) {
+        border-left: none;
+        &__left, &__right {
+          padding-right: 0px;
+        }
       }
     }
 
@@ -322,7 +330,7 @@
     }
 
     @include screen-max-width(medium) {
-      padding: 0 12px 0 32px;
+      padding: 0 0px 0 5px;
     }
   }
 
@@ -345,6 +353,12 @@
         color: #ee344e;
       }
     }
+
+    // &-address {
+    //   &::placeholder {
+    //     font-size: 18px;
+    //   }
+    // }
 
     @include screen-max-width(medium) {
       padding: 0;
@@ -435,6 +449,20 @@
 
     &__label {
       display: none;
+      &.trigger-swap-modal {
+        display: block;
+        .exchange-content__label {
+          display: block;
+          margin: 0 10px;
+          .token-symbol {
+            display: none;
+          }
+          &::after {
+            top: -6px;
+            right: unset;
+          }
+        }
+      }
     }
 
     &__select {
@@ -444,7 +472,7 @@
     &__input-container {
       margin-left: 0;
       border-left: none;
-      width: 200px;
+      width: 170px;
     }
 
     &__input-container--to {
@@ -665,14 +693,35 @@
   }
   .select-item{
     background-color: white;
-    border: 1px solid #eee;
+    // border: 1px solid #eee;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 8px 10px 1px rgba(0, 0, 0, 0.14);
+    border-radius: 4px;
     .list-item {
       >div{
-        padding: 10px;
+        padding: 10px 10px 10px 32px;
         cursor: pointer;
         &:hover{
           background-color: #eee;
         }
+
+        @include screen-max-width(medium) {
+          text-align: left;
+        }
+      }
+    }
+
+    .checked {
+      position: relative;
+      &::before {
+        content: '';
+        position: absolute;
+        background-image: url(../img/exchange/choosed.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        left: 8px;
+        width: 15px;
+        height: 15px;
+        top: 13px;
       }
     }
   }

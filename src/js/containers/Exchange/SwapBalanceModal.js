@@ -17,7 +17,8 @@ export default class SwapBalanceModal extends React.Component {
     constructor(){
         super()
         this.state = {
-            open: false
+            open: false,
+            percent: 0
         }
     }
     showChooseBalance = () => {
@@ -53,22 +54,31 @@ export default class SwapBalanceModal extends React.Component {
         this.props.ethereum.fetchRateExchange(true)
         this.hideChooseBalance()
         analytics.trackClickChooseBalance(percent)
+        this.setState({percent: percent})
     }
+
+    isThisPercent = (percent) => {
+        if (this.state.percent === percent) {
+            return "checked"
+        }
+        return ""
+    }
+
     render = () => {
         return (
             <div class="swap-balance-modal">
                 <Dropdown onShow={(e) => this.showChooseBalance(e)} onHide={(e) => this.hideChooseBalance(e)} active={this.state.open}>
                     <DropdownTrigger className="notifications-toggle">
                         <div className="exchange-content__label exchange-content__label--dropdown">
-                            {this.props.exchange.sourceTokenSymbol}
+                            <div className={"token-symbol"}>{this.props.exchange.sourceTokenSymbol}</div>
                         </div>
                     </DropdownTrigger>
                     <DropdownContent>
                     <div className="select-item">
                         <div className="list-item custom-scroll">
-                            <div onClick={(e) => this.selectBalance(25)}>Swap 25% balance</div>
-                            <div onClick={(e) => this.selectBalance(50)}>Swap 50% balance</div>
-                            <div onClick={(e) => this.selectBalance(100)}>Swap 100% balance</div>
+                            <div className={this.isThisPercent(25)} onClick={(e) => this.selectBalance(25)}>Swap 25% balance</div>
+                            <div className={this.isThisPercent(50)} onClick={(e) => this.selectBalance(50)}>Swap 50% balance</div>
+                            <div className={this.isThisPercent(100)} onClick={(e) => this.selectBalance(100)}>Swap 100% balance</div>
                         </div>
                         </div>
                     </DropdownContent>

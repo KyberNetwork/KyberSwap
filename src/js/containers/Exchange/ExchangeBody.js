@@ -135,6 +135,7 @@ export default class ExchangeBody extends React.Component {
       }
     }
 
+    var sourceAmount = sourceValue
     var errorMsg = validators.verifyAmount(sourceAmount,
       this.props.exchange.sourceBalance,
       this.props.exchange.sourceTokenSymbol,
@@ -194,9 +195,9 @@ export default class ExchangeBody extends React.Component {
       case "too high cap":
         sourceAmountErrorKey = "error.source_amount_too_high_cap"
         break
-      case "too small":
-        sourceAmountErrorKey = "error.source_amount_too_small"
-        break
+      // case "too small":
+      //   sourceAmountErrorKey = "error.source_amount_too_small"
+      //   break
       case "too high for reserve":
         sourceAmountErrorKey = "error.source_amount_too_high_for_reserve"
         break

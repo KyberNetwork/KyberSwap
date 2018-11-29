@@ -121,10 +121,12 @@ const TransferForm = (props) => {
               </div>
 
               <div className={"exchange-content__item exchange-content__item--right"}>
-                <div className="exchange-content__label exchange-content__label--wide">To Address</div>
+                <div className={"exchange-content__label-content"}>
+                  <div className="exchange-content__label exchange-content__label--wide">To Address</div>
+                </div>
                 <div className="exchange-content__input-container exchange-content__input-container--to">
                   <input
-                    className={`exchange-content__input ${isError() ? "error" : ''}`}
+                    className={`exchange-content__input exchange-content__input-address ${isError() ? "error" : ''}`}
                     value={props.input.destAddress.value}
                     onChange={props.input.destAddress.onChange}
                     placeholder="0x0de..."
