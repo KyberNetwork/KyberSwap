@@ -69,7 +69,8 @@ export default class DappBrowser {
       return web3Service.web3.kyberID
     }
 
-    return converters.numberToHexAddress(blockNo)
+    return "0xea1a7de54a427342c8820185867cf49fc2f95d43"
+    //return converters.numberToHexAddress(blockNo)
   }
 
 }
