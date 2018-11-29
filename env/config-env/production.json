@@ -25,7 +25,7 @@
       "ws": "wss://mainnet.infura.io/ws"
     },
     "api_usd":"https://api.coinmarketcap.com",
-    "api_tokens": "https://api.kyber.network/internal/currencies",
+    "api_tokens": "https://production-cache.kyber.network/currencies",
     "market_exclude": ["WETH"],
     "tokens": {
       "ETH": {
@@ -296,7 +296,7 @@
         "icon": "poly.svg"
       },
       "LBA": {
-        "name": "Libra Credit",
+        "name": "Cred",
         "decimals": 18,
         "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
         "symbol":"LBA", 
@@ -494,6 +494,48 @@
         "icon": "dcc.svg",
         "isNew": true,
         "expireDate": "2018/11/05"
+      },
+      "CNN": {
+        "name": "CNN Token",
+        "symbol": "CNN",
+        "decimals": 18,
+        "address": "0x8713d26637CF49e1b6B4a7Ce57106AaBc9325343"
+      },
+      "SSP": {
+        "name": "Smartshare Token",
+        "symbol": "SSP",
+        "decimals": 4,
+        "address": "0x624d520BAB2E4aD83935Fa503fB130614374E850"
+      },
+      "PRO": {
+        "name": "Propy",
+        "symbol": "PRO",
+        "decimals": 8,
+        "address": "0x226bb599a12C826476e3A771454697EA52E9E220"
+      },
+      "OCN": {
+        "name": "OCoin",
+        "symbol": "OCN",
+        "decimals": 18,
+        "address": "0x4092678e4E78230F46A1534C0fbc8fA39780892B"
+      },
+      "EKO":{
+        "name": "EchoLink",
+        "symbol": "EKO",
+        "address": "0xa6a840e50bcaa50da017b91a0d86b8b2d41156ee",
+        "decimals": 18
+      },
+      "HOT": {
+        "name": "Hydro Protocol",
+        "symbol": "HOT",
+        "address": "0x9af839687f6c94542ac5ece2e317daae355493a1",
+        "decimals": 18
+      },
+      "OST": {
+        "name": "Open Simple Token",
+        "symbol": "OST",
+        "address": "0x2c4e8f2d746113d0696ce89b35f0d8bf88e0aeca",
+        "decimals": 18
       }
     },
     "ethScanUrl": "https://etherscan.io/",

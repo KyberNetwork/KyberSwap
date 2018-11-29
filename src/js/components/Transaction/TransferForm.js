@@ -71,7 +71,7 @@ const TransferForm = (props) => {
 
                     <div className={classSource}>
                       <div>
-                        <input type="text" min="0" step="0.000001" placeholder="0"
+                        <input type="number" min="0" step="0.000001" placeholder="0"
                           id="inputTransfer"
                           value={props.input.amount.value} className="transfer-input"
                           onChange={handleChangeAmount}

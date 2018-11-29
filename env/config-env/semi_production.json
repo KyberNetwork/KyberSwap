@@ -25,7 +25,7 @@
       "ws": "wss://mainnet.infura.io/ws"
     },
     "api_usd":"https://api.coinmarketcap.com",
-    "api_tokens": "https://semi-api.knstats.com/internal/currencies",
+    "api_tokens": "https://semi-cache.kyber.network/currencies",
     "market_exclude": ["WETH"],
     "tokens": {
       "ETH": {
@@ -303,7 +303,7 @@
         "icon": "poly.svg"
       },
       "LBA": {
-        "name": "Libra Credit",
+        "name": "Cred",
         "decimals": 18,
         "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
         "symbol":"LBA", 
