@@ -17,7 +17,9 @@ const TokenSelectorView = (props) => {
   })
 
   var getListToken = () => {
+    var banToken = props.banToken ? props.banToken : ""
     return Object.keys(listShow).map((key, i) => {
+      if (key === props.banToken) return
       if (key !== props.focusItem) {
         var item = listShow[key]
         var balance = toT(item.balance, item.decimals)
