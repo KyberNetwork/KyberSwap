@@ -83,29 +83,40 @@ $padding-col-left : 2rem;
           .select-token-panel {
             margin-top: 0;
           }
-          .hashAddr {
-                font-size: 18px;
-                text-align: center;
-                letter-spacing: 1.25px;
-                //background-color: #415b68;
-                height: 140px;
-                border: 1px solid #ddd;
-                //color: $white;
-                resize: none;
-                margin-bottom: 0;
-                outline: none;
-                padding: 10px;
-                width: 100%;
-                border-radius: 5px;
-            
-            // @media screen and (min-width: 40em){
-            //   height: 153px;        
-            // }
+          .receive-addr{
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             @include breakpoint(small only) {
               margin-bottom: 20px;
-              height: 120px;
+              height: 55px;
+            }
+            .qc-code-content{
+              padding-right: 10px;
+            }
+            .hashAddr {
+                  font-size: 18px;
+                  text-align: center;
+                  letter-spacing: 1.25px;
+                  //background-color: #415b68;
+                  
+                  
+                  //color: $white;
+                  resize: none;
+                  margin-bottom: 0;
+                  outline: none;
+                  padding: 10px;
+                  width: 100%;
+                  border: none;
+                  height: 100%;
+                  
+            
             }
           }
+          
         }
       //}
     //}
@@ -209,4 +220,11 @@ $padding-col-left : 2rem;
       padding-left: 0;
     }
   }
+}
+
+
+
+.qc-code-wrapper{
+  margin-top: 50px;
+  position: relative;
 }
