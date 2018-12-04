@@ -153,6 +153,9 @@
         background-size: contain;
         left: -23px;
         top: 3px;
+        @include screen-max-width(medium) {
+          left: -15px;
+        }
       }
 
       .exchange-content__label--dropdown {
@@ -406,6 +409,12 @@
     @include screen-max-width(medium) {
       padding: 0;
       padding-right: 10px;
+      &.has-account {
+        padding-right: 0;
+        &.error {
+          padding-right: 25px;
+        }
+      }
     }
   }
 

@@ -144,7 +144,7 @@ const ExchangeBodyLayout = (props) => {
                     /> */}
                     <div className={"main-input main-input__left"}>
                       <input
-                        className={`exchange-content__input ${errorExchange ? "error" : ""}`}
+                        className={`exchange-content__input ${props.account !== false ? 'has-account' : ''} ${errorExchange ? "error" : ""}`}
                         min="0"
                         step="0.000001"
                         placeholder="0" autoFocus
@@ -161,9 +161,6 @@ const ExchangeBodyLayout = (props) => {
                         <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal ${errorExchange ? "error" : ""}`}>{props.swapBalance}</div>
                       )}
                     </div>
-
-                    <div>{errorShow}</div>
-                    
                     {props.focus === "source" && <div className={errorExchange ? "error-msg" : ""}>
                       {/* {!props.isChangingWallet ? props.errorShow : ''} */}
                       {errorShow}
