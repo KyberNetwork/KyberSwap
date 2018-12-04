@@ -449,13 +449,6 @@
         "address": "0x23ccc43365d9dd3882eab88f43d515208f832430",
         "icon": "mas.svg"
       },
-      "KCC":{
-        "name": "Kyber Community Coupon",
-        "decimals": 18,
-        "symbol" : "KCC",
-        "address": "0x09677d0175dec51e2215426cddd055a71bf4228d",
-        "icon": "kcc.svg"
-      },
       "DAT":{
         "name": "Datum",
         "decimals": 18,
