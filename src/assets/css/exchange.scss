@@ -60,17 +60,36 @@
   }
 
   &__item {
-    display: flex;
+    // display: flex;
     // align-items: center;
     position: relative;
 
     &--left,
     &--right {
       width: calc(50% - 2px);
-      height: 48px;
+      // height: 48px;
       background-color: white;
       box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
       border: solid 0.8px rgba(204, 204, 204, 0.72);
+      .input-div-content {
+        height: 48px;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        @include screen-max-width(medium) {
+          &.error {
+            border-bottom: 1px solid #cccccc;
+          }
+        }
+      }
+      .mobile-error__show {
+        display: none;
+        @include screen-max-width(medium) {
+          display: block;
+          color: #ee344e;
+          padding: 15px 12px
+        }
+      }
     }
 
     &--left {
@@ -94,6 +113,21 @@
       justify-content: center;
       align-items: center;
       z-index: 1;
+      @include screen-max-width(medium) {
+        display: none;
+      }
+      &.error {
+        display: none;
+        @include screen-max-width(medium) {
+          display: block;
+          top: unset;
+          text-align: center;
+          span {
+            color: #f1637d;
+            font-size: 14px;
+          }
+        }
+      }
     }
   }
 
@@ -142,6 +176,9 @@
         position: absolute;
         top: 9px;
         right: 0;
+        @include screen-max-width(large) {
+          right: -10px;
+        }
       }
     }
 
@@ -173,11 +210,14 @@
 
     .main-input {
       border-left: 1px solid #cccccc;
-      height: 45px;
+      height: 48px;
       display: flex;
       align-items: center;
       &__left {
         padding-right: 25px;
+        @include screen-max-width(large) {
+          padding-right: 0;
+        }
       }
       &__right {
         padding-right: 20px;
@@ -214,6 +254,9 @@
 
       div {
         color: #f1637d;
+      }
+      @include screen-max-width(medium) {
+        display: none;
       }
     }
 
@@ -348,7 +391,7 @@
 
     &.error {
       color: #ee344e;
-      padding-right: 30px;
+      padding-right: 10px;
       &::placeholder {
         color: #ee344e;
       }
@@ -362,6 +405,7 @@
 
     @include screen-max-width(medium) {
       padding: 0;
+      padding-right: 10px;
     }
   }
 
@@ -439,7 +483,7 @@
 
   @media screen and (max-width: 650px) {
     &__item {
-      padding: 0 5px;
+      padding: 0;
       justify-content: space-between;
 
       &--absolute div {
@@ -697,8 +741,9 @@
     box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 8px 10px 1px rgba(0, 0, 0, 0.14);
     border-radius: 4px;
     .list-item {
+      padding-top: 10px;
       >div{
-        padding: 10px 10px 10px 32px;
+        padding: 10px 20px;
         cursor: pointer;
         &:hover{
           background-color: #eee;

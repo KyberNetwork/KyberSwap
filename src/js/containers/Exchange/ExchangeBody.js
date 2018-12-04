@@ -138,21 +138,6 @@ export default class ExchangeBody extends React.Component {
       }
     }
 
-    var sourceAmount = sourceValue
-    var errorMsg = validators.verifyAmount(sourceAmount,
-      this.props.exchange.sourceBalance,
-      this.props.exchange.sourceTokenSymbol,
-      this.props.exchange.sourceDecimal,
-      //this.props.exchange.offeredRate,
-      this.props.exchange.rateSourceToEth,
-      this.props.exchange.destDecimal,
-      this.props.exchange.maxCap)
-
-    if (errorMsg === "too small") {
-      this.props.dispatch(exchangeActions.thowErrorSourceAmount("error.source_amount_too_small"))
-      return
-    }
-
     //var minRate = 0
     var tokens = this.props.tokens
     if (tokens[sourceTokenSymbol]) {
