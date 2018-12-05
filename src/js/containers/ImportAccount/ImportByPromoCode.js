@@ -95,7 +95,7 @@ export default class ImportByPromoCode extends React.Component {
 
     var captcha = document.getElementById("capcha-promo").value
     if (captcha === "") {
-      this.setState({errorCaptcha: "Captcha is empty"})      
+      this.setState({errorCaptcha: this.props.translate("error.capcha_error") || "Captcha is empty."})      
       check = true
     }
     if (check){
@@ -216,7 +216,7 @@ export default class ImportByPromoCode extends React.Component {
                         <span className="error-text">{this.state.errorPromoCode}</span>
                         }
                       </label>
-                        <div className={"label-text"}>{this.props.translate("import.not_robot") || "To make sure you are not robot..."}</div>
+                        <div className={"label-text"}>{this.props.translate("import.you_are_not_robot") || "To make sure you are not robot..."}</div>
                         <div className={"capcha"}>
                           <img src={`${BLOCKCHAIN_INFO.userdashboard_url}/rucaptcha/?${this.state.captchaV}`} />
                           <a onClick={this.changeCaptchaV}><div className={"refresh-capcha"}></div></a>
