@@ -217,7 +217,7 @@ export default class Transfer extends React.Component {
         focusItem={this.props.transfer.tokenSymbol}
         listItem={this.props.tokens}
         chooseToken={this.chooseToken}
-        banToken={"KCC"}
+        banToken={"PT"}
       />
     )
 
