@@ -24,7 +24,7 @@ export default class QRCode extends React.Component {
     }
 
     openModal = () => {
-        this.setState({ isOpen: true })
+        this.setState({ isOpen: true, error: "" })
     }
 
     hideModal = () => {
@@ -33,7 +33,7 @@ export default class QRCode extends React.Component {
 
     onError = (err) => {
         if (err) {
-            this.setState({error: err})
+            this.setState({error: "Can not access your device camera"})
             if (this.props.onError) {
                 this.props.onError(err)
             }

@@ -117,7 +117,7 @@
     "staging": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=staging",
     "production": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=production",
     "semi-production": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=semi_production",
-    "ropsten": "webpack-dev-server --content-base src --inline --https --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=ropsten --env.logger=true",
+    "ropsten": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=ropsten --env.logger=true",
     "ropstens": "webpack-dev-server --https --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3003 --env.chain=ropsten --env.logger=true",
     "dev": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=ropsten --env.logger=true",
     "test": "jest --setupTestFrameworkScriptFile=raf/polyfill",
