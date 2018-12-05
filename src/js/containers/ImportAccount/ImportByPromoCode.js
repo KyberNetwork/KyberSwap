@@ -75,8 +75,6 @@ export default class ImportByPromoCode extends React.Component {
               console.log(err)
               reject("Cannot get Promo code")
           })
-      
-
     })
 
     // resolve({
@@ -146,14 +144,15 @@ export default class ImportByPromoCode extends React.Component {
 
   changeCaptchaV = ()=>{
     this.setState({captchaV: (new Date).getTime()})
+    analytics.trackClickChangeCapcha()
   }
 
   onPromoCodeChange = () =>{
-    this.setState({errorPromoCode: ""})
+    this.setState({errorPromoCode: "", error: ""})
   }
 
   onCaptchaChange = () =>{
-    this.setState({errorCaptcha: ""})
+    this.setState({errorCaptcha: "", error: ""})
   }
 
    submit = (e) => {
@@ -182,15 +181,17 @@ export default class ImportByPromoCode extends React.Component {
         </div>
   
         <Modal
-          className={{ base: 'reveal medium', afterOpen: 'reveal medium import-privatekey' }}
+          className={{ base: 'reveal medium promocode', afterOpen: 'reveal medium import-privatekey' }}
           isOpen={this.props.account.promoCode.modalOpen}
           onRequestClose={this.closeModal.bind(this)}
           content={
-            <div>
-              <div className="title">{this.props.translate("import.enter_promo_code") || "Your Promo code"}</div>
-              {this.state.error && (
-                <div className="error">{this.state.error}</div>
-              )}
+            <div id="promocode-modal">
+              <div className="title">
+                {this.props.translate("import.enter_promo_code") || "Your Promo code"}
+                {this.state.error && (
+                  <div className="error">{this.state.error}</div>
+                )}
+              </div>
               <a className="x" onClick={this.closeModal.bind(this)}>&times;</a>
               <div className="content with-overlap">
                 <div className="row">
@@ -208,24 +209,30 @@ export default class ImportByPromoCode extends React.Component {
                             spellCheck="false"
                             onFocus={(e) => {analytics.trackClickInputPromoCode()}}
                             required
+                            placeholder="Enter your promocode here"
                           />
                         </div>
                         {!!this.state.errorPromoCode &&
                         <span className="error-text">{this.state.errorPromoCode}</span>
                         }
                       </label>
-                        <div>To make sure you are not robot...</div>
-                        <img src={`${BLOCKCHAIN_INFO.userdashboard_url}/rucaptcha/?${this.state.captchaV}`} />
-                        <a onClick={this.changeCaptchaV}>Reload</a>
-                        <div>Type the characters you see above (without spaces)</div>
+                        <div className={"label-text"}>{this.props.translate("import.not_robot") || "To make sure you are not robot..."}</div>
+                        <div className={"capcha"}>
+                          <img src={`${BLOCKCHAIN_INFO.userdashboard_url}/rucaptcha/?${this.state.captchaV}`} />
+                          <a onClick={this.changeCaptchaV}><div className={"refresh-capcha"}></div></a>
+                        </div>
+                        <div className={"label-text"}>{this.props.translate("import.type_capcha") || "Type the characters you see above (without spaces)"}</div>
                         <label className={!!this.state.errorCaptcha ? "error" : ""}>
-                        <input
-                            className="text-center" id="capcha-promo"
-                            type="text"
-                            onChange={this.onCaptchaChange.bind(this)}
-                            spellCheck="false"
-                            required
-                          />
+                        <div className="input-reveal">
+                          <input
+                              className="text-center" id="capcha-promo"
+                              type="text"
+                              onChange={this.onCaptchaChange.bind(this)}
+                              spellCheck="false"
+                              onFocus={(e) => {analytics.trackClickInputCapcha()}}
+                              required
+                            />
+                          </div>
                            {!!this.state.errorCaptcha &&
                         <span className="error-text">{this.state.errorCaptcha}</span>
                         }
