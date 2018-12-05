@@ -814,6 +814,9 @@ $divider-color: darken($title-background-color, 5);
       // font-weight: 600;
       // text-align: center;
       color: #222222;
+      &-bottom {
+        margin-bottom: 20px;
+      }
     }
     .capcha {
       margin-bottom: 20px;

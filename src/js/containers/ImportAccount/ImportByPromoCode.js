@@ -221,7 +221,7 @@ export default class ImportByPromoCode extends React.Component {
                           <img src={`${BLOCKCHAIN_INFO.userdashboard_url}/rucaptcha/?${this.state.captchaV}`} />
                           <a onClick={this.changeCaptchaV}><div className={"refresh-capcha"}></div></a>
                         </div>
-                        <div className={"label-text"}>{this.props.translate("import.type_capcha") || "Type the characters you see above (without spaces)"}</div>
+                        <div className={"label-text label-text-bottom"}>{this.props.translate("import.type_capcha") || "Type the characters you see above (without spaces)"}</div>
                         <label className={!!this.state.errorCaptcha ? "error" : ""}>
                         <div className="input-reveal">
                           <input
