@@ -14,7 +14,7 @@
   },
   "api_usd":"https://api.coinmarketcap.com",
   "api_tokens": "https://ropsten-cache.knstats.com/currencies",
-  "promo_token": "KNC",
+  "promo_token": "OMG",
   "userdashboard_url":"https://dev-userdashboard.knstats.com",
   "tokens": {
       "ETH": {
