@@ -45,9 +45,9 @@ import {isMobile, iOSVersion} from "../../utils/common"
     tokenName = tokens[tokenSymbol].name
   }
 
-  var rawVersion = iOSVersion.Version()
-  var version = Array.isArray(rawVersion) ? rawVersion[0] : 0 
-
+  var version = iOSVersion.Version()
+  console.log("version: ", version)
+  
   return {
     transfer: { ...store.transfer, balance, decimals, tokenName },
     account: store.account,

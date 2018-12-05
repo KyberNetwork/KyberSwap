@@ -36,7 +36,7 @@ const TransferForm = (props) => {
           {props.isOnIOS && props.iOSVersion >= 11 && <div className={"iso-notice"}>
             <div className={"notice-icon"}></div>
             <div className={"notice-content"}>
-              iOS users please use safari as camera won't work on other browsers
+              {props.translate("transaction.ios_notice") || "iOS users please use safari as camera won't work on other browsers"}
             </div>
           </div>}
           <div className="cell small-12 large-9 transfer-col transfer-col-1">
