@@ -32,7 +32,27 @@
     //   margin-bottom: 10px;      
     // }
 
-
+      &.fix-source-token{
+        .balance-item{
+          cursor: initial;
+          pointer-events: none;
+        }
+        li{
+          pointer-events: none;
+        }
+        // .custom-radio{
+        //   li{
+        //     &:not(.active){
+        //       &:hover {
+        //         // background-color: #F2FAF7;
+        //         .check{
+        //           border: 2px solid #ef8102 ;
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
+      }
     .balance-large{
       @media screen and (max-width: 640px) {
         display: none

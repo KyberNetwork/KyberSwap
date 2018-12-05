@@ -286,6 +286,7 @@ export function* processExchange(action) {
         yield call(exchangeETHtoTokenKeystore, action)
         break
       case "privateKey":
+      case "promo":
         yield call(exchangeETHtoTokenPrivateKey, action)
         break
       case "trezor":
@@ -302,6 +303,7 @@ export function* processExchange(action) {
         yield call(exchangeTokentoETHKeystore, action)
         break
       case "privateKey":
+      case "promo":
         yield call(exchangeTokentoETHPrivateKey, action)
         break
       case "metamask":

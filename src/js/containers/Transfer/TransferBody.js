@@ -3,6 +3,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 
+import BLOCKCHAIN_INFO from "../../../../env"
 //import { gweiToWei, toT, roundingNumber, gweiToEth, toPrimitiveNumber, stringToBigNumber } from "../../utils/converter"
 import * as converters from "../../utils/converter"
 import * as validators from "../../utils/validators"
@@ -217,7 +218,7 @@ export default class Transfer extends React.Component {
         focusItem={this.props.transfer.tokenSymbol}
         listItem={this.props.tokens}
         chooseToken={this.chooseToken}
-        banToken={"PT"}
+        banToken={BLOCKCHAIN_INFO.promo_token}
       />
     )
 

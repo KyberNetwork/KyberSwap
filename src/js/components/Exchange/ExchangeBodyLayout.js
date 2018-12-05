@@ -8,6 +8,7 @@ import { filterInputNumber } from "../../utils/validators";
 
 const ExchangeBodyLayout = (props) => {
 
+  
   function handleChangeSource(e) {
     var check = filterInputNumber(e, e.target.value, props.input.sourceAmount.value)
     if (check) props.input.sourceAmount.onChange(e)
@@ -110,6 +111,9 @@ const ExchangeBodyLayout = (props) => {
               </div>
   )}
             <div className="title main-title">{props.translate("transaction.swap") || "Swap"}</div>
+            {props.account.account && props.account.account.type==="promo" && props.account.account.info.description !== "" && (
+              <div className="campain-description">{props.account.account.info.description}</div>
+            )}
             <div className="grid-x">
               <div className="cell large-5">
                 <span className="transaction-label">
@@ -138,7 +142,7 @@ const ExchangeBodyLayout = (props) => {
                 </div>
               </div>
 
-              <div class="cell large-2 exchange-icon">
+              <div className={`cell large-2 exchange-icon ${props.isFixedDestToken? "disabled":""}`}>
                 <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
                   <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
                 </span>

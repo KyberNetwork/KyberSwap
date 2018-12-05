@@ -127,7 +127,7 @@ const AccountBalanceLayout = (props) => {
   }
 
   return (
-    <div id="balance-account">
+    <div id="balance-account" className={props.isFixedSourceToken?"fix-source-token": ""}>
       <div className="balance-address">
         <div className="title">{props.translate("address.your_wallet_address") || "Your Wallet Address"}</div>
         <div>

@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
-
+import BLOCKCHAIN_INFO from "../../../../env"
 import { gweiToWei, stringToHex, getDifferentAmount, toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber, stringToBigNumber, toEther } from "../../utils/converter"
 
 import { PostExchangeWithKey, MinRate, AccountBalance } from "../Exchange"
@@ -284,6 +284,10 @@ export default class ExchangeBody extends React.Component {
   }
 
   swapToken = () => {
+    var isFixedDestToken = !!(this.props.account && this.props.account.account.type ==="promo" && this.props.account.account.info.destToken)
+    if (isFixedDestToken){
+      return
+    }
     this.props.dispatch(exchangeActions.swapToken())
     this.props.ethereum.fetchRateExchange(true)
 
@@ -372,18 +376,22 @@ export default class ExchangeBody extends React.Component {
       tokenDest[key] = { ...this.props.tokens[key], isNotSupport: isNotSupport }
     })
 
+    var isFixedSourceToken = !!(this.props.account && this.props.account.account.type ==="promo" && this.props.tokens[BLOCKCHAIN_INFO.promo_token])
     var tokenSourceSelect = (
       <TokenSelector type="source"
         focusItem={this.props.exchange.sourceTokenSymbol}
         listItem={this.props.tokens}
         chooseToken={this.chooseToken}
+        isFixToken = {isFixedSourceToken}
       />
     )
+    var isFixedDestToken = !!(this.props.account && this.props.account.account.type ==="promo" && this.props.account.account.info.destToken)
     var tokenDestSelect = (
       <TokenSelector type="des"
         focusItem={this.props.exchange.destTokenSymbol}
         listItem={tokenDest}
         chooseToken={this.chooseToken}
+        isFixToken = {isFixedDestToken}
       />
     )
     //--------End
@@ -461,6 +469,8 @@ export default class ExchangeBody extends React.Component {
         balanceList = {accountBalance}
         focus = {this.state.focus}
         networkError ={this.props.global.network_error}
+        account = {this.props.account}
+        isFixedDestToken = {isFixedDestToken}
       />
     )
   }

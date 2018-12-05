@@ -27,6 +27,7 @@
     "api_usd":"https://api.coinmarketcap.com",
     "api_tokens": "https://api.kyber.network/internal/currencies",
     "market_exclude": ["WETH", "PT"],
+    "promo_token": "PT",
     "tokens": {
       "ETH": {
         "name": "Ethereum",
