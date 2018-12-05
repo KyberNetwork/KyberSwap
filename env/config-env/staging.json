@@ -25,7 +25,9 @@
     "ws": "wss://mainnet.infura.io/ws"
   },
   "api_tokens": "https://staging-cache.kyber.network/currencies",
-  "market_exclude": ["WETH", "KCC"],
+  "market_exclude": ["WETH", "PT"],
+  "promo_token": "PT",
+  "userdashboard_url":"https://staging-userdashboard.knstats.com", 
   "tokens": {
     "ETH": {
       "name": "Ethereum",

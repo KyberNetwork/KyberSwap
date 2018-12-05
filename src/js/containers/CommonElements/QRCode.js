@@ -46,6 +46,9 @@ export default class QRCode extends React.Component {
             // console.log(data)
             // alert(data)
             if (this.props.onScan) {
+                //handle raw data
+                var seperatorIndex = data.indexOf(":")
+                data = data.substring(seperatorIndex + 1,)
                 this.props.onScan(data)
             }
             this.hideModal()

@@ -76,15 +76,6 @@ export default class ImportByPromoCode extends React.Component {
               reject("Cannot get Promo code")
           })
     })
-
-    // resolve({
-    //   privateKey: "41e8ce91af1eb639d2ecb39fe6753ba3bd801dc02d2496ae1e7cd5b7022824b1",
-    //   des_token: "DAI",        
-    //   description:"This is campain for DAI"
-    // })
-    // return new Promise ((resolve, reject)=>{
-    //   reject("Cannot get Promo code")
-    // })
   }
   importPromoCode = (promoCode) => {
     var check = false
@@ -155,6 +146,12 @@ export default class ImportByPromoCode extends React.Component {
     this.setState({errorCaptcha: "", error: ""})
   }
 
+  nextToCapcha = (e) => {
+    if (e.key === 'Enter') {
+      document.getElementById("capcha-promo").focus()
+    }
+  }
+
    submit = (e) => {
     if (e.key === 'Enter') {
       var promoCode = document.getElementById("promo_code").value
@@ -162,6 +159,7 @@ export default class ImportByPromoCode extends React.Component {
       analytics.trackClickSubmitPromoCode()      
     }
   }
+  
 
   apply = (e) => {
     var promoCode = document.getElementById("promo_code").value
@@ -203,7 +201,7 @@ export default class ImportByPromoCode extends React.Component {
                             className="text-center" id="promo_code"
                             type="text"
                             onChange={this.onPromoCodeChange.bind(this)}
-                            onKeyPress={this.submit.bind(this)}
+                            onKeyPress={this.nextToCapcha.bind(this)}
                             autoFocus
                             autoComplete="off"
                             spellCheck="false"
@@ -231,6 +229,7 @@ export default class ImportByPromoCode extends React.Component {
                               spellCheck="false"
                               onFocus={(e) => {analytics.trackClickInputCapcha()}}
                               required
+                              onKeyPress={this.submit.bind(this)}
                             />
                           </div>
                            {!!this.state.errorCaptcha &&
