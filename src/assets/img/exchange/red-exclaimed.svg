@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="15px" viewBox="0 0 15 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/alert/error_24px</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Swap-capcha-error" transform="translate(-1035.000000, -617.000000)" fill="#EE344E" fill-rule="nonzero">
+            <path d="M1042.5,617 C1038.36,617 1035,620.36 1035,624.5 C1035,628.64 1038.36,632 1042.5,632 C1046.64,632 1050,628.64 1050,624.5 C1050,620.36 1046.64,617 1042.5,617 Z M1043.25,628.25 L1041.75,628.25 L1041.75,626.75 L1043.25,626.75 L1043.25,628.25 Z M1043.25,625.25 L1041.75,625.25 L1041.75,620.75 L1043.25,620.75 L1043.25,625.25 Z" id="icon/alert/error_24px"></path>
+        </g>
+    </g>
+</svg>
