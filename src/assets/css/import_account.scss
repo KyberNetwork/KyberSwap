@@ -381,22 +381,36 @@ $animationTime: 0.5s;
 // }
 
 .import-privatekey {
-  padding: 0px;
+  padding: 0px !important;
   .title {
     font-size: 1.2rem;
-    font-weight: normal;
+    // font-size: 30px;
+    // font-weight: bold;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     margin-top: 0;
     padding-top: 70px;
+
   }
   // .content {
   //   padding-left: 30px;
   // }
+  .content {
+    &.with-overlap {
+      padding-left: 30px !important;
+      padding-right: 30px !important;
+      input {
+        outline: none;
+        box-shadow: none;
+        border-color: #e5e5e5;
+      }
+    }
+  }
   .overlap {
     justify-content: center;
-    background-color: #fcfcfc;
+    background-color: #f5f5f5;
     margin-top: 10px;
+    padding: 50px 45px;
     .accent {
       // margin-top: 50px;
       line-height: 55px;
@@ -404,7 +418,8 @@ $animationTime: 0.5s;
       background: #ef8102;
       font-size: 1.3rem;
       border-radius: 4px;
-      box-shadow: 0 10px 15px #ccc;
+      // box-shadow: 0 10px 15px #ccc;
+      width: 100%;
     }
   }
   #private_key {

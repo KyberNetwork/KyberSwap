@@ -17,7 +17,9 @@ const TokenSelectorView = (props) => {
   })
 
   var getListToken = () => {
+    var banToken = props.banToken ? props.banToken : ""
     return Object.keys(listShow).map((key, i) => {
+      if (key === props.banToken) return
       if (key !== props.focusItem) {
         var item = listShow[key]
         var balance = toT(item.balance, item.decimals)
@@ -57,8 +59,8 @@ const TokenSelectorView = (props) => {
   }
 
   return (
-    <div className="token-selector">
-      <Dropdown onShow = {(e) => props.showTokens(e)} onHide = {(e) => props.hideTokens(e)}>
+    <div className={`token-selector ${props.isFixToken?"fix_token" : ""}`} >
+      <Dropdown onShow = {(e) => props.showTokens(e)} onHide = {(e) => props.hideTokens(e)} disabled ={props.isFixToken? true: false}>
         <DropdownTrigger className="notifications-toggle">
           <div className="focus-item d-flex">
             <div className="d-flex">

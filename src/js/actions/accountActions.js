@@ -90,10 +90,10 @@ export function throwPromoCodeError(error) {
   }
 }
 
-export function importNewAccount(address, type, keystring, ethereum, tokens, walletType = null, metamask = null) {
+export function importNewAccount(address, type, keystring, ethereum, tokens, walletType = null, metamask = null, info = null) {
   return {
     type: "ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING",
-    payload: { address, type, keystring, ethereum, tokens, walletType, metamask }
+    payload: { address, type, keystring, ethereum, tokens, walletType, metamask, info }
   }
 }
 

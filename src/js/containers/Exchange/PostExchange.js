@@ -116,6 +116,7 @@ export default class PostExchange extends React.Component {
             this.props.dispatch(exchangeActions.openPassphrase())
             break
           case "privateKey":
+          case "promo":
             this.props.dispatch(exchangeActions.fetchGasSnapshot())
             this.props.dispatch(exchangeActions.showConfirm())
             break

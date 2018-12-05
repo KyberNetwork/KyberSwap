@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-
+import BLOCKCHAIN_INFO from "../../../../env"
 import { AccountBalanceLayout } from '../../components/Exchange'
 // import { selectTokenAsync } from '../../actions/exchangeActions'
 // import { selectToken } from '../../actions/transferActions'
@@ -13,6 +13,9 @@ import { getTranslate } from 'react-localize-redux';
   var location = store.router.location.pathname
   var sourceActive = 'ETH'
   sourceActive = store.exchange.sourceTokenSymbol
+  var isFixedSourceToken = !!(store.account && store.account.account.type ==="promo" && store.tokens.tokens[BLOCKCHAIN_INFO.promo_token])
+  console.log("is_fixed_token")
+  console.log(isFixedSourceToken)
   return {
     tokens: store.tokens.tokens,
     translate: getTranslate(store.locale),
@@ -23,6 +26,7 @@ import { getTranslate } from 'react-localize-redux';
     walletType: store.account.account.type,
     address: store.account.account.address,
     chooseToken: props.chooseToken,
+    isFixedSourceToken: isFixedSourceToken
   }
 })
 
@@ -48,6 +52,7 @@ export default class AccountBalance extends React.Component {
   }
 
   selectToken = (e, symbol, address) => {
+    if (this.props.isFixedSourceToken) return
     this.props.chooseToken(symbol, address, "source")
     analytics.trackChooseTokenOnBalanceBoard(symbol)
   }
@@ -96,6 +101,7 @@ export default class AccountBalance extends React.Component {
         sortPrice = {this.sortPrice}
         sortType = {this.state.sortType}
         sortValue = {sortValue}
+        isFixedSourceToken = {this.props.isFixedSourceToken}
       />
     )
   }

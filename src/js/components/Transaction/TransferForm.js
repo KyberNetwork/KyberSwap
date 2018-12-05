@@ -54,8 +54,12 @@ const TransferForm = (props) => {
               <div className="cell small-12 medium-7">
                 <div className={props.errors.destAddress !== '' ? "error" : ""}>
                   <span className="transaction-label">{props.translate("transaction.address") || "Receiving Address"}</span>
-                  <input className="hashAddr" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange} onFocus={(e) => analytics.trackClickInputRecieveAddress()}>
-                  </input>
+                  <div className="receive-addr">
+                    <input className="hashAddr" value={props.input.destAddress.value} onChange={props.input.destAddress.onChange} onFocus={(e) => analytics.trackClickInputRecieveAddress()}>
+                    </input>
+                    {props.qcCode}
+                  </div>
+                  
                   {props.errors.destAddress &&
                     <span class="error-text">{props.translate(props.errors.destAddress)}</span>
                   }
@@ -71,7 +75,7 @@ const TransferForm = (props) => {
 
                     <div className={classSource}>
                       <div>
-                        <input type="text" min="0" step="0.000001" placeholder="0"
+                        <input type="number" min="0" step="0.000001" placeholder="0"
                           id="inputTransfer"
                           value={props.input.amount.value} className="transfer-input"
                           onChange={handleChangeAmount}

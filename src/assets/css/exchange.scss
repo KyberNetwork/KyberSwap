@@ -8,6 +8,11 @@
 #exchange {
   margin-bottom: 50px;
 
+  .campain-description{
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
   @media print, screen and (min-width: 40em) {
     .medium-5 {
       width: 45%;
@@ -85,7 +90,7 @@
         position: relative;
         .exchange-wrapper-btn{
           position: absolute;
-          margin-top: -215px;
+          margin-top: -180px;
           width: 100%;
         }
       }
@@ -101,6 +106,10 @@
     margin-top: 50px;
     @include screen-max-width(large) {
       display: none;
+    }
+    &.disabled{
+      cursor: initial;
+      pointer-events: none;
     }    
   }
   .main-title  {

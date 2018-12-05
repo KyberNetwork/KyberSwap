@@ -3,13 +3,14 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
 
+import BLOCKCHAIN_INFO from "../../../../env"
 //import { gweiToWei, toT, roundingNumber, gweiToEth, toPrimitiveNumber, stringToBigNumber } from "../../utils/converter"
 import * as converters from "../../utils/converter"
 import * as validators from "../../utils/validators"
 
 import { TransferForm } from "../../components/Transaction"
 import { PostTransferWithKey } from "../Transfer"
-import { TransactionLoading } from "../CommonElements"
+import { TransactionLoading, QRCode } from "../CommonElements"
 
 import { TokenSelector } from "../TransactionCommon"
 
@@ -26,6 +27,7 @@ import * as analytics from "../../utils/analytics"
 import * as transferActions from "../../actions/transferActions"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
+
 
 @connect((store, props) => {
 
@@ -164,6 +166,14 @@ export default class Transfer extends React.Component {
     analytics.trackClickAllIn("Transfer", tokenSymbol)
   }
 
+  handleErrorQRCode = (err) =>{
+    //alert(err)
+  }
+  handleScanQRCode = (data) =>{
+    this.props.dispatch(transferActions.specifyAddressReceive(data));
+    //alert(data)
+  }
+
   render() {
     // if (this.props.account.isStoreReady) {
     //   if (!!!this.props.account.account.address) {
@@ -208,6 +218,7 @@ export default class Transfer extends React.Component {
         focusItem={this.props.transfer.tokenSymbol}
         listItem={this.props.tokens}
         chooseToken={this.chooseToken}
+        banToken={BLOCKCHAIN_INFO.promo_token}
       />
     )
 
@@ -255,6 +266,10 @@ export default class Transfer extends React.Component {
     //   />
     // )
 
+    var qcCode = common.isMobile.any() ? <QRCode  
+    onError={this.handleErrorQRCode}
+    onScan={this.handleScanQRCode}/> : ""
+
     return (
       <TransferForm step={this.props.transfer.step}
         tokenSymbol={this.props.transfer.tokenSymbol}
@@ -271,6 +286,7 @@ export default class Transfer extends React.Component {
         focus = {this.state.focus}
         advanceLayout = {this.props.advanceLayout}
         networkError ={this.props.global.network_error}
+        qcCode = {qcCode}
       />
     )
   }
