@@ -12,7 +12,7 @@ export default class CachedServerProvider extends React.Component {
 
     getGasPrice() {
         return new Promise((resolve, rejected) => {
-            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/gasPrice'))
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getGasPrice'))
             .then((response) => {
                 return response.json()
             }).then((result) => {
@@ -46,7 +46,7 @@ export default class CachedServerProvider extends React.Component {
 
     checkKyberEnable() {
         return new Promise((resolve, rejected) => {
-            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/kyberEnabled'))
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getKyberEnabled'))
             .then((response) => {
                 return response.json()
             }).then((result) => {
@@ -65,7 +65,7 @@ export default class CachedServerProvider extends React.Component {
 
     getMaxGasPrice() {
         return new Promise((resolve, rejected) => {
-            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/maxGasPrice'))
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getMaxGasPrice'))
             .then((response) => {
                 return response.json()
             }).then((result) => {
@@ -84,7 +84,7 @@ export default class CachedServerProvider extends React.Component {
 
     getLatestBlock() {
         return new Promise((resolve, rejected) => {
-            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/latestBlock'))
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getLatestBlock'))
             .then((response) => {
                 return response.json()
             }).then((result) => {
@@ -105,7 +105,7 @@ export default class CachedServerProvider extends React.Component {
 
     getAllRates(tokensObj) {
         return new Promise((resolve, rejected) => {
-            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/rate'))
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getRate'))
             
                 .then((response) => {
                     return response.json()
@@ -125,7 +125,7 @@ export default class CachedServerProvider extends React.Component {
 
     getAllRatesUSD() {
         return new Promise((resolve, rejected) => {
-            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/rateUSD'))
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getRateUSD'))
             .then((response) => {
                 return response.json()
             })
@@ -144,7 +144,7 @@ export default class CachedServerProvider extends React.Component {
 
     getRateETH() {
         return new Promise((resolve, rejected) => {
-            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/rateETH'))
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getRateETH'))
             .then((response) => {
                 return response.json()
             })
@@ -281,7 +281,7 @@ export default class CachedServerProvider extends React.Component {
 
     getRightMarketInfo() {
         return new Promise((resolve, rejected) => {
-            this.timeout(this.maxRequestTime,  fetch(this.rpcUrl + '/marketInfo'))
+            this.timeout(this.maxRequestTime,  fetch(this.rpcUrl + '/getRightMarketInfo'))
             .then((response) => {
                 return response.json()
             })
@@ -297,7 +297,7 @@ export default class CachedServerProvider extends React.Component {
 
     getLast7D(queryString) {
         return new Promise((resolve, rejected) => {
-            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/last7D' + '?listToken=' + queryString))
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/getLast7D' + '?listToken=' + queryString))
             //fetch(this.rpcUrl + '/getLast7D' + '?listToken=' + queryString, {
             .then((response) => {
                 return response.json()
