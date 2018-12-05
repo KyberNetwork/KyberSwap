@@ -5,9 +5,12 @@ import { importNewAccount, throwError, promoCodeChange, throwPromoCodeError, ope
 import { addressFromPrivateKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
 import * as analytics from "../../utils/analytics"
+import * as common from "../../utils/common"
 import * as utilActions from '../../actions/utilActions'
 import { getAssetUrl } from "../../utils/common";
 import { Modal } from '../../components/CommonElement'
+
+import BLOCKCHAIN_INFO from "../../../../env"
 
 import Web3 from "web3"
 
@@ -29,7 +32,7 @@ export default class ImportByPromoCode extends React.Component {
   constructor(){
     super()
     this.state = {
-      isLoading: "",
+      isLoading: false,
       error:"",
       errorPromoCode: "",
       errorCaptcha: "",
@@ -52,17 +55,36 @@ export default class ImportByPromoCode extends React.Component {
   }
   
   getPrivateKey = (promo, captcha) =>{    
-    // return new Promise ((resolve, reject)=>{
-    //   resolve({
-    //     privateKey: "41e8ce91af1eb639d2ecb39fe6753ba3bd801dc02d2496ae1e7cd5b7022824b1",
-    //     des_token: "DAI",        
-    //     description:"This is campain for DAI"
-    //   })
-    // })
-
     return new Promise ((resolve, reject)=>{
-      reject("Cannot get Promo code")
+      common.timeout(3000,  fetch(BLOCKCHAIN_INFO.userdashboard_url + '/api/promo/' + promo + "?_rucaptcha=" + captcha))
+      .then((response) => {
+          return response.json()
+      })
+          .then((result) => {
+              if (result.error){
+                reject(result.error)
+              }else{
+                 resolve({
+                    privateKey: result.data.private_key,
+                    des_token: result.data.destination_token,        
+                    description: result.data.description
+                  })
+              }
+          })
+          .catch((err) => {
+              console.log(err)
+              reject("Cannot get Promo code")
+          })
     })
+
+    // resolve({
+    //   privateKey: "41e8ce91af1eb639d2ecb39fe6753ba3bd801dc02d2496ae1e7cd5b7022824b1",
+    //   des_token: "DAI",        
+    //   description:"This is campain for DAI"
+    // })
+    // return new Promise ((resolve, reject)=>{
+    //   reject("Cannot get Promo code")
+    // })
   }
   importPromoCode = (promoCode) => {
     var check = false
@@ -79,8 +101,8 @@ export default class ImportByPromoCode extends React.Component {
     if (check){
       return
     }
-
-    this.getPrivateKey().then(result => {
+    this.setState({isLoading: true})
+    this.getPrivateKey(promoCode, captcha).then(result => {
       var privateKey = result.privateKey
       var address = addressFromPrivateKey(privateKey)
       this.props.dispatch(closePromoCodeModal());    
@@ -91,8 +113,10 @@ export default class ImportByPromoCode extends React.Component {
         privateKey,
         this.props.ethereum,
         this.props.tokens, null, null, info))
+        this.setState({isLoading: false})
     }).catch(error => {
       this.setState({error: error, captchaV: (new Date).getTime()})      
+      this.setState({isLoading: false})
     })
 
     // //keccak256 promo code
@@ -159,7 +183,7 @@ export default class ImportByPromoCode extends React.Component {
         <Modal
           className={{ base: 'reveal medium promocode', afterOpen: 'reveal medium import-privatekey' }}
           isOpen={this.props.account.promoCode.modalOpen}
-          onRequestClose={this.closeModal}
+          onRequestClose={this.closeModal.bind(this)}
           content={
             <div id="promocode-modal">
               <div className="title">
@@ -194,7 +218,7 @@ export default class ImportByPromoCode extends React.Component {
                       </label>
                         <div className={"label-text"}>{this.props.translate("import.not_robot") || "To make sure you are not robot..."}</div>
                         <div className={"capcha"}>
-                          <img src={`https://kyber.network/rucaptcha/?${this.state.captchaV}`} />
+                          <img src={`${BLOCKCHAIN_INFO.userdashboard_url}/rucaptcha/?${this.state.captchaV}`} />
                           <a onClick={this.changeCaptchaV}><div className={"refresh-capcha"}></div></a>
                         </div>
                         <div className={"label-text"}>{this.props.translate("import.type_capcha") || "Type the characters you see above (without spaces)"}</div>

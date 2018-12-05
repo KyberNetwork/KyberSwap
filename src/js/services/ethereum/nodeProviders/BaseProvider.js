@@ -57,6 +57,30 @@ export default class BaseProvider {
         })
     }
 
+    getBalanceToken(owner, token) {
+        var tokenContract = this.erc20Contract
+        tokenContract.options.address = token
+        
+
+        return new Promise((resolve, reject) => {
+            var data = tokenContract.methods.balanceOf(owner).encodeABI()
+
+            
+                this.rpc.eth.call({
+                    to: token,
+                    data: data
+                })
+                    .then(result => {
+                        var balance = this.rpc.eth.abi.decodeParameters(['uint256'], result)
+                        resolve(balance[0])
+                    }).catch((err) => {
+                        console.log(err)
+                        reject(err)
+                    })
+            
+        })
+    }
+
     getAllBalancesTokenAtLatestBlock(address, tokens) {
         var listToken = []
         var listSymbol = []
