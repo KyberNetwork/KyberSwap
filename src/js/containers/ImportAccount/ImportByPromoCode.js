@@ -32,7 +32,7 @@ export default class ImportByPromoCode extends React.Component {
   constructor(){
     super()
     this.state = {
-      isLoading: "",
+      isLoading: false,
       error:"",
       errorPromoCode: "",
       errorCaptcha: "",
@@ -65,9 +65,9 @@ export default class ImportByPromoCode extends React.Component {
                 reject(result.error)
               }else{
                  resolve({
-                    privateKey: "41e8ce91af1eb639d2ecb39fe6753ba3bd801dc02d2496ae1e7cd5b7022824b1",
-                    des_token: "DAI",        
-                    description:"This is campain for DAI"
+                    privateKey: result.data.private_key,
+                    des_token: result.data.destination_token,        
+                    description: result.data.description
                   })
               }
           })
@@ -103,7 +103,7 @@ export default class ImportByPromoCode extends React.Component {
     if (check){
       return
     }
-
+    this.setState({isLoading: true})
     this.getPrivateKey(promoCode, captcha).then(result => {
       var privateKey = result.privateKey
       var address = addressFromPrivateKey(privateKey)
@@ -115,8 +115,10 @@ export default class ImportByPromoCode extends React.Component {
         privateKey,
         this.props.ethereum,
         this.props.tokens, null, null, info))
+        this.setState({isLoading: false})
     }).catch(error => {
       this.setState({error: error, captchaV: (new Date).getTime()})      
+      this.setState({isLoading: false})
     })
 
     // //keccak256 promo code
