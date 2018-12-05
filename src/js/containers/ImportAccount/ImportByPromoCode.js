@@ -158,7 +158,7 @@ export default class ImportByPromoCode extends React.Component {
         <Modal
           className={{ base: 'reveal medium', afterOpen: 'reveal medium import-privatekey' }}
           isOpen={this.props.account.promoCode.modalOpen}
-          onRequestClose={this.closeModal}
+          onRequestClose={this.closeModal.bind(this)}
           content={
             <div>
               <div className="title">{this.props.translate("import.enter_promo_code") || "Your Promo code"}</div>

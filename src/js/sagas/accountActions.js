@@ -99,8 +99,20 @@ export function* importNewAccount(action) {
       var sourceToken = exchange.sourceTokenSymbol.toLowerCase()
       var promoToken = BLOCKCHAIN_INFO.promo_token      
       if (promoToken && newTokens[promoToken]){
-        yield put.sync(exchangeActions.selectTokenAsync(promoToken, newTokens[promoToken].address, "source", ethereum))
+        var promoAddr = newTokens[promoToken].address
+        var promoDecimal = newTokens[promoToken].decimals
+        yield put.sync(exchangeActions.selectTokenAsync(promoToken, promoAddr, "source", ethereum))
         sourceToken = promoToken.toLowerCase()
+        //get source balance
+        // try{
+        //   var balanceSource = yield call([ethereum, ethereum.call], "getBalanceToken", address, promoAddr)
+        //   var balance = (balanceSource/Math.pow(10, promoDecimal)).toString()
+        //   yield put.sync(exchangeActions.inputChange('source', balance))
+        //   yield put.sync(exchangeActions.focusInput('source'));
+        // }catch(e){
+        //   console.log(e)
+        // }
+        
       }
       var destToken = exchange.destTokenSymbol.toLowerCase()
       if (info.destToken && newTokens[info.destToken]){
@@ -109,7 +121,21 @@ export function* importNewAccount(action) {
       }
       var path = constants.BASE_HOST + "/swap/" + sourceToken + "_" + destToken
       path = commonUtils.getPath(path, constants.LIST_PARAMS_SUPPORTED)
-      yield put(goToRoute(path))
+      yield put.sync(goToRoute(path))
+      
+
+      if (promoToken && newTokens[promoToken]){
+        var promoAddr = newTokens[promoToken].address
+        var promoDecimal = newTokens[promoToken].decimals
+        try{
+          var balanceSource = yield call([ethereum, ethereum.call], "getBalanceToken", address, promoAddr)
+          var balance = (balanceSource/Math.pow(10, promoDecimal)).toString()
+          yield put.sync(exchangeActions.inputChange('source', balance))
+          yield put.sync(exchangeActions.focusInput('source'));
+        }catch(e){
+          console.log(e)
+        }
+      }
     }
     
    // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
@@ -125,8 +151,10 @@ export function* importNewAccount(action) {
     
 
 //    yield put(goToRoute(constants.BASE_HOST + '/swap'))
-
-    yield put(exchangeActions.fetchExchangeEnable())
+    if (type !== "promo"){
+      yield put(exchangeActions.fetchExchangeEnable())
+    }
+    
 
     var maxCapOneExchange = "infinity"
     try {
@@ -154,6 +182,7 @@ export function* importNewAccount(action) {
     balanceTokens.map(token => {
       mapBalance[token.symbol] = token.balance
     })
+    
     yield put(setBalanceToken(balanceTokens))
   }
   catch (err) {
