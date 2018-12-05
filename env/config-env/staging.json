@@ -24,7 +24,7 @@
     ],
     "ws": "wss://mainnet.infura.io/ws"
   },
-  "api_tokens": "https://staging-cache.kyber.network/currencies",
+  "api_tokens": "https://staging-api.knstats.com/internal/currencies",
   "market_exclude": ["WETH", "PT"],
   "promo_token": "PT",
   "userdashboard_url":"https://staging-userdashboard.knstats.com", 
