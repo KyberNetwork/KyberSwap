@@ -120,6 +120,7 @@ export default class ImportByPromoCode extends React.Component {
 
   changeCaptchaV = ()=>{
     this.setState({captchaV: (new Date).getTime()})
+    analytics.trackClickChangeCapcha()
   }
 
   onPromoCodeChange = () =>{
@@ -191,12 +192,12 @@ export default class ImportByPromoCode extends React.Component {
                         <span className="error-text">{this.state.errorPromoCode}</span>
                         }
                       </label>
-                        <div className={"label-text"}>To make sure you are not robot...</div>
+                        <div className={"label-text"}>{this.props.translate("import.not_robot") || "To make sure you are not robot..."}</div>
                         <div className={"capcha"}>
                           <img src={`https://kyber.network/rucaptcha/?${this.state.captchaV}`} />
                           <a onClick={this.changeCaptchaV}><div className={"refresh-capcha"}></div></a>
                         </div>
-                        <div className={"label-text"}>Type the characters you see above (without spaces)</div>
+                        <div className={"label-text"}>{this.props.translate("import.type_capcha") || "Type the characters you see above (without spaces)"}</div>
                         <label className={!!this.state.errorCaptcha ? "error" : ""}>
                         <div className="input-reveal">
                           <input
@@ -204,6 +205,7 @@ export default class ImportByPromoCode extends React.Component {
                               type="text"
                               onChange={this.onCaptchaChange.bind(this)}
                               spellCheck="false"
+                              onFocus={(e) => {analytics.trackClickInputCapcha()}}
                               required
                             />
                           </div>

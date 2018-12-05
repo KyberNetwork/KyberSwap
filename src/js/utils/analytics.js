@@ -667,10 +667,30 @@ export function trackAccessToSwap(){
         }
     }
 }
- export function exitSwap(){
+export function exitSwap(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
             mixpanel.track("Session_Swap_End", {href: window.location.href})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickInputCapcha(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_2_2_Click_Input_Capcha")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickChangeCapcha(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_2_2_Click_Change_New_Capcha")
         }catch(e){
             console.log(e)
         }
