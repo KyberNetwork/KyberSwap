@@ -25,7 +25,7 @@
       "ws": "wss://mainnet.infura.io/ws"
     },
     "api_usd":"https://api.coinmarketcap.com",
-    "api_tokens": "https://production-cache.kyber.network/currencies",
+    "api_tokens": "https://api.kyber.network/internal/currencies",
     "market_exclude": ["WETH", "KCC"],
     "tokens": {
       "ETH": {
