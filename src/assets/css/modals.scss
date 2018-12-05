@@ -822,6 +822,7 @@ $divider-color: darken($title-background-color, 5);
       margin-bottom: 20px;
       display: flex;
       align-items: center;
+      height: 70px;
       a {
         margin-left: 20px;
         .refresh-capcha {
@@ -863,6 +864,7 @@ $divider-color: darken($title-background-color, 5);
     background-color: #f5f5f5;
     button {
       width: 100%;
+      box-shadow: none;
     }
   }
 }
