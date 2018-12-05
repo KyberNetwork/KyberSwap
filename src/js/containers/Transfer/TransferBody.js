@@ -26,7 +26,7 @@ import * as analytics from "../../utils/analytics"
 import * as transferActions from "../../actions/transferActions"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
-import {isMobile} from "../../utils/common"
+import {isMobile, iOSVersion} from "../../utils/common"
 
 
 @connect((store, props) => {
@@ -45,6 +45,9 @@ import {isMobile} from "../../utils/common"
     tokenName = tokens[tokenSymbol].name
   }
 
+  var rawVersion = iOSVersion.Version()
+  var version = Array.isArray(rawVersion) ? rawVersion[0] : 0 
+
   return {
     transfer: { ...store.transfer, balance, decimals, tokenName },
     account: store.account,
@@ -54,6 +57,7 @@ import {isMobile} from "../../utils/common"
     advanceLayout : props.advanceLayout,
     currentLang,
     isOnIOS: isMobile.iOS(),
+    iOSVersion: version
   }
 })
 
@@ -289,6 +293,7 @@ export default class Transfer extends React.Component {
         networkError ={this.props.global.network_error}
         qcCode = {qcCode}
         isOnIOS = {this.props.isOnIOS}
+        iOSVersion = {this.props.iOSVersion}
       />
     )
   }
