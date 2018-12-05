@@ -128,7 +128,7 @@ const TransferForm = (props) => {
               <div className={"exchange-content__item exchange-content__item--right"}>
                 <div className={`input-div-content ${isError() ? "error" : ""}`}>
                   <div className={"exchange-content__label-content"}>
-                    <div className="exchange-content__label exchange-content__label--wide">To Address</div>
+                    <div className="exchange-content__label exchange-content__label--toaddr exchange-content__label--wide">To Address</div>
                   </div>
                   <div className="exchange-content__input-container exchange-content__input-container--to">
                     <input
@@ -139,7 +139,7 @@ const TransferForm = (props) => {
                       onFocus={props.onFocusAddr}
                       onBlur={props.onBlur}
                     />
-                    {props.focus !== "fdsto-addr" && <div className={props.errors.destAddress ? "error-msg" : ""}>
+                    {props.focus === "to-addr" && <div className={props.errors.destAddress ? "error-msg" : ""}>
                       {/* {!props.isChangingWallet ? props.errorShow : ''} */}
                       {props.translate(props.errors.destAddress)}
                     </div>}
