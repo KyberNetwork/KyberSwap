@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="15px" viewBox="0 0 15 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/alert/error_24px</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Swap---Promocode" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="m/Swap---Transfer---message" transform="translate(-24.000000, -164.000000)" fill="#EF8102" fill-rule="nonzero">
+            <path d="M31.5,164 C27.36,164 24,167.36 24,171.5 C24,175.64 27.36,179 31.5,179 C35.64,179 39,175.64 39,171.5 C39,167.36 35.64,164 31.5,164 Z M32.25,175.25 L30.75,175.25 L30.75,173.75 L32.25,173.75 L32.25,175.25 Z M32.25,172.25 L30.75,172.25 L30.75,167.75 L32.25,167.75 L32.25,172.25 Z" id="icon/alert/error_24px"></path>
+        </g>
+    </g>
+</svg>

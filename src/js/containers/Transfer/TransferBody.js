@@ -26,6 +26,7 @@ import * as analytics from "../../utils/analytics"
 import * as transferActions from "../../actions/transferActions"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
+import {isMobile} from "../../utils/common"
 
 
 @connect((store, props) => {
@@ -51,7 +52,8 @@ import { default as _ } from 'underscore'
     global: store.global,
     translate: getTranslate(store.locale),
     advanceLayout : props.advanceLayout,
-    currentLang
+    currentLang,
+    isOnIOS: isMobile.iOS(),
   }
 })
 
@@ -286,6 +288,7 @@ export default class Transfer extends React.Component {
         advanceLayout = {this.props.advanceLayout}
         networkError ={this.props.global.network_error}
         qcCode = {qcCode}
+        isOnIOS = {this.props.isOnIOS}
       />
     )
   }

@@ -33,6 +33,12 @@ const TransferForm = (props) => {
     <div id="transfer-screen">
       <div class="frame">
         <div className="transfer-detail grid-x">
+          {props.isOnIOS && <div className={"iso-notice"}>
+            <div className={"notice-icon"}></div>
+            <div className={"notice-content"}>
+              iOS users please use safari as camera won't work on other browsers
+            </div>
+          </div>}
           <div className="cell small-12 large-9 transfer-col transfer-col-1">
 
           {props.networkError !== "" && (

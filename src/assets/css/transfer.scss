@@ -58,6 +58,28 @@ $padding-col-left : 2rem;
           }
         }
         .transfer-detail {
+          .iso-notice {
+            display: flex;
+            align-items: center;
+            border: 1.5px solid #ef8102;
+            color: #ef8102;
+            padding: 10px 15px;
+            background-color: #fff8ee;
+            margin-bottom: 5px;
+            .notice {
+              &-icon {
+                background: url(../img/exchange/notice-icon.svg) center no-repeat;
+                background-size: contain;
+                height: 18px;
+                width: 18px;
+              }
+              &-content {
+                font-size: 14px;
+                margin-left: 20px;
+                width: calc(100% - 18px - 30px);
+              }
+            }
+          }
           @include screen-max-width(large) {
             background-color: white;
           }
