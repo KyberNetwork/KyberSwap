@@ -96,6 +96,8 @@ $padding-col-left : 2rem;
             }
             .qc-code-content{
               padding-right: 10px;
+            
+
             }
             .hashAddr {
                   font-size: 18px;
@@ -112,6 +114,8 @@ $padding-col-left : 2rem;
                   width: 100%;
                   border: none;
                   height: 100%;
+
+                  border-radius: 10px;
                   
             
             }
@@ -224,7 +228,48 @@ $padding-col-left : 2rem;
 
 
 
-.qc-code-wrapper{
-  margin-top: 50px;
-  position: relative;
+.qc-modal{
+  .qc-title{
+    text-align: center;
+    margin-top: 30px;
+    h2{
+      font-size: 25px;
+    }
+  }
+  .qc-code-wrapper{
+    margin-top: 25px;
+    position: relative;
+  }
+  .qc-error{
+    margin-top: 40px;
+  }
+  .qc-nav-bar{
+    span{
+      &:not(:first-child){
+        margin-left: 20px;
+        position: relative;
+        &:before{
+          background-image: url("../img/arrow-qc.svg");
+          content: "";
+          position: absolute;
+          width: 7px;
+          height: 14px;
+          left: -14px;
+          background-repeat: no-repeat;
+          top: 2px;
+        }
+        
+      }
+    }
+  }
+  .cancel-qc-btn{
+    cursor: pointer;
+    color: #fff;
+    padding: 12px;
+    text-align: center;
+    width: 100%;
+    background-color: #d0021b;
+    border-radius: 5px;
+    font-weight: bold;
+  }
 }

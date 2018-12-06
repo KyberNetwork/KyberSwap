@@ -54,7 +54,7 @@ export default class ImportByPromoCode extends React.Component {
     this.props.dispatch(promoCodeChange(value));
   }
   
-  getPrivateKey = (promo, captcha) =>{    
+  getPrivateKey = (promo, captcha) =>{        
     return new Promise ((resolve, reject)=>{
       common.timeout(3000,  fetch(BLOCKCHAIN_INFO.userdashboard_url + '/api/promo/' + promo + "?_rucaptcha=" + captcha))
       .then((response) => {
