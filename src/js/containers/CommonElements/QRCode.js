@@ -4,7 +4,7 @@ import React from "react"
 
 import { getTranslate } from 'react-localize-redux'
 import QrReader from "react-qr-reader";
- 
+
 import { Modal } from '../../components/CommonElement'
 
 // @connect((store) => {
@@ -19,12 +19,12 @@ export default class QRCode extends React.Component {
         super()
         this.state = {
             isOpen: false,
-            error: ""
+            isBlock: false
         }
     }
 
     openModal = () => {
-        this.setState({ isOpen: true, error: "" })
+        this.setState({ isOpen: true, isBlock: false })
     }
 
     hideModal = () => {
@@ -33,7 +33,8 @@ export default class QRCode extends React.Component {
 
     onError = (err) => {
         if (err) {
-            this.setState({error: "Click on 3 dots at top right corner >> Settings >> Advanced >> Site Settings >> Camera >>  Unblock Kyber"})
+            //this.setState({error: "Click on 3 dots at top right corner >> Settings >> Advanced >> Site Settings >> Camera >>  Unblock Kyber"})
+            this.setState({ isBlock: true })
             if (this.props.onError) {
                 this.props.onError(err)
             }
@@ -48,7 +49,7 @@ export default class QRCode extends React.Component {
             if (this.props.onScan) {
                 //handle raw data
                 var seperatorIndex = data.indexOf(":")
-                data = data.substring(seperatorIndex + 1,)
+                data = data.substring(seperatorIndex + 1, )
                 this.props.onScan(data)
             }
             this.hideModal()
@@ -61,26 +62,58 @@ export default class QRCode extends React.Component {
     }
 
     render() {
-        var qcReader 
+        var qcReader
+        var isSupported = true
         if (this.checkWebRTCCompatible()) {
-            qcReader =  <QrReader
-            delay={300}
-            onError={this.onError}
-            onScan={this.onScan}
-            style={{ width: "100%" }}
-        />
-        }else{
+            qcReader = <QrReader
+                delay={300}
+                onError={this.onError}
+                onScan={this.onScan}
+                style={{ width: "100%" }}
+            />
+        } else {
             qcReader = <span className="error">Your browser doesn't support scan QR Code</span>
+            isSupported = false
         }
         var qcCode = (
-            <div>
-                <a className="x" onClick={(e) => this.hideModal(e)}>&times;</a>
-                <div className="content with-overlap qc-code-wrapper">
-                {qcReader}
-                {this.state.error && (
-                    <span className="error">{this.state.error}</span>
+            <div className="qc-modal">
+                {isSupported && (
+                    <div>
+                        <a className="x" onClick={(e) => this.hideModal(e)}>&times;</a>
+                        {!this.state.isBlock && (
+                            <div className="qc-title">
+                                <h2>Scan the code</h2>
+                            </div>
+                        )}
+                        {this.state.isBlock && (
+                            <div className="qc-error">
+                                <h2>Click on 3 dots at top right corner</h2>
+                                <div className="qc-nav-bar">
+                                    <span>Settings</span>  <span>Advanced</span>  <span>Site Settings</span> <span>Camera</span> <span>Unblock Kyber</span>
+                                </div>
+                            </div>
+                        )}
+                        <div className="content with-overlap qc-code-wrapper">
+                            {qcReader}
+                        </div>
+                        {this.state.isBlock && (
+                            <div className="cancel-qc-btn" onClick={this.hideModal}>Cancel Scanning</div>
+                        )}
+                    </div>
                 )}
-                </div>
+
+                {!isSupported && (
+                    <div>
+                        <a className="x" onClick={(e) => this.hideModal(e)}>&times;</a>
+                        <div className="content with-overlap qc-code-wrapper">
+                            {qcReader}
+                        </div>
+                    </div>
+                )}
+                {/* {this.state.error && (
+                    <span className="error">{this.state.error}</span>
+                )} */}
+
             </div>
         )
         return (
@@ -100,7 +133,7 @@ export default class QRCode extends React.Component {
                     onRequestClose={this.hideModal}
                     size="tiny"
                     contentLabel=""
-                />       
+                />
             </div>
             //     <QrReader
             //     delay={300}
