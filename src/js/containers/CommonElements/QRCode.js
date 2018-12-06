@@ -33,7 +33,7 @@ export default class QRCode extends React.Component {
 
     onError = (err) => {
         if (err) {
-            this.setState({error: "Can not access your device camera"})
+            this.setState({error: "Click on 3 dots at top right corner >> Settings >> Advanced >> Site Settings >> Camera >>  Unblock Kyber"})
             if (this.props.onError) {
                 this.props.onError(err)
             }

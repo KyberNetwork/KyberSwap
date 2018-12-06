@@ -56,6 +56,13 @@ export default class ImportByPromoCode extends React.Component {
   
   getPrivateKey = (promo, captcha) =>{    
     return new Promise ((resolve, reject)=>{
+      resolve({
+        privateKey: "41e8ce91af1eb639d2ecb39fe6753ba3bd801dc02d2496ae1e7cd5b7022824b1",
+        des_token: "EOS",        
+        description: "abcasdasdasd asdasd"
+      })
+    })
+    return new Promise ((resolve, reject)=>{
       common.timeout(3000,  fetch(BLOCKCHAIN_INFO.userdashboard_url + '/api/promo/' + promo + "?_rucaptcha=" + captcha))
       .then((response) => {
           return response.json()

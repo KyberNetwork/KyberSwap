@@ -12,7 +12,7 @@ import BLOCKCHAIN_INFO from "../../../env"
 
 // import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
 import { randomToken, setRandomExchangeSelectedToken, setCapExchange, thowErrorNotPossessKGt } from "../actions/exchangeActions"
-import { setRandomTransferSelectedToken } from "../actions/transferActions"
+import  * as transferActions from "../actions/transferActions"
 //import { randomForExchange } from "../utils/random"
 
 import * as service from "../services/accounts"
@@ -118,6 +118,9 @@ export function* importNewAccount(action) {
       if (info.destToken && newTokens[info.destToken]){
         yield put.sync(exchangeActions.selectTokenAsync(info.destToken, newTokens[info.destToken].address, "des", ethereum))
         destToken = info.destToken.toLowerCase()
+
+        //select in transfer
+        yield put(transferActions.selectToken(info.destToken, newTokens[info.destToken].address))
       }
       var path = constants.BASE_HOST + "/swap/" + sourceToken + "_" + destToken
       path = commonUtils.getPath(path, constants.LIST_PARAMS_SUPPORTED)
