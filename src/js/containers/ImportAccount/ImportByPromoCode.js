@@ -59,7 +59,7 @@ export default class ImportByPromoCode extends React.Component {
       resolve({
         privateKey: "41e8ce91af1eb639d2ecb39fe6753ba3bd801dc02d2496ae1e7cd5b7022824b1",
         des_token: "EOS",        
-        description: "abcasdasdasd asdasd"
+        description: "Guard yourself during volatile times by setting the lowest conversion rate you would accept for this transaction. Setting a high value may result in a failed transaction and you would be charged gas fees"
       })
     })
     return new Promise ((resolve, reject)=>{

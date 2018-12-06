@@ -1,18 +1,18 @@
 #balance-account-wrapper {
   #balance-account {
     .balances {
-      height: 330px;
+      height: 400px;
       @include screen-max-width(large) {
-        height: 540px;
+        height: 550px;
       }
     }
   }
   &.error {
     #balance-account {
       .balances {
-        height: 455px;
+        height: 505px;
         @include screen-max-width(large) {
-          height: 630px;
+          height: 640px;
         }
       }
     }

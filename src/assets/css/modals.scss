@@ -823,6 +823,10 @@ $divider-color: darken($title-background-color, 5);
       display: flex;
       align-items: center;
       height: 70px;
+      img {
+        width: 200px;
+        height: 70px;
+      }
       a {
         margin-left: 20px;
         .refresh-capcha {
