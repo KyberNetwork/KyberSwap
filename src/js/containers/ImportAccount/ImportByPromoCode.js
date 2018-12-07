@@ -1,6 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 //import { ImportByPromoCodeView } from "../../components/ImportAccount"
+import Recaptcha from "react-recaptcha"
 import { importNewAccount, throwError, promoCodeChange, throwPromoCodeError, openPromoCodeModal, closePromoCodeModal } from "../../actions/accountActions"
 import { addressFromPrivateKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
@@ -36,7 +37,9 @@ export default class ImportByPromoCode extends React.Component {
       error:"",
       errorPromoCode: "",
       errorCaptcha: "",
-      captchaV: "",      
+      captchaV: "",    
+      tokenCaptcha: "" ,
+      isPassCapcha: false
     }
   }
   openModal() {
@@ -77,6 +80,23 @@ export default class ImportByPromoCode extends React.Component {
           })
     })
   }
+  verifyCallback = (response) => {
+    console.log("captcha_response")
+    console.log(response);
+    if (response){
+      this.setState({
+        tokenCaptcha: response,
+        isPassCapcha: true
+      })
+    }
+  }
+
+  expiredCallback = () => {
+    this.setState({
+      tokenCaptcha: "",
+      isPassCapcha: false
+    })
+  }
   importPromoCode = (promoCode) => {
     var check = false
     if (promoCode === "") {
@@ -84,11 +104,12 @@ export default class ImportByPromoCode extends React.Component {
       check = true
     }
 
-    var captcha = document.getElementById("capcha-promo").value
-    if (captcha === "") {
-      this.setState({errorCaptcha: this.props.translate("error.capcha_error") || "Captcha is empty."})      
-      check = true
-    }
+    // var captcha = document.getElementById("capcha-promo").value
+    // if (captcha === "") {
+    //   this.setState({errorCaptcha: this.props.translate("error.capcha_error") || "Captcha is empty."})      
+    //   check = true
+    // }
+    var captcha = this.state.tokenCaptcha
     if (check){
       return
     }
@@ -162,6 +183,9 @@ export default class ImportByPromoCode extends React.Component {
   
 
   apply = (e) => {
+    if(!this.state.isPassCapcha){
+      return
+    }
     var promoCode = document.getElementById("promo_code").value
     this.importPromoCode(promoCode)
     analytics.trackClickSubmitPromoCode()      
@@ -214,12 +238,13 @@ export default class ImportByPromoCode extends React.Component {
                         <span className="error-text">{this.state.errorPromoCode}</span>
                         }
                       </label>
-                        <div className={"label-text"}>{this.props.translate("import.you_are_not_robot") || "To make sure you are not robot..."}</div>
+                        {/* <div className={"label-text"}>{this.props.translate("import.you_are_not_robot") || "To make sure you are not robot..."}</div>
                         <div className={"capcha"}>
                           <img src={`${BLOCKCHAIN_INFO.userdashboard_url}/rucaptcha/?${this.state.captchaV}`} />
                           <a onClick={this.changeCaptchaV}><div className={"refresh-capcha"}></div></a>
                         </div>
                         <div className={"label-text label-text-bottom"}>{this.props.translate("import.type_capcha") || "Type the characters you see above (without spaces)"}</div>
+                        
                         <label className={!!this.state.errorCaptcha ? "error" : ""}>
                         <div className="input-reveal">
                           <input
@@ -235,12 +260,16 @@ export default class ImportByPromoCode extends React.Component {
                            {!!this.state.errorCaptcha &&
                         <span className="error-text">{this.state.errorCaptcha}</span>
                         }
-                        </label>
+                        </label> */}
+                      <div className="capcha-wrapper">
+                        <Recaptcha sitekey="6LfTVn8UAAAAAIBzOyB1DRE5p-qWVav4vuZM53co"
+                                     verifyCallback={this.verifyCallback}/>
+                      </div>
                   </div>
                 </div>
               </div>
-              <div className="overlap">
-                <button className="button accent cur-pointer" onClick={this.apply.bind(this)}>
+              <div className="overlap promo-btn">
+                <button className= {`button accent cur-pointer ${this.state.isPassCapcha ? "": "disable"}`} onClick={this.apply.bind(this)}>
                   {this.props.translate("import.apply") || "Apply"}
                 </button>
               </div>
