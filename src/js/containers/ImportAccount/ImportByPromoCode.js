@@ -32,6 +32,7 @@ import Web3 from "web3"
 export default class ImportByPromoCode extends React.Component {
   constructor(){
     super()
+    this.recaptchaInstance
     this.state = {
       isLoading: false,
       error:"",
@@ -59,13 +60,14 @@ export default class ImportByPromoCode extends React.Component {
   
   getPrivateKey = (promo, captcha) =>{        
     return new Promise ((resolve, reject)=>{
-      common.timeout(3000,  fetch(BLOCKCHAIN_INFO.userdashboard_url + '/api/promo/' + promo + "?_rucaptcha=" + captcha))
+      common.timeout(3000,  fetch(BLOCKCHAIN_INFO.userdashboard_url + '/api/promo/' + promo + "?g-recaptcha-response=" + captcha))
       .then((response) => {
           return response.json()
       })
           .then((result) => {
               if (result.error){
                 reject(result.error)
+                this.resetCapcha()
               }else{
                  resolve({
                     privateKey: result.data.private_key,
@@ -77,7 +79,16 @@ export default class ImportByPromoCode extends React.Component {
           .catch((err) => {
               console.log(err)
               reject("Cannot get Promo code")
+              this.resetCapcha()
           })
+    })
+  }
+
+  resetCapcha = () => {
+    this.recaptchaInstance.reset()
+    this.setState({
+      tokenCaptcha: "",
+      isPassCapcha: false
     })
   }
   verifyCallback = (response) => {
@@ -263,6 +274,7 @@ export default class ImportByPromoCode extends React.Component {
                         </label> */}
                       <div className="capcha-wrapper">
                         <Recaptcha sitekey="6LfTVn8UAAAAAIBzOyB1DRE5p-qWVav4vuZM53co"
+                                    ref={e => this.recaptchaInstance = e}
                                      verifyCallback={this.verifyCallback}/>
                       </div>
                   </div>
