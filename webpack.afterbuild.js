@@ -29,6 +29,7 @@ link rel="stylesheet" href="/swap/${chain}/app.bundle.css?v=${now}" type="text/c
 script src="/trading_view/charting_library/charting_library.min.js"
 script src="/trading_view/datafeeds/udf/dist/polyfills.js"
 script src="/trading_view/datafeeds/udf/dist/bundle.js"
+script src="https://www.google.com/recaptcha/api.js"
 script src="/swap/${chain}/client.min.js?v=${now}"
 `
 

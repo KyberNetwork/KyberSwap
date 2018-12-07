@@ -791,7 +791,15 @@ $divider-color: darken($title-background-color, 5);
       margin-top: 15px;
     }
   }
-
+  .promo-btn{
+    button{
+      &.disable{
+        cursor: initial;
+        pointer-events: none;
+        opacity: 0.6;
+      }
+    }
+  }
   .content {
     // .input-reveal {
       padding: 16px 30px;
@@ -818,18 +826,25 @@ $divider-color: darken($title-background-color, 5);
         margin-bottom: 20px;
       }
     }
-    .capcha {
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      height: 70px;
-      a {
-        margin-left: 20px;
-        .refresh-capcha {
-          width: 25px;
-          height: 25px;
-          background: url(../img/import-account/refresh-capcha.svg) center no-repeat;
-          background-size: contain;
+    // .capcha {
+    //   margin-bottom: 20px;
+    //   display: flex;
+    //   align-items: center;
+    //   height: 70px;
+    //   a {
+    //     margin-left: 20px;
+    //     .refresh-capcha {
+    //       width: 25px;
+    //       height: 25px;
+    //       background: url(../img/import-account/refresh-capcha.svg) center no-repeat;
+    //       background-size: contain;
+    //     }
+    //   }
+    // }
+    .capcha-wrapper{
+      #g-recaptcha{
+        >div{
+          margin: 0 auto;
         }
       }
     }
