@@ -125,7 +125,7 @@ const ExchangeBodyLayout = (props) => {
                     <div>
                       <input id="inputSource" className="source-input" min="0" step="0.000001"
                         placeholder="0" autoFocus
-                        type="number" maxLength="50" autoComplete="off"
+                        type="text" maxLength="50" autoComplete="off"
                         value={props.input.sourceAmount.value}
                         onFocus={props.input.sourceAmount.onFocus}
                         onBlur={props.input.sourceAmount.onBlur}
@@ -160,7 +160,7 @@ const ExchangeBodyLayout = (props) => {
                   <div className={props.focus === "dest" ? "amount-input focus" : "amount-input"}>
                   <div>
                     <input className="des-input" step="0.000001" placeholder="0" min="0"
-                      type="number" maxLength="50" autoComplete="off"
+                      type="text" maxLength="50" autoComplete="off"
                       value={props.input.destAmount.value}
                       onFocus={props.input.destAmount.onFocus}
                       onBlur={props.input.destAmount.onBlur}

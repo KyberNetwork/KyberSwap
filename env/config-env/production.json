@@ -4,7 +4,11 @@
         {
           "endPoint" : "https://production-cache.kyber.network",
           "type": "cached"
-        },                       
+        },                  
+        {
+          "endPoint" : "https://eth-mainnet.alchemyapi.io/jsonrpc/V1GjKybGLx6rzSu517KSWpSrTSIIXmV7",
+          "type": "prune"
+        },         
         {
           "endPoint" : "https://mainnet.infura.io",
           "type": "prune"
