@@ -48,19 +48,28 @@ export default class SwapBalanceModal extends React.Component {
 
         amount = amount / Math.pow(10,sourceDecimal)
 
-        this.props.dispatch(exchangeActions.inputChange('source', amount.toString(10)))
+        this.props.dispatch(exchangeActions.inputChange('source', converters.roundingNumber(amount).toString(10)))
         this.props.dispatch(exchangeActions.focusInput('source'));
         this.props.ethereum.fetchRateExchange(true)
         this.hideChooseBalance()
         analytics.trackClickChooseBalance(percent)
+        // this.setState({percent: percent})
     }
+
+    // isThisPercent = (percent) => {
+    //     if (this.state.percent === percent) {
+    //         return "checked"
+    //     }
+    //     return ""
+    // }
+
     render = () => {
         return (
             <div class="swap-balance-modal">
                 <Dropdown onShow={(e) => this.showChooseBalance(e)} onHide={(e) => this.hideChooseBalance(e)} active={this.state.open}>
                     <DropdownTrigger className="notifications-toggle">
                         <div className="exchange-content__label exchange-content__label--dropdown">
-                            {this.props.exchange.sourceTokenSymbol}
+                            <div className={"token-symbol"}>{this.props.exchange.sourceTokenSymbol}</div>
                         </div>
                     </DropdownTrigger>
                     <DropdownContent>

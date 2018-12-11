@@ -60,17 +60,36 @@
   }
 
   &__item {
-    display: flex;
+    // display: flex;
     // align-items: center;
     position: relative;
 
     &--left,
     &--right {
       width: calc(50% - 2px);
-      height: 48px;
+      // height: 48px;
       background-color: white;
       box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
       border: solid 0.8px rgba(204, 204, 204, 0.72);
+      .input-div-content {
+        height: 48px;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        @include screen-max-width(medium) {
+          &.error {
+            border-bottom: 1px solid #cccccc;
+          }
+        }
+      }
+      .mobile-error__show {
+        display: none;
+        @include screen-max-width(medium) {
+          display: block;
+          color: #ee344e;
+          padding: 15px 12px
+        }
+      }
     }
 
     &--left {
@@ -94,10 +113,26 @@
       justify-content: center;
       align-items: center;
       z-index: 1;
+      @include screen-max-width(medium) {
+        display: none;
+      }
+      &.error {
+        display: none;
+        @include screen-max-width(medium) {
+          display: block;
+          top: unset;
+          text-align: center;
+          span {
+            color: #f1637d;
+            font-size: 14px;
+          }
+        }
+      }
     }
   }
 
   &__label {
+    white-space: nowrap;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: -0.4px;
@@ -118,6 +153,9 @@
         background-size: contain;
         left: -23px;
         top: 3px;
+        @include screen-max-width(medium) {
+          left: -15px;
+        }
       }
 
       .exchange-content__label--dropdown {
@@ -141,6 +179,9 @@
         position: absolute;
         top: 9px;
         right: 0;
+        @include screen-max-width(large) {
+          right: -10px;
+        }
       }
     }
 
@@ -172,14 +213,24 @@
 
     .main-input {
       border-left: 1px solid #cccccc;
-      height: 45px;
+      height: 48px;
       display: flex;
       align-items: center;
       &__left {
         padding-right: 25px;
+        @include screen-max-width(large) {
+          padding-right: 0;
+        }
       }
       &__right {
         padding-right: 20px;
+      }
+
+      @include screen-max-width(medium) {
+        border-left: none;
+        &__left, &__right {
+          padding-right: 0px;
+        }
       }
     }
 
@@ -206,6 +257,9 @@
 
       div {
         color: #f1637d;
+      }
+      @include screen-max-width(medium) {
+        display: none;
       }
     }
 
@@ -322,7 +376,7 @@
     }
 
     @include screen-max-width(medium) {
-      padding: 0 12px 0 32px;
+      padding: 0 0px 0 5px;
     }
   }
 
@@ -340,14 +394,27 @@
 
     &.error {
       color: #ee344e;
-      padding-right: 30px;
+      padding-right: 10px;
       &::placeholder {
         color: #ee344e;
       }
     }
 
+    // &-address {
+    //   &::placeholder {
+    //     font-size: 18px;
+    //   }
+    // }
+
     @include screen-max-width(medium) {
       padding: 0;
+      padding-right: 10px;
+      &.has-account {
+        padding-right: 0;
+        &.error {
+          padding-right: 25px;
+        }
+      }
     }
   }
 
@@ -425,7 +492,7 @@
 
   @media screen and (max-width: 650px) {
     &__item {
-      padding: 0 5px;
+      padding: 0;
       justify-content: space-between;
 
       &--absolute div {
@@ -435,6 +502,20 @@
 
     &__label {
       display: none;
+      &.trigger-swap-modal {
+        display: block;
+        .exchange-content__label {
+          display: block;
+          margin: 0 10px;
+          .token-symbol {
+            display: none;
+          }
+          &::after {
+            top: -6px;
+            right: unset;
+          }
+        }
+      }
     }
 
     &__select {
@@ -444,7 +525,7 @@
     &__input-container {
       margin-left: 0;
       border-left: none;
-      width: 200px;
+      width: 170px;
     }
 
     &__input-container--to {
@@ -665,14 +746,36 @@
   }
   .select-item{
     background-color: white;
-    border: 1px solid #eee;
+    // border: 1px solid #eee;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 8px 10px 1px rgba(0, 0, 0, 0.14);
+    border-radius: 4px;
     .list-item {
+      padding-top: 10px;
       >div{
-        padding: 10px;
+        padding: 10px 20px;
         cursor: pointer;
         &:hover{
           background-color: #eee;
         }
+
+        @include screen-max-width(medium) {
+          text-align: left;
+        }
+      }
+    }
+
+    .checked {
+      position: relative;
+      &::before {
+        content: '';
+        position: absolute;
+        background-image: url(../img/exchange/choosed.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        left: 8px;
+        width: 15px;
+        height: 15px;
+        top: 13px;
       }
     }
   }
