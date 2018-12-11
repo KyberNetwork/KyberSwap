@@ -62,6 +62,21 @@ export var isMobile = {
     }
 };
 
+export var checkBrowser = {
+    isFirefox: function() {
+        return typeof InstallTrigger !== 'undefined';
+    },
+    isChrome: function() {
+        return !!window.chrome && !!window.chrome.webstore;
+    },
+    isSafari: function() {
+        return /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+    },
+    isNotFCSBrowser: function() {
+        return !this.isFirefox && !this.isChrome && !this.isSafari;
+    }
+}
+
 export function getAssetUrl(uri = "") {
   return constants.ASSET_URL + uri.toLowerCase();
 }
