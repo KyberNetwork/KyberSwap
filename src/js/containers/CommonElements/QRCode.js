@@ -63,20 +63,19 @@ export default class QRCode extends React.Component {
     }
 
     blockCameraMsg = () => {
-        if (checkBrowser.isNotFCSBrowser()) {
-            return (
-                <div className="qc-error">
-                    <h2>KyberSwap cannot access your camera</h2>
-                </div>
-            )
-        }
+        var isIOS = !!isMobile.iOS()
+        var isAndroid = !!isMobile.Android()
+        var isNotGerneralInfo = isIOS && checkBrowser.isSafari() || isAndroid && checkBrowser.isFirefox() || isAndroid && checkBrowser.isChrome()
+        var msgContent = ""
+        if (isIOS && checkBrowser.isSafari()) msgContent = <span>Refresh website and try again</span>
+        if (isAndroid && checkBrowser.isFirefox()) msgContent = <span>Close this modal and try again</span>
+        if (isAndroid && checkBrowser.isChrome()) msgContent = <div className="qc-nav-bar"><span>Settings</span>  <span>Advanced</span>  <span>Site Settings</span> <span>Camera</span> <span>Unblock Kyber</span></div>
 
         return (
             <div className="qc-error">
-                <h2>Follow steps to allow KyberSwap access your camera</h2>
-                {isMobile.iOS() && checkBrowser.isSafari() && <span>Refresh website and try again</span>}
-                {isMobile.Android() && checkBrowser.isFirefox() && <span>Close this modal and try again</span>}
-                {isMobile.Android() && checkBrowser.isChrome() && <div className="qc-nav-bar"><span>Settings</span>  <span>Advanced</span>  <span>Site Settings</span> <span>Camera</span> <span>Unblock Kyber</span></div>}
+                {isNotGerneralInfo && <h2>Follow steps to allow KyberSwap to access your camera</h2>}
+                {!isNotGerneralInfo && <h2>KyberSwap cannot access your camera</h2>}
+                {isNotGerneralInfo && msgContent}
             </div>
         )
     }

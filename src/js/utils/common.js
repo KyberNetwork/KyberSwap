@@ -1,4 +1,5 @@
 import * as constants from '../services/constants';
+import {detect} from "detect-browser"
 
 export function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -62,15 +63,16 @@ export var isMobile = {
     }
 };
 
+const browser = detect()
 export var checkBrowser = {
     isFirefox: function() {
-        return typeof InstallTrigger !== 'undefined';
+        return browser.name && browser.name === "firefox"
     },
     isChrome: function() {
-        return !!window.chrome && !!window.chrome.webstore;
+        return browser.name && browser.name === "chrome"
     },
     isSafari: function() {
-        return /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+        return navigator.userAgent.indexOf("Safari") != -1
     },
     isNotFCSBrowser: function() {
         return !this.isFirefox && !this.isChrome && !this.isSafari;
