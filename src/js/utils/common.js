@@ -64,13 +64,13 @@ export var isMobile = {
 
 export var checkBrowser = {
     isFirefox: function() {
-        return typeof InstallTrigger !== 'undefined';
+        return navigator.userAgent.indexOf("Firefox") != -1
     },
     isChrome: function() {
-        return !!window.chrome && !!window.chrome.webstore;
+        return navigator.userAgent.indexOf("Chrome") != -1
     },
     isSafari: function() {
-        return /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+        return navigator.userAgent.indexOf("Safari") != -1
     },
     isNotFCSBrowser: function() {
         return !this.isFirefox && !this.isChrome && !this.isSafari;
