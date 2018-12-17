@@ -6,6 +6,7 @@ import { getTranslate } from 'react-localize-redux'
 import QrReader from "react-qr-reader";
 
 import { Modal } from '../../components/CommonElement'
+import {checkBrowser, isMobile} from "../../utils/common"
 
 // @connect((store) => {
 //   return {
@@ -61,6 +62,24 @@ export default class QRCode extends React.Component {
             navigator.mediaDevices.getUserMedia);
     }
 
+    blockCameraMsg = () => {
+        var isIOS = !!isMobile.iOS()
+        var isAndroid = !!isMobile.Android()
+        var isNotGerneralInfo = isIOS && checkBrowser.isSafari() || isAndroid && checkBrowser.isFirefox() || isAndroid && checkBrowser.isChrome()
+        var msgContent = ""
+        if (isIOS && checkBrowser.isSafari()) msgContent = <span>Refresh website and try again</span>
+        if (isAndroid && checkBrowser.isFirefox()) msgContent = <span>Close this modal and try again</span>
+        if (isAndroid && checkBrowser.isChrome()) msgContent = <div className="qc-nav-bar"><span>Settings</span>  <span>Advanced</span>  <span>Site Settings</span> <span>Camera</span> <span>Unblock Kyber</span></div>
+
+        return (
+            <div className="qc-error">
+                {isNotGerneralInfo && <h2>Follow steps to allow KyberSwap to access your camera</h2>}
+                {!isNotGerneralInfo && <h2>KyberSwap cannot access your camera</h2>}
+                {isNotGerneralInfo && msgContent}
+            </div>
+        )
+    }
+
     render() {
         var qcReader
         var isSupported = true
@@ -85,14 +104,9 @@ export default class QRCode extends React.Component {
                                 <h2>Scan the code</h2>
                             </div>
                         )}
-                        {this.state.isBlock && (
-                            <div className="qc-error">
-                                <h2>Click on 3 dots at top right corner</h2>
-                                <div className="qc-nav-bar">
-                                    <span>Settings</span>  <span>Advanced</span>  <span>Site Settings</span> <span>Camera</span> <span>Unblock Kyber</span>
-                                </div>
-                            </div>
-                        )}
+                        {this.state.isBlock ? 
+                            this.blockCameraMsg()
+                        : ''}
                         <div className="content with-overlap qc-code-wrapper">
                             {qcReader}
                         </div>

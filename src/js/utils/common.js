@@ -1,4 +1,5 @@
 import * as constants from '../services/constants';
+import {detect} from "detect-browser"
 
 export function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -61,6 +62,22 @@ export var isMobile = {
         return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
     }
 };
+
+const browser = detect()
+export var checkBrowser = {
+    isFirefox: function() {
+        return browser.name && browser.name === "firefox"
+    },
+    isChrome: function() {
+        return browser.name && browser.name === "chrome"
+    },
+    isSafari: function() {
+        return navigator.userAgent.indexOf("Safari") != -1
+    },
+    isNotFCSBrowser: function() {
+        return !this.isFirefox && !this.isChrome && !this.isSafari;
+    }
+}
 
 export function getAssetUrl(uri = "") {
   return constants.ASSET_URL + uri.toLowerCase();
