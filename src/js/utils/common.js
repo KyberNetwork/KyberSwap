@@ -1,5 +1,5 @@
 import * as constants from '../services/constants';
-import {detect} from "detect-browser"
+import * as bowser from 'bowser'
 
 export function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -63,16 +63,15 @@ export var isMobile = {
     }
 };
 
-const browser = detect()
 export var checkBrowser = {
     isFirefox: function() {
-        return browser.name && browser.name === "firefox"
+        return !!bowser.firefox
     },
     isChrome: function() {
-        return browser.name && browser.name === "chrome"
+        return !!bowser.chrome
     },
     isSafari: function() {
-        return navigator.userAgent.indexOf("Safari") != -1
+        return !!bowser.safari
     },
     isNotFCSBrowser: function() {
         return !this.isFirefox && !this.isChrome && !this.isSafari;
