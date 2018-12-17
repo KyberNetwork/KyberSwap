@@ -13,7 +13,7 @@ export default class DappBrowser {
     if (this.web3 && this.web3.net && !this.web3.eth.net){
       this.web3.eth.net = this.web3.net
     }
-    console.log(this.web3)
+    //console.log(this.web3)
   }
 
   getWalletType = () => {
