@@ -268,7 +268,8 @@ export default class Transfer extends React.Component {
 
     var qcCode = common.isMobile.any() ? <QRCode  
     onError={this.handleErrorQRCode}
-    onScan={this.handleScanQRCode}/> : ""
+    onScan={this.handleScanQRCode}
+    onDAPP={this.props.account.isOnDAPP}/> : ""
 
     return (
       <TransferForm step={this.props.transfer.step}

@@ -15,7 +15,8 @@ const initState = {
   promoCode: {
     error: '',
     modalOpen: false
-  }
+  },
+  isOnDAPP: false
 }
 
 const account = (state=initState, action) => {
@@ -124,6 +125,11 @@ const account = (state=initState, action) => {
     }  
     case "GLOBAL.CLEAR_SESSION_FULFILLED":{
       let newState = {...initState}
+      return newState
+    }
+    case "ACCOUNT.SET_ON_DAPP": {
+      let newState = {...state}
+      newState.isOnDAPP = true
       return newState
     }
   }
