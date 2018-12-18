@@ -211,6 +211,8 @@ export function* importMetamask(action) {
   const { web3Service, networkId, ethereum, tokens, translate, walletType } = action.payload
   try {
     const currentId = yield call([web3Service, web3Service.getNetworkId])
+    console.log("currentId + " + currentId)
+    
     if (parseInt(currentId, 10) !== networkId) {
       var currentName = findNetworkName(parseInt(currentId, 10))
       var expectedName = findNetworkName(networkId)
@@ -234,6 +236,7 @@ export function* importMetamask(action) {
     }
     //get coinbase
     const address = yield call([web3Service, web3Service.getCoinbase], true)
+    console.log("address_eth + " + address)
     yield call([web3Service, web3Service.setDefaultAddress, address])
 
     const metamask = { web3Service, address, networkId }
