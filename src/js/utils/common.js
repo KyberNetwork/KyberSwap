@@ -1,4 +1,5 @@
 import * as constants from '../services/constants';
+import * as bowser from 'bowser'
 
 export function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -61,6 +62,21 @@ export var isMobile = {
         return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
     }
 };
+
+export var checkBrowser = {
+    isFirefox: function() {
+        return !!bowser.firefox
+    },
+    isChrome: function() {
+        return !!bowser.chrome
+    },
+    isSafari: function() {
+        return !!bowser.safari
+    },
+    isNotFCSBrowser: function() {
+        return !this.isFirefox && !this.isChrome && !this.isSafari;
+    }
+}
 
 export function getAssetUrl(uri = "") {
   return constants.ASSET_URL + uri.toLowerCase();
