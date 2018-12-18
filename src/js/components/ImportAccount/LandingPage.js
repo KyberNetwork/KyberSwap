@@ -6,7 +6,7 @@ import config from '../../config';
 import * as web3Package from "../../services/web3"
 
 import {acceptTermOfService} from "../../actions/globalActions"
-import { importAccountMetamask } from "../../actions/accountActions"
+import { importAccountMetamask, setOnDAPP } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import * as analytics from "../../utils/analytics"
 
@@ -89,6 +89,7 @@ export default class LandingPage extends React.Component {
 				//alert(walletType)
 				this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
 				this.props.ethereum, this.props.tokens, this.props.translate, walletType))
+				this.props.dispatch(setOnDAPP())
 			}else{
 				this.props.dispatch(acceptTermOfService())
 			}
