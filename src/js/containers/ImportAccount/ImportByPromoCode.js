@@ -1,6 +1,5 @@
 import React from "react"
 import { connect } from "react-redux"
-//import { ImportByPromoCodeView } from "../../components/ImportAccount"
 import Recaptcha from "react-recaptcha"
 import { importNewAccount, throwError, promoCodeChange, throwPromoCodeError, openPromoCodeModal, closePromoCodeModal } from "../../actions/accountActions"
 import { addressFromPrivateKey } from "../../utils/keys"
@@ -10,9 +9,7 @@ import * as common from "../../utils/common"
 import * as utilActions from '../../actions/utilActions'
 import { getAssetUrl } from "../../utils/common";
 import { Modal } from '../../components/CommonElement'
-
 import BLOCKCHAIN_INFO from "../../../../env"
-
 import Web3 from "web3"
 
 @connect((store) => {
@@ -28,7 +25,6 @@ import Web3 from "web3"
     translate: getTranslate(store.locale)
   }
 })
-
 export default class ImportByPromoCode extends React.Component {
   constructor(){
     super()
@@ -115,11 +111,6 @@ export default class ImportByPromoCode extends React.Component {
       check = true
     }
 
-    // var captcha = document.getElementById("capcha-promo").value
-    // if (captcha === "") {
-    //   this.setState({errorCaptcha: this.props.translate("error.capcha_error") || "Captcha is empty."})
-    //   check = true
-    // }
     var captcha = this.state.tokenCaptcha
     if (check){
       return
@@ -141,28 +132,6 @@ export default class ImportByPromoCode extends React.Component {
       this.setState({error: error, captchaV: (new Date).getTime()})
       this.setState({isLoading: false})
     })
-
-    // //keccak256 promo code
-    // for (var i = 0; i< 50; i++){
-    //   promoCode = Web3.utils.sha3(promoCode)
-    // }
-
-    // try {
-    //   if (promoCode.match(/^0[x | X].{3,}$/)) {
-    //       promoCode = promoCode.substring(2)
-    //   }
-    //   let address = addressFromPrivateKey(promoCode)
-    //   this.props.dispatch(closePromoCodeModal());
-    //   this.props.dispatch(importNewAccount(address,
-    //     "privateKey",
-    //     promoCode,
-    //     this.props.ethereum,
-    //     this.props.tokens))
-    // }
-    // catch (e) {
-    //   console.log(e)
-    //   this.props.dispatch(throwPromoCodeError(this.props.translate("error.invalid_promo_code") || 'Invalid promo code'))
-    // }
   }
 
   changeCaptchaV = ()=>{
@@ -184,14 +153,13 @@ export default class ImportByPromoCode extends React.Component {
     }
   }
 
-   submit = (e) => {
+  submit = (e) => {
     if (e.key === 'Enter') {
       var promoCode = document.getElementById("promo_code").value
       this.importPromoCode(promoCode)
       analytics.trackClickSubmitPromoCode()
     }
   }
-
 
   apply = (e) => {
     if(!this.state.isPassCapcha){
@@ -204,13 +172,10 @@ export default class ImportByPromoCode extends React.Component {
 
   render() {
     return (
-      <div className="column column-block">
-        <div className="importer promoCode">
-          <div className="importer__symbol">
-            <img src={getAssetUrl('wallets/promo_code.svg')} />
-            <div className="importer__name">{this.props.translate("landing_page.promo_code") || "PROMO CODE"}</div>
-          </div>
-          <button className="importer__button" onClick={this.openModal.bind(this)}>{this.props.translate("import.enter_promo_code") || "Enter your Promo Code"}</button>
+      <div>
+        <div className="import-account__block" onClick={this.openModal.bind(this)}>
+          <div className="import-account__icon promo-code"></div>
+          <div className="import-account__name">{this.props.translate("landing_page.promo_code") || "PROMO CODE"}</div>
         </div>
 
         <Modal
@@ -230,53 +195,32 @@ export default class ImportByPromoCode extends React.Component {
                 <div className="row">
                   <div className="column">
 
-                      <label className={!!this.state.errorPromoCode ? "error" : ""}>
-                        <div className="input-reveal">
-                          <input
-                            className="text-center" id="promo_code"
-                            type="text"
-                            onChange={this.onPromoCodeChange.bind(this)}
-                            onKeyPress={this.nextToCapcha.bind(this)}
-                            autoFocus
-                            autoComplete="off"
-                            spellCheck="false"
-                            onFocus={(e) => {analytics.trackClickInputPromoCode()}}
-                            required
-                            placeholder="Enter your promocode here"
-                          />
-                        </div>
-                        {!!this.state.errorPromoCode &&
-                        <span className="error-text">{this.state.errorPromoCode}</span>
-                        }
-                      </label>
-                        {/* <div className={"label-text"}>{this.props.translate("import.you_are_not_robot") || "To make sure you are not robot..."}</div>
-                        <div className={"capcha"}>
-                          <img src={`${BLOCKCHAIN_INFO.userdashboard_url}/rucaptcha/?${this.state.captchaV}`} />
-                          <a onClick={this.changeCaptchaV}><div className={"refresh-capcha"}></div></a>
-                        </div>
-                        <div className={"label-text label-text-bottom"}>{this.props.translate("import.type_capcha") || "Type the characters you see above (without spaces)"}</div>
-
-                        <label className={!!this.state.errorCaptcha ? "error" : ""}>
-                        <div className="input-reveal">
-                          <input
-                              className="text-center" id="capcha-promo"
-                              type="text"
-                              onChange={this.onCaptchaChange.bind(this)}
-                              spellCheck="false"
-                              onFocus={(e) => {analytics.trackClickInputCapcha()}}
-                              required
-                              onKeyPress={this.submit.bind(this)}
-                            />
-                          </div>
-                           {!!this.state.errorCaptcha &&
-                        <span className="error-text">{this.state.errorCaptcha}</span>
-                        }
-                        </label> */}
-                      <div className="capcha-wrapper">
-                        <Recaptcha sitekey="6LfTVn8UAAAAAIBzOyB1DRE5p-qWVav4vuZM53co"
-                                    ref={e => this.recaptchaInstance = e}
-                                     verifyCallback={this.verifyCallback}/>
+                    <label className={!!this.state.errorPromoCode ? "error" : ""}>
+                      <div className="input-reveal">
+                        <input
+                          className="text-center" id="promo_code"
+                          type="text"
+                          onChange={this.onPromoCodeChange.bind(this)}
+                          onKeyPress={this.nextToCapcha.bind(this)}
+                          autoFocus
+                          autoComplete="off"
+                          spellCheck="false"
+                          onFocus={(e) => {analytics.trackClickInputPromoCode()}}
+                          required
+                          placeholder="Enter your promocode here"
+                        />
                       </div>
+                      {!!this.state.errorPromoCode &&
+                      <span className="error-text">{this.state.errorPromoCode}</span>
+                      }
+                    </label>
+                    <div className="capcha-wrapper">
+                      <Recaptcha
+                        sitekey="6LfTVn8UAAAAAIBzOyB1DRE5p-qWVav4vuZM53co"
+                        ref={e => this.recaptchaInstance = e}
+                        verifyCallback={this.verifyCallback}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -290,18 +234,5 @@ export default class ImportByPromoCode extends React.Component {
         />
       </div>
     )
-
-    // return (
-    //   <ImportByPromoCodeView
-    //     isOnMobile={this.props.isOnMobile}
-    //     importPromoCode={this.importPromoCode.bind(this)}
-    //     modalOpen={this.openModal.bind(this)}
-    //     onRequestClose={this.closeModal.bind(this)}
-    //     isOpen={this.props.account.promoCode.modalOpen}
-    //     onChange={this.inputChange.bind(this)}
-    //     promoCodeError={this.props.account.promoCode.error}
-    //     translate={this.props.translate}
-    //   />
-    // )
   }
 }

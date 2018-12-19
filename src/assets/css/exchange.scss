@@ -93,7 +93,7 @@
     }
 
     &--left {
-      padding: 0 0px 0 20px;
+      padding: 0 20px;
     }
 
     &--right {
@@ -207,17 +207,16 @@
   &__input-container {
     width: 100%;
 
+    .qc-code-content {
+      margin-left: 10px;
+    }
+
     .main-input {
       border-left: 1px solid #cccccc;
       height: 48px;
       display: flex;
       align-items: center;
-      &__left {
-        padding-right: 25px;
-        @include screen-max-width(large) {
-          padding-right: 0;
-        }
-      }
+
       &__right {
         padding-right: 20px;
       }
@@ -390,12 +389,6 @@
       }
     }
 
-    // &-address {
-    //   &::placeholder {
-    //     font-size: 18px;
-    //   }
-    // }
-
     @include screen-max-width(medium) {
       padding: 0;
       padding-right: 10px;
@@ -487,6 +480,10 @@
 
       &--absolute div {
         display: none;
+      }
+
+      &--left {
+        padding-right: 12px !important;
       }
     }
 

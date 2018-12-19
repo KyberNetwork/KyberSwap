@@ -9,7 +9,7 @@ import { getTranslate } from 'react-localize-redux';
 @connect((store, props) => {
   var location = store.router.location.pathname
   var sourceActive = 'ETH'
-  ourceActive = store.exchange.sourceTokenSymbol
+  sourceActive = store.exchange.sourceTokenSymbol
   var isFixedSourceToken = !!(store.account && store.account.account.type ==="promo" && store.tokens.tokens[BLOCKCHAIN_INFO.promo_token])
 
   return {
