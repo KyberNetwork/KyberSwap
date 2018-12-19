@@ -1,21 +1,8 @@
 import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
-// import * as actions from '../actions/globalActions'
-// import * as actionsExchange from '../actions/exchangeActions'
-// import * as actionsUtils from '../actions/utilActions'
 import * as marketActions from "../actions/marketActions"
 import * as globalActions from "../actions/globalActions"
-// import { closeImportLoading } from '../actions/accountActions'
-// import { Rate } from "../services/rate"
-// import { push } from 'react-router-redux';
-// import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
-// import { getTranslate } from 'react-localize-redux';
-// import { getLanguage } from "../services/language"
-// import Language from "../../../lang"
-// import constants from "../services/constants"
-
-// import * as converter from "../utils/converter"
- import { store } from '../store'
-
+import { store } from '../store'
+import BLOCKCHAIN_INFO from "../../../env";
 
 export function* getData(action) {
     var state = store.getState()
@@ -27,18 +14,6 @@ export function* getData(action) {
         console.log(e)
     }
 }
-
-// export function* getGeneralTokenInfo(action){
-//     var state = store.getState()
-//     var ethereum = state.connection.ethereum
-//     var rateUSD = state.tokens.tokens.ETH.rateUSD 
-//     try {
-//         var data = yield call([ethereum, ethereum.call], "getGeneralTokenInfo")
-//         yield put(marketActions.getGeneralTokenInfoComplete(data, rateUSD))
-//     }catch(e){
-//         console.log(e)
-//     }
-// }
 
 export function* getVolumn(){
     var state = store.getState()
@@ -140,13 +115,48 @@ export function* getNewData(action) {
     }
 }
 
+export function* fetchChartData(action) {
+  const { tokenSymbol, timeRange } = action.payload;
+  var state = store.getState()
+  var currentChartData = state.market.chart
+  if (tokenSymbol === currentChartData.tokenSymbol && currentChartData.points[timeRange]) {
+    return
+  }
+  yield put(marketActions.setChartLoading(true));
+
+  try {
+    // if (timeRange === 'w') {
+    //   const state = store.getState();
+    //   const ethereum = state.connection.ethereum;
+
+    //   const last7DPoints = yield call([ethereum, ethereum.call], 'getLast7D', tokenSymbol);
+		// 	var dataLast7D = last7DPoints.data[tokenSymbol] ? last7DPoints.data[tokenSymbol] : []
+    //   yield put(marketActions.setChartPoints(dataLast7D));
+    // } else {
+      const response = yield call(fetch, BLOCKCHAIN_INFO.tracker + `/chart/klines?symbol=${tokenSymbol}&interval=${timeRange}`);
+      const data = yield call([response, response.json]);
+			var chartData = {t: data.t, c: data.c}
+			if (data.s !== "ok" || !data.t || !data.c || data.t.length !== data.c.length) {
+				chartData.t = []
+				chartData.c = []
+			}
+      yield put(marketActions.setChartPoints(chartData, tokenSymbol, timeRange));
+    // }
+
+  } catch(e) {
+    console.log(e);
+  }
+
+  yield put(marketActions.setChartLoading(false));
+}
+
 export function* watchMarket() {
   yield takeEvery("MARKET.GET_MARKET_DATA", getData)
-  //yield takeEvery("MARKET.GET_GENERAL_INFO_TOKENS", getGeneralTokenInfo)
   yield takeEvery("MARKET.GET_MORE_DATA", getNewData)
   yield takeEvery("MARKET.GET_VOLUMN", getVolumn)
   yield takeEvery("MARKET.RESET_LIST_TOKEN", getNewData)
   yield takeEvery("MARKET.UPDATE_SORTED_TOKENS", getNewData)
+  yield takeEvery("MARKET.FETCH_CHART_DATA", fetchChartData);
 }
 
 

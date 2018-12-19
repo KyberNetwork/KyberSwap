@@ -48,7 +48,7 @@ export default class ImportByPrivateKey extends React.Component {
         "privateKey",
         privateKey,
         this.props.ethereum,
-        this.props.tokens))
+        this.props.tokens, null, null, "PRIVATE KEY"))
     }
     catch (e) {
       console.log(e)
@@ -60,6 +60,7 @@ export default class ImportByPrivateKey extends React.Component {
   render() {
     return (
       <ImportByPKeyView
+        isOnMobile={this.props.isOnMobile}
         importPrivateKey={this.importPrivateKey.bind(this)}
         modalOpen={this.openModal.bind(this)}
         onRequestClose={this.closeModal.bind(this)}

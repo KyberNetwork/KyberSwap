@@ -20,10 +20,10 @@ deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
-    bucket: dev-swap.knstats.com
+    bucket: beta-swap.knstats.com
     region: ap-southeast-1
     acl: public_read
     local_dir: dist/ropsten
     skip_cleanup: true
     on:
-      branch: develop
+      branch: change_layout

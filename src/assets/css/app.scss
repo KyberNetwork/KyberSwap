@@ -2,7 +2,6 @@
 @import '../bower/animate.css/animate.css';
 @import 'settings';
 @import "util";
-//@import 'foundation';
 
 $accent-gradient: linear-gradient(169deg, #36d9ac, #049696);
 $alert-color: #ff5d00;
@@ -14,18 +13,13 @@ $alert-color: #ff5d00;
 @import 'addresses';
 @import 'tokens';
 @import 'custom';
-
-@import 'address_balance';
-
-//@import "~slick-carousel/slick/slick.css";
+@import 'account-balance';
 @import "~react-table/react-table.css";
-//@import "history";
 @import "transaction_list";
 @import "language";
 @import "token_select";
 @import "term_and_services";
 @import "icon";
-@import "landing_page";
 @import "footer";
 @import "advance_config";
 @import "exchange";
@@ -34,7 +28,7 @@ $alert-color: #ff5d00;
 @import "transfer";
 @import "cold_wallet";
 @import "animation";
-
+@import "slide_down";
 @import '~react-linechart/dist/styles.css';
 
 @font-face{
@@ -175,37 +169,7 @@ html body{
   padding: 10px 0;
   padding-top: 0;
   border-bottom: 1px solid #ddd;
-  //min-height: 75px;
-  // .notice {
-  //   height: 55px;
-  //   padding: 0 10px;
-  //   background-image: url(../img/landing/cover.jpg);
-  //   background-repeat: no-repeat;
-  //   background-position: center;
-  //   text-align: center;
-  //   background-size: cover;
-  //   p {
-  //     line-height: 55px;
-  //     color: $white;
-  //     font-weight: 550;
-  //     span {
-  //       padding: 10px;
-  //       background: #355C71;
-  //       border-radius: 3px;
-  //       &:hover {
-  //         cursor: pointer;
-  //         box-shadow: 0 0 15px #fff;
-  //       }
-  //       a {
-  //         color: $white;
-  //         &:hover {
-  //           color: $white;
-  //           cursor: pointer;
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
+
   a.logo img{
     width: 108px;
     margin-top: 7px;

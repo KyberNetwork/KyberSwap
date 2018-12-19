@@ -5,6 +5,7 @@ import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
   return {
+    account: store.account.account,
     focusItem: props.focusItem,
     listItem: props.listItem,
     type: props.type,

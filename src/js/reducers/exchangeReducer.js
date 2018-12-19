@@ -1,8 +1,6 @@
 import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
-//import { calculateDest, caculateDestAmount, caculateSourceAmount } from "../utils/converter"
 import * as converter from "../utils/converter"
-//import { randomToken, randomForExchange } from "../utils/random"
 import BLOCKCHAIN_INFO from "../../../env"
 
 
@@ -168,18 +166,16 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.UPDATE_RATE":{
       const { rateInit, expectedPrice, slippagePrice, blockNo ,isManual, isSuccess} = action.payload
 
-     // console.log({rateInit, expectedPrice, slippagePrice, blockNo ,isManual, isSuccess})
-      
       if (!isSuccess) {
         newState.errors.rateSystem = "error.get_rate"
-      }else{
-        if(expectedPrice === "0"){
-          if(rateInit === "0" || rateInit === 0 || rateInit === undefined || rateInit === null){
+      } else {
+        if (expectedPrice === "0") {
+          if (rateInit === "0" || rateInit === 0 || rateInit === undefined || rateInit === null){
             newState.errors.rateSystem = "error.kyber_maintain"
-          }else{
+          } else {
             newState.errors.rateSystem = "error.handle_amount"
           }
-        }else{
+        } else {
           newState.errors.rateSystem = ""
         }
       }
@@ -187,8 +183,6 @@ const exchange = (state = initState, action) => {
       var slippageRate = slippagePrice === "0" ? converter.estimateSlippagerate(rateInit, 18) : converter.toT(slippagePrice, 18)
       var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
 
-
-    
       newState.slippageRate = slippageRate
       newState.offeredRate = expectedRate
       newState.blockNo = blockNo
@@ -196,14 +190,24 @@ const exchange = (state = initState, action) => {
       if (newState.sourceAmount !== "") {
         newState.minDestAmount = converter.calculateDest(newState.sourceAmount, expectedRate).toString(10)
       }
-      //newState.offeredRateBalance = action.payload.reserveBalance
-      // newState.offeredRateExpiryBlock = action.payload.expirationBlock
+
+      //calculate source, dest
+      if (newState.inputFocus === 'dest') {
+        newState.sourceAmount = converter.caculateSourceAmount(newState.destAmount, expectedRate, 6)
+      }
+
+      if (newState.inputFocus === 'source') {
+        newState.destAmount = converter.calculateDest(newState.sourceAmount, expectedRate, 6)
+      }
+
       if (!newState.isEditRate) {
         newState.minConversionRate = slippageRate
       }
+
       newState.isSelectToken = false
       return newState
     }
+
     case "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE": {
       var { rateInit, expectedPrice, slippagePrice, rateInitSlippage } = action.payload
 
@@ -539,19 +543,40 @@ const exchange = (state = initState, action) => {
       newState.selectedGas = level
       return newState
     }
+    case "EXCHANGE.OPEN_IMPORT_ACCOUNT":{
+      newState.isOpenImportAcount = true
+      return newState
+    }
+    case "EXCHANGE.CLOSE_IMPORT_ACCOUNT":{
+      newState.isOpenImportAcount = false
+      return newState
+    }
     case "GLOBAL.CLEAR_SESSION_FULFILLED":{
+      var gasPrice = action.payload
       var resetState = {...initState}
       resetState.sourceToken = newState.sourceToken
       resetState.sourceTokenSymbol = newState.sourceTokenSymbol
       
-      resetState.gasPrice = newState.gasPrice
+      // resetState.gasPrice = newState.gasPrice
+      resetState.gasPrice = gasPrice
       resetState.selectedGas = newState.selectedGas
-      resetState.isEditGasPrice = newState.isEditGasPrice
+      // resetState.isEditGasPrice = newState.isEditGasPrice
+      resetState.isEditGasPrice = false
       
       resetState.destToken = newState.destToken
       resetState.destTokenSymbol = newState.destTokenSymbol
 
       return resetState
+    }
+
+    case "EXCHANGE.TOGGLE_BALANCE_CONTENT": {
+      newState.isBalanceActive = action.payload !== null ? action.payload : !newState.isBalanceActive;
+      return newState;
+    }
+
+    case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED":{
+      newState.isBalanceActive = true
+      return newState
     }
   }
   return state

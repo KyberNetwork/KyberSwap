@@ -1,28 +1,33 @@
 import { take, put, call, fork, select, takeEvery, all, cancel } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
-import { clearSession, setGasPrice, setBalanceToken, updateAllRate, updateAllRateComplete, goToRoute } from "../actions/globalActions"
+import { clearSession, setGasPrice, setBalanceToken, closeChangeWallet } from "../actions/globalActions"
+import { fetchExchangeEnable } from "../actions/exchangeActions"
 import * as exchangeActions from "../actions/exchangeActions"
-
 import * as utilActions from '../actions/utilActions'
 import * as common from "./common"
 import * as analytics from "../utils/analytics"
-import * as commonUtils from "../utils/common"
-import BLOCKCHAIN_INFO from "../../../env"
-
-// import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
-import { randomToken, setRandomExchangeSelectedToken, setCapExchange, thowErrorNotPossessKGt } from "../actions/exchangeActions"
+import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
+import {
+  randomToken,
+  setRandomExchangeSelectedToken,
+  setCapExchange,
+  thowErrorNotPossessKGt,
+  closeImportAccountExchange
+} from "../actions/exchangeActions";
+import {
+  setRandomTransferSelectedToken,
+  closeImportAccountTransfer
+} from "../actions/transferActions"
 import  * as transferActions from "../actions/transferActions"
-//import { randomForExchange } from "../utils/random"
-
 import * as service from "../services/accounts"
 import constants from "../services/constants"
 import { Rate, updateAllRatePromise } from "../services/rate"
-
 import { findNetworkName } from "../utils/converter"
-
 import { getTranslate } from 'react-localize-redux'
 import { store } from '../store';
+import * as commonUtils from "../utils/common"
+import BLOCKCHAIN_INFO from "../../../env"
 
 export function* updateAccount(action) {
   const { account, ethereum } = action.payload
@@ -59,8 +64,9 @@ function* createNewAccount(address, type, keystring, ethereum, walletType, info)
 
 export function* importNewAccount(action) {
   yield put(actions.importLoading())
-  const { address, type, keystring, ethereum, tokens, metamask, walletType, info } = action.payload
+  const { address, type, keystring, ethereum, tokens, metamask, walletType, walletName, info } = action.payload
   var translate = getTranslate(store.getState().locale)
+  var isChangingWallet = store.getState().global.isChangingWallet
   try {
     var  account
     var accountRequest = yield call(common.handleRequest, createNewAccount, address, type, keystring, ethereum, walletType, info)
@@ -93,26 +99,16 @@ export function* importNewAccount(action) {
     })
 
     if (type === "promo"){
-      //promo token      
+      //promo token
       var state = store.getState()
       var exchange = state.exchange
       var sourceToken = exchange.sourceTokenSymbol.toLowerCase()
-      var promoToken = BLOCKCHAIN_INFO.promo_token      
+      var promoToken = BLOCKCHAIN_INFO.promo_token
       if (promoToken && newTokens[promoToken]){
         var promoAddr = newTokens[promoToken].address
         var promoDecimal = newTokens[promoToken].decimals
         yield put.sync(exchangeActions.selectTokenAsync(promoToken, promoAddr, "source", ethereum))
         sourceToken = promoToken.toLowerCase()
-        //get source balance
-        // try{
-        //   var balanceSource = yield call([ethereum, ethereum.call], "getBalanceToken", address, promoAddr)
-        //   var balance = (balanceSource/Math.pow(10, promoDecimal)).toString()
-        //   yield put.sync(exchangeActions.inputChange('source', balance))
-        //   yield put.sync(exchangeActions.focusInput('source'));
-        // }catch(e){
-        //   console.log(e)
-        // }
-        
       }
       var destToken = exchange.destTokenSymbol.toLowerCase()
       if (info.destToken && newTokens[info.destToken]){
@@ -125,7 +121,7 @@ export function* importNewAccount(action) {
       var path = constants.BASE_HOST + "/swap/" + sourceToken + "_" + destToken
       path = commonUtils.getPath(path, constants.LIST_PARAMS_SUPPORTED)
       yield put.sync(goToRoute(path))
-      
+
 
       if (promoToken && newTokens[promoToken]){
         var promoAddr = newTokens[promoToken].address
@@ -140,24 +136,26 @@ export function* importNewAccount(action) {
         }
       }
     }
-    
+
    // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
     yield put(actions.closeImportLoading())
-    yield put(actions.importNewAccountComplete(account))
-
+    yield put(actions.importNewAccountComplete(account, walletName))
+    if (isChangingWallet) yield put(closeChangeWallet())
 
     //track login wallet
     analytics.loginWallet(type)
-    
 
-    
-    
-
-//    yield put(goToRoute(constants.BASE_HOST + '/swap'))
     if (type !== "promo"){
       yield put(exchangeActions.fetchExchangeEnable())
     }
-    
+
+    if (screen === "exchange"){
+      yield put(closeImportAccountExchange())
+    }else{
+      yield put(closeImportAccountTransfer())
+    }
+
+    yield put(fetchExchangeEnable())
 
     var maxCapOneExchange = "infinity"
     try {
@@ -174,7 +172,13 @@ export function* importNewAccount(action) {
       var linkReg = 'https://kybernetwork.zendesk.com'
       yield put(thowErrorNotPossessKGt(translate("error.not_possess_kgt", {link: linkReg}) || "There seems to be a problem with your address, please contact us for more details"))
     }
-    
+
+    //update token and token balance
+    var newTokens = {}
+    Object.values(tokens).map(token => {
+      var token = { ...token }
+      newTokens[token.symbol] = token
+    })
 
     yield call(ethereum.fetchRateExchange)
 
@@ -185,7 +189,7 @@ export function* importNewAccount(action) {
     balanceTokens.map(token => {
       mapBalance[token.symbol] = token.balance
     })
-    
+
     yield put(setBalanceToken(balanceTokens))
   }
   catch (err) {
@@ -193,9 +197,6 @@ export function* importNewAccount(action) {
     yield put(actions.throwError(translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
     yield put(actions.closeImportLoading())
   }
-
-
-
 
   //fork for metamask
   if (type === "metamask") {
@@ -211,8 +212,6 @@ export function* importMetamask(action) {
   const { web3Service, networkId, ethereum, tokens, translate, walletType } = action.payload
   try {
     const currentId = yield call([web3Service, web3Service.getNetworkId])
-    console.log("currentId + " + currentId)
-    
     if (parseInt(currentId, 10) !== networkId) {
       var currentName = findNetworkName(parseInt(currentId, 10))
       var expectedName = findNetworkName(networkId)
@@ -236,7 +235,6 @@ export function* importMetamask(action) {
     }
     //get coinbase
     const address = yield call([web3Service, web3Service.getCoinbase], true)
-    console.log("address_eth + " + address)
     yield call([web3Service, web3Service.setDefaultAddress, address])
 
     const metamask = { web3Service, address, networkId }

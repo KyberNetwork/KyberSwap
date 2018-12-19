@@ -26,32 +26,20 @@ const TokenSelectorView = (props) => {
         return (
           <div key={key} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item">
             <div className="d-flex">
-              <div className="item-icon">
-                <img src={getAssetUrl(`tokens/${item.symbol}.svg`)} />
-              </div>
-
-              <div>
-                <div>{item.name}</div>
-                {props.type !== "des" &&
-                <div className="item-balance">
-                  <span title={balance}>
-                    {roundingNumber(balance)}
-                  </span>
-                  <span className="item-symbol">
-                    {item.symbol}
-                  </span>
+              <div className={"token-info"}>
+                <div className="item-icon">
+                  <img src={getAssetUrl(`tokens/${item.symbol}.svg`)} />
                 </div>
-                }
-                {/* <div className="font-w-b">{item.symbol}</span><span className="show-for-large token-name"> - {item.name}</div> */}
+                <div>{item.symbol}</div>
               </div>
-
-              {/* {item.isNotSupport &&
-                <span className="unsupported">{props.translate("error.not_supported") || "not supported"}</span>
-              } */}
+              {(props.type !== "des" && props.account != false) &&
+              <div className="item-balance">
+                <div title={balance} className="item-balance-value">
+                  {`${roundingNumber(balance)} ${item.symbol}`}
+                </div>
+              </div>
+              }
             </div>
-            {/* <div>
-              <span title={balance}>{roundingNumber(balance)}</span>
-            </div> */}
           </div>
         )
       }
@@ -59,8 +47,8 @@ const TokenSelectorView = (props) => {
   }
 
   return (
-    <div className={`token-selector ${props.isFixToken?"fix_token" : ""}`} >
-      <Dropdown onShow = {(e) => props.showTokens(e)} onHide = {(e) => props.hideTokens(e)} disabled ={props.isFixToken? true: false}>
+    <div className={`token-selector ${props.type} ${props.isFixToken?"fix_token" : ""}`}>
+      <Dropdown active={props.open} onShow = {(e) => props.showTokens(e)} onHide = {(e) => props.hideTokens(e)} disabled ={props.isFixToken? true: false}>
         <DropdownTrigger className="notifications-toggle">
           <div className="focus-item d-flex">
             <div className="d-flex">
@@ -68,24 +56,27 @@ const TokenSelectorView = (props) => {
                 <img src={getAssetUrl(`tokens/${focusItem.symbol}.svg`)} />
               </div>
               <div>
-                <div className="focus-name">{focusItem.name}</div>
-                <div className="focus-balance">
-                  {props.type !== "des" &&
-                  <span>
-                    <span className="token-balance" title = {toT(focusItem.balance)}>{roundingNumber(toT(focusItem.balance, focusItem.decimals))}</span>
-                    <span className="token-symbol">{focusItem.symbol}</span>
-                  </span>
-                  }
+                <div className="focus-name">
+                  <span className={"focus-name--desktop"}>{focusItem.name}</span>
+                  <span className={"focus-name--mobile"}>{focusItem.symbol}</span>
                 </div>
               </div>
             </div>
-            <div><i className={'k k-angle ' + (props.open ? 'up' : 'down')}></i></div>
+            <div><i className={'k k-angle bold ' + (props.open ? 'up' : 'down')}></i></div>
           </div>
         </DropdownTrigger>
         <DropdownContent>
           <div className="select-item">
+            <div onClick={(e) => props.hideTokens(e)} className="d-flex current-token">
+              <div>
+                <span>{props.type !== "des" ? "From" : "To"}</span>
+                <img src={getAssetUrl(`tokens/${focusItem.symbol}.svg`)} />
+                <span>{focusItem.name}</span>
+              </div>
+              <div><i className={'k k-angle bold ' + (props.open ? 'up' : 'down')}></i></div>
+            </div>
             <div className="search-item">
-              <input value={props.searchWord} placeholder={props.translate("search") || "Search"} onChange={(e) => props.changeWord(e)} type="text" onFocus={(e) => analytics.trackSearchToken()}/>
+              <input value={props.searchWord} placeholder={props.translate("try_dai") || `Try "DAI"`} onChange={(e) => props.changeWord(e)} type="text" onFocus={(e) => analytics.trackSearchToken()}/>
             </div>
             <div className="list-item custom-scroll">
               {getListToken()}

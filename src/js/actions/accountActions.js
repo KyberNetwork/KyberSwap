@@ -90,17 +90,17 @@ export function throwPromoCodeError(error) {
   }
 }
 
-export function importNewAccount(address, type, keystring, ethereum, tokens, walletType = null, metamask = null, info = null) {
+export function importNewAccount(address, type, keystring, ethereum, tokens, walletType = null, metamask = null, walletName = "", info = null) {
   return {
     type: "ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING",
-    payload: { address, type, keystring, ethereum, tokens, walletType, metamask, info }
+    payload: { address, type, keystring, ethereum, tokens, walletType, metamask, walletName, info }
   }
 }
 
-export function importNewAccountComplete(account) {
+export function importNewAccountComplete(account, walletName) {
   return {
     type: "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED",
-    payload: account
+    payload: {account, walletName}
   }
 }
 

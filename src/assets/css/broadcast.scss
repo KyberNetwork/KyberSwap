@@ -8,8 +8,9 @@
   text-align: center;
 
   .tx-title-text {
-    font-size: 18px;
-    color: #666;
+    font-size: 16px;
+    color: #222222;
+    font-weight: 600;
   }
 }
 
@@ -18,7 +19,7 @@
   position: relative;
 
   a {
-    padding: 10px;
+    padding:  13px 10px;
 
     &:first-child{
       width: 100%;
@@ -36,12 +37,12 @@
     }
 
     &.copy-tx {
-      padding: 5px 10px;
+      padding: 8px 10px;
       background-color: #F5F5F5;
       border-radius: 6px;
       position: absolute;
       right: 5px;
-      top: 5px;
+      top: 6px;
 
       img {
         position: relative;
@@ -143,14 +144,18 @@ ul.broadcast-steps {
       font-size: 20px;
       font-weight: normal;
       .title{
-        color: #EF8102;
+        // color: #EF8102;
+        color: #222222;
         font-weight: 500;
       }
       .content{
+        font-size: 18px;
         span{
           margin-left: 5px;
+          color: #999999;
           strong{
             font-weight: 600;
+            color: #141927;
           }
         }
       }
@@ -215,7 +220,7 @@ ul.broadcast-steps {
 
   .new-transaction {
     border-radius: 3px;
-    padding: 14px 70px 14px 30px;
+    padding: 14px 70px 14px 50px;
     color: #fff;
     font-size: 14px;
     background-color: #EF8102;
@@ -231,7 +236,7 @@ ul.broadcast-steps {
       position: absolute;
       width: 28px;
       height: 28px;
-      margin-left: 10px;
+      margin-left: 20px;
       top: 50%;
       border-radius: 50%;
       transform: translateY(-50%);

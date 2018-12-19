@@ -7,6 +7,7 @@ import * as converters from "../../utils/converter"
 import {Line} from 'react-chartjs-2';
 import * as analytics from "../../utils/analytics";
 import { getAssetUrl } from "../../utils/common";
+import { MarketMobile } from "../Market"
 
 @connect((store, props) => {
   var data = props.data
@@ -18,6 +19,9 @@ import { getAssetUrl } from "../../utils/common";
   var sortType = props.sortType
 
   var numScroll = store.market.configs.numScroll
+
+  var isRussia = false
+  isRussia = store.locale.languages[0] && store.locale.languages[0].active && store.locale.languages[0].code === "ru"
 
   return {
     translate: getTranslate(store.locale),
@@ -33,7 +37,12 @@ import { getAssetUrl } from "../../utils/common";
     numScroll: numScroll,
     page: page,
     firstPageSize: firstPageSize,
-    sortType: sortType
+    sortType: sortType,
+    manageColumn: props.manageColumn,
+    searchWordLayout: props.searchWordLayout,
+    currencyLayout: props.currencyLayout,
+    isRussia: isRussia,
+    isOnMobile: store.global.isOnMobile
   }
 })
 
@@ -69,21 +78,23 @@ export default class MarketTable extends React.Component {
   }
 
   drawChart = (props) => {
-    var lineColor = ""
-    var backgroundColor = ""
-    if (props["original"]["change"] < 0) {
-      lineColor = "#EB7576"
-      backgroundColor = "#F6EAEC"
-    } else if (props["original"]["change"] === 0) {
-      lineColor = "#767677"
-      backgroundColor = "#eee"
-    } else {
-      lineColor = "#1FDCAB"
-      backgroundColor = "#EDFBF6"
-    }
+    // var lineColor = ""
+    // var backgroundColor = ""
+    // if (props["original"]["change"] < 0) {
+    //   lineColor = "#F0506E"
+    //   backgroundColor = "#FEF4F6"
+    // } else if (props["original"]["change"] === 0) {
+    //   lineColor = "#767677"
+    //   backgroundColor = "#eee"
+    // } else {
+    //   lineColor = "#31CB9E"
+    //   backgroundColor = "#EDFBF6"
+    // }
+    var lineColor = "#31CB9E"
+    var backgroundColor = "#EDFBF6"
     var point = []
     var labels = []
-    var input = props.value
+    var input = props.value ? props.value : props.last_7d
     var dataLength = 28
 
     if (Array.isArray(input)) {
@@ -151,6 +162,12 @@ export default class MarketTable extends React.Component {
           }
         }],
         yAxes: [yOption]
+      },
+      tooltips: {
+        enabled: false
+      },
+      hover: {
+        mode: null
       }
     } 
     return (
@@ -183,7 +200,7 @@ export default class MarketTable extends React.Component {
     }
     if (input > 0){
       return (
-        <span className = "positive">{input} %<img src={require("../../../assets/img/landing/arrow_green.svg")}/></span>
+        <span className = "positive">{input} %<img src={require("../../../assets/img/landing/arrow_white.svg")}/></span>
       )
     }     
   }
@@ -239,6 +256,32 @@ export default class MarketTable extends React.Component {
     return (
       <div className="rt-th-img">
         <img src={require("../../../assets/img/landing/sort.svg")} />{this.props.translate(this.getTranslateFromKey(key)) || title}
+      </div>
+    )
+  }
+
+  handleSortHeader = () => {
+    this.getSortArray('market', this.getSortType('market'))
+    this.updateSortState('market', this.getSortType('market'))
+  }
+
+  getSortHeaderMarket = (title, key) => {
+    return (
+      <div>
+        <div className="for-desktop-only rt-th-first-header">
+          {/* <div className='rt-th-header-title' onClick = {this.handleSortHeader}>
+            {this.props.translate("market.eth_market") || "Ethereum market"}
+          </div> */}
+          <div className="rt-th-control">
+            {/* {this.props.searchWordLayout} */}
+            {this.props.currencyLayout}
+          </div>
+        </div>
+        <div className={"for-mobile-only " +  this.props.sortType['market'] + ' -cursor-pointer'} onClick = {this.handleSortHeader}>
+          <div className="rt-th-img">
+          <img src={require("../../../assets/img/landing/sort.svg")} /> {this.props.translate(this.getTranslateFromKey(key)) || title}
+          </div>
+        </div>
       </div>
     )
   }
@@ -321,21 +364,27 @@ export default class MarketTable extends React.Component {
     return newSortType
   }
 
+  makeSort = (key) => {
+    this.getSortArray(key, this.getSortType(key))
+    this.updateSortState(key, this.getSortType(key))
+  }
+
   getColumn = () => {
     var columns = [{
-      Header: this.getSortHeader("Market", "market"),
+      Header: this.getSortHeaderMarket("Market", "market"),
       accessor: 'market', // String-based value accessors!
       Cell: props => this.addIcon(props.value),
-      minWidth: 175,
-      getHeaderProps: () => {
-        return {
-          className: this.props.sortType['market'] ?  (this.props.sortType['market'] + ' -cursor-pointer') :'-cursor-pointer',
-          onClick: (e) => {
-            this.getSortArray('market', this.getSortType('market'))
-            this.updateSortState('market', this.getSortType('market'))
-          }
-        }
-      }
+      minWidth: 150
+      //sortable: false,
+      // getHeaderProps: () => {
+      //   return {
+      //     className: this.props.sortType['market'] ?  (this.props.sortType['market'] + ' -cursor-pointer') :'-cursor-pointer',
+      //     onClick: (e) => {
+      //       this.getSortArray('market', this.getSortType('market'))
+      //       this.updateSortState('market', this.getSortType('market'))
+      //     }
+      //   }
+      // }
     }, {
       Header: this.getSortHeader("Sell Price", "sell_price"),
       accessor: 'sellPrice',
@@ -365,6 +414,7 @@ export default class MarketTable extends React.Component {
         }
       }
     }]
+
     Object.keys(this.props.listShowColumn).map((key, i) => {
       var item = this.props.listShowColumn[key]
       var index = this.props.showActive.indexOf(key)
@@ -391,7 +441,7 @@ export default class MarketTable extends React.Component {
                   Header: this.getSortHeader(item.title, key),
                   accessor: key,
                   Cell: props => this.addClassChange(props.value),
-                  minWidth: 200,
+                  minWidth: 180,
                   getHeaderProps: () => {
                     return {
                       className: this.props.sortType[key] ?  (this.props.sortType[key] + ' -cursor-pointer') :'-cursor-pointer',
@@ -427,7 +477,7 @@ export default class MarketTable extends React.Component {
                   Header: this.getSortHeader(item.title, key),
                   accessor: key,
                   Cell: props => this.addUnit(props.value, this.props.currency),
-                  minWidth: 150,
+                  minWidth: this.props.isRussia ? 200 : 150,
                   getHeaderProps: () => {
                     return {
                       className: this.props.sortType[key] ?  (this.props.sortType[key] + ' -cursor-pointer') :'-cursor-pointer',
@@ -470,7 +520,7 @@ export default class MarketTable extends React.Component {
                 columns.push({
                   Header: this.getSortHeader(item.title, key),
                   accessor: key,
-                  minWidth: 150
+                  minWidth: this.props.isRussia ? 175 : 150,
                 })
                 break
               }
@@ -487,36 +537,69 @@ export default class MarketTable extends React.Component {
     const columns = this.getColumn()
 
     return (
-      <ReactTable
-        data={this.props.data}
-        columns={columns}
-        showPagination = {false}
-        pageSize = {this.props.data.length}
-        minRows = {1}
-        getTrProps={(state, rowInfo) => {
-          return {
-            onClick: (e) => {
-              var symbol = rowInfo.original.info.symbol
-              this.props.dispatch(actions.showTradingViewChart(symbol))
-              analytics.tokenForCharting(symbol)
+      <div className="market-wrapper">
+        <div className="market-control">
+          <div>
+            <div className="for-mobile-only">
+              {this.props.translate("market.eth_market") || "Ethereum market"}
+            </div>
+            <div>
+              {/* <div className="for-mobile-only search-word-mobile">
+                {this.props.searchWordLayout}
+              </div> */}
+              <div className="market__header-right">        
+                {this.props.manageColumn}
+              </div>
+            </div>
+          </div>
+
+          {/* {!this.props.isOnMobile && <div className="for-mobile-only">
+            {this.props.currencyLayout}
+          </div>} */}
+          {this.props.searchWordLayout}
+        </div>
+        {this.props.isOnMobile ? 
+          <MarketMobile 
+            data={this.props.data}
+            sortType={this.props.sortType}
+            makeSort={this.makeSort}
+            handle24hChange={this.addClassChange}
+            drawChart={this.drawChart}
+          /> :
+          <ReactTable
+            data={this.props.data}
+            columns={columns}
+            showPagination = {false}
+            pageSize = {this.props.data.length}
+            minRows = {1}
+            getTrProps={(state, rowInfo) => {
+              return {
+                onClick: (e) => {
+                  var symbol = rowInfo.original.info.symbol
+                  this.props.dispatch(actions.showTradingViewChart(symbol))
+                  analytics.tokenForCharting(symbol)
+
+                }
+              }
             }
-          }
+            }
+            getPaginationProps={() => {
+              return {
+                previousText: (<img src={require("../../../assets/img/market/arrow-left.png")} />),
+                nextText:  (<img src={require("../../../assets/img/market/arrow-right.svg")} />)
+              }
+            }
+            }
+            getNoDataProps={(state, rowInfo) => {
+              if(this.props.data.length==0) return { style: { border: 'none' ,top:'75%',padding:'0px'} };
+              return {};
+              }
+            }
+            sortable={false}
+          />
         }
-        }
-        getPaginationProps={() => {
-          return {
-            previousText: (<img src={require("../../../assets/img/market/arrow-left.png")} />),
-            nextText:  (<img src={require("../../../assets/img/market/arrow-right.svg")} />)
-          }
-        }
-        }
-        getNoDataProps={(state, rowInfo) => {
-          if(this.props.data.length==0) return { style: { border: 'none' ,top:'75%',padding:'0px'} };
-          return {};
-          }
-        }
-        sortable={false}
-      />
+      </div>
+      
     )
   }
 }

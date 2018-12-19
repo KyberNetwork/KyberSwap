@@ -13,18 +13,20 @@
   },
   "address": {
     "address": "Address",
-    "import_address": "Access Your Wallet",
+    "import_address": "Connect your Wallet to Swap",
     "exchange_from": "Exchange from",
     "my_balance": "My Balance",
     "estimated_value": "Estimated value",
     "total": "Total",
     "hide_zero_balance": "Hide zero balance",
-    "symbol": "SYMBOL",
-    "price": "PRICE",
+    "symbol": "Symbol",
+    "price": "Price",
     "your_wallet_address": "Your Wallet Address",
-    "search": "Search"
+    "search": "Search by Name"
   },
   "transaction": {
+    "wallet": "Wallet",
+    "close": "Close",
     "exchange": "Exchange",
     "exchange_from": "From",
     "exchange_to": "To",
@@ -104,7 +106,8 @@
     "address": "Receiving Address",
     "slippage_tip": "Rate may change. You can change maximum slippage rate by adjusting\nmin rate in advanced option",
     "max_slippage": "With maximum ${percent}% slippage",
-    "included": "Included"
+    "included": "Included",
+    "type_pass_before_progress": "Type a password before progressing"
   },
   "modal": {
     "enter_password": "Enter Password",
@@ -197,7 +200,9 @@
     "exchange_enable": "You have exceeded your daily limit! You might trade again tomorrow\nat 00:00 UTC+0",
     "min_rate_greater_expected_rate": "Your configured minimal exchange rate is higher\nthan what is recommended by KyberNetwork. Your exchange has high chance to fail",
     "exceed_daily_volumn": "You may want to <a target='_blank' href='${link}'>register\nwith us</a> to have higher trade limits",
-    "broadcast_tx": "Potentially Failed! We likely couldn't broadcast the transaction to\nthe blockchain. Please check on <a target='_blank' href='${link}'>Etherscan</a>\nto verify."
+    "broadcast_tx": "Potentially Failed! We likely couldn't broadcast the transaction to\nthe blockchain. Please check on <a target='_blank' href='${link}'>Etherscan</a>\nto verify.",
+    "invalid_json_file": "Your uploaded JSON file is invalid. Please upload a correct JSON keystore.",
+    "key_derivation_failed": "Key derivation failed - possibly wrong password"
   },
   "import": {
     "from_metamask": "METAMASK",

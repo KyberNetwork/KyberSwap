@@ -52,9 +52,12 @@ const transfer = (state = initState, action) => {
     case "TRANSFER.TRANSFER_SPECIFY_ADDRESS_RECEIVE":
       newState.destAddress = action.payload
       newState.errors.destAddress = ''
+      newState.errors.amountTransfer = ''
+      newState.errors.ethBalanceError = ""
       return newState
     case "TRANSFER.TRANSFER_SPECIFY_AMOUNT":
       newState.amount = action.payload
+      newState.errors.destAddress = ''
       newState.errors.amountTransfer = ''
       newState.errors.ethBalanceError = ""
       return newState
@@ -197,10 +200,6 @@ const transfer = (state = initState, action) => {
       }
       return newState
     }
-    case "TRANSFER.SET_TERM_AND_SERVICES": {
-      newState.termAgree = action.payload.value
-      return newState
-    }
     case "TRANSFER.SET_GAS_USED":{
       newState.gas = action.payload.gas
       return newState
@@ -245,16 +244,38 @@ const transfer = (state = initState, action) => {
       return newState
     }
 
+    case "TRANSFER.OPEN_IMPORT_ACCOUNT":{
+      newState.isOpenImportAcount = true
+      return newState
+    }
+    case "TRANSFER.CLOSE_IMPORT_ACCOUNT":{
+      newState.isOpenImportAcount = false
+      return newState
+    }
+
     case "GLOBAL.CLEAR_SESSION_FULFILLED":{
+      var gasPrice = action.payload
       var resetState = {...initState}
       resetState.token = newState.token
 
-      resetState.gasPrice = newState.gasPrice
+      // resetState.gasPrice = newState.gasPrice
+      resetState.gasPrice = gasPrice
       resetState.selectedGas = newState.selectedGas
-      resetState.isEditGasPrice = newState.isEditGasPrice
+      // resetState.isEditGasPrice = newState.isEditGasPrice
+      resetState.isEditGasPrice = false
 
       resetState.tokenSymbol = newState.tokenSymbol
       return resetState
+    }
+
+    case "TRANSFER.TOGGLE_BALANCE_CONTENT": {
+      newState.isBalanceActive = action.payload !== null ? action.payload : !newState.isBalanceActive;
+      return newState;
+    }
+
+    case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED":{
+      newState.isBalanceActive = true
+      return newState
     }
   }
   return state

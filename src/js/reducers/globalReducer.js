@@ -12,22 +12,26 @@ const initState = {
   count: {storageKey: constants.STORAGE_KEY},
   conn_checker: constants.CONNECTION_CHECKER,
   isVisitFirstTime: true,
-
   isOpenAnalyze: false,
   isAnalize: false,
   isAnalizeComplete: false,
   analizeError : {},
   selectedAnalyzeHash: '',
+  changeWalletType: "",
+  isChangingWallet: false,
   network_error:"",
   metamask: {
     address: "",
     balance: "",
     error: "Address is loading"
   },
+  isIos: false,
+  isAndroid: false,
   onMobile: {
     isIOS: false,
     isAndroid: false
-  }
+  },
+  isOnMobile: false
 }
 
 const global = (state = initState, action) => {
@@ -138,6 +142,22 @@ const global = (state = initState, action) => {
       return Object.assign({}, state, { network_error: error })
     }
 
+    case "GLOBAL.CHANGE_WALLET": {
+      const tradeType = action.payload
+      return Object.assign({}, state, { changeWalletType: tradeType, isChangingWallet: true })
+    }
+
+    case "GLOBAL.CLOSE_CHANGE_WALLET": {
+      return Object.assign({}, state, { changeWalletType: "", isChangingWallet: false })
+    }
+    
+    case "GLOBAL.SET_IS_IOS": {
+      return Object.assign({}, state, { isIos: action.payload })
+    }
+
+    case "GLOBAL.SET_IS_ANDROID": {
+      return Object.assign({}, state, { isAndroid: action.payload })
+    }
     case "GLOBAL.SET_ON_MOBILE": {
       const {isIOS, isAndroid} = action.payload
       let onMobile = {
@@ -145,6 +165,9 @@ const global = (state = initState, action) => {
         isAndroid: isAndroid
       }
       return Object.assign({}, state, { onMobile: onMobile })
+    }
+    case "GLOBAL.SET_ON_MOBILE_ONLY": {
+      return Object.assign({}, state, { isOnMobile: true })
     }
   }
   return state
