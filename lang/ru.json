@@ -25,6 +25,8 @@
     "search": "Поиск"
   },
   "transaction": {
+    "wallet": "Wallet",
+    "close": "Close",
     "exchange": "Обмен",
     "exchange_from": "От",
     "exchange_to": "К",
@@ -104,7 +106,8 @@
     "address": "Получение адреса",
     "slippage_tip": "Ставка может меняться. Вы можете указать максимальное снижение через изменение\nминимальной ставки в дополнительных опциях",
     "max_slippage": "С максимальным ${percent}% сокращением",
-    "included": "Включительно"
+    "included": "Включительно",
+    "type_pass_before_progress": "Type a password before progressing"
   },
   "modal": {
     "enter_password": "Введите пароль",
@@ -197,7 +200,11 @@
     "exchange_enable": "Вы превысили свой дневной лимит! Вы сможете торговать завтра\nв 00:00 UTC+0",
     "min_rate_greater_expected_rate": "Ваif мнимальная ставка выше, чем рекомендуемая\nKyberNetwork. Ваш омен может не быть исполен",
     "exceed_daily_volumn": "Возможно, вы захотите <a target='_blank' href='${link}'> зарегистрироваться,\nчтобы </a> иметь больший лимит на торговлю",
-    "broadcast_tx": "Потенциальная ошибка! Возможно, мы не сможем осуществить эту транзакцию\nна блокчейне. Пожалуйста, проверьте на <a target='_blank' href='${link}'>Etherscan</a>\nдля подтверждения."
+    "broadcast_tx": "Потенциальная ошибка! Возможно, мы не сможем осуществить эту транзакцию\nна блокчейне. Пожалуйста, проверьте на <a target='_blank' href='${link}'>Etherscan</a>\nдля подтверждения.",
+    "invalid_json_file": "Your uploaded JSON file is invalid. Please upload a correct JSON keystore.",
+    "key_derivation_failed": "Key derivation failed - possibly wrong password",
+    "invalid_promo_code": "Invalid promo code",
+    "promo_code_error": "Promo code is empty"
   },
   "import": {
     "from_metamask": "METAMASK",
@@ -215,7 +222,9 @@
     "swap_from_ledger": "Обмен через Ledger",
     "swap_from_trezor": "Обмен через Trezor",
     "select_or_drag": "Выберите или перетяните",
-    "address_is_loading": "Адрес загружается..."
+    "address_is_loading": "Адрес загружается...",
+    "enter_promo_code": "Enter your Promo Code",
+    "apply": "Apply"
   },
   "info": {
     "title": "Тестовая сеть Kyber",
@@ -276,7 +285,8 @@
     "metamask": "METAMASK",
     "json": "JSON",
     "ledger": "LEDGER",
-    "private_key": "ПРИВАТНЫЙ КЛЮЧ"
+    "private_key": "ПРИВАТНЫЙ КЛЮЧ",
+    "promo_code": "PROMO CODE"
   },
   "market": {
     "eth_market": "Ethereum Market",

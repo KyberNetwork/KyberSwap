@@ -25,6 +25,8 @@
     "search": "Tìm kiếm"
   },
   "transaction": {
+    "wallet": "Ví",
+    "close": "Đóng",
     "exchange": "TRAO ĐỔI",
     "exchange_from": "Đổi từ",
     "exchange_to": "Đổi sang",
@@ -103,7 +105,8 @@
     "address": "Địa chỉ nhận",
     "slippage_tip": "Tỉ giá có thể thay đổi, bạn có thể chỉnh tỉ giá trong lựa chọn nâng\ncao",
     "max_slippage": "với tối đa ${percent}% trượt giá",
-    "included": "Bao gồm"
+    "included": "Bao gồm",
+    "type_pass_before_progress": "Nhập mật khẩu trước khi tiến hành"
   },
   "modal": {
     "enter_password": "Nhập mật khẩu",
@@ -196,7 +199,11 @@
     "exchange_enable": "Bạn đã giao dịch quá lượng 1 ngày! Bạn có thể giao dịch vào ngày\nmai tại thời điểm 00:00 UTC+0",
     "min_rate_greater_expected_rate": "Bạn đã chỉnh tỉ giá lớn hơn tỉ giá đề nghị bởi KyberNetwork.\nGiao dịch của bạn nhiều khả năng thất bại",
     "exceed_daily_volumn": "Bạn có thể phải <a target='_blank' href='${link}'>đăng kí</a>\nvới chúng tôi để có hạn mức giao dịch cao hơn",
-    "broadcast_tx": "Giao dịch có khả năng bị thất bại! Chúng tôi không thể đưa giao dịch\ncủa bạn lên blockchain. Vui lòng kiểm tra tại <a target='_blank' href='${link}'>Etherscan</a>"
+    "broadcast_tx": "Giao dịch có khả năng bị thất bại! Chúng tôi không thể đưa giao dịch\ncủa bạn lên blockchain. Vui lòng kiểm tra tại <a target='_blank' href='${link}'>Etherscan</a>",
+    "invalid_json_file": "Cập nhật JSON file của bạn không hợp lệ. Vui lòng tải lên đúng keystore JSON.",
+    "key_derivation_failed": "Nhập khóa nguồn thất bại - có thể do sai mật khẩu",
+    "invalid_promo_code": "Mã khuyến mãi không hợp lệ",
+    "promo_code_error": "Chưa nhập mã khuyến mãi"
   },
   "import": {
     "from_metamask": "Kết nối <br> Metamask",
@@ -214,7 +221,9 @@
     "swap_from_ledger": "Giao dịch từ Ledger",
     "swap_from_trezor": "Giao dịch từ Trezor",
     "select_or_drag": "Chọn hoặc kéo file",
-    "address_is_loading": "Đang tải thông tin địa chỉ..."
+    "address_is_loading": "Đang tải thông tin địa chỉ...",
+    "enter_promo_code": "Nhập mã khuyến mãi",
+    "apply": "Áp dụng"
   },
   "info": {
     "title": "Kyber phiên bản thử nghiệm",
@@ -271,11 +280,12 @@
     "exchange": "giao dịch",
     "instant_and_secure_token_swap": "Trao đổi Token sang Token một cách tức thì và đảm\nbảo",
     "no_oderbooks_no_deposit": "Không lệnh giao dịch, không cần gửi tiền.",
-    "power_by": "Power by Kyber's Decentralized Liquidity Network",
+    "power_by": "Cung cấp bởi giao thức cung cấp thanh khoản trên blockchain của Kyber",
     "metamask": "METAMASK",
     "json": "JSON",
     "ledger": "LEDGER",
-    "private_key": "PRIVATE KEY"
+    "private_key": "PRIVATE KEY",
+    "promo_code": "MÃ KHUYẾN MÃI"
   },
   "market": {
     "eth_market": "Thị trường Ethereum",

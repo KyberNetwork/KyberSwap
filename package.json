@@ -110,10 +110,12 @@
     "webpack-shell-plugin": "^0.5.0"
   },
   "scripts": {
-    "build-ropsten": "NODE_ENV=production webpack --env.chain=ropsten --env.build=true",
+    "build-ropsten": "NODE_ENV=ropsten node webpack-wrapper.js",
+    "build-production": "NODE_ENV=production node webpack-wrapper.js",
+
     "build-rinkeby": "NODE_ENV=production webpack --env.chain=rinkeby --env.build=true",
     "build-staging": "NODE_ENV=production webpack --env.chain=staging --env.build=true",
-    "build-production": "NODE_ENV=production webpack --env.chain=production --env.build=true",
+    
     "build-semi-production": "NODE_ENV=production webpack --env.chain=semi_production --env.build=true",
     "build-all": "npm run build-staging && npm run build-production && npm run build-rinkeby && npm run build-ropsten",
     "build-all-mainnet": "npm run build-staging && npm run build-production",

@@ -16,7 +16,7 @@ var getConfigFiles = env => {
     const timestamp = Date.now();
 
     let entry = {
-        app: ['babel-polyfill', './js/client.js', './assets/css/app.scss'],
+        app: ['babel-polyfill', path.resolve(__dirname, 'src/js/client.js'), path.resolve(__dirname, 'src/assets/css/app.scss')]
         //  libary: ['./assets/css/foundation-float.min.css', './assets/css/foundation-prototype.min.css']
     };
     let plugins = [
@@ -40,7 +40,7 @@ var getConfigFiles = env => {
     if (!env || env.build !== 'true') {
         entry['libary'] = ['./assets/css/foundation-float.min.css', './assets/css/foundation-prototype.min.css']
         plugins.push(new webpack.DefinePlugin({
-            'env': JSON.stringify(env.chain),
+           // 'env': JSON.stringify(env.chain),
             'process.env': {
                 'logger': 'true'
             }
@@ -55,22 +55,22 @@ var getConfigFiles = env => {
         //         }
         //     }
         // }));
-        plugins.push(
-            new webpack.DefinePlugin({
-                'env': JSON.stringify(env.chain),
-                'process.env': {
-                    'NODE_ENV': JSON.stringify('production')
-                }
-            })
-        );
-        plugins.push(new CompressionPlugin({
-            asset: '[path].gz[query]',
-            algorithm: 'gzip',
-            test: /\.js$|\.css$|\.html$/,
-            threshold: 10240,
-            minRatio: 0.8
-        })
-        )
+        // plugins.push(
+        //     new webpack.DefinePlugin({
+        //         'env': JSON.stringify(env.chain),
+        //         'process.env': {
+        //             'NODE_ENV': JSON.stringify('production')
+        //         }
+        //     })
+        // );
+        // plugins.push(new CompressionPlugin({
+        //     asset: '[path].gz[query]',
+        //     algorithm: 'gzip',
+        //     test: /\.js$|\.css$|\.html$/,
+        //     threshold: 10240,
+        //     minRatio: 0.8
+        // })
+        //)
     }
     return {
         context: path.join(__dirname, 'src'),

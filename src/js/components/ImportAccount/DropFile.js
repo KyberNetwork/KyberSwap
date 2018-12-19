@@ -32,18 +32,38 @@ const DropFile = (props) => {
   //console.log(keystring)
   return (
     <Dropzone onDrop={(e) => props.onDrop(e)} disablePreview={true} className="column column-block">
-      <div className="importer json">
-        {/* <div className="how-to-use" data-for="keystore-tip" data-tip="How to use"></div> */}
+
+      {({ getRootProps, getInputProps, isDragActive }) => {
+        return (
+          // <div className={"importer json"} {...getRootProps()}>
+          //   <input {...getInputProps()} />
+          //   <div className={"importer__symbol"}>
+          //     <div className={"importer__icon keystore"}/>
+          //     <div className={"importer__name"}>{props.translate("import.json") || "Keystore"}</div>
+          //   </div>
+          // </div>
+
+          <div className="importer json" {...getRootProps() }>
+            <input {...getInputProps() } />
+            <div className="importer__symbol">
+              <img src={getAssetUrl('wallets/keystore.svg')} />
+              <div className="importer__name">{props.translate("import.json") || "JSON"}</div>
+            </div>
+            <button className="importer__button" onClick={(e) => props.onDrop(e)}>{props.translate("import.select_or_drag") || "Select or Drag"}</button>
+          </div>
+
+        )
+      }}
+
+      {/* <div className="importer json">
         <div className="importer__symbol">
-          {/* <img src={require('../../../assets/img/landing/keystore_active.svg')} /> */}
           <img src={getAssetUrl('wallets/keystore.svg')} />
           <div className="importer__name">{props.translate("import.json") || "JSON"}</div>
         </div>
         <button className="importer__button" onClick={(e) => props.onDrop(e)}>{props.translate("import.select_or_drag") || "Select or Drag"}</button>
-      </div>
-      {/* <ReactTooltip place="top" id="keystore-tip" type="dark" /> */}
+      </div> */}
     </Dropzone>
-  )  
+  )
 }
 
 export default DropFile

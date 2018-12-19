@@ -1,4 +1,7 @@
 
+
+if (typeof env === "undefined") var env = "ropsten"
+
 var config
 , config_file = ( typeof env !== 'undefined' ? env : process.env.npm_config_chain || 'kovan') + '.json';
 try {
@@ -12,5 +15,8 @@ try {
     throw err;
 }
 }
+
 module.exports = config;
+
+
 
