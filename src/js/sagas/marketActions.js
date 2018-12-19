@@ -34,7 +34,7 @@ export function* getVolumn(){
 
     try {
         const rates = yield call([ethereum, ethereum.call],"getAllRates", tokens)
-        // yield put.sync(globalActions.updateAllRateComplete(rates))
+        // yield put.resolve(globalActions.updateAllRateComplete(rates))
 
         const rateUSDETH = yield call([ethereum, ethereum.call],"getRateETH")
 

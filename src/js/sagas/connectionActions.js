@@ -68,24 +68,24 @@ function getListTokens() {
 export function* createNewConnection(action) {
   var tokens = yield call(getListTokens)
 
-  yield put.sync(initTokens(tokens))
+  yield put.resolve(initTokens(tokens))
 
   var translate = getTranslate(store.getState().locale)
   var connectionInstance = new EthereumService()
-  yield put.sync(setConnection(connectionInstance))
+  yield put.resolve(setConnection(connectionInstance))
   connectionInstance.subcribe()
 
   // var state = store.getState()
   // var ethereum = action.payload.ethereum
   // var ethereum = state.connection.ethereum
-  yield put.sync(setMaxGasPrice(connectionInstance))
+  yield put.resolve(setMaxGasPrice(connectionInstance))
 
 
 
   var web3Service = web3Package.newWeb3Instance()
 
   if (web3Service === false) {
-    yield put.sync(globalActions.throwErrorMematamask(translate("error.metamask_not_installed") || "Metamask is not installed"))
+    yield put.resolve(globalActions.throwErrorMematamask(translate("error.metamask_not_installed") || "Metamask is not installed"))
   } else {
     //const web3Service = new Web3Service(web3)
     const watchMetamask = yield fork(watchMetamaskAccount, connectionInstance, web3Service)
@@ -93,7 +93,7 @@ export function* createNewConnection(action) {
 
 
   var notiService = new NotiService({ type: "session" })
-  yield put.sync(globalActions.setNotiHandler(notiService))
+  yield put.resolve(globalActions.setNotiHandler(notiService))
 
   //  const watchConnectionTask = yield fork(watchToSwitchConnection, connectionInstance)
 

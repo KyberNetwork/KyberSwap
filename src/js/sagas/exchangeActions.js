@@ -648,7 +648,7 @@ function* getRate(ethereum, source, dest, sourceAmount) {
   catch (err) {
     console.log(err)
     return { status: "fail" }
-    //yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0))
+    //yield put.resolve(actions.updateRateExchangeComplete(rateInit, "0", "0", 0))
     //yield put(actions.setRateSystemError())
   }
 }
@@ -713,7 +713,7 @@ function* updateRatePending(action) {
             return
         }
       }
-      yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
+      yield put.resolve(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
     }
 
     if (rateRequest.status === "timeout") {
@@ -738,7 +738,7 @@ function* updateRatePending(action) {
         }
       }
       
-      yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
+      yield put.resolve(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
     }
   }
 }
@@ -781,7 +781,7 @@ function* updateRateSnapshot(action) {
         yield put(actions.hideConfirm())
         yield put(actions.hidePassphrase())
       }else{
-        yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
+        yield put.resolve(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
         yield put(actions.caculateAmountInSnapshot())
       }
     }else{
@@ -804,7 +804,7 @@ function* updateRateSnapshot(action) {
     // const expectedPrice = rate.expectedRate ? rate.expectedRate : "0"
     // const slippagePrice = rate.slippageRate ? rate.slippageRate : "0"
 
-    // yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
+    // yield put.resolve(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
     // yield put(actions.caculateAmountInSnapshot())
   }
   catch (err) {

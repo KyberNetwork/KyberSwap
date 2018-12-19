@@ -27,7 +27,7 @@ import * as analytics from "../../utils/analytics"
 		translate: getTranslate(store.locale),
 		screen: props.screen
 	}
-}, null, null, { withRef: true })
+})
 
 export default class ImportByDevice extends React.Component {
 	constructor(props) {

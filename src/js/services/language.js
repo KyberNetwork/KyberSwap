@@ -1,7 +1,7 @@
 import  constants from "./constants"
 import Language from "../../../lang/index"
-import { initialize, addTranslation, addTranslationForLanguage, setActiveLanguage, localeReducer } from 'react-localize-redux';
-
+//import { initialize, addTranslation, addTranslationForLanguage, setActiveLanguage, localeReducer } from 'react-localize-redux';
+import { initialize, addTranslationForLanguage } from 'react-localize-redux';
 
 const onMissingTranslation = (key, languageCode) => {
   // here you can do whatever you want e.g. call back end service that will 
@@ -59,11 +59,19 @@ export function initLanguage(store){
     languagePack = require("../../../lang/" + packName + ".json")
   }
   console.log("________________ load loanguage ", packName)
-  store.dispatch(initialize([packName], { 
-    missingTranslationCallback: onMissingTranslation, 
-    showMissingTranslationMsg: false,
-    defaultLanguage: packName
-  }));
+  store.dispatch(initialize({
+  //   [packName], { 
+  //   missingTranslationCallback: onMissingTranslation, 
+  //   showMissingTranslationMsg: false,
+  //   defaultLanguage: packName
+  // }));
+    languages: [
+      { name: "", code: packName },      
+    ],
+    options: {
+      renderToStaticMarkup: false
+    }
+  }))
   store.dispatch(addTranslationForLanguage(languagePack, packName));
 
 }

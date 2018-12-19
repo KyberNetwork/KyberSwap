@@ -202,7 +202,9 @@
     "exceed_daily_volumn": "Возможно, вы захотите <a target='_blank' href='${link}'> зарегистрироваться,\nчтобы </a> иметь больший лимит на торговлю",
     "broadcast_tx": "Потенциальная ошибка! Возможно, мы не сможем осуществить эту транзакцию\nна блокчейне. Пожалуйста, проверьте на <a target='_blank' href='${link}'>Etherscan</a>\nдля подтверждения.",
     "invalid_json_file": "Your uploaded JSON file is invalid. Please upload a correct JSON keystore.",
-    "key_derivation_failed": "Key derivation failed - possibly wrong password"
+    "key_derivation_failed": "Key derivation failed - possibly wrong password",
+    "invalid_promo_code": "Invalid promo code",
+    "promo_code_error": "Promo code is empty"
   },
   "import": {
     "from_metamask": "METAMASK",
@@ -220,7 +222,9 @@
     "swap_from_ledger": "Обмен через Ledger",
     "swap_from_trezor": "Обмен через Trezor",
     "select_or_drag": "Выберите или перетяните",
-    "address_is_loading": "Адрес загружается..."
+    "address_is_loading": "Адрес загружается...",
+    "enter_promo_code": "Enter your Promo Code",
+    "apply": "Apply"
   },
   "info": {
     "title": "Тестовая сеть Kyber",
@@ -281,7 +285,8 @@
     "metamask": "METAMASK",
     "json": "JSON",
     "ledger": "LEDGER",
-    "private_key": "ПРИВАТНЫЙ КЛЮЧ"
+    "private_key": "ПРИВАТНЫЙ КЛЮЧ",
+    "promo_code": "PROMO CODE"
   },
   "market": {
     "eth_market": "Ethereum Market",

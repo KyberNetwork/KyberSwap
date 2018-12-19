@@ -107,12 +107,12 @@ export function* importNewAccount(action) {
       if (promoToken && newTokens[promoToken]){
         var promoAddr = newTokens[promoToken].address
         var promoDecimal = newTokens[promoToken].decimals
-        yield put.sync(exchangeActions.selectTokenAsync(promoToken, promoAddr, "source", ethereum))
+        yield put.resolve(exchangeActions.selectTokenAsync(promoToken, promoAddr, "source", ethereum))
         sourceToken = promoToken.toLowerCase()
       }
       var destToken = exchange.destTokenSymbol.toLowerCase()
       if (info.destToken && newTokens[info.destToken]){
-        yield put.sync(exchangeActions.selectTokenAsync(info.destToken, newTokens[info.destToken].address, "des", ethereum))
+        yield put.resolve(exchangeActions.selectTokenAsync(info.destToken, newTokens[info.destToken].address, "des", ethereum))
         destToken = info.destToken.toLowerCase()
 
         //select in transfer
@@ -120,7 +120,7 @@ export function* importNewAccount(action) {
       }
       var path = constants.BASE_HOST + "/swap/" + sourceToken + "_" + destToken
       path = commonUtils.getPath(path, constants.LIST_PARAMS_SUPPORTED)
-      yield put.sync(goToRoute(path))
+      yield put.resolve(goToRoute(path))
 
 
       if (promoToken && newTokens[promoToken]){
@@ -129,8 +129,8 @@ export function* importNewAccount(action) {
         try{
           var balanceSource = yield call([ethereum, ethereum.call], "getBalanceToken", address, promoAddr)
           var balance = (balanceSource/Math.pow(10, promoDecimal)).toString()
-          yield put.sync(exchangeActions.inputChange('source', balance))
-          yield put.sync(exchangeActions.focusInput('source'));
+          yield put.resolve(exchangeActions.inputChange('source', balance))
+          yield put.resolve(exchangeActions.focusInput('source'));
         }catch(e){
           console.log(e)
         }

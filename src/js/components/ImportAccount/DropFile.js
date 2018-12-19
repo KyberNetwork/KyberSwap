@@ -27,13 +27,45 @@ const DropFile = (props) => {
   }
 
   return (
-    <Dropzone onDrop={(e) => props.onDrop(e)} onClick={(e) => props.onDrop(e)} disablePreview={true} className="column-block">
-      <div className="import-account__block">
-        <div className="import-account__icon json"/>
-        <div className="import-account__name">{props.translate("import.json") || "JSON"}</div>
-      </div>
+    <Dropzone onDrop={(e) => props.onDrop(e)} disablePreview={true} className="column column-block">
+
+      {({ getRootProps, getInputProps, isDragActive }) => {
+        return (
+          // <div className={"importer json"} {...getRootProps()}>
+          //   <input {...getInputProps()} />
+          //   <div className={"importer__symbol"}>
+          //     <div className={"importer__icon keystore"}/>
+          //     <div className={"importer__name"}>{props.translate("import.json") || "Keystore"}</div>
+          //   </div>
+          // </div>
+
+          <div className="import-account__block" {...getRootProps() }>
+            <input {...getInputProps() } />          
+            <div className="import-account__icon json"/>
+            <div className="import-account__name">{props.translate("import.json") || "JSON"}</div>
+          </div>
+
+          // <div className="importer json" {...getRootProps() }>
+          //   <input {...getInputProps() } />
+          //   <div className="importer__symbol">
+          //     <img src={getAssetUrl('wallets/keystore.svg')} />
+          //     <div className="importer__name">{props.translate("import.json") || "JSON"}</div>
+          //   </div>
+          //   <button className="importer__button" onClick={(e) => props.onDrop(e)}>{props.translate("import.select_or_drag") || "Select or Drag"}</button>
+          // </div>
+
+        )
+      }}
+
+      {/* <div className="importer json">
+        <div className="importer__symbol">
+          <img src={getAssetUrl('wallets/keystore.svg')} />
+          <div className="importer__name">{props.translate("import.json") || "JSON"}</div>
+        </div>
+        <button className="importer__button" onClick={(e) => props.onDrop(e)}>{props.translate("import.select_or_drag") || "Select or Drag"}</button>
+      </div> */}
     </Dropzone>
-  )  
+  )
 }
 
 export default DropFile

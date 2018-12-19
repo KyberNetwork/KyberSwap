@@ -8,6 +8,7 @@ import constansts from "../../services/constants"
 import * as common from "../../utils/common"
 
 import BLOCKCHAIN_INFO from "../../../../env"
+import { store } from '../../store'
 
 //import { Rate } from "../Header"
 
@@ -44,7 +45,7 @@ const LayoutView = (props) => {
   // }
   //console.log(listToken)
   return (
-    <ConnectedRouter history={props.history}>
+    <ConnectedRouter history={props.history}  store ={store}>
       <div>
         <Route component={props.Header} />
         <section id="content">
