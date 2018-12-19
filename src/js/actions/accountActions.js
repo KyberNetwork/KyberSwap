@@ -90,10 +90,10 @@ export function throwPromoCodeError(error) {
   }
 }
 
-export function importNewAccount(address, type, keystring, ethereum, tokens, walletType = null, metamask = null, walletName = "") {
+export function importNewAccount(address, type, keystring, ethereum, tokens, walletType = null, metamask = null, walletName = "", info = null) {
   return {
     type: "ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING",
-    payload: { address, type, keystring, ethereum, tokens, walletType, metamask, walletName }
+    payload: { address, type, keystring, ethereum, tokens, walletType, metamask, walletName, info }
   }
 }
 
@@ -135,5 +135,11 @@ export function importAccountMetamask(web3Service, networkId, ethereum, tokens, 
   return {
     type: "ACCOUNT.IMPORT_ACCOUNT_METAMASK",
     payload: { web3Service, networkId, ethereum, tokens, translate, walletType }
+  }
+}
+
+export function setOnDAPP() {
+  return {
+    type: "ACCOUNT.SET_ON_DAPP"
   }
 }

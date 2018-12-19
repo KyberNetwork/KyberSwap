@@ -62,8 +62,7 @@ export function caculateDestAmount(sourceAmount, offeredRate, precision) {
   if (!sourceAmount || !offeredRate || acceptableTyping(sourceAmount) || acceptableTyping(offeredRate)) {
     return "0"
   }
-
-  var bigSource = new BigNumber(sourceAmount)
+  var bigSource = new BigNumber(sourceAmount.toString())
   var bigOfferedRate = new BigNumber(offeredRate)
 
   bigOfferedRate = bigOfferedRate.div(1000000000000000000)

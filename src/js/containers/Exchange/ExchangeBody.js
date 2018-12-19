@@ -288,6 +288,10 @@ export default class ExchangeBody extends React.Component {
   }
 
   swapToken = () => {
+    var isFixedDestToken = !!(this.props.account && this.props.account.account.type ==="promo" && this.props.account.account.info.destToken)
+    if (isFixedDestToken){
+      return
+    }
     this.props.dispatch(exchangeActions.swapToken())
     this.props.ethereum.fetchRateExchange(true)
 
@@ -433,20 +437,24 @@ export default class ExchangeBody extends React.Component {
       tokenDest[key] = { ...this.props.tokens[key], isNotSupport: isNotSupport }
     })
 
+    var isFixedSourceToken = !!(this.props.account && this.props.account.account.type ==="promo" && this.props.tokens[BLOCKCHAIN_INFO.promo_token])
     var tokenSourceSelect = (
       <TokenSelector
         type="source"
         focusItem={this.props.exchange.sourceTokenSymbol}
         listItem={this.props.tokens}
         chooseToken={this.chooseToken}
+        isFixToken = {isFixedSourceToken}
       />
     )
+    var isFixedDestToken = !!(this.props.account && this.props.account.account.type ==="promo" && this.props.account.account.info.destToken)
     var tokenDestSelect = (
       <TokenSelector
         type="des"
         focusItem={this.props.exchange.destTokenSymbol}
         listItem={tokenDest}
         chooseToken={this.chooseToken}
+        isFixToken = {isFixedDestToken}
       />
     )
     //--------End
@@ -523,6 +531,8 @@ export default class ExchangeBody extends React.Component {
         swapBalance = {this.getSwapBalance()}
         clearSession={this.clearSession}
         walletName={this.props.account.walletName}
+        balanceList = {accountBalance}
+        isFixedDestToken = {isFixedDestToken}
       />
     )
   }

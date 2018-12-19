@@ -4,7 +4,8 @@ import { push } from 'react-router-redux';
 import * as converters from "../../utils/converter"
 import * as validators from "../../utils/validators"
 import { TransferForm } from "../../components/Transaction"
-import { TransactionLoading } from "../CommonElements"
+import { TransactionLoading, QRCode } from "../CommonElements"
+import { PostTransferWithKey } from "../Transfer"
 import { AdvanceConfigLayout, GasConfig } from "../../components/TransactionCommon"
 import { TokenSelector, AccountBalance } from "../TransactionCommon"
 import { hideSelectToken } from "../../actions/utilActions"
@@ -163,6 +164,13 @@ export default class Transfer extends React.Component {
     analytics.trackClickAllIn("Transfer", tokenSymbol)
   }
 
+  handleErrorQRCode = (err) =>{
+  }
+
+  handleScanQRCode = (data) =>{
+    this.props.dispatch(transferActions.specifyAddressReceive(data));
+  }
+
   toggleBalanceContent = (value) => {
     this.props.dispatch(transferActions.toggleBalanceContent(value))    
   }
@@ -249,6 +257,7 @@ export default class Transfer extends React.Component {
         focusItem={this.props.transfer.tokenSymbol}
         listItem={this.props.tokens}
         chooseToken={this.chooseToken}
+        banToken={BLOCKCHAIN_INFO.promo_token}
       />
     )
 
@@ -270,6 +279,11 @@ export default class Transfer extends React.Component {
         isOpen={this.props.transfer.step === 2}
       />
     )
+
+    var qcCode = common.isMobile.any() ? <QRCode
+      onError={this.handleErrorQRCode}
+      onScan={this.handleScanQRCode}
+      onDAPP={this.props.account.isOnDAPP}/> : ""
 
     return (
       <TransferForm
@@ -297,6 +311,7 @@ export default class Transfer extends React.Component {
         addressBalance={addressBalance}
         clearSession={this.clearSession}
         walletName={this.props.account.walletName}
+        qcCode = {qcCode}
       />
     )
   }

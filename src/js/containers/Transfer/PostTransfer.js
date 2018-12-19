@@ -66,6 +66,7 @@ export default class PostTransfer extends React.Component {
           this.props.dispatch(transferActions.openPassphrase())
           break
         case "privateKey":
+        case "promo":
         case "trezor":
         case "ledger":
         case "metamask":
@@ -192,6 +193,7 @@ export default class PostTransfer extends React.Component {
       case "trezor":
       case "metamask":
       case "ledger":
+      case "promo":
       case "privateKey":
         if (this.props.form.isConfirming) return
         this.props.dispatch(transferActions.hideConfirm())

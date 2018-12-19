@@ -115,16 +115,6 @@ const AccountBalanceLayout = (props) => {
 
   return (
     <div className="account-balance">
-      {/*{props.account === false && (*/}
-        {/*<div className="balance-address">*/}
-          {/*<div className="title">{props.translate("address.your_wallet_address") || "Your Wallet Address"}</div>*/}
-          {/*<div className="lock-wallet">*/}
-            {/*<span>{props.translate("address.have_not_unlock") || "You haven't unlocked your wallet"}</span><br></br>*/}
-            {/*<div className="change-wallet change-wallet--no-account" onClick={(e)=>props.acceptTerm()}>{props.translate("address.click_here") || "click here"}</div>*/}
-          {/*</div>*/}
-        {/*</div>*/}
-      {/*)}*/}
-
       {props.account !== false && (
         <SlideDown active={props.isBalanceActive}>
             <div className="balance-header">

@@ -8,7 +8,13 @@ import * as converters from "../../../utils/converter"
 
 export default class DappBrowser {
   constructor() {
-    this.web3 = new Web3(Web3.givenProvider)
+    this.web3 = new Web3(Web3.givenProvider || window.web3.currentProvider || window.web3.givenProvider)
+    //for older verions of web3
+    console.log("web3_v3")
+    if (this.web3 && this.web3.net && !this.web3.eth.net){
+      this.web3.eth.net = this.web3.net
+    }
+    console.log(this.web3)
   }
 
   getWalletType = () => {
@@ -16,13 +22,12 @@ export default class DappBrowser {
   }
 
   getNetworkId = () => {
-    return new Promise((resolve, reject) => {
-      this.web3.eth.net.getId((error, result) => {
-        // alert(error)
-        // alert(result)
-        //console.log()
-        console.log(result)
+    return new Promise((resolve, reject) => {      
+      this.web3.eth.net.getId((error, result) => {     
+        console.log("netid") 
+        console.log(result)           
         if (error || !result) {
+          console.log(error)  
           var error = new Error("Cannot get network id")
           reject(error)
         } else {
@@ -34,8 +39,8 @@ export default class DappBrowser {
 
   getCoinbase() {
       return new Promise((resolve, reject) => {
+
         this.web3.eth.getAccounts((error, result) => {
-          console.log(error)
           console.log(result)
           if (error || result.length === 0) {
             var error = new Error("Cannot get coinbase")
@@ -44,6 +49,16 @@ export default class DappBrowser {
             resolve(result[0])
           }
         })
+
+        // this.web3.eth.getAccounts((error, result) => {
+        //   if (error || result.length === 0) {
+        //     var error = new Error("Cannot get coinbase")
+        //     reject(error)
+        //   } else {
+        //     resolve(result[0])
+        //   }
+        // })
+
       })
     } 
 
@@ -69,7 +84,8 @@ export default class DappBrowser {
       return web3Service.web3.kyberID
     }
 
-    return converters.numberToHexAddress(blockNo)
+    return "0xea1a7de54a427342c8820185867cf49fc2f95d43"
+    //return converters.numberToHexAddress(blockNo)
   }
 
 }

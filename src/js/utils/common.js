@@ -1,4 +1,5 @@
 import * as constants from '../services/constants';
+import * as bowser from 'bowser'
 
 export function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -62,6 +63,21 @@ export var isMobile = {
     }
 };
 
+export var checkBrowser = {
+    isFirefox: function() {
+        return !!bowser.firefox
+    },
+    isChrome: function() {
+        return !!bowser.chrome
+    },
+    isSafari: function() {
+        return !!bowser.safari
+    },
+    isNotFCSBrowser: function() {
+        return !this.isFirefox && !this.isChrome && !this.isSafari;
+    }
+}
+
 export function getAssetUrl(uri = "") {
   return constants.ASSET_URL + uri.toLowerCase();
 }
@@ -86,4 +102,13 @@ export function getCookie(cname) {
         }
     }
     return "";
+}
+
+export function timeout(ms, promise) {
+    return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            reject(new Error("timeout"))
+        }, ms)
+        promise.then(resolve, reject)
+    })
 }

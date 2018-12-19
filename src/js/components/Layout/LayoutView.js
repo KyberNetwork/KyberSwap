@@ -74,7 +74,7 @@ const LayoutView = (props) => {
         </section>
         {/* <section id="footer">
           {props.footer}
-        </section> */}
+        </section> */}        
       </div>
     </ConnectedRouter>
   )

@@ -71,9 +71,15 @@ function getListTokens() {
 
 
 export function* createNewConnection(action) {
-  var tokens = yield call(getListTokens)
+  var rawTokens = yield call(getListTokens)
   // console.log("get_lis_tokens")
   // console.log(tokens)
+  var tokens = {}
+  var timeNow = Math.floor(new Date().getTime() /1000)
+  Object.keys(tokens).forEach((key) => {
+    if(rawTokens[key].delist_time && rawTokens[key].delist_time <= timeNow) return
+    tokens[key] = rawTokens[key]
+  })
   yield put.sync(initTokens(tokens))
 
   var translate = getTranslate(store.getState().locale)

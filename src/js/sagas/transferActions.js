@@ -76,6 +76,7 @@ export function* processTransfer(action) {
       yield call(transferKeystore, action, callService)
       break
     case "privateKey":
+    case "promo":
     case "trezor":
     case "ledger":
       yield call(transferColdWallet, action, callService)

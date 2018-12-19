@@ -12,6 +12,7 @@ import { connect } from "react-redux"
       keyService = new KeyStore()
       break
     case "privateKey":
+    case "promo":
       keyService = new PrivateKey()
       break
     case "trezor":

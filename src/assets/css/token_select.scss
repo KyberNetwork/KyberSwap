@@ -283,6 +283,17 @@
   //   -webkit-transform:translate3d(0,0,0);
   // }
   color: #545268;
+  &.fix_token{
+    .focus-item{
+      background-color: #f5f5f5 !important;
+      border: none !important;
+      box-shadow: none !important;
+      cursor: initial !important;
+    }
+    .k-angle{
+      display: none;
+    }
+  }
   .dropdown{
     width: 100%;
 

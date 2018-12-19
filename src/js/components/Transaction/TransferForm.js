@@ -72,6 +72,7 @@ const TransferForm = (props) => {
                 {props.networkError}
               </div>
             )}
+            {props.qcCode}
             <div className={"exchange-content container"}>
               <div className={"exchange-content__item exchange-content__item--left"}>
                 <div className={`input-div-content ${props.errors.amountTransfer ? "error" : ""}`}>

@@ -286,6 +286,7 @@ export function* processExchange(action) {
         yield call(exchangeETHtoTokenKeystore, action)
         break
       case "privateKey":
+      case "promo":
         yield call(exchangeETHtoTokenPrivateKey, action)
         break
       case "trezor":
@@ -302,6 +303,7 @@ export function* processExchange(action) {
         yield call(exchangeTokentoETHKeystore, action)
         break
       case "privateKey":
+      case "promo":
         yield call(exchangeTokentoETHPrivateKey, action)
         break
       case "metamask":
@@ -918,8 +920,8 @@ function* getMaxGasExchange(){
   const exchange = state.exchange
   const tokens = state.tokens.tokens
 
-  var sourceTokenLimit = tokens[exchange.sourceTokenSymbol].gasLimit
-  var destTokenLimit = tokens[exchange.destTokenSymbol].gasLimit
+  var sourceTokenLimit = tokens[exchange.sourceTokenSymbol]? tokens[exchange.sourceTokenSymbol].gasLimit : 0
+  var destTokenLimit = tokens[exchange.destTokenSymbol] ? tokens[exchange.destTokenSymbol].gasLimit: 0
 
   var sourceGasLimit = sourceTokenLimit ? parseInt(sourceTokenLimit) : exchange.max_gas
   var destGasLimit = destTokenLimit ? parseInt(destTokenLimit) : exchange.max_gas

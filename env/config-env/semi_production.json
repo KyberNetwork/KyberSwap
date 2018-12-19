@@ -25,8 +25,8 @@
       "ws": "wss://mainnet.infura.io/ws"
     },
     "api_usd":"https://api.coinmarketcap.com",
-    "api_tokens": "https://semi-api.knstats.com/internal/currencies",
-    "market_exclude": ["WETH"],
+    "api_tokens": "https://api.kyber.network/internal/currencies",
+    "market_exclude": ["WETH", "KCC"],
     "tokens": {
       "ETH": {
         "name": "Ethereum",
@@ -303,7 +303,7 @@
         "icon": "poly.svg"
       },
       "LBA": {
-        "name": "Libra Credit",
+        "name": "Cred",
         "decimals": 18,
         "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
         "symbol":"LBA", 
@@ -455,13 +455,6 @@
         "symbol" : "MAS",
         "address": "0x23ccc43365d9dd3882eab88f43d515208f832430",
         "icon": "mas.svg"
-      },
-      "KCC":{
-        "name": "Kyber Community Coupon",
-        "decimals": 18,
-        "symbol" : "KCC",
-        "address": "0x09677d0175dec51e2215426cddd055a71bf4228d",
-        "icon": "kcc.svg"
       },
       "DAT":{
         "name": "Datum",

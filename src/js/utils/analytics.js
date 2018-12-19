@@ -8,24 +8,6 @@ export function changePath(path) {
             console.log(e)
         }
     }
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'ChangePath', {
-    //             'event_category': "path",
-    //             'event_label': path,
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "ChangePath", { path: path })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 export function loginWallet(wallet) {
@@ -38,25 +20,6 @@ export function loginWallet(wallet) {
             console.log(e)
         }
     }
-
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'LoginWallet', {
-    //             'event_category': "wallet",
-    //             'event_label': wallet
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "LoginWallet", { wallet: wallet })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 
@@ -68,25 +31,6 @@ export function completeTrade(hash, walletType, tradeType) {
             console.log(e)
         }
     }
-
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'CompleteTrade', {
-    //             'event_category': "trade",
-    //             'event_label': tradeType,
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "CompleteTrade", { hash: hash, wallet: walletType, trade: tradeType })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 
@@ -98,24 +42,6 @@ export function trackCoinExchange(data) {
             console.log(e)
         }
     }
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'Swap', {
-    //             'event_category': "Swap",
-    //             'event_label': `${data.sourceTokenSymbol}_${data.destTokenSymbol}`
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "Swap", { source: data.sourceTokenSymbol, dest: data.destTokenSymbol })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 
@@ -127,24 +53,6 @@ export function trackCoinTransfer(token){
             console.log(e)
         }
     }
-
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'Transfer', {
-    //             'event_category': "transfer",
-    //             'event_label': token
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "Transfer", { token: token })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 export function tokenForCharting(token){
@@ -155,24 +63,6 @@ export function tokenForCharting(token){
             console.log(e)
         }
     }
-
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'ViewChart', {
-    //             'event_category': "viewChart",
-    //             'event_label': token
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "ViewChart", { token: token })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 export function acceptTerm(tradeType){
@@ -183,24 +73,6 @@ export function acceptTerm(tradeType){
             console.log(e)
         }
     }
-
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'AcceptTerm', {
-    //             'event_category': "AcceptTerm",
-    //             'event_label': "Accepted"
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "AcceptTerm", { accept: 'Accepted' })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 export function trackBaseCurrency(currency){
@@ -211,24 +83,6 @@ export function trackBaseCurrency(currency){
             console.log(e)
         }
     }
-
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'chooseBaseCurrency', {
-    //             'event_category': "currency",
-    //             'event_label': currency
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "chooseBaseCurrency", { currency: currency })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 export function trackMarketSetting(field, value){
@@ -239,24 +93,6 @@ export function trackMarketSetting(field, value){
             console.log(e)
         }
     }
-
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'marketSetting', {
-    //             'event_category': "option",
-    //             'event_label': `${field}: ${value}`
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "marketSetting", { setting: field,  value: value})
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 export function trackChooseGas(type, gas, typeGas){
@@ -267,24 +103,6 @@ export function trackChooseGas(type, gas, typeGas){
             console.log(e)
         }
     }
-
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'chooseGasPrice', {
-    //             'event_category': "gasPrice",
-    //             'event_label': `${type}: ${gas}`
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "chooseGasPrice", {type: type, gasPrice: gas})
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 export function trackSearchETHMarket(){
@@ -446,16 +264,6 @@ export function trackConfirmTransaction(type, token){
         }
     }
 }
-
-// export function trackClickBack(){
-//     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-//         try{
-//             mixpanel.track("Swap_*_1_Click_Back")
-//         }catch(e){
-//             console.log(e)
-//         }
-//     }
-// }
 
 export function trackClickBreadCrumb(path){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
@@ -707,4 +515,24 @@ export function trackClickChooseBalance(percent){
             console.log(e)
         }
     }
+}
+
+export function trackClickInputCapcha(){
+  if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+    try{
+      mixpanel.track("Swap_2_2_Click_Input_Capcha")
+    }catch(e){
+      console.log(e)
+    }
+  }
+}
+
+export function trackClickChangeCapcha(){
+  if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+    try{
+      mixpanel.track("Swap_2_2_Click_Change_New_Capcha")
+    }catch(e){
+      console.log(e)
+    }
+  }
 }

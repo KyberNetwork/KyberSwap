@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import BLOCKCHAIN_INFO from "../../../../env"
 import { AccountBalanceLayout } from '../../components/Exchange'
 import {acceptTermOfService} from "../../actions/globalActions"
 import * as analytics from "../../utils/analytics"
@@ -7,18 +8,22 @@ import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
   var location = store.router.location.pathname
+  var sourceActive = 'ETH'
+  ourceActive = store.exchange.sourceTokenSymbol
+  var isFixedSourceToken = !!(store.account && store.account.account.type ==="promo" && store.tokens.tokens[BLOCKCHAIN_INFO.promo_token])
 
   return {
     tokens: store.tokens.tokens,
     translate: getTranslate(store.locale),
     ethereum: store.connection.ethereum,
-    showBalance: store.global.showBalance,    
+    showBalance: store.global.showBalance,
     location,
     walletType: store.account.account.type,
     account: store.account.account,
     address: store.account.account.address,
     chooseToken: props.chooseToken,
-    sourceActive: props.sourceActive
+    sourceActive: props.sourceActive,
+    isFixedSourceToken: isFixedSourceToken
   }
 })
 
@@ -54,6 +59,7 @@ export default class AccountBalance extends React.Component {
   }
 
   selectToken = (e, symbol, address) => {
+    if (this.props.isFixedSourceToken) return
     this.props.chooseToken(symbol, address, "source")
     analytics.trackChooseTokenOnBalanceBoard(symbol)
   }
@@ -78,7 +84,7 @@ export default class AccountBalance extends React.Component {
   }
 
   toggleBalanceContent = () => {
-    this.props.onToggleBalanceContent()    
+    this.props.onToggleBalanceContent()
   }
 
   render() {
@@ -108,8 +114,8 @@ export default class AccountBalance extends React.Component {
         sourceTokenSymbol={this.props.sourceActive}
         destTokenSymbol={this.props.destTokenSymbol}
         onToggleBalanceContent={this.onToggleBalanceContent}
-        // acceptTerm = {this.acceptTerm}
         tradeType = {this.props.tradeType}
+        isFixedSourceToken = {this.props.isFixedSourceToken}
       />
     )
   }

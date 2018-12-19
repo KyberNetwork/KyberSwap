@@ -7,50 +7,53 @@ import DappBrowser from "./DappBrowser";
 
 
 export default class ModernMetamaskBrowser extends DappBrowser {
-  constructor() {
-    super()
-    this.web3 = new Web3(Web3.givenProvider)
-  }
+  // constructor() {
+  //   super()
+  //   this.web3 = new Web3(Web3.givenProvider)
+  // }
 
   getWalletType = () => {
     return "metamask"
   }
 
-  getNetworkId = () => {
-    return new Promise((resolve, reject) => {
-      this.web3.eth.net.getId((error, result) => {
-        // alert(error)
-        // alert(result)
-        if (error || !result) {
-          var error = new Error("Cannot get network id")
-          reject(error)
-        } else {
-          resolve(result)
-        }
-      })
-    })
-  }
+  // getNetworkId = () => {
+  //   return new Promise((resolve, reject) => {
+  //     this.web3.eth.net.getId((error, result) => {
+  //       if (error || !result) {
+  //         var error = new Error("Cannot get network id")
+  //         reject(error)
+  //       } else {
+  //         resolve(result)
+  //       }
+  //     })
+  //   })
+  // }
 
   getCoinbase(isManual = false) {
-    // console.log("is_manual")
-    // console.log(isManual)
     if (window.ethereum && isManual) {
       return new Promise((resolve, reject) => {
         window.ethereum.enable().then(() => {
-          this.web3.eth.getCoinbase((error, result) => {
-            // alert(error)
-            // alert(result)
-            console.log(error)
-            //   console.log(result)      
-            if (error || !result) {
+
+          // this.web3.eth.getCoinbase((error, result) => {
+          //   if (error || !result) {
+          //     var error = new Error("Cannot get coinbase")
+          //     reject(error)
+          //   } else {
+          //     resolve(result)
+          //   }
+          // })
+
+          this.web3.eth.getAccounts((error, result) => {
+            console.log(result)
+            if (error || result.length === 0) {
               var error = new Error("Cannot get coinbase")
               reject(error)
             } else {
-              resolve(result)
+              resolve(result[0])
             }
           })
+
         }).catch(err => {
-          console.log(err)
           var error = new Error("Cannot get coinbase")
           reject(error)
         })
@@ -58,18 +61,27 @@ export default class ModernMetamaskBrowser extends DappBrowser {
       })
     } else {
       return new Promise((resolve, reject) => {
-        this.web3.eth.getCoinbase((error, result) => {
-          // alert(error)
-          // alert(result)
-          console.log(error)
-          //   console.log(result)      
-          if (error || !result) {
+        // this.web3.eth.getCoinbase((error, result) => {
+
+        //   if (error || !result) {
+        //     var error = new Error("Cannot get coinbase")
+        //     reject(error)
+        //   } else {
+        //     resolve(result)
+        //   }
+        // })
+
+        this.web3.eth.getAccounts((error, result) => {
+          console.log(result)
+          if (error || result.length === 0) {
             var error = new Error("Cannot get coinbase")
             reject(error)
           } else {
-            resolve(result)
+            resolve(result[0])
           }
         })
+
+
       })
     }
   }

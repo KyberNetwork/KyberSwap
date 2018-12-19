@@ -10,7 +10,9 @@ import { getTranslate } from 'react-localize-redux';
     listItem: props.listItem,
     type: props.type,
     chooseToken: props.chooseToken,
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    banToken: props.banToken,
+    isFixToken: props.isFixToken
   }
 })
 
@@ -55,6 +57,8 @@ export default class TokenSelector extends React.Component {
         showTokens={this.showTokens}
         hideTokens={this.hideTokens}
         type={this.props.type}
+        banToken={this.props.banToken}
+        isFixToken = {this.props.isFixToken}
       />
     )
   }
