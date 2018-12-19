@@ -7,16 +7,11 @@ import { Exchange } from "../../containers/Exchange"
 import { Transfer } from "../../containers/Transfer"
 import { Header } from "../../containers/Header"
 import { ImportAccount } from "../ImportAccount"
-
-//import { Footer } from "../Layout"
-
 import { Processing, ExchangeHistory } from "../../containers/CommonElements/"
 import {Market} from "../Market"
 import constanst from "../../services/constants"
-// import { createNewConnection } from "../../services/ethereum/connection"
-
 import history from "../../history"
-import { clearSession, changeLanguage } from "../../actions/globalActions"
+import { clearSession, changeLanguage, setOnMobileOnly } from "../../actions/globalActions"
 import { openInfoModal } from "../../actions/utilActions"
 import { setConnection, createNewConnectionInstance } from "../../actions/connectionActions"
 import { default as _ } from 'underscore';
@@ -24,12 +19,11 @@ import { LayoutView } from "../../components/Layout"
 import { getTranslate } from 'react-localize-redux'
 import * as common from "../../utils/common"
 import * as analytics from "../../utils/analytics"
+import {isMobile} from '../../utils/common'
 
 import Language from "../../../../lang"
 
 @connect((store) => {
-
-
   return {
     ethereumNode: store.connection.ethereum,
     currentBlock: store.global.currentBlock,
@@ -40,7 +34,6 @@ import Language from "../../../../lang"
     translate: getTranslate(store.locale),
     locale: store.locale,
     tokens: store.tokens.tokens
-    // currentLanguage: getActiveLanguage(store.locale).code
   }
 })
 
@@ -63,14 +56,19 @@ export default class Layout extends React.Component {
     document.onkeypress = this.resetTimmer;
 
     this.intervalIdle = setInterval(this.checkTimmer.bind(this), 10000)
-
     this.props.dispatch(createNewConnectionInstance())
-    // createNewConnection()
   }
 
   componentDidMount = () => {
     analytics.trackAccessToSwap()
     window.addEventListener("beforeunload", this.handleCloseWeb)
+    if (isMobile.iOS() || isMobile.Android()) {
+      this.props.dispatch(setOnMobileOnly())
+    }
+  }
+
+  handleCloseWeb = () => {
+    analytics.exitSwap()
   }
 
   handleCloseWeb = () => {
@@ -108,15 +106,12 @@ export default class Layout extends React.Component {
   render() {
 
     var currentLanguage = common.getActiveLanguage(this.props.locale.languages)
-   // var exchangeHistory = <TransactionList />
     var market = <Market />
-    //var footer = <Footer />
-   // var rate = <Rate />
+
     return (
       <LayoutView
         history={history}
         Header={Header}
-        // ImportAccount={ImportAccount}
         Exchange={Exchange}
         Transfer={Transfer}
         market={market}
@@ -124,7 +119,6 @@ export default class Layout extends React.Component {
         setActiveLanguage={this.setActiveLanguage}      
         currentLanguage = {currentLanguage}  
         tokens = {this.props.tokens}
-       // footer = {footer}
       />
     )
   }

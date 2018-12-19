@@ -74,9 +74,10 @@ export function acceptTermOfService() {
   }
 }
 
-export function clearSession() {
+export function clearSession(gasPrice) {
   return {
-    type: "GLOBAL.CLEAR_SESSION"
+    type: "GLOBAL.CLEAR_SESSION",
+    payload: gasPrice
   }
 }
 
@@ -94,9 +95,10 @@ export function changeLanguage(ethereum, lang, locale){
   }
 }
 
-export function clearSessionComplete() {
+export function clearSessionComplete(gasPrice) {
   return {
-    type: "GLOBAL.CLEAR_SESSION_FULFILLED"
+    type: "GLOBAL.CLEAR_SESSION_FULFILLED",
+    payload: gasPrice
   }
 }
 
@@ -220,6 +222,33 @@ export function setNetworkError(error){
   }
 }
 
+export function changeWallet(tradeType){
+  return {
+    type: "GLOBAL.CHANGE_WALLET",
+    payload: tradeType
+  }
+}
+
+export function closeChangeWallet(){
+  return {
+    type: "GLOBAL.CLOSE_CHANGE_WALLET"
+  }
+}
+
+export function setIsIos(isIos) {
+  return {
+    type: "GLOBAL.SET_IS_IOS",
+    payload: isIos
+  }
+}
+
+export function setIsAndroid(isAndroid) {
+  return {
+    type: "GLOBAL.SET_IS_ANDROID",
+    payload: isAndroid
+  }
+}
+
 // export function updateTokenStatus() {
 //   return {
 //     type: "GLOBAL.UPDATE_TOKEN_STATUS"
@@ -230,5 +259,11 @@ export function setOnMobile(isIOS, isAndroid){
   return {
     type: "GLOBAL.SET_ON_MOBILE",
     payload: {isIOS, isAndroid}
+  }
+}
+
+export function setOnMobileOnly(){
+  return {
+    type: "GLOBAL.SET_ON_MOBILE_ONLY"
   }
 }

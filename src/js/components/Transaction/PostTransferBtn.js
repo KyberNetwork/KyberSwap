@@ -1,32 +1,25 @@
-import React from "react"
-import { PendingOverlay } from "../../components/CommonElement"
+import React from "react";
+import { PendingOverlay } from "../../components/CommonElement";
+import TermAndServices from "../../containers/CommonElements/TermAndServices";
 
 const PostTransferBtn = (props) => {
 
   return (
-    <div>        
-        <a className={'submit-transfer ' + props.className} data-open="passphrase-modal" onClick={props.submit}>{props.translate("transaction.transfer") || "Transfer"}</a>
-
-       {/* <div class="column small-11 medium-10 large-9 small-centered text-center">
-          
-        </div>
-
-      {props.step !== 2 ?
-        <div class="small-11 medium-12 large-12">
-          <div className="column transaction-footer">
-            <div className="small-12 medium-4 text-center mx-auto">
-              <a className={'submit-transfer ' + props.className} data-open="passphrase-modal" onClick={props.submit}>{props.translate("transaction.transfer") || "Transfer"}</a>
-            </div>           
-          </div>
-        </div>
-        :
+    <div className="exchange-button">
+      <div>
+        {props.isHaveAccount && !props.isChangingWallet &&
         <div>
-          <div class="column small-11 medium-10 large-9 small-centered text-center">
-            <a className={'submit-transfer ' + props.className} data-open="passphrase-modal" onClick={props.submit}>{props.translate("transaction.transfer") || "Transfer"}</a>
-          </div>
+          <a className={props.activeButtonClass + " exchange-button__button"} onClick={props.submit} data-open="passphrase-modal">
+            <i className="k k-exchange k-3x cur-pointer"></i>
+            {props.translate("transaction.transfer") || "Transfer"}
+          </a>
+          <TermAndServices tradeType="transfer"/>
         </div>
-      } */}
+        }
+      </div>
+
       {props.modalPassphrase}
+
       <PendingOverlay isEnable={props.isConfirming} />
     </div>
   )

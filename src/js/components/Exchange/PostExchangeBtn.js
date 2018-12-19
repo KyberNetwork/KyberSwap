@@ -1,21 +1,26 @@
-import React from "react"
-import { PendingOverlay } from "../../components/CommonElement"
+import React from "react";
+import { PendingOverlay } from "../../components/CommonElement";
+import TermAndServices from "../../containers/CommonElements/TermAndServices";
 
 const PostExchangeBtn = (props) => {
   return (
-    <div className="exchange-wrapper-btn">
+    <div className="exchange-button">
       <div>
-        <div>
-          <a class={props.className} onClick={props.submit} data-open="passphrase-modal">{props.translate("transaction.swap") ||  "Swap" }</a>
-        </div>
-          {props.rateToken}
-      </div>      
-      
-      {props.modalPassphrase}
-      {props.modalConfirm}
-      {props.modalApprove}
-      <PendingOverlay isEnable={props.isConfirming || props.isApproving} />
-    </div >
+        {props.isHaveAccount && !props.isChangingWallet &&
+          <div>
+            <a className={props.activeButtonClass + " exchange-button__button"} onClick={props.submit} data-open="passphrase-modal">
+              <i className="k k-exchange k-3x cur-pointer"></i>
+              {props.translate("transaction.swap") || "Swap"}
+            </a>
+            <TermAndServices tradeType="swap"/>
+          </div>
+        }
+      </div>
+
+      {props.modalExchange}
+
+      <PendingOverlay isEnable={props.isConfirming || props.isApproving}/>
+    </div>
   )
 }
 

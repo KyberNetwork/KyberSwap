@@ -42,7 +42,7 @@ export function* goToRoute(action) {
 }
 
 export function* clearSession(action) {
-  yield put(actions.clearSessionComplete())
+  yield put(actions.clearSessionComplete(action.payload))
   //yield put(actions.goToRoute(constants.BASE_HOST));
 }
 
@@ -217,7 +217,7 @@ export function* changelanguage(action) {
         var languagePack = yield call(ethereum.call,"getLanguagePack", lang)
         if (!languagePack) return;
 
-        yield put.sync(addTranslationForLanguage(languagePack, activeLang))
+        yield put.resolve(addTranslationForLanguage(languagePack, activeLang))
       }
     }
     yield put(setActiveLanguage(activeLang))

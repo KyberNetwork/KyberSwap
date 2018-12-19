@@ -1,55 +1,78 @@
-import React from "react"
+import React from "react";
+import {
+  ImportKeystore,
+  ImportByDevice,
+  ImportByPrivateKey,
+  ImportByMetamask,
+  ImportByDeviceWithLedger,
+  ImportByDeviceWithTrezor,
+  ImportByPromoCode
+} from "../../containers/ImportAccount";
 
 const ImportAccountView = (props) => {
-  var downloadOnMobile = (
-    <div class="onmobile-only">
-      <div className="mobile-left">
-        <div className="mobile-left-icon"></div>
-        <div className="mobile-left-content">
-          <div className="mobile-left-content-title">Coinbase Wallet</div>
-          <div className="mobile-left-content-desc">Ethereum Wallet & DApp Browser</div>
-        </div>
-      </div>
-      {props.onMobile.isIOS && <a className="mobile-btn" href="https://itunes.apple.com/us/app/coinbase-wallet/id1278383455?mt=8" target="_blank">{props.translate("address.download") || "Download"}</a>}
-      {props.onMobile.isAndroid && <a className="mobile-btn" href="https://play.google.com/store/apps/details?id=org.toshi&hl=en" target="_blank">{props.translate("address.download") || "Download"}</a>}
-    </div>
-  )
-
-  var isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid
+  var isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid;
 
   return (
-    <div id="import-account">
-    	<div className="landing-background">
-      </div>
-      <div className="frame">
-        <div className="container">
-          <div className="small-centered" id="import-acc">
-            <h1 className="title">{props.translate("address.import_address") || "Import address"}</h1>
+    <div className="import-account">
+      <div className="import-account__choose-wallet-container container">
+        <h1 className="import-account__title">{props.translate("address.import_address") || "Connect your Wallet to Swap"}</h1>
 
-            <div className="import-account">
-              <div className={`import-account__item ${isOnMobile ? "onmobile-only-wrapper" : ""}`}>
-                {isOnMobile ? downloadOnMobile : props.firstKey}
+        <div className={`import-account__content ${isOnMobile ? ' import-account__content--mobile' : ''}`}>
+          {!isOnMobile &&
+          <div className="import-account__item">
+            <ImportByMetamask/>
+          </div>
+          }
+
+          {!isOnMobile &&
+          <div className="import-account__item">
+            <ImportKeystore/>
+          </div>
+          }
+
+          {!isOnMobile &&
+          <div className="import-account__item">
+            <ImportByDeviceWithTrezor/>
+          </div>
+          }
+
+          {!isOnMobile &&
+          <div className="import-account__item">
+            <ImportByDeviceWithLedger/>
+          </div>
+          }
+
+          {isOnMobile &&
+          <div class="import-account__item">
+            <div className={"import-account__block"}>
+              <div className={"import-account__block-left"}>
+                <div className="import-account__icon coinbase"/>
+                <div>
+                  <div className="import-account__name">Coinbase Wallet</div>
+                  <div className="import-account__desc">Ethereum Wallet & DApp Browser</div>
+                </div>
               </div>
-              {!isOnMobile && <div className="import-account__item">
-                {props.secondKey}
-              </div>}
-              {!isOnMobile && <div className="import-account__item">
-                {props.thirdKey}
-              </div>}
-              {!isOnMobile && <div className="import-account__item">
-                {props.fourthKey}
-              </div>}
-              <div className="import-account__item">
-                {props.fifthKey}
-              </div>
-              <div className="import-account__item">
-                {props.sixthKey}
-              </div>
+              <a
+                className="import-account__block-right"
+                href={props.onMobile.isIOS ? "https://itunes.apple.com/us/app/coinbase-wallet/id1278383455?mt=8" : "https://play.google.com/store/apps/details?id=org.toshi&hl=en"}
+                target="_blank"
+              >
+                {props.translate("address.download") || "Download"}
+              </a>
             </div>
           </div>
+          }
+
+          <div className={"import-account__item"}>
+            <ImportByPrivateKey isOnMobile={isOnMobile}/>
+          </div>
+
+          <div className={"import-account__item"}>
+            <ImportByPromoCode isOnMobile={isOnMobile}/>
+          </div>
         </div>
-        {props.errorModal}
       </div>
+      {props.errorModal}
     </div>
   )
 }

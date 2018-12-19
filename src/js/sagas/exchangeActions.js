@@ -648,7 +648,7 @@ function* getRate(ethereum, source, dest, sourceAmount) {
   catch (err) {
     console.log(err)
     return { status: "fail" }
-    //yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0))
+    //yield put.resolve(actions.updateRateExchangeComplete(rateInit, "0", "0", 0))
     //yield put(actions.setRateSystemError())
   }
 }
@@ -663,9 +663,6 @@ function* getSourceAmount(sourceTokenSymbol, sourceAmount){
   if (tokens[sourceTokenSymbol]){
     var decimals = tokens[sourceTokenSymbol].decimals
     var rateSell = tokens[sourceTokenSymbol].rate
-    console.log(tokens[sourceTokenSymbol]);
-    console.log("=================================");
-    console.log({sourceAmount, decimals, rateSell})
     sourceAmountHex = converter.calculateMinSource(sourceTokenSymbol, sourceAmount, decimals, rateSell)
   }else{
     sourceAmountHex = converter.stringToHex(sourceAmount, 18)
@@ -688,13 +685,10 @@ function* getSourceAmountZero(sourceTokenSymbol){
 function* updateRatePending(action) {
   const { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual } = action.payload
   var state = store.getState()
-  // var exchangeSnapshot = state.exchange.snapshot
   var translate = getTranslate(state.locale)
-  
   var sourceAmoutRefined = yield call(getSourceAmount, sourceTokenSymbol, sourceAmount)
   var sourceAmoutZero = yield call(getSourceAmountZero, sourceTokenSymbol)
-  //console.log({sourceAmoutRefined, sourceAmoutZero})
-  //console.log("is_manual: " + isManual)
+
   if (isManual) {
     var rateRequest = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutRefined)
     console.log("rate_request_manual: " + JSON.stringify(rateRequest))
@@ -705,7 +699,6 @@ function* updateRatePending(action) {
       if (expectedPrice.toString() === "0"){
         var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutZero)
 
-        //console.log(rateRequestZeroAmount.data)
         if (rateRequestZeroAmount.status === "success"){
           rateInit = rateRequestZeroAmount.data.expectedPrice
         }
@@ -720,16 +713,8 @@ function* updateRatePending(action) {
             return
         }
       }
-      yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
-      // if (expectedPrice === "0") {
-      //   yield put(actions.setRateSystemError())
-      // }else{
-      //   yield put(actions.caculateAmount())
-      // }
+      yield put.resolve(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
     }
-    // else{
-    //   yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
-    // }
 
     if (rateRequest.status === "timeout") {
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
@@ -740,74 +725,21 @@ function* updateRatePending(action) {
         translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
     }
 
-    // if ((rateRequest.status === "timeout") || (rateRequest.status === "fail")) {
-
-    //   yield put(utilActions.openInfoModal("Error", "There are some problems with nodes. Please try again in a while"))
-    // }
-
   } else {
     const rateRequest = yield call(getRate, ethereum, source, dest, sourceAmoutRefined)
-   // console.log("rate_request_manual_not: " + JSON.stringify(rateRequest))
     if (rateRequest.status === "success") {
       var { expectedPrice, slippagePrice, lastestBlock } = rateRequest.res
-    //  console.log(rateRequest.res)
       var rateInit = expectedPrice.toString()
       if (expectedPrice.toString() === "0"){
         var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutZero)
 
-     //   console.log(rateRequestZeroAmount.data)
         if (rateRequestZeroAmount.status === "success"){
           rateInit = rateRequestZeroAmount.data.expectedPrice
         }
-        // if (rateRequestZeroAmount.status === "timeout") {
-        //   yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-        //     translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
-        //     return
-        // }
-        // if (rateRequestZeroAmount.status === "fail") {
-        //   yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-        //     translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
-        //     return
-        // }
       }
       
-      yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
-
-      // if (expectedPrice.toString() !== "0"){
-      //   yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
-      // }
-
-
+      yield put.resolve(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
     }
-    else {
-      //yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
-
-      //yield put(actions.setRateFailError())
-    }
-
-    // const { expectedPrice, slippagePrice, lastestBlock } = rates.res
-    // yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock))
-    // if (lastestBlock === 0) {
-    //   yield put(actions.setRateSystemError())
-    // }else{
-    //   yield put(actions.caculateAmount())
-    // }
-
-    // try {
-    //   //get latestblock
-    //   const lastestBlock = yield call([ethereum, ethereum.call],"getLatestBlock")
-    //  // console.log(lastestBlock)
-    //   const rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmount, lastestBlock)
-    //   const expectedPrice = rate.expectedPrice ? rate.expectedPrice : "0"
-    //   const slippagePrice = rate.slippagePrice ? rate.slippagePrice : "0"
-    //   yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock))
-    //   yield put(actions.caculateAmount())
-    // }
-    // catch (err) {    
-    //   console.log(err)
-    //   yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0))
-    //   yield put(actions.setRateSystemError())
-    // }
   }
 }
 
@@ -849,7 +781,7 @@ function* updateRateSnapshot(action) {
         yield put(actions.hideConfirm())
         yield put(actions.hidePassphrase())
       }else{
-        yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
+        yield put.resolve(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
         yield put(actions.caculateAmountInSnapshot())
       }
     }else{
@@ -872,11 +804,10 @@ function* updateRateSnapshot(action) {
     // const expectedPrice = rate.expectedRate ? rate.expectedRate : "0"
     // const slippagePrice = rate.slippageRate ? rate.slippageRate : "0"
 
-    // yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
+    // yield put.resolve(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
     // yield put(actions.caculateAmountInSnapshot())
   }
   catch (err) {
-    console.log("===================")
     console.log(err)
   }
 }
@@ -1484,11 +1415,9 @@ export function* getExchangeEnable() {
   }
 }
 
-
 export function* watchExchange() {
   yield takeEvery("EXCHANGE.TX_BROADCAST_PENDING", broadCastTx)
   yield takeEvery("EXCHANGE.APPROVAL_TX_BROADCAST_PENDING", approveTx)
-
   yield takeEvery("EXCHANGE.PROCESS_EXCHANGE", processExchange)
   yield takeEvery("EXCHANGE.PROCESS_APPROVE", processApprove)
   yield takeEvery("EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET", checkTokenBalanceOfColdWallet)
@@ -1496,14 +1425,10 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.UPDATE_RATE_SNAPSHOT", updateRateSnapshot)
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", fetchGas)
   yield takeEvery("EXCHANGE.ANALYZE_ERROR", analyzeError)
-
   yield takeEvery("EXCHANGE.SELECT_TOKEN_ASYNC", selectToken)
   yield takeEvery("EXCHANGE.INPUT_CHANGE", fetchGas)
-  //yield takeEvery("EXCHANGE.FETCH_GAS", fetchGasManual)
   yield takeEvery("EXCHANGE.FETCH_GAS_SNAPSHOT", fetchGasSnapshot)
-
   yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
   yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
-
   yield takeEvery("EXCHANGE.FETCH_EXCHANGE_ENABLE", fetchExchangeEnable)
 }

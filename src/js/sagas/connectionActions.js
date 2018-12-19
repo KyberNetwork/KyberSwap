@@ -16,7 +16,16 @@ import * as converter from "../utils/converter"
 import { getTranslate } from 'react-localize-redux'
 import NotiService from "../services/noti_service/noti_service"
 
-
+function filterTokens(tokens){
+  var newTokens = {}
+  var now = Math.round(new Date().getTime()/1000)
+  tokens.map(val => {
+    if (val.listing_time > now) return
+    if(val.delist_time && val.delist_time <= now) return
+    newTokens[val.symbol] = {...val}
+  })
+  return newTokens
+}
 
 //get list tokens
 function getListTokens() {
@@ -38,33 +47,19 @@ function getListTokens() {
         if (result.success) {
           //check listing time
           
-          var tokens = {}
-          result.data.map(val => {
-            if (val.listing_time > now) return
-            tokens[val.symbol] = val
-          })
+          var tokens = filterTokens(result.data)
           resolve(tokens)
 
           //resolve(result.data)
         } else {
           //rejected(new Error("Cannot get data"))
           //get from snapshot
-          var tokens = {}          
-          Object.values(BLOCKCHAIN_INFO.tokens).map(val => {
-             if (val.listing_time > now) return
-            tokens[val.symbol] = val
-          })
-          resolve(tokens)
+          resolve(BLOCKCHAIN_INFO.tokens)
         }
       })
       .catch((err) => {
         console.log(err)
-        var tokens = {}          
-          Object.values(BLOCKCHAIN_INFO.tokens).map(val => {
-             if (val.listing_time > now) return
-            tokens[val.symbol] = val
-          })
-          resolve(tokens)
+        resolve(BLOCKCHAIN_INFO.tokens)
       })
   })
 }
@@ -72,26 +67,25 @@ function getListTokens() {
 
 export function* createNewConnection(action) {
   var tokens = yield call(getListTokens)
-  // console.log("get_lis_tokens")
-  // console.log(tokens)
-  yield put.sync(initTokens(tokens))
+
+  yield put.resolve(initTokens(tokens))
 
   var translate = getTranslate(store.getState().locale)
   var connectionInstance = new EthereumService()
-  yield put.sync(setConnection(connectionInstance))
+  yield put.resolve(setConnection(connectionInstance))
   connectionInstance.subcribe()
 
   // var state = store.getState()
   // var ethereum = action.payload.ethereum
   // var ethereum = state.connection.ethereum
-  yield put.sync(setMaxGasPrice(connectionInstance))
+  yield put.resolve(setMaxGasPrice(connectionInstance))
 
 
 
   var web3Service = web3Package.newWeb3Instance()
 
   if (web3Service === false) {
-    yield put.sync(globalActions.throwErrorMematamask(translate("error.metamask_not_installed") || "Metamask is not installed"))
+    yield put.resolve(globalActions.throwErrorMematamask(translate("error.metamask_not_installed") || "Metamask is not installed"))
   } else {
     //const web3Service = new Web3Service(web3)
     const watchMetamask = yield fork(watchMetamaskAccount, connectionInstance, web3Service)
@@ -99,7 +93,7 @@ export function* createNewConnection(action) {
 
 
   var notiService = new NotiService({ type: "session" })
-  yield put.sync(globalActions.setNotiHandler(notiService))
+  yield put.resolve(globalActions.setNotiHandler(notiService))
 
   //  const watchConnectionTask = yield fork(watchToSwitchConnection, connectionInstance)
 

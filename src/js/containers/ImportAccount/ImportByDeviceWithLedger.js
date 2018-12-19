@@ -8,9 +8,10 @@ import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as analytics from "../../utils/analytics"
 
-@connect((store) => {
+@connect((store, props) => {
   return {
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    screen: props.screen
   }
 })
 
@@ -33,6 +34,7 @@ export default class ImportByDeviceWithLedger extends React.Component {
       <ImportByDevice ref="child"
         deviceService={this.deviceService} 
         content={importContent}
+        screen = {this.props.screen}
       />
     )
   }

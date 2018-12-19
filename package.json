@@ -112,29 +112,21 @@
   "scripts": {
     "build-ropsten": "NODE_ENV=ropsten node webpack-wrapper.js",
     "build-production": "NODE_ENV=production node webpack-wrapper.js",
-
-    "build-rinkeby": "NODE_ENV=production webpack --env.chain=rinkeby --env.build=true",
-    "build-staging": "NODE_ENV=production webpack --env.chain=staging --env.build=true",
-    
-    "build-semi-production": "NODE_ENV=production webpack --env.chain=semi_production --env.build=true",
+    "build-rinkeby": "NODE_ENV=rinkeby node webpack-wrapper.js",
+    "build-staging": "NODE_ENV=staging node webpack-wrapper.js",
     "build-all": "npm run build-staging && npm run build-production && npm run build-rinkeby && npm run build-ropsten",
     "build-all-mainnet": "npm run build-staging && npm run build-production",
     "rinkeby": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=rinkeby --env.logger=true",
     "staging": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=staging",
     "production": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=production",
-    "semi-production": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=semi_production",
     "ropsten": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=ropsten --env.logger=true",
     "ropstens": "webpack-dev-server --https --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3003 --env.chain=ropsten --env.logger=true",
-    "dev": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3000 --env.chain=ropsten --env.logger=true",
     "test": "jest --setupTestFrameworkScriptFile=raf/polyfill",
-    "server": "node server/server_http.js",
-    "ieo_ropsten": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=ropsten --progress --profile --colors --env.build=true",
-    "build_ieo_ropsten": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=ropsten --progress --profile --colors --env.build=true",
-    "ieo_production": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=production --progress --profile --colors --env.build=true",
-    "build_ieo_production": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=production --progress --profile --colors --env.build=true",
-    "build_ieo_rinkeby": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=rinkeby --progress --profile --colors --env.build=true",
-    "ieo_staging": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=staging --progress --profile --colors --env.build=true",
-    "build_ieo_staging": "NODE_ENV=production webpack --watch --config webpack.config.ieo.js --env.chain=staging --progress --profile --colors --env.build=true",
+
+    "build_ieo_ropsten": "NODE_ENV=ropsten node webpack-wrapper-dashboard.js",
+    "build_ieo_production": "NODE_ENV=production node webpack-wrapper-dashboard.js",
+    "build_ieo_rinkeby": "NODE_ENV=rinkeby node webpack-wrapper-dashboard.js",
+    "build_ieo_staging": "NODE_ENV=staging node webpack-wrapper-dashboard.js",
     "build_all_ieo": "npm run build_ieo_ropsten & npm run build_ieo_rinkeby & npm run build_ieo_production & npm run build_ieo_staging"
   },
   "jest": {

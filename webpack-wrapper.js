@@ -21,20 +21,8 @@ var fs = require('fs');
 var sass = require('node-sass');
 
 
-function recursiveIssuer(m) {
-    if (m.issuer) {
-        return recursiveIssuer(m.issuer);
-    } else if (m.name) {
-        return m.name;
-    } else {
-        return false;
-    }
-}
-
-//module.exports = env => {
 var getConfig = env => {
-    const folder = env
-    const outputPath = `dist/${folder}`
+    const outputPath = `dist/${env}`
 
     const timestamp = Date.now();
 
@@ -61,9 +49,9 @@ var getConfig = env => {
         mode: env !== 'production' ? 'development' : 'production',
         entry: entry,
         optimization: {
-            splitChunks: {
-                chunks: 'all'
-            },
+            // splitChunks: {
+            //     chunks: 'all'
+            // },
             minimizer: [
                 new TerserPlugin({
                     parallel: true,

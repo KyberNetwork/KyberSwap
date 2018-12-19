@@ -1,5 +1,3 @@
-
-//import {RATE_EPSILON} from "../services/constants.js"
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
 
@@ -146,13 +144,6 @@ export function updatePrevSource(value) {
 }
 
 export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess) {
-  // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
-  //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
-
-  //var rateBig = converter.stringToBigNumber(rate[0])
-  //  var offeredRate = rate.expectedPrice
-  //var expirationBlock = rate[1]
-  //var reserveBalance = rate[2]
   return {
     type: "EXCHANGE.UPDATE_RATE",
     payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess}
@@ -161,56 +152,12 @@ export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePric
 }
 
 export function updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice) {
-  // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
-  //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
-
-  //var rateBig = converter.stringToBigNumber(rate[0])
-  //  var offeredRate = rate.expectedPrice
-  //var expirationBlock = rate[1]
-  //var reserveBalance = rate[2]
   return {
     type: "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE",
     payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage:  converter.toT(rateInit, 18)}
   }
 
 }
-
-
-// export function setRateSystemError(){
-//   return {
-//     type: "EXCHANGE.SET_RATE_ERROR_SYSTEM"
-//   }  
-// }
-
-// export function setRateFailError(){
-//   return {
-//     type: "EXCHANGE.SET_RATE_ERROR_FAIL"
-//   }  
-// }
-
-// export function setErrorRateSystem(){
-//   return {
-//     type: "EXCHANGE.SET_RATE_ERROR_SYSTEM"
-//   }  
-// }
-// export function setErrorRateExchange(){
-//   return {
-//     type: "EXCHANGE.ERROR_RATE_ZERO"
-//   }
-// }
-
-// export function clearErrorRateExchange(){
-//   return {
-//     type: "EXCHANGE.CLEAR_ERROR_RATE_ZERO"
-//   }
-// }
-
-// export function setErrorRateEqualZero(){
-//   return {
-//     type: "EXCHANGE.SET_RATE_ERROR_ZERO"
-//   }
-// }
-
 
 export function openPassphrase() {
   return {
@@ -587,5 +534,24 @@ export function updateBalanceData(balanceData, hash){
 export function throwErrorHandleAmount(){
   return {
     type: "EXCHANGE.HANDLE_AMOUNT"
+  }
+}
+
+export function openImportAccount(){
+  return {
+    type: "EXCHANGE.OPEN_IMPORT_ACCOUNT"
+  }
+}
+
+export function closeImportAccountExchange(){
+  return {
+    type: "EXCHANGE.CLOSE_IMPORT_ACCOUNT"
+  }
+}
+
+export function toggleBalanceContent(value = null){
+  return {
+    type: "EXCHANGE.TOGGLE_BALANCE_CONTENT",
+    payload: value
   }
 }

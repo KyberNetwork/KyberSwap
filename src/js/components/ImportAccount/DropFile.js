@@ -1,9 +1,5 @@
 import React from "react"
-
 import Dropzone from 'react-dropzone'
-//import ReactTooltip from 'react-tooltip'
-import { getAssetUrl } from "../../utils/common";
-
 
 const DropFile = (props) => {
   var keystring
@@ -29,7 +25,7 @@ const DropFile = (props) => {
       </p>
     }
   }
-  //console.log(keystring)
+
   return (
     <Dropzone onDrop={(e) => props.onDrop(e)} disablePreview={true} className="column column-block">
 
@@ -43,14 +39,20 @@ const DropFile = (props) => {
           //   </div>
           // </div>
 
-          <div className="importer json" {...getRootProps() }>
-            <input {...getInputProps() } />
-            <div className="importer__symbol">
-              <img src={getAssetUrl('wallets/keystore.svg')} />
-              <div className="importer__name">{props.translate("import.json") || "JSON"}</div>
-            </div>
-            <button className="importer__button" onClick={(e) => props.onDrop(e)}>{props.translate("import.select_or_drag") || "Select or Drag"}</button>
+          <div className="import-account__block" {...getRootProps() }>
+            <input {...getInputProps() } />          
+            <div className="import-account__icon json"/>
+            <div className="import-account__name">{props.translate("import.json") || "JSON"}</div>
           </div>
+
+          // <div className="importer json" {...getRootProps() }>
+          //   <input {...getInputProps() } />
+          //   <div className="importer__symbol">
+          //     <img src={getAssetUrl('wallets/keystore.svg')} />
+          //     <div className="importer__name">{props.translate("import.json") || "JSON"}</div>
+          //   </div>
+          //   <button className="importer__button" onClick={(e) => props.onDrop(e)}>{props.translate("import.select_or_drag") || "Select or Drag"}</button>
+          // </div>
 
         )
       }}

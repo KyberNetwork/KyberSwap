@@ -1,4 +1,3 @@
-
 import React from "react"
 import ReactTooltip from 'react-tooltip'
 import { filterInputNumber } from "../../utils/validators";

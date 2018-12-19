@@ -1,5 +1,7 @@
 import React from "react"
 import { gweiToEth, stringToBigNumber, calculateGasFee, roundingNumber } from "../../utils/converter";
+import { FeeDetail } from "../CommonElement";
+
 class ApproveModal extends React.Component {
   
   constructor() {
@@ -61,15 +63,15 @@ class ApproveModal extends React.Component {
                     <div className="column small-9 tx-hash">
                         {this.props.address}
                     </div> */}
-                    <span>{this.props.translate("modal.address") || "Address"}:</span>
-                    <span>{this.props.address}</span>
+                    <div>{this.props.translate("modal.address") || "Address"}</div>
+                    <div>{this.props.address}</div>
                   </div>
                 </div>
                 {/* <div className="address">
                   <span>Address</span>
                   <span>{this.props.address}</span>
                 </div> */}
-                <div className="gas-configed">
+                {/* <div className="gas-configed">
                   <div><b>{this.props.translate("transaction.included") || 'Included'}</b></div>
                   <div className="row">
                     <span className="column small-6 font-w-b">{this.props.translate("transaction.gas_price") || 'Gas price'}</span>
@@ -82,7 +84,16 @@ class ApproveModal extends React.Component {
                       : <span>{totalGas.toString()}</span>
                     } ETH</span>
                   </div>                 
-                </div>
+                </div> */}
+
+                <FeeDetail 
+                  translate={this.props.translate} 
+                  gasPrice={this.props.gasPrice} 
+                  gas={this.props.gas}
+                  isFetchingGas={this.props.isFetchingGas}
+                  totalGas={totalGas}
+                />
+                
                 {/* {haveError ?
                   '' :
                   this.props.isConfirming ? (

@@ -35,6 +35,6 @@ import { connect } from "react-redux"
 
 export default class PostExchangeWithKey extends React.Component {
   render = () => {
-    return <PostExchange keyService={this.props.keyService} />
+    return <PostExchange keyService={this.props.keyService} isChangingWallet={this.props.isChangingWallet}/>
   }
 }

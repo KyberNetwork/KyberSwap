@@ -8,24 +8,6 @@ export function changePath(path) {
             console.log(e)
         }
     }
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'ChangePath', {
-    //             'event_category': "path",
-    //             'event_label': path,
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "ChangePath", { path: path })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 export function loginWallet(wallet) {
@@ -38,25 +20,6 @@ export function loginWallet(wallet) {
             console.log(e)
         }
     }
-
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'LoginWallet', {
-    //             'event_category': "wallet",
-    //             'event_label': wallet
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "LoginWallet", { wallet: wallet })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 
@@ -68,25 +31,6 @@ export function completeTrade(hash, walletType, tradeType) {
             console.log(e)
         }
     }
-
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'CompleteTrade', {
-    //             'event_category': "trade",
-    //             'event_label': tradeType,
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "CompleteTrade", { hash: hash, wallet: walletType, trade: tradeType })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 
@@ -98,24 +42,6 @@ export function trackCoinExchange(data) {
             console.log(e)
         }
     }
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'Swap', {
-    //             'event_category': "Swap",
-    //             'event_label': `${data.sourceTokenSymbol}_${data.destTokenSymbol}`
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "Swap", { source: data.sourceTokenSymbol, dest: data.destTokenSymbol })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 
@@ -127,24 +53,6 @@ export function trackCoinTransfer(token){
             console.log(e)
         }
     }
-
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'Transfer', {
-    //             'event_category': "transfer",
-    //             'event_label': token
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "Transfer", { token: token })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 export function tokenForCharting(token){
@@ -155,27 +63,9 @@ export function tokenForCharting(token){
             console.log(e)
         }
     }
-
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'ViewChart', {
-    //             'event_category': "viewChart",
-    //             'event_label': token
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "ViewChart", { token: token })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
-export function acceptTerm(){
+export function acceptTerm(tradeType){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
             mixpanel.track("Step_1_Accept_Term")
@@ -183,24 +73,6 @@ export function acceptTerm(){
             console.log(e)
         }
     }
-
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'AcceptTerm', {
-    //             'event_category': "AcceptTerm",
-    //             'event_label': "Accepted"
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "AcceptTerm", { accept: 'Accepted' })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 export function trackBaseCurrency(currency){
@@ -211,24 +83,6 @@ export function trackBaseCurrency(currency){
             console.log(e)
         }
     }
-
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'chooseBaseCurrency', {
-    //             'event_category': "currency",
-    //             'event_label': currency
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "chooseBaseCurrency", { currency: currency })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 export function trackMarketSetting(field, value){
@@ -239,24 +93,6 @@ export function trackMarketSetting(field, value){
             console.log(e)
         }
     }
-
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'marketSetting', {
-    //             'event_category': "option",
-    //             'event_label': `${field}: ${value}`
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "marketSetting", { setting: field,  value: value})
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 export function trackChooseGas(type, gas, typeGas){
@@ -267,24 +103,6 @@ export function trackChooseGas(type, gas, typeGas){
             console.log(e)
         }
     }
-
-    // if (typeof window.gtag === 'function') {
-    //     try {
-    //         window.gtag('event', 'chooseGasPrice', {
-    //             'event_category': "gasPrice",
-    //             'event_label': `${type}: ${gas}`
-    //         })
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-    // if (typeof window.fbq === 'function') {
-    //     try {
-    //         window.fbq('trackCustom', "chooseGasPrice", {type: type, gasPrice: gas})
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
 }
 
 export function trackSearchETHMarket(){
@@ -300,7 +118,7 @@ export function trackSearchETHMarket(){
 export function trackChooseTokenOnBalanceBoard(token){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_3_1_Click_Choose_Token_Balance_Board", {token : token})
+            mixpanel.track("Swap_*_3_Click_Choose_Token_Balance_Board", {token : token})
         }catch(e){
             console.log(e)
         }
@@ -310,7 +128,7 @@ export function trackChooseTokenOnBalanceBoard(token){
 export function trackClickSortBalanceBoard(type, sortType){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_3_2_Click_Sort_Token_Balance_Board", {type: type, sortType: sortType})
+            mixpanel.track("Swap_*_4_Click_Sort_Token_Balance_Board", {type: type, sortType: sortType})
         }catch(e){
             console.log(e)
         }
@@ -320,7 +138,7 @@ export function trackClickSortBalanceBoard(type, sortType){
 export function trackSearchTokenBalanceBoard(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_3_1_Click_Search_Token_Balance_board")
+            mixpanel.track("Swap_*_3_Click_Search_Token_Balance_board")
         }catch(e){
             console.log(e)
         }
@@ -330,7 +148,7 @@ export function trackSearchTokenBalanceBoard(){
 export function trackClickAllIn(type, token){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_1_Click_Use_All_Token_Balance", {type: type, token: token})
+            mixpanel.track("Swap_*_3_Click_Use_All_Token_Balance", {type: type, token: token})
         }catch(e){
             console.log(e)
         }
@@ -350,7 +168,7 @@ export function trackSetNewMinrate(minrate){
 export function trackCustomGasPrice(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_1_Click_Gas_Input")
+            mixpanel.track("Swap_*_3_Click_Gas_Input")
         }catch(e){
             console.log(e)
         }
@@ -380,14 +198,14 @@ export function trackSearchToken(){
 export function trackSortETHMarket(field, sortType){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_1_1_Click_Sort_ETH_Market", {field: field, sortType: sortType})
+            mixpanel.track("Swap_*_1_Click_Sort_ETH_Market", {field: field, sortType: sortType})
         }catch(e){
             console.log(e)
         }
     }
 }
 
-export function trackClickSwapDestSrc(){
+export function trackClickSwapDestSrc(sourceToken, destToken){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
             mixpanel.track("Step_3_select_swap_token")
@@ -398,7 +216,6 @@ export function trackClickSwapDestSrc(){
 }
 
 export function trackClickSwapButton(){
-    console.log("click swap button")
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
             mixpanel.track("Step_4_click_swap")
@@ -421,7 +238,7 @@ export function trackClickTransferButton(){
 export function trackClickNewTransaction(type){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_1_Click_New_Transaction", {type: type})
+            mixpanel.track("Swap_*_6_Click_New_Transaction", {type: type})
         }catch(e){
             console.log(e)
         }
@@ -431,7 +248,7 @@ export function trackClickNewTransaction(type){
 export function trackClickApproveToken(token){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_3_Click_Approve_Token", {token: token})
+            mixpanel.track("Swap_*_5_Click_Approve_Token", {token: token})
         }catch(e){
             console.log(e)
         }
@@ -442,16 +259,6 @@ export function trackConfirmTransaction(type, token){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
             mixpanel.track(`Step_5_click_confirm_${type}`, {token: token})
-        }catch(e){
-            console.log(e)
-        }
-    }
-}
-
-export function trackClickBack(){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-        try{
-            mixpanel.track("Swap_*_1_Click_Back")
         }catch(e){
             console.log(e)
         }
@@ -481,7 +288,7 @@ export function trackClickViewTxOnEtherscan(){
 export function trackClickCopyTx(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_*_3_Click_Copy_Tx")
+            mixpanel.track("Swap_*_6_Click_Copy_Tx")
         }catch(e){
             console.log(e)
         }
@@ -491,7 +298,7 @@ export function trackClickCopyTx(){
 export function trackClickInputRecieveAddress(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_4_1_Click_To_Input_Address_Transfer")
+            mixpanel.track("Swap_2_1_Click_To_Input_Address_Transfer")
         }catch(e){
             console.log(e)
         }
@@ -511,7 +318,7 @@ export function trackClickCloseModal(typeModal){
 export function trackClickGetMoreAddressDevice(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_2_2_Click_GetMore_Device_Address")
+            mixpanel.track("Swap_*_3_Click_GetMore_Device_Address")
         }catch(e){
             console.log(e)
         }
@@ -521,7 +328,7 @@ export function trackClickGetMoreAddressDevice(){
 export function trackClickGetPreAddressDevice(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_2_2_Click_GetPrevious_Device_Address")
+            mixpanel.track("Swap_*_3_Click_GetPrevious_Device_Address")
         }catch(e){
             console.log(e)
         }
@@ -531,7 +338,7 @@ export function trackClickGetPreAddressDevice(){
 export function trackOpenModalColdWallet(walletType){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_2_1_Open_Modal_ColdWallet", {walletType: walletType})
+            mixpanel.track("Swap_*_2_Open_Modal_ColdWallet", {walletType: walletType})
         }catch(e){
             console.log(e)
         }
@@ -541,7 +348,7 @@ export function trackOpenModalColdWallet(walletType){
 export function trackClickCustomPathColdWallet(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_2_3_Click_Custom_Path_ColdWallet")
+            mixpanel.track("Swap_*_4_Click_Custom_Path_ColdWallet")
         }catch(e){
             console.log(e)
         }
@@ -551,7 +358,7 @@ export function trackClickCustomPathColdWallet(){
 export function trackChoosePathColdWallet(path){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_2_3_Click_Choose_Path_ColdWallet", {path: path})
+            mixpanel.track("Swap_*_4_Click_Choose_Path_ColdWallet", {path: path})
         }catch(e){
             console.log(e)
         }
@@ -571,7 +378,7 @@ export function trackClickShowPassword(status){
 export function trackClickShowTermAndCondition(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_1_1_Click_Show_Term_And_Condition")
+            mixpanel.track("Swap_*_1_Click_Show_Term_And_Condition")
         }catch(e){
             console.log(e)
         }
@@ -581,7 +388,7 @@ export function trackClickShowTermAndCondition(){
 export function trackClickInputPasswordWithJSON(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_4_2_Click_Input_Passphrase")
+            mixpanel.track("Swap_*_4_Click_Input_Passphrase")
         }catch(e){
             console.log(e)
         }
@@ -601,7 +408,7 @@ export function trackClickImportAccount(type){
 export function trackClickInputPrKey(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_2_2_Click_Input_Private_Key")
+            mixpanel.track("Swap_*_3_Click_Input_Private_Key")
         }catch(e){
             console.log(e)
         }
@@ -621,7 +428,7 @@ export function trackClickInputPromoCode(){
 export function trackClickSubmitPrKey(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_2_3_Click_Submit_Private_Key")
+            mixpanel.track("Swap_*_3_Click_Submit_Private_Key")
         }catch(e){
             console.log(e)
         }
@@ -651,7 +458,27 @@ export function trackClickInputAmount(type){
 export function trackClickShowAddressOnEtherescan(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Swap_3_1_Click_Show_Address_On_Etherescan")
+            mixpanel.track("Swap_*_1_Click_Show_Address_On_Etherescan")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickTheLeftWing(tradeType){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_*_1_Click_Show_Wallet", {tradeType: tradeType})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+export function trackClickTheRightWing(tradeType){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_*_1_Click_Show_Advanced", {tradeType: tradeType})
         }catch(e){
             console.log(e)
         }
@@ -661,16 +488,29 @@ export function trackClickShowAddressOnEtherescan(){
 export function trackAccessToSwap(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Session_Swap_Start", {href: window.location.href})
+            mixpanel.track("Session_Swap_Start")
         }catch(e){
             console.log(e)
         }
     }
 }
+
 export function exitSwap(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
-            mixpanel.track("Session_Swap_End", {href: window.location.href})
+            mixpanel.track("Session_Swap_End")
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
+
+
+export function trackClickChooseBalance(percent){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_Click_Choose_Blance_" + percent)
         }catch(e){
             console.log(e)
         }
@@ -678,21 +518,21 @@ export function exitSwap(){
 }
 
 export function trackClickInputCapcha(){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-        try{
-            mixpanel.track("Swap_2_2_Click_Input_Capcha")
-        }catch(e){
-            console.log(e)
-        }
+  if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+    try{
+      mixpanel.track("Swap_2_2_Click_Input_Capcha")
+    }catch(e){
+      console.log(e)
     }
+  }
 }
 
 export function trackClickChangeCapcha(){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-        try{
-            mixpanel.track("Swap_2_2_Click_Change_New_Capcha")
-        }catch(e){
-            console.log(e)
-        }
+  if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+    try{
+      mixpanel.track("Swap_2_2_Click_Change_New_Capcha")
+    }catch(e){
+      console.log(e)
     }
+  }
 }
