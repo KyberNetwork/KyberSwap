@@ -16,7 +16,16 @@ import * as converter from "../utils/converter"
 import { getTranslate } from 'react-localize-redux'
 import NotiService from "../services/noti_service/noti_service"
 
-
+function filterTokens(tokens){
+  var newTokens = {}
+  var now = Math.round(new Date().getTime()/1000)
+  tokens.map(val => {
+    if (val.listing_time > now) return
+    if(val.delist_time && val.delist_time <= now) return
+    newTokens[val.symbol] = {...val}
+  })
+  return newTokens
+}
 
 //get list tokens
 function getListTokens() {
@@ -38,48 +47,27 @@ function getListTokens() {
         if (result.success) {
           //check listing time
           
-          var tokens = {}
-          result.data.map(val => {
-            if (val.listing_time > now) return
-            tokens[val.symbol] = val
-          })
+          var tokens = filterTokens(result.data)
           resolve(tokens)
 
           //resolve(result.data)
         } else {
           //rejected(new Error("Cannot get data"))
           //get from snapshot
-          var tokens = {}          
-          Object.values(BLOCKCHAIN_INFO.tokens).map(val => {
-             if (val.listing_time > now) return
-            tokens[val.symbol] = val
-          })
-          resolve(tokens)
+          resolve(BLOCKCHAIN_INFO.tokens)
         }
       })
       .catch((err) => {
         console.log(err)
-        var tokens = {}          
-          Object.values(BLOCKCHAIN_INFO.tokens).map(val => {
-             if (val.listing_time > now) return
-            tokens[val.symbol] = val
-          })
-          resolve(tokens)
+        resolve(BLOCKCHAIN_INFO.tokens)
       })
   })
 }
 
 
 export function* createNewConnection(action) {
-  var rawTokens = yield call(getListTokens)
-  // console.log("get_lis_tokens")
-  // console.log(tokens)
-  var tokens = {}
-  var timeNow = Math.floor(new Date().getTime() /1000)
-  Object.keys(tokens).forEach((key) => {
-    if(rawTokens[key].delist_time && rawTokens[key].delist_time <= timeNow) return
-    tokens[key] = rawTokens[key]
-  })
+  var tokens = yield call(getListTokens)
+
   yield put.sync(initTokens(tokens))
 
   var translate = getTranslate(store.getState().locale)
