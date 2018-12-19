@@ -531,7 +531,6 @@ export default class ExchangeBody extends React.Component {
         swapBalance = {this.getSwapBalance()}
         clearSession={this.clearSession}
         walletName={this.props.account.walletName}
-        balanceList = {accountBalance}
         isFixedDestToken = {isFixedDestToken}
       />
     )
