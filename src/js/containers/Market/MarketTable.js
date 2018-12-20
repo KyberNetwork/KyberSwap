@@ -206,7 +206,7 @@ export default class MarketTable extends React.Component {
   }
   formatNumber = (number) => {
     if (number > 1000) {
-      return converters.formatNumber(number)
+      return converters.formatNumber(number, 0)
     }
     return number
   }
