@@ -128,6 +128,7 @@
     align-items: center;
     cursor: pointer;
     transition: all .4s;
+    outline: none;
 
     &:hover {
       border-color: transparent;
