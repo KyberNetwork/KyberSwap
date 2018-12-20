@@ -385,7 +385,8 @@ function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, source
           data: data
         }
         gas = yield call([ethereum, ethereum.call],"estimateGas", txObj)
-        gas = Math.round(gas * 120 / 100)
+        //addition 15k gas for transfer token
+        gas = Math.round((gas + 15000) * 120 / 100)
         return {"status": "success", res: gas}
         //return gas
       //  yield put(actions.setGasUsed(gas))
