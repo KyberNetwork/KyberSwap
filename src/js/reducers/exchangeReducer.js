@@ -553,6 +553,14 @@ const exchange = (state = initState, action) => {
 
       return resetState
     }
+    case "EXCHANGE.SET_SELECTED_GAS_PRICE":{
+      const { gasPrice, gasLevel } = action.payload
+
+      newState.gasPrice = gasPrice
+      newState.selectedGas = gasLevel
+
+      return newState
+    }
   }
   return state
 }

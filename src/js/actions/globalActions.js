@@ -144,10 +144,10 @@ export function updateCountConnection(count){
   }
 }
 
-export function setGasPrice(ethereum){
+export function setGasPrice(ethereum, account){
   return {
     type: "GLOBAL.SET_GAS_PRICE",
-    payload: ethereum
+    payload: { ethereum, account }
   }
 }
 

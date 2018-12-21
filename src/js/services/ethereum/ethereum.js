@@ -337,7 +337,9 @@ export default class EthereumService extends React.Component {
   fetchGasprice = () => {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    store.dispatch(setGasPrice(ethereum))
+    var account = state.account.account;
+
+    store.dispatch(setGasPrice(ethereum, account))
   }
 
   fetchMaxGasPrice = () => {

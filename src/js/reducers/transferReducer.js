@@ -256,6 +256,14 @@ const transfer = (state = initState, action) => {
       resetState.tokenSymbol = newState.tokenSymbol
       return resetState
     }
+    case "TRANSFER.SET_SELECTED_GAS_PRICE":{
+      const { gasPrice, gasLevel } = action.payload
+
+      newState.gasPrice = gasPrice
+      newState.selectedGas = gasLevel
+
+      return newState
+    }
   }
   return state
 }
