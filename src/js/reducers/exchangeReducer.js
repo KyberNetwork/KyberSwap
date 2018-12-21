@@ -575,7 +575,7 @@ const exchange = (state = initState, action) => {
     }
 
     case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED":{
-      newState.isBalanceActive = true
+      if(!action.payload.isOnMobile) newState.isBalanceActive = true
       return newState
     }
   }

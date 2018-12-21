@@ -19,7 +19,7 @@ export default class ImportByDeviceWithLedger extends React.Component {
   deviceService = new Ledger()
   
   showLoading = (walletType) => {
-    this.refs.child.getWrappedInstance().showLoading(walletType)
+    this.refs.child.showLoading(walletType)
     analytics.trackClickImportAccount(walletType)
   }
   

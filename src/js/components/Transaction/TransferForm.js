@@ -73,7 +73,7 @@ const TransferForm = (props) => {
               </div>
             )}
             <div className={"exchange-content container"}>
-              <div className={"exchange-content__item exchange-content__item--left"}>
+              <div className={"exchange-content__item exchange-content__item--left exchange-content__item--transfer"}>
                 <div className={`input-div-content ${props.errors.amountTransfer ? "error" : ""}`}>
                   <div className={"exchange-content__label-content"}>
                     <div className="exchange-content__label exchange-content__label--wide">
@@ -111,13 +111,13 @@ const TransferForm = (props) => {
                       <div className={`exchange-content__label ${props.errors.amountTransfer ? "error" : ""}`}>{props.sourceActive}</div>
                       {props.qcCode}
                     </div>
-                    {props.focus === "source" && <div className={props.errors.amountTransfer ? "error-msg" : ""}>
+                    {props.focus === "source" && props.errors.amountTransfer && <div className={props.errors.amountTransfer ? "error-msg error-msg-source" : ""}>
                       {/* {!props.isChangingWallet ? props.errorShow : ''} */}
                       {props.translate(props.errors.amountTransfer)}
                     </div>}
                   </div>
                 </div>
-                {props.focus === "source" && <div className={props.errors.amountTransfer ? "mobile-error__show" : ""}>
+                {props.focus !== "ssource" && props.errors.amountTransfer && <div className={props.errors.amountTransfer ? "mobile-error__show" : ""}>
                   {props.translate(props.errors.amountTransfer)}
                 </div>}
               </div>
@@ -129,18 +129,20 @@ const TransferForm = (props) => {
               <div className={"exchange-content__item exchange-content__item--right"}>
                 <div className={`input-div-content ${isError() ? "error" : ""}`}>
                   <div className={"exchange-content__label-content"}>
-                    <div className="exchange-content__label exchange-content__label--toaddr exchange-content__label--wide">To Address</div>
+                    <div className="exchange-content__label exchange-content__label--toaddr exchange-content__label--wide exchange-content__label--transfer">To Address</div>
                   </div>
                   <div className="exchange-content__input-container exchange-content__input-container--to">
-                    <input
-                      className={`exchange-content__input exchange-content__input-address ${props.errors.destAddress ? "error" : ''}`}
-                      value={props.input.destAddress.value}
-                      onChange={props.input.destAddress.onChange}
-                      placeholder="0x0de..."
-                      onFocus={props.onFocusAddr}
-                      onBlur={props.onBlur}
-                    />
-                    {props.focus === "to-addr" && <div className={props.errors.destAddress ? "error-msg" : ""}>
+                    <div className={`main-input main-input__right main-input__right--transfer ${props.errors.destAddress && props.focus === "to-addr" ? "error" : ''}`}>
+                      <input
+                        className={`exchange-content__input exchange-content__input-address ${props.errors.destAddress ? "error" : ''}`}
+                        value={props.input.destAddress.value}
+                        onChange={props.input.destAddress.onChange}
+                        placeholder="0x0de..."
+                        onFocus={props.onFocusAddr}
+                        onBlur={props.onBlur}
+                      />
+                    </div>
+                    {props.focus === "to-addr" && props.errors.destAddress && <div className={props.errors.destAddress ? "error-msg" : ""}>
                       {/* {!props.isChangingWallet ? props.errorShow : ''} */}
                       {props.translate(props.errors.destAddress)}
                     </div>}
@@ -158,7 +160,7 @@ const TransferForm = (props) => {
                     {/*}*/}
                   </div>
                 </div>
-                {props.focus === "to-addr" && <div className={props.errors.destAddress ? "mobile-error__show" : ""}>
+                {props.focus === "to-addr" && props.errors.destAddress && <div className={props.errors.destAddress ? "mobile-error__show" : ""}>
                   {props.translate(props.errors.destAddress)}
                 </div>}
               </div>
