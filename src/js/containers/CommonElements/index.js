@@ -13,3 +13,5 @@ export {default as Selector } from './Selector.js'
 
 
 export {default as QRCode } from './QRCode.js'
+
+export { default as ChooseBalanceModal } from './ChooseBalanceModal.js'

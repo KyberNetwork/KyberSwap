@@ -5,9 +5,8 @@ import * as converters from "../../utils/converter"
 import { TransactionConfig } from "../../components/Transaction"
 import { ExchangeBodyLayout } from "../../components/Exchange"
 import { AdvanceConfigLayout, GasConfig, MinConversionRate } from "../../components/TransactionCommon"
-import { TransactionLoading, Token } from "../CommonElements"
+import { TransactionLoading, Token, ChooseBalanceModal } from "../CommonElements"
 import { TokenSelector, AccountBalance } from "../TransactionCommon"
-import { SwapBalanceModal } from "../Exchange"
 import * as validators from "../../utils/validators"
 import * as common from "../../utils/common"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
@@ -380,7 +379,12 @@ export default class ExchangeBody extends React.Component {
 
   getSwapBalance = () => {
     return (
-      <SwapBalanceModal />
+      <ChooseBalanceModal
+        changeAmount={exchangeActions.inputChange}
+        changeFocus={exchangeActions.focusInput}
+        sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
+        typeTx={"swap"}
+      />
     )
   }
 

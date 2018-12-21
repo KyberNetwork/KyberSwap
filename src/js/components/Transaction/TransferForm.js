@@ -108,7 +108,12 @@ const TransferForm = (props) => {
                         maxLength="50"
                         autoComplete="off"
                       />
-                      <div className={`exchange-content__label ${props.errors.amountTransfer ? "error" : ""}`}>{props.sourceActive}</div>
+                      {props.account === false && (
+                        <div className={`exchange-content__label ${props.errors.amountTransfer ? "error" : ""}`}>{props.sourceActive}</div>
+                      )}
+                      {props.account !== false && (
+                        <div className={`exchange-content__label ${props.errors.amountTransfer ? "error" : ""}`}>{props.transferBalance}</div>
+                      )}
                       {props.qcCode}
                     </div>
                     {props.focus === "source" && props.errors.amountTransfer && <div className={props.errors.amountTransfer ? "error-msg error-msg-source" : ""}>
