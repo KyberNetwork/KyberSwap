@@ -102,8 +102,10 @@ export function* importNewAccount(action) {
       //promo token
       var state = store.getState()
       var exchange = state.exchange
+      const transfer = state.transfer;
       var sourceToken = exchange.sourceTokenSymbol.toLowerCase()
       var promoToken = BLOCKCHAIN_INFO.promo_token
+
       if (promoToken && newTokens[promoToken]){
         var promoAddr = newTokens[promoToken].address
         var promoDecimal = newTokens[promoToken].decimals
@@ -135,6 +137,9 @@ export function* importNewAccount(action) {
           console.log(e)
         }
       }
+
+      yield put(transferActions.setSelectedGasPrice(transfer.gasPriceSuggest.standardGas, "s"));
+      yield put(exchangeActions.setSelectedGasPrice(exchange.gasPriceSuggest.standardGas, "s"));
     }
 
    // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)

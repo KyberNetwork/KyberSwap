@@ -277,6 +277,14 @@ const transfer = (state = initState, action) => {
       newState.isBalanceActive = true
       return newState
     }
+    case "TRANSFER.SET_SELECTED_GAS_PRICE":{
+      const { gasPrice, gasLevel } = action.payload
+
+      newState.gasPrice = gasPrice
+      newState.selectedGas = gasLevel
+
+      return newState
+    }
   }
   return state
 }
