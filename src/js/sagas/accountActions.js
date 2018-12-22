@@ -142,8 +142,15 @@ export function* importNewAccount(action) {
         }
       }
 
-      yield put(transferActions.setSelectedGasPrice(transfer.gasPriceSuggest.standardGas, "s"));
-      yield put(setSelectedGasPrice(exchange.gasPriceSuggest.standardGas, "s"));
+      if (!transfer.isEditGasPrice) {
+        yield put(transferActions.setSelectedGasPrice(transfer.gasPriceSuggest.standardGas, "s"));
+      }
+
+      if (!exchange.isEditGasPrice) {
+        yield put(setSelectedGasPrice(exchange.gasPriceSuggest.standardGas, "s"));
+      }
+    } else {
+      yield put(setGasPrice());
     }
     
    // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)

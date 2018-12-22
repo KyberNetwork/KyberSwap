@@ -252,6 +252,7 @@ const transfer = (state = initState, action) => {
       resetState.gasPrice = newState.gasPrice
       resetState.selectedGas = newState.selectedGas
       resetState.isEditGasPrice = newState.isEditGasPrice
+      resetState.gasPriceSuggest = newState.gasPriceSuggest
 
       resetState.tokenSymbol = newState.tokenSymbol
       return resetState

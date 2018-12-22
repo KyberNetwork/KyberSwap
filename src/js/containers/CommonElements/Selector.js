@@ -11,7 +11,6 @@ export default class Selector extends React.Component {
         // console.log("list item: ", props.listItem, props.defaultItem)
         this.state = {
             open: false,
-            focus: { value: props.defaultItem, name: props.listItem[props.defaultItem] },
             list: props.listItem,
             onChange: props.onChange ? props.onChange : null
         }
@@ -31,10 +30,7 @@ export default class Selector extends React.Component {
     }
 
     selectItem = (e, value) => {
-        //get name
-        var name = this.state.list[value]
         this.setState({
-            focus: { value: value, name: name },
             open: false
         })
         if (this.state.onChange) this.state.onChange(value)
@@ -57,7 +53,7 @@ export default class Selector extends React.Component {
                     <DropdownTrigger className="notifications-toggle">
                         <div className="focus-item d-flex">
                             <div>
-                                {this.state.focus.name}
+                                {this.props.listItem[this.props.defaultItem]}
                             </div>
                             {/* <div><i className={'k k-angle ' + (this.state.open ? 'up' : 'down')}></i></div> */}
                             <div>

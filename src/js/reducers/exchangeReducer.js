@@ -547,7 +547,8 @@ const exchange = (state = initState, action) => {
       resetState.gasPrice = newState.gasPrice
       resetState.selectedGas = newState.selectedGas
       resetState.isEditGasPrice = newState.isEditGasPrice
-      
+      resetState.gasPriceSuggest = newState.gasPriceSuggest
+
       resetState.destToken = newState.destToken
       resetState.destTokenSymbol = newState.destTokenSymbol
 
