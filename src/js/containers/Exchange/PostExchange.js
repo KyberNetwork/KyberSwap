@@ -342,6 +342,14 @@ export default class PostExchange extends React.Component {
     this.props.dispatch(exchangeActions.hideApprove())
     this.props.dispatch(exchangeActions.resetSignError())
   }
+
+  closeModalApproveZero = (event) => {
+    analytics.trackClickCloseModal("Approve Zero Modal")
+    if (this.props.form.isApprovingZero) return
+    this.props.dispatch(exchangeActions.hideApproveZero())
+    this.props.dispatch(exchangeActions.resetSignError())
+  }
+
   changePassword = (event) => {
     this.props.dispatch(exchangeActions.changePassword())
   }
@@ -482,6 +490,16 @@ export default class PostExchange extends React.Component {
     analytics.trackClickApproveToken(params.sourceTokenSymbol)
   }
 
+  processExchangeAfterApproveZero = () => {
+    const params = this.formParamOfSnapshot()
+    console.log(params)
+    const account = this.props.account
+    const ethereum = this.props.ethereum
+    this.props.dispatch(exchangeActions.doApproveZero(ethereum, params.sourceToken, 0, params.nonce, params.gas_approve, params.gasPrice,
+      account.keystring, account.password, account.type, account, this.props.keyService, params.sourceTokenSymbol))
+    analytics.trackClickApproveTokenZero(params.sourceTokenSymbol)
+  }
+
   processTx = () => {
     // var errors = {}
     try {
@@ -576,6 +594,26 @@ export default class PostExchange extends React.Component {
     )
   }
 
+
+  contentApproveZero = () => {
+    var addressShort = this.props.account.address.slice(0, 8) + "..." + this.props.account.address.slice(-6)
+    return (
+      <ApproveModal recap="Please approve"
+        onCancel={this.closeModalApproveZero}
+        isApproving={this.props.form.isApprovingZero}
+        token={this.props.form.sourceTokenSymbol}
+        onSubmit={this.processExchangeAfterApproveZero}
+        translate={this.props.translate}
+        address={this.props.account.address}
+        gasPrice={this.props.form.snapshot.gasPrice}
+        gas={this.props.form.snapshot.gas_approve}
+        isFetchingGas={this.props.form.snapshot.isFetchingGas}
+        errors={this.props.form.signError}
+        walletType={this.props.account.type}
+      />
+    )
+  }
+
   openConfig = () => {
     this.props.dispatch(exchangeActions.toggleAdvance());
   }
@@ -587,6 +625,7 @@ export default class PostExchange extends React.Component {
       var modalPassphrase = ""
       var modalConfirm = ""
       var modalApprove = ""
+      var modalApproveZero = ""
       if (this.props.account.type === "keystore") {
         modalPassphrase = (<Modal
           className={{
@@ -623,8 +662,20 @@ export default class PostExchange extends React.Component {
             size="medium"
           />
         )
+        modalApproveZero = (
+          <Modal className={{
+            base: 'reveal medium confirm-modal',
+            afterOpen: 'reveal medium confirm-modal'
+          }}
+            isOpen={this.props.form.confirmApproveZero}
+            onRequestClose={this.closeModalApproveZero}
+            contentLabel="approve modal"
+            content={this.contentApproveZero()}
+            size="medium"
+          />
+        )
       }
-      modalExchange = <div>{modalPassphrase} {modalConfirm} {modalApprove}</div>
+      modalExchange = <div>{modalPassphrase} {modalConfirm} {modalApprove} {modalApproveZero}</div>
     }
 
     let activeButtonClass = ""

@@ -198,10 +198,40 @@ function* processApprove(action) {
   switch (accountType) {
     case "trezor":
     case "ledger":
-      yield call(processApproveByColdWallet, action)
+      var result = yield call(processApproveByColdWallet, action)
+      if (result){
+        yield put(actions.hideApprove())
+        yield put(actions.showConfirm())
+      }
       break
     case "metamask":
-      yield call(processApproveByMetamask, action)
+      var result = yield call(processApproveByMetamask, action)
+      if (result){
+        yield put(actions.hideApprove())
+        yield put(actions.showConfirm())
+      }
+      break
+  }
+}
+
+function processApproveZero(action){
+  const { ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+    keystring, password, accountType, account, keyService, sourceTokenSymbol } = action.payload
+  switch (accountType) {
+    case "trezor":
+    case "ledger":
+      var result = yield call(processApproveByColdWallet, action)
+      if (result){
+        yield put(actions.hideApproveZero())
+        yield put(actions.showApprove())
+      }
+      break
+    case "metamask":
+      var result = yield call(processApproveByMetamask, action)
+      if (result){
+        yield put(actions.hideApproveZero())
+        yield put(actions.showApprove())
+      }
       break
   }
 }
@@ -234,12 +264,14 @@ export function* processApproveByColdWallet(action) {
     //increase nonce 
     yield put(incManualNonceAccount(account.address))
 
-    yield put(actions.hideApprove())
-    yield put(actions.showConfirm())
+    // yield put(actions.hideApprove())
+    // yield put(actions.showConfirm())
     yield put(actions.fetchGasSuccess())
+    return true
   } catch (e) {
     console.log(e)
     yield call(doTxFail, ethereum, account, e.message)
+    return false
   }
 
   //save approve to store
@@ -265,11 +297,13 @@ export function* processApproveByMetamask(action) {
     //increase nonce 
     yield put(incManualNonceAccount(account.address))
 
-    yield put(actions.hideApprove())
-    yield put(actions.showConfirm())
+    // yield put(actions.hideApprove())
+    // yield put(actions.showConfirm())
     yield put(actions.fetchGasSuccess())
+    return true
   } catch (e) {
     yield put(actions.setSignError(e))
+    return false
   }
 }
 
@@ -1420,6 +1454,7 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.APPROVAL_TX_BROADCAST_PENDING", approveTx)
   yield takeEvery("EXCHANGE.PROCESS_EXCHANGE", processExchange)
   yield takeEvery("EXCHANGE.PROCESS_APPROVE", processApprove)
+  yield takeEvery("EXCHANGE.PROCESS_APPROVE_ZERO", processApproveZero)
   yield takeEvery("EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET", checkTokenBalanceOfColdWallet)
   yield takeEvery("EXCHANGE.UPDATE_RATE_PENDING", updateRatePending)
   yield takeEvery("EXCHANGE.UPDATE_RATE_SNAPSHOT", updateRateSnapshot)

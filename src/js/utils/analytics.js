@@ -255,6 +255,16 @@ export function trackClickApproveToken(token){
     }
 }
 
+export function trackClickApproveTokenZero(token){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+        try{
+            mixpanel.track("Swap_*_5_Click_Approve_Token_To_Zero", {token: token})
+        }catch(e){
+            console.log(e)
+        }
+    }
+}
+
 export function trackConfirmTransaction(type, token){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
         try{
