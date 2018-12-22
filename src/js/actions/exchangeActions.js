@@ -555,3 +555,10 @@ export function toggleBalanceContent(value = null){
     payload: value
   }
 }
+
+export function setSelectedGasPrice(gasPrice, gasLevel){
+  return {
+    type: "EXCHANGE.SET_SELECTED_GAS_PRICE",
+    payload: { gasPrice, gasLevel }
+  }
+}
