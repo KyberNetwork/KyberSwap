@@ -124,7 +124,7 @@ const ExchangeBodyLayout = (props) => {
             )}
             <div className={"exchange-content container"}>
               <div className={"exchange-content__item exchange-content__item--left"}>
-                <div className={`input-div-content ${errorExchange ? "error" : ""}`}>
+                <div className={`input-div-content ${errorExchange && props.focus === "source" ? "error" : ""}`}>
                   <div className={"exchange-content__label-content"}>
                     <div className="exchange-content__label">{props.translate("transaction.exchange_from") || "From"}</div>
                     <div className="exchange-content__select select-token-panel">{props.tokenSourceSelect}</div>
@@ -161,7 +161,7 @@ const ExchangeBodyLayout = (props) => {
                         <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal ${errorExchange ? "error" : ""}`}>{props.swapBalance}</div>
                       )}
                     </div>
-                    {props.focus === "source" && <div className={errorExchange ? "error-msg" : ""}>
+                    {props.focus === "source" && <div className={errorExchange ? "error-msg error-msg-source" : ""}>
                       {/* {!props.isChangingWallet ? props.errorShow : ''} */}
                       {errorShow}
                     </div>}

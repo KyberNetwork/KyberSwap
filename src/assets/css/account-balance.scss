@@ -46,9 +46,9 @@
     margin: 0 1.7% 12px 0;
     cursor: pointer;
 
-    &:nth-last-child(-n + 4) {
-      margin-bottom: 0;
-    }
+    // &:nth-last-child(-n + 4) { // bug 1975
+    //   margin-bottom: 0;
+    // }
 
     &.active {
       .account-balance__token-symbol,

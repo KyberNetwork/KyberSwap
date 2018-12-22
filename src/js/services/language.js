@@ -69,7 +69,8 @@ export function initLanguage(store){
       { name: "", code: packName },      
     ],
     options: {
-      renderToStaticMarkup: false
+      renderToStaticMarkup: false,
+      renderInnerHtml: true
     }
   }))
   store.dispatch(addTranslationForLanguage(languagePack, packName));

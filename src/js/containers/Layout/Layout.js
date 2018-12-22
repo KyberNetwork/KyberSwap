@@ -24,6 +24,7 @@ import {isMobile} from '../../utils/common'
 import Language from "../../../../lang"
 
 @connect((store) => {
+  console.log("locale: ", store.locale)
   return {
     ethereumNode: store.connection.ethereum,
     currentBlock: store.global.currentBlock,

@@ -18,7 +18,7 @@ export default class ImportByDeviceWithTrezor extends React.Component {
   deviceService = new Trezor()
   
   showLoading = (walletType) => {
-    this.refs.child.getWrappedInstance().showLoading(walletType)
+    this.refs.child.showLoading(walletType)
     analytics.trackClickImportAccount(walletType)
   }
   

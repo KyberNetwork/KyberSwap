@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 import * as converters from "../../utils/converter"
 import * as validators from "../../utils/validators"
 import { TransferForm } from "../../components/Transaction"
-import { TransactionLoading, QRCode } from "../CommonElements"
+import { TransactionLoading, QRCode, ChooseBalanceModal } from "../CommonElements"
 import { PostTransferWithKey } from "../Transfer"
 import { AdvanceConfigLayout, GasConfig } from "../../components/TransactionCommon"
 import { TokenSelector, AccountBalance } from "../TransactionCommon"
@@ -226,6 +226,17 @@ export default class Transfer extends React.Component {
     // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
   }
 
+  getTransferBalance = () => {
+    return (
+      <ChooseBalanceModal
+        changeAmount={transferActions.specifyAmountTransfer}
+        changeFocus={this.onFocus}
+        sourceTokenSymbol={this.props.transfer.tokenSymbol}
+        typeTx={"transfer"}
+      />
+    )
+  }
+
   render() {
     var addressBalance = ""
     var token = this.props.tokens[this.props.transfer.tokenSymbol]
@@ -312,6 +323,7 @@ export default class Transfer extends React.Component {
         clearSession={this.clearSession}
         walletName={this.props.account.walletName}
         qcCode = {qcCode}
+        transferBalance = {this.getTransferBalance()}
       />
     )
   }

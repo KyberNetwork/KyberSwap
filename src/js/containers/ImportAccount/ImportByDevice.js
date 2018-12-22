@@ -27,7 +27,7 @@ import * as analytics from "../../utils/analytics"
 		translate: getTranslate(store.locale),
 		screen: props.screen
 	}
-})
+}, null, null, {forwardRef: true})
 
 export default class ImportByDevice extends React.Component {
 	constructor(props) {
@@ -223,7 +223,7 @@ export default class ImportByDevice extends React.Component {
 		let browser = bowser.name;
 		this.props.dispatch(resetCheckTimeImportLedger())
 		if (walletType == 'ledger') {
-			if (browser != 'Chrome') {
+			if (!bowser.chrome) {
 				let erroMsg = this.props.translate("error.browser_not_support_ledger", { browser: browser }) || `Ledger is not supported on ${browser}, you can use Chrome instead.`
 				this.props.dispatch(throwError(erroMsg));
 				return;

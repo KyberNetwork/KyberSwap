@@ -97,10 +97,10 @@ export function importNewAccount(address, type, keystring, ethereum, tokens, wal
   }
 }
 
-export function importNewAccountComplete(account, walletName) {
+export function importNewAccountComplete(account, walletName, isOnMobile = null) {
   return {
     type: "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED",
-    payload: {account, walletName}
+    payload: {account, walletName, isOnMobile}
   }
 }
 
