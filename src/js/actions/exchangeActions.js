@@ -589,3 +589,10 @@ export function throwErrorHandleAmount(){
     type: "EXCHANGE.HANDLE_AMOUNT"
   }
 }
+
+export function setSelectedGasPrice(gasPrice, gasLevel){
+  return {
+    type: "EXCHANGE.SET_SELECTED_GAS_PRICE",
+    payload: { gasPrice, gasLevel }
+  }
+}

@@ -173,12 +173,13 @@ function getGasExchange(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
 
 export function* setGasPrice(action) {
   var safeLowGas, standardGas, fastGas, defaultGas
-  var state = store.getState()
+  var state = store.getState();
+  var ethereum = state.connection.ethereum;
+  var accountType = state.account.account.type;
 
-  var maxGasPrice = yield call(getMaxGasPrice)   
+  var maxGasPrice = yield call(getMaxGasPrice)
 
   try {
-    const ethereum = action.payload
     const gasPrice = yield call([ethereum, ethereum.call], "getGasPrice")
 
     safeLowGas = gasPrice.low
@@ -188,7 +189,8 @@ export function* setGasPrice(action) {
     
     var selectedGas = 's'
     var fastGasFloat = parseFloat(fastGas)
-    if (fastGasFloat <= 20){
+
+    if (accountType !== "promo" && fastGasFloat <= 20){
       defaultGas = gasPrice.fast
       selectedGas = 'f'
     }

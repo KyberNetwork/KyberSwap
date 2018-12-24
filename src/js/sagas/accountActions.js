@@ -11,7 +11,7 @@ import * as commonUtils from "../utils/common"
 import BLOCKCHAIN_INFO from "../../../env"
 
 // import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
-import { randomToken, setRandomExchangeSelectedToken, setCapExchange, thowErrorNotPossessKGt } from "../actions/exchangeActions"
+import { randomToken, setRandomExchangeSelectedToken, setCapExchange, thowErrorNotPossessKGt, setSelectedGasPrice } from "../actions/exchangeActions"
 import  * as transferActions from "../actions/transferActions"
 //import { randomForExchange } from "../utils/random"
 
@@ -96,8 +96,10 @@ export function* importNewAccount(action) {
       //promo token      
       var state = store.getState()
       var exchange = state.exchange
+      const transfer = state.transfer;
       var sourceToken = exchange.sourceTokenSymbol.toLowerCase()
-      var promoToken = BLOCKCHAIN_INFO.promo_token      
+      var promoToken = BLOCKCHAIN_INFO.promo_token
+
       if (promoToken && newTokens[promoToken]){
         var promoAddr = newTokens[promoToken].address
         var promoDecimal = newTokens[promoToken].decimals
@@ -139,6 +141,16 @@ export function* importNewAccount(action) {
           console.log(e)
         }
       }
+
+      if (!transfer.isEditGasPrice) {
+        yield put(transferActions.setSelectedGasPrice(transfer.gasPriceSuggest.standardGas, "s"));
+      }
+
+      if (!exchange.isEditGasPrice) {
+        yield put(setSelectedGasPrice(exchange.gasPriceSuggest.standardGas, "s"));
+      }
+    } else {
+      yield put(setGasPrice());
     }
     
    // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)

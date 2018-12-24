@@ -547,11 +547,20 @@ const exchange = (state = initState, action) => {
       resetState.gasPrice = newState.gasPrice
       resetState.selectedGas = newState.selectedGas
       resetState.isEditGasPrice = newState.isEditGasPrice
-      
+      resetState.gasPriceSuggest = newState.gasPriceSuggest
+
       resetState.destToken = newState.destToken
       resetState.destTokenSymbol = newState.destTokenSymbol
 
       return resetState
+    }
+    case "EXCHANGE.SET_SELECTED_GAS_PRICE":{
+      const { gasPrice, gasLevel } = action.payload
+
+      newState.gasPrice = gasPrice
+      newState.selectedGas = gasLevel
+
+      return newState
     }
   }
   return state

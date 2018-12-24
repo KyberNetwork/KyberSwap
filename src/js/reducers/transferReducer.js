@@ -27,8 +27,9 @@ const transfer = (state = initState, action) => {
       newState.token = transfer.token
       newState.tokenSymbol = transfer.tokenSymbol
       newState.gasPrice = transfer.gasPrice
+      newState.selectedGas = transfer.selectedGas
       newState.advanced = false
-    //  newState.isEditGasPrice = false
+      newState.isEditGasPrice = transfer.isEditGasPrice
       return newState
     case "TRANSFER.SELECT_TOKEN":
       newState.tokenSymbol = action.payload.symbol
@@ -252,9 +253,18 @@ const transfer = (state = initState, action) => {
       resetState.gasPrice = newState.gasPrice
       resetState.selectedGas = newState.selectedGas
       resetState.isEditGasPrice = newState.isEditGasPrice
+      resetState.gasPriceSuggest = newState.gasPriceSuggest
 
       resetState.tokenSymbol = newState.tokenSymbol
       return resetState
+    }
+    case "TRANSFER.SET_SELECTED_GAS_PRICE":{
+      const { gasPrice, gasLevel } = action.payload
+
+      newState.gasPrice = gasPrice
+      newState.selectedGas = gasLevel
+
+      return newState
     }
   }
   return state
