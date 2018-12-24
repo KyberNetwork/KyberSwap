@@ -29,7 +29,7 @@ const transfer = (state = initState, action) => {
       newState.gasPrice = transfer.gasPrice
       newState.selectedGas = transfer.selectedGas
       newState.advanced = false
-    //  newState.isEditGasPrice = false
+      newState.isEditGasPrice = transfer.isEditGasPrice
       return newState
     case "TRANSFER.SELECT_TOKEN":
       newState.tokenSymbol = action.payload.symbol
