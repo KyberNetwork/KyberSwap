@@ -578,6 +578,14 @@ const exchange = (state = initState, action) => {
       if(!action.payload.isOnMobile) newState.isBalanceActive = true
       return newState
     }
+    case "EXCHANGE.SET_SELECTED_GAS_PRICE":{
+      const { gasPrice, gasLevel } = action.payload
+
+      newState.gasPrice = gasPrice
+      newState.selectedGas = gasLevel
+
+      return newState
+    }
   }
   return state
 }

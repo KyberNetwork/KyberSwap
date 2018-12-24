@@ -508,7 +508,7 @@ export function calculatePercent(numerator, denumerator){
   return roundPercent
 }
 
-export function formatNumber(number) {
+export function formatNumber(number , round = false) {
   var format = {
     decimalSeparator: '.',
     groupSeparator: ',',
@@ -516,6 +516,11 @@ export function formatNumber(number) {
   }
   BigNumber.config({ FORMAT: format })
   var numberFormat = new BigNumber(number.toString())
+
+  if (round !== false) {
+    return numberFormat.toFormat(round)
+  }
+
   return numberFormat.toFormat()
 }
 
