@@ -15,6 +15,9 @@ script:
 install:
   - npm install
   - npm run build-ropsten
+  - mkdir upload
+  - mv dist/ropsten/app.css upload
+  - mv dist/ropsten/app.min.js upload
 
 deploy:
   - provider: s3
@@ -23,7 +26,7 @@ deploy:
     bucket: dev-swap.knstats.com
     region: ap-southeast-1
     acl: public_read
-    local_dir: dist/ropsten
+    local_dir: upload
     skip_cleanup: true
     on:
       branch: develop
