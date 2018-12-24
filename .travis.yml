@@ -16,8 +16,8 @@ install:
   - npm install
   - npm run build-ropsten
   - mkdir upload
-  - mv dist/ropsten/app.css upload
-  - mv dist/ropsten/app.min.js upload
+  - mv dist/ropsten/*.css upload
+  - mv dist/ropsten/*.js upload
 
 deploy:
   - provider: s3
