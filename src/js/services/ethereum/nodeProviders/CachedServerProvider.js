@@ -281,7 +281,8 @@ export default class CachedServerProvider extends React.Component {
 
     getRightMarketInfo() {
         return new Promise((resolve, rejected) => {
-            this.timeout(this.maxRequestTime,  fetch(this.rpcUrl + '/marketInfo'))
+            // this.timeout(this.maxRequestTime,  fetch(this.rpcUrl + '/marketInfo'))
+            this.timeout(this.maxRequestTime,  fetch("http://localhost:3001/marketInfo"))
             .then((response) => {
                 return response.json()
             })

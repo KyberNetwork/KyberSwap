@@ -397,7 +397,18 @@ const market = (state = initState, action) => {
           }
         }
 
-        newTokens[key].USD.change = newTokens[key].ETH.change = change
+        // newTokens[key].USD.change = newTokens[key].ETH.change = change
+        var rawChangeUSD = token.change_24h
+        
+        var changeUSD = parseFloat(rawChangeUSD)
+        if (changeUSD === "" || !!changeUSD === false) {
+          changeUSD = -9999
+        } else {
+          changeUSD = Number(changeUSD.toFixed(1))
+        }
+        newTokens[key].ETH.change = change
+        newTokens[key].USD.change = changeUSD
+
         if (newTokens[key] && token.quotes) {
           newTokens[key].ETH.market_cap = token.quotes.ETH.market_cap
           newTokens[key].ETH.volume = token.quotes.ETH.volume_24h ? Math.round(token.quotes.ETH.volume_24h): 0
