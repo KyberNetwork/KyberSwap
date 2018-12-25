@@ -66,7 +66,7 @@ export default class ChooseBalanceModal extends React.Component {
             if (this.props.typeTx === "swap") this.props.ethereum.fetchRateExchange(true)
         } else {
             this.props.dispatch(this.props.changeAmount(converters.roundingNumber(amount).toString(10)))
-            this.changeFocus()
+            this.props.changeFocus()
         }
         this.hideChooseBalance()
         analytics.trackClickChooseBalance(percent)

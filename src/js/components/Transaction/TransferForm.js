@@ -95,7 +95,7 @@ const TransferForm = (props) => {
                     /> */}
                     <div className={"main-input main-input__left"}>
                       <input
-                        className={`exchange-content__input ${isError() ? "error" : ""}`}
+                        className={`exchange-content__input ${props.account !== false ? 'has-account' : ''} ${isError() ? "error" : ""}`}
                         type="text"
                         min="0"
                         step="0.000001"
@@ -112,9 +112,9 @@ const TransferForm = (props) => {
                         <div className={`exchange-content__label ${props.errors.amountTransfer ? "error" : ""}`}>{props.sourceActive}</div>
                       )}
                       {props.account !== false && (
-                        <div className={`exchange-content__label ${props.errors.amountTransfer ? "error" : ""}`}>{props.transferBalance}</div>
+                        <div className={`exchange-content__label trigger-swap-modal ${props.errors.amountTransfer ? "error" : ""}`}>{props.transferBalance}</div>
                       )}
-                      {props.qcCode}
+                      {/* {props.qcCode} */}
                     </div>
                     {props.focus === "source" && props.errors.amountTransfer && <div className={props.errors.amountTransfer ? "error-msg error-msg-source" : ""}>
                       {/* {!props.isChangingWallet ? props.errorShow : ''} */}
@@ -122,7 +122,7 @@ const TransferForm = (props) => {
                     </div>}
                   </div>
                 </div>
-                {props.focus !== "ssource" && props.errors.amountTransfer && <div className={props.errors.amountTransfer ? "mobile-error__show" : ""}>
+                {props.focus === "source" && props.errors.amountTransfer && <div className={props.errors.amountTransfer ? "mobile-error__show" : ""}>
                   {props.translate(props.errors.amountTransfer)}
                 </div>}
               </div>
@@ -146,6 +146,7 @@ const TransferForm = (props) => {
                         onFocus={props.onFocusAddr}
                         onBlur={props.onBlur}
                       />
+                      {props.qcCode}
                     </div>
                     {props.focus === "to-addr" && props.errors.destAddress && <div className={props.errors.destAddress ? "error-msg" : ""}>
                       {/* {!props.isChangingWallet ? props.errorShow : ''} */}
