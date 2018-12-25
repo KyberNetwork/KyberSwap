@@ -87,7 +87,12 @@
         @include screen-max-width(medium) {
           display: block;
           color: #ee344e;
-          padding: 15px 12px
+          padding: 15px 12px;
+          span {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 5px;
+          }
         }
       }
     }
@@ -116,11 +121,19 @@
       @include screen-max-width(medium) {
         display: none;
       }
-      &.error {
+
+      &__mobile {
         display: none;
+        top: unset !important;
         @include screen-max-width(medium) {
-          display: block;
-          top: unset;
+          display: flex;
+        }
+      }
+
+      &.error {
+        // display: none;
+        @include screen-max-width(medium) {
+          // display: flex;
           text-align: center;
           span {
             color: #f1637d;
@@ -157,7 +170,8 @@
         left: -23px;
         top: 3px;
         @include screen-max-width(medium) {
-          left: -15px;
+          // left: -15px;
+          display: none;
         }
       }
 
@@ -226,6 +240,9 @@
           border-left: none;
           &.error {
             border-left: 1px solid #cccccc;
+          }
+          .qc-code-content {
+            margin-right: 10px;
           }
         }
       }
@@ -378,9 +395,9 @@
       border-left: none;
     }
 
-    @include screen-max-width(medium) {
-      padding: 0 0px 0 5px;
-    }
+    // @include screen-max-width(medium) {
+    //   padding: 0 0px 0 5px;
+    // }
   }
 
   & &__input {
@@ -405,12 +422,17 @@
 
     @include screen-max-width(medium) {
       padding: 0;
+      padding-left: 20px;
       padding-right: 10px;
       &.has-account {
         padding-right: 0;
+        // padding-left: 20px;
         &.error {
-          padding-right: 25px;
+          // padding-right: 25px;
         }
+      }
+      &-address {
+        text-align: left;
       }
     }
   }
@@ -501,7 +523,7 @@
       // }
 
       &--transfer {
-        padding-right: 12px !important;
+        // padding-right: 12px !important;
       }
     }
 
@@ -545,6 +567,7 @@
     &__input {
       padding-right: 10px;
       text-align: right;
+      // padding-left: 20px;
     }
   }
 }

@@ -39,7 +39,7 @@ export function unlock(input, password, nonStrict) {
         throw new Error('Unsupported key derivation scheme')
     }
     var ciphertext = new Buffer(json.crypto.ciphertext, 'hex')
-    var mac = ethUtil.sha3(Buffer.concat([derivedKey.slice(16, 32), ciphertext]))
+    var mac = ethUtil.keccak(Buffer.concat([derivedKey.slice(16, 32), ciphertext]))
     if (mac.toString('hex') !== json.crypto.mac) {
         throw new Error('Key derivation failed - possibly wrong password')
     }

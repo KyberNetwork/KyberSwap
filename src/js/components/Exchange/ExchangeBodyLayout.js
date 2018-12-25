@@ -180,12 +180,12 @@ const ExchangeBodyLayout = (props) => {
               </div>
 
               <div className={"exchange-content__item exchange-content__item--right"}>
-                {errorExchange && <div className={"exchange-content__item--absolute error"}>
+                <div className={`exchange-content__item--absolute exchange-content__item--absolute__mobile  ${errorExchange ? "error" : ""}`}>
                   <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
                     <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
                   </span>
                   <ReactTooltip place="bottom" id="swap" type="light"/>
-                </div>}
+                </div>
                 <div className={`input-div-content ${errorExchange ? "error" : ""}`}>
                   <div className={"exchange-content__label-content"}>
                     <div className="exchange-content__label">{props.translate("transaction.exchange_to") || "To"}</div>
