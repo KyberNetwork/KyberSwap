@@ -11,6 +11,7 @@ import { getTranslate } from 'react-localize-redux'
   return {...store.account, 
     path,
     translate: getTranslate(store.locale),
+    analytics: store.global.analytics
   }
 })
 
@@ -26,13 +27,15 @@ export default class Address extends React.Component {
     )
   
     return (
-        <AddressView address={this.props.account.address}
-                     parrentProps={this.props}
-                     endSession={this.handleEndSession} 
-                     path = {this.props.path}
-                     notify = {notify}
-                     translate={this.props.translate}
-        />
+      <AddressView
+        address={this.props.account.address}
+        parrentProps={this.props}
+        endSession={this.handleEndSession}
+        path = {this.props.path}
+        notify = {notify}
+        translate={this.props.translate}
+        analytics={this.props.analytics}
+      />
     )
   }
 }

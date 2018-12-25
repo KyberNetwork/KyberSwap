@@ -1,25 +1,11 @@
 import React from "react"
 import { connect } from "react-redux"
-import { push } from 'react-router-redux';
-import constants from "../../services/constants"
 import { TransactionLoadingView } from "../../components/Transaction"
 import { getTranslate } from 'react-localize-redux'
-import * as exchangeActions from "../../actions/exchangeActions"
-import * as transferActions from "../../actions/transferActions"
 import { Modal } from "../../components/CommonElement"
-import * as analytics from "../../utils/analytics"
 
 
 @connect((store, props) => {
-    // var type = props.type
-    // var isOpen = false
-    // if (props.type === "exchange"){
-    //     isOpen = store.exchange.step === 3
-    // }
-    // if (props.type === "transfer"){
-    //     isOpen = store.transfer.step === 3
-    // }
-    
     var returnProps = {}
     if (props.broadcasting) {
         returnProps = {
@@ -41,7 +27,7 @@ import * as analytics from "../../utils/analytics"
             isOpen: props.isOpen,
         }
     }
-    return { ...returnProps, translate: getTranslate(store.locale) }
+    return { ...returnProps, translate: getTranslate(store.locale), analytics: store.global.analytics }
 })
 
 export default class TransactionLoading extends React.Component {
@@ -64,7 +50,7 @@ export default class TransactionLoading extends React.Component {
         this.setState({
             isCopied: true
         })
-        analytics.trackClickCopyTx()
+        this.props.analytics.callTrack("trackClickCopyTx");
     }
 
     resetCopy(){
@@ -78,25 +64,26 @@ export default class TransactionLoading extends React.Component {
     // }
 
     render() {
-        var loadingView = 
-        <TransactionLoadingView
-                broadcasting={this.props.broadcasting}
-                error={this.props.error}
-                type={this.props.type}
-                status={this.props.status}
-                txHash={this.props.txHash}
-                balanceInfo={this.props.balanceInfo}
-                makeNewTransaction={this.props.makeNewTransaction}
-                translate={this.props.translate}
-                analyze={this.props.analyze}
-                address={this.props.address}
-                toogleModal={this.toogleModal.bind(this)}
-                isOpenModal={this.state.isOpenModal}
-                isCopied={this.state.isCopied}
-                handleCopy={this.handleCopy.bind(this)}
-                resetCopy={this.resetCopy.bind(this)}
-                onCancel = {this.props.makeNewTransaction}                
-            />
+        var loadingView =
+          <TransactionLoadingView
+            broadcasting={this.props.broadcasting}
+            error={this.props.error}
+            type={this.props.type}
+            status={this.props.status}
+            txHash={this.props.txHash}
+            balanceInfo={this.props.balanceInfo}
+            makeNewTransaction={this.props.makeNewTransaction}
+            translate={this.props.translate}
+            analyze={this.props.analyze}
+            address={this.props.address}
+            toogleModal={this.toogleModal.bind(this)}
+            isOpenModal={this.state.isOpenModal}
+            isCopied={this.state.isCopied}
+            handleCopy={this.handleCopy.bind(this)}
+            resetCopy={this.resetCopy.bind(this)}
+            onCancel = {this.props.makeNewTransaction}
+            analytics = {this.props.analytics}
+          />
         return (
             <Modal
             className={{

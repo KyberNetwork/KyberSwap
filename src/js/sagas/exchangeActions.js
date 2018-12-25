@@ -4,7 +4,6 @@ import * as globalActions from "../actions/globalActions"
 
 import * as common from "./common"
 import * as validators from "../utils/validators"
-import * as analytics from "../utils/analytics"
 
 import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
 import { addTx } from '../actions/txActions'
@@ -68,9 +67,12 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
     console.log(e)
   }
 
+  const state = store.getState();
+  const global = state.global;
+
   //track complete trade
-  analytics.trackCoinExchange(data)
-  analytics.completeTrade(hash, "kyber", "swap")
+  global.analytics.callTrack("trackCoinExchange", data);
+  global.analytics.callTrack("completeTrade", hash, "kyber", "swap");
 
   //console.log({txRaw, hash, account, data})
   const tx = new Tx(
@@ -86,8 +88,7 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
 
 
   try{
-    var state = store.getState()
-    var notiService = state.global.notiService
+    var notiService = global.notiService
     notiService.callFunc("setNewTx",{hash: hash})
   }catch(e){
     console.log(e)

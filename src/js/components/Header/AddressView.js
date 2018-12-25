@@ -1,7 +1,6 @@
-import { NavLink, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import React from "react"
 import BLOCKCHAIN_INFO from "../../../../env"
-import * as analytics from "../../utils/analytics"
 
 const Address = (props) => {
 
@@ -18,7 +17,7 @@ const Address = (props) => {
           <div className="address d-inline-block">
             <div className="float-left-md">{props.translate("address.address") || "ADDRESS"}</div>
             <div className="float-right-md">
-              <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.address} onClick={(e) => {analytics.trackClickShowAddressOnEtherescan()}}>
+              <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.address} onClick={(e) => {props.analytics.callTrack("trackClickShowAddressOnEtherescan")}}>
                 {props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}
               </a>
             </div>

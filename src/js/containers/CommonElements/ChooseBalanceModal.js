@@ -1,8 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
-import * as exchangeActions from "../../actions/exchangeActions"
-import * as analytics from "../../utils/analytics"
 import * as converters from "../../utils/converter"
 
 @connect((store, props) => {
@@ -13,7 +11,8 @@ import * as converters from "../../utils/converter"
         changeAmount: props.changeAmount,
         changeFocus: props.changeFocus,
         typeTx: props.typeTx,
-        transfer: store.transfer
+        transfer: store.transfer,
+        analytics: store.global.analytics
     }
 })
 
@@ -69,7 +68,7 @@ export default class ChooseBalanceModal extends React.Component {
             this.changeFocus()
         }
         this.hideChooseBalance()
-        analytics.trackClickChooseBalance(percent)
+        this.props.analytics.callTrack("trackClickChooseBalance", percent);
         // this.setState({percent: percent})
     }
 
