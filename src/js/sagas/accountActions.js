@@ -6,7 +6,6 @@ import { fetchExchangeEnable } from "../actions/exchangeActions"
 import * as exchangeActions from "../actions/exchangeActions"
 import * as utilActions from '../actions/utilActions'
 import * as common from "./common"
-import * as analytics from "../utils/analytics"
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
 import {
   randomToken,
@@ -65,8 +64,9 @@ function* createNewAccount(address, type, keystring, ethereum, walletType, info)
 export function* importNewAccount(action) {
   yield put(actions.importLoading())
   const { address, type, keystring, ethereum, tokens, metamask, walletType, walletName, info } = action.payload
+  const global = store.getState().global;
   var translate = getTranslate(store.getState().locale)
-  var isChangingWallet = store.getState().global.isChangingWallet
+  var isChangingWallet = global.isChangingWallet
   try {
     var  account
     var accountRequest = yield call(common.handleRequest, createNewAccount, address, type, keystring, ethereum, walletType, info)
@@ -148,7 +148,7 @@ export function* importNewAccount(action) {
     if (isChangingWallet) yield put(closeChangeWallet())
 
     //track login wallet
-    analytics.loginWallet(type)
+    global.analytics.callTrack("loginWallet", type)
 
     if (type !== "promo"){
       yield put(exchangeActions.fetchExchangeEnable())

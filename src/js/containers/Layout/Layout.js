@@ -1,27 +1,23 @@
 import React from "react"
 import { connect } from "react-redux"
-import { Route } from 'react-router'
-import { ConnectedRouter } from 'react-router-redux'
-import InfoKyber from "../../components/InfoKyber"
 import { Exchange } from "../../containers/Exchange"
 import { Transfer } from "../../containers/Transfer"
 import { Header } from "../../containers/Header"
-import { ImportAccount } from "../ImportAccount"
-import { Processing, ExchangeHistory } from "../../containers/CommonElements/"
+import { ExchangeHistory } from "../../containers/CommonElements/"
 import {Market} from "../Market"
 import constanst from "../../services/constants"
 import history from "../../history"
-import { clearSession, changeLanguage, setOnMobileOnly } from "../../actions/globalActions"
+import { clearSession, changeLanguage, setOnMobileOnly, initAnalytics } from "../../actions/globalActions"
 import { openInfoModal } from "../../actions/utilActions"
-import { setConnection, createNewConnectionInstance } from "../../actions/connectionActions"
+import { createNewConnectionInstance } from "../../actions/connectionActions"
 import { default as _ } from 'underscore';
 import { LayoutView } from "../../components/Layout"
 import { getTranslate } from 'react-localize-redux'
 import * as common from "../../utils/common"
-import * as analytics from "../../utils/analytics"
 import {isMobile} from '../../utils/common'
-
 import Language from "../../../../lang"
+import AnalyticFactory from "../../services/analytics"
+import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store) => {
   console.log("locale: ", store.locale)
@@ -34,7 +30,8 @@ import Language from "../../../../lang"
     account: store.account,
     translate: getTranslate(store.locale),
     locale: store.locale,
-    tokens: store.tokens.tokens
+    tokens: store.tokens.tokens,
+    analytics: store.global.analytics
   }
 })
 
@@ -58,10 +55,14 @@ export default class Layout extends React.Component {
 
     this.intervalIdle = setInterval(this.checkTimmer.bind(this), 10000)
     this.props.dispatch(createNewConnectionInstance())
+
+    const analytic = new AnalyticFactory({ listWorker: ['mix'], network: BLOCKCHAIN_INFO.chainName })
+    this.props.dispatch(initAnalytics(analytic))
   }
 
   componentDidMount = () => {
-    analytics.trackAccessToSwap()
+    this.props.analytics.callTrack("trackAccessToSwap");
+
     window.addEventListener("beforeunload", this.handleCloseWeb)
     if (isMobile.iOS() || isMobile.Android()) {
       this.props.dispatch(setOnMobileOnly())
@@ -69,11 +70,7 @@ export default class Layout extends React.Component {
   }
 
   handleCloseWeb = () => {
-    analytics.exitSwap()
-  }
-
-  handleCloseWeb = () => {
-    analytics.exitSwap()
+    this.props.analytics.callTrack("exitSwap");
   }
 
   checkTimmer() {

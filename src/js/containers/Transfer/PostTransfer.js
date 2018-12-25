@@ -1,20 +1,12 @@
 import React from "react"
 import { connect } from "react-redux"
-
-import constants from "../../services/constants"
-
 import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
-
 import * as transferActions from "../../actions/transferActions"
 import * as utilActions from "../../actions/utilActions"
-
-import { TermAndServices } from "../../containers/CommonElements"
 import { PassphraseModal, ConfirmTransferModal, PostTransferBtn } from "../../components/Transaction"
-
 import { Modal } from "../../components/CommonElement"
 import { getTranslate } from 'react-localize-redux';
-import * as analytics from "../../utils/analytics"
 
 @connect((store, props) => {
   const tokens = store.tokens.tokens
@@ -34,7 +26,8 @@ import * as analytics from "../../utils/analytics"
     form: { ...store.transfer, balance, decimals, tokenName },
     ethereum: store.connection.ethereum,
     keyService: props.keyService,
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    analytics: store.global.analytics
   };
 
 })
@@ -42,7 +35,7 @@ import * as analytics from "../../utils/analytics"
 
 export default class PostTransfer extends React.Component {
   clickTransfer = () => {
-    analytics.trackClickTransferButton()
+    this.props.analytics.callTrack("trackClickTransferButton");
     if (this.props.account === false){
       this.props.dispatch(transferActions.openImportAccount())
       return
@@ -119,7 +112,8 @@ export default class PostTransfer extends React.Component {
 
   content = () => {
     return (
-      <PassphraseModal recap={this.createRecap()}
+      <PassphraseModal
+        recap={this.createRecap()}
         onChange={this.changePassword}
         onClick={this.processTx}
         onCancel={this.closeModal}
@@ -129,6 +123,7 @@ export default class PostTransfer extends React.Component {
         gasPrice={this.props.form.snapshot.gasPrice}
         gas={this.props.form.snapshot.gas}
         isFetchingRate={true}
+        analytics={this.props.analytics}
       />
     )
   }
@@ -200,7 +195,7 @@ export default class PostTransfer extends React.Component {
         this.props.dispatch(transferActions.resetSignError())
         break
     }
-    analytics.trackClickCloseModal("ConfirmTransfer Modal")
+    this.props.analytics.callTrack("trackClickCloseModal", "ConfirmTransfer Modal");
   }
   changePassword = () => {
     this.props.dispatch(transferActions.changePassword())
@@ -251,7 +246,7 @@ export default class PostTransfer extends React.Component {
       console.log(e)
       this.props.dispatch(transferActions.throwPassphraseError(this.props.translate("error.passphrase_error") || "Key derivation failed"))
     }
-    analytics.trackConfirmTransaction("transfer", this.props.form.tokenSymbol)
+    this.props.analytics.callTrack("trackConfirmTransaction", "transfer", this.props.form.tokenSymbol);
   }
 
   openConfig = () => {

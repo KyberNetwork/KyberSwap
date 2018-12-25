@@ -3,13 +3,10 @@ import { connect } from "react-redux"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { AccountBalanceLayout } from '../../components/Exchange'
 import {acceptTermOfService} from "../../actions/globalActions"
-import * as analytics from "../../utils/analytics"
 import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
   var location = store.router.location.pathname
-  var sourceActive = 'ETH'
-  sourceActive = store.exchange.sourceTokenSymbol
   var isFixedSourceToken = !!(store.account && store.account.account.type ==="promo" && store.tokens.tokens[BLOCKCHAIN_INFO.promo_token])
 
   return {
@@ -23,7 +20,8 @@ import { getTranslate } from 'react-localize-redux';
     address: store.account.account.address,
     chooseToken: props.chooseToken,
     sourceActive: props.sourceActive,
-    isFixedSourceToken: isFixedSourceToken
+    isFixedSourceToken: isFixedSourceToken,
+    analytics: store.global.analytics
   }
 })
 
@@ -55,13 +53,13 @@ export default class AccountBalance extends React.Component {
   }
 
   clickOnInput = (e) => {
-    analytics.trackSearchTokenBalanceBoard()
+    this.props.analytics.callTrack("trackSearchTokenBalanceBoard");
   }
 
   selectToken = (e, symbol, address) => {
     if (this.props.isFixedSourceToken) return
     this.props.chooseToken(symbol, address, "source")
-    analytics.trackChooseTokenOnBalanceBoard(symbol)
+    this.props.analytics.callTrack("trackChooseTokenOnBalanceBoard", symbol);
   }
 
   showSort = (e) =>{
@@ -74,13 +72,13 @@ export default class AccountBalance extends React.Component {
   sortSymbol = (e) =>{
     this.setState({sortType: "Symbol", sortValueSymbol_DES: !this.state.sortValueSymbol_DES})
     this.hideSort()
-    analytics.trackClickSortBalanceBoard("Symbol", this.state.sortValueSymbol_DES ? "DESC" : "ASC")
+    this.props.analytics.callTrack("trackClickSortBalanceBoard", "Symbol", this.state.sortValueSymbol_DES ? "DESC" : "ASC");
   }
 
   sortPrice = (e) =>{
     this.setState({sortType: "Price", sortValuePrice_DES: !this.state.sortValuePrice_DES})
     this.hideSort()
-    analytics.trackClickSortBalanceBoard("Price", this.state.sortValuePrice_DES ? "DESC" : "ASC")
+    this.props.analytics.callTrack("trackClickSortBalanceBoard", "Price", this.state.sortValuePrice_DES ? "DESC" : "ASC");
   }
 
   toggleBalanceContent = () => {
@@ -116,6 +114,7 @@ export default class AccountBalance extends React.Component {
         onToggleBalanceContent={this.onToggleBalanceContent}
         tradeType = {this.props.tradeType}
         isFixedSourceToken = {this.props.isFixedSourceToken}
+        analytics={this.props.analytics}
       />
     )
   }

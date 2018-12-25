@@ -9,15 +9,16 @@ import { default as _ } from 'underscore'
 import { clearSession, setIsChangingPath } from "../../actions/globalActions"
 import { ImportAccount } from "../ImportAccount"
 import {HeaderTransaction} from "../TransactionCommon"
-import * as analytics from "../../utils/analytics"
 
 @connect((store, props) => {
   const account = store.account.account
   var translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
   const transfer = store.transfer
+  const analytics = store.global.analytics
+
   return {
-    translate, transfer, tokens, account,
+    translate, transfer, tokens, account, analytics,
     params: {...props.match.params}
   }
 })
@@ -63,7 +64,7 @@ export default class Exchange extends React.Component {
     }
     this.props.dispatch(transferActions.seSelectedGas(level))
     this.specifyGasPrice(value)
-    analytics.trackChooseGas("transfer", value, level)
+    this.props.analytics.callTrack("trackChooseGas", "transfer", value, level);
   }
 
   render() {
