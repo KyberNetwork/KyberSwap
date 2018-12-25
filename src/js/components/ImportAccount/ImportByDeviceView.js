@@ -2,9 +2,7 @@ import React from "react";
 import { SelectAddressModal } from "../ImportAccount";
 import { roundingNumber } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
-import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
 import PathSelector from "../../containers/CommonElements/PathSelector";
-import * as analytics from "../../utils/analytics"
 
 const ImportByDeviceView = (props) => {
 
@@ -16,7 +14,7 @@ const ImportByDeviceView = (props) => {
             selectedPath = inputPath.value;
         }
         props.choosePath(selectedPath, dpath);
-        analytics.trackChoosePathColdWallet(selectedPath)
+        props.analytics.callTrack("trackChoosePathColdWallet", selectedPath);
     }
 
     function getAddress(formAddress) {
@@ -62,12 +60,15 @@ const ImportByDeviceView = (props) => {
     }
 
     function getListPathHtml() {
-        return (<PathSelector
-            listItem = {props.dPath}
-            choosePath = {choosePath}
-            walletType = {props.walletType}
-            currentDPath = {props.currentDPath}
-        />)
+      return (
+        <PathSelector
+          listItem = {props.dPath}
+          choosePath = {choosePath}
+          walletType = {props.walletType}
+          currentDPath = {props.currentDPath}
+          analytics={props.analytics}
+        />
+      )
     }
 
     function getSelectAddressHtml() {

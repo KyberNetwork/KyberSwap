@@ -7,7 +7,6 @@ import * as web3Package from "../../services/web3"
 import {acceptTermOfService} from "../../actions/globalActions"
 import { importAccountMetamask, setOnDAPP } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
-import * as analytics from "../../utils/analytics"
 
 @connect((store, props) => {
   var tokens = store.tokens.tokens
@@ -20,7 +19,8 @@ import * as analytics from "../../utils/analytics"
     translate: getTranslate(store.locale),
     ethereum: store.connection.ethereum,
     tokens: supportTokens,
-    tradeType: props.tradeType
+    tradeType: props.tradeType,
+    global: store.global
   }
 })
 
@@ -84,7 +84,7 @@ export default class LandingPage extends React.Component {
     }else{
       this.props.dispatch(acceptTermOfService())
     }
-    analytics.acceptTerm(this.props.tradeType)
+    this.props.global.analytics.callTrack("acceptTerm", this.props.tradeType);
   }
 
   render() {

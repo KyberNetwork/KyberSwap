@@ -1,7 +1,5 @@
 import React from "react"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
-import { getTranslate } from 'react-localize-redux';
-import * as analytics from "../../utils/analytics"
 
 export default class PathSelector extends React.Component {
     constructor(props) {
@@ -89,7 +87,7 @@ export default class PathSelector extends React.Component {
                             ) : (
                                 <div className="input-custom-path">
                                     <div class="">
-                                        <input id="form-input-custom-path" type="text" name="customPath" defaultValue={dPath.defaultP}  placeholder="Your Custom Path" onFocus={(e) => analytics.trackClickCustomPathColdWallet()}/>
+                                        <input id="form-input-custom-path" type="text" name="customPath" defaultValue={dPath.defaultP}  placeholder="Your Custom Path" onFocus={(e) => this.props.analytics.callTrack("trackClickCustomPathColdWallet")}/>
                                         <img src={require('../../../assets/img/angle-right.svg')}/>
                                     </div>
                                 </div>

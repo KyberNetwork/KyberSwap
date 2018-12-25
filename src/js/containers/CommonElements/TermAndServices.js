@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getTranslate } from 'react-localize-redux';
-import * as analytics from "../../utils/analytics";
 import { isUserEurope } from "../../utils/common";
 
 @connect((store, props) => {
   return {
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    analytics: store.global.analytics
   }
 })
 
@@ -19,9 +19,9 @@ export default class TermAndServices extends React.Component {
     }
     
     return (
-      <div className="exchange-terms" onClick={() => {analytics.acceptTerm(this.props.tradeType)}}>
+      <div className="exchange-terms" onClick={() => {this.props.analytics.callTrack("acceptTerm", this.props.tradeType)}}>
         <span>By Swapping, you agree to the</span>
-        <a class="exchange-terms__link" href={termAndConditionUrl} target="_blank" onClick={(e) => {analytics.trackClickShowTermAndCondition()}}>
+        <a class="exchange-terms__link" href={termAndConditionUrl} target="_blank" onClick={(e) => {this.props.analytics.callTrack("trackClickShowTermAndCondition")}}>
           {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}
         </a>
       </div>

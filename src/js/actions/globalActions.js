@@ -267,3 +267,10 @@ export function setOnMobileOnly(){
     type: "GLOBAL.SET_ON_MOBILE_ONLY"
   }
 }
+
+export function initAnalytics(analytics){
+  return {
+    type: "GLOBAL.INIT_ANALYTICS",
+    payload: analytics
+  }
+}

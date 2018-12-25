@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 import * as converters from "../../utils/converter"
 import { TransactionConfig } from "../../components/Transaction"
 import { ExchangeBodyLayout } from "../../components/Exchange"
-import { AdvanceConfigLayout, GasConfig, MinConversionRate } from "../../components/TransactionCommon"
+import { AdvanceConfigLayout, MinConversionRate } from "../../components/TransactionCommon"
 import { TransactionLoading, Token, ChooseBalanceModal } from "../CommonElements"
 import { TokenSelector, AccountBalance } from "../TransactionCommon"
 import * as validators from "../../utils/validators"
@@ -12,7 +12,6 @@ import * as common from "../../utils/common"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import * as globalActions from "../../actions/globalActions"
 import * as exchangeActions from "../../actions/exchangeActions"
-import * as analytics from "../../utils/analytics"
 import constansts from "../../services/constants"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore';
@@ -109,15 +108,14 @@ export default class ExchangeBody extends React.Component {
     var path
     if (type === "source"){
       path = constansts.BASE_HOST + "/swap/" + symbol.toLowerCase() + "_" + this.props.exchange.destTokenSymbol.toLowerCase()
-      analytics.trackChooseToken("from", symbol)
+      this.props.global.analytics.callTrack("trackChooseToken", "from", symbol);
     }else{
       path = constansts.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "_" + symbol.toLowerCase()
-      analytics.trackChooseToken("to", symbol)
+      this.props.global.analytics.callTrack("trackChooseToken", "to", symbol);
     }
 
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
     this.props.dispatch(globalActions.goToRoute(path))
-    // analytics.trackChooseToken(type, symbol)
   }
 
   dispatchUpdateRateExchange = (sourceValue) => {
@@ -239,7 +237,7 @@ export default class ExchangeBody extends React.Component {
   focusSource = () => {
     this.props.dispatch(exchangeActions.focusInput('source'));
     this.setState({focus:"source"})
-    analytics.trackClickInputAmount("from")
+    this.props.global.analytics.callTrack("trackClickInputAmount", "from");
   }
 
   blurSource = () => {
@@ -249,7 +247,7 @@ export default class ExchangeBody extends React.Component {
   focusDest = () => {
     this.props.dispatch(exchangeActions.focusInput('dest'));
     this.setState({focus:"dest"})
-    analytics.trackClickInputAmount("to")
+    this.props.global.analytics.callTrack("trackClickInputAmount", "to");
   }
 
   blurDest = () => {
@@ -258,7 +256,7 @@ export default class ExchangeBody extends React.Component {
 
   makeNewExchange = () => {
     this.props.dispatch(exchangeActions.makeNewExchange());
-    analytics.trackClickNewTransaction("Swap")
+    this.props.global.analytics.callTrack("trackClickNewTransaction", "Swap");
   }  
 
   setAmount = () => {
@@ -283,7 +281,7 @@ export default class ExchangeBody extends React.Component {
       this.props.dispatch(exchangeActions.inputChange('source', balance))
       this.props.ethereum.fetchRateExchange(true)
     }
-    analytics.trackClickAllIn("Swap", tokenSymbol)
+    this.props.global.analytics.callTrack("trackClickAllIn", "Swap", tokenSymbol);
   }
 
   swapToken = () => {
@@ -297,7 +295,7 @@ export default class ExchangeBody extends React.Component {
     var path = constansts.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "_" + this.props.exchange.sourceTokenSymbol.toLowerCase()
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
     this.props.dispatch(globalActions.goToRoute(path))
-    analytics.trackClickSwapDestSrc(this.props.exchange.sourceTokenSymbol, this.props.exchange.destTokenSymbol)
+    this.props.global.analytics.callTrack("trackClickSwapDestSrc", this.props.exchange.sourceTokenSymbol, this.props.exchange.destTokenSymbol);
   }
 
   analyze = () => {
@@ -320,7 +318,7 @@ export default class ExchangeBody extends React.Component {
   selectedGasHandler = (value, level, levelString) => {
     this.props.dispatch(exchangeActions.seSelectedGas(level))
     this.specifyGasPrice(value)
-    analytics.trackChooseGas(value, levelString)
+    this.props.global.analytics.callTrack("trackChooseGas", value, levelString);
   }
 
   handleSlippageRateChanged = (e, isInput = false) => {
@@ -336,7 +334,7 @@ export default class ExchangeBody extends React.Component {
     const minRate = converters.caculatorRateToPercentage(value, offeredRate);
 
     this.props.dispatch(exchangeActions.setMinRate(minRate.toString()));
-    analytics.trackSetNewMinrate(value)
+    this.props.global.analytics.callTrack("trackSetNewMinrate", value);
   }
 
   getAdvanceLayout = () => {

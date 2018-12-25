@@ -1,16 +1,12 @@
 import React from "react"
 import { connect } from "react-redux"
 import Recaptcha from "react-recaptcha"
-import { importNewAccount, throwError, promoCodeChange, throwPromoCodeError, openPromoCodeModal, closePromoCodeModal } from "../../actions/accountActions"
+import { importNewAccount, promoCodeChange, openPromoCodeModal, closePromoCodeModal } from "../../actions/accountActions"
 import { addressFromPrivateKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
-import * as analytics from "../../utils/analytics"
 import * as common from "../../utils/common"
-import * as utilActions from '../../actions/utilActions'
-import { getAssetUrl } from "../../utils/common";
 import { Modal } from '../../components/CommonElement'
 import BLOCKCHAIN_INFO from "../../../../env"
-import Web3 from "web3"
 
 @connect((store) => {
   var tokens = store.tokens.tokens
@@ -22,7 +18,8 @@ import Web3 from "web3"
     account: store.account,
     ethereum: store.connection.ethereum,
     tokens: supportTokens,
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    analytics: store.global.analytics
   }
 })
 export default class ImportByPromoCode extends React.Component {
@@ -41,12 +38,12 @@ export default class ImportByPromoCode extends React.Component {
   }
   openModal() {
     this.props.dispatch(openPromoCodeModal());
-    analytics.trackClickImportAccount("promo code")
+    this.props.analytics.callTrack("trackClickImportAccount", "promo code");
   }
 
   closeModal() {
     this.props.dispatch(closePromoCodeModal());    
-    analytics.trackClickCloseModal("import promo-code")
+    this.props.analytics.callTrack("trackClickCloseModal", "import promo-code");
   }
 
   inputChange(e) {
@@ -136,7 +133,7 @@ export default class ImportByPromoCode extends React.Component {
 
   changeCaptchaV = ()=>{
     this.setState({captchaV: (new Date).getTime()})
-    analytics.trackClickChangeCapcha()
+    this.props.analytics.callTrack("trackClickChangeCapcha");
   }
 
   onPromoCodeChange = () =>{
@@ -157,7 +154,7 @@ export default class ImportByPromoCode extends React.Component {
     if (e.key === 'Enter') {
       var promoCode = document.getElementById("promo_code").value
       this.importPromoCode(promoCode)
-      analytics.trackClickSubmitPromoCode()
+      this.props.analytics.callTrack("trackClickSubmitPromoCode");
     }
   }
 
@@ -167,7 +164,7 @@ export default class ImportByPromoCode extends React.Component {
     }
     var promoCode = document.getElementById("promo_code").value
     this.importPromoCode(promoCode)
-    analytics.trackClickSubmitPromoCode()
+    this.props.analytics.callTrack("trackClickSubmitPromoCode");
   }
 
   render() {
@@ -205,7 +202,7 @@ export default class ImportByPromoCode extends React.Component {
                           autoFocus
                           autoComplete="off"
                           spellCheck="false"
-                          onFocus={(e) => {analytics.trackClickInputPromoCode()}}
+                          onFocus={(e) => {this.props.analytics.callTrack("trackClickInputPromoCode")}}
                           required
                           placeholder="Enter your promocode here"
                         />

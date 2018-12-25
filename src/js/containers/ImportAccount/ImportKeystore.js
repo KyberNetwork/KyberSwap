@@ -6,7 +6,6 @@ import { importNewAccount, throwError } from "../../actions/accountActions"
 import { verifyKey, anyErrors } from "../../utils/validators"
 import { addressFromKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
-import * as analytics from "../../utils/analytics"
 
 @connect((store, props) => {
   var tokens = store.tokens.tokens
@@ -19,7 +18,8 @@ import * as analytics from "../../utils/analytics"
     ethereum: store.connection.ethereum,
     tokens: supportTokens,
     translate: getTranslate(store.locale),
-    screen: props.screen
+    screen: props.screen,
+    analytics: store.global.analytics
   }
 })
 
@@ -34,7 +34,7 @@ export default class ImportKeystore extends React.Component {
   }
 
   onDrop = (files) => {
-    analytics.trackClickImportAccount("keystore")
+    this.props.analytics.callTrack("trackClickImportAccount", "keystore");
     try {
       var _this = this
       var file = files[0]

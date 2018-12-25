@@ -49,12 +49,12 @@ export default class Header extends React.Component {
     return (
       <HeaderView 
         account={this.props.account}
-        address={<Address 
+        address={
+          <Address
           path={this.props.location.pathname}
           translate={this.props.translate}
-          />}                
-     //   infoMenu = {infoMenu}
-
+          />
+        }
         analyze={analyze} 
         onRequestClose={this.toggleModal}
         isOpen={this.props.global.isOpenAnalyze}

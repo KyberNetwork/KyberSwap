@@ -1,6 +1,3 @@
-import { REHYDRATE } from 'redux-persist/lib/constants'
-import Rate from "../services/rate"
-import BigNumber from "bignumber.js"
 import constants from '../services/constants';
 
 const initState = {
@@ -31,7 +28,10 @@ const initState = {
     isIOS: false,
     isAndroid: false
   },
-  isOnMobile: false
+  isOnMobile: false,
+  analytics: {
+    callTrack : () => {return}
+  }
 }
 
 const global = (state = initState, action) => {
@@ -168,6 +168,11 @@ const global = (state = initState, action) => {
     }
     case "GLOBAL.SET_ON_MOBILE_ONLY": {
       return Object.assign({}, state, { isOnMobile: true })
+    }
+    case "GLOBAL.INIT_ANALYTICS":{
+      var newState = {...state}
+      newState.analytics = action.payload
+      return newState
     }
   }
   return state
