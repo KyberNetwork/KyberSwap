@@ -16,6 +16,7 @@ install:
   - npm install
   - npm run build-ropsten
   - mkdir upload
+  - mv dist/ropsten/index.html upload
   - mv dist/ropsten/*.css upload
   - mv dist/ropsten/*.js upload
 
