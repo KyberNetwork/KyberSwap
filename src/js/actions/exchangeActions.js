@@ -507,6 +507,13 @@ export function setKyberEnable(enable){
   }
 }
 
+export function setApproveTxZero(hash, symbol){
+  return {
+    type: "EXCHANGE.SET_APPROVE_TX_ZERO",
+    payload: {hash, symbol}
+  }
+}
+
 export function setApproveTx(hash, symbol){
   return {
     type: "EXCHANGE.SET_APPROVE_TX",
