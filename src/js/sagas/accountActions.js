@@ -144,7 +144,7 @@ export function* importNewAccount(action) {
 
    // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
     yield put(actions.closeImportLoading())
-    yield put(actions.importNewAccountComplete(account, walletName, global.isOnMobile))
+    yield put(actions.importNewAccountComplete(account, walletName))
     if (isChangingWallet) yield put(closeChangeWallet())
 
     //track login wallet

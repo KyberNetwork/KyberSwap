@@ -139,27 +139,27 @@
       }
 
       .metamask {
-        background-image: url($image-path + 'import-account/icon-metamask-white.svg');
+        background-image: url($asset-url + 'wallets/metamask-white.svg');
       }
 
       .json {
-        background-image: url($image-path + 'import-account/icon-json-white.svg');
+        background-image: url($asset-url + 'wallets/keystore-white.svg');
       }
 
       .trezor {
-        background-image: url($image-path + 'import-account/icon-trezor-white.svg');
+        background-image: url($asset-url + 'wallets/trezor-white.svg');
       }
 
       .ledger {
-        background-image: url($image-path + 'import-account/icon-ledger-white.svg');
+        background-image: url($asset-url + 'wallets/ledger-white.svg');
       }
 
       .private-key {
-        background-image: url($image-path + 'import-account/icon-private-key-white.png');
+        background-image: url($asset-url + 'wallets/privatekey-white.png');
       }
 
       .promo-code {
-        background-image: url($image-path + 'import-account/icon-promo-code-white.svg');
+        background-image: url($asset-url + 'wallets/promo_code-white.svg');
       }
     }
   }
@@ -172,27 +172,27 @@
     background-size: contain;
 
     &.metamask {
-      background-image: url($image-path + 'import-account/icon-metamask.svg');
+      background-image: url($asset-url + 'wallets/metamask.svg');
     }
 
     &.json {
-      background-image: url($image-path + 'import-account/icon-json.svg');
+      background-image: url($asset-url + 'wallets/keystore.svg');
     }
 
     &.trezor {
-      background-image: url($image-path + 'import-account/icon-trezor.svg');
+      background-image: url($asset-url + 'wallets/trezor.svg');
     }
 
     &.ledger {
-      background-image: url($image-path + 'import-account/icon-ledger.svg');
+      background-image: url($asset-url + 'wallets/ledger.svg');
     }
 
     &.private-key {
-      background-image: url($image-path + 'import-account/icon-private-key.svg');
+      background-image: url($asset-url + 'wallets/privatekey.svg');
     }
 
     &.promo-code {
-      background-image: url($image-path + 'import-account/icon-promo-code.svg');
+      background-image: url($asset-url + 'wallets/promo_code.svg');
     }
   }
 
