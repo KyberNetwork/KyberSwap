@@ -1,19 +1,15 @@
 import React from "react"
 import { connect } from "react-redux"
-import { push } from 'react-router-redux';
 import * as converters from "../../utils/converter"
 import * as validators from "../../utils/validators"
 import { TransferForm } from "../../components/Transaction"
-import { TransactionLoading, QRCode } from "../CommonElements"
-import { PostTransferWithKey } from "../Transfer"
-import { AdvanceConfigLayout, GasConfig } from "../../components/TransactionCommon"
+import { TransactionLoading, QRCode, ChooseBalanceModal } from "../CommonElements"
+import { AdvanceConfigLayout } from "../../components/TransactionCommon"
 import { TokenSelector, AccountBalance } from "../TransactionCommon"
 import { hideSelectToken } from "../../actions/utilActions"
-import { verifyAccount } from "../../utils/validators"
 import * as common from "../../utils/common"
 import * as globalActions from "../../actions/globalActions"
 import constansts from "../../services/constants"
-import * as analytics from "../../utils/analytics"
 import * as transferActions from "../../actions/transferActions"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
@@ -44,7 +40,8 @@ import EthereumService from "../../services/ethereum/ethereum"
     global: store.global,
     translate: getTranslate(store.locale),
     advanceLayout: props.advanceLayout,
-    currentLang
+    currentLang,
+    analytics: store.global.analytics
   }
 })
 
@@ -118,22 +115,22 @@ export default class Transfer extends React.Component {
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
 
     this.props.dispatch(globalActions.goToRoute(path))
-    analytics.trackChooseToken(type, symbol)
+    this.props.analytics.callTrack("trackChooseToken", type, symbol);
   }
 
   makeNewTransfer = () => {
     this.props.dispatch(transferActions.makeNewTransfer());
-    analytics.trackClickNewTransaction("Transfer")
+    this.props.analytics.callTrack("trackClickNewTransaction", "Transfer");
   }
 
   onFocus = () => { 
     this.setState({focus:"source"})
-    analytics.trackClickInputAmount("transfer")
+    this.props.analytics.callTrack("trackClickInputAmount", "transfer");
   }
 
   onFocusAddr = () => { 
     this.setState({focus:"to-addr"})
-    analytics.trackClickInputRecieveAddress()
+    this.props.analytics.callTrack("trackClickInputRecieveAddress");
   }
 
   onBlur = () => {
@@ -161,7 +158,7 @@ export default class Transfer extends React.Component {
 
       this.onFocus()
     }
-    analytics.trackClickAllIn("Transfer", tokenSymbol)
+    this.props.analytics.callTrack("trackClickAllIn", "Transfer", tokenSymbol);
   }
 
   handleErrorQRCode = (err) =>{
@@ -224,6 +221,17 @@ export default class Transfer extends React.Component {
   clearSession = (e) => {
     this.props.dispatch(globalActions.clearSession())
     // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
+  }
+
+  getTransferBalance = () => {
+    return (
+      <ChooseBalanceModal
+        changeAmount={transferActions.specifyAmountTransfer}
+        changeFocus={this.onFocus}
+        sourceTokenSymbol={this.props.transfer.tokenSymbol}
+        typeTx={"transfer"}
+      />
+    )
   }
 
   render() {
@@ -312,6 +320,7 @@ export default class Transfer extends React.Component {
         clearSession={this.clearSession}
         walletName={this.props.account.walletName}
         qcCode = {qcCode}
+        transferBalance = {this.getTransferBalance()}
       />
     )
   }

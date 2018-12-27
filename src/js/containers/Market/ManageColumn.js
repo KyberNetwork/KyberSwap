@@ -1,17 +1,15 @@
 import React from "react"
 import { connect } from "react-redux"
-
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import { getTranslate } from 'react-localize-redux';
 import * as marketActions from "../../actions/marketActions"
-import * as analytics from "../../utils/analytics"
-
 
 @connect((store) => {
     return {
         translate: getTranslate(store.locale),
         display: store.market.configs.column.display,
-        shows: store.market.configs.column.shows
+        shows: store.market.configs.column.shows,
+        analytics: store.global.analytics
     }
 })
 
@@ -39,7 +37,7 @@ export default class ManageColumn extends React.Component {
     selectShowsColumn = (e, key) => {
         var value = e.target.checked
         this.props.dispatch(marketActions.changeShowColumn(key, value))
-        analytics.trackMarketSetting(this.props.shows.listItem[key].title, value)
+        this.props.analytics.callTrack("trackMarketSetting", this.props.shows.listItem[key].title, value);
     }
 
     getDisplayColumn = (e) => {

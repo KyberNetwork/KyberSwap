@@ -11,15 +11,16 @@ import * as analytics from "../../utils/analytics"
 @connect((store, props) => {
   return {
     translate: getTranslate(store.locale),
-    screen: props.screen
+    screen: props.screen,
+    analytics: store.global.analytics
   }
 })
 export default class ImportByDeviceWithTrezor extends React.Component {
   deviceService = new Trezor()
   
   showLoading = (walletType) => {
-    this.refs.child.getWrappedInstance().showLoading(walletType)
-    analytics.trackClickImportAccount(walletType)
+    this.refs.child.showLoading(walletType)
+    this.props.analytics.callTrack("trackClickImportAccount", walletType);
   }
   
   render = () => {

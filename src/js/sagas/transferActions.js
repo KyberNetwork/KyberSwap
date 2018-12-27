@@ -30,10 +30,12 @@ function* broadCastTx(action) {
 }
 
 export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
+  const state = store.getState();
+  const global = state.global;
 
   //track complete trade
-  analytics.trackCoinTransfer(data.tokenSymbol)
-  analytics.completeTrade(hash, "kyber", "transfer")
+  global.analytics.callTrack("trackCoinTransfer", data.tokenSymbol);
+  global.analytics.callTrack("completeTrade", hash, "kyber", "transfer");
 
   const tx = new Tx(
     hash, account.address, ethUtil.bufferToInt(txRaw.gas),
@@ -46,8 +48,7 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   yield put(actions.finishTransfer())
   
   try{
-    var state = store.getState()
-    var notiService = state.global.notiService
+    var notiService = global.notiService
     notiService.callFunc("setNewTx",{hash: hash})
   }catch(e){
     console.log(e)

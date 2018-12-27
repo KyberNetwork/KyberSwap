@@ -1,10 +1,8 @@
 import React from "react"
 import * as converts from "../../utils/converter"
-import BigNumber from "bignumber.js"
 import BLOCKCHAIN_INFO from "../../../../env"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import SlideDown, { SlideDownTrigger, SlideDownContent } from "../CommonElement/SlideDown";
-import * as analytics from "../../utils/analytics"
 
 const AccountBalanceLayout = (props) => {
 
@@ -122,7 +120,7 @@ const AccountBalanceLayout = (props) => {
                 <div>
                   <span className="account-balance__address-text">Wallet </span>
                   <a className="account-balance__address-link" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
-                    onClick={(e) => {analytics.trackClickShowAddressOnEtherescan()}}>
+                    onClick={(e) => {props.analytics.callTrack("trackClickShowAddressOnEtherescan")}}>
                     {props.account.address}
                   </a>
                 </div>

@@ -82,7 +82,7 @@ export function verifyBalanceForTransaction(
   var bigEthBalance = new BigNumber(ethBalance.toString())
 
   //calcualte tx fee
-  if (gasPrice === "") gasPrice = 0
+  if (typeof gasPrice === "undefined" || gasPrice === "") gasPrice = 0
   var gasPriceBig = new BigNumber(gasPrice.toString())
   var txFee = gasPriceBig.times(1000000000).times(gas)
 

@@ -5,8 +5,6 @@ import { ImportByMetamaskView } from "../../components/ImportAccount"
 import BLOCKCHAIN_INFO from "../../../../env"
 import * as web3Package from "../../services/web3"
 import { getTranslate } from 'react-localize-redux'
-import bowser from 'bowser'
-import * as analytics from "../../utils/analytics"
 
 @connect((store, props) => {
   var tokens = store.tokens.tokens
@@ -20,14 +18,15 @@ import * as analytics from "../../utils/analytics"
     tokens: supportTokens,
     translate: getTranslate(store.locale),
     metamask: store.global.metamask,
-    screen: props.screen
+    screen: props.screen,
+    analytics: store.global.analytics
   }
 })
 
 export default class ImportByMetamask extends React.Component {
 
   connect = (e) => {   
-    analytics.trackClickImportAccount("metamask")
+    this.props.analytics.callTrack("trackClickImportAccount", "metamask");
 
     var web3Service = web3Package.newWeb3Instance()
 

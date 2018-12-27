@@ -586,7 +586,15 @@ const exchange = (state = initState, action) => {
     }
 
     case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED":{
-      newState.isBalanceActive = true
+      if(!action.payload.isOnMobile) newState.isBalanceActive = true
+      return newState
+    }
+    case "EXCHANGE.SET_SELECTED_GAS_PRICE":{
+      const { gasPrice, gasLevel } = action.payload
+
+      newState.gasPrice = gasPrice
+      newState.selectedGas = gasLevel
+
       return newState
     }
   }

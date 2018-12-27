@@ -87,7 +87,12 @@
         @include screen-max-width(medium) {
           display: block;
           color: #ee344e;
-          padding: 15px 12px
+          padding: 15px 12px;
+          span {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 5px;
+          }
         }
       }
     }
@@ -116,11 +121,19 @@
       @include screen-max-width(medium) {
         display: none;
       }
-      &.error {
+
+      &__mobile {
         display: none;
+        top: unset !important;
         @include screen-max-width(medium) {
-          display: block;
-          top: unset;
+          display: flex;
+        }
+      }
+
+      &.error {
+        // display: none;
+        @include screen-max-width(medium) {
+          // display: flex;
           text-align: center;
           span {
             color: #f1637d;
@@ -137,6 +150,9 @@
     font-weight: 600;
     letter-spacing: -0.4px;
     color: #999999;
+    &--transfer {
+      margin-right: 15px;
+    }
 
     &.error {
       position: relative;
@@ -154,7 +170,8 @@
         left: -23px;
         top: 3px;
         @include screen-max-width(medium) {
-          left: -15px;
+          // left: -15px;
+          display: none;
         }
       }
 
@@ -219,6 +236,15 @@
 
       &__right {
         padding-right: 20px;
+        &--transfer {
+          border-left: none;
+          &.error {
+            border-left: 1px solid #cccccc;
+          }
+          .qc-code-content {
+            margin-right: 10px;
+          }
+        }
       }
 
       @include screen-max-width(medium) {
@@ -240,12 +266,17 @@
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 4px;
       padding: 15px 20px;
+      color: #f1637d;
       span {
         margin-top: 5px;
       }
 
       div {
         color: #f1637d;
+      }
+
+      &-source {
+        width: calc(100% + 21px);
       }
       @include screen-max-width(medium) {
         display: none;
@@ -364,9 +395,9 @@
       border-left: none;
     }
 
-    @include screen-max-width(medium) {
-      padding: 0 0px 0 5px;
-    }
+    // @include screen-max-width(medium) {
+    //   padding: 0 0px 0 5px;
+    // }
   }
 
   & &__input {
@@ -391,12 +422,17 @@
 
     @include screen-max-width(medium) {
       padding: 0;
+      padding-left: 20px;
       padding-right: 10px;
       &.has-account {
         padding-right: 0;
+        // padding-left: 20px;
         &.error {
-          padding-right: 25px;
+          // padding-right: 25px;
         }
+      }
+      &-address {
+        text-align: left;
       }
     }
   }
@@ -482,8 +518,12 @@
         display: none;
       }
 
-      &--left {
-        padding-right: 12px !important;
+      // &--left {
+        // padding-right: 12px !important;
+      // }
+
+      &--transfer {
+        // padding-right: 12px !important;
       }
     }
 
@@ -527,6 +567,7 @@
     &__input {
       padding-right: 10px;
       text-align: right;
+      // padding-left: 20px;
     }
   }
 }
@@ -540,6 +581,7 @@
     justify-content: space-between;
     margin: 15px auto 0;
     padding-bottom: 15px;
+    min-height: 40px;
   }
 
   &__balance {

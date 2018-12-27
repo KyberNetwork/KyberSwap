@@ -5,7 +5,6 @@ import { getTranslate } from 'react-localize-redux'
 import * as actions from "../../actions/marketActions"
 import * as converters from "../../utils/converter"
 import {Line} from 'react-chartjs-2';
-import * as analytics from "../../utils/analytics";
 import { getAssetUrl } from "../../utils/common";
 import { MarketMobile } from "../Market"
 
@@ -42,7 +41,8 @@ import { MarketMobile } from "../Market"
     searchWordLayout: props.searchWordLayout,
     currencyLayout: props.currencyLayout,
     isRussia: isRussia,
-    isOnMobile: store.global.isOnMobile
+    isOnMobile: store.global.isOnMobile,
+    global: store.global,
   }
 })
 
@@ -206,7 +206,7 @@ export default class MarketTable extends React.Component {
   }
   formatNumber = (number) => {
     if (number > 1000) {
-      return converters.formatNumber(number)
+      return converters.formatNumber(number, 0)
     }
     return number
   }
@@ -342,7 +342,7 @@ export default class MarketTable extends React.Component {
 
   updateSortState = (key, sortType) => {
     this.props.dispatch(actions.updateSortState(key, sortType))
-    analytics.trackSortETHMarket(key, sortType)
+    this.props.global.analytics.callTrack("trackSortETHMarket", key, sortType);
   }
 
   getSortType = (key) => {
@@ -577,8 +577,7 @@ export default class MarketTable extends React.Component {
                 onClick: (e) => {
                   var symbol = rowInfo.original.info.symbol
                   this.props.dispatch(actions.showTradingViewChart(symbol))
-                  analytics.tokenForCharting(symbol)
-
+                  this.props.global.analytics.callTrack("tokenForCharting", symbol);
                 }
               }
             }

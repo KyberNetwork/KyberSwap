@@ -1,6 +1,5 @@
 import React from "react"
-import { gweiToEth, stringToBigNumber, calculateGasFee, roundingNumber } from "../../utils/converter"
-import * as analytics from "../../utils/analytics"
+import { gweiToEth, stringToBigNumber, calculateGasFee } from "../../utils/converter"
 import { FeeDetail } from "../CommonElement";
 
 const PassphraseModal = (props) => {
@@ -21,11 +20,11 @@ const PassphraseModal = (props) => {
     if (input.classList.contains('security')) {
       input.classList.remove('security')
       input.parentElement.classList.add('unlock')
-      analytics.trackClickShowPassword("show")
+      props.analytics.callTrack("trackClickShowPassword", "show");
     } else if (input.type == 'text') {
       input.classList.add('security')
       input.parentElement.classList.remove('unlock')
-      analytics.trackClickShowPassword("hide")
+      props.analytics.callTrack("trackClickShowPassword", "hide");
     }
   }
 
@@ -114,7 +113,7 @@ const PassphraseModal = (props) => {
           <div className="input-reveal">
             <input className="text-center security" id="passphrase" type="text"
               autoComplete="off" spellCheck="false"
-              onFocus={(e) => {analytics.trackClickInputPasswordWithJSON()}}
+              onFocus={(e) => {this.props.analytics.callTrack("trackClickInputPasswordWithJSON")}}
               onChange={(e) => props.onChange(e)} autoFocus onKeyPress={(e) => submit(e)} />
             <a className="toggle" onClick={() => toggleShowPw()}></a>
             <a className="tootip"></a>

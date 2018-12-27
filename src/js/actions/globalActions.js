@@ -146,10 +146,10 @@ export function updateCountConnection(count){
   }
 }
 
-export function setGasPrice(ethereum){
+export function setGasPrice(ethereum, account){
   return {
     type: "GLOBAL.SET_GAS_PRICE",
-    payload: ethereum
+    payload: { ethereum, account }
   }
 }
 
@@ -265,5 +265,12 @@ export function setOnMobile(isIOS, isAndroid){
 export function setOnMobileOnly(){
   return {
     type: "GLOBAL.SET_ON_MOBILE_ONLY"
+  }
+}
+
+export function initAnalytics(analytics){
+  return {
+    type: "GLOBAL.INIT_ANALYTICS",
+    payload: analytics
   }
 }

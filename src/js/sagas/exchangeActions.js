@@ -4,7 +4,6 @@ import * as globalActions from "../actions/globalActions"
 
 import * as common from "./common"
 import * as validators from "../utils/validators"
-import * as analytics from "../utils/analytics"
 
 import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
 import { addTx } from '../actions/txActions'
@@ -68,9 +67,12 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
     console.log(e)
   }
 
+  const state = store.getState();
+  const global = state.global;
+
   //track complete trade
-  analytics.trackCoinExchange(data)
-  analytics.completeTrade(hash, "kyber", "swap")
+  global.analytics.callTrack("trackCoinExchange", data);
+  global.analytics.callTrack("completeTrade", hash, "kyber", "swap");
 
   //console.log({txRaw, hash, account, data})
   const tx = new Tx(
@@ -86,8 +88,7 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
 
 
   try {
-    var state = store.getState()
-    var notiService = state.global.notiService
+    var notiService = global.notiService
     notiService.callFunc("setNewTx", { hash: hash })
   } catch (e) {
     console.log(e)
@@ -171,19 +172,33 @@ export function* checkTokenBalanceOfColdWallet(action) {
   let translate = getTranslate(store.getState().locale)
   try {
     const remainStr = yield call([ethereum, ethereum.call], "getAllowanceAtLatestBlock", sourceToken, address)
-    const remain = converter.hexToBigNumber(remainStr)
-    const sourceAmountBig = converter.hexToBigNumber(sourceAmount)
+    // const remain = converter.hexToBigNumber(remainStr)
+    // const sourceAmountBig = converter.hexToBigNumber(sourceAmount)
 
 
-    if (!remain.isGreaterThanOrEqualTo(sourceAmountBig) && !isApproveTxPending()) {
-      yield put(actions.showApprove())
-      yield call(fetchGasApproveSnapshot)
-      //fetch gas approve
-
-    } else {
-      yield put(actions.showConfirm())
-      yield call(fetchGasConfirmSnapshot)
+    var currenStep = yield call(checkStep, remainStr, sourceAmount)
+    switch(currenStep){
+      case 3:
+        yield put(actions.showConfirm())
+        yield call(fetchGasConfirmSnapshot)
+        break
+      case 2:
+        yield put(actions.showApprove())
+        yield call(fetchGasApproveSnapshot)
+        break
+      case 1:
+        yield put(actions.showApproveZero())
+        yield call(fetchGasApprove)
+        break
+        
     }
+    // if (!remain.isGreaterThanOrEqualTo(sourceAmountBig) && !isApproveTxPending()) {
+    //   yield put(actions.showApprove())
+    //   yield call(fetchGasApproveSnapshot)
+    // } else {
+    //   yield put(actions.showConfirm())
+    //   yield call(fetchGasConfirmSnapshot)
+    // }
   } catch (e) {
     let title = translate("error.error_occurred") || "Error occurred"
     let content = translate("error.network_error") || "Cannot connect to node right now. Please check your network!"
@@ -220,14 +235,14 @@ export function* processApproveZero(action) {
   switch (accountType) {
     case "trezor":
     case "ledger":
-      var result = yield call(processApproveByColdWallet, action)
+      var result = yield call(processApproveByColdWalletZero, action)
       if (result) {
         yield put(actions.hideApproveZero())
         yield put(actions.showApprove())
       }
       break
     case "metamask":
-      var result = yield call(processApproveByMetamask, action)
+      var result = yield call(processApproveByMetamaskZero, action)
       if (result) {
         yield put(actions.hideApproveZero())
         yield put(actions.showApprove())
@@ -264,8 +279,6 @@ export function* processApproveByColdWallet(action) {
     //increase nonce 
     yield put(incManualNonceAccount(account.address))
 
-    // yield put(actions.hideApprove())
-    // yield put(actions.showConfirm())
     yield put(actions.fetchGasSuccess())
     return true
   } catch (e) {
@@ -273,14 +286,43 @@ export function* processApproveByColdWallet(action) {
     yield call(doTxFail, ethereum, account, e.message)
     return false
   }
+}
 
-  //save approve to store
+export function* processApproveByColdWalletZero(action) {
+  const { ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+    keystring, password, accountType, account, keyService, sourceTokenSymbol } = action.payload
+  //try {
+  let rawApprove
+  try {
+    rawApprove = yield call(keyService.callSignTransaction, "getAppoveTokenZero", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+      keystring, password, accountType, account.address)
+  } catch (e) {
+    console.log(e)
+    let msg = ''
+    if (accountType === 'ledger') {
+      msg = keyService.getLedgerError(e)
+    } else {
+      msg = e.message
+    }
+    yield put(actions.setSignError(msg))
+    return
+  }
+  var hashApprove
+  try {
+    hashApprove = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApprove)
+    console.log(hashApprove)
+    yield put(actions.setApproveTxZero(hashApprove, sourceTokenSymbol))
 
+    //increase nonce 
+    yield put(incManualNonceAccount(account.address))
 
-  // } catch (e) {
-  //console.log(e)
-
-  // }
+    yield put(actions.fetchGasSuccess())
+    return true
+  } catch (e) {
+    console.log(e)
+    yield call(doTxFail, ethereum, account, e.message)
+    return false
+  }
 }
 
 export function* processApproveByMetamask(action) {
@@ -291,18 +333,36 @@ export function* processApproveByMetamask(action) {
       keystring, password, accountType, account.address)
 
     yield put(actions.setApproveTx(hashApprove, sourceTokenSymbol))
-    //const hashApprove = yield call(ethereum.call("sendRawTransaction"), rawApprove, ethereum)
     console.log(hashApprove)
     //return
     //increase nonce 
     yield put(incManualNonceAccount(account.address))
 
-    // yield put(actions.hideApprove())
-    // yield put(actions.showConfirm())
     yield put(actions.fetchGasSuccess())
     return true
   } catch (e) {
-    yield put(actions.setSignError(e))
+    yield put(actions.setSignError(e.toString()))
+    return false
+  }
+}
+
+export function* processApproveByMetamaskZero(action) {
+  const { ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+    keystring, password, accountType, account, keyService, sourceTokenSymbol } = action.payload
+  try {
+    const hashApprove = yield call(keyService.callSignTransaction, "getAppoveTokenZero", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+      keystring, password, accountType, account.address)
+
+    yield put(actions.setApproveTxZero(hashApprove, sourceTokenSymbol))
+    console.log(hashApprove)
+    //return
+    //increase nonce 
+    yield put(incManualNonceAccount(account.address))
+
+    yield put(actions.fetchGasSuccess())
+    return true
+  } catch (e) {
+    yield put(actions.setSignError(e.toString()))
     return false
   }
 }
@@ -523,9 +583,7 @@ function* exchangeTokentoETHKeystore(action) {
   // return 
 
   var currentStep = yield call(checkStep, remainStr, sourceAmount)
-  // console.log("step_now")
-  // console.log(currentStep)
-  // return
+
   switch (currentStep) {
     case 3:
       var txRaw
@@ -593,7 +651,7 @@ function* exchangeTokentoETHKeystore(action) {
     case 1:
       var rawApproveZero
       try {
-        rawApproveZero = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, 0, nonce, gas, gasPrice,
+        rawApproveZero = yield call(keyService.callSignTransaction, "getAppoveTokenZero", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
           keystring, password, type, address)
       } catch (e) {
         console.log(e)
@@ -607,7 +665,7 @@ function* exchangeTokentoETHKeystore(action) {
         var hashApproveZero = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApproveZero)
 
         yield put(actions.setApproveTxZero(hashApproveZero, sourceTokenSymbol))
-        console.log("approve: " + hashApproveZero)
+        console.log("approve_zero: " + hashApproveZero)
         //increase nonce 
         yield put(incManualNonceAccount(account.address))
         nonce++
@@ -645,69 +703,6 @@ function* exchangeTokentoETHKeystore(action) {
       break
 
   }
-
-  // if (!remain.isGreaterThanOrEqualTo(sourceAmountBig) && !isApproveTxPending()) {
-  //   var rawApprove
-  //   try {
-  //     rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-  //       keystring, password, type, address)
-  //   } catch (e) {
-  //     console.log(e)
-  //     yield put(actions.throwPassphraseError(e.message))
-  //     return
-  //   }
-  //   try {
-  //     yield put(actions.prePareBroadcast(balanceData))
-  //     var hashApprove, txRaw
-  //     try {
-  //       var hashApprove = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApprove)
-
-  //       yield put(actions.setApproveTx(hashApprove, sourceTokenSymbol))
-  //       console.log("approve: " + hashApprove)
-  //       //increase nonce 
-  //       yield put(incManualNonceAccount(account.address))
-  //       nonce++
-  //       txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
-  //         sourceAmount, destToken, destAddress,
-  //         maxDestAmount, minConversionRate,
-  //         blockNo, nonce, gas,
-  //         gasPrice, keystring, type, password)
-  //       yield put(actions.prePareBroadcast(balanceData))
-  //     } catch (e) {
-  //       console.log(e)
-  //       yield call(doTxFail, ethereum, account, e.message)
-  //       return
-  //     }
-  //     var hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", txRaw)
-  //     yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
-  //   } catch (e) {
-  //     console.log(e)
-  //     yield call(doTxFail, ethereum, account, e.message)
-  //     return
-  //   }
-  // } else {
-  //   var txRaw
-  //   try {
-  //     txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
-  //       sourceAmount, destToken, destAddress,
-  //       maxDestAmount, minConversionRate,
-  //       blockNo, nonce, gas,
-  //       gasPrice, keystring, type, password)
-  //   } catch (e) {
-  //     console.log(e)
-  //     yield put(actions.throwPassphraseError(e.message))
-  //     return
-  //   }
-  //   try {
-  //     yield put(actions.prePareBroadcast(balanceData))
-  //     const hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", txRaw)
-  //     yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
-  //   } catch (e) {
-  //     console.log(e)
-  //     yield call(doTxFail, ethereum, account, e.message)
-  //     return
-  //   }
-  // }
 }
 export function* exchangeTokentoETHPrivateKey(action) {
   var { formId, ethereum, address, sourceToken,
@@ -717,48 +712,108 @@ export function* exchangeTokentoETHPrivateKey(action) {
     gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo } = action.payload
   try {
     var remainStr = yield call([ethereum, ethereum.call], "getAllowanceAtLatestBlock", sourceToken, address)
-    var remain = converter.hexToBigNumber(remainStr)
-    var sourceAmountBig = converter.hexToBigNumber(sourceAmount)
-    if (!remain.isGreaterThanOrEqualTo(sourceAmountBig) && !isApproveTxPending()) {
-      let rawApprove
-      try {
-        rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-          keystring, password, type, address)
-      } catch (e) {
-        yield put(actions.setSignError(e.message))
-        return
-      }
 
-      yield put(actions.prePareBroadcast(balanceData))
-      var hashApprove
-      try {
-        var hashApprove = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApprove)
-        yield put(actions.setApproveTx(hashApprove, sourceTokenSymbol))
-        console.log(hashApprove)
-        //increase nonce 
-        yield put(incManualNonceAccount(account.address))
-        nonce++
-      } catch (e) {
-        console.log(e)
-        yield call(doTxFail, ethereum, account, e.message)
-        return
-      }
-    }
+    var currentStep = yield call(checkStep, remainStr, sourceAmount)
 
-    var txRaw
-    try {
-      txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
-        sourceAmount, destToken, destAddress,
-        maxDestAmount, minConversionRate,
-        blockNo, nonce, gas,
-        gasPrice, keystring, type, password)
-    } catch (e) {
-      yield put(actions.setSignError(e.message))
-      return
+    switch (currentStep) {
+      case 3:
+        try {
+          try {
+            txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
+              sourceAmount, destToken, destAddress,
+              maxDestAmount, minConversionRate,
+              blockNo, nonce, gas,
+              gasPrice, keystring, type, password)
+          } catch (e) {
+            yield put(actions.setSignError(e.message))
+            return
+          }
+          yield put(actions.prePareBroadcast(balanceData))
+          var hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", txRaw)
+          yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
+        } catch (e) {
+          console.log(e)
+          yield call(doTxFail, ethereum, account, e.message)
+          return
+        }
+        break
+      case 2:
+        try {
+          let rawApprove
+          try {
+            rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+              keystring, password, type, address)
+          } catch (e) {
+            yield put(actions.setSignError(e.message))
+            return
+          }
+
+          var hashApprove = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApprove)
+          yield put(actions.setApproveTx(hashApprove, sourceTokenSymbol))
+          console.log(hashApprove)
+          //increase nonce 
+          yield put(incManualNonceAccount(account.address))
+          nonce++
+
+          var txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
+            sourceAmount, destToken, destAddress,
+            maxDestAmount, minConversionRate,
+            blockNo, nonce, gas,
+            gasPrice, keystring, type, password)
+          yield put(actions.prePareBroadcast(balanceData))
+          var hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", txRaw)
+          yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
+        } catch (e) {
+          console.log(e)
+          yield call(doTxFail, ethereum, account, e.message)
+          return
+        }
+        break;
+      case 1:
+        try {
+          let rawApproveZero
+          try {
+            rawApproveZero = yield call(keyService.callSignTransaction, "getAppoveTokenZero", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+              keystring, password, type, address)
+          } catch (e) {
+            console.log(e)
+            yield put(actions.setSignError(e.message))
+            return
+          }
+
+          //yield put(actions.prePareBroadcast(balanceData))
+          var hashApproveZero
+          var hashApproveZero = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApproveZero)
+          yield put(actions.setApproveTx(hashApproveZero, sourceTokenSymbol))
+          console.log(hashApproveZero)
+          yield put(incManualNonceAccount(account.address))
+          nonce++
+
+          var rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+            keystring, password, type, address)
+          var hashApprove
+          var hashApprove = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApprove)
+          yield put(actions.setApproveTx(hashApprove, sourceTokenSymbol))
+          console.log(hashApprove)
+          yield put(incManualNonceAccount(account.address))
+          nonce++
+
+          var txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
+            sourceAmount, destToken, destAddress,
+            maxDestAmount, minConversionRate,
+            blockNo, nonce, gas,
+            gasPrice, keystring, type, password)
+
+          yield put(actions.prePareBroadcast(balanceData))
+          var hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", txRaw)
+          yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
+        } catch (e) {
+          console.log(e)
+          yield call(doTxFail, ethereum, account, e.message)
+          return
+        }
+        break
     }
-    yield put(actions.prePareBroadcast(balanceData))
-    var hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", txRaw)
-    yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
   } catch (e) {
     console.log(e)
     yield call(doTxFail, ethereum, account, e.message)

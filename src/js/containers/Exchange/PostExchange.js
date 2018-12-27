@@ -1,16 +1,13 @@
 import React from "react"
 import { connect } from "react-redux"
-import ReactTooltip from 'react-tooltip'
 import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
 import * as exchangeActions from "../../actions/exchangeActions"
 import * as utilActions from "../../actions/utilActions"
 import { Modal } from "../../components/CommonElement"
-import { TermAndServices } from "../../containers/CommonElements"
 import { PassphraseModal, ConfirmTransferModal, ApproveModal } from "../../components/Transaction"
 import { PostExchangeBtn } from "../../components/Exchange"
 import { getTranslate } from 'react-localize-redux';
-import * as analytics from "../../utils/analytics";
 import { getAssetUrl, isUserEurope, getParameterByName } from "../../utils/common";
 
 @connect((store, props) => {
@@ -53,6 +50,7 @@ import { getAssetUrl, isUserEurope, getParameterByName } from "../../utils/commo
     tokens: store.tokens,
     keyService: props.keyService,
     translate: getTranslate(store.locale),
+    analytics: store.global.analytics
   }
 })
 
@@ -62,7 +60,7 @@ export default class PostExchange extends React.Component {
     this.state = { form: {} }
   }
   clickExchange = () => {
-    analytics.trackClickSwapButton()
+    this.props.analytics.callTrack("trackClickSwapButton");
     if (this.props.account === false) {
       this.props.dispatch(exchangeActions.openImportAccount())
       return
@@ -328,23 +326,23 @@ export default class PostExchange extends React.Component {
   closeModal = (event) => {
     this.props.dispatch(exchangeActions.hidePassphrase())
     this.props.dispatch(exchangeActions.resetSignError())
-    analytics.trackClickCloseModal("Passphrase Modal")
+    this.props.analytics.callTrack("trackClickCloseModal", "Passphrase Modal");
   }
   closeModalConfirm = (event) => {
-    analytics.trackClickCloseModal("ConfirmTransferModal")
+    this.props.analytics.callTrack("trackClickCloseModal", "ConfirmTransferModal");
     if (this.props.form.isConfirming) return
     this.props.dispatch(exchangeActions.hideConfirm())
     this.props.dispatch(exchangeActions.resetSignError())
   }
   closeModalApprove = (event) => {
-    analytics.trackClickCloseModal("Approve Modal")
+    this.props.analytics.callTrack("trackClickCloseModal", "Approve Modal");
     if (this.props.form.isApproving) return
     this.props.dispatch(exchangeActions.hideApprove())
     this.props.dispatch(exchangeActions.resetSignError())
   }
 
   closeModalApproveZero = (event) => {
-    analytics.trackClickCloseModal("Approve Zero Modal")
+    //this.props.analytics.trackClickCloseModal("Approve Zero Modal")
     if (this.props.form.isApprovingZero) return
     this.props.dispatch(exchangeActions.hideApproveZero())
     this.props.dispatch(exchangeActions.resetSignError())
@@ -487,7 +485,7 @@ export default class PostExchange extends React.Component {
     const ethereum = this.props.ethereum
     this.props.dispatch(exchangeActions.doApprove(ethereum, params.sourceToken, params.sourceAmount, params.nonce, params.gas_approve, params.gasPrice,
       account.keystring, account.password, account.type, account, this.props.keyService, params.sourceTokenSymbol))
-    analytics.trackClickApproveToken(params.sourceTokenSymbol)
+    //this.props.analytics.callTrack("trackClickApproveToken", params.sourceTokenSymbol);
   }
 
   processExchangeAfterApproveZero = () => {
@@ -497,7 +495,8 @@ export default class PostExchange extends React.Component {
     const ethereum = this.props.ethereum
     this.props.dispatch(exchangeActions.doApproveZero(ethereum, params.sourceToken, 0, params.nonce, params.gas_approve, params.gasPrice,
       account.keystring, account.password, account.type, account, this.props.keyService, params.sourceTokenSymbol))
-    analytics.trackClickApproveTokenZero(params.sourceTokenSymbol)
+      
+    //this.props.analytics.trackClickApproveTokenZero(params.sourceTokenSymbol)
   }
 
   processTx = () => {
@@ -529,7 +528,7 @@ export default class PostExchange extends React.Component {
       console.log(e)
       this.props.dispatch(exchangeActions.throwPassphraseError(this.props.translate("error.passphrase_error")))
     }
-    analytics.trackConfirmTransaction("swap", this.props.form.sourceTokenSymbol)
+    this.props.analytics.callTrack("trackConfirmTransaction", "swap", this.props.form.sourceTokenSymbol);
   }
 
   content = () => {
@@ -537,7 +536,8 @@ export default class PostExchange extends React.Component {
     var offeredRate = this.props.snapshot.offeredRate
     var slippagePercent = converters.calculatePercentRate(minRate, offeredRate)
     return (
-      <PassphraseModal recap={this.createRecap()}
+      <PassphraseModal
+        recap={this.createRecap()}
         onChange={this.changePassword}
         onClick={this.processTx}
         onCancel={this.closeModal}
@@ -549,6 +549,7 @@ export default class PostExchange extends React.Component {
         isFetchingRate={this.props.snapshot.isFetchingRate}
         title={this.props.translate('modal.confirm_swap') || "Confirm Swap"}
         slippagePercent={slippagePercent}
+        analytics={this.props.analytics}
       />
     )
   }
@@ -578,11 +579,13 @@ export default class PostExchange extends React.Component {
   contentApprove = () => {
     var addressShort = this.props.account.address.slice(0, 8) + "..." + this.props.account.address.slice(-6)
     return (
-      <ApproveModal recap="Please approve"
+      <ApproveModal 
+        title={ this.props.translate("modal.approve_token") || "Approve token"}
+        recap="Please approve"
         onCancel={this.closeModalApprove}
         isApproving={this.props.form.isApproving}
         token={this.props.form.sourceTokenSymbol}
-        onSubmit={this.processExchangeAfterApprove}
+        onSubmit={this.processExchangeAfterApprove.bind(this)}
         translate={this.props.translate}
         address={this.props.account.address}
         gasPrice={this.props.form.snapshot.gasPrice}
@@ -598,11 +601,13 @@ export default class PostExchange extends React.Component {
   contentApproveZero = () => {
     var addressShort = this.props.account.address.slice(0, 8) + "..." + this.props.account.address.slice(-6)
     return (
-      <ApproveModal recap="Please approve"
+      <ApproveModal 
+        title={ this.props.translate("modal.approve_token_zero") || "Approve token Zero"}
+        recap="Please approve"
         onCancel={this.closeModalApproveZero}
         isApproving={this.props.form.isApprovingZero}
         token={this.props.form.sourceTokenSymbol}
-        onSubmit={this.processExchangeAfterApproveZero}
+        onSubmit={this.processExchangeAfterApproveZero.bind(this)}
         translate={this.props.translate}
         address={this.props.account.address}
         gasPrice={this.props.form.snapshot.gasPrice}

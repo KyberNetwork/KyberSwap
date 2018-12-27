@@ -2,11 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import constansts from "../../services/constants"
 import { getTranslate } from 'react-localize-redux'
-import {openImportAccount as openImportAccountExchange} from "../../actions/exchangeActions"
-import {openImportAccount as openImportAccountTransfer} from "../../actions/transferActions"
 import * as common from "../../utils/common"
-import { clearSession } from "../../actions/globalActions"
-import * as analytics from "../../utils/analytics"
 import { Link } from 'react-router-dom'
 
 @connect((store, props) => {
@@ -24,14 +20,14 @@ import { Link } from 'react-router-dom'
 
   return {
     translate, currentLang, exchangeLink, transferLink,
-    page: props.page
-
+    page: props.page,
+    analytics: store.global.analytics
   }
 })
 
 export default class HeaderTransaction extends React.Component {
   gotoRoot = (e) => {
-    analytics.trackClickBreadCrumb("Home")
+    this.props.analytics.callTrack("trackClickBreadCrumb", "Home");
     if (this.props.currentLang === 'en') {
       window.location.href = "/"
     } else {
