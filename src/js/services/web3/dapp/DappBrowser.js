@@ -10,11 +10,11 @@ export default class DappBrowser {
   constructor() {
     this.web3 = new Web3(Web3.givenProvider || window.web3.currentProvider || window.web3.givenProvider)
     //for older verions of web3
-    console.log("web3_v4")
+    console.log("web3_v5")
     if (this.web3 && this.web3.net && !this.web3.eth.net){
       this.web3.eth.net = this.web3.net
     }
-    console.log(this.web3)
+    //console.log(this.web3)
   }
 
   getWalletType = () => {
@@ -24,8 +24,8 @@ export default class DappBrowser {
   getNetworkId = () => {
     return new Promise((resolve, reject) => {      
       this.web3.eth.net.getId((error, result) => {     
-        console.log("netid") 
-        console.log(result)           
+        // console.log("netid") 
+        // console.log(result)           
         if (error || !result) {
           console.log(error)  
           var error = new Error("Cannot get network id")

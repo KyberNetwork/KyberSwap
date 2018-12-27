@@ -44,7 +44,7 @@ export default class ModernMetamaskBrowser extends DappBrowser {
           // })
 
           this.web3.eth.getAccounts((error, result) => {
-            console.log(result)
+            // console.log(result)
             if (error || result.length === 0) {
               var error = new Error("Cannot get coinbase")
               reject(error)
@@ -72,7 +72,7 @@ export default class ModernMetamaskBrowser extends DappBrowser {
         // })
 
         this.web3.eth.getAccounts((error, result) => {
-          console.log(result)
+          // console.log(result)
           if (error || result.length === 0) {
             var error = new Error("Cannot get coinbase")
             reject(error)

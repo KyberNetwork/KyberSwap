@@ -47,45 +47,21 @@ class ApproveModal extends React.Component {
     //var haveError = this.props.errors ? true : false
     return (
       <div className="approve-modal">
-        <div className="title">{ this.props.translate("modal.approve_token") || "Approve token"}</div>
+        <div className="title">{this.props.title}</div>
         <a className="x" onClick={(e) => this.props.onCancel(e)}>&times;</a>
         <div className="content with-overlap">
           <div className="row">
             <div>
               <div>
                 <div className="message">                 
-                    {this.props.translate("modal.approve_exchange", {token: this.props.token}) 
-                      || `You need to grant permission for Kyber Swap to interact with ${this.props.token} with this address`}
+                    {this.props.message}
                 </div>
                 <div class="info tx-title">
                   <div className="address-info">
-                    {/* <div className="column small-3 tx-title-text">Address:</div>
-                    <div className="column small-9 tx-hash">
-                        {this.props.address}
-                    </div> */}
                     <div>{this.props.translate("modal.address") || "Address"}</div>
                     <div>{this.props.address}</div>
                   </div>
                 </div>
-                {/* <div className="address">
-                  <span>Address</span>
-                  <span>{this.props.address}</span>
-                </div> */}
-                {/* <div className="gas-configed">
-                  <div><b>{this.props.translate("transaction.included") || 'Included'}</b></div>
-                  <div className="row">
-                    <span className="column small-6 font-w-b">{this.props.translate("transaction.gas_price") || 'Gas price'}</span>
-                    <span className="column small-6 font-w-b">{+roundingNumber(this.props.gasPrice)} Gwei</span>
-                  </div>
-                  <div className="row">
-                    <span className="column small-6 font-w-b">{this.props.translate("transaction.transaction_fee") || "Transaction Fee"}</span>
-                    <span className="column small-6 font-w-b">{this.props.isFetchingGas ?
-                      <img src={require('../../../assets/img/waiting-white.svg')} />
-                      : <span>{totalGas.toString()}</span>
-                    } ETH</span>
-                  </div>                 
-                </div> */}
-
                 <FeeDetail 
                   translate={this.props.translate} 
                   gasPrice={this.props.gasPrice} 
@@ -93,15 +69,6 @@ class ApproveModal extends React.Component {
                   isFetchingGas={this.props.isFetchingGas}
                   totalGas={totalGas}
                 />
-                
-                {/* {haveError ?
-                  '' :
-                  this.props.isConfirming ? (
-                    <p>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</p>
-                  ) : (
-                    <p>{this.props.translate("modal.press_approve") || "Press approve to continue"}</p>
-                  )
-                } */}
               </div>
               {this.errorHtml()}
 
@@ -114,7 +81,7 @@ class ApproveModal extends React.Component {
             <div className="cell medium-8 small-12">{this.msgHtml()}</div>
               <div className="cell medium-4 small-12">
                 <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "waiting" : "next")}
-                onClick={(e) => this.props.onSubmit(e)}
+                onClick={this.props.onSubmit}
               >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a>
             </div>
           </div>

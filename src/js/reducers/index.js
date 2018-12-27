@@ -29,14 +29,19 @@ const appReducer = combineReducers({
   // }, market),  
   locale : localizeReducer,
   tokens, txs,
+  utils,
   // locale: persistReducer({
   //   key: 'locale',
   //   storage: localForage
   // }, locale),  
-  utils: persistReducer({
-    key: 'utils',
+  // utils: persistReducer({
+  //   key: 'utils',
+  //   storage: session
+  // }, utils),  
+  txs: persistReducer({
+    key: 'txs',
     storage: session
-  }, utils),  
+  }, txs),  
   // global: persistReducer({
   //   key: 'global',
   //   storage: localForage,

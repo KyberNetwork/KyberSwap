@@ -20,11 +20,11 @@ const PassphraseModal = (props) => {
     if (input.classList.contains('security')) {
       input.classList.remove('security')
       input.parentElement.classList.add('unlock')
-      this.props.analytics.callTrack("trackClickShowPassword", "show");
+      props.analytics.callTrack("trackClickShowPassword", "show");
     } else if (input.type == 'text') {
       input.classList.add('security')
       input.parentElement.classList.remove('unlock')
-      this.props.analytics.callTrack("trackClickShowPassword", "hide");
+      props.analytics.callTrack("trackClickShowPassword", "hide");
     }
   }
 
