@@ -6,7 +6,7 @@ const ImportByPKeyView = (props) => {
   function handldeSubmit() {
     let privateKey = document.getElementById("private_key").value
     props.importPrivateKey(privateKey)
-    this.props.analytics.callTrack("trackClickSubmitPrKey");
+    props.analytics.callTrack("trackClickSubmitPrKey");
   }
 
   function submit(e) {
@@ -20,11 +20,11 @@ const ImportByPKeyView = (props) => {
     if (input.classList.contains('security')) {
       input.classList.remove('security')
       input.parentElement.classList.add('unlock')
-      this.props.analytics.callTrack("trackClickShowPassword", "show");
+      props.analytics.callTrack("trackClickShowPassword", "show");
     } else if (input.type == 'text') {
       input.classList.add('security')
       input.parentElement.classList.remove('unlock')
-      this.props.analytics.callTrack("trackClickShowPassword", "hide");
+      props.analytics.callTrack("trackClickShowPassword", "hide");
     }
   }
 
@@ -71,7 +71,7 @@ const ImportByPKeyView = (props) => {
                                autoFocus
                                autoComplete="off"
                                spellCheck="false"
-                               onFocus={(e) => {this.props.analytics.callTrack("trackClickInputPrKey")}}
+                               onFocus={(e) => {props.analytics.callTrack("trackClickInputPrKey")}}
                                required />
                         <p>{props.privateKeyVisible}</p>
                         <a className="toggle" onClick={toggleShowPw}></a>

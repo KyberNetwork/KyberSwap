@@ -265,8 +265,19 @@ const exchange = (state = initState, action) => {
       newState.signError = ''
       return newState
     }
+    case "EXCHANGE.HIDE_APPROVE_ZERO":{
+      newState.confirmApproveZero = false
+      newState.isApprovingZero = false
+      newState.signError = ''
+      return newState
+    }
     case "EXCHANGE.SHOW_APPROVE": {
       newState.confirmApprove = true
+      newState.isFetchingGas = true
+      return newState
+    }
+    case "EXCHANGE.SHOW_APPROVE_ZERO": {
+      newState.confirmApproveZero = true
       newState.isFetchingGas = true
       return newState
     }

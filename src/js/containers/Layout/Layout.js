@@ -20,7 +20,7 @@ import AnalyticFactory from "../../services/analytics"
 import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store) => {
-  console.log("locale: ", store.locale)
+  // console.log("locale: ", store.locale)
   return {
     ethereumNode: store.connection.ethereum,
     currentBlock: store.global.currentBlock,

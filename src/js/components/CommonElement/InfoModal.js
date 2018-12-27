@@ -3,7 +3,6 @@ import { IDLE_TIME_OUT } from "../../services/constants";
 import {Modal} from '../CommonElement'
 
 const InfoModal = (props) => {
-  //console.log(props.content)
   var content = (
     <div>
       <div class="title text-center">{props.title}</div><a class="x" onClick={props.closeModal}>&times;</a>
@@ -11,7 +10,9 @@ const InfoModal = (props) => {
           <div class="row">
               <div class="column">
                   <center>
-                      <p>{props.content}</p>
+                      <p>
+                      {props.content}
+                      </p>
                   </center>
               </div>
           </div>

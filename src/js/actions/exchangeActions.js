@@ -189,9 +189,21 @@ export function hideApprove() {
   }
 }
 
+export function hideApproveZero(){
+  return {
+    type: "EXCHANGE.HIDE_APPROVE_ZERO",
+  }
+}
+
 export function showApprove() {
   return {
     type: "EXCHANGE.SHOW_APPROVE",
+  }
+}
+
+export function showApproveZero() {
+  return {
+    type: "EXCHANGE.SHOW_APPROVE_ZERO",
   }
 }
 
@@ -266,6 +278,18 @@ export function doApprove(ethereum, sourceToken, sourceAmount, nonce, gas, gasPr
     }
   }
 }
+
+export function doApproveZero(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+  keystring, password, accountType, account, keyService, sourceTokenSymbol) {
+  return {
+    type: "EXCHANGE.PROCESS_APPROVE_ZERO",
+    payload: {
+      ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+      keystring, password, accountType, account, keyService, sourceTokenSymbol
+    }
+  }
+}
+
 export function doTransaction(id, ethereum, tx, account, data) {
   return {
     type: "EXCHANGE.TX_BROADCAST_PENDING",
@@ -480,6 +504,13 @@ export function setKyberEnable(enable){
   return {
     type: "EXCHANGE.SET_KYBER_ENABLE",
     payload: enable
+  }
+}
+
+export function setApproveTxZero(hash, symbol){
+  return {
+    type: "EXCHANGE.SET_APPROVE_TX_ZERO",
+    payload: {hash, symbol}
   }
 }
 

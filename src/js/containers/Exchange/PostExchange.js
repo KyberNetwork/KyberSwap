@@ -255,47 +255,16 @@ export default class PostExchange extends React.Component {
       return (
         <div className="confirm-exchange-modal">
           <div className="title-description">
-            {/* {this.props.translate("transaction.about_to_swap") || "You are about to swap"} */}
             <div>{this.props.translate("transaction.your_wallet") || "Your Wallet"}</div>
             <div>{this.props.account.address}</div>
           </div>
           <div className="amount">
-            <div className="amount-item amount-left">
-              {/* <div className="grid-x">
-                <div className="cell medium-3 small-12 amount-icon">
-                  <img src={getAssetUrl(`tokens/${sourceIcon}`)} />
-                </div>
-                <div className="cell medium-9 small-12">
-                  <div className="amount-detail">
-                    <span>
-                      {sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''}
-                    </span>
-                    <span>
-                      {sourceTokenSymbol}
-                    </span>
-                  </div>
-                </div>
-              </div> */}
+            <div className="amount-item amount-left">              
               <div className={"rc-label"}>From</div>
               <div className={"rc-info"}>{sourceAmount} {sourceTokenSymbol}</div>
             </div>
             <div className="space"><img src={require("../../../assets/img/exchange/arrow-right-orange.svg")} /></div>
             <div className="amount-item amount-right">
-                {/* <div className="grid-x">
-                  <div className="cell medium-3 small-12 amount-icon">
-                    <img src={getAssetUrl(`tokens/${destIcon}`)} />
-                  </div>
-                  <div className="cell medium-9 small-12">
-                    <div className="amount-detail">
-                      <span>
-                        {destAmount.slice(0, 7)}{destAmount.length > 7 ? '...' : ''}
-                      </span>
-                      <span>
-                        {destTokenSymbol}
-                      </span>
-                    </div>
-                  </div>
-                </div> */}
                 <div>
                   <div className={"rc-label"}>To</div>
                   <div className={"rc-info"}>
@@ -340,6 +309,14 @@ export default class PostExchange extends React.Component {
     this.props.dispatch(exchangeActions.hideApprove())
     this.props.dispatch(exchangeActions.resetSignError())
   }
+
+  closeModalApproveZero = (event) => {
+    this.props.analytics.callTrack("trackClickCloseModal", "Approve Zero Modal")
+    if (this.props.form.isApprovingZero) return
+    this.props.dispatch(exchangeActions.hideApproveZero())
+    this.props.dispatch(exchangeActions.resetSignError())
+  }
+
   changePassword = (event) => {
     this.props.dispatch(exchangeActions.changePassword())
   }
@@ -480,15 +457,24 @@ export default class PostExchange extends React.Component {
     this.props.analytics.callTrack("trackClickApproveToken", params.sourceTokenSymbol);
   }
 
+  processExchangeAfterApproveZero = () => {
+    const params = this.formParamOfSnapshot()
+    console.log(params)
+    const account = this.props.account
+    const ethereum = this.props.ethereum
+    this.props.dispatch(exchangeActions.doApproveZero(ethereum, params.sourceToken, 0, params.nonce, params.gas_approve, params.gasPrice,
+      account.keystring, account.password, account.type, account, this.props.keyService, params.sourceTokenSymbol))
+      
+    this.props.analytics.callTrack("trackClickApproveTokenZero" ,params.sourceTokenSymbol)
+  }
+
   processTx = () => {
-    // var errors = {}
     try {
       var password = ""
       if (this.props.account.type === "keystore") {
         password = document.getElementById("passphrase").value
         document.getElementById("passphrase").value = ''
       }
-      //const params = this.formParams()
       const params = this.formParamOfSnapshot()
       //check nonce
       params.nonce = validators.verifyNonce(this.props.account.getUsableNonce())
@@ -560,11 +546,37 @@ export default class PostExchange extends React.Component {
   contentApprove = () => {
     var addressShort = this.props.account.address.slice(0, 8) + "..." + this.props.account.address.slice(-6)
     return (
-      <ApproveModal recap="Please approve"
+      <ApproveModal 
+        title={ this.props.translate("modal.approve_token") || "Approve token"}
+        message={"You need to grant permission for Kyber Swap to interact with KNC with this address"}
+        recap="Please approve"
         onCancel={this.closeModalApprove}
         isApproving={this.props.form.isApproving}
         token={this.props.form.sourceTokenSymbol}
-        onSubmit={this.processExchangeAfterApprove}
+        onSubmit={this.processExchangeAfterApprove.bind(this)}
+        translate={this.props.translate}
+        address={this.props.account.address}
+        gasPrice={this.props.form.snapshot.gasPrice}
+        gas={this.props.form.snapshot.gas_approve}
+        isFetchingGas={this.props.form.snapshot.isFetchingGas}
+        errors={this.props.form.signError}
+        walletType={this.props.account.type}
+      />
+    )
+  }
+
+
+  contentApproveZero = () => {
+    var addressShort = this.props.account.address.slice(0, 8) + "..." + this.props.account.address.slice(-6)    
+    return (
+      <ApproveModal 
+        title={ "Approve token"}
+        message={"You need reset allowance KNC of Kyber Swap with this address"}
+        recap="Please approve"
+        onCancel={this.closeModalApproveZero}
+        isApproving={this.props.form.isApprovingZero}
+        token={this.props.form.sourceTokenSymbol}
+        onSubmit={this.processExchangeAfterApproveZero.bind(this)}
         translate={this.props.translate}
         address={this.props.account.address}
         gasPrice={this.props.form.snapshot.gasPrice}
@@ -587,6 +599,7 @@ export default class PostExchange extends React.Component {
       var modalPassphrase = ""
       var modalConfirm = ""
       var modalApprove = ""
+      var modalApproveZero = ""
       if (this.props.account.type === "keystore") {
         modalPassphrase = (<Modal
           className={{
@@ -623,8 +636,20 @@ export default class PostExchange extends React.Component {
             size="medium"
           />
         )
+        modalApproveZero = (
+          <Modal className={{
+            base: 'reveal medium confirm-modal',
+            afterOpen: 'reveal medium confirm-modal'
+          }}
+            isOpen={this.props.form.confirmApproveZero}
+            onRequestClose={this.closeModalApproveZero}
+            contentLabel="approve modal"
+            content={this.contentApproveZero()}
+            size="medium"
+          />
+        )
       }
-      modalExchange = <div>{modalPassphrase} {modalConfirm} {modalApprove}</div>
+      modalExchange = <div>{modalPassphrase} {modalConfirm} {modalApprove} {modalApproveZero}</div>
     }
 
     let activeButtonClass = ""

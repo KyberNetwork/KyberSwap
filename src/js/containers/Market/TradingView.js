@@ -77,7 +77,7 @@ export default class TradingView extends React.Component {
 	}
 
 	componentDidMount() {
-		console.log(this.props)
+		// console.log(this.props)
 		const feeder = new window.Datafeeds.UDFCompatibleDatafeed(
 			this.props.datafeedUrl, this.props.updateFrequency);
 		const widgetOptions = {
