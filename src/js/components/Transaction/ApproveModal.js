@@ -54,8 +54,7 @@ class ApproveModal extends React.Component {
             <div>
               <div>
                 <div className="message">                 
-                    {this.props.translate("modal.approve_exchange", {token: this.props.token}) 
-                      || `You need to grant permission for Kyber Swap to interact with ${this.props.token} with this address`}
+                    {this.props.message}
                 </div>
                 <div class="info tx-title">
                   <div className="address-info">
