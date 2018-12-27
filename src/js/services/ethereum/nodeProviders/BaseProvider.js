@@ -220,9 +220,11 @@ export default class BaseProvider {
         if (!this.rpc.utils.isAddress(walletId)) {
             walletId = "0x" + Array(41).join("0")
         }
-        var data = this.networkContract.methods.trade(
+        // var hint = this.rpc.utils.utf8ToHex("PERM");
+        var hint =  this.rpc.utils.utf8ToHex("PERM");
+        var data = this.networkContract.methods.tradeWithHint(
             sourceToken, sourceAmount, destToken, destAddress,
-            maxDestAmount, minConversionRate, walletId).encodeABI()
+            maxDestAmount, minConversionRate, walletId, hint).encodeABI()
 
         return new Promise((resolve, reject) => {
             resolve(data)
