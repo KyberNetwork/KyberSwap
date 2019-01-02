@@ -53,7 +53,7 @@ export default class Tx {
               //   newTx.eventTrade = theLog.data
               //   break
               // }
-              if (logs[i].topics[0].toLowerCase() == BLOCKCHAIN_INFO.trade_topic.toLowerCase()) {
+              if (logs[i].topics[0].toLowerCase() == constants.TRADE_TOPIC.toLowerCase()) {
                 theLog = logs[i]
                 newTx.eventTrade = theLog.data
                 break

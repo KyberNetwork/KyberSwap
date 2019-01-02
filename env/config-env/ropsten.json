@@ -251,7 +251,6 @@
   "reserve": "0x0fc1cf3e7dd049f7b42e6823164a64f76fc06be0",
   "network": "0x818E6FECD516Ecc3849DAf6845e3EC868087B755",
   "wrapper": "0x665d34f192f4940da4e859ff7768c0a80ed3ae10",
-  "trade_topic":"0xd30ca399cb43507ecec6a629a35cf45eb98cda550c27696dcb0d8c4a3873ce6c",
   "endpoint": "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",
   "averageBlockTime": 6000,
   "networkId": 3,
