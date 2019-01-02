@@ -37,6 +37,8 @@ export default class Tx {
         newTx.gas = receipt.gasUsed
         newTx.blockNumber = receipt.blockNumber
         var logs = receipt.logs
+        console.log("log_tx")
+        console.log(logs)
         if (newTx.type == "exchange") {
           if (logs.length == 0) {
             newTx.threw = true
@@ -45,8 +47,13 @@ export default class Tx {
           } else {
             var theLog
             for (var i = 0; i < logs.length; i++) {
-              if (logs[i].address.toLowerCase() == BLOCKCHAIN_INFO.network.toLowerCase() &&
-                logs[i].topics[0].toLowerCase() == BLOCKCHAIN_INFO.trade_topic.toLowerCase()) {
+              // if (logs[i].address.toLowerCase() == BLOCKCHAIN_INFO.network.toLowerCase() &&
+              //   logs[i].topics[0].toLowerCase() == BLOCKCHAIN_INFO.trade_topic.toLowerCase()) {
+              //   theLog = logs[i]
+              //   newTx.eventTrade = theLog.data
+              //   break
+              // }
+              if (logs[i].topics[0].toLowerCase() == BLOCKCHAIN_INFO.trade_topic.toLowerCase()) {
                 theLog = logs[i]
                 newTx.eventTrade = theLog.data
                 break

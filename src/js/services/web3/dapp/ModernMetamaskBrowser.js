@@ -40,7 +40,6 @@ export default class ModernMetamaskBrowser extends DappBrowser {
           this.web3.eth.getCoinbase((error, result) => {
             // alert(error)
             // alert(result)
-            console.log(error)
             //   console.log(result)      
             if (error || !result) {
               var error = new Error("Cannot get coinbase")
@@ -61,7 +60,6 @@ export default class ModernMetamaskBrowser extends DappBrowser {
         this.web3.eth.getCoinbase((error, result) => {
           // alert(error)
           // alert(result)
-          console.log(error)
           //   console.log(result)      
           if (error || !result) {
             var error = new Error("Cannot get coinbase")

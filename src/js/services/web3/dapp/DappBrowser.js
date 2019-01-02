@@ -18,10 +18,6 @@ export default class DappBrowser {
   getNetworkId = () => {
     return new Promise((resolve, reject) => {
       this.web3.eth.net.getId((error, result) => {
-        // alert(error)
-        // alert(result)
-        //console.log()
-        console.log(result)
         if (error || !result) {
           var error = new Error("Cannot get network id")
           reject(error)
@@ -35,8 +31,6 @@ export default class DappBrowser {
   getCoinbase() {
       return new Promise((resolve, reject) => {
         this.web3.eth.getAccounts((error, result) => {
-          console.log(error)
-          console.log(result)
           if (error || result.length === 0) {
             var error = new Error("Cannot get coinbase")
             reject(error)
