@@ -98,7 +98,7 @@ const PassphraseModal = (props) => {
               <a className="tootip"></a>
             </div>
             <div className="cell small-12 medium-4">
-              <a className={"button process-submit" + (props.isConfirming || props.isFetchingGas || props.isFetchingRate ? " waiting" : " next")}
+              <a className={"button process-submit" + (props.isConfirming || props.isFetchingGas || props.isFetchingRate ? " disabled-button" : " next")}
                 onClick={(e) => submitTransaction(e)}>
                 {props.translate("modal.confirm").toLocaleUpperCase() || "Confirm".toLocaleUpperCase()}
               </a>

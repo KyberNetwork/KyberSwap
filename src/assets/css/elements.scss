@@ -168,6 +168,10 @@ input.error {
     &.waiting{
       color: #aaa;
     }
+  }
+  &.disabled-button {
+    pointer-events: none;
+    cursor: default;
   }  
 }
 
