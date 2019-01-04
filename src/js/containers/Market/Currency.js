@@ -12,7 +12,8 @@ import * as analytics from "../../utils/analytics"
 @connect((store) => {
     return {
         translate: getTranslate(store.locale),
-        currency: store.market.configs.currency
+        currency: store.market.configs.currency,
+        focus: store.market.configs.currency.focus
     }
 })
 export default class Currency extends React.Component {
@@ -25,7 +26,7 @@ export default class Currency extends React.Component {
             <div className="market-choose-currency">
                 <div className="header-label">{this.props.translate("market.currency") || "Currency"}</div>
                 <Selector
-                    defaultItem={this.props.currency.focus}
+                    defaultItem={this.props.focus}
                     listItem={this.props.currency.listItem}
                     onChange = {this.changeCurrency}
                 />
