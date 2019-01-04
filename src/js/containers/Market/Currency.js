@@ -12,7 +12,7 @@ import * as analytics from "../../utils/analytics"
 @connect((store) => {
     return {
         translate: getTranslate(store.locale),
-        currency: store.market.configs.currency
+        currency: {...store.market.configs.currency}
     }
 })
 export default class Currency extends React.Component {
