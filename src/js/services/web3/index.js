@@ -48,10 +48,10 @@ export function newWeb3Instance(){
 
 
 function getWeb3Type(){
-    if (window.ethereum){
-        return "modern_metamask"
-    }
     if (window.web3){
+        if (window.ethereum && window.web3.currentProvider && window.web3.currentProvider.isMetaMask){
+            return "modern_metamask"
+        }
         if (window.web3.currentProvider && window.web3.currentProvider.isMetaMask){
             return "metamask"
         }
