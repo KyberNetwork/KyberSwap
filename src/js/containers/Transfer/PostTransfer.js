@@ -124,7 +124,6 @@ export default class PostTransfer extends React.Component {
         isFetchingGas={this.props.form.snapshot.isFetchingGas}
         gasPrice={this.props.form.snapshot.gasPrice}
         gas={this.props.form.snapshot.gas}
-        isFetchingRate={true}
       />
     )
   }
@@ -142,7 +141,6 @@ export default class PostTransfer extends React.Component {
         title={this.props.translate("modal.confirm_transfer_title") || "Transfer Confirm"}
         errors={this.props.form.signError}
         walletType={this.props.account.type}
-        isFetchingRate={true}
       />
     )
   }
