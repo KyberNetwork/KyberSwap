@@ -337,6 +337,10 @@ $divider-color: darken($title-background-color, 5);
       &:hover {
         background-color: $color-swap-light;
       }
+
+      &.disabled-button {
+        background-color: #EF8102;
+      }
     }
     @include screen-max-width(medium){
       padding-left: 20px;
