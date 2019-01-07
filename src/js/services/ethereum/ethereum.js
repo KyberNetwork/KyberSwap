@@ -175,7 +175,7 @@ export default class EthereumService extends React.Component {
     // this.verifyExchange()
     // this.verifyTransfer()
 
-    // this.fetchGasExchange()
+    this.fetchGasExchange()
     this.fetchGasTransfer()
 
     //this.fetMarketData()

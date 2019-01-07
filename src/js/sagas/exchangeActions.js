@@ -882,11 +882,10 @@ function* updateRateSnapshot(action) {
 }
 
 function* fetchGas() {
-  // yield call(estimateGas)
+  yield call(estimateGas)
 }
 
 function* estimateGas() {
-  console.log("run here first")
   var gasRequest = yield call(common.handleRequest, getGasUsed)
   if (gasRequest.status === "success") {
     const { gas, gas_approve } = gasRequest.data
@@ -1141,7 +1140,6 @@ function* getGasApprove() {
 }
 
 function* getGasUsed() {
-  console.log("estimate gas here")
   var state = store.getState()
   const ethereum = state.connection.ethereum
   const exchange = state.exchange
@@ -1499,7 +1497,7 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.ANALYZE_ERROR", analyzeError)
 
   yield takeEvery("EXCHANGE.SELECT_TOKEN_ASYNC", selectToken)
-  yield takeEvery("EXCHANGE.INPUT_CHANGE", fetchGas)
+  // yield takeEvery("EXCHANGE.INPUT_CHANGE", fetchGas)
   //yield takeEvery("EXCHANGE.FETCH_GAS", fetchGasManual)
   yield takeEvery("EXCHANGE.FETCH_GAS_SNAPSHOT", fetchGasSnapshot)
 

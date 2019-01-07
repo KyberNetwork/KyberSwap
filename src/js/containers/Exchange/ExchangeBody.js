@@ -216,7 +216,6 @@ export default class ExchangeBody extends React.Component {
     this.lazyUpdateValidateSourceAmount(sourceValue)
   }
   changeSourceAmount = (e) => {
-    console.log("change input run here")
     var value = e.target.value
     if (value < 0) return
     this.props.dispatch(exchangeActions.inputChange('source', value));
