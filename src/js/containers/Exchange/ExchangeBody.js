@@ -206,9 +206,15 @@ export default class ExchangeBody extends React.Component {
   //   }
   // }
 
+  dispatchEstimateGasNormal = () => {
+    this.props.dispatch(exchangeActions.estimateGasNormal())
+  }
+
   lazyUpdateRateExchange = _.debounce(this.dispatchUpdateRateExchange, 500)
   lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
  // lazyValidateTransactionFee = _.debounce(this.validateTxFee, 500)
+
+  lazyEstimateGas = _.debounce(this.dispatchEstimateGasNormal, 500)
 
  
   validateRateAndSource = (sourceValue) => {
@@ -219,6 +225,8 @@ export default class ExchangeBody extends React.Component {
     var value = e.target.value
     if (value < 0) return
     this.props.dispatch(exchangeActions.inputChange('source', value));
+
+    this.lazyEstimateGas()
 
     this.validateRateAndSource(value)
   }
