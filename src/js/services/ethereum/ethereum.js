@@ -493,7 +493,33 @@ export default class EthereumService extends React.Component {
     var errors = []
     var results = []
     return new Promise((resolve, reject) => {
-      this.promiseMultiNode(this.listProviders, 0, fn, resolve, reject, results, errors, ...args)
+      this.listProviders.map(val => {
+        if (!val[fn]) {
+          errors.push({
+            code: 0,
+            msg: "Provider not support this API"
+          })
+          return
+        }
+        val[fn](...args).then(result => {
+          resolve(result)
+        }).catch(err => {
+          console.log(err)
+          errors.push({
+            code: 1,
+            msg: err
+          })          
+          if (errors.length === this.listProviders.length){
+            //find error with code 1
+            for (var i = 0; i<errors.length; i++){
+              if (errors[i].code === 1){
+                reject(errors[i].msg)
+              }
+            }
+          }
+        })
+      })
+      //this.promiseMultiNode(this.listProviders, 0, fn, resolve, reject, results, errors, ...args)
     })
   }
 
