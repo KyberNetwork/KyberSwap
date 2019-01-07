@@ -1237,7 +1237,8 @@ function* getGasUsed() {
     if (gas > maxGas) {
       gas = maxGas
     }
-
+    
+    yield put(actions.setEstimateGas(gas, gas_approve))
     return { status: "success", res: { gas, gas_approve } }
   } catch (e) {
     console.log("Cannot estimate gas")

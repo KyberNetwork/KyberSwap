@@ -112,23 +112,12 @@ export default class Exchange extends React.Component {
   //   this.props.dispatch(clearSession())
   // }
 
-  getGasLimit = () => {
-    let sourceSymbol = this.props.exchange.sourceTokenSymbol
-    let destSymbol = this.props.exchange.destTokenSymbol
-    var sourceTokenLimit = this.props.tokens[sourceSymbol]? this.props.tokens[sourceSymbol].gasLimit : 0
-    var destTokenLimit = this.props.tokens[destSymbol] ? this.props.tokens[destSymbol].gasLimit: 0
-
-    var sourceGasLimit = sourceTokenLimit ? parseInt(sourceTokenLimit) : this.props.exchange.max_gas
-    var destGasLimit = destTokenLimit ? parseInt(destTokenLimit) : this.props.exchange.max_gas
-    return sourceGasLimit + destGasLimit
-  }
-
   render() {    
     if (this.props.account === false){
       return <ImportAccount />
     }
     var gasPrice = converter.stringToBigNumber(converter.gweiToEth(this.props.exchange.gasPrice))
-    var totalGas = gasPrice.multipliedBy(this.getGasLimit() + this.props.exchange.gas_approve)
+    var totalGas = gasPrice.multipliedBy(this.props.exchange.gas + this.props.exchange.gas_approve)
     var page = "exchange"
     var gasConfig = (
       <GasConfig 
