@@ -1523,4 +1523,5 @@ export function* watchExchange() {
 
   yield takeEvery("EXCHANGE.FETCH_EXCHANGE_ENABLE", fetchExchangeEnable)
   yield takeEvery("EXCHANGE.EXCHANGE.ESTIMATE_GAS_USED_NORMAL", estimateGasNormal)
+  yield takeEvery("EXCHANGE.SWAP_TOKEN", estimateGasNormal)
 }
