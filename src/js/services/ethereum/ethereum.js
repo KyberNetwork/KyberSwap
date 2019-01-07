@@ -60,6 +60,8 @@ export default class EthereumService extends React.Component {
   }
 
   subcribe(callBack) {
+    this.fetchGasprice() // fetch gas price when app load
+
     var callBackAsync = this.fetchData.bind(this)
     callBackAsync()
     this.intervalAsyncID = setInterval(callBackAsync, 10000)
@@ -166,14 +168,14 @@ export default class EthereumService extends React.Component {
 
 
     this.fetchMaxGasPrice()
-    this.fetchGasprice()
+    // this.fetchGasprice()
     
 
     this.fetchExchangeEnable()
     // this.verifyExchange()
     // this.verifyTransfer()
 
-    this.fetchGasExchange()
+    // this.fetchGasExchange()
     this.fetchGasTransfer()
 
     //this.fetMarketData()
