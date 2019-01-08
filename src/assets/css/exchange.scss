@@ -6,6 +6,12 @@
 }
 
 #exchange {
+  .exchange-extra-info{
+    margin-top: 25px;
+    .swap-all-des{
+      font-size: 14px;
+    }
+  }
   margin-bottom: 50px;
 
   .campain-description{
@@ -161,24 +167,31 @@
     color: #666666;
     font-size: 14px;
     letter-spacing: .5px;
-    text-align: center;
-    margin-bottom: 10px;
-    margin-top: 1rem;
-    font-weight: 600;
+    text-align: right;
+    // margin-bottom: 10px;
+    // margin-top: 1rem;
+    // font-weight: 600;
 
     &__separator {
       margin: 0 15px;
     }
-
-    @include screen-min-width(large) {
-      width: 450px;
-      margin: 0 auto;
-      margin-top: 1rem;
+    &__item {
+      span{
+        &:not(:first-child){
+          margin-left: 10px;
+        }
+      }
     }
+    &__change{
+      color: #EE344E;
+    }
+    // @include screen-min-width(large) {
+    //   margin-top: 
+    // }
 
     @include screen-max-width(large) {
       text-align: left;
-
+      margin-top: 15px;
       &__item {
         display: block;
       }

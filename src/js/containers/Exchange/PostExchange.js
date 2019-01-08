@@ -12,7 +12,7 @@ import { TermAndServices } from "../../containers/CommonElements"
 import { PassphraseModal, ConfirmTransferModal, ApproveModal } from "../../components/Transaction"
 import { PostExchangeBtn } from "../../components/Exchange"
 import { getTranslate } from 'react-localize-redux';
-import { RateBetweenToken } from "../Exchange"
+// import { RateBetweenToken } from "../Exchange"
 import * as analytics from "../../utils/analytics";
 import { getAssetUrl, isUserEurope, getParameterByName } from "../../utils/common";
 
@@ -649,12 +649,12 @@ export default class PostExchange extends React.Component {
       percent: "-"
     }
 
-    var rateToken = (
-      <RateBetweenToken
-        isSelectToken={this.props.form.isSelectToken}
-        exchangeRate={exchangeRate}
-      />
-    )
+    // var rateToken = (
+    //   <RateBetweenToken
+    //     isSelectToken={this.props.form.isSelectToken}
+    //     exchangeRate={exchangeRate}
+    //   />
+    // )
     return (
       <PostExchangeBtn
         step={this.props.form.step}
@@ -668,7 +668,7 @@ export default class PostExchange extends React.Component {
         isApproving={this.props.form.isApproving}
         translate={this.props.translate}
         termAndServices={termAndServices}
-        rateToken={rateToken}
+        // rateToken={rateToken}
         openConfig={this.openConfig}
         advanced={this.props.form.advanced}
       />
