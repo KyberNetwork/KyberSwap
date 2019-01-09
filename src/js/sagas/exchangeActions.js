@@ -51,9 +51,10 @@ function* selectToken(action) {
   yield put(utilActions.hideSelectToken())
 
   yield put(actions.checkSelectToken())
+  yield call(estimateGasNormal)
+  
   if (ethereum){
     yield call(ethereum.fetchRateExchange, true)
-    yield call(estimateGasNormal)
   }
 
   //calculate gas use

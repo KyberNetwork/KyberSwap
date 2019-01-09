@@ -71,7 +71,6 @@ export default class Exchange extends React.Component {
 
           this.props.dispatch(exchangeActions.selectTokenAsync(sourceSymbol, sourceAddress, "source", this.props.ethereum))
           this.props.dispatch(exchangeActions.selectTokenAsync(destSymbol, destAddress, "des", this.props.ethereum))
-          this.props.dispatch(exchangeActions.estimateGasNormal())
     }
   }
   validateTxFee = (gasPrice) => {
