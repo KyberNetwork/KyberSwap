@@ -51,9 +51,10 @@ function* selectToken(action) {
   yield put(utilActions.hideSelectToken())
 
   yield put(actions.checkSelectToken())
+  yield call(estimateGasNormal)
+  
   if (ethereum){
     yield call(ethereum.fetchRateExchange, true)
-    yield call(estimateGasNormal)
   }
 
   //calculate gas use
@@ -892,6 +893,7 @@ function* estimateGasNormal() {
   const sourceTokenSymbol = exchange.sourceTokenSymbol
   var gas = yield call(getMaxGasExchange)
   var gas_approve 
+
   if(sourceTokenSymbol === "ETH"){
     gas_approve = 0
   }else{
@@ -1522,5 +1524,6 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
 
   yield takeEvery("EXCHANGE.FETCH_EXCHANGE_ENABLE", fetchExchangeEnable)
-  yield takeEvery("EXCHANGE.EXCHANGE.ESTIMATE_GAS_USED_NORMAL", estimateGasNormal)
+  yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED_NORMAL", estimateGasNormal)
+  yield takeEvery("EXCHANGE.SWAP_TOKEN", estimateGasNormal)
 }
