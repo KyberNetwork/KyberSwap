@@ -5,6 +5,7 @@ import { roundingNumber } from "../../utils/converter"
 import * as actions from "../../actions/exchangeActions"
 import { getTranslate } from 'react-localize-redux';
 import * as converter from '../../utils/converter'
+import * as constants from '../../services/constants'
 import ReactTooltip from 'react-tooltip'
 
 @connect((store, props) => {
@@ -69,10 +70,10 @@ export default class RateBetweenToken extends React.Component {
         {/* <span className="token-compare__tooltip">
             <img src={require('../../../assets/img/down_arrow.svg')}/>
         </span> */}
-        <span className="token-compare__tooltip" data-tip={""} data-for="info_indicator" currentitem="false">
+        <span className="token-compare__tooltip" data-html={true} data-tip={`<p style="text-align:center">Price is dependent on your swap value.<br> There is a ${change}% difference in price for the requested quantity and the default ${constants.MIN_AMOUNT_DEFAULT_RATE} ETH quantity</p>`} data-for="info_indicator" currentitem="false">
             <img src={require('../../../assets/img/info_indicator.svg')}/>
         </span>
-        <ReactTooltip place="bottom" id="info_indicator" type="top" />
+        <ReactTooltip place="top" id="info_indicator" type="light" html={true}/>
       </div>
     )
   }
