@@ -54,7 +54,7 @@ export default class RateBetweenToken extends React.Component {
     }
     var change = (defaultRate - expectedRate) / defaultRate
     change = Math.round(change * 1000) / 10    
-    if (change <= 0.1) {
+    if (change <= 0.1 || change > 80) {
       return (<div className={"token-compare__item"}>
         1 {this.props.exchange.sourceTokenSymbol} = {roundingNumber(expectedRate)} {this.props.exchange.destTokenSymbol}
       </div>)
