@@ -293,9 +293,13 @@ export default class BaseProvider {
 
     }
 
-    getRate(source, dest, quantity) {
+    getRate(source, dest, srcAmount) {
+        var mask = converters.maskNumber()
+        var srcAmountEnableFirstBit = converters.sumOfTwoNumber(srcAmount,  mask)
+        srcAmountEnableFirstBit = converters.toHex(srcAmountEnableFirstBit)
+
         return new Promise((resolve, reject) => {
-            this.networkContract.methods.getExpectedRate(source, dest, quantity).call()
+            this.networkContract.methods.getExpectedRate(source, dest, srcAmountEnableFirstBit).call()
                 .then((result) => {
                     if (result != null) {
                         resolve(result)
