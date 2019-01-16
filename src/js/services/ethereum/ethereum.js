@@ -59,6 +59,10 @@ export default class EthereumService extends React.Component {
     }
   }
 
+  getNumProvider(){
+    return this.listProviders.length
+  }
+
   subcribe(callBack) {
     this.fetchGasprice() // fetch gas price when app load
 

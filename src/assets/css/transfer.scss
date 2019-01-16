@@ -7,6 +7,12 @@ $padding-col-left : 2rem;
 #transfer-screen{
   // display: inline-block;
   // width: 100%;
+  .address-balance{
+    margin-top: 25px;
+    .balance{
+      margin-left: 15px;
+    }
+  }
   @include screen-max-width(large){
     margin:  0 10px 10px 10px;
     box-shadow: 0 7px 25px #ddd;
@@ -32,11 +38,11 @@ $padding-col-left : 2rem;
   @include screen-min-width(large){
     .transfer-col-1{
       box-shadow: $box-shadow-tab;
-      min-height: 550px;
+      min-height: 510px;
     }
     .transfer-col-3-1{
       position: relative;
-      top: -200px;
+      top: -160px;
     }
   }
   .frame {
