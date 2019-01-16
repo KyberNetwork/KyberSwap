@@ -59,6 +59,10 @@ export default class EthereumService extends React.Component {
     }
   }
 
+  getNumProvider(){
+    return this.listProviders.length
+  }
+
   subcribe(callBack) {
     var callBackAsync = this.fetchData.bind(this)
     callBackAsync()
