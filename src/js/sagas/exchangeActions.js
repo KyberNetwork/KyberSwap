@@ -51,9 +51,10 @@ function* selectToken(action) {
   yield put(utilActions.hideSelectToken())
 
   yield put(actions.checkSelectToken())
+  yield call(estimateGasNormal)
+  
   if (ethereum){
     yield call(ethereum.fetchRateExchange, true)
-    yield call(fetchGas)
   }
 
   //calculate gas use
@@ -885,8 +886,24 @@ function* fetchGas() {
   yield call(estimateGas)
 }
 
-function* estimateGas() {
+function* estimateGasNormal() {
+  var state = store.getState()
+  const exchange = state.exchange
 
+  const sourceTokenSymbol = exchange.sourceTokenSymbol
+  var gas = yield call(getMaxGasExchange)
+  var gas_approve 
+
+  if(sourceTokenSymbol === "ETH"){
+    gas_approve = 0
+  }else{
+    gas_approve = yield call(getMaxGasApprove)
+  }
+
+  yield put(actions.setEstimateGas(gas, gas_approve))
+}
+
+function* estimateGas() {
   var gasRequest = yield call(common.handleRequest, getGasUsed)
   if (gasRequest.status === "success") {
     const { gas, gas_approve } = gasRequest.data
@@ -894,19 +911,20 @@ function* estimateGas() {
   }
   if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")) {
     console.log("timeout")
-    var state = store.getState()
-    const exchange = state.exchange
+    // var state = store.getState()
+    // const exchange = state.exchange
 
-    const sourceTokenSymbol = exchange.sourceTokenSymbol
-    var gas = yield call(getMaxGasExchange)
-    var gas_approve 
-    if(sourceTokenSymbol === "ETH"){
-      gas_approve = 0
-    }else{
-      gas_approve = yield call(getMaxGasApprove)
-    }
+    // const sourceTokenSymbol = exchange.sourceTokenSymbol
+    // var gas = yield call(getMaxGasExchange)
+    // var gas_approve 
+    // if(sourceTokenSymbol === "ETH"){
+    //   gas_approve = 0
+    // }else{
+    //   gas_approve = yield call(getMaxGasApprove)
+    // }
 
-    yield put(actions.setEstimateGas(gas, gas_approve))
+    // yield put(actions.setEstimateGas(gas, gas_approve))
+    yield call(estimateGasNormal)
   }
 }
 
@@ -916,7 +934,7 @@ function* fetchGasSnapshot() {
 }
 
 function* estimateGasSnapshot() {
-
+  
   var gasRequest = yield call(common.handleRequest, getGasUsed)
   console.log("gas_request:" + JSON.stringify(gasRequest))
   if (gasRequest.status === "success") {
@@ -1498,7 +1516,7 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.ANALYZE_ERROR", analyzeError)
 
   yield takeEvery("EXCHANGE.SELECT_TOKEN_ASYNC", selectToken)
-  yield takeEvery("EXCHANGE.INPUT_CHANGE", fetchGas)
+  // yield takeEvery("EXCHANGE.INPUT_CHANGE", fetchGas)
   //yield takeEvery("EXCHANGE.FETCH_GAS", fetchGasManual)
   yield takeEvery("EXCHANGE.FETCH_GAS_SNAPSHOT", fetchGasSnapshot)
 
@@ -1506,4 +1524,6 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
 
   yield takeEvery("EXCHANGE.FETCH_EXCHANGE_ENABLE", fetchExchangeEnable)
+  yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED_NORMAL", estimateGasNormal)
+  yield takeEvery("EXCHANGE.SWAP_TOKEN", estimateGasNormal)
 }

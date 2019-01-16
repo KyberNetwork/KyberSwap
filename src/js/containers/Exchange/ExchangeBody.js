@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 import BLOCKCHAIN_INFO from "../../../../env"
 import { gweiToWei, stringToHex, getDifferentAmount, toT, roundingNumber, caculateSourceAmount, caculateDestAmount, gweiToEth, toPrimitiveNumber, stringToBigNumber, toEther } from "../../utils/converter"
 
-import { PostExchangeWithKey, MinRate, AccountBalance } from "../Exchange"
+import { PostExchangeWithKey, MinRate, AccountBalance, RateBetweenToken } from "../Exchange"
 import { TransactionConfig } from "../../components/Transaction"
 
 import { ExchangeBodyLayout }  from "../../components/Exchange"
@@ -206,9 +206,15 @@ export default class ExchangeBody extends React.Component {
   //   }
   // }
 
+  dispatchEstimateGasNormal = () => {
+    this.props.dispatch(exchangeActions.estimateGasNormal())
+  }
+
   lazyUpdateRateExchange = _.debounce(this.dispatchUpdateRateExchange, 500)
   lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
  // lazyValidateTransactionFee = _.debounce(this.validateTxFee, 500)
+
+  lazyEstimateGas = _.debounce(this.dispatchEstimateGasNormal, 500)
 
  
   validateRateAndSource = (sourceValue) => {
@@ -219,6 +225,8 @@ export default class ExchangeBody extends React.Component {
     var value = e.target.value
     if (value < 0) return
     this.props.dispatch(exchangeActions.inputChange('source', value));
+
+    this.lazyEstimateGas()
 
     this.validateRateAndSource(value)
   }
@@ -447,6 +455,13 @@ export default class ExchangeBody extends React.Component {
     if (maxCap !== "infinity") {
       maxCap = toEther(this.props.exchange.maxCap)
     }
+
+
+    var rateToken = (
+      <RateBetweenToken
+      
+      />
+    )
     return (
       <ExchangeBodyLayout step={this.props.exchange.step}
         tokenSourceSelect={tokenSourceSelect}
@@ -471,6 +486,8 @@ export default class ExchangeBody extends React.Component {
         networkError ={this.props.global.network_error}
         account = {this.props.account}
         isFixedDestToken = {isFixedDestToken}
+
+        rateToken = {rateToken}
       />
     )
   }

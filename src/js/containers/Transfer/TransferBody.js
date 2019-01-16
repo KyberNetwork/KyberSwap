@@ -85,7 +85,12 @@ export default class Transfer extends React.Component {
 
   }
 
+  dispatchEstimateGas = (value) => {
+    this.props.dispatch(transferActions.estimateGasWhenAmountChange(value))
+  }
+
   lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
+  lazyEstimateGas = _.debounce(this.dispatchEstimateGas, 500)
 
 
   onAddressReceiveChange = (event) => {
@@ -98,6 +103,7 @@ export default class Transfer extends React.Component {
     var value = event.target.value
     this.props.dispatch(transferActions.specifyAmountTransfer(value))
 
+    this.lazyEstimateGas(value)
     this.lazyUpdateValidateSourceAmount(value, this.props.transfer.gasPrice)
   }
 

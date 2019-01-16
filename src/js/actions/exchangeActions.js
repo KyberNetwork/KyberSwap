@@ -430,6 +430,12 @@ export function estimateGas() {
   }
 }
 
+export function estimateGasNormal() {
+  return {
+    type: "EXCHANGE.ESTIMATE_GAS_USED_NORMAL",
+  }
+}
+
 export function setEstimateGas(gas, gas_approve) {
   return {
     type: "EXCHANGE.SET_GAS_USED",

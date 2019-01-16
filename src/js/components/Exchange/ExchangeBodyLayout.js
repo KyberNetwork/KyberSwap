@@ -173,18 +173,24 @@ const ExchangeBodyLayout = (props) => {
                 </div>
               </div>
             </div>
-            <div class="address-balance large-6">
-              <p class="note">{props.translate("transaction.address_balance") || "Address Balance"}</p>
-              <div>
-                <span>{props.translate("transaction.click_to_ex_all_balance") || "Click to swap all balance"}</span>
-                <span className="balance" title={props.balance.value} onClick={() => {
-                  props.setAmount()
-                  setTimeout(moveCursor, 0);
-                }}>
-                  {props.balance.roundingValue}
-                </span>
-              </div>
+            <div className="grid-x exchange-extra-info">
+                <div className="cell address-balance large-6">
+                  <p class="note">{props.translate("transaction.address_balance") || "Address Balance"}</p>
+                  <div>
+                    <div className="swap-all-des">{props.translate("transaction.click_to_ex_all_balance") || "Click to swap all balance"}</div>
+                    <div className="balance" title={props.balance.value} onClick={() => {
+                      props.setAmount()
+                      setTimeout(moveCursor, 0);
+                    }}>
+                      {props.balance.roundingValue}
+                    </div>
+                  </div>
+                </div>
+                <div className="cell large-6">
+                    {props.rateToken}
+                </div>
             </div>
+           
           </div>
           <div className="cell large-4 exchange-col-2">
             {props.advanceLayout}

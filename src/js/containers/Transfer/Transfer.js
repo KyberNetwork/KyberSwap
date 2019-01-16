@@ -124,7 +124,7 @@ export default class Exchange extends React.Component {
     var page = "transfer"
     var gasConfig = (
       <GasConfig 
-        gas={this.props.transfer.gas}
+        // gas={this.props.transfer.gas}
         gasPrice={this.props.transfer.gasPrice}
         maxGasPrice={this.props.transfer.maxGasPrice}
         gasHandler={this.specifyGas}

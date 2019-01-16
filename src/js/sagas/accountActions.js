@@ -157,7 +157,6 @@ export function* importNewAccount(action) {
     yield put(actions.closeImportLoading())
     yield put(actions.importNewAccountComplete(account))
 
-
     //track login wallet
     analytics.loginWallet(type)
     

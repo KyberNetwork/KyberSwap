@@ -8,7 +8,7 @@ const PostExchangeBtn = (props) => {
         <div>
           <a class={props.className} onClick={props.submit} data-open="passphrase-modal">{props.translate("transaction.swap") ||  "Swap" }</a>
         </div>
-          {props.rateToken}
+          {/* {props.rateToken} */}
       </div>      
       
       {props.modalPassphrase}
