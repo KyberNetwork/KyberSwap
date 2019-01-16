@@ -635,7 +635,11 @@ export default class BaseProvider {
                     //    console.log({source, dest, srcAmount, blockno})
                     //     console.log("rate: " + result)
                     if (result === "0x") {
-                        reject(new Error("Cannot get rate"))
+                        // reject(new Error("Cannot get rate"))
+                        resolve({
+                            expectedPrice: "0",
+                            slippagePrice: "0"
+                        })
                         return
                     }
                     try {
