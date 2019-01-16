@@ -635,16 +635,16 @@ export function* exchangeTokentoETHMetamask(action) {
   }
 }
 
-function* getRate(ethereum, source, dest, sourceAmount) {
+function* getRate(ethereum, source, dest, sourceAmount, blockNo) {
   //console.log({source, dest, sourceAmount})
   try {
     //get latestblock
-    const lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
+    //const lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
     // console.log(lastestBlock)
-    const rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmount, lastestBlock)
+    const rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmount, blockNo)
     const expectedPrice = rate.expectedPrice ? rate.expectedPrice : "0"
     const slippagePrice = rate.slippagePrice ? rate.slippagePrice : "0"
-    return { status: "success", res: { expectedPrice, slippagePrice, lastestBlock } }
+    return { status: "success", data: { expectedPrice, slippagePrice, blockNo } }
   }
   catch (err) {
     console.log(err)
@@ -664,9 +664,6 @@ function* getSourceAmount(sourceTokenSymbol, sourceAmount){
   if (tokens[sourceTokenSymbol]){
     var decimals = tokens[sourceTokenSymbol].decimals
     var rateSell = tokens[sourceTokenSymbol].rate
-    console.log(tokens[sourceTokenSymbol]);
-    console.log("=================================");
-    console.log({sourceAmount, decimals, rateSell})
     sourceAmountHex = converter.calculateMinSource(sourceTokenSymbol, sourceAmount, decimals, rateSell)
   }else{
     sourceAmountHex = converter.stringToHex(sourceAmount, 18)
@@ -689,127 +686,83 @@ function* getSourceAmountZero(sourceTokenSymbol){
 function* updateRatePending(action) {
   const { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual } = action.payload
   var state = store.getState()
-  // var exchangeSnapshot = state.exchange.snapshot
   var translate = getTranslate(state.locale)
-  
   var sourceAmoutRefined = yield call(getSourceAmount, sourceTokenSymbol, sourceAmount)
   var sourceAmoutZero = yield call(getSourceAmountZero, sourceTokenSymbol)
-  //console.log({sourceAmoutRefined, sourceAmoutZero})
-  //console.log("is_manual: " + isManual)
-  if (isManual) {
-    var rateRequest = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutRefined)
-    console.log("rate_request_manual: " + JSON.stringify(rateRequest))
-    console.log("source_amount: " + JSON.stringify(sourceAmoutRefined))
-    if (rateRequest.status === "success") {      
-      var { expectedPrice, slippagePrice, lastestBlock } = rateRequest.data      
-      var rateInit = expectedPrice.toString()
-      if (expectedPrice.toString() === "0"){
-        var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutZero)
 
-        //console.log(rateRequestZeroAmount.data)
-        if (rateRequestZeroAmount.status === "success"){
-          rateInit = rateRequestZeroAmount.data.expectedPrice
-        }
-        if (rateRequestZeroAmount.status === "timeout") {
-          yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-            translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
-            return
-        }
-        if (rateRequestZeroAmount.status === "fail") {
-          yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-            translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
-            return
-        }
-      }
-      yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
-      // if (expectedPrice === "0") {
-      //   yield put(actions.setRateSystemError())
-      // }else{
-      //   yield put(actions.caculateAmount())
-      // }
-    }
-    // else{
-    //   yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
-    // }
+  try{
+    var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
+    var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmoutRefined, lastestBlock)
+    var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmoutZero, lastestBlock)
+    var { expectedPrice, slippagePrice } = rate
 
-    if (rateRequest.status === "timeout") {
+    var percentChange = 0
+    if(rateZero.expectedPrice != 0){
+      percentChange = (rateZero.expectedPrice - rate.expectedPrice) / rateZero.expectedPrice 
+      percentChange = Math.round(percentChange * 1000) / 10    
+      if(percentChange <= 0.1 || percentChange > 80) percentChange = 0
+    }    
+
+    yield put.sync(actions.updateRateExchangeComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, true, percentChange))
+
+  }catch(err){
+    console.log(err)
+    if(isManual){
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-        translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+      translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+      return
     }
-    if (rateRequest.status === "fail") {
-      yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-        translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
-    }
-
-    // if ((rateRequest.status === "timeout") || (rateRequest.status === "fail")) {
-
-    //   yield put(utilActions.openInfoModal("Error", "There are some problems with nodes. Please try again in a while"))
-    // }
-
-  } else {
-    const rateRequest = yield call(getRate, ethereum, source, dest, sourceAmoutRefined)
-   // console.log("rate_request_manual_not: " + JSON.stringify(rateRequest))
-    if (rateRequest.status === "success") {
-      var { expectedPrice, slippagePrice, lastestBlock } = rateRequest.res
-    //  console.log(rateRequest.res)
-      var rateInit = expectedPrice.toString()
-      if (expectedPrice.toString() === "0"){
-        var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutZero)
-
-     //   console.log(rateRequestZeroAmount.data)
-        if (rateRequestZeroAmount.status === "success"){
-          rateInit = rateRequestZeroAmount.data.expectedPrice
-        }
-        // if (rateRequestZeroAmount.status === "timeout") {
-        //   yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-        //     translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
-        //     return
-        // }
-        // if (rateRequestZeroAmount.status === "fail") {
-        //   yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-        //     translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
-        //     return
-        // }
-      }
-      
-      yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
-
-      // if (expectedPrice.toString() !== "0"){
-      //   yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
-      // }
-
-
-    }
-    else {
-      //yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
-
-      //yield put(actions.setRateFailError())
-    }
-
-    // const { expectedPrice, slippagePrice, lastestBlock } = rates.res
-    // yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock))
-    // if (lastestBlock === 0) {
-    //   yield put(actions.setRateSystemError())
-    // }else{
-    //   yield put(actions.caculateAmount())
-    // }
-
-    // try {
-    //   //get latestblock
-    //   const lastestBlock = yield call([ethereum, ethereum.call],"getLatestBlock")
-    //  // console.log(lastestBlock)
-    //   const rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmount, lastestBlock)
-    //   const expectedPrice = rate.expectedPrice ? rate.expectedPrice : "0"
-    //   const slippagePrice = rate.slippagePrice ? rate.slippagePrice : "0"
-    //   yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock))
-    //   yield put(actions.caculateAmount())
-    // }
-    // catch (err) {    
-    //   console.log(err)
-    //   yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0))
-    //   yield put(actions.setRateSystemError())
-    // }
   }
+
+  // if (isManual) {
+  //   const lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
+  //   var rateRequest = yield call(getRate, ethereum, source, dest, sourceAmoutRefined, lastestBlock)
+  //   var rateRequestZeroAmount = yield call(getRate, ethereum, source, dest, sourceAmoutZero, lastestBlock)
+    
+  //   if (rateRequest.status === "success") {      
+  //     var { expectedPrice, slippagePrice, blockNo } = rateRequest.data  
+
+  //     var rateInit = expectedPrice.toString()
+  //     if (expectedPrice.toString() === "0"){
+  //       var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutZero)
+  //       if (rateRequestZeroAmount.status === "success"){
+  //         rateInit = rateRequestZeroAmount.data.expectedPrice
+  //       }
+  //       if (rateRequestZeroAmount.status === "timeout") {
+  //         yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+  //           translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+  //           return
+  //       }
+  //       if (rateRequestZeroAmount.status === "fail") {
+  //         yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+  //           translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
+  //           return
+  //       }
+  //     }
+  //     yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
+  //   }
+  //   if (rateRequest.status === "timeout") {
+  //     yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+  //       translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+  //   }
+  //   if (rateRequest.status === "fail") {
+  //     yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+  //       translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
+  //   }
+  // } else {
+  //   const rateRequest = yield call(getRate, ethereum, source, dest, sourceAmoutRefined)
+  //   if (rateRequest.status === "success") {
+  //     var { expectedPrice, slippagePrice, lastestBlock } = rateRequest.res
+  //     var rateInit = expectedPrice.toString()
+  //     if (expectedPrice.toString() === "0"){
+  //       var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutZero)
+  //       if (rateRequestZeroAmount.status === "success"){
+  //         rateInit = rateRequestZeroAmount.data.expectedPrice
+  //       }
+  //     }
+  //     yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
+  //   }
+  // }
 }
 
 

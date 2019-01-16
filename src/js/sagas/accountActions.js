@@ -50,7 +50,7 @@ export function* updateTokenBalance(action) {
 function* createNewAccount(address, type, keystring, ethereum, walletType, info){
   try{
     const account = yield call(service.newAccountInstance, address, type, keystring, ethereum, walletType, info)
-    return {status: "success", res: account}
+    return {status: "success", data: account}
   }catch(e){
     console.log(e)
     return {status: "fail"}
@@ -63,7 +63,7 @@ export function* importNewAccount(action) {
   var translate = getTranslate(store.getState().locale)
   try {
     var  account
-    var accountRequest = yield call(common.handleRequest, createNewAccount, address, type, keystring, ethereum, walletType, info)
+    var accountRequest = yield call(createNewAccount, address, type, keystring, ethereum, walletType, info)
 
     if (accountRequest.status === "timeout") {
       console.log("timeout")

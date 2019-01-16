@@ -25,7 +25,6 @@ module.exports = env => {
         new CleanPlugin([outputPath+'/app.*', outputPath + '/libary.*']),
         new HtmlWebpackPlugin({
             title: 'Wallet - kyber.network',
-            filename: 'index.html',
             template: './app.html',
             favicon: './assets/img/favicon.png',
             inject: 'body'
@@ -46,7 +45,7 @@ module.exports = env => {
                 comments: false,
                 compress: {
                     //drop_console: true,
-                    warnings: false
+                    //warnings: false
                 }
             }
         }));

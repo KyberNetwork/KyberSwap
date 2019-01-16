@@ -8,7 +8,7 @@ import * as converters from "../../../utils/converter"
 export default class BaseProvider {
 
     initContract() {
-        this.rpc = new Web3(new Web3.providers.HttpProvider(this.rpcUrl, 3000))
+        this.rpc = new Web3(new Web3.providers.HttpProvider(this.rpcUrl, constants.CONNECTION_TIMEOUT))
 
         this.erc20Contract = new this.rpc.eth.Contract(constants.ERC20)
         this.networkAddress = BLOCKCHAIN_INFO.network
@@ -293,9 +293,13 @@ export default class BaseProvider {
 
     }
 
-    getRate(source, dest, quantity) {
+    getRate(source, dest, srcAmount) {
+        var mask = converters.maskNumber()
+        var srcAmountEnableFirstBit = converters.sumOfTwoNumber(srcAmount,  mask)
+        srcAmountEnableFirstBit = converters.toHex(srcAmountEnableFirstBit)
+
         return new Promise((resolve, reject) => {
-            this.networkContract.methods.getExpectedRate(source, dest, quantity).call()
+            this.networkContract.methods.getExpectedRate(source, dest, srcAmountEnableFirstBit).call()
                 .then((result) => {
                     if (result != null) {
                         resolve(result)

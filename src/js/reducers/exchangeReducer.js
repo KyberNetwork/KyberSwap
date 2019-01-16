@@ -166,7 +166,7 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.UPDATE_RATE":{
-      const { rateInit, expectedPrice, slippagePrice, blockNo ,isManual, isSuccess} = action.payload
+      const { rateInit, expectedPrice, slippagePrice, blockNo ,isManual, isSuccess, percentChange} = action.payload
 
      // console.log({rateInit, expectedPrice, slippagePrice, blockNo ,isManual, isSuccess})
       
@@ -192,6 +192,7 @@ const exchange = (state = initState, action) => {
       newState.slippageRate = slippageRate
       newState.offeredRate = expectedRate
       newState.blockNo = blockNo
+      newState.percentChange = percentChange
 
       if (newState.sourceAmount !== "") {
         newState.minDestAmount = converter.calculateDest(newState.sourceAmount, expectedRate).toString(10)

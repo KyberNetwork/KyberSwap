@@ -145,17 +145,10 @@ export function updatePrevSource(value) {
   }
 }
 
-export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess) {
-  // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
-  //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
-
-  //var rateBig = converter.stringToBigNumber(rate[0])
-  //  var offeredRate = rate.expectedPrice
-  //var expirationBlock = rate[1]
-  //var reserveBalance = rate[2]
+export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess, percentChange) {
   return {
     type: "EXCHANGE.UPDATE_RATE",
-    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess}
+    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess, percentChange}
   }
 
 }
