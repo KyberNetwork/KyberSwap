@@ -44,7 +44,7 @@ module.exports = env => {
             uglifyOptions: {
                 comments: false,
                 compress: {
-                    //drop_console: true,
+                    drop_console: true,
                     //warnings: false
                 }
             }
