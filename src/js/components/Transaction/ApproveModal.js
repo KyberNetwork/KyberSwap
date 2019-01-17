@@ -80,7 +80,7 @@ class ApproveModal extends React.Component {
           <div className="input-confirm grid-x">
             <div className="cell medium-8 small-12">{this.msgHtml()}</div>
               <div className="cell medium-4 small-12">
-                <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "waiting" : "next")}
+                <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "disabled-button" : "next")}
                 onClick={this.props.onSubmit}
               >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a>
             </div>

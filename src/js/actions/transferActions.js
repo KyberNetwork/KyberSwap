@@ -276,7 +276,6 @@ export function setGasPriceTransferComplete(safeLowGas, standardGas, fastGas, de
   }
 }
 
-
 export function seSelectedGas(level){
   return {
     type: "TRANSFER.SET_SELECTED_GAS",

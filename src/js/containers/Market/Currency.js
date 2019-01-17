@@ -7,7 +7,8 @@ import * as marketActions from "../../actions/marketActions"
     return {
         translate: getTranslate(store.locale),
         currency: store.market.configs.currency,
-        analytics: store.global.analytics
+        analytics: store.global.analytics,
+        focus: store.market.configs.currency.focus
     }
 })
 export default class Currency extends React.Component {

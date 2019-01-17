@@ -1121,6 +1121,8 @@ function* estimateGasSnapshot() {
 
     const sourceTokenSymbol = exchange.sourceTokenSymbol
     var gas = yield call(getMaxGasExchange)
+    console.log("gas_ne")
+    console.log(gas)
     var gas_approve
     if (sourceTokenSymbol === "ETH") {
       gas_approve = 0

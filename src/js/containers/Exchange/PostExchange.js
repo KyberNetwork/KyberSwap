@@ -207,7 +207,8 @@ export default class PostExchange extends React.Component {
         <div className="confirm-exchange-modal">
           <div className="modal-title message">
             {/* {this.props.translate("transaction.about_to_swap") || "You are about to swap"} */}
-            <div>{this.props.translate("transaction.your_wallet") || "Your Wallet"}</div>
+            {/* <div>{this.props.translate("transaction.your_wallet") || "Your Wallet"}</div> */}
+            <div>{"Your Wallet"}</div>
             <div>{this.props.account.address}</div>
           </div>
           <div className="amount">
@@ -255,7 +256,8 @@ export default class PostExchange extends React.Component {
       return (
         <div className="confirm-exchange-modal">
           <div className="title-description">
-            <div>{this.props.translate("transaction.your_wallet") || "Your Wallet"}</div>
+            {/* <div>{this.props.translate("transaction.your_wallet") || "Your Wallet"}</div> */}
+            <div>{"Your Wallet"}</div>
             <div>{this.props.account.address}</div>
           </div>
           <div className="amount">
