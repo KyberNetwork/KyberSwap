@@ -302,6 +302,11 @@ export function biggestNumber() {
   return "0x" + (initNumber.pow(255).toString(16))
 }
 
+export function maskNumber() {
+  var initNumber = new BigNumber(2)
+  return "0x" + (initNumber.pow(255).toString(16))
+}
+
 export function biggestNumberDecimal() {
   var initNumber = new BigNumber(10)
   return initNumber.pow(30).toString(10)
@@ -508,7 +513,7 @@ export function calculatePercent(numerator, denumerator){
   return roundPercent
 }
 
-export function formatNumber(number , round = false) {
+export function formatNumber(number, round = false) {
   var format = {
     decimalSeparator: '.',
     groupSeparator: ',',
@@ -604,4 +609,12 @@ export function getSourceAmountZero(sourceTokenSymbol, decimal, rateSell){
 export function toHex(number){
   var bigNumber = new BigNumber(number)
   return "0x" + bigNumber.toString(16)
+}
+
+
+export function sumOfTwoNumber(num1, num2){
+  var num1 = new BigNumber(num1.toString())
+  var num2 = new BigNumber(num2.toString())
+  var sum = num1.plus(num2)       
+  return sum.toString()
 }

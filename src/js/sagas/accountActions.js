@@ -7,17 +7,15 @@ import * as exchangeActions from "../actions/exchangeActions"
 import * as utilActions from '../actions/utilActions'
 import * as common from "./common"
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
-import {
-  randomToken,
-  setRandomExchangeSelectedToken,
-  setCapExchange,
-  thowErrorNotPossessKGt,
-  closeImportAccountExchange
-} from "../actions/exchangeActions";
+
 import {
   setRandomTransferSelectedToken,
   closeImportAccountTransfer
 } from "../actions/transferActions"
+import * as analytics from "../utils/analytics"
+
+// import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
+import { randomToken, setRandomExchangeSelectedToken, setCapExchange, thowErrorNotPossessKGt, setSelectedGasPrice, closeImportAccountExchange } from "../actions/exchangeActions"
 import  * as transferActions from "../actions/transferActions"
 import * as service from "../services/accounts"
 import constants from "../services/constants"
@@ -138,8 +136,15 @@ export function* importNewAccount(action) {
         }
       }
 
-      yield put(transferActions.setSelectedGasPrice(transfer.gasPriceSuggest.standardGas, "s"));
-      yield put(exchangeActions.setSelectedGasPrice(exchange.gasPriceSuggest.standardGas, "s"));
+      if (!transfer.isEditGasPrice) {
+        yield put(transferActions.setSelectedGasPrice(transfer.gasPriceSuggest.standardGas, "s"));
+      }
+
+      if (!exchange.isEditGasPrice) {
+        yield put(setSelectedGasPrice(exchange.gasPriceSuggest.standardGas, "s"));
+      }
+    } else {
+      yield put(setGasPrice());
     }
 
    // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
