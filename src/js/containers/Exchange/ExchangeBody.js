@@ -395,6 +395,10 @@ export default class ExchangeBody extends React.Component {
     // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
   }
 
+  acceptTerm = (e) => {
+    this.props.dispatch(globalActions.acceptTermOfService())
+  }
+
   render() {
     var balanceInfo = {
       sourceAmount: converters.toT(this.props.exchange.balanceData.sourceAmount, this.props.exchange.balanceData.sourceDecimal),
@@ -521,7 +525,7 @@ export default class ExchangeBody extends React.Component {
         swapToken={this.swapToken}
         maxCap={maxCap}
         errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}
-        isAgreed={this.props.global.termOfServiceAccepted}
+        isAgreedTermOfService={this.props.global.termOfServiceAccepted}
         advanceLayout={this.getAdvanceLayout()}
         balanceLayout={this.getBalanceLayout()}
         focus={this.state.focus}
@@ -534,6 +538,7 @@ export default class ExchangeBody extends React.Component {
         clearSession={this.clearSession}
         walletName={this.props.account.walletName}
         isFixedDestToken = {isFixedDestToken}
+        acceptTerm={this.acceptTerm}
       />
     )
   }

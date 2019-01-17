@@ -26,7 +26,7 @@ export default class RateBetweenToken extends React.Component {
     var tokenRate = this.props.isSelectToken ? "Loading..." : roundingNumber(this.props.exchangeRate.rate)
     return (
       <div class="exchange-rate">
-        <span className="exchange-rate__unit">{this.props.exchangeRate.sourceToken}</span>
+        {/* <span className="exchange-rate__unit">{this.props.exchangeRate.sourceToken}</span>
         <span className="exchange-rate__amount">1</span>
         <span className="exchange-rate__equal">=</span>
         <span className="exchange-rate__unit">{this.props.exchangeRate.destToken}</span>
@@ -38,7 +38,8 @@ export default class RateBetweenToken extends React.Component {
             <span className="exchange-rate__amount">{converter.roundingNumber(this.props.rateUSD)}</span>
             <span className="exchange-rate__bracket">)</span>
           </span>
-        }
+        } */}
+        <span>1 {this.props.exchangeRate.sourceToken} = {tokenRate} {this.props.exchangeRate.destToken} = {converter.roundingNumber(this.props.rateUSD)} USD</span>
       </div>
     )
   }

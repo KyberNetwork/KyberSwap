@@ -94,6 +94,7 @@
         font-weight: 600;
         color: #ef8102;
         margin-left: 25px;
+        margin-bottom: 3px;
       }
     }
 
@@ -136,8 +137,10 @@
       //   }
       // }
       .input-div-content {
-          display: flex;
-          align-items: center;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding-right: 12px;
       }
     }
 
@@ -193,6 +196,77 @@
             color: #f1637d;
             font-size: 14px;
           }
+        }
+      }
+    }
+  }
+
+  &__accept-term {
+    text-align: center;
+    .accept-buttom {
+      margin: 0 auto;
+      width: 244px;
+      height: 54px;
+      line-height: 54px;
+      border-radius: 27px;
+      box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+      background: linear-gradient(164deg, #ffb046, #f52880) 0 100%;
+      background-size: auto 150%;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 17px;
+      transition: all 0.3s;
+      &:hover {
+        cursor: pointer;
+        background-position: 0 0;
+      }
+    }
+
+    .list-wallet {
+      display: flex;
+      justify-content: space-between;
+      max-width: 500px;
+      flex-wrap: wrap;
+      margin: 40px auto 0;
+      &__item {
+        width: 146px;
+        height: 30px;
+        border-radius: 22.5px;
+        background-color: #e7edf5;
+        margin: 5px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .item-icon {
+          height: 18px;
+          width: 18px;
+          margin-right: 12px;
+          &__metamask {
+            background: url($image-path + 'import-account/wallet-icon/metamask_gray.svg') no-repeat center;
+          }
+          &__ledger {
+            background: url($image-path + 'import-account/wallet-icon/ledger_gray.svg') no-repeat center;
+          }
+          &__trezor {
+            background: url($image-path + 'import-account/wallet-icon/trezor_gray.svg') no-repeat center;
+          }
+          &__keystore {
+            background: url($image-path + 'import-account/wallet-icon/keystore_gray.svg') no-repeat center;
+          }
+          &__privatekey {
+            background: url($image-path + 'import-account/wallet-icon/private_key_gray.svg') no-repeat center;
+          }
+          &__promocode {
+            background: url($image-path + 'import-account/wallet-icon/promocode_gray.svg') no-repeat center;
+          }
+        }
+        .wallet-name {
+          font-size: 12px;
+          font-weight: 600;
+          line-height: 2;
+          color: #677c94;
         }
       }
     }
@@ -266,12 +340,13 @@
     .focus-item {
       justify-content: unset !important;
 
-      // .focus-name {
-      //   display: none;
-      //   @include screen-max-width(medium) {
-      //     display: block;
-      //   }
-      // }
+      .focus-name {
+        // display: none;
+        font-size: 16px;
+        // @include screen-max-width(medium) {
+        //   display: block;
+        // }
+      }
     }
   }
 
@@ -283,13 +358,13 @@
     }
 
     .main-input {
-      border-left: 1px solid #cccccc;
-      height: 48px;
+      // border-left: 1px solid #cccccc;
+      // height: 48px;
       display: flex;
       align-items: center;
 
       &__right {
-        padding-right: 20px;
+        // padding-right: 20px;
         &--transfer {
           border-left: none;
           &.error {
@@ -465,6 +540,7 @@
     outline: none;
     border: none !important;
     box-shadow: none !important;
+    text-align: right;
 
     &.error {
       color: #ee344e;
@@ -627,7 +703,7 @@
 }
 
 .exchange-rate {
-  color: white;
+  // color: white;
 
   &-container {
     max-width: 1050px;
@@ -635,54 +711,68 @@
     // justify-content: space-between;
     justify-content: flex-start;
     margin: 15px auto 0;
-    padding-bottom: 15px;
+    padding-bottom: 35px;
     min-height: 40px;
-  }
-
-  &__balance {
-    color: white;
-  }
-
-  &__balance-text {
-    font-size: 14px;
-  }
-
-  &__balance-amount {
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.4px;
-  }
-
-  &__unit {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.6px;
-    position: relative;
-    bottom: 5px;
-    margin-right: 5px;
-  }
-
-  &__amount {
-    font-weight: 600;
-    letter-spacing: 0.4px;
-  }
-
-  &__equal {
-    font-size: 12px;
-    margin: 0 13px;
-  }
-
-  &__bracket {
-    font-size: 13px;
-    font-weight: 600;
-    margin: 0 10px;
-    position: relative;
-    bottom: 2px;
-
-    &:last-child {
-      margin-right: 0;
+    &__left {
+      width: calc(50% - 29px);
+      margin-left: 35px;
+      .exchange-rate {
+        font-family: Montserrat;
+        font-size: 13px;
+        font-weight: 600;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: #8690ad;
+      }
     }
   }
+
+  // &__balance {
+  //   color: white;
+  // }
+
+  // &__balance-text {
+  //   font-size: 14px;
+  // }
+
+  // &__balance-amount {
+  //   font-size: 16px;
+  //   font-weight: 600;
+  //   letter-spacing: 0.4px;
+  // }
+
+  // &__unit {
+  //   font-size: 10px;
+  //   font-weight: 600;
+  //   letter-spacing: 0.6px;
+  //   position: relative;
+  //   bottom: 5px;
+  //   margin-right: 5px;
+  // }
+
+  // &__amount {
+  //   font-weight: 600;
+  //   letter-spacing: 0.4px;
+  // }
+
+  // &__equal {
+  //   font-size: 12px;
+  //   margin: 0 13px;
+  // }
+
+  // &__bracket {
+  //   font-size: 13px;
+  //   font-weight: 600;
+  //   margin: 0 10px;
+  //   position: relative;
+  //   bottom: 2px;
+
+  //   &:last-child {
+  //     margin-right: 0;
+  //   }
+  // }
 
   @media screen and (max-width: 650px) {
     &-container {
@@ -692,12 +782,27 @@
 }
 
 .exchange-account {
-  background-color: #f9f9f9;
+  // background-color: #f9f9f9;
 
   &__container {
     max-width: 1050px;
-    margin: 0 auto;
-    padding: 10px 1rem 20px;
+    margin: 0 51px;
+    padding: 10px 0 20px;
+    border-top: 1px solid #e1e4eb;
+    position: relative;
+    .reimport-msg {
+      position: absolute;
+      max-width: 170px;
+      font-size: 12px;
+      color: #8690ad;
+      font-weight: 500;
+      line-height: 2;
+      width: 100%;
+      margin-left: calc(50% - 85px);
+      text-align: center;
+      top: -13px;
+      background: #eff4fa;
+    }
   }
 
   &__content {
@@ -768,30 +873,53 @@
   text-align: center;
   margin-bottom: 10px;
 
+  // &__button {
+  //   display: inline-block;
+  //   margin-bottom: 10px;
+  //   background-color: #ef8102;
+  //   text-transform: uppercase;
+  //   padding: 15px 46px;
+  //   border-radius: 30px;
+  //   font-size: 14px;
+  //   font-weight: bold;
+  //   color: #f8f8f8 !important;
+  //   transition: background-color .3s;
+
+  //   i {
+  //     margin-right: 15px;
+  //     bottom: 1px !important;
+  //   }
+
+  //   &:hover {
+  //     background-color: #F2A657;
+  //   }
+
+  //   &:active {
+  //     position: relative;
+  //     top: 1px;
+  //   }
+  // }
   &__button {
-    display: inline-block;
-    margin-bottom: 10px;
-    background-color: #ef8102;
-    text-transform: uppercase;
-    padding: 15px 46px;
-    border-radius: 30px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #f8f8f8 !important;
-    transition: background-color .3s;
-
-    i {
-      margin-right: 15px;
-      bottom: 1px !important;
-    }
-
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 244px;
+    height: 54px;
+    line-height: 54px;
+    border-radius: 27px;
+    box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+    background: linear-gradient(164deg, #ffb046, #f52880) 0 100%;
+    background-size: auto 150%;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 17px;
+    transition: all 0.3s;
     &:hover {
-      background-color: #F2A657;
-    }
-
-    &:active {
-      position: relative;
-      top: 1px;
+      cursor: pointer;
+      color: white;
+      background-position: 0 0;
     }
   }
 

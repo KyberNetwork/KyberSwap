@@ -12,6 +12,7 @@ import { RateBetweenToken } from "../../containers/Exchange";
 import * as converters from "../../utils/converter";
 import { getAssetUrl } from "../../utils/common";
 import BigInput from "./BigInput";
+import { TermAndServices } from "../../containers/CommonElements";
 
 const ExchangeBodyLayout = (props) => {
   function handleChangeSource(e) {
@@ -109,6 +110,26 @@ const ExchangeBodyLayout = (props) => {
         </div>
       </div>
     );
+  }
+
+  var importAccount = function() {
+    if (props.account === false || (props.isChangingWallet && props.changeWalletType === "swap")) {
+      return (<ImportAccount
+        tradeType="swap"
+        isChangingWallet={props.isChangingWallet}
+        closeChangeWallet={props.closeChangeWallet}
+      />)
+    }
+    // return (<div className="import-account">
+    //   <div className={"import-account__wallet-container container"}>
+    //     <div className="import-account__wallet-connect"
+    //       onClick={(e) => props.clearSession(e)}>
+    //       <div className={"reimport-content"}>Connect other wallet</div>
+    //       <div className={"reimport-line"}></div>
+    //     </div>
+    //     {/* {getAccountTypeHtml()} */}
+    //   </div>
+    // </div>)
   }
 
   return (
@@ -239,40 +260,60 @@ const ExchangeBodyLayout = (props) => {
                 </span>
                 )}
               </div> */}
-
-              <RateBetweenToken
-                isSelectToken={props.exchange.isSelectToken}
-                exchangeRate={{
-                  sourceToken: props.sourceTokenSymbol,
-                  rate: converters.toT(props.exchange.offeredRate),
-                  destToken: props.destTokenSymbol
-                }}
-              />
-            </div>
-          </div>
-
-          {(props.account === false || (props.isChangingWallet && props.changeWalletType === "swap")) &&
-          <ImportAccount
-            tradeType="swap"
-            isChangingWallet={props.isChangingWallet}
-            closeChangeWallet={props.closeChangeWallet}
-          />
-          || (
-            <div className="import-account">
-              <div className={"import-account__wallet-container container"}>
-                <div className="import-account__wallet-connect"
-                  onClick={(e) => props.clearSession(e)}>
-                  Connect your Wallet to Swap
-                </div>
-                {getAccountTypeHtml()}
+              <div className={"exchange-rate-container__left"}>
+                <RateBetweenToken
+                  isSelectToken={props.exchange.isSelectToken}
+                  exchangeRate={{
+                    sourceToken: props.sourceTokenSymbol,
+                    rate: converters.toT(props.exchange.offeredRate),
+                    destToken: props.destTokenSymbol
+                  }}
+                />
               </div>
             </div>
-          )}
+          </div>
+          
+          {!props.isAgreedTermOfService && 
+            <div className={"exchange-content__accept-term"}>
+              <div className={"accept-buttom"} onClick={(e) => props.acceptTerm()}>Swap Now</div>
+              <TermAndServices tradeType="swap"/>
+
+              <div className={"list-wallet"}>
+                <div className={"list-wallet__item"}>
+                  <div className={"item-icon item-icon__metamask"}></div>
+                  <div className={"wallet-name"}>METAMASK</div>
+                </div>
+                <div className={"list-wallet__item"}>
+                  <div className={"item-icon item-icon__ledger"}></div>
+                  <div className={"wallet-name"}>LEDGER</div>
+                </div>
+                <div className={"list-wallet__item"}>
+                  <div className={"item-icon item-icon__trezor"}></div>
+                  <div className={"wallet-name"}>TREZOR</div>
+                </div>
+                <div className={"list-wallet__item"}>
+                  <div className={"item-icon item-icon__keystore"}></div>
+                  <div className={"wallet-name"}>KEYSTORE</div>
+                </div>
+                <div className={"list-wallet__item"}>
+                  <div className={"item-icon item-icon__privatekey"}></div>
+                  <div className={"wallet-name"}>PRIVATE KEY</div>
+                </div>
+                <div className={"list-wallet__item"}>
+                  <div className={"item-icon item-icon__promocode"}></div>
+                  <div className={"wallet-name"}>PROMOCODE</div>
+                </div>
+              </div>
+            </div>
+          }
+
+          {props.isAgreedTermOfService && importAccount()}
         </div>
 
         {props.account !== false && (
           <div className="exchange-account">
             <div className="exchange-account__container container">
+              <div className={"reimport-msg"}>Connect other wallet</div>
               <div className="exchange-account__content">
                 {getAccountTypeHtml(true)}
                 <div className="exchange-account__balance">{props.balanceLayout}</div>

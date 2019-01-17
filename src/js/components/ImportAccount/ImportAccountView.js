@@ -15,7 +15,7 @@ const ImportAccountView = (props) => {
   return (
     <div className="import-account">
       <div className="import-account__choose-wallet-container container">
-        <h1 className="import-account__title">{props.translate("address.import_address") || "Connect your Wallet to Swap"}</h1>
+        <h1 className="import-account__title">{props.translate("address.connect_your_wallet_to_swap") || "Connect your Wallet to Swap"}</h1>
 
         <div className={`import-account__content ${isOnMobile ? ' import-account__content--mobile' : ''}`}>
           {!isOnMobile &&
@@ -25,20 +25,20 @@ const ImportAccountView = (props) => {
           }
 
           {!isOnMobile &&
-          <div className="import-account__item">
-            <ImportKeystore/>
-          </div>
-          }
-
-          {!isOnMobile &&
-          <div className="import-account__item">
+          <div className="import-account__item import-account__item-trezor">
             <ImportByDeviceWithTrezor/>
           </div>
           }
 
           {!isOnMobile &&
-          <div className="import-account__item">
+          <div className="import-account__item import-account__item-ledger">
             <ImportByDeviceWithLedger/>
+          </div>
+          }
+
+          {!isOnMobile &&
+          <div className="import-account__item">
+            <ImportKeystore/>
           </div>
           }
 
