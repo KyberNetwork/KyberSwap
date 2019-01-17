@@ -124,6 +124,7 @@ export default class PostTransfer extends React.Component {
         isFetchingGas={this.props.form.snapshot.isFetchingGas}
         gasPrice={this.props.form.snapshot.gasPrice}
         gas={this.props.form.snapshot.gas}
+        type="transfer"
       />
     )
   }

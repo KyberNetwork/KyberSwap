@@ -57,18 +57,10 @@ class ApproveModal extends React.Component {
                 </div>
                 <div class="info tx-title">
                   <div className="address-info">
-                    {/* <div className="column small-3 tx-title-text">Address:</div>
-                    <div className="column small-9 tx-hash">
-                        {this.props.address}
-                    </div> */}
                     <span>{this.props.translate("modal.address") || "Address"}:</span>
                     <span>{this.props.address}</span>
                   </div>
                 </div>
-                {/* <div className="address">
-                  <span>Address</span>
-                  <span>{this.props.address}</span>
-                </div> */}
                 <div className="gas-configed">
                   <div><b>{this.props.translate("transaction.included") || 'Included'}</b></div>
                   <div className="row">
@@ -83,14 +75,6 @@ class ApproveModal extends React.Component {
                     } ETH</span>
                   </div>                 
                 </div>
-                {/* {haveError ?
-                  '' :
-                  this.props.isConfirming ? (
-                    <p>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</p>
-                  ) : (
-                    <p>{this.props.translate("modal.press_approve") || "Press approve to continue"}</p>
-                  )
-                } */}
               </div>
               {this.errorHtml()}
 

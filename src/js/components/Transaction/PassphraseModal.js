@@ -54,7 +54,7 @@ const PassphraseModal = (props) => {
                   } ETH</span>
                 </div>
               </div>
-              {!props.isFetchingRate &&
+              {!props.isFetchingRate && props.type === "exchange" &&
                 <div className="des">
                   <div><img src={require('../../../assets/img/exchange/exclaimed.svg')}/></div>
                   <div className="description">
@@ -67,19 +67,6 @@ const PassphraseModal = (props) => {
                   </div>
                 </div>
           }
-              {/* <div className="gas-configed">
-                <div class="d-flex justify-content-around">
-                  <p>Gas Price</p>
-                  <p>{+roundingNumber(props.gasPrice)} Gwei</p>
-                </div>
-                <div class="d-flex justify-content-around">
-                  <p>{props.translate("transaction.transaction_fee") || "Transaction Fee"}</p>
-                  <p>{props.isFetchingGas ?
-                    <img src={require('../../../assets/img/waiting-white.svg')} /> 
-                    : <span>{totalGas.toString()}</span>
-                  } ETH</p>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>

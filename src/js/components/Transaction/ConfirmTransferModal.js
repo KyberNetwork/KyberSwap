@@ -1,7 +1,7 @@
 import React from "react"
 import { gweiToEth, stringToBigNumber, calculateGasFee, roundingNumber } from "../../utils/converter";
-class ConfirmTransferModal extends React.Component {
 
+class ConfirmTransferModal extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -67,7 +67,7 @@ class ConfirmTransferModal extends React.Component {
                   </span>
                 </div>
                 </div>
-                {!this.props.isFetchingRate &&
+                {!this.props.isFetchingRate && this.props.type === "exchange" &&
                   <div className="des">
                     <div><img src={require('../../../assets/img/exchange/exclaimed.svg')}/></div>
                     <div className="description">
