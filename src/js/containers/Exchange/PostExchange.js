@@ -540,6 +540,7 @@ export default class PostExchange extends React.Component {
         isFetchingRate={this.props.snapshot.isFetchingRate}
         title= {this.props.translate('modal.confirm_swap') || "Confirm Swap"}
         slippagePercent = {slippagePercent}
+        type="exchange"
       />
     )
   }
