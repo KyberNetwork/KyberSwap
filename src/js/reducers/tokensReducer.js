@@ -103,7 +103,8 @@ const tokens = (state = {tokens: initState()}, action) => {
           mapToken[rate.source].rate = rate.rate          
           mapToken[rate.source].minRate = converter.getMinrate(rate.rate, rate.minRate)
 
-          mapToken[rate.source].rateUSD = converter.roundingNumber(converter.toT(rate.rate, 18)*rateUSD)
+          var rateByUSD = converter.roundingNumber(converter.toT(rate.rate, 18)*rateUSD.replace(",", ""))
+          mapToken[rate.source].rateUSD = rateByUSD.replace(",", "")
           //mapToken[rate.source].rateUSD = rateUSD
         } else {
           if (!mapToken[rate.dest]) {
