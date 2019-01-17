@@ -123,40 +123,43 @@ const ExchangeBodyLayout = (props) => {
               </div>
             )}
             <div className={"exchange-content container"}>
-              <div className={"exchange-content__item exchange-content__item--left"}>
-                <div className={`input-div-content ${errorExchange && props.focus === "source" ? "error" : ""}`}>
-                  <div className={"exchange-content__label-content"}>
-                    <div className="exchange-content__label">{props.translate("transaction.exchange_from") || "From"}</div>
-                    <div className="exchange-content__select select-token-panel">{props.tokenSourceSelect}</div>
-                  </div>
-                  <div className={`exchange-content__input-container ${errorExchange ? "error" : ""}`}>
-                    <div className={"main-input main-input__left"}>
-                      <input
-                        className={`exchange-content__input ${props.account !== false ? 'has-account' : ''} ${errorExchange ? "error" : ""}`}
-                        min="0"
-                        step="0.000001"
-                        placeholder="0" autoFocus
-                        type="text" maxLength="50" autoComplete="off"
-                        value={props.input.sourceAmount.value}
-                        onFocus={props.input.sourceAmount.onFocus}
-                        onBlur={props.input.sourceAmount.onBlur}
-                        onChange={handleChangeSource}
-                      />
-                      {props.account === false && (
-                        <div className={`exchange-content__label exchange-content__label--right ${errorExchange ? "error" : ""}`}>{props.sourceTokenSymbol}</div>
-                      )}
-                      {props.account !== false && (
-                        <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal ${errorExchange ? "error" : ""}`}>{props.swapBalance}</div>
-                      )}
+              <div className={"exchange-content__item--wrapper"}>
+                <div className={"exchange-item-label"}>{props.translate("transaction.exchange_from") || "From"}:</div>
+                <div className={"exchange-content__item exchange-content__item--left"}>
+                  <div className={`input-div-content ${errorExchange && props.focus === "source" ? "error" : ""}`}>
+                    <div className={"exchange-content__label-content"}>
+                      {/* <div className="exchange-content__label">{props.translate("transaction.exchange_from") || "From"}</div> */}
+                      <div className="exchange-content__select select-token-panel">{props.tokenSourceSelect}</div>
                     </div>
-                    {props.focus === "source" && <div className={errorExchange ? "error-msg error-msg-source" : ""}>
-                      {errorShow}
-                    </div>}
+                    <div className={`exchange-content__input-container ${errorExchange ? "error" : ""}`}>
+                      <div className={"main-input main-input__left"}>
+                        <input
+                          className={`exchange-content__input ${props.account !== false ? 'has-account' : ''} ${errorExchange ? "error" : ""}`}
+                          min="0"
+                          step="0.000001"
+                          placeholder="0" autoFocus
+                          type="text" maxLength="50" autoComplete="off"
+                          value={props.input.sourceAmount.value}
+                          onFocus={props.input.sourceAmount.onFocus}
+                          onBlur={props.input.sourceAmount.onBlur}
+                          onChange={handleChangeSource}
+                        />
+                        {/* {props.account === false && (
+                          <div className={`exchange-content__label exchange-content__label--right ${errorExchange ? "error" : ""}`}>{props.sourceTokenSymbol}</div>
+                        )}
+                        {props.account !== false && (
+                          <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal ${errorExchange ? "error" : ""}`}>{props.swapBalance}</div>
+                        )} */}
+                      </div>
+                      {/* {props.focus === "source" && <div className={errorExchange ? "error-msg error-msg-source" : ""}>
+                        {errorShow}
+                      </div>} */}
+                    </div>
                   </div>
+                  {/* {props.focus === "source" && <div className={errorExchange ? "mobile-error__show" : ""}>
+                    {errorShow}
+                  </div>} */}
                 </div>
-                {props.focus === "source" && <div className={errorExchange ? "mobile-error__show" : ""}>
-                  {errorShow}
-                </div>}
               </div>
 
               {/* <div className={"exchange-content__item--absolute"}>
@@ -165,75 +168,77 @@ const ExchangeBodyLayout = (props) => {
                 </span>
                 <ReactTooltip place="bottom" id="swap" type="light"/>
               </div> */}
-              <div className={"exchange-content__item--middel"}>
+              <div className={"exchange-content__item--middle"}>
                 <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
                   <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
                 </span>
                 <ReactTooltip place="bottom" id="swap" type="light"/>
               </div>
-
-              <div className={"exchange-content__item exchange-content__item--right"}>
-                <div className={`exchange-content__item--absolute exchange-content__item--absolute__mobile  ${errorExchange ? "error" : ""}`}>
-                  <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
-                    <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
-                  </span>
-                  <ReactTooltip place="bottom" id="swap" type="light"/>
-                </div>
-                <div className={`input-div-content ${errorExchange ? "error" : ""}`}>
-                  <div className={"exchange-content__label-content"}>
-                    <div className="exchange-content__label">{props.translate("transaction.exchange_to") || "To"}</div>
-                    <div className="exchange-content__select select-token-panel">{props.tokenDestSelect}</div>
-                  </div>
-                  <div className={`exchange-content__input-container ${errorExchange ? "error" : ""}`}>
-                    {/* <BigInput 
-                      value={props.input.destAmount.value}
-                      onFocus={props.input.destAmount.onFocus}
-                      onBlur={props.input.destAmount.onBlur}
-                      handleChangeValue={handleChangeDest}
-                      tokenSymbol={props.destTokenSymbol}
-                      type={"dest"}
-                      focus={props.focus}
-                      errorExchange={errorExchange}
-                      errorShow={errorShow}
-                      isChangingWallet={props.isChangingWallet}
-                    /> */}
-                    <div className={"main-input main-input__right"}>
-                      <input
-                        className={`exchange-content__input ${errorExchange ? "error" : ""}`}
-                        step="0.000001"
-                        placeholder="0"
-                        min="0"
-                        type="text"
-                        maxLength="50"
-                        autoComplete="off"
+              <div className={"exchange-content__item--wrapper"}>
+              <div className={"exchange-item-label"}>{props.translate("transaction.exchange_to") || "To"}:</div>
+                <div className={"exchange-content__item exchange-content__item--right"}>
+                  {/* <div className={`exchange-content__item--absolute exchange-content__item--absolute__mobile  ${errorExchange ? "error" : ""}`}>
+                    <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
+                      <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
+                    </span>
+                    <ReactTooltip place="bottom" id="swap" type="light"/>
+                  </div> */}
+                  <div className={`input-div-content ${errorExchange ? "error" : ""}`}>
+                    <div className={"exchange-content__label-content"}>
+                      {/* <div className="exchange-content__label">{props.translate("transaction.exchange_to") || "To"}</div> */}
+                      <div className="exchange-content__select select-token-panel">{props.tokenDestSelect}</div>
+                    </div>
+                    <div className={`exchange-content__input-container ${errorExchange ? "error" : ""}`}>
+                      {/* <BigInput 
                         value={props.input.destAmount.value}
                         onFocus={props.input.destAmount.onFocus}
                         onBlur={props.input.destAmount.onBlur}
-                        onChange={handleChangeDest}
-                      />
-                      <div className={`exchange-content__label exchange-content__label--right ${errorExchange ? "error" : ""}`}>{props.destTokenSymbol}</div>
+                        handleChangeValue={handleChangeDest}
+                        tokenSymbol={props.destTokenSymbol}
+                        type={"dest"}
+                        focus={props.focus}
+                        errorExchange={errorExchange}
+                        errorShow={errorShow}
+                        isChangingWallet={props.isChangingWallet}
+                      /> */}
+                      <div className={"main-input main-input__right"}>
+                        <input
+                          className={`exchange-content__input ${errorExchange ? "error" : ""}`}
+                          step="0.000001"
+                          placeholder="0"
+                          min="0"
+                          type="text"
+                          maxLength="50"
+                          autoComplete="off"
+                          value={props.input.destAmount.value}
+                          onFocus={props.input.destAmount.onFocus}
+                          onBlur={props.input.destAmount.onBlur}
+                          onChange={handleChangeDest}
+                        />
+                        {/* <div className={`exchange-content__label exchange-content__label--right ${errorExchange ? "error" : ""}`}>{props.destTokenSymbol}</div> */}
+                      </div>
+                      {props.focus === "dest" && <div className={errorExchange ? "error-msg" : ""}>
+                        {/* {!props.isChangingWallet ? props.errorShow : ''} */}
+                        {errorShow}
+                      </div>}
                     </div>
-                    {props.focus === "dest" && <div className={errorExchange ? "error-msg" : ""}>
-                      {/* {!props.isChangingWallet ? props.errorShow : ''} */}
-                      {errorShow}
-                    </div>}
                   </div>
+                  {props.focus === "dest" && <div className={errorExchange ? "mobile-error__show" : "mobile-error"}>
+                    {errorShow}
+                  </div>}
                 </div>
-                {props.focus === "dest" && <div className={errorExchange ? "mobile-error__show" : "mobile-error"}>
-                  {errorShow}
-                </div>}
               </div>
             </div>
 
             <div className="exchange-rate-container container">
-              <div className="exchange-rate__balance">
+              {/* <div className="exchange-rate__balance">
                 {(!props.isChangingWallet && props.account !== false) && (
                   <span>
                   <span className="exchange-rate__balance-text">Balance: </span>
                   <span className="exchange-rate__balance-amount">{props.addressBalance.roundingValue}</span>
                 </span>
                 )}
-              </div>
+              </div> */}
 
               <RateBetweenToken
                 isSelectToken={props.exchange.isSelectToken}
