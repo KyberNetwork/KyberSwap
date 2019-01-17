@@ -38,23 +38,14 @@ export default class HeaderTransaction extends React.Component {
   render() {
     var transfer = this.props.translate("transaction.transfer") || "Transfer"
     var swap = this.props.translate("transaction.swap") || "Swap"
-    const disabledSwapClass = this.props.page === "exchange" ? "" : " exchange-tab__item--disabled";
-    const disabledTransferClass = this.props.page === "transfer" ? "" : " exchange-tab__item--disabled";
+    const disabledSwapClass = this.props.page === "exchange" ? " exchange-tab__item--active" : " exchange-tab__item--disabled";
+    const disabledTransferClass = this.props.page === "transfer" ? " exchange-tab__item--active" : " exchange-tab__item--disabled";
 
     return (
       <div className="exchange-header">
-        {/*<div className="swap-navigation">*/}
-          {/*<div>*/}
-            {/*<a onClick={(e) => this.gotoRoot(e)}>{this.props.translate("home") || "Home"}</a>*/}
-          {/*</div>*/}
-          {/*<div className="seperator">/</div>*/}
-          {/*<div className="active">*/}
-            {/*<a>{this.props.page === "exchange" ? swap : transfer}</a>*/}
-          {/*</div>*/}
-        {/*</div>*/}
         <div className="exchange-tab">
           <Link to={this.props.exchangeLink} className={"exchange-tab__item" + disabledSwapClass}>{swap}</Link>
-          <div className={"exchange-tab__separator"}></div>
+          {/* <div className={"exchange-tab__separator"}></div> */}
           <Link to={this.props.transferLink} className={"exchange-tab__item" + disabledTransferClass}>{transfer}</Link>
         </div>
       </div>

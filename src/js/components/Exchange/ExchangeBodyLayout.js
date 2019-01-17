@@ -130,18 +130,6 @@ const ExchangeBodyLayout = (props) => {
                     <div className="exchange-content__select select-token-panel">{props.tokenSourceSelect}</div>
                   </div>
                   <div className={`exchange-content__input-container ${errorExchange ? "error" : ""}`}>
-                    {/* <BigInput 
-                      value={props.input.sourceAmount.value}
-                      onFocus={props.input.sourceAmount.onFocus}
-                      onBlur={props.input.sourceAmount.onBlur}
-                      handleChangeValue={handleChangeSource}
-                      tokenSymbol={props.sourceTokenSymbol}
-                      type={"source"}
-                      focus={props.focus}
-                      errorExchange={errorExchange}
-                      errorShow={errorShow}
-                      isChangingWallet={props.isChangingWallet}
-                    /> */}
                     <div className={"main-input main-input__left"}>
                       <input
                         className={`exchange-content__input ${props.account !== false ? 'has-account' : ''} ${errorExchange ? "error" : ""}`}
@@ -162,7 +150,6 @@ const ExchangeBodyLayout = (props) => {
                       )}
                     </div>
                     {props.focus === "source" && <div className={errorExchange ? "error-msg error-msg-source" : ""}>
-                      {/* {!props.isChangingWallet ? props.errorShow : ''} */}
                       {errorShow}
                     </div>}
                   </div>
@@ -172,7 +159,13 @@ const ExchangeBodyLayout = (props) => {
                 </div>}
               </div>
 
-              <div className={"exchange-content__item--absolute"}>
+              {/* <div className={"exchange-content__item--absolute"}>
+                <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
+                  <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
+                </span>
+                <ReactTooltip place="bottom" id="swap" type="light"/>
+              </div> */}
+              <div className={"exchange-content__item--middel"}>
                 <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
                   <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
                 </span>
