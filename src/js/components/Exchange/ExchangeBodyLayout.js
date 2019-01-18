@@ -127,7 +127,7 @@ const ExchangeBodyLayout = (props) => {
     //       <div className={"reimport-content"}>Connect other wallet</div>
     //       <div className={"reimport-line"}></div>
     //     </div>
-    //     {/* {getAccountTypeHtml()} */}
+    //     {getAccountTypeHtml()}
     //   </div>
     // </div>)
   }

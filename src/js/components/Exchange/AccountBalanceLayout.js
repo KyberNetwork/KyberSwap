@@ -111,6 +111,29 @@ const AccountBalanceLayout = (props) => {
     }
   }
 
+  function getWalletName() {
+    if (props.walletName === "") {
+      switch(props.account.type) {
+        case "metamask":
+          return "Metamask"
+        case "keystore":
+          return "Keystore"
+        case "ledger":
+          return "Ledger"
+        case "trezor":
+          return "Trezor"
+        case "privateKey":
+          return "Private key"
+        case "promoCode":
+          return "Promocode"
+        default:
+          return "Wallet"
+      }
+    } else {
+      return props.walletName
+    }
+  }
+
   return (
     <div className="account-balance">
       {props.account !== false && (
@@ -118,7 +141,8 @@ const AccountBalanceLayout = (props) => {
             <div className="balance-header">
               <div className="slide-down__trigger-container">
                 <div>
-                  <span className="account-balance__address-text">Wallet </span>
+                  <div><span className="account-balance__address-text">Your Wallet</span> - <span>{getWalletName()}</span></div>
+                  {/* <span className="account-balance__address-text">Your Wallet - </span> */}
                   <a className="account-balance__address-link" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
                     onClick={(e) => {props.analytics.callTrack("trackClickShowAddressOnEtherescan")}}>
                     {props.account.address}

@@ -371,6 +371,7 @@ export default class ExchangeBody extends React.Component {
         destTokenSymbol={this.props.exchange.destTokenSymbol}
         onToggleBalanceContent={this.toggleBalanceContent}
         isBalanceActive = {this.props.exchange.isBalanceActive}
+        walletName = {this.props.account.walletName}
         tradeType = "swap"
       />)
   }
