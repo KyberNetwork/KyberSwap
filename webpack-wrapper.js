@@ -41,7 +41,14 @@ var getConfig = env => {
         new MiniCssExtractPlugin({
             filename: "[name].css",
         }),   
-        new CleanPlugin([outputPath + '/app.*', outputPath + '/libary.*'])
+        new CleanPlugin([outputPath + '/app.*', outputPath + '/libary.*']),
+        new webpack.DefinePlugin({
+            'env': JSON.stringify(env.chain),
+            'process.env': {
+                'logger': 'true',
+                'env': JSON.stringify(env.chain)
+            }
+        })
     ];
     return {
         context: path.join(__dirname, 'src'),

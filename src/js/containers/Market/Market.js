@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 
 import { getTranslate } from 'react-localize-redux'
-import { Currency, ManageColumn, MarketTable, SearchWord, SortColumn, TradingViewModal } from "../Market"
+import { Currency, ManageColumn, MarketTable, SearchWord, SortColumn, TradingViewModal, RateSlider } from "../Market"
 import * as marketActions from "../../actions/marketActions"
 import { toEther } from "../../utils/converter";
 import * as analytics from "../../utils/analytics"
@@ -70,7 +70,7 @@ import * as analytics from "../../utils/analytics"
 
   var data = []
   Object.keys(tokens).forEach((key) => {
-    if (key === "ETH" || key === "WETH") return
+    // if (key === "ETH" || key === "WETH") return
     var item = tokens[key]
     item.market = key + ' / ' + currency
     item = { ...item, ...item[currency] }
@@ -124,6 +124,7 @@ export default class Market extends React.Component {
   render() {
     return (
       <div className="market-wrapper-container">
+        <RateSlider />
         <div className="market container" id="market-eth">
           <h1 className="market__title">{this.props.translate("market.eth_market") || "Ethereum Market"}</h1>
           {/* <div className={"search-area"}><SearchWord /></div> */}
