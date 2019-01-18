@@ -69,6 +69,7 @@ export default class ImportAccount extends React.Component {
         errorModal={<ErrorModal/>}
         translate={this.props.translate}
         onMobile={this.props.onMobile}
+        tradeType={this.props.tradeType}
       />
     )
   }

@@ -798,9 +798,11 @@
     }
   }
 
-  // &__balance {
-  //   color: white;
-  // }
+  &__balance {
+    // color: white;
+    height: 20px;
+    opacity: 0;
+  }
 
   // &__balance-text {
   //   font-size: 14px;

@@ -238,6 +238,10 @@ export default class Transfer extends React.Component {
     )
   }
 
+  acceptTerm = (e) => {
+    this.props.dispatch(globalActions.acceptTermOfService())
+  }
+
   render() {
     var addressBalance = ""
     var token = this.props.tokens[this.props.transfer.tokenSymbol]
@@ -325,6 +329,9 @@ export default class Transfer extends React.Component {
         walletName={this.props.account.walletName}
         qcCode = {qcCode}
         transferBalance = {this.getTransferBalance()}
+        isAgreedTermOfService={this.props.global.termOfServiceAccepted}
+        acceptTerm={this.acceptTerm}
+        isBalanceActive = {this.props.transfer.isBalanceActive}
       />
     )
   }
