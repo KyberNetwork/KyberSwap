@@ -143,10 +143,10 @@ export function updatePrevSource(value) {
   }
 }
 
-export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess) {
+export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess, percentChange) {
   return {
     type: "EXCHANGE.UPDATE_RATE",
-    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess}
+    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess, percentChange}
   }
 
 }
@@ -398,6 +398,12 @@ export function resetMinRate() {
 export function estimateGas() {
   return {
     type: "EXCHANGE.ESTIMATE_GAS_USED",
+  }
+}
+
+export function estimateGasNormal() {
+  return {
+    type: "EXCHANGE.ESTIMATE_GAS_USED_NORMAL",
   }
 }
 

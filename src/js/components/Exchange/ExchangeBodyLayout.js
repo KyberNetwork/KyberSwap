@@ -270,7 +270,10 @@ const ExchangeBodyLayout = (props) => {
                   }}
                 />
               </div>
+
+              {props.rateToken}
             </div>
+           
           </div>
           
           {!props.isAgreedTermOfService && 

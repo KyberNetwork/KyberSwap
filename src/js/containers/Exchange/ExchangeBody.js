@@ -20,6 +20,8 @@ import * as web3Package from "../../services/web3"
 import { importAccountMetamask } from "../../actions/accountActions"
 import EthereumService from "../../services/ethereum/ethereum"
 
+import { PostExchangeWithKey, MinRate, RateBetweenToken } from "../Exchange"
+
 @connect((store, props) => {
   const langs = store.locale.languages
   const currentLang = common.getActiveLanguage(langs)
@@ -208,9 +210,27 @@ export default class ExchangeBody extends React.Component {
     }
   }
 
+  // validateTxFee = (gasPrice) => {
+  //   var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
+  //   this.props.exchange.sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, gasPrice)
+
+  //   if (validateWithFee) {
+  //     this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
+  //     return
+  //     // check = false
+  //   }
+  // }
+
+  dispatchEstimateGasNormal = () => {
+    this.props.dispatch(exchangeActions.estimateGasNormal())
+  }
+
   lazyUpdateRateExchange = _.debounce(this.dispatchUpdateRateExchange, 500)
   lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
 
+  lazyEstimateGas = _.debounce(this.dispatchEstimateGasNormal, 500)
+
+ 
   validateRateAndSource = (sourceValue) => {
     this.lazyUpdateRateExchange(sourceValue)
     if (this.props.account.account !== false) {
@@ -221,6 +241,8 @@ export default class ExchangeBody extends React.Component {
     var value = e.target.value
     if (value < 0) return
     this.props.dispatch(exchangeActions.inputChange('source', value));
+
+    this.lazyEstimateGas()
 
     this.validateRateAndSource(value)
   }
@@ -508,6 +530,12 @@ export default class ExchangeBody extends React.Component {
       maxCap = converters.toEther(this.props.exchange.maxCap)
     }
 
+
+    var rateToken = (
+      <RateBetweenToken
+      
+      />
+    )
     return (
       <ExchangeBodyLayout
         chooseToken={this.chooseToken}
@@ -540,6 +568,8 @@ export default class ExchangeBody extends React.Component {
         walletName={this.props.account.walletName}
         isFixedDestToken = {isFixedDestToken}
         acceptTerm={this.acceptTerm}
+
+        rateToken = {rateToken}
       />
     )
   }

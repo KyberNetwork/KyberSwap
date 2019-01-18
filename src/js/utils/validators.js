@@ -44,7 +44,10 @@ export function verifyAmount(sourceAmount,
     estimateValue = rateBig.times(sourceAmountWei).div(Math.pow(10, sourceDecimal))
   }
   var epsilon = new BigNumber(constants.EPSILON)
-  if (estimateValue.isLessThan(epsilon)) {
+  var delta = estimateValue.minus(epsilon).abs()
+  var acceptDetal = new BigNumber(constants.MIN_ACCEPT_DELTA)
+
+  if (estimateValue.isLessThan(epsilon) && !delta.div(epsilon).isLessThan(acceptDetal)) {
     return "too small"
   }
 

@@ -383,7 +383,7 @@
     font-weight: bold;
     font-size: 14px;
     text-transform: uppercase;
-    margin-top: 2em;
+    // margin-top: 2em;
     margin-bottom: 0;
     font-style: normal;
     color: #666;
@@ -392,14 +392,19 @@
     cursor: pointer;
   }
   div {
-    display: flex;
+    // display: flex;
+    // justify-content: space-between;
+    // align-items: center;
+    @include screen-max-width(large) {
+      display: flex;
     justify-content: space-between;
     align-items: center;
+    }
     span {
       font-size: 14px;
       color: #666666;
     }
-    span:nth-child(2) {
+    .balance {
       font-size: 12px;
       color: #ef8102;
       padding-right: 10px;
@@ -409,7 +414,8 @@
       background-color: #EFF1FD;
       line-height: 20px;
       font-weight: 500;
-      margin-left: 5px;
+      display: inline-block;
+      // margin-left: 5px;
     }
   }
   .balance-amount {
