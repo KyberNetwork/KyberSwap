@@ -9,7 +9,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 
-var getConfigFiles = env => {
+module.exports = env => {
 
     const outputPath = env.chain ? 'dist/' + env.chain : '/src';
 
@@ -33,7 +33,8 @@ var getConfigFiles = env => {
         new webpack.DefinePlugin({
             'env': JSON.stringify(env.chain),
             'process.env': {
-                'logger': 'true'
+                'logger': 'true',
+                'env': JSON.stringify(env.chain)
             }
         })
     ];
@@ -94,4 +95,3 @@ return {
 };
 
 
-module.exports = getConfigFiles({})

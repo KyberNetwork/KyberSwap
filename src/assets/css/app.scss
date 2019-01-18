@@ -15,12 +15,12 @@ $alert-color: #ff5d00;
 @import 'custom';
 @import 'account-balance';
 @import "~react-table/react-table.css";
-@import "transaction_list";
-@import "language";
+// @import "transaction_list";
+// @import "language";
 @import "token_select";
-@import "term_and_services";
+// @import "term_and_services";
 @import "icon";
-@import "footer";
+// @import "footer";
 @import "advance_config";
 @import "exchange";
 @import "market";
@@ -30,6 +30,8 @@ $alert-color: #ff5d00;
 @import "animation";
 @import "slide_down";
 @import '~react-linechart/dist/styles.css';
+@import "slider";
+@import "~slick-carousel/slick/slick.css";
 
 @font-face{
   font-family: 'My-Montserrat';
@@ -383,49 +385,7 @@ html body{
   }
 }
 
-#rate-bar {
-  background-color: $k-primary;
-  color: $white-light;
-  min-height: 0px !important;
-  padding: 15px 0;
-  border-top: 1px solid $k-divider;
-  .bx-wrapper {
-    &:after {
-      pointer-events: none;
-      content: '';
-      width: 90px;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      background: linear-gradient(90deg, transparent, #0E1320);
-    }
-  }
-  div.rate {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    font-size: 0;
-    div.slick-slide {
-      display: inline-block;
-      padding-right: 70px;
-      &:not(:last-child) {
-        border-right: 1px solid $k-divider;
-        margin-right:30px;
-      }
-      .pair {
-        font-size: 12px;
-        font-weight: bold;
-      }
-      .value {
-        font-size: 14px;
-        span {
-          margin-left: 10px;
-        }
-      }
-    }
-  }
-}
+
 
 #info{
   padding: 10px;
