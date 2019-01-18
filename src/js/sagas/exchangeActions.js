@@ -50,9 +50,10 @@ function* selectToken(action) {
   yield put(utilActions.hideSelectToken())
 
   yield put(actions.checkSelectToken())
-  if (ethereum) {
+  yield call(estimateGasNormal)
+  
+  if (ethereum){
     yield call(ethereum.fetchRateExchange, true)
-    yield call(fetchGas)
   }
 
   //calculate gas use
@@ -885,16 +886,16 @@ export function* exchangeTokentoETHMetamask(action) {
   }
 }
 
-function* getRate(ethereum, source, dest, sourceAmount) {
+function* getRate(ethereum, source, dest, sourceAmount, blockNo) {
   //console.log({source, dest, sourceAmount})
   try {
     //get latestblock
-    const lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
+    //const lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
     // console.log(lastestBlock)
-    const rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmount, lastestBlock)
+    const rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmount, blockNo)
     const expectedPrice = rate.expectedPrice ? rate.expectedPrice : "0"
     const slippagePrice = rate.slippagePrice ? rate.slippagePrice : "0"
-    return { status: "success", res: { expectedPrice, slippagePrice, lastestBlock } }
+    return { status: "success", data: { expectedPrice, slippagePrice, blockNo } }
   }
   catch (err) {
     console.log(err)
@@ -940,58 +941,79 @@ function* updateRatePending(action) {
   var sourceAmoutRefined = yield call(getSourceAmount, sourceTokenSymbol, sourceAmount)
   var sourceAmoutZero = yield call(getSourceAmountZero, sourceTokenSymbol)
 
-  if (isManual) {
-    var rateRequest = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutRefined)
-    console.log("rate_request_manual: " + JSON.stringify(rateRequest))
-    console.log("source_amount: " + JSON.stringify(sourceAmoutRefined))
-    if (rateRequest.status === "success") {
-      var { expectedPrice, slippagePrice, lastestBlock } = rateRequest.data
-      var rateInit = expectedPrice.toString()
-      if (expectedPrice.toString() === "0") {
-        var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutZero)
+  try{
+    var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
+    var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmoutRefined, lastestBlock)
+    var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmoutZero, lastestBlock)
+    var { expectedPrice, slippagePrice } = rate
 
-        if (rateRequestZeroAmount.status === "success") {
-          rateInit = rateRequestZeroAmount.data.expectedPrice
-        }
-        if (rateRequestZeroAmount.status === "timeout") {
-          yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-            translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
-          return
-        }
-        if (rateRequestZeroAmount.status === "fail") {
-          yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-            translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
-          return
-        }
-      }
-      yield put.resolve(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
-    }
+    var percentChange = 0
+    if(rateZero.expectedPrice != 0){
+      percentChange = (rateZero.expectedPrice - rate.expectedPrice) / rateZero.expectedPrice 
+      percentChange = Math.round(percentChange * 1000) / 10    
+      if(percentChange <= 0.1 || percentChange > 80) percentChange = 0
+    }    
 
-    if (rateRequest.status === "timeout") {
+    yield put.sync(actions.updateRateExchangeComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, true, percentChange))
+
+  }catch(err){
+    console.log(err)
+    if(isManual){
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-        translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
-    }
-    if (rateRequest.status === "fail") {
-      yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-        translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
-    }
-
-  } else {
-    const rateRequest = yield call(getRate, ethereum, source, dest, sourceAmoutRefined)
-    if (rateRequest.status === "success") {
-      var { expectedPrice, slippagePrice, lastestBlock } = rateRequest.res
-      var rateInit = expectedPrice.toString()
-      if (expectedPrice.toString() === "0") {
-        var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutZero)
-
-        if (rateRequestZeroAmount.status === "success") {
-          rateInit = rateRequestZeroAmount.data.expectedPrice
-        }
-      }
-
-      yield put.resolve(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
+      translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+      return
     }
   }
+
+  // if (isManual) {
+  //   const lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
+  //   var rateRequest = yield call(getRate, ethereum, source, dest, sourceAmoutRefined, lastestBlock)
+  //   var rateRequestZeroAmount = yield call(getRate, ethereum, source, dest, sourceAmoutZero, lastestBlock)
+    
+  //   if (rateRequest.status === "success") {      
+  //     var { expectedPrice, slippagePrice, blockNo } = rateRequest.data  
+
+  //     var rateInit = expectedPrice.toString()
+  //     if (expectedPrice.toString() === "0"){
+  //       var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutZero)
+  //       if (rateRequestZeroAmount.status === "success"){
+  //         rateInit = rateRequestZeroAmount.data.expectedPrice
+  //       }
+  //       if (rateRequestZeroAmount.status === "timeout") {
+  //         yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+  //           translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+  //           return
+  //       }
+  //       if (rateRequestZeroAmount.status === "fail") {
+  //         yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+  //           translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
+  //           return
+  //       }
+  //     }
+  //     yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
+  //   }
+  //   if (rateRequest.status === "timeout") {
+  //     yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+  //       translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+  //   }
+  //   if (rateRequest.status === "fail") {
+  //     yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+  //       translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
+  //   }
+  // } else {
+  //   const rateRequest = yield call(getRate, ethereum, source, dest, sourceAmoutRefined)
+  //   if (rateRequest.status === "success") {
+  //     var { expectedPrice, slippagePrice, lastestBlock } = rateRequest.res
+  //     var rateInit = expectedPrice.toString()
+  //     if (expectedPrice.toString() === "0"){
+  //       var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutZero)
+  //       if (rateRequestZeroAmount.status === "success"){
+  //         rateInit = rateRequestZeroAmount.data.expectedPrice
+  //       }
+  //     }
+  //     yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
+  //   }
+  // }
 }
 
 
@@ -1076,8 +1098,24 @@ function* fetchGas() {
   yield put(actions.setEstimateGas(gas, gasApprove))
 }
 
-function* estimateGas() {
+function* estimateGasNormal() {
+  var state = store.getState()
+  const exchange = state.exchange
 
+  const sourceTokenSymbol = exchange.sourceTokenSymbol
+  var gas = yield call(getMaxGasExchange)
+  var gas_approve 
+
+  if(sourceTokenSymbol === "ETH"){
+    gas_approve = 0
+  }else{
+    gas_approve = yield call(getMaxGasApprove)
+  }
+
+  yield put(actions.setEstimateGas(gas, gas_approve))
+}
+
+function* estimateGas() {
   var gasRequest = yield call(common.handleRequest, getGasUsed)
   if (gasRequest.status === "success") {
     const { gas, gas_approve } = gasRequest.data
@@ -1085,19 +1123,20 @@ function* estimateGas() {
   }
   if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")) {
     console.log("timeout")
-    var state = store.getState()
-    const exchange = state.exchange
+    // var state = store.getState()
+    // const exchange = state.exchange
 
-    const sourceTokenSymbol = exchange.sourceTokenSymbol
-    var gas = yield call(getMaxGasExchange)
-    var gas_approve
-    if (sourceTokenSymbol === "ETH") {
-      gas_approve = 0
-    } else {
-      gas_approve = yield call(getMaxGasApprove)
-    }
+    // const sourceTokenSymbol = exchange.sourceTokenSymbol
+    // var gas = yield call(getMaxGasExchange)
+    // var gas_approve 
+    // if(sourceTokenSymbol === "ETH"){
+    //   gas_approve = 0
+    // }else{
+    //   gas_approve = yield call(getMaxGasApprove)
+    // }
 
-    yield put(actions.setEstimateGas(gas, gas_approve))
+    // yield put(actions.setEstimateGas(gas, gas_approve))
+    yield call(estimateGasNormal)
   }
 }
 
@@ -1107,7 +1146,7 @@ function* fetchGasSnapshot() {
 }
 
 function* estimateGasSnapshot() {
-
+  
   var gasRequest = yield call(common.handleRequest, getGasUsed)
   console.log("gas_request:" + JSON.stringify(gasRequest))
   if (gasRequest.status === "success") {
@@ -1700,4 +1739,6 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
   yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
   yield takeEvery("EXCHANGE.FETCH_EXCHANGE_ENABLE", fetchExchangeEnable)
+  yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED_NORMAL", estimateGasNormal)
+  yield takeEvery("EXCHANGE.SWAP_TOKEN", estimateGasNormal)
 }

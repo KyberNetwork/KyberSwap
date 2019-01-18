@@ -242,15 +242,9 @@ const ExchangeBodyLayout = (props) => {
                 )}
               </div>
 
-              <RateBetweenToken
-                isSelectToken={props.exchange.isSelectToken}
-                exchangeRate={{
-                  sourceToken: props.sourceTokenSymbol,
-                  rate: converters.toT(props.exchange.offeredRate),
-                  destToken: props.destTokenSymbol
-                }}
-              />
+              {props.rateToken}
             </div>
+           
           </div>
 
           {(props.account === false || (props.isChangingWallet && props.changeWalletType === "swap")) &&

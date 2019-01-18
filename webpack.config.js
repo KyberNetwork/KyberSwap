@@ -26,7 +26,6 @@ var getConfigFiles = env => {
         new CleanPlugin([outputPath + '/app.*', outputPath + '/libary.*']),
         new HtmlWebpackPlugin({
             title: 'Wallet - kyber.network',
-            filename: 'index.html',
             template: './app.html',
             favicon: './assets/img/favicon.png',
             inject: 'body'
