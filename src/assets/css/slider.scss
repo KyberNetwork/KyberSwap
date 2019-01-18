@@ -29,7 +29,10 @@ ul.bxslider {
   // background-color: $k-primary;
   // color: $white-light;
   min-height: 0px !important;
-  padding: 15px 0;
+  padding: 15px 30px;
+  background-color: white;
+  margin-top: 50px;
+  border-top: 1px dashed #e9e9e9;
   // border-top: 1px solid $k-divider;
   .bx-wrapper {
     &:after {
@@ -50,19 +53,49 @@ ul.bxslider {
     font-size: 0;
     div.slick-slide {
       display: inline-block;
-      padding-right: 70px;
+      padding-right: 80px;
       &:not(:last-child) {
-        border-right: 1px solid $k-divider;
+        // border-right: 1px solid $k-divider;
         margin-right:30px;
       }
+      >div >div {
+        outline: none;
+      }
       .pair {
-        font-size: 12px;
+        // font-size: 12px;
         font-weight: bold;
       }
       .value {
-        font-size: 14px;
+        // font-size: 14px;
         span {
           margin-left: 10px;
+        }
+      }
+      // .percent-change {
+      //   font-size: 14px;
+      // }
+      .pair, .value, .percent-change {
+        color: #afb6c5;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .change-positive, .change-negative {
+        position: relative;
+        &::before {
+          content: '';
+          position: absolute;
+          height: 12px;
+          width: 12px;
+          background: url($image-path + "change-percent/arrow-up-blue.svg") center no-repeat;
+          background-size: contain;
+          left: -23px;
+          top: 2px;
+        }
+      }
+      .change-negative {
+        &::before {
+          background: url($image-path + "change-percent/arrow-down-red.svg") center no-repeat;
         }
       }
     }

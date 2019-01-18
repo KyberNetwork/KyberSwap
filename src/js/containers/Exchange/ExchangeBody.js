@@ -568,6 +568,7 @@ export default class ExchangeBody extends React.Component {
         walletName={this.props.account.walletName}
         isFixedDestToken = {isFixedDestToken}
         acceptTerm={this.acceptTerm}
+        isBalanceActive = {this.props.exchange.isBalanceActive}
 
         rateToken = {rateToken}
       />

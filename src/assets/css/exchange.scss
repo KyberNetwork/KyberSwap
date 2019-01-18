@@ -211,6 +211,7 @@
 
   &__accept-term {
     text-align: center;
+    padding-bottom: 45px;
     .accept-buttom {
       margin: 0 auto;
       width: 244px;
@@ -729,6 +730,7 @@
 
 .exchange-rate {
   // color: white;
+  min-height: 20px;
 
   &-container {
     max-width: 1050px;
@@ -850,13 +852,19 @@
 
 .exchange-account {
   // background-color: #f9f9f9;
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 0 16px;
 
-  &__container {
-    max-width: 1050px;
-    margin: 0 51px;
-    padding: 10px 0 20px;
-    border-top: 1px solid #e1e4eb;
-    position: relative;
+  &__wrapper {
+
+    &--reimport {
+      position: relative;
+      height: 20px;
+      margin: 0 35px;
+      border-top: 1px solid #e1e4eb;
+    }
+
     .reimport-msg {
       position: absolute;
       max-width: 170px;
@@ -872,11 +880,26 @@
     }
   }
 
+  &__container {
+    max-width: 1050px;
+    padding: 0 0 20px;
+    // position: relative;
+    
+  }
+
   &__content {
     display: flex;
     border-bottom: 1px solid rgba(204, 204, 204, 0.36);
-    margin-bottom: 30px;
-    padding-bottom: 10px;
+
+    padding: 0 0 10px;
+    margin: 0 35px 30px;
+    &--open {
+      background: white;
+      padding: 15px 35px 10px;
+      margin: 0 0 30px;
+      border-bottom: none;
+      border-radius: 5.1px;
+    }
   }
 
   &__balance {
@@ -884,17 +907,17 @@
     padding-right: 45px;
     position: relative;
 
-    &::after {
-      content: '';
-      display: block;
-      width: 1px;
-      height: 88%;
-      background-color: rgba(204, 204, 204, 0.36);
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-    }
+    // &::after {
+    //   content: '';
+    //   display: block;
+    //   width: 1px;
+    //   height: 88%;
+    //   background-color: rgba(204, 204, 204, 0.36);
+    //   position: absolute;
+    //   right: 0;
+    //   top: 50%;
+    //   transform: translateY(-50%);
+    // }
   }
 
   &__adv-config {
@@ -1001,7 +1024,7 @@
 .exchange-terms {
   font-size: 12px;
   font-style: italic;
-  color: #666666;
+  color: #9ea1aa;
 
   &__link {
     color: #ef8102 !important;

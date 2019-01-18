@@ -46,7 +46,6 @@ export default class RateBetweenToken extends React.Component {
     
     var change = this.props.exchange.percentChange
     var rateUSD = !!parseFloat(this.props.rateUSD) ? parseFloat(this.props.rateUSD) : 0
-    change = 5
     if (change == 0) {
       return (<div className={"token-compare__item"}>
         1 {this.props.exchange.sourceTokenSymbol} = {roundingNumber(expectedRate)} {this.props.exchange.destTokenSymbol} {rateUSD != 0 ? `= ${rateUSD.toFixed(3)} USD` : ""}
@@ -58,7 +57,7 @@ export default class RateBetweenToken extends React.Component {
           1 {this.props.exchange.sourceTokenSymbol} = {roundingNumber(expectedRate)} {this.props.exchange.destTokenSymbol} {rateUSD != 0 ? `= ${rateUSD.toFixed(3)} USD` : ""}
         </span>
         <span className={`token-compare__change ${change >= 0 ? 'change-positive' : 'change-negative'}`}>
-          {change}%
+          {Math.abs(change)}%
           {change >= 0 ? <img src={require('../../../assets/img/change-percent/arrow-up-blue.svg')}/> : <img src={require('../../../assets/img/change-percent/arrow-down-red.svg')}/>}
         </span>        
         <span className="token-compare__tooltip" data-html={true} data-tip={`<p>Price is dependent on your swap value. There is a ${change}% difference in price for the requested quantity and the default ${constants.MIN_AMOUNT_DEFAULT_RATE} ETH quantity</p>`} data-for="info_indicator" currentitem="false">

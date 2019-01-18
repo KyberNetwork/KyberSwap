@@ -315,15 +315,19 @@ const ExchangeBodyLayout = (props) => {
 
         {props.account !== false && (
           <div className="exchange-account">
-            <div className="exchange-account__container container">
-              <div className={"reimport-msg"}>Connect other wallet</div>
-              <div className="exchange-account__content">
-                {getAccountTypeHtml(true)}
-                <div className="exchange-account__balance">{props.balanceLayout}</div>
-                <div className="exchange-account__adv-config">{props.advanceLayout}</div>
+            <div className="exchange-account__wrapper">
+              <div className={"exchange-account__wrapper--reimport"}>
+                <div className={"reimport-msg"} onClick={(e) => props.clearSession(e)}>Connect other wallet</div>
               </div>
+              <div className="exchange-account__container container">
+                <div className={`exchange-account__content ${props.isBalanceActive ? 'exchange-account__content--open' : ''}`}>
+                  {getAccountTypeHtml(true)}
+                  <div className="exchange-account__balance">{props.balanceLayout}</div>
+                  <div className="exchange-account__adv-config">{props.advanceLayout}</div>
+                </div>
 
-              <PostExchangeWithKey isChangingWallet={props.isChangingWallet}/>
+                <PostExchangeWithKey isChangingWallet={props.isChangingWallet}/>
+              </div>
             </div>
           </div>
         )}

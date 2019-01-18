@@ -1,8 +1,12 @@
 .account-balance {
+  &__address {
+    display: flex;
+    align-items: center;
+  }
   &__address-text {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
-    color: #141927;
+    color: #ef8102;
   }
 
   &__address-link {
@@ -31,7 +35,7 @@
     }
 
     &::-webkit-scrollbar {
-      width: 4px;
+      width: 6px;
     }
 
     &::-webkit-scrollbar-thumb {
@@ -79,6 +83,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
+    padding-right: 15px;
   }
 
   &__content-search-container {
@@ -93,14 +98,14 @@
       position: absolute;
       top: 10px;
       right: 10px;
-      background-image: url($image-path + 'icon-search-black.svg');
+      background-image: url($image-path + 'common/icon-search-gray.svg');
       background-size: contain;
     }
   }
 
   & &__content-search {
     border: none !important;
-    border-bottom: 1px solid #666 !important;
+    border-bottom: 1px solid #e1e5eb !important;
     padding: 10px 35px 10px 0;
     outline: none;
     background-color: transparent !important;
@@ -108,7 +113,7 @@
     margin-bottom: 0;
 
     &::placeholder {
-      color: #222222;
+      color: #8f8f8f;
       font-size: 14px;
     }
   }
@@ -166,7 +171,7 @@
   }
 
   &__sort-dropdown {
-    color: #222222;
+    color: #8f8f8f;;
     font-size: 14px;
     border-bottom: 1px solid #666;
     padding: 9px 0;
