@@ -45,21 +45,24 @@ export default class RateBetweenToken extends React.Component {
     var destToken = this.props.exchange.destTokenSymbol
     
     var change = this.props.exchange.percentChange
+    var rateUSD = !!parseFloat(this.props.rateUSD) ? parseFloat(this.props.rateUSD) : 0
+    change = 5
     if (change == 0) {
       return (<div className={"token-compare__item"}>
-        1 {this.props.exchange.sourceTokenSymbol} = {roundingNumber(expectedRate)} {this.props.exchange.destTokenSymbol}
+        1 {this.props.exchange.sourceTokenSymbol} = {roundingNumber(expectedRate)} {this.props.exchange.destTokenSymbol} {rateUSD != 0 ? `= ${rateUSD.toFixed(3)} USD` : ""}
       </div>)
     }
     return (
       <div className={"token-compare__item"}>
         <span>
-          1 {this.props.exchange.sourceTokenSymbol} = {roundingNumber(expectedRate)} {this.props.exchange.destTokenSymbol} 
+          1 {this.props.exchange.sourceTokenSymbol} = {roundingNumber(expectedRate)} {this.props.exchange.destTokenSymbol} {rateUSD != 0 ? `= ${rateUSD.toFixed(3)} USD` : ""}
         </span>
-        <span className="token-compare__change">
-          {change}% 
+        <span className={`token-compare__change ${change >= 0 ? 'change-positive' : 'change-negative'}`}>
+          {change}%
+          {change >= 0 ? <img src={require('../../../assets/img/change-percent/arrow-up-blue.svg')}/> : <img src={require('../../../assets/img/change-percent/arrow-down-red.svg')}/>}
         </span>        
         <span className="token-compare__tooltip" data-html={true} data-tip={`<p>Price is dependent on your swap value. There is a ${change}% difference in price for the requested quantity and the default ${constants.MIN_AMOUNT_DEFAULT_RATE} ETH quantity</p>`} data-for="info_indicator" currentitem="false">
-            <img src={require('../../../assets/img/info_indicator.svg')}/>
+            <img src={require('../../../assets/img/common/blue-indicator.svg')}/>
         </span>
         <ReactTooltip place="top" offset={{left:95}} id="info_indicator" type="light" html={true}/>
       </div>
@@ -67,7 +70,7 @@ export default class RateBetweenToken extends React.Component {
   }
 
   render = () => {
-    //var tokenRate = this.props.isSelectToken ? "Loading..." : roundingNumber(this.props.exchangeRate.rate)
+    // var tokenRate = this.props.isSelectToken ? "Loading..." : roundingNumber(this.props.exchangeRate.rate)
     return (
       <div class="exchange-rate">
         {/* <span className="exchange-rate__unit">{this.props.exchangeRate.sourceToken}</span>
@@ -76,7 +79,7 @@ export default class RateBetweenToken extends React.Component {
         <span className="exchange-rate__unit">{this.props.exchangeRate.destToken}</span>
         <span className="exchange-rate__amount">{tokenRate}</span> */}
         {this.compareRate()}
-        {this.props.rateUSD != 0 &&
+        {/* {this.props.rateUSD != 0 &&
           <span>
             <span className="exchange-rate__bracket">(</span>
             <span className="exchange-rate__unit">USD</span>
@@ -84,7 +87,7 @@ export default class RateBetweenToken extends React.Component {
             <span className="exchange-rate__bracket">)</span>
           </span>
         } */}
-        <span>1 {this.props.exchangeRate.sourceToken} = {tokenRate} {this.props.exchangeRate.destToken} = {converter.roundingNumber(this.props.rateUSD)} USD</span>
+        {/* <span>1 {this.props.exchangeRate.sourceToken} = {tokenRate} {this.props.exchangeRate.destToken} = {converter.roundingNumber(this.props.rateUSD)} USD</span> */}
       </div>
     )
   }

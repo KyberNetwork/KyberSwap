@@ -112,7 +112,7 @@ const AccountBalanceLayout = (props) => {
   }
 
   function getWalletName() {
-    if (props.walletName === "") {
+    if (!props.walletName || props.walletName === "") {
       switch(props.account.type) {
         case "metamask":
           return "Metamask"

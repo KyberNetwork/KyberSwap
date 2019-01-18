@@ -19,16 +19,6 @@
   border-radius: 18.5px;
   box-shadow: inset 0 1px 4px 0 rgba(21, 40, 60, 0.08);
   background-color: #eef0f5;
-}
-#exchange {
-  .exchange-extra-info{
-    margin-top: 25px;
-    .swap-all-des{
-      font-size: 14px;
-    }
-  }
-  margin-bottom: 50px;
-
   &__item {
     font-weight: 600;
     font-size: 14px;
@@ -62,17 +52,26 @@
       color: #8e97ad !important;
     }
   }
-
-  &__separator {
-    width: 1px;
-    height: 100%;
-    background-color: white;
-    position: absolute;
-    right: 0;
-    left: 0;
-    margin: 0 auto;
-    opacity: .65;
+}
+#exchange {
+  .exchange-extra-info{
+    margin-top: 25px;
+    .swap-all-des{
+      font-size: 14px;
+    }
   }
+  margin-bottom: 50px;
+
+  // &__separator {
+  //   width: 1px;
+  //   height: 100%;
+  //   background-color: white;
+  //   position: absolute;
+  //   right: 0;
+  //   left: 0;
+  //   margin: 0 auto;
+  //   opacity: .65;
+  // }
 }
 
 .exchange-content {
@@ -648,12 +647,12 @@
         width: 100%;
       }
     }
-    .token-compare {
-      color: #666666;
-      font-size: 14px;
-      letter-spacing: .5px;
-      text-align: right;
-    }
+    // .token-compare {
+    //   color: #666666;
+    //   font-size: 14px;
+    //   letter-spacing: .5px;
+    //   text-align: right;
+    // }
 
     .k.k-exchange {
       background-image: url($image-path + 'icon-swap-down.svg');
@@ -751,6 +750,48 @@
         line-height: normal;
         letter-spacing: normal;
         color: #8690ad;
+      }
+
+      .token-compare {
+        &__item {
+          display: flex;
+          align-items: center;
+        }
+  
+        &__change {
+          width: 49px;
+          height: 25px;
+          border-radius: 22.5px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: 5px;
+
+          img {
+            width: 10px;
+            height: auto;
+            margin-left: 2px;
+          }
+  
+          &.change-positive {
+            color: #007bde;
+            background-color: #e6f3fd;
+          }
+  
+          &.change-negative {
+            background-color: #fff3f3; 
+            color: #ee344e;
+
+          }
+        }
+
+        &__tooltip {
+          margin-left: 5px;
+          display: flex;
+          img {
+            height: 13px;  
+          }
+        }
       }
     }
   }

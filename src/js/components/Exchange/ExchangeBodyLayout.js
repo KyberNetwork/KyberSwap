@@ -271,7 +271,7 @@ const ExchangeBodyLayout = (props) => {
                 />
               </div>
 
-              {props.rateToken}
+              {/* {props.rateToken} */}
             </div>
            
           </div>
