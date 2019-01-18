@@ -52,7 +52,7 @@ export function* updateTokenBalance(action) {
 function* createNewAccount(address, type, keystring, ethereum, walletType, info){
   try{
     const account = yield call(service.newAccountInstance, address, type, keystring, ethereum, walletType, info)
-    return {status: "success", res: account}
+    return {status: "success", data: account}
   }catch(e){
     console.log(e)
     return {status: "fail"}
@@ -67,7 +67,7 @@ export function* importNewAccount(action) {
   var isChangingWallet = global.isChangingWallet
   try {
     var  account
-    var accountRequest = yield call(common.handleRequest, createNewAccount, address, type, keystring, ethereum, walletType, info)
+    var accountRequest = yield call(createNewAccount, address, type, keystring, ethereum, walletType, info)
 
     if (accountRequest.status === "timeout") {
       console.log("timeout")
@@ -149,7 +149,7 @@ export function* importNewAccount(action) {
 
    // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
     yield put(actions.closeImportLoading())
-    yield put(actions.importNewAccountComplete(account, walletName))
+    yield put(actions.importNewAccountComplete(account))
     if (isChangingWallet) yield put(closeChangeWallet())
 
     //track login wallet

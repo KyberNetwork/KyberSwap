@@ -591,8 +591,9 @@ export function calculateMinSource(sourceTokenSymbol, sourceAmount, decimal, rat
 
 
 export function getSourceAmountZero(sourceTokenSymbol, decimal, rateSell){
-  var epsilon = constants.EPSILON
-  var minETHAllow = new BigNumber(epsilon.toString())
+  var minAmount = toTWei(constants.MIN_AMOUNT_DEFAULT_RATE)
+
+  var minETHAllow = new BigNumber(minAmount.toString())
 
   if (sourceTokenSymbol === "ETH"){
     return minETHAllow.toFixed(0)

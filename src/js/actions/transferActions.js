@@ -79,6 +79,13 @@ export function specifyAmountTransfer(value) {
   }
 }
 
+export function estimateGasWhenAmountChange(value) {
+  return {
+    type: "TRANSFER.ESTIMATE_GAS_WHEN_AMOUNT_CHANGE",
+    payload: value
+  }
+}
+
 export function throwErrorDestAddress(message) {
   return {
     type: "TRANSFER.THROW_ERROR_DEST_ADDRESS",

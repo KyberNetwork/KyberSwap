@@ -2,12 +2,13 @@ import React from 'react';
 
 //import Web3 from "web3"
 import BLOCKCHAIN_INFO from "../../../../../env"
+import * as constants from "../../constants"
 
 export default class CachedServerProvider extends React.Component {
     constructor(props) {
         super(props)
         this.rpcUrl = props.url
-        this.maxRequestTime = 3000
+        this.maxRequestTime = constants.CONNECTION_TIMEOUT
     }
 
     getGasPrice() {
