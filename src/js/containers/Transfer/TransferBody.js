@@ -50,7 +50,8 @@ export default class Transfer extends React.Component {
     super()
     this.state = {
       focus: "transfer",
-      defaultShowAmountErrorTooltip: true
+      defaultShowAmountErrorTooltip: true,
+      defaultShowAddrErrorTooltip: true
     }
   }
 
@@ -250,6 +251,9 @@ export default class Transfer extends React.Component {
   setDefaulAmountErrorTooltip = (value) => {
     this.setState({defaultShowAmountErrorTooltip: value})
   }
+  setDefaulAddrErrorTooltip = (value) => {
+    this.setState({defaultShowAddrErrorTooltip: value})
+  }
 
   render() {
     var addressBalance = ""
@@ -346,6 +350,9 @@ export default class Transfer extends React.Component {
 
         defaultShowAmountErrorTooltip = {this.state.defaultShowAmountErrorTooltip}
         setDefaulAmountErrorTooltip = {this.setDefaulAmountErrorTooltip}
+
+        defaultShowAddrErrorTooltip = {this.state.defaultShowAddrErrorTooltip}
+        setDefaulAddrErrorTooltip = {this.setDefaulAddrErrorTooltip}
       />
     )
   }

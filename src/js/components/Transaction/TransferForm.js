@@ -54,19 +54,19 @@ const TransferForm = (props) => {
     }, 300)
   }
 
-  function isError() {
-    if (props.errors.amountTransfer || props.errors.destAddress) {
-      return true
-    }
-    return false
+  if (props.errors.destAddress && props.defaultShowAddrErrorTooltip) {
+    setTimeout(() => {
+      ReactTooltip.show(document.getElementById("transfer-address-error-trigger"))
+      props.setDefaulAddrErrorTooltip(false)
+    }, 300)
   }
 
-  var errorShow = (
-    <div>
-      {props.errors.amountTransfer && <div>{props.translate(props.errors.amountTransfer)}</div>}
-      {props.errors.destAddress && <div>{props.translate(props.errors.destAddress)}</div>}
-    </div>
-  )
+  if (!props.errors.destAddress && !props.defaultShowAddrErrorTooltip) {
+    setTimeout(() => {
+      props.setDefaulAddrErrorTooltip(true)
+    }, 300)
+  }
+
   function getWalletIconName(type, walletName) {
     if (walletName === "PROMO CODE") {
       return "promo_code";
@@ -142,28 +142,27 @@ const TransferForm = (props) => {
 
               <div className={"exchange-content__item--wrapper"}>
                 <div className={"exchange-item-label"}>To Address:</div>
-                <div className={"exchange-content__item exchange-content__item--right"}>
-                  <div className={`input-div-content ${isError() ? "error" : ""}`}>
-                    <div className="exchange-content__input-container exchange-content__input-container--to">
-                      <div className={`main-input main-input__right main-input__right--transfer ${props.errors.destAddress && props.focus === "to-addr" ? "error" : ''}`}>
+                <div className={`exchange-content__item exchange-content__item--right select-token ${props.errors.destAddress ? "error" : ""}`}>
+                  <div className={`input-div-content`}>
+                    <div className="exchange-content__input-container exchange-content__input-container--to exchange-content__transfer-addr">
+                      <div id="transfer-address-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${props.translate(props.errors.destAddress)}</div>`} data-html={true} data-event='click focus' data-for="transfer-address-error" data-scroll-hide="false"
+                        >
                         <input
-                          className={`exchange-content__input exchange-content__input-address ${props.errors.destAddress ? "error" : ''}`}
+                          className={`exchange-content__input exchange-content__input-address`}
                           value={props.input.destAddress.value}
                           onChange={props.input.destAddress.onChange}
                           placeholder="0x0de..."
                           onFocus={props.onFocusAddr}
                           onBlur={props.onBlur}
                         />
-                        {props.qcCode}
+                       
                       </div>
-                      {props.focus === "to-addr" && props.errors.destAddress && <div className={props.errors.destAddress ? "error-msg" : ""}>
-                        {props.translate(props.errors.destAddress)}
-                      </div>}
+                      {props.qcCode}
                     </div>
                   </div>
-                  {props.focus === "to-addr" && props.errors.destAddress && <div className={props.errors.destAddress ? "mobile-error__show" : ""}>
-                    {props.translate(props.errors.destAddress)}
-                  </div>}
+                  {props.errors.destAddress &&
+                    <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="transfer-address-error" type="light" />
+                  }
                 </div>
               </div>
             </div>

@@ -250,7 +250,7 @@
     border-bottom: 1px solid rgba(204, 204, 204, 0.36);
 
     padding: 0 0 10px;
-    margin: 0 35px 30px;
+    // margin: 0 35px 30px;
     &--open {
       background: white;
       padding: 15px 35px 10px;
@@ -261,39 +261,35 @@
   }
 
   &__balance {
-    width: 65%;
-    padding-right: 45px;
+    
+   
     position: relative;
 
-    // &::after {
-    //   content: '';
-    //   display: block;
-    //   width: 1px;
-    //   height: 88%;
-    //   background-color: rgba(204, 204, 204, 0.36);
-    //   position: absolute;
-    //   right: 0;
-    //   top: 50%;
-    //   transform: translateY(-50%);
-    // }
-  }
+    @include screen-min-width(large){
+      padding-right: 45px;
+      width: 65%;
+    }
 
+  }
+  @include screen-min-width(large){
   &__adv-config {
     width: 35%;
     padding-left: 35px;
   }
+}
 
-  @media screen and (max-width: 900px) {
+ @include screen-max-width(large) {
     &__content {
       display: block;
       box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
       background-color: #ffffff;
+      padding: 20px 10px;
     }
 
     &__balance {
       width: 100%;
-      padding: 10px 10px 0 42px;
-      border-top: solid 1px #cccccc;
+      // padding: 10px 10px 0 42px;
+      // border-top: solid 1px #cccccc;
 
       &::after {
         display: none;
@@ -302,7 +298,7 @@
 
     &__adv-config {
       width: 100%;
-      padding: 0 10px 0 42px;
+      // padding: 0 10px 0 42px;
     }
   }
 
@@ -320,33 +316,6 @@
 .exchange-button {
   text-align: center;
   margin-bottom: 10px;
-
-  // &__button {
-  //   display: inline-block;
-  //   margin-bottom: 10px;
-  //   background-color: #ef8102;
-  //   text-transform: uppercase;
-  //   padding: 15px 46px;
-  //   border-radius: 30px;
-  //   font-size: 14px;
-  //   font-weight: bold;
-  //   color: #f8f8f8 !important;
-  //   transition: background-color .3s;
-
-  //   i {
-  //     margin-right: 15px;
-  //     bottom: 1px !important;
-  //   }
-
-  //   &:hover {
-  //     background-color: #F2A657;
-  //   }
-
-  //   &:active {
-  //     position: relative;
-  //     top: 1px;
-  //   }
-  // }
   &__button {
     display: block;
     margin-left: auto;
@@ -371,12 +340,12 @@
     }
   }
 
-  @media screen and (max-width: 400px) {
-    &__button {
-      width: 100%;
-      padding: 10px 46px;
-    }
-  }
+  // @include screen-max-width(large) {
+  //   &__button {
+  //     width: 100%;
+  //     padding: 10px 46px;
+  //   }
+  // }
 }
 
 .exchange-terms {
