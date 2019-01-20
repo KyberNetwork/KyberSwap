@@ -49,7 +49,8 @@ export default class Transfer extends React.Component {
   constructor() {
     super()
     this.state = {
-      focus: "transfer"
+      focus: "transfer",
+      defaultShowAmountErrorTooltip: true
     }
   }
 
@@ -105,9 +106,10 @@ export default class Transfer extends React.Component {
   onAmountChange = (event) => {
     var value = event.target.value
     this.props.dispatch(transferActions.specifyAmountTransfer(value))
-
-    this.lazyEstimateGas(value)
-    this.lazyUpdateValidateSourceAmount(value, this.props.transfer.gasPrice)
+    if(this.props.account.account){
+      this.lazyEstimateGas(value)
+      this.lazyUpdateValidateSourceAmount(value, this.props.transfer.gasPrice)
+    }
   }
 
   chooseToken = (symbol, address, type) => {
@@ -227,6 +229,13 @@ export default class Transfer extends React.Component {
     // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
   }
 
+ 
+
+  acceptTerm = (e) => {
+    this.props.dispatch(globalActions.acceptTermOfService())
+  }
+
+
   getTransferBalance = () => {
     return (
       <ChooseBalanceModal
@@ -237,9 +246,9 @@ export default class Transfer extends React.Component {
       />
     )
   }
-
-  acceptTerm = (e) => {
-    this.props.dispatch(globalActions.acceptTermOfService())
+  
+  setDefaulAmountErrorTooltip = (value) => {
+    this.setState({defaultShowAmountErrorTooltip: value})
   }
 
   render() {
@@ -332,6 +341,11 @@ export default class Transfer extends React.Component {
         isAgreedTermOfService={this.props.global.termOfServiceAccepted}
         acceptTerm={this.acceptTerm}
         isBalanceActive = {this.props.transfer.isBalanceActive}
+
+        swapBalance = {this.getTransferBalance()}
+
+        defaultShowAmountErrorTooltip = {this.state.defaultShowAmountErrorTooltip}
+        setDefaulAmountErrorTooltip = {this.setDefaulAmountErrorTooltip}
       />
     )
   }

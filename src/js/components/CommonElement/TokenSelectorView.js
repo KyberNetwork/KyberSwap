@@ -64,7 +64,7 @@ const TokenSelectorView = (props) => {
               </div>
               <div>
                 <div className="focus-name">
-                  <span className={"focus-name--desktop"}>{focusItem.symbol}</span>
+                  <span>{focusItem.symbol}</span>
                 </div>
               </div>
             </div>
