@@ -66,9 +66,9 @@ function getListTokens() {
 
 
 export function* createNewConnection(action) {
-  var tokens = yield call(getListTokens)
+  // var tokens = yield call(getListTokens)
 
-  yield put.resolve(initTokens(tokens))
+  // yield put.resolve(initTokens(tokens))
 
   var translate = getTranslate(store.getState().locale)
   var connectionInstance = new EthereumService()

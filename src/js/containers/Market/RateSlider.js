@@ -31,14 +31,20 @@ export default class RateSilder extends React.Component {
     Object.keys(this.props.tokens).forEach((key) => {     
       var price = this.getPriceToken(this.props.tokens[key])      
       if (price != 0) {
+        var rateValue = this.props.tokens[key].ETH.change
+        var classSlider = ""
+        if (rateValue > 0 && rateValue != -9999) {
+          classSlider = "change-positive"
+        } else if (rateValue < 0 && rateValue != -9999) {
+          classSlider = "change-negative"
+        }
         rates.push(
-          <div key={key}>
-            <div class="pair">{key} / ETH</div>
+          <div key={key} className={`${classSlider}`}>
+            <div class="pair">{key}</div>
             <div class="value up">
               {roundingNumber(price)}
-              <span class="percent-change">{this.props.tokens[key].ETH.change} %</span>
             </div>
-            
+            <div class="percent-change">{rateValue === -9999 ? "---" : Math.abs(rateValue)} %</div>
           </div>
         )
       }

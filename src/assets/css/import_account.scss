@@ -1,23 +1,32 @@
 .import-account {
   border-bottom: 1px solid #cccccc;
-  box-shadow: 0 0 10px 0 #ccc;
+  // box-shadow: 0 0 10px 0 #ccc;
 
   &__choose-wallet-container {
     padding: 30px 1rem 20px;
   }
 
   &__title {
-    font-size: 14px;
+    font-family: Montserrat;
+    font-size: 18px;
     font-weight: 500;
-    color: #222222;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
     text-align: center;
+    color: #222222;
     margin-bottom: 20px;
   }
 
   &__content {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 600px;
+    margin: 0 auto;
 
     &--mobile {
       display: block;
@@ -111,7 +120,22 @@
   }
 
   &__item {
-    margin : 0 15px 15px 0;
+    // margin : 0 15px 15px 0;
+    width: 188px;
+    height: 39px;
+    border-radius: 22.5px;
+    background-color: #e7edf5;
+    margin: 6px 0;
+
+    >div {
+      height: 100%;
+    }
+
+    &-ledger, &-trezor {
+      >div >div {
+        height: 100%;
+      }
+    }
 
     &:last-child {
       margin-right: 0;
@@ -119,9 +143,10 @@
   }
 
   &__block {
-    height: 36px;
-    border: solid 0.5px #cccccc;
-    background-color: #f9f9f9;
+    height: 100%;
+    // border: solid 0.5px #cccccc;
+    // background-color: #f9f9f9;
+    background-color: #e7edf5;
     display: flex;
     padding: 5px 15px;
     border-radius: 20px;

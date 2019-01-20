@@ -954,7 +954,7 @@ function* updateRatePending(action) {
       if(percentChange <= 0.1 || percentChange > 80) percentChange = 0
     }    
 
-    yield put.sync(actions.updateRateExchangeComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, true, percentChange))
+    yield put.resolve(actions.updateRateExchangeComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, true, percentChange))
 
   }catch(err){
     console.log(err)

@@ -10,8 +10,7 @@ const PostTransferBtn = (props) => {
         {props.isHaveAccount && !props.isChangingWallet &&
         <div>
           <a className={props.activeButtonClass + " exchange-button__button"} onClick={props.submit} data-open="passphrase-modal">
-            <i className="k k-exchange k-3x cur-pointer"></i>
-            {props.translate("transaction.transfer") || "Transfer"}
+            {props.translate("transaction.transfer") || "Transfer Now"}
           </a>
           <TermAndServices tradeType="transfer"/>
         </div>

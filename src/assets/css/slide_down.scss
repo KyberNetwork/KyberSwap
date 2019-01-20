@@ -11,7 +11,7 @@
       align-items: center;
 
       .slide-arrow-container {
-        padding: 10px 12px 10px 20px;
+        padding: 10px 12px 10px 0;
         margin-left: 15px;
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
@@ -71,9 +71,9 @@
       transform: translateY(0);
     }
 
-    .slide-arrow-container {
-      background-color: #ebebeb;
-    }
+    // .slide-arrow-container {
+    //   background-color: #ebebeb;
+    // }
   }
 
   @media screen and (max-width: 900px) {

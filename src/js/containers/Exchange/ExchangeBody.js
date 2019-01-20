@@ -69,7 +69,8 @@ export default class ExchangeBody extends React.Component {
   constructor() {
     super()
     this.state = {
-      focus: ""
+      focus: "",
+      defaultShowTooltip: true,
     }
   }
 
@@ -359,6 +360,10 @@ export default class ExchangeBody extends React.Component {
     this.props.global.analytics.callTrack("trackSetNewMinrate", value);
   }
 
+  setDefaulTooltip = (value) => {
+    this.setState({defaultShowTooltip: value})
+  }
+
   getAdvanceLayout = () => {
     const minConversionRate = (
       <MinConversionRate
@@ -393,6 +398,7 @@ export default class ExchangeBody extends React.Component {
         destTokenSymbol={this.props.exchange.destTokenSymbol}
         onToggleBalanceContent={this.toggleBalanceContent}
         isBalanceActive = {this.props.exchange.isBalanceActive}
+        walletName = {this.props.account.walletName}
         tradeType = "swap"
       />)
   }
@@ -415,6 +421,10 @@ export default class ExchangeBody extends React.Component {
   clearSession = (e) => {
     this.props.dispatch(globalActions.clearSession(this.props.exchange.gasPrice))
     // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
+  }
+
+  acceptTerm = (e) => {
+    this.props.dispatch(globalActions.acceptTermOfService())
   }
 
   render() {
@@ -549,7 +559,7 @@ export default class ExchangeBody extends React.Component {
         swapToken={this.swapToken}
         maxCap={maxCap}
         errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}
-        isAgreed={this.props.global.termOfServiceAccepted}
+        isAgreedTermOfService={this.props.global.termOfServiceAccepted}
         advanceLayout={this.getAdvanceLayout()}
         balanceLayout={this.getBalanceLayout()}
         focus={this.state.focus}
@@ -562,8 +572,13 @@ export default class ExchangeBody extends React.Component {
         clearSession={this.clearSession}
         walletName={this.props.account.walletName}
         isFixedDestToken = {isFixedDestToken}
+        acceptTerm={this.acceptTerm}
+        isBalanceActive = {this.props.exchange.isBalanceActive}
 
         rateToken = {rateToken}
+
+        defaultShowTooltip = {this.state.defaultShowTooltip}
+        setDefaulTooltip = {this.setDefaulTooltip}
       />
     )
   }

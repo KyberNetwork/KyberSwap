@@ -35,9 +35,9 @@ const MinConversionRate = (props) => {
       </div>
       <div className={"advance-config__info"}>
         <div>
-          Transaction will be reverted if rate of {props.sourceTokenSymbol}-{props.destTokenSymbol} is lower than {slippageExchangeRate}
+          Transaction will be reverted if rate of {props.sourceTokenSymbol}-{props.destTokenSymbol} is lower than {slippageExchangeRate} (Current rate {roundExchangeRate})
         </div>
-        <div>(Current rate <b>{roundExchangeRate}</b>)</div>
+        {/* <div>(Current rate <b>{roundExchangeRate}</b>)</div> */}
       </div>
     </div>
   )
