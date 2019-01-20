@@ -20,7 +20,7 @@ const TransferForm = (props) => {
 
   function getWalletName() {
     if (props.walletName === "") {
-      switch(props.account.type) {
+      switch (props.account.type) {
         case "metamask":
           return "METAMASK"
         case "keystore":
@@ -39,6 +39,19 @@ const TransferForm = (props) => {
     } else {
       return props.walletName
     }
+  }
+
+  if (props.errors.amountTransfer && props.defaultShowAmountErrorTooltip) {
+    setTimeout(() => {
+      ReactTooltip.show(document.getElementById("transfer-amount-error-trigger"))
+      props.setDefaulAmountErrorTooltip(false)
+    }, 300)
+  }
+
+  if (!props.errors.amountTransfer && !props.defaultShowAmountErrorTooltip) {
+    setTimeout(() => {
+      props.setDefaulAmountErrorTooltip(true)
+    }, 300)
   }
 
   function isError() {
@@ -62,7 +75,7 @@ const TransferForm = (props) => {
     return type;
   }
 
-  var importAccount = function() {
+  var importAccount = function () {
     if (props.account === false || (props.isChangingWallet && props.changeWalletType === "transfer")) {
       return (<ImportAccount
         tradeType="transfer"
@@ -86,51 +99,47 @@ const TransferForm = (props) => {
             <div className={"exchange-content container"}>
               <div className={"exchange-content__item--wrapper"}>
                 <div className={"exchange-item-label"}>{props.translate("transaction.exchange_from") || "From"}:</div>
-                <div className={"exchange-content__item exchange-content__item--left exchange-content__item--transfer"}>
-                  <div className={`input-div-content ${props.errors.amountTransfer ? "error" : ""}`}>
+                <div className={`exchange-content__item exchange-content__item--left exchange-content__item--transfer  select-token ${props.errors.amountTransfer ? "error" : ""}`}>
+                  <div className={`input-div-content`}>
                     <div className={"exchange-content__label-content"}>
                       <div className="exchange-content__select select-token-panel">{props.tokenTransferSelect}</div>
                     </div>
-                    <div className={`exchange-content__input-container ${props.errors.amountTransfer ? "error" : ""}`}>
+                    <div className={"exchange-content__input-container"}>
                       <div className={"main-input main-input__left"}>
-                        <input
-                          className={`exchange-content__input ${props.account !== false ? 'has-account' : ''} ${isError() ? "error" : ""}`}
-                          type="text"
-                          min="0"
-                          step="0.000001"
-                          placeholder="0"
-                          id="inputSource"
-                          value={props.input.amount.value}
-                          onChange={handleChangeAmount}
-                          onBlur={props.onBlur}
-                          onFocus={props.onFocus}
-                          maxLength="50"
-                          autoComplete="off"
-                        />
-                        {/* {props.account === false && (
-                          <div className={`exchange-content__label ${props.errors.amountTransfer ? "error" : ""}`}>{props.sourceActive}</div>
-                        )}
+                        <div id="transfer-amount-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${props.translate(props.errors.amountTransfer)}</div>`} data-html={true} data-event='click focus' data-for="transfer-amount-error" data-scroll-hide="false"
+                          >
+                          <input
+                            className={`exchange-content__input ${props.account !== false ? 'has-account' : ''}`}
+                            type="text"
+                            min="0"
+                            step="0.000001"
+                            placeholder="0"
+                            id="inputSource"
+                            value={props.input.amount.value}
+                            onChange={handleChangeAmount}
+                            onBlur={props.onBlur}
+                            onFocus={props.onFocus}
+                            maxLength="50"
+                            autoComplete="off"
+                          />
+                        </div>
                         {props.account !== false && (
-                          <div className={`exchange-content__label trigger-swap-modal ${props.errors.amountTransfer ? "error" : ""}`}>{props.transferBalance}</div>
-                        )} */}
-                        {/* {props.qcCode} */}
+                          <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal`}>{props.transferBalance}</div>
+                        )}
                       </div>
-                      {props.focus === "source" && props.errors.amountTransfer && <div className={props.errors.amountTransfer ? "error-msg error-msg-source" : ""}>
-                        {/* {!props.isChangingWallet ? props.errorShow : ''} */}
-                        {props.translate(props.errors.amountTransfer)}
-                      </div>}
                     </div>
                   </div>
-                  {props.focus === "source" && props.errors.amountTransfer && <div className={props.errors.amountTransfer ? "mobile-error__show" : ""}>
-                    {props.translate(props.errors.amountTransfer)}
-                  </div>}
+                  {props.errors.amountTransfer &&
+                    <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="transfer-amount-error" type="light" />
+                  }
                 </div>
+
               </div>
 
               <div className={"exchange-content__item--middle"}>
                 <i className="k k-transfer k-3x"></i>
               </div>
-              
+
               <div className={"exchange-content__item--wrapper"}>
                 <div className={"exchange-item-label"}>To Address:</div>
                 <div className={"exchange-content__item exchange-content__item--right"}>
@@ -163,18 +172,18 @@ const TransferForm = (props) => {
               <div className="exchange-rate__balance">
                 {(!props.isChangingWallet && props.account !== false) && (
                   <span>
-                  <span className="exchange-rate__balance-text">Balance: </span>
-                  <span className="exchange-rate__balance-amount">{props.addressBalance.roundingValue}</span>
-                </span>
+                    <span className="exchange-rate__balance-text">Balance: </span>
+                    <span className="exchange-rate__balance-amount">{props.addressBalance.roundingValue}</span>
+                  </span>
                 )}
               </div>
             </div>
           </div>
 
-          {!props.isAgreedTermOfService && 
+          {!props.isAgreedTermOfService &&
             <div className={"exchange-content__accept-term"}>
               <div className={"accept-buttom"} onClick={(e) => props.acceptTerm()}>Transfer Now</div>
-              <TermAndServices tradeType="transfer"/>
+              <TermAndServices tradeType="transfer" />
 
               <div className={"list-wallet"}>
                 <div className={"list-wallet__item"}>
