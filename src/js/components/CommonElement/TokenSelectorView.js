@@ -2,6 +2,7 @@ import React from "react"
 import { toT, roundingNumber } from "../../utils/converter"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import { getAssetUrl } from "../../utils/common";
+import BLOCKCHAIN_INFO from "../../../../env"
 
 const TokenSelectorView = (props) => {
   var focusItem = props.listItem[props.focusItem]
@@ -45,6 +46,13 @@ const TokenSelectorView = (props) => {
     })
   }
 
+  var priorityTokens = BLOCKCHAIN_INFO.priority_tokens.map(value => {
+    return <span key={value} onClick={(e) => {props.selectItem(e, value, props.listItem[value].address); props.hideTokens(e) }}>
+      <img src={getAssetUrl(`tokens/${value.toLowerCase()}.svg`)} />
+      {value}
+    </span>
+  })
+
   return (
     <div className={`token-selector ${props.type} ${props.isFixToken?"fix_token" : ""}`}>
       <Dropdown active={props.open} onShow = {(e) => props.showTokens(e)} onHide = {(e) => props.hideTokens(e)} disabled ={props.isFixToken? true: false}>
@@ -57,7 +65,6 @@ const TokenSelectorView = (props) => {
               <div>
                 <div className="focus-name">
                   <span className={"focus-name--desktop"}>{focusItem.symbol}</span>
-                  {/* <span className={"focus-name--mobile"}>{focusItem.symbol}</span> */}
                 </div>
               </div>
             </div>
@@ -66,14 +73,7 @@ const TokenSelectorView = (props) => {
         </DropdownTrigger>
         <DropdownContent>
           <div className="select-item">
-            <div onClick={(e) => props.hideTokens(e)} className="d-flex current-token">
-              <div>
-                <span>{props.type !== "des" ? "From" : "To"}</span>
-                <img src={getAssetUrl(`tokens/${focusItem.symbol}.svg`)} />
-                <span>{focusItem.name}</span>
-              </div>
-              <div><i className={'k k-angle bold ' + (props.open ? 'up' : 'down')}></i></div>
-            </div>
+            <div className="select-item__priority-token">{priorityTokens}</div>
             <div className="search-item">
               <input value={props.searchWord} placeholder={props.translate("try_dai") || `Try "DAI"`} onChange={(e) => props.changeWord(e)} type="text" onFocus={(e) => props.analytics.callTrack("trackSearchToken")}/>
             </div>

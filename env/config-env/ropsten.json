@@ -15,6 +15,9 @@
     "api_usd": "https://api.coinmarketcap.com",
     "api_tokens": "https://ropsten-api.kyber.network/internal/currencies",
     "promo_token": "OMG",
+    "priority_tokens": [
+        "ETH", "KNC"
+    ],
     "market_exclude": [
         "WETH",
         "PT",

@@ -69,7 +69,8 @@ export default class ExchangeBody extends React.Component {
   constructor() {
     super()
     this.state = {
-      focus: ""
+      focus: "",
+      defaultShowTooltip: true,
     }
   }
 
@@ -359,6 +360,10 @@ export default class ExchangeBody extends React.Component {
     this.props.global.analytics.callTrack("trackSetNewMinrate", value);
   }
 
+  setDefaulTooltip = (value) => {
+    this.setState({defaultShowTooltip: value})
+  }
+
   getAdvanceLayout = () => {
     const minConversionRate = (
       <MinConversionRate
@@ -571,6 +576,9 @@ export default class ExchangeBody extends React.Component {
         isBalanceActive = {this.props.exchange.isBalanceActive}
 
         rateToken = {rateToken}
+
+        defaultShowTooltip = {this.state.defaultShowTooltip}
+        setDefaulTooltip = {this.setDefaulTooltip}
       />
     )
   }

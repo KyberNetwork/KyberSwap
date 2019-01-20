@@ -295,22 +295,21 @@
       position: relative;
       color: #ee344e;
 
-      &::before {
-        content: "";
-        position: absolute;
-        width: 15px;
-        height: 15px;
-        background-image: url(../img/exchange/error-icon.svg);
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        left: -23px;
-        top: 3px;
-        @include screen-max-width(medium) {
-          // left: -15px;
-          display: none;
-        }
-      }
+      // &::before {
+      //   content: "";
+      //   position: absolute;
+      //   width: 15px;
+      //   height: 15px;
+      //   background-image: url(../img/exchange/error-icon.svg);
+      //   background-position: center;
+      //   background-repeat: no-repeat;
+      //   background-size: contain;
+      //   left: -23px;
+      //   top: 3px;
+      //   @include screen-max-width(medium) {
+      //     display: none;
+      //   }
+      // }
 
       .exchange-content__label--dropdown {
         color: #ee344e;
@@ -321,9 +320,9 @@
     }
 
     &--dropdown {
-      padding-right: 15px;
+      
       position: relative;
-
+      padding: 10px;
       &::after {
         content: '';
         width: 10px;
@@ -331,7 +330,7 @@
         display: block;
         background-image: url($image-path + 'icon-dropdown-grey.svg');
         position: absolute;
-        top: 9px;
+        // top: 4px;
         right: 0;
         @include screen-max-width(large) {
           right: -10px;
@@ -758,6 +757,9 @@
         &__item {
           display: flex;
           align-items: center;
+          .rate-loading{
+            padding: 0 5px;
+          }
         }
   
         &__change {
@@ -1041,6 +1043,8 @@
 .swap-balance-modal{
   position: relative;
   z-index: 1;
+  // top: -10px;
+  
 
   .dropdown__content {
     right: 0;

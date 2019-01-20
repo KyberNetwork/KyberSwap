@@ -64,11 +64,23 @@ const ExchangeBodyLayout = (props) => {
       }
     }
   }
+  if(errorExchange && props.defaultShowTooltip){
+    setTimeout(()=>{
+      ReactTooltip.show(document.getElementById("swap-error-trigger"))
+      props.setDefaulTooltip(false)
+    }, 300)
+  }
 
+  if(!errorExchange && !props.defaultShowTooltip){
+    setTimeout(()=>{
+      props.setDefaulTooltip(true)
+    }, 300)
+  }
+
+  var errorTooltip = ""
   var errorShow = errorSource.map((value, index) => {
-    return <span class="error-text" key={index}>{value}</span>
+    errorTooltip += `<span class="error-text" key=${index}>${value}</span>`
   })
-
   function getWalletName() {
     if (props.walletName === "") {
       switch(props.account.type) {
@@ -120,18 +132,8 @@ const ExchangeBodyLayout = (props) => {
         closeChangeWallet={props.closeChangeWallet}
       />)
     }
-    // return (<div className="import-account">
-    //   <div className={"import-account__wallet-container container"}>
-    //     <div className="import-account__wallet-connect"
-    //       onClick={(e) => props.clearSession(e)}>
-    //       <div className={"reimport-content"}>Connect other wallet</div>
-    //       <div className={"reimport-line"}></div>
-    //     </div>
-    //     {getAccountTypeHtml()}
-    //   </div>
-    // </div>)
   }
-
+  
   return (
     <div>
       <div>
@@ -146,59 +148,56 @@ const ExchangeBodyLayout = (props) => {
             <div className={"exchange-content container"}>
               <div className={"exchange-content__item--wrapper"}>
                 <div className={"exchange-item-label"}>{props.translate("transaction.exchange_from") || "From"}:</div>
-                <div className={"exchange-content__item exchange-content__item--left"}>
-                  <div className={`input-div-content ${errorExchange && props.focus === "source" ? "error" : ""}`}>
+                <div className={`exchange-content__item exchange-content__item--left select-token ${errorExchange ? "error" : ""}`}
+                      >
+                  <div className={`input-div-content`}>
                     <div className={"exchange-content__label-content"}>
                       {/* <div className="exchange-content__label">{props.translate("transaction.exchange_from") || "From"}</div> */}
                       <div className="exchange-content__select select-token-panel">{props.tokenSourceSelect}</div>
                     </div>
-                    <div className={`exchange-content__input-container ${errorExchange ? "error" : ""}`}>
+                    <div className={`exchange-content__input-container`}>
                       <div className={"main-input main-input__left"}>
-                        <input
-                          className={`exchange-content__input ${props.account !== false ? 'has-account' : ''} ${errorExchange ? "error" : ""}`}
-                          min="0"
-                          step="0.000001"
-                          placeholder="0" autoFocus
-                          type="text" maxLength="50" autoComplete="off"
-                          value={props.input.sourceAmount.value}
-                          onFocus={props.input.sourceAmount.onFocus}
-                          onBlur={props.input.sourceAmount.onBlur}
-                          onChange={handleChangeSource}
-                        />
-                        {/* {props.account === false && (
-                          <div className={`exchange-content__label exchange-content__label--right ${errorExchange ? "error" : ""}`}>{props.sourceTokenSymbol}</div>
-                        )}
-                        {props.account !== false && (
-                          <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal ${errorExchange ? "error" : ""}`}>{props.swapBalance}</div>
-                        )} */}
+                        <div id="swap-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorTooltip}</div>`} data-html={true} data-event='click focus' data-for="swap-error" data-scroll-hide = "false">
+                          <input
+                            className={`exchange-content__input ${props.account !== false ? 'has-account' : ''}`}
+                            min="0"
+                            step="0.000001"
+                            placeholder="0" autoFocus
+                            type="text" maxLength="50" autoComplete="off"
+                            value={props.input.sourceAmount.value}
+                            onFocus={props.input.sourceAmount.onFocus}
+                            onBlur={props.input.sourceAmount.onBlur}
+                            onChange={handleChangeSource}
+                          />
+                        </div>
+                      {props.account !== false && (
+                        <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal ${errorExchange ? "error" : ""}`}>{props.swapBalance}</div>
+                      )}
                       </div>
-                      {/* {props.focus === "source" && <div className={errorExchange ? "error-msg error-msg-source" : ""}>
-                        {errorShow}
-                      </div>} */}
                     </div>
                   </div>
-                  {/* {props.focus === "source" && <div className={errorExchange ? "mobile-error__show" : ""}>
-                    {errorShow}
-                  </div>} */}
+                  {errorExchange && 
+                   <ReactTooltip globalEventOff="click" html={true}  place="bottom" className="select-token-error" id="swap-error" type="light"/>
+                   }
                 </div>
               </div>
               <div className={"exchange-content__item--middle"}>
-                <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap" currentitem="false">
+                <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap-icon" currentitem="false">
                   <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
                 </span>
-                <ReactTooltip place="bottom" id="swap" type="light"/>
+                <ReactTooltip place="bottom" id="swap-icon" type="light"/>
               </div>
               <div className={"exchange-content__item--wrapper"}>
                 <div className={"exchange-item-label"}>{props.translate("transaction.exchange_to") || "To"}:</div>
                 <div className={"exchange-content__item exchange-content__item--right"}>
-                  <div className={`input-div-content ${errorExchange ? "error" : ""}`}>
+                  <div className={`input-div-content`}>
                     <div className={"exchange-content__label-content"}>
                       <div className="exchange-content__select select-token-panel">{props.tokenDestSelect}</div>
                     </div>
-                    <div className={`exchange-content__input-container ${errorExchange ? "error" : ""}`}>
+                    <div className={`exchange-content__input-container`}>
                       <div className={"main-input main-input__right"}>
                         <input
-                          className={`exchange-content__input ${errorExchange ? "error" : ""}`}
+                          className={`exchange-content__input`}
                           step="0.000001"
                           placeholder="0"
                           min="0"
@@ -210,17 +209,14 @@ const ExchangeBodyLayout = (props) => {
                           onBlur={props.input.destAmount.onBlur}
                           onChange={handleChangeDest}
                         />
-                        {/* <div className={`exchange-content__label exchange-content__label--right ${errorExchange ? "error" : ""}`}>{props.destTokenSymbol}</div> */}
                       </div>
-                      {props.focus === "dest" && <div className={errorExchange ? "error-msg" : ""}>
-                        {/* {!props.isChangingWallet ? props.errorShow : ''} */}
-                        {errorShow}
-                      </div>}
+                      {/* {props.focus === "dest" && <div className={errorExchange ? "error-msg" : ""}>
+                      </div>} */}
                     </div>
                   </div>
-                  {props.focus === "dest" && <div className={errorExchange ? "mobile-error__show" : "mobile-error"}>
+                  {/* {props.focus === "dest" && <div className={errorExchange ? "mobile-error__show" : "mobile-error"}>
                     {errorShow}
-                  </div>}
+                  </div>} */}
                 </div>
               </div>
             </div>
