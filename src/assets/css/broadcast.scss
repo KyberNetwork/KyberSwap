@@ -29,16 +29,17 @@
       white-space: nowrap;
       overflow:hidden !important;
       text-overflow: ellipsis;
-      border-radius: 4px;
+      border-radius: 23px;
       font-size: 16px;
       text-align: left;
       display: inline-block;
       font-weight: 600;
+      padding-left: 25px;
     }
 
     &.copy-tx {
       padding: 8px 10px;
-      background-color: #F5F5F5;
+      // background-color: #F5F5F5;
       border-radius: 6px;
       position: absolute;
       right: 5px;
@@ -215,7 +216,7 @@ ul.broadcast-steps {
   padding: 50px 0;
 
   @include screen-min-width(medium) {
-    background: #F5F5F5;
+    // background: #F5F5F5;
   }
 
   .new-transaction {

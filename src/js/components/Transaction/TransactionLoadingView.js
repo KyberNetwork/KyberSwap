@@ -165,7 +165,7 @@ const TransactionLoadingView = (props) => {
                 <div>
                   {props.type === "exchange" &&
                     <div>
-                      <div className="title final-status">{ props.translate('transaction.success_swap_msg') || "Successfully exchanged from" }</div>
+                      <div className="title final-status">{ props.translate('transaction.success_swap_msg') || "Successfully swapped" }</div>
                       <div className="content">
                         <span>
                           <strong>{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceSymbol}</strong> 
