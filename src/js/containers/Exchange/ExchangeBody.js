@@ -386,6 +386,8 @@ export default class ExchangeBody extends React.Component {
         isBalanceActive = {this.props.exchange.isBalanceActive}
         toggleBalanceContent={this.toggleBalanceContent}
         minConversionRate={minConversionRate}
+        type="exchange"
+        maxGasPrice = {this.props.exchange.maxGasPrice}
       />
     )
   }

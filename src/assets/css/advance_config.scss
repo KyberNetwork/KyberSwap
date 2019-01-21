@@ -1,15 +1,23 @@
 .advance-config {
+  font-size: 11px;
   &__block {
     margin: 11px 0 15px;
     padding-bottom: 15px;
     border-bottom: 1px solid #e1e4eb;
   }
 
+  &__gas-tooltip{
+    opacity: 1;
+  }
+
   &__title {
-    font-size: 14px;
+    // font-size: 14px;
     font-weight: 600;
     color: #141927;
     margin-bottom: 10px;
+  }
+  &__title-info{
+    margin-left: 5px;    
   }
 
   &__option {
@@ -42,8 +50,8 @@
 
     &:checked {
       ~.advance-config__checkmark {
-        border-color: #ef8102;
-        background-color: #ef8102;
+        border-color: #1DB1FF;
+        background-color: #1DB1FF;
 
         &::after {
           transform: translateY(-50%) scale(1);
@@ -107,20 +115,20 @@
   }
 
   &__info {
-    font-size: 13px;
+    // font-size: 13px;
     font-style: italic;
     color: #5a5e67;
     margin-top: 15px;
   }
 
   &__gas-amount {
-    font-size: 16px;
+    // font-size: 16px;
     letter-spacing: 1px;
     color: #141927;
   }
 
   &__gas-mode {
-    font-size: 12px;
+    // font-size: 12px;
     color: #5a5e67;
     text-transform: uppercase;
   }

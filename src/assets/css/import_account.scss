@@ -1,5 +1,5 @@
 .import-account {
-  border-bottom: 1px solid #cccccc;
+  // border-bottom: 1px solid #cccccc;
   // box-shadow: 0 0 10px 0 #ccc;
 
   &__choose-wallet-container {
@@ -291,9 +291,9 @@
       padding: 5px 10px;
       display: none;
 
-      &.mobile {
-        display: flex;
-      }
+      // &.mobile {
+      //   display: flex;
+      // }
     }
 
     &__wallet-container {

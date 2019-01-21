@@ -78,18 +78,6 @@ export default class MarketTable extends React.Component {
   }
 
   drawChart = (props) => {
-    // var lineColor = ""
-    // var backgroundColor = ""
-    // if (props["original"]["change"] < 0) {
-    //   lineColor = "#F0506E"
-    //   backgroundColor = "#FEF4F6"
-    // } else if (props["original"]["change"] === 0) {
-    //   lineColor = "#767677"
-    //   backgroundColor = "#eee"
-    // } else {
-    //   lineColor = "#31CB9E"
-    //   backgroundColor = "#EDFBF6"
-    // }
     var lineColor = "#007BDE"
     var backgroundColor = "#D8E9FA"
     var point = []

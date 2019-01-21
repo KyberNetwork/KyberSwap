@@ -1,6 +1,8 @@
 import React from "react";
 import * as converter from "../../utils/converter";
 import SlideDown, { SlideDownTrigger, SlideDownContent } from "../CommonElement/SlideDown";
+import ReactTooltip from 'react-tooltip'
+
 
 export default class AdvanceConfigLayout extends React.Component {
   render() {
@@ -29,7 +31,27 @@ export default class AdvanceConfigLayout extends React.Component {
             {this.props.minConversionRate}
 
             <div>
-              <div className="advance-config__title">GAS fee (Gwei):</div>
+              <div className="advance-config__title">
+                <span>GAS fee (Gwei)</span>
+                {this.props.type==="exchange" && (
+                  <span className="advance-config__title-info">
+                    <span data-tip={`Higher gas price, faster transaction. Max gas price: ${this.props.maxGasPrice} Gwei`} data-html={true} data-for="gas-info">
+                      <img src={require("../../../assets/img/v3/info_blue.svg")} />
+                    </span>
+                    <ReactTooltip html={true}  place="right" className="advance-config__gas-tooltip" id="gas-info" type="dark"/>
+                  </span>  
+                )}
+
+                {this.props.type==="transfer" && (
+                  <span className="advance-config__title-info">
+                    <span data-tip={`Higher gas price, faster transaction`} data-html={true} data-for="gas-info">
+                      <img src={require("../../../assets/img/v3/info_blue.svg")} />
+                    </span>
+                    <ReactTooltip html={true}  place="right" className="advance-config__gas-tooltip" id="gas-info" type="dark"/>
+                  </span>  
+                )}
+                
+              </div>
               <div className="advance-config__option-container">
                 {gasOptions.map((item, index) => {
                   return (

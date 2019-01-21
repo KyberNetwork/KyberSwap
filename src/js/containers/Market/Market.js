@@ -116,6 +116,7 @@ export default class Market extends React.Component {
   getContentMarket = () => {
     return (
       <div className="market container" id="market-eth">
+        <a className="x" onClick={this.closeModal}>&times;</a>
         <h1 className="market__title">{this.props.translate("market.eth_market") || "Ethereum Market"}</h1>
         <div className="market-table">
           <div>
