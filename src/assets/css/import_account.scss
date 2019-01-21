@@ -122,6 +122,9 @@
   &__item {
     // margin : 0 15px 15px 0;
     width: 188px;
+    // @include screen-max-width(large){
+    //   width: 160px;
+    // }
     height: 39px;
     border-radius: 22.5px;
     background-color: #e7edf5;

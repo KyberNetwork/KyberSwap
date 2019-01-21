@@ -133,23 +133,23 @@
     text-transform: uppercase;
   }
 
-  @media screen and (max-width: 900px) {
-    padding: 0 0 5px 20px;
-  }
+  // @media screen and (max-width: 900px) {
+  //   padding: 0 0 5px 20px;
+  // }
 
-  @media screen and (max-width: 390px) {
-    &__option-container {
-      display: block;
-    }
+  // @media screen and (max-width: 390px) {
+  //   &__option-container {
+  //     display: block;
+  //   }
 
-    &__option {
-      display: flex;
-      align-items: center;
-      margin-bottom: 5px;
-    }
+  //   &__option {
+  //     display: flex;
+  //     align-items: center;
+  //     margin-bottom: 5px;
+  //   }
 
-    &__gas-amount {
-      margin-right: 5px;
-    }
-  }
+  //   &__gas-amount {
+  //     margin-right: 5px;
+  //   }
+  // }
 }

@@ -92,7 +92,7 @@
   &__token-symbol {
     // font-size: 14px;
     opacity: 0.8;
-    font-weight: 600;
+    // font-weight: 600;
     color: #222222;
     margin-right: 5px;
     transition: color .3s;
@@ -200,7 +200,7 @@
   &__sort-dropdown {
     color: #8f8f8f;;
     font-size: 14px;
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid #e1e5eb;
     padding: 9px 0;
   }
 
@@ -210,15 +210,15 @@
     right: 0;
     width: 12px;
     height: 12px;
-    background: url($image-path + 'arrow-down-black.svg') center no-repeat;
+    background: url($image-path + '/v3/price_drop_down.svg') center no-repeat;
     background-size: contain;
     transition: all 0.3s;
   }
 
   @media screen and (max-width: 900px) {
-    &__content {
-      padding-left: 20px;
-    }
+    // &__content {
+    //   padding-left: 20px;
+    // }
 
     &__address-text {
       display: block;
@@ -252,6 +252,7 @@
     &__token-item {
       width: 50%;
       margin: 0;
+      padding: 7px 0;
     }
   }
 }
