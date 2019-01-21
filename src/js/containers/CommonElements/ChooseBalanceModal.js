@@ -85,7 +85,6 @@ export default class ChooseBalanceModal extends React.Component {
                 <Dropdown onShow={(e) => this.showChooseBalance(e)} onHide={(e) => this.hideChooseBalance(e)} active={this.state.open}>
                     <DropdownTrigger className="notifications-toggle">
                         <div className="exchange-content__label exchange-content__label--dropdown">
-                            <div className={"token-symbol"}>{this.props.sourceTokenSymbol}</div>
                         </div>
                     </DropdownTrigger>
                     <DropdownContent>

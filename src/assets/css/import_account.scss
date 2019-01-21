@@ -389,3 +389,53 @@
     padding-left: 55px;
   }
 }
+
+
+
+.list-wallet {
+  display: flex;
+  justify-content: space-between;
+  max-width: 500px;
+  flex-wrap: wrap;
+  margin: 40px auto 0;
+  padding: 0 1rem;
+  &__item {
+    width: 146px;
+    height: 30px;
+    border-radius: 22.5px;
+    background-color: #e7edf5;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .item-icon {
+      height: 18px;
+      width: 18px;
+      margin-right: 12px;
+      &__metamask {
+        background: url($image-path + 'import-account/wallet-icon/metamask_gray.svg') no-repeat center;
+      }
+      &__ledger {
+        background: url($image-path + 'import-account/wallet-icon/ledger_gray.svg') no-repeat center;
+      }
+      &__trezor {
+        background: url($image-path + 'import-account/wallet-icon/trezor_gray.svg') no-repeat center;
+      }
+      &__keystore {
+        background: url($image-path + 'import-account/wallet-icon/keystore_gray.svg') no-repeat center;
+      }
+      &__privatekey {
+        background: url($image-path + 'import-account/wallet-icon/private_key_gray.svg') no-repeat center;
+      }
+      &__promocode {
+        background: url($image-path + 'import-account/wallet-icon/promocode_gray.svg') no-repeat center;
+      }
+    }
+    .wallet-name {
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 2;
+      color: #677c94;
+    }
+  }
+}

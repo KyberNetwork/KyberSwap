@@ -35,7 +35,7 @@ export default class RateBetweenToken extends React.Component {
     if (this.props.exchange.isSelectToken) {
       return (
         <div className={"token-compare__item"}>
-          1 {this.props.exchange.sourceTokenSymbol} = <img src={require('../../../assets/img/waiting-white.svg')} /> {this.props.exchange.destTokenSymbol}
+          1 {this.props.exchange.sourceTokenSymbol} =<span className="rate-loading"> <img src={require('../../../assets/img/waiting-white.svg')} /></span> {this.props.exchange.destTokenSymbol}
         </div>
       )
     }
@@ -56,9 +56,9 @@ export default class RateBetweenToken extends React.Component {
         <span>
           1 {this.props.exchange.sourceTokenSymbol} = {roundingNumber(expectedRate)} {this.props.exchange.destTokenSymbol} {rateUSD != 0 ? `= ${rateUSD.toFixed(3)} USD` : ""}
         </span>
-        <span className={`token-compare__change ${change >= 0 ? 'change-positive' : 'change-negative'}`}>
-          {Math.abs(change)}%
-          {change >= 0 ? <img src={require('../../../assets/img/change-percent/arrow-up-blue.svg')}/> : <img src={require('../../../assets/img/change-percent/arrow-down-red.svg')}/>}
+        <span className={"token-compare__change change-negative"}>
+          {change}%
+          <img src={require('../../../assets/img/change-percent/arrow-down-red.svg')}/>
         </span>        
         <span className="token-compare__tooltip" data-html={true} data-tip={`<p>Price is dependent on your swap value. There is a ${change}% difference in price for the requested quantity and the default ${constants.MIN_AMOUNT_DEFAULT_RATE} ETH quantity</p>`} data-for="info_indicator" currentitem="false">
             <img src={require('../../../assets/img/common/blue-indicator.svg')}/>

@@ -30,6 +30,9 @@
     },
     "api_usd": "https://api.coinmarketcap.com",
     "api_tokens": "https://api.kyber.network/internal/currencies",
+    "priority_tokens": [
+        "ETH", "DAI", "KNC"
+    ],
     "market_exclude": [
         "WETH",
         "PT",

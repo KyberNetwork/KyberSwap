@@ -22,7 +22,9 @@ const MIN_AMOUNT_DEFAULT_RATE = 0.5   // ETH
 
 // const NODE_ENDPOINT = "https://kovan.kyber.network"
 const ETHER_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-var secondKey = Object.keys(BLOCKCHAIN_INFO.tokens)[1]
+// var secondKey = Object.keys(BLOCKCHAIN_INFO.tokens)[1]
+
+var secondKey = "KNC"
 
 const INIT_EXCHANGE_FORM_STATE = {
   isOpenImportAcount: false,
