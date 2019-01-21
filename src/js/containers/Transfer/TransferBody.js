@@ -205,6 +205,7 @@ export default class Transfer extends React.Component {
         translate={this.props.translate}
         isBalanceActive = {this.props.transfer.isBalanceActive}
         toggleBalanceContent={this.toggleBalanceContent}
+        type="transfer"
       />
     )
   }

@@ -213,8 +213,13 @@
   // background-color: #f9f9f9;
   max-width: 1050px;
   margin: 0 auto;
-  padding: 0 16px;
+  
+  
   font-size: 13px;
+
+  @include screen-min-width(large){
+    padding: 0 1rem;
+  }
 
   &__wrapper {
 
@@ -249,7 +254,7 @@
 
   &__content {
     display: flex;
-    border-bottom: 1px solid rgba(204, 204, 204, 0.36);
+    // border-bottom: 1px solid rgba(204, 204, 204, 0.36);
 
     padding: 0 0 10px;
     // margin: 0 35px 30px;
@@ -276,7 +281,7 @@
   @include screen-min-width(large){
   &__adv-config {
     width: 35%;
-    padding-left: 35px;
+    // padding-left: 35px;
   }
 }
 
@@ -285,7 +290,7 @@
       display: block;
       box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
       background-color: #ffffff;
-      padding: 20px 10px;
+      padding: 20px 1rem;
     }
 
     &__balance {
@@ -388,6 +393,9 @@
       padding-top: 10px;
       >div{
         padding: 10px 20px;
+        color: #5A5E67;
+        font-weight: normal;
+        font-size: 14px;
         cursor: pointer;
         &:hover{
           background-color: #eee;
