@@ -22,7 +22,8 @@
     "symbol": "SYMBOL",
     "price": "PRICE",
     "your_wallet_address": "Your Wallet Address",
-    "search": "Search"
+    "search": "Search",
+    "connect_your_wallet_to_swap": "Connect your Wallet to Swap"
   },
   "transaction": {
     "wallet": "Wallet",
@@ -50,7 +51,7 @@
     "broadcasted": "Broadcasted!",
     "broadcasting": "Broadcasting!",
     "success_ex_msg": "Successfully exchanged from </br> ${sourceAmount} ${sourceSymbol}\nto ${destAmount} ${destSymbol}",
-    "success_swap_msg": "Successfully swapped from",
+    "success_swap_msg": "Successfully swapped",
     "success_tx_msg": "Successfully transferred </br> ${amount} ${token} to ${address}",
     "success_transfer_msg": "Successfully transferred",
     "copy_tx": "Copy transaction hash",
@@ -107,7 +108,9 @@
     "slippage_tip": "Rate may change. You can change maximum slippage rate by adjusting\nmin rate in advanced option",
     "max_slippage": "With maximum ${percent}% slippage",
     "included": "Included",
-    "type_pass_before_progress": "Type a password before progressing"
+    "type_pass_before_progress": "Type a password before progressing",
+    "swap_now": "Swap Now",
+    "type_pass_to_sign": "Enter your password/passphrase to sign and broadcast"
   },
   "modal": {
     "enter_password": "Enter Password",
@@ -126,7 +129,7 @@
     "press_approve": "Press approve to continue",
     "waiting_for_confirmation": "Waiting for confirmation from your wallet",
     "confirm_exchange_title": "Exchange Confirm",
-    "confirm_swap": "Confirm Swap",
+    "confirm_swap": "Swap Confirm",
     "confirm_transfer_title": "Confirm Transfer",
     "select_your_language": "Select your language",
     "select_source_token": "Select source token",
