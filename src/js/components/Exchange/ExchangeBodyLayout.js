@@ -184,7 +184,7 @@ const ExchangeBodyLayout = (props) => {
                 <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap-icon" currentitem="false">
                   <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
                 </span>
-                <ReactTooltip place="bottom" id="swap-icon" type="light"/>
+                <ReactTooltip place="bottom" id="swap-icon" type="dark"/>
               </div>
               <div className={"exchange-content__item--wrapper"}>
                 <div className={"exchange-item-label"}>{props.translate("transaction.exchange_to") || "To"}:</div>
@@ -281,10 +281,10 @@ const ExchangeBodyLayout = (props) => {
                 <div className={"reimport-msg"} onClick={(e) => props.clearSession(e)}>Connect other wallet</div>
               </div>
               <div className="exchange-account__container container">
-                <div className={`exchange-account__content ${props.isBalanceActive ? 'exchange-account__content--open' : ''}`}>
+                <div className={`exchange-account__content`}>
                   {getAccountTypeHtml(true)}
-                  <div className="exchange-account__balance">{props.balanceLayout}</div>
-                  <div className="exchange-account__adv-config">{props.advanceLayout}</div>
+                  <div className={`exchange-account__balance ${props.isBalanceActive ? 'exchange-account__content--open' : ''}`}>{props.balanceLayout}</div>
+                  <div className={`exchange-account__adv-config ${props.isAdvanceActive ? 'exchange-account__content--open' : ''}`}>{props.advanceLayout}</div>
                 </div>
 
                 <PostExchangeWithKey isChangingWallet={props.isChangingWallet}/>

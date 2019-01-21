@@ -586,10 +586,14 @@ export function closeImportAccountExchange(){
   }
 }
 
-export function toggleBalanceContent(value = null){
+export function toggleBalanceContent(){
   return {
-    type: "EXCHANGE.TOGGLE_BALANCE_CONTENT",
-    payload: value
+    type: "EXCHANGE.TOGGLE_BALANCE_CONTENT"
+  }
+}
+export function toggleAdvanceContent(){
+  return {
+    type: "EXCHANGE.TOGGLE_ADVANCE_CONTENT"
   }
 }
 

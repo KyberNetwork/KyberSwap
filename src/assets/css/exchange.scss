@@ -231,7 +231,7 @@
     }
 
     .reimport-msg {
-      position: absolute;
+      position: relative;
       max-width: 170px;
       font-size: 12px;
       color: #8690ad;
@@ -243,7 +243,7 @@
       top: -13px;
       background: #eff4fa;
       cursor: pointer;
-      z-index: 1;
+      // z-index: 1;
     }
   }
 
@@ -263,9 +263,12 @@
     &--open {
       background: white;
       padding: 15px 35px 10px;
-      margin: 0 0 30px;
+      // margin: 0 0 30px;
       border-bottom: none;
-      border-radius: 5.1px;
+      border-radius: 5px;
+      @include screen-max-width(large){
+        border-radius: 0;
+      }
     }
   }
 
@@ -290,24 +293,37 @@
  @include screen-max-width(large) {
     &__content {
       display: block;
-      box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
-      background-color: #ffffff;
-      padding: 20px 1rem;
+      // box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+      // background-color: #ffffff;
+
+      
+      @include screen-min-width(large){
+        padding: 20px 1rem;
+      }
+
+      background-color: #eff4fa;
+      // border-bottom: 1px solid #ddd;
+      border-radius: 0;
+      &--open{
+        background-color: white;
+        border-bottom: none;
+      }
     }
 
     &__balance {
       width: 100%;
       // padding: 10px 10px 0 42px;
       // border-top: solid 1px #cccccc;
-
+      padding: 1rem;
       &::after {
         display: none;
       }
     }
 
     &__adv-config {
+      padding: 1rem;
       width: 100%;
-      margin-top: 20px;
+      // margin-top: 20px;
       // padding: 0 10px 0 42px;
     }
   }

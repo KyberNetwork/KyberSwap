@@ -393,7 +393,7 @@
     &-right {
       @include screen-min-width(large){
         position: absolute;
-        top: 50px;
+        top: 70px;
         right: 0px;
       }
       .token-selector{

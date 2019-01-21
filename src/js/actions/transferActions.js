@@ -302,10 +302,15 @@ export function closeImportAccountTransfer(){
   }
 }
 
-export function toggleBalanceContent(value = null){
+export function toggleBalanceContent(){
   return {
-    type: "TRANSFER.TOGGLE_BALANCE_CONTENT",
-    payload: value
+    type: "TRANSFER.TOGGLE_BALANCE_CONTENT"
+  }
+}
+
+export function toggleAdvanceContent(){
+  return {
+    type: "TRANSFER.TOGGLE_ADVANCE_CONTENT"
   }
 }
 

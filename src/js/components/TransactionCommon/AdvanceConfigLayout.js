@@ -13,8 +13,8 @@ export default class AdvanceConfigLayout extends React.Component {
     ];
 
     return (
-      <SlideDown active={this.props.isBalanceActive}>
-        <SlideDownTrigger onToggleContent={() => this.props.toggleBalanceContent()}>
+      <SlideDown active={this.props.isAdvanceActive}>
+        <SlideDownTrigger onToggleContent={() => this.props.toggleAdvanceContent()}>
           <div className="slide-down__trigger-container slide-down__trigger-container--align-right">
             <div>
               <span className="slide-down__trigger-bold">Advance - </span>

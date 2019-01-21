@@ -582,7 +582,11 @@ const exchange = (state = initState, action) => {
     }
 
     case "EXCHANGE.TOGGLE_BALANCE_CONTENT": {
-      newState.isBalanceActive = action.payload !== null ? action.payload : !newState.isBalanceActive;
+      newState.isBalanceActive = !newState.isBalanceActive;
+      return newState;
+    }
+    case "EXCHANGE.TOGGLE_ADVANCE_CONTENT":{
+      newState.isAdvanceActive = !newState.isAdvanceActive
       return newState;
     }
     case "EXCHANGE.SET_SELECTED_GAS_PRICE":{

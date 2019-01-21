@@ -175,9 +175,20 @@ export default class Transfer extends React.Component {
     this.props.dispatch(transferActions.specifyAddressReceive(data));
   }
 
-  toggleBalanceContent = (value) => {
-    this.props.dispatch(transferActions.toggleBalanceContent(value))    
+
+  toggleBalanceContent = () => {
+    this.props.dispatch(transferActions.toggleBalanceContent())    
+    if(!this.props.global.isOnMobile){
+      this.props.dispatch(transferActions.toggleAdvanceContent())    
+    }
   }
+  toggleAdvanceContent = () => {
+    this.props.dispatch(transferActions.toggleAdvanceContent())    
+    if(!this.props.global.isOnMobile){
+      this.props.dispatch(transferActions.toggleBalanceContent())    
+    }
+  }
+
 
   specifyGasPrice = (value) => {
     this.props.dispatch(transferActions.specifyGasPrice(value))
@@ -203,8 +214,8 @@ export default class Transfer extends React.Component {
         selectedGasHandler={this.selectedGasHandler}
         gasPriceSuggest={this.props.transfer.gasPriceSuggest}
         translate={this.props.translate}
-        isBalanceActive = {this.props.transfer.isBalanceActive}
-        toggleBalanceContent={this.toggleBalanceContent}
+        isAdvanceActive = {this.props.transfer.isAdvanceActive}
+        toggleAdvanceContent={this.toggleAdvanceContent}
         type="transfer"
       />
     )
@@ -346,6 +357,7 @@ export default class Transfer extends React.Component {
         isAgreedTermOfService={this.props.global.termOfServiceAccepted}
         acceptTerm={this.acceptTerm}
         isBalanceActive = {this.props.transfer.isBalanceActive}
+        isAdvanceActive = {this.props.transfer.isAdvanceActive}
 
         swapBalance = {this.getTransferBalance()}
 

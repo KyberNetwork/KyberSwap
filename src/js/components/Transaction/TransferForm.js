@@ -235,9 +235,9 @@ const TransferForm = (props) => {
                 <div className={"reimport-msg"} onClick={(e) => props.clearSession(e)}>Connect other wallet</div>
               </div>
               <div className="exchange-account__container container">
-                <div className={`exchange-account__content ${props.isBalanceActive ? 'exchange-account__content--open' : ''}`}>
-                  <div className="exchange-account__balance">{props.balanceLayout}</div>
-                  <div className="exchange-account__adv-config">{props.advanceLayout}</div>
+                <div className={`exchange-account__content`}>
+                  <div className={`exchange-account__balance  ${props.isBalanceActive ? 'exchange-account__content--open' : ''}`}>{props.balanceLayout}</div>
+                  <div className={`exchange-account__adv-config  ${props.isAdvanceActive ? 'exchange-account__content--open' : ''}`}>{props.advanceLayout}</div>
                 </div>
 
                 <PostTransferWithKey isChangingWallet={props.isChangingWallet} />

@@ -327,8 +327,17 @@ export default class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.analyzeError(ethereum, exchange.txHash))
   }
 
-  toggleBalanceContent = (value) => {
-    this.props.dispatch(exchangeActions.toggleBalanceContent(value))    
+  toggleBalanceContent = () => {
+    this.props.dispatch(exchangeActions.toggleBalanceContent())    
+    if(!this.props.global.isOnMobile){
+      this.props.dispatch(exchangeActions.toggleAdvanceContent())    
+    }
+  }
+  toggleAdvanceContent = () => {
+    this.props.dispatch(exchangeActions.toggleAdvanceContent())    
+    if(!this.props.global.isOnMobile){
+      this.props.dispatch(exchangeActions.toggleBalanceContent())    
+    }
   }
 
   specifyGasPrice = (value) => {
@@ -383,8 +392,8 @@ export default class ExchangeBody extends React.Component {
         selectedGasHandler={this.selectedGasHandler}
         gasPriceSuggest={this.props.exchange.gasPriceSuggest}
         translate={this.props.translate}
-        isBalanceActive = {this.props.exchange.isBalanceActive}
-        toggleBalanceContent={this.toggleBalanceContent}
+        isAdvanceActive = {this.props.exchange.isAdvanceActive}
+        toggleAdvanceContent={this.toggleAdvanceContent}
         minConversionRate={minConversionRate}
         type="exchange"
         maxGasPrice = {this.props.exchange.maxGasPrice}
@@ -575,7 +584,9 @@ export default class ExchangeBody extends React.Component {
         walletName={this.props.account.walletName}
         isFixedDestToken = {isFixedDestToken}
         acceptTerm={this.acceptTerm}
+
         isBalanceActive = {this.props.exchange.isBalanceActive}
+        isAdvanceActive = {this.props.exchange.isAdvanceActive}
 
         rateToken = {rateToken}
 

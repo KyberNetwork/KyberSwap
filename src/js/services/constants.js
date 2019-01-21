@@ -118,7 +118,8 @@ const INIT_EXCHANGE_FORM_STATE = {
   isAnalizeComplete: false,
   analizeError : {},
   snapshot: {},
-  isBalanceActive: false
+  isBalanceActive: false,
+  isAdvanceActive: false,
 }
 
 const INIT_TRANSFER_FORM_STATE = {
@@ -173,7 +174,8 @@ const INIT_TRANSFER_FORM_STATE = {
     ethBalanceError: ''
   },
   snapshot: {},
-  isBalanceActive: false
+  isBalanceActive: false,
+  isAdvanceActive: false
 }
 
 // reserves
