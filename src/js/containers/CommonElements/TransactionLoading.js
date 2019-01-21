@@ -3,10 +3,25 @@ import { connect } from "react-redux"
 import { TransactionLoadingView } from "../../components/Transaction"
 import { getTranslate } from 'react-localize-redux'
 import { Modal } from "../../components/CommonElement"
+import constansts from "../../services/constants"
+import * as common from "../../utils/common"
 
 
 @connect((store, props) => {
     var returnProps = {}
+    const exchange = store.exchange
+    const transfer = store.transfer
+    var exchangeLink = constansts.BASE_HOST + "/swap/" + exchange.sourceTokenSymbol.toLowerCase() + "_" + exchange.destTokenSymbol.toLowerCase()
+    var transferLink = constansts.BASE_HOST + "/transfer/" + transfer.tokenSymbol.toLowerCase()
+
+    exchangeLink = common.getPath(exchangeLink, constansts.LIST_PARAMS_SUPPORTED)
+    transferLink = common.getPath(transferLink, constansts.LIST_PARAMS_SUPPORTED)
+    var changePath
+    if (props.type === "swap") {
+        changePath = transferLink
+    } else {
+        changePath = exchangeLink
+    }
     if (props.broadcasting) {
         returnProps = {
             broadcasting: true,
@@ -25,6 +40,7 @@ import { Modal } from "../../components/CommonElement"
             analyze: props.analyze,
             address: props.address,
             isOpen: props.isOpen,
+            changePath: changePath,
         }
     }
     return { ...returnProps, translate: getTranslate(store.locale), analytics: store.global.analytics }
@@ -83,6 +99,7 @@ export default class TransactionLoading extends React.Component {
             resetCopy={this.resetCopy.bind(this)}
             onCancel = {this.props.makeNewTransaction}
             analytics = {this.props.analytics}
+            changePath = {this.props.changePath}
           />
         return (
             <Modal

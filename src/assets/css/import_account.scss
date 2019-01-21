@@ -363,6 +363,8 @@
     background-color: #f5f5f5;
     margin-top: 10px;
     padding: 50px 45px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     .accent {
       // margin-top: 50px;
       line-height: 55px;
@@ -372,6 +374,8 @@
       border-radius: 4px;
       // box-shadow: 0 10px 15px #ccc;
       width: 100%;
+      max-width: 200px;
+      border-radius: 60px;
     }
   }
   #private_key {
@@ -379,8 +383,9 @@
     width: 100%;
     background-color: white;
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 23px;
     color: #666666;
     height: 50px;
+    padding-left: 55px;
   }
 }

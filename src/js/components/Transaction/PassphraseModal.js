@@ -113,7 +113,7 @@ const PassphraseModal = (props) => {
           <div className="input-reveal">
             <input className="text-center security" id="passphrase" type="text"
               autoComplete="off" spellCheck="false"
-              onFocus={(e) => {this.props.analytics.callTrack("trackClickInputPasswordWithJSON")}}
+              onFocus={(e) => {props.analytics.callTrack("trackClickInputPasswordWithJSON")}}
               onChange={(e) => props.onChange(e)} autoFocus onKeyPress={(e) => submit(e)} />
             <a className="toggle" onClick={() => toggleShowPw()}></a>
             <a className="tootip"></a>
