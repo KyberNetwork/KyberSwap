@@ -110,7 +110,8 @@
     "included": "Included",
     "type_pass_before_progress": "Type a password before progressing",
     "swap_now": "Swap Now",
-    "type_pass_to_sign": "Enter your password/passphrase to sign and broadcast"
+    "type_pass_to_sign": "Enter your password/passphrase to sign and broadcast",
+    "try_dai": "Try DAI"
   },
   "modal": {
     "enter_password": "Enter Password",

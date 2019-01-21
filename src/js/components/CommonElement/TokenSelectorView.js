@@ -75,7 +75,7 @@ const TokenSelectorView = (props) => {
           <div className="select-item">
             <div className="select-item__priority-token">{priorityTokens}</div>
             <div className="search-item">
-              <input value={props.searchWord} placeholder={props.translate("try_dai") || `Try "DAI"`} onChange={(e) => props.changeWord(e)} type="text" onFocus={(e) => props.analytics.callTrack("trackSearchToken")}/>
+              <input value={props.searchWord} placeholder={props.translate("transaction.try_dai") || `Try "DAI"`} onChange={(e) => props.changeWord(e)} type="text" onFocus={(e) => props.analytics.callTrack("trackSearchToken")}/>
             </div>
             <div className="list-item custom-scroll">
               {getListToken()}
