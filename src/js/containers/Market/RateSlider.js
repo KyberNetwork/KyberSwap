@@ -16,35 +16,45 @@ import constants from "../../services/constants"
 
 
 export default class RateSilder extends React.Component {
-  getPriceToken = (token) => {    
-    if(token.ETH.buyPrice == 0 || token.ETH.sellPrice == 0){
+  getPriceToken = (token) => {
+    if (token.ETH.buyPrice == 0 || token.ETH.sellPrice == 0) {
       return token.ETH.buyPrice + token.ETH.sellPrice
-    }else{
+    } else {
       return (token.ETH.buyPrice + token.ETH.sellPrice) / 2
     }
   }
 
-  render() {    
+  render() {
     // var rateReverse
     var rates = []
     var token
-    Object.keys(this.props.tokens).forEach((key) => {     
-      var price = this.getPriceToken(this.props.tokens[key])      
+    Object.keys(this.props.tokens).forEach((key) => {
+      var price = this.getPriceToken(this.props.tokens[key])
       if (price != 0) {
         var rateValue = this.props.tokens[key].ETH.change
-        var classSlider = ""
-        if (rateValue > 0 && rateValue != -9999) {
-          classSlider = "change-positive"
-        } else if (rateValue < 0 && rateValue != -9999) {
-          classSlider = "change-negative"
-        }
+        // var classSlider = ""
+        // if (rateValue > 0 && rateValue != -9999) {
+        //   classSlider = "change-positive"
+        // } else if (rateValue < 0 && rateValue != -9999) {
+        //   classSlider = "change-negative"
+        // }
         rates.push(
-          <div key={key} className={`${classSlider}`}>
-            <div class="pair">{key}</div>
-            <div class="value up">
-              {roundingNumber(price)}
+          <div key={key}>
+            <div className="rate-item">
+              {rateValue > 0 && rateValue != -9999 && (
+                <div className="change-positive rate-item__percent-change"></div>
+              )}
+              {rateValue < 0 && rateValue != -9999 && (
+                <div className="change-negative rate-item__percent-change"></div>
+              )}
+              <div>
+                <div class="pair">{key}</div>
+                <div class="value up">
+                  {roundingNumber(price)}
+                </div>
+                <div class="percent-change">{rateValue === -9999 ? "---" : Math.abs(rateValue)} %</div>
+              </div>
             </div>
-            <div class="percent-change">{rateValue === -9999 ? "---" : Math.abs(rateValue)} %</div>
           </div>
         )
       }
@@ -64,7 +74,7 @@ export default class RateSilder extends React.Component {
         { breakpoint: 100000, settings: { slidesToShow: 6 } }]
     }
     return (
-      <div class="row small-11 medium-12 large-12" id="rate-bar">
+      <div id="rate-bar">
         <div class="column">
           <div className="rate">
             <Slider {...settings}>
