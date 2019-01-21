@@ -6,6 +6,7 @@ import { Currency, ManageColumn, MarketTable, SearchWord, SortColumn, TradingVie
 import * as marketActions from "../../actions/marketActions"
 import { toEther } from "../../utils/converter";
 import * as analytics from "../../utils/analytics"
+import { Modal } from "../../components/CommonElement"
 
 @connect((store) => {
 
@@ -39,14 +40,14 @@ import * as analytics from "../../utils/analytics"
     } else if (sortKey != '') {
       listTokens.sort(compareNum(originalTokens, currency, sortKey))
     }
-    
+
     if (sortType[sortKey] && sortType[sortKey] === '-sort-desc') {
       listTokens.reverse()
     }
   }
 
   function compareString(currency) {
-    return function(tokenA, tokenB) {
+    return function (tokenA, tokenB) {
       var marketA = tokenA + currency
       var marketB = tokenB + currency
       if (marketA < marketB)
@@ -58,12 +59,12 @@ import * as analytics from "../../utils/analytics"
   }
 
   function compareNum(originalTokens, currency, sortKey) {
-    return function(tokenA, tokenB) {
+    return function (tokenA, tokenB) {
       return originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey]
     }
   }
 
-  var tokens = listTokens.slice(0, currencyList).reduce(function(newOb, key){
+  var tokens = listTokens.slice(0, currencyList).reduce(function (newOb, key) {
     newOb[key] = originalTokens[key]
     return newOb
   }, {})
@@ -90,10 +91,18 @@ import * as analytics from "../../utils/analytics"
     searchWord: searchWord,
     sortType: sortType,
     showSearchInput: store.market.configs.showSearchInput,
+    global: store.global
   }
 })
 
 export default class Market extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      modalState: false
+    }
+  }
+
   getMoreData = () => {
     this.props.dispatch(marketActions.getMoreData(this.props.listTokens))
   }
@@ -104,71 +113,66 @@ export default class Market extends React.Component {
     this.props.dispatch(marketActions.resetListToken(value))
   }
 
-  // handleOnClick = (e) => {
-  //   // this.props.dispatch(marketActions.showSearchInput(false))
-  //   var className = e.target.className
-  //   var check = e.target.id !== "search-market" && className !== "search-symbol" && className !== "search-icon" && className !== "search-img"
-  //   if (this.props.showSearchInput === true && check) {
-  //     this.props.dispatch(marketActions.showSearchInput(false))
-  //   }
-  // }
+  getContentMarket = () => {
+    return (
+      <div className="market container" id="market-eth">
+        <h1 className="market__title">{this.props.translate("market.eth_market") || "Ethereum Market"}</h1>
+        <div className="market-table">
+          <div>
+            <MarketTable
+              data={this.props.data}
+              currency={this.props.currency}
+              tokens={this.props.tokens}
+              listTokens={this.props.listTokens}
+              page={this.props.page}
+              firstPageSize={this.props.firstPageSize}
+              originalTokens={this.props.originalTokens}
+              searchWord={this.props.searchWord}
+              sortType={this.props.sortType}
+              manageColumn={<ManageColumn />}
+              searchWordLayout={<SearchWord />}
+              currencyLayout={<Currency currentCurrency={this.props.currency} />}
+            />
+          </div>
+        </div>
+        <TradingViewModal />
+      </div>
+    )
+  }
 
-  // componentDidMount() {
-  //   document.addEventListener('click', this.handleOnClick)
-  // }
-
-  // componentWillUnmount() {
-  //   document.removeEventListener('click', this.handleOnClick)
-  // }
+  closeModal = () => {
+    this.setState({ modalState: false })
+  }
+  openModal = () => {
+    this.setState({ modalState: true })
+  }
 
   render() {
     return (
       <div className="market-wrapper-container">
-        <RateSlider />
-        <div className="market container" id="market-eth">
-          <h1 className="market__title">{this.props.translate("market.eth_market") || "Ethereum Market"}</h1>
-          {/* <div className={"search-area"}><SearchWord /></div> */}
-          {/* <div className="market__header">
-            <div className="market__header-left">
-              <div className="market__header-search"><SearchWord /></div>
-              <div className="market__header-currency"><Currency /></div>
+        {!this.props.global.isOnMobile && (
+          <div className="rate-container">
+            <div className="rate-container__slider">
+              <RateSlider />
             </div>
-            <div className="market__header-right"><ManageColumn /></div>
-          </div> */}
-          <div className="market-table">
-              {/* <SearchWord /> */}
-              {/* {this.props.showSearchInput ? <div className='search-space'>
-                  <input id="search-market" type="text" className="search-input" placeholder={this.props.translate("market.try_searching_for_token") || "Try Searching for Token"} 
-                    value={this.props.searchWord} 
-                    onChange={(e) => this.changeSearch(e)} 
-                    onFocus={(e) => analytics.trackSearchETHMarket()}
-                  />
-              </div> : ""} */}
-              <div>
-                <MarketTable
-                  data = {this.props.data}
-                  currency = {this.props.currency}
-                  tokens = {this.props.tokens}
-                  listTokens = {this.props.listTokens}
-                  page = {this.props.page}
-                  firstPageSize = {this.props.firstPageSize}
-                  originalTokens = {this.props.originalTokens}
-                  searchWord = {this.props.searchWord}
-                  sortType = {this.props.sortType}
-                  manageColumn= {<ManageColumn />}
-                  searchWordLayout = {<SearchWord />}
-                  currencyLayout = {<Currency currentCurrency={this.props.currency}/>}
-                />
-              </div>
+            <div className="rate-container__more">
+              <a onClick={this.openModal}>More</a>
+            </div>
           </div>
-          {/* <div className="show-more">
-            <button className={this.props.isDisabled ? 'disabled' : ''} onClick={(e) => {if(!this.props.isDisabled) this.getMoreData(e)}}>
-              {this.props.translate("market.show_more_results") || "Show more results"}
-            </button>
-          </div> */}
-          <TradingViewModal />
-        </div>
+        )}
+        <Modal className={{
+          base: 'reveal large confirm-modal',
+          afterOpen: 'reveal large confirm-modal'
+        }}
+          isOpen={this.state.modalState}
+          onRequestClose={this.closeModal}
+          contentLabel="Market modal"
+          content={this.getContentMarket()}
+          size="large"
+        />
       </div>
+
+
     )
   }
 }
