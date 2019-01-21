@@ -29,7 +29,10 @@ export default class AdvanceConfigLayout extends React.Component {
             {this.props.minConversionRate}
 
             <div>
-              <div className="advance-config__title">GAS fee (Gwei):</div>
+              <div className="advance-config__title">
+                <span>GAS fee (Gwei)</span>
+                <span><img src={require("../../../assets/img/v3/info_blue.svg")} /></span>
+              </div>
               <div className="advance-config__option-container">
                 {gasOptions.map((item, index) => {
                   return (
