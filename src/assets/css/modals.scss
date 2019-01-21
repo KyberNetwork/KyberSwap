@@ -14,6 +14,7 @@ $divider-color: darken($title-background-color, 5);
   border-radius: 0;
   //color: $white;
   outline: none;
+  background-color: #f6f7fa;
   // background-color: $k-primary;
   // border: 2px solid $white;
   box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
@@ -48,7 +49,7 @@ $divider-color: darken($title-background-color, 5);
     display: flex;
     justify-content: space-between;
     background-color: #8CBCAE;
-    padding: 50px 50px;
+    padding: 50px 45px;
     align-items: center;
     span{
       &:not(.error-text){
@@ -114,7 +115,7 @@ $divider-color: darken($title-background-color, 5);
         font-size: 13px;
         color: #666666;
         font-weight: normal;
-        margin-top: 10px;
+        // margin-top: 10px;
       }
     }
     hr{
@@ -229,18 +230,19 @@ $divider-color: darken($title-background-color, 5);
     display: flex;
     margin-top: 0.8rem;
     justify-content: space-between;
-    background-color: white;
-    box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
-    border: solid 0.8px rgba(204, 204, 204, 0.72);
+    background-color: #eaecf2;
+    // box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
+    // border: solid 0.8px rgba(204, 204, 204, 0.72);
     border-radius: 4px;
-    padding: 5px 10px;
+    padding: 5px 50px;
     .amount-item{
       padding: 10px;
       .rc-label {
-        color: #999999;
-        font-size: 13px;
+        color: #ef8102;
+        font-size: 12px;
         font-weight: 600;
         letter-spacing: -0.4px;
+        line-height: 1.17;
       }
       .rc-info {
         color: #222222;
@@ -282,7 +284,7 @@ $divider-color: darken($title-background-color, 5);
   padding-left: 0 !important;
   padding-right: 0 !important;
   padding-bottom: 0 !important;
-  background-color: #f5f5f5 !important;
+  background-color: #f6f7fa !important;
 
   .title {
     font-weight: 600;
@@ -321,25 +323,29 @@ $divider-color: darken($title-background-color, 5);
     width: 100%;
     text-align: left;
     background-color: white;
-    padding: 15px 50px 43px 50px;
+    padding: 15px 45px 43px 45px;
     align-items: center;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
 
     span{
       &:not(.error-text){
         color: #666666;
-        font-weight: 600;
+        // font-weight: 600;
         font-size: 14px;
         letter-spacing: normal;
       }
     }
     .type-password{
-      font-size: 14px;
+      font-size: 16px;
+      font-weight: 600;
       color: #666666;
       margin-bottom: 15px;
     }
     .button {
-      border-radius: 3px;
-      padding: 14px 60px 14px 30px;
+      min-width: 150px;
+      border-radius: 23px;
+      padding: 14px 30px 14px 30px;
       color: #fff;
       font-size: 14px;
       background-color: #EF8102;
@@ -352,17 +358,17 @@ $divider-color: darken($title-background-color, 5);
       outline: none;
       box-shadow: none;
 
-      &::after {
-        content: '';
-        position: absolute;
-        width: 28px;
-        height: 28px;
-        right: 11px;
-        top: 50%;
-        border-radius: 50%;
-        transform: translateY(-50%);
-        background: rgba(255, 255, 255, 0.1) url($image-path + 'arrow-right-thick.svg') center center no-repeat;
-      }
+      // &::after {
+      //   content: '';
+      //   position: absolute;
+      //   width: 28px;
+      //   height: 28px;
+      //   right: 11px;
+      //   top: 50%;
+      //   border-radius: 50%;
+      //   transform: translateY(-50%);
+      //   background: rgba(255, 255, 255, 0.1) url($image-path + 'arrow-right-thick.svg') center center no-repeat;
+      // }
 
       &:hover {
         background-color: $color-swap-light;
@@ -372,8 +378,8 @@ $divider-color: darken($title-background-color, 5);
         background-color: #6f6f6f;
         color: white;
         text-transform: uppercase;
-        min-width: 135px;
-        padding: 14px;
+        // min-width: 135px;
+        // padding: 14px;
         &::after {
           content: none;
         }
@@ -393,7 +399,7 @@ $divider-color: darken($title-background-color, 5);
     }
   }
   .content {
-    padding: 0 50px;
+    padding: 0 45px;
     @include screen-max-width(medium){
       padding: 0 20px;
     }
@@ -531,6 +537,9 @@ $divider-color: darken($title-background-color, 5);
       color: #141927;
       margin-bottom: 25px;
       font-size: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #141927;
       div:last-child {
         color: #5a5e67;
         margin-top: 3px;
@@ -546,8 +555,9 @@ $divider-color: darken($title-background-color, 5);
     // padding-bottom: 20px;
     // padding-top: 20px;
     border: solid 1px #e5e5e5;
-    border-radius: 3px;
-    padding-left: 35px;
+    border-radius: 23px;
+    padding-left: 50px;
+    height: 45px;
     &.security{
       font-family: 'text-security-disc';
       font-size: 14px;
@@ -568,7 +578,7 @@ $divider-color: darken($title-background-color, 5);
     align-items: center;
     justify-content: space-between;
   }
-  .input-passpharse{
+  .password-input{
     margin-top: 10px;
     @include screen-min-width(medium){
       .process-submit{
@@ -582,41 +592,6 @@ $divider-color: darken($title-background-color, 5);
       }
     }
     .input-reveal{
-      border-radius: 4px;
-      background-color: #ffffff;
-      border: solid 1px #e5e5e5;
-
-      input {
-        background-color: #ffffff;
-        font-size: 14px;
-        font-style: italic;
-        line-height: 1.43;
-        color: #141927;
-      }
-
-      .toggle {
-        opacity: .4;
-        display: block;
-        width: 20px;
-        height: 20px;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
-        position: absolute;
-        top: 50%;
-        margin-top: -10px;
-        right: 12px;
-        left: unset;
-        -webkit-transition: opacity .5s ease-in-out;
-        -o-transition: opacity .5s ease-in-out;
-        transition: opacity .5s ease-in-out;
-        background-image: url(../img/unlock-pass.svg);
-      }
-
-      &.unlock .toggle {
-        background-image: url(../img/lock-pass.svg);
-      }
-
       .tootip {
         opacity: .4;
         display: block;
@@ -626,13 +601,19 @@ $divider-color: darken($title-background-color, 5);
         background-size: contain;
         background-position: center;
         position: absolute;
-        top: 50%;
+        top: 21px;
         margin-top: -11px;
-        left: 20px;
+        left: 24px; 
         -webkit-transition: opacity .5s ease-in-out;
         -o-transition: opacity .5s ease-in-out;
         transition: opacity .5s ease-in-out;
         background-image: url(../img/lock.svg);
+      }
+    }
+    &.error {
+      #passphrase {
+        border-color: #ee344e;
+        background-color: #ffe7eb;
       }
     }
   }
@@ -657,17 +638,17 @@ $divider-color: darken($title-background-color, 5);
         text-overflow: ellipsis;
         display: flex;
         justify-content: space-between;
-        background-color: #fff;
-        box-shadow: 0 1px 5px 0 hsla(0,0%,56%,.15);
-        border: .8px solid hsla(0,0%,80%,.72);
+        background-color: #eaecf2;
+        // box-shadow: 0 1px 5px 0 hsla(0,0%,56%,.15);
+        // border: .8px solid hsla(0,0%,80%,.72);
         border-radius: 4px;
         padding: 15px 25px;
         margin-right: 0;
         div {
           &:first-child {
-            color: #141927;
+            color: #ef8102;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 12px;
           }
           &:last-child {
             // padding: 0 15px;
@@ -732,7 +713,7 @@ $divider-color: darken($title-background-color, 5);
     color: #141927;
     margin-bottom: 30px;
     text-align: center;
-    margin-top: 60px;
+    margin-top: 50px;
     .icon {
       width: 100px;
       height: 100px;
@@ -759,19 +740,20 @@ $divider-color: darken($title-background-color, 5);
   }
   .content.with-overlap {
     @include screen-min-width(medium) {
-      padding-left: 4rem;
-      padding-right: 4rem;
+      padding-left: 3rem;
+      padding-right: 3rem;
     }
   }
   .final-status {
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
     margin-top: 30px;
     margin-bottom: 15px;
-    line-height: 1.5;
     letter-spacing: -0.1px;
-    font-weight: 600;
+    font-weight: 600 !important;
     color: #222222;
+    line-height: 1.71;
+    letter-spacing: -0.1px;
   }
   .tx-loading {
     padding: 20px 0 60px 0;
@@ -889,6 +871,7 @@ $divider-color: darken($title-background-color, 5);
         margin-bottom: 20px;
         padding-left: 35px;
         padding-right: 35px;
+        border-radius: 40px;
       }
     .label-text {
       font-size: 16px;

@@ -9,7 +9,6 @@ import BLOCKCHAIN_INFO from "../../../../env";
 import * as analytics from "../../utils/analytics";
 import { RateBetweenToken } from "../../containers/Exchange";
 import { getAssetUrl } from "../../utils/common";
-import BigInput from "../Exchange/BigInput";
 import { TermAndServices } from "../../containers/CommonElements";
 
 const TransferForm = (props) => {

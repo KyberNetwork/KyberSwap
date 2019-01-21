@@ -11,7 +11,6 @@ import BLOCKCHAIN_INFO from "../../../../env";
 import { RateBetweenToken } from "../../containers/Exchange";
 import * as converters from "../../utils/converter";
 import { getAssetUrl } from "../../utils/common";
-import BigInput from "./BigInput";
 import { TermAndServices } from "../../containers/CommonElements";
 
 const ExchangeBodyLayout = (props) => {
@@ -170,9 +169,9 @@ const ExchangeBodyLayout = (props) => {
                             onChange={handleChangeSource}
                           />
                         </div>
-                      {props.account !== false && (
-                        <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal ${errorExchange ? "error" : ""}`}>{props.swapBalance}</div>
-                      )}
+                        {props.account !== false && (
+                          <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal ${errorExchange ? "error" : ""}`}>{props.swapBalance}</div>
+                        )}
                       </div>
                     </div>
                   </div>

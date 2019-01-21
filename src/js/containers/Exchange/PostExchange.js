@@ -516,7 +516,7 @@ export default class PostExchange extends React.Component {
         gasPrice={this.props.form.snapshot.gasPrice}
         gas={this.props.form.snapshot.gas + this.props.form.snapshot.gas_approve}
         isFetchingRate={this.props.snapshot.isFetchingRate}
-        title={this.props.translate('modal.confirm_swap') || "Confirm Swap"}
+        title={this.props.translate('modal.confirm_swap') || "Swap Confirm"}
         slippagePercent={slippagePercent}
         analytics={this.props.analytics}
       />
@@ -538,7 +538,7 @@ export default class PostExchange extends React.Component {
         isFetchingRate={this.props.form.snapshot.isFetchingRate}
         type="exchange"
         translate={this.props.translate}
-        title={this.props.translate('modal.confirm_swap') || "Confirm Swap"}
+        title={this.props.translate('modal.confirm_swap') || "Swap Confirm"}
         errors={this.props.form.signError}
         walletType={this.props.account.type}
         slippagePercent={slippagePercent}
