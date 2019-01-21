@@ -150,6 +150,12 @@
     font-weight: 600;
     letter-spacing: -0.4px;
     color: #999999;
+
+    &.no-account {
+      opacity: 0.4;
+      cursor: default;
+      pointer-events: none;
+    }
     &--transfer {
       margin-right: 15px;
     }
