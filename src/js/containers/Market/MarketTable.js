@@ -90,8 +90,8 @@ export default class MarketTable extends React.Component {
     //   lineColor = "#31CB9E"
     //   backgroundColor = "#EDFBF6"
     // }
-    var lineColor = "#31CB9E"
-    var backgroundColor = "#EDFBF6"
+    var lineColor = "#007BDE"
+    var backgroundColor = "#D8E9FA"
     var point = []
     var labels = []
     var input = props.value ? props.value : props.last_7d
@@ -190,7 +190,7 @@ export default class MarketTable extends React.Component {
     }
     if (input < 0) {
       return (
-        <span className = "negative">{input} %<img src={require("../../../assets/img/landing/arrow_red.svg")}/></span>
+        <span className = "negative"><img src={require("../../../assets/img/v3/ic_arrow_downward.svg")}/> {input} %</span>
       )
     }
     if (input === 0){
@@ -200,7 +200,7 @@ export default class MarketTable extends React.Component {
     }
     if (input > 0){
       return (
-        <span className = "positive">{input} %<img src={require("../../../assets/img/landing/arrow_white.svg")}/></span>
+        <span className = "positive"><img src={require("../../../assets/img/v3/ic_arrow_upward.svg")}/> {input} %</span>
       )
     }     
   }

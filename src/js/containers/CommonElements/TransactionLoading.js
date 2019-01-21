@@ -9,18 +9,15 @@ import * as common from "../../utils/common"
 
 @connect((store, props) => {
     var returnProps = {}
-    const exchange = store.exchange
-    const transfer = store.transfer
-    var exchangeLink = constansts.BASE_HOST + "/swap/" + exchange.sourceTokenSymbol.toLowerCase() + "_" + exchange.destTokenSymbol.toLowerCase()
-    var transferLink = constansts.BASE_HOST + "/transfer/" + transfer.tokenSymbol.toLowerCase()
-
-    exchangeLink = common.getPath(exchangeLink, constansts.LIST_PARAMS_SUPPORTED)
-    transferLink = common.getPath(transferLink, constansts.LIST_PARAMS_SUPPORTED)
     var changePath
     if (props.type === "swap") {
-        changePath = transferLink
+        const transfer = store.transfer
+        var transferLink = constansts.BASE_HOST + "/transfer/" + transfer.tokenSymbol.toLowerCase()
+        changePath = common.getPath(transferLink, constansts.LIST_PARAMS_SUPPORTED)
     } else {
-        changePath = exchangeLink
+        const exchange = store.exchange
+        var exchangeLink = constansts.BASE_HOST + "/swap/" + exchange.sourceTokenSymbol.toLowerCase() + "_" + exchange.destTokenSymbol.toLowerCase()
+        changePath = common.getPath(exchangeLink, constansts.LIST_PARAMS_SUPPORTED)
     }
     if (props.broadcasting) {
         returnProps = {

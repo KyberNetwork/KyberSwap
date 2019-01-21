@@ -107,13 +107,13 @@ export default class ManageColumn extends React.Component {
                     <Dropdown onShow={(e) => this.showSelector(e)} onHide={(e) => this.hideSelector(e)} active={this.state.open}>
                         <DropdownTrigger className="notifications-toggle">
                             <div className="focus-item d-flex">
-                                <img src={require("../../../assets/img/landing/setting.svg")} />
+                                <img src={require("../../../assets/img/v3/setting_icon.svg")} />
                             </div>
                         </DropdownTrigger>
                         <DropdownContent>
                             <div className="select-item">
                                 <div className="setting-header">
-                                    <img src={require("../../../assets/img/landing/setting.svg")} />
+                                    <img src={require("../../../assets/img/v3/setting_icon.svg")} />
                                     <span>{this.props.translate("market.settings") || "Settings"}</span>
                                 </div>
                                 <div className="list-setting">

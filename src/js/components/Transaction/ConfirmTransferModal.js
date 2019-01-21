@@ -43,7 +43,6 @@ class ConfirmTransferModal extends React.Component {
   render() {
     var gasPrice = stringToBigNumber(gweiToEth(this.props.gasPrice))
     var totalGas = +calculateGasFee(this.props.gasPrice, this.props.gas)
-    //var totalGas = gasPrice.multipliedBy(this.props.gas)
     return (
       <div>
         <a className="x" onClick={(e) => this.props.onCancel(e)}>&times;</a>

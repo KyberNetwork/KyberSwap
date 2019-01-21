@@ -169,12 +169,9 @@ const ExchangeBodyLayout = (props) => {
                             onChange={handleChangeSource}
                           />
                         </div>
-                      {/* {props.account !== false && ( */}
-                        <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal 
-                          ${props.account === false ? 'no-account' : ''} ${errorExchange ? "error" : ""}`}>
-                          {props.swapBalance}
-                        </div>
-                      {/* )} */}
+                        {props.account !== false && (
+                          <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal ${errorExchange ? "error" : ""}`}>{props.swapBalance}</div>
+                        )}
                       </div>
                     </div>
                   </div>
