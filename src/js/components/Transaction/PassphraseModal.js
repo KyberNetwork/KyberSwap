@@ -113,7 +113,7 @@ const PassphraseModal = (props) => {
           <div className="input-reveal">
             <input className="text-center security" id="passphrase" type="text"
               autoComplete="off" spellCheck="false"
-              onFocus={(e) => {this.props.analytics.callTrack("trackClickInputPasswordWithJSON")}}
+              onFocus={(e) => {props.analytics.callTrack("trackClickInputPasswordWithJSON")}}
               onChange={(e) => props.onChange(e)} autoFocus onKeyPress={(e) => submit(e)} />
             <a className="toggle" onClick={() => toggleShowPw()}></a>
             <a className="tootip"></a>
@@ -126,6 +126,9 @@ const PassphraseModal = (props) => {
               </a>
             </div>
           </div> */}
+          {!!props.passwordError &&
+            <span className="error-text">{getTranslateErr()}</span>
+          }
           <div className="input-confirm grid-x">
             {/* <div className="cell medium-8 small-12">{this.msgHtml()}</div> */}
             {/* <div className="cell medium-4 small-12"> */}
@@ -135,9 +138,6 @@ const PassphraseModal = (props) => {
               {props.translate("modal.confirm").toLocaleUpperCase() || "Confirm".toLocaleUpperCase()}</a>
             {/* </div> */}
           </div>
-          {!!props.passwordError &&
-              <span className="error-text">{getTranslateErr()}</span>
-            }
         </div>
         
       </div>

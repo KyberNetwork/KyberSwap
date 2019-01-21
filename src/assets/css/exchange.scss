@@ -242,6 +242,8 @@
       text-align: center;
       top: -13px;
       background: #eff4fa;
+      cursor: pointer;
+      z-index: 1;
     }
   }
 
@@ -323,6 +325,7 @@
 .exchange-button {
   text-align: center;
   margin-bottom: 10px;
+  margin-top: 25px;
   &__button {
     display: block;
     margin-left: auto;

@@ -427,7 +427,7 @@ export default class ExchangeBody extends React.Component {
 
   acceptTerm = (e) => {
     this.props.dispatch(globalActions.acceptTermOfService())
-  }
+  } 
 
   render() {
     var balanceInfo = {
@@ -450,7 +450,7 @@ export default class ExchangeBody extends React.Component {
         tx={this.props.exchange.txHash}
         tempTx={this.props.exchange.tempTx}
         makeNewTransaction={this.makeNewExchange}
-        type="exchange"
+        type="swap"
         balanceInfo={balanceInfo}
         broadcasting={this.props.exchange.broadcasting}
         broadcastingError={this.props.exchange.broadcastError}
