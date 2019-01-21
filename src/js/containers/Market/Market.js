@@ -161,7 +161,7 @@ export default class Market extends React.Component {
           </div>
         )}
         <Modal className={{
-          base: 'reveal large confirm-modal',
+          base: 'reveal large confirm-modal market-modal',
           afterOpen: 'reveal large confirm-modal'
         }}
           isOpen={this.state.modalState}

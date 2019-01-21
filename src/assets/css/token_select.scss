@@ -955,7 +955,7 @@
       }
       .select-item{
         display: block;
-        border: 2px solid $white;
+        // border: 2px solid $white;
         border-top: none;
         color: inherit;
         padding-bottom: 15px;
@@ -1056,8 +1056,8 @@
     transition: 0.2s;
     width: 100%;
     z-index: 2;
-    background-color: #FCFCFC;
-    border: 2px solid $white;
+    background-color: #F1F5FB;
+    // border: 2px solid $white;
     border-top: none;
     border-bottom: none;
 

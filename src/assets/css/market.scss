@@ -270,10 +270,11 @@
       // }
     // }
     input.search-input {
-      background-image: url(../img/search_icon.svg);
+      // background-image: url(../img/search_icon.svg);
       background-size: auto 50%;
       text-indent: 40px;
       border: none;
+      border-radius: 20px;
       background-color: white;
       padding: 5px 10px;
       background-position: 1.2rem;
@@ -292,7 +293,7 @@
     text-align: center;
     font-size: 28px;
     margin-bottom: 30px;
-    font-weight: 600;
+    // font-weight: 600;
     @include screen-max-width(large) {
       display: none;
     }
@@ -548,7 +549,7 @@
   .market-table {
     margin-bottom: 50px;
     padding-bottom: 15px;
-    color: #666666;
+    color: #222;
     position: relative;
     .search-space {
       position: absolute;
@@ -723,14 +724,14 @@
                 align-items: center;
                 justify-content: center;
                 &.negative {
-                  background-color: #FEF4F6;
-                  color: #F1637D;
+                  // background-color: #FEF4F6;
+                  color: #EE344E;
                   font-weight: bold;
                   border-radius: 20px;
                 }
                 &.positive {
-                  background-color: #0eaba3;
-                  color: white;
+                  // background-color: #0eaba3;
+                  color: #007BDE;
                   font-weight: bold;
                   border-radius: 20px;
                 }
@@ -759,27 +760,6 @@
                   position: relative;
                   top: -2px;
                 }
-                // &.new-token::after {
-                //   content: '';
-                //   background-image: url(../img/market/new.svg);
-                //   position: absolute;
-                //   width: 26px;
-                //   height: 100%;
-                //   background-position: center;
-                //   background-size: contain;
-                //   background-repeat: no-repeat;
-                //   top: -17px;
-                //   margin-left: 5px;
-                  
-                //   @media screen and (max-width: 1290px) {
-                //     top: -23px;
-                //     margin-left: -12px;
-                //   }
-                //   @include screen-max-width(medium) {
-                //     top: -23px;
-                //     margin-left: -15px;
-                //   }
-                // }
                 .new-token {
                   position: absolute;
                   top: -20px;
@@ -795,9 +775,6 @@
                   border-radius: 2px;
                   min-width: 25px;
                   text-align: center;
-                  // @include screen-max-width(large) {
-                  //   right: 0;
-                  // }
                   @media screen and (max-width: 1296px) {
                     right: 0;
                   }
@@ -995,4 +972,10 @@
   @media only screen and (max-width: 1296px) {
     max-width: 60rem;
   }
+}
+
+
+.market-modal{
+  background-color: #F1F5FB !important;
+  border-radius: 20px;
 }
