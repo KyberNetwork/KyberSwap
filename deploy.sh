@@ -1,10 +1,58 @@
 #!/bin/bash
 
-branch=$1
-build_env=$2
-domain_name=$3
-secret_token=$4 
+print_usage() {
+    cat <<EOF
+Usage: You need to include all 4 argument -b, -e, -d, -s
+    -h, --help: print this message
+    -b, --branch: deployment branch
+    -e, --env: deployment environment
+    -d, --domain: domain name and AWS S3 bucket name
+    -s, --secret: secret travis-ci api token
+EOF
+}
 
+if (( $# != 8 )) && (( $# != 1 )) ; then
+    echo "The number of flags must be exactly 4 including: -b, -e, -d, -s"
+    print_usage
+    exit 1
+fi
+
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+    -h|--help)
+    print_usage
+    exit 0
+    ;;
+    -b|--branch)
+    branch="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -e|--env)
+    build_env="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -d|--domain)
+    domain_name="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -s|--secret)
+    secret_token="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    *)    # unknown option
+    echo "Invalid option: $1 $2"
+    print_usage
+    exit 1
+    ;;
+esac
+done
 
 body=$(cat << EOF
 {
@@ -85,6 +133,6 @@ curl -X POST \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "Travis-API-Version: 3" \
-    -H "Authorization: token $4" \
+    -H "Authorization: token $secret_token" \
     -d "$body" \
     https://api.travis-ci.com/repo/KyberNetwork%2FKyberSwap/requests
