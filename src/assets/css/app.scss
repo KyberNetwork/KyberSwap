@@ -70,6 +70,9 @@ html body{
 #swap-app{
   max-width: 982px;
   margin: 0 auto;
+  #content {
+    background-color: white;
+  }
 }
 
 #waiting {
