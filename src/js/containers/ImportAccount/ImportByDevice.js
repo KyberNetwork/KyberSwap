@@ -95,7 +95,7 @@ export default class ImportByDevice extends React.Component {
     this.generator = new AddressGenerator(data);
     let addresses = [];
     let index = 0;
-    for (index; index < 5; index++) {
+    for (index; index < 3; index++) {
       let address = {
         addressString: this.generator.getAddressString(index),
         index: index,
@@ -137,7 +137,7 @@ export default class ImportByDevice extends React.Component {
   moreAddress() {
     let addresses = this.state.addresses,
       i = this.addressIndex,
-      j = i + 5,
+      j = i + 3,
       currentAddresses = [];
     if (this.generator) {
       if (this.addressIndex == this.currentIndex) {
@@ -154,10 +154,10 @@ export default class ImportByDevice extends React.Component {
         }
       }
       this.addressIndex = i;
-      this.currentIndex += 5;
+      this.currentIndex += 3;
       this.setState({
         addresses: addresses,
-        currentAddresses: addresses.slice(this.currentIndex - 5, this.currentIndex)
+        currentAddresses: addresses.slice(this.currentIndex - 3, this.currentIndex)
       })
       if (this.state.isFirstList) {
         this.setState({
@@ -172,13 +172,13 @@ export default class ImportByDevice extends React.Component {
 
   preAddress() {
     let addresses = this.state.addresses;
-    if (this.currentIndex > 5) {
-      this.currentIndex -= 5;
+    if (this.currentIndex > 3) {
+      this.currentIndex -= 3;
       this.setState({
-        currentAddresses: addresses.slice(this.currentIndex - 5, this.currentIndex),
+        currentAddresses: addresses.slice(this.currentIndex - 3, this.currentIndex),
       })
     }
-    if (this.currentIndex <= 5) {
+    if (this.currentIndex <= 3) {
       this.setState({
         isFirstList: true
       })

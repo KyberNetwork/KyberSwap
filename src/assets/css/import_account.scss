@@ -132,7 +132,7 @@
     //   width: 160px;
     // }
     height: 39px;
-    border-radius: 22.5px;
+    border-radius: 23px;
     background-color: #e7edf5;
     margin: 6px 0;
 
@@ -344,14 +344,15 @@
 .import-privatekey {
   padding: 0px !important;
   .title {
-    font-size: 1.2rem;
-    // font-size: 30px;
-    // font-weight: bold;
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 70px;
     margin-top: 0;
     padding-top: 70px;
-
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.71;
+    letter-spacing: -0.4px;
+    color: #141927;
   }
   // .content {
   //   padding-left: 30px;
@@ -369,22 +370,21 @@
   }
   .overlap {
     justify-content: center;
-    background-color: #f5f5f5;
+    // background-color: #f5f5f5;
     margin-top: 10px;
-    padding: 50px 45px;
+    padding: 20px 45px 45px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     .accent {
-      // margin-top: 50px;
-      line-height: 55px;
+      line-height: 45px;
       padding: 0 35px;
       background: #ef8102;
-      font-size: 1.3rem;
+      font-size: 14px;
       border-radius: 4px;
-      // box-shadow: 0 10px 15px #ccc;
       width: 100%;
       max-width: 200px;
       border-radius: 60px;
+      font-weight: 600;
     }
   }
   #private_key {
@@ -394,7 +394,7 @@
     border: 1px solid #ccc;
     border-radius: 23px;
     color: #666666;
-    height: 50px;
+    height: 45px;
     padding-left: 55px;
   }
 }
@@ -411,7 +411,7 @@
   &__item {
     width: 146px;
     height: 30px;
-    border-radius: 22.5px;
+    border-radius: 23px;
     background-color: #e7edf5;
     margin: 5px 0;
     display: flex;

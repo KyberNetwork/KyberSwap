@@ -48,7 +48,7 @@ $divider-color: darken($title-background-color, 5);
     text-align: center;
     display: flex;
     justify-content: space-between;
-    background-color: #8CBCAE;
+    // background-color: #8CBCAE;
     padding: 50px 45px;
     align-items: center;
     span{
@@ -830,13 +830,15 @@ $divider-color: darken($title-background-color, 5);
 // css for promo code
 #promocode-modal {
   .title {
-    font-size: 30px;
+    font-size: 28px;
     font-weight: 600;
-    line-height: 0.67;
-    text-align: center;
-    color: #222222;
-    padding-top: 70px;
+    text-align: left;
+    color: #141927;
+    padding-top: 50px;
+    line-height: 0.86;
     margin-bottom: 30px;
+    letter-spacing: -0.1px;
+    padding-left: 45px;
     .error {
       font-size: 14px;
       font-weight: normal;
@@ -858,21 +860,29 @@ $divider-color: darken($title-background-color, 5);
     }
   }
   .content {
-      padding: 16px 30px;
-      input.text-center {
-        border: solid 1px #e5e5e5;
-        background-color: #ffffff;
-        outline: none;
-        box-shadow: none;
-        height: 55px;
-        border-radius: 4px;
-        font-size: 16px;
-        text-align: unset;
-        margin-bottom: 20px;
-        padding-left: 35px;
-        padding-right: 35px;
-        border-radius: 40px;
+    padding: 16px 30px;
+    input.text-center {
+      border: solid 1px #e5e5e5;
+      background-color: #ffffff;
+      outline: none;
+      box-shadow: none;
+      height: 55px;
+      border-radius: 4px;
+      font-size: 16px;
+      text-align: unset;
+      margin-bottom: 20px;
+      padding-left: 35px;
+      padding-right: 35px;
+      border-radius: 40px;
+      &::placeholder {
+        color: #7f7f7f;
+        line-height: 1.25;
+        letter-spacing: normal;
       }
+    }
+    .capcha-wrapper {
+      padding: 10px 0;
+    }
     .label-text {
       font-size: 16px;
       color: #222222;
@@ -915,10 +925,20 @@ $divider-color: darken($title-background-color, 5);
     }
   }
   .overlap {
-    background-color: #f5f5f5;
+    // background-color: #f5f5f5;
+    justify-content: space-between;
+    background-color: white;
+    padding: 30px 45px 35px;
     button {
       width: 100%;
+      max-width: 150px;
+      width: 100%;
       box-shadow: none;
+      text-transform: capitalize;
+      letter-spacing: 0.5px;
+      &.cancel-buttom {
+        background-color: #6f6f6f;
+      }
     }
   }
 }
