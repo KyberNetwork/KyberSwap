@@ -17,7 +17,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
     "bignumber.js": "^8.0.1",
-    "bowser": "^2.0.0-beta.3",
+    "bowser": "^1.9.4",
     "chart.js": "^2.7.2",
     "clean-webpack-plugin": "^1.0.0",
     "compression-webpack-plugin": "^2.0.0",

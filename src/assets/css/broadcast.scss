@@ -218,8 +218,8 @@ ul.broadcast-steps {
   justify-content: space-between;
   align-items: center;
 
-  @include screen-min-width(medium) {
-    // background: #F5F5F5;
+  @include screen-max-width(medium) {
+    padding: 50px 0;
   }
 
   a {
@@ -230,6 +230,10 @@ ul.broadcast-steps {
     border-radius: 23px;
     font-size: 14px;
     font-weight: 600;
+
+    @include screen-max-width(medium) {
+      max-width: 135px;
+    }    
   }
 
   .new-transaction {

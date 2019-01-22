@@ -387,6 +387,10 @@ $divider-color: darken($title-background-color, 5);
           background-color: #6f6f6f;
         }
       }
+
+      @include screen-max-width(medium){
+        min-width: 125px;
+      }
     }
     @include screen-max-width(medium){
       padding-left: 20px;
@@ -543,6 +547,9 @@ $divider-color: darken($title-background-color, 5);
       div:last-child {
         color: #5a5e67;
         margin-top: 3px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }
@@ -577,6 +584,9 @@ $divider-color: darken($title-background-color, 5);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @include screen-max-width(medium) {
+      padding-top: 20px;
+    }
   }
   .password-input{
     margin-top: 10px;
@@ -938,6 +948,14 @@ $divider-color: darken($title-background-color, 5);
       letter-spacing: 0.5px;
       &.cancel-buttom {
         background-color: #6f6f6f;
+      }
+    }
+
+    @include screen-max-width(medium) {
+      padding-right: 30px;
+      padding-left: 30px;
+      button {
+        max-width: 125px;
       }
     }
   }

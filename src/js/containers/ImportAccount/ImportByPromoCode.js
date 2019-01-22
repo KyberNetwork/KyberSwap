@@ -171,14 +171,14 @@ export default class ImportByPromoCode extends React.Component {
   render() {
     return (
       <div>
-        {!this.props.global.isOnMobile && (
-         <div className="import-account__block" onClick={this.openModal.bind(this)}>
+        {/* {!this.props.global.isOnMobile && ( */}
+        <div className="import-account__block" onClick={this.openModal.bind(this)}>
           <div className="import-account__icon promo-code"></div>
           <div className="import-account__name">{this.props.translate("landing_page.promo_code") || "PROMO CODE"}</div>
         </div>
-      )}
+      {/* )} */}
 
-      {this.props.global.isOnMobile && (
+      {/* {this.props.global.isOnMobile && (
         <div className={"import-account__block"}>
           <div className={"import-account__block-left"}>
             <div className="import-account__icon promo-code"/>
@@ -189,7 +189,7 @@ export default class ImportByPromoCode extends React.Component {
           </div>
           <div className="import-account__block-right" onClick={this.openModal.bind(this)}>Enter</div>
         </div>
-      )}
+      )} */}
 
        
 

@@ -70,6 +70,16 @@ html body{
 #swap-app{
   max-width: 982px;
   margin: 0 auto;
+  #content {
+    background-color: white;
+    @include screen-min-width(medium) {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      .exchange-container {
+        border-radius: 10px;
+      }
+    }
+  }
 }
 
 #waiting {
