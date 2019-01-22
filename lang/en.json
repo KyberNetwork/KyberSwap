@@ -23,7 +23,8 @@
     "price": "PRICE",
     "your_wallet_address": "Your Wallet Address",
     "search": "Search",
-    "connect_your_wallet_to_swap": "Connect your Wallet to Swap"
+    "connect_your_wallet_to_swap": "Connect your Wallet to Swap",
+    "download": "Download"
   },
   "transaction": {
     "wallet": "Wallet",

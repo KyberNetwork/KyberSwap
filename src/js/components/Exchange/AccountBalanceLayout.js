@@ -7,42 +7,42 @@ import SlideDown, { SlideDownTrigger, SlideDownContent } from "../CommonElement/
 const AccountBalanceLayout = (props) => {
 
   function displayBalance(balance, rateUSD) {
-    return props.showBalance ? 
-    `${props.translate("address.my_balance") || "My Balance"}: 
+    return props.showBalance ?
+      `${props.translate("address.my_balance") || "My Balance"}: 
     <strong>${balance}</strong>
     <br/>${props.translate("address.estimated_value") || "Estimated value"}: 
     <strong>${converts.roundingNumber(balance * rateUSD)}</strong> USD`
-    : `${props.translate("address.my_balance") || "Balance"}: <strong>${balance}</strong>`
+      : `${props.translate("address.my_balance") || "Balance"}: <strong>${balance}</strong>`
   }
 
-  function reorderToken(tokens){
-      if (props.sortType === "Price"){
-        if (props.sortValue){
-          return converts.sortEthBalance(tokens)
-        }else{
-          return converts.sortASCEthBalance(tokens)
-        }
-      }else{
-        if (props.sortValue){
-          var ordered = []
-          Object.keys(tokens).sort().forEach(function(key) {
-            ordered.push(tokens[key])
-          })
-          return ordered
-        }else{
-          var ordered = []
-          Object.keys(tokens).sort().reverse().forEach(function(key) {
-            ordered.push(tokens[key])
-          })
-          return ordered
-        }
+  function reorderToken(tokens) {
+    if (props.sortType === "Price") {
+      if (props.sortValue) {
+        return converts.sortEthBalance(tokens)
+      } else {
+        return converts.sortASCEthBalance(tokens)
       }
-      
+    } else {
+      if (props.sortValue) {
+        var ordered = []
+        Object.keys(tokens).sort().forEach(function (key) {
+          ordered.push(tokens[key])
+        })
+        return ordered
+      } else {
+        var ordered = []
+        Object.keys(tokens).sort().reverse().forEach(function (key) {
+          ordered.push(tokens[key])
+        })
+        return ordered
+      }
+    }
+
   }
 
   function getBalances() {
     var tokens = reorderToken(props.tokens)
-    var balances = tokens 
+    var balances = tokens
       .map(token => {
         var balance = converts.toT(token.balance, token.decimals)
         var searchWord = props.searchWord.toLowerCase()
@@ -56,7 +56,7 @@ const AccountBalanceLayout = (props) => {
           <div
             key={token.symbol}
             onClick={(e) => props.selectToken(e, token.symbol, token.address)}
-            className = {"account-balance__token-item" + classBalance}
+            className={"account-balance__token-item" + classBalance}
           >
             <div className="account-balance__token-symbol">{token.symbol}</div>
             <div className="account-balance__token-balance">{converts.roundingNumber(balance)}</div>
@@ -70,7 +70,7 @@ const AccountBalanceLayout = (props) => {
     var total = 0
 
     Object.values(props.tokens).map(token => {
-      if (!token.rateUSD){
+      if (!token.rateUSD) {
         return
       }
       var balance = converts.toT(token.balance, token.decimals)
@@ -82,8 +82,8 @@ const AccountBalanceLayout = (props) => {
     return roundingTotal
   }
 
-  function getWalletType(walletType){
-    switch(walletType){
+  function getWalletType(walletType) {
+    switch (walletType) {
       case "metamask":
         return "Metamask"
       case "trezor":
@@ -103,17 +103,17 @@ const AccountBalanceLayout = (props) => {
     var advanceContent = document.getElementById("balance-content");
     var arrowBalance = document.getElementById("arrow-balance");
     if (advanceContent.className === "show-balance") {
-        advanceContent.className = "";
-        arrowBalance.className = "";
+      advanceContent.className = "";
+      arrowBalance.className = "";
     } else {
-        advanceContent.className = "show-balance";
-        arrowBalance.className = "arrow-balance-up";
+      advanceContent.className = "show-balance";
+      arrowBalance.className = "arrow-balance-up";
     }
   }
 
   function getWalletName() {
     if (!props.walletName || props.walletName === "") {
-      switch(props.account.type) {
+      switch (props.account.type) {
         case "metamask":
           return "Metamask"
         case "keystore":
@@ -138,25 +138,28 @@ const AccountBalanceLayout = (props) => {
     <div className="account-balance">
       {props.account !== false && (
         <SlideDown active={props.isBalanceActive}>
+          <SlideDownTrigger onToggleContent={() => props.toggleBalanceContent()}>
             <div className="balance-header">
+
               <div className="slide-down__trigger-container">
                 <div>
                   <div className={"account-balance__address"}>
                     <div><span className="account-balance__address-text">Your Wallet</span> - <span>{getWalletName()}</span></div>
-                    <SlideDownTrigger onToggleContent={() => props.toggleBalanceContent()}>
-                      <div className="slide-arrow-container">
-                        <div className="slide-arrow"></div>
-                      </div>
-                    </SlideDownTrigger>
+                    {/* <SlideDownTrigger onToggleContent={() => props.toggleBalanceContent()}> */}
+                    <div className="slide-arrow-container">
+                      <div className="slide-arrow"></div>
+                    </div>
+                    {/* </SlideDownTrigger> */}
                   </div>
                   <a className="account-balance__address-link" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
-                    onClick={(e) => {props.analytics.callTrack("trackClickShowAddressOnEtherescan")}}>
+                    onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan");   e.stopPropagation(); }}>
                     {props.account.address}
                   </a>
                 </div>
               </div>
             </div>
 
+          </SlideDownTrigger>
           <SlideDownContent>
             <div className="account-balance__content">
               <div>
@@ -167,14 +170,14 @@ const AccountBalanceLayout = (props) => {
                       type="text"
                       placeholder={props.translate("address.search") || "Search by Name"}
                       onChange={(e) => props.changeSearchBalance(e)}
-                      value = {props.searchWord}
+                      value={props.searchWord}
                     />
                   </div>
 
                   <Dropdown
                     className={"account-balance__sort"}
-                    onShow = {(e) => props.showSort(e)}
-                    onHide = {(e) => props.hideSort(e)}
+                    onShow={(e) => props.showSort(e)}
+                    onHide={(e) => props.hideSort(e)}
                     active={props.sortActive}
                   >
                     <DropdownTrigger>
@@ -183,8 +186,8 @@ const AccountBalanceLayout = (props) => {
                     </DropdownTrigger>
                     <DropdownContent>
                       <div className={"account-balance__sort-category"}>
-                        <div className={`account-balance__sort-item ${props.sortType == 'Symbol' ? 'active' : ''}`} onClick={(e)=>props.sortSymbol()}>{props.translate("address.symbol") || "Symbol"}</div>
-                        <div className={`account-balance__sort-item ${props.sortType == 'Price' ? 'active' : ''}`} onClick={(e)=>props.sortPrice()}>{props.translate("address.price") || "Price"}</div>
+                        <div className={`account-balance__sort-item ${props.sortType == 'Symbol' ? 'active' : ''}`} onClick={(e) => props.sortSymbol()}>{props.translate("address.symbol") || "Symbol"}</div>
+                        <div className={`account-balance__sort-item ${props.sortType == 'Price' ? 'active' : ''}`} onClick={(e) => props.sortPrice()}>{props.translate("address.price") || "Price"}</div>
                       </div>
                     </DropdownContent>
                   </Dropdown>

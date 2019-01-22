@@ -80,6 +80,9 @@ const ExchangeBodyLayout = (props) => {
   var errorShow = errorSource.map((value, index) => {
     errorTooltip += `<span class="error-text" key=${index}>${value}</span>`
   })
+  var errorSelector = document.getElementById("swap-error")
+  if(errorSelector) errorSelector.innerHTML = `<div>${errorTooltip}</div>`
+  
   function getWalletName() {
     if (props.walletName === "") {
       switch(props.account.type) {

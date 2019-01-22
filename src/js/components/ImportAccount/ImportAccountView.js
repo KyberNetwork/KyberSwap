@@ -44,13 +44,13 @@ const ImportAccountView = (props) => {
           }
 
           {isOnMobile &&
-          <div class="import-account__item">
+          <div class="import-account__item download-app">
             <div className={"import-account__block"}>
               <div className={"import-account__block-left"}>
-                <div className="import-account__icon coinbase"/>
+                <div className="import-account__icon kyberapp"/>
                 <div>
-                  <div className="import-account__name">Coinbase Wallet</div>
-                  <div className="import-account__desc">Ethereum Wallet & DApp Browser</div>
+                  <div className="import-account__name">KYBERSWAP APP</div>
+                  <div className="import-account__desc">Ethereum Wallet & DApp</div>
                 </div>
               </div>
               <a

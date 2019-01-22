@@ -17,8 +17,8 @@ const MinConversionRate = (props) => {
       </div>
       <div className="advance-config__option-container">
         <label className="advance-config__option">
-          <span>3%</span>
-          <input className="advance-config__radio" type="radio" name="slippageRate" value="97" defaultChecked onChange={props.onSlippageRateChanged}/>
+          <span>{percent == 0? 3: 100- percent}%</span>
+          <input className="advance-config__radio" type="radio" name="slippageRate" value={percent == 0? 0: percent} defaultChecked onChange={props.onSlippageRateChanged}/>
           <span className="advance-config__checkmark"></span>
         </label>
         <label className="advance-config__option">

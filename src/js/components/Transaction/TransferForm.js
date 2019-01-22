@@ -66,6 +66,12 @@ const TransferForm = (props) => {
     }, 300)
   }
 
+  // var transferErrorTooltip = document.getElementById("transfer-amount-error")
+  // if(transferErrorTooltip) transferErrorTooltip.innerHTML = `<div>${props.translate(props.errors.amountTransfer)}</div>`
+
+  // var transferErrorTooltip = document.getElementById("transfer-amount-error")
+  // if(transferErrorTooltip) transferErrorTooltip.innerHTML = `<div>${props.translate(props.errors.amountTransfer)}</div>`
+
   function getWalletIconName(type, walletName) {
     if (walletName === "PROMO CODE") {
       return "promo_code";

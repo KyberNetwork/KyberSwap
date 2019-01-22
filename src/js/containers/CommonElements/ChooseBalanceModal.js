@@ -17,17 +17,17 @@ import * as converters from "../../utils/converter"
 })
 
 export default class ChooseBalanceModal extends React.Component {
-    constructor(){
+    constructor() {
         super()
         this.state = {
             open: false
         }
     }
     showChooseBalance = () => {
-        this.setState({open: true})
+        this.setState({ open: true })
     }
     hideChooseBalance = () => {
-        this.setState({open: false})
+        this.setState({ open: false })
     }
 
     selectBalance = (percent) => {
@@ -37,32 +37,34 @@ export default class ChooseBalanceModal extends React.Component {
         var amount
 
         if (!sourceBalance) {
-          this.hideChooseBalance();
-          return;
+            this.hideChooseBalance();
+            return;
         }
 
-        if (sourceSymbol !== "ETH"){
+        if (sourceSymbol !== "ETH") {
             amount = sourceBalance * percent / 100
         } else {
-            var gasLimit, totalGas
+            var gasLimit
+            var totalGas
             if (this.props.typeTx === "swap") {
-                gasLimit = this.props.exchange.max_gas
-                totalGas = converters.calculateGasFee(this.props.exchange.gasPrice, gasLimit) * Math.pow(10,18)
+                var destTokenSymbol = this.props.exchange.destTokenSymbol
+                gasLimit = this.props.tokens[destTokenSymbol].gasLimit || this.props.exchange.max_gas
+                totalGas = converters.calculateGasFee(this.props.exchange.gasPrice, gasLimit) * Math.pow(10, 18)
                 // amount = (sourceBalance - totalGas) * percent / 100
             } else {
                 gasLimit = this.props.transfer.gas
-                totalGas = converters.calculateGasFee(this.props.transfer.gasPrice, gasLimit) * Math.pow(10,18)
+                totalGas = converters.calculateGasFee(this.props.transfer.gasPrice, gasLimit) * Math.pow(10, 18)
                 // amount = (sourceBalance - totalGas) * percent / 100
             }
-            var amount = (sourceBalance - totalGas) * percent / 100
+            var amount = (sourceBalance) * percent / 100 - totalGas * 120 / 100
         }
 
-        amount = amount / Math.pow(10,sourceDecimal)
+        amount = amount / Math.pow(10, sourceDecimal)
 
         if (this.props.typeTx === "swap") {
             this.props.dispatch(this.props.changeAmount('source', converters.roundingNumber(amount).toString(10)))
             this.props.dispatch(this.props.changeFocus('source'));
-            if (this.props.typeTx === "swap") this.props.ethereum.fetchRateExchange(true)
+            this.props.ethereum.fetchRateExchange(true)
         } else {
             this.props.dispatch(this.props.changeAmount(converters.roundingNumber(amount).toString(10)))
             this.props.changeFocus()
@@ -88,12 +90,12 @@ export default class ChooseBalanceModal extends React.Component {
                         </div>
                     </DropdownTrigger>
                     <DropdownContent>
-                    <div className="select-item">
-                        <div className="list-item custom-scroll">
-                            <div onClick={(e) => this.selectBalance(25)}>Swap 25% balance</div>
-                            <div onClick={(e) => this.selectBalance(50)}>Swap 50% balance</div>
-                            <div onClick={(e) => this.selectBalance(100)}>Swap 100% balance</div>
-                        </div>
+                        <div className="select-item">
+                            <div className="list-item custom-scroll">
+                                <div onClick={(e) => this.selectBalance(25)}>Swap 25% balance</div>
+                                <div onClick={(e) => this.selectBalance(50)}>Swap 50% balance</div>
+                                <div onClick={(e) => this.selectBalance(100)}>Swap 100% balance</div>
+                            </div>
                         </div>
                     </DropdownContent>
                 </Dropdown>

@@ -33,18 +33,26 @@
 
       .import-account__item {
         margin: 10px 0;
+        width: auto;
+        height: auto;
+        &.download-app{
+          .import-account__block-right{
+            background-color: #EF8102;
+            border: none;
+            color: #fff;
+          }
+        }
       }
 
       .import-account__block {
-        box-shadow: 0 2px 5px 0 #b8b8b8;
-        background-color: #fafafa;
-        border-radius: unset;
+        background-color: #E7EDF5;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 12px 15px;
+        padding: 10px 20px;
         height: unset;
         cursor: initial;
+        border-radius: 50%;
 
         &:hover {
           border-color: #ccc;
@@ -62,25 +70,25 @@
       }
 
       .import-account__icon {
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        background-color: #ef8102;
-        background-size: 12px;
+        width: 21px;
+        height: 46px;
+        // border-radius: 50%;
+        // background-color: #ef8102;
+        // background-size: 12px;
 
-        &.coinbase {
+        &.kyberapp {
           background-size: 100%;
-          background-image: url($image-path + 'coinbase.svg');
+          background-image: url($image-path + '/v3/kyber-logo.svg');
           background-color: transparent;
         }
 
         &.promo-code {
-          background-image: url($image-path + 'import-account/icon-promo-code-white.svg');
+          background-image: url($image-path + '/v3/kyber-promo-mobile.svg');
         }
 
         &.private-key {
-          background-size: 12px;
-          background-image: url($image-path + 'import-account/icon-private-key-white.png');
+          // background-size: 12px;
+          background-image: url($image-path + '/v3/private-key-mobile.svg');
         }
       }
 
@@ -98,17 +106,15 @@
 
       .import-account__block-right {
         display: block;
-        font-size: 11px;
-        font-weight: 600;
-        color: #666666;
-        text-transform: uppercase;
-        border: solid 1px #dfdfdf;
-        background-color: #f9f9f9;
-        width: 80px;
+        font-size: 12px;
+        color: #677C94;
+        width: 100px;
         padding: 4px 0;
         text-align: center;
         cursor: pointer;
         transition: all .3s;
+        border: 1px solid #677C94;
+        border-radius: 20px;
 
         &:hover {
           color: white;
