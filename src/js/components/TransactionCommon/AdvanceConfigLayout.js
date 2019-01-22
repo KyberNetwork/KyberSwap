@@ -17,8 +17,7 @@ export default class AdvanceConfigLayout extends React.Component {
         <SlideDownTrigger onToggleContent={() => this.props.toggleAdvanceContent()}>
           <div className="slide-down__trigger-container slide-down__trigger-container--align-right">
             <div>
-              <span className="slide-down__trigger-bold">Advance - </span>
-              <span className="slide-down__trigger-light">Optional</span>
+              <span className="slide-down__trigger-bold">Advance</span> - <span className="slide-down__trigger-light">Optional</span>
             </div>
             <div className="slide-arrow-container">
               <div className="slide-arrow"></div>

@@ -253,10 +253,6 @@
       @include screen-max-width(large) {
         max-width: 100%;
       }
-      &:after{
-        background-image: url("../img/v3/search_icon.svg");
-        content: ' ';
-      }
     }
   }
   .market-wrapper{
@@ -573,6 +569,24 @@
       }
       .search-icon {
         display: none;
+      }
+
+      .search-input {
+        max-width: 700px;
+        margin: auto;
+        position: relative;
+        &:after{
+          content: '';
+          background-image: url($image-path +  "v3/search_icon.svg");
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
+          position: absolute;
+          height: 20px;
+          width: 20px;
+          top: 12px;
+          right: 15px;
+        }
       }
       @include screen-max-width(large) {
         margin-top: 10px;

@@ -56,7 +56,7 @@ const ImportByPKeyView = (props) => {
         onRequestClose={() => props.onRequestClose()}
         content={
           <div>
-            <div className="title">{ props.translate("import.from_private_key_input_title") || "ENTER YOUR PRIVATE KEY"}</div><a className="x" onClick={props.onRequestClose}>&times;</a>
+            <div className="title">{ props.translate("import.from_private_key_input_title") || "Enter your Private Key"}</div><a className="x" onClick={props.onRequestClose}>&times;</a>
             <div className="content with-overlap">
               <div className="row">
                 <div className="column">

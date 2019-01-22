@@ -144,7 +144,7 @@ const AccountBalanceLayout = (props) => {
               <div className="slide-down__trigger-container">
                 <div>
                   <div className={"account-balance__address"}>
-                    <div><span className="account-balance__address-text">Your Wallet</span> - <span>{getWalletName()}</span></div>
+                    <div><span className="account-balance__address-text">Your Wallet</span> - <span className={"account-balance__wallet-name"}>{getWalletName()}</span></div>
                     {/* <SlideDownTrigger onToggleContent={() => props.toggleBalanceContent()}> */}
                     <div className="slide-arrow-container">
                       <div className="slide-arrow"></div>

@@ -217,7 +217,7 @@
     "from_trezor": "TREZOR",
     "from_ledger": "LEDGER",
     "from_private_key": "PRIVATE KEY",
-    "from_private_key_input_title": "ENTER YOUR PRIVATE KEY",
+    "from_private_key_input_title": "Enter your Private Key",
     "from_private_key_input_title_placehoder": "Enter your private key",
     "connect": "Connect",
     "address": "Address",
@@ -228,7 +228,9 @@
     "select_or_drag": "Select or Drag",
     "address_is_loading": "Address is loading...",
     "enter_promo_code": "Enter your Promo Code",
-    "apply": "Apply"
+    "apply": "Apply",
+    "promo_code": "Promocode",
+    "cancel": "Cancel"
   },
   "info": {
     "title": "Kyber Testnet",

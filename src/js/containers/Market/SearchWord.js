@@ -37,7 +37,7 @@ export default class SearchWord extends React.Component {
                 <div className="search-icon" onClick={(e) => this.showSelector()}>
                     <img className="search-img" src={require("../../../assets/img/search_icon.svg")} />
                 </div>
-                <div>
+                <div className="search-input">
                     <input type="text" className="search-input" placeholder={this.props.translate("market.try_searching_for_token") || "Try Searching for Token"} value={this.props.searchWord} onChange={(e) => this.changeSearch(e)} onFocus={() => this.props.analytics.callTrack("trackSearchETHMarket")}/>
                 </div>
             </div>

@@ -213,9 +213,9 @@ ul.broadcast-steps {
 
 .tx-actions{
   text-align: center;
-  padding: 50px 0;
+  padding: 50px 48px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 
   @include screen-min-width(medium) {

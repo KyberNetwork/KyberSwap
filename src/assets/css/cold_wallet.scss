@@ -1,23 +1,26 @@
 .reveal.large {
   &.reveal-cold-wallet {
-    max-width: 544px;
+    max-width: 630px;
     border-radius: 5px;
     padding: 0;
     overflow: unset;
     #cold-wallet {
       .address-list-path {
         .content {
-          background-color: #F5F5F5;
-          padding: 60px 35px 20px;
+          background-color: #f6f7fa;
+          padding: 50px 35px 20px;
           .top-wrapper {
-            padding: 20px 0px;
+            padding: 20px 0px 10px;
             .title {
               margin-top: 0;
               padding: 0 .9375rem;
               margin-bottom: 30px;
+              color: #141927;
             }
             .token-selector {
               .focus-item {
+                border-radius: 23px;
+                border: 1px solid #e5e5e5;
                 padding: 10px 5px;
                 background-color: white;
                 >div {
@@ -40,7 +43,7 @@
               }
               .select-item {
                 top: -45px;
-                box-shadow: 0 0 23px #232323;
+                box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
                 border-radius: 5px;
                 max-height: 450px;
                 overflow-y: auto;
@@ -97,9 +100,7 @@
             }
           }
           &.white {
-            background-color: white;
             padding: 0px 35px;
-            margin-bottom: 20px;
           }
         }
       }

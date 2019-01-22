@@ -200,7 +200,7 @@ export default class ImportByPromoCode extends React.Component {
           content={
             <div id="promocode-modal">
               <div className="title">
-                {this.props.translate("import.enter_promo_code") || "Your Promo code"}
+                {this.props.translate("import.promo_code") || "Promocode"}
                 {this.state.error && (
                   <div className="error">{this.state.error}</div>
                 )}
@@ -240,6 +240,9 @@ export default class ImportByPromoCode extends React.Component {
                 </div>
               </div>
               <div className="overlap promo-btn">
+                <button onClick={this.closeModal.bind(this)} className= {`button accent cur-pointer cancel-buttom`}>
+                  {this.props.translate("import.cancel") || "Cancel"}
+                </button>
                 <button className= {`button accent cur-pointer ${this.state.isPassCapcha ? "": "disable"}`} onClick={this.apply.bind(this)}>
                   {this.props.translate("import.apply") || "Apply"}
                 </button>

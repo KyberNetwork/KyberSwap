@@ -49,7 +49,7 @@ const ImportByDeviceView = (props) => {
                             </a>
                             <a class="import">
                                 {props.translate("import.import") || "Import"}
-                                <img src={require('../../../assets/img/import-account/arrow_right_orange.svg')}/>
+                                {/* <img src={require('../../../assets/img/import-account/arrow_right_orange.svg')}/> */}
                             </a>
                         </div>
                     </div>
@@ -99,14 +99,16 @@ const ImportByDeviceView = (props) => {
                                 {getCurrentList()}
                             </ul>
                             <div class="address-list-navigation animated fadeIn">
-                                <a class={'previous ' + (props.isFirstList ? 'disabled' : '')} onClick={props.getPreAddress}>
-                                    <img src={require('../../../assets/img/import-account/arrows_left_icon.svg')} />
-                                    <span>{props.translate("modal.previous_addresses") || "Previous Addresses"}</span>
-                                </a>
-                                <a class="next" onClick={props.getMoreAddress}>
-                                    <span>{props.translate("modal.more_addresses") || "More Addresses"}</span>
-                                    <img src={require('../../../assets/img/import-account/arrows_right_icon.svg')} />
-                                </a>
+                                <div class={'address-button address-button-previous ' + (props.isFirstList ? 'disabled' : '')} onClick={props.getPreAddress}>
+                                    {/* <img src={require('../../../assets/img/import-account/arrows_left_icon.svg')} /> */}
+                                    {/* <span>{props.translate("modal.previous_addresses") || "Previous Addresses"}</span> */}
+                                    <div className={"address-arrow address-arrow-left"}></div>
+                                </div>
+                                <div class="address-button address-button-next" onClick={props.getMoreAddress}>
+                                    {/* <span>{props.translate("modal.more_addresses") || "More Addresses"}</span> */}
+                                    {/* <img src={require('../../../assets/img/import-account/arrows_right_icon.svg')} /> */}
+                                    <div className={"address-arrow address-arrow-right"}></div>
+                                </div>
                             </div>
                         </div>
                     </div>
