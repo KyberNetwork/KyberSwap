@@ -78,7 +78,7 @@ export default class DappBrowser {
     }
 
     if (web3.kyberID && !verifyAccount(web3.kyberID)) {
-      return web3Service.web3.kyberID
+      return web3.kyberID
     }
 
     return "0xea1a7de54a427342c8820185867cf49fc2f95d43"
