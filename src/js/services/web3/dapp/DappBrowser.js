@@ -49,22 +49,16 @@ export default class DappBrowser {
   
   getWalletId(blockNo){
     var refAddr = common.getParameterByName("ref")
-  //  alert(refAddr)
-    
     if (!verifyAccount(refAddr)) {
-    //  alert("xxxx")
       return refAddr
     }
     if (common.isUserEurope()){
         return "0x440bBd6a888a36DE6e2F6A25f65bc4e16874faa9" 
     }
-
     if (web3.kyberID && !verifyAccount(web3.kyberID)) {
-      return web3Service.web3.kyberID
+      return web3.kyberID
     }
-
     return "0xea1a7de54a427342c8820185867cf49fc2f95d43"
-    //return converters.numberToHexAddress(blockNo)
   }
 
 }
