@@ -82,11 +82,14 @@ const TransferForm = (props) => {
 
   var importAccount = function () {
     if (props.account === false || (props.isChangingWallet && props.changeWalletType === "transfer")) {
-      return (<ImportAccount
-        tradeType="transfer"
-        isChangingWallet={props.isChangingWallet}
-        closeChangeWallet={props.closeChangeWallet}
-      />)
+      return (
+        <ImportAccount
+          tradeType="transfer"
+          isChangingWallet={props.isChangingWallet}
+          closeChangeWallet={props.closeChangeWallet}
+          isAgreedTermOfService={props.isAgreedTermOfService}
+        />
+      )
     }
   }
 
@@ -184,41 +187,14 @@ const TransferForm = (props) => {
             </div>
           </div>
 
-          {!props.isAgreedTermOfService &&
+          {(!props.isAgreedTermOfService && props.account === false) &&
             <div className={"exchange-content__accept-term"}>
               <div className={"accept-buttom"} onClick={(e) => props.acceptTerm()}>Transfer Now</div>
               <TermAndServices tradeType="transfer" />
-
-              <div className={"list-wallet"}>
-                <div className={"list-wallet__item"}>
-                  <div className={"item-icon item-icon__metamask"}></div>
-                  <div className={"wallet-name"}>METAMASK</div>
-                </div>
-                <div className={"list-wallet__item"}>
-                  <div className={"item-icon item-icon__ledger"}></div>
-                  <div className={"wallet-name"}>LEDGER</div>
-                </div>
-                <div className={"list-wallet__item"}>
-                  <div className={"item-icon item-icon__trezor"}></div>
-                  <div className={"wallet-name"}>TREZOR</div>
-                </div>
-                <div className={"list-wallet__item"}>
-                  <div className={"item-icon item-icon__keystore"}></div>
-                  <div className={"wallet-name"}>KEYSTORE</div>
-                </div>
-                <div className={"list-wallet__item"}>
-                  <div className={"item-icon item-icon__privatekey"}></div>
-                  <div className={"wallet-name"}>PRIVATE KEY</div>
-                </div>
-                <div className={"list-wallet__item"}>
-                  <div className={"item-icon item-icon__promocode"}></div>
-                  <div className={"wallet-name"}>PROMOCODE</div>
-                </div>
-              </div>
             </div>
           }
 
-          {props.isAgreedTermOfService && importAccount()}
+          {props.account === false && importAccount()}
         </div>
 
         {/* {props.account !== false && (

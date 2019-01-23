@@ -164,7 +164,7 @@ const TransactionLoadingView = (props) => {
               <li class={props.status}>
                 <div>
                 <div>
-                  {props.type === "exchange" &&
+                  {props.type === "swap" &&
                     <div>
                       <div className="title final-status">{ props.translate('transaction.success_swap_msg') || "Successfully swapped" }</div>
                       <div className="content">
@@ -229,12 +229,12 @@ const TransactionLoadingView = (props) => {
         </div>
       </div>
       <div className="tx-actions">
-        <Link to={props.changePath} className={"change-path"} onClick={(e) => props.onCancel(e)}>
-            {props.type === "swap" ? (props.translate("transaction.transfer") || "Transfer")  : (props.translate("transaction.swap") || "Swap")}
-        </Link>
+        <a className={"change-path"} onClick={(e) => props.onCancel(e)}>
+            {props.type === "swap" ? (props.translate("transaction.swap") || "Swap") : (props.translate("transaction.transfer") || "Transfer")}
+        </a>
         <a className="new-transaction" onClick={props.makeNewTransaction}>
-          {props.type === "exchange" ?
-            props.translate("transaction.new_ex") || "New swap"            
+          {props.type === "swap" ?
+            props.translate("transaction.new_ex") || "New swap"
             : props.translate("transaction.new_tx") || "New transfer"}
         </a>
       </div>

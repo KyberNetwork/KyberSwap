@@ -309,7 +309,8 @@ export default class Transfer extends React.Component {
     }
     var destAdressShort = this.props.transfer.destAddress.slice(0, 8) + "..." + this.props.transfer.destAddress.slice(-6)
     var transactionLoadingScreen = (
-      <TransactionLoading tx={this.props.transfer.txHash}
+      <TransactionLoading
+        tx={this.props.transfer.txHash}
         makeNewTransaction={this.makeNewTransfer}
         tempTx={this.props.transfer.tempTx}
         type="transfer"
