@@ -66,6 +66,7 @@ export default class ImportAccount extends React.Component {
   render() {
     return (
       <ImportAccountView
+        isAgreedTermOfService={this.props.isAgreedTermOfService}
         errorModal={<ErrorModal/>}
         translate={this.props.translate}
         onMobile={this.props.onMobile}
