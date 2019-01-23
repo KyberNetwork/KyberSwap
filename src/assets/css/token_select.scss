@@ -599,19 +599,24 @@
   &.error{
     border: 1px solid #EE344E;
     position: relative;
+
+    .input-tooltip-wrapper {
+      padding-right: 20px;
+    }
+
     input{
-          color: #ee344e;  
+      color: #ee344e;
     }
-    .main-input{
-      &:after{
-            content: ' ';
-            // position: absolute;
-            width: 16px;
-            height: 15px;
-            background-image: url("../img/v3/error_notice.svg");
-            margin-left: 10px;
-          }
+
+    .main-input:after{
+      content: '';
+      position: absolute;
+      right: 20px;
+      width: 15px;
+      height: 15px;
+      background-image: url("../img/v3/error_notice.svg");
     }
+
     .__react_component_tooltip{
         position: absolute;
         z-index: 1 !important;
