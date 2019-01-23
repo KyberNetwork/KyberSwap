@@ -263,12 +263,17 @@
     // margin: 0 35px 30px;
     &--open {
       background: white;
-      padding: 15px 35px 10px;
       // margin: 0 0 30px;
       border-bottom: none;
       border-radius: 5px;
       @include screen-max-width(large){
         border-radius: 0;
+      }
+
+      &.exchange-account{
+        &__balance, &__adv-config {
+          padding: 15px 20px 25px;
+        }
       }
     }
   }
