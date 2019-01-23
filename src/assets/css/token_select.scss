@@ -183,9 +183,9 @@
     }
 
     &--dropdown {
-      
       position: relative;
-      padding: 10px;
+      padding: 10px 0;
+
       &::after {
         content: '';
         width: 10px;
@@ -193,7 +193,6 @@
         display: block;
         background-image: url($image-path + 'icon-dropdown-grey.svg');
         position: absolute;
-        // top: 4px;
         right: 0;
         @include screen-max-width(large) {
           right: -10px;
@@ -432,6 +431,10 @@
       }
     }
 
+    &.has-account {
+      padding-right: 20px;
+    }
+
     @include screen-max-width(medium) {
       padding: 0;
       padding-left: 20px;
@@ -600,7 +603,7 @@
     border: 1px solid #EE344E;
     position: relative;
 
-    .input-tooltip-wrapper {
+    .exchange-content__input {
       padding-right: 20px;
     }
 
@@ -615,6 +618,10 @@
       width: 15px;
       height: 15px;
       background-image: url("../img/v3/error_notice.svg");
+    }
+
+    .exchange-content__label--dropdown {
+      margin-right: 30px;
     }
 
     .__react_component_tooltip{
