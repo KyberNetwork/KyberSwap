@@ -368,8 +368,8 @@ class ExchangeBody extends React.Component {
 
     if (value > 100) {
       value = 100;
-    } else if (value < 0) {
-      value = 0;
+    } else if (value < 10) {
+      value = 10;
     }
 
     const minRate = converters.caculatorRateToPercentage(value, offeredRate);
