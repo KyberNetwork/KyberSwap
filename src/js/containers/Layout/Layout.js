@@ -7,7 +7,7 @@ import { ExchangeHistory } from "../../containers/CommonElements/"
 import {Market} from "../Market"
 import constanst from "../../services/constants"
 import history from "../../history"
-import { clearSession, changeLanguage, setOnMobileOnly, initAnalytics } from "../../actions/globalActions"
+import { clearSession, changeLanguage, setOnMobileOnly, initAnalytics, setIsShowingMarket } from "../../actions/globalActions"
 import { openInfoModal } from "../../actions/utilActions"
 import { createNewConnectionInstance } from "../../actions/connectionActions"
 import { default as _ } from 'underscore';
@@ -31,7 +31,8 @@ import BLOCKCHAIN_INFO from "../../../../env";
     translate: getTranslate(store.locale),
     locale: store.locale,
     tokens: store.tokens.tokens,
-    analytics: store.global.analytics
+    analytics: store.global.analytics,
+    notiService: store.global.notiService
   }
 })
 
@@ -67,6 +68,14 @@ export default class Layout extends React.Component {
     if (isMobile.iOS() || isMobile.Android()) {
       this.props.dispatch(setOnMobileOnly())
     }
+    
+    if (window.kyberBus){
+      window.kyberBus.on("swap.open.market", this.setShowMarket.bind(this));
+    }
+  }
+
+  setShowMarket = () => {
+    this.props.dispatch(setIsShowingMarket());
   }
 
   handleCloseWeb = () => {

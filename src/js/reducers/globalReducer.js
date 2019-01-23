@@ -31,7 +31,8 @@ const initState = {
   isOnMobile: false,
   analytics: {
     callTrack : () => {return}
-  }
+  },
+  isShowingMarket: false
 }
 
 const global = (state = initState, action) => {
@@ -172,6 +173,17 @@ const global = (state = initState, action) => {
     case "GLOBAL.INIT_ANALYTICS":{
       var newState = {...state}
       newState.analytics = action.payload
+      return newState
+    }
+
+    case "GLOBAL.OPEN_MARKET_MODAL":{
+      var newState = {...state}
+      const currentShow = newState.isShowingMarket
+      if (currentShow) {
+        newState.isShowingMarket = false
+      } else {
+        newState.isShowingMarket = true
+      }
       return newState
     }
   }

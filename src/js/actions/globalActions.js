@@ -273,3 +273,9 @@ export function initAnalytics(analytics){
     payload: analytics
   }
 }
+
+export function setIsShowingMarket(){
+  return {
+    type: "GLOBAL.OPEN_MARKET_MODAL"
+  }
+}

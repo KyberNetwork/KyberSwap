@@ -8,6 +8,8 @@ import { toEther } from "../../utils/converter";
 import * as analytics from "../../utils/analytics"
 import { Modal } from "../../components/CommonElement"
 
+import { setIsShowingMarket } from "../../actions/globalActions"
+
 @connect((store) => {
 
   var searchWord = store.market.configs.searchWord
@@ -91,7 +93,8 @@ import { Modal } from "../../components/CommonElement"
     searchWord: searchWord,
     sortType: sortType,
     showSearchInput: store.market.configs.showSearchInput,
-    global: store.global
+    global: store.global,
+    isShowingMarket: store.global.isShowingMarket
   }
 })
 
@@ -143,6 +146,7 @@ export default class Market extends React.Component {
 
   closeModal = () => {
     this.setState({ modalState: false })
+    this.props.dispatch(setIsShowingMarket())
   }
   openModal = () => {
     this.setState({ modalState: true })
@@ -165,7 +169,7 @@ export default class Market extends React.Component {
           base: 'reveal large confirm-modal market-modal',
           afterOpen: 'reveal large confirm-modal'
         }}
-          isOpen={this.state.modalState}
+          isOpen={this.state.modalState || this.props.isShowingMarket}
           onRequestClose={this.closeModal}
           contentLabel="Market modal"
           content={this.getContentMarket()}
