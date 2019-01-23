@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import { withRouter } from 'react-router-dom'
 import * as converters from "../../utils/converter"
 import * as validators from "../../utils/validators"
 import { TransferForm } from "../../components/Transaction"
@@ -21,12 +22,14 @@ import EthereumService from "../../services/ethereum/ethereum"
 @connect((store, props) => {
   const langs = store.locale.languages
   var currentLang = common.getActiveLanguage(langs)
-
   const tokens = store.tokens.tokens
   const tokenSymbol = store.transfer.tokenSymbol
+  const swapSrcTokenSymbol = store.exchange.sourceTokenSymbol;
+  const swapDestTokenSymbol = store.exchange.destTokenSymbol;
   var balance = 0
   var decimals = 18
   var tokenName = "kyber"
+
   if (tokens[tokenSymbol]) {
     balance = tokens[tokenSymbol].balance
     decimals = tokens[tokenSymbol].decimals
@@ -41,11 +44,13 @@ import EthereumService from "../../services/ethereum/ethereum"
     translate: getTranslate(store.locale),
     advanceLayout: props.advanceLayout,
     currentLang,
+    swapSrcTokenSymbol,
+    swapDestTokenSymbol,
     analytics: store.global.analytics
   }
 })
 
-export default class Transfer extends React.Component {
+class Transfer extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -125,9 +130,16 @@ export default class Transfer extends React.Component {
     this.props.analytics.callTrack("trackChooseToken", type, symbol);
   }
 
-  makeNewTransfer = () => {
+  makeNewTransfer = (changeTransactionType = false) => {
     this.props.dispatch(transferActions.makeNewTransfer());
-    this.props.analytics.callTrack("trackClickNewTransaction", "Transfer");
+
+    if (changeTransactionType) {
+      var swapLink = constansts.BASE_HOST + "/swap/" + this.props.swapSrcTokenSymbol.toLowerCase() + "_" + this.props.swapDestTokenSymbol.toLowerCase();
+      this.props.global.analytics.callTrack("trackClickNewTransaction", "Swap");
+      this.props.history.push(swapLink)
+    } else {
+      this.props.global.analytics.callTrack("trackClickNewTransaction", "Transfer");
+    }
   }
 
   onFocus = () => { 
@@ -371,3 +383,5 @@ export default class Transfer extends React.Component {
     )
   }
 }
+
+export default withRouter(Transfer)

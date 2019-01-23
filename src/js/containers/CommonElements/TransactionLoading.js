@@ -28,16 +28,16 @@ import * as common from "../../utils/common"
         returnProps = { broadcasting: true, error: props.broadcastingError }
     } else {
         returnProps = {
-            ...props.tempTx,
-            broadcasting: false,
-            makeNewTransaction: props.makeNewTransaction,
-            type: props.type,
-            balanceInfo: props.balanceInfo,
-            txHash: props.tx,
-            analyze: props.analyze,
-            address: props.address,
-            isOpen: props.isOpen,
-            changePath: changePath,
+          ...props.tempTx,
+          broadcasting: false,
+          makeNewTransaction: props.makeNewTransaction,
+          type: props.type,
+          balanceInfo: props.balanceInfo,
+          txHash: props.tx,
+          analyze: props.analyze,
+          address: props.address,
+          isOpen: props.isOpen,
+          changePath: changePath,
         }
     }
     return { ...returnProps, translate: getTranslate(store.locale), analytics: store.global.analytics }
@@ -71,11 +71,6 @@ export default class TransactionLoading extends React.Component {
             isCopied: false
         })
     }
-
-    // closeModal = () => {
-    //    this.props.makeNewTransaction()
-    // }
-
     render() {
         var loadingView =
           <TransactionLoadingView
@@ -94,7 +89,6 @@ export default class TransactionLoading extends React.Component {
             isCopied={this.state.isCopied}
             handleCopy={this.handleCopy.bind(this)}
             resetCopy={this.resetCopy.bind(this)}
-            onCancel = {this.props.makeNewTransaction}
             analytics = {this.props.analytics}
             changePath = {this.props.changePath}
           />

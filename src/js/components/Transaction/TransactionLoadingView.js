@@ -30,7 +30,7 @@ const TransactionLoadingView = (props) => {
           </div>
         }
         </div>
-        <a className="x" onClick={(e) => props.onCancel(e)}>&times;</a>
+        <a className="x" onClick={() => props.makeNewTransaction()}>&times;</a>
         <div className="content with-overlap tx-loading">
           <div className="row">
             <ul class="broadcast-steps">
@@ -139,7 +139,7 @@ const TransactionLoadingView = (props) => {
           </div>
         }
       </div>
-      <a className="x" onClick={(e) => props.onCancel(e)}>&times;</a>
+      <a className="x" onClick={() => props.makeNewTransaction()}>&times;</a>
       <div className="content with-overlap">
         <div className="row">
           <div class="info tx-title">
@@ -229,10 +229,10 @@ const TransactionLoadingView = (props) => {
         </div>
       </div>
       <div className="tx-actions">
-        <a className={"change-path"} onClick={(e) => props.onCancel(e)}>
-            {props.type === "swap" ? (props.translate("transaction.swap") || "Swap") : (props.translate("transaction.transfer") || "Transfer")}
+        <a className={"change-path"} onClick={() => props.makeNewTransaction(true)}>
+            {props.type === "swap" ? (props.translate("transaction.transfer") || "Transfer") : (props.translate("transaction.swap") || "Swap") }
         </a>
-        <a className="new-transaction" onClick={props.makeNewTransaction}>
+        <a className="new-transaction" onClick={() => props.makeNewTransaction()}>
           {props.type === "swap" ?
             props.translate("transaction.new_ex") || "New swap"
             : props.translate("transaction.new_tx") || "New transfer"}
