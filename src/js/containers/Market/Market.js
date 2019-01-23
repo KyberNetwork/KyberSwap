@@ -103,6 +103,16 @@ export default class Market extends React.Component {
     }
   }
 
+  componentDidMount = () => {    
+    if (window.kyberBus){
+      window.kyberBus.on("swap.open.market", this.setShowMarket.bind(this));
+    }
+  }
+
+  setShowMarket = () => {
+    this.setState({ modalState: true })
+  }
+
   getMoreData = () => {
     this.props.dispatch(marketActions.getMoreData(this.props.listTokens))
   }
