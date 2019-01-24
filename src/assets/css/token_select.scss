@@ -1070,26 +1070,39 @@
     width: 100%;
     z-index: 2;
     background-color: #F1F5FB;
-    // border: 2px solid $white;
     border-top: none;
     border-bottom: none;
 
-    &__priority-token{
+    &__priority-token {
       display: flex;
       justify-content: space-between;
-      span{
+
+      span {
+        width: 45%;
         cursor: pointer;
-        border: 1px solid #aaa;
+        border: 1px solid #e7edf5;
         padding: 5px 10px;
         border-radius: 20px;
-    img{
-      margin-right: 5px;
-    }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 500;
+        font-size: 14px;
+        transition: all .3s;
+
+        &:hover {
+          background-color: #e7edf5;
+        }
+
+        img {
+          max-width: 22px;
+          margin-right: 8px;
+        }
       }
     }
+
     .search-item{
       padding: 15px;
-      // margin-bottom: 10px;
     }
   }
 
