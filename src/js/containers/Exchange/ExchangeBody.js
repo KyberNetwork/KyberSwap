@@ -438,11 +438,6 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(globalActions.closeChangeWallet())
   }
 
-  clearSession = (e) => {
-    this.props.dispatch(globalActions.clearSession(this.props.exchange.gasPrice))
-    // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
-  }
-
   acceptTerm = (e) => {
     this.props.dispatch(globalActions.acceptTermOfService())
   } 
@@ -589,7 +584,6 @@ class ExchangeBody extends React.Component {
         closeChangeWallet = {this.closeChangeWallet}
         global={this.props.global}
         swapBalance = {this.getSwapBalance()}
-        clearSession={this.clearSession}
         walletName={this.props.account.walletName}
         isFixedDestToken = {isFixedDestToken}
         acceptTerm={this.acceptTerm}
@@ -601,8 +595,6 @@ class ExchangeBody extends React.Component {
 
         defaultShowTooltip = {this.state.defaultShowTooltip}
         setDefaulTooltip = {this.setDefaulTooltip}
-
-        isOnDAPP = {this.props.account.isOnDAPP}
       />
     )
   }

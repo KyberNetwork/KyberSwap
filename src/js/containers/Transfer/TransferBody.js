@@ -247,14 +247,7 @@ class Transfer extends React.Component {
 
   closeChangeWallet = () => {
     this.props.dispatch(globalActions.closeChangeWallet())
-  }
-
-  clearSession = (e) => {
-    this.props.dispatch(globalActions.clearSession())
-    // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
-  }
-
- 
+  } 
 
   acceptTerm = (e) => {
     this.props.dispatch(globalActions.acceptTermOfService())
@@ -363,7 +356,6 @@ class Transfer extends React.Component {
         closeChangeWallet = {this.closeChangeWallet}
         global={this.props.global}
         addressBalance={addressBalance}
-        clearSession={this.clearSession}
         walletName={this.props.account.walletName}
         qcCode = {qcCode}
         transferBalance = {this.getTransferBalance()}
@@ -380,7 +372,6 @@ class Transfer extends React.Component {
         defaultShowAddrErrorTooltip = {this.state.defaultShowAddrErrorTooltip}
         setDefaulAddrErrorTooltip = {this.setDefaulAddrErrorTooltip}
 
-        isOnDAPP = {this.props.account.isOnDAPP}
       />
     )
   }

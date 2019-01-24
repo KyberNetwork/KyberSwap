@@ -1,17 +1,18 @@
 import React from "react"
-import { NavLink } from 'react-router-dom'
+// import { NavLink } from 'react-router-dom'
 import { roundingNumber, toEther } from "../../utils/converter"
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import constants from "../../services/constants"
 import ReactTooltip from 'react-tooltip'
 import { filterInputNumber } from "../../utils/validators";
 import { ImportAccount } from "../../containers/ImportAccount";
 import { PostExchangeWithKey } from "../../containers/Exchange";
-import BLOCKCHAIN_INFO from "../../../../env";
+// import BLOCKCHAIN_INFO from "../../../../env";
 import { RateBetweenToken } from "../../containers/Exchange";
 import * as converters from "../../utils/converter";
 import { getAssetUrl } from "../../utils/common";
 // import { TermAndServices } from "../../containers/CommonElements";
+import {AccountAdvance} from "../../containers/TransactionCommon"
 
 const ExchangeBodyLayout = (props) => {
   function handleChangeSource(e) {
@@ -248,22 +249,17 @@ const ExchangeBodyLayout = (props) => {
         </div>
 
         {props.account !== false && (
-          <div className="exchange-account">
-            <div className="exchange-account__wrapper">
-              {!props.isOnDAPP && <div className={"exchange-account__wrapper--reimport"}>
-                <div className={"reimport-msg"} onClick={(e) => props.clearSession(e)}>Connect other wallet</div>
-              </div>}
-              <div className="exchange-account__container container">
-                <div className={`exchange-account__content`}>
-                  {getAccountTypeHtml(true)}
-                  <div className={`exchange-account__balance ${props.isBalanceActive ? 'exchange-account__content--open' : ''}`}>{props.balanceLayout}</div>
-                  <div className={`exchange-account__adv-config ${props.isAdvanceActive ? 'exchange-account__content--open' : ''}`}>{props.advanceLayout}</div>
-                </div>
-
-                <PostExchangeWithKey isChangingWallet={props.isChangingWallet}/>
-              </div>
-            </div>
-          </div>
+          <AccountAdvance
+            isOnDAPP={props.isOnDAPP}
+            clearSession={props.clearSession}
+            getAccountTypeHtml={getAccountTypeHtml}
+            isBalanceActive = {props.isBalanceActive}
+            balanceLayout = {props.balanceLayout}
+            isAdvanceActive = {props.isAdvanceActive}
+            advanceLayout = {props.advanceLayout}
+            postWithKey = {<PostExchangeWithKey isChangingWallet={props.isChangingWallet}/>}
+            tradeType={"swap"}
+          /> 
         )}
       </div>
 

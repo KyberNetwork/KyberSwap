@@ -258,7 +258,7 @@ $divider-color: darken($title-background-color, 5);
           text-overflow: ellipsis;
         }
 
-        @media only screen and (max-width: 430px) {
+        @include screen-max-width(mid-small) {
           display: block;
           >div {
             max-width: 100%;
