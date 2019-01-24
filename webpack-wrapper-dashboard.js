@@ -41,8 +41,8 @@ var getConfig = env => {
     ];
     return {
         context: path.join(__dirname, 'src'),
-        devtool: env !== 'production' ? 'inline-sourcemap' : false,
-        mode: env !== 'production' ? 'development' : 'production',
+        devtool: false,
+        mode: 'production',
         entry: entry,
         optimization: {
             // splitChunks: {
