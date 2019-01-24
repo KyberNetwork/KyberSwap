@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import { filterInputNumber, restrictInputNumber, anyErrors } from "../../utils/validators";
 import { ImportAccount } from "../../containers/ImportAccount";
-import { AccountBalance } from "../../containers/TransactionCommon";
+// import { AccountBalance } from "../../containers/TransactionCommon";
 import { PostTransferWithKey } from "../../containers/Transfer";
-import BLOCKCHAIN_INFO from "../../../../env";
+// import BLOCKCHAIN_INFO from "../../../../env";
 import * as analytics from "../../utils/analytics";
-import { RateBetweenToken } from "../../containers/Exchange";
-import { getAssetUrl } from "../../utils/common";
-import { TermAndServices } from "../../containers/CommonElements";
+// import { RateBetweenToken } from "../../containers/Exchange";
+// import { getAssetUrl } from "../../utils/common";
+// import { TermAndServices } from "../../containers/CommonElements";
+import {AdvanceAccount} from "../TransactionCommon"
 
 const TransferForm = (props) => {
   function handleChangeAmount(e) {
@@ -108,7 +109,8 @@ const TransferForm = (props) => {
             <div className={"exchange-content container"}>
               <div className={"exchange-content__item--wrapper"}>
                 <div className={"exchange-item-label"}>{props.translate("transaction.exchange_from") || "From"}:</div>
-                <div className={`exchange-content__item exchange-content__item--left exchange-content__item--transfer  select-token ${props.errors.amountTransfer ? "error" : ""}`}>
+                <div className={`exchange-content__item exchange-content__item--left exchange-content__item--transfer 
+                  select-token ${props.account !== false ? 'has-account' : ''} ${props.errors.amountTransfer ? "error" : ""}`}>
                   <div className={`input-div-content`}>
                     <div className={"exchange-content__label-content"}>
                       <div className="exchange-content__select select-token-panel">{props.tokenTransferSelect}</div>
@@ -205,21 +207,17 @@ const TransferForm = (props) => {
         )} */}
 
         {props.account !== false && (
-          <div className="exchange-account">
-            <div className="exchange-account__wrapper">
-              {!props.isOnDAPP && <div className={"exchange-account__wrapper--reimport"}>
-                <div className={"reimport-msg"} onClick={(e) => props.clearSession(e)}>Connect other wallet</div>
-              </div>}
-              <div className="exchange-account__container container">
-                <div className={`exchange-account__content`}>
-                  <div className={`exchange-account__balance  ${props.isBalanceActive ? 'exchange-account__content--open' : ''}`}>{props.balanceLayout}</div>
-                  <div className={`exchange-account__adv-config  ${props.isAdvanceActive ? 'exchange-account__content--open' : ''}`}>{props.advanceLayout}</div>
-                </div>
 
-                <PostTransferWithKey isChangingWallet={props.isChangingWallet} />
-              </div>
-            </div>
-          </div>
+          <AdvanceAccount
+            isOnDAPP={props.isOnDAPP}
+            clearSession={props.clearSession}
+            isBalanceActive = {props.isBalanceActive}
+            balanceLayout = {props.balanceLayout}
+            isAdvanceActive = {props.isAdvanceActive}
+            advanceLayout = {props.advanceLayout}
+            postWithKey = {<PostTransferWithKey isChangingWallet={props.isChangingWallet}/>}
+            tradeType={"transfer"}
+          /> 
         )}
       </div>
 
