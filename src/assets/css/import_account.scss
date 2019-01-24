@@ -30,6 +30,8 @@
         margin: 10px 0;
         width: auto;
         height: auto;
+        border-radius: 50px;
+
         &.download-app{
           .import-account__block-right{
             background-color: #EF8102;
@@ -65,16 +67,13 @@
       }
 
       .import-account__icon {
-        width: 21px;
-        height: 46px;
-        // border-radius: 50%;
-        // background-color: #ef8102;
-        // background-size: 12px;
+        width: 25px;
+        height: 35px;
+        background-size: contain;
+        margin-right: 15px;
 
         &.kyberapp {
-          background-size: 100%;
           background-image: url($image-path + '/v3/kyber-logo.svg');
-          background-color: transparent;
         }
 
         &.promo-code {

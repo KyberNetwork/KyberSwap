@@ -33,14 +33,14 @@ const ImportByDeviceView = (props) => {
             return (
                 <li key={address.addressString} onClick={() => getAddress(address)}>
                     <div className="grid-x">
-                        <div className="cell medium-6 small-12">
+                        <div className="cell medium-7 small-12">
                             <a class="name text-lowercase">
                                 <label class="mb-0">
-                                    <span class="hash">{address.addressString}</span>
+                                    <span class="hash">{address.addressString.slice(0, 20)}...{address.addressString.slice(-8)}</span>
                                 </label>
                             </a>
                         </div>
-                        <div class="info cell medium-6 small-12">
+                        <div class="info cell medium-5 small-12">
                             <a class="link has-tip top explore" title={address.balance}>
                                 {address.balance == '-1' ?
                                     <img src={require('../../../assets/img/waiting-white.svg')} />
