@@ -154,7 +154,7 @@ const ExchangeBodyLayout = (props) => {
             <div className={"exchange-content container"}>
               <div className={"exchange-content__item--wrapper"}>
                 <div className={"exchange-item-label"}>{props.translate("transaction.exchange_from") || "From"}:</div>
-                <div className={`exchange-content__item exchange-content__item--left select-token ${errorExchange ? "error" : ""}`}
+                <div className={`exchange-content__item exchange-content__item--left select-token ${props.account !== false ? 'has-account' : ''} ${errorExchange ? "error" : ""}`}
                       >
                   <div className={`input-div-content`}>
                     <div className={"exchange-content__label-content"}>

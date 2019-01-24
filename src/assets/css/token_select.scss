@@ -606,6 +606,9 @@
 
     .exchange-content__input {
       padding-right: 20px;
+      @include screen-max-width(medium) {
+        padding-right: 30px;
+      }
     }
 
     input{
@@ -622,7 +625,7 @@
     }
 
     .exchange-content__label--dropdown {
-      margin-right: 30px;
+      margin-right: 25px;
     }
 
     .__react_component_tooltip{
@@ -641,6 +644,17 @@
               right: 50px;
               left:auto;
         }
+    }
+
+    &.has-account {
+      @include screen-max-width(medium) {
+        .swap-balance-modal {
+          right: 20px;
+        }
+        .exchange-content__input {
+          padding-right: 20px;
+        }
+      }
     }
   }
 }
@@ -735,7 +749,7 @@
       box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
       width: 350px;
       background-color: #ffffff;
-      border-radius: 4px;
+      border-radius: 10px;
       padding: 25px 25px 40px;
       right: 0;
     top: 10px;
@@ -834,7 +848,8 @@
       border-bottom: solid 1px #e8e8e8;
       box-shadow: none;
       &::placeholder {
-        color: #222;
+        color: #474d5f;
+        font-weight: 600;
       }
       &:focus {
         outline: none;
@@ -852,7 +867,7 @@
         .token-item {
           padding-left: 0;
           padding-right: 0;
-          border-bottom: 1px solid #d8d8d8;
+          // border-bottom: 1px solid #d8d8d8;
           &:last-child {
             border-bottom: none;
           }
@@ -899,7 +914,9 @@
                 margin-right: 25px;
               }
               div:last-child {
-                font-size: 15px;
+                font-size: 14px;
+                font-weight: 550;
+                color: #474d5f;
               }
             }
           }

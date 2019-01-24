@@ -41,21 +41,15 @@ export default class ImportAccount extends React.Component {
   componentDidMount = () => {
     var swapPage = document.getElementById("swap-app")
     swapPage.className = swapPage.className === "" ? "no-min-height" : swapPage.className + " no-min-height"
-
-
-    // var web3Service = web3Package.newWeb3Instance()
     
     var web3Service = web3Package.newWeb3Instance()
-    // if (this.props.termOfServiceAccepted){
-    //   if (web3Service !== false) {
-    //     var walletType = web3Service.getWalletType()
-        
-    //     if ((walletType !== "metamask") && (walletType !== "modern_metamask")) {
-    //       this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-    //       this.props.ethereum, this.props.tokens, this.props.screen, this.props.translate, walletType))
-    //     }
-    //   }
-    // }
+    if (web3Service !== false) {
+      const walletType = web3Service.getWalletType();
+      const isDapp = (walletType !== "metamask") && (walletType !== "modern_metamask");
+      if (isDapp) {
+        this.props.dispatch(setOnDAPP())
+      }
+    }
     if (web3Service === false) {
       if (isMobile.iOS()) {
         this.props.dispatch(setOnMobile(true, false));
@@ -66,21 +60,13 @@ export default class ImportAccount extends React.Component {
   }
 
   acceptTerm = () => {
-  
-    const web3Service = web3Package.newWeb3Instance();
-    if (web3Service !== false) {
+    if (this.props.isOnDAPP) {
+      var web3Service = web3Package.newWeb3Instance()
       const walletType = web3Service.getWalletType();
-      const isDapp = (walletType !== "metamask") && (walletType !== "modern_metamask");
+      const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
 
-      if (isDapp) {
-        const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
-
-        this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-          ethereumService, this.props.tokens, this.props.translate, walletType))
-        this.props.dispatch(setOnDAPP())
-      } else {
-        this.props.acceptTerm()
-      }
+      this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
+        ethereumService, this.props.tokens, this.props.translate, walletType))
     } else {
       this.props.acceptTerm()
     }
@@ -95,13 +81,13 @@ export default class ImportAccount extends React.Component {
             <TermAndServices tradeType={this.props.tradeType}/>
           </div>
         }
-        <ImportAccountView
+        {!this.props.isOnDAPP && <ImportAccountView
           isAgreedTermOfService={this.props.isAgreedTermOfService}
           errorModal={<ErrorModal/>}
           translate={this.props.translate}
           onMobile={this.props.onMobile}
           tradeType={this.props.tradeType}
-        />
+        />}
       </div>
     )
   }
