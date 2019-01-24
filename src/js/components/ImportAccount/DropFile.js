@@ -42,7 +42,7 @@ const DropFile = (props) => {
           <div className="import-account__block" {...getRootProps() }>
             <input {...getInputProps() } />          
             <div className="import-account__icon json"/>
-            <div className="import-account__name">{props.translate("import.json") || "JSON"}</div>
+            <div className="import-account__name">{props.translate("import.json") || "KEYSTORE"}</div>
           </div>
 
           // <div className="importer json" {...getRootProps() }>

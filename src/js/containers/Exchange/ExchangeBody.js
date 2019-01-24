@@ -1,6 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
+import { withRouter } from 'react-router-dom'
 import * as converters from "../../utils/converter"
 import { TransactionConfig } from "../../components/Transaction"
 import { ExchangeBodyLayout } from "../../components/Exchange"
@@ -19,7 +20,6 @@ import BLOCKCHAIN_INFO from "../../../../env";
 import * as web3Package from "../../services/web3"
 import { importAccountMetamask } from "../../actions/accountActions"
 import EthereumService from "../../services/ethereum/ethereum"
-
 import { PostExchangeWithKey, MinRate, RateBetweenToken } from "../Exchange"
 
 @connect((store, props) => {
@@ -30,6 +30,7 @@ import { PostExchangeWithKey, MinRate, RateBetweenToken } from "../Exchange"
   const exchange = store.exchange
   const tokens = store.tokens.tokens
   const translate = getTranslate(store.locale)
+  const transferTokenSymbol = store.transfer.tokenSymbol;
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
   var sourceBalance = 0
   var sourceDecimal = 18
@@ -57,6 +58,7 @@ import { PostExchangeWithKey, MinRate, RateBetweenToken } from "../Exchange"
   return {
     account, ethereum, tokens, translate, currentLang,
     global: store.global,
+    transferTokenSymbol,
     exchange: {
       ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
       sourceName, destName, rateSourceToEth,
@@ -65,7 +67,7 @@ import { PostExchangeWithKey, MinRate, RateBetweenToken } from "../Exchange"
   }
 })
 
-export default class ExchangeBody extends React.Component {
+class ExchangeBody extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -277,10 +279,17 @@ export default class ExchangeBody extends React.Component {
     this.setState({ focus: "" })
   }
 
-  makeNewExchange = () => {
+  makeNewExchange = (changeTransactionType = false) => {
     this.props.dispatch(exchangeActions.makeNewExchange());
-    this.props.global.analytics.callTrack("trackClickNewTransaction", "Swap");
-  }  
+
+    if (changeTransactionType) {
+      const transferLink = constansts.BASE_HOST + "/transfer/" + this.props.transferTokenSymbol.toLowerCase();
+      this.props.global.analytics.callTrack("trackClickNewTransaction", "Transfer");
+      this.props.history.push(transferLink)
+    } else {
+      this.props.global.analytics.callTrack("trackClickNewTransaction", "Swap");
+    }
+  }
 
   setAmount = () => {
     var tokenSymbol = this.props.exchange.sourceTokenSymbol
@@ -359,8 +368,8 @@ export default class ExchangeBody extends React.Component {
 
     if (value > 100) {
       value = 100;
-    } else if (value < 0) {
-      value = 0;
+    } else if (value < 10) {
+      value = 10;
     }
 
     const minRate = converters.caculatorRateToPercentage(value, offeredRate);
@@ -596,3 +605,5 @@ export default class ExchangeBody extends React.Component {
     )
   }
 }
+
+export default withRouter(ExchangeBody);
