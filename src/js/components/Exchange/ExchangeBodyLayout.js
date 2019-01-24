@@ -11,7 +11,7 @@ import BLOCKCHAIN_INFO from "../../../../env";
 import { RateBetweenToken } from "../../containers/Exchange";
 import * as converters from "../../utils/converter";
 import { getAssetUrl } from "../../utils/common";
-import { TermAndServices } from "../../containers/CommonElements";
+// import { TermAndServices } from "../../containers/CommonElements";
 
 const ExchangeBodyLayout = (props) => {
   function handleChangeSource(e) {
@@ -134,6 +134,7 @@ const ExchangeBodyLayout = (props) => {
           isChangingWallet={props.isChangingWallet}
           closeChangeWallet={props.closeChangeWallet}
           isAgreedTermOfService={props.isAgreedTermOfService}
+          acceptTerm={props.acceptTerm}
         />
       )
     }
@@ -242,13 +243,6 @@ const ExchangeBodyLayout = (props) => {
             </div>
            
           </div>
-          
-          {(!props.isAgreedTermOfService && props.account === false) &&
-            <div className={"exchange-content__accept-term"}>
-              <div className={"accept-buttom"} onClick={(e) => props.acceptTerm()}>Swap Now</div>
-              <TermAndServices tradeType="swap"/>
-            </div>
-          }
 
           {props.account === false && importAccount()}
         </div>
@@ -256,9 +250,9 @@ const ExchangeBodyLayout = (props) => {
         {props.account !== false && (
           <div className="exchange-account">
             <div className="exchange-account__wrapper">
-              <div className={"exchange-account__wrapper--reimport"}>
+              {!props.isOnDAPP && <div className={"exchange-account__wrapper--reimport"}>
                 <div className={"reimport-msg"} onClick={(e) => props.clearSession(e)}>Connect other wallet</div>
-              </div>
+              </div>}
               <div className="exchange-account__container container">
                 <div className={`exchange-account__content`}>
                   {getAccountTypeHtml(true)}
