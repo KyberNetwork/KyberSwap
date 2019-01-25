@@ -37,6 +37,13 @@ export default class ImportByPromoCode extends React.Component {
       isPassCapcha: false
     }
   }
+
+  componentDidMount = () => {
+    if (window.kyberBus) {
+      window.kyberBus.on("swap.import_promo_code", this.openModal.bind(this));
+    }
+  }
+
   openModal() {
     this.props.dispatch(openPromoCodeModal());
     this.props.analytics.callTrack("trackClickImportAccount", "promo code");
