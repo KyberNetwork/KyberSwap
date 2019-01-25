@@ -250,8 +250,6 @@ const ExchangeBodyLayout = (props) => {
 
         {props.account !== false && (
           <AccountAdvance
-            isOnDAPP={props.isOnDAPP}
-            clearSession={props.clearSession}
             getAccountTypeHtml={getAccountTypeHtml}
             isBalanceActive = {props.isBalanceActive}
             balanceLayout = {props.balanceLayout}
