@@ -48,16 +48,10 @@ export default class ImportAccount extends React.Component {
   constructor() {
     super()
     this.state = {
-      isOpen: false,
-      // isInLandingPage: true
+      isOpen: false 
     }
   }
 
-  // goExchange = (e) => {
-  //   this.setState({
-  //     isInLandingPage: false
-  //   })
-  // }
 
   componentDidMount = () => {
     var swapPage = document.getElementById("swap-app")
@@ -89,31 +83,7 @@ export default class ImportAccount extends React.Component {
     }
   }
 
-  // closeModal = (e) => {
-  //   this.setState({isOpen: false})
-  // }
-
-  // openModal = (e) => {
-  //   this.setState({isOpen: true})
-  // }
-
   render() {
-    // return (
-    //   <div>
-    //     <LandingPage goExchange={this.openModal} translate={this.props.translate}/>
-    //     <ImportAccountView
-    //       firstKey={<ImportByMetamask />}
-    //       secondKey={<ImportKeystore />}
-    //       thirdKey={<ImportByDeviceWithTrezor />}
-    //       fourthKey={<ImportByDeviceWithLedger />}
-    //       fifthKey={<ImportByPrivateKey />}
-    //       errorModal={<ErrorModal />}
-    //       translate={this.props.translate}
-    //       isOpen = {this.state.isOpen}
-    //       closeModal = {this.closeModal}
-    //     />
-    //   </div>
-    // )    
     var content
     if (!this.props.termOfServiceAccepted) {
       content = <LandingPage translate={this.props.translate} />
