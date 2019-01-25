@@ -79,19 +79,19 @@ class ExchangeBody extends React.Component {
   componentDidMount = () => {
     if (this.props.global.changeWalletType !== "swap") this.props.dispatch(globalActions.closeChangeWallet())
 
-    const web3Service = web3Package.newWeb3Instance();
+    // const web3Service = web3Package.newWeb3Instance();
 
-    if (web3Service !== false) {
-      const walletType = web3Service.getWalletType();
-      const isDapp = (walletType !== "metamask") && (walletType !== "modern_metamask");
+    // if (web3Service !== false) {
+    //   const walletType = web3Service.getWalletType();
+    //   const isDapp = (walletType !== "metamask") && (walletType !== "modern_metamask");
 
-      if (isDapp) {
-        const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
+    //   if (isDapp) {
+    //     const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
 
-        this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-          ethereumService, this.props.tokens, this.props.translate, walletType))
-      }
-    }
+    //     this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
+    //       ethereumService, this.props.tokens, this.props.translate, walletType))
+    //   }
+    // }
   }
 
   validateTxFee = (gasPrice) => {
@@ -601,6 +601,8 @@ class ExchangeBody extends React.Component {
 
         defaultShowTooltip = {this.state.defaultShowTooltip}
         setDefaulTooltip = {this.setDefaulTooltip}
+
+        isOnDAPP = {this.props.account.isOnDAPP}
       />
     )
   }

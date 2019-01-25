@@ -263,7 +263,7 @@ export default class PostExchange extends React.Component {
           <div className="amount">
             <div className="amount-item amount-left">              
               <div className={"rc-label"}>From</div>
-              <div className={"rc-info"}>{sourceAmount} {sourceTokenSymbol}</div>
+              <div className={"rc-info"}><div>{sourceAmount}</div> {sourceTokenSymbol}</div>
             </div>
             <div className="space"><img src={require("../../../assets/img/exchange/arrow-right-orange.svg")} /></div>
             <div className="amount-item amount-right">

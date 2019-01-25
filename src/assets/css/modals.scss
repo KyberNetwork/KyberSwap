@@ -249,6 +249,22 @@ $divider-color: darken($title-background-color, 5);
         font-size: 20px;
         // font-weight: 600;
         letter-spacing: -0.5px;
+        display: flex;
+        >div {
+          margin-right: 5px;
+          max-width: 100px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        @include screen-max-width(mid-small) {
+          display: block;
+          >div {
+            max-width: 100%;
+            margin-right: 0;
+          }
+        }
       }
     }      
     .amount-icon{
@@ -271,6 +287,10 @@ $divider-color: darken($title-background-color, 5);
           margin-right: 5px;
         }
       }
+    }
+
+    @include screen-max-width(medium) {
+      padding: 5px 15px;
     }
   }
   .description{
@@ -486,15 +506,15 @@ $divider-color: darken($title-background-color, 5);
       margin-top: 0.8rem;
       justify-content: space-between;
       .amount-item{
-        width: 100%;
+        width: calc(50% - 30px);
         color: #666;
         padding: 10px;
 
         .grid-x { 
           div {
-            &:first-child {
+            // &:first-child {
               
-            }
+            // }
 
             &:last-child {
               position: relative;
@@ -526,13 +546,14 @@ $divider-color: darken($title-background-color, 5);
       }
       .space{
         position: relative;
-        padding: 12px 12px;
+        padding: 12px 8px;
+        width: 30px;
         display: flex;
         img{
-          width: 30px;
+          width: 100%;
         }
         @include screen-max-width(medium){
-          padding: 40px 12px;
+          padding: 12px 8px;
         }
       }     
     }
