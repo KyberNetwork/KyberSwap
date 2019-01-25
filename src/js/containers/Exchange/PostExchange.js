@@ -4,6 +4,12 @@ import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
 import * as exchangeActions from "../../actions/exchangeActions"
 import * as utilActions from "../../actions/utilActions"
+<<<<<<< HEAD
+=======
+import * as constants from "../../services/constants"
+
+//import {getWalletId} from "../../services/web3"
+>>>>>>> 1f87819fad4d909daa69595eb7bc2ee3969931f5
 import { Modal } from "../../components/CommonElement"
 import { PassphraseModal, ConfirmTransferModal, ApproveModal } from "../../components/Transaction"
 import { PostExchangeBtn } from "../../components/Exchange"
@@ -325,17 +331,10 @@ export default class PostExchange extends React.Component {
 
   getReferAddr = (blockNo) => {
     var refAddr = getParameterByName("ref")
-    //  alert(refAddr)
-      
-      if (!validators.verifyAccount(refAddr)) {
-      //  alert("xxxx")
-        return refAddr
-      }
-      if (isUserEurope()){
-          return "0x440bBd6a888a36DE6e2F6A25f65bc4e16874faa9" 
-      }
-      return "0xea1a7de54a427342c8820185867cf49fc2f95d43"
-      //return converters.numberToHexAddress(blockNo)
+    if (!validators.verifyAccount(refAddr)) {
+      return refAddr
+    }
+    return constants.COMMISSION_ADDR
   }
 
   formParams = () => {
@@ -388,16 +387,15 @@ export default class PostExchange extends React.Component {
     minConversionRate = converters.numberToHex(minConversionRate)
 
     //var blockNo = converters.numberToHexAddress(this.props.snapshot.blockNo)
-     // check wallet type
+    // check wallet type
     var walletType = this.props.account.type
-   // console.log("wallet_type")
+    // console.log("wallet_type")
     //console.log(walletType)
     //alert(walletType)
     var blockNo = this.props.snapshot.blockNo
-    if (walletType === "metamask"){
+    if (walletType === "metamask") {
       blockNo = this.props.account.keystring.getWalletId(blockNo)
-    }else{
-      
+    } else {
       blockNo = this.getReferAddr(blockNo)
     }
     //var blockNo =  getWalletId (walletType, this.props.snapshot.blockNo)
@@ -519,6 +517,7 @@ export default class PostExchange extends React.Component {
         title={this.props.translate('modal.confirm_swap') || "Swap Confirm"}
         slippagePercent={slippagePercent}
         analytics={this.props.analytics}
+        type="exchange"
       />
     )
   }

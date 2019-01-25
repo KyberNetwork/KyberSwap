@@ -3,7 +3,6 @@ import { gweiToEth, stringToBigNumber, calculateGasFee, roundingNumber } from ".
 import { FeeDetail } from "../CommonElement";
 
 class ConfirmTransferModal extends React.Component {
-
   constructor() {
     super()
     this.state = {
