@@ -58,7 +58,7 @@ export default class MarketTable extends React.Component {
       if (!!marketModal[0]) {
         var marketScroll = marketModal[0]
         var market = document.getElementById("market-eth")
-        if ((window.innerHeight + marketScroll.scrollTop) >= market.offsetHeight) {
+        if ( (window.innerHeight + marketScroll.scrollTop) >= market.offsetHeight) {
           this.getMoreData()
         }
       }
@@ -66,16 +66,13 @@ export default class MarketTable extends React.Component {
   }
 
   componentDidMount() {
+    if (typeof(document) === "undefined" || typeof(window) === "undefined") return
     var marketModal = document.getElementsByClassName("market-modal-scroll")
     var marketElem
     if(!!marketModal[0]) {
       marketElem = marketModal[0]
       marketElem.addEventListener("scroll", this.handleScroll)
     }
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.handleScroll)
   }
 
   drawChart = (props) => {
