@@ -1074,10 +1074,11 @@
 
     &__priority-token {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
+      flex-wrap: wrap;
 
       span {
-        width: 45%;
+        width: 30%;
         cursor: pointer;
         border: 1px solid #e7edf5;
         padding: 5px 10px;
@@ -1088,6 +1089,12 @@
         font-weight: 500;
         font-size: 14px;
         transition: all .3s;
+        margin-bottom: 10px;
+        margin-right: 5%;
+
+        &:nth-child(3n) {
+          margin-right: 0;
+        }
 
         &:hover {
           background-color: #e7edf5;
@@ -1101,7 +1108,7 @@
     }
 
     .search-item{
-      padding: 15px;
+      padding: 5px 15px 15px;
     }
   }
 

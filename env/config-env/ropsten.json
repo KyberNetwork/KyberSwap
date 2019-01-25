@@ -16,7 +16,7 @@
     "api_tokens": "https://ropsten-api.kyber.network/internal/currencies",
     "promo_token": "OMG",
     "priority_tokens": [
-        "ETH", "KNC"
+        "ETH", "KNC", "DAI"
     ],
     "market_exclude": [
         "WETH",
