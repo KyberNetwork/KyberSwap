@@ -8,10 +8,11 @@ import {
 } from "../ImportAccount"
 import { visitExchange, setOnMobile } from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux'
-import { importAccountMetamask } from "../../actions/accountActions"
+import { importAccountMetamask, setOnDAPP } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import * as web3Package from "../../services/web3"
 import {isMobile} from '../../utils/common'
+import { TermAndServices } from "../../containers/CommonElements";
 
 @connect((store, props) => {
   var tokens = store.tokens.tokens
@@ -31,7 +32,8 @@ import {isMobile} from '../../utils/common'
     screen: props.screen,
     tradeType: props.tradeType,
     global: store.global,
-    onMobile: store.global.onMobile
+    onMobile: store.global.onMobile,
+    acceptTerm: props.acceptTerm
   }
 })
 
@@ -39,19 +41,13 @@ export default class ImportAccount extends React.Component {
   componentDidMount = () => {
     var swapPage = document.getElementById("swap-app")
     swapPage.className = swapPage.className === "" ? "no-min-height" : swapPage.className + " no-min-height"
-
-
-    var web3Service = web3Package.newWeb3Instance()
     
     var web3Service = web3Package.newWeb3Instance()
-    if (this.props.termOfServiceAccepted){
-      if (web3Service !== false) {
-        var walletType = web3Service.getWalletType()
-        
-        if ((walletType !== "metamask") && (walletType !== "modern_metamask")) {
-          this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-          this.props.ethereum, this.props.tokens, this.props.screen, this.props.translate, walletType))
-        }
+    if (web3Service !== false) {
+      const walletType = web3Service.getWalletType();
+      const isDapp = (walletType !== "metamask") && (walletType !== "modern_metamask");
+      if (isDapp) {
+        this.props.dispatch(setOnDAPP())
       }
     }
     if (web3Service === false) {
@@ -63,15 +59,36 @@ export default class ImportAccount extends React.Component {
     }
   }
 
+  acceptTerm = () => {
+    if (this.props.isOnDAPP) {
+      var web3Service = web3Package.newWeb3Instance()
+      const walletType = web3Service.getWalletType();
+      const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
+
+      this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
+        ethereumService, this.props.tokens, this.props.translate, walletType))
+    } else {
+      this.props.acceptTerm()
+    }
+  }
+
   render() {
     return (
-      <ImportAccountView
-        isAgreedTermOfService={this.props.isAgreedTermOfService}
-        errorModal={<ErrorModal/>}
-        translate={this.props.translate}
-        onMobile={this.props.onMobile}
-        tradeType={this.props.tradeType}
-      />
+      <div>
+        {(!this.props.isAgreedTermOfService && this.props.account === false) &&
+          <div className={"exchange-content__accept-term"}>
+            <div className={"accept-buttom"} onClick={(e) => this.acceptTerm()}>{this.props.tradeType === "swap" ? "Swap Now" : "Transfer Now"}</div>
+            <TermAndServices tradeType={this.props.tradeType}/>
+          </div>
+        }
+        {!this.props.isOnDAPP && <ImportAccountView
+          isAgreedTermOfService={this.props.isAgreedTermOfService}
+          errorModal={<ErrorModal/>}
+          translate={this.props.translate}
+          onMobile={this.props.onMobile}
+          tradeType={this.props.tradeType}
+        />}
+      </div>
     )
   }
 }

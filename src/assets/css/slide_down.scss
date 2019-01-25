@@ -54,7 +54,9 @@
   &__fade-in {
     opacity: 0;
     transform: translateY(25px);
-    transition: all .4s;
+    position: relative;
+    z-index: -1;
+    // transition: all .4s;
   }
 
   &--active {
@@ -71,6 +73,8 @@
     .slide-down__fade-in {
       opacity: 1;
       transform: translateY(0);
+      position: unset;
+      transition: all .4s;
     }
 
     // .slide-arrow-container {
