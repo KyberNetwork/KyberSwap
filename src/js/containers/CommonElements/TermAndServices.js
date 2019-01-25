@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getTranslate } from 'react-localize-redux';
-import { isUserEurope } from "../../utils/common";
+import * as analytics from "../../utils/analytics"
 
 @connect((store, props) => {
   return {
@@ -13,10 +13,6 @@ import { isUserEurope } from "../../utils/common";
 export default class TermAndServices extends React.Component {
   render() {
     let termAndConditionUrl = "https://files.kyber.network/tac.pdf";
-
-    if (isUserEurope()) {
-      termAndConditionUrl = "https://files.kyber.network/tac-eu.pdf";
-    }
     
     return (
       <div className="exchange-terms" onClick={() => {this.props.analytics.callTrack("acceptTerm", this.props.tradeType)}}>
