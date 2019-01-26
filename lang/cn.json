@@ -22,7 +22,10 @@
     "symbol": "符号",
     "price": "价格",
     "your_wallet_address": "您的钱包地址",
-    "search": "搜索"
+    "search": "搜索",
+    "connect_your_wallet_to_swap": "Connect your Wallet to Swap",
+    "connect_your_wallet_to_transfer": "Connect your Wallet to Transfer",
+    "your_wallet": "Your Wallet"
   },
   "transaction": {
     "wallet": "钱包",
@@ -106,7 +109,11 @@
     "slippage_tip": "费率可能会改变。 您可以在高级选项中调整最小价格来更改最大滑点率",
     "max_slippage": "滑点率至多为${percent}%",
     "included": "包括",
-    "type_pass_before_progress": "进行之前，请输入密码"
+    "type_pass_to_sign": "进行之前，请输入密码",
+    "try_dai":"Try \"DAI\"",
+    "swap_now": "Swap Now",
+    "transfer_now": "Transfer Now",
+    "advance_notice": "Transaction will be reverted if rate of ${srcSymbol}-${destSymbol} is lower than ${slippageRate} (Current rate ${roundRate})"
   },
   "modal": {
     "enter_password": "输入密码",
@@ -135,7 +142,8 @@
     "eth_token_exchange": "ETH代币交易",
     "approve": "批准",
     "address": "地址",
-    "approve_token": "批准代币"
+    "approve_token": "批准代币",
+    "cancel": "Cancel"
   },
   "error": {
     "metamask_not_installed": "Metamask未安装",
@@ -224,7 +232,11 @@
     "address_is_loading": "地址正在加载中...",
     "promo_code": "PROMO CODE",
     "enter_promo_code": "输入您的活动码",
-    "apply": "申请"
+    "apply": "申请",
+    "cancel": "Cancel",
+    "swap_now": "Swap Now",
+    "transfer_now": "Transfer Now",
+    "connect_other_wallet": "Connect other wallet"
   },
   "info": {
     "title": "Kyber测试网络",
@@ -268,7 +280,9 @@
     "use_real": "请千万不要使用真实的以太坊账户！！！",
     "accept": "接受",
     "terms_and_condition": "条款和条件",
-    "to_get_started": "以开始"
+    "to_get_started": "以开始",
+    "description_term_swap": "By Swapping, you agree to the",
+    "description_term_transfer": "By Transfering, you agree to the"
   },
   "landing_page": {
     "title": "以太坊代币的去中心化交易",

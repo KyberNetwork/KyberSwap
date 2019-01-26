@@ -259,6 +259,7 @@ const ExchangeBodyLayout = (props) => {
             advanceLayout = {props.advanceLayout}
             postWithKey = {<PostExchangeWithKey isChangingWallet={props.isChangingWallet}/>}
             tradeType={"swap"}
+            translate={props.translate}
           /> 
         )}
       </div>

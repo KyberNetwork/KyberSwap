@@ -1,6 +1,15 @@
 import React from "react";
 import * as converter from "../../utils/converter";
 import { filterInputNumber } from "../../utils/validators";
+import { connect } from "react-redux"
+import { getTranslate } from 'react-localize-redux'
+
+@connect((store, props) => {
+  const translate = getTranslate(store.locale)
+  return {
+    translate: translate
+  }
+})
 
 export default class MinConversionRate extends React.Component {
   constructor(props) {
@@ -57,7 +66,9 @@ export default class MinConversionRate extends React.Component {
         </div>
         <div className={"advance-config__info"}>
           <div>
-            Transaction will be reverted if rate of {this.props.sourceTokenSymbol}-{this.props.destTokenSymbol} is lower than {slippageExchangeRate} (Current rate {roundExchangeRate})
+            {this.props.translate("transaction.advance_notice", 
+              {srcSymbol: this.props.sourceTokenSymbol, destSymbol: this.props.destTokenSymbol, slippageRate: slippageExchangeRate, roundRate: roundExchangeRate})
+              || `Transaction will be reverted if rate of ${this.props.sourceTokenSymbol}-${this.props.destTokenSymbol} is lower than ${slippageExchangeRate} (Current rate ${roundExchangeRate})`}
           </div>
         </div>
       </div>

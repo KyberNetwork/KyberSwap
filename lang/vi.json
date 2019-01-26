@@ -22,7 +22,10 @@
     "symbol": "MÃ",
     "price": "GIÁ",
     "your_wallet_address": "Địa chỉ ví của bạn",
-    "search": "Tìm kiếm"
+    "search": "Tìm kiếm",
+    "connect_your_wallet_to_swap": "Kết nối ví của bạn để trao đổi",
+    "connect_your_wallet_to_transfer": "Kết nối ví của bạn để chuyển khoản",
+    "your_wallet": "Ví của bạn"
   },
   "transaction": {
     "wallet": "Ví",
@@ -106,7 +109,11 @@
     "slippage_tip": "Tỉ giá có thể thay đổi, bạn có thể chỉnh tỉ giá trong lựa chọn nâng\ncao",
     "max_slippage": "với tối đa ${percent}% trượt giá",
     "included": "Bao gồm",
-    "type_pass_before_progress": "Nhập mật khẩu trước khi tiến hành"
+    "type_pass_to_sign": "Nhập mật khẩu trước khi tiến hành",
+    "try_dai":"Try \"DAI\"",
+    "swap_now": "Trao đổi",
+    "transfer_now": "Chuyển khoản",
+    "advance_notice": "Giao dịch sẽ bị hủy nếu tỉ giá của ${srcSymbol}-${destSymbol} thấp hơn ${slippageRate} (tỷ giá hiện tại ${roundRate})"
   },
   "modal": {
     "enter_password": "Nhập mật khẩu",
@@ -223,7 +230,11 @@
     "select_or_drag": "Chọn hoặc kéo file",
     "address_is_loading": "Đang tải thông tin địa chỉ...",
     "enter_promo_code": "Nhập mã khuyến mãi",
-    "apply": "Áp dụng"
+    "apply": "Áp dụng",
+    "cancel": "Hủy",
+    "swap_now": "Trao đổi",
+    "transfer_now": "Chuyển khoản",
+    "connect_other_wallet": "Dùng ví khác"
   },
   "info": {
     "title": "Kyber phiên bản thử nghiệm",
@@ -268,7 +279,9 @@
     "use_real": "ĐỪNG SỬ DỤNG TÀI KHOẢN VÍ ETHEREUM CHÍNH THỨC!!!",
     "accept": "Chấp nhận",
     "terms_and_condition": " Điều khoản sử dụng ",
-    "to_get_started": "để bắt đầu"
+    "to_get_started": "để bắt đầu",
+    "description_term_swap": "By Swapping, you agree to the",
+    "description_term_transfer": "By Transfering, you agree to the"
   },
   "landing_page": {
     "title": "Trao đổi Ethereum tokens",

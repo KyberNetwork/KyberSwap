@@ -22,7 +22,11 @@
     "symbol": "기호",
     "price": "가격",
     "your_wallet_address": "지갑 주소",
-    "search": "찾기"
+    "search": "찾기",
+    "connect_your_wallet_to_swap": "Connect your Wallet to Swap",
+    "connect_your_wallet_to_transfer": "Connect your Wallet to Transfer",
+    "download": "Download",
+    "your_wallet": "Your Wallet"
   },
   "transaction": {
     "wallet": "지갑",
@@ -107,7 +111,10 @@
     "slippage_tip": "고급 옵션에서 최소 비율을 조절하여 최대 미끄럼 비율을 변경할 수 있습니다.",
     "max_slippage": "가치를 잃은 ${percent}%로 최대입니다",
     "included": "포함",
-    "type_pass_before_progress": "비밀번호를 입력 하세요"
+    "type_pass_to_sign": "비밀번호를 입력 하세요",
+    "try_dai":"Try \"DAI\"",
+    "exchange_now": "${typeTrade} Now",
+    "advance_notice": "Transaction will be reverted if rate of ${srcSymbol}-${destSymbol} is lower than ${slippageRate} (Current rate ${roundRate})"
   },
   "modal": {
     "enter_password": "비밀번호 입력",
@@ -136,7 +143,8 @@
     "eth_token_exchange": "ETH 토큰 거래",
     "approve": "승인",
     "address": "주소",
-    "approve_token": "토큰 승인하기"
+    "approve_token": "토큰 승인하기",
+    "cancel": "Cancel"
   },
   "error": {
     "metamask_not_installed": "메타마스크가 설치되지 않았습니다",
@@ -224,7 +232,10 @@
     "select_or_drag": "선택 또는 드래그",
     "address_is_loading": "주소 로딩중...",
     "enter_promo_code": "Enter your Promo Code",
-    "apply": "Apply"
+    "apply": "Apply",
+    "cancel": "Cancel",
+    "exchange_now": "${typeTrade} Now",
+    "connect_other_wallet": "Connect other wallet"
   },
   "info": {
     "title": "카이버 테스트넷",
@@ -269,7 +280,9 @@
     "use_real": "진짜 이더리움 계정은 사용하시면 안됩니다!",
     "accept": "시작하려면",
     "terms_and_condition": " 이용 약관 ",
-    "to_get_started": "에 동의하십시오!"
+    "to_get_started": "에 동의하십시오!",
+    "description_term_swap": "By Swapping, you agree to the",
+    "description_term_transfer": "By Transfering, you agree to the"
   },
   "landing_page": {
     "title": "분권화된 이더리움 토큰 거래소",
