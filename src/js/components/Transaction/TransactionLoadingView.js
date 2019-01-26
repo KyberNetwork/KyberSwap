@@ -170,7 +170,7 @@ const TransactionLoadingView = (props) => {
                       <div className="title final-status">{ props.translate('transaction.success_swap_msg') || "Successfully swapped" }</div>
                       <div className="content">
                         <span>
-                          <strong>{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceSymbol}</strong> 
+                          <strong>{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceSymbol}</strong>
                         </span>
                         <span> {props.translate('transaction.to') || "to"} </span>
                         <span><strong>{displayRoundingNumber(props.balanceInfo.destAmount)} {props.balanceInfo.destSymbol}</strong></span>
@@ -186,7 +186,7 @@ const TransactionLoadingView = (props) => {
                             </span>
                             <span> {props.translate('transaction.to') || "to"} </span>
                             <span><strong>{props.address}</strong></span>
-                          </div>                           
+                          </div>
                       </div>
                   }
                 </div>
@@ -200,7 +200,7 @@ const TransactionLoadingView = (props) => {
             {isTxFailed &&
               <li class={props.status}>
                 <div>
-                  {props.type==="exchange" && (
+                  {props.type==="swap" && (
                     <div>
                       <h4 class="font-w-b d-inline-blocka analyze-btn" onClick={(e) => handleAnalyze(e)}>                    
                         {props.translate("transaction.transaction_error") || "Transaction error"}
