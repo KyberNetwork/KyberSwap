@@ -24,6 +24,7 @@ const MyModal = (props) => {
                 afterOpen: props.className.afterOpen + ' modal-open',
                 beforeClose:""
             }}
+            overlayClassName={props.overlayClassName ? props.overlayClassName : ''}
             style={customStyles}
             isOpen={props.isOpen}
             onRequestClose={props.onRequestClose}

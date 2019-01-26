@@ -2,16 +2,12 @@ import React from "react"
 import { Switch, Route, Redirect } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 import { Processing, InfoModal } from "../../containers/CommonElements/"
+import ImportByPromoCodeModal from "../../containers/ImportAccount/ImportByPromoCodeModal"
 import { Link } from 'react-router-dom'
-
 import constansts from "../../services/constants"
 import * as common from "../../utils/common"
-
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from '../../store'
-
-//import { Rate } from "../Header"
-
 
 function getAllPathToken(listToken){
   var tokens = []
@@ -57,6 +53,7 @@ const LayoutView = (props) => {
         </section>
         <section id="modals">
           <InfoModal />
+          <ImportByPromoCodeModal/>
         </section>
       </div>
     </ConnectedRouter>

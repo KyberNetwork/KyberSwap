@@ -54,27 +54,25 @@ export default class MarketTable extends React.Component {
 
   handleScroll = () => {
     if (this.props.listTokens.length > this.props.firstPageSize && !this.props.isLoading && this.props.page - 1 < this.props.numScroll) {
-      var market = document.getElementById("market-eth")
-      if ((window.innerHeight + window.scrollY) >= market.offsetHeight) {
-        this.getMoreData()
+      var marketModal = document.getElementsByClassName("market-modal-scroll")
+      if (!!marketModal[0]) {
+        var marketScroll = marketModal[0]
+        var market = document.getElementById("market-eth")
+        if ( (window.innerHeight + marketScroll.scrollTop) >= market.offsetHeight) {
+          this.getMoreData()
+        }
       }
-      // var scrollTop   = window.scrollY,
-      //   elementOffset = market.offsetTop,
-      //   elementHeight = market.clientHeight,
-      //   windowH       = window.innerHeight,
-      //   distance      = (elementHeight + elementOffset - scrollTop - windowH);
-      //   if (distance <= 250) {
-      //     this.getMoreData()
-      //   }
     }
   }
 
   componentDidMount() {
-    window.addEventListener("scroll", this.handleScroll)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.handleScroll)
+    if (typeof(document) === "undefined" || typeof(window) === "undefined") return
+    var marketModal = document.getElementsByClassName("market-modal-scroll")
+    var marketElem
+    if(!!marketModal[0]) {
+      marketElem = marketModal[0]
+      marketElem.addEventListener("scroll", this.handleScroll)
+    }
   }
 
   drawChart = (props) => {
