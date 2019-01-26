@@ -5,8 +5,6 @@ import * as converters from "../../utils/converter"
 import * as exchangeActions from "../../actions/exchangeActions"
 import * as utilActions from "../../actions/utilActions"
 import * as constants from "../../services/constants"
-
-//import {getWalletId} from "../../services/web3"
 import { Modal } from "../../components/CommonElement"
 import { PassphraseModal, ConfirmTransferModal, ApproveModal } from "../../components/Transaction"
 import { PostExchangeBtn } from "../../components/Exchange"
