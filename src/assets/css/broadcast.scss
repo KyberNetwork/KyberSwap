@@ -52,6 +52,13 @@
       }
     }
   }
+
+  &--error {
+    a:first-child {
+      border-color: $error-color;
+      background-color: #FFE7EB;
+    }
+  }
 }
 
 
@@ -217,6 +224,10 @@ ul.broadcast-steps {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  &--error {
+    justify-content: center;
+  }
 
   @include screen-max-width(medium) {
     padding: 50px 0;

@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 const TransactionLoadingView = (props) => {
   var isBroadcasting = props.broadcasting
   var broadcastError = props.error
+  const isTxFailed = props.status === "failed";
 
   isBroadcasting = props.broadcasting
   broadcastError = props.error
@@ -126,7 +127,7 @@ const TransactionLoadingView = (props) => {
             <div className="title">{props.translate('transaction.done') || "Done"}</div>
           </div>
         }
-        {props.status === "failed" &&
+        {isTxFailed &&
           <div>
             <div className="icon icon--failed"></div>
             <div className="title">{ props.translate('transaction.failed') || "Failed!" }</div>
@@ -144,7 +145,7 @@ const TransactionLoadingView = (props) => {
         <div className="row">
           <div class="info tx-title">
             <div className="tx-title-text">{props.translate("transaction.transaction") || "Transaction hash"}</div>
-            <div className="tx-hash">
+            <div className={`tx-hash ${isTxFailed ? "tx-hash--error" : ""}`}>
               <a class="text-light" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank" 
                 title={props.translate("modal.view_on_etherscan") || "View on Etherscan"} onClick={(e) => props.analytics.callTrack("trackClickViewTxOnEtherscan")}>
                 {props.txHash}
@@ -196,7 +197,7 @@ const TransactionLoadingView = (props) => {
                 </div> */}
               </li>
             }
-            {props.status === "failed" &&
+            {isTxFailed &&
               <li class={props.status}>
                 <div>
                   {props.type==="exchange" && (
@@ -208,7 +209,7 @@ const TransactionLoadingView = (props) => {
                         {getError()}
                       </div>
                     </div>
-                  )}                       
+                  )}
                 </div>
               </li>
             }
@@ -228,16 +229,23 @@ const TransactionLoadingView = (props) => {
           </ul>
         </div>
       </div>
-      <div className="tx-actions">
-        <a className={"change-path"} onClick={() => props.makeNewTransaction(true)}>
+      {!isTxFailed && (
+        <div className="tx-actions">
+          <a className={"change-path"} onClick={() => props.makeNewTransaction(true)}>
             {props.type === "swap" ? (props.translate("transaction.transfer") || "Transfer") : (props.translate("transaction.swap") || "Swap") }
-        </a>
-        <a className="new-transaction" onClick={() => props.makeNewTransaction()}>
-          {props.type === "swap" ?
-            props.translate("transaction.new_ex") || "New swap"
-            : props.translate("transaction.new_tx") || "New transfer"}
-        </a>
-      </div>
+          </a>
+          <a className="new-transaction" onClick={() => props.makeNewTransaction()}>
+            {props.type === "swap" ?
+              props.translate("transaction.new_ex") || "New swap"
+              : props.translate("transaction.new_tx") || "New transfer"}
+          </a>
+        </div>
+      )}
+      {isTxFailed && (
+        <div className={"tx-actions tx-actions--error"}>
+          <a className="new-transaction" onClick={() => props.makeNewTransaction()}>{props.translate("transaction.try_again") || "Try Again"}</a>
+        </div>
+      )}
     </div>
   )
 }
