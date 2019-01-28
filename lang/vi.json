@@ -114,7 +114,10 @@
     "swap_now": "Trao đổi",
     "transfer_now": "Chuyển",
     "advance_notice": "Giao dịch sẽ bị hủy nếu tỉ giá của ${srcSymbol}-${destSymbol} thấp hơn ${slippageRate} (tỷ giá hiện tại ${roundRate})",
-    "try_again": "Thử Lại"
+    "try_again": "Thử Lại",
+    "optional": "Tùy chọn",
+    "still_proceed_if_rate_goes_down": "Vẫn tiếp tục nếu tỷ giá ${pair} giảm xuống",
+    "gas_fee": "Phí GAS"
   },
   "modal": {
     "enter_password": "Nhập mật khẩu",
@@ -143,7 +146,8 @@
     "eth_token_exchange": "Chuyển đổi eth token",
     "approve": "Đồng ý",
     "address": "Địa chỉ",
-    "approve_token": "Cho phép sử dụng token"
+    "approve_token": "Cho phép sử dụng token",
+    "cancel": "Hủy"
   },
   "error": {
     "metamask_not_installed": "Metamask chưa được cài đặt",
@@ -233,8 +237,6 @@
     "enter_promo_code": "Nhập mã khuyến mãi",
     "apply": "Áp dụng",
     "cancel": "Hủy",
-    "swap_now": "Trao đổi",
-    "transfer_now": "Chuyển khoản",
     "connect_other_wallet": "Kết nối với ví khác"
   },
   "info": {
@@ -318,7 +320,8 @@
     "volume": "Lượng giao dịch (24h)",
     "support_eth_only": "Chỉ hỗ trợ các cặp giao dịch với ETH, chưa hỗ trợ giao dịch với\nUSD.",
     "show_more_results": "Hiển thị thêm kết quả",
-    "new_token": "MỚI"
+    "new_token": "MỚI",
+    "more": "Nhiều hơn"
   },
   "trading_view": {
     "buy": "Mua",

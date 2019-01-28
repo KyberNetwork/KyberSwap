@@ -113,9 +113,13 @@
     "included": "포함",
     "type_pass_to_sign": "비밀번호를 입력 하세요",
     "try_dai":"Try \"DAI\"",
-    "exchange_now": "${typeTrade} Now",
+    "swap_now": "Swap Now",
+    "transfer_now": "Transfer Now",
     "advance_notice": "Transaction will be reverted if rate of ${srcSymbol}-${destSymbol} is lower than ${slippageRate} (Current rate ${roundRate})",
-    "try_again": "다시 시도해보십시오r"
+    "try_again": "다시 시도해보십시오r",
+    "optional": "선택 사항",
+    "still_proceed_if_rate_goes_down": "Still proceed if ${pair} rate goes down by",
+    "gas_fee": "가스 비용"
   },
   "modal": {
     "enter_password": "비밀번호 입력",
@@ -145,7 +149,7 @@
     "approve": "승인",
     "address": "주소",
     "approve_token": "토큰 승인하기",
-    "cancel": "Cancel"
+    "cancel": "취소"
   },
   "error": {
     "metamask_not_installed": "메타마스크가 설치되지 않았습니다",
@@ -233,9 +237,8 @@
     "select_or_drag": "선택 또는 드래그",
     "address_is_loading": "주소 로딩중...",
     "enter_promo_code": "Enter your Promo Code",
-    "apply": "Apply",
-    "cancel": "Cancel",
-    "exchange_now": "${typeTrade} Now",
+    "apply": "적용",
+    "cancel": "취소",
     "connect_other_wallet": "Connect other wallet"
   },
   "info": {
@@ -319,7 +322,8 @@
     "volume": "볼륨 (24h)",
     "support_eth_only": "현재 ETH페어만 지원합니다. USD페어는 아직 지원되지 않습니다.",
     "show_more_results": "더 보기",
-    "new_token": "새로운"
+    "new_token": "새로운",
+    "more": "더"
   },
   "trading_view": {
     "buy": "구매하기",

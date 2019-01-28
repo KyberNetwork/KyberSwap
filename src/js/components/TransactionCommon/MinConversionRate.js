@@ -44,7 +44,8 @@ export default class MinConversionRate extends React.Component {
     return (
       <div className="advance-config__block">
         <div className="advance-config__title">
-          Still proceed if {this.props.sourceTokenSymbol}-{this.props.destTokenSymbol} rate goes down by:
+          {this.props.translate("transaction.still_proceed_if_rate_goes_down", {pair: `${this.props.sourceTokenSymbol}-${this.props.destTokenSymbol}`})}:
+          {/* Still proceed if {this.props.sourceTokenSymbol}-{this.props.destTokenSymbol} rate goes down by: */}
         </div>
         <div className="advance-config__option-container">
           <label className="advance-config__option">

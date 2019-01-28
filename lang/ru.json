@@ -22,7 +22,11 @@
     "symbol": "ТИКЕР",
     "price": "ЦЕНА",
     "your_wallet_address": "Ваш адрес кошелька",
-    "search": "Поиск"
+    "search": "Поиск",
+    "download": "Download",
+    "connect_your_wallet_to_swap": "Connect your Wallet to Swap",
+    "connect_your_wallet_to_transfer": "Connect your Wallet to Transfer",
+    "your_wallet": "Your Wallet"
   },
   "transaction": {
     "wallet": "Wallet",
@@ -108,7 +112,15 @@
     "max_slippage": "С максимальным ${percent}% сокращением",
     "included": "Включительно",
     "type_pass_before_progress": "Type a password before progressing",
-    "try_again": "Попробуйте снова"
+    "try_again": "Попробуйте снова",
+    "swap_now": "Swap Now",
+    "transfer_now": "Transfer Now",
+    "type_pass_to_sign": "Enter your password/passphrase to sign and broadcast",
+    "try_dai":"Try \"DAI\"",
+    "advance_notice": "Transaction will be reverted if rate of ${srcSymbol}-${destSymbol} is lower than ${slippageRate} (Current rate ${roundRate})",
+    "optional": "Optional",
+    "still_proceed_if_rate_goes_down": "Still proceed if ${pair} rate goes down by",
+    "gas_fee": "GAS fee"
   },
   "modal": {
     "enter_password": "Введите пароль",
@@ -137,7 +149,8 @@
     "eth_token_exchange": "Обмен токенов ETH",
     "approve": "Одобрить",
     "address": "Адрес",
-    "approve_token": "Подтвердить токен"
+    "approve_token": "Подтвердить токен",
+    "cancel": "Cancel"
   },
   "error": {
     "metamask_not_installed": "Metamask не установлен",
@@ -225,7 +238,8 @@
     "select_or_drag": "Выберите или перетяните",
     "address_is_loading": "Адрес загружается...",
     "enter_promo_code": "Enter your Promo Code",
-    "apply": "Apply"
+    "apply": "Apply",
+    "connect_other_wallet": "Connect other wallet"
   },
   "info": {
     "title": "Тестовая сеть Kyber",
@@ -270,7 +284,9 @@
     "use_real": "НЕ ИСПОЛЬЗУЙТЕ РЕАЛЬНЫЕ УЧЕТНЫЕ ЗАПИСИ ETHEREUM!!!",
     "accept": "Принять",
     "terms_and_condition": " Условия и положения ",
-    "to_get_started": "чтобы начать"
+    "to_get_started": "чтобы начать",
+    "description_term_swap": "By Swapping, you agree to the",
+    "description_term_transfer": "By Transfering, you agree to the"
   },
   "landing_page": {
     "title": "Децентрализованный обмен ETH",
@@ -306,7 +322,8 @@
     "volume": "Объем (24 ч)",
     "support_eth_only": "Сейчас поддерживаются только пары с ETH, пары с USD еще не поддерживаются.",
     "show_more_results": "Показать больше результатов",
-    "new_token": "Новый токен"
+    "new_token": "Новый токен",
+    "more": "More"
   },
   "trading_view": {
     "buy": "Покупка",

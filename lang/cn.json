@@ -111,10 +111,13 @@
     "included": "包括",
     "type_pass_to_sign": "进行之前，请输入密码",
     "try_dai":"试试\"DAI\"",
-    "swap_now": "Swap Now",
-    "transfer_now": "Transfer Now",
+    "swap_now": "现在兑换",
+    "transfer_now": "现在转账",
     "advance_notice": "如果${srcSymbol}-${destSymbol}低于${slippageRate}(目前的汇率${roundRate})，那么交易将被取消",
-    "try_again": "再试一次"
+    "try_again": "再试一次",
+    "optional": "可选",
+    "still_proceed_if_rate_goes_down": "Still proceed if ${pair} rate goes down by",
+    "gas_fee": "燃料费用"
   },
   "modal": {
     "enter_password": "输入密码",
@@ -144,7 +147,7 @@
     "approve": "批准",
     "address": "地址",
     "approve_token": "批准代币",
-    "cancel": "Cancel"
+    "cancel": "取消"
   },
   "error": {
     "metamask_not_installed": "Metamask未安装",
@@ -234,9 +237,7 @@
     "promo_code": "PROMO CODE",
     "enter_promo_code": "输入您的活动码",
     "apply": "申请",
-    "cancel": "Cancel",
-    "swap_now": "Swap Now",
-    "transfer_now": "Transfer Now",
+    "cancel": "取消",
     "connect_other_wallet": "连接其他钱包"
   },
   "info": {
@@ -319,7 +320,8 @@
     "volume": "交易量 (24小时)",
     "support_eth_only": "现在只支持与ETH的交易对，不支持美元交易对。",
     "show_more_results": "显示更多结果",
-    "new_token": "新"
+    "new_token": "新",
+    "more": "更多"
   },
   "trading_view": {
     "buy": "买",

@@ -183,7 +183,9 @@ const AccountBalanceLayout = (props) => {
                     active={props.sortActive}
                   >
                     <DropdownTrigger>
-                      <div className={"account-balance__sort-dropdown"}>{props.sortType}</div>
+                      <div className={"account-balance__sort-dropdown"}>
+                        {props.sortType == 'Symbol' ? props.translate("address.symbol") || "Symbol" : props.translate("address.price") || "Price"}
+                      </div>
                       <div className={"account-balance__sort-arrow"}></div>
                     </DropdownTrigger>
                     <DropdownContent>

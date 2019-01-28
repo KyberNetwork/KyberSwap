@@ -263,13 +263,13 @@ export default class PostExchange extends React.Component {
           </div>
           <div className="amount">
             <div className="amount-item amount-left">              
-              <div className={"rc-label"}>From</div>
+              <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
               <div className={"rc-info"}><div>{sourceAmount}</div> {sourceTokenSymbol}</div>
             </div>
             <div className="space"><img src={require("../../../assets/img/exchange/arrow-right-orange.svg")} /></div>
             <div className="amount-item amount-right">
                 <div>
-                  <div className={"rc-label"}>To</div>
+                  <div className={"rc-label"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
                   <div className={"rc-info"}>
                     {this.props.snapshot.isFetchingRate ? <img src={require('../../../assets/img/waiting-white.svg')} /> : destAmount} {destTokenSymbol}
                   </div> 

@@ -78,8 +78,8 @@ export default class ImportAccount extends React.Component {
         {(!this.props.isAgreedTermOfService && this.props.account === false) &&
           <div className={"exchange-content__accept-term"}>
             <div className={"accept-buttom"} onClick={(e) => this.acceptTerm()}>
-              {this.props.tradeType === "swap" ? this.props.translate("import.swap_now") || "Swap Now"
-              : this.props.translate("import.transfer_now") || "Transfer Now"}
+              {this.props.tradeType === "swap" ? this.props.translate("transaction.swap_now") || "Swap Now"
+              : this.props.translate("transaction.transfer_now") || "Transfer Now"}
             </div>
             <TermAndServices tradeType={this.props.tradeType}/>
           </div>
