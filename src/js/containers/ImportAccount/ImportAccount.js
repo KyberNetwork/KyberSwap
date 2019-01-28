@@ -70,6 +70,7 @@ export default class ImportAccount extends React.Component {
     } else {
       this.props.acceptTerm()
     }
+    this.props.global.analytics.callTrack("acceptTerm")
   }
 
   render() {

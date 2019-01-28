@@ -189,12 +189,22 @@ class Transfer extends React.Component {
 
 
   toggleBalanceContent = () => {
+    if (this.props.transfer.isBalanceActive) {
+      this.props.global.analytics.callTrack("trackClickHideAccountBalance", "Transfer")
+    } else {
+      this.props.global.analytics.callTrack("trackClickShowAccountBalance", "Transfer")
+    }
     this.props.dispatch(transferActions.toggleBalanceContent())    
     if(!this.props.global.isOnMobile){
       this.props.dispatch(transferActions.toggleAdvanceContent())    
     }
   }
   toggleAdvanceContent = () => {
+    if (this.props.transfer.isAdvanceActive) {
+      this.props.global.analytics.callTrack("trackClickHideAdvanceOption", "Transfer")
+    } else {
+      this.props.global.analytics.callTrack("trackClickShowAdvanceOption", "Transfer")
+    }
     this.props.dispatch(transferActions.toggleAdvanceContent())    
     if(!this.props.global.isOnMobile){
       this.props.dispatch(transferActions.toggleBalanceContent())    
@@ -214,9 +224,10 @@ class Transfer extends React.Component {
     this.specifyGasPrice(value)
   }
 
-  selectedGasHandler = (value, level) => {
+  selectedGasHandler = (value, level, levelString) => {
     this.props.dispatch(transferActions.seSelectedGas(level))
     this.specifyGasPrice(value)
+    this.props.global.analytics.callTrack("trackChooseGas", "transfer", value, levelString);
   }
 
   getAdvanceLayout = () => {
@@ -251,7 +262,7 @@ class Transfer extends React.Component {
 
   clearSession = (e) => {
     this.props.dispatch(globalActions.clearSession())
-    // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
+    this.props.global.analytics.callTrack("trackClickChangeWallet")
   }
 
  

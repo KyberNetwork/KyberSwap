@@ -189,14 +189,19 @@
 
       &::after {
         content: '';
-        width: 10px;
-        height: 5px;
+        width: 30px;
+        height: 30px;
         display: block;
         background-image: url($image-path + 'icon-dropdown-grey.svg');
         position: absolute;
         right: 0;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-top: -12px;
+        left: -17px;
         @include screen-max-width(large) {
           right: -10px;
+          left: -5px;
         }
       }
     }
