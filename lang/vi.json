@@ -22,7 +22,10 @@
     "symbol": "MÃ",
     "price": "GIÁ",
     "your_wallet_address": "Địa chỉ ví của bạn",
-    "search": "Tìm kiếm"
+    "search": "Tìm kiếm",
+    "connect_your_wallet_to_swap": "Kết nối ví của bạn để trao đổi",
+    "connect_your_wallet_to_transfer": "Kết nối ví của bạn để chuyển token",
+    "your_wallet": "Ví của bạn"
   },
   "transaction": {
     "wallet": "Ví",
@@ -80,7 +83,7 @@
     "our_suggest_loading": "<img src=\"${src}\"/> ${desToken} là tỷ giá thấp nhất chấp nhận\nđược mà chúng tôi đề xuất.",
     "our_suggest": "<strong> ${suggestRate}</strong> là tỷ giá thấp nhất chấp nhận được\nmà chúng tôi đề xuất.",
     "min_acceptable_rate": "Tỷ giá thấp nhất được chấp nhận",
-    "about_to_swap": "Bạn chuẩn bị chuyển đổi",
+    "about_to_swap": "Bạn chuẩn bị trao đổi",
     "about_to_transfer": "Bạn chuẩn bị gửi",
     "processing": "Đang xử lý",
     "gas_limit": "Gas giới hạn",
@@ -91,7 +94,7 @@
     "to": "đến",
     "best_rate": "Tỷ giá tốt nhất",
     "token_amount": "Token/Số lượng",
-    "click_to_swap": "Kích để hoán đổi",
+    "click_to_swap": "Kích để trao đổi",
     "transfer_tooltip": "Chuyển eth hoặc token đến một tài khoản khác",
     "transaction_gasprice_50": "Giá Gas càng cao, giao dịch càng nhanh. Giá Gas lớn nhất\n50 Gwei",
     "transaction_gasprice": "Giá Gas càng cao, giao dịch càng nhanh",
@@ -106,8 +109,17 @@
     "slippage_tip": "Tỉ giá có thể thay đổi, bạn có thể chỉnh tỉ giá trong lựa chọn nâng\ncao",
     "max_slippage": "với tối đa ${percent}% trượt giá",
     "included": "Bao gồm",
-    "type_pass_before_progress": "Nhập mật khẩu trước khi tiến hành",
-    "try_again": "Thử Lại"
+    "type_pass_to_sign": "Nhập mật khẩu trước khi tiến hành",
+    "try_dai":"Thử \"DAI\"",
+    "swap_now": "Trao đổi",
+    "transfer_now": "Chuyển",
+    "advance_notice": "Giao dịch sẽ bị hủy nếu tỉ giá của ${srcSymbol}-${destSymbol} thấp hơn ${slippageRate} (tỷ giá hiện tại ${roundRate})",
+    "try_again": "Thử Lại",
+    "optional": "Tùy chọn",
+    "still_proceed_if_rate_goes_down": "Vẫn tiếp tục nếu tỷ giá ${pair} giảm xuống",
+    "gas_fee": "Phí GAS",
+    "any_rate": "Any-rate",
+    "custom": "Custom"
   },
   "modal": {
     "enter_password": "Nhập mật khẩu",
@@ -136,7 +148,8 @@
     "eth_token_exchange": "Chuyển đổi eth token",
     "approve": "Đồng ý",
     "address": "Địa chỉ",
-    "approve_token": "Cho phép sử dụng token"
+    "approve_token": "Cho phép sử dụng token",
+    "cancel": "Hủy"
   },
   "error": {
     "metamask_not_installed": "Metamask chưa được cài đặt",
@@ -224,7 +237,9 @@
     "select_or_drag": "Chọn hoặc kéo file",
     "address_is_loading": "Đang tải thông tin địa chỉ...",
     "enter_promo_code": "Nhập mã khuyến mãi",
-    "apply": "Áp dụng"
+    "apply": "Áp dụng",
+    "cancel": "Hủy",
+    "connect_other_wallet": "Kết nối với ví khác"
   },
   "info": {
     "title": "Kyber phiên bản thử nghiệm",
@@ -269,7 +284,9 @@
     "use_real": "ĐỪNG SỬ DỤNG TÀI KHOẢN VÍ ETHEREUM CHÍNH THỨC!!!",
     "accept": "Chấp nhận",
     "terms_and_condition": " Điều khoản sử dụng ",
-    "to_get_started": "để bắt đầu"
+    "to_get_started": "để bắt đầu",
+    "description_term_swap": "Bằng việc trao đổi token, bạn đồng ý với ",
+    "description_term_transfer": "Bằng việc chuyển token, bạn đồng ý với "
   },
   "landing_page": {
     "title": "Trao đổi Ethereum tokens",
@@ -305,7 +322,8 @@
     "volume": "Lượng giao dịch (24h)",
     "support_eth_only": "Chỉ hỗ trợ các cặp giao dịch với ETH, chưa hỗ trợ giao dịch với\nUSD.",
     "show_more_results": "Hiển thị thêm kết quả",
-    "new_token": "MỚI"
+    "new_token": "MỚI",
+    "more": "Nhiều hơn"
   },
   "trading_view": {
     "buy": "Mua",

@@ -24,7 +24,9 @@
     "your_wallet_address": "Your Wallet Address",
     "search": "Search",
     "connect_your_wallet_to_swap": "Connect your Wallet to Swap",
-    "download": "Download"
+    "connect_your_wallet_to_transfer": "Connect your Wallet to Transfer",
+    "download": "Download",
+    "your_wallet": "Your Wallet"
   },
   "transaction": {
     "wallet": "Wallet",
@@ -105,15 +107,22 @@
     "error_tx_contract": "Warning! Error encountered during contract execution",
     "no_pedding_tx": "No pending transaction",
     "rate_info": "Rates might be changed during settlement. <br/>You can indicate your\nminimum rate by clicking \"Advanced\"",
-    "address": "Receiving Address",
+    "address": "To Address",
     "slippage_tip": "Rate may change. You can change maximum slippage rate by adjusting\nmin rate in advanced option",
     "max_slippage": "With maximum ${percent}% slippage",
     "included": "Included",
     "type_pass_before_progress": "Type a password before progressing",
     "swap_now": "Swap Now",
+    "transfer_now": "Transfer Now",
     "type_pass_to_sign": "Enter your password/passphrase to sign and broadcast",
     "try_dai":"Try \"DAI\"",
-    "try_again": "Try Again"
+    "advance_notice": "Transaction will be reverted if rate of ${srcSymbol}-${destSymbol} is lower than ${slippageRate} (Current rate ${roundRate})",
+    "try_again": "Try Again",
+    "optional": "Optional",
+    "still_proceed_if_rate_goes_down": "Still proceed if ${pair} rate goes down by",
+    "gas_fee": "GAS fee",
+    "any_rate": "Any-rate",
+    "custom": "Custom"
   },
   "modal": {
     "enter_password": "Enter Password",
@@ -142,7 +151,8 @@
     "eth_token_exchange": "ETH token exchange",
     "approve": "Approve",
     "address": "Address",
-    "approve_token": "Approve token"
+    "approve_token": "Approve token",
+    "cancel": "Cancel"
   },
   "error": {
     "metamask_not_installed": "Metamask is not installed",
@@ -231,7 +241,8 @@
     "enter_promo_code": "Enter your Promo Code",
     "apply": "Apply",
     "promo_code": "Promocode",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "connect_other_wallet": "Connect other wallet"
   },
   "info": {
     "title": "Kyber Testnet",
@@ -276,7 +287,9 @@
     "use_real": "DO NOT USE REAL ETHEREUM ACCOUNTS!!!",
     "accept": "Accept",
     "terms_and_condition": " Terms and Conditions ",
-    "to_get_started": "to get started"
+    "to_get_started": "to get started",
+    "description_term_swap": "By Swapping, you agree to the",
+    "description_term_transfer": "By Transfering, you agree to the"
   },
   "landing_page": {
     "title": "Decentralized Exchange for Ethereum tokens",
@@ -312,7 +325,8 @@
     "volume": "Volume (24h)",
     "support_eth_only": "Now support only pairs with ETH, not support pairs with USD yet.",
     "show_more_results": "Show more results",
-    "new_token": "NEW"
+    "new_token": "NEW",
+    "more": "More"
   },
   "trading_view": {
     "buy": "Buy",

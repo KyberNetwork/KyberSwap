@@ -144,12 +144,14 @@ const AccountBalanceLayout = (props) => {
               <div className="slide-down__trigger-container">
                 <div>
                   <div className={"account-balance__address"}>
-                    <div><span className="account-balance__address-text">Your Wallet</span> - <span className={"account-balance__wallet-name"}>{getWalletName()}</span></div>
-                    {/* <SlideDownTrigger onToggleContent={() => props.toggleBalanceContent()}> */}
+                    <div>
+                      <span className="account-balance__address-text">{props.translate("address.your_wallet") || "Your Wallet"}</span>
+                       - 
+                      <span className={"account-balance__wallet-name"}>{getWalletName()}</span>
+                    </div>
                     <div className="slide-arrow-container">
                       <div className="slide-arrow"></div>
                     </div>
-                    {/* </SlideDownTrigger> */}
                   </div>
                   <a className="account-balance__address-link" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
                     onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan");   e.stopPropagation(); }}>
@@ -181,7 +183,9 @@ const AccountBalanceLayout = (props) => {
                     active={props.sortActive}
                   >
                     <DropdownTrigger>
-                      <div className={"account-balance__sort-dropdown"}>{props.sortType}</div>
+                      <div className={"account-balance__sort-dropdown"}>
+                        {props.sortType == 'Symbol' ? props.translate("address.symbol") || "Symbol" : props.translate("address.price") || "Price"}
+                      </div>
                       <div className={"account-balance__sort-arrow"}></div>
                     </DropdownTrigger>
                     <DropdownContent>

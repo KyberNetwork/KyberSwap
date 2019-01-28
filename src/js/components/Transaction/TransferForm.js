@@ -152,7 +152,7 @@ const TransferForm = (props) => {
               </div>
 
               <div className={"exchange-content__item--wrapper"}>
-                <div className={"exchange-item-label"}>To Address:</div>
+                <div className={"exchange-item-label"}>{props.translate("transaction.address") || "To Address"}:</div>
                 <div className={`exchange-content__item exchange-content__item--right select-token ${props.errors.destAddress ? "error" : ""}`}>
                   <div className={`input-div-content`}>
                     <div className="exchange-content__input-container exchange-content__input-container--to exchange-content__transfer-addr">
@@ -217,6 +217,7 @@ const TransferForm = (props) => {
             advanceLayout = {props.advanceLayout}
             postWithKey = {<PostTransferWithKey isChangingWallet={props.isChangingWallet}/>}
             tradeType={"transfer"}
+            translate={props.translate}
           /> 
         )}
       </div>

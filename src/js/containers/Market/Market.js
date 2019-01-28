@@ -169,7 +169,7 @@ export default class Market extends React.Component {
               <RateSlider />
             </div>
             <div className="rate-container__more">
-              <a onClick={this.openModal}>More</a>
+              <a onClick={this.openModal}>{this.props.translate("market.more") || "More"}</a>
             </div>
           </div>
         )}
