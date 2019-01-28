@@ -60,7 +60,7 @@ export default class ImportByPromoCode extends React.Component {
   
   getPrivateKey = (promo, captcha) =>{        
     return new Promise ((resolve, reject)=>{
-      common.timeout(3000,  fetch(BLOCKCHAIN_INFO.userdashboard_url + '/api/promo/' + promo + "?g-recaptcha-response=" + captcha))
+      common.timeout(3000,  fetch(BLOCKCHAIN_INFO.userdashboard_url + '/api/promo?code=' + promo + "&g-recaptcha-response=" + captcha))
       .then((response) => {
           return response.json()
       })
