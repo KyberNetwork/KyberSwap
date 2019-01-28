@@ -103,6 +103,16 @@ export default class Market extends React.Component {
     }
   }
 
+  componentDidMount = () => {    
+    if (window.kyberBus){
+      window.kyberBus.on("swap.open.market", this.setShowMarket.bind(this));
+    }
+  }
+
+  setShowMarket = () => {
+    this.setState({ modalState: true })
+  }
+
   getMoreData = () => {
     this.props.dispatch(marketActions.getMoreData(this.props.listTokens))
   }
@@ -162,9 +172,10 @@ export default class Market extends React.Component {
           </div>
         )}
         <Modal className={{
-          base: 'reveal large confirm-modal market-modal',
-          afterOpen: 'reveal large confirm-modal'
-        }}
+            base: 'reveal large confirm-modal market-modal',
+            afterOpen: 'reveal large confirm-modal'
+          }}
+          overlayClassName={"market-modal-scroll"}
           isOpen={this.state.modalState}
           onRequestClose={this.closeModal}
           contentLabel="Market modal"

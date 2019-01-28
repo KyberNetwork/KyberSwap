@@ -184,9 +184,9 @@
     }
 
     &--dropdown {
-      
       position: relative;
-      padding: 10px;
+      padding: 10px 0;
+
       &::after {
         content: '';
         width: 10px;
@@ -194,7 +194,6 @@
         display: block;
         background-image: url($image-path + 'icon-dropdown-grey.svg');
         position: absolute;
-        // top: 4px;
         right: 0;
         @include screen-max-width(large) {
           right: -10px;
@@ -433,6 +432,10 @@
       }
     }
 
+    &.has-account {
+      padding-right: 20px;
+    }
+
     @include screen-max-width(medium) {
       padding: 0;
       padding-left: 20px;
@@ -600,19 +603,31 @@
   &.error{
     border: 1px solid #EE344E;
     position: relative;
+
+    .exchange-content__input {
+      padding-right: 20px;
+      @include screen-max-width(medium) {
+        padding-right: 30px;
+      }
+    }
+
     input{
-          color: #ee344e;  
+      color: #ee344e;
     }
-    .main-input{
-      &:after{
-            content: ' ';
-            // position: absolute;
-            width: 16px;
-            height: 15px;
-            background-image: url("../img/v3/error_notice.svg");
-            margin-left: 10px;
-          }
+
+    .main-input:after{
+      content: '';
+      position: absolute;
+      right: 20px;
+      width: 15px;
+      height: 15px;
+      background-image: url("../img/v3/error_notice.svg");
     }
+
+    .exchange-content__label--dropdown {
+      margin-right: 25px;
+    }
+
     .__react_component_tooltip{
         position: absolute;
         z-index: 1 !important;
@@ -629,6 +644,17 @@
               right: 50px;
               left:auto;
         }
+    }
+
+    &.has-account {
+      @include screen-max-width(medium) {
+        .swap-balance-modal {
+          right: 20px;
+        }
+        .exchange-content__input {
+          padding-right: 20px;
+        }
+      }
     }
   }
 }
@@ -723,7 +749,7 @@
       box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
       width: 350px;
       background-color: #ffffff;
-      border-radius: 4px;
+      border-radius: 10px;
       padding: 25px 25px 40px;
       right: 0;
     top: 10px;
@@ -822,7 +848,8 @@
       border-bottom: solid 1px #e8e8e8;
       box-shadow: none;
       &::placeholder {
-        color: #222;
+        color: #474d5f;
+        font-weight: 600;
       }
       &:focus {
         outline: none;
@@ -840,7 +867,7 @@
         .token-item {
           padding-left: 0;
           padding-right: 0;
-          border-bottom: 1px solid #d8d8d8;
+          // border-bottom: 1px solid #d8d8d8;
           &:last-child {
             border-bottom: none;
           }
@@ -887,7 +914,9 @@
                 margin-right: 25px;
               }
               div:last-child {
-                font-size: 15px;
+                font-size: 14px;
+                font-weight: 550;
+                color: #474d5f;
               }
             }
           }
@@ -1058,26 +1087,46 @@
     width: 100%;
     z-index: 2;
     background-color: #F1F5FB;
-    // border: 2px solid $white;
     border-top: none;
     border-bottom: none;
 
-    &__priority-token{
+    &__priority-token {
       display: flex;
-      justify-content: space-between;
-      span{
+      justify-content: center;
+      flex-wrap: wrap;
+
+      span {
+        width: 30%;
         cursor: pointer;
-        border: 1px solid #aaa;
+        border: 1px solid #e7edf5;
         padding: 5px 10px;
         border-radius: 20px;
-    img{
-      margin-right: 5px;
-    }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 500;
+        font-size: 14px;
+        transition: all .3s;
+        margin-bottom: 10px;
+        margin-right: 5%;
+
+        &:nth-child(3n) {
+          margin-right: 0;
+        }
+
+        &:hover {
+          background-color: #e7edf5;
+        }
+
+        img {
+          max-width: 22px;
+          margin-right: 8px;
+        }
       }
     }
+
     .search-item{
-      padding: 15px;
-      // margin-bottom: 10px;
+      padding: 5px 15px 15px;
     }
   }
 

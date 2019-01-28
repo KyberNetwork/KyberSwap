@@ -577,6 +577,7 @@ const exchange = (state = initState, action) => {
 
       resetState.destToken = newState.destToken
       resetState.destTokenSymbol = newState.destTokenSymbol
+      resetState.errors.selectSameToken = newState.errors.selectSameToken
 
       return resetState
     }

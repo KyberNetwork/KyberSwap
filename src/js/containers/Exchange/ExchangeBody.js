@@ -1,6 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { push } from 'react-router-redux';
+import { withRouter } from 'react-router-dom'
 import * as converters from "../../utils/converter"
 import { TransactionConfig } from "../../components/Transaction"
 import { ExchangeBodyLayout } from "../../components/Exchange"
@@ -19,7 +20,6 @@ import BLOCKCHAIN_INFO from "../../../../env";
 import * as web3Package from "../../services/web3"
 import { importAccountMetamask } from "../../actions/accountActions"
 import EthereumService from "../../services/ethereum/ethereum"
-
 import { PostExchangeWithKey, MinRate, RateBetweenToken } from "../Exchange"
 
 @connect((store, props) => {
@@ -30,6 +30,7 @@ import { PostExchangeWithKey, MinRate, RateBetweenToken } from "../Exchange"
   const exchange = store.exchange
   const tokens = store.tokens.tokens
   const translate = getTranslate(store.locale)
+  const transferTokenSymbol = store.transfer.tokenSymbol;
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
   var sourceBalance = 0
   var sourceDecimal = 18
@@ -57,6 +58,7 @@ import { PostExchangeWithKey, MinRate, RateBetweenToken } from "../Exchange"
   return {
     account, ethereum, tokens, translate, currentLang,
     global: store.global,
+    transferTokenSymbol,
     exchange: {
       ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
       sourceName, destName, rateSourceToEth,
@@ -65,7 +67,7 @@ import { PostExchangeWithKey, MinRate, RateBetweenToken } from "../Exchange"
   }
 })
 
-export default class ExchangeBody extends React.Component {
+class ExchangeBody extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -77,19 +79,19 @@ export default class ExchangeBody extends React.Component {
   componentDidMount = () => {
     if (this.props.global.changeWalletType !== "swap") this.props.dispatch(globalActions.closeChangeWallet())
 
-    const web3Service = web3Package.newWeb3Instance();
+    // const web3Service = web3Package.newWeb3Instance();
 
-    if (web3Service !== false) {
-      const walletType = web3Service.getWalletType();
-      const isDapp = (walletType !== "metamask") && (walletType !== "modern_metamask");
+    // if (web3Service !== false) {
+    //   const walletType = web3Service.getWalletType();
+    //   const isDapp = (walletType !== "metamask") && (walletType !== "modern_metamask");
 
-      if (isDapp) {
-        const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
+    //   if (isDapp) {
+    //     const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
 
-        this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-          ethereumService, this.props.tokens, this.props.translate, walletType))
-      }
-    }
+    //     this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
+    //       ethereumService, this.props.tokens, this.props.translate, walletType))
+    //   }
+    // }
   }
 
   validateTxFee = (gasPrice) => {
@@ -277,10 +279,17 @@ export default class ExchangeBody extends React.Component {
     this.setState({ focus: "" })
   }
 
-  makeNewExchange = () => {
+  makeNewExchange = (changeTransactionType = false) => {
     this.props.dispatch(exchangeActions.makeNewExchange());
-    this.props.global.analytics.callTrack("trackClickNewTransaction", "Swap");
-  }  
+
+    if (changeTransactionType) {
+      const transferLink = constansts.BASE_HOST + "/transfer/" + this.props.transferTokenSymbol.toLowerCase();
+      this.props.global.analytics.callTrack("trackClickNewTransaction", "Transfer");
+      this.props.history.push(transferLink)
+    } else {
+      this.props.global.analytics.callTrack("trackClickNewTransaction", "Swap");
+    }
+  }
 
   setAmount = () => {
     var tokenSymbol = this.props.exchange.sourceTokenSymbol
@@ -359,8 +368,8 @@ export default class ExchangeBody extends React.Component {
 
     if (value > 100) {
       value = 100;
-    } else if (value < 0) {
-      value = 0;
+    } else if (value < 10) {
+      value = 10;
     }
 
     const minRate = converters.caculatorRateToPercentage(value, offeredRate);
@@ -592,7 +601,11 @@ export default class ExchangeBody extends React.Component {
 
         defaultShowTooltip = {this.state.defaultShowTooltip}
         setDefaulTooltip = {this.setDefaulTooltip}
+
+        isOnDAPP = {this.props.account.isOnDAPP}
       />
     )
   }
 }
+
+export default withRouter(ExchangeBody);

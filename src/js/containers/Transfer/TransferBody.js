@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import { withRouter } from 'react-router-dom'
 import * as converters from "../../utils/converter"
 import * as validators from "../../utils/validators"
 import { TransferForm } from "../../components/Transaction"
@@ -21,12 +22,14 @@ import EthereumService from "../../services/ethereum/ethereum"
 @connect((store, props) => {
   const langs = store.locale.languages
   var currentLang = common.getActiveLanguage(langs)
-
   const tokens = store.tokens.tokens
   const tokenSymbol = store.transfer.tokenSymbol
+  const swapSrcTokenSymbol = store.exchange.sourceTokenSymbol;
+  const swapDestTokenSymbol = store.exchange.destTokenSymbol;
   var balance = 0
   var decimals = 18
   var tokenName = "kyber"
+
   if (tokens[tokenSymbol]) {
     balance = tokens[tokenSymbol].balance
     decimals = tokens[tokenSymbol].decimals
@@ -41,11 +44,13 @@ import EthereumService from "../../services/ethereum/ethereum"
     translate: getTranslate(store.locale),
     advanceLayout: props.advanceLayout,
     currentLang,
+    swapSrcTokenSymbol,
+    swapDestTokenSymbol,
     analytics: store.global.analytics
   }
 })
 
-export default class Transfer extends React.Component {
+class Transfer extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -58,19 +63,19 @@ export default class Transfer extends React.Component {
   componentDidMount = () => {
     if (this.props.global.changeWalletType !== "") this.props.dispatch(globalActions.closeChangeWallet())
 
-    const web3Service = web3Package.newWeb3Instance();
+    // const web3Service = web3Package.newWeb3Instance();
 
-    if (web3Service !== false) {
-      const walletType = web3Service.getWalletType();
-      const isDapp = (walletType !== "metamask") && (walletType !== "modern_metamask");
+    // if (web3Service !== false) {
+    //   const walletType = web3Service.getWalletType();
+    //   const isDapp = (walletType !== "metamask") && (walletType !== "modern_metamask");
 
-      if (isDapp) {
-        const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
+    //   if (isDapp) {
+    //     const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
 
-        this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-          ethereumService, this.props.tokens, this.props.translate, walletType))
-      }
-    }
+    //     this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
+    //       ethereumService, this.props.tokens, this.props.translate, walletType))
+    //   }
+    // }
   }
 
   validateSourceAmount = (value, gasPrice) => {
@@ -125,9 +130,16 @@ export default class Transfer extends React.Component {
     this.props.analytics.callTrack("trackChooseToken", type, symbol);
   }
 
-  makeNewTransfer = () => {
+  makeNewTransfer = (changeTransactionType = false) => {
     this.props.dispatch(transferActions.makeNewTransfer());
-    this.props.analytics.callTrack("trackClickNewTransaction", "Transfer");
+
+    if (changeTransactionType) {
+      var swapLink = constansts.BASE_HOST + "/swap/" + this.props.swapSrcTokenSymbol.toLowerCase() + "_" + this.props.swapDestTokenSymbol.toLowerCase();
+      this.props.global.analytics.callTrack("trackClickNewTransaction", "Swap");
+      this.props.history.push(swapLink)
+    } else {
+      this.props.global.analytics.callTrack("trackClickNewTransaction", "Transfer");
+    }
   }
 
   onFocus = () => { 
@@ -367,7 +379,11 @@ export default class Transfer extends React.Component {
 
         defaultShowAddrErrorTooltip = {this.state.defaultShowAddrErrorTooltip}
         setDefaulAddrErrorTooltip = {this.setDefaulAddrErrorTooltip}
+
+        isOnDAPP = {this.props.account.isOnDAPP}
       />
     )
   }
 }
+
+export default withRouter(Transfer)

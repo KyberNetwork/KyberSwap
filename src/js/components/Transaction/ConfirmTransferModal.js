@@ -3,7 +3,6 @@ import { gweiToEth, stringToBigNumber, calculateGasFee, roundingNumber } from ".
 import { FeeDetail } from "../CommonElement";
 
 class ConfirmTransferModal extends React.Component {
-
   constructor() {
     super()
     this.state = {
@@ -35,8 +34,6 @@ class ConfirmTransferModal extends React.Component {
     if (this.props.isConfirming) {
       let isPKeyAcc = this.props.walletType === 'privateKey'
       return isPKeyAcc ? '' : <span>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</span>
-    } else {
-      return <span>{this.props.translate("modal.press_confirm_if_really_want") || "Press Confirm to continue"}</span>
     }
   }
 
@@ -65,6 +62,7 @@ class ConfirmTransferModal extends React.Component {
           </div>
         </div>
         <div className="overlap">
+          <div>{this.msgHtml()}</div>
           <div className="input-confirm grid-x">
             <a className={"button process-submit cancel-process"} onClick={(e) => this.props.onCancel(e)}>Cancel</a>
             <a className={"button process-submit " + (this.props.isConfirming || this.props.isFetchingGas || this.props.isFetchingRate ? "disabled-button" : "next")} onClick={(e) => this.props.onExchange(e)}>{this.props.translate("modal.confirm").toLocaleUpperCase() || "Confirm".toLocaleUpperCase()}</a>

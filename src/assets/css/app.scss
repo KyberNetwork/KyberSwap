@@ -34,24 +34,6 @@ $alert-color: #ff5d00;
 @import "~slick-carousel/slick/slick.css";
 
 @font-face{
-  font-family: 'My-Montserrat';
-  font-style: normal;
-  font-weight: 400;
-  src: url(../fonts/Montserrat-Regular.ttf);
-}
-@font-face{
-  font-family: 'My-Montserrat';
-  font-style: normal;
-  font-weight: 500;
-  src: url(../fonts/Montserrat-Medium.ttf);
-}
-@font-face{
-  font-family: 'My-Montserrat';
-  font-style: normal;
-  font-weight: 600;
-  src: url(../fonts/Montserrat-SemiBold.ttf);
-}
-@font-face{
   font-family: 'text-security-disc';
   font-style: normal;
   font-weight: normal;
@@ -60,7 +42,7 @@ $alert-color: #ff5d00;
 
 html body{
   color: $black;
-  font-family: $font-openSans;
+  font-family: $font-montserrat;
 
   h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
     font-family: $font-cera;

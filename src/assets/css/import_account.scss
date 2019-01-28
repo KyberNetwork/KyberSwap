@@ -20,7 +20,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    max-width: 500px;
+    max-width: 550px;
     margin: 0 auto;
 
     &--mobile {
@@ -30,6 +30,8 @@
         margin: 10px 0;
         width: auto;
         height: auto;
+        border-radius: 50px;
+
         &.download-app{
           .import-account__block-right{
             background-color: #EF8102;
@@ -65,16 +67,13 @@
       }
 
       .import-account__icon {
-        width: 21px;
-        height: 46px;
-        // border-radius: 50%;
-        // background-color: #ef8102;
-        // background-size: 12px;
+        width: 25px;
+        height: 35px;
+        background-size: contain;
+        margin-right: 15px;
 
         &.kyberapp {
-          background-size: 100%;
           background-image: url($image-path + '/v3/kyber-logo.svg');
-          background-color: transparent;
         }
 
         &.promo-code {
@@ -120,8 +119,7 @@
   }
 
   &__item {
-    width: 146px;
-    height: 30px;
+    width: 160px;
     border-radius: 23px;
     background-color: #e7edf5;
     margin: 0 0 12px;
@@ -141,23 +139,40 @@
     }
 
     &--inactive {
-      .import-account__icon.metamask {
-        background: url($image-path + 'import-account/wallet-icon/metamask_gray.svg') no-repeat center;
-      }
-      .import-account__icon.ledger {
-        background: url($image-path + 'import-account/wallet-icon/ledger_gray.svg') no-repeat center;
-      }
-      .import-account__icon.trezor {
-        background: url($image-path + 'import-account/wallet-icon/trezor_gray.svg') no-repeat center;
-      }
-      .import-account__icon.json {
-        background: url($image-path + 'import-account/wallet-icon/keystore_gray.svg') no-repeat center;
-      }
-      .import-account__icon.private-key {
-        background: url($image-path + 'import-account/wallet-icon/private_key_gray.svg') no-repeat center;
-      }
-      .import-account__icon.promo-code {
-        background: url($image-path + 'import-account/wallet-icon/promocode_gray.svg') no-repeat center;
+      .import-account__block {
+        border: 1px solid transparent;
+
+        &:hover {
+          border-color: #e7edf5;
+          background-color: white;
+
+          .import-account__name {
+            color: inherit;
+          }
+        }
+
+        .import-account__icon {
+          background: no-repeat center;
+
+          &.metamask {
+            background-image: url($image-path + 'import-account/wallet-icon/metamask_gray.svg');
+          }
+          &.ledger {
+            background-image: url($image-path + 'import-account/wallet-icon/ledger_gray.svg');
+          }
+          &.trezor {
+            background-image: url($image-path + 'import-account/wallet-icon/trezor_gray.svg');
+          }
+          &.json {
+            background-image: url($image-path + 'import-account/wallet-icon/keystore_gray.svg');
+          }
+          &.private-key {
+            background-image: url($image-path + 'import-account/wallet-icon/private_key_gray.svg');
+          }
+          &.promo-code {
+            background-image: url($image-path + 'import-account/wallet-icon/promocode_gray.svg');
+          }
+        }
       }
     }
   }
@@ -166,13 +181,13 @@
     height: 100%;
     background-color: #e7edf5;
     display: flex;
-    padding: 5px 15px;
+    padding: 6px 15px;
     border-radius: 20px;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
     transition: all .4s;
     outline: none;
-
     &:hover {
       border-color: transparent;
       background-color: #ef8102;

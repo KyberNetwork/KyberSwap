@@ -17,6 +17,7 @@
     "promo_token": "OMG",
     "priority_tokens": [
         "ETH",
+        "DAI",
         "KNC"
     ],
     "market_exclude": [
@@ -31,7 +32,8 @@
             "name": "Ethereum",
             "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "decimals": 18,
-            "cg_id": "ethereum"
+            "cg_id": "ethereum",
+            "gasLimit": "0"
         },
         "KNC": {
             "symbol": "KNC",
