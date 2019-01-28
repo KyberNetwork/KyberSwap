@@ -114,7 +114,8 @@
     "type_pass_to_sign": "비밀번호를 입력 하세요",
     "try_dai":"Try \"DAI\"",
     "exchange_now": "${typeTrade} Now",
-    "advance_notice": "Transaction will be reverted if rate of ${srcSymbol}-${destSymbol} is lower than ${slippageRate} (Current rate ${roundRate})"
+    "advance_notice": "Transaction will be reverted if rate of ${srcSymbol}-${destSymbol} is lower than ${slippageRate} (Current rate ${roundRate})",
+    "try_again": "다시 시도해보십시오r"
   },
   "modal": {
     "enter_password": "비밀번호 입력",

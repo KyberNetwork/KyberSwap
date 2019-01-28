@@ -116,7 +116,8 @@
     "transfer_now": "Transfer Now",
     "type_pass_to_sign": "Enter your password/passphrase to sign and broadcast",
     "try_dai":"Try \"DAI\"",
-    "advance_notice": "Transaction will be reverted if rate of ${srcSymbol}-${destSymbol} is lower than ${slippageRate} (Current rate ${roundRate})"
+    "advance_notice": "Transaction will be reverted if rate of ${srcSymbol}-${destSymbol} is lower than ${slippageRate} (Current rate ${roundRate})",
+    "try_again": "Try Again"
   },
   "modal": {
     "enter_password": "Enter Password",

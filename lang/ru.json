@@ -107,7 +107,8 @@
     "slippage_tip": "Ставка может меняться. Вы можете указать максимальное снижение через изменение\nминимальной ставки в дополнительных опциях",
     "max_slippage": "С максимальным ${percent}% сокращением",
     "included": "Включительно",
-    "type_pass_before_progress": "Type a password before progressing"
+    "type_pass_before_progress": "Type a password before progressing",
+    "try_again": "Попробуйте снова"
   },
   "modal": {
     "enter_password": "Введите пароль",

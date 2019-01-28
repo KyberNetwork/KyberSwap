@@ -23,9 +23,9 @@
     "price": "价格",
     "your_wallet_address": "您的钱包地址",
     "search": "搜索",
-    "connect_your_wallet_to_swap": "Connect your Wallet to Swap",
-    "connect_your_wallet_to_transfer": "Connect your Wallet to Transfer",
-    "your_wallet": "Your Wallet"
+    "connect_your_wallet_to_swap": "连接您的钱包进行兑换",
+    "connect_your_wallet_to_transfer": "连接您的钱包进行转账",
+    "your_wallet": "您的钱包"
   },
   "transaction": {
     "wallet": "钱包",
@@ -110,10 +110,11 @@
     "max_slippage": "滑点率至多为${percent}%",
     "included": "包括",
     "type_pass_to_sign": "进行之前，请输入密码",
-    "try_dai":"Try \"DAI\"",
+    "try_dai":"试试\"DAI\"",
     "swap_now": "Swap Now",
     "transfer_now": "Transfer Now",
-    "advance_notice": "Transaction will be reverted if rate of ${srcSymbol}-${destSymbol} is lower than ${slippageRate} (Current rate ${roundRate})"
+    "advance_notice": "如果${srcSymbol}-${destSymbol}低于${slippageRate}(目前的汇率${roundRate})，那么交易将被取消",
+    "try_again": "再试一次"
   },
   "modal": {
     "enter_password": "输入密码",
@@ -236,7 +237,7 @@
     "cancel": "Cancel",
     "swap_now": "Swap Now",
     "transfer_now": "Transfer Now",
-    "connect_other_wallet": "Connect other wallet"
+    "connect_other_wallet": "连接其他钱包"
   },
   "info": {
     "title": "Kyber测试网络",
@@ -281,8 +282,8 @@
     "accept": "接受",
     "terms_and_condition": "条款和条件",
     "to_get_started": "以开始",
-    "description_term_swap": "By Swapping, you agree to the",
-    "description_term_transfer": "By Transfering, you agree to the"
+    "description_term_swap": "通过兑换，您同意",
+    "description_term_transfer": "通过转账，您同意"
   },
   "landing_page": {
     "title": "以太坊代币的去中心化交易",

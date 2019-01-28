@@ -212,6 +212,12 @@ function* estimateGasUsedWhenSelectToken(action){
   const { symbol, address } = action.payload
 
   var state = store.getState()
+
+  var ethereum = state.connection.ethereum
+  if(!ethereum){
+    return
+  }
+
   var transfer = state.transfer
 
   var tokens = state.tokens.tokens
@@ -233,6 +239,11 @@ function* estimateGasUsedWhenChangeAmount(action){
   var amount = action.payload
 
   var state = store.getState()
+  var ethereum = state.connection.ethereum
+  if(!ethereum){
+    return
+  }
+
   var transfer = state.transfer
   var tokens = state.tokens.tokens
 

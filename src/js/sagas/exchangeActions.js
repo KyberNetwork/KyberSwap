@@ -1478,7 +1478,7 @@ function* analyzeError(action) {
     //console.log(txHash)
     var tx = yield call([ethereum, ethereum.call], "getTx", txHash)
     //  console.log(tx)
-    console.log(tx.input)
+    // console.log(tx.input)
     // console.log(tx)
     var value = tx.value
     var owner = tx.from
@@ -1518,13 +1518,19 @@ function* analyzeError(action) {
 }
 
 function* debug(input, blockno, ethereum) {
-  // console.log({input, blockno})
+  // console.log("debug_tx")
+  // console.log(input)
   var networkIssues = {}
   // var reserveIssues = {}
   var translate = getTranslate(store.getState().locale)
   var gasCap = yield call([ethereum, ethereum.call], "wrapperGetGasCap", blockno)
 
-  if (input.transaction.gasUsed === input.transaction.gas && !input.transaction.status) networkIssues["gas_used"] = "Your transaction is run out of gas"
+  if(!input.transaction.status || input.transaction.status == "0x0"){
+    if(input.transaction.gas != 0 && (input.transaction.gasUsed/input.transaction.gas >= 0.95)){
+      networkIssues["gas_used"] = "Your transaction is run out of gas"
+    }
+  }
+  // if (input.transaction.gasUsed === input.transaction.gas && !input.transaction.status) networkIssues["gas_used"] = "Your transaction is run out of gas"
 
   if (converter.compareTwoNumber(input.gas_price, gasCap) === 1) {
     networkIssues["gas_price"] = translate('error.gas_price_exceeded_limit') || "Gas price exceeded max limit"

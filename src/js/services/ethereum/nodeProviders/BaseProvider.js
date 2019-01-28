@@ -484,7 +484,7 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             try {
                 //get trade abi from 
-                var tradeAbi = this.getAbiByName("trade", constants.KYBER_NETWORK)
+                var tradeAbi = this.getAbiByName("tradeWithHint", constants.KYBER_NETWORK)
                 //  console.log(tradeAbi)
                 abiDecoder.addABI(tradeAbi)
                 //  console.log(abiDecoder)

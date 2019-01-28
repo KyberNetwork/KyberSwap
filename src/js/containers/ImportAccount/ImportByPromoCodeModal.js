@@ -81,8 +81,6 @@ export default class ImportByPromoCodeModal extends React.Component {
   }
 
   verifyCallback = (response) => {
-    console.log("captcha_response")
-    console.log(response);
     if (response){
       this.setState({
         tokenCaptcha: response,

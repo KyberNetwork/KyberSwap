@@ -42,7 +42,10 @@ export default class ChooseBalanceModal extends React.Component {
         }
 
         if (sourceSymbol !== "ETH") {
-            amount = sourceBalance * percent / 100
+            amount = sourceBalance * (percent / 100)
+            amount = amount / Math.pow(10, sourceDecimal)
+            amount = amount.toString()
+            amount = amount.replace(",", "")
         } else {
             var gasLimit
             var totalGas
@@ -56,17 +59,21 @@ export default class ChooseBalanceModal extends React.Component {
                 totalGas = converters.calculateGasFee(this.props.transfer.gasPrice, gasLimit) * Math.pow(10, 18)
                 // amount = (sourceBalance - totalGas) * percent / 100
             }
-            var amount = (sourceBalance) * percent / 100 - totalGas * 120 / 100
+            amount = (sourceBalance) * percent / 100 - totalGas * 120 / 100
+            amount = amount / Math.pow(10, sourceDecimal)
+            amount = converters.roundingNumber(amount).toString(10)
+            amount = amount.replace(",", "")
         }
 
-        amount = amount / Math.pow(10, sourceDecimal)
+        
+        
 
         if (this.props.typeTx === "swap") {
-            this.props.dispatch(this.props.changeAmount('source', converters.roundingNumber(amount).toString(10)))
+            this.props.dispatch(this.props.changeAmount('source', amount))
             this.props.dispatch(this.props.changeFocus('source'));
             this.props.ethereum.fetchRateExchange(true)
         } else {
-            this.props.dispatch(this.props.changeAmount(converters.roundingNumber(amount).toString(10)))
+            this.props.dispatch(this.props.changeAmount(amount))
             this.props.changeFocus()
         }
         this.hideChooseBalance()
