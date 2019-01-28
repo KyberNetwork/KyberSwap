@@ -63,7 +63,7 @@ export default class AdvanceConfigLayout extends React.Component {
                         name="gasAmount"
                         value={item.key}
                         defaultChecked={this.props.selectedGas == item.key}
-                        onChange={() => this.props.selectedGasHandler(item.value, item.key)}
+                        onChange={() => this.props.selectedGasHandler(item.value, item.key, item.text)}
                       />
                       <span className="advance-config__checkmark"></span>
                     </label>

@@ -153,9 +153,11 @@ export default class Market extends React.Component {
 
   closeModal = () => {
     this.setState({ modalState: false })
+    this.props.global.analytics.callTrack("trackClickCloseMarket")
   }
   openModal = () => {
     this.setState({ modalState: true })
+    this.props.global.analytics.callTrack("trackClickOpenMarket")
   }
 
   render() {
