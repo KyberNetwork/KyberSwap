@@ -36,7 +36,7 @@ export default class AdvanceConfigLayout extends React.Component {
 
             <div>
               <div className="advance-config__title">
-                <span>{this.props.translate("transaction.gas_fee") || "GAS fee"}} (Gwei)</span>
+                <span>{this.props.translate("transaction.gas_fee") || "GAS fee"} (Gwei)</span>
                 {this.props.type==="exchange" && (
                   <span className="advance-config__title-info">
                     <span data-tip={`Higher gas price, faster transaction. Max gas price: ${this.props.maxGasPrice} Gwei`} data-html={true} data-for="gas-info">

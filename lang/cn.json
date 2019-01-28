@@ -117,7 +117,9 @@
     "try_again": "再试一次",
     "optional": "可选",
     "still_proceed_if_rate_goes_down": "Still proceed if ${pair} rate goes down by",
-    "gas_fee": "燃料费用"
+    "gas_fee": "燃料费用",
+    "any_rate": "Any-rate",
+    "custom": "Custom"
   },
   "modal": {
     "enter_password": "输入密码",

@@ -119,7 +119,9 @@
     "try_again": "다시 시도해보십시오r",
     "optional": "선택 사항",
     "still_proceed_if_rate_goes_down": "Still proceed if ${pair} rate goes down by",
-    "gas_fee": "가스 비용"
+    "gas_fee": "가스 비용",
+    "any_rate": "Any-rate",
+    "custom": "Custom"
   },
   "modal": {
     "enter_password": "비밀번호 입력",

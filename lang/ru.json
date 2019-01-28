@@ -120,7 +120,9 @@
     "advance_notice": "Transaction will be reverted if rate of ${srcSymbol}-${destSymbol} is lower than ${slippageRate} (Current rate ${roundRate})",
     "optional": "Optional",
     "still_proceed_if_rate_goes_down": "Still proceed if ${pair} rate goes down by",
-    "gas_fee": "GAS fee"
+    "gas_fee": "GAS fee",
+    "any_rate": "Any-rate",
+    "custom": "Custom"
   },
   "modal": {
     "enter_password": "Введите пароль",

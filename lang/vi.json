@@ -117,7 +117,9 @@
     "try_again": "Thử Lại",
     "optional": "Tùy chọn",
     "still_proceed_if_rate_goes_down": "Vẫn tiếp tục nếu tỷ giá ${pair} giảm xuống",
-    "gas_fee": "Phí GAS"
+    "gas_fee": "Phí GAS",
+    "any_rate": "Any-rate",
+    "custom": "Custom"
   },
   "modal": {
     "enter_password": "Nhập mật khẩu",
