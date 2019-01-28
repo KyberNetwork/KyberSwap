@@ -337,12 +337,23 @@ class ExchangeBody extends React.Component {
   }
 
   toggleBalanceContent = () => {
+    if (this.props.exchange.isBalanceActive) {
+      this.props.global.analytics.callTrack("trackClickHideAccountBalance", "Swap")
+    } else {
+      this.props.global.analytics.callTrack("trackClickShowAccountBalance", "Swap")
+    }
     this.props.dispatch(exchangeActions.toggleBalanceContent())    
     if(!this.props.global.isOnMobile){
       this.props.dispatch(exchangeActions.toggleAdvanceContent())    
     }
   }
+
   toggleAdvanceContent = () => {
+    if (this.props.exchange.isAdvanceActive) {
+      this.props.global.analytics.callTrack("trackClickHideAdvanceOption", "Swap")
+    } else {
+      this.props.global.analytics.callTrack("trackClickShowAdvanceOption", "Swap")
+    }
     this.props.dispatch(exchangeActions.toggleAdvanceContent())    
     if(!this.props.global.isOnMobile){
       this.props.dispatch(exchangeActions.toggleBalanceContent())    
@@ -359,7 +370,7 @@ class ExchangeBody extends React.Component {
   selectedGasHandler = (value, level, levelString) => {
     this.props.dispatch(exchangeActions.seSelectedGas(level))
     this.specifyGasPrice(value)
-    this.props.global.analytics.callTrack("trackChooseGas", value, levelString);
+    this.props.global.analytics.callTrack("trackChooseGas", "swap", value, levelString);
   }
 
   handleSlippageRateChanged = (e, isInput = false) => {
@@ -440,6 +451,7 @@ class ExchangeBody extends React.Component {
 
   clearSession = (e) => {
     this.props.dispatch(globalActions.clearSession(this.props.exchange.gasPrice))
+    this.props.global.analytics.callTrack("trackClickChangeWallet")
     // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
   }
 

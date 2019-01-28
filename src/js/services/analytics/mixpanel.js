@@ -112,7 +112,7 @@ export default class Mixpanel {
     }
   }
 
-  acceptTerm(tradeType){
+  acceptTerm(){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
         mixpanel.track("Step_1_Accept_Term")
@@ -576,6 +576,76 @@ export default class Mixpanel {
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
         mixpanel.track("Swap_2_2_Click_Change_New_Capcha")
+      }catch(e){
+        console.log(e)
+      }
+    }
+  }
+
+  trackClickChangeWallet(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track("Step_2_Connect_Other_Wallet")
+      }catch(e){
+        console.log(e)
+      }
+    }
+  }
+
+  trackClickOpenMarket(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track("Step_*_Open_Market_Modal")
+      }catch(e){
+        console.log(e)
+      }
+    }
+  }
+
+  trackClickCloseMarket(){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track("Step_*_Close_Market_Modal")
+      }catch(e){
+        console.log(e)
+      }
+    }
+  }
+
+  trackClickShowAccountBalance(tradeType){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`Step_2_Show_Account_Balance_${tradeType}`)
+      }catch(e){
+        console.log(e)
+      }
+    }
+  }
+
+  trackClickShowAdvanceOption(tradeType){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`Step_2_Show_Advance_Option_${tradeType}`)
+      }catch(e){
+        console.log(e)
+      }
+    }
+  }
+
+  trackClickHideAccountBalance(tradeType){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`Step_2_Hide_Account_Balance_${tradeType}`)
+      }catch(e){
+        console.log(e)
+      }
+    }
+  }
+
+  trackClickHideAdvanceOption(tradeType){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`Step_2_Hide_Advance_Option_${tradeType}`)
       }catch(e){
         console.log(e)
       }
