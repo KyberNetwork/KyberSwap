@@ -106,7 +106,8 @@
     "slippage_tip": "Tỉ giá có thể thay đổi, bạn có thể chỉnh tỉ giá trong lựa chọn nâng\ncao",
     "max_slippage": "với tối đa ${percent}% trượt giá",
     "included": "Bao gồm",
-    "type_pass_before_progress": "Nhập mật khẩu trước khi tiến hành"
+    "type_pass_before_progress": "Nhập mật khẩu trước khi tiến hành",
+    "try_again": "Thử Lại"
   },
   "modal": {
     "enter_password": "Nhập mật khẩu",
