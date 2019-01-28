@@ -107,7 +107,8 @@
     "slippage_tip": "고급 옵션에서 최소 비율을 조절하여 최대 미끄럼 비율을 변경할 수 있습니다.",
     "max_slippage": "가치를 잃은 ${percent}%로 최대입니다",
     "included": "포함",
-    "type_pass_before_progress": "비밀번호를 입력 하세요"
+    "type_pass_before_progress": "비밀번호를 입력 하세요",
+    "try_again": "다시 시도해보십시오r"
   },
   "modal": {
     "enter_password": "비밀번호 입력",
