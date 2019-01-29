@@ -25,7 +25,7 @@
         "PT",
         "ETH"
     ],
-    "userdashboard_url": "https://dev-userdashboard.knstats.com",
+    "userdashboard_url": "https://staging-kyberswap.knstats.com",
     "tokens": {
         "ETH": {
             "symbol": "ETH",
