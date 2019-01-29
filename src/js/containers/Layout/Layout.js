@@ -27,7 +27,7 @@ import BLOCKCHAIN_INFO from "../../../../env";
     code = locale.languages[0].code
   }
 
-  var langClass = ""
+  var langClass
   switch(code) {
     case "en":
       langClass = "swap-en"
@@ -44,6 +44,8 @@ import BLOCKCHAIN_INFO from "../../../../env";
     case "vi":
       langClass = "swap-vi"
       break
+    default:
+      langClass = ""
   }
 
   return {
