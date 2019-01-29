@@ -306,6 +306,12 @@ $divider-color: darken($title-background-color, 5);
   padding-bottom: 0 !important;
   background-color: #f6f7fa !important;
 
+  .transfer-title {
+    @include screen-max-width(medium) {
+      padding: 0 20px;
+    }
+  }
+
   .title {
     font-weight: 600;
     line-height: 0.8;
@@ -314,6 +320,9 @@ $divider-color: darken($title-background-color, 5);
     margin-bottom: 30px;
     text-align: left;
     margin-top: 60px;
+    @include screen-max-width(medium) {
+      margin-top: 20px;
+    }
   }
 
   .recap-sum-up {
@@ -413,6 +422,7 @@ $divider-color: darken($title-background-color, 5);
       }
     }
     @include screen-max-width(medium){
+      background-color: #f6f7fa;
       padding-left: 20px;
       padding-right: 20px;
       .button {
@@ -424,11 +434,11 @@ $divider-color: darken($title-background-color, 5);
   }
   .content {
     padding: 0 45px;
-    @include screen-max-width(medium){
-      padding: 0 20px;
-    }
     &.with-overlap {
       padding-bottom: 25px;
+      @include screen-max-width(medium){
+        padding-bottom: 0;
+      }
     }
     .block-title {
       @include clearfix;
@@ -497,6 +507,22 @@ $divider-color: darken($title-background-color, 5);
         font-size: 14px;
         line-height: 1.71;
         letter-spacing: 0.8px;
+      }
+    }
+    @include screen-max-width(medium){
+      padding: 0 0 20px 0;
+      .title, .gas-configed {
+        padding: 0 20px;
+      }
+      .confirm-exchange-modal {
+        .title-description {
+          padding: 0 20px;
+        }
+        .amount {
+          padding: 5px 10px;
+          background-color: white;
+          border-radius: 0;
+        }
       }
     }
   }
@@ -607,6 +633,12 @@ $divider-color: darken($title-background-color, 5);
     justify-content: space-between;
     @include screen-max-width(medium) {
       padding-top: 20px;
+      &--approve {
+        text-align: center;
+        .button {
+          max-width: 200px;
+        }
+      }
     }
   }
   .password-input{
@@ -660,6 +692,9 @@ $divider-color: darken($title-background-color, 5);
       font-size: 14px;
       margin-top: 1rem;
       font-weight: normal;
+      @include screen-max-width(medium) {
+        padding: 0 20px;
+      }
     }
     .tx-title{
       text-align: left;
@@ -690,6 +725,9 @@ $divider-color: darken($title-background-color, 5);
         }
         @include screen-max-width(medium) {
           display: block;
+          background-color: white;
+          padding-left: 20px;
+          padding-right: 20px;
           div {
             &:last-child {
               // padding: 0 15px;
