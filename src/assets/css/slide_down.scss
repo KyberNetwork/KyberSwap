@@ -73,7 +73,8 @@
     .slide-down__fade-in {
       opacity: 1;
       transform: translateY(0);
-      position: unset;
+      // position: unset;
+      z-index: unset;
       transition: all .4s;
     }
 
