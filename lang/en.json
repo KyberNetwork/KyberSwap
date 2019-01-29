@@ -288,8 +288,8 @@
     "accept": "Accept",
     "terms_and_condition": " Terms and Conditions ",
     "to_get_started": "to get started",
-    "description_term_swap": "By Swapping, you agree to the",
-    "description_term_transfer": "By Transfering, you agree to the"
+    "description_term_swap": "By Swapping, you agree to the ${term}",
+    "description_term_transfer": "By Transfering, you agree to the ${term}"
   },
   "landing_page": {
     "title": "Decentralized Exchange for Ethereum tokens",

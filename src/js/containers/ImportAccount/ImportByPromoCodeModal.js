@@ -178,7 +178,7 @@ export default class ImportByPromoCodeModal extends React.Component {
                           spellCheck="false"
                           onFocus={(e) => {this.props.analytics.callTrack("trackClickInputPromoCode")}}
                           required
-                          placeholder="Enter your promocode here"
+                          placeholder={this.props.translate("import.enter_promo_code") || "Enter your promocode here"}
                         />
                       </div>
                       {!!this.state.errorPromoCode &&
