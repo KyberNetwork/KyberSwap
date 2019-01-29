@@ -55,11 +55,12 @@ export function* updateAllRate(action) {
     try {
       console.log("run here")
       rateUSD = yield call([ethereum, ethereum.call],"getRateETH")
-      yield put(actions.updateAllRateUSDComplete(rateETHUSD))
+      yield put(actions.updateAllRateUSDComplete(rateUSD))
       yield put(actions.showBalanceUSD())
     }
     catch(err) {
       console.log(err.message)
+      rateUSD = "0"
     }
   }
   try {
