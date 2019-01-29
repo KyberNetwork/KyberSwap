@@ -109,7 +109,7 @@
     "slippage_tip": "Tỉ giá có thể thay đổi, bạn có thể chỉnh tỉ giá trong lựa chọn nâng\ncao",
     "max_slippage": "với tối đa ${percent}% trượt giá",
     "included": "Bao gồm",
-    "type_pass_to_sign": "Nhập mật khẩu trước khi tiến hành",
+    "type_pass_to_sign": "Nhập mật khẩu/ cụm mật khẩu của bạn để kí và thực hiện giao dịch",
     "try_dai":"Thử \"DAI\"",
     "swap_now": "Trao đổi",
     "transfer_now": "Chuyển",
@@ -119,7 +119,7 @@
     "still_proceed_if_rate_goes_down": "Vẫn tiếp tục nếu tỷ giá ${pair} giảm xuống",
     "gas_fee": "Phí GAS",
     "any_rate": "Any-rate",
-    "custom": "Custom"
+    "custom": "Tùy chỉnh"
   },
   "modal": {
     "enter_password": "Nhập mật khẩu",
@@ -239,7 +239,8 @@
     "enter_promo_code": "Nhập mã khuyến mãi",
     "apply": "Áp dụng",
     "cancel": "Hủy",
-    "connect_other_wallet": "Kết nối với ví khác"
+    "connect_other_wallet": "Kết nối với ví khác",
+    "promo_code": "MÃ KHUYẾN MÃI"
   },
   "info": {
     "title": "Kyber phiên bản thử nghiệm",
@@ -285,8 +286,8 @@
     "accept": "Chấp nhận",
     "terms_and_condition": " Điều khoản sử dụng ",
     "to_get_started": "để bắt đầu",
-    "description_term_swap": "Bằng việc trao đổi token, bạn đồng ý với ",
-    "description_term_transfer": "Bằng việc chuyển token, bạn đồng ý với "
+    "description_term_swap": "Bằng việc trao đổi token, bạn đồng ý với ${term}",
+    "description_term_transfer": "Bằng việc chuyển token, bạn đồng ý với ${term}"
   },
   "landing_page": {
     "title": "Trao đổi Ethereum tokens",

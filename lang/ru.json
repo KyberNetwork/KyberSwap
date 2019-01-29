@@ -240,6 +240,7 @@
     "select_or_drag": "Выберите или перетяните",
     "address_is_loading": "Адрес загружается...",
     "enter_promo_code": "Enter your Promo Code",
+    "promo_code": "Promocode",
     "apply": "Apply",
     "connect_other_wallet": "Connect other wallet"
   },
@@ -287,8 +288,8 @@
     "accept": "Принять",
     "terms_and_condition": " Условия и положения ",
     "to_get_started": "чтобы начать",
-    "description_term_swap": "By Swapping, you agree to the",
-    "description_term_transfer": "By Transfering, you agree to the"
+    "description_term_swap": "By Swapping, you agree to the ${term}",
+    "description_term_transfer": "By Transfering, you agree to the ${term}"
   },
   "landing_page": {
     "title": "Децентрализованный обмен ETH",
