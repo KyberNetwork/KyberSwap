@@ -240,6 +240,7 @@
     "select_or_drag": "Выберите или перетяните",
     "address_is_loading": "Адрес загружается...",
     "enter_promo_code": "Enter your Promo Code",
+    "promo_code": "Promocode",
     "apply": "Apply",
     "connect_other_wallet": "Connect other wallet"
   },

@@ -33,6 +33,12 @@ $alert-color: #ff5d00;
 @import "slider";
 @import "~slick-carousel/slick/slick.css";
 
+@import "swap_en";
+@import "swap_cn";
+@import "swap_kr";
+@import "swap_vi";
+@import "swap_ru";
+
 @font-face{
   font-family: 'text-security-disc';
   font-style: normal;

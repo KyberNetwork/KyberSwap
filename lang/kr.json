@@ -239,6 +239,7 @@
     "select_or_drag": "선택 또는 드래그",
     "address_is_loading": "주소 로딩중...",
     "enter_promo_code": "Enter your Promo Code",
+    "promo_code": "Promocode",
     "apply": "적용",
     "cancel": "취소",
     "connect_other_wallet": "Connect other wallet"

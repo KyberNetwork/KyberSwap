@@ -239,7 +239,8 @@
     "enter_promo_code": "Nhập mã khuyến mãi",
     "apply": "Áp dụng",
     "cancel": "Hủy",
-    "connect_other_wallet": "Kết nối với ví khác"
+    "connect_other_wallet": "Kết nối với ví khác",
+    "promo_code": "MÃ KHUYẾN MÃI"
   },
   "info": {
     "title": "Kyber phiên bản thử nghiệm",

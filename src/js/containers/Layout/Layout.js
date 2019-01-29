@@ -21,6 +21,31 @@ import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store) => {
   // console.log("locale: ", store.locale)
+  var locale = store.locale
+  var code
+  if(Array.isArray(locale.languages)) {
+    code = locale.languages[0].code
+  }
+
+  var langClass = ""
+  switch(code) {
+    case "en":
+      langClass = "swap-en"
+      break
+    case "cn":
+      langClass = "swap-cn"
+      break
+    case "kr":
+      langClass = "swap-kr"
+      break
+    case "ru":
+      langClass = "swap-ru"
+      break
+    case "vi":
+      langClass = "swap-vi"
+      break
+  }
+
   return {
     ethereumNode: store.connection.ethereum,
     currentBlock: store.global.currentBlock,
@@ -29,9 +54,10 @@ import BLOCKCHAIN_INFO from "../../../../env";
     utils: store.utils,
     account: store.account,
     translate: getTranslate(store.locale),
-    locale: store.locale,
+    locale: locale,
     tokens: store.tokens.tokens,
-    analytics: store.global.analytics
+    analytics: store.global.analytics,
+    langClass: langClass
   }
 })
 
@@ -117,6 +143,7 @@ export default class Layout extends React.Component {
         setActiveLanguage={this.setActiveLanguage}      
         currentLanguage = {currentLanguage}  
         tokens = {this.props.tokens}
+        langClass = {this.props.langClass}
       />
     )
   }
