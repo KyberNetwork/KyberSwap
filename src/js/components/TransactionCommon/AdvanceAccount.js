@@ -8,7 +8,9 @@ const AdvanceAccount = (props) => {
     <div className="exchange-account">
       <div className="exchange-account__wrapper">
         {!props.isOnDAPP && <div className={"exchange-account__wrapper--reimport"}>
-          <div className={"reimport-msg"} onClick={(e) => props.clearSession(e)}>Connect other wallet</div>
+          <div className={"reimport-msg"} onClick={(e) => props.clearSession(e)}>
+            {props.translate("import.connect_other_wallet") || "Connect other wallet"}
+          </div>
         </div>}
         <div className="exchange-account__container container">
           <div className={`exchange-account__content`}>

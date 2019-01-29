@@ -1,6 +1,15 @@
 import React from "react";
 import * as converter from "../../utils/converter";
 import { filterInputNumber } from "../../utils/validators";
+import { connect } from "react-redux"
+import { getTranslate } from 'react-localize-redux'
+
+@connect((store, props) => {
+  const translate = getTranslate(store.locale)
+  return {
+    translate: translate
+  }
+})
 
 export default class MinConversionRate extends React.Component {
   constructor(props) {
@@ -35,7 +44,8 @@ export default class MinConversionRate extends React.Component {
     return (
       <div className="advance-config__block">
         <div className="advance-config__title">
-          Still proceed if {this.props.sourceTokenSymbol}-{this.props.destTokenSymbol} rate goes down by:
+          {this.props.translate("transaction.still_proceed_if_rate_goes_down", {pair: `${this.props.sourceTokenSymbol}-${this.props.destTokenSymbol}`})}:
+          {/* Still proceed if {this.props.sourceTokenSymbol}-{this.props.destTokenSymbol} rate goes down by: */}
         </div>
         <div className="advance-config__option-container">
           <label className="advance-config__option">
@@ -44,12 +54,12 @@ export default class MinConversionRate extends React.Component {
             <span className="advance-config__checkmark"></span>
           </label>
           <label className="advance-config__option">
-            <span>Any-rate</span>
+            <span>{this.props.translate("transaction.any_rate") || "Any-rate"}</span>
             <input className="advance-config__radio" type="radio" name="slippageRate" value="0" onChange={this.props.onSlippageRateChanged}/>
             <span className="advance-config__checkmark"></span>
           </label>
           <label className="advance-config__option advance-config__option--with-input">
-            <span>Custom</span>
+            <span>{this.props.translate("transaction.custom") || "Custom"}</span>
             <input className="advance-config__radio" type="radio" name="slippageRate" value={this.state.customSlippageRate} onChange={(e) => this.props.onSlippageRateChanged(e, true)}/>
             <span className="advance-config__checkmark"></span>
             <input type="number" placeholder="%" className="advance-config__input" value={this.state.customSlippageRate} onChange={(e) => this.onCustomSlippageRateChanged(e)}/>
@@ -57,7 +67,9 @@ export default class MinConversionRate extends React.Component {
         </div>
         <div className={"advance-config__info"}>
           <div>
-            Transaction will be reverted if rate of {this.props.sourceTokenSymbol}-{this.props.destTokenSymbol} is lower than {slippageExchangeRate} (Current rate {roundExchangeRate})
+            {this.props.translate("transaction.advance_notice", 
+              {srcSymbol: this.props.sourceTokenSymbol, destSymbol: this.props.destTokenSymbol, slippageRate: slippageExchangeRate, roundRate: roundExchangeRate})
+              || `Transaction will be reverted if rate of ${this.props.sourceTokenSymbol}-${this.props.destTokenSymbol} is lower than ${slippageExchangeRate} (Current rate ${roundExchangeRate})`}
           </div>
         </div>
       </div>

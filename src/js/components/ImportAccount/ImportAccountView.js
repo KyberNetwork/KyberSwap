@@ -18,7 +18,9 @@ const ImportAccountView = (props) => {
       <div className="import-account__choose-wallet-container container">
         {props.isAgreedTermOfService && (
           <h1 className="import-account__title">{ props.tradeType === "swap" ?
-            props.translate("address.connect_your_wallet_to_swap") || "Connect your Wallet to Swap" : "Connect your Wallet to Transfer"}</h1>
+            props.translate("address.connect_your_wallet_to_swap") || "Connect your Wallet to Swap" : 
+            props.translate("address.connect_your_wallet_to_transfer") || "Connect your Wallet to Transfer"}
+          </h1>
         )}
 
         <div className={`import-account__content ${isOnMobile ? ' import-account__content--mobile' : ''}`}>
