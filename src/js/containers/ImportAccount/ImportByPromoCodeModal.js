@@ -80,6 +80,14 @@ export default class ImportByPromoCodeModal extends React.Component {
     })
   }
 
+  resetCapcha = () => {
+    this.recaptchaInstance.reset()
+    this.setState({
+      tokenCaptcha: "",
+      isPassCapcha: false
+    })
+  }
+  
   verifyCallback = (response) => {
     if (response){
       this.setState({
