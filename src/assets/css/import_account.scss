@@ -50,15 +50,30 @@
         height: unset;
         cursor: initial;
         border-radius: 50%;
-
         &:hover {
-          border-color: #ccc;
-          background-color: #fafafa;
-
+          background-color: transparent !important;
           .import-account__name {
-            color: #222222;
+            color: inherit !important;
           }
         }
+        // @include screen-min-width(large){
+        //   &:hover {
+        //     border-color: #ccc;
+        //     background-color: #fafafa;
+  
+        //     .import-account__name {
+        //       color: #222222;
+        //     }
+        //   }
+        // }
+        // @include screen-max-width(large){
+        //   &:hover {
+        //     background-color: transparent;
+        //     .import-account__name {
+        //       color: inherit;
+        //     }
+        //   }
+        // }
       }
 
       .import-account__block-left {

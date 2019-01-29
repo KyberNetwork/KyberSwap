@@ -58,7 +58,7 @@ const ImportAccountView = (props) => {
               </div>
               <a
                 className="import-account__block-right"
-                href={props.onMobile.isIOS ? "https://itunes.apple.com/us/app/coinbase-wallet/id1278383455?mt=8" : "https://play.google.com/store/apps/details?id=org.toshi&hl=en"}
+                href={"https://itunes.apple.com/us/app/coinbase-wallet/id1278383455?mt=8"}
                 target="_blank"
               >
                 {props.translate("address.download") || "Download"}
