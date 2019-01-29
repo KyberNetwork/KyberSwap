@@ -967,6 +967,7 @@
 .market-modal{
   background-color: #f1f5fb !important;
   border-radius: 20px;
+  height: auto;
   @include screen-max-width(large){
     border-radius: 0;
   }
