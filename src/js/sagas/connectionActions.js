@@ -47,7 +47,7 @@ function getListTokens() {
         if (result.success) {
           //check listing time
           
-          var tokens = filterTokens(result.data)
+          var tokens = filterTokens(result.data)          
           resolve(tokens)
 
           //resolve(result.data)
