@@ -522,6 +522,14 @@
             "decimals": 18,
             "cg_id": "the-abyss",
             "listing_time": 1547560800
+        },
+        "WBTC": {
+            "symbol": "WBTC",
+            "name": "Wrapped BTC",
+            "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+            "decimals": 8,
+            "cg_id": "",
+            "listing_time": 1548916200
         }
     },
     "ethScanUrl": "https://etherscan.io/",

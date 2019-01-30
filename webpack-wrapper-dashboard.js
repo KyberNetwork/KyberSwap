@@ -31,6 +31,13 @@ var getConfig = env => {
             filename: "[name].css",
         }),   
         new CleanPlugin([outputPath + '/app*', outputPath + '/libary*']),
+        new webpack.DefinePlugin({
+            'env': JSON.stringify(env),
+            'process.env': {
+                'logger': env === 'production'?'false': 'true',
+                'env': JSON.stringify(env)
+            }
+        }),
         new WebpackShellPlugin(
             {
                 // hash: hash,
