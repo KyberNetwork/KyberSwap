@@ -12,7 +12,7 @@ import * as analytics from "../../utils/analytics"
 
 export default class TermAndServices extends React.Component {
   render() {
-    let termAndConditionUrl = "https://files.kyber.network/tac.pdf";
+    let termAndConditionUrl = "http://files.kyberswap.com/tac.pdf";
 
     let termLink = (<a class="exchange-terms__link" href={termAndConditionUrl} target="_blank" onClick={(e) => {this.props.analytics.callTrack("trackClickShowTermAndCondition")}}>
       {this.props.translate("terms.terms_and_condition") || " Terms and Conditions "}
