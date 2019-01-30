@@ -60,10 +60,10 @@ const ImportAccountView = (props) => {
               </div>
               <a
                 className="import-account__block-right"
-                href={"https://itunes.apple.com/us/app/coinbase-wallet/id1278383455?mt=8"}
+                href={"https://docs.google.com/forms/d/e/1FAIpQLSeHmkoi5TQ8gGvmrhzg7RzRZQNlEDBR_Gqb67uB6M92V10rpQ/viewform"}
                 target="_blank"
               >
-                {props.translate("address.download") || "Download"}
+                {props.translate("address.register_beta") || "Register Beta"}
               </a>
             </div>
           </div>
