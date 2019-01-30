@@ -563,11 +563,11 @@ export default class PostExchange extends React.Component {
 
 
   contentApproveZero = () => {
-    var addressShort = this.props.account.address.slice(0, 8) + "..." + this.props.account.address.slice(-6)    
+    var addressShort = this.props.account.address.slice(0, 8) + "..." + this.props.account.address.slice(-6)
     return (
       <ApproveModal 
         title={ "Approve token"}
-        message={"You need reset allowance KNC of Kyber Swap with this address"}
+        message={`You need reset allowance ${this.props.form.sourceTokenSymbol} of Kyber Swap with this address`}
         recap="Please approve"
         onCancel={this.closeModalApproveZero}
         isApproving={this.props.form.isApprovingZero}
