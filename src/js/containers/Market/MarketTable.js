@@ -576,7 +576,7 @@ export default class MarketTable extends React.Component {
             }
             }
             getNoDataProps={(state, rowInfo) => {
-              if(this.props.data.length==0) return { style: { border: 'none' ,top:'75%',padding:'0px'} };
+              if(this.props.data.length==0) return { style: { border: 'none' ,top:'75%',padding:'0px', backgroundColor:'transparent'} };
               return {};
               }
             }
