@@ -544,7 +544,7 @@ export default class PostExchange extends React.Component {
     return (
       <ApproveModal 
         title={ this.props.translate("modal.approve_token") || "Approve token"}
-        message={"You need to grant permission for Kyber Swap to interact with KNC with this address"}
+        message={`You need to grant permission for Kyber Swap to interact with ${this.props.form.sourceTokenSymbol} with this address`}
         recap="Please approve"
         onCancel={this.closeModalApprove}
         isApproving={this.props.form.isApproving}

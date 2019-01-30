@@ -201,7 +201,7 @@ async function renderLanguage(){
 }
 async function main() {
     //render language
-    await renderLanguage()
+   // await renderLanguage()
 
     var enviroment = process.env.NODE_ENV
     await saveBackupTokens(enviroment)
