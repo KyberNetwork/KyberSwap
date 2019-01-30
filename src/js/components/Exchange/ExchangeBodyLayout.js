@@ -145,6 +145,8 @@ const ExchangeBodyLayout = (props) => {
     <div>
       <div>
         <div>
+          {props.account && props.account.type === "promo" && props.account.info.description !== ""
+           && <div className={"promo-description"}><span>{props.account.info.description}</span></div>}
           <div className="exchange-content-wrapper">
             {props.networkError !== "" && (
               <div className="network_error">
