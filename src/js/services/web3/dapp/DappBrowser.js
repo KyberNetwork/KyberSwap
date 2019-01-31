@@ -36,10 +36,32 @@ export default class DappBrowser {
     })
   }
 
-  getCoinbase() {
+  getCoinbase(isManual = false) {
+    if (window.ethereum && isManual) {
+      return new Promise((resolve, reject) => {
+        window.ethereum.enable().then(() => {
+
+          this.web3.eth.getAccounts((error, result) => {
+            // console.log(result)
+            if (error || result.length === 0) {
+              var error = new Error("Cannot get coinbase")
+              reject(error)
+            } else {
+              resolve(result[0])
+            }
+          })
+
+        }).catch(err => {
+          var error = new Error("Cannot get coinbase")
+          reject(error)
+        })
+       
+      })
+    } else {
       return new Promise((resolve, reject) => {
 
         this.web3.eth.getAccounts((error, result) => {
+          // console.log(result)
           if (error || result.length === 0) {
             var error = new Error("Cannot get coinbase")
             reject(error)
@@ -48,17 +70,10 @@ export default class DappBrowser {
           }
         })
 
-        // this.web3.eth.getAccounts((error, result) => {
-        //   if (error || result.length === 0) {
-        //     var error = new Error("Cannot get coinbase")
-        //     reject(error)
-        //   } else {
-        //     resolve(result[0])
-        //   }
-        // })
 
       })
-    } 
+    }
+  }
 
 
   setDefaultAddress(address) {
