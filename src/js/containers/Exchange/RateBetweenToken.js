@@ -63,7 +63,7 @@ export default class RateBetweenToken extends React.Component {
         <span className="token-compare__tooltip" data-html={true} data-tip={`<p>Price is dependent on your swap value. There is a ${change}% difference in price for the requested quantity and the default ${constants.MIN_AMOUNT_DEFAULT_RATE} ETH quantity</p>`} data-for="info_indicator" currentitem="false">
             <img src={require('../../../assets/img/common/blue-indicator.svg')}/>
         </span>
-        <ReactTooltip place="top" offset={{left:95}} id="info_indicator" type="light" html={true}/>
+        <ReactTooltip place="top" offset={{left:95}} id="info_indicator" className={"common-tooltip"} type="light" html={true}/>
       </div>
     )
   }

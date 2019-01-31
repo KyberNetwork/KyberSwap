@@ -42,7 +42,7 @@ export default class AdvanceConfigLayout extends React.Component {
                     <span data-tip={`Higher gas price, faster transaction. Max gas price: ${this.props.maxGasPrice} Gwei`} data-html={true} data-for="gas-info">
                       <img src={require("../../../assets/img/v3/info_blue.svg")} />
                     </span>
-                    <ReactTooltip html={true}  place="right" className="advance-config__gas-tooltip" id="gas-info" type="dark"/>
+                    <ReactTooltip html={true}  place="right" className="advance-config__gas-tooltip common-tooltip common-tooltip--horizontal" id="gas-info" type="dark"/>
                   </span>  
                 )}
 
@@ -51,7 +51,7 @@ export default class AdvanceConfigLayout extends React.Component {
                     <span data-tip={`Higher gas price, faster transaction`} data-html={true} data-for="gas-info">
                       <img src={require("../../../assets/img/v3/info_blue.svg")} />
                     </span>
-                    <ReactTooltip html={true}  place="right" className="advance-config__gas-tooltip" id="gas-info" type="dark"/>
+                    <ReactTooltip html={true}  place="right" className="advance-config__gas-tooltip common-tooltip common-tooltip--horizontal" id="gas-info" type="dark"/>
                   </span>  
                 )}
                 
