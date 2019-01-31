@@ -171,3 +171,20 @@ input[type=number] {
         background-color: transparent !important;
     }
 }
+
+.__react_component_tooltip.common-tooltip {
+    background-color: #8690AD !important;
+    color: white !important;
+    &--horizontal{
+        &::after {
+            border-right-color: #8690AD !important;
+            border-left-color: #8690AD !important;
+        }
+    }
+
+    &--bottom{
+        &::after {
+            border-bottom-color: #8690AD !important;
+        }
+    }
+}
