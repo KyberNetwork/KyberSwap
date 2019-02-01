@@ -146,8 +146,8 @@ const AccountBalanceLayout = (props) => {
                   <div className={"account-balance__address"}>
                     <div>
                       <span className="account-balance__address-text">{props.translate("address.your_wallet") || "Your Wallet"}</span>
-                       - 
-                      <span className={"account-balance__wallet-name"}>{getWalletName()}</span>
+                      {/* - <span className={"account-balance__wallet-name"}>{getWalletName()}</span> */}
+                      {!props.isOnDAPP && <span className={"account-balance__wallet-name"}><span>-</span>{getWalletName()}</span>}
                     </div>
                     <div className="slide-arrow-container">
                       <div className="slide-arrow"></div>
