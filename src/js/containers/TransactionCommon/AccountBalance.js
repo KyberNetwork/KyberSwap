@@ -23,7 +23,8 @@ import { getTranslate } from 'react-localize-redux';
     sourceActive: props.sourceActive,
     isFixedSourceToken: isFixedSourceToken,
     analytics: store.global.analytics,
-    walletName: props.walletName
+    walletName: props.walletName,
+    isOnDAPP: props.isOnDAPP
   }
 })
 
@@ -118,6 +119,7 @@ export default class AccountBalance extends React.Component {
         isFixedSourceToken = {this.props.isFixedSourceToken}
         analytics={this.props.analytics}
         walletName={this.props.walletName}
+        isOnDAPP = {this.props.isOnDAPP}
       />
     )
   }

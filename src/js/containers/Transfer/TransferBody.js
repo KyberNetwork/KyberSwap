@@ -253,6 +253,7 @@ class Transfer extends React.Component {
         onToggleBalanceContent={this.toggleBalanceContent}
         isBalanceActive = {this.props.transfer.isBalanceActive}
         tradeType = "transfer"
+        isOnDAPP = {this.props.account.isOnDAPP}
       />)
   }
 
