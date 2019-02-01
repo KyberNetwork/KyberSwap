@@ -431,6 +431,7 @@ class ExchangeBody extends React.Component {
         isBalanceActive = {this.props.exchange.isBalanceActive}
         walletName = {this.props.account.walletName}
         tradeType = "swap"
+        isOnDAPP = {this.props.account.isOnDAPP}
       />)
   }
 
