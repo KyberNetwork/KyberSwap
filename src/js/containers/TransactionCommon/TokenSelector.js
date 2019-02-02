@@ -5,13 +5,15 @@ import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
   return {
+    account: store.account.account,
     focusItem: props.focusItem,
     listItem: props.listItem,
     type: props.type,
     chooseToken: props.chooseToken,
     translate: getTranslate(store.locale),
     banToken: props.banToken,
-    isFixToken: props.isFixToken
+    isFixToken: props.isFixToken,
+    analytics: store.global.analytics
   }
 })
 
@@ -39,14 +41,12 @@ export default class TokenSelector extends React.Component {
 
   selectItem = (event, symbol, address) => {
     this.props.chooseToken(symbol, address, this.props.type)
-    //this.toggleOpen()
-    //console.log("toggle 2: " + this.state.open)
-   // this.setState({ open: false })
   }
 
   render() {
     return (
       <TokenSelectorView
+        account={this.props.account}
         open={this.state.open}
         searchWord={this.state.searchWord}
         listItem={this.props.listItem}
@@ -55,11 +55,12 @@ export default class TokenSelector extends React.Component {
         changeWord={this.changeWord}
         selectItem={this.selectItem}
         translate={this.props.translate}
-        showTokens = {this.showTokens}
-        hideTokens = {this.hideTokens}
+        showTokens={this.showTokens}
+        hideTokens={this.hideTokens}
         type={this.props.type}
         banToken={this.props.banToken}
         isFixToken = {this.props.isFixToken}
+        analytics={this.props.analytics}
       />
     )
   }

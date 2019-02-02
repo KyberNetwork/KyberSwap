@@ -1,12 +1,20 @@
 import { fork, call, put, join, race, cancel } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
+import * as constants from "../services/constants"
+import { store } from '../store'
 
 export function* handleRequest(sendRequest, ...args) {
+
+    //check how much connection
+    var state = store.getState()
+    var ethereum = state.connection.ethereum
+    var numProvider = ethereum.getNumProvider()    
+
 	const task = yield fork(sendRequest, ...args)
 
 	const { res, timeout } = yield race({
 		res: join(task),
-		timeout: call(delay, 9 * 1000)
+		timeout: call(delay, numProvider * constants.CONNECTION_TIMEOUT)
     })
         
 	if (timeout) {     

@@ -10,7 +10,7 @@ import {
 } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx, updateApproveTxsData } from "../../actions/txActions"
-import { updateRateExchange, estimateGas, analyzeError, checkKyberEnable, verifyExchange, caculateAmount, fetchExchangeEnable } from "../../actions/exchangeActions"
+import { updateRateExchange, estimateGasNormal, analyzeError, checkKyberEnable, verifyExchange, caculateAmount, fetchExchangeEnable } from "../../actions/exchangeActions"
 import { estimateGasTransfer, verifyTransfer } from "../../actions/transferActions"
 
 import * as marketActions from "../../actions/marketActions"
@@ -59,7 +59,13 @@ export default class EthereumService extends React.Component {
     }
   }
 
+  getNumProvider(){
+    return this.listProviders.length
+  }
+
   subcribe(callBack) {
+    this.fetchGasprice() // fetch gas price when app load
+
     var callBackAsync = this.fetchData.bind(this)
     callBackAsync()
     this.intervalAsyncID = setInterval(callBackAsync, 10000)
@@ -71,81 +77,12 @@ export default class EthereumService extends React.Component {
     var callBack5Min = this.fetchData5Min.bind(this)
     callBack5Min()
     var interval5Min = setInterval(callBack5Min, 300000)
-
-    // var callBackDay = this.updateTokenStatus.bind(this)
-    // callBackDay()
   }
 
   clearSubcription() {
     clearInterval(this.intervalID)
     clearInterval(this.intervalSyncID)
   }
-
-
-  //var httpArr = BLOCKCHAIN_INFO.connections.http
-
-
-  // var randomNum = Math.floor((Math.random() * httpArr.length))
-  // this.httpUrl = httpArr[randomNum]
-  // this.wsUrl = BLOCKCHAIN_INFO.connections.ws
-  // this.httpProvider = this.getHttpProvider()
-  // this.wsProvider = false
-
-  //this.initProvider(props.default)
-
-  // initProvider(provider) {
-  //   switch (provider) {
-  //     case "http":
-  //       this.currentProvider = this.httpProvider
-  //       this.currentLabel = "http"
-  //       break
-  //     case "ws":
-  //       this.currentProvider = this.wsProvider
-  //       this.currentLabel = "ws"
-  //       break
-  //     default:
-  //       this.currentProvider = this.httpProvider
-  //       this.currentLabel = "http"
-  //       break
-  //   }
-  // }
-
-  // getWebsocketProvider() {
-  //   return new WebsocketEthereumProvider({
-  //     url: this.wsUrl, failEvent: () => {
-  //       var state = store.getState()
-  //       var ethereum = state.connection.ethereum
-  //       if (ethereum.wsProvider.connection) {
-  //         ethereum.wsProvider.connection = false
-  //         //ethereum.wsProvider.reconnectTime = 0
-  //         store.dispatch(setConnection(ethereum))
-  //       }
-  //     }
-  //   })
-  // }
-
-  // getHttpProvider() {
-  //   return new HttpEthereumProvider({ url: this.httpUrl })
-  // }
-
-  // getProvider() {
-  //   return this.currentProvider
-  // }
-
-  // setProvider(provider) {
-  //   this.currentProvider = provider
-  // }
-
-  // subcribe() {
-  //   //this.currentProvider.clearSubcription()
-  //   //get gas price
-  //   //this.fetchGasPrice()
-  //   this.currentProvider.subcribeNewBlock(this.fetchData.bind(this))
-  // }
-
-  // clearSubcription() {
-  //   this.currentProvider.clearSubcription()
-  // }
 
   fetchData() {
     this.checkKyberEnable()
@@ -166,7 +103,7 @@ export default class EthereumService extends React.Component {
 
 
     this.fetchMaxGasPrice()
-    this.fetchGasprice()
+    // this.fetchGasprice()
     
 
     this.fetchExchangeEnable()
@@ -180,7 +117,7 @@ export default class EthereumService extends React.Component {
 
     this.fetGeneralInfoTokens()
 
-     //this.testAnalize()
+    //  this.testAnalize()
   // this.testEstimateGas()
   }
 
@@ -196,6 +133,8 @@ export default class EthereumService extends React.Component {
   fetchDataSync() {
     var state = store.getState()
     var account = state.account
+    // console.log("verify account")
+    // console.log(account)
     if (account.isGetAllBalance){
       this.verifyExchange()
       this.verifyTransfer()
@@ -205,7 +144,7 @@ export default class EthereumService extends React.Component {
   testAnalize() {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    store.dispatch(analyzeError(ethereum, "0xcf399849f56c126fa1f0efde76e7e03c7ecbe4dfbffe2e96e7a48fa6e6c02692"))
+    store.dispatch(analyzeError(ethereum, "0x01eb9edc466055563ffea0a07edd770bc0407d78e4271ec6b6d54396dc4a8e82"))
   }
 
   // testEstimateGas() {
@@ -311,18 +250,6 @@ export default class EthereumService extends React.Component {
     if (tokens[sourceTokenSymbol]) {
       sourceDecimal = tokens[sourceTokenSymbol].decimals
     }
-
-//    var sourceAmountHex = stringToHex(sourceAmount, sourceDecimal)
-
-    // var destTokenSymbol = state.exchange.destTokenSymbol
-    // var rateInit = 0
-    // if (sourceTokenSymbol === 'ETH' && destTokenSymbol !== 'ETH') {
-    //   rateInit = tokens[destTokenSymbol].minRateEth
-    // }
-    // if (sourceTokenSymbol !== 'ETH' && destTokenSymbol === 'ETH') {
-    //   rateInit = tokens[sourceTokenSymbol].minRate
-    // }
-
     store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual))
   }
 
@@ -354,7 +281,7 @@ export default class EthereumService extends React.Component {
     if (!pathname.includes(constants.BASE_HOST + "/swap")) {
       return
     }
-    store.dispatch(estimateGas())
+    store.dispatch(estimateGasNormal())
   }
 
   fetchGasTransfer = () => {
@@ -491,7 +418,33 @@ export default class EthereumService extends React.Component {
     var errors = []
     var results = []
     return new Promise((resolve, reject) => {
-      this.promiseMultiNode(this.listProviders, 0, fn, resolve, reject, results, errors, ...args)
+      this.listProviders.map(val => {
+        if (!val[fn]) {
+          errors.push({
+            code: 0,
+            msg: "Provider not support this API"
+          })
+          return
+        }
+        val[fn](...args).then(result => {
+          resolve(result)
+        }).catch(err => {
+          console.log(err)
+          errors.push({
+            code: 1,
+            msg: err
+          })          
+          if (errors.length === this.listProviders.length){
+            //find error with code 1
+            for (var i = 0; i<errors.length; i++){
+              if (errors[i].code === 1){
+                reject(errors[i].msg)
+              }
+            }
+          }
+        })
+      })
+      //this.promiseMultiNode(this.listProviders, 0, fn, resolve, reject, results, errors, ...args)
     })
   }
 

@@ -1,39 +1,84 @@
+import React from "react";
+import * as converter from "../../utils/converter";
+import SlideDown, { SlideDownTrigger, SlideDownContent } from "../CommonElement/SlideDown";
+import ReactTooltip from 'react-tooltip'
 
-import React from "react"
 
-const AdvanceConfigLayout = (props) => {
+export default class AdvanceConfigLayout extends React.Component {
+  render() {
+    const gasOptions = [
+      {key: 'f', text: this.props.translate("fast") || 'Fast', value: this.props.gasPriceSuggest.fastGas},
+      {key: 's', text: this.props.translate("standard") || 'Standard', value: this.props.gasPriceSuggest.standardGas},
+      {key: 'l', text: this.props.translate("low") || 'Slow', value: this.props.gasPriceSuggest.safeLowGas}
+    ];
 
-  var toggleShowAdvance = (e) => {
-    var advanceContent = document.getElementById("advance-content");
-    var advanceArrow = document.getElementById("advance-arrow");
-    if (advanceContent.className === "show-advance") {
-        advanceContent.className = "";
-        advanceArrow.className = "";
-    } else {
-        advanceContent.className = "show-advance";
-        advanceArrow.className = "advance-arrow-up";
-    }
+    return (
+      <SlideDown active={this.props.isAdvanceActive}>
+        <SlideDownTrigger onToggleContent={() => this.props.toggleAdvanceContent()}>
+          <div className="slide-down__trigger-container slide-down__trigger-container--align-right">
+            <div>
+              <span className="slide-down__trigger-bold">
+                {this.props.translate("transaction.advanced") || "Advance"}
+              </span> - 
+              <span className="slide-down__trigger-light">
+              {this.props.translate("transaction.optional") || "Optional"}
+              </span>
+            </div>
+            <div className="slide-arrow-container">
+              <div className="slide-arrow"></div>
+            </div>
+          </div>
+        </SlideDownTrigger>
+
+        <SlideDownContent>
+          <div className="advance-config">
+            {this.props.minConversionRate}
+
+            <div>
+              <div className="advance-config__title">
+                <span>{this.props.translate("transaction.gas_fee") || "GAS fee"} (Gwei)</span>
+                {this.props.type==="exchange" && (
+                  <span className="advance-config__title-info">
+                    <span data-tip={`Higher gas price, faster transaction. Max gas price: ${this.props.maxGasPrice} Gwei`} data-html={true} data-for="gas-info">
+                      <img src={require("../../../assets/img/v3/info_blue.svg")} />
+                    </span>
+                    <ReactTooltip html={true}  place="right" className="advance-config__gas-tooltip common-tooltip common-tooltip--horizontal" id="gas-info" type="dark"/>
+                  </span>  
+                )}
+
+                {this.props.type==="transfer" && (
+                  <span className="advance-config__title-info">
+                    <span data-tip={`Higher gas price, faster transaction`} data-html={true} data-for="gas-info">
+                      <img src={require("../../../assets/img/v3/info_blue.svg")} />
+                    </span>
+                    <ReactTooltip html={true}  place="right" className="advance-config__gas-tooltip common-tooltip common-tooltip--horizontal" id="gas-info" type="dark"/>
+                  </span>  
+                )}
+                
+              </div>
+              <div className="advance-config__option-container">
+                {gasOptions.map((item, index) => {
+                  return (
+                    <label className="advance-config__option" key={index}>
+                      <span className="advance-config__gas-amount">{item.value} </span>
+                      <span className="advance-config__gas-mode">{item.text}</span>
+                      <input
+                        className="advance-config__radio"
+                        type="radio"
+                        name="gasAmount"
+                        value={item.key}
+                        defaultChecked={this.props.selectedGas == item.key}
+                        onChange={() => this.props.selectedGasHandler(item.value, item.key, item.text)}
+                      />
+                      <span className="advance-config__checkmark"></span>
+                    </label>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        </SlideDownContent>
+      </SlideDown>
+    )
   }
-  return (
-    <div className="advance-config">
-      <div className="title advance-title-desktop">{props.translate("transaction.advanced") || "Advanced"}</div>
-      <div className="advance-title-mobile title" onClick={(e) => toggleShowAdvance()}>
-        <div>
-          {props.translate("transaction.advanced") || "Advanced"}
-          <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="advance-arrow"/>
-        </div>        
-      </div>
-      <div id="advance-content">
-        <div className="advance-content">
-          <div>
-              {props.minRate}
-          </div>
-          <div>
-              {props.gasConfig}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
 }
-export default AdvanceConfigLayout

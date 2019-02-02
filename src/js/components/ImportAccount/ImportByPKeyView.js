@@ -1,96 +1,99 @@
 import React from "react"
 import { Modal } from '../CommonElement'
-import * as analytics from "../../utils/analytics"
-//import ReactTooltip from 'react-tooltip'
-import { getAssetUrl } from "../../utils/common";
 
 const ImportByPKeyView = (props) => {
 
-	function handldeSubmit() {
-		let privateKey = document.getElementById("private_key").value
-		props.importPrivateKey(privateKey)
-		analytics.trackClickSubmitPrKey()
-	}
+  function handldeSubmit() {
+    let privateKey = document.getElementById("private_key").value
+    props.importPrivateKey(privateKey)
+    props.analytics.callTrack("trackClickSubmitPrKey");
+  }
 
-	function submit(e) {
-		if (e.key === 'Enter') {
-			handldeSubmit(e)
-		}
-	}
+  function submit(e) {
+    if (e.key === 'Enter') {
+      handldeSubmit(e)
+    }
+  }
 
-	function toggleShowPw() {
-		let input = document.getElementById('private_key')
-		if (input.classList.contains('security')) {
-			input.classList.remove('security')
-			input.parentElement.classList.add('unlock')
-			analytics.trackClickShowPassword("show")
-		} else if (input.type == 'text') {
-			input.classList.add('security')
-			input.parentElement.classList.remove('unlock')
-			analytics.trackClickShowPassword("hide")
-		}
-	}
+  function toggleShowPw() {
+    let input = document.getElementById('private_key')
+    if (input.classList.contains('security')) {
+      input.classList.remove('security')
+      input.parentElement.classList.add('unlock')
+      props.analytics.callTrack("trackClickShowPassword", "show");
+    } else if (input.type == 'text') {
+      input.classList.add('security')
+      input.parentElement.classList.remove('unlock')
+      props.analytics.callTrack("trackClickShowPassword", "hide");
+    }
+  }
 
-	return (
-		<div className="column column-block">
-			<div className="importer pkey">
-				{/*<div className="how-to-use" data-for="private-key-tip" data-tip="How to use"></div>*/}
-        <div className="importer__symbol">
-          {/* <img src={require('../../../assets/img/landing/privatekey_active.svg')} /> */}
-		  <img src={getAssetUrl('wallets/privatekey.svg')} />
-          <div className="importer__name">{props.translate("import.from_private_key") || "PRIVATE KEY"}</div>
+  return (
+    <div>
+      {!props.isOnMobile && (
+        <div className="import-account__block" onClick={(e) => props.modalOpen()}>
+          <div className="import-account__icon private-key"/>
+          <div className="import-account__name">{props.translate("import.from_private_key") || "PRIVATE KEY"}</div>
         </div>
-				<button className="importer__button" onClick={(e) => props.modalOpen()}>{props.translate("import.from_private_key_input_title_placehoder") || "Enter your Private key"}</button>
-				{/* <a onClick={() => props.modalOpen()} id="importPKey">
-					<img src={require('../../../assets/img/pkey.svg')} />
-				</a> */}
-			</div>
-			{/* <ReactTooltip place="top" id="private-key-tip" type="dark" /> */}
+      )}
 
-			<Modal
-				className={{ base: 'reveal medium', afterOpen: 'reveal medium import-privatekey' }}
-				isOpen={props.isOpen}
-				onRequestClose={() => props.onRequestClose()}
-				content={
-					<div>
-						<div className="title">{ props.translate("import.from_private_key_input_title") || "ENTER YOUR PRIVATE KEY"}</div><a className="x" onClick={props.onRequestClose}>&times;</a>
-						<div className="content with-overlap">
-							<div className="row">
-								<div className="column">
-									<center>
-										<label className={!!props.pKeyError ? "error" : ""}>
-											<div className="input-reveal">
-												<input className="text-center security" id="private_key"
-												type="text"
-												onChange={(e) => props.onChange(e)}
-												onKeyPress={(e) => submit(e)}
-												value={props.privateKey}
-												autoFocus
-												autoComplete="off"
-												spellCheck="false"
-												onFocus={(e) => {analytics.trackClickInputPrKey()}}
-												required />
-												<p>{props.privateKeyVisible}</p>
-												<a className="toggle" onClick={toggleShowPw}></a>
-												<a className="tootip"></a>
-											</div>
-											{!!props.pKeyError &&
-												<span className="error-text">{props.pKeyError}</span>
-											}
-										</label>
-									</center>
-								</div>
-							</div>
-						</div>
-						<div className="overlap">
-							<button className="button accent cur-pointer" id="submit_pkey" onClick={() => handldeSubmit()} >{props.translate("modal.import") || "Import"}</button>
-						</div>
+      {props.isOnMobile && (
+        <div className={"import-account__block"}>
+          <div className={"import-account__block-left"}>
+            <div className="import-account__icon private-key"/>
+            <div>
+              <div className="import-account__name">{props.translate("import.from_private_key") || "PRIVATE KEY"}</div>
+              <div className="import-account__desc">Access your Wallet</div>
+            </div>
+          </div>
+          <div className="import-account__block-right" onClick={(e) => props.modalOpen()}>Enter</div>
+        </div>
+      )}
 
-					</div>
-				}
-			/>
-		</div>
-	)
+      <Modal
+        className={{ base: 'reveal medium', afterOpen: 'reveal medium import-privatekey' }}
+        isOpen={props.isOpen}
+        onRequestClose={() => props.onRequestClose()}
+        content={
+          <div>
+            <div className="title">{ props.translate("import.from_private_key_input_title") || "Enter your Private Key"}</div><a className="x" onClick={props.onRequestClose}>&times;</a>
+            <div className="content with-overlap">
+              <div className="row">
+                <div className="column">
+                  <center>
+                    <label className={!!props.pKeyError ? "error" : ""}>
+                      <div className="input-reveal">
+                        <input className="text-center security" id="private_key"
+                               type="text"
+                               onChange={(e) => props.onChange(e)}
+                               onKeyPress={(e) => submit(e)}
+                               value={props.privateKey}
+                               autoFocus
+                               autoComplete="off"
+                               spellCheck="false"
+                               onFocus={(e) => {props.analytics.callTrack("trackClickInputPrKey")}}
+                               required />
+                        <p>{props.privateKeyVisible}</p>
+                        <a className="toggle" onClick={toggleShowPw}></a>
+                        <a className="tootip"></a>
+                      </div>
+                      {!!props.pKeyError &&
+                      <span className="error-text">{props.pKeyError}</span>
+                      }
+                    </label>
+                  </center>
+                </div>
+              </div>
+            </div>
+            <div className="overlap">
+              <button className="button accent cur-pointer" id="submit_pkey" onClick={() => handldeSubmit()} >{props.translate("modal.import") || "Import"}</button>
+            </div>
+
+          </div>
+        }
+      />
+    </div>
+  )
 }
 
 export default ImportByPKeyView

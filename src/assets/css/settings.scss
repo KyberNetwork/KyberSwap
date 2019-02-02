@@ -120,17 +120,18 @@ $container-max-width: 77rem;
 $container-side-padding: 1rem;
 
 $image-path: '../img/';
+$asset-url: 'https://files.kyber.network/DesignAssets/';
 $box-shadow-tab: 0 10px 20px 0 rgba(135, 136, 136, 0.26), 0 6px 6px 0 rgba(173, 177, 176, 0.26);
 
 @include add-foundation-colors;
 
 // 2. Breakpoints
 // --------------
-
-
 $break-point-large: 1024px;
 $break-point-medium: 768px;
 $break-point-small: 640px;
+$print-breakpoint: large;
+$breakpoint-classes: (small medium large);
 $breakpoints: (
   small: 0,
   mid-small: 480px,
@@ -140,10 +141,6 @@ $breakpoints: (
   xlarge: 1200px,
   xxlarge: 1440px,
 );
-
-
-$print-breakpoint: large;
-$breakpoint-classes: (small medium large);
 
 // 3. The Grid
 // -----------
@@ -172,6 +169,7 @@ $header-font-style: normal;
 
 $font-cera: 'Cera', 'Open Sans', sans-serif;
 $font-openSans: 'Open Sans', sans-serif;
+$font-montserrat: 'Montserrat', sans-serif;
 
 $header-color: inherit;
 $header-lineheight: 1.4;
@@ -906,7 +904,7 @@ $grid-container-max: $global-width;
 $xy-block-grid-max: 8;
 
 @mixin screen-max-width($breakpoint) {
-  @media screen and (max-width: #{map-get($breakpoints, $breakpoint)}) {
+  @media screen and (max-width: calc(#{map-get($breakpoints, $breakpoint)} - 1px)) {
     @content;
   }
 }

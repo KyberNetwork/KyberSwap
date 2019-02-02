@@ -2,9 +2,7 @@ import React from "react";
 import { SelectAddressModal } from "../ImportAccount";
 import { roundingNumber } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
-import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
 import PathSelector from "../../containers/CommonElements/PathSelector";
-import * as analytics from "../../utils/analytics"
 
 const ImportByDeviceView = (props) => {
 
@@ -16,7 +14,7 @@ const ImportByDeviceView = (props) => {
             selectedPath = inputPath.value;
         }
         props.choosePath(selectedPath, dpath);
-        analytics.trackChoosePathColdWallet(selectedPath)
+        props.analytics.callTrack("trackChoosePathColdWallet", selectedPath);
     }
 
     function getAddress(formAddress) {
@@ -35,14 +33,14 @@ const ImportByDeviceView = (props) => {
             return (
                 <li key={address.addressString} onClick={() => getAddress(address)}>
                     <div className="grid-x">
-                        <div className="cell medium-6 small-12">
+                        <div className="cell medium-7 small-12">
                             <a class="name text-lowercase">
                                 <label class="mb-0">
-                                    <span class="hash">{address.addressString}</span>
+                                    <span class="hash">{address.addressString.slice(0, 20)}...{address.addressString.slice(-8)}</span>
                                 </label>
                             </a>
                         </div>
-                        <div class="info cell medium-6 small-12">
+                        <div class="info cell medium-5 small-12">
                             <a class="link has-tip top explore" title={address.balance}>
                                 {address.balance == '-1' ?
                                     <img src={require('../../../assets/img/waiting-white.svg')} />
@@ -51,7 +49,7 @@ const ImportByDeviceView = (props) => {
                             </a>
                             <a class="import">
                                 {props.translate("import.import") || "Import"}
-                                <img src={require('../../../assets/img/import-account/arrow_right_orange.svg')}/>
+                                {/* <img src={require('../../../assets/img/import-account/arrow_right_orange.svg')}/> */}
                             </a>
                         </div>
                     </div>
@@ -62,12 +60,15 @@ const ImportByDeviceView = (props) => {
     }
 
     function getListPathHtml() {
-        return (<PathSelector
-            listItem = {props.dPath}
-            choosePath = {choosePath}
-            walletType = {props.walletType}
-            currentDPath = {props.currentDPath}
-        />)
+      return (
+        <PathSelector
+          listItem = {props.dPath}
+          choosePath = {choosePath}
+          walletType = {props.walletType}
+          currentDPath = {props.currentDPath}
+          analytics={props.analytics}
+        />
+      )
     }
 
     function getSelectAddressHtml() {
@@ -98,14 +99,16 @@ const ImportByDeviceView = (props) => {
                                 {getCurrentList()}
                             </ul>
                             <div class="address-list-navigation animated fadeIn">
-                                <a class={'previous ' + (props.isFirstList ? 'disabled' : '')} onClick={props.getPreAddress}>
-                                    <img src={require('../../../assets/img/import-account/arrows_left_icon.svg')} />
-                                    <span>{props.translate("modal.previous_addresses") || "Previous Addresses"}</span>
-                                </a>
-                                <a class="next" onClick={props.getMoreAddress}>
-                                    <span>{props.translate("modal.more_addresses") || "More Addresses"}</span>
-                                    <img src={require('../../../assets/img/import-account/arrows_right_icon.svg')} />
-                                </a>
+                                <div class={'address-button address-button-previous ' + (props.isFirstList ? 'disabled' : '')} onClick={props.getPreAddress}>
+                                    {/* <img src={require('../../../assets/img/import-account/arrows_left_icon.svg')} /> */}
+                                    {/* <span>{props.translate("modal.previous_addresses") || "Previous Addresses"}</span> */}
+                                    <div className={"address-arrow address-arrow-left"}></div>
+                                </div>
+                                <div class="address-button address-button-next" onClick={props.getMoreAddress}>
+                                    {/* <span>{props.translate("modal.more_addresses") || "More Addresses"}</span> */}
+                                    {/* <img src={require('../../../assets/img/import-account/arrows_right_icon.svg')} /> */}
+                                    <div className={"address-arrow address-arrow-right"}></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -115,7 +118,7 @@ const ImportByDeviceView = (props) => {
     }
 
     return ([
-        <div class="column column-block" key='coldwallet'>{props.content}</div>,
+        <div key='coldwallet'>{props.content}</div>,
         <SelectAddressModal key="modal"
             isOpen={props.modalOpen}
             onRequestClose={props.onRequestClose}

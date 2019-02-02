@@ -5,11 +5,13 @@ import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
   return {
+    account: store.account.account,
     focusItem: props.focusItem,
     listItem: props.listItem,
     type: props.type,
     chooseToken: props.chooseToken,
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    analytics: store.global.analytics
   }
 })
 
@@ -56,6 +58,7 @@ export default class TokenSelector extends React.Component {
         showTokens = {this.showTokens}
         hideTokens = {this.hideTokens}
         type={this.props.type}
+        analytics={this.props.analytics}
       />
     )
   }

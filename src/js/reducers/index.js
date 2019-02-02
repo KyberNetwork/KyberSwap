@@ -18,8 +18,8 @@ import txs from './txsReducer'
 import locale from './languageReducer'
 import market from './marketReducer'
 
-import { localeReducer } from 'react-localize-redux';
-// import { localeReducer } from 'react-localize-redux';
+//import { localeReducer } from 'react-localize-redux';
+import { localizeReducer } from 'react-localize-redux';
 
 const appReducer = combineReducers({
   account, exchange, transfer, connection, router: routerReducer, market,global,
@@ -27,16 +27,21 @@ const appReducer = combineReducers({
   //   key: 'market',
   //   storage: localForage
   // }, market),  
-  locale : localeReducer,
+  locale : localizeReducer,
   tokens, txs,
+  utils,
   // locale: persistReducer({
   //   key: 'locale',
   //   storage: localForage
   // }, locale),  
-  utils: persistReducer({
-    key: 'utils',
+  // utils: persistReducer({
+  //   key: 'utils',
+  //   storage: session
+  // }, utils),  
+  txs: persistReducer({
+    key: 'txs',
     storage: session
-  }, utils),  
+  }, txs),  
   // global: persistReducer({
   //   key: 'global',
   //   storage: localForage,

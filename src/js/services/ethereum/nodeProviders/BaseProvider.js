@@ -8,7 +8,7 @@ import * as converters from "../../../utils/converter"
 export default class BaseProvider {
 
     initContract() {
-        this.rpc = new Web3(new Web3.providers.HttpProvider(this.rpcUrl, 3000))
+        this.rpc = new Web3(new Web3.providers.HttpProvider(this.rpcUrl, constants.CONNECTION_TIMEOUT))
 
         this.erc20Contract = new this.rpc.eth.Contract(constants.ERC20)
         this.networkAddress = BLOCKCHAIN_INFO.network
@@ -484,7 +484,7 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             try {
                 //get trade abi from 
-                var tradeAbi = this.getAbiByName("trade", constants.KYBER_NETWORK)
+                var tradeAbi = this.getAbiByName("tradeWithHint", constants.KYBER_NETWORK)
                 //  console.log(tradeAbi)
                 abiDecoder.addABI(tradeAbi)
                 //  console.log(abiDecoder)
@@ -568,6 +568,7 @@ export default class BaseProvider {
                             fast: 1
                         })
                     } else {
+                        gasPrice = Math.round(gasPrice * 10) / 10
                         resolve({
                             low: gasPrice.toString(),
                             default: gasPrice.toString(),
@@ -660,6 +661,7 @@ export default class BaseProvider {
                         // })
                     }
                 }).catch((err) => {
+                    console.log(err)
                     reject(err)
                 })
         })

@@ -1,4 +1,5 @@
 import * as constants from '../services/constants';
+import * as bowser from 'bowser'
 
 export function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -62,6 +63,21 @@ export var isMobile = {
     }
 };
 
+export var checkBrowser = {
+    isFirefox: function() {
+        return !!bowser.firefox
+    },
+    isChrome: function() {
+        return !!bowser.chrome
+    },
+    isSafari: function() {
+        return !!bowser.safari
+    },
+    isNotFCSBrowser: function() {
+        return !this.isFirefox && !this.isChrome && !this.isSafari;
+    }
+}
+
 export function getAssetUrl(uri = "") {
   return constants.ASSET_URL + uri.toLowerCase();
 }
@@ -70,6 +86,16 @@ export function getAssetUrl(uri = "") {
 export function isUserEurope(){
     var isEurope = getCookie("is_europe")
     return isEurope === true || isEurope === 'true'
+}
+
+export function setCookie(cname, cvalue, exdays) {
+  if (!exdays) {
+    exdays = 5 * 365
+  }
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  var expires = "expires=" + d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
 export function getCookie(cname) {

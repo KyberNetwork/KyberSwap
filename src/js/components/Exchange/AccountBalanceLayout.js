@@ -1,83 +1,66 @@
 import React from "react"
 import * as converts from "../../utils/converter"
-import BigNumber from "bignumber.js"
-//import ReactTooltip from 'react-tooltip'
 import BLOCKCHAIN_INFO from "../../../../env"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
-import * as analytics from "../../utils/analytics"
+import SlideDown, { SlideDownTrigger, SlideDownContent } from "../CommonElement/SlideDown";
 
 const AccountBalanceLayout = (props) => {
 
   function displayBalance(balance, rateUSD) {
-    return props.showBalance ? 
-    `${props.translate("address.my_balance") || "My Balance"}: 
+    return props.showBalance ?
+      `${props.translate("address.my_balance") || "My Balance"}: 
     <strong>${balance}</strong>
     <br/>${props.translate("address.estimated_value") || "Estimated value"}: 
     <strong>${converts.roundingNumber(balance * rateUSD)}</strong> USD`
-    : `${props.translate("address.my_balance") || "Balance"}: <strong>${balance}</strong>`
+      : `${props.translate("address.my_balance") || "Balance"}: <strong>${balance}</strong>`
   }
 
-  function reorderToken(tokens){
-      if (props.sortType === "Price"){
-        if (props.sortValue){
-          return converts.sortEthBalance(tokens)
-        }else{
-          return converts.sortASCEthBalance(tokens)
-        }
-      }else{
-        if (props.sortValue){
-          var ordered = []
-          //console.log(tokens)
-          Object.keys(tokens).sort().forEach(function(key) {
-            ordered.push(tokens[key])
-          })
-          //console.log(ordered)
-          return ordered
-        }else{
-          var ordered = []
-          //console.log(tokens)          
-          Object.keys(tokens).sort().reverse().forEach(function(key) {
-            ordered.push(tokens[key])
-          })
-          //console.log(ordered)
-          return ordered
-        }
+  function reorderToken(tokens) {
+    if (props.sortType === "Price") {
+      if (props.sortValue) {
+        return converts.sortEthBalance(tokens)
+      } else {
+        return converts.sortASCEthBalance(tokens)
       }
-      
+    } else {
+      if (props.sortValue) {
+        var ordered = []
+        Object.keys(tokens).sort().forEach(function (key) {
+          ordered.push(tokens[key])
+        })
+        return ordered
+      } else {
+        var ordered = []
+        Object.keys(tokens).sort().reverse().forEach(function (key) {
+          ordered.push(tokens[key])
+        })
+        return ordered
+      }
+    }
+
   }
 
   function getBalances() {
     var tokens = reorderToken(props.tokens)
-    var balances = tokens 
+    var balances = tokens
       .map(token => {
         var balance = converts.toT(token.balance, token.decimals)
-
-        // var tokenEpsilon = converts.caculateTokenEpsilon(token.rate, token.decimal, token.symbol)
-        // var bigBalance = new BigNumber(token.balance)
-
         var searchWord = props.searchWord.toLowerCase()
         var symbolL = token.symbol.toLowerCase()
+        var classBalance = "";
 
-        var classBalance = ""
-        if (token.symbol === props.sourceActive) classBalance += "active"
+        if (token.symbol === props.sourceActive) classBalance += " active"
         if (!symbolL.includes(searchWord)) classBalance += " hide"
-        
-        return (
-            <li key={token.symbol} data-for={token.symbol}
-              onClick={(e) => props.selectToken(e, token.symbol, token.address)} className = {classBalance}
-            >
-              <div className='balance-item'>
-                <input checked={token.symbol === props.sourceActive?true: false} 
-                        type="radio" id={token.symbol + "options"} name="b-selector"
-                        onChange={(e)=>console.log()}/>
-                <div class="check"></div>
 
-                <label className="label-radio" for={token.symbol + "options"}>
-                  <div className="symbol">{token.symbol}</div>
-                  <div className="balance">{converts.roundingNumber(balance)}</div>
-                </label>
-              </div>
-            </li>
+        return (
+          <div
+            key={token.symbol}
+            onClick={(e) => props.selectToken(e, token.symbol, token.address)}
+            className={"account-balance__token-item" + classBalance}
+          >
+            <div className="account-balance__token-symbol">{token.symbol}</div>
+            <div className="account-balance__token-balance">{converts.roundingNumber(balance)}</div>
+          </div>
         )
       })
     return balances
@@ -85,20 +68,22 @@ const AccountBalanceLayout = (props) => {
 
   function getBalanceUsd() {
     var total = 0
+
     Object.values(props.tokens).map(token => {
-      if (!token.rateUSD){
+      if (!token.rateUSD) {
         return
       }
       var balance = converts.toT(token.balance, token.decimals)
       total += balance * token.rateUSD
     })
-    //console.log("total: " + total)
+
     var roundingTotal = converts.roundingNumber(total)
+
     return roundingTotal
   }
 
-  function getWalletType(walletType){
-    switch(walletType){
+  function getWalletType(walletType) {
+    switch (walletType) {
       case "metamask":
         return "Metamask"
       case "trezor":
@@ -118,78 +103,110 @@ const AccountBalanceLayout = (props) => {
     var advanceContent = document.getElementById("balance-content");
     var arrowBalance = document.getElementById("arrow-balance");
     if (advanceContent.className === "show-balance") {
-        advanceContent.className = "";
-        arrowBalance.className = "";
+      advanceContent.className = "";
+      arrowBalance.className = "";
     } else {
-        advanceContent.className = "show-balance";
-        arrowBalance.className = "arrow-balance-up";
+      advanceContent.className = "show-balance";
+      arrowBalance.className = "arrow-balance-up";
+    }
+  }
+
+  function getWalletName() {
+    if (!props.walletName || props.walletName === "") {
+      switch (props.account.type) {
+        case "metamask":
+          return "Metamask"
+        case "keystore":
+          return "Keystore"
+        case "ledger":
+          return "Ledger"
+        case "trezor":
+          return "Trezor"
+        case "privateKey":
+          return "Private key"
+        case "promoCode":
+          return "Promocode"
+        default:
+          return "Wallet"
+      }
+    } else {
+      return props.walletName
     }
   }
 
   return (
-    <div id="balance-account" className={props.isFixedSourceToken?"fix-source-token": ""}>
-      <div className="balance-address">
-        <div className="title">{props.translate("address.your_wallet_address") || "Your Wallet Address"}</div>
-        <div>
-          <a className="short-address" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.address} onClick={(e) => {analytics.trackClickShowAddressOnEtherescan()}}>
-            {props.address ? props.address.slice(0, 8) : ''} ... {props.address ? props.address.slice(-6) : ''}
-          </a>
-        </div>
-      </div>
+    <div className="account-balance">
+      {props.account !== false && (
+        <SlideDown active={props.isBalanceActive}>
+          <SlideDownTrigger onToggleContent={() => props.toggleBalanceContent()}>
+            <div className="balance-header">
 
-      <div className="balance-header balance-large">
-        <div className="title">
-          {props.translate("address.my_balance") || "My balance"}
-        </div>
-        {props.showBalance && (
-              <div className="estimate-value">
-                <span className="text-upcase">{props.translate("address.total") || "Total"} {getBalanceUsd()} USD</span>
+              <div className="slide-down__trigger-container">
+                <div>
+                  <div className={"account-balance__address"}>
+                    <div>
+                      <span className="account-balance__address-text">{props.translate("address.your_wallet") || "Your Wallet"}</span>
+                      {/* - <span className={"account-balance__wallet-name"}>{getWalletName()}</span> */}
+                      {!props.isOnDAPP && <span className={"account-balance__wallet-name"}><span>-</span>{getWalletName()}</span>}
+                    </div>
+                    <div className="slide-arrow-container">
+                      <div className="slide-arrow"></div>
+                    </div>
+                  </div>
+                  <a className="account-balance__address-link" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
+                    onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan");   e.stopPropagation(); }}>
+                    {props.account.address}
+                  </a>
+                </div>
               </div>
-            )}
-      </div>
-      
-      <div className="balance-header balance-medium" onClick={(e) => toggleShowBalance()}>
-          <div>
-            <div className="title">
-              {props.translate("address.my_balance") || "My balance"}
-            </div>
-            {props.showBalance && (
-              <div className="estimate-value">
-                <span className="text-upcase">{props.translate("address.total") || "Total"} {getBalanceUsd()} USD</span>
-              </div>
-            )}
-          </div>
-          <img src={require("../../../assets/img/exchange/arrow-down-swap.svg")} id="arrow-balance"/> 
-      </div>
-      
-      <div id="balance-content">
-        <div className="balance-panel">
-          <div id="search-balance" className="row">
-            <div className="column small-10">
-              <input type="text" placeholder={props.translate("address.search") || "Search"} onChange={(e) => props.changeSearchBalance(e)} value = {props.searchWord} onFocus={ (e) => props.clickOnInput() } className="search-input"/>
             </div>
 
-            
-            <Dropdown  onShow = {(e) => props.showSort(e)} onHide = {(e) => props.hideSort(e)} active={props.sortActive}>
-            <DropdownTrigger className="notifications-toggle">
-              <div className="column small-2 sort-balance"></div>
-            </DropdownTrigger>
-            <DropdownContent>
-              <div className="select-item">
-              <div onClick={(e)=>props.sortSymbol()}>{props.translate("address.symbol") || "SYMBOL"}</div>
-              <div onClick={(e)=>props.sortPrice()}>{props.translate("address.price") || "PRICE"}</div>
+          </SlideDownTrigger>
+          <SlideDownContent>
+            <div className="account-balance__content">
+              <div>
+                <div className={"account-balance__content-input-container"}>
+                  <div className="account-balance__content-search-container">
+                    <input
+                      className="account-balance__content-search"
+                      type="text"
+                      placeholder={props.translate("address.search") || "Search by Name"}
+                      onChange={(e) => props.changeSearchBalance(e)}
+                      value={props.searchWord}
+                    />
+                  </div>
+
+                  <Dropdown
+                    className={"account-balance__sort"}
+                    onShow={(e) => props.showSort(e)}
+                    onHide={(e) => props.hideSort(e)}
+                    active={props.sortActive}
+                  >
+                    <DropdownTrigger>
+                      <div className={"account-balance__sort-dropdown"}>
+                        {props.sortType == 'Symbol' ? props.translate("address.symbol") || "Symbol" : props.translate("address.price") || "Price"}
+                      </div>
+                      <div className={"account-balance__sort-arrow"}></div>
+                    </DropdownTrigger>
+                    <DropdownContent>
+                      <div className={"account-balance__sort-category"}>
+                        <div className={`account-balance__sort-item ${props.sortType == 'Symbol' ? 'active' : ''}`} onClick={(e) => props.sortSymbol()}>{props.translate("address.symbol") || "Symbol"}</div>
+                        <div className={`account-balance__sort-item ${props.sortType == 'Price' ? 'active' : ''}`} onClick={(e) => props.sortPrice()}>{props.translate("address.price") || "Price"}</div>
+                      </div>
+                    </DropdownContent>
+                  </Dropdown>
+                </div>
+
+                <div className="balances custom-radio">
+                  <div className="account-balance__token-list">
+                    {getBalances()}
+                  </div>
+                </div>
               </div>
-            </DropdownContent>
-          </Dropdown>
-            
-          </div>
-          <div className="balances custom-radio custom-scroll">
-            <ul>
-              {getBalances()}
-            </ul>
-          </div>
-        </div>
-      </div>
+            </div>
+          </SlideDownContent>
+        </SlideDown>
+      )}
     </div>
   )
 }

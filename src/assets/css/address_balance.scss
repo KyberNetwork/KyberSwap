@@ -1,7 +1,7 @@
 #balance-account-wrapper {
   #balance-account {
     .balances {
-      height: 330px;
+      height: 290px;
       @include screen-max-width(large) {
         height: 540px;
       }
@@ -10,7 +10,7 @@
   &.error {
     #balance-account {
       .balances {
-        height: 455px;
+        height: 360px;
         @include screen-max-width(large) {
           height: 630px;
         }

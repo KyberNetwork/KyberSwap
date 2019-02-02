@@ -79,6 +79,13 @@ export function specifyAmountTransfer(value) {
   }
 }
 
+export function estimateGasWhenAmountChange(value) {
+  return {
+    type: "TRANSFER.ESTIMATE_GAS_WHEN_AMOUNT_CHANGE",
+    payload: value
+  }
+}
+
 export function throwErrorDestAddress(message) {
   return {
     type: "TRANSFER.THROW_ERROR_DEST_ADDRESS",
@@ -224,14 +231,6 @@ export function updateCurrentBalance(tokenBalance, txHash) {
   }
 }
 
-
-export function setTermAndServices(value){
-  return {
-    type: "TRANSFER.SET_TERM_AND_SERVICES",
-    payload: {value}
-  }
-}
-
 export function fetchGasSnapshot(){
   return {
     type: "TRANSFER.FETCH_GAS_SNAPSHOT"
@@ -244,16 +243,6 @@ export function fetchSnapshotGasSuccess(){
   }
 }
 
-// export function fetchGas(){
-//   return {
-//     type: "TRANSFER.FETCH_GAS"
-//   }
-// }
-// export function fetchGasSuccess(){
-//   return {
-//     type: "TRANSFER.FETCH_GAS_SUCCESS"
-//   }
-// }
 export function estimateGasTransfer(){
   return {
     type: "TRANSFER.ESTIMATE_GAS_USED"
@@ -298,6 +287,30 @@ export function seSelectedGas(level){
   return {
     type: "TRANSFER.SET_SELECTED_GAS",
     payload: {level: level}
+  }
+}
+
+export function openImportAccount(){
+  return {
+    type: "TRANSFER.OPEN_IMPORT_ACCOUNT"
+  }
+}
+
+export function closeImportAccountTransfer(){
+  return {
+    type: "TRANSFER.CLOSE_IMPORT_ACCOUNT"
+  }
+}
+
+export function toggleBalanceContent(){
+  return {
+    type: "TRANSFER.TOGGLE_BALANCE_CONTENT"
+  }
+}
+
+export function toggleAdvanceContent(){
+  return {
+    type: "TRANSFER.TOGGLE_ADVANCE_CONTENT"
   }
 }
 

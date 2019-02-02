@@ -23,3 +23,106 @@ ul.bxslider {
 .bx-viewport {
   -webkit-transform: translateZ(0);
 }
+
+.rate-container{
+  padding: 20px 0;
+  background-color: white;
+  background-color: white;
+  margin-top: 50px;
+  border-top: 1px dashed #e9e9e9;
+  display: flex;
+  justify-content: space-between;
+  &__slider{
+    width: 90%;
+  }
+  &__more{
+    padding-right: 1rem;
+    a{
+      color: #666666;
+      font-size: 12px;
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: 600;
+    }
+  }
+}
+#rate-bar {
+  min-height: 0px !important;
+  
+  .bx-wrapper {
+    &:after {
+      pointer-events: none;
+      content: '';
+      width: 90px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      background: linear-gradient(90deg, transparent, #0E1320);
+    }
+  }
+  div.rate {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    .rate-item{
+      display: flex !important;
+      &__percent-change{
+        margin-right: 5px;
+      }
+    }
+    div.slick-slide {
+      display: inline-block;
+      padding-right: 18px;
+      &:focus{
+        outline: none;
+        border: none;
+      }
+      &:not(:last-child) {
+        // border-right: 1px solid $k-divider;
+        margin-right:30px;
+      }
+      >div >div {
+        outline: none;
+      }
+      .pair {
+        // font-size: 12px;
+        font-weight: bold;
+      }
+      .value {
+        // font-size: 14px;
+        span {
+          margin-left: 10px;
+        }
+      }
+      // .percent-change {
+      //   font-size: 14px;
+      // }
+      .pair, .value, .percent-change {
+        color: #666666;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .change-positive, .change-negative {
+        // position: relative;
+        // &::before {
+          // content: '';
+          // position: absolute;
+          height: 22px;
+          width: 12px;
+          background: url($image-path + "v3/ic_arrow_upward.svg") center no-repeat;
+          background-size: contain;
+          // left: -23px;
+          // top: 2px;
+        //}
+      }
+      .change-negative {
+        //&::before {
+          background: url($image-path + "v3/ic_arrow_downward.svg") center no-repeat;
+        //}
+      }
+    }
+  }
+}

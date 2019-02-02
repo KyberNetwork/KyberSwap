@@ -21,6 +21,7 @@ const sagaMiddleware = createSagaMiddleware()
 
 var middlewareArray = [sagaMiddleware, routeMiddleware]
 
+//middlewareArray.push(logger)
 if(process.env && process.env.logger){
   middlewareArray.push(logger)
 }

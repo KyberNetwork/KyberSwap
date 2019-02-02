@@ -22,9 +22,16 @@
     "symbol": "ТИКЕР",
     "price": "ЦЕНА",
     "your_wallet_address": "Ваш адрес кошелька",
-    "search": "Поиск"
+    "search": "Поиск",
+    "download": "Download",
+    "connect_your_wallet_to_swap": "Connect your Wallet to Swap",
+    "connect_your_wallet_to_transfer": "Connect your Wallet to Transfer",
+    "your_wallet": "Your Wallet",
+    "register_beta": "Register Beta"
   },
   "transaction": {
+    "wallet": "Wallet",
+    "close": "Close",
     "exchange": "Обмен",
     "exchange_from": "От",
     "exchange_to": "К",
@@ -104,7 +111,19 @@
     "address": "Получение адреса",
     "slippage_tip": "Ставка может меняться. Вы можете указать максимальное снижение через изменение\nминимальной ставки в дополнительных опциях",
     "max_slippage": "С максимальным ${percent}% сокращением",
-    "included": "Включительно"
+    "included": "Включительно",
+    "type_pass_before_progress": "Type a password before progressing",
+    "try_again": "Попробуйте снова",
+    "swap_now": "Swap Now",
+    "transfer_now": "Transfer Now",
+    "type_pass_to_sign": "Enter your password/passphrase to sign and broadcast",
+    "try_dai":"Try \"DAI\"",
+    "advance_notice": "Transaction will be reverted if rate of ${srcSymbol}-${destSymbol} is lower than ${slippageRate} (Current rate ${roundRate})",
+    "optional": "Optional",
+    "still_proceed_if_rate_goes_down": "Still proceed if ${pair} rate goes down by",
+    "gas_fee": "GAS fee",
+    "any_rate": "Any-rate",
+    "custom": "Custom"
   },
   "modal": {
     "enter_password": "Введите пароль",
@@ -133,7 +152,8 @@
     "eth_token_exchange": "Обмен токенов ETH",
     "approve": "Одобрить",
     "address": "Адрес",
-    "approve_token": "Подтвердить токен"
+    "approve_token": "Подтвердить токен",
+    "cancel": "Cancel"
   },
   "error": {
     "metamask_not_installed": "Metamask не установлен",
@@ -197,7 +217,11 @@
     "exchange_enable": "Вы превысили свой дневной лимит! Вы сможете торговать завтра\nв 00:00 UTC+0",
     "min_rate_greater_expected_rate": "Ваif мнимальная ставка выше, чем рекомендуемая\nKyberNetwork. Ваш омен может не быть исполен",
     "exceed_daily_volumn": "Возможно, вы захотите <a target='_blank' href='${link}'> зарегистрироваться,\nчтобы </a> иметь больший лимит на торговлю",
-    "broadcast_tx": "Потенциальная ошибка! Возможно, мы не сможем осуществить эту транзакцию\nна блокчейне. Пожалуйста, проверьте на <a target='_blank' href='${link}'>Etherscan</a>\nдля подтверждения."
+    "broadcast_tx": "Потенциальная ошибка! Возможно, мы не сможем осуществить эту транзакцию\nна блокчейне. Пожалуйста, проверьте на <a target='_blank' href='${link}'>Etherscan</a>\nдля подтверждения.",
+    "invalid_json_file": "Your uploaded JSON file is invalid. Please upload a correct JSON keystore.",
+    "key_derivation_failed": "Key derivation failed - possibly wrong password",
+    "invalid_promo_code": "Invalid promo code",
+    "promo_code_error": "Promo code is empty"
   },
   "import": {
     "from_metamask": "METAMASK",
@@ -215,7 +239,11 @@
     "swap_from_ledger": "Обмен через Ledger",
     "swap_from_trezor": "Обмен через Trezor",
     "select_or_drag": "Выберите или перетяните",
-    "address_is_loading": "Адрес загружается..."
+    "address_is_loading": "Адрес загружается...",
+    "enter_promo_code": "Enter your Promo Code",
+    "promo_code": "Promocode",
+    "apply": "Apply",
+    "connect_other_wallet": "Connect other wallet"
   },
   "info": {
     "title": "Тестовая сеть Kyber",
@@ -260,7 +288,9 @@
     "use_real": "НЕ ИСПОЛЬЗУЙТЕ РЕАЛЬНЫЕ УЧЕТНЫЕ ЗАПИСИ ETHEREUM!!!",
     "accept": "Принять",
     "terms_and_condition": " Условия и положения ",
-    "to_get_started": "чтобы начать"
+    "to_get_started": "чтобы начать",
+    "description_term_swap": "By Swapping, you agree to the ${term}",
+    "description_term_transfer": "By Transfering, you agree to the ${term}"
   },
   "landing_page": {
     "title": "Децентрализованный обмен ETH",
@@ -276,7 +306,8 @@
     "metamask": "METAMASK",
     "json": "JSON",
     "ledger": "LEDGER",
-    "private_key": "ПРИВАТНЫЙ КЛЮЧ"
+    "private_key": "ПРИВАТНЫЙ КЛЮЧ",
+    "promo_code": "PROMO CODE"
   },
   "market": {
     "eth_market": "Ethereum Market",
@@ -295,7 +326,8 @@
     "volume": "Объем (24 ч)",
     "support_eth_only": "Сейчас поддерживаются только пары с ETH, пары с USD еще не поддерживаются.",
     "show_more_results": "Показать больше результатов",
-    "new_token": "Новый токен"
+    "new_token": "Новый токен",
+    "more": "More"
   },
   "trading_view": {
     "buy": "Покупка",

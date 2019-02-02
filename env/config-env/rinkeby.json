@@ -14,49 +14,53 @@
         "ETH": 0,
         "DGX": 750000
     },
-    "pinnedTokens": ["ETH", "KNC", "OMG"],
+    "pinnedTokens": [
+        "ETH",
+        "KNC",
+        "OMG"
+    ],
     "tokens": {
         "ETH": {
-            "name": "Ethereum",
             "symbol": "ETH",
-            "icon": "eth.svg",
+            "name": "Ethereum",
             "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "decimals": 18,
-            "usd_id": "ethereum"
+            "cg_id": "ethereum"
         },
         "KNC": {
-            "name": "KyberNetwork",
             "symbol": "KNC",
-            "icon": "knc.svg",
-            "address": "0x55080ac40700BdE5725D8a87f48a01e192F660AF",
+            "name": "KyberNetwork",
+            "address": "0x55080ac40700bde5725d8a87f48a01e192f660af",
             "decimals": 18,
-            "usd_id": "kyber-network",
-            "priority": true
+            "cg_id": "kyber-network"
         },
         "OMG": {
-            "name": "OmiseGO",
             "symbol": "OMG",
-            "icon": "omg.svg",
-            "address": "0x659c4206b2ee8CC00af837CddA132eb30fA58df8",
+            "name": "OmiseGO",
+            "address": "0x659c4206b2ee8cc00af837cdda132eb30fa58df8",
             "decimals": 18,
-            "usd_id": "omisego",
-            "priority": true
+            "cg_id": "omisego"
         },
         "SALT": {
-            "name": "Salt",
-            "address": "0x6b1224743CC0E5994d1B35f2b90A1A12a51044aC",
             "symbol": "SALT",
-            "icon": "salt.svg",
+            "name": "Salt",
+            "address": "0x6b1224743cc0e5994d1b35f2b90a1a12a51044ac",
             "decimals": 8,
-            "usd_id": "salt"
+            "cg_id": "salt"
         },
         "ZIL": {
-            "name": "Zilliqa",
-            "address": "0xa8787F4faB0467B80d2F57722b1Bc8DDE707630E",
             "symbol": "ZIL",
+            "name": "Zilliqa",
+            "address": "0xa8787f4fab0467b80d2f57722b1bc8dde707630e",
             "decimals": 12,
-            "icon": "zil.svg",
-            "usd_id": "zilliqa"
+            "cg_id": "zilliqa"
+        },
+        "MANA": {
+            "symbol": "MANA",
+            "name": "Mana",
+            "address": "0xfea1141e988c1919a9b04b262b92f24adcdd8e9d",
+            "decimals": 18,
+            "cg_id": "decentraland"
         }
     },
     "ethScanUrl": "https://rinkeby.etherscan.io/",

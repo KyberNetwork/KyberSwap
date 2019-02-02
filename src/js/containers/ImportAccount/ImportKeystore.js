@@ -6,9 +6,8 @@ import { importNewAccount, throwError } from "../../actions/accountActions"
 import { verifyKey, anyErrors } from "../../utils/validators"
 import { addressFromKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
-import * as analytics from "../../utils/analytics"
 
-@connect((store) => {
+@connect((store, props) => {
   var tokens = store.tokens.tokens
   var supportTokens = []
   Object.keys(tokens).forEach((key) => {
@@ -18,7 +17,9 @@ import * as analytics from "../../utils/analytics"
     account: store.account,
     ethereum: store.connection.ethereum,
     tokens: supportTokens,
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    screen: props.screen,
+    analytics: store.global.analytics
   }
 })
 
@@ -33,7 +34,7 @@ export default class ImportKeystore extends React.Component {
   }
 
   onDrop = (files) => {
-    analytics.trackClickImportAccount("keystore")
+    this.props.analytics.callTrack("trackClickImportAccount", "keystore");
     try {
       var _this = this
       var file = files[0]
@@ -43,14 +44,14 @@ export default class ImportKeystore extends React.Component {
         var errors = {}
         errors["keyError"] = verifyKey(keystring)
         if (anyErrors(errors)) {
-          this.props.dispatch(throwError("Your uploaded JSON file is invalid. Please upload a correct JSON keystore."))
+          this.props.dispatch(throwError(this.props.translate("error.invalid_json_file") || "Your uploaded JSON file is invalid. Please upload a correct JSON keystore."))
         } else {
           var address = addressFromKey(keystring)
           this.props.dispatch(importNewAccount(address,
             "keystore",
             keystring,
             this.props.ethereum,
-            this.props.tokens))
+            this.props.tokens, this.props.screen))
         }
 
       }

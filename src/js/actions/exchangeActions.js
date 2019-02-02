@@ -1,5 +1,3 @@
-
-//import {RATE_EPSILON} from "../services/constants.js"
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
 
@@ -145,72 +143,21 @@ export function updatePrevSource(value) {
   }
 }
 
-export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess) {
-  // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
-  //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
-
-  //var rateBig = converter.stringToBigNumber(rate[0])
-  //  var offeredRate = rate.expectedPrice
-  //var expirationBlock = rate[1]
-  //var reserveBalance = rate[2]
+export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess, percentChange) {
   return {
     type: "EXCHANGE.UPDATE_RATE",
-    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess}
+    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess, percentChange}
   }
 
 }
 
 export function updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice) {
-  // var rateBig = converter.stringToBigNumber(rate.expectedPrice)
-  //  var offeredRate = rateBig.times(1 - constants.RATE_EPSILON).toFixed(0)
-
-  //var rateBig = converter.stringToBigNumber(rate[0])
-  //  var offeredRate = rate.expectedPrice
-  //var expirationBlock = rate[1]
-  //var reserveBalance = rate[2]
   return {
     type: "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE",
     payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage:  converter.toT(rateInit, 18)}
   }
 
 }
-
-
-// export function setRateSystemError(){
-//   return {
-//     type: "EXCHANGE.SET_RATE_ERROR_SYSTEM"
-//   }  
-// }
-
-// export function setRateFailError(){
-//   return {
-//     type: "EXCHANGE.SET_RATE_ERROR_FAIL"
-//   }  
-// }
-
-// export function setErrorRateSystem(){
-//   return {
-//     type: "EXCHANGE.SET_RATE_ERROR_SYSTEM"
-//   }  
-// }
-// export function setErrorRateExchange(){
-//   return {
-//     type: "EXCHANGE.ERROR_RATE_ZERO"
-//   }
-// }
-
-// export function clearErrorRateExchange(){
-//   return {
-//     type: "EXCHANGE.CLEAR_ERROR_RATE_ZERO"
-//   }
-// }
-
-// export function setErrorRateEqualZero(){
-//   return {
-//     type: "EXCHANGE.SET_RATE_ERROR_ZERO"
-//   }
-// }
-
 
 export function openPassphrase() {
   return {
@@ -242,9 +189,21 @@ export function hideApprove() {
   }
 }
 
+export function hideApproveZero(){
+  return {
+    type: "EXCHANGE.HIDE_APPROVE_ZERO",
+  }
+}
+
 export function showApprove() {
   return {
     type: "EXCHANGE.SHOW_APPROVE",
+  }
+}
+
+export function showApproveZero() {
+  return {
+    type: "EXCHANGE.SHOW_APPROVE_ZERO",
   }
 }
 
@@ -319,6 +278,18 @@ export function doApprove(ethereum, sourceToken, sourceAmount, nonce, gas, gasPr
     }
   }
 }
+
+export function doApproveZero(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+  keystring, password, accountType, account, keyService, sourceTokenSymbol) {
+  return {
+    type: "EXCHANGE.PROCESS_APPROVE_ZERO",
+    payload: {
+      ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+      keystring, password, accountType, account, keyService, sourceTokenSymbol
+    }
+  }
+}
+
 export function doTransaction(id, ethereum, tx, account, data) {
   return {
     type: "EXCHANGE.TX_BROADCAST_PENDING",
@@ -430,6 +401,12 @@ export function estimateGas() {
   }
 }
 
+export function estimateGasNormal() {
+  return {
+    type: "EXCHANGE.ESTIMATE_GAS_USED_NORMAL",
+  }
+}
+
 export function setEstimateGas(gas, gas_approve) {
   return {
     type: "EXCHANGE.SET_GAS_USED",
@@ -536,6 +513,13 @@ export function setKyberEnable(enable){
   }
 }
 
+export function setApproveTxZero(hash, symbol){
+  return {
+    type: "EXCHANGE.SET_APPROVE_TX_ZERO",
+    payload: {hash, symbol}
+  }
+}
+
 export function setApproveTx(hash, symbol){
   return {
     type: "EXCHANGE.SET_APPROVE_TX",
@@ -587,6 +571,29 @@ export function updateBalanceData(balanceData, hash){
 export function throwErrorHandleAmount(){
   return {
     type: "EXCHANGE.HANDLE_AMOUNT"
+  }
+}
+
+export function openImportAccount(){
+  return {
+    type: "EXCHANGE.OPEN_IMPORT_ACCOUNT"
+  }
+}
+
+export function closeImportAccountExchange(){
+  return {
+    type: "EXCHANGE.CLOSE_IMPORT_ACCOUNT"
+  }
+}
+
+export function toggleBalanceContent(){
+  return {
+    type: "EXCHANGE.TOGGLE_BALANCE_CONTENT"
+  }
+}
+export function toggleAdvanceContent(){
+  return {
+    type: "EXCHANGE.TOGGLE_ADVANCE_CONTENT"
   }
 }
 

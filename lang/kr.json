@@ -22,9 +22,16 @@
     "symbol": "기호",
     "price": "가격",
     "your_wallet_address": "지갑 주소",
-    "search": "찾기"
+    "search": "찾기",
+    "connect_your_wallet_to_swap": "환전을 위해 지갑을 연결해주세요",
+    "connect_your_wallet_to_transfer": "송금을 위해 지갑을 연결해주세요",
+    "download": "Download",
+    "your_wallet": "월렛",
+    "register_beta": "Register Beta"
   },
   "transaction": {
+    "wallet": "지갑",
+    "close": "완료",
     "exchange": "환전",
     "exchange_from": "보내는 곳",
     "exchange_to": "받는 곳",
@@ -104,7 +111,18 @@
     "address": "받는 주소",
     "slippage_tip": "고급 옵션에서 최소 비율을 조절하여 최대 미끄럼 비율을 변경할 수 있습니다.",
     "max_slippage": "가치를 잃은 ${percent}%로 최대입니다",
-    "included": "포함"
+    "included": "포함",
+    "type_pass_to_sign": "트랜젝션을 서명 후 생성하려면 비밀번호 / 암호를 입력하십시오.",
+    "try_dai":"\"DAI\" 사용해보기",
+    "swap_now": "지금 환전하기",
+    "transfer_now": "지금 송금하기",
+    "advance_notice": "Transaction will be reverted if rate of ${srcSymbol}-${destSymbol} is lower than ${slippageRate} (Current rate ${roundRate})",
+    "try_again": "다시 시도해보십시오r",
+    "optional": "선택 사항",
+    "still_proceed_if_rate_goes_down": "${pair} 가격이 바뀌어도 거래를 진행합니다",
+    "gas_fee": "가스 비용",
+    "any_rate": "상관없이 진행",
+    "custom": "사용자 지정"
   },
   "modal": {
     "enter_password": "비밀번호 입력",
@@ -133,7 +151,8 @@
     "eth_token_exchange": "ETH 토큰 거래",
     "approve": "승인",
     "address": "주소",
-    "approve_token": "토큰 승인하기"
+    "approve_token": "토큰 승인하기",
+    "cancel": "취소"
   },
   "error": {
     "metamask_not_installed": "메타마스크가 설치되지 않았습니다",
@@ -197,7 +216,11 @@
     "exchange_enable": "거래는 일일 한도를 초과했습니다! 내일 00:00 UTC+0 다시 거래 할 수도 있습니다",
     "min_rate_greater_expected_rate": "구성된 최소 환율은 카이버 네트워크에서 권장하는 것보다 높습니다. 귀하의 거래소는 실패\n할 확률이 높습니다.",
     "exceed_daily_volumn": "귀하는 <a target='_blank' href='${link}'>더 높은 거래 한도를 가지려면</a>\n저희에게 등록하십시오",
-    "broadcast_tx": "죄송합니다! 트랜잭션을 블록체인에 브로드 캐스팅 할 수 없었습니다. <a target='_blank' href='${link}'>\nEtherscan </a>에서 확인하세요"
+    "broadcast_tx": "죄송합니다! 트랜잭션을 블록체인에 브로드 캐스팅 할 수 없었습니다. <a target='_blank' href='${link}'>\nEtherscan </a>에서 확인하세요",
+    "invalid_json_file": "JSON 파일이 일치하지 않습니다. 올바른 JSON 파일을 업로드 해주세요.",
+    "key_derivation_failed": "키 인증 실패 - 잘못된 패스워드",
+    "invalid_promo_code": "프로모션 코드가 잘못되었습니다.",
+    "promo_code_error": "프로모션 코드가 비어 있습니다."
   },
   "import": {
     "from_metamask": "Metamask",
@@ -215,7 +238,12 @@
     "swap_from_ledger": " Ledger에서 교환하기",
     "swap_from_trezor": "Trezor에서 교환하기",
     "select_or_drag": "선택 또는 드래그",
-    "address_is_loading": "주소 로딩중..."
+    "address_is_loading": "주소 로딩중...",
+    "enter_promo_code": "프로모션 코드를 입력하세요",
+    "promo_code": "프로모션 코드",
+    "apply": "적용",
+    "cancel": "취소",
+    "connect_other_wallet": "다른 지갑에 연결"
   },
   "info": {
     "title": "카이버 테스트넷",
@@ -260,7 +288,9 @@
     "use_real": "진짜 이더리움 계정은 사용하시면 안됩니다!",
     "accept": "시작하려면",
     "terms_and_condition": " 이용 약관 ",
-    "to_get_started": "에 동의하십시오!"
+    "to_get_started": "에 동의하십시오!",
+    "description_term_swap": "환전을 하면 ${term}에 동의하는 것입니다.",
+    "description_term_transfer": "송금을 하면 ${term}에 동의하는 것입니다."
   },
   "landing_page": {
     "title": "분권화된 이더리움 토큰 거래소",
@@ -275,7 +305,9 @@
     "metamask": "METAMASK",
     "json": "JSON",
     "ledger": "LEDGER",
-    "private_key": "PRIVATE KEY"
+    "private_key": "PRIVATE KEY",
+    "power_by": "Powered by 온체인(On-Chain) 유동성 프로토콜",
+    "promo_code": "PROMO CODE"
   },
   "market": {
     "eth_market": "이더리움 시장",
@@ -294,7 +326,8 @@
     "volume": "볼륨 (24h)",
     "support_eth_only": "현재 ETH페어만 지원합니다. USD페어는 아직 지원되지 않습니다.",
     "show_more_results": "더 보기",
-    "new_token": "새로운"
+    "new_token": "새로운",
+    "more": "더"
   },
   "trading_view": {
     "buy": "구매하기",

@@ -24,6 +24,10 @@ export function verifyAmount(sourceAmount,
   sourceSymbol,
   sourceDecimal,
   rate, destDecimal, maxCap) {
+
+    console.log("validate_amount")
+    console.log(sourceAmount)
+    console.log(balance)
   //verify number for source amount
   var testAmount = parseFloat(sourceAmount)
   if (isNaN(testAmount)) {
@@ -44,7 +48,10 @@ export function verifyAmount(sourceAmount,
     estimateValue = rateBig.times(sourceAmountWei).div(Math.pow(10, sourceDecimal))
   }
   var epsilon = new BigNumber(constants.EPSILON)
-  if (estimateValue.isLessThan(epsilon)) {
+  var delta = estimateValue.minus(epsilon).abs()
+  var acceptDetal = new BigNumber(constants.MIN_ACCEPT_DELTA)
+
+  if (estimateValue.isLessThan(epsilon) && !delta.div(epsilon).isLessThan(acceptDetal)) {
     return "too small"
   }
 
@@ -82,7 +89,7 @@ export function verifyBalanceForTransaction(
   var bigEthBalance = new BigNumber(ethBalance.toString())
 
   //calcualte tx fee
-  if (gasPrice === "") gasPrice = 0
+  if (typeof gasPrice === "undefined" || gasPrice === "") gasPrice = 0
   var gasPriceBig = new BigNumber(gasPrice.toString())
   var txFee = gasPriceBig.times(1000000000).times(gas)
 

@@ -2,10 +2,11 @@ import React from "react"
 import { connect } from "react-redux"
 
 import { getTranslate } from 'react-localize-redux'
-import { Currency, ManageColumn, MarketTable, SearchWord, SortColumn, TradingViewModal } from "../Market"
+import { Currency, ManageColumn, MarketTable, SearchWord, SortColumn, TradingViewModal, RateSlider } from "../Market"
 import * as marketActions from "../../actions/marketActions"
 import { toEther } from "../../utils/converter";
-
+import * as analytics from "../../utils/analytics"
+import { Modal } from "../../components/CommonElement"
 
 @connect((store) => {
 
@@ -39,14 +40,14 @@ import { toEther } from "../../utils/converter";
     } else if (sortKey != '') {
       listTokens.sort(compareNum(originalTokens, currency, sortKey))
     }
-    
+
     if (sortType[sortKey] && sortType[sortKey] === '-sort-desc') {
       listTokens.reverse()
     }
   }
 
   function compareString(currency) {
-    return function(tokenA, tokenB) {
+    return function (tokenA, tokenB) {
       var marketA = tokenA + currency
       var marketB = tokenB + currency
       if (marketA < marketB)
@@ -58,19 +59,19 @@ import { toEther } from "../../utils/converter";
   }
 
   function compareNum(originalTokens, currency, sortKey) {
-    return function(tokenA, tokenB) {
+    return function (tokenA, tokenB) {
       return originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey]
     }
   }
 
-  var tokens = listTokens.slice(0, currencyList).reduce(function(newOb, key){
+  var tokens = listTokens.slice(0, currencyList).reduce(function (newOb, key) {
     newOb[key] = originalTokens[key]
     return newOb
   }, {})
 
   var data = []
   Object.keys(tokens).forEach((key) => {
-    if (key === "ETH") return
+    // if (key === "ETH" || key === "WETH") return
     var item = tokens[key]
     item.market = key + ' / ' + currency
     item = { ...item, ...item[currency] }
@@ -86,51 +87,106 @@ import { toEther } from "../../utils/converter";
     page: page,
     firstPageSize: firstPageSize,
     currencyList: currencyList,
-    // isDisabled: currencyList > listTokens.length || listTokens.length < firstPageSize,
     originalTokens: originalTokens,
     searchWord: searchWord,
-    sortType: sortType
+    sortType: sortType,
+    showSearchInput: store.market.configs.showSearchInput,
+    global: store.global
   }
 })
 
 export default class Market extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      modalState: false
+    }
+  }
+
+  componentDidMount = () => {    
+    if (window.kyberBus){
+      window.kyberBus.on("swap.open.market", this.setShowMarket.bind(this));
+    }
+  }
+
+  setShowMarket = () => {
+    this.setState({ modalState: true })
+  }
+
   getMoreData = () => {
     this.props.dispatch(marketActions.getMoreData(this.props.listTokens))
   }
 
-  render() {
+  changeSearch = (e) => {
+    var value = e.target.value
+    this.props.dispatch(marketActions.changeSearchWord(value))
+    this.props.dispatch(marketActions.resetListToken(value))
+  }
+
+  getContentMarket = () => {
     return (
       <div className="market container" id="market-eth">
+        <a className="x" onClick={this.closeModal}>&times;</a>
         <h1 className="market__title">{this.props.translate("market.eth_market") || "Ethereum Market"}</h1>
-        <div className="market__header">
-          <div className="market__header-left">
-            <div className="market__header-search"><SearchWord /></div>
-            <div className="market__header-currency"><Currency /></div>
-          </div>
-          <div className="market__header-right"><ManageColumn /></div>
-        </div>
         <div className="market-table">
-            <div>
-              <MarketTable
-                data = {this.props.data}
-                currency = {this.props.currency}
-                tokens = {this.props.tokens}
-                listTokens = {this.props.listTokens}
-                page = {this.props.page}
-                firstPageSize = {this.props.firstPageSize}
-                originalTokens = {this.props.originalTokens}
-                searchWord = {this.props.searchWord}
-                sortType = {this.props.sortType}
-              />
-            </div>
+          <div>
+            <MarketTable
+              data={this.props.data}
+              currency={this.props.currency}
+              tokens={this.props.tokens}
+              listTokens={this.props.listTokens}
+              page={this.props.page}
+              firstPageSize={this.props.firstPageSize}
+              originalTokens={this.props.originalTokens}
+              searchWord={this.props.searchWord}
+              sortType={this.props.sortType}
+              manageColumn={<ManageColumn />}
+              searchWordLayout={<SearchWord />}
+              currencyLayout={<Currency currentCurrency={this.props.currency} />}
+            />
+          </div>
         </div>
-        {/* <div className="show-more">
-          <button className={this.props.isDisabled ? 'disabled' : ''} onClick={(e) => {if(!this.props.isDisabled) this.getMoreData(e)}}>
-            {this.props.translate("market.show_more_results") || "Show more results"}
-          </button>
-        </div> */}
         <TradingViewModal />
       </div>
+    )
+  }
+
+  closeModal = () => {
+    this.setState({ modalState: false })
+    this.props.global.analytics.callTrack("trackClickCloseMarket")
+  }
+  openModal = () => {
+    this.setState({ modalState: true })
+    this.props.global.analytics.callTrack("trackClickOpenMarket")
+  }
+
+  render() {
+    return (
+      <div className="market-wrapper-container">
+        {!this.props.global.isOnMobile && (
+          <div className="rate-container">
+            <div className="rate-container__slider">
+              <RateSlider />
+            </div>
+            <div className="rate-container__more">
+              <a onClick={this.openModal}>{this.props.translate("market.more") || "More"}</a>
+            </div>
+          </div>
+        )}
+        <Modal className={{
+            base: 'reveal large confirm-modal market-modal',
+            afterOpen: 'reveal large confirm-modal'
+          }}
+          overlayClassName={"market-modal-scroll"}
+          isOpen={this.state.modalState}
+          onRequestClose={this.closeModal}
+          contentLabel="Market modal"
+          content={this.getContentMarket()}
+          size="large"
+        />
+      </div>
+
+
     )
   }
 }

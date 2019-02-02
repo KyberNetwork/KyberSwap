@@ -1,17 +1,15 @@
 import React from "react"
 import { connect } from "react-redux"
-
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import { getTranslate } from 'react-localize-redux';
 import * as marketActions from "../../actions/marketActions"
-import * as analytics from "../../utils/analytics"
-
 
 @connect((store) => {
     return {
         translate: getTranslate(store.locale),
         display: store.market.configs.column.display,
-        shows: store.market.configs.column.shows
+        shows: store.market.configs.column.shows,
+        analytics: store.global.analytics
     }
 })
 
@@ -39,7 +37,7 @@ export default class ManageColumn extends React.Component {
     selectShowsColumn = (e, key) => {
         var value = e.target.checked
         this.props.dispatch(marketActions.changeShowColumn(key, value))
-        analytics.trackMarketSetting(this.props.shows.listItem[key].title, value)
+        this.props.analytics.callTrack("trackMarketSetting", this.props.shows.listItem[key].title, value);
     }
 
     getDisplayColumn = (e) => {
@@ -104,18 +102,18 @@ export default class ManageColumn extends React.Component {
     //<div key={key} className="column-label">
     render() {
         return (
-            <div>
+            // <div>
                 <div className="token-selector">
                     <Dropdown onShow={(e) => this.showSelector(e)} onHide={(e) => this.hideSelector(e)} active={this.state.open}>
                         <DropdownTrigger className="notifications-toggle">
                             <div className="focus-item d-flex">
-                                <img src={require("../../../assets/img/landing/setting.svg")} />
+                                <img src={require("../../../assets/img/v3/setting_icon.svg")} />
                             </div>
                         </DropdownTrigger>
                         <DropdownContent>
                             <div className="select-item">
                                 <div className="setting-header">
-                                    <img src={require("../../../assets/img/landing/setting.svg")} />
+                                    <img src={require("../../../assets/img/v3/setting_icon.svg")} />
                                     <span>{this.props.translate("market.settings") || "Settings"}</span>
                                 </div>
                                 <div className="list-setting">
@@ -130,7 +128,7 @@ export default class ManageColumn extends React.Component {
                         </DropdownContent>
                     </Dropdown>
                 </div>
-            </div>
+            // </div>
         )
     }
 }

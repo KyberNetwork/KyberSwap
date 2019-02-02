@@ -42,7 +42,7 @@ export function* goToRoute(action) {
 }
 
 export function* clearSession(action) {
-  yield put(actions.clearSessionComplete())
+  yield put(actions.clearSessionComplete(action.payload))
   //yield put(actions.goToRoute(constants.BASE_HOST));
 }
 
@@ -55,11 +55,12 @@ export function* updateAllRate(action) {
     try {
       console.log("run here")
       rateUSD = yield call([ethereum, ethereum.call],"getRateETH")
-      yield put(actions.updateAllRateUSDComplete(rateETHUSD))
+      yield put(actions.updateAllRateUSDComplete(rateUSD))
       yield put(actions.showBalanceUSD())
     }
     catch(err) {
       console.log(err.message)
+      rateUSD = "0"
     }
   }
   try {
@@ -219,7 +220,7 @@ export function* changelanguage(action) {
         var languagePack = yield call(ethereum.call,"getLanguagePack", lang)
         if (!languagePack) return;
 
-        yield put.sync(addTranslationForLanguage(languagePack, activeLang))
+        yield put.resolve(addTranslationForLanguage(languagePack, activeLang))
       }
     }
     yield put(setActiveLanguage(activeLang))

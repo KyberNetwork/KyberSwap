@@ -1,7 +1,7 @@
 import  constants from "./constants"
 import Language from "../../../lang/index"
-import { initialize, addTranslation, addTranslationForLanguage, setActiveLanguage, localeReducer } from 'react-localize-redux';
-
+//import { initialize, addTranslation, addTranslationForLanguage, setActiveLanguage, localeReducer } from 'react-localize-redux';
+import { initialize, addTranslationForLanguage } from 'react-localize-redux';
 
 const onMissingTranslation = (key, languageCode) => {
   // here you can do whatever you want e.g. call back end service that will 
@@ -47,6 +47,16 @@ export function initLanguage(store){
   let languagePack, packName
   try {
     packName = getParameterByName('lang')
+    if (packName === null) {
+      var rawPackName = getParameterByName('locale')
+      switch (rawPackName) {
+        case "en-EN":
+          packName = "en"
+          break
+        case "zh-CN":
+          packName = "cn"
+      }
+    }
     if (packName){
       languagePack = require("../../../lang/" + packName + ".json")
     }else{
@@ -59,11 +69,20 @@ export function initLanguage(store){
     languagePack = require("../../../lang/" + packName + ".json")
   }
   console.log("________________ load loanguage ", packName)
-  store.dispatch(initialize([packName], { 
-    missingTranslationCallback: onMissingTranslation, 
-    showMissingTranslationMsg: false,
-    defaultLanguage: packName
-  }));
+  store.dispatch(initialize({
+  //   [packName], { 
+  //   missingTranslationCallback: onMissingTranslation, 
+  //   showMissingTranslationMsg: false,
+  //   defaultLanguage: packName
+  // }));
+    languages: [
+      { name: "", code: packName },      
+    ],
+    options: {
+      renderToStaticMarkup: false,
+      renderInnerHtml: true
+    }
+  }))
   store.dispatch(addTranslationForLanguage(languagePack, packName));
 
 }

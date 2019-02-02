@@ -1,44 +1,35 @@
-
 import React from "react"
 import { connect } from "react-redux"
-import { push } from 'react-router-redux';
-
-import BLOCKCHAIN_INFO from "../../../../env"
-//import { gweiToWei, toT, roundingNumber, gweiToEth, toPrimitiveNumber, stringToBigNumber } from "../../utils/converter"
+import { withRouter } from 'react-router-dom'
 import * as converters from "../../utils/converter"
 import * as validators from "../../utils/validators"
-
 import { TransferForm } from "../../components/Transaction"
-import { PostTransferWithKey } from "../Transfer"
-import { TransactionLoading, QRCode } from "../CommonElements"
-
-import { TokenSelector } from "../TransactionCommon"
-
+import { TransactionLoading, QRCode, ChooseBalanceModal } from "../CommonElements"
+import { AdvanceConfigLayout } from "../../components/TransactionCommon"
+import { TokenSelector, AccountBalance } from "../TransactionCommon"
 import { hideSelectToken } from "../../actions/utilActions"
-import { verifyAccount } from "../../utils/validators"
 import * as common from "../../utils/common"
-
-
 import * as globalActions from "../../actions/globalActions"
 import constansts from "../../services/constants"
-import * as analytics from "../../utils/analytics"
-
-// import { specifyAddressReceive, specifyAmountTransfer, selectToken, errorSelectToken, goToStep, showAdvance, openPassphrase, throwErrorDestAddress, thowErrorAmount, makeNewTransfer } from '../../actions/transferActions';
 import * as transferActions from "../../actions/transferActions"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore'
-
+import BLOCKCHAIN_INFO from "../../../../env";
+import * as web3Package from "../../services/web3"
+import { importAccountMetamask } from "../../actions/accountActions"
+import EthereumService from "../../services/ethereum/ethereum"
 
 @connect((store, props) => {
-
   const langs = store.locale.languages
   var currentLang = common.getActiveLanguage(langs)
-
   const tokens = store.tokens.tokens
   const tokenSymbol = store.transfer.tokenSymbol
+  const swapSrcTokenSymbol = store.exchange.sourceTokenSymbol;
+  const swapDestTokenSymbol = store.exchange.destTokenSymbol;
   var balance = 0
   var decimals = 18
   var tokenName = "kyber"
+
   if (tokens[tokenSymbol]) {
     balance = tokens[tokenSymbol].balance
     decimals = tokens[tokenSymbol].decimals
@@ -51,17 +42,40 @@ import { default as _ } from 'underscore'
     tokens: tokens,
     global: store.global,
     translate: getTranslate(store.locale),
-    advanceLayout : props.advanceLayout,
-    currentLang
+    advanceLayout: props.advanceLayout,
+    currentLang,
+    swapSrcTokenSymbol,
+    swapDestTokenSymbol,
+    analytics: store.global.analytics
   }
 })
 
-export default class Transfer extends React.Component {
-  constructor(){
+class Transfer extends React.Component {
+  constructor() {
     super()
     this.state = {
-      focus: "transfer"
+      focus: "transfer",
+      defaultShowAmountErrorTooltip: true,
+      defaultShowAddrErrorTooltip: true
     }
+  }
+
+  componentDidMount = () => {
+    if (this.props.global.changeWalletType !== "") this.props.dispatch(globalActions.closeChangeWallet())
+
+    // const web3Service = web3Package.newWeb3Instance();
+
+    // if (web3Service !== false) {
+    //   const walletType = web3Service.getWalletType();
+    //   const isDapp = (walletType !== "metamask") && (walletType !== "modern_metamask");
+
+    //   if (isDapp) {
+    //     const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
+
+    //     this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
+    //       ethereumService, this.props.tokens, this.props.translate, walletType))
+    //   }
+    // }
   }
 
   validateSourceAmount = (value, gasPrice) => {
@@ -81,24 +95,27 @@ export default class Transfer extends React.Component {
         this.props.dispatch(transferActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
       }
     }
-   
+  }
 
+  dispatchEstimateGas = (value) => {
+    this.props.dispatch(transferActions.estimateGasWhenAmountChange(value))
   }
 
   lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
-
+  lazyEstimateGas = _.debounce(this.dispatchEstimateGas, 500)
 
   onAddressReceiveChange = (event) => {
     var value = event.target.value
     this.props.dispatch(transferActions.specifyAddressReceive(value));
   }
 
-
   onAmountChange = (event) => {
     var value = event.target.value
     this.props.dispatch(transferActions.specifyAmountTransfer(value))
-
-    this.lazyUpdateValidateSourceAmount(value, this.props.transfer.gasPrice)
+    if(this.props.account.account){
+      this.lazyEstimateGas(value)
+      this.lazyUpdateValidateSourceAmount(value, this.props.transfer.gasPrice)
+    }
   }
 
   chooseToken = (symbol, address, type) => {
@@ -107,40 +124,37 @@ export default class Transfer extends React.Component {
 
     var path = constansts.BASE_HOST + "/transfer/" + symbol.toLowerCase()
 
-    // if (this.props.currentLang !== "en"){
-    //   path += "?lang=" + this.props.currentLang
-    // }
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
 
     this.props.dispatch(globalActions.goToRoute(path))
-    analytics.trackChooseToken(type, symbol)
+    this.props.analytics.callTrack("trackChooseToken", type, symbol);
   }
 
-  makeNewTransfer = () => {
+  makeNewTransfer = (changeTransactionType = false) => {
     this.props.dispatch(transferActions.makeNewTransfer());
-    analytics.trackClickNewTransaction("Transfer")
-  }
 
+    if (changeTransactionType) {
+      var swapLink = constansts.BASE_HOST + "/swap/" + this.props.swapSrcTokenSymbol.toLowerCase() + "_" + this.props.swapDestTokenSymbol.toLowerCase();
+      this.props.global.analytics.callTrack("trackClickNewTransaction", "Swap");
+      this.props.history.push(swapLink)
+    } else {
+      this.props.global.analytics.callTrack("trackClickNewTransaction", "Transfer");
+    }
+  }
 
   onFocus = () => { 
     this.setState({focus:"source"})
-    analytics.trackClickInputAmount("transfer")
+    this.props.analytics.callTrack("trackClickInputAmount", "transfer");
   }
 
-  onBlur = () => { 
-    this.setState({focus:""})
+  onFocusAddr = () => { 
+    this.setState({focus:"to-addr"})
+    this.props.analytics.callTrack("trackClickInputRecieveAddress");
   }
 
-//   specifyGas = (event) => {
-//     var value = event.target.value
-//     this.props.dispatch(transferActions.specifyGas(value))
-//   }
-
-//   specifyGasPrice = (value) => {
-//     this.props.dispatch(transferActions.specifyGasPrice(value))
-
-//     this.lazyUpdateValidateSourceAmount(this.props.transfer.amount, value)
-//   }
+  onBlur = () => {
+    this.setState({ focus: "" })
+  }
 
   setAmount = () => {
     var tokenSymbol = this.props.transfer.tokenSymbol
@@ -163,31 +177,121 @@ export default class Transfer extends React.Component {
 
       this.onFocus()
     }
-    analytics.trackClickAllIn("Transfer", tokenSymbol)
+    this.props.analytics.callTrack("trackClickAllIn", "Transfer", tokenSymbol);
   }
 
   handleErrorQRCode = (err) =>{
-    //alert(err)
   }
+
   handleScanQRCode = (data) =>{
     this.props.dispatch(transferActions.specifyAddressReceive(data));
-    //alert(data)
+  }
+
+
+  toggleBalanceContent = () => {
+    if (this.props.transfer.isBalanceActive) {
+      this.props.global.analytics.callTrack("trackClickHideAccountBalance", "Transfer")
+    } else {
+      this.props.global.analytics.callTrack("trackClickShowAccountBalance", "Transfer")
+    }
+    this.props.dispatch(transferActions.toggleBalanceContent())    
+    if(!this.props.global.isOnMobile){
+      this.props.dispatch(transferActions.toggleAdvanceContent())    
+    }
+  }
+  toggleAdvanceContent = () => {
+    if (this.props.transfer.isAdvanceActive) {
+      this.props.global.analytics.callTrack("trackClickHideAdvanceOption", "Transfer")
+    } else {
+      this.props.global.analytics.callTrack("trackClickShowAdvanceOption", "Transfer")
+    }
+    this.props.dispatch(transferActions.toggleAdvanceContent())    
+    if(!this.props.global.isOnMobile){
+      this.props.dispatch(transferActions.toggleBalanceContent())    
+    }
+  }
+
+
+  specifyGasPrice = (value) => {
+    this.props.dispatch(transferActions.specifyGasPrice(value))
+
+    if (this.props.account !== false && !this.props.isChangingWallet) {
+      this.lazyUpdateValidateSourceAmount(this.props.transfer.amount, value)
+    }
+  }
+
+  inputGasPriceHandler = (value) => {
+    this.specifyGasPrice(value)
+  }
+
+  selectedGasHandler = (value, level, levelString) => {
+    this.props.dispatch(transferActions.seSelectedGas(level))
+    this.specifyGasPrice(value)
+    this.props.global.analytics.callTrack("trackChooseGas", "transfer", value, levelString);
+  }
+
+  getAdvanceLayout = () => {
+    return (
+      <AdvanceConfigLayout
+        selectedGas={this.props.transfer.selectedGas}
+        selectedGasHandler={this.selectedGasHandler}
+        gasPriceSuggest={this.props.transfer.gasPriceSuggest}
+        translate={this.props.translate}
+        isAdvanceActive = {this.props.transfer.isAdvanceActive}
+        toggleAdvanceContent={this.toggleAdvanceContent}
+        type="transfer"
+      />
+    )
+  }
+
+  getBalanceLayout = () => {
+    return (
+      <AccountBalance
+        chooseToken={this.chooseToken}
+        sourceActive={this.props.transfer.tokenSymbol}
+        destTokenSymbol='ETH'
+        onToggleBalanceContent={this.toggleBalanceContent}
+        isBalanceActive = {this.props.transfer.isBalanceActive}
+        tradeType = "transfer"
+        isOnDAPP = {this.props.account.isOnDAPP}
+      />)
+  }
+
+  closeChangeWallet = () => {
+    this.props.dispatch(globalActions.closeChangeWallet())
+  }
+
+  clearSession = (e) => {
+    this.props.dispatch(globalActions.clearSession())
+    this.props.global.analytics.callTrack("trackClickChangeWallet")
+  }
+
+ 
+
+  acceptTerm = (e) => {
+    this.props.dispatch(globalActions.acceptTermOfService())
+  }
+
+
+  getTransferBalance = () => {
+    return (
+      <ChooseBalanceModal
+        changeAmount={transferActions.specifyAmountTransfer}
+        changeFocus={this.onFocus}
+        sourceTokenSymbol={this.props.transfer.tokenSymbol}
+        typeTx={"transfer"}
+      />
+    )
+  }
+  
+  setDefaulAmountErrorTooltip = (value) => {
+    this.setState({defaultShowAmountErrorTooltip: value})
+  }
+  setDefaulAddrErrorTooltip = (value) => {
+    this.setState({defaultShowAddrErrorTooltip: value})
   }
 
   render() {
-    // if (this.props.account.isStoreReady) {
-    //   if (!!!this.props.account.account.address) {
-    //     setTimeout(() => this.props.dispatch(push("/")), 1000)
-    //     return (
-    //       <div></div>
-    //     )
-    //   }
-    // } else {
-    //   return (
-    //     <div></div>
-    //   )
-    // }
-
     var addressBalance = ""
     var token = this.props.tokens[this.props.transfer.tokenSymbol]
     if (token) {
@@ -222,23 +326,15 @@ export default class Transfer extends React.Component {
       />
     )
 
-    var transferButton = (
-      <PostTransferWithKey />
-    )
-
-    // var balance = {
-    //   prev: converters.toT(this.props.transfer.balanceData.prev, this.props.transfer.balanceData.tokenDecimal),
-    //   next: converters.toT(this.props.transfer.balanceData.next, this.props.transfer.balanceData.tokenDecimal)
-    // }
     var balanceInfo = {
       tokenName: this.props.transfer.balanceData.tokenName,
       amount: this.props.transfer.balanceData.amount,
       tokenSymbol: this.props.transfer.balanceData.tokenSymbol
-      // tokenSymbol: this.props.transfer.tokenSymbol
     }
     var destAdressShort = this.props.transfer.destAddress.slice(0, 8) + "..." + this.props.transfer.destAddress.slice(-6)
     var transactionLoadingScreen = (
-      <TransactionLoading tx={this.props.transfer.txHash}
+      <TransactionLoading
+        tx={this.props.transfer.txHash}
         makeNewTransaction={this.makeNewTransfer}
         tempTx={this.props.transfer.tempTx}
         type="transfer"
@@ -250,44 +346,56 @@ export default class Transfer extends React.Component {
       />
     )
 
-    // var gasPrice = converters.stringToBigNumber(converters.gweiToEth(this.props.transfer.gasPrice))
-    // var totalGas = gasPrice.multipliedBy(this.props.transfer.gas)
-    // var gasConfig = (
-    //   <TransactionConfig gas={this.props.transfer.gas}
-    //     gasPrice={this.props.transfer.gasPrice}
-    //     gasHandler={this.specifyGas}
-    //     gasPriceHandler={this.specifyGasPrice}
-    //     gasPriceError={this.props.transfer.errors.gasPrice}
-    //     gasError={this.props.transfer.errors.gas}
-    //     totalGas={totalGas.toString()}
-    //     translate={this.props.translate}
-    //     advanced={this.props.transfer.advanced}
-    //     gasPriceSuggest={this.props.transfer.gasPriceSuggest}
-    //   />
-    // )
-
-    var qcCode = common.isMobile.any() ? <QRCode  
-    onError={this.handleErrorQRCode}
-    onScan={this.handleScanQRCode}/> : ""
+    var qcCode = common.isMobile.any() ? <QRCode
+      onError={this.handleErrorQRCode}
+      onScan={this.handleScanQRCode}
+      onDAPP={this.props.account.isOnDAPP}/> : ""
 
     return (
-      <TransferForm step={this.props.transfer.step}
+      <TransferForm
+        account={this.props.account.account}
+        chooseToken={this.chooseToken}
+        sourceActive={this.props.transfer.tokenSymbol}
+        step={this.props.transfer.step}
         tokenSymbol={this.props.transfer.tokenSymbol}
         tokenTransferSelect={tokenTransferSelect}
-        transferButton={transferButton}
         transactionLoadingScreen={transactionLoadingScreen}
         input={input}
         errors={errors}
-        balance={addressBalance}
-        setAmount={this.setAmount}
         translate={this.props.translate}
-        onBlur = {this.onBlur}
-        onFocus = {this.onFocus}
-        focus = {this.state.focus}
-        advanceLayout = {this.props.advanceLayout}
-        networkError ={this.props.global.network_error}
+        onBlur={this.onBlur}
+        onFocus={this.onFocus}
+        focus={this.state.focus}
+        onFocusAddr={this.onFocusAddr}
+        advanceLayout={this.getAdvanceLayout()}
+        balanceLayout={this.getBalanceLayout()}
+        networkError={this.props.global.network_error}
+        isChangingWallet = {this.props.global.isChangingWallet}
+        changeWalletType = {this.props.global.changeWalletType}
+        closeChangeWallet = {this.closeChangeWallet}
+        global={this.props.global}
+        addressBalance={addressBalance}
+        clearSession={this.clearSession}
+        walletName={this.props.account.walletName}
         qcCode = {qcCode}
+        transferBalance = {this.getTransferBalance()}
+        isAgreedTermOfService={this.props.global.termOfServiceAccepted}
+        acceptTerm={this.acceptTerm}
+        isBalanceActive = {this.props.transfer.isBalanceActive}
+        isAdvanceActive = {this.props.transfer.isAdvanceActive}
+
+        swapBalance = {this.getTransferBalance()}
+
+        defaultShowAmountErrorTooltip = {this.state.defaultShowAmountErrorTooltip}
+        setDefaulAmountErrorTooltip = {this.setDefaulAmountErrorTooltip}
+
+        defaultShowAddrErrorTooltip = {this.state.defaultShowAddrErrorTooltip}
+        setDefaulAddrErrorTooltip = {this.setDefaulAddrErrorTooltip}
+
+        isOnDAPP = {this.props.account.isOnDAPP}
       />
     )
   }
 }
+
+export default withRouter(Transfer)

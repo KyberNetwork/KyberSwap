@@ -4,7 +4,6 @@ import * as globalActions from "../actions/globalActions"
 
 import * as common from "./common"
 import * as validators from "../utils/validators"
-import * as analytics from "../utils/analytics"
 
 import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
 import { addTx } from '../actions/txActions'
@@ -24,7 +23,7 @@ function* broadCastTx(action) {
     yield put(actions.prePareBroadcast())
     const hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", tx)
     yield call(runAfterBroadcastTx, ethereum, tx, hash, account, data)
-    
+
   }
   catch (e) {
     console.log(e)
@@ -51,9 +50,10 @@ function* selectToken(action) {
   yield put(utilActions.hideSelectToken())
 
   yield put(actions.checkSelectToken())
+  yield call(estimateGasNormal)
+  
   if (ethereum){
     yield call(ethereum.fetchRateExchange, true)
-    yield call(fetchGas)
   }
 
   //calculate gas use
@@ -68,9 +68,12 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
     console.log(e)
   }
 
+  const state = store.getState();
+  const global = state.global;
+
   //track complete trade
-  analytics.trackCoinExchange(data)
-  analytics.completeTrade(hash, "kyber", "swap")
+  global.analytics.callTrack("trackCoinExchange", data);
+  global.analytics.callTrack("completeTrade", hash, "kyber", "swap");
 
   //console.log({txRaw, hash, account, data})
   const tx = new Tx(
@@ -85,14 +88,13 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
   yield put(actions.resetSignError())
 
 
-  try{
-    var state = store.getState()
-    var notiService = state.global.notiService
-    notiService.callFunc("setNewTx",{hash: hash})
-  }catch(e){
+  try {
+    var notiService = global.notiService
+    notiService.callFunc("setNewTx", { hash: hash })
+  } catch (e) {
     console.log(e)
   }
-  
+
 
 
   //estimate time for tx
@@ -142,12 +144,12 @@ function* doApproveTransactionFail(ethereum, account, e) {
 
 function* doTxFail(ethereum, account, e) {
   console.log("tx failed")
-  console.log({account, e})
+  console.log({ account, e })
   var error = e
-  if (!error){
+  if (!error) {
     var translate = getTranslate(store.getState().locale)
     var link = BLOCKCHAIN_INFO.ethScanUrl + "address/" + account.address
-    error = translate("error.broadcast_tx", {link: link}) || "Potentially Failed! We likely couldn't broadcast the transaction to the blockchain. Please check on Etherscan to verify."
+    error = translate("error.broadcast_tx", { link: link }) || "Potentially Failed! We likely couldn't broadcast the transaction to the blockchain. Please check on Etherscan to verify."
   }
   yield put(actions.setBroadcastError(error))
   yield put(updateAccount(ethereum, account))
@@ -171,19 +173,33 @@ export function* checkTokenBalanceOfColdWallet(action) {
   let translate = getTranslate(store.getState().locale)
   try {
     const remainStr = yield call([ethereum, ethereum.call], "getAllowanceAtLatestBlock", sourceToken, address)
-    const remain = converter.hexToBigNumber(remainStr)
-    const sourceAmountBig = converter.hexToBigNumber(sourceAmount)
+    // const remain = converter.hexToBigNumber(remainStr)
+    // const sourceAmountBig = converter.hexToBigNumber(sourceAmount)
 
 
-    if (!remain.isGreaterThanOrEqualTo(sourceAmountBig) && !isApproveTxPending()) {
-      yield put(actions.showApprove())
-      yield call(fetchGasApproveSnapshot)
-      //fetch gas approve
-
-    } else {
-      yield put(actions.showConfirm())
-      yield call(fetchGasConfirmSnapshot)
+    var currenStep = yield call(checkStep, remainStr, sourceAmount)
+    switch(currenStep){
+      case 3:
+        yield put(actions.showConfirm())
+        yield call(fetchGasConfirmSnapshot)
+        break
+      case 2:
+        yield put(actions.showApprove())
+        yield call(fetchGasApproveSnapshot)
+        break
+      case 1:
+        yield put(actions.showApproveZero())
+        yield call(fetchGasApproveSnapshot, true)
+        break
+        
     }
+    // if (!remain.isGreaterThanOrEqualTo(sourceAmountBig) && !isApproveTxPending()) {
+    //   yield put(actions.showApprove())
+    //   yield call(fetchGasApproveSnapshot)
+    // } else {
+    //   yield put(actions.showConfirm())
+    //   yield call(fetchGasConfirmSnapshot)
+    // }
   } catch (e) {
     let title = translate("error.error_occurred") || "Error occurred"
     let content = translate("error.network_error") || "Cannot connect to node right now. Please check your network!"
@@ -198,10 +214,40 @@ function* processApprove(action) {
   switch (accountType) {
     case "trezor":
     case "ledger":
-      yield call(processApproveByColdWallet, action)
+      var result = yield call(processApproveByColdWallet, action)
+      if (result) {
+        yield put(actions.hideApprove())
+        yield put(actions.showConfirm())
+      }
       break
     case "metamask":
-      yield call(processApproveByMetamask, action)
+      var result = yield call(processApproveByMetamask, action)
+      if (result) {
+        yield put(actions.hideApprove())
+        yield put(actions.showConfirm())
+      }
+      break
+  }
+}
+
+export function* processApproveZero(action) {
+  const { ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+    keystring, password, accountType, account, keyService, sourceTokenSymbol } = action.payload
+  switch (accountType) {
+    case "trezor":
+    case "ledger":
+      var result = yield call(processApproveByColdWalletZero, action)
+      if (result) {
+        yield put(actions.hideApproveZero())
+        yield put(actions.showApprove())
+      }
+      break
+    case "metamask":
+      var result = yield call(processApproveByMetamaskZero, action)
+      if (result) {
+        yield put(actions.hideApproveZero())
+        yield put(actions.showApprove())
+      }
       break
   }
 }
@@ -234,21 +280,50 @@ export function* processApproveByColdWallet(action) {
     //increase nonce 
     yield put(incManualNonceAccount(account.address))
 
-    yield put(actions.hideApprove())
-    yield put(actions.showConfirm())
     yield put(actions.fetchGasSuccess())
+    return true
   } catch (e) {
     console.log(e)
     yield call(doTxFail, ethereum, account, e.message)
+    return false
   }
+}
 
-  //save approve to store
+export function* processApproveByColdWalletZero(action) {
+  const { ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+    keystring, password, accountType, account, keyService, sourceTokenSymbol } = action.payload
+  //try {
+  let rawApprove
+  try {
+    rawApprove = yield call(keyService.callSignTransaction, "getAppoveTokenZero", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+      keystring, password, accountType, account.address)
+  } catch (e) {
+    console.log(e)
+    let msg = ''
+    if (accountType === 'ledger') {
+      msg = keyService.getLedgerError(e)
+    } else {
+      msg = e.message
+    }
+    yield put(actions.setSignError(msg))
+    return
+  }
+  var hashApprove
+  try {
+    hashApprove = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApprove)
+    console.log(hashApprove)
+    yield put(actions.setApproveTxZero(hashApprove, sourceTokenSymbol))
 
+    //increase nonce 
+    yield put(incManualNonceAccount(account.address))
 
-  // } catch (e) {
-  //console.log(e)
-
-  // }
+    yield put(actions.fetchGasSuccess())
+    return true
+  } catch (e) {
+    console.log(e)
+    yield call(doTxFail, ethereum, account, e.message)
+    return false
+  }
 }
 
 export function* processApproveByMetamask(action) {
@@ -259,17 +334,37 @@ export function* processApproveByMetamask(action) {
       keystring, password, accountType, account.address)
 
     yield put(actions.setApproveTx(hashApprove, sourceTokenSymbol))
-    //const hashApprove = yield call(ethereum.call("sendRawTransaction"), rawApprove, ethereum)
     console.log(hashApprove)
     //return
     //increase nonce 
     yield put(incManualNonceAccount(account.address))
 
-    yield put(actions.hideApprove())
-    yield put(actions.showConfirm())
     yield put(actions.fetchGasSuccess())
+    return true
   } catch (e) {
-    yield put(actions.setSignError(e))
+    yield put(actions.setSignError(e.toString()))
+    return false
+  }
+}
+
+export function* processApproveByMetamaskZero(action) {
+  const { ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+    keystring, password, accountType, account, keyService, sourceTokenSymbol } = action.payload
+  try {
+    const hashApprove = yield call(keyService.callSignTransaction, "getAppoveTokenZero", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+      keystring, password, accountType, account.address)
+
+    yield put(actions.setApproveTxZero(hashApprove, sourceTokenSymbol))
+    console.log(hashApprove)
+    //return
+    //increase nonce 
+    yield put(incManualNonceAccount(account.address))
+
+    yield put(actions.fetchGasSuccess())
+    return true
+  } catch (e) {
+    yield put(actions.setSignError(e.toString()))
+    return false
   }
 }
 
@@ -440,6 +535,39 @@ function* exchangeETHtoTokenMetamask(action) {
   }
 }
 
+
+function* checkStep(remain, sourceAmount) {
+  var remain = converter.hexToBigNumber(remain)
+  var sourceAmount = converter.hexToBigNumber(sourceAmount)
+
+  if (converter.compareTwoNumber(remain, sourceAmount) !== -1) {
+    return 3
+  }
+
+  const state = store.getState()
+  const tokens = state.tokens.tokens
+  const sourceTokenSymbol = state.exchange.sourceTokenSymbol
+
+  if (remain != 0 && !!tokens[sourceTokenSymbol].approveZeroTx && !!tokens[sourceTokenSymbol].approveTx) {
+    return 3
+  }
+
+  if (remain != 0 && !!tokens[sourceTokenSymbol].approveZeroTx && !tokens[sourceTokenSymbol].approveTx) {
+    return 2
+  }
+
+  if (remain != 0 && !tokens[sourceTokenSymbol].approveZeroTx) {
+    return 1
+  }
+
+  if (remain == 0 && !!tokens[sourceTokenSymbol].approveTx) {
+    return 3
+  }
+  if (remain == 0 && !tokens[sourceTokenSymbol].approveTx) {
+    return 2
+  }
+}
+
 function* exchangeTokentoETHKeystore(action) {
   var { formId, ethereum, address, sourceToken,
     sourceAmount, destToken, destAddress,
@@ -447,23 +575,105 @@ function* exchangeTokentoETHKeystore(action) {
     throwOnFailure, nonce, gas,
     gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo } = action.payload
   var remainStr = yield call([ethereum, ethereum.call], "getAllowanceAtLatestBlock", sourceToken, address)
-  console.log("remain: " + remainStr)
-  var remain = converter.hexToBigNumber(remainStr)
-  var sourceAmountBig = converter.hexToBigNumber(sourceAmount)
-  if (!remain.isGreaterThanOrEqualTo(sourceAmountBig) && !isApproveTxPending()) {
-    var rawApprove
-    try {
-      rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-        keystring, password, type, address)
-    } catch (e) {
-      console.log(e)
-      yield put(actions.throwPassphraseError(e.message))
-      return
-    }
-    try {
-      yield put(actions.prePareBroadcast(balanceData))
-      var hashApprove, txRaw
+  // console.log("remain: " + remainStr)
+  // var remain = converter.hexToBigNumber(remainStr)
+  // var sourceAmountBig = converter.hexToBigNumber(sourceAmount)
+
+  // console.log("we_are_here")
+  // console.log(remain)
+  // return 
+
+  var currentStep = yield call(checkStep, remainStr, sourceAmount)
+
+  switch (currentStep) {
+    case 3:
+      var txRaw
       try {
+        txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
+          sourceAmount, destToken, destAddress,
+          maxDestAmount, minConversionRate,
+          blockNo, nonce, gas,
+          gasPrice, keystring, type, password)
+      } catch (e) {
+        console.log(e)
+        yield put(actions.throwPassphraseError(e.message))
+        return
+      }
+      try {
+        yield put(actions.prePareBroadcast(balanceData))
+        const hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", txRaw)
+        yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
+      } catch (e) {
+        console.log(e)
+        yield call(doTxFail, ethereum, account, e.message)
+        return
+      }
+      break
+    case 2:
+      var rawApprove
+      try {
+        rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+          keystring, password, type, address)
+      } catch (e) {
+        console.log(e)
+        yield put(actions.throwPassphraseError(e.message))
+        return
+      }
+      try {
+        yield put(actions.prePareBroadcast(balanceData))
+        var hashApprove, txRaw
+        try {
+          var hashApprove = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApprove)
+
+          yield put(actions.setApproveTx(hashApprove, sourceTokenSymbol))
+          console.log("approve: " + hashApprove)
+          //increase nonce 
+          yield put(incManualNonceAccount(account.address))
+          nonce++
+          txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
+            sourceAmount, destToken, destAddress,
+            maxDestAmount, minConversionRate,
+            blockNo, nonce, gas,
+            gasPrice, keystring, type, password)
+          yield put(actions.prePareBroadcast(balanceData))
+        } catch (e) {
+          console.log(e)
+          yield call(doTxFail, ethereum, account, e.message)
+          return
+        }
+        var hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", txRaw)
+        yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
+      } catch (e) {
+        console.log(e)
+        yield call(doTxFail, ethereum, account, e.message)
+        return
+      }
+      break
+    case 1:
+      var rawApproveZero
+      try {
+        rawApproveZero = yield call(keyService.callSignTransaction, "getAppoveTokenZero", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+          keystring, password, type, address)
+      } catch (e) {
+        console.log(e)
+        yield put(actions.throwPassphraseError(e.message))
+        return
+      }
+      try {
+        yield put(actions.prePareBroadcast(balanceData))
+        var hashApproveZero, txRaw
+        //try {
+        var hashApproveZero = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApproveZero)
+
+        yield put(actions.setApproveTxZero(hashApproveZero, sourceTokenSymbol))
+        console.log("approve_zero: " + hashApproveZero)
+        //increase nonce 
+        yield put(incManualNonceAccount(account.address))
+        nonce++
+
+        //aprove
+        var rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+          keystring, password, type, address)
         var hashApprove = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApprove)
 
         yield put(actions.setApproveTx(hashApprove, sourceTokenSymbol))
@@ -471,46 +681,28 @@ function* exchangeTokentoETHKeystore(action) {
         //increase nonce 
         yield put(incManualNonceAccount(account.address))
         nonce++
+
+        //send tx
         txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
           sourceAmount, destToken, destAddress,
           maxDestAmount, minConversionRate,
           blockNo, nonce, gas,
           gasPrice, keystring, type, password)
         yield put(actions.prePareBroadcast(balanceData))
+        // } catch (e) {
+        //   console.log(e)
+        //   yield call(doTxFail, ethereum, account, e.message)
+        //   return
+        // }
+        var hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", txRaw)
+        yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
       } catch (e) {
         console.log(e)
         yield call(doTxFail, ethereum, account, e.message)
         return
       }
-      var hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", txRaw)
-      yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
-    } catch (e) {
-      console.log(e)
-      yield call(doTxFail, ethereum, account, e.message)
-      return
-    }
-  } else {
-    var txRaw
-    try {
-      txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
-        sourceAmount, destToken, destAddress,
-        maxDestAmount, minConversionRate,
-        blockNo, nonce, gas,
-        gasPrice, keystring, type, password)
-    } catch (e) {
-      console.log(e)
-      yield put(actions.throwPassphraseError(e.message))
-      return
-    }
-    try {
-      yield put(actions.prePareBroadcast(balanceData))
-      const hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", txRaw)
-      yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
-    } catch (e) {
-      console.log(e)
-      yield call(doTxFail, ethereum, account, e.message)
-      return
-    }
+      break
+
   }
 }
 export function* exchangeTokentoETHPrivateKey(action) {
@@ -521,48 +713,108 @@ export function* exchangeTokentoETHPrivateKey(action) {
     gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo } = action.payload
   try {
     var remainStr = yield call([ethereum, ethereum.call], "getAllowanceAtLatestBlock", sourceToken, address)
-    var remain = converter.hexToBigNumber(remainStr)
-    var sourceAmountBig = converter.hexToBigNumber(sourceAmount)
-    if (!remain.isGreaterThanOrEqualTo(sourceAmountBig) && !isApproveTxPending()) {
-      let rawApprove
-      try {
-        rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-          keystring, password, type, address)
-      } catch (e) {
-        yield put(actions.setSignError(e.message))
-        return
-      }
 
-      yield put(actions.prePareBroadcast(balanceData))
-      var hashApprove
-      try {
-        var hashApprove = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApprove)
-        yield put(actions.setApproveTx(hashApprove, sourceTokenSymbol))
-        console.log(hashApprove)
-        //increase nonce 
-        yield put(incManualNonceAccount(account.address))
-        nonce++
-      } catch (e) {
-        console.log(e)
-        yield call(doTxFail, ethereum, account, e.message)
-        return
-      }
-    }
+    var currentStep = yield call(checkStep, remainStr, sourceAmount)
 
-    var txRaw
-    try {
-      txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
-        sourceAmount, destToken, destAddress,
-        maxDestAmount, minConversionRate,
-        blockNo, nonce, gas,
-        gasPrice, keystring, type, password)
-    } catch (e) {
-      yield put(actions.setSignError(e.message))
-      return
+    switch (currentStep) {
+      case 3:
+        try {
+          try {
+            txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
+              sourceAmount, destToken, destAddress,
+              maxDestAmount, minConversionRate,
+              blockNo, nonce, gas,
+              gasPrice, keystring, type, password)
+          } catch (e) {
+            yield put(actions.setSignError(e.message))
+            return
+          }
+          yield put(actions.prePareBroadcast(balanceData))
+          var hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", txRaw)
+          yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
+        } catch (e) {
+          console.log(e)
+          yield call(doTxFail, ethereum, account, e.message)
+          return
+        }
+        break
+      case 2:
+        try {
+          let rawApprove
+          try {
+            rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+              keystring, password, type, address)
+          } catch (e) {
+            yield put(actions.setSignError(e.message))
+            return
+          }
+
+          var hashApprove = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApprove)
+          yield put(actions.setApproveTx(hashApprove, sourceTokenSymbol))
+          console.log(hashApprove)
+          //increase nonce 
+          yield put(incManualNonceAccount(account.address))
+          nonce++
+
+          var txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
+            sourceAmount, destToken, destAddress,
+            maxDestAmount, minConversionRate,
+            blockNo, nonce, gas,
+            gasPrice, keystring, type, password)
+          yield put(actions.prePareBroadcast(balanceData))
+          var hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", txRaw)
+          yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
+        } catch (e) {
+          console.log(e)
+          yield call(doTxFail, ethereum, account, e.message)
+          return
+        }
+        break;
+      case 1:
+        try {
+          let rawApproveZero
+          try {
+            rawApproveZero = yield call(keyService.callSignTransaction, "getAppoveTokenZero", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+              keystring, password, type, address)
+          } catch (e) {
+            console.log(e)
+            yield put(actions.setSignError(e.message))
+            return
+          }
+
+          //yield put(actions.prePareBroadcast(balanceData))
+          var hashApproveZero
+          var hashApproveZero = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApproveZero)
+          yield put(actions.setApproveTx(hashApproveZero, sourceTokenSymbol))
+          console.log(hashApproveZero)
+          yield put(incManualNonceAccount(account.address))
+          nonce++
+
+          var rawApprove = yield call(keyService.callSignTransaction, "getAppoveToken", ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+            keystring, password, type, address)
+          var hashApprove
+          var hashApprove = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", rawApprove)
+          yield put(actions.setApproveTx(hashApprove, sourceTokenSymbol))
+          console.log(hashApprove)
+          yield put(incManualNonceAccount(account.address))
+          nonce++
+
+          var txRaw = yield call(keyService.callSignTransaction, "tokenToOthersFromAccount", formId, ethereum, address, sourceToken,
+            sourceAmount, destToken, destAddress,
+            maxDestAmount, minConversionRate,
+            blockNo, nonce, gas,
+            gasPrice, keystring, type, password)
+
+          yield put(actions.prePareBroadcast(balanceData))
+          var hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", txRaw)
+          yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
+        } catch (e) {
+          console.log(e)
+          yield call(doTxFail, ethereum, account, e.message)
+          return
+        }
+        break
     }
-    yield put(actions.prePareBroadcast(balanceData))
-    var hash = yield call([ethereum, ethereum.callMultiNode], "sendRawTransaction", txRaw)
-    yield call(runAfterBroadcastTx, ethereum, txRaw, hash, account, data)
   } catch (e) {
     console.log(e)
     yield call(doTxFail, ethereum, account, e.message)
@@ -634,50 +886,47 @@ export function* exchangeTokentoETHMetamask(action) {
   }
 }
 
-function* getRate(ethereum, source, dest, sourceAmount) {
+function* getRate(ethereum, source, dest, sourceAmount, blockNo) {
   //console.log({source, dest, sourceAmount})
   try {
     //get latestblock
-    const lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
+    //const lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
     // console.log(lastestBlock)
-    const rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmount, lastestBlock)
+    const rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmount, blockNo)
     const expectedPrice = rate.expectedPrice ? rate.expectedPrice : "0"
     const slippagePrice = rate.slippagePrice ? rate.slippagePrice : "0"
-    return { status: "success", res: { expectedPrice, slippagePrice, lastestBlock } }
+    return { status: "success", data: { expectedPrice, slippagePrice, blockNo } }
   }
   catch (err) {
     console.log(err)
     return { status: "fail" }
-    //yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0))
+    //yield put.resolve(actions.updateRateExchangeComplete(rateInit, "0", "0", 0))
     //yield put(actions.setRateSystemError())
   }
 }
 
 
 
-function* getSourceAmount(sourceTokenSymbol, sourceAmount){
+function* getSourceAmount(sourceTokenSymbol, sourceAmount) {
   var state = store.getState()
   var tokens = state.tokens.tokens
 
   var sourceAmountHex = "0x0"
-  if (tokens[sourceTokenSymbol]){
+  if (tokens[sourceTokenSymbol]) {
     var decimals = tokens[sourceTokenSymbol].decimals
     var rateSell = tokens[sourceTokenSymbol].rate
-    console.log(tokens[sourceTokenSymbol]);
-    console.log("=================================");
-    console.log({sourceAmount, decimals, rateSell})
     sourceAmountHex = converter.calculateMinSource(sourceTokenSymbol, sourceAmount, decimals, rateSell)
-  }else{
+  } else {
     sourceAmountHex = converter.stringToHex(sourceAmount, 18)
   }
   return sourceAmountHex
 }
 
-function* getSourceAmountZero(sourceTokenSymbol){
+function* getSourceAmountZero(sourceTokenSymbol) {
   var state = store.getState()
   var tokens = state.tokens.tokens
   var sourceAmountHex = "0x0"
-  if (tokens[sourceTokenSymbol]){
+  if (tokens[sourceTokenSymbol]) {
     var decimals = tokens[sourceTokenSymbol].decimals
     var rateSell = tokens[sourceTokenSymbol].rate
     sourceAmountHex = converter.toHex(converter.getSourceAmountZero(sourceTokenSymbol, decimals, rateSell))
@@ -688,127 +937,83 @@ function* getSourceAmountZero(sourceTokenSymbol){
 function* updateRatePending(action) {
   const { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual } = action.payload
   var state = store.getState()
-  // var exchangeSnapshot = state.exchange.snapshot
   var translate = getTranslate(state.locale)
-  
   var sourceAmoutRefined = yield call(getSourceAmount, sourceTokenSymbol, sourceAmount)
   var sourceAmoutZero = yield call(getSourceAmountZero, sourceTokenSymbol)
-  //console.log({sourceAmoutRefined, sourceAmoutZero})
-  //console.log("is_manual: " + isManual)
-  if (isManual) {
-    var rateRequest = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutRefined)
-    console.log("rate_request_manual: " + JSON.stringify(rateRequest))
-    console.log("source_amount: " + JSON.stringify(sourceAmoutRefined))
-    if (rateRequest.status === "success") {      
-      var { expectedPrice, slippagePrice, lastestBlock } = rateRequest.data      
-      var rateInit = expectedPrice.toString()
-      if (expectedPrice.toString() === "0"){
-        var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutZero)
 
-        //console.log(rateRequestZeroAmount.data)
-        if (rateRequestZeroAmount.status === "success"){
-          rateInit = rateRequestZeroAmount.data.expectedPrice
-        }
-        if (rateRequestZeroAmount.status === "timeout") {
-          yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-            translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
-            return
-        }
-        if (rateRequestZeroAmount.status === "fail") {
-          yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-            translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
-            return
-        }
-      }
-      yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
-      // if (expectedPrice === "0") {
-      //   yield put(actions.setRateSystemError())
-      // }else{
-      //   yield put(actions.caculateAmount())
-      // }
-    }
-    // else{
-    //   yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
-    // }
+  try{
+    var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
+    var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmoutRefined, lastestBlock)
+    var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmoutZero, lastestBlock)
+    var { expectedPrice, slippagePrice } = rate
 
-    if (rateRequest.status === "timeout") {
+    var percentChange = 0
+    if(rateZero.expectedPrice != 0){
+      percentChange = (rateZero.expectedPrice - rate.expectedPrice) / rateZero.expectedPrice 
+      percentChange = Math.round(percentChange * 1000) / 10    
+      if(percentChange <= 0.1 || percentChange > 80) percentChange = 0
+    }    
+
+    yield put.resolve(actions.updateRateExchangeComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, true, percentChange))
+
+  }catch(err){
+    console.log(err)
+    if(isManual){
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-        translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+      translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+      return
     }
-    if (rateRequest.status === "fail") {
-      yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-        translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
-    }
-
-    // if ((rateRequest.status === "timeout") || (rateRequest.status === "fail")) {
-
-    //   yield put(utilActions.openInfoModal("Error", "There are some problems with nodes. Please try again in a while"))
-    // }
-
-  } else {
-    const rateRequest = yield call(getRate, ethereum, source, dest, sourceAmoutRefined)
-   // console.log("rate_request_manual_not: " + JSON.stringify(rateRequest))
-    if (rateRequest.status === "success") {
-      var { expectedPrice, slippagePrice, lastestBlock } = rateRequest.res
-    //  console.log(rateRequest.res)
-      var rateInit = expectedPrice.toString()
-      if (expectedPrice.toString() === "0"){
-        var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutZero)
-
-     //   console.log(rateRequestZeroAmount.data)
-        if (rateRequestZeroAmount.status === "success"){
-          rateInit = rateRequestZeroAmount.data.expectedPrice
-        }
-        // if (rateRequestZeroAmount.status === "timeout") {
-        //   yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-        //     translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
-        //     return
-        // }
-        // if (rateRequestZeroAmount.status === "fail") {
-        //   yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-        //     translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
-        //     return
-        // }
-      }
-      
-      yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
-
-      // if (expectedPrice.toString() !== "0"){
-      //   yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
-      // }
-
-
-    }
-    else {
-      //yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0, isManual, false))
-
-      //yield put(actions.setRateFailError())
-    }
-
-    // const { expectedPrice, slippagePrice, lastestBlock } = rates.res
-    // yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock))
-    // if (lastestBlock === 0) {
-    //   yield put(actions.setRateSystemError())
-    // }else{
-    //   yield put(actions.caculateAmount())
-    // }
-
-    // try {
-    //   //get latestblock
-    //   const lastestBlock = yield call([ethereum, ethereum.call],"getLatestBlock")
-    //  // console.log(lastestBlock)
-    //   const rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmount, lastestBlock)
-    //   const expectedPrice = rate.expectedPrice ? rate.expectedPrice : "0"
-    //   const slippagePrice = rate.slippagePrice ? rate.slippagePrice : "0"
-    //   yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock))
-    //   yield put(actions.caculateAmount())
-    // }
-    // catch (err) {    
-    //   console.log(err)
-    //   yield put.sync(actions.updateRateExchangeComplete(rateInit, "0", "0", 0))
-    //   yield put(actions.setRateSystemError())
-    // }
   }
+
+  // if (isManual) {
+  //   const lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
+  //   var rateRequest = yield call(getRate, ethereum, source, dest, sourceAmoutRefined, lastestBlock)
+  //   var rateRequestZeroAmount = yield call(getRate, ethereum, source, dest, sourceAmoutZero, lastestBlock)
+    
+  //   if (rateRequest.status === "success") {      
+  //     var { expectedPrice, slippagePrice, blockNo } = rateRequest.data  
+
+  //     var rateInit = expectedPrice.toString()
+  //     if (expectedPrice.toString() === "0"){
+  //       var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutZero)
+  //       if (rateRequestZeroAmount.status === "success"){
+  //         rateInit = rateRequestZeroAmount.data.expectedPrice
+  //       }
+  //       if (rateRequestZeroAmount.status === "timeout") {
+  //         yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+  //           translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+  //           return
+  //       }
+  //       if (rateRequestZeroAmount.status === "fail") {
+  //         yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+  //           translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
+  //           return
+  //       }
+  //     }
+  //     yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
+  //   }
+  //   if (rateRequest.status === "timeout") {
+  //     yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+  //       translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+  //   }
+  //   if (rateRequest.status === "fail") {
+  //     yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+  //       translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
+  //   }
+  // } else {
+  //   const rateRequest = yield call(getRate, ethereum, source, dest, sourceAmoutRefined)
+  //   if (rateRequest.status === "success") {
+  //     var { expectedPrice, slippagePrice, lastestBlock } = rateRequest.res
+  //     var rateInit = expectedPrice.toString()
+  //     if (expectedPrice.toString() === "0"){
+  //       var rateRequestZeroAmount = yield call(common.handleRequest, getRate, ethereum, source, dest, sourceAmoutZero)
+  //       if (rateRequestZeroAmount.status === "success"){
+  //         rateInit = rateRequestZeroAmount.data.expectedPrice
+  //       }
+  //     }
+  //     yield put.sync(actions.updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, lastestBlock, isManual, true))
+  //   }
+  // }
 }
 
 
@@ -841,18 +1046,18 @@ function* updateRateSnapshot(action) {
       var rate = rateRequest.data
       var expectedPrice = rate.expectedRate ? rate.expectedRate : "0"
       var slippagePrice = rate.slippageRate ? rate.slippageRate : "0"
-     // expectedPrice = "0"
-      if (expectedPrice  == 0){
-        yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred", 
-                                            translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
+      // expectedPrice = "0"
+      if (expectedPrice == 0) {
+        yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
+          translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
         yield put(actions.hideApprove())
         yield put(actions.hideConfirm())
         yield put(actions.hidePassphrase())
-      }else{
-        yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
+      } else {
+        yield put.resolve(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
         yield put(actions.caculateAmountInSnapshot())
       }
-    }else{
+    } else {
       yield put(actions.hideApprove())
       yield put(actions.hideConfirm())
       yield put(actions.hidePassphrase())
@@ -872,21 +1077,45 @@ function* updateRateSnapshot(action) {
     // const expectedPrice = rate.expectedRate ? rate.expectedRate : "0"
     // const slippagePrice = rate.slippageRate ? rate.slippageRate : "0"
 
-    // yield put.sync(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
+    // yield put.resolve(actions.updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice))
     // yield put(actions.caculateAmountInSnapshot())
   }
   catch (err) {
-    console.log("===================")
     console.log(err)
   }
 }
 
 function* fetchGas() {
-  yield call(estimateGas)
+  // yield call(estimateGas)
+  var state = store.getState()
+  var exchange = state.exchange
+  var gas = yield call(getMaxGasExchange)
+  var gasApprove = 0
+  if (exchange.sourceTokenSymbol !== "ETH"){
+    gasApprove = yield call(getMaxGasApprove)
+    gasApprove = gasApprove * 2
+  }
+  yield put(actions.setEstimateGas(gas, gasApprove))
+}
+
+function* estimateGasNormal() {
+  var state = store.getState()
+  const exchange = state.exchange
+
+  const sourceTokenSymbol = exchange.sourceTokenSymbol
+  var gas = yield call(getMaxGasExchange)
+  var gas_approve 
+
+  if(sourceTokenSymbol === "ETH"){
+    gas_approve = 0
+  }else{
+    gas_approve = yield call(getMaxGasApprove)
+  }
+
+  yield put(actions.setEstimateGas(gas, gas_approve))
 }
 
 function* estimateGas() {
-
   var gasRequest = yield call(common.handleRequest, getGasUsed)
   if (gasRequest.status === "success") {
     const { gas, gas_approve } = gasRequest.data
@@ -894,19 +1123,20 @@ function* estimateGas() {
   }
   if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")) {
     console.log("timeout")
-    var state = store.getState()
-    const exchange = state.exchange
+    // var state = store.getState()
+    // const exchange = state.exchange
 
-    const sourceTokenSymbol = exchange.sourceTokenSymbol
-    var gas = yield call(getMaxGasExchange)
-    var gas_approve 
-    if(sourceTokenSymbol === "ETH"){
-      gas_approve = 0
-    }else{
-      gas_approve = yield call(getMaxGasApprove)
-    }
+    // const sourceTokenSymbol = exchange.sourceTokenSymbol
+    // var gas = yield call(getMaxGasExchange)
+    // var gas_approve 
+    // if(sourceTokenSymbol === "ETH"){
+    //   gas_approve = 0
+    // }else{
+    //   gas_approve = yield call(getMaxGasApprove)
+    // }
 
-    yield put(actions.setEstimateGas(gas, gas_approve))
+    // yield put(actions.setEstimateGas(gas, gas_approve))
+    yield call(estimateGasNormal)
   }
 }
 
@@ -916,7 +1146,7 @@ function* fetchGasSnapshot() {
 }
 
 function* estimateGasSnapshot() {
-
+  
   var gasRequest = yield call(common.handleRequest, getGasUsed)
   console.log("gas_request:" + JSON.stringify(gasRequest))
   if (gasRequest.status === "success") {
@@ -930,10 +1160,12 @@ function* estimateGasSnapshot() {
 
     const sourceTokenSymbol = exchange.sourceTokenSymbol
     var gas = yield call(getMaxGasExchange)
-    var gas_approve 
-    if(sourceTokenSymbol === "ETH"){
+    console.log("gas_ne")
+    console.log(gas)
+    var gas_approve
+    if (sourceTokenSymbol === "ETH") {
       gas_approve = 0
-    }else{
+    } else {
       gas_approve = yield call(getMaxGasApprove)
     }
 
@@ -962,13 +1194,13 @@ function* fetchGasConfirmSnapshot() {
   yield put(actions.fetchGasSuccessSnapshot())
 }
 
-function* fetchGasApproveSnapshot() {
+function* fetchGasApproveSnapshot(isZeroAmount = false) {
   var state = store.getState()
   const exchange = state.exchange
   var gas = yield call(getMaxGasExchange)
   var gas_approve
 
-  var gasRequest = yield call(common.handleRequest, getGasApprove)
+  var gasRequest = yield call(common.handleRequest, getGasApprove, isZeroAmount)
   if (gasRequest.status === "success") {
     const gas_approve = gasRequest.data
     yield put(actions.setEstimateGasSnapshot(gas, gas_approve))
@@ -984,13 +1216,13 @@ function* fetchGasApproveSnapshot() {
 }
 
 
-function* getMaxGasExchange(){
+function* getMaxGasExchange() {
   var state = store.getState()
   const exchange = state.exchange
   const tokens = state.tokens.tokens
 
-  var sourceTokenLimit = tokens[exchange.sourceTokenSymbol]? tokens[exchange.sourceTokenSymbol].gasLimit : 0
-  var destTokenLimit = tokens[exchange.destTokenSymbol] ? tokens[exchange.destTokenSymbol].gasLimit: 0
+  var sourceTokenLimit = tokens[exchange.sourceTokenSymbol] ? tokens[exchange.sourceTokenSymbol].gasLimit : 0
+  var destTokenLimit = tokens[exchange.destTokenSymbol] ? tokens[exchange.destTokenSymbol].gasLimit : 0
 
   var sourceGasLimit = sourceTokenLimit ? parseInt(sourceTokenLimit) : exchange.max_gas
   var destGasLimit = destTokenLimit ? parseInt(destTokenLimit) : exchange.max_gas
@@ -1027,16 +1259,16 @@ function* getMaxGasExchange(){
   // }
 }
 
-function* getMaxGasApprove(){
+function* getMaxGasApprove() {
   var state = store.getState()
   var tokens = state.tokens.tokens
   const exchange = state.exchange
   var sourceSymbol = exchange.sourceTokenSymbol
-  if (tokens[sourceSymbol] && tokens[sourceSymbol].gasApprove){
+  if (tokens[sourceSymbol] && tokens[sourceSymbol].gasApprove) {
     return tokens[sourceSymbol].gasApprove
-  }else{
+  } else {
     return exchange.max_gas_approve
-  }  
+  }
 }
 
 function* getGasConfirm() {
@@ -1046,7 +1278,7 @@ function* getGasConfirm() {
   const kyber_address = BLOCKCHAIN_INFO.network
 
   const maxGas = yield call(getMaxGasExchange)
-  
+
   var gas = maxGas
   var gas_approve = 0
 
@@ -1108,7 +1340,7 @@ function* getGasConfirm() {
 
 }
 
-function* getGasApprove() {
+function* getGasApprove(isZeroAmount) {
   var state = store.getState()
   const ethereum = state.connection.ethereum
   const exchange = state.exchange
@@ -1120,7 +1352,13 @@ function* getGasApprove() {
   const maxGasApprove = yield call(getMaxGasApprove)
   var gas_approve = 0
   try {
-    var dataApprove = yield call([ethereum, ethereum.call], "approveTokenData", sourceToken, converter.biggestNumber())
+    var dataApprove
+    if (isZeroAmount){
+      dataApprove = yield call([ethereum, ethereum.call], "approveTokenData", sourceToken, 0)
+    }else{
+      dataApprove = yield call([ethereum, ethereum.call], "approveTokenData", sourceToken, converter.biggestNumber())
+    }
+    
     var txObjApprove = {
       from: address,
       to: sourceToken,
@@ -1128,7 +1366,7 @@ function* getGasApprove() {
       value: '0x0',
     }
     gas_approve = yield call([ethereum, ethereum.call], "estimateGas", txObjApprove)
-    gas_approve = Math.round(gas_approve * 120 / 100)
+    gas_approve = Math.round((gas_approve + 15000) * 120 / 100)
     if (gas_approve > maxGasApprove) {
       gas_approve = maxGasApprove
     }
@@ -1240,7 +1478,7 @@ function* analyzeError(action) {
     //console.log(txHash)
     var tx = yield call([ethereum, ethereum.call], "getTx", txHash)
     //  console.log(tx)
-    console.log(tx.input)
+    // console.log(tx.input)
     // console.log(tx)
     var value = tx.value
     var owner = tx.from
@@ -1250,7 +1488,7 @@ function* analyzeError(action) {
     var result = yield call([ethereum, ethereum.call], "exactTradeData", tx.input)
     var source = result[0].value
     var srcAmount = result[1].value
-   
+
     var dest = result[2].value
     var destAddress = result[3].value
     var maxDestAmount = result[4].value
@@ -1280,13 +1518,19 @@ function* analyzeError(action) {
 }
 
 function* debug(input, blockno, ethereum) {
-  // console.log({input, blockno})
+  // console.log("debug_tx")
+  // console.log(input)
   var networkIssues = {}
   // var reserveIssues = {}
   var translate = getTranslate(store.getState().locale)
   var gasCap = yield call([ethereum, ethereum.call], "wrapperGetGasCap", blockno)
 
-  if(input.transaction.gasUsed === input.transaction.gas && !input.transaction.status) networkIssues["gas_used"] = "Your transaction is run out of gas"
+  if(!input.transaction.status || input.transaction.status == "0x0"){
+    if(input.transaction.gas != 0 && (input.transaction.gasUsed/input.transaction.gas >= 0.95)){
+      networkIssues["gas_used"] = "Your transaction is run out of gas"
+    }
+  }
+  // if (input.transaction.gasUsed === input.transaction.gas && !input.transaction.status) networkIssues["gas_used"] = "Your transaction is run out of gas"
 
   if (converter.compareTwoNumber(input.gas_price, gasCap) === 1) {
     networkIssues["gas_price"] = translate('error.gas_price_exceeded_limit') || "Gas price exceeded max limit"
@@ -1335,9 +1579,9 @@ function* debug(input, blockno, ethereum) {
     console.log(rates)
     console.log(input.minConversionRate)
     if (converter.compareTwoNumber(input.minConversionRate, rates.expectedPrice) === 1) {
-//      reserveIssues["reason"] = translate('error.min_rate_too_high') || "Your min rate is too high!"
+      //      reserveIssues["reason"] = translate('error.min_rate_too_high') || "Your min rate is too high!"
 
-        networkIssues["rateZero"] = translate('error.min_rate_too_high') || "Your min rate is too high!"
+      networkIssues["rateZero"] = translate('error.min_rate_too_high') || "Your min rate is too high!"
     }
   }
   console.log("_________________________")
@@ -1484,26 +1728,23 @@ export function* getExchangeEnable() {
   }
 }
 
-
 export function* watchExchange() {
   yield takeEvery("EXCHANGE.TX_BROADCAST_PENDING", broadCastTx)
   yield takeEvery("EXCHANGE.APPROVAL_TX_BROADCAST_PENDING", approveTx)
-
   yield takeEvery("EXCHANGE.PROCESS_EXCHANGE", processExchange)
   yield takeEvery("EXCHANGE.PROCESS_APPROVE", processApprove)
+  yield takeEvery("EXCHANGE.PROCESS_APPROVE_ZERO", processApproveZero)
   yield takeEvery("EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET", checkTokenBalanceOfColdWallet)
   yield takeEvery("EXCHANGE.UPDATE_RATE_PENDING", updateRatePending)
   yield takeEvery("EXCHANGE.UPDATE_RATE_SNAPSHOT", updateRateSnapshot)
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", fetchGas)
   yield takeEvery("EXCHANGE.ANALYZE_ERROR", analyzeError)
-
   yield takeEvery("EXCHANGE.SELECT_TOKEN_ASYNC", selectToken)
-  yield takeEvery("EXCHANGE.INPUT_CHANGE", fetchGas)
-  //yield takeEvery("EXCHANGE.FETCH_GAS", fetchGasManual)
+  // yield takeEvery("EXCHANGE.INPUT_CHANGE", fetchGas)
   yield takeEvery("EXCHANGE.FETCH_GAS_SNAPSHOT", fetchGasSnapshot)
-
   yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
   yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
-
   yield takeEvery("EXCHANGE.FETCH_EXCHANGE_ENABLE", fetchExchangeEnable)
+  yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED_NORMAL", estimateGasNormal)
+  yield takeEvery("EXCHANGE.SWAP_TOKEN", estimateGasNormal)
 }

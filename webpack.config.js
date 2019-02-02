@@ -1,10 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+//const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 
 module.exports = env => {
@@ -14,106 +16,82 @@ module.exports = env => {
     const timestamp = Date.now();
 
     let entry = {
-        app: ['babel-polyfill', './js/client.js', './assets/css/app.scss'],
-      //  libary: ['./assets/css/foundation-float.min.css', './assets/css/foundation-prototype.min.css']
+        app: ['babel-polyfill', path.resolve(__dirname, 'src/js/client.js'), path.resolve(__dirname, 'src/assets/css/app.scss')]
     };
     let plugins = [
-        new webpack.ProgressPlugin(),
-        new ExtractTextPlugin(`[name].bundle.${timestamp}.css`, {
-            allChunks: true
+        new webpack.ProgressPlugin(),        
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
         }),
-        new CleanPlugin([outputPath+'/app.*', outputPath + '/libary.*']),
+        new CleanPlugin([outputPath + '/app.*', outputPath + '/libary.*']),
         new HtmlWebpackPlugin({
             title: 'Wallet - kyber.network',
-            filename: 'index.html',
             template: './app.html',
             favicon: './assets/img/favicon.png',
             inject: 'body'
         }),
-        new webpack.HashedModuleIdsPlugin()
-    ];
-    if (env && env.build !== 'true') {
-        entry['libary'] = ['./assets/css/foundation-float.min.css', './assets/css/foundation-prototype.min.css']
-        plugins.push(new webpack.DefinePlugin({
+        new webpack.DefinePlugin({
             'env': JSON.stringify(env.chain),
             'process.env': {
-                'logger': 'true'
+                'logger': 'true',
+                'env': JSON.stringify(env.chain)
             }
-        }));
-    } else {
-        plugins.push(new UglifyJsPlugin({
-            uglifyOptions: {
-                comments: false,
-                compress: {
-                    //drop_console: true,
-                    warnings: false
-                }
+        })
+    ];
+return {
+    context: path.join(__dirname, 'src'),
+    mode: env && env.build === 'true' ? "production" : "development",
+    devtool: env && env.build === 'true' ? false : 'inline-sourcemap',
+    entry: entry,
+    output: {
+        path: path.join(__dirname, outputPath),
+        filename: `[name].min.${timestamp}.js`,
+        publicPath: '/'
+    },
+    module: {
+        rules: [{
+            test: /\.jsx?$/,
+            exclude: /(node_modules|bower_components)/,
+            loader: 'babel-loader',
+            query: {
+                presets: ['react', 'es2015', 'stage-0'],
+                plugins: ['react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties'],
             }
-        }));
-        plugins.push(
-            new webpack.DefinePlugin({
-                'env': JSON.stringify(env.chain),
-                'process.env': {
-                    'NODE_ENV': JSON.stringify('production')
-                }
-            })
-        );
-        plugins.push(new CompressionPlugin({
-                asset: '[path].gz[query]',
-                algorithm: 'gzip',
-                test: /\.js$|\.css$|\.html$/,
-                threshold: 10240,
-                minRatio: 0.8
-            })
-        )
-    }
-    return {
-        context: path.join(__dirname, 'src'),
-        devtool: env && env.build !== 'true' ? 'inline-sourcemap' : false,
-        entry: entry,
-        output: {
-            path: path.join(__dirname, outputPath),
-            filename: `[name].min.${timestamp}.js`,
-            publicPath: '/'
         },
-        module: {
-            loaders: [{
-                test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['react', 'es2015', 'stage-0'],
-                    plugins: ['react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties'],
-                }
-            },
+        {
+            test: /\.(css|sass|scss)$/,
+            use: [
+                MiniCssExtractPlugin.loader,
                 {
-                    test: /\.css$/,
-                    use: ['style-loader', 'css-loader'],
+                    loader: 'css-loader',
+                    options: {
+                        importLoaders: 2,
+                        sourceMap: true
+                    }
                 },
                 {
-                    test: /\.scss$/,
-                    exclude: /node_modules/,
-                    loader: ExtractTextPlugin.extract({
-                        fallback: 'style-loader',
-                        use: [
-                            {loader: 'css-loader', options: {minimize: true}},
-                            'sass-loader'
-                        ]
-                    })
-                },
-                {
-                    test: /\.(jpe?g|png|gif|svg|ttf)$/i,
-                    use: [
-                        {
-                            loader: 'url-loader',
-                            options: {
-                                limit: 10000
-                            }
-                        }
-                    ]
+                    loader: 'sass-loader',
+                    options: {
+                        sourceMap: true
+                    }
                 }
             ]
         },
-        plugins: plugins
-    }
+        {
+            test: /\.(jpe?g|png|gif|svg|ttf)$/i,
+            use: [
+                {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 10000
+                    }
+                }
+            ]
+        }
+        ]
+    },
+    plugins: plugins
+}
 };
+
+

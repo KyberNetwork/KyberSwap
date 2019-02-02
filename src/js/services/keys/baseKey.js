@@ -92,6 +92,28 @@ export const getAppoveToken = (ethereum, sourceToken, sourceAmount, nonce, gas, 
   })
 }
 
+export const getAppoveTokenZero = (ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+  keystring, password, accountType, account) => {
+  //const approvalData = ethereum.approveTokenData(sourceToken, sourceAmount)  
+  return new Promise((resolve, reject) => {
+    ethereum.call("approveTokenData", sourceToken, 0).then(result => {
+      const txParams = {
+        from: account,
+        nonce: nonce,
+        gasPrice: gasPrice,
+        gasLimit: gas,
+        to: sourceToken,
+        value: '0x0',
+        data: result,
+        // EIP 155 chainId - mainnet: 1, ropsten: 3
+        chainId: BLOCKCHAIN_INFO.networkId
+      }
+      resolve({ txParams, keystring, password })
+    })
+  })
+}
+
+
 export const tokenToOthersFromAccount = (
   id, ethereum, account, sourceToken, sourceAmount, destToken,
   destAddress, maxDestAmount, minConversionRate,

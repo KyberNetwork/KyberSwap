@@ -15,7 +15,9 @@ const initState = {
   promoCode: {
     error: '',
     modalOpen: false
-  }
+  },
+  walletName: '',
+  isOnDAPP: false
 }
 
 const account = (state=initState, action) => {
@@ -33,7 +35,7 @@ const account = (state=initState, action) => {
       return {...state, checkTimeImportLedger: false}
     }
     case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED": {
-      return {...state, account: action.payload, loading: false, isStoreReady: true}
+      return {...state, account: action.payload.account, loading: false, isStoreReady: true, walletName: action.payload.walletName}
     }
     case "ACCOUNT.CLOSE_LOADING_IMPORT":{
       return {...state, loading: false}
@@ -124,6 +126,11 @@ const account = (state=initState, action) => {
     }  
     case "GLOBAL.CLEAR_SESSION_FULFILLED":{
       let newState = {...initState}
+      return newState
+    }
+    case "ACCOUNT.SET_ON_DAPP": {
+      let newState = {...state}
+      newState.isOnDAPP = true
       return newState
     }
   }

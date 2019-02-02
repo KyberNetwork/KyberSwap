@@ -4,7 +4,8 @@ export { default as ManageColumn } from './ManageColumn.js';
 export { default as Market } from './Market.js';
 export { default as SearchWord } from './SearchWord.js';
 export { default as SortColumn } from './SortColumn.js';
-
 export { default as TradingViewModal } from './TradingViewModal.js';
 export { default as TradingView } from './TradingView.js';
+export { default as MarketMobile } from './MarketMobile.js';
 
+export { default as RateSlider } from './RateSlider.js';

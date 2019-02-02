@@ -1,20 +1,12 @@
 import React from "react"
 import { connect } from "react-redux"
-
-import constants from "../../services/constants"
-
 import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
-
 import * as transferActions from "../../actions/transferActions"
 import * as utilActions from "../../actions/utilActions"
-
-import { TermAndServices } from "../../containers/CommonElements"
 import { PassphraseModal, ConfirmTransferModal, PostTransferBtn } from "../../components/Transaction"
-
 import { Modal } from "../../components/CommonElement"
 import { getTranslate } from 'react-localize-redux';
-import * as analytics from "../../utils/analytics"
 
 @connect((store, props) => {
   const tokens = store.tokens.tokens
@@ -34,7 +26,8 @@ import * as analytics from "../../utils/analytics"
     form: { ...store.transfer, balance, decimals, tokenName },
     ethereum: store.connection.ethereum,
     keyService: props.keyService,
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    analytics: store.global.analytics
   };
 
 })
@@ -42,7 +35,11 @@ import * as analytics from "../../utils/analytics"
 
 export default class PostTransfer extends React.Component {
   clickTransfer = () => {
-    analytics.trackClickTransferButton()
+    this.props.analytics.callTrack("trackClickTransferButton");
+    if (this.props.account === false){
+      this.props.dispatch(transferActions.openImportAccount())
+      return
+    }
     if (validators.anyErrors(this.props.form.errors)) return
     if (this.validateTransfer()) {
 
@@ -115,7 +112,8 @@ export default class PostTransfer extends React.Component {
 
   content = () => {
     return (
-      <PassphraseModal recap={this.createRecap()}
+      <PassphraseModal
+        recap={this.createRecap()}
         onChange={this.changePassword}
         onClick={this.processTx}
         onCancel={this.closeModal}
@@ -124,6 +122,8 @@ export default class PostTransfer extends React.Component {
         isFetchingGas={this.props.form.snapshot.isFetchingGas}
         gasPrice={this.props.form.snapshot.gasPrice}
         gas={this.props.form.snapshot.gas}
+        isFetchingRate={true}
+        analytics={this.props.analytics}
         type="transfer"
       />
     )
@@ -151,7 +151,7 @@ export default class PostTransfer extends React.Component {
     var destAddress = form.destAddress;
     var tokenSymbol = form.tokenSymbol;
     return (
-      <div>
+      <div className={"transfer-title"}>
         <div className="recap-sum-up">
           {this.props.translate("transaction.about_to_transfer") || "You are about to transfer"}
         </div>
@@ -195,14 +195,10 @@ export default class PostTransfer extends React.Component {
         this.props.dispatch(transferActions.resetSignError())
         break
     }
-    analytics.trackClickCloseModal("ConfirmTransfer Modal")
+    this.props.analytics.callTrack("trackClickCloseModal", "ConfirmTransfer Modal");
   }
   changePassword = () => {
     this.props.dispatch(transferActions.changePassword())
-  }
-
-  clickCheckbox = (value) => {
-    this.props.dispatch(transferActions.setTermAndServices(value))
   }
 
   formParams = () => {
@@ -248,9 +244,9 @@ export default class PostTransfer extends React.Component {
         params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService, params.balanceData))
     } catch (e) {
       console.log(e)
-      this.props.dispatch(transferActions.throwPassphraseError(this.props.translate("error.passphrase_error")))
+      this.props.dispatch(transferActions.throwPassphraseError(this.props.translate("error.passphrase_error") || "Key derivation failed"))
     }
-    analytics.trackConfirmTransaction("transfer", this.props.form.tokenSymbol)
+    this.props.analytics.callTrack("trackConfirmTransaction", "transfer", this.props.form.tokenSymbol);
   }
 
   openConfig = () => {
@@ -282,27 +278,25 @@ export default class PostTransfer extends React.Component {
         content={this.contentConfirm()}
         size="medium"
       />
-    let className = "button accent "
-    if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree) {
-      //className += " animated infinite pulse next"
-      className += " next"
-    }
 
-    var termAndServices = (<TermAndServices clickCheckbox={this.clickCheckbox}
-      termAgree={this.props.form.termAgree} />)
+    let activeButtonClass = ""
+    if (!validators.anyErrors(this.props.form.errors) && this.props.form.termAgree) {
+      activeButtonClass += " active"
+    }
 
     return (
       <PostTransferBtn
-        className={className}
+        isHaveAccount = {this.props.account === false ? false: true}
+        activeButtonClass={activeButtonClass}
         modalPassphrase={modalPassphrase}
         submit={this.clickTransfer}
         accountType={this.props.account.type}
         isConfirming={this.props.form.isConfirming}
         translate={this.props.translate}
         step={this.props.transfer.step}
-        termAndServices={termAndServices}
         openConfig={this.openConfig}
         advanced={this.props.transfer.advanced}
+        isChangingWallet={this.props.isChangingWallet}
       />
     )
   }
