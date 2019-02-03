@@ -1146,7 +1146,6 @@ function* fetchGasSnapshot() {
 }
 
 function* estimateGasSnapshot() {
-  console.log("estimate_gas_ne")
   var gasRequest = yield call(common.handleRequest, getGasUsed)
   console.log("gas_request:" + JSON.stringify(gasRequest))
   if (gasRequest.status === "success") {
