@@ -1146,7 +1146,7 @@ function* fetchGasSnapshot() {
 }
 
 function* estimateGasSnapshot() {
-  
+  console.log("estimate_gas_ne")
   var gasRequest = yield call(common.handleRequest, getGasUsed)
   console.log("gas_request:" + JSON.stringify(gasRequest))
   if (gasRequest.status === "success") {
@@ -1288,6 +1288,11 @@ function* getGasConfirm() {
   var tokens = state.tokens.tokens
   var sourceDecimal = 18
   var sourceTokenSymbol = exchange.sourceTokenSymbol
+  var destTokenSymbol = exchange.destTokenSymbol
+  if(sourceTokenSymbol === "TUSD" || destTokenSymbol === "TUSD"){
+    return { status: "success", res: gas }
+  }
+
   if (tokens[sourceTokenSymbol]) {
     sourceDecimal = tokens[sourceTokenSymbol].decimals
   }
@@ -1399,6 +1404,16 @@ function* getGasUsed() {
   var tokens = state.tokens.tokens
   var sourceDecimal = 18
   var sourceTokenSymbol = exchange.sourceTokenSymbol
+  var destTokenSymbol = exchange.destTokenSymbol
+
+  //hard code for tusd
+  // if(tokens[sourceTokenSymbol].cannot_estimate_gas){
+  //   return { status: "success", res: { gas, gas_approve } }
+  // }
+  if(sourceTokenSymbol === "TUSD" || destTokenSymbol === "TUSD"){
+    return { status: "success", res: { gas: maxGas, gas_approve: maxGasApprove } }
+  }
+
   if (tokens[sourceTokenSymbol]) {
     sourceDecimal = tokens[sourceTokenSymbol].decimals
   }
