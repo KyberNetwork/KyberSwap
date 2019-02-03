@@ -367,6 +367,9 @@ function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, source
         //yield put(actions.setGasUsed(gasLimit))
       }
     }else{
+      if(tokenSymbol === "TUSD"){
+        return {"status": "success", res: gasLimit}
+      }
       try{
         var destAddr = transfer.destAddress !== "" ? transfer.destAddress : internalAdrr
         var data = yield call([ethereum, ethereum.call],"sendTokenData", tokenAddr, amount, destAddr)

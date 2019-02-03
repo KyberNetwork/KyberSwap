@@ -134,7 +134,7 @@ const INIT_TRANSFER_FORM_STATE = {
   destAddress: "",
   throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 21000,
-  gas_limit: 100000,
+  gas_limit: 150000,
   isFetchingGas: false,
   gasPrice: 20,
   selectedGas: 'f',
