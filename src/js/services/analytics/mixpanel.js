@@ -20,7 +20,7 @@ export default class Mixpanel {
           }; a.__SV = 1.2; b = e.createElement("script"); b.type = "text/javascript"; b.async = !0; b.src = "undefined" !== typeof MIXPANEL_CUSTOM_LIB_URL ? MIXPANEL_CUSTOM_LIB_URL : "file:" === e.location.protocol && "//cdn4.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//) ? "https://cdn4.mxpnl.com/libs/mixpanel-2-latest.min.js" : "//cdn4.mxpnl.com/libs/mixpanel-2-latest.min.js"; c = e.getElementsByTagName("script")[0]; c.parentNode.insertBefore(b, c)
         }
       })(document, window.mixpanel || []);
-      mixpanel.init("c8ba82217c67ca61811d0174de5fd51f");
+      mixpanel.init("2c27cf48c0454e7f366bf47eb001dc57");
     } else {
       (function (e, a) {
         if (!a.__SV) {
