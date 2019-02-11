@@ -6,10 +6,6 @@
                 "type": "cached"
             },
             {
-                "endPoint": "https://staging-cache.kyber.network",
-                "type": "cached"
-            },
-            {
                 "endPoint": "https://mainnet.infura.io",
                 "type": "prune"
             },
@@ -32,7 +28,8 @@
     ],
     "market_exclude": [
         "WETH",
-        "PT"
+        "PT",
+        "ETH"
     ],
     "promo_token": "PT",
     "userdashboard_url": "https://staging-kyberswap.knstats.com",
@@ -503,7 +500,7 @@
             "name": "Wrapped BTC",
             "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
             "decimals": 8,
-            "cg_id": "",
+            "cg_id": "wrapped-bitcoin",
             "listing_time": 1543375503
         },
         "ABYSS": {
@@ -529,38 +526,6 @@
             "decimals": 18,
             "cg_id": "",
             "listing_time": 1544520340
-        },
-        "USDC": {
-            "symbol": "USDC",
-            "name": "USD Coin",
-            "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-            "decimals": 6,
-            "cg_id": "usd-coin",
-            "listing_time": 1548435610
-        },
-        "GUSD": {
-            "symbol": "GUSD",
-            "name": "Gemini dollar",
-            "address": "0x056fd409e1d7a124bd7017459dfea2f387b6d5cd",
-            "decimals": 2,
-            "cg_id": "gemini-dollar",
-            "listing_time": 1548435610
-        },
-        "EURS": {
-            "symbol": "EURS",
-            "name": "STASIS EURS",
-            "address": "0xdb25f211ab05b1c97d595516f45794528a807ad8",
-            "decimals": 2,
-            "cg_id": "stasis-eurs",
-            "listing_time": 1548435610
-        },
-        "PAX": {
-            "symbol": "PAX",
-            "name": "Paxos Standard",
-            "address": "0x8e870d67f660d95d5be530380d0ec0bd388289e1",
-            "decimals": 18,
-            "cg_id": "paxos-standard",
-            "listing_time": 1548435610
         }
     },
     "ethScanUrl": "https://etherscan.io/",
