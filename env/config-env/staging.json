@@ -25,6 +25,11 @@
         "ws": "wss://mainnet.infura.io/ws"
     },
     "api_tokens": "https://staging-api.knstats.com/internal/currencies",
+    "priority_tokens": [
+        "ETH",
+        "DAI",
+        "KNC"
+    ],
     "market_exclude": [
         "WETH",
         "PT"
