@@ -38,10 +38,11 @@ ul.bxslider {
   &__more{
     padding-right: 1rem;
     a{
-      color: #FEA34C;
+      color: #666666;
       font-size: 12px;
       text-decoration: underline;
       cursor: pointer;
+      font-weight: 600;
     }
   }
 }
@@ -73,7 +74,7 @@ ul.bxslider {
     }
     div.slick-slide {
       display: inline-block;
-      padding-right: 80px;
+      padding-right: 18px;
       &:focus{
         outline: none;
         border: none;
@@ -99,7 +100,7 @@ ul.bxslider {
       //   font-size: 14px;
       // }
       .pair, .value, .percent-change {
-        color: #afb6c5;
+        color: #666666;
         font-size: 12px;
         font-weight: 500;
       }

@@ -41,7 +41,7 @@
         "ETH"
     ],
     "promo_token": "PT",
-    "userdashboard_url": "https://kyber.network",
+    "userdashboard_url": "https://kyberswap.com",
     "tokens": {
         "ETH": {
             "symbol": "ETH",
@@ -528,8 +528,16 @@
             "name": "Wrapped BTC",
             "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
             "decimals": 8,
-            "cg_id": "",
-            "listing_time": 1548916200
+            "cg_id": "wrapped-bitcoin",
+            "listing_time": 1548853200
+        },
+        "MLN": {
+            "symbol": "MLN",
+            "name": "Melon Token",
+            "address": "0xec67005c4e498ec7f55e092bd1d35cbc47c91892",
+            "decimals": 18,
+            "cg_id": "melon",
+            "listing_time": 1549321200
         }
     },
     "ethScanUrl": "https://etherscan.io/",

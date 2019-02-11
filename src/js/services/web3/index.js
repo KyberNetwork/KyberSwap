@@ -39,8 +39,9 @@ export function newWeb3Instance(){
             web3Instance = false
             break
     }
-    console.log("web3_type")
-    console.log(type)
+    // alert(type)
+    // console.log("web3_type")
+    // console.log(type)
     return web3Instance
 }   
 
@@ -64,7 +65,7 @@ function getWeb3Type(){
         if (window.web3.isDAppBrowser && window.web3.isDAppBrowser()) {
             return "dapp"
         }
-        return "unknown"
+        return "dapp"
     }
     return "non_web3"    
 }

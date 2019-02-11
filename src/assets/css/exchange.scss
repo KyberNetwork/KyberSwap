@@ -237,7 +237,30 @@
   @include screen-min-width(large){
     padding: 0 1rem;
   }
-
+  .slide-down__trigger-container{
+    @include screen-min-width(large){
+      padding: 20px 20px 0 20px;
+    } 
+  }
+  .slide-down__content{
+    @include screen-min-width(large){
+      padding: 10px 20px 10px 20px;
+    } 
+  }
+  &__balance{
+    .slide-down__content{
+      @include screen-min-width(large){
+        padding-right: 35px;
+      } 
+    } 
+  }
+  &__adv-config{
+    .slide-down__content{
+      @include screen-min-width(large){
+        padding-left: 30px;
+      } 
+    } 
+  }
   &__wrapper {
 
     &--reimport {
@@ -275,8 +298,10 @@
   &__content {
     display: flex;
     // border-bottom: 1px solid rgba(204, 204, 204, 0.36);
-
-    padding: 0 15px 10px;
+    @include screen-min-width(large){
+      padding: 0 15px 10px;
+    }
+    
     // margin: 0 35px 30px;
     &--open {
       background: white;
@@ -289,7 +314,9 @@
 
       &.exchange-account{
         &__balance, &__adv-config {
-          padding: 15px 20px 25px;
+          @include screen-max-width(large){
+            padding: 15px 20px 15px;
+          }
         }
       }
     }
@@ -301,9 +328,9 @@
     position: relative;
 
     @include screen-min-width(large){
-      width: 65%;
-      padding: 0 20px;
-      padding-right: 35px;
+      width: 60%;
+      // padding: 0 20px;
+      // padding-right: 40px !important;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
@@ -311,8 +338,8 @@
   }
   @include screen-min-width(large){
   &__adv-config {
-    width: 35%;
-    padding: 0 20px;
+    width: 40%;
+    // padding: 0 20px;
     // padding-left: 35px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;

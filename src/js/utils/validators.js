@@ -24,6 +24,10 @@ export function verifyAmount(sourceAmount,
   sourceSymbol,
   sourceDecimal,
   rate, destDecimal, maxCap) {
+
+    console.log("validate_amount")
+    console.log(sourceAmount)
+    console.log(balance)
   //verify number for source amount
   var testAmount = parseFloat(sourceAmount)
   if (isNaN(testAmount)) {

@@ -16,9 +16,9 @@
               &:first-child{
                 margin-right: 10px;
               }
-              &:last-child{
-                margin-left: 10px;
-              }
+              // &:last-child{
+              //   margin-left: 10px;
+              // }
             }
           }
         }
@@ -39,6 +39,12 @@
 
   &__wallet-name {
     padding-left: 5px;
+    >span {
+      padding-right: 10px;
+      @include screen-max-width(medium) {
+        padding-right: 15px;
+      }
+    }
   }
 
   &__address-link {
@@ -78,8 +84,8 @@
 
   &__token-item {
     display: flex;
-    width: 23.25%;
-    margin: 0 1.7% 12px 0;
+    width: 30%;
+    margin: 0 1.7% 22px 0;
     cursor: pointer;
 
     // &:nth-last-child(-n + 4) { // bug 1975
@@ -101,6 +107,7 @@
     color: #222222;
     margin-right: 5px;
     transition: color .3s;
+    font-weight: 500;
   }
 
   &__token-balance {

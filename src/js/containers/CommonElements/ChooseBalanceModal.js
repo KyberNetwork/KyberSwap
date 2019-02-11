@@ -42,9 +42,8 @@ export default class ChooseBalanceModal extends React.Component {
         }
 
         if (sourceSymbol !== "ETH") {
-            amount = sourceBalance * (percent / 100)
-            amount = amount / Math.pow(10, sourceDecimal)
-            amount = amount.toString()
+            amount = percent == 100 ? sourceBalance: sourceBalance * (percent / 100)
+            amount = converters.toT(amount, sourceDecimal)
             amount = amount.replace(",", "")
         } else {
             var gasLimit
@@ -60,7 +59,7 @@ export default class ChooseBalanceModal extends React.Component {
                 // amount = (sourceBalance - totalGas) * percent / 100
             }
             amount = (sourceBalance) * percent / 100 - totalGas * 120 / 100
-            amount = amount / Math.pow(10, sourceDecimal)
+            amount = converters.toEther(amount)
             amount = converters.roundingNumber(amount).toString(10)
             amount = amount.replace(",", "")
         }
