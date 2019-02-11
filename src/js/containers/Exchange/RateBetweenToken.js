@@ -56,7 +56,7 @@ export default class RateBetweenToken extends React.Component {
     let tokenRateText;
 
     if (isSourceTokenETH) {
-      const tokenETHBuyRate = convertBuyRate(this.props.tokens[destToken].rateEth);
+      const tokenETHBuyRate = this.props.exchange.offeredRate ? convertBuyRate(this.props.exchange.offeredRate) : 0;
       const tokenUSDBuyRate = tokenETHBuyRate * this.props.rateEthUsd;
 
       tokenRateText = <span>1 {destToken} = {roundingNumber(tokenETHBuyRate)} ETH {tokenUSDBuyRate ? `= ${tokenUSDBuyRate.toFixed(3)} USD` : ""}</span>
