@@ -6,6 +6,7 @@ import { getTranslate } from 'react-localize-redux';
 import * as converter from '../../utils/converter'
 import * as constants from '../../services/constants'
 import ReactTooltip from 'react-tooltip'
+import BLOCKCHAIN_INFO from "../../../../env"
 
 @connect((store, props) => {
   var tokens = store.tokens.tokens
@@ -75,7 +76,7 @@ export default class RateBetweenToken extends React.Component {
           {change}%
           <img src={require('../../../assets/img/v3/arrow-down-red.svg')}/>
         </span>
-        <span className="token-compare__tooltip" data-html={true} data-tip={`<p>Price is dependent on your swap value. There is a ${change}% difference in price for the requested quantity and the default ${constants.MIN_AMOUNT_DEFAULT_RATE} ETH quantity</p>`} data-for="info_indicator" currentitem="false">
+        <span className="token-compare__tooltip" data-html={true} data-tip={`<p>Price is dependent on your swap value. There is a ${change}% difference in price for the requested quantity and the default ${BLOCKCHAIN_INFO.min_accept_amount} ETH quantity</p>`} data-for="info_indicator" currentitem="false">
             <img src={require('../../../assets/img/common/blue-indicator.svg')}/>
         </span>
         <ReactTooltip place="top" offset={{left:95}} id="info_indicator" className={"common-tooltip"} type="light" html={true}/>

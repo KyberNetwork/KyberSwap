@@ -12,6 +12,7 @@
         ],
         "ws": "wss://ropsten.kyber.network/ws/"
     },
+    "min_accept_amount": 0.5,
     "api_usd": "https://api.coinmarketcap.com",
     "api_tokens": "https://ropsten-api.kyber.network/internal/currencies",
     "promo_token": "OMG",

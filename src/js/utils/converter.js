@@ -2,6 +2,7 @@
 
 import BigNumber from 'bignumber.js'
 import constants from "../services/constants"
+import BLOCKCHAIN_INFO from "../../../env"
 
 
 export function calculateMinAmount(source, rate) {
@@ -591,7 +592,7 @@ export function calculateMinSource(sourceTokenSymbol, sourceAmount, decimal, rat
 
 
 export function getSourceAmountZero(sourceTokenSymbol, decimal, rateSell){
-  var minAmount = toTWei(constants.MIN_AMOUNT_DEFAULT_RATE)
+  var minAmount = toTWei(BLOCKCHAIN_INFO.min_accept_amount)
 
   var minETHAllow = new BigNumber(minAmount.toString())
 
