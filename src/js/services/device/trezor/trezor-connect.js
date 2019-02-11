@@ -3,7 +3,7 @@
  *
  * GPLv3
  */
-var VERSION = 4;
+var VERSION = 6;
 
 if (!Array.isArray) {
     Array.isArray = function(arg) {
@@ -35,7 +35,7 @@ var TrezorConnect = (function () {
 
     var DISABLE_LOGIN_BUTTONS = window.TREZOR_DISABLE_LOGIN_BUTTONS || false;
     var CHROME_URL = window.TREZOR_CHROME_URL || './chrome/wrapper.html';
-    var POPUP_URL = window.TREZOR_POPUP_URL || 'https://connect.trezor.io/' + VERSION + '/popup/popup.html?v=' + new Date().getTime();
+    var POPUP_URL = window.TREZOR_POPUP_URL || 'https://connect.trezor.io/' + VERSION + '/popup.html';
     var POPUP_PATH = window.TREZOR_POPUP_PATH || 'https://connect.trezor.io/' + VERSION;
     var POPUP_ORIGIN = window.TREZOR_POPUP_ORIGIN || 'https://connect.trezor.io';
 

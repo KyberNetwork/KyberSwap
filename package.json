@@ -69,6 +69,7 @@
     "slick-carousel": "^1.8.1",
     "sqlite3": "^4.0.4",
     "terser-webpack-plugin": "^1.1.0",
+    "trezor-connect": "^6.0.4",
     "underscore": "^1.8.3",
     "web3": "^1.0.0-beta.33",
     "web3-providers-ws": "^1.0.0-beta.34",
