@@ -367,7 +367,7 @@ function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, source
         //yield put(actions.setGasUsed(gasLimit))
       }
     }else{
-      if(tokenSymbol === "TUSD"){
+      if(tokenSymbol === "TUSD" || tokenSymbol === "EURS"){
         return {"status": "success", res: gasLimit}
       }
       try{
