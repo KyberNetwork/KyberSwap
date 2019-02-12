@@ -20,6 +20,7 @@
         ],
         "ws": "wss://mainnet.infura.io/ws"
     },
+    "min_accept_amount": 0.1,
     "api_tokens": "https://staging-api.knstats.com/internal/currencies",
     "priority_tokens": [
         "ETH",
@@ -500,7 +501,7 @@
             "name": "Wrapped BTC",
             "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
             "decimals": 8,
-            "cg_id": "wrapped-bitcoin",
+            "cg_id": "",
             "listing_time": 1543375503
         },
         "ABYSS": {
@@ -526,6 +527,22 @@
             "decimals": 18,
             "cg_id": "",
             "listing_time": 1544520340
+        },
+        "BIX": {
+            "symbol": "BIX",
+            "name": "BIX Token",
+            "address": "0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069",
+            "decimals": 18,
+            "cg_id": "bibox-token",
+            "listing_time": 1549860054
+        },
+        "CDT": {
+            "symbol": "CDT",
+            "name": "CoinDash",
+            "address": "0x177d39ac676ed1c67a2b268ad7f1e58826e5b0af",
+            "decimals": 18,
+            "cg_id": "blox",
+            "listing_time": 1549860054
         }
     },
     "ethScanUrl": "https://etherscan.io/",

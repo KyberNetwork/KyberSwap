@@ -28,6 +28,7 @@
         ],
         "ws": "wss://mainnet.infura.io/ws"
     },
+    "min_accept_amount": 0.5,
     "api_usd": "https://api.coinmarketcap.com",
     "api_tokens": "https://api.kyber.network/internal/currencies",
     "priority_tokens": [
