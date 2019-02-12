@@ -829,29 +829,29 @@
   .token-selector {
     .search-item{
       position: relative;
-      &:after{
-        background-image: url(../img/search.png);
+      &:before{
+        background-image: url("../img/v3/search_icon_token.svg");
         background-repeat: no-repeat;
-        background-size: 30px 30px;
         background-position: 8px center;
         content: ' ';
-        height: 50px;
-        width: 50px;
+        height: 30px;
+        width: 30px;
         position: absolute;
-        top: 16px;
-        right: 0px;
+        top: 15px;
+        left: -8px;
+        background-size: 20px 20px;
       }
     }
     input {
       border-radius: 0px;
-      height: 50px;
       margin-bottom: 0;
-   
-      // text-indent: 33px;
-      // border: solid 1px #e8e8e8;
       border: none;
-      border-bottom: solid 1px #e8e8e8;
+      // border-bottom: solid 1px #474d5f;
+      padding: 10px;
+      font-size: 14px;
       box-shadow: none;
+      padding-bottom: 0;
+      color: #222;
       &::placeholder {
         color: #474d5f;
         font-weight: 600;
@@ -865,8 +865,10 @@
       padding-left: 15px;
       padding-right: 15px;
       .search-item {
-        padding-left: 0;
-        padding-right: 0;
+        padding-left: 20px;
+        border-bottom: solid 1px #474d5f;
+        padding-bottom: 5px;
+        margin-bottom: 20px;
       }
       .list-item {
         .token-item {
@@ -884,7 +886,7 @@
             }
           }
           .item-balance {
-            font-weight: bold;
+            // font-weight: bold;
             padding-top: 5px;
           }
           &:hover {
@@ -916,7 +918,7 @@
               align-items: center;
               min-width: 115px;
               .item-icon {
-                margin-right: 25px;
+                margin-right: 15px;
               }
               div:last-child {
                 font-size: 14px;
