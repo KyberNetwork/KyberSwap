@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 
 import { getTranslate } from 'react-localize-redux'
-import { Currency, ManageColumn, MarketTable, SearchWord, SortColumn, TradingViewModal, RateSlider } from "../Market"
+import { Currency, ManageColumn, MarketTable, SearchWord, SortColumn, TradingViewModal, RateSliderV2 } from "../Market"
 import * as marketActions from "../../actions/marketActions"
 import { toEther } from "../../utils/converter";
 import * as analytics from "../../utils/analytics"
@@ -103,8 +103,8 @@ export default class Market extends React.Component {
     }
   }
 
-  componentDidMount = () => {    
-    if (window.kyberBus){
+  componentDidMount = () => {
+    if (window.kyberBus) {
       window.kyberBus.on("swap.open.market", this.setShowMarket.bind(this));
     }
   }
@@ -166,17 +166,18 @@ export default class Market extends React.Component {
         {!this.props.global.isOnMobile && (
           <div className="rate-container">
             <div className="rate-container__slider">
-              <RateSlider />
+              <RateSliderV2 />
             </div>
             <div className="rate-container__more">
               <a onClick={this.openModal}>{this.props.translate("market.more") || "More"}</a>
             </div>
           </div>
+
         )}
         <Modal className={{
-            base: 'reveal large confirm-modal market-modal',
-            afterOpen: 'reveal large confirm-modal'
-          }}
+          base: 'reveal large confirm-modal market-modal',
+          afterOpen: 'reveal large confirm-modal'
+        }}
           overlayClassName={"market-modal-scroll"}
           isOpen={this.state.modalState}
           onRequestClose={this.closeModal}
