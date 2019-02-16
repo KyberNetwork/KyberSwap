@@ -29,7 +29,7 @@ function getAllPathToken(listToken){
 
 const LayoutView = (props) => {
   var listToken = getAllPathToken(props.tokens)
-  var defaultPathExchange = constansts.BASE_HOST + "/swap/eth_knc"
+  var defaultPathExchange = constansts.BASE_HOST + "/swap/eth-knc"
   var defaultPathTransfer = constansts.BASE_HOST + "/transfer/eth"
 
   defaultPathExchange = common.getPath(defaultPathExchange, constansts.LIST_PARAMS_SUPPORTED)
