@@ -4,10 +4,15 @@ import { TokenSelectorView } from '../../components/CommonElement'
 import { getTranslate } from 'react-localize-redux';
 
 @connect((store, props) => {
+  var listToken = [] 
+  Object.keys(props.listItem).map((key, i) => {
+    listToken.push(listToken[key])
+  })
+ 
   return {
     account: store.account.account,
     focusItem: props.focusItem,
-    listItem: props.listItem,
+    listToken: listToken,
     type: props.type,
     chooseToken: props.chooseToken,
     translate: getTranslate(store.locale),
@@ -21,7 +26,15 @@ export default class TokenSelector extends React.Component {
     this.state = {
       open: false,
       searchWord: "",
+      numShow: 10,
+      displayList: []
     }
+  }
+  componentDidMount = () => {
+    var index = 0
+    Object.keys(this.props.listItem).map((key, i) => {
+
+    })
   }
 
   changeWord = (e) => {
@@ -49,7 +62,7 @@ export default class TokenSelector extends React.Component {
       <TokenSelectorView
         open={this.state.open}
         searchWord={this.state.searchWord}
-        listItem={this.props.listItem}
+        listToken={this.props.listToken}
         focusItem={this.props.focusItem}
         toggleOpen={this.toggleOpen}
         changeWord={this.changeWord}

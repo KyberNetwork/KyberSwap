@@ -122,3 +122,13 @@ export function timeout(ms, promise) {
         promise.then(resolve, reject)
     })
 }
+
+
+export function getTokenBySymbol(tokens, symbol){
+    for (var i = 0; i< tokens.length; i++){
+      if (tokens[i].symbol === symbol){
+        return tokens[i]
+      }
+    }
+    return false
+  }

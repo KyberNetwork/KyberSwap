@@ -1,27 +1,36 @@
 import React from "react"
 import { toT, roundingNumber } from "../../utils/converter"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
-import { getAssetUrl } from "../../utils/common";
+import { getAssetUrl, getTokenBySymbol } from "../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../env"
 
+
+
 const TokenSelectorView = (props) => {
-  var focusItem = props.listItem[props.focusItem]
-  var listShow = {}
-  Object.keys(props.listItem).map((key, i) => {
-    var token = props.listItem[key],
-      matchName = token.name.toLowerCase().includes(props.searchWord),
-      matchSymbol = token.symbol.toLowerCase().includes(props.searchWord)
-    if (matchSymbol || matchName) {
-      listShow[key] = props.listItem[key]
-    }
+  var focusItem = getTokenBySymbol(props.listToken, props.focusItem)
+
+  var listShow = []
+  props.listToken.map(value => {
+    matchName = value.name.toLowerCase().includes(props.searchWord),
+      matchSymbol = value.symbol.toLowerCase().includes(props.searchWord)
+      if (matchSymbol || matchName) {
+        listShow.push(value)
+      }
   })
+  // Object.keys(props.listItem).map((key, i) => {
+  //   var token = props.listItem[key],
+  //     matchName = token.name.toLowerCase().includes(props.searchWord),
+  //     matchSymbol = token.symbol.toLowerCase().includes(props.searchWord)
+  //   if (matchSymbol || matchName) {
+  //     listShow[key] = props.listItem[key]
+  //   }
+  // })
 
   var getListToken = () => {
     var banToken = props.banToken ? props.banToken : ""
-    return Object.keys(listShow).map((key, i) => {
-      if (key === props.banToken) return
-      if (key !== props.focusItem) {
-        var item = listShow[key]
+    return listShow.map((item, i) => {
+      if (item.symbol === props.banToken) return
+      if (item.symbol !== props.focusItem) {
         var balance = toT(item.balance, item.decimals)
         return (
           <div key={key} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item">
@@ -47,7 +56,8 @@ const TokenSelectorView = (props) => {
   }
 
   var priorityTokens = BLOCKCHAIN_INFO.priority_tokens.map(value => {
-    return <span key={value} onClick={(e) => {props.selectItem(e, value, props.listItem[value].address); props.hideTokens(e) }}>
+    var token = getTokenBySymbol(props.listToken, value)
+    return <span key={value} onClick={(e) => {props.selectItem(e, value, token.address); props.hideTokens(e) }}>
       <img src={getAssetUrl(`tokens/${value.toLowerCase()}.svg`)} />
       {value}
     </span>
