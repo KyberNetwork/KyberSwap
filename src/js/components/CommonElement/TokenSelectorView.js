@@ -9,31 +9,14 @@ import BLOCKCHAIN_INFO from "../../../../env"
 const TokenSelectorView = (props) => {
   var focusItem = getTokenBySymbol(props.listToken, props.focusItem)
 
-  var listShow = []
-  props.listToken.map(value => {
-    matchName = value.name.toLowerCase().includes(props.searchWord),
-      matchSymbol = value.symbol.toLowerCase().includes(props.searchWord)
-      if (matchSymbol || matchName) {
-        listShow.push(value)
-      }
-  })
-  // Object.keys(props.listItem).map((key, i) => {
-  //   var token = props.listItem[key],
-  //     matchName = token.name.toLowerCase().includes(props.searchWord),
-  //     matchSymbol = token.symbol.toLowerCase().includes(props.searchWord)
-  //   if (matchSymbol || matchName) {
-  //     listShow[key] = props.listItem[key]
-  //   }
-  // })
-
   var getListToken = () => {
     var banToken = props.banToken ? props.banToken : ""
-    return listShow.map((item, i) => {
+    return props.listShowToken.map((item, i) => {
       if (item.symbol === props.banToken) return
       if (item.symbol !== props.focusItem) {
         var balance = toT(item.balance, item.decimals)
         return (
-          <div key={key} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item">
+          <div key={item.symbol} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item">
             <div className="d-flex">
               <div className={"token-info"}>
                 <div className="item-icon">
@@ -87,7 +70,7 @@ const TokenSelectorView = (props) => {
             <div className="search-item">
               <input value={props.searchWord} placeholder={props.translate("transaction.try_dai") || `Try "DAI"`} onChange={(e) => props.changeWord(e)} type="text" onFocus={(e) => props.analytics.callTrack("trackSearchToken")}/>
             </div>
-            <div className="list-item custom-scroll">
+            <div className="list-item custom-scroll" onScroll={props.onListScroll}>
               {getListToken()}
             </div>
           </div>
