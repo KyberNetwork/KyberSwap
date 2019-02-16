@@ -20,7 +20,7 @@ const TokenSelectorView = (props) => {
             <div className="d-flex">
               <div className={"token-info"}>
                 <div className="item-icon">
-                  <img src={getAssetUrl(`tokens/${item.symbol}.svg`)} />
+                  <img alt={item.name} src={getAssetUrl(`tokens/${item.symbol}.svg`)} />
                 </div>
                 <div>{item.symbol}</div>
               </div>
@@ -53,7 +53,7 @@ const TokenSelectorView = (props) => {
           <div className="focus-item d-flex">
             <div className="d-flex">
               <div className="icon">
-                <img src={getAssetUrl(`tokens/${focusItem.symbol}.svg`)} />
+                <img alt={focusItem.name} src={getAssetUrl(`tokens/${focusItem.symbol}.svg`)} />
               </div>
               <div>
                 <div className="focus-name">
