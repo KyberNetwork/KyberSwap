@@ -41,7 +41,7 @@ const LayoutView = (props) => {
         <Route component={props.Header} />
         <section id="content" className={props.langClass}>
           <Switch>
-            <Route exact path={constansts.BASE_HOST + `/swap/:source${listToken}_:dest${listToken}`} component={props.Exchange} />
+            <Route exact path={constansts.BASE_HOST + `/swap/:source${listToken}-:dest${listToken}`} component={props.Exchange} />
             <Route exact path={constansts.BASE_HOST + `/transfer/:source${listToken}`} component={props.Transfer} />       
             <Redirect from={constansts.BASE_HOST + "/transfer"} to={defaultPathTransfer} />
             <Redirect from={constansts.BASE_HOST + "/transfer/*"} to={defaultPathTransfer} />

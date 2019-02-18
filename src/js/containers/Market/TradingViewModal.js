@@ -4,6 +4,7 @@ import { Modal } from "../../components/CommonElement"
 import {TradingView} from "../Market"
 import { getTranslate } from 'react-localize-redux';
 import * as marketActions from "../../actions/marketActions"
+import {addScriptTag} from "../../utils/common"
 
 @connect((store) => {
   return {
@@ -16,6 +17,13 @@ import * as marketActions from "../../actions/marketActions"
 })
 
 export default class TradingViewModal extends React.Component {
+  
+  componentDidMount = () => {
+    addScriptTag("/trading_view/charting_library/charting_library.min.js")
+    addScriptTag("/trading_view/datafeeds/udf/dist/polyfills.js")
+    addScriptTag("/trading_view/datafeeds/udf/dist/bundle.js")
+  }
+
   closeModal = () => {
     this.props.dispatch(marketActions.hideTradingViewChart())
     this.props.analytics.callTrack("trackClickCloseModal", "TradingView Modal");

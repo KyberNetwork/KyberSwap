@@ -72,7 +72,7 @@ export default class MarketTable extends React.Component {
     if(!!marketModal[0]) {
       marketElem = marketModal[0]
       marketElem.addEventListener("scroll", this.handleScroll)
-    }
+    }   
   }
 
   drawChart = (props) => {

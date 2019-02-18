@@ -324,7 +324,7 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.swapToken())
     this.props.ethereum.fetchRateExchange(true)
 
-    var path = constansts.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "_" + this.props.exchange.sourceTokenSymbol.toLowerCase()
+    var path = constansts.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "-" + this.props.exchange.sourceTokenSymbol.toLowerCase()
     path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
     this.props.dispatch(globalActions.goToRoute(path))
     this.props.global.analytics.callTrack("trackClickSwapDestSrc", this.props.exchange.sourceTokenSymbol, this.props.exchange.destTokenSymbol);

@@ -8,6 +8,25 @@ import { toEther } from "../../utils/converter";
 import * as analytics from "../../utils/analytics"
 import { Modal } from "../../components/CommonElement"
 
+
+function compareString(currency) {
+  return function (tokenA, tokenB) {
+    var marketA = tokenA + currency
+    var marketB = tokenB + currency
+    if (marketA < marketB)
+      return -1;
+    if (marketA > marketB)
+      return 1;
+    return 0;
+  }
+}
+
+function compareNum(originalTokens, currency, sortKey) {
+  return function (tokenA, tokenB) {
+    return originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey]
+  }
+}
+
 @connect((store) => {
 
   var searchWord = store.market.configs.searchWord
@@ -43,24 +62,6 @@ import { Modal } from "../../components/CommonElement"
 
     if (sortType[sortKey] && sortType[sortKey] === '-sort-desc') {
       listTokens.reverse()
-    }
-  }
-
-  function compareString(currency) {
-    return function (tokenA, tokenB) {
-      var marketA = tokenA + currency
-      var marketB = tokenB + currency
-      if (marketA < marketB)
-        return -1;
-      if (marketA > marketB)
-        return 1;
-      return 0;
-    }
-  }
-
-  function compareNum(originalTokens, currency, sortKey) {
-    return function (tokenA, tokenB) {
-      return originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey]
     }
   }
 
@@ -106,7 +107,7 @@ export default class Market extends React.Component {
   componentDidMount = () => {
     if (window.kyberBus) {
       window.kyberBus.on("swap.open.market", this.setShowMarket.bind(this));
-    }
+    }   
   }
 
   setShowMarket = () => {

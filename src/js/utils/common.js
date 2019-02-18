@@ -132,3 +132,11 @@ export function getTokenBySymbol(tokens, symbol){
     }
     return false
   }
+
+
+  export function addScriptTag(src){
+    var script = document.createElement("script");
+    script.async = true;
+    script.src = src;
+    document.body.appendChild(script);
+  }
