@@ -569,7 +569,7 @@
     "endpoint": "wss://mainnet.infura.io/ws",
     "averageBlockTime": 15000,
     "networkId": 1,
-    "chainName": "Mainnet",
+    "chainName": "Staging",
     "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
     "tracker": "https://staging-tracker.knstats.com",
     "statEndPoint": "https://mainnet-data.kyber.network"
