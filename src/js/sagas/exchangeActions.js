@@ -1707,22 +1707,25 @@ function* verifyExchange() {
 }
 
 
-export function* fetchExchangeEnable() {
-  var enableRequest = yield call(common.handleRequest, getExchangeEnable)
-  if (enableRequest.status === "success") {
+export function* fetchExchangeEnable() {  
+  try{
     var state = store.getState()
-    var exchange = state.exchange
-    console.log(enableRequest)
-    if (enableRequest.data === true && exchange.errors.exchange_enable === "") {
+    const ethereum = state.connection.ethereum
+    var account = state.account.account
+    var address = account.address
+    var enabled = yield call([ethereum, ethereum.call], "getExchangeEnable", address)
+    if (!enabled.error && !enabled.kyced && (enabled.rich === true || enabled.rich === 'true')){
       var translate = getTranslate(state.locale)
-      var kycLink = "https://account.kyber.network/users/sign_up"
+      var kycLink = "/users/sign_up"
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
         translate("error.exceed_daily_volumn", { link: kycLink }) || "You may want to register with us to have higher trade limits " + kycLink))
+        yield put(actions.setExchangeEnable(false))
+    }else{
+      yield put(actions.setExchangeEnable(true))
     }
-    yield put(actions.setExchangeEnable(enableRequest.data))
-  }
-  if ((enableRequest.status === "timeout") || (enableRequest.status === "fail")) {
-    yield put(actions.setExchangeEnable(false))
+  }catch(e){
+    console.log(e)
+    yield put(actions.setExchangeEnable(true))
   }
 }
 
