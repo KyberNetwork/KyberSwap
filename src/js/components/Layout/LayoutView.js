@@ -29,7 +29,7 @@ function getAllPathToken(listToken){
 
 const LayoutView = (props) => {
   var listToken = getAllPathToken(props.tokens)
-  var defaultPathExchange = constansts.BASE_HOST + "/swap/eth_knc"
+  var defaultPathExchange = constansts.BASE_HOST + "/swap/eth-knc"
   var defaultPathTransfer = constansts.BASE_HOST + "/transfer/eth"
 
   defaultPathExchange = common.getPath(defaultPathExchange, constansts.LIST_PARAMS_SUPPORTED)
@@ -41,7 +41,7 @@ const LayoutView = (props) => {
         <Route component={props.Header} />
         <section id="content" className={props.langClass}>
           <Switch>
-            <Route exact path={constansts.BASE_HOST + `/swap/:source${listToken}_:dest${listToken}`} component={props.Exchange} />
+            <Route exact path={constansts.BASE_HOST + `/swap/:source${listToken}-:dest${listToken}`} component={props.Exchange} />
             <Route exact path={constansts.BASE_HOST + `/transfer/:source${listToken}`} component={props.Transfer} />       
             <Redirect from={constansts.BASE_HOST + "/transfer"} to={defaultPathTransfer} />
             <Redirect from={constansts.BASE_HOST + "/transfer/*"} to={defaultPathTransfer} />

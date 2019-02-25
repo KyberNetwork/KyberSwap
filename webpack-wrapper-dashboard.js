@@ -4,6 +4,7 @@ const CleanPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackShellPlugin = require('./webpack-shell-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin')
 var BLOCKCHAIN_INFO = require("./env")
 const fetch = require("node-fetch");
@@ -34,7 +35,7 @@ var getConfig = env => {
         new webpack.DefinePlugin({
             'env': JSON.stringify(env),
             'process.env': {
-                'logger': env === 'production'?'false': 'true',
+                'logger': env === 'production' || env === 'staging'?'false': 'true',
                 'env': JSON.stringify(env)
             }
         }),
@@ -66,7 +67,7 @@ var getConfig = env => {
                         }
                     }
                 }),
-
+                new OptimizeCSSAssetsPlugin({})
             ]
         },
         output: {
@@ -93,13 +94,13 @@ var getConfig = env => {
                             loader: 'css-loader',
                             options: {
                                 importLoaders: 2,
-                                sourceMap: true
+                                sourceMap: false
                             }
                         },
                         {
                             loader: 'sass-loader',
                             options: {
-                                sourceMap: true
+                                sourceMap: false
                             }
                         }
                     ]

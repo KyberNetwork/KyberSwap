@@ -26,9 +26,6 @@ var now = new Date().getTime()
 let view = `
 #swap-app 
 link rel="stylesheet" href="/swap/${chain}/app.css?v=${now}" type="text/css"
-script src="/trading_view/charting_library/charting_library.min.js"
-script src="/trading_view/datafeeds/udf/dist/polyfills.js"
-script src="/trading_view/datafeeds/udf/dist/bundle.js"
 script src="https://www.google.com/recaptcha/api.js"
 script src="/swap/${chain}/app.min.js?v=${now}"
 `
