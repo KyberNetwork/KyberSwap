@@ -88,7 +88,7 @@ html body{
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 99999999;
+  z-index: 999;
   &.pending{
     background-color: rgba($white, .3);
     h4{
