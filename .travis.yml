@@ -14,22 +14,18 @@ script:
 
 install:
   - npm install
-  - npm run build-ropsten
+  - npm run build-all
   - mkdir upload_ropsten
-  - mv dist/ropsten/index.html upload_ropsten
-  - mv dist/ropsten/*.css upload_ropsten
-  - mv dist/ropsten/*.js upload_ropsten
   - npm run build-staging
   - mkdir upload_staging
-  - mv dist/staging/index.html upload_staging
-  - mv dist/staging/*.css upload_staging
-  - mv dist/staging/*.js upload_staging
+  - source .travis/parse_tag.sh
+  - bash .travis/build_swap.sh
 
 deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
-    bucket: dev-swap.knstats.com
+    bucket: kyber-swap
     region: ap-southeast-1
     acl: public_read
     local_dir: upload_ropsten
@@ -91,3 +87,16 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: kyber-swap
+    region: ap-southeast-1
+    acl: public_read
+    local_dir: dist/$SWAP_ENV
+    upload_dir: $TRAVIS_COMMIT/$SWAP_ENV
+    skip_cleanup: true
+    on:
+      all_branches: true
+      tag: true
+      condition: $TRAVIS_TAG =~ ^deploy.*$
