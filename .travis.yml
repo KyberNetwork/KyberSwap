@@ -92,7 +92,6 @@ deploy:
     secret_access_key: $AWS_SECRET_ACCESS_KEY
     bucket: kyber-swap
     region: ap-southeast-1
-    acl: public_read
     local_dir: dist/$SWAP_ENV
     upload_dir: $TRAVIS_COMMIT/$SWAP_ENV
     skip_cleanup: true
