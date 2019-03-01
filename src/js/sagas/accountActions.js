@@ -118,7 +118,7 @@ export function* importNewAccount(action) {
         //select in transfer
         yield put(transferActions.selectToken(info.destToken, newTokens[info.destToken].address))
       }
-      var path = constants.BASE_HOST + "/swap/" + sourceToken + "_" + destToken
+      var path = constants.BASE_HOST + "/swap/" + sourceToken + "-" + destToken
       path = commonUtils.getPath(path, constants.LIST_PARAMS_SUPPORTED)
       yield put.resolve(goToRoute(path))
 

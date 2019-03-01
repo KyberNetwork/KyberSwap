@@ -1,34 +1,26 @@
 import React from "react"
 import { toT, roundingNumber } from "../../utils/converter"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
-import { getAssetUrl } from "../../utils/common";
+import { getAssetUrl, getTokenBySymbol } from "../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../env"
 
+
+
 const TokenSelectorView = (props) => {
-  var focusItem = props.listItem[props.focusItem]
-  var listShow = {}
-  Object.keys(props.listItem).map((key, i) => {
-    var token = props.listItem[key],
-      matchName = token.name.toLowerCase().includes(props.searchWord),
-      matchSymbol = token.symbol.toLowerCase().includes(props.searchWord)
-    if (matchSymbol || matchName) {
-      listShow[key] = props.listItem[key]
-    }
-  })
+  var focusItem = getTokenBySymbol(props.listToken, props.focusItem)
 
   var getListToken = () => {
     var banToken = props.banToken ? props.banToken : ""
-    return Object.keys(listShow).map((key, i) => {
-      if (key === props.banToken) return
-      if (key !== props.focusItem) {
-        var item = listShow[key]
+    return props.listShowToken.map((item, i) => {
+      if (item.symbol === props.banToken) return
+      if (item.symbol !== props.focusItem) {
         var balance = toT(item.balance, item.decimals)
         return (
-          <div key={key} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item">
+          <div key={item.symbol} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item">
             <div className="d-flex">
               <div className={"token-info"}>
                 <div className="item-icon">
-                  <img src={getAssetUrl(`tokens/${item.symbol}.svg`)} />
+                  <img alt={item.name} src={getAssetUrl(`tokens/${item.symbol}.svg`)} />
                 </div>
                 <div>{item.symbol}</div>
               </div>
@@ -47,7 +39,8 @@ const TokenSelectorView = (props) => {
   }
 
   var priorityTokens = BLOCKCHAIN_INFO.priority_tokens.map(value => {
-    return <span key={value} onClick={(e) => {props.selectItem(e, value, props.listItem[value].address); props.hideTokens(e) }}>
+    var token = getTokenBySymbol(props.listToken, value)
+    return <span key={value} onClick={(e) => {props.selectItem(e, value, token.address); props.hideTokens(e) }}>
       <img src={getAssetUrl(`tokens/${value.toLowerCase()}.svg`)} />
       {value}
     </span>
@@ -60,7 +53,7 @@ const TokenSelectorView = (props) => {
           <div className="focus-item d-flex">
             <div className="d-flex">
               <div className="icon">
-                <img src={getAssetUrl(`tokens/${focusItem.symbol}.svg`)} />
+                <img alt={focusItem.name} src={getAssetUrl(`tokens/${focusItem.symbol}.svg`)} />
               </div>
               <div>
                 <div className="focus-name">
@@ -77,7 +70,7 @@ const TokenSelectorView = (props) => {
             <div className="search-item">
               <input value={props.searchWord} placeholder={props.translate("transaction.try_dai") || `Try "DAI"`} onChange={(e) => props.changeWord(e)} type="text" onFocus={(e) => props.analytics.callTrack("trackSearchToken")}/>
             </div>
-            <div className="list-item custom-scroll">
+            <div className="list-item custom-scroll" onScroll={props.onListScroll}>
               {getListToken()}
             </div>
           </div>

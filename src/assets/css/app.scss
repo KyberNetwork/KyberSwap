@@ -1,4 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600');
+// @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600');
+
+// @font-face{
+//   font-family: 'Montserrat';
+//   font-style: normal;
+//   font-display: swap;
+//   font-weight: normal;
+//   src: url(https://fonts.googleapis.com/css?family=Montserrat:400,500,600);
+// }
+// $font-montserrat: 'Montserrat', sans-serif;
+
 @import '../bower/animate.css/animate.css';
 @import 'settings';
 @import "util";
@@ -42,13 +52,16 @@ $alert-color: #ff5d00;
 @font-face{
   font-family: 'text-security-disc';
   font-style: normal;
+  font-display: swap;
   font-weight: normal;
   src: url(../fonts/text-security-disc.ttf);
 }
 
+
+
 html body{
   color: $black;
-  font-family: $font-montserrat;
+  font-family: 'Montserrat';
 
   h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
     font-family: $font-cera;

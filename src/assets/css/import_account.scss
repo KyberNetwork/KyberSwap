@@ -273,6 +273,14 @@
     font-size: 13px;
     font-weight: 600;
     color: #666666;
+    h3{
+      font-size: inherit;
+      font-family: inherit;
+      line-height: inherit;
+      font-weight: inherit;
+      position: relative;
+      top: 4px;
+    }
   }
 
   .column-block {

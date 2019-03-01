@@ -72,7 +72,7 @@ export default class MarketTable extends React.Component {
     if(!!marketModal[0]) {
       marketElem = marketModal[0]
       marketElem.addEventListener("scroll", this.handleScroll)
-    }
+    }   
   }
 
   drawChart = (props) => {
@@ -277,7 +277,7 @@ export default class MarketTable extends React.Component {
     var key = tokenPair[0]
     return (
       <div className="token-pair">
-        <img src={getAssetUrl(`tokens/${this.props.tokens[key].info.symbol}.svg`)} />
+        <img alt={this.props.tokens[key].info.name} src={getAssetUrl(`tokens/${this.props.tokens[key].info.symbol}.svg`)} />
         {input}
         {this.props.tokens[key].info.isNew ? <div className="new-token">{this.props.translate("market.new_token" || "NEW")}</div>:""}
       </div>

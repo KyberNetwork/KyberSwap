@@ -1330,7 +1330,7 @@ function* getGasConfirm() {
   try {
     gas = yield call([ethereum, ethereum.call], "estimateGas", txObj)
      console.log("gas ne: " + gas)
-    gas = Math.round((gas + 50000) * 120 / 100)
+    gas = Math.round(gas * 120 / 100) + 100000
     //console.log("gas ne: " + gas)
     if (gas > maxGas) {
       gas = maxGas
@@ -1715,7 +1715,7 @@ export function* fetchExchangeEnable() {
     console.log(enableRequest)
     if (enableRequest.data === true && exchange.errors.exchange_enable === "") {
       var translate = getTranslate(state.locale)
-      var kycLink = "https://account.kyber.network/users/sign_up"
+      var kycLink = "/users/sign_up"
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
         translate("error.exceed_daily_volumn", { link: kycLink }) || "You may want to register with us to have higher trade limits " + kycLink))
     }
