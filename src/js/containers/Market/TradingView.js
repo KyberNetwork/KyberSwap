@@ -86,6 +86,7 @@ export default class TradingView extends React.Component {
 			interval: this.props.interval,
 			container_id: this.props.containerId,
 			library_path: this.props.libraryPath,
+			resolution: 600,
 			// timeframe: this.props.timeframe,
 			// time_frames: this.props.time_frames,
 			locale: this.getLanguageFromURL() || this.props.locale,
