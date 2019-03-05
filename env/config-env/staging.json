@@ -571,6 +571,6 @@
     "networkId": 1,
     "chainName": "Staging",
     "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
-    "tracker": "https://staging-tracker.knstats.com",
+    "tracker": "https://staging-api.knstats.com",
     "statEndPoint": "https://mainnet-data.kyber.network"
 }
