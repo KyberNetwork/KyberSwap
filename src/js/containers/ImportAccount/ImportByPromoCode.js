@@ -21,7 +21,7 @@ export default class ImportByPromoCode extends React.Component {
         {!this.props.isOnMobile && (
           <div className="import-account__block" onClick={this.openModal.bind(this)}>
             <div className="import-account__icon promo-code"></div>
-            <div className="import-account__name">{this.props.translate("landing_page.promo_code") || "PROMO CODE"}</div>
+            <div className="import-account__name"><h3>{this.props.translate("landing_page.promo_code") || "PROMO CODE"}</h3></div>
           </div>
         )}
 

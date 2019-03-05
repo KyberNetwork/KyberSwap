@@ -1330,7 +1330,7 @@ function* getGasConfirm() {
   try {
     gas = yield call([ethereum, ethereum.call], "estimateGas", txObj)
      console.log("gas ne: " + gas)
-    gas = Math.round((gas + 50000) * 120 / 100)
+    gas = Math.round(gas * 120 / 100) + 100000
     //console.log("gas ne: " + gas)
     if (gas > maxGas) {
       gas = maxGas
