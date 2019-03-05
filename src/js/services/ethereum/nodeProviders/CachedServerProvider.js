@@ -189,21 +189,17 @@ export default class CachedServerProvider extends React.Component {
 
     getExchangeEnable(address) {
         return new Promise((resolve, rejected) => {
-            this.timeout(this.maxRequestTime, fetch(BLOCKCHAIN_INFO.statEndPoint + '/richguy/' + address))
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/users?address=' + address))
             
                 .then((response) => {
                     return response.json()
                 })
                 .then((result) => {
-                    if (result.success) {
-                        resolve(result.data)
-                    } else {
-                        resolve(false)
-                    }
+                    resolve(result)                    
                 })
                 .catch((err) => {
                     console.log(err)
-                    resolve(false)
+                    reject(err)
                 })
         })
     }
@@ -315,24 +311,16 @@ export default class CachedServerProvider extends React.Component {
 
     getUserMaxCap(address) {
         return new Promise((resolve, rejected) => {
-            this.timeout(this.maxRequestTime,  fetch(BLOCKCHAIN_INFO.statEndPoint + '/cap-by-address/' + address))
-            .then((response) => {
-                return response.json()
-            })
+            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/users?address=' + address))
+                .then((response) => {
+                    return response.json()
+                })
                 .then((result) => {
-                    if (result.data) {
-                        var val = parseFloat(result.data);
-                        if (isNaN(val)) {
-                            rejected(new Error("Cannot parse data user cap"))
-                        } else {
-                            resolve(result)
-                        }
-                    } else {
-                        rejected(new Error("Cannot parse data user cap"))
-                    }
+                    resolve(result)                    
                 })
                 .catch((err) => {
-                    rejected(err)
+                    console.log(err)
+                    reject(err)
                 })
         })
     }

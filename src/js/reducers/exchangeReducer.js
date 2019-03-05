@@ -535,7 +535,7 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.SET_EXCHANGE_ENABLE":{
-      if(!action.payload){
+      if(action.payload){
         newState.errors.exchange_enable = ""
       }else{
         newState.errors.exchange_enable = "error.exchange_enable"
