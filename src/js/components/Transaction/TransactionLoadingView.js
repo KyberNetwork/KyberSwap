@@ -4,6 +4,7 @@ import BLOCKCHAIN_INFO from "../../../../env"
 import ReactTooltip from 'react-tooltip'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { Link } from 'react-router-dom'
+import {getAssetUrl} from "../../utils/common"
 
 const TransactionLoadingView = (props) => {
   var isBroadcasting = props.broadcasting
@@ -158,6 +159,16 @@ const TransactionLoadingView = (props) => {
                 </CopyToClipboard>
               </a>
               <ReactTooltip getContent={[() => getTooltipCopy()]} place="right" id="copy-tx-tip" type="light" />
+            </div>
+            <div className="tx-explorer">
+              <a href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank" >
+                <img  src={getAssetUrl(`utils/etherscan_explorer.svg`)}/>
+                <span>{props.translate("transaction.etherscan_explorer") || "View on etherscan"}</span>
+              </a>
+              <a href={BLOCKCHAIN_INFO.enjinx + 'eth/transaction/' + props.txHash} target="_blank" >
+                <img  src={getAssetUrl(`utils/kyber_explorer.svg`)}/>
+                <span>{props.translate("transaction.kyber_explorer") || "View on kyber.enjinx"}</span>
+              </a>
             </div>
           </div>
           <ul class="broadcast-steps">

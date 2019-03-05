@@ -107,7 +107,7 @@ ul.broadcast-steps {
       align-items: center;
       margin-top: 10px;
       color: #666;
-      font-size: 16px;
+      font-size: 13px;
     }
     
     .cssload-container{
@@ -152,7 +152,7 @@ ul.broadcast-steps {
     }
     &.success {
       text-align: center;
-      margin-top: 20px;
+      // margin-top: 20px;
       font-size: 20px;
       font-weight: normal;
       .title{
@@ -175,7 +175,7 @@ ul.broadcast-steps {
     &.failed {
       h4 {
         cursor: pointer;
-        margin-top: 10px;
+        // margin-top: 10px;
         display: inline-block;
         border-bottom: 1px solid #F1637D;
         color: #F1637D;
@@ -244,7 +244,7 @@ ul.broadcast-steps {
 
 .tx-actions{
   text-align: center;
-  padding: 50px 48px;
+  padding: 30px 48px 60px 48px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -352,5 +352,31 @@ ul.broadcast-steps {
   color: #666;
   &:not(.loading){
     list-style-type: disc;
+  }
+}
+
+
+.tx-explorer{  
+  display: flex;
+  justify-content: space-between;
+
+  width: 350px;
+  margin: 0 auto;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  @include screen-max-width(medium){
+    width: 100%;
+  }
+  a{
+    color: inherit !important;
+    font-size: 10px;
+    padding: 5px 10px;
+    background-color: #F1F3F8;
+    border-radius: 20px;
+    /* margin-left: 25px; */
+    font-weight: 500;
+    span{
+      margin-left: 6px;
+    }
   }
 }
