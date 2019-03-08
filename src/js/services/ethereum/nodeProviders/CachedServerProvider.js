@@ -199,7 +199,7 @@ export default class CachedServerProvider extends React.Component {
                 })
                 .catch((err) => {
                     console.log(err)
-                    reject(err)
+                    rejected(err)
                 })
         })
     }
@@ -320,7 +320,7 @@ export default class CachedServerProvider extends React.Component {
                 })
                 .catch((err) => {
                     console.log(err)
-                    reject(err)
+                    rejected(err)
                 })
         })
     }

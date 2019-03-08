@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
   var currentLang = common.getActiveLanguage(langs)
   const exchange = store.exchange
   const transfer = store.transfer
-  var exchangeLink = constansts.BASE_HOST + "/swap/" + exchange.sourceTokenSymbol.toLowerCase() + "_" + exchange.destTokenSymbol.toLowerCase()
+  var exchangeLink = constansts.BASE_HOST + "/swap/" + exchange.sourceTokenSymbol.toLowerCase() + "-" + exchange.destTokenSymbol.toLowerCase()
   var transferLink = constansts.BASE_HOST + "/transfer/" + transfer.tokenSymbol.toLowerCase()
 
   exchangeLink = common.getPath(exchangeLink, constansts.LIST_PARAMS_SUPPORTED)
