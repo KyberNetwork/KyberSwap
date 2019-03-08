@@ -10,6 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackShellPlugin = require('./webpack-shell-plugin');
 //const ThemesGeneratorPlugin = require('themes-switch/ThemesGeneratorPlugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 
 //const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -43,17 +44,17 @@ var getConfig = env => {
         }),   
         new CleanPlugin([outputPath + '/app.*', outputPath + '/libary.*']),
         new webpack.DefinePlugin({
-            'env': JSON.stringify(env.chain),
+            'env': JSON.stringify(env),
             'process.env': {
-                'logger': 'true',
-                'env': JSON.stringify(env.chain)
+                'logger': env === 'production' || env === 'staging'?'false': 'true',
+                'env': JSON.stringify(env)
             }
         })
     ];
     return {
         context: path.join(__dirname, 'src'),
-        devtool: env !== 'production' ? 'inline-sourcemap' : false,
-        mode: env !== 'production' ? 'development' : 'production',
+        devtool: 'false',
+        mode: 'production',
         entry: entry,
         optimization: {
             // splitChunks: {
@@ -70,6 +71,7 @@ var getConfig = env => {
                         }
                     }
                 }),
+                new OptimizeCSSAssetsPlugin({})
 
             ]
         },

@@ -120,7 +120,9 @@
     "still_proceed_if_rate_goes_down": "Vẫn tiếp tục nếu tỷ giá ${pair} giảm xuống",
     "gas_fee": "Phí GAS",
     "any_rate": "Any-rate",
-    "custom": "Tùy chỉnh"
+    "custom": "Tùy chỉnh",
+    "etherscan_explorer": "Xem trên etherscan",
+    "kyber_explorer": "Xem trên kyber.enjinx"
   },
   "modal": {
     "enter_password": "Nhập mật khẩu",

@@ -562,6 +562,7 @@
         }
     },
     "ethScanUrl": "https://etherscan.io/",
+    "enjinx": "https://kyber.enjinx.io/",
     "reserve": "0x2c5a182d280eeb5824377b98cd74871f78d6b8bc",
     "network": "0xc14f34233071543e979f6a79aa272b0ab1b4947d",
     "wrapper": "0x6172AFC8c00c46E0D07ce3AF203828198194620a",
@@ -571,6 +572,6 @@
     "networkId": 1,
     "chainName": "Staging",
     "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
-    "tracker": "https://staging-tracker.knstats.com",
+    "tracker": "https://staging-api.knstats.com",
     "statEndPoint": "https://mainnet-data.kyber.network"
 }

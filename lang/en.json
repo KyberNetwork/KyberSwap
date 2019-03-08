@@ -123,7 +123,9 @@
     "still_proceed_if_rate_goes_down": "Still proceed if ${pair} rate goes down by",
     "gas_fee": "GAS fee",
     "any_rate": "Any-rate",
-    "custom": "Custom"
+    "custom": "Custom",
+    "etherscan_explorer": "View on etherscan",
+    "kyber_explorer": "View on kyber.enjinx"
   },
   "modal": {
     "enter_password": "Enter Password",

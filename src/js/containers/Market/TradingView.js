@@ -85,7 +85,7 @@ export default class TradingView extends React.Component {
 			datafeed: feeder,
 			interval: this.props.interval,
 			container_id: this.props.containerId,
-			library_path: this.props.libraryPath,
+			library_path: this.props.libraryPath,			
 			// timeframe: this.props.timeframe,
 			// time_frames: this.props.time_frames,
 			locale: this.getLanguageFromURL() || this.props.locale,
@@ -130,7 +130,7 @@ export default class TradingView extends React.Component {
 		// } catch (e) {
 		// 	console.log(e)
 		// }
-
+		
 		return (
 			<div style={{ height: 600, padding: 20, marginTop: 10 }}
 				id={this.props.containerId}

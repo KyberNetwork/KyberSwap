@@ -155,9 +155,9 @@ export function* importNewAccount(action) {
     //track login wallet
     global.analytics.callTrack("loginWallet", type)
 
-    if (type !== "promo"){
-      yield put(exchangeActions.fetchExchangeEnable())
-    }
+    // if (type !== "promo"){
+    //   yield put(exchangeActions.fetchExchangeEnable())
+    // }
 
     if (screen === "exchange"){
       yield put(closeImportAccountExchange())
@@ -165,13 +165,13 @@ export function* importNewAccount(action) {
       yield put(closeImportAccountTransfer())
     }
 
-    yield put(fetchExchangeEnable())
+    // yield put(fetchExchangeEnable())
 
     var maxCapOneExchange = "infinity"
     try {
       var result = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
-      if (result.success && (!result.kyc || result.kyc === "false")) {
-        maxCapOneExchange = result.data
+      if (!result.error && !result.kyced) {
+        maxCapOneExchange = result.cap
       }
     } catch(e) {
       console.log(e)

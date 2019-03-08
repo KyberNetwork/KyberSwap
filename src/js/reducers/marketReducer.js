@@ -318,9 +318,9 @@ const market = (state = initMarket, action) => {
             var midlePrice = (buyPrice + sellPrice) / 2
             var price24h = token.rate
             if (midlePrice > price24h){
-              change = converters.calculatePercent(midlePrice, price24h)
-            }else{
               change = converters.calculatePercent(price24h, midlePrice) * -1
+            }else{
+              change = converters.calculatePercent(price24h, midlePrice)
             }
           }
         }
