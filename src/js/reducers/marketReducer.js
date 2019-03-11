@@ -317,15 +317,14 @@ const market = (state = initMarket, action) => {
           }else{
             var midlePrice = (buyPrice + sellPrice) / 2
             var price24h = token.rate
-            if (midlePrice > price24h){
-              change = converters.calculatePercent(price24h, midlePrice) * -1
+            if (price24h == 0){
+              change = -9999
             }else{
-              change = converters.calculatePercent(price24h, midlePrice)
+              change = converters.percentChange(midlePrice, price24h)
             }
           }
         }
 
-        // newTokens[key].USD.change = newTokens[key].ETH.change = change
         var rawChangeUSD = token.change_24h
         
         var changeUSD = parseFloat(rawChangeUSD)
