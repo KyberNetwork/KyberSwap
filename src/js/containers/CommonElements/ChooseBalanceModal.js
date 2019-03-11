@@ -97,11 +97,22 @@ export default class ChooseBalanceModal extends React.Component {
                     </DropdownTrigger>
                     <DropdownContent>
                         <div className="select-item">
-                            <div className="list-item custom-scroll">
-                                <div onClick={(e) => this.selectBalance(25)}>Swap 25% balance</div>
-                                <div onClick={(e) => this.selectBalance(50)}>Swap 50% balance</div>
-                                <div onClick={(e) => this.selectBalance(100)}>Swap 100% balance</div>
-                            </div>
+                            {this.props.typeTx === "swap" && (
+                                <div className="list-item custom-scroll">
+                                    <div onClick={(e) => this.selectBalance(25)}>Swap 25% balance</div>
+                                    <div onClick={(e) => this.selectBalance(50)}>Swap 50% balance</div>
+                                    <div onClick={(e) => this.selectBalance(100)}>Swap 100% balance</div>
+                                </div>
+                            )}
+
+                            {this.props.typeTx === "transfer" && (
+                                <div className="list-item custom-scroll">
+                                    <div onClick={(e) => this.selectBalance(25)}>Transfer 25% balance</div>
+                                    <div onClick={(e) => this.selectBalance(50)}>Transfer 50% balance</div>
+                                    <div onClick={(e) => this.selectBalance(100)}>Transfer 100% balance</div>
+                                </div>
+                            )}
+                            
                         </div>
                     </DropdownContent>
                 </Dropdown>
