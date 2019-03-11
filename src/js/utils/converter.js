@@ -514,6 +514,13 @@ export function calculatePercent(numerator, denumerator){
   return roundPercent
 }
 
+export function percentChange(newPrice, oldPrice){
+  if (oldPrice === 0) return 0
+  var percent =  ((newPrice - oldPrice) / oldPrice) * 100
+  var roundPercent = Math.round(percent * 10) / 10
+  return roundPercent
+}
+
 export function formatNumber(number, round = false) {
   var format = {
     decimalSeparator: '.',
