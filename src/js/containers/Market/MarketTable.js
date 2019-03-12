@@ -81,29 +81,21 @@ export default class MarketTable extends React.Component {
     var point = []
     var labels = []
     var input = props.value ? props.value : props.last_7d
-    var dataLength = 28
 
     if (Array.isArray(input)) {
-      if (input.length === 29) {
-        input.shift()
-      }
-      var addLength = 0
-      var inputLength = input.length
-      if (inputLength < dataLength) {
-        addLength = dataLength - inputLength
-        for (let index = 0; index < addLength; index++) {
-          point.push(0)
+      var maxValue
+      if (input.length > 0) {
+        var maxValue = input[0]
+        input.map((item, index) => {
           labels.push(index)
+          if (item > maxValue) {
+            maxValue = item
+          }
+        })
+        if (maxValue !== 0) {
+          point = input
         }
       }
-      var maxValue = input[0]
-      input.map((item, index) => {
-        labels.push(index + addLength)
-        point.push(item)
-        if (item > maxValue) {
-          maxValue = item
-        }
-      })
 
       var yOption = {
         display: false,

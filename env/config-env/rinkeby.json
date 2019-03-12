@@ -25,45 +25,52 @@
             "name": "Ethereum",
             "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "decimals": 18,
-            "cg_id": "ethereum"
+            "cg_id": "ethereum",
+            "alias_symbol": ""
         },
         "KNC": {
             "symbol": "KNC",
             "name": "KyberNetwork",
             "address": "0x55080ac40700bde5725d8a87f48a01e192f660af",
             "decimals": 18,
-            "cg_id": "kyber-network"
+            "cg_id": "kyber-network",
+            "alias_symbol": ""
         },
         "OMG": {
             "symbol": "OMG",
             "name": "OmiseGO",
             "address": "0x659c4206b2ee8cc00af837cdda132eb30fa58df8",
             "decimals": 18,
-            "cg_id": "omisego"
+            "cg_id": "omisego",
+            "alias_symbol": ""
         },
         "SALT": {
             "symbol": "SALT",
             "name": "Salt",
             "address": "0x6b1224743cc0e5994d1b35f2b90a1a12a51044ac",
             "decimals": 8,
-            "cg_id": "salt"
+            "cg_id": "salt",
+            "alias_symbol": ""
         },
         "ZIL": {
             "symbol": "ZIL",
             "name": "Zilliqa",
             "address": "0xa8787f4fab0467b80d2f57722b1bc8dde707630e",
             "decimals": 12,
-            "cg_id": "zilliqa"
+            "cg_id": "zilliqa",
+            "alias_symbol": ""
         },
         "MANA": {
             "symbol": "MANA",
             "name": "Mana",
             "address": "0xfea1141e988c1919a9b04b262b92f24adcdd8e9d",
             "decimals": 18,
-            "cg_id": "decentraland"
+            "cg_id": "decentraland",
+            "alias_symbol": ""
         }
     },
     "ethScanUrl": "https://rinkeby.etherscan.io/",
+    "enjinx": "https://kyber.enjinx.io/",
     "network": "0x39CC6802cF1625C30548B57D885932CB381EB4a4",
     "wrapper": "0xa4c7c9a74aeda3ffb9737a4fc1895c2cdebd42b8",
     "trade_topic": "0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",

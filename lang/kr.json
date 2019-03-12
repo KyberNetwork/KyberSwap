@@ -122,7 +122,9 @@
     "still_proceed_if_rate_goes_down": "${pair} 가격이 바뀌어도 거래를 진행합니다",
     "gas_fee": "가스 비용",
     "any_rate": "상관없이 진행",
-    "custom": "사용자 지정"
+    "custom": "사용자 지정",
+    "etherscan_explorer": "Etherscan에서 확인",
+    "kyber_explorer": "Kyber.enjix에서 확인"
   },
   "modal": {
     "enter_password": "비밀번호 입력",
