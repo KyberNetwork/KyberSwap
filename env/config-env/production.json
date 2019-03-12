@@ -14,16 +14,8 @@
                 "type": "prune"
             },
             {
-                "endPoint": "https://semi-node.kyber.network",
-                "type": "prune"
-            },
-            {
                 "endPoint": "https://optionally-pleasant-horse.quiknode.io/9d72a0f8-0d8b-4e4c-aef1-eb529e05cdb9/V1ZsC_tuomfETYotFo4KKA==/",
                 "type": "prune"
-            },
-            {
-                "endPoint": "https://api.mycryptoapi.com/eth",
-                "type": "none_prune"
             }
         ],
         "ws": "wss://mainnet.infura.io/ws"
