@@ -23,6 +23,15 @@ const ImportAccountView = (props) => {
           </h1>
         )}
 
+        {!props.isAgreedTermOfService && (
+          <div className="import-account__title--inactive">
+            <div className="import-account__title--inactive--seperator"></div>
+            <div className="import-account__title--inactive--content">
+              { props.translate("address.or_connect_with") || "Or Connect with"}
+            </div>
+          </div>
+        )}
+
         <div className={`import-account__content ${isOnMobile ? ' import-account__content--mobile' : ''}`}>
           {!isOnMobile &&
           <div className={`import-account__item ${importInactiveClass}`}>

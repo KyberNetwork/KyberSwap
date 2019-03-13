@@ -82,7 +82,7 @@ export default class ImportAccount extends React.Component {
               {this.props.tradeType === "swap" ? this.props.translate("transaction.swap_now") || "Swap Now"
               : this.props.translate("transaction.transfer_now") || "Transfer Now"}
             </div>
-            <TermAndServices tradeType={this.props.tradeType}/>
+            {/* <TermAndServices tradeType={this.props.tradeType}/> */}
           </div>
         }
         {!this.props.isOnDAPP && <ImportAccountView

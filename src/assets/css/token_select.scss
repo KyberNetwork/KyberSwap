@@ -3,7 +3,7 @@
 .exchange-content {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   position: relative;
   max-width: 1050px;
   margin: 0 auto;
@@ -62,7 +62,7 @@
       line-height: 34px;
       @include screen-min-width(large){
         position: relative;
-        top: 12px;
+        top: 40px;
         margin: 0 12px;
       }
       @include screen-max-width(large){

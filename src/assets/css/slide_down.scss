@@ -18,13 +18,13 @@
         transition: background-color .3s;
       }
 
-      .slide-arrow {
-        width: 12px;
-        height: 12px;
-        background: url($image-path + 'arrow-down-black.svg') center no-repeat;
-        background-size: contain;
-        transition: all 0.3s;
-      }
+      // .slide-arrow {
+      //   width: 12px;
+      //   height: 12px;
+      //   background: url($image-path + 'arrow-down-black.svg') center no-repeat;
+      //   background-size: contain;
+      //   transition: all 0.3s;
+      // }
 
       &--align-right {
         justify-content: flex-end;

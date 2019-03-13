@@ -26,7 +26,8 @@
     "connect_your_wallet_to_swap": "Kết nối ví của bạn để trao đổi",
     "connect_your_wallet_to_transfer": "Kết nối ví của bạn để chuyển token",
     "your_wallet": "Ví của bạn",
-    "register_beta": "Register Beta"
+    "register_beta": "Register Beta",
+    "or_connect_with": "Or Connect with"
   },
   "transaction": {
     "wallet": "Ví",

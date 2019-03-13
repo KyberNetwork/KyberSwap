@@ -7,7 +7,7 @@ import { TransactionConfig } from "../../components/Transaction"
 import { ExchangeBodyLayout } from "../../components/Exchange"
 import { AdvanceConfigLayout, MinConversionRate } from "../../components/TransactionCommon"
 import { TransactionLoading, Token, ChooseBalanceModal } from "../CommonElements"
-import { TokenSelector, AccountBalance } from "../TransactionCommon"
+import { TokenSelector, AccountBalance, TopBalance } from "../TransactionCommon"
 import * as validators from "../../utils/validators"
 import * as common from "../../utils/common"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
@@ -336,17 +336,17 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.analyzeError(ethereum, exchange.txHash))
   }
 
-  toggleBalanceContent = () => {
-    if (this.props.exchange.isBalanceActive) {
-      this.props.global.analytics.callTrack("trackClickHideAccountBalance", "Swap")
-    } else {
-      this.props.global.analytics.callTrack("trackClickShowAccountBalance", "Swap")
-    }
-    this.props.dispatch(exchangeActions.toggleBalanceContent())    
-    if(!this.props.global.isOnMobile){
-      this.props.dispatch(exchangeActions.toggleAdvanceContent())    
-    }
-  }
+  // toggleBalanceContent = () => {
+  //   if (this.props.exchange.isBalanceActive) {
+  //     this.props.global.analytics.callTrack("trackClickHideAccountBalance", "Swap")
+  //   } else {
+  //     this.props.global.analytics.callTrack("trackClickShowAccountBalance", "Swap")
+  //   }
+  //   this.props.dispatch(exchangeActions.toggleBalanceContent())    
+  //   if(!this.props.global.isOnMobile){
+  //     this.props.dispatch(exchangeActions.toggleAdvanceContent())    
+  //   }
+  // }
 
   toggleAdvanceContent = () => {
     if (this.props.exchange.isAdvanceActive) {
@@ -355,10 +355,14 @@ class ExchangeBody extends React.Component {
       this.props.global.analytics.callTrack("trackClickShowAdvanceOption", "Swap")
     }
     this.props.dispatch(exchangeActions.toggleAdvanceContent())    
-    if(!this.props.global.isOnMobile){
-      this.props.dispatch(exchangeActions.toggleBalanceContent())    
-    }
+    // if(!this.props.global.isOnMobile){
+    //   this.props.dispatch(exchangeActions.toggleBalanceContent())    
+    // }
   }
+
+  // closeAdvance = () => {
+
+  // }
 
   specifyGasPrice = (value) => {
     this.props.dispatch(exchangeActions.specifyGasPrice(value + ""))
@@ -413,7 +417,7 @@ class ExchangeBody extends React.Component {
         gasPriceSuggest={this.props.exchange.gasPriceSuggest}
         translate={this.props.translate}
         isAdvanceActive = {this.props.exchange.isAdvanceActive}
-        toggleAdvanceContent={this.toggleAdvanceContent}
+        // toggleAdvanceContent={this.toggleAdvanceContent}
         minConversionRate={minConversionRate}
         type="exchange"
         maxGasPrice = {this.props.exchange.maxGasPrice}
@@ -427,8 +431,8 @@ class ExchangeBody extends React.Component {
         chooseToken={this.chooseToken}
         sourceActive={this.props.exchange.sourceTokenSymbol}
         destTokenSymbol={this.props.exchange.destTokenSymbol}
-        onToggleBalanceContent={this.toggleBalanceContent}
-        isBalanceActive = {this.props.exchange.isBalanceActive}
+        // onToggleBalanceContent={this.toggleBalanceContent}
+        isBalanceActive = {this.props.exchange.isAdvanceActive}
         walletName = {this.props.account.walletName}
         tradeType = "swap"
         isOnDAPP = {this.props.account.isOnDAPP}
@@ -574,6 +578,10 @@ class ExchangeBody extends React.Component {
       
       />
     )
+
+    var topBalance = <TopBalance  showMore = {this.toggleAdvanceContent}
+                                  selectToken = {this.chooseToken}
+                                  activeSymbol = {this.props.exchange.sourceTokenSymbol}/>
     return (
       <ExchangeBodyLayout
         chooseToken={this.chooseToken}
@@ -607,13 +615,16 @@ class ExchangeBody extends React.Component {
         isFixedDestToken = {isFixedDestToken}
         acceptTerm={this.acceptTerm}
 
-        isBalanceActive = {this.props.exchange.isBalanceActive}
-        isAdvanceActive = {this.props.exchange.isAdvanceActive}
+        // isBalanceActive = {this.props.exchange.isBalanceActive}
+        isAdvanceActive = {this.props.exchange.isAdvanceActive}        
+        toggleAdvanceContent = {this.toggleAdvanceContent}
 
         rateToken = {rateToken}
 
         defaultShowTooltip = {this.state.defaultShowTooltip}
         setDefaulTooltip = {this.setDefaulTooltip}
+
+        topBalance = {topBalance}
 
         isOnDAPP = {this.props.account.isOnDAPP}
       />

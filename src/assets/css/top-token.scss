@@ -1,0 +1,27 @@
+
+
+.top-token{
+    padding: 10px 20px;
+    &-content{
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+    }
+    &-item{
+        cursor: pointer;
+        &.active{
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        &__symbol{
+            text-decoration: underline;
+        }
+    }
+    &-more{
+        font-size: 14px;
+        color: #ef8102;
+        cursor: pointer;
+        margin-top: 5px;
+        display: inline-block;
+    }
+}

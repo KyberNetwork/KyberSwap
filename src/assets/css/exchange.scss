@@ -99,17 +99,18 @@
 
   &-container {
     max-width: 1050px;
-    display: flex;
+    // display: flex;
     // justify-content: space-between;
-    justify-content: flex-start;
+    // justify-content: flex-start;
     margin: 15px auto 0;
-    padding-bottom: 20px;
-    min-height: 40px;
+    // padding-bottom: 20px;
+    // min-height: 40px;
     &__left {
       
       @include screen-min-width(large){
-        width: calc(50% - 29px);
-        margin-left: 35px;
+        // width: calc(50% - 29px);
+        // margin-left: 35px;
+        float: right;
       }
       @include screen-max-width(large){
         margin-left: 20px;
@@ -234,12 +235,14 @@
   
   font-size: 13px;
 
+ 
   @include screen-min-width(large){
     padding: 0 1rem;
   }
   .slide-down__trigger-container{
     @include screen-min-width(large){
-      padding: 20px 20px 0 20px;
+      // padding: 20px 20px 0 20px;
+      padding-bottom: 20px;
     } 
   }
   .slide-down__content{
@@ -297,10 +300,27 @@
 
   &__content {
     display: flex;
+    position: relative;
+    margin-bottom: 20px;
     // border-bottom: 1px solid rgba(204, 204, 204, 0.36);
-    @include screen-min-width(large){
-      padding: 0 15px 10px;
+
+    .advance-close{
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      z-index: 2;
+      padding: 10px;
+      cursor: pointer;
+      &_wrapper{
+        background-image: url("../img/v3/Close-3.svg");
+        width: 16px;
+        height: 16px;
+      }
     }
+
+    // @include screen-min-width(large){
+    //   padding: 0 15px 10px;
+    // }
     
     // margin: 0 35px 30px;
     &--open {
@@ -397,8 +417,8 @@
 
 .exchange-button {
   text-align: center;
-  margin-bottom: 10px;
-  margin-top: 25px;
+  margin-bottom: 40px;
+  margin-top: 10px;
   // position: relative;
   // z-index: 1;
   &__button {

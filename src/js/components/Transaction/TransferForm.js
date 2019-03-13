@@ -134,9 +134,9 @@ const TransferForm = (props) => {
                             autoComplete="off"
                           />
                         </div>
-                        {props.account !== false && (
+                        {/* {props.account !== false && (
                           <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal`}>{props.transferBalance}</div>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </div>
