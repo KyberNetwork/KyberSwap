@@ -15,10 +15,16 @@ script:
 install:
   - npm install
   - npm run build-ropsten
-  - mkdir upload
+  - mkdir upload_ropsten
   - mv dist/ropsten/index.html upload
   - mv dist/ropsten/*.css upload
   - mv dist/ropsten/*.js upload
+  - npm run build-staging
+  - mkdir upload_staging
+  - mv dist/staging/index.html upload
+  - mv dist/staging/*.css upload
+  - mv dist/staging/*.js upload
+  
 
 deploy:
   - provider: s3
@@ -27,7 +33,7 @@ deploy:
     bucket: dev-swap.knstats.com
     region: ap-southeast-1
     acl: public_read
-    local_dir: upload
+    local_dir: upload_ropsten
     skip_cleanup: true
     on:
       branch: develop
@@ -37,7 +43,7 @@ deploy:
     bucket: dev-swap.knstats.com
     region: ap-southeast-1
     acl: public_read
-    local_dir: upload
+    local_dir: upload_ropsten
     upload-dir: swap
     skip_cleanup: true
     on:
@@ -48,8 +54,41 @@ deploy:
     bucket: dev-swap.knstats.com
     region: ap-southeast-1
     acl: public_read
-    local_dir: upload
+    local_dir: upload_ropsten
     upload-dir: transfer
     skip_cleanup: true
     on:
       branch: develop
+
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: staging-swap.knstats.com
+    region: ap-southeast-1
+    acl: public_read
+    local_dir: upload_staging
+    skip_cleanup: true
+    on:
+      branch: master
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: staging-swap.knstats.com
+    region: ap-southeast-1
+    acl: public_read
+    local_dir: upload_staging
+    upload-dir: swap
+    skip_cleanup: true
+    on:
+      branch: master
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: staging-swap.knstats.com
+    region: ap-southeast-1
+    acl: public_read
+    local_dir: upload_staging
+    upload-dir: transfer
+    skip_cleanup: true
+    on:
+      branch: master
