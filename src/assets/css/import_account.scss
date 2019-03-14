@@ -21,16 +21,20 @@
       margin-bottom: 25px;
       font-size: 13px;
       &--seperator{
-        width: 100%;
-        border-bottom: 1px solid;
+        width: calc(100% - 35px);
+        margin: 0 auto;
+        border-bottom: 1px solid #e1e4eb;
       }
       &--content{
-        width: 150px;
+        width: 230px;
         position: relative;
         top: -10px;
         z-index: 1;
-        background-color: white;
+        background-color:#f1f5fb;
         margin: 0 auto;
+        text-align: center;
+        color: #9ea1aa;
+        font-weight: 500;
       }
     }
   }
