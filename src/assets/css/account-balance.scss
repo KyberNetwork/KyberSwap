@@ -227,7 +227,7 @@
     transition: all 0.3s;
   }
 
-  @media screen and (max-width: 900px) {
+  @include screen-max-width(large) {
     // &__content {
     //   padding-left: 20px;
     // }
@@ -265,6 +265,7 @@
       width: 50%;
       margin: 0;
       padding: 7px 0;
+      font-size: 14px;
     }
   }
 }

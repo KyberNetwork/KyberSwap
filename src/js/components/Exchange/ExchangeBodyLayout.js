@@ -253,6 +253,7 @@ const ExchangeBodyLayout = (props) => {
         {props.account !== false && (
           <AdvanceAccount
             isOnDAPP={props.isOnDAPP}
+            isOnMobile={props.global.isOnMobile}
             clearSession={props.clearSession}
             getAccountTypeHtml={getAccountTypeHtml}            
             toggleAdvanceContent = {props.toggleAdvanceContent}

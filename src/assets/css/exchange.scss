@@ -270,7 +270,7 @@
       position: relative;
       height: 20px;
       margin: 0 35px;
-      border-top: 1px solid #e1e4eb;
+      // border-top: 1px solid #e1e4eb;
     }
 
     .reimport-msg {
@@ -287,6 +287,7 @@
       background: #eff4fa;
       cursor: pointer;
       padding: 7px 0;
+      text-decoration: underline;
       // z-index: 1;
     }
   }
@@ -304,6 +305,10 @@
     margin-bottom: 20px;
     // border-bottom: 1px solid rgba(204, 204, 204, 0.36);
 
+    @include screen-max-width(large){
+      background-color: #f6f7fa;
+    }
+
     .advance-close{
       position: absolute;
       right: 5px;
@@ -311,6 +316,10 @@
       z-index: 2;
       padding: 10px;
       cursor: pointer;
+      @include screen-max-width(large){
+        right: 0px;
+        top: -5px;
+      }
       &_wrapper{
         background-image: url("../img/v3/Close-3.svg");
         width: 16px;
@@ -335,7 +344,8 @@
       &.exchange-account{
         &__balance, &__adv-config {
           @include screen-max-width(large){
-            padding: 15px 20px 15px;
+            padding: 5px;
+            background-color: #f6f7fa;
           }
         }
       }
@@ -377,7 +387,7 @@
         padding: 20px 1rem;
       }
 
-      background-color: #eff4fa;
+      // background-color: #eff4fa;
       // border-bottom: 1px solid #ddd;
       border-radius: 0;
       &--open{
@@ -399,6 +409,7 @@
     &__adv-config {
       padding: 1rem;
       width: 100%;
+      margin-top: 20px;
       // margin-top: 20px;
       // padding: 0 10px 0 42px;
     }
