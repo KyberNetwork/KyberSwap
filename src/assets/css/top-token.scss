@@ -2,6 +2,13 @@
 
 .top-token{
     padding: 10px 20px;
+    @include screen-max-width(large){
+        display: flex;
+        justify-content: space-between;
+        .top-token-content{
+            width: 80%;
+        }
+    }
     &-content{
         display: flex;
         justify-content: space-between;
