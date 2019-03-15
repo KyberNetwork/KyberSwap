@@ -466,3 +466,36 @@
     padding-left: 55px;
   }
 }
+
+
+.reimport-modal{
+  .title{
+    font-size: 18px;
+    text-align: center;
+    font-weight: 550;
+    padding: 20px;
+    margin: 0;
+  }
+  .content{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    max-width: 250px;
+    margin: 0 auto;
+    a{
+      padding: 10px 35px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      &.confirm-btn{
+        background-color: #EF8102;
+      }
+      &.cancel-btn{
+        background-color: #6f6f6f;
+      }
+    }
+  }
+}

@@ -4,6 +4,9 @@ import * as analytics from "../../utils/analytics"
 import { Modal } from "../CommonElement"
 import ReactTooltip from 'react-tooltip'
 
+
+
+
 const AdvanceAccount = (props) => {
   var getContent = () => {
     if (!props.isAdvanceActive) return ""
@@ -48,10 +51,10 @@ const AdvanceAccount = (props) => {
           {props.postWithKey}
           {!props.isOnDAPP && <div className={"exchange-account__wrapper--reimport"}>
             <div className={"reimport-msg"}>
-              <div data-for="connect-other-wallet" data-tip={confirmModal()} data-event='click focus' data-html={true}>
+              <div>
                 {props.translate("import.connect_other_wallet") || "Connect other wallet"}
-              </div>
-              <ReactTooltip globalEventOff="click" html={true} place="top" id="connect-other-÷ " type="light" />
+              </div>              
+
             </div>
           </div>}
 

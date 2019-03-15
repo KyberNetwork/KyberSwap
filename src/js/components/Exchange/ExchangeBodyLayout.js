@@ -12,7 +12,9 @@ import { RateBetweenToken } from "../../containers/Exchange";
 import * as converters from "../../utils/converter";
 import { getAssetUrl } from "../../utils/common";
 // import { TermAndServices } from "../../containers/CommonElements";
-import { AdvanceAccount } from "../TransactionCommon"
+// import { AdvanceAccount } from "../TransactionCommon"
+
+import { AdvanceAccount } from "../../containers/TransactionCommon"
 
 const ExchangeBodyLayout = (props) => {
   function handleChangeSource(e) {
@@ -83,49 +85,7 @@ const ExchangeBodyLayout = (props) => {
   })
   var errorSelector = document.getElementById("swap-error")
   if (errorSelector) errorSelector.innerHTML = `<div>${errorTooltip}</div>`
-
-  function getWalletName() {
-    if (props.walletName === "") {
-      switch (props.account.type) {
-        case "metamask":
-          return "METAMASK"
-        case "keystore":
-          return "JSON"
-        case "ledger":
-          return "LEDGER"
-        case "trezor":
-          return "TREZOR"
-        case "privateKey":
-          return "PRIVATE KEY"
-        case "promoCode":
-          return "PROMO CODE"
-        default:
-          return "WALLET"
-      }
-    } else {
-      return props.walletName
-    }
-  }
-
-  function getWalletIconName(type, walletName) {
-    if (walletName === "PROMO CODE") {
-      return "promo_code";
-    }
-
-    return type;
-  }
-
-  function getAccountTypeHtml(onMobile = false) {
-    return (
-      <div className={`import-account__wallet-type ${onMobile ? "mobile" : ""}`}>
-        <img className="import-account__wallet-image" src={getAssetUrl(`wallets/${getWalletIconName(props.account.type, props.walletName)}.svg`)} />
-        <div className="import-account__wallet-content">
-          <span className="import-account__wallet-title">Your Wallet - </span>
-          <span className="import-account__wallet-name">{getWalletName()}</span>
-        </div>
-      </div>
-    );
-  }
+  
 
   var importAccount = function () {
     if (props.account === false || (props.isChangingWallet && props.changeWalletType === "swap")) {
@@ -252,17 +212,13 @@ const ExchangeBodyLayout = (props) => {
 
         {props.account !== false && (
           <AdvanceAccount
-            isOnDAPP={props.isOnDAPP}
-            isOnMobile={props.global.isOnMobile}
             clearSession={props.clearSession}
-            getAccountTypeHtml={getAccountTypeHtml}            
             toggleAdvanceContent = {props.toggleAdvanceContent}
             balanceLayout={props.balanceLayout}
             isAdvanceActive={props.isAdvanceActive}
             advanceLayout={props.advanceLayout}
             postWithKey={<PostExchangeWithKey isChangingWallet={props.isChangingWallet} />}
-            tradeType={"swap"}
-            translate={props.translate}
+            screen={"swap"}
           />
         )}
       </div>
