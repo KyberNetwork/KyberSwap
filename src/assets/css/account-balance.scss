@@ -91,7 +91,9 @@
     // &:nth-last-child(-n + 4) { // bug 1975
     //   margin-bottom: 0;
     // }
-
+    &.disabled{
+      opacity: 0.3;
+    }
     &.active {
       .account-balance__token-symbol,
       .account-balance__token-balance {

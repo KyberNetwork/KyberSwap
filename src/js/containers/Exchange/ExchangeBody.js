@@ -6,7 +6,7 @@ import * as converters from "../../utils/converter"
 import { TransactionConfig } from "../../components/Transaction"
 import { ExchangeBodyLayout } from "../../components/Exchange"
 import { AdvanceConfigLayout, MinConversionRate } from "../../components/TransactionCommon"
-import { TransactionLoading, Token, ChooseBalanceModal } from "../CommonElements"
+import { TransactionLoading, Token } from "../CommonElements"
 import { TokenSelector, AccountBalance, TopBalance } from "../TransactionCommon"
 import * as validators from "../../utils/validators"
 import * as common from "../../utils/common"
@@ -434,21 +434,23 @@ class ExchangeBody extends React.Component {
         // onToggleBalanceContent={this.toggleBalanceContent}
         isBalanceActive = {this.props.exchange.isAdvanceActive}
         walletName = {this.props.account.walletName}
-        tradeType = "swap"
+        screen = "swap"
         isOnDAPP = {this.props.account.isOnDAPP}
+        changeAmount={exchangeActions.inputChange}
+        changeFocus={exchangeActions.focusInput}
       />)
   }
 
-  getSwapBalance = () => {
-    return (
-      <ChooseBalanceModal
-        changeAmount={exchangeActions.inputChange}
-        changeFocus={exchangeActions.focusInput}
-        sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
-        typeTx={"swap"}
-      />
-    )
-  }
+  // getSwapBalance = () => {
+  //   return (
+  //     <ChooseBalanceModal
+  //       changeAmount={exchangeActions.inputChange}
+  //       changeFocus={exchangeActions.focusInput}
+  //       sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
+  //       typeTx={"swap"}
+  //     />
+  //   )
+  // }
 
   closeChangeWallet = () => {
     this.props.dispatch(globalActions.closeChangeWallet())
@@ -580,8 +582,11 @@ class ExchangeBody extends React.Component {
     )
 
     var topBalance = <TopBalance  showMore = {this.toggleAdvanceContent}
-                                  selectToken = {this.chooseToken}
-                                  activeSymbol = {this.props.exchange.sourceTokenSymbol}/>
+                                  chooseToken = {this.chooseToken}
+                                  activeSymbol = {this.props.exchange.sourceTokenSymbol}
+                                  screen= "swap"
+                                  changeAmount={exchangeActions.inputChange}
+                                  changeFocus={exchangeActions.focusInput}/>
     return (
       <ExchangeBodyLayout
         chooseToken={this.chooseToken}
@@ -608,8 +613,7 @@ class ExchangeBody extends React.Component {
         isChangingWallet = {this.props.global.isChangingWallet}
         changeWalletType = {this.props.global.changeWalletType}
         closeChangeWallet = {this.closeChangeWallet}
-        global={this.props.global}
-        swapBalance = {this.getSwapBalance()}
+        global={this.props.global}        
         clearSession={this.clearSession}
         walletName={this.props.account.walletName}
         isFixedDestToken = {isFixedDestToken}

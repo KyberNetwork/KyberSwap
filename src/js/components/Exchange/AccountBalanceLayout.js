@@ -50,11 +50,12 @@ const AccountBalanceLayout = (props) => {
 
         if (token.symbol === props.sourceActive) classBalance += " active"
         if (!symbolL.includes(searchWord)) classBalance += " hide"
+        if (balance == 0) classBalance += " disabled"
 
         return (
           <div
             key={token.symbol}
-            onClick={(e) => props.selectToken(e, token.symbol, token.address)}
+            onClick={(e) => props.selectBalance(token.symbol)}
             className={"account-balance__token-item" + classBalance}
           >
             <div className="account-balance__token-symbol">{token.symbol}</div>

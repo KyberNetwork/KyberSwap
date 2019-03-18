@@ -10,7 +10,10 @@ import * as analytics from "../../utils/analytics";
 // import { RateBetweenToken } from "../../containers/Exchange";
 // import { getAssetUrl } from "../../utils/common";
 // import { TermAndServices } from "../../containers/CommonElements";
-import {AdvanceAccount} from "../TransactionCommon"
+// import {AdvanceAccount} from "../TransactionCommon"
+
+import { AdvanceAccount } from "../../containers/TransactionCommon"
+
 
 const TransferForm = (props) => {
   function handleChangeAmount(e) {
@@ -144,7 +147,9 @@ const TransferForm = (props) => {
                     <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="transfer-amount-error" type="light" />
                   }
                 </div>
-
+                {props.account !== false && !props.isAdvanceActive && (
+                      <div>{props.topBalance}</div>
+                    )}
               </div>
 
               <div className={"exchange-content__item--middle"}>
@@ -207,17 +212,15 @@ const TransferForm = (props) => {
         )} */}
 
         {props.account !== false && (
-
+          
           <AdvanceAccount
-            isOnDAPP={props.isOnDAPP}
-            clearSession={props.clearSession}
-            isBalanceActive = {props.isBalanceActive}
-            balanceLayout = {props.balanceLayout}
-            isAdvanceActive = {props.isAdvanceActive}
-            advanceLayout = {props.advanceLayout}
-            postWithKey = {<PostTransferWithKey isChangingWallet={props.isChangingWallet}/>}
-            tradeType={"transfer"}
-            translate={props.translate}
+          clearSession={props.clearSession}
+          toggleAdvanceContent = {props.toggleAdvanceContent}
+          balanceLayout={props.balanceLayout}
+          isAdvanceActive={props.isAdvanceActive}
+          advanceLayout={props.advanceLayout}
+          postWithKey={<PostTransferWithKey isChangingWallet={props.isChangingWallet} />}
+          screen={"transfer"}
           /> 
         )}
       </div>

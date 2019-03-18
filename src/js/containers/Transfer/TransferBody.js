@@ -6,7 +6,7 @@ import * as validators from "../../utils/validators"
 import { TransferForm } from "../../components/Transaction"
 import { TransactionLoading, QRCode, ChooseBalanceModal } from "../CommonElements"
 import { AdvanceConfigLayout } from "../../components/TransactionCommon"
-import { TokenSelector, AccountBalance } from "../TransactionCommon"
+import { TokenSelector, AccountBalance, TopBalance } from "../TransactionCommon"
 import { hideSelectToken } from "../../actions/utilActions"
 import * as common from "../../utils/common"
 import * as globalActions from "../../actions/globalActions"
@@ -188,27 +188,14 @@ class Transfer extends React.Component {
   }
 
 
-  toggleBalanceContent = () => {
-    if (this.props.transfer.isBalanceActive) {
-      this.props.global.analytics.callTrack("trackClickHideAccountBalance", "Transfer")
-    } else {
-      this.props.global.analytics.callTrack("trackClickShowAccountBalance", "Transfer")
-    }
-    this.props.dispatch(transferActions.toggleBalanceContent())    
-    if(!this.props.global.isOnMobile){
-      this.props.dispatch(transferActions.toggleAdvanceContent())    
-    }
-  }
+
   toggleAdvanceContent = () => {
     if (this.props.transfer.isAdvanceActive) {
       this.props.global.analytics.callTrack("trackClickHideAdvanceOption", "Transfer")
     } else {
       this.props.global.analytics.callTrack("trackClickShowAdvanceOption", "Transfer")
     }
-    this.props.dispatch(transferActions.toggleAdvanceContent())    
-    if(!this.props.global.isOnMobile){
-      this.props.dispatch(transferActions.toggleBalanceContent())    
-    }
+    this.props.dispatch(transferActions.toggleAdvanceContent())        
   }
 
 
@@ -250,10 +237,10 @@ class Transfer extends React.Component {
         chooseToken={this.chooseToken}
         sourceActive={this.props.transfer.tokenSymbol}
         destTokenSymbol='ETH'
-        onToggleBalanceContent={this.toggleBalanceContent}
-        isBalanceActive = {this.props.transfer.isBalanceActive}
-        tradeType = "transfer"
+        isBalanceActive = {this.props.transfer.isAdvanceActive}
+        screen = "transfer"
         isOnDAPP = {this.props.account.isOnDAPP}
+        changeAmount={transferActions.specifyAmountTransfer}
       />)
   }
 
@@ -273,16 +260,7 @@ class Transfer extends React.Component {
   }
 
 
-  getTransferBalance = () => {
-    return (
-      <ChooseBalanceModal
-        changeAmount={transferActions.specifyAmountTransfer}
-        changeFocus={this.onFocus}
-        sourceTokenSymbol={this.props.transfer.tokenSymbol}
-        typeTx={"transfer"}
-      />
-    )
-  }
+
   
   setDefaulAmountErrorTooltip = (value) => {
     this.setState({defaultShowAmountErrorTooltip: value})
@@ -351,6 +329,12 @@ class Transfer extends React.Component {
       onScan={this.handleScanQRCode}
       onDAPP={this.props.account.isOnDAPP}/> : ""
 
+    var topBalance = <TopBalance  showMore = {this.toggleAdvanceContent}
+      chooseToken = {this.chooseToken}
+      activeSymbol = {this.props.transfer.tokenSymbol}
+      screen= "transfer"
+      changeAmount={transferActions.specifyAmountTransfer}/>
+
     return (
       <TransferForm
         account={this.props.account.account}
@@ -378,13 +362,13 @@ class Transfer extends React.Component {
         clearSession={this.clearSession}
         walletName={this.props.account.walletName}
         qcCode = {qcCode}
-        transferBalance = {this.getTransferBalance()}
         isAgreedTermOfService={this.props.global.termOfServiceAccepted}
         acceptTerm={this.acceptTerm}
         isBalanceActive = {this.props.transfer.isBalanceActive}
         isAdvanceActive = {this.props.transfer.isAdvanceActive}
+        toggleAdvanceContent = {this.toggleAdvanceContent}
+        topBalance = {topBalance}
 
-        swapBalance = {this.getTransferBalance()}
 
         defaultShowAmountErrorTooltip = {this.state.defaultShowAmountErrorTooltip}
         setDefaulAmountErrorTooltip = {this.setDefaulAmountErrorTooltip}
