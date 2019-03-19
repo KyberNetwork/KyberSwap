@@ -30,11 +30,11 @@ export default class AdvanceAccount extends React.Component {
         }
     }
 
-    openReImport = () =>{
-        this.setState({isReImport: true})
+    openReImport = () => {
+        this.setState({ isReImport: true })
     }
-    closeReImport = () =>{
-        this.setState({isReImport: false})
+    closeReImport = () => {
+        this.setState({ isReImport: false })
     }
 
     getWalletName = () => {
@@ -63,7 +63,7 @@ export default class AdvanceAccount extends React.Component {
     getWalletIconName = (type, walletName) => {
         if (walletName === "PROMO CODE") {
             return "promo_code";
-        }        
+        }
         return type;
     }
 
@@ -115,13 +115,13 @@ export default class AdvanceAccount extends React.Component {
     reImportModal = () => {
         return (
             <div className="reimport-modal">
-                <a className="x" onClick={this.closeReImport}>&times;</a>               
+                <a className="x" onClick={this.closeReImport}>&times;</a>
                 <div className="title">Do you want to connect other Wallet?</div>
                 <div className="content">
                     <a className="button confirm-btn" onClick={this.clearSession}>Yes</a>
                     <a className="button cancel-btn" onClick={this.closeReImport}>No</a>
                 </div>
-            </div>            
+            </div>
         )
     }
 
@@ -140,15 +140,15 @@ export default class AdvanceAccount extends React.Component {
                                     {this.props.translate("import.connect_other_wallet") || "Connect other wallet"}
                                 </div>
                                 <Modal className={{
-                                        base: 'reveal tiny reimport-modal',
-                                        afterOpen: 'reveal tiny reimport-modal'
-                                    }}
-                                        isOpen={this.state.isReImport}
-                                        onRequestClose={this.closeReImport}
-                                        contentLabel="advance modal"
-                                        content={this.reImportModal()}
-                                        size="tiny"
-                                    />
+                                    base: 'reveal tiny reimport-modal',
+                                    afterOpen: 'reveal tiny reimport-modal'
+                                }}
+                                    isOpen={this.state.isReImport}
+                                    onRequestClose={this.closeReImport}
+                                    contentLabel="advance modal"
+                                    content={this.reImportModal()}
+                                    size="tiny"
+                                />
                             </div>
                         </div>}
 
