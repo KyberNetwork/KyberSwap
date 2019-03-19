@@ -308,6 +308,8 @@
     @include screen-max-width(large){
       background-color: #f6f7fa;
     }
+    
+    @include rollOut;
 
     .advance-close{
       position: absolute;
