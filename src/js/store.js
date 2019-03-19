@@ -12,8 +12,8 @@ import { initialize, addTranslation, addTranslationForLanguage, setActiveLanguag
 import rootSaga from './sagas'
 import Language from "../../lang"
 
-import  constantsVar from "../js/services/constants"
-import {initLanguage} from "../js/services/language"
+import constantsVar from "../js/services/constants"
+import { initLanguage } from "../js/services/language"
 
 const routeMiddleware = routerMiddleware(history)
 
@@ -22,7 +22,7 @@ const sagaMiddleware = createSagaMiddleware()
 var middlewareArray = [sagaMiddleware, routeMiddleware]
 
 //middlewareArray.push(logger)
-if(process.env && process.env.logger){
+if (process.env && process.env.logger) {
   middlewareArray.push(logger)
 }
 
@@ -39,6 +39,6 @@ sagaMiddleware.run(rootSaga)
 initLanguage(store);
 
 
-const persistor =  persistStore(store)
+const persistor = persistStore(store)
 
-export {store, persistor}
+export { store, persistor }
