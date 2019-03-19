@@ -2,13 +2,13 @@
 
 .top-token{
     padding: 10px 20px;
-    @include screen-max-width(large){
-        display: flex;
-        justify-content: space-between;
-        .top-token-content{
-            width: 80%;
-        }
+    
+    display: flex;
+    justify-content: space-between;
+    .top-token-content{
+        width: 70%;
     }
+    
     &-content{
         display: flex;
         justify-content: space-between;
@@ -18,17 +18,33 @@
         cursor: pointer;
         &.active{
             opacity: 0.3;
-            pointer-events: none;
+            // pointer-events: none;
         }
         &__symbol{
             text-decoration: underline;
         }
     }
     &-more{
-        font-size: 14px;
-        color: #ef8102;
+        font-size: 13px;
         cursor: pointer;
         margin-top: 5px;
-        display: inline-block;
+        background-color: #EAEEF5;
+        padding: 2px 18px 2px 10px;
+        border-radius: 10px;
+        height: 25px;
+        position: relative;
+        transition: all .3s;
+        &:hover{
+            background-color: white;
+        }
+        &:after{
+            background-image: url("../img/v3/arrow_more.svg");
+            content: " ";
+            position: absolute;
+            width: 7px;
+            height: 4px;
+            top: 10px;
+            right: 7px;
+        }
     }
 }
