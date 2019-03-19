@@ -11,3 +11,8 @@
     opacity: 1;
   }
 }
+
+@mixin rollOut {
+  -webkit-animation: rollOut 0.3s ease-out;
+  animation: rollOut 0.3s ease-out;
+}

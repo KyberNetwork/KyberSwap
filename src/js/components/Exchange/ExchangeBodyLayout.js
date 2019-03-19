@@ -85,7 +85,7 @@ const ExchangeBodyLayout = (props) => {
   })
   var errorSelector = document.getElementById("swap-error")
   if (errorSelector) errorSelector.innerHTML = `<div>${errorTooltip}</div>`
-  
+
 
   var importAccount = function () {
     if (props.account === false || (props.isChangingWallet && props.changeWalletType === "swap")) {
@@ -143,16 +143,16 @@ const ExchangeBodyLayout = (props) => {
                         )} */}
                       </div>
                     </div>
-                
-                    
+
+
                   </div>
                   {errorExchange &&
                     <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="swap-error" type="light" />
                   }
                 </div>
                 {props.account !== false && !props.isAdvanceActive && (
-                      <div>{props.topBalance}</div>
-                    )}
+                  <div>{props.topBalance}</div>
+                )}
               </div>
               <div className={"exchange-content__item--middle"}>
                 <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap-icon" currentitem="false">
@@ -213,7 +213,7 @@ const ExchangeBodyLayout = (props) => {
         {props.account !== false && (
           <AdvanceAccount
             clearSession={props.clearSession}
-            toggleAdvanceContent = {props.toggleAdvanceContent}
+            toggleAdvanceContent={props.toggleAdvanceContent}
             balanceLayout={props.balanceLayout}
             isAdvanceActive={props.isAdvanceActive}
             advanceLayout={props.advanceLayout}
