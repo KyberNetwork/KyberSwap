@@ -73,7 +73,7 @@ export default class TopBalance extends React.Component {
     }
 
     renderToken = (tokens) => {
-        var maxToken = this.props.global.isOnMobile ? 3 : 4
+        var maxToken = 3
         var tokenLayout = tokens.slice(0, maxToken).map(token => {
             return <div className={`top-token-item ${this.props.activeSymbol === token.symbol ? "active" : ""}`} key={token.symbol} onClick={(e) => { this.selectBalance(token.symbol) }}>
                 <div className="top-token-item__symbol">{token.symbol}</div>
@@ -90,7 +90,7 @@ export default class TopBalance extends React.Component {
         return (
             <div className="top-token">
                 <div className="top-token-content">{this.renderToken(newTokens)}</div>
-                <div className="top-token-more" onClick={this.showMore}>More</div>
+                <div className="top-token-more" onClick={this.showMore}>more</div>
             </div>
         )
     }
