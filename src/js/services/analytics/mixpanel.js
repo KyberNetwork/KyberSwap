@@ -651,4 +651,13 @@ export default class Mixpanel {
       }
     }
   }
+  trackClickToken(symbol, screen){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`Step_2_Click_Top_Token_${screen}_${symbol}`)
+      }catch(e){
+        console.log(e)
+      }
+    }
+  }
 }

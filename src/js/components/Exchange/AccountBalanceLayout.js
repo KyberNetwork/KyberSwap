@@ -37,7 +37,6 @@ const AccountBalanceLayout = (props) => {
         return ordered
       }
     }
-
   }
 
   function getBalances() {
@@ -51,11 +50,12 @@ const AccountBalanceLayout = (props) => {
 
         if (token.symbol === props.sourceActive) classBalance += " active"
         if (!symbolL.includes(searchWord)) classBalance += " hide"
+        if (balance == 0) classBalance += " disabled"
 
         return (
           <div
             key={token.symbol}
-            onClick={(e) => props.selectToken(e, token.symbol, token.address)}
+            onClick={(e) => props.selectBalance(token.symbol)}
             className={"account-balance__token-item" + classBalance}
           >
             <div className="account-balance__token-symbol">{token.symbol}</div>
@@ -138,7 +138,7 @@ const AccountBalanceLayout = (props) => {
     <div className="account-balance">
       {props.account !== false && (
         <SlideDown active={props.isBalanceActive}>
-          <SlideDownTrigger onToggleContent={() => props.toggleBalanceContent()}>
+          {/* <SlideDownTrigger onToggleContent={() => props.toggleBalanceContent()}>
             <div className="balance-header">
 
               <div className="slide-down__trigger-container">
@@ -146,7 +146,6 @@ const AccountBalanceLayout = (props) => {
                   <div className={"account-balance__address"}>
                     <div>
                       <span className="account-balance__address-text">{props.translate("address.your_wallet") || "Your Wallet"}</span>
-                      {/* - <span className={"account-balance__wallet-name"}>{getWalletName()}</span> */}
                       {!props.isOnDAPP && <span className={"account-balance__wallet-name"}><span>-</span>{getWalletName()}</span>}
                     </div>
                     <div className="slide-arrow-container">
@@ -160,9 +159,28 @@ const AccountBalanceLayout = (props) => {
                 </div>
               </div>
             </div>
-
-          </SlideDownTrigger>
+          </SlideDownTrigger> */}
           <SlideDownContent>
+            <div className="balance-header">
+
+              <div className="slide-down__trigger-container">
+                <div>
+                  <div className={"account-balance__address"}>
+                    <div>
+                      <span className="account-balance__address-text">{props.translate("address.your_wallet") || "Your Wallet"}</span>
+                      {!props.isOnDAPP && <span className={"account-balance__wallet-name"}><span>-</span>{getWalletName()}</span>}
+                    </div>
+                    {/* <div className="slide-arrow-container">
+                      <div className="slide-arrow"></div>
+                    </div> */}
+                  </div>
+                  <a className="account-balance__address-link" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
+                    onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan"); e.stopPropagation(); }}>
+                    {props.account.address}
+                  </a>
+                </div>
+              </div>
+            </div>
             <div className="account-balance__content">
               <div>
                 <div className={"account-balance__content-input-container"}>

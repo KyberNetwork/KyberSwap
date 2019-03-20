@@ -31,38 +31,38 @@ export function updateBlockFailed(error) {
 export function updateAllRate(ethereum, tokens) {
   return {
     type: 'GLOBAL.RATE_UPDATE_ALL_PENDING',
-    payload: { ethereum, tokens}
+    payload: { ethereum, tokens }
   }
 }
 
-export function updateAllRateComplete(rates,rateUSD) {
+export function updateAllRateComplete(rates, rateUSD) {
   return {
     type: 'GLOBAL.ALL_RATE_UPDATED_FULFILLED',
-    payload: { rates, rateUSD}
+    payload: { rates, rateUSD }
   }
 }
 
-export function updateAllRateUSD(ethereum){
+export function updateAllRateUSD(ethereum) {
   return {
     type: 'GLOBAL.UPDATE_RATE_USD_PENDING',
     payload: { ethereum }
   }
 }
 
-export function updateAllRateUSDComplete(rateETHUSD){
+export function updateAllRateUSDComplete(rateETHUSD) {
   return {
     type: 'GLOBAL.UPDATE_RATE_USD_FULFILLED',
-    payload: {rateETHUSD}
+    payload: { rateETHUSD }
   }
 }
 
-export function showBalanceUSD(){
+export function showBalanceUSD() {
   return {
     type: 'GLOBAL.SHOW_BALABCE_USD',
   }
 }
 
-export function hideBalanceUSD(){
+export function hideBalanceUSD() {
   return {
     type: 'GLOBAL.HIDE_BALABCE_USD',
   }
@@ -74,6 +74,20 @@ export function acceptTermOfService() {
   }
 }
 
+export function acceptConnectWallet() {
+  return {
+    type: "GLOBAL.SET_ACCEPT_CONNECT_WALLET",
+    payload: true
+  }
+}
+
+export function clearAcceptConnectWallet() {
+  return {
+    type: "GLOBAL.SET_ACCEPT_CONNECT_WALLET",
+    payload: false
+  }
+}
+
 export function clearSession(gasPrice) {
   return {
     type: "GLOBAL.CLEAR_SESSION",
@@ -81,17 +95,17 @@ export function clearSession(gasPrice) {
   }
 }
 
-export function setBalanceToken(balances){
+export function setBalanceToken(balances) {
   return {
     type: "GLOBAL.SET_BALANCE_TOKEN",
-    payload: {balances}
+    payload: { balances }
   }
 }
 
-export function changeLanguage(ethereum, lang, locale){
+export function changeLanguage(ethereum, lang, locale) {
   return {
     type: "GLOBAL.CHANGE_LANGUAGE",
-    payload: {ethereum, lang, locale}
+    payload: { ethereum, lang, locale }
   }
 }
 
@@ -132,53 +146,53 @@ export function checkConnection(ethereum, count, maxCount, isCheck) {
 }
 
 
-export function updateIsCheck(isCheck){
+export function updateIsCheck(isCheck) {
   return {
     type: "GLOBAL.CONNECTION_UPDATE_IS_CHECK",
     payload: isCheck
   }
 }
 
-export function updateCountConnection(count){
+export function updateCountConnection(count) {
   return {
     type: "GLOBAL.CONNECTION_UPDATE_COUNT",
     payload: count
   }
 }
 
-export function setGasPrice(){
+export function setGasPrice() {
   return {
     type: "GLOBAL.SET_GAS_PRICE",
   }
 }
 
-export function visitExchange(){
+export function visitExchange() {
   return {
     type: "GLOBAL.VISIT_EXCHANGE",
   }
 }
 
-export function caculateGasPrice(gasStationPrice){
+export function caculateGasPrice(gasStationPrice) {
   return {
     type: "GLOBAL.CACULATE_GASPRICE",
     payload: gasStationPrice
   }
 }
 
-export function toggleAnalyze(){
+export function toggleAnalyze() {
   return {
     type: "GLOBAL.TOGGLE_ANALYZE"
   }
 }
 
-export function openAnalyze(txHash){
+export function openAnalyze(txHash) {
   return {
     type: "GLOBAL.OPEN_ANALYZE",
     payload: txHash
   }
 }
 
-export function setAnalyzeError(networkIssues, reserveIssues, txHash){
+export function setAnalyzeError(networkIssues, reserveIssues, txHash) {
   return {
     type: "GLOBAL.SET_ANALYZE_ERROR",
     payload: { networkIssues, reserveIssues, txHash }
@@ -186,14 +200,14 @@ export function setAnalyzeError(networkIssues, reserveIssues, txHash){
 }
 
 
-export function throwErrorMematamask(err){
+export function throwErrorMematamask(err) {
   return {
     type: "GLOBAL.THROW_ERROR_METAMASK",
     payload: { err }
   }
 }
 
-export function updateMetamaskAccount(address, balance){
+export function updateMetamaskAccount(address, balance) {
   return {
     type: "GLOBAL.UPDATE_METAMASK_ACCOUNT",
     payload: { address, balance }
@@ -214,21 +228,21 @@ export function setMaxGasPrice() {
 }
 
 
-export function setNetworkError(error){
+export function setNetworkError(error) {
   return {
     type: "GLOBAL.SET_NETWORK_ERROR",
-    payload: {error}
+    payload: { error }
   }
 }
 
-export function changeWallet(tradeType){
+export function changeWallet(tradeType) {
   return {
     type: "GLOBAL.CHANGE_WALLET",
     payload: tradeType
   }
 }
 
-export function closeChangeWallet(){
+export function closeChangeWallet() {
   return {
     type: "GLOBAL.CLOSE_CHANGE_WALLET"
   }
@@ -254,20 +268,20 @@ export function setIsAndroid(isAndroid) {
 //   }
 // }
 
-export function setOnMobile(isIOS, isAndroid){
+export function setOnMobile(isIOS, isAndroid) {
   return {
     type: "GLOBAL.SET_ON_MOBILE",
-    payload: {isIOS, isAndroid}
+    payload: { isIOS, isAndroid }
   }
 }
 
-export function setOnMobileOnly(){
+export function setOnMobileOnly() {
   return {
     type: "GLOBAL.SET_ON_MOBILE_ONLY"
   }
 }
 
-export function initAnalytics(analytics){
+export function initAnalytics(analytics) {
   return {
     type: "GLOBAL.INIT_ANALYTICS",
     payload: analytics

@@ -4,6 +4,8 @@ import BLOCKCHAIN_INFO from "../../../../env"
 import { AccountBalanceLayout } from '../../components/Exchange'
 import {acceptTermOfService} from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux';
+import * as converters from "../../utils/converter"
+
 
 @connect((store, props) => {
   var location = store.router.location.pathname
@@ -12,6 +14,8 @@ import { getTranslate } from 'react-localize-redux';
   var isFixedSourceToken = !!(store.account && store.account.account.type ==="promo" && store.tokens.tokens[BLOCKCHAIN_INFO.promo_token])  
   return {
     tokens: store.tokens.tokens,
+    exchange: store.exchange,    
+    transfer: store.transfer,
     translate: getTranslate(store.locale),
     ethereum: store.connection.ethereum,
     showBalance: store.global.showBalance,
@@ -22,7 +26,7 @@ import { getTranslate } from 'react-localize-redux';
     chooseToken: props.chooseToken,
     sourceActive: props.sourceActive,
     isFixedSourceToken: isFixedSourceToken,
-    analytics: store.global.analytics,
+    global: store.global,
     walletName: props.walletName,
     isOnDAPP: props.isOnDAPP
   }
@@ -40,6 +44,47 @@ export default class AccountBalance extends React.Component {
     }
   }
 
+  selectBalance = (sourceSymbol) => {
+
+    this.props.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, this.props.screen === "swap"?"source":"transfer")
+    
+    var sourceBalance = this.props.tokens[sourceSymbol].balance
+    var sourceDecimal = this.props.tokens[sourceSymbol].decimals
+    var amount
+
+    if (sourceSymbol !== "ETH") {
+        amount = sourceBalance
+        amount = converters.toT(amount, sourceDecimal)
+        amount = amount.replace(",", "")
+    } else {
+        var gasLimit
+        var totalGas
+        if (this.props.screen === "swap") {
+            var destTokenSymbol = this.props.exchange.destTokenSymbol
+            gasLimit = this.props.tokens[destTokenSymbol].gasLimit || this.props.exchange.max_gas
+            totalGas = converters.calculateGasFee(this.props.exchange.gasPrice, gasLimit) * Math.pow(10, 18)
+            // amount = (sourceBalance - totalGas) * percent / 100
+        } else {
+            gasLimit = this.props.transfer.gas
+            totalGas = converters.calculateGasFee(this.props.transfer.gasPrice, gasLimit) * Math.pow(10, 18)
+            // amount = (sourceBalance - totalGas) * percent / 100
+        }
+        amount = sourceBalance - totalGas * 120 / 100
+        amount = converters.toEther(amount)
+        amount = converters.roundingNumber(amount).toString(10)
+        amount = amount.replace(",", "")
+    }
+
+    if (this.props.screen === "swap") {
+        this.props.dispatch(this.props.changeAmount('source', amount))
+        this.props.dispatch(this.props.changeFocus('source'));
+    } else {
+        this.props.dispatch(this.props.changeAmount(amount))
+        // this.props.changeFocus()
+    }
+    this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, this.props.screen);
+}
+
   componentDidMount() {
     if (window.innerWidth < 640) {
       this.setState({isBalanceActive: false})
@@ -56,13 +101,13 @@ export default class AccountBalance extends React.Component {
   }
 
   clickOnInput = (e) => {
-    this.props.analytics.callTrack("trackSearchTokenBalanceBoard");
+    this.props.global.analytics.callTrack("trackSearchTokenBalanceBoard");
   }
 
   selectToken = (e, symbol, address) => {
     if (this.props.isFixedSourceToken) return
     this.props.chooseToken(symbol, address, "source")
-    this.props.analytics.callTrack("trackChooseTokenOnBalanceBoard", symbol);
+    this.props.global.analytics.callTrack("trackChooseTokenOnBalanceBoard", symbol);
   }
 
   showSort = (e) =>{
@@ -75,13 +120,13 @@ export default class AccountBalance extends React.Component {
   sortSymbol = (e) =>{
     this.setState({sortType: "Symbol", sortValueSymbol_DES: !this.state.sortValueSymbol_DES})
     this.hideSort()
-    this.props.analytics.callTrack("trackClickSortBalanceBoard", "Symbol", this.state.sortValueSymbol_DES ? "DESC" : "ASC");
+    this.props.global.analytics.callTrack("trackClickSortBalanceBoard", "Symbol", this.state.sortValueSymbol_DES ? "DESC" : "ASC");
   }
 
   sortPrice = (e) =>{
     this.setState({sortType: "Price", sortValuePrice_DES: !this.state.sortValuePrice_DES})
     this.hideSort()
-    this.props.analytics.callTrack("trackClickSortBalanceBoard", "Price", this.state.sortValuePrice_DES ? "DESC" : "ASC");
+    this.props.global.analytics.callTrack("trackClickSortBalanceBoard", "Price", this.state.sortValuePrice_DES ? "DESC" : "ASC");
   }
 
   toggleBalanceContent = () => {
@@ -115,11 +160,12 @@ export default class AccountBalance extends React.Component {
         sourceTokenSymbol={this.props.sourceActive}
         destTokenSymbol={this.props.destTokenSymbol}
         onToggleBalanceContent={this.onToggleBalanceContent}
-        tradeType = {this.props.tradeType}
+        screen = {this.props.screen}
         isFixedSourceToken = {this.props.isFixedSourceToken}
-        analytics={this.props.analytics}
+        analytics={this.props.global.analytics}
         walletName={this.props.walletName}
         isOnDAPP = {this.props.isOnDAPP}
+        selectBalance = {this.selectBalance}
       />
     )
   }

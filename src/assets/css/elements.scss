@@ -111,7 +111,7 @@ input.error {
     line-height: 54px;
     padding: 0 45px;
     border-radius: 1000px;
-    background: $accent-gradient;
+    background: #EF8102;
     font-size: 13px;
     letter-spacing: 1.25px;
     text-transform: uppercase;
@@ -120,6 +120,9 @@ input.error {
     border: none;
     color: #fff;
     cursor: default;
+    &.cancel{
+      background-color: #6f6f6f;
+    }
     &.waiting {
       color: rgba(white, .5);
       pointer-events: none;

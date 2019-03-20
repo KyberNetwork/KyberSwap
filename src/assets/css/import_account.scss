@@ -14,6 +14,28 @@
     text-align: center;
     color: #222222;
     margin: 30px 0 20px;
+    &--inactive{
+      max-width: 550px;
+      margin: 0 auto;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 13px;
+      &--seperator{
+        width: calc(100% - 35px);
+        margin: 0 auto;
+        border-bottom: 1px solid #e1e4eb;
+      }
+      &--content{
+        width: 230px;
+        position: relative;
+        top: -10px;
+        background-color:#f1f5fb;
+        margin: 0 auto;
+        text-align: center;
+        color: #9ea1aa;
+        font-weight: 500;
+      }
+    }
   }
 
   &__content {
@@ -22,6 +44,13 @@
     justify-content: space-around;
     max-width: 550px;
     margin: 0 auto;
+
+    &--animation {
+      @include animation(slideInUp) {
+        animation-duration: 0.3s;
+        animation-timing-function: ease-out;
+      }
+    }
 
     &--mobile {
       display: block;
@@ -441,5 +470,38 @@
     color: #666666;
     height: 45px;
     padding-left: 55px;
+  }
+}
+
+
+.reimport-modal{
+  .title{
+    font-size: 18px;
+    text-align: center;
+    font-weight: 550;
+    padding: 20px;
+    margin: 0;
+  }
+  .content{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    max-width: 250px;
+    margin: 0 auto;
+    a{
+      padding: 10px 35px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      &.confirm-btn{
+        background-color: #EF8102;
+      }
+      &.cancel-btn{
+        background-color: #6f6f6f;
+      }
+    }
   }
 }

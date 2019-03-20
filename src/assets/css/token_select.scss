@@ -3,7 +3,7 @@
 .exchange-content {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   position: relative;
   max-width: 1050px;
   margin: 0 auto;
@@ -30,12 +30,12 @@
       }
       
       .exchange-item-label {
-        font-family: Montserrat;
         font-size: 16px;
         font-weight: 600;
         color: #ef8102;
         margin-left: 25px;
         margin-bottom: 3px;
+        text-align: left;
       }
     }
 
@@ -62,7 +62,7 @@
       line-height: 34px;
       @include screen-min-width(large){
         position: relative;
-        top: 12px;
+        top: 40px;
         margin: 0 12px;
       }
       @include screen-max-width(large){
@@ -446,7 +446,7 @@
       padding-left: 20px;
       padding-right: 10px;
       &.has-account {
-        padding-right: 0;
+        padding-right: 10px;
         // padding-left: 20px;
         &.error {
           // padding-right: 25px;

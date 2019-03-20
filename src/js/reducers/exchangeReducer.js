@@ -57,7 +57,7 @@ const exchange = (state = initState, action) => {
       for (var key in newState.errors) {
         newState.errors[key] = ""
       }
-      
+
       newState.sourceAmount = ""
       newState.destAmount = 0
 
@@ -132,9 +132,9 @@ const exchange = (state = initState, action) => {
     }
     case "EXCHANGE.SET_BROADCAST_ERROR": {
       newState.broadcasting = false
-      if (action.payload){
+      if (action.payload) {
         newState.broadcastError = action.payload
-      }else{
+      } else {
         newState.broadcastError = "Cannot broadcast transaction to blockchain"
       }
       newState.confirmApprove = false
@@ -159,18 +159,18 @@ const exchange = (state = initState, action) => {
       newState.deviceError = action.payload ? action.payload : ''
       return newState
     }
-    case "EXCHANGE.HANDLE_AMOUNT":{
+    case "EXCHANGE.HANDLE_AMOUNT": {
       newState.errors.rateSystem = "error.handle_amount"
       return newState
     }
-    case "EXCHANGE.UPDATE_RATE":{
-      const { rateInit, expectedPrice, slippagePrice, blockNo ,isManual, isSuccess, percentChange} = action.payload
+    case "EXCHANGE.UPDATE_RATE": {
+      const { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess, percentChange } = action.payload
 
       if (!isSuccess) {
         newState.errors.rateSystem = "error.get_rate"
       } else {
         if (expectedPrice === "0") {
-          if (rateInit === "0" || rateInit === 0 || rateInit === undefined || rateInit === null){
+          if (rateInit === "0" || rateInit === 0 || rateInit === undefined || rateInit === null) {
             newState.errors.rateSystem = "error.kyber_maintain"
           } else {
             newState.errors.rateSystem = "error.handle_amount"
@@ -179,7 +179,7 @@ const exchange = (state = initState, action) => {
           newState.errors.rateSystem = ""
         }
       }
-    
+
       var slippageRate = slippagePrice === "0" ? converter.estimateSlippagerate(rateInit, 18) : converter.toT(slippagePrice, 18)
       var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
 
@@ -266,7 +266,7 @@ const exchange = (state = initState, action) => {
       newState.signError = ''
       return newState
     }
-    case "EXCHANGE.HIDE_APPROVE_ZERO":{
+    case "EXCHANGE.HIDE_APPROVE_ZERO": {
       newState.confirmApproveZero = false
       newState.isApprovingZero = false
       newState.signError = ''
@@ -311,7 +311,7 @@ const exchange = (state = initState, action) => {
         sourceName: action.payload.balanceData.sourceName,
         sourceDecimal: action.payload.balanceData.sourceDecimal,
         sourceSymbol: action.payload.balanceData.sourceSymbol,
-      //  prevSource: action.payload.balanceData.source,
+        //  prevSource: action.payload.balanceData.source,
         //nextSource: 0,
 
         destName: action.payload.balanceData.destName,
@@ -320,8 +320,8 @@ const exchange = (state = initState, action) => {
 
         sourceAmount: action.payload.balanceData.sourceAmount,
         destAmount: action.payload.balanceData.destAmount,
-       // prevDest: action.payload.balanceData.dest,
-       // nextDest: 0
+        // prevDest: action.payload.balanceData.dest,
+        // nextDest: 0
       }
       return newState
     }
@@ -360,8 +360,8 @@ const exchange = (state = initState, action) => {
         newState.snapshot.destAmount = converter.caculateDestAmount(state.snapshot.sourceAmount, state.snapshot.offeredRate, 6)
       }
       newState.snapshot.isFetchingRate = false
-    //  console.log("***************")
-    //  console.log(newState)
+      //  console.log("***************")
+      //  console.log(newState)
       return newState
     }
     case "EXCHANGE.INPUT_CHANGE": {
@@ -388,7 +388,7 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.UPDATE_CURRENT_BALANCE": {
-      const {sourceBalance, destBalance, txHash} = action.payload
+      const { sourceBalance, destBalance, txHash } = action.payload
       if (txHash === newState.txHash) {
         newState.balanceData.nextSource = sourceBalance
         newState.balanceData.nextDest = destBalance
@@ -424,13 +424,13 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.SET_GAS_USED": {
-      const {gas, gas_approve} = action.payload      
+      const { gas, gas_approve } = action.payload
       newState.gas = gas
       newState.gas_approve = gas_approve
       return newState
     }
     case "EXCHANGE.SET_GAS_USED_SNAPSHOT": {
-      const {gas, gas_approve} = action.payload      
+      const { gas, gas_approve } = action.payload
       newState.snapshot.gas = gas
       newState.snapshot.gas_approve = gas_approve
       return newState
@@ -465,14 +465,14 @@ const exchange = (state = initState, action) => {
       if (!newState.isEditGasPrice) {
         var { safeLowGas, standardGas, fastGas, defaultGas, selectedGas } = action.payload
 
-        var gasPriceSuggest = {...newState.gasPriceSuggest}
-        
-        gasPriceSuggest.fastGas = Math.round(fastGas * 10)/10
-        gasPriceSuggest.standardGas = Math.round(standardGas * 10)/10
-        gasPriceSuggest.safeLowGas = Math.round(safeLowGas * 10)/10
+        var gasPriceSuggest = { ...newState.gasPriceSuggest }
 
-        newState.gasPriceSuggest = {...gasPriceSuggest}
-        newState.gasPrice = Math.round(defaultGas * 10)/10
+        gasPriceSuggest.fastGas = Math.round(fastGas * 10) / 10
+        gasPriceSuggest.standardGas = Math.round(standardGas * 10) / 10
+        gasPriceSuggest.safeLowGas = Math.round(safeLowGas * 10) / 10
+
+        newState.gasPriceSuggest = { ...gasPriceSuggest }
+        newState.gasPrice = Math.round(defaultGas * 10) / 10
 
         newState.selectedGas = selectedGas
       }
@@ -490,15 +490,15 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.ANALYZE_ERROR": {
-      const {txHash} = action.payload
-      if (txHash === newState.txHash){
+      const { txHash } = action.payload
+      if (txHash === newState.txHash) {
         newState.isAnalize = true
       }
       return newState
     }
     case "EXCHANGE.SET_ANALYZE_ERROR": {
       const { networkIssues, txHash } = action.payload
-      if (txHash === newState.txHash){
+      if (txHash === newState.txHash) {
         newState.analizeError = { ...networkIssues }
         newState.isAnalize = false
         newState.isAnalizeComplete = true
@@ -513,62 +513,62 @@ const exchange = (state = initState, action) => {
     //   newState.isFetchingGas = false
     //   return newState
     // }
-    case "EXCHANGE.FETCH_GAS_SNAPSHOT":{
+    case "EXCHANGE.FETCH_GAS_SNAPSHOT": {
       newState.snapshot.isFetchingGas = true
       return newState
     }
-    case "EXCHANGE.FETCH_GAS_SUCCESS_SNAPSHOT":{
+    case "EXCHANGE.FETCH_GAS_SUCCESS_SNAPSHOT": {
       newState.snapshot.isFetchingGas = false
       return newState
     }
-    case "EXCHANGE.SET_KYBER_ENABLE":{
+    case "EXCHANGE.SET_KYBER_ENABLE": {
       newState.kyber_enabled = action.payload
       return newState
     }
     case "EXCHANGE.SET_SNAPSHOT": {
-      var snapshot  = action.payload
-      newState.snapshot = {...snapshot}
+      var snapshot = action.payload
+      newState.snapshot = { ...snapshot }
       return newState
     }
     case "EXCHANGE.THROW_NOT_POSSESS_KGT_ERROR": {
       newState.errorNotPossessKgt = action.payload
       return newState
     }
-    case "EXCHANGE.SET_EXCHANGE_ENABLE":{
-      if(action.payload){
+    case "EXCHANGE.SET_EXCHANGE_ENABLE": {
+      if (action.payload) {
         newState.errors.exchange_enable = ""
-      }else{
+      } else {
         newState.errors.exchange_enable = "error.exchange_enable"
       }
       return newState
     }
-    case "EXCHANGE.UPDATE_BALANCE_DATA":{
-      const {balanceData, hash} = action.payload
-      if (hash === newState.txHash){
+    case "EXCHANGE.UPDATE_BALANCE_DATA": {
+      const { balanceData, hash } = action.payload
+      if (hash === newState.txHash) {
         newState.balanceData.sourceAmount = balanceData.srcAmount
         newState.balanceData.destAmount = balanceData.destAmount
       }
       return newState
     }
-    case "EXCHANGE.SET_SELECTED_GAS":{
-      const {level} = action.payload
+    case "EXCHANGE.SET_SELECTED_GAS": {
+      const { level } = action.payload
       newState.selectedGas = level
       return newState
     }
-    case "EXCHANGE.OPEN_IMPORT_ACCOUNT":{
+    case "EXCHANGE.OPEN_IMPORT_ACCOUNT": {
       newState.isOpenImportAcount = true
       return newState
     }
-    case "EXCHANGE.CLOSE_IMPORT_ACCOUNT":{
+    case "EXCHANGE.CLOSE_IMPORT_ACCOUNT": {
       newState.isOpenImportAcount = false
       return newState
     }
-    case "GLOBAL.CLEAR_SESSION_FULFILLED":{
+    case "GLOBAL.CLEAR_SESSION_FULFILLED": {
       var gasPrice = action.payload
-      var resetState = {...initState}
+      var resetState = { ...initState }
       resetState.sourceToken = newState.sourceToken
       resetState.sourceTokenSymbol = newState.sourceTokenSymbol
-      
+
       // resetState.gasPrice = newState.gasPrice
       resetState.gasPrice = gasPrice
       resetState.selectedGas = newState.selectedGas
@@ -586,11 +586,16 @@ const exchange = (state = initState, action) => {
       newState.isBalanceActive = !newState.isBalanceActive;
       return newState;
     }
-    case "EXCHANGE.TOGGLE_ADVANCE_CONTENT":{
+    case "EXCHANGE.TOGGLE_ADVANCE_CONTENT": {
       newState.isAdvanceActive = !newState.isAdvanceActive
       return newState;
     }
-    case "EXCHANGE.SET_SELECTED_GAS_PRICE":{
+    case "EXCHANGE.SET_IS_OPEN_ADVANCE": {
+      newState.isOpenAdvance = action.payload;
+      return newState;
+    }
+
+    case "EXCHANGE.SET_SELECTED_GAS_PRICE": {
       const { gasPrice, gasLevel } = action.payload
 
       newState.gasPrice = gasPrice
