@@ -261,6 +261,7 @@ class ExchangeBody extends React.Component {
 
   focusSource = () => {
     this.props.dispatch(exchangeActions.focusInput('source'));
+    this.props.dispatch(exchangeActions.setIsSelectTokenBalance(false))
     this.setState({ focus: "source" })
     this.props.global.analytics.callTrack("trackClickInputAmount", "from");
   }
@@ -271,6 +272,7 @@ class ExchangeBody extends React.Component {
 
   focusDest = () => {
     this.props.dispatch(exchangeActions.focusInput('dest'));
+    this.props.dispatch(exchangeActions.setIsSelectTokenBalance(false));
     this.setState({ focus: "dest" })
     this.props.global.analytics.callTrack("trackClickInputAmount", "to");
   }
@@ -442,6 +444,7 @@ class ExchangeBody extends React.Component {
         isOnDAPP={this.props.account.isOnDAPP}
         changeAmount={exchangeActions.inputChange}
         changeFocus={exchangeActions.focusInput}
+        selectTokenBalance={this.selectTokenBalance}
       />)
   }
 
@@ -473,6 +476,10 @@ class ExchangeBody extends React.Component {
 
   clearIsOpenAdvance = () => {
     this.props.dispatch(exchangeActions.clearIsOpenAdvance());
+  }
+
+  selectTokenBalance = () => {
+    this.props.dispatch(exchangeActions.setIsSelectTokenBalance(true));
   }
 
   render() {
@@ -594,6 +601,7 @@ class ExchangeBody extends React.Component {
       chooseToken={this.chooseToken}
       activeSymbol={this.props.exchange.sourceTokenSymbol}
       screen="swap"
+      selectTokenBalance={this.selectTokenBalance}
       changeAmount={exchangeActions.inputChange}
       changeFocus={exchangeActions.focusInput} />
     return (
@@ -644,6 +652,8 @@ class ExchangeBody extends React.Component {
         topBalance={topBalance}
 
         isOnDAPP={this.props.account.isOnDAPP}
+
+        isSelectTokenBalance={this.props.exchange.isSelectTokenBalance}
       />
     )
   }

@@ -13,7 +13,7 @@ import * as analytics from "../../utils/analytics";
 // import {AdvanceAccount} from "../TransactionCommon"
 
 import { AdvanceAccount } from "../../containers/TransactionCommon"
-
+import { CSSTransition } from "react-transition-group";
 
 const TransferForm = (props) => {
   function handleChangeAmount(e) {
@@ -143,6 +143,12 @@ const TransferForm = (props) => {
                         )} */}
                       </div>
                     </div>
+                    <CSSTransition mountOnEnter unmountOnExit classNames="top-token-number" 
+                      in={!props.errors.amountTransfer && props.input.amount.value > 0 && props.isSelectTokenBalance}
+                      appear={true}
+                      timeout={{ enter: 300, exit: 200 }}>
+                        <div className={`top-token-number`} onClick={props.onFocus}>100%</div>
+                    </CSSTransition>
                   </div>
                   {props.errors.amountTransfer &&
                     <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="transfer-amount-error" type="light" />

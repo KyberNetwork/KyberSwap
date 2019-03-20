@@ -334,3 +334,10 @@ export function setSelectedGasPrice(gasPrice, gasLevel) {
     payload: { gasPrice, gasLevel }
   }
 }
+
+export function setIsSelectTokenBalance(value) {
+  return {
+    type: "TRANSFER.SET_IS_SELECT_TOKEN_BALANCE",
+    payload: value
+  }
+}

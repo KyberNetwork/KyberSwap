@@ -57,7 +57,7 @@
     "react-table": "^6.8.2",
     "react-test-renderer": "^16.2.0",
     "react-tooltip": "^3.4.0",
-    "react-transition-group": "^2.5.1",
+    "react-transition-group": "^2.6.1",
     "reactstrap": "^6.5.0",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",

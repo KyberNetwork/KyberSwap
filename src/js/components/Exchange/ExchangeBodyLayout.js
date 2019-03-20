@@ -14,7 +14,8 @@ import { getAssetUrl } from "../../utils/common";
 // import { TermAndServices } from "../../containers/CommonElements";
 // import { AdvanceAccount } from "../TransactionCommon"
 
-import { AdvanceAccount } from "../../containers/TransactionCommon"
+import { AdvanceAccount } from "../../containers/TransactionCommon";
+import { CSSTransition } from "react-transition-group";
 
 const ExchangeBodyLayout = (props) => {
   function handleChangeSource(e) {
@@ -144,8 +145,12 @@ const ExchangeBodyLayout = (props) => {
                         )} */}
                       </div>
                     </div>
-
-
+                    <CSSTransition mountOnEnter unmountOnExit classNames="top-token-number" 
+                      in={!errorExchange && props.input.sourceAmount.value > 0 && props.isSelectTokenBalance}
+                      appear={true}
+                      timeout={{ enter: 300, exit: 200 }}>
+                        <div className={`top-token-number`} onClick={props.input.sourceAmount.onFocus}>100%</div>
+                    </CSSTransition>
                   </div>
                   {errorExchange &&
                     <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="swap-error" type="light" />
@@ -222,6 +227,7 @@ const ExchangeBodyLayout = (props) => {
             clearIsOpenAdvance={props.clearIsOpenAdvance}
             postWithKey={<PostExchangeWithKey isChangingWallet={props.isChangingWallet} />}
             screen={"swap"}
+            selectTokenBalance={props.selectTokenBalance}
           />
         )}
       </div>
