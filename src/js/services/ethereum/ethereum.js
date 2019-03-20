@@ -396,10 +396,10 @@ export default class EthereumService extends React.Component {
   }
 
   call(fn, ...args) {
-    var cloneArr =  this.copyArr(this.listProviders)
-    var shuffleArr = this.shuffleArr(cloneArr)
+    // var cloneArr =  this.copyArr(this.listProviders)
+    // var shuffleArr = this.shuffleArr(cloneArr)
     return new Promise((resolve, reject) => {
-      this.promiseOneNode(shuffleArr, 0, fn, resolve, reject, ...args)
+      this.promiseOneNode(this.listProviders, 0, fn, resolve, reject, ...args)
     })
   }
 
