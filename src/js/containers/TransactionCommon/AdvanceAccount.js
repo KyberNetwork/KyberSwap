@@ -82,7 +82,7 @@ export default class AdvanceAccount extends React.Component {
     getContent = () => {
         if (!this.props.isAdvanceActive) return ""
         return (
-            <div className={`exchange-account__content`}>
+            <div className={`exchange-account__content ${this.props.isOpenAdvance ? "exchange-account__content--animation" : ""}`}>
                 <div className="advance-close" onClick={this.props.toggleAdvanceContent}>
                     <div className="advance-close_wrapper"></div>
                 </div>
@@ -123,6 +123,10 @@ export default class AdvanceAccount extends React.Component {
                 </div>
             </div>
         )
+    }
+
+    componentWillUnmount = () => {
+        this.props.clearIsOpenAdvance();
     }
 
     render() {

@@ -309,7 +309,12 @@
       background-color: #f6f7fa;
     }
     
-    @include rollOut;
+    &--animation {
+      @include animation(slideInDown) {
+        animation-duration: 0.3s;
+        animation-timing-function: ease-out;
+      };
+    }
 
     .advance-close{
       position: absolute;

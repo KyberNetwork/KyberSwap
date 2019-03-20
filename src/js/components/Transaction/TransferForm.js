@@ -92,6 +92,7 @@ const TransferForm = (props) => {
           isChangingWallet={props.isChangingWallet}
           closeChangeWallet={props.closeChangeWallet}
           isAgreedTermOfService={props.isAgreedTermOfService}
+          isAcceptConnectWallet={props.isAcceptConnectWallet}
           acceptTerm={props.acceptTerm}
         />
       )
@@ -121,7 +122,7 @@ const TransferForm = (props) => {
                     <div className={"exchange-content__input-container"}>
                       <div className={"main-input main-input__left"}>
                         <div id="transfer-amount-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${props.translate(props.errors.amountTransfer)}</div>`} data-html={true} data-event='click focus' data-for="transfer-amount-error" data-scroll-hide="false"
-                          >
+                        >
                           <input
                             className={`exchange-content__input ${props.account !== false ? 'has-account' : ''}`}
                             type="text"
@@ -148,8 +149,8 @@ const TransferForm = (props) => {
                   }
                 </div>
                 {props.account !== false && !props.isAdvanceActive && (
-                      <div>{props.topBalance}</div>
-                    )}
+                  <div>{props.topBalance}</div>
+                )}
               </div>
 
               <div className={"exchange-content__item--middle"}>
@@ -162,7 +163,7 @@ const TransferForm = (props) => {
                   <div className={`input-div-content`}>
                     <div className="exchange-content__input-container exchange-content__input-container--to exchange-content__transfer-addr">
                       <div id="transfer-address-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${props.translate(props.errors.destAddress)}</div>`} data-html={true} data-event='click focus' data-for="transfer-address-error" data-scroll-hide="false"
-                        >
+                      >
                         <input
                           className={`exchange-content__input exchange-content__input-address`}
                           value={props.input.destAddress.value}
@@ -171,7 +172,7 @@ const TransferForm = (props) => {
                           onFocus={props.onFocusAddr}
                           onBlur={props.onBlur}
                         />
-                       
+
                       </div>
                       {props.qcCode}
                     </div>
@@ -212,16 +213,18 @@ const TransferForm = (props) => {
         )} */}
 
         {props.account !== false && (
-          
+
           <AdvanceAccount
-          clearSession={props.clearSession}
-          toggleAdvanceContent = {props.toggleAdvanceContent}
-          balanceLayout={props.balanceLayout}
-          isAdvanceActive={props.isAdvanceActive}
-          advanceLayout={props.advanceLayout}
-          postWithKey={<PostTransferWithKey isChangingWallet={props.isChangingWallet} />}
-          screen={"transfer"}
-          /> 
+            clearSession={props.clearSession}
+            toggleAdvanceContent={props.toggleAdvanceContent}
+            balanceLayout={props.balanceLayout}
+            isAdvanceActive={props.isAdvanceActive}
+            advanceLayout={props.advanceLayout}
+            isOpenAdvance={props.isOpenAdvance}
+            clearIsOpenAdvance={props.clearIsOpenAdvance}
+            postWithKey={<PostTransferWithKey isChangingWallet={props.isChangingWallet} />}
+            screen={"transfer"}
+          />
         )}
       </div>
 

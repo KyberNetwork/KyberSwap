@@ -95,6 +95,7 @@ const ExchangeBodyLayout = (props) => {
           isChangingWallet={props.isChangingWallet}
           closeChangeWallet={props.closeChangeWallet}
           isAgreedTermOfService={props.isAgreedTermOfService}
+          isAcceptConnectWallet={props.isAcceptConnectWallet}
           acceptTerm={props.acceptTerm}
         />
       )
@@ -217,6 +218,8 @@ const ExchangeBodyLayout = (props) => {
             balanceLayout={props.balanceLayout}
             isAdvanceActive={props.isAdvanceActive}
             advanceLayout={props.advanceLayout}
+            isOpenAdvance={props.isOpenAdvance}
+            clearIsOpenAdvance={props.clearIsOpenAdvance}
             postWithKey={<PostExchangeWithKey isChangingWallet={props.isChangingWallet} />}
             screen={"swap"}
           />

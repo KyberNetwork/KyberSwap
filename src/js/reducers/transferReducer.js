@@ -38,7 +38,7 @@ const transfer = (state = initState, action) => {
         newState.gas_estimate = newState.gas_limit_transfer_eth
       } else {
         newState.gas_estimate = newState.gas_limit_transfer_token
-      }      
+      }
       newState.amount = ""
       newState.errors.amountTransfer = ""
       newState.errors.ethBalanceError = ""
@@ -141,7 +141,7 @@ const transfer = (state = initState, action) => {
     }
     case "TRANSFER.SET_BROADCAST_ERROR": {
       newState.broadcasting = false
-      newState.broadcastError = action.payload ? action.payload :  "Cannot broadcast transaction to blockchain"
+      newState.broadcastError = action.payload ? action.payload : "Cannot broadcast transaction to blockchain"
       newState.confirmApprove = false
       newState.isApproving = false
       newState.isConfirming = false
@@ -201,19 +201,19 @@ const transfer = (state = initState, action) => {
       }
       return newState
     }
-    case "TRANSFER.SET_GAS_USED":{
+    case "TRANSFER.SET_GAS_USED": {
       newState.gas = action.payload.gas
       return newState
     }
-    case "TRANSFER.SET_GAS_USED_SNAPSHOT":{
+    case "TRANSFER.SET_GAS_USED_SNAPSHOT": {
       newState.snapshot.gas = action.payload.gas
       return newState
     }
-    case "TRANSFER.FETCH_GAS_SNAPSHOT":{
+    case "TRANSFER.FETCH_GAS_SNAPSHOT": {
       newState.snapshot.isFetchingGas = true
       return newState
     }
-    case "TRANSFER.FETCH_SNAPSHOT_GAS_SUCCESS":{
+    case "TRANSFER.FETCH_SNAPSHOT_GAS_SUCCESS": {
       newState.snapshot.isFetchingGas = false
       return newState
     }
@@ -222,41 +222,41 @@ const transfer = (state = initState, action) => {
         var { safeLowGas, standardGas, fastGas, defaultGas, selectedGas } = action.payload
 
         var gasPriceSuggest = newState.gasPriceSuggest
-        gasPriceSuggest.fastGas = Math.round(fastGas * 10)/10
-        gasPriceSuggest.standardGas = Math.round(standardGas * 10)/10
-        gasPriceSuggest.safeLowGas = Math.round(safeLowGas * 10)/10
+        gasPriceSuggest.fastGas = Math.round(fastGas * 10) / 10
+        gasPriceSuggest.standardGas = Math.round(standardGas * 10) / 10
+        gasPriceSuggest.safeLowGas = Math.round(safeLowGas * 10) / 10
 
-        newState.gasPriceSuggest = {...gasPriceSuggest}
-        newState.gasPrice = Math.round(defaultGas * 10)/10
+        newState.gasPriceSuggest = { ...gasPriceSuggest }
+        newState.gasPrice = Math.round(defaultGas * 10) / 10
         newState.selectedGas = selectedGas
       }
       return newState
     }
 
     case "TRANSFER.SET_SNAPSHOT": {
-      var snapshot  = action.payload
-      newState.snapshot = {...snapshot}
+      var snapshot = action.payload
+      newState.snapshot = { ...snapshot }
       return newState
     }
 
-    case "TRANSFER.SET_SELECTED_GAS":{
-      const {level} = action.payload
+    case "TRANSFER.SET_SELECTED_GAS": {
+      const { level } = action.payload
       newState.selectedGas = level
       return newState
     }
 
-    case "TRANSFER.OPEN_IMPORT_ACCOUNT":{
+    case "TRANSFER.OPEN_IMPORT_ACCOUNT": {
       newState.isOpenImportAcount = true
       return newState
     }
-    case "TRANSFER.CLOSE_IMPORT_ACCOUNT":{
+    case "TRANSFER.CLOSE_IMPORT_ACCOUNT": {
       newState.isOpenImportAcount = false
       return newState
     }
 
-    case "GLOBAL.CLEAR_SESSION_FULFILLED":{
+    case "GLOBAL.CLEAR_SESSION_FULFILLED": {
       var gasPrice = action.payload
-      var resetState = {...initState}
+      var resetState = { ...initState }
       resetState.token = newState.token
 
       // resetState.gasPrice = newState.gasPrice
@@ -277,7 +277,11 @@ const transfer = (state = initState, action) => {
       newState.isAdvanceActive = !newState.isAdvanceActive;
       return newState;
     }
-    case "TRANSFER.SET_SELECTED_GAS_PRICE":{
+    case "TRANSFER.SET_IS_OPEN_ADVANCE": {
+      newState.isOpenAdvance = action.payload;
+      return newState;
+    }
+    case "TRANSFER.SET_SELECTED_GAS_PRICE": {
       const { gasPrice, gasLevel } = action.payload
 
       newState.gasPrice = gasPrice

@@ -45,6 +45,13 @@
     max-width: 550px;
     margin: 0 auto;
 
+    &--animation {
+      @include animation(slideInUp) {
+        animation-duration: 0.3s;
+        animation-timing-function: ease-out;
+      }
+    }
+
     &--mobile {
       display: block;
 
