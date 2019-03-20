@@ -1,17 +1,17 @@
 import React from "react"
 import { connect } from "react-redux"
-import {  ImportAccountView } from '../../components/ImportAccount'
+import { ImportAccountView } from '../../components/ImportAccount'
 import {
   ImportKeystore, ImportByDevice, ImportByPrivateKey,
   ErrorModal, ImportByMetamask,
   ImportByDeviceWithLedger, ImportByDeviceWithTrezor, ImportByPromoCode
 } from "../ImportAccount"
-import { visitExchange, setOnMobile } from "../../actions/globalActions"
+import { visitExchange, setOnMobile, clearAcceptConnectWallet } from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux'
 import { importAccountMetamask, setOnDAPP } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import * as web3Package from "../../services/web3"
-import {isMobile} from '../../utils/common'
+import { isMobile } from '../../utils/common'
 import { TermAndServices } from "../../containers/CommonElements";
 
 @connect((store, props) => {
@@ -20,7 +20,7 @@ import { TermAndServices } from "../../containers/CommonElements";
   Object.keys(tokens).forEach((key) => {
     supportTokens.push(tokens[key])
   })
-  
+
   return {
     ...store.account,
     translate: getTranslate(store.locale),
@@ -41,7 +41,7 @@ export default class ImportAccount extends React.Component {
   componentDidMount = () => {
     var swapPage = document.getElementById("swap-app")
     swapPage.className = swapPage.className === "" ? "no-min-height" : swapPage.className + " no-min-height"
-    
+
     var web3Service = web3Package.newWeb3Instance()
     if (web3Service !== false) {
       const walletType = web3Service.getWalletType();
@@ -57,6 +57,10 @@ export default class ImportAccount extends React.Component {
         this.props.dispatch(setOnMobile(false, true));
       }
     }
+  }
+
+  componentWillUnmount = () => {
+    this.props.dispatch(clearAcceptConnectWallet());
   }
 
   acceptTerm = () => {
@@ -80,14 +84,15 @@ export default class ImportAccount extends React.Component {
           <div className={"exchange-content__accept-term"}>
             <div className={"accept-buttom"} onClick={(e) => this.acceptTerm()}>
               {this.props.tradeType === "swap" ? this.props.translate("transaction.swap_now") || "Swap Now"
-              : this.props.translate("transaction.transfer_now") || "Transfer Now"}
+                : this.props.translate("transaction.transfer_now") || "Transfer Now"}
             </div>
             {/* <TermAndServices tradeType={this.props.tradeType}/> */}
           </div>
         }
         {!this.props.isOnDAPP && <ImportAccountView
           isAgreedTermOfService={this.props.isAgreedTermOfService}
-          errorModal={<ErrorModal/>}
+          isAcceptConnectWallet={this.props.isAcceptConnectWallet}
+          errorModal={<ErrorModal />}
           translate={this.props.translate}
           onMobile={this.props.onMobile}
           tradeType={this.props.tradeType}

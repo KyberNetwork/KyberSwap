@@ -112,7 +112,7 @@ class Transfer extends React.Component {
   onAmountChange = (event) => {
     var value = event.target.value
     this.props.dispatch(transferActions.specifyAmountTransfer(value))
-    if(this.props.account.account){
+    if (this.props.account.account) {
       this.lazyEstimateGas(value)
       this.lazyUpdateValidateSourceAmount(value, this.props.transfer.gasPrice)
     }
@@ -142,13 +142,13 @@ class Transfer extends React.Component {
     }
   }
 
-  onFocus = () => { 
-    this.setState({focus:"source"})
+  onFocus = () => {
+    this.setState({ focus: "source" })
     this.props.analytics.callTrack("trackClickInputAmount", "transfer");
   }
 
-  onFocusAddr = () => { 
-    this.setState({focus:"to-addr"})
+  onFocusAddr = () => {
+    this.setState({ focus: "to-addr" })
     this.props.analytics.callTrack("trackClickInputRecieveAddress");
   }
 
@@ -180,10 +180,10 @@ class Transfer extends React.Component {
     this.props.analytics.callTrack("trackClickAllIn", "Transfer", tokenSymbol);
   }
 
-  handleErrorQRCode = (err) =>{
+  handleErrorQRCode = (err) => {
   }
 
-  handleScanQRCode = (data) =>{
+  handleScanQRCode = (data) => {
     this.props.dispatch(transferActions.specifyAddressReceive(data));
   }
 
@@ -195,7 +195,11 @@ class Transfer extends React.Component {
     } else {
       this.props.global.analytics.callTrack("trackClickShowAdvanceOption", "Transfer")
     }
-    this.props.dispatch(transferActions.toggleAdvanceContent())        
+    this.props.dispatch(transferActions.toggleAdvanceContent());
+
+    if (!this.props.transfer.isOpenAdvance) {
+      this.props.dispatch(transferActions.setIsOpenAdvance());
+    }
   }
 
 
@@ -224,7 +228,7 @@ class Transfer extends React.Component {
         selectedGasHandler={this.selectedGasHandler}
         gasPriceSuggest={this.props.transfer.gasPriceSuggest}
         translate={this.props.translate}
-        isAdvanceActive = {this.props.transfer.isAdvanceActive}
+        isAdvanceActive={this.props.transfer.isAdvanceActive}
         toggleAdvanceContent={this.toggleAdvanceContent}
         type="transfer"
       />
@@ -237,9 +241,9 @@ class Transfer extends React.Component {
         chooseToken={this.chooseToken}
         sourceActive={this.props.transfer.tokenSymbol}
         destTokenSymbol='ETH'
-        isBalanceActive = {this.props.transfer.isAdvanceActive}
-        screen = "transfer"
-        isOnDAPP = {this.props.account.isOnDAPP}
+        isBalanceActive={this.props.transfer.isAdvanceActive}
+        screen="transfer"
+        isOnDAPP={this.props.account.isOnDAPP}
         changeAmount={transferActions.specifyAmountTransfer}
       />)
   }
@@ -253,20 +257,21 @@ class Transfer extends React.Component {
     this.props.global.analytics.callTrack("trackClickChangeWallet")
   }
 
- 
 
   acceptTerm = (e) => {
-    this.props.dispatch(globalActions.acceptTermOfService())
+    this.props.dispatch(globalActions.acceptTermOfService());
+    this.props.dispatch(globalActions.acceptConnectWallet());
   }
 
+  clearIsOpenAdvance = () => {
+    this.props.dispatch(transferActions.clearIsOpenAdvance());
+  }
 
-
-  
   setDefaulAmountErrorTooltip = (value) => {
-    this.setState({defaultShowAmountErrorTooltip: value})
+    this.setState({ defaultShowAmountErrorTooltip: value })
   }
   setDefaulAddrErrorTooltip = (value) => {
-    this.setState({defaultShowAddrErrorTooltip: value})
+    this.setState({ defaultShowAddrErrorTooltip: value })
   }
 
   render() {
@@ -327,13 +332,13 @@ class Transfer extends React.Component {
     var qcCode = common.isMobile.any() ? <QRCode
       onError={this.handleErrorQRCode}
       onScan={this.handleScanQRCode}
-      onDAPP={this.props.account.isOnDAPP}/> : ""
+      onDAPP={this.props.account.isOnDAPP} /> : ""
 
-    var topBalance = <TopBalance  showMore = {this.toggleAdvanceContent}
-      chooseToken = {this.chooseToken}
-      activeSymbol = {this.props.transfer.tokenSymbol}
-      screen= "transfer"
-      changeAmount={transferActions.specifyAmountTransfer}/>
+    var topBalance = <TopBalance showMore={this.toggleAdvanceContent}
+      chooseToken={this.chooseToken}
+      activeSymbol={this.props.transfer.tokenSymbol}
+      screen="transfer"
+      changeAmount={transferActions.specifyAmountTransfer} />
 
     return (
       <TransferForm
@@ -354,29 +359,34 @@ class Transfer extends React.Component {
         advanceLayout={this.getAdvanceLayout()}
         balanceLayout={this.getBalanceLayout()}
         networkError={this.props.global.network_error}
-        isChangingWallet = {this.props.global.isChangingWallet}
-        changeWalletType = {this.props.global.changeWalletType}
-        closeChangeWallet = {this.closeChangeWallet}
+        isChangingWallet={this.props.global.isChangingWallet}
+        changeWalletType={this.props.global.changeWalletType}
+        closeChangeWallet={this.closeChangeWallet}
         global={this.props.global}
         addressBalance={addressBalance}
         clearSession={this.clearSession}
         walletName={this.props.account.walletName}
-        qcCode = {qcCode}
+        qcCode={qcCode}
         isAgreedTermOfService={this.props.global.termOfServiceAccepted}
         acceptTerm={this.acceptTerm}
-        isBalanceActive = {this.props.transfer.isBalanceActive}
-        isAdvanceActive = {this.props.transfer.isAdvanceActive}
-        toggleAdvanceContent = {this.toggleAdvanceContent}
-        topBalance = {topBalance}
+        isBalanceActive={this.props.transfer.isBalanceActive}
+        isAdvanceActive={this.props.transfer.isAdvanceActive}
+        toggleAdvanceContent={this.toggleAdvanceContent}
 
+        isOpenAdvance={this.props.transfer.isOpenAdvance}
+        clearIsOpenAdvance={this.clearIsOpenAdvance}
 
-        defaultShowAmountErrorTooltip = {this.state.defaultShowAmountErrorTooltip}
-        setDefaulAmountErrorTooltip = {this.setDefaulAmountErrorTooltip}
+        topBalance={topBalance}
+        isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
+        acceptConnectWallet={this.acceptConnectWallet}
 
-        defaultShowAddrErrorTooltip = {this.state.defaultShowAddrErrorTooltip}
-        setDefaulAddrErrorTooltip = {this.setDefaulAddrErrorTooltip}
+        defaultShowAmountErrorTooltip={this.state.defaultShowAmountErrorTooltip}
+        setDefaulAmountErrorTooltip={this.setDefaulAmountErrorTooltip}
 
-        isOnDAPP = {this.props.account.isOnDAPP}
+        defaultShowAddrErrorTooltip={this.state.defaultShowAddrErrorTooltip}
+        setDefaulAddrErrorTooltip={this.setDefaulAddrErrorTooltip}
+
+        isOnDAPP={this.props.account.isOnDAPP}
       />
     )
   }

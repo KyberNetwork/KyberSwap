@@ -2,21 +2,22 @@ import constants from '../services/constants';
 
 const initState = {
   termOfServiceAccepted: false,
+  isAcceptConnectWallet: false,
   showBalance: false,
   nodeName: "Infura Kovan",
   nodeURL: "https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi",
- // history: constants.HISTORY_EXCHANGE,
-  count: {storageKey: constants.STORAGE_KEY},
+  // history: constants.HISTORY_EXCHANGE,
+  count: { storageKey: constants.STORAGE_KEY },
   conn_checker: constants.CONNECTION_CHECKER,
   isVisitFirstTime: true,
   isOpenAnalyze: false,
   isAnalize: false,
   isAnalizeComplete: false,
-  analizeError : {},
+  analizeError: {},
   selectedAnalyzeHash: '',
   changeWalletType: "",
   isChangingWallet: false,
-  network_error:"",
+  network_error: "",
   metamask: {
     address: "",
     balance: "",
@@ -30,7 +31,7 @@ const initState = {
   },
   isOnMobile: false,
   analytics: {
-    callTrack : () => {return}
+    callTrack: () => { return }
   }
 }
 
@@ -62,11 +63,11 @@ const global = (state = initState, action) => {
     }
     case "GLOBAL.TOGGLE_ANALYZE": {
       var oldStateOpenAnalyze = state.isOpenAnalyze
-      return {...state, isOpenAnalyze: !oldStateOpenAnalyze}
+      return { ...state, isOpenAnalyze: !oldStateOpenAnalyze }
     }
     case "GLOBAL.OPEN_ANALYZE": {
       var txHash = action.payload
-      var newState = {...state}
+      var newState = { ...state }
       newState.selectedAnalyzeHash = txHash
       newState.isOpenAnalyze = true
 
@@ -74,7 +75,7 @@ const global = (state = initState, action) => {
     }
     case "GLOBAL.SET_ANALYZE_ERROR": {
       const { networkIssues, reserveIssues, txHash } = action.payload
-      var newState = {...state}
+      var newState = { ...state }
       newState.analizeError[txHash] = { networkIssues, reserveIssues }
       newState.isAnalize = false
       newState.isAnalizeComplete = true
@@ -101,44 +102,44 @@ const global = (state = initState, action) => {
     //   history.isFetching = false
     //   return { ...state,  history: {...history} }
     // }
-    case "GLOBAL.CONNECTION_UPDATE_IS_CHECK":{
+    case "GLOBAL.CONNECTION_UPDATE_IS_CHECK": {
       var conn_checker = { ...state.conn_checker }
       conn_checker.isCheck = action.payload
       return Object.assign({}, state, { conn_checker: conn_checker })
     }
-    case "GLOBAL.CONNECTION_UPDATE_COUNT":{
+    case "GLOBAL.CONNECTION_UPDATE_COUNT": {
       var conn_checker = { ...state.conn_checker }
       conn_checker.count = action.payload
       return Object.assign({}, state, { conn_checker: conn_checker })
     }
-    case "GLOBAL.SHOW_BALABCE_USD":{
+    case "GLOBAL.SHOW_BALABCE_USD": {
       return Object.assign({}, state, { showBalance: true })
     }
-    case "GLOBAL.HIDE_BALABCE_USD":{
+    case "GLOBAL.HIDE_BALABCE_USD": {
       return Object.assign({}, state, { showBalance: false })
     }
-    case "GLOBAL.VISIT_EXCHANGE":{
+    case "GLOBAL.VISIT_EXCHANGE": {
       return Object.assign({}, state, { isVisitFirstTime: false })
     }
-    case "GLOBAL.THROW_ERROR_METAMASK":{
-      const {err} = action.payload
-      var metamask = {error: err}
+    case "GLOBAL.THROW_ERROR_METAMASK": {
+      const { err } = action.payload
+      var metamask = { error: err }
       return Object.assign({}, state, { metamask: metamask })
     }
-    case "GLOBAL.UPDATE_METAMASK_ACCOUNT":{
-      const {address, balance} = action.payload
+    case "GLOBAL.UPDATE_METAMASK_ACCOUNT": {
+      const { address, balance } = action.payload
       const error = ""
-      var metamask = {address, balance, error}
+      var metamask = { address, balance, error }
       return Object.assign({}, state, { metamask: metamask })
     }
 
-    case "GLOBAL.SET_NOTI_HANDLER":{
-      const {notiService} = action.payload
+    case "GLOBAL.SET_NOTI_HANDLER": {
+      const { notiService } = action.payload
       return Object.assign({}, state, { notiService: notiService })
     }
 
-    case "GLOBAL.SET_NETWORK_ERROR":{
-      const {error} = action.payload
+    case "GLOBAL.SET_NETWORK_ERROR": {
+      const { error } = action.payload
       return Object.assign({}, state, { network_error: error })
     }
 
@@ -150,7 +151,7 @@ const global = (state = initState, action) => {
     case "GLOBAL.CLOSE_CHANGE_WALLET": {
       return Object.assign({}, state, { changeWalletType: "", isChangingWallet: false })
     }
-    
+
     case "GLOBAL.SET_IS_IOS": {
       return Object.assign({}, state, { isIos: action.payload })
     }
@@ -159,7 +160,7 @@ const global = (state = initState, action) => {
       return Object.assign({}, state, { isAndroid: action.payload })
     }
     case "GLOBAL.SET_ON_MOBILE": {
-      const {isIOS, isAndroid} = action.payload
+      const { isIOS, isAndroid } = action.payload
       let onMobile = {
         isIOS: isIOS,
         isAndroid: isAndroid
@@ -169,10 +170,16 @@ const global = (state = initState, action) => {
     case "GLOBAL.SET_ON_MOBILE_ONLY": {
       return Object.assign({}, state, { isOnMobile: true })
     }
-    case "GLOBAL.INIT_ANALYTICS":{
-      var newState = {...state}
+    case "GLOBAL.INIT_ANALYTICS": {
+      var newState = { ...state }
       newState.analytics = action.payload
       return newState
+    }
+    case "GLOBAL.SET_ACCEPT_CONNECT_WALLET": {
+      return {
+        ...state,
+        isAcceptConnectWallet: action.payload
+      }
     }
   }
   return state

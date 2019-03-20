@@ -32,7 +32,7 @@ const ImportAccountView = (props) => {
           </div>
         )}
 
-        <div className={`import-account__content ${props.isAgreedTermOfService ? 'import-account__content--animation' : ''} ${isOnMobile ? ' import-account__content--mobile' : ''}`}>
+        <div className={`import-account__content ${props.isAcceptConnectWallet ? "import-account__content--animation" : ""} ${isOnMobile ? ' import-account__content--mobile' : ''}`}>
           {!isOnMobile &&
             <div className={`import-account__item ${importInactiveClass}`}>
               <ImportByMetamask />

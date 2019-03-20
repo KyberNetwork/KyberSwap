@@ -25,7 +25,7 @@ export function caculateAmount() {
   }
 }
 
-export function caculateAmountInSnapshot(){
+export function caculateAmountInSnapshot() {
   return {
     type: "EXCHANGE.CACULATE_AMOUNT_SNAPSHOT"
   }
@@ -52,14 +52,14 @@ export function thowErrorSourceAmount(message) {
   }
 }
 
-export function thowErrorMaxCap(){
+export function thowErrorMaxCap() {
   return {
     type: "EXCHANGE.THROW_SOURCE_AMOUNT_ERROR",
     payload: message
   }
 }
 
-export function thowErrorEthBalance(message){
+export function thowErrorEthBalance(message) {
   return {
     type: "EXCHANGE.THROW_ETH_BALANCE_ERROR",
     payload: message
@@ -94,10 +94,10 @@ export function specifyGas(value) {
   }
 }
 
-export function seSelectedGas(level){
+export function seSelectedGas(level) {
   return {
     type: "EXCHANGE.SET_SELECTED_GAS",
-    payload: {level: level}
+    payload: { level: level }
   }
 }
 
@@ -129,7 +129,7 @@ export function updateRateExchange(ethereum, source, dest,
   }
 }
 
-export function updateRateSnapshot(ethereum){
+export function updateRateSnapshot(ethereum) {
   return {
     type: "EXCHANGE.UPDATE_RATE_SNAPSHOT",
     payload: ethereum
@@ -146,7 +146,7 @@ export function updatePrevSource(value) {
 export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess, percentChange) {
   return {
     type: "EXCHANGE.UPDATE_RATE",
-    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess, percentChange}
+    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess, percentChange }
   }
 
 }
@@ -154,7 +154,7 @@ export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePric
 export function updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice) {
   return {
     type: "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE",
-    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage:  converter.toT(rateInit, 18)}
+    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage: converter.toT(rateInit, 18) }
   }
 
 }
@@ -189,7 +189,7 @@ export function hideApprove() {
   }
 }
 
-export function hideApproveZero(){
+export function hideApproveZero() {
   return {
     type: "EXCHANGE.HIDE_APPROVE_ZERO",
   }
@@ -414,7 +414,7 @@ export function setEstimateGas(gas, gas_approve) {
   }
 }
 
-export function setEstimateGasSnapshot(gas, gas_approve){
+export function setEstimateGasSnapshot(gas, gas_approve) {
   return {
     type: "EXCHANGE.SET_GAS_USED_SNAPSHOT",
     payload: { gas, gas_approve }
@@ -448,7 +448,7 @@ export function setMaxGasPrice(ethereum) {
   }
 }
 
-export function setMaxGasPriceComplete(maxGasPriceGwei) { 
+export function setMaxGasPriceComplete(maxGasPriceGwei) {
   return {
     type: "EXCHANGE.SET_MAX_GAS_PRICE_COMPLETE",
     payload: maxGasPriceGwei
@@ -458,83 +458,83 @@ export function setMaxGasPriceComplete(maxGasPriceGwei) {
 export function setGasPriceSwapComplete(safeLowGas, standardGas, fastGas, defaultGas, selectedGas) {
   return {
     type: "EXCHANGE.SET_GAS_PRICE_SWAP_COMPLETE",
-    payload: {safeLowGas, standardGas, defaultGas, fastGas, selectedGas}
+    payload: { safeLowGas, standardGas, defaultGas, fastGas, selectedGas }
   }
 }
 
 export function analyzeError(ethereum, txHash) {
   return {
     type: "EXCHANGE.ANALYZE_ERROR",
-    payload: { ethereum, txHash}
+    payload: { ethereum, txHash }
   }
 }
 
-export function setAnalyzeError(networkIssues, txHash){
+export function setAnalyzeError(networkIssues, txHash) {
   return {
     type: "EXCHANGE.SET_ANALYZE_ERROR",
-    payload: { networkIssues  , txHash}
+    payload: { networkIssues, txHash }
   }
 }
 
 
-export function fetchGas(){
+export function fetchGas() {
   return {
     type: "EXCHANGE.FETCH_GAS"
   }
 }
-export function fetchGasSnapshot(){
+export function fetchGasSnapshot() {
   return {
     type: "EXCHANGE.FETCH_GAS_SNAPSHOT"
   }
 }
 
-export function fetchGasSuccess(){
+export function fetchGasSuccess() {
   return {
     type: "EXCHANGE.FETCH_GAS_SUCCESS"
   }
 }
 
-export function fetchGasSuccessSnapshot(){
+export function fetchGasSuccessSnapshot() {
   return {
     type: "EXCHANGE.FETCH_GAS_SUCCESS_SNAPSHOT"
   }
 }
 
-export function checkKyberEnable(){
+export function checkKyberEnable() {
   return {
     type: "EXCHANGE.CHECK_KYBER_ENABLE"
   }
 }
 
-export function setKyberEnable(enable){
+export function setKyberEnable(enable) {
   return {
     type: "EXCHANGE.SET_KYBER_ENABLE",
     payload: enable
   }
 }
 
-export function setApproveTxZero(hash, symbol){
+export function setApproveTxZero(hash, symbol) {
   return {
     type: "EXCHANGE.SET_APPROVE_TX_ZERO",
-    payload: {hash, symbol}
+    payload: { hash, symbol }
   }
 }
 
-export function setApproveTx(hash, symbol){
+export function setApproveTx(hash, symbol) {
   return {
     type: "EXCHANGE.SET_APPROVE_TX",
-    payload: {hash, symbol}
+    payload: { hash, symbol }
   }
 }
 
-export function removeApproveTx(symbol){
+export function removeApproveTx(symbol) {
   return {
     type: "EXCHANGE.REMOVE_APPROVE_TX",
-    payload: {symbol}
+    payload: { symbol }
   }
 }
 
-export function setSnapshot(data){
+export function setSnapshot(data) {
   data.isFetchingRate = true
   return {
     type: "EXCHANGE.SET_SNAPSHOT",
@@ -542,62 +542,76 @@ export function setSnapshot(data){
   }
 }
 
-export function verifyExchange(){
+export function verifyExchange() {
   return {
     type: "EXCHANGE.VERIFY_EXCHANGE",
   }
 }
 
-export function fetchExchangeEnable(){
+export function fetchExchangeEnable() {
   return {
     type: "EXCHANGE.FETCH_EXCHANGE_ENABLE",
   }
 }
 
-export function setExchangeEnable(enable){
+export function setExchangeEnable(enable) {
   return {
     type: "EXCHANGE.SET_EXCHANGE_ENABLE",
     payload: enable
   }
 }
 
-export function updateBalanceData(balanceData, hash){
+export function updateBalanceData(balanceData, hash) {
   return {
     type: "EXCHANGE.UPDATE_BALANCE_DATA",
-    payload: {balanceData, hash}
+    payload: { balanceData, hash }
   }
 }
 
-export function throwErrorHandleAmount(){
+export function throwErrorHandleAmount() {
   return {
     type: "EXCHANGE.HANDLE_AMOUNT"
   }
 }
 
-export function openImportAccount(){
+export function openImportAccount() {
   return {
     type: "EXCHANGE.OPEN_IMPORT_ACCOUNT"
   }
 }
 
-export function closeImportAccountExchange(){
+export function closeImportAccountExchange() {
   return {
     type: "EXCHANGE.CLOSE_IMPORT_ACCOUNT"
   }
 }
 
-export function toggleBalanceContent(){
+export function toggleBalanceContent() {
   return {
     type: "EXCHANGE.TOGGLE_BALANCE_CONTENT"
   }
 }
-export function toggleAdvanceContent(){
+export function toggleAdvanceContent() {
   return {
     type: "EXCHANGE.TOGGLE_ADVANCE_CONTENT"
   }
 }
 
-export function setSelectedGasPrice(gasPrice, gasLevel){
+export function setIsOpenAdvance() {
+  return {
+    type: "EXCHANGE.SET_IS_OPEN_ADVANCE",
+    payload: true
+  }
+}
+
+export function clearIsOpenAdvance() {
+  return {
+    type: "EXCHANGE.SET_IS_OPEN_ADVANCE",
+    payload: false
+  }
+}
+
+export function setSelectedGasPrice(gasPrice, gasLevel) {
   return {
     type: "EXCHANGE.SET_SELECTED_GAS_PRICE",
     payload: { gasPrice, gasLevel }
