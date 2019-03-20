@@ -6,15 +6,7 @@
                 "type": "cached"
             },
             {
-                "endPoint": "https://mainnet.infura.io",
-                "type": "prune"
-            },
-            {
-                "endPoint": "https://api.mycryptoapi.com/eth",
-                "type": "none_prune"
-            },
-            {
-                "endPoint": "https://semi-node.kyber.network",
+                "endPoint": "https://mainnet.infura.io/v3/c1d32946e55e45b78c330954cf543fc7",
                 "type": "prune"
             }
         ],
