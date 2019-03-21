@@ -27,15 +27,3 @@ This repository is using `Reactjs` and `Redux` and following their naming conven
 ```
 bundle exec rake master_data:media_post
 ```
-
-## Deploy to develop server
-```
-git tag -f deploy_server_develop_env_<insert env here>
-git push -f <origin/upstream> deploy_server_develop_env_<insert env here>
-```
-
-## Deploy to staging server
-```
-git tag -f deploy_server_staging_env_<insert env here>
-git push -f <origin/upstream> deploy_server_staging_env_<insert env here>
-```
