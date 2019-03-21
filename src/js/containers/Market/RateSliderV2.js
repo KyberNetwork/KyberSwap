@@ -103,12 +103,12 @@ export default class RateSilderV2 extends React.Component {
     render() {
         var listDisplay = this.getListDisplay()
         //console.log(listDisplay)
-        var rateContent = listDisplay.map(value => {
+        var rateContent = listDisplay.map((value, index) => {
             var rateChange = value.ETH.change
             var symbol = value.info.symbol
             var price = getPriceToken(value)
             return (
-                <div key={symbol}>
+                <div key={symbol+index}>
                     <div className="rate-item">
                         {rateChange > 0 && rateChange != -9999 && (
                             <div className="change-positive rate-item__percent-change"></div>

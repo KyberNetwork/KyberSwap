@@ -59,11 +59,9 @@ const ImportAccountView = (props) => {
                 </div>
               </div>
               <a
-                className="import-account__block-right"
-                href={"https://docs.google.com/forms/d/e/1FAIpQLSeHmkoi5TQ8gGvmrhzg7RzRZQNlEDBR_Gqb67uB6M92V10rpQ/viewform"}
-                target="_blank"
+                className="import-account__block-right"                
               >
-                {props.translate("address.register_beta") || "Register Beta"}
+                {props.translate("address.register_beta") || "Comming soon"}
               </a>
             </div>
           </div>
