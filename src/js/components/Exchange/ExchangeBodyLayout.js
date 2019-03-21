@@ -127,6 +127,12 @@ const ExchangeBodyLayout = (props) => {
                     </div>
                     <div className={`exchange-content__input-container`}>
                       <div className={"main-input main-input__left"}>
+                        <CSSTransition mountOnEnter unmountOnExit classNames="top-token-number" 
+                          in={!errorExchange && props.input.sourceAmount.value > 0 && props.isSelectTokenBalance}
+                          appear={true}
+                          timeout={{ enter: 300, exit: 500 }}>
+                            <div className={`top-token-number`} onClick={props.input.sourceAmount.onFocus}>100%</div>
+                        </CSSTransition>
                         <div id="swap-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorTooltip}</div>`} data-html={true} data-event='click focus' data-for="swap-error" data-scroll-hide="false">
                           <input
                             className={`exchange-content__input ${props.account !== false ? 'has-account' : ''}`}
@@ -145,12 +151,7 @@ const ExchangeBodyLayout = (props) => {
                         )} */}
                       </div>
                     </div>
-                    <CSSTransition mountOnEnter unmountOnExit classNames="top-token-number" 
-                      in={!errorExchange && props.input.sourceAmount.value > 0 && props.isSelectTokenBalance}
-                      appear={true}
-                      timeout={{ enter: 300, exit: 200 }}>
-                        <div className={`top-token-number`} onClick={props.input.sourceAmount.onFocus}>100%</div>
-                    </CSSTransition>
+                    
                   </div>
                   {errorExchange &&
                     <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="swap-error" type="light" />

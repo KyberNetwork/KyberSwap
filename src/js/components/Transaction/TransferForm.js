@@ -121,6 +121,12 @@ const TransferForm = (props) => {
                     </div>
                     <div className={"exchange-content__input-container"}>
                       <div className={"main-input main-input__left"}>
+                        <CSSTransition mountOnEnter unmountOnExit classNames="top-token-number" 
+                          in={!props.errors.amountTransfer && props.input.amount.value > 0 && props.isSelectTokenBalance}
+                          appear={true}
+                          timeout={{ enter: 500, exit: 500 }}>
+                            <div className={`top-token-number`} onClick={props.onFocus}>100%</div>
+                        </CSSTransition>
                         <div id="transfer-amount-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${props.translate(props.errors.amountTransfer)}</div>`} data-html={true} data-event='click focus' data-for="transfer-amount-error" data-scroll-hide="false"
                         >
                           <input
@@ -143,12 +149,6 @@ const TransferForm = (props) => {
                         )} */}
                       </div>
                     </div>
-                    <CSSTransition mountOnEnter unmountOnExit classNames="top-token-number" 
-                      in={!props.errors.amountTransfer && props.input.amount.value > 0 && props.isSelectTokenBalance}
-                      appear={true}
-                      timeout={{ enter: 300, exit: 200 }}>
-                        <div className={`top-token-number`} onClick={props.onFocus}>100%</div>
-                    </CSSTransition>
                   </div>
                   {props.errors.amountTransfer &&
                     <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="transfer-amount-error" type="light" />
