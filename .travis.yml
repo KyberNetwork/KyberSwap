@@ -16,15 +16,14 @@ install:
   - npm install
   - npm run build-ropsten
   - mkdir upload_ropsten
-  - mv dist/ropsten/index.html upload
-  - mv dist/ropsten/*.css upload
-  - mv dist/ropsten/*.js upload
+  - mv dist/ropsten/index.html upload_ropsten
+  - mv dist/ropsten/*.css upload_ropsten
+  - mv dist/ropsten/*.js upload_ropsten
   - npm run build-staging
   - mkdir upload_staging
-  - mv dist/staging/index.html upload
-  - mv dist/staging/*.css upload
-  - mv dist/staging/*.js upload
-  
+  - mv dist/staging/index.html upload_staging
+  - mv dist/staging/*.css upload_staging
+  - mv dist/staging/*.js upload_staging
 
 deploy:
   - provider: s3
