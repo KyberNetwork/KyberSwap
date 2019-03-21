@@ -14,11 +14,6 @@ script:
 
 install:
   - npm install
-  - npm run build-all
-  - mkdir upload_ropsten
-  - npm run build-staging
-  - mkdir upload_staging
-  - source .travis/parse_tag.sh
   - bash .travis/build_swap.sh
 
 deploy:
@@ -28,7 +23,7 @@ deploy:
     bucket: dev-swap.knstats.com
     region: ap-southeast-1
     acl: public_read
-    local_dir: upload_ropsten
+    local_dir: dist/ropsten
     skip_cleanup: true
     on:
       branch: develop
@@ -38,7 +33,7 @@ deploy:
     bucket: dev-swap.knstats.com
     region: ap-southeast-1
     acl: public_read
-    local_dir: upload_ropsten
+    local_dir: dist/ropsten
     upload-dir: swap
     skip_cleanup: true
     on:
@@ -49,7 +44,7 @@ deploy:
     bucket: dev-swap.knstats.com
     region: ap-southeast-1
     acl: public_read
-    local_dir: upload_ropsten
+    local_dir: dist/ropsten
     upload-dir: transfer
     skip_cleanup: true
     on:
@@ -61,7 +56,7 @@ deploy:
     bucket: staging-swap.knstats.com
     region: ap-southeast-1
     acl: public_read
-    local_dir: upload_staging
+    local_dir: dist/staging
     skip_cleanup: true
     on:
       branch: master
@@ -71,7 +66,7 @@ deploy:
     bucket: staging-swap.knstats.com
     region: ap-southeast-1
     acl: public_read
-    local_dir: upload_staging
+    local_dir: dist/staging
     upload-dir: swap
     skip_cleanup: true
     on:
@@ -82,20 +77,19 @@ deploy:
     bucket: staging-swap.knstats.com
     region: ap-southeast-1
     acl: public_read
-    local_dir: upload_staging
+    local_dir: dist/staging
     upload-dir: transfer
     skip_cleanup: true
     on:
       branch: master
+
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
     bucket: kyber-swap
     region: ap-southeast-1
-    local_dir: dist/$SWAP_ENV
-    upload_dir: $TRAVIS_COMMIT/$SWAP_ENV
+    local_dir: dist
+    upload_dir: $TRAVIS_COMMIT
     skip_cleanup: true
     on:
       all_branches: true
-      tag: true
-      condition: $TRAVIS_TAG =~ ^deploy.*$
