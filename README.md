@@ -8,7 +8,7 @@ The wallet is developed on `Nodejs`, we assume users have it installed in their 
 npm install
 ```
 
-## Run in development mode (kovan chain)
+## Run in development mode (ropsten network)
 ```
 npm run ropsten
 ```
