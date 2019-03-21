@@ -2,5 +2,5 @@
 
 set -euo pipefail
 
-echo "Building swap from commit $TRAVIS_COMMIT with env $SWAP_ENV"
+printf 'Building swap from commit %s' "$TRAVIS_COMMIT"
 npm run build-all
