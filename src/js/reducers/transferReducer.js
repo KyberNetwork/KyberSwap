@@ -289,6 +289,11 @@ const transfer = (state = initState, action) => {
 
       return newState
     }
+
+    case "TRANSFER.SET_IS_SELECT_TOKEN_BALANCE": {
+      newState.isSelectTokenBalance = action.payload;
+      return newState;
+    }
   }
   return state
 }

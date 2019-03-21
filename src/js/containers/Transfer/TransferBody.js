@@ -143,7 +143,8 @@ class Transfer extends React.Component {
   }
 
   onFocus = () => {
-    this.setState({ focus: "source" })
+    this.setState({ focus: "source" });
+    this.props.dispatch(transferActions.setIsSelectTokenBalance(false));
     this.props.analytics.callTrack("trackClickInputAmount", "transfer");
   }
 
@@ -245,6 +246,7 @@ class Transfer extends React.Component {
         screen="transfer"
         isOnDAPP={this.props.account.isOnDAPP}
         changeAmount={transferActions.specifyAmountTransfer}
+        selectTokenBalance={this.selectTokenBalance}
       />)
   }
 
@@ -272,6 +274,10 @@ class Transfer extends React.Component {
   }
   setDefaulAddrErrorTooltip = (value) => {
     this.setState({ defaultShowAddrErrorTooltip: value })
+  }
+
+  selectTokenBalance = () => {
+    this.props.dispatch(transferActions.setIsSelectTokenBalance(true));
   }
 
   render() {
@@ -337,6 +343,7 @@ class Transfer extends React.Component {
     var topBalance = <TopBalance showMore={this.toggleAdvanceContent}
       chooseToken={this.chooseToken}
       activeSymbol={this.props.transfer.tokenSymbol}
+      selectTokenBalance={this.selectTokenBalance}
       screen="transfer"
       changeAmount={transferActions.specifyAmountTransfer} />
 
@@ -387,6 +394,8 @@ class Transfer extends React.Component {
         setDefaulAddrErrorTooltip={this.setDefaulAddrErrorTooltip}
 
         isOnDAPP={this.props.account.isOnDAPP}
+
+        isSelectTokenBalance={this.props.transfer.isSelectTokenBalance}
       />
     )
   }

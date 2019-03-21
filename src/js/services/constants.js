@@ -120,7 +120,8 @@ const INIT_EXCHANGE_FORM_STATE = {
   snapshot: {},
   isBalanceActive: false,
   isAdvanceActive: false,
-  isOpenAdvance: false
+  isOpenAdvance: false,
+  isSelectTokenBalance: false
 }
 
 const INIT_TRANSFER_FORM_STATE = {
@@ -177,7 +178,8 @@ const INIT_TRANSFER_FORM_STATE = {
   snapshot: {},
   isBalanceActive: false,
   isAdvanceActive: false,
-  isOpenAdvance: false
+  isOpenAdvance: false,
+  isSelectTokenBalance: false
 }
 
 // reserves

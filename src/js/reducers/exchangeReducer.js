@@ -603,6 +603,11 @@ const exchange = (state = initState, action) => {
 
       return newState
     }
+
+    case "EXCHANGE.SET_IS_SELECT_TOKEN_BALANCE": {
+      newState.isSelectTokenBalance = action.payload;
+      return newState;
+    }
   }
   return state
 }

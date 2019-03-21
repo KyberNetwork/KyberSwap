@@ -82,6 +82,7 @@ export default class AccountBalance extends React.Component {
         this.props.dispatch(this.props.changeAmount(amount))
         // this.props.changeFocus()
     }
+    this.props.selectTokenBalance();
     this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, this.props.screen);
 }
 
