@@ -164,15 +164,16 @@ export default class Market extends React.Component {
   render() {
     return (
       <div className="market-wrapper-container">
-          <div className="rate-container">
-            <div className="rate-container__slider">
-              <RateSliderV2 />
+        {!this.props.global.isOnMobile && (
+            <div className="rate-container">
+              <div className="rate-container__slider">
+                <RateSliderV2 />
+              </div>
+              <div className="rate-container__more">
+                <a onClick={this.openModal}>{this.props.translate("market.more") || "More"}</a>
+              </div>
             </div>
-            <div className="rate-container__more">
-              <a onClick={this.openModal}>{this.props.translate("market.more") || "More"}</a>
-            </div>
-          </div>
-
+        )}
         <Modal className={{
           base: 'reveal large confirm-modal market-modal',
           afterOpen: 'reveal large confirm-modal'
