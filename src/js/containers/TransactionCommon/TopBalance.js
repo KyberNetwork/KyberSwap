@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 
 import * as converters from "../../utils/converter"
+import { getTranslate } from "react-localize-redux";
 
 @connect((store, props) => {
 
@@ -17,7 +18,7 @@ import * as converters from "../../utils/converter"
         changeAmount: props.changeAmount,
         changeFocus: props.changeFocus,
         ethereum: store.connection.ethereum,
-
+        translate: getTranslate(store.locale)
     }
 })
 
@@ -91,7 +92,7 @@ export default class TopBalance extends React.Component {
         return (
             <div className="top-token">
                 <div className="top-token-content">{this.renderToken(newTokens)}</div>
-                <div className="top-token-more" onClick={this.showMore}>more</div>
+                <div className="top-token-more" onClick={this.showMore}>{this.props.translate("market.more") || "more"}</div>
             </div>
         )
     }
