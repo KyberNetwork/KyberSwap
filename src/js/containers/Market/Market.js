@@ -164,7 +164,6 @@ export default class Market extends React.Component {
   render() {
     return (
       <div className="market-wrapper-container">
-        {!this.props.global.isOnMobile && (
           <div className="rate-container">
             <div className="rate-container__slider">
               <RateSliderV2 />
@@ -174,7 +173,6 @@ export default class Market extends React.Component {
             </div>
           </div>
 
-        )}
         <Modal className={{
           base: 'reveal large confirm-modal market-modal',
           afterOpen: 'reveal large confirm-modal'
