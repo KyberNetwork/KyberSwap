@@ -53,16 +53,17 @@ export default class MinConversionRate extends React.Component {
             <input className="advance-config__radio" type="radio" name="slippageRate" value="97" defaultChecked onChange={this.props.onSlippageRateChanged}/>
             <span className="advance-config__checkmark"></span>
           </label>
-          <label className="advance-config__option">
+          {/* <label className="advance-config__option">
             <span>{this.props.translate("transaction.any_rate") || "Any-rate"}</span>
             <input className="advance-config__radio" type="radio" name="slippageRate" value="0" onChange={this.props.onSlippageRateChanged}/>
             <span className="advance-config__checkmark"></span>
-          </label>
+          </label> */}
           <label className="advance-config__option advance-config__option--with-input">
-            <span>{this.props.translate("transaction.custom") || "Custom"}</span>
+            <span>{this.props.translate("transaction.custom") || "Custom"}: </span>
             <input className="advance-config__radio" type="radio" name="slippageRate" value={this.state.customSlippageRate} onChange={(e) => this.props.onSlippageRateChanged(e, true)}/>
             <span className="advance-config__checkmark"></span>
-            <input type="number" placeholder="%" className="advance-config__input" value={this.state.customSlippageRate} onChange={(e) => this.onCustomSlippageRateChanged(e)}/>
+            <input type="number" className="advance-config__input" value={this.state.customSlippageRate} onChange={(e) => this.onCustomSlippageRateChanged(e)}/>
+            <span className="advance-config__input--suffix">%</span>
           </label>
         </div>
         <div className={"advance-config__info"}>
