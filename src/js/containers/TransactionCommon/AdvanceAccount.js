@@ -116,10 +116,10 @@ export default class AdvanceAccount extends React.Component {
         return (
             <div className="reimport-modal">
                 <a className="x" onClick={this.closeReImport}>&times;</a>
-                <div className="title">Do you want to connect other Wallet?</div>
+                <div className="title">{this.props.translate("import.do_you_want_to_connect_other_wallet") || "Do you want to connect other Wallet?"}</div>
                 <div className="content">
-                    <a className="button confirm-btn" onClick={this.clearSession}>Yes</a>
-                    <a className="button cancel-btn" onClick={this.closeReImport}>No</a>
+                    <a className="button confirm-btn" onClick={this.clearSession}>{this.props.translate("import.yes") || "Yes"}</a>
+                    <a className="button cancel-btn" onClick={this.closeReImport}>{this.props.translate("import.no") || "No"}</a>
                 </div>
             </div>
         )

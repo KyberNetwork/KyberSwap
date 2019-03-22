@@ -244,7 +244,10 @@
     "apply": "Áp dụng",
     "cancel": "Hủy",
     "connect_other_wallet": "Kết nối với ví khác",
-    "promo_code": "MÃ KHUYẾN MÃI"
+    "promo_code": "MÃ KHUYẾN MÃI",
+    "do_you_want_to_connect_other_wallet": "Bạn có muốn kết nối với ví khác không?",
+    "yes": "Có",
+    "no": "Không"
   },
   "info": {
     "title": "Kyber phiên bản thử nghiệm",

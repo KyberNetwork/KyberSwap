@@ -246,7 +246,10 @@
     "enter_promo_code": "Enter your Promo Code",
     "promo_code": "Promocode",
     "apply": "Apply",
-    "connect_other_wallet": "Connect other wallet"
+    "connect_other_wallet": "Connect other wallet",
+    "do_you_want_to_connect_other_wallet": "Do you want to connect other Wallet?",
+    "yes": "Yes",
+    "no": "No"
   },
   "info": {
     "title": "Тестовая сеть Kyber",
