@@ -8,7 +8,7 @@ import { Modal } from "../../components/CommonElement"
 @connect((store, props) => {
 
     return {
-        account: store.account.account,
+        account: store.account,
         isOnMobile: store.global.isOnMobile,
         clearSession: props.clearSession,
         screen: props.screen,
