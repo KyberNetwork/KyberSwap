@@ -22,12 +22,12 @@ import market from './marketReducer'
 import { localizeReducer } from 'react-localize-redux';
 
 const appReducer = combineReducers({
-  account, exchange, transfer, connection, router: routerReducer, market,global,
+  account, exchange, transfer, connection, router: routerReducer, market, global,
   // market: persistReducer({
   //   key: 'market',
   //   storage: localForage
   // }, market),  
-  locale : localizeReducer,
+  locale: localizeReducer,
   tokens, txs,
   utils,
   // locale: persistReducer({
@@ -41,7 +41,7 @@ const appReducer = combineReducers({
   txs: persistReducer({
     key: 'txs',
     storage: session
-  }, txs),  
+  }, txs),
   // global: persistReducer({
   //   key: 'global',
   //   storage: localForage,
@@ -74,7 +74,7 @@ const rootReducer = (state, action) => {
   //     exchange: exchange
   //   }
   // }
-  
+
   // let isGoToExchange = action.type === '@@router/LOCATION_CHANGE' && ( (action.payload.pathname === constants.BASE_HOST + '/swap')&&(action.payload.pathname === constants.BASE_HOST + '/transfer') )
   // if(isGoToExchange && !state.account.account){
   //   window.location.href = '/'

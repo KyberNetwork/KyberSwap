@@ -101,7 +101,7 @@ export function thowErrorAmount(message) {
   }
 }
 
-export function thowErrorEthBalance(message){
+export function thowErrorEthBalance(message) {
   return {
     type: "TRANSFER.THROW_ETH_BALANCE_ERROR",
     payload: message
@@ -130,7 +130,7 @@ export function changePassword() {
 export function prePareBroadcast(balanceData) {
   return {
     type: "TRANSFER.PREPARE_TRANSACTION",
-    payload: {balanceData: balanceData}
+    payload: { balanceData: balanceData }
   }
 }
 
@@ -231,92 +231,113 @@ export function updateCurrentBalance(tokenBalance, txHash) {
   }
 }
 
-export function fetchGasSnapshot(){
+export function fetchGasSnapshot() {
   return {
     type: "TRANSFER.FETCH_GAS_SNAPSHOT"
   }
 }
 
-export function fetchSnapshotGasSuccess(){
+export function fetchSnapshotGasSuccess() {
   return {
     type: "TRANSFER.FETCH_SNAPSHOT_GAS_SUCCESS"
   }
 }
 
-export function estimateGasTransfer(){
+export function estimateGasTransfer() {
   return {
     type: "TRANSFER.ESTIMATE_GAS_USED"
   }
 }
 
-export function setGasUsed(gas){
+export function setGasUsed(gas) {
   return {
     type: "TRANSFER.SET_GAS_USED",
-    payload: {gas}
+    payload: { gas }
   }
 }
 
-export function setGasUsedSnapshot(gas){
+export function setGasUsedSnapshot(gas) {
   return {
     type: "TRANSFER.SET_GAS_USED_SNAPSHOT",
-    payload: {gas}
+    payload: { gas }
   }
 }
 
-export function verifyTransfer(){
+export function verifyTransfer() {
   return {
     type: "TRANSFER.VERIFY_TRANSFER",
   }
 }
 
-export function setSnapshot(data){
+export function setSnapshot(data) {
   return {
     type: "TRANSFER.SET_SNAPSHOT",
     payload: data
   }
 }
 
-export function setGasPriceTransferComplete(safeLowGas, standardGas, fastGas, defaultGas, selectedGas){
+export function setGasPriceTransferComplete(safeLowGas, standardGas, fastGas, defaultGas, selectedGas) {
   return {
     type: "TRANSFER.SET_GAS_PRICE_TRANSFER_COMPLETE",
-    payload: {safeLowGas, standardGas, defaultGas, fastGas, selectedGas}
+    payload: { safeLowGas, standardGas, defaultGas, fastGas, selectedGas }
   }
 }
 
-export function seSelectedGas(level){
+export function seSelectedGas(level) {
   return {
     type: "TRANSFER.SET_SELECTED_GAS",
-    payload: {level: level}
+    payload: { level: level }
   }
 }
 
-export function openImportAccount(){
+export function openImportAccount() {
   return {
     type: "TRANSFER.OPEN_IMPORT_ACCOUNT"
   }
 }
 
-export function closeImportAccountTransfer(){
+export function closeImportAccountTransfer() {
   return {
     type: "TRANSFER.CLOSE_IMPORT_ACCOUNT"
   }
 }
 
-export function toggleBalanceContent(){
+export function toggleBalanceContent() {
   return {
     type: "TRANSFER.TOGGLE_BALANCE_CONTENT"
   }
 }
 
-export function toggleAdvanceContent(){
+export function toggleAdvanceContent() {
   return {
     type: "TRANSFER.TOGGLE_ADVANCE_CONTENT"
   }
 }
 
-export function setSelectedGasPrice(gasPrice, gasLevel){
+export function setIsOpenAdvance() {
+  return {
+    type: "TRANSFER.SET_IS_OPEN_ADVANCE",
+    payload: true
+  }
+}
+
+export function clearIsOpenAdvance() {
+  return {
+    type: "TRANSFER.SET_IS_OPEN_ADVANCE",
+    payload: false
+  }
+}
+
+export function setSelectedGasPrice(gasPrice, gasLevel) {
   return {
     type: "TRANSFER.SET_SELECTED_GAS_PRICE",
     payload: { gasPrice, gasLevel }
+  }
+}
+
+export function setIsSelectTokenBalance(value) {
+  return {
+    type: "TRANSFER.SET_IS_SELECT_TOKEN_BALANCE",
+    payload: value
   }
 }

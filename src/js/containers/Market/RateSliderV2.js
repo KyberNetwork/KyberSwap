@@ -108,7 +108,7 @@ export default class RateSilderV2 extends React.Component {
             var symbol = value.info.symbol
             var price = getPriceToken(value)
             return (
-                <div key={symbol+index}>
+                <div key={symbol + index}>
                     <div className="rate-item">
                         {rateChange > 0 && rateChange != -9999 && (
                             <div className="change-positive rate-item__percent-change"></div>

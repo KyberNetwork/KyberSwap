@@ -580,7 +580,7 @@ export function getMinrate(rate, minRate){
 
 
 export function calculateMinSource(sourceTokenSymbol, sourceAmount, decimal, rateSell){
-  console.log({sourceAmount, decimal, rateSell})
+  // console.log({sourceAmount, decimal, rateSell})
   if ((sourceAmount === "") || isNaN(sourceAmount)) sourceAmount = 0
 
   var minSourceAllow = new BigNumber(getSourceAmountZero(sourceTokenSymbol, decimal, rateSell))
@@ -608,7 +608,13 @@ export function getSourceAmountZero(sourceTokenSymbol, decimal, rateSell){
   }
   var rate = new BigNumber(rateSell)
   if (rate.comparedTo(0) === 0){
-    return "0"
+    var minNumber
+    if (sourceTokenSymbol !== "REN"){
+      minNumber = Math.pow(10, Math.round(decimal/2))
+    }else{
+      minNumber = Math.pow(10, decimal)
+    }
+    return minNumber.toString()
   }
   var minSourceAllow = minETHAllow.div(rate).times(Math.pow(10,decimal))
   return  minSourceAllow.toFixed(0)

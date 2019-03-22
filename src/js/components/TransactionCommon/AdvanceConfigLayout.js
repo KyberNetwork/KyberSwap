@@ -14,7 +14,7 @@ export default class AdvanceConfigLayout extends React.Component {
 
     return (
       <SlideDown active={this.props.isAdvanceActive}>
-        <SlideDownTrigger onToggleContent={() => this.props.toggleAdvanceContent()}>
+        {/* <SlideDownTrigger onToggleContent={() => this.props.toggleAdvanceContent()}>
           <div className="slide-down__trigger-container slide-down__trigger-container--align-right">
             <div>
               <span className="slide-down__trigger-bold">
@@ -28,9 +28,22 @@ export default class AdvanceConfigLayout extends React.Component {
               <div className="slide-arrow"></div>
             </div>
           </div>
-        </SlideDownTrigger>
+        </SlideDownTrigger> */}
 
         <SlideDownContent>
+        <div className="slide-down__trigger-container">
+            <div>
+              <span className="slide-down__trigger-bold">
+                {this.props.translate("transaction.advanced") || "Advance"}
+              </span> - 
+              <span className="slide-down__trigger-light">
+              {this.props.translate("transaction.optional") || "Optional"}
+              </span>
+            </div>
+            {/* <div className="slide-arrow-container">
+              <div className="slide-arrow"></div>
+            </div> */}
+          </div>
           <div className="advance-config">
             {this.props.minConversionRate}
 

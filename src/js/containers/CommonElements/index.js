@@ -14,4 +14,4 @@ export {default as TermAndServices } from './TermAndServices.js'
 
 export {default as QRCode } from './QRCode.js'
 
-export { default as ChooseBalanceModal } from './ChooseBalanceModal.js'
+// export { default as ChooseBalanceModal } from './ChooseBalanceModal.js'

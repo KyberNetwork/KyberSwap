@@ -31,9 +31,9 @@
     align-items: center;
   }
   &__address-text {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
-    color: #ef8102;
+    color: #222222;
     padding-right: 5px;
   }
 
@@ -91,7 +91,9 @@
     // &:nth-last-child(-n + 4) { // bug 1975
     //   margin-bottom: 0;
     // }
-
+    &.disabled{
+      opacity: 0.3;
+    }
     &.active {
       .account-balance__token-symbol,
       .account-balance__token-balance {
@@ -227,7 +229,7 @@
     transition: all 0.3s;
   }
 
-  @media screen and (max-width: 900px) {
+  @include screen-max-width(large) {
     // &__content {
     //   padding-left: 20px;
     // }
@@ -265,6 +267,7 @@
       width: 50%;
       margin: 0;
       padding: 7px 0;
+      font-size: 14px;
     }
   }
 }

@@ -168,7 +168,7 @@ export default class MarketTable extends React.Component {
     }
     if (input < 0) {
       return (
-        <span className = "negative"><img src={require("../../../assets/img/v3/ic_arrow_downward.svg")}/> {input} %</span>
+        <span className = "negative">{input} %</span>
       )
     }
     if (input === 0){
@@ -178,7 +178,7 @@ export default class MarketTable extends React.Component {
     }
     if (input > 0){
       return (
-        <span className = "positive"><img src={require("../../../assets/img/v3/ic_arrow_upward.svg")}/> {input} %</span>
+        <span className = "positive">{input} %</span>
       )
     }     
   }
@@ -521,14 +521,14 @@ export default class MarketTable extends React.Component {
             <div className="for-mobile-only">
               {this.props.translate("market.eth_market") || "Ethereum market"}
             </div>
-            <div>
-              {/* <div className="for-mobile-only search-word-mobile">
-                {this.props.searchWordLayout}
-              </div> */}
-              <div className="market__header-right">        
-                {this.props.manageColumn}
+            {!this.props.isOnMobile && 
+              <div>              
+                <div className="market__header-right">        
+                  {this.props.manageColumn}
+                </div>
               </div>
-            </div>
+            } 
+            
           </div>
 
           {/* {!this.props.isOnMobile && <div className="for-mobile-only">

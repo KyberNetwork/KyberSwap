@@ -1,13 +1,33 @@
-@keyframes rollOut {
+@keyframes slideInDown {
   0% {
-    -webkit-transform: translateY(-3em);
-    transform: translateY(-3em);
+    -webkit-transform: translate3d(0, -3em, 0);
+    transform: translate3d(0, -3em, 0);
     opacity: 0;
   }
 
   100% {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
     opacity: 1;
   }
+}
+
+@keyframes slideInUp {
+  0% {
+    -webkit-transform: translate3d(0, 3em, 0);
+    transform: translate3d(0, 3em, 0);
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@mixin animation($animationName) {
+  -webkit-animation-name: $animationName;
+  animation-name: $animationName;
+  @content;
 }

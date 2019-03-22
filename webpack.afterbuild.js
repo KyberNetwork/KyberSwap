@@ -24,8 +24,8 @@ console.log("bundle name ----------------___++++++", BUNDLE_NAME)
 var now = new Date().getTime()
 
 let view = `
-#swap-app 
 link rel="stylesheet" href="/swap/${chain}/app.css?v=${now}" type="text/css"
+= render "server_rendering"
 script src="https://www.google.com/recaptcha/api.js"
 script src="/swap/${chain}/app.min.js?v=${now}"
 `

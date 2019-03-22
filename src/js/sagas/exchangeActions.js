@@ -1329,8 +1329,8 @@ function* getGasConfirm() {
   // }
   try {
     gas = yield call([ethereum, ethereum.call], "estimateGas", txObj)
-     console.log("gas ne: " + gas)
-    gas = Math.round(gas * 120 / 100) + 100000
+    var marginGas = sourceTokenSymbol === "DAI" || destTokenSymbol === "DAI" ? 150000: 100000    
+    gas = Math.round(gas * 120 / 100) + marginGas
     //console.log("gas ne: " + gas)
     if (gas > maxGas) {
       gas = maxGas
@@ -1412,6 +1412,7 @@ function* getGasUsed() {
   if(sourceTokenSymbol === "TUSD" || destTokenSymbol === "TUSD"){
     return { status: "success", res: { gas: maxGas, gas_approve: maxGasApprove } }
   }
+  
 
   if (tokens[sourceTokenSymbol]) {
     sourceDecimal = tokens[sourceTokenSymbol].decimals
@@ -1468,7 +1469,8 @@ function* getGasUsed() {
     // }
     gas = yield call([ethereum, ethereum.call], "estimateGas", txObj)
     console.log("get_gas:" + gas)
-    gas = Math.round(gas * 120 / 100)
+    var marginGas = sourceTokenSymbol === "DAI" || destTokenSymbol === "DAI" ? 150000: 100000
+    gas = Math.round(gas * 120 / 100) + marginGas
     //console.log("gas ne: " + gas)
     if (gas > maxGas) {
       gas = maxGas

@@ -12,7 +12,10 @@ import { RateBetweenToken } from "../../containers/Exchange";
 import * as converters from "../../utils/converter";
 import { getAssetUrl } from "../../utils/common";
 // import { TermAndServices } from "../../containers/CommonElements";
-import {AdvanceAccount} from "../TransactionCommon"
+// import { AdvanceAccount } from "../TransactionCommon"
+
+import { AdvanceAccount } from "../../containers/TransactionCommon";
+import { CSSTransition } from "react-transition-group";
 
 const ExchangeBodyLayout = (props) => {
   function handleChangeSource(e) {
@@ -64,15 +67,15 @@ const ExchangeBodyLayout = (props) => {
       }
     }
   }
-  if(errorExchange && props.defaultShowTooltip){
-    setTimeout(()=>{
+  if (errorExchange && props.defaultShowTooltip) {
+    setTimeout(() => {
       ReactTooltip.show(document.getElementById("swap-error-trigger"))
       props.setDefaulTooltip(false)
     }, 300)
   }
 
-  if(!errorExchange && !props.defaultShowTooltip){
-    setTimeout(()=>{
+  if (!errorExchange && !props.defaultShowTooltip) {
+    setTimeout(() => {
       props.setDefaulTooltip(true)
     }, 300)
   }
@@ -82,52 +85,10 @@ const ExchangeBodyLayout = (props) => {
     errorTooltip += `<span class="error-text" key=${index}>${value}</span>`
   })
   var errorSelector = document.getElementById("swap-error")
-  if(errorSelector) errorSelector.innerHTML = `<div>${errorTooltip}</div>`
-  
-  function getWalletName() {
-    if (props.walletName === "") {
-      switch(props.account.type) {
-        case "metamask":
-          return "METAMASK"
-        case "keystore":
-          return "JSON"
-        case "ledger":
-          return "LEDGER"
-        case "trezor":
-          return "TREZOR"
-        case "privateKey":
-          return "PRIVATE KEY"
-        case "promoCode":
-          return "PROMO CODE"
-        default:
-          return "WALLET"
-      }
-    } else {
-      return props.walletName
-    }
-  }
+  if (errorSelector) errorSelector.innerHTML = `<div>${errorTooltip}</div>`
 
-  function getWalletIconName(type, walletName) {
-    if (walletName === "PROMO CODE") {
-      return "promo_code";
-    }
 
-    return type;
-  }
-
-  function getAccountTypeHtml(onMobile = false) {
-    return (
-      <div className={`import-account__wallet-type ${onMobile ? "mobile" : ""}`}>
-        <img className="import-account__wallet-image" src={getAssetUrl(`wallets/${getWalletIconName(props.account.type, props.walletName)}.svg`)}/>
-        <div className="import-account__wallet-content">
-          <span className="import-account__wallet-title">Your Wallet - </span>
-          <span className="import-account__wallet-name">{getWalletName()}</span>
-        </div>
-      </div>
-    );
-  }
-
-  var importAccount = function() {
+  var importAccount = function () {
     if (props.account === false || (props.isChangingWallet && props.changeWalletType === "swap")) {
       return (
         <ImportAccount
@@ -135,18 +96,19 @@ const ExchangeBodyLayout = (props) => {
           isChangingWallet={props.isChangingWallet}
           closeChangeWallet={props.closeChangeWallet}
           isAgreedTermOfService={props.isAgreedTermOfService}
+          isAcceptConnectWallet={props.isAcceptConnectWallet}
           acceptTerm={props.acceptTerm}
         />
       )
     }
   }
-  
+
   return (
     <div>
       <div>
         <div>
           {props.account && props.account.type === "promo" && props.account.info.description !== ""
-           && <div className={"promo-description"}><span>{props.account.info.description}</span></div>}
+            && <div className={"promo-description"}><span>{props.account.info.description}</span></div>}
           <div className="exchange-content-wrapper">
             {props.networkError !== "" && (
               <div className="network_error">
@@ -158,15 +120,20 @@ const ExchangeBodyLayout = (props) => {
               <div className={"exchange-content__item--wrapper"}>
                 <div className={"exchange-item-label"}>{props.translate("transaction.exchange_from") || "From"}:</div>
                 <div className={`exchange-content__item exchange-content__item--left select-token ${props.account !== false ? 'has-account' : ''} ${errorExchange ? "error" : ""}`}
-                      >
+                >
                   <div className={`input-div-content`}>
                     <div className={"exchange-content__label-content"}>
-                      {/* <div className="exchange-content__label">{props.translate("transaction.exchange_from") || "From"}</div> */}
                       <div className="exchange-content__select select-token-panel">{props.tokenSourceSelect}</div>
                     </div>
                     <div className={`exchange-content__input-container`}>
                       <div className={"main-input main-input__left"}>
-                        <div id="swap-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorTooltip}</div>`} data-html={true} data-event='click focus' data-for="swap-error" data-scroll-hide = "false">
+                        <CSSTransition mountOnEnter unmountOnExit classNames="top-token-number" 
+                          in={!errorExchange && props.input.sourceAmount.value > 0 && props.isSelectTokenBalance}
+                          appear={true}
+                          timeout={{ enter: 300, exit: 500 }}>
+                            <div className={`top-token-number`} onClick={props.input.sourceAmount.onFocus}>100%</div>
+                        </CSSTransition>
+                        <div id="swap-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorTooltip}</div>`} data-html={true} data-event='click focus' data-for="swap-error" data-scroll-hide="false">
                           <input
                             className={`exchange-content__input ${props.account !== false ? 'has-account' : ''}`}
                             min="0"
@@ -179,22 +146,26 @@ const ExchangeBodyLayout = (props) => {
                             onChange={handleChangeSource}
                           />
                         </div>
-                        {props.account !== false && (
+                        {/* {props.account !== false && (
                           <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal ${errorExchange ? "error" : ""}`}>{props.swapBalance}</div>
-                        )}
+                        )} */}
                       </div>
                     </div>
+                    
                   </div>
-                  {errorExchange && 
-                   <ReactTooltip globalEventOff="click" html={true}  place="bottom" className="select-token-error" id="swap-error" type="light"/>
-                   }
+                  {errorExchange &&
+                    <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="swap-error" type="light" />
+                  }
                 </div>
+                {props.account !== false && !props.isAdvanceActive && (
+                  <div>{props.topBalance}</div>
+                )}
               </div>
               <div className={"exchange-content__item--middle"}>
                 <span data-tip={props.translate('transaction.click_to_swap') || 'Click to swap'} data-for="swap-icon" currentitem="false">
                   <i className="k k-exchange k-3x cur-pointer" onClick={(e) => props.swapToken(e)}></i>
                 </span>
-                <ReactTooltip place="bottom" id="swap-icon" className={"common-tooltip common-tooltip--bottom"} type="dark"/>
+                <ReactTooltip place="bottom" id="swap-icon" className={"common-tooltip common-tooltip--bottom"} type="dark" />
               </div>
               <div className={"exchange-content__item--wrapper"}>
                 <div className={"exchange-item-label"}>{props.translate("transaction.exchange_to") || "To"}:</div>
@@ -219,32 +190,28 @@ const ExchangeBodyLayout = (props) => {
                           onChange={handleChangeDest}
                         />
                       </div>
-                      {/* {props.focus === "dest" && <div className={errorExchange ? "error-msg" : ""}>
-                      </div>} */}
                     </div>
                   </div>
-                  {/* {props.focus === "dest" && <div className={errorExchange ? "mobile-error__show" : "mobile-error"}>
-                    {errorShow}
-                  </div>} */}
                 </div>
+
+                <div className="exchange-rate-container container">
+                  <div className={"exchange-rate-container__left"}>
+                    <RateBetweenToken
+                      isSelectToken={props.exchange.isSelectToken}
+                      exchangeRate={{
+                        sourceToken: props.sourceTokenSymbol,
+                        rate: converters.toT(props.exchange.offeredRate),
+                        destToken: props.destTokenSymbol
+                      }}
+                    />
+                  </div>
+                </div>
+
               </div>
             </div>
 
-            <div className="exchange-rate-container container">
-              <div className={"exchange-rate-container__left"}>
-                <RateBetweenToken
-                  isSelectToken={props.exchange.isSelectToken}
-                  exchangeRate={{
-                    sourceToken: props.sourceTokenSymbol,
-                    rate: converters.toT(props.exchange.offeredRate),
-                    destToken: props.destTokenSymbol
-                  }}
-                />
-              </div>
 
-              {/* {props.rateToken} */}
-            </div>
-           
+
           </div>
 
           {props.account === false && importAccount()}
@@ -252,17 +219,17 @@ const ExchangeBodyLayout = (props) => {
 
         {props.account !== false && (
           <AdvanceAccount
-            isOnDAPP={props.isOnDAPP}
             clearSession={props.clearSession}
-            getAccountTypeHtml={getAccountTypeHtml}
-            isBalanceActive = {props.isBalanceActive}
-            balanceLayout = {props.balanceLayout}
-            isAdvanceActive = {props.isAdvanceActive}
-            advanceLayout = {props.advanceLayout}
-            postWithKey = {<PostExchangeWithKey isChangingWallet={props.isChangingWallet}/>}
-            tradeType={"swap"}
-            translate={props.translate}
-          /> 
+            toggleAdvanceContent={props.toggleAdvanceContent}
+            balanceLayout={props.balanceLayout}
+            isAdvanceActive={props.isAdvanceActive}
+            advanceLayout={props.advanceLayout}
+            isOpenAdvance={props.isOpenAdvance}
+            clearIsOpenAdvance={props.clearIsOpenAdvance}
+            postWithKey={<PostExchangeWithKey isChangingWallet={props.isChangingWallet} />}
+            screen={"swap"}
+            selectTokenBalance={props.selectTokenBalance}
+          />
         )}
       </div>
 

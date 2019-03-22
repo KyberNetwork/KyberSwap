@@ -10,7 +10,10 @@ import * as analytics from "../../utils/analytics";
 // import { RateBetweenToken } from "../../containers/Exchange";
 // import { getAssetUrl } from "../../utils/common";
 // import { TermAndServices } from "../../containers/CommonElements";
-import {AdvanceAccount} from "../TransactionCommon"
+// import {AdvanceAccount} from "../TransactionCommon"
+
+import { AdvanceAccount } from "../../containers/TransactionCommon"
+import { CSSTransition } from "react-transition-group";
 
 const TransferForm = (props) => {
   function handleChangeAmount(e) {
@@ -89,6 +92,7 @@ const TransferForm = (props) => {
           isChangingWallet={props.isChangingWallet}
           closeChangeWallet={props.closeChangeWallet}
           isAgreedTermOfService={props.isAgreedTermOfService}
+          isAcceptConnectWallet={props.isAcceptConnectWallet}
           acceptTerm={props.acceptTerm}
         />
       )
@@ -117,8 +121,14 @@ const TransferForm = (props) => {
                     </div>
                     <div className={"exchange-content__input-container"}>
                       <div className={"main-input main-input__left"}>
+                        <CSSTransition mountOnEnter unmountOnExit classNames="top-token-number" 
+                          in={!props.errors.amountTransfer && props.input.amount.value > 0 && props.isSelectTokenBalance}
+                          appear={true}
+                          timeout={{ enter: 500, exit: 500 }}>
+                            <div className={`top-token-number`} onClick={props.onFocus}>100%</div>
+                        </CSSTransition>
                         <div id="transfer-amount-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${props.translate(props.errors.amountTransfer)}</div>`} data-html={true} data-event='click focus' data-for="transfer-amount-error" data-scroll-hide="false"
-                          >
+                        >
                           <input
                             className={`exchange-content__input ${props.account !== false ? 'has-account' : ''}`}
                             type="text"
@@ -134,9 +144,9 @@ const TransferForm = (props) => {
                             autoComplete="off"
                           />
                         </div>
-                        {props.account !== false && (
+                        {/* {props.account !== false && (
                           <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal`}>{props.transferBalance}</div>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </div>
@@ -144,7 +154,9 @@ const TransferForm = (props) => {
                     <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="transfer-amount-error" type="light" />
                   }
                 </div>
-
+                {props.account !== false && !props.isAdvanceActive && (
+                  <div>{props.topBalance}</div>
+                )}
               </div>
 
               <div className={"exchange-content__item--middle"}>
@@ -157,7 +169,7 @@ const TransferForm = (props) => {
                   <div className={`input-div-content`}>
                     <div className="exchange-content__input-container exchange-content__input-container--to exchange-content__transfer-addr">
                       <div id="transfer-address-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${props.translate(props.errors.destAddress)}</div>`} data-html={true} data-event='click focus' data-for="transfer-address-error" data-scroll-hide="false"
-                        >
+                      >
                         <input
                           className={`exchange-content__input exchange-content__input-address`}
                           value={props.input.destAddress.value}
@@ -166,7 +178,7 @@ const TransferForm = (props) => {
                           onFocus={props.onFocusAddr}
                           onBlur={props.onBlur}
                         />
-                       
+
                       </div>
                       {props.qcCode}
                     </div>
@@ -209,16 +221,16 @@ const TransferForm = (props) => {
         {props.account !== false && (
 
           <AdvanceAccount
-            isOnDAPP={props.isOnDAPP}
             clearSession={props.clearSession}
-            isBalanceActive = {props.isBalanceActive}
-            balanceLayout = {props.balanceLayout}
-            isAdvanceActive = {props.isAdvanceActive}
-            advanceLayout = {props.advanceLayout}
-            postWithKey = {<PostTransferWithKey isChangingWallet={props.isChangingWallet}/>}
-            tradeType={"transfer"}
-            translate={props.translate}
-          /> 
+            toggleAdvanceContent={props.toggleAdvanceContent}
+            balanceLayout={props.balanceLayout}
+            isAdvanceActive={props.isAdvanceActive}
+            advanceLayout={props.advanceLayout}
+            isOpenAdvance={props.isOpenAdvance}
+            clearIsOpenAdvance={props.clearIsOpenAdvance}
+            postWithKey={<PostTransferWithKey isChangingWallet={props.isChangingWallet} />}
+            screen={"transfer"}
+          />
         )}
       </div>
 

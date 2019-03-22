@@ -9,7 +9,8 @@
 // }
 // $font-montserrat: 'Montserrat', sans-serif;
 
-@import '../bower/animate.css/animate.css';
+// @import '../bower/animate.css/animate.css';
+@import "animation";
 @import 'settings';
 @import "util";
 
@@ -41,6 +42,7 @@ $alert-color: #ff5d00;
 @import "slide_down";
 @import '~react-linechart/dist/styles.css';
 @import "slider";
+@import "top-token";
 // @import "~slick-carousel/slick/slick.css";
 
 @import "swap_en";

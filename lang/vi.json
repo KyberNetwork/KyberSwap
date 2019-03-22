@@ -26,7 +26,8 @@
     "connect_your_wallet_to_swap": "Kết nối ví của bạn để trao đổi",
     "connect_your_wallet_to_transfer": "Kết nối ví của bạn để chuyển token",
     "your_wallet": "Ví của bạn",
-    "register_beta": "Register Beta"
+    "register_beta": "Register Beta",
+    "or_connect_with": "Or Connect with"
   },
   "transaction": {
     "wallet": "Ví",
@@ -243,7 +244,10 @@
     "apply": "Áp dụng",
     "cancel": "Hủy",
     "connect_other_wallet": "Kết nối với ví khác",
-    "promo_code": "MÃ KHUYẾN MÃI"
+    "promo_code": "MÃ KHUYẾN MÃI",
+    "do_you_want_to_connect_other_wallet": "Bạn có muốn kết nối với ví khác không?",
+    "yes": "Có",
+    "no": "Không"
   },
   "info": {
     "title": "Kyber phiên bản thử nghiệm",

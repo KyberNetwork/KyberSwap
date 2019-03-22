@@ -6,8 +6,8 @@ import * as converters from "../../utils/converter"
 import { TransactionConfig } from "../../components/Transaction"
 import { ExchangeBodyLayout } from "../../components/Exchange"
 import { AdvanceConfigLayout, MinConversionRate } from "../../components/TransactionCommon"
-import { TransactionLoading, Token, ChooseBalanceModal } from "../CommonElements"
-import { TokenSelector, AccountBalance } from "../TransactionCommon"
+import { TransactionLoading, Token } from "../CommonElements"
+import { TokenSelector, AccountBalance, TopBalance } from "../TransactionCommon"
 import * as validators from "../../utils/validators"
 import * as common from "../../utils/common"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
@@ -95,11 +95,11 @@ class ExchangeBody extends React.Component {
   }
 
   validateTxFee = (gasPrice) => {
-    if (this.props.account.account === false){
+    if (this.props.account.account === false) {
       return
     }
     var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
-    this.props.exchange.sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, gasPrice)
+      this.props.exchange.sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, gasPrice)
 
     if (validateWithFee) {
       this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
@@ -111,10 +111,10 @@ class ExchangeBody extends React.Component {
   chooseToken = (symbol, address, type) => {
     this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
     var path
-    if (type === "source"){
+    if (type === "source") {
       path = constansts.BASE_HOST + "/swap/" + symbol.toLowerCase() + "-" + this.props.exchange.destTokenSymbol.toLowerCase()
       this.props.global.analytics.callTrack("trackChooseToken", "from", symbol);
-    }else{
+    } else {
       path = constansts.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "-" + symbol.toLowerCase()
       this.props.global.analytics.callTrack("trackChooseToken", "to", symbol);
     }
@@ -233,7 +233,7 @@ class ExchangeBody extends React.Component {
 
   lazyEstimateGas = _.debounce(this.dispatchEstimateGasNormal, 500)
 
- 
+
   validateRateAndSource = (sourceValue) => {
     this.lazyUpdateRateExchange(sourceValue)
     if (this.props.account.account !== false) {
@@ -261,7 +261,8 @@ class ExchangeBody extends React.Component {
 
   focusSource = () => {
     this.props.dispatch(exchangeActions.focusInput('source'));
-    this.setState({focus:"source"})
+    this.props.dispatch(exchangeActions.setIsSelectTokenBalance(false))
+    this.setState({ focus: "source" })
     this.props.global.analytics.callTrack("trackClickInputAmount", "from");
   }
 
@@ -271,7 +272,8 @@ class ExchangeBody extends React.Component {
 
   focusDest = () => {
     this.props.dispatch(exchangeActions.focusInput('dest'));
-    this.setState({focus:"dest"})
+    this.props.dispatch(exchangeActions.setIsSelectTokenBalance(false));
+    this.setState({ focus: "dest" })
     this.props.global.analytics.callTrack("trackClickInputAmount", "to");
   }
 
@@ -317,8 +319,8 @@ class ExchangeBody extends React.Component {
   }
 
   swapToken = () => {
-    var isFixedDestToken = !!(this.props.account && this.props.account.account.type ==="promo" && this.props.account.account.info.destToken)
-    if (isFixedDestToken){
+    var isFixedDestToken = !!(this.props.account && this.props.account.account.type === "promo" && this.props.account.account.info.destToken)
+    if (isFixedDestToken) {
       return
     }
     this.props.dispatch(exchangeActions.swapToken())
@@ -336,17 +338,17 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.analyzeError(ethereum, exchange.txHash))
   }
 
-  toggleBalanceContent = () => {
-    if (this.props.exchange.isBalanceActive) {
-      this.props.global.analytics.callTrack("trackClickHideAccountBalance", "Swap")
-    } else {
-      this.props.global.analytics.callTrack("trackClickShowAccountBalance", "Swap")
-    }
-    this.props.dispatch(exchangeActions.toggleBalanceContent())    
-    if(!this.props.global.isOnMobile){
-      this.props.dispatch(exchangeActions.toggleAdvanceContent())    
-    }
-  }
+  // toggleBalanceContent = () => {
+  //   if (this.props.exchange.isBalanceActive) {
+  //     this.props.global.analytics.callTrack("trackClickHideAccountBalance", "Swap")
+  //   } else {
+  //     this.props.global.analytics.callTrack("trackClickShowAccountBalance", "Swap")
+  //   }
+  //   this.props.dispatch(exchangeActions.toggleBalanceContent())    
+  //   if(!this.props.global.isOnMobile){
+  //     this.props.dispatch(exchangeActions.toggleAdvanceContent())    
+  //   }
+  // }
 
   toggleAdvanceContent = () => {
     if (this.props.exchange.isAdvanceActive) {
@@ -354,11 +356,19 @@ class ExchangeBody extends React.Component {
     } else {
       this.props.global.analytics.callTrack("trackClickShowAdvanceOption", "Swap")
     }
-    this.props.dispatch(exchangeActions.toggleAdvanceContent())    
-    if(!this.props.global.isOnMobile){
-      this.props.dispatch(exchangeActions.toggleBalanceContent())    
+    this.props.dispatch(exchangeActions.toggleAdvanceContent());
+
+    if (!this.props.exchange.isOpenAdvance) {
+      this.props.dispatch(exchangeActions.setIsOpenAdvance());
     }
+    // if(!this.props.global.isOnMobile){
+    //   this.props.dispatch(exchangeActions.toggleBalanceContent())    
+    // }
   }
+
+  // closeAdvance = () => {
+
+  // }
 
   specifyGasPrice = (value) => {
     this.props.dispatch(exchangeActions.specifyGasPrice(value + ""))
@@ -374,7 +384,7 @@ class ExchangeBody extends React.Component {
   }
 
   handleSlippageRateChanged = (e, isInput = false) => {
-    const offeredRate  = this.props.exchange.offeredRate;
+    const offeredRate = this.props.exchange.offeredRate;
     let value = isInput ? 100 - e.currentTarget.value : e.currentTarget.value;
 
     if (value > 100) {
@@ -390,7 +400,7 @@ class ExchangeBody extends React.Component {
   }
 
   setDefaulTooltip = (value) => {
-    this.setState({defaultShowTooltip: value})
+    this.setState({ defaultShowTooltip: value })
   }
 
   getAdvanceLayout = () => {
@@ -412,11 +422,11 @@ class ExchangeBody extends React.Component {
         selectedGasHandler={this.selectedGasHandler}
         gasPriceSuggest={this.props.exchange.gasPriceSuggest}
         translate={this.props.translate}
-        isAdvanceActive = {this.props.exchange.isAdvanceActive}
-        toggleAdvanceContent={this.toggleAdvanceContent}
+        isAdvanceActive={this.props.exchange.isAdvanceActive}
+        // toggleAdvanceContent={this.toggleAdvanceContent}
         minConversionRate={minConversionRate}
         type="exchange"
-        maxGasPrice = {this.props.exchange.maxGasPrice}
+        maxGasPrice={this.props.exchange.maxGasPrice}
       />
     )
   }
@@ -427,24 +437,27 @@ class ExchangeBody extends React.Component {
         chooseToken={this.chooseToken}
         sourceActive={this.props.exchange.sourceTokenSymbol}
         destTokenSymbol={this.props.exchange.destTokenSymbol}
-        onToggleBalanceContent={this.toggleBalanceContent}
-        isBalanceActive = {this.props.exchange.isBalanceActive}
-        walletName = {this.props.account.walletName}
-        tradeType = "swap"
-        isOnDAPP = {this.props.account.isOnDAPP}
+        // onToggleBalanceContent={this.toggleBalanceContent}
+        isBalanceActive={this.props.exchange.isAdvanceActive}
+        walletName={this.props.account.walletName}
+        screen="swap"
+        isOnDAPP={this.props.account.isOnDAPP}
+        changeAmount={exchangeActions.inputChange}
+        changeFocus={exchangeActions.focusInput}
+        selectTokenBalance={this.selectTokenBalance}
       />)
   }
 
-  getSwapBalance = () => {
-    return (
-      <ChooseBalanceModal
-        changeAmount={exchangeActions.inputChange}
-        changeFocus={exchangeActions.focusInput}
-        sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
-        typeTx={"swap"}
-      />
-    )
-  }
+  // getSwapBalance = () => {
+  //   return (
+  //     <ChooseBalanceModal
+  //       changeAmount={exchangeActions.inputChange}
+  //       changeFocus={exchangeActions.focusInput}
+  //       sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
+  //       typeTx={"swap"}
+  //     />
+  //   )
+  // }
 
   closeChangeWallet = () => {
     this.props.dispatch(globalActions.closeChangeWallet())
@@ -457,8 +470,17 @@ class ExchangeBody extends React.Component {
   }
 
   acceptTerm = (e) => {
-    this.props.dispatch(globalActions.acceptTermOfService())
-  } 
+    this.props.dispatch(globalActions.acceptTermOfService());
+    this.props.dispatch(globalActions.acceptConnectWallet());
+  }
+
+  clearIsOpenAdvance = () => {
+    this.props.dispatch(exchangeActions.clearIsOpenAdvance());
+  }
+
+  selectTokenBalance = () => {
+    this.props.dispatch(exchangeActions.setIsSelectTokenBalance(true));
+  }
 
   render() {
     var balanceInfo = {
@@ -504,24 +526,24 @@ class ExchangeBody extends React.Component {
       tokenDest[key] = { ...this.props.tokens[key], isNotSupport: isNotSupport }
     })
 
-    var isFixedSourceToken = !!(this.props.account && this.props.account.account.type ==="promo" && this.props.tokens[BLOCKCHAIN_INFO.promo_token])
+    var isFixedSourceToken = !!(this.props.account && this.props.account.account.type === "promo" && this.props.tokens[BLOCKCHAIN_INFO.promo_token])
     var tokenSourceSelect = (
       <TokenSelector
         type="source"
         focusItem={this.props.exchange.sourceTokenSymbol}
         listItem={this.props.tokens}
         chooseToken={this.chooseToken}
-        isFixToken = {isFixedSourceToken}
+        isFixToken={isFixedSourceToken}
       />
     )
-    var isFixedDestToken = !!(this.props.account && this.props.account.account.type ==="promo" && this.props.account.account.info.destToken)
+    var isFixedDestToken = !!(this.props.account && this.props.account.account.type === "promo" && this.props.account.account.info.destToken)
     var tokenDestSelect = (
       <TokenSelector
         type="des"
         focusItem={this.props.exchange.destTokenSymbol}
         listItem={tokenDest}
         chooseToken={this.chooseToken}
-        isFixToken = {isFixedDestToken}
+        isFixToken={isFixedDestToken}
       />
     )
     //--------End
@@ -571,9 +593,17 @@ class ExchangeBody extends React.Component {
 
     var rateToken = (
       <RateBetweenToken
-      
+
       />
     )
+
+    var topBalance = <TopBalance showMore={this.toggleAdvanceContent}
+      chooseToken={this.chooseToken}
+      activeSymbol={this.props.exchange.sourceTokenSymbol}
+      screen="swap"
+      selectTokenBalance={this.selectTokenBalance}
+      changeAmount={exchangeActions.inputChange}
+      changeFocus={exchangeActions.focusInput} />
     return (
       <ExchangeBodyLayout
         chooseToken={this.chooseToken}
@@ -597,25 +627,33 @@ class ExchangeBody extends React.Component {
         balanceLayout={this.getBalanceLayout()}
         focus={this.state.focus}
         networkError={this.props.global.network_error}
-        isChangingWallet = {this.props.global.isChangingWallet}
-        changeWalletType = {this.props.global.changeWalletType}
-        closeChangeWallet = {this.closeChangeWallet}
+        isChangingWallet={this.props.global.isChangingWallet}
+        changeWalletType={this.props.global.changeWalletType}
+        closeChangeWallet={this.closeChangeWallet}
         global={this.props.global}
-        swapBalance = {this.getSwapBalance()}
         clearSession={this.clearSession}
         walletName={this.props.account.walletName}
-        isFixedDestToken = {isFixedDestToken}
+        isFixedDestToken={isFixedDestToken}
         acceptTerm={this.acceptTerm}
+        isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
 
-        isBalanceActive = {this.props.exchange.isBalanceActive}
-        isAdvanceActive = {this.props.exchange.isAdvanceActive}
+        // isBalanceActive = {this.props.exchange.isBalanceActive}
+        isAdvanceActive={this.props.exchange.isAdvanceActive}
+        toggleAdvanceContent={this.toggleAdvanceContent}
 
-        rateToken = {rateToken}
+        isOpenAdvance={this.props.exchange.isOpenAdvance}
+        clearIsOpenAdvance={this.clearIsOpenAdvance}
 
-        defaultShowTooltip = {this.state.defaultShowTooltip}
-        setDefaulTooltip = {this.setDefaulTooltip}
+        rateToken={rateToken}
 
-        isOnDAPP = {this.props.account.isOnDAPP}
+        defaultShowTooltip={this.state.defaultShowTooltip}
+        setDefaulTooltip={this.setDefaulTooltip}
+
+        topBalance={topBalance}
+
+        isOnDAPP={this.props.account.isOnDAPP}
+
+        isSelectTokenBalance={this.props.exchange.isSelectTokenBalance}
       />
     )
   }

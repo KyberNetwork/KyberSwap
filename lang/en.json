@@ -27,7 +27,8 @@
     "connect_your_wallet_to_transfer": "Connect your Wallet to Transfer",
     "download": "Download",
     "your_wallet": "Your Wallet",
-    "register_beta": "Comming soon"
+    "register_beta": "Comming soon",
+    "or_connect_with": "Or Connect with"
   },
   "transaction": {
     "wallet": "Wallet",
@@ -245,7 +246,10 @@
     "apply": "Apply",
     "promo_code": "Promocode",
     "cancel": "Cancel",
-    "connect_other_wallet": "Connect other wallet"
+    "connect_other_wallet": "Connect other wallet",
+    "do_you_want_to_connect_other_wallet": "Do you want to connect other Wallet?",
+    "yes": "Yes",
+    "no": "No"
   },
   "info": {
     "title": "Kyber Testnet",

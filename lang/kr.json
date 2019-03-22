@@ -27,7 +27,8 @@
     "connect_your_wallet_to_transfer": "송금을 위해 지갑을 연결해주세요",
     "download": "Download",
     "your_wallet": "월렛",
-    "register_beta": "곧 출시"
+    "register_beta": "곧 출시",
+     "or_connect_with": "또는"
   },
   "transaction": {
     "wallet": "지갑",
@@ -245,7 +246,10 @@
     "promo_code": "프로모션 코드",
     "apply": "적용",
     "cancel": "취소",
-    "connect_other_wallet": "다른 지갑에 연결"
+    "connect_other_wallet": "다른 지갑에 연결",
+    "do_you_want_to_connect_other_wallet": "다른 지갑으로 연결하시겠습니까?",
+    "yes": "예",
+    "no": "아니오"
   },
   "info": {
     "title": "카이버 테스트넷",

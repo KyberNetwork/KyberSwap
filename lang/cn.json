@@ -26,7 +26,8 @@
     "connect_your_wallet_to_swap": "连接您的钱包进行兑换",
     "connect_your_wallet_to_transfer": "连接您的钱包进行转账",
     "your_wallet": "您的钱包",
-    "register_beta": "敬请期待"
+    "register_beta": "敬请期待",
+    "or_connect_with": "或者连接"
   },
   "transaction": {
     "wallet": "钱包",
@@ -243,7 +244,10 @@
     "enter_promo_code": "输入您的活动码",
     "apply": "申请",
     "cancel": "取消",
-    "connect_other_wallet": "连接其他钱包"
+    "connect_other_wallet": "连接其他钱包",
+    "do_you_want_to_connect_other_wallet": "你是否想要连接至其他钱包?",
+    "yes": "是",
+    "no": "否"
   },
   "info": {
     "title": "Kyber测试网络",
