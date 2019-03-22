@@ -63,9 +63,11 @@
 
         &.download-app{
           .import-account__block-right{
-            background-color: #EF8102;
+            background-color: #6f6f6f;
             border: none;
             color: #fff;
+            font-size: 11px;
+            pointer-events: none;
           }
         }
       }

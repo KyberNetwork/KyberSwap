@@ -75,6 +75,11 @@ const ImportAccountView = (props) => {
                   {props.translate("address.register_beta") || "Register Beta"}
                 </a>
               </div>
+              <a
+                className="import-account__block-right"                
+              >
+                {props.translate("address.register_beta") || "Comming soon"}
+              </a>
             </div>
           }
 
