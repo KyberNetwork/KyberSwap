@@ -70,7 +70,7 @@ const ImportAccountView = (props) => {
                   </div>
                 </div>
                 {isIos && <a
-                  className="import-account__block-right"
+                  className="import-account__block-right import-account__block-right--download"
                   href={"https://itunes.apple.com/us/app/kyberswap/id1453691309?ls=1&mt=8"}
                   target="_blank"
                 >
