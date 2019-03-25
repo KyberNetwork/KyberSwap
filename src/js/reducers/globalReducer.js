@@ -23,8 +23,6 @@ const initState = {
     balance: "",
     error: "Address is loading"
   },
-  isIos: false,
-  isAndroid: false,
   onMobile: {
     isIOS: false,
     isAndroid: false
@@ -152,13 +150,6 @@ const global = (state = initState, action) => {
       return Object.assign({}, state, { changeWalletType: "", isChangingWallet: false })
     }
 
-    case "GLOBAL.SET_IS_IOS": {
-      return Object.assign({}, state, { isIos: action.payload })
-    }
-
-    case "GLOBAL.SET_IS_ANDROID": {
-      return Object.assign({}, state, { isAndroid: action.payload })
-    }
     case "GLOBAL.SET_ON_MOBILE": {
       const { isIOS, isAndroid } = action.payload
       let onMobile = {
