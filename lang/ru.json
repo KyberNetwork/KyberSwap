@@ -209,7 +209,7 @@
     "min_rate_too_high": "Ваша минимальная ставка слишком высока!",
     "ledger_global_err": "<div class='text-left'>Не получается подключиться к Ledger. Пожалуйста\ncheck if:<br/>- Ваш Ledger правильно подлючен.<br/>- Вы подключились к\nLedger.<br/>- Вы запустили приложение Ethereum на вашем Ledger.<br/>-\n\"Браузерная поддержка\" был включен к вашему Ledger. Включите \"Браузерную поддержку\"\n<a href=\"${link}\" target=\"_blank\">здесь</a>.</div>",
     "need_to_config_env_ledger": "Вы должны настроить устройство Linux для подключения к Ledger.\nИнструкция <a href=\"${link}\" target=\"_blank\">здесь</a>.",
-    "ledger_not_enable_contract": "Пожалуйста, проверьте: </br>- \"Данные контракта\" были включены\nв ваш Ledger. Инструкция <a href=\"${link}\" target=\"_blank\">here</a>.",
+    "ledger_not_enable_contract": "Пожалуйста, проверьте: </br>- \"Данные контракта\" были включены\nв ваш Ledger.",
     "invalid_path_or_session_expired": "Невозможно получить адрес по этому пути. Пожалуйста, проверьте\nваш путь и подключение Ledger.",
     "path_is_invalid": "Неправильный путь. Выберите иной.",
     "ledger_time_out": "Ваша сессия в Ledger истекла. Пожалуйста, войдите еще раз для продолжения.",
