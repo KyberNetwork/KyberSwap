@@ -208,7 +208,7 @@
     "min_rate_too_high": "Your min rate is too high!",
     "ledger_global_err": "<div class='text-left'>Cannot connect to your Ledger. Please\ncheck if:<br/>- Your Ledger is properly plugged in.<br/>- You have logged into\nyour Ledger.<br/>- You have launched Ethereum Application on your Ledger.<br/>-\n\"Browser Support\" has been enabled in your Ledger. Learn to enable \"Browser Support\"\n<a href=\"${link}\" target=\"_blank\">here</a>.</div>",
     "need_to_config_env_ledger": "You need to configure your Linux device to access Ledger.\nInstruction <a href=\"${link}\" target=\"_blank\">here</a>.",
-    "ledger_not_enable_contract": "Please check if: </br>- \"Contract Data\" has been enabled\nin your Ledger. Instruction <a href=\"${link}\" target=\"_blank\">here</a>.",
+    "ledger_not_enable_contract": "Please check if: </br>- \"Contract Data\" has been enabled\nin your Ledger.",
     "invalid_path_or_session_expired": "Cannot get address from this path. Please check\nyour path is valid or Ledger is connected.",
     "path_is_invalid": "Invalid path. Please choose another one.",
     "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue.",
