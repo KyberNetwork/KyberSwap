@@ -93,3 +93,8 @@ deploy:
     skip_cleanup: true
     on:
       all_branches: true
+
+  - provider: script
+    script: bash .travis/awx_job_launch.sh $TRAVIS_BRANCH
+    on:
+      all_branches: true
