@@ -1158,9 +1158,7 @@ function* estimateGasSnapshot() {
     const exchange = state.exchange
 
     const sourceTokenSymbol = exchange.sourceTokenSymbol
-    var gas = yield call(getMaxGasExchange)
-    console.log("gas_ne")
-    console.log(gas)
+    var gas = yield call(getMaxGasExchange)    
     var gas_approve
     if (sourceTokenSymbol === "ETH") {
       gas_approve = 0
@@ -1288,7 +1286,9 @@ function* getGasConfirm() {
   var sourceDecimal = 18
   var sourceTokenSymbol = exchange.sourceTokenSymbol
   var destTokenSymbol = exchange.destTokenSymbol
-  if(sourceTokenSymbol === "TUSD" || destTokenSymbol === "TUSD"){
+
+  var specialList = ["DAI", "TUSD"]
+  if(specialList.indexOf(sourceTokenSymbol) !== -1 || specialList.indexOf(destTokenSymbol) !== -1){
     return { status: "success", res: gas }
   }
 
@@ -1329,8 +1329,7 @@ function* getGasConfirm() {
   // }
   try {
     gas = yield call([ethereum, ethereum.call], "estimateGas", txObj)
-    var marginGas = sourceTokenSymbol === "DAI" || destTokenSymbol === "DAI" ? 150000: 100000    
-    gas = Math.round(gas * 120 / 100) + marginGas
+    gas = Math.round(gas * 120 / 100) + 100000
     //console.log("gas ne: " + gas)
     if (gas > maxGas) {
       gas = maxGas
@@ -1409,7 +1408,9 @@ function* getGasUsed() {
   // if(tokens[sourceTokenSymbol].cannot_estimate_gas){
   //   return { status: "success", res: { gas, gas_approve } }
   // }
-  if(sourceTokenSymbol === "TUSD" || destTokenSymbol === "TUSD"){
+
+  var specialList = ["DAI", "TUSD"]
+  if(specialList.indexOf(sourceTokenSymbol) !== -1 || specialList.indexOf(destTokenSymbol) !== -1){
     return { status: "success", res: { gas: maxGas, gas_approve: maxGasApprove } }
   }
   
@@ -1468,9 +1469,7 @@ function* getGasUsed() {
     //   console.log("timeout")
     // }
     gas = yield call([ethereum, ethereum.call], "estimateGas", txObj)
-    console.log("get_gas:" + gas)
-    var marginGas = sourceTokenSymbol === "DAI" || destTokenSymbol === "DAI" ? 150000: 100000
-    gas = Math.round(gas * 120 / 100) + marginGas
+    gas = Math.round(gas * 120 / 100) + 100000
     //console.log("gas ne: " + gas)
     if (gas > maxGas) {
       gas = maxGas
