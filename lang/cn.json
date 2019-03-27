@@ -206,7 +206,7 @@
     "min_rate_too_high": "你设置的最交易低价格太高了！",
     "ledger_global_err": "<div class='text-left'>无法连接至Ledger. 请检查是否:<br/>- 你的Ledger硬件钱包插入无误。<br/>-\n你已经登录进你的Ledger了。<br/>- 你已经启动了Ledger上的以太坊应用。<br/>- 你的Ledger中的“浏览器支持“已经启用。 <a href=\"${link}\"\ntarget=\"_blank\">在这</a>里学习如何启用Ledger中的“浏览器支持“。</div>",
     "need_to_config_env_ledger": "你需要调试你的Linux设备来使用Ledger。说明请看<a href=\"${link}\" target=\"_blank\">这里</a>。",
-    "ledger_not_enable_contract": "请检查是否: </br>- 你Ledger中的”合约数据“已经被启用。 说明请看<a href=\"${link}\"\ntarget=\"_blank\">这里</a>。",
+    "ledger_not_enable_contract": "请检查是否: </br>- 你Ledger中的”合约数据“已经被启用。",
     "invalid_path_or_session_expired": "无法从此路径得到地址。请检查您路径的有效性或Ledger的连接",
     "path_is_invalid": "错误的路径。请选择另一个。",
     "ledger_time_out": "你Ledger上的对话已经过期。请重新登录。",
