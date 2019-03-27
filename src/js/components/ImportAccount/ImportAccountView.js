@@ -11,6 +11,8 @@ import {
 
 const ImportAccountView = (props) => {
   var isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid;
+  const { isIOS: isIos, isAndroid } = props.onMobile;
+
   const importInactiveClass = !props.isAgreedTermOfService ? 'import-account__item--inactive' : '';
 
   return (
@@ -67,13 +69,20 @@ const ImportAccountView = (props) => {
                     <div className="import-account__desc">Ethereum Wallet & DApp</div>
                   </div>
                 </div>
-                <a
-                  className="import-account__block-right"
-                  href={"https://docs.google.com/forms/d/e/1FAIpQLSeHmkoi5TQ8gGvmrhzg7RzRZQNlEDBR_Gqb67uB6M92V10rpQ/viewform"}
+                {isIos && <a
+                  className="import-account__block-right import-account__block-right--download"
+                  href={"https://itunes.apple.com/us/app/kyberswap/id1453691309?ls=1&mt=8"}
                   target="_blank"
                 >
-                  {props.translate("address.register_beta") || "Register Beta"}
-                </a>
+                  {props.translate("address.download") || "Download"}
+                </a>}
+                {isAndroid && <a
+                  className="import-account__block-right import-account__block-right--comming-soon"
+                  href={""}
+                  target="_blank"
+                >
+                  {props.translate("address.register_beta") || "Comming soon"}
+                </a>}
               </div>
             </div>
           }
