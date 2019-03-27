@@ -24,10 +24,18 @@ console.log("bundle name ----------------___++++++", BUNDLE_NAME)
 var now = new Date().getTime()
 
 let view = `
-link rel="stylesheet" href="/swap/${chain}/app.css?v=${now}" type="text/css"
-= render "server_rendering"
-script src="https://www.google.com/recaptcha/api.js"
-script src="/swap/${chain}/app.min.js?v=${now}"
+- if cookies[:is_visited] == 'true'
+    #swap-app onClick="animateSwap()"
+        div style="text-align:center"
+            = render "server_rendering"
+    link rel="stylesheet" href="/swap/${chain}/app.css?v=${now}" type="text/css"
+    script src="https://www.google.com/recaptcha/api.js"
+    script src="/swap/${chain}/app.min.js?v=${now}"
+- else 
+    #swap-app
+        div style="text-align:center" onClick="openSwap('${chain}', ${now})"
+            = render "server_rendering"
+    link rel="stylesheet" href="/swap/${chain}/app.css?v=${now}" type="text/css"
 `
 
 // let view = `
