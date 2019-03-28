@@ -24,7 +24,7 @@ console.log("bundle name ----------------___++++++", BUNDLE_NAME)
 var now = new Date().getTime()
 
 let view = `
-- if cookies[:is_visited] == 'true'
+- if browser.device.mobile? || cookies[:is_visited] == 'true'
     #swap-app onClick="animateSwap()"
         div style="text-align:center"
             = render "server_rendering"
