@@ -965,6 +965,10 @@ $divider-color: darken($title-background-color, 5);
           margin: 0 auto;
         }
       }
+
+      .captcha-hide {
+        display: none;
+      }
     }
     label.error {
       .input-reveal {
@@ -1017,5 +1021,75 @@ $divider-color: darken($title-background-color, 5);
         max-width: 125px;
       }
     }
+  }
+
+  $spCol: #ef8102;
+  $spBallSize: 15px;
+  $spOpacity: 0.4;
+  .loading-3balls, .loading-3balls:before, .loading-3balls:after {
+    border-radius: 50%;
+    background-color: $spCol;
+    width: $spBallSize;
+    height: $spBallSize;
+    transform-origin: center center;
+    display: inline-block;
+  }
+  .loading-3balls {
+    position: relative;
+    left: 50%;
+    margin-bottom: $spBallSize;
+    background-color: rgba($spCol,1);
+    opacity: 1;
+    -webkit-animation: spScaleAlpha 1s infinite linear;
+    animation: spScaleAlpha 1s infinite linear;
+  }
+  .loading-3balls:before, .loading-3balls:after {
+    content: '';
+    position: relative;
+    opacity: 0.25;
+  }
+  .loading-3balls:before {
+    left: 30px;
+    top: -2px;
+    -webkit-animation: spScaleAlphaBefore 1s infinite linear;
+    animation: spScaleAlphaBefore 1s infinite linear;
+  }
+  .loading-3balls:after {
+    left: -30px;
+    top: -26px;
+    -webkit-animation: spScaleAlphaAfter 1s infinite linear;
+    animation: spScaleAlphaAfter 1s infinite linear;
+  }
+  @-webkit-keyframes spScaleAlpha {
+    0% { opacity: 1; }
+    33% { opacity: $spOpacity; }
+    66% { opacity: $spOpacity; }
+    100% { opacity: 1; }
+  }
+  @keyframes spScaleAlpha {
+    0% { opacity: 1; }
+    33% {  opacity: $spOpacity; }
+    66% { opacity: $spOpacity; }
+    100% {  opacity: 1; }
+  }
+  @-webkit-keyframes spScaleAlphaBefore {
+    0% { opacity: $spOpacity; }
+    33% { opacity: 1; }
+    66% { opacity: $spOpacity; }
+  }
+  @keyframes spScaleAlphaBefore {
+    0% { opacity: $spOpacity; }
+    33% { opacity: 1; }
+    66% { opacity: $spOpacity; }
+  }
+  @-webkit-keyframes spScaleAlphaAfter {
+    33% { opacity: $spOpacity; }
+    66% { opacity: 1; }
+    100% { opacity: $spOpacity; }
+  }
+  @keyframes spScaleAlphaAfter {
+    33% { opacity: $spOpacity; }
+    66% { opacity: 1; }
+    100% { opacity: $spOpacity; }
   }
 }
