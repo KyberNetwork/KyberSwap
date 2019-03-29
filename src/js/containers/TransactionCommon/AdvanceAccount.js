@@ -145,7 +145,7 @@ export default class AdvanceAccount extends React.Component {
                                 </div>
                                 <Modal className={{
                                     base: 'reveal tiny reimport-modal',
-                                    afterOpen: 'reveal tiny reimport-modal'
+                                    afterOpen: 'reveal tiny reimport-modal reimport-modal--tiny'
                                 }}
                                     isOpen={this.state.isReImport}
                                     onRequestClose={this.closeReImport}

@@ -23,6 +23,9 @@
         &__symbol{
             text-decoration: underline;
         }
+        &--deactivated {
+            pointer-events: none;
+        }
     }
     &-more{
         font-size: 13px;

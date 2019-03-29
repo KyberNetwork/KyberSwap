@@ -16,6 +16,8 @@ import { AdvanceAccount } from "../../containers/TransactionCommon"
 import { CSSTransition } from "react-transition-group";
 
 const TransferForm = (props) => {
+  const { isOnMobile } = props.global;
+
   function handleChangeAmount(e) {
     var check = filterInputNumber(e, e.target.value, props.input.amount.value)
     if (check) props.input.amount.onChange(e)
@@ -131,7 +133,7 @@ const TransferForm = (props) => {
                         >
                           <input
                             className={`exchange-content__input ${props.account !== false ? 'has-account' : ''}`}
-                            type="text"
+                            type={isOnMobile ? "number" : "text"}
                             min="0"
                             step="0.000001"
                             placeholder="0"

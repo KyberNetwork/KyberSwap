@@ -26,7 +26,7 @@ import BLOCKCHAIN_INFO from "../../../../env"
 export default class ImportByPromoCodeModal extends React.Component {
   constructor(){
     super()
-    this.recaptchaInstance
+    this.recaptchaInstance;
     this.state = {
       isLoading: false,
       error:"",
@@ -34,7 +34,8 @@ export default class ImportByPromoCodeModal extends React.Component {
       errorCaptcha: "",
       captchaV: "",
       tokenCaptcha: "" ,
-      isPassCapcha: false
+      isPassCapcha: false,
+      isCaptchaLoaded: false
     }
   }
 
@@ -50,6 +51,13 @@ export default class ImportByPromoCodeModal extends React.Component {
   }
 
   closeModal() {
+    const iframeEle = document.getElementById("g-recaptcha").querySelector("iframe");
+    iframeEle.removeEventListener("load", () => {
+      this.setState({
+        isCaptchaLoaded: false
+      });
+    });
+
     this.props.dispatch(closePromoCodeModal());
     this.props.analytics.callTrack("trackClickCloseModal", "import promo-code");
   }
@@ -84,8 +92,18 @@ export default class ImportByPromoCodeModal extends React.Component {
     this.recaptchaInstance.reset()
     this.setState({
       tokenCaptcha: "",
-      isPassCapcha: false
-    })
+      isPassCapcha: false,
+      isCaptchaLoaded: false
+    });
+    
+    const iframeEle = document.getElementById("g-recaptcha").querySelector("iframe");
+    iframeEle.removeEventListener("load", () => {});
+
+    iframeEle.addEventListener("load", () => {
+      this.setState({
+        isCaptchaLoaded: true
+      });
+    });
   }
   
   verifyCallback = (response) => {
@@ -95,6 +113,22 @@ export default class ImportByPromoCodeModal extends React.Component {
         isPassCapcha: true
       })
     }
+  }
+
+  onloadCallback = () => {
+    // First render, show loading indicator
+    this.setState({
+      isCaptchaLoaded: false
+    });
+
+    // When iframe loading process is finished, show captcha box
+    const iframeEle = document.getElementById("g-recaptcha").querySelector("iframe");
+    iframeEle.addEventListener("load", () => {
+      this.setState({
+        isCaptchaLoaded: true
+      });
+    });
+    
   }
 
   importPromoCode = (promoCode) => {
@@ -186,10 +220,14 @@ export default class ImportByPromoCodeModal extends React.Component {
                       }
                     </label>
                     <div className="capcha-wrapper">
+                      {!this.state.isCaptchaLoaded && <div className="loading-3balls"></div>}
                       <Recaptcha
+                        elementID="g-recaptcha"
+                        className={`captcha${this.state.isCaptchaLoaded ? "" : "-hide"}`}
                         sitekey="6LfTVn8UAAAAAIBzOyB1DRE5p-qWVav4vuZM53co"
                         ref={e => this.recaptchaInstance = e}
                         verifyCallback={this.verifyCallback}
+                        onloadCallback={this.onloadCallback}
                       />
                     </div>
                   </div>

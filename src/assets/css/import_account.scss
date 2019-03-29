@@ -483,6 +483,18 @@
 
 
 .reimport-modal{
+
+  &--tiny {
+    @media print, screen and (max-width: 40em) {
+      top: 40%;
+      height: 160px;
+      min-height: 0;
+      width: 90%;
+      border-radius: 10px;
+      margin: 0 auto;
+    }
+  }
+  
   .title{
     font-size: 18px;
     text-align: center;

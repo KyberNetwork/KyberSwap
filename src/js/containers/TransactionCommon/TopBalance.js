@@ -7,6 +7,7 @@ import { getTranslate } from "react-localize-redux";
 @connect((store, props) => {
 
     return {
+        account: store.account,
         global: store.global,
         exchange: store.exchange,
         transfer: store.transfer,
@@ -75,9 +76,10 @@ export default class TopBalance extends React.Component {
     }
 
     renderToken = (tokens) => {
+        var isFixedSourceToken = !!(this.props.account && this.props.account.account.type ==="promo");
         var maxToken = 3
         var tokenLayout = tokens.slice(0, maxToken).map(token => {
-            return <div className={`top-token-item ${this.props.activeSymbol === token.symbol ? "active" : ""}`} key={token.symbol} onClick={(e) => { this.selectBalance(token.symbol) }}>
+            return <div className={`top-token-item ${this.props.activeSymbol === token.symbol ? "active" : ""} ${isFixedSourceToken && this.props.screen === "swap" ? "top-token-item--deactivated" : ""}`} key={token.symbol} onClick={(e) => { this.selectBalance(token.symbol) }}>
                 <div className="top-token-item__symbol">{token.symbol}</div>
                 <div className="top-token-item__balance">{converters.roundingNumber(converters.toT(token.balance, token.decimals))}</div>
             </div>

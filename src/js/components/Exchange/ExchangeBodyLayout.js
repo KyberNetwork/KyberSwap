@@ -18,6 +18,7 @@ import { AdvanceAccount } from "../../containers/TransactionCommon";
 import { CSSTransition } from "react-transition-group";
 
 const ExchangeBodyLayout = (props) => {
+  const { isOnMobile } = props.global;
   function handleChangeSource(e) {
     var check = filterInputNumber(e, e.target.value, props.input.sourceAmount.value)
     if (check) props.input.sourceAmount.onChange(e)
@@ -139,7 +140,7 @@ const ExchangeBodyLayout = (props) => {
                             min="0"
                             step="0.000001"
                             placeholder="0" autoFocus
-                            type="text" maxLength="50" autoComplete="off"
+                            type={isOnMobile ? "number" : "text"} maxLength="50" autoComplete="off"
                             value={props.input.sourceAmount.value}
                             onFocus={props.input.sourceAmount.onFocus}
                             onBlur={props.input.sourceAmount.onBlur}
@@ -181,7 +182,7 @@ const ExchangeBodyLayout = (props) => {
                           step="0.000001"
                           placeholder="0"
                           min="0"
-                          type="text"
+                          type={isOnMobile ? "number" : "text"}
                           maxLength="50"
                           autoComplete="off"
                           value={props.input.destAmount.value}

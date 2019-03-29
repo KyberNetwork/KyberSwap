@@ -38,6 +38,11 @@ var illegal = false
 //   // break
 // }
 
+//indicate bundle swap is loaded 
+if (window.kyberBus){
+  window.kyberBus.broadcast("swap.on.loaded")
+}
+
 Modal.setAppElement('body');
 
 if (illegal) {

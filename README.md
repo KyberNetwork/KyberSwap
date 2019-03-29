@@ -1,6 +1,5 @@
 # KyberSwap: Instantly Convert Your Tokens
-KyberSwap allows users to directly interact with Kyber's decentralized liquidity network and instantly swap/ trade their tokens.
-
+KyberSwap allows users to directly interact with Kyber's decentralized liquidity network and instantly swap/ trade their tokens. Check our website at https://kyberswap.com
 
 ## Install dependencies
 The wallet is developed on `Nodejs`, we assume users have it installed in their environment. *We suggest to use Node v7.3.0*
