@@ -283,6 +283,13 @@ export function setGasPriceTransferComplete(safeLowGas, standardGas, fastGas, de
   }
 }
 
+export function setGasPriceSuggest(gasPriceSuggest) {
+  return {
+    type: "TRANSFER.SET_GAS_PRICE_SUGGEST",
+    payload: gasPriceSuggest
+  }
+}
+
 export function seSelectedGas(level) {
   return {
     type: "TRANSFER.SET_SELECTED_GAS",
