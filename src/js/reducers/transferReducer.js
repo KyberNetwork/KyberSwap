@@ -233,6 +233,11 @@ const transfer = (state = initState, action) => {
       return newState
     }
 
+    case "TRANSFER.SET_GAS_PRICE_SUGGEST": {
+      newState.gasPriceSuggest = action.payload;
+      return newState;
+    }
+
     case "TRANSFER.SET_SNAPSHOT": {
       var snapshot = action.payload
       newState.snapshot = { ...snapshot }
