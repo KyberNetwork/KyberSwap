@@ -519,7 +519,7 @@ $divider-color: darken($title-background-color, 5);
           padding: 0 20px;
         }
         .amount {
-          padding: 5px 10px;
+          // padding: 5px 10px;
           background-color: white;
           border-radius: 0;
         }
@@ -572,22 +572,67 @@ $divider-color: darken($title-background-color, 5);
       }
       .space{
         position: relative;
-        padding: 12px 8px;
         width: 30px;
         display: flex;
         img{
           width: 100%;
         }
-        @include screen-max-width(medium){
+        
+        &--padding {
           padding: 12px 8px;
         }
-      }     
+      }
+
+      // &-promo-payment {
+      //   padding: 5px;
+      // }
+    }
+
+    .amount-promo-payment {
+      // override properties in .amount 
+      padding: 10px 15px; 
+      @include screen-max-width(medium) {
+        padding: 10px 0;
+      }
+      min-height: 100px;
+      display: grid;
+      grid-template-columns: 1fr 90px 1fr 30px 90px;
+
+      .amount-item {
+        width: 100%;
+
+        .rc-info {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .space-container {
+      font-size: 12px;
+      color: #666666;
+      font-weight: 600;
+      position: relative;
+
+      .text-above {
+        position: absolute;
+        top: 10px;
+      }
+
+      .text-below {
+        position: absolute;
+        top: 50px;
+        line-height: 1.17
+      }
+
+      .space {
+        position: absolute;
+        top: 30px;
+        padding: 0
+      }
     }
     
     .title-description{
-      color: #141927;
       margin-bottom: 25px;
-      font-size: 14px;
       font-size: 14px;
       font-weight: 600;
       color: #141927;
@@ -597,6 +642,14 @@ $divider-color: darken($title-background-color, 5);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+      }
+
+      &-promo-payment {
+        padding: 0 20px;
+        margin-bottom: 25px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #141927;
       }
     }
   }

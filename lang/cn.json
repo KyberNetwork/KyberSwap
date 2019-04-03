@@ -35,6 +35,7 @@
     "exchange": "交易",
     "exchange_from": "从",
     "exchange_to": "到",
+    "exchange_receive": "接收",
     "transfer": "转移",
     "transfer_to_address": "转移到地址",
     "amount": "数量",
@@ -123,7 +124,10 @@
     "any_rate": "任何汇率",
     "custom": "自定义",
     "etherscan_explorer": "在Etherscan上查看",
-    "kyber_explorer": "在Kyber.enjinx上查看"
+    "kyber_explorer": "在Kyber.enjinx上查看",
+    "swap_for_gift": "您正在通过兑换获得一个礼物",
+    "send_to_organizer": "发送至组织者",
+    "gift": "礼物"
   },
   "modal": {
     "enter_password": "输入密码",
