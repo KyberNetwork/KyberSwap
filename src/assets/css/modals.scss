@@ -591,12 +591,14 @@ $divider-color: darken($title-background-color, 5);
     .amount-promo-payment {
       // override properties in .amount 
       padding: 10px 15px; 
-      @include screen-max-width(medium) {
-        padding: 10px 0;
-      }
       min-height: 100px;
       display: grid;
       grid-template-columns: 1fr 90px 1fr 30px 90px;
+
+      @include screen-max-width(medium) {
+        padding: 10px 0;
+        grid-template-columns: 90px 1fr 90px 1fr 60px;
+      }
 
       .amount-item {
         width: 100%;
@@ -636,7 +638,8 @@ $divider-color: darken($title-background-color, 5);
       font-size: 14px;
       font-weight: 600;
       color: #141927;
-      div:last-child {
+
+      &-wallet-address {
         color: #5a5e67;
         margin-top: 3px;
         white-space: nowrap;
@@ -650,6 +653,12 @@ $divider-color: darken($title-background-color, 5);
         font-size: 14px;
         font-weight: 600;
         color: #141927;
+      }
+
+      &-expired-notification {
+        color: #1e87f0;
+        font-size: 13px;
+        font-weight: 500;
       }
     }
   }

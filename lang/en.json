@@ -130,7 +130,8 @@
     "kyber_explorer": "View on kyber.enjinx",
     "swap_for_gift": "You are swapping to receive a gift",
     "send_to_organizer": "Send to the Organizer",
-    "gift": "Gift"
+    "gift": "Gift",
+    "promo_expired_notification": "After swapping please transfer your token to your personal wallet before"
   },
   "modal": {
     "enter_password": "Enter Password",

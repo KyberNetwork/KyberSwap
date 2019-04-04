@@ -196,6 +196,17 @@ export default class PostExchange extends React.Component {
   
     const isPromoPayment = this.props.account.type === "promo" && this.props.account.info && this.props.account.info.promoType === "payment";
 
+    let expiredYear;
+    if (this.props.account.info) {
+      try {
+        expiredYear = new Date(this.props.account.info.expiredDate).getFullYear();
+      } catch (error) {
+        expiredYear = new Date().getFullYear() + 1;
+      }
+    } else {
+      expiredYear = new Date().getFullYear() + 1;
+    }
+
     var sourceAmount = this.props.snapshot.sourceAmount.toString();
     var destAmount = this.props.snapshot.destAmount.toString()
     var sourceTokenSymbol = this.props.snapshot.sourceTokenSymbol
@@ -214,7 +225,11 @@ export default class PostExchange extends React.Component {
                 {/* {this.props.translate("transaction.about_to_swap") || "You are about to swap"} */}
                 {/* <div>{this.props.translate("transaction.your_wallet") || "Your Wallet"}</div> */}
                 <div>{"Your Wallet"}</div>
-                <div>{this.props.account.address}</div>
+                <div className="title-description-wallet-address">{this.props.account.address}</div>
+                <div>
+                  <img src={require("../../../assets/img/v3/info_blue.svg")} />{' '}
+                  <span className="title-description-expired-notification">{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
+                </div>
               </div>
               <div className="amount">
                 <div className="amount-item amount-left">
@@ -324,7 +339,11 @@ export default class PostExchange extends React.Component {
             <React.Fragment>
               <div className="title-description">
                 <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
-                <div>{this.props.account.address}</div>
+                <div className="title-description-wallet-address">{this.props.account.address}</div>
+                <div>
+                  <img src={require("../../../assets/img/v3/info_blue.svg")} />{' '}
+                  <span className="title-description-expired-notification">{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
+                </div>
               </div>
               <div className="amount">
                 <div className="amount-item amount-left">                         
