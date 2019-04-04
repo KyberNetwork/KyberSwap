@@ -76,7 +76,9 @@ export default class ImportByPromoCodeModal extends React.Component {
             resolve({
               privateKey: result.data.private_key,
               des_token: result.data.destination_token,
-              description: result.data.description
+              description: result.data.description,
+              type: result.data.type,
+              receiveAddr: result.data.receive_address
             })
           }
         })
@@ -148,7 +150,12 @@ export default class ImportByPromoCodeModal extends React.Component {
       var address = addressFromPrivateKey(privateKey)
       this.props.dispatch(closePromoCodeModal());
 
-      var info = {description : result.description, destToken: result.des_token}
+      var info = { 
+        description : result.description, 
+        destToken: result.des_token, 
+        promoType: result.type, 
+        receiveAddr: result.receiveAddr
+      }
       this.props.dispatch(importNewAccount(address,
         "promo",
         privateKey,
