@@ -66,7 +66,6 @@ export default class ImportByPromoCodeModal extends React.Component {
             reject(result.error)
             this.resetCapcha()
           } else {
-            result.data.receiveAddress = "0x123";
             const isValidAccount = verifyAccount(result.data.receive_address);
             if (isValidAccount === "invalid") {
               this.resetCapcha();
