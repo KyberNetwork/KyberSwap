@@ -61,7 +61,7 @@ var HistoryProvider = /** @class */ (function () {
             symbol: symbolInfo.ticker || '',
             resolution: resolution,
             from: rangeStartDate,
-            to: rangeEndDate,
+            to: rangeEndDate - 3600,
             rateType: (window.KyberRateType || "sell")
         };
         return new Promise(function (resolve, reject) {

@@ -58,7 +58,7 @@ export class HistoryProvider {
 			symbol: symbolInfo.ticker || '',
 			resolution: resolution,
 			from: rangeStartDate,
-			to: rangeEndDate,
+			to: rangeEndDate - 3600,
 		};
 
 		return new Promise((resolve: (result: GetBarsResult) => void, reject: (reason: string) => void) => {
