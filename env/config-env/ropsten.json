@@ -241,6 +241,13 @@
             "address": "0xef75e34c50c1b109fe65ee696f12225de508b9f2",
             "decimals": 18,
             "cg_id": "kambria"
+        },
+        "UPP": {
+            "symbol": "UPP",
+            "name": "Sentinel Protocol",
+            "address": "0xade0e0ed3ec60c7124ddc88c410af671493dc949",
+            "decimals": 18,
+            "cg_id": "sentinel-protocol"
         }
     },
     "ethScanUrl": "https://ropsten.etherscan.io/",
