@@ -5,6 +5,7 @@ import { importNewAccount, promoCodeChange, openPromoCodeModal, closePromoCodeMo
 import { addressFromPrivateKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
 import * as common from "../../utils/common"
+import { verifyAccount } from "../../utils/validators";
 import { Modal } from '../../components/CommonElement'
 import BLOCKCHAIN_INFO from "../../../../env"
 
@@ -64,7 +65,7 @@ export default class ImportByPromoCodeModal extends React.Component {
 
   getPrivateKey = (promo, captcha) =>{
     return new Promise ((resolve, reject)=>{
-      common.timeout(3000,  fetch(`/api/promo?g-recaptcha-response=${captcha}&code=${promo}`))
+      common.timeout(3000,  fetch(`${API}/api/promo?g-recaptcha-response=${captcha}&code=${promo}`))
         .then((response) => {
           return response.json()
         })
@@ -72,13 +73,19 @@ export default class ImportByPromoCodeModal extends React.Component {
           if (result.error){
             reject(result.error)
             this.resetCapcha()
-          }else{
+          } else {
+            const isValidAccount = verifyAccount(result.data.receive_address);
+            if (isValidAccount === "invalid") {
+              this.resetCapcha();
+              reject(this.props.translate("error.invalid_promo_code"));
+            }
             resolve({
               privateKey: result.data.private_key,
               des_token: result.data.destination_token,
               description: result.data.description,
               type: result.data.type,
-              receiveAddr: result.data.receive_address
+              receiveAddr: result.data.receive_address,
+              expiredDate: result.data.expired_date
             })
           }
         })
@@ -154,7 +161,8 @@ export default class ImportByPromoCodeModal extends React.Component {
         description : result.description, 
         destToken: result.des_token, 
         promoType: result.type, 
-        receiveAddr: result.receiveAddr
+        receiveAddr: result.receiveAddr,
+        expiredDate: result.expiredDate
       }
       this.props.dispatch(importNewAccount(address,
         "promo",

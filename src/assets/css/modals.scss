@@ -225,6 +225,9 @@ $divider-color: darken($title-background-color, 5);
   }
   .modal-title{
     font-size: 0.8rem;
+    @include screen-max-width(medium) {
+      padding: 0 20px;
+    }
   }
   .amount{
     display: flex;
@@ -249,13 +252,19 @@ $divider-color: darken($title-background-color, 5);
         font-size: 20px;
         // font-weight: 600;
         letter-spacing: -0.5px;
-        display: flex;
-        >div {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        >div:first-child {
           margin-right: 5px;
-          max-width: 100px;
+          max-width: 80px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+        }
+
+        @include screen-max-width(medium) {
+          grid-auto-columns: 1fr;
+          grid-auto-rows: 1fr 1fr;
         }
 
         @include screen-max-width(mid-small) {
@@ -278,8 +287,10 @@ $divider-color: darken($title-background-color, 5);
       }
     }
     .amount-detail{
+      display: grid;
+      grid-template-rows: 1fr 1fr;
       @include screen-max-width(medium) {
-        text-align: center !important;
+        // text-align: center !important;
         margin-top: 10px;
       }
       >span{
@@ -296,6 +307,9 @@ $divider-color: darken($title-background-color, 5);
   .description{
     margin-top: 1rem;
     margin-bottom: 1rem;
+    @include screen-max-width(medium) {
+      padding: 0 20px;
+    }
   }
  
 }
@@ -558,10 +572,8 @@ $divider-color: darken($title-background-color, 5);
           }
         }
 
-        @include screen-max-width(medium){
-          .item-icon {
-            margin-bottom: 10px;
-          }
+        .item-icon {
+          margin: 5px 0;
         }
       }
       .amount-left{
@@ -591,12 +603,14 @@ $divider-color: darken($title-background-color, 5);
     .amount-promo-payment {
       // override properties in .amount 
       padding: 10px 15px; 
-      @include screen-max-width(medium) {
-        padding: 10px 0;
-      }
       min-height: 100px;
       display: grid;
-      grid-template-columns: 1fr 90px 1fr 30px 90px;
+      grid-template-columns: 120px 1fr 120px 1fr 90px;
+
+      @include screen-max-width(medium) {
+        padding: 10px 0;
+        grid-template-columns: 90px 1fr 90px 1fr 60px;
+      }
 
       .amount-item {
         width: 100%;
@@ -627,7 +641,7 @@ $divider-color: darken($title-background-color, 5);
       .space {
         position: absolute;
         top: 30px;
-        padding: 0
+        padding: 0;
       }
     }
     
@@ -636,7 +650,8 @@ $divider-color: darken($title-background-color, 5);
       font-size: 14px;
       font-weight: 600;
       color: #141927;
-      div:last-child {
+
+      &-wallet-address {
         color: #5a5e67;
         margin-top: 3px;
         white-space: nowrap;
@@ -645,11 +660,20 @@ $divider-color: darken($title-background-color, 5);
       }
 
       &-promo-payment {
-        padding: 0 20px;
         margin-bottom: 25px;
         font-size: 14px;
         font-weight: 600;
         color: #141927;
+
+        @include screen-max-width(medium) {
+          padding: 0 20px;
+        }
+      }
+
+      &-expired-notification {
+        color: #1e87f0;
+        font-size: 13px;
+        font-weight: 500;
       }
     }
   }

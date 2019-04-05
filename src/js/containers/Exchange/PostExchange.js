@@ -196,6 +196,17 @@ export default class PostExchange extends React.Component {
   
     const isPromoPayment = this.props.account.type === "promo" && this.props.account.info && this.props.account.info.promoType === "payment";
 
+    let expiredYear;
+    if (this.props.account.info) {
+      try {
+        expiredYear = new Date(this.props.account.info.expiredDate).getFullYear();
+      } catch (error) {
+        expiredYear = new Date().getFullYear() + 1;
+      }
+    } else {
+      expiredYear = new Date().getFullYear() + 1;
+    }
+
     var sourceAmount = this.props.snapshot.sourceAmount.toString();
     var destAmount = this.props.snapshot.destAmount.toString()
     var sourceTokenSymbol = this.props.snapshot.sourceTokenSymbol
@@ -214,7 +225,11 @@ export default class PostExchange extends React.Component {
                 {/* {this.props.translate("transaction.about_to_swap") || "You are about to swap"} */}
                 {/* <div>{this.props.translate("transaction.your_wallet") || "Your Wallet"}</div> */}
                 <div>{"Your Wallet"}</div>
-                <div>{this.props.account.address}</div>
+                <div className="title-description-wallet-address">{this.props.account.address}</div>
+                {this.props.account.type === "promo" && <div>
+                  <img src={require("../../../assets/img/v3/info_blue.svg")} />{' '}
+                  <span className="title-description-expired-notification">{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
+                </div>}
               </div>
               <div className="amount">
                 <div className="amount-item amount-left">
@@ -225,12 +240,12 @@ export default class PostExchange extends React.Component {
                     </div>
                     <div className="cell medium-9 small-12">
                       <div className="amount-detail">
-                        <span>
+                        <div>
                           {sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''}
-                        </span>
-                        <span>
+                        </div>
+                        <div>
                           {sourceTokenSymbol}
-                        </span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -254,9 +269,7 @@ export default class PostExchange extends React.Component {
           {/* For Promo payment */}
           {isPromoPayment && 
             <React.Fragment>
-              <div className="modal-title message">
-                <div className="title-description-promo-payment">{this.props.translate("transaction.swap_for_gift") || "You are swapping to receive a gift"}</div>
-              </div>
+              <div className="title-description-promo-payment">{this.props.translate("transaction.swap_for_gift") || "You are swapping to receive a gift"}</div>
               <div className="amount amount-promo-payment">
                 <div className="amount-item amount-left">
                   <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
@@ -266,12 +279,12 @@ export default class PostExchange extends React.Component {
                     </div>
                     <div className="cell medium-9 small-12">
                       <div className="amount-detail">
-                        <span>
+                        <div>
                           {sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''}
-                        </span>
-                        <span>
+                        </div>
+                        <div>
                           {sourceTokenSymbol}
-                        </span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -324,18 +337,34 @@ export default class PostExchange extends React.Component {
             <React.Fragment>
               <div className="title-description">
                 <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
-                <div>{this.props.account.address}</div>
+                <div className="title-description-wallet-address">{this.props.account.address}</div>
+                {this.props.account.type === "promo" && <div>
+                  <img src={require("../../../assets/img/v3/info_blue.svg")} />{' '}
+                  <span className="title-description-expired-notification">{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
+                </div>}
               </div>
               <div className="amount">
                 <div className="amount-item amount-left">                         
                   <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
-                  <div className={"rc-info"}><div>{sourceAmount}</div> {sourceTokenSymbol}</div>
+                  <div className={"rc-info"}>
+                    <div>
+                      {sourceAmount}
+                    </div>
+                    <div>
+                      {sourceTokenSymbol}
+                    </div>  
+                  </div>
                 </div>
                 <div className="space space--padding"><img src={require("../../../assets/img/exchange/arrow-right-orange.svg")} /></div>
                 <div className="amount-item amount-right">
                   <div className={"rc-label"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
                   <div className={"rc-info"}>
-                    {this.props.snapshot.isFetchingRate ? <img src={require('../../../assets/img/waiting-white.svg')} /> : destAmount} {destTokenSymbol}
+                    <div>
+                      {this.props.snapshot.isFetchingRate ? <img src={require('../../../assets/img/waiting-white.svg')} /> : destAmount}
+                    </div>
+                    <div>
+                      {destTokenSymbol}
+                    </div>
                   </div> 
                 </div>
               </div>
@@ -348,7 +377,14 @@ export default class PostExchange extends React.Component {
               <div className="amount amount-promo-payment">
                 <div className="amount-item amount-left">              
                   <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
-                  <div className={"rc-info"}><div>{sourceAmount}</div> {sourceTokenSymbol}</div>
+                  <div className={"rc-info"}>
+                    <div>
+                      {sourceAmount}
+                    </div>
+                    <div>
+                      {sourceTokenSymbol}
+                    </div>
+                  </div>
                 </div>
                 <div className="space-container">
                   <div className="text-above">{this.props.translate("transaction.swap") || "Swap"}</div>
@@ -358,7 +394,12 @@ export default class PostExchange extends React.Component {
                 <div className="amount-item amount-right">
                   <div className={"rc-label"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
                   <div className={"rc-info"}>
-                    {this.props.snapshot.isFetchingRate ? <img src={require('../../../assets/img/waiting-white.svg')} /> : destAmount} {destTokenSymbol}
+                    <div>
+                      {this.props.snapshot.isFetchingRate ? <img src={require('../../../assets/img/waiting-white.svg')} /> : destAmount}
+                    </div>
+                    <div>
+                      {destTokenSymbol}
+                    </div>
                   </div> 
                 </div>
                 <div className="space-container">
