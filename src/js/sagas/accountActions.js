@@ -136,12 +136,22 @@ export function* importNewAccount(action) {
         }
       }
 
+      yield put(exchangeActions.setGasPriceSuggest({
+        ...exchange.gasPriceSuggest,
+        fastGas: exchange.gasPriceSuggest.fastGas + 2
+      }));
+
+      yield put(transferActions.setGasPriceSuggest({
+        ...transfer.gasPriceSuggest,
+        fastGas: transfer.gasPriceSuggest.fastGas + 2
+      }))
+
       if (!transfer.isEditGasPrice) {
-        yield put(transferActions.setSelectedGasPrice(transfer.gasPriceSuggest.standardGas, "s"));
+        yield put(transferActions.setSelectedGasPrice(transfer.gasPriceSuggest.fastGas + 2, "f"));
       }
 
       if (!exchange.isEditGasPrice) {
-        yield put(setSelectedGasPrice(exchange.gasPriceSuggest.standardGas, "s"));
+        yield put(setSelectedGasPrice(exchange.gasPriceSuggest.fastGas + 2, "f"));
       }
     } else {
       yield put(setGasPrice());

@@ -191,7 +191,7 @@ export function* setGasPrice(action) {
     var selectedGas = 's'
     var fastGasFloat = parseFloat(fastGas)
 
-    if (accountType !== "promo" && fastGasFloat <= 20){
+    if (fastGasFloat <= 20){
       defaultGas = gasPrice.fast
       selectedGas = 'f'
     }

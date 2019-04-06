@@ -462,6 +462,13 @@ export function setGasPriceSwapComplete(safeLowGas, standardGas, fastGas, defaul
   }
 }
 
+export function setGasPriceSuggest(gasPriceSuggest) {
+  return {
+    type: "EXCHANGE.SET_GAS_PRICE_SUGGEST",
+    payload: gasPriceSuggest
+  }
+}
+
 export function analyzeError(ethereum, txHash) {
   return {
     type: "EXCHANGE.ANALYZE_ERROR",

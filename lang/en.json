@@ -36,6 +36,7 @@
     "exchange": "Exchange",
     "exchange_from": "From",
     "exchange_to": "To",
+    "exchange_receive": "Receive",
     "transfer": "Transfer",
     "transfer_to_address": "Transfer to address",
     "amount": "amount",
@@ -126,7 +127,11 @@
     "any_rate": "Any-rate",
     "custom": "Custom",
     "etherscan_explorer": "View on etherscan",
-    "kyber_explorer": "View on kyber.enjinx"
+    "kyber_explorer": "View on kyber.enjinx",
+    "swap_for_gift": "You are swapping to receive a gift",
+    "send_to_organizer": "Send to the Organizer",
+    "gift": "Gift",
+    "promo_expired_notification": "After swapping please transfer your token to your personal wallet before"
   },
   "modal": {
     "enter_password": "Enter Password",

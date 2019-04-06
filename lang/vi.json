@@ -35,6 +35,7 @@
     "exchange": "TRAO ĐỔI",
     "exchange_from": "Đổi từ",
     "exchange_to": "Đổi sang",
+    "exchange_receive": "Nhận được",
     "transfer": "CHUYỂN KHOẢN",
     "transfer_to_address": "CHUYỂN ĐẾN ĐỊA CHỈ",
     "amount": "SỐ LƯỢNG",
@@ -123,7 +124,10 @@
     "any_rate": "Any-rate",
     "custom": "Tùy chỉnh",
     "etherscan_explorer": "Xem trên etherscan",
-    "kyber_explorer": "Xem trên kyber.enjinx"
+    "kyber_explorer": "Xem trên kyber.enjinx",
+    "swap_for_gift": "Bạn chuẩn bị trao đổi để nhận quà",
+    "send_to_organizer": "Gửi tới nhà tổ chức",
+    "gift": "Món quà"
   },
   "modal": {
     "enter_password": "Nhập mật khẩu",

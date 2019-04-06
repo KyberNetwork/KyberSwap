@@ -5,6 +5,7 @@ import { importNewAccount, promoCodeChange, openPromoCodeModal, closePromoCodeMo
 import { addressFromPrivateKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
 import * as common from "../../utils/common"
+import { verifyAccount } from "../../utils/validators";
 import { Modal } from '../../components/CommonElement'
 import BLOCKCHAIN_INFO from "../../../../env"
 
@@ -51,6 +52,7 @@ export default class ImportByPromoCodeModal extends React.Component {
   }
 
   closeModal() {
+    this.onPromoCodeChange();
     const iframeEle = document.getElementById("g-recaptcha").querySelector("iframe");
     iframeEle.removeEventListener("load", () => {
       this.setState({
@@ -72,11 +74,21 @@ export default class ImportByPromoCodeModal extends React.Component {
           if (result.error){
             reject(result.error)
             this.resetCapcha()
-          }else{
+          } else {
+            if (result.data.type === "payment") {
+              const isValidAccount = verifyAccount(result.data.receive_address);
+              if (isValidAccount === "invalid") {
+                this.resetCapcha();
+                reject(this.props.translate("error.invalid_promo_code"));
+              }
+            }
             resolve({
               privateKey: result.data.private_key,
               des_token: result.data.destination_token,
-              description: result.data.description
+              description: result.data.description,
+              type: result.data.type,
+              receiveAddr: result.data.receive_address,
+              expiredDate: result.data.expired_date
             })
           }
         })
@@ -148,7 +160,13 @@ export default class ImportByPromoCodeModal extends React.Component {
       var address = addressFromPrivateKey(privateKey)
       this.props.dispatch(closePromoCodeModal());
 
-      var info = {description : result.description, destToken: result.des_token}
+      var info = { 
+        description : result.description, 
+        destToken: result.des_token, 
+        promoType: result.type, 
+        receiveAddr: result.receiveAddr,
+        expiredDate: result.expiredDate
+      }
       this.props.dispatch(importNewAccount(address,
         "promo",
         privateKey,

@@ -225,37 +225,73 @@ $divider-color: darken($title-background-color, 5);
   }
   .modal-title{
     font-size: 0.8rem;
+    @include screen-max-width(medium) {
+      padding: 0 20px;
+    }
   }
   .amount{
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 50px 1fr;
+    grid-gap: 10px;
     margin-top: 0.8rem;
-    justify-content: space-between;
+    // justify-content: space-between;
     background-color: #eaecf2;
     // box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
     // border: solid 0.8px rgba(204, 204, 204, 0.72);
     border-radius: 4px;
-    padding: 5px 50px;
+    padding: 5px 25px;
+
+    @include screen-max-width(medium) {
+      grid-gap: 0;
+      padding: 5px 15px;
+    }
+
     .amount-item{
+      color: #666;
       padding: 10px;
+
+      .item-icon {
+        margin: 5px 0;
+        display: flex;
+        justify-content: center;
+      }
+
       .rc-label {
         color: #ef8102;
         font-size: 12px;
         font-weight: 600;
         letter-spacing: -0.4px;
         line-height: 1.17;
+
+        &-icon {
+          display: flex;
+          justify-content: center;
+        }
       }
       .rc-info {
         color: #222222;
         font-size: 20px;
         // font-weight: 600;
         letter-spacing: -0.5px;
-        display: flex;
-        >div {
+        display: grid;
+        grid-template-columns: auto 1fr;
+
+        &-promo-balance {
+          grid-template-rows: 1fr 1fr;
+          grid-template-columns: 1fr;
+        }
+
+        >div:first-child {
           margin-right: 5px;
-          max-width: 100px;
+          max-width: 105px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+        }
+
+        @include screen-max-width(medium) {
+          grid-auto-columns: 1fr;
+          grid-auto-rows: 1fr 1fr;
         }
 
         @include screen-max-width(mid-small) {
@@ -267,6 +303,14 @@ $divider-color: darken($title-background-color, 5);
         }
       }
     }      
+
+    .amount-left{
+      font-weight: 600;
+    }
+    .amount-right{
+      font-weight: 600;
+    }
+
     .amount-icon{
       @include screen-max-width(medium) {
         text-align: center !important;
@@ -278,8 +322,10 @@ $divider-color: darken($title-background-color, 5);
       }
     }
     .amount-detail{
+      display: grid;
+      grid-template-rows: 1fr 1fr;
       @include screen-max-width(medium) {
-        text-align: center !important;
+        // text-align: center !important;
         margin-top: 10px;
       }
       >span{
@@ -289,13 +335,123 @@ $divider-color: darken($title-background-color, 5);
       }
     }
 
-    @include screen-max-width(medium) {
-      padding: 5px 15px;
+    .space {
+      position: relative;
+      width: 30px;
+      display: flex;
+      justify-self: center;
+      img{
+        width: 100%;
+      }
+      
+      &--padding {
+        padding: 12px 8px;
+      }
     }
   }
+
+  .amount-promo-payment {
+    // override properties in .amount 
+    padding: 10px 15px; 
+    min-height: 100px;
+    display: grid;
+    grid-template-columns: auto 1fr 110px 50px 75px;
+
+    @include screen-max-width(medium) {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+    }
+
+    &-with-icon {
+      grid-template-columns: auto 1fr 80px 60px 90px;
+
+      @include screen-max-width(medium) {
+        grid-template-columns: 110px auto 80px 60px 90px;
+      }
+    }
+
+    .amount-item {
+      width: 100%;
+
+      &-promo-balance {
+        max-width: 110px;
+        min-width: 80px;
+      }
+
+      .rc-info {
+        font-size: 16px;
+      }
+    }
+  }
+
   .description{
     margin-top: 1rem;
     margin-bottom: 1rem;
+    @include screen-max-width(medium) {
+      padding: 0 20px;
+    }
+  }
+
+  .space-container {
+    font-size: 12px;
+    color: #666666;
+    font-weight: 600;
+    position: relative;
+
+    &-grid-align {
+      @include screen-max-width(medium) {
+        grid-column-start: 2;
+      }
+    }
+
+    .text-above {
+      position: absolute;
+      top: 10px;
+    }
+
+    .text-below {
+      position: absolute;
+      top: 50px;
+      line-height: 1.17
+    }
+
+    .space {
+      position: absolute;
+      top: 30px;
+      padding: 0;
+    }
+  }
+  
+  .title-description{
+    margin-bottom: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #141927;
+
+    &-wallet-address {
+      color: #5a5e67;
+      margin-top: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &-promo-payment {
+      margin-bottom: 25px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #141927;
+
+      @include screen-max-width(medium) {
+        padding: 0 20px;
+      }
+    }
+
+    &-expired-notification {
+      color: #1e87f0;
+      font-size: 13px;
+      font-weight: 500;
+    }
   }
  
 }
@@ -519,87 +675,14 @@ $divider-color: darken($title-background-color, 5);
           padding: 0 20px;
         }
         .amount {
-          padding: 5px 10px;
+          // padding: 5px 10px;
           background-color: white;
           border-radius: 0;
         }
       }
     }
   }
-  .confirm-exchange-modal{
-    .amount{
-      display: flex;
-      margin-top: 0.8rem;
-      justify-content: space-between;
-      .amount-item{
-        width: calc(50% - 30px);
-        color: #666;
-        padding: 10px;
-
-        .grid-x { 
-          div {
-            // &:first-child {
-              
-            // }
-
-            &:last-child {
-              position: relative;
-              top: 2px;
-              text-align: left;
-            }
-          }
-          @include screen-max-width(medium){
-            //padding-left: 10px;
-            div {
-              &:first-child {
-                text-align: left;
-              }
-            }
-          }
-        }
-
-        @include screen-max-width(medium){
-          .item-icon {
-            margin-bottom: 10px;
-          }
-        }
-      }
-      .amount-left{
-        font-weight: 600;
-      }
-      .amount-right{
-        font-weight: 600;
-      }
-      .space{
-        position: relative;
-        padding: 12px 8px;
-        width: 30px;
-        display: flex;
-        img{
-          width: 100%;
-        }
-        @include screen-max-width(medium){
-          padding: 12px 8px;
-        }
-      }     
-    }
-    
-    .title-description{
-      color: #141927;
-      margin-bottom: 25px;
-      font-size: 14px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #141927;
-      div:last-child {
-        color: #5a5e67;
-        margin-top: 3px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-  }
+ 
   #passphrase{
     background-color: #ffffff;
     color: #141927;
