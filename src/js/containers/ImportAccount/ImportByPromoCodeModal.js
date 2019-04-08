@@ -52,6 +52,7 @@ export default class ImportByPromoCodeModal extends React.Component {
   }
 
   closeModal() {
+    this.onPromoCodeChange();
     const iframeEle = document.getElementById("g-recaptcha").querySelector("iframe");
     iframeEle.removeEventListener("load", () => {
       this.setState({
@@ -65,7 +66,7 @@ export default class ImportByPromoCodeModal extends React.Component {
 
   getPrivateKey = (promo, captcha) =>{
     return new Promise ((resolve, reject)=>{
-      common.timeout(3000,  fetch(`${API}/api/promo?g-recaptcha-response=${captcha}&code=${promo}`))
+      common.timeout(3000,  fetch(`/api/promo?g-recaptcha-response=${captcha}&code=${promo}`))
         .then((response) => {
           return response.json()
         })
@@ -74,10 +75,12 @@ export default class ImportByPromoCodeModal extends React.Component {
             reject(result.error)
             this.resetCapcha()
           } else {
-            const isValidAccount = verifyAccount(result.data.receive_address);
-            if (isValidAccount === "invalid") {
-              this.resetCapcha();
-              reject(this.props.translate("error.invalid_promo_code"));
+            if (result.data.type === "payment") {
+              const isValidAccount = verifyAccount(result.data.receive_address);
+              if (isValidAccount === "invalid") {
+                this.resetCapcha();
+                reject(this.props.translate("error.invalid_promo_code"));
+              }
             }
             resolve({
               privateKey: result.data.private_key,

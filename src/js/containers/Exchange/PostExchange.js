@@ -226,28 +226,21 @@ export default class PostExchange extends React.Component {
                 {/* <div>{this.props.translate("transaction.your_wallet") || "Your Wallet"}</div> */}
                 <div>{"Your Wallet"}</div>
                 <div className="title-description-wallet-address">{this.props.account.address}</div>
-                {this.props.account.type === "promo" && <div>
+                {this.props.account.type === "promo" && <div className="title-description-expired-notification">
                   <img src={require("../../../assets/img/v3/info_blue.svg")} />{' '}
-                  <span className="title-description-expired-notification">{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
+                  <span>{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
                 </div>}
               </div>
               <div className="amount">
-                <div className="amount-item amount-left">
+                <div className="amount-item amount-left">                         
                   <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
-                  <div className="d-flex">
-                    <div className="item-icon">
-                      <img src={getAssetUrl(`tokens/${sourceIcon}`)} />
+                  <div className={"rc-info"}>
+                    <div>
+                      {sourceAmount}
                     </div>
-                    <div className="cell medium-9 small-12">
-                      <div className="amount-detail">
-                        <div>
-                          {sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''}
-                        </div>
-                        <div>
-                          {sourceTokenSymbol}
-                        </div>
-                      </div>
-                    </div>
+                    <div>
+                      {sourceTokenSymbol}
+                    </div>  
                   </div>
                 </div>
                 <div className="space space--padding"><img src={require("../../../assets/img/exchange/arrow-right-orange.svg")} /></div>
@@ -256,10 +249,8 @@ export default class PostExchange extends React.Component {
                   {this.props.snapshot.isFetchingRate ?
                     <img src={require('../../../assets/img/waiting-white.svg')} />
                     :
-                    <div className="d-flex">
-                      <div className="item-icon">
-                        <img src={getAssetUrl(`tokens/${destIcon}`)} />
-                      </div>
+                    <div className="item-icon">
+                      <img src={getAssetUrl(`tokens/${destIcon}`)} />
                     </div>
                   }
                 </div>
@@ -270,49 +261,40 @@ export default class PostExchange extends React.Component {
           {isPromoPayment && 
             <React.Fragment>
               <div className="title-description-promo-payment">{this.props.translate("transaction.swap_for_gift") || "You are swapping to receive a gift"}</div>
-              <div className="amount amount-promo-payment">
-                <div className="amount-item amount-left">
+              <div className="amount amount-promo-payment amount-promo-payment-with-icon">
+                <div className="amount-item amount-left amount-item-promo-balance">
                   <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
-                  <div className="d-flex">
-                    <div className="item-icon">
-                      <img src={getAssetUrl(`tokens/${sourceIcon}`)} />
+                  <div className={"rc-info rc-info-promo-balance"}>
+                    <div>
+                      {sourceAmount}
                     </div>
-                    <div className="cell medium-9 small-12">
-                      <div className="amount-detail">
-                        <div>
-                          {sourceAmount.slice(0, 7)}{sourceAmount.length > 7 ? '...' : ''}
-                        </div>
-                        <div>
-                          {sourceTokenSymbol}
-                        </div>
-                      </div>
-                    </div>
+                    <div>
+                      {sourceTokenSymbol}
+                    </div>  
                   </div>
                 </div>
                 <div className="space-container">
                   <div className="text-above">{this.props.translate("transaction.swap") || "Swap"}</div>
-                  <div className="space"><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
+                  <div className="space" style={{ width: "40px"}}><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
                   <div className="text-below">{this.props.translate("transaction.send_to_organizer") || "Send to the Organizer"}</div>
                 </div>
-                <div className="amount-item amount-right">
-                  <div className={"rc-label"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
+                <div className="amount-item amount-right amount-item-icon">
+                  <div className={"rc-label rc-label-icon"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
                   {this.props.snapshot.isFetchingRate ?
                     <img src={require('../../../assets/img/waiting-white.svg')} />
                     :
-                    <div className="d-flex">
-                      <div className="item-icon">
-                        <img src={getAssetUrl(`tokens/${destIcon}`)} />
-                      </div>
+                    <div className="item-icon">
+                      <img src={getAssetUrl(`tokens/${destIcon}`)} />
                     </div>
                   }
                 </div>
-                <div className="space-container">
-                  <div className="space"><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
+                <div className="space-container space-container-grid-align">
+                  <div className="space" style={{ width: "40px"}}><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
                 </div>
                 <div className="amount-item amount-right">
                   <div>
                     <div className={"rc-label"}>{this.props.translate("transaction.exchange_receive") || "Receive" }</div>
-                    <div className={"rc-info"}>
+                    <div className={"rc-info rc-info-promo-balance"}>
                       1 {this.props.translate("transaction.gift") || "Gift"}
                     </div> 
                   </div>
@@ -338,9 +320,9 @@ export default class PostExchange extends React.Component {
               <div className="title-description">
                 <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
                 <div className="title-description-wallet-address">{this.props.account.address}</div>
-                {this.props.account.type === "promo" && <div>
+                {this.props.account.type === "promo" && <div className="title-description-expired-notification">
                   <img src={require("../../../assets/img/v3/info_blue.svg")} />{' '}
-                  <span className="title-description-expired-notification">{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
+                  <span>{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
                 </div>}
               </div>
               <div className="amount">
@@ -375,9 +357,9 @@ export default class PostExchange extends React.Component {
             <React.Fragment>
               <div className="title-description-promo-payment">{this.props.translate("transaction.swap_for_gift") || "You are swapping to receive a gift"}</div>
               <div className="amount amount-promo-payment">
-                <div className="amount-item amount-left">              
+                <div className="amount-item amount-left amount-item-promo-balance">              
                   <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
-                  <div className={"rc-info"}>
+                  <div className={"rc-info rc-info-promo-balance"}>
                     <div>
                       {sourceAmount}
                     </div>
@@ -388,12 +370,12 @@ export default class PostExchange extends React.Component {
                 </div>
                 <div className="space-container">
                   <div className="text-above">{this.props.translate("transaction.swap") || "Swap"}</div>
-                  <div className="space"><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
+                  <div className="space" style={{ width: "40px"}}><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
                   <div className="text-below">{this.props.translate("transaction.send_to_organizer") || "Send to the Organizer"}</div>
                 </div>
-                <div className="amount-item amount-right">
+                <div className="amount-item amount-right amount-item-promo-balance">
                   <div className={"rc-label"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
-                  <div className={"rc-info"}>
+                  <div className={"rc-info rc-info-promo-balance"}>
                     <div>
                       {this.props.snapshot.isFetchingRate ? <img src={require('../../../assets/img/waiting-white.svg')} /> : destAmount}
                     </div>
@@ -402,8 +384,8 @@ export default class PostExchange extends React.Component {
                     </div>
                   </div> 
                 </div>
-                <div className="space-container">
-                  <div className="space"><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
+                <div className="space-container space-container-grid-align">
+                  <div className="space" style={{ width: "40px"}}><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
                 </div>
                 <div className="amount-item amount-right">
                   <div>
