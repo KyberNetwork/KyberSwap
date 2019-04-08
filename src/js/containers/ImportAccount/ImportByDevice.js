@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import AddressGenerator from "../../utils/addressGenerator";
+import AddressGenerator from "../../services/addressGenerator";
 import { ImportByDeviceView } from "../../components/ImportAccount"
 import { importNewAccount, importLoading, closeImportLoading, throwError, checkTimeImportLedger, resetCheckTimeImportLedger } from "../../actions/accountActions"
 import { toEther } from "../../utils/converter"
