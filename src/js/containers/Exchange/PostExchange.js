@@ -275,7 +275,7 @@ export default class PostExchange extends React.Component {
                 </div>
                 <div className="space-container">
                   <div className="text-above">{this.props.translate("transaction.swap") || "Swap"}</div>
-                  <div className="space" style={{ width: "40px"}}><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
+                  <div className="space space-arrow-icon" ><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
                   <div className="text-below">{this.props.translate("transaction.send_to_organizer") || "Send to the Organizer"}</div>
                 </div>
                 <div className="amount-item amount-right amount-item-icon">
@@ -289,7 +289,7 @@ export default class PostExchange extends React.Component {
                   }
                 </div>
                 <div className="space-container space-container-grid-align">
-                  <div className="space" style={{ width: "40px"}}><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
+                  <div className="space space-arrow-icon" ><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
                 </div>
                 <div className="amount-item amount-right">
                   <div>
@@ -370,7 +370,7 @@ export default class PostExchange extends React.Component {
                 </div>
                 <div className="space-container">
                   <div className="text-above">{this.props.translate("transaction.swap") || "Swap"}</div>
-                  <div className="space" style={{ width: "40px"}}><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
+                  <div className="space space-arrow-icon"><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
                   <div className="text-below">{this.props.translate("transaction.send_to_organizer") || "Send to the Organizer"}</div>
                 </div>
                 <div className="amount-item amount-right amount-item-promo-balance">
@@ -385,7 +385,7 @@ export default class PostExchange extends React.Component {
                   </div> 
                 </div>
                 <div className="space-container space-container-grid-align">
-                  <div className="space" style={{ width: "40px"}}><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
+                  <div className="space space-arrow-icon"><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
                 </div>
                 <div className="amount-item amount-right">
                   <div>

@@ -343,6 +343,15 @@ $divider-color: darken($title-background-color, 5);
       img{
         width: 100%;
       }
+
+      &-arrow-icon {
+        max-width: 80px;
+        width: auto;
+
+        @include screen-max-width(medium) {
+          max-width: 90px;
+        }
+      }
       
       &--padding {
         padding: 12px 8px;
@@ -355,7 +364,8 @@ $divider-color: darken($title-background-color, 5);
     padding: 10px 15px; 
     min-height: 100px;
     display: grid;
-    grid-template-columns: auto 1fr 110px 50px 75px;
+    grid-template-columns: auto 1fr 110px 1fr 75px;
+    grid-gap: 0;
 
     @include screen-max-width(medium) {
       grid-template-columns: repeat(3, 1fr);
