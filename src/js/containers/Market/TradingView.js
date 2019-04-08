@@ -93,7 +93,7 @@ export default class TradingView extends React.Component {
 			autosize: this.props.autosize,
 			timeframe: "4D",
 			debug: true,
-			timezone: "Asia/Singapore",
+			// timezone: "Asia/Singapore",
 			overrides: {
 				'mainSeriesProperties.candleStyle.upColor': '#31CB9E',
 				'mainSeriesProperties.candleStyle.downColor': '#F95555',
