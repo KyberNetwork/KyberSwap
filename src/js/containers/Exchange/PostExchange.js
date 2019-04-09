@@ -226,9 +226,9 @@ export default class PostExchange extends React.Component {
                 {/* <div>{this.props.translate("transaction.your_wallet") || "Your Wallet"}</div> */}
                 <div>{"Your Wallet"}</div>
                 <div className="title-description-wallet-address">{this.props.account.address}</div>
-                {this.props.account.type === "promo" && <div>
+                {this.props.account.type === "promo" && <div className="title-description-expired-notification">
                   <img src={require("../../../assets/img/v3/info_blue.svg")} />{' '}
-                  <span className="title-description-expired-notification">{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
+                  <span>{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
                 </div>}
               </div>
               <div className="amount">
@@ -320,9 +320,9 @@ export default class PostExchange extends React.Component {
               <div className="title-description">
                 <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
                 <div className="title-description-wallet-address">{this.props.account.address}</div>
-                {this.props.account.type === "promo" && <div>
+                {this.props.account.type === "promo" && <div className="title-description-expired-notification">
                   <img src={require("../../../assets/img/v3/info_blue.svg")} />{' '}
-                  <span className="title-description-expired-notification">{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
+                  <span>{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
                 </div>}
               </div>
               <div className="amount">
