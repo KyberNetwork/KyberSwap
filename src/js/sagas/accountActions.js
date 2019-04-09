@@ -180,7 +180,7 @@ export function* importNewAccount(action) {
     var maxCapOneExchange = "infinity"
     try {
       var result = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
-      if (!result.error && !result.kyced) {
+      if (!result.error) {
         maxCapOneExchange = result.cap
       }
     } catch(e) {
