@@ -131,7 +131,8 @@
     "swap_for_gift": "You are swapping to receive a gift",
     "send_to_organizer": "Send to the Organizer",
     "gift": "Gift",
-    "promo_expired_notification": "After swapping please transfer your token to your personal wallet before"
+    "promo_expired_notification": "After swapping please transfer your token to your personal wallet before",
+    "kyber_network_proxy": "Kyber Network Proxy"
   },
   "modal": {
     "enter_password": "Enter Password",

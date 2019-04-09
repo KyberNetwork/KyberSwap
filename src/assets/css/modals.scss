@@ -338,6 +338,15 @@ $divider-color: darken($title-background-color, 5);
       img{
         width: 100%;
       }
+
+      &-arrow-icon {
+        max-width: 80px;
+        width: auto;
+
+        @include screen-max-width(medium) {
+          max-width: 90px;
+        }
+      }
       
       &--padding {
         padding: 12px 8px;
@@ -350,7 +359,8 @@ $divider-color: darken($title-background-color, 5);
     padding: 10px 15px; 
     min-height: 100px;
     display: grid;
-    grid-template-columns: 120px 1fr 120px 50px 75px;
+    grid-template-columns: auto 1fr 110px 1fr 75px;
+    grid-gap: 0;
 
     @include screen-max-width(medium) {
       grid-template-columns: repeat(3, 1fr);
@@ -416,6 +426,16 @@ $divider-color: darken($title-background-color, 5);
       padding: 0;
     }
   }
+
+  .title-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    >div:nth-child(2) {
+      border-left: 2px solid #ccc9c9;
+      padding-left: 30px;
+    }
+  }
   
   .title-description{
     margin-bottom: 25px;
@@ -429,6 +449,10 @@ $divider-color: darken($title-background-color, 5);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      
+      >span:nth-child(2) {
+        padding: 0 3px;
+      }
     }
 
     &-promo-payment {

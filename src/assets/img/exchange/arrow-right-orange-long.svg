@@ -1,22 +1,11 @@
-
-<svg width="172px" height="15px" viewBox="0 0 172 58" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="SVG-Layer" transform="translate(-0.637931, -0.603448)" fill="#EF8102" fill-rule="nonzero">
-            <g id="Page-1">
-                <g id="SVG-Layer" transform="translate(0.192633, 0.694179)">
-                    <g id="Shape" transform="translate(0.945298, 0.443752)">
-                        <g id="Desktop---Swap-">
-                            <g id="Swap-ConfirmPopup3">
-                                <g id="Group-15">
-                                    <g id="Group-14">
-                                        <polygon id="Shape" points="143.714286 0 138.914286 4.99098145 158.114286 24.9549072 4.26325641e-14 24.9549072 4.26325641e-14 32.0848806 158.114286 32.0848806 138.914286 52.0488062 143.714286 57.0397879 171.142857 28.5198939"></polygon>
-                                    </g>
-                                </g>
-                            </g>
-                        </g>
-                    </g>
-                </g>
-            </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="123px" height="20px" viewBox="0 0 123 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape Copy 2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Promo-code" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="M_swap-confirm-Copy-2" transform="translate(-91.000000, -214.000000)" fill="#EF8102">
+            <polygon id="Shape-Copy-2" points="208.723176 214 207.864673 214.843019 211.298684 218.215096 91.9876536 218.215096 91.9876536 219.419409 211.298684 219.419409 207.864673 222.791486 208.723176 223.634505 213.628906 218.817252"></polygon>
         </g>
     </g>
 </svg>
