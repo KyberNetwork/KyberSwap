@@ -10,6 +10,7 @@ import { PassphraseModal, ConfirmTransferModal, ApproveModal } from "../../compo
 import { PostExchangeBtn } from "../../components/Exchange"
 import { getTranslate } from 'react-localize-redux';
 import { getAssetUrl, isUserEurope, getParameterByName } from "../../utils/common";
+import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store, props) => {
   var sourceTokenSymbol = store.exchange.sourceTokenSymbol
@@ -218,7 +219,6 @@ export default class PostExchange extends React.Component {
     var minRate = this.props.snapshot.minConversionRate
     var offeredRate = this.props.snapshot.offeredRate
 
-    const KYBER_NETWORK_PROXY = "0x818e6fecd516ecc3849daf6845e3ec868087b755";
     const { isOnMobile } = this.props.global;
 
     if (converters.compareRate(minRate, offeredRate) === 1) {
@@ -241,9 +241,9 @@ export default class PostExchange extends React.Component {
                     <div className="title-description">
                       <div>{this.props.translate("transaction.kyber_network_proxy") || "Kyber Network Proxy"}</div>
                       <div className="title-description-wallet-address">
-                        <span>{KYBER_NETWORK_PROXY.slice(0, 7)}</span>
+                        <span>{BLOCKCHAIN_INFO.network.slice(0, 7)}</span>
                         <span>...</span>
-                        <span>{KYBER_NETWORK_PROXY.slice(-6)}</span>
+                        <span>{BLOCKCHAIN_INFO.network.slice(-6)}</span>
                       </div>
                     </div>
                   </div>
@@ -367,9 +367,9 @@ export default class PostExchange extends React.Component {
                     <div className="title-description">
                       <div>{this.props.translate("transaction.kyber_network_proxy") || "Kyber Network Proxy"}</div>
                       <div className="title-description-wallet-address">
-                        <span>{KYBER_NETWORK_PROXY.slice(0, 7)}</span>
+                        <span>{BLOCKCHAIN_INFO.network.slice(0, 7)}</span>
                         <span>...</span>
-                        <span>{KYBER_NETWORK_PROXY.slice(-6)}</span>
+                        <span>{BLOCKCHAIN_INFO.network.slice(-6)}</span>
                       </div>
                     </div>
                   </div>
