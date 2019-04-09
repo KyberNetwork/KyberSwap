@@ -51,7 +51,8 @@ import { getAssetUrl, isUserEurope, getParameterByName } from "../../utils/commo
     tokens: store.tokens,
     keyService: props.keyService,
     translate: getTranslate(store.locale),
-    analytics: store.global.analytics
+    analytics: store.global.analytics,
+    global: store.global
   }
 })
 
@@ -216,21 +217,55 @@ export default class PostExchange extends React.Component {
 
     var minRate = this.props.snapshot.minConversionRate
     var offeredRate = this.props.snapshot.offeredRate
+
+    const KYBER_NETWORK_PROXY = "0x818e6fecd516ecc3849daf6845e3ec868087b755";
+    const { isOnMobile } = this.props.global;
+
     if (converters.compareRate(minRate, offeredRate) === 1) {
       return (
         <div className="confirm-exchange-modal">
           {!isPromoPayment && 
             <React.Fragment>
-              <div className="modal-title message">
-                {/* {this.props.translate("transaction.about_to_swap") || "You are about to swap"} */}
-                {/* <div>{this.props.translate("transaction.your_wallet") || "Your Wallet"}</div> */}
-                <div>{"Your Wallet"}</div>
-                <div className="title-description-wallet-address">{this.props.account.address}</div>
-                {this.props.account.type === "promo" && <div>
-                  <img src={require("../../../assets/img/v3/info_blue.svg")} />{' '}
-                  <span className="title-description-expired-notification">{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
-                </div>}
-              </div>
+              {!isOnMobile ? (
+                // On desktop
+                <React.Fragment>
+                  <div className="title-container">
+                    <div className="title-description">
+                      <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
+                      <div className="title-description-wallet-address">
+                        <span>{this.props.account.address.slice(0, 7)}</span>
+                        <span>...</span>
+                        <span>{this.props.account.address.slice(-6)}</span>
+                      </div>
+                    </div>
+                    <div className="title-description">
+                      <div>{this.props.translate("transaction.kyber_network_proxy") || "Kyber Network Proxy"}</div>
+                      <div className="title-description-wallet-address">
+                        <span>{KYBER_NETWORK_PROXY.slice(0, 7)}</span>
+                        <span>...</span>
+                        <span>{KYBER_NETWORK_PROXY.slice(-6)}</span>
+                      </div>
+                    </div>
+                  </div>
+                  {this.props.account.type === "promo" && <div className="title-description-expired-notification">
+                    <img src={require("../../../assets/img/v3/info_blue.svg")} />{' '}
+                    <span>{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
+                  </div>}
+                </React.Fragment>
+              ) : (
+                // On mobile
+                  <div className="title-description">
+                    <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
+                    <div className="title-description-wallet-address">
+                      {this.props.account.address}
+                    </div>
+                    {this.props.account.type === "promo" && <div className="title-description-expired-notification">
+                      <img src={require("../../../assets/img/v3/info_blue.svg")} />{' '}
+                      <span>{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
+                    </div>}
+                  </div>
+                )
+              }
               <div className="amount">
                 <div className="amount-item amount-left">                         
                   <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
@@ -317,14 +352,46 @@ export default class PostExchange extends React.Component {
         <div className="confirm-exchange-modal">
           {!isPromoPayment && 
             <React.Fragment>
-              <div className="title-description">
-                <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
-                <div className="title-description-wallet-address">{this.props.account.address}</div>
-                {this.props.account.type === "promo" && <div>
-                  <img src={require("../../../assets/img/v3/info_blue.svg")} />{' '}
-                  <span className="title-description-expired-notification">{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
-                </div>}
-              </div>
+              {!isOnMobile ? (
+                // On desktop
+                <React.Fragment>
+                  <div className="title-container">
+                    <div className="title-description">
+                      <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
+                      <div className="title-description-wallet-address">
+                        <span>{this.props.account.address.slice(0, 7)}</span>
+                        <span>...</span>
+                        <span>{this.props.account.address.slice(-6)}</span>
+                      </div>
+                    </div>
+                    <div className="title-description">
+                      <div>{this.props.translate("transaction.kyber_network_proxy") || "Kyber Network Proxy"}</div>
+                      <div className="title-description-wallet-address">
+                        <span>{KYBER_NETWORK_PROXY.slice(0, 7)}</span>
+                        <span>...</span>
+                        <span>{KYBER_NETWORK_PROXY.slice(-6)}</span>
+                      </div>
+                    </div>
+                  </div>
+                  {this.props.account.type === "promo" && <div className="title-description-expired-notification">
+                    <img src={require("../../../assets/img/v3/info_blue.svg")} />{' '}
+                    <span>{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
+                  </div>}
+                </React.Fragment>
+              ) : (
+                // On mobile
+                <div className="title-description">
+                  <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
+                  <div className="title-description-wallet-address">
+                    {this.props.account.address}
+                  </div>
+                  {this.props.account.type === "promo" && <div className="title-description-expired-notification">
+                    <img src={require("../../../assets/img/v3/info_blue.svg")} />{' '}
+                    <span>{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}` }</span>
+                  </div>}
+                </div>
+              )
+            }
               <div className="amount">
                 <div className="amount-item amount-left">                         
                   <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>

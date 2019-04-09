@@ -431,6 +431,16 @@ $divider-color: darken($title-background-color, 5);
       padding: 0;
     }
   }
+
+  .title-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    >div:nth-child(2) {
+      border-left: 2px solid #ccc9c9;
+      padding-left: 30px;
+    }
+  }
   
   .title-description{
     margin-bottom: 25px;
@@ -444,6 +454,10 @@ $divider-color: darken($title-background-color, 5);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      
+      >span:nth-child(2) {
+        padding: 0 3px;
+      }
     }
 
     &-promo-payment {
