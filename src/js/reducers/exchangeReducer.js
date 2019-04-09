@@ -58,8 +58,8 @@ const exchange = (state = initState, action) => {
         newState.errors[key] = ""
       }
 
-      newState.sourceAmount = ""
-      newState.destAmount = 0
+      // newState.sourceAmount = ""
+      // newState.destAmount = 0
 
       newState.selected = true
       newState.isEditRate = false
@@ -446,8 +446,8 @@ const exchange = (state = initState, action) => {
       newState.sourceTokenSymbol = newState.destTokenSymbol
       newState.destToken = tempSourceToken
       newState.destTokenSymbol = tempSourceTokenSymbol
-      newState.sourceAmount = ""
-      newState.destAmount = 0
+      // newState.sourceAmount = ""
+      // newState.destAmount = 0
       newState.isSelectToken = true
       newState.isEditRate = false
 
