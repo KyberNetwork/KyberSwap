@@ -661,7 +661,7 @@
           right: 20px;
         }
         .exchange-content__input {
-          padding-right: 20px;
+          padding-right: 30px;
         }
       }
     }
@@ -817,6 +817,12 @@
         .dropdown.dropdown--active .select-item {
           left: 0px;
         }
+      }
+    }
+
+    @media screen and (max-width: 320px) {
+      .dropdown.dropdown--active .select-item {
+        width: 285px;
       }
     }
   }
