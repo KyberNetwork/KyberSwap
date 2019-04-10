@@ -39,7 +39,7 @@ const transfer = (state = initState, action) => {
       } else {
         newState.gas_estimate = newState.gas_limit_transfer_token
       }
-      newState.amount = ""
+      // newState.amount = ""
       newState.errors.amountTransfer = ""
       newState.errors.ethBalanceError = ""
       newState.selected = true
