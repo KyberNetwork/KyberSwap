@@ -277,7 +277,7 @@ $divider-color: darken($title-background-color, 5);
         flex-wrap: wrap;
 
         &-promo-balance {
-          max-width: 85px;
+          max-width: 90px;
         }
 
         >div:first-child {
@@ -359,7 +359,7 @@ $divider-color: darken($title-background-color, 5);
     padding: 10px 15px; 
     min-height: 100px;
     display: grid;
-    grid-template-columns: 110px 1fr 110px 1fr 75px;
+    grid-template-columns: 120px 1fr 110px 1fr 75px;
     grid-gap: 0;
 
     @include screen-max-width(medium) {
