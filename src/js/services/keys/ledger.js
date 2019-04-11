@@ -1,6 +1,8 @@
 import * as keyService from "./baseKey"
 import EthereumTx from "ethereumjs-tx"
 import * as ethUtil from 'ethereumjs-util'
+import TransportU2F from "@ledgerhq/hw-transport-u2f";
+import Eth from "@ledgerhq/hw-app-eth";
 
 import { store } from "../../store"
 import { CONFIG_ENV_LEDGER_LINK, LEDGER_SUPPORT_LINK } from "../constants"
