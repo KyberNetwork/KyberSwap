@@ -82,7 +82,7 @@ export class DataPulseProvider {
 
 		// BEWARE: please note we really need 2 bars, not the only last one
 		// see the explanation below. `10` is the `large enough` value to work around holidays
-		const rangeStartTime = rangeEndTime - periodLengthSeconds(subscriptionRecord.resolution, 10);
+		const rangeStartTime = rangeEndTime - periodLengthSeconds(subscriptionRecord.resolution, 1);
 
 		return this._historyProvider.getBars(subscriptionRecord.symbolInfo, subscriptionRecord.resolution, rangeStartTime, rangeEndTime)
 			.then((result: GetBarsResult) => {
@@ -131,14 +131,18 @@ function periodLengthSeconds(resolution: string, requiredPeriodsCount: number): 
 	let daysCount = 0;
 
 	if (resolution === 'D') {
-		daysCount = requiredPeriodsCount;
-	} else if (resolution === 'M') {
-		daysCount = 31 * requiredPeriodsCount;
-	} else if (resolution === 'W') {
-		daysCount = 7 * requiredPeriodsCount;
-	} else {
-		daysCount = requiredPeriodsCount * parseInt(resolution) / (24 * 60);
-	}
+        daysCount = 100;
+    }
+    else if (resolution === 'M') {
+        // not implemented yet
+        daysCount = 100;
+    }
+    else if (resolution === 'W') {
+        daysCount = 24 * 31;
+    }
+    else {
+        daysCount = parseInt(resolution) / (4 * 60);
+    }
 
 	return daysCount * 24 * 60 * 60;
 }
