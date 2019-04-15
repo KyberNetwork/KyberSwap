@@ -20,9 +20,9 @@ export default class AnalyticFactory extends React.Component{
           this.workers.push(instanceWorker)
           break
         default:
-          var instanceWorker = new Mixpanel()
-          instanceWorker.initService(this.network)
-          this.workers.push(instanceWorker)
+          // var instanceWorker = new Mixpanel()
+          // instanceWorker.initService(this.network)
+          // this.workers.push(instanceWorker)
           break
       }
     })
@@ -30,7 +30,9 @@ export default class AnalyticFactory extends React.Component{
 
   callTrack = (funcName, ...args) => {
     for (var i = 0; i< this.workers.length; i++){
-      this.workers[i][funcName](...args)
+      if(this.workers[i][funcName]){
+        this.workers[i][funcName](...args)
+      }
     }
   }
 }
