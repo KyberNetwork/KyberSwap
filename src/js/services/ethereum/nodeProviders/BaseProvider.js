@@ -94,8 +94,8 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             var data = this.wrapperContract.methods.getBalances(address, listToken).call().then(result => {
                 //console.log(result)
-                 console.log("balance_tokens")
-                 console.log(result)
+                //  console.log("balance_tokens")
+                //  console.log(result)
                 if (result.length !== listToken.length){
                     console.log("Cannot get balances from node")
                     reject("Cannot get balances from node")
