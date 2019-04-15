@@ -91,6 +91,8 @@ export default class TradingView extends React.Component {
 			locale: this.getLanguageFromURL() || this.props.locale,
 			fullscreen: this.props.fullscreen,
 			autosize: this.props.autosize,
+			timeframe: "4D",
+			// timezone: "Asia/Singapore",
 			overrides: {
 				'mainSeriesProperties.candleStyle.upColor': '#31CB9E',
 				'mainSeriesProperties.candleStyle.downColor': '#F95555',
@@ -108,9 +110,21 @@ export default class TradingView extends React.Component {
 			this.createButton(widget, { content: this.props.translate("trading_view.buy") || "Buy", value: "buy", title: this.props.translate("trading_view.buy_price") || "Buy price" })
 			this.createButton(widget, { content: this.props.translate("trading_view.mid") || "Mid", value: "mid", title: this.props.translate("trading_view.mid_price") || "Mid price" })
 
-      widget.activeChart().onSymbolChanged().subscribe(null, (symbolData) => {
-        this.props.dispatch(changeSymbol(symbolData.name))
-      })
+			widget.activeChart().onSymbolChanged().subscribe(null, (symbolData) => {
+				this.props.dispatch(changeSymbol(symbolData.name))
+			})
+			
+			const chart = widget.chart();
+
+			chart.onIntervalChanged().subscribe(null, (interval, obj) => {
+				if (interval === "D") {
+					obj.timeframe = "100D"
+				} else if (interval === "W") {
+					obj.timeframe = "24M"
+				} else {
+					obj.timeframe = `${interval / 60 * 4}D`;
+				}
+			});
 		});
 	}
 
