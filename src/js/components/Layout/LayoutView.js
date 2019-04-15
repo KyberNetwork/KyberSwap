@@ -38,7 +38,6 @@ const LayoutView = (props) => {
   return (
     <ConnectedRouter history={props.history}  store ={store}>
       <div>
-        <Route component={props.Header} />
         <section id="content" className={props.langClass}>
           <Switch>
             <Route exact path={constansts.BASE_HOST + `/swap/:source${listToken}-:dest${listToken}`} component={props.Exchange} />

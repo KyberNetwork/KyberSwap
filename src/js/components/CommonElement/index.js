@@ -1,6 +1,6 @@
 export { default as Modal } from './MyModal.js';
 //export { default as TokenSelect } from './TokenSelect.js';
-export { default as DropFile } from './DropFile.js';
+// export { default as DropFile } from './DropFile.js';
 
 export { default as ProcessingModal } from "./Processing.js"
 export { default as PendingOverlay } from "./PendingOverlay.js"
