@@ -277,7 +277,7 @@ $divider-color: darken($title-background-color, 5);
         flex-wrap: wrap;
 
         &-promo-balance {
-          max-width: 85px;
+          max-width: 90px;
         }
 
         >div:first-child {
@@ -359,7 +359,7 @@ $divider-color: darken($title-background-color, 5);
     padding: 10px 15px; 
     min-height: 100px;
     display: grid;
-    grid-template-columns: auto 1fr 110px 1fr 75px;
+    grid-template-columns: 120px 1fr 110px 1fr 75px;
     grid-gap: 0;
 
     @include screen-max-width(medium) {
@@ -471,6 +471,10 @@ $divider-color: darken($title-background-color, 5);
       font-size: 13px;
       font-weight: 500;
       margin-top: 10px;
+
+      > img {
+        padding-bottom: 4px;
+      }
     }
   }
  
@@ -481,6 +485,10 @@ $divider-color: darken($title-background-color, 5);
   padding-right: 0 !important;
   padding-bottom: 0 !important;
   background-color: #f6f7fa !important;
+
+  @include screen-min-width(large) {
+    width: 630px;
+  }
 
   .transfer-title {
     @include screen-max-width(medium) {
