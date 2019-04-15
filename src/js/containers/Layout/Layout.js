@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { Exchange } from "../../containers/Exchange"
 import { Transfer } from "../../containers/Transfer"
-import { Header } from "../../containers/Header"
+// import { Header } from "../../containers/Header"
 import { ExchangeHistory } from "../../containers/CommonElements/"
 import {Market} from "../Market"
 import constanst from "../../services/constants"
@@ -136,8 +136,7 @@ export default class Layout extends React.Component {
 
     return (
       <LayoutView
-        history={history}
-        Header={Header}
+        history={history}        
         Exchange={Exchange}
         Transfer={Transfer}
         market={market}
