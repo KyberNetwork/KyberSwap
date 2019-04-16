@@ -70,10 +70,16 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
 
   const state = store.getState();
   const global = state.global;
+  const exchange = state.exchange;
 
   //track complete trade
   global.analytics.callTrack("trackCoinExchange", data);
   global.analytics.callTrack("completeTrade", hash, "kyber", "swap");
+
+  // Track swapping time here
+  const swappingTime = exchange.swappingTime;
+  const currentTime = Math.round(new Date().getTime());
+  global.analytics.callTrack("trackBroadcastedTransaction", currentTime - swappingTime);
 
   //console.log({txRaw, hash, account, data})
   const tx = new Tx(

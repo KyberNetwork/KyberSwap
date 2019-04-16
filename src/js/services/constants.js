@@ -121,7 +121,8 @@ const INIT_EXCHANGE_FORM_STATE = {
   isBalanceActive: false,
   isAdvanceActive: false,
   isOpenAdvance: false,
-  isSelectTokenBalance: false
+  isSelectTokenBalance: false,
+  swappingTime: 0
 }
 
 const INIT_TRANSFER_FORM_STATE = {

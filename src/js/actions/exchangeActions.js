@@ -631,3 +631,10 @@ export function setIsSelectTokenBalance(value) {
     payload: value
   }
 }
+
+export function setSwappingTime(time) {
+  return {
+    type: "EXCHANGE.SET_SWAPPING_TIME",
+    payload: time
+  }
+}
