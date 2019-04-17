@@ -18,7 +18,7 @@ import * as marketActions from "../../actions/marketActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
 import { setConnection } from "../../actions/connectionActions"
-import { stringToHex } from "../../utils/converter"
+import { stringToHex, calculateMinAmount, compareTwoNumber } from "../../utils/converter"
 
 import * as providers from "./nodeProviders"
 
@@ -251,14 +251,14 @@ export default class EthereumService extends React.Component {
     var sourceTokenSymbol = state.exchange.sourceTokenSymbol    
     
     if (sourceTokenSymbol === "ETH") {
-      if (parseFloat(sourceAmount) > constants.ETH.maxAmount) {
+      if (compareTwoNumber(sourceAmount, constants.ETH.MAX_AMOUNT) === 1) {
         store.dispatch(throwErrorHandleAmount());
         return;
       }
     } else {
       const tokens = state.tokens.tokens;
-      const sourceAmountInEth = sourceAmount * tokens[sourceTokenSymbol].rate / Math.pow(10, 18);
-      if (parseFloat(sourceAmountInEth) > constants.ETH.maxAmount) {
+      const sourceAmountInEth = calculateMinAmount(sourceAmount, tokens[sourceTokenSymbol].rate);
+      if (compareTwoNumber(sourceAmountInEth, constants.ETH.MAX_AMOUNT) === 1) {
         store.dispatch(throwErrorHandleAmount());
         return;
       }

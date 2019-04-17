@@ -128,13 +128,13 @@ class ExchangeBody extends React.Component {
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
 
     if (sourceTokenSymbol === "ETH") {
-      if (parseFloat(sourceValue) > constants.ETH.maxAmount) {
+      if (parseFloat(sourceValue) > constants.ETH.MAX_AMOUNT) {
         this.props.dispatch(exchangeActions.throwErrorHandleAmount())
         return
       }
     } else {
       var destValue = converters.caculateDestAmount(sourceValue, this.props.exchange.rateSourceToEth, 6)
-      if (parseFloat(destValue) > constants.ETH.maxAmount) {
+      if (parseFloat(destValue) > constants.ETH.MAX_AMOUNT) {
         this.props.dispatch(exchangeActions.throwErrorHandleAmount())
         return
       }
