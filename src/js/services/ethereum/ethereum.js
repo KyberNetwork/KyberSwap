@@ -10,7 +10,7 @@ import {
 } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx, updateApproveTxsData } from "../../actions/txActions"
-import { updateRateExchange, estimateGasNormal, analyzeError, checkKyberEnable, verifyExchange, caculateAmount, fetchExchangeEnable } from "../../actions/exchangeActions"
+import { updateRateExchange, estimateGasNormal, analyzeError, checkKyberEnable, verifyExchange, caculateAmount, fetchExchangeEnable, throwErrorHandleAmount } from "../../actions/exchangeActions"
 import { estimateGasTransfer, verifyTransfer } from "../../actions/transferActions"
 
 import * as marketActions from "../../actions/marketActions"
@@ -18,7 +18,7 @@ import * as marketActions from "../../actions/marketActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
 import { setConnection } from "../../actions/connectionActions"
-import { stringToHex } from "../../utils/converter"
+import { stringToHex, calculateMinAmount, compareTwoNumber } from "../../utils/converter"
 
 import * as providers from "./nodeProviders"
 
@@ -250,6 +250,20 @@ export default class EthereumService extends React.Component {
     var sourceAmount = state.exchange.sourceAmount
     var sourceTokenSymbol = state.exchange.sourceTokenSymbol    
     
+    if (sourceTokenSymbol === "ETH") {
+      if (compareTwoNumber(sourceAmount, constants.ETH.MAX_AMOUNT) === 1) {
+        store.dispatch(throwErrorHandleAmount());
+        return;
+      }
+    } else {
+      const tokens = state.tokens.tokens;
+      const sourceAmountInEth = calculateMinAmount(sourceAmount, tokens[sourceTokenSymbol].rate);
+      if (compareTwoNumber(sourceAmountInEth, constants.ETH.MAX_AMOUNT) === 1) {
+        store.dispatch(throwErrorHandleAmount());
+        return;
+      }
+    }
+
     //check input focus
     if (state.exchange.inputFocus !== "source"){
       //calculate source amount by dest amount

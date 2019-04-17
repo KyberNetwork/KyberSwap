@@ -13,7 +13,7 @@ import * as common from "../../utils/common"
 import { openTokenModal, hideSelectToken } from "../../actions/utilActions"
 import * as globalActions from "../../actions/globalActions"
 import * as exchangeActions from "../../actions/exchangeActions"
-import constansts from "../../services/constants"
+import constants from "../../services/constants"
 import { getTranslate } from 'react-localize-redux'
 import { default as _ } from 'underscore';
 import BLOCKCHAIN_INFO from "../../../../env";
@@ -112,14 +112,14 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
     var path
     if (type === "source") {
-      path = constansts.BASE_HOST + "/swap/" + symbol.toLowerCase() + "-" + this.props.exchange.destTokenSymbol.toLowerCase()
+      path = constants.BASE_HOST + "/swap/" + symbol.toLowerCase() + "-" + this.props.exchange.destTokenSymbol.toLowerCase()
       this.props.global.analytics.callTrack("trackChooseToken", "from", symbol);
     } else {
-      path = constansts.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "-" + symbol.toLowerCase()
+      path = constants.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "-" + symbol.toLowerCase()
       this.props.global.analytics.callTrack("trackChooseToken", "to", symbol);
     }
 
-    path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
+    path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
     this.props.dispatch(globalActions.goToRoute(path))
   }
 
@@ -128,13 +128,13 @@ class ExchangeBody extends React.Component {
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
 
     if (sourceTokenSymbol === "ETH") {
-      if (parseFloat(sourceValue) > 1000) {
+      if (parseFloat(sourceValue) > constants.ETH.MAX_AMOUNT) {
         this.props.dispatch(exchangeActions.throwErrorHandleAmount())
         return
       }
     } else {
       var destValue = converters.caculateDestAmount(sourceValue, this.props.exchange.rateSourceToEth, 6)
-      if (parseFloat(destValue) > 1000) {
+      if (parseFloat(destValue) > constants.ETH.MAX_AMOUNT) {
         this.props.dispatch(exchangeActions.throwErrorHandleAmount())
         return
       }
@@ -285,7 +285,7 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.makeNewExchange());
 
     if (changeTransactionType) {
-      const transferLink = constansts.BASE_HOST + "/transfer/" + this.props.transferTokenSymbol.toLowerCase();
+      const transferLink = constants.BASE_HOST + "/transfer/" + this.props.transferTokenSymbol.toLowerCase();
       this.props.global.analytics.callTrack("trackClickNewTransaction", "Transfer");
       this.props.history.push(transferLink)
     } else {
@@ -326,8 +326,8 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.swapToken())
     this.props.ethereum.fetchRateExchange(true)
 
-    var path = constansts.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "-" + this.props.exchange.sourceTokenSymbol.toLowerCase()
-    path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
+    var path = constants.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "-" + this.props.exchange.sourceTokenSymbol.toLowerCase()
+    path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
     this.props.dispatch(globalActions.goToRoute(path))
     this.props.global.analytics.callTrack("trackClickSwapDestSrc", this.props.exchange.sourceTokenSymbol, this.props.exchange.destTokenSymbol);
   }
