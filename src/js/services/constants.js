@@ -189,7 +189,8 @@ const ETH = {
   name: "Ether",
   symbol: "ETH",
   icon: "/img/ether.png",
-  address: ETHER_ADDRESS
+  address: ETHER_ADDRESS,
+  maxAmount: 1000
 };
 
 const IDLE_TIME_OUT = 900

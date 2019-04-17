@@ -10,7 +10,7 @@ import {
 } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx, updateApproveTxsData } from "../../actions/txActions"
-import { updateRateExchange, estimateGasNormal, analyzeError, checkKyberEnable, verifyExchange, caculateAmount, fetchExchangeEnable } from "../../actions/exchangeActions"
+import { updateRateExchange, estimateGasNormal, analyzeError, checkKyberEnable, verifyExchange, caculateAmount, fetchExchangeEnable, throwErrorHandleAmount } from "../../actions/exchangeActions"
 import { estimateGasTransfer, verifyTransfer } from "../../actions/transferActions"
 
 import * as marketActions from "../../actions/marketActions"
@@ -250,6 +250,20 @@ export default class EthereumService extends React.Component {
     var sourceAmount = state.exchange.sourceAmount
     var sourceTokenSymbol = state.exchange.sourceTokenSymbol    
     
+    if (sourceTokenSymbol === "ETH") {
+      if (parseFloat(sourceAmount) > constants.ETH.maxAmount) {
+        store.dispatch(throwErrorHandleAmount());
+        return;
+      }
+    } else {
+      const tokens = state.tokens.tokens;
+      const sourceAmountInEth = sourceAmount * tokens[sourceTokenSymbol].rate / Math.pow(10, 18);
+      if (parseFloat(sourceAmountInEth) > constants.ETH.maxAmount) {
+        store.dispatch(throwErrorHandleAmount());
+        return;
+      }
+    }
+
     //check input focus
     if (state.exchange.inputFocus !== "source"){
       //calculate source amount by dest amount
