@@ -612,6 +612,10 @@ const exchange = (state = initState, action) => {
       newState.isSelectTokenBalance = action.payload;
       return newState;
     }
+    case "EXCHANGE.SET_SWAPPING_TIME": {
+      newState.swappingTime = action.payload;
+      return newState;
+    }
   }
   return state
 }
