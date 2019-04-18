@@ -169,8 +169,8 @@ const exchange = (state = initState, action) => {
       if (!isSuccess) {
         newState.errors.rateSystem = "error.get_rate"
       } else {
-        if (expectedPrice === "0") {
-          if (rateInit === "0" || rateInit === 0 || rateInit === undefined || rateInit === null) {
+        if (expectedPrice == "0") {
+          if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
             newState.errors.rateSystem = "error.kyber_maintain"
           } else {
             newState.errors.rateSystem = "error.handle_amount"
@@ -180,8 +180,8 @@ const exchange = (state = initState, action) => {
         }
       }
 
-      var slippageRate = slippagePrice === "0" ? converter.estimateSlippagerate(rateInit, 18) : converter.toT(slippagePrice, 18)
-      var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
+      var slippageRate = slippagePrice == "0" ? converter.estimateSlippagerate(rateInit, 18) : converter.toT(slippagePrice, 18)
+      var expectedRate = expectedPrice == "0" ? rateInit : expectedPrice
 
       newState.slippageRate = slippageRate
       newState.offeredRate = expectedRate
@@ -380,6 +380,7 @@ const exchange = (state = initState, action) => {
         newState.errors.sourceAmountError = ""
         if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
         newState.sourceAmount = converter.caculateSourceAmount(value, state.offeredRate, 6)
+        console.log(`====Source amount: ${newState.sourceAmount}, Offered Rate: ${state.offeredRate}`);
       }
       return newState
     }

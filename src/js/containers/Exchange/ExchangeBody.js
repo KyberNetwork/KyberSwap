@@ -123,7 +123,7 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(globalActions.goToRoute(path))
   }
 
-  dispatchUpdateRateExchange = (sourceValue) => {
+  dispatchUpdateRateExchange = (sourceValue, refetchSourceAmount) => {
     var sourceDecimal = 18
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
 
@@ -133,11 +133,11 @@ class ExchangeBody extends React.Component {
         return
       }
     } else {
-      var destValue = converters.caculateDestAmount(sourceValue, this.props.exchange.rateSourceToEth, 6)
-      if (parseFloat(destValue) > constants.ETH.MAX_AMOUNT) {
-        this.props.dispatch(exchangeActions.throwErrorHandleAmount())
-        return
-      }
+      // var destValue = converters.caculateDestAmount(sourceValue, this.props.exchange.offeredRate, 6)
+      // if (parseFloat(destValue) > constants.ETH.MAX_AMOUNT) {
+      //   this.props.dispatch(exchangeActions.throwErrorHandleAmount())
+      //   return
+      // }
     }
 
     //var minRate = 0
@@ -160,7 +160,7 @@ class ExchangeBody extends React.Component {
       rateInit = this.props.tokens[sourceTokenSymbol].minRate
     }
 
-    this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, rateInit))
+    this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount))
   }
 
   validateSourceAmount = (value) => {
@@ -234,8 +234,8 @@ class ExchangeBody extends React.Component {
   lazyEstimateGas = _.debounce(this.dispatchEstimateGasNormal, 500)
 
 
-  validateRateAndSource = (sourceValue) => {
-    this.lazyUpdateRateExchange(sourceValue)
+  validateRateAndSource = (sourceValue, refetchSourceAmount = false) => {
+    this.lazyUpdateRateExchange(sourceValue, refetchSourceAmount)
     if (this.props.account.account !== false) {
       this.lazyUpdateValidateSourceAmount(sourceValue)
     }
@@ -256,7 +256,7 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.inputChange('dest', value))
 
     var valueSource = converters.caculateSourceAmount(value, this.props.exchange.offeredRate, 6)
-    this.validateRateAndSource(valueSource)
+    this.validateRateAndSource(valueSource, true);
   }
 
   focusSource = () => {
