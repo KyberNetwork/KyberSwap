@@ -248,7 +248,9 @@ export default class EthereumService extends React.Component {
     var dest = state.exchange.destToken
     
     var sourceAmount = state.exchange.sourceAmount
-    var sourceTokenSymbol = state.exchange.sourceTokenSymbol    
+    var sourceTokenSymbol = state.exchange.sourceTokenSymbol
+    
+    let refetchSourceAmount = false;
     
     if (sourceTokenSymbol === "ETH") {
       if (compareTwoNumber(sourceAmount, constants.ETH.MAX_AMOUNT) === 1) {
@@ -256,12 +258,14 @@ export default class EthereumService extends React.Component {
         return;
       }
     } else {
-      const tokens = state.tokens.tokens;
-      const sourceAmountInEth = calculateMinAmount(sourceAmount, tokens[sourceTokenSymbol].rate);
-      if (compareTwoNumber(sourceAmountInEth, constants.ETH.MAX_AMOUNT) === 1) {
-        store.dispatch(throwErrorHandleAmount());
-        return;
-      }
+      // const tokens = state.tokens.tokens;
+      // const rate = state.exchange.offeredRate;
+      // // const rate = tokens[sourceTokenSymbol].rate;
+      // const sourceAmountInEth = calculateMinAmount(sourceAmount, rate);
+      // if (compareTwoNumber(sourceAmountInEth, constants.ETH.MAX_AMOUNT) === 1) {
+      //   store.dispatch(throwErrorHandleAmount());
+      //   return;
+      // }
     }
 
     //check input focus
@@ -279,10 +283,11 @@ export default class EthereumService extends React.Component {
       }else{
         sourceAmount = 0
       }
+      refetchSourceAmount = true;
     }    
     
 
-    store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual))
+    store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount));
   }
 
   // fetchHistoryExchange = () => {
