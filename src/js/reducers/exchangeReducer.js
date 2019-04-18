@@ -380,7 +380,6 @@ const exchange = (state = initState, action) => {
         newState.errors.sourceAmountError = ""
         if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
         newState.sourceAmount = converter.caculateSourceAmount(value, state.offeredRate, 6)
-        console.log(`====Source amount: ${newState.sourceAmount}, Offered Rate: ${state.offeredRate}`);
       }
       return newState
     }
