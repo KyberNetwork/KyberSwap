@@ -64,6 +64,11 @@ export default class PostExchange extends React.Component {
   }
   clickExchange = () => {
     this.props.analytics.callTrack("trackClickSwapButton");
+
+    // Track swapping time
+    const currentTimeMillisecond = Math.round(new Date().getTime());
+    this.props.dispatch(exchangeActions.setSwappingTime(currentTimeMillisecond));
+
     if (this.props.account === false) {
       this.props.dispatch(exchangeActions.openImportAccount())
       return

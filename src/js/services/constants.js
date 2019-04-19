@@ -121,7 +121,8 @@ const INIT_EXCHANGE_FORM_STATE = {
   isBalanceActive: false,
   isAdvanceActive: false,
   isOpenAdvance: false,
-  isSelectTokenBalance: false
+  isSelectTokenBalance: false,
+  swappingTime: 0
 }
 
 const INIT_TRANSFER_FORM_STATE = {
@@ -189,7 +190,8 @@ const ETH = {
   name: "Ether",
   symbol: "ETH",
   icon: "/img/ether.png",
-  address: ETHER_ADDRESS
+  address: ETHER_ADDRESS,
+  MAX_AMOUNT: 1000
 };
 
 const IDLE_TIME_OUT = 900

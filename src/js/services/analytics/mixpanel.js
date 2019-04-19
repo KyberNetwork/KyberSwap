@@ -312,6 +312,16 @@ export default class Mixpanel {
     }
   }
 
+  trackBroadcastedTransaction(timeout) {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === "function") {
+      try {
+        mixpanel.track("Swap_ConfirmTime", { value: timeout });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }
+
   trackClickBreadCrumb(path){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{

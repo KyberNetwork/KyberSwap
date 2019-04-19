@@ -124,6 +124,25 @@ export default class CachedServerProvider extends React.Component {
         })
     }
 
+    getSourceAmount(sourceTokenSymbol, destTokenSymbol, destAmount) {
+        return new Promise((resolve, reject) => {
+            this.timeout(this.maxRequestTime, fetch(`${this.rpcUrl}/sourceAmount?source=${sourceTokenSymbol}&dest=${destTokenSymbol}&destAmount=${destAmount}`))
+                .then((response) => {
+                    return response.json();
+                })
+                .then((result) => {
+                    if (result.success) {
+                        resolve(result.value);
+                    } else {
+                        reject(new Error("Cannot get source amount"));
+                    }
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        })
+    }
+
     getAllRatesUSD() {
         return new Promise((resolve, rejected) => {
             this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/rateUSD'))

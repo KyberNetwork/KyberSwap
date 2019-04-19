@@ -51,7 +51,7 @@ const AccountBalanceLayout = (props) => {
         if (token.symbol === props.sourceActive) classBalance += " active"
         if (!symbolL.includes(searchWord)) classBalance += " hide"
         if (balance == 0) classBalance += " disabled"
-        if (props.isFixedSourceToken && props.screen === "swap") {
+        if ((props.isFixedSourceToken && props.screen === "swap") || (token.symbol === "PT" && props.screen === "transfer")) {
           classBalance += " deactivated";
         }
 

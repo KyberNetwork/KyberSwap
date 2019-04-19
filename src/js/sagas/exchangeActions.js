@@ -70,10 +70,16 @@ export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
 
   const state = store.getState();
   const global = state.global;
+  const exchange = state.exchange;
 
   //track complete trade
   global.analytics.callTrack("trackCoinExchange", data);
   global.analytics.callTrack("completeTrade", hash, "kyber", "swap");
+
+  // Track swapping time here
+  const swappingTime = exchange.swappingTime;
+  const currentTime = Math.round(new Date().getTime());
+  global.analytics.callTrack("trackBroadcastedTransaction", currentTime - swappingTime);
 
   //console.log({txRaw, hash, account, data})
   const tx = new Tx(
@@ -935,9 +941,21 @@ function* getSourceAmountZero(sourceTokenSymbol) {
 }
 
 function* updateRatePending(action) {
-  const { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual } = action.payload
-  var state = store.getState()
-  var translate = getTranslate(state.locale)
+  const { ethereum, source, dest, sourceTokenSymbol, isManual, refetchSourceAmount } = action.payload;
+  let { sourceAmount } = action.payload;
+
+  const state = store.getState();
+  const translate = getTranslate(state.locale);
+  const { destTokenSymbol, destAmount } = state.exchange;
+
+  if (refetchSourceAmount) {
+    try {
+     sourceAmount = yield call([ethereum, ethereum.call], "getSourceAmount", sourceTokenSymbol, destTokenSymbol, destAmount);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   var sourceAmoutRefined = yield call(getSourceAmount, sourceTokenSymbol, sourceAmount)
   var sourceAmoutZero = yield call(getSourceAmountZero, sourceTokenSymbol)
 
@@ -951,7 +969,14 @@ function* updateRatePending(action) {
     if(rateZero.expectedPrice != 0){
       percentChange = (rateZero.expectedPrice - rate.expectedPrice) / rateZero.expectedPrice 
       percentChange = Math.round(percentChange * 1000) / 10    
-      if(percentChange <= 0.1 || percentChange > 80) percentChange = 0
+      if(percentChange <= 0.1) {
+        percentChange = 0
+      }
+      if(percentChange >= 100){
+        percentChange = 0
+        expectedPrice = 0
+        slippagePrice = 0
+      }
     }    
 
     yield put.resolve(actions.updateRateExchangeComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, true, percentChange))

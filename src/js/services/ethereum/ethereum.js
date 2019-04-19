@@ -10,7 +10,7 @@ import {
 } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import { updateTx, updateApproveTxsData } from "../../actions/txActions"
-import { updateRateExchange, estimateGasNormal, analyzeError, checkKyberEnable, verifyExchange, caculateAmount, fetchExchangeEnable } from "../../actions/exchangeActions"
+import { updateRateExchange, estimateGasNormal, analyzeError, checkKyberEnable, verifyExchange, caculateAmount, fetchExchangeEnable, throwErrorHandleAmount } from "../../actions/exchangeActions"
 import { estimateGasTransfer, verifyTransfer } from "../../actions/transferActions"
 
 import * as marketActions from "../../actions/marketActions"
@@ -18,7 +18,7 @@ import * as marketActions from "../../actions/marketActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
 import { setConnection } from "../../actions/connectionActions"
-import { stringToHex } from "../../utils/converter"
+import { stringToHex, calculateMinAmount, compareTwoNumber } from "../../utils/converter"
 
 import * as providers from "./nodeProviders"
 
@@ -66,17 +66,22 @@ export default class EthereumService extends React.Component {
   subcribe(callBack) {
     this.fetchGasprice() // fetch gas price when app load
 
-    var callBackAsync = this.fetchData.bind(this)
-    callBackAsync()
-    this.intervalAsyncID = setInterval(callBackAsync, 10000)
+    // callback 10s
+    var callBack_10s = this.fetchData_10s.bind(this)
+    callBack_10s()
+    this.interval_10s = setInterval(callBack_10s, 10000)
 
-    var callBackSync = this.fetchDataSync.bind(this)
-    callBackSync()
-    this.intervalSyncID = setInterval(callBackSync, 3000)
+    var callBack_5s = this.fetchData_5s.bind(this)
+    callBack_5s()
+    this.interval_5s = setInterval(callBack_5s, 3000)
 
-    var callBack5Min = this.fetchData5Min.bind(this)
-    callBack5Min()
-    var interval5Min = setInterval(callBack5Min, 300000)
+    var callBack_3s = this.fetchData_3s.bind(this)
+    callBack_3s()
+    this.interval_3s = setInterval(callBack_3s, 3000)
+
+    var callBack_5min = this.fetchData_5Min.bind(this)
+    callBack_5min()
+    var interval_5min = setInterval(callBack_5min, 300000)
   }
 
   clearSubcription() {
@@ -84,13 +89,11 @@ export default class EthereumService extends React.Component {
     clearInterval(this.intervalSyncID)
   }
 
-  fetchData() {
+  fetchData_10s() {
     this.checkKyberEnable()
 
     this.fetchTxsData()
-    this.fetchApproveTxsData()
-
-    this.fetchRateData()
+    this.fetchApproveTxsData()    
 
     this.fetchAccountData()
     this.fetchTokenBalance()
@@ -121,16 +124,12 @@ export default class EthereumService extends React.Component {
   // this.testEstimateGas()
   }
 
-  // updateTokenStatus() {
-  //   store.dispatch(updateTokenStatus())
-  // }
-
-  fetchData5Min(){
-    this.fetchVolumn()
-    this.fetchRateUSD()
+  fetchData_5s(){
+    this.fetchRateData()
   }
 
-  fetchDataSync() {
+
+  fetchData_3s() {
     var state = store.getState()
     var account = state.account
     // console.log("verify account")
@@ -139,6 +138,11 @@ export default class EthereumService extends React.Component {
       this.verifyExchange()
       this.verifyTransfer()
     }
+  }
+
+  fetchData_5Min(){
+    this.fetchVolumn()
+    this.fetchRateUSD()
   }
 
   testAnalize() {
@@ -244,8 +248,26 @@ export default class EthereumService extends React.Component {
     var dest = state.exchange.destToken
     
     var sourceAmount = state.exchange.sourceAmount
-    var sourceTokenSymbol = state.exchange.sourceTokenSymbol    
+    var sourceTokenSymbol = state.exchange.sourceTokenSymbol
     
+    let refetchSourceAmount = false;
+    
+    if (sourceTokenSymbol === "ETH") {
+      if (compareTwoNumber(sourceAmount, constants.ETH.MAX_AMOUNT) === 1) {
+        store.dispatch(throwErrorHandleAmount());
+        return;
+      }
+    } else {
+      // const tokens = state.tokens.tokens;
+      // const rate = state.exchange.offeredRate;
+      // // const rate = tokens[sourceTokenSymbol].rate;
+      // const sourceAmountInEth = calculateMinAmount(sourceAmount, rate);
+      // if (compareTwoNumber(sourceAmountInEth, constants.ETH.MAX_AMOUNT) === 1) {
+      //   store.dispatch(throwErrorHandleAmount());
+      //   return;
+      // }
+    }
+
     //check input focus
     if (state.exchange.inputFocus !== "source"){
       //calculate source amount by dest amount
@@ -261,10 +283,11 @@ export default class EthereumService extends React.Component {
       }else{
         sourceAmount = 0
       }
+      refetchSourceAmount = true;
     }    
     
 
-    store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual))
+    store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount));
   }
 
   // fetchHistoryExchange = () => {
