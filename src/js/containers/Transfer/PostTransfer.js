@@ -241,7 +241,7 @@ export default class PostTransfer extends React.Component {
 
       this.props.dispatch(transferActions.processTransfer(formId, ethereum, account.address,
         params.token, params.amount,
-        params.destAddress, params.nonce, params.gas,
+        params.destAddress.toLowerCase(), params.nonce, params.gas,
         params.gasPrice, account.keystring, account.type, password, account, data, this.props.keyService, params.balanceData))
     } catch (e) {
       console.log(e)

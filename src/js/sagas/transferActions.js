@@ -73,8 +73,6 @@ export function* processTransfer(action) {
     gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
   var callService = token == constants.ETHER_ADDRESS ? "sendEtherFromAccount" : "sendTokenFromAccount";
 
-  action.payload.destAddress = action.payload.destAddress.toLowerCase();
-  
   switch (type) {
     case "keystore":
       yield call(transferKeystore, action, callService)
