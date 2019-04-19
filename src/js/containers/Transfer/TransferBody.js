@@ -255,7 +255,7 @@ class Transfer extends React.Component {
   }
 
   clearSession = (e) => {
-    this.props.dispatch(globalActions.clearSession())
+    this.props.dispatch(globalActions.clearSession(this.props.transfer.gasPrice));
     this.props.global.analytics.callTrack("trackClickChangeWallet")
   }
 
