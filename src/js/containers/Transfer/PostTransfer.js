@@ -237,7 +237,8 @@ export default class PostTransfer extends React.Component {
       var account = this.props.account
       var ethereum = this.props.ethereum
       var formId = "transfer"
-      var data = this.recap()
+      var data = this.recap();
+
       this.props.dispatch(transferActions.processTransfer(formId, ethereum, account.address,
         params.token, params.amount,
         params.destAddress, params.nonce, params.gas,
