@@ -79,7 +79,9 @@ export default class TopBalance extends React.Component {
         var isFixedSourceToken = !!(this.props.account && this.props.account.account.type ==="promo");
         var maxToken = 3
         var tokenLayout = tokens.slice(0, maxToken).map(token => {
-            return <div className={`top-token-item ${this.props.activeSymbol === token.symbol ? "active" : ""} ${isFixedSourceToken && this.props.screen === "swap" ? "top-token-item--deactivated" : ""}`} key={token.symbol} onClick={(e) => { this.selectBalance(token.symbol) }}>
+            const classTokenItem = (isFixedSourceToken && this.props.screen === "swap") || (token.symbol === "KNC" && this.props.screen === "transfer")
+             ? "top-token-item--deactivated" : "";
+            return <div className={`top-token-item ${classTokenItem} ${this.props.activeSymbol === token.symbol ? "active" : ""}`} key={token.symbol} onClick={(e) => { this.selectBalance(token.symbol) }}>
                 <div className="top-token-item__symbol">{token.symbol}</div>
                 <div className="top-token-item__balance">{converters.roundingNumber(converters.toT(token.balance, token.decimals))}</div>
             </div>
