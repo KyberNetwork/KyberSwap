@@ -327,7 +327,6 @@ class ExchangeBody extends React.Component {
   }
 
   setAmount = () => {
-    this.props.dispatch(globalActions.updateTitleWithRate());
     var tokenSymbol = this.props.exchange.sourceTokenSymbol
     var token = this.props.tokens[tokenSymbol]
     if (token) {
