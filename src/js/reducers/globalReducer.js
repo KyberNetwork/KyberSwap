@@ -30,7 +30,8 @@ const initState = {
   isOnMobile: false,
   analytics: {
     callTrack: () => { return }
-  }
+  },
+  documentTitle: "Kyber Network | Instant Exchange | No Fees"
 }
 
 const global = (state = initState, action) => {
@@ -170,6 +171,12 @@ const global = (state = initState, action) => {
       return {
         ...state,
         isAcceptConnectWallet: action.payload
+      }
+    }
+    case "GLOBAL.SET_DOCUMENT_TITLE": {
+      return {
+        ...state,
+        documentTitle: action.payload
       }
     }
   }

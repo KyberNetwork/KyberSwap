@@ -78,6 +78,20 @@ export var checkBrowser = {
     }
 }
 
+export function isAtSwapPage(path) {
+    const regex = /^\/swap\//;
+    return regex.test(path);
+}
+
+export function getTokenPairFromRoute(path) {
+    const regex = /^\/swap\/(\w+)-(\w+)/;
+    const match = regex.exec(path);
+    return {
+        sourceTokenSymbol: match[1],
+        destTokenSymbol: match[2]
+    }
+}
+
 export function getAssetUrl(uri = "") {
   return constants.ASSET_URL + uri.toLowerCase();
 }
