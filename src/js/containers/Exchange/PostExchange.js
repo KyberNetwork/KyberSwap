@@ -53,7 +53,8 @@ import BLOCKCHAIN_INFO from "../../../../env";
     keyService: props.keyService,
     translate: getTranslate(store.locale),
     analytics: store.global.analytics,
-    global: store.global
+    global: store.global,
+    exchange: store.exchange
   }
 })
 
@@ -422,6 +423,16 @@ export default class PostExchange extends React.Component {
                   </div> 
                 </div>
               </div>
+
+              {/* Warning message */}
+              {this.props.exchange.percentChange >= 10 && 
+                <div className="description error">
+                  <span className="error-text">
+                    {this.props.translate("error.percent_change_error", { percentChange: this.props.exchange.percentChange}) || `There is a ${this.props.exchange.percentChange}% difference in price for the requested quantity and the default 0.5 ETH quantity.`}
+                  </span>
+                </div>
+              }
+
             </React.Fragment>
           }
           {/* For Promo payment */}

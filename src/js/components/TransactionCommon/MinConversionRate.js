@@ -62,7 +62,7 @@ export default class MinConversionRate extends React.Component {
             <span>{this.props.translate("transaction.custom") || "Custom"}: </span>
             <input className="advance-config__radio" type="radio" name="slippageRate" value={this.state.customSlippageRate} onChange={(e) => this.props.onSlippageRateChanged(e, true)}/>
             <span className="advance-config__checkmark"></span>
-            <input type="number" className="advance-config__input" value={this.state.customSlippageRate} onChange={(e) => this.onCustomSlippageRateChanged(e)}/>
+            <input type="number" className="advance-config__input" value={this.state.customSlippageRate} min={0} max={100} onChange={(e) => this.onCustomSlippageRateChanged(e)}/>
             <span className="advance-config__input--suffix">%</span>
           </label>
         </div>
