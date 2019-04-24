@@ -68,17 +68,26 @@ import { PostExchangeWithKey, MinRate, RateBetweenToken } from "../Exchange"
 })
 
 class ExchangeBody extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       focus: "",
       defaultShowTooltip: true,
     }
+
   }
 
   componentDidMount = () => {
     if (this.props.global.changeWalletType !== "swap") this.props.dispatch(globalActions.closeChangeWallet())
 
+    const { pathname } = this.props.history.location;
+    this.updateTitle(pathname);
+
+    this.props.history.listen((location, action) => {
+      const { pathname } = location;
+      this.updateTitle(pathname);
+    });
+    
     // const web3Service = web3Package.newWeb3Instance();
 
     // if (web3Service !== false) {
@@ -92,6 +101,61 @@ class ExchangeBody extends React.Component {
     //       ethereumService, this.props.tokens, this.props.translate, walletType))
     //   }
     // }
+  }
+
+  updateTitle = (pathname) => {
+    let title = this.props.global.documentTitle;
+    if (common.isAtSwapPage(pathname)) {
+      let { sourceTokenSymbol, destTokenSymbol } = common.getTokenPairFromRoute(pathname);
+      sourceTokenSymbol = sourceTokenSymbol.toUpperCase();
+      destTokenSymbol = destTokenSymbol.toUpperCase();
+
+      if (sourceTokenSymbol !== destTokenSymbol) {
+        if (sourceTokenSymbol === "ETH") {
+          title = `${destTokenSymbol}/${sourceTokenSymbol} | Swap ${sourceTokenSymbol}-${destTokenSymbol} | KyberSwap`;
+        } else {
+          title = `${sourceTokenSymbol}/${destTokenSymbol} | Swap ${sourceTokenSymbol}-${destTokenSymbol} | KyberSwap`;
+        }
+      } else {
+        title = "Kyber Network | Instant Exchange | No Fees";
+      }
+    } else {
+      title = "Kyber Network | Instant Exchange | No Fees";
+    }
+
+    document.title = title;
+    this.props.dispatch(globalActions.setDocumentTitle(title));
+  }
+
+  updateTitleWithRate = () => {
+    let title = this.props.global.documentTitle;
+    const { pathname } = this.props.history.location;
+
+    if (common.isAtSwapPage(pathname)) {
+      let { sourceTokenSymbol, destTokenSymbol } = common.getTokenPairFromRoute(pathname);
+      sourceTokenSymbol = sourceTokenSymbol.toUpperCase();
+      destTokenSymbol = destTokenSymbol.toUpperCase();
+
+      if (sourceTokenSymbol !== destTokenSymbol) {
+        if (sourceTokenSymbol === "ETH") {
+          // 1 token = 1 / rateEth (Eth)
+          const rateEth = converters.convertBuyRate(this.props.tokens[destTokenSymbol].rateEth);
+          if (rateEth != 0) {
+            title = `${converters.roundingNumber(rateEth)} ${title}`;
+          }
+        } else {
+          // 1 src token = rate src token * rateEth dest token
+          const rateSourceToEth = converters.toT(this.props.tokens[sourceTokenSymbol].rate);
+          const rateEthToDest = converters.toT(this.props.tokens[destTokenSymbol].rateEth);
+          const rate = rateSourceToEth * rateEthToDest;
+          if (rate != 0) {
+            title = `${converters.roundingNumber(rate)} ${title}`;
+          }
+        }
+      } 
+    }
+
+    document.title = title;
   }
 
   validateTxFee = (gasPrice) => {
@@ -511,6 +575,8 @@ class ExchangeBody extends React.Component {
         isOpen={this.props.exchange.step === 3}
       />
     )
+
+    this.updateTitleWithRate();
 
     //--------For select token
     var tokenDest = {}

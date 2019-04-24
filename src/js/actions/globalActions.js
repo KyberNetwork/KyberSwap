@@ -273,3 +273,10 @@ export function initAnalytics(analytics) {
     payload: analytics
   }
 }
+
+export function setDocumentTitle(title) {
+  return {
+    type: "GLOBAL.SET_DOCUMENT_TITLE",
+    payload: title
+  }
+}
