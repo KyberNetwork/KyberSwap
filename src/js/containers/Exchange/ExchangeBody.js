@@ -161,7 +161,7 @@ class ExchangeBody extends React.Component {
   dispatchUpdateRateExchange = (sourceValue, refetchSourceAmount) => {
     var sourceDecimal = 18
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
-
+    
     if (sourceTokenSymbol === "ETH") {
       if (parseFloat(sourceValue) > constants.ETH.MAX_AMOUNT) {
         this.props.dispatch(exchangeActions.throwErrorHandleAmount())
@@ -195,7 +195,8 @@ class ExchangeBody extends React.Component {
       rateInit = this.props.tokens[sourceTokenSymbol].minRate
     }
 
-    this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount))
+    // this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount))
+    this.props.dispatch(exchangeActions.updateRateExchangeAndValidateSource(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount));
   }
 
   validateSourceAmount = (value) => {
@@ -264,16 +265,13 @@ class ExchangeBody extends React.Component {
   }
 
   lazyUpdateRateExchange = _.debounce(this.dispatchUpdateRateExchange, 500)
-  lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
+  // lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
 
   lazyEstimateGas = _.debounce(this.dispatchEstimateGasNormal, 500)
 
 
   validateRateAndSource = (sourceValue, refetchSourceAmount = false) => {
     this.lazyUpdateRateExchange(sourceValue, refetchSourceAmount)
-    if (this.props.account.account !== false) {
-      this.lazyUpdateValidateSourceAmount(sourceValue)
-    }
   }
   changeSourceAmount = (e) => {
     var value = e.target.value
