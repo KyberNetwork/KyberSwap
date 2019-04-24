@@ -280,3 +280,9 @@ export function setDocumentTitle(title) {
     payload: title
   }
 }
+
+export function updateTitleWithRate() {
+  return {
+    type: "GLOBAL.UPDATE_TITLE_WITH_RATE"
+  }
+}

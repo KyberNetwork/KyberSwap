@@ -82,6 +82,7 @@ class ExchangeBody extends React.Component {
 
     const { pathname } = this.props.history.location;
     this.updateTitle(pathname);
+    this.props.dispatch(globalActions.updateTitleWithRate());
 
     this.props.history.listen((location, action) => {
       const { pathname } = location;
@@ -127,37 +128,6 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(globalActions.setDocumentTitle(title));
   }
 
-  updateTitleWithRate = () => {
-    let title = this.props.global.documentTitle;
-    const { pathname } = this.props.history.location;
-
-    if (common.isAtSwapPage(pathname)) {
-      let { sourceTokenSymbol, destTokenSymbol } = common.getTokenPairFromRoute(pathname);
-      sourceTokenSymbol = sourceTokenSymbol.toUpperCase();
-      destTokenSymbol = destTokenSymbol.toUpperCase();
-
-      if (sourceTokenSymbol !== destTokenSymbol) {
-        if (sourceTokenSymbol === "ETH") {
-          // 1 token = 1 / rateEth (Eth)
-          const rateEth = converters.convertBuyRate(this.props.tokens[destTokenSymbol].rateEth);
-          if (rateEth != 0) {
-            title = `${converters.roundingNumber(rateEth)} ${title}`;
-          }
-        } else {
-          // 1 src token = rate src token * rateEth dest token
-          const rateSourceToEth = converters.toT(this.props.tokens[sourceTokenSymbol].rate);
-          const rateEthToDest = converters.toT(this.props.tokens[destTokenSymbol].rateEth);
-          const rate = rateSourceToEth * rateEthToDest;
-          if (rate != 0) {
-            title = `${converters.roundingNumber(rate)} ${title}`;
-          }
-        }
-      } 
-    }
-
-    document.title = title;
-  }
-
   validateTxFee = (gasPrice) => {
     if (this.props.account.account === false) {
       return
@@ -185,6 +155,7 @@ class ExchangeBody extends React.Component {
 
     path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
     this.props.dispatch(globalActions.goToRoute(path))
+    this.props.dispatch(globalActions.updateTitleWithRate());
   }
 
   dispatchUpdateRateExchange = (sourceValue, refetchSourceAmount) => {
@@ -393,6 +364,7 @@ class ExchangeBody extends React.Component {
     var path = constants.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "-" + this.props.exchange.sourceTokenSymbol.toLowerCase()
     path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
     this.props.dispatch(globalActions.goToRoute(path))
+    this.props.dispatch(globalActions.updateTitleWithRate());
     this.props.global.analytics.callTrack("trackClickSwapDestSrc", this.props.exchange.sourceTokenSymbol, this.props.exchange.destTokenSymbol);
   }
 
@@ -575,8 +547,6 @@ class ExchangeBody extends React.Component {
         isOpen={this.props.exchange.step === 3}
       />
     )
-
-    this.updateTitleWithRate();
 
     //--------For select token
     var tokenDest = {}
