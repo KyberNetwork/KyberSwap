@@ -127,7 +127,10 @@
     "kyber_explorer": "在Kyber.enjinx上查看",
     "swap_for_gift": "您正在通过兑换获得一个礼物",
     "send_to_organizer": "发送至组织者",
-    "gift": "礼物"
+    "gift": "礼物",
+    "promo_expired_notification": "After swapping please transfer your token to your personal wallet before",
+    "kyber_network_proxy": "Kyber Network Proxy",
+    "please_swap_before": "Please swap before"
   },
   "modal": {
     "enter_password": "输入密码",
@@ -225,7 +228,8 @@
     "invalid_json_file": "您导入的JSON文件无效。 请导入正确的JSON密钥库。",
     "key_derivation_failed": "密钥派生失败 - 可能是密码错误",
     "invalid_promo_code": "无效的活动代码",
-    "promo_code_error": "促销代码为空"
+    "promo_code_error": "促销代码为空",
+    "percent_change_error": "There is a ${percentChange}% difference in price for the requested quantity and the default 0.5 ETH quantity."
   },
   "import": {
     "from_metamask": "连接至<br>Metamask",

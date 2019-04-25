@@ -10,7 +10,7 @@ import { PostExchangeWithKey } from "../../containers/Exchange";
 // import BLOCKCHAIN_INFO from "../../../../env";
 import { RateBetweenToken } from "../../containers/Exchange";
 import * as converters from "../../utils/converter";
-import { getAssetUrl } from "../../utils/common";
+import { getAssetUrl, getFormattedDate } from "../../utils/common";
 // import { TermAndServices } from "../../containers/CommonElements";
 // import { AdvanceAccount } from "../TransactionCommon"
 
@@ -104,12 +104,30 @@ const ExchangeBodyLayout = (props) => {
     }
   }
 
+  let expiredDate = new Date().getFullYear() + 1;
+  if (props.account.info) {
+    const date = new Date(props.account.info.expiredDate);
+    expiredDate = getFormattedDate(date);
+  } 
+  
   return (
     <div>
       <div>
         <div>
           {props.account && props.account.type === "promo" && props.account.info.description !== ""
-            && <div className={"promo-description"}><span>{props.account.info.description}</span></div>}
+            && <div className={"promo-description"}>
+              <div className="promo-description--icon">
+                <img src={require("../../../assets/img/exchange/tick.svg")} />
+              </div>
+              <div className="promo-description--message">
+                <div>{props.account.info.description}</div>
+                <div>
+                  <span>{props.translate("transaction.please_swap_before") || "Please swap before"}</span>{' '}
+                  <span className="promo-description--expired-date">{expiredDate}</span>
+                </div>
+              </div>
+              
+            </div>}
           <div className="exchange-content-wrapper">
             {props.networkError !== "" && (
               <div className="network_error">

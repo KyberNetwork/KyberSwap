@@ -3,19 +3,35 @@
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
   .promo-description {
     margin: 0 auto 10px;
-    text-align: center;
-    >span {
-      text-align: center;
-      // white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      padding: 3px 15px;
-      background-color: #E7EDF5;
-      color: #8690AD;
+    font-size: 11px;
+    color: #222222;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    &--icon {
+      margin: auto 15px auto 0;
+    }
+
+    &--message {
+      >div:first-child {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 500px;
+
+        @include screen-max-width(medium) {
+          max-width: 250px;
+        }
+      }
+    }
+
+    &--expired-date {
+      color: #000;
+      font-weight: 700;
+      background-color: #DEEBFF;
       border-radius: 10px;
-      max-width: 500px;
-      font-size: 11px;
-      display: inline-block;
+      padding: 3px 10px;
     }
   }
 }
