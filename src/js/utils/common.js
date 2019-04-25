@@ -154,3 +154,11 @@ export function getTokenBySymbol(tokens, symbol){
     script.src = src;
     document.body.appendChild(script);
   }
+
+export function getFormattedDate(date) {
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
+}
