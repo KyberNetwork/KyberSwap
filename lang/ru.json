@@ -132,7 +132,8 @@
     "gift": "Gift",
     "promo_expired_notification": "After swapping please transfer your token to your personal wallet before",
     "kyber_network_proxy": "Kyber Network Proxy",
-    "please_swap_before": "Please swap before"
+    "please_swap_before": "Please swap before",
+    "please_swap_and_send_before": "Please swap and send to your personal wallet before"
   },
   "modal": {
     "enter_password": "Введите пароль",
