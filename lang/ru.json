@@ -126,7 +126,13 @@
     "any_rate": "Any-rate",
     "custom": "Custom",
     "etherscan_explorer": "View on etherscan",
-    "kyber_explorer": "View on kyber.enjinx"
+    "kyber_explorer": "View on kyber.enjinx",
+    "swap_for_gift": "You are swapping to receive a gift",
+    "send_to_organizer": "Send to the Organizer",
+    "gift": "Gift",
+    "promo_expired_notification": "After swapping please transfer your token to your personal wallet before",
+    "kyber_network_proxy": "Kyber Network Proxy",
+    "please_swap_before": "Please swap before"
   },
   "modal": {
     "enter_password": "Введите пароль",
@@ -224,7 +230,8 @@
     "invalid_json_file": "Your uploaded JSON file is invalid. Please upload a correct JSON keystore.",
     "key_derivation_failed": "Key derivation failed - possibly wrong password",
     "invalid_promo_code": "Invalid promo code",
-    "promo_code_error": "Promo code is empty"
+    "promo_code_error": "Promo code is empty",
+    "percent_change_error": "There is a ${percentChange}% difference in price for the requested quantity and the default 0.5 ETH quantity."
   },
   "import": {
     "from_metamask": "METAMASK",

@@ -125,7 +125,13 @@
     "any_rate": "상관없이 진행",
     "custom": "사용자 지정",
     "etherscan_explorer": "Etherscan에서 확인",
-    "kyber_explorer": "Kyber.enjix에서 확인"
+    "kyber_explorer": "Kyber.enjix에서 확인",
+    "swap_for_gift": "You are swapping to receive a gift",
+    "send_to_organizer": "Send to the Organizer",
+    "gift": "Gift",
+    "promo_expired_notification": "After swapping please transfer your token to your personal wallet before",
+    "kyber_network_proxy": "Kyber Network Proxy",
+    "please_swap_before": "Please swap before"
   },
   "modal": {
     "enter_password": "비밀번호 입력",
@@ -223,7 +229,8 @@
     "invalid_json_file": "JSON 파일이 일치하지 않습니다. 올바른 JSON 파일을 업로드 해주세요.",
     "key_derivation_failed": "키 인증 실패 - 잘못된 패스워드",
     "invalid_promo_code": "프로모션 코드가 잘못되었습니다.",
-    "promo_code_error": "프로모션 코드가 비어 있습니다."
+    "promo_code_error": "프로모션 코드가 비어 있습니다.",
+    "percent_change_error": "There is a ${percentChange}% difference in price for the requested quantity and the default 0.5 ETH quantity."
   },
   "import": {
     "from_metamask": "Metamask",

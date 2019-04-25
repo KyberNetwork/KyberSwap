@@ -127,7 +127,10 @@
     "kyber_explorer": "Xem trên kyber.enjinx",
     "swap_for_gift": "Bạn chuẩn bị trao đổi để nhận quà",
     "send_to_organizer": "Gửi tới nhà tổ chức",
-    "gift": "Món quà"
+    "gift": "Món quà",
+    "promo_expired_notification": "After swapping please transfer your token to your personal wallet before",
+    "kyber_network_proxy": "Kyber Network Proxy",
+    "please_swap_before": "Please swap before"
   },
   "modal": {
     "enter_password": "Nhập mật khẩu",
@@ -225,7 +228,8 @@
     "invalid_json_file": "Cập nhật JSON file của bạn không hợp lệ. Vui lòng tải lên đúng keystore JSON.",
     "key_derivation_failed": "Nhập khóa nguồn thất bại - có thể do sai mật khẩu",
     "invalid_promo_code": "Mã khuyến mãi không hợp lệ",
-    "promo_code_error": "Chưa nhập mã khuyến mãi"
+    "promo_code_error": "Chưa nhập mã khuyến mãi",
+    "percent_change_error": "There is a ${percentChange}% difference in price for the requested quantity and the default 0.5 ETH quantity."
   },
   "import": {
     "from_metamask": "Kết nối <br> Metamask",
