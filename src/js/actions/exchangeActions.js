@@ -645,3 +645,10 @@ export function setSwappingTime(time) {
     payload: time
   }
 }
+
+export function changeAmount(input, value){
+  return {
+    type: "EXCHANGE.CHANGE_AMOUNT",
+    payload: {input, value}
+  }
+}
