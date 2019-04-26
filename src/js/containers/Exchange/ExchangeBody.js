@@ -381,7 +381,7 @@ class ExchangeBody extends React.Component {
       this.props.dispatch(exchangeActions.changeAmount('source', this.props.exchange.destAmount))
       this.props.dispatch(exchangeActions.changeAmount('dest', ""))
     }
-    // this.props.ethereum.fetchRateExchange(true)
+    this.props.ethereum.fetchRateExchange(true)
 
     var path = constants.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "-" + this.props.exchange.sourceTokenSymbol.toLowerCase()
     path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
