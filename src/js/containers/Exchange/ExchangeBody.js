@@ -195,8 +195,11 @@ class ExchangeBody extends React.Component {
       rateInit = this.props.tokens[sourceTokenSymbol].minRate
     }
 
-    // this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount))
-    this.props.dispatch(exchangeActions.updateRateExchangeAndValidateSource(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount));
+    if (this.props.account.account !== false) {
+      this.props.dispatch(exchangeActions.updateRateExchangeAndValidateSource(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount));
+    } else {
+      this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount))
+    }
   }
 
   validateSourceAmount = (value) => {
