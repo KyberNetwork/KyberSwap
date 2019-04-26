@@ -248,6 +248,20 @@
             "address": "0xade0e0ed3ec60c7124ddc88c410af671493dc949",
             "decimals": 18,
             "cg_id": "sentinel-protocol"
+        },
+        "SPN": {
+            "symbol": "SPN",
+            "name": "Sapien Network",
+            "address": "0x7f7992a21e333baeeab065d54829122173caceb7",
+            "decimals": 6,
+            "cg_id": "sapien"
+        },
+        "HKN": {
+            "symbol": "HKN",
+            "name": "Hacken",
+            "address": "0x4aefa5bded67f5842ade8f025a738cb3363b7499",
+            "decimals": 8,
+            "cg_id": "hacken"
         }
     },
     "ethScanUrl": "https://ropsten.etherscan.io/",

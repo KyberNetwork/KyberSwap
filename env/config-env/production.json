@@ -180,14 +180,6 @@
             "decimals": 18,
             "cg_id": "ripio-credit-network"
         },
-        "ZIL": {
-            "symbol": "ZIL",
-            "name": "Zilliqa",
-            "address": "0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27",
-            "decimals": 12,
-            "cg_id": "zilliqa",
-            "priority": true
-        },
         "LINK": {
             "symbol": "LINK",
             "name": "Chain Link",
@@ -377,14 +369,6 @@
             "address": "0x865ec58b06bf6305b886793aa20a2da31d034e68",
             "decimals": 18,
             "cg_id": "mossland"
-        },
-        "BNB": {
-            "symbol": "BNB",
-            "name": "Binance Coin",
-            "address": "0xb8c77482e45f1f44de1745f52c74426c631bdd52",
-            "decimals": 18,
-            "cg_id": "binancecoin",
-            "priority": true
         },
         "REP": {
             "symbol": "REP",
@@ -580,6 +564,14 @@
             "decimals": 18,
             "cg_id": "blox",
             "listing_time": 1549976400
+        },
+        "MCO": {
+            "symbol": "MCO",
+            "name": "Monaco",
+            "address": "0xb63b606ac810a52cca15e44bb630fd42d8d1d83d",
+            "decimals": 8,
+            "cg_id": "monaco",
+            "listing_time": 1556283600
         }
     },
     "ethScanUrl": "https://etherscan.io/",
