@@ -1688,11 +1688,16 @@ function* verifyExchange() {
 
   var sourceAmount = exchange.sourceAmount
 
+  let rate = rateSourceToEth;
+  if (destTokenSymbol === 'ETH') {
+    rate = offeredRate;
+  }
+
   var validateAmount = validators.verifyAmount(sourceAmount,
     sourceBalance,
     sourceTokenSymbol,
     sourceDecimal,
-    offeredRate,
+    rate,
     destDecimal,
     exchange.maxCap)
 
