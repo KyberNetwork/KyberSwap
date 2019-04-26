@@ -575,6 +575,7 @@
         }
     },
     "ethScanUrl": "https://etherscan.io/",
+    "broadcastTx": "https://broadcast.kyber.network/",
     "enjinx": "https://kyber.enjinx.io/",
     "bank": "0x0",
     "reserve": "0x63825c174ab367968ec60f061753d3bbd36a0d8f",

@@ -265,6 +265,7 @@
         }
     },
     "ethScanUrl": "https://ropsten.etherscan.io/",
+    "broadcastTx": "https://ropsten-broadcast.knstats.com/",
     "enjinx": "https://kyber.enjinx.io/",
     "reserve": "0x0fc1cf3e7dd049f7b42e6823164a64f76fc06be0",
     "network": "0x818E6FECD516Ecc3849DAf6845e3EC868087B755",
