@@ -80,6 +80,10 @@ export default class PostExchange extends React.Component {
     if (this.props.form.isSelectToken) {
       return
     }
+    if (this.props.form.customRateInput.value === "" && this.props.form.customRateInput.isDirty) {
+      this.props.dispatch(exchangeActions.setCustomRateInputError(true));
+      return
+    }
     if (this.props.form.maxCap == 0) {
       let titleModal = this.props.translate('transaction.notification') || 'Notification'
       let contentModal = this.props.translate('transaction.not_enable_exchange') || 'Your address is not enabled for exchange'

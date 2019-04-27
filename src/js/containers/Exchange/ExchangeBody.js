@@ -385,8 +385,23 @@ class ExchangeBody extends React.Component {
   // }
 
   toggleAdvanceContent = () => {
+    if (this.props.global.isOnMobile){
+      // this.props.dispatch(exchangeActions.toggleBalanceContent())    
+      if (this.props.exchange.customRateInput.value === "" && this.props.exchange.customRateInput.isDirty) {
+        this.props.dispatch(exchangeActions.setCustomRateInputError(true));
+        return;
+      }
+    }
+    
     if (this.props.exchange.isAdvanceActive) {
       this.props.global.analytics.callTrack("trackClickHideAdvanceOption", "Swap")
+      const offeredRate = this.props.exchange.offeredRate;
+
+      const minRate = converters.caculatorRateToPercentage(97, offeredRate);  // Reset rate to 3%
+  
+      this.props.dispatch(exchangeActions.setMinRate(minRate.toString()));
+      this.props.dispatch(exchangeActions.setCustomRateInputError(false));
+      this.props.dispatch(exchangeActions.setCustomRateInputDirty(false));
     } else {
       this.props.global.analytics.callTrack("trackClickShowAdvanceOption", "Swap")
     }
@@ -395,9 +410,6 @@ class ExchangeBody extends React.Component {
     if (!this.props.exchange.isOpenAdvance) {
       this.props.dispatch(exchangeActions.setIsOpenAdvance());
     }
-    // if(!this.props.global.isOnMobile){
-    //   this.props.dispatch(exchangeActions.toggleBalanceContent())    
-    // }
   }
 
   // closeAdvance = () => {
@@ -418,6 +430,19 @@ class ExchangeBody extends React.Component {
   }
 
   handleSlippageRateChanged = (e, isInput = false) => {
+    if (isInput) {
+      if (e.target.value === "" && this.props.exchange.customRateInput.isDirty) {
+        this.props.dispatch(exchangeActions.setCustomRateInputError(true));
+      } else {
+        this.props.dispatch(exchangeActions.setCustomRateInputError(false));
+      }
+      this.props.dispatch(exchangeActions.setCustomRateInputDirty(true));
+      this.props.dispatch(exchangeActions.setCustomRateInputValue(e.target.value));
+    } else {
+      this.props.dispatch(exchangeActions.setCustomRateInputDirty(false));
+      this.props.dispatch(exchangeActions.setCustomRateInputError(false));
+    }
+
     const offeredRate = this.props.exchange.offeredRate;
     let value = isInput ? 100 - e.currentTarget.value : e.currentTarget.value;
 

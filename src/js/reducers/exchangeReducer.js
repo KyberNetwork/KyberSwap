@@ -616,6 +616,18 @@ const exchange = (state = initState, action) => {
       newState.swappingTime = action.payload;
       return newState;
     }
+    case "EXCHANGE.SET_CUSTOM_RATE_INPUT_ERROR": {
+      newState.customRateInput.isError = action.payload;
+      return newState;
+    }
+    case "EXCHANGE.SET_CUSTOM_RATE_INPUT_DIRTY": {
+      newState.customRateInput.isDirty = action.payload;
+      return newState;
+    }
+    case "EXCHANGE.SET_CUSTOM_RATE_INPUT_VALUE": {
+      newState.customRateInput.value = action.payload;
+      return newState;
+    }
   }
   return state
 }

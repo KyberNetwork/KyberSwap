@@ -43,6 +43,45 @@
     }
   }
 
+  &__rate-input-error-trigger {
+    width: 0;
+    height: 0;    
+  }
+
+  .__react_component_tooltip{
+    position: absolute;
+    z-index: 1 !important;
+    background-color: #FFCAD1;
+    width: 100% !important;
+    left: 0px !important;
+    top: 25px !important;
+    >div {
+      color: #222;
+      font-size: 11px;
+    }
+    &:after{
+      border-bottom-color: #FFCAD1 !important;
+      right: 20px;
+      left: auto;
+    }
+
+    @include screen-max-width(medium) {
+      left: 10px !important;
+      top: 32px !important;
+
+      &:after {
+        border-left: 8px solid transparent !important;
+        border-right: 8px solid transparent !important;
+        top: -6px;
+        // left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #FFCAD1 !important;
+        right: 20px;
+        left: auto;
+      }
+    }
+  }
+  
   &__radio {
     position: absolute;
     visibility: hidden;
@@ -115,6 +154,10 @@
       color: #666666;
       position: absolute;
       right: 8px;
+    }
+
+    &-error {
+      border: 1px solid #EE344E !important;
     }
   }
 
