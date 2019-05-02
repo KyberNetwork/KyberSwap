@@ -231,7 +231,8 @@
     "key_derivation_failed": "키 인증 실패 - 잘못된 패스워드",
     "invalid_promo_code": "프로모션 코드가 잘못되었습니다.",
     "promo_code_error": "프로모션 코드가 비어 있습니다.",
-    "percent_change_error": "There is a ${percentChange}% difference in price for the requested quantity and the default 0.5 ETH quantity."
+    "percent_change_error": "There is a ${percentChange}% difference in price for the requested quantity and the default 0.5 ETH quantity.",
+    "required_field": "This field is required"
   },
   "import": {
     "from_metamask": "Metamask",

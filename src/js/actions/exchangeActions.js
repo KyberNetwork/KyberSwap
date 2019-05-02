@@ -646,9 +646,32 @@ export function setSwappingTime(time) {
   }
 }
 
+
 export function changeAmount(input, value){
   return {
     type: "EXCHANGE.CHANGE_AMOUNT",
     payload: {input, value}
   }
 }
+
+export function setCustomRateInputError(isError) {
+  return {
+    type: "EXCHANGE.SET_CUSTOM_RATE_INPUT_ERROR",
+    payload: isError
+  }
+}
+
+export function setCustomRateInputDirty(isDirty) {
+  return {
+    type: "EXCHANGE.SET_CUSTOM_RATE_INPUT_DIRTY",
+    payload: isDirty
+  }
+}
+
+export function setCustomRateInputValue(value) {
+  return {
+    type: "EXCHANGE.SET_CUSTOM_RATE_INPUT_VALUE",
+    payload: value
+  }
+}
+
