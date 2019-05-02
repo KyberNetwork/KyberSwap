@@ -122,7 +122,9 @@ const ExchangeBodyLayout = (props) => {
               <div className="promo-description--message">
                 <div>{props.account.info.description}</div>
                 <div>
-                  <span>{props.translate("transaction.please_swap_before") || "Please swap before"}</span>{' '}
+                  {props.account.info.promoType === "swap" && <span>{props.translate("transaction.please_swap_and_send_before") || "Please swap and send to your personal wallet before"}</span>}
+                  {props.account.info.promoType === "payment" && <span>{props.translate("transaction.please_swap_before") || "Please swap before"}</span>}
+                  {' '}
                   <span className="promo-description--expired-date">{expiredDate}</span>
                 </div>
               </div>

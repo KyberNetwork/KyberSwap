@@ -195,8 +195,11 @@ class ExchangeBody extends React.Component {
       rateInit = this.props.tokens[sourceTokenSymbol].minRate
     }
 
-    // this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount))
-    this.props.dispatch(exchangeActions.updateRateExchangeAndValidateSource(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount));
+    if (this.props.account.account !== false) {
+      this.props.dispatch(exchangeActions.updateRateExchangeAndValidateSource(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount));
+    } else {
+      this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount))
+    }
   }
 
   validateSourceAmount = (value) => {
@@ -273,8 +276,13 @@ class ExchangeBody extends React.Component {
   validateRateAndSource = (sourceValue, refetchSourceAmount = false) => {
     this.lazyUpdateRateExchange(sourceValue, refetchSourceAmount)
   }
-  changeSourceAmount = (e) => {
-    var value = e.target.value
+  changeSourceAmount = (e, amount) => {
+    var value 
+    if(e){
+      value = e.target.value
+    }else{
+      value = amount
+    }
     if (value < 0) return
     this.props.dispatch(exchangeActions.inputChange('source', value));
 
@@ -283,8 +291,14 @@ class ExchangeBody extends React.Component {
     this.validateRateAndSource(value)
   }
 
-  changeDestAmount = (e) => {
-    var value = e.target.value
+  changeDestAmount = (e, amount) => {
+    var value 
+    if(e){
+      value = e.target.value
+    }else{
+      value = amount
+    }
+    
     if (value < 0) return
     this.props.dispatch(exchangeActions.inputChange('dest', value))
 
@@ -357,6 +371,16 @@ class ExchangeBody extends React.Component {
       return
     }
     this.props.dispatch(exchangeActions.swapToken())
+    //update source token, dest token
+    if (this.props.exchange.inputFocus === "source"){
+      this.props.dispatch(exchangeActions.focusInput('dest'));
+      this.props.dispatch(exchangeActions.changeAmount('source', ""))
+      this.props.dispatch(exchangeActions.changeAmount('dest', this.props.exchange.sourceAmount))
+    }else{
+      this.props.dispatch(exchangeActions.focusInput('source'));
+      this.props.dispatch(exchangeActions.changeAmount('source', this.props.exchange.destAmount))
+      this.props.dispatch(exchangeActions.changeAmount('dest', ""))
+    }
     this.props.ethereum.fetchRateExchange(true)
 
     var path = constants.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "-" + this.props.exchange.sourceTokenSymbol.toLowerCase()

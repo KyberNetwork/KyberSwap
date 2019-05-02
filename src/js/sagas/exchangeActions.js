@@ -1043,9 +1043,9 @@ function* updateRatePending(action) {
 
 function* updateRateAndValidateSource(action) {
   const state = store.getState();
-  const { sourceAmount } = action.payload;
+  const { ethereum, source, dest, sourceValue, sourceTokenSymbol, sourceAmount, isManual, refetchSourceAmount } = action.payload;
   try {
-    yield call(updateRatePending, action);
+    yield put(actions.updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount));
     if (state.account.account !== false) {
       yield call(verifyExchange);
     }
@@ -1688,11 +1688,16 @@ function* verifyExchange() {
 
   var sourceAmount = exchange.sourceAmount
 
+  let rate = rateSourceToEth;
+  if (destTokenSymbol === 'ETH') {
+    rate = offeredRate;
+  }
+
   var validateAmount = validators.verifyAmount(sourceAmount,
     sourceBalance,
     sourceTokenSymbol,
     sourceDecimal,
-    offeredRate,
+    rate,
     destDecimal,
     exchange.maxCap)
 

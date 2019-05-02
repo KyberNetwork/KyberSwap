@@ -191,7 +191,7 @@ export default class CachedServerProvider extends React.Component {
 
     getInfo(infoObj) {
         console.log(infoObj)
-        fetch('https://broadcast.kyber.network/broadcast/' + infoObj.hash, {
+        fetch(BLOCKCHAIN_INFO.broadcastTx + 'broadcast/' + infoObj.hash, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',

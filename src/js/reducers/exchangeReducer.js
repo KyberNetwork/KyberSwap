@@ -364,6 +364,15 @@ const exchange = (state = initState, action) => {
       //  console.log(newState)
       return newState
     }
+    case "EXCHANGE.CHANGE_AMOUNT": {
+      var {input, value} = action.payload
+      if (input === "source"){
+        newState.sourceAmount = value
+      }else{
+        newState.destAmount = value
+      }
+      return newState
+    }
     case "EXCHANGE.INPUT_CHANGE": {
       let focus = action.payload.focus
       let value = action.payload.value
