@@ -11,6 +11,7 @@ import { getTranslate } from 'react-localize-redux';
 import { getLanguage } from "../services/language"
 import Language from "../../../lang"
 import constants from "../services/constants"
+import * as common from "../utils/common";
 
 import * as converter from "../utils/converter"
 import { store } from '../store'
@@ -66,11 +67,52 @@ export function* updateAllRate(action) {
   try {
     const rates = yield call([ethereum, ethereum.call],"getAllRates", tokens)
     yield put(actions.updateAllRateComplete(rates, rateUSD))
+    yield call(updateTitleWithRate);
   }
   catch (err) {
     //get rate from blockchain
     console.log(err.message)
   }
+}
+
+export function* updateTitle() {
+  try {
+    yield call(updateTitleWithRate);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function updateTitleWithRate() {
+  const state = store.getState();
+  let title = state.global.documentTitle;
+  const { pathname } = window.location;
+
+  if (common.isAtSwapPage(pathname)) {
+    let { sourceTokenSymbol, destTokenSymbol } = common.getTokenPairFromRoute(pathname);
+    sourceTokenSymbol = sourceTokenSymbol.toUpperCase();
+    destTokenSymbol = destTokenSymbol.toUpperCase();
+
+    if (sourceTokenSymbol !== destTokenSymbol) {
+      if (sourceTokenSymbol === "ETH") {
+        // 1 token = 1 / rateEth (Eth)
+        const rateEth = converter.convertBuyRate(state.tokens.tokens[destTokenSymbol].rateEth);
+        if (rateEth != 0) {
+          title = `${converter.roundingNumber(rateEth)} ${title}`;
+        }
+      } else {
+        // 1 src token = rate src token * rateEth dest token
+        const rateSourceToEth = converter.toT(state.tokens.tokens[sourceTokenSymbol].rate);
+        const rateEthToDest = converter.toT(state.tokens.tokens[destTokenSymbol].rateEth);
+        const rate = rateSourceToEth * rateEthToDest;
+        if (rate != 0) {
+          title = `${converter.roundingNumber(rate)} ${title}`;
+        }
+      }
+    } 
+  }
+
+  document.title = title;
 }
 
 export function* updateRateUSD(action) {
@@ -245,4 +287,5 @@ export function* watchGlobal() {
 
 
   yield takeEvery("GLOBAL.SET_MAX_GAS_PRICE", setMaxGasPrice)
+  yield takeEvery("GLOBAL.UPDATE_TITLE_WITH_RATE", updateTitle)
 }

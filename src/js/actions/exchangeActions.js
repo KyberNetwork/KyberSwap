@@ -129,6 +129,13 @@ export function updateRateExchange(ethereum, source, dest,
   }
 }
 
+export function updateRateExchangeAndValidateSource(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual = false, refetchSourceAmount = false) {
+  return {
+    type: "EXCHANGE.UPDATE_RATE_AND_VALIDATE_SOURCE",
+    payload: { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount }
+  }
+}
+
 export function updateRateSnapshot(ethereum) {
   return {
     type: "EXCHANGE.UPDATE_RATE_SNAPSHOT",
@@ -636,5 +643,12 @@ export function setSwappingTime(time) {
   return {
     type: "EXCHANGE.SET_SWAPPING_TIME",
     payload: time
+  }
+}
+
+export function changeAmount(input, value){
+  return {
+    type: "EXCHANGE.CHANGE_AMOUNT",
+    payload: {input, value}
   }
 }

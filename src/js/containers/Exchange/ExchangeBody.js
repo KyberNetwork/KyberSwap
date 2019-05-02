@@ -68,17 +68,27 @@ import { PostExchangeWithKey, MinRate, RateBetweenToken } from "../Exchange"
 })
 
 class ExchangeBody extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       focus: "",
       defaultShowTooltip: true,
     }
+
   }
 
   componentDidMount = () => {
     if (this.props.global.changeWalletType !== "swap") this.props.dispatch(globalActions.closeChangeWallet())
 
+    const { pathname } = this.props.history.location;
+    this.updateTitle(pathname);
+    this.props.dispatch(globalActions.updateTitleWithRate());
+
+    this.props.history.listen((location, action) => {
+      const { pathname } = location;
+      this.updateTitle(pathname);
+    });
+    
     // const web3Service = web3Package.newWeb3Instance();
 
     // if (web3Service !== false) {
@@ -92,6 +102,30 @@ class ExchangeBody extends React.Component {
     //       ethereumService, this.props.tokens, this.props.translate, walletType))
     //   }
     // }
+  }
+
+  updateTitle = (pathname) => {
+    let title = this.props.global.documentTitle;
+    if (common.isAtSwapPage(pathname)) {
+      let { sourceTokenSymbol, destTokenSymbol } = common.getTokenPairFromRoute(pathname);
+      sourceTokenSymbol = sourceTokenSymbol.toUpperCase();
+      destTokenSymbol = destTokenSymbol.toUpperCase();
+
+      if (sourceTokenSymbol !== destTokenSymbol) {
+        if (sourceTokenSymbol === "ETH") {
+          title = `${destTokenSymbol}/${sourceTokenSymbol} | Swap ${sourceTokenSymbol}-${destTokenSymbol} | KyberSwap`;
+        } else {
+          title = `${sourceTokenSymbol}/${destTokenSymbol} | Swap ${sourceTokenSymbol}-${destTokenSymbol} | KyberSwap`;
+        }
+      } else {
+        title = "Kyber Network | Instant Exchange | No Fees";
+      }
+    } else {
+      title = "Kyber Network | Instant Exchange | No Fees";
+    }
+
+    document.title = title;
+    this.props.dispatch(globalActions.setDocumentTitle(title));
   }
 
   validateTxFee = (gasPrice) => {
@@ -121,12 +155,13 @@ class ExchangeBody extends React.Component {
 
     path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
     this.props.dispatch(globalActions.goToRoute(path))
+    this.props.dispatch(globalActions.updateTitleWithRate());
   }
 
   dispatchUpdateRateExchange = (sourceValue, refetchSourceAmount) => {
     var sourceDecimal = 18
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
-
+    
     if (sourceTokenSymbol === "ETH") {
       if (parseFloat(sourceValue) > constants.ETH.MAX_AMOUNT) {
         this.props.dispatch(exchangeActions.throwErrorHandleAmount())
@@ -160,7 +195,11 @@ class ExchangeBody extends React.Component {
       rateInit = this.props.tokens[sourceTokenSymbol].minRate
     }
 
-    this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount))
+    if (this.props.account.account !== false) {
+      this.props.dispatch(exchangeActions.updateRateExchangeAndValidateSource(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount));
+    } else {
+      this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount))
+    }
   }
 
   validateSourceAmount = (value) => {
@@ -229,19 +268,21 @@ class ExchangeBody extends React.Component {
   }
 
   lazyUpdateRateExchange = _.debounce(this.dispatchUpdateRateExchange, 500)
-  lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
+  // lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
 
   lazyEstimateGas = _.debounce(this.dispatchEstimateGasNormal, 500)
 
 
   validateRateAndSource = (sourceValue, refetchSourceAmount = false) => {
     this.lazyUpdateRateExchange(sourceValue, refetchSourceAmount)
-    if (this.props.account.account !== false) {
-      this.lazyUpdateValidateSourceAmount(sourceValue)
-    }
   }
-  changeSourceAmount = (e) => {
-    var value = e.target.value
+  changeSourceAmount = (e, amount) => {
+    var value 
+    if(e){
+      value = e.target.value
+    }else{
+      value = amount
+    }
     if (value < 0) return
     this.props.dispatch(exchangeActions.inputChange('source', value));
 
@@ -250,8 +291,14 @@ class ExchangeBody extends React.Component {
     this.validateRateAndSource(value)
   }
 
-  changeDestAmount = (e) => {
-    var value = e.target.value
+  changeDestAmount = (e, amount) => {
+    var value 
+    if(e){
+      value = e.target.value
+    }else{
+      value = amount
+    }
+    
     if (value < 0) return
     this.props.dispatch(exchangeActions.inputChange('dest', value))
 
@@ -324,11 +371,22 @@ class ExchangeBody extends React.Component {
       return
     }
     this.props.dispatch(exchangeActions.swapToken())
+    //update source token, dest token
+    if (this.props.exchange.inputFocus === "source"){
+      this.props.dispatch(exchangeActions.focusInput('dest'));
+      this.props.dispatch(exchangeActions.changeAmount('source', ""))
+      this.props.dispatch(exchangeActions.changeAmount('dest', this.props.exchange.sourceAmount))
+    }else{
+      this.props.dispatch(exchangeActions.focusInput('source'));
+      this.props.dispatch(exchangeActions.changeAmount('source', this.props.exchange.destAmount))
+      this.props.dispatch(exchangeActions.changeAmount('dest', ""))
+    }
     this.props.ethereum.fetchRateExchange(true)
 
     var path = constants.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "-" + this.props.exchange.sourceTokenSymbol.toLowerCase()
     path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
     this.props.dispatch(globalActions.goToRoute(path))
+    this.props.dispatch(globalActions.updateTitleWithRate());
     this.props.global.analytics.callTrack("trackClickSwapDestSrc", this.props.exchange.sourceTokenSymbol, this.props.exchange.destTokenSymbol);
   }
 

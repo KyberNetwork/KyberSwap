@@ -78,6 +78,20 @@ export var checkBrowser = {
     }
 }
 
+export function isAtSwapPage(path) {
+    const regex = /^\/swap\//;
+    return regex.test(path);
+}
+
+export function getTokenPairFromRoute(path) {
+    const regex = /^\/swap\/(\w+)-(\w+)/;
+    const match = regex.exec(path);
+    return {
+        sourceTokenSymbol: match[1],
+        destTokenSymbol: match[2]
+    }
+}
+
 export function getAssetUrl(uri = "") {
   return constants.ASSET_URL + uri.toLowerCase();
 }
@@ -140,3 +154,11 @@ export function getTokenBySymbol(tokens, symbol){
     script.src = src;
     document.body.appendChild(script);
   }
+
+export function getFormattedDate(date) {
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
+}

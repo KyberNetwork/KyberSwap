@@ -62,6 +62,7 @@ class Transfer extends React.Component {
 
   componentDidMount = () => {
     if (this.props.global.changeWalletType !== "") this.props.dispatch(globalActions.closeChangeWallet())
+    document.title = "Kyber Network | Instant Exchange | No Fees";
 
     // const web3Service = web3Package.newWeb3Instance();
 

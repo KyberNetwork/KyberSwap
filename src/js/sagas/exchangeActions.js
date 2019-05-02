@@ -1041,7 +1041,18 @@ function* updateRatePending(action) {
   // }
 }
 
-
+function* updateRateAndValidateSource(action) {
+  const state = store.getState();
+  const { ethereum, source, dest, sourceValue, sourceTokenSymbol, sourceAmount, isManual, refetchSourceAmount } = action.payload;
+  try {
+    yield put(actions.updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount));
+    if (state.account.account !== false) {
+      yield call(verifyExchange);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 function* getRateSnapshot(ethereum, source, dest, sourceAmountHex) {
   try {
@@ -1677,11 +1688,16 @@ function* verifyExchange() {
 
   var sourceAmount = exchange.sourceAmount
 
+  let rate = rateSourceToEth;
+  if (destTokenSymbol === 'ETH') {
+    rate = offeredRate;
+  }
+
   var validateAmount = validators.verifyAmount(sourceAmount,
     sourceBalance,
     sourceTokenSymbol,
     sourceDecimal,
-    rateSourceToEth,
+    rate,
     destDecimal,
     exchange.maxCap)
 
@@ -1780,6 +1796,7 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET", checkTokenBalanceOfColdWallet)
   yield takeEvery("EXCHANGE.UPDATE_RATE_PENDING", updateRatePending)
   yield takeEvery("EXCHANGE.UPDATE_RATE_SNAPSHOT", updateRateSnapshot)
+  yield takeEvery("EXCHANGE.UPDATE_RATE_AND_VALIDATE_SOURCE", updateRateAndValidateSource);
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", fetchGas)
   yield takeEvery("EXCHANGE.ANALYZE_ERROR", analyzeError)
   yield takeEvery("EXCHANGE.SELECT_TOKEN_ASYNC", selectToken)

@@ -64,6 +64,7 @@
         }
     },
     "ethScanUrl": "https://rinkeby.etherscan.io/",
+    "broadcastTx": "https://rinkeby-broadcast.kyber.network/",
     "enjinx": "https://kyber.enjinx.io/",
     "network": "0x39CC6802cF1625C30548B57D885932CB381EB4a4",
     "wrapper": "0xa4c7c9a74aeda3ffb9737a4fc1895c2cdebd42b8",
