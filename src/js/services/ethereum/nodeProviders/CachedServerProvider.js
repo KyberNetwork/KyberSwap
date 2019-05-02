@@ -138,7 +138,7 @@ export default class CachedServerProvider extends React.Component {
                     }
                 })
                 .catch((err) => {
-                    rejected(err);
+                    reject(err);
                 });
         })
     }
