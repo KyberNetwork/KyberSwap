@@ -645,3 +645,24 @@ export function setSwappingTime(time) {
     payload: time
   }
 }
+
+export function setCustomRateInputError(isError) {
+  return {
+    type: "EXCHANGE.SET_CUSTOM_RATE_INPUT_ERROR",
+    payload: isError
+  }
+}
+
+export function setCustomRateInputDirty(isDirty) {
+  return {
+    type: "EXCHANGE.SET_CUSTOM_RATE_INPUT_DIRTY",
+    payload: isDirty
+  }
+}
+
+export function setCustomRateInputValue(value) {
+  return {
+    type: "EXCHANGE.SET_CUSTOM_RATE_INPUT_VALUE",
+    payload: value
+  }
+}

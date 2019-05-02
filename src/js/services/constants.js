@@ -114,6 +114,11 @@ const INIT_EXCHANGE_FORM_STATE = {
     exchange_enable: ''
   },
   errorNotPossessKgt: '',
+  customRateInput: {
+    isError: false,
+    isDirty: false,
+    value: ""
+  },
   isAnalize: false,
   isAnalizeComplete: false,
   analizeError: {},

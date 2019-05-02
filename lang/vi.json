@@ -229,7 +229,8 @@
     "key_derivation_failed": "Nhập khóa nguồn thất bại - có thể do sai mật khẩu",
     "invalid_promo_code": "Mã khuyến mãi không hợp lệ",
     "promo_code_error": "Chưa nhập mã khuyến mãi",
-    "percent_change_error": "There is a ${percentChange}% difference in price for the requested quantity and the default 0.5 ETH quantity."
+    "percent_change_error": "There is a ${percentChange}% difference in price for the requested quantity and the default 0.5 ETH quantity.",
+    "required_field": "This field is required"
   },
   "import": {
     "from_metamask": "Kết nối <br> Metamask",
