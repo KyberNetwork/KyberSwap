@@ -55,7 +55,7 @@ export default class HeaderTransaction extends React.Component {
         <div className="exchange-tab">
           <Link to={this.props.exchangeLink} className={"exchange-tab__item" + disabledSwapClass}>{swap}</Link>          
           <Link to={this.props.transferLink} className={"exchange-tab__item" + disabledTransferClass}>{transfer}</Link>
-          <Link to={this.props.orderLink} className={"exchange-tab__item" + disabledTransferClass}>{order}</Link>
+          <Link to={this.props.orderLink} className={"exchange-tab__item" + disabledLimitOrderClass}>{order}</Link>
         </div>
       </div>
     )
