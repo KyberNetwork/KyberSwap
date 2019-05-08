@@ -188,6 +188,111 @@ const INIT_TRANSFER_FORM_STATE = {
   isSelectTokenBalance: false
 }
 
+const INIT_LIMIT_ORDER_STATE = {
+  isOpenImportAcount: false,
+  kyber_enabled: false,
+  advanced: false,
+  termAgree: true,
+  passphrase: false,
+  selected: false,
+  isSelectToken: false,
+  sourceToken: ETHER_ADDRESS,
+  sourceTokenSymbol: "ETH",
+  sourceAmount: "",
+  destAmount: "",
+  destToken: BLOCKCHAIN_INFO.tokens[secondKey].address,
+  destTokenSymbol: secondKey,
+  destAddress: "",
+  inputFocus: "source",
+  maxCap: "infinity",
+  minConversionRate: 0,
+  minDestAmount: 0,
+  maxDestAmount: 0,
+  prevAmount: 0,
+  offeredRate: 0,
+  isEditRate: false,
+  slippageRate: 0,
+  blockNo: 0,
+  percentChange: 0,
+
+  throwOnFailure: "0x0000000000000000000000000000000000000000",
+  gas: 380000,
+  max_gas: 380000,
+
+  gas_approve: 0,
+  max_gas_approve: 120000,
+
+  //max_gas_total: 430000,
+
+  isFetchingGas: false,
+  gasPrice: 20,
+  selectedGas: 'f',
+  gasPriceSuggest: {
+    fastGas: 20,
+    standardGas: 20,
+    safeLowGas: 20,
+    fastTime: 2, //minutes
+    standardTime: 5,
+    lowTime: 30
+  },
+  maxGasPrice: 50,
+  isEditGasPrice: false,
+  step: 2,
+  broadcasting: true,
+  bcError: "",
+  txHash: "",
+  tempTx: {},
+  txApprove: false,
+  confirmApprove: false,
+  confirmApproveZero: false,
+  isConfirming: false,
+  isApproving: false,
+  isApprovingZero: false,
+  confirmColdWallet: false,
+  signError: "",
+  broadcastError: "",
+  balanceData: {
+    sourceName: "Ether",
+    sourceSymbol: "ETH",
+    sourceDecimal: 18,
+    destName: "Kyber",
+    destSymbol: "KNC",
+    destDecimal: 18,
+    sourceAmount: 0,
+    destAmount: 0
+  },
+  errors: {
+    selectSameToken: '',
+    selectTokenToken: '',
+    sourceAmountError: '',
+    gasPriceError: '',
+    gasError: '',
+    passwordError: '',
+    signTransaction: '',
+    rateError: '',
+    rateAmount: '',
+    rateSystem: '',
+    ethBalanceError: '',
+    exchange_enable: ''
+  },
+  errorNotPossessKgt: '',
+  customRateInput: {
+    isError: false,
+    isDirty: false,
+    value: ""
+  },
+  isAnalize: false,
+  isAnalizeComplete: false,
+  analizeError: {},
+  snapshot: {},
+  isBalanceActive: false,
+  isAdvanceActive: false,
+  isOpenAdvance: false,
+  isSelectTokenBalance: false,
+  swappingTime: 0
+}
+
+
 // reserves
 const RESERVES = [{ index: 0, name: "Kyber official reserve" }]
 
@@ -234,10 +339,12 @@ const PERM_HINT = "PERM"
 const CONNECTION_TIMEOUT = 3000
 const COMMISSION_ADDR = "0x440bBd6a888a36DE6e2F6A25f65bc4e16874faa9"
 
+const LIMIT_ORDER_PATH = "limit_order"
+
 module.exports = {
   ERC20, KYBER_NETWORK, KYBER_WRAPPER, EPSILON, ETHER_ADDRESS, ETH, RESERVES, KYBER_WALLET,
   KYBER_WALLET_DATA, INIT_EXCHANGE_FORM_STATE, INIT_TRANSFER_FORM_STATE, ASSET_URL,
   RATE_EPSILON, IDLE_TIME_OUT, HISTORY_EXCHANGE, STORAGE_KEY, CONNECTION_CHECKER,
   MAX_CAP_ONE_EXCHANGE_BASE_VALUE, MAX_CAP_ONE_EXCHANGE_BASE_RESERVE, MAX_CAP_PERCENT, CONFIG_ENV_LEDGER_LINK, LEDGER_SUPPORT_LINK, TRANSFER_TOPIC, BASE_HOST, LIST_PARAMS_SUPPORTED,
-  TRADE_TOPIC, PERM_HINT, MIN_ACCEPT_DELTA, CONNECTION_TIMEOUT, COMMISSION_ADDR
+  TRADE_TOPIC, PERM_HINT, MIN_ACCEPT_DELTA, CONNECTION_TIMEOUT, COMMISSION_ADDR, LIMIT_ORDER_PATH, INIT_LIMIT_ORDER_STATE
 }

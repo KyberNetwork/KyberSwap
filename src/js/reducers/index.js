@@ -11,6 +11,7 @@ import account from './accountReducer'
 import tokens from './tokensReducer'
 import exchange from './exchangeReducer'
 import transfer from './transferReducer'
+import limitOrder from './limitOrderReducer'
 import global from './globalReducer'
 import connection from './connection'
 import utils from './utilsReducer'
@@ -22,7 +23,7 @@ import market from './marketReducer'
 import { localizeReducer } from 'react-localize-redux';
 
 const appReducer = combineReducers({
-  account, exchange, transfer, connection, router: routerReducer, market, global,
+  account, exchange, transfer, limitOrder, connection, router: routerReducer, market, global, 
   // market: persistReducer({
   //   key: 'market',
   //   storage: localForage
