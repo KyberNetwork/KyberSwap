@@ -192,7 +192,13 @@ const INIT_TRANSFER_FORM_STATE = {
 
 const LIMIT_ORDER_CONFIG = {
   path: "limit_order",
-  maxFee: 0.5
+  maxFee: 0.5,
+  orderCase: {
+    approveZero: 1,
+    approveMax: 2,
+    wrapETH: 3,
+    submitOrder: 4
+  }
 }
 
 const INIT_LIMIT_ORDER_STATE = {
@@ -225,6 +231,38 @@ const INIT_LIMIT_ORDER_STATE = {
   orderFee: LIMIT_ORDER_CONFIG.maxFee, 
   isFetchingFee: false,
   orderFeeErr: "",
+
+  currentPath : LIMIT_ORDER_CONFIG.submitOrder,
+  orderPath: [],  
+
+  listOrder: [
+    {  
+      id: "1209",
+      source: "KNC",
+      dest: "DAI",
+      address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+      nonce: 1290,
+      src_amount: 2000,
+      min_rate: 0.5321,
+      fee: 0.5,
+      status: "active",
+      created_time: 1556784881,
+      cancel_time: 1556784882
+    },
+    {  
+      id: "1210",
+      source: "KNC",
+      dest: "OMG",
+      address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+      nonce: 1290,
+      src_amount: 2000,
+      min_rate: 0.5321,
+      fee: 0.5,
+      status: "active",
+      created_time: 1556784881,
+      cancel_time: 1556784882
+    }
+  ],
 
   throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 380000,
@@ -276,6 +314,7 @@ const INIT_LIMIT_ORDER_STATE = {
     selectSameToken: '',
     selectTokenToken: '',
     sourceAmountError: '',
+    triggerRateError: '',
     gasPriceError: '',
     gasError: '',
     passwordError: '',

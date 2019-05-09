@@ -26,6 +26,7 @@
         "PT",
         "ETH"
     ],
+    "wrapETHToken": "WETH",
     "userdashboard_url": "https://staging-kyberswap.knstats.com",
     "tokens": {
         "ETH": {
