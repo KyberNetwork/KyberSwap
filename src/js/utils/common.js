@@ -83,6 +83,7 @@ export function isAtSwapPage(path) {
     return regex.test(path);
 }
 
+
 export function getTokenPairFromRoute(path) {
     const regex = /^\/swap\/(\w+)-(\w+)/;
     const match = regex.exec(path);
