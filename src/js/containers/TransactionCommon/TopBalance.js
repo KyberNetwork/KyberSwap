@@ -26,8 +26,7 @@ import { getTranslate } from "react-localize-redux";
 export default class TopBalance extends React.Component {
 
     selectBalance = (sourceSymbol) => {
-
-        this.props.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, this.props.screen === "swap" ? "source" : "transfer")
+        this.props.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, "source")
 
         var sourceBalance = this.props.tokens[sourceSymbol].balance
         var sourceDecimal = this.props.tokens[sourceSymbol].decimals

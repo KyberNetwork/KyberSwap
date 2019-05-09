@@ -162,3 +162,8 @@ export function getFormattedDate(date) {
     const year = date.getFullYear();
     return `${day} ${month} ${year}`;
 }
+
+
+export function isUserLogin(){
+    return true
+}

@@ -135,7 +135,8 @@
     "kyber_network_proxy": "Kyber Network Proxy",
     "please_swap_before": "Please swap before",
     "please_swap_and_send_before": "Please swap and send to your personal wallet before",
-    "limit_order": "Limit Order"
+    "limit_order": "Limit Order",
+    "rate_label":"Rate"
   },
   "modal": {
     "enter_password": "Enter Password",

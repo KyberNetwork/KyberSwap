@@ -242,7 +242,15 @@ export default class EthereumService extends React.Component {
   }
 
   fetchRateExchange = (isManual = false) => {
+    
+    
     var state = store.getState()
+
+    var pathname = state.router.location.pathname
+    if (!pathname.includes(constants.BASE_HOST + "/swap")) {
+      return
+    }
+    
     var ethereum = state.connection.ethereum
     var source = state.exchange.sourceToken
     var dest = state.exchange.destToken

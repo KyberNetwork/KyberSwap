@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom'
   var exchangeLink = constansts.BASE_HOST + "/swap/" + exchange.sourceTokenSymbol.toLowerCase() + "-" + exchange.destTokenSymbol.toLowerCase()
   var transferLink = constansts.BASE_HOST + "/transfer/" + transfer.tokenSymbol.toLowerCase()
 
-  var orderLink = constansts.BASE_HOST + `/${constansts.LIMIT_ORDER_PATH}/` + limitOrder.sourceTokenSymbol.toLowerCase() + "-" + limitOrder.destTokenSymbol.toLowerCase()
+  var orderLink = constansts.BASE_HOST + `/${constansts.LIMIT_ORDER_CONFIG.path}/` + limitOrder.sourceTokenSymbol.toLowerCase() + "-" + limitOrder.destTokenSymbol.toLowerCase()
 
   exchangeLink = common.getPath(exchangeLink, constansts.LIST_PARAMS_SUPPORTED)
   transferLink = common.getPath(transferLink, constansts.LIST_PARAMS_SUPPORTED)

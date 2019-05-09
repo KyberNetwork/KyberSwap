@@ -6,6 +6,8 @@ import { watchTransfer } from './transferActions';
 import { watchTx } from './txActions';
 import { watchConnection } from './connectionActions'
 import { watchMarket } from './marketActions'
+
+import {watchLimitOrder} from "./limitOrderActions"
 // function* watchAndLog() {
 //   yield takeEvery('*', function* logger(action) {
 //     const state = yield select()
@@ -23,6 +25,7 @@ export default function* root() {
     fork(watchTransfer),
     fork(watchTx),
     fork(watchConnection),
-    fork(watchMarket)
+    fork(watchMarket),
+    fork(watchLimitOrder)
   ])
 }

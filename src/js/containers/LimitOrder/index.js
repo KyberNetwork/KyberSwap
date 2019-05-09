@@ -7,3 +7,7 @@ export { default as LimitOrderFee } from './LimitOrderFee.js'
 export { default as LimitOrderSubmit } from './LimitOrderSubmit.js'
 
 export { default as LimitOrderList } from './LimitOrderList.js'
+
+export { default as LimitOrderCompareRate } from './LimitOrderCompareRate.js'
+
+export { default as LimitOrderAccount } from './LimitOrderAccount.js'

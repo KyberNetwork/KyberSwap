@@ -913,32 +913,32 @@ function* getRate(ethereum, source, dest, sourceAmount, blockNo) {
 
 
 
-function* getSourceAmount(sourceTokenSymbol, sourceAmount) {
-  var state = store.getState()
-  var tokens = state.tokens.tokens
+// function* getSourceAmount(sourceTokenSymbol, sourceAmount) {
+//   var state = store.getState()
+//   var tokens = state.tokens.tokens
 
-  var sourceAmountHex = "0x0"
-  if (tokens[sourceTokenSymbol]) {
-    var decimals = tokens[sourceTokenSymbol].decimals
-    var rateSell = tokens[sourceTokenSymbol].rate
-    sourceAmountHex = converter.calculateMinSource(sourceTokenSymbol, sourceAmount, decimals, rateSell)
-  } else {
-    sourceAmountHex = converter.stringToHex(sourceAmount, 18)
-  }
-  return sourceAmountHex
-}
+//   var sourceAmountHex = "0x0"
+//   if (tokens[sourceTokenSymbol]) {
+//     var decimals = tokens[sourceTokenSymbol].decimals
+//     var rateSell = tokens[sourceTokenSymbol].rate
+//     sourceAmountHex = converter.calculateMinSource(sourceTokenSymbol, sourceAmount, decimals, rateSell)
+//   } else {
+//     sourceAmountHex = converter.stringToHex(sourceAmount, 18)
+//   }
+//   return sourceAmountHex
+// }
 
-function* getSourceAmountZero(sourceTokenSymbol) {
-  var state = store.getState()
-  var tokens = state.tokens.tokens
-  var sourceAmountHex = "0x0"
-  if (tokens[sourceTokenSymbol]) {
-    var decimals = tokens[sourceTokenSymbol].decimals
-    var rateSell = tokens[sourceTokenSymbol].rate
-    sourceAmountHex = converter.toHex(converter.getSourceAmountZero(sourceTokenSymbol, decimals, rateSell))
-  }
-  return sourceAmountHex
-}
+// function* getSourceAmountZero(sourceTokenSymbol) {
+//   var state = store.getState()
+//   var tokens = state.tokens.tokens
+//   var sourceAmountHex = "0x0"
+//   if (tokens[sourceTokenSymbol]) {
+//     var decimals = tokens[sourceTokenSymbol].decimals
+//     var rateSell = tokens[sourceTokenSymbol].rate
+//     sourceAmountHex = converter.toHex(converter.getSourceAmountZero(sourceTokenSymbol, decimals, rateSell))
+//   }
+//   return sourceAmountHex
+// }
 
 function* updateRatePending(action) {
   const { ethereum, source, dest, sourceTokenSymbol, isManual, refetchSourceAmount } = action.payload;
@@ -956,8 +956,8 @@ function* updateRatePending(action) {
     }
   }
 
-  var sourceAmoutRefined = yield call(getSourceAmount, sourceTokenSymbol, sourceAmount)
-  var sourceAmoutZero = yield call(getSourceAmountZero, sourceTokenSymbol)
+  var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount)
+  var sourceAmoutZero = yield call(common.getSourceAmountZero, sourceTokenSymbol)
 
   try{
     var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")

@@ -38,9 +38,12 @@ export function calculateDest(source, rate, precision) {
 }
 
 export function caculateSourceAmount(destAmount, offeredRate, precision) {
-  if (!destAmount || !offeredRate || acceptableTyping(destAmount) || acceptableTyping(offeredRate)) {
-    return "0"
+  if (isNaN(destAmount) || destAmount === ""){
+    return 0 
   }
+  if (isNaN(offeredRate) || offeredRate === ""){
+    return 0 
+  }  
 
   var bigOfferedRate = new BigNumber(offeredRate)
 
@@ -60,9 +63,14 @@ export function caculateSourceAmount(destAmount, offeredRate, precision) {
 }
 
 export function caculateDestAmount(sourceAmount, offeredRate, precision) {
-  if (!sourceAmount || !offeredRate || acceptableTyping(sourceAmount) || acceptableTyping(offeredRate)) {
-    return "0"
+  if (isNaN(sourceAmount) || sourceAmount === ""){
+    return 0 
   }
+  if (isNaN(offeredRate) || offeredRate === ""){
+    return 0 
+  }
+
+  
   var bigSource = new BigNumber(sourceAmount.toString())
   var bigOfferedRate = new BigNumber(offeredRate)
 
@@ -74,6 +82,34 @@ export function caculateDestAmount(sourceAmount, offeredRate, precision) {
   } else {
     return result.toString()
   }
+}
+
+export function caculateTriggerRate(sourceAmount, destAmount, precision){
+  if (isNaN(sourceAmount) || sourceAmount === ""){
+    return 0 
+  }
+  if (isNaN(destAmount) || destAmount === ""){
+    return 0 
+  }
+  
+  var bigSource = new BigNumber(sourceAmount.toString())
+  var bigDest = new BigNumber(destAmount.toString())
+
+  var result = bigSource.times(bigDest)
+  if (precision) {
+    return result.toFixed(precision)
+  } else {
+    return result.toString()
+  }
+}
+
+export function roundingRate(rate){
+  if (isNaN(rate) || rate === ""){
+    return 0 
+  }
+
+  var bigRate = new BigNumber(rate).times(Math.pow(10,18))
+  return bigRate.toFixed(0)
 }
 
 export function calculateRate(source, dest) {
