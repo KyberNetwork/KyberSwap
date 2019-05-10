@@ -297,8 +297,8 @@ export default class PostExchange extends React.Component {
                         <img src={require('../../../assets/img/waiting-white.svg')} />
                         : destAmount}
                     </div>
-                    <div className="item-icon">
-                      <img src={getAssetUrl(`tokens/${destIcon}`)} />
+                    <div>
+                      {destTokenSymbol}
                     </div>
                   </div>
                 </div>
@@ -334,8 +334,8 @@ export default class PostExchange extends React.Component {
                         <img src={require('../../../assets/img/waiting-white.svg')} />
                         : destAmount}
                     </div>
-                    <div className="item-icon">
-                      <img src={getAssetUrl(`tokens/${destIcon}`)} />
+                    <div>
+                      {destTokenSymbol}
                     </div>
                   </div>
                 </div>
