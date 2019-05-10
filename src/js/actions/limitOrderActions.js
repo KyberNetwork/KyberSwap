@@ -58,3 +58,12 @@ export function fetchFeeComplete(fee, err) {
     payload: { fee, err }
   }
 }
+
+
+export function throwError(key, msg){
+  return {
+    type: "LIMIT_ORDER.THROW_ERROR",
+    payload: { key, msg }
+  }
+}
+

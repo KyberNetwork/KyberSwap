@@ -122,6 +122,14 @@ const limitOrder = (state = initState, action) => {
       return newState
     }
 
+    case "LIMIT_ORDER.THROW_ERROR":{
+      const { key, msg } = action.payload
+      var errors = newState.errors
+      errors[key] = msg
+      newState.errors = errors
+      return newState
+    }
+
   }
   return state
 }

@@ -193,6 +193,7 @@ const INIT_TRANSFER_FORM_STATE = {
 const LIMIT_ORDER_CONFIG = {
   path: "limit_order",
   maxFee: 0.5,
+  maxPercentTriggerRate: 50,
   orderCase: {
     approveZero: 1,
     approveMax: 2,
@@ -315,6 +316,9 @@ const INIT_LIMIT_ORDER_STATE = {
     selectTokenToken: '',
     sourceAmountError: '',
     triggerRateError: '',
+    rateETHEqualZero: '',
+    balanceError: '',
+
     gasPriceError: '',
     gasError: '',
     passwordError: '',
