@@ -572,6 +572,14 @@
             "decimals": 8,
             "cg_id": "monaco",
             "listing_time": 1556283600
+        },
+        "PAX": {
+            "symbol": "PAX",
+            "name": "Paxos Standard",
+            "address": "0x8e870d67f660d95d5be530380d0ec0bd388289e1",
+            "decimals": 18,
+            "cg_id": "paxos-standard",
+            "listing_time": 1556542800
         }
     },
     "ethScanUrl": "https://etherscan.io/",

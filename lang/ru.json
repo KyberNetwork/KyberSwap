@@ -232,7 +232,8 @@
     "key_derivation_failed": "Key derivation failed - possibly wrong password",
     "invalid_promo_code": "Invalid promo code",
     "promo_code_error": "Promo code is empty",
-    "percent_change_error": "There is a ${percentChange}% difference in price for the requested quantity and the default 0.5 ETH quantity."
+    "percent_change_error": "There is a ${percentChange}% difference in price for the requested quantity and the default 0.5 ETH quantity.",
+    "required_field": "This field is required"
   },
   "import": {
     "from_metamask": "METAMASK",

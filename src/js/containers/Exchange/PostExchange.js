@@ -80,6 +80,10 @@ export default class PostExchange extends React.Component {
     if (this.props.form.isSelectToken) {
       return
     }
+    if (this.props.form.customRateInput.value === "" && this.props.form.customRateInput.isDirty) {
+      this.props.dispatch(exchangeActions.setCustomRateInputError(true));
+      return
+    }
     if (this.props.form.maxCap == 0) {
       let titleModal = this.props.translate('transaction.notification') || 'Notification'
       let contentModal = this.props.translate('transaction.not_enable_exchange') || 'Your address is not enabled for exchange'
@@ -287,13 +291,16 @@ export default class PostExchange extends React.Component {
                 <div className="space space--padding"><img src={require("../../../assets/img/exchange/arrow-right-orange.svg")} /></div>
                 <div className="amount-item amount-right">
                   <div className={"rc-label"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
-                  {this.props.snapshot.isFetchingRate ?
-                    <img src={require('../../../assets/img/waiting-white.svg')} />
-                    :
-                    <div className="item-icon">
-                      <img src={getAssetUrl(`tokens/${destIcon}`)} />
+                  <div className={"rc-info"}>
+                    <div>
+                      {this.props.snapshot.isFetchingRate ?
+                        <img src={require('../../../assets/img/waiting-white.svg')} />
+                        : destAmount}
                     </div>
-                  }
+                    <div>
+                      {destTokenSymbol}
+                    </div>
+                  </div>
                 </div>
               </div>
             </React.Fragment>
@@ -321,13 +328,16 @@ export default class PostExchange extends React.Component {
                 </div>
                 <div className="amount-item amount-right amount-item-icon">
                   <div className={"rc-label rc-label-icon"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
-                  {this.props.snapshot.isFetchingRate ?
-                    <img src={require('../../../assets/img/waiting-white.svg')} />
-                    :
-                    <div className="item-icon">
-                      <img src={getAssetUrl(`tokens/${destIcon}`)} />
+                  <div className={"rc-info"}>
+                    <div>
+                      {this.props.snapshot.isFetchingRate ?
+                        <img src={require('../../../assets/img/waiting-white.svg')} />
+                        : destAmount}
                     </div>
-                  }
+                    <div>
+                      {destTokenSymbol}
+                    </div>
+                  </div>
                 </div>
                 <div className="space-container space-container-grid-align">
                   <div className="space space-arrow-icon" ><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
