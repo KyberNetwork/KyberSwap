@@ -129,7 +129,28 @@ const limitOrder = (state = initState, action) => {
       newState.errors = errors
       return newState
     }
+    case "LIMIT_ORDER.UPDATE_ORDER_PATH":{
+      const {orderPath, currentPathIndex} = action.payload
+      newState.orderPath = orderPath
+      newState.currentPathIndex = currentPathIndex
+      return newState
+    }
+    case "LIMIT_ORDER.RESET_ORDER_PATH":{
+      newState.currentPathIndex = -1
+      return newState
+    }
+    case "LIMIT_ORDER.FORWARD_ORDER_PATH":{
+      newState.currentPathIndex += 1
+      return newState
+    }
 
+    case "LIMIT_ORDER.ADD_NEW_ORDER":{
+      const {order} = action.payload
+      var listOrder = newState.listOrder
+      listOrder.unshift(order)
+      newState.listOrder = listOrder
+      return newState
+    }
   }
   return state
 }

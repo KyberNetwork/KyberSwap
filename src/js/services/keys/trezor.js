@@ -6,7 +6,7 @@ import TrezorConnect from 'trezor-connect';
 import EthereumTx from "ethereumjs-tx"
 import { numberToHex } from "../../utils/converter"
 import { getTranslate } from 'react-localize-redux'
-
+import EthereumService from "../ethereum/ethereum"
 import { store } from "../../store"
 
 const defaultDPath = "m/44'/60'/0'/0";
@@ -40,6 +40,38 @@ export default class Trezor  extends React.Component {
         }
       });
     });
+  }
+
+
+  async signSignature(data, account) {
+    try {
+      var signature = await TrezorConnect.signMessage( {
+        path: account.keystring,
+        message: data
+      });
+      return signature
+    }catch(err){
+      console.log(err)
+      throw err
+    }    
+  }
+
+  async broadCastTx(funcName, ...args) {
+    try{
+      var txRaw = await callSignTransaction(funcName, ...args)
+      try{
+        var ethereum = new EthereumService()
+        var txHash = await ethereum.callMultiNode("sendRawTransaction", txRaw)
+        return txHash
+      }catch(err){
+        console.log(err)
+        return err
+      }
+      
+    }catch(err){
+      console.log(err)
+      return err
+    }
   }
 
   callSignTransaction = (funcName, ...args) => {

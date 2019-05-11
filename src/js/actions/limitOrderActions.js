@@ -67,3 +67,29 @@ export function throwError(key, msg){
   }
 }
 
+
+export function updateOrderPath(orderPath, currentPathIndex){
+  return {
+    type: "LIMIT_ORDER.UPDATE_ORDER_PATH",
+    payload: { orderPath, currentPathIndex }
+  }
+}
+
+export function resetOrderPath() {
+  return {
+    type: "LIMIT_ORDER.RESET_ORDER_PATH"
+  }
+}
+
+export function  forwardOrderPath() {
+  return {
+    type: "LIMIT_ORDER.FORWARD_ORDER_PATH"
+  }
+}
+
+export function addNewOrder(order) {
+  return {
+    type: "LIMIT_ORDER.ADD_NEW_ORDER",
+    payload: {order}
+  }
+}

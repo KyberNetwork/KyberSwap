@@ -6,6 +6,13 @@ import * as converters from "../../utils/converter"
 
 import BLOCKCHAIN_INFO from "../../../../env"
 
+import {ApproveZeroModal} from "./LimitOrderModals/ApproveZeroModal"
+import {ApproveMaxModal} from "./LimitOrderModals/ApproveMaxModal"
+import {WrapETHModal} from "./LimitOrderModals/WrapETHModal"
+import {ConfirmModal} from "./LimitOrderModals/ConfirmModal"
+import {SubmitStatusModal} from "./LimitOrderModals/SubmitStatusModal"
+
+
 import {isUserLogin} from "../../utils/common"
 import constants from "../../services/constants"
 
@@ -119,16 +126,29 @@ export default class LimitOrderSubmit extends React.Component {
   async findPathOrder(){
     try{
       var orderPath = []
-      var currentPath = 0
+      // var currentPath = constants.LIMIT_ORDER_CONFIG.orderPath.confirmSubmitOrder
       var ethereum = this.prpps.ethereum
-      var allowance = ethereum.call("getAllowanceAtLatestBlock", this.props.limitOrder.sourceToken, this.props.account.address)
+      // check wrapped eth
+      var allowance = await ethereum.call("getAllowanceAtLatestBlock", this.props.limitOrder.sourceToken, this.props.account.address, BLOCKCHAIN_INFO.kyberswapAddress)
       if (allowance == 0){
-        orderPath.push(1)
-        currentPath = 1
+        orderPath = [constants.LIMIT_ORDER_CONFIG.orderPath.approveMax]
+        // currentPath = constants.LIMIT_ORDER_CONFIG.orderPath.approveMax
       }
-      if (allowance == 0){
-
+      if (allowance != 0 && allowance < Math.pow(10, 28)){
+        orderPath = [constants.LIMIT_ORDER_CONFIG.orderPath.approveZero, constants.LIMIT_ORDER_CONFIG.orderPath.approveMax]
+        // currentPath = constants.LIMIT_ORDER_CONFIG.orderPath.approveZero
       }
+      
+      if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken){
+        var sourceToken = this.getSourceAmount()
+        var userBalance = this.props.tokens[this.props.limitOrder.sourceTokenSymbol].balance
+        if(converters.compareTwoNumber(userBalance, sourceToken) < 0){
+          orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.wrapETH)
+        }
+      }
+      orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.confirmSubmitOrder)
+      orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.submitStatusOrder)
+      this.props.dispatch(limitOrderActions.updateOrderPath(orderPath, 0))
     }catch{
       this.setState({
         networkError: "Cannot connect to ethereum node",
@@ -153,6 +173,11 @@ export default class LimitOrderSubmit extends React.Component {
       return (
         <div className={"limit-order-form"} onClick={this.submitOrder}>
             {isUserLogin()? "Submit": "Login to Submit Order"}
+            <ApproveZeroModal />
+            <ApproveMaxModal />
+            <WrapETHModal />
+            <ConfirmModal />
+            <SubmitStatusModal />
         </div>
       )
     }

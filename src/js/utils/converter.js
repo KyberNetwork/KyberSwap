@@ -669,3 +669,23 @@ export function sumOfTwoNumber(num1, num2){
   var sum = num1.plus(num2)       
   return sum.toString()
 }
+
+export function bigPow(n, m){
+  var x = new BigNumber(n)
+  x.exponentiatedBy(m)        
+  return x
+}
+
+export function  concatTokenAddresses(source, dest) {
+    var bigSource = new BigNumber(source)
+    var weightLow = bigPow(2, 32)
+    var weightHeight = bigPow(2, 128)
+    bigSource = bigSource.div(weightLow)
+    bigSource = bigSource.div(weightHeight)
+
+    var bigDest = new BigNumber(dest)
+    bigDest = bigDest.div(weightLow)
+
+    var sum = bigSource.plus(bigDest)
+    return sum.toString()
+}

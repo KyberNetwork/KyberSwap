@@ -7,6 +7,7 @@ import Eth from "@ledgerhq/hw-app-eth";
 import { store } from "../../store"
 import { CONFIG_ENV_LEDGER_LINK, LEDGER_SUPPORT_LINK } from "../constants"
 import { getTranslate } from 'react-localize-redux'
+import EthereumService from "../ethereum/ethereum"
 
 const defaultDPath = "m/44'/60'/0'";
 const ledgerPath = "m/44'/60'/0'";
@@ -16,11 +17,11 @@ export default class Ledger {
   connectLedger = () => {
     return new Promise((resolve, reject) => {
       TransportU2F.create(20000).then(transport => {
-          var eth = new Eth(transport)
-          resolve(eth)
+        var eth = new Eth(transport)
+        resolve(eth)
       }).catch(e => {
-          console.log(e)
-          reject(e)
+        console.log(e)
+        reject(e)
       })
 
 
@@ -35,31 +36,33 @@ export default class Ledger {
     });
   }
 
+
+
   signLedgerTransaction = (eth, path, raxTxHex) => {
     return new Promise((resolve, reject) => {
-        eth.signTransaction(path, raxTxHex)
-            .then((result) => {
-                resolve(result)
-            })
-            .catch((err) => {
-                console.log(err)
-                reject(err)
-            });
+      eth.signTransaction(path, raxTxHex)
+        .then((result) => {
+          resolve(result)
+        })
+        .catch((err) => {
+          console.log(err)
+          reject(err)
+        });
 
     });
   }
 
-  getLedgerPublicKey = (eth,path = ledgerPath) => {
+  getLedgerPublicKey = (eth, path = ledgerPath) => {
     return new Promise((resolve, reject) => {
-        eth.getAddress(path, false, true)
-            .then((result) => {
-                result.dPath = path;
-                resolve(result)
-            })
-            .catch((err) => {
-                console.log(err)
-                reject(err)
-            });
+      eth.getAddress(path, false, true)
+        .then((result) => {
+          result.dPath = path;
+          resolve(result)
+        })
+        .catch((err) => {
+          console.log(err)
+          reject(err)
+        });
     });
   }
 
@@ -101,6 +104,36 @@ export default class Ledger {
         reject(translate("error.ledger_global_err", { link: LEDGER_SUPPORT_LINK }))
       })
     });
+  }
+
+  async signSignature(data, account) {
+    try {
+      var eth =  this.connectLedger()
+      var signature =  eth.signPersonalMessage(account.keystring, data)
+      return signature
+    }catch(err){
+      console.log(err)
+      throw err
+    }    
+  }
+
+
+  async broadCastTx(funcName, ...args) {
+    try {
+      var txRaw = await callSignTransaction(funcName, ...args)
+      try {
+        var ethereum = new EthereumService()
+        var txHash = await ethereum.callMultiNode("sendRawTransaction", txRaw)
+        return txHash
+      } catch (err) {
+        console.log(err)
+        throw err
+      }
+
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
   }
 
   callSignTransaction = (funcName, ...args) => {

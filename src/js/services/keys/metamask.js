@@ -1,7 +1,29 @@
 import * as keyService from "./baseKey"
 import EthereumTx from "ethereumjs-tx"
+import {newWeb3Instance} from "../web3"
 
 export default class Metamask {
+
+  async signSignature(data, account) {
+    try {      
+      var web3Service = newWeb3Instance()
+      var signature =  web3Service.sign(data)
+      return signature
+    }catch(err){
+      console.log(err)
+      throw err
+    }    
+  }
+
+  async broadCastTx(funcName, ...args) {
+    try {
+      var txHash = await callSignTransaction(funcName, ...args)
+      return txHash
+    } catch (err) {
+      console.log(err)
+      return err
+    }
+  }
 
   callSignTransaction = (funcName, ...args) => {
     return new Promise((resolve, reject) => {
@@ -21,13 +43,13 @@ export default class Metamask {
 
   sealTx = (txParams, web3Service, password) => {
     txParams.gas = txParams.gasLimit
-    delete(txParams.gasLimit)
+    delete (txParams.gasLimit)
 
     return new Promise((resolve, reject) => {
-      web3Service.web3.eth.sendTransaction(txParams, function(err, transactionHash) {
-        if (!err){
+      web3Service.web3.eth.sendTransaction(txParams, function (err, transactionHash) {
+        if (!err) {
           resolve(transactionHash)
-        }else{
+        } else {
           console.log(err)
           reject(err.message)
         }
