@@ -355,6 +355,21 @@
     "mid": "Mid",
     "mid_price": "Mid Price"
   },
+  "limit_order": {
+    "no_data_text": "You have no orders yet.",
+    "cancel": "Cancel",
+    "date": "Date",
+    "pair": "Pair",
+    "condition": "Condition", 
+    "from": "From",
+    "to": "To",
+    "status": "Status",
+    "actions": "Actions",
+    "order_list_title": "Manage your orders",
+    "day": "Day",
+    "week": "Week",
+    "month": "Month"
+  },
   "home": "Home",
   "tracker": "Tracker",
   "product_feedback": "Product Feedback",

@@ -51,29 +51,29 @@ export default class LimitOrderBody extends React.Component {
 
 
     render() {
-        return (
-            <div className={"limit-order-container"}>
+      return (
+        <div className={"limit-order-body"}>
+          <div>
+            <div>
+                <LimitOrderForm chooseToken = {this.chooseToken}/>
+                <LimitOrderCompareRate />
+            </div>
+            <div>
                 <div>
-                    <div>
-                        <LimitOrderForm chooseToken = {this.chooseToken}/>
-                        <LimitOrderCompareRate />
-                    </div>
-                    <div>
-                        <div>
-                            <LimitOrderAccount chooseToken = {this.chooseToken} />
-                        </div>
-                        <div>
-                            <LimitOrderFee />
-                        </div>
-                    </div>
+                    <LimitOrderAccount chooseToken = {this.chooseToken} />
                 </div>
                 <div>
-                    <LimitOrderSubmit />
-                </div>
-                <div>
-                    <LimitOrderList />
+                    <LimitOrderFee />
                 </div>
             </div>
-        )
+          </div>
+          <div>
+              <LimitOrderSubmit />
+          </div>
+          <div className="limit-order-body--list">
+              <LimitOrderList />
+          </div>
+        </div>
+      )
     }
 }

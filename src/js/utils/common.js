@@ -156,9 +156,16 @@ export function getTokenBySymbol(tokens, symbol){
     document.body.appendChild(script);
   }
 
-export function getFormattedDate(date) {
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const day = date.getDate();
+export function getFormattedDate(value) {
+    let date = value;
+    if (typeof value === "number") {
+      date = new Date(value*1000);
+    }
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let day = date.getDate();
+    if (day < 10) {
+        day = "0" + day;
+    }
     const month = months[date.getMonth()];
     const year = date.getFullYear();
     return `${day} ${month} ${year}`;
@@ -167,4 +174,20 @@ export function getFormattedDate(date) {
 
 export function isUserLogin(){
     return true
+}
+
+export function formatFractionalValue(input, decimal) {
+    let value = input;
+    if (typeof value === "number") {
+        value = value + "";
+    }
+    if (decimal <= 0) return value;
+
+    const arr = value.split(".");
+    if (arr.length > 1) {
+      if (arr[1].length > decimal) {
+        return `${arr[0]}.${arr[1].slice(0, decimal)}`
+      }
+    }
+    return value;
 }
