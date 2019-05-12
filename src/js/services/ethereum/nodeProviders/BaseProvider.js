@@ -234,11 +234,11 @@ export default class BaseProvider {
         })
     }
 
-    approveTokenData(sourceToken, sourceAmount) {
+    approveTokenData(sourceToken, sourceAmount, delegator = this.networkAddress) {
         var tokenContract = this.erc20Contract
         tokenContract.options.address = sourceToken
 
-        var data = tokenContract.methods.approve(this.networkAddress, sourceAmount).encodeABI()
+        var data = tokenContract.methods.approve(delegator, sourceAmount).encodeABI()
         return new Promise((resolve, reject) => {
             resolve(data)
         })
@@ -710,7 +710,11 @@ export default class BaseProvider {
         })
     }
 
-    getKeccak256(...args){
-        return this.rpc.sha(...args)
+    keccak256( ...args){
+        return new Promise((resolve) => {
+            var signature = this.rpc.utils.sha3( ...args)
+            resolve(signature)
+        })
+        
     }
 }

@@ -43,7 +43,7 @@ export default class ConfirmModal extends React.Component {
 
             // nonce from contract
             var concatTokenAddresses = converters.concatTokenAddresses(this.props.limitOrder.sourceToken, this.props.limitOrder.destToken)
-            var nonceContract = ethereum.call("getLimitOrderNonce", this.props.account.address, concatTokenAddresses)
+            var nonceContract = await ethereum.call("getLimitOrderNonce", this.props.account.address, concatTokenAddresses)
             return nonceContract > nonceServer ? nonceContract: nonceServer           
         }catch(err){
             console.log(err)
@@ -59,17 +59,27 @@ export default class ConfirmModal extends React.Component {
         try{
             //get user nonce
             var ethereum = this.props.ethereum
-            var user = this.props.account.address
+            var user = this.props.account.address.toLowerCase()
             var nonce = await this.getUserNonce()
-            var srcToken = this.props.limitOrder.sourceToken
+            nonce = converters.toHex(nonce)
+            var srcToken = this.props.limitOrder.sourceToken.toLowerCase()
+
             var srcQty = converters.toTWei(this.props.limitOrder.sourceAmount, this.props.tokens[this.props.limitOrder.sourceTokenSymbol].decimals)
-            var destToken = this.props.limitOrder.destToken
-            var destAddress = this.props.account.address
-            var minConversionRate = converters.toTWei(this.props.triggerRate, 18)
+            srcQty = converters.toHex(srcQty)
+
+            var destToken = this.props.limitOrder.destToken.toLowerCase()
+            var destAddress = this.props.account.address.toLowerCase()
+            var minConversionRate = converters.toTWei(this.props.limitOrder.triggerRate, 18)
+            minConversionRate = converters.toHex(minConversionRate)
+
+            
             var feeInPrecision = this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount / 100
             feeInPrecision = converters.toTWei(feeInPrecision)
+            feeInPrecision = converters.toHex(feeInPrecision)
+            
 
-            var signData = ethereum.call("getKeccak256", user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision)
+            var signData = await ethereum.call("keccak256", user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision)
+            console.log(signData)
             var signature = await wallet.signSignature(signData, this.props.account)     
             
             //submit to server
@@ -94,7 +104,7 @@ export default class ConfirmModal extends React.Component {
             this.props.dispatch(limitOrderActions.forwardOrderPath())
         }catch(err){
             console.log(err)
-            this.setState({err: err})
+            this.setState({err: err.toString()})
         }
     }
 
@@ -128,7 +138,7 @@ export default class ConfirmModal extends React.Component {
             <div className="overlap">
               <div className="input-confirm grid-x input-confirm--approve">                
                   <div className="cell medium-4 small-12">
-                  <a className={"button process-submit next"} onClick={this.onSubmit}>Confirm</a>
+                  <a className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>Confirm</a>
                 </div>
               </div>
             </div>

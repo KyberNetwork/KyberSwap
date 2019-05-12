@@ -5,7 +5,7 @@ import * as limitOrderActions from '../actions/limitOrderActions'
 import { store } from '../store'
 import { getTranslate } from 'react-localize-redux';
 import * as common from "./common"
-import * as limitOrderService from "../services/limit_order"
+import {getFee} from "../services/limit_order"
 import {isUserLogin} from "../utils/common"
 
 import * as constants from "../services/constants"
@@ -74,7 +74,7 @@ function* updateRatePending(action) {
 function* fetchFee(action){
   var { userAddr, source, dest } = action.payload
   try{
-    var fee = yield call(limitOrderService.getFee, userAddr, source, dest)
+    var fee = yield call(getFee, userAddr, source, dest)
     yield put(limitOrderActions.fetchFeeComplete(fee))
   }catch(err){
     console.log(err)

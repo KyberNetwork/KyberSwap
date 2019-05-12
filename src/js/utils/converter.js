@@ -694,5 +694,7 @@ export function  concatTokenAddresses(source, dest) {
     bigDest = bigDest.div(weightLow)
 
     var sum = bigSource.plus(bigDest)
-    return sum.toString()
+
+    return "0x" + sum.toString(16)
+    // return sum.toString()
 }

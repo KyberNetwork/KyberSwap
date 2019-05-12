@@ -72,10 +72,10 @@ export const etherToOthersFromAccount = (
 }
 
 export const getAppoveToken = (ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-  keystring, password, accountType, account) => {
+  keystring, password, accountType, account, delegator) => {
   //const approvalData = ethereum.approveTokenData(sourceToken, sourceAmount)  
   return new Promise((resolve, reject) => {
-    ethereum.call("approveTokenData", sourceToken, biggestNumber()).then(result => {
+    ethereum.call("approveTokenData", sourceToken, biggestNumber(), delegator).then(result => {
       const txParams = {
         from: account,
         nonce: nonce,
@@ -93,10 +93,10 @@ export const getAppoveToken = (ethereum, sourceToken, sourceAmount, nonce, gas, 
 }
 
 export const getAppoveTokenZero = (ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-  keystring, password, accountType, account) => {
+  keystring, password, accountType, account, delegator) => {
   //const approvalData = ethereum.approveTokenData(sourceToken, sourceAmount)  
   return new Promise((resolve, reject) => {
-    ethereum.call("approveTokenData", sourceToken, 0).then(result => {
+    ethereum.call("approveTokenData", sourceToken, 0, delegator).then(result => {
       const txParams = {
         from: account,
         nonce: nonce,

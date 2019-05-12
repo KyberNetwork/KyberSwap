@@ -17,11 +17,11 @@ export default class Metamask {
 
   async broadCastTx(funcName, ...args) {
     try {
-      var txHash = await callSignTransaction(funcName, ...args)
+      var txHash = await this.callSignTransaction(funcName, ...args)
       return txHash
     } catch (err) {
       console.log(err)
-      return err
+      throw err
     }
   }
 

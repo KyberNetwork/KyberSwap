@@ -83,11 +83,13 @@ export function getNonce(userAddr, source, dest) {
                 if (!result.error) {
                     resolve(result.nonce)
                 } else {
-                    rejected(new Error("Cannot get user nonce"))
+                    // rejected(new Error("Cannot get user nonce"))
+                    resolve(1)
                 }
             })
             .catch((err) => {
-                rejected(new Error("Cannot get user nonce"))
+                resolve(1)
+                // rejected(new Error("Cannot get user nonce"))
             })
     })
 }

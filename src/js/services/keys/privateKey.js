@@ -17,19 +17,19 @@ export default class PrivateKey {
   
   async broadCastTx(funcName, ...args) {
     try{
-      var txRaw = await callSignTransaction(funcName, ...args)
+      var txRaw = await this.callSignTransaction(funcName, ...args)
       try{
         var ethereum = new EthereumService()
         var txHash = await ethereum.callMultiNode("sendRawTransaction", txRaw)
         return txHash
       }catch(err){
         console.log(err)
-        return err
+        throw err
       }
       
     }catch(err){
       console.log(err)
-      return err
+      throw err
     }
   }
 

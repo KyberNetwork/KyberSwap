@@ -6,27 +6,29 @@ export { default as Ledger } from './ledger.js'
 
 export { default as Metamask } from './metamask.js'
 
+import * as keys from "../keys"
 
 export function getWallet(type) {
+    var keyService
     switch (type) {
         case "keystore":
-            keyService = new KeyStore()
+            keyService = new keys.KeyStore()
             break
         case "privateKey":
         case "promo":
-            keyService = new PrivateKey()
+            keyService = new keys.PrivateKey()
             break
         case "trezor":
-            keyService = new Trezor()
+            keyService = new keys.Trezor()
             break
         case "ledger":
-            keyService = new Ledger()
+            keyService = new keys.Ledger()
             break
         case "metamask":
-            keyService = new Metamask()
+            keyService = new keys.Metamask()
             break
         default:
-            keyService = new KeyStore()
+            keyService = new keys.KeyStore()
             break
     }
     return keyService

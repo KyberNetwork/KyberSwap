@@ -71,7 +71,7 @@ export default class LimitOrder extends React.Component {
       var destAddress = this.props.tokens[destSymbol].address
 
       this.props.dispatch(limitOrderActions.selectTokenAsync(sourceSymbol, sourceAddress, "source"))
-      this.props.dispatch(limitOrderActions.selectTokenAsync(destSymbol, destAddress, "des"))
+      this.props.dispatch(limitOrderActions.selectTokenAsync(destSymbol, destAddress, "dest"))
     }
   }
 

@@ -9,6 +9,8 @@ import constants from "../../../services/constants"
 
 import {getWallet} from "../../../services/keys"
 
+import BLOCKCHAIN_INFO from "../../../../../env"
+
 @connect((store, props) => {
     const account = store.account.account
     const translate = getTranslate(store.locale)
@@ -37,7 +39,7 @@ export default class ApproveMaxModal extends React.Component {
         var password = ""
         try{
             var txHash = await wallet.broadCastTx("getAppoveToken", this.props.ethereum, this.props.limitOrder.sourceToken, 0, this.props.account.nonce, this.props.limitOrder.max_gas_approve,
-            this.props.limitOrder.gasPrice, this.props.account.keystring, password, this.props.account.type, this.props.account.address)     
+            this.props.limitOrder.gasPrice, this.props.account.keystring, password, this.props.account.type, this.props.account.address, BLOCKCHAIN_INFO.kyberswapAddress)     
             
             //increase account nonce 
             this.props.dispatch(accountActions.incManualNonceAccount(this.props.account.address))
@@ -64,7 +66,7 @@ export default class ApproveMaxModal extends React.Component {
     //     }
     //   }
     closeModal = () => {
-        this.props.dispatch(limitOrderActions.updateCurrentOrderPath(0))
+        this.props.dispatch(limitOrderActions.resetOrderPath())
     }
     contentModal = () => {
         return (
@@ -76,7 +78,7 @@ export default class ApproveMaxModal extends React.Component {
                 <div>
                   <div>
                     <div className="message">                 
-                        {`You need reset allowance ${this.props.limitOrder.sourceTokenSymbol} of Kyber Swap with this address`}
+                        {`You need approve KyberSwap to use token ${this.props.limitOrder.sourceTokenSymbol}`}
                     </div>
                     <div class="info tx-title">
                       <div className="address-info">
@@ -110,7 +112,7 @@ export default class ApproveMaxModal extends React.Component {
                     onClick={this.props.onSubmit}
                   >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a> */}
                   <a className={"button process-submit next"}
-                    onClick={this.onSubmit}
+                    onClick={this.onSubmit.bind(this)}
                   >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a>
                 </div>
               </div>

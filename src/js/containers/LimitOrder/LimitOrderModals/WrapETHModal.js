@@ -88,7 +88,7 @@ export default class WrapETHModal extends React.Component {
 
 
     closeModal = () => {
-        this.props.dispatch(limitOrderActions.updateCurrentOrderPath(0))
+        this.props.dispatch(limitOrderActions.resetOrderPath())
     }
 
     contentModal = () => {
@@ -141,7 +141,7 @@ export default class WrapETHModal extends React.Component {
                     {/* <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "disabled-button" : "next")}
                     onClick={this.props.onSubmit}
                   >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a> */}
-                  <a className={"button process-submit next"} onClick={this.onSubmit}>Convert</a>
+                  <a className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>Convert</a>
                 </div>
               </div>
             </div>

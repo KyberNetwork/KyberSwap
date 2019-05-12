@@ -55,7 +55,7 @@ export default class LimitOrderSubmit extends React.Component {
 
   getSourceAmount = () => {
     var sourceAmount = this.props.limitOrder.sourceAmount
-    this.props.listOrder.map(value => {
+    this.props.limitOrder.listOrder.map(value => {
       if (value.status === "active" && value.source === this.props.limitOrder.sourceTokenSymbol && value.address.toLowerCase() === this.props.account.address.toLowerCase()) {
         sourceAmount += sourceAmount
       }
@@ -129,7 +129,7 @@ export default class LimitOrderSubmit extends React.Component {
     try {
       var orderPath = []
       // var currentPath = constants.LIMIT_ORDER_CONFIG.orderPath.confirmSubmitOrder
-      var ethereum = this.prpps.ethereum
+      var ethereum = this.props.ethereum
       // check wrapped eth
       var allowance = await ethereum.call("getAllowanceAtLatestBlock", this.props.limitOrder.sourceToken, this.props.account.address, BLOCKCHAIN_INFO.kyberswapAddress)
       if (allowance == 0) {
