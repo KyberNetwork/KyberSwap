@@ -663,6 +663,13 @@ export function toHex(number){
 }
 
 
+export function subOfTwoNumber(num1, num2){
+  var num1 = new BigNumber(num1.toString())
+  var num2 = new BigNumber(num2.toString())
+  var sum = num1.minus(num2)       
+  return sum.toString()
+}
+
 export function sumOfTwoNumber(num1, num2){
   var num1 = new BigNumber(num1.toString())
   var num2 = new BigNumber(num2.toString())

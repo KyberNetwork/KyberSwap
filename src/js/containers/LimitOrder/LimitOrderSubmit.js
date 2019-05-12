@@ -3,17 +3,19 @@ import { connect } from "react-redux"
 import * as limitOrderActions from "../../actions/limitOrderActions"
 
 import * as converters from "../../utils/converter"
+import { getTranslate } from 'react-localize-redux'
+
 
 import BLOCKCHAIN_INFO from "../../../../env"
 
-import {ApproveZeroModal} from "./LimitOrderModals/ApproveZeroModal"
-import {ApproveMaxModal} from "./LimitOrderModals/ApproveMaxModal"
-import {WrapETHModal} from "./LimitOrderModals/WrapETHModal"
-import {ConfirmModal} from "./LimitOrderModals/ConfirmModal"
-import {SubmitStatusModal} from "./LimitOrderModals/SubmitStatusModal"
+import ApproveZeroModal from "./LimitOrderModals/ApproveZeroModal"
+import ApproveMaxModal from "./LimitOrderModals/ApproveMaxModal"
+import WrapETHModal from "./LimitOrderModals/WrapETHModal"
+import ConfirmModal from "./LimitOrderModals/ConfirmModal"
+import SubmitStatusModal from "./LimitOrderModals/SubmitStatusModal"
 
 
-import {isUserLogin} from "../../utils/common"
+import { isUserLogin } from "../../utils/common"
 import constants from "../../services/constants"
 
 @connect((store, props) => {
@@ -24,8 +26,8 @@ import constants from "../../services/constants"
   const ethereum = store.connection.ethereum
 
   return {
-      translate, limitOrder, tokens, account, ethereum,
-      global: store.global
+    translate, limitOrder, tokens, account, ethereum,
+    global: store.global
 
   }
 })
@@ -34,8 +36,8 @@ import constants from "../../services/constants"
 
 
 export default class LimitOrderSubmit extends React.Component {
-  constructor () {
-    super() 
+  constructor() {
+    super()
     this.state = {
       step: 0,
       networkError: "",
@@ -43,10 +45,10 @@ export default class LimitOrderSubmit extends React.Component {
     }
   }
 
-  getUserBalance = () =>{
-    if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken){
+  getUserBalance = () => {
+    if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
       return this.props.tokens[this.props.limitOrder.sourceTokenSymbol].balance + this.props.tokens["ETH"].balance
-    }else{
+    } else {
       return this.props.tokens[this.props.limitOrder.sourceTokenSymbol].balance
     }
   }
@@ -54,14 +56,14 @@ export default class LimitOrderSubmit extends React.Component {
   getSourceAmount = () => {
     var sourceAmount = this.props.limitOrder.sourceAmount
     this.props.listOrder.map(value => {
-      if(value.status === "active" && value.source === this.props.limitOrder.sourceTokenSymbol && value.address.toLowerCase() === this.props.account.address.toLowerCase()){
+      if (value.status === "active" && value.source === this.props.limitOrder.sourceTokenSymbol && value.address.toLowerCase() === this.props.account.address.toLowerCase()) {
         sourceAmount += sourceAmount
       }
     })
     var sourceAmountBig = converters.toTWei(sourceAmount, this.props.tokens[this.props.limitOrder.sourceTokenSymbol].decimals)
     return sourceAmountBig.toString()
   }
-  
+
 
   validateOrder = () => {
     // check source amount is zero
@@ -72,22 +74,22 @@ export default class LimitOrderSubmit extends React.Component {
       isValidate = false
     }
 
-     //verify min source amount
-    if (this.props.tokens[this.props.limitOrder.sourceTokenSymbol].rate == 0){
+    //verify min source amount
+    if (this.props.tokens[this.props.limitOrder.sourceTokenSymbol].rate == 0) {
       this.props.dispatch(limitOrderActions.throwError("rateETHEqualZero", "This pair is under maintenance"))
       isValidate = false
     }
 
-    
+
     var rateBig = converters.toTWei(this.props.tokens[this.props.limitOrder.sourceTokenSymbol].rate, 18)
     var ethEquivalentValue = converters.calculateDest(this.props.limitOrder.sourceAmount, rateBig, 6)
-    
-    if(ethEquivalentValue < 0.5){
+
+    if (ethEquivalentValue < 0.5) {
       this.props.dispatch(limitOrderActions.throwError("sourceAmountTooSmall", "Source Amount is too smalll. Limit order only support min 0.5 ETH equivalent order"))
       isValidate = false
     }
 
-    if(ethEquivalentValue > 10){
+    if (ethEquivalentValue > 10) {
       this.props.dispatch(limitOrderActions.throwError("sourceAmountTooBig", "Source Amount is too big. Limit order only support max 10 ETH equivalent order"))
       isValidate = false
     }
@@ -100,7 +102,7 @@ export default class LimitOrderSubmit extends React.Component {
     }
     // check rate is too big
     var percentChange = converters.percentChange(triggerRate, this.props.limitOrder.offeredRate)
-    if (percentChange > constants.LIMIT_ORDER_CONFIG.maxPercentTriggerRate){
+    if (percentChange > constants.LIMIT_ORDER_CONFIG.maxPercentTriggerRate) {
       this.props.dispatch(limitOrderActions.throwError("triggerRateError", "Trigger rate is to high, only allow 50% greater than the current rate"))
       isValidate = false
     }
@@ -108,13 +110,13 @@ export default class LimitOrderSubmit extends React.Component {
     //check balance
     var userBalance = this.getUserBalance()
     var srcAmount = this.getSourceAmount()
-    if (converters.compareTwoNumber(userBalance, srcAmount) < 0){
+    if (converters.compareTwoNumber(userBalance, srcAmount) < 0) {
       this.props.dispatch(limitOrderActions.throwError("balanceError", "Your balance is insufficent for the order"))
       isValidate = false
     }
 
-    
-    if (isValidate){
+
+    if (isValidate) {
       return
     }
 
@@ -123,62 +125,67 @@ export default class LimitOrderSubmit extends React.Component {
 
   }
 
-  async findPathOrder(){
-    try{
+  async findPathOrder() {
+    try {
       var orderPath = []
       // var currentPath = constants.LIMIT_ORDER_CONFIG.orderPath.confirmSubmitOrder
       var ethereum = this.prpps.ethereum
       // check wrapped eth
       var allowance = await ethereum.call("getAllowanceAtLatestBlock", this.props.limitOrder.sourceToken, this.props.account.address, BLOCKCHAIN_INFO.kyberswapAddress)
-      if (allowance == 0){
+      if (allowance == 0) {
         orderPath = [constants.LIMIT_ORDER_CONFIG.orderPath.approveMax]
         // currentPath = constants.LIMIT_ORDER_CONFIG.orderPath.approveMax
       }
-      if (allowance != 0 && allowance < Math.pow(10, 28)){
+      if (allowance != 0 && allowance < Math.pow(10, 28)) {
         orderPath = [constants.LIMIT_ORDER_CONFIG.orderPath.approveZero, constants.LIMIT_ORDER_CONFIG.orderPath.approveMax]
         // currentPath = constants.LIMIT_ORDER_CONFIG.orderPath.approveZero
       }
-      
-      if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken){
+
+      if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
         var sourceToken = this.getSourceAmount()
         var userBalance = this.props.tokens[this.props.limitOrder.sourceTokenSymbol].balance
-        if(converters.compareTwoNumber(userBalance, sourceToken) < 0){
+        if (converters.compareTwoNumber(userBalance, sourceToken) < 0) {
           orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.wrapETH)
         }
       }
       orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.confirmSubmitOrder)
       orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.submitStatusOrder)
       this.props.dispatch(limitOrderActions.updateOrderPath(orderPath, 0))
-    }catch{
+    } catch (err) {
+      console.log(err)
       this.setState({
         networkError: "Cannot connect to ethereum node",
         isOpen: true
       })
     }
-  } 
+  }
 
 
   submitOrder = () => {
-    if (isUserLogin() && this.props.account !== false){
+    if (isUserLogin() && this.props.account !== false) {
       // check to go to step
       this.validateOrder()
 
-    }else{
+    } else {
       window.location.href = "/users/sign_in"
     }
   }
 
 
-    render() {
-      return (
-        <div className={"limit-order-form"} onClick={this.submitOrder}>
-            {isUserLogin()? "Submit": "Login to Submit Order"}
-            <ApproveZeroModal />
-            <ApproveMaxModal />
-            <WrapETHModal />
-            <ConfirmModal />
-            <SubmitStatusModal />
+  render() {
+    return (
+      <div className={"limit-order-form"}>
+        <button onClick={this.submitOrder}>
+          {isUserLogin() ? "Submit" : "Login to Submit Order"}
+        </button>
+        <div>
+          <ApproveZeroModal />
+          <ApproveMaxModal />
+          <WrapETHModal />
+          <ConfirmModal />
+          <SubmitStatusModal />
         </div>
-      )
-    }
+      </div>
+    )
   }
+}

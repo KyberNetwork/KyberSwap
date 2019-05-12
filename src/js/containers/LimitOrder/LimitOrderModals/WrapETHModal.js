@@ -1,4 +1,6 @@
 import React from "react"
+import { Modal } from "../../../components/CommonElement"
+
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as limitOrderActions from "../../../actions/limitOrderActions"
@@ -35,9 +37,10 @@ export default class WrapETHModal extends React.Component {
     }
 
     getAmountWrapETH = () =>{
-        var balance = this.props.tokens[this.props.limitOrder.sourceTokenSymbol].balance
-        var srcAmount = this.getSourceAmount()
-        var wrapAmount = srcAmount - balance  
+        var srcToken = this.props.tokens[this.props.limitOrder.sourceTokenSymbol]
+        var balance = srcToken.balance
+        var srcAmount = converters.toTWei(this.props.limitOrder.sourceAmount, srcToken.decimals)
+        var wrapAmount = converters.subOfTwoNumber(srcAmount,balance)
         return wrapAmount  
     }
 

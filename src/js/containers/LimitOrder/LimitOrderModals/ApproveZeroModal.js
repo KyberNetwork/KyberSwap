@@ -1,4 +1,6 @@
 import React from "react"
+import { Modal } from "../../../components/CommonElement"
+
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as limitOrderActions from "../../../actions/limitOrderActions"
@@ -91,7 +93,7 @@ export default class ApproveZeroModal extends React.Component {
             </div>
             <div className="overlap">
               <div className="input-confirm grid-x input-confirm--approve">
-                <div className="cell medium-8 small-12">{this.msgHtml()}</div>
+                {/* <div className="cell medium-8 small-12">{this.msgHtml()}</div> */}
                   <div className="cell medium-4 small-12">
                     {/* <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "disabled-button" : "next")}
                     onClick={this.props.onSubmit}

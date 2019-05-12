@@ -1,4 +1,7 @@
 import React from "react"
+import { Modal } from "../../../components/CommonElement"
+
+import constants from "../../../services/constants"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 

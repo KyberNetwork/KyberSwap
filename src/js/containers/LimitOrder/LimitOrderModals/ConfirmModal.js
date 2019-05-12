@@ -1,4 +1,6 @@
 import React from "react"
+import { Modal } from "../../../components/CommonElement"
+
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as limitOrderActions from "../../../actions/limitOrderActions"
