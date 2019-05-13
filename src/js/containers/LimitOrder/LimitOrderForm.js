@@ -146,7 +146,7 @@ export default class LimitOrderForm extends React.Component {
               <div className={'exchange-content__label-content exchange-content__label-content--disabled'}>
                 {this.props.limitOrder.sourceTokenSymbol} / {this.props.limitOrder.destTokenSymbol}
               </div>
-              <div className={"main-input main-input__left"}>
+              <div className={"main-input main-input__left main-input--rate"}>
                 <input
                   className={`exchange-content__input`}
                   step="0.000001"
