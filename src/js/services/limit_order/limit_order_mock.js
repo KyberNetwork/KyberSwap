@@ -30,7 +30,7 @@ export function submitOrder(order) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: order
+            body: JSON.stringify(order)
         }))
             .then((response) => {
                 return response.json()
@@ -56,7 +56,7 @@ export function cancelOrder(order) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: order
+            body: JSON.stringify(order)
         }))
             .then((response) => {
                 return response.json()

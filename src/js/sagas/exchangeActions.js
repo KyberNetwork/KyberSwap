@@ -1260,36 +1260,8 @@ function* getMaxGasExchange() {
   var sourceGasLimit = sourceTokenLimit ? parseInt(sourceTokenLimit) : exchange.max_gas
   var destGasLimit = destTokenLimit ? parseInt(destTokenLimit) : exchange.max_gas
 
-  // console.log("fee tx: ", sourceGasLimit + destGasLimit)
-
   return sourceGasLimit + destGasLimit
 
-  // if (exchange.sourceTokenSymbol === 'DGX'){
-  //   if (exchange.destTokenSymbol === 'ETH'){
-  //     return 750000
-  //   }else{
-  //     return (750000 + exchange.max_gas)
-  //   }
-  // }
-  // if (exchange.sourceTokenSymbol === 'ETH'){
-  //   if (exchange.destTokenSymbol === 'DGX'){
-  //     return 750000
-  //   }else{
-  //     return exchange.max_gas
-  //   }
-  // }
-
-  // if (exchange.sourceTokenSymbol !== 'ETH'){
-  //   if (exchange.destTokenSymbol === 'DGX'){
-  //     return 750000 + exchange.max_gas
-  //   }
-  //   if (exchange.destTokenSymbol === 'ETH'){
-  //     return exchange.max_gas
-  //   }
-  //   else{
-  //     return exchange.max_gas * 2
-  //   }
-  // }
 }
 
 function* getMaxGasApprove() {

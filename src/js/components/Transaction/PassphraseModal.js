@@ -1,5 +1,5 @@
 import React from "react"
-import { gweiToEth, stringToBigNumber, calculateGasFee } from "../../utils/converter"
+import { gweiToEth, stringToBigNumber } from "../../utils/converter"
 import { FeeDetail } from "../CommonElement";
 
 const PassphraseModal = (props) => {
@@ -36,8 +36,7 @@ const PassphraseModal = (props) => {
     return translateErr
   }
 
-  var gasPrice = stringToBigNumber(gweiToEth(props.gasPrice))
-  var totalGas = +calculateGasFee(props.gasPrice, props.gas)
+  var gasPrice = stringToBigNumber(gweiToEth(props.gasPrice))  
   //var totalGas = gasPrice.multipliedBy(props.gas)
   return (
     <div >
@@ -52,8 +51,7 @@ const PassphraseModal = (props) => {
                 translate={props.translate} 
                 gasPrice={props.gasPrice} 
                 gas={props.gas}
-                isFetchingGas={props.isFetchingGas}
-                totalGas={totalGas}
+                isFetchingGas={props.isFetchingGas}                
               />
             </div>
           </div>

@@ -9,10 +9,11 @@ import ethUtils from "ethereumjs-util"
 export default class PrivateKey {
 
 
-  async signSignature(data, account){
-    const privateKey = account.keystring
-    const sig = secp256k1.sign(data, ethUtils.toBuffer(privateKey))
-    return sig.signature
+  async signSignature(message, account){
+    const privateKey = account.keystring    
+    const sig = secp256k1.sign(ethUtils.toBuffer(message), ethUtils.toBuffer("0x" + privateKey))
+    const signature = ethUtils.bufferToHex(sig.signature)    
+    return signature
   }
   
   async broadCastTx(funcName, ...args) {

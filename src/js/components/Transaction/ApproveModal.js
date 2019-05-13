@@ -1,5 +1,5 @@
 import React from "react"
-import { gweiToEth, stringToBigNumber, calculateGasFee, roundingNumber } from "../../utils/converter";
+import { gweiToEth, stringToBigNumber, roundingNumber } from "../../utils/converter";
 import { FeeDetail } from "../CommonElement";
 
 class ApproveModal extends React.Component {
@@ -42,7 +42,7 @@ class ApproveModal extends React.Component {
 
   render(){
     var gasPrice = stringToBigNumber(gweiToEth(this.props.gasPrice))
-    var totalGas = +calculateGasFee(this.props.gasPrice, this.props.gas)
+    // var totalGas = +calculateGasFee(this.props.gasPrice, this.props.gas)
     //var totalGas = gasPrice.multipliedBy(this.props.gas)
     //var haveError = this.props.errors ? true : false
     return (
@@ -67,7 +67,6 @@ class ApproveModal extends React.Component {
                   gasPrice={this.props.gasPrice} 
                   gas={this.props.gas}
                   isFetchingGas={this.props.isFetchingGas}
-                  totalGas={totalGas}
                 />
               </div>
               {this.errorHtml()}

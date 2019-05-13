@@ -156,7 +156,7 @@ export default class WrapETHModal extends React.Component {
                 base: 'reveal medium confirm-modal',
                 afterOpen: 'reveal medium confirm-modal'
               }}
-                isOpen={this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.wrapETH}
+                isOpen={true}
                 onRequestClose={this.closeModal}
                 contentLabel="approve modal"
                 content={this.contentModal()}

@@ -49,7 +49,7 @@ export default class SubmitStatusModal extends React.Component {
             base: 'reveal medium confirm-modal',
             afterOpen: 'reveal medium confirm-modal'
           }}
-            isOpen={this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.submitStatusOrder}
+            isOpen={true}
             onRequestClose={this.closeModal}
             contentLabel="status modal"
             content={this.contentModal()}

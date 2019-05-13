@@ -45,6 +45,8 @@ export default class LimitOrderSubmit extends React.Component {
     }
   }
 
+
+
   getUserBalance = () => {
     if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
       return this.props.tokens[this.props.limitOrder.sourceTokenSymbol].balance + this.props.tokens["ETH"].balance
@@ -125,6 +127,57 @@ export default class LimitOrderSubmit extends React.Component {
 
   }
 
+  getMaxGasApprove = () => {
+    var tokens = this.props.tokens
+    var sourceSymbol = this.props.limitOrder.sourceTokenSymbol
+    if (tokens[sourceSymbol] && tokens[sourceSymbol].gasApprove) {
+      return tokens[sourceSymbol].gasApprove
+    } else {
+      return this.props.limitOrder.max_gas_approve
+    }
+  }
+
+  getMaxGasExchange = () => {
+    const tokens = this.props.tokens
+    var destTokenSymbol = BLOCKCHAIN_INFO.wrapETHToken
+    var destTokenLimit = tokens[destTokenSymbol] && tokens[destTokenSymbol].gasLimit ? tokens[destTokenSymbol].gasLimit : this.props.limitOrder.max_gas    
+    return destGasLimit
+  
+  }
+
+  getMaxGasLimit = (orderPath) => {
+    var gasLimit = 0
+    for (var i = 0; i <orderPath.length; i++){
+      switch(orderPath[i]){
+        case constants.LIMIT_ORDER_CONFIG.orderPath.approveZero:
+        case constants.LIMIT_ORDER_CONFIG.orderPath.approveMax:
+          gasLimit += this.getMaxGasApprove()
+          break
+        case constants.LIMIT_ORDER_CONFIG.orderPath.wrapETH:
+          gasLimit += this.getMaxGasExchange()
+          break
+      }
+    }
+    return gasLimit
+  }
+
+  validateBalance = (orderPath) =>{
+    var gasLimit = this.getMaxGasLimit(orderPath)
+    var totalFee = converters.calculateGasFee(this.props.limitOrder.gasPrice, gasLimit)
+    var totalFeeBig = converters.toTWei(totalFee, 18)
+    var ethBalance = this.props.tokens["ETH"].balance
+    
+    var compareValue
+    if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken){
+      var srcAmount = this.getSourceAmount()
+      var wrapETHTokenBalance = this.props.tokens[BLOCKCHAIN_INFO.wrapETHToken].balance
+      compareValue = converters.sumOfTwoNumber(totalFeeBig, converters.subOfTwoNumber(srcAmount, wrapETHTokenBalance))
+    }else{
+      compareValue = totalFeeBig      
+    }    
+    return converters.compareTwoNumber(ethBalance, compareValue) < 0 ? false: true          
+  }
+
   async findPathOrder() {
     try {
       var orderPath = []
@@ -150,7 +203,19 @@ export default class LimitOrderSubmit extends React.Component {
       }
       orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.confirmSubmitOrder)
       orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.submitStatusOrder)
-      this.props.dispatch(limitOrderActions.updateOrderPath(orderPath, 0))
+
+      //check balance eth is enough
+     
+      if (this.validateBalance(orderPath)){
+        this.props.dispatch(limitOrderActions.updateOrderPath(orderPath, 0))
+      }else{
+        console.log("Your eth balance is not enough for transactions")
+        this.setState({
+          balanceError: "Your eth balance is not enough for transactions",
+          isOpen: true
+        })
+      }
+      
     } catch (err) {
       console.log(err)
       this.setState({
@@ -179,11 +244,11 @@ export default class LimitOrderSubmit extends React.Component {
           {isUserLogin() ? "Submit" : "Login to Submit Order"}
         </button>
         <div>
-          <ApproveZeroModal />
-          <ApproveMaxModal />
-          <WrapETHModal />
-          <ConfirmModal />
-          <SubmitStatusModal />
+          {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.approveZero && <ApproveZeroModal getMaxGasApprove= {this.getMaxGasApprove.bind(this)}/>}
+          {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.approveMax && <ApproveMaxModal getMaxGasApprove= {this.getMaxGasApprove.bind(this)}/>}
+          {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.wrapETH && <WrapETHModal />}
+          {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.confirmSubmitOrder && <ConfirmModal />}
+          {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.submitStatusOrder && <SubmitStatusModal />}
         </div>
       </div>
     )

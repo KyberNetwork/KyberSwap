@@ -8,12 +8,13 @@ import { numberToHex } from "../../utils/converter"
 import { getTranslate } from 'react-localize-redux'
 import EthereumService from "../ethereum/ethereum"
 import { store } from "../../store"
+import * as converter from "../../utils/converter"
 
 const defaultDPath = "m/44'/60'/0'/0";
 
-export default class Trezor  extends React.Component {
+export default class Trezor extends React.Component {
 
-    constructor(props) {
+  constructor(props) {
     super(props);
 
     TrezorConnect.manifest({
@@ -45,30 +46,36 @@ export default class Trezor  extends React.Component {
 
   async signSignature(data, account) {
     try {
-      var signature = await TrezorConnect.signMessage( {
+      var signature = await TrezorConnect.signMessage({
         path: account.keystring,
         message: data
       });
+      signature = signature.payload.signature
+      
+      // signature = Buffer.from(signature, 'base64');
+      signature = converter.base64toHEX(signature)
+      console.log(signature)
+      
       return signature
-    }catch(err){
+    } catch (err) {
       console.log(err)
       throw err
-    }    
+    }
   }
 
   async broadCastTx(funcName, ...args) {
-    try{
+    try {
       var txRaw = await this.callSignTransaction(funcName, ...args)
-      try{
+      try {
         var ethereum = new EthereumService()
         var txHash = await ethereum.callMultiNode("sendRawTransaction", txRaw)
         return txHash
-      }catch(err){
+      } catch (err) {
         console.log(err)
         throw err
       }
-      
-    }catch(err){
+
+    } catch (err) {
       console.log(err)
       throw err
     }
@@ -90,31 +97,34 @@ export default class Trezor  extends React.Component {
     })
   }
 
+  convertTrezorFormat = (param) => {
+    var outputWithFormat = param
+    if (isNaN) {
+      outputWithFormat = converter.toHex(outputWithFormat)
+    }
+    outputWithFormat = outputWithFormat.slice(2)
+    if (outputWithFormat.length % 2) {
+      outputWithFormat = '0' + outputWithFormat
+    }
+    return outputWithFormat
+  }
+
   sealTx = (params) => {
+    console.log(params)
     var address_n = params.address_n
-    var nonce = numberToHex(params.nonce).slice(2);
-    if (nonce.length % 2) {
-      nonce = '0' + nonce
-    }
-    var gasPrice = params.gasPrice.slice(2);
-    if (gasPrice.length % 2) {
-      gasPrice = '0' + gasPrice
-    }
-    var gasLimit = params.gasLimit.slice(2);
-    if (gasLimit.length % 2) {
-      gasLimit = '0' + gasLimit
-    }
+    var nonce = this.convertTrezorFormat(params.nonce)
+
+    var gasPrice = this.convertTrezorFormat(params.gasPrice);
+
+    var gasLimit = this.convertTrezorFormat(params.gasLimit)
+
     var to = params.to.slice(2);
-    var value = params.value.slice(2);
-    if (value.length % 2) {
-      value = '0' + value
-    }
+
+    var value = this.convertTrezorFormat(params.value);
+
     var data = ""
     if (params.data) {
-      data = params.data.slice(2)
-      if (data.length % 2) {
-        data = '0' + data
-      }
+      data = this.convertTrezorFormat(params.data);
     }
 
     var chain_id = params.chainId; // 1 for ETH, 61 for ETC

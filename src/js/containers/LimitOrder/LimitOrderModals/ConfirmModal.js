@@ -84,14 +84,14 @@ export default class ConfirmModal extends React.Component {
             
             //submit to server
             var newOrder = await submitOrder({  
-                "address": this.props.account.address,
-                "nonce": nonce,
-                "source": this.props.sourceTokenSymbol,
-                "dest": this.props.destTokenSymbol,
-                "src_amount": this.props.sourceAmount,
-                "min_rate": this.props.triggerRate,
-                "fee": this.props.limitOrder.orderFee,
-
+                address: this.props.account.address,
+                nonce: nonce,
+                source: this.props.limitOrder.sourceTokenSymbol,
+                dest: this.props.limitOrder.destTokenSymbol,
+                src_amount: this.props.limitOrder.sourceAmount,
+                min_rate: this.props.limitOrder.triggerRate,
+                fee: this.props.limitOrder.orderFee,
+                signature: signature
             })
 
             //save new order
@@ -152,7 +152,7 @@ export default class ConfirmModal extends React.Component {
             base: 'reveal medium confirm-modal',
             afterOpen: 'reveal medium confirm-modal'
           }}
-            isOpen={this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.confirmSubmitOrder}
+            isOpen={true}
             onRequestClose={this.closeModal}
             contentLabel="Confirm modal"
             content={this.contentModal()}

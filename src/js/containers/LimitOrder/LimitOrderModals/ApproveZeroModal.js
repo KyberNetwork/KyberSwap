@@ -9,6 +9,8 @@ import constants from "../../../services/constants"
 
 import {getWallet} from "../../../services/keys"
 
+import {FeeDetail} from "../../../components/CommonElement"
+
 import BLOCKCHAIN_INFO from "../../../../../env"
 
 
@@ -30,8 +32,55 @@ export default class ApproveZeroModal extends React.Component {
     constructor(){
         super()
         this.state = {
-            err: ""
+            err: "",
+            isFetchGas: false,
+            gasLimit: 0            
         }
+    }
+
+    componentDidMount = () =>{
+      this.setState({
+        isFetchFee: true,
+        gasLimit: this.props.getMaxGasApprove(),
+      })
+      
+      this.getGasApprove()
+    }
+
+    // getMaxGasApprove = () => {
+    //   var tokens = this.props.tokens
+    //   var sourceSymbol = this.props.limitOrder.sourceTokenSymbol
+    //   if (tokens[sourceSymbol] && tokens[sourceSymbol].gasApprove) {
+    //     return tokens[sourceSymbol].gasApprove
+    //   } else {
+    //     return this.props.limitOrder.max_gas_approve
+    //   }
+    // }
+
+    async getGasApprove(){
+        // estimate gas approve
+        try{
+          var ethereum = this.props.ethereum
+          var dataApprove = await ethereum.call("approveTokenData", this.props.limitOrder.sourceToken, 0, BLOCKCHAIN_INFO.kyberswapAddress)
+          var txObjApprove = {
+            from: this.props.account.address,
+            to: this.props.limitOrder.sourceToken,
+            data: dataApprove,
+            value: '0x0',
+          }
+          var gas_approve = await ethereum.call("estimateGas", txObjApprove)
+          gas_approve = Math.round((gas_approve + 15000) * 120 / 100)
+          this.setState({
+            isFetchFee: false,
+            gasLimit: gas_approve
+          })
+        }catch(err){
+          console.log(err)
+          this.setState({
+            isFetchFee: false            
+          })
+        }
+        
     }
     
     async onSubmit(){
@@ -39,7 +88,7 @@ export default class ApproveZeroModal extends React.Component {
         var wallet = getWallet(this.props.account.type)
         var password = ""
         try{
-            var txHash = await wallet.broadCastTx("getAppoveTokenZero", this.props.ethereum, this.props.limitOrder.sourceToken, 0, this.props.account.nonce, this.props.limitOrder.max_gas_approve,
+            var txHash = await wallet.broadCastTx("getAppoveTokenZero", this.props.ethereum, this.props.limitOrder.sourceToken, 0, this.props.account.nonce, this.state.gasLimit,
             this.props.limitOrder.gasPrice, this.props.account.keystring, password, this.props.account.type, this.props.account.address, BLOCKCHAIN_INFO.kyberswapAddress)     
             
             //increase account nonce 
@@ -76,13 +125,12 @@ export default class ApproveZeroModal extends React.Component {
                         <div>{this.props.account.address}</div>
                       </div>
                     </div>
-                    {/* <FeeDetail 
+                    <FeeDetail 
                       translate={this.props.translate} 
-                      gasPrice={this.props.gasPrice} 
-                      gas={this.props.gas}
-                      isFetchingGas={this.props.isFetchingGas}
-                      totalGas={totalGas}
-                    /> */}
+                      gasPrice={this.props.limitOrder.gasPrice} 
+                      gas={this.state.gasLimit}
+                      isFetchingGas={this.state.isFetchGas}                      
+                    />
                   </div>
                   {/* {this.errorHtml()} */}
                   
@@ -117,7 +165,7 @@ export default class ApproveZeroModal extends React.Component {
             base: 'reveal medium confirm-modal',
             afterOpen: 'reveal medium confirm-modal'
           }}
-            isOpen={this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.approveZero}
+            isOpen={true}
             onRequestClose={this.closeModal}
             contentLabel="approve modal"
             content={this.contentModal()}

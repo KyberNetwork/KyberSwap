@@ -4,6 +4,7 @@ import * as ethUtil from 'ethereumjs-util'
 import TransportU2F from "@ledgerhq/hw-transport-u2f";
 import Eth from "@ledgerhq/hw-app-eth";
 
+
 import { store } from "../../store"
 import { CONFIG_ENV_LEDGER_LINK, LEDGER_SUPPORT_LINK } from "../constants"
 import { getTranslate } from 'react-localize-redux'
@@ -106,11 +107,16 @@ export default class Ledger {
     });
   }
 
-  async signSignature(data, account) {
+  async signSignature(message, account) {
     try {
-      var eth =  this.connectLedger()
-      var signature =  eth.signPersonalMessage(account.keystring, data)
-      return signature
+      var eth = await this.connectLedger()
+      var signature = await eth.signPersonalMessage(account.keystring, message.substring(2))
+
+      var rpcSig = ethUtil.toRpcSig(signature.v,  signature.r, signature.s)
+      // console.log(signature)
+      // console.log(rpcSig)
+      
+      return rpcSig
     }catch(err){
       console.log(err)
       throw err
