@@ -1,19 +1,14 @@
 import React from "react"
 import { connect } from "react-redux"
 import ReactTooltip from 'react-tooltip'
-
 import { getTranslate } from 'react-localize-redux'
 import * as common from "../../utils/common"
 import { filterInputNumber } from "../../utils/validators";
-
 import * as limitOrderActions from "../../actions/limitOrderActions"
 import * as globalActions from "../../actions/globalActions"
-
 import { TokenSelector } from "../TransactionCommon"
-
 import constants from "../../services/constants"
-
-
+import { LimitOrderCompareRate } from "../LimitOrder"
 
 @connect((store, props) => {
   const account = store.account.account
@@ -28,8 +23,6 @@ import constants from "../../services/constants"
 
   }
 })
-
-
 
 export default class LimitOrderForm extends React.Component {
 
@@ -67,7 +60,7 @@ export default class LimitOrderForm extends React.Component {
     var errorLimitOrder = ""
 
     return (
-      <div className={"limit-order-form"}>
+      <div className={"exchange-content exchange-content--limit-order limit-order-form container"}>
         <div className={"exchange-content__item--wrapper"}>
           <div className={"exchange-item-label"}>{this.props.translate("transaction.exchange_from") || "From"}:</div>
           <div className={`exchange-content__item exchange-content__item--left select-token`}
@@ -85,7 +78,6 @@ export default class LimitOrderForm extends React.Component {
               </div>
               <div className={`exchange-content__input-container`}>
                 <div className={"main-input main-input__left"}>
-
                   <div id="limit-order-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorTooltip}</div>`} data-html={true} data-event='click focus' data-for="swap-error" data-scroll-hide="false">
                     <input
                       className={`exchange-content__input`}
@@ -104,7 +96,6 @@ export default class LimitOrderForm extends React.Component {
                      )} */}
                 </div>
               </div>
-
             </div>
             {errorLimitOrder &&
               <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="swap-error" type="light" />
@@ -116,63 +107,63 @@ export default class LimitOrderForm extends React.Component {
         </div>
 
         <div className={"exchange-content__item--wrapper"}>
-                <div className={"exchange-item-label"}>{this.props.translate("transaction.exchange_to") || "To"}:</div>
-                <div className={"exchange-content__item exchange-content__item--right"}>
-                  <div className={`input-div-content`}>
-                    <div className={"exchange-content__label-content"}>
-                      <div className="exchange-content__select select-token-panel">
-                          <TokenSelector
-                            type="dest"
-                            focusItem={this.props.limitOrder.destTokenSymbol}
-                            listItem={this.props.tokens}
-                            chooseToken={this.props.chooseToken}                      
-                          />
-                      </div>
-                    </div>
-                    <div className={`exchange-content__input-container`}>
-                      <div className={"main-input main-input__right"}>
-                        <input
-                          className={`exchange-content__input`}
-                          step="0.000001"
-                          placeholder="0"
-                          min="0"
-                          type={this.props.global.isOnMobile ? "number" : "text"}
-                          maxLength="50"
-                          autoComplete="off"
-                          value={this.props.limitOrder.destAmount}                          
-                          onChange={(e) => this.handleInputChange(e, "dest", this.props.limitOrder.destAmount)}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>              
+          <div className={"exchange-item-label"}>{this.props.translate("transaction.exchange_to") || "To"}:</div>
+          <div className={"exchange-content__item exchange-content__item--left"}>
+            <div className={`input-div-content`}>
+              <div className={"exchange-content__label-content"}>
+                <div className="exchange-content__select select-token-panel">
+                  <TokenSelector
+                    type="des"
+                    focusItem={this.props.limitOrder.destTokenSymbol}
+                    listItem={this.props.tokens}
+                    chooseToken={this.props.chooseToken}
+                  />
+                </div>
               </div>
+              <div className={`exchange-content__input-container`}>
+                <div className={"main-input main-input__left"}>
+                  <input
+                    className={`exchange-content__input`}
+                    step="0.000001"
+                    placeholder="0"
+                    min="0"
+                    type={this.props.global.isOnMobile ? "number" : "text"}
+                    maxLength="50"
+                    autoComplete="off"
+                    value={this.props.limitOrder.destAmount}
+                    onChange={(e) => this.handleInputChange(e, "dest", this.props.limitOrder.destAmount)}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-              <div className={"exchange-content__item--wrapper"}>
-                <div className={"exchange-item-label"}>{this.props.translate("transaction.rate_label") || "Rate"}:</div>
-                <div className={"exchange-content__item exchange-content__item--right"}>
-                  <div className={`input-div-content`}>                  
-                    <div className={`exchange-content__input-container`}>
-                      <div>
-                          {this.props.limitOrder.sourceTokenSymbol} / {this.props.limitOrder.destTokenSymbol}
-                      </div>
-                      <div className={"main-input main-input__right"}>
-                        <input
-                          className={`exchange-content__input`}
-                          step="0.000001"
-                          placeholder="0"
-                          min="0"
-                          type={this.props.global.isOnMobile ? "number" : "text"}
-                          maxLength="50"
-                          autoComplete="off"
-                          value={this.props.limitOrder.triggerRate}                          
-                          onChange={(e) => this.handleInputChange(e, "rate", this.props.limitOrder.triggerRate)}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>              
+        <div className={"exchange-content__item--wrapper"}>
+          <div className={"exchange-item-label"}>{this.props.translate("transaction.rate_label") || "Rate"}:</div>
+          <div className={"exchange-content__item exchange-content__item--left exchange-content__item--no-pd-left"}>
+            <div className={`input-div-content`}>
+              <div className={'exchange-content__label-content exchange-content__label-content--disabled'}>
+                {this.props.limitOrder.sourceTokenSymbol} / {this.props.limitOrder.destTokenSymbol}
               </div>
+              <div className={"main-input main-input__left"}>
+                <input
+                  className={`exchange-content__input`}
+                  step="0.000001"
+                  placeholder="0"
+                  min="0"
+                  type={this.props.global.isOnMobile ? "number" : "text"}
+                  maxLength="50"
+                  autoComplete="off"
+                  value={this.props.limitOrder.triggerRate}
+                  onChange={(e) => this.handleInputChange(e, "rate", this.props.limitOrder.triggerRate)}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <LimitOrderCompareRate />
       </div>
     )
   }

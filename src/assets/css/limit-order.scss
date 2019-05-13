@@ -411,3 +411,14 @@
         }
     }
 }
+
+.limit-order-compare-rate {
+    font-size: 14px;
+    font-weight: 500;
+    color: #626b86;
+    padding-left: 20px;
+
+    &__text {
+        margin-bottom: 2px;
+    }
+}
