@@ -2,6 +2,7 @@ import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effect
 import * as actions from '../actions/globalActions'
 import * as actionsExchange from '../actions/exchangeActions'
 import * as actionsTransfer from '../actions/transferActions'
+import * as actionsLimitOrder from "../actions/limitOrderActions";
 import * as actionsUtils from '../actions/utilActions'
 import { closeImportLoading } from '../actions/accountActions'
 import { Rate } from "../services/rate"
@@ -243,6 +244,7 @@ export function* setGasPrice(action) {
     var gasExchange = getGasExchange(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
     yield put(actionsExchange.setGasPriceSwapComplete(gasExchange.safeLowGas, gasExchange.standardGas, gasExchange.fastGas, gasExchange.defaultGas, selectedGas))
 
+    yield put(actionsLimitOrder.setGasPriceLimitOrderComplete(safeLowGas, standardGas, fastGas, defaultGas, selectedGas));
   }catch (err) {
     console.log(err.message)
   }
