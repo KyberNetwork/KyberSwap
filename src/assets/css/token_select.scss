@@ -47,12 +47,18 @@
       background-color: #ffffff;
       border: 1px solid #e7edf5;
       padding: 0 10px;
+
       .input-div-content {
         display: flex;
         align-items: center;
         width: 100%;
         padding-right: 12px;
+        justify-content: space-between;
       }
+    }
+
+    &--no-pd-left {
+      padding-left: 0;
     }
 
     &--middle {
@@ -159,22 +165,6 @@
       position: relative;
       color: #ee344e;
 
-      // &::before {
-      //   content: "";
-      //   position: absolute;
-      //   width: 15px;
-      //   height: 15px;
-      //   background-image: url(../img/exchange/error-icon.svg);
-      //   background-position: center;
-      //   background-repeat: no-repeat;
-      //   background-size: contain;
-      //   left: -23px;
-      //   top: 3px;
-      //   @include screen-max-width(medium) {
-      //     display: none;
-      //   }
-      // }
-
       .exchange-content__label--dropdown {
         color: #ee344e;
       }
@@ -209,6 +199,18 @@
     &-content {
       display: flex;
       align-items: center;
+
+      &--disabled {
+        height: 100%;
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px;
+        padding: 0 20px;
+        background-color: #dee8f1;
+        font-size: 14px;
+        font-weight: 600;
+        color: #222222;
+        text-align: center;
+      }
     }
   }
 
@@ -410,10 +412,6 @@
     &--to {
       border-left: none;
     }
-
-    // @include screen-max-width(medium) {
-    //   padding: 0 0px 0 5px;
-    // }
   }
 
   & &__input {
@@ -459,6 +457,29 @@
     }
     &-address {
       font-size: 15px;
+    }
+  }
+
+  &--limit-order {
+    width: calc(50% - 30px);
+    display: block;
+    margin: 20px 0 30px 0;
+
+    .exchange-content__item {
+      height: 52px;
+    }
+
+    .exchange-content__item--wrapper {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .main-input--rate {
+      width: calc(100% - 130px);
+    }
+
+    @include screen-max-width(xxmedium) {
+      width: calc(100%);
     }
   }
 
@@ -523,12 +544,6 @@
         width: 100%;
       }
     }
-    // .token-compare {
-    //   color: #666666;
-    //   font-size: 14px;
-    //   letter-spacing: .5px;
-    //   text-align: right;
-    // }
 
     .k.k-exchange {
       background-image: url($image-path + 'icon-swap-down.svg');
@@ -547,14 +562,6 @@
 
       &--absolute div {
         display: none;
-      }
-
-      // &--left {
-        // padding-right: 12px !important;
-      // }
-
-      &--transfer {
-        // padding-right: 12px !important;
       }
     }
 

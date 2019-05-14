@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import * as limitOrderActions from "../../actions/limitOrderActions"
 import * as common from "../../utils/common"
 import { getTranslate } from 'react-localize-redux'
+import * as converter from "../../utils/converter"
 
 @connect((store, props) => {
   const account = store.account.account
@@ -32,6 +33,8 @@ export default class LimitOrderFee extends React.Component {
 
     render() {
       var calculateFee = (this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount) / 100
+      calculateFee = converter.roundingNumber(calculateFee)
+      var sourceAmount = converter.roundingNumber(this.props.limitOrder.sourceAmount)
       if (calculateFee == 0){
         return ""
       }
@@ -50,7 +53,7 @@ export default class LimitOrderFee extends React.Component {
         return (
           <div className={"limit-order-fee"}>
               <div>
-                Fee: {calculateFee} {this.props.limitOrder.sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of {this.props.limitOrder.sourceAmount})
+                Fee: {calculateFee} {this.props.limitOrder.sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of {sourceAmount})
               </div>
               <div>
                 Buy 3000KNC to discount 50% for 20 orders

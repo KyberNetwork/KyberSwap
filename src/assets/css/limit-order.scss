@@ -539,3 +539,39 @@
         }
     }
 }
+
+.limit-order-compare-rate {
+    font-size: 14px;
+    font-weight: 500;
+    color: #626b86;
+    padding-left: 20px;
+
+    &__text {
+        margin-bottom: 2px;
+    }
+}
+
+.balance-order {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  top: 20px;
+  padding-right: 20px;
+
+  &__item {
+    padding: 3px 9px;
+    margin-left: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #8690ad;
+    border-radius: 14px;
+    border: solid 1px #e1e4eb;
+    background-color: #f7fafe;
+    cursor: pointer;
+    transition: box-shadow .3s;
+
+    &:hover {
+      box-shadow: 0 2px 3px 0 #ddd;
+    }
+  }
+}

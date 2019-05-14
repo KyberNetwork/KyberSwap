@@ -1,19 +1,11 @@
 import React from "react"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
-
 import * as limitOrderActions from "../../actions/limitOrderActions"
 import * as globalActions from "../../actions/globalActions"
-
-
 import * as common from "../../utils/common"
 import * as constants from "../../services/constants"
-
-import { LimitOrderForm, LimitOrderSubmit, LimitOrderFee, LimitOrderList, LimitOrderCompareRate, LimitOrderAccount } from "../LimitOrder"
-
-
-
-
+import { LimitOrderForm, LimitOrderSubmit, LimitOrderFee, LimitOrderList, LimitOrderAccount } from "../LimitOrder"
 
 @connect((store, props) => {
     const account = store.account.account
@@ -30,9 +22,6 @@ import { LimitOrderForm, LimitOrderSubmit, LimitOrderFee, LimitOrderList, LimitO
 })
 
 export default class LimitOrderBody extends React.Component {
-
-
- 
     chooseToken = (symbol, address, type) => {
         this.props.dispatch(limitOrderActions.selectTokenAsync(symbol, address, type))
         var path
@@ -56,7 +45,6 @@ export default class LimitOrderBody extends React.Component {
           <div>
             <div>
                 <LimitOrderForm chooseToken = {this.chooseToken}/>
-                <LimitOrderCompareRate />
             </div>
             <div>
                 <div>

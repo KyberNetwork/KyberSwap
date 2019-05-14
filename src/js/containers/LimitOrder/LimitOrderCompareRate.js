@@ -1,27 +1,22 @@
 import React from "react"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
-
 import * as converters from "../../utils/converter"
 
-
 @connect((store) => {
-    const account = store.account.account
-    const translate = getTranslate(store.locale)
-    const tokens = store.tokens.tokens
-    const limitOrder = store.limitOrder
-    const ethereum = store.connection.ethereum      
+  const account = store.account.account
+  const translate = getTranslate(store.locale)
+  const tokens = store.tokens.tokens
+  const limitOrder = store.limitOrder
+  const ethereum = store.connection.ethereum
 
-    return {
-        translate, limitOrder, tokens, account, ethereum        
+  return {
+    translate, limitOrder, tokens, account, ethereum
 
-    }
+  }
 })
 
-
 export default class LimitOrderCompareRate extends React.Component {
-
-
 
     render() {
         if (this.props.limitOrder.isSelectToken) {
@@ -49,15 +44,15 @@ export default class LimitOrderCompareRate extends React.Component {
             var expectedRate = converters.toT(this.props.limitOrder.offeredRate)
             return (
                 <div className={"limit-order-compare-rate"}>
-                    <div>
+                    <div className={"limit-order-compare-rate__text"}>
                         Current Rate: 1 {this.props.limitOrder.sourceTokenSymbol} = {converters.roundingNumber(expectedRate)} {this.props.limitOrder.destTokenSymbol}
                     </div>
                     
                     {percentChange > 0 && (
-                        <div>
-                            Your price is {percentChange}% higher than current Market
-                        </div>                    
-                    )}
+                    <div className={"limit-order-compare-rate__text"}>
+                      Your price is {percentChange}% higher than current Market
+                    </div>
+                  )}
                     
 
                 </div>
@@ -65,4 +60,5 @@ export default class LimitOrderCompareRate extends React.Component {
         }
 
     }
+  
 }
