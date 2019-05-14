@@ -2,7 +2,7 @@ import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
 import BLOCKCHAIN_INFO from "../../../env"
-
+import * as common from "../utils/common";
 
 var initState = constants.INIT_EXCHANGE_FORM_STATE
 initState.snapshot = constants.INIT_EXCHANGE_FORM_STATE
@@ -469,21 +469,22 @@ const exchange = (state = initState, action) => {
       newState.maxCap = action.payload.maxCap
       return newState
     }
-    case "EXCHANGE.SET_GAS_PRICE_SWAP_COMPLETE": {
-
+    case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
       if (!newState.isEditGasPrice) {
-        var { safeLowGas, standardGas, fastGas, defaultGas, selectedGas } = action.payload
+        var { safeLowGas, standardGas, fastGas, defaultGas, selectedGas, maxGasPrice } = action.payload;
+
+        const gasExchange = common.getGasExchange(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice);
 
         var gasPriceSuggest = { ...newState.gasPriceSuggest }
 
-        gasPriceSuggest.fastGas = Math.round(fastGas * 10) / 10
-        gasPriceSuggest.standardGas = Math.round(standardGas * 10) / 10
-        gasPriceSuggest.safeLowGas = Math.round(safeLowGas * 10) / 10
+        gasPriceSuggest.fastGas = Math.round(gasExchange.fastGas * 10) / 10
+        gasPriceSuggest.standardGas = Math.round(gasExchange.standardGas * 10) / 10
+        gasPriceSuggest.safeLowGas = Math.round(gasExchange.safeLowGas * 10) / 10
 
         newState.gasPriceSuggest = { ...gasPriceSuggest }
-        newState.gasPrice = Math.round(defaultGas * 10) / 10
+        newState.gasPrice = Math.round(gasExchange.defaultGas * 10) / 10
 
-        newState.selectedGas = selectedGas
+        newState.selectedGas = selectedGas;
       }
       return newState
     }

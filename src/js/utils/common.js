@@ -191,3 +191,21 @@ export function formatFractionalValue(input, decimal) {
     }
     return value;
 }
+
+export function getGasExchange(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
+    var safeLowGas = parseFloat(safeLowGas)
+    var standardGas = parseFloat(standardGas)
+    var fastGas = parseFloat(fastGas)
+    var defaultGas = parseFloat(defaultGas)
+    var maxGas = parseFloat(maxGas)
+    if (fastGas > maxGas) {
+        var returnSuggest = {}
+        returnSuggest.fastGas = maxGas
+        returnSuggest.standardGas = maxGas
+        returnSuggest.safeLowGas = maxGas - maxGas * 30 / 100
+        returnSuggest.defaultGas = maxGas
+        return returnSuggest
+    } else {
+        return {safeLowGas, standardGas, fastGas, defaultGas}
+    }
+}
