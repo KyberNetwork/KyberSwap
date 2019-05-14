@@ -26,6 +26,17 @@
   }
 }
 
+@keyframes underlineOut {
+  0% {
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+  }
+  100% {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+  }
+}
+
 @mixin animation($animationName) {
   -webkit-animation-name: $animationName;
   animation-name: $animationName;
