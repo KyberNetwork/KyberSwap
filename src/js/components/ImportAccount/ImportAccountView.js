@@ -13,7 +13,13 @@ const ImportAccountView = (props) => {
   var isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid;
   const { isIOS: isIos, isAndroid } = props.onMobile;
 
-  const importInactiveClass = !props.isAgreedTermOfService ? 'import-account__item--inactive' : '';
+  let importInactiveClass =  "";
+
+  if (props.tradeType !== "limit_order") {
+    importInactiveClass = !props.isAgreedTermOfService ? 'import-account__item--inactive' : '';
+  } else {
+    importInactiveClass = !props.isUserLogin ? 'import-account__item--inactive' : '';
+  }
 
   let importAccountTitle = props.translate("address.connect_your_wallet_to_swap") || "Connect your Wallet to Swap";
   if (props.tradeType === "transfer") {
@@ -25,7 +31,13 @@ const ImportAccountView = (props) => {
   return (
     <div className="import-account">
       <div className="import-account__choose-wallet-container container">
-        {props.isAgreedTermOfService && (
+        {props.isAgreedTermOfService && props.tradeType !== "limit_order" && (
+          <h1 className="import-account__title">
+            {importAccountTitle}
+          </h1>
+        )}
+
+        {props.tradeType === "limit_order" && (
           <h1 className="import-account__title">
             {importAccountTitle}
           </h1>

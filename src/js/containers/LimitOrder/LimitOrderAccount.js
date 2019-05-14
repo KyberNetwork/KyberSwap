@@ -7,6 +7,7 @@ import { ImportAccountView } from '../../components/ImportAccount'
 import { TopBalance, AccountBalance } from "../TransactionCommon";
 
 import * as limitOrderActions from "../../actions/limitOrderActions";
+import { isUserLogin } from "../../utils/common"
 
 @connect((store, props) => {
 	const account = store.account.account;
@@ -54,6 +55,7 @@ export default class LimitOrderAccount extends React.Component {
             translate={this.props.translate}
             onMobile={this.props.global.onMobile}
             tradeType={"limit_order"}
+            isUserLogin={isUserLogin()}
             />
 				</div>
 			);

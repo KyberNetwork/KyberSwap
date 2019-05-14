@@ -12,6 +12,14 @@
 
 .limit-order-account {
 
+    .import-account {
+        &__title {
+            font-size: 14px;
+            color: #5A5E67;
+            font-weight: 600;
+        }
+    }
+
     // Override
     .top-token {
         width: 417px;
