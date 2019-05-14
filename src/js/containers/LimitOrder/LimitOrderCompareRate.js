@@ -24,13 +24,6 @@ export default class LimitOrderCompareRate extends React.Component {
 
 
     render() {
-        if (this.props.limitOrder.offeredRate == 0){
-            return (
-                <div className={"limit-order-compare-rate"}>
-                    This pair is currently not supported by market
-                </div>
-            )
-        }
         if (this.props.limitOrder.isSelectToken) {
             return (
                 <div className={"limit-order-compare-rate"}>
@@ -41,7 +34,16 @@ export default class LimitOrderCompareRate extends React.Component {
             )
         }
 
-        if (!this.props.limitOrder.isSelectToken) {
+        if (!this.props.limitOrder.isSelectToken && this.props.limitOrder.offeredRate == 0){
+            return (
+                <div className={"limit-order-compare-rate"}>
+                    This pair is currently not supported by market
+                </div>
+            )
+        }
+     
+
+        if (!this.props.limitOrder.isSelectToken && this.props.limitOrder.offeredRate != 0) {
             var triggerRate = converters.roundingRate(this.props.limitOrder.triggerRate)
             var percentChange = converters.percentChange(triggerRate, this.props.limitOrder.offeredRate)
             var expectedRate = converters.toT(this.props.limitOrder.offeredRate)

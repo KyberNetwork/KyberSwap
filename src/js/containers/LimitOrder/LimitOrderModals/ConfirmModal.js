@@ -11,6 +11,7 @@ import {getWallet} from "../../../services/keys"
 
 import {getNonce, submitOrder} from "../../../services/limit_order"
 import * as converters from "../../../utils/converter"
+import BLOCKCHAIN_INFO from "../../../../../env"
 
 @connect((store, props) => {
     const account = store.account.account
@@ -43,8 +44,15 @@ export default class ConfirmModal extends React.Component {
 
             // nonce from contract
             var concatTokenAddresses = converters.concatTokenAddresses(this.props.limitOrder.sourceToken, this.props.limitOrder.destToken)
+            console.log(concatTokenAddresses)
             var nonceContract = await ethereum.call("getLimitOrderNonce", this.props.account.address, concatTokenAddresses)
-            return nonceContract > nonceServer ? nonceContract: nonceServer           
+            nonceContract += 1
+
+            //get minimum nonce
+            var minNonce = converters.calculateMinNonce(BLOCKCHAIN_INFO.kyberswapAddress)
+            
+            var validNonce = converters.findMaxNumber([nonceServer, nonceContract, minNonce])
+            return validNonce
         }catch(err){
             console.log(err)
             throw err         
@@ -73,16 +81,18 @@ export default class ConfirmModal extends React.Component {
             minConversionRate = converters.toHex(minConversionRate)
 
             
-            var feeInPrecision = this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount / 100
-            feeInPrecision = converters.toTWei(feeInPrecision)
+            var feeInPrecision = this.props.limitOrder.orderFee 
+            feeInPrecision = converters.toTWei(feeInPrecision, 4)
             feeInPrecision = converters.toHex(feeInPrecision)
-            
 
-            var signData = await ethereum.call("keccak256", user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision)
-            console.log(signData)
-            var signature = await wallet.signSignature(signData, this.props.account)     
+            var signData = await ethereum.call("getMessageHash", user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision)
             
-            //submit to server
+            var signature = await wallet.signSignature(signData, this.props.account)     
+            var pramameters = await ethereum.call("getSignatureParameters", signature)
+            // console.log(pramameters)
+            // console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
+            
+            
             var newOrder = await submitOrder({  
                 address: this.props.account.address,
                 nonce: nonce,
@@ -95,10 +105,7 @@ export default class ConfirmModal extends React.Component {
             })
 
             //save new order
-            this.props.dispatch(limitOrderActions.addNewOrder(newOrder))
-
-            //increase account nonce 
-            // this.props.dispatch(accountActions.incManualNonceAccount(this.props.account.address))
+            this.props.dispatch(limitOrderActions.addNewOrder(newOrder))            
 
             //go to the next step
             this.props.dispatch(limitOrderActions.forwardOrderPath())

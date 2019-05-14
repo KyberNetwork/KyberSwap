@@ -684,19 +684,10 @@ export function bigPow(n, m){
 }
 
 export function  concatTokenAddresses(source, dest) {
-    var bigSource = new BigNumber(source)
-    var weightLow = bigPow(2, 32)
-    var weightHeight = bigPow(2, 128)
-    bigSource = bigSource.div(weightLow)
-    bigSource = bigSource.div(weightHeight)
+    var sourceFactor = source.substring(0, source.length - 8)
+    var destFactor = dest.substring(2, dest.length - 8)
 
-    var bigDest = new BigNumber(dest)
-    bigDest = bigDest.div(weightLow)
-
-    var sum = bigSource.plus(bigDest)
-
-    return "0x" + sum.toString(16)
-    // return sum.toString()
+    return sourceFactor + destFactor
 }
 
 export function base64toHEX(base64) {
@@ -713,4 +704,22 @@ export function base64toHEX(base64) {
 
   }
   return HEX.toUpperCase();
+}
+
+
+export function  calculateMinNonce(address) {
+  var addrFactor = address.substring(0, address.length - 8)  
+  return addrFactor.toLowerCase() + "00000000000000000000000000000000"
+}
+
+export function findMaxNumber(arr) {
+  console.log(arr)
+  if (arr.length === 0) return false
+  var maxNum = arr[0]
+  for (var i = 1; i < arr.length; i++){
+    if (compareTwoNumber(arr[i], maxNum) == 1){
+      maxNum = arr[i]
+    }
+  }
+  return maxNum
 }

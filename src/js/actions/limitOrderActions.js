@@ -4,7 +4,7 @@
 export function selectTokenAsync(symbol, address, type) {
   return {
     type: "LIMIT_ORDER.SELECT_TOKEN_ASYNC",
-    payload: { symbol, address, type }
+    payload: {symbol, address, type }
   }
 }
 
@@ -23,10 +23,10 @@ export function inputChange(focus, value) {
   }
 }
 
-export function updateRate(source, dest, sourceAmount, sourceTokenSymbol, isManual = false) {
+export function updateRate(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual = false) {
   return {
     type: "LIMIT_ORDER.UPDATE_RATE_PENDING",
-    payload: { source, dest, sourceAmount, sourceTokenSymbol, isManual }
+    payload: {ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual }
   }
 }
 

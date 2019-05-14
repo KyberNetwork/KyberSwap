@@ -12,6 +12,7 @@ import * as globalActions from "../../actions/globalActions"
 import { TokenSelector } from "../TransactionCommon"
 
 import constants from "../../services/constants"
+import { default as _ } from 'underscore';
 
 
 
@@ -33,13 +34,40 @@ import constants from "../../services/constants"
 
 export default class LimitOrderForm extends React.Component {
 
+
+  getEthereumInstance = () => {
+    var ethereum = this.props.ethereum
+    if (!ethereum){
+      ethereum = new EthereumService()
+    }
+    return ethereum
+  }
+
+  fetchCurrentRate = (sourceAmount) => {
+    var source = this.props.limitOrder.sourceToken
+    var dest = this.props.limitOrder.destToken
+    
+    var sourceTokenSymbol = this.props.limitOrder.sourceTokenSymbol
+    var isManual = true
+
+    var ethereum = this.getEthereumInstance()
+    this.props.dispatch(limitOrderActions.updateRate(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual));
+    
+  }
+
+  lazyFetchRate = _.debounce(this.fetchCurrentRate, 500)
+
   handleInputChange = (e, type, referValue) => {
     var value = e.target.value
     var check = filterInputNumber(e, value, referValue)
     if (check) {     
       if (value < 0) return
       this.props.dispatch(limitOrderActions.inputChange(type, value));
-  
+      
+      if (type === "source"){
+        this.lazyFetchRate(value)
+      }
+      
       // this.lazyEstimateGas()
   
       // this.validateRateAndSource(value)

@@ -7,6 +7,7 @@ import { getTranslate } from 'react-localize-redux';
 import * as common from "./common"
 import {getFee} from "../services/limit_order"
 import {isUserLogin} from "../utils/common"
+import * as utilActions from '../actions/utilActions'
 
 import * as constants from "../services/constants"
 
@@ -14,26 +15,37 @@ function* selectToken(action) {
     const { symbol, address, type } = action.payload
     yield put(limitOrderActions.selectToken(symbol, address, type))
 
+    const state = store.getState();
+    var ethereum = state.connection.ethereum
+    var limitOrder = state.limitOrder
+    var source = limitOrder.sourceToken
+    var dest = limitOrder.destToken
+    var sourceTokenSymbol = limitOrder.sourceTokenSymbol
+    var isManual = true
+    var sourceAmount = limitOrder.sourceAmount
 
 
     if (type === "source" ){
-      const state = store.getState();
-      var limitOrder = state.limitOrder
       var account = state.account.account
       if (isUserLogin() && account !== false){
         yield put(limitOrderActions.fetchFee(account.address, symbol, limitOrder.destTokenSymbol))
       }
-      
+
+      source = address
+      sourceTokenSymbol = symbol
+    }else{
+      dest = address      
     }
+    
     
     // yield put(utilActions.hideSelectToken())
   
     // yield put(actions.checkSelectToken())
     // yield call(estimateGasNormal)
     
-    // if (ethereum){
-    //   yield call(ethereum.fetchRateExchange, true)
-    // }
+    if (ethereum){      
+      yield put(limitOrderActions.updateRate(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual ))
+    }
   
     //calculate gas use
     // yield call(updateGasUsed)
@@ -41,13 +53,12 @@ function* selectToken(action) {
 
 
 function* updateRatePending(action) {
-  var { source, dest, sourceTokenSymbol, isManual, sourceAmount } = action.payload;
+  var { ethereum, source, dest, sourceTokenSymbol, isManual, sourceAmount } = action.payload;
   
 
   const state = store.getState();
   const translate = getTranslate(state.locale);
   const { destTokenSymbol, destAmount } = state.limitOrder;
-  var ethereum = state.connection.ethereum
 
 
   var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount)

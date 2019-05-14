@@ -101,9 +101,7 @@ export function* createNewConnection(action) {
   //yield cancel(watchConnectionTask)
 }
 
-function* watchMetamaskAccount(ethereum, web3Service) {
-  console.log("metamask_account")
-  console.log(web3Service)
+function* watchMetamaskAccount(ethereum, web3Service) {  
   //check 
   var translate = getTranslate(store.getState().locale)
   while (true) {

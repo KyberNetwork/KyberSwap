@@ -3,6 +3,8 @@ import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import {HeaderTransaction} from "../TransactionCommon"
 
+import EthereumService from "../../services/ethereum/ethereum"
+
 import * as limitOrderActions from "../../actions/limitOrderActions"
 
 import {LimitOrderBody} from "../LimitOrder"
@@ -32,6 +34,15 @@ export default class LimitOrder extends React.Component {
       invervalProcess: null
     }
   }
+
+  getEthereumInstance = () => {
+    var ethereum = this.props.ethereum
+    if (!ethereum){
+      ethereum = new EthereumService()
+    }
+    return ethereum
+  }
+  
   fetchCurrentRate = () => {
     var source = this.props.limitOrder.sourceToken
     var dest = this.props.limitOrder.destToken
@@ -39,9 +50,8 @@ export default class LimitOrder extends React.Component {
     var sourceTokenSymbol = this.props.limitOrder.sourceTokenSymbol
     var isManual = false
 
-    if (this.props.ethereum){
-      this.props.dispatch(limitOrderActions.updateRate(source, dest, sourceAmount, sourceTokenSymbol, isManual));
-    }
+    var ethereum = this.getEthereumInstance()
+    this.props.dispatch(limitOrderActions.updateRate(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual));
     
   }
 
@@ -70,6 +80,7 @@ export default class LimitOrder extends React.Component {
       var destSymbol = this.props.params.dest.toUpperCase()
       var destAddress = this.props.tokens[destSymbol].address
 
+      // var ethereum = this.getEthereumInstance()
       this.props.dispatch(limitOrderActions.selectTokenAsync(sourceSymbol, sourceAddress, "source"))
       this.props.dispatch(limitOrderActions.selectTokenAsync(destSymbol, destAddress, "dest"))
     }

@@ -710,11 +710,24 @@ export default class BaseProvider {
         })
     }
 
-    keccak256( ...args){
+    getMessageHash(user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision){
+        console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})        
         return new Promise((resolve) => {
-            var signature = this.rpc.utils.sha3( ...args)
+            var signature = this.rpc.utils.soliditySha3({t: 'address', v: user}, {t: 'uint256', v: nonce}, {t: 'address', v: srcToken}, {t: 'uint256', v: srcQty}, {t: 'address', v: destToken},
+            {t: 'address', v: destAddress}, {t: 'uint256', v: minConversionRate}, {t: 'uint256', v: feeInPrecision});
+            // var signature = this.rpc.utils.soliditySha3(user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision)
             resolve(signature)
         })
         
+    }
+
+    getSignatureParameters(signature){
+        return new Promise((resolve) => {       
+            var {v, r, s} = ethUtil.fromRpcSig(signature)
+            r = ethUtil.bufferToHex(r)    
+            s = ethUtil.bufferToHex(s)    
+
+            resolve({v, r,s})
+        })
     }
 }
