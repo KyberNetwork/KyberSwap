@@ -8,7 +8,8 @@ import * as limitOrderActions from "../../actions/limitOrderActions"
 import * as globalActions from "../../actions/globalActions"
 import { TokenSelector } from "../TransactionCommon"
 import constants from "../../services/constants"
-import { LimitOrderCompareRate } from "../LimitOrder"
+import { LimitOrderCompareRate } from "../LimitOrder";
+import * as converters from "../../utils/converter";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -37,7 +38,19 @@ export default class LimitOrderForm extends React.Component {
   
       // this.validateRateAndSource(value)
     }
-  }
+  };
+
+  addSrcAmountByBalancePercentage = (balancePercentage) => {
+    const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol;
+    const srcToken = this.props.tokens[srcTokenSymbol];
+    const srcTokenBalance = converters.toT(srcToken.balance, srcToken.decimals);
+
+    let sourceAmountByPercentage = srcTokenBalance * (balancePercentage / 100);
+
+    if (!+sourceAmountByPercentage) sourceAmountByPercentage = 0;
+
+    this.props.dispatch(limitOrderActions.inputChange('source', sourceAmountByPercentage));
+  };
 
   // chooseToken = (symbol, address, type) => {
   //   this.props.dispatch(limitOrderActions.selectTokenAsync(symbol, address, type))
@@ -61,6 +74,14 @@ export default class LimitOrderForm extends React.Component {
 
     return (
       <div className={"exchange-content exchange-content--limit-order limit-order-form container"}>
+        {this.props.account !== false && (
+          <div className={'balance-order'}>
+            <div className={'balance-order__item'} onClick={() => this.addSrcAmountByBalancePercentage(25)}>25%</div>
+            <div className={'balance-order__item'} onClick={() => this.addSrcAmountByBalancePercentage(50)}>50%</div>
+            <div className={'balance-order__item'} onClick={() => this.addSrcAmountByBalancePercentage(80)}>80%</div>
+            <div className={'balance-order__item'} onClick={() => this.addSrcAmountByBalancePercentage(100)}>100%</div>
+          </div>
+        )}
         <div className={"exchange-content__item--wrapper"}>
           <div className={"exchange-item-label"}>{this.props.translate("transaction.exchange_from") || "From"}:</div>
           <div className={`exchange-content__item exchange-content__item--left select-token`}
@@ -101,9 +122,6 @@ export default class LimitOrderForm extends React.Component {
               <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="swap-error" type="light" />
             }
           </div>
-          {this.props.account !== false && (
-            <div>Balance selector</div>
-          )}
         </div>
 
         <div className={"exchange-content__item--wrapper"}>
