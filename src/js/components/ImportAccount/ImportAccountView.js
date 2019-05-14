@@ -15,17 +15,23 @@ const ImportAccountView = (props) => {
 
   const importInactiveClass = !props.isAgreedTermOfService ? 'import-account__item--inactive' : '';
 
+  let importAccountTitle = props.translate("address.connect_your_wallet_to_swap") || "Connect your Wallet to Swap";
+  if (props.tradeType === "transfer") {
+    importAccountTitle = props.translate("address.connect_your_wallet_to_transfer") || "Connect your Wallet to Transfer";
+  } else if (props.tradeType === "limit_order") {
+    importAccountTitle = props.translate("address.connect_your_wallet_to_limit_order") || "Import your Wallet to Submit Order";
+  }
+
   return (
     <div className="import-account">
       <div className="import-account__choose-wallet-container container">
         {props.isAgreedTermOfService && (
-          <h1 className="import-account__title">{props.tradeType === "swap" ?
-            props.translate("address.connect_your_wallet_to_swap") || "Connect your Wallet to Swap" :
-            props.translate("address.connect_your_wallet_to_transfer") || "Connect your Wallet to Transfer"}
+          <h1 className="import-account__title">
+            {importAccountTitle}
           </h1>
         )}
 
-        {!props.isAgreedTermOfService && (
+        {!props.isAgreedTermOfService && props.tradeType !== "limit_order" && (
           <div className="import-account__title--inactive">
             <div className="import-account__title--inactive--seperator"></div>
             <div className="import-account__title--inactive--content">

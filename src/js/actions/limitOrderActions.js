@@ -23,6 +23,13 @@ export function inputChange(focus, value) {
   }
 }
 
+export function focusInput(focus) {
+  return {
+    type: "LIMIT_ORDER.FOCUS_INPUT",
+    payload: focus
+  }
+}
+
 export function updateRate(source, dest, sourceAmount, sourceTokenSymbol, isManual = false) {
   return {
     type: "LIMIT_ORDER.UPDATE_RATE_PENDING",
