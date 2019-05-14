@@ -93,3 +93,11 @@ export function addNewOrder(order) {
     payload: {order}
   }
 }
+
+
+export function focusInput(focus) {
+  return {
+    type: "LIMIT_ORDER.FOCUS_INPUT",
+    payload: focus
+  }
+}

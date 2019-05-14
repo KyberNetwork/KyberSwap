@@ -25,7 +25,6 @@ import { TermAndServices } from "../../containers/CommonElements";
     ...store.account,
     translate: getTranslate(store.locale),
     isVisitFirstTime: store.global.isVisitFirstTime,
-    translate: getTranslate(store.locale),
     termOfServiceAccepted: store.global.termOfServiceAccepted,
     ethereum: store.connection.ethereum,
     tokens: supportTokens,

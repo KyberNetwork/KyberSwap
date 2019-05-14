@@ -10,6 +10,134 @@
     }
 }
 
+.limit-order-account {
+
+    .import-account {
+        &__title {
+            font-size: 14px;
+            color: #5A5E67;
+            font-weight: 600;
+        }
+    }
+
+    // Override
+    .top-token {
+        width: 417px;
+
+        // &-item {
+        //     cursor: pointer;
+        //     font-size: 12px;
+        //     font-weight: 600;
+        //     color: #626b86;
+    
+        //     &.active {
+        //         color: #8690ad;
+        //         // opacity: 1;
+        //     }
+    
+        //     &__symbol {
+        //         text-decoration: none;
+        //     }
+        // }
+
+        // &-more {
+        //     font-size: 12px;
+        //     font-weight: 600;
+        //     color: #fea34c;
+        //     text-decoration: underline;
+        //     background-color: transparent;
+
+        //     &:hover {
+        //         background-color: transparent;
+        //     }
+
+        //     &:after {
+        //         background-image: none;
+        //         content: "";
+        //     }
+        // }
+    }
+
+    &__advance {
+        width: 417px;
+        height: 252px;
+        padding: 10px 20px;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px 0 rgba(87, 102, 119, 0.14);
+        background-color: #ffffff;
+        position: relative;
+
+        @include animation(slideInDown) {
+            animation-duration: 0.3s;
+            animation-timing-function: ease-out;
+          };
+
+        .advance-close {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            z-index: 2;
+            padding: 10px;
+            cursor: pointer;
+            @include screen-max-width(large) {
+                right: 0px;
+                top: -5px;
+            }
+            &_wrapper {
+                background-image: url("../img/v3/Close-3.svg");
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        // Override
+        .account-balance {
+            &__address-text {
+                font-size: 16px;
+                font-weight: 600;
+                color: #ef8102;
+            }
+
+            &__wallet-name {
+                font-size: 12px;
+                font-weight: 500;
+                color: #141927;
+            }
+
+            &__address-link {
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+            &__content-search-container {
+                &::before {
+                    width: 16px;
+                    height: 16px;
+                }
+            }
+
+            & &__content-search {
+                &::placeholder {
+                    color: #b8babe;
+                    font-weight: 500;
+                }
+            }
+
+            &__sort-dropdown {
+                font-weight: 500;
+                color: #5a5e67;
+            }
+
+            &__token-item {
+                font-size: 12px;
+                font-weight: 500;
+                color: #5a5e67;
+            }
+        }
+    }
+}
+
+
 .limit-order-list {
     width: 936px;
     height: 381px;

@@ -28,7 +28,8 @@ import * as converters from "../../utils/converter"
     isFixedSourceToken: isFixedSourceToken,
     global: store.global,
     walletName: props.walletName,
-    isOnDAPP: props.isOnDAPP
+    isOnDAPP: props.isOnDAPP,
+    limitOrder : store.limitOrder
   }
 })
 
@@ -46,7 +47,7 @@ export default class AccountBalance extends React.Component {
 
   selectBalance = (sourceSymbol) => {
 
-    this.props.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, this.props.screen === "swap"?"source":"transfer")
+    this.props.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, this.props.screen === "swap" || this.props.screen === "limit_order" ?"source":"transfer")
     
     var sourceBalance = this.props.tokens[sourceSymbol].balance
     var sourceDecimal = this.props.tokens[sourceSymbol].decimals
@@ -60,10 +61,14 @@ export default class AccountBalance extends React.Component {
         var gasLimit
         var totalGas
         if (this.props.screen === "swap") {
-            var destTokenSymbol = this.props.exchange.destTokenSymbol
+            var destTokenSymbol = this.props.exchange.destTsokenSymbol
             gasLimit = this.props.tokens[destTokenSymbol].gasLimit || this.props.exchange.max_gas
             totalGas = converters.calculateGasFee(this.props.exchange.gasPrice, gasLimit) * Math.pow(10, 18)
             // amount = (sourceBalance - totalGas) * percent / 100
+        } else if (this.props.screen === "limit_order") {
+            const destTokenSymbol = this.props.limitOrder.destTokenSymbol;
+            gasLimit = this.props.tokens[destTokenSymbol].gasLimit || this.props.limitOrder.max_gas;
+            totalGas = converters.calculateGasFee(this.props.limitOrder.gasPrice, gasLimit) * Math.pow(10, 18);
         } else {
             gasLimit = this.props.transfer.gas
             totalGas = converters.calculateGasFee(this.props.transfer.gasPrice, gasLimit) * Math.pow(10, 18)
@@ -75,7 +80,7 @@ export default class AccountBalance extends React.Component {
         amount = amount.replace(",", "")
     }
 
-    if (this.props.screen === "swap") {
+    if (this.props.screen === "swap" || this.props.screen === "limit_order") {
         this.props.dispatch(this.props.changeAmount('source', amount))
         this.props.dispatch(this.props.changeFocus('source'));
     } else {

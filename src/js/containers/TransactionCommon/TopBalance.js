@@ -19,7 +19,8 @@ import { getTranslate } from "react-localize-redux";
         changeAmount: props.changeAmount,
         changeFocus: props.changeFocus,
         ethereum: store.connection.ethereum,
-        translate: getTranslate(store.locale)
+        translate: getTranslate(store.locale),
+        limitOrder: store.limitOrder
     }
 })
 
@@ -44,6 +45,10 @@ export default class TopBalance extends React.Component {
                 gasLimit = this.props.tokens[destTokenSymbol].gasLimit || this.props.exchange.max_gas
                 totalGas = converters.calculateGasFee(this.props.exchange.gasPrice, gasLimit) * Math.pow(10, 18)
                 // amount = (sourceBalance - totalGas) * percent / 100
+            } else if (this.props.screen === "limit_order") { 
+                const destTokenSymbol = this.props.limitOrder.destTokenSymbol;
+                gasLimit = this.props.tokens[destTokenSymbol].gasLimit || this.props.limitOrder.max_gas;
+                totalGas = converters.calculateGasFee(this.props.limitOrder.gasPrice, gasLimit) * Math.pow(10, 18)
             } else {
                 gasLimit = this.props.transfer.gas
                 totalGas = converters.calculateGasFee(this.props.transfer.gasPrice, gasLimit) * Math.pow(10, 18)
@@ -55,7 +60,7 @@ export default class TopBalance extends React.Component {
             amount = amount.replace(",", "")
         }
 
-        if (this.props.screen === "swap") {
+        if (this.props.screen === "swap" || this.props.screen === "limit_order") {
             this.props.dispatch(this.props.changeAmount('source', amount))
             this.props.dispatch(this.props.changeFocus('source'));
         } else {

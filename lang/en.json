@@ -13,6 +13,7 @@
   },
   "address": {
     "address": "Address",
+    "add": "Add",
     "import_address": "Access Your Wallet",
     "exchange_from": "Exchange from",
     "my_balance": "My Balance",
@@ -25,6 +26,7 @@
     "search": "Search",
     "connect_your_wallet_to_swap": "Connect your Wallet to Swap",
     "connect_your_wallet_to_transfer": "Connect your Wallet to Transfer",
+    "connect_your_wallet_to_limit_order": "Import your Wallet to Submit Order",
     "download": "Download",
     "your_wallet": "Your Wallet",
     "register_beta": "Coming soon",
@@ -368,7 +370,8 @@
     "order_list_title": "Manage your orders",
     "day": "Day",
     "week": "Week",
-    "month": "Month"
+    "month": "Month",
+    "submit_order": "Submit Order"
   },
   "home": "Home",
   "tracker": "Tracker",

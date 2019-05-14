@@ -69,7 +69,10 @@ const limitOrder = (state = initState, action) => {
       }
       return newState
     }
-
+    case "LIMIT_ORDER.FOCUS_INPUT": {
+      newState.inputFocus = action.payload;
+      return newState;
+    }
     case "LIMIT_ORDER.UPDATE_RATE": {
       const { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess } = action.payload
 
