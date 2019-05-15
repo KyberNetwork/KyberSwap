@@ -217,7 +217,7 @@ const transfer = (state = initState, action) => {
       newState.snapshot.isFetchingGas = false
       return newState
     }
-    case "TRANSFER.SET_GAS_PRICE_TRANSFER_COMPLETE": {
+    case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
       if (!newState.isEditGasPrice) {
         var { safeLowGas, standardGas, fastGas, defaultGas, selectedGas } = action.payload
 

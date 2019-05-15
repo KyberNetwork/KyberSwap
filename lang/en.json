@@ -371,7 +371,9 @@
     "day": "Day",
     "week": "Week",
     "month": "Month",
-    "submit_order": "Submit Order"
+    "submit_order": "Submit Order",
+    "your_balance": "Your Balance",
+    "eth_not_support": "WETH is the Wrapping Token of ETH in KyberSwap, because KyberSwap doesn't support ETH."
   },
   "home": "Home",
   "tracker": "Tracker",

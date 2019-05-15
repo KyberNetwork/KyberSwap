@@ -239,8 +239,8 @@ export default class LimitOrderSubmit extends React.Component {
 
   render() {
     return (
-      <div className={"limit-order-form"}>
-        <button onClick={this.submitOrder}>
+      <div className={"limit-order-submit"}>
+        <button className="accept-button" onClick={this.submitOrder}>
           {isUserLogin() ? "Submit" : "Login to Submit Order"}
         </button>
         <div>

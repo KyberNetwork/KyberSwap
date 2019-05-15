@@ -94,10 +94,16 @@ export function addNewOrder(order) {
   }
 }
 
-
 export function focusInput(focus) {
   return {
     type: "LIMIT_ORDER.FOCUS_INPUT",
     payload: focus
+  }
+}
+
+export function setGasPriceLimitOrderComplete(safeLowGas, standardGas, fastGas, defaultGas, selectedGas) {
+  return {
+    type: "LIMIT_ORDER.SET_GAS_PRICE_LIMIT_ORDER_COMPLETE",
+    payload: { safeLowGas, standardGas, defaultGas, fastGas, selectedGas }
   }
 }

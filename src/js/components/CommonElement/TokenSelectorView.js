@@ -3,7 +3,7 @@ import { toT, roundingNumber } from "../../utils/converter"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import { getAssetUrl, getTokenBySymbol } from "../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../env"
-
+import * as constants from "../../services/constants";
 
 
 const TokenSelectorView = (props) => {
@@ -38,13 +38,28 @@ const TokenSelectorView = (props) => {
     })
   }
 
-  var priorityTokens = BLOCKCHAIN_INFO.priority_tokens.map(value => {
+  const getWethTitle = () => {
+    return (
+      <div className="select-item__title" onClick={e => props.selectItem(e, "WETH", constants.WETH_ADDRESS)}>
+        <div className="item-icon">
+          <img alt={"WETH"} src={getAssetUrl(`tokens/weth.svg`)} />
+        </div>
+        <div>
+          <span className="bold-text">{props.translate("limit_order.eth_not_support").slice(0, 4) || "WETH"}</span>
+          <span>{props.translate("limit_order.eth_not_support").slice(4) || "is the Wrapping Token of ETH in KyberSwap, because KyberSwap doesn't support ETH."}</span>
+        </div>
+      </div>
+    )
+  }
+  
+
+  const priorityTokens = BLOCKCHAIN_INFO.priority_tokens.map(value => {
     var token = getTokenBySymbol(props.listToken, value)
     return <span key={value} onClick={(e) => {props.selectItem(e, value, token.address); props.hideTokens(e) }}>
       <img src={getAssetUrl(`tokens/${value.toLowerCase()}.svg`)} />
       {value}
     </span>
-  })
+  });
 
   return (
     <div className={`token-selector ${props.type} ${props.isFixToken?"fix_token" : ""}`}>
@@ -61,19 +76,26 @@ const TokenSelectorView = (props) => {
                 </div>
               </div>
             </div>
+            {focusItem.symbol.toLowerCase() === "weth" && 
+              <img src={require("../../../assets/img/v3/info_grey.svg")} className="weth-info"/>
+            }
             <div><i className={'k k-angle bold ' + (props.open ? 'up' : 'down')}></i></div>
           </div>
         </DropdownTrigger>
         <DropdownContent>
           <div className="select-item">
-            <div className="select-item__priority-token">{priorityTokens}</div>
-            <div className="search-item">
-              <input className="search-item__input" value={props.searchWord} placeholder={props.translate("transaction.try_dai") || `Try "DAI"`} onChange={(e) => props.changeWord(e)} type="text" onFocus={(e) => props.analytics.callTrack("trackSearchToken")}/>
-            </div>
-            <div className="list-item custom-scroll" onScroll={props.onListScroll}>
-              {getListToken()}
+            {props.screen === "limit_order" && getWethTitle()}
+            {props.screen !== "limit_order" && <div className="select-item__priority-token">{priorityTokens}</div>}
+            <div className="select-item__body">
+              <div className="search-item">
+                <input className="search-item__input" value={props.searchWord} placeholder={props.translate("transaction.try_dai") || `Try "DAI"`} onChange={(e) => props.changeWord(e)} type="text" onFocus={(e) => props.analytics.callTrack("trackSearchToken")}/>
+              </div>
+              <div className="list-item custom-scroll" onScroll={props.onListScroll}>
+                {getListToken()}
+              </div>
             </div>
           </div>
+          
         </DropdownContent>
       </Dropdown>
     </div>

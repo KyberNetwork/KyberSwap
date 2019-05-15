@@ -166,6 +166,13 @@ export function setGasPrice() {
   }
 }
 
+export function setGasPriceComplete(safeLowGas, standardGas, fastGas, defaultGas, selectedGas) {
+  return {
+    type: "GLOBAL.SET_GAS_PRICE_COMPLETE",
+    payload: { safeLowGas, standardGas, fastGas, defaultGas, selectedGas }
+  }
+}
+
 export function visitExchange() {
   return {
     type: "GLOBAL.VISIT_EXCHANGE",

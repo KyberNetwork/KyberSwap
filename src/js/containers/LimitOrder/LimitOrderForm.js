@@ -108,7 +108,6 @@ export default class LimitOrderForm extends React.Component {
           <div className={'balance-order'}>
             <div className={'balance-order__item'} onClick={() => this.addSrcAmountByBalancePercentage(25)}>25%</div>
             <div className={'balance-order__item'} onClick={() => this.addSrcAmountByBalancePercentage(50)}>50%</div>
-            <div className={'balance-order__item'} onClick={() => this.addSrcAmountByBalancePercentage(80)}>80%</div>
             <div className={'balance-order__item'} onClick={() => this.addSrcAmountByBalancePercentage(100)}>100%</div>
           </div>
         )}
@@ -123,7 +122,8 @@ export default class LimitOrderForm extends React.Component {
                       type="source"
                       focusItem={this.props.limitOrder.sourceTokenSymbol}
                       listItem={this.props.tokens}
-                      chooseToken={this.props.chooseToken}                      
+                      chooseToken={this.props.chooseToken}
+                      screen="limit_order"                      
                     />
                 </div>
               </div>
@@ -165,6 +165,7 @@ export default class LimitOrderForm extends React.Component {
                     focusItem={this.props.limitOrder.destTokenSymbol}
                     listItem={this.props.tokens}
                     chooseToken={this.props.chooseToken}
+                    screen="limit_order"
                   />
                 </div>
               </div>

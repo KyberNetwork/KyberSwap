@@ -154,6 +154,22 @@ const limitOrder = (state = initState, action) => {
       newState.listOrder = listOrder
       return newState
     }
+    
+    case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
+      const { safeLowGas, standardGas, fastGas, defaultGas, selectedGas } = action.payload;
+
+      const gasPriceSuggest = { ...newState.gasPriceSuggest };
+
+      gasPriceSuggest.fastGas = Math.round(fastGas * 10) / 10;
+      gasPriceSuggest.standardGas = Math.round(standardGas * 10) / 10;
+      gasPriceSuggest.safeLowGas = Math.round(safeLowGas * 10) / 10;
+
+      newState.gasPriceSuggest = { ...gasPriceSuggest };
+      newState.gasPrice = Math.round(defaultGas * 10) / 10;
+
+      newState.selectedGas = selectedGas;
+      return newState;
+    }
   }
   return state
 }

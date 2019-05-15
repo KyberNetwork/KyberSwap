@@ -97,6 +97,7 @@ export default class TokenSelector extends React.Component {
         isFixToken={this.props.isFixToken}
         analytics={this.props.analytics}
         onListScroll = {this.onListScroll}
+        screen={this.props.screen}
       />
     )
   }

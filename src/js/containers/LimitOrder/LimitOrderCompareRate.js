@@ -22,8 +22,9 @@ export default class LimitOrderCompareRate extends React.Component {
         if (this.props.limitOrder.isSelectToken) {
             return (
                 <div className={"limit-order-compare-rate"}>
-                    <div>
-                        Current Rate: 1 {this.props.limitOrder.sourceTokenSymbol} = <span className="rate-loading"> <img src={require('../../../assets/img/waiting-white.svg')} /></span> {this.props.limitOrder.destTokenSymbol}
+                    <div className="limit-order-compare-rate__text">
+                        <span>Current Rate:</span>{' '}
+                        <span className="rate">1 {this.props.limitOrder.sourceTokenSymbol} = <span className="rate-loading"> <img src={require('../../../assets/img/waiting-white.svg')} /></span> {this.props.limitOrder.destTokenSymbol}</span>
                     </div>
                 </div>
             )
@@ -45,7 +46,8 @@ export default class LimitOrderCompareRate extends React.Component {
             return (
                 <div className={"limit-order-compare-rate"}>
                     <div className={"limit-order-compare-rate__text"}>
-                        Current Rate: 1 {this.props.limitOrder.sourceTokenSymbol} = {converters.roundingNumber(expectedRate)} {this.props.limitOrder.destTokenSymbol}
+                        <span>Current Rate:</span>{' '}
+                        <span className="rate">1 {this.props.limitOrder.sourceTokenSymbol} = {converters.roundingNumber(expectedRate)} {this.props.limitOrder.destTokenSymbol}</span>
                     </div>
                     
                     {percentChange > 0 && (
