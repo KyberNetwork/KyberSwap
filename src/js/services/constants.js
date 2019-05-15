@@ -231,7 +231,7 @@ const ASSET_URL = 'https://files.kyber.network/DesignAssets/';
 const STORAGE_KEY = "130"
 const TRADE_TOPIC = "0xd30ca399cb43507ecec6a629a35cf45eb98cda550c27696dcb0d8c4a3873ce6c"
 const PERM_HINT = "PERM"
-const CONNECTION_TIMEOUT = 3000
+const CONNECTION_TIMEOUT = 8000
 const COMMISSION_ADDR = "0x440bBd6a888a36DE6e2F6A25f65bc4e16874faa9"
 
 module.exports = {
