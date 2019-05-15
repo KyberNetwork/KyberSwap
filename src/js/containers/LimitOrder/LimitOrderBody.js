@@ -42,7 +42,7 @@ export default class LimitOrderBody extends React.Component {
     render() {
       return (
         <div className={"limit-order-body"}>
-          <div>
+          <div className="limit-order-body--form">
             <div>
                 <LimitOrderForm chooseToken = {this.chooseToken}/>
             </div>
