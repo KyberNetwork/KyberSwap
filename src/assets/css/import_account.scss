@@ -481,8 +481,17 @@
   }
 }
 
+.keystore-modal{
+  .title{
+    font-size: 18px;
+    text-align: center;
+  }
+  .unlock-btn-wrapper{
+    text-align: center;
+  }
+}
 
-.reimport-modal{
+.reimport-modal, {
 
   &--tiny {
     @media print, screen and (max-width: 40em) {

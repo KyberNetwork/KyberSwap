@@ -130,7 +130,7 @@ export default class ConfirmModal extends React.Component {
         return (
             <div className="order-confirm-modal">
             <div className="title">Order Confirm</div>
-            <a className="x" onClick={(e) => this.props.closeModal(e)}>&times;</a>
+            <a className="x" onClick={this.closeModal}>&times;</a>
             <div className="content with-overlap">
               <div className="row">
                 <div>
