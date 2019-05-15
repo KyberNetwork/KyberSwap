@@ -6,15 +6,15 @@
                 "type": "cached"
             },
             {
-                "endPoint": "https://eth-mainnet.alchemyapi.io/jsonrpc/V1GjKybGLx6rzSu517KSWpSrTSIIXmV7",
-                "type": "prune"
-            },
-            {
                 "endPoint": "https://mainnet.infura.io/v3/c1d32946e55e45b78c330954cf543fc7",
                 "type": "prune"
             },
             {
                 "endPoint": "https://semi-node.kyber.network",
+                "type": "prune"
+            },
+            {
+                "endPoint": "https://eth-mainnet.alchemyapi.io/jsonrpc/V1GjKybGLx6rzSu517KSWpSrTSIIXmV7",
                 "type": "prune"
             }
         ],
@@ -232,13 +232,6 @@
             "decimals": 18,
             "cg_id": "enjincoin",
             "priority": true
-        },
-        "AE": {
-            "symbol": "AE",
-            "name": "Aeternity",
-            "address": "0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d",
-            "decimals": 18,
-            "cg_id": "aeternity"
         },
         "BLZ": {
             "symbol": "BLZ",
