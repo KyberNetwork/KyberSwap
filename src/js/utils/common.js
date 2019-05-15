@@ -164,6 +164,6 @@ export function getFormattedDate(date) {
 }
 
 export function isUserIsLogin() {    
-    var loginCookies = getCookie("singed_in")
+    var loginCookies = getCookie("signed_in")
     return loginCookies === true || loginCookies === "true" ? true: false
 }
