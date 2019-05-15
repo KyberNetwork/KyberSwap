@@ -37,6 +37,13 @@
             "cg_id": "ethereum",
             "gasLimit": "0"
         },
+        "WETH": {
+            "symbol": "WETH",
+            "name": "Wrapped Ether",
+            "address": "0xbca556c912754bc8e7d4aad20ad69a1b1444f42d",
+            "decimals": 18,
+            "cg_id": "weth"
+        },
         "KNC": {
             "symbol": "KNC",
             "name": "KyberNetwork",

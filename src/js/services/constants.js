@@ -213,12 +213,12 @@ const INIT_LIMIT_ORDER_STATE = {
   passphrase: false,
   selected: false,
   isSelectToken: false,
-  sourceToken: ETHER_ADDRESS,
-  sourceTokenSymbol: "ETH",
+  sourceToken: BLOCKCHAIN_INFO.tokens["KNC"].address,
+  sourceTokenSymbol: "KNC",
   sourceAmount: "",
   destAmount: "",
-  destToken: BLOCKCHAIN_INFO.tokens[secondKey].address,
-  destTokenSymbol: secondKey,
+  destToken: BLOCKCHAIN_INFO.tokens[BLOCKCHAIN_INFO.wrapETHToken].address,
+  destTokenSymbol: BLOCKCHAIN_INFO.wrapETHToken,
   destAddress: "",
   inputFocus: "source",
   maxCap: "infinity",
@@ -363,7 +363,7 @@ const ETH = {
   MAX_AMOUNT: 1000
 };
 
-const IDLE_TIME_OUT = 900
+const IDLE_TIME_OUT = 600
 const TOKEN_CHART_INTERVAL = 300000;
 
 const HISTORY_EXCHANGE = {

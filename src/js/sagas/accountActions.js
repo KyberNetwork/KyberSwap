@@ -261,7 +261,7 @@ export function* importMetamask(action) {
     yield put(actions.importNewAccount(
       address,
       "metamask",
-      web3Service,
+      web3Service.getWalletId(),
       ethereum,
       tokens,
       walletType,

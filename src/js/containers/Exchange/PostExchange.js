@@ -600,7 +600,7 @@ export default class PostExchange extends React.Component {
     //alert(walletType)
     var blockNo = this.props.snapshot.blockNo
     if (walletType === "metamask") {
-      blockNo = this.props.account.keystring.getWalletId(blockNo)
+      blockNo = this.props.account.keystring
     } else {
       blockNo = this.getReferAddr(blockNo)
     }

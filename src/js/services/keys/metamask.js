@@ -42,7 +42,10 @@ export default class Metamask {
     // return this.sealTx(txParams, keystring, password)
   }
 
-  sealTx = (txParams, web3Service, password) => {
+  sealTx = (txParams, keystring, password) => {
+
+    var web3Service = newWeb3Instance()
+
     txParams.gas = txParams.gasLimit
     delete (txParams.gasLimit)
 

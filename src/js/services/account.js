@@ -27,15 +27,15 @@ export default class Account {
     const _this = account ? account : this
     promise = new Promise((resolve, reject) => {
       const acc = _this.shallowClone()
-      resolve(acc)
-      // ethereum.call("getBalance", acc.address)
-      // .then((balance) => {
-      //   acc.balance = balance
-      //   resolve(acc)
-      // })
-      // .catch((err) => {
-      //   reject(err)
-      // })
+      // resolve(acc)
+      ethereum.call("getBalanceAtLatestBlock", acc.address)
+      .then((balance) => {
+        acc.balance = balance
+        resolve(acc)
+      })
+      .catch((err) => {
+        reject(err)
+      })
     })
 
     promise = promise.then((acc) => {
