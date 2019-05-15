@@ -86,6 +86,7 @@ export default class ConfirmModal extends React.Component {
             feeInPrecision = converters.toHex(feeInPrecision)
 
             var signData = await ethereum.call("getMessageHash", user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision)
+            console.log(signData)
             
             var signature = await wallet.signSignature(signData, this.props.account)     
 

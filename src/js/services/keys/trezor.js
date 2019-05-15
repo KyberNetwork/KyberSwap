@@ -46,16 +46,16 @@ export default class Trezor extends React.Component {
 
   async signSignature(data, account) {
     try {
-      var signature = await TrezorConnect.signMessage({
+      // var messageFromEthUtil = ethUtil.toBuffer('0x12345');
+      var signature = await TrezorConnect.ethereumSignMessage({
         path: account.keystring,
         message: data
       });
-      signature = signature.payload.signature
-      
-      // signature = Buffer.from(signature, 'base64');
-      signature = converter.base64toHEX(signature)
-      console.log(signature)
-      
+
+      // console.log(data)
+      // console.log(signature)
+      signature = "0x" + signature.payload.signature                  
+
       return signature
     } catch (err) {
       console.log(err)
