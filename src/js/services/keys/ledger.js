@@ -4,6 +4,8 @@ import * as ethUtil from 'ethereumjs-util'
 import TransportU2F from "@ledgerhq/hw-transport-u2f";
 import Eth from "@ledgerhq/hw-app-eth";
 
+import Web3 from "web3"
+
 
 import { store } from "../../store"
 import { CONFIG_ENV_LEDGER_LINK, LEDGER_SUPPORT_LINK } from "../constants"
@@ -110,7 +112,8 @@ export default class Ledger {
   async signSignature(message, account) {
     try {
       var eth = await this.connectLedger()
-      var signature = await eth.signPersonalMessage(account.keystring, message.substring(2))
+      var web3 = new Web3()
+      var signature = await eth.signPersonalMessage(account.keystring, web3.utils.toHex(message).substring(2))
 
       var rpcSig = ethUtil.toRpcSig(signature.v,  signature.r, signature.s)
       // console.log(signature)
