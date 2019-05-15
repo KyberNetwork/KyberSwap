@@ -46,8 +46,8 @@ export default class ConfirmModal extends React.Component {
             var concatTokenAddresses = converters.concatTokenAddresses(this.props.limitOrder.sourceToken, this.props.limitOrder.destToken)
             console.log(concatTokenAddresses)
             var nonceContract = await ethereum.call("getLimitOrderNonce", this.props.account.address, concatTokenAddresses)
-            nonceContract += 1
-
+            nonceContract  = converters.sumOfTwoNumber(nonceContract, 1)
+            nonceContract = converters.toHex(nonceContract)
             //get minimum nonce
             var minNonce = converters.calculateMinNonce(BLOCKCHAIN_INFO.kyberswapAddress)
             
@@ -88,9 +88,14 @@ export default class ConfirmModal extends React.Component {
             var signData = await ethereum.call("getMessageHash", user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision)
             
             var signature = await wallet.signSignature(signData, this.props.account)     
+
+            
             var pramameters = await ethereum.call("getSignatureParameters", signature)
-            // console.log(pramameters)
-            // console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
+            
+            console.log(signature)
+            console.log(signData)
+            console.log(pramameters)
+            console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
             
             
             var newOrder = await submitOrder({  

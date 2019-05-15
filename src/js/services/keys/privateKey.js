@@ -2,7 +2,6 @@ import * as keyService from "./baseKey"
 import EthereumTx from "ethereumjs-tx"
 import EthereumService from "../ethereum/ethereum"
 
-import secp256k1 from "secp256k1"
 import ethUtils from "ethereumjs-util"
 
 
@@ -11,9 +10,9 @@ export default class PrivateKey {
 
   async signSignature(message, account){
     const privateKey = account.keystring    
-    const sig = secp256k1.sign(ethUtils.toBuffer(message), ethUtils.toBuffer("0x" + privateKey))
-    const signature = ethUtils.bufferToHex(sig.signature)    
-    return signature
+    var sig = ethUtils.ecsign(ethUtils.toBuffer(message), ethUtils.toBuffer("0x" + privateKey))
+    var rpcSig = ethUtils.toRpcSig(sig.v,  sig.r, sig.s)
+    return rpcSig
   }
   
   async broadCastTx(funcName, ...args) {

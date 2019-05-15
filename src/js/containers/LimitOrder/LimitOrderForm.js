@@ -161,7 +161,7 @@ export default class LimitOrderForm extends React.Component {
               <div className={"exchange-content__label-content"}>
                 <div className="exchange-content__select select-token-panel">
                   <TokenSelector
-                    type="des"
+                    type="dest"
                     focusItem={this.props.limitOrder.destTokenSymbol}
                     listItem={this.props.tokens}
                     chooseToken={this.props.chooseToken}
