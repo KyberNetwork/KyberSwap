@@ -1709,7 +1709,8 @@ function* verifyExchange() {
   if (isNaN(sourceAmount) || sourceAmount === "") {
     sourceAmount = 0
   }
-  var validateWithFee = validators.verifyBalanceForTransaction(tokens['ETH'].balance, sourceTokenSymbol,
+  const account = state.account.account
+  var validateWithFee = validators.verifyBalanceForTransaction(account.balance, sourceTokenSymbol,
     sourceAmount, exchange.gas + exchange.gas_approve, exchange.gasPrice)
 
   if (validateWithFee) {
@@ -1721,10 +1722,10 @@ function* verifyExchange() {
 }
 
 
-export function* fetchExchangeEnable() {  
+export function* fetchExchangeEnable(action) {  
   try{
+    var {ethereum} = action.payload
     var state = store.getState()
-    const ethereum = state.connection.ethereum
     var account = state.account.account
     var address = account.address
     var enabled = yield call([ethereum, ethereum.call], "getExchangeEnable", address)
@@ -1759,6 +1760,15 @@ export function* getExchangeEnable() {
   }
 }
 
+// function* triggerAfterAccountImport(action){
+//   const { pathname } = window.location;
+
+//   if (pathname.includes("swap")) {
+//     yield call(updateRatePending)
+//   }
+// }
+
+
 export function* watchExchange() {
   yield takeEvery("EXCHANGE.TX_BROADCAST_PENDING", broadCastTx)
   yield takeEvery("EXCHANGE.APPROVAL_TX_BROADCAST_PENDING", approveTx)
@@ -1779,4 +1789,6 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.FETCH_EXCHANGE_ENABLE", fetchExchangeEnable)
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED_NORMAL", estimateGasNormal)
   yield takeEvery("EXCHANGE.SWAP_TOKEN", estimateGasNormal)
+
+  // yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED", triggerAfterAccountImport)
 }

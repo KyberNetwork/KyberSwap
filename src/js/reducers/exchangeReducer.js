@@ -577,24 +577,26 @@ const exchange = (state = initState, action) => {
       newState.isOpenImportAcount = false
       return newState
     }
-    case "GLOBAL.CLEAR_SESSION_FULFILLED": {
-      var gasPrice = action.payload
-      var resetState = { ...initState }
-      resetState.sourceToken = newState.sourceToken
-      resetState.sourceTokenSymbol = newState.sourceTokenSymbol
+    // case "GLOBAL.CLEAR_SESSION_FULFILLED": {
+    //   var gasPrice = action.payload
+    //   var resetState = { ...initState }
+    //   resetState.sourceToken = newState.sourceToken
+    //   resetState.sourceTokenSymbol = newState.sourceTokenSymbol
 
-      // resetState.gasPrice = newState.gasPrice
-      resetState.gasPrice = gasPrice
-      resetState.selectedGas = newState.selectedGas
-      resetState.isEditGasPrice = newState.isEditGasPrice
-      resetState.gasPriceSuggest = newState.gasPriceSuggest
+    //   resetState.gasPrice = gasPrice
+    //   resetState.selectedGas = newState.selectedGas
+    //   resetState.isEditGasPrice = newState.isEditGasPrice
+    //   resetState.gasPriceSuggest = newState.gasPriceSuggest
 
-      resetState.destToken = newState.destToken
-      resetState.destTokenSymbol = newState.destTokenSymbol
-      resetState.errors.selectSameToken = newState.errors.selectSameToken
+    //   resetState.destToken = newState.destToken
+    //   resetState.destTokenSymbol = newState.destTokenSymbol
+    //   resetState.errors.selectSameToken = newState.errors.selectSameToken
 
-      return resetState
-    }
+    //   resetState.isSelectToken = false
+    //   resetState.offeredRate = newState.offeredRate
+
+    //   return resetState
+    // }
 
     case "EXCHANGE.TOGGLE_BALANCE_CONTENT": {
       newState.isBalanceActive = !newState.isBalanceActive;

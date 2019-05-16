@@ -228,11 +228,11 @@ export function setNotiHandler(notiService) {
   }
 }
 
-export function setMaxGasPrice() {
-  return {
-    type: "GLOBAL.SET_MAX_GAS_PRICE",
-  }
-}
+// export function setMaxGasPrice() {
+//   return {
+//     type: "GLOBAL.SET_MAX_GAS_PRICE",
+//   }
+// }
 
 
 export function setNetworkError(error) {
