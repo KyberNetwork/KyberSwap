@@ -113,8 +113,9 @@ export default class Ledger {
     try {
       var eth = await this.connectLedger()
       var web3 = new Web3()
-      var signature = await eth.signPersonalMessage(account.keystring, web3.utils.toHex(message).substring(2))
-
+      var signature = await eth.signPersonalMessage(account.keystring, message.substring(2))
+      console.log(signature)
+      console.log(message)
       var rpcSig = ethUtil.toRpcSig(signature.v,  signature.r, signature.s)
       // console.log(signature)
       // console.log(rpcSig)
