@@ -81,13 +81,13 @@ const limitOrder = (state = initState, action) => {
       const { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess } = action.payload
 
       if (!isSuccess) {
-        newState.errors.rateSystem = "error.get_rate"
+        newState.errors.rateSystem = "Cannot get swap rates from Ethereum nodes"
       } else {
         if (expectedPrice == "0") {
           if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
-            newState.errors.rateSystem = "error.kyber_maintain"
+            newState.errors.rateSystem = "This token pair is temporarily under maintenance"
           } else {
-            newState.errors.rateSystem = "error.handle_amount"
+            newState.errors.rateSystem = "Kyber cannot handle your amount at the moment, please reduce your amount"
           }
         } else {
           newState.errors.rateSystem = ""

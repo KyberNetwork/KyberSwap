@@ -114,7 +114,6 @@ export default class LimitOrderSubmit extends React.Component {
       rateError.push(`Trigger rate is too high, only allow ${constants.LIMIT_ORDER_CONFIG.maxPercentTriggerRate}% greater than the current rate`)
       isValidate = false
     }
-    console.log(percentChange)
     if(percentChange < constants.LIMIT_ORDER_CONFIG.minPercentTriggerRate && !isNaN(triggerRate)){
       rateError.push(`Trigger rate is too low, please increase trigger rate`)
       isValidate = false
@@ -256,9 +255,10 @@ export default class LimitOrderSubmit extends React.Component {
 
   render() {
     var isDisable = isUserLogin() && this.props.account == false
+    var isWaiting = this.props.limitOrder.isSelectToken || this.props.limitOrder.errors.sourceAmount.length > 0 || this.props.limitOrder.errors.triggerRate.length > 0
     return (
       <div className={"limit-order-submit"}>
-        <button className={`accept-button ${isDisable ? "disable": ""}`} onClick={this.submitOrder}>
+        <button className={`accept-button ${isDisable ? "disable": ""} ${isWaiting ? "waiting": ""}`} onClick={this.submitOrder}>
           {isUserLogin() ? "Submit" : "Login to Submit Order"}
         </button>
         <div>

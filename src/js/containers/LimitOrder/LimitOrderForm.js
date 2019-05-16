@@ -38,7 +38,8 @@ export default class LimitOrderForm extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.limitOrder.errors.sourceAmount.length > 0 && prevProps.limitOrder.errors.sourceAmount.length === 0){
+    if ((this.props.limitOrder.errors.sourceAmount.length > 0 && prevProps.limitOrder.errors.sourceAmount.length === 0) || 
+    (this.props.limitOrder.errors.rateSystem !== "" && prevProps.limitOrder.errors.rateSystem === "")){
       setTimeout(() => {
         ReactTooltip.show(document.getElementById("limit-order-error-trigger"))
       }, 300)
@@ -52,7 +53,7 @@ export default class LimitOrderForm extends React.Component {
   }
 
   componentDidMount = () => {    
-    if (this.props.limitOrder.errors.sourceAmount.length > 0){
+    if (this.props.limitOrder.errors.sourceAmount.length > 0 || this.props.limitOrder.errors.rateSystem !== ""){
       setTimeout(() => {
         ReactTooltip.show(document.getElementById("limit-order-error-trigger"))
       }, 300)
@@ -118,6 +119,9 @@ export default class LimitOrderForm extends React.Component {
     var errorShow = this.props.limitOrder.errors.sourceAmount.map((value, index) => {
       errorSourceAmount += `<span class="error-text" key=${index}>${value}</span>`
     })
+    if (this.props.limitOrder.errors.rateSystem !== ""){
+      errorSourceAmount += `<span class="error-text">${this.props.limitOrder.errors.rateSystem}</span>`
+    }
 
     var errorTriggerRate = ""
     var errorShow = this.props.limitOrder.errors.triggerRate.map((value, index) => {

@@ -225,6 +225,10 @@
             background: #bfbfbf;
             box-shadow: none;
         }
+        &.waiting{
+            pointer-events: none;
+            cursor: initial;
+        }
     }
 }
 
