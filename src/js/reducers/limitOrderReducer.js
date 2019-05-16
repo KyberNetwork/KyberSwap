@@ -26,11 +26,15 @@ const limitOrder = (state = initState, action) => {
         newState.destToken = action.payload.address
 
       }
+      var errors = newState.errors
+      errors.sourceAmount = []
+      errors.triggerRate = []
+      newState.errors = errors
 
       //reset all error
-      for (var key in newState.errors) {
-        newState.errors[key] = ""
-      }
+      // for (var key in newState.errors) {
+      //   newState.errors[key] = ""
+      // }
 
       // newState.sourceAmount = ""
       // newState.destAmount = 0
