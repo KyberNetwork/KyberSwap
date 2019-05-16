@@ -677,3 +677,71 @@
     }
   }
 }
+
+
+.wrap-eth-modal{
+    .title{
+        margin-top: 20px;
+        margin-left: 45px;
+    }
+    .message{
+        font-size: 13px;
+        border-bottom: 1px solid #dFdFdf;
+        padding-bottom: 20px;
+    }
+    .address-info{
+        >div{
+            display: flex;        
+        }
+        label{
+            color: inherit;
+            width: 100px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        span{
+            font-size: 14px;
+        }
+    }
+    .illustration{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        .token-item{
+            border: 1px solid #cfcfcf;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+        }
+        .token-info{
+            padding: 10px;
+            span{
+                font-weight: 550;
+                margin-left: 15px;
+                padding-right: 25px;
+            }
+        }
+        .token-value{
+            padding: 10px 40px;
+            background: white;
+            border-radius: 0 25px 25px 0;
+        }
+        .dest-token{
+            .token-info{
+                padding: 10px 20px;
+            }
+            span{
+                padding-right: 0;
+            }
+        }
+    }
+    .btn-wrapper{
+        display: flex;
+        justify-content: flex-end;
+        .cancel-process{
+            margin-right: 25px;
+        }
+    }
+}

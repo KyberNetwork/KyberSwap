@@ -95,7 +95,7 @@ export default class WrapETHModal extends React.Component {
         var wrapAmount = this.getAmountWrapETH()
         wrapAmount = converters.roundingNumber(converters.toT(wrapAmount, this.props.tokens[this.props.limitOrder.sourceTokenSymbol].decimals))
         return (
-            <div className="approve-modal">
+            <div className="wrap-eth-modal">
             <div className="title">Convert ETH to WETH</div>
             <a className="x" onClick={this.closeModal}>&times;</a>
             <div className="content with-overlap">
@@ -104,32 +104,45 @@ export default class WrapETHModal extends React.Component {
 
                     <div className="message">                 
                         Your order can not be submited because your WETH is not enough, please convert ETH to WETH.
-                    </div>                                                   
-                    <div>
-                        <span>Your address: </span>
-                        <span>{this.props.account.address}</span>
-                    </div>
-                    <div>
-                        <span>Your balance: </span>
-                        <span>{this.props.tokens["ETH"].balance}</span>
-                    </div>
-
-                    <div>
+                    </div>    
+                    <div className="address-info">
                         <div>
-                            <img src={getAssetUrl(`tokens/eth.svg`)} />
-                            <span>ETH</span>
+                            <label>Your address: </label>
+                            <span>{this.props.account.address}</span>
                         </div>
-                        <div><input value={wrapAmount} /></div>
-                    </div>
-                    <div>
                         <div>
-                            <img src={getAssetUrl(`tokens/${BLOCKCHAIN_INFO.wrapETHToken.toLowerCase()}.svg`)} />
-                        </div>                        
-                    </div>
+                            <label>Your balance: </label>
+                            <span>{converters.roundingNumber(converters.toEther(this.props.tokens["ETH"].balance))} ETH</span>
+                        </div>
+                    </div>                                               
+                    
+                    <div className="illustration">
+                         <div className="source-token token-item">
+                            <div className="token-info">
+                                <img src={getAssetUrl(`tokens/eth.svg`)} />
+                                <span>ETH</span>
+                            </div>
+                            <div className="token-value">{wrapAmount}</div>
+                        </div>
+                        
+                        <div className="token-connector">
+                            <i className="k k-transfer k-3x"></i>
+                        </div>
 
-                  <div className={'modal-error custom-scroll'}>
-                        {this.state.err}
+                        <div  className="dest-token token-item">
+                            <div className="token-info">
+                                <img src={getAssetUrl(`tokens/${BLOCKCHAIN_INFO.wrapETHToken.toLowerCase()}.svg`)} />
+                                <span>{BLOCKCHAIN_INFO.wrapETHToken}</span>
+                            </div>                        
+                        </div>
                     </div>
+                    
+                    {this.state.err && (
+                        <div className={'modal-error custom-scroll'}>
+                            {this.state.err}
+                        </div>
+                    )}
+                  
     
                 </div>
     
@@ -137,10 +150,11 @@ export default class WrapETHModal extends React.Component {
             </div>
             <div className="overlap">
               <div className="input-confirm grid-x input-confirm--approve">                
-                  <div className="cell medium-4 small-12">
+                  <div className="cell btn-wrapper">
                     {/* <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "disabled-button" : "next")}
                     onClick={this.props.onSubmit}
                   >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a> */}
+                  <a className={"button process-submit cancel-process"} onClick={this.closeModal}>Cancel</a>
                   <a className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>Convert</a>
                 </div>
               </div>
