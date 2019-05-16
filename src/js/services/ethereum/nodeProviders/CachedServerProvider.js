@@ -4,6 +4,8 @@ import React from 'react';
 import BLOCKCHAIN_INFO from "../../../../../env"
 import * as constants from "../../constants"
 
+import {isUserLogin} from "../../../utils/common"
+
 export default class CachedServerProvider extends React.Component {
     constructor(props) {
         super(props)
@@ -190,15 +192,26 @@ export default class CachedServerProvider extends React.Component {
 
 
     getInfo(infoObj) {
-        console.log(infoObj)
-        fetch(BLOCKCHAIN_INFO.broadcastTx + 'broadcast/' + infoObj.hash, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-        })
-
+        if(isUserLogin()){
+            var params = {tx_hash: infoObj.hash}
+            fetch("/api/transactions", {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(params)
+            })
+        }else{
+            fetch(BLOCKCHAIN_INFO.broadcastTx + 'broadcast/' + infoObj.hash, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+        }
+       
         return new Promise((resolve, rejected) => {
             resolve("get_info_successfully")
         })
@@ -207,20 +220,35 @@ export default class CachedServerProvider extends React.Component {
 
 
     getExchangeEnable(address) {
-        return new Promise((resolve, rejected) => {
-            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/users?address=' + address))
-            
-                .then((response) => {
-                    return response.json()
-                })
-                .then((result) => {
-                    resolve(result)                    
-                })
-                .catch((err) => {
-                    console.log(err)
-                    rejected(err)
-                })
-        })
+        if (isUserLogin()){
+            return new Promise((resolve, rejected) => {
+                this.timeout(this.maxRequestTime, fetch("/api/user_stats"))
+                    .then((response) => {
+                        return response.json()
+                    })
+                    .then((result) => {
+                        resolve(result)                    
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        rejected(err)
+                    })
+            })
+        }else{
+            return new Promise((resolve, rejected) => {
+                this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/users?address=' + address))
+                    .then((response) => {
+                        return response.json()
+                    })
+                    .then((result) => {
+                        resolve(result)                    
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        rejected(err)
+                    })
+            })
+        }
     }
 
     getMarketData() {
@@ -329,19 +357,36 @@ export default class CachedServerProvider extends React.Component {
     }
 
     getUserMaxCap(address) {
-        return new Promise((resolve, rejected) => {
-            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/users?address=' + address))
-                .then((response) => {
-                    return response.json()
-                })
-                .then((result) => {
-                    resolve(result)                    
-                })
-                .catch((err) => {
-                    console.log(err)
-                    rejected(err)
-                })
-        })
+        if (isUserLogin()){
+            return new Promise((resolve, rejected) => {
+                this.timeout(this.maxRequestTime, fetch("/api/user_stats"))
+                    .then((response) => {
+                        return response.json()
+                    })
+                    .then((result) => {
+                        resolve(result)                    
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        rejected(err)
+                    })
+            })
+        }else{
+            return new Promise((resolve, rejected) => {
+                this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/users?address=' + address))
+                    .then((response) => {
+                        return response.json()
+                    })
+                    .then((result) => {
+                        resolve(result)                    
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        rejected(err)
+                    })
+            })
+        }
+        
     }
 
     timeout(ms, promise) {
