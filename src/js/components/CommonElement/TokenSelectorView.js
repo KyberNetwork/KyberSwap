@@ -40,7 +40,10 @@ const TokenSelectorView = (props) => {
 
   const getWethTitle = () => {
     return (
-      <div className="select-item__title" onClick={e => props.selectItem(e, "WETH", constants.WETH_ADDRESS)}>
+      <div className="select-item__title" onClick={e => { 
+        props.selectItem(e, "WETH", constants.WETH_ADDRESS);
+        props.hideTokens();
+      }}>
         <div className="item-icon">
           <img alt={"WETH"} src={getAssetUrl(`tokens/weth.svg`)} />
         </div>

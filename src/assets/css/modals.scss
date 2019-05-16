@@ -485,9 +485,16 @@ $divider-color: darken($title-background-color, 5);
   padding-right: 0 !important;
   padding-bottom: 0 !important;
   background-color: #f6f7fa !important;
+  border-radius: 10px;
 
   @include screen-min-width(large) {
     width: 630px;
+  }
+
+  &__cancel-order {
+    @include screen-min-width(large) {
+      width: 680px;
+    }
   }
 
   .transfer-title {

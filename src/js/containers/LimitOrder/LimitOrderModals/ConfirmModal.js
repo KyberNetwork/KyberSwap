@@ -1,6 +1,6 @@
 import React from "react"
 import { Modal } from "../../../components/CommonElement"
-
+import ReactTooltip from 'react-tooltip';
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as limitOrderActions from "../../../actions/limitOrderActions"
@@ -31,8 +31,11 @@ export default class ConfirmModal extends React.Component {
     constructor(){
         super()
         this.state = {
-            err: ""
+            err: "",
+            isConfirm: false,
+            isFinish: false
         }
+        this.onSubmit = this.onSubmit.bind(this);
     }
     
     async getUserNonce(){
@@ -62,7 +65,10 @@ export default class ConfirmModal extends React.Component {
     async onSubmit(){
         //reset        
         var wallet = getWallet(this.props.account.type)
-        var password = ""
+        var password = "";
+        this.setState({
+          isConfirm: true
+        });
 
         try{
             //get user nonce
@@ -107,16 +113,26 @@ export default class ConfirmModal extends React.Component {
                 min_rate: this.props.limitOrder.triggerRate,
                 fee: this.props.limitOrder.orderFee,
                 signature: signature
-            })
+            });
+
+            newOrder.id = this.props.limitOrder.listOrder.length + 1;
 
             //save new order
             this.props.dispatch(limitOrderActions.addNewOrder(newOrder))            
 
             //go to the next step
-            this.props.dispatch(limitOrderActions.forwardOrderPath())
+            // this.props.dispatch(limitOrderActions.forwardOrderPath())
+            this.setState({
+              isFinish: true,
+              isConfirm: false
+            });
         }catch(err){
-            console.log(err)
-            this.setState({err: err.toString()})
+            console.log(err.message);
+            this.setState({
+              err: err.toString(),
+              isConfirm: false,
+              isFinish: false
+            })
         }
     }
 
@@ -125,38 +141,126 @@ export default class ConfirmModal extends React.Component {
         this.props.dispatch(limitOrderActions.resetOrderPath())
     }
 
+    getFeeInfoTooltip = () => {
+      let calculateFee = (this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount) / 100;
+      calculateFee = converters.roundingNumber(calculateFee);
+      const sourceAmount = converters.roundingNumber(this.props.limitOrder.sourceAmount)
+
+      return `
+      <div>
+        <div>
+          ${`Fee ${calculateFee} ${this.props.limitOrder.sourceTokenSymbol} (${this.props.limitOrder.orderFee}% of ${sourceAmount} ${this.props.limitOrder.sourceTokenSymbol})`}
+        </div>
+        <div>
+          ${this.props.translate("limit_order.fee_info_message") || "Don’t worry. You will not be charged now. You pay fees only when transaction is executed (broadcasted & mined)."}
+        </div>
+      <div>
+      `
+    }
+
     contentModal = () => {
-        return (
-            <div className="order-confirm-modal">
-            <div className="title">Order Confirm</div>
-            <a className="x" onClick={(e) => this.props.closeModal(e)}>&times;</a>
-            <div className="content with-overlap">
-              <div className="row">
-                <div>
-                  <div>
-                    <div className="message">                 
-                        Your transaction will be broadcasted when rate of {this.props.limitOrder.sourceTokenSymbol}/{this.props.limitOrder.destTokenSymbol} >= {this.props.limitOrder.triggerRate}
-                    </div>
-                  </div>                  
-                  
-                  <div className={'modal-error custom-scroll'}>
-                        {this.state.err}
-                    </div>
-    
-                </div>
-    
-              </div>
+      let calculateFee = (this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount) / 100;
+      calculateFee = converters.roundingNumber(calculateFee);
+
+      const receiveAmount = converters.roundingNumber((this.props.limitOrder.sourceAmount - (this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount) / 100) * this.props.limitOrder.triggerRate);
+      return (
+          <div className="limit-order-modal">
+          <div className="limit-order-modal__body">
+            <div className="limit-order-modal__title">
+              {this.props.translate("modal.order_confirm") ||
+                "Order Confirm"}
             </div>
-            <div className="overlap">
-              <div className="input-confirm grid-x input-confirm--approve">                
-                  <div className="cell medium-4 small-12">
-                  <a className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>Confirm</a>
+            <a className="x" onClick={e => this.closeModal()}>
+              &times;
+            </a>
+            <div className="limit-order-modal__content">
+              <div className="limit-order-modal__message">
+                Your transaction will be broadcasted when rate of {this.props.limitOrder.sourceTokenSymbol}/{this.props.limitOrder.destTokenSymbol} >= {this.props.limitOrder.triggerRate}
+              </div>
+              <div className="limit-order-modal__amount">
+                <div className="limit-order-modal__pair">
+                  <div className="amount">
+                    <div className="amount-item amount-left">                         
+                      <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
+                      <div className={"rc-info"}>
+                        <div>
+                          {this.props.limitOrder.sourceAmount}
+                        </div>
+                        <div>
+                          {this.props.limitOrder.sourceTokenSymbol}
+                        </div>  
+                      </div>
+                    </div>
+                    <div className="space space--padding"><img src={require("../../../../assets/img/exchange/arrow-right-orange.svg")} /></div>
+                    <div className="amount-item amount-right">
+                      <div className={"rc-label"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
+                      <div className={"rc-info"}>
+                        <div>
+                          {this.props.limitOrder.snapshot.isFetchingRate ? <img src={require('../../../../assets/img/waiting-white.svg')} /> : this.props.limitOrder.destAmount}
+                        </div>
+                        <div>
+                          {this.props.limitOrder.destTokenSymbol}
+                        </div>
+                      </div> 
+                    </div>
+                  </div>
+                </div>
+                <div className="limit-order-modal__fee">
+                  <div className="limit-order-modal__fee--title">
+                    <div>
+                      Fee
+                    </div>
+                    <span data-tip data-for="fee-info" data-scroll-hide="false">
+                      <img src={require("../../../../assets/img/v3/info_grey.svg")} />
+                    </span>
+                    <ReactTooltip globalEventOff="click" html={true} place="right" type="light" id="fee-info" className="limit-order-modal__fee--info">
+                      {this.getFeeInfoTooltip()}
+                    </ReactTooltip>
+                  </div>
+                  <div className="limit-order-modal__fee--amount">
+                    <div>
+                      {calculateFee}
+                    </div>
+                    <div>
+                      {this.props.limitOrder.sourceTokenSymbol}
+                    </div>
+                  </div>
                 </div>
               </div>
+              <div className="limit-order-modal__result">
+                <span>You will receive</span>{' '}
+                <span>{`${receiveAmount} ${this.props.limitOrder.destTokenSymbol}`}</span>
+              </div>
+
+              {this.state.isConfirm && <div>
+                Waiting for confirmation from your wallet.
+              </div>}
+              {this.state.err && <div>
+                {this.state.err}
+              </div>}
+
             </div>
           </div>
-        )
-      }
+
+          {!this.state.isFinish && <div className="limit-order-modal__footer">
+            <button
+            className="btn-cancel"
+            onClick={e => this.closeModal()}
+            >
+              {this.props.translate("modal.cancel") || "Cancel"}
+            </button>
+            <button className="btn-confirm"
+              disabled={this.state.isConfirm}
+              onClick={e => this.onSubmit()}>{this.props.translate("modal.confirm") || "Confirm"}</button>
+          </div>}
+
+          {this.state.isFinish && <div className="limit-order-modal__success-msg">
+            <img src={require("../../../../assets/img/limit-order/checkmark_green.svg")}/>
+            <span>Success</span>
+          </div>}
+        </div>
+      )
+    }
     
     render() {
         return (

@@ -94,6 +94,27 @@ export function addNewOrder(order) {
   }
 }
 
+export function removeOrder(order) {
+  return {
+    type: "LIMIT_ORDER.REMOVE_ORDER",
+    payload: { order }
+  }
+}
+
+export function addListOrder(listOrder) {
+  return {
+    type: "LIMIT_ORDER.ADD_LIST_ORDER",
+    payload: listOrder
+  }
+}
+
+export function cancelOrder(order) {
+  return {
+    type: "LIMIT_ORDER.CANCEL_ORDER",
+    payload: { order }
+  }
+}
+
 export function focusInput(focus) {
   return {
     type: "LIMIT_ORDER.FOCUS_INPUT",

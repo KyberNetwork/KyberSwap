@@ -61,7 +61,7 @@ export default class AccountBalance extends React.Component {
         var gasLimit
         var totalGas
         if (this.props.screen === "swap") {
-            var destTokenSymbol = this.props.exchange.destTsokenSymbol
+            var destTokenSymbol = this.props.exchange.destTokenSymbol
             gasLimit = this.props.tokens[destTokenSymbol].gasLimit || this.props.exchange.max_gas
             totalGas = converters.calculateGasFee(this.props.exchange.gasPrice, gasLimit) * Math.pow(10, 18)
             // amount = (sourceBalance - totalGas) * percent / 100

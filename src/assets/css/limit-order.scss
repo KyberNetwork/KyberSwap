@@ -1,3 +1,5 @@
+@import "./modals.scss";
+
 .limit-order-container {
     background-color: #eff4fa;
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
@@ -223,109 +225,67 @@
     }
 }
 
-.limit-order-list {
-    width: 936px;
-    height: 381px;
-    color: #5a5e67;
-    background-color: #ffffff;
-    margin: 0 auto;
-    border-radius: 10px;
+%react-table-layout {
+    position: relative;
 
-    &--title {
-        display: flex;
-        justify-content: space-between; 
-        margin: 30px 30px 0;
+    .ReactTable {
+        height: 310px;
+        overflow: auto;
+        margin: 15px 30px 30px 30px;
+        border: none;
 
-        .title {
-            font-size: 14px;
+        .rt-thead {
+            overflow-y: scroll;
+            font-size: 12px;
             font-weight: 600;
+            box-shadow: none;
+            border-bottom: 2px solid #cccccc;
+            height: 44px;
+            margin-bottom: 5px;
+
+            .rt-th {
+                font-weight: 600;
+                color: #999999;
+                border: none;
+                outline: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 5px 0;
+
+                &.-sort-asc, .-sort-asc {
+                    box-shadow: none;
+                }
+
+                &.-sort-desc, .-sort-desc {
+                    box-shadow: none;
+                }
+            }
         }
 
-        .filter {
-            list-style-type: none;
-            display: flex;
-            justify-content: space-between;
-            margin: 0;
-            padding: 0;
+        .rt-tbody {
+            font-size: 13px;
+            font-weight: 500;
+            color: #222222;
+            $row-height: 50px;
 
-            li {
-                padding-right: 15px;
-            }
-            li:last-child {
-                padding: 0;
-            }
-
-            a {
-                font-size: 12px;
-                font-weight: 600;
-                color: #5a5e67;
-                display: inline-block;
-                text-decoration: none;
+            .rt-td {
+                border: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                max-height: $row-height;
+                padding: 7px 0;
             }
 
-            &--active {
-                color: #ff9008 !important;
+            .rt-tr-group {
+                height: $row-height;
+                max-height: $row-height;
+                border: none;
             }
         }
     }
 
-    &--table {
-        position: relative;
-        .ReactTable {
-            height: 310px;
-            overflow: auto;
-            margin: 15px 30px 30px 30px;
-            border: none;
-
-            .rt-thead {
-                overflow-y: scroll;
-                font-size: 12px;
-                font-weight: 600;
-                box-shadow: none;
-                border-radius: 6px;
-                background-color: #eff4fa;
-                height: 44px;
-                margin-bottom: 5px;
-
-                .rt-th {
-                    border: none;
-                    outline: none;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-
-                    &.-sort-asc, .-sort-asc {
-                        box-shadow: none;
-                    }
-
-                    &.-sort-desc, .-sort-desc {
-                        box-shadow: none;
-                    }
-                }
-            }
-
-            .rt-tbody {
-                font-size: 14px;
-                font-weight: 500;
-                color: #5a5e67;
-                $row-height: 50px;
-
-                .rt-td {
-                    border: none;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    max-height: $row-height;
-                }
-
-                .rt-tr-group {
-                    height: $row-height;
-                    max-height: $row-height;
-                    border: none;
-                }
-            }
-        }
-    }
 
     @mixin cell-flex ($position) {
         &-header {
@@ -350,16 +310,6 @@
         @include cell-flex(flex-end);
     }
 
-    .cell-date {
-        &-header {
-            padding-right: 20px !important;
-            padding-left: 10px !important;
-        }
-
-        padding-right: 20px !important;
-        padding-left: 10px !important;
-    }
-
     .cell-pair {
         &-header {
             cursor: pointer;
@@ -373,40 +323,54 @@
     .cell-status {
         &-header {
             cursor: pointer;
-            padding-left: 20px !important;
         }
 
-        padding-left: 20px !important;
+        padding: 2px 8px;
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: 500;
+        width: 66px;
+        text-align: center;
+
+        &--active {
+            background-color: #deebff;
+            color: #0049b0;
+        }
+
+        &--cancel {
+            background-color: #ffebe5;
+            color: #bf2600;
+        }
+
+        &--filled {
+            background-color: #e2ffee;
+            color: #006644;
+        }
     }
 
     .cell-action {
         .btn-cancel-order {
-            height: 30px;
-            width: 82px;
-            font-size: 12px;
+            height: 20px;
+            width: 70px;
+            font-size: 11px;
             font-weight: 600;
+            color: #666666;
             border-radius: 18px;
-            border: solid 1px #bdc4c8;
-            background-color: #ffffff;
+            // border: solid 1px #bdc4c8;
+            background-color: #f5f6f8;
             cursor: pointer;
 
             &:hover {
-                background-color: #FF8902;
+                background-color: #666666;
                 color: #ffffff;
             }
         }
-
-        .line-indicator {
-            width: 10px;
-            height: 1px;
-            border: solid 1px #979797;
-        }
     }
 
-    .cell-setting {
-        &-header {
-            padding-left: 0 !important;
-        }
+    .line-indicator {
+        width: 10px;
+        height: 1px;
+        border: solid 1px #979797;
     }
 
     .cell-from, .cell-to {
@@ -431,7 +395,66 @@
         @extend %number-cell;
         max-width: 100px;
     }
+}
 
+.limit-order-list {
+    width: 936px;
+    height: 381px;
+    color: #5a5e67;
+    background-color: #ffffff;
+    margin: 0 auto;
+    border-radius: 10px;
+
+    &--title {
+        display: flex;
+        justify-content: space-between; 
+        margin: 30px 30px 0;
+
+        .title {
+            color: #222222;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .filter-container {
+            display: flex;
+        }
+
+        .filter {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-between;
+            margin: 0 20px 0 0;
+            padding: 0;
+
+            li {
+                padding-right: 15px;
+            }
+            li:last-child {
+                padding: 0;
+            }
+
+            a {
+                font-size: 12px;
+                font-weight: normal;
+                color: #666666;
+                display: inline-block;
+                text-decoration: none;
+            }
+
+            &--active {
+                font-weight: bold !important;
+            }
+        }
+
+        .setting {
+            cursor: pointer;
+        }
+    }
+
+    &--table {
+        @extend %react-table-layout;
+    }
 
     // Checkmark radio
     %checkmark-radio {
@@ -528,7 +551,7 @@
 
         &__option {
             color: #5a5e67;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 500;
             cursor: pointer;
             margin-bottom: 10px;
@@ -543,7 +566,7 @@
 
         &__advance {
             padding: 10px 12px 10px;
-            height: 185px;
+            height: 164px;
             overflow: scroll;
         }
 
@@ -579,7 +602,7 @@
     // Status filter modal
     .status-filter-modal {
         width: 105px;
-        height: 118px;
+        height: 105px;
         border-radius: 6px;
         box-shadow: 0 4px 12px 0 rgba(87, 102, 119, 0.14);
         border: solid 0.9px #d3d7db;
@@ -594,7 +617,7 @@
 
         &__option {
             color: #5a5e67;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 500;
             cursor: pointer;
             margin-bottom: 10px;
@@ -667,4 +690,170 @@
         background-color: #ffffff;
     }
   }
+}
+
+// Limit order modal
+.limit-order-modal {
+
+    &__body {
+        background-color: #f6f7fa;
+        padding: 50px 30px 0;
+    }
+
+    &__footer {
+        background-color: #ffffff;
+        display: flex;
+        justify-content: flex-end;
+        padding: 25px 0;
+        border-radius: 0 0 10px 10px;
+    }
+
+    &__title {
+        font-size: 28px;
+        font-weight: 600;
+        color: #141927;
+        line-height: 0.86;
+        letter-spacing: -0.1px;
+    }
+
+    &__message {
+        font-size: 16px;
+        font-weight: 500;
+        color: #141927;
+        margin-bottom: 15px;
+    }
+
+    &__content {
+        margin: 30px 0;
+    }
+
+    &__table {
+        @extend %react-table-layout;
+        .ReactTable {
+            height: 100%;
+            margin: 0;
+        }
+    }
+
+    &__amount {
+        border-radius: 5px;
+        background-color: #ecedf1;
+        display: grid;
+        grid-template-columns: auto 140px;
+    }
+
+    &__pair {
+        @extend .confirm-exchange-modal; 
+
+        .amount {
+            margin: 0;
+            padding: 15px 20px;
+            background-color: #ecedf1;
+            border-right: 1px solid #d6d9e0;
+            border-radius: 5px 0 0 5px;
+            grid-template-columns: auto 30px 1fr;
+        }
+
+        .rc-label {
+            color: #999999 !important;
+        }
+
+        .rc-info {
+            font-weight: 500;
+        }
+    }
+
+    &__fee {
+        padding: 25px 15px;
+        &--title {
+            display: flex;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.17;
+            letter-spacing: -0.3px;
+            color: #999999;
+            margin-bottom: 5px;
+
+            >div:first-child {
+                margin-right: 3px;
+            }
+        }
+
+        &--amount {
+            display: flex;
+            font-size: 14px;
+            font-weight: 500;
+            color: #222222;
+
+            >div:first-child {
+                margin-right: 5px;
+            }
+        }
+
+        &--info {
+            border-radius: 5px;
+            background-color: #3e5271 !important;
+            color: #ffffff !important;
+        }
+    }
+
+    &__result {
+        margin-top: 25px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #222222;
+        text-align: right;
+
+        >span:last-child {
+            font-size: 22px;
+        }
+    }
+
+    &__success-msg {
+        background-color: #e8f9e8;
+        color: #000;
+        display: flex;
+        padding: 30px 30px;
+        font-weight: 600;
+        border-radius: 0 0 10px 10px;
+
+        >span {
+            margin-left: 15px;
+        }
+    }
+
+    .x {
+        display: block;
+        position: absolute;
+        right: 20px;
+        top: 5px;
+        font-size: 2rem;
+        color: #aaa;
+    }
+
+    %btn {
+        width: 151px;
+        height: 40px;
+        border-radius: 22.5px;
+        padding: 0 25px;
+        font-size: 14px;
+        font-weight: 600;
+        margin-right: 30px;
+        cursor: pointer;
+    }
+
+    .btn-cancel {
+        @extend %btn;
+        color: #222222;
+        background-color: #f5f6f8;
+    }
+
+    .btn-confirm {
+        @extend %btn;
+        color: #ffffff;
+        background-color: #ef8102;
+        &:hover {
+            background-color: $color-swap-light;
+        }
+    }
 }

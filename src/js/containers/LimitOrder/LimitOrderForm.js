@@ -123,7 +123,8 @@ export default class LimitOrderForm extends React.Component {
                       focusItem={this.props.limitOrder.sourceTokenSymbol}
                       listItem={this.props.tokens}
                       chooseToken={this.props.chooseToken}
-                      screen="limit_order"                      
+                      screen="limit_order"
+                      banToken="ETH"                 
                     />
                 </div>
               </div>
@@ -166,6 +167,7 @@ export default class LimitOrderForm extends React.Component {
                     listItem={this.props.tokens}
                     chooseToken={this.props.chooseToken}
                     screen="limit_order"
+                    banToken="ETH"
                   />
                 </div>
               </div>
