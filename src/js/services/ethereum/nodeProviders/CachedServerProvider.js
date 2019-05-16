@@ -220,20 +220,35 @@ export default class CachedServerProvider extends React.Component {
 
 
     getExchangeEnable(address) {
-        return new Promise((resolve, rejected) => {
-            this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/users?address=' + address))
-            
-                .then((response) => {
-                    return response.json()
-                })
-                .then((result) => {
-                    resolve(result)                    
-                })
-                .catch((err) => {
-                    console.log(err)
-                    rejected(err)
-                })
-        })
+        if (isUserIsLogin()){
+            return new Promise((resolve, rejected) => {
+                this.timeout(this.maxRequestTime, fetch("/api/user_stats"))
+                    .then((response) => {
+                        return response.json()
+                    })
+                    .then((result) => {
+                        resolve(result)                    
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        rejected(err)
+                    })
+            })
+        }else{
+            return new Promise((resolve, rejected) => {
+                this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/users?address=' + address))
+                    .then((response) => {
+                        return response.json()
+                    })
+                    .then((result) => {
+                        resolve(result)                    
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        rejected(err)
+                    })
+            })
+        }
     }
 
     getMarketData() {
