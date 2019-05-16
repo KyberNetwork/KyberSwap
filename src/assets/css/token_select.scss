@@ -703,6 +703,9 @@
         width: 100% !important;
         left: 0px !important;
         top: 60px !important;
+        &.show{
+          opacity: 1;
+        }
         .error-text{
           color: #222;
           font-size: 11px;

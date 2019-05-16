@@ -220,6 +220,11 @@
             cursor: pointer;
             background-position: 0 0;
         }
+        &.disable{
+            pointer-events: none;
+            background: #bfbfbf;
+            box-shadow: none;
+        }
     }
 }
 

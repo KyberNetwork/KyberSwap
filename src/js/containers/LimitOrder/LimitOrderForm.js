@@ -29,7 +29,40 @@ import * as converters from "../../utils/converter";
 })
 
 export default class LimitOrderForm extends React.Component {
+  constructor(){
+    super()
+    this.state = {
+      isShowSourceAmountError: false,
+      isShowTriggerRateError: false
+    }
+  }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.limitOrder.errors.sourceAmount.length > 0 && prevProps.limitOrder.errors.sourceAmount.length === 0){
+      setTimeout(() => {
+        ReactTooltip.show(document.getElementById("limit-order-error-trigger"))
+      }, 300)
+    }
+
+    if (this.props.limitOrder.errors.triggerRate.length > 0 && prevProps.limitOrder.errors.triggerRate.length === 0){
+      setTimeout(() => {
+        ReactTooltip.show(document.getElementById("trigger-rate-error-trigger"))
+      }, 300)
+    }
+  }
+
+  componentDidMount = () => {    
+    if (this.props.limitOrder.errors.sourceAmount.length > 0){
+      setTimeout(() => {
+        ReactTooltip.show(document.getElementById("limit-order-error-trigger"))
+      }, 300)
+    }
+    if (this.props.limitOrder.errors.triggerRate.length > 0){
+      setTimeout(() => {
+        ReactTooltip.show(document.getElementById("trigger-rate-error-trigger"))
+      }, 300)
+    }
+  }
 
   getEthereumInstance = () => {
     var ethereum = this.props.ethereum
@@ -63,10 +96,6 @@ export default class LimitOrderForm extends React.Component {
       if (type === "source"){
         this.lazyFetchRate(value)
       }
-      
-      // this.lazyEstimateGas()
-  
-      // this.validateRateAndSource(value)
     }
   };
 
@@ -82,26 +111,19 @@ export default class LimitOrderForm extends React.Component {
     this.props.dispatch(limitOrderActions.inputChange('source', sourceAmountByPercentage));
   };
 
-  // chooseToken = (symbol, address, type) => {
-  //   this.props.dispatch(limitOrderActions.selectTokenAsync(symbol, address, type))
-  //   var path
-  //   if (type === "source") {
-  //     path = constants.BASE_HOST + `/${constants.LIMIT_ORDER_CONFIG.path}/` + symbol.toLowerCase() + "-" + this.props.limitOrder.destTokenSymbol.toLowerCase()
-  //     this.props.global.analytics.callTrack("trackChooseToken", "from", symbol);
-  //   } else {
-  //     path = constants.BASE_HOST + `/${constants.LIMIT_ORDER_CONFIG.path}/` + this.props.limitOrder.sourceTokenSymbol.toLowerCase() + "-" + symbol.toLowerCase()
-  //     this.props.global.analytics.callTrack("trackChooseToken", "to", symbol);
-  //   }
 
-  //   path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
-  //   this.props.dispatch(globalActions.goToRoute(path))
-  //   this.props.dispatch(globalActions.updateTitleWithRate());
-  // }
+  render() {    
 
-  render() {
-    var errorTooltip = ""
-    var errorLimitOrder = ""
+    var errorSourceAmount = ""
+    var errorShow = this.props.limitOrder.errors.sourceAmount.map((value, index) => {
+      errorSourceAmount += `<span class="error-text" key=${index}>${value}</span>`
+    })
 
+    var errorTriggerRate = ""
+    var errorShow = this.props.limitOrder.errors.triggerRate.map((value, index) => {
+      errorTriggerRate += `<span class="error-text" key=${index}>${value}</span>`
+    })
+    
     return (
       <div className={"exchange-content exchange-content--limit-order limit-order-form container"}>
         {this.props.account !== false && (
@@ -113,7 +135,7 @@ export default class LimitOrderForm extends React.Component {
         )}
         <div className={"exchange-content__item--wrapper"}>
           <div className={"exchange-item-label"}>{this.props.translate("transaction.exchange_from") || "From"}:</div>
-          <div className={`exchange-content__item exchange-content__item--left select-token`}
+          <div className={`exchange-content__item exchange-content__item--left select-token ${errorSourceAmount != "" ? "error" : ""}`}
           >
             <div className={`input-div-content`}>
               <div className={"exchange-content__label-content"}>
@@ -129,27 +151,22 @@ export default class LimitOrderForm extends React.Component {
               </div>
               <div className={`exchange-content__input-container`}>
                 <div className={"main-input main-input__left"}>
-                  <div id="limit-order-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorTooltip}</div>`} data-html={true} data-event='click focus' data-for="swap-error" data-scroll-hide="false">
+                  <div id="limit-order-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorSourceAmount}</div>`} data-html={true} data-event='click focus' data-for="source-amount-error" data-scroll-hide="false">
                     <input
                       className={`exchange-content__input`}
                       min="0"
                       step="0.000001"
                       placeholder="0" autoFocus
                       type={this.props.global.isOnMobile ? "number" : "text"} maxLength="50" autoComplete="off"
-                      value={this.props.limitOrder.sourceAmount}
-                      // onFocus={props.input.sourceAmount.onFocus}
-                      // onBlur={props.input.sourceAmount.onBlur}
+                      value={this.props.limitOrder.sourceAmount}                      
                       onChange={(e) => this.handleInputChange(e, "source", this.props.limitOrder.sourceAmount)}
                     />
                   </div>
-                  {/* {props.account !== false && (
-                       <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal ${errorExchange ? "error" : ""}`}>{props.swapBalance}</div>
-                     )} */}
                 </div>
               </div>
             </div>
-            {errorLimitOrder &&
-              <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="swap-error" type="light" />
+            {errorSourceAmount &&
+              <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="source-amount-error" type="light" />
             }
           </div>
         </div>
@@ -190,12 +207,13 @@ export default class LimitOrderForm extends React.Component {
 
         <div className={"exchange-content__item--wrapper"}>
           <div className={"exchange-item-label"}>{this.props.translate("transaction.rate_label") || "Rate"}:</div>
-          <div className={"exchange-content__item exchange-content__item--left exchange-content__item--no-pd-left"}>
+          <div className={`exchange-content__item exchange-content__item--left exchange-content__item--no-pd-left select-token ${errorTriggerRate != "" ? "error" : ""}`}>
             <div className={`input-div-content`}>
               <div className={'exchange-content__label-content exchange-content__label-content--disabled'}>
                 {this.props.limitOrder.sourceTokenSymbol} / {this.props.limitOrder.destTokenSymbol}
               </div>
-              <div className={"main-input main-input__left main-input--rate"}>
+              <div id="trigger-rate-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorTriggerRate}</div>`} data-html={true} data-event='click focus' data-for="trigger-rate-error" data-scroll-hide="false">
+              {/* <div className={"main-input main-input__left main-input--rate"}> */}
                 <input
                   className={`exchange-content__input`}
                   step="0.000001"
@@ -209,6 +227,9 @@ export default class LimitOrderForm extends React.Component {
                 />
               </div>
             </div>
+            {errorTriggerRate &&
+              <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="trigger-rate-error" type="light" />
+            }
           </div>
         </div>
 

@@ -45,24 +45,24 @@ const limitOrder = (state = initState, action) => {
       switch(focus) {
         case "source":
           newState.sourceAmount = value
-          newState.errors.sourceAmountError = ""
-          newState.errors.ethBalanceError = ""
-          if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
+          var errors = newState.errors
+          errors.sourceAmount = []
+          newState.errors = errors
           var bigRate = converter.roundingRate(state.triggerRate)
           newState.destAmount = converter.caculateDestAmount(value, bigRate, 6)
           break
         case "dest":
           newState.destAmount = value
-          newState.errors.destAmountError = ""
-          newState.errors.sourceAmountError = ""
-          if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
+          var errors = newState.errors
+          errors.triggerRate = []
+          newState.errors = errors
           newState.triggerRate = converter.caculateTriggerRate(state.sourceAmount, value, 6)  
           break
         case "rate": 
           newState.triggerRate = value
-          newState.errors.destAmountError = ""
-          newState.errors.sourceAmountError = ""
-          if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
+          var errors = newState.errors
+          errors.triggerRate = []
+          newState.errors = errors
           var bigRate = converter.roundingRate(value)
           newState.destAmount = converter.caculateDestAmount(state.sourceAmount, bigRate, 6)  
           break

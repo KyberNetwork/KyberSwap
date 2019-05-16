@@ -32,9 +32,6 @@ import constants from "../../services/constants"
   }
 })
 
-
-
-
 export default class LimitOrderSubmit extends React.Component {
   constructor() {
     super()
@@ -45,8 +42,6 @@ export default class LimitOrderSubmit extends React.Component {
     }
   }
 
-
-
   getUserBalance = () => {
     if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
       return this.props.tokens[this.props.limitOrder.sourceTokenSymbol].balance + this.props.tokens["ETH"].balance
@@ -56,10 +51,13 @@ export default class LimitOrderSubmit extends React.Component {
   }
 
   getSourceAmount = () => {
-    var sourceAmount = this.props.limitOrder.sourceAmount
+    var sourceAmount = parseFloat(this.props.limitOrder.sourceAmount)
+    if(isNaN(sourceAmount)){
+      return 0
+    }
     this.props.limitOrder.listOrder.map(value => {
       if (value.status === "active" && value.source === this.props.limitOrder.sourceTokenSymbol && value.address.toLowerCase() === this.props.account.address.toLowerCase()) {
-        sourceAmount += sourceAmount
+        sourceAmount += value.src_amount
       }
     })
     var sourceAmountBig = converters.toTWei(sourceAmount, this.props.tokens[this.props.limitOrder.sourceTokenSymbol].decimals)
@@ -69,43 +67,56 @@ export default class LimitOrderSubmit extends React.Component {
 
   validateOrder = () => {
     // check source amount is zero
-    var sourceAmount = parseFloat(this.props.sourceAmount)
+    var sourceAmount = parseFloat(this.props.limitOrder.sourceAmount)
     var isValidate = true
+    var sourceAmountError = []
+    var rateError = []
+    if (this.props.limitOrder.sourceTokenSymbol === this.props.limitOrder.destTokenSymbol){
+      sourceAmountError.push("Source token must be different from dest token")
+      isValidate = false
+    }
     if (isNaN(sourceAmount)) {
-      this.props.dispatch(limitOrderActions.throwError("sourceAmountError", "Source amount is not number"))
+      sourceAmountError.push("Source amount is not number")
       isValidate = false
     }
 
     //verify min source amount
     if (this.props.tokens[this.props.limitOrder.sourceTokenSymbol].rate == 0) {
-      this.props.dispatch(limitOrderActions.throwError("rateETHEqualZero", "This pair is under maintenance"))
+      sourceAmountError.push("This pair is under maintenance")
       isValidate = false
     }
 
 
     var rateBig = converters.toTWei(this.props.tokens[this.props.limitOrder.sourceTokenSymbol].rate, 18)
     var ethEquivalentValue = converters.calculateDest(this.props.limitOrder.sourceAmount, rateBig, 6)
+    ethEquivalentValue = converters.toEther(ethEquivalentValue)
 
-    if (ethEquivalentValue < 0.5) {
-      this.props.dispatch(limitOrderActions.throwError("sourceAmountTooSmall", "Source Amount is too smalll. Limit order only support min 0.5 ETH equivalent order"))
+    if (ethEquivalentValue < constants.LIMIT_ORDER_CONFIG.minSupportOrder && !isNaN(sourceAmount)) {
+      sourceAmountError.push(`Source Amount is too smalll. Limit order only support min ${constants.LIMIT_ORDER_CONFIG.minSupportOrder} ETH equivalent order`)
       isValidate = false
-    }
+    }    
 
-    if (ethEquivalentValue > 10) {
-      this.props.dispatch(limitOrderActions.throwError("sourceAmountTooBig", "Source Amount is too big. Limit order only support max 10 ETH equivalent order"))
+    if (ethEquivalentValue > constants.LIMIT_ORDER_CONFIG.maxSupportOrder && !isNaN(sourceAmount)) {
+      sourceAmountError.push(`Source Amount is too big. Limit order only support max ${constants.LIMIT_ORDER_CONFIG.minSupportOrder} ETH equivalent order`)
       isValidate = false
     }
 
     // check rate is zero
-    var triggerRate = parseFloat(this.props.triggerRate)
+    var triggerRate = parseFloat(this.props.limitOrder.triggerRate)
     if (isNaN(triggerRate)) {
-      this.props.dispatch(limitOrderActions.throwError("triggerRateError", "Trigger rate is not number"))
+      rateError.push("Trigger rate is not number")
+      isValidate = false
+    }    
+    // check rate is too big
+    var triggerRateBig = converters.roundingRate(this.props.limitOrder.triggerRate)
+    var percentChange = converters.percentChange(triggerRateBig, this.props.limitOrder.offeredRate)
+    if (percentChange > constants.LIMIT_ORDER_CONFIG.maxPercentTriggerRate && !isNaN(triggerRate)) {
+      rateError.push(`Trigger rate is too high, only allow ${constants.LIMIT_ORDER_CONFIG.maxPercentTriggerRate}% greater than the current rate`)
       isValidate = false
     }
-    // check rate is too big
-    var percentChange = converters.percentChange(triggerRate, this.props.limitOrder.offeredRate)
-    if (percentChange > constants.LIMIT_ORDER_CONFIG.maxPercentTriggerRate) {
-      this.props.dispatch(limitOrderActions.throwError("triggerRateError", "Trigger rate is to high, only allow 50% greater than the current rate"))
+    console.log(percentChange)
+    if(percentChange < constants.LIMIT_ORDER_CONFIG.minPercentTriggerRate && !isNaN(triggerRate)){
+      rateError.push(`Trigger rate is too low, please increase trigger rate`)
       isValidate = false
     }
 
@@ -113,12 +124,18 @@ export default class LimitOrderSubmit extends React.Component {
     var userBalance = this.getUserBalance()
     var srcAmount = this.getSourceAmount()
     if (converters.compareTwoNumber(userBalance, srcAmount) < 0) {
-      this.props.dispatch(limitOrderActions.throwError("balanceError", "Your balance is insufficent for the order"))
+      sourceAmountError.push(`Your balance is insufficent for the order. Please check your ${this.props.limitOrder.sourceTokenSymbol} balance and your pending order`)
       isValidate = false
     }
 
+    if (sourceAmountError.length > 0){
+      this.props.dispatch(limitOrderActions.throwError("sourceAmount", sourceAmountError))
+    }
+    if (rateError.length > 0){
+      this.props.dispatch(limitOrderActions.throwError("triggerRate", rateError))
+    }
 
-    if (isValidate) {
+    if (!isValidate) {
       return
     }
 
@@ -227,20 +244,21 @@ export default class LimitOrderSubmit extends React.Component {
 
 
   submitOrder = () => {
-    if (isUserLogin() && this.props.account !== false) {
-      // check to go to step
-      this.validateOrder()
-
-    } else {
+    if(!isUserLogin()){
       window.location.href = "/users/sign_in"
+    }
+
+    if (this.props.account !== false){
+      this.validateOrder()
     }
   }
 
 
   render() {
+    var isDisable = isUserLogin() && this.props.account == false
     return (
       <div className={"limit-order-submit"}>
-        <button className="accept-button" onClick={this.submitOrder}>
+        <button className={`accept-button ${isDisable ? "disable": ""}`} onClick={this.submitOrder}>
           {isUserLogin() ? "Submit" : "Login to Submit Order"}
         </button>
         <div>

@@ -193,7 +193,10 @@ const INIT_TRANSFER_FORM_STATE = {
 
 const LIMIT_ORDER_CONFIG = {
   path: "limit_order",
+  minSupportOrder: 0.1,
+  maxSupportOrder: 10,
   maxFee: 0.5,
+  minPercentTriggerRate: -20,
   maxPercentTriggerRate: 50,
   orderPath: {
     approveZero: 1,
@@ -249,7 +252,7 @@ const INIT_LIMIT_ORDER_STATE = {
       dest: "DAI",
       address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
       nonce: 1290,
-      src_amount: 2000,
+      src_amount: 10,
       min_rate: 0.5321,
       fee: 0.5,
       status: "active",
@@ -262,7 +265,7 @@ const INIT_LIMIT_ORDER_STATE = {
       dest: "OMG",
       address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
       nonce: 1290,
-      src_amount: 2000,
+      src_amount: 10,
       min_rate: 0.5321,
       fee: 0.5,
       status: "active",
@@ -318,22 +321,13 @@ const INIT_LIMIT_ORDER_STATE = {
     destAmount: 0
   },
   errors: {
-    selectSameToken: '',
-    selectTokenToken: '',
-    sourceAmountError: '',
-    triggerRateError: '',
-    rateETHEqualZero: '',
-    balanceError: '',
+    sourceAmount: [],
+    triggerRate: [],
 
-    gasPriceError: '',
-    gasError: '',
-    passwordError: '',
-    signTransaction: '',
+   
     rateError: '',
     rateAmount: '',
-    rateSystem: '',
-    ethBalanceError: '',
-    exchange_enable: ''
+    rateSystem: ''
   },
   errorNotPossessKgt: '',
   customRateInput: {
