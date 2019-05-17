@@ -262,6 +262,13 @@
             "address": "0x4aefa5bded67f5842ade8f025a738cb3363b7499",
             "decimals": 8,
             "cg_id": "hacken"
+        },
+        "WETH": {
+            "symbol": "WETH",
+            "name": "Wrapped Ether",
+            "address": "0xbca556c912754bc8e7d4aad20ad69a1b1444f42d",
+            "decimals": 18,
+            "cg_id": "weth"
         }
     },
     "ethScanUrl": "https://ropsten.etherscan.io/",

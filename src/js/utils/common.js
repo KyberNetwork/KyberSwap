@@ -162,3 +162,8 @@ export function getFormattedDate(date) {
     const year = date.getFullYear();
     return `${day} ${month} ${year}`;
 }
+
+export function isUserIsLogin() {    
+    var loginCookies = getCookie("signed_in")
+    return loginCookies === true || loginCookies === "true" ? true: false
+}
