@@ -168,15 +168,11 @@ const limitOrder = (state = initState, action) => {
       newState.listOrder = listOrder;
       return newState;
     }
-    case "LIMIT_ORDER.CANCEL_ORDER": {
+    case "LIMIT_ORDER.UPDATE_ORDER": {
       const { order } = action.payload;
       const newListOrder = newState.listOrder.map(item => {
         if (item.id === order.id) {
-          return {
-            ...item,
-            status: "cancel",
-            cancel_time: new Date().getTime() / 1000
-          }
+          return order;
         }
 
         return item;

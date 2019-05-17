@@ -108,9 +108,9 @@ export function addListOrder(listOrder) {
   }
 }
 
-export function cancelOrder(order) {
+export function updateOrder(order) {
   return {
-    type: "LIMIT_ORDER.CANCEL_ORDER",
+    type: "LIMIT_ORDER.UPDATE_ORDER",
     payload: { order }
   }
 }

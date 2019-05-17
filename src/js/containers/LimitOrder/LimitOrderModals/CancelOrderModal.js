@@ -146,7 +146,7 @@ export default class CancelOrderModal extends Component {
 			try {
 				const results = await limitOrderServices.cancelOrder(this.props.order);
 				if (results) {
-					this.props.dispatch(limitOrderActions.cancelOrder(results));
+					this.props.dispatch(limitOrderActions.updateOrder(results));
 					this.props.closeModal();
 				}
 			} catch (err) {

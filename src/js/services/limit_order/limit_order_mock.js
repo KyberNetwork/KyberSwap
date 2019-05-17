@@ -173,7 +173,10 @@ export function submitOrder(order) {
 
 export function cancelOrder(order) {
     return new Promise((resolve, rejected) => {
-        resolve(order);
+        const newOrder = { ...order };
+        newOrder.cancel_time = new Date().getTime() / 1000;
+        newOrder.status = "cancel";
+        resolve(newOrder);
         return;
 
         timeout(MAX_REQUEST_TIMEOUT, fetch('/user/cancel_order', {
