@@ -18,6 +18,7 @@ export default class ErrorModal extends React.Component {
   }
 
   render() {
+    console.log(this.props.error)
     return (
       <ErrorModalView
         isOpen={this.props.showError}

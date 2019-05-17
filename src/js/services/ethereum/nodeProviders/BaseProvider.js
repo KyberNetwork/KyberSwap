@@ -22,8 +22,8 @@ export default class BaseProvider {
         this.kyberswapContract = new this.rpc.eth.Contract(constants.KYBER_SWAP_ABI, this.kyberswapAddress)
 
         // this.getSignatureParameters("0x3ebf9366a33aa9877c339f6b52e6911b583251d1e0139751e4ff0d9e551638274811d1b31a7b7e3b7458559571a906a0996c98f4e95b1d35fbc2a44eb6dd6bcc1c")
-        this.getSignatureParameters("0xef943db930294829b5ae00c2be93010ea3928acf3d407faa1bbea19913862c0d41b9d6d76ec7d0fefdb8236f9d70fb17332b9780c9d7d6b84f2945b7016948101b")
-        
+        // this.getSignatureParameters("0x112b82204e41184696fe6e83e2637870f7922672ecf1dc603815a4c25098bfde1cf6ed4ddc6a76b77cc103f844eddc2e1e39a6062e3e09da4f2b53cfab620c5c1c")
+        // this.getMessageHashTest("hello")
         
         // console.log(Buffer.from("test").toString("hex"))
         // var message = "0x6d1ffaf4dc86fa4249bc6a81620bfa187114044dd961cfe6cf8193737a16598a"
@@ -720,15 +720,20 @@ export default class BaseProvider {
         })
     }
 
-    getMessageHash(user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision){
-        console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})        
+    getMessageHashTest(message){        
         return new Promise((resolve) => {
-            var signature = this.rpc.utils.soliditySha3({t: 'address', v: user}, {t: 'uint256', v: nonce}, {t: 'address', v: srcToken}, {t: 'uint256', v: srcQty}, {t: 'address', v: destToken},
-            {t: 'address', v: destAddress}, {t: 'uint256', v: minConversionRate}, {t: 'uint256', v: feeInPrecision});
-            // var signature = this.rpc.utils.soliditySha3(user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision)
+            var signature = this.rpc.utils.soliditySha3(message);     
+            console.log(signature)       
             resolve(signature)
         })
-        
+    }
+
+    getMessageHash(user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision){        
+        return new Promise((resolve) => {
+            var signature = this.rpc.utils.soliditySha3({t: 'address', v: user}, {t: 'uint256', v: nonce}, {t: 'address', v: srcToken}, {t: 'uint256', v: srcQty}, {t: 'address', v: destToken},
+            {t: 'address', v: destAddress}, {t: 'uint256', v: minConversionRate}, {t: 'uint256', v: feeInPrecision});            
+            resolve(signature)
+        })
     }
 
     getSignatureParameters(signature){

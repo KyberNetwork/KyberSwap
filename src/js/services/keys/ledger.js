@@ -7,6 +7,8 @@ import Eth from "@ledgerhq/hw-app-eth";
 import Web3 from "web3"
 
 
+
+
 import { store } from "../../store"
 import { CONFIG_ENV_LEDGER_LINK, LEDGER_SUPPORT_LINK } from "../constants"
 import { getTranslate } from 'react-localize-redux'
@@ -111,10 +113,28 @@ export default class Ledger {
 
   async signSignature(message, account) {
     try {
+      // message ="hello"
       var eth = await this.connectLedger()
-      var web3 = new Web3()
-      var signature = await eth.signPersonalMessage(account.keystring, web3.utils.toHex(message).substring(2))
+      // var web3 = new Web3()
+      var signature = await eth.signPersonalMessage(account.keystring, message.substring(2))
+      // console.log(signature)
+      // console.log(message)
 
+      // var v = signature.v - 27
+      // v = v.toString(16)
+      // if (v.length < 2) {
+      //   v = '0' + v
+      // }
+      // // console.log(result, parseInt(v))
+      // var ethereum = new EthereumService()
+      
+      
+      // var messageHash = await ethereum.call("getMessageHashTest", `\x19Ethereum Signed Message:\n`+ message.length +message)
+      // var publicKey = ethUtil.ecrecover(ethUtil.toBuffer(messageHash), signature['v'], new Buffer(signature.r, 'hex'), new Buffer(signature.s, 'hex'))
+      // var addrBuf = ethUtil.pubToAddress(publicKey);
+      // var addr    = ethUtil.bufferToHex(addrBuf);
+      // console.log("addr_ledger")
+      //   console.log(addr)
       var rpcSig = ethUtil.toRpcSig(signature.v,  signature.r, signature.s)
       // console.log(signature)
       // console.log(rpcSig)
