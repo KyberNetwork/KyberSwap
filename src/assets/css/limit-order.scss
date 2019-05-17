@@ -734,6 +734,10 @@
         font-weight: 500;
         color: #141927;
         margin-bottom: 15px;
+
+        &--text-small {
+            font-size: 14px;
+        }
     }
 
     &__content {
@@ -760,7 +764,7 @@
 
         .amount {
             margin: 0;
-            padding: 15px 20px;
+            padding: 15px 0 20px 15px;
             background-color: #ecedf1;
             border-right: 1px solid #d6d9e0;
             border-radius: 5px 0 0 5px;

@@ -175,7 +175,7 @@ export default class ConfirmModal extends React.Component {
               &times;
             </a>
             <div className="limit-order-modal__content">
-              <div className="limit-order-modal__message">
+              <div className="limit-order-modal__message limit-order-modal__message--text-small">
                 Your transaction will be broadcasted when rate of {this.props.limitOrder.sourceTokenSymbol}/{this.props.limitOrder.destTokenSymbol} >= {this.props.limitOrder.triggerRate}
               </div>
               <div className="limit-order-modal__amount">

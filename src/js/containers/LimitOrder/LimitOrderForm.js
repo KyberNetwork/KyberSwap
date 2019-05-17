@@ -218,7 +218,7 @@ export default class LimitOrderForm extends React.Component {
               <div className={'exchange-content__label-content exchange-content__label-content--disabled'}>
                 {this.props.limitOrder.sourceTokenSymbol} / {this.props.limitOrder.destTokenSymbol}
               </div>
-              <div id="trigger-rate-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorTriggerRate}</div>`} data-html={true} data-event='click focus' data-for="trigger-rate-error" data-scroll-hide="false">
+              <div id="trigger-rate-error-trigger" className="input-tooltip-wrapper input-tooltip-wrapper__rate" data-tip={`<div>${errorTriggerRate}</div>`} data-html={true} data-event='click focus' data-for="trigger-rate-error" data-scroll-hide="false">
               {/* <div className={"main-input main-input__left main-input--rate"}> */}
                 <input
                   className={`exchange-content__input`}

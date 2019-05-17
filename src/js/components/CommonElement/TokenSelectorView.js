@@ -79,7 +79,7 @@ const TokenSelectorView = (props) => {
                 </div>
               </div>
             </div>
-            {focusItem.symbol.toLowerCase() === "weth" && 
+            {props.screen === "limit_order" && focusItem.symbol.toLowerCase() === "weth" && 
               <img src={require("../../../assets/img/v3/info_grey.svg")} className="weth-info"/>
             }
             <div><i className={'k k-angle bold ' + (props.open ? 'up' : 'down')}></i></div>

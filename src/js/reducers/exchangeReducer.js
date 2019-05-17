@@ -47,7 +47,7 @@ const exchange = (state = initState, action) => {
         newState.sourceToken = action.payload.address
 
 
-      } else if (action.payload.type === "des") {
+      } else if (action.payload.type === "dest") {
         newState.destTokenSymbol = action.payload.symbol
         newState.destToken = action.payload.address
 
