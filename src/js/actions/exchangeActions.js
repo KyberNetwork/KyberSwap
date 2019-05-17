@@ -562,9 +562,10 @@ export function verifyExchange() {
   }
 }
 
-export function fetchExchangeEnable() {
+export function fetchExchangeEnable(ethereum) {
   return {
     type: "EXCHANGE.FETCH_EXCHANGE_ENABLE",
+    payload: {ethereum}
   }
 }
 

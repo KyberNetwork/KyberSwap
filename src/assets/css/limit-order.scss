@@ -3,6 +3,10 @@
 .limit-order-container {
     background-color: #eff4fa;
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+
+    .select-token.error .__react_component_tooltip{
+        top: 50px !important;
+    }
 }
 
 .limit-order-body {
@@ -221,6 +225,15 @@
         &:hover {
             cursor: pointer;
             background-position: 0 0;
+        }
+        &.disable{
+            pointer-events: none;
+            background: #bfbfbf;
+            box-shadow: none;
+        }
+        &.waiting{
+            pointer-events: none;
+            cursor: initial;
         }
     }
 }
@@ -854,6 +867,73 @@
         background-color: #ef8102;
         &:hover {
             background-color: $color-swap-light;
+        }
+     }
+}
+
+.wrap-eth-modal{
+    .title{
+        margin-top: 20px;
+        margin-left: 45px;
+    }
+    .message{
+        font-size: 13px;
+        border-bottom: 1px solid #dFdFdf;
+        padding-bottom: 20px;
+    }
+    .address-info{
+        >div{
+            display: flex;        
+        }
+        label{
+            color: inherit;
+            width: 100px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        span{
+            font-size: 14px;
+        }
+    }
+    .illustration{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        .token-item{
+            border: 1px solid #cfcfcf;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+        }
+        .token-info{
+            padding: 10px;
+            span{
+                font-weight: 550;
+                margin-left: 15px;
+                padding-right: 25px;
+            }
+        }
+        .token-value{
+            padding: 10px 40px;
+            background: white;
+            border-radius: 0 25px 25px 0;
+        }
+        .dest-token{
+            .token-info{
+                padding: 10px 20px;
+            }
+            span{
+                padding-right: 0;
+            }
+        }
+    }
+    .btn-wrapper{
+        display: flex;
+        justify-content: flex-end;
+        .cancel-process{
+            margin-right: 25px;
         }
     }
 }

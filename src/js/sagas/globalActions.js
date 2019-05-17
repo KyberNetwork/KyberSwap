@@ -171,30 +171,30 @@ export function* checkConnection(action) {
 }
 
 
-export function* setMaxGasPrice(action) {
-  var state = store.getState()
-  var ethereum = state.connection.ethereum
-  try {
-    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
-    var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
-    yield put(actionsExchange.setMaxGasPriceComplete(maxGasPriceGwei))
-  } catch (err) {
-    console.log(err)
-  }
-}
+// export function* setMaxGasPrice(action) {
+//   var state = store.getState()
+//   var ethereum = state.connection.ethereum
+//   try {
+//     const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
+//     var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
+//     yield put(actionsExchange.setMaxGasPriceComplete(maxGasPriceGwei))
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
 
-export function* getMaxGasPrice(action){
-  var state = store.getState()
-  var ethereum = state.connection.ethereum
-  try {
-    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
-    var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
-    return maxGasPriceGwei
-  } catch (err) {
-    console.log(err)
-    return 50
-  }
-}
+// export function* getMaxGasPrice(action){
+//   var state = store.getState()
+//   var ethereum = state.connection.ethereum
+//   try {
+//     const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
+//     var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
+//     return maxGasPriceGwei
+//   } catch (err) {
+//     console.log(err)
+//     return 50
+//   }
+// }
 
 
 function getGasExchange(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
@@ -221,7 +221,7 @@ export function* setGasPrice(action) {
   var ethereum = state.connection.ethereum;
   var accountType = state.account.account.type;
 
-  var maxGasPrice = yield call(getMaxGasPrice)
+  var maxGasPrice = state.exchange.maxGasPrice
 
   try {
     const gasPrice = yield call([ethereum, ethereum.call], "getGasPrice")
@@ -290,6 +290,6 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.UPDATE_RATE_USD_PENDING", updateRateUSD)
 
 
-  yield takeEvery("GLOBAL.SET_MAX_GAS_PRICE", setMaxGasPrice)
+  // yield takeEvery("GLOBAL.SET_MAX_GAS_PRICE", setMaxGasPrice)
   yield takeEvery("GLOBAL.UPDATE_TITLE_WITH_RATE", updateTitle)
 }

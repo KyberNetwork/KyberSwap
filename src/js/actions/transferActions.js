@@ -243,9 +243,10 @@ export function fetchSnapshotGasSuccess() {
   }
 }
 
-export function estimateGasTransfer() {
+export function estimateGasTransfer(ethereum) {
   return {
-    type: "TRANSFER.ESTIMATE_GAS_USED"
+    type: "TRANSFER.ESTIMATE_GAS_USED",
+    payload: {ethereum}
   }
 }
 

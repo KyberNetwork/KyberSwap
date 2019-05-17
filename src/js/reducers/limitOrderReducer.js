@@ -26,11 +26,15 @@ const limitOrder = (state = initState, action) => {
         newState.destToken = action.payload.address
 
       }
+      var errors = newState.errors
+      errors.sourceAmount = []
+      errors.triggerRate = []
+      newState.errors = errors
 
       //reset all error
-      for (var key in newState.errors) {
-        newState.errors[key] = ""
-      }
+      // for (var key in newState.errors) {
+      //   newState.errors[key] = ""
+      // }
 
       // newState.sourceAmount = ""
       // newState.destAmount = 0
@@ -45,24 +49,24 @@ const limitOrder = (state = initState, action) => {
       switch(focus) {
         case "source":
           newState.sourceAmount = value
-          newState.errors.sourceAmountError = ""
-          newState.errors.ethBalanceError = ""
-          if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
+          var errors = newState.errors
+          errors.sourceAmount = []
+          newState.errors = errors
           var bigRate = converter.roundingRate(state.triggerRate)
           newState.destAmount = converter.caculateDestAmount(value, bigRate, 6)
           break
         case "dest":
           newState.destAmount = value
-          newState.errors.destAmountError = ""
-          newState.errors.sourceAmountError = ""
-          if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
+          var errors = newState.errors
+          errors.triggerRate = []
+          newState.errors = errors
           newState.triggerRate = converter.caculateTriggerRate(state.sourceAmount, value, 6)  
           break
         case "rate": 
           newState.triggerRate = value
-          newState.errors.destAmountError = ""
-          newState.errors.sourceAmountError = ""
-          if (state.errors.selectSameToken || state.errors.selectTokenToken) return newState
+          var errors = newState.errors
+          errors.triggerRate = []
+          newState.errors = errors
           var bigRate = converter.roundingRate(value)
           newState.destAmount = converter.caculateDestAmount(state.sourceAmount, bigRate, 6)  
           break
@@ -77,13 +81,13 @@ const limitOrder = (state = initState, action) => {
       const { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess } = action.payload
 
       if (!isSuccess) {
-        newState.errors.rateSystem = "error.get_rate"
+        newState.errors.rateSystem = "Cannot get swap rates from Ethereum nodes"
       } else {
         if (expectedPrice == "0") {
           if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
-            newState.errors.rateSystem = "error.kyber_maintain"
+            newState.errors.rateSystem = "This token pair is temporarily under maintenance"
           } else {
-            newState.errors.rateSystem = "error.handle_amount"
+            newState.errors.rateSystem = "Kyber cannot handle your amount at the moment, please reduce your amount"
           }
         } else {
           newState.errors.rateSystem = ""

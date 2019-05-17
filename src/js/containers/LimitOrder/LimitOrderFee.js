@@ -39,11 +39,12 @@ class LimitOrderFee extends React.Component {
 
     render() {
       var calculateFee = (this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount) / 100
-      calculateFee = converter.roundingNumber(calculateFee)
-      var sourceAmount = converter.roundingNumber(this.props.limitOrder.sourceAmount)
-      if (calculateFee == 0){
-        return ""
-      }
+      calculateFee = Math.round(calculateFee * 10000)/ 10000
+      var sourceAmount = parseFloat(this.props.limitOrder.sourceAmount)
+      sourceAmount = isNaN(sourceAmount)? 0:  Math.round(sourceAmount * 100)/ 100
+      // if (calculateFee == 0){
+      //   return ""
+      // }
       if (this.props.limitOrder.isFetchingFee) {
         return (
           <div className={"limit-order-fee"}>
@@ -60,7 +61,7 @@ class LimitOrderFee extends React.Component {
         return (
           <div className={"limit-order-fee"}>
               <div className="limit-order-fee__text">
-                Fee: {calculateFee} {this.props.limitOrder.sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of {sourceAmount})
+                Fee: {calculateFee} {this.props.limitOrder.sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of {sourceAmount} {this.props.limitOrder.sourceTokenSymbol})
               </div>
               <div>
                 <a onClick={e => this.redirectToSwap()}>Buy 3000KNC</a>{' '}

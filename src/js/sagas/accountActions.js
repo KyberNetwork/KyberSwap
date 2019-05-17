@@ -169,11 +169,11 @@ export function* importNewAccount(action) {
     //   yield put(exchangeActions.fetchExchangeEnable())
     // }
 
-    if (screen === "exchange"){
-      yield put(closeImportAccountExchange())
-    }else{
-      yield put(closeImportAccountTransfer())
-    }
+    // if (screen === "exchange"){
+    //   yield put(closeImportAccountExchange())
+    // }else{
+    //   yield put(closeImportAccountTransfer())
+    // }
 
     // yield put(fetchExchangeEnable())
 
@@ -200,7 +200,7 @@ export function* importNewAccount(action) {
       newTokens[token.symbol] = token
     })
 
-    yield call(ethereum.fetchRateExchange)
+    // yield call(ethereum.fetchRateExchange)
 
     console.log(address)
     const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtLatestBlock", address, tokens)
@@ -261,7 +261,7 @@ export function* importMetamask(action) {
     yield put(actions.importNewAccount(
       address,
       "metamask",
-      web3Service,
+      web3Service.getWalletId(),
       ethereum,
       tokens,
       walletType,

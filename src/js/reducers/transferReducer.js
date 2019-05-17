@@ -259,20 +259,20 @@ const transfer = (state = initState, action) => {
       return newState
     }
 
-    case "GLOBAL.CLEAR_SESSION_FULFILLED": {
-      var gasPrice = action.payload
-      var resetState = { ...initState }
-      resetState.token = newState.token
+    // case "GLOBAL.CLEAR_SESSION_FULFILLED": {
+    //   var gasPrice = action.payload
+    //   var resetState = { ...initState }
+    //   resetState.token = newState.token
 
-      // resetState.gasPrice = newState.gasPrice
-      resetState.gasPrice = gasPrice
-      resetState.selectedGas = newState.selectedGas
-      resetState.isEditGasPrice = newState.isEditGasPrice
-      resetState.gasPriceSuggest = newState.gasPriceSuggest
+    //   // resetState.gasPrice = newState.gasPrice
+    //   resetState.gasPrice = gasPrice
+    //   resetState.selectedGas = newState.selectedGas
+    //   resetState.isEditGasPrice = newState.isEditGasPrice
+    //   resetState.gasPriceSuggest = newState.gasPriceSuggest
 
-      resetState.tokenSymbol = newState.tokenSymbol
-      return resetState
-    }
+    //   resetState.tokenSymbol = newState.tokenSymbol
+    //   return resetState
+    // }
 
     case "TRANSFER.TOGGLE_BALANCE_CONTENT": {
       newState.isBalanceActive = !newState.isBalanceActive;

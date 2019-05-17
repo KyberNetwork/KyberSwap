@@ -81,7 +81,7 @@ export default class DappBrowser {
   }
 
 
-  getWalletId(blockNo) {
+  getWalletId() {
     if (web3.kyberID && !verifyAccount(web3.kyberID)) {
       return web3.kyberID
     }

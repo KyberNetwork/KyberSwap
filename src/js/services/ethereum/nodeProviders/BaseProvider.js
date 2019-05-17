@@ -21,12 +21,15 @@ export default class BaseProvider {
 
         this.kyberswapContract = new this.rpc.eth.Contract(constants.KYBER_SWAP_ABI, this.kyberswapAddress)
 
-        this.getSignatureParameters("0x3ebf9366a33aa9877c339f6b52e6911b583251d1e0139751e4ff0d9e551638274811d1b31a7b7e3b7458559571a906a0996c98f4e95b1d35fbc2a44eb6dd6bcc1c")
-        console.log(Buffer.from("test").toString("hex"))
-        var message = "0x6d1ffaf4dc86fa4249bc6a81620bfa187114044dd961cfe6cf8193737a16598a"
-        console.log(message)
-        console.log(Buffer.from(message.substring(2)).toString("hex"))
-        console.log(Buffer.from(message).toString("hex"))
+        // this.getSignatureParameters("0x3ebf9366a33aa9877c339f6b52e6911b583251d1e0139751e4ff0d9e551638274811d1b31a7b7e3b7458559571a906a0996c98f4e95b1d35fbc2a44eb6dd6bcc1c")
+        this.getSignatureParameters("0xef943db930294829b5ae00c2be93010ea3928acf3d407faa1bbea19913862c0d41b9d6d76ec7d0fefdb8236f9d70fb17332b9780c9d7d6b84f2945b7016948101b")
+        
+        
+        // console.log(Buffer.from("test").toString("hex"))
+        // var message = "0x6d1ffaf4dc86fa4249bc6a81620bfa187114044dd961cfe6cf8193737a16598a"
+        // console.log(message)
+        // console.log(Buffer.from(message.substring(2)).toString("hex"))
+        // console.log(Buffer.from(message).toString("hex"))
     }
 
     version() {

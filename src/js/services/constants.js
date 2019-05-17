@@ -34,7 +34,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   termAgree: true,
   passphrase: false,
   selected: false,
-  isSelectToken: false,
+  isSelectToken: true,
   sourceToken: ETHER_ADDRESS,
   sourceTokenSymbol: "ETH",
   sourceAmount: "",
@@ -193,7 +193,10 @@ const INIT_TRANSFER_FORM_STATE = {
 
 const LIMIT_ORDER_CONFIG = {
   path: "limit_order",
+  minSupportOrder: 0.1,
+  maxSupportOrder: 10,
   maxFee: 0.5,
+  minPercentTriggerRate: -20,
   maxPercentTriggerRate: 50,
   orderPath: {
     approveZero: 1,
@@ -213,13 +216,13 @@ const INIT_LIMIT_ORDER_STATE = {
   termAgree: true,
   passphrase: false,
   selected: false,
-  isSelectToken: false,
-  sourceToken: ETHER_ADDRESS,
-  sourceTokenSymbol: "ETH",
+  isSelectToken: true,
+  sourceToken: BLOCKCHAIN_INFO.tokens["KNC"].address,
+  sourceTokenSymbol: "KNC",
   sourceAmount: "",
   destAmount: "",
-  destToken: BLOCKCHAIN_INFO.tokens[secondKey].address,
-  destTokenSymbol: secondKey,
+  destToken: BLOCKCHAIN_INFO.tokens[BLOCKCHAIN_INFO.wrapETHToken].address,
+  destTokenSymbol: BLOCKCHAIN_INFO.wrapETHToken,
   destAddress: "",
   inputFocus: "source",
   maxCap: "infinity",
@@ -249,7 +252,7 @@ const INIT_LIMIT_ORDER_STATE = {
       dest: "DAI",
       address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
       nonce: 1290,
-      src_amount: 2000,
+      src_amount: 10,
       min_rate: 0.5321,
       fee: 0.5,
       status: "active",
@@ -262,7 +265,7 @@ const INIT_LIMIT_ORDER_STATE = {
       dest: "OMG",
       address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
       nonce: 1290,
-      src_amount: 2000,
+      src_amount: 10,
       min_rate: 0.5321,
       fee: 0.5,
       status: "active",
@@ -318,22 +321,13 @@ const INIT_LIMIT_ORDER_STATE = {
     destAmount: 0
   },
   errors: {
-    selectSameToken: '',
-    selectTokenToken: '',
-    sourceAmountError: '',
-    triggerRateError: '',
-    rateETHEqualZero: '',
-    balanceError: '',
+    sourceAmount: [],
+    triggerRate: [],
 
-    gasPriceError: '',
-    gasError: '',
-    passwordError: '',
-    signTransaction: '',
+   
     rateError: '',
     rateAmount: '',
-    rateSystem: '',
-    ethBalanceError: '',
-    exchange_enable: ''
+    rateSystem: ''
   },
   errorNotPossessKgt: '',
   customRateInput: {
@@ -364,7 +358,7 @@ const ETH = {
   MAX_AMOUNT: 1000
 };
 
-const IDLE_TIME_OUT = 900
+const IDLE_TIME_OUT = 600
 const TOKEN_CHART_INTERVAL = 300000;
 
 const HISTORY_EXCHANGE = {
@@ -396,7 +390,7 @@ const ASSET_URL = 'https://files.kyber.network/DesignAssets/';
 const STORAGE_KEY = "130"
 const TRADE_TOPIC = "0xd30ca399cb43507ecec6a629a35cf45eb98cda550c27696dcb0d8c4a3873ce6c"
 const PERM_HINT = "PERM"
-const CONNECTION_TIMEOUT = 3000
+const CONNECTION_TIMEOUT = 6000
 const COMMISSION_ADDR = "0x440bBd6a888a36DE6e2F6A25f65bc4e16874faa9"
 
 

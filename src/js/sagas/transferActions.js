@@ -190,6 +190,7 @@ function* getMaxGasTransfer(){
 }
 
 function* estimateGasUsed(action){
+  var {ethereum} = action.payload
   var state = store.getState()
   var transfer = state.transfer
 
@@ -203,8 +204,7 @@ function* estimateGasUsed(action){
   var account = state.account.account
   var fromAddr = account.address
 
-  yield call(fetchAndSetGas, fromAddr, transfer.tokenSymbol, transfer.token, decimals, transfer.amount)
-//  yield call(calculateGasUse, fromAddr, transfer.tokenSymbol, transfer.token, decimal, transfer.amount)
+  yield call(fetchAndSetGas, ethereum, fromAddr, transfer.tokenSymbol, transfer.token, decimals, transfer.amount)
 }
 
 
@@ -231,9 +231,7 @@ function* estimateGasUsedWhenSelectToken(action){
   var account = state.account.account
   var fromAddr = account.address
 
-  yield call(fetchAndSetGas, fromAddr, tokenSymbol, address, decimals, transfer.amount)
-
-  //yield call(calculateGasUse, fromAddr, tokenSymbol, address, decimal, transfer.amount)
+  yield call(fetchAndSetGas, ethereum, fromAddr, tokenSymbol, address, decimals, transfer.amount)
 }
 
 function* estimateGasUsedWhenChangeAmount(action){
@@ -257,60 +255,28 @@ function* estimateGasUsedWhenChangeAmount(action){
   var account = state.account.account
   var fromAddr = account.address
 
-  yield call(fetchAndSetGas, fromAddr, tokenSymbol, transfer.token, decimals, amount)
+  yield call(fetchAndSetGas, ethereum, fromAddr, tokenSymbol, transfer.token, decimals, amount)
 
- // yield call(calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimal, amount)
 }
 
-function* fetchAndSetGas(fromAddr, tokenSymbol, tokenAddr, decimals, amount){
-  var gasRequest = yield call(common.handleRequest, calculateGasUse, fromAddr, tokenSymbol, tokenAddr, decimals, amount)
+function* fetchAndSetGas(ethereum, fromAddr, tokenSymbol, tokenAddr, decimals, amount){
+  var gasRequest = yield call(calculateGasUse, ethereum, fromAddr, tokenSymbol, tokenAddr, decimals, amount)
+  // {"status": "success", res: gasLimit}
   if (gasRequest.status === "success"){
-    const gas = gasRequest.data
+    const gas = gasRequest.res
     yield put(actions.setGasUsed(gas))
-  }
-  if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
+  }else{
     var gasLimit = yield call(getMaxGasTransfer)
     yield put(actions.setGasUsed(gasLimit))
   }
 }
 
 
-// function* fetchGas(){
-//   var state = store.getState()
-//   var transfer = state.transfer
-//   var tokens = state.tokens.tokens
-
-//   var decimal = 18
-//   var tokenSymbol = transfer.tokenSymbol
-//   if (tokens[tokenSymbol]) {
-//     decimal = tokens[tokenSymbol].decimal
-//   }
-
-//   var account = state.account.account
-//   var fromAddr = account.address
-
-
-
-//   var gasRequest = yield call(common.handleRequest, calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimal, transfer.amount)
-//   if (gasRequest.status === "success"){
-//     const gas = gasRequest.data
-//     yield put(actions.setGasUsed(gas))
-//   }
-//   if ((gasRequest.status === "timeout") || (gasRequest.status === "fail")){
-//     var state = store.getState()
-//     var transfer = state.transfer
-//     var gasLimit = transfer.gas_limit
-//     yield put(actions.setGasUsed(gasLimit))
-//   }
-
-//   //yield call(calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimal, transfer.amount)
-//   yield put(actions.fetchGasSuccess())
-// }
-
 function* fetchGasSnapshot(){
   var state = store.getState()
   var transfer = state.transfer
   var tokens = state.tokens.tokens
+  var ethereum = state.connection.ethereum
 
   var decimals = 18
   var tokenSymbol = transfer.tokenSymbol
@@ -323,7 +289,8 @@ function* fetchGasSnapshot(){
 
 
 
-  var gasRequest = yield call(common.handleRequest, calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimals, transfer.amount)
+
+  var gasRequest = yield call(common.handleRequest, calculateGasUse, ethereum, fromAddr, tokenSymbol, transfer.token, decimals, transfer.amount)
   if (gasRequest.status === "success"){
     const gas = gasRequest.data
     yield put(actions.setGasUsedSnapshot(gas))
@@ -335,13 +302,11 @@ function* fetchGasSnapshot(){
     yield put(actions.setGasUsedSnapshot(gasLimit))
   }
 
-  //yield call(calculateGasUse, fromAddr, tokenSymbol, transfer.token, decimal, transfer.amount)
   yield put(actions.fetchSnapshotGasSuccess())
 }
 
-function* calculateGasUse(fromAddr, tokenSymbol, tokenAddr, tokenDecimal, sourceAmount){
-    var state = store.getState()
-    var ethereum = state.connection.ethereum
+function* calculateGasUse(ethereum, fromAddr, tokenSymbol, tokenAddr, tokenDecimal, sourceAmount){
+    var state = store.getState()    
     var transfer = state.transfer
     const amount = converter.stringToHex(sourceAmount, tokenDecimal)
     var gasLimit = yield call(getMaxGasTransfer)
@@ -403,8 +368,8 @@ export function* verifyTransfer(){
   if (isNaN(amount) || amount === "") {
     amount = 0
   }
-  
-  var testBalanceWithFee = validators.verifyBalanceForTransaction(state.tokens.tokens['ETH'].balance,
+  var account = state.account.account
+  var testBalanceWithFee = validators.verifyBalanceForTransaction(account.balance,
   transfer.tokenSymbol, amount, transfer.gas, transfer.gasPrice)
   if (testBalanceWithFee) {
     yield put(actions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))

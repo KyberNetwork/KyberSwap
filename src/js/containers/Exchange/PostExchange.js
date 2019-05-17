@@ -291,13 +291,16 @@ export default class PostExchange extends React.Component {
                 <div className="space space--padding"><img src={require("../../../assets/img/exchange/arrow-right-orange.svg")} /></div>
                 <div className="amount-item amount-right">
                   <div className={"rc-label"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
-                  {this.props.snapshot.isFetchingRate ?
-                    <img src={require('../../../assets/img/waiting-white.svg')} />
-                    :
-                    <div className="item-icon">
-                      <img src={getAssetUrl(`tokens/${destIcon}`)} />
+                  <div className={"rc-info"}>
+                    <div>
+                      {this.props.snapshot.isFetchingRate ?
+                        <img src={require('../../../assets/img/waiting-white.svg')} />
+                        : destAmount}
                     </div>
-                  }
+                    <div>
+                      {destTokenSymbol}
+                    </div>
+                  </div>
                 </div>
               </div>
             </React.Fragment>
@@ -325,13 +328,16 @@ export default class PostExchange extends React.Component {
                 </div>
                 <div className="amount-item amount-right amount-item-icon">
                   <div className={"rc-label rc-label-icon"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
-                  {this.props.snapshot.isFetchingRate ?
-                    <img src={require('../../../assets/img/waiting-white.svg')} />
-                    :
-                    <div className="item-icon">
-                      <img src={getAssetUrl(`tokens/${destIcon}`)} />
+                  <div className={"rc-info"}>
+                    <div>
+                      {this.props.snapshot.isFetchingRate ?
+                        <img src={require('../../../assets/img/waiting-white.svg')} />
+                        : destAmount}
                     </div>
-                  }
+                    <div>
+                      {destTokenSymbol}
+                    </div>
+                  </div>
                 </div>
                 <div className="space-container space-container-grid-align">
                   <div className="space space-arrow-icon" ><img src={require("../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
@@ -600,7 +606,7 @@ export default class PostExchange extends React.Component {
     //alert(walletType)
     var blockNo = this.props.snapshot.blockNo
     if (walletType === "metamask") {
-      blockNo = this.props.account.keystring.getWalletId(blockNo)
+      blockNo = this.props.account.keystring
     } else {
       blockNo = this.getReferAddr(blockNo)
     }
