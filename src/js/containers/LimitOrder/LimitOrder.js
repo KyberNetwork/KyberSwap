@@ -9,7 +9,7 @@ import * as limitOrderActions from "../../actions/limitOrderActions"
 
 import {LimitOrderBody} from "../LimitOrder"
 import * as limitOrderServices from "../../services/limit_order";
-
+import { isUserLogin } from "../../utils/common";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -96,7 +96,9 @@ export default class LimitOrder extends React.Component {
     }
 
     // Get list orders
-    this.getOrders();
+    if (isUserLogin()) {
+      this.getOrders();
+    }
   }
 
 
