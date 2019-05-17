@@ -622,7 +622,7 @@ class ExchangeBody extends React.Component {
     var isFixedDestToken = !!(this.props.account && this.props.account.account.type === "promo" && this.props.account.account.info.destToken)
     var tokenDestSelect = (
       <TokenSelector
-        type="des"
+        type="dest"
         focusItem={this.props.exchange.destTokenSymbol}
         listItem={tokenDest}
         chooseToken={this.chooseToken}

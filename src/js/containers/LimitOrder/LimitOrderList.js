@@ -4,122 +4,10 @@ import ReactTable from "react-table";
 import { getTranslate } from 'react-localize-redux';
 import _ from "lodash";
 
+import CancelOrderModal from "./LimitOrderModals/CancelOrderModal";
+
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import * as common from "../../utils/common";
-
-const data = [
-  {
-    id: "2",
-    source: "DAI",
-    dest: "ETH",
-    address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
-    nonce: 1290,
-    src_amount: 2000000,
-    min_rate: 0.123,
-    fee: 0.1,
-    status: "active",
-    created_time: 1557544645,
-    cancel_time: 1557307228
-  },
-  {
-    id: "1",
-    source: "ETH",
-    dest: "DAI",
-    address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
-    nonce: 1290,
-    src_amount: 2000,
-    min_rate: 0.123,
-    fee: 0.1,
-    status: "cancel",
-    created_time: 1556784881,
-    cancel_time: 1557371845 
-  }, {
-    id: "3",
-    source: "USDC",
-    dest: "TUSD",
-    address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
-    nonce: 1290,
-    src_amount: 2000,
-    min_rate: 0.123,
-    fee: 0.1,
-    status: "active",
-    created_time: 1555298245,
-    cancel_time: 1556785883
-  }, {
-    id: "4",
-    source: "KNC",
-    dest: "TUSD",
-    address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
-    nonce: 1290,
-    src_amount: 100,
-    min_rate: 0.123,
-    fee: 0.1,
-    status: "cancel",
-    created_time: 1546334424,
-    cancel_time: 1556767045
-  }, {
-    id: "5",
-    source: "BNB",
-    dest: "TUSD",
-    address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
-    nonce: 1290,
-    src_amount: 2000,
-    min_rate: 0.123,
-    fee: 0.1,
-    status: "active",
-    created_time: 1551496645,
-    cancel_time: 1538299225
-  }, {
-    id: "6",
-    source: "ETH",
-    dest: "TUSD",
-    address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
-    nonce: 1290,
-    src_amount: 2000,
-    min_rate: 0.123,
-    fee: 0.1,
-    status: "active",
-    created_time: 1569835224,
-    cancel_time: 1556785883
-  }, {
-    id: "7",
-    source: "MKR",
-    dest: "TUSD",
-    address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
-    nonce: 1290,
-    src_amount: 2000,
-    min_rate: 0.123,
-    fee: 0.1,
-    status: "active",
-    created_time: 1569835224,
-    cancel_time: 1556785883
-  }, {
-    id: "8",
-    source: "MKR",
-    dest: "TUSD",
-    address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
-    nonce: 1290,
-    src_amount: 2000,
-    min_rate: 0.123,
-    fee: 0.1,
-    status: "active",
-    created_time: 1569835224,
-    cancel_time: 1556785883
-  }, {
-    id: "9",
-    source: "MKR",
-    dest: "TUSD",
-    address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
-    nonce: 1290,
-    src_amount: 2000,
-    min_rate: 0.123,
-    fee: 0.1,
-    status: "cancel",
-    created_time: 1569835224,
-    cancel_time: 1556785883
-  }
-];
-
 
 @connect((store, props) => {
   return {
@@ -142,11 +30,13 @@ export default class LimitOrderList extends React.Component {
       },
       pairFilterVisible: false,
       statusFilterVisible: false,
+      cancelOrderModalVisible: false,
       statusFilter: [],
       pairFilter: [],
       dateSort: "desc",
       pairSort: "asc",
-      prioritySort: "date"    // date or pair
+      prioritySort: "date",    // date or pair,
+      currentOrder: null
     };
 
     // this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -162,9 +52,8 @@ export default class LimitOrderList extends React.Component {
       Header: this.getHeader("date"),
       accessor: item => item.status === "active" ? item.created_time : item.cancel_time,
       Cell: props => this.getDateCell(props),
-      sortable: true,
-      headerClassName: "cell-flex-end-header cell-date-header",
-      className: "cell-flex-end cell-date",
+      headerClassName: "cell-flex-start-header",
+      className: "cell-flex-start",
       maxWidth: 120,
       getHeaderProps: (state, rowInfo) => {
         return {
@@ -201,15 +90,15 @@ export default class LimitOrderList extends React.Component {
       Header: this.getHeader("from"),
       accessor: item => ({ source: item.source, sourceAmount: item.src_amount }),
       Cell: props => this.getFromCell(props),
-      headerClassName: "cell-flex-end-header",
-      className: "cell-flex-end cell-from"
+      headerClassName: "cell-flex-start-header",
+      className: "cell-flex-start cell-from"
     }, {
       id: "to",
       Header: this.getHeader("to"),
-      accessor: item => ({ dest: item.dest, minRate: item.min_rate, sourceAmount: item.src_amount }),
+      accessor: item => ({ dest: item.dest, minRate: item.min_rate, sourceAmount: item.src_amount, fee: item.fee }),
       Cell: props => this.getToCell(props),
-      headerClassName: "cell-flex-end-header",
-      className: "cell-flex-end cell-to",
+      headerClassName: "cell-flex-start-header",
+      className: "cell-flex-start cell-to",
       width: 160
     }, {
       id: "status",
@@ -217,7 +106,7 @@ export default class LimitOrderList extends React.Component {
       accessor: item => item.status,
       Cell: props => this.getStatusCell(props),
       headerClassName: "cell-flex-start-header cell-status-header",
-      className: "cell-flex-start cell-status",
+      className: "cell-flex-start",
       maxWidth: 90,
       getHeaderProps: (state, rowInfo) => {
         return {
@@ -232,11 +121,6 @@ export default class LimitOrderList extends React.Component {
       accessor: item => item.status,
       Cell: props => this.getActionCell(props),
       maxWidth: 100
-    }, {
-      id: "setting",
-      Header: this.getHeader("setting"),
-      width: 25,
-      headerClassName: 'cell-setting-header'
     }]; 
     return columns;
   }
@@ -279,8 +163,8 @@ export default class LimitOrderList extends React.Component {
   }
 
   getToCell = (props) => {
-    const { dest, minRate, sourceAmount } = props.value;
-    let destAmount = sourceAmount * (1 - minRate) / minRate;
+    const { dest, minRate, fee, sourceAmount } = props.value;
+    let destAmount = sourceAmount * (1 - fee / 100) * minRate;
     destAmount = common.formatFractionalValue(destAmount, 6);
     return (
       <div>
@@ -293,7 +177,7 @@ export default class LimitOrderList extends React.Component {
   getStatusCell = (props) => {
     const status = props.value;
     return (
-      <div>{status.charAt(0).toUpperCase() + status.slice(1)}</div>
+      <div className={`cell-status cell-status--${status}`}>{status.toUpperCase()}</div>
     )
   }
 
@@ -301,8 +185,9 @@ export default class LimitOrderList extends React.Component {
     const status = props.value;
     return (
       <div className="cell-action">
-        {status === "active" && <button className="btn-cancel-order">{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
+        {status === "active" && <button className="btn-cancel-order" onClick={e =>this.openCancelOrderModal(props.original)}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
         {status !== "active" && <div className="line-indicator"></div>}
+        
       </div>
     )
   }
@@ -312,7 +197,7 @@ export default class LimitOrderList extends React.Component {
     if (title === "date") {
       return (
         <div>
-          <span>{this.props.translate("limit_order.date").toUpperCase() || "DATE"}</span>
+          <span>{this.props.translate("limit_order.date") || "Date"}</span>
           {this.state.dateSort === "asc" && <img src={require("../../../assets/img/limit-order/sort-asc-icon.svg")} />}
           {this.state.dateSort === "desc" && <img src={require("../../../assets/img/limit-order/sort-desc-icon.svg")} />}
         </div>
@@ -320,7 +205,7 @@ export default class LimitOrderList extends React.Component {
     } else if (title === "pair") {
       return (
         <div>
-          <span>{this.props.translate("limit_order.pair").toUpperCase() || "PAIR"}</span>
+          <span>{this.props.translate("limit_order.pair") || "Pair"}</span>
           
           <div className="drop-down">
             <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
@@ -330,23 +215,31 @@ export default class LimitOrderList extends React.Component {
     } else if (title === "status") {
       return (
         <div>
-          <span>{this.props.translate("limit_order.status").toUpperCase() || "STATUS"}</span>
+          <span>{this.props.translate("limit_order.status") || "Status"}</span>
           <div className="drop-down">
             <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
           </div>
         </div>
       )
-    } else if (title === "setting") {
-      return (
-        <div style={{ cursor: "pointer" }}>
-          <img src={require("../../../assets/img/limit-order/setting-grey-icon.svg")}/>
-        </div>
-      )
     } else {
       return (
-        <div>{this.props.translate(`limit_order.${title}`).toUpperCase() || title.toUpperCase()}</div>
+        <div>{this.props.translate(`limit_order.${title}`) || title}</div>
       )
     }
+  }
+
+  openCancelOrderModal = (order) => {
+    const currentOrder = JSON.parse(JSON.stringify(order));
+    this.setState({
+      cancelOrderModalVisible: true,
+      currentOrder
+    });
+  }
+
+  closeCancelOrderModal = () => {
+    this.setState({
+      cancelOrderModalVisible: false
+    });
   }
 
   // Handle filters
@@ -609,19 +502,25 @@ export default class LimitOrderList extends React.Component {
 
   render() {
     const columns = this.getColumns();
-    
+    const data = this.renderData(this.props.limitOrder.listOrder);
     return (
       <div className={"limit-order-list"}>
         <div>
           <div className="limit-order-list--title">
-            <div className="title">{this.props.translate("limit_order.order_list_title").toUpperCase() || "MANAGE YOUR ORDERS"}</div>
-            <ul className="filter">
-              {this.getTimeFilter()}
-            </ul>
+            <div className="title">{this.props.translate("limit_order.order_list_title") || "Manage Your Orders"}</div>
+            <div className="filter-container">
+              <ul className="filter">
+                {this.getTimeFilter()}
+              </ul>
+              <div className="setting">
+                <img src={require("../../../assets/img/limit-order/setting-grey-icon.svg")}/>
+              </div>
+            </div>
+            
           </div>
           <div className="limit-order-list--table">
             <ReactTable 
-              data={this.renderData(data)}
+              data={data}
               columns={columns}
               showPagination={false}
               resizable={false}
@@ -631,6 +530,10 @@ export default class LimitOrderList extends React.Component {
             />
             {this.state.pairFilterVisible && this.getPairFilter(data)}
             {this.state.statusFilterVisible && this.getStatusFilter()}
+            <CancelOrderModal order={this.state.currentOrder} 
+              isOpen={this.state.cancelOrderModalVisible}
+              closeModal={this.closeCancelOrderModal}
+            />
           </div>
         </div>
       </div>

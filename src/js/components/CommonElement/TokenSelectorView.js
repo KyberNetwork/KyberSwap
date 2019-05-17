@@ -40,7 +40,10 @@ const TokenSelectorView = (props) => {
 
   const getWethTitle = () => {
     return (
-      <div className="select-item__title" onClick={e => props.selectItem(e, "WETH", constants.WETH_ADDRESS)}>
+      <div className="select-item__title" onClick={e => { 
+        props.selectItem(e, "WETH", constants.WETH_ADDRESS);
+        props.hideTokens();
+      }}>
         <div className="item-icon">
           <img alt={"WETH"} src={getAssetUrl(`tokens/weth.svg`)} />
         </div>
@@ -76,7 +79,7 @@ const TokenSelectorView = (props) => {
                 </div>
               </div>
             </div>
-            {focusItem.symbol.toLowerCase() === "weth" && 
+            {props.screen === "limit_order" && focusItem.symbol.toLowerCase() === "weth" && 
               <img src={require("../../../assets/img/v3/info_grey.svg")} className="weth-info"/>
             }
             <div><i className={'k k-angle bold ' + (props.open ? 'up' : 'down')}></i></div>
