@@ -57,7 +57,8 @@ export default class Exchange extends React.Component {
   }
 
   checkKyberEnable = () => {
-    this.props.dispatch(exchangeActions.checkKyberEnable())
+    var ethereum = this.getEthereumInstance()
+    this.props.dispatch(exchangeActions.checkKyberEnable(ethereum))
   }
 
   fetchExchangeEnable = () => {

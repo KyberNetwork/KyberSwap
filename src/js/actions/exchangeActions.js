@@ -514,9 +514,10 @@ export function fetchGasSuccessSnapshot() {
   }
 }
 
-export function checkKyberEnable() {
+export function checkKyberEnable(ethereum) {
   return {
-    type: "EXCHANGE.CHECK_KYBER_ENABLE"
+    type: "EXCHANGE.CHECK_KYBER_ENABLE",
+    payload: {ethereum}
   }
 }
 

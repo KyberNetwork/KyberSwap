@@ -1615,9 +1615,9 @@ function* debug(input, blockno, ethereum) {
   yield put(actions.setAnalyzeError(networkIssues, input.txHash))
 }
 
-function* checkKyberEnable() {
+function* checkKyberEnable(action) {
+  const {ethereum} = action.payload
   var state = store.getState()
-  const ethereum = state.connection.ethereum
   try {
     var enabled = yield call([ethereum, ethereum.call], "checkKyberEnable")
     yield put(actions.setKyberEnable(enabled))

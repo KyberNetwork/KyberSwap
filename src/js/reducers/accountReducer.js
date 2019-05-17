@@ -28,7 +28,7 @@ const account = (state=initState, action) => {
       if (action.key === "account" && action.payload && action.payload.account != false) {
         var {address, type, keystring, walletType, info, balance, manualNonce, nonce } = action.payload.account         
         var updatedAccount = cloneAccount(address, type, keystring, walletType, info, balance, nonce, manualNonce )
-        return {...state, account: updatedAccount, loading: false, isStoreReady: true}
+        return {...state, account: updatedAccount, loading: false, isStoreReady: true, error: ""}
       }else{
         return {...state, isStoreReady: true}      
       }
