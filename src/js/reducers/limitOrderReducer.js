@@ -150,13 +150,39 @@ const limitOrder = (state = initState, action) => {
       newState.currentPathIndex += 1
       return newState
     }
-
+    case "LIMIT_ORDER.ADD_LIST_ORDER": {
+      const listOrder = action.payload;
+      newState.listOrder = listOrder;
+      return newState;
+    }
     case "LIMIT_ORDER.ADD_NEW_ORDER":{
       const {order} = action.payload
       var listOrder = newState.listOrder
       listOrder.unshift(order)
       newState.listOrder = listOrder
       return newState
+    }
+    case "LIMIT_ORDER.REMOVE_ORDER": {
+      const { order } = action.payload;
+      const listOrder = JSON.parse(JSON.stringify(newState.listOrder));
+      const target = listOrder.filter(item => item.id === order.id);
+      if (target.length > 0) {
+        listOrder.splice(listOrder.indexOf(target[0]), 1);
+      }
+      newState.listOrder = listOrder;
+      return newState;
+    }
+    case "LIMIT_ORDER.UPDATE_ORDER": {
+      const { order } = action.payload;
+      const newListOrder = newState.listOrder.map(item => {
+        if (item.id === order.id) {
+          return order;
+        }
+
+        return item;
+      });
+      newState.listOrder = newListOrder;
+      return newState;
     }
     
     case "GLOBAL.SET_GAS_PRICE_COMPLETE": {

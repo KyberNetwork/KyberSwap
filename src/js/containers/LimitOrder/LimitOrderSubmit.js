@@ -157,7 +157,8 @@ export default class LimitOrderSubmit extends React.Component {
     const tokens = this.props.tokens
     var destTokenSymbol = BLOCKCHAIN_INFO.wrapETHToken
     var destTokenLimit = tokens[destTokenSymbol] && tokens[destTokenSymbol].gasLimit ? tokens[destTokenSymbol].gasLimit : this.props.limitOrder.max_gas    
-    return destGasLimit
+    
+    return destTokenLimit;
   
   }
 

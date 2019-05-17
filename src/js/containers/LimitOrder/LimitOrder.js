@@ -8,7 +8,8 @@ import EthereumService from "../../services/ethereum/ethereum"
 import * as limitOrderActions from "../../actions/limitOrderActions"
 
 import {LimitOrderBody} from "../LimitOrder"
-
+import * as limitOrderServices from "../../services/limit_order";
+import { isUserLogin } from "../../utils/common";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -67,6 +68,15 @@ export default class LimitOrder extends React.Component {
     clearInterval(this.invervalProcess)
   }
 
+  async getOrders() {
+    try {
+      const results = await limitOrderServices.getOrders();
+      this.props.dispatch(limitOrderActions.addListOrder(results));
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   componentDidMount = () =>{
     // set interval process
     this.setInvervalProcess()
@@ -83,6 +93,11 @@ export default class LimitOrder extends React.Component {
       // var ethereum = this.getEthereumInstance()
       this.props.dispatch(limitOrderActions.selectTokenAsync(sourceSymbol, sourceAddress, "source"))
       this.props.dispatch(limitOrderActions.selectTokenAsync(destSymbol, destAddress, "dest"))
+    }
+
+    // Get list orders
+    if (isUserLogin()) {
+      this.getOrders();
     }
   }
 
