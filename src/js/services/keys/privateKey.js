@@ -5,12 +5,15 @@ import EthereumService from "../ethereum/ethereum"
 import ethUtils from "ethereumjs-util"
 
 
+
 export default class PrivateKey {
 
 
   async signSignature(message, account){
     const privateKey = account.keystring    
-    var sig = ethUtils.ecsign(ethUtils.toBuffer(message), ethUtils.toBuffer("0x" + privateKey))
+    var prefixHash = ethUtils.hashPersonalMessage(ethUtils.toBuffer(message))
+
+    var sig = ethUtils.ecsign(ethUtils.toBuffer(prefixHash), ethUtils.toBuffer("0x" + privateKey))
     var rpcSig = ethUtils.toRpcSig(sig.v,  sig.r, sig.s)
     return rpcSig
   }
