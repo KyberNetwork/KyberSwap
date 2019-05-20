@@ -204,8 +204,11 @@ function getGasExchange(safeLowGas, standardGas, fastGas, superFastGas, defaultG
   var defaultGas = parseFloat(defaultGas)
   var maxGas = parseFloat(maxGas)
   if (superFastGas > maxGas) {
+    superFastGas = maxGas;
+  }
+
+  if (fastGas > maxGas) {
     var returnSuggest = {}
-    returnSuggest.superFastGas = maxGas
     returnSuggest.fastGas = maxGas
     returnSuggest.standardGas = maxGas
     returnSuggest.safeLowGas = maxGas - maxGas * 30 / 100
