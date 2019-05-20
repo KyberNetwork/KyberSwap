@@ -18,7 +18,8 @@ export function calculateMinAmount(source, rate) {
 
 export function calculateDest(source, rate, precision) {
   if (isNaN(source) || source === ""){
-    source = 0
+    source = 0;
+    return "";
   }
 
   var bigSource = new BigNumber(source)
@@ -39,7 +40,7 @@ export function calculateDest(source, rate, precision) {
 
 export function caculateSourceAmount(destAmount, offeredRate, precision) {
   if (!destAmount || !offeredRate || acceptableTyping(destAmount) || acceptableTyping(offeredRate)) {
-    return "0"
+    return ""
   }
 
   var bigOfferedRate = new BigNumber(offeredRate)
@@ -61,7 +62,7 @@ export function caculateSourceAmount(destAmount, offeredRate, precision) {
 
 export function caculateDestAmount(sourceAmount, offeredRate, precision) {
   if (!sourceAmount || !offeredRate || acceptableTyping(sourceAmount) || acceptableTyping(offeredRate)) {
-    return "0"
+    return "";
   }
   var bigSource = new BigNumber(sourceAmount.toString())
   var bigOfferedRate = new BigNumber(offeredRate)
