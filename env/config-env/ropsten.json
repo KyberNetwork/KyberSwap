@@ -284,7 +284,7 @@
     "enjinx": "https://kyber.enjinx.io/",
     "reserve": "0x0fc1cf3e7dd049f7b42e6823164a64f76fc06be0",
     "network": "0x818E6FECD516Ecc3849DAf6845e3EC868087B755",
-    "kyberswapAddress": "0x880a6aD3Df09b6220639856e64B4Ab86f18f6095",
+    "kyberswapAddress": "0x7Fd3e50013E911e7c479A10B8525728f3F69a2bC",
     "wrapper": "0x665d34f192f4940da4e859ff7768c0a80ed3ae10",
     "trade_topic": "0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
     "endpoint": "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",
