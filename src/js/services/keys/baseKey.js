@@ -1,6 +1,7 @@
 import { verifyNonce } from "../../utils/validators"
 import { biggestNumber } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
+import * as converters from "../../utils/converter";
 
 export const sendEtherFromAccount = (
   id, ethereum, account, sourceToken, sourceAmount,
@@ -79,7 +80,7 @@ export const getAppoveToken = (ethereum, sourceToken, sourceAmount, nonce, gas, 
       const txParams = {
         from: account,
         nonce: nonce,
-        gasPrice: gasPrice,
+        gasPrice: converters.gweiToWei(gasPrice),
         gasLimit: gas,
         to: sourceToken,
         value: '0x0',
@@ -100,7 +101,7 @@ export const getAppoveTokenZero = (ethereum, sourceToken, sourceAmount, nonce, g
       const txParams = {
         from: account,
         nonce: nonce,
-        gasPrice: gasPrice,
+        gasPrice: converters.gweiToWei(gasPrice),
         gasLimit: gas,
         to: sourceToken,
         value: '0x0',
