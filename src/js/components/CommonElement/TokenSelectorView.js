@@ -39,9 +39,10 @@ const TokenSelectorView = (props) => {
   }
 
   const getWethTitle = () => {
+    const wethAddress = props.listToken.filter(item => item.symbol === "WETH")[0].address;
     return (
       <div className="select-item__title" onClick={e => { 
-        props.selectItem(e, "WETH", constants.WETH_ADDRESS);
+        props.selectItem(e, "WETH", wethAddress);
         props.hideTokens();
       }}>
         <div className="item-icon">
