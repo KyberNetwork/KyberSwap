@@ -7,6 +7,7 @@ import ReactTooltip from 'react-tooltip'
 export default class AdvanceConfigLayout extends React.Component {
   render() {
     const gasOptions = [
+      {key: 'sf', text: this.props.translate("super_fast") || 'Super Fast', value: this.props.gasPriceSuggest.superFastGas},
       {key: 'f', text: this.props.translate("fast") || 'Fast', value: this.props.gasPriceSuggest.fastGas},
       {key: 's', text: this.props.translate("standard") || 'Standard', value: this.props.gasPriceSuggest.standardGas},
       {key: 'l', text: this.props.translate("low") || 'Slow', value: this.props.gasPriceSuggest.safeLowGas}
@@ -72,7 +73,7 @@ export default class AdvanceConfigLayout extends React.Component {
               <div className="advance-config__option-container">
                 {gasOptions.map((item, index) => {
                   return (
-                    <label className="advance-config__option" key={index}>
+                    <label className="advance-config__option advance-config__option--gas" key={index}>
                       <span className="advance-config__gas-amount">{item.value} </span>
                       <span className="advance-config__gas-mode">{item.text}</span>
                       <input

@@ -360,5 +360,6 @@
   "low": "Slow",
   "standard": "Standard",
   "fast": "Fast",
+  "super_fast": "Super Fast",
   "search": "Search"
 }
