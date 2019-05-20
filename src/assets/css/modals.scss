@@ -493,7 +493,7 @@ $divider-color: darken($title-background-color, 5);
 
   &__cancel-order {
     @include screen-min-width(large) {
-      width: 680px;
+      width: 700px;
     }
   }
 
