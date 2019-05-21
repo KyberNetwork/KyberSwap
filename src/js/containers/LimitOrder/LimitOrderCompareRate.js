@@ -58,7 +58,7 @@ export default class LimitOrderCompareRate extends React.Component {
 
                     {percentChange < 0 && percentChange > -100 && (
                     <div className={"limit-order-compare-rate__text"}>
-                      Your price is {percentChange}% lower than current Market
+                      Your price is {Math.abs(percentChange)}% lower than current Market
                     </div>
                   )}
                     
