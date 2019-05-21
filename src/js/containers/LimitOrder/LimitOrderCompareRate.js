@@ -12,11 +12,39 @@ import * as converters from "../../utils/converter"
 
   return {
     translate, limitOrder, tokens, account, ethereum
-
   }
 })
 
 export default class LimitOrderCompareRate extends React.Component {
+
+  renderTokenCurrentRate = (isLoading = false) => {
+    const srcSymbol = this.props.limitOrder.sourceTokenSymbol;
+    const destSymbol = this.props.limitOrder.destTokenSymbol;
+    const offeredRate = this.props.limitOrder.offeredRate;
+
+    if (srcSymbol === 'WETH') {
+      const expectedRate = offeredRate ? converters.convertBuyRate(offeredRate) : 0;
+      return this.getTokenCurrentRateHtml(destSymbol, srcSymbol, expectedRate, isLoading);
+    } else {
+      const expectedRate = converters.toT(offeredRate);
+      return this.getTokenCurrentRateHtml(srcSymbol, destSymbol, expectedRate, isLoading);
+    }
+  }
+
+  getTokenCurrentRateHtml = (srcSymbol, destSymbol, expectedRate, isLoading = false) => {
+    return (
+      <span className="rate">
+        <span>1 {srcSymbol} = </span>
+        {isLoading && (
+          <span className="rate-loading">
+            <img src={require('../../../assets/img/waiting-white.svg')} />
+          </span>
+        )}
+        {!isLoading && converters.roundingNumber(expectedRate)}
+        <span> {destSymbol}</span>
+      </span>
+    )
+  }
 
     render() {
         if (this.props.limitOrder.isSelectToken) {
@@ -24,7 +52,7 @@ export default class LimitOrderCompareRate extends React.Component {
                 <div className={"limit-order-compare-rate"}>
                     <div className="limit-order-compare-rate__text">
                         <span>Current Rate:</span>{' '}
-                        <span className="rate">1 {this.props.limitOrder.sourceTokenSymbol} = <span className="rate-loading"> <img src={require('../../../assets/img/waiting-white.svg')} /></span> {this.props.limitOrder.destTokenSymbol}</span>
+                        {this.renderTokenCurrentRate(true)}
                     </div>
                 </div>
             )
@@ -37,19 +65,18 @@ export default class LimitOrderCompareRate extends React.Component {
                 </div>
             )
         }
-     
 
         if (!this.props.limitOrder.isSelectToken && this.props.limitOrder.offeredRate != 0) {
             var triggerRate = converters.roundingRate(this.props.limitOrder.triggerRate)
             var percentChange = converters.percentChange(triggerRate, this.props.limitOrder.offeredRate)
-            var expectedRate = converters.toT(this.props.limitOrder.offeredRate)
+
             return (
                 <div className={"limit-order-compare-rate"}>
                     <div className={"limit-order-compare-rate__text"}>
                         <span>Current Rate:</span>{' '}
-                        <span className="rate">1 {this.props.limitOrder.sourceTokenSymbol} = {converters.roundingNumber(expectedRate)} {this.props.limitOrder.destTokenSymbol}</span>
+                        {this.renderTokenCurrentRate()}
                     </div>
-                    
+
                     {percentChange > 0 && (
                     <div className={"limit-order-compare-rate__text"}>
                       Your price is {percentChange}% higher than current Market
@@ -61,12 +88,8 @@ export default class LimitOrderCompareRate extends React.Component {
                       Your price is {Math.abs(percentChange)}% lower than current Market
                     </div>
                   )}
-                    
-
                 </div>
             )
         }
-
     }
-  
 }
