@@ -80,7 +80,7 @@ export const getAppoveToken = (ethereum, sourceToken, sourceAmount, nonce, gas, 
       const txParams = {
         from: account,
         nonce: nonce,
-        gasPrice: converters.gweiToWei(gasPrice),
+        gasPrice: converters.toHex(converters.gweiToWei(gasPrice)),
         gasLimit: gas,
         to: sourceToken,
         value: '0x0',
@@ -101,7 +101,7 @@ export const getAppoveTokenZero = (ethereum, sourceToken, sourceAmount, nonce, g
       const txParams = {
         from: account,
         nonce: nonce,
-        gasPrice: converters.gweiToWei(gasPrice),
+        gasPrice: converters.toHex(converters.gweiToWei(gasPrice)),
         gasLimit: gas,
         to: sourceToken,
         value: '0x0',
