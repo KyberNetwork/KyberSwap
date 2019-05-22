@@ -6,7 +6,6 @@ import * as common from "./common"
 import * as validators from "../utils/validators"
 
 import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
-import { addTx } from '../actions/txActions'
 import * as utilActions from '../actions/utilActions'
 import constants from "../services/constants"
 import * as converter from "../utils/converter"

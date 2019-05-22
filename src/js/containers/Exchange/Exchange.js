@@ -7,7 +7,6 @@ import * as validators from "../../utils/validators"
 
 import * as exchangeActions from "../../actions/exchangeActions"
 import {setIsChangingPath, clearSession} from "../../actions/globalActions"
-// import { updateApproveTxsData } from "../../actions/txActions"
 
 import {HeaderTransaction} from "../TransactionCommon"
 import * as analytics from "../../utils/analytics"
