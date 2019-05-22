@@ -18,7 +18,7 @@ import BLOCKCHAIN_INFO from "../../../../../env"
 import Tx from "../../../services/tx"
 
 import * as accountActions from '../../../actions/accountActions'
-import { addTx } from '../../../actions/txActions'
+// import { addTx } from '../../../actions/txActions'
 
 @connect((store, props) => {
     const account = store.account.account

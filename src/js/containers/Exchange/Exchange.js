@@ -7,7 +7,7 @@ import * as validators from "../../utils/validators"
 
 import * as exchangeActions from "../../actions/exchangeActions"
 import {setIsChangingPath, clearSession} from "../../actions/globalActions"
-import { updateApproveTxsData } from "../../actions/txActions"
+// import { updateApproveTxsData } from "../../actions/txActions"
 
 import {HeaderTransaction} from "../TransactionCommon"
 import * as analytics from "../../utils/analytics"
@@ -127,9 +127,9 @@ export default class Exchange extends React.Component {
     }
   }
 
-  fetchApproveTxsData = () => {
-    this.props.dispatch(updateApproveTxsData())
-  }
+  // fetchApproveTxsData = () => {
+  //   this.props.dispatch(updateApproveTxsData())
+  // }
 
   verifyExchange = () => {
     if (!this.props.account) {
@@ -145,7 +145,7 @@ export default class Exchange extends React.Component {
     this.setInterValGroup( this.fetchRateExchange, 10000)
     this.setInterValGroup( this.fetchGasExchange, 10000)
     this.setInterValGroup( this.fetchMaxGasPrice.bind(this), 10000)
-    this.setInterValGroup( this.fetchApproveTxsData, 10000)    
+    // this.setInterValGroup( this.fetchApproveTxsData, 10000)    
 
     this.setInterValGroup( this.verifyExchange, 3000)
   }
