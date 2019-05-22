@@ -283,7 +283,7 @@ export default class BroadCastModal extends React.Component {
           afterOpen: 'reveal medium transaction-loading'
         }}
         isOpen={true}
-        onRequestClose={(e) => this.makeNewTransaction(true)}
+        onRequestClose={(e) => this.makeNewTransaction(false)}
         contentLabel="confirm modal"
         content={loadingView}
         size="medium"

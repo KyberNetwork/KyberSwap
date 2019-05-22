@@ -12,7 +12,6 @@ import * as converters from "../../utils/converter"
 
   return {
     translate, limitOrder, tokens, account, ethereum
-
   }
 })
 
@@ -24,7 +23,7 @@ export default class LimitOrderCompareRate extends React.Component {
                 <div className={"limit-order-compare-rate"}>
                     <div className="limit-order-compare-rate__text">
                         <span>Current Rate:</span>{' '}
-                        <span className="rate">1 {this.props.limitOrder.sourceTokenSymbol} = <span className="rate-loading"> <img src={require('../../../assets/img/waiting-white.svg')} /></span> {this.props.limitOrder.destTokenSymbol}</span>
+                      <span className="rate">1 {this.props.limitOrder.sourceTokenSymbol} = <span className="rate-loading"> <img src={require('../../../assets/img/waiting-white.svg')} /></span> {this.props.limitOrder.destTokenSymbol}</span>
                     </div>
                 </div>
             )
@@ -37,19 +36,19 @@ export default class LimitOrderCompareRate extends React.Component {
                 </div>
             )
         }
-     
 
         if (!this.props.limitOrder.isSelectToken && this.props.limitOrder.offeredRate != 0) {
             var triggerRate = converters.roundingRate(this.props.limitOrder.triggerRate)
             var percentChange = converters.percentChange(triggerRate, this.props.limitOrder.offeredRate)
             var expectedRate = converters.toT(this.props.limitOrder.offeredRate)
+
             return (
                 <div className={"limit-order-compare-rate"}>
                     <div className={"limit-order-compare-rate__text"}>
                         <span>Current Rate:</span>{' '}
-                        <span className="rate">1 {this.props.limitOrder.sourceTokenSymbol} = {converters.roundingNumber(expectedRate)} {this.props.limitOrder.destTokenSymbol}</span>
+                      <span className="rate">1 {this.props.limitOrder.sourceTokenSymbol} = {converters.roundingNumber(expectedRate)} {this.props.limitOrder.destTokenSymbol}</span>
                     </div>
-                    
+
                     {percentChange > 0 && (
                     <div className={"limit-order-compare-rate__text"}>
                       Your price is {percentChange}% higher than current Market
@@ -58,15 +57,11 @@ export default class LimitOrderCompareRate extends React.Component {
 
                     {percentChange < 0 && percentChange > -100 && (
                     <div className={"limit-order-compare-rate__text"}>
-                      Your price is {percentChange}% lower than current Market
+                      Your price is {Math.abs(percentChange)}% lower than current Market
                     </div>
                   )}
-                    
-
                 </div>
             )
         }
-
     }
-  
 }

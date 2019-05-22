@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import ReactTable from "react-table";
 import { getTranslate } from 'react-localize-redux';
 import _ from "lodash";
-
+import Dropdown, { DropdownContent, DropdownTrigger } from "react-simple-dropdown";
 import CancelOrderModal from "./LimitOrderModals/CancelOrderModal";
 
 import * as limitOrderActions from "../../actions/limitOrderActions";
@@ -28,8 +28,6 @@ export default class LimitOrderList extends React.Component {
       selectedTimeFilter: {
         interval: 1, unit: 'month'
       },
-      pairFilterVisible: false,
-      statusFilterVisible: false,
       cancelOrderModalVisible: false,
       statusFilter: [],
       pairFilter: [],
@@ -38,12 +36,6 @@ export default class LimitOrderList extends React.Component {
       prioritySort: "date",    // date or pair,
       currentOrder: null
     };
-
-    // this.handleMouseDown = this.handleMouseDown.bind(this);
-    this.statusFilterDropdownRef = null;
-    this.setStatusFilterDropdownRef = el => {
-      this.statusFilterDropdownRef = el;
-    }
   }
 
   getColumns = () => {
@@ -69,14 +61,7 @@ export default class LimitOrderList extends React.Component {
       Cell: props => this.getPairCell(props),
       headerClassName: "cell-flex-start-header cell-pair-header",
       className: "cell-flex-start cell-pair",
-      width: 120,
-      getHeaderProps: (state, rowInfo) => {
-        return {
-          onClick: (e) => {
-            this.togglePairFilter();
-          }
-        }
-      }
+      width: 120
     }, {
       id: "condition",
       Header: this.getHeader("condition"),
@@ -84,14 +69,14 @@ export default class LimitOrderList extends React.Component {
       Cell: props => this.getConditionCell(props),
       headerClassName: "cell-flex-start-header",
       className: "cell-flex-start",
-      width: 160
+      width: 160,
     }, {
       id: "from",
       Header: this.getHeader("from"),
       accessor: item => ({ source: item.source, sourceAmount: item.src_amount }),
       Cell: props => this.getFromCell(props),
       headerClassName: "cell-flex-start-header",
-      className: "cell-flex-start cell-from"
+      className: "cell-flex-start cell-from",
     }, {
       id: "to",
       Header: this.getHeader("to"),
@@ -107,14 +92,7 @@ export default class LimitOrderList extends React.Component {
       Cell: props => this.getStatusCell(props),
       headerClassName: "cell-flex-start-header cell-status-header",
       className: "cell-flex-start",
-      maxWidth: 90,
-      getHeaderProps: (state, rowInfo) => {
-        return {
-          onClick: (e) => {
-            this.toggleStatusFilter();
-          }
-        }
-      }
+      maxWidth: 90
     }, {
       id: "actions",
       Header: this.getHeader("actions"),
@@ -204,22 +182,31 @@ export default class LimitOrderList extends React.Component {
       )
     } else if (title === "pair") {
       return (
-        <div>
-          <span>{this.props.translate("limit_order.pair") || "Pair"}</span>
-          
-          <div className="drop-down">
-            <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
-          </div>
-        </div>
+        <Dropdown>
+          <DropdownTrigger>
+            <span>{this.props.translate("limit_order.pair") || "Pair"}</span>
+            <div className="drop-down">
+              <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
+            </div>
+          </DropdownTrigger>
+          <DropdownContent>
+            {this.getPairFilter()}
+          </DropdownContent>
+        </Dropdown>
       )
     } else if (title === "status") {
       return (
-        <div>
-          <span>{this.props.translate("limit_order.status") || "Status"}</span>
-          <div className="drop-down">
-            <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
-          </div>
-        </div>
+        <Dropdown>
+          <DropdownTrigger>
+            <span>{this.props.translate("limit_order.status") || "Status"}</span>
+            <div className="drop-down">
+              <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
+            </div>
+          </DropdownTrigger>
+          <DropdownContent>
+            {this.getStatusFilter()}
+          </DropdownContent>
+        </Dropdown>
       )
     } else {
       return (
@@ -251,19 +238,7 @@ export default class LimitOrderList extends React.Component {
       }
     });
   }
-
-  togglePairFilter = () => {
-    this.setState({
-      pairFilterVisible: !this.state.pairFilterVisible
-    })
-  }
-
-  toggleStatusFilter = () => {
-    this.setState({
-      statusFilterVisible: !this.state.statusFilterVisible
-    })
-  }
-
+  
   // Render time filter
   getTimeFilter = () => {
     const { timeFilter, selectedTimeFilter } = this.state;
@@ -300,8 +275,9 @@ export default class LimitOrderList extends React.Component {
   }
 
   // Render pair filter dropdown
-  getPairFilter = (data) => {
+  getPairFilter = () => {
     const { pairFilter, pairSort } = this.state;
+    const data = this.props.limitOrder.listOrder;
 
     const renderedPair = data.filter((item, index, self) => {
       return index === self.findIndex(t => t.source === item.source && t.dest === item.dest);
@@ -332,7 +308,7 @@ export default class LimitOrderList extends React.Component {
                     checked={pairSort === "asc"}
                     className="pair-filter-modal__radio" 
                     onChange={e => this.handleSortPair(e)}/>
-            <span className="pair-filter-modal__checkmark--radio"></span>
+            <div className="pair-filter-modal__checkmark--radio"></div>
 
           </label>
           <label className="pair-filter-modal__option">
@@ -341,7 +317,7 @@ export default class LimitOrderList extends React.Component {
                     checked={pairSort === "desc"}
                     className="pair-filter-modal__radio" 
                     onChange={e => this.handleSortPair(e)}/>
-            <span className="pair-filter-modal__checkmark--radio"></span>
+            <div className="pair-filter-modal__checkmark--radio"></div>
 
           </label>
         </div>
@@ -400,7 +376,7 @@ export default class LimitOrderList extends React.Component {
     });
 
     return (
-      <div className="status-filter-modal" ref={this.setStatusFilterDropdownRef}>
+      <div className="status-filter-modal" >
         {renderedStatus}
       </div>
     )
@@ -484,27 +460,11 @@ export default class LimitOrderList extends React.Component {
     return results;
   }
 
-  // handleMouseDown(e) {
-  //   if (this.statusFilterDropdownRef && !this.statusFilterDropdownRef.contains(e.target)) {
-  //     this.setState({
-  //       statusFilterVisible: false
-  //     })
-  //   }
-  // }
-
-  // componentDidMount() {
-  //   document.addEventListener("mousedown", this.handleMouseDown, false);
-  // }
-
-  // componentWillUnmount() {
-  //   document.removeEventListener("mousedown", this.handleMouseDown, false);
-  // }
-
   render() {
     const columns = this.getColumns();
     const data = this.renderData(this.props.limitOrder.listOrder);
     return (
-      <div className={"limit-order-list"}>
+      <div className={`limit-order-list ${data.length === 0 ? "limit-order-list--empty" : ""}`}>
         <div>
           <div className="limit-order-list--title">
             <div className="title">{this.props.translate("limit_order.order_list_title") || "Manage Your Orders"}</div>
@@ -526,10 +486,14 @@ export default class LimitOrderList extends React.Component {
               resizable={false}
               sortable={false}
               minRows={1}
-              noDataText={this.props.translate("limit_order.no_data_text") || "You have no orders yet."}
+              PadRowComponent={() => (<div className="line-indicator"></div>)}
+              NoDataComponent={() => null}
+              getTheadProps={(state, rowInfo) => {
+                return {
+                  style: { overflow: "visible"}
+                }
+              }}
             />
-            {this.state.pairFilterVisible && this.getPairFilter(data)}
-            {this.state.statusFilterVisible && this.getStatusFilter()}
             <CancelOrderModal order={this.state.currentOrder} 
               isOpen={this.state.cancelOrderModalVisible}
               closeModal={this.closeCancelOrderModal}

@@ -1702,10 +1702,10 @@ function* verifyExchange() {
       if (sourceTokenSymbol !== "ETH"){
         maxCap = maxCap * constants.EXCHANGE_CONFIG.MAX_CAP_PERCENT
       }
-      yield put(actions.thowErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, translate("error.source_amount_too_high_cap", { cap: maxCap })))      
+      yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, translate("error.source_amount_too_high_cap", { cap: maxCap })))      
       break
     case "too small":
-      yield put(actions.thowErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, translate("error.source_amount_too_small", { minAmount: converter.toEther(constants.EXCHANGE_CONFIG.EPSILON)})))
+      yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, translate("error.source_amount_too_small", { minAmount: converter.toEther(constants.EXCHANGE_CONFIG.EPSILON)})))
       break
     case "too high for reserve":
       yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, translate("error.source_amount_too_high_for_reserve")))

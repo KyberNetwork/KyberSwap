@@ -14,6 +14,7 @@ import {FeeDetail} from "../../../components/CommonElement"
 
 import BLOCKCHAIN_INFO from "../../../../../env"
 
+
 @connect((store, props) => {
   const account = store.account.account
   const translate = getTranslate(store.locale)
@@ -88,7 +89,7 @@ export default class ApproveMaxModal extends React.Component {
     
     try {
       var txHash = await wallet.broadCastTx("getAppoveToken", this.props.ethereum, this.props.exchange.sourceToken, 0, this.props.account.nonce, this.state.gasLimit,
-        this.props.exchange.gasPrice, this.props.account.keystring, password, this.props.account.type, this.props.account.address, BLOCKCHAIN_INFO.network)
+      converter.toHex(converter.gweiToWei(this.props.exchange.gasPrice)), this.props.account.keystring, password, this.props.account.type, this.props.account.address, BLOCKCHAIN_INFO.network)
 
       //increase account nonce 
       this.props.dispatch(accountActions.incManualNonceAccount(this.props.account.address))

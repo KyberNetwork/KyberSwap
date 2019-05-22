@@ -1,18 +1,14 @@
 import React from "react"
 import { Modal } from "../../../components/CommonElement"
-
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as limitOrderActions from "../../../actions/limitOrderActions"
 import * as accountActions from "../../../actions/accountActions"
 import constants from "../../../services/constants"
-
 import {getWallet} from "../../../services/keys"
-
 import {FeeDetail} from "../../../components/CommonElement"
-
 import BLOCKCHAIN_INFO from "../../../../../env"
-
+import * as converters from "../../../utils/converter"
 
 @connect((store, props) => {
     const account = store.account.account
@@ -89,7 +85,7 @@ export default class ApproveZeroModal extends React.Component {
         var password = ""
         try{
             var txHash = await wallet.broadCastTx("getAppoveTokenZero", this.props.ethereum, this.props.limitOrder.sourceToken, 0, this.props.account.nonce, this.state.gasLimit,
-            this.props.limitOrder.gasPrice, this.props.account.keystring, password, this.props.account.type, this.props.account.address, BLOCKCHAIN_INFO.kyberswapAddress)     
+              converters.toHex(converters.gweiToWei(this.props.limitOrder.gasPrice)), this.props.account.keystring, password, this.props.account.type, this.props.account.address, BLOCKCHAIN_INFO.kyberswapAddress)
             
             //increase account nonce 
             this.props.dispatch(accountActions.incManualNonceAccount(this.props.account.address))

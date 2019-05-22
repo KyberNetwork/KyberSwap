@@ -90,8 +90,8 @@ export default class Exchange extends React.Component {
     //check input focus
     if (this.props.exchange.inputFocus !== "source"){
       //calculate source amount by dest amount
-      var destAmount = state.exchange.destAmount
-      var destTokenSymbol = state.exchange.destTokenSymbol    
+      var destAmount = this.props.exchange.destAmount
+      var destTokenSymbol = this.props.exchange.destTokenSymbol
       // relative source amount 
       var tokens = this.props.tokens
       var rateSourceEth = sourceTokenSymbol === "ETH" ? 1: tokens[sourceTokenSymbol].rate / Math.pow(10,18)

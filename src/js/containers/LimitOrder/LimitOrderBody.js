@@ -23,13 +23,24 @@ import { LimitOrderForm, LimitOrderSubmit, LimitOrderFee, LimitOrderList, LimitO
 
 export default class LimitOrderBody extends React.Component {
     chooseToken = (symbol, address, type) => {
-        this.props.dispatch(limitOrderActions.selectTokenAsync(symbol, address, type))
         var path
+
+        let sourceTokenSymbol = type === "source" ? symbol : this.props.limitOrder.sourceTokenSymbol;
+        let destTokenSymbol = type === "source" ? this.props.limitOrder.destTokenSymbol : symbol;
+
+        if (sourceTokenSymbol.toLowerCase() === "eth") {
+          sourceTokenSymbol = "WETH";
+        } else if (destTokenSymbol.toLowerCase() === "eth") {
+          destTokenSymbol = "WETH";
+        }
+
+        this.props.dispatch(limitOrderActions.selectTokenAsync(type === "source" ? sourceTokenSymbol : destTokenSymbol, address, type));
+
         if (type === "source") {
-          path = constants.BASE_HOST + `/${constants.LIMIT_ORDER_CONFIG.path}/` + symbol.toLowerCase() + "-" + this.props.limitOrder.destTokenSymbol.toLowerCase()
+          path = constants.BASE_HOST + `/${constants.LIMIT_ORDER_CONFIG.path}/` + sourceTokenSymbol.toLowerCase() + "-" + destTokenSymbol.toLowerCase()
           this.props.global.analytics.callTrack("trackChooseToken", "from", symbol);
         } else {
-          path = constants.BASE_HOST + `/${constants.LIMIT_ORDER_CONFIG.path}/` + this.props.limitOrder.sourceTokenSymbol.toLowerCase() + "-" + symbol.toLowerCase()
+          path = constants.BASE_HOST + `/${constants.LIMIT_ORDER_CONFIG.path}/` + sourceTokenSymbol.toLowerCase() + "-" + destTokenSymbol.toLowerCase()
           this.props.global.analytics.callTrack("trackChooseToken", "to", symbol);
         }
     
