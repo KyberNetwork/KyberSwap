@@ -13,170 +13,171 @@ import Tx from "../services/tx"
 import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
 import { addTx } from '../actions/txActions'
 import { store } from "../store"
+import { getTranslate } from 'react-localize-redux';
 
-function* broadCastTx(action) {
-  const { ethereum, tx, account, data } = action.payload
-  try {
-    yield put(actions.prePareBroadcast())
-    const hash = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", tx)
-    yield call(runAfterBroadcastTx, ethereum, tx, hash, account, data)
+// function* broadCastTx(action) {
+//   const { ethereum, tx, account, data } = action.payload
+//   try {
+//     yield put(actions.prePareBroadcast())
+//     const hash = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", tx)
+//     yield call(runAfterBroadcastTx, ethereum, tx, hash, account, data)
 
     
-  }
-  catch (e) {
-    console.log(e)
-    yield call(doTransactionFail, ethereum, account, e.message)
-  }
-}
+//   }
+//   catch (e) {
+//     console.log(e)
+//     yield call(doTransactionFail, ethereum, account, e.message)
+//   }
+// }
 
-export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
-  const state = store.getState();
-  const global = state.global;
+// export function* runAfterBroadcastTx(ethereum, txRaw, hash, account, data) {
+//   const state = store.getState();
+//   const global = state.global;
 
-  //track complete trade
-  global.analytics.callTrack("trackCoinTransfer", data.tokenSymbol);
-  global.analytics.callTrack("completeTrade", hash, "kyber", "transfer");
+//   //track complete trade
+//   global.analytics.callTrack("trackCoinTransfer", data.tokenSymbol);
+//   global.analytics.callTrack("completeTrade", hash, "kyber", "transfer");
 
-  const tx = new Tx(
-    hash, account.address, ethUtil.bufferToInt(txRaw.gas),
-    converter.weiToGwei(ethUtil.bufferToInt(txRaw.gasPrice)),
-    ethUtil.bufferToInt(txRaw.nonce), "pending", "transfer", data)
-  yield put(incManualNonceAccount(account.address))
-  yield put(updateAccount(ethereum, account))
-  yield put(addTx(tx))
-  yield put(actions.doTransactionComplete(hash))
-  yield put(actions.finishTransfer())
+//   const tx = new Tx(
+//     hash, account.address, ethUtil.bufferToInt(txRaw.gas),
+//     converter.weiToGwei(ethUtil.bufferToInt(txRaw.gasPrice)),
+//     ethUtil.bufferToInt(txRaw.nonce), "pending", "transfer", data)
+//   yield put(incManualNonceAccount(account.address))
+//   yield put(updateAccount(ethereum, account))
+//   yield put(addTx(tx))
+//   yield put(actions.doTransactionComplete(hash))
+//   yield put(actions.finishTransfer())
   
-  try{
-    var notiService = global.notiService
-    notiService.callFunc("setNewTx",{hash: hash})
-  }catch(e){
-    console.log(e)
-  }
-}
+//   try{
+//     var notiService = global.notiService
+//     notiService.callFunc("setNewTx",{hash: hash})
+//   }catch(e){
+//     console.log(e)
+//   }
+// }
 
-function* doTransactionFail(ethereum, account, e) {
-  yield put(actions.doTransactionFail(e))
-  //yield put(incManualNonceAccount(account.address))
-  yield put(updateAccount(ethereum, account))
-}
+// function* doTransactionFail(ethereum, account, e) {
+//   yield put(actions.doTransactionFail(e))
+//   //yield put(incManualNonceAccount(account.address))
+//   yield put(updateAccount(ethereum, account))
+// }
 
-function* doTxFail(ethereum, account, e) {
-  yield put(actions.setBroadcastError(e))
-  yield put(updateAccount(ethereum, account))
-}
+// function* doTxFail(ethereum, account, e) {
+//   yield put(actions.setBroadcastError(e))
+//   yield put(updateAccount(ethereum, account))
+// }
 
-export function* processTransfer(action) {
-  const { formId, ethereum, address,
-    token, amount,
-    destAddress, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
-  var callService = token == constants.ETHER_ADDRESS ? "sendEtherFromAccount" : "sendTokenFromAccount";
+// export function* processTransfer(action) {
+//   const { formId, ethereum, address,
+//     token, amount,
+//     destAddress, nonce, gas,
+//     gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
+//   var callService = token == constants.ETHER_ADDRESS ? "sendEtherFromAccount" : "sendTokenFromAccount";
 
-  switch (type) {
-    case "keystore":
-      yield call(transferKeystore, action, callService)
-      break
-    case "privateKey":
-    case "promo":
-    case "trezor":
-    case "ledger":
-      yield call(transferColdWallet, action, callService)
-      break
-    case "metamask":
-      yield call(transferMetamask, action, callService)
-      break
-  }
-}
+//   switch (type) {
+//     case "keystore":
+//       yield call(transferKeystore, action, callService)
+//       break
+//     case "privateKey":
+//     case "promo":
+//     case "trezor":
+//     case "ledger":
+//       yield call(transferColdWallet, action, callService)
+//       break
+//     case "metamask":
+//       yield call(transferMetamask, action, callService)
+//       break
+//   }
+// }
 
-function* transferKeystore(action, callService) {
-  const { formId, ethereum, address,
-    token, amount,
-    destAddress, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
-  try {
-    var rawTx = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
-      token, amount,
-      destAddress, nonce, gas,
-      gasPrice, keystring, type, password)
-  } catch (e) {
-    yield put(actions.throwPassphraseError(e.message))
-    return
-  }
-  try {
-    yield put(actions.prePareBroadcast(balanceData))
-    const hash = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", rawTx)
-    yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
-  } catch (e) {
-    yield call(doTxFail, ethereum, account, e.message)
-  }
+// function* transferKeystore(action, callService) {
+//   const { formId, ethereum, address,
+//     token, amount,
+//     destAddress, nonce, gas,
+//     gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
+//   try {
+//     var rawTx = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
+//       token, amount,
+//       destAddress, nonce, gas,
+//       gasPrice, keystring, type, password)
+//   } catch (e) {
+//     yield put(actions.throwPassphraseError(e.message))
+//     return
+//   }
+//   try {
+//     yield put(actions.prePareBroadcast(balanceData))
+//     const hash = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", rawTx)
+//     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
+//   } catch (e) {
+//     yield call(doTxFail, ethereum, account, e.message)
+//   }
 
-}
+// }
 
-function* transferColdWallet(action, callService) {
-  const { formId, ethereum, address,
-    token, amount,
-    destAddress, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
-  try {
-    var rawTx
-    try {
-      rawTx = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
-        token, amount,
-        destAddress, nonce, gas,
-        gasPrice, keystring, type, password)
-    } catch (e) {
-      let msg = ''
-      if(e.native && type == 'ledger'){
-        msg = keyService.getLedgerError(e.native)
-      }
-      yield put(actions.setSignError(msg))
-      return
-    }
+// function* transferColdWallet(action, callService) {
+//   const { formId, ethereum, address,
+//     token, amount,
+//     destAddress, nonce, gas,
+//     gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
+//   try {
+//     var rawTx
+//     try {
+//       rawTx = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
+//         token, amount,
+//         destAddress, nonce, gas,
+//         gasPrice, keystring, type, password)
+//     } catch (e) {
+//       let msg = ''
+//       if(e.native && type == 'ledger'){
+//         msg = keyService.getLedgerError(e.native)
+//       }
+//       yield put(actions.setSignError(msg))
+//       return
+//     }
     
-    yield put(actions.prePareBroadcast(balanceData))
-    const hash = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", rawTx)
-    yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
-  } catch (e) {
-    let msg = ''
-    if(type == 'ledger'){
-      msg = keyService.getLedgerError(e.native)
-    }else{
-      msg = e.message
-    }
-    yield call(doTxFail, ethereum, account, msg)
-    return
-  }
-}
+//     yield put(actions.prePareBroadcast(balanceData))
+//     const hash = yield call([ethereum, ethereum.callMultiNode],"sendRawTransaction", rawTx)
+//     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
+//   } catch (e) {
+//     let msg = ''
+//     if(type == 'ledger'){
+//       msg = keyService.getLedgerError(e.native)
+//     }else{
+//       msg = e.message
+//     }
+//     yield call(doTxFail, ethereum, account, msg)
+//     return
+//   }
+// }
 
-function* transferMetamask(action, callService) {
-  const { formId, ethereum, address,
-    token, amount,
-    destAddress, nonce, gas,
-    gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
-  try {
-    var hash
-    try {
-      hash = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
-        token, amount,
-        destAddress, nonce, gas,
-        gasPrice, keystring, type, password)
-    } catch (e) {
-      console.log(e)
-      yield put(actions.setSignError(e))
-      return
-    }
+// function* transferMetamask(action, callService) {
+//   const { formId, ethereum, address,
+//     token, amount,
+//     destAddress, nonce, gas,
+//     gasPrice, keystring, type, password, account, data, keyService, balanceData } = action.payload
+//   try {
+//     var hash
+//     try {
+//       hash = yield call(keyService.callSignTransaction, callService, formId, ethereum, address,
+//         token, amount,
+//         destAddress, nonce, gas,
+//         gasPrice, keystring, type, password)
+//     } catch (e) {
+//       console.log(e)
+//       yield put(actions.setSignError(e))
+//       return
+//     }
     
-    yield put(actions.prePareBroadcast(balanceData))
-    const rawTx = {gas, gasPrice, nonce}
-    yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
-  } catch (e) {
-    console.log(e)
-    let msg = converter.sliceErrorMsg(e.message)
-    yield call(doTxFail, ethereum, account, msg)
-    return
-  }
-}
+//     yield put(actions.prePareBroadcast(balanceData))
+//     const rawTx = {gas, gasPrice, nonce}
+//     yield call(runAfterBroadcastTx, ethereum, rawTx, hash, account, data)
+//   } catch (e) {
+//     console.log(e)
+//     let msg = converter.sliceErrorMsg(e.message)
+//     yield call(doTxFail, ethereum, account, msg)
+//     return
+//   }
+// }
 
 
 function* getMaxGasTransfer(){
@@ -363,6 +364,7 @@ function* calculateGasUse(ethereum, fromAddr, tokenSymbol, tokenAddr, tokenDecim
 export function* verifyTransfer(){
   var state = store.getState()
   var transfer = state.transfer
+  var translate = getTranslate(state.locale)
 
   var amount = transfer.amount
   if (isNaN(amount) || amount === "") {
@@ -372,15 +374,17 @@ export function* verifyTransfer(){
   var testBalanceWithFee = validators.verifyBalanceForTransaction(account.balance,
   transfer.tokenSymbol, amount, transfer.gas, transfer.gasPrice)
   if (testBalanceWithFee) {
-    yield put(actions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
+
+
+    yield put(actions.throwErrorAmount(constants.TRANSFER_CONFIG.sourceErrors.balance, translate("error.eth_balance_not_enough_for_fee")))
   }else{
-    yield put(actions.thowErrorEthBalance(""))
+    yield put(actions.clearErrorAmount(constants.TRANSFER_CONFIG.sourceErrors.balance))    
   }
 }
 
 export function* watchTransfer() {
-  yield takeEvery("TRANSFER.TX_BROADCAST_PENDING", broadCastTx)
-  yield takeEvery("TRANSFER.PROCESS_TRANSFER", processTransfer)
+  // yield takeEvery("TRANSFER.TX_BROADCAST_PENDING", broadCastTx)
+  // yield takeEvery("TRANSFER.PROCESS_TRANSFER", processTransfer)
 
   yield takeEvery("TRANSFER.ESTIMATE_GAS_USED", estimateGasUsed)
   yield takeEvery("TRANSFER.SELECT_TOKEN", estimateGasUsedWhenSelectToken)

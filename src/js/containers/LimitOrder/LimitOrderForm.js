@@ -29,13 +29,13 @@ import * as converters from "../../utils/converter";
 })
 
 export default class LimitOrderForm extends React.Component {
-  constructor(){
-    super()
-    this.state = {
-      isShowSourceAmountError: false,
-      isShowTriggerRateError: false
-    }
-  }
+  // constructor(){
+  //   super()
+  //   this.state = {
+  //     isShowSourceAmountError: false,
+  //     isShowTriggerRateError: false
+  //   }
+  // }
 
   componentDidUpdate(prevProps) {
     if ((this.props.limitOrder.errors.sourceAmount.length > 0 && prevProps.limitOrder.errors.sourceAmount.length === 0) || 

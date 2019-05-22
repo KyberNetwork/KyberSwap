@@ -82,7 +82,7 @@ export default class Exchange extends React.Component {
     
     if (sourceTokenSymbol === "ETH") {
       if (converter.compareTwoNumber(sourceAmount, constants.ETH.MAX_AMOUNT) === 1) {
-        this.props.dispatch(exchangeActions.throwErrorHandleAmount());
+        this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, this.props.translate("error.handle_amount")))
         return;
       }
     } 
@@ -171,7 +171,7 @@ export default class Exchange extends React.Component {
       var destAddress = this.props.tokens[destSymbol].address
 
       this.props.dispatch(exchangeActions.selectTokenAsync(sourceSymbol, sourceAddress, "source", this.props.ethereum))
-      this.props.dispatch(exchangeActions.selectTokenAsync(destSymbol, destAddress, "des", this.props.ethereum))
+      this.props.dispatch(exchangeActions.selectTokenAsync(destSymbol, destAddress, "dest", this.props.ethereum))
     }
   }
 

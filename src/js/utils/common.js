@@ -196,6 +196,10 @@ export function formatFractionalValue(input, decimal) {
     return value;
 }
 
+export function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export function getGasExchange(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
     var safeLowGas = parseFloat(safeLowGas)
     var standardGas = parseFloat(standardGas)

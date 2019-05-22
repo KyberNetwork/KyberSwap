@@ -3,7 +3,7 @@ import { watchAccount } from './accountActions';
 import { watchGlobal } from './globalActions';
 import { watchExchange } from './exchangeActions';
 import { watchTransfer } from './transferActions';
-import { watchTx } from './txActions';
+// import { watchTx } from './txActions';
 import { watchConnection } from './connectionActions'
 import { watchMarket } from './marketActions'
 
@@ -22,8 +22,7 @@ export default function* root() {
     fork(watchAccount),
     fork(watchGlobal),
     fork(watchExchange),
-    fork(watchTransfer),
-    fork(watchTx),
+    fork(watchTransfer),    
     fork(watchConnection),
     fork(watchMarket),
     fork(watchLimitOrder)

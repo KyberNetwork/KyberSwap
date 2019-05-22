@@ -108,7 +108,7 @@ function* updateApproveTxs(){
 }
 
 export function* watchTx() {
-  yield takeEvery("TX.UPDATE_TX_PENDING", updateTx)
+  // yield takeEvery("TX.UPDATE_TX_PENDING", updateTx)
   yield takeEvery("TX.UPDATE_APPROVE_TXS", updateApproveTxs)
 }
 

@@ -11,13 +11,10 @@ const KYBER_SWAP_ABI = [{"constant":false,"inputs":[],"name":"enableTrade","outp
 // compiled with v0.4.11+commit.68ef5810
 const TRANSFER_TOPIC = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
 // constants
-const MIN_ACCEPT_DELTA = 0.0001
-const EPSILON = 1000000000000000
-const RATE_EPSILON = 0.002
-const MAX_CAP_PERCENT = 0.95
-const MAX_CAP_ONE_EXCHANGE_BASE_VALUE = "10000000000000000000" //10 ETH
-const MAX_CAP_ONE_EXCHANGE_BASE_RESERVE = 0.5 //50% 
-
+// const MIN_ACCEPT_DELTA = 0.0001
+// const EPSILON = 1000000000000000
+// const RATE_EPSILON = 0.002
+// const MAX_CAP_PERCENT = 0.95
 
 
 // const NODE_ENDPOINT = "https://kovan.kyber.network"
@@ -26,6 +23,29 @@ const WETH_ADDRESS = "0xbca556c912754bc8e7d4aad20ad69a1b1444f42d"
 // var secondKey = Object.keys(BLOCKCHAIN_INFO.tokens)[1]
 
 var secondKey = "KNC"
+
+const EXCHANGE_CONFIG = {
+  path: "swap",
+  MIN_ACCEPT_DELTA: 0.0001,
+  EPSILON: 1000000000000000,
+  MAX_CAP_PERCENT: 0.95,    
+  COMMISSION_ADDR: "0x440bBd6a888a36DE6e2F6A25f65bc4e16874faa9",
+  exchangePath: {
+    approveZero: 1,
+    approveMax: 2,    
+    confirm: 3,    
+    broadcast: 4
+  },
+  sourceErrors: {
+    balance: "balance",
+    input: "input",
+    rate: "rate",
+    sameToken: "sameToken"
+  },
+  slippageRateErrors: {
+    input: "input"
+  }
+}
 
 const INIT_EXCHANGE_FORM_STATE = {
   isOpenImportAcount: false,
@@ -48,7 +68,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   minDestAmount: 0,
   maxDestAmount: 0,
   prevAmount: 0,
-  offeredRate: 0,
+  expectedRate: 0,
   isEditRate: false,
   slippageRate: 0,
   blockNo: 0,
@@ -90,6 +110,10 @@ const INIT_EXCHANGE_FORM_STATE = {
   confirmColdWallet: false,
   signError: "",
   broadcastError: "",
+
+  currentPathIndex : -1,
+  exchangePath: [],    
+
   balanceData: {
     sourceName: "Ether",
     sourceSymbol: "ETH",
@@ -101,8 +125,12 @@ const INIT_EXCHANGE_FORM_STATE = {
     destAmount: 0
   },
   errors: {
-    selectSameToken: '',
-    selectTokenToken: '',
+    sourceAmount: {},
+    slippageRate: {},
+
+
+    // selectSameToken: '',
+    // selectTokenToken: '',
     sourceAmountError: '',
     gasPriceError: '',
     gasError: '',
@@ -130,6 +158,24 @@ const INIT_EXCHANGE_FORM_STATE = {
   isSelectTokenBalance: false,
   swappingTime: 0
 }
+
+
+
+const TRANSFER_CONFIG = {
+  path: "transfer",
+  transferPath: {    
+    confirm: 3,    
+    broadcast: 4
+  },
+  sourceErrors: {
+    balance: "balance",
+    input: "input"
+  },
+  addressErrors: {
+    input: "input"
+  }
+}
+
 
 const INIT_TRANSFER_FORM_STATE = {
   isOpenImportAcount: false,
@@ -174,13 +220,20 @@ const INIT_TRANSFER_FORM_STATE = {
     prev: 0,
     next: 0
   },
+
+  currentPathIndex : -1,
+  transferPath: [],    
+
   errors: {
-    gasPrice: '',
-    destAddress: '',
-    amountTransfer: '',
-    passwordError: '',
-    signTransaction: '',
-    ethBalanceError: ''
+    sourceAmount: {},
+    destAddress: {},
+
+    // gasPrice: '',
+    // destAddress: '',
+    // amountTransfer: '',
+    // passwordError: '',
+    // signTransaction: '',
+    // ethBalanceError: ''
   },
   snapshot: {},
   isBalanceActive: false,
@@ -242,8 +295,7 @@ const INIT_LIMIT_ORDER_STATE = {
 
   // currentPath : 0,
   currentPathIndex : -1,
-  orderPath: [],  
-  pendingNonce: 0,
+  orderPath: [],    
 
   listOrder: [
     {  
@@ -391,13 +443,14 @@ const STORAGE_KEY = "130"
 const TRADE_TOPIC = "0xd30ca399cb43507ecec6a629a35cf45eb98cda550c27696dcb0d8c4a3873ce6c"
 const PERM_HINT = "PERM"
 const CONNECTION_TIMEOUT = 6000
-const COMMISSION_ADDR = "0x440bBd6a888a36DE6e2F6A25f65bc4e16874faa9"
+
 
 
 module.exports = {
-  ERC20, KYBER_NETWORK, KYBER_WRAPPER, EPSILON, ETHER_ADDRESS, ETH, RESERVES,
+  ERC20, KYBER_NETWORK, KYBER_WRAPPER, ETHER_ADDRESS, ETH, RESERVES,
   INIT_EXCHANGE_FORM_STATE, INIT_TRANSFER_FORM_STATE, ASSET_URL,
-  RATE_EPSILON, IDLE_TIME_OUT, HISTORY_EXCHANGE, STORAGE_KEY, CONNECTION_CHECKER,
-  MAX_CAP_ONE_EXCHANGE_BASE_VALUE, MAX_CAP_ONE_EXCHANGE_BASE_RESERVE, MAX_CAP_PERCENT, CONFIG_ENV_LEDGER_LINK, LEDGER_SUPPORT_LINK, TRANSFER_TOPIC, BASE_HOST, LIST_PARAMS_SUPPORTED,
-  TRADE_TOPIC, PERM_HINT, MIN_ACCEPT_DELTA, CONNECTION_TIMEOUT, COMMISSION_ADDR, INIT_LIMIT_ORDER_STATE, LIMIT_ORDER_CONFIG, SIGN_OFF_WALLETS, KYBER_SWAP_ABI, WETH_ADDRESS
+  IDLE_TIME_OUT, HISTORY_EXCHANGE, STORAGE_KEY, CONNECTION_CHECKER,
+  CONFIG_ENV_LEDGER_LINK, LEDGER_SUPPORT_LINK, TRANSFER_TOPIC, BASE_HOST, LIST_PARAMS_SUPPORTED,
+  TRADE_TOPIC, PERM_HINT, CONNECTION_TIMEOUT, INIT_LIMIT_ORDER_STATE, LIMIT_ORDER_CONFIG, SIGN_OFF_WALLETS, KYBER_SWAP_ABI, WETH_ADDRESS,
+  EXCHANGE_CONFIG, TRANSFER_CONFIG
 }

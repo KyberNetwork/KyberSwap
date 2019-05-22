@@ -350,6 +350,7 @@ class Transfer extends React.Component {
 
     return (
       <TransferForm
+        transfer = {this.props.transfer}
         account={this.props.account.account}
         chooseToken={this.chooseToken}
         sourceActive={this.props.transfer.tokenSymbol}

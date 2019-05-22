@@ -71,7 +71,7 @@ export default class EthereumService extends React.Component {
   fetchData_10s() {
 
 
-    this.fetchTxsData()
+    // this.fetchTxsData()
 
     this.fetchAccountData()
     this.fetchTokenBalance()
@@ -129,44 +129,44 @@ export default class EthereumService extends React.Component {
     store.dispatch(updateAllRateUSD(ethereum))
   }
 
-  fetchTxsData = () => {
-    var state = store.getState()
-    var tx
-    var txs = state.txs
-    var ethereum = state.connection.ethereum
+  // fetchTxsData = () => {
+  //   var state = store.getState()
+  //   var tx
+  //   var txs = state.txs
+  //   var ethereum = state.connection.ethereum
 
-    var account = state.account.account
-    var listToken = {}
-    Object.keys(txs).forEach((hash) => {
-      tx = txs[hash]
-      if (tx.status == "pending") {
-        if (tx.type === "exchange") {
-          var exchange = state.exchange
-          listToken = {
-            source: {
-              symbol: exchange.sourceTokenSymbol,
-              address: exchange.sourceToken
-            },
-            dest: {
-              symbol: exchange.destTokenSymbol,
-              address: exchange.destToken
-            }
-          }
-          store.dispatch(updateTx(ethereum, tx, account, listToken))
-        } else {
-          var transfer = state.transfer
-          listToken = {
-            token: {
-              symbol: transfer.tokenSymbol,
-              address: transfer.token
-            }
-          }
-          store.dispatch(updateTx(ethereum, tx, account, listToken))
-        }
+  //   var account = state.account.account
+  //   var listToken = {}
+  //   Object.keys(txs).forEach((hash) => {
+  //     tx = txs[hash]
+  //     if (tx.status == "pending") {
+  //       if (tx.type === "exchange") {
+  //         var exchange = state.exchange
+  //         listToken = {
+  //           source: {
+  //             symbol: exchange.sourceTokenSymbol,
+  //             address: exchange.sourceToken
+  //           },
+  //           dest: {
+  //             symbol: exchange.destTokenSymbol,
+  //             address: exchange.destToken
+  //           }
+  //         }
+  //         store.dispatch(updateTx(ethereum, tx, account, listToken))
+  //       } else {
+  //         var transfer = state.transfer
+  //         listToken = {
+  //           token: {
+  //             symbol: transfer.tokenSymbol,
+  //             address: transfer.token
+  //           }
+  //         }
+  //         store.dispatch(updateTx(ethereum, tx, account, listToken))
+  //       }
 
-      }
-    })
-  }
+  //     }
+  //   })
+  // }
 
 
   fetchAccountData = () => {

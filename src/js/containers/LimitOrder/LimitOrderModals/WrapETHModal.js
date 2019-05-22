@@ -60,7 +60,7 @@ export default class WrapETHModal extends React.Component {
             var destAddress = this.props.account.address
             var maxDestAmount = converters.toHex( this.getAmountWrapETH() )
             var minConversionRate = converters.toHex(Math.pow(10,18))
-            var blockNo = constants.COMMISSION_ADDR
+            var blockNo = constants.EXCHANGE_CONFIG.COMMISSION_ADDR
             var nonce = this.props.account.nonce
             var gas = this.props.limitOrder.max_gas
             var gasPrice = this.props.limitOrder.gasPrice

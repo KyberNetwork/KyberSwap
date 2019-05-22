@@ -89,7 +89,7 @@ export default class DappBrowser {
     if (!verifyAccount(refAddr)) {
       return refAddr
     }
-    return constants.COMMISSION_ADDR
+    return constants.EXCHANGE_CONFIG.COMMISSION_ADDR
   }
 
   sign(message) {
