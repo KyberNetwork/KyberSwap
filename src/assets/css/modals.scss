@@ -505,12 +505,15 @@ $divider-color: darken($title-background-color, 5);
 
   .title {
     font-weight: 600;
-    line-height: 0.8;
+    line-height: 1.3;
     letter-spacing: -0.2px;
     color: #141927;
-    margin-bottom: 30px;
-    text-align: left;
+    margin-bottom: 20px;
+    text-align: center;
     margin-top: 60px;
+    padding: 0 45px;
+    font-size: 16px;
+
     @include screen-max-width(medium) {
       margin-top: 20px;
     }
@@ -701,7 +704,6 @@ $divider-color: darken($title-background-color, 5);
       }
     }
     @include screen-max-width(medium){
-      padding: 0 0 20px 0;
       .title, .gas-configed {
         padding: 0 20px;
       }
