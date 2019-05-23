@@ -79,12 +79,12 @@
       width: 100%;
       position: absolute;
       bottom: 0;
+      left: 0;
 
       @include animation(underlineOut) {
         animation-duration: 0.2s;
         animation-timing-function: linear;
       }
-      
     }
 
     &--disabled {
@@ -106,6 +106,10 @@
   &__limit-order-info {
     position: absolute;
     right: 18px;
+
+    @media screen and (max-width: 320px) {
+      right: 6px
+    }
   }
 }
 #exchange {

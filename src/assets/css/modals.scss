@@ -487,6 +487,10 @@ $divider-color: darken($title-background-color, 5);
   background-color: #f6f7fa !important;
   border-radius: 10px;
 
+  @include screen-max-width(medium) {
+    border-radius: 0;
+  }
+
   @include screen-min-width(large) {
     width: 630px;
   }
