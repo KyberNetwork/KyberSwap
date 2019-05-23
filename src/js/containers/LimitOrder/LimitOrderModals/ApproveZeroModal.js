@@ -8,7 +8,7 @@ import constants from "../../../services/constants"
 import {getWallet} from "../../../services/keys"
 import {FeeDetail} from "../../../components/CommonElement"
 import BLOCKCHAIN_INFO from "../../../../../env"
-import * as converters from "../../../utils/converter"
+import * as converter from "../../../utils/converter"
 
 @connect((store, props) => {
     const account = store.account.account
@@ -85,7 +85,7 @@ export default class ApproveZeroModal extends React.Component {
         var password = ""
         try{
             var txHash = await wallet.broadCastTx("getAppoveTokenZero", this.props.ethereum, this.props.limitOrder.sourceToken, 0, this.props.account.nonce, this.state.gasLimit,
-              converters.toHex(converters.gweiToWei(this.props.limitOrder.gasPrice)), this.props.account.keystring, password, this.props.account.type, this.props.account.address, BLOCKCHAIN_INFO.kyberswapAddress)
+              converter.toHex(converter.gweiToWei(this.props.limitOrder.gasPrice)), this.props.account.keystring, password, this.props.account.type, this.props.account.address, BLOCKCHAIN_INFO.kyberswapAddress)
             
             //increase account nonce 
             this.props.dispatch(accountActions.incManualNonceAccount(this.props.account.address))
