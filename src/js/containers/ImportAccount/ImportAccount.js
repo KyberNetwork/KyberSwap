@@ -13,6 +13,7 @@ import BLOCKCHAIN_INFO from "../../../../env"
 import * as web3Package from "../../services/web3"
 import { isMobile } from '../../utils/common'
 import { TermAndServices } from "../../containers/CommonElements";
+import EthereumService from "../../services/ethereum/ethereum";
 
 @connect((store, props) => {
   var tokens = store.tokens.tokens
@@ -47,7 +48,11 @@ export default class ImportAccount extends React.Component {
       const walletType = web3Service.getWalletType();
       const isDapp = (walletType !== "metamask") && (walletType !== "modern_metamask");
       if (isDapp) {
-        this.props.dispatch(setOnDAPP())
+        this.props.dispatch(setOnDAPP());
+
+        const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
+        this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
+          ethereumService, this.props.tokens, this.props.translate, walletType))
       }
     }
     if (web3Service === false) {
