@@ -163,17 +163,17 @@ export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSy
 //   }
 // }
 
-export function updatePrevSource(value) {
-  return {
-    type: "EXCHANGE.SET_PREV_SOURCE",
-    payload: { value }
-  }
-}
+// export function updatePrevSource(value) {
+//   return {
+//     type: "EXCHANGE.SET_PREV_SOURCE",
+//     payload: { value }
+//   }
+// }
 
-export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess, percentChange, translate) {
+export function updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange) {
   return {
-    type: "EXCHANGE.UPDATE_RATE",
-    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess, percentChange, translate }
+    type: "EXCHANGE.UPDATE_RATE_COMPLETE",
+    payload: { expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange }
   }
 
 }

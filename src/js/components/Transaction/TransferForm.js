@@ -61,31 +61,31 @@ const TransferForm = (props) => {
     errorDestAddr.push(value)
   })
 
-  if (isErrorSource && props.defaultShowAmountErrorTooltip) {
-    setTimeout(() => {
-      ReactTooltip.show(document.getElementById("transfer-amount-error-trigger"))
-      props.setDefaulAmountErrorTooltip(false)
-    }, 300)
-  }
+  // if (isErrorSource && props.defaultShowAmountErrorTooltip) {
+  //   setTimeout(() => {
+  //     ReactTooltip.show(document.getElementById("transfer-amount-error-trigger"))
+  //     props.setDefaulAmountErrorTooltip(false)
+  //   }, 300)
+  // }
 
-  if (!isErrorSource === 0 && !props.defaultShowAmountErrorTooltip) {
-    setTimeout(() => {
-      props.setDefaulAmountErrorTooltip(true)
-    }, 300)
-  }
+  // if (!isErrorSource === 0 && !props.defaultShowAmountErrorTooltip) {
+  //   setTimeout(() => {
+  //     props.setDefaulAmountErrorTooltip(true)
+  //   }, 300)
+  // }
 
-  if (isErrorDestAddr && props.defaultShowAddrErrorTooltip) {
-    setTimeout(() => {
-      ReactTooltip.show(document.getElementById("transfer-address-error-trigger"))
-      props.setDefaulAddrErrorTooltip(false)
-    }, 300)
-  }
+  // if (isErrorDestAddr && props.defaultShowAddrErrorTooltip) {
+  //   setTimeout(() => {
+  //     ReactTooltip.show(document.getElementById("transfer-address-error-trigger"))
+  //     props.setDefaulAddrErrorTooltip(false)
+  //   }, 300)
+  // }
 
-  if (!isErrorDestAddr && !props.defaultShowAddrErrorTooltip) {
-    setTimeout(() => {
-      props.setDefaulAddrErrorTooltip(true)
-    }, 300)
-  }
+  // if (!isErrorDestAddr && !props.defaultShowAddrErrorTooltip) {
+  //   setTimeout(() => {
+  //     props.setDefaulAddrErrorTooltip(true)
+  //   }, 300)
+  // }
 
 
   var errorSourceTooltip = ""
@@ -272,7 +272,7 @@ const TransferForm = (props) => {
         )}
       </div>
 
-      {props.transactionLoadingScreen}
+      {/* {props.transactionLoadingScreen} */}
     </div>
   )
 }

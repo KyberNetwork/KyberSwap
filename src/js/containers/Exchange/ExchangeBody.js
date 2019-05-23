@@ -24,54 +24,23 @@ import {MinRate, RateBetweenToken } from "../Exchange"
 import ReactTooltip from 'react-tooltip'
 
 @connect((store, props) => {
-  const langs = store.locale.languages
-  const currentLang = common.getActiveLanguage(langs)
   const ethereum = store.connection.ethereum
   const account = store.account
   const exchange = store.exchange
   const tokens = store.tokens.tokens
   const translate = getTranslate(store.locale)
-  const transferTokenSymbol = store.transfer.tokenSymbol;
-  var sourceTokenSymbol = store.exchange.sourceTokenSymbol
-  var sourceBalance = 0
-  var sourceDecimal = 18
-  var sourceName = "Ether"
-  var rateSourceToEth = 0
+  const global = store.global
 
-  if (tokens[sourceTokenSymbol]) {
-    sourceBalance = tokens[sourceTokenSymbol].balance
-    sourceDecimal = tokens[sourceTokenSymbol].decimals
-    sourceName = tokens[sourceTokenSymbol].name
-    rateSourceToEth = tokens[sourceTokenSymbol].rate
-  }
-
-  var destTokenSymbol = store.exchange.destTokenSymbol
-  var destBalance = 0
-  var destDecimal = 18
-  var destName = "Kybernetwork"
-
-  if (tokens[destTokenSymbol]) {
-    destBalance = tokens[destTokenSymbol].balance
-    destDecimal = tokens[destTokenSymbol].decimals
-    destName = tokens[destTokenSymbol].name
-  }
 
   return {
-    account, ethereum, tokens, translate, currentLang,
-    global: store.global,
-    transferTokenSymbol,
-    exchange: {
-      ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
-      sourceName, destName, rateSourceToEth,
-      advanceLayout: props.advanceLayout
-    }
+    account, ethereum, tokens, translate, 
+    global, exchange   
   }
 })
 
 class ExchangeBody extends React.Component {
   constructor() {
     super()
-    // super(props)
     this.state = {
       focus: "",
       // defaultShowTooltip: true,
@@ -82,7 +51,7 @@ class ExchangeBody extends React.Component {
 
 
   componentDidUpdate(prevProps) {    
-    if (Object.keys(this.props.exchange.errors.sourceAmount).length > 0 && Object.keys(prevProps.exchange.errors.sourceAmount).length === 0){      
+    if (Object.keys(this.props.exchange.errors.sourceAmount).length > Object.keys(prevProps.exchange.errors.sourceAmount).length){      
       setTimeout(() => {
         ReactTooltip.show(document.getElementById("swap-error-trigger"))
       }, 300)
@@ -150,21 +119,6 @@ class ExchangeBody extends React.Component {
   }
   lazyValidateTransactionFee = _.debounce(this.validateTxFee, 500)
 
-  // chooseToken = (symbol, address, type) => {
-  //   this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
-  //   var path
-  //   if (type === "source") {
-  //     path = constants.BASE_HOST + "/swap/" + symbol.toLowerCase() + "-" + this.props.exchange.destTokenSymbol.toLowerCase()
-  //     this.props.global.analytics.callTrack("trackChooseToken", "from", symbol);
-  //   } else {
-  //     path = constants.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "-" + symbol.toLowerCase()
-  //     this.props.global.analytics.callTrack("trackChooseToken", "to", symbol);
-  //   }
-
-  //   path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
-  //   this.props.dispatch(globalActions.goToRoute(path))
-  //   this.props.dispatch(globalActions.updateTitleWithRate());
-  // }
 
   updateGlobal = (sourceTokenSymbol, sourceToken, destTokenSymbol, destToken) => {
     var path = constants.BASE_HOST +  "/swap/" + sourceTokenSymbol.toLowerCase() + "-" + destTokenSymbol.toLowerCase()
@@ -189,7 +143,7 @@ class ExchangeBody extends React.Component {
   }
 
   selectDestToken = (symbol) => {
-    var sourceTokenSymbol = this.props.limitOrder.sourceTokenSymbol
+    var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
     var sourceToken = this.props.tokens[sourceTokenSymbol].address
     var destTokenSymbol = symbol
     var destToken = this.props.tokens[destTokenSymbol].address
@@ -209,13 +163,7 @@ class ExchangeBody extends React.Component {
         this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, this.props.translate("error.handle_amount")))
         return
       }
-    } else {
-      // var destValue = converters.caculateDestAmount(sourceValue, this.props.exchange.expectedRate, 6)
-      // if (parseFloat(destValue) > constants.ETH.MAX_AMOUNT) {
-      //   this.props.dispatch(exchangeActions.throwErrorHandleAmount())
-      //   return
-      // }
-    }
+    } 
 
     //var minRate = 0
     var tokens = this.props.tokens
@@ -239,21 +187,32 @@ class ExchangeBody extends React.Component {
 
     this.props.dispatch(exchangeActions.updateRate(this.props.ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, refetchSourceAmount,constants.EXCHANGE_CONFIG.updateRateType.changeAmount));
 
-    // if (this.props.account.account !== false) {
-     
-    // }
+
+  }
+
+  getFormParams = () => {
+    var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
+    var rateSourceToEth = this.props.tokens[sourceTokenSymbol].rate
+    var sourceBalance =  this.props.tokens[sourceTokenSymbol].balance
+    var sourceDecimal = this.props.tokens[sourceTokenSymbol].decimals
+
+    var destTokenSymbol = this.props.exchange.destTokenSymbol    
+    var destDecimal = this.props.tokens[destTokenSymbol].decimals
+
+    return {sourceTokenSymbol, rateSourceToEth, sourceBalance,  sourceDecimal, destTokenSymbol, destDecimal}
   }
 
   validateSourceAmount = (value) => {
+    var {sourceTokenSymbol, rateSourceToEth, sourceBalance,  sourceDecimal, destTokenSymbol, destDecimal} = this.getFormParams()
     // var check = true
     var sourceAmount = value
     var validateAmount = validators.verifyAmount(sourceAmount,
-      this.props.exchange.sourceBalance,
-      this.props.exchange.sourceTokenSymbol,
-      this.props.exchange.sourceDecimal,
-      //this.props.exchange.expectedRate,
-      this.props.exchange.rateSourceToEth,
-      this.props.exchange.destDecimal,
+      rateSourceToEth,
+      sourceTokenSymbol,
+      sourceDecimal,
+      //this.props.exchange.expectedRate,      
+      rateSourceToEth,
+      destDecimal,
       this.props.exchange.maxCap)
     var sourceAmountErrorKey = false
     switch (validateAmount) {
@@ -370,17 +329,17 @@ class ExchangeBody extends React.Component {
     this.setState({ focus: "" })
   }
 
-  makeNewExchange = (changeTransactionType = false) => {
-    this.props.dispatch(exchangeActions.makeNewExchange());
+  // makeNewExchange = (changeTransactionType = false) => {
+  //   this.props.dispatch(exchangeActions.makeNewExchange());
 
-    if (changeTransactionType) {
-      const transferLink = constants.BASE_HOST + "/transfer/" + this.props.transferTokenSymbol.toLowerCase();
-      this.props.global.analytics.callTrack("trackClickNewTransaction", "Transfer");
-      this.props.history.push(transferLink)
-    } else {
-      this.props.global.analytics.callTrack("trackClickNewTransaction", "Swap");
-    }
-  }
+  //   if (changeTransactionType) {
+  //     const transferLink = constants.BASE_HOST + "/transfer/" + this.props.transferTokenSymbol.toLowerCase();
+  //     this.props.global.analytics.callTrack("trackClickNewTransaction", "Transfer");
+  //     this.props.history.push(transferLink)
+  //   } else {
+  //     this.props.global.analytics.callTrack("trackClickNewTransaction", "Swap");
+  //   }
+  // }
 
   setAmount = () => {
     var tokenSymbol = this.props.exchange.sourceTokenSymbol

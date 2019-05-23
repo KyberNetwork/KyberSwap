@@ -38,14 +38,14 @@ export default class LimitOrderForm extends React.Component {
   // }
 
   componentDidUpdate(prevProps) {
-    if ((this.props.limitOrder.errors.sourceAmount.length > 0 && prevProps.limitOrder.errors.sourceAmount.length === 0) || 
+    if ((this.props.limitOrder.errors.sourceAmount.length > prevProps.limitOrder.errors.sourceAmount.length) || 
     (this.props.limitOrder.errors.rateSystem !== "" && prevProps.limitOrder.errors.rateSystem === "")){
       setTimeout(() => {
         ReactTooltip.show(document.getElementById("limit-order-error-trigger"))
       }, 300)
     }
 
-    if (this.props.limitOrder.errors.triggerRate.length > 0 && prevProps.limitOrder.errors.triggerRate.length === 0){
+    if (this.props.limitOrder.errors.triggerRate.length > prevProps.limitOrder.errors.triggerRate.length){
       setTimeout(() => {
         ReactTooltip.show(document.getElementById("trigger-rate-error-trigger"))
       }, 300)

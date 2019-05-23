@@ -59,10 +59,10 @@ function* updateRatePending(action) {
 
   const state = store.getState();
   const translate = getTranslate(state.locale);
-  // const { destTokenSymbol, destAmount } = state.exchange;
 
   if (refetchSourceAmount) {
     try {
+      var destAmount = this.props.exchange.destAmount
      sourceAmount = yield call([ethereum, ethereum.call], "getSourceAmount", sourceTokenSymbol, destTokenSymbol, destAmount);
     } catch (err) {
       console.log(err);
@@ -79,8 +79,9 @@ function* updateRatePending(action) {
     var { expectedPrice, slippagePrice } = rate
 
     var percentChange = 0
-    if(rateZero.expectedPrice != 0){
-      percentChange = (rateZero.expectedPrice - rate.expectedPrice) / rateZero.expectedPrice 
+    var expectedRateInit = rateZero.expectedPrice
+    if(expectedRateInit != 0){
+      percentChange = (expectedRateInit - expectedPrice) / expectedRateInit
       percentChange = Math.round(percentChange * 1000) / 10    
       if(percentChange <= 0.1) {
         percentChange = 0
@@ -92,7 +93,17 @@ function* updateRatePending(action) {
       }
     }    
 
-    yield put.resolve(actions.updateRateExchangeComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, true, percentChange, translate))
+    if (expectedPrice == "0") {
+      if (expectedRateInit == "0" || expectedRateInit == 0 || expectedRateInit === undefined || expectedRateInit === null) {
+        yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, translate("error.kyber_maintain")))
+      } else {
+        yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, translate("error.handle_amount")))
+      }
+    } else {
+      yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate))
+    }
+
+    yield put(actions.updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange))
 
   }catch(err){
     console.log(err)
