@@ -20,7 +20,7 @@ export default class LimitOrderTable extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			statusFilter: [],
+			statusFilter: ["active"],
       pairFilter: [],
       dateSort: "desc",
       pairSort: "asc",
@@ -577,7 +577,7 @@ export default class LimitOrderTable extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.selectedTimeFilter !== nextProps.selectedTimeFilter) {
       this.setState({
-        statusFilter: [],
+        statusFilter: ["active"],
         pairFilter: [],
         pairSort: "asc",
         expanded: {}

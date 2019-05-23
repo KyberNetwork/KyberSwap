@@ -509,14 +509,14 @@ $divider-color: darken($title-background-color, 5);
 
   .title {
     font-weight: 600;
-    line-height: 1.3;
+    line-height: 0.8;
     letter-spacing: -0.2px;
     color: #141927;
-    margin-bottom: 20px;
-    text-align: center;
+    margin-bottom: 30px;
+    text-align: left;
     margin-top: 60px;
-    padding: 0 45px;
-    font-size: 16px;
+    // padding: 0 45px;
+    // font-size: 16px;
 
     @include screen-max-width(medium) {
       margin-top: 20px;
@@ -602,16 +602,17 @@ $divider-color: darken($title-background-color, 5);
       }
 
       &.cancel-process {
-        background-color: #6f6f6f;
-        color: white;
+        background-color: #f5f6f8;
+        color: #222222;
         text-transform: uppercase;
+        margin-right: 30px;
         // min-width: 135px;
         // padding: 14px;
         &::after {
           content: none;
         }
         &:hover {
-          background-color: #6f6f6f;
+          // background-color: #6f6f6f;
         }
       }
 
@@ -754,7 +755,7 @@ $divider-color: darken($title-background-color, 5);
     padding: 30px 0px 0px 0px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     @include screen-max-width(medium) {
       padding-top: 20px;
       &--approve {

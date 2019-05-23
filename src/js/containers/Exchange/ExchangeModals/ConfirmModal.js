@@ -481,7 +481,7 @@ export default class ConfirmModal extends React.Component {
                     <div className="row">
                         <div>
                             <div>
-                                <div className="title">{this.props.title}</div>
+                                <div className="title">{this.props.translate("modal.confirm_swap") || "Swap Confirm"}</div>
                                 {this.recap()}
 
                                 <FeeDetail
