@@ -250,6 +250,9 @@ const LIMIT_ORDER_CONFIG = {
   maxFee: 0.5,
   minPercentTriggerRate: -20,
   maxPercentTriggerRate: 50,
+  updateRateType : {
+    selectToken: "select_token"
+  },
   orderPath: {
     approveZero: 1,
     approveMax: 2,

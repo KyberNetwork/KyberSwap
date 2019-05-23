@@ -16,28 +16,17 @@ const limitOrder = (state = initState, action) => {
     }
 
     case "LIMIT_ORDER.SELECT_TOKEN": {
-      if (action.payload.type === "source") {
-        newState.sourceTokenSymbol = action.payload.symbol
-        newState.sourceToken = action.payload.address
 
+      var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type} = action.payload
+      newState.sourceTokenSymbol = sourceTokenSymbol
+      newState.sourceToken = sourceToken
+      newState.destTokenSymbol = destTokenSymbol
+      newState.destToken = destToken
 
-      } else if (action.payload.type === "dest") {
-        newState.destTokenSymbol = action.payload.symbol
-        newState.destToken = action.payload.address
-
-      }
       var errors = newState.errors
       errors.sourceAmount = []
       errors.triggerRate = []
       newState.errors = errors
-
-      //reset all error
-      // for (var key in newState.errors) {
-      //   newState.errors[key] = ""
-      // }
-
-      // newState.sourceAmount = ""
-      // newState.destAmount = 0
 
       newState.selected = true
       newState.isEditRate = false
@@ -77,22 +66,20 @@ const limitOrder = (state = initState, action) => {
       newState.inputFocus = action.payload;
       return newState;
     }
-    case "LIMIT_ORDER.UPDATE_RATE": {
-      const { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess } = action.payload
+    case "LIMIT_ORDER.UPDATE_RATE_COMPLETE": {
+      const { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type } = action.payload
 
-      if (!isSuccess) {
-        newState.errors.rateSystem = "Cannot get swap rates from Ethereum nodes"
-      } else {
-        if (expectedPrice == "0") {
-          if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
-            newState.errors.rateSystem = "This token pair is temporarily under maintenance"
-          } else {
-            newState.errors.rateSystem = "Kyber cannot handle your amount at the moment, please reduce your amount"
-          }
+  
+      if (expectedPrice == "0") {
+        if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
+          newState.errors.rateSystem = "This token pair is temporarily under maintenance"
         } else {
-          newState.errors.rateSystem = ""
+          newState.errors.rateSystem = "Kyber cannot handle your amount at the moment, please reduce your amount"
         }
+      } else {
+        newState.errors.rateSystem = ""
       }
+      
 
       var slippageRate = slippagePrice == "0" ? converter.estimateSlippagerate(rateInit, 18) : converter.toT(slippagePrice, 18)
       var expectedRate = expectedPrice == "0" ? rateInit : expectedPrice
@@ -100,7 +87,11 @@ const limitOrder = (state = initState, action) => {
       newState.slippageRate = slippageRate
       newState.offeredRate = expectedRate
       newState.blockNo = blockNo
-      
+
+      if(type === constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken){
+        newState.triggerRate = converter.roundingNumber(converter.toT(expectedRate, 18))
+        newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, 6)  
+      }
 
       newState.isSelectToken = false
       return newState
