@@ -25,34 +25,13 @@ import EthereumService from "../../services/ethereum/ethereum"
 import constants from "../../services/constants"
 
 @connect((store, props) => {
-  // const langs = store.locale.languages
-  // var currentLang = common.getActiveLanguage(langs)
-  // const tokens = store.tokens.tokens
-  
-  // const tokenSymbol = store.transfer.tokenSymbol
-  // const swapSrcTokenSymbol = store.exchange.sourceTokenSymbol;
-  // const swapDestTokenSymbol = store.exchange.destTokenSymbol;
-  // var balance = 0
-  // var decimals = 18
-  // var tokenName = "kyber"
-
-  // if (tokens[tokenSymbol]) {
-  //   balance = tokens[tokenSymbol].balance
-  //   decimals = tokens[tokenSymbol].decimals
-  //   tokenName = tokens[tokenSymbol].name
-  // }
 
   return {
     transfer: store.transfer,
     account: store.account,
     tokens: store.tokens.tokens,
     global: store.global,
-    translate: getTranslate(store.locale),
-    // advanceLayout: props.advanceLayout,
-    // currentLang,
-    // swapSrcTokenSymbol,
-    // swapDestTokenSymbol,
-    // analytics: store.global.analytics
+    translate: getTranslate(store.locale)
   }
 })
 
@@ -61,8 +40,6 @@ class Transfer extends React.Component {
     super()
     this.state = {
       focus: "transfer"
-      // defaultShowAmountErrorTooltip: true,
-      // defaultShowAddrErrorTooltip: true
     }
   }
 
@@ -296,13 +273,6 @@ class Transfer extends React.Component {
     this.props.dispatch(transferActions.clearIsOpenAdvance());
   }
 
-  // setDefaulAmountErrorTooltip = (value) => {
-  //   this.setState({ defaultShowAmountErrorTooltip: value })
-  // }
-  // setDefaulAddrErrorTooltip = (value) => {
-  //   this.setState({ defaultShowAddrErrorTooltip: value })
-  // }
-
   selectTokenBalance = () => {
     this.props.dispatch(transferActions.setIsSelectTokenBalance(true));
   }
@@ -342,26 +312,6 @@ class Transfer extends React.Component {
       />
     )
 
-    // var balanceInfo = {
-    //   tokenName: this.props.transfer.balanceData.tokenName,
-    //   amount: this.props.transfer.balanceData.amount,
-    //   tokenSymbol: this.props.transfer.balanceData.tokenSymbol
-    // }
-    // var destAdressShort = this.props.transfer.destAddress.slice(0, 8) + "..." + this.props.transfer.destAddress.slice(-6)
-    // var transactionLoadingScreen = (
-    //   <TransactionLoading
-    //     tx={this.props.transfer.txHash}
-    //     makeNewTransaction={this.makeNewTransfer}
-    //     tempTx={this.props.transfer.tempTx}
-    //     type="transfer"
-    //     balanceInfo={balanceInfo}
-    //     broadcasting={this.props.transfer.broadcasting}
-    //     broadcastingError={this.props.transfer.bcError}
-    //     address={destAdressShort}
-    //     isOpen={this.props.transfer.step === 2}
-    //   />
-    // )
-
     var qcCode = common.isMobile.any() ? <QRCode
       onError={this.handleErrorQRCode}
       onScan={this.handleScanQRCode}
@@ -383,7 +333,6 @@ class Transfer extends React.Component {
         step={this.props.transfer.step}
         tokenSymbol={this.props.transfer.tokenSymbol}
         tokenTransferSelect={tokenTransferSelect}
-        // transactionLoadingScreen={transactionLoadingScreen}
         input={input}
         errors={errors}
         translate={this.props.translate}
@@ -414,12 +363,6 @@ class Transfer extends React.Component {
         topBalance={topBalance}
         isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
         acceptConnectWallet={this.acceptConnectWallet}
-
-        // defaultShowAmountErrorTooltip={this.state.defaultShowAmountErrorTooltip}
-        // setDefaulAmountErrorTooltip={this.setDefaulAmountErrorTooltip}
-
-        // defaultShowAddrErrorTooltip={this.state.defaultShowAddrErrorTooltip}
-        // setDefaulAddrErrorTooltip={this.setDefaulAddrErrorTooltip}
 
         isOnDAPP={this.props.account.isOnDAPP}
 
