@@ -106,7 +106,7 @@ const transfer = (state = initState, action) => {
       return newState
     }
     case "TRANSFER.THROW_AMOUNT_ERROR": {
-      var {key, messsage} = action.payload
+      var {key, message} = action.payload
       var errors = newState.errors
       errors.sourceAmount[key] = message
       newState.errors = errors

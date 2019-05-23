@@ -150,28 +150,62 @@ class ExchangeBody extends React.Component {
   }
   lazyValidateTransactionFee = _.debounce(this.validateTxFee, 500)
 
-  chooseToken = (symbol, address, type) => {
-    this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
-    var path
-    if (type === "source") {
-      path = constants.BASE_HOST + "/swap/" + symbol.toLowerCase() + "-" + this.props.exchange.destTokenSymbol.toLowerCase()
-      this.props.global.analytics.callTrack("trackChooseToken", "from", symbol);
-    } else {
-      path = constants.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "-" + symbol.toLowerCase()
-      this.props.global.analytics.callTrack("trackChooseToken", "to", symbol);
-    }
+  // chooseToken = (symbol, address, type) => {
+  //   this.props.dispatch(exchangeActions.selectTokenAsync(symbol, address, type, this.props.ethereum))
+  //   var path
+  //   if (type === "source") {
+  //     path = constants.BASE_HOST + "/swap/" + symbol.toLowerCase() + "-" + this.props.exchange.destTokenSymbol.toLowerCase()
+  //     this.props.global.analytics.callTrack("trackChooseToken", "from", symbol);
+  //   } else {
+  //     path = constants.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "-" + symbol.toLowerCase()
+  //     this.props.global.analytics.callTrack("trackChooseToken", "to", symbol);
+  //   }
 
+  //   path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
+  //   this.props.dispatch(globalActions.goToRoute(path))
+  //   this.props.dispatch(globalActions.updateTitleWithRate());
+  // }
+
+  updateGlobal = (sourceTokenSymbol, sourceToken, destTokenSymbol, destToken) => {
+    var path = constants.BASE_HOST +  "/swap/" + sourceTokenSymbol.toLowerCase() + "-" + destTokenSymbol.toLowerCase()
     path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
     this.props.dispatch(globalActions.goToRoute(path))
     this.props.dispatch(globalActions.updateTitleWithRate());
+
+    var sourceAmount = this.props.exchange.sourceAmount
+    var refetchSourceAmount = this.props.exchange.inputFocus === "source"?false: true
+    this.props.dispatch(exchangeActions.updateRate(this.props.ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, refetchSourceAmount,constants.EXCHANGE_CONFIG.updateRateType.selectToken));
   }
 
-  dispatchUpdateRateExchange = (sourceValue, refetchSourceAmount) => {
+  selectSourceToken = (symbol) => {        
+    var sourceTokenSymbol = symbol
+    var sourceToken = this.props.tokens[sourceTokenSymbol].address
+    var destTokenSymbol = this.props.exchange.destTokenSymbol
+    var destToken = this.props.tokens[destTokenSymbol].address
+    this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "source"));
+
+    this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
+    this.props.global.analytics.callTrack("trackChooseToken", "from", symbol);
+  }
+
+  selectDestToken = (symbol) => {
+    var sourceTokenSymbol = this.props.limitOrder.sourceTokenSymbol
+    var sourceToken = this.props.tokens[sourceTokenSymbol].address
+    var destTokenSymbol = symbol
+    var destToken = this.props.tokens[destTokenSymbol].address
+    this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "dest"));
+
+    this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
+    this.props.global.analytics.callTrack("trackChooseToken", "to", symbol);
+  }
+
+
+  dispatchUpdateRateExchange = (sourceAmount, refetchSourceAmount) => {
     var sourceDecimal = 18
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
     
     if (sourceTokenSymbol === "ETH") {
-      if (parseFloat(sourceValue) > constants.ETH.MAX_AMOUNT) {
+      if (parseFloat(sourceAmount) > constants.ETH.MAX_AMOUNT) {
         this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, this.props.translate("error.handle_amount")))
         return
       }
@@ -191,8 +225,8 @@ class ExchangeBody extends React.Component {
     }
 
     var ethereum = this.props.ethereum
-    var source = this.props.exchange.sourceToken
-    var dest = this.props.exchange.destToken
+    var sourceToken = this.props.exchange.sourceToken
+    var destToken = this.props.exchange.destToken
     var destTokenSymbol = this.props.exchange.destTokenSymbol
     //var sourceAmountHex = stringToHex(sourceValue, sourceDecimal)
     var rateInit = 0
@@ -203,11 +237,11 @@ class ExchangeBody extends React.Component {
       rateInit = this.props.tokens[sourceTokenSymbol].minRate
     }
 
-    if (this.props.account.account !== false) {
-      this.props.dispatch(exchangeActions.updateRateExchangeAndValidateSource(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount));
-    } else {
-      this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceValue, sourceTokenSymbol, true, refetchSourceAmount))
-    }
+    this.props.dispatch(exchangeActions.updateRate(this.props.ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, refetchSourceAmount,constants.EXCHANGE_CONFIG.updateRateType.changeAmount));
+
+    // if (this.props.account.account !== false) {
+     
+    // }
   }
 
   validateSourceAmount = (value) => {
@@ -389,12 +423,19 @@ class ExchangeBody extends React.Component {
       this.props.dispatch(exchangeActions.changeAmount('source', this.props.exchange.destAmount))
       this.props.dispatch(exchangeActions.changeAmount('dest', ""))
     }
-    this.props.ethereum.fetchRateExchange(true)
+    var sourceTokenSymbol = this.props.exchange.destTokenSymbol
+    var sourceToken = this.props.exchange.destToken
+    var destTokenSymbol = this.props.exchange.sourceTokenSymbol
+    var destToken = this.props.exchange.sourceToken
 
-    var path = constants.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "-" + this.props.exchange.sourceTokenSymbol.toLowerCase()
-    path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
-    this.props.dispatch(globalActions.goToRoute(path))
-    this.props.dispatch(globalActions.updateTitleWithRate());
+    this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "swap"));
+    this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
+    // this.props.ethereum.fetchRateExchange(true)
+
+    // var path = constants.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "-" + this.props.exchange.sourceTokenSymbol.toLowerCase()
+    // path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
+    // this.props.dispatch(globalActions.goToRoute(path))
+    // this.props.dispatch(globalActions.updateTitleWithRate());
     this.props.global.analytics.callTrack("trackClickSwapDestSrc", this.props.exchange.sourceTokenSymbol, this.props.exchange.destTokenSymbol);
   }
 
@@ -525,7 +566,7 @@ class ExchangeBody extends React.Component {
   getBalanceLayout = () => {
     return (
       <AccountBalance
-        chooseToken={this.chooseToken}
+        chooseToken={this.selectSourceToken}
         sourceActive={this.props.exchange.sourceTokenSymbol}
         destTokenSymbol={this.props.exchange.destTokenSymbol}
         // onToggleBalanceContent={this.toggleBalanceContent}
@@ -623,7 +664,7 @@ class ExchangeBody extends React.Component {
         type="source"
         focusItem={this.props.exchange.sourceTokenSymbol}
         listItem={this.props.tokens}
-        chooseToken={this.chooseToken}
+        chooseToken={this.selectSourceToken}
         isFixToken={isFixedSourceToken}
       />
     )
@@ -633,7 +674,7 @@ class ExchangeBody extends React.Component {
         type="dest"
         focusItem={this.props.exchange.destTokenSymbol}
         listItem={tokenDest}
-        chooseToken={this.chooseToken}
+        chooseToken={this.selectDestToken}
         isFixToken={isFixedDestToken}
       />
     )

@@ -42,21 +42,23 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.SELECT_TOKEN": {
-      if (action.payload.type === "source") {
-        newState.sourceTokenSymbol = action.payload.symbol
-        newState.sourceToken = action.payload.address
-
-
-      } else if (action.payload.type === "dest") {
-        newState.destTokenSymbol = action.payload.symbol
-        newState.destToken = action.payload.address
-
-      }
+      var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type} = action.payload
+      newState.sourceTokenSymbol = sourceTokenSymbol
+      newState.sourceToken = sourceToken
+      newState.destTokenSymbol = destTokenSymbol
+      newState.destToken = destToken
 
       //reset all error
       for (var key in newState.errors) {
         newState.errors[key] = {}
       }
+
+      //   if (state.exchange.sourceTokenSymbol === state.exchange.destTokenSymbol){
+//     var translate = getTranslate(state.locale)
+//     yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken, translate("error.select_same_token")))
+//   }else{
+//     yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken))
+//   }
 
       // newState.sourceAmount = ""
       // newState.destAmount = 0

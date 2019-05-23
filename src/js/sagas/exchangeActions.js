@@ -18,13 +18,13 @@ import bowser from 'bowser'
 
 
 function* selectToken(action) {
-  const { symbol, address, type, ethereum } = action.payload
-  yield put.sync(actions.selectToken(symbol, address, type))
-  yield put(utilActions.hideSelectToken())
+  const { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type} = action.payload
+  // yield put(utilActions.hideSelectToken())
   
   //check select same token
-  var state = store.getState()
-  if (state.exchange.sourceTokenSymbol === state.exchange.destTokenSymbol){
+  
+  if (sourceTokenSymbol === destTokenSymbol){
+    var state = store.getState()
     var translate = getTranslate(state.locale)
     yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken, translate("error.select_same_token")))
   }else{
@@ -34,9 +34,9 @@ function* selectToken(action) {
 
   yield call(estimateGasNormal)
   
-  if (ethereum){
-    yield call(ethereum.fetchRateExchange, true)
-  }
+  // if (ethereum){
+  //   yield call(ethereum.fetchRateExchange, true)
+  // }
 
 }
 
@@ -54,12 +54,12 @@ function* getRate(ethereum, source, dest, sourceAmount, blockNo) {
 }
 
 function* updateRatePending(action) {
-  const { ethereum, source, dest, sourceTokenSymbol, isManual, refetchSourceAmount } = action.payload;
-  let { sourceAmount } = action.payload;
+  var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, type } = action.payload;
+
 
   const state = store.getState();
   const translate = getTranslate(state.locale);
-  const { destTokenSymbol, destAmount } = state.exchange;
+  // const { destTokenSymbol, destAmount } = state.exchange;
 
   if (refetchSourceAmount) {
     try {
@@ -74,8 +74,8 @@ function* updateRatePending(action) {
 
   try{
     var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
-    var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmoutRefined, lastestBlock)
-    var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmoutZero, lastestBlock)
+    var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutRefined, lastestBlock)
+    var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutZero, lastestBlock)
     var { expectedPrice, slippagePrice } = rate
 
     var percentChange = 0
@@ -96,7 +96,7 @@ function* updateRatePending(action) {
 
   }catch(err){
     console.log(err)
-    if(isManual){
+    if(isManual){      
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
       translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
       return
@@ -104,18 +104,18 @@ function* updateRatePending(action) {
   }
 }
 
-function* updateRateAndValidateSource(action) {
-  const state = store.getState();
-  const { ethereum, source, dest, sourceValue, sourceTokenSymbol, sourceAmount, isManual, refetchSourceAmount } = action.payload;
-  try {
-    yield put(actions.updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount));
-    if (state.account.account !== false) {
-      yield call(verifyExchange);
-    }
-  } catch (err) {
-    console.log(err);
-  }
-}
+// function* updateRateAndValidateSource(action) {
+//   const state = store.getState();
+//   const { ethereum, source, dest, sourceValue, sourceTokenSymbol, sourceAmount, isManual, refetchSourceAmount } = action.payload;
+//   try {
+//     yield put(actions.updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount));
+//     if (state.account.account !== false) {
+//       yield call(verifyExchange);
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
 
 function* getRateSnapshot(ethereum, source, dest, sourceAmountHex) {
   try {
@@ -553,9 +553,9 @@ export function* fetchUserCap(action) {
 
 export function* watchExchange() {
   yield takeEvery("EXCHANGE.UPDATE_RATE_PENDING", updateRatePending)
-  yield takeEvery("EXCHANGE.UPDATE_RATE_AND_VALIDATE_SOURCE", updateRateAndValidateSource);
+  // yield takeEvery("EXCHANGE.UPDATE_RATE_AND_VALIDATE_SOURCE", updateRateAndValidateSource);
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", fetchGas)
-  yield takeEvery("EXCHANGE.SELECT_TOKEN_ASYNC", selectToken)
+  yield takeEvery("EXCHANGE.SELECT_TOKEN", selectToken)
   yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
   yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
 

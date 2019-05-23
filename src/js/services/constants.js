@@ -29,6 +29,11 @@ const EXCHANGE_CONFIG = {
   EPSILON: 1000000000000000,
   MAX_CAP_PERCENT: 0.95,    
   COMMISSION_ADDR: "0x440bBd6a888a36DE6e2F6A25f65bc4e16874faa9",
+  updateRateType : {
+    selectToken: "select_token",
+    changeAmount: "changeAmount",
+    interval: "interval"
+  },
   exchangePath: {
     approveZero: 1,
     approveMax: 2,    

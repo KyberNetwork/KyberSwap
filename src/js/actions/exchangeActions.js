@@ -1,16 +1,16 @@
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
 
-export function selectTokenAsync(symbol, address, type, ethereum) {
-  return {
-    type: "EXCHANGE.SELECT_TOKEN_ASYNC",
-    payload: { symbol, address, type, ethereum }
-  }
-}
-export function selectToken(symbol, address, type) {
+// export function selectTokenAsync(symbol, address, type, ethereum) {
+//   return {
+//     type: "EXCHANGE.SELECT_TOKEN_ASYNC",
+//     payload: { symbol, address, type, ethereum }
+//   }
+// }
+export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type) {
   return {
     type: "EXCHANGE.SELECT_TOKEN",
-    payload: { symbol, address, type }
+    payload: { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type}
   }
 }
 export function checkSelectToken() {
@@ -142,20 +142,19 @@ export function setRandomExchangeSelectedToken(random) {
   }
 }
 
-export function updateRateExchange(ethereum, source, dest,
-  sourceAmount, sourceTokenSymbol, isManual = false, refetchSourceAmount = false) {
+export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual = false, refetchSourceAmount = false, type = null) {
   return {
     type: "EXCHANGE.UPDATE_RATE_PENDING",
-    payload: { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount }
+    payload: { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, type }
   }
 }
 
-export function updateRateExchangeAndValidateSource(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual = false, refetchSourceAmount = false) {
-  return {
-    type: "EXCHANGE.UPDATE_RATE_AND_VALIDATE_SOURCE",
-    payload: { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount }
-  }
-}
+// export function updateRateExchangeAndValidateSource(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual = false, refetchSourceAmount = false) {
+//   return {
+//     type: "EXCHANGE.UPDATE_RATE_AND_VALIDATE_SOURCE",
+//     payload: { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount }
+//   }
+// }
 
 // export function updateRateSnapshot(ethereum) {
 //   return {

@@ -32,7 +32,8 @@ export default class Exchange extends React.Component {
     super(props)
     this.state = {
       isAnimation: false,
-      intervalGroup : []
+      intervalGroup : [],
+      isFirstTime: true,
       
     }
   }
@@ -71,11 +72,16 @@ export default class Exchange extends React.Component {
 
   fetchRateExchange = () => {    
     var ethereum = this.getEthereumInstance()
-    var source = this.props.exchange.sourceToken
-    var dest = this.props.exchange.destToken
+
+    var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken} = this.getTokenInit()
+    // if (this.state.isFirstTime){
+      
+    // }
+
+    // var sourceToken = this.props.exchange.sourceToken
+    // var destToken = this.props.exchange.destToken
     
     var sourceAmount = this.props.exchange.sourceAmount
-    var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
     
     let refetchSourceAmount = false;
     
@@ -90,7 +96,7 @@ export default class Exchange extends React.Component {
     if (this.props.exchange.inputFocus !== "source"){
       //calculate source amount by dest amount
       var destAmount = this.props.exchange.destAmount
-      var destTokenSymbol = this.props.exchange.destTokenSymbol
+      // var destTokenSymbol = this.props.exchange.destTokenSymbol
       // relative source amount 
       var tokens = this.props.tokens
       var rateSourceEth = sourceTokenSymbol === "ETH" ? 1: tokens[sourceTokenSymbol].rate / Math.pow(10,18)
@@ -104,8 +110,9 @@ export default class Exchange extends React.Component {
       refetchSourceAmount = true;
     }    
     
-
-    this.props.dispatch(exchangeActions.updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, false, refetchSourceAmount));
+    var isManual = this.state.isFirstTime ? true: false
+    this.setState({isFirstTime: false})
+    this.props.dispatch(exchangeActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, constants.EXCHANGE_CONFIG.updateRateType.interval));
   }
 
   fetchGasExchange = () =>{    
@@ -141,7 +148,9 @@ export default class Exchange extends React.Component {
   setInvervalProcess = () => {
     this.setInterValGroup( this.checkKyberEnable, 10000)
     this.setInterValGroup( this.fetchUserCap, 10000)
+
     this.setInterValGroup( this.fetchRateExchange, 10000)
+
     this.setInterValGroup( this.fetchGasExchange, 10000)
     this.setInterValGroup( this.fetchMaxGasPrice.bind(this), 10000)
     // this.setInterValGroup( this.fetchApproveTxsData, 10000)    
@@ -156,21 +165,35 @@ export default class Exchange extends React.Component {
     this.setState({intervalGroup: []})    
   }
 
+  getTokenInit = () => {
+    var sourceTokenSymbol = this.props.params.source.toUpperCase()
+    var sourceToken = this.props.tokens[sourceTokenSymbol].address
+
+    var destTokenSymbol = this.props.params.dest.toUpperCase()
+    var destToken = this.props.tokens[destTokenSymbol].address
+
+    return {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken}
+  }
+
   componentDidMount = () =>{
     // set interval process
     this.setInvervalProcess()
 
-    if ((this.props.params.source.toLowerCase() !== this.props.exchange.sourceTokenSymbol.toLowerCase()) ||
-      (this.props.params.dest.toLowerCase() !== this.props.exchange.destTokenSymbol.toLowerCase()) ){
+    var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken} = this.getTokenInit()
 
-      var sourceSymbol = this.props.params.source.toUpperCase()
-      var sourceAddress = this.props.tokens[sourceSymbol].address
+    if ((sourceTokenSymbol !== this.props.exchange.sourceTokenSymbol) ||
+      (destTokenSymbol !== this.props.exchange.destTokenSymbol) ){
 
-      var destSymbol = this.props.params.dest.toUpperCase()
-      var destAddress = this.props.tokens[destSymbol].address
+      // var sourceSymbol = this.props.params.source.toUpperCase()
+      // var sourceAddress = this.props.tokens[sourceSymbol].address
 
-      this.props.dispatch(exchangeActions.selectTokenAsync(sourceSymbol, sourceAddress, "source", this.props.ethereum))
-      this.props.dispatch(exchangeActions.selectTokenAsync(destSymbol, destAddress, "dest", this.props.ethereum))
+      // var destSymbol = this.props.params.dest.toUpperCase()
+      // var destAddress = this.props.tokens[destSymbol].address
+
+      // this.props.dispatch(exchangeActions.selectTokenAsync(sourceSymbol, sourceAddress, "source", this.props.ethereum))
+      // this.props.dispatch(exchangeActions.selectTokenAsync(destSymbol, destAddress, "dest", this.props.ethereum))
+
+      this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "default"));
     }
   }
 
