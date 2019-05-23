@@ -9,7 +9,6 @@ import {
   checkConnection, setGasPrice, setMaxGasPrice
 } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
-import { updateTx } from "../../actions/txActions"
 import { updateRateExchange, estimateGasNormal, analyzeError, checkKyberEnable, verifyExchange, caculateAmount, fetchExchangeEnable, throwErrorHandleAmount } from "../../actions/exchangeActions"
 import { estimateGasTransfer, verifyTransfer } from "../../actions/transferActions"
 
@@ -70,9 +69,6 @@ export default class EthereumService extends React.Component {
 
   fetchData_10s() {
 
-
-    this.fetchTxsData()
-
     this.fetchAccountData()
     this.fetchTokenBalance()
 
@@ -98,9 +94,6 @@ export default class EthereumService extends React.Component {
     store.dispatch(analyzeError(ethereum, "0x2a5a08b792c5fd79c498bf75e8433274724e5851f208dddf9e112d1c29256649"))
   }
 
-  // testEstimateGas() {
-  //   this.call("estimateGasContract")
-  // }
   
   fetchVolumn () {
     store.dispatch(marketActions.getVolumn())
@@ -127,45 +120,6 @@ export default class EthereumService extends React.Component {
     var state = store.getState()
     var ethereum = state.connection.ethereum
     store.dispatch(updateAllRateUSD(ethereum))
-  }
-
-  fetchTxsData = () => {
-    var state = store.getState()
-    var tx
-    var txs = state.txs
-    var ethereum = state.connection.ethereum
-
-    var account = state.account.account
-    var listToken = {}
-    Object.keys(txs).forEach((hash) => {
-      tx = txs[hash]
-      if (tx.status == "pending") {
-        if (tx.type === "exchange") {
-          var exchange = state.exchange
-          listToken = {
-            source: {
-              symbol: exchange.sourceTokenSymbol,
-              address: exchange.sourceToken
-            },
-            dest: {
-              symbol: exchange.destTokenSymbol,
-              address: exchange.destToken
-            }
-          }
-          store.dispatch(updateTx(ethereum, tx, account, listToken))
-        } else {
-          var transfer = state.transfer
-          listToken = {
-            token: {
-              symbol: transfer.tokenSymbol,
-              address: transfer.token
-            }
-          }
-          store.dispatch(updateTx(ethereum, tx, account, listToken))
-        }
-
-      }
-    })
   }
 
 
@@ -204,16 +158,7 @@ export default class EthereumService extends React.Component {
         store.dispatch(throwErrorHandleAmount());
         return;
       }
-    } else {
-      // const tokens = state.tokens.tokens;
-      // const rate = state.exchange.offeredRate;
-      // // const rate = tokens[sourceTokenSymbol].rate;
-      // const sourceAmountInEth = calculateMinAmount(sourceAmount, rate);
-      // if (compareTwoNumber(sourceAmountInEth, constants.ETH.MAX_AMOUNT) === 1) {
-      //   store.dispatch(throwErrorHandleAmount());
-      //   return;
-      // }
-    }
+    } 
 
     //check input focus
     if (state.exchange.inputFocus !== "source"){

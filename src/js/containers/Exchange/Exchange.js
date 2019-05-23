@@ -7,7 +7,6 @@ import * as validators from "../../utils/validators"
 
 import * as exchangeActions from "../../actions/exchangeActions"
 import {setIsChangingPath, clearSession} from "../../actions/globalActions"
-import { updateApproveTxsData } from "../../actions/txActions"
 
 import {HeaderTransaction} from "../TransactionCommon"
 import * as analytics from "../../utils/analytics"
@@ -82,7 +81,7 @@ export default class Exchange extends React.Component {
     
     if (sourceTokenSymbol === "ETH") {
       if (converter.compareTwoNumber(sourceAmount, constants.ETH.MAX_AMOUNT) === 1) {
-        this.props.dispatch(exchangeActions.throwErrorHandleAmount());
+        this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, this.props.translate("error.handle_amount")))
         return;
       }
     } 
@@ -90,8 +89,8 @@ export default class Exchange extends React.Component {
     //check input focus
     if (this.props.exchange.inputFocus !== "source"){
       //calculate source amount by dest amount
-      var destAmount = state.exchange.destAmount
-      var destTokenSymbol = state.exchange.destTokenSymbol    
+      var destAmount = this.props.exchange.destAmount
+      var destTokenSymbol = this.props.exchange.destTokenSymbol
       // relative source amount 
       var tokens = this.props.tokens
       var rateSourceEth = sourceTokenSymbol === "ETH" ? 1: tokens[sourceTokenSymbol].rate / Math.pow(10,18)
@@ -127,9 +126,9 @@ export default class Exchange extends React.Component {
     }
   }
 
-  fetchApproveTxsData = () => {
-    this.props.dispatch(updateApproveTxsData())
-  }
+  // fetchApproveTxsData = () => {
+  //   this.props.dispatch(updateApproveTxsData())
+  // }
 
   verifyExchange = () => {
     if (!this.props.account) {
@@ -145,7 +144,7 @@ export default class Exchange extends React.Component {
     this.setInterValGroup( this.fetchRateExchange, 10000)
     this.setInterValGroup( this.fetchGasExchange, 10000)
     this.setInterValGroup( this.fetchMaxGasPrice.bind(this), 10000)
-    this.setInterValGroup( this.fetchApproveTxsData, 10000)    
+    // this.setInterValGroup( this.fetchApproveTxsData, 10000)    
 
     this.setInterValGroup( this.verifyExchange, 3000)
   }
@@ -171,7 +170,7 @@ export default class Exchange extends React.Component {
       var destAddress = this.props.tokens[destSymbol].address
 
       this.props.dispatch(exchangeActions.selectTokenAsync(sourceSymbol, sourceAddress, "source", this.props.ethereum))
-      this.props.dispatch(exchangeActions.selectTokenAsync(destSymbol, destAddress, "des", this.props.ethereum))
+      this.props.dispatch(exchangeActions.selectTokenAsync(destSymbol, destAddress, "dest", this.props.ethereum))
     }
   }
 

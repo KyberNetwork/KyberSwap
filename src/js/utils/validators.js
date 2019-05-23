@@ -47,9 +47,9 @@ export function verifyAmount(sourceAmount,
   if (sourceSymbol !== "ETH") {
     estimateValue = rateBig.times(sourceAmountWei).div(Math.pow(10, sourceDecimal))
   }
-  var epsilon = new BigNumber(constants.EPSILON)
+  var epsilon = new BigNumber(constants.EXCHANGE_CONFIG.EPSILON)
   var delta = estimateValue.minus(epsilon).abs()
-  var acceptDetal = new BigNumber(constants.MIN_ACCEPT_DELTA)
+  var acceptDetal = new BigNumber(constants.EXCHANGE_CONFIG.MIN_ACCEPT_DELTA)
 
   if (estimateValue.isLessThan(epsilon) && !delta.div(epsilon).isLessThan(acceptDetal)) {
     return "too small"
@@ -60,7 +60,7 @@ export function verifyAmount(sourceAmount,
   if (maxCap !== "infinity") {
     var maxCap = new BigNumber(maxCap)
     if (sourceSymbol !== "ETH") {
-      maxCap = maxCap.multipliedBy(constants.MAX_CAP_PERCENT)
+      maxCap = maxCap.multipliedBy(constants.EXCHANGE_CONFIG.MAX_CAP_PERCENT)
     }
     if (estimateValue.isGreaterThan(maxCap)) {
       return "too high cap"

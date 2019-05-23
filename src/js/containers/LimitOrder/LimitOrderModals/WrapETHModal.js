@@ -54,13 +54,13 @@ export default class WrapETHModal extends React.Component {
             var formId = "limit_order"
             var ethereum = this.props.ethereum
             var address = this.props.account.address
-            var sourceToken = this.props.limitOrder.sourceToken
+            var sourceToken = this.props.tokens["ETH"].address
             var sourceAmount = converters.toHex( this.getAmountWrapETH() )
-            var destToken = this.props.limitOrder.destToken
+            var destToken = this.props.tokens[BLOCKCHAIN_INFO.wrapETHToken].address
             var destAddress = this.props.account.address
             var maxDestAmount = converters.toHex( this.getAmountWrapETH() )
             var minConversionRate = converters.toHex(Math.pow(10,18))
-            var blockNo = constants.COMMISSION_ADDR
+            var blockNo = constants.EXCHANGE_CONFIG.COMMISSION_ADDR
             var nonce = this.props.account.nonce
             var gas = this.props.limitOrder.max_gas
             var gasPrice = this.props.limitOrder.gasPrice

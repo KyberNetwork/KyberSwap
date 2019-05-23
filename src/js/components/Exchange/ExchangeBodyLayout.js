@@ -6,7 +6,7 @@ import constants from "../../services/constants"
 import ReactTooltip from 'react-tooltip'
 import { filterInputNumber } from "../../utils/validators";
 import { ImportAccount } from "../../containers/ImportAccount";
-import { PostExchangeWithKey } from "../../containers/Exchange";
+import { PostExchange } from "../../containers/Exchange";
 // import BLOCKCHAIN_INFO from "../../../../env";
 import { RateBetweenToken } from "../../containers/Exchange";
 import * as converters from "../../utils/converter";
@@ -29,57 +29,66 @@ const ExchangeBodyLayout = (props) => {
     if (check) props.input.destAmount.onChange(e)
   }
 
-  var errorSelectSameToken = props.errors.selectSameToken !== '' ? props.translate(props.errors.selectSameToken) : ''
-  var errorSelectTokenToken = props.errors.selectTokenToken !== '' ? props.translate(props.errors.selectTokenToken) : ''
-  var errorToken = errorSelectSameToken + errorSelectTokenToken
-  var maxCap = props.maxCap
+
   var errorSource = []
-  var errorExchange = false
-
-  if (props.errorNotPossessKgt !== "") {
-    errorSource.push(props.errorNotPossessKgt)
+  var errorExchange = false  
+  Object.values(props.exchange.errors.sourceAmount).map(value => {
     errorExchange = true
-  } else {
-    if (props.errors.exchange_enable !== "") {
-      errorSource.push(props.translate(props.errors.exchange_enable))
-      errorExchange = true
-    } else {
-      if (errorToken !== "") {
-        errorSource.push(errorToken)
-        errorExchange = true
-      }
-      if (props.errors.sourceAmount !== "") {
-        if (props.errors.sourceAmount === "error.source_amount_too_high_cap") {
-          if (props.sourceTokenSymbol === "ETH") {
-            errorSource.push(props.translate("error.source_amount_too_high_cap", { cap: maxCap }))
-          } else {
-            errorSource.push(props.translate("error.dest_amount_too_high_cap", { cap: maxCap * constants.MAX_CAP_PERCENT }))
-          }
-        } else if (props.errors.sourceAmount === "error.source_amount_too_small") {
-          errorSource.push(props.translate("error.source_amount_too_small", { minAmount: toEther(constants.EPSILON) }))
-        } else {
-          errorSource.push(props.translate(props.errors.sourceAmount))
-        }
-        errorExchange = true
-      }
-      if (props.errors.rateSystem !== "") {
-        errorSource.push(props.translate(props.errors.rateSystem))
-        errorExchange = true
-      }
-    }
-  }
-  if (errorExchange && props.defaultShowTooltip) {
-    setTimeout(() => {
-      ReactTooltip.show(document.getElementById("swap-error-trigger"))
-      props.setDefaulTooltip(false)
-    }, 300)
-  }
+    errorSource.push(value)
+  })
 
-  if (!errorExchange && !props.defaultShowTooltip) {
-    setTimeout(() => {
-      props.setDefaulTooltip(true)
-    }, 300)
-  }
+  // var errorSelectSameToken = props.errors.selectSameToken !== '' ? props.translate(props.errors.selectSameToken) : ''
+  // var errorSelectTokenToken = props.errors.selectTokenToken !== '' ? props.translate(props.errors.selectTokenToken) : ''
+  // var errorToken = errorSelectSameToken + errorSelectTokenToken
+  // var maxCap = props.maxCap
+  // var errorSource = []
+  
+
+  // if (props.errorNotPossessKgt !== "") {
+  //   errorSource.push(props.errorNotPossessKgt)
+  //   errorExchange = true
+  // } else {
+  //   if (props.errors.exchange_enable !== "") {
+  //     errorSource.push(props.translate(props.errors.exchange_enable))
+  //     errorExchange = true
+  //   } else {
+  //     if (errorToken !== "") {
+  //       errorSource.push(errorToken)
+  //       errorExchange = true
+  //     }
+  //     if (props.errors.sourceAmount !== "") {
+  //       if (props.errors.sourceAmount === "error.source_amount_too_high_cap") {
+  //         if (props.sourceTokenSymbol === "ETH") {
+  //           errorSource.push(props.translate("error.source_amount_too_high_cap", { cap: maxCap }))
+  //         } else {
+  //           errorSource.push(props.translate("error.dest_amount_too_high_cap", { cap: maxCap * constants.EXCHANGE_CONFIG.MAX_CAP_PERCENT }))
+  //         }
+  //       } else if (props.errors.sourceAmount === "error.source_amount_too_small") {
+  //         errorSource.push(props.translate("error.source_amount_too_small", { minAmount: toEther(constants.EXCHANGE_CONFIG.EPSILON) }))
+  //       } else {
+  //         errorSource.push(props.translate(props.errors.sourceAmount))
+  //       }
+  //       errorExchange = true
+  //     }
+  //     if (props.errors.rateSystem !== "") {
+  //       errorSource.push(props.translate(props.errors.rateSystem))
+  //       errorExchange = true
+  //     }
+  //   }
+  // }
+
+  // if (errorExchange && props.defaultShowTooltip) {
+  //   setTimeout(() => {
+  //     ReactTooltip.show(document.getElementById("swap-error-trigger"))
+  //     props.setDefaulTooltip(false)
+  //   }, 300)
+  // }
+
+  // if (!errorExchange && !props.defaultShowTooltip) {
+  //   setTimeout(() => {
+  //     props.setDefaulTooltip(true)
+  //   }, 300)
+  // }
 
   var errorTooltip = ""
   var errorShow = errorSource.map((value, index) => {
@@ -221,7 +230,7 @@ const ExchangeBodyLayout = (props) => {
                       isSelectToken={props.exchange.isSelectToken}
                       exchangeRate={{
                         sourceToken: props.sourceTokenSymbol,
-                        rate: converters.toT(props.exchange.offeredRate),
+                        rate: converters.toT(props.exchange.expectedRate),
                         destToken: props.destTokenSymbol
                       }}
                     />
@@ -247,14 +256,14 @@ const ExchangeBodyLayout = (props) => {
             advanceLayout={props.advanceLayout}
             isOpenAdvance={props.isOpenAdvance}
             clearIsOpenAdvance={props.clearIsOpenAdvance}
-            postWithKey={<PostExchangeWithKey isChangingWallet={props.isChangingWallet} />}
+            postWithKey={<PostExchange />}
             screen={"swap"}
             selectTokenBalance={props.selectTokenBalance}
           />
         )}
       </div>
 
-      {props.transactionLoadingScreen}
+      {/* {props.transactionLoadingScreen} */}
     </div>
   )
 }

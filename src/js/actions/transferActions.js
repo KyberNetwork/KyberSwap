@@ -12,18 +12,18 @@ export function errorSelectToken(message) {
   }
 }
 
-export function goToStep(step) {
-  return {
-    type: "TRANSFER.GO_TO_STEP",
-    payload: step
-  }
-}
+// export function goToStep(step) {
+//   return {
+//     type: "TRANSFER.GO_TO_STEP",
+//     payload: step
+//   }
+// }
 
-export function openPassphrase() {
-  return {
-    type: "TRANSFER.OPEN_PASSPHRASE",
-  }
-}
+// export function openPassphrase() {
+//   return {
+//     type: "TRANSFER.OPEN_PASSPHRASE",
+//   }
+// }
 
 export function specifyGas(value) {
   return {
@@ -52,18 +52,18 @@ export function toggleAdvance() {
   }
 }
 
-export function hideConfirm() {
-  return {
-    type: "TRANSFER.HIDE_CONFIRM",
-  }
-}
+// export function hideConfirm() {
+//   return {
+//     type: "TRANSFER.HIDE_CONFIRM",
+//   }
+// }
 
-export function showConfirm() {
-  return {
-    type: "TRANSFER.SHOW_CONFIRM",
+// export function showConfirm() {
+//   return {
+//     type: "TRANSFER.SHOW_CONFIRM",
 
-  }
-}
+//   }
+// }
 
 export function specifyAddressReceive(value) {
   return {
@@ -86,53 +86,68 @@ export function estimateGasWhenAmountChange(value) {
   }
 }
 
-export function throwErrorDestAddress(message) {
+export function throwErrorDestAddress(key, message) {
   return {
     type: "TRANSFER.THROW_ERROR_DEST_ADDRESS",
-    payload: message
+    payload: { key, message }
   }
 }
 
 
-export function thowErrorAmount(message) {
+export function clearErrorDestAddress(key) {
+  return {
+    type: "TRANSFER.CLEAR_ERROR_DEST_ADDRESS",
+    payload: { key }
+  }
+}
+
+
+export function throwErrorAmount(key, message) {
   return {
     type: "TRANSFER.THROW_AMOUNT_ERROR",
-    payload: message
+    payload: {key, message}
   }
 }
 
-export function thowErrorEthBalance(message) {
+export function clearErrorAmount(key) {
   return {
-    type: "TRANSFER.THROW_ETH_BALANCE_ERROR",
-    payload: message
+    type: "TRANSFER.CLEAR_ERROR_AMOUNT",
+    payload: { key }
   }
 }
 
-export function thowErrorGasPrice(message) {
-  return {
-    type: "TRANSFER.THROW_GAS_PRICE_ERROR",
-    payload: message
-  }
-}
+// export function thowErrorEthBalance(message) {
+//   return {
+//     type: "TRANSFER.THROW_ETH_BALANCE_ERROR",
+//     payload: message
+//   }
+// }
 
-export function hidePassphrase() {
-  return {
-    type: "TRANSFER.HIDE_PASSPHRASE",
-  }
-}
+// export function thowErrorGasPrice(message) {
+//   return {
+//     type: "TRANSFER.THROW_GAS_PRICE_ERROR",
+//     payload: message
+//   }
+// }
 
-export function changePassword() {
-  return {
-    type: "TRANSFER.CHANGE_PASSPHRASE",
-  }
-}
+// export function hidePassphrase() {
+//   return {
+//     type: "TRANSFER.HIDE_PASSPHRASE",
+//   }
+// }
 
-export function prePareBroadcast(balanceData) {
-  return {
-    type: "TRANSFER.PREPARE_TRANSACTION",
-    payload: { balanceData: balanceData }
-  }
-}
+// export function changePassword() {
+//   return {
+//     type: "TRANSFER.CHANGE_PASSPHRASE",
+//   }
+// }
+
+// export function prePareBroadcast(balanceData) {
+//   return {
+//     type: "TRANSFER.PREPARE_TRANSACTION",
+//     payload: { balanceData: balanceData }
+//   }
+// }
 
 export function finishTransfer() {
   return {
@@ -140,82 +155,102 @@ export function finishTransfer() {
   }
 }
 
-export function throwPassphraseError(message) {
-  return {
-    type: "TRANSFER.THROW_ERROR_PASSPHRASE",
-    payload: message
-  }
-}
+// export function throwPassphraseError(message) {
+//   return {
+//     type: "TRANSFER.THROW_ERROR_PASSPHRASE",
+//     payload: message
+//   }
+// }
 
-export function processTransfer(formId, ethereum, address,
-  token, amount,
-  destAddress, nonce, gas,
-  gasPrice, keystring, type, password, account, data, keyService, balanceData) {
-  return {
-    type: "TRANSFER.PROCESS_TRANSFER",
-    payload: {
-      formId, ethereum, address,
-      token, amount,
-      destAddress, nonce, gas,
-      gasPrice, keystring, type, password, account, data, keyService, balanceData
-    }
-  }
-}
+// export function processTransfer(formId, ethereum, address,
+//   token, amount,
+//   destAddress, nonce, gas,
+//   gasPrice, keystring, type, password, account, data, keyService, balanceData) {
+//   return {
+//     type: "TRANSFER.PROCESS_TRANSFER",
+//     payload: {
+//       formId, ethereum, address,
+//       token, amount,
+//       destAddress, nonce, gas,
+//       gasPrice, keystring, type, password, account, data, keyService, balanceData
+//     }
+//   }
+// }
 
-export function doTransaction(id, ethereum, tx, account, data) {
-  return {
-    type: "TRANSFER.TX_BROADCAST_PENDING",
-    payload: { ethereum, tx, account, data },
-  }
-}
+// export function doTransaction(id, ethereum, tx, account, data) {
+//   return {
+//     type: "TRANSFER.TX_BROADCAST_PENDING",
+//     payload: { ethereum, tx, account, data },
+//   }
+// }
 
-export function doTransactionComplete(txHash) {
+export function doTransactionComplete(tx) {
   return {
     type: "TRANSFER.TX_BROADCAST_FULFILLED",
-    payload: txHash,
+    payload: {tx},
   }
 }
 
-export function doTransactionFail(error) {
+// export function doTransactionFail(error) {
+//   return {
+//     type: "TRANSFER.TX_BROADCAST_REJECTED",
+//     payload: error,
+//   }
+// }
+
+
+// export function resetSignError() {
+//   return {
+//     type: "TRANSFER.RESET_SIGN_ERROR",
+//   }
+// }
+
+// export function setSignError(error) {
+//   return {
+//     type: "TRANSFER.SET_SIGN_ERROR",
+//     payload: error,
+//   }
+// }
+
+// export function resetBroadcastError() {
+//   return {
+//     type: "TRANSFER.RESET_BROADCAST_ERROR",
+//   }
+// }
+
+// export function setBroadcastError(error) {
+//   return {
+//     type: "TRANSFER.SET_BROADCAST_ERROR",
+//     payload: error,
+//   }
+// }
+
+// export function throwErrorSignTransferTransaction(error) {
+//   return {
+//     type: "TRANSFER.THROW_ERROR_SIGN_TRANSACTION",
+//     payload: error
+//   }
+// }
+
+export function updateTransferPath(transferPath, currentPathIndex){
   return {
-    type: "TRANSFER.TX_BROADCAST_REJECTED",
-    payload: error,
+    type: "TRANSFER.UPDATE_TRANSFER_PATH",
+    payload: { transferPath, currentPathIndex }
   }
 }
 
-
-export function resetSignError() {
+export function resetTransferPath() {
   return {
-    type: "TRANSFER.RESET_SIGN_ERROR",
+    type: "TRANSFER.RESET_TRANSFER_PATH"
   }
 }
 
-export function setSignError(error) {
+export function  forwardTransferPath() {
   return {
-    type: "TRANSFER.SET_SIGN_ERROR",
-    payload: error,
+    type: "TRANSFER.FORWARD_TRANSFER_PATH"
   }
 }
 
-export function resetBroadcastError() {
-  return {
-    type: "TRANSFER.RESET_BROADCAST_ERROR",
-  }
-}
-
-export function setBroadcastError(error) {
-  return {
-    type: "TRANSFER.SET_BROADCAST_ERROR",
-    payload: error,
-  }
-}
-
-export function throwErrorSignTransferTransaction(error) {
-  return {
-    type: "TRANSFER.THROW_ERROR_SIGN_TRANSACTION",
-    payload: error
-  }
-}
 
 export function makeNewTransfer() {
   return {
@@ -231,17 +266,17 @@ export function updateCurrentBalance(tokenBalance, txHash) {
   }
 }
 
-export function fetchGasSnapshot() {
-  return {
-    type: "TRANSFER.FETCH_GAS_SNAPSHOT"
-  }
-}
+// export function fetchGasSnapshot() {
+//   return {
+//     type: "TRANSFER.FETCH_GAS_SNAPSHOT"
+//   }
+// }
 
-export function fetchSnapshotGasSuccess() {
-  return {
-    type: "TRANSFER.FETCH_SNAPSHOT_GAS_SUCCESS"
-  }
-}
+// export function fetchSnapshotGasSuccess() {
+//   return {
+//     type: "TRANSFER.FETCH_SNAPSHOT_GAS_SUCCESS"
+//   }
+// }
 
 export function estimateGasTransfer(ethereum) {
   return {

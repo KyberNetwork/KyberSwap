@@ -9,7 +9,7 @@ const ErrorModalView = (props) => {
                 <div class="row">
                     <div class="column">
                         <center>
-                            <p>{props.error.toString()}</p>
+                            <p>{props.error}</p>
                         </center>
                     </div>
                 </div>

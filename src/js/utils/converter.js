@@ -445,7 +445,7 @@ export function caculateTokenEpsilon(rate, decimal, symbol) {
   if (symbol === "ETH") {
     tokenRate = new BigNumber(10).pow(18)
   }
-  var epsilon = new BigNumber(constants.EPSILON)
+  var epsilon = new BigNumber(constants.EXCHANGE_CONFIG.EPSILON)
   var ts = epsilon.times(Math.pow(10, decimal))
   return ts.div(tokenRate)
 }

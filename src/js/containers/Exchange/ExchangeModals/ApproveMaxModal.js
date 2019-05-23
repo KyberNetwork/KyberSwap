@@ -1,24 +1,29 @@
 import React from "react"
 import { Modal } from "../../../components/CommonElement"
+
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
-import * as limitOrderActions from "../../../actions/limitOrderActions"
+import * as exchangeActions from "../../../actions/exchangeActions"
 import * as accountActions from "../../../actions/accountActions"
 import constants from "../../../services/constants"
-import * as converters from "../../../utils/converter"
+
+import * as converter from "../../../utils/converter"
+
 import { getWallet } from "../../../services/keys"
 import {FeeDetail} from "../../../components/CommonElement"
+
 import BLOCKCHAIN_INFO from "../../../../../env"
+
 
 @connect((store, props) => {
   const account = store.account.account
   const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
-  const limitOrder = store.limitOrder
+  const exchange = store.exchange
   const ethereum = store.connection.ethereum
 
   return {
-    translate, limitOrder, tokens, account, ethereum
+    translate, exchange, tokens, account, ethereum
 
   }
 })
@@ -30,51 +35,42 @@ export default class ApproveMaxModal extends React.Component {
     super()
     this.state = {
       err: "",
-      isFetchGas: false,
-      gasLimit: 0      
+      isFetchGas: true,
+      gasLimit: 0,
+      isConfirmingTx: false   
     }
   }
 
   componentDidMount = () =>{
     this.setState({
-      isFetchFee: true,
+      isFetchGas: true,
       gasLimit: this.props.getMaxGasApprove(),
     })
     
     this.getGasApprove()
   }
 
-  // getMaxGasApprove = () => {
-  //   var tokens = this.props.tokens
-  //   var sourceSymbol = this.props.limitOrder.sourceTokenSymbol
-  //   if (tokens[sourceSymbol] && tokens[sourceSymbol].gasApprove) {
-  //     return tokens[sourceSymbol].gasApprove
-  //   } else {
-  //     return this.props.limitOrder.max_gas_approve
-  //   }
-  // }
-
   async getGasApprove(){
       // estimate gas approve
       try{
         var ethereum = this.props.ethereum
-        var dataApprove = await ethereum.call("approveTokenData", this.props.limitOrder.sourceToken, converter.biggestNumber(), BLOCKCHAIN_INFO.kyberswapAddress)
+        var dataApprove = await ethereum.call("approveTokenData", this.props.exchange.sourceToken, converter.biggestNumber(), BLOCKCHAIN_INFO.network)
         var txObjApprove = {
           from: this.props.account.address,
-          to: this.props.limitOrder.sourceToken,
+          to: this.props.exchange.sourceToken,
           data: dataApprove,
           value: '0x0',
         }
         var gas_approve = await ethereum.call("estimateGas", txObjApprove)
         gas_approve = Math.round((gas_approve + 15000) * 120 / 100)
         this.setState({
-          isFetchFee: false,
+          isFetchGas: false,
           gasLimit: gas_approve
         })
       }catch(err){
         console.log(err)
         this.setState({
-          isFetchFee: false            
+          isFetchGas: false            
         })
       }
       
@@ -82,38 +78,58 @@ export default class ApproveMaxModal extends React.Component {
 
   async onSubmit() {
     //reset        
+    if (this.state.isConfirmingTx || this.state.isFetchGas) return
+    this.setState({
+        err: "",
+        isConfirmingTx: true
+    })
+
     var wallet = getWallet(this.props.account.type)
     var password = ""
+    
     try {
-      var txHash = await wallet.broadCastTx("getAppoveToken", this.props.ethereum, this.props.limitOrder.sourceToken, 0, this.props.account.nonce, this.state.gasLimit,
-        converters.toHex(converters.gweiToWei(this.props.limitOrder.gasPrice)), this.props.account.keystring, password, this.props.account.type, this.props.account.address, BLOCKCHAIN_INFO.kyberswapAddress)
+      var txHash = await wallet.broadCastTx("getAppoveToken", this.props.ethereum, this.props.exchange.sourceToken, 0, this.props.account.nonce, this.state.gasLimit,
+      converter.toHex(converter.gweiToWei(this.props.exchange.gasPrice)), this.props.account.keystring, password, this.props.account.type, this.props.account.address, BLOCKCHAIN_INFO.network)
 
       //increase account nonce 
       this.props.dispatch(accountActions.incManualNonceAccount(this.props.account.address))
 
       //go to the next step
-      this.props.dispatch(limitOrderActions.forwardOrderPath())
+      this.props.dispatch(exchangeActions.forwardExchangePath())
     } catch (err) {
       console.log(err)
-      this.setState({ err: err.toString() })
+      this.setState({ err: err.toString(), isConfirmingTx: false })
     }
   }
 
-  // errorHtml = () => {
-  //     if (this.state.err) {
-  //       let isMetaMaskAcc = this.props.account.walletType === 'metamask'
-  //       let metaMaskClass = isMetaMaskAcc ? 'metamask' : ''
-  //       return (
-  //         <React.Fragment>
-  //           <div className={'modal-error custom-scroll' + metaMaskClass + (this.state.isFullError ? ' full' : '')}>
-  //             {this.props.err}
-  //           </div>
-  //         </React.Fragment>
-  //       )
-  //     }
-  //   }
+  msgHtml = () => {
+    if (this.state.isConfirmingTx && this.props.account.type !== 'privateKey') {
+      return <span>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</span>
+    } else {
+      return ""
+    }
+  }
+
+
+
+  errorHtml = () => {
+    if (this.state.err) {
+      let metaMaskClass = this.props.account.type === 'metamask' ? 'metamask' : ''
+      return (
+        <React.Fragment>
+          <div className={'modal-error custom-scroll ' + metaMaskClass}>
+            {this.state.err}
+          </div>
+        </React.Fragment>
+      )
+    } else {
+      return ""
+    }
+  }
+
   closeModal = () => {
-    this.props.dispatch(limitOrderActions.resetOrderPath())
+    if (this.state.isConfirmingTx) return
+    this.props.dispatch(exchangeActions.resetExchangePath())
   }
   contentModal = () => {
     return (
@@ -125,7 +141,7 @@ export default class ApproveMaxModal extends React.Component {
             <div>
               <div>
                 <div className="message">
-                  {`You need approve KyberSwap to use token ${this.props.limitOrder.sourceTokenSymbol}`}
+                  {`You need approve KyberSwap to use token ${this.props.exchange.sourceTokenSymbol}`}
                 </div>
                 <div class="info tx-title">
                   <div className="address-info">
@@ -135,31 +151,27 @@ export default class ApproveMaxModal extends React.Component {
                 </div>
                 <FeeDetail 
                       translate={this.props.translate} 
-                      gasPrice={this.props.limitOrder.gasPrice} 
+                      gasPrice={this.props.exchange.gasPrice} 
                       gas={this.state.gasLimit}
                       isFetchingGas={this.state.isFetchGas}                      
                     />
               </div>
-              {/* {this.errorHtml()} */}
-
-              <div className={'modal-error custom-scroll'}>
-                {this.state.err}
-              </div>
+              {this.errorHtml()}
+              
 
             </div>
 
           </div>
         </div>
         <div className="overlap">
+          <div>{this.msgHtml()}</div>
           <div className="input-confirm grid-x input-confirm--approve">
             {/* <div className="cell medium-8 small-12">{this.msgHtml()}</div> */}
             <div className="cell medium-4 small-12">
-              {/* <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "disabled-button" : "next")}
-                    onClick={this.props.onSubmit}
-                  >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a> */}
-              <a className={"button process-submit next"}
-                onClick={this.onSubmit.bind(this)}
-              >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a>
+              <a className={"button process-submit " + (this.state.isFetchGas || this.state.isConfirmingTx ? "disabled-button" : "next")}
+                    onClick={this.onSubmit.bind(this)}
+                  >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a>
+
             </div>
           </div>
         </div>
