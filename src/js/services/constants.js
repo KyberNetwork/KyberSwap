@@ -39,7 +39,10 @@ const EXCHANGE_CONFIG = {
     balance: "balance",
     input: "input",
     rate: "rate",
-    sameToken: "sameToken"
+    sameToken: "sameToken",
+    zeroCap: "zeroCap",
+    richGuy: "richGuy",
+    kyberEnable: "kyberEnable"
   },
   slippageRateErrors: {
     input: "input"

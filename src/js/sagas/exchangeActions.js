@@ -406,10 +406,14 @@ function* checkKyberEnable(action) {
   var state = store.getState()
   try {
     var enabled = yield call([ethereum, ethereum.call], "checkKyberEnable")
-    yield put(actions.setKyberEnable(enabled))
+    if (enabled){
+      yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.kyberEnable))
+    }else{
+      yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.kyberEnable, "Kyber is not enabled at the momment. Please try again for a while"))
+    }
   } catch (e) {
     console.log(e.message)
-    yield put(actions.setKyberEnable(false))
+    yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.kyberEnable))
   }
 
 }
@@ -508,43 +512,43 @@ function* verifyExchange() {
 }
 
 
-export function* fetchExchangeEnable(action) {  
+export function* fetchUserCap(action) {  
   try{
     var {ethereum} = action.payload
     var state = store.getState()
     var account = state.account.account
     var address = account.address
-    var enabled = yield call([ethereum, ethereum.call], "getExchangeEnable", address)
+    var enabled = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
     if (!enabled.error && !enabled.kyced && (enabled.rich === true || enabled.rich === 'true')){
       var translate = getTranslate(state.locale)
-      var kycLink = "/users/sign_up"
-      yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-        translate("error.exceed_daily_volumn", { link: kycLink }) || "You may want to register with us to have higher trade limits " + kycLink))
-        yield put(actions.setExchangeEnable(false))
+      // var kycLink = "/users/sign_up"
+      var content = translate("error.exceed_daily_volumn") || "You may want to register with us to have higher trade limits."
+      yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy, content))
+        
     }else{
-      yield put(actions.setExchangeEnable(true))
+      yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy))
     }
   }catch(e){
     console.log(e)
-    yield put(actions.setExchangeEnable(true))
+    yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy))
   }
 }
 
-export function* getExchangeEnable() {
-  var state = store.getState()
-  const ethereum = state.connection.ethereum
+// export function* getExchangeEnable() {
+//   var state = store.getState()
+//   const ethereum = state.connection.ethereum
 
-  var account = state.account.account
-  var address = account.address
+//   var account = state.account.account
+//   var address = account.address
 
-  try {
-    var enabled = yield call([ethereum, ethereum.call], "getExchangeEnable", address)
-    return { status: "success", res: enabled }
-  } catch (e) {
-    console.log(e.message)
-    return { status: "success", res: false }
-  }
-}
+//   try {
+//     var enabled = yield call([ethereum, ethereum.call], "getExchangeEnable", address)
+//     return { status: "success", res: enabled }
+//   } catch (e) {
+//     console.log(e.message)
+//     return { status: "success", res: false }
+//   }
+// }
 
 
 export function* watchExchange() {
@@ -554,7 +558,9 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.SELECT_TOKEN_ASYNC", selectToken)
   yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
   yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
-  yield takeEvery("EXCHANGE.FETCH_EXCHANGE_ENABLE", fetchExchangeEnable)
+
+  yield takeEvery("EXCHANGE.FETCH_USER_CAP", fetchUserCap)
+  
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED_NORMAL", estimateGasNormal)
   yield takeEvery("EXCHANGE.SWAP_TOKEN", estimateGasNormal)
 }

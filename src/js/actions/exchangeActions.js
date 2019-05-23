@@ -462,12 +462,12 @@ export function setCapExchange(maxCap) {
   }
 }
 
-export function thowErrorNotPossessKGt(message) {
-  return {
-    type: "EXCHANGE.THROW_NOT_POSSESS_KGT_ERROR",
-    payload: message
-  }
-}
+// export function thowErrorNotPossessKGt(message) {
+//   return {
+//     type: "EXCHANGE.THROW_NOT_POSSESS_KGT_ERROR",
+//     payload: message
+//   }
+// }
 
 export function setMaxGasPrice(ethereum) {
   return {
@@ -542,12 +542,12 @@ export function checkKyberEnable(ethereum) {
   }
 }
 
-export function setKyberEnable(enable) {
-  return {
-    type: "EXCHANGE.SET_KYBER_ENABLE",
-    payload: enable
-  }
-}
+// export function setKyberEnable(enable) {
+//   return {
+//     type: "EXCHANGE.SET_KYBER_ENABLE",
+//     payload: enable
+//   }
+// }
 
 // export function setApproveTxZero(hash, symbol) {
 //   return {
@@ -584,19 +584,19 @@ export function verifyExchange() {
   }
 }
 
-export function fetchExchangeEnable(ethereum) {
+export function fetchUserCap(ethereum) {
   return {
-    type: "EXCHANGE.FETCH_EXCHANGE_ENABLE",
+    type: "EXCHANGE.FETCH_USER_CAP",
     payload: {ethereum}
   }
 }
 
-export function setExchangeEnable(enable) {
-  return {
-    type: "EXCHANGE.SET_EXCHANGE_ENABLE",
-    payload: enable
-  }
-}
+// export function setExchangeEnable(enable) {
+//   return {
+//     type: "EXCHANGE.SET_EXCHANGE_ENABLE",
+//     payload: enable
+//   }
+// }
 
 // export function updateBalanceData(balanceData, hash) {
 //   return {

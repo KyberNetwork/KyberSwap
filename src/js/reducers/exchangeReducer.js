@@ -540,27 +540,27 @@ const exchange = (state = initState, action) => {
     //   newState.snapshot.isFetchingGas = false
     //   return newState
     // }
-    case "EXCHANGE.SET_KYBER_ENABLE": {
-      newState.kyber_enabled = action.payload
-      return newState
-    }
+    // case "EXCHANGE.SET_KYBER_ENABLE": {
+    //   newState.kyber_enabled = action.payload
+    //   return newState
+    // }
     case "EXCHANGE.SET_SNAPSHOT": {
       var snapshot = action.payload
       newState.snapshot = { ...snapshot }
       return newState
     }
-    case "EXCHANGE.THROW_NOT_POSSESS_KGT_ERROR": {
-      newState.errorNotPossessKgt = action.payload
-      return newState
-    }
-    case "EXCHANGE.SET_EXCHANGE_ENABLE": {
-      if (action.payload) {
-        newState.errors.exchange_enable = ""
-      } else {
-        newState.errors.exchange_enable = "error.exchange_enable"
-      }
-      return newState
-    }
+    // case "EXCHANGE.THROW_NOT_POSSESS_KGT_ERROR": {
+    //   newState.errorNotPossessKgt = action.payload
+    //   return newState
+    // }
+    // case "EXCHANGE.SET_EXCHANGE_ENABLE": {
+    //   if (action.payload) {
+    //     newState.errors.exchange_enable = ""
+    //   } else {
+    //     newState.errors.exchange_enable = "error.exchange_enable"
+    //   }
+    //   return newState
+    // }
     // case "EXCHANGE.UPDATE_BALANCE_DATA": {
     //   const { balanceData, hash } = action.payload
     //   if (hash === newState.txHash) {
