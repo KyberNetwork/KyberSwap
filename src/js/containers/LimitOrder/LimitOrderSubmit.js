@@ -2,17 +2,17 @@ import React from "react"
 import { connect } from "react-redux"
 import * as limitOrderActions from "../../actions/limitOrderActions"
 
+import * as utilActions from "../../actions/utilActions"
+
 import * as converters from "../../utils/converter"
 import { getTranslate } from 'react-localize-redux'
 
 
 import BLOCKCHAIN_INFO from "../../../../env"
 
-import ApproveZeroModal from "./LimitOrderModals/ApproveZeroModal"
-import ApproveMaxModal from "./LimitOrderModals/ApproveMaxModal"
-import WrapETHModal from "./LimitOrderModals/WrapETHModal"
-import ConfirmModal from "./LimitOrderModals/ConfirmModal"
-import SubmitStatusModal from "./LimitOrderModals/SubmitStatusModal"
+
+
+import { ApproveZeroModal, ApproveMaxModal, WrapETHModal, ConfirmModal, SubmitStatusModal, WarningModal } from "./LimitOrderModals"
 
 
 import { isUserLogin } from "../../utils/common"
@@ -36,9 +36,8 @@ export default class LimitOrderSubmit extends React.Component {
   constructor() {
     super()
     this.state = {
-      step: 0,
-      networkError: "",
-      isOpen: false
+      isShowWarning: false,
+      isAgree: false
     }
   }
 
@@ -52,7 +51,7 @@ export default class LimitOrderSubmit extends React.Component {
 
   getSourceAmount = () => {
     var sourceAmount = parseFloat(this.props.limitOrder.sourceAmount)
-    if(isNaN(sourceAmount)){
+    if (isNaN(sourceAmount)) {
       return 0
     }
     this.props.limitOrder.listOrder.map(value => {
@@ -71,7 +70,7 @@ export default class LimitOrderSubmit extends React.Component {
     var isValidate = true
     var sourceAmountError = []
     var rateError = []
-    if (this.props.limitOrder.sourceTokenSymbol === this.props.limitOrder.destTokenSymbol){
+    if (this.props.limitOrder.sourceTokenSymbol === this.props.limitOrder.destTokenSymbol) {
       sourceAmountError.push("Source token must be different from dest token")
       isValidate = false
     }
@@ -94,7 +93,7 @@ export default class LimitOrderSubmit extends React.Component {
     if (ethEquivalentValue < constants.LIMIT_ORDER_CONFIG.minSupportOrder && !isNaN(sourceAmount)) {
       sourceAmountError.push(`Source Amount is too smalll. Limit order only support min ${constants.LIMIT_ORDER_CONFIG.minSupportOrder} ETH equivalent order`)
       isValidate = false
-    }    
+    }
 
     if (ethEquivalentValue > constants.LIMIT_ORDER_CONFIG.maxSupportOrder && !isNaN(sourceAmount)) {
       sourceAmountError.push(`Source Amount is too big. Limit order only support max ${constants.LIMIT_ORDER_CONFIG.minSupportOrder} ETH equivalent order`)
@@ -106,7 +105,7 @@ export default class LimitOrderSubmit extends React.Component {
     if (isNaN(triggerRate)) {
       rateError.push("Trigger rate is not number")
       isValidate = false
-    }    
+    }
     // check rate is too big
     var triggerRateBig = converters.roundingRate(this.props.limitOrder.triggerRate)
     var percentChange = converters.percentChange(triggerRateBig, this.props.limitOrder.offeredRate)
@@ -114,7 +113,7 @@ export default class LimitOrderSubmit extends React.Component {
       rateError.push(`Trigger rate is too high, only allow ${constants.LIMIT_ORDER_CONFIG.maxPercentTriggerRate}% greater than the current rate`)
       isValidate = false
     }
-    if(percentChange < constants.LIMIT_ORDER_CONFIG.minPercentTriggerRate && !isNaN(triggerRate)){
+    if (percentChange < constants.LIMIT_ORDER_CONFIG.minPercentTriggerRate && !isNaN(triggerRate)) {
       rateError.push(`Trigger rate is too low, please increase trigger rate`)
       isValidate = false
     }
@@ -127,10 +126,10 @@ export default class LimitOrderSubmit extends React.Component {
       isValidate = false
     }
 
-    if (sourceAmountError.length > 0){
+    if (sourceAmountError.length > 0) {
       this.props.dispatch(limitOrderActions.throwError("sourceAmount", sourceAmountError))
     }
-    if (rateError.length > 0){
+    if (rateError.length > 0) {
       this.props.dispatch(limitOrderActions.throwError("triggerRate", rateError))
     }
 
@@ -138,8 +137,34 @@ export default class LimitOrderSubmit extends React.Component {
       return
     }
 
-    // find path for order
-    this.findPathOrder()
+
+    //check if he is agreed submit order
+    console.log("isAgree")
+    console.log(this.state.isAgree)
+    if (this.state.isAgree) {
+      this.findPathOrder()
+      this.setState({ isAgree: false })
+      return
+    }
+
+    // check pair is ok
+    var isPedingOrder = false
+    for (var i = 0; i < this.props.limitOrder.listOrder.length; i++) {
+      var value = this.props.limitOrder.listOrder[i]
+      if (value.source === this.props.limitOrder.sourceTokenSymbol && value.dest === this.props.limitOrder.destTokenSymbol
+          && value.address.toLowerCase() === this.props.account.address.toLowerCase()) {
+        if (converters.compareTwoNumber(this.props.limitOrder.triggerRate, value.min_rate) < 1) {
+          isPedingOrder = true
+          break
+        }
+      }
+    }
+    if (isPedingOrder) {
+      this.setState({ isShowWarning: true })
+    } else {
+      this.findPathOrder()
+    }
+
 
   }
 
@@ -156,16 +181,16 @@ export default class LimitOrderSubmit extends React.Component {
   getMaxGasExchange = () => {
     const tokens = this.props.tokens
     var destTokenSymbol = BLOCKCHAIN_INFO.wrapETHToken
-    var destTokenLimit = tokens[destTokenSymbol] && tokens[destTokenSymbol].gasLimit ? tokens[destTokenSymbol].gasLimit : this.props.limitOrder.max_gas    
-    
+    var destTokenLimit = tokens[destTokenSymbol] && tokens[destTokenSymbol].gasLimit ? tokens[destTokenSymbol].gasLimit : this.props.limitOrder.max_gas
+
     return destTokenLimit;
-  
+
   }
 
   getMaxGasLimit = (orderPath) => {
     var gasLimit = 0
-    for (var i = 0; i <orderPath.length; i++){
-      switch(orderPath[i]){
+    for (var i = 0; i < orderPath.length; i++) {
+      switch (orderPath[i]) {
         case constants.LIMIT_ORDER_CONFIG.orderPath.approveZero:
         case constants.LIMIT_ORDER_CONFIG.orderPath.approveMax:
           gasLimit += this.getMaxGasApprove()
@@ -178,21 +203,21 @@ export default class LimitOrderSubmit extends React.Component {
     return gasLimit
   }
 
-  validateBalance = (orderPath) =>{
+  validateBalance = (orderPath) => {
     var gasLimit = this.getMaxGasLimit(orderPath)
     var totalFee = converters.calculateGasFee(this.props.limitOrder.gasPrice, gasLimit)
     var totalFeeBig = converters.toTWei(totalFee, 18)
     var ethBalance = this.props.tokens["ETH"].balance
-    
+
     var compareValue
-    if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken){
+    if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
       var srcAmount = this.getSourceAmount()
       var wrapETHTokenBalance = this.props.tokens[BLOCKCHAIN_INFO.wrapETHToken].balance
       compareValue = converters.sumOfTwoNumber(totalFeeBig, converters.subOfTwoNumber(srcAmount, wrapETHTokenBalance))
-    }else{
-      compareValue = totalFeeBig      
-    }    
-    return converters.compareTwoNumber(ethBalance, compareValue) < 0 ? false: true          
+    } else {
+      compareValue = totalFeeBig
+    }
+    return converters.compareTwoNumber(ethBalance, compareValue) < 0 ? false : true
   }
 
   async findPathOrder() {
@@ -222,49 +247,59 @@ export default class LimitOrderSubmit extends React.Component {
       orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.submitStatusOrder)
 
       //check balance eth is enough
-     
-      if (this.validateBalance(orderPath)){
+
+      if (this.validateBalance(orderPath)) {
         this.props.dispatch(limitOrderActions.updateOrderPath(orderPath, 0))
-      }else{
+      } else {
         console.log("Your eth balance is not enough for transactions")
-        this.setState({
-          balanceError: "Your eth balance is not enough for transactions",
-          isOpen: true
-        })
+        var title = this.props.translate("error.error_occurred") || "Error occurred"
+        var content = "Your eth balance is not enough for transactions"
+        this.props.dispatch(utilActions.openInfoModal(title, content))
       }
-      
+
     } catch (err) {
       console.log(err)
-      this.setState({
-        networkError: "Cannot connect to ethereum node",
-        isOpen: true
-      })
+
+      var title = this.props.translate("error.error_occurred") || "Error occurred"
+      var content = this.props.translate("error.node_error") || "There are some problems with nodes. Please try again in a while."
+      this.props.dispatch(utilActions.openInfoModal(title, content))
+
     }
   }
 
 
   submitOrder = () => {
-    if(!isUserLogin()){
+    if (!isUserLogin()) {
       window.location.href = "/users/sign_in"
     }
 
-    if (this.props.account !== false){
+    if (this.props.account !== false) {
       this.validateOrder()
     }
   }
 
+  cancelSubmit = () => {
+    this.setState({ isShowWarning: false })
+  }
+
+  agreeSubmit = () => {
+    this.setState({ isAgree: true, isShowWarning: false }, () => {
+      this.submitOrder()
+    })
+  }
 
   render() {
     var isDisable = isUserLogin() && this.props.account == false
     var isWaiting = this.props.limitOrder.isSelectToken || this.props.limitOrder.errors.sourceAmount.length > 0 || this.props.limitOrder.errors.triggerRate.length > 0
     return (
       <div className={"limit-order-submit"}>
-        <button className={`accept-button ${isDisable ? "disable": ""} ${isWaiting ? "waiting": ""}`} onClick={this.submitOrder}>
+        <button className={`accept-button ${isDisable ? "disable" : ""} ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder}>
           {isUserLogin() ? "Submit" : "Login to Submit Order"}
         </button>
         <div>
-          {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.approveZero && <ApproveZeroModal getMaxGasApprove= {this.getMaxGasApprove.bind(this)}/>}
-          {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.approveMax && <ApproveMaxModal getMaxGasApprove= {this.getMaxGasApprove.bind(this)}/>}
+          {this.state.isShowWarning && <WarningModal onCancel={this.cancelSubmit} onSubmit={this.agreeSubmit} />}
+          {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.approveZero && <ApproveZeroModal getMaxGasApprove={this.getMaxGasApprove.bind(this)} />}
+          {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.approveMax && <ApproveMaxModal getMaxGasApprove={this.getMaxGasApprove.bind(this)} />}
           {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.wrapETH && <WrapETHModal />}
           {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.confirmSubmitOrder && <ConfirmModal />}
           {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.submitStatusOrder && <SubmitStatusModal />}

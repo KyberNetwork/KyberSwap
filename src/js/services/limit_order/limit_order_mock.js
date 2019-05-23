@@ -6,12 +6,12 @@ const MAX_REQUEST_TIMEOUT = 3000
 const data = [
     {
       id: 2,
-      source: "DAI",
-      dest: "ETH",
+      source: "KNC",
+      dest: "WETH",
       address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
       nonce: 1290,
       src_amount: 10,
-      min_rate: 0.123,
+      min_rate: 0.002604,
       fee: 0.1,
       status: "active",
       created_time: 1557544645,
