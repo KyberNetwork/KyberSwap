@@ -11,3 +11,6 @@ export { default as LimitOrderList } from './LimitOrderList.js'
 export { default as LimitOrderCompareRate } from './LimitOrderCompareRate.js'
 
 export { default as LimitOrderAccount } from './LimitOrderAccount.js'
+
+export { default as LimitOrderListModal } from "./LimitOrderListModal";
+export { default as LimitOrderTable } from "./LimitOrderTable";

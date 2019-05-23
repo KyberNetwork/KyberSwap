@@ -486,6 +486,10 @@
 
       .input-tooltip-wrapper__rate {
         width: 65% !important;
+
+        @include screen-max-width(medium) {
+          width: 50% !important;
+        }
       }
     }
 
@@ -493,6 +497,10 @@
       background-color: #f5f6f8;
       border-right: 1px solid #e1e4eb;
       padding: 0 15px 0 20px;
+
+      @include screen-max-width(medium) {
+        padding: 0 15px;
+      }
     }
 
     .main-input--rate {
@@ -526,6 +534,7 @@
 
     @include screen-max-width(medium) {
       width: calc(100%);
+      margin-bottom: 0;
     }
 
     .focus-item {

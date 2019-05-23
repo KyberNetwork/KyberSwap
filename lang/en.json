@@ -369,7 +369,7 @@
     "to": "To",
     "status": "Status",
     "actions": "Actions",
-    "order_list_title": "Manage your orders",
+    "order_list_title": "Manage Your Orders",
     "day": "Day",
     "week": "Week",
     "month": "Month",
@@ -377,7 +377,9 @@
     "your_balance": "Your Balance",
     "eth_not_support": "WETH is the Wrapping Token of ETH in KyberSwap, because KyberSwap doesn't support ETH.",
     "canceling_order_message": "You are canceling this order",
-    "fee_info_message": "Don’t worry. You will not be charged now. \nYou pay fees only when transaction is executed (broadcasted & mined)."
+    "fee_info_message": "Don’t worry. You will not be charged now. \nYou pay fees only when transaction is executed (broadcasted & mined).",
+    "confirm_order_message": "Your transaction will be broadcasted when rate of ${srcToken}/${destToken} >= ${rate}",
+    "fee": "Fee"
   },
   "home": "Home",
   "tracker": "Tracker",

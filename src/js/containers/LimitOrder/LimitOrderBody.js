@@ -5,7 +5,7 @@ import * as limitOrderActions from "../../actions/limitOrderActions"
 import * as globalActions from "../../actions/globalActions"
 import * as common from "../../utils/common"
 import * as constants from "../../services/constants"
-import { LimitOrderForm, LimitOrderSubmit, LimitOrderFee, LimitOrderList, LimitOrderAccount } from "../LimitOrder"
+import { LimitOrderForm, LimitOrderSubmit, LimitOrderFee, LimitOrderList, LimitOrderAccount, LimitOrderListModal } from "../LimitOrder"
 
 @connect((store, props) => {
     const account = store.account.account
@@ -69,9 +69,12 @@ export default class LimitOrderBody extends React.Component {
           <div>
               <LimitOrderSubmit />
           </div>
-          <div className="limit-order-body--list">
+          {!this.props.global.isOnMobile && 
+            <div className="limit-order-body--list">
               <LimitOrderList />
-          </div>
+            </div>
+          }
+          {this.props.global.isOnMobile && <LimitOrderListModal />}
         </div>
       )
     }
