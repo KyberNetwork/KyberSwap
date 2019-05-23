@@ -1,7 +1,6 @@
 import { verifyNonce } from "../../utils/validators"
 import { biggestNumber } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
-import BigNumber from "bignumber.js";
 
 export const sendEtherFromAccount = (
   id, ethereum, account, sourceToken, sourceAmount,
@@ -75,13 +74,12 @@ export const etherToOthersFromAccount = (
 export const getAppoveToken = (ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
   keystring, password, accountType, account, delegator) => {
   //const approvalData = ethereum.approveTokenData(sourceToken, sourceAmount)  
-  const web3 = new Web3(new Web3.providers.HttpProvider());
   return new Promise((resolve, reject) => {
     ethereum.call("approveTokenData", sourceToken, biggestNumber(), delegator).then(result => {
       const txParams = {
         from: account,
         nonce: nonce,
-        gasPrice: new BigNumber(gasPrice).times(1000000000),
+        gasPrice: gasPrice,
         gasLimit: gas,
         to: sourceToken,
         value: '0x0',
@@ -102,7 +100,7 @@ export const getAppoveTokenZero = (ethereum, sourceToken, sourceAmount, nonce, g
       const txParams = {
         from: account,
         nonce: nonce,
-        gasPrice: new BigNumber(gasPrice).times(1000000000),
+        gasPrice: gasPrice,
         gasLimit: gas,
         to: sourceToken,
         value: '0x0',
