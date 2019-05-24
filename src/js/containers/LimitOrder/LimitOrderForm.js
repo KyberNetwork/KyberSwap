@@ -128,7 +128,7 @@ export default class LimitOrderForm extends React.Component {
     var errorShow = this.props.limitOrder.errors.triggerRate.map((value, index) => {
       errorTriggerRate += `<span class="error-text" key=${index}>${value}</span>`
     })
-    
+
     return (
       <div className={"exchange-content exchange-content--limit-order limit-order-form container"}>
         {this.props.account !== false && (
@@ -214,7 +214,7 @@ export default class LimitOrderForm extends React.Component {
 
         <div className={"exchange-content__item--wrapper"}>
           <div className={"exchange-item-label"}>{this.props.translate("transaction.rate_label") || "Rate"}:</div>
-          <div className={`exchange-content__item exchange-content__item--left exchange-content__item--no-pd-left select-token ${errorTriggerRate != "" ? "error" : ""}`}>
+          <div className={`exchange-content__item exchange-content__item--left exchange-content__item--no-pd-left select-token ${errorTriggerRate != "" ? "error" : ""} ${this.props.limitOrder.errors.rateWarning !== "" ? "rate-warning" : ""}`}>
             <div className={`input-div-content`}>
               <div className={'exchange-content__label-content exchange-content__label-content--disabled'}>
                 {this.props.limitOrder.sourceTokenSymbol} / {this.props.limitOrder.destTokenSymbol}

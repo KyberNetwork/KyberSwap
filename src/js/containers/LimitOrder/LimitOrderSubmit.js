@@ -4,6 +4,7 @@ import * as limitOrderActions from "../../actions/limitOrderActions"
 
 import * as utilActions from "../../actions/utilActions"
 
+import * as common from "../../utils/common"
 import * as converters from "../../utils/converter"
 import { getTranslate } from 'react-localize-redux'
 
@@ -17,6 +18,8 @@ import { ApproveZeroModal, ApproveMaxModal, WrapETHModal, ConfirmModal, SubmitSt
 
 import { isUserLogin } from "../../utils/common"
 import constants from "../../services/constants"
+
+import { Tooltip } from "react-tippy";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -36,7 +39,6 @@ export default class LimitOrderSubmit extends React.Component {
   constructor() {
     super()
     this.state = {
-      isShowWarning: false,
       isAgree: false
     }
   }
@@ -56,7 +58,7 @@ export default class LimitOrderSubmit extends React.Component {
     }
     this.props.limitOrder.listOrder.map(value => {
       if (value.status === "active" && value.source === this.props.limitOrder.sourceTokenSymbol && value.address.toLowerCase() === this.props.account.address.toLowerCase()) {
-        sourceAmount += value.src_amount
+        sourceAmount += parseFloat(value.src_amount);
       }
     })
     var sourceAmountBig = converters.toTWei(sourceAmount, this.props.tokens[this.props.limitOrder.sourceTokenSymbol].decimals)
@@ -160,8 +162,13 @@ export default class LimitOrderSubmit extends React.Component {
       }
     }
     if (isPedingOrder) {
-      this.setState({ isShowWarning: true })
+      if (!this.props.limitOrder.errors.rateWarning) {
+        this.props.dispatch(limitOrderActions.throwError("rateWarning", "Lower rate"));
+      }
     } else {
+      if (this.props.limitOrder.errors.rateWarning) {
+        this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
+      }
       this.findPathOrder()
     }
 
@@ -278,14 +285,69 @@ export default class LimitOrderSubmit extends React.Component {
     }
   }
 
-  cancelSubmit = () => {
-    this.setState({ isShowWarning: false })
-  }
-
   agreeSubmit = () => {
-    this.setState({ isAgree: true, isShowWarning: false }, () => {
+    this.setState({ isAgree: true }, () => {
       this.submitOrder()
     })
+  }
+
+  getRateWarningTooltip = () => {
+    // Filter active orders which have higher rate than current input rate
+    const filterHigherRate = this.props.limitOrder.listOrder.filter(item => {
+      return item.source === this.props.limitOrder.sourceTokenSymbol &&
+            item.dest === this.props.limitOrder.destTokenSymbol &&
+            item.address.toLowerCase() === this.props.account.address.toLowerCase() &&
+            item.status === "active" &&
+            converters.compareTwoNumber(this.props.limitOrder.triggerRate, item.min_rate) < 1;
+    });
+
+    const tableComp = filterHigherRate.map(item => {
+      const datetime = common.getFormattedDate(item.status === "active" ? item.created_time : item.cancel_time);
+      const rate = converters.roundingNumber(item.min_rate);
+      return (
+        <div key={item.id} className="rate-warning-tooltip__order">
+          <div>{datetime}</div>
+          <div>{`${item.source.toUpperCase()}/${item.dest.toUpperCase()} >= ${rate}`}</div>
+        </div>
+      );
+    });
+
+    return (
+      <div className="rate-warning-tooltip">
+        {/* Description */}
+        <div className="rate-warning-tooltip__description">
+          {this.props.translate("limit_order.lower_rate_warning") || "This new order has a lower rate than some orders you have created. Below orders will be cancelled when you submitted this order.s"}
+        </div>
+        {/* Table */}
+        <div className="rate-warning-tooltip__order-container">
+          {tableComp}
+        </div>
+        {/* Buttons */}
+        <div className="rate-warning-tooltip__footer">
+          <button
+						className="btn-cancel"
+						onClick={e => this.closeRateWarningTooltip()}
+					>
+						{this.props.translate("limit_order.change_rate") || "Change Rate"}
+					</button>
+					<button
+						className="btn-confirm"
+						onClick={e => this.confirmAgreeSubmit()}
+					>
+						{this.props.translate("import.yes") || "Yes"}
+					</button>
+        </div>
+      </div>
+    );
+  }
+
+  closeRateWarningTooltip = () => {
+    this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
+  }
+
+  confirmAgreeSubmit = () => {
+    this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
+    this.agreeSubmit();
   }
 
   render() {
@@ -293,11 +355,19 @@ export default class LimitOrderSubmit extends React.Component {
     var isWaiting = this.props.limitOrder.isSelectToken || this.props.limitOrder.errors.sourceAmount.length > 0 || this.props.limitOrder.errors.triggerRate.length > 0
     return (
       <div className={"limit-order-submit"}>
-        <button className={`accept-button ${isDisable ? "disable" : ""} ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder}>
-          {isUserLogin() ? "Submit" : "Login to Submit Order"}
-        </button>
+        <Tooltip 
+            open={this.props.limitOrder.errors.rateWarning !== ""}
+            position="right"
+            interactive={true}
+            animateFill={false}
+            onRequestClose={() => this.closeRateWarningTooltip()}
+            html={this.getRateWarningTooltip()}
+        >
+          <button className={`accept-button ${isDisable ? "disable" : ""} ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder}>
+            {isUserLogin() ? "Submit" : "Login to Submit Order"}
+          </button>
+        </Tooltip>
         <div>
-          {this.state.isShowWarning && <WarningModal onCancel={this.cancelSubmit} onSubmit={this.agreeSubmit} />}
           {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.approveZero && <ApproveZeroModal getMaxGasApprove={this.getMaxGasApprove.bind(this)} />}
           {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.approveMax && <ApproveMaxModal getMaxGasApprove={this.getMaxGasApprove.bind(this)} />}
           {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.wrapETH && <WrapETHModal />}

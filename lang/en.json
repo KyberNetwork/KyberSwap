@@ -379,7 +379,9 @@
     "canceling_order_message": "You are canceling this order",
     "fee_info_message": "Don’t worry. You will not be charged now. \nYou pay fees only when transaction is executed (broadcasted & mined).",
     "confirm_order_message": "Your transaction will be broadcasted when rate of ${srcToken}/${destToken} >= ${rate}",
-    "fee": "Fee"
+    "fee": "Fee",
+    "change_rate": "Change Rate",
+    "lower_rate_warning": "This new order has a lower rate than some orders you have created. Below orders will be cancelled when you submitted this order."
   },
   "home": "Home",
   "tracker": "Tracker",
