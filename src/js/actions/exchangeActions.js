@@ -1,16 +1,16 @@
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
 
-export function selectTokenAsync(symbol, address, type, ethereum) {
-  return {
-    type: "EXCHANGE.SELECT_TOKEN_ASYNC",
-    payload: { symbol, address, type, ethereum }
-  }
-}
-export function selectToken(symbol, address, type) {
+// export function selectTokenAsync(symbol, address, type, ethereum) {
+//   return {
+//     type: "EXCHANGE.SELECT_TOKEN_ASYNC",
+//     payload: { symbol, address, type, ethereum }
+//   }
+// }
+export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type) {
   return {
     type: "EXCHANGE.SELECT_TOKEN",
-    payload: { symbol, address, type }
+    payload: { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type}
   }
 }
 export function checkSelectToken() {
@@ -142,20 +142,19 @@ export function setRandomExchangeSelectedToken(random) {
   }
 }
 
-export function updateRateExchange(ethereum, source, dest,
-  sourceAmount, sourceTokenSymbol, isManual = false, refetchSourceAmount = false) {
+export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual = false, refetchSourceAmount = false, type = null) {
   return {
     type: "EXCHANGE.UPDATE_RATE_PENDING",
-    payload: { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount }
+    payload: { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, type }
   }
 }
 
-export function updateRateExchangeAndValidateSource(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual = false, refetchSourceAmount = false) {
-  return {
-    type: "EXCHANGE.UPDATE_RATE_AND_VALIDATE_SOURCE",
-    payload: { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount }
-  }
-}
+// export function updateRateExchangeAndValidateSource(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual = false, refetchSourceAmount = false) {
+//   return {
+//     type: "EXCHANGE.UPDATE_RATE_AND_VALIDATE_SOURCE",
+//     payload: { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount }
+//   }
+// }
 
 // export function updateRateSnapshot(ethereum) {
 //   return {
@@ -164,17 +163,17 @@ export function updateRateExchangeAndValidateSource(ethereum, source, dest, sour
 //   }
 // }
 
-export function updatePrevSource(value) {
-  return {
-    type: "EXCHANGE.SET_PREV_SOURCE",
-    payload: { value }
-  }
-}
+// export function updatePrevSource(value) {
+//   return {
+//     type: "EXCHANGE.SET_PREV_SOURCE",
+//     payload: { value }
+//   }
+// }
 
-export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess, percentChange, translate) {
+export function updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange) {
   return {
-    type: "EXCHANGE.UPDATE_RATE",
-    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess, percentChange, translate }
+    type: "EXCHANGE.UPDATE_RATE_COMPLETE",
+    payload: { expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange }
   }
 
 }
@@ -462,12 +461,12 @@ export function setCapExchange(maxCap) {
   }
 }
 
-export function thowErrorNotPossessKGt(message) {
-  return {
-    type: "EXCHANGE.THROW_NOT_POSSESS_KGT_ERROR",
-    payload: message
-  }
-}
+// export function thowErrorNotPossessKGt(message) {
+//   return {
+//     type: "EXCHANGE.THROW_NOT_POSSESS_KGT_ERROR",
+//     payload: message
+//   }
+// }
 
 export function setMaxGasPrice(ethereum) {
   return {
@@ -542,12 +541,12 @@ export function checkKyberEnable(ethereum) {
   }
 }
 
-export function setKyberEnable(enable) {
-  return {
-    type: "EXCHANGE.SET_KYBER_ENABLE",
-    payload: enable
-  }
-}
+// export function setKyberEnable(enable) {
+//   return {
+//     type: "EXCHANGE.SET_KYBER_ENABLE",
+//     payload: enable
+//   }
+// }
 
 // export function setApproveTxZero(hash, symbol) {
 //   return {
@@ -584,19 +583,19 @@ export function verifyExchange() {
   }
 }
 
-export function fetchExchangeEnable(ethereum) {
+export function fetchUserCap(ethereum) {
   return {
-    type: "EXCHANGE.FETCH_EXCHANGE_ENABLE",
+    type: "EXCHANGE.FETCH_USER_CAP",
     payload: {ethereum}
   }
 }
 
-export function setExchangeEnable(enable) {
-  return {
-    type: "EXCHANGE.SET_EXCHANGE_ENABLE",
-    payload: enable
-  }
-}
+// export function setExchangeEnable(enable) {
+//   return {
+//     type: "EXCHANGE.SET_EXCHANGE_ENABLE",
+//     payload: enable
+//   }
+// }
 
 // export function updateBalanceData(balanceData, hash) {
 //   return {

@@ -18,13 +18,12 @@ import bowser from 'bowser'
 
 
 function* selectToken(action) {
-  const { symbol, address, type, ethereum } = action.payload
-  yield put.sync(actions.selectToken(symbol, address, type))
-  yield put(utilActions.hideSelectToken())
+  const { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type} = action.payload
   
   //check select same token
-  var state = store.getState()
-  if (state.exchange.sourceTokenSymbol === state.exchange.destTokenSymbol){
+  
+  if (sourceTokenSymbol === destTokenSymbol){
+    var state = store.getState()
     var translate = getTranslate(state.locale)
     yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken, translate("error.select_same_token")))
   }else{
@@ -34,9 +33,6 @@ function* selectToken(action) {
 
   yield call(estimateGasNormal)
   
-  if (ethereum){
-    yield call(ethereum.fetchRateExchange, true)
-  }
 
 }
 
@@ -54,15 +50,15 @@ function* getRate(ethereum, source, dest, sourceAmount, blockNo) {
 }
 
 function* updateRatePending(action) {
-  const { ethereum, source, dest, sourceTokenSymbol, isManual, refetchSourceAmount } = action.payload;
-  let { sourceAmount } = action.payload;
+  var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, type } = action.payload;
+
 
   const state = store.getState();
   const translate = getTranslate(state.locale);
-  const { destTokenSymbol, destAmount } = state.exchange;
 
   if (refetchSourceAmount) {
     try {
+      var destAmount = this.props.exchange.destAmount
      sourceAmount = yield call([ethereum, ethereum.call], "getSourceAmount", sourceTokenSymbol, destTokenSymbol, destAmount);
     } catch (err) {
       console.log(err);
@@ -74,13 +70,14 @@ function* updateRatePending(action) {
 
   try{
     var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
-    var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmoutRefined, lastestBlock)
-    var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmoutZero, lastestBlock)
+    var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutRefined, lastestBlock)
+    var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutZero, lastestBlock)
     var { expectedPrice, slippagePrice } = rate
 
     var percentChange = 0
-    if(rateZero.expectedPrice != 0){
-      percentChange = (rateZero.expectedPrice - rate.expectedPrice) / rateZero.expectedPrice 
+    var expectedRateInit = rateZero.expectedPrice
+    if(expectedRateInit != 0){
+      percentChange = (expectedRateInit - expectedPrice) / expectedRateInit
       percentChange = Math.round(percentChange * 1000) / 10    
       if(percentChange <= 0.1) {
         percentChange = 0
@@ -92,28 +89,25 @@ function* updateRatePending(action) {
       }
     }    
 
-    yield put.resolve(actions.updateRateExchangeComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, true, percentChange, translate))
+    if (expectedPrice == "0") {
+      if (expectedRateInit == "0" || expectedRateInit == 0 || expectedRateInit === undefined || expectedRateInit === null) {
+        yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, translate("error.kyber_maintain")))
+      } else {
+        yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, translate("error.handle_amount")))
+      }
+    } else {
+      yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate))
+    }
+
+    yield put(actions.updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange))
 
   }catch(err){
     console.log(err)
-    if(isManual){
+    if(isManual){      
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
       translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
       return
     }
-  }
-}
-
-function* updateRateAndValidateSource(action) {
-  const state = store.getState();
-  const { ethereum, source, dest, sourceValue, sourceTokenSymbol, sourceAmount, isManual, refetchSourceAmount } = action.payload;
-  try {
-    yield put(actions.updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount));
-    if (state.account.account !== false) {
-      yield call(verifyExchange);
-    }
-  } catch (err) {
-    console.log(err);
   }
 }
 
@@ -406,10 +400,14 @@ function* checkKyberEnable(action) {
   var state = store.getState()
   try {
     var enabled = yield call([ethereum, ethereum.call], "checkKyberEnable")
-    yield put(actions.setKyberEnable(enabled))
+    if (enabled){
+      yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.kyberEnable))
+    }else{
+      yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.kyberEnable, "Kyber is not enabled at the momment. Please try again for a while"))
+    }
   } catch (e) {
     console.log(e.message)
-    yield put(actions.setKyberEnable(false))
+    yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.kyberEnable))
   }
 
 }
@@ -508,53 +506,55 @@ function* verifyExchange() {
 }
 
 
-export function* fetchExchangeEnable(action) {  
+export function* fetchUserCap(action) {  
   try{
     var {ethereum} = action.payload
     var state = store.getState()
     var account = state.account.account
     var address = account.address
-    var enabled = yield call([ethereum, ethereum.call], "getExchangeEnable", address)
+    var enabled = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
     if (!enabled.error && !enabled.kyced && (enabled.rich === true || enabled.rich === 'true')){
       var translate = getTranslate(state.locale)
-      var kycLink = "/users/sign_up"
-      yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
-        translate("error.exceed_daily_volumn", { link: kycLink }) || "You may want to register with us to have higher trade limits " + kycLink))
-        yield put(actions.setExchangeEnable(false))
+      // var kycLink = "/users/sign_up"
+      var content = translate("error.exceed_daily_volumn") || "You may want to register with us to have higher trade limits."
+      yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy, content))
+        
     }else{
-      yield put(actions.setExchangeEnable(true))
+      yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy))
     }
   }catch(e){
     console.log(e)
-    yield put(actions.setExchangeEnable(true))
+    yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy))
   }
 }
 
-export function* getExchangeEnable() {
-  var state = store.getState()
-  const ethereum = state.connection.ethereum
+// export function* getExchangeEnable() {
+//   var state = store.getState()
+//   const ethereum = state.connection.ethereum
 
-  var account = state.account.account
-  var address = account.address
+//   var account = state.account.account
+//   var address = account.address
 
-  try {
-    var enabled = yield call([ethereum, ethereum.call], "getExchangeEnable", address)
-    return { status: "success", res: enabled }
-  } catch (e) {
-    console.log(e.message)
-    return { status: "success", res: false }
-  }
-}
+//   try {
+//     var enabled = yield call([ethereum, ethereum.call], "getExchangeEnable", address)
+//     return { status: "success", res: enabled }
+//   } catch (e) {
+//     console.log(e.message)
+//     return { status: "success", res: false }
+//   }
+// }
 
 
 export function* watchExchange() {
   yield takeEvery("EXCHANGE.UPDATE_RATE_PENDING", updateRatePending)
-  yield takeEvery("EXCHANGE.UPDATE_RATE_AND_VALIDATE_SOURCE", updateRateAndValidateSource);
+  // yield takeEvery("EXCHANGE.UPDATE_RATE_AND_VALIDATE_SOURCE", updateRateAndValidateSource);
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", fetchGas)
-  yield takeEvery("EXCHANGE.SELECT_TOKEN_ASYNC", selectToken)
+  yield takeEvery("EXCHANGE.SELECT_TOKEN", selectToken)
   yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
   yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
-  yield takeEvery("EXCHANGE.FETCH_EXCHANGE_ENABLE", fetchExchangeEnable)
+
+  yield takeEvery("EXCHANGE.FETCH_USER_CAP", fetchUserCap)
+  
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED_NORMAL", estimateGasNormal)
   yield takeEvery("EXCHANGE.SWAP_TOKEN", estimateGasNormal)
 }

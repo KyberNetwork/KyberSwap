@@ -9,10 +9,10 @@ export function selectTokenAsync(symbol, address, type) {
 }
 
 
-export function selectToken(symbol, address, type) {
+export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type) {
   return {
     type: "LIMIT_ORDER.SELECT_TOKEN",
-    payload: { symbol, address, type }
+    payload: { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type }
   }
 }
 
@@ -23,17 +23,17 @@ export function inputChange(focus, value) {
   }
 }
 
-export function updateRate(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual = false) {
+export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual = false, type = false) {
   return {
     type: "LIMIT_ORDER.UPDATE_RATE_PENDING",
-    payload: {ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual }
+    payload: {ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual , type}
   }
 }
 
-export function updateRateComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess) {
+export function updateRateComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, type) {
   return {
-    type: "LIMIT_ORDER.UPDATE_RATE",
-    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess }
+    type: "LIMIT_ORDER.UPDATE_RATE_COMPLETE",
+    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type }
   }
 
 }
@@ -45,14 +45,14 @@ export function setIsSelectTokenBalance(value) {
   }
 }
 
-export function fetchFee(userAddr, source, dest) {
+export function fetchFee(userAddr, src, dest, srcAmount, destAmount) {
   return {
     type: "LIMIT_ORDER.FETCH_FEE",
-    payload: { userAddr, source, dest }
+    payload: { userAddr, src, dest, srcAmount, destAmount }
   }
 }
 
-export function fetchFeeComplete(fee, err) {
+export function fetchFeeComplete(fee, err = null) {
   return {
     type: "LIMIT_ORDER.FETCH_FEE_COMPLETE",
     payload: { fee, err }

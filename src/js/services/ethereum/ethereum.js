@@ -142,45 +142,45 @@ export default class EthereumService extends React.Component {
     store.dispatch(setGasPrice())
   }
 
-  fetchRateExchange = (isManual = false) => {
-    var state = store.getState()
-    var ethereum = state.connection.ethereum
-    var source = state.exchange.sourceToken
-    var dest = state.exchange.destToken
+  // fetchRateExchange = (isManual = false) => {
+  //   var state = store.getState()
+  //   var ethereum = state.connection.ethereum
+  //   var source = state.exchange.sourceToken
+  //   var dest = state.exchange.destToken
     
-    var sourceAmount = state.exchange.sourceAmount
-    var sourceTokenSymbol = state.exchange.sourceTokenSymbol
+  //   var sourceAmount = state.exchange.sourceAmount
+  //   var sourceTokenSymbol = state.exchange.sourceTokenSymbol
     
-    let refetchSourceAmount = false;
+  //   let refetchSourceAmount = false;
     
-    if (sourceTokenSymbol === "ETH") {
-      if (compareTwoNumber(sourceAmount, constants.ETH.MAX_AMOUNT) === 1) {
-        store.dispatch(throwErrorHandleAmount());
-        return;
-      }
-    } 
+  //   if (sourceTokenSymbol === "ETH") {
+  //     if (compareTwoNumber(sourceAmount, constants.ETH.MAX_AMOUNT) === 1) {
+  //       store.dispatch(throwErrorHandleAmount());
+  //       return;
+  //     }
+  //   } 
 
-    //check input focus
-    if (state.exchange.inputFocus !== "source"){
-      //calculate source amount by dest amount
-      var destAmount = state.exchange.destAmount
-      var destTokenSymbol = state.exchange.destTokenSymbol    
-      // relative source amount 
-      var tokens = state.tokens.tokens
-      var rateSourceEth = sourceTokenSymbol === "ETH" ? 1: tokens[sourceTokenSymbol].rate / Math.pow(10,18)
-      var rateEthDest = destTokenSymbol === "ETH" ? 1: tokens[destTokenSymbol].rateEth / Math.pow(10,18)
+  //   //check input focus
+  //   if (state.exchange.inputFocus !== "source"){
+  //     //calculate source amount by dest amount
+  //     var destAmount = state.exchange.destAmount
+  //     var destTokenSymbol = state.exchange.destTokenSymbol    
+  //     // relative source amount 
+  //     var tokens = state.tokens.tokens
+  //     var rateSourceEth = sourceTokenSymbol === "ETH" ? 1: tokens[sourceTokenSymbol].rate / Math.pow(10,18)
+  //     var rateEthDest = destTokenSymbol === "ETH" ? 1: tokens[destTokenSymbol].rateEth / Math.pow(10,18)
       
-      if (rateSourceEth != 0 && rateEthDest != 0){
-        sourceAmount = destAmount / (rateSourceEth * rateEthDest)
-      }else{
-        sourceAmount = 0
-      }
-      refetchSourceAmount = true;
-    }    
+  //     if (rateSourceEth != 0 && rateEthDest != 0){
+  //       sourceAmount = destAmount / (rateSourceEth * rateEthDest)
+  //     }else{
+  //       sourceAmount = 0
+  //     }
+  //     refetchSourceAmount = true;
+  //   }    
     
 
-    store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount));
-  }
+  //   store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount));
+  // }
 
 
   fetMarketData = () => {

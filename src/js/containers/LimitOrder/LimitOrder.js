@@ -7,6 +7,8 @@ import EthereumService from "../../services/ethereum/ethereum"
 
 import * as limitOrderActions from "../../actions/limitOrderActions"
 
+import constants from "../../services/constants"
+
 import {LimitOrderBody} from "../LimitOrder"
 import * as limitOrderServices from "../../services/limit_order";
 import { isUserLogin } from "../../utils/common";
@@ -45,22 +47,30 @@ export default class LimitOrder extends React.Component {
   }
   
   fetchCurrentRate = () => {
-    var source = this.props.limitOrder.sourceToken
-    var dest = this.props.limitOrder.destToken
+    var sourceToken = this.props.limitOrder.sourceToken
+    var destToken = this.props.limitOrder.destToken
     var sourceAmount = this.props.limitOrder.sourceAmount
     var sourceTokenSymbol = this.props.limitOrder.sourceTokenSymbol
+    var destTokenSymbol = this.props.limitOrder.destTokenSymbol
     var isManual = false
 
     var ethereum = this.getEthereumInstance()
-    this.props.dispatch(limitOrderActions.updateRate(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual));
+    this.props.dispatch(limitOrderActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual));
     
+  }
+
+  fetchCurrentRateInit = () => {
+    var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken} = this.getTokenInit()
+    var sourceAmount = 0
+    var ethereum = this.getEthereumInstance()
+    this.props.dispatch(limitOrderActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken));
   }
 
   setInvervalProcess = () => {
     var invervalFunc = () => {
       this.fetchCurrentRate()
     }
-    invervalFunc()
+    this.fetchCurrentRateInit()
     this.invervalProcess =  setInterval(invervalFunc, 10000)
   }
 
@@ -77,22 +87,27 @@ export default class LimitOrder extends React.Component {
     }
   }
 
+  getTokenInit = () => {
+    var sourceTokenSymbol = this.props.params.source.toUpperCase()
+    var sourceToken = this.props.tokens[sourceTokenSymbol].address
+
+    var destTokenSymbol = this.props.params.dest.toUpperCase()
+    var destToken = this.props.tokens[destTokenSymbol].address
+
+    return {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken}
+  }
+
   componentDidMount = () =>{
     // set interval process
     this.setInvervalProcess()
 
-    if ((this.props.params.source.toLowerCase() !== this.props.limitOrder.sourceTokenSymbol.toLowerCase()) ||
-      (this.props.params.dest.toLowerCase() !== this.props.limitOrder.destTokenSymbol.toLowerCase()) ){
+    var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken} = this.getTokenInit()
 
-      var sourceSymbol = this.props.params.source.toUpperCase()
-      var sourceAddress = this.props.tokens[sourceSymbol].address
+    if ((sourceTokenSymbol !== this.props.limitOrder.sourceTokenSymbol) ||
+      (destTokenSymbol !== this.props.limitOrder.destTokenSymbol) ){
 
-      var destSymbol = this.props.params.dest.toUpperCase()
-      var destAddress = this.props.tokens[destSymbol].address
+      this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "default"));
 
-      // var ethereum = this.getEthereumInstance()
-      this.props.dispatch(limitOrderActions.selectTokenAsync(sourceSymbol, sourceAddress, "source"))
-      this.props.dispatch(limitOrderActions.selectTokenAsync(destSymbol, destAddress, "dest"))
     }
 
     // Get list orders

@@ -2,8 +2,6 @@ import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
 import { calculateDest } from "../utils/converter"
 
-//import { randomToken } from "../utils/random"
-
 const initFormState = constants.INIT_TRANSFER_FORM_STATE
 const initState = initFormState
 
@@ -39,9 +37,6 @@ const transfer = (state = initState, action) => {
       } else {
         newState.gas_estimate = newState.gas_limit_transfer_token
       }
-      // newState.amount = ""
-      // newState.errors.amountTransfer = ""
-      // newState.errors.ethBalanceError = ""
       newState.errors.sourceAmount = {}
       newState.selected = true
       return newState
@@ -68,29 +63,12 @@ const transfer = (state = initState, action) => {
     case "TRANSFER_SPECIFY_GAS_PRICE":
       newState.gasPrice = action.payload
       newState.isEditGasPrice = true
-      
       delete newState.errors.sourceAmount[constants.TRANSFER_CONFIG.sourceErrors.balance]
-      // newState.errors.gasPrice = ""
-      // newState.errors.ethBalanceError = ""
       return newState
     case "TRANSFER.TOGGLE_ADVANCE":
       newState.advanced = !newState.advanced
       return newState
-    // case "TRANSFER.HIDE_CONFIRM": {
-    //   newState.confirmColdWallet = false
-    //   return newState
-    // }
-    // case "TRANSFER.SHOW_CONFIRM": {
-    //   newState.confirmColdWallet = true
-    //   return newState
-    // }
-    // case "TRANSFER.OPEN_PASSPHRASE":
-    //   newState.passphrase = true
-    //   return newState
-    // case "TRANSFER.HIDE_PASSPHRASE":
-    //   newState.passphrase = false
-    //   newState.errors.passwordError = ""
-    //   return newState
+
     case "TRANSFER.THROW_ERROR_DEST_ADDRESS":
       var {key, message} = action.payload
       var errors = newState.errors
@@ -106,7 +84,7 @@ const transfer = (state = initState, action) => {
       return newState
     }
     case "TRANSFER.THROW_AMOUNT_ERROR": {
-      var {key, messsage} = action.payload
+      var {key, message} = action.payload
       var errors = newState.errors
       errors.sourceAmount[key] = message
       newState.errors = errors
@@ -120,128 +98,23 @@ const transfer = (state = initState, action) => {
       return newState
     }
 
-    // case "TRANSFER.THROW_ETH_BALANCE_ERROR": {
-    //   newState.errors.ethBalanceError = action.payload
-    //   return newState
-    // }
-    // case "TRANSFER.THROW_GAS_PRICE_ERROR": {
-    //   newState.errors.gasPrice = action.payload
-    //   return newState
-    // }
-    // case "TRANSFER.CHANGE_PASSPHRASE": {
-    //   newState.errors.passwordError = ""
-    //   return newState
-    // }
-    // case "TRANSFER.THROW_ERROR_PASSPHRASE": {
-    //   newState.errors.passwordError = action.payload
-    //   newState.isConfirming = false
-    //   return newState
-    // }
-    // case "TRANSFER.TX_BROADCAST_PENDING": {
-    //   newState.txHash = action.payload
-    //   return newState
-    // }
     case "TRANSFER.TX_BROADCAST_FULFILLED": {
       var {tx} = action.payload
       newState.broadcasting = false
       newState.tx = tx
       return newState
     }
-    // case "TRANSFER.TX_BROADCAST_REJECTED": {
-    //   newState.broadcasting = false
-    //   newState.bcError = action.payload ? action.payload : ""
-    //   newState.isConfirming = false
-    //   newState.deviceError = action.payload ? action.payload : ''
-    //   return newState
-    // }
-    // case "TRANSFER.SET_SIGN_ERROR": {
-    //   newState.signError = action.payload ? action.payload : ""
-    //   newState.isApproving = false
-    //   newState.isConfirming = false
-    //   return newState
-    // }
-    // case "TRANSFER.RESET_SIGN_ERROR": {
-    //   newState.signError = ''
-    //   return newState
-    // }
-    // case "TRANSFER.SET_BROADCAST_ERROR": {
-    //   newState.broadcasting = false
-    //   newState.broadcastError = action.payload ? action.payload : "Cannot broadcast transaction to blockchain"
-    //   newState.confirmApprove = false
-    //   newState.isApproving = false
-    //   newState.isConfirming = false
-    //   newState.step = 3
-    //   return newState
-    // }
-    // case "TRANSFER.RESET_BROADCAST_ERROR": {
-    //   newState.broadcastError = ''
-    //   return newState
-    // }
+   
     case "TRANSFER.FINISH_TRANSACTION": {
       newState.broadcasting = false
       return newState
     }
-    // case "TRANSFER.PREPARE_TRANSACTION": {
-    //   newState.passphrase = false
-    //   newState.confirmColdWallet = false
-    //   newState.amount = 0
-    //   newState.isConfirming = false
-    //   newState.txRaw = ""
-    //   newState.step = 2
-    //   newState.bcError = ""
-    //   newState.broadcasting = true
-    //   newState.balanceData = {
-    //     tokenName: action.payload.balanceData.name,
-    //     tokenDecimal: action.payload.balanceData.decimals,
-    //     tokenSymbol: action.payload.balanceData.tokenSymbol,
-    //     amount: action.payload.balanceData.amount,
-    //     // prev: action.payload.balanceData.balance,
-    //     // next: 0
-    //   }
-    //   return newState
-    // }
-    // case "TRANSFER.THROW_ERROR_SIGN_TRANSACTION": {
-    //   newState.errors.signTransaction = action.payload
-    //   return newState
-    // }
-    // case "TRANSFER.PROCESS_TRANSFER": {
-    //   newState.isConfirming = true
-    //   newState.bcError = ""
-    //   return newState
-    // }
-    // case "TX.TX_ADDED": {
-    //   newState.tempTx = action.payload
-    //   return newState
-    // }
-    // case "TX.UPDATE_TX_FULFILLED": {
-    //   if (newState.tempTx.hash === action.payload.hash) {
-    //     newState.tempTx = action.payload
-    //   }
-    //   return newState
-    // }
-    // case "TRANSFER.UPDATE_CURRENT_BALANCE": {
-    //   const { tokenBalance, txHash } = action.payload
-    //   if (newState.txHash === txHash) {
-    //     newState.balanceData.next = action.payload.tokenBalance
-    //   }
-    //   return newState
-    // }
+    
     case "TRANSFER.SET_GAS_USED": {
       newState.gas = action.payload.gas
       return newState
     }
-    // case "TRANSFER.SET_GAS_USED_SNAPSHOT": {
-    //   newState.snapshot.gas = action.payload.gas
-    //   return newState
-    // }
-    // case "TRANSFER.FETCH_GAS_SNAPSHOT": {
-    //   newState.snapshot.isFetchingGas = true
-    //   return newState
-    // }
-    // case "TRANSFER.FETCH_SNAPSHOT_GAS_SUCCESS": {
-    //   newState.snapshot.isFetchingGas = false
-    //   return newState
-    // }
+    
     case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
       if (!newState.isEditGasPrice) {
         var { safeLowGas, standardGas, fastGas, defaultGas, selectedGas } = action.payload
@@ -263,12 +136,6 @@ const transfer = (state = initState, action) => {
       return newState;
     }
 
-    // case "TRANSFER.SET_SNAPSHOT": {
-    //   var snapshot = action.payload
-    //   newState.snapshot = { ...snapshot }
-    //   return newState
-    // }
-
     case "TRANSFER.SET_SELECTED_GAS": {
       const { level } = action.payload
       newState.selectedGas = level
@@ -283,21 +150,6 @@ const transfer = (state = initState, action) => {
       newState.isOpenImportAcount = false
       return newState
     }
-
-    // case "GLOBAL.CLEAR_SESSION_FULFILLED": {
-    //   var gasPrice = action.payload
-    //   var resetState = { ...initState }
-    //   resetState.token = newState.token
-
-    //   // resetState.gasPrice = newState.gasPrice
-    //   resetState.gasPrice = gasPrice
-    //   resetState.selectedGas = newState.selectedGas
-    //   resetState.isEditGasPrice = newState.isEditGasPrice
-    //   resetState.gasPriceSuggest = newState.gasPriceSuggest
-
-    //   resetState.tokenSymbol = newState.tokenSymbol
-    //   return resetState
-    // }
 
     case "TRANSFER.TOGGLE_BALANCE_CONTENT": {
       newState.isBalanceActive = !newState.isBalanceActive;

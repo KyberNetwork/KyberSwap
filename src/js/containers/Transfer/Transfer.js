@@ -11,6 +11,8 @@ import { ImportAccount } from "../ImportAccount"
 import {HeaderTransaction} from "../TransactionCommon"
 import EthereumService from "../../services/ethereum/ethereum"
 
+import constants from "../../services/constants"
+
 @connect((store, props) => {
   const account = store.account.account
   var translate = getTranslate(store.locale)
@@ -96,14 +98,14 @@ export default class Exchange extends React.Component {
     } else {
       var amountBig = converters.stringEtherToBigNumber(this.props.transfer.amount, this.props.transfer.decimals)
       if (amountBig.isGreaterThan(this.props.transfer.balance)) {
-        this.props.dispatch(transferActions.thowErrorAmount("error.amount_transfer_too_hign"))
+        this.props.dispatch(transferActions.throwErrorAmount(constants.TRANSFER_CONFIG.sourceErrors.input, this.props.translate("error.amount_transfer_too_hign")))
         return
       }
 
       var testBalanceWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance,
         this.props.transfer.tokenSymbol, this.props.transfer.amount, this.props.transfer.gas, gasPrice)
       if (testBalanceWithFee) {
-        this.props.dispatch(transferActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
+        this.props.dispatch(transferActions.throwErrorAmount(constants.TRANSFER_CONFIG.sourceErrors.balance, this.props.translate("error.eth_balance_not_enough_for_fee")))
       }
     }
     this.props.dispatch(transferActions.seSelectedGas(level))

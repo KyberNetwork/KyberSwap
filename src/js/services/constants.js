@@ -29,6 +29,11 @@ const EXCHANGE_CONFIG = {
   EPSILON: 1000000000000000,
   MAX_CAP_PERCENT: 0.95,    
   COMMISSION_ADDR: "0x440bBd6a888a36DE6e2F6A25f65bc4e16874faa9",
+  updateRateType : {
+    selectToken: "select_token",
+    changeAmount: "changeAmount",
+    interval: "interval"
+  },
   exchangePath: {
     approveZero: 1,
     approveMax: 2,    
@@ -39,7 +44,10 @@ const EXCHANGE_CONFIG = {
     balance: "balance",
     input: "input",
     rate: "rate",
-    sameToken: "sameToken"
+    sameToken: "sameToken",
+    zeroCap: "zeroCap",
+    richGuy: "richGuy",
+    kyberEnable: "kyberEnable"
   },
   slippageRateErrors: {
     input: "input"
@@ -48,10 +56,10 @@ const EXCHANGE_CONFIG = {
 
 const INIT_EXCHANGE_FORM_STATE = {
   isOpenImportAcount: false,
-  kyber_enabled: false,
+  // kyber_enabled: false,
   advanced: false,
   termAgree: true,
-  passphrase: false,
+  // passphrase: false,
   selected: false,
   isSelectToken: true,
   sourceToken: ETHER_ADDRESS,
@@ -66,7 +74,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   minConversionRate: 0,
   minDestAmount: 0,
   maxDestAmount: 0,
-  prevAmount: 0,
+  // prevAmount: 0,
   expectedRate: 0,
   isEditRate: false,
   slippageRate: 0,
@@ -95,20 +103,20 @@ const INIT_EXCHANGE_FORM_STATE = {
   },
   maxGasPrice: 50,
   isEditGasPrice: false,
-  step: 2,
+  // step: 2,
   broadcasting: true,
-  bcError: "",
-  txHash: "",
-  tempTx: {},
-  txApprove: false,
-  confirmApprove: false,
-  confirmApproveZero: false,
-  isConfirming: false,
-  isApproving: false,
-  isApprovingZero: false,
-  confirmColdWallet: false,
-  signError: "",
-  broadcastError: "",
+  // bcError: "",
+  // txHash: "",
+  // tempTx: {},
+  // txApprove: false,
+  // confirmApprove: false,
+  // confirmApproveZero: false,
+  // isConfirming: false,
+  // isApproving: false,
+  // isApprovingZero: false,
+  // confirmColdWallet: false,
+  // signError: "",
+  // broadcastError: "",
 
   currentPathIndex : -1,
   exchangePath: [],    
@@ -130,32 +138,32 @@ const INIT_EXCHANGE_FORM_STATE = {
 
     // selectSameToken: '',
     // selectTokenToken: '',
-    sourceAmountError: '',
-    gasPriceError: '',
-    gasError: '',
-    passwordError: '',
-    signTransaction: '',
-    rateError: '',
-    rateAmount: '',
-    rateSystem: '',
-    ethBalanceError: '',
-    exchange_enable: ''
+    // sourceAmountError: '',
+    // gasPriceError: '',
+    // gasError: '',
+    // passwordError: '',
+    // signTransaction: '',
+    // rateError: '',
+    // rateAmount: '',
+    // rateSystem: '',
+    // ethBalanceError: '',
+    // exchange_enable: ''
   },
-  errorNotPossessKgt: '',
+  // errorNotPossessKgt: '',
   customRateInput: {
     isError: false,
     isDirty: false,
     value: ""
   },
-  isAnalize: false,
-  isAnalizeComplete: false,
-  analizeError: {},
+  // isAnalize: false,
+  // isAnalizeComplete: false,
+  // analizeError: {},
   snapshot: {},
   isBalanceActive: false,
   isAdvanceActive: false,
   isOpenAdvance: false,
-  isSelectTokenBalance: false,
-  swappingTime: 0
+  isSelectTokenBalance: false
+  // swappingTime: 0
 }
 
 
@@ -203,15 +211,15 @@ const INIT_TRANSFER_FORM_STATE = {
   },
   maxGasPrice: 50,
   isEditGasPrice: false,
-  step: 1,
+  // step: 1,
   broadcasting: true,
-  bcError: "",
-  txHash: "",
-  tempTx: {},
-  isConfirming: false,
-  confirmColdWallet: false,
-  signError: "",
-  broadcastError: "",
+  // bcError: "",
+  // txHash: "",
+  // tempTx: {},
+  // isConfirming: false,
+  // confirmColdWallet: false,
+  // signError: "",
+  // broadcastError: "",
   balanceData: {
     tokenName: "Ether",
     tokenSymbol: "ETH",
@@ -250,6 +258,9 @@ const LIMIT_ORDER_CONFIG = {
   maxFee: 0.5,
   minPercentTriggerRate: -20,
   maxPercentTriggerRate: 50,
+  updateRateType : {
+    selectToken: "select_token"
+  },
   orderPath: {
     approveZero: 1,
     approveMax: 2,
@@ -296,34 +307,7 @@ const INIT_LIMIT_ORDER_STATE = {
   currentPathIndex : -1,
   orderPath: [],    
 
-  listOrder: [
-    {  
-      id: "1209",
-      source: "KNC",
-      dest: "DAI",
-      address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
-      nonce: 1290,
-      src_amount: 10,
-      min_rate: 0.5321,
-      fee: 0.5,
-      status: "active",
-      created_time: 1556784881,
-      cancel_time: 1556784882
-    },
-    {  
-      id: "1210",
-      source: "KNC",
-      dest: "OMG",
-      address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
-      nonce: 1290,
-      src_amount: 10,
-      min_rate: 0.5321,
-      fee: 0.5,
-      status: "active",
-      created_time: 1556784881,
-      cancel_time: 1556784882
-    }
-  ],
+  listOrder: [],
 
   throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 380000,
@@ -375,7 +359,7 @@ const INIT_LIMIT_ORDER_STATE = {
     sourceAmount: [],
     triggerRate: [],
 
-   
+    rateWarning: '',
     rateError: '',
     rateAmount: '',
     rateSystem: ''

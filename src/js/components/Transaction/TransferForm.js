@@ -3,14 +3,8 @@ import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import { filterInputNumber, restrictInputNumber, anyErrors } from "../../utils/validators";
 import { ImportAccount } from "../../containers/ImportAccount";
-// import { AccountBalance } from "../../containers/TransactionCommon";
 import { PostTransfer } from "../../containers/Transfer";
-// import BLOCKCHAIN_INFO from "../../../../env";
 import * as analytics from "../../utils/analytics";
-// import { RateBetweenToken } from "../../containers/Exchange";
-// import { getAssetUrl } from "../../utils/common";
-// import { TermAndServices } from "../../containers/CommonElements";
-// import {AdvanceAccount} from "../TransactionCommon"
 
 import { AdvanceAccount } from "../../containers/TransactionCommon"
 import { CSSTransition } from "react-transition-group";
@@ -61,33 +55,6 @@ const TransferForm = (props) => {
     errorDestAddr.push(value)
   })
 
-  if (isErrorSource && props.defaultShowAmountErrorTooltip) {
-    setTimeout(() => {
-      ReactTooltip.show(document.getElementById("transfer-amount-error-trigger"))
-      props.setDefaulAmountErrorTooltip(false)
-    }, 300)
-  }
-
-  if (!isErrorSource === 0 && !props.defaultShowAmountErrorTooltip) {
-    setTimeout(() => {
-      props.setDefaulAmountErrorTooltip(true)
-    }, 300)
-  }
-
-  if (isErrorDestAddr && props.defaultShowAddrErrorTooltip) {
-    setTimeout(() => {
-      ReactTooltip.show(document.getElementById("transfer-address-error-trigger"))
-      props.setDefaulAddrErrorTooltip(false)
-    }, 300)
-  }
-
-  if (!isErrorDestAddr && !props.defaultShowAddrErrorTooltip) {
-    setTimeout(() => {
-      props.setDefaulAddrErrorTooltip(true)
-    }, 300)
-  }
-
-
   var errorSourceTooltip = ""
   errorSource.map((value, index) => {
     errorSourceTooltip += `<span class="error-text" key=${index}>${value}</span>`
@@ -102,17 +69,7 @@ const TransferForm = (props) => {
   })
   var errorDestSelector = document.getElementById("transfer-address-error")
   if (errorDestSelector) errorDestSelector.innerHTML = `<div>${errorDestAddrTooltip}</div>`
-  
-  // var transferErrorTooltip = document.getElementById("transfer-amount-error")
-  // if(transferErrorTooltip) transferErrorTooltip.innerHTML = `<div>${props.translate(props.errors.amountTransfer)}</div>`
 
-
-
-  // var transferErrorTooltip = document.getElementById("transfer-amount-error")
-  // if(transferErrorTooltip) transferErrorTooltip.innerHTML = `<div>${props.translate(props.errors.amountTransfer)}</div>`
-
-  // var transferErrorTooltip = document.getElementById("transfer-amount-error")
-  // if(transferErrorTooltip) transferErrorTooltip.innerHTML = `<div>${props.translate(props.errors.amountTransfer)}</div>`
 
   function getWalletIconName(type, walletName) {
     if (walletName === "PROMO CODE") {
@@ -182,9 +139,6 @@ const TransferForm = (props) => {
                             autoComplete="off"
                           />
                         </div>
-                        {/* {props.account !== false && (
-                          <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal`}>{props.transferBalance}</div>
-                        )} */}
                       </div>
                     </div>
                   </div>
@@ -243,19 +197,6 @@ const TransferForm = (props) => {
           {props.account === false && importAccount()}
         </div>
 
-        {/* {props.account !== false && (
-          <div className="exchange-account">
-            <div className="exchange-account__container container">
-              <div className="exchange-account__content">
-                <div className="exchange-account__balance">{props.balanceLayout}</div>
-                <div className="exchange-account__adv-config">{props.advanceLayout}</div>
-              </div>
-
-              <PostTransferWithKey isChangingWallet={props.isChangingWallet} />
-            </div>
-          </div>
-        )} */}
-
         {props.account !== false && (
 
           <AdvanceAccount
@@ -271,8 +212,6 @@ const TransferForm = (props) => {
           />
         )}
       </div>
-
-      {props.transactionLoadingScreen}
     </div>
   )
 }

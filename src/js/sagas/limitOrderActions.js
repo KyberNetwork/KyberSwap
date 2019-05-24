@@ -53,12 +53,12 @@ function* selectToken(action) {
 
 
 function* updateRatePending(action) {
-  var { ethereum, source, dest, sourceTokenSymbol, isManual, sourceAmount } = action.payload;
+  var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, type  } = action.payload;
   
 
-  const state = store.getState();
-  const translate = getTranslate(state.locale);
-  const { destTokenSymbol, destAmount } = state.limitOrder;
+  // const state = store.getState();
+  // const translate = getTranslate(state.locale);
+  // const { destTokenSymbol, destAmount } = state.limitOrder;
 
 
   var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount)
@@ -66,11 +66,11 @@ function* updateRatePending(action) {
 
   try{
     var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
-    var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmoutRefined, lastestBlock)
-    var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", source, dest, sourceAmoutZero, lastestBlock)
+    var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutRefined, lastestBlock)
+    var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutZero, lastestBlock)
     var { expectedPrice, slippagePrice } = rate
 
-    yield put.resolve(limitOrderActions.updateRateComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, true))
+    yield put.resolve(limitOrderActions.updateRateComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, type))
 
   }catch(err){
     console.log(err)
@@ -83,9 +83,9 @@ function* updateRatePending(action) {
 }
 
 function* fetchFee(action){
-  var { userAddr, source, dest } = action.payload
+  var { userAddr, src, dest, srcAmount, destAmount } = action.payload
   try{
-    var fee = yield call(getFee, userAddr, source, dest)
+    var fee = yield call(getFee, userAddr, src, dest, srcAmount, destAmount)
     yield put(limitOrderActions.fetchFeeComplete(fee))
   }catch(err){
     console.log(err)

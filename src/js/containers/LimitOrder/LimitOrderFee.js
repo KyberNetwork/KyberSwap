@@ -22,12 +22,24 @@ import * as converter from "../../utils/converter"
 })
 
 class LimitOrderFee extends React.Component {
-
   componentDidMount = () =>{
-    if (common.isUserLogin() && this.props.account !== false){
-      this.props.dispatch(limitOrderActions.fetchFee(this.props.account.address, this.props.limitOrder.sourceTokenSymbol, this.props.limitOrder.destTokenSymbol))
-    }
+    this.fetchFee()
+    this.intervalFetchFee = setInterval(this.fetchFee, 10000)
+  }
 
+  componentWillUnmount = () => {
+    clearInterval(this.intervalFetchFee)
+  }
+
+  fetchFee = () => {
+    if (common.isUserLogin() && this.props.account !== false){
+      var userAddr = this.props.account.address
+      var src = this.props.tokens[this.props.limitOrder.sourceTokenSymbol].address
+      var dest = this.props.tokens[this.props.limitOrder.destTokenSymbol].address
+      var srcAmount = this.props.limitOrder.sourceAmount
+      var destAmount = this.props.limitOrder.destAmount
+      this.props.dispatch(limitOrderActions.fetchFee(userAddr, src, dest, srcAmount, destAmount))
+    }
   }
 
   redirectToSwap = () => {

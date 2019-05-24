@@ -2,7 +2,7 @@ import { take, put, call, fork, select, takeEvery, all, cancel } from 'redux-sag
 import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
 import { clearSession, setGasPrice, setBalanceToken, closeChangeWallet } from "../actions/globalActions"
-import { fetchExchangeEnable } from "../actions/exchangeActions"
+import { fetchExchangeEnable, throwErrorSourceAmount } from "../actions/exchangeActions"
 import * as exchangeActions from "../actions/exchangeActions"
 import * as utilActions from '../actions/utilActions'
 import * as common from "./common"
@@ -190,7 +190,7 @@ export function* importNewAccount(action) {
 
     if (+maxCapOneExchange == 0){
       var linkReg = 'https://kybernetwork.zendesk.com'
-      yield put(thowErrorNotPossessKGt(translate("error.not_possess_kgt", {link: linkReg}) || "There seems to be a problem with your address, please contact us for more details"))
+      yield put(throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.zeroCap , translate("error.not_possess_kgt", {link: linkReg}) || "There seems to be a problem with your address, please contact us for more details"))
     }
 
     //update token and token balance

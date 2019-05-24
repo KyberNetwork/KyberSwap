@@ -21,14 +21,6 @@ import { LimitOrderForm, LimitOrderSubmit, LimitOrderFee, LimitOrderList, LimitO
 })
 
 export default class LimitOrderBody extends React.Component {
-  renderTokenSymbol = (token) => {
-    return token.substituteSymbol ? token.substituteSymbol : token.symbol;
-  }
-
-  renderTokenImage = (token) => {
-    return token.substituteImage ? token.substituteImage : token.symbol;
-  }
-
   findTokenBySymbol = (tokens, symbol) => {
     return  tokens.find(token => {
       return token.symbol === symbol;
@@ -122,20 +114,53 @@ export default class LimitOrderBody extends React.Component {
     this.props.dispatch(globalActions.updateTitleWithRate());
   }
 
+  updateGlobal = (sourceTokenSymbol, sourceToken, destTokenSymbol, destToken) => {
+    var path = constants.BASE_HOST + `/${constants.LIMIT_ORDER_CONFIG.path}/` + sourceTokenSymbol.toLowerCase() + "-" + destTokenSymbol.toLowerCase()
+    path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
+    this.props.dispatch(globalActions.goToRoute(path))
+    this.props.dispatch(globalActions.updateTitleWithRate());
+
+    var sourceAmount = this.props.limitOrder.sourceAmount
+    this.props.dispatch(limitOrderActions.updateRate(this.props.ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken));
+  }
+
+  selectSourceToken = (symbol) => {
+    var sourceTokenSymbol = symbol
+    var sourceToken = this.props.tokens[sourceTokenSymbol].address
+    var destTokenSymbol = this.props.limitOrder.destTokenSymbol
+    var destToken = this.props.tokens[destTokenSymbol].address
+    this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "source"));
+
+    this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
+    this.props.global.analytics.callTrack("trackChooseToken", "from", symbol);
+  }
+
+  selectDestToken = (symbol) => {
+    var sourceTokenSymbol = this.props.limitOrder.sourceTokenSymbol
+    var sourceToken = this.props.tokens[sourceTokenSymbol].address
+    var destTokenSymbol = symbol
+    var destToken = this.props.tokens[destTokenSymbol].address
+    this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "dest"));
+
+    this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
+    this.props.global.analytics.callTrack("trackChooseToken", "to", symbol);
+  }
+
   render() {
     return (
       <div className={"limit-order-body"}>
         <div className="limit-order-body--form">
           <div>
             <LimitOrderForm
-              chooseToken = {this.chooseToken}
-              availableBalanceTokens = {this.getModifiedTokenList()}
+              selectSourceToken={this.selectSourceToken}
+              selectDestToken ={this.selectDestToken}
+              availableBalanceTokens={this.getModifiedTokenList()}
             />
           </div>
           <div>
             <div>
               <LimitOrderAccount
-                chooseToken={this.chooseToken}
+                chooseToken={this.selectSourceToken}
                 getTokenListWithoutEthAndWeth={this.getTokenListWithoutEthAndWeth}
                 mergeEthIntoWeth={this.mergeEthIntoWeth}
                 getAvailableBalanceTokenList={this.getAvailableBalanceTokenList}
