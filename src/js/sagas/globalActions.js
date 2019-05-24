@@ -196,12 +196,17 @@ export function* getMaxGasPrice(action){
 }
 
 
-function getGasExchange(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
+function getGasExchange(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, maxGas){
   var safeLowGas = parseFloat(safeLowGas)
   var standardGas = parseFloat(standardGas)
   var fastGas = parseFloat(fastGas)
+  var superFastGas = parseFloat(superFastGas)
   var defaultGas = parseFloat(defaultGas)
   var maxGas = parseFloat(maxGas)
+  if (superFastGas > maxGas) {
+    superFastGas = maxGas;
+  }
+
   if (fastGas > maxGas) {
     var returnSuggest = {}
     returnSuggest.fastGas = maxGas
@@ -210,12 +215,12 @@ function getGasExchange(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
     returnSuggest.defaultGas = maxGas
     return returnSuggest
   } else {
-    return {safeLowGas, standardGas, fastGas, defaultGas}
+    return {safeLowGas, standardGas, fastGas, superFastGas, defaultGas}
   }
 }
 
 export function* setGasPrice(action) {
-  var safeLowGas, standardGas, fastGas, defaultGas
+  var safeLowGas, standardGas, fastGas, defaultGas, superFastGas
   var state = store.getState();
   var ethereum = state.connection.ethereum;
   var accountType = state.account.account.type;
@@ -229,6 +234,7 @@ export function* setGasPrice(action) {
     standardGas = gasPrice.standard
     defaultGas = gasPrice.default
     fastGas = gasPrice.fast
+    superFastGas = 2 * fastGas;
     
     var selectedGas = 's'
     var fastGasFloat = parseFloat(fastGas)
@@ -238,10 +244,14 @@ export function* setGasPrice(action) {
       selectedGas = 'f'
     }
 
-    yield put(actionsTransfer.setGasPriceTransferComplete(safeLowGas, standardGas, fastGas, defaultGas, selectedGas))
+    if (fastGasFloat <= 10) {
+      superFastGas = 20;
+    }
 
-    var gasExchange = getGasExchange(safeLowGas, standardGas, fastGas, defaultGas, maxGasPrice)
-    yield put(actionsExchange.setGasPriceSwapComplete(gasExchange.safeLowGas, gasExchange.standardGas, gasExchange.fastGas, gasExchange.defaultGas, selectedGas))
+    yield put(actionsTransfer.setGasPriceTransferComplete(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas))
+
+    var gasExchange = getGasExchange(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, maxGasPrice)
+    yield put(actionsExchange.setGasPriceSwapComplete(gasExchange.safeLowGas, gasExchange.standardGas, gasExchange.fastGas, gasExchange.superFastGas, gasExchange.defaultGas, selectedGas))
 
   }catch (err) {
     console.log(err.message)

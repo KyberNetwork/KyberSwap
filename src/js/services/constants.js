@@ -66,6 +66,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   gasPrice: 20,
   selectedGas: 'f',
   gasPriceSuggest: {
+    superFastGas: 40,
     fastGas: 20,
     standardGas: 20,
     safeLowGas: 20,
@@ -147,6 +148,7 @@ const INIT_TRANSFER_FORM_STATE = {
   gasPrice: 20,
   selectedGas: 'f',
   gasPriceSuggest: {
+    superFastGas: 40,
     fastGas: 20,
     standardGas: 20,
     safeLowGas: 20,
