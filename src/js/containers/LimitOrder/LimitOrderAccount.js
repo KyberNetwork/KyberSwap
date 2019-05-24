@@ -74,12 +74,10 @@ export default class LimitOrderAccount extends React.Component {
     )
   }
 
-  getFilteredTokens = (orderByDesc = true, itemNumber = false) => {
-    let tokens = this.props.tokens;
-    let filteredTokens = [];
+  getAvailableBalanceTokens = (tokens) => {
     const orderList = this.props.limitOrder.listOrder;
 
-    tokens = Object.keys(tokens).map(key => {
+    return Object.keys(tokens).map(key => {
       let token = tokens[key];
       const openOrderTokens = orderList.filter(order => {
         return order.source === token.symbol && order.status === 'active';
@@ -98,6 +96,23 @@ export default class LimitOrderAccount extends React.Component {
 
       return token;
     });
+  };
+
+  findTokenBySymbol = (tokens, symbol) => {
+    return  tokens.find(token => {
+      return token.symbol === symbol;
+    });
+  };
+
+  getTokenListWithoutEthAndWeth = (tokens) => {
+    return tokens.filter(token => {
+      return token.symbol !== 'ETH' && token.symbol !== 'WETH';
+    });
+  }
+
+  getFilteredTokens = (orderByDesc = true, itemNumber = false) => {
+    let filteredTokens = [];
+    const tokens = this.getAvailableBalanceTokens(this.props.tokens);
 
     if (orderByDesc) {
       filteredTokens = converters.sortEthBalance(tokens);
@@ -105,18 +120,11 @@ export default class LimitOrderAccount extends React.Component {
       filteredTokens = converters.sortASCEthBalance(tokens);
     }
 
-    let eth = filteredTokens.find(token => {
-      return token.symbol === 'ETH';
-    });
-
-    let weth = filteredTokens.find(token => {
-      return token.symbol === 'WETH';
-    });
+    const eth = this.findTokenBySymbol(filteredTokens, 'ETH');
+    let weth = this.findTokenBySymbol(filteredTokens, 'WETH');
     weth = Object.create(weth);
 
-    filteredTokens = filteredTokens.filter(token => {
-      return token.symbol !== 'ETH' && token.symbol !== 'WETH';
-    });
+    filteredTokens = this.getTokenListWithoutEthAndWeth(filteredTokens);
 
     if ((eth && eth.balance > 0) && weth) {
       weth.substituteName = 'ETH*';
