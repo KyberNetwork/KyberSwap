@@ -6,6 +6,7 @@ import * as globalActions from "../../actions/globalActions"
 import * as common from "../../utils/common"
 import * as constants from "../../services/constants"
 import { LimitOrderForm, LimitOrderSubmit, LimitOrderFee, LimitOrderList, LimitOrderAccount, LimitOrderListModal } from "../LimitOrder"
+import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -29,17 +30,17 @@ export default class LimitOrderBody extends React.Component {
 
   getTokenListWithoutEthAndWeth = (tokens) => {
     return tokens.filter(token => {
-      return token.symbol !== 'ETH' && token.symbol !== 'WETH';
+      return token.symbol !== 'ETH' && token.symbol !== BLOCKCHAIN_INFO.wrapETHToken;
     });
   }
 
   mergeEthIntoWeth = (tokens) => {
     const eth = this.findTokenBySymbol(tokens, 'ETH');
-    let weth = this.findTokenBySymbol(tokens, 'WETH');
+    let weth = this.findTokenBySymbol(tokens, BLOCKCHAIN_INFO.wrapETHToken);
 
     if (weth) {
       weth = Object.create(weth);
-      weth.substituteSymbol = 'ETH*';
+      weth.substituteSymbol = constants.WETH_SUBSTITUTE_NAME;
       weth.substituteImage = 'eth';
 
       if (eth) {
@@ -86,32 +87,6 @@ export default class LimitOrderBody extends React.Component {
     }
 
     return tokens;
-  }
-
-  chooseToken = (symbol, address, type) => {
-    var path
-    let sourceTokenSymbol = type === "source" ? symbol : this.props.limitOrder.sourceTokenSymbol;
-    let destTokenSymbol = type === "source" ? this.props.limitOrder.destTokenSymbol : symbol;
-
-    if (sourceTokenSymbol.toLowerCase() === "eth") {
-      sourceTokenSymbol = "WETH";
-    } else if (destTokenSymbol.toLowerCase() === "eth") {
-      destTokenSymbol = "WETH";
-    }
-
-    this.props.dispatch(limitOrderActions.selectTokenAsync(type === "source" ? sourceTokenSymbol : destTokenSymbol, address, type));
-
-    if (type === "source") {
-      path = constants.BASE_HOST + `/${constants.LIMIT_ORDER_CONFIG.path}/` + sourceTokenSymbol.toLowerCase() + "-" + destTokenSymbol.toLowerCase()
-      this.props.global.analytics.callTrack("trackChooseToken", "from", symbol);
-    } else {
-      path = constants.BASE_HOST + `/${constants.LIMIT_ORDER_CONFIG.path}/` + sourceTokenSymbol.toLowerCase() + "-" + destTokenSymbol.toLowerCase()
-      this.props.global.analytics.callTrack("trackChooseToken", "to", symbol);
-    }
-
-    path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
-    this.props.dispatch(globalActions.goToRoute(path))
-    this.props.dispatch(globalActions.updateTitleWithRate());
   }
 
   updateGlobal = (sourceTokenSymbol, sourceToken, destTokenSymbol, destToken) => {

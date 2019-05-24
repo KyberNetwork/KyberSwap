@@ -41,11 +41,11 @@ const TokenSelectorView = (props) => {
     const wethAddress = props.listToken.filter(item => item.symbol === "WETH")[0].address;
     return (
       <div className="select-item__title" onClick={e => { 
-        props.selectItem(e, "WETH", wethAddress);
+        props.selectItem(e, BLOCKCHAIN_INFO.wrapETHToken, wethAddress);
         props.hideTokens();
       }}>
         <div className="item-icon">
-          <img alt={"ETH*"} src={getAssetUrl(`tokens/eth.svg`)} />
+          <img alt={constants.WETH_SUBSTITUTE_NAME} src={getAssetUrl(`tokens/eth.svg`)} />
         </div>
         <div className={"select-item__information"}>
           <div>

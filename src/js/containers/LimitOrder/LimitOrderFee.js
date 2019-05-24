@@ -1,11 +1,12 @@
 import React from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router";
-
 import * as limitOrderActions from "../../actions/limitOrderActions"
 import * as common from "../../utils/common"
 import { getTranslate } from 'react-localize-redux'
 import * as converter from "../../utils/converter"
+import BLOCKCHAIN_INFO from "../../../../env";
+import * as constants from "../../services/constants"
 
 @connect((store, props) => {
   const account = store.account.account
@@ -69,7 +70,7 @@ class LimitOrderFee extends React.Component {
       return (
         <div className={"limit-order-fee"}>
           <div className="limit-order-fee__text">
-            Fee: {calculateFee} {this.props.limitOrder.sourceTokenSymbol === 'WETH' ? 'ETH*' : this.props.limitOrder.sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of {sourceAmount} {this.props.limitOrder.destTokenSymbol === 'WETH' ? 'ETH*' : this.props.limitOrder.destTokenSymbol})
+            Fee: {calculateFee} {this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of {sourceAmount} {this.props.limitOrder.destTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.destTokenSymbol})
           </div>
           <div>
             <a onClick={e => this.redirectToSwap()}>Buy 3000KNC</a>{' '}

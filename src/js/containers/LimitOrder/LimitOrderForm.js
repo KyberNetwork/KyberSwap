@@ -7,12 +7,11 @@ import { filterInputNumber } from "../../utils/validators";
 import * as limitOrderActions from "../../actions/limitOrderActions"
 import * as globalActions from "../../actions/globalActions"
 import { TokenSelector } from "../TransactionCommon"
-import constants from "../../services/constants"
-
+import * as constants from "../../services/constants"
 import { default as _ } from 'underscore';
-
 import { LimitOrderCompareRate } from "../LimitOrder";
 import * as converters from "../../utils/converter";
+import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -217,7 +216,7 @@ export default class LimitOrderForm extends React.Component {
           <div className={`exchange-content__item exchange-content__item--left exchange-content__item--no-pd-left select-token ${errorTriggerRate != "" ? "error" : ""} ${this.props.limitOrder.errors.rateWarning !== "" ? "rate-warning" : ""}`}>
             <div className={`input-div-content`}>
               <div className={'exchange-content__label-content exchange-content__label-content--disabled'}>
-                {this.props.limitOrder.sourceTokenSymbol === 'WETH' ? 'ETH*' : this.props.limitOrder.sourceTokenSymbol} / {this.props.limitOrder.destTokenSymbol === 'WETH' ? 'ETH*' : this.props.limitOrder.destTokenSymbol}
+                {this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.sourceTokenSymbol} / {this.props.limitOrder.destTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.destTokenSymbol}
               </div>
               <div id="trigger-rate-error-trigger" className="input-tooltip-wrapper input-tooltip-wrapper__rate" data-tip={`<div>${errorTriggerRate}</div>`} data-html={true} data-event='click focus' data-for="trigger-rate-error" data-scroll-hide="false">
               {/* <div className={"main-input main-input__left main-input--rate"}> */}

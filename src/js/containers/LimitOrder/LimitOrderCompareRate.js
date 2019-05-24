@@ -2,6 +2,8 @@ import React from "react"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as converters from "../../utils/converter"
+import BLOCKCHAIN_INFO from "../../../../env";
+import * as constants from "../../services/constants"
 
 @connect((store) => {
   const account = store.account.account
@@ -17,8 +19,8 @@ import * as converters from "../../utils/converter"
 
 export default class LimitOrderCompareRate extends React.Component {
   render() {
-    const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol === 'WETH' ? 'ETH*' : this.props.limitOrder.sourceTokenSymbol;
-    const destTokenSymbol = this.props.limitOrder.destTokenSymbol === 'WETH' ? 'ETH*' : this.props.limitOrder.destTokenSymbol;
+    const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.sourceTokenSymbol;
+    const destTokenSymbol = this.props.limitOrder.destTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.destTokenSymbol;
 
     if (this.props.limitOrder.isSelectToken) {
       return (
