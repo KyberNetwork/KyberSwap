@@ -84,6 +84,7 @@ export default class TopBalance extends React.Component {
 
         if (this.props.isLimitOrderTab) {
             orderedTokens = this.props.getFilteredTokens(true, maxItemNumber);
+            console.log(orderedTokens);
         } else {
             orderedTokens = this.reorderToken(tokens, maxItemNumber);
         }
@@ -93,7 +94,7 @@ export default class TopBalance extends React.Component {
             const classTokenItem = (isFixedSourceToken && this.props.screen === "swap") || (token.symbol === "PT" && this.props.screen === "transfer")
              ? "top-token-item--deactivated" : "";
             return <div className={`top-token-item ${classTokenItem} ${this.props.activeSymbol === token.symbol ? "active" : ""}`} key={token.symbol} onClick={(e) => { this.selectBalance(token.symbol) }}>
-                <div className="top-token-item__symbol">{token.substituteName ? token.substituteName : token.symbol}</div>
+                <div className="top-token-item__symbol">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</div>
                 <div className="top-token-item__balance">{converters.roundingNumber(converters.toT(token.balance, token.decimals))}</div>
             </div>
         })

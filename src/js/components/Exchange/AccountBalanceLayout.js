@@ -35,8 +35,8 @@ const AccountBalanceLayout = (props) => {
     } else {
       if (props.isLimitOrderTab) {
         return tokens.sort((firstToken, secondToken) => {
-          const firstTokenSymbol = firstToken.substituteName ? firstToken.substituteName : firstToken.symbol;
-          const secondTokenSymbol = secondToken.substituteName ? secondToken.substituteName : secondToken.symbol;
+          const firstTokenSymbol = firstToken.substituteSymbol ? firstToken.substituteSymbol : firstToken.symbol;
+          const secondTokenSymbol = secondToken.substituteSymbol ? secondToken.substituteSymbol : secondToken.symbol;
 
           return props.sortValue ? firstTokenSymbol.localeCompare(secondTokenSymbol) : secondTokenSymbol.localeCompare(firstTokenSymbol);
         });
@@ -80,7 +80,7 @@ const AccountBalanceLayout = (props) => {
             onClick={(e) => props.selectBalance(token.symbol)}
             className={"account-balance__token-item" + classBalance}
           >
-            <div className="account-balance__token-symbol">{token.substituteName ? token.substituteName : token.symbol}</div>
+            <div className="account-balance__token-symbol">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</div>
             <div className="account-balance__token-balance">{converts.roundingNumber(balance)}</div>
           </div>
         )
