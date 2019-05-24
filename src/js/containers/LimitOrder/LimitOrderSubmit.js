@@ -57,7 +57,7 @@ export default class LimitOrderSubmit extends React.Component {
       return 0
     }
     this.props.limitOrder.listOrder.map(value => {
-      if (value.status === "active" && value.source === this.props.limitOrder.sourceTokenSymbol && value.address.toLowerCase() === this.props.account.address.toLowerCase()) {
+      if (value.status === "open" && value.source === this.props.limitOrder.sourceTokenSymbol && value.address.toLowerCase() === this.props.account.address.toLowerCase()) {
         sourceAmount += parseFloat(value.src_amount);
       }
     })
@@ -297,12 +297,12 @@ export default class LimitOrderSubmit extends React.Component {
       return item.source === this.props.limitOrder.sourceTokenSymbol &&
             item.dest === this.props.limitOrder.destTokenSymbol &&
             item.address.toLowerCase() === this.props.account.address.toLowerCase() &&
-            item.status === "active" &&
+            item.status === "open" &&
             converters.compareTwoNumber(this.props.limitOrder.triggerRate, item.min_rate) < 1;
     });
 
     const tableComp = filterHigherRate.map(item => {
-      const datetime = common.getFormattedDate(item.status === "active" ? item.created_time : item.cancel_time);
+      const datetime = common.getFormattedDate(item.status === "open" ? item.created_time : item.cancel_time);
       const rate = converters.roundingNumber(item.min_rate);
       return (
         <div key={item.id} className="rate-warning-tooltip__order">
@@ -355,18 +355,21 @@ export default class LimitOrderSubmit extends React.Component {
     var isWaiting = this.props.limitOrder.isSelectToken || this.props.limitOrder.errors.sourceAmount.length > 0 || this.props.limitOrder.errors.triggerRate.length > 0
     return (
       <div className={"limit-order-submit"}>
-        <Tooltip 
+        {this.props.account !== false && common.isUserLogin() && (
+          <Tooltip
             open={this.props.limitOrder.errors.rateWarning !== ""}
             position="right"
             interactive={true}
             animateFill={false}
             onRequestClose={() => this.closeRateWarningTooltip()}
             html={this.getRateWarningTooltip()}
-        >
-          <button className={`accept-button ${isDisable ? "disable" : ""} ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder}>
-            {isUserLogin() ? "Submit" : "Login to Submit Order"}
-          </button>
-        </Tooltip>
+          >
+            <button className={`accept-button ${isDisable ? "disable" : ""} ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder}>
+              {isUserLogin() ? "Submit" : "Login to Submit Order"}
+            </button>
+          </Tooltip>
+        )}
+       
         <div>
           {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.approveZero && <ApproveZeroModal getMaxGasApprove={this.getMaxGasApprove.bind(this)} />}
           {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.approveMax && <ApproveMaxModal getMaxGasApprove={this.getMaxGasApprove.bind(this)} />}
