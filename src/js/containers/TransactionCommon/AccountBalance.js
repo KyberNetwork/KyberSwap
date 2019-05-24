@@ -172,6 +172,8 @@ export default class AccountBalance extends React.Component {
         walletName={this.props.walletName}
         isOnDAPP = {this.props.isOnDAPP}
         selectBalance = {this.selectBalance}
+        isLimitOrderTab={this.props.isLimitOrderTab}
+        getFilteredTokens={this.props.getFilteredTokens}
       />
     )
   }

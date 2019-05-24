@@ -374,7 +374,7 @@
     "week": "Week",
     "month": "Month",
     "submit_order": "Submit Order",
-    "your_balance": "Your Balance",
+    "your_balance": "Your Available Balance",
     "eth_not_support": "WETH is the Wrapping Token of ETH in KyberSwap, because KyberSwap doesn't support ETH.",
     "canceling_order_message": "You are canceling this order",
     "fee_info_message": "Don’t worry. You will not be charged now. \nYou pay fees only when transaction is executed (broadcasted & mined).",

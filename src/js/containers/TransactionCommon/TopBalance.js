@@ -1,11 +1,9 @@
 import React from "react"
 import { connect } from "react-redux"
-
 import * as converters from "../../utils/converter"
 import { getTranslate } from "react-localize-redux";
 
 @connect((store, props) => {
-
     return {
         account: store.account,
         global: store.global,
@@ -75,18 +73,27 @@ export default class TopBalance extends React.Component {
         this.props.showMore()
     }
 
-    reorderToken = (tokens) => {
-        return converters.sortEthBalance(tokens)
+    reorderToken = (tokens, maxItemNumber) => {
+        const orderedTokens = converters.sortEthBalance(tokens);
+        return orderedTokens.slice(0, maxItemNumber)
     }
 
     renderToken = (tokens) => {
+        let orderedTokens = [];
+        const maxItemNumber = 3;
+
+        if (this.props.isLimitOrderTab) {
+            orderedTokens = this.props.getFilteredTokens(true, maxItemNumber);
+        } else {
+            orderedTokens = this.reorderToken(tokens, maxItemNumber);
+        }
+
         var isFixedSourceToken = !!(this.props.account && this.props.account.account.type ==="promo");
-        var maxToken = 3
-        var tokenLayout = tokens.slice(0, maxToken).map(token => {
+        var tokenLayout = orderedTokens.map(token => {
             const classTokenItem = (isFixedSourceToken && this.props.screen === "swap") || (token.symbol === "PT" && this.props.screen === "transfer")
              ? "top-token-item--deactivated" : "";
             return <div className={`top-token-item ${classTokenItem} ${this.props.activeSymbol === token.symbol ? "active" : ""}`} key={token.symbol} onClick={(e) => { this.selectBalance(token.symbol) }}>
-                <div className="top-token-item__symbol">{token.symbol}</div>
+                <div className="top-token-item__symbol">{token.substituteName ? token.substituteName : token.symbol}</div>
                 <div className="top-token-item__balance">{converters.roundingNumber(converters.toT(token.balance, token.decimals))}</div>
             </div>
         })
@@ -94,12 +101,9 @@ export default class TopBalance extends React.Component {
     }
 
     render() {
-        //select top 4 balances
-        var newTokens = this.reorderToken(this.props.tokens)
-
         return (
             <div className="top-token">
-                <div className="top-token-content">{this.renderToken(newTokens)}</div>
+                <div className="top-token-content">{this.renderToken(this.props.tokens)}</div>
                 <div className="top-token-more" onClick={this.showMore}>{this.props.translate("market.more") || "more"}</div>
             </div>
         )
