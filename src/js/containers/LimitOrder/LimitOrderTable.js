@@ -144,35 +144,6 @@ export default class LimitOrderTable extends Component {
     )
   }
 
-  getPairCell = (props) => {
-		const { source, dest, status, created_time, cancel_time, min_rate } = props.value;
-    const { screen } = this.props;
-
-    const datetime = status === "active" ? created_time : cancel_time;
-    const rate = converters.roundingNumber(min_rate);
-    
-    if (screen === "mobile") {
-      return (
-        <div className="cell-pair__mobile">
-          {this.getDateCell({ value: datetime })}
-          <div>
-            <span>{source.toUpperCase()}</span>
-            <span>&rarr;</span>
-            <span>{dest.toUpperCase()}</span>
-          </div>
-          <div className="cell-pair__mobile--rate">{`${source.toUpperCase()}/${dest.toUpperCase()} >= ${rate}`}</div>
-        </div>
-      )
-    }
-    return (
-      <div>
-        <span>{source.toUpperCase()}</span>
-        <span>&rarr;</span>
-        <span>{dest.toUpperCase()}</span>
-      </div>
-    )
-  }
-
   getConditionCell = (props) => {
     const { source, dest, status, created_time, cancel_time, min_rate } = props.value;
     const { screen } = this.props;

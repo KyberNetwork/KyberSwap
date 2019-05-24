@@ -381,7 +381,7 @@ const INIT_LIMIT_ORDER_STATE = {
     sourceAmount: [],
     triggerRate: [],
 
-   
+    rateWarning: '',
     rateError: '',
     rateAmount: '',
     rateSystem: ''

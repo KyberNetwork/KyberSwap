@@ -110,7 +110,7 @@ export default class ConfirmModal extends React.Component {
                 nonce: nonce,
                 source: this.props.limitOrder.sourceTokenSymbol,
                 dest: this.props.limitOrder.destTokenSymbol,
-                src_amount: this.props.limitOrder.sourceAmount,
+                src_amount: parseFloat(this.props.limitOrder.sourceAmount),
                 min_rate: this.props.limitOrder.triggerRate,
                 fee: this.props.limitOrder.orderFee,
                 signature: signature

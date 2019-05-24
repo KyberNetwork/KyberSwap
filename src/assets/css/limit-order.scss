@@ -1,5 +1,6 @@
 @import "./modals.scss";
-
+@import "./components/_button.scss";
+@import "~react-tippy/dist/tippy.css";
 // -------------------------
 // ----- Common styles -----
 // -------------------------
@@ -1267,5 +1268,94 @@
         .cancel-process{
             margin-right: 25px;
         }
+    }
+}
+
+.rate-warning-tooltip {
+    width: 350px;
+    height: 100%;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px 0 rgba(87, 102, 119, 0.14);
+    border: solid 1px #1e87f0;
+    background-color: #ffffff;
+    padding: 15px 20px;
+    font-size: 12px;
+    position: relative;
+    
+
+    &::before, &::after {
+        right: 100%;
+        top: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    &::after {
+        border-right-color: #ffffff;
+        border-width: 10px;
+        margin-top: -10px;
+    }
+
+    &::before {
+        border-right-color: #1e87f0;
+        border-width: 11px;
+        margin-top: -11px;
+    }
+
+    &__description {
+        font-size: 11px;
+        font-weight: 600;
+        color: #222222;
+        margin-bottom: 20px;
+        text-align: left
+    }
+
+    &__order-container {
+        margin-bottom: 20px;
+        max-height: 100px;
+        overflow-y: scroll;
+    }
+
+    &__order {
+        font-size: 12px;
+        font-weight: 500;
+        color: #222222;
+        display: flex;
+        justify-content: space-between;
+        margin: 8px 0;
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .btn-cancel {
+        @extend .btn-cancel;
+    }
+
+    .btn-confirm {
+        @extend .btn-confirm;
+    }
+
+    .btn-cancel, .btn-confirm {
+        font-size: 11px;
+        width: 110px;
+        height: 35px;
+        padding: 0 15px;
+    }
+}
+
+// Override React Tippy
+.tippy-popper {
+    left: -155px !important;
+    top: -160px !important;
+
+    .tippy-tooltip {
+        background-color: transparent;
     }
 }

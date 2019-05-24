@@ -741,6 +741,11 @@
       }
     }
   }
+
+  &.rate-warning {
+    border: solid 1px #1e87f0;
+    position: relative;
+  }
 }
 
 .select-token-panel{

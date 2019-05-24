@@ -1,0 +1,28 @@
+%btn {
+    width: 151px;
+    height: 40px;
+    border-radius: 22.5px;
+    padding: 0 25px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+
+    @include screen-max-width(medium) {
+        margin: 0;
+    }
+}
+
+.btn-cancel {
+    @extend %btn;
+    color: #222222;
+    background-color: #f5f6f8;
+}
+
+.btn-confirm {
+    @extend %btn;
+    color: #ffffff;
+    background-color: #ef8102;
+    &:hover {
+        background-color: $color-swap-light;
+    }
+}
