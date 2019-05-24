@@ -83,9 +83,9 @@ function* updateRatePending(action) {
 }
 
 function* fetchFee(action){
-  var { userAddr, source, dest } = action.payload
+  var { userAddr, src, dest, srcAmount, destAmount } = action.payload
   try{
-    var fee = yield call(getFee, userAddr, source, dest)
+    var fee = yield call(getFee, userAddr, src, dest, srcAmount, destAmount)
     yield put(limitOrderActions.fetchFeeComplete(fee))
   }catch(err){
     console.log(err)

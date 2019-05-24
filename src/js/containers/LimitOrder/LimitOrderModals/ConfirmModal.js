@@ -9,7 +9,7 @@ import constants from "../../../services/constants"
 
 import {getWallet} from "../../../services/keys"
 
-import {getNonce, submitOrder} from "../../../services/limit_order"
+import {getNonce, submitOrder, getFee} from "../../../services/limit_order"
 import * as converters from "../../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../../env"
 
@@ -33,11 +33,32 @@ export default class ConfirmModal extends React.Component {
         this.state = {
             err: "",
             isConfirm: false,
-            isFinish: false
+            isFetchFee : true,
+            isFinish: false,
+            fee : constants.LIMIT_ORDER_CONFIG.maxFee
         }
         this.onSubmit = this.onSubmit.bind(this);
     }
     
+    componentDidMount = () => {
+      this.fetchFee()
+    }
+
+    async fetchFee(){
+      var userAddr = this.props.account.address
+      var src = this.props.tokens[this.props.limitOrder.sourceTokenSymbol].address
+      var dest = this.props.tokens[this.props.limitOrder.destTokenSymbol].address
+      var srcAmount = this.props.limitOrder.sourceAmount
+      var destAmount = this.props.limitOrder.destAmount
+      try{
+        var fee = await getFee(userAddr, src, dest, srcAmount, destAmount)        
+        this.setState({isFetchFee : false, fee: fee})
+      }catch(err){
+        console.log(err)
+        this.setState({isFetchFee : false})
+      }
+    }
+
     async getUserNonce(){
         //user nonce from server
         try{
@@ -63,6 +84,7 @@ export default class ConfirmModal extends React.Component {
     }
 
     async onSubmit(){
+        if(this.state.isFetchFee) return
         //reset        
         var wallet = getWallet(this.props.account.type)
         var password = "";
@@ -87,7 +109,7 @@ export default class ConfirmModal extends React.Component {
             minConversionRate = converters.toHex(minConversionRate)
 
             
-            var feeInPrecision = this.props.limitOrder.orderFee 
+            var feeInPrecision = this.state.fee
             feeInPrecision = converters.toTWei(feeInPrecision, 4)
             feeInPrecision = converters.toHex(feeInPrecision)
 
@@ -266,7 +288,7 @@ export default class ConfirmModal extends React.Component {
                 {this.props.translate("modal.cancel") || "Cancel"}
               </button>
               <button className="btn-confirm"
-                disabled={this.state.isConfirm}
+                disabled={this.state.isConfirm || this.state.isFetchFee}
                 onClick={e => this.onSubmit()}>{this.props.translate("modal.confirm") || "Confirm"}</button>
             </div>}
 

@@ -19,7 +19,6 @@ import bowser from 'bowser'
 
 function* selectToken(action) {
   const { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type} = action.payload
-  // yield put(utilActions.hideSelectToken())
   
   //check select same token
   
@@ -34,9 +33,6 @@ function* selectToken(action) {
 
   yield call(estimateGasNormal)
   
-  // if (ethereum){
-  //   yield call(ethereum.fetchRateExchange, true)
-  // }
 
 }
 
@@ -114,19 +110,6 @@ function* updateRatePending(action) {
     }
   }
 }
-
-// function* updateRateAndValidateSource(action) {
-//   const state = store.getState();
-//   const { ethereum, source, dest, sourceValue, sourceTokenSymbol, sourceAmount, isManual, refetchSourceAmount } = action.payload;
-//   try {
-//     yield put(actions.updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount));
-//     if (state.account.account !== false) {
-//       yield call(verifyExchange);
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
 
 function* getRateSnapshot(ethereum, source, dest, sourceAmountHex) {
   try {

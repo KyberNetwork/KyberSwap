@@ -3,17 +3,40 @@ import BLOCKCHAIN_INFO from "../../../../env"
 
 const MAX_REQUEST_TIMEOUT = 3000
 
+const keyMapping = {
+    "id": "id",
+    "src": "sourceAddr",
+    "dst": "destAddr",
+    "src_amount": "src_amount",
+    "min_rate": "min_rate",
+    "addr": "address",
+    "nonce": "nonce",
+    "fee": "fee",
+    "status": "status",
+    "created_at": "created_time",
+    "updated_at": "cancel_time",
+    "msg": "msg"    
+}
+
+
+
 export function getOrders() {
     return new Promise((resolve, rejected) => {
-        timeout(MAX_REQUEST_TIMEOUT, fetch('/user/orders'))
+        timeout(MAX_REQUEST_TIMEOUT, fetch('/api/orders'))
             .then((response) => {
                 return response.json()
             }).then((result) => {
-                if (!result.error) {
-                    resolve(result.data)
-                } else {
-                    rejected(new Error("Cannot get user orders"))
-                }
+                var orderList = []
+                var fields = result.fields
+                result.orders.map(value => {
+                    var order = {}
+                    for (var i = 0; i < order.length; i++) {
+                        var field = keyMapping[fields[i]] ? keyMapping[fields[i]] : fields[i]
+                        order[field] = value[index]
+                    }
+                    orderList.push(order)
+                })
+                resolve(orderList)
             })
             .catch((err) => {
                 rejected(new Error("Cannot get user orders"))
@@ -24,7 +47,7 @@ export function getOrders() {
 
 export function submitOrder(order) {
     return new Promise((resolve, rejected) => {
-        timeout(MAX_REQUEST_TIMEOUT, fetch('/user/submit_order', {
+        timeout(MAX_REQUEST_TIMEOUT, fetch('/api/orders', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -35,11 +58,7 @@ export function submitOrder(order) {
             .then((response) => {
                 return response.json()
             }).then((result) => {
-                if (!result.error) {
-                    resolve(result.data)
-                } else {
-                    rejected(new Error("Cannot submit order"))
-                }
+                resolve(result)
             })
             .catch((err) => {
                 rejected(new Error("Cannot submit order"))
@@ -50,22 +69,17 @@ export function submitOrder(order) {
 
 export function cancelOrder(order) {
     return new Promise((resolve, rejected) => {
-        timeout(MAX_REQUEST_TIMEOUT, fetch('/user/cancel_order', {
-            method: 'POST',
+        timeout(MAX_REQUEST_TIMEOUT, fetch(`/api/orders/${order.id}/cancel`, {
+            method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(order)
+            }
         }))
             .then((response) => {
                 return response.json()
             }).then((result) => {
-                if (!result.error) {
-                    resolve("Cancel order successfully")
-                } else {
-                    rejected(new Error("Cannot cancel order"))
-                }
+                resolve(result.cancelled)
             })
             .catch((err) => {
                 rejected(new Error("Cannot cancel order"))
@@ -76,15 +90,11 @@ export function cancelOrder(order) {
 
 export function getNonce(userAddr, source, dest) {
     return new Promise((resolve, rejected) => {
-        timeout(MAX_REQUEST_TIMEOUT, fetch(`/user/nonce/${userAddr}/${source}/${dest}`))
+        timeout(MAX_REQUEST_TIMEOUT, fetch(`/api/orders/nonce?addr=${userAddr}&src=${source}&dst=${dest}`))
             .then((response) => {
                 return response.json()
             }).then((result) => {
-                if (!result.error) {
-                    resolve(result.nonce)
-                } else {
-                    rejected(new Error("Cannot get user nonce"))
-                }
+                resolve(result.nonce)
             })
             .catch((err) => {
                 rejected(new Error("Cannot get user nonce"))
@@ -93,17 +103,13 @@ export function getNonce(userAddr, source, dest) {
 }
 
 
-export function getFee(userAddr, source, dest) {
+export function getFee(userAddr, src, dest, src_amount, dst_amount) {
     return new Promise((resolve, rejected) => {
-        timeout(MAX_REQUEST_TIMEOUT, fetch(`/user/fee/${userAddr}/${source}/${dest}`))
+        timeout(MAX_REQUEST_TIMEOUT, fetch(`/api/orders/fee?addr=${userAddr}src=${src}&dst=${dest}&src_amount=${src_amount}&dst_amount=${dst_amount}`))
             .then((response) => {
                 return response.json()
             }).then((result) => {
-                if (!result.error) {
-                    resolve(result.fee)
-                } else {
-                    rejected(new Error("Cannot get user fee"))
-                }
+                resolve(result.fee)
             })
             .catch((err) => {
                 rejected(new Error("Cannot get user fee"))

@@ -45,14 +45,14 @@ export function setIsSelectTokenBalance(value) {
   }
 }
 
-export function fetchFee(userAddr, source, dest) {
+export function fetchFee(userAddr, src, dest, srcAmount, destAmount) {
   return {
     type: "LIMIT_ORDER.FETCH_FEE",
-    payload: { userAddr, source, dest }
+    payload: { userAddr, src, dest, srcAmount, destAmount }
   }
 }
 
-export function fetchFeeComplete(fee, err) {
+export function fetchFeeComplete(fee, err = null) {
   return {
     type: "LIMIT_ORDER.FETCH_FEE_COMPLETE",
     payload: { fee, err }

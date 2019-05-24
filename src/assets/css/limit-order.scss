@@ -119,15 +119,27 @@
         border-radius: 3px;
         font-size: 11px;
         font-weight: 500;
-        width: 66px;
+        // width: 66px;
+        margin: 0 auto;
         text-align: center;
 
-        &--active {
+        &--open {
             background-color: #deebff;
             color: #0049b0;
         }
 
-        &--cancel {
+        &--cancelled {
+            background-color: #ffebe5;
+            color: #bf2600;
+        }
+
+
+        &--invalidated {
+            background-color: #ffebe5;
+            color: #bf2600;
+        }
+
+        &--in_progress {
             background-color: #ffebe5;
             color: #bf2600;
         }
@@ -849,8 +861,8 @@
 // }
 
 .status-filter-modal {
-    width: 105px;
-    height: 105px;
+    width: 130px;
+    height: 170px;
     border-radius: 6px;
     box-shadow: 0 4px 12px 0 rgba(87, 102, 119, 0.14);
     border: solid 0.9px #d3d7db;

@@ -40,7 +40,7 @@ export default class LimitOrderTable extends Component {
 		const desktopColumns = [{
       id: "date",
       Header: this.getHeader("date"),
-      accessor: item => item.status === "active" ? item.created_time : item.cancel_time,
+      accessor: item => item.status === "open" ? item.created_time : item.cancel_time,
       Cell: props => this.getDateCell(props),
       headerClassName: "cell-flex-start-header",
       className: "cell-flex-start",
@@ -148,7 +148,7 @@ export default class LimitOrderTable extends Component {
 		const { source, dest, status, created_time, cancel_time, min_rate } = props.value;
     const { screen } = this.props;
 
-    const datetime = status === "active" ? created_time : cancel_time;
+    const datetime = status === "open" ? created_time : cancel_time;
     const rate = converters.roundingNumber(min_rate);
     
     if (screen === "mobile") {
@@ -177,7 +177,7 @@ export default class LimitOrderTable extends Component {
     const { source, dest, status, created_time, cancel_time, min_rate } = props.value;
     const { screen } = this.props;
 
-    const datetime = status === "active" ? created_time : cancel_time;
+    const datetime = status === "open" ? created_time : cancel_time;
     const rate = converters.roundingNumber(min_rate);
 
     if (screen === "mobile") {
@@ -232,8 +232,8 @@ export default class LimitOrderTable extends Component {
     const status = props.value;
     return (
       <div className="cell-action">
-        {status === "active" && <button className="btn-cancel-order" onClick={e =>this.props.openCancelOrderModal(props.original)}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
-        {status !== "active" && this.props.screen !== "mobile" && <div className="line-indicator"></div>}
+        {status === "open" && <button className="btn-cancel-order" onClick={e =>this.props.openCancelOrderModal(props.original)}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
+        {status !== "open" && this.props.screen !== "mobile" && <div className="line-indicator"></div>}
       </div>
     )
   }
@@ -272,7 +272,7 @@ export default class LimitOrderTable extends Component {
   getOrderDetail = (row) => {
     const { source, dest, min_rate, status, created_time, cancel_time, src_amount, fee } = row.original;
 
-    const datetime = status === "active" ? created_time : cancel_time;
+    const datetime = status === "open" ? created_time : cancel_time;
     const rate = converters.roundingNumber(min_rate);
 
     const sourceAmount = converters.roundingNumber(src_amount);
@@ -333,7 +333,7 @@ export default class LimitOrderTable extends Component {
 
     const currentTime = new Date().getTime() / 1000;
     data = data.filter(item => {
-      if (item.status === "active") {
+      if (item.status === "open") {
         return item.created_time >= currentTime - interval;
       } else {
         return item.cancel_time >= currentTime - interval; 
@@ -422,7 +422,7 @@ export default class LimitOrderTable extends Component {
 	// ------------------------------
 	getStatusFilter = () => {
     const { statusFilter } = this.state;
-    const status = ["active", "filled", "cancel"];
+    const status = ["open", "filled", "cancelled", "in_progress", "invalidated"];
     const renderedStatus = status.map((item) => {
       const checked = statusFilter.indexOf(item) !== -1;
 
@@ -548,7 +548,7 @@ export default class LimitOrderTable extends Component {
 
     const currentTime = new Date().getTime() / 1000;
     results = results.filter(item => {
-      if (item.status === "active") {
+      if (item.status === "open") {
         return item.created_time >= currentTime - interval;
       } else {
         return item.cancel_time >= currentTime - interval; 
@@ -559,7 +559,7 @@ export default class LimitOrderTable extends Component {
     // Date sort or pair sort
     if (prioritySort === "date" && dateSort) {
       results = _.orderBy(results, item => {
-        if (item.status === "active") {
+        if (item.status === "open") {
           return item.created_time;
         } else {
           return item.cancel_time;
