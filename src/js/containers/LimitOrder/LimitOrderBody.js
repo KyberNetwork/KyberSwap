@@ -57,7 +57,7 @@ export default class LimitOrderBody extends React.Component {
     return Object.keys(tokens).map(key => {
       let token = tokens[key];
       const openOrderTokens = orderList.filter(order => {
-        return order.source === token.symbol && order.status === 'active';
+        return order.source === token.symbol && order.status === 'open';
       });
 
       if (openOrderTokens.length > 0) {
