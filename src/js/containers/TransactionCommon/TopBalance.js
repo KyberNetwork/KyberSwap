@@ -28,6 +28,15 @@ export default class TopBalance extends React.Component {
         this.props.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, "source")
 
         var sourceBalance = this.props.tokens[sourceSymbol].balance
+
+        if (this.props.isLimitOrderTab) {
+            const tokens = this.props.getFilteredTokens();
+            const srcToken = tokens.find(token => {
+              return token.symbol === sourceSymbol;
+            });
+            sourceBalance = srcToken.balance;
+        }
+
         var sourceDecimal = this.props.tokens[sourceSymbol].decimals
         var amount
 
@@ -84,7 +93,6 @@ export default class TopBalance extends React.Component {
 
         if (this.props.isLimitOrderTab) {
             orderedTokens = this.props.getFilteredTokens(true, maxItemNumber);
-            console.log(orderedTokens);
         } else {
             orderedTokens = this.reorderToken(tokens, maxItemNumber);
         }

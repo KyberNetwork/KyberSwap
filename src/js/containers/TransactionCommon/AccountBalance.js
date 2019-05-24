@@ -50,6 +50,15 @@ export default class AccountBalance extends React.Component {
     this.props.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, this.props.screen === "swap" || this.props.screen === "limit_order" ?"source":"transfer")
     
     var sourceBalance = this.props.tokens[sourceSymbol].balance
+
+    if (this.props.isLimitOrderTab) {
+      const tokens = this.props.getFilteredTokens();
+      const srcToken = tokens.find(token => {
+        return token.symbol === sourceSymbol;
+      });
+      sourceBalance = srcToken.balance;
+    }
+
     var sourceDecimal = this.props.tokens[sourceSymbol].decimals
     var amount
 
