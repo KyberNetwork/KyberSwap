@@ -5,7 +5,6 @@ import { getAssetUrl, getTokenBySymbol } from "../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../env"
 import * as constants from "../../services/constants";
 
-
 const TokenSelectorView = (props) => {
   var focusItem = getTokenBySymbol(props.listToken, props.focusItem)
 
@@ -20,14 +19,14 @@ const TokenSelectorView = (props) => {
             <div className="d-flex">
               <div className={"token-info"}>
                 <div className="item-icon">
-                  <img alt={item.name} src={getAssetUrl(`tokens/${item.symbol}.svg`)} />
+                  <img alt={item.name} src={getAssetUrl(`tokens/${item.substituteImage ? item.substituteImage : item.symbol}.svg`)} />
                 </div>
-                <div>{item.symbol}</div>
+                <div>{item.substituteSymbol ? item.substituteSymbol : item.symbol}</div>
               </div>
               {(props.type !== "des" && props.account != false) &&
               <div className="item-balance">
                 <div title={balance} className="item-balance-value">
-                  {`${roundingNumber(balance)} ${item.symbol}`}
+                  {`${roundingNumber(balance)} ${item.substituteSymbol ? item.substituteSymbol : item.symbol}`}
                 </div>
               </div>
               }
@@ -46,16 +45,17 @@ const TokenSelectorView = (props) => {
         props.hideTokens();
       }}>
         <div className="item-icon">
-          <img alt={"WETH"} src={getAssetUrl(`tokens/weth.svg`)} />
+          <img alt={"ETH*"} src={getAssetUrl(`tokens/eth.svg`)} />
         </div>
-        <div>
-          <span className="bold-text">{props.translate("limit_order.eth_not_support").slice(0, 4) || "WETH"}</span>
-          <span>{props.translate("limit_order.eth_not_support").slice(4) || "is the Wrapping Token of ETH in KyberSwap, because KyberSwap doesn't support ETH."}</span>
+        <div className={"select-item__information"}>
+          <div>
+            <span className="bold-text">{props.translate("limit_order.eth_not_support").slice(0, 4) || "ETH*"}</span>
+            <span> {props.translate("limit_order.eth_not_support").slice(4) || " is the combination of ETH and WETH"}</span>
+          </div>
         </div>
       </div>
     )
   }
-  
 
   const priorityTokens = BLOCKCHAIN_INFO.priority_tokens.map(value => {
     var token = getTokenBySymbol(props.listToken, value)
@@ -72,11 +72,11 @@ const TokenSelectorView = (props) => {
           <div className="focus-item d-flex">
             <div className="d-flex">
               <div className="icon">
-                <img alt={focusItem.name} src={getAssetUrl(`tokens/${focusItem.symbol}.svg`)} />
+                <img alt={focusItem.name} src={getAssetUrl(`tokens/${focusItem.substituteImage ? focusItem.substituteImage : focusItem.symbol}.svg`)} />
               </div>
               <div>
                 <div className="focus-name">
-                  <span>{focusItem.symbol}</span>
+                  <span>{focusItem.substituteSymbol ? focusItem.substituteSymbol : focusItem.symbol}</span>
                 </div>
               </div>
             </div>
@@ -104,6 +104,6 @@ const TokenSelectorView = (props) => {
       </Dropdown>
     </div>
   )
-
 }
+
 export default TokenSelectorView

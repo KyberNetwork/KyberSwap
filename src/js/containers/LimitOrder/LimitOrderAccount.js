@@ -74,45 +74,9 @@ export default class LimitOrderAccount extends React.Component {
     )
   }
 
-  getAvailableBalanceTokens = (tokens) => {
-    const orderList = this.props.limitOrder.listOrder;
-
-    return Object.keys(tokens).map(key => {
-      let token = tokens[key];
-      const openOrderTokens = orderList.filter(order => {
-        return order.source === token.symbol && order.status === 'active';
-      });
-
-      if (openOrderTokens.length > 0) {
-        let openOrderAmount = 0;
-
-        openOrderTokens.forEach(order => {
-          openOrderAmount += order.src_amount * (Math.pow(10, token.decimals));
-        });
-
-        token = Object.create(token);
-        token.balance = +token.balance - openOrderAmount;
-      }
-
-      return token;
-    });
-  };
-
-  findTokenBySymbol = (tokens, symbol) => {
-    return  tokens.find(token => {
-      return token.symbol === symbol;
-    });
-  };
-
-  getTokenListWithoutEthAndWeth = (tokens) => {
-    return tokens.filter(token => {
-      return token.symbol !== 'ETH' && token.symbol !== 'WETH';
-    });
-  }
-
   getFilteredTokens = (orderByDesc = true, itemNumber = false) => {
     let filteredTokens = [];
-    const tokens = this.getAvailableBalanceTokens(this.props.tokens);
+    const tokens = this.props.getAvailableBalanceTokenList();
 
     if (orderByDesc) {
       filteredTokens = converters.sortEthBalance(tokens);
@@ -120,16 +84,12 @@ export default class LimitOrderAccount extends React.Component {
       filteredTokens = converters.sortASCEthBalance(tokens);
     }
 
-    const eth = this.findTokenBySymbol(filteredTokens, 'ETH');
-    let weth = this.findTokenBySymbol(filteredTokens, 'WETH');
-    weth = Object.create(weth);
+    const weth = this.props.mergeEthIntoWeth(filteredTokens);
 
-    filteredTokens = this.getTokenListWithoutEthAndWeth(filteredTokens);
+    filteredTokens = this.props.getTokenListWithoutEthAndWeth(filteredTokens);
 
-    if ((eth && eth.balance > 0) && weth) {
-      weth.substituteName = 'ETH*';
-      weth.balance = +weth.balance + +eth.balance;
-      filteredTokens.splice(0, 0, weth);
+    if (weth) {
+      filteredTokens.splice(0, 0, weth)
     }
 
     filteredTokens = itemNumber ? filteredTokens.slice(0, itemNumber) : filteredTokens;

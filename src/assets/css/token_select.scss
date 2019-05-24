@@ -949,6 +949,12 @@
     .select-item {
       padding-left: 15px;
       padding-right: 15px;
+
+      &__information {
+        display: flex;
+        align-items: center;
+      }
+
       .search-item {
         padding-left: 20px;
         border-bottom: solid 1px #474d5f;

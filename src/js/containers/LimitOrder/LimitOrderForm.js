@@ -147,7 +147,7 @@ export default class LimitOrderForm extends React.Component {
                 <TokenSelector
                       type="source"
                       focusItem={this.props.limitOrder.sourceTokenSymbol}
-                      listItem={this.props.tokens}
+                      listItem={this.props.availableBalanceTokens}
                       chooseToken={this.props.chooseToken}
                       screen="limit_order"
                       banToken="ETH"                 
@@ -185,7 +185,7 @@ export default class LimitOrderForm extends React.Component {
                   <TokenSelector
                     type="dest"
                     focusItem={this.props.limitOrder.destTokenSymbol}
-                    listItem={this.props.tokens}
+                    listItem={this.props.availableBalanceTokens}
                     chooseToken={this.props.chooseToken}
                     screen="limit_order"
                     banToken="ETH"
@@ -216,7 +216,7 @@ export default class LimitOrderForm extends React.Component {
           <div className={`exchange-content__item exchange-content__item--left exchange-content__item--no-pd-left select-token ${errorTriggerRate != "" ? "error" : ""}`}>
             <div className={`input-div-content`}>
               <div className={'exchange-content__label-content exchange-content__label-content--disabled'}>
-                {this.props.limitOrder.sourceTokenSymbol} / {this.props.limitOrder.destTokenSymbol}
+                {this.props.limitOrder.sourceTokenSymbol === 'WETH' ? 'ETH*' : this.props.limitOrder.sourceTokenSymbol} / {this.props.limitOrder.destTokenSymbol === 'WETH' ? 'ETH*' : this.props.limitOrder.destTokenSymbol}
               </div>
               <div id="trigger-rate-error-trigger" className="input-tooltip-wrapper input-tooltip-wrapper__rate" data-tip={`<div>${errorTriggerRate}</div>`} data-html={true} data-event='click focus' data-for="trigger-rate-error" data-scroll-hide="false">
               {/* <div className={"main-input main-input__left main-input--rate"}> */}
