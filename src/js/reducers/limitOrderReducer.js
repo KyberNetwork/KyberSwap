@@ -10,10 +10,10 @@ initState.snapshot = constants.INIT_LIMIT_ORDER_STATE
 const limitOrder = (state = initState, action) => {
   var newState = { ...state, errors: { ...state.errors } }
   switch (action.type) {
-    case "LIMIT_ORDER.SELECT_TOKEN_ASYNC": {
-      newState.isSelectToken = true
-      return newState
-    }
+    // case "LIMIT_ORDER.SELECT_TOKEN_ASYNC": {
+    //   newState.isSelectToken = true
+    //   return newState
+    // }
 
     case "LIMIT_ORDER.SELECT_TOKEN": {
 

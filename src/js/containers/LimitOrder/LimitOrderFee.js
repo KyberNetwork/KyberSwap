@@ -50,9 +50,8 @@ class LimitOrderFee extends React.Component {
 
   render() {
     var calculateFee = (this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount) / 100
-    calculateFee = Math.round(calculateFee * 10000)/ 10000
-    var sourceAmount = parseFloat(this.props.limitOrder.sourceAmount)
-    sourceAmount = isNaN(sourceAmount)? 0:  Math.round(sourceAmount * 100)/ 100
+    // calculateFee = Math.round(calculateFee * 10000)/ 10000
+
 
     var sourceTokenSymbol = this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.sourceTokenSymbol
 
@@ -72,7 +71,7 @@ class LimitOrderFee extends React.Component {
       return (
         <div className={"limit-order-fee"}>
           <div className="limit-order-fee__text">
-            Fee: {calculateFee} {sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of {sourceAmount} {sourceTokenSymbol})
+            Fee: <span title={calculateFee}>{converter.displayNumberWithDot(calculateFee)}</span> {sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of <span title={this.props.limitOrder.sourceAmount}>{converter.displayNumberWithDot(this.props.limitOrder.sourceAmount)}</span> {sourceTokenSymbol})
           </div>
           <div>
             <a onClick={e => this.redirectToSwap()}>Buy 3000KNC</a>{' '}

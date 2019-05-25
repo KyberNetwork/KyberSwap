@@ -96,6 +96,13 @@ export default class LimitOrderBody extends React.Component {
     this.props.dispatch(globalActions.updateTitleWithRate());
 
     var sourceAmount = this.props.limitOrder.sourceAmount
+
+    if (sourceTokenSymbol === destTokenSymbol){
+      this.props.dispatch(limitOrderActions.throwError("sourceAmount", ["Source token must be different from dest token"]))
+      // this.props.dispatch(limitOrderActions.throwError)
+    }else{
+      this.props.dispatch(limitOrderActions.throwError("sourceAmount", []))
+    }
     this.props.dispatch(limitOrderActions.updateRate(this.props.ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken));
   }
 

@@ -1,12 +1,12 @@
 
 
 
-export function selectTokenAsync(symbol, address, type) {
-  return {
-    type: "LIMIT_ORDER.SELECT_TOKEN_ASYNC",
-    payload: {symbol, address, type }
-  }
-}
+// export function selectTokenAsync(symbol, address, type) {
+//   return {
+//     type: "LIMIT_ORDER.SELECT_TOKEN_ASYNC",
+//     payload: {symbol, address, type }
+//   }
+// }
 
 
 export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type) {
