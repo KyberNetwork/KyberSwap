@@ -93,6 +93,10 @@
         @include cell-flex(flex-end);
     }
 
+    .cell-flex-center {
+        @include cell-flex(center);
+    }
+
     .cell-condition {
         &-header {
             cursor: pointer;
@@ -125,8 +129,8 @@
         text-align: center;
 
         &--open {
-            background-color: #deebff;
-            color: #0049b0;
+            background-color: #eae6ff;
+            color: #403294;
         }
 
         &--cancelled {
@@ -136,19 +140,35 @@
 
 
         &--invalidated {
-            background-color: #ffebe5;
-            color: #bf2600;
+            background-color: #fff0b3;
+            color: #172b4d;
         }
 
         &--in_progress {
-            background-color: #ffebe5;
-            color: #bf2600;
+            background-color: #deebff;
+            color: #0049b0;
         }
 
         &--filled {
             background-color: #e2ffee;
             color: #006644;
         }
+
+        &__container {
+            display: flex;
+            justify-content: space-between;
+            >div:first-child {
+                margin-right: 8px;
+            }
+        }
+    }
+
+    .order-status-info {
+        border-radius: 3px;
+        background-color: #172b4c !important;
+        font-size: 10px !important;
+        font-weight: 500 !important;
+        color: #ffffff !important;
     }
 
     .cell-action {
