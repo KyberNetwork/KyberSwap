@@ -6,6 +6,7 @@ import Dropdown, { DropdownContent, DropdownTrigger } from "react-simple-dropdow
 import CancelOrderModal from "./LimitOrderModals/CancelOrderModal";
 import * as common from "../../utils/common";
 import * as converters from "../../utils/converter";
+import ReactTooltip from "react-tooltip";
 
 import PropTypes from "prop-types";
 
@@ -20,7 +21,7 @@ export default class LimitOrderTable extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			statusFilter: [],
+			statusFilter: ["open", "in_progress"],
       pairFilter: [],
       dateSort: "desc",
       pairSort: "asc",
@@ -59,6 +60,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getConditionCell(props),
       headerClassName: "cell-flex-start-header cell-condition-header",
       className: "cell-flex-start cell-condition",
+      width: 180
     }, {
       id: "from",
       Header: this.getHeader("from"),
@@ -76,11 +78,10 @@ export default class LimitOrderTable extends Component {
     }, {
       id: "status",
       Header: this.getHeader("status"),
-      accessor: item => item.status,
-      Cell: props => this.getStatusCell(props),
-      headerClassName: "cell-flex-start-header cell-status-header",
-      className: "cell-flex-start",
-      maxWidth: 90
+      accessor: item => item,
+      Cell: props => this.getStatusCell(props.value),
+      headerClassName: "cell-flex-center-header cell-status-header",
+      className: "cell-flex-center",
     }, {
       id: "actions",
       Header: this.getHeader("actions"),
@@ -105,8 +106,8 @@ export default class LimitOrderTable extends Component {
     }, {
       id: "status",
       Header: this.getHeader("status"),
-      accessor: item => item.status,
-      Cell: props => this.getStatusCell(props),
+      accessor: item => item,
+      Cell: props => this.getStatusCell(props.value),
       headerClassName: "cell-flex-end-header cell-status-header",
       className: "cell-flex-end",
     }, {
@@ -192,10 +193,33 @@ export default class LimitOrderTable extends Component {
     )
   }
 
-  getStatusCell = (props) => {
-		const status = props.value;
+  getStatusCell = (order) => {
+    const { status, msg, id } = order;
+
+    const getMsg = (msg) => {
+      return msg.reduce((result, item) => {
+        return result += `<div>${item}</div>`;
+      }, "");
+    }
+
     return (
-      <div className={`cell-status cell-status--${status}`}>{status.toUpperCase()}</div>
+      <div className="cell-status__container">
+        <div className={`cell-status cell-status--${status}`}>{status.toUpperCase()}</div>
+        {msg && msg.length > 0 && 
+        <React.Fragment>
+          <div data-tip data-for={`order-status-info-${id}`} data-scroll-hide={true}>
+            <img src={require("../../../assets/img/warning-triangle.svg")}/>
+          </div>
+          <ReactTooltip globalEventOff="click" 
+            html={true} 
+            place="bottom" 
+            type="dark" 
+            id={`order-status-info-${id}`} 
+            className="order-status-info">
+            {getMsg(msg)}
+          </ReactTooltip>
+        </React.Fragment>}
+      </div>
     )
   }
 
@@ -260,7 +284,7 @@ export default class LimitOrderTable extends Component {
               <span>&rarr;</span>
               <span>{dest.toUpperCase()}</span>
             </div>
-            {this.getStatusCell({ value: status })}
+            {this.getStatusCell(row.original)}
           </div>
           <div className="limit-order-modal__detail-order__rate">
             <div>{`${source.toUpperCase()}/${dest.toUpperCase()} >= ${rate}`}</div>
@@ -394,12 +418,21 @@ export default class LimitOrderTable extends Component {
 	getStatusFilter = () => {
     const { statusFilter } = this.state;
     const status = ["open", "filled", "cancelled", "in_progress", "invalidated"];
+
+    const getTitle = (status) => {
+      if (status === "in_progress") {
+        return "In Progress";
+      } else {
+        return status.charAt(0).toUpperCase() + status.slice(1);
+      }
+    }
+
     const renderedStatus = status.map((item) => {
       const checked = statusFilter.indexOf(item) !== -1;
 
       return (
         <label key={item} className="status-filter-modal__option">
-          <span>{item.charAt(0).toUpperCase() + item.slice(1)}</span>
+          <span>{getTitle(item)}</span>
           <input type="checkbox" value={item} name={item} 
                 checked={checked}
                 className="status-filter-modal__checkbox"
@@ -548,7 +581,7 @@ export default class LimitOrderTable extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.selectedTimeFilter !== nextProps.selectedTimeFilter) {
       this.setState({
-        statusFilter: [],
+        statusFilter: ["open", "in_progress"],
         pairFilter: [],
         pairSort: "asc",
         expanded: {}
