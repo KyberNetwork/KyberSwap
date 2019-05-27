@@ -358,7 +358,7 @@
           padding: 15px 25px;
           // background-color: #EBEBEB;
           border-bottom: solid 1px #f5f5f5;
-          color: #999999;
+          color: #999999 !important;
           @include screen-max-width(large){
             width: 50%;
             text-align: center;
@@ -367,13 +367,14 @@
           // &:not(:first-child){
           //   margin-left: 10px;
           // }
-          &:hover, &.active {
+          &:hover {
             // background-color: #eee;
             // color: inherit;
             color: #666666;
           }
           &.active {
-            border-bottom: solid 1px #666666;
+            border-bottom: solid 1px #EF8102;
+            color: #EF8102 !important;
           }
         }
       //}
