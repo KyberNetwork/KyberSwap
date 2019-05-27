@@ -8,8 +8,10 @@ const initState = {
   account: false,
   loading: false,
   checkTimeImportLedger: false,
-  error: "",
-  showError: false,
+  error: {
+    error: "",
+    showError: false,
+  },
   pKey: {
     error: '',
     modalOpen: false
@@ -25,16 +27,15 @@ const initState = {
 const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
   switch (action.type) {  	
     case REHYDRATE: {      
+      var newState = JSON.parse(JSON.stringify(initState))
       if (action.key === "account" && action.payload && action.payload.account != false) {
         var {address, type, keystring, walletType, info, balance, manualNonce, nonce } = action.payload.account         
         var updatedAccount = cloneAccount(address, type, keystring, walletType, info, balance, nonce, manualNonce )
-        
-        var newState = JSON.parse(JSON.stringify(initState))
         return {...newState, account: updatedAccount}
-      }else{        
-        return JSON.parse(JSON.stringify(initState))    
       }
-      
+      // console.log("rehydrate")
+      // console.log(JSON.parse(JSON.stringify(initState)))
+      return {...newState}
     }
     case "ACCOUNT.LOADING": {
       return {...state, loading: true}
@@ -46,9 +47,7 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
       return {...state, checkTimeImportLedger: false}
     }
     case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED": {
-      const {account, walletName} = action.payload
-      console.log(account)
-      console.log("account_persist")
+      const {account, walletName} = action.payload      
       return {...state, account: account, loading: false, isStoreReady: true, walletName: walletName}
     }
     case "ACCOUNT.CLOSE_LOADING_IMPORT":{
@@ -57,8 +56,11 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
     case "ACCOUNT.CLOSE_LOADING_IMPORT": {
       return {...state, loading: false}
     }
-    case "ACCOUNT.THROW_ERROR": {            
-      return {...state, error: action.payload, showError: true}
+    case "ACCOUNT.THROW_ERROR": { 
+      var error =    {
+        error: action.payload, showError: true
+      }
+      return {...state, error}
     }
     case "ACCOUNT.END_SESSION": {
       return JSON.parse(JSON.stringify(initState))
@@ -139,7 +141,8 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
       return newState
     }  
     case "GLOBAL.CLEAR_SESSION_FULFILLED":{      
-      return JSON.parse(JSON.stringify(initState))
+      var newState = JSON.parse(JSON.stringify(initState))    
+      return {...newState}      
     }
     case "ACCOUNT.SET_ON_DAPP": {
       let newState = {...state}
