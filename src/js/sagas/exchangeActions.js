@@ -493,15 +493,19 @@ function* verifyExchange() {
   if (isNaN(sourceAmount) || sourceAmount === "") {
     sourceAmount = 0
   }
-  const account = state.account.account
-  var validateWithFee = validators.verifyBalanceForTransaction(account.balance, sourceTokenSymbol,
-    sourceAmount, exchange.gas + exchange.gas_approve, exchange.gasPrice)
-
-  if (validateWithFee) {
-    yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.balance, translate("error.eth_balance_not_enough_for_fee")))
-  } else {
-    yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.balance))
+  
+  if (state.account.isGetAllBalance){
+    const account = state.account.account
+    var validateWithFee = validators.verifyBalanceForTransaction(account.balance, sourceTokenSymbol,
+      sourceAmount, exchange.gas + exchange.gas_approve, exchange.gasPrice)
+  
+    if (validateWithFee) {
+      yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.balance, translate("error.eth_balance_not_enough_for_fee")))
+    } else {
+      yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.balance))
+    }
   }
+
 
 }
 
