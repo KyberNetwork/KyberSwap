@@ -14,7 +14,7 @@
         border: none;
 
         .rt-thead {
-            overflow-y: scroll;
+            overflow-y: auto;
             font-size: 12px;
             font-weight: 600;
             box-shadow: none;
@@ -155,10 +155,12 @@
         }
 
         &__container {
-            display: flex;
-            justify-content: space-between;
-            >div:first-child {
-                margin-right: 8px;
+            position: relative;
+
+            .status-info-icon {
+                top: 0;
+                position: absolute;
+                right: -18px;
             }
         }
     }
@@ -1370,7 +1372,7 @@
     &__order-container {
         margin-bottom: 15px;
         max-height: 100px;
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 
     &__order {
