@@ -22,15 +22,17 @@ const initState = {
   isOnDAPP: false
 }
 
-const account = (state=initState, action) => {
+const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
   switch (action.type) {  	
     case REHYDRATE: {      
       if (action.key === "account" && action.payload && action.payload.account != false) {
         var {address, type, keystring, walletType, info, balance, manualNonce, nonce } = action.payload.account         
         var updatedAccount = cloneAccount(address, type, keystring, walletType, info, balance, nonce, manualNonce )
-        return {...state, account: updatedAccount, loading: false, isStoreReady: true, error: ""}
-      }else{
-        return {...state, isStoreReady: true}      
+        
+        var newState = JSON.parse(JSON.stringify(initState))
+        return {...newState, account: updatedAccount}
+      }else{        
+        return JSON.parse(JSON.stringify(initState))    
       }
       
     }
@@ -59,7 +61,7 @@ const account = (state=initState, action) => {
       return {...state, error: action.payload, showError: true}
     }
     case "ACCOUNT.END_SESSION": {
-      return {...initState}
+      return JSON.parse(JSON.stringify(initState))
     }
     case "ACCOUNT.UPDATE_ACCOUNT_FULFILLED":{
       var oldState = {...state}
@@ -136,9 +138,8 @@ const account = (state=initState, action) => {
       newState.isGetAllBalance = true
       return newState
     }  
-    case "GLOBAL.CLEAR_SESSION_FULFILLED":{
-      let newState = {...initState}
-      return newState
+    case "GLOBAL.CLEAR_SESSION_FULFILLED":{      
+      return JSON.parse(JSON.stringify(initState))
     }
     case "ACCOUNT.SET_ON_DAPP": {
       let newState = {...state}
