@@ -5,8 +5,6 @@ import * as converters from "../../utils/converter"
 import * as exchangeActions from "../../actions/exchangeActions"
 import * as utilActions from "../../actions/utilActions"
 import * as constants from "../../services/constants"
-// import { Modal } from "../../components/CommonElement"
-// import { PassphraseModal, ConfirmTransferModal, ApproveModal } from "../../components/Transaction"
 import { PostExchangeBtn } from "../../components/Exchange"
 import { getTranslate } from 'react-localize-redux';
 import { getAssetUrl, isUserEurope, getParameterByName } from "../../utils/common";
@@ -17,51 +15,14 @@ import TermAndServices from "../CommonElements/TermAndServices";
 import {ApproveZeroModal, ApproveMaxModal, ConfirmModal, BroadCastModal} from "./ExchangeModals"
 
 @connect((store, props) => {
-  // var sourceTokenSymbol = store.exchange.sourceTokenSymbol
-  // var tokens = store.tokens.tokens
-  // var sourceBalance = 0
-  // var sourceDecimal = 18
-  // var sourceName = "Ether"
-  // var sourceIcon = "eth.svg"
-
-  // var rateSourceToEth = 0
-  // if (tokens[sourceTokenSymbol]) {
-  //   sourceBalance = tokens[sourceTokenSymbol].balance
-  //   sourceDecimal = tokens[sourceTokenSymbol].decimals
-  //   sourceName = tokens[sourceTokenSymbol].name
-  //   sourceIcon = sourceTokenSymbol + '.svg';
-  //   rateSourceToEth = tokens[sourceTokenSymbol].rate
-  // }
-
-  // var destTokenSymbol = store.exchange.destTokenSymbol
-  // var destBalance = 0
-  // var destDecimal = 18
-  // var destName = "Kybernetwork"
-  // var destIcon = "knc.svg"
-  // if (tokens[destTokenSymbol]) {
-  //   destBalance = tokens[destTokenSymbol].balance
-  //   destDecimal = tokens[destTokenSymbol].decimals
-  //   destName = tokens[destTokenSymbol].name
-  //   destIcon = destTokenSymbol + '.svg';
-  // }
 
   return {
     exchange: store.exchange,
-    tokens: store.tokens.tokens,
-    
-    // form: {
-    //   ...store.exchange, sourceBalance, sourceDecimal, destBalance, destDecimal,
-    //   sourceName, destName, sourceIcon, destIcon, rateSourceToEth
-    // },
-    // snapshot: store.exchange.snapshot,
+    tokens: store.tokens.tokens,    
     account: store.account.account,
     ethereum: store.connection.ethereum,
-    
-    // keyService: props.keyService,
     translate: getTranslate(store.locale),
-    // analytics: store.global.analytics,
-    global: store.global,
-    // exchange: store.exchange
+    global: store.global
   }
 })
 
@@ -84,10 +45,6 @@ export default class PostExchange extends React.Component {
 
   clickExchange = () => {
     this.props.global.analytics.callTrack("trackClickSwapButton");
-
-    // Track swapping time
-    // const currentTimeMillisecond = Math.round(new Date().getTime());
-    // this.props.dispatch(exchangeActions.setSwappingTime(currentTimeMillisecond));
 
     if (this.props.account === false) {
       this.props.dispatch(exchangeActions.openImportAccount())
@@ -142,10 +99,6 @@ export default class PostExchange extends React.Component {
       })
     }
   }
-
-  // clickCheckbox = (value) => {
-  //   this.props.dispatch(exchangeActions.setTermAndServices(value))
-  // }
 
   validateExchange = () => {
     if (this.props.exchange.expectedRate === "0") {

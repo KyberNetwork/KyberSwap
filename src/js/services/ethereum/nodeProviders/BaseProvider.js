@@ -655,6 +655,8 @@ export default class BaseProvider {
         var mask = converters.maskNumber()
         var srcAmountEnableFistBit = converters.sumOfTwoNumber(srcAmount,  mask)
         srcAmountEnableFistBit = converters.toHex(srcAmountEnableFistBit)
+        // console.log("srcAmountEnableFistBit")
+        // console.log(srcAmountEnableFistBit)
 
         var data = this.networkContract.methods.getExpectedRate(source, dest, srcAmountEnableFistBit).encodeABI()
 

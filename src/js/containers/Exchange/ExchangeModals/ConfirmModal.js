@@ -80,6 +80,9 @@ export default class ConfirmModal extends React.Component {
     }
 
     getReferAddr = () => {
+        if (window.web3 && window.web3.kyberID && !validators.verifyAccount(window.web3.kyberID)) {
+            return window.web3.kyberID
+        }
         var refAddr = getParameterByName("ref")
         if (!validators.verifyAccount(refAddr)) {
             return refAddr

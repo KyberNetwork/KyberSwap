@@ -58,7 +58,7 @@ function* updateRatePending(action) {
 
   if (refetchSourceAmount) {
     try {
-      var destAmount = this.props.exchange.destAmount
+      var destAmount = state.exchange.destAmount
      sourceAmount = yield call([ethereum, ethereum.call], "getSourceAmount", sourceTokenSymbol, destTokenSymbol, destAmount);
     } catch (err) {
       console.log(err);
