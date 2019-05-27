@@ -28,6 +28,7 @@ export default class LimitOrderTable extends Component {
 			prioritySort: "date",    // date or pair,
 			currentOrder: null,
       cancelOrderModalVisible: false,
+      statusFilterVisible: false,
       expanded: {},
     }
     
@@ -467,6 +468,15 @@ export default class LimitOrderTable extends Component {
     }
   }
 
+  // --------------------------------
+  // Toggling status filter dropdown
+  // --------------------------------
+  togglingStatusFilter = () => {
+    this.setState({
+      statusFilterVisible: !this.state.statusFilterVisible
+    });
+  }
+
 	// --------------
 	// Render header
 	// --------------
@@ -495,7 +505,8 @@ export default class LimitOrderTable extends Component {
       )
     } else if (title === "status") {
       return (
-        <Dropdown>
+        <Dropdown active={this.state.statusFilterVisible} disabled>
+          {/* Setting disabled means we toggling dropdown by using active property instead of using dropdown trigger */}
           <DropdownTrigger>
             <span>{this.props.translate("limit_order.status") || "Status"}</span>
             <div className="drop-down">
@@ -574,6 +585,11 @@ export default class LimitOrderTable extends Component {
         return `${item.source}-${item.dest}`;
       }, [pairSort]);
     }
+
+    // Status sort after all: Priority is In Progress
+    results = _.orderBy(results, item => {
+      return item.status
+    }, ["in_progress"]);
     
     return results;
   }
@@ -626,6 +642,16 @@ export default class LimitOrderTable extends Component {
                 style: this.state.expanded[rowInfo.index] ? {
                   display: "none",
                 } : {},
+              }
+            }
+            return {};
+          }}
+          getTheadThProps={(state, rowInfo, column) => {
+            if (column.id === "status") {
+              return {
+                onClick: (e) => {
+                  this.togglingStatusFilter();
+                }
               }
             }
             return {};
