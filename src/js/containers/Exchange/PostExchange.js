@@ -132,11 +132,11 @@ export default class PostExchange extends React.Component {
     var sourceAmountErrorKey
     switch (validateAmount) {
       case "not a number":        
-        this.props.dispatch(exchangeActions.thowErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_is_not_number")))
+        this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_is_not_number")))
         check = false
         break
       case "too high":
-        this.props.dispatch(exchangeActions.thowErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_high")))
+        this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_high")))
         check = false        
         break
       case "too high cap":
@@ -144,15 +144,15 @@ export default class PostExchange extends React.Component {
         if (this.props.exchange.sourceTokenSymbol !== "ETH"){
           maxCap = maxCap * constants.EXCHANGE_CONFIG.MAX_CAP_PERCENT
         }
-        this.props.dispatch(exchangeActions.thowErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_high_cap", { cap: maxCap })))
+        this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_high_cap", { cap: maxCap })))
         check = false                
         break
       case "too small":        
-        this.props.dispatch(exchangeActions.thowErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_small", { minAmount: converters.toEther(constants.EXCHANGE_CONFIG.EPSILON)})))
+        this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_small", { minAmount: converters.toEther(constants.EXCHANGE_CONFIG.EPSILON)})))
         check = false        
         break
       case "too high for reserve":
-        this.props.dispatch(exchangeActions.thowErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_high_for_reserve")))
+        this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_high_for_reserve")))
         check = false           
         break
     }
