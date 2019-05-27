@@ -164,6 +164,16 @@ export default class ConfirmModal extends React.Component {
         this.props.dispatch(limitOrderActions.resetOrderPath())
     }
 
+    msgHtml = () => {
+      if (this.state.isConfirm && this.props.account.type !== 'privateKey') {
+          return <div className="limit-order-modal__result--pending">
+          {this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}
+        </div>
+      } else {
+          return ""
+      }
+  }
+
     getFeeInfoTooltip = () => {
       let calculateFee = (this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount) / 100;
       calculateFee = converters.roundingNumber(calculateFee);
@@ -270,9 +280,7 @@ export default class ConfirmModal extends React.Component {
                   <span title={receiveAmount}>{`${converters.displayNumberWithDot(receiveAmount)} ${this.props.limitOrder.destTokenSymbol}`}</span>
                 </div>
 
-                {this.state.isConfirm && <div className="limit-order-modal__result--pending">
-                  {this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}
-                </div>}
+                  {this.msgHtml()}
                 {this.state.err && <div className="limit-order-modal__result--error">
                   {this.state.err}
                 </div>}

@@ -59,7 +59,7 @@ export default class ImportKeystore extends React.Component {
       var address = addressFromKey(this.state.keystring)
       this.props.dispatch(importNewAccount(address,
         "privateKey",
-        privKey,
+        privKey.toString("hex"),
         this.props.ethereum,
         this.props.tokens, null, null, "PRIVATE KEY"))
         this.setState({ isOpen: false, error: "" })
