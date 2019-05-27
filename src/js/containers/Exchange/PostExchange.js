@@ -65,6 +65,11 @@ export default class PostExchange extends React.Component {
       return
     }
 
+    if (this.props.exchange.customRateInput.value === "" && this.props.exchange.customRateInput.isDirty) {
+      this.props.dispatch(exchangeActions.setCustomRateInputError(true));
+      return;
+    }
+
     if  (this.validateExchange()) {
       this.props.dispatch(exchangeActions.setSnapshot(this.props.exchange))
       this.findPathExchange()
