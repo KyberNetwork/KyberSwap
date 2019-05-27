@@ -482,10 +482,10 @@ export function setMaxGasPriceComplete(maxGasPriceGwei) {
   }
 }
 
-export function setGasPriceSwapComplete(safeLowGas, standardGas, fastGas, defaultGas, selectedGas) {
+export function setGasPriceSwapComplete(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas) {
   return {
     type: "EXCHANGE.SET_GAS_PRICE_SWAP_COMPLETE",
-    payload: { safeLowGas, standardGas, defaultGas, fastGas, selectedGas }
+    payload: { safeLowGas, standardGas, defaultGas, fastGas, superFastGas, selectedGas }
   }
 }
 

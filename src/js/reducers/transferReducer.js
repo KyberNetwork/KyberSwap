@@ -117,9 +117,10 @@ const transfer = (state = initState, action) => {
     
     case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
       if (!newState.isEditGasPrice) {
-        var { safeLowGas, standardGas, fastGas, defaultGas, selectedGas } = action.payload
+        var { safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas } = action.payload
 
         var gasPriceSuggest = newState.gasPriceSuggest
+        gasPriceSuggest.superFastGas = Math.round(superFastGas * 10) / 10
         gasPriceSuggest.fastGas = Math.round(fastGas * 10) / 10
         gasPriceSuggest.standardGas = Math.round(standardGas * 10) / 10
         gasPriceSuggest.safeLowGas = Math.round(safeLowGas * 10) / 10

@@ -17,8 +17,9 @@ export function calculateMinAmount(source, rate) {
 }
 
 export function calculateDest(source, rate, precision) {
-  if (isNaN(source) || source === "") {
-    source = 0
+  if (isNaN(source) || source === ""){
+    source = 0;
+    return "";
   }
 
   var bigSource = new BigNumber(source)
@@ -38,11 +39,8 @@ export function calculateDest(source, rate, precision) {
 }
 
 export function caculateSourceAmount(destAmount, offeredRate, precision) {
-  if (isNaN(destAmount) || destAmount === "") {
-    return 0
-  }
-  if (isNaN(offeredRate) || offeredRate === "") {
-    return 0
+  if (!destAmount || !offeredRate || acceptableTyping(destAmount) || acceptableTyping(offeredRate)) {
+    return ""
   }
 
   var bigOfferedRate = new BigNumber(offeredRate)
@@ -63,11 +61,8 @@ export function caculateSourceAmount(destAmount, offeredRate, precision) {
 }
 
 export function caculateDestAmount(sourceAmount, offeredRate, precision) {
-  if (isNaN(sourceAmount) || sourceAmount === "") {
-    return 0
-  }
-  if (isNaN(offeredRate) || offeredRate === "") {
-    return 0
+  if (!sourceAmount || !offeredRate || acceptableTyping(sourceAmount) || acceptableTyping(offeredRate)) {
+    return "";
   }
 
 
