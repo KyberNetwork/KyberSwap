@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
-    <title>Shape Copy 2</title>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon 24px</title>
     <desc>Created with Sketch.</desc>
-    <g id="KyberSwap.com-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="transfer-4" transform="translate(-950.000000, -564.000000)" fill="#666666">
-            <g id="Group-9" transform="translate(861.000000, 562.000000)">
-                <path d="M96,2 C92.136,2 89,5.136 89,9 C89,12.864 92.136,16 96,16 C99.864,16 103,12.864 103,9 C103,5.136 99.864,2 96,2 L96,2 Z M96.7,12.5 L95.3,12.5 L95.3,8.3 L96.7,8.3 L96.7,12.5 L96.7,12.5 Z M96.7,6.9 L95.3,6.9 L95.3,5.5 L96.7,5.5 L96.7,6.9 L96.7,6.9 Z" id="Shape-Copy-2"></path>
+    <g id="Limit-Order-14May" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1---LimitOrder---home" transform="translate(-870.000000, -148.000000)">
+            <g id="Icon-24px" transform="translate(869.000000, 147.000000)">
+                <polygon id="Shape" points="0 0 14 0 14 14 0 14"></polygon>
+                <path d="M7,1.16666667 C3.78,1.16666667 1.16666667,3.78 1.16666667,7 C1.16666667,10.22 3.78,12.8333333 7,12.8333333 C10.22,12.8333333 12.8333333,10.22 12.8333333,7 C12.8333333,3.78 10.22,1.16666667 7,1.16666667 L7,1.16666667 Z M7.58333333,9.91666667 L6.41666667,9.91666667 L6.41666667,6.41666667 L7.58333333,6.41666667 L7.58333333,9.91666667 L7.58333333,9.91666667 Z M7.58333333,5.25 L6.41666667,5.25 L6.41666667,4.08333333 L7.58333333,4.08333333 L7.58333333,5.25 L7.58333333,5.25 Z" id="Shape" fill="#3E5271"></path>
             </g>
         </g>
     </g>
