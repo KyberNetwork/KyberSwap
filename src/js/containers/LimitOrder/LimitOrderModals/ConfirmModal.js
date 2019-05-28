@@ -119,12 +119,12 @@ export default class ConfirmModal extends React.Component {
             var signature = await wallet.signSignature(signData, this.props.account)     
 
             
-            var pramameters = await ethereum.call("getSignatureParameters", signature)
+            // var pramameters = await ethereum.call("getSignatureParameters", signature)
             
-            console.log(signature)
-            console.log(signData)
-            console.log(pramameters)
-            console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
+            // console.log(signature)
+            // console.log(signData)
+            // console.log(pramameters)
+            // console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
             
             
             var newOrder = await submitOrder({  
