@@ -102,16 +102,17 @@ export default class LimitOrderForm extends React.Component {
 
   addSrcAmountByBalancePercentage = (balancePercentage) => {
     const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol;
-    const srcToken = this.props.tokens[srcTokenSymbol];
+    const srcToken = this.props.availableBalanceTokens.find(token => {
+      return token.symbol === srcTokenSymbol;
+    });
     const srcTokenBalance = converters.toT(srcToken.balance, srcToken.decimals);
 
-    let sourceAmountByPercentage = srcTokenBalance * (balancePercentage / 100);
+    let sourceAmountByPercentage = converters.stringToBigNumber(srcTokenBalance).multipliedBy(balancePercentage / 100).valueOf();
 
-    if (!+sourceAmountByPercentage) sourceAmountByPercentage = 0;
+    if (!+sourceAmountByPercentage || sourceAmountByPercentage < 0) sourceAmountByPercentage = 0;
 
     this.props.dispatch(limitOrderActions.inputChange('source', sourceAmountByPercentage));
   };
-
 
   render() {    
 
