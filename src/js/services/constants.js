@@ -269,6 +269,13 @@ const LIMIT_ORDER_CONFIG = {
     wrapETH: 3,
     confirmSubmitOrder: 4,
     submitStatusOrder: 5
+  },
+  status: {
+    OPEN: "open",
+    IN_PROGRESS: "in_progress",
+    FILLED: "filled",
+    CANCELLED: "cancelled",
+    INVALIDATED: "invalidated"
   }
 }
 

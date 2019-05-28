@@ -458,7 +458,7 @@ class ExchangeBody extends React.Component {
   }
 
   selectedGasHandler = (value, level, levelString) => {
-    this.props.dispatch(exchangeActions.seSelectedGas(level))
+    this.props.dispatch(exchangeActions.setSelectedGasPrice(value, level))
     this.specifyGasPrice(value)
     this.props.global.analytics.callTrack("trackChooseGas", "swap", value, levelString);
   }
@@ -691,7 +691,7 @@ class ExchangeBody extends React.Component {
     )
 
     var topBalance = <TopBalance showMore={this.toggleAdvanceContent}
-      chooseToken={this.chooseToken}
+      chooseToken={this.selectSourceToken}
       activeSymbol={this.props.exchange.sourceTokenSymbol}
       screen="swap"
       selectTokenBalance={this.selectTokenBalance}
@@ -699,7 +699,7 @@ class ExchangeBody extends React.Component {
       changeFocus={exchangeActions.focusInput} />
     return (
       <ExchangeBodyLayout
-        chooseToken={this.chooseToken}
+        chooseToken={this.selectSourceToken}
         exchange={this.props.exchange}
         account={this.props.account.account}
         step={this.props.exchange.step}
