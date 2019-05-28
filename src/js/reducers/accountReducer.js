@@ -29,8 +29,8 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
     case REHYDRATE: {      
       var newState = JSON.parse(JSON.stringify(initState))
       if (action.key === "account" && action.payload && action.payload.account != false) {
-        var {address, type, keystring, walletType, info, balance, manualNonce, nonce } = action.payload.account         
-        var updatedAccount = cloneAccount(address, type, keystring, walletType, info, balance, nonce, manualNonce )
+        var {address, type, keystring, walletType, info, balance, manualNonce, nonce, maxCap, rich } = action.payload.account         
+        var updatedAccount = cloneAccount(address, type, keystring, walletType, info, balance, nonce, manualNonce, maxCap, rich )
         return {...newState, account: updatedAccount}
       }
       // console.log("rehydrate")

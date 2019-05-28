@@ -20,9 +20,10 @@ import {getWallet} from "../../../services/keys"
     const tokens = store.tokens.tokens
     const limitOrder = store.limitOrder
     const ethereum = store.connection.ethereum
+    const exchange = store.exchange
 
     return {
-        translate, limitOrder, tokens, account, ethereum
+        translate, limitOrder, tokens, account, ethereum, exchange
 
     }
 })
@@ -32,7 +33,27 @@ export default class WrapETHModal extends React.Component {
     constructor(){
         super()
         this.state = {
-            err: ""
+            err: "",
+            isConfirming: false,
+            isError: true
+        }
+    }
+
+    componentDidMount = () => {
+        //verify cap
+        var maxCap = this.props.account.maxCap
+        if (maxCap !== "infinity") {
+          maxCap = converters.toEther(maxCap)
+        }else{
+            this.setState({isError: false})
+            return
+        }    
+        var convertedEth = this.getAmountWrapETH() 
+
+        if (converters.compareTwoNumber(convertedEth, maxCap) === 1){
+            this.setState({err: `Converted amount is over your cap - ${maxCap} ETH`, isError: true})
+        }else{
+            this.setState({isError: false})
         }
     }
 
@@ -47,6 +68,10 @@ export default class WrapETHModal extends React.Component {
       
     
     async onSubmit(){
+        if (this.state.isError) return
+        if (this.state.isConfirming) return
+
+        this.setState({isConfirming: true, err: ""})
         //reset        
         var wallet = getWallet(this.props.account.type)
         
@@ -69,7 +94,7 @@ export default class WrapETHModal extends React.Component {
             
             var password = ""    
 
-            var txHash = wallet.broadCastTx("etherToOthersFromAccount", formId, ethereum, address, sourceToken,
+            var txHash = await wallet.broadCastTx("etherToOthersFromAccount", formId, ethereum, address, sourceToken,
         sourceAmount, destToken, destAddress,
         maxDestAmount, minConversionRate,
         blockNo, nonce, gas,
@@ -82,14 +107,38 @@ export default class WrapETHModal extends React.Component {
             this.props.dispatch(limitOrderActions.forwardOrderPath())
         }catch(err){
             console.log(err)
-            this.setState({err: err})
+            this.setState({err: err, isConfirming: false})
         }
     }
 
 
     closeModal = () => {
+        if (this.state.isConfirming) return
         this.props.dispatch(limitOrderActions.resetOrderPath())
     }
+
+    msgHtml = () => {
+        if (this.state.isConfirming && this.props.account.type !== 'privateKey') {
+          return <span>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</span>
+        } else {
+          return ""
+        }
+      }
+
+      errorHtml = () => {
+        if (this.state.err) {
+          let metaMaskClass = this.props.account.type === 'metamask' ? 'metamask' : ''
+          return (
+            <React.Fragment>
+              <div className={'modal-error custom-scroll ' + metaMaskClass}>
+                {this.state.err}
+              </div>
+            </React.Fragment>
+          )
+        } else {
+          return ""
+        }
+      }
 
     contentModal = () => {
         var wrapAmount = this.getAmountWrapETH()
@@ -137,18 +186,19 @@ export default class WrapETHModal extends React.Component {
                         </div>
                     </div>
                     
-                    {this.state.err && (
+                    {/* {this.state.err && (
                         <div className={'modal-error custom-scroll'}>
                             {this.state.err}
                         </div>
-                    )}
-                  
+                    )} */}
+                  {this.errorHtml()}
     
                 </div>
     
               </div>
             </div>
             <div className="overlap">
+                {this.msgHtml()}
               <div className="input-confirm grid-x input-confirm--approve">                
                   <div className="cell btn-wrapper">
                     {/* <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "disabled-button" : "next")}

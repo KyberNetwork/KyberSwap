@@ -66,6 +66,19 @@ export default class LimitOrderSubmit extends React.Component {
   }
 
 
+  calculateETHequivalent = () => {
+    if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken){
+      return this.props.limitOrder.sourceAmount
+    }
+    if (this.props.limitOrder.destTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken){
+      return this.props.limitOrder.destAmount
+    }
+    var rateBig = converters.toTWei(this.props.tokens[this.props.limitOrder.sourceTokenSymbol].rate, 18)
+    var ethEquivalentValue = converters.calculateDest(this.props.limitOrder.sourceAmount, rateBig, 6)
+    ethEquivalentValue = converters.toEther(ethEquivalentValue)
+    return ethEquivalentValue
+  }
+
   validateOrder = () => {
     // check source amount is zero
     var sourceAmount = parseFloat(this.props.limitOrder.sourceAmount)
@@ -88,17 +101,16 @@ export default class LimitOrderSubmit extends React.Component {
     }
 
 
-    var rateBig = converters.toTWei(this.props.tokens[this.props.limitOrder.sourceTokenSymbol].rate, 18)
-    var ethEquivalentValue = converters.calculateDest(this.props.limitOrder.sourceAmount, rateBig, 6)
-    ethEquivalentValue = converters.toEther(ethEquivalentValue)
+    // var rateBig = converters.toTWei(this.props.tokens[this.props.limitOrder.sourceTokenSymbol].rate, 18)
+    var ethEquivalentValue = this.calculateETHequivalent()
 
     if (ethEquivalentValue < constants.LIMIT_ORDER_CONFIG.minSupportOrder && !isNaN(sourceAmount)) {
-      sourceAmountError.push(`Source Amount is too smalll. Limit order only support min ${constants.LIMIT_ORDER_CONFIG.minSupportOrder} ETH equivalent order`)
+      sourceAmountError.push(`Amount is too smalll. Limit order only support min ${constants.LIMIT_ORDER_CONFIG.minSupportOrder} ETH equivalent order`)
       isValidate = false
     }
 
     if (ethEquivalentValue > constants.LIMIT_ORDER_CONFIG.maxSupportOrder && !isNaN(sourceAmount)) {
-      sourceAmountError.push(`Source Amount is too big. Limit order only support max ${constants.LIMIT_ORDER_CONFIG.minSupportOrder} ETH equivalent order`)
+      sourceAmountError.push(`Amount is too big. Limit order only support max ${constants.LIMIT_ORDER_CONFIG.maxSupportOrder} ETH equivalent order`)
       isValidate = false
     }
 

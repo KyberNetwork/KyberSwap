@@ -61,14 +61,14 @@ export default class Exchange extends React.Component {
     this.props.dispatch(exchangeActions.checkKyberEnable(ethereum))
   }
 
-  fetchUserCap = () => {
-    var account = this.props.account
-    if (this.props.account == false) {
-      return
-    }
-    var ethereum = this.getEthereumInstance()
-    this.props.dispatch(exchangeActions.fetchUserCap(ethereum))
-  }
+  // fetchUserCap = () => {
+  //   var account = this.props.account
+  //   if (this.props.account == false) {
+  //     return
+  //   }
+  //   var ethereum = this.getEthereumInstance()
+  //   this.props.dispatch(exchangeActions.fetchUserCap(ethereum))
+  // }
 
   fetchRateExchange = () => {    
     var ethereum = this.getEthereumInstance()
@@ -147,7 +147,7 @@ export default class Exchange extends React.Component {
 
   setInvervalProcess = () => {
     this.setInterValGroup( this.checkKyberEnable, 10000)
-    this.setInterValGroup( this.fetchUserCap, 10000)
+    // this.setInterValGroup( this.fetchUserCap, 10000)
 
     this.setInterValGroup( this.fetchRateExchange, 10000)
 

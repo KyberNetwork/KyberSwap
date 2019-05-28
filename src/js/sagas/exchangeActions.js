@@ -455,13 +455,18 @@ function* verifyExchange() {
     return
   }
 
+  if (!state.account.isGetAllBalance){
+    return
+  }
+
+  var maxCap = state.account.account.maxCap
   var validateAmount = validators.verifyAmount(sourceAmount,
     sourceBalance,
     sourceTokenSymbol,
     sourceDecimal,
     rate,
     destDecimal,
-    exchange.maxCap)
+    maxCap)
 
   var isNotNumber = false
   switch (validateAmount) {
@@ -473,7 +478,7 @@ function* verifyExchange() {
       yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, translate("error.source_amount_too_high")))
       break
     case "too high cap":
-      var maxCap = exchange.maxCap
+      var maxCap = converter.toEther(maxCap)
       if (sourceTokenSymbol !== "ETH"){
         maxCap = maxCap * constants.EXCHANGE_CONFIG.MAX_CAP_PERCENT
       }
@@ -494,7 +499,7 @@ function* verifyExchange() {
     sourceAmount = 0
   }
   
-  if (state.account.isGetAllBalance){
+  // if (state.account.isGetAllBalance){
     const account = state.account.account
     var validateWithFee = validators.verifyBalanceForTransaction(account.balance, sourceTokenSymbol,
       sourceAmount, exchange.gas + exchange.gas_approve, exchange.gasPrice)
@@ -504,7 +509,7 @@ function* verifyExchange() {
     } else {
       yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.balance))
     }
-  }
+  // }
 
 
 }

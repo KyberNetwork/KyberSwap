@@ -58,7 +58,7 @@ export default class PostExchange extends React.Component {
       return
     }
     
-    if (this.props.exchange.maxCap == 0) {
+    if (this.props.account.maxCap == 0) {
       let titleModal = this.props.translate('transaction.notification') || 'Notification'
       let contentModal = this.props.translate('transaction.not_enable_exchange') || 'Your address is not enabled for exchange'
       this.props.dispatch(utilActions.openInfoModal(titleModal, contentModal))
@@ -116,7 +116,7 @@ export default class PostExchange extends React.Component {
     var rateSourceToEth = this.props.tokens[sourceTokenSymbol].rate
     var destTokenSymbol = this.props.exchange.destTokenSymbol
     var destDecimal = this.props.tokens[destTokenSymbol].decimals
-    var maxCap = this.props.exchange.maxCap
+    var maxCap = this.props.account.maxCap
 
     if (sourceAmount) {
       var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, sourceTokenSymbol,
@@ -140,7 +140,7 @@ export default class PostExchange extends React.Component {
         check = false        
         break
       case "too high cap":
-        var maxCap = this.props.exchange.maxCap
+        // var maxCap = converters.toEther(this.props.account.maxCap)
         if (this.props.exchange.sourceTokenSymbol !== "ETH"){
           maxCap = maxCap * constants.EXCHANGE_CONFIG.MAX_CAP_PERCENT
         }

@@ -177,21 +177,21 @@ export function* importNewAccount(action) {
 
     // yield put(fetchExchangeEnable())
 
-    var maxCapOneExchange = "infinity"
-    try {
-      var result = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
-      if (!result.error) {
-        maxCapOneExchange = result.cap
-      }
-    } catch(e) {
-      console.log(e)
-    }
-    yield put(setCapExchange(maxCapOneExchange))
+    // var maxCapOneExchange = "infinity"
+    // try {
+    //   var result = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
+    //   if (!result.error) {
+    //     maxCapOneExchange = result.cap
+    //   }
+    // } catch(e) {
+    //   console.log(e)
+    // }
+    // yield put(setCapExchange(maxCapOneExchange))
 
-    if (+maxCapOneExchange == 0){
-      var linkReg = 'https://kybernetwork.zendesk.com'
-      yield put(throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.zeroCap , translate("error.not_possess_kgt", {link: linkReg}) || "There seems to be a problem with your address, please contact us for more details"))
-    }
+    // if (+maxCapOneExchange == 0){
+    //   var linkReg = 'https://kybernetwork.zendesk.com'
+    //   yield put(throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.zeroCap , translate("error.not_possess_kgt", {link: linkReg}) || "There seems to be a problem with your address, please contact us for more details"))
+    // }
 
     //update token and token balance
     var newTokens = {}
