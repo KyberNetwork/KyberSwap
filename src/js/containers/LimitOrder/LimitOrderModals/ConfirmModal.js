@@ -32,7 +32,7 @@ export default class ConfirmModal extends React.Component {
         super()
         this.state = {
             err: "",
-            isConfirm: false,
+            isConfirming: false,
             isFetchFee : true,
             isFinish: false,
             fee : constants.LIMIT_ORDER_CONFIG.maxFee
@@ -89,7 +89,7 @@ export default class ConfirmModal extends React.Component {
         var wallet = getWallet(this.props.account.type)
         var password = "";
         this.setState({
-          isConfirm: true
+          isConfirming: true
         });
 
         try{
@@ -147,13 +147,13 @@ export default class ConfirmModal extends React.Component {
             // this.props.dispatch(limitOrderActions.forwardOrderPath())
             this.setState({
               isFinish: true,
-              isConfirm: false
+              isConfirming: false
             });
         }catch(err){
             console.log(err.message);
             this.setState({
               err: err.toString(),
-              isConfirm: false,
+              isConfirming: false,
               isFinish: false
             })
         }
@@ -161,11 +161,12 @@ export default class ConfirmModal extends React.Component {
 
   
     closeModal = () => {
-        this.props.dispatch(limitOrderActions.resetOrderPath())
+      if (this.state.isConfirming) return;
+      this.props.dispatch(limitOrderActions.resetOrderPath())
     }
 
     msgHtml = () => {
-      if (this.state.isConfirm && this.props.account.type !== 'privateKey') {
+      if (this.state.isConfirming && this.props.account.type !== 'privateKey') {
           return <div className="limit-order-modal__result--pending">
           {this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}
         </div>
@@ -290,13 +291,12 @@ export default class ConfirmModal extends React.Component {
 
             {!this.state.isFinish && <div className="limit-order-modal__footer">
               <button
-              className="btn-cancel"
-              onClick={e => this.closeModal()}
+                className={`btn-cancel ${(this.state.isConfirming || this.state.isFetchFee) ? "btn--disabled" : ""}`}
+                onClick={e => this.closeModal()}
               >
                 {this.props.translate("modal.cancel") || "Cancel"}
               </button>
-              <button className="btn-confirm"
-                disabled={this.state.isConfirm || this.state.isFetchFee}
+              <button className={`btn-confirm ${(this.state.isConfirming || this.state.isFetchFee) ? "btn--disabled" : ""}`}
                 onClick={e => this.onSubmit()}>{this.props.translate("modal.confirm") || "Confirm"}</button>
             </div>}
 
